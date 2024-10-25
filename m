@@ -4,73 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439A9D0C5FB
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 10:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 209BAD0C5FD
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 10:42:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4HSP-0003yt-1h; Fri, 25 Oct 2024 06:22:13 -0400
+	id 1t4Hkv-0003pK-VC; Fri, 25 Oct 2024 06:41:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1t4HSL-0003vM-5a
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 06:22:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t4Hkt-0003on-C8
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 06:41:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1t4HSE-0000RT-9E
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 06:22:08 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t4Hkr-00032e-3O
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 06:41:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729851721;
+ s=mimecast20190719; t=1729852874;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=E5Q38/onoC/usUrpnVetKCEKAlRS6tR5lbiBnrltnW4=;
- b=XGXk9McNDc62UWKZtXcJ2E5tSqOhmyuCW4Ci+c4RNDw4yp6PR03N46ELvg34A4OSGtRBot
- dorhYnkxvIFQ8N+zJxqva5m/5EeIc2Maiv1aZsd/h3cpTgAa8oybL1KU49sfNPv7klC4mQ
- JecdmXfS6H40xDhh8EAYHUeFfD6WJa4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ylTp1QLVbhe6U4eqZf0jmNJnLxdYGk1Ss/G/3MPthlA=;
+ b=gjAMn5EB5btpurgcLJ1BmUbUmrb9lupElh0QRmkNCOHoHhZmj4MK+Nc2YrzalprItl35z3
+ 9Vt0j6CssuHh65hr55OO/S7K61C2QLUgqEcCr18TwzM0EAKu5sIM/9FmZL5Ma1bUddo/pM
+ JzZ/VImIIbFcTzqd9un4tku0CPTXSCY=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-DNGNkVFhM4SsV5_VkNI1jA-1; Fri,
- 25 Oct 2024 06:20:46 -0400
-X-MC-Unique: DNGNkVFhM4SsV5_VkNI1jA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-l6QxU85rM2qcAnhblcCa5g-1; Fri,
+ 25 Oct 2024 06:41:11 -0400
+X-MC-Unique: l6QxU85rM2qcAnhblcCa5g-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 164E819560A6; Fri, 25 Oct 2024 10:20:44 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.39.194.5])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 510EC196BB7E; Fri, 25 Oct 2024 10:20:38 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, cohuck@redhat.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: [RFC 04/21] arm/cpu: Store aa64isar1/2 into the idregs array
-Date: Fri, 25 Oct 2024 12:17:23 +0200
-Message-ID: <20241025101959.601048-5-eric.auger@redhat.com>
-In-Reply-To: <20241025101959.601048-1-eric.auger@redhat.com>
-References: <20241025101959.601048-1-eric.auger@redhat.com>
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2BF7F1945114; Fri, 25 Oct 2024 10:41:07 +0000 (UTC)
+Received: from t14s.fritz.box (unknown [10.22.80.53])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9367A1955F43; Fri, 25 Oct 2024 10:41:04 +0000 (UTC)
+From: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v1] virtio-mem: unplug memory only during system resets,
+ not device resets
+Date: Fri, 25 Oct 2024 12:41:03 +0200
+Message-ID: <20241025104103.342188-1-david@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,367 +80,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- target/arm/cpu-features.h | 38 +++++++++++++++++++-------------------
- target/arm/cpu.h          |  2 --
- target/arm/cpu.c          |  9 +++------
- target/arm/cpu64.c        |  9 +++++----
- target/arm/helper.c       |  4 ++--
- target/arm/kvm.c          |  6 ++----
- target/arm/tcg/cpu64.c    | 24 ++++++++++++------------
- 7 files changed, 43 insertions(+), 49 deletions(-)
+We recently converted from the LegacyReset to the new reset framework
+in commit c009a311e939 ("virtio-mem: Use new Resettable framework instead
+of LegacyReset") to be able to use the ResetType to filter out wakeup
+resets.
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 4eb29d205c..de571b520f 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -466,12 +466,12 @@ static inline bool isar_feature_aa64_tlbios(const ARMISARegisters *id)
+However, this change had an undesired implications: as we override the
+Resettable interface methods in VirtIOMEMClass, the reset handler will
+not only get called during system resets (i.e., qemu_devices_reset())
+but also during any direct or indirect device rests (e.g.,
+device_cold_reset()).
+
+Further, we might now receive two reset callbacks during
+qemu_devices_reset(), first when reset by a parent and later when reset
+directly.
+
+The memory state of virtio-mem devices is rather special: it's supposed to
+be persistent/unchanged during most resets (similar to resetting a hard
+disk will not destroy the data), unless actually cold-resetting the whole
+system (different to a hard disk where a reboot will not destroy the data):
+ripping out system RAM is something guest OSes don't particularly enjoy,
+but we want to detect when rebooting to an OS that does not support
+virtio-mem and wouldn't be able to detect+use the memory -- and we want
+to force-defragment hotplugged memory to also shrink the usable device
+memory region. So we rally want to catch system resets to do that.
+
+On supported targets (e.g., x86), getting a cold reset on the
+device/parent triggers is not that easy (but looks like PCI code
+might trigger it), so this implication went unnoticed.
+
+However, with upcoming s390x support it is problematic: during
+kdump, s390x triggers a subsystem reset, ending up in
+s390_machine_reset() and calling only subsystem_reset() instead of
+qemu_devices_reset() -- because it's not a full system reset.
+
+In subsystem_reset(), s390x performs a device_cold_reset() of any
+TYPE_VIRTUAL_CSS_BRIDGE device, which ends up resetting all children,
+including the virtio-mem device. Consequently, we wrongly detect a system
+reset and unplug all device memory, resulting in hotplugged memory not
+getting included in the crash dump -- undesired.
+
+We really must not mess with hotplugged memory state during simple
+device resets. To fix, create+register a new reset object that will only
+get triggered during qemu_devices_reset() calls, but not during any other
+resets as it is logically not the child of any other object.
+
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Juraj Marcin <jmarcin@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+ hw/virtio/virtio-mem.c         | 103 +++++++++++++++++++++++----------
+ include/hw/virtio/virtio-mem.h |  12 +++-
+ 2 files changed, 83 insertions(+), 32 deletions(-)
+
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index ae1e81d7ba..08e0e9da1c 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -956,6 +956,7 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+     VirtIOMEM *vmem = VIRTIO_MEM(dev);
+     uint64_t page_size;
+     RAMBlock *rb;
++    Object *obj;
+     int ret;
  
- static inline bool isar_feature_aa64_jscvt(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, JSCVT) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, JSCVT) != 0;
- }
- 
- static inline bool isar_feature_aa64_fcma(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, FCMA) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, FCMA) != 0;
- }
- 
- /*
-@@ -495,9 +495,9 @@ isar_feature_pauth_feature(const ARMISARegisters *id)
-      * Architecturally, only one of {APA,API,APA3} may be active (non-zero)
-      * and the other two must be zero.  Thus we may avoid conditionals.
-      */
--    return (FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, APA) |
--            FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, API) |
--            FIELD_EX64(id->id_aa64isar2, ID_AA64ISAR2, APA3));
-+    return (FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, APA) |
-+            FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, API) |
-+            FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR2, APA3));
- }
- 
- static inline bool isar_feature_aa64_pauth(const ARMISARegisters *id)
-@@ -515,7 +515,7 @@ static inline bool isar_feature_aa64_pauth_qarma5(const ARMISARegisters *id)
-      * Return true if pauth is enabled with the architected QARMA5 algorithm.
-      * QEMU will always enable or disable both APA and GPA.
-      */
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, APA) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, APA) != 0;
- }
- 
- static inline bool isar_feature_aa64_pauth_qarma3(const ARMISARegisters *id)
-@@ -524,67 +524,67 @@ static inline bool isar_feature_aa64_pauth_qarma3(const ARMISARegisters *id)
-      * Return true if pauth is enabled with the architected QARMA3 algorithm.
-      * QEMU will always enable or disable both APA3 and GPA3.
-      */
--    return FIELD_EX64(id->id_aa64isar2, ID_AA64ISAR2, APA3) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR2, APA3) != 0;
- }
- 
- static inline bool isar_feature_aa64_sb(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, SB) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, SB) != 0;
- }
- 
- static inline bool isar_feature_aa64_predinv(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, SPECRES) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, SPECRES) != 0;
- }
- 
- static inline bool isar_feature_aa64_frint(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, FRINTTS) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, FRINTTS) != 0;
- }
- 
- static inline bool isar_feature_aa64_dcpop(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, DPB) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, DPB) != 0;
- }
- 
- static inline bool isar_feature_aa64_dcpodp(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, DPB) >= 2;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, DPB) >= 2;
- }
- 
- static inline bool isar_feature_aa64_bf16(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, BF16) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, BF16) != 0;
- }
- 
- static inline bool isar_feature_aa64_rcpc_8_3(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, LRCPC) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, LRCPC) != 0;
- }
- 
- static inline bool isar_feature_aa64_rcpc_8_4(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, LRCPC) >= 2;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, LRCPC) >= 2;
- }
- 
- static inline bool isar_feature_aa64_i8mm(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, I8MM) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR1, I8MM) != 0;
- }
- 
- static inline bool isar_feature_aa64_wfxt(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar2, ID_AA64ISAR2, WFXT) >= 2;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR2, WFXT) >= 2;
- }
- 
- static inline bool isar_feature_aa64_hbc(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar2, ID_AA64ISAR2, BC) != 0;
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR2, BC) != 0;
- }
- 
- static inline bool isar_feature_aa64_mops(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64isar2, ID_AA64ISAR2, MOPS);
-+    return FIELD_EX64_IDREG(&id->idregs, ID_AA64ISAR2, MOPS);
- }
- 
- static inline bool isar_feature_aa64_fp_simd(const ARMISARegisters *id)
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index aee8dfe439..87df224121 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1082,8 +1082,6 @@ struct ArchCPU {
-         uint32_t dbgdidr;
-         uint32_t dbgdevid;
-         uint32_t dbgdevid1;
--        uint64_t id_aa64isar1;
--        uint64_t id_aa64isar2;
-         uint64_t id_aa64pfr0;
-         uint64_t id_aa64pfr1;
-         uint64_t id_aa64mmfr0;
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 9521eed586..a4b59b259c 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2124,9 +2124,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-         uint64_t t;
-         uint32_t u;
- 
--        t = cpu->isar.id_aa64isar1;
--        t = FIELD_DP64(t, ID_AA64ISAR1, JSCVT, 0);
--        cpu->isar.id_aa64isar1 = t;
-+        FIELD_DP64_IDREG(idregs, ID_AA64ISAR1, JSCVT, 0);
- 
-         t = cpu->isar.id_aa64pfr0;
-         t = FIELD_DP64(t, ID_AA64PFR0, FP, 0xf);
-@@ -2179,11 +2177,11 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-         t = FIELD_DP64(t, ID_AA64ISAR0, DP, 0);
-         SET_IDREG(idregs, ID_AA64ISAR0, t);
- 
--        t = cpu->isar.id_aa64isar1;
-+        t = GET_IDREG(idregs, ID_AA64ISAR1);
-         t = FIELD_DP64(t, ID_AA64ISAR1, FCMA, 0);
-         t = FIELD_DP64(t, ID_AA64ISAR1, BF16, 0);
-         t = FIELD_DP64(t, ID_AA64ISAR1, I8MM, 0);
--        cpu->isar.id_aa64isar1 = t;
-+        SET_IDREG(idregs, ID_AA64ISAR1, t);
- 
-         t = cpu->isar.id_aa64pfr0;
-         t = FIELD_DP64(t, ID_AA64PFR0, ADVSIMD, 0xf);
-@@ -2219,7 +2217,6 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+     if (!vmem->memdev) {
+@@ -1121,7 +1122,28 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+         vmstate_register_any(VMSTATE_IF(vmem),
+                              &vmstate_virtio_mem_device_early, vmem);
      }
- 
-     if (!cpu->has_neon && !cpu->has_vfp) {
--        uint64_t t;
-         uint32_t u;
- 
-         FIELD_DP64_IDREG(idregs, ID_AA64ISAR0, FHM, 0);
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 1451b3e1b3..d16c7487ac 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -479,6 +479,7 @@ void aarch64_add_sme_properties(Object *obj)
- void arm_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
- {
-     ARMPauthFeature features = cpu_isar_feature(pauth_feature, cpu);
-+    IdRegMap *idregs = &cpu->isar.idregs;
-     uint64_t isar1, isar2;
+-    qemu_register_resettable(OBJECT(vmem));
++
++    /*
++     * We only want to unplug all memory to start with a clean slate when
++     * it is safe for the guest -- during system resets that call
++     * qemu_devices_reset().
++     *
++     * We'll filter out selected qemu_devices_reset() calls used for other
++     * purposes, like resetting all devices during wakeup from suspend on
++     * x86 based on the reset type passed to qemu_devices_reset().
++     *
++     * Unplugging all memory during simple device resets can result in the VM
++     * unexpectedly losing RAM, corrupting VM state.
++     *
++     * Simple device resets (or resets triggered by getting a parent device
++     * reset) must not change the state of plugged memory blocks. Therefore,
++     * we need a dedicated reset object that only gets called during
++     * qemu_devices_reset().
++     */
++    obj = object_new(TYPE_VIRTIO_MEM_SYSTEM_RESET);
++    vmem->system_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
++    vmem->system_reset->vmem = vmem;
++    qemu_register_resettable(obj);
  
      /*
-@@ -489,13 +490,13 @@ void arm_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
-      *
-      * Begin by disabling all fields.
+      * Set ourselves as RamDiscardManager before the plug handler maps the
+@@ -1141,7 +1163,10 @@ static void virtio_mem_device_unrealize(DeviceState *dev)
+      * found via an address space anymore. Unset ourselves.
       */
--    isar1 = cpu->isar.id_aa64isar1;
-+    isar1 = GET_IDREG(idregs, ID_AA64ISAR1);
-     isar1 = FIELD_DP64(isar1, ID_AA64ISAR1, APA, 0);
-     isar1 = FIELD_DP64(isar1, ID_AA64ISAR1, GPA, 0);
-     isar1 = FIELD_DP64(isar1, ID_AA64ISAR1, API, 0);
-     isar1 = FIELD_DP64(isar1, ID_AA64ISAR1, GPI, 0);
- 
--    isar2 = cpu->isar.id_aa64isar2;
-+    isar2 = GET_IDREG(idregs, ID_AA64ISAR2);
-     isar2 = FIELD_DP64(isar2, ID_AA64ISAR2, APA3, 0);
-     isar2 = FIELD_DP64(isar2, ID_AA64ISAR2, GPA3, 0);
- 
-@@ -542,8 +543,8 @@ void arm_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
-         }
+     memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
+-    qemu_unregister_resettable(OBJECT(vmem));
++
++    qemu_unregister_resettable(OBJECT(vmem->system_reset));
++    object_unref(OBJECT(vmem->system_reset));
++
+     if (vmem->early_migration) {
+         vmstate_unregister(VMSTATE_IF(vmem), &vmstate_virtio_mem_device_early,
+                            vmem);
+@@ -1841,38 +1866,12 @@ static void virtio_mem_unplug_request_check(VirtIOMEM *vmem, Error **errp)
      }
- 
--    cpu->isar.id_aa64isar1 = isar1;
--    cpu->isar.id_aa64isar2 = isar2;
-+    SET_IDREG(idregs, ID_AA64ISAR1, isar1);
-+    SET_IDREG(idregs, ID_AA64ISAR2, isar2);
  }
  
- static Property arm_cpu_pauth_property =
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 8eae775d87..209b7c22b6 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -8960,12 +8960,12 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 6, .opc2 = 1,
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_aa64_tid3,
--              .resetvalue = cpu->isar.id_aa64isar1 },
-+              .resetvalue = GET_IDREG(idregs, ID_AA64ISAR1)},
-             { .name = "ID_AA64ISAR2_EL1", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 6, .opc2 = 2,
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_aa64_tid3,
--              .resetvalue = cpu->isar.id_aa64isar2 },
-+              .resetvalue = GET_IDREG(idregs, ID_AA64ISAR2)},
-             { .name = "ID_AA64ISAR3_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 6, .opc2 = 3,
-               .access = PL1_R, .type = ARM_CP_CONST,
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 7a2087c195..c30dc53622 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -335,10 +335,8 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64dfr1,
-                               ARM64_SYS_REG(3, 0, 0, 5, 1));
-         err |= get_host_cpu_reg64(fd, ahcf, SYS_ID_AA64ISAR0_EL1);
--        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64isar1,
--                              ARM64_SYS_REG(3, 0, 0, 6, 1));
--        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64isar2,
--                              ARM64_SYS_REG(3, 0, 0, 6, 2));
-+        err |= get_host_cpu_reg64(fd, ahcf, SYS_ID_AA64ISAR1_EL1);
-+        err |= get_host_cpu_reg64(fd, ahcf, SYS_ID_AA64ISAR2_EL1);
-         err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64mmfr0,
-                               ARM64_SYS_REG(3, 0, 0, 7, 0));
-         err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64mmfr1,
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 1b25ca4382..7be63f21a1 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -94,7 +94,7 @@ static void aarch64_a35_initfn(Object *obj)
-     cpu->isar.id_aa64dfr0 = 0x10305106;
-     cpu->isar.id_aa64dfr1 = 0;
-     SET_IDREG(idregs, ID_AA64ISAR0, 0x00011120);
--    cpu->isar.id_aa64isar1 = 0;
-+    SET_IDREG(idregs, ID_AA64ISAR1, 0);
-     cpu->isar.id_aa64mmfr0 = 0x00101122;
-     cpu->isar.id_aa64mmfr1 = 0;
-     cpu->clidr = 0x0a200023;
-@@ -247,7 +247,7 @@ static void aarch64_a55_initfn(Object *obj)
-     cpu->dcz_blocksize = 4; /* 64 bytes */
-     cpu->isar.id_aa64dfr0  = 0x0000000010305408ull;
-     SET_IDREG(idregs, ID_AA64ISAR0, 0x0000100010211120ull);
--    cpu->isar.id_aa64isar1 = 0x0000000000100001ull;
-+    SET_IDREG(idregs, ID_AA64ISAR1, 0x0000000000100001ull);
-     cpu->isar.id_aa64mmfr0 = 0x0000000000101122ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
-@@ -374,7 +374,7 @@ static void aarch64_a76_initfn(Object *obj)
-     cpu->dcz_blocksize = 4;
-     cpu->isar.id_aa64dfr0  = 0x0000000010305408ull;
-     SET_IDREG(idregs, ID_AA64ISAR0, 0x0000100010211120ull);
--    cpu->isar.id_aa64isar1 = 0x0000000000100001ull;
-+    SET_IDREG(idregs, ID_AA64ISAR1, 0x0000000000100001ull);
-     cpu->isar.id_aa64mmfr0 = 0x0000000000101122ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
-@@ -451,7 +451,7 @@ static void aarch64_a64fx_initfn(Object *obj)
-     cpu->isar.id_aa64mmfr1 = 0x0000000011212100;
-     cpu->isar.id_aa64mmfr2 = 0x0000000000001011;
-     SET_IDREG(idregs, ID_AA64ISAR0, 0x0000000010211120);
--    cpu->isar.id_aa64isar1 = 0x0000000000010001;
-+    SET_IDREG(idregs, ID_AA64ISAR1, 0x0000000000010001);
-     SET_IDREG(idregs, ID_AA64ZFR0, 0x0000000000000000);
-     cpu->clidr = 0x0000000080000023;
-     cpu->ccsidr[0] = 0x7007e01c; /* 64KB L1 dcache */
-@@ -616,7 +616,7 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
-     cpu->dcz_blocksize = 4;
-     cpu->isar.id_aa64dfr0  = 0x0000000110305408ull;
-     SET_IDREG(idregs, ID_AA64ISAR0, 0x0000100010211120ull);
--    cpu->isar.id_aa64isar1 = 0x0000000000100001ull;
-+    SET_IDREG(idregs, ID_AA64ISAR1, 0x0000000000100001ull);
-     cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
-@@ -692,7 +692,7 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
-     cpu->isar.id_aa64dfr0  = 0x000001f210305519ull;
-     cpu->isar.id_aa64dfr1 = 0x00000000;
-     SET_IDREG(idregs, ID_AA64ISAR0, 0x1011111110212120ull); /* with FEAT_RNG */
--    cpu->isar.id_aa64isar1 = 0x0111000001211032ull;
-+    SET_IDREG(idregs, ID_AA64ISAR1, 0x0111000001211032ull);
-     cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x0220011102101011ull;
-@@ -938,7 +938,7 @@ static void aarch64_a710_initfn(Object *obj)
-     cpu->id_aa64afr0       = 0;
-     cpu->id_aa64afr1       = 0;
-     SET_IDREG(idregs, ID_AA64ISAR0, 0x0221111110212120ull); /* with Crypto */
--    cpu->isar.id_aa64isar1 = 0x0010111101211052ull;
-+    SET_IDREG(idregs, ID_AA64ISAR1, 0x0010111101211052ull);
-     cpu->isar.id_aa64mmfr0 = 0x0000022200101122ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x1221011110101011ull;
-@@ -1037,7 +1037,7 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
-     cpu->id_aa64afr0       = 0;
-     cpu->id_aa64afr1       = 0;
-     SET_IDREG(idregs, ID_AA64ISAR0, 0x1221111110212120ull); /* with Crypto and FEAT_RNG */
--    cpu->isar.id_aa64isar1 = 0x0011111101211052ull;
-+    SET_IDREG(idregs, ID_AA64ISAR1, 0x0011111101211052ull);
-     cpu->isar.id_aa64mmfr0 = 0x0000022200101125ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x1221011112101011ull;
-@@ -1160,7 +1160,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64ISAR0, RNDR, 1);     /* FEAT_RNG */
-     SET_IDREG(idregs, ID_AA64ISAR0, t);
+-static ResettableState *virtio_mem_get_reset_state(Object *obj)
+-{
+-    VirtIOMEM *vmem = VIRTIO_MEM(obj);
+-    return &vmem->reset_state;
+-}
+-
+-static void virtio_mem_system_reset_hold(Object *obj, ResetType type)
+-{
+-    VirtIOMEM *vmem = VIRTIO_MEM(obj);
+-
+-    /*
+-     * When waking up from standby/suspend-to-ram, do not unplug any memory.
+-     */
+-    if (type == RESET_TYPE_WAKEUP) {
+-        return;
+-    }
+-
+-    /*
+-     * During usual resets, we will unplug all memory and shrink the usable
+-     * region size. This is, however, not possible in all scenarios. Then,
+-     * the guest has to deal with this manually (VIRTIO_MEM_REQ_UNPLUG_ALL).
+-     */
+-    virtio_mem_unplug_all(vmem);
+-}
+-
+ static void virtio_mem_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
+     VirtIOMEMClass *vmc = VIRTIO_MEM_CLASS(klass);
+     RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(klass);
+-    ResettableClass *rc = RESETTABLE_CLASS(klass);
  
--    t = cpu->isar.id_aa64isar1;
-+    t = GET_IDREG(idregs, ID_AA64ISAR1);
-     t = FIELD_DP64(t, ID_AA64ISAR1, DPB, 2);      /* FEAT_DPB2 */
-     t = FIELD_DP64(t, ID_AA64ISAR1, APA, PauthFeat_FPACCOMBINED);
-     t = FIELD_DP64(t, ID_AA64ISAR1, API, 1);
-@@ -1173,13 +1173,13 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64ISAR1, BF16, 1);     /* FEAT_BF16 */
-     t = FIELD_DP64(t, ID_AA64ISAR1, DGH, 1);      /* FEAT_DGH */
-     t = FIELD_DP64(t, ID_AA64ISAR1, I8MM, 1);     /* FEAT_I8MM */
--    cpu->isar.id_aa64isar1 = t;
-+    SET_IDREG(idregs, ID_AA64ISAR1, t);
+     device_class_set_props(dc, virtio_mem_properties);
+     dc->vmsd = &vmstate_virtio_mem;
+@@ -1899,9 +1898,6 @@ static void virtio_mem_class_init(ObjectClass *klass, void *data)
+     rdmc->replay_discarded = virtio_mem_rdm_replay_discarded;
+     rdmc->register_listener = virtio_mem_rdm_register_listener;
+     rdmc->unregister_listener = virtio_mem_rdm_unregister_listener;
+-
+-    rc->get_state = virtio_mem_get_reset_state;
+-    rc->phases.hold = virtio_mem_system_reset_hold;
+ }
  
--    t = cpu->isar.id_aa64isar2;
-+    t = GET_IDREG(idregs, ID_AA64ISAR2);
-     t = FIELD_DP64(t, ID_AA64ISAR2, MOPS, 1);     /* FEAT_MOPS */
-     t = FIELD_DP64(t, ID_AA64ISAR2, BC, 1);       /* FEAT_HBC */
-     t = FIELD_DP64(t, ID_AA64ISAR2, WFXT, 2);     /* FEAT_WFxT */
--    cpu->isar.id_aa64isar2 = t;
-+    SET_IDREG(idregs, ID_AA64ISAR2, t);
+ static const TypeInfo virtio_mem_info = {
+@@ -1924,3 +1920,48 @@ static void virtio_register_types(void)
+ }
  
-     t = cpu->isar.id_aa64pfr0;
-     t = FIELD_DP64(t, ID_AA64PFR0, FP, 1);        /* FEAT_FP16 */
+ type_init(virtio_register_types)
++
++OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(VirtioMemSystemReset, virtio_mem_system_reset, VIRTIO_MEM_SYSTEM_RESET, OBJECT, { TYPE_RESETTABLE_INTERFACE }, { })
++
++static void virtio_mem_system_reset_init(Object *obj)
++{
++}
++
++static void virtio_mem_system_reset_finalize(Object *obj)
++{
++}
++
++static ResettableState *virtio_mem_system_reset_get_state(Object *obj)
++{
++    VirtioMemSystemReset *vmem_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
++
++    return &vmem_reset->reset_state;
++}
++
++static void virtio_mem_system_reset_hold(Object *obj, ResetType type)
++{
++    VirtioMemSystemReset *vmem_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
++    VirtIOMEM *vmem = vmem_reset->vmem;
++
++    /*
++     * When waking up from standby/suspend-to-ram, do not unplug any memory.
++     */
++    if (type == RESET_TYPE_WAKEUP) {
++        return;
++    }
++
++    /*
++     * During usual resets, we will unplug all memory and shrink the usable
++     * region size. This is, however, not possible in all scenarios. Then,
++     * the guest has to deal with this manually (VIRTIO_MEM_REQ_UNPLUG_ALL).
++     */
++    virtio_mem_unplug_all(vmem);
++}
++
++static void virtio_mem_system_reset_class_init(ObjectClass *klass, void *data)
++{
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    rc->get_state = virtio_mem_system_reset_get_state;
++    rc->phases.hold = virtio_mem_system_reset_hold;
++}
+diff --git a/include/hw/virtio/virtio-mem.h b/include/hw/virtio/virtio-mem.h
+index a1af144c28..abde1c4101 100644
+--- a/include/hw/virtio/virtio-mem.h
++++ b/include/hw/virtio/virtio-mem.h
+@@ -25,6 +25,10 @@
+ OBJECT_DECLARE_TYPE(VirtIOMEM, VirtIOMEMClass,
+                     VIRTIO_MEM)
+ 
++#define TYPE_VIRTIO_MEM_SYSTEM_RESET "virtio-mem-system-reset"
++
++OBJECT_DECLARE_SIMPLE_TYPE(VirtioMemSystemReset, VIRTIO_MEM_SYSTEM_RESET)
++
+ #define VIRTIO_MEM_MEMDEV_PROP "memdev"
+ #define VIRTIO_MEM_NODE_PROP "node"
+ #define VIRTIO_MEM_SIZE_PROP "size"
+@@ -117,8 +121,14 @@ struct VirtIOMEM {
+     /* listeners to notify on plug/unplug activity. */
+     QLIST_HEAD(, RamDiscardListener) rdl_list;
+ 
+-    /* State of the resettable container */
++    /* Catch system resets -> qemu_devices_reset() only. */
++    VirtioMemSystemReset *system_reset;
++};
++
++struct VirtioMemSystemReset {
++    Object parent;
+     ResettableState reset_state;
++    VirtIOMEM *vmem;
+ };
+ 
+ struct VirtIOMEMClass {
 -- 
-2.41.0
+2.46.1
 
 
