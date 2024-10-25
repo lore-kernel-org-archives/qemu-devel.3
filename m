@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89910D0C615
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 14:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8EE5D0C616
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 14:15:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4L48-0004LA-4X; Fri, 25 Oct 2024 10:13:24 -0400
+	id 1t4L47-0004Kn-Dd; Fri, 25 Oct 2024 10:13:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t4L41-0004D9-DL
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:13:17 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1t4L40-0004Cj-GN
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:13:16 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t4L3t-0007rO-78
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:13:17 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4316e9f4a40so21293275e9.2
+ id 1t4L3s-0007qw-Iq
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:13:16 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-37d41894a32so1613395f8f.1
  for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 07:13:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729865588; x=1730470388; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729865587; x=1730470387; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BczarKbZJDxbjH7vD9cLXbmuaONY9kegQ+oAgDMMF9U=;
- b=XKyCwuPgMRD5EESVEuJwYn4wbvkUiQHedOWBLth6UVHgYaoGkpqIlrjZvthKRk8Pwi
- 27d9gA84vjU/1Th7GK+rMm+zx+F7sGP0BRkc7KQPczUWhHgwzRIqtBgRNMRciQhV8cIu
- WWwevhjPMGTTBO18ZRwdlrB7WqTUu7KEQjl3wg8eMaOJe7XxJ7eAGgRcGAFcPJX3Y7Zo
- H1kkG1iO+3xS5N83MyWM5JoVUROBc7AOxgwQNVk0Seuga4l0N7v0R9NZOc8+Ts1VNtpW
- WOfh8O5UuseMvNxxmkGdgcBlQi6vmETGjziQP1Hc3HQa4T7d9VcEtxJ2pZZMY5D8m2NF
- EfdQ==
+ bh=+3N7Gh5ykD6QxUXP4fouNsk3DmkKRJ2QzcoWCfXISHI=;
+ b=VkHiDTtkl6/xjD7vf7wRv6vPMshw+ZerzlexMzsF9ivpAYZdnYNEmlD5fYaA1UivxW
+ 2EppflRwN20n291OyRg4MJcQTdRfD47bHJECxXK4LRCht5gCnfrWXE+qEcp+qW6pyfd1
+ k+NJB5/hfscgXIxmGdRVVaYA/HDNHWWmwTztGUpC+5jgT9xPgv4B0hYPNCf1dC8pW4Pb
+ xKpAKpzvanmJJ++seOIv2/o7VS3uirtsMw+yJWmV1VRD8GKYJO2PoTLvcDNiuMIL8wEo
+ OosJYc0baW5VNq64Unsux3tE6P9ya706IOffWX23HlAcfpuz03NFFMBkNFPmPkN+s15k
+ +5HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729865588; x=1730470388;
+ d=1e100.net; s=20230601; t=1729865587; x=1730470387;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BczarKbZJDxbjH7vD9cLXbmuaONY9kegQ+oAgDMMF9U=;
- b=Llp4FSyR3HPPNRnFccGxw9+wdjFWw9g3BdUnDw/uEg8St+ug57GCLJUzp3WbEMLtTR
- L7kUATDo3sQE3vMOCr0Pelg6UyDnI68ZHcwCqCcKrF1IF+cDVhmG/WymavvWCyxu/nVS
- aj6eDl8uypUVqLf+kcXaYwf/DPpTnllrlR6Yp4TeAdhNupvG7ydqg08+1ObYyEU/2rHd
- XtE3Xu/+KnKEXRAofGzJqHafErbvrtv1CU/f5DiyNGTygqcyv7ETLGjFue2XQSC4jA78
- 4wpBR8wm5yNvdDVcEK1miNgg2PS2IcUBTnEY2B8onLVP9PEnT9VgjSKI+CT4vcVgAZ1x
- u4KA==
+ bh=+3N7Gh5ykD6QxUXP4fouNsk3DmkKRJ2QzcoWCfXISHI=;
+ b=A0e4RCdeTvWclCIsL0nVOQq6r/4iyFCkgCSeU+5mbGd25MLJckMFw30V6sEaY5vk40
+ 1QHAVO2NjB53pLu6v2e5Tm2IJ8h42iR3f6OhrGYHTu743D+fiq6a0oBVkfe7NGdp5xGJ
+ LVXh6sQumMubWRb5qFon16whyHGuXZ7LYB+yHOCUBMDsGWy1APpAfroTHyzOxG6kX3n+
+ lzE2XWQVl+Cd+ENCTVtA/QD5ytUc+qW9fw299E7jzO0PppucvWU6Je78kmM/3sUvmy+/
+ r/Wi4iGnMtU4J6HyZohHV1WsqLRWie3O/3kOtLuKI4RTID0760aMVHCR+2rIezhmEgEC
+ l5Zg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgacg4i3fOA6iqry6PS79ZJ/YUyyiAnnZppH3Z9s0BrNK8fK+fy9+2i+VLRVzSz2Ivol2MlsoUZN1K@nongnu.org
-X-Gm-Message-State: AOJu0Yxc4SVhbgIGcqppKGpP44BXWqT3+Xqis2nyBH9RXYHxdSn5JWtC
- 6+9/dIMjMEIQvDtuGRq0VmwkZx6MwqsgZ5XqqtpGBbRkrFYxk2lzwrENzzBX/Kk=
-X-Google-Smtp-Source: AGHT+IGNNUYTl0oSNkkML3EYVg7ubOEefufl3uJ7Hu9oF+87c+QcxlU+fQ+f2iqHE1/Nl7pGgL9vYA==
-X-Received: by 2002:a05:600c:1552:b0:42c:b750:1a1e with SMTP id
- 5b1f17b1804b1-4318beb62e6mr50079065e9.0.1729865587749; 
- Fri, 25 Oct 2024 07:13:07 -0700 (PDT)
+ AJvYcCUWgz9ITntkNMX3jUDSb1ASV59LbrVvwqWSWFs+PmaRaJ7b93CZnUMSXa4x2keKUMS0ORl6jLt3SG0E@nongnu.org
+X-Gm-Message-State: AOJu0Yz7zhoMH9i0d/3DqoYwlRrvjpoJF6TVCKL2ZRQpemZJO98myL+7
+ V+EwNDWUFYLz14f26bI4WsPwLWOrfFH4qV4ftfFhtdSTPZdIVW5Ynv6ctN0NdZc=
+X-Google-Smtp-Source: AGHT+IFELKEdswjTGifEl1YHesJLSbvwyrbGh5IhwQ+SHELG0FMMmzYmcW2PCs8GDLSYanzPnyZ5mg==
+X-Received: by 2002:a05:6000:d0b:b0:374:bd00:d1e with SMTP id
+ ffacd0b85a97d-3803abc2879mr4856955f8f.3.1729865586918; 
+ Fri, 25 Oct 2024 07:13:06 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4318b57b051sm50104535e9.42.2024.10.25.07.13.07
+ 5b1f17b1804b1-4318b57b051sm50104535e9.42.2024.10.25.07.13.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Oct 2024 07:13:07 -0700 (PDT)
+ Fri, 25 Oct 2024 07:13:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
@@ -78,16 +78,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
  qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH 13/21] target/xtensa: Factor out calls to set_use_first_nan()
-Date: Fri, 25 Oct 2024 15:12:46 +0100
-Message-Id: <20241025141254.2141506-14-peter.maydell@linaro.org>
+Subject: [PATCH 12/21] target/sparc: Explicitly set 2-NaN propagation rule
+Date: Fri, 25 Oct 2024 15:12:45 +0100
+Message-Id: <20241025141254.2141506-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241025141254.2141506-1-peter.maydell@linaro.org>
 References: <20241025141254.2141506-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,168 +110,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In xtensa we currently call set_use_first_nan() in a lot of
-places where we want to switch the NaN-propagation handling.
-We're about to change the softfloat API we use to do that,
-so start by factoring all the calls out into a single
-xtensa_use_first_nan() function.
-
-The bulk of this change was done with
- sed -i -e 's/set_use_first_nan(\([^,]*\),[^)]*)/xtensa_use_first_nan(env, \1)/'  target/xtensa/fpu_helper.c
+Set the NaN propagation rule explicitly in the float_status
+words we use.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/xtensa/cpu.h        |  6 ++++++
- target/xtensa/cpu.c        |  2 +-
- target/xtensa/fpu_helper.c | 33 +++++++++++++++++++--------------
- 3 files changed, 26 insertions(+), 15 deletions(-)
+ target/sparc/cpu.c             |  8 ++++++++
+ target/sparc/fop_helper.c      | 10 ++++++++--
+ fpu/softfloat-specialize.c.inc |  6 ++----
+ 3 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
-index 9f2341d8563..77e48eef19c 100644
---- a/target/xtensa/cpu.h
-+++ b/target/xtensa/cpu.h
-@@ -802,4 +802,10 @@ static inline void cpu_get_tb_cpu_state(CPUXtensaState *env, vaddr *pc,
- XtensaCPU *xtensa_cpu_create_with_clock(const char *cpu_type,
-                                         Clock *cpu_refclk);
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index e7f4068a162..dd7af86de73 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -26,6 +26,7 @@
+ #include "hw/qdev-properties.h"
+ #include "qapi/visitor.h"
+ #include "tcg/tcg.h"
++#include "fpu/softfloat.h"
  
-+/*
-+ * Set the NaN propagation rule for future FPU operations:
-+ * use_first is true to pick the first NaN as the result if both
-+ * inputs are NaNs, false to pick the second.
-+ */
-+void xtensa_use_first_nan(CPUXtensaState *env, bool use_first);
+ //#define DEBUG_FEATURES
+ 
+@@ -807,6 +808,13 @@ static void sparc_cpu_realizefn(DeviceState *dev, Error **errp)
+     env->version |= env->def.nwindows - 1;
  #endif
-diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
-index a08c7a0b1f2..6f9039abaee 100644
---- a/target/xtensa/cpu.c
-+++ b/target/xtensa/cpu.c
-@@ -134,7 +134,7 @@ static void xtensa_cpu_reset_hold(Object *obj, ResetType type)
-     cs->halted = env->runstall;
- #endif
-     set_no_signaling_nans(!dfpu, &env->fp_status);
--    set_use_first_nan(!dfpu, &env->fp_status);
-+    xtensa_use_first_nan(env, !dfpu);
- }
  
- static ObjectClass *xtensa_cpu_class_by_name(const char *cpu_model)
-diff --git a/target/xtensa/fpu_helper.c b/target/xtensa/fpu_helper.c
-index 381e83ded83..50a5efa65e2 100644
---- a/target/xtensa/fpu_helper.c
-+++ b/target/xtensa/fpu_helper.c
-@@ -57,6 +57,11 @@ static const struct {
-     { XTENSA_FP_V, float_flag_invalid, },
- };
- 
-+void xtensa_use_first_nan(CPUXtensaState *env, bool use_first)
-+{
-+    set_use_first_nan(use_first, &env->fp_status);
-+}
++    /*
++     * Prefer SNaN over QNaN, order B then A. It's OK to do this in realize
++     * rather than reset, because fp_status is after 'end_reset_fields' in
++     * the CPU state struct so it won't get zeroed on reset.
++     */
++    set_float_2nan_prop_rule(float_2nan_prop_s_ba, &env->fp_status);
 +
- void HELPER(wur_fpu2k_fcr)(CPUXtensaState *env, uint32_t v)
- {
-     static const int rounding_mode[] = {
-@@ -171,87 +176,87 @@ float32 HELPER(fpu2k_msub_s)(CPUXtensaState *env,
+     cpu_exec_realizefn(cs, &local_err);
+     if (local_err != NULL) {
+         error_propagate(errp, local_err);
+diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
+index b6692382b3b..6f9ccc008a0 100644
+--- a/target/sparc/fop_helper.c
++++ b/target/sparc/fop_helper.c
+@@ -497,7 +497,10 @@ uint32_t helper_flcmps(float32 src1, float32 src2)
+      * Perform the comparison with a dummy fp environment.
+      */
+     float_status discard = { };
+-    FloatRelation r = float32_compare_quiet(src1, src2, &discard);
++    FloatRelation r;
++
++    set_float_2nan_prop_rule(float_2nan_prop_s_ba, &discard);
++    r = float32_compare_quiet(src1, src2, &discard);
  
- float64 HELPER(add_d)(CPUXtensaState *env, float64 a, float64 b)
+     switch (r) {
+     case float_relation_equal:
+@@ -518,7 +521,10 @@ uint32_t helper_flcmps(float32 src1, float32 src2)
+ uint32_t helper_flcmpd(float64 src1, float64 src2)
  {
--    set_use_first_nan(true, &env->fp_status);
-+    xtensa_use_first_nan(env, true);
-     return float64_add(a, b, &env->fp_status);
- }
+     float_status discard = { };
+-    FloatRelation r = float64_compare_quiet(src1, src2, &discard);
++    FloatRelation r;
++
++    set_float_2nan_prop_rule(float_2nan_prop_s_ba, &discard);
++    r = float64_compare_quiet(src1, src2, &discard);
  
- float32 HELPER(add_s)(CPUXtensaState *env, float32 a, float32 b)
- {
--    set_use_first_nan(env->config->use_first_nan, &env->fp_status);
-+    xtensa_use_first_nan(env, env->config->use_first_nan);
-     return float32_add(a, b, &env->fp_status);
- }
- 
- float64 HELPER(sub_d)(CPUXtensaState *env, float64 a, float64 b)
- {
--    set_use_first_nan(true, &env->fp_status);
-+    xtensa_use_first_nan(env, true);
-     return float64_sub(a, b, &env->fp_status);
- }
- 
- float32 HELPER(sub_s)(CPUXtensaState *env, float32 a, float32 b)
- {
--    set_use_first_nan(env->config->use_first_nan, &env->fp_status);
-+    xtensa_use_first_nan(env, env->config->use_first_nan);
-     return float32_sub(a, b, &env->fp_status);
- }
- 
- float64 HELPER(mul_d)(CPUXtensaState *env, float64 a, float64 b)
- {
--    set_use_first_nan(true, &env->fp_status);
-+    xtensa_use_first_nan(env, true);
-     return float64_mul(a, b, &env->fp_status);
- }
- 
- float32 HELPER(mul_s)(CPUXtensaState *env, float32 a, float32 b)
- {
--    set_use_first_nan(env->config->use_first_nan, &env->fp_status);
-+    xtensa_use_first_nan(env, env->config->use_first_nan);
-     return float32_mul(a, b, &env->fp_status);
- }
- 
- float64 HELPER(madd_d)(CPUXtensaState *env, float64 a, float64 b, float64 c)
- {
--    set_use_first_nan(env->config->use_first_nan, &env->fp_status);
-+    xtensa_use_first_nan(env, env->config->use_first_nan);
-     return float64_muladd(b, c, a, 0, &env->fp_status);
- }
- 
- float32 HELPER(madd_s)(CPUXtensaState *env, float32 a, float32 b, float32 c)
- {
--    set_use_first_nan(env->config->use_first_nan, &env->fp_status);
-+    xtensa_use_first_nan(env, env->config->use_first_nan);
-     return float32_muladd(b, c, a, 0, &env->fp_status);
- }
- 
- float64 HELPER(msub_d)(CPUXtensaState *env, float64 a, float64 b, float64 c)
- {
--    set_use_first_nan(env->config->use_first_nan, &env->fp_status);
-+    xtensa_use_first_nan(env, env->config->use_first_nan);
-     return float64_muladd(b, c, a, float_muladd_negate_product,
-                           &env->fp_status);
- }
- 
- float32 HELPER(msub_s)(CPUXtensaState *env, float32 a, float32 b, float32 c)
- {
--    set_use_first_nan(env->config->use_first_nan, &env->fp_status);
-+    xtensa_use_first_nan(env, env->config->use_first_nan);
-     return float32_muladd(b, c, a, float_muladd_negate_product,
-                           &env->fp_status);
- }
- 
- float64 HELPER(mkdadj_d)(CPUXtensaState *env, float64 a, float64 b)
- {
--    set_use_first_nan(true, &env->fp_status);
-+    xtensa_use_first_nan(env, true);
-     return float64_div(b, a, &env->fp_status);
- }
- 
- float32 HELPER(mkdadj_s)(CPUXtensaState *env, float32 a, float32 b)
- {
--    set_use_first_nan(env->config->use_first_nan, &env->fp_status);
-+    xtensa_use_first_nan(env, env->config->use_first_nan);
-     return float32_div(b, a, &env->fp_status);
- }
- 
- float64 HELPER(mksadj_d)(CPUXtensaState *env, float64 v)
- {
--    set_use_first_nan(true, &env->fp_status);
-+    xtensa_use_first_nan(env, true);
-     return float64_sqrt(v, &env->fp_status);
- }
- 
- float32 HELPER(mksadj_s)(CPUXtensaState *env, float32 v)
- {
--    set_use_first_nan(env->config->use_first_nan, &env->fp_status);
-+    xtensa_use_first_nan(env, env->config->use_first_nan);
-     return float32_sqrt(v, &env->fp_status);
- }
- 
+     switch (r) {
+     case float_relation_equal:
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 226632a4d10..8bc95187178 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -404,11 +404,9 @@ static int pickNaN(FloatClass a_cls, FloatClass b_cls,
+     || defined(TARGET_RISCV) || defined(TARGET_SH4) \
+     || defined(TARGET_TRICORE) || defined(TARGET_ARM) || defined(TARGET_MIPS) \
+     || defined(TARGET_LOONGARCH64) || defined(TARGET_HPPA) \
+-    || defined(TARGET_S390X) || defined(TARGET_PPC) || defined(TARGET_M68K)
++    || defined(TARGET_S390X) || defined(TARGET_PPC) || defined(TARGET_M68K) \
++    || defined(TARGET_SPARC)
+         g_assert_not_reached();
+-#elif defined(TARGET_SPARC)
+-        /* Prefer SNaN over QNaN, order B then A. */
+-        rule = float_2nan_prop_s_ba;
+ #elif defined(TARGET_XTENSA)
+         /*
+          * Xtensa has two NaN propagation modes.
 -- 
 2.34.1
 
