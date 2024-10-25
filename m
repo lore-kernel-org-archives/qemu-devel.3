@@ -4,96 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65CA2D10399
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 15:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 034D2D0BB56
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 15:37:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4MID-0008FR-CX; Fri, 25 Oct 2024 11:32:01 -0400
+	id 1t4MN9-000184-2t; Fri, 25 Oct 2024 11:37:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t4MIB-0008F5-Mp; Fri, 25 Oct 2024 11:31:59 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t4MIA-0001I7-7n; Fri, 25 Oct 2024 11:31:59 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DAB199C2F8;
- Fri, 25 Oct 2024 18:31:22 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DB9A015D37E;
- Fri, 25 Oct 2024 18:31:55 +0300 (MSK)
-Message-ID: <e4e1507d-26c7-4b70-9ff0-65568bc7813c@tls.msk.ru>
-Date: Fri, 25 Oct 2024 18:31:55 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t4MN7-00017f-Ru
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:37:05 -0400
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t4MN5-0001un-VM
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:37:05 -0400
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-539983beb19so2801277e87.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 08:37:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729870621; x=1730475421; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xdTpAh/H4IE8xw4sTZvG5a2N+FOfeO8fbZ3W37DlIhI=;
+ b=hzPV8mH+PF+B9/52S/LsNQ0lfMppyUQaboTz0fUPOyMJYNrn81PcGbBjpFJ0AvtvIA
+ 0/z8jMSvC32VPbKSrrxuQaEXH16Hw9ZKFWabaxQIfkI05omvUX5bGIV/v4GOKJjxL2ey
+ FIxukaoZatPuihX1aRbHlAYUc21IarhOwWfUT9bm1BFFj4WSvJQL2slA6KuDXqSSH2+G
+ a14mHQqVllDUjO+8jEtdrvMg7xJPKNoxgo51Q7KPpVApofAOzpb5W3Hh3QpkfZc9mKtN
+ mFvi8xpADtPg2d9iF2ns6O7EVX79e47YObC9hzYBob3wQbvZZuNVY281PRIfSAMspqjZ
+ 30Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729870621; x=1730475421;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xdTpAh/H4IE8xw4sTZvG5a2N+FOfeO8fbZ3W37DlIhI=;
+ b=t5eLZBdBs9fcH33JqxGqb1u5Dlf7MkKtGibHDq85LYEZnK1qJnX8uUt/GD4JLaZm1i
+ DnX0T/jVNufMR6qpHqMVrdoL0PxQWU/WV2Zxk3eLD4iVIfavE44cHo1zY7nWX9L6eckV
+ EPRZpD1WAmYZBr+zBmIFMHrlCSa5Vlzs9eirpSg3W6bwq5KOHEk3mZ56PzHBpDh3yWdH
+ d8PFeG//4gXowJKBiBQh8ZAdpCdy2qEYzGgZlwH3ySNy2Jn6NYxcG5XOR3yo3/WqM0Bt
+ GDLrjf3q83bT1saf/mHuwWW7mVgqT/Vx8pCiCFjuUGgb/J0ONzrQoK8gAPom6RWJHNFS
+ XnBg==
+X-Gm-Message-State: AOJu0YzKXTTB4d2Qtyit2sPfdJPT1BM93S3ZscyFUAT0EsVHfEY9upx7
+ RfOcWqqh7q/BEAUqwvSAYpPW4A9JWZ4DVudM2i9prxkqzG3Ouxxnfx+CQtO2sTg=
+X-Google-Smtp-Source: AGHT+IE9VotOM9qqqlLKtbos0qW5oITXh6gBZN0gP5FETpItu8bPHdYkVWa7zVxW+oKPp2NSbp9QwA==
+X-Received: by 2002:a05:6512:b1e:b0:536:54e9:3a63 with SMTP id
+ 2adb3069b0e04-53b1a375b25mr5997559e87.49.1729870621429; 
+ Fri, 25 Oct 2024 08:37:01 -0700 (PDT)
+Received: from [192.168.5.26] ([85.9.250.243])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43193594fe7sm20901655e9.14.2024.10.25.08.37.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Oct 2024 08:37:01 -0700 (PDT)
+Message-ID: <b45d04e1-b6f5-4b70-a59d-3df4320b8b07@linaro.org>
+Date: Fri, 25 Oct 2024 16:36:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] target/i386/tcg: Use DPL-level accesses for
- interrupts and call gates
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, rrh.henry@gmail.com, richard.henderson@linaro.org, 
- qemu-stable <qemu-stable@nongnu.org>
-References: <20240710062920.73063-1-pbonzini@redhat.com>
- <20240710062920.73063-8-pbonzini@redhat.com>
- <806baf9d-5549-4298-99e7-f50fdf69f99d@tls.msk.ru>
- <c82f5323-9fa8-4c65-83dd-fbfa38d26f4b@tls.msk.ru>
- <CABgObfb7aoChrq=TgUqfjTkPMxhbeoW70EYFq188hUcsdUT-zA@mail.gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <CABgObfb7aoChrq=TgUqfjTkPMxhbeoW70EYFq188hUcsdUT-zA@mail.gmail.com>
+Subject: Re: Ping: [PATCH v2 1/2] linux-user: Map low priority rt signals
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Brian Cain <bcain@quicinc.com>,
+ "ltaylorsimpson@gmail.com" <ltaylorsimpson@gmail.com>
+References: <20240212205022.242968-1-iii@linux.ibm.com>
+ <20240212205022.242968-2-iii@linux.ibm.com>
+ <2afc8b53-5a35-482c-aa89-c61a882cedf0@linaro.org>
+ <6d3832490ebc7abc62652c9be1d27a70c5d7551c.camel@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <6d3832490ebc7abc62652c9be1d27a70c5d7551c.camel@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,19 +103,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-25.10.2024 18:28, Paolo Bonzini wrote:
-
-> Hi! No, this is totally ok for 9.1.x; it missed 9.1 but it was already
-> submitted back then and it's okay to apply it there.
+On 10/25/24 10:32, Ilya Leoshkevich wrote:
+> On Tue, 2024-02-13 at 07:51 +0100, Philippe Mathieu-Daudé wrote:
+>> Cc'ing Brian & Taylor
+>>
+>> On 12/2/24 21:45, Ilya Leoshkevich wrote:
+>>> Some applications want to use low priority realtime signals (e.g.,
+>>> SIGRTMAX). Currently QEMU cannot map all target realtime signals to
+>>> host signals, and chooses to sacrifice the end of the target
+>>> realtime
+>>> signal range.
+>>>
+>>> Change this to the middle of that range, hoping that fewer
+>>> applications
+>>> will need it.
+>>>
+>>> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>>> ---
+>>>    linux-user/signal.c | 18 +++++++++++++-----
+>>>    1 file changed, 13 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/linux-user/signal.c b/linux-user/signal.c
+>>> index d3e62ab030f..a81533b563a 100644
+>>> --- a/linux-user/signal.c
+>>> +++ b/linux-user/signal.c
+>>> @@ -511,13 +511,14 @@ static int core_dump_signal(int sig)
+>>>    
+>>>    static void signal_table_init(void)
+>>>    {
+>>> -    int hsig, tsig, count;
+>>> +    int hsig, hsig_count, tsig, tsig_count, tsig_hole,
+>>> tsig_hole_size, count;
+>>>    
+>>>        /*
+>>> -     * Signals are supported starting from TARGET_SIGRTMIN and
+>>> going up
+>>> -     * until we run out of host realtime signals.  Glibc uses the
+>>> lower 2
+>>> -     * RT signals and (hopefully) nobody uses the upper ones.
+>>> -     * This is why SIGRTMIN (34) is generally greater than
+>>> __SIGRTMIN (32).
+>>> +     * Signals are supported starting from TARGET_SIGRTMIN and up
+>>> to
+>>> +     * TARGET_SIGRTMAX, potentially with a hole in the middle of
+>>> this
+>>> +     * range, which, hopefully, nobody uses. Glibc uses the lower
+>>> 2 RT
+>>> +     * signals; this is why SIGRTMIN (34) is generally greater
+>>> than
+>>> +     * __SIGRTMIN (32).
+>>>         * To fix this properly we would need to do manual signal
+>>> delivery
+>>>         * multiplexed over a single host signal.
+>>>         * Attempts for configure "missing" signals via sigaction
+>>> will be
+>>> @@ -536,9 +537,16 @@ static void signal_table_init(void)
+>>>        host_to_target_signal_table[SIGABRT] = 0;
+>>>        host_to_target_signal_table[hsig++] = TARGET_SIGABRT;
+>>>    
+>>> +    hsig_count = SIGRTMAX - hsig + 1;
+>>> +    tsig_count = TARGET_NSIG - TARGET_SIGRTMIN + 1;
+>>> +    tsig_hole_size = tsig_count - MIN(hsig_count, tsig_count);
+>>> +    tsig_hole = TARGET_SIGRTMIN + (tsig_count - tsig_hole_size) /
+>>> 2;
+>>>        for (tsig = TARGET_SIGRTMIN;
+>>>             hsig <= SIGRTMAX && tsig <= TARGET_NSIG;
+>>>             hsig++, tsig++) {
+>>> +        if (tsig == tsig_hole) {
+>>> +            tsig += tsig_hole_size;
+>>> +        }
+>>>            host_to_target_signal_table[hsig] = tsig;
+>>>        }
+>>>    
 > 
-> On the other hand, Richard wrote some large cleanup patches to enable
-> this relatively small patch. The bug has been there for many years, we
-> can keep it in 9.0.x and earlier.
+> Ping.
+> 
+> I wonder if it would make sense to make this configurable?
 
-Aha. That makes good sense.
+There are plenty of IPC use-cases for which we need a consistent mapping of guest signals. 
+  Because we must steal some for emulation, we cannot give the guest the full set.  But 
+you're right that different applications allocate the rt signals differently, and 
+arbitrarily nixing the highest signal numbers may be problematic.
 
-Thank you for the follow-up and for clearing my confusion :)
+Nixing the middle rt signals seems equally problematic, so some sort of configuration 
+seems the only solution.  Perhaps we could come up with some generalized mapping?
 
-/mjt
+
+r~
+
+
+  perhaps a generalized mapping
+
 
 
