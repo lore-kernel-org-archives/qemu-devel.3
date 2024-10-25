@@ -4,44 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED637D0C5F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 09:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D499D0C5F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 09:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4GlG-0000b0-9X; Fri, 25 Oct 2024 05:37:38 -0400
+	id 1t4Gqe-0003Sn-Dc; Fri, 25 Oct 2024 05:43:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@jedlik.phy.bme.hu>)
- id 1t4GlE-0000ak-9q
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 05:37:36 -0400
-Received: from jedlik.phy.bme.hu ([152.66.102.83])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4GqS-0003PF-T2
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 05:43:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@jedlik.phy.bme.hu>)
- id 1t4Gl9-0002yK-6F
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 05:37:36 -0400
-Received: by jedlik.phy.bme.hu (Postfix, from userid 1000)
- id 4AAE7A0128; Fri, 25 Oct 2024 11:30:15 +0200 (CEST)
-Date: Fri, 25 Oct 2024 11:30:15 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Lei Huang <Lei.Huang@amd.com>
-cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org, 
- pierre-eric.pelloux-prayer@amd.com, ken.xue@amd.com
-Subject: Re: [PATCH] ui/sdl: Mouse event optimization
-In-Reply-To: <20241025065205.1222-1-Lei.Huang@amd.com>
-Message-ID: <alpine.LMD.2.03.2410251127250.22275@eik.bme.hu>
-References: <20241025065205.1222-1-Lei.Huang@amd.com>
-User-Agent: Alpine 2.03 (LMD 1266 2009-07-14)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4GqN-00047N-Tf
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 05:42:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729849374;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=EGXu5CBuE8xwKZlIqcgq1tN+U8GgEV5+6D9N6jIde4E=;
+ b=ellBGuPtoTC4BWtZYtDyseMJrGM6TeJGTkcrnWDTbo9VjT7Cvl+DsBY3T7hPHzYm2/6MIj
+ PT7Ptv9IA2ADes3eN6Ham7OTRtqcPFMngY852ctKLY/ZDeEdm+v8LT+MziUrn7fZZDpzjv
+ gkwWzmWkVdB2MQttd+ADSqngGdx4dI8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-496-UR_rfZ_lNOa1DRyVAlL9IQ-1; Fri, 25 Oct 2024 05:42:51 -0400
+X-MC-Unique: UR_rfZ_lNOa1DRyVAlL9IQ-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37d59ad50f3so992673f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 02:42:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729849370; x=1730454170;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EGXu5CBuE8xwKZlIqcgq1tN+U8GgEV5+6D9N6jIde4E=;
+ b=aQdni34Tr4xxBcFZbuYJ+j2VTn8tIEEXrUOSxXebxHgzNnMY1rxk2DU2jOeHirED4C
+ aOBZ/ZAGFa9jrpgqfXzinNyORQ7ERZnzrLg7TstDUJwreIT4ybJJj6hgc0JPmbz+FYps
+ 58CNSiICA2Ue9yzgCLhujBSKGGw9d775BoDd0AHbjO+BzR9oh+yhkPaeH39wbXGBS9xl
+ TTnnSdHo7A+t+78nohFmdp3iZTpYcDykzX9AakPjMGlSyWGPrRUyLfc7NpsF4RmCl3I/
+ AGraBWIkNfNs+/ivlp97mtC2kq6KOhBggZ/TR57rn6eoo8PrkoVOSYinN9nezEF2nAal
+ YAxA==
+X-Gm-Message-State: AOJu0YyeAEMB3gU86obLmaEUtQckxGeSYjLVqiEYy3WyZDWqivEUpFM8
+ IpeBUQhLYRppG1KtvPmS1mdmmzGh4dpxlLzu5qV2gaZEOx2xqMkhQ3wCo65r3K34KK86sR0uZwz
+ AQzQ5C3j3GEpXCMoaphI7uZrKVBpCWDX7T25mHSGUI9eBXw8MUZJWIw366+iXBFRPVPqXVKr+jz
+ RXAod7aAgSxoYWwOk6AP9tB4rBwubDWSJgj7np5bk=
+X-Received: by 2002:a5d:4b4f:0:b0:37d:4ba1:dcff with SMTP id
+ ffacd0b85a97d-380458b5eb2mr3538761f8f.42.1729849370127; 
+ Fri, 25 Oct 2024 02:42:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERX/bo/0f21aLEXfvAPl5NBOxWmLHZ0+WaXsTgB9TIYC9J0x3x0l21TrPqurmgSXYW6o6/qw==
+X-Received: by 2002:a5d:4b4f:0:b0:37d:4ba1:dcff with SMTP id
+ ffacd0b85a97d-380458b5eb2mr3538745f8f.42.1729849369718; 
+ Fri, 25 Oct 2024 02:42:49 -0700 (PDT)
+Received: from [192.168.10.3] ([151.95.99.171])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38058b71406sm1065728f8f.84.2024.10.25.02.42.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Oct 2024 02:42:49 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: manos.pitsidianakis@linaro.org
+Subject: [PATCH] rust: do not always select X_PL011_RUST
+Date: Fri, 25 Oct 2024 11:42:48 +0200
+Message-ID: <20241025094248.152556-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.102.83;
- envelope-from=balaton@jedlik.phy.bme.hu; helo=jedlik.phy.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -57,85 +99,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 25 Oct 2024, Lei Huang wrote:
-> Use a convergence factor to make the VM's input
-> global coordinates more closely approach the global
-> coordinates of DOM0.
+Right now the Rust pl011 device is included in all QEMU system
+emulator binaries if --enable-rust is passed.  This is not needed
+since the board logic in hw/arm/Kconfig will pick it.
 
-Dom0 is some Xen terminology. Do you mean "host" which is more often used 
-in QEMU?
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/hw/char/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-> Change-Id: I2c3f12f1fe7dfb9306d1fc40c4fd4d299937f4c6
-> Signed-off-by: Lei Huang <Lei.Huang@amd.com>
-> ---
-> ui/sdl2.c | 32 ++++++++++++++++++++++++++++++--
-> 1 file changed, 30 insertions(+), 2 deletions(-)
->
-> diff --git a/ui/sdl2.c b/ui/sdl2.c
-> index bd4f5a9da14..8f504dd8727 100644
-> --- a/ui/sdl2.c
-> +++ b/ui/sdl2.c
-> @@ -303,6 +303,34 @@ static void sdl_mouse_mode_change(Notifier *notify, void *data)
->     }
-> }
->
-> +/*
-> + *guest_x and guest_y represent the global coordinates on the VM side,
-> + *while x and y represent the global coordinates on the dom0 side.
-> + *The goal of this entire process is to align the global coordinates of
-> + *the VM with those of dom0 using dx and dy. The current approach aims
-> + *for precise calibration in once attempt; however, because guest_x
+diff --git a/rust/hw/char/Kconfig b/rust/hw/char/Kconfig
+index a1732a9e97f..5fe800c4806 100644
+--- a/rust/hw/char/Kconfig
++++ b/rust/hw/char/Kconfig
+@@ -1,3 +1,2 @@
+ config X_PL011_RUST
+     bool
+-    default y if HAVE_RUST
+-- 
+2.47.0
 
-"in one attempt" also add a space after the * at the beginning of lines.
-
-> + *and guest_y are non-zero values, they are not accurate values when
-> + *they are counted out to become negative.Therefore, achieving perfect
-> + *alignment in one attempt is impossible.Since the same calibration method
-> + *is used each time, repeated attempts cannot achieve alignment either.
-> + *By introducing a convergence factor, guest_x and guest_y can be made to
-> + *approach dom0's x and y indefinitely.
-> + *
-> + *                   QEMU                       (dx,dy)  VM
-> + *calculates dx and dy using guest_x and guest_y ---->  input driver
-> + *           ^                                            |
-> + *           |                                            |
-> + *           |                                            V
-> + *           |     update
-> + *           | guest_x,guest_y              input dispatcher ---> WindowManager
-> + *           |                                            |                 |
-> + *           |                                            |                 |
-> + *           |                 libdrm                     V                 |
-> + *       virtio-gpu  <------ drmModeMoveCursor <------ compositor <-------  |
-> + *                           (guest_x,guest_y)   calculates guest_x and
-> + *                                               guest_y dy using dx and dy
-> + */
-
-What about other display devices than virtio-gpu? Does this work with 
-those or do they need some update? If this is independent of graphics 
-device maybe add a note that virtio-gpu is an example and could be any 
-graphics device.
-
-Regards,
-BALATON Zoltan
-
-> +#define CONVERGENCE_FACTOR 3
-> static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
->                                  int x, int y, int state)
-> {
-> @@ -331,8 +359,8 @@ static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
->             y -= guest_y;
->             guest_x += x;
->             guest_y += y;
-> -            dx = x;
-> -            dy = y;
-> +            dx = x / CONVERGENCE_FACTOR;
-> +            dy = y / CONVERGENCE_FACTOR;
->         }
->         qemu_input_queue_rel(scon->dcl.con, INPUT_AXIS_X, dx);
->         qemu_input_queue_rel(scon->dcl.con, INPUT_AXIS_Y, dy);
-> -- 
-> 2.45.2
->
->
->
 
