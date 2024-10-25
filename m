@@ -4,55 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571BCD149C7
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E290D149D6
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 17:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4NS3-0002pq-53; Fri, 25 Oct 2024 12:46:15 -0400
+	id 1t4Nkf-0006b7-AA; Fri, 25 Oct 2024 13:05:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1t4NS1-0002pH-D9; Fri, 25 Oct 2024 12:46:13 -0400
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1t4NkR-0006WO-30; Fri, 25 Oct 2024 13:05:16 -0400
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1t4NRz-0001Wx-K7; Fri, 25 Oct 2024 12:46:13 -0400
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1t4NkO-0003wV-DD; Fri, 25 Oct 2024 13:05:13 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id B8DFEA42EE5;
- Fri, 25 Oct 2024 16:44:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E298C4CEC3;
- Fri, 25 Oct 2024 16:45:58 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id 49662A4315B;
+ Fri, 25 Oct 2024 17:03:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16391C4CEE3;
+ Fri, 25 Oct 2024 17:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1729874758;
- bh=U906ien2EMPmTWatB2bu+wjqopVQdTO+Rt2YDztEHG4=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Kj2wgO9Mas/izDU7bVaTQkXB8NZcxYznD1bKKETKxHp85qB8MDcRopO88FooCxU4d
- xoVlmy4AGAx5oyKZiY22AxwbuC3iOKpYi+Hr41QmCNOkUGNU44xEylkQ4NW5RUn0Ka
- p7uJhEC9FzxNKBLoN1I7aWolMzC8P9tAYhFU0wSrBXyqsVVjVvvPyiR6EXOm6LVqJr
- IhPK/87p4zEYIARCCF7da4Dg6TLGLPMHTppngkL5LP+NWJ0c5ZeMzU7bShk1w2CW76
- RVrmi6vWKhwllhZ7yF9HuudpuvoVP2aw9Pn/19xq3tvTxTzkERUyc7s6Qll970eCqg
- DRdyZeBdXm4dw==
-Date: Fri, 25 Oct 2024 10:45:55 -0600
-From: Keith Busch <kbusch@kernel.org>
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- qemu-stable@nongnu.org, Waldemar Kozaczuk <jwkozaczuk@gmail.com>
-Subject: Re: [PATCH] hw/nvme: fix handling of over-committed queues
-Message-ID: <ZxvLQ5rSQtDAfE-H@kbusch-mbp.dhcp.thefacebook.com>
-References: <20241025-issue-2388-v1-1-16707e0d3342@samsung.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241025-issue-2388-v1-1-16707e0d3342@samsung.com>
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=kbusch@kernel.org; helo=nyc.source.kernel.org
+ s=k20201202; t=1729875906;
+ bh=VAh/4/78mDGKWgIG/y/D4fuPPawGrBhwtluopSQMBjE=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=JNy0FXX4xsONOYlDh5s2CmGeGT+GDA9VoqdO1EcCSbmb6yvktqAly8Cwm+wk7/LET
+ PYPmNfTCnKP1iNCpMseKsv6qG3l5tfK4lNoHOc3D2ABCZ3+y/72XT5ysRwu45aICdf
+ izgbH7mHJiMYcf31kQiNlCOFQJsoycMKUBQZQE7WPgHSaxcToQmY1qaomaxL2qshCu
+ WYYzXNC2csxIfGDGhN/GkbNPwwetYtjAnpJZt0GEfr9hvriYH6mnoZo58CvD6VBNUa
+ fKzpqwnodvXZRAEF3Ek5kY6AiSlGVSLjErUY+SzvjuasM5WVQSjvDfaH1/XkCpZ48G
+ rz1cCwjEXmXAA==
+Received: from sofa.misterjones.org ([185.219.108.64]
+ helo=goblin-girl.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1t4NkF-006riz-RU;
+ Fri, 25 Oct 2024 18:05:04 +0100
+Date: Fri, 25 Oct 2024 18:05:03 +0100
+Message-ID: <86frok2jwg.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, cohuck@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: Re: [RFC 14/21] arm/cpu: Add sysreg generation scripts
+In-Reply-To: <20241025101959.601048-15-eric.auger@redhat.com>
+References: <20241025101959.601048-1-eric.auger@redhat.com>
+ <20241025101959.601048-15-eric.auger@redhat.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: eric.auger@redhat.com, eric.auger.pro@gmail.com,
+ cohuck@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev, peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, berrange@redhat.com,
+ abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com,
+ mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=maz@kernel.org;
+ helo=nyc.source.kernel.org
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,19 +95,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 25, 2024 at 12:50:45PM +0200, Klaus Jensen wrote:
-> @@ -1520,9 +1520,16 @@ static void nvme_post_cqes(void *opaque)
->          nvme_inc_cq_tail(cq);
->          nvme_sg_unmap(&req->sg);
-> +
-> +        if (QTAILQ_EMPTY(&sq->req_list) && !nvme_sq_empty(sq)) {
-> +            qemu_bh_schedule(sq->bh);
-> +        }
-> +
->          QTAILQ_INSERT_TAIL(&sq->req_list, req, entry);
->      }
+On Fri, 25 Oct 2024 11:17:33 +0100,
+Eric Auger <eric.auger@redhat.com> wrote:
+> 
+> Introduce scripts that automate the generation of system register
+> definitions from a given linux source tree arch/arm64/tools/sysreg.
+> 
+> Invocation of
+> ./update-aarch64-sysreg-code.sh $PATH_TO_LINUX_SOURCE_TREE
+> in scripts directory do generate 2 qemu files:
+> - target/arm/cpu-sysreg-properties.c
+> - target/arm/cpu-sysregs.h
+> 
+> cpu-sysregs.h creates defined for all system registers.
+> However cpu-sysreg-properties.c only cares about feature ID registers.
+> 
+> update-aarch64-sysreg-code.sh calls two awk scripts.
+> gen-cpu-sysreg-properties.awk is inherited from kernel
+> arch/arm64/tools/gen-sysreg.awk. All credits to Mark Rutland
+> the original author of this script.
 
-Shouldn't we schedule the bottom half after the req has been added to
-the list? I think everything the callback needs to be written prior to
-calling qemu_bh_schedule().
+You really want to be careful with this. Both the script and the
+source file describing the registers are submitted to regular outburst
+of churn (I'm currently sitting on such a series). You really have to
+be prepared to see things breaking on each import.
+
+That file has also been known to contain annoying mistakes, as it is
+all written by hand.
+
+Ideally, this would be directly generated from the ARM XML, which is a
+public set of files. However, the license attached to this package
+strictly prohibits its use in QEMU (or anywhere else). One day...
+
+Thanks,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 
