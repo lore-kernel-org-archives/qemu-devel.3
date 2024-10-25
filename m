@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD9CFD10399
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 15:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03577D10399
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 15:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4MX9-0003Jn-Mp; Fri, 25 Oct 2024 11:47:27 -0400
+	id 1t4MaN-0004GJ-KS; Fri, 25 Oct 2024 11:50:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t4MX7-0003JV-LF
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:47:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1t4MaH-0004FU-NH; Fri, 25 Oct 2024 11:50:42 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t4MX5-0002zU-MY
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:47:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729871241;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vdRa0lNDzbbAsouR2soEg0+zUvmQMiqrb985I59ljhY=;
- b=K0cor0kygTCoYrGxJNAT7gyav3GE7boFLsB7yXDPsLEOhCO2eGpIYgOZTxl0Npa/pCMj8b
- lTAqsuV6NTRpHNKhw6qlYQ402HFtFIV2dMnyR+8ZCb1ZIx13PDRpqhj2Q1tKpX73aZ+9Yr
- gqcTyrDzGQ8Y8JvO5QHuFoWWhMiIBRw=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-4BDOhT2nNvmlJGDEySzyzA-1; Fri, 25 Oct 2024 11:47:19 -0400
-X-MC-Unique: 4BDOhT2nNvmlJGDEySzyzA-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6cbe6ad0154so26563636d6.0
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 08:47:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729871239; x=1730476039;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vdRa0lNDzbbAsouR2soEg0+zUvmQMiqrb985I59ljhY=;
- b=n7Jf2LMynKS/M5JVLYGncPS3h0nAd2nwNoy7nIYa1R7pgOI/Xa1U8Xdnq3SG+XYfr2
- k/YtobkrGcwYDNZP+B6tpxLUHqPW/ml2Hx1vlGINm2nyTgsCsiKxygdgXXXqrh/tOP33
- N9/jZY3bmhJ5v/wjNybm17S6+3T62nfSr97Wm+Eledrxnh2kSc4o4lpmnkkg5/fVG63E
- W9iEJSK1Oz/M8COi+/xNiG/RkkMrz2Bzjx5Nx2cdZgYG4Y2Gw5FOVhrTyGw1+b5tBevc
- Sja6y6hXOKGFVipQrsEuxw6ITD/Y0bctuK/6f5c69MS2v4C7WDA2zIYAuI+G+RUa9kqy
- nrPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUR49GBeEyuRWtLGhyurM/aP8SxOBFsKBrMipDmpfzS2ts2txGKYg3FWBPkvWEN1GIzLe0LcfBYjAgB@nongnu.org
-X-Gm-Message-State: AOJu0Yw4NjfT4RWvHIMM2z9MEnVisRXkd13VIjnzojr1tAyqCjiOMvya
- Iso1yVHx/7hQ/63HKbVcl3hfPb5GUGdyFbZywMuf2xMzxKbcdlt/cDyE6iODMJiLg7/FLBBHkOD
- S0S+xdKQMc3OmLZCs9AHSzl+6mcEdSFGg0i/0Aw3sKFgR/6dCUU6N
-X-Received: by 2002:a05:6214:4687:b0:6cb:eb51:a26a with SMTP id
- 6a1803df08f44-6ce342ec6b5mr170070356d6.47.1729871239163; 
- Fri, 25 Oct 2024 08:47:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEBMqwGVuFGAgwJQhvcyEjjz0k36ehHB/ztx7Or21J+cx8XxlSW4WRwX83y93yhPHPHvKxugw==
-X-Received: by 2002:a05:6214:4687:b0:6cb:eb51:a26a with SMTP id
- 6a1803df08f44-6ce342ec6b5mr170069966d6.47.1729871238760; 
- Fri, 25 Oct 2024 08:47:18 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d1799fd524sm6738626d6.94.2024.10.25.08.47.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Oct 2024 08:47:18 -0700 (PDT)
-Date: Fri, 25 Oct 2024 11:47:15 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- "Daniel P. Berrange" <berrange@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: cpr-transfer with caveats
-Message-ID: <Zxu9g_pZo1KdBl3S@x1n>
-References: <87b1beba-4e03-45c7-b6ce-2772dcb117d1@oracle.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1t4MaF-0003OY-Ai; Fri, 25 Oct 2024 11:50:41 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 155229C306;
+ Fri, 25 Oct 2024 18:50:02 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1A60D15D395;
+ Fri, 25 Oct 2024 18:50:35 +0300 (MSK)
+Message-ID: <53c424e6-dc51-4b87-b0fc-11c0703b5416@tls.msk.ru>
+Date: Fri, 25 Oct 2024 18:50:35 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87b1beba-4e03-45c7-b6ce-2772dcb117d1@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] target/arm: Fix arithmetic underflow in SETM
+ instruction
+To: Ido Plat <ido.plat1@ibm.com>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, qemu-stable <qemu-stable@nongnu.org>
+References: <20241025024909.799989-1-ido.plat1@ibm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20241025024909.799989-1-ido.plat1@ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,63 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 25, 2024 at 11:01:27AM -0400, Steven Sistare wrote:
-> Hi Peter, are you OK if we proceed with cpr-transfer as is, without the
-> precreate phase?  Here are the problems that motivated it:
+25.10.2024 05:48, Ido Plat wrote:
+> Pass the stage size to step function callback,
+> otherwise do_setm would hang when size is larger then page size because stage size would underflow.
+> This fix changes do_setm to be more inline with do_setp.
 > 
-> * migration test wants to enable migration events on the dest.
->   fix: enable on dest qemu using -global.  only for the test.
-
-If it's to be documented that cpr-transfer allows no migration parameter /
-cap setup, then the test case should follow, IMHO, rather than enabling
-anything from cmdline.
-
-I hope that's trivial if we can have MigrateCommon.disable_events, for
-example, then only cpr selects it.
-
+> Fixes: 0e92818887dee ("target/arm: Implement the SET* instructions")
+> Signed-off-by: Ido Plat <ido.plat1@ibm.com>
+> ---
+>   target/arm/tcg/helper-a64.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> * migration test needs to fetch the dynamically assigned migration
->     listen port number
->   Fix: require unix domain socket for cpr-transfer, or a fixed port
->   number. Document it.
+> diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+> index 56b431faf5..8f42a28d07 100644
+> --- a/target/arm/tcg/helper-a64.c
+> +++ b/target/arm/tcg/helper-a64.c
+> @@ -1348,7 +1348,7 @@ static void do_setm(CPUARMState *env, uint32_t syndrome, uint32_t mtedesc,
+>       /* Do the actual memset: we leave the last partial page to SETE */
+>       stagesetsize = setsize & TARGET_PAGE_MASK;
+>       while (stagesetsize > 0) {
+> -        step = stepfn(env, toaddr, setsize, data, memidx, &mtedesc, ra);
+> +        step = stepfn(env, toaddr, stagesetsize, data, memidx, &mtedesc, ra);
+>           toaddr += step;
+>           setsize -= step;
+>           stagesetsize -= step;
+This also seems to be:
 
-Fixed port is probably not a good idea.. requires unix sockets looks fine.
+Cc: qemu-stable@nongnu.org
 
-But then again the whole point previously having -cpr-uri together with
--incoming (IIRC, from your previous email) is to have that flexibility to
-use non-unix too.  Now I am not sure whether it is still needed to be
-separate just that you'll still need to rely on SIGHUP just because
-precreate is gone.
+(Cc'ed now, there's no need to add it again).
 
-> 
-> * migration test hangs connecting to the qtest socket.
->   fix: in the qtest code, defer connection.
+Please let me know if it shouldn't.
 
-Not sure how much change here, hopefully still manageable.
+Thanks,
 
-From use case POV shouldn't be a huge issue, if we don't use -qtest in
-production anyway.
-
-> 
-> Document that one cannot set migration caps or params on the dest
-> for cpr-transfer.
-
-This also needs to be reviewed by Dan, on impact of Libvirt initiating the
-dest QEMU instance with QMP all dead before a "migrate" on src.  I'm not
-sure whether Libvirt will also do early setup like what our qtest does to
-enable events and so on, assuming QMP available since the start.
-
-> 
-> Document that for -incoming defer, mgmt must send the migrate command
-> to the src first (so dest reads cpr state and progresses to start the
-> monitor), then send the hotplug monitor commands to the dest.
-> 
-> Daniel, are you OK with that last bit?
-> 
-> - Steve
-> 
-
--- 
-Peter Xu
-
+/mjt
 
