@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C881D149E8
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 19:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6358D149E7
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 19:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Pq1-0007G6-ON; Fri, 25 Oct 2024 15:19:11 -0400
+	id 1t4PvV-0008E4-UK; Fri, 25 Oct 2024 15:24:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4Ppt-0007F2-Qf
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:19:02 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4PvU-0008Dt-SX
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:24:48 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4Pps-0003oo-5J
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:19:01 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-20cbcd71012so24115005ad.3
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 12:18:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4PvT-0004GA-7N
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:24:48 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-7db90a28cf6so2263987a12.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 12:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729883938; x=1730488738; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729884285; x=1730489085; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MJ9QNAuL6b1gV3z/ZNgXMFXPDD7bVHBcciFaACkVTRc=;
- b=JCRuNcTx2dyyFkT0J9AGDOm4l6nreTjpcyWppJbC1crLmrwZRWZXI5KWj3QlqIUd7b
- 2lS82GyITLaH/rz6Z4pEO/hcfkxw/CgNuayzDNCqxMDqyzbDHLPMNXVrkBev2CtsUWIE
- AI5tG7wCqXpQpRAbUpkRp8K2bWOF34Q+vpLI/XXLWJ8Zy7APitsbpdZzULnx9kYQb0bn
- pbzKcpND9wUDjNDBXFOONbao5iuPfXBaIBwGqZhAN4eD9wNPcfWmSeF8XUsZMEK9vr7t
- sEH5yGwsazHZxMe63Sq3kDgFDwL2mGA9SMjtd8yINB6SyGWexKF6GsjXB8cGzTaHx2UU
- ELPw==
+ bh=Y5LVtIeT5NcYZHzsC3p86uvBJjN2DUE9T4e1FCYL0vk=;
+ b=RMm6/oqR0hkeNP0AQNpdpWhIEuz8nc6wtvHrRaey24kjA2uK6vOTQ3wyhoG9DjZs9i
+ UbEnKAPEf4iImmZ3dISwwrgebwflpvMOGPc41fwg18P2Ix2bnf/wzQR2FhNY/TyUU8IQ
+ OBe2NUZkpHtUVxXVzq/2lKWFnemvLQl384wjQjzovHTk56leRgPq99SxYyd81NyGUiAO
+ gcvmgYYUy1vFoKSMIr5yDiwCRKvtGkbNUaXgKHKmGN+kasWgCwZiB1fBauaxFU5xey24
+ EWMbksi9k0JvZSvPGJ67R5Do5daFiCP/sXdA+9+LeYoQrP9hpd6h8EECdLH29uTBZkjo
+ vC9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729883938; x=1730488738;
+ d=1e100.net; s=20230601; t=1729884285; x=1730489085;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MJ9QNAuL6b1gV3z/ZNgXMFXPDD7bVHBcciFaACkVTRc=;
- b=kvZzpyGz9pQLf4CQ/+RRZBJUJZ2trXMp+CwbYPDUlyTVuppVwQ2B7iVbuIItEyeJW2
- r2iaNLJItIVuIgmZU5iXnQpvVcUFx+xT7TpZQY6kMDzaUJk15dTj2J6NbZ0Why6mam7A
- JNuub2/joYfQ2gfe15jkk5JpMvAkFUaTrPhuuFrUtr5HInnNFUzbwESOtFCQk4Jd1UYf
- 70nw2KSreDuTIlK8MGrey9++O4w4BUfQBFcxJfJqN44cK17cp8DMlRMqTekmIApWNdz+
- lPa9hsxnxwEMI8kP7cdxIRqOr7mDOw/FneC6lGInTePbKuIQP/JHwHC9/UtKfaR/9/oT
- ZnLA==
+ bh=Y5LVtIeT5NcYZHzsC3p86uvBJjN2DUE9T4e1FCYL0vk=;
+ b=M7JE2gTtitmYas//MgEZRA4rtkvS949rsoEuMXU57zI0mJtx5kppj9aE7Ah10aDgB7
+ nm2TEs7sl2KiKqCfJUFRwMaGwURlpOJnRjYONbfZsvCbrUmEFtwDJyg14sbvkeluXUuf
+ d8ZtE+QGsqPlmlKMi1kXXvmNCeJSkTOfaO//XiV5ReXEELxLjHXVlulTdGvMYTmxH7CN
+ /BtXDviBba/ZFJ0u2w1MT/1JzRgWmebEfGnrN9jwqatBuqATO+vKW10cmbDgxMwv3vJ0
+ PlkeADBRu3i0B6+D/heWnVEV4k8qj8W0c9/Lz6DmDeL9Gv4ga8JXKBoJeQbElucnuCgo
+ r7KQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTONqiUQoq1bdq5q5ThK4G8aliEzG3V5FdIeeTPy+vX3XSZfCpdJfMCnNhjlKOYHGCowWR7rMGP5uj@nongnu.org
-X-Gm-Message-State: AOJu0YypNo7UGsxt3WKHUDC7SRugyhSYOHJeAfN/mt+C6Fz3hKxeCxI9
- 8wCFCiSIRQR58vB9Lo14dsPB6XbsTvlAP2pzl102ld3+FptanQ5esqnMqmJ71tQ=
-X-Google-Smtp-Source: AGHT+IHiXmjKJc5yZp8uu3GMXyWTMIcQvlpAYFP+Q4xBFBajCMTnCUODTqAN1Dda2sCelvZWcekfEw==
-X-Received: by 2002:a17:90b:3e82:b0:2e5:5e55:7f18 with SMTP id
- 98e67ed59e1d1-2e8f107b9efmr463009a91.24.1729883938228; 
- Fri, 25 Oct 2024 12:18:58 -0700 (PDT)
+ AJvYcCWJ7pC97Sn/HEYmvpSp3LEBcPn6qGBdUzAsdAOVHtI8J5QD9M/KR+/zWdI0oeCDgQ9rfTatcFeN7+e9@nongnu.org
+X-Gm-Message-State: AOJu0Yw6F1ZV+3wMBd30kgVtW2/LCdKiOrElZFrE8i+pCQ1cpEPSoLe6
+ cx/Ru7I/POkIpiony8AGFT7lduZ/Tm5VzwCSWCY3XfVrEVdF1f4fRSSnSQWceeQ=
+X-Google-Smtp-Source: AGHT+IFd2Zaie8VDB5vm4hyrMAPUN8o2KZrJ1x8UiL38B5vU2ejqwwKj/8UiC/1sdr73MiGDTbluDA==
+X-Received: by 2002:a05:6a21:394b:b0:1d9:3acf:8bdd with SMTP id
+ adf61e73a8af0-1d9a767bdfamr995200637.22.1729884285461; 
+ Fri, 25 Oct 2024 12:24:45 -0700 (PDT)
 Received: from [192.168.2.252] ([201.190.186.93])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e77e4cbe79sm3896048a91.17.2024.10.25.12.18.56
+ d2e1a72fcca58-72057a0b8e2sm1428279b3a.102.2024.10.25.12.24.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 12:18:57 -0700 (PDT)
-Message-ID: <1464da3f-e9ee-43e1-9b3e-c405b91e0144@linaro.org>
-Date: Fri, 25 Oct 2024 16:18:53 -0300
+ Fri, 25 Oct 2024 12:24:44 -0700 (PDT)
+Message-ID: <50dd60b2-f789-4828-9a7e-3becc6721964@linaro.org>
+Date: Fri, 25 Oct 2024 16:24:41 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/8] target/mips: Enable MSA ASE for mips32r6-generic
+Subject: Re: [PATCH v2 8/8] target/mips: Enable MSA ASE for mips64R2-generic
 To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  "cfu@mips.com" <cfu@mips.com>, "arikalo@gmail.com" <arikalo@gmail.com>,
  "peter.maydell@linaro.org" <peter.maydell@linaro.org>
-References: <AM9PR09MB485153B7CB706E188DED763484402@AM9PR09MB4851.eurprd09.prod.outlook.com>
+References: <AM9PR09MB485141F5613A7EBFC5A4A08884402@AM9PR09MB4851.eurprd09.prod.outlook.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <AM9PR09MB485153B7CB706E188DED763484402@AM9PR09MB4851.eurprd09.prod.outlook.com>
+In-Reply-To: <AM9PR09MB485141F5613A7EBFC5A4A08884402@AM9PR09MB4851.eurprd09.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,32 +98,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/10/24 10:20, Aleksandar Rakic wrote:
-> Enable MSA ASE for mips32r6-generic CPU.
-
-Commit 4b3bcd016d8 added this comment:
-
-         /* A generic CPU supporting MIPS32 Release 6 ISA.
-            FIXME: Support IEEE 754-2008 FP.
-                   Eventually this should be replaced by a
-                   real CPU model. */
-         .name = "mips32r6-generic",
-
-I'd rather we model a real mips32r6 core. Or for generic models
-enable a feature using a CLI flag, i.e.:
-   -cpu mips32r6-generic,+msa / -cpu mips32r6-generic,msa=on
-
-But this would need quite some rework.
-
-> Cherry-picked 0186e83a0613e90aff6d4c12c91cdb080d695d37
-> from https://github.com/MIPS/gnutools-qemu
+On 18/10/24 10:21, Aleksandar Rakic wrote:
+> Enable MSA ASE for mips64R2-generic CPU.
 > 
-> Signed-off-by: Aleksandar Markovic <amarkovic@wavecomp.com>
+> Cherry-picked 60f6ae8d3d685ba1ea5d301222fb72b67f39264f
+> from  https://github.com/MIPS/gnutools-qemu
+> 
 > Signed-off-by: Faraz Shahbazker <fshahbazker@wavecomp.com>
 > Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
 > ---
->   target/mips/cpu-defs.c.inc | 8 +++++---
->   1 file changed, 5 insertions(+), 3 deletions(-)
+>   target/mips/cpu-defs.c.inc | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
+> index 19e2abac82..2b707cc5a7 100644
+> --- a/target/mips/cpu-defs.c.inc
+> +++ b/target/mips/cpu-defs.c.inc
+> @@ -678,7 +678,9 @@ const mips_def_t mips_defs[] =
+>                          (2 << CP0C1_DS) | (4 << CP0C1_DL) | (3 << CP0C1_DA) |
+>                          (1 << CP0C1_PC) | (1 << CP0C1_WR) | (1 << CP0C1_EP),
+>           .CP0_Config2 = MIPS_CONFIG2,
+> -        .CP0_Config3 = MIPS_CONFIG3 | (1 << CP0C3_LPA),
+> +        .CP0_Config3 = MIPS_CONFIG3 | (1 << CP0C3_LPA) |
+> +                       (1 << CP0C3_VInt) | (1 << CP0C3_MSAP),
+> +        .CP0_Config5_rw_bitmask = (1 << CP0C5_MSAEn),
+>           .CP0_LLAddr_rw_bitmask = 0,
+>           .CP0_LLAddr_shift = 0,
+>           .SYNCI_Step = 32,
 
-Patch queued.
+We already have the I6400/I6500 which are R6 with MSA.
+
+Why would we need a non-R6 core with MSA?
 
