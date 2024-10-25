@@ -4,89 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA37D149E8
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 19:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92908D149E8
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 19:28:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4PyS-0000Wa-7J; Fri, 25 Oct 2024 15:27:52 -0400
+	id 1t4Pys-0000dU-0R; Fri, 25 Oct 2024 15:28:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t4PyK-0000W4-KX
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:27:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t4PyI-0004et-Qf
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:27:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729884460;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rDls0cIjH4+9iyTriu/WJ76sIlZRNxQ84OEiuRmJrQQ=;
- b=LZZETDqGuZtKY5zbmilHP2ELHyEUdQAo0nE6wlZvgIWWb/O2yDjyjRbeDf1szdXvvYstt7
- IEwRsl4d0Ud9ysajYnB3WyngO10RRbtE9uKK6A/YheS6YIt4XtF931zE9gktxn2lpRiGgA
- ajBXYv2eYslyqkXF9qHZL9sEuZ/bv2g=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-465-rSuomevmOCqJHZTeC608fw-1; Fri, 25 Oct 2024 15:27:35 -0400
-X-MC-Unique: rSuomevmOCqJHZTeC608fw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43157cff1d1so16866435e9.2
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 12:27:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4Pyl-0000YN-7Q
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:28:12 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4Pyi-0004h8-In
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:28:10 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-20cb7139d9dso20792815ad.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 12:28:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729884486; x=1730489286; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=30f+tu42ZCmJzPXPH3/iD203rT2cgzBRHma0eVrvkvM=;
+ b=zhWSi0O79d3xWtvdHUb9fD8gXhHxMSgjhkj/Z6UrfmujHzj7wEOvOQP5Zaf6tQZmFE
+ 0+kQazwm0LAkwwJNA9ElimsADzYNWkYn5DVg200/HJlXNhkwqq6oM9as6ANfmpqkDFZd
+ oZcTSzNN/EMfvv8IaHI/iBwkvbpBURXJHPG4HsWy4bmRzrtuupssgJtGADNMA7iKMyrv
+ 73UZAOrw2f7jvvHg1ErvL2DS8dQH6hyLRhPRlLj1TE7N0WvIygWSeSHdnLXCjJx9lnxf
+ AKKckEv2zrg5Ra6R1ZI1j0zyy9xSZHwJCutZffRIV9QmL24NeIWETDyPttOEtyWrppGw
+ uxKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729884454; x=1730489254;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rDls0cIjH4+9iyTriu/WJ76sIlZRNxQ84OEiuRmJrQQ=;
- b=ehdaQV6nY7u501DS5EiDnSr08dHooeDSzmQfgdhavkd00xaoAWYRbKrkVzWlJREEY2
- dTblV6eiqZBBvpvFCjL3HAHJDvDmgu2QwI0vuJi0pq3ymQixJzNRbN4jF5gkN/H56BGa
- 0NTy9TL42PfXl/euPVFT5JIMierpQhorcCofcfrYNLxFo7pqEN5fjPO7XSRTVJGu+GjB
- gJxmVTOwb16CSaiWvXqs1oDgK+SJZtWS7kvjnF6cnBFK+1EADJbr8SbN9tE+sq+OM2zb
- ke16ZBIZGoItSLO6fo5XqRzglIC24CPy/NdNrtfHGNRY1bbjyb07ypWdDWFcsoS2o5jB
- UPHg==
-X-Gm-Message-State: AOJu0YxmHA4ilsKnFoh8/L/N/PS2FEDpfOds9fEjZMRueXe/PDDA+aAQ
- mjjFeE46Q0YacopP2meBFymu48hGshjKe6cbTWpRMNVukCVx5+OStyErnwXcusJZ8q0A4zRoQDp
- 2tQaUtiMssyNdu/yeP7jBrPCat5SyYZbyAIqoytN9DzbzV89V/rTI+DIk1O6QKpRGg5wpavdN2Z
- 3Ll5L+clLCrSksFJVVouisDYdrBOo=
-X-Received: by 2002:a05:600c:1c1e:b0:431:5ecf:2a39 with SMTP id
- 5b1f17b1804b1-4319ad32854mr1751585e9.35.1729884454002; 
- Fri, 25 Oct 2024 12:27:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEl5RW9lkdvPi0GVfF3vLp6aJoHvaeLUrGi5vzmJkOAT75H8Gi2Pw866iUq/tKLlJw8pDwLnZhMLKRj5CqLwM0=
-X-Received: by 2002:a05:600c:1c1e:b0:431:5ecf:2a39 with SMTP id
- 5b1f17b1804b1-4319ad32854mr1751455e9.35.1729884453640; Fri, 25 Oct 2024
- 12:27:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729884486; x=1730489286;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=30f+tu42ZCmJzPXPH3/iD203rT2cgzBRHma0eVrvkvM=;
+ b=NmOY7tt8pApaVdJd78fathB8yRH/UtAjfLkbp3mk+JHpf0fcl+/Sx1V50Y6PgE4iq7
+ iuxiHs25eH+34er4CgJGoFPRewSjRqOsWLEEBBUGHdd/tIYzRUOtEt07xNH/KvnZT0Bl
+ ZswdaQqdhe1bRfA/rgTs29jXt4bi3xo/ThtSIUBeZXDH9qSikZ4oNAalbjmKhuuM5C9m
+ sAuKHau1juRzoAawr77nVo4ZI1k3PfNBQdTQbqAR2npr9awfBjR7BYnAEyjJ/8jy9UbN
+ mptD9hUVioQGz/nqzWVGqjbMILlZLyJTE/7DHcv2CbzgTpUEIThJBmqPnOgpA2wHixRn
+ txfA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVAGFxWroo+JlbknsBI+lofygFRzCJLUcbTktlxjC3Ol317mDkTGbYN8JsYREXRfJU3/CMt6OY1pOvA@nongnu.org
+X-Gm-Message-State: AOJu0Yx7PoF8idK2bA6QaKS0LzpRMlMbojpnM6jIco306c8fT+3Idv8Z
+ Rhghq1WRdiYIdzgTLmwhOuGc4JUBfwGVKqfbvSd/h95SaTBFWvcKZvHotNXU2Ug=
+X-Google-Smtp-Source: AGHT+IEeFiIxKjm1wUuW0S1AwvxqxMbO07oPOVaaEmVqkzmguq9gzyjJRfaQMsBnX6Fk4nHQBt/qGg==
+X-Received: by 2002:a17:902:f60c:b0:20c:f648:e3a7 with SMTP id
+ d9443c01a7336-210c6c7048cmr2872355ad.50.1729884486478; 
+ Fri, 25 Oct 2024 12:28:06 -0700 (PDT)
+Received: from [192.168.2.252] ([201.190.186.93])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-210bbf46373sm12828965ad.54.2024.10.25.12.28.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Oct 2024 12:28:05 -0700 (PDT)
+Message-ID: <889b9edf-16d5-4372-92fd-43190ada1c6e@linaro.org>
+Date: Fri, 25 Oct 2024 16:27:58 -0300
 MIME-Version: 1.0
-References: <20241025160209.194307-1-pbonzini@redhat.com>
- <20241025160209.194307-24-pbonzini@redhat.com>
- <8b1fc9e7-7387-4386-b759-9c15873a1bd1@linaro.org>
-In-Reply-To: <8b1fc9e7-7387-4386-b759-9c15873a1bd1@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 25 Oct 2024 21:27:22 +0200
-Message-ID: <CABgObfYtjfv0N3mwT4OzYFrcMujxmgQcsFkuRAQDOEPvx06NWA@mail.gmail.com>
-Subject: Re: [PATCH 23/23] ci: enable rust in the Debian and Ubuntu system
- build job
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, 
- Emmanouil Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, 
- Junjie Mao <junjie.mao@hotmail.com>, "P. Berrange,
- Daniel" <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000005cbd150625521cea"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/21] tests/fp: Explicitly set 2-NaN propagation rule
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, Eduardo Habkost <eduardo@habkost.net>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
+References: <20241025141254.2141506-1-peter.maydell@linaro.org>
+ <20241025141254.2141506-3-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241025141254.2141506-3-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,132 +110,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005cbd150625521cea
-Content-Type: text/plain; charset="UTF-8"
+On 25/10/24 11:12, Peter Maydell wrote:
+> Explicitly set a 2-NaN propagation rule in the softfloat tests.  In
+> meson.build we put -DTARGET_ARM in fpcflags, and so we should select
+> here the Arm propagation rule of float_2nan_prop_s_ab.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   tests/fp/fp-bench.c     | 2 ++
+>   tests/fp/fp-test-log2.c | 1 +
+>   tests/fp/fp-test.c      | 2 ++
+>   3 files changed, 5 insertions(+)
 
-Il ven 25 ott 2024, 20:55 Pierrick Bouvier <pierrick.bouvier@linaro.org> ha
-scritto:
-
-> On 10/25/24 09:02, Paolo Bonzini wrote:
-> > We have fixed all incompatibilities with older versions of rustc
-> > and bindgen.  Enable Rust on Debian to check that the minimum
-> > supported version of Rust is indeed 1.63.0, and 0.60.x for bindgen.
-> >
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >   .gitlab-ci.d/buildtest.yml | 4 ++--
-> >   1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> > index aba65ff833a..8deaf9627cb 100644
-> > --- a/.gitlab-ci.d/buildtest.yml
-> > +++ b/.gitlab-ci.d/buildtest.yml
-> > @@ -40,7 +40,7 @@ build-system-ubuntu:
-> >       job: amd64-ubuntu2204-container
-> >     variables:
-> >       IMAGE: ubuntu2204
-> > -    CONFIGURE_ARGS: --enable-docs
-> > +    CONFIGURE_ARGS: --enable-docs --enable-rust
-> >       TARGETS: alpha-softmmu microblazeel-softmmu mips64el-softmmu
-> >       MAKE_CHECK_ARGS: check-build
-> >
-> > @@ -71,7 +71,7 @@ build-system-debian:
-> >       job: amd64-debian-container
-> >     variables:
-> >       IMAGE: debian
-> > -    CONFIGURE_ARGS: --with-coroutine=sigaltstack
-> > +    CONFIGURE_ARGS: --with-coroutine=sigaltstack --enable-rust
-> >       TARGETS: arm-softmmu i386-softmmu riscv64-softmmu sh4-softmmu
-> >         sparc-softmmu xtensa-softmmu
-> >       MAKE_CHECK_ARGS: check-build
->
-> Do you think it could be valuable to have a third job for Rust with:
-> - ubuntu2204 or debian with latest rustc/cargo/bindgen, so we may detect
-> regressions when those are updated.
->
-
-Note that apart from these two jobs we have Fedora with rustup-installed
-nightly (in master) and Fedora with distro Rust tool chain (patches
-posted). Would that provide the same (or similar enough) scenario?
-
-Paolo
-
-
-> This way, we would test (2204 + min, debian + min, latest), which should
-> ensure Rust code will build correctly on older and newer systems.
->
-> Pierrick
->
->
-
---0000000000005cbd150625521cea
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il ven 25 ott 2024, 20:55 Pierrick Bouvier &lt;<a href=
-=3D"mailto:pierrick.bouvier@linaro.org">pierrick.bouvier@linaro.org</a>&gt;=
- ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On =
-10/25/24 09:02, Paolo Bonzini wrote:<br>
-&gt; We have fixed all incompatibilities with older versions of rustc<br>
-&gt; and bindgen.=C2=A0 Enable Rust on Debian to check that the minimum<br>
-&gt; supported version of Rust is indeed 1.63.0, and 0.60.x for bindgen.<br=
->
-&gt; <br>
-&gt; Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com=
-" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0.gitlab-ci.d/buildtest.yml | 4 ++--<br>
-&gt;=C2=A0 =C2=A01 file changed, 2 insertions(+), 2 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml<b=
-r>
-&gt; index aba65ff833a..8deaf9627cb 100644<br>
-&gt; --- a/.gitlab-ci.d/buildtest.yml<br>
-&gt; +++ b/.gitlab-ci.d/buildtest.yml<br>
-&gt; @@ -40,7 +40,7 @@ build-system-ubuntu:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0job: amd64-ubuntu2204-container<br>
-&gt;=C2=A0 =C2=A0 =C2=A0variables:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0IMAGE: ubuntu2204<br>
-&gt; -=C2=A0 =C2=A0 CONFIGURE_ARGS: --enable-docs<br>
-&gt; +=C2=A0 =C2=A0 CONFIGURE_ARGS: --enable-docs --enable-rust<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0TARGETS: alpha-softmmu microblazeel-softmmu =
-mips64el-softmmu<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MAKE_CHECK_ARGS: check-build<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; @@ -71,7 +71,7 @@ build-system-debian:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0job: amd64-debian-container<br>
-&gt;=C2=A0 =C2=A0 =C2=A0variables:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0IMAGE: debian<br>
-&gt; -=C2=A0 =C2=A0 CONFIGURE_ARGS: --with-coroutine=3Dsigaltstack<br>
-&gt; +=C2=A0 =C2=A0 CONFIGURE_ARGS: --with-coroutine=3Dsigaltstack --enable=
--rust<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0TARGETS: arm-softmmu i386-softmmu riscv64-so=
-ftmmu sh4-softmmu<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sparc-softmmu xtensa-softmmu<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MAKE_CHECK_ARGS: check-build<br>
-<br>
-Do you think it could be valuable to have a third job for Rust with:<br>
-- ubuntu2204 or debian with latest rustc/cargo/bindgen, so we may detect <b=
-r>
-regressions when those are updated.<br></blockquote></div></div><div dir=3D=
-"auto"><br></div><div dir=3D"auto">Note that apart from these two jobs we h=
-ave Fedora with rustup-installed nightly (in master) and Fedora with distro=
- Rust tool chain (patches posted). Would that provide the same (or similar =
-enough) scenario?</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo<=
-/div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quot=
-e"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-This way, we would test (2204 + min, debian + min, latest), which should <b=
-r>
-ensure Rust code will build correctly on older and newer systems.<br>
-<br>
-Pierrick<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000005cbd150625521cea--
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
