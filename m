@@ -4,123 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9E5D149EA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 18:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33B7BD149E8
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 18:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4P48-0001Oo-6T; Fri, 25 Oct 2024 14:29:40 -0400
+	id 1t4PPP-00038m-US; Fri, 25 Oct 2024 14:51:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1t4P46-0001OO-Ml
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 14:29:38 -0400
-Received: from mout.gmx.net ([212.227.17.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1t4P43-00069U-3H
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 14:29:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1729880971; x=1730485771; i=deller@gmx.de;
- bh=nFNxkvcPt0hriKpnHMcY3BLH0MoGeYnKZhhWRqIy/mY=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=RnjKlxEN1AGEfg9fhM3OVVPOYuwGwLC4YPNV8ki3pldl+OK8/uOvm8QY1x+qHR8N
- SkTWz5Jg4x+AcWClocv9L9A0lMBUNHJ2LsoUdpISMCbi+wvr5bYmN/X0KMmvr2uYw
- lZuiVnCtZY2r/A5du11eHIJCAubhacfYNVtJhWxrEZGgKTGQtM/ns3m+B9lkmaYcE
- /ae1nFSn2KX0qxs5lPZsr45MAID79+WuVldOgHs9FUJU0YtEpxCYE9sCOZL4Nxs0Y
- EDklXm7yN81REBhpHebW3ZqNPjrLTdCEOJgxyu9c5nH5ImhNDjWwRWAfjcsTHOrCJ
- JCV7u3af83DM4jJ80w==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MbivG-1tbp8X33RG-00qj80; Fri, 25
- Oct 2024 20:29:31 +0200
-Message-ID: <af3a5e4b-a9ae-4a1d-868e-43d6e06a6008@gmx.de>
-Date: Fri, 25 Oct 2024 20:29:31 +0200
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t4PPN-00038V-69
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 14:51:37 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t4PPI-0000TN-VW
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 14:51:34 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-71e67d12d04so1757325b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 11:51:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729882290; x=1730487090; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=niTAzSYvjIXiaYdZc8wIVbqCHQVeJdxusNu8GvZOJSU=;
+ b=t58ZAKn88nOdlu2MjDCHvt1DfuhUtv9fERh4k2tsw6a3lr3gt23clKNq44LAdKFzs+
+ zqaOStAyBQLIf9GIWNa5sdpFsX3zMZVg5/v/OtEBAHvCB8mGC8a9768Zbplw/i6AzeQd
+ 7bYf7PT4yfwMKCPzDDHQZ8b/g7THjx+KBZzZZ7lg0NSiWju+jJF9JsOG3+LpKN7ikGqG
+ k2igdk87qZzA4pezoiNHJsJ8OYHU5kTT6qy4tuZlaqewpDunqXFBscbfo6SSrxQqZBqG
+ /3SiGOc9DzFGYEVHw9Cw4vY+sACfkmuWMi4ICt+DPPxE2KdKuytf6C4SyhyXBUMWsvB4
+ BlXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729882290; x=1730487090;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=niTAzSYvjIXiaYdZc8wIVbqCHQVeJdxusNu8GvZOJSU=;
+ b=Plf9ULQkBuOisL4wekNQ6OX7zakFeBOvY+77xGDHgOOqIzPSvEWgd3HsPM7sV2WwB8
+ Amap5ez4YioeHLLtGdtucb0rY9nTTAk+Y7mOdhVV9HuHQHiiZvBK+tox5//XdzpchObI
+ Kxg59i1Zxh93ei4A1vJWf+R/RXCAkvOlTJdIMUqjv1XBsAf9D0RxflAto9bHKRnKDa7Y
+ tRv9WqWa7vYWnylSYYcBCfRiuKpmE5dhRWIjSmlDbb/+SokSkQr492nayY5+VYneo51X
+ aDHPYQEtm23FFUGdKLUgZNYeYYguHXKTXpFvAk3VHc6jxMYvbERkOIDsEHa1m/ydclei
+ WufQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXjBeeyRkSd9Rr5BqPYNYBQiiWqqOgcqOJGiEGKcU64Oo2MVldHibCRWDL4rk/8ObgHXEyqfesUiuse@nongnu.org
+X-Gm-Message-State: AOJu0YxzdXJeM0OCY0JIkwCqH41oyJRzNnFam2Xe4iHAviPhrDAuJqhG
+ Onyu+K/dnISNDs0sxgi5EGGJJHr7zUw9fqVRJxf3AArYMe0S4usq4SfmhDOYcds=
+X-Google-Smtp-Source: AGHT+IHiqHmtTUer3atTgjh8ZuJpPL+Biw07tqwwN2mwb1qOWdGGsi7hpYbjGPb8jSGIKDdB2EluGQ==
+X-Received: by 2002:a05:6a00:1890:b0:71e:6a57:7290 with SMTP id
+ d2e1a72fcca58-72062bdeaabmr807318b3a.0.1729882289850; 
+ Fri, 25 Oct 2024 11:51:29 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72057920364sm1390471b3a.5.2024.10.25.11.51.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Oct 2024 11:51:29 -0700 (PDT)
+Message-ID: <580f10bc-4d37-4ece-b9d8-496ba66b7966@linaro.org>
+Date: Fri, 25 Oct 2024 11:51:28 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/21] softfloat: Set 2-NaN propagation rule in
- float_status, not at compile time
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20241025141254.2141506-1-peter.maydell@linaro.org>
- <e5e9e5e8-febd-43bf-bfad-8932b29fdd0b@gmx.de>
- <CAFEAcA-UZbFxXRt5pzQP9Fa40DJAvuYz0_a=AEsVjUb8A3Z4nQ@mail.gmail.com>
+Subject: Re: [PATCH 22/23] dockerfiles: install bindgen from cargo on Ubuntu
+ 22.04
 Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
- HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
- r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
- CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
- 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
- dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
- Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
- GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
- aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
- 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
- ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
- FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
- uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
- uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
- REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
- qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
- iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
- gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
- Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
- qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
- 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
- dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
- rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
- UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
- eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
- ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
- dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
- lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
- 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
- xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
- wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
- fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
- Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
- l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
- RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
- BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
- Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
- XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
- MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
- FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
- 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
- ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <CAFEAcA-UZbFxXRt5pzQP9Fa40DJAvuYz0_a=AEsVjUb8A3Z4nQ@mail.gmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
+ junjie.mao@hotmail.com, berrange@redhat.com
+References: <20241025160209.194307-1-pbonzini@redhat.com>
+ <20241025160209.194307-23-pbonzini@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20241025160209.194307-23-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:b1eUfodZZnZRHHxQdiCtloXnqAYawVwGx6Ie46KYekw5XoiZtQ2
- VaprHvH/GTXkR1mcq8iqL8N0E4tNPqVjOAKofxUxkEl7TRFrbZVoxofAhAbcWt12wlDSQ6A
- lg55oa9a1gbd80wuZDfcywSHvnFER4IhjxhebLF8xC+5141pCbMwLNen4ZojWqjLpAp8mVr
- ms2vsBbsaCL1JnSUaoVIA==
-UI-OutboundReport: notjunk:1;M01:P0:8SmXNGpkxeY=;UFI7F8J/CizJIwhxjaHVxHbc8N3
- VNlELymTsPuTUrIbMVQ+HjSbo0+BFaIZe55oM7U27aVPH3dEC4dqsP+9sEh9F1zGarv7Qo5tN
- 3lfOigV/kPFUldqlNvNIecrS3giOS6Xx/tgPv0YhilOR2efQnhBYnMX+rlaLzttAoclcsR3dh
- 3AbWr0jO27qQrxqUQwSh2DouDFQFzvuWE62l5MX5faEx6Xo3tbbHNY18ssYKh4y8/VDtWt6ME
- bcLrzEhS2aFJUzAfQNZmtijao244m0B0M0t3nMAts0yeUr84ujH2vtUI93mYB3HAQwazCo5oR
- Y0C27lBHNdP/0oRKtkBMwd2X5UWBNeEsMoFKizy82BEsaQKTgSCTnnn7OGe5dF3zid5zudUiG
- z72qym1mMsxYZW3sBT0MQ9tGP513roro4M8AOvj5973yOnmseuluUj9VnwFeLgW7m6j+d1wbJ
- LUoOzcoQrk+petkemz/CM0ZOnqVQW4HA2fXZ503oqMGciND20zHlW3NaoBSe3Q0Vap8KmeYE0
- 0DL33vCCGddLKzlEix5VYQ4/BMUtT2QTYqpnCbSeWHyKjOJ2XSXoYx4t8M69FaI9HBjSRXhAB
- CPtYKQ/MGkpWkMxw9CWywKq3Tu5iHGteM4MK4jTwvGstTKFWFwN7SeVE8ZITAgare8F7OILPn
- 1qianMrr59Gtvl2RzYyu9A42SL3G6/UbOycAecFNbtcF1Jg7CEHQgn7YSbLOQZMmo5JplLTB0
- 0enlFOFKivKi1yN6idewEQ9LPtCQ0erhJIgcvuPcyYQLJZCy4SpV6WqrWqOWpq4GoTm5Ktp7e
- XgjDoZf9IYIMh2ZxlVm0ErJg==
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -137,38 +100,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/25/24 16:59, Peter Maydell wrote:
-> On Fri, 25 Oct 2024 at 15:49, Helge Deller <deller@gmx.de> wrote:
->>
->>
->> On 10/25/24 16:12, Peter Maydell wrote:
->>> A summary of those TODOs and other oddities I have noticed but not
->>> tried to tackle is:>
->>>    * hppa really ought to implement a CPU reset method
->>>    * alpha also doesn't implement CPU reset
->>
->> I used the alpha code as template to implement the hppa machine.
->> That's probably why the CPU reset method is missing for both :-)
->>
->> The TODO about implementing: ?
->>          resettable_class_set_parent_phases(rc, NULL, hppa_cpu_reset_ho=
-ld, NULL,...)...
->
-> Yes, basically. The reset method should restore all the
-> state of the CPU to what it was when QEMU started.
-> Typically you put an end_reset_fields marker in the
-> CPU state struct so you can memset() everything up to
-> that point to zero, and then manually reset anything
-> else that needs special handling.
+Hi Paolo,
 
-Thanks for the explanation!
+On 10/25/24 09:02, Paolo Bonzini wrote:
+> Because Ubuntu 22.04 has a very old version of bindgen, that
+> does not have the important option --allowlist-file, it will
+> not be able to use --enable-rust out of the box.  Instead,
+> install the latest version of bindgen-cli via "cargo install"
+> in the container, following QEMU's own documentation.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   tests/docker/dockerfiles/ubuntu2204.docker |  5 +++++
+>   tests/lcitool/mappings.yml                 |  4 ++++
+>   tests/lcitool/refresh                      | 11 ++++++++++-
+>   3 files changed, 19 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
+> index ce3aa39d4f3..245ac879622 100644
+> --- a/tests/docker/dockerfiles/ubuntu2204.docker
+> +++ b/tests/docker/dockerfiles/ubuntu2204.docker
+> @@ -149,6 +149,11 @@ ENV LANG "en_US.UTF-8"
+>   ENV MAKE "/usr/bin/make"
+>   ENV NINJA "/usr/bin/ninja"
+>   ENV PYTHON "/usr/bin/python3"
+> +ENV CARGO_HOME=/usr/local/cargo
+> +ENV PATH=$CARGO_HOME/bin:$PATH
+> +RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+> +  apt install -y --no-install-recommends cargo
+> +RUN cargo install bindgen-cli
+>   # As a final step configure the user (if env is defined)
+>   ARG USER
+>   ARG UID
+> diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+> index 9c5ac87c1c2..c90b23a00f1 100644
+> --- a/tests/lcitool/mappings.yml
+> +++ b/tests/lcitool/mappings.yml
+> @@ -1,4 +1,8 @@
+>   mappings:
+> +  # Too old on Ubuntu 22.04; we install it from cargo instead
+> +  bindgen:
+> +    Ubuntu2204:
+> +
+>     flake8:
+>       OpenSUSELeap15:
+>   
+> diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+> index 0f16f4d525c..a46cbbdca41 100755
+> --- a/tests/lcitool/refresh
+> +++ b/tests/lcitool/refresh
+> @@ -137,6 +137,14 @@ fedora_rustup_nightly_extras = [
+>       'RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli\n',
+>   ]
+>   
+> +ubuntu2204_bindgen_extras = [
+> +    "ENV CARGO_HOME=/usr/local/cargo\n",
+> +    'ENV PATH=$CARGO_HOME/bin:$PATH\n',
+> +    "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
+> +    "  apt install -y --no-install-recommends cargo\n",
+> +    'RUN cargo install bindgen-cli\n',
+> +]
+> +
+>   def cross_build(prefix, targets):
+>       conf = "ENV QEMU_CONFIGURE_OPTS --cross-prefix=%s\n" % (prefix)
+>       targets = "ENV DEF_TARGET_LIST %s\n" % (targets)
+> @@ -157,7 +165,8 @@ try:
+>                           trailer="".join(debian12_extras))
+>       generate_dockerfile("fedora", "fedora-40")
+>       generate_dockerfile("opensuse-leap", "opensuse-leap-15")
+> -    generate_dockerfile("ubuntu2204", "ubuntu-2204")
+> +    generate_dockerfile("ubuntu2204", "ubuntu-2204",
+> +                        trailer="".join(ubuntu2204_bindgen_extras))
+>   
+>       #
+>       # Non-fatal Rust-enabled build
 
-I've just sent a patch to the mailing list:
-[PATCH] target/hppa: Add CPU reset method
+Should we install the same version as the minimal one we expect (0.60, 
+in debian 12)?
 
-I tested it and it does work for me.
-If OK for you, I'd happy if you could include it in your patch
-series and adjust as needed to fix the FP initialization.
-
-Helge
+All the rest of series is focused on having fixed minimal version, and 
+this patch seems to escape this rule.
+Note: we can still install it using cargo, but just having a fixed 
+version would be better.
 
