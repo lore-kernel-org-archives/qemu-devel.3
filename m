@@ -4,141 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83A5DD149C1
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB8FD149C0
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:10:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Msb-000373-NN; Fri, 25 Oct 2024 12:09:42 -0400
+	id 1t4Mqi-0007gV-E2; Fri, 25 Oct 2024 12:07:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t4MsP-0002qs-GD
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:09:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1t4Mq2-0007Pg-P9
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:07:01 -0400
+Received: from shrimp.cherry.relay.mailchannels.net ([23.83.223.164])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t4MsN-0005PQ-Rv
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:09:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729872562;
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1t4Mq0-0005Ix-AE
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:06:58 -0400
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id A7CFCC3040;
+ Fri, 25 Oct 2024 16:06:51 +0000 (UTC)
+Received: from pdx1-sub0-mail-a233.dreamhost.com
+ (trex-8.trex.outbound.svc.cluster.local [100.103.220.31])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id 4B84BC40E0;
+ Fri, 25 Oct 2024 16:06:51 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1729872411; a=rsa-sha256;
+ cv=none;
+ b=V7qwKwXGfjoPOO1W8tPd0azPcY8dPZfet73LEYV6T+X8RyvqJP0sSqMlMfyExrkXxSEAG6
+ m3qa6S2y5adghKgfzPBHsFTmudP/6zJxjFPxWLHpJSfQiL0AxJwNVlYakZncMG4NysqfJt
+ Ved/UHfCY+n7SwIXc2O8VxeFzBj8MWt0uCbjEixrrkKLmFxGiw6x0DrxjLF4BcaSvDu5ev
+ ge6MWg0Rkc7s7N4rD8p5AbGJhhUli0Loskp9P50xfROk222yp8lLb4basuMdxFnPcClypM
+ crCIx/0K/dYgs9wX3BGCcho7z25FhgG1Xy54P9U1s2h8M8OkK0taOJ1piolXsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1729872411;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3d3atI9RzcNoaopQtlnwLcsKduUq0PvI7XHn79LYRYQ=;
- b=TY5ARnNxSqpCvpsvYcxNXC5K2HsTgUpJIS64/dxHmfkbiGziabPA0cUJVAq0oBSoYb9o0i
- w5JaK2m9KTDIykHCAojYLmSAJOHPv00pJ7yG4E44Wb7n6Aey27wI6fliLeJI0VKKjBdBxX
- 5FWvOB1/adTsQxeCd3idH9tlSODnXBA=
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
- [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-x0TVRa6lOlK_m0zVyzoh8A-1; Fri, 25 Oct 2024 12:09:20 -0400
-X-MC-Unique: x0TVRa6lOlK_m0zVyzoh8A-1
-Received: by mail-ot1-f70.google.com with SMTP id
- 46e09a7af769-710cbc3ddfcso2103142a34.2
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 09:09:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729872560; x=1730477360;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3d3atI9RzcNoaopQtlnwLcsKduUq0PvI7XHn79LYRYQ=;
- b=PGC69uU65h3klttNZ3Cqb3viAZyX5FTRg7O7Kl2694kGE1+XJPrkhG084ePaRmRRer
- j/wtm1p2MI4fHq7Wt3NQhJ8CRjxeGYknTVIXlYlWAVni5MGa4GTrDLvFyPGH3GfSAexq
- nnF1AZd3TjOiEuUSY8KF6LLhDuMgNGzoeOPwcUAlpnGy2bmxq9vxBW22Wvb7/UlOv9Xc
- BRcZMyclxvJwp8rdcThxRGG6Busr19TbOt1wGqG9gUudWBy0UsGf6cc9PFYxvlKaJSch
- AKUWRWqA2aL/7kZIALREBVV/ZMqHXVUUVwJfDsBE8esOWH7Nj7d2Oc0UqIp36q4N17df
- +ztA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXP6X/oFCV8OOAeJGk3ln7YDxlNs6rLbtjEZ4ul+PEM3uJVWi/jlydKh58rDJvTG+J+IzxiKEgtvH3g@nongnu.org
-X-Gm-Message-State: AOJu0Yw07BESzNvScbeN0erNX3+sfgtefhK2wx7PxOeADOaRBmC3VZzS
- 2PTPu13tUKC8yh9AoBJeYWVnxc0dFJfgYAXJp7CFFcgh+u605rz+83ZnvD9jp0c1GYey3amdh1+
- /g24u7CpdKN7y21p6PjUpHkjM/RXtZLZwQpMW9rpOY8T/SRVvX+N5
-X-Received: by 2002:a05:6358:7188:b0:1b8:3242:3286 with SMTP id
- e5c5f4694b2df-1c3e4d1f22cmr374407455d.12.1729872560153; 
- Fri, 25 Oct 2024 09:09:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE5jDJrABVIk2OkL6p2Z3VHnvswOp3lbDpK0JeTjasccK3NPSJ4zhz69YD//Piehav3NV/p7Q==
-X-Received: by 2002:a05:6358:7188:b0:1b8:3242:3286 with SMTP id
- e5c5f4694b2df-1c3e4d1f22cmr374404155d.12.1729872559835; 
- Fri, 25 Oct 2024 09:09:19 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
- ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4613211a109sm7185621cf.8.2024.10.25.09.09.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 09:09:19 -0700 (PDT)
-Message-ID: <b04df140-4754-4ebf-b369-c7d42a69b2ab@redhat.com>
-Date: Fri, 25 Oct 2024 18:09:17 +0200
+ in-reply-to:in-reply-to:references:references:dkim-signature;
+ bh=aEzrN/Nw6UKLvVJs00tshw8NLr2g+/kwairU/76Ypcg=;
+ b=21IyleDMZiW8+Gs6qGMxCBbMKun0sK4lU1EP80GQidQhOYp6DhQAv3Y+6axhD/cwCUidnd
+ WahPOsm4ulX6UPMTom+G/CBuntWFWgCnP9FKESBFxYKui1chROKThlpYN9Ah3vbn9sPaul
+ DLNLHwE6eizB1guwML5QPI7LYyjNM4yk+FRT/rv2S2rEKfs5nzbV4oFuOr7B0af+5Y/4LW
+ cwAJWTNOqPW4baHKENfrBhCzYJOB48GYDu5KUBuV94SMauyhxDRTfdLb44KQDR6mo7JsIb
+ KQSKu+M2ThV8ZIz4qfLsN5LYEeQBuMgB/zmY2B1Yf61HPO1U5j/yyfyLTe0n2A==
+ARC-Authentication-Results: i=1; rspamd-78ff97654b-h696w;
+ auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
+X-MailChannels-Auth-Id: dreamhost
+X-Vacuous-Exultant: 1318d7c20fe6e2df_1729872411543_3769676576
+X-MC-Loop-Signature: 1729872411543:3829036414
+X-MC-Ingress-Time: 1729872411543
+Received: from pdx1-sub0-mail-a233.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.103.220.31 (trex/7.0.2); Fri, 25 Oct 2024 16:06:51 +0000
+Received: from [172.22.7.54] (unknown [198.232.126.195])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: rob@landley.net)
+ by pdx1-sub0-mail-a233.dreamhost.com (Postfix) with ESMTPSA id 4XZnj64zWpz4g; 
+ Fri, 25 Oct 2024 09:06:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
+ s=dreamhost; t=1729872411;
+ bh=aEzrN/Nw6UKLvVJs00tshw8NLr2g+/kwairU/76Ypcg=;
+ h=Date:Subject:To:From:Content-Type:Content-Transfer-Encoding;
+ b=FIlmumQrfhxA8Ytr/nYF8iyaK7vqXyw/GliHCZJ2/8Ssumllj6eJcoD1s8OZfBBQT
+ vqzOxbu7jQdtsJJ8rG8JNpeV2jDmJwKTeviIulereIO9KNVmtFsFZKGKVi33pavLJZ
+ NmIYNWoDdaduVNCXzGVltgnGEk4w+ZBzYgJ8pYf0WTAB019ZU9Qzd4jMolCH4/YDks
+ VMWJGcAjtBf5vmtsV2JKZMFVFksNttHkCgEu2nKHEakj8Sx8495S8vOLr9035azdnx
+ zmCGxQMl3b3tN8bSdsNxdFixdXUjvzoWbnusgcrs29mWz2XxeBBVduzepDJBxcptC9
+ ssaChh/0vtklw==
+Message-ID: <e424cf07-2c58-460a-8622-dc79c1e5ba30@landley.net>
+Date: Fri, 25 Oct 2024 11:06:49 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] vfio/migration: Report only stop-copy size in
- vfio_state_pending_exact()
-To: Michael Tokarev <mjt@tls.msk.ru>, Avihai Horon <avihaih@nvidia.com>,
- qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20241020130108.27148-1-avihaih@nvidia.com>
- <20241020130108.27148-2-avihaih@nvidia.com>
- <0dc26cff-2e25-4b9e-9e38-8536aaadbe0f@tls.msk.ru>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <0dc26cff-2e25-4b9e-9e38-8536aaadbe0f@tls.msk.ru>
+Subject: Re: Please put qemu-system-sh4eb back.
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, jeff@coresemi.io,
+ peter.maydell@linaro.org, glaubitz@physik.fu-berlin.de
+References: <d6755445-1060-48a8-82b6-2f392c21f9b9@landley.net>
+ <9f8b2357-a28a-4b80-aa5c-ff1725e364d9@redhat.com>
+Content-Language: en-US
+From: Rob Landley <rob@landley.net>
+In-Reply-To: <9f8b2357-a28a-4b80-aa5c-ff1725e364d9@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=23.83.223.164; envelope-from=rob@landley.net;
+ helo=shrimp.cherry.relay.mailchannels.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,34 +114,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/25/24 17:18, Michael Tokarev wrote:
-> 20.10.2024 16:01, Avihai Horon:
->> vfio_state_pending_exact() is used to update migration core how much
->> device data is left for the device migration. Currently, the sum of
->> pre-copy and stop-copy sizes of the VFIO device are reported.
+On 10/24/24 00:44, Thomas Huth wrote:
+> On 24/10/2024 02.11, Rob Landley wrote:
+>> I use it, and ship system images for it:
 >>
->> The pre-copy size is obtained via the VFIO_MIG_GET_PRECOPY_INFO ioctl,
->> which returns the amount of device data available to be transferred
->> while the device is in the PRE_COPY states.
->>
->> The stop-copy size is obtained via the VFIO_DEVICE_FEATURE_MIG_DATA_SIZE
->> ioctl, which returns the total amount of device data left to be
->> transferred in order to complete the device migration.
->>
->> According to the above, current implementation is wrong -- it reports
->> extra overlapping data because pre-copy size is already contained in
->> stop-copy size. Fix it by reporting only stop-copy size.
->>
->> Fixes: eda7362af959 ("vfio/migration: Add VFIO migration pre-copy support")
->> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+>>    https://landley.net/bin/mkroot/latest/sh4eb.tgz
 > 
-> This smells like a qemu-stable material (for 8.1+).
+> Oh, that's interesting, I've been told that the r2d machine does not 
+> work in big endian mode:
+> 
+>   https://lore.kernel.org/qemu-devel/87a5fwjjew.wl-ysato@users.sourceforge.jp/
 
-I am in favor.
+Possibly they were referring to:
 
-Thanks,
+https://landley.net/notes-2023.html#16-06-2023
 
-C.
+Less-used platforms get regressions and then get fixed again. The reason 
+I rebuilt qemu and noticed sh4eb's removal was I was checking if commit 
+3c5f86a22686 was still a problem before reporting it, but I see 
+68ad89b75ad2 already reverted it... :)
 
+> But yes, your binaries apparently work there, so sorry for the confusion.
+> I'll send a patch to revert the removal.
 
+Thank you. (The j-core SOCs are all big endian.)
+
+Rob
 
