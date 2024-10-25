@@ -4,73 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93BC4D0C5EB
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 08:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE545D0C5E6
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 08:45:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Fv6-0002my-J5; Fri, 25 Oct 2024 04:43:44 -0400
+	id 1t4FwL-0003v1-IJ; Fri, 25 Oct 2024 04:45:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t4Fv4-0002me-9F
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:43:42 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1t4FwJ-0003uL-2r
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:44:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t4Fv1-00053D-Ai
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:43:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1729845819; x=1761381819;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Ou4Ii8w02hSPQQ2PFVQUT6v1B6OA+VGwlbsG8MffFVM=;
- b=POS7slrJML3jZtk1IVIhfUv39SzXRm0FiCY6h1bSMfvcAbCGfCt5K5Ue
- A1j1QYJRXtp0YN/K3IB7XaN1tVLqBouiOkDfBZep3eJ072oqPpbxXC/RL
- RjwT624YNQcUT1WmNECDi02jGx+v5xEZN/BhS0gKjFAHB7E6FFpYKzo1p
- sU3zl/NrfjTa8qproEpvIcwRZG+ba9RxMDrd4xTAaKjGrpu3Y+RYuXqMg
- anka5NcL5LkQoB4fKZViD4gzEBW4VxpBZIP/3ICChA6eIvgmShe5aB3KE
- +yD6vgIWyTzU2+79+QzJUImj00ByyE9ay4fCIROeN+F9wQ139yJDumwzO Q==;
-X-CSE-ConnectionGUID: j6cfqbpzTreWcqjmAJt5Vg==
-X-CSE-MsgGUID: oBotW9DgQv6izN4k8fWDKw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11235"; a="33420224"
-X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; d="scan'208";a="33420224"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Oct 2024 01:43:36 -0700
-X-CSE-ConnectionGUID: IG9TuvdnQSuou7YbQr5vOw==
-X-CSE-MsgGUID: YECBHtIuSS+BW/MnbG+1Cw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; d="scan'208";a="80513338"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa007.fm.intel.com with ESMTP; 25 Oct 2024 01:43:27 -0700
-Date: Fri, 25 Oct 2024 16:59:45 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: Re: [PATCH v2 08/13] rust: cleanup module_init!, use it from
- #[derive(Object)]
-Message-ID: <ZxteAWr98He5Zedc@intel.com>
-References: <20241021163538.136941-1-pbonzini@redhat.com>
- <20241021163538.136941-9-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1t4FwH-00056m-Bi
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:44:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729845895;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CfJVmL3lLksXD4E1ckSgunbi5oYZu/7oMqwZ1czZnzs=;
+ b=AZYRmyIDQGKdHaOAJMNNR8h8h5Ebdm3r/kL8Fw3f011JHWjhJbBzblz1t38Wp2ME0LGsm5
+ vDhvK+42a96hePADMAQMiV3ulZKjrUuj1dLfeN/DRP/Q6pG62SukWyL357cb613Y5MnrE8
+ iVF/j1vnvirfC8lV+GvLP6voFNL+TE4=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-663-pqyuXYzrO1GDigJq6IE8Ew-1; Fri, 25 Oct 2024 04:44:54 -0400
+X-MC-Unique: pqyuXYzrO1GDigJq6IE8Ew-1
+Received: by mail-ot1-f69.google.com with SMTP id
+ 46e09a7af769-7181285c746so1991187a34.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 01:44:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729845893; x=1730450693;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CfJVmL3lLksXD4E1ckSgunbi5oYZu/7oMqwZ1czZnzs=;
+ b=xA/iM2xI4ZSPb/Bbhpd3d8h2rrWWce/ISx7UBW9uINyELcLAj9JCA7R148+vGR4z/K
+ iXCBlfJokSQobKbla2K2g2P5YhwoGKwU02V2CH5HWq5LHwRMP+hF3tYbcdPQxiyYtAyU
+ DPkTAbw4xpDkZsBeUrJf19BlMbvaA735e2EuvLDBptrK51P0Aw2IdwdvawdAs1efOQ32
+ 3DodbvrZu9Znxf9z4tjOw9jmAQhxCu4m4YSagrvDwzXHjwoJh1YRapeitsjhdSCg9JMy
+ riLsxNPfLAMWA6TNql7exp7otceAKtTW1T2syrfvykKYfPwJJV0SoXDj3klM8Psjnkc8
+ X1ew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXB/6hJ1uysVcsxv/dhZXbXNuf/To8Ngg3FKdHHo8wVbvdt55J2JzPQpDWkkMYiTq2OUWAVNEGHMc76@nongnu.org
+X-Gm-Message-State: AOJu0YxAjUZeGR19MrcFeUh5imLh2skBNO5V/VVRZeIZWFrQFzNzNzwX
+ iO6Tl7SbCD12Xl0gQVPo5yE8Njs1cdpPqRzbKfIQQ9OJxUaKZ5PTc3YMMN39pCcjYkl0LCloPsp
+ JOJzYSga93JZsPJwzQyNTvkn01hGUepLsdMwWYc1vS03PBCkje0UJh0z83q61Xh43767muopgoN
+ N4YVdSwThR0Oy5pKqxBqMJDpxnUeQ=
+X-Received: by 2002:a05:6830:3881:b0:718:162e:7712 with SMTP id
+ 46e09a7af769-7184b2c09c3mr10935750a34.14.1729845893454; 
+ Fri, 25 Oct 2024 01:44:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH05ISFYixTlQNtuXWu2AU44Jn53+4pVWuQnfLwvVBNu4fB8XhLgRXFW0juIb0Oj0hmOQQCi6ynhVTlEUVjR4U=
+X-Received: by 2002:a05:6830:3881:b0:718:162e:7712 with SMTP id
+ 46e09a7af769-7184b2c09c3mr10935728a34.14.1729845893108; Fri, 25 Oct 2024
+ 01:44:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241021163538.136941-9-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
+References: <20241022-load-v1-1-99df0bff7939@daynix.com>
+ <20241023040059-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20241023040059-mutt-send-email-mst@kernel.org>
+From: Jason Wang <jasowang@redhat.com>
+Date: Fri, 25 Oct 2024 16:44:42 +0800
+Message-ID: <CACGkMEtKBdwkd9LDaMAga0YoJgBj5Pj_rL7ii8C3_SCC3XnPPA@mail.gmail.com>
+Subject: Re: [PATCH] virtio-net: Add queues before loading them
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
 X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,96 +102,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 21, 2024 at 06:35:33PM +0200, Paolo Bonzini wrote:
-> Date: Mon, 21 Oct 2024 18:35:33 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH v2 08/13] rust: cleanup module_init!, use it from
->  #[derive(Object)]
-> X-Mailer: git-send-email 2.46.2
-> 
-> Remove the duplicate code by using the module_init! macro; at the same time,
-> simplify how module_init! is used, by taking inspiration from the implementation
-> of #[derive(Object)].
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/qemu-api-macros/src/lib.rs  | 33 +++-------------
->  rust/qemu-api/src/definitions.rs | 66 ++++++++++++++------------------
->  2 files changed, 33 insertions(+), 66 deletions(-)
+On Wed, Oct 23, 2024 at 4:02=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> On Tue, Oct 22, 2024 at 03:49:01PM +0900, Akihiko Odaki wrote:
+> > Call virtio_net_set_multiqueue() to add queues before loading their
+> > states. Otherwise the loaded queues will not have handlers and elements
+> > in them will not be processed.
+> >
+> > Cc: qemu-stable@nongnu.org
+> > Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizin=
+g")
+> > Reported-by: Laurent Vivier <lvivier@redhat.com>
+> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+>
+>
+> Jason, your queue?
+>
 
-LGTM (with some questions related type_init usage inline)
+Yes, queued.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel>
-
-> diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
-> index 70e3f920460..a4bc5d01ee8 100644
-> --- a/rust/qemu-api-macros/src/lib.rs
-> +++ b/rust/qemu-api-macros/src/lib.rs
-> @@ -3,43 +3,20 @@
->  // SPDX-License-Identifier: GPL-2.0-or-later
->  #[proc_macro_derive(Object)]
->  pub fn derive_object(input: TokenStream) -> TokenStream {
-
-[snip]
-
-> +            MODULE_INIT_QOM => unsafe {
-> +                ::qemu_api::bindings::type_register_static(&<#name as ::qemu_api::definitions::ObjectImpl>::TYPE_INFO);
->              }
-
-I want to see how general this macro could be, so I checked current
-type_init() cases for TypeInfo. In most cases, only type_register_static()
-is called directly in the init_fn() callback.
-
-There are only two exceptions:
-
-1. Some init_fn callbacks contain more complex validation or register
-logic.
-
-  For example, in backends/hostmem-epc.c, sgx_epc_backed_info involves
-  extra check before type_register_static().
-
-  static void register_types(void)
-  {
-      int fd = qemu_open_old("/dev/sgx_vepc", O_RDWR);
-      if (fd >= 0) {
-          close(fd);
-
-          type_register_static(&sgx_epc_backed_info);
-      }
-  }
-
-
-  And in hw/audio/intel-hda.c, there's extra pci_register_soundhw afer
-  type_register_static():
-
-  static void intel_hda_register_types(void)
-  {
-      type_register_static(&hda_codec_bus_info);
-      type_register_static(&intel_hda_info);
-      type_register_static(&intel_hda_info_ich6);
-      type_register_static(&intel_hda_info_ich9);
-      type_register_static(&hda_codec_device_type_info);
-      pci_register_soundhw("hda", "Intel HD Audio", intel_hda_and_codec_init);
-  }
-
-  The device can define a custom init_fn() for TypeInfo based on
-  module_init!, but I wonder if the examples above are valid. Is it
-  allowed to include other logic in init_fn()?
-
-
-2. Some init_fn callbacks use type_register() instead of
-type_register_static().
-
-  TypeImpl *type_register_static(const TypeInfo *info)
-  {
-      return type_register(info);
-  }
-
-  It seems that type_register() and type_register_static() are the same.
-  I guess I could clean up one of them, right? (type_register() was added
-  by your earlie commit 049cb3cfdac1 :-) ).
-
-Thanks,
-Zhao
+Thanks
 
 
