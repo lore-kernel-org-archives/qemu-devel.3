@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD12D149C0
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B08FED149C1
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:10:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Mq5-0007Fx-1t; Fri, 25 Oct 2024 12:07:03 -0400
+	id 1t4Mn0-0002Vh-0M; Fri, 25 Oct 2024 12:03:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1t4MpX-000748-RC; Fri, 25 Oct 2024 12:06:28 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4Mmg-0002Gs-Gu
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:03:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1t4MpV-0005HJ-Ih; Fri, 25 Oct 2024 12:06:27 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49PFf57s020881;
- Fri, 25 Oct 2024 16:06:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=ViGjngwJ2vndr8N3DnHoQ0
- mtiUMECGSAQOr1mQp3bFs=; b=DHfihPr8RHXHaWZIBcI4+kFHNI8WyqioOL2IRU
- 0KrroWKRwvcVg48m0Xqu9rologtgB+UddtN60DtgqpEAFfsLVbOTGTGNxXbYWkeP
- U11BhMf6tCHR3G31oSKDb4Nc08s3ikQ7G13sbjPoVDQ/PguKN/5dvrI58hzg8YdA
- R/rjYmzuLTo6N8MG1uHsN7Ho8g/PbGsQm8mIx50QmPW90d7Qu+vjpmce4kwi2fuv
- xkCfR3Y6dVjepVXpjFcRrh1tRM0dYwhLeXRsHr5ResBSPVzAYVFjepKymBPsO+9T
- SJipoEXMSnaO9FK1kpH5ITP5BhTM2gdNDR2+cp4a88XhI0Mw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42g6y91krd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Oct 2024 16:06:11 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
- [10.47.209.196])
- by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49PG6B6j024331
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Oct 2024 16:06:11 GMT
-Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 25 Oct 2024 09:06:11 -0700
-From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-To: <qemu-devel@nongnu.org>
-CC: <alejandro.zeise@seagate.com>, <clg@redhat.com>, <berrange@redhat.com>,
- <qemu-arm@nongnu.org>, <kris.conklin@seagate.com>,
- <jonathan.henze@seagate.com>, <evan.burgess@seagate.com>,
- <clg@kaod.org>, <peter.maydell@linaro.org>, <bcain@quicinc.com>,
- <sidneym@quicinc.com>
-Subject: qcrypto_ivgen mem leak and possible issue?
-Date: Fri, 25 Oct 2024 13:06:01 -0300
-Message-ID: <60849a6166bba234230bc1761835cc188a9f765f.1729858348.git.quic_mathbern@quicinc.com>
-X-Mailer: git-send-email 2.37.2
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4Mme-0004rJ-5E
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:03:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729872207;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JRpYd5gLU5pnd2gn0TumqBM3kJhFe2BgTXzKLOcnZGg=;
+ b=WD2n3WVRfI5YkzaCGCzoK7G86WjlcdptbLVRqWCSfsfjhyhO3R1Z6O9MKaWvUJs8s2C0SG
+ t6nLnPR8sbfaf0NAJ6+uTixAlxlbLW1bzvzfVQO3uRZtTMrEe26QTzIxF+0bo5ZpArH5Sl
+ 0gTvAYJnSOv0fJsBE8+LnOMrLuReSI4=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-548-Cm8Df4srMIqyHq_jvTusWg-1; Fri, 25 Oct 2024 12:03:24 -0400
+X-MC-Unique: Cm8Df4srMIqyHq_jvTusWg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a9a194d672bso159445666b.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 09:03:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729872201; x=1730477001;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JRpYd5gLU5pnd2gn0TumqBM3kJhFe2BgTXzKLOcnZGg=;
+ b=fLInT2+6QJE23q/IEUSjzlkJV+4FpZ6SFqh69l4TJEzEloqVY+NSNOjoxb2kk9pi6I
+ HhLbu4B+Y7hdtOBVvxFyX0XdldyD/5c+BxX32WOCoCht2p7JT0bda+/kGp5HgMrh7wkl
+ hoFKqJwR3mdmRKGndKHDaLkLASSo/TFec1IGvv5STxBz3t5qU5nHZJELtZk9mmUg59kd
+ 9Ml3GfDJ8bqxTMmJ/mMwAOSo/kKfab35svq4QJWkHJJ65RtjqFh5tH4gK2xuHxl2W/xe
+ 1V5NmKXr7kWhP4W479osMRHSUkf8MsL0rVk+QcFTusF27qJsPREFmSpPukdksbPOg1pz
+ f5hg==
+X-Gm-Message-State: AOJu0YzrqnhiNRtI3ARNA1s5elWG2fCSS/zozyq283eKpmPxSNihNh0V
+ 5JydCedseAksfTXuqucYFq2F7tbgNtTO/bJQE56OEwfVruXN3uAxt30Wq7r41A2ORpqOVDgDiVg
+ 5HYmytsJBcrXD7LP4YLyxfqcSbmReiEI7KiioL4fKQtE8SbHsn37qh0etEMy5PVe30fkOH1K8Xr
+ qJ7mCVuWe2cv/Na3PaYLoi4jhjbnaFJfFiZJaavLU=
+X-Received: by 2002:a17:907:5015:b0:a9d:e1d6:42a1 with SMTP id
+ a640c23a62f3a-a9de1d6435emr21190166b.30.1729872201011; 
+ Fri, 25 Oct 2024 09:03:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyt2JvE9VYA2xkI3VIFOyVoR52tOPHTdEzenqsysH29mMicK8aICqmXcRNSvL5Hv7W8Z+0rw==
+X-Received: by 2002:a17:907:5015:b0:a9d:e1d6:42a1 with SMTP id
+ a640c23a62f3a-a9de1d6435emr21186166b.30.1729872200346; 
+ Fri, 25 Oct 2024 09:03:20 -0700 (PDT)
+Received: from [192.168.10.47] ([151.81.112.43])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9b1f0698c0sm85027666b.95.2024.10.25.09.03.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Oct 2024 09:03:16 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
+ junjie.mao@hotmail.com, berrange@redhat.com
+Subject: [PATCH 10/23] rust: use std::os::raw instead of core::ffi
+Date: Fri, 25 Oct 2024 18:01:55 +0200
+Message-ID: <20241025160209.194307-11-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241025160209.194307-1-pbonzini@redhat.com>
+References: <20241025160209.194307-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-GUID: UJPziTmd7pti8NmRm1NKeU4I5uTTSFCU
-X-Proofpoint-ORIG-GUID: UJPziTmd7pti8NmRm1NKeU4I5uTTSFCU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0
- spamscore=0 adultscore=0 suspectscore=0 mlxlogscore=999 clxscore=1011
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410250124
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_mathbern@quicinc.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,78 +103,376 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+core::ffi::c_* types were introduced in Rust 1.64.0.  Use the older types
+in std::os::raw, which are now aliases of the types in core::ffi.  There is
+no need to compile QEMU as no_std, so this is acceptable as long as we supp=
+ort
+a version of Debian with Rust 1.63.0.
 
-Since e3c07527f3 (crypto/hash: Implement and use new hash API,
-2024-10-08), we've been seeing a memory leak in two check-unit tests:
-test-crypto-hash and test-crypto-ivgen. Looking a bit further to try and
-plug the leak, I got a bit confused regarding how the result crypto
-buffer is handled. Looks like we are allocating different sizes at two
-different places, and I'm unsure if these places follow the same
-convention or could be breaking expectations from one another...
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ meson.build                          |  3 +--
+ rust/hw/char/pl011/src/device.rs     | 35 +++++++++++-----------------
+ rust/hw/char/pl011/src/lib.rs        |  4 ++--
+ rust/hw/char/pl011/src/memory_ops.rs | 14 +++--------
+ rust/qemu-api/src/definitions.rs     |  2 +-
+ rust/qemu-api/src/device_class.rs    |  6 ++---
+ rust/qemu-api/src/lib.rs             | 11 +++++----
+ rust/qemu-api/src/vmstate.rs         | 10 ++++----
+ rust/qemu-api/tests/tests.rs         |  9 ++++---
+ 9 files changed, 39 insertions(+), 55 deletions(-)
 
-So this is the report from LeakSanitizer:
+diff --git a/meson.build b/meson.build
+index 5e2b0fb82b2..e819148f36c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3933,14 +3933,13 @@ if have_rust and have_system
+   bindgen_args =3D [
+     '--disable-header-comment',
+     '--raw-line', '// @generated',
+-    '--ctypes-prefix', 'core::ffi',
++    '--ctypes-prefix', 'std::os::raw',
+     '--formatter', 'rustfmt',
+     '--generate-block',
+     '--generate-cstr',
+     '--impl-debug',
+     '--merge-extern-blocks',
+     '--no-doc-comments',
+-    '--use-core',
+     '--with-derive-default',
+     '--no-layout-tests',
+     '--no-prepend-enum-name',
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/devi=
+ce.rs
+index 788b47203b1..036757f7f3a 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -2,9 +2,10 @@
+ // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ // SPDX-License-Identifier: GPL-2.0-or-later
+=20
+-use core::{
+-    ffi::{c_int, c_uchar, c_uint, c_void, CStr},
+-    ptr::{addr_of, addr_of_mut, NonNull},
++use core::ptr::{addr_of, addr_of_mut, NonNull};
++use std::{
++    ffi::CStr,
++    os::raw::{c_int, c_uchar, c_uint, c_void},
+ };
+=20
+ use qemu_api::{
+@@ -117,11 +118,10 @@ pub struct PL011Class {
+ }
+=20
+ impl qemu_api::definitions::Class for PL011Class {
+-    const CLASS_INIT: Option<
+-        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi=
+::c_void),
+-    > =3D Some(crate::device_class::pl011_class_init);
++    const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectClass,=
+ data: *mut c_void)> =3D
++        Some(crate::device_class::pl011_class_init);
+     const CLASS_BASE_INIT: Option<
+-        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi=
+::c_void),
++        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void),
+     > =3D None;
+ }
+=20
+@@ -176,11 +176,7 @@ unsafe fn init(&mut self) {
+         }
+     }
+=20
+-    pub fn read(
+-        &mut self,
+-        offset: hwaddr,
+-        _size: core::ffi::c_uint,
+-    ) -> std::ops::ControlFlow<u64, u64> {
++    pub fn read(&mut self, offset: hwaddr, _size: c_uint) -> std::ops::Con=
+trolFlow<u64, u64> {
+         use RegisterOffset::*;
+=20
+         std::ops::ControlFlow::Break(match RegisterOffset::try_from(offset=
+) {
+@@ -562,11 +558,7 @@ pub fn post_load(&mut self, _version_id: u32) -> Resul=
+t<(), ()> {
+ /// readable/writeable from one thread at any time.
+ ///
+ /// The buffer and size arguments must also be valid.
+-pub unsafe extern "C" fn pl011_receive(
+-    opaque: *mut core::ffi::c_void,
+-    buf: *const u8,
+-    size: core::ffi::c_int,
+-) {
++pub unsafe extern "C" fn pl011_receive(opaque: *mut c_void, buf: *const u8=
+, size: c_int) {
+     unsafe {
+         debug_assert!(!opaque.is_null());
+         let mut state =3D NonNull::new_unchecked(opaque.cast::<PL011State>=
+());
+@@ -585,7 +577,7 @@ pub fn post_load(&mut self, _version_id: u32) -> Result=
+<(), ()> {
+ /// We expect the FFI user of this function to pass a valid pointer, that =
+has
+ /// the same size as [`PL011State`]. We also expect the device is
+ /// readable/writeable from one thread at any time.
+-pub unsafe extern "C" fn pl011_event(opaque: *mut core::ffi::c_void, event=
+: QEMUChrEvent) {
++pub unsafe extern "C" fn pl011_event(opaque: *mut c_void, event: QEMUChrEv=
+ent) {
+     unsafe {
+         debug_assert!(!opaque.is_null());
+         let mut state =3D NonNull::new_unchecked(opaque.cast::<PL011State>=
+());
+@@ -656,11 +648,10 @@ pub struct PL011LuminaryClass {
+ }
+=20
+ impl qemu_api::definitions::Class for PL011LuminaryClass {
+-    const CLASS_INIT: Option<
+-        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi=
+::c_void),
+-    > =3D None;
++    const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectClass,=
+ data: *mut c_void)> =3D
++        None;
+     const CLASS_BASE_INIT: Option<
+-        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi=
+::c_void),
++        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void),
+     > =3D None;
+ }
+=20
+diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
+index c6bb76a7926..a539062aa30 100644
+--- a/rust/hw/char/pl011/src/lib.rs
++++ b/rust/hw/char/pl011/src/lib.rs
+@@ -45,8 +45,8 @@
+ pub mod device_class;
+ pub mod memory_ops;
+=20
+-pub const TYPE_PL011: &::core::ffi::CStr =3D c"pl011";
+-pub const TYPE_PL011_LUMINARY: &::core::ffi::CStr =3D c"pl011_luminary";
++pub const TYPE_PL011: &::std::ffi::CStr =3D c"pl011";
++pub const TYPE_PL011_LUMINARY: &::std::ffi::CStr =3D c"pl011_luminary";
+=20
+ /// Offset of each register from the base memory address of the device.
+ ///
+diff --git a/rust/hw/char/pl011/src/memory_ops.rs b/rust/hw/char/pl011/src/=
+memory_ops.rs
+index fc69922fbf3..169d485a4d2 100644
+--- a/rust/hw/char/pl011/src/memory_ops.rs
++++ b/rust/hw/char/pl011/src/memory_ops.rs
+@@ -3,6 +3,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+=20
+ use core::ptr::NonNull;
++use std::os::raw::{c_uint, c_void};
+=20
+ use qemu_api::{bindings::*, zeroable::Zeroable};
+=20
+@@ -22,11 +23,7 @@
+     },
+ };
+=20
+-unsafe extern "C" fn pl011_read(
+-    opaque: *mut core::ffi::c_void,
+-    addr: hwaddr,
+-    size: core::ffi::c_uint,
+-) -> u64 {
++unsafe extern "C" fn pl011_read(opaque: *mut c_void, addr: hwaddr, size: c=
+_uint) -> u64 {
+     assert!(!opaque.is_null());
+     let mut state =3D unsafe { NonNull::new_unchecked(opaque.cast::<PL011S=
+tate>()) };
+     let val =3D unsafe { state.as_mut().read(addr, size) };
+@@ -43,12 +40,7 @@
+     }
+ }
+=20
+-unsafe extern "C" fn pl011_write(
+-    opaque: *mut core::ffi::c_void,
+-    addr: hwaddr,
+-    data: u64,
+-    _size: core::ffi::c_uint,
+-) {
++unsafe extern "C" fn pl011_write(opaque: *mut c_void, addr: hwaddr, data: =
+u64, _size: c_uint) {
+     unsafe {
+         assert!(!opaque.is_null());
+         let mut state =3D NonNull::new_unchecked(opaque.cast::<PL011State>=
+());
+diff --git a/rust/qemu-api/src/definitions.rs b/rust/qemu-api/src/definitio=
+ns.rs
+index 064afe60549..26597934bbd 100644
+--- a/rust/qemu-api/src/definitions.rs
++++ b/rust/qemu-api/src/definitions.rs
+@@ -4,7 +4,7 @@
+=20
+ //! Definitions required by QEMU when registering a device.
+=20
+-use ::core::ffi::{c_void, CStr};
++use std::{ffi::CStr, os::raw::c_void};
+=20
+ use crate::bindings::{Object, ObjectClass, TypeInfo};
+=20
+diff --git a/rust/qemu-api/src/device_class.rs b/rust/qemu-api/src/device_c=
+lass.rs
+index 3d40256f60f..cb4573ca6ef 100644
+--- a/rust/qemu-api/src/device_class.rs
++++ b/rust/qemu-api/src/device_class.rs
+@@ -7,7 +7,7 @@ macro_rules! device_class_init {
+     ($func:ident, props =3D> $props:ident, realize_fn =3D> $realize_fn:exp=
+r, legacy_reset_fn =3D> $legacy_reset_fn:expr, vmsd =3D> $vmsd:ident$(,)*) =
+=3D> {
+         pub unsafe extern "C" fn $func(
+             klass: *mut $crate::bindings::ObjectClass,
+-            _: *mut ::core::ffi::c_void,
++            _: *mut ::std::os::raw::c_void,
+         ) {
+             let mut dc =3D
+                 ::core::ptr::NonNull::new(klass.cast::<$crate::bindings::D=
+eviceClass>()).unwrap();
+@@ -26,7 +26,7 @@ macro_rules! define_property {
+     ($name:expr, $state:ty, $field:expr, $prop:expr, $type:expr, default =
+=3D $defval:expr$(,)*) =3D> {
+         $crate::bindings::Property {
+             // use associated function syntax for type checking
+-            name: ::core::ffi::CStr::as_ptr($name),
++            name: ::std::ffi::CStr::as_ptr($name),
+             info: $prop,
+             offset: ::core::mem::offset_of!($state, $field) as isize,
+             set_default: true,
+@@ -37,7 +37,7 @@ macro_rules! define_property {
+     ($name:expr, $state:ty, $field:expr, $prop:expr, $type:expr$(,)*) =3D>=
+ {
+         $crate::bindings::Property {
+             // use associated function syntax for type checking
+-            name: ::core::ffi::CStr::as_ptr($name),
++            name: ::std::ffi::CStr::as_ptr($name),
+             info: $prop,
+             offset: ::core::mem::offset_of!($state, $field) as isize,
+             set_default: false,
+diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
+index 10ab3d7e639..ed840ee2f72 100644
+--- a/rust/qemu-api/src/lib.rs
++++ b/rust/qemu-api/src/lib.rs
+@@ -34,7 +34,10 @@ unsafe impl Sync for bindings::VMStateInfo {}
+ pub mod vmstate;
+ pub mod zeroable;
+=20
+-use std::alloc::{GlobalAlloc, Layout};
++use std::{
++    alloc::{GlobalAlloc, Layout},
++    os::raw::c_void,
++};
+=20
+ #[cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)]
+ extern "C" {
+@@ -48,8 +51,8 @@ fn g_aligned_alloc0(
+=20
+ #[cfg(not(HAVE_GLIB_WITH_ALIGNED_ALLOC))]
+ extern "C" {
+-    fn qemu_memalign(alignment: usize, size: usize) -> *mut ::core::ffi::c=
+_void;
+-    fn qemu_vfree(ptr: *mut ::core::ffi::c_void);
++    fn qemu_memalign(alignment: usize, size: usize) -> *mut c_void;
++    fn qemu_vfree(ptr: *mut c_void);
+ }
+=20
+ extern "C" {
+@@ -114,7 +117,7 @@ fn default() -> Self {
+ }
+=20
+ // Sanity check.
+-const _: [(); 8] =3D [(); ::core::mem::size_of::<*mut ::core::ffi::c_void>=
+()];
++const _: [(); 8] =3D [(); ::core::mem::size_of::<*mut c_void>()];
+=20
+ unsafe impl GlobalAlloc for QemuAllocator {
+     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index 2a626137e25..5dd783a902a 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -55,7 +55,7 @@ macro_rules! vmstate_single_test {
+         $crate::bindings::VMStateField {
+             name: ::core::concat!(::core::stringify!($field_name), 0)
+                 .as_bytes()
+-                .as_ptr() as *const ::core::ffi::c_char,
++                .as_ptr() as *const ::std::os::raw::c_char,
+             err_hint: ::core::ptr::null(),
+             offset: ::core::mem::offset_of!($struct_name, $field_name),
+             size: $size,
+@@ -132,7 +132,7 @@ macro_rules! vmstate_array {
+         $crate::bindings::VMStateField {
+             name: ::core::concat!(::core::stringify!($field_name), 0)
+                 .as_bytes()
+-                .as_ptr() as *const ::core::ffi::c_char,
++                .as_ptr() as *const ::std::os::raw::c_char,
+             err_hint: ::core::ptr::null(),
+             offset: ::core::mem::offset_of!($struct_name, $field_name),
+             size: $size,
+@@ -180,7 +180,7 @@ macro_rules! vmstate_struct_pointer_v {
+         $crate::bindings::VMStateField {
+             name: ::core::concat!(::core::stringify!($field_name), 0)
+                 .as_bytes()
+-                .as_ptr() as *const ::core::ffi::c_char,
++                .as_ptr() as *const ::std::os::raw::c_char,
+             err_hint: ::core::ptr::null(),
+             offset: ::core::mem::offset_of!($struct_name, $field_name),
+             size: ::core::mem::size_of::<*const $type>(),
+@@ -205,7 +205,7 @@ macro_rules! vmstate_array_of_pointer {
+         $crate::bindings::VMStateField {
+             name: ::core::concat!(::core::stringify!($field_name), 0)
+                 .as_bytes()
+-                .as_ptr() as *const ::core::ffi::c_char,
++                .as_ptr() as *const ::std::os::raw::c_char,
+             version_id: $version_id,
+             num: $num as _,
+             info: $info,
+@@ -230,7 +230,7 @@ macro_rules! vmstate_array_of_pointer_to_struct {
+         $crate::bindings::VMStateField {
+             name: ::core::concat!(::core::stringify!($field_name), 0)
+                 .as_bytes()
+-                .as_ptr() as *const ::core::ffi::c_char,
++                .as_ptr() as *const ::std::os::raw::c_char,
+             version_id: $version_id,
+             num: $num as _,
+             vmsd: $vmsd,
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index 37c4dd44f81..c7089f0cf21 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -2,7 +2,7 @@
+ // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ // SPDX-License-Identifier: GPL-2.0-or-later
+=20
+-use core::ffi::CStr;
++use std::{ffi::CStr, os::raw::c_void};
+=20
+ use qemu_api::{
+     bindings::*,
+@@ -64,11 +64,10 @@ impl ObjectImpl for DummyState {
+     }
+=20
+     impl Class for DummyClass {
+-        const CLASS_INIT: Option<
+-            unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core:=
+:ffi::c_void),
+-        > =3D Some(dummy_class_init);
++        const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectCl=
+ass, data: *mut c_void)> =3D
++            Some(dummy_class_init);
+         const CLASS_BASE_INIT: Option<
+-            unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core:=
+:ffi::c_void),
++            unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_voi=
+d),
+         > =3D None;
+     }
+=20
+--=20
+2.47.0
 
-qemu:unit / test-crypto-hash ERROR
-Direct leak of 180 byte(s) in 5 object(s) allocated from:
-    #0 0x7fdb016e0a06 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cc:153
-    #1 0x555bdb5892f7 in g_malloc0 ../subprojects/glib/glib/gmem.c:155
-    #2 0x555bdb5895d6 in g_malloc0_n ../subprojects/glib/glib/gmem.c:387
-    #3 0x555bdb3fede2 in test_hash_prealloc ../tests/unit/test-crypto-hash.c:136
-    #4 0x555bdb59fb96 in test_case_run ../subprojects/glib/glib/gtestutils.c:2930
-    #5 0x555bdb59ff81 in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3018
-    #6 0x555bdb5a00a9 in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3035
-    #7 0x555bdb5a00a9 in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3035
-    #8 0x555bdb5a02c8 in g_test_run_suite ../subprojects/glib/glib/gtestutils.c:3112
-    #9 0x555bdb59e9e2 in g_test_run ../subprojects/glib/glib/gtestutils.c:2231
-    #10 0x555bdb401b27 in main ../tests/unit/test-crypto-hash.c:301
-    #11 0x7fdb00a75082 in __libc_start_main ../csu/libc-start.c:308
-
-qemu:unit / test-crypto-ivgen ERROR
-Direct leak of 96 byte(s) in 3 object(s) allocated from:
-    #0 0x7fd572092a06 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cc:153
-    #1 0x565440094e7a in g_malloc0 ../subprojects/glib/glib/gmem.c:155
-    #2 0x565440095159 in g_malloc0_n ../subprojects/glib/glib/gmem.c:387
-    #3 0x56543fede89e in qcrypto_ivgen_essiv_init ../crypto/ivgen-essiv.c:44
-    #4 0x56543fedfc8a in qcrypto_ivgen_new ../crypto/ivgen.c:58
-    #5 0x56543feefdd3 in test_ivgen ../tests/unit/test-crypto-ivgen.c:147
-    #6 0x5654400ab719 in test_case_run ../subprojects/glib/glib/gtestutils.c:2930
-    #7 0x5654400abb04 in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3018
-    #8 0x5654400abc2c in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3035
-    #9 0x5654400abc2c in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3035
-    #10 0x5654400abc2c in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3035
-    #11 0x5654400abe4b in g_test_run_suite ../subprojects/glib/glib/gtestutils.c:3112
-    #12 0x5654400aa565 in g_test_run ../subprojects/glib/glib/gtestutils.c:2231
-    #13 0x56543fef0654 in main ../tests/unit/test-crypto-ivgen.c:177
-    #14 0x7fd571427082 in __libc_start_main ../csu/libc-start.c:308
-
-At qcrypto_ivgen_essiv_init(), we allocate 'salt' with:
-
-    /* Salt must be larger of hash size or key size */
-    salt = g_new0(uint8_t, MAX(nhash, nsalt));
-
-The address of 'salt' is passed down the stack as 'result':
-
-    qcrypto_ivgen_essiv_init()
-     |> qcrypto_hash_bytes()
-       |> qcrypto_hash_bytesv()
-         |> qcrypto_hash_finalize_bytes()
-            |> qcrypto_glib_hash_finalize()
-
-Which is reassigned to a new memory (of potentially different size) at
-qcrypto_glib_hash_finalize():
-
-    *result_len = ret;
-    *result = g_new(uint8_t, *result_len);
-
-The reference to the original address gets lost and never free'd, so we
-get the mem leak error. I'm confused as to why we start with one size
-and then realloc later here. Also, how should this mem leak be fixed?
-Would it be sufficient to avoid the g_checksum_type_get_length() and
-rellocation here if 'result' is already set?
-
-As mentioned before, the mem leak bisects down to e3c07527f3.
-
-Thanks,
-Matheus
 
