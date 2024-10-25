@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A5CD149EE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 20:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCD9ED149EB
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 20:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4QgF-0004J0-FE; Fri, 25 Oct 2024 16:13:07 -0400
+	id 1t4QgY-0004Oh-Rr; Fri, 25 Oct 2024 16:13:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t4QgC-0004Ih-OK
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 16:13:05 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t4QgB-0001e7-2Y
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 16:13:04 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-20c803787abso19199375ad.0
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 13:13:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729887181; x=1730491981; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=esZSJuyFIbSO/os1ckzBEMtis0pcbxv0TgyRBTQhA+0=;
- b=tJSOyPnh+oXbjPEkVanaqcnoDyFI9xFVkasAqhetWND2omERXVSya1W9fn70ImCz+b
- M/j0wVsA6O6vw1/jP6/3BLL1bmglvkbUFvElUmmWm8YrrK2QIgdqn964xZiFVDjgBbSI
- Adx/Idv7m2kMvkaQyYw1ktFuRtCZQTM0//DeqnAjiu+1Ok9vGivRU6RfQGtyTJu6ihxo
- 7aBxnf7DD/2YHnWRip4CjQF7ARYqe5oD9nhrzBDGmPlnCTNwskRlL8tzbNKIxSq3iiu2
- uEvMTCl6EHh85YAtjBExnXPKNToL6bplTbFwTmghu+eDwJmALQ3IQdeuFv6T1rZAReoR
- dyzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729887181; x=1730491981;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=esZSJuyFIbSO/os1ckzBEMtis0pcbxv0TgyRBTQhA+0=;
- b=kfzFm2HySqL6PaIX6H5r8JOJJdTit6HmOVCW0gKj+RKUWu8WhVO6h54wbGuSYbzdUy
- rGKlzMZgmml0vWI1O0jXMvQHyTSXAbpddOVPiqkD1d79sRdiONaaxgUOW/xTzcftmW2Z
- XaE45yvu/d361KaO/OcBfg/kZaYSB8Ig7uSOSXH259C41rWyLHAM473Pqdv35HZYt25u
- uI7A2RF5tl6XpHXCDMdz4Il5oeGd1ARHVI903Xohv5V3HHq2jMAGIEhTfaLC78Mu5y7K
- CpMUGFSlfEzrShUHBayRitaCYiuxbUcrL1Xx/c2r5l5mDkxQGhCKB99j4hACPWRGL8oh
- LnrA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/oorcz89ICo811UrT74zeUb6WOcdw2LYsgu7BF+7KqtiP/z/E1A0FhHshCToU9N3eAZzi7CxRQ7NX@nongnu.org
-X-Gm-Message-State: AOJu0YwbPjGiZ0sVfWkxfxvCspepXr1W2FZZwBcv6Tvi3gylEZydDgOB
- y1HZq5+nZavVPyTvysZw/9Wa6oI2dCY3dYTQRroG0jfsk8SWnM6/9hBpFGV1w/I=
-X-Google-Smtp-Source: AGHT+IE47F3eLt5oAhTylB9mlM42HD8PYc3hvr0/bkznp8MHy1zieC8KvNbdrge8P1jmnGbWvzKiBw==
-X-Received: by 2002:a17:902:d2c8:b0:20a:fd4e:fef6 with SMTP id
- d9443c01a7336-20fb88d5d7fmr98701305ad.8.1729887181491; 
- Fri, 25 Oct 2024 13:13:01 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-210bc02df82sm13048565ad.189.2024.10.25.13.13.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 13:13:00 -0700 (PDT)
-Message-ID: <ffeebb55-a3da-4676-acf5-186d9b861691@linaro.org>
-Date: Fri, 25 Oct 2024 13:12:59 -0700
+ (Exim 4.90_1) (envelope-from <dantan@linux.vnet.ibm.com>)
+ id 1t4QgQ-0004Jt-FW; Fri, 25 Oct 2024 16:13:18 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dantan@linux.vnet.ibm.com>)
+ id 1t4QgN-0001fG-Ud; Fri, 25 Oct 2024 16:13:18 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49PHKM7J003071;
+ Fri, 25 Oct 2024 20:13:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=vSw9fDKcZKzqM94QiJRAU/Ko1dNKC3t+FbdTNkjJJ
+ xE=; b=mKbL1MqNUkqGKvKLqbjimjp2AMbJe2UXxn4vnl3EKpr4EU54HvJhq7Juk
+ 6eyCaHV67QVv4gyyjPGaudZyOolfo9+ZPGiC4FizBiIlbTuXYnE3agrm2IhS/68f
+ VCYKOcxojlBBNH1hE61cEk5VxmJ78FvMWNQBOABInknY/MWIz/jg+mo/fKle+y3T
+ +egN3TDb37dfe720lDLERNQGK9YfS5J7GTpfDjghrf0LOpHAsj9ikbNRIOpaNmZ6
+ SqcFyy839yBKNYB/U9rWrSQsbyODT6mXY3F7IBufArrjLuL+yNNVEdP3WQPp9w4f
+ 0v4mM6KY6vZJycEo6igj4To3W6tvw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42g5kxkyfd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 25 Oct 2024 20:13:03 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49PHamYB014571;
+ Fri, 25 Oct 2024 20:13:02 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42emk87hta-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 25 Oct 2024 20:13:02 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49PKD1eu52560354
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 25 Oct 2024 20:13:01 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4F8CD5805A;
+ Fri, 25 Oct 2024 20:13:01 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 184B458051;
+ Fri, 25 Oct 2024 20:13:01 +0000 (GMT)
+Received: from gfwa829.aus.stglabs.ibm.com (unknown [9.3.84.19])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 25 Oct 2024 20:13:01 +0000 (GMT)
+From: dan tan <dantan@linux.vnet.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, stefanb@linux.vnet.ibm.com, clg@kaod.org,
+ lvivier@redhat.com, farosas@suse.de, pbonzini@redhat.com
+Subject: [PATCH v2 0/3] *** TPM TIS SPI pull request ***
+Date: Fri, 25 Oct 2024 15:12:44 -0500
+Message-Id: <20241025201247.29574-1-dantan@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 19/23] rust: do not use --generate-cstr
-Content-Language: en-US
-To: Michael Tokarev <mjt@tls.msk.ru>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Cc: manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
- junjie.mao@hotmail.com, berrange@redhat.com
-References: <20241025160209.194307-1-pbonzini@redhat.com>
- <20241025160209.194307-20-pbonzini@redhat.com>
- <b86de87b-99f3-4fce-9a33-3580d37d90dc@tls.msk.ru>
- <3a0a5685-8c8b-46ad-8933-0fff8715f47d@linaro.org>
- <89bfa733-4496-4128-bace-94099b96a9db@tls.msk.ru>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <89bfa733-4496-4128-bace-94099b96a9db@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -SgmhAcIjmBTocnM2dfnUypqEmsOk1Xl
+X-Proofpoint-GUID: -SgmhAcIjmBTocnM2dfnUypqEmsOk1Xl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=531
+ malwarescore=0 spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ suspectscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410250152
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=dantan@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,28 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTAvMjUvMjQgMTM6MTAsIE1pY2hhZWwgVG9rYXJldiB3cm90ZToNCj4gMjUuMTAuMjAy
-NCAyMzowNiwgUGllcnJpY2sgQm91dmllciB3cm90ZToNCj4+IE9uIDEwLzI1LzI0IDEzOjAz
-LCBNaWNoYWVsIFRva2FyZXYgd3JvdGU6DQo+Pj4gMjUuMTAuMjAyNCAxOTowMiwgUGFvbG8g
-Qm9uemluaSB3cm90ZToNCj4+Pj4gLS1nZW5lcmF0ZS1jc3RyIGlzIGEgZ29vZCBpZGVhIGFu
-ZCBnZW5lcmFsbHkgdGhlIHJpZ2h0IHRoaW5nIHRvIGRvLA0KPj4+PiBidXQgaXQgaXMgbm90
-IGF2YWlsYWJsZSBpbiBEZWJpYW4gMTIgYW5kIFVidW50dSAyMi4wNC7CoCBXb3JrIGFyb3Vu
-ZA0KPj4+PiB0aGUgYWJzZW5jZS4NCj4+Pg0KPj4+IENhbid0IHdlIGp1c3QgaW5zdGFsbCBh
-IG1vcmUgcmVjZW50IGJpbmRnZW4gYW5kIHVzZSBhbGwgdGhlIGN1cnJlbnQNCj4+PiBmZWF0
-dXJlcyBvZiBpdCwgbGlrZSBpdCdzIGRvbmUgaW4gcGF0Y2ggMjIgZm9yIHVidW50dT8NCj4+
-DQo+PiBVc2VycyB5ZXMsIGJ1dCBkaXN0cm9zIGV4cGVjdCB0byBiZSBhYmxlIHRvIHVzZSB0
-aGVpciBwYWNrYWdlZCB2ZXJzaW9uLg0KPiANCj4gUHJldHR5IHBsZWFzZSBkbyBub3QgdGFy
-Z2V0IHJ1c3QgaW4gcWVtdSBmb3IgKmN1cnJlbnRseSogc3VwcG9ydGVkDQo+IGRpc3Ryb3Mu
-ICBGb3IgZGViaWFuIGJvb2t3b3JtIGl0IGlzIGFscmVhZHkgd2F5IHRvbyBsYXRlLCAtIGZv
-cg0KPiBib29rd29ybSBhcyBhIGRpc3RybywgcWVtdSB3aXRoIHJ1c3QgaXMgaG9wZWxlc3Ms
-IGl0IGlzIHBvc3NpYmxlDQo+IG9ubHkgd2l0aCB0cml4aWUgYW5kIHVwLg0KPiANCj4gVXNl
-cnMgd2lzaGluZyB0byBleHBlcmltZW50IGNhbiBpbnN0YWxsIG1vcmUgcmVjZW50IHBhY2th
-Z2VzLCBmb3INCj4gcWVtdSBjaSBpdCBpcyB0aGUgd2F5IHRvIGdvIHRvbyB1c2luZyB0aGUg
-d2F5IGluIHBhdGNoIDIyLCBhbmQgdGhhdCdzDQo+IGl0LiAgVGhlcmUncyBubyBuZWVkIHRv
-IHNhY3JpZmljZSBxZW11IHJ1c3QgY29kZSBmb3IgY3VycmVudCBkZWJpYW4NCj4gc3RhYmxl
-LiAgcnVzdCBpcyBhbHJlYWR5IHRvbyB2b2xhdGlsZSBieSBpdHMgb3duLCBhbmQgdGFyZ2V0
-aW5nDQo+IHRoYXQgd2lkZSByYW5nZSBvZiB2ZXJzaW9ucyBpcyBpbnNhbmUuDQo+IA0KDQpJ
-dCdzIHRoZSBnb2FsIG9mIHRoaXMgc2VyaWVzLCBhbmQgd2l0aCBjaGFuZ2VzIGluY2x1ZGVk
-LCBpdCBjYW4gYmUgYnVpbHQgDQpvbiBkZWJpYW4gc3RhYmxlICh3aXRoIHBhY2thZ2VkIHJ1
-c3RjL2JpbmRnZW4pLg0KDQo+IC9tanQNCj4gDQo=
+Version 2 summary,
+    addressed the following review comments:
+    - break up patch into 3 separate commits;
+    - add more details in the commit logs;
+      - I added links to the TCG TPM standard documents as this device
+        model communicates to the TPM device (hw / swtpm) via
+        tpm_tis_commom.c which is standard compliant;
+      - the TPM SPI model implementation in itself is not platform
+        specific. However, the SPI interface is via the PowerNV SPI
+        bus master, thus it is only supported on the PowerNV platform
+    - change all qemu_log() calls to trace events;
+    - move static global variables to the TPMStateSPI struct;
+    - fixed code formatting (verified by scripts/checkpatch.pl);
+    - per requests, make the code more readable by using self-
+      explanatory #defines and adding comments;
+    - added some documentation support (tpm.rst);
+    - beefed up the unit test exercising major supported locality
+      functionality
+
+Tests: 'make check' and 'make check-avocado'
+
+dan tan (3):
+  tpm/tpm_tis_spi: Support TPM for SPI (Serial Peripheral Interface)
+  tpm/tpm_tis_spi: activation for the PowerNV machines
+  tests/qtest/tpm: add unit test to tis-spi
+
+ docs/specs/tpm.rst                 |  15 +
+ include/sysemu/tpm.h               |   3 +
+ hw/tpm/tpm_tis_spi.c               | 328 ++++++++++++++
+ tests/qtest/tpm-tis-spi-pnv-test.c | 700 +++++++++++++++++++++++++++++
+ hw/ppc/Kconfig                     |   1 +
+ hw/tpm/Kconfig                     |   6 +
+ hw/tpm/meson.build                 |   1 +
+ hw/tpm/trace-events                |   7 +
+ tests/qtest/meson.build            |   3 +-
+ 9 files changed, 1063 insertions(+), 1 deletion(-)
+ create mode 100644 hw/tpm/tpm_tis_spi.c
+ create mode 100644 tests/qtest/tpm-tis-spi-pnv-test.c
+
+-- 
+2.39.5
+
 
