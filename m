@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30226D0C614
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 14:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4BF8D0C614
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 14:17:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4L3p-00040t-Tj; Fri, 25 Oct 2024 10:13:05 -0400
+	id 1t4L4D-0004RX-LA; Fri, 25 Oct 2024 10:13:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t4L3l-0003wo-Pj
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:13:01 -0400
+ id 1t4L44-0004GI-6r
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:13:21 -0400
 Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t4L3i-0007lE-89
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:13:01 -0400
+ id 1t4L3u-0007sl-U0
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:13:19 -0400
 Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4315eac969aso14573155e9.1
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 07:12:57 -0700 (PDT)
+ 5b1f17b1804b1-43169902057so20481835e9.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 07:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729865576; x=1730470376; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=FpcQQjq66hc60h15t5XebYBsiuHjNC9wWkvbtWI3lC4=;
- b=Bt4+d1RniQy9YgpP3WXQGCvc+eQJOoxdns7iAdki09E63yR25ZgSlwsvLL8T5A+gYc
- YH2Z4vIwRKnaHGpEeKGnEby6RVKDjb5im55N58zbUwi0YN64nmK7P2ouv3mBqYQqtcWh
- bOa/jpXZ/qufE9BmzvEayhR8ttTsXC3qsqhweIoXI+nQRe/rOl84AiNBzr/Pg948WJv/
- kpVdDsaduIBYBsC1U2pkNQTPrPyuAQWqYtwYJSf4vHQ8SsyZljIHeC2BsOIan8dkGAW3
- 5BNlH4H2rD8oTBDtTflzsTR+wVqQYI2cl6kwQANrNexyw3udn+SGy4j7ULKNfoC6Wjmv
- vm/Q==
+ d=linaro.org; s=google; t=1729865589; x=1730470389; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1cCo50wdC0NIgQKfnDkwtGpzRTYsS1ol+AjTcdAhO0A=;
+ b=SS6Q9Fp/HdnY+6ajn/QNUZwh7QwfvagZsrs28rDOk4zxQqLmZZXnEh8bQMw2OSKWZD
+ wznleDwLjNuJKOghzwreMj9ZEW3IEWW3GLUrYu9hrKg5Ng1q8fy73G7WJhBXVfKIarjH
+ GaYanxj2fvkCqJalQaskgtleKvRApWzsPKgr+/AATfIG/Axkt7QeFtGvAX1L2ZtFyspG
+ 1DRYPy6mpTc29jwu+aRJSqIzKy1Zuv4Ks66lHPK7A9EPmSHluL3O7iDfMAGxetrwP8t/
+ oK3m83oRu5rwdo4Ex79/otPqyFnj4rJJY1NbToTzYl0nc9qZ1Kw9yaba2SYTv26AKxsE
+ 63FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729865576; x=1730470376;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FpcQQjq66hc60h15t5XebYBsiuHjNC9wWkvbtWI3lC4=;
- b=cAUc3qxDaC7KQGvMKLmojqitTYIzqgOJx0eAKD3ELKPM086mvkxFBGLcgD/2416NEN
- Gern69Fe9Z8boDBKs3dT+2OaOSo9FmMXtNic2gTXFoibBfH8BzSaB5omWJvtWQ+xanrA
- JV9Mv44C0nt2gPWlpxT5Sy9k8A0Tvl1PMdc/nXwDESv3fcwolO7ECKpKN9V44RtUrgZX
- iTyzNbq2Xq/+lTSSv6SFvpue9PIVgWnManbs71dIaqMtKKdRvjgo5WQZnf2msJ6eWnfF
- p0+RZQmMweCFU3FVdimqXuTYkCvy4Hdgkefqo60hBVe0epF2cYNNoLUMCEgc8azjzuIu
- gJDg==
+ d=1e100.net; s=20230601; t=1729865589; x=1730470389;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1cCo50wdC0NIgQKfnDkwtGpzRTYsS1ol+AjTcdAhO0A=;
+ b=O9y8JK/LpFkFKoXLGZfmDAblWe2eXXJfY2h7DQMzpgzk1AmrzUAuDg0sXOWQh7hQvo
+ jYSaJ5s50KcCUkgCF+CAL1C+H+tXsyFUIQecql6lcHnquI0b6RM8txGl1dbArkjTYBNA
+ nkkY2CBMRonX5i0IXJ6WjeF02ajvgPrw48nV0+McIav1L+hirspa4WPg4+FdJKQ4VXG2
+ EJu+c9Va8lndFsUnVpNznCcekIMA/0N8CQBd2rSTJdn2T4a4F/rC5pvBsQFhw01xQ3Di
+ RsK29TftrMaupbIkdoUvBpTfYux3pHFmBZm8WpGwefMzYOB8xL/cY3iPPhgStWX3zGPa
+ QaTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUzycRSxY2gCRjZfEUOa8p+ftEWTpr2cS4G0Vv3O8kficV6FHJwEXOIzYR2O9LexBPRvKhKPnSJAC2s@nongnu.org
-X-Gm-Message-State: AOJu0YzN17fXkf6NFKZgY/bbd2PE9EWHz32DCI2qyhH97lMUiHHQifoV
- 4cC9tK9xT3Hl+sivR9/J/EnMGoT8FoP/9IdyZJXU/4i7YtTNj0U1oovFltXdfM0=
-X-Google-Smtp-Source: AGHT+IH7LJ/mqCUO19u/3mAYHeI4tLr5gb2ZtoYG2LWPCYbt06cffRXNGH3Nlz2ob5gZraHXDu5Eig==
-X-Received: by 2002:a05:600c:35c3:b0:431:4a82:97f2 with SMTP id
- 5b1f17b1804b1-4318b5a42edmr44666555e9.6.1729865576232; 
- Fri, 25 Oct 2024 07:12:56 -0700 (PDT)
+ AJvYcCV7+ozOQDmODyr/8hPcMGpIoM7wNQeqB7Eao0kKtw4mAHdi2uMvfHz7SkBHmdK00H/9Rsm/JKwVam+/@nongnu.org
+X-Gm-Message-State: AOJu0YyeywU58tkBbWJeGI3gl/Iz+3XVWY2TiQYtJpzbPvmZoGpb4Tq6
+ BeSs5YWTGSLzRvZgpx+fKmG5RQiSo0LPsi34YNcTYZ5hy8BhsmD9b7/7CwPWAy0=
+X-Google-Smtp-Source: AGHT+IErRofvNVko14JtpQxdLcThoMuGjBJqi3FTPlWg0ZwyTazi/nWN12GMkiVoSHlJvSwtaTXZqA==
+X-Received: by 2002:a05:600c:1d27:b0:431:58cd:b260 with SMTP id
+ 5b1f17b1804b1-4318418a568mr84761005e9.25.1729865589416; 
+ Fri, 25 Oct 2024 07:13:09 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4318b57b051sm50104535e9.42.2024.10.25.07.12.55
+ 5b1f17b1804b1-4318b57b051sm50104535e9.42.2024.10.25.07.13.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Oct 2024 07:12:55 -0700 (PDT)
+ Fri, 25 Oct 2024 07:13:09 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
@@ -77,11 +78,12 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
  qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH 00/21] softfloat: Set 2-NaN propagation rule in float_status,
- not at compile time
-Date: Fri, 25 Oct 2024 15:12:33 +0100
-Message-Id: <20241025141254.2141506-1-peter.maydell@linaro.org>
+Subject: [PATCH 15/21] target/i386: Set 2-NaN propagation rule explicitly
+Date: Fri, 25 Oct 2024 15:12:48 +0100
+Message-Id: <20241025141254.2141506-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241025141254.2141506-1-peter.maydell@linaro.org>
+References: <20241025141254.2141506-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::333;
@@ -92,7 +94,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,130 +110,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IEEE 758 does not define a fixed rule for which NaN to pick as the
-result if both operands of a 2-operand operation are NaNs.  As a
-result different architectures have ended up with different rules for
-propagating NaNs.
+Set the NaN propagation rule explicitly for the float_status words
+used in the x86 target.
 
-QEMU currently hardcodes the NaN propagation logic into the binary,
-because pickNaN() has an ifdef ladder for different targets.  We want
-to make the propagation rule instead be selectable at runtime,
-because:
- * this will let us have multiple targets in one QEMU binary
- * the Arm FEAT_AFP architectural feature includes letting the guest
-   select a NaN propagation rule at runtime
- * x86 specifies different propagation rules for x87 FPU ops and for
-   SSE ops, and specifying the rule in the float_status would let us
-   emulate this, instead of wrongly using the x87 rules everywhere
- * xtensa allows selection of NaN propagation rule at runtime;
-   currently we implement this with the use_first_nan flag which
-   is only used by xtensa; providing a general facility will let us
-   remove this limited-purpose handling
-                                                           
-This series switches pickNaN away from the ifdef ladder. Instead
-targets must always set a 2-NaN propagation rule via the new
-set_float_2nan_prop_rule(), unless they are using default_nan_mode.
-Patch 1 implements this in core softfloat (with a transitional
-fallback to "use the old ifdef ladder logic" if the target doesn't
-specify the propagation rule). Then subsequent patches convert
-all the targets to set the rule explicitly. The final patch then
-removes the remnants of the transitional logic.
+This is a no-behaviour-change commit, so we retain the existing
+behaviour of using the x87-style "prefer QNaN over SNaN, then prefer
+the NaN with the larger significand" for MMX and SSE.  This is
+however not the documented hardware behaviour, so we leave a TODO
+note about what we should be doing instead.
 
-I have included a couple of minor fixes for sparc, xtensa, m68k.
-This is intended as a no-behaviour-change patchset, so although there
-are a few places where I have noticed that the current behaviour
-is not correct I have left these as TODO comments. A summary of
-those TODOs and other oddities I have noticed but not tried to
-tackle is:
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/i386/cpu.h              |  3 +++
+ target/i386/cpu.c              |  4 ++++
+ target/i386/tcg/fpu_helper.c   | 40 ++++++++++++++++++++++++++++++++++
+ fpu/softfloat-specialize.c.inc |  3 ++-
+ 4 files changed, 49 insertions(+), 1 deletion(-)
 
- * hppa really ought to implement a CPU reset method
- * alpha also doesn't implement CPU reset
- * ppc sets tininess_before_rounding on fp_status but not on
-   vec_status, so its behaviour there will vary between
-   guest instructions; unclear to me if this is intended
- * x86 should set the float_2nan_prop_ab rule on env->sse_status
-   (and maybe env->mmx_status, though 3DNow! insns don't handle
-   NaNs in a documented way anyway)
- * alpha never had a case in the ifdef ladder so it uses the
-   x87 propagation rule. It ought to use float_2nan_prop_ba.
- * openrisc didn't have an ifdef and also uses the x87 rule;
-   this is probably wrong but I couldn't find anything documenting
-   what it actually does
- * rx didn't have an ifdef and also uses the x87 rule;
-   again, probably wrong
-
-The next stage after this patchset, obviously, is to do the
-same thing with pickNaNMulAdd(). That is a little trickier
-because currently we ask it to do two things:
- * handle the "infinity * zero + NaN" corner case
- * pick a NaN when more than one operand is a NaN
-My intention is to separate these out so that targets specify
-both separately. This gives more orthogonality (e.g. Arm,
-MIPS with !snan_bit_is_one and loongarch64 all have the same
-"prefer SNaN over QNaN, prefer C over A over B" NaN selection
-logic but they have different ideas about the infzero case).
-
-(Once pickNaNMulAdd() is converted we will be able to remove
-the current xtensa-specific use_first_nan flag.)
-
-thanks
--- PMM
-
-Peter Maydell (21):
-  softfloat: Allow 2-operand NaN propagation rule to be set at runtime
-  tests/fp: Explicitly set 2-NaN propagation rule
-  target/arm: Explicitly set 2-NaN propagation rule
-  target/mips: Explicitly set 2-NaN propagation rule
-  target/loongarch: Explicitly set 2-NaN propagation rule
-  target/hppa: Explicitly set 2-NaN propagation rule
-  target/s390x: Explicitly set 2-NaN propagation rule
-  target/ppc: Explicitly set 2-NaN propagation rule
-  target/m68k: Explicitly set 2-NaN propagation rule
-  target/m68k: Initialize float_status fields in gdb set/get functions
-  target/sparc: Move cpu_put_fsr(env, 0) call to reset
-  target/sparc: Explicitly set 2-NaN propagation rule
-  target/xtensa: Factor out calls to set_use_first_nan()
-  target/xtensa: Explicitly set 2-NaN propagation rule
-  target/i386: Set 2-NaN propagation rule explicitly
-  target/alpha: Explicitly set 2-NaN propagation rule
-  target/microblaze: Move setting of float rounding mode to reset
-  target/microblaze: Explicitly set 2-NaN propagation rule
-  target/openrisc: Explicitly set 2-NaN propagation rule
-  target/rx: Explicitly set 2-NaN propagation rule
-  softfloat: Remove fallback rule from pickNaN()
-
- include/fpu/softfloat-helpers.h   |  11 +++
- include/fpu/softfloat-types.h     |  38 ++++++++
- target/i386/cpu.h                 |   3 +
- target/mips/fpu_helper.h          |  22 +++++
- target/xtensa/cpu.h               |   6 ++
- linux-user/arm/nwfpe/fpa11.c      |  18 ++++
- target/alpha/cpu.c                |  11 +++
- target/arm/cpu.c                  |  25 +++--
- target/hppa/fpu_helper.c          |   6 ++
- target/i386/cpu.c                 |   4 +
- target/i386/tcg/fpu_helper.c      |  40 ++++++++
- target/loongarch/tcg/fpu_helper.c |   1 +
- target/m68k/cpu.c                 |  16 +++
- target/m68k/fpu_helper.c          |   1 +
- target/m68k/helper.c              |   4 +-
- target/microblaze/cpu.c           |  10 +-
- target/mips/cpu.c                 |   2 +-
- target/mips/msa.c                 |  17 ++++
- target/openrisc/cpu.c             |   6 ++
- target/ppc/cpu_init.c             |   8 ++
- target/rx/cpu.c                   |   7 ++
- target/s390x/cpu.c                |   1 +
- target/sparc/cpu.c                |  10 +-
- target/sparc/fop_helper.c         |  10 +-
- target/xtensa/cpu.c               |   2 +-
- target/xtensa/fpu_helper.c        |  35 ++++---
- tests/fp/fp-bench.c               |   2 +
- tests/fp/fp-test-log2.c           |   1 +
- tests/fp/fp-test.c                |   2 +
- fpu/softfloat-specialize.c.inc    | 156 +++++++++++-------------------
- 30 files changed, 346 insertions(+), 129 deletions(-)
-
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 74886d1580f..43ba62e92d3 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2562,6 +2562,9 @@ static inline bool cpu_vmx_maybe_enabled(CPUX86State *env)
+ int get_pg_mode(CPUX86State *env);
+ 
+ /* fpu_helper.c */
++
++/* Set all non-runtime-variable float_status fields to x86 handling */
++void cpu_init_fp_statuses(CPUX86State *env);
+ void update_fp_status(CPUX86State *env);
+ void update_mxcsr_status(CPUX86State *env);
+ void update_mxcsr_from_sse_status(CPUX86State *env);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 1ff1af032ea..e9260fbc654 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7083,6 +7083,10 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+ 
+     memset(env, 0, offsetof(CPUX86State, end_reset_fields));
+ 
++    if (tcg_enabled()) {
++        cpu_init_fp_statuses(env);
++    }
++
+     env->old_exception = -1;
+ 
+     /* init to reset state */
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index e1b850f3fc2..53b49bb2977 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -135,6 +135,46 @@ static void fpu_set_exception(CPUX86State *env, int mask)
+     }
+ }
+ 
++void cpu_init_fp_statuses(CPUX86State *env)
++{
++    /*
++     * Initialise the non-runtime-varying fields of the various
++     * float_status words to x86 behaviour. This must be called at
++     * CPU reset because the float_status words are in the
++     * "zeroed on reset" portion of the CPU state struct.
++     * Fields in float_status that vary under guest control are set
++     * via the codepath for setting that register, eg cpu_set_fpuc().
++     */
++    /*
++     * Use x87 NaN propagation rules:
++     * SNaN + QNaN => return the QNaN
++     * two SNaNs => return the one with the larger significand, silenced
++     * two QNaNs => return the one with the larger significand
++     * SNaN and a non-NaN => return the SNaN, silenced
++     * QNaN and a non-NaN => return the QNaN
++     *
++     * If we get down to comparing significands and they are the same,
++     * return the NaN with the positive sign bit (if any).
++     */
++    set_float_2nan_prop_rule(float_2nan_prop_x87, &env->fp_status);
++    /*
++     * TODO: These are incorrect: the x86 Software Developer's Manual vol 1
++     * section 4.8.3.5 "Operating on SNaNs and QNaNs" says that the
++     * "larger significand" behaviour is only used for x87 FPU operations.
++     * For SSE the required behaviour is to always return the first NaN,
++     * which is float_2nan_prop_ab.
++     *
++     * mmx_status is used only for the AMD 3DNow! instructions, which
++     * are documented in the "3DNow! Technology Manual" as not supporting
++     * NaNs or infinities as inputs. The result of passing two NaNs is
++     * documented as "undefined", so we can do what we choose.
++     * (Strictly there is some behaviour we don't implement correctly
++     * for these "unsupported" NaN and Inf values, like "NaN * 0 == 0".)
++     */
++    set_float_2nan_prop_rule(float_2nan_prop_x87, &env->mmx_status);
++    set_float_2nan_prop_rule(float_2nan_prop_x87, &env->sse_status);
++}
++
+ static inline uint8_t save_exception_flags(CPUX86State *env)
+ {
+     uint8_t old_flags = get_float_exception_flags(&env->fp_status);
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index b050c5eb04a..77ebc8216f6 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -405,7 +405,8 @@ static int pickNaN(FloatClass a_cls, FloatClass b_cls,
+     || defined(TARGET_TRICORE) || defined(TARGET_ARM) || defined(TARGET_MIPS) \
+     || defined(TARGET_LOONGARCH64) || defined(TARGET_HPPA) \
+     || defined(TARGET_S390X) || defined(TARGET_PPC) || defined(TARGET_M68K) \
+-    || defined(TARGET_SPARC) || defined(TARGET_XTENSA)
++    || defined(TARGET_SPARC) || defined(TARGET_XTENSA) \
++    || defined(TARGET_I386)
+         g_assert_not_reached();
+ #else
+         rule = float_2nan_prop_x87;
 -- 
 2.34.1
 
