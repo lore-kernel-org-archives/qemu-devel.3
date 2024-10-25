@@ -4,87 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B61D149E8
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 20:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47BD7D149EB
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 20:10:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Qc5-0001BS-4N; Fri, 25 Oct 2024 16:08:49 -0400
+	id 1t4Qdo-000353-Bc; Fri, 25 Oct 2024 16:10:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t4Qc3-0001Am-Jk
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 16:08:47 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t4Qc1-00011w-WC
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 16:08:47 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2e2a999b287so1931965a91.0
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 13:08:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729886924; x=1730491724; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tIr5tyC/tEi/tu0Auz/rckjJ59RWPuoXvmPPpIdmFAk=;
- b=oakEYKNs7TRNPx68i5FFeZYaH9+AqQ98iDObLs0u+VUgoJaYcZD/SFEn3if7kdJraa
- JzB+9txDgepRblWuVTBAESXilyyCFVUVsQylKnPn5QHRjXqQziW3UCrDafMtw8JYIqXr
- MXko7veFNvazo9Ps9p3uS7IFv7AJE+fcrCy2sqojiChnunm8nStqWrEbeL/UvX2dbA54
- mW6rNi6UTYr0iyndjlEdECrghlUKisVpZsyDXpgx+bM17P5D1Eq8xh1E5OnDP5ozmgpm
- E71sIpyK0viGvdpYx9npavL7Zk4Z7njzT6fHSTCwVufnvPOEAY2nCG1m0bTrhqjHLdal
- UUqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729886924; x=1730491724;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tIr5tyC/tEi/tu0Auz/rckjJ59RWPuoXvmPPpIdmFAk=;
- b=xNpEJrmhPCF5f1swYTYQCLObUf1mEquQ4QYCXY0X5tJKeGyx3Ep9/wVwS5CoZF/RN2
- mNvwTCnbmF0/lAix6RCKQw4xWD5RU8YpZgRE4n/5BUd6aRyIZZ/wtTewwRJ/zxbiGwPE
- TDZZxyHDCfHzPTGHW2DbAJjp8i5EIZ/Hy4cxtqRCmGpGwHZmwYjCGdNyN1VWA9ihw3BE
- n9dSenNz4geIXXpfzGL4D/xqXyOez38Ztg+RqoTmg/1R47O8xabJmDBLPmMD5Vl+CgoZ
- OsVrwl4SgzncMZbomv7DLsrM0Qyf5xAjd2Hn2XWdVI+/jbLsb5T6gDmJMxHvPR9f9dL4
- Hf2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWK1X/cu9vtAGEk6a4eDOJcTp9WzH47PFJX3oetO3KULYgABfYE9K7tK/UnlTHrdw84l7NBfFbETyks@nongnu.org
-X-Gm-Message-State: AOJu0YyH1jsYnTRi3znet6NdWwcOOsjzXnVesHhgHq1m3+0mEAR3Ri1S
- IG0Gy15MSeL0YPom9o8sHLfUfH/CmJwZRnkfJfb1RpxsUlA7GV8E6xfAwAPWNAU=
-X-Google-Smtp-Source: AGHT+IEu0ZnkxU+RnbYShLjikrQ48DgisbOuoYcgCw0lemGg3HBQURzr+4sCkk6nEc/R9yrs/IXSbA==
-X-Received: by 2002:a17:90a:e20d:b0:2e2:ddfa:24d5 with SMTP id
- 98e67ed59e1d1-2e8f105e9bbmr622470a91.15.1729886924457; 
- Fri, 25 Oct 2024 13:08:44 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e8e3555c28sm1929713a91.6.2024.10.25.13.08.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 13:08:44 -0700 (PDT)
-Message-ID: <f94e005f-ffb9-486c-9151-7e98b0211429@linaro.org>
-Date: Fri, 25 Oct 2024 13:08:43 -0700
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4Qdd-00034N-AB
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 16:10:26 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4Qdb-0001Lj-OA
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 16:10:25 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 46F789C3F2;
+ Fri, 25 Oct 2024 23:09:47 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8930015D59F;
+ Fri, 25 Oct 2024 23:10:20 +0300 (MSK)
+Message-ID: <89bfa733-4496-4128-bace-94099b96a9db@tls.msk.ru>
+Date: Fri, 25 Oct 2024 23:10:20 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/23] dockerfiles: install bindgen from cargo on Ubuntu
- 22.04
-Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 19/23] rust: do not use --generate-cstr
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
  junjie.mao@hotmail.com, berrange@redhat.com
 References: <20241025160209.194307-1-pbonzini@redhat.com>
- <20241025160209.194307-23-pbonzini@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241025160209.194307-23-pbonzini@redhat.com>
+ <20241025160209.194307-20-pbonzini@redhat.com>
+ <b86de87b-99f3-4fce-9a33-3580d37d90dc@tls.msk.ru>
+ <3a0a5685-8c8b-46ad-8933-0fff8715f47d@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <3a0a5685-8c8b-46ad-8933-0fff8715f47d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,78 +108,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/25/24 09:02, Paolo Bonzini wrote:
-> Because Ubuntu 22.04 has a very old version of bindgen, that
-> does not have the important option --allowlist-file, it will
-> not be able to use --enable-rust out of the box.  Instead,
-> install the latest version of bindgen-cli via "cargo install"
-> in the container, following QEMU's own documentation.
+25.10.2024 23:06, Pierrick Bouvier wrote:
+> On 10/25/24 13:03, Michael Tokarev wrote:
+>> 25.10.2024 19:02, Paolo Bonzini wrote:
+>>> --generate-cstr is a good idea and generally the right thing to do,
+>>> but it is not available in Debian 12 and Ubuntu 22.04.  Work around
+>>> the absence.
+>>
+>> Can't we just install a more recent bindgen and use all the current
+>> features of it, like it's done in patch 22 for ubuntu?
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   tests/docker/dockerfiles/ubuntu2204.docker |  5 +++++
->   tests/lcitool/mappings.yml                 |  4 ++++
->   tests/lcitool/refresh                      | 11 ++++++++++-
->   3 files changed, 19 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
-> index ce3aa39d4f3..245ac879622 100644
-> --- a/tests/docker/dockerfiles/ubuntu2204.docker
-> +++ b/tests/docker/dockerfiles/ubuntu2204.docker
-> @@ -149,6 +149,11 @@ ENV LANG "en_US.UTF-8"
->   ENV MAKE "/usr/bin/make"
->   ENV NINJA "/usr/bin/ninja"
->   ENV PYTHON "/usr/bin/python3"
-> +ENV CARGO_HOME=/usr/local/cargo
-> +ENV PATH=$CARGO_HOME/bin:$PATH
-> +RUN DEBIAN_FRONTEND=noninteractive eatmydata \
-> +  apt install -y --no-install-recommends cargo
-> +RUN cargo install bindgen-cli
->   # As a final step configure the user (if env is defined)
->   ARG USER
->   ARG UID
-> diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-> index 9c5ac87c1c2..c90b23a00f1 100644
-> --- a/tests/lcitool/mappings.yml
-> +++ b/tests/lcitool/mappings.yml
-> @@ -1,4 +1,8 @@
->   mappings:
-> +  # Too old on Ubuntu 22.04; we install it from cargo instead
-> +  bindgen:
-> +    Ubuntu2204:
-> +
->     flake8:
->       OpenSUSELeap15:
->   
-> diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-> index 0f16f4d525c..a46cbbdca41 100755
-> --- a/tests/lcitool/refresh
-> +++ b/tests/lcitool/refresh
-> @@ -137,6 +137,14 @@ fedora_rustup_nightly_extras = [
->       'RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli\n',
->   ]
->   
-> +ubuntu2204_bindgen_extras = [
-> +    "ENV CARGO_HOME=/usr/local/cargo\n",
-> +    'ENV PATH=$CARGO_HOME/bin:$PATH\n',
-> +    "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
-> +    "  apt install -y --no-install-recommends cargo\n",
-> +    'RUN cargo install bindgen-cli\n',
-> +]
-> +
->   def cross_build(prefix, targets):
->       conf = "ENV QEMU_CONFIGURE_OPTS --cross-prefix=%s\n" % (prefix)
->       targets = "ENV DEF_TARGET_LIST %s\n" % (targets)
-> @@ -157,7 +165,8 @@ try:
->                           trailer="".join(debian12_extras))
->       generate_dockerfile("fedora", "fedora-40")
->       generate_dockerfile("opensuse-leap", "opensuse-leap-15")
-> -    generate_dockerfile("ubuntu2204", "ubuntu-2204")
-> +    generate_dockerfile("ubuntu2204", "ubuntu-2204",
-> +                        trailer="".join(ubuntu2204_bindgen_extras))
->   
->       #
->       # Non-fatal Rust-enabled build
+> Users yes, but distros expect to be able to use their packaged version.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Pretty please do not target rust in qemu for *currently* supported
+distros.  For debian bookworm it is already way too late, - for
+bookworm as a distro, qemu with rust is hopeless, it is possible
+only with trixie and up.
+
+Users wishing to experiment can install more recent packages, for
+qemu ci it is the way to go too using the way in patch 22, and that's
+it.  There's no need to sacrifice qemu rust code for current debian
+stable.  rust is already too volatile by its own, and targeting
+that wide range of versions is insane.
+
+/mjt
+
 
