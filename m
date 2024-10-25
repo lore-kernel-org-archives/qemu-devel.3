@@ -4,87 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA7BD149C0
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 090F5D149C0
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:11:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Mlv-0001gA-0o; Fri, 25 Oct 2024 12:02:43 -0400
+	id 1t4Msp-0003EO-MD; Fri, 25 Oct 2024 12:09:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t4Mls-0001eM-G5
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:02:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1t4MsQ-0002yp-Mu
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:09:26 -0400
+Received: from iguana.tulip.relay.mailchannels.net ([23.83.218.253])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t4Mlp-0004n3-HH
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:02:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729872156;
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1t4MsO-0005PR-EW
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:09:26 -0400
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 40A2F1C27F3;
+ Fri, 25 Oct 2024 16:09:22 +0000 (UTC)
+Received: from pdx1-sub0-mail-a233.dreamhost.com
+ (trex-0.trex.outbound.svc.cluster.local [100.99.209.54])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id AA1E01C303C;
+ Fri, 25 Oct 2024 16:09:21 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1729872561; a=rsa-sha256;
+ cv=none;
+ b=ao3uzSJcrzGzcfs4hqpaT7nBfChvbj5E7FyV6QRJqGoDbu1hyV0M0oLwK4yyTHm4AtrlR+
+ rn1wEtyy5NHvJBjNWg9wEZw++APztW9F0neCfEnNnZG6SCbC1JZENtdqY3WA5eZ1UGMnWc
+ GwiDObi8s7PDs2U+D0gfzOQZu9NdsrjR4hjh6TIHV8/o/iUUQl15PCNb8cKqm/fXteYwMM
+ Dlhq0Q5tjDboWZgZsEmxcFvRLAF7f9qDuFz/l/OLXcxawN4xS0gWfbVJtyEN9rtiE77bTw
+ OzsPjFa1RfA2e17UHg6nYCd1kmlQaL400g89SpztcsBokP496BUHeDUUGFC6hw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1729872561;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rKfrIinsgj9j+tvfQg1SYIKrObbRxPY5XNT1F0GLBRk=;
- b=HHAeYTt1yqQP18svBgUvWYTyH0C+9SsB0C0bQJC91tB1vqJ2VEqExFTAoZlSJn31suIVJu
- r5o9NG5BoLvyJqxw9a/oPwsRxaa6c7hGikjgDGaUMHV2dWwCHIL7WEQz1UpJRu3TAnWiEr
- yrPCZZH0NSZ2ib5j9iUiAatlZ2C8KnA=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-149-tfBkLRVNNECT9WEby9NTDA-1; Fri, 25 Oct 2024 12:02:35 -0400
-X-MC-Unique: tfBkLRVNNECT9WEby9NTDA-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5c999f254aeso1929996a12.0
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 09:02:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729872154; x=1730476954;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rKfrIinsgj9j+tvfQg1SYIKrObbRxPY5XNT1F0GLBRk=;
- b=sCnAGpeaX+6v5ZVRAetENkwNoC59TOUCXi16hKu+xvMEaxzqmDQz47zdM1VceDQlKo
- yS/iXPVXrgfmD4XEohNv0FKclfzPzodh4MnyLiIiyKIl9rSK3nXRSMJotOK0ut9YG5TE
- O3GQR60S4AE5aPNtl9NFUQ/+gOw3MfDhDG9LrU6oLaBnbzXsTmInHKF50i30vA/pgYNN
- S5DnzsEvQPVzcjkOrM4RWPzEWe53Mnt5CfQp30AcHG3riIQm6WsCZNiNNEdifWkOq3wR
- pzudJ+R04hTvMHVIQZsYzZuPaNrxDHKfPNhypjEZ/tEKO0i4YxKthgkoRuccBntzqR6G
- CyBA==
-X-Gm-Message-State: AOJu0YyRfGCadAKV9eovuOdFWHXQd0edUf7RcthrvpTeRkPf278gDgaV
- F83Uz3Q9zUDMY9WDFJIDA7Fi9WEAOyWAAhdeHM8yBtycgBUgT1l0CcRWmkLP1KywblsmP7K1e2s
- eplpLFidNsWA6Ik1EWn7dwl94OqDn3fyFCSS68/oV2ftJuquETZLg8kWaUmtltXqDrept9qlWxp
- m5DvMe5dGuCIn/AyvlumLSu4XUNpkmpucHh6KW8M4=
-X-Received: by 2002:a05:6402:3814:b0:5c9:367a:68d9 with SMTP id
- 4fb4d7f45d1cf-5cb8b1c1b13mr8213338a12.15.1729872153856; 
- Fri, 25 Oct 2024 09:02:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH7yU9yqwH3xS3296qTOuOhl/lc6/xFAIlF0HVEt+ayJm+UwhI/SN91Hx6eBRrdb5z5sOHhYw==
-X-Received: by 2002:a05:6402:3814:b0:5c9:367a:68d9 with SMTP id
- 4fb4d7f45d1cf-5cb8b1c1b13mr8213266a12.15.1729872153234; 
- Fri, 25 Oct 2024 09:02:33 -0700 (PDT)
-Received: from [192.168.10.47] ([151.81.112.43])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cbb629c250sm759850a12.27.2024.10.25.09.02.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Oct 2024 09:02:32 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
- junjie.mao@hotmail.com, berrange@redhat.com
-Subject: [PATCH 05/23] rust/pl011: add TYPE_PL011_LUMINARY device
-Date: Fri, 25 Oct 2024 18:01:50 +0200
-Message-ID: <20241025160209.194307-6-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241025160209.194307-1-pbonzini@redhat.com>
-References: <20241025160209.194307-1-pbonzini@redhat.com>
+ in-reply-to:in-reply-to:references:references:dkim-signature;
+ bh=IdmirYyRblDuI+AZaBO+p4heqJBXcuAld70rKQqHWYo=;
+ b=YWPSe0kZ4g9SpYFWCOXrN5RSWiSIQJ4nT8zKqupmoNlwYNVv7sYRTkLxBf4hbuqHL9qaDs
+ lt3QLaqHALMingf0k0eVNZNj0QO4kJF0VUUr4RrY0fWQQz2MpF/OZU5AhXH6tSlAwIaarQ
+ GehreLXok+ic0Yuho8h1Q9dQ2ZfLKkbv/+K6tKNTF/5qlo+bsTrWppqsQkRtSC/GhSuITA
+ gdISC5j6cgijqcXtaWP5daBG7Un/sbdwEukVp1wCovzkW+CIsE2uPybzJz/JCzphvoRsQI
+ lK4kCZhAriYaDukPZ/fx6TPb+E2SpUx11zB5oW3qmbOtB11+CtDbdlTLL/kDdQ==
+ARC-Authentication-Results: i=1; rspamd-547c589df-6fk22;
+ auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
+X-MailChannels-Auth-Id: dreamhost
+X-Eight-Stretch: 71241ae648e0fd8a_1729872562090_1195396160
+X-MC-Loop-Signature: 1729872562090:2375849557
+X-MC-Ingress-Time: 1729872562090
+Received: from pdx1-sub0-mail-a233.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.99.209.54 (trex/7.0.2); Fri, 25 Oct 2024 16:09:22 +0000
+Received: from [172.22.7.54] (unknown [198.232.126.195])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ (No client certificate requested)
+ (Authenticated sender: rob@landley.net)
+ by pdx1-sub0-mail-a233.dreamhost.com (Postfix) with ESMTPSA id 4XZnm101DTz4h; 
+ Fri, 25 Oct 2024 09:09:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
+ s=dreamhost; t=1729872561;
+ bh=IdmirYyRblDuI+AZaBO+p4heqJBXcuAld70rKQqHWYo=;
+ h=Date:Subject:To:Cc:From:Content-Type:Content-Transfer-Encoding;
+ b=rIBm0akqPE/KxyZJtniobhWghvIiQJjfGY5KoS6VcbW2dGQpO6LnvqPZWEAlHoQLt
+ TodWOG2hvG6OKIFRiVo8ZQcfSwQortgrLNHw7ou/Eoc87/Uwi8JjvzCgWxKVShhJsS
+ WHAsSqdX0qfV2OxXWGqmz5qCzLEOEYv6XG8zT/iHBxZHDyl9Zmo7pGvP4jP2CNSfMB
+ HDdCWYU7TadzlreSaw5g5DXstKasG9/Ew26+LPzBI2S/QdbozkbrMCK7bae5Cz04c2
+ 0Zh+7qIAezkbCIG+We8ooSQyYLEXQYwyknuaYn+BAQdLavK2lM17sul9MFD+S7lrOL
+ p1reLfcbFgweg==
+Message-ID: <b45ff481-bae0-413d-a3a6-bf5a308aae76@landley.net>
+Date: Fri, 25 Oct 2024 11:09:19 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] Revert "Remove the unused sh4eb target"
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>
+References: <20241024082735.42324-1-thuth@redhat.com>
+ <20241024082735.42324-2-thuth@redhat.com>
+Content-Language: en-US
+From: Rob Landley <rob@landley.net>
+In-Reply-To: <20241024082735.42324-2-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=23.83.218.253; envelope-from=rob@landley.net;
+ helo=iguana.tulip.relay.mailchannels.net
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -103,165 +117,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+On 10/24/24 03:27, Thomas Huth wrote:
+> This reverts commit 73ceb12960e686b763415f0880cc5171ccce01cf.
+> 
+> The "r2d" machine can work in big endian mode, see:
+> 
+>   https://lore.kernel.org/qemu-devel/d6755445-1060-48a8-82b6-2f392c21f9b9@landley.net/
+> 
+> So the reasoning for removing sh4eb was wrong.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Add a device specialization for the Luminary UART device.
+Signed-off-by: Rob Landley <rob@landley.net>
 
-This commit adds a DeviceId enum that utilizes the Index trait to return
-different bytes depending on what device id the UART has (Arm -default-
-or Luminary)
-
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20241024-rust-round-2-v1-6-051e7a25b978@lin=
-aro.org
----
- rust/hw/char/pl011/src/device.rs | 77 ++++++++++++++++++++++++++++++--
- rust/hw/char/pl011/src/lib.rs    |  1 +
- 2 files changed, 75 insertions(+), 3 deletions(-)
-
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/devi=
-ce.rs
-index f91790ff185..051c59f39ae 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -18,8 +18,6 @@
-     RegisterOffset,
- };
-=20
--static PL011_ID_ARM: [c_uchar; 8] =3D [0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0,=
- 0x05, 0xb1];
--
- /// Integer Baud Rate Divider, `UARTIBRD`
- const IBRD_MASK: u32 =3D 0x3f;
-=20
-@@ -31,6 +29,29 @@
- /// QEMU sourced constant.
- pub const PL011_FIFO_DEPTH: usize =3D 16_usize;
-=20
-+#[derive(Clone, Copy, Debug)]
-+enum DeviceId {
-+    #[allow(dead_code)]
-+    Arm =3D 0,
-+    Luminary,
-+}
-+
-+impl std::ops::Index<hwaddr> for DeviceId {
-+    type Output =3D c_uchar;
-+
-+    fn index(&self, idx: hwaddr) -> &Self::Output {
-+        match self {
-+            Self::Arm =3D> &Self::PL011_ID_ARM[idx as usize],
-+            Self::Luminary =3D> &Self::PL011_ID_LUMINARY[idx as usize],
-+        }
-+    }
-+}
-+
-+impl DeviceId {
-+    const PL011_ID_ARM: [c_uchar; 8] =3D [0x11, 0x10, 0x14, 0x00, 0x0d, 0x=
-f0, 0x05, 0xb1];
-+    const PL011_ID_LUMINARY: [c_uchar; 8] =3D [0x11, 0x00, 0x18, 0x01, 0x0=
-d, 0xf0, 0x05, 0xb1];
-+}
-+
- #[repr(C)]
- #[derive(Debug, qemu_api_macros::Object)]
- /// PL011 Device Model in QEMU
-@@ -75,6 +96,8 @@ pub struct PL011State {
-     pub clock: NonNull<Clock>,
-     #[doc(alias =3D "migrate_clk")]
-     pub migrate_clock: bool,
-+    /// The byte string that identifies the device.
-+    device_id: DeviceId,
- }
-=20
- impl ObjectImpl for PL011State {
-@@ -162,7 +185,7 @@ pub fn read(
-=20
-         std::ops::ControlFlow::Break(match RegisterOffset::try_from(offset=
-) {
-             Err(v) if (0x3f8..0x400).contains(&v) =3D> {
--                u64::from(PL011_ID_ARM[((offset - 0xfe0) >> 2) as usize])
-+                u64::from(self.device_id[(offset - 0xfe0) >> 2])
-             }
-             Err(_) =3D> {
-                 // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset =
-0x%x\n", (int)offset);
-@@ -619,3 +642,51 @@ pub fn post_load(&mut self, _version_id: u32) -> Resul=
-t<(), ()> {
-         state.as_mut().init();
-     }
- }
-+
-+#[repr(C)]
-+#[derive(Debug, qemu_api_macros::Object)]
-+/// PL011 Luminary device model.
-+pub struct PL011Luminary {
-+    parent_obj: PL011State,
-+}
-+
-+#[repr(C)]
-+pub struct PL011LuminaryClass {
-+    _inner: [u8; 0],
-+}
-+
-+/// Initializes a pre-allocated, unitialized instance of `PL011Luminary`.
-+///
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer, that =
-has
-+/// the same size as [`PL011Luminary`]. We also expect the device is
-+/// readable/writeable from one thread at any time.
-+pub unsafe extern "C" fn pl011_luminary_init(obj: *mut Object) {
-+    unsafe {
-+        debug_assert!(!obj.is_null());
-+        let mut state =3D NonNull::new_unchecked(obj.cast::<PL011Luminary>=
-());
-+        let state =3D state.as_mut();
-+        state.parent_obj.device_id =3D DeviceId::Luminary;
-+    }
-+}
-+
-+impl qemu_api::definitions::Class for PL011LuminaryClass {
-+    const CLASS_INIT: Option<
-+        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi=
-::c_void),
-+    > =3D None;
-+    const CLASS_BASE_INIT: Option<
-+        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi=
-::c_void),
-+    > =3D None;
-+}
-+
-+impl ObjectImpl for PL011Luminary {
-+    type Class =3D PL011LuminaryClass;
-+    const TYPE_INFO: qemu_api::bindings::TypeInfo =3D qemu_api::type_info!=
- { Self };
-+    const TYPE_NAME: &'static CStr =3D crate::TYPE_PL011_LUMINARY;
-+    const PARENT_TYPE_NAME: Option<&'static CStr> =3D Some(crate::TYPE_PL0=
-11);
-+    const ABSTRACT: bool =3D false;
-+    const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> =
-=3D Some(pl011_luminary_init);
-+    const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut Object=
-)> =3D None;
-+    const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut Object)=
-> =3D None;
-+}
-diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
-index 2939ee50c99..c6bb76a7926 100644
---- a/rust/hw/char/pl011/src/lib.rs
-+++ b/rust/hw/char/pl011/src/lib.rs
-@@ -46,6 +46,7 @@
- pub mod memory_ops;
-=20
- pub const TYPE_PL011: &::core::ffi::CStr =3D c"pl011";
-+pub const TYPE_PL011_LUMINARY: &::core::ffi::CStr =3D c"pl011_luminary";
-=20
- /// Offset of each register from the base memory address of the device.
- ///
---=20
-2.47.0
-
+Rob
 
