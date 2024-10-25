@@ -4,128 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D54D0C607
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 12:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30D19D0C606
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 12:49:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4JbK-0001AL-OS; Fri, 25 Oct 2024 08:39:34 -0400
+	id 1t4Jjw-00030W-0p; Fri, 25 Oct 2024 08:48:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t4JbJ-00019t-3i
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:39:33 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t4Jjt-00030G-Ts
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:48:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t4JbH-00021W-DZ
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:39:32 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t4Jjs-0003d6-6j
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:48:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729859967;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=zWX+DsdIc9Qtt9swtc03nyXdG9gQ+/2FT8Yt8pFqtAA=;
- b=Eh47l+xarO6jhaqWcP9oBMPjNM0u1iC+/595nFaP6BnuijlZh8QlfSvswSsAD7mtm6t3vx
- HGhJ072u+hYHh+L2VhY2fCCxwaWV9xJXzmpEbybHlnEOr56DY/z4i4JxN8B+W/eT4MFdQk
- QoRgd45my6qaZnU1o5BYGZZEfbXIo4s=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-hAnwR7KsPduS1f7b_XpL2Q-1; Fri, 25 Oct 2024 08:39:26 -0400
-X-MC-Unique: hAnwR7KsPduS1f7b_XpL2Q-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37d5ca192b8so1093808f8f.1
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 05:39:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729859965; x=1730464765;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zWX+DsdIc9Qtt9swtc03nyXdG9gQ+/2FT8Yt8pFqtAA=;
- b=keETbzhw0h9qORvKAqWtcFMjTqkfBV+twrrTgtjaN9TM0xqfHJBViBj+NWMA5LtYvK
- slIesO09U/rbrc9Ntcy6uh2LXZ4QhGdMdMrtH9Cy2qCrPaAeWgdQE5F203Tc5dD3sGDJ
- 6h5cDczophdO3ZJqUFDR2BUXwyzPKj/3DXi784WRY0MN9id6AZ9gYIDvieUc12rrJGrP
- c/oNr9PmgZ/d7ui/KTLmL6NVZpWPNMXFyxFWg8N0NdU2V8/PmncWZYIwGX2knWTmxq8G
- jAiSGF49RuHaBXU8B2vXl3J/dJDQLr/3gWmS2wkcKFMvlp8YJ+hrh9xFWoIH+4B7r2q9
- uVNg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUONtUnVG1R6wYut2cnMsk/tkiwEgcvxWGzg27OSMOCyE+npjRaRHvwH+yfW9Otlm1AVCgyD6Rb8n20@nongnu.org
-X-Gm-Message-State: AOJu0Yyr+q30Ug3GTSul9vlV8OjPbfipbNXnt8b+6DMxYNR7yGq9Kqjm
- EyE3o+3Ojmg5gSGo5y/f/EmCTDOHx0iZe7OUoFS1NUMicMq2oUNtw6W6vU6A5vfXc+WbRX5Ftcj
- 9hycSJslPs/EiYjr0ta4gFMt3VCHRanmbmveDuVspWUphvFODdgew
-X-Received: by 2002:a05:6000:d0b:b0:374:bd00:d1e with SMTP id
- ffacd0b85a97d-3803abc2879mr4511802f8f.3.1729859965146; 
- Fri, 25 Oct 2024 05:39:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMxlIcpEkmGbWpzluhskK5sgdK3TUNFEE1UERUoQqmkmdDQMGQZk0a5cQXninMMN4hjqcI3w==
-X-Received: by 2002:a05:6000:d0b:b0:374:bd00:d1e with SMTP id
- ffacd0b85a97d-3803abc2879mr4511777f8f.3.1729859964705; 
- Fri, 25 Oct 2024 05:39:24 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
- ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38058b0ea58sm1428904f8f.15.2024.10.25.05.39.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 05:39:24 -0700 (PDT)
-Message-ID: <ba4ce438-554f-4f44-a14e-b65426aa8d4d@redhat.com>
-Date: Fri, 25 Oct 2024 14:39:23 +0200
+ s=mimecast20190719; t=1729860502;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=B9S/IEouqGIyuyHIuaLPuM+goYWbjD0yNKfUV+cFoY0=;
+ b=NzyYpEYZRuzovfr+i3EAnXiY9R9a/aFeNbB2Syb4UC0BKbNd4P85H0JRvKClnb6EyZ4tVb
+ KvMouh45OoWvZUli7esKExqoasqovt8T74Hx2eGEVyCMz56AN3Se6Yj9OBwK5kwi2gwlId
+ pnRIVigUMYzzz3lWCtSQzUMEs+Zxbp8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-3d99tjC7MN6nUr6DDzUDyw-1; Fri,
+ 25 Oct 2024 08:48:19 -0400
+X-MC-Unique: 3d99tjC7MN6nUr6DDzUDyw-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 632461955D4D; Fri, 25 Oct 2024 12:48:17 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.164])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B6241300018D; Fri, 25 Oct 2024 12:48:15 +0000 (UTC)
+Date: Fri, 25 Oct 2024 13:48:12 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Dehan Meng <demeng@redhat.com>
+Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com, michael.roth@amd.com,
+ peter.maydell@linaro.org
+Subject: Re: [PATCH v4 1/5] qemu-ga:  'Null' check for mandatory parameters
+Message-ID: <ZxuTjJvrdIKKT4AC@redhat.com>
+References: <20241022142948.531325-1-demeng@redhat.com>
+ <20241022142948.531325-2-demeng@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/8] migration: Drop migration_is_idle()
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Avihai Horon <avihaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20241024213056.1395400-1-peterx@redhat.com>
- <20241024213056.1395400-6-peterx@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241024213056.1395400-6-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241022142948.531325-2-demeng@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -147,135 +82,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/24/24 23:30, Peter Xu wrote:
-> Now with the current migration_is_running(), it will report exactly the
-> opposite of what will be reported by migration_is_idle().
+On Tue, Oct 22, 2024 at 10:29:44PM +0800, Dehan Meng wrote:
+> sscanf return values are checked and add 'Null' check for
+> mandatory parameters.
 > 
-> Drop migration_is_idle(), instead use "!migration_is_running()" which
-> should be identical on functionality.
-> 
-> In reality, most of the idle check is inverted, so it's even easier to
-> write with "migrate_is_running()" check.
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+> Signed-off-by: Dehan Meng <demeng@redhat.com>
 > ---
->   include/migration/misc.h |  1 -
->   hw/virtio/virtio-mem.c   |  2 +-
->   migration/migration.c    | 21 +--------------------
->   migration/ram.c          |  2 +-
->   system/qdev-monitor.c    |  4 ++--
->   5 files changed, 5 insertions(+), 25 deletions(-)
+>  qga/commands-linux.c | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
 > 
-> diff --git a/include/migration/misc.h b/include/migration/misc.h
-> index 86ef160f19..804eb23c06 100644
-> --- a/include/migration/misc.h
-> +++ b/include/migration/misc.h
-> @@ -53,7 +53,6 @@ void dump_vmstate_json_to_file(FILE *out_fp);
->   void migration_object_init(void);
->   void migration_shutdown(void);
->   
-> -bool migration_is_idle(void);
->   bool migration_is_active(void);
->   bool migration_is_device(void);
->   bool migration_is_running(void);
-> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-> index ae1e81d7ba..80ada89551 100644
-> --- a/hw/virtio/virtio-mem.c
-> +++ b/hw/virtio/virtio-mem.c
-> @@ -188,7 +188,7 @@ static bool virtio_mem_is_busy(void)
->        * after plugging them) until we're running on the destination (as we didn't
->        * migrate these blocks when they were unplugged).
->        */
-> -    return migration_in_incoming_postcopy() || !migration_is_idle();
-> +    return migration_in_incoming_postcopy() || migration_is_running();
->   }
->   
->   typedef int (*virtio_mem_range_cb)(VirtIOMEM *vmem, void *arg,
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 3365195def..f86c709699 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1636,25 +1636,6 @@ bool migration_in_bg_snapshot(void)
->       return migrate_background_snapshot() && migration_is_running();
->   }
->   
-> -bool migration_is_idle(void)
-> -{
-> -    MigrationState *s = current_migration;
-> -
-> -    if (!s) {
-> -        return true;
-> -    }
-> -
-> -    switch (s->state) {
-> -    case MIGRATION_STATUS_NONE:
-> -    case MIGRATION_STATUS_CANCELLED:
-> -    case MIGRATION_STATUS_COMPLETED:
-> -    case MIGRATION_STATUS_FAILED:
-> -        return true;
-> -    default:
-> -        return false;
-> -    }
-> -}
-> -
->   bool migration_is_active(void)
->   {
->       MigrationState *s = current_migration;
-> @@ -1733,7 +1714,7 @@ static bool is_busy(Error **reasonp, Error **errp)
->       ERRP_GUARD();
->   
->       /* Snapshots are similar to migrations, so check RUN_STATE_SAVE_VM too. */
-> -    if (runstate_check(RUN_STATE_SAVE_VM) || !migration_is_idle()) {
-> +    if (runstate_check(RUN_STATE_SAVE_VM) || migration_is_running()) {
->           error_propagate_prepend(errp, *reasonp,
->                                   "disallowing migration blocker "
->                                   "(migration/snapshot in progress) for: ");
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 5646a0b882..504b48d584 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -4498,7 +4498,7 @@ static void ram_mig_ram_block_resized(RAMBlockNotifier *n, void *host,
->           return;
->       }
->   
-> -    if (!migration_is_idle()) {
-> +    if (migration_is_running()) {
->           /*
->            * Precopy code on the source cannot deal with the size of RAM blocks
->            * changing at random points in time - especially after sending the
-> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-> index 1310f35c9f..83fa684475 100644
-> --- a/system/qdev-monitor.c
-> +++ b/system/qdev-monitor.c
-> @@ -686,7 +686,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
->           return NULL;
->       }
->   
-> -    if (!migration_is_idle()) {
-> +    if (migration_is_running()) {
->           error_setg(errp, "device_add not allowed while migrating");
->           return NULL;
->       }
-> @@ -935,7 +935,7 @@ void qdev_unplug(DeviceState *dev, Error **errp)
->           return;
->       }
->   
-> -    if (!migration_is_idle() && !dev->allow_unplug_during_migration) {
-> +    if (migration_is_running() && !dev->allow_unplug_during_migration) {
->           error_setg(errp, "device_del not allowed while migrating");
->           return;
->       }
+> diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+> index 51d5e3d927..f0e9cdd27c 100644
+> --- a/qga/commands-linux.c
+> +++ b/qga/commands-linux.c
+> @@ -2103,7 +2103,9 @@ static char *hexToIPAddress(const void *hexValue, int is_ipv6)
+>          int i;
+>  
+>          for (i = 0; i < 16; i++) {
+> -            sscanf(&hexStr[i * 2], "%02hhx", &in6.s6_addr[i]);
+> +            if (sscanf(&hex_str[i * 2], "%02hhx", &in6.s6_addr[i]) != 1) {
+> +                return NULL;
+> +            }
+>          }
+>          inet_ntop(AF_INET6, &in6, addr, INET6_ADDRSTRLEN);
+>  
+> @@ -2164,6 +2166,10 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
+>                  networkroute = route;
+>                  networkroute->iface = g_strdup(Iface);
+>                  networkroute->destination = hexToIPAddress(Destination, 1);
+> +                if (networkroute->destination == NULL) {
+> +                    g_free(route);
+> +                    continue;
+> +                }
+
+This still hasn't fixed the leak problems identified in the previous
+review of the last version
+
+>                  networkroute->metric = Metric;
+>                  networkroute->source = hexToIPAddress(Source, 1);
+>                  networkroute->desprefixlen = g_strdup_printf(
+> @@ -2195,6 +2201,10 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
+>                  networkroute = route;
+>                  networkroute->iface = g_strdup(Iface);
+>                  networkroute->destination = hexToIPAddress(&Destination, 0);
+> +                if (networkroute->destination == NULL) {
+> +                    g_free(route);
+> +                    continue;
+> +                }
+>                  networkroute->gateway = hexToIPAddress(&Gateway, 0);
+>                  networkroute->mask = hexToIPAddress(&Mask, 0);
+>                  networkroute->metric = Metric;
+> -- 
+> 2.40.1
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
