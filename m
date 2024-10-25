@@ -4,74 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB7BD10399
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 15:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD3C5D10399
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 15:27:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4MC8-0005Az-Jh; Fri, 25 Oct 2024 11:25:44 -0400
+	id 1t4MCt-0005VZ-Fr; Fri, 25 Oct 2024 11:26:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
- id 1t4MC5-00059s-NG
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:25:41 -0400
-Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4MCp-0005V6-Ud
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:26:27 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
- id 1t4MC4-000087-32
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:25:41 -0400
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
- by metis.whiteo.stw.pengutronix.de with esmtps
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <jlu@pengutronix.de>)
- id 1t4MBp-0004XG-Uv; Fri, 25 Oct 2024 17:25:25 +0200
-Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77])
- by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
- (envelope-from <jlu@pengutronix.de>) id 1t4MBo-000OFW-2e;
- Fri, 25 Oct 2024 17:25:24 +0200
-Received: from localhost ([127.0.0.1])
- by ptz.office.stw.pengutronix.de with esmtp (Exim 4.96)
- (envelope-from <jlu@pengutronix.de>) id 1t4MBo-006ahU-05;
- Fri, 25 Oct 2024 17:25:24 +0200
-Message-ID: <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
-Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
-From: Jan =?ISO-8859-1?Q?L=FCbbe?= <jlu@pengutronix.de>
-To: Guenter Roeck <linux@roeck-us.net>, =?ISO-8859-1?Q?C=E9dric?= Le Goater	
- <clg@kaod.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
- <thuth@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>, Joel Stanley
- <joel@jms.id.au>
-Date: Fri, 25 Oct 2024 17:25:24 +0200
-In-Reply-To: <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
-References: <20241017163247.711244-1-peter.maydell@linaro.org>
- <dcf06645-dac0-4099-8946-38ca9deaeccf@redhat.com>
- <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
- <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
- <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
- <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
- <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
- <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
- <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
- <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
- <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.0 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4MCo-0000Ap-2G
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:26:27 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 616519C2EE;
+ Fri, 25 Oct 2024 18:25:40 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6282A15D376;
+ Fri, 25 Oct 2024 18:26:13 +0300 (MSK)
+Message-ID: <c82f5323-9fa8-4c65-83dd-fbfa38d26f4b@tls.msk.ru>
+Date: Fri, 25 Oct 2024 18:26:13 +0300
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: jlu@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
- SAEximRunCond expanded to false
-X-PTX-Original-Recipient: qemu-devel@nongnu.org
-Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
- envelope-from=jlu@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/10] target/i386/tcg: Use DPL-level accesses for
+ interrupts and call gates
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: rrh.henry@gmail.com, richard.henderson@linaro.org
+References: <20240710062920.73063-1-pbonzini@redhat.com>
+ <20240710062920.73063-8-pbonzini@redhat.com>
+ <806baf9d-5549-4298-99e7-f50fdf69f99d@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <806baf9d-5549-4298-99e7-f50fdf69f99d@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,113 +106,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2024-10-25 at 06:59 -0700, Guenter Roeck wrote:
-> On 10/25/24 02:57, Jan L=C3=BCbbe wrote:
-> > On Fri, 2024-10-25 at 08:55 +0200, C=C3=A9dric Le Goater wrote:
-> > > On 10/24/24 19:59, Philippe Mathieu-Daud=C3=A9 wrote:
-> > > > Cc'ing Jan.
-> > > >=20
-> > > > On 22/10/24 12:04, Guenter Roeck wrote:
-> > > >=20
-> > > > > I have no idea how this is supposed to work, and I don't think it=
- works
-> > > > > as implemented. I'll revert commit e32ac563b83 in my local copy o=
-f qemu.
-> > > > > Jan, can you have a look at this bug report please? Otherwise I'l=
-l
-> > > > > have a look during soft freeze.
-> >=20
-> > Guenter, just to make sure: In your case [1], you had "boot-emmc" (see
-> > aspeed_machine_ast2600_class_emmc_init) enabled, right? Otherwise the
->=20
-> I tried both enabled and disabled.
->=20
-> > boot partition size would be 0, meaning that the eMMC has no boot
-> > partitions.
->=20
-> That is what I would have expected, but it does not reflect reality.
->=20
-> > In that configuration, your backing file needs to have space for the
-> > boot partitions at the start (2*1MiB) and the rootfs starts at the 2
-> > MiB offset.
-> >=20
->=20
-> boot-emmc doesn't make a difference, because
->=20
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (emmc) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-qdev_prop_set_uint8(card, "boot-config",
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 boot_emmc ? 0x1 << 3 : 0x0);
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->=20
-> in hw/arm/aspeed.c sets the boot partition size independently of the
-> boot-emmc flag.=C2=A0
+18.10.2024 19:02, Michael Tokarev wrote:
+> 10.07.2024 09:29, Paolo Bonzini wrote:
+>> This fixes a bug wherein i386/tcg assumed an interrupt return using
+>> the CALL or JMP instructions were always going from kernel or user mode to
+>> kernel mode, when using a call gate. This assumption is violated if
+>> the call gate has a DPL that is greater than 0.
+>>
+>> In addition, the stack accesses should count as explicit, not implicit
+>> ("kernel" in QEMU code), so that SMAP is not applied if DPL=3.
+>>
+>> Analyzed-by: Robert R. Henry <rrh.henry@gmail.com>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/249
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> 
+> This sounds like qemu-stable material, is it not?
+> 
+> It can be picked up for 9.1.x, but for 9.0 and before it needs a few
+> other changes in this area, like v9.0.0-2238-g8053862af9 "target/i386/tcg:
+> Compute MMU index once" and v9.0.0-2236-g059368bcf5 "target/i386/tcg:
+> Reorg push/pop within seg_helper.c", or it needs a proper backport.
+> 
+> What do you think?
 
-Ah, yes. :/
+A friendly ping/help? :)
 
-So you can have SD, eMMC with boot from boot partition *disabled* or
-eMMC with boot from boot partition *enabled*.
+Or should I drop this from 9.1.x too?
 
-> I suspect that the expectation is that I always provide
-> an emmc image with a 2 MB gap at the beginning, but in my opinion that is
-> really hyper-clumsy, and I simply won't do it, sorry.
+Thanks,
 
-I was surprised that the boot partitions' contents are stored in the
-same backing file as the main area (instead of being separate files).
-But I've not researched why it was designed this way.
-
-> I can work around
-> the problem by changing the above code to only set boot-partition-size if
-> boot_emmc is set, or I can revert commit e32ac563b83. For now I chose the
-> latter.
-
-With e32ac563b83 reverted, your backing file layout will change *at
-runtime* depending on whether booting from the boot partition is
-enabled via EXT CSD registers. You should be able to try that using
-'mmc bootpart enable <boot_part> 0 /dev/mmcblk0' (with boot_part=3D0 for
-disabled and boot_part=3D1/2 for enabled).
-
-
-I'm not sure what the best way forward is... perhaps make the boot-
-partition-size zero if boot_emmc is false? e.g.
-
-@@ -339,7 +339,12 @@ static void sdhci_attach_drive(SDHCIState *sdhci, Driv=
-eInfo *dinfo, bool emmc,
-         }
-         card =3D qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
-         if (emmc) {
--            qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
-+            /*
-+             * Avoid the requirement for a padded disk image if booting fr=
-om
-+             * eMMC boot partitions is not needed.
-+             */
-+            qdev_prop_set_uint64(card, "boot-partition-size",
-+                                boot_emmc ? 1 * MiB : 0);
-             qdev_prop_set_uint8(card, "boot-config",
-                                 boot_emmc ? 0x1 << 3 : 0x0);
-         }
-
-
-Then you'd have the choice between:
-- an eMMC, but without boot partitions (and simple backing=C2=A0file=C2=A0l=
-ayout)
-- an eMMC with boot partitions and need a backing file with=C2=A0
-  the=C2=A0boot partitions at the beginning
-
-That might be the lesser evil. :)
-
-Jan
-
---=20
-Pengutronix e.K.                        |                             |
-Steuerwalder Str. 21                    | https://www.pengutronix.de/ |
-31137 Hildesheim, Germany               | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686        | Fax:   +49-5121-206917-5555 |
-
-
+/mjt
 
