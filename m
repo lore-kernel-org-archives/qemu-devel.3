@@ -4,67 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 209BAD0C5FD
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 10:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20B5CD0C5FB
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 10:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Hkv-0003pK-VC; Fri, 25 Oct 2024 06:41:22 -0400
+	id 1t4Huq-0005g2-GM; Fri, 25 Oct 2024 06:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t4Hkt-0003on-C8
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 06:41:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1t4Huo-0005fb-AN; Fri, 25 Oct 2024 06:51:34 -0400
+Received: from fout-a5-smtp.messagingengine.com ([103.168.172.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t4Hkr-00032e-3O
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 06:41:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729852874;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ylTp1QLVbhe6U4eqZf0jmNJnLxdYGk1Ss/G/3MPthlA=;
- b=gjAMn5EB5btpurgcLJ1BmUbUmrb9lupElh0QRmkNCOHoHhZmj4MK+Nc2YrzalprItl35z3
- 9Vt0j6CssuHh65hr55OO/S7K61C2QLUgqEcCr18TwzM0EAKu5sIM/9FmZL5Ma1bUddo/pM
- JzZ/VImIIbFcTzqd9un4tku0CPTXSCY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-l6QxU85rM2qcAnhblcCa5g-1; Fri,
- 25 Oct 2024 06:41:11 -0400
-X-MC-Unique: l6QxU85rM2qcAnhblcCa5g-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2BF7F1945114; Fri, 25 Oct 2024 10:41:07 +0000 (UTC)
-Received: from t14s.fritz.box (unknown [10.22.80.53])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9367A1955F43; Fri, 25 Oct 2024 10:41:04 +0000 (UTC)
-From: David Hildenbrand <david@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v1] virtio-mem: unplug memory only during system resets,
- not device resets
-Date: Fri, 25 Oct 2024 12:41:03 +0200
-Message-ID: <20241025104103.342188-1-david@redhat.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1t4Hul-0004A9-A3; Fri, 25 Oct 2024 06:51:33 -0400
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal
+ [10.202.2.41])
+ by mailfout.phl.internal (Postfix) with ESMTP id 525F41380147;
+ Fri, 25 Oct 2024 06:51:27 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-01.internal (MEProxy); Fri, 25 Oct 2024 06:51:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:message-id:mime-version
+ :reply-to:subject:subject:to:to; s=fm2; t=1729853487; x=
+ 1729939887; bh=K1HsLM0w0dLUOiVJq2rqs7rAKcCVgY8sabIVebI1pJ8=; b=M
+ zFJS6urK89KnmQIBY3eb7FYo3qguvvb4UyLKaB6yxhXnW+iSH/R6c+qU2cyC2WUZ
+ Hbt0CF9jgvA8fBctbCuYW8ubVBaYn+yLmDhOCbXHLX4Hp73uegvcFVUWSihcM/Aq
+ 4sIebQ5i0FhruN8RnzNzW4ickwHSf/v6Ajjjjv0GsZKOiZor5JdrEuUEdwCOZTgx
+ YPvE2t5lt4a2E57/BNNXirNoOnbOND/EDhzwjTaPQFdM3+4y/JKLtNfi97GlMVOA
+ giXqqyBanuUm5NuwLi5neHwfBXai22SzVM4EcqVhbuTewbgZx2rcv56cyKji2Rea
+ d3vu+5PLfc/G1yWLdalzg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; t=1729853487; x=1729939887; bh=K1HsLM0w0dLUO
+ iVJq2rqs7rAKcCVgY8sabIVebI1pJ8=; b=Gi8JaVaNjlPGJkedQTPtB2UWsU7Id
+ cV0JDp6H/a0TpuhnZElDVZZ3Ssk1qnpxGV6QsM8K19kXPXL60if3nPlx5fDKSUXA
+ EnkQAstQRtg7ExiXGeP4ttBT5NZG6EN+u/EoPW1hHNLgzz9IBs4xqoVMaLsYfm5v
+ c4ft6JQUQ0HR0NE50EArCpiqieww1tuhuhH2YsL5DbXB+V6EjwgCuNnU5p0uwEfm
+ axvf8qu5WTm/K8Wzeq90OqQBLfPmWE9tmoLTdtTB1GNn3HcimvbLB1H59EadkzXq
+ UvTjQt11BKU86AMt/UqHFDLT1VDZ4oklAs/ErBxdBtErNNtQzheBd3ZLw==
+X-ME-Sender: <xms:LngbZ7j2_3-CkFB6eTVjLAMvZ2t1LqXYl0m2o_LmnxCCBhWg7oyYwQ>
+ <xme:LngbZ4B4O8F1MtMLYwj-12sC1I_sd9Fq1ysi2ocFHWuFDKWuBVpwUmcy36A9xBeTb
+ YY6qh27wgne9cB57dk>
+X-ME-Received: <xmr:LngbZ7Gm9cEFsCgO2XU52xKO14s7c6kaAMatTgzDRfPIlvNjqAzqYMGhVswPdID5Mk-NWP-W6M9Di9TNLfc-WDc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejvddgfeefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhephfffufggtgfgkffvvefosehtjeertdertdejnecu
+ hfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrug
+ hkqeenucggtffrrghtthgvrhhnpefgjedtvdelkeegudelkedttedtffevfefhgefhtdeu
+ vdevuefhhfefuddvveffieenucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluh
+ hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesihhrrhgv
+ lhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpd
+ hrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohep
+ khgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehjfihkohiirggtiihukh
+ esghhmrghilhdrtghomhdprhgtphhtthhopehithhssehirhhrvghlvghvrghnthdrughk
+ pdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdhorhhgpdhrtghpth
+ htohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgtphhtthhopehfohhs
+ shesuggvfhhmrggtrhhordhithdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonh
+ hgnhhurdhorhhg
+X-ME-Proxy: <xmx:LngbZ4RrareDQuV_JwJwpPOCzjGq7prxnBBkb8A9UroyMFPWF03LeQ>
+ <xmx:LngbZ4wj3Iaz5Ue0wLMKPo7vzR7fpiN68wr57XKtbLL_sBi7WF56rQ>
+ <xmx:LngbZ-6GoeFa9jxjlkDzd9T_KN7Il0heptplLwetZBLhbVC94OgWuA>
+ <xmx:LngbZ9zYBWsC5na61E-1hFf9Y8z0Z49npDE4YLBvWKpzY4WWcFqrnQ>
+ <xmx:L3gbZ3mdj0ocCDGLh4GHK8OwmtzkKjVGL5TezZgDT7-BAEyDtOvkwT65>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Oct 2024 06:51:25 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+Date: Fri, 25 Oct 2024 12:50:45 +0200
+Subject: [PATCH] hw/nvme: fix handling of over-committed queues
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241025-issue-2388-v1-1-16707e0d3342@samsung.com>
+X-B4-Tracking: v=1; b=H4sIAAR4G2cC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDAyNT3czi4tJUXSNjCwvdpBQDE3MTC/M0c5NkJaCGgqLUtMwKsGHRsbW
+ 1ABgV8VNcAAAA
+X-Change-ID: 20241025-issue-2388-bd047487f74c
+To: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org, 
+ qemu-devel@nongnu.org
+Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org, 
+ Waldemar Kozaczuk <jwkozaczuk@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3886; i=k.jensen@samsung.com; 
+ h=from:subject:message-id;
+ bh=mCvhtCzEj6dSkBH8aSEomtZHCEU/6z19GmVHUHtKu1g=; 
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFaTCtrQTBEQUFvQlRlR3ZNV
+ zFQRGVrQnl5WmlBR2NiZUN4bmJyc2t6ekNCb3k3VWhoelZjZHpWClVXUmg4NzdTQm9HYWhEeE1K
+ TXBUYllrQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKbkczZ3N
+ BQW9KRUUzaHJ6RnRUdzNwSjRJSC9qSDBYMmxsSDdzN0hXNFlJV3dJWUlYMEJ4dTl3WW1MQ3BXWg
+ pKSWN0VmtNSCswaGtnK3g5QkNoT05VZVM2aDJBeTZHdmpvcmhFejlhNU5pTmdzTXBhRkxjeitCc
+ FI3QXU2UWQzCkZaSUNON0Rva0NVbzhmYjMwYUFGVkZ1SXJvSE91bGh0ZkNDS1BQcFVMUmpIVlVH
+ aUdBV2RUNkttQzdORTRpUy8KRCtzbzBqdVZIRFdqWVZkbml2azZ1ZjI3WlJTVWI4R2lKTWxSREF
+ ud3VpeUhxRUZ3dnZ6SzAwTHFjbHM2VklReApVcGtIeHRTWnNOREx6bzJEWWFHYTRjdmFZR0VrRG
+ ZqRlA1dE9TZnRpalZ3eW92K3RCN21BZjhYNkdXR2YzL2tPClBpY1cyRzhjZElad0prWEF5SS9Db
+ lh0RExBRmo4ZFd3MVFoSlRtcnRIaHdldUl1MnpXR3NuYVFPCj14MHJ2Ci0tLS0tRU5EIFBHUCBN
+ RVNTQUdFLS0tLS0K
+X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
+ fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
+Received-SPF: pass client-ip=103.168.172.148; envelope-from=its@irrelevant.dk;
+ helo=fout-a5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,244 +133,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently converted from the LegacyReset to the new reset framework
-in commit c009a311e939 ("virtio-mem: Use new Resettable framework instead
-of LegacyReset") to be able to use the ResetType to filter out wakeup
-resets.
+From: Klaus Jensen <k.jensen@samsung.com>
 
-However, this change had an undesired implications: as we override the
-Resettable interface methods in VirtIOMEMClass, the reset handler will
-not only get called during system resets (i.e., qemu_devices_reset())
-but also during any direct or indirect device rests (e.g.,
-device_cold_reset()).
+If a host chooses to use the SQHD "hint" in the CQE to know if there is
+room in the submission queue for additional commands, it may result in a
+situation where there are not enough internal resources (struct
+NvmeRequest) available to process the command. For a lack of a better
+term, the host may "over-commit" the device (i.e., it may have more
+inflight commands than the queue size).
 
-Further, we might now receive two reset callbacks during
-qemu_devices_reset(), first when reset by a parent and later when reset
-directly.
+For example, assume a queue with N entries. The host submits N commands
+and all are picked up for processing, advancing the head and emptying
+the queue. Regardless of which of these N commands complete first, the
+SQHD field of that CQE will indicate to the host that the queue is
+empty, which allows the host to issue N commands again. However, if the
+device has not posted CQEs for all the previous commands yet, the device
+will have less than N resources available to process the commands, so
+queue processing is suspended.
 
-The memory state of virtio-mem devices is rather special: it's supposed to
-be persistent/unchanged during most resets (similar to resetting a hard
-disk will not destroy the data), unless actually cold-resetting the whole
-system (different to a hard disk where a reboot will not destroy the data):
-ripping out system RAM is something guest OSes don't particularly enjoy,
-but we want to detect when rebooting to an OS that does not support
-virtio-mem and wouldn't be able to detect+use the memory -- and we want
-to force-defragment hotplugged memory to also shrink the usable device
-memory region. So we rally want to catch system resets to do that.
+And here lies an 11 year latent bug. In the absense of any additional
+tail updates on the submission queue, we never schedule the processing
+bottom-half again unless we observe a head update on an associated full
+completion queue. This has been sufficient to handle N-to-1 SQ/CQ setups
+(in the absense of over-commit of course). Incidentially, that "kick all
+associated SQs" mechanism can now be killed since we now just schedule
+queue processing when we return a processing resource to a non-empty
+submission queue, which happens to cover both edge cases.
 
-On supported targets (e.g., x86), getting a cold reset on the
-device/parent triggers is not that easy (but looks like PCI code
-might trigger it), so this implication went unnoticed.
+So, apparently, no previous driver tested with hw/nvme has ever used
+SQHD (e.g., neither the Linux NVMe driver or SPDK uses it). But then OSv
+shows up with the driver that actually does. I salute you.
 
-However, with upcoming s390x support it is problematic: during
-kdump, s390x triggers a subsystem reset, ending up in
-s390_machine_reset() and calling only subsystem_reset() instead of
-qemu_devices_reset() -- because it's not a full system reset.
-
-In subsystem_reset(), s390x performs a device_cold_reset() of any
-TYPE_VIRTUAL_CSS_BRIDGE device, which ends up resetting all children,
-including the virtio-mem device. Consequently, we wrongly detect a system
-reset and unplug all device memory, resulting in hotplugged memory not
-getting included in the crash dump -- undesired.
-
-We really must not mess with hotplugged memory state during simple
-device resets. To fix, create+register a new reset object that will only
-get triggered during qemu_devices_reset() calls, but not during any other
-resets as it is logically not the child of any other object.
-
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Juraj Marcin <jmarcin@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: David Hildenbrand <david@redhat.com>
+Fixes: f3c507adcd7b ("NVMe: Initial commit for new storage interface")
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2388
+Reported-by: Waldemar Kozaczuk <jwkozaczuk@gmail.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/virtio/virtio-mem.c         | 103 +++++++++++++++++++++++----------
- include/hw/virtio/virtio-mem.h |  12 +++-
- 2 files changed, 83 insertions(+), 32 deletions(-)
+ hw/nvme/ctrl.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index ae1e81d7ba..08e0e9da1c 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -956,6 +956,7 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
-     VirtIOMEM *vmem = VIRTIO_MEM(dev);
-     uint64_t page_size;
-     RAMBlock *rb;
-+    Object *obj;
-     int ret;
- 
-     if (!vmem->memdev) {
-@@ -1121,7 +1122,28 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
-         vmstate_register_any(VMSTATE_IF(vmem),
-                              &vmstate_virtio_mem_device_early, vmem);
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index f4e89203c1a6e3b051fd7185cbf01ec9bae9684a..b13585c4da911b9e8ae4a722761fd85dfa24be4d 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -1520,9 +1520,16 @@ static void nvme_post_cqes(void *opaque)
+             stl_le_p(&n->bar.csts, NVME_CSTS_FAILED);
+             break;
+         }
++
+         QTAILQ_REMOVE(&cq->req_list, req, entry);
++
+         nvme_inc_cq_tail(cq);
+         nvme_sg_unmap(&req->sg);
++
++        if (QTAILQ_EMPTY(&sq->req_list) && !nvme_sq_empty(sq)) {
++            qemu_bh_schedule(sq->bh);
++        }
++
+         QTAILQ_INSERT_TAIL(&sq->req_list, req, entry);
      }
--    qemu_register_resettable(OBJECT(vmem));
-+
-+    /*
-+     * We only want to unplug all memory to start with a clean slate when
-+     * it is safe for the guest -- during system resets that call
-+     * qemu_devices_reset().
-+     *
-+     * We'll filter out selected qemu_devices_reset() calls used for other
-+     * purposes, like resetting all devices during wakeup from suspend on
-+     * x86 based on the reset type passed to qemu_devices_reset().
-+     *
-+     * Unplugging all memory during simple device resets can result in the VM
-+     * unexpectedly losing RAM, corrupting VM state.
-+     *
-+     * Simple device resets (or resets triggered by getting a parent device
-+     * reset) must not change the state of plugged memory blocks. Therefore,
-+     * we need a dedicated reset object that only gets called during
-+     * qemu_devices_reset().
-+     */
-+    obj = object_new(TYPE_VIRTIO_MEM_SYSTEM_RESET);
-+    vmem->system_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
-+    vmem->system_reset->vmem = vmem;
-+    qemu_register_resettable(obj);
+     if (cq->tail != cq->head) {
+@@ -7950,7 +7957,6 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
+         /* Completion queue doorbell write */
  
-     /*
-      * Set ourselves as RamDiscardManager before the plug handler maps the
-@@ -1141,7 +1163,10 @@ static void virtio_mem_device_unrealize(DeviceState *dev)
-      * found via an address space anymore. Unset ourselves.
-      */
-     memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
--    qemu_unregister_resettable(OBJECT(vmem));
-+
-+    qemu_unregister_resettable(OBJECT(vmem->system_reset));
-+    object_unref(OBJECT(vmem->system_reset));
-+
-     if (vmem->early_migration) {
-         vmstate_unregister(VMSTATE_IF(vmem), &vmstate_virtio_mem_device_early,
-                            vmem);
-@@ -1841,38 +1866,12 @@ static void virtio_mem_unplug_request_check(VirtIOMEM *vmem, Error **errp)
-     }
- }
+         uint16_t new_head = val & 0xffff;
+-        int start_sqs;
+         NvmeCQueue *cq;
  
--static ResettableState *virtio_mem_get_reset_state(Object *obj)
--{
--    VirtIOMEM *vmem = VIRTIO_MEM(obj);
--    return &vmem->reset_state;
--}
--
--static void virtio_mem_system_reset_hold(Object *obj, ResetType type)
--{
--    VirtIOMEM *vmem = VIRTIO_MEM(obj);
--
--    /*
--     * When waking up from standby/suspend-to-ram, do not unplug any memory.
--     */
--    if (type == RESET_TYPE_WAKEUP) {
--        return;
--    }
--
--    /*
--     * During usual resets, we will unplug all memory and shrink the usable
--     * region size. This is, however, not possible in all scenarios. Then,
--     * the guest has to deal with this manually (VIRTIO_MEM_REQ_UNPLUG_ALL).
--     */
--    virtio_mem_unplug_all(vmem);
--}
--
- static void virtio_mem_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
-     VirtIOMEMClass *vmc = VIRTIO_MEM_CLASS(klass);
-     RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(klass);
--    ResettableClass *rc = RESETTABLE_CLASS(klass);
+         qid = (addr - (0x1000 + (1 << 2))) >> 3;
+@@ -8001,18 +8007,10 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
  
-     device_class_set_props(dc, virtio_mem_properties);
-     dc->vmsd = &vmstate_virtio_mem;
-@@ -1899,9 +1898,6 @@ static void virtio_mem_class_init(ObjectClass *klass, void *data)
-     rdmc->replay_discarded = virtio_mem_rdm_replay_discarded;
-     rdmc->register_listener = virtio_mem_rdm_register_listener;
-     rdmc->unregister_listener = virtio_mem_rdm_unregister_listener;
--
--    rc->get_state = virtio_mem_get_reset_state;
--    rc->phases.hold = virtio_mem_system_reset_hold;
- }
+         trace_pci_nvme_mmio_doorbell_cq(cq->cqid, new_head);
  
- static const TypeInfo virtio_mem_info = {
-@@ -1924,3 +1920,48 @@ static void virtio_register_types(void)
- }
+-        start_sqs = nvme_cq_full(cq) ? 1 : 0;
+         cq->head = new_head;
+         if (!qid && n->dbbuf_enabled) {
+             stl_le_pci_dma(pci, cq->db_addr, cq->head, MEMTXATTRS_UNSPECIFIED);
+         }
+-        if (start_sqs) {
+-            NvmeSQueue *sq;
+-            QTAILQ_FOREACH(sq, &cq->sq_list, entry) {
+-                qemu_bh_schedule(sq->bh);
+-            }
+-            qemu_bh_schedule(cq->bh);
+-        }
  
- type_init(virtio_register_types)
-+
-+OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(VirtioMemSystemReset, virtio_mem_system_reset, VIRTIO_MEM_SYSTEM_RESET, OBJECT, { TYPE_RESETTABLE_INTERFACE }, { })
-+
-+static void virtio_mem_system_reset_init(Object *obj)
-+{
-+}
-+
-+static void virtio_mem_system_reset_finalize(Object *obj)
-+{
-+}
-+
-+static ResettableState *virtio_mem_system_reset_get_state(Object *obj)
-+{
-+    VirtioMemSystemReset *vmem_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
-+
-+    return &vmem_reset->reset_state;
-+}
-+
-+static void virtio_mem_system_reset_hold(Object *obj, ResetType type)
-+{
-+    VirtioMemSystemReset *vmem_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
-+    VirtIOMEM *vmem = vmem_reset->vmem;
-+
-+    /*
-+     * When waking up from standby/suspend-to-ram, do not unplug any memory.
-+     */
-+    if (type == RESET_TYPE_WAKEUP) {
-+        return;
-+    }
-+
-+    /*
-+     * During usual resets, we will unplug all memory and shrink the usable
-+     * region size. This is, however, not possible in all scenarios. Then,
-+     * the guest has to deal with this manually (VIRTIO_MEM_REQ_UNPLUG_ALL).
-+     */
-+    virtio_mem_unplug_all(vmem);
-+}
-+
-+static void virtio_mem_system_reset_class_init(ObjectClass *klass, void *data)
-+{
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    rc->get_state = virtio_mem_system_reset_get_state;
-+    rc->phases.hold = virtio_mem_system_reset_hold;
-+}
-diff --git a/include/hw/virtio/virtio-mem.h b/include/hw/virtio/virtio-mem.h
-index a1af144c28..abde1c4101 100644
---- a/include/hw/virtio/virtio-mem.h
-+++ b/include/hw/virtio/virtio-mem.h
-@@ -25,6 +25,10 @@
- OBJECT_DECLARE_TYPE(VirtIOMEM, VirtIOMEMClass,
-                     VIRTIO_MEM)
- 
-+#define TYPE_VIRTIO_MEM_SYSTEM_RESET "virtio-mem-system-reset"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(VirtioMemSystemReset, VIRTIO_MEM_SYSTEM_RESET)
-+
- #define VIRTIO_MEM_MEMDEV_PROP "memdev"
- #define VIRTIO_MEM_NODE_PROP "node"
- #define VIRTIO_MEM_SIZE_PROP "size"
-@@ -117,8 +121,14 @@ struct VirtIOMEM {
-     /* listeners to notify on plug/unplug activity. */
-     QLIST_HEAD(, RamDiscardListener) rdl_list;
- 
--    /* State of the resettable container */
-+    /* Catch system resets -> qemu_devices_reset() only. */
-+    VirtioMemSystemReset *system_reset;
-+};
-+
-+struct VirtioMemSystemReset {
-+    Object parent;
-     ResettableState reset_state;
-+    VirtIOMEM *vmem;
- };
- 
- struct VirtIOMEMClass {
+         if (cq->tail == cq->head) {
+             if (cq->irq_enabled) {
+
+---
+base-commit: e67b7aef7c7f67ecd0282e903e0daff806d5d680
+change-id: 20241025-issue-2388-bd047487f74c
+
+Best regards,
 -- 
-2.46.1
+Klaus Jensen <k.jensen@samsung.com>
 
 
