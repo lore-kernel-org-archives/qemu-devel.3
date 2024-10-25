@@ -4,144 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95186D149D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 17:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A40D149CD
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 17:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Nki-0006d8-17; Fri, 25 Oct 2024 13:05:32 -0400
+	id 1t4Ntn-0000mE-B0; Fri, 25 Oct 2024 13:14:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1t4NkW-0006ZV-DD; Fri, 25 Oct 2024 13:05:20 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <jwkozaczuk@gmail.com>)
+ id 1t4N3G-0004OW-TS; Fri, 25 Oct 2024 12:20:39 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1t4NkP-0003yX-1i; Fri, 25 Oct 2024 13:05:16 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-20cbca51687so19770995ad.1; 
- Fri, 25 Oct 2024 10:05:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jwkozaczuk@gmail.com>)
+ id 1t4N3D-0007Ih-Bt; Fri, 25 Oct 2024 12:20:38 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-539e4908837so283815e87.0; 
+ Fri, 25 Oct 2024 09:20:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729875911; x=1730480711; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=lw71pk82LpfjAulczG7MG8JmKnJKEsspPL35UZ0lrYA=;
- b=Hr/UZ8eIQsg8sK/Dlf4Zxok1xOfTSVqvA+uv2TLAcdnmqyLaN2xKWWtQgPQl+89bRL
- y+Loi4Bh+pi/xun/j1jVrMqFmbytxA5Kb/TCmdBFOUK56lKB1kH7+pr7/98PcilT83fp
- SvqLe6FP6BAz4qyhDFvi6zomuAxkdGKMEqMCxLdAP0/e1ScsCstnaloh5OFn8oP4k20N
- +BpEYgKhU0LDnH0RPbHTEOdB+Mg06VmwpfzB7MgNKvvyuclhZ8U8st8828huKNibAAuV
- ABJF4+SnQXPMR/i3isT4tgTfi0QjqjU1tKCioKUueKVEL1ASwGB9Aej6LnHS4qCW9SJc
- Hv7A==
+ d=gmail.com; s=20230601; t=1729873231; x=1730478031; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nYYcTr9GJlT/1uRT+8PDffCtlj/YXfeYShzdvK2ZH5U=;
+ b=f+BkcTLp4EEe7e7eLJ8+E1qyXZdDCMcmuFy+AIYCWxSl2kgtbG5rJu3ydf0eVxtWCX
+ MyajWiMxP0SWP8tdeGdspK8UZVBMHk+zlBTWdPswo+yl4OuzPqG8Pl4+067zfGadggkw
+ emsJzRPq/eFQWA6mxQ+r86DfVecU9oDYTFTJ7G33XJ9veUMxp97pEuKlhU4UvDQkTRLr
+ sRYHaZb1TFDWoY24jOONoUJ6IJaZFHRwogcJPA49ByxsqvNo5jJxJHbCaTCdLIgvigVC
+ xD4IhhetHIjL3f265BYosGfC0d5R+tZ+kMaiJrtBHAaf8PWs/I6FdLKTxZyKuQps2J0k
+ AcSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729875911; x=1730480711;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lw71pk82LpfjAulczG7MG8JmKnJKEsspPL35UZ0lrYA=;
- b=wcKxPj8d9qpJukfvX13DOYa2l9jIixOhUOoWDpMtQ4hl5JMyU9hw0uNlzQCH3sOz6T
- 2X7HOLXZk52lb0NwPr4grYbptPiKiMMyD+JHLwB3/h9YrFMvV8IAPoCKtIZ+R4TgUrwl
- +pgIPQS+l0x3lR+dh9kNrek/CXxMkHJxQKljzTNN/XvAZN5y8OmJ87o9Mli/Rn4fFx8A
- Vhzf+iYFrjHNiIwxJ6UZVdtetnTj2/pbjSEJNaQBo0eQqw3fH3zLBLi7b3SXLLcpGRZY
- L9G2B+n8qflVS7nSahmyU8IFjNsGpRuWgSdnQKIZqRPj+lbc2mZM/72GKpbFHSBhm8xi
- xJ+w==
+ d=1e100.net; s=20230601; t=1729873231; x=1730478031;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nYYcTr9GJlT/1uRT+8PDffCtlj/YXfeYShzdvK2ZH5U=;
+ b=lzzuHlSwbhj0MQy1f1/o568R7GbfY8CuIb+VtGbuyfFPs3lx6u/z8Xy5R+O6JaB10n
+ j9WDW0wMOGVWX9sxYu8zpbeiNcJHDZEVwL9ofUl1XW07B/1TVN4q55aYH6SkpHt+KEFp
+ EaRtV7t4l8WefOYx9ozwMRgrZ9gqZz/eSLqm9y/lCTFKZ8cOTHZAcPfnvYQR/blixqU1
+ uL1KQDiIaFaUhJXrfeNLoLEM/mrkjCbFIVnIOsGZ2fO22cb/4DQx8ZD8AXVmtadG6ml1
+ RqbTQA8IsnWMXj5dPw53kLvPJ8sEO7YfFJZYz7GLnjd95bzD8egn1RdRLBI2NRsXZ6fy
+ jpOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVxps/IN+8tWpyvl0sM5yMG4rpV5j38mCq17vSRghlMDh9w0u+k5p4moyePtoCGFwasrUfTlHtYkEVr@nongnu.org
-X-Gm-Message-State: AOJu0YwjbA8eU83Gy079kJBFT45RIV/h/nQlBwWR3o5Yb1SJpbOTRxtg
- 1R/6wCq0edwTkVaA4VrOzmIybcwp/xvuk4Y552WuMZ6QiqgMU4Bu
-X-Google-Smtp-Source: AGHT+IGK9MqwCUtJcZk7m15M6TRLnYTn3W+uRbIOb7f864N3ZrAuOEGvgEdklvQCuYf5TbipMMO8gw==
-X-Received: by 2002:a17:902:da84:b0:20c:5c37:e2c6 with SMTP id
- d9443c01a7336-20fa9deb323mr140299635ad.11.1729875910495; 
- Fri, 25 Oct 2024 10:05:10 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
- ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-210bc013620sm11395465ad.121.2024.10.25.10.05.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 10:05:09 -0700 (PDT)
-Message-ID: <8dfd38c9-bb9e-40e9-b95d-fe898db5df82@roeck-us.net>
-Date: Fri, 25 Oct 2024 10:05:07 -0700
+ AJvYcCVxmA1FiM3NYgEZMi/VvB5QqIvy5bMOvqNFTJQg9stGKBJ/LnX2Z5AulvsZ6EY0L0wO2X2PM7ioSkAH@nongnu.org,
+ AJvYcCW7KDfUun9X4bnitz2hDhu3JVHuCjOzizBmPJxPRP7OG6f/Glt9vuT7UCwhx0iSl1L9LypVygLwnGGC7Q==@nongnu.org,
+ AJvYcCXr0Saaj5RAtGHSmndZ6iTNFHZQOH3JOfl1RkQMnnPFtsKZoV1OdXpVq4xLFHNcuwL+vPsdrhWe7PUKJew=@nongnu.org
+X-Gm-Message-State: AOJu0YzJ2tPgfLPia3RZGS547gLbm114D18FXkOmc24Y4VMU4oC/tKHd
+ /2E+riV8yQNxK+6R6GpR1Zw+tzxoGMLZWe03bSAyF8cGeeA/2v4VV63nZMA6zwAk3Yhiucv7XQl
+ Bw3yzCML/llpP6mRGoihUK9lG7Jc=
+X-Google-Smtp-Source: AGHT+IGdM4Zk9Aj1dVrFmtkbK1xL47EvEVPagc52svFkiTJekCGKb9mZD1G6ldA1r3KnKI/e6CEDgJTTQFstwyB4m4g=
+X-Received: by 2002:a05:6512:4018:b0:539:dc9b:f9a8 with SMTP id
+ 2adb3069b0e04-53b1a311a70mr1589711e87.5.1729873231031; Fri, 25 Oct 2024
+ 09:20:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
-To: =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
- <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Joel Stanley <joel@jms.id.au>
-References: <20241017163247.711244-1-peter.maydell@linaro.org>
- <dcf06645-dac0-4099-8946-38ca9deaeccf@redhat.com>
- <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
- <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
- <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
- <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
- <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
- <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
- <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
- <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
- <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
- <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=groeck7@gmail.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.17, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20241025-issue-2388-v1-1-16707e0d3342@samsung.com>
+In-Reply-To: <20241025-issue-2388-v1-1-16707e0d3342@samsung.com>
+From: Waldek Kozaczuk <jwkozaczuk@gmail.com>
+Date: Fri, 25 Oct 2024 12:20:18 -0400
+Message-ID: <CAL9cFfMkP4ctg8LU6jKjuOrqf5U3dstpXMa0Qs3eL+toBSKOrg@mail.gmail.com>
+Subject: Re: [PATCH] hw/nvme: fix handling of over-committed queues
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org, 
+ qemu-devel@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ qemu-stable@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000713b5006254f7fe1"
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=jwkozaczuk@gmail.com; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 25 Oct 2024 13:14:52 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -156,110 +93,270 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/25/24 08:25, Jan Lübbe wrote:
-> On Fri, 2024-10-25 at 06:59 -0700, Guenter Roeck wrote:
->> On 10/25/24 02:57, Jan Lübbe wrote:
->>> On Fri, 2024-10-25 at 08:55 +0200, Cédric Le Goater wrote:
->>>> On 10/24/24 19:59, Philippe Mathieu-Daudé wrote:
->>>>> Cc'ing Jan.
->>>>>
->>>>> On 22/10/24 12:04, Guenter Roeck wrote:
->>>>>
->>>>>> I have no idea how this is supposed to work, and I don't think it works
->>>>>> as implemented. I'll revert commit e32ac563b83 in my local copy of qemu.
->>>>>> Jan, can you have a look at this bug report please? Otherwise I'll
->>>>>> have a look during soft freeze.
->>>
->>> Guenter, just to make sure: In your case [1], you had "boot-emmc" (see
->>> aspeed_machine_ast2600_class_emmc_init) enabled, right? Otherwise the
->>
->> I tried both enabled and disabled.
->>
->>> boot partition size would be 0, meaning that the eMMC has no boot
->>> partitions.
->>
->> That is what I would have expected, but it does not reflect reality.
->>
->>> In that configuration, your backing file needs to have space for the
->>> boot partitions at the start (2*1MiB) and the rootfs starts at the 2
->>> MiB offset.
->>>
->>
->> boot-emmc doesn't make a difference, because
->>
->>           if (emmc) {
->>               qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
->>               qdev_prop_set_uint8(card, "boot-config",
->>                                   boot_emmc ? 0x1 << 3 : 0x0);
->>           }
->>
->> in hw/arm/aspeed.c sets the boot partition size independently of the
->> boot-emmc flag.
-> 
-> Ah, yes. :/
-> 
-> So you can have SD, eMMC with boot from boot partition *disabled* or
-> eMMC with boot from boot partition *enabled*.
-> 
->> I suspect that the expectation is that I always provide
->> an emmc image with a 2 MB gap at the beginning, but in my opinion that is
->> really hyper-clumsy, and I simply won't do it, sorry.
-> 
-> I was surprised that the boot partitions' contents are stored in the
-> same backing file as the main area (instead of being separate files).
-> But I've not researched why it was designed this way.
-> 
->> I can work around
->> the problem by changing the above code to only set boot-partition-size if
->> boot_emmc is set, or I can revert commit e32ac563b83. For now I chose the
->> latter.
-> 
-> With e32ac563b83 reverted, your backing file layout will change *at
-> runtime* depending on whether booting from the boot partition is
-> enabled via EXT CSD registers. You should be able to try that using
-> 'mmc bootpart enable <boot_part> 0 /dev/mmcblk0' (with boot_part=0 for
-> disabled and boot_part=1/2 for enabled).
-> 
+--000000000000713b5006254f7fe1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-That does not matter for me since I am only testing if the emulation can boot
-Linux from emmc. Booing Linux from the boot partition isn't possible anyway
-because it is too small.
+Hi,
 
-> 
-> I'm not sure what the best way forward is... perhaps make the boot-
-> partition-size zero if boot_emmc is false? e.g.
-> 
-> @@ -339,7 +339,12 @@ static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc,
->           }
->           card = qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
->           if (emmc) {
-> -            qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
-> +            /*
-> +             * Avoid the requirement for a padded disk image if booting from
-> +             * eMMC boot partitions is not needed.
-> +             */
-> +            qdev_prop_set_uint64(card, "boot-partition-size",
-> +                                boot_emmc ? 1 * MiB : 0);
->               qdev_prop_set_uint8(card, "boot-config",
->                                   boot_emmc ? 0x1 << 3 : 0x0);
->           }
-> 
-> 
-> Then you'd have the choice between:
-> - an eMMC, but without boot partitions (and simple backing file layout)
-> - an eMMC with boot partitions and need a backing file with
->    the boot partitions at the beginning
-> 
-> That might be the lesser evil. :)
-> 
+I have applied this patch to the same QEMU source tree where I reproduced
+this issue. I changed the queue size to 3 on the OSv side to trigger this
+bug, but unfortunately, I still see the same behavior of the OSv guest
+hanging.
 
-I would agree, but ...
+Regards,
+Waldemar Kozaczuk
 
-I don't know how boot partitions are used in the field. Having its size fixed to 1 MiB
-seems odd. Maybe a second parameter in addition to boot-emmc would be useful, so one
-could say something like "boot-emmc=on,boot-partition-size=16M".
+On Fri, Oct 25, 2024 at 6:51=E2=80=AFAM Klaus Jensen <its@irrelevant.dk> wr=
+ote:
 
-Thanks,
-Guenter
+> From: Klaus Jensen <k.jensen@samsung.com>
+>
+> If a host chooses to use the SQHD "hint" in the CQE to know if there is
+> room in the submission queue for additional commands, it may result in a
+> situation where there are not enough internal resources (struct
+> NvmeRequest) available to process the command. For a lack of a better
+> term, the host may "over-commit" the device (i.e., it may have more
+> inflight commands than the queue size).
+>
+> For example, assume a queue with N entries. The host submits N commands
+> and all are picked up for processing, advancing the head and emptying
+> the queue. Regardless of which of these N commands complete first, the
+> SQHD field of that CQE will indicate to the host that the queue is
+> empty, which allows the host to issue N commands again. However, if the
+> device has not posted CQEs for all the previous commands yet, the device
+> will have less than N resources available to process the commands, so
+> queue processing is suspended.
+>
+> And here lies an 11 year latent bug. In the absense of any additional
+> tail updates on the submission queue, we never schedule the processing
+> bottom-half again unless we observe a head update on an associated full
+> completion queue. This has been sufficient to handle N-to-1 SQ/CQ setups
+> (in the absense of over-commit of course). Incidentially, that "kick all
+> associated SQs" mechanism can now be killed since we now just schedule
+> queue processing when we return a processing resource to a non-empty
+> submission queue, which happens to cover both edge cases.
+>
+> So, apparently, no previous driver tested with hw/nvme has ever used
+> SQHD (e.g., neither the Linux NVMe driver or SPDK uses it). But then OSv
+> shows up with the driver that actually does. I salute you.
+>
+> Fixes: f3c507adcd7b ("NVMe: Initial commit for new storage interface")
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2388
+> Reported-by: Waldemar Kozaczuk <jwkozaczuk@gmail.com>
+> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+> ---
+>  hw/nvme/ctrl.c | 16 +++++++---------
+>  1 file changed, 7 insertions(+), 9 deletions(-)
+>
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index
+> f4e89203c1a6e3b051fd7185cbf01ec9bae9684a..b13585c4da911b9e8ae4a722761fd85=
+dfa24be4d
+> 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -1520,9 +1520,16 @@ static void nvme_post_cqes(void *opaque)
+>              stl_le_p(&n->bar.csts, NVME_CSTS_FAILED);
+>              break;
+>          }
+> +
+>          QTAILQ_REMOVE(&cq->req_list, req, entry);
+> +
+>          nvme_inc_cq_tail(cq);
+>          nvme_sg_unmap(&req->sg);
+> +
+> +        if (QTAILQ_EMPTY(&sq->req_list) && !nvme_sq_empty(sq)) {
+> +            qemu_bh_schedule(sq->bh);
+> +        }
+> +
+>          QTAILQ_INSERT_TAIL(&sq->req_list, req, entry);
+>      }
+>      if (cq->tail !=3D cq->head) {
+> @@ -7950,7 +7957,6 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr
+> addr, int val)
+>          /* Completion queue doorbell write */
+>
+>          uint16_t new_head =3D val & 0xffff;
+> -        int start_sqs;
+>          NvmeCQueue *cq;
+>
+>          qid =3D (addr - (0x1000 + (1 << 2))) >> 3;
+> @@ -8001,18 +8007,10 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr
+> addr, int val)
+>
+>          trace_pci_nvme_mmio_doorbell_cq(cq->cqid, new_head);
+>
+> -        start_sqs =3D nvme_cq_full(cq) ? 1 : 0;
+>          cq->head =3D new_head;
+>          if (!qid && n->dbbuf_enabled) {
+>              stl_le_pci_dma(pci, cq->db_addr, cq->head,
+> MEMTXATTRS_UNSPECIFIED);
+>          }
+> -        if (start_sqs) {
+> -            NvmeSQueue *sq;
+> -            QTAILQ_FOREACH(sq, &cq->sq_list, entry) {
+> -                qemu_bh_schedule(sq->bh);
+> -            }
+> -            qemu_bh_schedule(cq->bh);
+> -        }
+>
+>          if (cq->tail =3D=3D cq->head) {
+>              if (cq->irq_enabled) {
+>
+> ---
+> base-commit: e67b7aef7c7f67ecd0282e903e0daff806d5d680
+> change-id: 20241025-issue-2388-bd047487f74c
+>
+> Best regards,
+> --
+> Klaus Jensen <k.jensen@samsung.com>
+>
+>
 
+--000000000000713b5006254f7fe1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><br></div><div>Hi,</div><div><br></div><div>I have ap=
+plied this patch to the same QEMU source tree where I reproduced this issue=
+. I changed the queue size to 3 on the OSv side to=C2=A0trigger this bug, b=
+ut unfortunately, I still see the same behavior of the OSv guest hanging.</=
+div><div><br></div><div>Regards,</div><div>Waldemar Kozaczuk</div></div><br=
+><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, O=
+ct 25, 2024 at 6:51=E2=80=AFAM Klaus Jensen &lt;<a href=3D"mailto:its@irrel=
+evant.dk">its@irrelevant.dk</a>&gt; wrote:<br></div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">From: Klaus Jensen &lt;<a href=3D"mailto:k.jense=
+n@samsung.com" target=3D"_blank">k.jensen@samsung.com</a>&gt;<br>
+<br>
+If a host chooses to use the SQHD &quot;hint&quot; in the CQE to know if th=
+ere is<br>
+room in the submission queue for additional commands, it may result in a<br=
+>
+situation where there are not enough internal resources (struct<br>
+NvmeRequest) available to process the command. For a lack of a better<br>
+term, the host may &quot;over-commit&quot; the device (i.e., it may have mo=
+re<br>
+inflight commands than the queue size).<br>
+<br>
+For example, assume a queue with N entries. The host submits N commands<br>
+and all are picked up for processing, advancing the head and emptying<br>
+the queue. Regardless of which of these N commands complete first, the<br>
+SQHD field of that CQE will indicate to the host that the queue is<br>
+empty, which allows the host to issue N commands again. However, if the<br>
+device has not posted CQEs for all the previous commands yet, the device<br=
+>
+will have less than N resources available to process the commands, so<br>
+queue processing is suspended.<br>
+<br>
+And here lies an 11 year latent bug. In the absense of any additional<br>
+tail updates on the submission queue, we never schedule the processing<br>
+bottom-half again unless we observe a head update on an associated full<br>
+completion queue. This has been sufficient to handle N-to-1 SQ/CQ setups<br=
+>
+(in the absense of over-commit of course). Incidentially, that &quot;kick a=
+ll<br>
+associated SQs&quot; mechanism can now be killed since we now just schedule=
+<br>
+queue processing when we return a processing resource to a non-empty<br>
+submission queue, which happens to cover both edge cases.<br>
+<br>
+So, apparently, no previous driver tested with hw/nvme has ever used<br>
+SQHD (e.g., neither the Linux NVMe driver or SPDK uses it). But then OSv<br=
+>
+shows up with the driver that actually does. I salute you.<br>
+<br>
+Fixes: f3c507adcd7b (&quot;NVMe: Initial commit for new storage interface&q=
+uot;)<br>
+Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-stable=
+@nongnu.org</a><br>
+Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2388" re=
+l=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/i=
+ssues/2388</a><br>
+Reported-by: Waldemar Kozaczuk &lt;<a href=3D"mailto:jwkozaczuk@gmail.com" =
+target=3D"_blank">jwkozaczuk@gmail.com</a>&gt;<br>
+Signed-off-by: Klaus Jensen &lt;<a href=3D"mailto:k.jensen@samsung.com" tar=
+get=3D"_blank">k.jensen@samsung.com</a>&gt;<br>
+---<br>
+=C2=A0hw/nvme/ctrl.c | 16 +++++++---------<br>
+=C2=A01 file changed, 7 insertions(+), 9 deletions(-)<br>
+<br>
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c<br>
+index f4e89203c1a6e3b051fd7185cbf01ec9bae9684a..b13585c4da911b9e8ae4a722761=
+fd85dfa24be4d 100644<br>
+--- a/hw/nvme/ctrl.c<br>
++++ b/hw/nvme/ctrl.c<br>
+@@ -1520,9 +1520,16 @@ static void nvme_post_cqes(void *opaque)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0stl_le_p(&amp;n-&gt;bar.cst=
+s, NVME_CSTS_FAILED);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0QTAILQ_REMOVE(&amp;cq-&gt;req_list, req, =
+entry);<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0nvme_inc_cq_tail(cq);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0nvme_sg_unmap(&amp;req-&gt;sg);<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (QTAILQ_EMPTY(&amp;sq-&gt;req_list) &amp;&a=
+mp; !nvme_sq_empty(sq)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_bh_schedule(sq-&gt;bh);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0QTAILQ_INSERT_TAIL(&amp;sq-&gt;req_list, =
+req, entry);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0if (cq-&gt;tail !=3D cq-&gt;head) {<br>
+@@ -7950,7 +7957,6 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr,=
+ int val)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Completion queue doorbell write */<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0uint16_t new_head =3D val &amp; 0xffff;<b=
+r>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 int start_sqs;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NvmeCQueue *cq;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qid =3D (addr - (0x1000 + (1 &lt;&lt; 2))=
+) &gt;&gt; 3;<br>
+@@ -8001,18 +8007,10 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr add=
+r, int val)<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0trace_pci_nvme_mmio_doorbell_cq(cq-&gt;cq=
+id, new_head);<br>
+<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 start_sqs =3D nvme_cq_full(cq) ? 1 : 0;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cq-&gt;head =3D new_head;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!qid &amp;&amp; n-&gt;dbbuf_enabled) =
+{<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0stl_le_pci_dma(pci, cq-&gt;=
+db_addr, cq-&gt;head, MEMTXATTRS_UNSPECIFIED);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (start_sqs) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 NvmeSQueue *sq;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 QTAILQ_FOREACH(sq, &amp;cq-&gt;s=
+q_list, entry) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_bh_schedule(s=
+q-&gt;bh);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_bh_schedule(cq-&gt;bh);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (cq-&gt;tail =3D=3D cq-&gt;head) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (cq-&gt;irq_enabled) {<b=
+r>
+<br>
+---<br>
+base-commit: e67b7aef7c7f67ecd0282e903e0daff806d5d680<br>
+change-id: 20241025-issue-2388-bd047487f74c<br>
+<br>
+Best regards,<br>
+-- <br>
+Klaus Jensen &lt;<a href=3D"mailto:k.jensen@samsung.com" target=3D"_blank">=
+k.jensen@samsung.com</a>&gt;<br>
+<br>
+</blockquote></div>
+
+--000000000000713b5006254f7fe1--
 
