@@ -4,74 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1E03D0C607
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 12:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D54D0C607
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 12:40:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4JX2-0007wW-PV; Fri, 25 Oct 2024 08:35:08 -0400
+	id 1t4JbK-0001AL-OS; Fri, 25 Oct 2024 08:39:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t4JX0-0007uk-8l
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:35:06 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t4JWy-00016U-IR
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:35:05 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5cbb719839eso759136a12.2
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 05:35:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729859703; x=1730464503; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=z+gQ+QVDfE7wD4hTZogpP0X8TWBzJ8Qv1S3V4EEfzjc=;
- b=ZCrGxeCJUB34VwQhYT1MKzInn72uMQv+3lXv9KxP3ZeR4H2djMydVCm1x2+TEIcVPF
- jfN9dZXVrpB+xTHN3GLrf6zEo5jEQLpSG1LSh+1hlRf24c9hqRjL7TjPNY/UncVR45Pm
- 84Lgh1PZcHsOYmVYLLxRHp0Np0Eszaui6XAfnVa3aNC54kWSYwqn+JnTBTI+J9t04hnG
- CK4qiiRbopVljwf0tMAlWpgWnorGz58faWkbvVcy58iTbsI9/Lh9WNwPG2ns01ELQlMY
- GoKxLyBWItEKoJDQMIl9t0cekGvwAaeYi/MhAfPyzHONW8BhXaOczzU8W79lQxIm9iJy
- dsTQ==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t4JbJ-00019t-3i
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:39:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t4JbH-00021W-DZ
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:39:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729859967;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=zWX+DsdIc9Qtt9swtc03nyXdG9gQ+/2FT8Yt8pFqtAA=;
+ b=Eh47l+xarO6jhaqWcP9oBMPjNM0u1iC+/595nFaP6BnuijlZh8QlfSvswSsAD7mtm6t3vx
+ HGhJ072u+hYHh+L2VhY2fCCxwaWV9xJXzmpEbybHlnEOr56DY/z4i4JxN8B+W/eT4MFdQk
+ QoRgd45my6qaZnU1o5BYGZZEfbXIo4s=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-556-hAnwR7KsPduS1f7b_XpL2Q-1; Fri, 25 Oct 2024 08:39:26 -0400
+X-MC-Unique: hAnwR7KsPduS1f7b_XpL2Q-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d5ca192b8so1093808f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 05:39:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729859703; x=1730464503;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=z+gQ+QVDfE7wD4hTZogpP0X8TWBzJ8Qv1S3V4EEfzjc=;
- b=KrfDYJe33RF+M5UIj1OU375S906zHOeclWlHXoLZMsrbreNzzVVXtZ/BSBNmAp/CMV
- Vdle25soLktjSfXA0E77Is6l1OU27MhGMxK07GNAsj5T5NiEGvxZAn6IxZt5fQg/BDzD
- rP1SyhhaJzVvoBIaaA9qxRTLCp9qdTUtC8Qm6JC25wX8J1iMjxNW1qiL+24HaA/YsWU1
- qTSKBNLyKBLvCyqU+0vi//HK/Cob3sjwKmgfzkGZZidHQ9RsMy/Z6e2x5z9Myiuy3EGE
- bS9uIqqJs58+meIEs0ceIWehckU0n3V6WKyYj7vzzEoVKQzRTjNg26kBGIMmIR5F2MSU
- 0ikg==
-X-Gm-Message-State: AOJu0Yw7T9BHZ/FqrRD/8JXRGYXP529tiKpSfuGgK6lhlbfPFOwFrapP
- CV6Gfnx8MDSxB9LVVi14ll2XAfbRF25tyXCBA16rPeX/5cojGnwWBzmKMvn8nRTh1WtaOBghg06
- sritUcl8R8L3quiKBMTVRh6w//Gqhr6JFJrz2oaGvHsjp9/UG
-X-Google-Smtp-Source: AGHT+IGGjpzXND4FEqr8A6HHq+h4vBqaRv/PmoTrJCOcecHQSahlj4iGdBnIqU3aIHM39NV/xEB465Lj/YAGn4MqLAU=
-X-Received: by 2002:a05:6402:26d3:b0:5c9:76b6:d14e with SMTP id
- 4fb4d7f45d1cf-5cba24608bdmr3162434a12.16.1729859702839; Fri, 25 Oct 2024
- 05:35:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729859965; x=1730464765;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zWX+DsdIc9Qtt9swtc03nyXdG9gQ+/2FT8Yt8pFqtAA=;
+ b=keETbzhw0h9qORvKAqWtcFMjTqkfBV+twrrTgtjaN9TM0xqfHJBViBj+NWMA5LtYvK
+ slIesO09U/rbrc9Ntcy6uh2LXZ4QhGdMdMrtH9Cy2qCrPaAeWgdQE5F203Tc5dD3sGDJ
+ 6h5cDczophdO3ZJqUFDR2BUXwyzPKj/3DXi784WRY0MN9id6AZ9gYIDvieUc12rrJGrP
+ c/oNr9PmgZ/d7ui/KTLmL6NVZpWPNMXFyxFWg8N0NdU2V8/PmncWZYIwGX2knWTmxq8G
+ jAiSGF49RuHaBXU8B2vXl3J/dJDQLr/3gWmS2wkcKFMvlp8YJ+hrh9xFWoIH+4B7r2q9
+ uVNg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUONtUnVG1R6wYut2cnMsk/tkiwEgcvxWGzg27OSMOCyE+npjRaRHvwH+yfW9Otlm1AVCgyD6Rb8n20@nongnu.org
+X-Gm-Message-State: AOJu0Yyr+q30Ug3GTSul9vlV8OjPbfipbNXnt8b+6DMxYNR7yGq9Kqjm
+ EyE3o+3Ojmg5gSGo5y/f/EmCTDOHx0iZe7OUoFS1NUMicMq2oUNtw6W6vU6A5vfXc+WbRX5Ftcj
+ 9hycSJslPs/EiYjr0ta4gFMt3VCHRanmbmveDuVspWUphvFODdgew
+X-Received: by 2002:a05:6000:d0b:b0:374:bd00:d1e with SMTP id
+ ffacd0b85a97d-3803abc2879mr4511802f8f.3.1729859965146; 
+ Fri, 25 Oct 2024 05:39:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMxlIcpEkmGbWpzluhskK5sgdK3TUNFEE1UERUoQqmkmdDQMGQZk0a5cQXninMMN4hjqcI3w==
+X-Received: by 2002:a05:6000:d0b:b0:374:bd00:d1e with SMTP id
+ ffacd0b85a97d-3803abc2879mr4511777f8f.3.1729859964705; 
+ Fri, 25 Oct 2024 05:39:24 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
+ ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38058b0ea58sm1428904f8f.15.2024.10.25.05.39.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Oct 2024 05:39:24 -0700 (PDT)
+Message-ID: <ba4ce438-554f-4f44-a14e-b65426aa8d4d@redhat.com>
+Date: Fri, 25 Oct 2024 14:39:23 +0200
 MIME-Version: 1.0
-References: <20241023131710.906748-1-thuth@redhat.com>
-In-Reply-To: <20241023131710.906748-1-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 25 Oct 2024 13:34:52 +0100
-Message-ID: <CAFEAcA-_0-yHKt+dViHa5N=_2Ec=ovwHTVLvA2eDy_8SXoat5A@mail.gmail.com>
-Subject: Re: [PULL 00/23] s390-ccw bios update
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/8] migration: Drop migration_is_idle()
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Avihai Horon <avihaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20241024213056.1395400-1-peterx@redhat.com>
+ <20241024213056.1395400-6-peterx@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20241024213056.1395400-6-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,30 +150,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 23 Oct 2024 at 14:17, Thomas Huth <thuth@redhat.com> wrote:
->
-> The following changes since commit 6f625ce2f21d6a1243065d236298277c56f972d5:
->
->   Merge tag 'pull-request-2024-10-21' of https://gitlab.com/thuth/qemu into staging (2024-10-21 17:12:59 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-10-23
->
-> for you to fetch changes up to 239e351ec415ff3673d9da70d70ca3a5dd95a2f0:
->
->   pc-bios/s390-ccw: Update s390-ccw.img with the full boot order support feature (2024-10-23 06:53:44 +0200)
->
-> ----------------------------------------------------------------
-> * Allow multiple boot devices (via bootindex properties) on s390x
-> * Avoid TEXTREL relocations in the s390-ccw.img firmware
->
+On 10/24/24 23:30, Peter Xu wrote:
+> Now with the current migration_is_running(), it will report exactly the
+> opposite of what will be reported by migration_is_idle().
+> 
+> Drop migration_is_idle(), instead use "!migration_is_running()" which
+> should be identical on functionality.
+> 
+> In reality, most of the idle check is inverted, so it's even easier to
+> write with "migrate_is_running()" check.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
 
-Applied, thanks.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+Thanks,
 
--- PMM
+C.
+
+
+> ---
+>   include/migration/misc.h |  1 -
+>   hw/virtio/virtio-mem.c   |  2 +-
+>   migration/migration.c    | 21 +--------------------
+>   migration/ram.c          |  2 +-
+>   system/qdev-monitor.c    |  4 ++--
+>   5 files changed, 5 insertions(+), 25 deletions(-)
+> 
+> diff --git a/include/migration/misc.h b/include/migration/misc.h
+> index 86ef160f19..804eb23c06 100644
+> --- a/include/migration/misc.h
+> +++ b/include/migration/misc.h
+> @@ -53,7 +53,6 @@ void dump_vmstate_json_to_file(FILE *out_fp);
+>   void migration_object_init(void);
+>   void migration_shutdown(void);
+>   
+> -bool migration_is_idle(void);
+>   bool migration_is_active(void);
+>   bool migration_is_device(void);
+>   bool migration_is_running(void);
+> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> index ae1e81d7ba..80ada89551 100644
+> --- a/hw/virtio/virtio-mem.c
+> +++ b/hw/virtio/virtio-mem.c
+> @@ -188,7 +188,7 @@ static bool virtio_mem_is_busy(void)
+>        * after plugging them) until we're running on the destination (as we didn't
+>        * migrate these blocks when they were unplugged).
+>        */
+> -    return migration_in_incoming_postcopy() || !migration_is_idle();
+> +    return migration_in_incoming_postcopy() || migration_is_running();
+>   }
+>   
+>   typedef int (*virtio_mem_range_cb)(VirtIOMEM *vmem, void *arg,
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 3365195def..f86c709699 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1636,25 +1636,6 @@ bool migration_in_bg_snapshot(void)
+>       return migrate_background_snapshot() && migration_is_running();
+>   }
+>   
+> -bool migration_is_idle(void)
+> -{
+> -    MigrationState *s = current_migration;
+> -
+> -    if (!s) {
+> -        return true;
+> -    }
+> -
+> -    switch (s->state) {
+> -    case MIGRATION_STATUS_NONE:
+> -    case MIGRATION_STATUS_CANCELLED:
+> -    case MIGRATION_STATUS_COMPLETED:
+> -    case MIGRATION_STATUS_FAILED:
+> -        return true;
+> -    default:
+> -        return false;
+> -    }
+> -}
+> -
+>   bool migration_is_active(void)
+>   {
+>       MigrationState *s = current_migration;
+> @@ -1733,7 +1714,7 @@ static bool is_busy(Error **reasonp, Error **errp)
+>       ERRP_GUARD();
+>   
+>       /* Snapshots are similar to migrations, so check RUN_STATE_SAVE_VM too. */
+> -    if (runstate_check(RUN_STATE_SAVE_VM) || !migration_is_idle()) {
+> +    if (runstate_check(RUN_STATE_SAVE_VM) || migration_is_running()) {
+>           error_propagate_prepend(errp, *reasonp,
+>                                   "disallowing migration blocker "
+>                                   "(migration/snapshot in progress) for: ");
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 5646a0b882..504b48d584 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -4498,7 +4498,7 @@ static void ram_mig_ram_block_resized(RAMBlockNotifier *n, void *host,
+>           return;
+>       }
+>   
+> -    if (!migration_is_idle()) {
+> +    if (migration_is_running()) {
+>           /*
+>            * Precopy code on the source cannot deal with the size of RAM blocks
+>            * changing at random points in time - especially after sending the
+> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+> index 1310f35c9f..83fa684475 100644
+> --- a/system/qdev-monitor.c
+> +++ b/system/qdev-monitor.c
+> @@ -686,7 +686,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+>           return NULL;
+>       }
+>   
+> -    if (!migration_is_idle()) {
+> +    if (migration_is_running()) {
+>           error_setg(errp, "device_add not allowed while migrating");
+>           return NULL;
+>       }
+> @@ -935,7 +935,7 @@ void qdev_unplug(DeviceState *dev, Error **errp)
+>           return;
+>       }
+>   
+> -    if (!migration_is_idle() && !dev->allow_unplug_during_migration) {
+> +    if (migration_is_running() && !dev->allow_unplug_during_migration) {
+>           error_setg(errp, "device_del not allowed while migrating");
+>           return;
+>       }
+
 
