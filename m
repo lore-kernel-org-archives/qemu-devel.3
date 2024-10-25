@@ -4,99 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB8FD149C0
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FFFD149C1
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:10:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Mqi-0007gV-E2; Fri, 25 Oct 2024 12:07:43 -0400
+	id 1t4Mov-0005Ce-EX; Fri, 25 Oct 2024 12:05:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1t4Mq2-0007Pg-P9
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:07:01 -0400
-Received: from shrimp.cherry.relay.mailchannels.net ([23.83.223.164])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4Mnx-0004WJ-RR
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:04:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1t4Mq0-0005Ix-AE
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:06:58 -0400
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id A7CFCC3040;
- Fri, 25 Oct 2024 16:06:51 +0000 (UTC)
-Received: from pdx1-sub0-mail-a233.dreamhost.com
- (trex-8.trex.outbound.svc.cluster.local [100.103.220.31])
- (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 4B84BC40E0;
- Fri, 25 Oct 2024 16:06:51 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1729872411; a=rsa-sha256;
- cv=none;
- b=V7qwKwXGfjoPOO1W8tPd0azPcY8dPZfet73LEYV6T+X8RyvqJP0sSqMlMfyExrkXxSEAG6
- m3qa6S2y5adghKgfzPBHsFTmudP/6zJxjFPxWLHpJSfQiL0AxJwNVlYakZncMG4NysqfJt
- Ved/UHfCY+n7SwIXc2O8VxeFzBj8MWt0uCbjEixrrkKLmFxGiw6x0DrxjLF4BcaSvDu5ev
- ge6MWg0Rkc7s7N4rD8p5AbGJhhUli0Loskp9P50xfROk222yp8lLb4basuMdxFnPcClypM
- crCIx/0K/dYgs9wX3BGCcho7z25FhgG1Xy54P9U1s2h8M8OkK0taOJ1piolXsQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1729872411;
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4Mnv-0004yv-VB
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:04:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729872287;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=aEzrN/Nw6UKLvVJs00tshw8NLr2g+/kwairU/76Ypcg=;
- b=21IyleDMZiW8+Gs6qGMxCBbMKun0sK4lU1EP80GQidQhOYp6DhQAv3Y+6axhD/cwCUidnd
- WahPOsm4ulX6UPMTom+G/CBuntWFWgCnP9FKESBFxYKui1chROKThlpYN9Ah3vbn9sPaul
- DLNLHwE6eizB1guwML5QPI7LYyjNM4yk+FRT/rv2S2rEKfs5nzbV4oFuOr7B0af+5Y/4LW
- cwAJWTNOqPW4baHKENfrBhCzYJOB48GYDu5KUBuV94SMauyhxDRTfdLb44KQDR6mo7JsIb
- KQSKu+M2ThV8ZIz4qfLsN5LYEeQBuMgB/zmY2B1Yf61HPO1U5j/yyfyLTe0n2A==
-ARC-Authentication-Results: i=1; rspamd-78ff97654b-h696w;
- auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
-X-MailChannels-Auth-Id: dreamhost
-X-Vacuous-Exultant: 1318d7c20fe6e2df_1729872411543_3769676576
-X-MC-Loop-Signature: 1729872411543:3829036414
-X-MC-Ingress-Time: 1729872411543
-Received: from pdx1-sub0-mail-a233.dreamhost.com (pop.dreamhost.com
- [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.103.220.31 (trex/7.0.2); Fri, 25 Oct 2024 16:06:51 +0000
-Received: from [172.22.7.54] (unknown [198.232.126.195])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: rob@landley.net)
- by pdx1-sub0-mail-a233.dreamhost.com (Postfix) with ESMTPSA id 4XZnj64zWpz4g; 
- Fri, 25 Oct 2024 09:06:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
- s=dreamhost; t=1729872411;
- bh=aEzrN/Nw6UKLvVJs00tshw8NLr2g+/kwairU/76Ypcg=;
- h=Date:Subject:To:From:Content-Type:Content-Transfer-Encoding;
- b=FIlmumQrfhxA8Ytr/nYF8iyaK7vqXyw/GliHCZJ2/8Ssumllj6eJcoD1s8OZfBBQT
- vqzOxbu7jQdtsJJ8rG8JNpeV2jDmJwKTeviIulereIO9KNVmtFsFZKGKVi33pavLJZ
- NmIYNWoDdaduVNCXzGVltgnGEk4w+ZBzYgJ8pYf0WTAB019ZU9Qzd4jMolCH4/YDks
- VMWJGcAjtBf5vmtsV2JKZMFVFksNttHkCgEu2nKHEakj8Sx8495S8vOLr9035azdnx
- zmCGxQMl3b3tN8bSdsNxdFixdXUjvzoWbnusgcrs29mWz2XxeBBVduzepDJBxcptC9
- ssaChh/0vtklw==
-Message-ID: <e424cf07-2c58-460a-8622-dc79c1e5ba30@landley.net>
-Date: Fri, 25 Oct 2024 11:06:49 -0500
+ in-reply-to:in-reply-to:references:references;
+ bh=max4ptoWARDXa3Y5mnahsubFzzuLs19p4ctB7GiY7D4=;
+ b=OIXKjH9XKJDWMFkEd0D55MVxHBjSOcnp9m/Gy5d5QIyj9SBMCHBDPUKFI4tfRI/90TCi0P
+ EFPDBU7+x3SPP9ToYTkj9jm5JyR35+ufL16euchQuBp5ABtbY8NPKCyQNlPJXZZGR42y3H
+ sDIjqaOGhzJa0wOUir/tcDfFzJeklpU=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-21-1nflGp0VNk-arTG7xYITZw-1; Fri, 25 Oct 2024 12:04:42 -0400
+X-MC-Unique: 1nflGp0VNk-arTG7xYITZw-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a9adb271de7so102553266b.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 09:04:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729872280; x=1730477080;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=max4ptoWARDXa3Y5mnahsubFzzuLs19p4ctB7GiY7D4=;
+ b=ZKyFTE3pfPwQAiPPe4qzmdfwCO9/VOmios8WwoB2F3DRrpsZaaQFuNQXcHhvpdXdin
+ mOvx/1l4vBTPZV878Cxu656QSF6UTM27/ibpcoPirEmb+3LIRjRIHSfa9gzNq+SVm/KW
+ VRxb92pViZ/dkNFs/HcinadpQOQmzpSR61pB+ZXB4e2YfotWMEsU+vXUU14mXp8UhT06
+ LHwCZrxBWzlzUj51Riw9RGqZbcLyXVfaL+uumJu6DG1plUxWLL0666hsbUoYVCaupTXJ
+ rW9Xv6xd2b+1PNVRzh5vry0MoKu72wcuX18QVpRsyWodsOBXmb3EXvboauLG8LKSHtQm
+ HLPw==
+X-Gm-Message-State: AOJu0YwK3ULgRuiTiVOr90aIvXzoiuMX+bNKcSaUUqRvnQcI+NK3lKxc
+ Cos8pv1yW1BpJ4oMnutGCaA2hr0mQCOcFCd7OxbcHKU6a8pKRFNeSUi0EB4RsbUkn7y+ltUpT/X
+ 7k0Wx6WPbLnLpPlvLaH8z/TAcJyJNVvDTvREupJcQrKr96d5ClEazNzoGND05qHLnPclSrals2V
+ MqqRluXR/YtrGix02LuAZ+ZDuXMFEjrgMpkT2N5jc=
+X-Received: by 2002:a17:907:7da5:b0:a9a:421:720 with SMTP id
+ a640c23a62f3a-a9ad283263emr466289866b.46.1729872279985; 
+ Fri, 25 Oct 2024 09:04:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEumtWYbq0/deuwQSHN+ZegtMRrT7wZQr4VKX8XXxm7QWfGz7uYrI0AEqHRFrcj6g1+9PG23Q==
+X-Received: by 2002:a17:907:7da5:b0:a9a:421:720 with SMTP id
+ a640c23a62f3a-a9ad283263emr466286666b.46.1729872279440; 
+ Fri, 25 Oct 2024 09:04:39 -0700 (PDT)
+Received: from [192.168.10.47] ([151.81.112.43])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9b1dfbc814sm85423266b.37.2024.10.25.09.04.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Oct 2024 09:04:34 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
+ junjie.mao@hotmail.com, berrange@redhat.com
+Subject: [PATCH 19/23] rust: do not use --generate-cstr
+Date: Fri, 25 Oct 2024 18:02:04 +0200
+Message-ID: <20241025160209.194307-20-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241025160209.194307-1-pbonzini@redhat.com>
+References: <20241025160209.194307-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Please put qemu-system-sh4eb back.
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, jeff@coresemi.io,
- peter.maydell@linaro.org, glaubitz@physik.fu-berlin.de
-References: <d6755445-1060-48a8-82b6-2f392c21f9b9@landley.net>
- <9f8b2357-a28a-4b80-aa5c-ff1725e364d9@redhat.com>
-Content-Language: en-US
-From: Rob Landley <rob@landley.net>
-In-Reply-To: <9f8b2357-a28a-4b80-aa5c-ff1725e364d9@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=23.83.223.164; envelope-from=rob@landley.net;
- helo=shrimp.cherry.relay.mailchannels.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,30 +103,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/24/24 00:44, Thomas Huth wrote:
-> On 24/10/2024 02.11, Rob Landley wrote:
->> I use it, and ship system images for it:
->>
->>    https://landley.net/bin/mkroot/latest/sh4eb.tgz
-> 
-> Oh, that's interesting, I've been told that the r2d machine does not 
-> work in big endian mode:
-> 
->   https://lore.kernel.org/qemu-devel/87a5fwjjew.wl-ysato@users.sourceforge.jp/
+--generate-cstr is a good idea and generally the right thing to do,
+but it is not available in Debian 12 and Ubuntu 22.04.  Work around
+the absence.
 
-Possibly they were referring to:
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ meson.build                       |  4 +++-
+ rust/hw/char/pl011/src/device.rs  |  1 +
+ rust/qemu-api/src/device_class.rs | 10 ++++++++++
+ rust/qemu-api/tests/tests.rs      |  4 ++--
+ 4 files changed, 16 insertions(+), 3 deletions(-)
 
-https://landley.net/notes-2023.html#16-06-2023
+diff --git a/meson.build b/meson.build
+index ab0613f353c..bfd04294850 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3941,13 +3941,15 @@ common_all =3D static_library('common',
+                             dependencies: common_ss.all_dependencies())
+=20
+ if have_rust
++  # We would like to use --generate-cstr, but it is only available
++  # starting with bindgen 0.66.0.  The oldest supported versions
++  # are in Ubuntu 22.04 (0.59.1) and Debian 12 (0.60.1).
+   bindgen_args =3D [
+     '--disable-header-comment',
+     '--raw-line', '// @generated',
+     '--ctypes-prefix', 'std::os::raw',
+     '--formatter', 'rustfmt',
+     '--generate-block',
+-    '--generate-cstr',
+     '--impl-debug',
+     '--merge-extern-blocks',
+     '--no-doc-comments',
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/devi=
+ce.rs
+index bca727e37f0..2a85960b81f 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -12,6 +12,7 @@
+     bindings::{self, *},
+     c_str,
+     definitions::ObjectImpl,
++    device_class::TYPE_SYS_BUS_DEVICE,
+ };
+=20
+ use crate::{
+diff --git a/rust/qemu-api/src/device_class.rs b/rust/qemu-api/src/device_c=
+lass.rs
+index 56608c7f7fc..0ba798d3e3c 100644
+--- a/rust/qemu-api/src/device_class.rs
++++ b/rust/qemu-api/src/device_class.rs
+@@ -2,6 +2,10 @@
+ // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ // SPDX-License-Identifier: GPL-2.0-or-later
+=20
++use std::ffi::CStr;
++
++use crate::bindings;
++
+ #[macro_export]
+ macro_rules! device_class_init {
+     ($func:ident, props =3D> $props:ident, realize_fn =3D> $realize_fn:exp=
+r, legacy_reset_fn =3D> $legacy_reset_fn:expr, vmsd =3D> $vmsd:ident$(,)*) =
+=3D> {
+@@ -62,3 +66,9 @@ macro_rules! declare_properties {
+         ];
+     };
+ }
++
++// workaround until we can use --generate-cstr in bindgen.
++pub const TYPE_DEVICE: &CStr =3D
++    unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_DEVICE) };
++pub const TYPE_SYS_BUS_DEVICE: &CStr =3D
++    unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_SYS_BUS_DE=
+VICE) };
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index 7442f695646..43a4827de12 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -8,7 +8,7 @@
+     bindings::*,
+     c_str, declare_properties, define_property,
+     definitions::{Class, ObjectImpl},
+-    device_class_init,
++    device_class, device_class_init,
+     zeroable::Zeroable,
+ };
+=20
+@@ -57,7 +57,7 @@ impl ObjectImpl for DummyState {
+         type Class =3D DummyClass;
+         const TYPE_INFO: qemu_api::bindings::TypeInfo =3D qemu_api::type_i=
+nfo! { Self };
+         const TYPE_NAME: &'static CStr =3D c_str!("dummy");
+-        const PARENT_TYPE_NAME: Option<&'static CStr> =3D Some(TYPE_DEVICE=
+);
++        const PARENT_TYPE_NAME: Option<&'static CStr> =3D Some(device_clas=
+s::TYPE_DEVICE);
+         const ABSTRACT: bool =3D false;
+         const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)=
+> =3D None;
+         const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut Ob=
+ject)> =3D None;
+--=20
+2.47.0
 
-Less-used platforms get regressions and then get fixed again. The reason 
-I rebuilt qemu and noticed sh4eb's removal was I was checking if commit 
-3c5f86a22686 was still a problem before reporting it, but I see 
-68ad89b75ad2 already reverted it... :)
-
-> But yes, your binaries apparently work there, so sorry for the confusion.
-> I'll send a patch to revert the removal.
-
-Thank you. (The j-core SOCs are all big endian.)
-
-Rob
 
