@@ -4,131 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08531D11708
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 06:58:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8086FD11717
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 07:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4EGP-0003OE-3J; Fri, 25 Oct 2024 02:57:37 -0400
+	id 1t4Eny-0007GQ-Ca; Fri, 25 Oct 2024 03:32:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Lei.Huang@amd.com>) id 1t4EGN-0003Ng-4i
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 02:57:35 -0400
-Received: from mail-dm6nam04on2086.outbound.protection.outlook.com
- ([40.107.102.86] helo=NAM04-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t4Enx-0007GB-AU
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 03:32:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Lei.Huang@amd.com>) id 1t4EGK-0001at-Fo
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 02:57:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UQFDnkLsAJmuYnxnseCR2IllQO8KSlg8khiM/XmWpcox5Qqzzdr7mIjIiKwtbNSYvZky1NzHSegORWru15eDcmdZzys8xC/yXSuO5fXb9Ww6YQU2bOh1h+Ww8rutEtcK06hC6Mq4dldXCWdPBLfItsQkietVt2rbnhjXitAIWWGTepdD/bOkGcGNUeMfshOn4rFJmrNwBl6HoUIhdZh6vqdiqjgs9cSqVi0HwUckb5dXzTpSqdkEZt9eica+g07YI9AGicA1drfbzhEB8a28nFuFSzpy8ehjLZhMXjZjP605Jtpm3Q8igG5oKnFJloOmOQCAbb/a+vMLxNU119PGNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KmfZAhiQRezAntS5cPJlvlFXrCQLMzebwZXuMHKwedo=;
- b=YGbLXFAWX7X28tbKweQVpKiBKLI+EI2bIwdTbRdYoN3Ni9u2NpepCdOX6yJXb0VlJUqR1sgQCoeM5NY+2u7WRbFzMMkHtZqIoVfGdmjKFDigVp/fKxgrEp7BCgKWfRWSWOiG5TJpI56KiKNXhQ63hGgS0a6tvsddpfjfxhs7Zr3wA91rBOxg4O62gM5H2iCT7DhZzexz0xs8Y3qXjVEaWGVO4T0llV9Axwa+JlU3ooJXptOebla87ZjpNaQoW/FDQUSE42urHYV08PBpTJ/MnRDcjTMZXxnY5Tj2CtD1SJROpXc+kgjojuRvkjrmfOORUNlIZezE9EAjY97RnunjnQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KmfZAhiQRezAntS5cPJlvlFXrCQLMzebwZXuMHKwedo=;
- b=TauyYU87bIHAm5KuBxAARkQnZlUL8P/ea6D85l3R7xJ65vib4C3Bt7hWZUjyotWMAVJTqufCpBOQeN4lAS9PX43NXAYnRnLiMQ3Fh044aClx051NerfxZXRPw3E3IYfyqGHjDD6KhHdaoxdkv2nITwBbeA9BrFxKkKVwmZiR8gU=
-Received: from MW4PR03CA0127.namprd03.prod.outlook.com (2603:10b6:303:8c::12)
- by DM4PR12MB6567.namprd12.prod.outlook.com (2603:10b6:8:8e::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.18; Fri, 25 Oct
- 2024 06:52:25 +0000
-Received: from BN1PEPF00005FFC.namprd05.prod.outlook.com
- (2603:10b6:303:8c:cafe::1a) by MW4PR03CA0127.outlook.office365.com
- (2603:10b6:303:8c::12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.18 via Frontend
- Transport; Fri, 25 Oct 2024 06:52:25 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN1PEPF00005FFC.mail.protection.outlook.com (10.167.243.228) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8093.14 via Frontend Transport; Fri, 25 Oct 2024 06:52:25 +0000
-Received: from SHA-L-LEIHUANG.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 25 Oct
- 2024 01:52:22 -0500
-From: Lei Huang <Lei.Huang@amd.com>
-To: <marcandre.lureau@redhat.com>
-CC: <qemu-devel@nongnu.org>, <pierre-eric.pelloux-prayer@amd.com>,
- <ken.xue@amd.com>, <lei.huang@amd.com>, Lei Huang <Lei.Huang@amd.com>
-Subject: [PATCH] ui/sdl: Mouse event optimization
-Date: Fri, 25 Oct 2024 14:52:05 +0800
-Message-ID: <20241025065205.1222-1-Lei.Huang@amd.com>
-X-Mailer: git-send-email 2.44.0.windows.1
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t4Enu-0004vr-Vx
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 03:32:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729841531;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=W34TzzRk8sa/oidspwOjjXSXdx84jDzmL6wRELBhhUo=;
+ b=DhU06jotgRJSZups29xGtIb7hOz5Ue0dxpajbsYt0+QOEVAW2Agm6PpvVn3QY4hK69F7m1
+ tL4gzAOHm0sKsAxgffbnkmTuh3FHeZptSsoMJVshMJK1Q2GCEO7U8S4CnzR2SApWiEDbJa
+ kfXzEKbExmgdbBImrC9q6oZ9udojHWM=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-568-0sBNxxjUP6q1RZ4k39WCEw-1; Fri, 25 Oct 2024 03:32:08 -0400
+X-MC-Unique: 0sBNxxjUP6q1RZ4k39WCEw-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4315e8e9b1cso9377935e9.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 00:32:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729841527; x=1730446327;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W34TzzRk8sa/oidspwOjjXSXdx84jDzmL6wRELBhhUo=;
+ b=nUAqFx6mRgbEAZqXbHWKf1sOXDMJsvMeTrL8u4OXRWOA0VD114RDo9h/L7fRfwThdZ
+ yQ66KXezBCU2m6pQzCZqWfCMSuNTJSqZVyDpWbskN5l0GYkjZA7LI1Mx/axJ1kQV+zBY
+ 1ud0tFOEbditAv2Jiu0gUosM7D+SOrpz9084nnmvm3G3JPDK1KCuQiybdP4VK4JyQmZp
+ vbFbBcqNvWqWJNf+CWvOc3yJYpeSsc63r1xEzfXJJnNWLMjg+HkCZC5VHnttC4Ol6asg
+ LuTD2P9QNo9rjtKbMCwY0KY82tWLOJxMQhHFmemwPJS8MaqoEwtuB2hP7E4ggUVhfKLn
+ C8tg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVFRfqwHqHaDfC7RaN/NuWyb9tM59jUmwaRr60/gJ+MfEdKubz7vE2AhqTtVDV1QTPKhz5qdKJJfSGw@nongnu.org
+X-Gm-Message-State: AOJu0Yx/mjIBfsQ6PFLHYRx7rMt1pbd/EExBTogI7FA1i4F9QX0BXbJp
+ pPp4LogqxIuiXNUFfc+7BFTPKXnOH6QrVtskz0paPxNdOguML3ZUmNr6cB0KKyK2bV0DmdEUALm
+ Ie0m3LDHzp2mFe5hL5Sc/uIMyF6mx39rp/60aL/S9XzgtA4CPj5mK
+X-Received: by 2002:a05:600c:45d0:b0:431:7ccd:ff8a with SMTP id
+ 5b1f17b1804b1-4318bc8f546mr33813815e9.14.1729841527149; 
+ Fri, 25 Oct 2024 00:32:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGskSdhclIoqTbH8lT6s2ceW2BPbUX35lwBPBDfqdBM8A3dZmUuQqmEnQp58u11gq6TUDnD7Q==
+X-Received: by 2002:a05:600c:45d0:b0:431:7ccd:ff8a with SMTP id
+ 5b1f17b1804b1-4318bc8f546mr33813595e9.14.1729841526742; 
+ Fri, 25 Oct 2024 00:32:06 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-40-241-30.web.vodafone.de.
+ [109.40.241.30]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38058b132fbsm826203f8f.4.2024.10.25.00.32.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Oct 2024 00:32:06 -0700 (PDT)
+Message-ID: <46e3c351-4acf-4bb7-b7b0-d9e0ae4c0346@redhat.com>
+Date: Fri, 25 Oct 2024 09:32:04 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00005FFC:EE_|DM4PR12MB6567:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4d580238-d551-4eb0-b308-08dcf4c1955a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?N1DXJUR5/VqG48jAL5EiMjJZ1dAppV0xH8ay9A4R98S8IhY49WvEKxDOiQxU?=
- =?us-ascii?Q?yt3OdB/mZC7JMZVz4pc6bxUsen0zbOxZ3bWfEGLrkgxtXMPKIx69PUaJ0f0O?=
- =?us-ascii?Q?xxxNk4cALDiKJCtIVlfa5/4LHFjxMIf0RaNcoVIV2+OF7OajYsXJb8YorU2a?=
- =?us-ascii?Q?4VwwgOI5LxbbnFYJLD4r5ToCepWhIEyZJYdkQjDkpzuzJD4T4lqXGbkBirQ+?=
- =?us-ascii?Q?jRcRn0ITDy9dYB9VULCDtxP5q8Nm75DY4eqBBvB90GJkPQ0qQicvD03rtTTv?=
- =?us-ascii?Q?FIcFpix59Ms/6LA9iqkjLvetV3/qlG4F4ItxepNJS+1mXWhZxr5WKm3r/xBS?=
- =?us-ascii?Q?KaCktL7xkr817eegglRk9KsGM6KpbnCdOGvGbKfLwTCIXhbcnM1A3dk8Oocc?=
- =?us-ascii?Q?GRwm4+bu9hkGzQekXqMZk10g+4hkJua92pogp4Qe3YooGBypyGw/7ScAtHxs?=
- =?us-ascii?Q?UaJ9w4GCT9ARlOEgK5Z79S+cLBqAaxA/j9IOOFmPtSc8WCGNCMCTAlnvsV1K?=
- =?us-ascii?Q?3ug6C8+asGSSa6UErRqZwqtKQrAgqFcD0uNZbbCZBeVa/pTa0fYQfwt66fbS?=
- =?us-ascii?Q?yqCbGvpm6Db4K7HWCuyn+FA+gwCoNwfsFxrGLgRmcrtXxGRWejOFkEaU9avB?=
- =?us-ascii?Q?Cfw9O174UML/H8vI4DCVKxUuvRKcCOovTA+EK/jOsOYRpAz1hbYz+s6kcVND?=
- =?us-ascii?Q?OLAu4gKE2wQHCcCBXWlVWl9GzMVbpPl7BfnDEpuYx1HQABzxP9C1ZtyDnPsj?=
- =?us-ascii?Q?a1BolEd7NS1oH5+wTo+iFXfQU1HxXrLsJaNODw/bEFRYcLY+9AG397JFRclj?=
- =?us-ascii?Q?iWl02xqvx8ACitXa+ZRv5hpRNMw5DrAwhJtI6AXM2kO+pAPJMEvcRrwPEtS9?=
- =?us-ascii?Q?kEuWUF3tc/bGYoJZ7pc87fSZjEy4hldsM01Oh9IwJDfeP2zeTLqMODrEhRGL?=
- =?us-ascii?Q?AhKh1sh07Vuz0GlElMLrfzmEdTyRCJJv29WHO34uKNISwxFTWsW4AdAcqwxD?=
- =?us-ascii?Q?htwhUD1IZPuIHXi9Y1ZnUCownA//l3GBcQ+c//8EubRsovPbxTfCefBdZade?=
- =?us-ascii?Q?UgRfu8PzMd2sm78/VQIv9cgal2dahZgtLWOulvgwvUHyUxXigWtNfUbQa9/w?=
- =?us-ascii?Q?xsCFPgYzMK+dpQg+LZOh0HWbQ5vlQHMRjCjhYMmvfirPidJlFsbxHh8UoeCF?=
- =?us-ascii?Q?G+FCgGevFnuqMTCEeeISrjeKa9Tty3dGzEViZIJzsuZOe3V9hxirHetYJ0qd?=
- =?us-ascii?Q?DES5CSYS3uJKxmbkNPN8OTtlgL+yRplCJK/rllvFsmZo7WFnoPLwfFgVC4sL?=
- =?us-ascii?Q?/xH7lVj3K253TF6UWyLFTcBdZT1dzwKIlN+8Xi5qTAL7quqZgQi6eO5KkhnO?=
- =?us-ascii?Q?KT2ol/7fUYM4pTHcbRHVdXmLNQ9Wc6dABJ7ZnoVUbaAOCU1m8A=3D=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Oct 2024 06:52:25.0601 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4d580238-d551-4eb0-b308-08dcf4c1955a
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00005FFC.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6567
-Received-SPF: permerror client-ip=40.107.102.86;
- envelope-from=Lei.Huang@amd.com;
- helo=NAM04-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+User-Agent: Mozilla Thunderbird
+Subject: Re: Missing image on storage.kernelci.org
+To: Joel Stanley <joel@jms.id.au>, QEMU Developers <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <CACPK8Xc=jsz5iT_WR7s-rcu1cRzryiK+-0o=6vUK_D_qMMrP3A@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CACPK8Xc=jsz5iT_WR7s-rcu1cRzryiK+-0o=6vUK_D_qMMrP3A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-1.697, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,67 +146,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a convergence factor to make the VM's input
-global coordinates more closely approach the global
-coordinates of DOM0.
+On 21/10/2024 12.16, Joel Stanley wrote:
+> I was attempting to run some boot tests today and saw this:
+> 
+>   (11/39) tests/avocado/boot_linux_console.py:BootLinuxConsole.test_arm_bpim2u_gmac:
+> CANCEL: Missing asset
+> http://storage.kernelci.org/images/rootfs/buildroot/buildroot-baseline/20221116.0/armel/rootfs.ext2.xz
+> (5.21 s)
 
-Change-Id: I2c3f12f1fe7dfb9306d1fc40c4fd4d299937f4c6
-Signed-off-by: Lei Huang <Lei.Huang@amd.com>
----
- ui/sdl2.c | 32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+Yes, looks like the old images have been removed. But at least newer 
+versions are still available. I'll try to convert the test to the new 
+functional framework and fix the broken URL along the way.
 
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index bd4f5a9da14..8f504dd8727 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -303,6 +303,34 @@ static void sdl_mouse_mode_change(Notifier *notify, void *data)
-     }
- }
- 
-+/*
-+ *guest_x and guest_y represent the global coordinates on the VM side,
-+ *while x and y represent the global coordinates on the dom0 side.
-+ *The goal of this entire process is to align the global coordinates of
-+ *the VM with those of dom0 using dx and dy. The current approach aims
-+ *for precise calibration in once attempt; however, because guest_x
-+ *and guest_y are non-zero values, they are not accurate values when
-+ *they are counted out to become negative.Therefore, achieving perfect
-+ *alignment in one attempt is impossible.Since the same calibration method
-+ *is used each time, repeated attempts cannot achieve alignment either.
-+ *By introducing a convergence factor, guest_x and guest_y can be made to
-+ *approach dom0's x and y indefinitely.
-+ *
-+ *                   QEMU                       (dx,dy)  VM
-+ *calculates dx and dy using guest_x and guest_y ---->  input driver
-+ *           ^                                            |
-+ *           |                                            |
-+ *           |                                            V
-+ *           |     update
-+ *           | guest_x,guest_y              input dispatcher ---> WindowManager
-+ *           |                                            |                 |
-+ *           |                                            |                 |
-+ *           |                 libdrm                     V                 |
-+ *       virtio-gpu  <------ drmModeMoveCursor <------ compositor <-------  |
-+ *                           (guest_x,guest_y)   calculates guest_x and
-+ *                                               guest_y dy using dx and dy
-+ */
-+#define CONVERGENCE_FACTOR 3
- static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
-                                  int x, int y, int state)
- {
-@@ -331,8 +359,8 @@ static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
-             y -= guest_y;
-             guest_x += x;
-             guest_y += y;
--            dx = x;
--            dy = y;
-+            dx = x / CONVERGENCE_FACTOR;
-+            dy = y / CONVERGENCE_FACTOR;
-         }
-         qemu_input_queue_rel(scon->dcl.con, INPUT_AXIS_X, dx);
-         qemu_input_queue_rel(scon->dcl.con, INPUT_AXIS_Y, dy);
--- 
-2.45.2
+  Thomas
 
 
