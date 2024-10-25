@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1DBFD0C606
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1E03D0C607
 	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 12:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4JWu-0007rS-TI; Fri, 25 Oct 2024 08:35:01 -0400
+	id 1t4JX2-0007wW-PV; Fri, 25 Oct 2024 08:35:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t4JWs-0007qc-Bk
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:34:58 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1t4JX0-0007uk-8l
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:35:06 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t4JWp-00011B-Kr
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:34:58 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c9404c0d50so2221877a12.3
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 05:34:52 -0700 (PDT)
+ id 1t4JWy-00016U-IR
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:35:05 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5cbb719839eso759136a12.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 05:35:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729859691; x=1730464491; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729859703; x=1730464503; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pKtoknJaRkBKpxNjIfUPtTkPP3ApBWXlXqHh3ivUFSw=;
- b=RkhdzzFCYBHzsYBJy5cQoebT+4EBdasP/tUOWeAJ9q/tNgOjyErBSdajnJcANe6xCE
- VqVvK8fIitOn614xy688uJnJcJXp3+KLhj/rGmSX+LsbYFI1whQ1OFiW64XpmSN0s+oE
- hzOV8dOOiLWKR0nyW22z5kycJdyDCK08T/rTTaomMMAvQNKwWP2A6ZQuRwBWl6Z/t5if
- kU3wCHGa5KBvCD1/3YEjI+dmiRbnf59Eznao6Q9ivnVoxLn6+FvBX2FsB8jjRSUQvGbb
- TUuTvEN1dX54xDXnWZ19AnsTcd9ZyUySfKa8zo6EjSRPY36UPJjQZ4zyDT8TbkFzYMak
- 0eww==
+ bh=z+gQ+QVDfE7wD4hTZogpP0X8TWBzJ8Qv1S3V4EEfzjc=;
+ b=ZCrGxeCJUB34VwQhYT1MKzInn72uMQv+3lXv9KxP3ZeR4H2djMydVCm1x2+TEIcVPF
+ jfN9dZXVrpB+xTHN3GLrf6zEo5jEQLpSG1LSh+1hlRf24c9hqRjL7TjPNY/UncVR45Pm
+ 84Lgh1PZcHsOYmVYLLxRHp0Np0Eszaui6XAfnVa3aNC54kWSYwqn+JnTBTI+J9t04hnG
+ CK4qiiRbopVljwf0tMAlWpgWnorGz58faWkbvVcy58iTbsI9/Lh9WNwPG2ns01ELQlMY
+ GoKxLyBWItEKoJDQMIl9t0cekGvwAaeYi/MhAfPyzHONW8BhXaOczzU8W79lQxIm9iJy
+ dsTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729859691; x=1730464491;
+ d=1e100.net; s=20230601; t=1729859703; x=1730464503;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=pKtoknJaRkBKpxNjIfUPtTkPP3ApBWXlXqHh3ivUFSw=;
- b=ZKvgggtVkmbxK+5p5Lkh5l+ejUtlkxcXEgF9VmVyJE7SmVc+xnJ0+YC1T/ZMgwP8dk
- 77nEAypZCAmHacJ4uf6vU8A/5XmfAjw1tKim1F00L8CizNyg1Z0WYlJ/tbLul5TUgKa6
- nZuQ9RGq+LSYmnJTdZwpLuFmfZ5dAwPQ7upNOoFlxDKSsRzP7eC3NNWhqSIGZ9XFIhek
- A9B4L90k4MZM4VSgNNetXXAyZRc+ZTzs1CDoOFM5RRhTEf6YYQTMQ2+tAle9D+hexOQX
- 2kDJY55w34svCp1q216kxu/OX/13Pu3VHqHvvDeblP11eF86pDqrKYWXSp4LskeCTOS+
- XY+A==
-X-Gm-Message-State: AOJu0YzUlsTuzsdhU03BrrX3WMVrY+VA5RxzRy7KtAsl+5AdnRbxEImb
- 1agWxvdyHZYZ2rJKa8e3U8R1Cq8icbrm/96S8qVo/SVRCOvtIn/gunRNfz6w1lOw7rQEOGbAASA
- cdnQhFdz2zNbYQNuxuecMzGUiTWkobUxdAdbx4Q==
-X-Google-Smtp-Source: AGHT+IFc2Op9efT7XB1MaMvSzihGqwwIa7ZKO0J2V89gm6BwuU7fgVwVzkr+ZAcMTo37AzRn3M36ExowDrORdYyd8cI=
-X-Received: by 2002:a05:6402:2548:b0:5cb:7295:49b with SMTP id
- 4fb4d7f45d1cf-5cba24ad1b7mr3094665a12.34.1729859690465; Fri, 25 Oct 2024
- 05:34:50 -0700 (PDT)
+ bh=z+gQ+QVDfE7wD4hTZogpP0X8TWBzJ8Qv1S3V4EEfzjc=;
+ b=KrfDYJe33RF+M5UIj1OU375S906zHOeclWlHXoLZMsrbreNzzVVXtZ/BSBNmAp/CMV
+ Vdle25soLktjSfXA0E77Is6l1OU27MhGMxK07GNAsj5T5NiEGvxZAn6IxZt5fQg/BDzD
+ rP1SyhhaJzVvoBIaaA9qxRTLCp9qdTUtC8Qm6JC25wX8J1iMjxNW1qiL+24HaA/YsWU1
+ qTSKBNLyKBLvCyqU+0vi//HK/Cob3sjwKmgfzkGZZidHQ9RsMy/Z6e2x5z9Myiuy3EGE
+ bS9uIqqJs58+meIEs0ceIWehckU0n3V6WKyYj7vzzEoVKQzRTjNg26kBGIMmIR5F2MSU
+ 0ikg==
+X-Gm-Message-State: AOJu0Yw7T9BHZ/FqrRD/8JXRGYXP529tiKpSfuGgK6lhlbfPFOwFrapP
+ CV6Gfnx8MDSxB9LVVi14ll2XAfbRF25tyXCBA16rPeX/5cojGnwWBzmKMvn8nRTh1WtaOBghg06
+ sritUcl8R8L3quiKBMTVRh6w//Gqhr6JFJrz2oaGvHsjp9/UG
+X-Google-Smtp-Source: AGHT+IGGjpzXND4FEqr8A6HHq+h4vBqaRv/PmoTrJCOcecHQSahlj4iGdBnIqU3aIHM39NV/xEB465Lj/YAGn4MqLAU=
+X-Received: by 2002:a05:6402:26d3:b0:5c9:76b6:d14e with SMTP id
+ 4fb4d7f45d1cf-5cba24608bdmr3162434a12.16.1729859702839; Fri, 25 Oct 2024
+ 05:35:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241023033432.1353830-1-richard.henderson@linaro.org>
-In-Reply-To: <20241023033432.1353830-1-richard.henderson@linaro.org>
+References: <20241023131710.906748-1-thuth@redhat.com>
+In-Reply-To: <20241023131710.906748-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 25 Oct 2024 13:34:39 +0100
-Message-ID: <CAFEAcA9rLJFbYez5b6_d0snNqzE1n9jCZUbKf7hYCoHvWfZziQ@mail.gmail.com>
-Subject: Re: [PULL 00/24] tcg + linux-user patch queue
-To: Richard Henderson <richard.henderson@linaro.org>
+Date: Fri, 25 Oct 2024 13:34:52 +0100
+Message-ID: <CAFEAcA-_0-yHKt+dViHa5N=_2Ec=ovwHTVLvA2eDy_8SXoat5A@mail.gmail.com>
+Subject: Re: [PULL 00/23] s390-ccw bios update
+To: Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,8 +87,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 23 Oct 2024 at 04:34, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Wed, 23 Oct 2024 at 14:17, Thomas Huth <thuth@redhat.com> wrote:
 >
 > The following changes since commit 6f625ce2f21d6a1243065d236298277c56f972d5:
 >
@@ -96,22 +95,15 @@ On Wed, 23 Oct 2024 at 04:34, Richard Henderson
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20241022
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-10-23
 >
-> for you to fetch changes up to 310df7a9fe400f32cde8a7edf80daad12cd9cf02:
+> for you to fetch changes up to 239e351ec415ff3673d9da70d70ca3a5dd95a2f0:
 >
->   linux-user/riscv: Fix definition of RISCV_HWPROBE_EXT_ZVFHMIN (2024-10-22 13:45:03 -0700)
+>   pc-bios/s390-ccw: Update s390-ccw.img with the full boot order support feature (2024-10-23 06:53:44 +0200)
 >
 > ----------------------------------------------------------------
-> tcg: Reset data_gen_ptr correctly
-> tcg/riscv: Implement host vector support
-> tcg/ppc: Fix tcg_out_rlw_rc
-> target/i386: Walk NPT in guest real mode
-> target/i386: Use probe_access_full_mmu in ptw_translate
-> linux-user: Fix build failure caused by missing __u64 on musl
-> linux-user: Emulate /proc/self/maps under mmap_lock
-> linux-user/riscv: Fix definition of RISCV_HWPROBE_EXT_ZVFHMIN
-> linux-user/ppc: Fix sigmask endianness issue in sigreturn
+> * Allow multiple boot devices (via bootindex properties) on s390x
+> * Avoid TEXTREL relocations in the s390-ccw.img firmware
 >
 
 
