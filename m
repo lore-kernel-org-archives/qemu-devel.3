@@ -4,97 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE7F7D0C611
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 13:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D47E7D0C612
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 13:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Ko9-0007Gu-1V; Fri, 25 Oct 2024 09:56:53 -0400
+	id 1t4Kor-0007d0-Ig; Fri, 25 Oct 2024 09:57:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1t4Ko7-0007Gg-4k; Fri, 25 Oct 2024 09:56:51 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t4Koh-0007T9-3D
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 09:57:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1t4Ko5-0005NA-9H; Fri, 25 Oct 2024 09:56:50 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49P1vDZ4032766;
- Fri, 25 Oct 2024 13:56:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=XDdWFE
- doyf+bDyOtm6x1DL2wTiz+trKQK15UAFaioc8=; b=fOalB/43pMo+mP4mS7OYin
- cj5iq3lHKNSYlDOzshr+wtbICrLkgkRK5xATiZBeUTZr1O06zvYisGD/v40dknta
- L7mpAOdba4Bcnz4eBffOnVPFItMPqXjuN6aqIk9GbSEOS6pFZ57v5MEDz3AHlA2/
- TCSAD/Ma/pEzCpiuB/yX11R3Km5wzbau5PuW50s7EKVBRf0DEhQ4rF8I2nlSlP8Q
- ftBlqYoJ3ZP5n+K+LDn1c9BjOOsJz+QW48Juhu/2HJzE/wUw+9h9ojEUpdU8y+0o
- 2iaIS5fFpyPNEPb+Yhps4zci7hFAZRijwoOieC6GNuRygejGlAdB1KLfVkYNKeHw
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42g246twxx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Oct 2024 13:56:43 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49PATLle001542;
- Fri, 25 Oct 2024 13:56:42 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42emk9nxtf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Oct 2024 13:56:42 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49PDuf8d55312820
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 25 Oct 2024 13:56:41 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A2E720043;
- Fri, 25 Oct 2024 13:56:41 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B1B4620040;
- Fri, 25 Oct 2024 13:56:39 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 25 Oct 2024 13:56:39 +0000 (GMT)
-Message-ID: <d86a9773348aed57d8f9759e05ea287c36364013.camel@linux.ibm.com>
-Subject: Re: [PATCH 1/2] linux-user/ppc: Fix sigmask endianness issue in
- sigreturn
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
- Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-Date: Fri, 25 Oct 2024 15:56:38 +0200
-In-Reply-To: <5cc9130c-5b9a-4e86-a609-9ab16d3529e0@tls.msk.ru>
-References: <20241017125811.447961-1-iii@linux.ibm.com>
- <20241017125811.447961-2-iii@linux.ibm.com>
- <5cc9130c-5b9a-4e86-a609-9ab16d3529e0@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t4Kof-0005R1-HQ
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 09:57:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729864629;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=ULioplRyJKwSiZycapCROHu3P3KvKfvBWmOFnDjGOb4=;
+ b=F8v2lTFa1dHutUi0B2HgsVL+ajjNn4aFAk8VyKNbCEnWZutTLItUUCrIK4+pAQPx7EpgdM
+ UA4EcvF7qUSKTXtkA4vy0J0rdM/vywqgx+i9l49qj5nFJ1Ib8HKVLVaRd5hb6mO2YK8ROY
+ 4lT4xwpdRBV2zFuJdUvlH/CjeZ9nWw0=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-390-kGr9vVz5M8KITXPlO9GILg-1; Fri,
+ 25 Oct 2024 09:57:06 -0400
+X-MC-Unique: kGr9vVz5M8KITXPlO9GILg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA12E1955F41; Fri, 25 Oct 2024 13:57:05 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.164])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 59EEE1955F42; Fri, 25 Oct 2024 13:57:04 +0000 (UTC)
+Date: Fri, 25 Oct 2024 14:57:00 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>
+Subject: Re: 'make check-functional' uses lots of disk space in build tree
+Message-ID: <ZxujrN9bHOboZzZT@redhat.com>
+References: <CAFEAcA8DE=i5X_=GxqrupOMqrQ6-BoL2HWo_GPe1pNhL15QU5g@mail.gmail.com>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: PL__AbGTmAgbpX4rZUaeCjMLLoNvFP6k
-X-Proofpoint-GUID: PL__AbGTmAgbpX4rZUaeCjMLLoNvFP6k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0
- priorityscore=1501 malwarescore=0 suspectscore=0 adultscore=0
- mlxlogscore=938 clxscore=1015 impostorscore=0 mlxscore=0 phishscore=0
- bulkscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410250106
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA8DE=i5X_=GxqrupOMqrQ6-BoL2HWo_GPe1pNhL15QU5g@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,48 +80,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2024-10-25 at 16:53 +0300, Michael Tokarev wrote:
-> 17.10.2024 15:54, Ilya Leoshkevich wrote:
-> > do_setcontext() copies the target sigmask without endianness
-> > handling
-> > and then uses target_to_host_sigset_internal(), which expects a
-> > byte-swapped one. Use target_to_host_sigset() instead.
-> >=20
-> > Fixes: bcd4933a23f1 ("linux-user: ppc signal handling")
-> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> > ---
-> > =C2=A0 linux-user/ppc/signal.c | 2 +-
-> > =C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
-> > index a1d8c0bccc1..24e5a02a782 100644
-> > --- a/linux-user/ppc/signal.c
-> > +++ b/linux-user/ppc/signal.c
-> > @@ -628,7 +628,7 @@ static int do_setcontext(struct target_ucontext
-> > *ucp, CPUPPCState *env, int sig)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!lock_user_struct(VERIFY_READ, mcp, =
-mcp_addr, 1))
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 1;
-> > =C2=A0=20
-> > -=C2=A0=C2=A0=C2=A0 target_to_host_sigset_internal(&blocked, &set);
-> > +=C2=A0=C2=A0=C2=A0 target_to_host_sigset(&blocked, &set);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 set_sigmask(&blocked);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 restore_user_regs(env, mcp, sig);
->=20
-> Shouldn't this change be picked for all stable releases too?
-> Yes, the issue is very old so probably does not have big impact,
-> but it looks like it should be okay to fix it finally?
->=20
-> I'm picking it up, please let me know if I shouldn't.
->=20
-> Thanks,
->=20
-> /mjt
+On Fri, Oct 25, 2024 at 02:50:50PM +0100, Peter Maydell wrote:
+> I notice that with the recent migration to check-functional we
+> seem to be using a lot of disk space in the build tree: for
+> one of my build trees
+>  du -h build/arm-clang/tests/functional/
+> returns a total of 4.5GB used, for instance, most of which seems
+> to be guest binary files.
+> 
+> Shouldn't something be cleaning these up after a test run?
 
-I think it's worth taking it, since it leads to weird qemu-user
-crashes. I actually intended to Cc: stable here and forgot to do it,
-so thanks for bringing this up.
+The big problem seems to be tests/functional/test_aarch64_sbsaref.py
+which is creating a pair of 256 MB firmware files on every test
+and not deleting them.
+
+The tests/functional/test_arm_raspi2.py is also uncompressing some
+archives and not deleting them.
+
+Perhaps we need to define a standard "scratch dir" in the framework
+that files can be put into, and then have the framework force delete
+them at the end.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
