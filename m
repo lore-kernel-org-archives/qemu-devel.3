@@ -4,73 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A228D0C608
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 13:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9A55D0C608
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 13:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4K3T-0001qi-Fv; Fri, 25 Oct 2024 09:08:39 -0400
+	id 1t4K93-0003my-RH; Fri, 25 Oct 2024 09:14:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stest6905@gmail.com>)
- id 1t4Czh-0007Sz-OJ
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 01:36:17 -0400
-Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stest6905@gmail.com>)
- id 1t4Czg-0001AX-2a
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 01:36:17 -0400
-Received: by mail-oi1-x234.google.com with SMTP id
- 5614622812f47-3e5ffea2699so1270647b6e.1
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 22:36:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729834573; x=1730439373; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=1hsFhprj+EVmsewaGyAnDovq+HwLa9nlVD4mzDv+Bg8=;
- b=WPxR6vsTPDlokMrl1/BFmV84f6JJXC2p2ilkax8wfRiHwgPnfqFLLQQ2+nEe7cE9GD
- evZiX+6GQriWLx8rLk+2jYxt1XdH05V45h5fESrvWM9RHLAsLegyLWHAwkKyyNLl/Ccv
- BQMhxnxSZEhOxEutgFr6yyEoUYQNopVp1MxdHPvuhKf9qcHPmfMbVa1vcKlD5Rqh2G5c
- mFDL9oJal88Fzc1WapOkAMw86DJlKCSRM//Qz9VfdfsMGdsc4/qRg7KR6MiWKE48718S
- 3mVkxmjvROUX22hPb5YfADlitH0E9SBaQC6uThSx1R83y6pBuKYD7s9e0uprSNTcy5dK
- kzrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729834573; x=1730439373;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1hsFhprj+EVmsewaGyAnDovq+HwLa9nlVD4mzDv+Bg8=;
- b=QPI6gzpmYb+Pxks0UZ6oteLftfaXO5QyAfHeFJRRGYUGa/q/p72a4snIzSpW/aJi69
- W2nrrFkFkyCD7ZRTzuy7VPpyn1EPFOPMqLLeiqraj7nqVgCNgEG7oxDmIgV7lyG5Vf9C
- Fae56GKBRcqIsTFDnO9VrH0Gf9xktHDGz4JLfF5mHOlnlJMbpT2LG2CtdaPUfiHgex7j
- h2MMbYJJPe6LL+45mtYwolhCz73v8qAVCo3+1czWwrTkAfkkRFhENPs/zioScRe0VqRs
- KRTn8HcHaLh6B5BxpI3DxVmyUiSvwgqYYXUjcdF5lB7831nIWeglGwn1C6RQ37oRRA2V
- g4XQ==
-X-Gm-Message-State: AOJu0YxdBd4dM2tU/vn6N3CgDVhUskWm91zmOmveLheI306jbW+pMNkH
- 1L2kLski7HqOHKkG1Vy3ksbn+LfnQSwgYnqkWiYHcawUADhOY6/e5HqZCPlUWcNSFY8sXG3ApuU
- MEhdoD9DeWrXTPD8lRVazy/9zNXZajSs7
-X-Google-Smtp-Source: AGHT+IH2SPgyCXpBdkd1b4bICLM2W7qasrOi+fzxO+mUcWIbuFo9Bl3qiGWC3K+WMxwHmvsrzcX7onNZ5PDPhNBSZFE=
-X-Received: by 2002:a05:6808:1597:b0:3e5:f9e9:43c4 with SMTP id
- 5614622812f47-3e62c5adec5mr2497187b6e.18.1729834572905; Thu, 24 Oct 2024
- 22:36:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t4K8t-0003mD-9L
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 09:14:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t4K8n-0007dI-79
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 09:14:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729862045;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=utmRzVQoxVVn0L+FQtdN5VmsyzaSJviEhgivbzjdJxU=;
+ b=fe5DbSDWRRQAihw+DNiXXSpajwYLOCA8fGoAjp6FhLlk9pkAWQO+uY9zDBnD9/kZfVV2/b
+ NHbeUIGM0/M29N7YLe35JhD9zBRWy0r9VsXVvUVgiwjcdADiVVol1fgd5Z15IbI65zsOkq
+ Ah3nLOCYnX0EAqXhEhNr+kZl00g+7to=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-ec0_NatpMH6YYRXoxfo7ag-1; Fri,
+ 25 Oct 2024 09:14:03 -0400
+X-MC-Unique: ec0_NatpMH6YYRXoxfo7ag-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 80FB91956080; Fri, 25 Oct 2024 13:14:01 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.164])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA92C196BB7D; Fri, 25 Oct 2024 13:13:56 +0000 (UTC)
+Date: Fri, 25 Oct 2024 14:13:53 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, cohuck@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
+ armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: Re: [RFC 21/21] arm/cpu-features: Document custom vcpu model
+Message-ID: <ZxuZkUFz_bwAA1pf@redhat.com>
+References: <20241025101959.601048-1-eric.auger@redhat.com>
+ <20241025101959.601048-22-eric.auger@redhat.com>
 MIME-Version: 1.0
-From: Test Inventory <stest6905@gmail.com>
-Date: Fri, 25 Oct 2024 08:35:47 +0300
-Message-ID: <CAGawYL8BdRnc_O7R-bFyc6py7E8kM7MGaUXgjSRxqfOOUv3xww@mail.gmail.com>
-Subject: Problem starting emulation
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000003d04e30625467f1f"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
- envelope-from=stest6905@gmail.com; helo=mail-oi1-x234.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241025101959.601048-22-eric.auger@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 25 Oct 2024 09:08:34 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,61 +88,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003d04e30625467f1f
-Content-Type: text/plain; charset="UTF-8"
-
-Hello.
-I recently discovered your emulator, I mostly use "VirtualBox". I wanted to
-run an image file from this site (https://solar-assistant.io/) with the
-following options
-"
-*qemu-system-arm.exe -M versatilepb -cpu arm1176 -drive
-format=raw,file=D:\2024-08-14-solar-assistant-rpi64\2024-08-14-solar-assistant-rpi64.img
--kernel kernel-qemu -m 192 -append "root=/dev/sda2" -dtb versatile-pb.dtb *
-"
-but I got this error
-"
+On Fri, Oct 25, 2024 at 12:17:40PM +0200, Eric Auger wrote:
+> From: Cornelia Huck <cohuck@redhat.com>
+> 
+> Add some documentation for the custom model.
+> 
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> ---
+>  docs/system/arm/cpu-features.rst | 55 +++++++++++++++++++++++++++-----
+>  1 file changed, 47 insertions(+), 8 deletions(-)
 
 
+> @@ -167,6 +196,16 @@ disabling many SVE vector lengths would be quite verbose, the ``sve<N>`` CPU
+>  properties have special semantics (see "SVE CPU Property Parsing
+>  Semantics").
+>  
+> +The ``custom`` CPU model needs to be configured via individual ID register
+> +field properties, for example::
+> +
+> +  $ qemu-system-aarch64 -M virt -cpu custom,SYSREG_ID_AA64ISAR0_EL1_DP=0x0
+> +
+> +This forces ID_AA64ISAR0_EL1 DP field to 0.
 
+What is the "baseline" featureset implied by 'custom' ?
 
+On x86 we have the named CPU models each setting a baseline that matches
+some corresponding real world silicon. Arm has that too, with TCG at
+least. So that way you know what the baseline is that you're toggling
+features against.
 
-*C:\Program Files\qemu>run.batC:\Program Files\qemu>qemu-system-arm.exe -M
-versatilepb -cpu arm1176 -drive
-format=raw,file=D:\2024-08-14-solar-assistant-rpi64\2024-08-14-solar-assistant-rpi64.img
--kernel kernel-qemu -m 192 -append "root=/dev/sda2" -dtb
-versatile-pb.dtbdsound: Could not initialize DirectSoundCapturedsound:
-Reason: No sound driver is available for use, or the given GUID is not a
-valid DirectSound device IDqemu-system-arm.exe: could not load kernel
-'kernel-qemu'C:\Program Files\qemu>*
-"
-Tell me what I'm doing wrong? I will be grateful for any help.
-Have a good day.
+Experiance on x86 was that making arbitrary feature changes on top of the
+named models could often backfire, as there are too many scenarios where
+code will check for feature "Y", and assume that existance of "Y" implies
+existance of "A", "B" and "C" too. So if you invent custom models where
+Y is set, but B is missing, there's decent risk of things going wrong in
+horrible to debug ways.  With that in mind, best practice is to try to
+just the vanilla named CPU models to the greatest extent possible, and
+keep feature toggling to an absolute minimum.  This 'custom' model does
+not seem to give us such ability for arm.
 
---0000000000003d04e30625467f1f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-<div dir=3D"ltr">Hello.<br>I recently discovered your emulator, I mostly us=
-e &quot;VirtualBox&quot;. I wanted to run an image file from this site (<a =
-href=3D"https://solar-assistant.io/">https://solar-assistant.io/</a>) with =
-the following options<br>&quot;<br><b>qemu-system-arm.exe -M versatilepb -c=
-pu arm1176 -drive format=3Draw,file=3DD:\2024-08-14-solar-assistant-rpi64\2=
-024-08-14-solar-assistant-rpi64.img -kernel kernel-qemu -m 192 -append &quo=
-t;root=3D/dev/sda2&quot; -dtb versatile-pb.dtb </b><br>&quot;<br>but I got =
-this error<br>&quot;<br><b>C:\Program Files\qemu&gt;run.bat<br>C:\Program F=
-iles\qemu&gt;qemu-system-arm.exe -M versatilepb -cpu arm1176 -drive format=
-=3Draw,file=3DD:\2024-08-14-solar-assistant-rpi64\2024-08-14-solar-assistan=
-t-rpi64.img -kernel kernel-qemu -m 192 -append &quot;root=3D/dev/sda2&quot;=
- -dtb versatile-pb.dtb<br>dsound: Could not initialize DirectSoundCapture<b=
-r>dsound: Reason: No sound driver is available for use, or the given GUID i=
-s not a valid DirectSound device ID<br>qemu-system-arm.exe: could not load =
-kernel &#39;kernel-qemu&#39;<br>C:\Program Files\qemu&gt;</b><br>&quot;<br>=
-Tell me what I&#39;m doing wrong? I will be grateful for any help.<br>Have =
-a good day.</div>
-
---0000000000003d04e30625467f1f--
 
