@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6358D149E7
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 19:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA37D149E8
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 19:28:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4PvV-0008E4-UK; Fri, 25 Oct 2024 15:24:49 -0400
+	id 1t4PyS-0000Wa-7J; Fri, 25 Oct 2024 15:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4PvU-0008Dt-SX
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:24:48 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4PvT-0004GA-7N
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:24:48 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7db90a28cf6so2263987a12.0
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 12:24:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729884285; x=1730489085; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Y5LVtIeT5NcYZHzsC3p86uvBJjN2DUE9T4e1FCYL0vk=;
- b=RMm6/oqR0hkeNP0AQNpdpWhIEuz8nc6wtvHrRaey24kjA2uK6vOTQ3wyhoG9DjZs9i
- UbEnKAPEf4iImmZ3dISwwrgebwflpvMOGPc41fwg18P2Ix2bnf/wzQR2FhNY/TyUU8IQ
- OBe2NUZkpHtUVxXVzq/2lKWFnemvLQl384wjQjzovHTk56leRgPq99SxYyd81NyGUiAO
- gcvmgYYUy1vFoKSMIr5yDiwCRKvtGkbNUaXgKHKmGN+kasWgCwZiB1fBauaxFU5xey24
- EWMbksi9k0JvZSvPGJ67R5Do5daFiCP/sXdA+9+LeYoQrP9hpd6h8EECdLH29uTBZkjo
- vC9A==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4PyK-0000W4-KX
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:27:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4PyI-0004et-Qf
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 15:27:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729884460;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rDls0cIjH4+9iyTriu/WJ76sIlZRNxQ84OEiuRmJrQQ=;
+ b=LZZETDqGuZtKY5zbmilHP2ELHyEUdQAo0nE6wlZvgIWWb/O2yDjyjRbeDf1szdXvvYstt7
+ IEwRsl4d0Ud9ysajYnB3WyngO10RRbtE9uKK6A/YheS6YIt4XtF931zE9gktxn2lpRiGgA
+ ajBXYv2eYslyqkXF9qHZL9sEuZ/bv2g=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-465-rSuomevmOCqJHZTeC608fw-1; Fri, 25 Oct 2024 15:27:35 -0400
+X-MC-Unique: rSuomevmOCqJHZTeC608fw-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43157cff1d1so16866435e9.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 12:27:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729884285; x=1730489085;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y5LVtIeT5NcYZHzsC3p86uvBJjN2DUE9T4e1FCYL0vk=;
- b=M7JE2gTtitmYas//MgEZRA4rtkvS949rsoEuMXU57zI0mJtx5kppj9aE7Ah10aDgB7
- nm2TEs7sl2KiKqCfJUFRwMaGwURlpOJnRjYONbfZsvCbrUmEFtwDJyg14sbvkeluXUuf
- d8ZtE+QGsqPlmlKMi1kXXvmNCeJSkTOfaO//XiV5ReXEELxLjHXVlulTdGvMYTmxH7CN
- /BtXDviBba/ZFJ0u2w1MT/1JzRgWmebEfGnrN9jwqatBuqATO+vKW10cmbDgxMwv3vJ0
- PlkeADBRu3i0B6+D/heWnVEV4k8qj8W0c9/Lz6DmDeL9Gv4ga8JXKBoJeQbElucnuCgo
- r7KQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWJ7pC97Sn/HEYmvpSp3LEBcPn6qGBdUzAsdAOVHtI8J5QD9M/KR+/zWdI0oeCDgQ9rfTatcFeN7+e9@nongnu.org
-X-Gm-Message-State: AOJu0Yw6F1ZV+3wMBd30kgVtW2/LCdKiOrElZFrE8i+pCQ1cpEPSoLe6
- cx/Ru7I/POkIpiony8AGFT7lduZ/Tm5VzwCSWCY3XfVrEVdF1f4fRSSnSQWceeQ=
-X-Google-Smtp-Source: AGHT+IFd2Zaie8VDB5vm4hyrMAPUN8o2KZrJ1x8UiL38B5vU2ejqwwKj/8UiC/1sdr73MiGDTbluDA==
-X-Received: by 2002:a05:6a21:394b:b0:1d9:3acf:8bdd with SMTP id
- adf61e73a8af0-1d9a767bdfamr995200637.22.1729884285461; 
- Fri, 25 Oct 2024 12:24:45 -0700 (PDT)
-Received: from [192.168.2.252] ([201.190.186.93])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72057a0b8e2sm1428279b3a.102.2024.10.25.12.24.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 12:24:44 -0700 (PDT)
-Message-ID: <50dd60b2-f789-4828-9a7e-3becc6721964@linaro.org>
-Date: Fri, 25 Oct 2024 16:24:41 -0300
+ d=1e100.net; s=20230601; t=1729884454; x=1730489254;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rDls0cIjH4+9iyTriu/WJ76sIlZRNxQ84OEiuRmJrQQ=;
+ b=ehdaQV6nY7u501DS5EiDnSr08dHooeDSzmQfgdhavkd00xaoAWYRbKrkVzWlJREEY2
+ dTblV6eiqZBBvpvFCjL3HAHJDvDmgu2QwI0vuJi0pq3ymQixJzNRbN4jF5gkN/H56BGa
+ 0NTy9TL42PfXl/euPVFT5JIMierpQhorcCofcfrYNLxFo7pqEN5fjPO7XSRTVJGu+GjB
+ gJxmVTOwb16CSaiWvXqs1oDgK+SJZtWS7kvjnF6cnBFK+1EADJbr8SbN9tE+sq+OM2zb
+ ke16ZBIZGoItSLO6fo5XqRzglIC24CPy/NdNrtfHGNRY1bbjyb07ypWdDWFcsoS2o5jB
+ UPHg==
+X-Gm-Message-State: AOJu0YxmHA4ilsKnFoh8/L/N/PS2FEDpfOds9fEjZMRueXe/PDDA+aAQ
+ mjjFeE46Q0YacopP2meBFymu48hGshjKe6cbTWpRMNVukCVx5+OStyErnwXcusJZ8q0A4zRoQDp
+ 2tQaUtiMssyNdu/yeP7jBrPCat5SyYZbyAIqoytN9DzbzV89V/rTI+DIk1O6QKpRGg5wpavdN2Z
+ 3Ll5L+clLCrSksFJVVouisDYdrBOo=
+X-Received: by 2002:a05:600c:1c1e:b0:431:5ecf:2a39 with SMTP id
+ 5b1f17b1804b1-4319ad32854mr1751585e9.35.1729884454002; 
+ Fri, 25 Oct 2024 12:27:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEl5RW9lkdvPi0GVfF3vLp6aJoHvaeLUrGi5vzmJkOAT75H8Gi2Pw866iUq/tKLlJw8pDwLnZhMLKRj5CqLwM0=
+X-Received: by 2002:a05:600c:1c1e:b0:431:5ecf:2a39 with SMTP id
+ 5b1f17b1804b1-4319ad32854mr1751455e9.35.1729884453640; Fri, 25 Oct 2024
+ 12:27:33 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] target/mips: Enable MSA ASE for mips64R2-generic
-To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "cfu@mips.com" <cfu@mips.com>, "arikalo@gmail.com" <arikalo@gmail.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>
-References: <AM9PR09MB485141F5613A7EBFC5A4A08884402@AM9PR09MB4851.eurprd09.prod.outlook.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <AM9PR09MB485141F5613A7EBFC5A4A08884402@AM9PR09MB4851.eurprd09.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=philmd@linaro.org; helo=mail-pg1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241025160209.194307-1-pbonzini@redhat.com>
+ <20241025160209.194307-24-pbonzini@redhat.com>
+ <8b1fc9e7-7387-4386-b759-9c15873a1bd1@linaro.org>
+In-Reply-To: <8b1fc9e7-7387-4386-b759-9c15873a1bd1@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 25 Oct 2024 21:27:22 +0200
+Message-ID: <CABgObfYtjfv0N3mwT4OzYFrcMujxmgQcsFkuRAQDOEPvx06NWA@mail.gmail.com>
+Subject: Re: [PATCH 23/23] ci: enable rust in the Debian and Ubuntu system
+ build job
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+ Emmanouil Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, 
+ Junjie Mao <junjie.mao@hotmail.com>, "P. Berrange,
+ Daniel" <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000005cbd150625521cea"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,35 +102,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/10/24 10:21, Aleksandar Rakic wrote:
-> Enable MSA ASE for mips64R2-generic CPU.
-> 
-> Cherry-picked 60f6ae8d3d685ba1ea5d301222fb72b67f39264f
-> from  https://github.com/MIPS/gnutools-qemu
-> 
-> Signed-off-by: Faraz Shahbazker <fshahbazker@wavecomp.com>
-> Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
-> ---
->   target/mips/cpu-defs.c.inc | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
-> index 19e2abac82..2b707cc5a7 100644
-> --- a/target/mips/cpu-defs.c.inc
-> +++ b/target/mips/cpu-defs.c.inc
-> @@ -678,7 +678,9 @@ const mips_def_t mips_defs[] =
->                          (2 << CP0C1_DS) | (4 << CP0C1_DL) | (3 << CP0C1_DA) |
->                          (1 << CP0C1_PC) | (1 << CP0C1_WR) | (1 << CP0C1_EP),
->           .CP0_Config2 = MIPS_CONFIG2,
-> -        .CP0_Config3 = MIPS_CONFIG3 | (1 << CP0C3_LPA),
-> +        .CP0_Config3 = MIPS_CONFIG3 | (1 << CP0C3_LPA) |
-> +                       (1 << CP0C3_VInt) | (1 << CP0C3_MSAP),
-> +        .CP0_Config5_rw_bitmask = (1 << CP0C5_MSAEn),
->           .CP0_LLAddr_rw_bitmask = 0,
->           .CP0_LLAddr_shift = 0,
->           .SYNCI_Step = 32,
+--0000000000005cbd150625521cea
+Content-Type: text/plain; charset="UTF-8"
 
-We already have the I6400/I6500 which are R6 with MSA.
+Il ven 25 ott 2024, 20:55 Pierrick Bouvier <pierrick.bouvier@linaro.org> ha
+scritto:
 
-Why would we need a non-R6 core with MSA?
+> On 10/25/24 09:02, Paolo Bonzini wrote:
+> > We have fixed all incompatibilities with older versions of rustc
+> > and bindgen.  Enable Rust on Debian to check that the minimum
+> > supported version of Rust is indeed 1.63.0, and 0.60.x for bindgen.
+> >
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >   .gitlab-ci.d/buildtest.yml | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+> > index aba65ff833a..8deaf9627cb 100644
+> > --- a/.gitlab-ci.d/buildtest.yml
+> > +++ b/.gitlab-ci.d/buildtest.yml
+> > @@ -40,7 +40,7 @@ build-system-ubuntu:
+> >       job: amd64-ubuntu2204-container
+> >     variables:
+> >       IMAGE: ubuntu2204
+> > -    CONFIGURE_ARGS: --enable-docs
+> > +    CONFIGURE_ARGS: --enable-docs --enable-rust
+> >       TARGETS: alpha-softmmu microblazeel-softmmu mips64el-softmmu
+> >       MAKE_CHECK_ARGS: check-build
+> >
+> > @@ -71,7 +71,7 @@ build-system-debian:
+> >       job: amd64-debian-container
+> >     variables:
+> >       IMAGE: debian
+> > -    CONFIGURE_ARGS: --with-coroutine=sigaltstack
+> > +    CONFIGURE_ARGS: --with-coroutine=sigaltstack --enable-rust
+> >       TARGETS: arm-softmmu i386-softmmu riscv64-softmmu sh4-softmmu
+> >         sparc-softmmu xtensa-softmmu
+> >       MAKE_CHECK_ARGS: check-build
+>
+> Do you think it could be valuable to have a third job for Rust with:
+> - ubuntu2204 or debian with latest rustc/cargo/bindgen, so we may detect
+> regressions when those are updated.
+>
+
+Note that apart from these two jobs we have Fedora with rustup-installed
+nightly (in master) and Fedora with distro Rust tool chain (patches
+posted). Would that provide the same (or similar enough) scenario?
+
+Paolo
+
+
+> This way, we would test (2204 + min, debian + min, latest), which should
+> ensure Rust code will build correctly on older and newer systems.
+>
+> Pierrick
+>
+>
+
+--0000000000005cbd150625521cea
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il ven 25 ott 2024, 20:55 Pierrick Bouvier &lt;<a href=
+=3D"mailto:pierrick.bouvier@linaro.org">pierrick.bouvier@linaro.org</a>&gt;=
+ ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On =
+10/25/24 09:02, Paolo Bonzini wrote:<br>
+&gt; We have fixed all incompatibilities with older versions of rustc<br>
+&gt; and bindgen.=C2=A0 Enable Rust on Debian to check that the minimum<br>
+&gt; supported version of Rust is indeed 1.63.0, and 0.60.x for bindgen.<br=
+>
+&gt; <br>
+&gt; Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com=
+" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0.gitlab-ci.d/buildtest.yml | 4 ++--<br>
+&gt;=C2=A0 =C2=A01 file changed, 2 insertions(+), 2 deletions(-)<br>
+&gt; <br>
+&gt; diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml<b=
+r>
+&gt; index aba65ff833a..8deaf9627cb 100644<br>
+&gt; --- a/.gitlab-ci.d/buildtest.yml<br>
+&gt; +++ b/.gitlab-ci.d/buildtest.yml<br>
+&gt; @@ -40,7 +40,7 @@ build-system-ubuntu:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0job: amd64-ubuntu2204-container<br>
+&gt;=C2=A0 =C2=A0 =C2=A0variables:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0IMAGE: ubuntu2204<br>
+&gt; -=C2=A0 =C2=A0 CONFIGURE_ARGS: --enable-docs<br>
+&gt; +=C2=A0 =C2=A0 CONFIGURE_ARGS: --enable-docs --enable-rust<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0TARGETS: alpha-softmmu microblazeel-softmmu =
+mips64el-softmmu<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MAKE_CHECK_ARGS: check-build<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; @@ -71,7 +71,7 @@ build-system-debian:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0job: amd64-debian-container<br>
+&gt;=C2=A0 =C2=A0 =C2=A0variables:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0IMAGE: debian<br>
+&gt; -=C2=A0 =C2=A0 CONFIGURE_ARGS: --with-coroutine=3Dsigaltstack<br>
+&gt; +=C2=A0 =C2=A0 CONFIGURE_ARGS: --with-coroutine=3Dsigaltstack --enable=
+-rust<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0TARGETS: arm-softmmu i386-softmmu riscv64-so=
+ftmmu sh4-softmmu<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sparc-softmmu xtensa-softmmu<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MAKE_CHECK_ARGS: check-build<br>
+<br>
+Do you think it could be valuable to have a third job for Rust with:<br>
+- ubuntu2204 or debian with latest rustc/cargo/bindgen, so we may detect <b=
+r>
+regressions when those are updated.<br></blockquote></div></div><div dir=3D=
+"auto"><br></div><div dir=3D"auto">Note that apart from these two jobs we h=
+ave Fedora with rustup-installed nightly (in master) and Fedora with distro=
+ Rust tool chain (patches posted). Would that provide the same (or similar =
+enough) scenario?</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo<=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quot=
+e"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+This way, we would test (2204 + min, debian + min, latest), which should <b=
+r>
+ensure Rust code will build correctly on older and newer systems.<br>
+<br>
+Pierrick<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000005cbd150625521cea--
+
 
