@@ -4,122 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D5AED116F6
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 05:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B066D116F6
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 06:00:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4DDD-0000T2-Se; Fri, 25 Oct 2024 01:50:15 -0400
+	id 1t4DMN-0001xX-Ug; Fri, 25 Oct 2024 01:59:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arun.kka@samsung.com>)
- id 1t4DD9-0000SD-2R
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 01:50:13 -0400
-Received: from mailout4.samsung.com ([203.254.224.34])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4DML-0001x8-2Y
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 01:59:41 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arun.kka@samsung.com>)
- id 1t4DD5-0002du-B4
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 01:50:10 -0400
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20241025054953epoutp04205d4600603e3537d7304c701b856cb9~BnCALmz6-0719107191epoutp04P
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 05:49:53 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20241025054953epoutp04205d4600603e3537d7304c701b856cb9~BnCALmz6-0719107191epoutp04P
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1729835393;
- bh=ssWJTMsNxAhsuhdMkvz/IJlZ/4oeFVWVnZjD5GBL9L4=;
- h=From:To:Cc:Subject:Date:References:From;
- b=dG8T6dc07d8iDJP6/Ztv3Oy6MHEvquMpOHzyxvFhOinca9L5Ephc62dgp5zduyZm/
- bTLrpVMtFmdA0qCzjQiBaKqLYCSXTmbYDvPbgY4AmyqY+uTBgyi4NvObR66VNDLSZI
- pYmlEFpM0tosW2UOWA8oj2JY1TTNnFObPt0dwTrE=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
- epcas5p1.samsung.com (KnoxPortal) with ESMTP id
- 20241025054952epcas5p164eb3ea6fd6fbd571bfebdae086c1d73~BnB-oqI9v1913819138epcas5p1N;
- Fri, 25 Oct 2024 05:49:52 +0000 (GMT)
-Received: from epsmgec5p1new.samsung.com (unknown [182.195.38.181]) by
- epsnrtp2.localdomain (Postfix) with ESMTP id 4XZX1C5h3Kz4x9Q7; Fri, 25 Oct
- 2024 05:49:51 +0000 (GMT)
-Received: from epcas5p4.samsung.com ( [182.195.41.42]) by
- epsmgec5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
- EF.28.08574.F713B176; Fri, 25 Oct 2024 14:49:51 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
- 20241023035127epcas5p241a150fcb18cbfc6975af8a8fc29d4c6~A_IB2SDPz3108831088epcas5p26;
- Wed, 23 Oct 2024 03:51:27 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
- epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
- 20241023035127epsmtrp1899aec5042e02145e2a636910a2a9099~A_IB1tnjP1419314193epsmtrp1K;
- Wed, 23 Oct 2024 03:51:27 +0000 (GMT)
-X-AuditID: b6c32a44-93ffa7000000217e-f7-671b317f25a0
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
- epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
- C4.CB.08229.FB278176; Wed, 23 Oct 2024 12:51:27 +0900 (KST)
-Received: from open-sourcing.sa.corp.samsungelectronics.net (unknown
- [107.99.41.223]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20241023035126epsmtip1ae9617c34b87c21bd2752d32d1b8e0b9~A_IA-SYbC1469214692epsmtip1h;
- Wed, 23 Oct 2024 03:51:26 +0000 (GMT)
-From: Arun Kumar <arun.kka@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, Arun Kumar
- <arun.kka@samsung.com>
-Subject: [PATCH] hw/nvme : remove dead code
-Date: Wed, 23 Oct 2024 03:51:05 +0530
-Message-ID: <20241022222105.3609223-1-arun.kka@samsung.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4DMJ-0003j0-9e
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 01:59:40 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 9EFFC9BE0E;
+ Fri, 25 Oct 2024 08:59:02 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 08FD115CB04;
+ Fri, 25 Oct 2024 08:59:35 +0300 (MSK)
+Message-ID: <4b78b269-d91d-4741-aeec-bdced9a34f80@tls.msk.ru>
+Date: Fri, 25 Oct 2024 08:59:34 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] softmmu: Support concurrent bounce buffers
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Mattias Nissler <mnissler@rivosinc.com>, qemu-devel@nongnu.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, stefanha@redhat.com,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Gonglei <arei.gonglei@huawei.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240819135455.2957406-1-mnissler@rivosinc.com>
+ <6c94975d-2c8e-4698-a035-1e62549c2d4a@tls.msk.ru>
+ <CAGNS4Tbw_JSfzyir2TKBN59n6jkrerGoy6E9hEW8xcq0y3tO4w@mail.gmail.com>
+ <3761eb6d-89c0-4e73-baf6-9242ad5136f7@tls.msk.ru>
+ <20240926040912-mutt-send-email-mst@kernel.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20240926040912-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBKsWRmVeSWpSXmKPExsWy7bCmlm69oXS6wamjOhZz7ltYnJgSZrH/
- 4DdWi0mHrjFaHO/dweLA6jFl2jV2j3M7zrN7bFrVyebx5NpmJo++LasYA1ijsm0yUhNTUosU
- UvOS81My89JtlbyD453jTc0MDHUNLS3MlRTyEnNTbZVcfAJ03TJzgHYrKZQl5pQChQISi4uV
- 9O1sivJLS1IVMvKLS2yVUgtScgpMCvSKE3OLS/PS9fJSS6wMDQyMTIEKE7Iz/q45x1bwnLVi
- 6atulgbGbpYuRk4OCQETiUMr7rN2MXJxCAnsZpRo7+1ghnA+ATnfJrNDON8YJdqO3mOEabn5
- +R4ziC0ksJdRYnNDNkRRF5PE+d5bYAk2AXWJtTN3MIHYIgKSEr+7ToPFmQXiJb4tWgq2W1hA
- W2LX+Q9gNouAqsSxxttg9bwC1hIb1lxhglgmL7F4x3JmiLigxMmZT1gg5shLNG+dDXaqhMA+
- dolLZx9BXeciseX9dHYIW1ji1fEtULaUxMv+Nii7XuLMzD1QCzoYJZ5+h4rbS1zc8xcozgG0
- QFNi/S59iLCsxNRT65gg9vJJ9P5+AtXKK7FjHoytJHFv60+oMRISc658hzrHQ+Ll78WMkMCK
- ldj75SbrBEb5WUjemYXknVkImxcwMq9ilEwtKM5NT002LTDMSy2HR2xyfu4mRnAS1HLZwXhj
- /j+9Q4xMHIyHGCU4mJVEeC9mSKYL8aYkVlalFuXHF5XmpBYfYjQFhvFEZinR5HxgGs4riTc0
- sTQwMTMzM7E0NjNUEud93To3RUggPbEkNTs1tSC1CKaPiYNTqoGp7Ffcv8RVG1f+eGT4Kj7w
- Z6pXyPk/3DIdrfErr4eq7HaY5Kdlts9hQobg4aZfl/Oqg7xXr4ibHD77dn1e2JTq5umnd0e8
- yT69/GG4J//nyEyWpFrVpOlClkGtrAzne6tqONZ88XT4ruy+7I3V42vVLG/36fsyNhTf4tis
- 9KnZ+WIh245v9pX/tlWYXttn2vt1wr2fzCV+mVlfAr/OK9jx4GDsiflLOCze6LwxeNewj+3L
- lJLJ50LUC3L6QtQjsq2Ouxfu19Tj+LTdkyUmQyPjekjPrJdW+7t2dk4PKM38krKyn91CJ2nD
- r+DM2W3sx7Ie1Pruaf24WyHC4+miKC7ewFv3HQ6f/mv/frbzmhdKLMUZiYZazEXFiQC+lYmM
- CwQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMLMWRmVeSWpSXmKPExsWy7bCSnO7+Iol0g289MhZz7ltYnJgSZrH/
- 4DdWi0mHrjFaHO/dweLA6jFl2jV2j3M7zrN7bFrVyebx5NpmJo++LasYA1ijuGxSUnMyy1KL
- 9O0SuDL+rjnHVvCctWLpq26WBsZuli5GTg4JAROJm5/vMXcxcnEICexmlNi/fS5UQkLix5dv
- jBC2sMTKf8/ZIYo6mCQeLN7HDpJgE1CXWDtzBxOILSIgKfG76zTQJA4OZoFkidc/fEHCwgLa
- ErvOfwCbySKgKnGs8TZYOa+AtcSGNVeYIObLSyzesZwZIi4ocXLmE7B6ZqB489bZzBMY+WYh
- Sc1CklrAyLSKUTK1oDg3PbfYsMAwL7Vcrzgxt7g0L10vOT93EyM4HLU0dzBuX/VB7xAjEwfj
- IUYJDmYlEV6lEtF0Id6UxMqq1KL8+KLSnNTiQ4zSHCxK4rziL3pThATSE0tSs1NTC1KLYLJM
- HJxSDUzxX+/ud3F4OM08V2qzuODqeeZlPhLLuIpT579ISLazUytU99/i515640OU2b34FUvs
- wt8eSf6+YR6P7H3p7Ksct9+aP16hzzzv3pvQjdcnOp6qcT/xes9hZX0XgY0vNhb96rrzN4Nz
- x0ktn7L6Job6xW+XyVZozSvwP/ifZfn1HTl/Vh4WvfvLScDhifLuLwmHal5NFm0vODejg5GN
- Qdkh7oHvqdsvNwrlfc49ycTCdzVF86PMr2qeHfbHw3jENlzV6D/Df+vgvrkOIgkbi8pYpnBZ
- zuL4/YbTK/SejEGB2hml2C4vraXir3mC3hkcOhJVK+P6O2r/zd3PYr9snfVzZ5iwhfrW+9N+
- mRtIZAopsRRnJBpqMRcVJwIAXrjunrYCAAA=
-X-CMS-MailID: 20241023035127epcas5p241a150fcb18cbfc6975af8a8fc29d4c6
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20241023035127epcas5p241a150fcb18cbfc6975af8a8fc29d4c6
-References: <CGME20241023035127epcas5p241a150fcb18cbfc6975af8a8fc29d4c6@epcas5p2.samsung.com>
-Received-SPF: pass client-ip=203.254.224.34; envelope-from=arun.kka@samsung.com;
- helo=mailout4.samsung.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIMWL_WL_HIGH=-0.263, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,31 +113,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-remove dead code which always returns success, since prchk will have a
-value of zero
+26.09.2024 11:12, Michael S. Tsirkin wrote:
+> On Thu, Sep 26, 2024 at 10:58:57AM +0300, Michael Tokarev wrote:
+>> 25.09.2024 13:23, Mattias Nissler wrote:
+>>> On Wed, Sep 25, 2024 at 12:03 PM Michael Tokarev <mjt@tls.msk.ru> wrote:
+>> ..
+>>>> So, the issue has now become CVE-2024-8612 (information leak), with this
+>>>> commit (v9.1.0-134-g637b0aa139) being the fix.
+>>>
+>>> Interesting. IIUC, this is triggered by device implementations calling
+>>> dma_memory_unmap with an incorrect size parameter as provided by a
+>>> hostile guest. Shouldn't the device implementations be fixed to
+>>> validate the parameter as well? Maybe this has already happened? It
+>>> would seem the more targeted fix to me.
+>>
+>> Yes, a similar question occurred to me too, - this change does not look
+>> like a proper fix for CVE-2024-8612.  And nope, no other changes has been
+>> made to fix it properly, in the device implementations.
+>>
+>> Maybe now with CVE-2024-8612 in place, we can fix the actual problem in
+>> the right place, instead of relying on this change..
+...>> So far I picked this and mac_dbdma change for 9.1, and will try to
+>> back-port things up to 8.2.  But it is better - IMHO - to have a real,
+>> more targetting, fix for CVE-2024-8612.
+> 
+> Agree 100% here.
+> 
+> Cc a bunch more people involved.
 
-Signed-off-by: Arun Kumar <arun.kka@samsung.com>
----
- hw/nvme/dif.c | 5 -----
- 1 file changed, 5 deletions(-)
+a little ping?
 
-diff --git a/hw/nvme/dif.c b/hw/nvme/dif.c
-index 01b19c3373..2805128498 100644
---- a/hw/nvme/dif.c
-+++ b/hw/nvme/dif.c
-@@ -575,11 +575,6 @@ uint16_t nvme_dif_rw(NvmeCtrl *n, NvmeRequest *req)
-             uint8_t *mbuf, *end;
-             int16_t pil = ns->lbaf.ms - nvme_pi_tuple_size(ns);
- 
--            status = nvme_check_prinfo(ns, prinfo, slba, reftag);
--            if (status) {
--                goto err;
--            }
--
-             flags = 0;
- 
-             ctx->mdata.bounce = g_malloc0(mlen);
--- 
-2.43.0
+Thanks,
 
+/mjt
 
