@@ -4,96 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5519D0BB56
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 15:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB7BD10399
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 15:26:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4M9U-000440-3i; Fri, 25 Oct 2024 11:23:00 -0400
+	id 1t4MC8-0005Az-Jh; Fri, 25 Oct 2024 11:25:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t4M9S-00043n-Cm
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:22:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
+ id 1t4MC5-00059s-NG
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:25:41 -0400
+Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t4M9P-00081O-Ur
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:22:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729869773;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Nii1EAnXm8u8JrjMH/ssb6+jDyu0dxGGtoA3oVgG3Uc=;
- b=h+0OR3pBFJaTl4gmVLZZ+3r7ggUEZwi03YvxN3Nq6+5d/R6TIHGVrx9tUx2M+rdG2ceZl0
- ib7ag69MOeUQo1c4jxVkcL3fgbLTet/4N6l/g+mzMWGGpLjFByXat9U0X4t2EJgeLjZQyo
- JD7B02HgXyREZVcfGxylxsK0zSVv/+c=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-387-lEz36SKxP-2fmThMABdfSA-1; Fri, 25 Oct 2024 11:22:52 -0400
-X-MC-Unique: lEz36SKxP-2fmThMABdfSA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-37d59ad50f3so1125264f8f.0
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 08:22:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729869771; x=1730474571;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Nii1EAnXm8u8JrjMH/ssb6+jDyu0dxGGtoA3oVgG3Uc=;
- b=sg1GR7GKt61/HFK2Y4wUbAj5xujgtTpvTrj10L4IF9nWRqrMtT7oK+TRbQEw+FExFW
- gH7/RdekKW5mxYVtMW+HXDt6MavF50XVdarsCkS9Kqywq6dAZrFsTYHlfomay7EELR1C
- PzQEh8k6LlompbJroEMYFK/DzGJNGnNbsJqJxvQRJsKdCBRAM8z+EhZ18eCBj/skWDME
- 5gdpSCkRGaXNqN7YyXMWL04k4myKa3jW5QGVkiIvVM5bHa3R/nzmwHOIGznpI20wQq+g
- dH1HH41Fh4KM55hQqhJzrRj7aiE+4fb6n1BsQFyxumjntGq4g4O0YmN6Y3CN/0hiLOL0
- xi7w==
-X-Gm-Message-State: AOJu0Yyrooq86JmtLbVQjEkZEaZ0MoVJm/tdemQHYL0mJiaztEXEFTWj
- 6EWrvk1wVyojtMrLxZuEpqrLw4C4rdOssRhAPzZpL+jMkfQVAJi5BlSG2TEYdZu/X0KHMKe41qm
- LfHu0XkmuLy0lMuf1gTSnfqnoXBqfRAgzh7NlbOqf5SMr199TgyGCGk0N8X9u9DA0/MoUxSlXza
- uDhgpNnh+msOTdBupWefhGoECcbJk=
-X-Received: by 2002:a05:6000:c8b:b0:37d:4ebe:164c with SMTP id
- ffacd0b85a97d-380458b5659mr4456475f8f.45.1729869770649; 
- Fri, 25 Oct 2024 08:22:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHol0HRRzkMxLrjRWePJWcWjP8wj3i78om5sS59AR6PaFGqyF5HU8cV2KxV2BrNt/8JDlk84HHjHaSrMyJAytQ=
-X-Received: by 2002:a05:6000:c8b:b0:37d:4ebe:164c with SMTP id
- ffacd0b85a97d-380458b5659mr4456439f8f.45.1729869770191; Fri, 25 Oct 2024
- 08:22:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <20241024-rust-round-2-v1-0-051e7a25b978@linaro.org>
- <20241024-rust-round-2-v1-3-051e7a25b978@linaro.org>
- <34f5191b-67d9-4815-a58b-a794fff0294d@redhat.com>
- <CAAjaMXZmNN5WS7ETQnGgUvWK+aY9w0oW+G3oBko_C2utK2BjHA@mail.gmail.com>
-In-Reply-To: <CAAjaMXZmNN5WS7ETQnGgUvWK+aY9w0oW+G3oBko_C2utK2BjHA@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 25 Oct 2024 17:22:37 +0200
-Message-ID: <CABgObfZj1ViRJ_6mgvuzYuHGqLvQ43G+va-6ahZbk8ripr5pcQ@mail.gmail.com>
-Subject: Re: [PATCH 03/11] rust/qemu-api-macros: introduce Device proc macro
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>, 
- Junjie Mao <junjie.mao@intel.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Kevin Wolf <kwolf@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
+ id 1t4MC4-000087-32
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 11:25:41 -0400
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+ by metis.whiteo.stw.pengutronix.de with esmtps
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <jlu@pengutronix.de>)
+ id 1t4MBp-0004XG-Uv; Fri, 25 Oct 2024 17:25:25 +0200
+Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77])
+ by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <jlu@pengutronix.de>) id 1t4MBo-000OFW-2e;
+ Fri, 25 Oct 2024 17:25:24 +0200
+Received: from localhost ([127.0.0.1])
+ by ptz.office.stw.pengutronix.de with esmtp (Exim 4.96)
+ (envelope-from <jlu@pengutronix.de>) id 1t4MBo-006ahU-05;
+ Fri, 25 Oct 2024 17:25:24 +0200
+Message-ID: <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
+Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
+From: Jan =?ISO-8859-1?Q?L=FCbbe?= <jlu@pengutronix.de>
+To: Guenter Roeck <linux@roeck-us.net>, =?ISO-8859-1?Q?C=E9dric?= Le Goater	
+ <clg@kaod.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
+ <thuth@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>, Joel Stanley
+ <joel@jms.id.au>
+Date: Fri, 25 Oct 2024 17:25:24 +0200
+In-Reply-To: <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
+References: <20241017163247.711244-1-peter.maydell@linaro.org>
+ <dcf06645-dac0-4099-8946-38ca9deaeccf@redhat.com>
+ <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
+ <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
+ <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
+ <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
+ <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
+ <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
+ <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
+ <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
+ <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Evolution 3.54.0 (by Flathub.org) 
+MIME-Version: 1.0
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: jlu@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
+ SAEximRunCond expanded to false
+X-PTX-Original-Recipient: qemu-devel@nongnu.org
+Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
+ envelope-from=jlu@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,274 +87,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[snipping to concentrate on the QOM code generation]
+On Fri, 2024-10-25 at 06:59 -0700, Guenter Roeck wrote:
+> On 10/25/24 02:57, Jan L=C3=BCbbe wrote:
+> > On Fri, 2024-10-25 at 08:55 +0200, C=C3=A9dric Le Goater wrote:
+> > > On 10/24/24 19:59, Philippe Mathieu-Daud=C3=A9 wrote:
+> > > > Cc'ing Jan.
+> > > >=20
+> > > > On 22/10/24 12:04, Guenter Roeck wrote:
+> > > >=20
+> > > > > I have no idea how this is supposed to work, and I don't think it=
+ works
+> > > > > as implemented. I'll revert commit e32ac563b83 in my local copy o=
+f qemu.
+> > > > > Jan, can you have a look at this bug report please? Otherwise I'l=
+l
+> > > > > have a look during soft freeze.
+> >=20
+> > Guenter, just to make sure: In your case [1], you had "boot-emmc" (see
+> > aspeed_machine_ast2600_class_emmc_init) enabled, right? Otherwise the
+>=20
+> I tried both enabled and disabled.
+>=20
+> > boot partition size would be 0, meaning that the eMMC has no boot
+> > partitions.
+>=20
+> That is what I would have expected, but it does not reflect reality.
+>=20
+> > In that configuration, your backing file needs to have space for the
+> > boot partitions at the start (2*1MiB) and the rootfs starts at the 2
+> > MiB offset.
+> >=20
+>=20
+> boot-emmc doesn't make a difference, because
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (emmc) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+qdev_prop_set_uint8(card, "boot-config",
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 boot_emmc ? 0x1 << 3 : 0x0);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>=20
+> in hw/arm/aspeed.c sets the boot partition size independently of the
+> boot-emmc flag.=C2=A0
 
-On Fri, Oct 25, 2024 at 4:05=E2=80=AFPM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
-> > The part where I have most comments, and some ideas of how to make your
-> > work a little more maintainable, is the implementation of class_init
-> > (and all that depends on it).
-> >
-> > Let's start with these generated functions:
-> >
-> > > +        pub unsafe extern "C" fn #realize_fn(
-> > > +            dev: *mut ::qemu_api::bindings::DeviceState,
-> > > +            errp: *mut *mut ::qemu_api::bindings::Error,
-> > > +        ) {
-> > > +            let mut instance =3D NonNull::new(dev.cast::<#name>()).e=
-xpect(concat!("Expected dev to be a non-null pointer of type ", stringify!(=
-#name)));
-> > > +            unsafe {
-> > > +                DeviceImpl::realize(instance.as_mut());
-> > > +            }
-> > > +        }
-> > > +
-> > > +        #[no_mangle]
-> > > +        pub unsafe extern "C" fn #reset_fn(
-> > > +            dev: *mut ::qemu_api::bindings::DeviceState,
-> > > +        ) {
-> > > +            let mut instance =3D NonNull::new(dev.cast::<#name>()).e=
-xpect(concat!("Expected dev to be a non-null pointer of type ", stringify!(=
-#name)));
-> > > +            unsafe {
-> > > +                DeviceImpl::reset(instance.as_mut());
-> > > +            }
-> > > +        }
-> >
-> > This can be handled entirely in Rust code, outside the macro.  If you a=
-dd:
->
-> Why? I don't understand what this solves. These are *just* trampoline
-> functions to call the Rust-abi code.
+Ah, yes. :/
 
-Yes, and there is no need to place them in the procedural macros.
+So you can have SD, eMMC with boot from boot partition *disabled* or
+eMMC with boot from boot partition *enabled*.
 
-Generally it's a good rule to do as little as possible in procedural
-macros, and move as much code as possible outside; this often means to
-generic functions or a declarative macros. For some examples you can
-look at Linux; in rust/macros/zeroable.rs for example the only
-"quote!" is
+> I suspect that the expectation is that I always provide
+> an emmc image with a 2 MB gap at the beginning, but in my opinion that is
+> really hyper-clumsy, and I simply won't do it, sorry.
 
-    quote! {
-        ::kernel::__derive_zeroable!(
-            parse_input:
-                @sig(#(#rest)*),
-                @impl_generics(#(#new_impl_generics)*),
-                @ty_generics(#(#ty_generics)*),
-                @body(#last),
-        );
-    }
+I was surprised that the boot partitions' contents are stored in the
+same backing file as the main area (instead of being separate files).
+But I've not researched why it was designed this way.
 
-For more information, see https://www.youtube.com/watch?v=3DDMLBBZBlKis
+> I can work around
+> the problem by changing the above code to only set boot-partition-size if
+> boot_emmc is set, or I can revert commit e32ac563b83. For now I chose the
+> latter.
 
-> > unsafe extern "C" fn realize_fn_unsafe<T: DeviceImpl>(...) {}
-> > unsafe extern "C" fn reset_fn_unsafe<T: DeviceImpl>(...) {}
->
-> So just rename them and put a generic argument. Still not seeing any gain=
- here.
+With e32ac563b83 reverted, your backing file layout will change *at
+runtime* depending on whether booting from the boot partition is
+enabled via EXT CSD registers. You should be able to try that using
+'mmc bootpart enable <boot_part> 0 /dev/mmcblk0' (with boot_part=3D0 for
+disabled and boot_part=3D1/2 for enabled).
 
-The gain is that you have a much shorter macro implementation, a
-shorter expansion which makes it easier to debug the macro, and an
-implementation of realize_fn_unsafe<>() and reset_fn_unsafe<>() that
-is isolated.
 
-> > Going on to the implementation of the safe functions:
-> >
-> > > +impl DeviceImpl for PL011State {
-> > > +    fn realize(&mut self) {
-> >
-> > These are not quite traits.  First, you can implement only some of the
-> > functions.
->
-> This is called "default implementations" in Rust
+I'm not sure what the best way forward is... perhaps make the boot-
+partition-size zero if boot_emmc is false? e.g.
 
-Sort of. Yes, this is related to default implementations, but the
-default implementation of a QOM method is not "call whatever is
-declared in the trait". It's "call whatever is defined by the
-superclass", which is represented by None.
+@@ -339,7 +339,12 @@ static void sdhci_attach_drive(SDHCIState *sdhci, Driv=
+eInfo *dinfo, bool emmc,
+         }
+         card =3D qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
+         if (emmc) {
+-            qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
++            /*
++             * Avoid the requirement for a padded disk image if booting fr=
+om
++             * eMMC boot partitions is not needed.
++             */
++            qdev_prop_set_uint64(card, "boot-partition-size",
++                                boot_emmc ? 1 * MiB : 0);
+             qdev_prop_set_uint8(card, "boot-config",
+                                 boot_emmc ? 0x1 << 3 : 0x0);
+         }
 
->  > Second, if you don't implement them they are not overwritten
-> > by the class_init method.
->
-> WYM overwritten? That we hook up the empty stub instead of a NULL
-> function pointer?
 
-Not really the NULL function pointer: the value left by the
-superclass. In other words, the class_init function should not have
+Then you'd have the choice between:
+- an eMMC, but without boot partitions (and simple backing=C2=A0file=C2=A0l=
+ayout)
+- an eMMC with boot partitions and need a backing file with=C2=A0
+  the=C2=A0boot partitions at the beginning
 
-    // realize is a function in a trait
-    dc.as_mut().realize =3D Self::realize;
+That might be the lesser evil. :)
 
-but rather
+Jan
 
-    // realize is a constant Option<fn(...)> in a trait
-    if let Some(realize_fn) =3D Self::REALIZE {
-        dc.as_mut().realize =3D Self::realize_fn;
-    }
+--=20
+Pengutronix e.K.                        |                             |
+Steuerwalder Str. 21                    | https://www.pengutronix.de/ |
+31137 Hildesheim, Germany               | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686        | Fax:   +49-5121-206917-5555 |
 
-> > Why is this important? Because the only code transformation is the
-> > generation of properties and vtables, and the bindings can be developed
-> > almost entirely in qemu_api instead of qemu_api_macros.  This has
-> > several advantages:
-> >
-> > 1) it's much easier: simpler error messages, no macro indirection, no
-> > super long global crate paths
->
-> Hard no, sorry. Error messages can definitely be generated from proc
-> macros. Long crate paths; that's just a matter of using imports or
-> changing names.
-
-I don't mean error messages from proc macros. I mean that debugging
-macros that are this complex (does not matter if procedural or
-declarative) is hell. If you move code outside the macro, to generic
-functions and blanket trait implementations, error messages from the
-compiler are simpler.
-
-One additional benefit is that the code is compiled _always_, not just
-if the macro hits a specific code path. It simplifies the testing
-noticeably.
-
-Finally, without -Zmacro-backtrace (nightly only) debugging procedural
-macros is a tedious matter of using "cargo expand". With
--Zmacro-backtrace it's better but we don't want developers to install
-nightly to develop QEMU. Note that this code is not write-once; it
-will be extended for example as soon as we have a device that can fail
-realization.
-
-> Long crate paths; that's just a matter of using imports or
-> changing names.
-
-Only to some extent. See how many ::core::ffi:: or ::core::mem:: are
-there in the current macros.
-
-> > 2) it allows simplifying the pl011 code piecewise, even before
-> > introducing procedural macro code
->
-> Not sure how that is relevant can you explain?
-
-Alex asked for a way to validate the expansion of the macro. If the
-procedural macro is simple and the code is outside, then reviewers can
-easily compare the pl011 code and the qemu-api-macros code, and see
-that they expand to the same thing.
-
-Try to put yourself into the mindset of the reviewer. If I see a patch like
-
-+#[qom_class_init]
- impl DeviceImpl for PL011State {
--    const REALIZE: Option<fn(&mut self)> =3D {
-         fn realize(&mut self) { ... }
--        Some(realize)
--    };
-
--    const RESET: Option<fn(&mut self)> =3D {
-         fn reset(&mut self) { ... }
--        Some(reset)
--    };
-
-     const VMSTATE: ... =3D ...;
-     const CATEGORY: ... =3D ...;
- }
-
-... then it's quite obvious what to expect from the expansion of the
-#[qom_class_init] attribute macro.
-
-> > It also becomes much easier to separate the work in separate patches, o=
-r
-> > even separate series.  Replacing the arguments to device_class_init!()
-> > with DeviceImpl + DeviceImplUnsafe can be introduced first: posted,
-> > reviewed, merged.  All the remaining tasks are pretty much independent:
-> >
-> > 1) splitting out ObjectInfo and introducing #[object] to automate it
-> > (i.e. extending derive(Object))
-> >
-> > 2) splitting out DeviceInfo and introducing #[property] to automate it
-> > (i.e. derive(Device))
-> >
-> > 3) the #[qom_class_init] macro
->
-> I disagree with this approach at the moment. This patch is in an
-> acceptable state albeit a bit longish while all these suggestions
-> would merely cause  more running around making changes for no real
-> gain while also delaying review and merging.
-
-I will be very clear: no, this patch is very far from an acceptable
-state. It's a wonderful prototype, just like hw/char/pl011, but at
-this point we're not accepting prototype-quality Rust code anymore:
-we're turning the existing prototype, which has a manageable but still
-large size, into the real thing.
-
-To sum up the basic points underlying the suggestions, my review comments a=
-re:
-
-- the syntax of #[device(...)] is arbitrary. You are keeping things
-that obviously refer to the QOM object (type name, parent type name)
-far from #[derive(Object)]. You are putting in #[device()] things that
-apply to the QOM object class (e.g. class_name_override) rather than
-the QOM device class. Finally, you are putting in #[device()] the
-vmstate, which is not self-contained (due to subsections).
-
-- the split in modules needs more work. For example, why is
-Migrateable under qemu_api::objects instead of qemu_api::device_class?
-
-- the part that would require the fewest changes is probably
-#[property], but we need to be careful about not introducing "fake
-safety".
-
-- to simplify splitting the patches, start by moving code out of the
-existing declarative macros and into generic code or declarative
-macros
-
-- to simply reviewing the patches, only use the procedural macros as a
-syntactic sugar, and do as little code generation as possible in the
-procedural macros themselves
-
-- splitting the ObjectImpl/DeviceImpl traits in two (one for code
-generated by derive-macros; one for stuff that is definde outside the
-struct declaration) could be a way to work incrementally, adding more
-and more parts of the class definition to the procedural macro but
-without doing everything at once
-
-- it must be possible to specify non-overridden DeviceClass or
-ObjectClass functions
-
-The suggestions are just a way to achieve these objectives. In
-particular, the suggestions are about how to achieve the bullets in
-the above list starting from the third.
-
-Also, this series *must* come after the other cleanups and CI
-integration that have been posted, for several reasons.
-
-As to the cleanups, right now we *already* have in the tree code that
-is duplicate, dead or untested. Removing that, and ensuring that it
-does not regress, is a priority over everything else.
-
-As to CI integration, first, changes like this one must be fully
-bisectable, which requires having working CI before. Second, if we
-want to advertise 9.2 as supporting --enable-rust (even if
-experimental), we need a way to run automated tests on at least _some_
-of the platforms that we support.
-
-So my plan right now is to post a pull request for part 1 next week,
-and to include part 2 (including your work on migration and Luminary,
-but without the procedural macro) in -rc1. This work is for 10.0.
-
-> > A final word: I absolutely don't want you to think that your work is of
-> > no value.  It's totally okay to throw away the first version of
-> > something.  You showed that it _is_ possible to have idiomatic code wit=
-h
-> > the help of procedural macros.  Even if the implementation can be
-> > improved, the _idea_ remains yours.
->
-> I don't know what this is in reference to :P What work and throwing
-> away are you talking about?
-
-I was talking in general. When working in Rust I often found that the
-first thing I came up with was crap, and the main value of it was in
-learning. Sometimes I came up with the second version on my own,
-sometimes it was pointed out during review. But even if it's pointed
-out during review, the reviewer doesn't in any way think bad of you or
-your work.
-
-Paolo
 
 
