@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47BD7D149EB
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 20:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6339D149EB
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 20:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Qdo-000353-Bc; Fri, 25 Oct 2024 16:10:36 -0400
+	id 1t4Qf3-0003iJ-Ch; Fri, 25 Oct 2024 16:11:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4Qdd-00034N-AB
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 16:10:26 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4Qf1-0003hv-DU
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 16:11:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4Qdb-0001Lj-OA
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 16:10:25 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 46F789C3F2;
- Fri, 25 Oct 2024 23:09:47 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8930015D59F;
- Fri, 25 Oct 2024 23:10:20 +0300 (MSK)
-Message-ID: <89bfa733-4496-4128-bace-94099b96a9db@tls.msk.ru>
-Date: Fri, 25 Oct 2024 23:10:20 +0300
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4Qez-0001Xn-OY
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 16:11:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729887107;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OHDOcyPfOFgO6bWvoZpBHME4TzQRzjTPWiHANMuyQUU=;
+ b=GcrrLyI8yzisHl361kwalplTX4V5VgbWqX5nqoMQtI6xF95WS17MxsDjhdVRDPbUFDt1fO
+ qJmkxVn+0FAZL5sVkT/1uf/lBuseanHFHDyr85cbKluk71ywqKqqhgUamqoaFVdBia6o5Y
+ NpxintoYPb/Yu5XqoAxm4fBN6TPsRmQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-211-W2qMyCNYNemj8f4ebdWe7A-1; Fri, 25 Oct 2024 16:11:44 -0400
+X-MC-Unique: W2qMyCNYNemj8f4ebdWe7A-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37d5a3afa84so1321247f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 13:11:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729887103; x=1730491903;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OHDOcyPfOFgO6bWvoZpBHME4TzQRzjTPWiHANMuyQUU=;
+ b=WLvXWOHUu3dO2wkCBAr64hYm86R5mJf7ZQ4+S7P0xYacQkXUQ3mEdiGFP3JfT5Ako4
+ Zhd5oww/wNUXuzFXmBcNDrFnMnHw/O3vpGITz8iIt2v9ajITTm0um9ZL4wYm9dTBYMWM
+ b2JX5oaPpa6/r5ktNdpuJEezUZap1jroP8WbRNV60Qi0AhjOV5IXmbYZL248tt0N8bCd
+ GzZIjzLKSuHmxlZ8XTBHwociXzwZvvjtLk2pDsgqSVEADx/2x9yvxu2O+DtG8nM6PpVA
+ XgAHrVrle5jVfAaGQBHc7F3HiI6s9Zoh6mmKZ9inDtZW5d4mOfZ1S/eyX4v+8crMu2XD
+ e1tg==
+X-Gm-Message-State: AOJu0Yxd+Au46JSmavB8qmy6wiW9K5zBfsqp42XaciNM7uMijggwzEIE
+ JzOSgAoKYMn2O8vYVBd7cGFe5MUC/O+nbaa0gWq1EQklSzl15bEq9reNakw9Qf2IWE07+JWYKry
+ 8hIY5EsZUVlZWSscoYy0MFXs1hH0aig7RD9+pHxa7sTYs6L8ceLe4bEJpr1wCvNub/X1oyyhV28
+ dI5hyBISkY2gADujq/o0lRoJmqCHw=
+X-Received: by 2002:a05:6000:e04:b0:37d:4c8f:2e1 with SMTP id
+ ffacd0b85a97d-38061137605mr442239f8f.22.1729887103392; 
+ Fri, 25 Oct 2024 13:11:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKlpsOVoElcQqcrPw5R5cim+fNeOybZXP/8bJxd/zJ070exVl9H0xh2SSZgx0X7qipfdeVKF7yRPG6Andc534=
+X-Received: by 2002:a05:6000:e04:b0:37d:4c8f:2e1 with SMTP id
+ ffacd0b85a97d-38061137605mr442226f8f.22.1729887103063; Fri, 25 Oct 2024
+ 13:11:43 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 19/23] rust: do not use --generate-cstr
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
- junjie.mao@hotmail.com, berrange@redhat.com
 References: <20241025160209.194307-1-pbonzini@redhat.com>
  <20241025160209.194307-20-pbonzini@redhat.com>
  <b86de87b-99f3-4fce-9a33-3580d37d90dc@tls.msk.ru>
- <3a0a5685-8c8b-46ad-8933-0fff8715f47d@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <3a0a5685-8c8b-46ad-8933-0fff8715f47d@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+In-Reply-To: <b86de87b-99f3-4fce-9a33-3580d37d90dc@tls.msk.ru>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 25 Oct 2024 22:11:32 +0200
+Message-ID: <CABgObfbYf8vEJd=QhvXvhy0o0Xt5-bPJ7jdd0NRVUh_-tXApuQ@mail.gmail.com>
+Subject: Re: [PATCH 19/23] rust: do not use --generate-cstr
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+ Emmanouil Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, 
+ Junjie Mao <junjie.mao@hotmail.com>, "P. Berrange,
+ Daniel" <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="00000000000047b73f062552ba76"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,29 +101,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-25.10.2024 23:06, Pierrick Bouvier wrote:
-> On 10/25/24 13:03, Michael Tokarev wrote:
->> 25.10.2024 19:02, Paolo Bonzini wrote:
->>> --generate-cstr is a good idea and generally the right thing to do,
->>> but it is not available in Debian 12 and Ubuntu 22.04.  Work around
->>> the absence.
->>
->> Can't we just install a more recent bindgen and use all the current
->> features of it, like it's done in patch 22 for ubuntu?
-> 
-> Users yes, but distros expect to be able to use their packaged version.
+--00000000000047b73f062552ba76
+Content-Type: text/plain; charset="UTF-8"
 
-Pretty please do not target rust in qemu for *currently* supported
-distros.  For debian bookworm it is already way too late, - for
-bookworm as a distro, qemu with rust is hopeless, it is possible
-only with trixie and up.
+Il ven 25 ott 2024, 22:03 Michael Tokarev <mjt@tls.msk.ru> ha scritto:
 
-Users wishing to experiment can install more recent packages, for
-qemu ci it is the way to go too using the way in patch 22, and that's
-it.  There's no need to sacrifice qemu rust code for current debian
-stable.  rust is already too volatile by its own, and targeting
-that wide range of versions is insane.
+> 25.10.2024 19:02, Paolo Bonzini wrote:
+> > --generate-cstr is a good idea and generally the right thing to do,
+> > but it is not available in Debian 12 and Ubuntu 22.04.  Work around
+> > the absence.
+>
+> Can't we just install a more recent bindgen and use all the current
+> features of it, like it's done in patch 22 for ubuntu?
+>
+
+The idea is that Ubuntu will get the memo and add an updated bindgen, since
+they did update rustc to 1.75.0... so hopefully even that change in patch
+22 is temporary.
+
+This patch is only a minor nuisance and we'll only need it for about a year.
+
+Paolo
 
 /mjt
+>
+>
+
+--00000000000047b73f062552ba76
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il ven 25 ott 2024, 22:03 Michael Tokarev &lt;<a href=
+=3D"mailto:mjt@tls.msk.ru">mjt@tls.msk.ru</a>&gt; ha scritto:<br></div><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
+:1px solid rgb(204,204,204);padding-left:1ex">25.10.2024 19:02, Paolo Bonzi=
+ni wrote:<br>
+&gt; --generate-cstr is a good idea and generally the right thing to do,<br=
+>
+&gt; but it is not available in Debian 12 and Ubuntu 22.04.=C2=A0 Work arou=
+nd<br>
+&gt; the absence.<br>
+<br>
+Can&#39;t we just install a more recent bindgen and use all the current<br>
+features of it, like it&#39;s done in patch 22 for ubuntu?<br></blockquote>=
+</div></div><div dir=3D"auto"><br></div><div dir=3D"auto">The idea is that =
+Ubuntu will get the memo and add an updated bindgen, since they did update =
+rustc to 1.75.0... so hopefully even that change in patch 22 is temporary.<=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto">This patch is only a min=
+or nuisance and we&#39;ll only need it for about a year.</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><di=
+v dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
+adding-left:1ex">
+/mjt<br>
+<br>
+</blockquote></div></div></div>
+
+--00000000000047b73f062552ba76--
 
 
