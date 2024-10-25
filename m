@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3554DD0C5F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 09:55:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2DD7D0C5F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 09:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4H1f-0007Ae-22; Fri, 25 Oct 2024 05:54:35 -0400
+	id 1t4H5L-0008Ig-1o; Fri, 25 Oct 2024 05:58:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t4H1X-0007AC-TT
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 05:54:28 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
+ id 1t4H5E-0008I9-GD
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 05:58:17 -0400
+Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t4H1V-0005jE-KU
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 05:54:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1729850066; x=1761386066;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=1e8CKrSCaJfh4of/dCdiXZLWpTodBCTemiyWfh340YQ=;
- b=Kni6lHEMEedrhTKeKWWZ0OJuX7OC6yQxsMmdrJ1nnwYIkuOqhQIScJWO
- J/LO8vGnletBWTZg1UIxquVxOh+Ln5iTfhIC6KKt23WacO6YstmatJRg+
- 8+NNpk4Dm/PL4tOjBlQTsOk86bPluCIndRA3frXh9cJJ/zwuI8eEtWaqL
- AAAGcMIP1APOs1pqrmct1pWosbE5Pwf89pR4GnJct0vpi4nIwDwskQCnA
- 96wDcspzp5u2dF7fpI22ZV08OouwG90zYb9GOXNam4pIiuaBITK+dy9Wc
- jSolk7fwAgFwJDg/2KEUY3lgyAKF9B9tmuZfxgvyNrtVqXt9cpm7yqYFu Q==;
-X-CSE-ConnectionGUID: U4c8881fTaafSAeKbhJ8Fg==
-X-CSE-MsgGUID: fY9SeW7qSEqZlxJA4qdy1w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11235"; a="29623957"
-X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; d="scan'208";a="29623957"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Oct 2024 02:54:22 -0700
-X-CSE-ConnectionGUID: W79WVS+2QniLoIG2zgmiGg==
-X-CSE-MsgGUID: mrQCE6L3S1SvR9/LYSa9MQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; d="scan'208";a="81699488"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 25 Oct 2024 02:54:21 -0700
-Date: Fri, 25 Oct 2024 18:10:38 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: Re: [PATCH v2 12/13] rust: provide safe wrapper for
- MaybeUninit::zeroed()
-Message-ID: <ZxtungaSiLaalOcx@intel.com>
-References: <20241021163538.136941-1-pbonzini@redhat.com>
- <20241021163538.136941-13-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
+ id 1t4H5C-0006Bn-SS
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 05:58:16 -0400
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+ by metis.whiteo.stw.pengutronix.de with esmtps
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <jlu@pengutronix.de>)
+ id 1t4H4x-0008CR-CF; Fri, 25 Oct 2024 11:57:59 +0200
+Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77])
+ by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <jlu@pengutronix.de>) id 1t4H4w-000LLu-0V;
+ Fri, 25 Oct 2024 11:57:58 +0200
+Received: from localhost ([127.0.0.1])
+ by ptz.office.stw.pengutronix.de with esmtp (Exim 4.96)
+ (envelope-from <jlu@pengutronix.de>) id 1t4H4v-006Mwp-1O;
+ Fri, 25 Oct 2024 11:57:58 +0200
+Message-ID: <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
+Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
+From: Jan =?ISO-8859-1?Q?L=FCbbe?= <jlu@pengutronix.de>
+To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Guenter Roeck <linux@roeck-us.net>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
+ <thuth@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>, Joel Stanley
+ <joel@jms.id.au>
+Date: Fri, 25 Oct 2024 11:57:57 +0200
+In-Reply-To: <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
+References: <20241017163247.711244-1-peter.maydell@linaro.org>
+ <dcf06645-dac0-4099-8946-38ca9deaeccf@redhat.com>
+ <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
+ <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
+ <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
+ <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
+ <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
+ <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
+ <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.0 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241021163538.136941-13-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: jlu@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
+ SAEximRunCond expanded to false
+X-PTX-Original-Recipient: qemu-devel@nongnu.org
+Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
+ envelope-from=jlu@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,33 +85,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 21, 2024 at 06:35:37PM +0200, Paolo Bonzini wrote:
-> Date: Mon, 21 Oct 2024 18:35:37 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH v2 12/13] rust: provide safe wrapper for
->  MaybeUninit::zeroed()
-> X-Mailer: git-send-email 2.46.2
-> 
-> MaybeUninit::zeroed() is handy, but it introduces unsafe (and has a
-> pretty heavy syntax in general).  Introduce a trait that provides the
-> same functionality while staying within safe Rust.
-> 
-> In addition, MaybeUninit::zeroed() is not available as a "const"
-> function until Rust 1.75.0, so this also prepares for having handwritten
-> implementations of the trait until we can assume that version.
-> 
-> Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/hw/char/pl011/src/device_class.rs |  8 ++++++--
->  rust/hw/char/pl011/src/memory_ops.rs   | 11 +++++++----
->  rust/qemu-api/meson.build              |  1 +
->  rust/qemu-api/src/device_class.rs      |  8 ++++----
->  rust/qemu-api/src/lib.rs               |  1 +
->  rust/qemu-api/src/zeroable.rs          | 23 +++++++++++++++++++++++
->  6 files changed, 42 insertions(+), 10 deletions(-)
->  create mode 100644 rust/qemu-api/src/zeroable.rs
+Hi,
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+On Fri, 2024-10-25 at 08:55 +0200, C=C3=A9dric Le Goater wrote:
+> On 10/24/24 19:59, Philippe Mathieu-Daud=C3=A9 wrote:
+> > Cc'ing Jan.
+> >=20
+> > On 22/10/24 12:04, Guenter Roeck wrote:
+> > > On 10/21/24 21:09, Philippe Mathieu-Daud=C3=A9 wrote:
+> > > > Hi Guenter,
+> > > >=20
+> > > > On 21/10/24 11:02, Guenter Roeck wrote:
+> > > >=20
+> > > > > Unrelated to this, but I found that the sd emulation in 9.1 is al=
+so broken
+> > > > > for loongarch and sifive_u, and partially for ast2600-evb (it has=
+ two
+> > > > > controllers, with one of them no longer working). That is too muc=
+h for me
+> > > > > to track down quickly, so this is just a heads-up.
+>=20
+> It would greatly help if we could merge some of your testsuite under QEMU=
+.
+>=20
+> > > > Please Cc me with reproducer or assign Gitlab issues to me,
+> > > > I'll have a look.
+> > > >=20
+> > >=20
+> > > If it wasn't funny, it would be sad.
+> > >=20
+> > > hw/sd/sd.c:sd_reset() calls sd_bootpart_offset() t determine the boot=
+ partition
+> > > offset. That function needs to have sd->ext_csd[EXT_CSD_PART_CONFIG] =
+configured.
+> > > However, the value is only set later in sd_reset() with the call to s=
+c->set_csd().
+> > > One of the parameters of that function is the previously calculated s=
+ize.
+> > >=20
+> > > So in other words there is a circular dependency. The call to sd_boot=
+part_offset()
+> > > returns 0 because sd->ext_csd[EXT_CSD_PART_CONFIG] isn't set, then
+> > > the call to sc->set_csd() sets it ... too late. Subsequent calls to
+> > > sd_bootpart_offset() will then return the expected offset.
+
+> oh. I didn't realize that :/ I guess we only tested our own scenario when
+> we were working on the ast2600 bringup.
+
+Ah, I missed that early call to sd_bootpart_offset() as well.
+
+As this function calculates the *runtime* offset which changes as the
+guest switches between accessing the main user data area and the boot
+partitions by writing to the EXT_CSD_PART_CONFIG_ACC_MASK bits, it
+shouldn't be involved in the calculations in sd_reset() at all.
+
+> I think the change in the reset handler should be :
+>=20
+> -=C2=A0=C2=A0=C2=A0 size -=3D sd_bootpart_offset(sd);
+> +=C2=A0=C2=A0=C2=A0 if (sd_is_emmc(sd)) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 size -=3D sd->boot_part_size =
+* 2;
+> +=C2=A0=C2=A0=C2=A0 }
+
+Yes, that seems correct.
+
+> > > I have no idea how this is supposed to work, and I don't think it wor=
+ks
+> > > as implemented. I'll revert commit e32ac563b83 in my local copy of qe=
+mu.
+> > > Jan, can you have a look at this bug report please? Otherwise I'll
+> > > have a look during soft freeze.
+
+Guenter, just to make sure: In your case [1], you had "boot-emmc" (see
+aspeed_machine_ast2600_class_emmc_init) enabled, right? Otherwise the
+boot partition size would be 0, meaning that the eMMC has no boot
+partitions.
+
+In that configuration, your backing file needs to have space for the
+boot partitions at the start (2*1MiB) and the rootfs starts at the 2
+MiB offset.
+
+Jan
+
+[1]https://lore.kernel.org/qemu-devel/8f3536a0-2685-4aa4-b26d-f460e738d387@=
+roeck-us.net/#t
+--=20
+Pengutronix e.K.                        |                             |
+Steuerwalder Str. 21                    | https://www.pengutronix.de/ |
+31137 Hildesheim, Germany               | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686        | Fax:   +49-5121-206917-5555 |
+
 
 
