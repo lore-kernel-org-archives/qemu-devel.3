@@ -4,133 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8086FD11717
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 07:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DEC5D1170E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 07:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Eny-0007GQ-Ca; Fri, 25 Oct 2024 03:32:18 -0400
+	id 1t4Erg-000879-C7; Fri, 25 Oct 2024 03:36:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t4Enx-0007GB-AU
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 03:32:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1t4ErX-00086m-Uo
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 03:36:00 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t4Enu-0004vr-Vx
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 03:32:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729841531;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=W34TzzRk8sa/oidspwOjjXSXdx84jDzmL6wRELBhhUo=;
- b=DhU06jotgRJSZups29xGtIb7hOz5Ue0dxpajbsYt0+QOEVAW2Agm6PpvVn3QY4hK69F7m1
- tL4gzAOHm0sKsAxgffbnkmTuh3FHeZptSsoMJVshMJK1Q2GCEO7U8S4CnzR2SApWiEDbJa
- kfXzEKbExmgdbBImrC9q6oZ9udojHWM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-0sBNxxjUP6q1RZ4k39WCEw-1; Fri, 25 Oct 2024 03:32:08 -0400
-X-MC-Unique: 0sBNxxjUP6q1RZ4k39WCEw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4315e8e9b1cso9377935e9.1
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 00:32:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729841527; x=1730446327;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W34TzzRk8sa/oidspwOjjXSXdx84jDzmL6wRELBhhUo=;
- b=nUAqFx6mRgbEAZqXbHWKf1sOXDMJsvMeTrL8u4OXRWOA0VD114RDo9h/L7fRfwThdZ
- yQ66KXezBCU2m6pQzCZqWfCMSuNTJSqZVyDpWbskN5l0GYkjZA7LI1Mx/axJ1kQV+zBY
- 1ud0tFOEbditAv2Jiu0gUosM7D+SOrpz9084nnmvm3G3JPDK1KCuQiybdP4VK4JyQmZp
- vbFbBcqNvWqWJNf+CWvOc3yJYpeSsc63r1xEzfXJJnNWLMjg+HkCZC5VHnttC4Ol6asg
- LuTD2P9QNo9rjtKbMCwY0KY82tWLOJxMQhHFmemwPJS8MaqoEwtuB2hP7E4ggUVhfKLn
- C8tg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVFRfqwHqHaDfC7RaN/NuWyb9tM59jUmwaRr60/gJ+MfEdKubz7vE2AhqTtVDV1QTPKhz5qdKJJfSGw@nongnu.org
-X-Gm-Message-State: AOJu0Yx/mjIBfsQ6PFLHYRx7rMt1pbd/EExBTogI7FA1i4F9QX0BXbJp
- pPp4LogqxIuiXNUFfc+7BFTPKXnOH6QrVtskz0paPxNdOguML3ZUmNr6cB0KKyK2bV0DmdEUALm
- Ie0m3LDHzp2mFe5hL5Sc/uIMyF6mx39rp/60aL/S9XzgtA4CPj5mK
-X-Received: by 2002:a05:600c:45d0:b0:431:7ccd:ff8a with SMTP id
- 5b1f17b1804b1-4318bc8f546mr33813815e9.14.1729841527149; 
- Fri, 25 Oct 2024 00:32:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGskSdhclIoqTbH8lT6s2ceW2BPbUX35lwBPBDfqdBM8A3dZmUuQqmEnQp58u11gq6TUDnD7Q==
-X-Received: by 2002:a05:600c:45d0:b0:431:7ccd:ff8a with SMTP id
- 5b1f17b1804b1-4318bc8f546mr33813595e9.14.1729841526742; 
- Fri, 25 Oct 2024 00:32:06 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-40-241-30.web.vodafone.de.
- [109.40.241.30]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38058b132fbsm826203f8f.4.2024.10.25.00.32.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 00:32:06 -0700 (PDT)
-Message-ID: <46e3c351-4acf-4bb7-b7b0-d9e0ae4c0346@redhat.com>
-Date: Fri, 25 Oct 2024 09:32:04 +0200
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1t4ErV-0005Km-Os
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 03:35:59 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c15:2711:0:640:16b3:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 9C96C60FD0;
+ Fri, 25 Oct 2024 10:35:48 +0300 (MSK)
+Received: from d-tatianin-lin.yandex.net (unknown
+ [2a02:6bf:8011:f00:9e1f:69f6:8772:3b7])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id hZPAuP0IWW20-aO3lFtg2; Fri, 25 Oct 2024 10:35:48 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1729841748;
+ bh=xGkL980BATm3PL5NNU/aPgieI30tZF+feqTi0/Jotpk=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=oFJhWtr+vd7fMfJgIQkv7GbJAAiFvq+w3Vqte5j4E9hvSETmU08vGnJa8jiMaNRzt
+ /88fYa7curYbKFps2l7OIqnbaQAbpg7A66kOu2DD3N5UV7h8OiEYYs36HfEM8SRoft
+ +Liye4eVlCy+AX8/hbQpU7eN/2LQSVeTtidgdd0U=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>, devel@lists.libvirt.org,
+ Jason Wang <jasowang@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ Corey Minyard <minyard@acm.org>, qemu-devel@nongnu.org
+Subject: [PATCH 0/2] finalize 'reconnect' deprecation
+Date: Fri, 25 Oct 2024 10:35:23 +0300
+Message-Id: <20241025073525.976136-1-d-tatianin@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Missing image on storage.kernelci.org
-To: Joel Stanley <joel@jms.id.au>, QEMU Developers <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <CACPK8Xc=jsz5iT_WR7s-rcu1cRzryiK+-0o=6vUK_D_qMMrP3A@mail.gmail.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CACPK8Xc=jsz5iT_WR7s-rcu1cRzryiK+-0o=6vUK_D_qMMrP3A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,18 +81,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/10/2024 12.16, Joel Stanley wrote:
-> I was attempting to run some boot tests today and saw this:
-> 
->   (11/39) tests/avocado/boot_linux_console.py:BootLinuxConsole.test_arm_bpim2u_gmac:
-> CANCEL: Missing asset
-> http://storage.kernelci.org/images/rootfs/buildroot/buildroot-baseline/20221116.0/armel/rootfs.ext2.xz
-> (5.21 s)
+We've deprecated the 'reconnect' property in c8e2b6b4d7e, but all the
+tests, as well as the stream netdev were still left using it. This
+series finalizes the deprecation and replaces all local usage and docs
+metions of 'reconnect' with 'reconnect-ms'.
 
-Yes, looks like the old images have been removed. But at least newer 
-versions are still available. I'll try to convert the test to the new 
-functional framework and fix the broken URL along the way.
+Daniil Tatianin (2):
+  net/stream: deprecate 'reconnect' in favor of 'reconnect-ms'
+  chardev: finalize 'reconnect' deprecation
 
-  Thomas
+ docs/COLO-FT.txt              |  4 +--
+ docs/about/deprecated.rst     | 10 ++++++++
+ docs/system/ppc/powernv.rst   |  2 +-
+ net/stream.c                  | 34 +++++++++++++++++---------
+ qapi/net.json                 | 13 +++++++++-
+ qemu-options.hx               | 46 +++++++++++++++++------------------
+ tests/qtest/ipmi-bt-test.c    |  2 +-
+ tests/qtest/netdev-socket.c   |  2 +-
+ tests/qtest/vhost-user-test.c |  2 +-
+ tests/unit/test-char.c        |  8 +++---
+ 10 files changed, 77 insertions(+), 46 deletions(-)
+
+-- 
+2.34.1
 
 
