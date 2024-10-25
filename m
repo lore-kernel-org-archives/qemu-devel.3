@@ -4,72 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF86D0C600
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 11:11:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 395A8D0C600
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 11:21:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4IDn-0000Vv-HM; Fri, 25 Oct 2024 07:11:12 -0400
+	id 1t4IMv-0002IV-RL; Fri, 25 Oct 2024 07:20:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t4IDf-0000VL-8K
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 07:11:04 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1t4IMl-0002He-7L
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 07:20:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t4IDZ-0006dT-Qu
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 07:11:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1729854657; x=1761390657;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=6CrhQ11rT4mIIGYaoOVyl66wNlhiV935Di3CsOf3bN8=;
- b=D7KTs9FwAczIn8t7fOTIOBzLwxs1mVsAwydrF8LOOYfsrSM6uVNx1c5t
- JnkzaFxOrl7h6jGRPBeNgy9+y6O5J01S9mJ5uRCh8t4q6WFseoj3pwGyB
- p+n5OlWbyMgYcsl8Wp0rrUxPLQpBbbFxCRnJZkbPKkN26uhz6UTmulO+8
- t2PMbWpAwockjIKvYUQX3rea0n783YXX8nlXhnq4Hy9H5U+v0doFavP38
- Dre2oGeon6y2RbDIf9fSWpzRlikHfgEwsgKK3S9bZo6aToVVinRwob3KB
- jn3yerAdO052w/A6Rif08gqYknexE/W99bUVzyMgXXTPSETGsNDsprYNK g==;
-X-CSE-ConnectionGUID: WbBj7GaFRRWRVuGocAeB5w==
-X-CSE-MsgGUID: N3zLSvDfTjm407RezDmxBQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11236"; a="40107704"
-X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; d="scan'208";a="40107704"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Oct 2024 04:10:52 -0700
-X-CSE-ConnectionGUID: PoZ/CmjxRi6ABShUaLfPnw==
-X-CSE-MsgGUID: q4wxXO1eSFKyV17HoEpsWg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; d="scan'208";a="85680630"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa005.jf.intel.com with ESMTP; 25 Oct 2024 04:10:52 -0700
-Date: Fri, 25 Oct 2024 19:27:09 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: Re: [PATCH v2 11/13] rust: make properties array immutable
-Message-ID: <ZxuAjfuYAOMe+FDI@intel.com>
-References: <20241021163538.136941-1-pbonzini@redhat.com>
- <20241021163538.136941-12-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1t4IMi-0008I1-Dz
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 07:20:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729855221;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hHnEz/f3YQfou2LqvuZk2Z4s45GI7GWtMls5LlbQas0=;
+ b=f8VPJBfhUCUT0R57QfftoWNTV6WwDoz4Nqxz/X1egU2OJ/uBOg1LUge9fKRWBPiT1acnGL
+ a6fADi20xm4+hita0HiJjXcUNBhJP1VGMPjMNObGg3j/J5zFkrbGzCULxIabB9YbsBneFI
+ vnwnab9kOmZtO6trzGfW+tffKP6zQZY=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-146-H4y0c9szM4So_1nh3gtWLA-1; Fri, 25 Oct 2024 07:20:20 -0400
+X-MC-Unique: H4y0c9szM4So_1nh3gtWLA-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-6e9bbe92d44so23133687b3.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 04:20:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729855220; x=1730460020;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hHnEz/f3YQfou2LqvuZk2Z4s45GI7GWtMls5LlbQas0=;
+ b=ClHKDxxvngrYsWeAbUdCEMR8Y9lM92E6s9xalP/y8rHxMHVbCf8bSoqPB2M/EMb449
+ IVHv0XZDXExSpB4C/KKasxdxnpXW/EpuSZk3mzCD75HA2JYUCGUq+Hw/BtIyJ3gT7atb
+ Ta4zUJ4KpOdssY1vM/EGzS10fRv8r1DycHARRCV9exUJdoQXR+kOf7SwMy9uu5kSItK9
+ gYZNlnHYCenF9lZYVyDXNpg5YX5rcGJThhj/4CtMyl48K752p+Sap4lJn2ktoEge8QD2
+ PP0W63dshpJW6WfIbImjnKaeb2fU24Px+z0ub+gqqTS+lJDBL9j7OmIOLzPE7yohBacO
+ 8xqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEH92wmpJzcK2yG3qknIxuvbi2UuFqre4GI6oLUSNGZpimzPWjgmH5GNr97nohWk79LMei+WK4+vGi@nongnu.org
+X-Gm-Message-State: AOJu0Yw+iJSyrHJusWAWuaTU0FBWXAU8M5BZjesKKwH1b3gUpsxtr3bU
+ wA+H2NTkAGtXoynznBkDMrRnuf+BDNfmR9VBDtt2LL6e/T3AdJhAqnwhi/V9yzIPXQ83fMKj6mg
+ aYyPjWbhxOhc8DgVOddX/E0mZD9dRvfY8r9295iX6FHc0jgyDEfQHeKbSzIXzajXysurmTChiLL
+ RbC1aYQV63ha5QK1NiUstL8lhIPss=
+X-Received: by 2002:a05:6902:2511:b0:e29:2a45:1e83 with SMTP id
+ 3f1490d57ef6-e2e3a6657b5mr8640929276.31.1729855219952; 
+ Fri, 25 Oct 2024 04:20:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHagD4B0aVEmnChXDMqJvFTUpyFpy30Yl90eWStuZ3jRGkOLyNtEmXY7YiWzSudG9RbMXn0WNQg2FrK5fB0oaw=
+X-Received: by 2002:a05:6902:2511:b0:e29:2a45:1e83 with SMTP id
+ 3f1490d57ef6-e2e3a6657b5mr8640844276.31.1729855218637; Fri, 25 Oct 2024
+ 04:20:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241021163538.136941-12-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
+References: <20241025073525.976136-1-d-tatianin@yandex-team.ru>
+In-Reply-To: <20241025073525.976136-1-d-tatianin@yandex-team.ru>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Fri, 25 Oct 2024 15:20:07 +0400
+Message-ID: <CAMxuvaz9XOhJ4cW9Fc3YRDq4pG3jn7D9b=WH5i5iEeFN0uxa1A@mail.gmail.com>
+Subject: Re: [PATCH 0/2] finalize 'reconnect' deprecation
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Cc: devel@lists.libvirt.org, Jason Wang <jasowang@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>, 
+ Corey Minyard <minyard@acm.org>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +107,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 21, 2024 at 06:35:36PM +0200, Paolo Bonzini wrote:
-> Date: Mon, 21 Oct 2024 18:35:36 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH v2 11/13] rust: make properties array immutable
-> X-Mailer: git-send-email 2.46.2
-> 
-> Now that device_class_set_props() takes a const pointer, the only part of
-> "define_property!" that needs to be non-const is the call to try_into().
-> This in turn will only break if offset_of returns a value with the most
-> significant bit set (i.e. a struct size that is >=2^31 or >= 2^63,
-> respectively on 32- and 64-bit system), which is impossible.
-> 
-> Just use a cast and clean everything up to remove the run-time
-> initialization.  This also removes a use of OnceLock, which was only
-> stabilized in 1.70.0.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/qemu-api/src/device_class.rs | 42 ++++++-------------------------
->  1 file changed, 8 insertions(+), 34 deletions(-)
-> 
+On Fri, Oct 25, 2024 at 11:36=E2=80=AFAM Daniil Tatianin
+<d-tatianin@yandex-team.ru> wrote:
+>
+> We've deprecated the 'reconnect' property in c8e2b6b4d7e, but all the
+> tests, as well as the stream netdev were still left using it. This
+> series finalizes the deprecation and replaces all local usage and docs
+> metions of 'reconnect' with 'reconnect-ms'.
+>
+> Daniil Tatianin (2):
+>   net/stream: deprecate 'reconnect' in favor of 'reconnect-ms'
+>   chardev: finalize 'reconnect' deprecation
 
-Very elegant!
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+>
+>  docs/COLO-FT.txt              |  4 +--
+>  docs/about/deprecated.rst     | 10 ++++++++
+>  docs/system/ppc/powernv.rst   |  2 +-
+>  net/stream.c                  | 34 +++++++++++++++++---------
+>  qapi/net.json                 | 13 +++++++++-
+>  qemu-options.hx               | 46 +++++++++++++++++------------------
+>  tests/qtest/ipmi-bt-test.c    |  2 +-
+>  tests/qtest/netdev-socket.c   |  2 +-
+>  tests/qtest/vhost-user-test.c |  2 +-
+>  tests/unit/test-char.c        |  8 +++---
+>  10 files changed, 77 insertions(+), 46 deletions(-)
+>
+> --
+> 2.34.1
+>
 
 
