@@ -4,92 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B87BD0C612
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 13:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA12D0C612
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 13:56:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Kku-0005JA-Gt; Fri, 25 Oct 2024 09:53:32 -0400
+	id 1t4Kn7-0006aa-PS; Fri, 25 Oct 2024 09:55:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t4Kks-0005Iq-Qb; Fri, 25 Oct 2024 09:53:30 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t4Kn6-0006a5-67
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 09:55:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t4Kkr-0004or-0Y; Fri, 25 Oct 2024 09:53:30 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CCDE59C240;
- Fri, 25 Oct 2024 16:52:52 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AB91615D18C;
- Fri, 25 Oct 2024 16:53:25 +0300 (MSK)
-Message-ID: <5cc9130c-5b9a-4e86-a609-9ab16d3529e0@tls.msk.ru>
-Date: Fri, 25 Oct 2024 16:53:25 +0300
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t4Kn4-0005IT-AY
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 09:55:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729864544;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pbBEloMWou59hXT2HVcKWDx/Zpq6ytzJ0Nl56mu52bg=;
+ b=TyBIaN4t4STlSxpp+JPSz+4lDFm9f9v3aOxaS8BEs9oZL1pbd5jPFJ7hdzl7ygRDW8ZXIg
+ +DVgzATJNNrguaQ0F+23u5aC9W7PSWVh834xb6QFH3jVzF7tfOlfsL9oBZosIh8mIj39Fs
+ e3APeUH3xdSfT2gXSCh4/YzYrJW+snM=
+Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
+ [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-5-cvY0IueWMCOLLTAzwpiMHA-1; Fri, 25 Oct 2024 09:55:43 -0400
+X-MC-Unique: cvY0IueWMCOLLTAzwpiMHA-1
+Received: by mail-yb1-f197.google.com with SMTP id
+ 3f1490d57ef6-e2605ce4276so3821691276.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 06:55:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729864543; x=1730469343;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pbBEloMWou59hXT2HVcKWDx/Zpq6ytzJ0Nl56mu52bg=;
+ b=PxiAs3Kc1/AqkCBGRPTFbqdJaqvCHSGsdFksm5KMyHjCO9zZE2y6OJ2n7Fp0MDolpR
+ NfKBIl4pcEpZGZ0GapyVWwBbaleaMbFwrDooc5LbycfYrKTHM2VYVZp5OU4xJ4q1g0yI
+ bq52qYnd6Yq5RnUi4VBbQymS9faG2ECvOKxVM34510NicVouGyyC3AgZIiUjIAUAK4Mz
+ e/PQIochbB82BczcoPLiP04DmDktd2eJ76JT7P6409FeLBskorVm9O/byBHSz5L+0BAZ
+ 9V5Y9Sl8Z52tsiHOBVIeGdqnai6Ekzc1u/yTt85kBbyz2A9ZWQWi6Xu9mvYX4CV141Oq
+ 89Xg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX8uhwF4GNJCGPYcP27dFzNdpN63dZpE+TqFJi98c7f8KYMD3SK3W0+3g8/5ZFs5gReLqASM3BYQPzo@nongnu.org
+X-Gm-Message-State: AOJu0YzxwtzpAL8uKcUJ14TJvNzqljcCJMhGLdqnV5LMH05cetn/27S3
+ A0fvDVdaQKj31yCIHmcUelx2hXYm+UhpaGh4vjbIRy1syQH+3X2Q2UDkIwIQReoM1Vvb0yf+mUt
+ fk1n+rD5DxoLfi3PHi7QJu3i+YxC1hJ2QjifG7RxmwXOkxYIf/Dkm
+X-Received: by 2002:a05:6902:2487:b0:e29:9ab:d39d with SMTP id
+ 3f1490d57ef6-e2e3a62387bmr9535476276.24.1729864542811; 
+ Fri, 25 Oct 2024 06:55:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFHT5b20FkCzD4NMMBNSySqoMldIuQJqRxbHcPUCZMlFoOLv7RYJtC7k//qOxcbTrA7CHa9vA==
+X-Received: by 2002:a05:6902:2487:b0:e29:9ab:d39d with SMTP id
+ 3f1490d57ef6-e2e3a62387bmr9535450276.24.1729864542408; 
+ Fri, 25 Oct 2024 06:55:42 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-461323a1c20sm6132071cf.84.2024.10.25.06.55.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Oct 2024 06:55:42 -0700 (PDT)
+Date: Fri, 25 Oct 2024 09:55:35 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 13/13] migration: cpr-transfer mode
+Message-ID: <ZxujV_9eTYCvOU_0@x1n>
+References: <ZwV-NRICDNTajTRq@x1n> <877caitno5.fsf@suse.de>
+ <ZwWMj4FYYpOSnPbe@x1n>
+ <8b92a6ee-19f7-4483-9766-6b849cc04017@oracle.com>
+ <ZwbUTXCxxl4heZYV@x1n>
+ <95bfa06f-de5a-42cc-8078-c49fd617a73b@oracle.com>
+ <ZwbpQiK7YWKpqHTk@x1n>
+ <198913f5-32de-4771-98dc-02e73c4f0754@oracle.com>
+ <ZwhFyOQanyqWqr6I@x1n>
+ <6d626aed-a78f-4dbc-b1c7-111bc42c72dd@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] linux-user/ppc: Fix sigmask endianness issue in
- sigreturn
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>, 
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <20241017125811.447961-1-iii@linux.ibm.com>
- <20241017125811.447961-2-iii@linux.ibm.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20241017125811.447961-2-iii@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6d626aed-a78f-4dbc-b1c7-111bc42c72dd@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,37 +115,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-17.10.2024 15:54, Ilya Leoshkevich wrote:
-> do_setcontext() copies the target sigmask without endianness handling
-> and then uses target_to_host_sigset_internal(), which expects a
-> byte-swapped one. Use target_to_host_sigset() instead.
+On Thu, Oct 24, 2024 at 05:12:05PM -0400, Steven Sistare wrote:
+> On 10/10/2024 5:23 PM, Peter Xu wrote:
+> > On Thu, Oct 10, 2024 at 04:06:13PM -0400, Steven Sistare wrote:
+> > > vhost requires us to stop the vm early:
+> > >    qmp_migrate
+> > >      stop vm
+> > >      migration_call_notifiers MIG_EVENT_PRECOPY_CPR_SETUP
+> > >        vhost_cpr_notifier
+> > >          vhost_reset_device - must be after stop vm
+> > >                             - and before new qemu inits devices
+> > >        cpr_state_save
+> > >          unblocks new qemu which inits devices and calls vhost_set_owner
+> > > 
+> > > Thus config commands must be sent to the target during the guest pause interval :(
+> > 
+> > I can understand it needs VM stopped, but it can still happen after
+> > cpr_save(), am I right (IOW, fd wont change in the notifier)?  I meant
+> > below sequence:
+> > 
+> >    - src: cpr_save(), when running, NONE->SETUP_CPR, all fds synced
+> > 
+> >    - [whatever happens..]
+> > 
+> >    - src: finally decide to switchover, vm stop
+> > 
+> >    - vhost notifier invoked. PS: it doesn't require to be named SETUP_CPR
+> >      notifiers here, but something else..
 > 
-> Fixes: bcd4933a23f1 ("linux-user: ppc signal handling")
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
->   linux-user/ppc/signal.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> The problem is that the first step, cpr_save, causes the dest to finish cpr_load_state
+> and proceed to initialize devices in qemu_create_late_backends -> net_init_clients.
+> This calls ioctl VHOST_SET_OWNER which fails because the device is still owned by src qemu.
 > 
-> diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
-> index a1d8c0bccc1..24e5a02a782 100644
-> --- a/linux-user/ppc/signal.c
-> +++ b/linux-user/ppc/signal.c
-> @@ -628,7 +628,7 @@ static int do_setcontext(struct target_ucontext *ucp, CPUPPCState *env, int sig)
->       if (!lock_user_struct(VERIFY_READ, mcp, mcp_addr, 1))
->           return 1;
->   
-> -    target_to_host_sigset_internal(&blocked, &set);
-> +    target_to_host_sigset(&blocked, &set);
->       set_sigmask(&blocked);
->       restore_user_regs(env, mcp, sig);
+> src qemu releases ownership via VHOST_RESET_OWNER in the vhost notifier.
 
-Shouldn't this change be picked for all stable releases too?
-Yes, the issue is very old so probably does not have big impact,
-but it looks like it should be okay to fix it finally?
+I think the block drives have similar issue before on ownership when disk
+is shared on both sides, and that ownership was only passed over to dest
+until switchover, rather than dest qemu init.  In the CPR routines it'll be
+also during switchover rather than cpr_save().
 
-I'm picking it up, please let me know if I shouldn't.
+Maybe it's just harder for vhost, as I assume vhost was never designed to
+work with using in shared mode.  Otherwise logically the net_init_clients()
+could do the rest initialization, but provide a facility to SET_OWNER at a
+later point. I'm not sure if it's possible.
+
+For block it could be easier, IIRC it was mostly about the file lock and
+who owns it (e.g. on a NFS share, to make sure no concurrent writters to
+corrupt the file).
+
+> 
+> Thus the guest must be paused while config commands are sent to the target.
+> We could avoid that with any of:
+>   * do not issue config commands
+>   * precreate phase
+>   * cpr-exec mode
+>   * only pause if vhost is present.  (eg no pause for vfio).
+
+OK.  I hope precreate will work out if that can solve this too.
 
 Thanks,
 
-/mjt
+-- 
+Peter Xu
+
 
