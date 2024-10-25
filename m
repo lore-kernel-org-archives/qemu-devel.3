@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE050D1039A
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 15:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA08ED10399
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 15:55:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Mdo-0005dk-9U; Fri, 25 Oct 2024 11:54:20 -0400
+	id 1t4MeO-00061k-Tl; Fri, 25 Oct 2024 11:54:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1t4Mdm-0005cy-5c; Fri, 25 Oct 2024 11:54:18 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1t4MeM-00060v-96; Fri, 25 Oct 2024 11:54:54 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1t4Mdk-0003hA-QN; Fri, 25 Oct 2024 11:54:17 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-20c714cd9c8so21206385ad.0; 
- Fri, 25 Oct 2024 08:54:15 -0700 (PDT)
+ id 1t4MeK-0003lB-Q7; Fri, 25 Oct 2024 11:54:54 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2e3d523a24dso1695570a91.0; 
+ Fri, 25 Oct 2024 08:54:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729871654; x=1730476454; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1729871690; x=1730476490; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qDI54KTdFRpNej9YaQfxoWTqRblPMpcIvzw4SOwLtec=;
- b=YfjgAAzK2mR07UcrY88FOML0Af3SMtV6JtJ8VR9W+3oJflX+mhZRljsjfryLOEzT+n
- SMoncOnSv9dkuXK2K8BNa9Zbv+Kp4cHUSzuGNTzpU1rEp29i47W/lNW5+I761IZ12Ags
- 6hmaNOykdCNFfdjzAv67547r++8PwafggzTuquJj9lVVRu2XNj/h+Cn/3JtFvEnpAkkV
- 8nEGWKqKTLEReKJKPUGTgcUpIye7esNlaD7Yu/uSEUl7KB8NtVi5zoyiUDlYfTGY16BY
- 8aGU07WxKYjNz8yQkTkhomMzy+H4ocQXi3NHkX+yHvLBliKN0DhQHBjUmnwtYh0d2oTM
- tC4w==
+ bh=EmNitsDmnY1x5cCTcNSoGI3ApEz86Deu5rvkm83X2t0=;
+ b=VySR7QaYM/qx2C/b77g5H7dIhVx//gVhLxG7G4EGcABkOOopT9OPpO4b/8qYu0NM7K
+ IpoCKhBAsGGoYOTiQ02IR1ALrnFOnqTQ4xEYkXmYg/0o5VUlOTcApOONU6J8JjfVQVHf
+ Iue+BGPy6ARhXz6vE91UsXpcX1tQ/trLBitUToCfOP7yoE23l7ioL2/9/tBDeobq0IOl
+ l9+lWBDSiWdq+I7W9BkDSaitY11cTQHMyiPValLXUdJPqjryogwGrvBGP81AoCd8YKiS
+ BfAVu167iDgsbbOI4IaMDz5J0Q4zl9QlqQ2aYhNSBhSZWpmvnrVXRviwf9Uki3r9fK3b
+ Kk8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729871654; x=1730476454;
+ d=1e100.net; s=20230601; t=1729871690; x=1730476490;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qDI54KTdFRpNej9YaQfxoWTqRblPMpcIvzw4SOwLtec=;
- b=whEPjKYq1uhhRwEwOa9FnkI845iaDthX9G/X2DQ+A1xCX6QwcSnE+IzUojBilwrLPI
- JGzQ2wp1zUDAiFZbumko8cI250DEc9kMMdHb0m81uYvVQ5XfRIGaX2N0WwpfaI3WWur1
- BqJUzZo22ykUnXYctUrNmybgLCujBa8Sc1UPSHfpIn6oOZQ4V51DB8clWEaDPgYUsCb5
- 19/9Xmt7AedEi6FkHiQjOFS8gC2yVzs678e9Dd6vi+9IsCOconDDpH8xXDhLjyUlixmi
- 3hkFdksYMfjkuJq3DZ1tN/DPEP1Uq149RT/6XUx/pYl70MV/shDF851FeHB9MQubMZos
- Ui/g==
+ bh=EmNitsDmnY1x5cCTcNSoGI3ApEz86Deu5rvkm83X2t0=;
+ b=b+NMynJXsMeKi//d4mwJHc6OsY8NQm0Q3/02pkMxgwKobaCOF18Ia03SjY9yZ6G9uO
+ fyZoBvKYjaEy5PVht6qUK+vJXfN1TDoyYQRpbscdJRWOiWKhXvkO/yYsf73+ZDFEdaJ0
+ OgWKk+pEsVc/3yYItZxWOWkqn+ETp05KjVXiQWm2Hw/BVpw0kaVOtiQ+/sYlWO7b524j
+ Uolkem7+sMVLRgkm9L0YcRHb/Zz5oUJYpNjZzjMfr6ULcFQGKwoTs0Hs7v5my/lJYLAI
+ 6Et3MGi7EG9MqIG9l18Mr3SbCA1VskBE8Jnbcp8ZVa6b7ddudPimqv+ZT6Z4xkXi8lBi
+ Hcwg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUexwm9KLlph23Yql/IWlovr64Yrul53ByKvEC37D4uxiDz3N1Xvnd+GcIqLqH9o2kQgdyfPyo9SWTP@nongnu.org,
- AJvYcCUm4bfKjvX1eVbHEMiUkA67EUSbL5iN7SIdXtb826ViElLL+M4CJqd50f3uIKVxTiD5UYhZin6uIQqMkQ==@nongnu.org,
- AJvYcCXAthWKchL1LrFbC4YGpNITrpv/VjPOv1Zcmv3GOd0yogFBt3B6gp9jtjvX14EGSdKqO0iMu9w3/A4=@nongnu.org
-X-Gm-Message-State: AOJu0Yxr4vuzJYswnMY88fX0/kkHULQeMnNRFCh2OvrSdMyFz0OcF8os
- zKdrNZzp/RDfVxv1coqWad7ruQ+loRamTwdp2xZrrb5Fet5v6fCmes3B1Wq9yxuPk60aqVQFG45
- Scf3ZXPOBo0Z5HKcXCqj5qplCSh8=
-X-Google-Smtp-Source: AGHT+IF64cda8/CX7HuY9GCD6+i5F9X3dCRHi9cKjZBXlUdfcsjk4LFg04CSvxxK4GilcKFWrW34xOFk3lYcPoihi1M=
-X-Received: by 2002:a17:902:ceca:b0:20c:528d:7063 with SMTP id
- d9443c01a7336-20fa9e0aa82mr139767605ad.19.1729871653972; Fri, 25 Oct 2024
- 08:54:13 -0700 (PDT)
+ AJvYcCUiuyYf6UE/DwtOXcgoqjyDyg96Na1+zkunBX/GIMutpNs/gXaQX7PHR2A6BusgsGmmTmLGzUlrhrij@nongnu.org,
+ AJvYcCWEaSx164aA0nKc+A9DtA/i4ZrJ1uYhw0B6KotowI3kha7/ZsMMvHxp3LRMxW5iLw89B8MIOVhXAS6Caw==@nongnu.org,
+ AJvYcCXgLEofsEtRtqPdn8cm5PQ2/U1QPpytZk+9CcyNFnlK6RBZPSyKlJeoGdFnjkobPFRMLibT/LcQ0gg=@nongnu.org
+X-Gm-Message-State: AOJu0Yy1Q+16U1+iy6hMOaQG0LEbQeyqHsAfj9F5fUFk+R0kY63qDXSg
+ 1tKNKjoX21ltnoEhqV7blQL4wQTkHXJt79PYalW4ORfPbfxEbr+kV7hgOXaGwKMFNI+7ENfV8fa
+ oQ3t6DkBqMGfqyhQLAleTQTizC+Q=
+X-Google-Smtp-Source: AGHT+IGmgu91ap8rnjy5z32bZYwPYzaTfW/kM34EqlqKrDdWiIg1yZPUxZYNjDPDBtvD0kjJnVbBMIcsPBNNcTN0mRY=
+X-Received: by 2002:a17:90b:110d:b0:2e2:d5fc:2847 with SMTP id
+ 98e67ed59e1d1-2e77f710f93mr6733204a91.30.1729871690074; Fri, 25 Oct 2024
+ 08:54:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241025141254.2141506-1-peter.maydell@linaro.org>
- <20241025141254.2141506-14-peter.maydell@linaro.org>
-In-Reply-To: <20241025141254.2141506-14-peter.maydell@linaro.org>
+ <20241025141254.2141506-15-peter.maydell@linaro.org>
+In-Reply-To: <20241025141254.2141506-15-peter.maydell@linaro.org>
 From: Max Filippov <jcmvbkbc@gmail.com>
-Date: Fri, 25 Oct 2024 08:54:03 -0700
-Message-ID: <CAMo8BfJvoCri2+Xh-2e8E0UKVTJW00nJHzTskzdk6OZhXcd90Q@mail.gmail.com>
-Subject: Re: [PATCH 13/21] target/xtensa: Factor out calls to
- set_use_first_nan()
+Date: Fri, 25 Oct 2024 08:54:40 -0700
+Message-ID: <CAMo8BfJT82ztbZfHwT8UkpJpaK-4H60MwOk2T_F_tptnLg907A@mail.gmail.com>
+Subject: Re: [PATCH 14/21] target/xtensa: Explicitly set 2-NaN propagation rule
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
@@ -84,8 +83,8 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
  qemu-s390x@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -6
 X-Spam_score: -0.7
 X-Spam_bar: /
@@ -112,22 +111,18 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Oct 25, 2024 at 7:13=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
 .org> wrote:
 >
-> In xtensa we currently call set_use_first_nan() in a lot of
-> places where we want to switch the NaN-propagation handling.
-> We're about to change the softfloat API we use to do that,
-> so start by factoring all the calls out into a single
-> xtensa_use_first_nan() function.
+> Set the NaN propagation rule explicitly in xtensa_use_first_nan().
 >
-> The bulk of this change was done with
->  sed -i -e 's/set_use_first_nan(\([^,]*\),[^)]*)/xtensa_use_first_nan(env=
-, \1)/'  target/xtensa/fpu_helper.c
+> (When we convert the softfloat pickNaNMulAdd routine to also
+> select a NaN propagation rule at runtime, we will be able to
+> remove the use_first_nan flag because the propagation rules
+> will handle everything.)
 >
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  target/xtensa/cpu.h        |  6 ++++++
->  target/xtensa/cpu.c        |  2 +-
->  target/xtensa/fpu_helper.c | 33 +++++++++++++++++++--------------
->  3 files changed, 26 insertions(+), 15 deletions(-)
+>  target/xtensa/fpu_helper.c     |  2 ++
+>  fpu/softfloat-specialize.c.inc | 12 +-----------
+>  2 files changed, 3 insertions(+), 11 deletions(-)
 
 Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
 
