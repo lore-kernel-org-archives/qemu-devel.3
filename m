@@ -4,97 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB7A0D0C616
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 14:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4576BD0C614
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 14:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4L4I-0004VJ-9m; Fri, 25 Oct 2024 10:13:34 -0400
+	id 1t4LEM-0004Rb-Ts; Fri, 25 Oct 2024 10:23:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t4L4A-0004PK-Kq
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:13:26 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1t4LEI-0004QY-GG
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:23:54 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t4L3y-0007uk-EN
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:13:26 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4314f38d274so27178475e9.1
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 07:13:13 -0700 (PDT)
+ id 1t4LEG-0000xA-Le
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 10:23:54 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5c94c4ad9d8so2624147a12.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 07:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729865593; x=1730470393; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1729866230; x=1730471030; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ID1X5YPOP+wvOiim/+MbdA0+ojv9rI9zYRkjUusf1JE=;
- b=frUVCa6zjscDYAOYmoQ8cjuBVXi9RkfQzHEIXNN41ZZV86q2w5A/+NuWeG/1eSgVxq
- kjH0pmkygx55ygkHZoSbT4CSLBwcoKHx1ZlT8aP2tmon9HxCA4/BMUXlSlnlc7hIa+st
- v4M5JI+s/p3+C+6oVGnIB5yxH7F2blMWFXiALkAYNsTIY4IUZHVGv3+K1N6u9xeodi1x
- 6ofMEW5gthepKcGKjPP/nniHttGyqCvwWCc7fTHq2LAdwnp7KfKadl4LBF5jGaWfeqMm
- K8viK/smDnec+yXRuxV3NlZidwycqY47bZQe1N+gvO9/noWRYMRawwiaT6NQ/WlAB7BL
- 4Geg==
+ bh=uAeWCEof8nkpWkAB9886cDE4Dsl4LieSFD/MXl7iNq0=;
+ b=zdUnVWxgJFVr/mkZTD5Khn6JjoH/t62I8q30DXNZPJbU+QDjO0EwO3rTsETRX1YFmA
+ Cv/zX+CJFconfFLJYUZU5YYpuX05gFVdgAMFGjNIQ/SU3Vj6bUYrM36ajMrusqeMZVUt
+ frEFmXxzAUKgr6IBHyua49Kq62qgRys9nMkPv92gk6TYXOMqqSR82UpvANXMorC1A/5T
+ Mh7hRRzVUiuW+/uZ4hwKYLFLn8zR7s8Hu5yjnfFcRTew2M5YakO8NiEmNElJ1OrNd5v5
+ R5qiBubF4JnbrO+uaqSpAj0xZT5aBLB57oIhxHE0JsgEKxdHoLvWUM6dqBwgs+yre5ux
+ 6aeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729865593; x=1730470393;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1729866230; x=1730471030;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ID1X5YPOP+wvOiim/+MbdA0+ojv9rI9zYRkjUusf1JE=;
- b=vqQU9EAb9R6LQx8k63hrVg4hzNP5aJUjsMvlA+mqe9WcT47fA5EODfTwcBPcCCTM72
- dH8CfP0MeA5l6DTo3uNv5zP6qmyMyje2aXsTWUh9Axc6kYIJLQd84hnG0VlFY29S9E0g
- OX/mDyNaepuVQUFGmFNSkI+WZ8lKpAEUxfFDDwlPvIVCFMb+M7dy3KFe2jgGPo2tkiJf
- nGTAY/217PVu7kvGZGh1FoHYyqnHqOD5groDPxqiGC5hy46StEAOtXD/0CTPDRvNzLrX
- 2i8Q3oPwo5tJY7GxZqDmHrfUwgeToHcgCxcFB0+sM2sOiFfQfJNcn52UsY2aa1k3EEpy
- 9wkg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVn1jWLWtTyS0zKDzJyQ86UnVdHj77R3RgDGyvfOCNczTK2RQiN7DhJFAn0jQqf15+vPBEEJO8KT0hi@nongnu.org
-X-Gm-Message-State: AOJu0Yz+8RprHoMc9OHKYvGBeP1fXps4vuN0TLhSUlpEuhJV4LP9eH4B
- vexVAbozARx4pzjn3imPUdl9RisVdqNPMk2zitla6n1RnkWvGDwgkaeo5WcXCpM=
-X-Google-Smtp-Source: AGHT+IGy1w+80bOSIQXUmP56n98o4p/PcDYHpGIXkWufhknYuh37RULU8ikJ7ZEtnUhTzvm7qJRzVw==
-X-Received: by 2002:a05:600c:4f04:b0:431:24c3:dbaa with SMTP id
- 5b1f17b1804b1-4318c8db165mr63501525e9.2.1729865592796; 
- Fri, 25 Oct 2024 07:13:12 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4318b57b051sm50104535e9.42.2024.10.25.07.13.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Oct 2024 07:13:12 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>, Eduardo Habkost <eduardo@habkost.net>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH 19/21] target/openrisc: Explicitly set 2-NaN propagation rule
-Date: Fri, 25 Oct 2024 15:12:52 +0100
-Message-Id: <20241025141254.2141506-20-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241025141254.2141506-1-peter.maydell@linaro.org>
-References: <20241025141254.2141506-1-peter.maydell@linaro.org>
+ bh=uAeWCEof8nkpWkAB9886cDE4Dsl4LieSFD/MXl7iNq0=;
+ b=FWncddUGRMMul1iYdVayZ9aNTkDjwLPLjcZuq5N8HYNjzypemLVpSqGgeD3Su6KOMg
+ NlbmpFe99VeKOkxkD9goiPbsqWoX94ivFWCM0epP3NPPbQqpwqubgRrGuq4Q5dfl3SXJ
+ 0FrZnmta77VqZLX/g+XRPPIYund+VdMb59TvDbRMZPnoG8yTErE4CBkVulOlBHH5kwkU
+ VudsFVfyJf+TK6ZUtFdC8plkHJ0DCOXfjX9ZKUJxSP8aKI8THLAkOsY7xjXSN54kdjeD
+ JMbzEpXK876XAvcL10MShhRzW7eh1IEHAM5AKUfoLy3dpC2SaXXhaL7eniFx28Vpyvmb
+ ENjQ==
+X-Gm-Message-State: AOJu0Yy43iVwzdK4zGqLS9jiJW4SXfMK5W2n977JJKwvbBKSCHUy/5Yj
+ GADn1BlKsxVmEU9DFcxY2GGcTbn6zGwTWlVkbia5jjZaOFlR8ofKmEww+VEPtUcfJ2AG5A0WKTb
+ UE/dZExMH9XUbsOq/KxiND2jIAGIAFqIILNEcCg==
+X-Google-Smtp-Source: AGHT+IHdsXWLFbWT0j9qxrP+PSqx9e/Qw7xMLkm4x3kIJCuK8iwVUuYi/6NqIZK4qvUcCXybt3k62wKsejMgojuxat8=
+X-Received: by 2002:a05:6402:13cc:b0:5c5:b9bb:c65a with SMTP id
+ 4fb4d7f45d1cf-5cb8ac2d6fbmr7695847a12.1.1729866230076; Fri, 25 Oct 2024
+ 07:23:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+References: <20241024053203.1559456-1-clg@redhat.com>
+In-Reply-To: <20241024053203.1559456-1-clg@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 25 Oct 2024 15:23:39 +0100
+Message-ID: <CAFEAcA87T0_Buwq0Ek9zH5kfr7rZaXwm3FSmmEuyzJKmShTOOQ@mail.gmail.com>
+Subject: Re: [PULL 0/4] vfio queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,46 +89,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the NaN propagation rule explicitly for the float_status word
-used in the openrisc target.
+On Thu, 24 Oct 2024 at 06:33, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+>
+> The following changes since commit 6f625ce2f21d6a1243065d236298277c56f972=
+d5:
+>
+>   Merge tag 'pull-request-2024-10-21' of https://gitlab.com/thuth/qemu in=
+to staging (2024-10-21 17:12:59 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/legoater/qemu/ tags/pull-vfio-20241024
+>
+> for you to fetch changes up to 00b519c0bca0e933ed22e2e6f8bca6b23f41f950:
+>
+>   vfio/helpers: Align mmaps (2024-10-23 14:46:24 +0200)
+>
+> ----------------------------------------------------------------
+> vfio queue:
+>
+> * Fixed size reported in vfio_state_pending_exact()
+> * Added support for PMD or PUD aligned mappings
+>
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/openrisc/cpu.c          | 6 ++++++
- fpu/softfloat-specialize.c.inc | 2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
-index 6ec54ad7a6c..b96561d1f26 100644
---- a/target/openrisc/cpu.c
-+++ b/target/openrisc/cpu.c
-@@ -105,6 +105,12 @@ static void openrisc_cpu_reset_hold(Object *obj, ResetType type)
- 
-     set_float_detect_tininess(float_tininess_before_rounding,
-                               &cpu->env.fp_status);
-+    /*
-+     * TODO: this is probably not the correct NaN propagation rule for
-+     * this architecture.
-+     */
-+    set_float_2nan_prop_rule(float_2nan_prop_x87, &cpu->env.fp_status);
-+
- 
- #ifndef CONFIG_USER_ONLY
-     cpu->env.picmr = 0x00000000;
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index 40cbb1ab73b..ee5c73cad46 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -407,7 +407,7 @@ static int pickNaN(FloatClass a_cls, FloatClass b_cls,
-     || defined(TARGET_S390X) || defined(TARGET_PPC) || defined(TARGET_M68K) \
-     || defined(TARGET_SPARC) || defined(TARGET_XTENSA) \
-     || defined(TARGET_I386) || defined(TARGET_ALPHA) \
--    || defined(TARGET_MICROBLAZE)
-+    || defined(TARGET_MICROBLAZE) || defined(TARGET_OPENRISC)
-         g_assert_not_reached();
- #else
-         rule = float_2nan_prop_x87;
--- 
-2.34.1
 
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
+
+-- PMM
 
