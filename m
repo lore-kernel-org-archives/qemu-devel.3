@@ -4,96 +4,205 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F248D149F6
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 22:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 414CBD149F7
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 23:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4SYs-0004LF-8G; Fri, 25 Oct 2024 18:13:38 -0400
+	id 1t4Tia-00020b-8T; Fri, 25 Oct 2024 19:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t4SYq-0004L4-3C
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 18:13:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
+ id 1t4TiY-0001zw-6l; Fri, 25 Oct 2024 19:27:42 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t4SYo-0000Wj-99
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 18:13:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729894412;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=71MMRyoOdcTDLt/kWNkS1VmFNpq4ydnjiFqi1EXnK4U=;
- b=JM5SPfnAsbnJvYPAdl6SLNP++vRJkZFy8a1M+ItRgTEfsCGZGMm1bhurnAZNuLsk1qwYgv
- mffe/tl7klpo+fSt2LE/zvmRcVMgtgAqPqgfD0eShvuddeAmegwdJSRIoG+DMTZgdiBdWR
- lJSJSy3/c8Ac6k2zjoQQ0nf/hdXg2rQ=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-296-1Mfg2IlSPR-v23PhYMSELA-1; Fri, 25 Oct 2024 18:13:29 -0400
-X-MC-Unique: 1Mfg2IlSPR-v23PhYMSELA-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6cbe7713563so34222976d6.0
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 15:13:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729894409; x=1730499209;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=71MMRyoOdcTDLt/kWNkS1VmFNpq4ydnjiFqi1EXnK4U=;
- b=KqdhiFhDDqtbHH0zVvK2uxNUmlA11mYEgGZ+pc1pQfF1ZHqeNW4BTpOiAI7udZW35y
- 9LuKl2Kv40gnP1cPGJMeF7Ehgz6O/kZZBABYFZRlVb3KstYMUUAMtOijoxFJ1cc8NJaA
- OlaopctIHzRwo2MBUcYjX8Yv8Mbcpq/le4dvrIkZAG8EfnX+yaA7FxzuPX0tIfNpmwoh
- +dh65Bdwc8R+RWM3u0wvvebTdQbEbAXzAtmVBJV1FATEuvcF4Dv3x1FeFjLqjkN+KmD+
- jswlYtjn4oxsB/8lbbidPFbFji9UsLFYtj4o9qQbG7Og70kq3FocvsaDQNkTB3bfoqaC
- OOdA==
-X-Gm-Message-State: AOJu0YzRLMfIkm4j4qDYt1+ulh3pKnKBpqyPhcC13r2rvfbxOj4UfMlj
- fAs1ICjFAXwgeo4a0nZ2z7XxRy7wOMUiFzN0pE37LmZDsOiod+BewCmffHfNpkqwCJy2hfXz9LL
- 0eOpMSa2bbP/hm1F1ynOX5ovZGBBBb82HQwZeBP/YC7s8lOUsO2t8
-X-Received: by 2002:a05:6214:5887:b0:6cb:83a5:8403 with SMTP id
- 6a1803df08f44-6d1858559b7mr13607376d6.50.1729894408998; 
- Fri, 25 Oct 2024 15:13:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvk/drgDiLKvVuAFiQfP7Bbz1HneXz2xUprC/acwR7Q0tsyy832LneVfISu9Zsp7f+VLC9vA==
-X-Received: by 2002:a05:6214:5887:b0:6cb:83a5:8403 with SMTP id
- 6a1803df08f44-6d1858559b7mr13606976d6.50.1729894408605; 
- Fri, 25 Oct 2024 15:13:28 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d17972f51csm9858196d6.3.2024.10.25.15.13.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Oct 2024 15:13:27 -0700 (PDT)
-Date: Fri, 25 Oct 2024 18:13:25 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Igor Mammedov <imammedo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 2/4] x86/iommu: Make x86-iommu a singleton object
-Message-ID: <ZxwYBeLGDLkTL0PJ@x1n>
-References: <20241024165627.1372621-1-peterx@redhat.com>
- <20241024165627.1372621-3-peterx@redhat.com>
- <87jzdwlekc.fsf@pond.sub.org> <ZxwT79JG0NzsDmPn@x1n>
+ (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
+ id 1t4TiW-0000dh-9x; Fri, 25 Oct 2024 19:27:41 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49PJdTbp009555;
+ Fri, 25 Oct 2024 23:27:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=NH2pSWPPd1U5Ay1vV1GCgzgKCKbfjSLDTmpJtUu7nSs=; b=
+ cEDZKBR7ux1GBTrLm09djDY8RvZbpsAyZfImk9HwEaLOuSC8ekB3Wd7CT4psC/mb
+ G8nILAwXowp4PZ+hMVsI/S6a/QHFgFsBhXebDFL/OBzDNdUpstSLwuaL5Bi7k7wa
+ n8gIM3zvrX6ZmHDuU7+QV7PJ69nBTCwW8k1Twu0ldKPVrYOv/JK8vHfInfSCxKEu
+ OfzugoVVKo9FAbtb/6WRDd4F5g2zZ/SoziojRDPIcOwfhLmM2HYPshrJ/4wiqcBV
+ 4Rvj3wzdu1UcEPSR5mJUUMVZ1T67bpLKSmhvZDEybty6jxJD21rZM1Owg7gTxLPZ
+ ynn8UHC3IPGyOlvNdbxnFQ==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42c55v62y7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 25 Oct 2024 23:27:36 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 49PM0reb016379; Fri, 25 Oct 2024 23:27:35 GMT
+Received: from nam02-dm3-obe.outbound.protection.outlook.com
+ (mail-dm3nam02lp2048.outbound.protection.outlook.com [104.47.56.48])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 42emhefatc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 25 Oct 2024 23:27:35 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cUDvvwtJCoKffSYZSnjn2S76OCHw0UCM12neJGIl8SReZ4JTj+TtgtFquQwEH6kR7tV25XnDfz/WdYrldryqGGQjPz9aF0Z+s92gz+TqGQtoBVqssoFDQrt8Ygeg0tWK6WnIaXMeOdxRieRZGk8LERid6HzDC1MR30ODb5/lWh7p+Fuejfv/+NYYHLPeH/l0N3b75lvAXMhgJIfOjc9tr+8R7uPuH0xkUKEEax3XLfgpDELBeGkFrDGsL53uwDH8K54aslYbrwcZ67tzc9e9C0vZtha3RoFgQNiIBFmNtvspSHn62cmLF2Tx8FQ7Buf2wc1MVAFydLU2TDjRoo4IoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NH2pSWPPd1U5Ay1vV1GCgzgKCKbfjSLDTmpJtUu7nSs=;
+ b=drUyZZA0KLP/VvJO7bCeFOZjSbaTd40VcKux8AATrqnTsVcHt6tzBTFETC9fH2Fwr3R9mj88e2y279ghSiqwJOjurdeOhb7PnMiRZ2qwgdKRBhjmjqcAZ4s5wPoE1c2/C7tq5lNuahi2vZL64gYtVib/Q/dWatMzqqCt4RNG2tmM5GAielGovOlRIH86hvtSIVSgcit1PROIAqY4pIhmkNB5JPFtdxqLjzV/OYPDm3WwgZHzTp9tZIsko8dECuc/VeWAG+ycXE6gbbLrttXtEwDazwebXfg62SYBdwRxqcFMCD70BXDJ5kkatsfhpjxsx3VnDqXmNcunK/smbik3gQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NH2pSWPPd1U5Ay1vV1GCgzgKCKbfjSLDTmpJtUu7nSs=;
+ b=V8VRDgQzfIaw8Lb1a9h3Sl9+bl+iUF1cJ/N3ipvSfW43GaJ6MTvRQ2anA35o1P+66ZLxG8H6Qj0U71uNrcFyN4zG+IqlChKiQzA+FDCEdLlDOUi221+bApvKOryn0oFaDkyMqw/kOPXd7m/hsvjLoAkeNzS2TGz9TswfXrxjKA8=
+Received: from CH3PR10MB7329.namprd10.prod.outlook.com (2603:10b6:610:12c::16)
+ by MN6PR10MB8141.namprd10.prod.outlook.com (2603:10b6:208:4f9::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.18; Fri, 25 Oct
+ 2024 23:27:33 +0000
+Received: from CH3PR10MB7329.namprd10.prod.outlook.com
+ ([fe80::f238:6143:104c:da23]) by CH3PR10MB7329.namprd10.prod.outlook.com
+ ([fe80::f238:6143:104c:da23%4]) with mapi id 15.20.8093.014; Fri, 25 Oct 2024
+ 23:27:33 +0000
+Message-ID: <e9f8e404-50db-4e0f-a5e1-749acad49325@oracle.com>
+Date: Sat, 26 Oct 2024 01:27:31 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/4] system/physmem: Largepage punch hole before reset
+ of memory pages
+To: David Hildenbrand <david@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
+ joao.m.martins@oracle.com
+References: <ZwalK7Dq_cf-EA_0@x1n>
+ <20241022213503.1189954-1-william.roche@oracle.com>
+ <20241022213503.1189954-4-william.roche@oracle.com>
+ <0cda6b34-d62c-49c7-b30c-33f171985817@redhat.com>
+Content-Language: en-US, fr
+From: William Roche <william.roche@oracle.com>
+In-Reply-To: <0cda6b34-d62c-49c7-b30c-33f171985817@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PR3P193CA0059.EURP193.PROD.OUTLOOK.COM
+ (2603:10a6:102:51::34) To CH3PR10MB7329.namprd10.prod.outlook.com
+ (2603:10b6:610:12c::16)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZxwT79JG0NzsDmPn@x1n>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR10MB7329:EE_|MN6PR10MB8141:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6138fe19-18a8-472d-7bb1-08dcf54c99fa
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZmFoSnFxOWNYWU5RTmtMRmhhdkF5NnVPNm90Z1RudjJ1MDkvVERFVWFzTTg1?=
+ =?utf-8?B?TklRVkpDTVNkWVZ5L1BIeXFlZUpVV2pjTW9ya0d1aVgza3lYWGQ1ZEdlSjVP?=
+ =?utf-8?B?TXZPRVRMdFJhL3hNY05mRVB2OWNXSFdDNnM2aTc2NXV5aVlmd25pUkxvV0tS?=
+ =?utf-8?B?M1JRalhtTEZnWW9odHFrdW45eEJUcHMwRE5HTkxVeTZRcXlIb2E1UStwc3hH?=
+ =?utf-8?B?NWJQazNIS0pFeGZjVmtoa2NUalcxVnRMdVk1MU9ZbGtTZ3RzZUZaRWVWMDF6?=
+ =?utf-8?B?encvVGJvUWxSVXFWSzY3aGF5QkxmSnNXYzI4Umx0ZnVlV3ZzOWZ3SmVYYzVO?=
+ =?utf-8?B?RFAwMnJQUWoxUWdlSHBDdkpXU0NYTTlaUFZrWEtMUUgzM1laMysxV1J3SGtt?=
+ =?utf-8?B?SHVTL0xTQmUzOWJoRGFqeVRKdHBJRXpubnFMK25iZjViTCthajg1NVZHeURV?=
+ =?utf-8?B?VlpGYnNFcnpWSFZ3R2JvREJtRDdZelBkL3RCenF0WDhSU1diT3QzbzJHdkNR?=
+ =?utf-8?B?STRNZTlxeDd0ZXFKT216QjhqaHplY01jSkNxY1hTUXpVMDZBbmlLeFlrZjVU?=
+ =?utf-8?B?RHZFZ1gvRWkyQUJWL1o5K2Uxa3hvbEdZUElIaFJvVVRBMkZjVlRLdnlVV1RR?=
+ =?utf-8?B?QmlOdjlqeFNPWVJLWU8zNTE4alliNW9weFlac1g5T2RXRVp4OXM4cFkwcDFP?=
+ =?utf-8?B?cXZkditTQ3hxQnVWUi91bXcyOGZFTjlvYzlEbC9vVElQZUhqeFNaVUdLSEp1?=
+ =?utf-8?B?S3hQczIxYUtPOGNuYmVKLzlEakRuc1J1UzZhN1k3aHlaQ3lNVzk0R3BaWkhY?=
+ =?utf-8?B?b0xIc0ErUlhVYnk1TUkyM3RaNnA5SjZNNVMxUzBURHFlRTdLNlZwNVpRbWpC?=
+ =?utf-8?B?V3c5T1NtSkIzMCtEL0tEVi9UeWlhRTZCOHNpVXdnenN5b3BlUHZFbzAwN05T?=
+ =?utf-8?B?NnQraXI5QmkyRFpKOVlHVDF0cmlXNUFoSFM3YWJkY1hjcFFoRFJIMjUwWmdz?=
+ =?utf-8?B?RnR2Y0pSTkwxTDR2ZUpTMFhUaWlPaXo3L1RISmFHTE51bVNYakRBdmhtQ1JN?=
+ =?utf-8?B?dm15YlJ6K3BXYW1LbUd2d1FqcGFHVFYwZFhHRFVDTm9hb1AxR2RlQ0Q3TTBx?=
+ =?utf-8?B?S0czTW5NQmFoV2FMMmlxaFJMOEVJM1MrOUU4RmZPbnArVjY4eHZ3aUsrcmZE?=
+ =?utf-8?B?c0ZPWHhxWDJMSWVYcWhtOTZpZkt3Uk12NktXN2hPK2FiemZaTXg2L25ORU02?=
+ =?utf-8?B?MFRsTWM3R3NlVGRhUm1ScGhXSklLejJCU3p6TjJUYmt0THJKMzV2YVdqdWxL?=
+ =?utf-8?B?b3VLY2ZtdUFxRnRXVG5YSFJiMUpNRDFGczVObnJFcWdrcnQ4TFNpZXBMaXJO?=
+ =?utf-8?B?eG4xNERROXlNa2xaY013aGFUY0xPUXZHTXVZQkxuaVYxWDFwQi9wS2hoWFVG?=
+ =?utf-8?B?Wm5leWpCdjU0NWVtVXJJZitoTnlsZHJlMk1JdGNGSENaa2FJK1R4MDRsUUNq?=
+ =?utf-8?B?bGtXaVd2OEVYQ3V3NVJHb1BaYmt4bGgzRHFMaGd4VmZyRENSMXFlNHEycUpV?=
+ =?utf-8?B?UVdGbnZXZUNPREZRSkN0MnBMcFdRZzk5YU0rTW9lSW5XVFRhVXZxQ2x4Wjlo?=
+ =?utf-8?B?UG5kZk44K2NGSno2b1FQa1hXQ0dKcVZBTkdXNDJULy81OTV4T2o2Z1dIOHdS?=
+ =?utf-8?B?a0p5dHNnZmpVV3FTT0pFeFZVN1ZTVi9UK29vNktUaDRPdTRlNndyU3VVbHBI?=
+ =?utf-8?Q?rsm1OcJme/qOP6i7Vi52N0HXir9wMt53dOfqIhN?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR10MB7329.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?anQzQUZlZTk5clplNWkxelRFMUp3T3g1cExHcEh4cGUvOCtQK3VQYUxhYUlP?=
+ =?utf-8?B?MGdyNzBzSUJPMUNRTWlKNjBqVDVHck80cTBjd1RJcGJBVTlTSEtLUXlMMlVm?=
+ =?utf-8?B?SUtzelhuSkgvRmJMVnBqbG9XWERPK1dYRW41ekczYkJlYTdxSkRiZ0ZDMzJw?=
+ =?utf-8?B?NmdFV1BTUStuZ3ZMQzBqUjdWMitxem1lOE9wcDdWS3dGS0RjLytZNzA2ejZZ?=
+ =?utf-8?B?QkFiR2Z0U2VyMmNldXdVN1RRa1p4ZXRaTU14dUhxN1JsVlljbGtwSGdhVWpw?=
+ =?utf-8?B?U2czT2ZRTDhweWYrMDJ2cDdoMnY0d1E1VldaUWlDTGg3cmFsc1V1SHhHZkFq?=
+ =?utf-8?B?dUE3NkVMUDZ6MVQzVHZ1c0N3aGg3cVhLN21xZXJSY0tabE9MT0s1SVd0WHhF?=
+ =?utf-8?B?M2lWemVrMmFidDloMmlOUCtiMmpuQ0ZEeHNuNklWcTNhK2JqdWxBZGw4ZnJ6?=
+ =?utf-8?B?M1Q0WDZwdlYwSHViVUloYy9YSWtiZW9NK284djhpcDJRalpHcHRWU2l3WDVk?=
+ =?utf-8?B?cnpiL3NpMmNVcVRSSG9kdnF5K0Jhd3BycXAzM0xRQmlzbXVsRVlzWTRlZk15?=
+ =?utf-8?B?Q3RyL3QrY3JMSFZlTzlmclFpYzJsVWVRQjJTeERhd2U0YXhSVU51SlRxRFl6?=
+ =?utf-8?B?cXl1blI5dnlkRjBwRmhRNitRcUIrRVdMUmtiN0RENldlbFJPZlRwam5vUmkw?=
+ =?utf-8?B?bEZDSFBRY3FoQS9NWjBIaTB2SVNyTHo0cmFvRWtrdHJwQS9sVHBYWXZqYmpz?=
+ =?utf-8?B?Q1FLbWtYNThGRkkxaThaNDF3cy8zVS92cFByK3NWYVBvaU5wdUdnS09iY0hX?=
+ =?utf-8?B?SkpmMFMxUjlGaDlnajYvTElHUUZCNTBiN05EdDE2Rjl4THV6U0x0UmRsc0xs?=
+ =?utf-8?B?T2l6U1hrK3FyUDVSVDMwbFR1T2pLeFJUaER1aHRrc1JQb1p6dTF0bXI3TWJa?=
+ =?utf-8?B?NkV6YVVjZGN6MGhpaVloTS94SGsyTlZ4SzVGcENaZVVTVnZId0FjRFlRWWtS?=
+ =?utf-8?B?WUp1OVZiSVRlN1NaSlB6Zm1SaUtLZG9xR0tQTnNLM1FLeGxPUHR3MmNXcm0r?=
+ =?utf-8?B?d0gvMTh4Wml5c1NJTEtOS0x3ZUZIWTM2QmJjN3J2aS8zL0NOaG1lanR5N2xl?=
+ =?utf-8?B?Y3BBS0sydVF4RmNPZnU5cngraDMxQlJIMm1mb3oyM3ZzcFBpd1loWVA1aytT?=
+ =?utf-8?B?YU90UVJHS3ZseGYvTzVUYzczdzVQc3RKUVd2aDdsRjZzRHppc3pFRmpDZlU4?=
+ =?utf-8?B?SWFqc2FGSGRFbFNmSmFERmx4SzRJcW15TS9TblJiZkpTREpkWHZyT2RXKzJJ?=
+ =?utf-8?B?VVVHY2JodHFyUWxvU3J5VTlicHY4S2RKbXl1R2RtRlQ5eWRTT0FzcDdMYWQ4?=
+ =?utf-8?B?Tzd2eVNuWDNWcGJWZk1QL1EyUUlHY0lTc1g1UXRsQm5oaUs5QnFNc2d1L294?=
+ =?utf-8?B?OU1jUVAvK2dSVFVYLzJJOXhoVzhvbmpBN1V3VTJjdnV0Zmt0NVFsRGtHenBH?=
+ =?utf-8?B?TE1UYXJlNFoyQ3N5Y0RCaUl5RFhCT0xlRWcrWVpwSVVZMWdLcUZDYXh0amxj?=
+ =?utf-8?B?R3lEWUxXSUVqS2xXSHhDY0hTdzE3Rm5MSER1ZnhNOWdLZVc5VnVYcEUzdEwr?=
+ =?utf-8?B?RTlpK09NYjdnZ1ZvZDl4d04yNldaamREYU52ak45TnN6Y2lmNEdYRHBBNXdx?=
+ =?utf-8?B?ZEhoSmc0Vm5DelZpNVBjZS9GWGF0ZFdDYVp3R0dTK0d2YUQyRlpGYlRZZFJU?=
+ =?utf-8?B?TUdBd3VjcndEcnB0RVNPTEwweng4T2x0UmpDNHJtaVRtL0tNWnZORE5PQ2lO?=
+ =?utf-8?B?Tlhtc1JnS1hyaFR6MFJtbHVKRFV6U1ZqdzNZWUFHM2dSZ0tlTEVmUk5GWTY1?=
+ =?utf-8?B?MHliaEN3MVgxSFJBMDFJcTVNNitHT3RDTVpSMjE3dC84dWZpKy8yRDM0WVJ3?=
+ =?utf-8?B?OVFXRnFaYldteSt0K1VLZkdiell6Q3JoUVV4WlJzQUFwMzJPK01zSzFTMWxm?=
+ =?utf-8?B?V0pnN01NNDR4SUU0cUgzZzYzaktCOFM2eTRLOGRUWnMzY1hiSUF6Z0JKVldn?=
+ =?utf-8?B?U25BM3VFaENzdlBhc0FSRU4xMDF2N1UxOEw5WWpuUk1Bb3FCVUZUQklhUVc4?=
+ =?utf-8?B?Wjl0Q0MxT0M1Ni9kUWxSTjFpblJHZ24wVDdGQ0pWTW9mV3FVWFNEdFd0NThW?=
+ =?utf-8?B?Wnc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: KTdeZ82Ix8EcQsDJ7np5aav9v8DQqU3jmzsKed2bzmfHOhp3caaQlnZiQQ0ERdmJyymcP5yK4JMvO/HsG1EjQvyhxpieKLHWq3Ej+72cwO6Atu1+I4lzgeHqAIPRoYCOZj4Q2MSxmLFtx8H0OU+PF3KrSsrI8OieNZ/OiXgaj4tx3DDYncrvL4IXHEXkLzXPvayQUka4y4oe2pZ/iVJoRF8ZRjpdApxsddJQvEa/7ca8gZQdH/Yqst37Ja9E5NGpq+EF7Y6kdbxQOkp3TArOzXrTHt4BNKoKyjFakwkO8rh3jTxM9vQUPkeLSvcC0RA94AKDU+pAHSpLYBhoLrKwoOvSYB4P7OXbnzWlhksTkysu1E0wUbGCebzEHRRUEGS/ri6KwV8fkuY3G0n2nc13fBTJzW17/STsNtfvQM248KZLfP7QehysVxnO1k0B9CXaBX6oz02nfGWry2ikOtV/WpdliLV0Aiz1YC6q97+8weRvaJn8J5Xfe0cjhuEpdLwKUciqZ+nnhbgDfgCNJECPe+w8TYfIVeUQRWv1/6mpysIVqe7VTcqI7AWvkuU7DwEy1xbcapbzhSJdX2f6sW9ckYdDbYeIM+rySEZnK6CuFjw=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6138fe19-18a8-472d-7bb1-08dcf54c99fa
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB7329.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Oct 2024 23:27:33.0596 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /4N2zUgWKZ4OcAt+I9L8vgEZj/NiveuY6fWxTKMCZRfxzbGa7vXWbEYzmZxQI/nC23mTVpGxrp+agmey3NlF82iyKAsLOX9VHX+CPvbvX6g=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR10MB8141
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-25_14,2024-10-25_02,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ mlxscore=0 phishscore=0
+ suspectscore=0 bulkscore=0 adultscore=0 malwarescore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2409260000
+ definitions=main-2410250181
+X-Proofpoint-GUID: _aDqjkFImmU5D5axMs9_rI4YxKFAivFM
+X-Proofpoint-ORIG-GUID: _aDqjkFImmU5D5axMs9_rI4YxKFAivFM
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=william.roche@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_PH_BODY_ACCOUNTS_PRE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,171 +218,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 25, 2024 at 05:55:59PM -0400, Peter Xu wrote:
-> On Fri, Oct 25, 2024 at 11:25:23AM +0200, Markus Armbruster wrote:
-> > Peter Xu <peterx@redhat.com> writes:
-> > 
-> > > X86 IOMMUs cannot be created more than one on a system yet.  Make it a
-> > > singleton so it guards the system from accidentally create yet another
-> > > IOMMU object when one already presents.
-> > >
-> > > Now if someone tries to create more than one, e.g., via:
-> > >
-> > >   ./qemu -M q35 -device intel-iommu -device intel-iommu
-> > >
-> > > The error will change from:
-> > >
-> > >   qemu-system-x86_64: -device intel-iommu: QEMU does not support multiple vIOMMUs for x86 yet.
-> > >
-> > > To:
-> > >
-> > >   qemu-system-x86_64: -device intel-iommu: Class 'intel-iommu' only supports one instance
-> > >
-> > > Unfortunately, yet we can't remove the singleton check in the machine
-> > > hook (pc_machine_device_pre_plug_cb), because there can also be
-> > > virtio-iommu involved, which doesn't share a common parent class yet.
-> > >
-> > > But with this, it should be closer to reach that goal to check singleton by
-> > > QOM one day.
-> > >
-> > > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > 
-> > $ qemu-system-x86_64 -device amd-iommu,help
-> > /work/armbru/qemu/include/hw/boards.h:24:MACHINE: Object 0x56473906f960 is not an instance of type machine
-> > Aborted (core dumped)
-> > 
-> > (gdb) bt
-> > #0  0x00007ffff4e43834 in __pthread_kill_implementation () at /lib64/libc.so.6
-> > #1  0x00007ffff4df18ee in raise () at /lib64/libc.so.6
-> > #2  0x00007ffff4dd98ff in abort () at /lib64/libc.so.6
-> > #3  0x0000555555f75ef3 in object_dynamic_cast_assert
-> >     (obj=0x555557e03960, typename=0x5555563c403e "machine", file=0x5555563c4018 "/work/armbru/qemu/include/hw/boards.h", line=24, func=0x5555563c4290 <__func__.7> "MACHINE") at ../qom/object.c:936
-> > #4  0x0000555555d5db0f in MACHINE (obj=0x555557e03960)
-> >     at /work/armbru/qemu/include/hw/boards.h:24
-> > #5  0x0000555555d5e030 in x86_iommu_get_default () at ../hw/i386/x86-iommu.c:83
-> > #6  0x0000555555d5e262 in x86_iommu_get_instance
-> >     (errp=0x5555573d4918 <error_abort>) at ../hw/i386/x86-iommu.c:139
-> > #7  0x0000555555f7c27c in singleton_get_instance (class=0x555557e00320)
-> >     at ../qom/object_interfaces.c:371
-> > #8  0x000055555612a842 in qmp_device_list_properties
-> >     (typename=0x555557e001d0 "amd-iommu", errp=0x7fffffffda38)
-> >     at ../qom/qom-qmp-cmds.c:147
-> > #9  0x0000555555bf20b2 in qdev_device_help (opts=0x555557e001f0)
-> >     at ../system/qdev-monitor.c:314
-> > #10 0x0000555555bfe06d in device_help_func
-> >     (opaque=0x0, opts=0x555557e001f0, errp=0x0) at ../system/vl.c:1208
-> > #11 0x0000555556217186 in qemu_opts_foreach
-> >     (list=0x55555729e5c0 <qemu_device_opts>, func=0x555555bfe04d <device_help_func>, opaque=0x0, errp=0x0) at ../util/qemu-option.c:1135
-> > #12 0x0000555555c01d56 in qemu_process_help_options () at ../system/vl.c:2555
-> > #13 0x0000555555c04d81 in qemu_init (argc=3, argv=0x7fffffffde28)
-> >     at ../system/vl.c:3654
-> > #14 0x000055555612ffae in main (argc=3, argv=0x7fffffffde28)
-> >     at ../system/main.c:47
-> > 
-> 
-> Thanks for the report!
-> 
-> It turns out that qdev_get_machine() cannot be invoked too early, and the
-> singleton code can make it earlier..
-> 
-> We may want a pre-requisite patch to allow qdev_get_machine() to be invoked
-> anytime, like:
-> 
-> ===8<===
-> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-> index db36f54d91..7ceae47139 100644
-> --- a/hw/core/qdev.c
-> +++ b/hw/core/qdev.c
-> @@ -831,6 +831,16 @@ Object *qdev_get_machine(void)
->  {
->      static Object *dev;
->  
-> +    if (!phase_check(PHASE_MACHINE_CREATED)) {
-> +        /*
-> +         * When the machine is not created, below can wrongly create
-> +         * /machine to be a container.. this enables qdev_get_machine() to
-> +         * be used at any time and return NULL properly when machine is not
-> +         * created.
-> +         */
-> +        return NULL;
-> +    }
-> +
->      if (dev == NULL) {
->          dev = container_get(object_get_root(), "/machine");
->      }
-> ===8<===
-> 
-> I hope it makes sense on its own.
+On 10/23/24 09:30, David Hildenbrand wrote:
 
-My apologies, spoke too soon here.  This helper is used too after machine
-is created, but right before switching to PHASE_MACHINE_CREATE stage..
+> On 22.10.24 23:35, “William Roche wrote:
+>> From: William Roche <william.roche@oracle.com>
+>>
+>> When the VM reboots, a memory reset is performed calling
+>> qemu_ram_remap() on all hwpoisoned pages.
+>> While we take into account the recorded page sizes to repair the
+>> memory locations, a large page also needs to punch a hole in the
+>> backend file to regenerate a usable memory, cleaning the HW
+>> poisoned section. This is mandatory for hugetlbfs case for example.
+>>
+>> Signed-off-by: William Roche <william.roche@oracle.com>
+>> ---
+>>   system/physmem.c | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/system/physmem.c b/system/physmem.c
+>> index 3757428336..3f6024a92d 100644
+>> --- a/system/physmem.c
+>> +++ b/system/physmem.c
+>> @@ -2211,6 +2211,14 @@ void qemu_ram_remap(ram_addr_t addr, 
+>> ram_addr_t length)
+>>                   prot = PROT_READ;
+>>                   prot |= block->flags & RAM_READONLY ? 0 : PROT_WRITE;
+>>                   if (block->fd >= 0) {
+>> +                    if (length > TARGET_PAGE_SIZE && 
+>> fallocate(block->fd,
+>> +                        FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE,
+>> +                        offset + block->fd_offset, length) != 0) {
+>> +                        error_report("Could not recreate the file 
+>> hole for "
+>> +                                     "addr: " RAM_ADDR_FMT "@" 
+>> RAM_ADDR_FMT "",
+>> +                                     length, addr);
+>> +                        exit(1);
+>> +                    }
+>>                       area = mmap(vaddr, length, prot, flags, block->fd,
+>>                                   offset + block->fd_offset);
+>>                   } else {
+>
+> Ah! Just what I commented to patch #3; we should be using 
+> ram_discard_range(). It might be better to avoid the mmap() completely 
+> if ram_discard_range() worked.
 
-So we need another way, like:
 
-===8<===
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index db36f54d91..36a9fdb428 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -832,7 +832,13 @@ Object *qdev_get_machine(void)
-     static Object *dev;
- 
-     if (dev == NULL) {
--        dev = container_get(object_get_root(), "/machine");
-+        /*
-+         * NOTE: dev can keep being NULL if machine is not yet created!
-+         * In which case the function will properly return NULL.
-+         *
-+         * Whenever machine object is created and found once, we cache it.
-+         */
-+        dev = object_resolve_path_component(object_get_root(), "machine");
-     }
- 
-     return dev;
-===8<===
+I think you are referring to ram_block_discard_range() here, as 
+ram_discard_range() seems to relate to VM migrations, maybe not a VM reset.
 
-The idea is still the same.  Meanwhile I'll test more to see whether it has
-other issues.
+Remapping the page is needed to get rid of the poison. So if we want to 
+avoid the mmap(), we have to shrink the memory address space -- which 
+can be a real problem if we imagine a VM with 1G large pages for 
+example. qemu_ram_remap() is used to regenerate the lost memory and the 
+mmap() call looks mandatory on the reset phase.
 
-Thanks,
 
-> Then callers who can be invoked earlier
-> could then handle NULL properly, in this case..
-> 
-> ===8<===
-> diff --git a/hw/i386/x86-iommu.c b/hw/i386/x86-iommu.c
-> index 4bfeb08705..fceb7adfe0 100644
-> --- a/hw/i386/x86-iommu.c
-> +++ b/hw/i386/x86-iommu.c
-> @@ -80,9 +80,15 @@ void x86_iommu_irq_to_msi_message(X86IOMMUIrq *irq, MSIMessage *msg_out)
->  
->  X86IOMMUState *x86_iommu_get_default(void)
->  {
-> -    MachineState *ms = MACHINE(qdev_get_machine());
-> -    PCMachineState *pcms =
-> -        PC_MACHINE(object_dynamic_cast(OBJECT(ms), TYPE_PC_MACHINE));
-> +    Object *machine = qdev_get_machine();
-> +    PCMachineState *pcms;
-> +
-> +    /* If machine has not been created, so is the vIOMMU */
-> +    if (!machine) {
-> +        return NULL;
-> +    }
-> +
-> +    pcms = PC_MACHINE(object_dynamic_cast(machine, TYPE_PC_MACHINE));
->  
->      if (pcms &&
->          object_dynamic_cast(OBJECT(pcms->iommu), TYPE_X86_IOMMU_DEVICE)) {
-> ===8<===
-> 
-> I'll make sure this works if I'll repost.
-> 
-> Thanks,
-> 
-> -- 
-> Peter Xu
+>
+> And as raised, there is the problem with memory preallocation (where 
+> we should fail if it doesn't work) and ram discards being disabled 
+> because something relies on long-term page pinning ...
 
--- 
-Peter Xu
+
+Yes. Do you suggest that we add a call to qemu_prealloc_mem() for the 
+remapped area in case of a backend->prealloc being true ?
+
+Or as we are running on posix machines for this piece of code (ifndef 
+_WIN32) maybe we could simply add a MAP_POPULATE flag to the mmap call 
+done in qemu_ram_remap() in the case where the backend requires a 
+'prealloc' ?  Can you confirm if this flag could be used on all systems 
+running this code ?
+
+Unfortunately, I don't know how to get the MEMORY_BACKEND corresponding 
+to a given memory block. I'm not sure that MEMORY_BACKEND(block->mr) is 
+a valid way to retrieve the Backend object and its 'prealloc' property 
+here. Could you please give me a direction here ?
+
+I can send a new version using ram_block_discard_range() as you 
+suggested to replace the direct call to fallocate(), if you think it 
+would be better.
+Please let me know what other enhancement(s) you'd like to see in this 
+code change.
+
+Thanks in advance,
+William.
 
 
