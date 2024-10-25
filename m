@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4082AD0C5E6
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 08:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DFC3D0C5E6
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 08:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Fyv-0005Km-FJ; Fri, 25 Oct 2024 04:47:41 -0400
+	id 1t4G40-0006Ff-Ms; Fri, 25 Oct 2024 04:52:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t4Fyt-0005KM-D6
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:47:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4G3z-0006FP-FQ
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:52:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t4Fyr-0005OH-JU
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:47:39 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4G3x-0005rM-SO
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:52:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729846056;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1729846373;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Uq3IhbU/yTH35/LWnljdNAvMNphm8dLQb3bhxKZeres=;
- b=iArG9Nxe5QhuB0f84BZ9KCVIg4DJBc9QBiDuJnZ6wXGpGWmX1ag9Cz2Aqh/Vht5Far58YE
- znrAEiMUBOiqGnBZcls1M1nYkVCw+EHdpArMVjOuitJpJNUprIu7uq4D6AZOpTo+JDjeBB
- NIFjfCOtfDnEspXPhKq6P/SGpSy/4eY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-163-Rz_weTKJOKilYDlrRF0BeQ-1; Fri,
- 25 Oct 2024 04:47:35 -0400
-X-MC-Unique: Rz_weTKJOKilYDlrRF0BeQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA65119560B5; Fri, 25 Oct 2024 08:47:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.164])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B01E19560A2; Fri, 25 Oct 2024 08:47:31 +0000 (UTC)
-Date: Fri, 25 Oct 2024 09:47:28 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] test: make cached assets for functional tests read-only
-Message-ID: <ZxtbIE6Xgp48_j8S@redhat.com>
-References: <20241021123633.1391911-1-berrange@redhat.com>
- <610dc78f-2546-4dd8-95d2-e449c107bb67@redhat.com>
- <7b2e2801-ee8b-4e37-93a6-349fac361c14@redhat.com>
+ bh=3Ynha+bszeMKj97T+vfDq2GuBeePhL7RbKtGimONHWc=;
+ b=iihuVPCA2ZDfOEt+adsqdGko1siKQfvsiqnaVWfPqmz5tWgBJg7CSer677KiLSeawCXZ+M
+ bSkD9eqo8VU27AfdfqlXlfmjKoFwQQQGL0llbvf5Ak0FCNx85HIvmD+MoJ5sh0Z1X6dHSV
+ AnF+jiJyFDhq6op0zy6YW5/bYp+XQwU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-570-XlFeZOdoN3ivV54PEVr99w-1; Fri, 25 Oct 2024 04:52:45 -0400
+X-MC-Unique: XlFeZOdoN3ivV54PEVr99w-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4316655b2f1so12900825e9.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 01:52:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729846364; x=1730451164;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3Ynha+bszeMKj97T+vfDq2GuBeePhL7RbKtGimONHWc=;
+ b=G9PO2LYyAfLapJ6kTtMItANTwUF6AiK3d4yStJyAZDOoo7aRPH5GnQzUzMEUwUqM/6
+ ucpuoRwVC1/3Z/pN8RnRVun3VTgVKyrVGsgROzwTLTeSZrkDF6dxcGc1AtYZZtRTnLrp
+ MTd2wEN6hdmBKE3TuWlvvi5Gcv7CwiHExZ85svi/J8k42h3ywyF8XIZlybfqHJ0ndw8X
+ boe064MAn5dLhNcaKN3X8CXI3/Pi/TjryCmD33DtFRli6D1M8GRPIwTGJLyWvk0SninB
+ 3N5chm5a2NaUuapdsQEMr1giH/VuzE6SJjNcCPykDPsKkXEnzDX1tVfYwpyju0O/6FBz
+ ZazA==
+X-Gm-Message-State: AOJu0YwNi1D90gFbVWtPmMCE9Cdg4cHkWldDtOYxG58FHHCnGXp4zmc6
+ A80UcKadvbDDPop8fdxC+v7eaPUNk8o5IjqKIdGMKTo/tq9GOPxtffPAZDnsoQEqgdMevA0RFGZ
+ jwsgYbdEtPQwTVFIyfLav43/6brKkfhVT5R+ruIRLV9/cy5BZs+vPmKByTkpmKobLY0F9d1hLHM
+ mZ6JaOVEvqIqVPlPsjre5KYCkujMO30IyBoaWy6g==
+X-Received: by 2002:a05:600c:5114:b0:431:5f9e:3f76 with SMTP id
+ 5b1f17b1804b1-4318415bd5amr85060435e9.16.1729846363833; 
+ Fri, 25 Oct 2024 01:52:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFTR+etjbMnVeMS7ErzMBq7yhm8CnDQPT2Ive8yRnE//1ATTQNtFoqaxF0/TpuC/5W7GaN346naeoL2EhLYh8c=
+X-Received: by 2002:a05:600c:5114:b0:431:5f9e:3f76 with SMTP id
+ 5b1f17b1804b1-4318415bd5amr85060275e9.16.1729846363487; Fri, 25 Oct 2024
+ 01:52:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7b2e2801-ee8b-4e37-93a6-349fac361c14@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+References: <20241024123459.59350-1-pbonzini@redhat.com>
+In-Reply-To: <20241024123459.59350-1-pbonzini@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 25 Oct 2024 10:52:30 +0200
+Message-ID: <CABgObfYYKcudft8Tm3+HO8dFELEJ488LAJqPyd8DC2JCamYUag@mail.gmail.com>
+Subject: Re: [PULL 0/8] Misc fixes for 2024-10-24
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,50 +93,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 25, 2024 at 09:47:07AM +0200, Thomas Huth wrote:
-> On 21/10/2024 17.02, Thomas Huth wrote:
-> > On 21/10/2024 14.36, Daniel P. Berrangé wrote:
-> > > This ensures that if a functional test runs QEMU with a writable
-> > > disk pointing to a cached asset, an error will be reported, rather
-> > > than silently modifying the cache file.
-> > > 
-> > > As an example, tweaking test_sbsaref.py to set snapshot=off,
-> > > results in a clear error:
-> > > 
-> > >    Command: ./build/qemu-system-aarch64 ...snip... -drive
-> > > file=/var/home/ berrange/.cache/qemu/ download/44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461,format=raw,snapshot=off
-> > > -cpu max,pauth=off
-> > >    Output: qemu-system-aarch64: Could not open
-> > > '/var/home/berrange/.cache/ qemu/ download/44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461':
-> > > Permission denied
-> > > 
-> > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > > ---
-> > >   tests/functional/qemu_test/asset.py | 3 +++
-> > >   1 file changed, 3 insertions(+)
-> > 
-> > Reviewed-by: Thomas Huth <thuth@redhat.com>
-> > Tested-by: Thomas Huth <thuth@redhat.com>
-> 
-> Actually, if you start with a clean cache, or if you manually do:
-> 
->  chmod a-w ~/.cache/qemu/download/*
-> 
-> a couple of tests are failing now. Could you please have a look?
+On Thu, Oct 24, 2024 at 2:35=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+>
+> The following changes since commit f1dd640896ee2b50cb34328f2568aad3247029=
+54:
+>
+>   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into stagin=
+g (2024-10-18 10:42:56 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
+>
+> for you to fetch changes up to 5c952562af6717bb4d206dc2c7ba2daa2fcd899d:
+>
+>   qdev: make properties array "const" (2024-10-24 14:33:55 +0200)
+>
+> ----------------------------------------------------------------
+> * target/i386: fixes for -cpu pentium3
+> * qdev: allow making Properties arrays const
+> * rust: enable rust in the Fedora system build job
+> * sockets: Remove dead code
+> * configure: Fix typo
+> * stubs: avoid duplicate symbols in libqemuutil.a
+> * remove erroneous file that breaks git clone on Windows
+>
+> ----------------------------------------------------------------
+> Daniel P. Berrang=C3=A9 (2):
+>       tests: add 'rust' and 'bindgen' to CI package list
+>       ci: enable rust in the Fedora system build job
 
-Oooh, I thought I tested with all targets enabled, but I guess I must
-have missed something.
+This has conflicts with master, will resend.
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Paolo
 
 
