@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B25D149C1
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46CCFD149C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Moz-0005VZ-RP; Fri, 25 Oct 2024 12:05:54 -0400
+	id 1t4Mn5-000305-BI; Fri, 25 Oct 2024 12:03:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t4Mo1-0004m7-Dl
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:04:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t4Mmy-0002ln-Ic
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:03:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t4Mnx-0004zI-Ii
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:04:52 -0400
+ id 1t4Mmv-0004sq-9d
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:03:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729872289;
+ s=mimecast20190719; t=1729872224;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/EguPHGv0KZEAhhaXf9YkHmhUGaAAWJPIVBGnJxjKSo=;
- b=TwfHsQmAtDjT24z6sADfJlignqPRt5J5MS4qfLHP8F+/V0qltQNuuV4zbFIlxKxdBMwKT2
- 7BirXEoEvV7tc8+X4Zd9ieulV28R8DUGqYV6spFQWwDBh9dVYxrkfeT/u08jvu18pjd+mr
- vhhEzLEfm32qBmp8egUnPvqJ/NQK2RQ=
+ bh=2wB6JRp5b76OAUvoiYkeVBQK6MMDnpjCaH4KljLaOxY=;
+ b=WoZv2A0dNQrAj28jVKA7wdUtQHVUaxPCSGVAByGz8ao5rDhnAYfUlDoIF6B1PvsduTPz3y
+ 3I63R3ThEwZHIYQ/8dxMN/i/StJIQ4u9ptbtStLr/zCKinOSwJhtKFxAaTXqm46fDh8hpl
+ hH9OJtauCezemmxGMqDhI3/iSb4/1sM=
 Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
  [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-435eXTh2MO-wnfx90cnYUg-1; Fri, 25 Oct 2024 12:04:47 -0400
-X-MC-Unique: 435eXTh2MO-wnfx90cnYUg-1
+ us-mta-231-eKNnQe29MVO3kyTPqm8Z7Q-1; Fri, 25 Oct 2024 12:03:43 -0400
+X-MC-Unique: eKNnQe29MVO3kyTPqm8Z7Q-1
 Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5cbb0b2c6e8so684596a12.0
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 09:04:47 -0700 (PDT)
+ 4fb4d7f45d1cf-5c94862c3adso1546656a12.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 09:03:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729872284; x=1730477084;
+ d=1e100.net; s=20230601; t=1729872220; x=1730477020;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/EguPHGv0KZEAhhaXf9YkHmhUGaAAWJPIVBGnJxjKSo=;
- b=tKXJlamBh8JdetEQQ6jn79E519MSvfv/ZLIwBRpB6/svV8XK5s2ct5UrXqP6Jdec6E
- YfcLsKeCxWw5CYXXw6LBSUUyzs1hLZ1r+yyLDHW1QKSex9StfWwLKr4pj2gHwX4PtnVZ
- jWpPn+q2mlyKmBKTL63xPRPNp2Z/d5G7Ly8zh4m489bzOKi6vY+hTS8eOg/voc4mLdmn
- bM8NDvY6Q4QJnELDI3KVLn8i1m8GqsuGSItUnIlPFRoAeW13DVfiuUwvHrVoAm7qEi9d
- N+VBSxdQoAL8sle3ms9cm/nNTbuwar2doXLt+gZ4Pauzzl1+8rP0DbWBnIYdHtY1eker
- mb0Q==
-X-Gm-Message-State: AOJu0YyfHPunv+IN11M2qs5ESF0rJ8xBZ4rG7qESHk+XI/rWvxgbFDP4
- qAlSO9tCkEbEv5yGkLuQ4mizc2CJ4fQ1Ei5Kw24TH8lS1cG2iCXN+ljPR0phX87dmOS0y3V57QY
- Rsybg/QtcBwLmAdWdtfBy95ckFFIcC7I9gyV5XbeFbg/6DJmYT+5MjxXueXpKmHsOQC0lLUpZlj
- ifVPniAsppeO5elcIB239v1FcWn9TgayOTKaPVuqE=
-X-Received: by 2002:a05:6402:5cd:b0:5c9:3f2:15fb with SMTP id
- 4fb4d7f45d1cf-5cb8af6bd46mr7487055a12.24.1729872284300; 
- Fri, 25 Oct 2024 09:04:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEePOJZE+dDS5HHVfR5s7/0uEOaVEoi7/ZkBunx1mnlqsYPoFgaqj3p2FLKX4M+xOA3GF+s+g==
-X-Received: by 2002:a05:6402:5cd:b0:5c9:3f2:15fb with SMTP id
- 4fb4d7f45d1cf-5cb8af6bd46mr7487024a12.24.1729872283776; 
- Fri, 25 Oct 2024 09:04:43 -0700 (PDT)
+ bh=2wB6JRp5b76OAUvoiYkeVBQK6MMDnpjCaH4KljLaOxY=;
+ b=rhekqGN5I6zl+o89bgdkMhaL0S8IuHp2+5isz0o7Q/4qK//bO4pmczolqmvHhs2O9Y
+ jrZXMu8KKMAhg2NY3jmu2bTP5cwNiYSM7l/TPxEpR+xhNcIid/Fj7yVgl/K7VzjhDOwK
+ 9gAM0N2GrBwCYmonxdggU+hTYpwYtj3UT2otm+bksuZ6rUR3Qog8B+ElXLdC1JijXPsp
+ RI81BZV71mw1slTkAxuqJIf3nQVnPwBt0YbL2bUOCQvQqr6XJSXrjoHQAFeMnEk0K0Ng
+ P/oe8UJmu0aJslUIRDQggeef9m/yJBNCRhDASqnb6Fr/1jyTtExxR4nxrETtIt9E5mRL
+ /Qew==
+X-Gm-Message-State: AOJu0YzqtB5BjWOX+Pnu2krFJYaocX+5pkZTv48PMXPBXIqMX8gNFb8b
+ WlVQHBzZqT3kPjcaF60M+MU0Snhsy1NhawLLX65wSMSxDU9iu0JG8OMgSM/nSGlj3NjgCJJkwNJ
+ dTiXRf5dB7acaZAfdfhez7IZS4QuAVdLa2XwE4ZfOYMoZdsQNfPncJ4G6yt5PkyLpZio5MjtJLb
+ 6nLuVbCNsdsIDS6WKPXxeK/fAL5jFR+kWhiPD6B2s=
+X-Received: by 2002:a05:6402:84a:b0:5c9:3ff:2734 with SMTP id
+ 4fb4d7f45d1cf-5cb8ac86aa0mr7150387a12.12.1729872220178; 
+ Fri, 25 Oct 2024 09:03:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGn8jOUSXxfcx9veK5F38rxLJDSO0g3t7TLjKEjwQ1Cc75UQgwroyeIj9UnQYnzFQ1bH6e91Q==
+X-Received: by 2002:a05:6402:84a:b0:5c9:3ff:2734 with SMTP id
+ 4fb4d7f45d1cf-5cb8ac86aa0mr7150354a12.12.1729872219623; 
+ Fri, 25 Oct 2024 09:03:39 -0700 (PDT)
 Received: from [192.168.10.47] ([151.81.112.43])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cbb62c3da7sm761499a12.55.2024.10.25.09.04.40
+ 4fb4d7f45d1cf-5cbb625810bsm753117a12.14.2024.10.25.09.03.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Oct 2024 09:04:41 -0700 (PDT)
+ Fri, 25 Oct 2024 09:03:32 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
  junjie.mao@hotmail.com, berrange@redhat.com
-Subject: [PATCH 20/23] rust: allow older version of bindgen
-Date: Fri, 25 Oct 2024 18:02:05 +0200
-Message-ID: <20241025160209.194307-21-pbonzini@redhat.com>
+Subject: [PATCH 12/23] rust: silence unknown warnings for the sake of old
+ compilers
+Date: Fri, 25 Oct 2024 18:01:57 +0200
+Message-ID: <20241025160209.194307-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241025160209.194307-1-pbonzini@redhat.com>
 References: <20241025160209.194307-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,125 +104,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cope with the old version that is provided in Debian 12.
+Occasionally, we may need to silence warnings and clippy lints that
+were only introduced in newer Rust compiler versions.  However, this
+would fail when compiling with an older rustc:
 
---size_t-is-usize is needed on bindgen <0.61.0, and it was removed in
-bindgen 0.65.0, so check for it in meson.build.
+error: unknown lint: `non_local_definitions`
+   --> rust/qemu-api/rust-qemu-api-tests.p/structured/offset_of.rs:79:17
 
---merge-extern-blocks was added in 0.61.0.
-
---formatter rustfmt was added in 0.65.0 and is the default, so remove it.
-
-Apart from Debian 12 and Ubuntu 22.04, all other supported distros have
-version 0.66.x of bindgen or newer (or do not have bindgen at all).
+So by default we need to block the unknown_lints warning.  To avoid
+misspelled lints or other similar issues, re-enable it in the CI job
+that uses nightly rust.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/about/build-platforms.rst | 12 ++++++++++++
- meson.build                    | 29 +++++++++++++++++++++++++----
- 2 files changed, 37 insertions(+), 4 deletions(-)
+ meson.build                   | 8 ++++++++
+ .gitlab-ci.d/buildtest.yml    | 2 +-
+ meson_options.txt             | 2 ++
+ scripts/meson-buildoptions.sh | 4 ++++
+ 4 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index 8fd7da140a3..ff56091078e 100644
---- a/docs/about/build-platforms.rst
-+++ b/docs/about/build-platforms.rst
-@@ -107,6 +107,18 @@ Python build dependencies
-   required, it may be necessary to fetch python modules from the Python
-   Package Index (PyPI) via ``pip``, in order to build QEMU.
-=20
-+Rust build dependencies
-+  QEMU is generally conservative in adding new Rust dependencies, and all
-+  of them are included in the distributed tarballs.  One exception is the
-+  bindgen tool, which is too big to package and distribute.  The minimum
-+  supported version of bindgen is 0.60.x.  For distributions that do not
-+  include bindgen or have an older version, it is recommended to install
-+  a newer version using ``cargo install bindgen-cli``.
-+
-+  Developers may want to use Cargo-based tools in the QEMU source tree;
-+  this requires Cargo 1.74.0.  Note that Cargo is not required in order
-+  to build QEMU.
-+
- Optional build dependencies
-   Build components whose absence does not affect the ability to build
-   QEMU may not be available in distros, or may be too old for QEMU's
 diff --git a/meson.build b/meson.build
-index bfd04294850..fb0295b312c 100644
+index e819148f36c..69b8367eb3c 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -100,6 +100,21 @@ if have_rust
-   endif
- endif
+@@ -3327,6 +3327,14 @@ if have_rust and have_system
+   # Prohibit code that is forbidden in Rust 2024
+   rustc_args +=3D ['-D', 'unsafe_op_in_unsafe_fn']
 =20
-+bindgen =3D find_program('bindgen', required: get_option('rust').disable_a=
-uto_if(not have_rust))
-+if not bindgen.found() or bindgen.version().version_compare('<0.60.0')
-+  if get_option('rust').enabled()
-+    error('bindgen version ' + bindgen.version() + ' is unsupported. You c=
-an install a new version with "cargo install bindgen-cli"')
-+  else
-+    if bindgen.found()
-+      warning('bindgen version ' + bindgen.version() + ' is unsupported, d=
-isabling Rust compilation.')
-+    else
-+      warning('bindgen not found, disabling Rust compilation.')
-+    endif
-+    message('To use Rust you can install a new version with "cargo install=
- bindgen-cli"')
-+    have_rust =3D false
++  # Occasionally, we may need to silence warnings and clippy lints that
++  # were only introduced in newer Rust compiler versions.  Do not croak
++  # in that case; a CI job with rust_strict_lints =3D=3D true ensures that
++  # we do not have misspelled allow() attributes.
++  if not get_option('strict_rust_lints')
++    rustc_args +=3D ['-A', 'unknown_lints']
 +  endif
-+endif
 +
- dtrace =3D not_found
- stap =3D not_found
- if 'dtrace' in get_option('trace_backends')
-@@ -3943,15 +3958,13 @@ common_all =3D static_library('common',
- if have_rust
-   # We would like to use --generate-cstr, but it is only available
-   # starting with bindgen 0.66.0.  The oldest supported versions
--  # are in Ubuntu 22.04 (0.59.1) and Debian 12 (0.60.1).
-+  # is 0.60.x (Debian 12 has 0.60.1) which introduces --allowlist-file.
-   bindgen_args =3D [
-     '--disable-header-comment',
-     '--raw-line', '// @generated',
-     '--ctypes-prefix', 'std::os::raw',
--    '--formatter', 'rustfmt',
-     '--generate-block',
-     '--impl-debug',
--    '--merge-extern-blocks',
-     '--no-doc-comments',
-     '--with-derive-default',
-     '--no-layout-tests',
-@@ -3960,6 +3973,12 @@ if have_rust
-     '--allowlist-file', meson.project_source_root() + '/.*',
-     '--allowlist-file', meson.project_build_root() + '/.*'
-     ]
-+  if bindgen.version().version_compare('<0.61.0')
-+    # default in 0.61+
-+    bindgen_args +=3D ['--size_t-is-usize']
-+  else
-+    bindgen_args +=3D ['--merge-extern-blocks']
-+  endif
-   c_enums =3D [
-     'DeviceCategory',
-     'GpioPolarity',
-@@ -3995,7 +4014,7 @@ if have_rust
-     dependencies: common_ss.all_dependencies(),
-     output: 'bindings.rs',
-     include_directories: include_directories('.', 'include'),
--    bindgen_version: ['>=3D0.69.4'],
-+    bindgen_version: ['>=3D0.60.0'],
-     args: bindgen_args,
-     )
-   subdir('rust')
-@@ -4461,6 +4480,8 @@ if have_rust
-   summary_info +=3D {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
-   summary_info +=3D {'rustc':           ' '.join(rustc.cmd_array())}
-   summary_info +=3D {'rustc version':   rustc.version()}
-+  summary_info +=3D {'bindgen':         bindgen.full_path()}
-+  summary_info +=3D {'bindgen version': bindgen.version()}
- endif
- option_cflags =3D (get_option('debug') ? ['-g'] : [])
- if get_option('optimization') !=3D 'plain'
+   # Apart from procedural macros, our Rust executables will often link
+   # with C code, so include all the libraries that C code needs.  This
+   # is safe; https://github.com/rust-lang/rust/pull/54675 says that
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 19ba5b9c818..aba65ff833a 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -128,7 +128,7 @@ build-system-fedora-rust-nightly:
+     job: amd64-fedora-rust-nightly-container
+   variables:
+     IMAGE: fedora-rust-nightly
+-    CONFIGURE_ARGS: --disable-docs --enable-rust
++    CONFIGURE_ARGS: --disable-docs --enable-rust --enable-strict-rust-lints
+     TARGETS: aarch64-softmmu
+     MAKE_CHECK_ARGS: check-build
+   allow_failure: true
+diff --git a/meson_options.txt b/meson_options.txt
+index 0ee4d7bb86b..e46199a3232 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -376,3 +376,5 @@ option('x86_version', type : 'combo', choices : ['0', '=
+1', '2', '3', '4'], value
+=20
+ option('rust', type: 'feature', value: 'disabled',
+        description: 'Rust support')
++option('strict_rust_lints', type: 'boolean', value: false,
++       description: 'Enable stricter set of Rust warnings')
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 6d08605b771..e898b20307d 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -47,6 +47,8 @@ meson_options_help() {
+   printf "%s\n" '                           getrandom()'
+   printf "%s\n" '  --enable-safe-stack      SafeStack Stack Smash Protecti=
+on (requires'
+   printf "%s\n" '                           clang/llvm and coroutine backe=
+nd ucontext)'
++  printf "%s\n" '  --enable-strict-rust-lints'
++  printf "%s\n" '                           Enable stricter set of Rust wa=
+rnings'
+   printf "%s\n" '  --enable-strip           Strip targets on install'
+   printf "%s\n" '  --enable-tcg-interpreter TCG with bytecode interpreter =
+(slow)'
+   printf "%s\n" '  --enable-trace-backends=3DCHOICES'
+@@ -490,6 +492,8 @@ _meson_option_parse() {
+     --disable-spice-protocol) printf "%s" -Dspice_protocol=3Ddisabled ;;
+     --enable-stack-protector) printf "%s" -Dstack_protector=3Denabled ;;
+     --disable-stack-protector) printf "%s" -Dstack_protector=3Ddisabled ;;
++    --enable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=3Dtrue ;;
++    --disable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=3Dfalse ;;
+     --enable-strip) printf "%s" -Dstrip=3Dtrue ;;
+     --disable-strip) printf "%s" -Dstrip=3Dfalse ;;
+     --sysconfdir=3D*) quote_sh "-Dsysconfdir=3D$2" ;;
 --=20
 2.47.0
 
