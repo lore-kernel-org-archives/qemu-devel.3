@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FFFD149C1
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:10:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD12D149C0
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 16:10:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Mov-0005Ce-EX; Fri, 25 Oct 2024 12:05:50 -0400
+	id 1t4Mq5-0007Fx-1t; Fri, 25 Oct 2024 12:07:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t4Mnx-0004WJ-RR
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:04:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1t4MpX-000748-RC; Fri, 25 Oct 2024 12:06:28 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t4Mnv-0004yv-VB
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 12:04:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729872287;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=max4ptoWARDXa3Y5mnahsubFzzuLs19p4ctB7GiY7D4=;
- b=OIXKjH9XKJDWMFkEd0D55MVxHBjSOcnp9m/Gy5d5QIyj9SBMCHBDPUKFI4tfRI/90TCi0P
- EFPDBU7+x3SPP9ToYTkj9jm5JyR35+ufL16euchQuBp5ABtbY8NPKCyQNlPJXZZGR42y3H
- sDIjqaOGhzJa0wOUir/tcDfFzJeklpU=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-21-1nflGp0VNk-arTG7xYITZw-1; Fri, 25 Oct 2024 12:04:42 -0400
-X-MC-Unique: 1nflGp0VNk-arTG7xYITZw-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a9adb271de7so102553266b.0
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 09:04:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729872280; x=1730477080;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=max4ptoWARDXa3Y5mnahsubFzzuLs19p4ctB7GiY7D4=;
- b=ZKyFTE3pfPwQAiPPe4qzmdfwCO9/VOmios8WwoB2F3DRrpsZaaQFuNQXcHhvpdXdin
- mOvx/1l4vBTPZV878Cxu656QSF6UTM27/ibpcoPirEmb+3LIRjRIHSfa9gzNq+SVm/KW
- VRxb92pViZ/dkNFs/HcinadpQOQmzpSR61pB+ZXB4e2YfotWMEsU+vXUU14mXp8UhT06
- LHwCZrxBWzlzUj51Riw9RGqZbcLyXVfaL+uumJu6DG1plUxWLL0666hsbUoYVCaupTXJ
- rW9Xv6xd2b+1PNVRzh5vry0MoKu72wcuX18QVpRsyWodsOBXmb3EXvboauLG8LKSHtQm
- HLPw==
-X-Gm-Message-State: AOJu0YwK3ULgRuiTiVOr90aIvXzoiuMX+bNKcSaUUqRvnQcI+NK3lKxc
- Cos8pv1yW1BpJ4oMnutGCaA2hr0mQCOcFCd7OxbcHKU6a8pKRFNeSUi0EB4RsbUkn7y+ltUpT/X
- 7k0Wx6WPbLnLpPlvLaH8z/TAcJyJNVvDTvREupJcQrKr96d5ClEazNzoGND05qHLnPclSrals2V
- MqqRluXR/YtrGix02LuAZ+ZDuXMFEjrgMpkT2N5jc=
-X-Received: by 2002:a17:907:7da5:b0:a9a:421:720 with SMTP id
- a640c23a62f3a-a9ad283263emr466289866b.46.1729872279985; 
- Fri, 25 Oct 2024 09:04:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEumtWYbq0/deuwQSHN+ZegtMRrT7wZQr4VKX8XXxm7QWfGz7uYrI0AEqHRFrcj6g1+9PG23Q==
-X-Received: by 2002:a17:907:7da5:b0:a9a:421:720 with SMTP id
- a640c23a62f3a-a9ad283263emr466286666b.46.1729872279440; 
- Fri, 25 Oct 2024 09:04:39 -0700 (PDT)
-Received: from [192.168.10.47] ([151.81.112.43])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9b1dfbc814sm85423266b.37.2024.10.25.09.04.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Oct 2024 09:04:34 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
- junjie.mao@hotmail.com, berrange@redhat.com
-Subject: [PATCH 19/23] rust: do not use --generate-cstr
-Date: Fri, 25 Oct 2024 18:02:04 +0200
-Message-ID: <20241025160209.194307-20-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241025160209.194307-1-pbonzini@redhat.com>
-References: <20241025160209.194307-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1t4MpV-0005HJ-Ih; Fri, 25 Oct 2024 12:06:27 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49PFf57s020881;
+ Fri, 25 Oct 2024 16:06:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=ViGjngwJ2vndr8N3DnHoQ0
+ mtiUMECGSAQOr1mQp3bFs=; b=DHfihPr8RHXHaWZIBcI4+kFHNI8WyqioOL2IRU
+ 0KrroWKRwvcVg48m0Xqu9rologtgB+UddtN60DtgqpEAFfsLVbOTGTGNxXbYWkeP
+ U11BhMf6tCHR3G31oSKDb4Nc08s3ikQ7G13sbjPoVDQ/PguKN/5dvrI58hzg8YdA
+ R/rjYmzuLTo6N8MG1uHsN7Ho8g/PbGsQm8mIx50QmPW90d7Qu+vjpmce4kwi2fuv
+ xkCfR3Y6dVjepVXpjFcRrh1tRM0dYwhLeXRsHr5ResBSPVzAYVFjepKymBPsO+9T
+ SJipoEXMSnaO9FK1kpH5ITP5BhTM2gdNDR2+cp4a88XhI0Mw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42g6y91krd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 25 Oct 2024 16:06:11 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49PG6B6j024331
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 25 Oct 2024 16:06:11 GMT
+Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 25 Oct 2024 09:06:11 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <qemu-devel@nongnu.org>
+CC: <alejandro.zeise@seagate.com>, <clg@redhat.com>, <berrange@redhat.com>,
+ <qemu-arm@nongnu.org>, <kris.conklin@seagate.com>,
+ <jonathan.henze@seagate.com>, <evan.burgess@seagate.com>,
+ <clg@kaod.org>, <peter.maydell@linaro.org>, <bcain@quicinc.com>,
+ <sidneym@quicinc.com>
+Subject: qcrypto_ivgen mem leak and possible issue?
+Date: Fri, 25 Oct 2024 13:06:01 -0300
+Message-ID: <60849a6166bba234230bc1761835cc188a9f765f.1729858348.git.quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.454,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: UJPziTmd7pti8NmRm1NKeU4I5uTTSFCU
+X-Proofpoint-ORIG-GUID: UJPziTmd7pti8NmRm1NKeU4I5uTTSFCU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0
+ spamscore=0 adultscore=0 suspectscore=0 mlxlogscore=999 clxscore=1011
+ lowpriorityscore=0 priorityscore=1501 mlxscore=0 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410250124
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,109 +100,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---generate-cstr is a good idea and generally the right thing to do,
-but it is not available in Debian 12 and Ubuntu 22.04.  Work around
-the absence.
+Hi,
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- meson.build                       |  4 +++-
- rust/hw/char/pl011/src/device.rs  |  1 +
- rust/qemu-api/src/device_class.rs | 10 ++++++++++
- rust/qemu-api/tests/tests.rs      |  4 ++--
- 4 files changed, 16 insertions(+), 3 deletions(-)
+Since e3c07527f3 (crypto/hash: Implement and use new hash API,
+2024-10-08), we've been seeing a memory leak in two check-unit tests:
+test-crypto-hash and test-crypto-ivgen. Looking a bit further to try and
+plug the leak, I got a bit confused regarding how the result crypto
+buffer is handled. Looks like we are allocating different sizes at two
+different places, and I'm unsure if these places follow the same
+convention or could be breaking expectations from one another...
 
-diff --git a/meson.build b/meson.build
-index ab0613f353c..bfd04294850 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3941,13 +3941,15 @@ common_all =3D static_library('common',
-                             dependencies: common_ss.all_dependencies())
-=20
- if have_rust
-+  # We would like to use --generate-cstr, but it is only available
-+  # starting with bindgen 0.66.0.  The oldest supported versions
-+  # are in Ubuntu 22.04 (0.59.1) and Debian 12 (0.60.1).
-   bindgen_args =3D [
-     '--disable-header-comment',
-     '--raw-line', '// @generated',
-     '--ctypes-prefix', 'std::os::raw',
-     '--formatter', 'rustfmt',
-     '--generate-block',
--    '--generate-cstr',
-     '--impl-debug',
-     '--merge-extern-blocks',
-     '--no-doc-comments',
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/devi=
-ce.rs
-index bca727e37f0..2a85960b81f 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -12,6 +12,7 @@
-     bindings::{self, *},
-     c_str,
-     definitions::ObjectImpl,
-+    device_class::TYPE_SYS_BUS_DEVICE,
- };
-=20
- use crate::{
-diff --git a/rust/qemu-api/src/device_class.rs b/rust/qemu-api/src/device_c=
-lass.rs
-index 56608c7f7fc..0ba798d3e3c 100644
---- a/rust/qemu-api/src/device_class.rs
-+++ b/rust/qemu-api/src/device_class.rs
-@@ -2,6 +2,10 @@
- // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- // SPDX-License-Identifier: GPL-2.0-or-later
-=20
-+use std::ffi::CStr;
-+
-+use crate::bindings;
-+
- #[macro_export]
- macro_rules! device_class_init {
-     ($func:ident, props =3D> $props:ident, realize_fn =3D> $realize_fn:exp=
-r, legacy_reset_fn =3D> $legacy_reset_fn:expr, vmsd =3D> $vmsd:ident$(,)*) =
-=3D> {
-@@ -62,3 +66,9 @@ macro_rules! declare_properties {
-         ];
-     };
- }
-+
-+// workaround until we can use --generate-cstr in bindgen.
-+pub const TYPE_DEVICE: &CStr =3D
-+    unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_DEVICE) };
-+pub const TYPE_SYS_BUS_DEVICE: &CStr =3D
-+    unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_SYS_BUS_DE=
-VICE) };
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index 7442f695646..43a4827de12 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -8,7 +8,7 @@
-     bindings::*,
-     c_str, declare_properties, define_property,
-     definitions::{Class, ObjectImpl},
--    device_class_init,
-+    device_class, device_class_init,
-     zeroable::Zeroable,
- };
-=20
-@@ -57,7 +57,7 @@ impl ObjectImpl for DummyState {
-         type Class =3D DummyClass;
-         const TYPE_INFO: qemu_api::bindings::TypeInfo =3D qemu_api::type_i=
-nfo! { Self };
-         const TYPE_NAME: &'static CStr =3D c_str!("dummy");
--        const PARENT_TYPE_NAME: Option<&'static CStr> =3D Some(TYPE_DEVICE=
-);
-+        const PARENT_TYPE_NAME: Option<&'static CStr> =3D Some(device_clas=
-s::TYPE_DEVICE);
-         const ABSTRACT: bool =3D false;
-         const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)=
-> =3D None;
-         const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut Ob=
-ject)> =3D None;
---=20
-2.47.0
+So this is the report from LeakSanitizer:
 
+qemu:unit / test-crypto-hash ERROR
+Direct leak of 180 byte(s) in 5 object(s) allocated from:
+    #0 0x7fdb016e0a06 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cc:153
+    #1 0x555bdb5892f7 in g_malloc0 ../subprojects/glib/glib/gmem.c:155
+    #2 0x555bdb5895d6 in g_malloc0_n ../subprojects/glib/glib/gmem.c:387
+    #3 0x555bdb3fede2 in test_hash_prealloc ../tests/unit/test-crypto-hash.c:136
+    #4 0x555bdb59fb96 in test_case_run ../subprojects/glib/glib/gtestutils.c:2930
+    #5 0x555bdb59ff81 in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3018
+    #6 0x555bdb5a00a9 in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3035
+    #7 0x555bdb5a00a9 in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3035
+    #8 0x555bdb5a02c8 in g_test_run_suite ../subprojects/glib/glib/gtestutils.c:3112
+    #9 0x555bdb59e9e2 in g_test_run ../subprojects/glib/glib/gtestutils.c:2231
+    #10 0x555bdb401b27 in main ../tests/unit/test-crypto-hash.c:301
+    #11 0x7fdb00a75082 in __libc_start_main ../csu/libc-start.c:308
+
+qemu:unit / test-crypto-ivgen ERROR
+Direct leak of 96 byte(s) in 3 object(s) allocated from:
+    #0 0x7fd572092a06 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cc:153
+    #1 0x565440094e7a in g_malloc0 ../subprojects/glib/glib/gmem.c:155
+    #2 0x565440095159 in g_malloc0_n ../subprojects/glib/glib/gmem.c:387
+    #3 0x56543fede89e in qcrypto_ivgen_essiv_init ../crypto/ivgen-essiv.c:44
+    #4 0x56543fedfc8a in qcrypto_ivgen_new ../crypto/ivgen.c:58
+    #5 0x56543feefdd3 in test_ivgen ../tests/unit/test-crypto-ivgen.c:147
+    #6 0x5654400ab719 in test_case_run ../subprojects/glib/glib/gtestutils.c:2930
+    #7 0x5654400abb04 in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3018
+    #8 0x5654400abc2c in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3035
+    #9 0x5654400abc2c in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3035
+    #10 0x5654400abc2c in g_test_run_suite_internal ../subprojects/glib/glib/gtestutils.c:3035
+    #11 0x5654400abe4b in g_test_run_suite ../subprojects/glib/glib/gtestutils.c:3112
+    #12 0x5654400aa565 in g_test_run ../subprojects/glib/glib/gtestutils.c:2231
+    #13 0x56543fef0654 in main ../tests/unit/test-crypto-ivgen.c:177
+    #14 0x7fd571427082 in __libc_start_main ../csu/libc-start.c:308
+
+At qcrypto_ivgen_essiv_init(), we allocate 'salt' with:
+
+    /* Salt must be larger of hash size or key size */
+    salt = g_new0(uint8_t, MAX(nhash, nsalt));
+
+The address of 'salt' is passed down the stack as 'result':
+
+    qcrypto_ivgen_essiv_init()
+     |> qcrypto_hash_bytes()
+       |> qcrypto_hash_bytesv()
+         |> qcrypto_hash_finalize_bytes()
+            |> qcrypto_glib_hash_finalize()
+
+Which is reassigned to a new memory (of potentially different size) at
+qcrypto_glib_hash_finalize():
+
+    *result_len = ret;
+    *result = g_new(uint8_t, *result_len);
+
+The reference to the original address gets lost and never free'd, so we
+get the mem leak error. I'm confused as to why we start with one size
+and then realloc later here. Also, how should this mem leak be fixed?
+Would it be sufficient to avoid the g_checksum_type_get_length() and
+rellocation here if 'result' is already set?
+
+As mentioned before, the mem leak bisects down to e3c07527f3.
+
+Thanks,
+Matheus
 
