@@ -4,78 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103DFD149D9
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 18:00:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A76B6D149CD
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 18:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4ObG-0002u8-9z; Fri, 25 Oct 2024 13:59:50 -0400
+	id 1t4On3-0005mm-Bv; Fri, 25 Oct 2024 14:12:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t4ObF-0002sK-5f
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 13:59:49 -0400
-Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t4Omv-0005mL-Eg
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 14:11:53 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t4ObD-0002Ni-NP
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 13:59:48 -0400
-Received: by mail-oo1-xc29.google.com with SMTP id
- 006d021491bc7-5ebc1af8e91so1174922eaf.1
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 10:59:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t4Omt-0003vc-RO
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 14:11:53 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5c941623a5aso5772298a12.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 11:11:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729879186; x=1730483986; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aPjC8EoA5VgdPyxmzDMvo5GAQnHdNsnFgI+pzOnJD3o=;
- b=FnDCVmRYfvfIW7Mq2w424qbLmzY9xh8xgexO69AFShdpeUopAkpRtgezjB5LQSwlqL
- 1onJrO/B9PTjh4DFsnZ9VG/9f1z6Q/V3Gq/AwBzvY1lwBiUuY7rIJkRA2sXn0LJ+w7Vv
- 17deeJRTb7gdSTRKuybR/t5b9F1kKdYb8bAXplZJ3Jf41fxfk/s0mAO7Zz3gW/UqigT/
- Z1qjTpv2CYspywr+zS1we+3EmXDvzNZwnFp0ErghwspZJnDYAeRTvugZTycXGt2QX/3c
- ThNheu9uzAVqmJ/vsuP5WVbtPKG6W1pIsVYnamRaAYMvZoU6UFCqk7FG/2VY0t9tHsXK
- NXjw==
+ d=linaro.org; s=google; t=1729879909; x=1730484709; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8nfTLWIFuLIRZnJ5zttn9t99WgZPd9Fo1gzAk5S5KCE=;
+ b=UiJSMVCYXEJEA9iY6DJGVk7+9NeTNZ71cjWUVuVNXI2Q8ExDMIE83IfAPQnezRE06X
+ rM2pZc5q5fQxo52pWMjTYtZfijcIvXrDusB4uMbOMuMbKbyb/dnMtuaxVFpR8Dgq0KvJ
+ iXvKtxEf5TPPqIDseKGtkyxe/DH95hTocWSJqrHWGsx1VZP97IY21Bag1PixQzNEWXfy
+ Gjl3kqSa+04KvYAIUM0XfbW300wOpGxhnVjfcDuG7/WyGIRCzBPeXraTR5LujL5xCUwu
+ d1HQopKmGhCCP67B41wjnjPGCMYARNVKYBwjCqhyK9fq5zb64UIhFePTc3OmmyirHmt2
+ x1JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729879186; x=1730483986;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aPjC8EoA5VgdPyxmzDMvo5GAQnHdNsnFgI+pzOnJD3o=;
- b=ZyrTBKRB0DQcdrYfbZai6HCU6cHXAd4tAfq2B0g611w9TkD4ZkZL2b3Lk38MKVfC3p
- 8e2AzOu1odw3xlNnwx7NtOqLG0SeRJUSX8V+OdPzmima5fDhUmkDpKGTuLFonJB1aLtX
- Nko3en/EF9hECismeeXvcMmY5LaniVa1ZLhs2WW7oQW2csT3/7uM2R3fD66fCYeyTcAI
- 881wkROkg6ZqdS080ENvTmem9WFiYAdSiUZPWJ90R3gfQUMtAEOaNT1zDLuBiaeR5Lj/
- MKvETPf9b0T6cQrhsNVwhkvte1tm6Ij4z/IQIjP4aukQvEifMJ5vVe7SZzQVnTBdAT3t
- Z0sw==
-X-Gm-Message-State: AOJu0YyPILLepmwWzYU+EnihuJqeSrrN1OGay2c9B6x3hTKSNObBoLT/
- zizTMzcX9Wqus9pMumYEPiDv2U08ocInLfp3abVHFpIZ7kv//cuUvIP7lqUNIiYcpfxxU83hlBG
- lk3R/DA==
-X-Google-Smtp-Source: AGHT+IGGttXCQq59/A76A6eoeRs9BNWmSf0QzhYZN8KC28whe8AamEy+GGh1/8O7EekyOTOKl2bt8w==
-X-Received: by 2002:a05:6870:1605:b0:270:129f:8e65 with SMTP id
- 586e51a60fabf-29051d75ad8mr354210fac.34.1729879186169; 
- Fri, 25 Oct 2024 10:59:46 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7edc8495cabsm1379708a12.0.2024.10.25.10.59.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 10:59:45 -0700 (PDT)
-Message-ID: <784b2fab-a7ad-4e52-a3bc-60351cb7ecf2@linaro.org>
-Date: Fri, 25 Oct 2024 10:59:45 -0700
+ d=1e100.net; s=20230601; t=1729879909; x=1730484709;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8nfTLWIFuLIRZnJ5zttn9t99WgZPd9Fo1gzAk5S5KCE=;
+ b=SqxCZypHBL5uOROU/gXJjnvFCGhCWNHmpS7TION5U5lh6zjnatT/5D+M4oJD/gH2Lf
+ mUcDOwXoT/pppFtMU20Gmw2Pf6iq+R2D3EdHwBqObMvBCceYAUUh0oxaC+3dRxHUPSAT
+ DCTec0EsLzqWtxC9wfrSB+uDTOxdAUFt5gvbVmX4k4q5ojqWVYLC/WYgohl67PyyPd8h
+ Wz9sC3GHplP8tyJsXCO5Qbuk3pKT5JmCLXtaI2ji+3ig/5rNS8cAJvTCBdzE3gPWN3SS
+ /npOup0RL7aQO+CuyI5z8+UQjz9i3J0kUhI/NIBqLWfmjxOSdXa/Jy3VDY2m7LVNHhqf
+ 8wXQ==
+X-Gm-Message-State: AOJu0YyZk4ziKeZHCUHR3yrICaxHnHdb6XAKgjGWBGnwefgqBXFJqwxC
+ YlrcxiymhcvaQEiBp82cHmbgFTz0SEOPFBiTuIx6p678E+r8Hwzh8WiZ+i2gF/W+kxBgPVxRu0O
+ VRJHYGHtb/FpRDKwqb7SlbsB0n51CUxkUrRocsw==
+X-Google-Smtp-Source: AGHT+IFj97ThCZdJaHmZqAxMZcH6FQSGgASk2i8CX8JNEcyWLP+VE05tCCVOPP4Imoal4zY4DyMBXBQ08CAQoXI02h4=
+X-Received: by 2002:a05:6402:358c:b0:5c9:3070:701e with SMTP id
+ 4fb4d7f45d1cf-5cba2037cc9mr7428957a12.9.1729879908100; Fri, 25 Oct 2024
+ 11:11:48 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] target/i386: fix hang when using slow path for
- ptw_setl
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-References: <20241025175334.2549425-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241025175334.2549425-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c29;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-oo1-xc29.google.com
+References: <20241024092626.1328049-1-gaosong@loongson.cn>
+In-Reply-To: <20241024092626.1328049-1-gaosong@loongson.cn>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 25 Oct 2024 19:11:36 +0100
+Message-ID: <CAFEAcA89rs3Uk9NbqVM-Zwh7J6m10dAaYy0-D2GQOrKwAshv5A@mail.gmail.com>
+Subject: Re: [PULL 0/6] loongarch-to-apply queue
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,26 +87,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/25/24 10:53, Pierrick Bouvier wrote:
-> Most of the details are available in first patch. Second one is there to ensure
-> we'll have a useful error message if start_exclusive is called from cpu_exec
-> again.
-> 
-> I'm a bit puzzled that we never triggered this hang before. Is there something
-> wrong with the potential slow path for ptw_setl, or is it simply very uncommon?
-> 
-> v2:
-> - get current cpu from local variable instead of current_cpu global var.
-> - change condition to check cpu is running as current_cpu will never be NULL.
-> 
-> Pierrick Bouvier (2):
->    target/i386: fix hang when using slow path for ptw_setl
->    cpu: ensure we don't call start_exclusive from cpu_exec
-> 
->   cpu-common.c                         | 3 +++
->   target/i386/tcg/sysemu/excp_helper.c | 4 ++++
->   2 files changed, 7 insertions(+)
-> 
+On Thu, 24 Oct 2024 at 10:44, Song Gao <gaosong@loongson.cn> wrote:
+>
+> The following changes since commit 6f625ce2f21d6a1243065d236298277c56f972d5:
+>
+>   Merge tag 'pull-request-2024-10-21' of https://gitlab.com/thuth/qemu into staging (2024-10-21 17:12:59 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20241024
+>
+> for you to fetch changes up to c44e0d6ba280dcc6bdf4ed555020c61d564b526c:
+>
+>   target/loongarch: Add steal time support on migration (2024-10-24 17:27:55 +0800)
+>
+> ----------------------------------------------------------------
+> pull-loongarch-20241024
+>
+> ----------------------------------------------------------------
+> Bibo Mao (6):
+>       target/loongarch: Add loongson binary translation feature
+>       target/loongarch: Implement lbt registers save/restore function
+>       target/loongarch/kvm: Implement LoongArch PMU extension
+>       linux-headers: loongarch: Add kvm_para.h and unistd_64.h
+>       linux-headers: Update to Linux v6.12-rc3
+>       target/loongarch: Add steal time support on migration
 
-Pushed from my old branch (same as v1), please see v3 instead.
+Hi; this fails to build on all the aarch64 jobs
+(both normal and cross-compile):
+
+https://gitlab.com/qemu-project/qemu/-/jobs/8190899599
+https://gitlab.com/qemu-project/qemu/-/jobs/8190899331
+
+In file included from /usr/include/aarch64-linux-gnu/sys/syscall.h:24,
+from ../util/oslib-posix.c:48:
+linux-headers/asm/unistd.h:2:10: fatal error: asm/unistd_64.h: No such
+file or directory
+2 | #include <asm/unistd_64.h>
+  |          ^~~~~~~~~~~~~~~~~
+
+
+thanks
+-- PMM
 
