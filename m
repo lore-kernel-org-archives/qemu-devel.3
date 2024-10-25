@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44718D0C602
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 11:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE65BD0C601
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 12:02:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Iul-0000J6-Vm; Fri, 25 Oct 2024 07:55:35 -0400
+	id 1t4J06-00024I-2n; Fri, 25 Oct 2024 08:01:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t4Iuk-0000Ih-Iw
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 07:55:34 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1t4Izn-0001zF-Eh
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:01:01 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t4Iuj-00045S-07
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 07:55:34 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4315baec69eso19780005e9.2
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 04:55:32 -0700 (PDT)
+ id 1t4Izj-0004hK-Hd
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 08:00:44 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4315e9e9642so18272295e9.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 05:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729857331; x=1730462131; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729857641; x=1730462441; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6dDwzFdfFtGh2Y46LgafwADGO+ut0nhEisFfSK3GnEk=;
- b=b+NIgHT9WDm+dGtUMuZYVT8MXDiMF5L9xLz4CUpZ+xAaDunFQimzDfAwwixJ2g9p+z
- hx/DMaB1AQmmOSk46XjrRlfo+cD4W7iLWq+NJSx24g5guZtw8lagWMBB5UNvhieRiXtH
- 3CPdiVgT+hNu229YLh1SYtq8cgtFoNw40MItTQokOlHEhgKcc2G4heen+doRZOMGUAAL
- k8QT+0dtjpJfuPSHSYGsf4jugwPl4n0sKSSNIEzABzeieLul4j3B1Tigw9+CnC47G1F1
- dpgh1lE50uXKeQsN5cO1i09P27HxETyMkE4RE7PF0L5hwKm6DRiSMLbEu718AK7b+OsE
- 7ssQ==
+ bh=fT4lMuOgOB56WfuG238V6VrSQ7gyaX2jhXZYxFyoaD8=;
+ b=HG/cmLKogjM5/1foVYwNVv5d8VKbU7pK3X1zr6UsbTmNhymRLsf1cQf7VTxRd91oPg
+ Cg8FKTRNc4e5XIg+MDRgZ29UeWY3gQqWvHZysFlRWk8FunvMgHKV7P9RSWmE59xljwsq
+ bxNcFwijkAFWoP7uE6RuX4u3eLoFs1pybf7lc+W5o5VYScco7VkNmhsQ3WHfaGvNSp00
+ O3hH6pNscmrYgnVTeRzekUnv2areLDzHYKW4ockGQNN3Ob5oxLvRAhG/vbf5EqZ2OrMa
+ 2fcKhsJJ95lrOsmj3RoHqBY5sNHu0qvF7R81dn2b+5OIOsu3WfXLotyC1DqmZ+JIgmwz
+ nI6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729857331; x=1730462131;
+ d=1e100.net; s=20230601; t=1729857641; x=1730462441;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6dDwzFdfFtGh2Y46LgafwADGO+ut0nhEisFfSK3GnEk=;
- b=IvSuiK6Egzg7bPC5HW0V9FS/iU2wxsW9f3uCiRZYvpbg+O8Cx3pHcfPao1UjUS9LHt
- G08eB0qdqLn4DrbwVSRrN2NsnaxYGEGVPOyhB3sIPcvvEM47tV2JckrgYkRONaor/m4B
- /iEKc8v/Bv4KiDGHGjNINmOwcQl/vcpR7V+6Pu77mH9Zfs25kGAQdIrO8yAGD2UBWcYG
- nU9rdrHomi6dWIfiYz2Rj+B7Cw6iU63nzmyNyvDGQHiVcejRqYACRLdjtm3+8xjyLyog
- GfNUNuv6k/YUfBACvNyAfQzTHbtuJ2O9EsAHRE3AFvZe8dGWIzt2OJhnXqyIutjCDoJ4
- Eccw==
+ bh=fT4lMuOgOB56WfuG238V6VrSQ7gyaX2jhXZYxFyoaD8=;
+ b=Zd9g1Qiqr8k2zseq7GWloDr4Z8NlNDVHbvUHVxRB1TKuIk2sLprFv76stZnBFzyM78
+ p8a/c/GAdupFeHm0Ro3kK2NQcO6FU07/7v68fDnrd/i2QUj+ub0sfSzTwlaQyD6PFo8Z
+ zir4jcLLMQgQLScARyyr/xt6NRSyyT1BbjRRCaHyuwLYhK2Aa2lBHqRPdeG0u7XW1T5l
+ JP5wzJQKjaXcLbu51TCKb9Y2NTdU7aksnyr+hzU93S00eK1eHa8XB16Ku6TZctJ7asOd
+ 8MqcCnpeqcsBJhyCSMNLBiyMm7gIhrW9BVyuD9VEQ1af2qVBB8uv3mKCVl0SABRuHOQN
+ 5HNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbmi/2HZtvlj5FOcAmx93cpRtJBa3hlALfskePthgqJUXUjkYRIukVuhrGKxMVa8LS2Cp1Hs0YlnGJ@nongnu.org
-X-Gm-Message-State: AOJu0Yz5wsYGY50XACSKdVzPcTW8JY8UArVYGFji9E6aiEJPX/pgt69C
- ChmZf97VdsQujOPrLV2Lx8J3knDG5Kz2gKNE5f72b35aEVQpzZofq9gVLWu6hp4cBYwE2YI+xgB
- OrEI=
-X-Google-Smtp-Source: AGHT+IGGw5CDxkw48w465lpqmSYHh+QXAY09YsEwcmcxT1Rd4ZXlUea6a3N9f+P1d2DMVWACGYOD1w==
-X-Received: by 2002:a05:600c:511c:b0:431:5f3b:6ae4 with SMTP id
- 5b1f17b1804b1-4318421fb96mr92944795e9.17.1729857331400; 
- Fri, 25 Oct 2024 04:55:31 -0700 (PDT)
+ AJvYcCX23pVfUUd+AWDWWOVxh1epJk0ZcCpcJizoKuQFduLSs+l0dzLWjTnCFj3oal5agttKkN76qACmn0i+@nongnu.org
+X-Gm-Message-State: AOJu0Yz5PYqW+W5+SU+nUexKNoa5oXYIu4amqCnBFl2OTKWkirek0N8C
+ ROhALkikewRthWWtGlLxyV7MTO6yXFsKyBN8F87gHzle980Mlk2wpjL9ivjxN7Y=
+X-Google-Smtp-Source: AGHT+IHcD1fevFBRkVSdW3Qb18xqR7Hh4Mq3zUj4rkHb2/71NQ4BDvQD5qs+9AmwjMsQsxCgIQnP2A==
+X-Received: by 2002:adf:f88d:0:b0:37c:d11f:c591 with SMTP id
+ ffacd0b85a97d-37efcf06babmr6221046f8f.17.1729857641439; 
+ Fri, 25 Oct 2024 05:00:41 -0700 (PDT)
 Received: from [192.168.200.153] ([185.201.60.218])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4318b55f719sm45434155e9.15.2024.10.25.04.55.30
+ ffacd0b85a97d-38058b9294dsm1328846f8f.105.2024.10.25.05.00.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 04:55:31 -0700 (PDT)
-Message-ID: <5dfc6df8-dd40-4ec2-b3ca-6c428130e449@linaro.org>
-Date: Fri, 25 Oct 2024 12:55:28 +0100
+ Fri, 25 Oct 2024 05:00:41 -0700 (PDT)
+Message-ID: <f4a58b30-f0bb-4818-95ff-d86c8e5ce5f4@linaro.org>
+Date: Fri, 25 Oct 2024 13:00:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] cpu: ensure we don't call start_exclusive from
- cpu_exec
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20241023222026.1430014-1-pierrick.bouvier@linaro.org>
- <20241023222026.1430014-3-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] target/mips: Introduce disas_mt_available()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>
+References: <20241024195447.44600-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241023222026.1430014-3-pierrick.bouvier@linaro.org>
+In-Reply-To: <20241024195447.44600-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x330.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,29 +99,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/23/24 23:20, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   cpu-common.c | 3 +++
->   1 file changed, 3 insertions(+)
+On 10/24/24 20:54, Philippe Mathieu-Daudé wrote:
+> Similarly to commit 17c2c320f3c ("Introduce ase_mt_available helper"),
+> introduce the disas_mt_available() one which takes a DisasContext
+> argument to determine whether Multi-Threading is available by
+> checking the MT bit of the CP0_Config3 register.
 > 
-> diff --git a/cpu-common.c b/cpu-common.c
-> index 6b262233a3b..c979138fce9 100644
-> --- a/cpu-common.c
-> +++ b/cpu-common.c
-> @@ -194,6 +194,9 @@ void start_exclusive(void)
->       CPUState *other_cpu;
->       int running_cpus;
->   
-> +    /* Ensure we are not running, or start_exclusive will be blocked. */
-> +    g_assert(!current_cpu || !current_cpu->running);
-> +
->       if (current_cpu->exclusive_context_count) {
->           current_cpu->exclusive_context_count++;
->           return;
+> Remove the then unused ASE_MT definition.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   target/mips/mips-defs.h     |   1 -
+>   target/mips/tcg/translate.h |   5 ++
+>   target/mips/tcg/translate.c | 136 ++++++++++++++++++------------------
+>   target/mips/cpu-defs.c.inc  |   4 +-
+>   4 files changed, 75
 
-Actually, current_cpu had better be non-null from the very next line.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
