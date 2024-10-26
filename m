@@ -4,96 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FCD4D10BE3
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 05:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 532F5D10BE5
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 05:55:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4ZfB-0006ON-Mg; Sat, 26 Oct 2024 01:48:37 -0400
+	id 1t4ZlC-0007Z6-Hb; Sat, 26 Oct 2024 01:54:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t4Zf7-0006NY-MS
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 01:48:33 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1t4Zl4-0007YM-R9; Sat, 26 Oct 2024 01:54:44 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t4Zf5-0000XK-Fm
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 01:48:33 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-20cdda5cfb6so24636515ad.3
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 22:48:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1t4Zl1-0001KO-Oy; Sat, 26 Oct 2024 01:54:42 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2e3fca72a41so2143938a91.1; 
+ Fri, 25 Oct 2024 22:54:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729921710; x=1730526510;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7yqyg18yp1ptO0mEMmGUaQNL/w8yLyUCwzuUeMnK0Ko=;
- b=KHkTzamEBJS/o+Tnv8bANnJE0o6oJL5Fs4kzl1WfHHGXYprc73SdueA4Ojb5JNDgoB
- 6zwFcDfN7bj1YcItUNHmrlpfTjIRd48wHmJIN7qxxL7YGjXX5KpxNgdV85Z1yFnPjEQd
- w29OrvFBBd7N8twdX2121mLNeCILJM+xgCbHeb57ge0pPB7jXtXPPnVlD9A0SpItt1Dr
- OyyCb7BrWLTBOiJevc8daxNwupl80getl3zA/WgNc1O3yZB6oTZFk8vP/cUOVOjCsfYR
- KG1qQStysnRvXvTXEzWMgFqIz4a1pcrQP2/27gUHBvTTQWGY2Er2pkAHn+oQvXHfTchr
- v1QQ==
+ d=gmail.com; s=20230601; t=1729922077; x=1730526877; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=NOMGy2FEk66qzMckv6NEqNCB3zgERDeVlupgMzTkWMg=;
+ b=kI5y4OkmY8sO3OdztOvoq/rwfxG41DszzpxMVgBJf6RVi0kGcCtYmdGXgy06aGLaui
+ cp5NGPTvQyzeJIIW7FWQjacThAR029jft5vhRwWvz27WIYVvhcSwbLbBt3OJelADaUnj
+ g3ukF0JwLG9eOOKV9S3HYjJ5UYVksN/8jRq5okrsA6rq7iJv1V+7N1JwsvSCgXPLQBIA
+ 5y/kbWTZO62H31mw9PheM/2D12zUnipzpQDZ/GxO+rPNKqOpwvJ1a7XYEmtDPNgmpmGt
+ wRhfJ9svctc+KlVobM6EaeD/shuUrwxNhmUtJ25l8mdSFxfV6kUkByvM2dvgrAHJe+Qz
+ fULQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729921710; x=1730526510;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7yqyg18yp1ptO0mEMmGUaQNL/w8yLyUCwzuUeMnK0Ko=;
- b=MqOrvbc4qDqCuKsLK4rqnqGu5wxgmJxzK+Ql44+4Tyly7DhuOIw/r4nXZoblI34ikE
- A1CAD7ZN4bDPx044f8UWWGqCac1UpLjFxxDyqJsQVTrjkGiYxruj0d12WqSh13chImaw
- LuVtVgv+wscURMwVHmnnO46RxVVvaLKdN/nn5YfLjtnweFX8BzmwB4rzJcJls7ziV8mW
- jQOhEOHJm8Cv2X/ajR5YSYfdKB9/+pmPxMSN/7yD2fHx63/MORMFQYgdBSURSZMZGMyR
- q4nzxjJ4bJAWevw+kYo54fk9wpUYtQPFhpTYTDuoOOhjE8s4jbCIRYxXYBcs68PBi4Y+
- 7b8w==
+ d=1e100.net; s=20230601; t=1729922077; x=1730526877;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NOMGy2FEk66qzMckv6NEqNCB3zgERDeVlupgMzTkWMg=;
+ b=EVMOLfheDrIiVr1fod9znbFuYtQbJhV3vWlXpSQJl0uaUHwdVX3qsWjAqncgppjtw8
+ 6zvjsl53bS9ijc6Mve+oPYMDJZllqW/FHKtII/lNZrFdmW2OYZxZATijaPUx5R1yONfT
+ sFTrMo2nwkhJ4tIK469oA9m0Cm8FPTUYALDbpUMgdJ6U1ryHVlRxMPKDfQWwpJP7RBHE
+ JuCKAErdIcolNGVbRj9XjqWlXFqGweJ10rDpTfWE+NHAdbpJUGhXoZdgSqh7GH3kSTQY
+ btqcBae3C2ArHXTBtxU7Aun7xgylOMmc27FprfZlbIDWKwp5XAp0NqwCvfKRbkJC58x8
+ bipw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZYaVax/mYqnYwaWu+jDx0kwNGxC2FHLN2+ZmTwekHeAH/ityPvtnA4O37R72kG1apEnof9qHBiIpW@nongnu.org
-X-Gm-Message-State: AOJu0Yzw7BgiA4Hln/XrwSmJIZEOP4Dtsp3jc1dBvBOe9hL9nn3NvQGz
- +SyA0hr6l/LJqiF+tHy8gdcnjX3KvfE/5JCWKTsJy8APh0IRrLE8Vk9LF48OrQo=
-X-Google-Smtp-Source: AGHT+IH+j9bmXhMlKfZezJVItOfdBmKyDav/ko6hvY/OeMR5cHk0oGceReAIlGHLHuJwSIRwX2pGaA==
-X-Received: by 2002:a17:903:1c3:b0:20b:5be:a403 with SMTP id
- d9443c01a7336-210c69e7554mr19052565ad.11.1729921709887; 
- Fri, 25 Oct 2024 22:48:29 -0700 (PDT)
-Received: from [157.82.207.107] ([157.82.207.107])
+ AJvYcCU21pWiAz78e25rjzc6NmONv2Hf79EJNRuJnplWSBY0GeZndNfTVdlzYFoi/dzZ8WidckX+aY0j4XYo@nongnu.org,
+ AJvYcCW9PW9nnvVorfLIqha1KuYZcKWgiUfDGjn5/qb6zVts41/6QQk7y1UOmaOcPzKRuazJlVjTx+8yBx6NuQ==@nongnu.org
+X-Gm-Message-State: AOJu0YzCt356Xx+67hfQu5rPAy7KT2XG9D19Uq5K5YV9tZP0DpOJMVJ0
+ vJB4fTTlHLPzGTtqQ7zP3/4l3EoXZs41kitxW9fC/Ts4tzMxtgD5
+X-Google-Smtp-Source: AGHT+IFJG4Cj/fqsoZNGSucSYoUv9Fl2K2E7HwCFBwMlahm5V4eoqQix85zJpo05dvtFAoMiTAOhbQ==
+X-Received: by 2002:a17:90a:b305:b0:2e2:9038:4a48 with SMTP id
+ 98e67ed59e1d1-2e8f10a6e39mr2108770a91.32.1729922077318; 
+ Fri, 25 Oct 2024 22:54:37 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
+ ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-210bbf71f81sm18244985ad.109.2024.10.25.22.48.23
+ 98e67ed59e1d1-2e8e3555b67sm2627131a91.9.2024.10.25.22.54.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 22:48:29 -0700 (PDT)
-Message-ID: <cade56f5-a0e4-42a6-b7e2-e1dda8f24800@daynix.com>
-Date: Sat, 26 Oct 2024 14:48:22 +0900
+ Fri, 25 Oct 2024 22:54:36 -0700 (PDT)
+Message-ID: <443f1b0c-8184-4bf4-9f68-c23d7de3bc36@roeck-us.net>
+Date: Fri, 25 Oct 2024 22:54:34 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/15] hw/vmapple/cfg: Introduce vmapple cfg region
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
- rad@semihalf.com, quic_llindhol@quicinc.com, marcin.juszkiewicz@linaro.org,
- stefanha@redhat.com, mst@redhat.com, slp@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com,
- chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com,
- philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, qemu-riscv@nongnu.org,
- Alexander Graf <graf@amazon.com>
-References: <20241024102813.9855-1-phil@philjordan.eu>
- <20241024102813.9855-13-phil@philjordan.eu>
+Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
+ <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Joel Stanley <joel@jms.id.au>, qemu-block <qemu-block@nongnu.org>
+References: <20241017163247.711244-1-peter.maydell@linaro.org>
+ <dcf06645-dac0-4099-8946-38ca9deaeccf@redhat.com>
+ <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
+ <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
+ <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
+ <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
+ <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
+ <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
+ <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
+ <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
+ <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
+ <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
+ <53cbb597-e7f2-4742-bf85-928c704ddbcf@linaro.org>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241024102813.9855-13-phil@philjordan.eu>
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <53cbb597-e7f2-4742-bf85-928c704ddbcf@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::633;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=groeck7@gmail.com; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.17, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,276 +158,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/24 19:28, Phil Dennis-Jordan wrote:
-> From: Alexander Graf <graf@amazon.com>
+On 10/25/24 21:47, Philippe Mathieu-Daudé wrote:
+> On 25/10/24 12:25, Jan Lübbe wrote:
+>> On Fri, 2024-10-25 at 06:59 -0700, Guenter Roeck wrote:
+>>> On 10/25/24 02:57, Jan Lübbe wrote:
+>>>> On Fri, 2024-10-25 at 08:55 +0200, Cédric Le Goater wrote:
+>>>>> On 10/24/24 19:59, Philippe Mathieu-Daudé wrote:
+>>>>>> Cc'ing Jan.
+>>>>>>
+>>>>>> On 22/10/24 12:04, Guenter Roeck wrote:
+>>>>>>
+>>>>>>> I have no idea how this is supposed to work, and I don't think it works
+>>>>>>> as implemented. I'll revert commit e32ac563b83 in my local copy of qemu.
+>>>>>>> Jan, can you have a look at this bug report please? Otherwise I'll
+>>>>>>> have a look during soft freeze.
+>>>>
+>>>> Guenter, just to make sure: In your case [1], you had "boot-emmc" (see
+>>>> aspeed_machine_ast2600_class_emmc_init) enabled, right? Otherwise the
+>>>
+>>> I tried both enabled and disabled.
+>>>
+>>>> boot partition size would be 0, meaning that the eMMC has no boot
+>>>> partitions.
+>>>
+>>> That is what I would have expected, but it does not reflect reality.
+>>>
+>>>> In that configuration, your backing file needs to have space for the
+>>>> boot partitions at the start (2*1MiB) and the rootfs starts at the 2
+>>>> MiB offset.
+>>>>
+>>>
+>>> boot-emmc doesn't make a difference, because
+>>>
+>>>           if (emmc) {
+>>>               qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
+>>>               qdev_prop_set_uint8(card, "boot-config",
+>>>                                   boot_emmc ? 0x1 << 3 : 0x0);
+>>>           }
+>>>
+>>> in hw/arm/aspeed.c sets the boot partition size independently of the
+>>> boot-emmc flag.
+>>
+>> Ah, yes. :/
+>>
+>> So you can have SD, eMMC with boot from boot partition *disabled* or
+>> eMMC with boot from boot partition *enabled*.
+>>
+>>> I suspect that the expectation is that I always provide
+>>> an emmc image with a 2 MB gap at the beginning, but in my opinion that is
+>>> really hyper-clumsy, and I simply won't do it, sorry.
+>>
+>> I was surprised that the boot partitions' contents are stored in the
+>> same backing file as the main area (instead of being separate files).
+>> But I've not researched why it was designed this way.
 > 
-> Instead of device tree or other more standardized means, VMApple passes
-> platform configuration to the first stage boot loader in a binary encoded
-> format that resides at a dedicated RAM region in physical address space.
+> Yeah I'd have preferred separate files too, but when it seemed
+> to be simpler for the single user case:
+> https://lore.kernel.org/qemu-devel/d48b6357-c839-4971-aa28-bdbd5b1bab53@kaod.org/
 > 
-> This patch models this configuration space as a qdev device which we can
-> then map at the fixed location in the address space. That way, we can
-> influence and annotate all configuration fields easily.
-> 
-> Signed-off-by: Alexander Graf <graf@amazon.com>
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> ---
-> v3:
-> 
->   * Replaced legacy device reset method with Resettable method
-> 
-> v4:
-> 
->   * Fixed initialisation of default values for properties
->   * Dropped superfluous endianness conversions
->   * Moved most header code to .c, device name #define goes in vmapple.h
-> 
->   hw/vmapple/Kconfig           |   3 +
->   hw/vmapple/cfg.c             | 197 +++++++++++++++++++++++++++++++++++
->   hw/vmapple/meson.build       |   1 +
->   include/hw/vmapple/vmapple.h |   2 +
->   4 files changed, 203 insertions(+)
->   create mode 100644 hw/vmapple/cfg.c
-> 
-> diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
-> index 68f88876eb9..8bbeb9a9237 100644
-> --- a/hw/vmapple/Kconfig
-> +++ b/hw/vmapple/Kconfig
-> @@ -4,3 +4,6 @@ config VMAPPLE_AES
->   config VMAPPLE_BDIF
->       bool
->   
-> +config VMAPPLE_CFG
-> +    bool
-> +
-> diff --git a/hw/vmapple/cfg.c b/hw/vmapple/cfg.c
-> new file mode 100644
-> index 00000000000..aeb76ba363c
-> --- /dev/null
-> +++ b/hw/vmapple/cfg.c
-> @@ -0,0 +1,197 @@
-> +/*
-> + * VMApple Configuration Region
-> + *
-> + * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/vmapple/vmapple.h"
-> +#include "hw/sysbus.h"
-> +#include "qemu/log.h"
-> +#include "qemu/module.h"
-> +#include "qapi/error.h"
-> +#include "net/net.h"
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(VMAppleCfgState, VMAPPLE_CFG)
-> +
-> +#define VMAPPLE_CFG_SIZE 0x00010000
-> +
-> +typedef struct VMAppleCfg {
-> +    uint32_t version;         /* 0x000 */
-> +    uint32_t nr_cpus;         /* 0x004 */
-> +    uint32_t unk1;            /* 0x008 */
-> +    uint32_t unk2;            /* 0x00c */
-> +    uint32_t unk3;            /* 0x010 */
-> +    uint32_t unk4;            /* 0x014 */
-> +    uint64_t ecid;            /* 0x018 */
-> +    uint64_t ram_size;        /* 0x020 */
-> +    uint32_t run_installer1;  /* 0x028 */
-> +    uint32_t unk5;            /* 0x02c */
-> +    uint32_t unk6;            /* 0x030 */
-> +    uint32_t run_installer2;  /* 0x034 */
-> +    uint32_t rnd;             /* 0x038 */
-> +    uint32_t unk7;            /* 0x03c */
-> +    MACAddr mac_en0;          /* 0x040 */
-> +    uint8_t pad1[2];
-> +    MACAddr mac_en1;          /* 0x048 */
-> +    uint8_t pad2[2];
-> +    MACAddr mac_wifi0;        /* 0x050 */
-> +    uint8_t pad3[2];
-> +    MACAddr mac_bt0;          /* 0x058 */
-> +    uint8_t pad4[2];
-> +    uint8_t reserved[0xa0];   /* 0x060 */
-> +    uint32_t cpu_ids[0x80];   /* 0x100 */
-> +    uint8_t scratch[0x200];   /* 0x180 */
-> +    char serial[32];          /* 0x380 */
-> +    char unk8[32];            /* 0x3a0 */
-> +    char model[32];           /* 0x3c0 */
-> +    uint8_t unk9[32];         /* 0x3e0 */
-> +    uint32_t unk10;           /* 0x400 */
-> +    char soc_name[32];        /* 0x404 */
-> +} VMAppleCfg;
-> +
-> +struct VMAppleCfgState {
-> +    SysBusDevice parent_obj;
-> +    VMAppleCfg cfg;
-> +
-> +    MemoryRegion mem;
-> +    char *serial;
-> +    char *model;
-> +    char *soc_name;
-> +};
-> +
-> +static void vmapple_cfg_reset(Object *obj, ResetType type)
-> +{
-> +    VMAppleCfgState *s = VMAPPLE_CFG(obj);
-> +    VMAppleCfg *cfg;
-> +
-> +    cfg = memory_region_get_ram_ptr(&s->mem);
-> +    memset((void *)cfg, 0, VMAPPLE_CFG_SIZE);
 
-This explicit cast is unnecessary.
+I don't mind a single file. What bothers me is that the partitioning is made
+mandatory for ast2600 even if not used.
 
-> +    *cfg = s->cfg;
-> +}
-> +
-> +static bool strlcpy_set_error(char *restrict dst, const char *restrict src,
-> +                              size_t dst_size, Error **errp,
-> +                              const char *parent_func, const char *location,
-> +                              const char *buffer_name)
-> +{
-> +    size_t len;
-> +
-> +    len = g_strlcpy(dst, src, dst_size);
-> +    if (len < dst_size) { /* len does not count nul terminator */
-> +        return true;
-> +    }
-> +
-> +    error_setg(errp,
-> +               "strlcpy_set_error: %s (%s): Destination buffer %s too small "
-> +               "(need %zu, have %zu)",
-> +               parent_func, location, buffer_name, len + 1, dst_size);
+Guenter
 
-This error message is user-facing so please describe the property name 
-the user specified instead of writing the function name.
-
-> +    return false;
-> +}
-> +
-> +/*
-> + * String copying wrapper that returns and reports a runtime error in
-> + * case of truncation due to insufficient destination buffer space.
-> + */
-> +#define strlcpy_array_return_error(dst_array, src, errp) \
-> +    do { \
-> +        if (!strlcpy_set_error((dst_array), (src), ARRAY_SIZE(dst_array), (errp),\
-> +                               __func__, stringify(__LINE__), # dst_array)) { \
-> +            return; \
-> +        } \
-> +    } while (0)
-> +
-> +static void vmapple_cfg_realize(DeviceState *dev, Error **errp)
-> +{
-> +    VMAppleCfgState *s = VMAPPLE_CFG(dev);
-> +    uint32_t i;
-> +
-> +    if (!s->serial) {
-> +        s->serial = g_strdup("1234");
-> +    }
-> +    if (!s->model) {
-> +        s->model = g_strdup("VM0001");
-> +    }
-> +    if (!s->soc_name) {
-> +        s->soc_name = g_strdup("Apple M1 (Virtual)");
-> +    }
-> +
-> +    strlcpy_array_return_error(s->cfg.serial, s->serial, errp);
-> +    strlcpy_array_return_error(s->cfg.model, s->model, errp);
-> +    strlcpy_array_return_error(s->cfg.soc_name, s->soc_name, errp);
-> +    strlcpy_array_return_error(s->cfg.unk8, "D/A", errp);
-> +    s->cfg.version = 2;
-> +    s->cfg.unk1 = 1;
-> +    s->cfg.unk2 = 1;
-> +    s->cfg.unk3 = 0x20;
-> +    s->cfg.unk4 = 0;
-> +    s->cfg.unk5 = 1;
-> +    s->cfg.unk6 = 1;
-> +    s->cfg.unk7 = 0;
-> +    s->cfg.unk10 = 1;
-> +
-> +    if (s->cfg.nr_cpus > ARRAY_SIZE(s->cfg.cpu_ids)) {
-> +        error_setg(errp,
-> +                   "Failed to create %u CPUs, vmapple machine supports %zu max",
-> +                   s->cfg.nr_cpus, ARRAY_SIZE(s->cfg.cpu_ids));
-> +        return;
-> +    }
-> +    for (i = 0; i < s->cfg.nr_cpus; i++) {
-> +        s->cfg.cpu_ids[i] = i;
-> +    }
-> +}
-> +
-> +static void vmapple_cfg_init(Object *obj)
-> +{
-> +    VMAppleCfgState *s = VMAPPLE_CFG(obj);
-> +
-> +    memory_region_init_ram(&s->mem, obj, "VMApple Config", VMAPPLE_CFG_SIZE,
-> +                           &error_fatal);
-> +    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mem);
-> +}
-> +
-> +static Property vmapple_cfg_properties[] = {
-> +    DEFINE_PROP_UINT32("nr-cpus", VMAppleCfgState, cfg.nr_cpus, 1),
-> +    DEFINE_PROP_UINT64("ecid", VMAppleCfgState, cfg.ecid, 0),
-> +    DEFINE_PROP_UINT64("ram-size", VMAppleCfgState, cfg.ram_size, 0),
-> +    DEFINE_PROP_UINT32("run_installer1", VMAppleCfgState, cfg.run_installer1, 0),
-> +    DEFINE_PROP_UINT32("run_installer2", VMAppleCfgState, cfg.run_installer2, 0),
-> +    DEFINE_PROP_UINT32("rnd", VMAppleCfgState, cfg.rnd, 0),
-> +    DEFINE_PROP_MACADDR("mac-en0", VMAppleCfgState, cfg.mac_en0),
-> +    DEFINE_PROP_MACADDR("mac-en1", VMAppleCfgState, cfg.mac_en1),
-> +    DEFINE_PROP_MACADDR("mac-wifi0", VMAppleCfgState, cfg.mac_wifi0),
-> +    DEFINE_PROP_MACADDR("mac-bt0", VMAppleCfgState, cfg.mac_bt0),
-> +    DEFINE_PROP_STRING("serial", VMAppleCfgState, serial),
-> +    DEFINE_PROP_STRING("model", VMAppleCfgState, model),
-> +    DEFINE_PROP_STRING("soc_name", VMAppleCfgState, soc_name),
-> +    DEFINE_PROP_END_OF_LIST(),
-> +};
-> +
-> +static void vmapple_cfg_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
-> +
-> +    dc->realize = vmapple_cfg_realize;
-> +    dc->desc = "VMApple Configuration Region";
-> +    device_class_set_props(dc, vmapple_cfg_properties);
-> +    rc->phases.hold = vmapple_cfg_reset;
-> +}
-> +
-> +static const TypeInfo vmapple_cfg_info = {
-> +    .name          = TYPE_VMAPPLE_CFG,
-> +    .parent        = TYPE_SYS_BUS_DEVICE,
-> +    .instance_size = sizeof(VMAppleCfgState),
-> +    .instance_init = vmapple_cfg_init,
-> +    .class_init    = vmapple_cfg_class_init,
-> +};
-> +
-> +static void vmapple_cfg_register_types(void)
-> +{
-> +    type_register_static(&vmapple_cfg_info);
-> +}
-> +
-> +type_init(vmapple_cfg_register_types)
-> diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
-> index d4624713deb..64b78693a31 100644
-> --- a/hw/vmapple/meson.build
-> +++ b/hw/vmapple/meson.build
-> @@ -1,2 +1,3 @@
->   system_ss.add(when: 'CONFIG_VMAPPLE_AES',  if_true: files('aes.c'))
->   system_ss.add(when: 'CONFIG_VMAPPLE_BDIF', if_true: files('bdif.c'))
-> +system_ss.add(when: 'CONFIG_VMAPPLE_CFG',  if_true: files('cfg.c'))
-> diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
-> index a4c87b166d5..984281b6a67 100644
-> --- a/include/hw/vmapple/vmapple.h
-> +++ b/include/hw/vmapple/vmapple.h
-> @@ -12,4 +12,6 @@
->   
->   #define TYPE_VMAPPLE_BDIF "vmapple-bdif"
->   
-> +#define TYPE_VMAPPLE_CFG "vmapple-cfg"
-> +
->   #endif /* HW_VMAPPLE_VMAPPLE_H */
+>>
+>>> I can work around
+>>> the problem by changing the above code to only set boot-partition-size if
+>>> boot_emmc is set, or I can revert commit e32ac563b83. For now I chose the
+>>> latter.
+>>
+>> With e32ac563b83 reverted, your backing file layout will change *at
+>> runtime* depending on whether booting from the boot partition is
+>> enabled via EXT CSD registers. You should be able to try that using
+>> 'mmc bootpart enable <boot_part> 0 /dev/mmcblk0' (with boot_part=0 for
+>> disabled and boot_part=1/2 for enabled).
+>>
+>>
+>> I'm not sure what the best way forward is... perhaps make the boot-
+>> partition-size zero if boot_emmc is false? e.g.
+>>
+>> @@ -339,7 +339,12 @@ static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc,
+>>           }
+>>           card = qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
+>>           if (emmc) {
+>> -            qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
+>> +            /*
+>> +             * Avoid the requirement for a padded disk image if booting from
+>> +             * eMMC boot partitions is not needed.
+>> +             */
+>> +            qdev_prop_set_uint64(card, "boot-partition-size",
+>> +                                boot_emmc ? 1 * MiB : 0);
+>>               qdev_prop_set_uint8(card, "boot-config",
+>>                                   boot_emmc ? 0x1 << 3 : 0x0);
+>>           }
+>>
+>>
+>> Then you'd have the choice between:
+>> - an eMMC, but without boot partitions (and simple backing file layout)
+>> - an eMMC with boot partitions and need a backing file with
+>>    the boot partitions at the beginning
+>>
+>> That might be the lesser evil. :)
+>>
+>> Jan
+>>
+> 
 
 
