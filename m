@@ -4,147 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C881BD10BFC
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 15:32:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE335D0C604
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 15:46:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4imV-0007m6-5O; Sat, 26 Oct 2024 11:32:47 -0400
+	id 1t4izJ-0001DM-9H; Sat, 26 Oct 2024 11:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1t4imS-0007kz-33; Sat, 26 Oct 2024 11:32:44 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4izI-0001D7-B6
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 11:46:00 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1t4imQ-0002zH-3e; Sat, 26 Oct 2024 11:32:43 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-20cceb8d8b4so16549995ad.1; 
- Sat, 26 Oct 2024 08:32:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4izG-0007EY-L9
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 11:46:00 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-7ed9c16f687so2239445a12.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Oct 2024 08:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729956759; x=1730561559; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=/E+P9XDtTfhdme2tZGAF7PlqHwrHS7iT886fnkgkgcI=;
- b=G9KPA5riHazgfXKqjwJegXGnNRDXQnxXLNiXC0BZcrQNs6x/Yinzw94vkiGnuzrXK6
- EjRbuzpIJ3kYjUcSsEF78JU2UxY5Ssb4bu5HKUxrXyWE2S7laTtX8zfTsH7rUz8yOJ1H
- FkqTxzyn3zi/BHQUQ1dHeyuadtklCBpGlXA8YRNLjZ7dQhmjW+MOGLyDCWQsEk2kMID2
- Ml1QqnnNZz0lCyQWT3/hXZHNHiDPNk9/w7xRpOpcWd442Sq9HTQSv+++j06AFJ9ZKElh
- tqZjPbXy9ym2YArHmDny2FUUtH0Bt9PbLiIkPsXJAgzECppArSE8RdlO2hKiUEN6K99+
- dFDA==
+ d=linaro.org; s=google; t=1729957556; x=1730562356; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IzCeCnXZcZFzbEpRCXR1UfcZZKsaCPraEa9wZnEbwSc=;
+ b=aycYP/NsJIZn9OZhxUGMYPAA3cAokVMl8b/8T8WUswCwhKw3sw6XefJFCCQeGOxlwV
+ tMawu8VKL12JDrpmrHXHGjtE8C60M3JmtE7957u/azgp28Zrn9N2Nj4g1TPljo5WV7zG
+ p4Pphaf68Jh0o/01SEGTdoXwxpJW7TsgNc4Fj1XQPLxCDvC3ehWmv62fD368jmbd3FFe
+ xeIe68ulRGnJna9LbArvNCtjsSMp2Av0Ol4TwRriY4//VqY6aH/OlC+iTne6j+qhos9i
+ hTJmF0FtDoiP+N6fQTSADvhu1NizpjxGwtTuCXnxHzlcMxoQMpYAPKgidg1vVTf+9cIR
+ d6Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729956759; x=1730561559;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/E+P9XDtTfhdme2tZGAF7PlqHwrHS7iT886fnkgkgcI=;
- b=YGj4IprsGWLcPmUfiW1u6SEBUgCvrRK/NS2rtHfzyXxtmi0e6N+BZBOXmDAPURXsjU
- tW4MI+ot6UFfs8oUxeaweDpEhIEMQpZL3RTTD/GA2wHzTcJ1ctGXYIUOOJK4i2GirvNG
- F1Di1NgsTBVEOPUVtiW7inAuA9uU4iPByagy98IIoEe1H4m+i71ILv2FI8LD6zwao4UQ
- A3WmX85IaqdTh+lGS/RcfiWccqdsot+xWd+90Hrxi88YETnJgOLZEQB7iGGq1YYe4OAC
- tmUgZ2Lzm5evPUkGhsqcoHAg4uLhdi+07r3qZxBQqm32Uu/NBZMObcbGXPD+L9cfqz8g
- xehw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUk+EfBeBvv8BrVw6WwlxrrtD3Y4KIJ1kcuqVyDIuwtsAFv+doQBwvG+Pr1FN/GzHaFJAZCTb5g+5xk@nongnu.org,
- AJvYcCXAkslEv1uuXsnfVnPEeqlAxdnyriyM31X/NLGCfEQe7Zm5OQYyoDBkI7P/QD5NjI89dX0UghdtxYbeXQ==@nongnu.org
-X-Gm-Message-State: AOJu0YxG2wUt+bJDEjNnFYq5R//DF3WOhkhQ5zqibbJbJZEaKVK1zp3l
- h7K3A0ulJNM/nCra7RacDSGND3LBwSVVMXcUbup/6u5tX4FnhYi/
-X-Google-Smtp-Source: AGHT+IHJFsko9Gt5kqf7/+xj5dbORSdSlwRqQWN/6nz+Qb5ZLldxm0cI1HOyFRJm4Esv58tn7+lp8Q==
-X-Received: by 2002:a17:902:e88e:b0:205:8b84:d5e8 with SMTP id
- d9443c01a7336-210c59e2580mr45231885ad.18.1729956759422; 
- Sat, 26 Oct 2024 08:32:39 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
- ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ d=1e100.net; s=20230601; t=1729957556; x=1730562356;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IzCeCnXZcZFzbEpRCXR1UfcZZKsaCPraEa9wZnEbwSc=;
+ b=IRMqU3Fyb6suJxH/HtstmL45pdtjosFRuZyftB2NtCshige/jfEAOxeoSGosqVgWGO
+ CeJqy092mEKjfM03cpniTlNAdamf+WUOevR///FsE4wlGyzUE1SpAlMqY1Z5yMX9hIo8
+ U/WFssB3WGbYlXJ/EOnfgYGdZY00gcFLYxwv2CLBL8ze+PAwTaqUsaTc5+5Q9xKZBGCM
+ kXTqsaTdsngw3M2sgKEYKDMKbj6oX35lk7PiHa1hgNCxoqCMldbxJQLmX405gfTnQfh7
+ 4FQ37VeNkKCKhS6fryzvgwtLASAhqaEYI9NcXcprwOjbKLfsg9CHLx36CkukvF0V2iDW
+ U+KQ==
+X-Gm-Message-State: AOJu0YzppGfwPVXwkEtmQKG6BtOIO6sWwDI/LL0PHyrcU+PAJO9orswx
+ gK1ujhofsUWwr2kUz3v4M1p5cTNO500YnjQ9UpqGZOkmBVIYGiX6E6F6bUC42nLsozojFYseLry
+ X
+X-Google-Smtp-Source: AGHT+IGyiBEleuxmFXSzI6E5uLsAZTQCD4h7DOty9dB+1Cwd7m6YfGl5YUeZSuqYiTECP47MUy1WoQ==
+X-Received: by 2002:a05:6a20:7a99:b0:1d9:69ca:6b24 with SMTP id
+ adf61e73a8af0-1d9a8402dc0mr3757009637.23.1729957556292; 
+ Sat, 26 Oct 2024 08:45:56 -0700 (PDT)
+Received: from localhost.localdomain ([45.176.88.169])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-210bc02f6f1sm25370515ad.226.2024.10.26.08.32.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 26 Oct 2024 08:32:38 -0700 (PDT)
-Message-ID: <c27fbed6-596e-4ce7-a6ca-6d12d7205e99@roeck-us.net>
-Date: Sat, 26 Oct 2024 08:32:36 -0700
+ 41be03b00d2f7-7edc8a3d0cesm2902305a12.80.2024.10.26.08.45.54
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 26 Oct 2024 08:45:55 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH] target/mips: Remove unreachable 32-bit code on 64-bit
+ Loongson Ext
+Date: Sat, 26 Oct 2024 12:45:50 -0300
+Message-ID: <20241026154550.78880-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
- <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Joel Stanley <joel@jms.id.au>, qemu-block <qemu-block@nongnu.org>
-References: <20241017163247.711244-1-peter.maydell@linaro.org>
- <dcf06645-dac0-4099-8946-38ca9deaeccf@redhat.com>
- <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
- <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
- <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
- <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
- <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
- <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
- <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
- <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
- <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
- <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
- <53cbb597-e7f2-4742-bf85-928c704ddbcf@linaro.org>
- <443f1b0c-8184-4bf4-9f68-c23d7de3bc36@roeck-us.net>
- <1bce4c22-9281-44c5-8acb-860881dc271c@kaod.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <1bce4c22-9281-44c5-8acb-860881dc271c@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=groeck7@gmail.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.171, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x533.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,55 +95,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/26/24 03:02, Cédric Le Goater wrote:
-[ ... ]
+Loongson fixed-point multiplies and divisions opcodes are
+specific to 64-bit cores (Loongson-2 and Loongson-3 families).
+Simplify by removing the 32-bit checks.
 
->> I don't mind a single file. What bothers me is that the partitioning is made
->> mandatory for ast2600 even if not used.
-> 
-> Our only use case, in 2019, was to boot QEMU ast2600 machines from an
-> eMMC device using an OpenBMC FW image like the ones we find on IBM
-> Power10 Rainier systems. I agree we only focused on this scenario.
-> Most of the support should be there for other use cases, and it's now
-> a question of finding the right tunables for the user.
-> 
-> I did a quick experiment using 2 patches,
-> 
-> one on hw/sd/sd.c to fix c8cb19876d3e ("hw/sd/sdcard: Support boot
-> area in emmc image")
-> 
->      @@ -826,7 +826,9 @@ static void sd_reset(DeviceState *dev)
->               sect = 0;
->           }
->           size = sect << HWBLOCK_SHIFT;
->      -    size -= sd_bootpart_offset(sd);
->      +    if (sd_is_emmc(sd)) {
->      +        size -= sd->boot_part_size * 2;
->      +    }
->           sect = sd_addr_to_wpnum(size) + 1;
-> 
-> and another on hw/arm/aspeed.c to remove the setting of the eMMC
-> device properties when it is not bootable :
->      @@ -338,7 +338,7 @@ static void sdhci_attach_drive(SDHCIStat
->                   return;
->               }
->               card = qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
->      -        if (emmc) {
->      +        if (emmc && boot_emmc) {
->                   qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
->                   qdev_prop_set_uint8(card, "boot-config",
->                                       boot_emmc ? 0x1 << 3 : 0x0);
-> (I am not saying this is correct)
-> 
+Reported-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Based-on: <20230831203024.87300-1-philmd@linaro.org>
+---
+ target/mips/tcg/loong_translate.c | 43 +++----------------------------
+ target/mips/tcg/translate.c       |  2 +-
+ target/mips/tcg/meson.build       |  2 +-
+ 3 files changed, 6 insertions(+), 41 deletions(-)
 
-Works for me, though, and it is much better than mandating the existence
-of boot partitions.
-
-If you end up submitting those patches, please feel free to add
-
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-
-Thanks,
-Guenter
+diff --git a/target/mips/tcg/loong_translate.c b/target/mips/tcg/loong_translate.c
+index c896e64b9e6..91711b8e052 100644
+--- a/target/mips/tcg/loong_translate.c
++++ b/target/mips/tcg/loong_translate.c
+@@ -31,13 +31,6 @@ static bool gen_lext_DIV_G(DisasContext *s, int rd, int rs, int rt,
+     TCGv t0, t1;
+     TCGLabel *l1, *l2, *l3;
+ 
+-    if (is_double) {
+-        if (TARGET_LONG_BITS != 64) {
+-            return false;
+-        }
+-        check_mips_64(s);
+-    }
+-
+     if (rd == 0) {
+         /* Treat as NOP. */
+         return true;
+@@ -61,8 +54,7 @@ static bool gen_lext_DIV_G(DisasContext *s, int rd, int rs, int rt,
+     tcg_gen_br(l3);
+     gen_set_label(l1);
+ 
+-    tcg_gen_brcondi_tl(TCG_COND_NE, t0, is_double && TARGET_LONG_BITS == 64
+-                                        ? LLONG_MIN : INT_MIN, l2);
++    tcg_gen_brcondi_tl(TCG_COND_NE, t0, is_double ? LLONG_MIN : INT_MIN, l2);
+     tcg_gen_brcondi_tl(TCG_COND_NE, t1, -1LL, l2);
+     tcg_gen_mov_tl(cpu_gpr[rd], t0);
+ 
+@@ -93,13 +85,6 @@ static bool gen_lext_DIVU_G(DisasContext *s, int rd, int rs, int rt,
+     TCGv t0, t1;
+     TCGLabel *l1, *l2;
+ 
+-    if (is_double) {
+-        if (TARGET_LONG_BITS != 64) {
+-            return false;
+-        }
+-        check_mips_64(s);
+-    }
+-
+     if (rd == 0) {
+         /* Treat as NOP. */
+         return true;
+@@ -147,13 +132,6 @@ static bool gen_lext_MOD_G(DisasContext *s, int rd, int rs, int rt,
+     TCGv t0, t1;
+     TCGLabel *l1, *l2, *l3;
+ 
+-    if (is_double) {
+-        if (TARGET_LONG_BITS != 64) {
+-            return false;
+-        }
+-        check_mips_64(s);
+-    }
+-
+     if (rd == 0) {
+         /* Treat as NOP. */
+         return true;
+@@ -173,8 +151,7 @@ static bool gen_lext_MOD_G(DisasContext *s, int rd, int rs, int rt,
+         tcg_gen_ext32u_tl(t1, t1);
+     }
+     tcg_gen_brcondi_tl(TCG_COND_EQ, t1, 0, l1);
+-    tcg_gen_brcondi_tl(TCG_COND_NE, t0, is_double && TARGET_LONG_BITS == 64
+-                                        ? LLONG_MIN : INT_MIN, l2);
++    tcg_gen_brcondi_tl(TCG_COND_NE, t0, is_double ? LLONG_MIN : INT_MIN, l2);
+     tcg_gen_brcondi_tl(TCG_COND_NE, t1, -1LL, l2);
+     gen_set_label(l1);
+     tcg_gen_movi_tl(cpu_gpr[rd], 0);
+@@ -205,13 +182,6 @@ static bool gen_lext_MODU_G(DisasContext *s, int rd, int rs, int rt,
+     TCGv t0, t1;
+     TCGLabel *l1, *l2;
+ 
+-    if (is_double) {
+-        if (TARGET_LONG_BITS != 64) {
+-            return false;
+-        }
+-        check_mips_64(s);
+-    }
+-
+     if (rd == 0) {
+         /* Treat as NOP. */
+         return true;
+@@ -257,13 +227,6 @@ static bool gen_lext_MULT_G(DisasContext *s, int rd, int rs, int rt,
+ {
+     TCGv t0, t1;
+ 
+-    if (is_double) {
+-        if (TARGET_LONG_BITS != 64) {
+-            return false;
+-        }
+-        check_mips_64(s);
+-    }
+-
+     if (rd == 0) {
+         /* Treat as NOP. */
+         return true;
+@@ -295,6 +258,8 @@ static bool trans_DMULTu_G(DisasContext *s, arg_muldiv *a)
+ 
+ bool decode_ext_loongson(DisasContext *ctx, uint32_t insn)
+ {
++    assert(ctx->hflags & MIPS_HFLAG_64);
++
+     if ((ctx->insn_flags & INSN_LOONGSON2E)
+             && decode_godson2(ctx, ctx->opcode)) {
+         return true;
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 9839575247e..68a5c21bb2d 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -15020,7 +15020,7 @@ static void decode_opc(CPUMIPSState *env, DisasContext *ctx)
+     if (cpu_supports_isa(env, INSN_VR54XX) && decode_ext_vr54xx(ctx, ctx->opcode)) {
+         return;
+     }
+-    if (decode_ext_loongson(ctx, ctx->opcode)) {
++    if (TARGET_LONG_BITS == 64 && decode_ext_loongson(ctx, ctx->opcode)) {
+         return;
+     }
+ #if defined(TARGET_MIPS64)
+diff --git a/target/mips/tcg/meson.build b/target/mips/tcg/meson.build
+index fbb6d6eb407..fd91148df74 100644
+--- a/target/mips/tcg/meson.build
++++ b/target/mips/tcg/meson.build
+@@ -16,7 +16,6 @@ mips_ss.add(files(
+   'fpu_helper.c',
+   'ldst_helper.c',
+   'lmmi_helper.c',
+-  'loong_translate.c',
+   'msa_helper.c',
+   'msa_translate.c',
+   'op_helper.c',
+@@ -31,6 +30,7 @@ mips_ss.add(when: 'TARGET_MIPS64', if_true: files(
+   'tx79_translate.c',
+   'octeon_translate.c',
+   'lcsr_translate.c',
++  'loong_translate.c',
+ ), if_false: files(
+   'mxu_translate.c',
+ ))
+-- 
+2.45.2
 
 
