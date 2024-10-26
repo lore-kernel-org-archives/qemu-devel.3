@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF947D0C604
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2EB3D10C00
 	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 16:32:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4jhA-0007wq-BZ; Sat, 26 Oct 2024 12:31:20 -0400
+	id 1t4jhA-0007wt-Ux; Sat, 26 Oct 2024 12:31:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
- id 1t4jgh-0007s2-MY; Sat, 26 Oct 2024 12:30:51 -0400
-Received: from icts-p-cavuit-1.kulnet.kuleuven.be ([2a02:2c40:0:c0::25:132])
+ id 1t4jgj-0007sh-SC; Sat, 26 Oct 2024 12:31:01 -0400
+Received: from icts-p-cavuit-3.kulnet.kuleuven.be ([2a02:2c40:0:c0::25:133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
- id 1t4jge-0003bI-DB; Sat, 26 Oct 2024 12:30:51 -0400
+ id 1t4jge-0003c3-BZ; Sat, 26 Oct 2024 12:30:52 -0400
 X-KULeuven-Envelope-From: libvirt-e6954efa@volkihar.be
 X-KULeuven-Scanned: Found to be clean
-X-KULeuven-ID: D09D320058.AA594
+X-KULeuven-ID: EF25620066.ADDCD
 X-KULeuven-Information: Katholieke Universiteit Leuven
 Received: from icts-p-ceifnet-smtps-1.kuleuven.be
  (icts-p-ceifnet-smtps.service.icts.svcd
  [IPv6:2a02:2c40:0:51:135:242:ac11:35])
- by icts-p-cavuit-1.kulnet.kuleuven.be (Postfix) with ESMTP id D09D320058;
+ by icts-p-cavuit-3.kulnet.kuleuven.be (Postfix) with ESMTP id EF25620066;
  Sat, 26 Oct 2024 18:30:37 +0200 (CEST)
 BCmilterd-Mark-Subject: no
 BCmilterd-Errors: 
 BCmilterd-Report: 
 X-CAV-Cluster: smtps
-Received: from flutterbat.volkihar.be (unknown
- [IPv6:2a02:a03f:8ada:7900:fc22:6c81:6588:12d3])
+Received: from flutterbat.volkihar.be (236.58-240-81.adsl-dyn.isp.belgacom.be
+ [81.240.58.236])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by icts-p-ceifnet-smtps-1.kuleuven.be (Postfix) with ESMTPSA id B13A1D4F2584F; 
+ by icts-p-ceifnet-smtps-1.kuleuven.be (Postfix) with ESMTPSA id D3D00D4F2584F; 
  Sat, 26 Oct 2024 18:30:37 +0200 (CEST)
 Received: by flutterbat.volkihar.be (Postfix, from userid 1000)
- id 62F5A4B91E8; Sat, 26 Oct 2024 18:30:37 +0200 (CEST)
+ id 9C8004B91EE; Sat, 26 Oct 2024 18:30:37 +0200 (CEST)
 X-Kuleuven: This mail passed the K.U.Leuven mailcluster
 From: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
 To: qemu-devel@nongnu.org
@@ -48,15 +48,17 @@ Cc: John Snow <jsnow@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
  Hanna Reitz <hreitz@redhat.com>,
  Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
-Subject: [PATCH v4 0/5] block: allow commit to unmap zero blocks
-Date: Sat, 26 Oct 2024 18:30:04 +0200
-Message-ID: <20241026163010.2865002-1-libvirt-e6954efa@volkihar.be>
+Subject: [PATCH v4 3/5] block: refactor error handling of commit_iteration
+Date: Sat, 26 Oct 2024 18:30:07 +0200
+Message-ID: <20241026163010.2865002-4-libvirt-e6954efa@volkihar.be>
 X-Mailer: git-send-email 2.44.1
+In-Reply-To: <20241026163010.2865002-1-libvirt-e6954efa@volkihar.be>
+References: <20241026163010.2865002-1-libvirt-e6954efa@volkihar.be>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:2c40:0:c0::25:132;
+Received-SPF: pass client-ip=2a02:2c40:0:c0::25:133;
  envelope-from=libvirt-e6954efa@volkihar.be;
- helo=icts-p-cavuit-1.kulnet.kuleuven.be
+ helo=icts-p-cavuit-3.kulnet.kuleuven.be
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -77,47 +79,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series adds support for zero blocks in non-active commits.
-The first three patches in the series refactor the relevant code, patch
-four makes the actual changes, and the last patch adds a test for the
-new functionality.
-
+Signed-off-by: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
 ---
+ block/commit.c | 61 ++++++++++++++++++++++++++++----------------------
+ 1 file changed, 34 insertions(+), 27 deletions(-)
 
-Changes since v3:
-- minor reformating based on checkpatch.pl
-- moved tracepoint in commit_iteration before first possible return on
-  error
-- renamed the handle_error label in commit_iteration to fail and
-  prevented the happy path from passing through this label
-- moved test script to the tests/qemu-iotests/tests folder and named it
-  commit-zero-blocks
-
-Changes since v2:
-- moved main loop of commit_run to a separate function and refactored
-  the error handling.
-- call blk_co_pwrite_zero even if the size of the zero region does not
-  align with the sectors of the base image. This removes the need for
-  the CommitMethod enum
-
-Changes since v1:
-- split up the implementation in three separate commits
-- removed accidentally left over includes from testing
-
-Vincent Vanlaer (5):
-  block: get type of block allocation in commit_run
-  block: move commit_run loop to separate function
-  block: refactor error handling of commit_iteration
-  block: allow commit to unmap zero blocks
-  block: add test non-active commit with zeroed data
-
- block/commit.c                                | 116 +++++++++++++-----
- tests/qemu-iotests/tests/commit-zero-blocks   |  96 +++++++++++++++
- .../qemu-iotests/tests/commit-zero-blocks.out |  54 ++++++++
- 3 files changed, 232 insertions(+), 34 deletions(-)
- create mode 100755 tests/qemu-iotests/tests/commit-zero-blocks
- create mode 100644 tests/qemu-iotests/tests/commit-zero-blocks.out
-
+diff --git a/block/commit.c b/block/commit.c
+index 078e54f51f..5c24c8b80a 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -129,51 +129,58 @@ static void commit_clean(Job *job)
+ }
+ 
+ static int commit_iteration(CommitBlockJob *s, int64_t offset,
+-                            int64_t *n, void *buf)
++                            int64_t *requested_bytes, void *buf)
+ {
++    int64_t bytes = *requested_bytes;
+     int ret = 0;
+-    bool copy;
+     bool error_in_source = true;
+ 
+     /* Copy if allocated above the base */
+     WITH_GRAPH_RDLOCK_GUARD() {
+         ret = bdrv_co_common_block_status_above(blk_bs(s->top),
+             s->base_overlay, true, true, offset, COMMIT_BUFFER_SIZE,
+-            n, NULL, NULL, NULL);
++            &bytes, NULL, NULL, NULL);
+     }
+ 
+-    copy = (ret >= 0 && ret & BDRV_BLOCK_ALLOCATED);
+-    trace_commit_one_iteration(s, offset, *n, ret);
+-    if (copy) {
+-        assert(*n < SIZE_MAX);
++    trace_commit_one_iteration(s, offset, bytes, ret);
+ 
+-        ret = blk_co_pread(s->top, offset, *n, buf, 0);
+-        if (ret >= 0) {
+-            ret = blk_co_pwrite(s->base, offset, *n, buf, 0);
+-            if (ret < 0) {
+-                error_in_source = false;
+-            }
+-        }
+-    }
+     if (ret < 0) {
+-        BlockErrorAction action = block_job_error_action(&s->common,
+-                                                         s->on_error,
+-                                                         error_in_source,
+-                                                         -ret);
+-        if (action == BLOCK_ERROR_ACTION_REPORT) {
+-            return ret;
+-        } else {
+-            *n = 0;
+-            return 0;
++        goto fail;
++    }
++
++    if (ret & BDRV_BLOCK_ALLOCATED) {
++        assert(bytes < SIZE_MAX);
++
++        ret = blk_co_pread(s->top, offset, bytes, buf, 0);
++        if (ret < 0) {
++            goto fail;
+         }
++
++        ret = blk_co_pwrite(s->base, offset, bytes, buf, 0);
++        if (ret < 0) {
++            error_in_source = false;
++            goto fail;
++        }
++
++        block_job_ratelimit_processed_bytes(&s->common, bytes);
+     }
++
+     /* Publish progress */
+-    job_progress_update(&s->common.job, *n);
+ 
+-    if (copy) {
+-        block_job_ratelimit_processed_bytes(&s->common, *n);
++    job_progress_update(&s->common.job, bytes);
++
++    *requested_bytes = bytes;
++
++    return 0;
++fail:;
++    BlockErrorAction action = block_job_error_action(&s->common, s->on_error,
++                                                     error_in_source, -ret);
++    if (action == BLOCK_ERROR_ACTION_REPORT) {
++        return ret;
+     }
+ 
++    *requested_bytes = 0;
++
+     return 0;
+ }
+ 
 -- 
 2.44.1
 
