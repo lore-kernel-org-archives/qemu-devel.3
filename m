@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5A4CD10BE9
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 04:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B8E6D10BEB
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 04:33:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4YSf-0003Oh-75; Sat, 26 Oct 2024 00:31:37 -0400
+	id 1t4YTm-0004A1-BY; Sat, 26 Oct 2024 00:32:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4YSd-0003N4-5b
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:31:35 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4YTg-000498-8I
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:32:40 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4YSa-0008HK-MU
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:31:34 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-20b5affde14so19250075ad.3
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 21:31:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4YTe-0008Pt-FT
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:32:40 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-20c714cd9c8so26052915ad.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 21:32:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729917091; x=1730521891; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729917156; x=1730521956; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=vQFUT+9eznvkrzicjIRNa391H8s4Bx97SjBzilVyW4Y=;
- b=NNaan5L1aT9tjRa6A7NzW5zMcfPPZBzH3v+dJFQJeF0UsZnfl2Q6revBv9vX7thZKG
- xW2pVLjl7BudAwmg+82CIiYipoK7ki5GwZ3dG7ly2eygavMlnI92sU0pVLCGyWf6WGZU
- OwshFutelToJ2VHvEb8Uvh/UGO//y2NZ3l+YPQiGdVpk8C1Y4QPdnoo+/NqSxPueG3Gj
- DGq2Ur9gM09bEfJZT8WwnnLFQ8Dyx609EFX413K2ILTskl4ajqBxjnkl0qzc5pMTcFiV
- iOvnlh9miu3yPfnZufHWSZLCERKwsybxGQp6QU2FvSIlRQi4e5Z59n4PI72/zb0mriaO
- bpmg==
+ bh=2xY5NFCSqNOVgI2joiK27KmS99wVtlCnPM+PxE8Ic9A=;
+ b=Ti9pyyKfQ46/KUtNxUBVZSMM4vlUU8vTs2YL8+NG414uMWKHOkhwEl604N1psF2xlf
+ ql9zOUfrNT1PMVuJ1v3ZsRjrBPjzlpZNgBGfwRijeu54O8Qt/x/yelWl9/nroYNLl0gB
+ ISCQAR1AtzXGxxA46qp4TWaM95zTyubFtENneiqAqyA5m6IQg1YLLIEjuJPWqW7a5+fK
+ S9q58BStH0hNkIhh8DLa/5ulhdWjkG8rBzBnBLuREkxL1bq29HDgVspJzIxkNVTe8npy
+ aRfKzX+gxu9ypKR3GD46IhmYFmovNOX6arnSfQMGj70djtyek+xLGBIwmtCUxzQdRDVy
+ AQ/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729917091; x=1730521891;
+ d=1e100.net; s=20230601; t=1729917156; x=1730521956;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vQFUT+9eznvkrzicjIRNa391H8s4Bx97SjBzilVyW4Y=;
- b=NjQW+As6TgQaCdFfHBPVWg8q6rlPOA71VS22MpTtH8xAubb7UcTAkDIY6XzqKHgnON
- u+TuNlRSHwot7lhPIxBUddDxrizDWHy5AvQsd79mXMSjQm+/5BoMZ9xeUhZMtQUnIxB5
- w5F3NCgHhyF8//mJf3FIXVeOY7kfUVGMx7mEnwBX7fgXW0DsSheBVr/Sxi4lkdIJt/NK
- hdRQseiqZU7TS5At2MsIYBpf5heUvqH0ussYoGhGGPig8W8uLkj0JQReMPKJpNTpGfyX
- fqRJ26E9WniRraMMd9oXFz/0Yaeu/H0mNJwt6OCZtHAeWnum/BwoCXqhQJ1hoQyGkbFJ
- 9Z9g==
+ bh=2xY5NFCSqNOVgI2joiK27KmS99wVtlCnPM+PxE8Ic9A=;
+ b=s7IQa2KV9WKQ3Klg6XQu3aY7TZprXNuAr1LYsCM+Uq3p/a3QAZDFsxxOwpsZTUR11i
+ 0163UFkoVMiS7VC5eaZqJjc16pIPXTgsIfqhObCqr0SDa2rfXi/YGcWY/sPnv+fHDsGf
+ TFiSPzXXRnWxa2P46zpDW883Bw4XxG1/V8MhdwBu6tgnDsqkLYWqPNuZAYHuGk27JTUQ
+ ZX1X3cMdFDuUM6GYmCthhE4qHqikPHKO3LdFAMoTx2HIDyMBl8VU50YKDm2OVhjlEb+K
+ 3cFy5ZsHyvZ+scZTJ1y0LXMUidsYPjIB2NLxQgpQvUCg8ups4TdRU1v9VFURojips6mT
+ FBaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVaJrl9EqieasJt1qGumd1gQRllFcS64jU4U9WMkvREx9lM6INW4q3kvCM9XBqlXCJ+Bi0qAqkNUdMf@nongnu.org
-X-Gm-Message-State: AOJu0YyIsYL0iJSSlcIZJMw3KQfUs6uUSeCLq5tG6Ohya0JnHBHJejYt
- M+8N2RzoGd+yqK1858iH9vWlTR1h3tiISKJcNNvlbpno/718Gw05oOojhpGM3WcSODPu03QewKy
- K
-X-Google-Smtp-Source: AGHT+IFU0RXYnF5Od9msysEhanVG6XdYlrsv5dJzVCaPoDM1turQHQTLSuLEVSYTQtJwfnH4xmOwug==
-X-Received: by 2002:a17:902:db0f:b0:20c:cf39:fe3c with SMTP id
- d9443c01a7336-210c6c34824mr21072615ad.41.1729917090995; 
- Fri, 25 Oct 2024 21:31:30 -0700 (PDT)
+ AJvYcCUZkPu2rteQ+7QczO8eeR+FqEVYCNVjssIn0Se3qfOlVlRg9NCIEL7/0ORf/k7DXvoHw39AG86nAPL+@nongnu.org
+X-Gm-Message-State: AOJu0YxU12VmCXnqajchkqX7AfYrKJU+AWgqvO6UASp5oWdqxvbB6TyU
+ r0ZQWyHhNjAsJ9BuEeY/vGABgYW5a7aEE9NaZhaRY2Hkv1giicc58TqTxIPqpRU=
+X-Google-Smtp-Source: AGHT+IFJ8TBIq1vw2ZrDWZ66H+dIj/BiCfj7ifKHaOguXKsUTHM2GUCjEft7XwWKwwgXSFj43vaeag==
+X-Received: by 2002:a17:902:cccd:b0:20c:9ec9:9a77 with SMTP id
+ d9443c01a7336-210c6c3ec85mr19533225ad.37.1729917156310; 
+ Fri, 25 Oct 2024 21:32:36 -0700 (PDT)
 Received: from [192.168.120.226] ([45.176.88.169])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-210bc01791bsm17195155ad.145.2024.10.25.21.31.25
+ d9443c01a7336-210bbf445d5sm17221225ad.42.2024.10.25.21.32.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 21:31:30 -0700 (PDT)
-Message-ID: <43863d19-30ea-4f68-a353-4cba12532ba1@linaro.org>
-Date: Sat, 26 Oct 2024 01:31:23 -0300
+ Fri, 25 Oct 2024 21:32:35 -0700 (PDT)
+Message-ID: <3bc58d20-a874-44e8-9f09-3a0fb54a46cb@linaro.org>
+Date: Sat, 26 Oct 2024 01:32:29 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/21] softfloat: Remove fallback rule from pickNaN()
+Subject: Re: [PATCH 11/21] target/sparc: Move cpu_put_fsr(env, 0) call to reset
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -81,14 +80,14 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
  qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
 References: <20241025141254.2141506-1-peter.maydell@linaro.org>
- <20241025141254.2141506-22-peter.maydell@linaro.org>
+ <20241025141254.2141506-12-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241025141254.2141506-22-peter.maydell@linaro.org>
+In-Reply-To: <20241025141254.2141506-12-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -112,19 +111,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/10/24 11:12, Peter Maydell wrote:
-> Now that all targets have been converted to explicitly set a NaN
-> propagation rule, we can remove the set of target ifdefs (which now
-> list every target) and clean up the references to fallback behaviour
-> for float_2nan_prop_none.
+> Currently we call cpu_put_fsr(0) in sparc_cpu_realizefn(), which
+> initializes various fields in the CPU struct:
+>   * fsr_cexc_ftt
+>   * fcc[]
+>   * fsr_qne
+>   * fsr
+> It also sets the rounding mode in env->fp_status.
 > 
-> The "default" case in the switch will catch any remaining places
-> where status->float_2nan_prop_rule was not set by the target.
+> This is largely pointless, because when we later reset the CPU
+> this will zero out all the fields up until the "end_reset_fields"
+> label, which includes all of these (but not fp_status!)
+> 
+> Move the cpu_put_fsr(env, 0) call to reset, because that expresses
+> the logical requirement: we want to reset FSR to 0 on every reset.
+> This isn't a behaviour change because the fields are all zero anyway.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   include/fpu/softfloat-types.h  | 10 +++-------
->   fpu/softfloat-specialize.c.inc | 23 +++--------------------
->   2 files changed, 6 insertions(+), 27 deletions(-)
+>   target/sparc/cpu.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
