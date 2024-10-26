@@ -4,71 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC746D10BE5
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 06:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE38D10BE5
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 07:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4aK7-0007xF-9f; Sat, 26 Oct 2024 02:30:55 -0400
+	id 1t4b8p-00055O-CW; Sat, 26 Oct 2024 03:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t4aK3-0007wf-Ks
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 02:30:51 -0400
-Received: from mail-ej1-f46.google.com ([209.85.218.46])
+ (Exim 4.90_1) (envelope-from <bibo.mao@gmail.com>)
+ id 1t4b8m-00054s-8P
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 03:23:17 -0400
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t4aK1-0005Q8-S9
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 02:30:51 -0400
-Received: by mail-ej1-f46.google.com with SMTP id
- a640c23a62f3a-a9a4031f69fso366854266b.0
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 23:30:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <bibo.mao@gmail.com>)
+ id 1t4b8k-0003Uq-GP
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 03:23:16 -0400
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-4a47f8a9168so918007137.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Oct 2024 00:23:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1729927392; x=1730532192; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tGpdT0XREkpx1lJIRC5ENziUfiMnPAcql/tu6PIi7ec=;
+ b=afp+gnmjR2g1TkWNmCmuMuV/if+hsw+VMGFpco9HO+3oAGp8w80RQcdFq2fuzJKDPn
+ RX5zGDp8/8ZJ2ywNo6JG5u0/ZL0Kh34LrwXKk3ntv9xbyRGAWN3536LyuMHkQQLv2OJh
+ ZjEQ9PVgFjRTlJ4F74lxb9VdMvXDF0+VUry6vBDYnLAfyOBNdtDg5kWEecKLtoYzPGo3
+ DZ/JvbWpd8goNzhnwABNKxCSKr6jLGj7ckkm9ixtOsHRM9BgdQn+K7IoVn5wPOjuRWxu
+ H8mSwterXgx+M3mqxRNhIxzRtt/yOnE0zY6SnkTXDpm0AE+uLkXsy88eTEipDH1Yf+ke
+ mctw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729924247; x=1730529047;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1729927392; x=1730532192;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4jaTXKw2i0ipk8lzCur1bmq2SlTXkYdTAbTPyTU9/Ec=;
- b=shF3+YsnIhrZay6EZJuvON0EJ5CY3/8aO+zO6HH4Jq3desn4Xxk5o0IssDA/ZeCUhR
- Ttb1WNqpzVk9m4Q4rWpWksXoyVT79E3EdElk4qtljtpB3w5+8BsIwrnZyl0D3KTsddHF
- wJcTOOyiXXSYiqPXNUK8Y/4wu+J+ZgM501UH5NYprQBI96ipu0F56zDqlMiOPfqUcGpK
- YTWwKazF2lBbBQ8+MuB9DR6A0BHI8/JSKc6oYT3849MeGdChHPz+RqF3Oh+BV0plFi2i
- FsbOHK5TA2GqIeUQxfvKyLQ73P7ztMGe/BHqDAhNtUXJMBBDtX+c980qvD/7b9G82MBA
- xccQ==
-X-Gm-Message-State: AOJu0YxNnNk7dQF8z7hcuE0SXHQvJAOEfEVPz9RYPHeFf8GQ+lcc5Ts8
- wDqTU/HOQFdggXw8IKyFAoVCCmTbgOYls6tMGE1MsJe/KWQz4cmDbG5qXA==
-X-Google-Smtp-Source: AGHT+IFEbirEK+LBnBH+sc/4MtWzjl6k6S7ivJ2PSAkUC4HSwdn/CkE/Yk8wDn1iM6iCwpZEs16ssw==
-X-Received: by 2002:a17:907:9495:b0:a9a:161:8da4 with SMTP id
- a640c23a62f3a-a9de619f1b6mr113560066b.55.1729924246628; 
- Fri, 25 Oct 2024 23:30:46 -0700 (PDT)
-Received: from tpx1 (ip-109-40-241-30.web.vodafone.de. [109.40.241.30])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9b1f298db6sm142484466b.131.2024.10.25.23.30.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Oct 2024 23:30:46 -0700 (PDT)
-Date: Sat, 26 Oct 2024 08:30:44 +0200
-From: Thomas Huth <huth@tuxfamily.org>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 01/36] next-cube: fix up compilation when DEBUG_NEXT is
- enabled
-Message-ID: <20241026083044.6d53f2aa@tpx1>
-In-Reply-To: <20241023085852.1061031-2-mark.cave-ayland@ilande.co.uk>
-References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-2-mark.cave-ayland@ilande.co.uk>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ bh=tGpdT0XREkpx1lJIRC5ENziUfiMnPAcql/tu6PIi7ec=;
+ b=NQSAU7QTrYAcLT4+jsxhVFYt12fy9/2vk8CaoniS/92uM1M5AARxpUlxzvRakNOeFV
+ I+jvNYrUO0lncLWBiVuvzqNTORjxxQeM7yVSQw7qXKmGW9Fp0Sg9hdskdjbhn3QlFKgg
+ oWM5wojFJpDVs+xAWt31r8n12iB2hUBEBw586N7Nh94B2WXfUxztTQfzCy1RosLFFK1G
+ y7N0Pf31M78FXcEQNS1dXbrXjX9vQYhAuNQKyNPPCMIftSCfBoEf616fQAcRBXUF3gtC
+ Fdz0YcM9hoacy4i6/Qr4e75b3w4mkoNUItmWUYbIZcV6qIz5lITDA7purxoNUA0SS4Pq
+ aU0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW/W4O1gw5Rm/lSl2Buqw4uOPW/djEv8ZugB7iGXNHf5xdgom3KGx+kZHs1ouS2m5xEyCoh0YA5/CET@nongnu.org
+X-Gm-Message-State: AOJu0YxxiZWb1d9L4fgpkb0n7zCGKXQewahuent3aJ/as/XEpJ5DLfZp
+ RRczt7NBHPFlCgu3L48qpjgfYiFUuaF7fm+uL446B8rakRmz20vTRRu2B7D1QJrZMhOiVwRDVji
+ Z2FwXOu/xzW4Z72QgJW2YxbHVmhyc+sup6r3/RfzZfdxkAWekr/k=
+X-Google-Smtp-Source: AGHT+IGD61zN0s68Eou/PiN9zympAUW6A2mcqZOAARFOUjQfb5hE9L1Axj17CWcu6v2hdnn7UGia4M0kA4nLuxcVh9M=
+X-Received: by 2002:a05:6102:4192:b0:4a7:487d:88e4 with SMTP id
+ ada2fe7eead31-4a8cfb443d7mr1631262137.4.1729927392521; Sat, 26 Oct 2024
+ 00:23:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.218.46; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f46.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.17, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20241024092626.1328049-1-gaosong@loongson.cn>
+ <CAFEAcA89rs3Uk9NbqVM-Zwh7J6m10dAaYy0-D2GQOrKwAshv5A@mail.gmail.com>
+In-Reply-To: <CAFEAcA89rs3Uk9NbqVM-Zwh7J6m10dAaYy0-D2GQOrKwAshv5A@mail.gmail.com>
+From: bibo mao <bibo.mao@gmail.com>
+Date: Sat, 26 Oct 2024 15:23:00 +0800
+Message-ID: <CAPpFdZ3hpCV7NZy7u2r=NDALY=CDRTzR9OFkuCbz+gLU9ub6Kw@mail.gmail.com>
+Subject: Re: [PULL 0/6] loongarch-to-apply queue
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=bibo.mao@gmail.com; helo=mail-vs1-xe32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,15 +92,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Wed, 23 Oct 2024 09:58:17 +0100
-schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
+Peter Maydell <peter.maydell@linaro.org> =E4=BA=8E2024=E5=B9=B410=E6=9C=882=
+6=E6=97=A5=E5=91=A8=E5=85=AD 02:12=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Thu, 24 Oct 2024 at 10:44, Song Gao <gaosong@loongson.cn> wrote:
+> >
+> > The following changes since commit 6f625ce2f21d6a1243065d236298277c56f9=
+72d5:
+> >
+> >   Merge tag 'pull-request-2024-10-21' of https://gitlab.com/thuth/qemu =
+into staging (2024-10-21 17:12:59 +0100)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20241024
+> >
+> > for you to fetch changes up to c44e0d6ba280dcc6bdf4ed555020c61d564b526c=
+:
+> >
+> >   target/loongarch: Add steal time support on migration (2024-10-24 17:=
+27:55 +0800)
+> >
+> > ----------------------------------------------------------------
+> > pull-loongarch-20241024
+> >
+> > ----------------------------------------------------------------
+> > Bibo Mao (6):
+> >       target/loongarch: Add loongson binary translation feature
+> >       target/loongarch: Implement lbt registers save/restore function
+> >       target/loongarch/kvm: Implement LoongArch PMU extension
+> >       linux-headers: loongarch: Add kvm_para.h and unistd_64.h
+> >       linux-headers: Update to Linux v6.12-rc3
+> >       target/loongarch: Add steal time support on migration
+>
+> Hi; this fails to build on all the aarch64 jobs
+> (both normal and cross-compile):
+>
+> https://gitlab.com/qemu-project/qemu/-/jobs/8190899599
+> https://gitlab.com/qemu-project/qemu/-/jobs/8190899331
+>
+> In file included from /usr/include/aarch64-linux-gnu/sys/syscall.h:24,
+> from ../util/oslib-posix.c:48:
+> linux-headers/asm/unistd.h:2:10: fatal error: asm/unistd_64.h: No such
+> file or directory
+> 2 | #include <asm/unistd_64.h>
+>   |          ^~~~~~~~~~~~~~~~~
 
-> These were accidentally introduced by my last series.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> ---
->  hw/m68k/next-cube.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+OOPS, there is missing file about unistd_64.h on ARM64 besides LoongArch64 =
+also.
+Will check and verify on all architectures.
 
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+Regards
+Bibo Mao
+>
+>
+> thanks
+> -- PMM
+>
 
