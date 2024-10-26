@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1591AD10C00
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17BFCD10C01
 	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 17:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4kzQ-0008QP-6o; Sat, 26 Oct 2024 13:54:16 -0400
+	id 1t4kzH-0008Or-QP; Sat, 26 Oct 2024 13:54:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4kzO-0008Q3-0C
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 13:54:14 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4kzF-0008Ns-Gm
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 13:54:05 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4kzL-0003lw-Rx
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 13:54:13 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-71e625b00bcso2322412b3a.3
- for <qemu-devel@nongnu.org>; Sat, 26 Oct 2024 10:54:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4kzD-0003js-O5
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 13:54:05 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-20c805a0753so29554265ad.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Oct 2024 10:54:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729965250; x=1730570050; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729965242; x=1730570042; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GUXo3gWo9LQ++O+bqUolSjJXO8UGvTh+04+/9wrBtPo=;
- b=woda/0xHGTgQ+NyZvItHWiCHsDBUhcrxifMMriP8b/PNZ7k8o0nG/+seKWmyeHA0jk
- NsbXZ9e/7f9hdcg6RP2iAMyv9QNrdvU+F9r9eSNYhceK5im6CA+i/bOq83C52MEY//vg
- TU+2Tf58xYGPd9hzkrOlVw6xoinnfTlHVwdiVsTlVkqBYRTjjuMCY+iwlTW5M3w6Ny7I
- dc1KD7IOzH4kDlw76GnxaGoxjGUW78X/siCnb0Hv/xzf+dGUCRSezbwqreg8JuEkDiAe
- M83zzb6zQxhAMONwSLsPTVNjA0/cFBjVbpOi+g7VDIOtROydx6xytWOvu7CAjqnKjd3O
- ooRA==
+ bh=KpfAMGmyWm4pigvyIOxRZMUq0CTvdaeELUk7R48DMKQ=;
+ b=VTHV8y87dPbSTG2T6XnXMR9xtzQjgJYLGU51nvj7CY3D8cLKsA7pM0a0iVl99oyO1i
+ cJYTFeB0NubPG8wet7QYvH/MzdQjFL/hdy2GEbXZh5plahoDqPNNKBarfdBKGzEoJ/DY
+ AKCKx/pbjIMuiEIJCsSDyiaCdPkpUtYMfB0gXCFj6MmQtOfr0s+DVX2uCI2SDrlvRFK3
+ OqqwZLaNthOtzkQbbXpBhmSx+QGqf/ikSfzu88bLWsJJNEmDbJ1KiiWQ514KybV3H7hw
+ 7pBMZ5lwP1JhpzoGBpRSEWl+sNtvReOeWtuZoeaBg2JIsSwBWSlmXS3ZfU8ETS81U/j2
+ vQpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729965250; x=1730570050;
+ d=1e100.net; s=20230601; t=1729965242; x=1730570042;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GUXo3gWo9LQ++O+bqUolSjJXO8UGvTh+04+/9wrBtPo=;
- b=pcRILLe9lZFFMpgKLCUF+YmzB5fyRnF7vOVw1APoTsj2NKV1ECxsWBH9TmWZsqQwmZ
- sGLprOg9w+qnifCaKGmIDWX2k8HdeQfWfxtXC/0DME0CeFiBVGv8VjGMB8u2BXYkYcAf
- ikW8n4z0z5+BoTRkNYL90EXw8mZvckC9tLkul7pM2kiU9sy6FUhD6qFbVFQCGAK7OjX3
- K4Q9q8UHjUNlbu78a26e5iWWSNYng9mhi9mFdt21Nr/TCrHpguSl9eZb+8FkeQbSgMuz
- UV/gBWV4NQo2v1BosRucVDzAfe4LLN1LRMSQQH3BuQAVjOULFb7hXrCIdUBt4KDy5La7
- NGpw==
-X-Gm-Message-State: AOJu0YwxwjTdjymvVJBDM6h2Qx17Pn49V7U7BdJYzkZdKKsp6SB/oUhh
- ZnqPwsuAFKKvO8IK7/tFth8Blc9pRyaQY3Az8vpMKHg/Hf8NZZo3x1qIoPmCvbSf/j5ZxbJoJZV
- y
-X-Google-Smtp-Source: AGHT+IHbUzSa+Nj+UgwNAjqL13Pr5jjQ3Af9zwm51m/fKPmu5s6qzgviFUFyYabD6Ob0/hhUT49l+g==
-X-Received: by 2002:a05:6a00:2389:b0:71e:8049:4730 with SMTP id
- d2e1a72fcca58-72062f85458mr5161984b3a.3.1729965250369; 
- Sat, 26 Oct 2024 10:54:10 -0700 (PDT)
+ bh=KpfAMGmyWm4pigvyIOxRZMUq0CTvdaeELUk7R48DMKQ=;
+ b=kAowXKggxhcosuaj4KJ39OhLQItEbbomulfRT6EDh4zX5u+eNG8gavZDCw5+mdhTaK
+ HtwU/HImFO1b0Yz4yx+0dGISxAk8HZmWr3z80rj+3IARlu//Hf3Milft3LZSTI+ouZ4/
+ 2xR+tti7rCTXEBMXufUth+KfNy1+IXj9nslF1O7ETrJUEHn/tNRjpRvelJuP4wEjvsU/
+ XwmP34dHhY45pIt7SaHp2fNz1MYrJjMDFSDBlP7iwUYTx3/N0uWy6QpczJWMDFSzO8Vp
+ kCZZ3w6Wa01pFyWAF9uwGNLRITYkdzcB5tErhgp4Owu/juZP4TB9T4tXBa6HDmRVudy8
+ g9FQ==
+X-Gm-Message-State: AOJu0Yzjmt1/92Bjitvgaim/eVGHW9Q1VehkvGJimAbfl8lMJecsW5d2
+ TW7vbM45v7rlKzmpgDJeZgK4QvzxF/NX8njq8LTp1c03JWh6pxpAvA1Hzp+vAdi4q1sC0g/t/W0
+ Y
+X-Google-Smtp-Source: AGHT+IEKCgv2GcJkl5toeLO9WZV+4NK/JDm0V5bLon8tKImk90vZUGMteiWImRLXG5d+CIJWYCkI8g==
+X-Received: by 2002:a17:902:dac9:b0:20e:57c8:6aae with SMTP id
+ d9443c01a7336-210c6879841mr50526365ad.3.1729965241944; 
+ Sat, 26 Oct 2024 10:54:01 -0700 (PDT)
 Received: from localhost.localdomain ([45.176.88.169])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7edc86a8b37sm3029998a12.56.2024.10.26.10.54.08
+ d9443c01a7336-210bbf84597sm26208485ad.111.2024.10.26.10.54.00
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 26 Oct 2024 10:54:10 -0700 (PDT)
+ Sat, 26 Oct 2024 10:54:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 2/9] target/mips: Simplify Loongson MULTU.G opcode
-Date: Sat, 26 Oct 2024 14:53:42 -0300
-Message-ID: <20241026175349.84523-3-philmd@linaro.org>
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: [PATCH v3 1/9] target/mips: Extract decode_64bit_enabled() helper
+Date: Sat, 26 Oct 2024 14:53:41 -0300
+Message-ID: <20241026175349.84523-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241026175349.84523-1-philmd@linaro.org>
 References: <20241026175349.84523-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -98,34 +97,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since MULTU opcodes don't record the most significant bits
-of the infinite result, sign-extending the sources make no
-difference in the result.
+Extract the decode_64bit_enabled() helper which detects
+whether CPUs can run 64-bit instructions.
 
-Once we remove the sign extension of source registers, MULT
-and MULTU are identical (as are DMULT and DMULTU).
-
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/tcg/translate.c | 2 --
- 1 file changed, 2 deletions(-)
+ target/mips/tcg/translate.h | 2 ++
+ target/mips/tcg/translate.c | 7 ++++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
+diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
+index 5d196e69ac4..ae6c25aa0c4 100644
+--- a/target/mips/tcg/translate.h
++++ b/target/mips/tcg/translate.h
+@@ -217,6 +217,8 @@ void msa_translate_init(void);
+ void mxu_translate_init(void);
+ bool decode_ase_mxu(DisasContext *ctx, uint32_t insn);
+ 
++bool decode_64bit_enabled(DisasContext *ctx);
++
+ /* decodetree generated */
+ bool decode_isa_rel6(DisasContext *ctx, uint32_t insn);
+ bool decode_ase_msa(DisasContext *ctx, uint32_t insn);
 diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 6c881af5618..6d7e913263e 100644
+index d92fc418edd..6c881af5618 100644
 --- a/target/mips/tcg/translate.c
 +++ b/target/mips/tcg/translate.c
-@@ -3615,8 +3615,6 @@ static void gen_loongson_integer(DisasContext *ctx, uint32_t opc,
-         break;
-     case OPC_MULTU_G_2E:
-     case OPC_MULTU_G_2F:
--        tcg_gen_ext32u_tl(t0, t0);
--        tcg_gen_ext32u_tl(t1, t1);
-         tcg_gen_mul_tl(cpu_gpr[rd], t0, t1);
-         tcg_gen_ext32s_tl(cpu_gpr[rd], cpu_gpr[rd]);
-         break;
+@@ -1645,13 +1645,18 @@ static inline void check_ps(DisasContext *ctx)
+     check_cp1_64bitmode(ctx);
+ }
+ 
++bool decode_64bit_enabled(DisasContext *ctx)
++{
++    return ctx->hflags & MIPS_HFLAG_64;
++}
++
+ /*
+  * This code generates a "reserved instruction" exception if cpu is not
+  * 64-bit or 64-bit instructions are not enabled.
+  */
+ void check_mips_64(DisasContext *ctx)
+ {
+-    if (unlikely((TARGET_LONG_BITS != 64) || !(ctx->hflags & MIPS_HFLAG_64))) {
++    if (unlikely((TARGET_LONG_BITS != 64) || !decode_64bit_enabled(ctx))) {
+         gen_reserved_instruction(ctx);
+     }
+ }
 -- 
 2.45.2
 
