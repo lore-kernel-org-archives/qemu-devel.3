@@ -4,95 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6532D10BE4
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 04:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D06B5D10BE4
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 04:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4Yg1-0003JY-Pb; Sat, 26 Oct 2024 00:45:25 -0400
+	id 1t4Yhr-00048u-QQ; Sat, 26 Oct 2024 00:47:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t4Yg0-0003If-2w
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:45:24 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4Yhn-00047z-2w
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:47:17 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t4Yfy-0001pi-6u
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:45:23 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2e2bb1efe78so1800518a91.1
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 21:45:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4Yhk-0001zA-0R
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:47:14 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-20c7edf2872so27599475ad.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 21:47:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729917921; x=1730522721;
- darn=nongnu.org; 
+ d=linaro.org; s=google; t=1729918030; x=1730522830; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=huB1Ga6lljYnceb9m3ruvpTX3eRmODYt6pvwYwnD+xI=;
- b=AsZfcsT+g7DNz0Ntdj/pr/ZjJopK8EnobveZtdpLLlF6ayGjdD49Pza++IxbUuD5XA
- Ypyt04PgBSh5R/xNQgVLpsg5hcghOeASbVKDH2d9M5oRryLLRu+4E7Cd70eEJTItKqRx
- yXIjQfzYZ1lIBRG/dSva+UlU7FJT6RQ7tItCoy0YGzn+vszj6Vcurt811wroqYaOQR+A
- t5w9XvHIKKWinjRKRnduroCdHQGgtFoRr4f6nErlSScf/p/Ict1cRJaNuKEbAMo1VRRo
- vDahHfOi9I8q/qUOz33OwKq4ZyP156Dr8QUfQO9wFzU8wYw0NK+AAD3zVcV7gFTREp+/
- jV4w==
+ bh=yJ8dGdbJeWFvl4ollPhSLJU33Y4fP/CM8oXsOmLAysE=;
+ b=IDXjLRVC2I2ghy3+DYoY/1WI5SqeOMP/VPtf3cQrEVT9N/hVgS73rVXc7pos9+atrw
+ 0ZhbC4Q1sZcFWfo+3ekRyjuxmIuZQKqggZBqCbSo7qOpf/NJ6D3eb4Vyg0VFwPytszk/
+ QGE4rMaAG2PjYhcIoAH5aBDQ1yzzvg1VP7ausAwGUC0QL2pDzEcOhzB3/4adByelICqU
+ pN7JZsgc+sKuHR3soEyfS/aml8y3Wv3WPfJyTEVEPI23PAs8gykpaupjZGDKE/icCrnF
+ N2c7eFUtPqmaxqJCq104lioY39jveOaE15dZR4rfBha//c9cSBjUV5hqKNrkA2RyZIiM
+ 63Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729917921; x=1730522721;
+ d=1e100.net; s=20230601; t=1729918030; x=1730522830;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=huB1Ga6lljYnceb9m3ruvpTX3eRmODYt6pvwYwnD+xI=;
- b=O5qcSQCaSNT6OYt8WOQmiZfjN5vIhLe+cHQj6hHjpCI5wGMkIFY0R1j97QQeNeFaZO
- Ds68hLYKHN8hfYzUyiqFcoIfYrlKFJJ9C2oQO7xw4i1adQs8D2DfvgScOKePsvXaYZn/
- +uOTR8NF7YZNX0m/cqIyahpIJrhv+LEoT0XN4fOYwxyqa1GKyocYEUuKTKHChefh4vfd
- B3iT+WI1aDD+QcmoPu7i6Kbivp9LOWncAYjFO612uQQP5ZSqkY9cHC3744Y07YKBE5nI
- AbT+k7vP1btaic9nIEJmcHBWDb3jC2Yfru9HJTOsAU6uhBFmOYHJLl0XwFJCZ/epxDSl
- dnKw==
+ bh=yJ8dGdbJeWFvl4ollPhSLJU33Y4fP/CM8oXsOmLAysE=;
+ b=s73Lui7LHfR6jyJccfaLT+B6+zNqzVv7ac6M0mJstpJwkMmsCLcSyKuc3I80EXQcxr
+ E3qDlMTqSDJECZ1YsyvEDlnlFKoX726mQWKFFV/n7JkEvA+5r7wzmpIwMxcKvCFJCsTO
+ rTGVJdGUaCoPcqUA+aVqTdOolH3crlVYRgU4t83ccBZ2fNTObZt28lVIHiyUAthFuUjE
+ 9WNM60ZECjwNBNYPCKykc+SmN8U3FO5rJnIW360yo1ss3l1Bi1p+C6ynkN0VxXQY3+Ip
+ 9MsEcTA3Ed4KWdovqMsWP3cA+90wtOoqUFhOy9uroJwdHyYv3ZKs6GJUYSdh9+fh54s1
+ SezA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXV/aju9cl0IzRUE/qZb9Dn7p32cjW7OVTi6PF+I6mftfeijcKFWjx6MP8d+IrNv64rNLkxMYbFECoA@nongnu.org
-X-Gm-Message-State: AOJu0Ywp5kjOp3bJa0tVAUiOjA2ECTtXr33LPpSgbBXox6YEB/GzxqaF
- c3/AqJoG1O/+QAGDGLK2+vHq26EwYMwrdXSp0DOrLvCzaoGbangfZom5FHchG9s=
-X-Google-Smtp-Source: AGHT+IGgYdE28MwLv/39xBrVuBg3GzboaeZe1u+ISXsfDWNeAMftR1ZczJ/SG6jQXw+TSHQnOhvRsg==
-X-Received: by 2002:a17:90a:70c2:b0:2e2:c1d0:68dc with SMTP id
- 98e67ed59e1d1-2e77e5e48a7mr12209562a91.9.1729917920679; 
- Fri, 25 Oct 2024 21:45:20 -0700 (PDT)
-Received: from [157.82.207.107] ([157.82.207.107])
+ AJvYcCX0hVGggF9mrbIaYJ/K6emTwmh4VKakjLtnOvbIskWwz3wVHZG40PqB5ojTWXBF1rQranwxClNQmUCh@nongnu.org
+X-Gm-Message-State: AOJu0YzJ6vVyzc3tDfxGFxlFbABuIIzX3O8uyOhJi5xl4f0Hqlt4Tj0t
+ /UgqxzD4HpbFNDrSdLSvhwbiJWLTEblWBLt0RSMXsR1re+RX2BKYACAiV8QuJkusZPRWGxLcwNG
+ x
+X-Google-Smtp-Source: AGHT+IF+wwvDyY7vdllMZgo7yciTs2+xBuNFGf/BBmG+PsfO40xE9zG3M5xxT2zCqtExzIR1MmK4aw==
+X-Received: by 2002:a17:903:32ce:b0:20c:5990:897c with SMTP id
+ d9443c01a7336-20fb8a5b3c2mr111413415ad.27.1729918030152; 
+ Fri, 25 Oct 2024 21:47:10 -0700 (PDT)
+Received: from [192.168.120.226] ([45.176.88.169])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e77e558114sm4423692a91.36.2024.10.25.21.45.14
+ d9443c01a7336-210bc0303dbsm17280395ad.217.2024.10.25.21.47.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 21:45:20 -0700 (PDT)
-Message-ID: <ad48abb9-2964-43ab-b739-7d60975f3859@daynix.com>
-Date: Sat, 26 Oct 2024 13:45:13 +0900
+ Fri, 25 Oct 2024 21:47:09 -0700 (PDT)
+Message-ID: <53cbb597-e7f2-4742-bf85-928c704ddbcf@linaro.org>
+Date: Sat, 26 Oct 2024 01:47:05 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/15] hw/display/apple-gfx: Adds PCI implementation
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
- rad@semihalf.com, quic_llindhol@quicinc.com, marcin.juszkiewicz@linaro.org,
- stefanha@redhat.com, mst@redhat.com, slp@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com,
- chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com,
- philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, qemu-riscv@nongnu.org
-References: <20241024102813.9855-1-phil@philjordan.eu>
- <20241024102813.9855-4-phil@philjordan.eu>
+Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
+To: =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Guenter Roeck <linux@roeck-us.net>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
+ <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Joel Stanley <joel@jms.id.au>, qemu-block <qemu-block@nongnu.org>
+References: <20241017163247.711244-1-peter.maydell@linaro.org>
+ <dcf06645-dac0-4099-8946-38ca9deaeccf@redhat.com>
+ <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
+ <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
+ <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
+ <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
+ <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
+ <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
+ <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
+ <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
+ <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
+ <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241024102813.9855-4-phil@philjordan.eu>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::1035;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,214 +111,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/24 19:28, Phil Dennis-Jordan wrote:
-> This change wires up the PCI variant of the paravirtualised
-> graphics device, mainly useful for x86-64 macOS guests, implemented
-> by macOS's ParavirtualizedGraphics.framework. It builds on code
-> shared with the vmapple/mmio variant of the PVG device.
+On 25/10/24 12:25, Jan Lübbe wrote:
+> On Fri, 2024-10-25 at 06:59 -0700, Guenter Roeck wrote:
+>> On 10/25/24 02:57, Jan Lübbe wrote:
+>>> On Fri, 2024-10-25 at 08:55 +0200, Cédric Le Goater wrote:
+>>>> On 10/24/24 19:59, Philippe Mathieu-Daudé wrote:
+>>>>> Cc'ing Jan.
+>>>>>
+>>>>> On 22/10/24 12:04, Guenter Roeck wrote:
+>>>>>
+>>>>>> I have no idea how this is supposed to work, and I don't think it works
+>>>>>> as implemented. I'll revert commit e32ac563b83 in my local copy of qemu.
+>>>>>> Jan, can you have a look at this bug report please? Otherwise I'll
+>>>>>> have a look during soft freeze.
+>>>
+>>> Guenter, just to make sure: In your case [1], you had "boot-emmc" (see
+>>> aspeed_machine_ast2600_class_emmc_init) enabled, right? Otherwise the
+>>
+>> I tried both enabled and disabled.
+>>
+>>> boot partition size would be 0, meaning that the eMMC has no boot
+>>> partitions.
+>>
+>> That is what I would have expected, but it does not reflect reality.
+>>
+>>> In that configuration, your backing file needs to have space for the
+>>> boot partitions at the start (2*1MiB) and the rootfs starts at the 2
+>>> MiB offset.
+>>>
+>>
+>> boot-emmc doesn't make a difference, because
+>>
+>>           if (emmc) {
+>>               qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
+>>               qdev_prop_set_uint8(card, "boot-config",
+>>                                   boot_emmc ? 0x1 << 3 : 0x0);
+>>           }
+>>
+>> in hw/arm/aspeed.c sets the boot partition size independently of the
+>> boot-emmc flag.
 > 
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> ---
+> Ah, yes. :/
 > 
-> v4:
+> So you can have SD, eMMC with boot from boot partition *disabled* or
+> eMMC with boot from boot partition *enabled*.
 > 
->   * Threading improvements analogous to those in common apple-gfx code
->     and mmio device variant.
->   * Smaller code review issues addressed.
+>> I suspect that the expectation is that I always provide
+>> an emmc image with a 2 MB gap at the beginning, but in my opinion that is
+>> really hyper-clumsy, and I simply won't do it, sorry.
 > 
->   hw/display/Kconfig         |   4 +
->   hw/display/apple-gfx-pci.m | 152 +++++++++++++++++++++++++++++++++++++
->   hw/display/meson.build     |   1 +
->   3 files changed, 157 insertions(+)
->   create mode 100644 hw/display/apple-gfx-pci.m
-> 
-> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
-> index 6a9b7b19ada..2b53dfd7d26 100644
-> --- a/hw/display/Kconfig
-> +++ b/hw/display/Kconfig
-> @@ -149,3 +149,7 @@ config MAC_PVG_MMIO
->       bool
->       depends on MAC_PVG && AARCH64
->   
-> +config MAC_PVG_PCI
-> +    bool
-> +    depends on MAC_PVG && PCI
-> +    default y if PCI_DEVICES
-> diff --git a/hw/display/apple-gfx-pci.m b/hw/display/apple-gfx-pci.m
-> new file mode 100644
-> index 00000000000..4ee26dde422
-> --- /dev/null
-> +++ b/hw/display/apple-gfx-pci.m
-> @@ -0,0 +1,152 @@
-> +/*
-> + * QEMU Apple ParavirtualizedGraphics.framework device, PCI variant
-> + *
-> + * Copyright © 2023-2024 Phil Dennis-Jordan
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * ParavirtualizedGraphics.framework is a set of libraries that macOS provides
-> + * which implements 3d graphics passthrough to the host as well as a
-> + * proprietary guest communication channel to drive it. This device model
-> + * implements support to drive that library from within QEMU as a PCI device
-> + * aimed primarily at x86-64 macOS VMs.
-> + */
-> +
-> +#include "apple-gfx.h"
-> +#include "hw/pci/pci_device.h"
-> +#include "hw/pci/msi.h"
-> +#include "qapi/error.h"
-> +#include "trace.h"
-> +#import <ParavirtualizedGraphics/ParavirtualizedGraphics.h>
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(AppleGFXPCIState, APPLE_GFX_PCI)
-> +
-> +struct AppleGFXPCIState {
-> +    PCIDevice parent_obj;
-> +
-> +    AppleGFXState common;
-> +};
-> +
-> +static const char* apple_gfx_pci_option_rom_path = NULL;
-> +
-> +static void apple_gfx_init_option_rom_path(void)
-> +{
-> +    NSURL *option_rom_url = PGCopyOptionROMURL();
-> +    const char *option_rom_path = option_rom_url.fileSystemRepresentation;
-> +    apple_gfx_pci_option_rom_path = g_strdup(option_rom_path);
-> +    [option_rom_url release];
-> +}
-> +
-> +static void apple_gfx_pci_init(Object *obj)
-> +{
-> +    AppleGFXPCIState *s = APPLE_GFX_PCI(obj);
-> +
-> +    if (!apple_gfx_pci_option_rom_path) {
-> +        /* The following is done on device not class init to avoid running
-> +         * ObjC code before fork() in -daemonize mode. */
-> +        PCIDeviceClass *pci = PCI_DEVICE_CLASS(object_get_class(obj));
-> +        apple_gfx_init_option_rom_path();
-> +        pci->romfile = apple_gfx_pci_option_rom_path;
-> +    }
-> +
-> +    apple_gfx_common_init(obj, &s->common, TYPE_APPLE_GFX_PCI);
-> +}
-> +
-> +typedef struct AppleGFXPCIInterruptJob {
-> +    PCIDevice *device;
-> +    uint32_t vector;
-> +} AppleGFXPCIInterruptJob;
-> +
-> +static void apple_gfx_pci_raise_interrupt(void *opaque)
-> +{
-> +    AppleGFXPCIInterruptJob *job = opaque;
-> +
-> +    if (msi_enabled(job->device)) {
-> +        msi_notify(job->device, job->vector);
-> +    }
-> +    g_free(job);
-> +}
-> +
-> +static void apple_gfx_pci_interrupt(PCIDevice *dev, AppleGFXPCIState *s,
-> +                                    uint32_t vector)
-> +{
-> +    AppleGFXPCIInterruptJob *job;
-> +
-> +    trace_apple_gfx_raise_irq(vector);
-> +    job = g_malloc0(sizeof(*job));
-> +    job->device = dev;
-> +    job->vector = vector;
-> +    aio_bh_schedule_oneshot(qemu_get_aio_context(),
-> +                            apple_gfx_pci_raise_interrupt, job);
-> +}
-> +
-> +static void apple_gfx_pci_realize(PCIDevice *dev, Error **errp)
-> +{
-> +    AppleGFXPCIState *s = APPLE_GFX_PCI(dev);
-> +    Error *err = NULL;
-> +    int ret;
-> +
-> +    pci_register_bar(dev, PG_PCI_BAR_MMIO,
-> +                     PCI_BASE_ADDRESS_SPACE_MEMORY, &s->common.iomem_gfx);
-> +
-> +    ret = msi_init(dev, 0x0 /* config offset; 0 = find space */,
-> +                   PG_PCI_MAX_MSI_VECTORS, true /* msi64bit */,
-> +                   false /*msi_per_vector_mask*/, &err);
-> +    if (ret != 0) {
-> +        error_propagate(errp, err);
+> I was surprised that the boot partitions' contents are stored in the
+> same backing file as the main area (instead of being separate files).
+> But I've not researched why it was designed this way.
 
-Don't use error_propaget() but just pass errp to msi_init.
+Yeah I'd have preferred separate files too, but when it seemed
+to be simpler for the single user case:
+https://lore.kernel.org/qemu-devel/d48b6357-c839-4971-aa28-bdbd5b1bab53@kaod.org/
 
-> +        return;
-> +    }
-> +
-> +    @autoreleasepool {
-> +        PGDeviceDescriptor *desc = [PGDeviceDescriptor new];
-> +        desc.raiseInterrupt = ^(uint32_t vector) {
-> +            apple_gfx_pci_interrupt(dev, s, vector);
-> +        };
-> +
-> +        apple_gfx_common_realize(&s->common, desc, errp);
-> +        [desc release];
-> +        desc = nil;
-> +    }
-> +}
-> +
-> +static void apple_gfx_pci_reset(Object *obj, ResetType type)
-> +{
-> +    AppleGFXPCIState *s = APPLE_GFX_PCI(obj);
-> +    [s->common.pgdev reset];
-> +}
-> +
-> +static void apple_gfx_pci_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    PCIDeviceClass *pci = PCI_DEVICE_CLASS(klass);
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
-> +
-> +    assert(rc->phases.hold == NULL);
-
-Remove this assertion; we don't have such for other PCI devices.
-
-> +    rc->phases.hold = apple_gfx_pci_reset;
-> +    dc->desc = "macOS Paravirtualized Graphics PCI Display Controller";
-> +    dc->hotpluggable = false;
-> +    set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
-> +
-> +    pci->vendor_id = PG_PCI_VENDOR_ID;
-> +    pci->device_id = PG_PCI_DEVICE_ID;
-> +    pci->class_id = PCI_CLASS_DISPLAY_OTHER;
-> +    pci->realize = apple_gfx_pci_realize;
-> +
-> +    // TODO: Property for setting mode list
-> +}
-> +
-> +static TypeInfo apple_gfx_pci_types[] = {
-> +    {
-> +        .name          = TYPE_APPLE_GFX_PCI,
-> +        .parent        = TYPE_PCI_DEVICE,
-> +        .instance_size = sizeof(AppleGFXPCIState),
-> +        .class_init    = apple_gfx_pci_class_init,
-> +        .instance_init = apple_gfx_pci_init,
-> +        .interfaces = (InterfaceInfo[]) {
-> +            { INTERFACE_PCIE_DEVICE },
-> +            { },
-> +        },
-> +    }
-> +};
-> +DEFINE_TYPES(apple_gfx_pci_types)
-> +
-> diff --git a/hw/display/meson.build b/hw/display/meson.build
-> index 619e642905a..78e1c41ea0a 100644
-> --- a/hw/display/meson.build
-> +++ b/hw/display/meson.build
-> @@ -65,6 +65,7 @@ system_ss.add(when: 'CONFIG_MAC_PVG',         if_true: [files('apple-gfx.m'), pv
->   if cpu == 'aarch64'
->     system_ss.add(when: 'CONFIG_MAC_PVG_MMIO',  if_true: [files('apple-gfx-mmio.m'), pvg, metal])
->   endif
-> +system_ss.add(when: 'CONFIG_MAC_PVG_PCI',     if_true: [files('apple-gfx-pci.m'), pvg, metal])
->   
->   if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
->     virtio_gpu_ss = ss.source_set()
+> 
+>> I can work around
+>> the problem by changing the above code to only set boot-partition-size if
+>> boot_emmc is set, or I can revert commit e32ac563b83. For now I chose the
+>> latter.
+> 
+> With e32ac563b83 reverted, your backing file layout will change *at
+> runtime* depending on whether booting from the boot partition is
+> enabled via EXT CSD registers. You should be able to try that using
+> 'mmc bootpart enable <boot_part> 0 /dev/mmcblk0' (with boot_part=0 for
+> disabled and boot_part=1/2 for enabled).
+> 
+> 
+> I'm not sure what the best way forward is... perhaps make the boot-
+> partition-size zero if boot_emmc is false? e.g.
+> 
+> @@ -339,7 +339,12 @@ static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc,
+>           }
+>           card = qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
+>           if (emmc) {
+> -            qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
+> +            /*
+> +             * Avoid the requirement for a padded disk image if booting from
+> +             * eMMC boot partitions is not needed.
+> +             */
+> +            qdev_prop_set_uint64(card, "boot-partition-size",
+> +                                boot_emmc ? 1 * MiB : 0);
+>               qdev_prop_set_uint8(card, "boot-config",
+>                                   boot_emmc ? 0x1 << 3 : 0x0);
+>           }
+> 
+> 
+> Then you'd have the choice between:
+> - an eMMC, but without boot partitions (and simple backing file layout)
+> - an eMMC with boot partitions and need a backing file with
+>    the boot partitions at the beginning
+> 
+> That might be the lesser evil. :)
+> 
+> Jan
+> 
 
 
