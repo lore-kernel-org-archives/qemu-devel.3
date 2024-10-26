@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04424D10BE4
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 04:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0931ED10BE4
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 04:39:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4YZ7-0006wC-Mp; Sat, 26 Oct 2024 00:38:17 -0400
+	id 1t4Ya7-0007ek-FT; Sat, 26 Oct 2024 00:39:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4YZ5-0006us-FJ
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:38:15 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4Ya6-0007eL-69
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:39:18 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4YZ3-0000bl-Qg
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:38:14 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-72061bfec2dso470921b3a.2
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 21:38:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4Ya4-0000gg-Qd
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:39:17 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7db90a28cf6so2419517a12.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 21:39:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729917492; x=1730522292; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729917555; x=1730522355; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=znhjkPX5FWYjPyXShpOCq3fXxg1BafTOW0qy9nRGctA=;
- b=cAV0ppX3QloguIpCsidwJVhLPne7tk2AvonCclp8UvwltVpKni/wESr2v9eiLrFOOe
- orzqxSJN19ZAgXO9od0u62Cl9+uncAeqYduenbxWteysfcSlj11bbptzWUSMmuc3ayWw
- bYMrYC1/thPCkxOGy1wUbUWhmOEjhuR8s7WIXsjY/Wiqai1jSAEn4xZQ1mkvHs4Flz2g
- 0Ltoa8feGKJjMTyoVAHz1O0eWGWF/IPifvllHViSgNYxa3JtmbmsWIrtEm1F9CX6Q5vd
- yqhZOUM3HKPpxh9XTtjkRH6B21v9AuVn4aWH4U5ayF10Se1LBitOJSOV7AgZC6lOayZG
- M4Ow==
+ bh=gs6F87cjm0we97xF2OmKhXtcxUpIT/xX+fPAETT/hiA=;
+ b=miFvgaqX1j9BSz7wMgHb/jBtUzXBpH1TILaURKTFrsvTwyAnutMh2uR8nLRipTm0/m
+ Ampbvs0svpFATf/MLv1OUHQo6GIU+N93g/PuXf7YqfEmOgbCnfo6/Mub2NIshUdnUaun
+ OwrtBqI5eXwXo1dHB/3nkYxLMZ24fbdtvOKd7N2Wv8bXWcLXG9I53j1tsdwUZt/1ICsR
+ cX0ODRmLklm3nYBXMebVWGqMZnPy5qRriTr9JReS5uAeDt+RvczFfenWnUT4vEobW2q2
+ FIo87Eg2r9r7BfY9WRRPxLPEvP2dOpgMf+nqYcysfJ4skKKrvABNoFj+tKJE2TTtuKXT
+ dpRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729917492; x=1730522292;
+ d=1e100.net; s=20230601; t=1729917555; x=1730522355;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=znhjkPX5FWYjPyXShpOCq3fXxg1BafTOW0qy9nRGctA=;
- b=mnUFxk8fjdNXyTQvXaATxj4CQBvCBYkYKj1KXPdrAwmvvVevxKQ0ZMFQkS22dhHFGz
- QOVTXi695cCdln8Tkl6zvFd26eZ2d8r/uqE8qHFG/RflLUmfJUlq6FNQp1V2NEXwUKb0
- waak5CGu32mMGPIr8bfa2wjECFcAzW4QwV45kiMQeI6c3a4W/MsWCB1Qd4GzehOxiSsj
- bazQdp8EtVhjc+27q2qp227ywTvzBRPSSZeaeorjaT4W0YzjM0nE4BccBA23UGawRdGM
- IinBaKurOmxpr6t0qo8Pq12rUPy4Ob4U7dF8JRItgeg0LcCMqxm59I3Xwu16Y07CRlyI
- sXOg==
+ bh=gs6F87cjm0we97xF2OmKhXtcxUpIT/xX+fPAETT/hiA=;
+ b=JbkB7GubPLNe0KPBiBB6R98Pp8780xLbohAm46gZvEIqFcXLXc1GtXcb3C8MMaBrOw
+ Yq2PslcGopBUujC2NyTvNlzGld/heWQnohRkA4h8v+BH4G/e0SgQgPSZnwm2rG6cuox9
+ pB4xoWeOB4ctjpNZ01XPLOZqxvmjhyouVPmxSek3tUFwRvs3VMdy1o/XVcPkmTfDdm0I
+ gb9XiO+hhU5bv4Xl8na4XKvdw5dm212y+xARCRwPhp0NxvDbKRbwhBKNQuNWD/Wqn/84
+ gynuofvs8QchvctLvzdqlTOrDh/KeEvELX6R7ME77f6cECymibn321Vm5/i/2w4gYt7q
+ mZow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVZTblbXO3lYpzF4emDpm0Zqtr7W+hbT5d1N2PgXzGqncXEDj+R+3DxRXq8spluMwqXl56T4VlutNdG@nongnu.org
-X-Gm-Message-State: AOJu0Yy39/Z3eO1/jid2PUlWpc4qdPVNxr1QGXXanTjTHEEsm808RDPq
- zrVfRM/Rl9wc/UBx8KIxercj7Fe26RdJ4psXpvfAYnX4BqFcuvbyY914+BL6BXQTkqApp4xDkIf
- V
-X-Google-Smtp-Source: AGHT+IHiEi98Ua8+20vzdPeL4TOKM+SayNL0dFSF2uXzHbYoDfZQdc+xfNN5SBhAtq0mIkiE+KhsAQ==
-X-Received: by 2002:a05:6a00:1392:b0:71e:1201:636a with SMTP id
- d2e1a72fcca58-72062f4e63emr2822643b3a.1.1729917492346; 
- Fri, 25 Oct 2024 21:38:12 -0700 (PDT)
+ AJvYcCUiYtdd3O+GRQmCLyDn5ggPO1USMUYVfDYsNQ4Lt0p3H6DJ7EyTjUi3T9K0YQt3M1E2ZWGmvJ1KcH4x@nongnu.org
+X-Gm-Message-State: AOJu0YwfU8sDGBDnZOiz7wW2SLuzgdHkDe/cqfv+Ewd2Xja7g4omnY8s
+ kzq+e6qkEEDlqTbzRV9v6CfLF66mHCp9lTzZRp6bt8V87MW1yVIip/oVbbUo9Mo=
+X-Google-Smtp-Source: AGHT+IE9cAmM7uvfX63iDT5wbxyT+quafADF/2cuZhczWLuuSId5gPFypr8wGxOgyNuz2Jpnye1Idg==
+X-Received: by 2002:a05:6a20:c6ce:b0:1d3:418a:e42 with SMTP id
+ adf61e73a8af0-1d9a74dfaf2mr2800762637.10.1729917555344; 
+ Fri, 25 Oct 2024 21:39:15 -0700 (PDT)
 Received: from [192.168.120.226] ([45.176.88.169])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7edc8696bf2sm1945153a12.50.2024.10.25.21.38.06
+ 41be03b00d2f7-7edc8664f4csm1981393a12.7.2024.10.25.21.39.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 21:38:11 -0700 (PDT)
-Message-ID: <ddcef854-622f-4c74-8593-251d68dc4f61@linaro.org>
-Date: Sat, 26 Oct 2024 01:38:04 -0300
+ Fri, 25 Oct 2024 21:39:14 -0700 (PDT)
+Message-ID: <1451fb8c-029e-4342-81e1-74cef282ba0d@linaro.org>
+Date: Sat, 26 Oct 2024 01:39:07 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/21] target/xtensa: Explicitly set 2-NaN propagation rule
+Subject: Re: [PATCH 16/21] target/alpha: Explicitly set 2-NaN propagation rule
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -81,14 +80,14 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
  qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
 References: <20241025141254.2141506-1-peter.maydell@linaro.org>
- <20241025141254.2141506-15-peter.maydell@linaro.org>
+ <20241025141254.2141506-17-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241025141254.2141506-15-peter.maydell@linaro.org>
+In-Reply-To: <20241025141254.2141506-17-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -112,18 +111,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/10/24 11:12, Peter Maydell wrote:
-> Set the NaN propagation rule explicitly in xtensa_use_first_nan().
+> Set the NaN propagation rule explicitly for the float_status word
+> used in this target.
 > 
-> (When we convert the softfloat pickNaNMulAdd routine to also
-> select a NaN propagation rule at runtime, we will be able to
-> remove the use_first_nan flag because the propagation rules
-> will handle everything.)
+> This is a no-behaviour-change commit, so we retain the existing
+> behaviour of x87-style pick-largest-significand NaN propagation.
+> This is however not the architecturally correct handling, so we leave
+> a TODO note to that effect.
+> 
+> We also leave a TODO note pointing out that all this code in the cpu
+> initfn (including the existing setting up of env->flags and the FPCR)
+> should be in a currently non-existent CPU reset function.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/xtensa/fpu_helper.c     |  2 ++
->   fpu/softfloat-specialize.c.inc | 12 +-----------
->   2 files changed, 3 insertions(+), 11 deletions(-)
+>   target/alpha/cpu.c             | 11 +++++++++++
+>   fpu/softfloat-specialize.c.inc |  2 +-
+>   2 files changed, 12 insertions(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
