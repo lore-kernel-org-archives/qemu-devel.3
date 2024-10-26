@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 800A9D10BE9
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 04:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 171C1D10BE9
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 04:37:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4YXJ-0005F7-Bl; Sat, 26 Oct 2024 00:36:26 -0400
+	id 1t4YXn-0005TW-8d; Sat, 26 Oct 2024 00:36:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4YX1-0005Cl-KU
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:36:08 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4YXl-0005Sf-Vv
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:36:54 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4YWz-0000RO-0P
- for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:36:07 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2e2e87153a3so1928498a91.3
- for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 21:36:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4YXj-0000VD-KF
+ for qemu-devel@nongnu.org; Sat, 26 Oct 2024 00:36:53 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-20cbcd71012so27081145ad.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 21:36:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729917363; x=1730522163; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729917410; x=1730522210; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/gIbe1d55J0i7G5iCOOM1ljApzrAFEyO6xE7+q4tuJA=;
- b=kI20Er5gE0NPTCtSCooB54bTUdStR5FaDOXpxY8MHNqHPkvt02HhiHY6KUciKZYppf
- 3JHxjz24n+EO1nDHQnYuDBJgge3N82XoNKk7untI4zABIPKLpjNlXvMs5WJXT6ixJ/IA
- +KAeHO1dUnUniHKP3vNX2E2eRaGSR1Nj4MOobodYCRfhKM7POv1Wjqzz1hgA/7D0QohH
- nyqLEvBOF9A1bjy5a+vpiWyzIfuRl0KPVNo9X5PGs0PhEKU85z1haKH4aXNcleRyUBwm
- CHww0uBWflHmQ4CJFaIGYCuGgfE2lwBd7qNy/cXo6uFcPNQCgH3rh2ReeAOPqoGkyVmi
- aG6w==
+ bh=ICl9dgED/m16kjHsCSPmAdWqNiBPiZRJM/ggx0AVya4=;
+ b=kGmwWoPi1M2+KMfVXZozTWtSQVEgxUmOgHETQqumbeKJ9biCZKy1Nz+HDKl2cvKPfo
+ XYlVeKvqapQq8tj/x5U4GiYt0b1OvbXltZAYD999tKWAQGBn8EwlTBWZaToe+VQ1aFeF
+ vfMrKEODXk4CpyQ0R+2f8lI2ri/u9KkdTQQim6sI7sGCMDyfAYD8WKQenknpqfqitw5t
+ eWSXGDX46wTKOBgvzCDnCuUILj4P3JcxRqPLxOkX9Qm0XjyeHKRjTWBWQxUNjVgefX6Z
+ MNAY95OIQPe2x1O2RHFeShMQPEgP0I7iRjlbhjzkSFUXg+kH7+nIieOOZ+ooTn4NyuO9
+ CL7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729917363; x=1730522163;
+ d=1e100.net; s=20230601; t=1729917410; x=1730522210;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/gIbe1d55J0i7G5iCOOM1ljApzrAFEyO6xE7+q4tuJA=;
- b=IJT0Yyqzg5cxihYbRAKi/t6ZENJxjG0zlqsQJopnrhkNTVzX6SGp9CQV2kwOkSl5mO
- SKREJAFjxe5fvzlF4Svv1NG7LJOq0mQvwbXI2jhIVpRHN2DxDt5nNCZoeh3d4EQFvBbV
- RlIMCKlJ+kBecZQCmPF6SlxVSnF69YdgpoIA1AdrDU/WcXgOtl7nuDwVKxll2nLsZdXE
- jH9C8YNdTvmU1mtldg0gvPx6WqE89LS9O8o3vdDSkQ/RrwLk5aYXhd8pihrgweq0bS6u
- Ladx3SD5UUiWAoPR1x0mXilPgBgpq6KjSYVu2oSfPHieTSXZy2PyxOxPcUQOlPeHgXfZ
- IvPw==
+ bh=ICl9dgED/m16kjHsCSPmAdWqNiBPiZRJM/ggx0AVya4=;
+ b=XzgtGebdEZqbuql3GLb8pacGn4NYqiqlG1gjFiE2v0U5+uJo+F5wSRDliDa1EWx9Q2
+ GP3jBvDE8i5qrDs7e1hB61vCwlbGfXwKmiU45/oYgmVcFiyK0k1NJA4+ip9yqnqX4sV0
+ m0bWIakPCyhUpUvO1dfqpI6V5doSE2VEIAfM9AbBN5+AGw52FrLI2zXyeHCuALQShY10
+ 0g2BHRghfU54BLq/LoctgfnPirfLF/y5eFuTmsvZy2asvS7tDc3/aLD4cBcmysSa8GOQ
+ Zo556fXqW8ed89kjol0+JFD+LOEv9ivWocjb1POs63lUUgqCqS+1DcYIFdQuW8pfBy5f
+ OU2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVru63cZe62xiUBrZ6jBXGTTxsvmWISQekCPoVTxFh+RkFAbCsvxWKIcVO7vgqAIniN5eQRA0tAxKPF@nongnu.org
-X-Gm-Message-State: AOJu0YxHZfcZ1wMN1ESzvzbaubpX06BjRRhUPfR8Y1esjYgxN5Kprmdb
- KKlfBl0RZ3NQkSf5zyE1EVz6aeNYB4yJ0Gweyg69mk32GUwyfzf6rIxcA0X4Qa8=
-X-Google-Smtp-Source: AGHT+IGReU4ICQ3M2VC36Ip/tTtyo22+H2HnmGfFtSFZ+yskBIh5Dcb1rq0I/LLPKx/DtGbBjo8Ylw==
-X-Received: by 2002:a17:90b:5201:b0:2e7:6e84:a854 with SMTP id
- 98e67ed59e1d1-2e8f0f53e17mr2311975a91.1.1729917362924; 
- Fri, 25 Oct 2024 21:36:02 -0700 (PDT)
+ AJvYcCVY/S/Xj+GX+FfaiZd2k6JFthEBJS1CFX5adua8IaQbNTI3PAOLB8E2eEYO0Gv+QcW9x3G6dVsu7RNA@nongnu.org
+X-Gm-Message-State: AOJu0YyRFAtgll6j9FXHgpR57Mg5Bkj+yC+gcRqF/vljJYsHp5CzGpGG
+ YflxDj9uejdngYgm+MoqOJDk/+g0t9qMWnG+zy7iHez730Yr5FEVKxMOIiE6iUQ=
+X-Google-Smtp-Source: AGHT+IEcy+oxRwkEEptkJNLNAOJpYSaTSplfcqHUoCdQPufiuDiNH7cqgQVdYSWihL9xgm8ISsGiLQ==
+X-Received: by 2002:a17:902:e892:b0:20b:5aff:dd50 with SMTP id
+ d9443c01a7336-210c6c19c8cmr20680645ad.31.1729917409779; 
+ Fri, 25 Oct 2024 21:36:49 -0700 (PDT)
 Received: from [192.168.120.226] ([45.176.88.169])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e8e37490cesm2435135a91.37.2024.10.25.21.35.57
+ d9443c01a7336-210bbf46ceesm17491325ad.44.2024.10.25.21.36.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Oct 2024 21:36:02 -0700 (PDT)
-Message-ID: <a6a832c5-9429-40b8-ae3f-1c90c5301f73@linaro.org>
-Date: Sat, 26 Oct 2024 01:35:54 -0300
+ Fri, 25 Oct 2024 21:36:49 -0700 (PDT)
+Message-ID: <5e0d668a-13b6-4361-bf38-660b9bb7bddc@linaro.org>
+Date: Sat, 26 Oct 2024 01:36:41 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/21] target/m68k: Initialize float_status fields in gdb
- set/get functions
+Subject: Re: [PATCH 09/21] target/m68k: Explicitly set 2-NaN propagation rule
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -81,14 +80,14 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
  qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
 References: <20241025141254.2141506-1-peter.maydell@linaro.org>
- <20241025141254.2141506-11-peter.maydell@linaro.org>
+ <20241025141254.2141506-10-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241025141254.2141506-11-peter.maydell@linaro.org>
+In-Reply-To: <20241025141254.2141506-10-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=philmd@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -112,48 +111,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/10/24 11:12, Peter Maydell wrote:
-> In cf_fpu_gdb_get_reg() and cf_fpu_gdb_set_reg() we use a temporary
-> float_status variable to pass to floatx80_to_float64() and
-> float64_to_floatx80(), but we don't initialize it, meaning that those
-> functions could access uninitialized data.  Zero-init the structs.
-> 
-> (We don't need to set a NaN-propagation rule here because we
-> don't use these with a 2-argument fpu operation.)
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Explicitly set the 2-NaN propagation rule on env->fp_status
+> and on the temporary fp_status that we use in frem (since
+> we pass that to a division operation function).
 > ---
-> Spotted by code-inspection while I was doing the 2-NaN propagation
-> patches.
-> ---
->   target/m68k/helper.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-> index 9d3db8419de..9bfc6ae97c0 100644
-> --- a/target/m68k/helper.c
-> +++ b/target/m68k/helper.c
-> @@ -36,7 +36,7 @@ static int cf_fpu_gdb_get_reg(CPUState *cs, GByteArray *mem_buf, int n)
->       CPUM68KState *env = &cpu->env;
->   
->       if (n < 8) {
-> -        float_status s;
-> +        float_status s = {};
->           return gdb_get_reg64(mem_buf, floatx80_to_float64(env->fregs[n].d, &s));
-
-While here, could be renamed as 'discard' like SPARC. Regardless:
+>   target/m68k/cpu.c              | 16 ++++++++++++++++
+>   target/m68k/fpu_helper.c       |  1 +
+>   fpu/softfloat-specialize.c.inc | 19 +------------------
+>   3 files changed, 18 insertions(+), 18 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->       }
->       switch (n) {
-> @@ -56,7 +56,7 @@ static int cf_fpu_gdb_set_reg(CPUState *cs, uint8_t *mem_buf, int n)
->       CPUM68KState *env = &cpu->env;
->   
->       if (n < 8) {
-> -        float_status s;
-> +        float_status s = {};
->           env->fregs[n].d = float64_to_floatx80(ldq_be_p(mem_buf), &s);
->           return 8;
->       }
 
 
