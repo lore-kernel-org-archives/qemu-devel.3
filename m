@@ -4,80 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103D0D10C15
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 09:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 641C0D10C17
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 09:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4zva-000361-Gh; Sun, 27 Oct 2024 05:51:18 -0400
+	id 1t501w-00044v-NW; Sun, 27 Oct 2024 05:57:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1t4zvX-00035r-Pz
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 05:51:16 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1t4zvW-0007rU-4n
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 05:51:15 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a9a0c40849cso544029666b.3
- for <qemu-devel@nongnu.org>; Sun, 27 Oct 2024 02:51:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730022671; x=1730627471; darn=nongnu.org;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=yJvUkCOiC287YxkoFbbtWODq3vAJ4vNAAkLXFsOIOZ0=;
- b=nXHu67DkSQvH0bel1qDt36UP0Mym/2yQuGcb9yB6PMYRy86i/AIQ04drL+Qmiy34oi
- wy/Ov+KOp9+UymO7ZFmId9T2BQSk8HW/uQo8TdTnZmGhb4JkouCOY3eleOWeFyGWILgC
- MYPf0kqxmdYGVPuANxOgC2BEiq5ynsP/3iQsm76io4477eXmv9zQ2/hilkmaTnfXsfs1
- Dc1xqSoATcybClPsZKnI/i+NaBl3Y4LWAEk4wOe1jRoEPZG0zQFrArLgf68Dr0ez30f+
- TQv6rt08+A6Y4jr00wLy87Jfq/+lw1iZUmSJVsKcdGKODDIwL5/qTsNAsOcL3t1/n5yO
- wIpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730022671; x=1730627471;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yJvUkCOiC287YxkoFbbtWODq3vAJ4vNAAkLXFsOIOZ0=;
- b=gro5D64arDZwH6Cm+4taLLwrE0YsaD3qUH/rEgkPMXhN2k5rgtse31Xj7kr79pO3WI
- QgkmfVGoUY3eWf+4CmQNZPTt3gpwF9xiwEoRLCWNJMRtXBNKQl5m4DSmu/rFVBvvsCD8
- PPyQzOdnpBRlNaBroRl4UtBcsMnZabX984Ys/FuaBbRMOij4ZShg9UsR3oYjzePsNy62
- c28SK7CA9K1yN2fQzPfKH87GrH8bpYsGTg1YKGLP3fL2gVBVO0nGa5k0tpA6TODtIS0e
- 5riDajSy39eoGCIbqEp9d/9mtk99aoISlpijtqxJjDwSPkGeXNOvUfI/Wf8gZ2P5QjiC
- yLYA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDdrvPxrPOBsIkCiQYHCOr75HBW/GTLAVTrlUyiwm64OlQ7KWnAP6u8mHcdSUhsfBtZ/BrVf2kKJTd@nongnu.org
-X-Gm-Message-State: AOJu0YzE1+kgM+B5uyxAM5bC6WGCfMxwx0nzGctvJvnnPnOkpoRejNH9
- hHTEU91YboiG3TnrNzWmc1UVDIchN6zgIWscw5LJtbHcD13/9nyglPLHVpnolKU=
-X-Google-Smtp-Source: AGHT+IEBvid+SztKvoK8/13AdN+fCVIEN4TJqWu301QxPUBw3hwe3uHRo+g7oNdyCnFCswuY/eAROg==
-X-Received: by 2002:a17:907:7fa5:b0:a99:fb10:1285 with SMTP id
- a640c23a62f3a-a9de5ce252dmr392830866b.20.1730022670839; 
- Sun, 27 Oct 2024 02:51:10 -0700 (PDT)
-Received: from meli-email.org (adsl-161.109.242.225.tellas.gr.
- [109.242.225.161]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9b3a0881d4sm261488866b.216.2024.10.27.02.51.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Oct 2024 02:51:10 -0700 (PDT)
-Date: Sun, 27 Oct 2024 11:49:56 +0200
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: manos.pitsidianakis@linaro.org
-Subject: Re: [PATCH] rust: do not always select X_PL011_RUST
-User-Agent: meli 0.8.7
-References: <20241025094248.152556-1-pbonzini@redhat.com>
-In-Reply-To: <20241025094248.152556-1-pbonzini@redhat.com>
-Message-ID: <m0e19.8g754qmy2u4@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t501n-00044b-5I
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 05:57:43 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t501l-0008PJ-Gf
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 05:57:42 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 52E5E9CAFE;
+ Sun, 27 Oct 2024 12:57:03 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E55BA15E602;
+ Sun, 27 Oct 2024 12:57:38 +0300 (MSK)
+Message-ID: <f37d8c73-14fd-4fd5-adf0-1a42ea0df91c@tls.msk.ru>
+Date: Sun, 27 Oct 2024 12:57:38 +0300
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/23] rust: fix CI + allow older versions of rustc and
+ bindgen
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20241025160209.194307-1-pbonzini@redhat.com>
+ <95b07b6b-0980-4a32-86fd-602985750104@tls.msk.ru>
+ <CABgObfb2qZnH6CKp37pxr8Dq5x39ug=0ND8K4_STerXKxxd6Vw@mail.gmail.com>
+ <e4ce3a76-80f8-486a-894f-fe006e97c577@tls.msk.ru>
+ <a5644958-907d-4940-818d-40a9b55a8297@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <a5644958-907d-4940-818d-40a9b55a8297@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,31 +108,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 25 Oct 2024 12:42, Paolo Bonzini <pbonzini@redhat.com> wrote:
->Right now the Rust pl011 device is included in all QEMU system
->emulator binaries if --enable-rust is passed.  This is not needed
->since the board logic in hw/arm/Kconfig will pick it.
->
->Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->---
-> rust/hw/char/Kconfig | 1 -
-> 1 file changed, 1 deletion(-)
->
->diff --git a/rust/hw/char/Kconfig b/rust/hw/char/Kconfig
->index a1732a9e97f..5fe800c4806 100644
->--- a/rust/hw/char/Kconfig
->+++ b/rust/hw/char/Kconfig
->@@ -1,3 +1,2 @@
-> config X_PL011_RUST
->     bool
->-    default y if HAVE_RUST
->-- 
->2.47.0
->
+27.10.2024 12:42, Michael Tokarev пишет:
+> 27.10.2024 12:38, Michael Tokarev wrote:
+>> 27.10.2024 11:00, Paolo Bonzini wrpte:
+>>
+>> [rustc-web]
+>>
+>>> Thanks for pointing it out! It is indeed better, however it does not
+>>> support mipsel.
+>>
+>> mipsel?  do you mean mips64el?
 
+Please note upstream rust does not provide rustup binaries for mipsel.
+So there's really no way to bootstrap mipsel rust currently.
 
-(Do I need someone else reviewing this before picking this up in my 
-tree?)
+And mipsel is gone in debian.
 
-Acked-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+It looks like we should not expect rust to work on mipsel.
+
+/mjt
 
