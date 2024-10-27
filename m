@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1284D10C09
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Oct 2024 23:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80ED3D10C07
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 00:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4qbZ-0000Ph-JX; Sat, 26 Oct 2024 19:54:02 -0400
+	id 1t4r6o-0004PK-3G; Sat, 26 Oct 2024 20:26:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1t4qbY-0000PI-49; Sat, 26 Oct 2024 19:54:00 -0400
+ id 1t4r6l-0004P8-CP; Sat, 26 Oct 2024 20:26:15 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1t4qbV-0002ha-Td; Sat, 26 Oct 2024 19:53:59 -0400
-DKIM-Signature: a=rsa-sha256; bh=nnM0qsTKZawvPSe65RgGHinZMHOACZZWNgiVrM0q4Xg=; 
+ id 1t4r6h-0000Q5-20; Sat, 26 Oct 2024 20:26:12 -0400
+DKIM-Signature: a=rsa-sha256; bh=tvgSp1LVa2B1ISPg+tfS0oNA8PdFbts0KqLiCV7PTGE=; 
  c=simple/simple; d=git.sr.ht;
  h=From:Date:Subject:Reply-to:To:Cc; 
- q=dns/txt; s=20240113; t=1729986833; v=1;
- b=JDXh3qXfG8N9O0o1rdDb5dV2jNJlz8zIbgbElUNOf2XWGWQRxmQ8T30uQDW0RAEa1KE6QtEc
- Rz03povhKwfKkN0Kb2aLS6VtD1KSK1xCr1KpYrM4GqO23a1PdSAWf8FNrDBEUAbqgut8S1acIvA
- RMyJUF32q2Ud2WeN29tsUOh7ATr2kcN+swVQ9GnkRuqH9b2JSEbd/9Z5VXP81B1pQVDRcbAmgHn
- +6Utc8ZWi/tFxV998vhlgdrbViSNU+7JbnP1hWUEmyB6MSwAaA+eUA1Qk9tx3Xayqe4dpBTdzpx
- dxBMC5VFugRiYcb79TFzim7S8z0agfq7vscBSnKcK/DPA==
+ q=dns/txt; s=20240113; t=1729988769; v=1;
+ b=GL6K3jUKltM1vA0rE6KA4z3EtGBGQppK/2QRsEvNO36uQL2AlIP1XuMWA8mdG1EoDMhmDy8i
+ PogNeIYstjZ3gvG1Vb86F4w1jDknpu9c+u4JQK3+90euK6425dVRm0of20sJ97tiZt1ZKf9DvDu
+ G1lTb0X3hhiPy1ygxkS0W/9PAoHlOTRqJG98ku9QfU+5bOOTTw8rj1B5H8yrlFBgL1YfgNEjHZ2
+ PoNkg+Xdhg8IQKbDWb7s4Avdn5pTk3HORQaMdN3WUHucJgocjVaTLfhj69TdDRlUOyYQzQaQVBs
+ JRLz+iay3jM6QtGOdmqiRpgq4yMD4HZCDnvZ0ywcTM4SA==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 43E632026F;
- Sat, 26 Oct 2024 23:53:53 +0000 (UTC)
+ by mail-a.sr.ht (Postfix) with ESMTPSA id E9FD9200CB;
+ Sun, 27 Oct 2024 00:26:08 +0000 (UTC)
 From: ~axelheider <axelheider@git.sr.ht>
-Date: Sat, 26 Oct 2024 23:53:53 +0000
-Subject: [PATCH qemu.git 0/1] docs/devel/reset: add missing words
+Date: Sun, 27 Oct 2024 00:26:08 +0000
+Subject: [PATCH qemu.git 0/1] hw/intc/sifive_plic: add const qualifier to
+ signature
 MIME-Version: 1.0
-Message-ID: <172998683323.20070.572834413126431721-0@git.sr.ht>
+Message-ID: <172998876893.15131.3277963343932581039-0@git.sr.ht>
 X-Mailer: git.sr.ht
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org
@@ -65,13 +66,15 @@ Reply-To: ~axelheider <axelheider@gmx.de>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add missing words in documentation
+Add const qualifier to function signature. The function does not modify
+the string. This allows passing read-only strings also.
 
 Axel Heider (1):
-  docs/devel/reset: add missing words
+  hw/intc/sifive_plic: add const qualifier to signature
 
- docs/devel/reset.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/intc/sifive_plic.c         | 2 +-
+ include/hw/intc/sifive_plic.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 -- 
 2.45.2
