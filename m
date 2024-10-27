@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51EA8D10C16
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 09:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E22D10C15
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 09:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4zjn-0000NZ-0b; Sun, 27 Oct 2024 05:39:07 -0400
+	id 1t4znS-0001eV-R0; Sun, 27 Oct 2024 05:42:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4zjl-0000NR-9h
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 05:39:05 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4znR-0001dz-FP
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 05:42:53 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4zjj-0006Zf-Ml
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 05:39:05 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4znP-00075T-TE
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 05:42:53 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 262029CACD;
- Sun, 27 Oct 2024 12:38:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F14219CACF;
+ Sun, 27 Oct 2024 12:42:14 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B4E5615E5EC;
- Sun, 27 Oct 2024 12:38:56 +0300 (MSK)
-Message-ID: <e4ce3a76-80f8-486a-894f-fe006e97c577@tls.msk.ru>
-Date: Sun, 27 Oct 2024 12:38:56 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8A55A15E5F3;
+ Sun, 27 Oct 2024 12:42:50 +0300 (MSK)
+Message-ID: <a5644958-907d-4940-818d-40a9b55a8297@tls.msk.ru>
+Date: Sun, 27 Oct 2024 12:42:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 00/23] rust: fix CI + allow older versions of rustc and
  bindgen
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org
 References: <20241025160209.194307-1-pbonzini@redhat.com>
  <95b07b6b-0980-4a32-86fd-602985750104@tls.msk.ru>
  <CABgObfb2qZnH6CKp37pxr8Dq5x39ug=0ND8K4_STerXKxxd6Vw@mail.gmail.com>
+ <e4ce3a76-80f8-486a-894f-fe006e97c577@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -80,9 +81,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <CABgObfb2qZnH6CKp37pxr8Dq5x39ug=0ND8K4_STerXKxxd6Vw@mail.gmail.com>
+In-Reply-To: <e4ce3a76-80f8-486a-894f-fe006e97c577@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -106,14 +107,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-27.10.2024 11:00, Paolo Bonzini wrpte:
+27.10.2024 12:38, Michael Tokarev wrote:
+> 27.10.2024 11:00, Paolo Bonzini wrpte:
+> 
+> [rustc-web]
+> 
+>> Thanks for pointing it out! It is indeed better, however it does not
+>> support mipsel.
+> 
+> mipsel?  do you mean mips64el?
 
-[rustc-web]
+Ah. I see what you mean.
+https://buildd.debian.org/status/package.php?p=rustc-web&suite=bookworm
 
-> Thanks for pointing it out! It is indeed better, however it does not
-> support mipsel.
-
-mipsel?  do you mean mips64el?
+FWIW, mipsel has been removed for the next debian, it isn't supported
+anymore in sid or testing (trixie).
 
 /mjt
 
