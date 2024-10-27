@@ -4,70 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ECECD116E8
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 11:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4CC1D116E8
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 12:40:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t51vH-00035J-Uw; Sun, 27 Oct 2024 07:59:07 -0400
+	id 1t52YX-0000XR-7I; Sun, 27 Oct 2024 08:39:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t51vG-000354-35
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 07:59:06 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t51vD-0006Xu-1L
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 07:59:05 -0400
-Received: by mail-ed1-f49.google.com with SMTP id
- 4fb4d7f45d1cf-5c903f5bd0eso6655239a12.3
- for <qemu-devel@nongnu.org>; Sun, 27 Oct 2024 04:59:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t52YV-0000XC-RF
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 08:39:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t52YS-0002Ye-HU
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 08:39:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730032773;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WHJM4+NQSyCrL8TkXbA3E7BvV1iD+Wp9nDOq2om9v34=;
+ b=IS2A5hi06RYL+wZbmC8/ktKGHq7QG5/DdTMqqtJCBbG2utS5JN8G6wxejmX56nS9b+7oK0
+ uu+Xkc6m/jfrPM6VLHW4VooxRn+F/blvolxRf16IeMkbIf03smZ0vsst4Bxbpx0Sc4F3m3
+ 8VL5CscHIKYu1XqYLpFyRqPnhr3/TbI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-199-mU3fMdYyP5SQbdKFu7KQhw-1; Sun, 27 Oct 2024 08:39:27 -0400
+X-MC-Unique: mU3fMdYyP5SQbdKFu7KQhw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-431604a3b47so24931185e9.3
+ for <qemu-devel@nongnu.org>; Sun, 27 Oct 2024 05:39:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730030341; x=1730635141;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pIVasYqKSblP9NGl/P7eCRWaDfIs5V2nTWzWd0Sz4rI=;
- b=OSD8aBnq75fkWg04tsGIGX/51RgtwcGw/9j8GvFzpw63udg2hLVg5xipZYmKyV9vfM
- K5+fMSy6aS3lzBnglXdJT0qkq7sCE1+ahyzf2rN3tD73Q2nGvs/zR5PXhfFqb/yby+Uc
- FodeKWeXLLroMT/cORkR2ypCxE3qp0+Ve4KXAiO/U+EDUeUTnfpRyvYyjB+8iPm9Q3H1
- nn04CrL1T64iQDNe8hjcWfKA+b10TpjOE/p1qtSW1RpiVxsCOvXukrncvKye/Efku25Y
- ntXJKMvg6t/MGPgWhKHV0XTRE/7mxl5czLPMNrj4s4TcmkVTiqcNB2b5+whbPJUfN2qa
- 2dnQ==
-X-Gm-Message-State: AOJu0YyhVtlzlius90j3AIEGKZtbhCq6xZVP/bwjQ3gl3SRXb9TJauXa
- JNZ8mFUMFzsHE+c4bkEhvuLCZFTgNMPQOfOLE8tRdK2WImBeKQqm
-X-Google-Smtp-Source: AGHT+IGlH5b/+eYqqA5NEx/BfMH3+W2vTjdo85/dWOXq3z5uYimVwWLMe97zoFbayDIllS+qnhzgag==
-X-Received: by 2002:a05:6402:2789:b0:5c9:7c78:4919 with SMTP id
- 4fb4d7f45d1cf-5cbbfaaa664mr3901162a12.30.1730030341284; 
- Sun, 27 Oct 2024 04:59:01 -0700 (PDT)
-Received: from tpx1 (ip-109-40-241-30.web.vodafone.de. [109.40.241.30])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cbb6255c74sm2318409a12.4.2024.10.27.04.58.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Oct 2024 04:59:00 -0700 (PDT)
-Date: Sun, 27 Oct 2024 12:58:57 +0100
-From: Thomas Huth <huth@tuxfamily.org>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 08/36] next-cube: introduce next-scsi device
-Message-ID: <20241027125857.6f03068a@tpx1>
-In-Reply-To: <20241023085852.1061031-9-mark.cave-ayland@ilande.co.uk>
-References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-9-mark.cave-ayland@ilande.co.uk>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1730032764; x=1730637564;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WHJM4+NQSyCrL8TkXbA3E7BvV1iD+Wp9nDOq2om9v34=;
+ b=butu+gw70FZLtif//LGJeRstn3fE/DT80QT/hz3TmdGq2smqazSIxC4z8MUB2CEKuR
+ mitcoUkaPkMrB/L5/uPRX15JGHU8UBlzlq5Cg9YqDlfoK6upbRhrEGJ6eyAsHB5Zim+j
+ vcgAldvBjluzm9fOhlk37fnrbJHyM323RX8iS74u6+soKJDjCOuWbLfAWjmXfR2XBn+2
+ 1rn3fbqJvHWWSra+BT8kWzKNDdAb4KTqv4xDToeuZG9MpKku8q9W9t1gCoc8pGex4z5l
+ EZYCsO1btzmuAMxaaBWJg8BgVU3ZbCeKsaLhdW9XRwhEesgPu94jQ45vfY1PWb2TMlR/
+ vWaw==
+X-Gm-Message-State: AOJu0Yy/ssRrksmk62O6Z3Z6J5MQkGDF0udn9yi3NB3PsVvkY0eqPUw1
+ 6OngK5Z2x571X1PFtBOTR3emYN9QmW2ozTUcFRB0Gr0TPu/3GKYLdtfZ33ISa/Y/yznsLTi1IAc
+ JKvXvTdE7EOxRcE1vwpQz9VfpEAY3HL55waUYwVv8GxqSS8Pc/jWv8G2HBsFoorBATNPQ2j1erg
+ H0ukZu3Dz8ggoOPad9y3gvQyW7WDXGdfelBs4+wg==
+X-Received: by 2002:a05:600c:4fcb:b0:425:7bbf:fd07 with SMTP id
+ 5b1f17b1804b1-4319ac6fb93mr45517895e9.5.1730032764438; 
+ Sun, 27 Oct 2024 05:39:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEoZJSzncr/meH4YgSevmipz1/weiwp7cUmJnAtT5ciZiUlP7jVYVawhXDxbdRSk3WgxJH4r+c/bafNdDZqbtM=
+X-Received: by 2002:a05:600c:4fcb:b0:425:7bbf:fd07 with SMTP id
+ 5b1f17b1804b1-4319ac6fb93mr45517745e9.5.1730032764078; Sun, 27 Oct 2024
+ 05:39:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.208.49; envelope-from=th.huth@gmail.com;
- helo=mail-ed1-f49.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20241025160209.194307-1-pbonzini@redhat.com>
+ <95b07b6b-0980-4a32-86fd-602985750104@tls.msk.ru>
+ <CABgObfb2qZnH6CKp37pxr8Dq5x39ug=0ND8K4_STerXKxxd6Vw@mail.gmail.com>
+ <e4ce3a76-80f8-486a-894f-fe006e97c577@tls.msk.ru>
+ <a5644958-907d-4940-818d-40a9b55a8297@tls.msk.ru>
+In-Reply-To: <a5644958-907d-4940-818d-40a9b55a8297@tls.msk.ru>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Sun, 27 Oct 2024 13:39:10 +0100
+Message-ID: <CABgObfbSO9Zzr8LDrr=ZZ53OAvvbEtgjWhB-mXEzKKfc9PM5cw@mail.gmail.com>
+Subject: Re: [PATCH v3 00/23] rust: fix CI + allow older versions of rustc and
+ bindgen
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="0000000000005a8716062574a4f9"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.287,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,17 +100,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Wed, 23 Oct 2024 09:58:24 +0100
-schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
+--0000000000005a8716062574a4f9
+Content-Type: text/plain; charset="UTF-8"
 
-> This device is intended to hold the ESP SCSI controller and the NeXT SCSI CSRs.
-> Start by creating the device and moving the ESP SCSI controller to be an
-> embedded child device.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> ---
->  hw/m68k/next-cube.c | 93 ++++++++++++++++++++++++++++++++++++---------
->  1 file changed, 74 insertions(+), 19 deletions(-)
+Il dom 27 ott 2024, 10:43 Michael Tokarev <mjt@tls.msk.ru> ha scritto:
 
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+> 27.10.2024 12:38, Michael Tokarev wrote:
+> > 27.10.2024 11:00, Paolo Bonzini wrpte:
+> >
+> > [rustc-web]
+> >
+> >> Thanks for pointing it out! It is indeed better, however it does not
+> >> support mipsel.
+> >
+> > mipsel?  do you mean mips64el?
+>
+> Ah. I see what you mean.
+> https://buildd.debian.org/status/package.php?p=rustc-web&suite=bookworm
+>
+> FWIW, mipsel has been removed for the next debian, it isn't supported
+> anymore in sid or testing (trixie).
+>
+
+Oh, then we need to deprecate it! But for now we're a bit stuck with it.
+
+Paolo
+
+
+> /mjt
+>
+>
+
+--0000000000005a8716062574a4f9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il dom 27 ott 2024, 10:43 Michael Tokarev &lt;<a href=
+=3D"mailto:mjt@tls.msk.ru">mjt@tls.msk.ru</a>&gt; ha scritto:<br></div><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
+:1px solid rgb(204,204,204);padding-left:1ex">27.10.2024 12:38, Michael Tok=
+arev wrote:<br>
+&gt; 27.10.2024 11:00, Paolo Bonzini wrpte:<br>
+&gt; <br>
+&gt; [rustc-web]<br>
+&gt; <br>
+&gt;&gt; Thanks for pointing it out! It is indeed better, however it does n=
+ot<br>
+&gt;&gt; support mipsel.<br>
+&gt; <br>
+&gt; mipsel?=C2=A0 do you mean mips64el?<br>
+<br>
+Ah. I see what you mean.<br>
+<a href=3D"https://buildd.debian.org/status/package.php?p=3Drustc-web&amp;s=
+uite=3Dbookworm" rel=3D"noreferrer noreferrer" target=3D"_blank">https://bu=
+ildd.debian.org/status/package.php?p=3Drustc-web&amp;suite=3Dbookworm</a><b=
+r>
+<br>
+FWIW, mipsel has been removed for the next debian, it isn&#39;t supported<b=
+r>
+anymore in sid or testing (trixie).<br></blockquote></div></div><div dir=3D=
+"auto"><br></div><div dir=3D"auto">Oh, then we need to deprecate it! But fo=
+r now we&#39;re a bit stuck with it.</div><div dir=3D"auto"><br></div><div =
+dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div =
+class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+/mjt<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000005a8716062574a4f9--
+
 
