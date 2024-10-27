@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4CC1D116E8
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 12:40:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8D85D116E8
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 13:06:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t52YX-0000XR-7I; Sun, 27 Oct 2024 08:39:41 -0400
+	id 1t52xl-0003mv-Iw; Sun, 27 Oct 2024 09:05:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t52YV-0000XC-RF
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 08:39:39 -0400
+ id 1t52xj-0003mh-Ce
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 09:05:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t52YS-0002Ye-HU
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 08:39:38 -0400
+ id 1t52xh-0005Ss-RC
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 09:05:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730032773;
+ s=mimecast20190719; t=1730034340;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WHJM4+NQSyCrL8TkXbA3E7BvV1iD+Wp9nDOq2om9v34=;
- b=IS2A5hi06RYL+wZbmC8/ktKGHq7QG5/DdTMqqtJCBbG2utS5JN8G6wxejmX56nS9b+7oK0
- uu+Xkc6m/jfrPM6VLHW4VooxRn+F/blvolxRf16IeMkbIf03smZ0vsst4Bxbpx0Sc4F3m3
- 8VL5CscHIKYu1XqYLpFyRqPnhr3/TbI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=chMhRQaxogGMnqR5MaOMUkx139qHo2hGdaN+p/obxoo=;
+ b=BTxrIH0fQ7hITLUUscwSB2DSlrHLYjlYpfkPa5NZpeaaRT3NrLueJQ2QkiMl0+hj94toZb
+ h8oyrz39e2e1vayu5KnNY6oUquHn5SJrovZEiQsR48ylG4tRwhQonCXtf4i0RT0Pa2jLRg
+ aFQ4ATM9O2rkZ/l6dg3EFS8BS9E/qiY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-199-mU3fMdYyP5SQbdKFu7KQhw-1; Sun, 27 Oct 2024 08:39:27 -0400
-X-MC-Unique: mU3fMdYyP5SQbdKFu7KQhw-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-431604a3b47so24931185e9.3
- for <qemu-devel@nongnu.org>; Sun, 27 Oct 2024 05:39:27 -0700 (PDT)
+ us-mta-385-theZ38GlP-e72lH7Pz51KQ-1; Sun, 27 Oct 2024 09:05:36 -0400
+X-MC-Unique: theZ38GlP-e72lH7Pz51KQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37d3e8dccc9so2077777f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Oct 2024 06:05:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730032764; x=1730637564;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1730034334; x=1730639134;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WHJM4+NQSyCrL8TkXbA3E7BvV1iD+Wp9nDOq2om9v34=;
- b=butu+gw70FZLtif//LGJeRstn3fE/DT80QT/hz3TmdGq2smqazSIxC4z8MUB2CEKuR
- mitcoUkaPkMrB/L5/uPRX15JGHU8UBlzlq5Cg9YqDlfoK6upbRhrEGJ6eyAsHB5Zim+j
- vcgAldvBjluzm9fOhlk37fnrbJHyM323RX8iS74u6+soKJDjCOuWbLfAWjmXfR2XBn+2
- 1rn3fbqJvHWWSra+BT8kWzKNDdAb4KTqv4xDToeuZG9MpKku8q9W9t1gCoc8pGex4z5l
- EZYCsO1btzmuAMxaaBWJg8BgVU3ZbCeKsaLhdW9XRwhEesgPu94jQ45vfY1PWb2TMlR/
- vWaw==
-X-Gm-Message-State: AOJu0Yy/ssRrksmk62O6Z3Z6J5MQkGDF0udn9yi3NB3PsVvkY0eqPUw1
- 6OngK5Z2x571X1PFtBOTR3emYN9QmW2ozTUcFRB0Gr0TPu/3GKYLdtfZ33ISa/Y/yznsLTi1IAc
- JKvXvTdE7EOxRcE1vwpQz9VfpEAY3HL55waUYwVv8GxqSS8Pc/jWv8G2HBsFoorBATNPQ2j1erg
- H0ukZu3Dz8ggoOPad9y3gvQyW7WDXGdfelBs4+wg==
-X-Received: by 2002:a05:600c:4fcb:b0:425:7bbf:fd07 with SMTP id
- 5b1f17b1804b1-4319ac6fb93mr45517895e9.5.1730032764438; 
- Sun, 27 Oct 2024 05:39:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEoZJSzncr/meH4YgSevmipz1/weiwp7cUmJnAtT5ciZiUlP7jVYVawhXDxbdRSk3WgxJH4r+c/bafNdDZqbtM=
-X-Received: by 2002:a05:600c:4fcb:b0:425:7bbf:fd07 with SMTP id
- 5b1f17b1804b1-4319ac6fb93mr45517745e9.5.1730032764078; Sun, 27 Oct 2024
- 05:39:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <20241025160209.194307-1-pbonzini@redhat.com>
- <95b07b6b-0980-4a32-86fd-602985750104@tls.msk.ru>
- <CABgObfb2qZnH6CKp37pxr8Dq5x39ug=0ND8K4_STerXKxxd6Vw@mail.gmail.com>
- <e4ce3a76-80f8-486a-894f-fe006e97c577@tls.msk.ru>
- <a5644958-907d-4940-818d-40a9b55a8297@tls.msk.ru>
-In-Reply-To: <a5644958-907d-4940-818d-40a9b55a8297@tls.msk.ru>
+ bh=chMhRQaxogGMnqR5MaOMUkx139qHo2hGdaN+p/obxoo=;
+ b=gdKejLkQbfjlI51Oxjq3F2djiwbl2o/qU5veXYZAb3vYzk8Ges+oqqjK7cxDdtxVaL
+ BzpTpXJUlp61YbY41IM/NSifbgacesrXHzAEiOayORZw7bDM06KBJ49eqyOyi8l8Uq5o
+ Gdtg+FrtkJif5W07HnGeMsRJGkvME4xDkxzXp2hQhyvyhaEtEBohvwHsNqMdxnPQhtm7
+ f96FuIgeP2K/rQlddY87U6l+XTmFxQL7MpZNyV9XRUb5kt8SHakoLalSfG8i8Fjmg4Bs
+ 1BidQOdRAmI41NqXD/My9/pYPTyz4v4/ASfjfgA5zDkAnZxSIcshE0Xp8wN1LEL+4JjA
+ ssSQ==
+X-Gm-Message-State: AOJu0Yxg5Lhm0gH1ogHWQYrE8yEQQAQRgFqEczKrWz30E+sRktLsr0tW
+ maBwX4FjuA4KvLNN7YHULlMtGxtSQNr3R6wRLiF7DJChPU5ueJSqQutz0a9INMG7aBvdAArAYRG
+ 1az3pCxtjB5bwPzkic3iLCSwv0pPyZwt4HPm/XCKmctffqjCYNAYEvjGnQbbBaKfNtQUP129l+T
+ LRM39FnFn2MefR9HNehv+FDzWtKMfz/JOpuK7ahnk=
+X-Received: by 2002:a5d:4f04:0:b0:37e:d965:4e1e with SMTP id
+ ffacd0b85a97d-380611ee9ccmr4121387f8f.42.1730034334588; 
+ Sun, 27 Oct 2024 06:05:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHboW2mmoINdX3R6hmWb8arsnoSDEf1cmDqIloGKCmthnnu4J3ic1x8hVmJeKOhVRGKHGmmwQ==
+X-Received: by 2002:a5d:4f04:0:b0:37e:d965:4e1e with SMTP id
+ ffacd0b85a97d-380611ee9ccmr4121354f8f.42.1730034334008; 
+ Sun, 27 Oct 2024 06:05:34 -0700 (PDT)
+Received: from [192.168.10.3] ([151.49.226.83])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38058b3b57bsm6782864f8f.26.2024.10.27.06.05.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 27 Oct 2024 06:05:33 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Sun, 27 Oct 2024 13:39:10 +0100
-Message-ID: <CABgObfbSO9Zzr8LDrr=ZZ53OAvvbEtgjWhB-mXEzKKfc9PM5cw@mail.gmail.com>
-Subject: Re: [PATCH v3 00/23] rust: fix CI + allow older versions of rustc and
- bindgen
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="0000000000005a8716062574a4f9"
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: [PATCH] configure: detect 64-bit MIPS
+Date: Sun, 27 Oct 2024 14:05:31 +0100
+Message-ID: <20241027130531.244145-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -82,7 +81,7 @@ X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.287,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,76 +99,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005a8716062574a4f9
-Content-Type: text/plain; charset="UTF-8"
+While right now 64-bit MIPS and 32-bit MIPS share the code in QEMU,
+Rust uses different rules for the target.  Set $cpu correctly to
+either mips or mips64 (--cpu=mips64* is already accepted in the case
+statement that canonicalizes cpu/host_arch/linux_arch), and adjust
+the checks to account for the different between $cpu (which handles
+mips/mips64 separately) and $host_arch (which does not).
 
-Il dom 27 ott 2024, 10:43 Michael Tokarev <mjt@tls.msk.ru> ha scritto:
+Fixes: 1a6ef6ff624 ("configure, meson: detect Rust toolchain", 2024-10-11)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ configure | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-> 27.10.2024 12:38, Michael Tokarev wrote:
-> > 27.10.2024 11:00, Paolo Bonzini wrpte:
-> >
-> > [rustc-web]
-> >
-> >> Thanks for pointing it out! It is indeed better, however it does not
-> >> support mipsel.
-> >
-> > mipsel?  do you mean mips64el?
->
-> Ah. I see what you mean.
-> https://buildd.debian.org/status/package.php?p=rustc-web&suite=bookworm
->
-> FWIW, mipsel has been removed for the next debian, it isn't supported
-> anymore in sid or testing (trixie).
->
-
-Oh, then we need to deprecate it! But for now we're a bit stuck with it.
-
-Paolo
-
-
-> /mjt
->
->
-
---0000000000005a8716062574a4f9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il dom 27 ott 2024, 10:43 Michael Tokarev &lt;<a href=
-=3D"mailto:mjt@tls.msk.ru">mjt@tls.msk.ru</a>&gt; ha scritto:<br></div><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
-:1px solid rgb(204,204,204);padding-left:1ex">27.10.2024 12:38, Michael Tok=
-arev wrote:<br>
-&gt; 27.10.2024 11:00, Paolo Bonzini wrpte:<br>
-&gt; <br>
-&gt; [rustc-web]<br>
-&gt; <br>
-&gt;&gt; Thanks for pointing it out! It is indeed better, however it does n=
-ot<br>
-&gt;&gt; support mipsel.<br>
-&gt; <br>
-&gt; mipsel?=C2=A0 do you mean mips64el?<br>
-<br>
-Ah. I see what you mean.<br>
-<a href=3D"https://buildd.debian.org/status/package.php?p=3Drustc-web&amp;s=
-uite=3Dbookworm" rel=3D"noreferrer noreferrer" target=3D"_blank">https://bu=
-ildd.debian.org/status/package.php?p=3Drustc-web&amp;suite=3Dbookworm</a><b=
-r>
-<br>
-FWIW, mipsel has been removed for the next debian, it isn&#39;t supported<b=
-r>
-anymore in sid or testing (trixie).<br></blockquote></div></div><div dir=3D=
-"auto"><br></div><div dir=3D"auto">Oh, then we need to deprecate it! But fo=
-r now we&#39;re a bit stuck with it.</div><div dir=3D"auto"><br></div><div =
-dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div =
-class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-/mjt<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000005a8716062574a4f9--
+diff --git a/configure b/configure
+index 97bd4495f86..c0ba649d309 100755
+--- a/configure
++++ b/configure
+@@ -395,7 +395,11 @@ elif check_define _ARCH_PPC ; then
+     cpu="ppc"
+   fi
+ elif check_define __mips__ ; then
+-  cpu="mips"
++  if check_define __mips64 ; then
++    cpu="mips64"
++  else
++    cpu="mips"
++  fi
+ elif check_define __s390__ ; then
+   if check_define __s390x__ ; then
+     cpu="s390x"
+@@ -1230,7 +1234,7 @@ EOF
+       fi
+     fi
+ 
+-    case "$host_arch" in
++    case "$cpu" in
+     arm)
+       # e.g. arm-unknown-linux-gnueabi, arm-unknown-linux-gnueabihf
+       write_c_skeleton
+@@ -1278,7 +1282,7 @@ EOF
+     test "$rust_arch" = arm && test "$rust_os" != linux && rust_arch=armv7
+     ;;
+ 
+-  mips|mips64)
++  mips)
+     # preserve ISA version (mipsisa64r6 etc.) and include endianness
+     rust_arch=${raw_cpu%el}
+     test "$bigendian" = no && rust_arch=${rust_arch}el
+-- 
+2.47.0
 
 
