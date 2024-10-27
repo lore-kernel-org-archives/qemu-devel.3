@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A3AD1039E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 07:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0616D10C08
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 08:02:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4xHU-0008Pk-Oz; Sun, 27 Oct 2024 03:01:45 -0400
+	id 1t4yDE-00081m-Km; Sun, 27 Oct 2024 04:01:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4xHS-0008Pc-DJ
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 03:01:42 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4yDB-00081V-Ch
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 04:01:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t4xHQ-0007jH-Qe
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 03:01:42 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6E8ED9CA96;
- Sun, 27 Oct 2024 10:00:51 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 973A915E549;
- Sun, 27 Oct 2024 10:01:26 +0300 (MSK)
-Message-ID: <95b07b6b-0980-4a32-86fd-602985750104@tls.msk.ru>
-Date: Sun, 27 Oct 2024 10:01:26 +0300
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t4yD9-0004r6-Vv
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 04:01:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730016077;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MOG0Om3HwykUbgAN29OSBeKr0FDoL+NWdpVIxQs43ss=;
+ b=hUXfhN+ezl557YB6UQjX3WLy+wG20hnKsc4wSbwu7+vMvrkCoU4Uvt7IB+nAiU8qq+Yg8e
+ LkZYLuCo37kFZD9WdEL9kc8r6b8/Jek0W8UNQSv6lSzWnBDVByYPK4kEB5XuBx4pBK9yL/
+ C7Hzf2ThltG796P0R2Op+1ktm9DyNaY=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-523-Qm8_AE31N5iDZNVFcyWjOw-1; Sun, 27 Oct 2024 04:00:55 -0400
+X-MC-Unique: Qm8_AE31N5iDZNVFcyWjOw-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d5016d21eso1640849f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 27 Oct 2024 01:00:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730016054; x=1730620854;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MOG0Om3HwykUbgAN29OSBeKr0FDoL+NWdpVIxQs43ss=;
+ b=iEs7BfVSU1ttEjGxHzoNkhzvXhRvz989ecZsUjDeqGlLkyUCHfbsYsZP68sdOtJWlm
+ XgyjCs7IIWtPRcgfm+cSOzKz2+9muuC6Pq/fp8rfOB8W81WdOBrisKinIju+5Tg9XcbI
+ fVhjQzY6SvMqZZ/yu4ch4ydzN/+3xFZFiqlS2CQrhuqE6qQNT9Mtr40KGj9ZtpAyAO45
+ qJAFo/1HcZtUrcnvGTljIYhDZn1LnJAlj1xRXffyPQwfz/x93q0taepPq9lXiuz0B8Ka
+ PFklNQP6RJyNpAb9OG/H/quBVsom33BvUNEi7eclwYObX+hfb2Ylo+jA7hi7LlQzkBgu
+ 2sMw==
+X-Gm-Message-State: AOJu0YwXKh9XTxh8NK1WoXEYRSh1lhGOgtaSAH04TpxquvACAV8URNku
+ GNQXKl3O/T9feZtlaxdkOPGvUqGqlzqJ2O+Qasi6WvCOd3BzzGdDF6p6WxfgP+TlbpUn7LbQDvr
+ 8XxaIk2KlXvYhmDDILelo7LDOc8pC/G202HlvUD7QCtsZubZ9R+XmW/9fAmgN3Tuzat6Om3a0hU
+ SVjOgIBwXjPrUdzGn/ia/wq6usohQ=
+X-Received: by 2002:a5d:55c4:0:b0:37d:47fe:7c59 with SMTP id
+ ffacd0b85a97d-3806100cecemr3845367f8f.0.1730016054360; 
+ Sun, 27 Oct 2024 01:00:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGs2losqmuwzFl6Gvx0ytywTNwTM9iQRz9Gd01wsG3oBEwIOr1bvImRNiXj6bQY3t5uopHNrXTFlrwuOt4/7vU=
+X-Received: by 2002:a5d:55c4:0:b0:37d:47fe:7c59 with SMTP id
+ ffacd0b85a97d-3806100cecemr3845332f8f.0.1730016053957; Sun, 27 Oct 2024
+ 01:00:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <20241025160209.194307-1-pbonzini@redhat.com>
+ <95b07b6b-0980-4a32-86fd-602985750104@tls.msk.ru>
+In-Reply-To: <95b07b6b-0980-4a32-86fd-602985750104@tls.msk.ru>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Sun, 27 Oct 2024 09:00:41 +0100
+Message-ID: <CABgObfb2qZnH6CKp37pxr8Dq5x39ug=0ND8K4_STerXKxxd6Vw@mail.gmail.com>
 Subject: Re: [PATCH v3 00/23] rust: fix CI + allow older versions of rustc and
  bindgen
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
  junjie.mao@hotmail.com, berrange@redhat.com
-References: <20241025160209.194307-1-pbonzini@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20241025160209.194307-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.488,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,29 +100,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I think this is the wrong direction (ie, backwards).
+On Sun, Oct 27, 2024 at 8:02=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
+ote:
+>i
+> I think this is the wrong direction (ie, backwards).
+>
+> Sacrificing current code to be compatible with old stuff feels wrong.
+> Especially for really old, like rustc in debian bookworm.
+>
+> bookworm has rustc-web (and a few related packages) which is regular
+> rustc version 1.78, just renamed.  It is regular bookworm, not backports.
+> It has some packages disabled (compared to regular rust) and is a hack,
+> but it exists and can be used for now (dunno if it is sufficient for
+> qemu though).
 
-Sacrificing current code to be compatible with old stuff feels wrong.
-Especially for really old, like rustc in debian bookworm.
+Thanks for pointing it out! It is indeed better, however it does not
+support mipsel.
 
-bookworm has rustc-web (and a few related packages) which is regular
-rustc version 1.78, just renamed.  It is regular bookworm, not backports.
-It has some packages disabled (compared to regular rust) and is a hack,
-but it exists and can be used for now (dunno if it is sufficient for
-qemu though).
+> Also debian has backports mechanism, which also can be used for qemu -
+> I can try back-porting regular rust (and llvm) to bookworm.
+> I think this is a better way (at least a way forward) than trying to
+> move backwards.
+>
+> But generally, what is the reason to support debian stable?  I understand
+> the CI thing, - we need a way to test stuff.  For this, I'd say a better
+> alternative would be to target debian testing (currently trixie), not
+> debian stable.
 
-Also debian has backports mechanism, which also can be used for qemu -
-I can try back-porting regular rust (and llvm) to bookworm.
+Basically: it is not too hard and it can be reverted without much
+hassle once we stop supporting Debian 12 in general. Also, the
+next-lowest version (in Ubuntu 22.04, which has 1.75.0) would still
+have some relatively invasive changes, for example patch 11. We'll
+always need some workarounds until all supported distros have rustc
+1.77.0.
 
-I think this is a better way (at least a way forward) than trying to
-move backwards.
+Paolo
 
-But generally, what is the reason to support debian stable?  I understand
-the CI thing, - we need a way to test stuff.  For this, I'd say a better
-alternative would be to target debian testing (currently trixie), not
-debian stable.
-
-Thanks,
-
-/mjt
 
