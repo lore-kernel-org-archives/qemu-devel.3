@@ -4,70 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44115D1356A
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 21:15:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48118D13587
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Oct 2024 21:15:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Aa5-0005LF-5b; Sun, 27 Oct 2024 17:13:49 -0400
+	id 1t5AaC-0005Nc-CZ; Sun, 27 Oct 2024 17:13:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=DUM3=RX=kaod.org=clg@ozlabs.org>)
- id 1t5Aa3-0005Ke-9k; Sun, 27 Oct 2024 17:13:47 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1t5AaA-0005MY-QB; Sun, 27 Oct 2024 17:13:54 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=DUM3=RX=kaod.org=clg@ozlabs.org>)
- id 1t5Aa1-0007U6-99; Sun, 27 Oct 2024 17:13:47 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Xc8Q63J6Bz4x4c;
- Mon, 28 Oct 2024 08:13:34 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Xc8Q257Hkz4x33;
- Mon, 28 Oct 2024 08:13:30 +1100 (AEDT)
-Message-ID: <86fa6e68-5861-4d4d-941f-95b278074eb6@kaod.org>
-Date: Sun, 27 Oct 2024 22:13:28 +0100
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1t5Aa7-0007VP-Lu; Sun, 27 Oct 2024 17:13:54 -0400
+DKIM-Signature: a=rsa-sha256; bh=xpJrd+oeCpWEXqbTmrWASBMLlgFrzvs3zCilL3pWEko=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
+ t=1730063627; v=1;
+ b=WeEHbrcZErCbjHB4NXsaiXQ6K4HJH1qH2VL+Okym1LF59osyMkI0mFvUJm8Imod6trINN9JM
+ PCLtipiTFD/bwwRwVda2ugjt77et8BeC2aW0QseRKUZcbBjtDea8atjkQpcMp76FEHvOGR5qPtD
+ fisDsEgBChcz2qxNF5jSvvdzglB1KmJCC4rtM1ycLnAQoQOWNrI2qCmC7ookn4FN5U3RHngFhxn
+ Jnrcjhb7G1q09HvD9+R61CFAQP54q2ju0fvnYzEV6RH8aDUvTm3r8tRl6kUUcnMikp2KzJAfjli
+ 8yLJvmWLx/zqyKSAv7SpYa8r2ZOgNddcdbVkH6vxzHbzA==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id C0BA3202BE;
+ Sun, 27 Oct 2024 21:13:47 +0000 (UTC)
+From: ~axelheider <axelheider@git.sr.ht>
+Date: Sun, 27 Oct 2024 22:02:42 +0100
+Subject: [PATCH qemu.git v2 2/2] docs/devel/reset: add plural 's'
+Message-ID: <173006362760.28451.11319467059840843945-2@git.sr.ht>
+X-Mailer: git.sr.ht
+In-Reply-To: <173006362760.28451.11319467059840843945-0@git.sr.ht>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
-To: Guenter Roeck <linux@roeck-us.net>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
- <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Joel Stanley <joel@jms.id.au>, qemu-block <qemu-block@nongnu.org>
-References: <20241017163247.711244-1-peter.maydell@linaro.org>
- <dcf06645-dac0-4099-8946-38ca9deaeccf@redhat.com>
- <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
- <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
- <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
- <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
- <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
- <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
- <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
- <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
- <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
- <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
- <53cbb597-e7f2-4742-bf85-928c704ddbcf@linaro.org>
- <443f1b0c-8184-4bf4-9f68-c23d7de3bc36@roeck-us.net>
- <1bce4c22-9281-44c5-8acb-860881dc271c@kaod.org>
- <c27fbed6-596e-4ce7-a6ca-6d12d7205e99@roeck-us.net>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <c27fbed6-596e-4ce7-a6ca-6d12d7205e99@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=DUM3=RX=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FORGED_REPLYTO=2.095,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,76 +62,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~axelheider <axelheider@gmx.de>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/26/24 17:32, Guenter Roeck wrote:
-> On 10/26/24 03:02, Cédric Le Goater wrote:
-> [ ... ]
-> 
->>> I don't mind a single file. What bothers me is that the partitioning is made
->>> mandatory for ast2600 even if not used.
->>
->> Our only use case, in 2019, was to boot QEMU ast2600 machines from an
->> eMMC device using an OpenBMC FW image like the ones we find on IBM
->> Power10 Rainier systems. I agree we only focused on this scenario.
->> Most of the support should be there for other use cases, and it's now
->> a question of finding the right tunables for the user.
->>
->> I did a quick experiment using 2 patches,
->>
->> one on hw/sd/sd.c to fix c8cb19876d3e ("hw/sd/sdcard: Support boot
->> area in emmc image")
->>
->>      @@ -826,7 +826,9 @@ static void sd_reset(DeviceState *dev)
->>               sect = 0;
->>           }
->>           size = sect << HWBLOCK_SHIFT;
->>      -    size -= sd_bootpart_offset(sd);
->>      +    if (sd_is_emmc(sd)) {
->>      +        size -= sd->boot_part_size * 2;
->>      +    }
->>           sect = sd_addr_to_wpnum(size) + 1;
->>
->> and another on hw/arm/aspeed.c to remove the setting of the eMMC
->> device properties when it is not bootable :
->>      @@ -338,7 +338,7 @@ static void sdhci_attach_drive(SDHCIStat
->>                   return;
->>               }
->>               card = qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
->>      -        if (emmc) {
->>      +        if (emmc && boot_emmc) {
->>                   qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
->>                   qdev_prop_set_uint8(card, "boot-config",
->>                                       boot_emmc ? 0x1 << 3 : 0x0);
->> (I am not saying this is correct)
->>
-> 
-> Works for me, though, and it is much better than mandating the existence
-> of boot partitions.
+From: Axel Heider <axel.heider@codasip.com>
 
-Yes. However, if the emmc device was user creatable, we could use :
+Suggested-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Axel Heider <axel.heider@codasip.com>
+---
+ docs/devel/reset.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-   -blockdev node-name=emmc0,driver=file,filename=mmc-ast2600-evb-noboot.raw \
-   -device emmc,bus=sdhci-bus.2,drive=emmc0
-
-and with boot partitions:
-
-   -M boot-emmc=true \
-   -blockdev node-name=emmc0,driver=file,filename=mmc-ast2600-evb.raw \
-   -device emmc,bus=sdhci-bus.2,drive=emmc0,boot-partition-size=1048576,boot-config=8
-
-The above would be my preferred approach if acceptable. The "sd-bus"
-bus identifier should be changed in other machines tough.
-
-> If you end up submitting those patches, please feel free to add
-> 
-> Tested-by: Guenter Roeck <linux@roeck-us.net>
-
-I should send these fixes for QEMU 9.2.
-
-Thanks,
-
-C.
-
+diff --git a/docs/devel/reset.rst b/docs/devel/reset.rst
+index 3e64a7259f..adefd59ef9 100644
+--- a/docs/devel/reset.rst
++++ b/docs/devel/reset.rst
+@@ -287,7 +287,7 @@ resettable too. Additional parameters (a reset type and a=
+n opaque pointer) must
+ be passed to the callback too.
+=20
+ In ``DeviceClass`` and ``BusClass`` the ``ResettableState`` is located in the
+-``DeviceState`` and ``BusState`` structure. ``child_foreach()`` is implement=
+ed
++``DeviceState`` and ``BusState`` structures. ``child_foreach()`` is implemen=
+ted
+ to follow the bus hierarchy; for a bus, it calls the function on every child
+ device; for a device, it calls the function on every bus child. When we reset
+ the main system bus, we reset the whole machine bus tree.
+--=20
+2.45.2
 
