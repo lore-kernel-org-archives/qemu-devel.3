@@ -4,101 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63530D13588
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 09:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1CEFD13570
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 09:16:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Ldm-0003R1-9y; Mon, 28 Oct 2024 05:02:22 -0400
+	id 1t5LrD-000665-Vj; Mon, 28 Oct 2024 05:16:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1t5LdO-0003G6-Ur; Mon, 28 Oct 2024 05:01:59 -0400
-Received: from fhigh-a4-smtp.messagingengine.com ([103.168.172.155])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1t5LrC-00065c-Gw; Mon, 28 Oct 2024 05:16:14 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1t5LdM-0004kn-Kh; Mon, 28 Oct 2024 05:01:58 -0400
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal
- [10.202.2.50])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 801F911400EE;
- Mon, 28 Oct 2024 05:01:52 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-10.internal (MEProxy); Mon, 28 Oct 2024 05:01:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1730106112; x=
- 1730192512; bh=Idf3Nj/bO1IyFzKv+FUd0O2tGj5dP9t7iccKDcM7npM=; b=C
- wbnXR2C9jSY41sqZHgIJu7DcH+4GGw8Sk5xdc0/ThypjSx3asKhwAJ04Bo/EnTKD
- LPVxhJrbrzU8j1AMjOUm7FaQKK+sQdJi36n/PJN6QuY6zChBU2d3lV2oPW7LlvTF
- AtyZiFAt6pHDPFAh2XPXHQMRxz0P5MjcYPX8L8WFH5Cr5ITE4pn88ZEWfoMF8jg6
- M7NM07HVgG5TpnJcvikQqc9AF4GXgN9g7PcWn6raWq5tPbfFHOjnKHae31z3ciZG
- jB7NcqEP/PRqMIp3Hn2tuxuSwsWHyyu/mJpDfMqzqbGWJ7V/yLhqXCkIhSarXvIi
- ndWDVT3Vs3If6SZwWAY7Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; t=1730106112; x=1730192512; bh=Idf3Nj/bO1IyFzKv+FUd0O2tGj5d
- P9t7iccKDcM7npM=; b=fzw5/5RVs0Kw9sspurc9V49Eu+WrQFScPrrLMW6kIZz6
- 3A+N5WgND5TqUVowBmk5U0Fp4hGZedAWpwiifBWatThMOhvgKmSzw97WeZzBn0dG
- 1CSYuihrC9E3orkLmyx25eJ5Xpb3QenBBPv/I60g3FiIfLhVsu+n9/wccOjgTpns
- 6BdD+xIFlzfFQ6QuARZxfmKnl4loL1YxBm4r+/Jgsm7ekchjbOTi6UFPyaIzih5X
- 571GlEEbUV3+/MpEwFyGrfwJeZIieH8ncHXRwRp6QfXHbFUu448fq2GFemDqmmO9
- 7AmvIFyula4EVpytUWf5GEd8YA/63oD/7T8GKA03+Q==
-X-ME-Sender: <xms:_1IfZ0rlqzblbpffYC-7A_-LA8f2EAJ8oQyVSeNmVPTT1R82q-4l7Q>
- <xme:_1IfZ6o4X4tqI1Vito4-wJKR0Vi5brEJb8kS62-yFVUA2o4sEa4k-oZOV66BW2vKC
- INfFBdPskjEbCRrPdg>
-X-ME-Received: <xmr:_1IfZ5M0jIQiRyxB_uqKSqtV9FGImd-0thSDaryibi3wMO-KYsi69e3mGtCX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejjedguddvkecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
- hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdej
- necuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnth
- drughkqeenucggtffrrghtthgvrhhnpeejgfejfeffvdeuhfeifefhgffgueelhedukeev
- jeevtdduudegieegteffffejveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
- epmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphht
- thhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehksghushgthheskhgvrh
- hnvghlrdhorhhgpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghp
- thhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvg
- hmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhdrjhgvnhhsvghn
- sehsrghmshhunhhgrdgtohhmpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonh
- hgnhhurdhorhhgpdhrtghpthhtohepjhifkhhoiigrtgiiuhhksehgmhgrihhlrdgtohhm
- pdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:_1IfZ77gVZ2URGJBq53EUw_Xof14gwm-Yze2LxcqLFZcr4VScxounA>
- <xmx:_1IfZz4p51R8ZPo8mBIYZA6llPJa6Qi1S003D88mq2rieqXyv54E8g>
- <xmx:_1IfZ7jfiB-vm6oG3r4oIplFvJAgmwM49Vw-uIr4C1wp-PLX8ZgkWA>
- <xmx:_1IfZ94ihKYsfcic4EXe0fqbS-fiBvwevaRhyvbPbKli915iegYODg>
- <xmx:AFMfZ9tnTerXx6cVvnqazJyOtKOKzboDbqU_aO3uaOJNp--OezFDrMie>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Oct 2024 05:01:51 -0400 (EDT)
-Date: Mon, 28 Oct 2024 10:01:50 +0100
-From: Klaus Jensen <its@irrelevant.dk>
-To: Keith Busch <kbusch@kernel.org>
-Cc: Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- qemu-stable@nongnu.org, Waldemar Kozaczuk <jwkozaczuk@gmail.com>
-Subject: Re: [PATCH] hw/nvme: fix handling of over-committed queues
-Message-ID: <Zx9S_tOkgB9MoY7J@AALNPWKJENSEN.aal.scsc.local>
-References: <20241025-issue-2388-v1-1-16707e0d3342@samsung.com>
- <ZxvLQ5rSQtDAfE-H@kbusch-mbp.dhcp.thefacebook.com>
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1t5LrA-0006Dx-KX; Mon, 28 Oct 2024 05:16:14 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49S4WcKh014824;
+ Mon, 28 Oct 2024 09:16:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=US5bFQgBmGn4kfWluInv+VpA5egg1XHmMAMzGm18X
+ LE=; b=ovunFy5iMleJ7S5XyP2HdOoWSG/i5IIFmxyq52nSfIv79xOpa6Ur0U+ao
+ gK8RBcklROVpJpia/ZR2z26xlCvpx91qzZI93gUBOhFcoOSbLIuFu6c/LouZrJ+i
+ W3v6zFrmkvJDuYGaoEil+i8QVHSfjTzW7ltkGCWeSrFpHj7Toa3GtxcgIySu6Rqc
+ sjE3bpcudXwjxK71u6YPNFu2Dm3hROd4fpiJHbNs+nu80XXLqyfca1T4T8n8oxG8
+ LGuc7kG+pxY90KeNZ8nxsfYwdfs+gwAEu3aCRxJbhTkCaPq3eXiLJfKc0WwOxKaw
+ P2RB2gcEVGgqz9dKzdQz7wwJOh5xg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42j3nshdcv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 28 Oct 2024 09:16:02 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49S9G23L026367;
+ Mon, 28 Oct 2024 09:16:02 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42j3nshdcm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 28 Oct 2024 09:16:02 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49S52OP1015831;
+ Mon, 28 Oct 2024 09:16:01 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 42hdf155f8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 28 Oct 2024 09:16:01 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49S9FvKl15270270
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 28 Oct 2024 09:15:57 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A9F702033E;
+ Mon, 28 Oct 2024 09:15:57 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6E9402034C;
+ Mon, 28 Oct 2024 09:15:47 +0000 (GMT)
+Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.ibm.com.com (unknown
+ [9.39.17.130]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 28 Oct 2024 09:15:47 +0000 (GMT)
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Vaibhav Jain <vaibhav@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: David Gibson <david@gibson.dropbear.id.au>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org,
+ Amit Machhiwal <amachhiw@linux.ibm.com>
+Subject: [PATCH] spapr: nested: Add Power11 capability support for Nested PAPR
+ guests in TCG L0
+Date: Mon, 28 Oct 2024 14:45:36 +0530
+Message-ID: <20241028091536.600913-1-amachhiw@linux.ibm.com>
+X-Mailer: git-send-email 2.47.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: uvwQBfUsbYy0kL3D8VjfUXwAja-5zmoa
+X-Proofpoint-GUID: _8ThbooamAo6pPICOhcILlK7lS9UIjlL
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="4rmTWXwfm5UFA8lh"
-Content-Disposition: inline
-In-Reply-To: <ZxvLQ5rSQtDAfE-H@kbusch-mbp.dhcp.thefacebook.com>
-Received-SPF: pass client-ip=103.168.172.155; envelope-from=its@irrelevant.dk;
- helo=fhigh-a4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0
+ bulkscore=0 mlxlogscore=999 clxscore=1015 priorityscore=1501
+ suspectscore=0 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410280073
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,48 +116,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The Power11 architected and raw mode support in Linux was merged via [1]
+and the corresponding support in QEMU is waiting to be added by [2]
+which in V6 currently.
 
---4rmTWXwfm5UFA8lh
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Add the Power11 capabilities and the required handling in TCG L0
+implementation of the "Nested PAPR API".
 
-On Oct 25 10:45, Keith Busch wrote:
-> On Fri, Oct 25, 2024 at 12:50:45PM +0200, Klaus Jensen wrote:
-> > @@ -1520,9 +1520,16 @@ static void nvme_post_cqes(void *opaque)
-> >          nvme_inc_cq_tail(cq);
-> >          nvme_sg_unmap(&req->sg);
-> > +
-> > +        if (QTAILQ_EMPTY(&sq->req_list) && !nvme_sq_empty(sq)) {
-> > +            qemu_bh_schedule(sq->bh);
-> > +        }
-> > +
-> >          QTAILQ_INSERT_TAIL(&sq->req_list, req, entry);
-> >      }
->=20
-> Shouldn't we schedule the bottom half after the req has been added to
-> the list? I think everything the callback needs to be written prior to
-> calling qemu_bh_schedule().
->=20
+Note: This patch is based on [2].
 
-Not as far as I know. It is only queued up; it won't be executed
-immediately. It might run next (ASAP) if we are already in a bottom
-half, but not before whatever context we are in returns.
+[1] https://lore.kernel.org/all/20240221044623.1598642-1-mpe@ellerman.id.au/
+[2] https://lore.kernel.org/all/20240731055022.696051-1-adityag@linux.ibm.com/
 
---4rmTWXwfm5UFA8lh
-Content-Type: application/pgp-signature; name="signature.asc"
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+---
+ hw/ppc/spapr_nested.c         | 12 +++++++++++-
+ include/hw/ppc/spapr_nested.h |  5 ++++-
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+index c02785756c1e..066d40e3c1b7 100644
+--- a/hw/ppc/spapr_nested.c
++++ b/hw/ppc/spapr_nested.c
+@@ -771,6 +771,7 @@ static void copy_logical_pvr(void *a, void *b, bool set)
+ 
+     if (*pvr_logical_ptr) {
+         switch (*pvr_logical_ptr) {
++        case CPU_POWERPC_LOGICAL_3_10_P11:
+         case CPU_POWERPC_LOGICAL_3_10:
+             pcr = PCR_COMPAT_3_10 | PCR_COMPAT_3_00;
+             break;
+@@ -1184,6 +1185,12 @@ static target_ulong h_guest_get_capabilities(PowerPCCPU *cpu,
+         return H_PARAMETER;
+     }
+ 
++    /* P11 capabilities */
++    if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_10_P11, 0,
++        spapr->max_compat_pvr)) {
++        env->gpr[4] |= H_GUEST_CAPABILITIES_P11_MODE;
++    }
++
+     /* P10 capabilities */
+     if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_10, 0,
+         spapr->max_compat_pvr)) {
+@@ -1226,7 +1233,10 @@ static target_ulong h_guest_set_capabilities(PowerPCCPU *cpu,
+         env->gpr[4] = 1;
+ 
+         /* set R5 to the first supported Power Processor Mode */
+-        if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_10, 0,
++        if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_10_P11, 0,
++                             spapr->max_compat_pvr)) {
++            env->gpr[5] = H_GUEST_CAP_P11_MODE_BMAP;
++        } else if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_10, 0,
+                              spapr->max_compat_pvr)) {
+             env->gpr[5] = H_GUEST_CAP_P10_MODE_BMAP;
+         } else if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_00, 0,
+diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+index 93ef14adcc5e..24531c3fd2e9 100644
+--- a/include/hw/ppc/spapr_nested.h
++++ b/include/hw/ppc/spapr_nested.h
+@@ -210,11 +210,14 @@ typedef struct SpaprMachineStateNestedGuest {
+ #define H_GUEST_CAPABILITIES_COPY_MEM 0x8000000000000000
+ #define H_GUEST_CAPABILITIES_P9_MODE  0x4000000000000000
+ #define H_GUEST_CAPABILITIES_P10_MODE 0x2000000000000000
+-#define H_GUEST_CAP_VALID_MASK        (H_GUEST_CAPABILITIES_P10_MODE | \
++#define H_GUEST_CAPABILITIES_P11_MODE 0x1000000000000000
++#define H_GUEST_CAP_VALID_MASK        (H_GUEST_CAPABILITIES_P11_MODE | \
++                                       H_GUEST_CAPABILITIES_P10_MODE | \
+                                        H_GUEST_CAPABILITIES_P9_MODE)
+ #define H_GUEST_CAP_COPY_MEM_BMAP     0
+ #define H_GUEST_CAP_P9_MODE_BMAP      1
+ #define H_GUEST_CAP_P10_MODE_BMAP     2
++#define H_GUEST_CAP_P11_MODE_BMAP     3
+ #define PAPR_NESTED_GUEST_MAX         4096
+ #define H_GUEST_DELETE_ALL_FLAG       0x8000000000000000ULL
+ #define PAPR_NESTED_GUEST_VCPU_MAX    2048
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmcfUvsACgkQTeGvMW1P
-DemzpwgAmKqdTeoViyfn55mhRNdrKIVcCDDc1xI9F10cFU5QxWKcsZFla5+VYGo1
-83db4ZnhYllD2u3ujOk/SG2YMzxIAjIWNvEiHTht5mhS302BUhu8ntNWDhGzimOg
-dsGFaNvutJ7yu0PBvwTq5sAQQlg1yY2lE/GZcGTfxejWcbGV3NxqXMsG7vuI7La7
-udf1/MyOjgm5/W6pvQV3R1W33OTmbxkUWl7fKIKx/3zL3M4v2WX4+mYNUMIgkn+Y
-U6i/QkPg/VDLlQLczowICzkoRORZLmcvdsbZKXPQBcJxU1DTJ7U7uUOyF1hzD24z
-MaxI/OaiIcS2i9oyRo18CwRCzSkAWw==
-=dvxT
------END PGP SIGNATURE-----
+-- 
+2.47.0
 
---4rmTWXwfm5UFA8lh--
 
