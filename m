@@ -4,84 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C9F8D33998
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC2BD33998
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5SJP-00068R-UG; Mon, 28 Oct 2024 12:09:47 -0400
+	id 1t5SMe-0007Aj-VP; Mon, 28 Oct 2024 12:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t5SJN-00068A-Qb
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:09:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kuba@kernel.org>) id 1t5SMc-0007AL-Vf
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:13:07 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t5SJM-00064F-48
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:09:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730131782;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ea6G5wtzKMhZ2E+87Bpxxtu+p19GIanpiqAsDf/FIog=;
- b=NNEBN98If8bcWXUYv+SW82BbgjPyNe4Nyo3aU2vr4891W8xOV+KJ21nAWCqRIoEE8KeA1t
- INVdIj5MimYIDNWsjEKw7KLrYMeFFQwvKbb7a3cHjmfljQ7Uvr1fpm8aqS9PQIJFZzlcm2
- 1n5SagwyGyafoLfxkpftXjZr3MMNr78=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-53-MFjKr2uwM3GR5URt0I5N1A-1; Mon,
- 28 Oct 2024 12:09:40 -0400
-X-MC-Unique: MFjKr2uwM3GR5URt0I5N1A-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9EE4619560BD; Mon, 28 Oct 2024 16:09:38 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.86])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B18619560AA; Mon, 28 Oct 2024 16:09:31 +0000 (UTC)
-Date: Mon, 28 Oct 2024 16:09:29 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
- armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: Re: [RFC 21/21] arm/cpu-features: Document custom vcpu model
-Message-ID: <Zx-3OUioG1l47hW3@redhat.com>
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <20241025101959.601048-22-eric.auger@redhat.com>
- <ZxuZkUFz_bwAA1pf@redhat.com>
- <0700af51-a1a6-4b11-a4bf-0eaf6e279c6d@redhat.com>
- <Zxudl5-fZV1vIaEL@redhat.com> <87y128nrfr.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <kuba@kernel.org>) id 1t5SMb-0006RZ-8h
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:13:06 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 33E935C5D58;
+ Mon, 28 Oct 2024 16:12:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1B6C4CEC3;
+ Mon, 28 Oct 2024 16:12:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1730131979;
+ bh=xuzSVIC+24hcvUH3Uu6IJyxDoI8NF9z/u0YhE9kqbOY=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=C0q+lkSKR1cXdmfA70QriKxNHoGAVcH+ZKCc+Zox4ygDHb48qTdn8VuHT2A4+o5V2
+ zoili6j4ZeZdYddsbvCBmzv4/WQgpSj7kTlw06ahaK4hCP3zTRP9o3R85+DvpU2GYF
+ JOfOD4cd4nqkmkIlo1feNr7WS5I7Lq9w9Ag0huIfm0H86flbsmELoeR1CWqpKwnAA6
+ NYQH1pJbxeuWuW0ou07d6MW7v+ovxkDt0VgRA/OeSEyVzpisDjPRrKkn0IRURMLEiE
+ huG9vkW7i5jsybC0co+F32KJLuGZov4R0mWfhQFuXfe18nE4zlmADox5tRHMwhBpHw
+ r+wobvKfES9+g==
+Date: Mon, 28 Oct 2024 09:12:56 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: Richard Cochran <richardcochran@gmail.com>, Peter Hilber
+ <peter.hilber@opensynergy.com>, linux-kernel@vger.kernel.org,
+ virtualization@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-rtc@vger.kernel.org, "Ridoux, Julien" <ridouxj@amazon.com>,
+ virtio-dev@lists.linux.dev, "Luu, Ryan" <rluu@amazon.com>, "Chashper,
+ David" <chashper@amazon.com>, "Mohamed Abuelfotoh, Hazem"
+ <abuehaze@amazon.com>, Paolo Abeni <pabeni@redhat.com>, "Christopher S .
+ Hall" <christopher.s.hall@intel.com>, Jason Wang <jasowang@redhat.com>,
+ John Stultz <jstultz@google.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ netdev@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>, Thomas Gleixner
+ <tglx@linutronix.de>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>, Marc Zyngier
+ <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Daniel Lezcano
+ <daniel.lezcano@linaro.org>, Alessandro Zummo <a.zummo@towertech.it>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, qemu-devel
+ <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
+Subject: Re: [PATCH net-next v7] ptp: Add support for the AMZNC10C 'vmclock'
+ device
+Message-ID: <20241028091256.1b0752b4@kernel.org>
+In-Reply-To: <c1eb33ffd66d45af77dea58db8bdca3dcd2468c4.camel@infradead.org>
+References: <78969a39b51ec00e85551b752767be65f6794b46.camel@infradead.org>
+ <20241009173253.5eb545db@kernel.org>
+ <c20d5f27c9106f3cb49e2d8467ade680f0092f91.camel@infradead.org>
+ <20241014131238.405c1e58@kernel.org>
+ <c1eb33ffd66d45af77dea58db8bdca3dcd2468c4.camel@infradead.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y128nrfr.fsf@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=kuba@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,58 +84,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 28, 2024 at 05:05:44PM +0100, Cornelia Huck wrote:
-> On Fri, Oct 25 2024, Daniel P. Berrangé <berrange@redhat.com> wrote:
+On Sat, 19 Oct 2024 18:49:24 +0100 David Woodhouse wrote:
+> > Yes please and thank you! We gotta straighten it out before 
+> > the merge window.  
 > 
-> > On Fri, Oct 25, 2024 at 03:28:35PM +0200, Eric Auger wrote:
-> >> Hi Daniel,
-> >> 
-> >> On 10/25/24 15:13, Daniel P. Berrangé wrote:
-> >> > On Fri, Oct 25, 2024 at 12:17:40PM +0200, Eric Auger wrote:
-> >> >> From: Cornelia Huck <cohuck@redhat.com>
-> >> >>
-> >> >> Add some documentation for the custom model.
-> >> >>
-> >> >> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> >> >> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> >> >> ---
-> >> >>  docs/system/arm/cpu-features.rst | 55 +++++++++++++++++++++++++++-----
-> >> >>  1 file changed, 47 insertions(+), 8 deletions(-)
-> >> >
-> >> >> @@ -167,6 +196,16 @@ disabling many SVE vector lengths would be quite verbose, the ``sve<N>`` CPU
-> >> >>  properties have special semantics (see "SVE CPU Property Parsing
-> >> >>  Semantics").
-> >> >>  
-> >> >> +The ``custom`` CPU model needs to be configured via individual ID register
-> >> >> +field properties, for example::
-> >> >> +
-> >> >> +  $ qemu-system-aarch64 -M virt -cpu custom,SYSREG_ID_AA64ISAR0_EL1_DP=0x0
-> >> >> +
-> >> >> +This forces ID_AA64ISAR0_EL1 DP field to 0.
-> >> > What is the "baseline" featureset implied by 'custom' ?
-> >> there is no baseline at the moment. By default this is a host
-> >> passthrough model.
-> >
-> > Why do we need to create "custom" at all, as opposed to just letting
-> > users toggle features on "-cpu host" ? 
-> 
-> We could consolidate that to the current "host" model, once we figure
-> out how to handle the currently already existing properties. Models
-> based on the different architecture extensions would probably be more
-> useable in the long run; maybe "custom" has a place for testing.
+> Hm, as I (finally) come to do that, I realise that many of the others
+> defined in drivers/ptp/Kconfig are also 'default y'. Which is only
+> really 'default PTP_1588_CLOCK' in practice since they all depend on
+> that.
 
-If you can set the features against "host", then any testing could
-be done with "host" surely, making 'custom' pointless ?
+AFAICT nothing defaulted to enabled since 2017, so I'd chalk it up
+to us getting better at catching mistakes over time.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> Most importantly, PTP_1588_CLOCK_KVM is 'default y'. And that one is
+> fundamentally broken (at least in the presence of live migration if
+> guests care about their clock suddenly being wrong) which is why it's
+> being superseded by the new VMCLOCK thing. We absolutely don't want to
+> leave the _KVM one enabled by default and not its _VMCLOCK replacement.
 
+You can default to .._CLOCK_KVM, and provide the explanation in
+the commit message and Kconfig help.
+Or if you feel strongly even make CLOCK_KVM depend on the new one?
+
+> Please advise... I suspect the best answer is to leave it as it is? 
+
+I'd really rather not. Linus has complained to us about Kconfig symbols
+appearing / getting enabled by default multiple times in the past.
+
+Sorry for the delay, vacation time.
 
