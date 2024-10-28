@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B184D339AF
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 18:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CE2D339AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 18:21:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5ULB-0007Sk-D6; Mon, 28 Oct 2024 14:19:47 -0400
+	id 1t5UMU-0000bk-I9; Mon, 28 Oct 2024 14:21:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wuhaotsh@google.com>)
- id 1t5UKr-0007LI-By
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 14:19:30 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1t5UMH-0000WP-O1
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 14:20:56 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wuhaotsh@google.com>)
- id 1t5UKp-0003Fn-OQ
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 14:19:25 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-539e66ba398so2785e87.0
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 11:19:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1t5UMF-0003cQ-1e
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 14:20:53 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-20c803787abso36679255ad.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 11:20:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1730139558; x=1730744358; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=I9KpKqmLLGgWQg4P3FM7fUf1XDrH/wvRuXnmbYM3Wa0=;
- b=TrtiJPS2nMYzDDJifz04HGa+6f7RJl1gILbrX6K+3pe38Rtik+0bu8HebCHD9hNI6H
- alJEApvBJ6dsrlgHYmU8FrguH7bvmOu5cv1ehEprz+DfSD2SqKczErlGIP5HcXfpqtk6
- wLdilKuzZAR6yMYSzOEXGru0P6qzskWmdLb12cH35ePzPV0w6LbPrQT69WTwGnGctQhw
- jOeCw3/Hg6mkxjOzIpM3IDpewxZ4J8Bhf8vwjNRtiSzK/k/i+eOdl6AEULLS4zGjawGi
- znuBSapldFQMlWr4//S2niiSTCeiXP751kn+/1yO9LZcPzK+DxGpVN/zvPpxCm0lDqun
- 3vOA==
+ d=ventanamicro.com; s=google; t=1730139649; x=1730744449; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i6z6DcRjVJWOSMzlRK4IW4vk/uBL6nDh9i3CjYrjeC0=;
+ b=DVeFrG3Tcx/cUZ2K2EFwql9COxjcBQvpbRoFtGX5UhZMFdqHCg19ROX+YYJwMMgsya
+ z93mflaHJOq23N/yow25ZsH5/zgNP2gOqltNnvxYFmUy2BF8j49ctsl8+aqe1t2fHdgw
+ RPNt3kyFOVYxtdqHmIGcxxmZogPUOIr9ObqyGQz8llEH43PK3BipvCSl4HfsziPYUSi8
+ pBGkNkc3+HftVtbP6KBXDJCVm5AIT2EGIlfpYMljCpipGxZgO6lqDyXe1qfYiiMB0oQJ
+ IC4A+DUmGg24nDMZrXx7srKn0QNREVpnksmt+iGnTZjwVfY230Z17s1yMPfMVHyqxGry
+ YtMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730139558; x=1730744358;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=I9KpKqmLLGgWQg4P3FM7fUf1XDrH/wvRuXnmbYM3Wa0=;
- b=SyIgpwwfm6mxm5FA1jZiv4k4nJgVKEvnBeo4fcdXSLg+C5FdOMkqhPuNbMBrnd9JO5
- weSdK9RhlAC6nio5bXwYMq3uUS/AovxcBeruL3xyj7V+HmjPKNRYK1k1hHDPPkOzHQ5V
- qbVnizNxIMRKK7jcuiGSEVkXfMbKg8ZL0EJZ5Pn9BxgI1ZcyWH7U67JALh7bpK7ykfTs
- k7HOxl+0wGgHe6p9lCYUihcNmyovvKfXS0LwQ6nyWbZEcaMsGXPZrXY0lOjNXK/Gvsh5
- HInwQtDTVWmqErF58FUHNE71k1a5YWFz8jd/r0T/+K871heTQg032xeya0ch60AvC0LK
- 1bgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXuN0Qw+7VX7mVn9UaaZqZJUowdMQwamCW4IlmWIyrhWzKUaTLOnY4WpmPYQumQk1VhL8Ul1s3qmCLN@nongnu.org
-X-Gm-Message-State: AOJu0YyZR/8cXYUgaGQhKKVbarwge9G6J/ORw26Bq8Kk3iuaU/pdqK9c
- mCY2SnZ3+a4WCgI6NjLczwUY2JuVa9jkDkdhmIwN0jJI6O0nOtCSeud2B1Rn9nFr3gBOufNQcJD
- tu/X52oHrd5IE73npsaPoHlC6G1WMh1MDgyvD
-X-Google-Smtp-Source: AGHT+IFSow7/H7wTYdQYqWSsLp7XO0afeI9AEYp5qH8pO3c6CIBoAy8TE/PH7Ky5liOdOYn2WRdF5m8X+1t1KmRHj2A=
-X-Received: by 2002:a05:6512:4017:b0:538:9e44:3034 with SMTP id
- 2adb3069b0e04-53b480a3b88mr19500e87.6.1730139557940; Mon, 28 Oct 2024
- 11:19:17 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1730139649; x=1730744449;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=i6z6DcRjVJWOSMzlRK4IW4vk/uBL6nDh9i3CjYrjeC0=;
+ b=sD6LS9WbGAFTN8mEto6Ax/cCYbJ1JjfvwdJLKlBFNJQ5uiGNzW1/jLT18iJrfN6ACj
+ 3tBDumNlCuKA4xiucA1PuHBALa2mAU2mzqNT8GaF92ifT/RTS3r7mfYcEUoNtp67DOkY
+ MVdCDoeNqfd7uGTkRWA3fnqmT3p2x97QvA6Y2qYlG3Y5HDJn3pg3T6hynjUD1XEmY1p6
+ YzZ0zluGQiBvx3ob+WU1AlTJE8MdrGZO/B5k3WI7l61P2u+ngdMQIvmVbjYsQLPjFX//
+ kOqstzU2YS+6dM8sbEH7fifTlHJQMLDE9yjjv3AySDyiQ8d5HRnu0Hfm8jzdJ+z9XyCp
+ 3XVg==
+X-Gm-Message-State: AOJu0YxAj+nHrLZ9iXkEXlJdjPF1QMa5mzA3k7n5P/oAZRoqBiW3KwlZ
+ qYGFvpcjqMF4+Ny4EjqLzu8wGT2aPppd1dD2lmt34sQB3ffeiRD8KjQrMps6DQKl2OtfYv44KUA
+ W
+X-Google-Smtp-Source: AGHT+IGsGMCZum3jRv5h4vlecPmDxM+iPbO5ZodIqejCaKpmel0YdmnDMMi3HgLEViNtEqjtMOtxNQ==
+X-Received: by 2002:a17:902:db07:b0:20b:6c1e:1e13 with SMTP id
+ d9443c01a7336-210e902a3f2mr7089495ad.23.1730139649453; 
+ Mon, 28 Oct 2024 11:20:49 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com ([191.8.109.222])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-210bbf471fesm53637505ad.51.2024.10.28.11.20.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Oct 2024 11:20:49 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v2 2/2] target/riscv/kvm: clarify how 'riscv-aia' default works
+Date: Mon, 28 Oct 2024 15:20:37 -0300
+Message-ID: <20241028182037.290171-3-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241028182037.290171-1-dbarboza@ventanamicro.com>
+References: <20241028182037.290171-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-References: <20241028181420.1438938-1-venture@google.com>
-In-Reply-To: <20241028181420.1438938-1-venture@google.com>
-From: Hao Wu <wuhaotsh@google.com>
-Date: Mon, 28 Oct 2024 11:19:03 -0700
-Message-ID: <CAGcCb13zjuH4dAspE=dAdWZXG88b5e3OkGFaE+KcwcWDjioyUQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm: enable at24c with aspeed
-To: Patrick Leis <venture@google.com>
-Cc: clg@kaod.org, peter.maydell@linaro.org, steven_lee@aspeedtech.com, 
- leetroy@gmail.co, jamin_lin@aspeedtech.com, andrew@codeconstruct.com.au, 
- joel@jms.id.au, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000c3bb9306258d814a"
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=wuhaotsh@google.com; helo=mail-lf1-x134.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,81 +96,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c3bb9306258d814a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+We do not have control in the default 'riscv-aia' default value. We can
+try to set it to a specific value, in this case 'auto', but there's no
+guarantee that the host will accept it.
 
-On Mon, Oct 28, 2024 at 11:15=E2=80=AFAM Patrick Leis <venture@google.com> =
-wrote:
+Couple with this we're always doing a 'qemu_log' to inform whether we're
+ended up using the host default or if we managed to set the AIA mode to
+the QEMU default we wanted to set.
 
-> Enable AT24C with ASPEED in the KConfig because the boards build this
-> device.
->
-> Signed-off-by: Patrick Leis <venture@google.com>
->
-Reviewed-by: Hao Wu <wuhaotsh@google.com>
+Change the 'riscv-aia' description to better reflect how the option
+works, and remove the two informative 'qemu_log' that are now unneeded:
+if no message shows, riscv-aia was set to the default or uset-set value.
 
-> ---
->  hw/arm/Kconfig | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index e7fd9338d1..1b25e73578 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -539,6 +539,7 @@ config ASPEED_SOC
->      select PMBUS
->      select MAX31785
->      select FSI_APB2OPB_ASPEED
-> +    select AT24C
->
->  config MPS2
->      bool
-> --
-> 2.47.0.163.g1226f6d8fa-goog
->
->
->
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/kvm/kvm-cpu.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
---000000000000c3bb9306258d814a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index acc713c56a..cbda4596da 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1676,9 +1676,9 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
+     object_class_property_add_str(oc, "riscv-aia", riscv_get_kvm_aia,
+                                   riscv_set_kvm_aia);
+     object_class_property_set_description(oc, "riscv-aia",
+-                                          "Set KVM AIA mode. Valid values are "
+-                                          "emul, hwaccel, and auto. Default "
+-                                          "is auto.");
++        "Set KVM AIA mode. Valid values are 'emul', 'hwaccel' and 'auto'. "
++        "Changing KVM AIA modes relies on host support. Defaults to 'auto' "
++        "if the host supports it");
+     object_property_set_default_str(object_class_property_find(oc, "riscv-aia"),
+                                     "auto");
+ }
+@@ -1712,10 +1712,7 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+         exit(1);
+     }
+ 
+-    if (default_aia_mode == aia_mode) {
+-        qemu_log("KVM AIA: using default host mode '%s'\n",
+-                  kvm_aia_mode_str(default_aia_mode));
+-    } else {
++    if (default_aia_mode != aia_mode) {
+         ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+                                 KVM_DEV_RISCV_AIA_CONFIG_MODE,
+                                 &aia_mode, true, NULL);
+@@ -1727,9 +1724,6 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+ 
+             /* failed to change AIA mode, use default */
+             aia_mode = default_aia_mode;
+-        } else {
+-            qemu_log("KVM AIA: setting current mode to %s\n",
+-                     kvm_aia_mode_str(aia_mode));
+         }
+     }
+ 
+-- 
+2.45.2
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Mon, Oct 28, 2024 at 11:15=E2=80=
-=AFAM Patrick Leis &lt;<a href=3D"mailto:venture@google.com">venture@google=
-.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
-gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
-ex">Enable AT24C with ASPEED in the KConfig because the boards build this<b=
-r>
-device.<br>
-<br>
-Signed-off-by: Patrick Leis &lt;<a href=3D"mailto:venture@google.com" targe=
-t=3D"_blank">venture@google.com</a>&gt;<br></blockquote><div>Reviewed-by: H=
-ao Wu &lt;<a href=3D"mailto:wuhaotsh@google.com">wuhaotsh@google.com</a>&gt=
-;=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
----<br>
-=C2=A0hw/arm/Kconfig | 1 +<br>
-=C2=A01 file changed, 1 insertion(+)<br>
-<br>
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig<br>
-index e7fd9338d1..1b25e73578 100644<br>
---- a/hw/arm/Kconfig<br>
-+++ b/hw/arm/Kconfig<br>
-@@ -539,6 +539,7 @@ config ASPEED_SOC<br>
-=C2=A0 =C2=A0 =C2=A0select PMBUS<br>
-=C2=A0 =C2=A0 =C2=A0select MAX31785<br>
-=C2=A0 =C2=A0 =C2=A0select FSI_APB2OPB_ASPEED<br>
-+=C2=A0 =C2=A0 select AT24C<br>
-<br>
-=C2=A0config MPS2<br>
-=C2=A0 =C2=A0 =C2=A0bool<br>
--- <br>
-2.47.0.163.g1226f6d8fa-goog<br>
-<br>
-<br>
-</blockquote></div></div>
-
---000000000000c3bb9306258d814a--
 
