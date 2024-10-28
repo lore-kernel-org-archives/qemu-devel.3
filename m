@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5749D13592
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 02:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DBAFD13590
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 02:52:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Fql-0006Ed-0I; Sun, 27 Oct 2024 22:51:23 -0400
+	id 1t5FqQ-0006Bo-5v; Sun, 27 Oct 2024 22:51:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
- id 1t5Fqi-0006ED-UF
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 22:51:20 -0400
+ id 1t5FqN-0006AX-2u
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 22:50:59 -0400
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
- id 1t5Fqh-0003XK-4d
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 22:51:20 -0400
+ id 1t5FqL-0003WR-Ef
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 22:50:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730083879; x=1761619879;
+ t=1730083858; x=1761619858;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=rp03Uwl7l03pPj4HY9BuMvQ1YdrKKOFrRjevx8nf8/s=;
- b=HSAhEO+GuaVj9ZnhvsfZ+IHp1svEmJTimWDYUQPfWcTIZOZmEqAgYzyZ
- X3TwMwM89RlkJlrAUhLr8x6t+Ox6hkmR80FXlxFUgE7Avyj/O6XetomnH
- TVHjgsyr1qNFSmAW0VR9HkbO83EBz2BEvL77pxQOEaF5fDuxZQb6P02/S
- 0fX1wPjVQafH5ok0DZRLuZyozRPpZAJ5PzuLro57IfT8Q418dgM0fdwLQ
- 8TKIWxUdwxHilc4RWU/85pRTo8O144/Bkiz0ftI4RVe87hCAaSzk1iGnQ
- m14FUFt1QAYTlhAY+TdmOjfDL+0O+4l77R8TsuNKPOm0caGsQCbl+cMkf Q==;
-X-CSE-ConnectionGUID: QaHNSbK2RnGcNdJgxsET4w==
-X-CSE-MsgGUID: 1TrsxcjtTmCVFlwi6ENLqQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11238"; a="40249478"
-X-IronPort-AV: E=Sophos;i="6.11,238,1725346800"; d="scan'208";a="40249478"
+ bh=1T2y+tcJtXzNjiVuhdwnguoXTqleNUI1LAkfNAE+DyY=;
+ b=V66VLCmlvkhYhjdom0JJavGPkApYHsxZrATrneZ+ahYHDqgkIrZ66OOx
+ fukOPFsyBoQC0yRyWFmJeUoPwK2GiqA7zOnkq6Jo6qwOF5vj6Kmer/8YV
+ tG/V82E2ek4/jc/ybhQ9RxP8q3Eb7za0P7fVq792eLq+pwlMA7JqakAhc
+ DxKnuB2VB6bYxhUduZdRczQ4FReLwjWSJlAHdXvX1BnPCIMX5m8xyRlES
+ +Cd+vH52ezPzNkXx3K0p8KRV+cu7isJVFfiOqYAhvrvZmNoj2nO0QY1yx
+ 7blNejY9HJztAShCStIbak6HziyP6kkS2laR3DvYZsWO6QeSMs6o8wPhB Q==;
+X-CSE-ConnectionGUID: J1NlcV22TzaD8ZQpzVooDQ==
+X-CSE-MsgGUID: vBVQooySTC2D+EOTSev+gg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11238"; a="40249465"
+X-IronPort-AV: E=Sophos;i="6.11,238,1725346800"; d="scan'208";a="40249465"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Oct 2024 19:51:05 -0700
-X-CSE-ConnectionGUID: DDpFGIdcT9ujjbRSzhG3Cg==
-X-CSE-MsgGUID: zTjI3JZVQmeColUNzejurA==
+ 27 Oct 2024 19:50:55 -0700
+X-CSE-ConnectionGUID: qc9EuPeGRgCX/LybdGH0Og==
+X-CSE-MsgGUID: qpeiZ7GXRaK9A9FMNY5ntw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,238,1725346800"; d="scan'208";a="81420959"
+X-IronPort-AV: E=Sophos;i="6.11,238,1725346800"; d="scan'208";a="81420932"
 Received: from st-server.bj.intel.com ([10.240.193.102])
- by orviesa009.jf.intel.com with ESMTP; 27 Oct 2024 19:51:02 -0700
+ by orviesa009.jf.intel.com with ESMTP; 27 Oct 2024 19:50:53 -0700
 From: Tao Su <tao1.su@linux.intel.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mtosatti@redhat.com, xiaoyao.li@intel.com,
  xuelian.guo@intel.com, tao1.su@linux.intel.com
-Subject: [PATCH 6/6] target/i386: Introduce GraniteRapids-v2 model
-Date: Mon, 28 Oct 2024 10:45:12 +0800
-Message-Id: <20241028024512.156724-7-tao1.su@linux.intel.com>
+Subject: [PATCH 1/6] target/i386: Add AVX512 state when AVX10 is supported
+Date: Mon, 28 Oct 2024 10:45:07 +0800
+Message-Id: <20241028024512.156724-2-tao1.su@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241028024512.156724-1-tao1.su@linux.intel.com>
 References: <20241028024512.156724-1-tao1.su@linux.intel.com>
@@ -81,43 +81,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update GraniteRapids CPU model to add AVX10 and the missing features(ss,
-tsc-adjust, cldemote, movdiri, movdir64b).
+AVX10 state enumeration in CPUID leaf D and enabling in XCR0 register
+are identical to AVX512 state regardless of the supported vector lengths.
+
+Given that some E-cores will support AVX10 but not support AVX512, add
+AVX512 state components to guest when AVX10 is enabled.
 
 Tested-by: Xuelian Guo <xuelian.guo@intel.com>
 Signed-off-by: Tao Su <tao1.su@linux.intel.com>
 ---
- target/i386/cpu.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ target/i386/cpu.c | 14 ++++++++++++++
+ target/i386/cpu.h |  2 ++
+ 2 files changed, 16 insertions(+)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index adde98fd26..8d72c08b66 100644
+index 1ff1af032e..d845ff5e4e 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -4375,6 +4375,23 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-         .model_id = "Intel Xeon Processor (GraniteRapids)",
-         .versions = (X86CPUVersionDefinition[]) {
-             { .version = 1 },
-+            {
-+                .version = 2,
-+                .props = (PropValue[]) {
-+                    { "ss", "on" },
-+                    { "tsc-adjust", "on" },
-+                    { "cldemote", "on" },
-+                    { "movdiri", "on" },
-+                    { "movdir64b", "on" },
-+                    { "avx10", "on" },
-+                    { "avx10-128", "on" },
-+                    { "avx10-256", "on" },
-+                    { "avx10-512", "on" },
-+                    { "avx10-version", "1" },
-+                    { "stepping", "1" },
-+                    { /* end of list */ }
-+                }
-+            },
-             { /* end of list */ },
-         },
-     },
+@@ -7177,6 +7177,13 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+         }
+         if (env->features[esa->feature] & esa->bits) {
+             xcr0 |= 1ull << i;
++            continue;
++        }
++        if (i == XSTATE_OPMASK_BIT || i == XSTATE_ZMM_Hi256_BIT ||
++            i == XSTATE_Hi16_ZMM_BIT) {
++            if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) {
++                xcr0 |= 1ull << i;
++            }
+         }
+     }
+ 
+@@ -7315,6 +7322,13 @@ static void x86_cpu_enable_xsave_components(X86CPU *cpu)
+         const ExtSaveArea *esa = &x86_ext_save_areas[i];
+         if (env->features[esa->feature] & esa->bits) {
+             mask |= (1ULL << i);
++            continue;
++        }
++        if (i == XSTATE_OPMASK_BIT || i == XSTATE_ZMM_Hi256_BIT ||
++            i == XSTATE_Hi16_ZMM_BIT) {
++            if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) {
++                mask |= (1ULL << i);
++            }
+         }
+     }
+ 
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 74886d1580..280bec701c 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -972,6 +972,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_1_EDX_AMX_COMPLEX       (1U << 8)
+ /* PREFETCHIT0/1 Instructions */
+ #define CPUID_7_1_EDX_PREFETCHITI       (1U << 14)
++/* Support for Advanced Vector Extensions 10 */
++#define CPUID_7_1_EDX_AVX10             (1U << 19)
+ /* Flexible return and event delivery (FRED) */
+ #define CPUID_7_1_EAX_FRED              (1U << 17)
+ /* Load into IA32_KERNEL_GS_BASE (LKGS) */
 -- 
 2.34.1
 
