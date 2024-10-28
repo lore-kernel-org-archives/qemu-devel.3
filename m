@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 592E7D13595
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 03:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48C1DD13595
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 03:39:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5GWZ-0000c8-Sw; Sun, 27 Oct 2024 23:34:36 -0400
+	id 1t5GbA-0001X5-02; Sun, 27 Oct 2024 23:39:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t5GWQ-0000bd-TH
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 23:34:27 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t5Gb8-0001Wc-NA
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 23:39:18 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t5GWP-00079E-Am
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 23:34:26 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-7ea7e250c54so2824850a12.0
- for <qemu-devel@nongnu.org>; Sun, 27 Oct 2024 20:34:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t5Gb7-0007m4-4E
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 23:39:18 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2e2eba31d3aso2608324a91.2
+ for <qemu-devel@nongnu.org>; Sun, 27 Oct 2024 20:39:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730086463; x=1730691263; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ d=linaro.org; s=google; t=1730086755; x=1730691555; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+hrUDzoAF3VjvoN+DlhoDkaV0tkYdmLX4Itc1OK3Hzk=;
- b=kfZbMA6jO1p1PwYweSohARSX4ArMl/i6XfW2vlIovwipGsARL+B0vRH6X6rQpwyNcH
- z6puuycCMEQ/7K7W/QPaMhGKc/z/W5XlDcNQlpOXKNn8YdPIlGCTtdVipCHnE7ltlurX
- x3kNT5O0Abc/KBCWgNTSWY3bIwERoUxdl/9kIDC7qP57r0MMKOJq9WVvNp9ummGBlcIa
- 3mwBKxxqJIdJ6UAsWP1bZsWKSE3yVslPeJ+iticyNTExQn7JrmlWMgkI8H4fsrpaXQkP
- a56otbyuDv/Bc2+S4CEE09AjoMSZMLwVPPegYuwHm92KVh71XK2KH6TX3oKiUTJTZJ+H
- kr0w==
+ bh=QWiHVTVH5Z3RKhRacDXIi7jkGZ0Bcu/W10mjIj1T6RM=;
+ b=S5Ja/ZEUxd7P/un5P1V/Io1WK/8Z74u+LXo/ocsSy/Bk+PY+Ik8+xDaB0yyUEBiYXq
+ d+Zqd4ONHkHszorCXHZlUSEJZNSyNQSrbvbr8s0OGOdCcRWyHxaa2VqZwNH+pDn8UW56
+ laW0oSeNiFBJsXVjhGQ46tQS14cRo8DTpFzHwDQkNbnK7PL+mo7lViA9Br9aWZcJkOnC
+ QW7BlwwDeWhTUB4+S3hPJzGXyQV7vpHPypK+cgXdFCSpxfEshodWd4q8LRR3cX6I9Stb
+ mWq8Ku5LG2GYdFTRefpTEX65DDJMqz4Cnu17Yt6ZusIiVzdtcwXdKOuvk5hs3AZMT4ss
+ TnRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730086463; x=1730691263;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ d=1e100.net; s=20230601; t=1730086755; x=1730691555;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+hrUDzoAF3VjvoN+DlhoDkaV0tkYdmLX4Itc1OK3Hzk=;
- b=v1l1mTEYDJxtxPheXEmns8pvpgYXJDUbqCjXClCGJpzxskQppgGuhisMNJ8QyWHcyE
- MZwukY+2JKWihCztt1Rtmq7I3FGPWZ+5oJky7EqQrkuuyL2L6EDrja8eWCQ/E9y/U42d
- TJtG7oyj0ON1Xz2qRVN3tDwtxlM/hsgwtk7T4Pj4kdD4IHYJWBlRNs3S9eGZLxWVan9F
- ftBz5wONTmAWC9N8eaekmFFuoLJmVGjlQGQovtUUmkpeXoG60qVV2QJmA/OKFtu7Z7W7
- q0gYIFXySBfwUNbYWhqXLIZoAopp8fsTtousOPHHBAfHMQ9hwShX6FzjfLcEeKMO/Csd
- OUCg==
+ bh=QWiHVTVH5Z3RKhRacDXIi7jkGZ0Bcu/W10mjIj1T6RM=;
+ b=msiwPuW79LElsQjnIv1By7/tYgI1u3333K2MyLPgItK1EJ0cRuIDsb4KCVYzyXXldX
+ b0AaFqGdOcWEfAvvi+YZND+fvccGNC8bGRQ/XMx0+TUSibIyIT1dFzis50Non+NmSR4E
+ +rAocZ6Gaz1OkaKLfddyuWQRPhZJ3U18w5DetV9ExeTMQQlRqvL1oW73MhZnju8rPr5i
+ Xxb+wBH+WtH/kJwMaSu3rwU1hY6Ne4dBi8+FZa8yREFpzRUIiBEAdIjlV0enQys9q/KM
+ KuwH77wQeL/9renysqNoeTeH8Ih+v33P2Z9zBBAWgiim4SM2Gaau9gziDmDJuUWOWk9J
+ 0CCQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUs917ZhtTqgnyDWjeOX6iDWqcyRh2GjGf/UG76e0NoEPOQQWTGj5BVrca/IFiBRw0/eDF0guvGg49N@nongnu.org
-X-Gm-Message-State: AOJu0Yx1FeMMAIuuuDXSgsiOv8Uhm1pFRjakBJ9MjPmsTUxCFg9TV6f6
- MDWF2bPTN5Zbj5dOGnon6GmouMjFKd/yTDgbnCa7GVcgOPin9kH0Evv4qHSbCyg=
-X-Google-Smtp-Source: AGHT+IFky77JmbHyBVG6Xfi5NwAYWcgvV9N58DJ6e5GudY+ulJ45tdzhMxJq4LtAboQvHUa8CRkLdQ==
-X-Received: by 2002:a05:6a21:4d81:b0:1c4:a1f4:3490 with SMTP id
- adf61e73a8af0-1d9a84dd798mr10069670637.39.1730086463410; 
- Sun, 27 Oct 2024 20:34:23 -0700 (PDT)
+ AJvYcCXwGc5vZEZfpIJEjLU/IpMRfVLeb0+Ik7jGKpedRqpbQU+2AVPvooxeslhQEJ339e4TlGNw6UJw1kEH@nongnu.org
+X-Gm-Message-State: AOJu0YyVT/7HJnQRr1WN+Ml/v8R6NOFGx5bRCsFHrfr5uNSD2J5ewqy5
+ 5HlghrymH9ZLdZDtYQS1ER7nnHxEzHUnPat15AsVB7m52bGk0pizsXD9/PWmbrpGlgLdRj76A0r
+ 2
+X-Google-Smtp-Source: AGHT+IERyy7mTynNT6eFHU2ra2LZFeBrGlNNIQwAoBiPTJq15evE55vHI20BIs5gOfC8m3lw0d8LpA==
+X-Received: by 2002:a17:90a:9312:b0:2e2:a8e0:85fa with SMTP id
+ 98e67ed59e1d1-2e8f1057e59mr8287472a91.8.1730086755371; 
+ Sun, 27 Oct 2024 20:39:15 -0700 (PDT)
 Received: from [192.168.100.49] ([45.176.88.169])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e77e48ed34sm8882405a91.9.2024.10.27.20.34.22
+ 98e67ed59e1d1-2e8e36a26aasm6021006a91.27.2024.10.27.20.39.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 27 Oct 2024 20:34:22 -0700 (PDT)
-Message-ID: <1d7c879b-07e4-498d-bfac-1b0122155eb4@linaro.org>
-Date: Mon, 28 Oct 2024 00:34:19 -0300
+ Sun, 27 Oct 2024 20:39:15 -0700 (PDT)
+Message-ID: <4ab94b59-e19f-4e04-9fd5-0f41621d7d26@linaro.org>
+Date: Mon, 28 Oct 2024 00:39:12 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] configure: detect 64-bit MIPS
+Subject: Re: [PATCH] configure, meson: deprecate 32-bit MIPS
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20241027130531.244145-1-pbonzini@redhat.com>
+References: <20241027130726.244605-1-pbonzini@redhat.com>
 Content-Language: en-US
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241027130531.244145-1-pbonzini@redhat.com>
+In-Reply-To: <20241027130726.244605-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=philmd@linaro.org; helo=mail-pg1-x52a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,20 +95,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/10/24 10:05, Paolo Bonzini wrote:
-> While right now 64-bit MIPS and 32-bit MIPS share the code in QEMU,
-> Rust uses different rules for the target.  Set $cpu correctly to
-> either mips or mips64 (--cpu=mips64* is already accepted in the case
-> statement that canonicalizes cpu/host_arch/linux_arch), and adjust
-> the checks to account for the different between $cpu (which handles
-> mips/mips64 separately) and $host_arch (which does not).
+On 27/10/24 10:07, Paolo Bonzini wrote:
+> The mipsel architecture is not available in Debian Bookworm, and it will
+> likely be a hard failure as soon as we drop support for the old Rust
+> toolchain in Debian Bullseye.  Prepare by deprecating 32-bit little
+> endian MIPS in QEMU 9.2.
 > 
-> Fixes: 1a6ef6ff624 ("configure, meson: detect Rust toolchain", 2024-10-11)
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   configure | 10 +++++++---
->   1 file changed, 7 insertions(+), 3 deletions(-)
+>   docs/about/build-platforms.rst |  2 +-
+>   docs/about/deprecated.rst      | 12 ++++++++----
+>   meson.build                    |  8 ++++++++
+>   3 files changed, 17 insertions(+), 5 deletions(-)
+> 
+> diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+> index ff56091078e..6102f00aec0 100644
+> --- a/docs/about/build-platforms.rst
+> +++ b/docs/about/build-platforms.rst
+> @@ -41,7 +41,7 @@ Those hosts are officially supported, with various accelerators:
+>        - Accelerators
+>      * - Arm
+>        - kvm (64 bit only), tcg, xen
+> -   * - MIPS (little endian only)
+> +   * - MIPS (64 bit little endian only)
+>        - kvm, tcg
+>      * - PPC
+>        - kvm, tcg
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 74c75666c31..32b4cd16ec3 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -170,15 +170,19 @@ property types.
+>   Host Architectures
+>   ------------------
+>   
+> -BE MIPS (since 7.2)
+> -'''''''''''''''''''
+> +32-bit MIPS (big endian since 7.2; little endian since 9.2)
+> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Big endian MIPS since 7.2; 32-bit little endian MIPS since 9.2
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
