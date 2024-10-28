@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48434D33994
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 15:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 622E0D33994
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 15:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5RQ4-0005tp-0z; Mon, 28 Oct 2024 11:12:36 -0400
+	id 1t5RQa-0006A6-5D; Mon, 28 Oct 2024 11:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t5RQ2-0005th-Ri
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 11:12:34 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
+ id 1t5RQZ-00066Q-1w
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 11:13:07 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t5RQ0-0008Pt-7T
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 11:12:33 -0400
+ id 1t5RQW-0008RY-Dp
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 11:13:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730128352; x=1761664352;
+ t=1730128385; x=1761664385;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=vQYxbEpeIAjs99MV8Tz53C6e0rZwCgsuxCLZvHwrvH4=;
- b=GMg/CgxMG851mMZVxvgmUa1UBgU6L/KFUpv9CK5n7IIgpwGOoLuY6fnd
- LT+xhx+dqZ6sXDmUwLhSRQXEScTQluXv39oTgcfnfwm6kB839UepWxTxM
- JzbpRoby8Bg0OcNRGTSp80tdZbcbS4YIXYHRKz1Gs9p/UFrKW2ZUw5eFT
- kNBVB5sel13vM+C55uE3weBsEGGzp2DvS7YBSNaXWh4Zk2zonQtveX6qf
- Hz0IDt0tg31o79NkgKpyPpu0mx7Jhg0UUVZMD3ihAPVH25BHcmcE8ZppE
- yFvHT8K6Ta7QftFPxMEpjJznVt8zgUhJdjHDFcKgyAVarjS+PZrumdzDn A==;
-X-CSE-ConnectionGUID: u1ynhfNwSbeWjYcY8fsJ+Q==
-X-CSE-MsgGUID: vDyktSOGQbeViOZWFAV7+g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11239"; a="29187912"
-X-IronPort-AV: E=Sophos;i="6.11,239,1725346800"; d="scan'208";a="29187912"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Oct 2024 08:10:50 -0700
-X-CSE-ConnectionGUID: ZSYmD1y5SdSOcoPu0KDcqg==
-X-CSE-MsgGUID: RwuntT19RGyhGedGDhe0VA==
+ bh=fiSwUPIP/8AlXzfm1vfSSZGDFP1glHe0XbJjhW0k/PU=;
+ b=nxaJ5NJh6OkfvLhaU6Xo5mSZZt7WGrvWF8RfhuYBByZ/JS5tVHp3TIzH
+ e+6VGO7VhCYW+ezJSDZXjdkCpUujev0BanjI8D4aIKRKRjey8KOolXSa8
+ SExc/aDA1zaqGNZK5COUbqis59nwzYi0mLb0wGy/vAsLI48pJZvKpK8cl
+ 5S6djjvVVlA9TkG6PIgIqfCDDJ45y6yFZxHGHC2uIuEdInFiMPAmHagRo
+ IquzkuBNbJm0t4MFPUsKAcqaLHlWAIk71xSGYFqEDENyfDzPyakQVTbxe
+ d+JwdI73+JXzzdjXy5HddnM4Yswc+sv+OKh4HqXrpwwQWOaEKeXPNBDdC Q==;
+X-CSE-ConnectionGUID: UdkpcE9PQWGJ9zELXp54kQ==
+X-CSE-MsgGUID: tUzd8BoxQX+rZ5tyYXsOEQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="29501522"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="29501522"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 08:13:03 -0700
+X-CSE-ConnectionGUID: vqqp+i5PTC6u+1bq8dWWBA==
+X-CSE-MsgGUID: CP5bL9lISVie99CLzTglvg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,239,1725346800"; d="scan'208";a="81750735"
+X-IronPort-AV: E=Sophos;i="6.11,239,1725346800"; d="scan'208";a="81808399"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.227.172])
  ([10.124.227.172])
- by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Oct 2024 08:10:48 -0700
-Message-ID: <65cd917f-b0d2-40f3-9818-a52b340b32e6@intel.com>
-Date: Mon, 28 Oct 2024 23:10:45 +0800
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 08:13:01 -0700
+Message-ID: <dfeedc51-7dc1-4a36-a790-7c2863c9d4c7@intel.com>
+Date: Mon, 28 Oct 2024 23:12:58 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] target/i386: add avx10-version property
+Subject: Re: [PATCH 1/6] target/i386: Add AVX512 state when AVX10 is supported
 To: Tao Su <tao1.su@linux.intel.com>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mtosatti@redhat.com, xuelian.guo@intel.com
 References: <20241028024512.156724-1-tao1.su@linux.intel.com>
- <20241028024512.156724-3-tao1.su@linux.intel.com>
+ <20241028024512.156724-2-tao1.su@linux.intel.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20241028024512.156724-3-tao1.su@linux.intel.com>
+In-Reply-To: <20241028024512.156724-2-tao1.su@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -87,45 +87,66 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/28/2024 10:45 AM, Tao Su wrote:
-> Introduce avx10-version property so that avx10 version can be controlled
-> by user and cpu model. Per spec, avx10 version can never be 0, the default
-> value of avx10-version is set to 0 to determine whether it is specified by
-> user.
-
-I think it's better to merge this patch into next one. It's intact to 
-show how avx10_version is supposed to work.
-
+> AVX10 state enumeration in CPUID leaf D and enabling in XCR0 register
+> are identical to AVX512 state regardless of the supported vector lengths.
+> 
+> Given that some E-cores will support AVX10 but not support AVX512, add
+> AVX512 state components to guest when AVX10 is enabled.
+> 
 > Tested-by: Xuelian Guo <xuelian.guo@intel.com>
 > Signed-off-by: Tao Su <tao1.su@linux.intel.com>
+
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
 > ---
->   target/i386/cpu.c | 1 +
->   target/i386/cpu.h | 2 ++
->   2 files changed, 3 insertions(+)
+>   target/i386/cpu.c | 14 ++++++++++++++
+>   target/i386/cpu.h |  2 ++
+>   2 files changed, 16 insertions(+)
 > 
 > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index d845ff5e4e..5b434a107a 100644
+> index 1ff1af032e..d845ff5e4e 100644
 > --- a/target/i386/cpu.c
 > +++ b/target/i386/cpu.c
-> @@ -8343,6 +8343,7 @@ static Property x86_cpu_properties[] = {
->       DEFINE_PROP_UINT32("min-level", X86CPU, env.cpuid_min_level, 0),
->       DEFINE_PROP_UINT32("min-xlevel", X86CPU, env.cpuid_min_xlevel, 0),
->       DEFINE_PROP_UINT32("min-xlevel2", X86CPU, env.cpuid_min_xlevel2, 0),
-> +    DEFINE_PROP_UINT8("avx10-version", X86CPU, env.avx10_version, 0),
->       DEFINE_PROP_UINT64("ucode-rev", X86CPU, ucode_rev, 0),
->       DEFINE_PROP_BOOL("full-cpuid-auto-level", X86CPU, full_cpuid_auto_level, true),
->       DEFINE_PROP_STRING("hv-vendor-id", X86CPU, hyperv_vendor),
+> @@ -7177,6 +7177,13 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+>           }
+>           if (env->features[esa->feature] & esa->bits) {
+>               xcr0 |= 1ull << i;
+> +            continue;
+> +        }
+> +        if (i == XSTATE_OPMASK_BIT || i == XSTATE_ZMM_Hi256_BIT ||
+> +            i == XSTATE_Hi16_ZMM_BIT) {
+> +            if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) {
+> +                xcr0 |= 1ull << i;
+> +            }
+>           }
+>       }
+>   
+> @@ -7315,6 +7322,13 @@ static void x86_cpu_enable_xsave_components(X86CPU *cpu)
+>           const ExtSaveArea *esa = &x86_ext_save_areas[i];
+>           if (env->features[esa->feature] & esa->bits) {
+>               mask |= (1ULL << i);
+> +            continue;
+> +        }
+> +        if (i == XSTATE_OPMASK_BIT || i == XSTATE_ZMM_Hi256_BIT ||
+> +            i == XSTATE_Hi16_ZMM_BIT) {
+> +            if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) {
+> +                mask |= (1ULL << i);
+> +            }
+>           }
+>       }
+>   
 > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 280bec701c..d845384dcd 100644
+> index 74886d1580..280bec701c 100644
 > --- a/target/i386/cpu.h
 > +++ b/target/i386/cpu.h
-> @@ -1920,6 +1920,8 @@ typedef struct CPUArchState {
->       uint32_t cpuid_vendor3;
->       uint32_t cpuid_version;
->       FeatureWordArray features;
-> +    /* AVX10 version */
-> +    uint8_t avx10_version;
->       /* Features that were explicitly enabled/disabled */
->       FeatureWordArray user_features;
->       uint32_t cpuid_model[12];
+> @@ -972,6 +972,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+>   #define CPUID_7_1_EDX_AMX_COMPLEX       (1U << 8)
+>   /* PREFETCHIT0/1 Instructions */
+>   #define CPUID_7_1_EDX_PREFETCHITI       (1U << 14)
+> +/* Support for Advanced Vector Extensions 10 */
+> +#define CPUID_7_1_EDX_AVX10             (1U << 19)
+>   /* Flexible return and event delivery (FRED) */
+>   #define CPUID_7_1_EAX_FRED              (1U << 17)
+>   /* Load into IA32_KERNEL_GS_BASE (LKGS) */
 
 
