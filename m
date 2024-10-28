@@ -4,78 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B52D10C11
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 13:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07B4D10C11
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 13:32:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Pk1-00039P-4E; Mon, 28 Oct 2024 09:25:05 -0400
+	id 1t5PqW-0004bV-SR; Mon, 28 Oct 2024 09:31:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5Pjz-000389-Q7
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 09:25:03 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1t5PqU-0004ad-AE
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 09:31:46 -0400
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5Pjx-0002pX-HV
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 09:25:03 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5cbb0900c86so3291478a12.0
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 06:25:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1t5PqR-0003rY-Sw
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 09:31:45 -0400
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-3e5f968230bso1491386b6e.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 06:31:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730121899; x=1730726699; darn=nongnu.org;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1730122302; x=1730727102;
+ darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8ZVH5GxwAKibzog2TH5n/39WEZ0Rd/nXcfSMUNQhE0k=;
- b=TJHsFcDVuT5Ftw2gs6XLPnCfCqQB3EmnArLd1Id1KPoGGi76NfUaraD2H275VFVlrz
- o6qo6hJEaG1OBW5xzksqi12h7jJd0IFZLoGQFORg23EORR1wJzyrxjmmshGLR3jIJD8H
- dgV4dJeMe8snDJ4iTNSLA6u24AP0ziYvb/MzBSgrNU2HPIIh4jbXVT5D73NN/hmBC13D
- 0UJAq6D8IAAHPeNOc4591VBUZNIu29N7L7YqH0o3fgtRABxyksjNMBWpi3dYPOehJQo/
- 5T0aaMdmOp0Y+74J+bDAFLKDM6zmLQUh6JN7HdcluZLOc9Zv4AWTw8FyNcSCu7txKGFS
- iTrw==
+ bh=ViZt5i1LowrCEgLq3TXpyh0l0Q0O4zNRRkzSe4OxN+U=;
+ b=k3kez4sxyYVLDlklpjYTSOntKY/mMDHqrnIggMdiPQ+RLEQsIqkUnsiHT38hdz1mHR
+ c0TpG39VEehqP5c4lH85j7vFYyLy4iES8ZT79N74W5I4imOkSmEFUbapmbiGubTDahtf
+ j8EF6jOGk00Yku4Y79dY8mRf047lP/aKD4YcVDJajzvxJQbw4p0A5vlTiAtE3q8Fk8wT
+ fvJAhi26xD96u/EQ0FUxdW92E1HIaLvL29FBfwgLZ2YTZEefluyGa3R3kInH8Ic7V5i5
+ 0LVqFCVS6oWWjII8/xYZEVEB57B3UUmwbzkw/IqndPrN/XF1PgTABP1vXPvj8MEXqxew
+ c2GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730121899; x=1730726699;
+ d=1e100.net; s=20230601; t=1730122302; x=1730727102;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8ZVH5GxwAKibzog2TH5n/39WEZ0Rd/nXcfSMUNQhE0k=;
- b=kTiAv9IJE/6V6sCPCAcr1SITcqqWlHhY21pwKR/fv08JfDDlCmvmGzYGFGMz7JZJlH
- 95cToECPiYtO5+c/EcQO47AybJ5DFYlJqOpO+AIQB2n2JZAA/RpPw/iseLOhdG9AqPvx
- BHp1t83rhN7keZ0vs8kbA8J0jQm5KNznDHNK1C3CXAE2a20ZYMjRD13J5Hzf5yJiGUZW
- +mXKCI9cnQsGCyH9NvzOvqs0oS29KKGJ9v5Wey3Jin/dL2WhlkwOTek/tdxH7kRleNMn
- xu94M9Qk4QfG90m3iDmGNhC++37MCFBFmy+5Sz7avdccjusScgoXfK2JMRPwisDB6zq9
- 6Plw==
-X-Gm-Message-State: AOJu0Yz9AEA5pIIRp22qwze32psU1fSzQWjEni+EGFvAZuPaCbpa1yXT
- rvAoO0baao5qVmxGCs4SppU7baI80+hSlcTOCBoOqv9eYAMMqLLIh04L8g0+GCf3TDYud34QFSM
- /k23yDgssGV1q9MaY3GoKOiTXvBJBgxIsD+3hgQ==
-X-Google-Smtp-Source: AGHT+IE2uv+pbb6s3IeZMiIDJur/VZgnyUoSior5kxQdu586SRDTnX4rTl9gEbhZOzduXbpfyQ/cr2yH6zVe9MJV9AQ=
-X-Received: by 2002:a05:6402:348f:b0:5c9:709c:24ab with SMTP id
- 4fb4d7f45d1cf-5cbbf8795aamr7511329a12.6.1730121898946; Mon, 28 Oct 2024
- 06:24:58 -0700 (PDT)
+ bh=ViZt5i1LowrCEgLq3TXpyh0l0Q0O4zNRRkzSe4OxN+U=;
+ b=XWds85Ti2sVO+vVirujXCM57NlJ4FfomBtbZzrNVB1ilbpcspMQl6gr4drLbVpYbTt
+ 06lmyTAx6nCVPUY5JLZTZNIQxVp9JcHmBohFtY8V1nfFORIO4b2fThgXjpAwIPz1tMjx
+ 0dPt/lYYMj1yI2uPiyHo6jy6KpgNo4nJ4kvHlORgPswekG5FSh20IqW4j4/KxB87kUAa
+ qr0p5eezjpKL3E7Qoiu9BDd7fdNQxAwm3w9W8CV1slnzbm4BGe6mpbnctMMqqyCuVs2L
+ lHRwtmArwX5RwdzjCbirV75TUKTj2lN6dnaR0A06d0x1X4RNW6V9kHLwa9FqIF0y/+VL
+ Xhrg==
+X-Gm-Message-State: AOJu0Ywnq1LLTSrngeDlcKLY/fndNmTYSAoKUk/ngqWl7sKCUlXmlhef
+ Msf5nXPNmqmuHsyqtw2mmQQzSkN+pWCtWtE+0gAFKyEnqILWm4mywT6SPyMVecaZMBtkLCYKrqC
+ 6aLwHqxzmRG9E1XVOsOEvHtisLNA9W0t3uBXm
+X-Google-Smtp-Source: AGHT+IHzyE8ukoSLITTIZpy/cO2QxDvoIPSFQ3QVCvsQs7c0sAuHTu3IB5TarXEB9r1tSZiVXns5mUQFkv+LRCR0Tt8=
+X-Received: by 2002:a05:6808:1309:b0:3e5:de6d:71e0 with SMTP id
+ 5614622812f47-3e6384cea09mr6503763b6e.45.1730122302086; Mon, 28 Oct 2024
+ 06:31:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240813152054.2445099-1-peter.maydell@linaro.org>
- <20240813152054.2445099-5-peter.maydell@linaro.org>
- <b090fac1-85df-4727-a382-8a934bd02f33@redhat.com>
-In-Reply-To: <b090fac1-85df-4727-a382-8a934bd02f33@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 28 Oct 2024 13:24:47 +0000
-Message-ID: <CAFEAcA_VWKkZyagd7aPWjAM8maJDZnXaR_aVjQ8MEkVUU9-=CQ@mail.gmail.com>
-Subject: Re: [PULL 4/4] target/arm: Fix usage of MMU indexes when EL3 is
- AArch32
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm <qemu-arm@nongnu.org>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20241024102813.9855-1-phil@philjordan.eu>
+ <20241024102813.9855-3-phil@philjordan.eu>
+ <9e310d5e-ab73-47b9-b9ed-5a16d4db3fb9@daynix.com>
+ <CAAibmn0NA+K63OvrsBpN1HivndyZo-fgeLwzY8AVE4hPrQR26w@mail.gmail.com>
+ <dd2aae75-348d-44ad-bbd9-5d45aad15bc6@daynix.com>
+ <CAAibmn1z+7yizwH8DogfcCWOWzA8Ox6e=p+Hc1pu-CS4SjAirg@mail.gmail.com>
+ <6a989d04-6416-4bd9-98ac-e1230a1095a9@daynix.com>
+ <CAAibmn3YEOT0O55-bwJkpi_oEGkA1WwvhC0w3jGbgXOZLTVa0w@mail.gmail.com>
+In-Reply-To: <CAAibmn3YEOT0O55-bwJkpi_oEGkA1WwvhC0w3jGbgXOZLTVa0w@mail.gmail.com>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+Date: Mon, 28 Oct 2024 14:31:30 +0100
+Message-ID: <CAAibmn3HZeDeK8FrYhHa1GGwc+N8rBuB2VvMRm7LCt0mUGmsYQ@mail.gmail.com>
+Subject: Re: [PATCH v4 02/15] hw/display/apple-gfx: Introduce
+ ParavirtualizedGraphics.Framework support
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org, 
+ pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com, 
+ marcin.juszkiewicz@linaro.org, stefanha@redhat.com, mst@redhat.com, 
+ slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net, 
+ marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com, 
+ chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com, philmd@linaro.org, 
+ shorne@gmail.com, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, 
+ berrange@redhat.com, qemu-arm@nongnu.org, qemu-block@nongnu.org, 
+ qemu-riscv@nongnu.org, Alexander Graf <graf@amazon.com>
+Content-Type: multipart/alternative; boundary="0000000000003c00bb0625897d15"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=phil@philjordan.eu; helo=mail-oi1-x22d.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,120 +105,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 25 Oct 2024 at 13:54, Thomas Huth <thuth@redhat.com> wrote:
+--0000000000003c00bb0625897d15
+Content-Type: text/plain; charset="UTF-8"
+
+On Mon, 28 Oct 2024 at 10:00, Phil Dennis-Jordan <phil@philjordan.eu> wrote:
+
 >
-> On 13/08/2024 17.20, Peter Maydell wrote:
-> > Our current usage of MMU indexes when EL3 is AArch32 is confused.
-> > Architecturally, when EL3 is AArch32, all Secure code runs under the
-> > Secure PL1&0 translation regime:
-> >   * code at EL3, which might be Mon, or SVC, or any of the
-> >     other privileged modes (PL1)
-> >   * code at EL0 (Secure PL0)
-> >
-> > This is different from when EL3 is AArch64, in which case EL3 is its
-> > own translation regime, and EL1 and EL0 (whether AArch32 or AArch64)
-> > have their own regime.
-> >
-> > We claimed to be mapping Secure PL1 to our ARMMMUIdx_EL3, but didn't
-> > do anything special about Secure PL0, which meant it used the same
-> > ARMMMUIdx_EL10_0 that NonSecure PL0 does.  This resulted in a bug
-> > where arm_sctlr() incorrectly picked the NonSecure SCTLR as the
-> > controlling register when in Secure PL0, which meant we were
-> > spuriously generating alignment faults because we were looking at the
-> > wrong SCTLR control bits.
-> >
-> > The use of ARMMMUIdx_EL3 for Secure PL1 also resulted in the bug that
-> > we wouldn't honour the PAN bit for Secure PL1, because there's no
-> > equivalent _PAN mmu index for it.
-> >
-> > We could fix this in one of two ways:
-> >   * The most straightforward is to add new MMU indexes EL30_0,
-> >     EL30_3, EL30_3_PAN to correspond to "Secure PL1&0 at PL0",
-> >     "Secure PL1&0 at PL1", and "Secure PL1&0 at PL1 with PAN".
-> >     This matches how we use indexes for the AArch64 regimes, and
-> >     preserves propirties like being able to determine the privilege
-> >     level from an MMU index without any other information. However
-> >     it would add two MMU indexes (we can share one with ARMMMUIdx_EL3),
-> >     and we are already using 14 of the 16 the core TLB code permits.
-> >
-> >   * The more complicated approach is the one we take here. We use
-> >     the same MMU indexes (E10_0, E10_1, E10_1_PAN) for Secure PL1&0
-> >     than we do for NonSecure PL1&0. This saves on MMU indexes, but
-> >     means we need to check in some places whether we're in the
-> >     Secure PL1&0 regime or not before we interpret an MMU index.
-> >
-> > The changes in this commit were created by auditing all the places
-> > where we use specific ARMMMUIdx_ values, and checking whether they
-> > needed to be changed to handle the new index value usage.
+> >      >
+>> >      > Hmm. I think if we were to use that, we would need to create a
+>> new
+>> >      > QemuEvent for every job and destroy it afterward, which seems
+>> >     expensive.
+>> >      > We can't rule out multiple concurrent jobs being submitted, and
+>> the
+>> >      > QemuEvent system only supports a single producer as far as I can
+>> >     tell.
+>> >      >
+>> >      > You can probably sort of hack around it with just one QemuEvent
+>> by
+>> >      > putting the qemu_event_wait into a loop and turning the job.done
+>> >     flag
+>> >      > into an atomic (because it would now need to be checked outside
+>> the
+>> >      > lock) but this all seems unnecessarily complicated considering
+>> the
+>> >      > QemuEvent uses the same mechanism QemuCond/QemuMutex internally
+>> >     on macOS
+>> >      > (the only platform relevant here), except we can use it as
+>> >     intended with
+>> >      > QemuCond/QemuMutex rather than having to work against the
+>> >     abstraction.
+>> >
+>> >     I don't think it's going to be used concurrently. It would be
+>> difficult
+>> >     to reason even for the framework if it performs memory
+>> >     unmapping/mapping/reading operations concurrently.
+>> >
+>> >
+>> > I've just performed a very quick test by wrapping the job submission/
+>> > wait in the 2 mapMemory callbacks and the 1 readMemory callback with
+>> > atomic counters and logging whenever a counter went above 1.
+>> >
+>> >   * Overall, concurrent callbacks across all types were common (many
+>> per
+>> > second when the VM is busy). It's not exactly a "thundering herd" (I
+>> > never saw >2) but it's probably not a bad idea to use a separate
+>> > condition variable for each job type. (task map, surface map, memory
+>> read)
+>> >   * While I did not observe any concurrent memory mapping operations
+>> > *within* a type of memory map (2 task mappings or 2 surface mappings) I
+>> > did see very occasional concurrent memory *read* callbacks. These
+>> would,
+>> > as far as I can tell, not be safe with QemuEvents, unless we placed the
+>> > event inside the job struct and init/destroyed it on every callback
+>> > (which seems like excessive overhead).
+>>
+>> I think we can tolerate that overhead. init/destroy essentially sets the
+>> fields in the data structure and I estimate its total size is about 100
+>> bytes. It is probably better than waking an irrelevant thread up. I also
+>> hope that keeps the code simple; it's not worthwhile adding code to
+>> optimize this.
+>>
 >
->   Hi Peter,
+> At least pthread_cond_{init,destroy} and pthread_mutex_{init,destroy}
+> don't make any syscalls, so yeah it's probably an acceptable overhead.
 >
-> this commit caused a regression with one of the Avocado tests:
+
+I've just experimented with QemuEvents created on-demand and ran into some
+weird deadlocks, which then made me sit down and think about it some more.
+I've come to the conclusion that creating (and crucially, destroying)
+QemuEvents on demand in this way is not safe.
+
+Specifically, you must not call qemu_event_destroy() - which transitively
+destroys the mutex and condition variable - unless you can guarantee that
+the qemu_event_set() call on that event object has completed.
+
+In qemu_event_set, the event object's value is atomically set to EV_SET. If
+the previous value was EV_BUSY, qemu_futex_wake() is called. All of this is
+outside any mutex, however, so apart from memory coherence (there are
+barriers) this can race with the waiting thread. qemu_event_wait() reads
+the event's value. If EV_FREE, it's atomically set to EV_BUSY. Then the
+mutex is locked, the value is checked again, and if it's still EV_BUSY, it
+waits for the condition variable, otherwise the mutex is immediately
+unlocked again. If the trigger thread's qemu_event_set() flip to EV_SET
+occurs between the waiting thread's two atomic reads of the value, the
+waiting thread will never wait for the condition variable, but the trigger
+thread WILL try to acquire the mutex and signal the condition variable in
+qemu_futex_wake(), by which  time the waiting thread may have advanced
+outside of qemu_event_wait().
+
+This is all fine usually, BUT if you destroy the QemuEvent immediately
+after the qemu_event_wait() call, qemu_futex_wake() may try to lock a mutex
+that has been destroyed, or signal a condition variable which has been
+destroyed. I don't see a reasonable way of making this safe other than
+using long-lived mutexes and condition variables. And anyway, we have much,
+MUCH bigger contention/performance issues coming from almost everything
+being covered by the BQL. (If waking these callbacks can even be considered
+an issue: I haven't seen it show up in profiling, whereas BQL contention
+very much does.)
+
+I'll submit v5 of this patch set with separate condition variables for each
+job type. This should make the occurrence of waking the wrong thread quite
+rare, while reasoning about correctness is pretty straightforward. I think
+that's good enough.
+
+--0000000000003c00bb0625897d15
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Mon, 28 Oct 2024 at 10:00, Phil De=
+nnis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu">phil@philjordan.eu</a=
+>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><di=
+v dir=3D"ltr"><div dir=3D"ltr"><br></div><div class=3D"gmail_quote"><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
+x solid rgb(204,204,204);padding-left:1ex">
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Hmm. I think if we were to use that, we would=
+ need to create a new<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; QemuEvent for every job and destroy it afterw=
+ard, which seems<br>
+&gt;=C2=A0 =C2=A0 =C2=A0expensive.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; We can&#39;t rule out multiple concurrent job=
+s being submitted, and the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; QemuEvent system only supports a single produ=
+cer as far as I can<br>
+&gt;=C2=A0 =C2=A0 =C2=A0tell.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; You can probably sort of hack around it with =
+just one QemuEvent by<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; putting the qemu_event_wait into a loop and t=
+urning the job.done<br>
+&gt;=C2=A0 =C2=A0 =C2=A0flag<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; into an atomic (because it would now need to =
+be checked outside the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; lock) but this all seems unnecessarily compli=
+cated considering the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; QemuEvent uses the same mechanism QemuCond/Qe=
+muMutex internally<br>
+&gt;=C2=A0 =C2=A0 =C2=A0on macOS<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; (the only platform relevant here), except we =
+can use it as<br>
+&gt;=C2=A0 =C2=A0 =C2=A0intended with<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; QemuCond/QemuMutex rather than having to work=
+ against the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0abstraction.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0I don&#39;t think it&#39;s going to be used concurr=
+ently. It would be difficult<br>
+&gt;=C2=A0 =C2=A0 =C2=A0to reason even for the framework if it performs mem=
+ory<br>
+&gt;=C2=A0 =C2=A0 =C2=A0unmapping/mapping/reading operations concurrently.<=
+br>
+&gt; <br>
+&gt; <br>
+&gt; I&#39;ve just performed a very quick test by wrapping the job submissi=
+on/ <br>
+&gt; wait in the 2 mapMemory callbacks and the 1 readMemory callback with <=
+br>
+&gt; atomic counters and logging whenever a counter went above 1.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0* Overall, concurrent callbacks across all types were comm=
+on (many per <br>
+&gt; second when the VM is busy). It&#39;s not exactly a &quot;thundering h=
+erd&quot; (I <br>
+&gt; never saw &gt;2) but it&#39;s probably not a bad idea to use a separat=
+e <br>
+&gt; condition variable for each job type. (task map, surface map, memory r=
+ead)<br>
+&gt;=C2=A0 =C2=A0* While I did not observe any concurrent memory mapping op=
+erations <br>
+&gt; *within* a type of memory map (2 task mappings or 2 surface mappings) =
+I <br>
+&gt; did see very occasional concurrent memory *read* callbacks. These woul=
+d, <br>
+&gt; as far as I can tell, not be safe with QemuEvents, unless we placed th=
+e <br>
+&gt; event inside the job struct and init/destroyed it on every callback <b=
+r>
+&gt; (which seems like excessive overhead).<br>
+<br>
+I think we can tolerate that overhead. init/destroy essentially sets the <b=
+r>
+fields in the data structure and I estimate its total size is about 100 <br=
 >
->   AVOCADO_ALLOW_LARGE_STORAGE=1 avocado run
-> tests/avocado/boot_linux_console.py:BootLinuxConsole.test_arm_bpim2u_openwrt_22_03_3
+bytes. It is probably better than waking an irrelevant thread up. I also <b=
+r>
+hope that keeps the code simple; it&#39;s not worthwhile adding code to <br=
 >
-> is failing now. It works still fine before this commit. Could you please
-> have a look?
+optimize this.<br></blockquote><div><br></div><div>At least pthread_cond_{i=
+nit,destroy} and pthread_mutex_{init,destroy} don&#39;t make any syscalls, =
+so yeah it&#39;s probably an acceptable overhead.<br></div></div></div></bl=
+ockquote><div><br></div><div>I&#39;ve just experimented with QemuEvents cre=
+ated on-demand and ran into some weird deadlocks, which then made me sit do=
+wn and think about it some more. I&#39;ve come to the conclusion that creat=
+ing (and crucially, destroying) QemuEvents on demand in this way is not saf=
+e.</div><div><br></div><div>Specifically, you must not call qemu_event_dest=
+roy() - which transitively destroys the mutex and condition variable - unle=
+ss you can guarantee that the qemu_event_set() call on that event object ha=
+s completed.</div><div><br></div><div>In qemu_event_set, the event object&#=
+39;s value is atomically set to EV_SET. If the previous value was EV_BUSY, =
+qemu_futex_wake() is called. All of this is outside any mutex, however, so =
+apart from memory coherence (there are barriers) this can race with the wai=
+ting thread. qemu_event_wait() reads the event&#39;s value. If EV_FREE, it&=
+#39;s atomically set to EV_BUSY. Then the mutex is locked, the value is che=
+cked again, and if it&#39;s still EV_BUSY, it waits for the condition varia=
+ble, otherwise the mutex is immediately unlocked again. If the trigger thre=
+ad&#39;s qemu_event_set() flip to EV_SET occurs between the waiting thread&=
+#39;s two atomic reads of the value, the waiting thread will never wait for=
+ the condition variable, but the trigger thread WILL try to acquire the mut=
+ex and signal the condition variable in qemu_futex_wake(), by which=C2=A0 t=
+ime the waiting thread may have advanced outside of qemu_event_wait().</div=
+><div><br></div><div>This is all fine usually, BUT if you destroy the QemuE=
+vent immediately after the qemu_event_wait() call, qemu_futex_wake() may tr=
+y to lock a mutex that has been destroyed, or signal a condition variable w=
+hich has been destroyed. I don&#39;t see a reasonable way of making this sa=
+fe other than using long-lived mutexes and condition variables. And anyway,=
+ we have much, MUCH bigger contention/performance issues coming from almost=
+ everything being covered by the BQL. (If waking these callbacks can even b=
+e considered an issue: I haven&#39;t seen it show up in profiling, whereas =
+BQL contention very much does.)</div><div><br></div><div>I&#39;ll submit v5=
+ of this patch set with separate condition variables for each job type. Thi=
+s should make the occurrence of waking the wrong thread quite rare, while r=
+easoning about correctness is pretty straightforward. I think that&#39;s go=
+od enough.</div><div><br></div><div><br></div><div><br></div></div></div>
 
-Thanks for the report; I've investigated it. The cause of this specific
-failure is that regime_el() doesn't return the right answer when code
-is executing in the guest in Monitor mode. The effect is that because
-regime_el() returns 1, not 3, we look at the wrong banked registers
-and the page table walk fails when it should not. This is enough to fix:
-
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 203a2dae148..812487b9291 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -926,7 +926,7 @@ static inline uint32_t regime_el(CPUARMState *env,
-ARMMMUIdx mmu_idx)
-     case ARMMMUIdx_E10_1_PAN:
-     case ARMMMUIdx_Stage1_E1:
-     case ARMMMUIdx_Stage1_E1_PAN:
--        return arm_el_is_aa64(env, 3) || !arm_is_secure_below_el3(env) ? 1 : 3;
-+        return arm_aa32_secure_pl1_0(env) ? 3 : 1;
-     case ARMMMUIdx_MPrivNegPri:
-     case ARMMMUIdx_MUserNegPri:
-     case ARMMMUIdx_MPriv:
-
-However, while I was thinking about this I realised that there
-are some problems with the design change this commit is trying
-to do. The idea is that we now use the same MMU indexes for
-Secure PL1&0 as we do for NonSecure PL1&0.
-
-Small problem:
- That means we need to flush the TLBs at any point where the CPU
- state flips from one to the other. We already flush the TLB when
- SCR.NS is changed, but we don't flush the TLB when we take an
- exception from NS PL1&0 into Mon or when we return from Mon to
- NS PL1&0. Now we need to do that, so any time we call up into
- Mon and back we'll dump the TLBs, which is a bit sad.
- (Also we could skip flushing all these TLBs when NS changes.)
-
-Larger problem:
- the ATS12NS* address translate instructions allow Mon code
- (which is Secure) to do a stage 1+2 page table walk for NS.
- I thought this was OK because do_ats_write() does a page
- table walk which doesn't use the TLBs, so because it can
- pass both the MMU index and also an ARMSecuritySpace argument
- we can tell the table walk that we want NS stage1+2, not S.
- But that means that all the code within the ptw that needs
- to find e.g. the regime EL cannot do so only with an
- mmu_idx -- all these functions like regime_sctlr(), regime_el(),
- etc would need to pass both an mmu_idx and the security_space,
- so they can tell whether this is a translation regime
- controlled by EL1 or EL3 (and so whether to look at SCTLR.S
- or SCTLR.NS, etc).
-
-So now I'm wondering if this merge was a good idea after all.
-Should we do all that replumbing required, or should we
-instead revert this and take the "straightforward" approach
-described in the commit message above of adding some extra
-MMU indexes?
-
-(I suspect that this commit is likely also the cause of
-https://gitlab.com/qemu-project/qemu/-/issues/2588 )
-
--- PMM
+--0000000000003c00bb0625897d15--
 
