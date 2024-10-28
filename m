@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2772D33991
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69EEDD33991
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:38:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Qli-0001g1-HC; Mon, 28 Oct 2024 10:30:54 -0400
+	id 1t5Qm4-0001lS-1G; Mon, 28 Oct 2024 10:31:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5QlU-0000iC-Nl
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:30:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1t5Ql3-0000LV-3w
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:30:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5QlT-00041V-97
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:30:40 -0400
+ id 1t5Qkt-0003ko-8d
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:30:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730125838;
+ s=mimecast20190719; t=1730125802;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ANrTQw6sylLk0MOtalh3eFn5kIjq1iikw1mOMtK6UAY=;
- b=iS0ubircX4y0UWJXDD3CxNfy/hzwXkLY/k2PqD04Ke6Hdygaq1lSmtv3KdJ9qIg3L6j4SF
- QnL5gek/+A5f8O8+dcQbQILIvakWRaL5w46+/FlskUtTUegd6u1B+aP83CA9CVJimrM/+5
- jHno5bhT47yuX/8rY2aJ4gy8SyUBXKs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DB7G90+Tf57PYu9+1OIot/PufKxyTD249TZ0dYeOJQU=;
+ b=gydlhh933Az2jxlldHH9QI7WLTJtFh/U5/RDILGn6Fvd7RCcqK2hu4mRbpPnrQXtX0fq83
+ R9zEfaYFSBqKOKU8c76iVp0Ibu3vV4Cm9AIz1Xnv7Mod8/+sPeRUZVsawWrlawngm2pWod
+ 4ZBA3PfPzOJuse707JToL/GuSp9KWp0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-475-jaNMWRIYPBmHbOsBTQlaqw-1; Mon, 28 Oct 2024 10:30:37 -0400
-X-MC-Unique: jaNMWRIYPBmHbOsBTQlaqw-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d5606250aso2171946f8f.2
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:30:37 -0700 (PDT)
+ us-mta-302-lA0ePlZaMteFSeLjfgbDMA-1; Mon, 28 Oct 2024 10:30:01 -0400
+X-MC-Unique: lA0ePlZaMteFSeLjfgbDMA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d603515cfso2081260f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:30:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730125835; x=1730730635;
+ d=1e100.net; s=20230601; t=1730125799; x=1730730599;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ANrTQw6sylLk0MOtalh3eFn5kIjq1iikw1mOMtK6UAY=;
- b=pTze3OMoVzXmWqa8JDJ7eQnFSlQi/H5S0Pl5qUtMcqUFdKlXkD10G8bM2XrReN3m8i
- f7WT00Sf1GYtSSy2pVLe89a0WnEjWAMxqmjFiYkTUPvJl4JS1Ym1UkTjYRiXwV7HbAd8
- EGjJYXc3U4aCgHDsE9AEEJKwig5e6DcKh3SJP2HIcZgpxmACeb25kG5LQfZSVgqgrMLV
- f6KC3khOKfB2uTY9EnGoNuCCf2RHO7rNcmyDrnYZvkbAJbQW89LdOFevsaQCaert6fHm
- qEMFszvVrDxMWFYFrHOyhRaQp6DyJUW8t3U89Bx7vxT8XmHHIhoWLdUtIPwY1vOOLUrJ
- jpNg==
-X-Gm-Message-State: AOJu0YxX3RKVCQSV7ujBa3AOLnCPQZ0/JIXF5DESAh4LcJqqGosaaKlF
- Gj8rbxTLTetWotpkbaWTbjCNWnOTBBHGzylPNYsgMoVbojF8tjPADYnB7drgCSFSMrRTteFUB3i
- bweko+9fkzPAKiRZMzrkJ0SPOyzg6fR2VA+XGfGzLCyqWdY3Ix7vBBz9wOt1EC1ZL/kRX8Vw3Uz
- VZNGpdNmraWLdGsk2Xwf6dFj2HTHadZORIVPgRsqM=
-X-Received: by 2002:adf:ce0d:0:b0:37d:5046:565 with SMTP id
- ffacd0b85a97d-3806120085fmr6710308f8f.40.1730125835096; 
- Mon, 28 Oct 2024 07:30:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEZEbzKaqxkHSPWqbBy/nv/SzGNxiAlvAwg+MTqSgxU7md2VRQkxlk9g0APXSIVS9wVskFRxQ==
-X-Received: by 2002:adf:ce0d:0:b0:37d:5046:565 with SMTP id
- ffacd0b85a97d-3806120085fmr6710262f8f.40.1730125834339; 
- Mon, 28 Oct 2024 07:30:34 -0700 (PDT)
+ bh=DB7G90+Tf57PYu9+1OIot/PufKxyTD249TZ0dYeOJQU=;
+ b=isnsZParup5Uh8s52QtY8f7vevApi2LQIM7oNIfBmh7JP9hcAgJOTb1zunJZhpBj7I
+ 7std1pRXUH2cTk/guRt8aB+Z2Q25mqOVRFZfiZWPqulEePCUKaIgb6V2Ao6/X8p0Qyno
+ joW0nPI4MpoULZ46cOABganOVzADQJkbr1a3qMIWPCy9hsRDYQGUpUj85qjskugBfGoo
+ mGZLji0fwbPLhq608L5dg3SYFl5RyG4cyamCz+L1Ui3PKAORzJA+CzieuyAWl+YYeQpK
+ C3FJNdzvMQHynFehvR9eEaYA21/DJaTFuexihxw2mg4mxAgc97Ua+98dI+WsNIqsLI71
+ kWmQ==
+X-Gm-Message-State: AOJu0YyjKLOEDfSqPp4L9jLREGtQLxvrLRCzNBilHbfhGdmy7Y6Ks//P
+ s6y3lWtkMpCtlFsJ9SYk/0qg05katlZf6isKdIEr91W6CKkp97gudNMdeVeZOG8XkEiZ3sJUAMz
+ MSIl5godvXqxWwnsiJhZ5LWJh2nXHcr81U7QL4AFU8AjJlW9KFOC0bed+Oox97rN44F/XDd7mJW
+ gaqGto8+94hrFAy6Nabn1thf2tL3DrjT4qdQ1FilE=
+X-Received: by 2002:a5d:4e0e:0:b0:37c:c842:a16e with SMTP id
+ ffacd0b85a97d-380610f7b1dmr6225907f8f.5.1730125799330; 
+ Mon, 28 Oct 2024 07:29:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHwhh5EdlAVH/Ky9t3ZwsbmWYYg2rAZN3hghsz81PMkxVKW7pA9r8O1NN8WlvIx5ju5mS3nwg==
+X-Received: by 2002:a5d:4e0e:0:b0:37c:c842:a16e with SMTP id
+ ffacd0b85a97d-380610f7b1dmr6225887f8f.5.1730125798876; 
+ Mon, 28 Oct 2024 07:29:58 -0700 (PDT)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38058b91ff2sm9629177f8f.96.2024.10.28.07.30.32
+ ffacd0b85a97d-38058bb4461sm9561669f8f.113.2024.10.28.07.29.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Oct 2024 07:30:32 -0700 (PDT)
+ Mon, 28 Oct 2024 07:29:57 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 24/24] MAINTAINERS: Add myself as a reviewer of x86 general
- architecture support
-Date: Mon, 28 Oct 2024 15:29:31 +0100
-Message-ID: <20241028142932.363687-25-pbonzini@redhat.com>
+Cc: Junjie Mao <junjie.mao@hotmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: [PULL 10/24] meson: remove repeated search for rust_root_crate.sh
+Date: Mon, 28 Oct 2024 15:29:17 +0100
+Message-ID: <20241028142932.363687-11-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028142932.363687-1-pbonzini@redhat.com>
 References: <20241028142932.363687-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,30 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Avoid repeated lines of the form
 
-X86 architecture has always been a focus of my work. I would like to
-help to review more related patches.
+Program scripts/rust/rust_root_crate.sh found: YES (/home/pbonzini/work/upstream/qemu/scripts/rust/rust_root_crate.sh)
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20241022023628.1743686-1-zhao1.liu@intel.com
+in the meson logs.
+
+Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ meson.build | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c3bfa132fd6..db2880253d0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -132,6 +132,7 @@ F: configs/targets/mips*
+diff --git a/meson.build b/meson.build
+index 891590353c4..0f1de0db2d9 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3977,6 +3977,7 @@ endif
  
- X86 general architecture support
- M: Paolo Bonzini <pbonzini@redhat.com>
-+R: Zhao Liu <zhao1.liu@intel.com>
- S: Maintained
- F: configs/devices/i386-softmmu/default.mak
- F: configs/targets/i386-softmmu.mak
+ 
+ feature_to_c = find_program('scripts/feature_to_c.py')
++rust_root_crate = find_program('scripts/rust/rust_root_crate.sh')
+ 
+ if host_os == 'darwin'
+   entitlement = find_program('scripts/entitlement.sh')
+@@ -4078,7 +4079,7 @@ foreach target : target_dirs
+     if crates.length() > 0
+       rlib_rs = custom_target('rust_' + target.underscorify() + '.rs',
+                               output: 'rust_' + target.underscorify() + '.rs',
+-                              command: [find_program('scripts/rust/rust_root_crate.sh')] + crates,
++                              command: [rust_root_crate, crates],
+                               capture: true,
+                               build_by_default: true,
+                               build_always_stale: true)
 -- 
 2.47.0
 
