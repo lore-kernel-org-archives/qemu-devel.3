@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B5EAD5B874
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 06:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0486CD5B874
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 06:12:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5fRc-0001hi-MC; Tue, 29 Oct 2024 02:11:08 -0400
+	id 1t5fRS-0001Xi-3D; Tue, 29 Oct 2024 02:10:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t5fRa-0001gJ-A1
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:11:06 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1t5fRH-0001QL-Tg
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:10:48 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t5fRY-0007HU-UY
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:11:06 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-37d63a79bb6so3587649f8f.0
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 23:11:04 -0700 (PDT)
+ id 1t5fRF-0007BI-29
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:10:46 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-431548bd1b4so48548275e9.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 23:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730182263; x=1730787063; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730182243; x=1730787043; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tw0DcjFPqeWV6b0ZQwg1a/UUMvz8Gie9VHVdzuTQErg=;
- b=L7UkSaLARoCqZ3xydhY8AZev6d0zmItEuFnqA4QQn0tLU8n+cz2flvmTnEdK1XSSfC
- z17ZUTMw8ipqC1dqRg06Vjvxrr+cjD89nXbgzgkJR3X6fOew9W9zc+E+S3jbCs52Tq4A
- AfR9cuFlI9MiJlvRzlYo1ZXnbB88x1iIHouAbI5d0UWdP+lT7puddccdHLTh1RQDmAvN
- GY9zmMazUrjEc59aYb3Qj4JOPUafT6TzUrUZdutk2w1DPQ3dcevCugtW7U8XHYIRqUeW
- difNOsRRSnFF2vF8IQg/fuNjWjQtkbifAdtqvAlAEiI89DTokJKKfGDACVjdF0CZOlDF
- tEJg==
+ bh=k8fHzV/f1hnDLxHZZKnInt/EtNNRU39WIf5id+i+9CM=;
+ b=pRbdlVHR8w2foK9ZS4kZpt93Ct4NSm4p/RkkGSbx8bagCL2G8N1KpTYPUC6oqbvl2+
+ Pkuq1czs3Wn9Z9uKLHWbQ/4uG0X3Wc9iQ+e3JlYm5G0LMKHaQvjy9cCIV9mRnKBNV9GX
+ DDJFjz53lTSbYjDfCYdfS6+bClG6EC+1CIQE3wsMAqj/MfIFWjU2EGQ2QG5V9thNTBjv
+ pSwmdKp5ZOtO4KBCVkF5Myc6jFyrfX5S4P1+hap32C0KtEeNgHHFfeFvrXQuo9xqbmFY
+ 8enP0JaMOaX9ZqwWNIEb3MQxXMbPFKzT0aLidR2pIc/VwryT+YigyQQ/PassuP4L+pgE
+ y6cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730182263; x=1730787063;
+ d=1e100.net; s=20230601; t=1730182243; x=1730787043;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tw0DcjFPqeWV6b0ZQwg1a/UUMvz8Gie9VHVdzuTQErg=;
- b=PtanChi5pus09mvxXnQrVPjOODuOC04leStEv6FcdqHew+kczFag5bcvnarArkks8D
- vrIh866oyKK9IdDFmM168nBuNx+OXy4qKy7TA3wZKBwPAknq1RB0ga0DW0ERchZWmOsq
- 6eP8xtX7dZaYYIxpb40RhOZCGpCIulZFvQiGf+amYkHbqyYL8luG8tyUEiXPUbtE5NH0
- Vu+p8pd7+7aMIxiqz0gauJYimeluHrEJpmkB51XT0R67nWsppTX6Y3PpTLC3t1H4Bfsq
- Z1k1C3988j3Ews714O7b2PNxf+maojBH4OpiCnHb7SScEwXpIRqgEqVcbKkJAnjPZ/Xq
- kpFQ==
+ bh=k8fHzV/f1hnDLxHZZKnInt/EtNNRU39WIf5id+i+9CM=;
+ b=NAZKRBqah3O7Dig8xSS5KxgpGoQCaIZ1D5SY0jq+l7QHdbkXY4biEOfC5dVz65j6PF
+ wEX+U6iGYad5x4RqBlv6Tz2a1mZuBrXQhVViam2fEyTVX4qqWL46Yk0HzMzMn2RJV7CI
+ tqVENR+Eyc/YcOZGCYhfS/3SVSX2PgSxUVBHQ9VG+EQraRupumc6LRcLh/k/g9Pdc3xM
+ FbAbYHeZAnsplX9Po+V5g6u6xQYwy2owOkPec97/M7QYpvlvPfnlLVG2zo7T7Cp4XzmT
+ ROCT3lI53R3m+YfN4UK59OIhNxorRA21Z9u0SjEUEeRiyjmPLZxMyRvYPXz4fJT6l+Jt
+ nzww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUq8XOtJcVSIq9/1I6aqW6qJbUtND7k09ShxQvhVr7/R47I9t3PsBiAPU++pWUptavlb3mj9KmA6KKf@nongnu.org
-X-Gm-Message-State: AOJu0YyVnUVFZ8LfqaDxTR12RWkbJPl3Uy/wYVshLyGYckhHl6XfU9yT
- 6VnKiNfYWTd+m5eSu9i6wkKbmXLLpE/cJuftcXPm8Z0rE2vX/h8ibcvfHWkn5SA=
-X-Google-Smtp-Source: AGHT+IHEIBaUPLujZoLe+2YmxHoZVxCs/XDKvKfCjBQAN/BRxNhY2YNAl35PmlHRF6naiPETtr7nQw==
-X-Received: by 2002:adf:f411:0:b0:37d:4e59:549a with SMTP id
- ffacd0b85a97d-380611418abmr7798213f8f.16.1730182263481; 
- Mon, 28 Oct 2024 23:11:03 -0700 (PDT)
+ AJvYcCWvEm6frubLBbXYQwv5uID3aetsPdViq0gXyoKX5bn4/2abLyvA1nv9pMf0v7Ac+3g0DKVIDw5h35Vw@nongnu.org
+X-Gm-Message-State: AOJu0YxFap5Gci5ISgyP2Sovi3Q+ukrQOgMBnV1AAaPOZoQIHkSSqGak
+ eAVyoyoiYVNqLXgp4cY3311znexFHfY0bLA4g6o31UvGFWktPp3Aruh/F4GduIA=
+X-Google-Smtp-Source: AGHT+IEC7ve4M7PIBcVep8RqsgKORn95Q7oWzbKVPhXEGueQDzHNr/uXBnkdWwabPuAMZNZUQzjmhw==
+X-Received: by 2002:a05:600c:350b:b0:431:44fe:fd9a with SMTP id
+ 5b1f17b1804b1-4319acb8a7cmr88621115e9.19.1730182242752; 
+ Mon, 28 Oct 2024 23:10:42 -0700 (PDT)
 Received: from [192.168.21.227] ([90.197.151.65])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431b45aa058sm12150405e9.1.2024.10.28.23.11.00
+ 5b1f17b1804b1-4318b55f5e1sm165298915e9.14.2024.10.28.23.10.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Oct 2024 23:11:02 -0700 (PDT)
-Message-ID: <55df000a-d9b2-4097-af91-746f4000c21a@linaro.org>
-Date: Mon, 28 Oct 2024 12:24:12 +0000
+ Mon, 28 Oct 2024 23:10:42 -0700 (PDT)
+Message-ID: <9eb4fbf0-b641-4d80-9eae-72ac24e2a8d4@linaro.org>
+Date: Mon, 28 Oct 2024 12:16:14 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/21] target/i386: Set 2-NaN propagation rule explicitly
+Subject: Re: [PATCH 08/21] target/ppc: Explicitly set 2-NaN propagation rule
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -82,14 +82,14 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
  qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
 References: <20241025141254.2141506-1-peter.maydell@linaro.org>
- <20241025141254.2141506-16-peter.maydell@linaro.org>
+ <20241025141254.2141506-9-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241025141254.2141506-16-peter.maydell@linaro.org>
+In-Reply-To: <20241025141254.2141506-9-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -113,24 +113,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/25/24 15:12, Peter Maydell wrote:
-> Set the NaN propagation rule explicitly for the float_status words
-> used in the x86 target.
+> Set the 2-NaN propagation rule explicitly in env->fp_status
+> and env->vec_status.
 > 
-> This is a no-behaviour-change commit, so we retain the existing
-> behaviour of using the x87-style "prefer QNaN over SNaN, then prefer
-> the NaN with the larger significand" for MMX and SSE.  This is
-> however not the documented hardware behaviour, so we leave a TODO
-> note about what we should be doing instead.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   target/i386/cpu.h              |  3 +++
->   target/i386/cpu.c              |  4 ++++
->   target/i386/tcg/fpu_helper.c   | 40 ++++++++++++++++++++++++++++++++++
->   fpu/softfloat-specialize.c.inc |  3 ++-
->   4 files changed, 49 insertions(+), 1 deletion(-)
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+> ---
+> As an aside, it looks a bit suspicious that we set
+> tininess_before_rounding on fp_status but not vec_status...
+
+Indeed.
+
 
 r~
 
