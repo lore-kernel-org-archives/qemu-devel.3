@@ -4,29 +4,29 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26FE7D13592
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66052D13590
 	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 01:59:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5F1O-0002kw-48; Sun, 27 Oct 2024 21:58:18 -0400
+	id 1t5F1U-0002nR-NH; Sun, 27 Oct 2024 21:58:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeeheng.sia@starfivetech.com>)
- id 1t5F1M-0002jB-Dr; Sun, 27 Oct 2024 21:58:16 -0400
+ id 1t5F1S-0002mZ-Oc; Sun, 27 Oct 2024 21:58:22 -0400
 Received: from mail-bjschn02on20701.outbound.protection.partner.outlook.cn
  ([2406:e500:4440:2::701]
  helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeeheng.sia@starfivetech.com>)
- id 1t5F1K-0007Ma-Qo; Sun, 27 Oct 2024 21:58:15 -0400
+ id 1t5F1R-0007Ma-0A; Sun, 27 Oct 2024 21:58:22 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DjZUvgdiksopPZUHEMx3W5WgxRhczgp95xmCFkHbOgWW6I+b3ebbgfWvS+U+fXShiCXPDSYBPHs5hm72OHdHK16VmB1QpuADLvMbMKpKIuUBdMOaAc7h7cz/0vtJVGIeIXRwghTWqr/mpHNHV+fkN9kyJtbVdlJ2NZd/mmWqujTNEvl526cll72bLyKrOyzcgzTju9NhRaNB78NHMKiwd1vbiZFq2vzfbsDyIR2zDYLxK6InJ0omCs/cwR3Mzm7jWiozyo0dmnaAv89H1phWwwZPiIklBbd+HuDP993kEf+iAR285gtpuB8rrxaXsviWXRn5RbRFzMvoGUFRgYS2Ug==
+ b=hSIQZrCcLNBZ189V5diMRrMYFJA9qQH54yiI8KZpEWxfTcsjMqrTnM89A4lOGqHrE1pD6nUDfPEukx9Xlg7p/pYAAP7/xFRFVeEg+8mEjvGCaJuQDPsfIcrwIgzS/RAm5BtRBdiNXhsslmx3D5g4nf5xSYDaDTkbh2bbb9vtAavVkGCr4pFNXtHWNYICy9PB7puNVAY7wy8sZsqEu4i5Dg4nDGyzMeKJVDep17wefWfHzmq1Guy64ZXL5vCdUKuqXXEBG6l4fz2dnHjB3j6fatCx2Mm+yvWPwyRitPBFFW41EyCnCzTWeIF3BuXvShnwtM9owc8hHMa/81gCGHp/ag==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Nc19MmBYw6Vx2TYDeNGr+OaoONIwYD2PizJpxZnmVMQ=;
- b=C1GPpvtlflJLN7pspzlk1NeUamm7AmmkshpKZ1ZcHeRpC+XFuRdUmz0/XdKiAmzqC22OBUeIeRAGnTIFTN8SgUmJ10YJ7qbqZHl9jlHbvtdGOJfUj8Md37lOVYIL1Z6vnJnINioWWjlzeaTaYjqbHLbfLJD/wXCln01rl3aEiew+4ew0M35FENEZbDtkA2Ejz6phLyHaZughvm1lTuYA7RV3FcQUQ3foVKQYkMwHzf0SPLo4VGyOQd1exRsCWiriSzxUGOeXupAUPNCa6unTGRgCLVbA3HjS5790n9xV6Es35s6wlw2qQhZygqGy8qNGzkM7RNT1Hh7ZeZzWKW606g==
+ bh=8roQIsT2ul1mR3LqGWmi0gRgf9/8WBWf4vqVV0E7TtQ=;
+ b=JhrD5RjVu6w9Rnlf6xIfp5Z618wpX4wcQbbbIfmg0Qeg2/LsY/apCcIJ40Z/QV+AWRK29mBMvBc3okMusgAif+FuWUwRbZ597/FW1G4rQzCcVIbAa+q6jL+0q7xqsu/SYCyYW3xcK/CJIYEKlqBpSAQaEvjTW62Oz4UyCG/vkY6jTrMUiIxdNlEieyO6Z3L1dndSLOcnnxurNQwYsJLrAHO7wv4Q8zEmfkqEo9q2upo/bDwnklmzY3roTVktmZSrJ4wGc0hg51OOl1AsbLclenznUHnikcsPrJfiUb6BoNKcImDOOUWsZ2OXrwaj/85wC2/vmK9ReMDp7WsCQK6gZQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=starfivetech.com; dmarc=pass action=none
  header.from=starfivetech.com; dkim=pass header.d=starfivetech.com; arc=none
@@ -36,11 +36,11 @@ Received: from NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
  (2406:e500:c510:12::10) by NT0PR01MB1263.CHNPR01.prod.partner.outlook.cn
  (2406:e500:c510:11::14) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.34; Mon, 28 Oct
- 2024 01:58:10 +0000
+ 2024 01:58:16 +0000
 Received: from NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
  ([fe80::affa:7fe4:57c8:11ce]) by
  NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn ([fe80::affa:7fe4:57c8:11ce%6])
- with mapi id 15.20.8069.031; Mon, 28 Oct 2024 01:58:10 +0000
+ with mapi id 15.20.8069.031; Mon, 28 Oct 2024 01:58:16 +0000
 From: Sia Jee Heng <jeeheng.sia@starfivetech.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org,
@@ -51,9 +51,10 @@ Cc: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
  alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
  dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
  gaosong@loongson.cn, jiaxun.yang@flygoat.com, maobibo@loongson.cn
-Subject: [PATCH v6 1/3] qtest: allow SPCR acpi table changes
-Date: Sun, 27 Oct 2024 18:57:42 -0700
-Message-ID: <20241028015744.624943-2-jeeheng.sia@starfivetech.com>
+Subject: [PATCH v6 3/3] tests/qtest/bios-tables-test: Update virt SPCR golden
+ reference for RISC-V
+Date: Sun, 27 Oct 2024 18:57:44 -0700
+Message-ID: <20241028015744.624943-4-jeeheng.sia@starfivetech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241028015744.624943-1-jeeheng.sia@starfivetech.com>
 References: <20241028015744.624943-1-jeeheng.sia@starfivetech.com>
@@ -65,54 +66,54 @@ X-ClientProxiedBy: NT0PR01CA0024.CHNPR01.prod.partner.outlook.cn
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: NT0PR01MB1278:EE_|NT0PR01MB1263:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4dc88187-db58-4503-ec1b-08dcf6f3f927
+X-MS-Office365-Filtering-Correlation-Id: 41db5af3-6c78-4a8e-9286-08dcf6f3fd08
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|7416014|52116014|366016|41320700013|1800799024|38350700014; 
-X-Microsoft-Antispam-Message-Info: o4iG6wQMkiAYjNjprd3cjepT3gz74JP58qvlfnphscWFcTUmhOW7F03Z3dQ161kR3LJVi8mdoe+RHBDV0hKKnz982kHIshgaCK06LOE7mSU/PL/mpq3lIw0SPCdEir3mKk3q/h/9QqASYNRbL+rz49WO9TNgWQ2KtOgUufBcEMlJ0bmv3BKKTrJP5yaQAZika+3vNpDpqqsstSJCZgJ3Mktbl4pzWQaL0YE4PBwBlqQN0Uc6SOAY6/j1QooVsLRJmGCrdSqOEIFMZW1oet64gsQZPtCoDxmIlS3dG22QACkPFfAmw5BpqT4WNLAU3VQkzkOy3Hg1aBmJbH3xLFZyUTyAZiV2YDi+LlvLOAMPsLTiXM0XK+DueleEJP0qQRyRWSrjY5z+oM2CaAIOVOBCHBvHw87Cpxdcb5/kIZyqQB9ZMzRDkgh+wRVCxPNt45DqLiGxuY3LF5QAKCSpomJEMUa/7oUgIENhhb2NIt3WApwgcFuCS+4nk+r9P7R5cJ6rLE4aoKwhAZ1RmukOh8J3HfYUq7alTLcu5hiqBPAkAUrX7zzD9Uil3RNGvp1PoJD2QjvSvjmnS8Hys3QAflDzfvsk+4hiKGpj1+d+7ml1W6dZoBzXn4PzgzERCMPiNEKl
+X-Microsoft-Antispam-Message-Info: u5gov6MlCqltnCpdixu6Y4K87IvNCskYX+MRCTdkUnnCrTq7XA5k1RVxus+2muvvNRBk5YKSWy/liI9RMhwRymIxgsmXlCSYNN57c2LymjQmK6kzAgdHAGlOJXhKGRWjB+ZgLDIXe7bJ3ZDbwW+IKD61Vpqe12IjE7lFMLJB83hXDEssY+YTFmAZ4843Vk77UFmgIQbQE4q3VF6E1hT0+wdWhs1hpvVH58MvgTPVVpmjzsA1+Hr6mZTdqKcO8E+W2rnzoEZU/P59GD/DR4IvI7AzTf/hn/4qKgqYSGgtpPnfVUY6HQTrm0gFI7g7Dk3inzwBXiEd7y+oEJfdUSNLcIRGWpP9s4nEbhK2Z7+eeteqOoDqST4IHuEjxLzvn9eB9suSAx0UUiRD/Bb9gjC+2Sa1P6PTXMTEaqoy2CF2+7EwAAZRfye3JebKRvk+eGb3yzpJCjJy1zFhcpclKkuG+JVx3h5mYRIxbiXcwD6xJ7WjxVvec8K5fQ483aqADxGFyrnKUPfySuYVFXfPCzj4PoDGcAF4XuU/qr4JWas2QUZs0jmrh8gnIAtizrRV1NI/SXO5oQz7h51yx6LM5XIQy2X0zSuHT91oxsjmI/W+8E0SF0YxIFtvMqnDxqmkSFpj
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn; PTR:;
  CAT:NONE;
  SFS:(13230040)(7416014)(52116014)(366016)(41320700013)(1800799024)(38350700014);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?uGAwT9KEubI9jxz9FiH8uEQvC7DbppGX0KPOw8lvAglk8LJD8iM3exyd/6X3?=
- =?us-ascii?Q?nEDOWKu8D2GWdNQ2/MKH3sPvlkxQ+ZAJbKbBKpwZauz+pv7CbK+BUOo5/mBV?=
- =?us-ascii?Q?0D37HyZJjhSTOJklj1Dyue9KsAaQgR6Vii8RoOZau1wD6jt9ONea0OMjidXr?=
- =?us-ascii?Q?uHecflzP/+kbokP26+cL7oBL8voSzbFX7nDZzbnW+YhMPXjd7Z1n7OztJL9R?=
- =?us-ascii?Q?M3Mnw8yKHhk6M8NHjg/50o1pqG4hdwcG5I400VnMBzsikn79j03ffMfyzlf2?=
- =?us-ascii?Q?dAwcx4OaTyEngupQeNU3ADnYkT0cfkmHFwV0IW/M0XQpFsSEpd7Goaa1+ui5?=
- =?us-ascii?Q?LlhWZX5mEZifiYij/uO7dwlR04CDNZ+b7lBsJIJJ+hjhymg8RJKAeWje2yC5?=
- =?us-ascii?Q?Nm09BukEr8rEr/ZCYsi8kFhuLaSEE1ExFOcGXLsfDUOnr6iLUKymQj75XzdA?=
- =?us-ascii?Q?cKYI+tLInVc10KwD35tntqWN4LsrbWthpZwpWXfu+KYJHZRSIfgtJ7TMpK7v?=
- =?us-ascii?Q?WbpkBzw9OnAwuB45qm6XQAYzVoMGSHLWiUZor51zfb5nYhm4itgvppMnGyZb?=
- =?us-ascii?Q?nQS7Q9O9RMgckMIU8rugLO8SLFQktOk1Hi+isHM2BlHX0dihe5aRugeUqdoT?=
- =?us-ascii?Q?Mb7eE8WeVLrfqirHxZvZ8HVgSt4jBqB6DPnIgP0L4Sw/gBhM/WnjcM/6QH1c?=
- =?us-ascii?Q?j3jyrZpWe8RH1H6zCfHVNGtOQJ1sRi8xDEtstBnwbw0nXpgnj/Opy/ywnDKT?=
- =?us-ascii?Q?+Uyppt0NPRLo9NApjrSzjvACDjkzcY6opC/UmuL8GzVYtjkrCvsCXLJt4CbD?=
- =?us-ascii?Q?24DDXy3NL9nHyEFGmMhSjIMBIK8psKZTB8LpF0BiRv/zHLL8rrDfG36w/UPF?=
- =?us-ascii?Q?3rrLbKVgmr6ERltFTthkfipChx0N8QNpolfIEy21eBeAtO0J0LcNZeh6og9d?=
- =?us-ascii?Q?KJ2mN4hI60MWyXsS1bL4Egesrne92HwGGmuXUYUVoIXoEdLQsnoUD/XD1MNZ?=
- =?us-ascii?Q?P/kvoBLhBjzrndbKgeSQDr8BPwb7UETPevtQmR6rbKmIcHiphxWU4EVaWaw0?=
- =?us-ascii?Q?TwRa1MZiHlhd/AeOFA614ccUMkLBLQfLNGAGzzfQJWHT3+U5iCGFcXutf4Nl?=
- =?us-ascii?Q?6fC25gVp9YhHjojjw2sizAJk6Q2C9buOy0SOWqPEAXyH7KOnajEUgBrg7EXU?=
- =?us-ascii?Q?tmcGaUBAWTO2wL+4C8GBTz9ejrTD8qhQaeJJYo7WeP5tfK2OmzK5DSHoskjN?=
- =?us-ascii?Q?XtU48VM4UssyV9dEUabbgj72WxVtfEIvxoGzrnsa3VgN7WTB/PKUur3BYIfW?=
- =?us-ascii?Q?dIy+eSHTJGGWjycJZ6hyp6b60NOX5bLTL6QFjozpGirxyLLmjXfSm99L9Hlu?=
- =?us-ascii?Q?Rix8yULmR8mwLtsPiUvfSLDqosCdiWnnj+5HgaN6EcTrqnZKhgsywYsh/CeW?=
- =?us-ascii?Q?VsmnbNTjVTjUgdGuom7jJCqconXDOh4H8Z/UTOBwbW4g2YiJrgItsi0ngx/G?=
- =?us-ascii?Q?fdffoA38CvdxzARbpyIwiaIada6YOt05RQy/Inl4QxnkWkD2jmnxjrqgkVOi?=
- =?us-ascii?Q?2PnmFxTbggwtwuz0jL6cOFirKuasmkDI5JA6gHpqaJWY2E3L6X9AsluNxxFT?=
- =?us-ascii?Q?6w=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?wtrmnXmSfTiTpPyPu1qS5miTVQs2KuOFc0/e/mWNzdzhBos/UxVI95llmgs2?=
+ =?us-ascii?Q?W6SRc68jOhuLYDR1BkEiGQhbHzDdIYkiBHgxUg+zwKW5xeqcoBI3BgwdywSb?=
+ =?us-ascii?Q?SdeiwsWYpkoDG6qLDlPbnbkXrcRo9nqpwZfeckZZ7Odls6ZgzUfJQj5Hhlj8?=
+ =?us-ascii?Q?sp3Fx9WQuCL1zLf5FVyG1bnELdQdMznrN1m8+MAB2XR/kLThj+06txl2VMIK?=
+ =?us-ascii?Q?pBhmscUbGsdUxB4wNkHKra/HZQNGAQKeSQOrP1yFnYi584+c0w977gKd97E6?=
+ =?us-ascii?Q?mGKfejVu/HEi/FBS/JMdYAMTkAn8dkpAPVcmOL14SU9tb3u0f1MrTqcGVKFL?=
+ =?us-ascii?Q?dEHEFeFWf7odrCAbZU7+Q4RfRWmNdjYHdxThyqhwrueMku4gYzJ880UIpGwv?=
+ =?us-ascii?Q?JiwMC2BNffAq+ZTWgqc0ayF78UnRHNIMTGOmIIuZyNyuu0nx9HrYbk11mUzL?=
+ =?us-ascii?Q?Bip6NJ439xWBRQ5OEcNLBq1Yp81VN+uFuyTCYxovRY80IluiVfQy0YPGgPF0?=
+ =?us-ascii?Q?oLci24XI6DItRfhT4Y2EtSeiwc0ksTYx8R0M7JPMg3hmstugx2rNX4LVbDfK?=
+ =?us-ascii?Q?uLd8soapIYqaECQvN3679zNlCJ4ROu5H66qPt+sZBZmHTWtlQPJs3s5FXXbi?=
+ =?us-ascii?Q?9J+DiJHZb0m7l4ds0QEJQhkVJLyaU5K6o2HEg9qko8RRRAajSKLiHxuNeUxJ?=
+ =?us-ascii?Q?8MoFZypqzM+CnyW1gHodcNoe82C7q+BLqGIiAxq19Np2+fghXUkOiGuxohDO?=
+ =?us-ascii?Q?ASOGPL2DdhlaOwGL0Nf9RvvQ1oaoZMWh9nBOragXQak/Iki3C99rj9KkT4PV?=
+ =?us-ascii?Q?w0aNa/WDBc60AMNj8z21ZndlicHFK+Fao7qcfA7aQahVXFFc6ttNQkUW1gs7?=
+ =?us-ascii?Q?WaNPO24PTFlS92Ks3XiHo4PGg27YTIfwjc6eL94SRtgSHxG0stXFBp34csjJ?=
+ =?us-ascii?Q?vHo3o0MxKx3FJ3i9rJ8IEJ3ptbR5I4VzplzEhfgxe9P+xB2OYmhf5yYPoqWz?=
+ =?us-ascii?Q?ZMxW4oEwWQyaw5PUmY0EWRnuVtkoVMPXhE+ysrPj6Fi2J+el/VEaR+hbi8l1?=
+ =?us-ascii?Q?mfuztHMic8rhwE7tQNWbeawFyNXokZFfLV3xgfeZ2gEq1N4N2QUrla1LXkcq?=
+ =?us-ascii?Q?ZoTTQWPM3Uq+5+MClsF0Oyis72g6hobCdF0uDzvnFJ4AEDF9NRRUrBdZPqsM?=
+ =?us-ascii?Q?QhOXhBANZcaw4Nit6LsudzdR45Oh93OQ9o/BlNcJEJWcmwxujbLagKsegIiJ?=
+ =?us-ascii?Q?IXBELEOPDWRKkGgUFToUYBBzV84V+0JVGVZeC1+CUm42LwZB5/9vvkQDBGNj?=
+ =?us-ascii?Q?0t2ZOu3Vlzc+BeNMVGsRzpQRFW3ye3te1iXdMGqOxpAAsNZVvwnt2mKB3H3D?=
+ =?us-ascii?Q?eDgkEQnrjN1tBwz4ISza3iu6FC8/w/mAPcECKc7pYnYJrhfBOmG+IhzeGdMb?=
+ =?us-ascii?Q?uRWfK+gOOnyJtzxVRarP7l3c7B0kJTXaJmL+AJYRGv8MKnvOof1VAO5PbRtS?=
+ =?us-ascii?Q?wN7GCBK/sg11gSaSVOGMmeQx2wrfZFBnwmaFtc0s4gH1ZbS8XBTlyDPKcL9h?=
+ =?us-ascii?Q?J0evzqJVfJuo4BuZNwkbalSkzcmMJ12xq1Z74cF50kNcVgu7JpK+/SLoC8ai?=
+ =?us-ascii?Q?dg=3D=3D?=
 X-OriginatorOrg: starfivetech.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4dc88187-db58-4503-ec1b-08dcf6f3f927
+X-MS-Exchange-CrossTenant-Network-Message-Id: 41db5af3-6c78-4a8e-9286-08dcf6f3fd08
 X-MS-Exchange-CrossTenant-AuthSource: NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2024 01:58:09.9541 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2024 01:58:16.4118 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 06fe3fa3-1221-43d3-861b-5a4ee687a85c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Hdxy9iKmqrH25DuxkdyvLAr8rwa7AYJojabN3IqcpOJxdA9ellShpSjE5z+jaJZxagoBa4j/3+rbgwMpOIS4BCUm1rkRSIyjMcznwWYa6zw=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0DEgZcLYh6o7r6J9v7ni9s05pYOVZXrh0wyZocKaPHP4aKFUVYaMPympNWyO2XzrzpLsajR+nv8pw+nnSv1cVF76vlAvrvnFEKTsJTl4NeQ=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: NT0PR01MB1263
 Received-SPF: pass client-ip=2406:e500:4440:2::701;
  envelope-from=jeeheng.sia@starfivetech.com;
@@ -137,20 +138,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Update the virt SPCR golden reference file for RISC-V to accommodate the
+SPCR Table revision 4 [1], utilizing the iasl binary compiled from the
+latest ACPICA repository. The SPCR table has been modified to
+adhere to the revision 4 format [2].
+
+[1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
+[2]: https://github.com/acpica/acpica/pull/931
+
+Diffs from iasl:
+/*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20200925 (64-bit version)
+  * Copyright (c) 2000 - 2020 Intel Corporation
+  *
+- * Disassembly of tests/data/acpi/riscv64/virt/SPCR, Wed Aug 28 18:28:19 2024
++ * Disassembly of /tmp/aml-MN0NS2, Wed Aug 28 18:28:19 2024
+  *
+  * ACPI Data Table [SPCR]
+  *
+  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
+  */
+
+ [000h 0000   4]                    Signature : "SPCR"    [Serial Port Console Redirection table]
+-[004h 0004   4]                 Table Length : 00000050
+-[008h 0008   1]                     Revision : 02
+-[009h 0009   1]                     Checksum : B9
++[004h 0004   4]                 Table Length : 0000005A
++[008h 0008   1]                     Revision : 04
++[009h 0009   1]                     Checksum : 13
+ [00Ah 0010   6]                       Oem ID : "BOCHS "
+ [010h 0016   8]                 Oem Table ID : "BXPC    "
+ [018h 0024   4]                 Oem Revision : 00000001
+ [01Ch 0028   4]              Asl Compiler ID : "BXPC"
+ [020h 0032   4]        Asl Compiler Revision : 00000001
+
+-[024h 0036   1]               Interface Type : 00
++[024h 0036   1]               Interface Type : 12
+ [025h 0037   3]                     Reserved : 000000
+
+ [028h 0040  12]         Serial Port Register : [Generic Address Structure]
+ [028h 0040   1]                     Space ID : 00 [SystemMemory]
+ [029h 0041   1]                    Bit Width : 20
+ [02Ah 0042   1]                   Bit Offset : 00
+ [02Bh 0043   1]         Encoded Access Width : 01 [Byte Access:8]
+ [02Ch 0044   8]                      Address : 0000000010000000
+
+ [034h 0052   1]               Interrupt Type : 10
+ [035h 0053   1]          PCAT-compatible IRQ : 00
+ [036h 0054   4]                    Interrupt : 0000000A
+ [03Ah 0058   1]                    Baud Rate : 07
+ [03Bh 0059   1]                       Parity : 00
+ [03Ch 0060   1]                    Stop Bits : 01
+ [03Dh 0061   1]                 Flow Control : 00
+ [03Eh 0062   1]                Terminal Type : 00
+ [04Ch 0076   1]                     Reserved : 00
+ [040h 0064   2]                PCI Device ID : FFFF
+ [042h 0066   2]                PCI Vendor ID : FFFF
+ [044h 0068   1]                      PCI Bus : 00
+ [045h 0069   1]                   PCI Device : 00
+ [046h 0070   1]                 PCI Function : 00
+ [047h 0071   4]                    PCI Flags : 00000000
+ [04Bh 0075   1]                  PCI Segment : 00
+-[04Ch 0076   4]                     Reserved : 00000000
++[04Ch 0076 004h]             Uart Clock Freq : 00000000
++[050h 0080 004h]           Precise Baud rate : 00000000
++[054h 0084 002h]       NameSpaceStringLength : 0002
++[056h 0086 002h]       NameSpaceStringOffset : 0058
++[058h 0088 002h]             NamespaceString : "."
+
+-Raw Table Data: Length 80 (0x50)
++Raw Table Data: Length 90 (0x5A)
+
+-    0000: 53 50 43 52 50 00 00 00 02 B9 42 4F 43 48 53 20  // SPCRP.....BOCHS
++    0000: 53 50 43 52 5A 00 00 00 04 13 42 4F 43 48 53 20  // SPCRZ.....BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 00 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
++    0020: 01 00 00 00 12 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
+     0030: 00 00 00 00 10 00 0A 00 00 00 07 00 01 00 00 03  // ................
+     0040: FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00  // ................
++    0050: 00 00 00 00 02 00 58 00 2E 00                    // ......X...
+
 Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
 Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 1 file changed, 1 insertion(+)
+ tests/data/acpi/riscv64/virt/SPCR           | Bin 80 -> 90 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ 2 files changed, 1 deletion(-)
+
+diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+index 4da9daf65f71a13ac2b488d4e9728f194b569a43..09617f8793a6f7b1f08172f735b58aa748671540 100644
+GIT binary patch
+delta 32
+mcmWHD;tCFM4vJ!6U|<oR$R))nG*MNX3&>+&Vu)bSV*mhNumqU^
+
+delta 21
+ccmazF;0g|K4hmpkU|`xgkxPn^VWO%w05v59j{pDw
 
 diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..aae973048a 100644
+index aae973048a..dfb8523c8b 100644
 --- a/tests/qtest/bios-tables-test-allowed-diff.h
 +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
+@@ -1,2 +1 @@
  /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/riscv64/virt/SPCR",
+-"tests/data/acpi/riscv64/virt/SPCR",
 -- 
 2.43.0
 
