@@ -4,86 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 229CBD33998
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E31D3399B
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:32:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5ScP-0005lC-1d; Mon, 28 Oct 2024 12:29:25 -0400
+	id 1t5Seo-0006ep-1J; Mon, 28 Oct 2024 12:31:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1t5ScN-0005kT-B2
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:29:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1t5ScM-0008Iz-02
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:29:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730132961;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mkkVElKn3Spk/fVm1hzjR0gsXNh0JNd5hSe/vYQwfCU=;
- b=UxnT4oD7C2X4Cn7SPrQSEaFpst1tk3nHFqcVG9bg2tv/NVdUmImAb9w1fxIoqUXI4SjMzY
- xDxcHSbnXwqtELJ2Rh9CMJ+Ulz01cRmS/5xezUotvHfPOsE9+IF4qZ42O0TxMP4ew6+6Ok
- 4s80602c0Fi82TU7kvxllaT7lwo53GA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-LhHf3dMWMJeGWk7sEJHcIQ-1; Mon,
- 28 Oct 2024 12:29:18 -0400
-X-MC-Unique: LhHf3dMWMJeGWk7sEJHcIQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1572F1955D4A; Mon, 28 Oct 2024 16:29:16 +0000 (UTC)
-Received: from localhost (unknown [10.22.88.106])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 52E9919560AA; Mon, 28 Oct 2024 16:29:14 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
- armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: Re: [RFC 21/21] arm/cpu-features: Document custom vcpu model
-In-Reply-To: <Zx-3OUioG1l47hW3@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <20241025101959.601048-22-eric.auger@redhat.com>
- <ZxuZkUFz_bwAA1pf@redhat.com>
- <0700af51-a1a6-4b11-a4bf-0eaf6e279c6d@redhat.com>
- <Zxudl5-fZV1vIaEL@redhat.com> <87y128nrfr.fsf@redhat.com>
- <Zx-3OUioG1l47hW3@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Mon, 28 Oct 2024 17:29:11 +0100
-Message-ID: <87plnknqco.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t5Sel-0006eP-QF
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:31:52 -0400
+Received: from mail-ej1-f47.google.com ([209.85.218.47])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t5Sej-0000LO-TA
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:31:51 -0400
+Received: by mail-ej1-f47.google.com with SMTP id
+ a640c23a62f3a-a9932aa108cso675801366b.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 09:31:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730133108; x=1730737908;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cr7klnDop923J4Cl6hxB1F3EHLPLN9IjujGKQiTFOwE=;
+ b=LhcqFT+3a0xBNIjNCzyyuLTKMc7wDRqXzxwAW1go7pH2vtmf/UidfD+Fy8Mqwl5YVX
+ w9VfCrdMtjH8v2zwE9fVNWTXO9wb4siNO8EKx4Oxh1s1/+WlPFAUJB6k7YRnW59DV3dH
+ UJ3IDvKVIBIFQ1hNPY21PC/CQHcSQl8Jx1uZpFbZEvMHZsMalHEfrZxzup1r9b5j2DJc
+ PsLHqg1UeEeYGQGfakIJrCl0V8cx+mQFzqUa/0DSIOoEqJ9pJKR3/Yz7HFGFmPwW3WMB
+ R89lM6C/gLtBjdy8El6NKI+4vQtietC5x0+cuJXjH1bZljGvEevddS0//3K9TEngA7t7
+ fpdw==
+X-Gm-Message-State: AOJu0YxE7GCfH/1XxXb3xC9ca9WBPPaMXHNmRyveM0kXfaK5uoQ/uLiH
+ b6PDBTXnr9OTBaX4FIAGmwN6/cSFjcSrOZWf6sDzzAqAN/UE+iqwUhdXzg==
+X-Google-Smtp-Source: AGHT+IHSAzVA08Npli526uJpnucrFgelGbwPaUaZfCqDPLOC5bzQwy/7dPKfiVgq/HIj92bsiDPcpA==
+X-Received: by 2002:a17:907:3f0a:b0:a9a:ca1:5e09 with SMTP id
+ a640c23a62f3a-a9de5f23b50mr714956766b.29.1730133108069; 
+ Mon, 28 Oct 2024 09:31:48 -0700 (PDT)
+Received: from tpx1 (ip-109-40-241-30.web.vodafone.de. [109.40.241.30])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9b1f0298f2sm391566066b.76.2024.10.28.09.31.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Oct 2024 09:31:47 -0700 (PDT)
+Date: Mon, 28 Oct 2024 17:31:46 +0100
+From: Thomas Huth <huth@tuxfamily.org>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 11/36] next-cube: move floppy disk MMIO to separate
+ memory region in next-pc
+Message-ID: <20241028173146.4e684a9f@tpx1>
+In-Reply-To: <20241023085852.1061031-12-mark.cave-ayland@ilande.co.uk>
+References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
+ <20241023085852.1061031-12-mark.cave-ayland@ilande.co.uk>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=209.85.218.47; envelope-from=th.huth@gmail.com;
+ helo=mail-ej1-f47.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,57 +84,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 28 2024, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+Am Wed, 23 Oct 2024 09:58:27 +0100
+schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 
-> On Mon, Oct 28, 2024 at 05:05:44PM +0100, Cornelia Huck wrote:
->> On Fri, Oct 25 2024, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
->>=20
->> > On Fri, Oct 25, 2024 at 03:28:35PM +0200, Eric Auger wrote:
->> >> Hi Daniel,
->> >>=20
->> >> On 10/25/24 15:13, Daniel P. Berrang=C3=A9 wrote:
->> >> > On Fri, Oct 25, 2024 at 12:17:40PM +0200, Eric Auger wrote:
->> >> >> From: Cornelia Huck <cohuck@redhat.com>
->> >> >>
->> >> >> Add some documentation for the custom model.
->> >> >>
->> >> >> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> >> >> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> >> >> ---
->> >> >>  docs/system/arm/cpu-features.rst | 55 +++++++++++++++++++++++++++=
------
->> >> >>  1 file changed, 47 insertions(+), 8 deletions(-)
->> >> >
->> >> >> @@ -167,6 +196,16 @@ disabling many SVE vector lengths would be qu=
-ite verbose, the ``sve<N>`` CPU
->> >> >>  properties have special semantics (see "SVE CPU Property Parsing
->> >> >>  Semantics").
->> >> >>=20=20
->> >> >> +The ``custom`` CPU model needs to be configured via individual ID=
- register
->> >> >> +field properties, for example::
->> >> >> +
->> >> >> +  $ qemu-system-aarch64 -M virt -cpu custom,SYSREG_ID_AA64ISAR0_E=
-L1_DP=3D0x0
->> >> >> +
->> >> >> +This forces ID_AA64ISAR0_EL1 DP field to 0.
->> >> > What is the "baseline" featureset implied by 'custom' ?
->> >> there is no baseline at the moment. By default this is a host
->> >> passthrough model.
->> >
->> > Why do we need to create "custom" at all, as opposed to just letting
->> > users toggle features on "-cpu host" ?=20
->>=20
->> We could consolidate that to the current "host" model, once we figure
->> out how to handle the currently already existing properties. Models
->> based on the different architecture extensions would probably be more
->> useable in the long run; maybe "custom" has a place for testing.
->
-> If you can set the features against "host", then any testing could
-> be done with "host" surely, making 'custom' pointless ?
+> The dummy floppy disk device is part of the next-pc device, and not related to
+> the NeXTCube SCRs.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> ---
+>  hw/m68k/next-cube.c | 61 ++++++++++++++++++++++++++++++++++++---------
+>  1 file changed, 49 insertions(+), 12 deletions(-)
 
-We might differentiate between "do some consistency checks" and "allow
-a completely weird wolpertinger"; if we agree that we don't need it,
-then we surely could drop it again.
-
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 
