@@ -4,81 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF81D3399B
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 383A3D33998
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5STc-0001eH-Dt; Mon, 28 Oct 2024 12:20:20 -0400
+	id 1t5SUn-0002Tg-Ev; Mon, 28 Oct 2024 12:21:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1t5STb-0001e0-Em
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:20:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1t5STa-0007Ck-2l
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:20:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730132417;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wEB65em+UxE9CbH8ToQp/Aqsq3Gdimrn9NbYT5ZTZiM=;
- b=hE7sbwXOF6mimSfyq0IcPgWfHstaXsr/Jry+rIyvholmDZ8iBzM4yu9EWP13e+yJjV/8+x
- O2y3Bveuh1dBA9uPMY3io2jQ5LDJ0AahYG5Vk75M9atlW4s9FBNwAC+lZpHx1N0Irl/N0k
- 7khs/rU4phy/FYeu5dafRq0bNmcvcJ0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-mT4IjqerP4OirGAA0p4R0Q-1; Mon,
- 28 Oct 2024 12:20:13 -0400
-X-MC-Unique: mT4IjqerP4OirGAA0p4R0Q-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E24C61956048; Mon, 28 Oct 2024 16:20:11 +0000 (UTC)
-Received: from localhost (unknown [10.22.88.106])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2A46F1956054; Mon, 28 Oct 2024 16:20:09 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Kashyap Chamarthy <kchamart@redhat.com>, Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: Re: [RFC 00/21] kvm/arm: Introduce a customizable aarch64 KVM host
- model
-In-Reply-To: <ZxuwZw2plMI6dNyE@pinwheel>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <ZxuwZw2plMI6dNyE@pinwheel>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Mon, 28 Oct 2024 17:20:07 +0100
-Message-ID: <87v7xcnqrs.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t5SUk-0002TK-G3
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:21:30 -0400
+Received: from mail-ej1-f52.google.com ([209.85.218.52])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t5SUg-0007Oj-Ua
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:21:29 -0400
+Received: by mail-ej1-f52.google.com with SMTP id
+ a640c23a62f3a-a99f1fd20c4so649697966b.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 09:21:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730132485; x=1730737285;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ujCgznPAvfOqwxYYGTh+Jxc6ru/OpPIevaYe1xo7iVI=;
+ b=SdGePoYAopCmSZNEMsgI0519P0piz1mws99HCe3UpkL1s1NRdbwECz5KqpJLv1HQyM
+ peGNLxyysNEWyW2XhmgSvVOgRktlfLH8U/3bhknhZ5tHWn0/XFzdrRWD6z5KB6TQIsF7
+ hWrgmg3TUbFqecMmcDew0PqfDtTJd50zCwwIAbHDZhcMC46LKGNTM4HD8uTPozG7bAYI
+ UAk/Nph5jEc1X0xow8EmuAwhZindf039Bn0B7GRGm+bg1hJKtWR68NeR9wtyDe0j1iXb
+ VW1b42o7AndZBl5Y+MI3AhVef6yi5hrP60QJ8gJJRjHvUc9vgSmJe59qchUzO20Vx/w3
+ tFrw==
+X-Gm-Message-State: AOJu0Yzh8FGJFIPC4Bfl7Tqk5P4Q1ukNciF6hyAZcx4UasHK346HTnFS
+ dfVvb2i1ho72rLukobfySGE/V8OWn9eJ+KnjMYidqRyRd/SE4Xzn
+X-Google-Smtp-Source: AGHT+IHKAkJFvcssWzNCv8ySmO+ia/FvVdGVWKHE/9vO+Tx+z9JiklS5TARIq4WlNJDl93pExdb6Ig==
+X-Received: by 2002:a17:907:970a:b0:a9a:14fc:9868 with SMTP id
+ a640c23a62f3a-a9de5c9225fmr805690666b.4.1730132484508; 
+ Mon, 28 Oct 2024 09:21:24 -0700 (PDT)
+Received: from tpx1 (ip-109-40-241-30.web.vodafone.de. [109.40.241.30])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9b1dec7fdbsm388981066b.39.2024.10.28.09.21.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Oct 2024 09:21:23 -0700 (PDT)
+Date: Mon, 28 Oct 2024 17:21:22 +0100
+From: Thomas Huth <huth@tuxfamily.org>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 09/36] next-cube: move SCSI CSRs from next-pc to the
+ next-scsi device
+Message-ID: <20241028172122.23bcb98c@tpx1>
+In-Reply-To: <20241023085852.1061031-10-mark.cave-ayland@ilande.co.uk>
+References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
+ <20241023085852.1061031-10-mark.cave-ayland@ilande.co.uk>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=209.85.218.52; envelope-from=th.huth@gmail.com;
+ helo=mail-ej1-f52.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,62 +84,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 25 2024, Kashyap Chamarthy <kchamart@redhat.com> wrote:
+Am Wed, 23 Oct 2024 09:58:25 +0100
+schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 
-> On Fri, Oct 25, 2024 at 12:17:19PM +0200, Eric Auger wrote:
->
-> Hi Eric,
->
-> I'm new to Arm, so please bear with my questions :)
->
->> This RFC series introduces a KVM host "custom" model.
->
-> (a) On terminology: as we know, in the x86 world, QEMU uses these
->     terms[1]:
->
->     - Host passthrough
->     - Named CPU models
->     - Then there's the libvirt abstraction, "host-model", that aims to
->       provide the best of 'host-passthrough' + named CPU models.
->
->     Now I see the term "host 'custom' model" here.  Most
->     management-layer tools and libvirt users are familiar with the
->     classic terms "host-model" or "custom".  If we now say "host
->     'custom' model", it can create confusion.  I hope we can settle on
->     one of the existing terms, or create a new term if need be.
->
->     (I'll share one more thought on how layers above libvirt tend to use
->     the term "custom", as a reply to patch 21/21, "arm/cpu-features:
->     Document custom vcpu model".)
+> The SCSI CSRs are located within the SCSI subsystem of the NeXT PC (Peripheral
+> Contoller) which is now modelled as a separate QEMU device.
+> 
+> Add a new VMStateDescription for the next-scsi device to enable the SCSI CSRs
+> to be migrated.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> ---
+>  hw/m68k/next-cube.c | 88 +++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 78 insertions(+), 10 deletions(-)
+> 
+> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+> index 266f57ac63..32466a425f 100644
+> --- a/hw/m68k/next-cube.c
+> +++ b/hw/m68k/next-cube.c
+> @@ -93,6 +93,10 @@ struct NeXTSCSI {
+>      MemoryRegion scsi_mem;
+>  
+>      SysBusESPState sysbus_esp;
+> +
+> +    MemoryRegion scsi_csr_mem;
+> +    uint8_t scsi_csr_1;
+> +    uint8_t scsi_csr_2;
+>  };
+>  
+>  #define TYPE_NEXT_PC "next-pc"
+> @@ -115,8 +119,6 @@ struct NeXTPC {
+>      uint32_t led;
+>  
+>      NeXTSCSI next_scsi;
+> -    uint8_t scsi_csr_1;
+> -    uint8_t scsi_csr_2;
+>  
+>      qemu_irq scsi_reset;
+>      qemu_irq scsi_dma;
+> @@ -364,6 +366,7 @@ static const MemoryRegionOps next_mmio_ops = {
+>  static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+>  {
+>      NeXTPC *s = NEXT_PC(opaque);
+> +    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
+>      uint64_t val;
+>  
+>      switch (addr) {
+> @@ -373,12 +376,12 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+>          break;
+>  
+>      case 0x14020:
+> -        DPRINTF("SCSI 4020  STATUS READ %X\n", s->scsi_csr_1);
+> -        val = s->scsi_csr_1;
+> +        DPRINTF("SCSI 4020  STATUS READ %X\n", ns->scsi_csr_1);
+> +        val = ns->scsi_csr_1;
+>          break;
+>  
+>      case 0x14021:
+> -        DPRINTF("SCSI 4021 STATUS READ %X\n", s->scsi_csr_2);
+> +        DPRINTF("SCSI 4021 STATUS READ %X\n", ns->scsi_csr_2);
+>          val = 0x40;
+>          break;
+>  
+> @@ -411,6 +414,7 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+>                               unsigned size)
+>  {
+>      NeXTPC *s = NEXT_PC(opaque);
+> +    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
+>  
+>      switch (addr) {
+>      case 0x14108:
+> @@ -445,7 +449,7 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+>              DPRINTF("SCSICSR Reset\n");
+>              /* I think this should set DMADIR. CPUDMA and INTMASK to 0 */
+>              qemu_irq_raise(s->scsi_reset);
+> -            s->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
+> +            ns->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
+>              qemu_irq_lower(s->scsi_reset);
+>          }
+>          if (val & SCSICSR_DMADIR) {
+> @@ -838,6 +842,54 @@ static void nextscsi_write(void *opaque, uint8_t *buf, int size)
+>      nextdma_write(opaque, buf, size, NEXTDMA_SCSI);
+>  }
+>  
+> +static void next_scsi_csr_write(void *opaque, hwaddr addr, uint64_t val,
+> +                                unsigned size)
+> +{
+> +    NeXTSCSI *s = NEXT_SCSI(opaque);
+> +
+> +    switch (addr) {
+> +    case 0:
+> +        s->scsi_csr_1 = val;
+> +        break;
+> +
+> +    case 1:
+> +        s->scsi_csr_2 = val;
+> +        break;
 
-I came up with the "custom" name just to have something to differentiate
-from the currently existing "host" model (which supports a number of
-properties that do not translate to id regs.) It is certainly not set in
-stone; I expect us to end up with named models and a handling of the
-"host" model which is more similar to what is done for other
-archs. Maybe we can then rename "custom" to "franken" so that people do
-not try to use it for productive work ;)
+The old code never set the scsi_csr_x directly like this, so I'm not sure
+whether this is right?
 
->
-> (b) The current CPU features doc[2] for Arm doesn't mention "host
->     passthrough" at all.  It is only implied by the last part of this
->     paragraph, from the section titled "A note about CPU models and
->     KVM"[3]:
->
->       "Named CPU models generally do not work with KVM. There are a few
->       cases that do work [...] but mostly if KVM is enabled the 'host'
->       CPU type must be used."
->
->     Related: in your reply[4] to Dan in this series, you write: "Having
->     named models is the next thing".  So named CPU models will be a
->     thing in Arm, too?  Then the above statement in the Arm
->     'cpu-features' will need updating :-)
+Also, maybe best squash this patch together with the next patch, otherwise
+this is temporary change in behaviour, isn't it?
 
-The currently existing named models are for cpus like cortex-a57; you
-can use them for KVM if you happen to run on a matching host cpu, but
-they only really make sense for use with tcg.
+ Thomas
 
-I currently think that an Armv9.0 or whatever model would make the most
-sense, but that's certainly still up for discussion :)
 
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +static uint64_t next_scsi_csr_read(void *opaque, hwaddr addr, unsigned size)
+> +{
+> +    NeXTSCSI *s = NEXT_SCSI(opaque);
+> +    uint64_t val;
+> +
+> +    switch (addr) {
+> +    case 0:
+> +        val = s->scsi_csr_1;
+> +        break;
+> +
+> +    case 1:
+> +        val = s->scsi_csr_2;
+> +        break;
+> +
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    return val;
+> +}
+> +
+> +static const MemoryRegionOps next_scsi_csr_ops = {
+> +    .read = next_scsi_csr_read,
+> +    .write = next_scsi_csr_write,
+> +    .valid.min_access_size = 1,
+> +    .valid.max_access_size = 1,
+> +    .endianness = DEVICE_BIG_ENDIAN,
+> +};
+> +
+>  static void next_scsi_init(Object *obj)
+>  {
+>      NeXTSCSI *s = NEXT_SCSI(obj);
+> @@ -845,6 +897,9 @@ static void next_scsi_init(Object *obj)
+>  
+>      object_initialize_child(obj, "esp", &s->sysbus_esp, TYPE_SYSBUS_ESP);
+>  
+> +    memory_region_init_io(&s->scsi_csr_mem, obj, &next_scsi_csr_ops,
+> +                          s, "csrs", 2);
+> +
+>      memory_region_init(&s->scsi_mem, obj, "next.scsi", 0x40);
+>      sysbus_init_mmio(sbd, &s->scsi_mem);
+>  }
+> @@ -874,15 +929,30 @@ static void next_scsi_realize(DeviceState *dev, Error **errp)
+>      memory_region_add_subregion(&s->scsi_mem, 0x0,
+>                                  sysbus_mmio_get_region(sbd, 0));
+>  
+> +    /* SCSI CSRs */
+> +    memory_region_add_subregion(&s->scsi_mem, 0x20, &s->scsi_csr_mem);
+> +
+>      scsi_bus_legacy_handle_cmdline(&s->sysbus_esp.esp.bus);
+>  }
+>  
+> +static const VMStateDescription next_scsi_vmstate = {
+> +    .name = "next-scsi",
+> +    .version_id = 0,
+> +    .minimum_version_id = 0,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT8(scsi_csr_1, NeXTSCSI),
+> +        VMSTATE_UINT8(scsi_csr_2, NeXTSCSI),
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+>  static void next_scsi_class_init(ObjectClass *klass, void *data)
+>  {
+>      DeviceClass *dc = DEVICE_CLASS(klass);
+>  
+>      dc->desc = "NeXT SCSI Controller";
+>      dc->realize = next_scsi_realize;
+> +    dc->vmsd = &next_scsi_vmstate;
+>  }
+>  
+>  static const TypeInfo next_scsi_info = {
+> @@ -1000,8 +1070,8 @@ static const VMStateDescription next_rtc_vmstate = {
+>  
+>  static const VMStateDescription next_pc_vmstate = {
+>      .name = "next-pc",
+> -    .version_id = 2,
+> -    .minimum_version_id = 2,
+> +    .version_id = 3,
+> +    .minimum_version_id = 3,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_UINT32(scr1, NeXTPC),
+>          VMSTATE_UINT32(scr2, NeXTPC),
+> @@ -1009,8 +1079,6 @@ static const VMStateDescription next_pc_vmstate = {
+>          VMSTATE_UINT32(int_mask, NeXTPC),
+>          VMSTATE_UINT32(int_status, NeXTPC),
+>          VMSTATE_UINT32(led, NeXTPC),
+> -        VMSTATE_UINT8(scsi_csr_1, NeXTPC),
+> -        VMSTATE_UINT8(scsi_csr_2, NeXTPC),
+>          VMSTATE_STRUCT(rtc, NeXTPC, 0, next_rtc_vmstate, NextRtc),
+>          VMSTATE_END_OF_LIST()
+>      },
 
