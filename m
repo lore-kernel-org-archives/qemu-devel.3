@@ -4,76 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571F3D3398B
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4254D3398C
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:26:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5QZg-0005E5-TR; Mon, 28 Oct 2024 10:18:28 -0400
+	id 1t5QhD-0006Pj-NR; Mon, 28 Oct 2024 10:26:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5QZR-0005DQ-Uv
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:18:18 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5QZM-0002Ye-Ug
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:18:10 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5c9850ae22eso5693483a12.3
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:18:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730125087; x=1730729887; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2NN1HtcuKk4u4sxYooYNjjpywbUCw7RG+vZTvUxvFaA=;
- b=hQXfuvk4TU65pTReEyIt6mEXlkKWyWl3Q9dprEoYALFuG2bkqCDkiDFEBSBZr6Ofpm
- G3mtEqU7kACsjBN5WA+GWeJvgEipM0UO9im7ZXMgJ4JcNKsfif/QemkBozh/EppQtiy2
- 9ygsc9m1NrbiBChSLIGX/SF5HZk+YtkpjVmQ6cAZPqsEVYmWwUBp8LQNqZZg89CSYrB2
- 05t+IcE1D/hYDXcyNGRUbuR5cYw9iuFt0Xus3yN2BU6Cc7Z7Bty8aXPsZ2BBnPkf9s+E
- bjbGxtRBRx+EWDT+IVjsJS9hYG9D53nlW5MezhQKU2Ps60KgvO0GYdEFwGEIH8R7A8Yq
- fJ7w==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t5Qh5-0006PT-P5
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:26:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t5Qh0-0003HK-Dy
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:26:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730125560;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KryVam8B1QeiyXDX/LEC5cXrGo7Bp2ehnvaqDurb+ic=;
+ b=LricEg5nxgjgjHEV9Gq/1gpiLJviAXnTdQBVFOyf+2sJl18G6Ia0zR8v6+Uas88XWxBqcG
+ BY4Uxtwp3rmCTbbL5OxwzDOAwDJzky6FDr/PlxQ1JWj0mZHwAf6wYWY8kuQnEffDess9G4
+ HCvft5fUb7Ttjq3EQTvogdGeZXWvap0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-692-M54GI0gyPx-c4SAU2lkjgQ-1; Mon, 28 Oct 2024 10:25:59 -0400
+X-MC-Unique: M54GI0gyPx-c4SAU2lkjgQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-431604a3b47so31604065e9.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:25:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730125087; x=1730729887;
+ d=1e100.net; s=20230601; t=1730125557; x=1730730357;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2NN1HtcuKk4u4sxYooYNjjpywbUCw7RG+vZTvUxvFaA=;
- b=wNHFv17O0pUSZZhAukj+oUMZ9wcaCiB5LiCrZfX2RfiezZ6kcfjQoPz+5xqH4cFgjA
- QzlSAYoSLqjpB+KC8kFDpu+iYa12ot0eDGEf3eedX21IGQlRFymcKB40QTbHwK6an3CW
- Z2wnVXoXTyh/PF0Av3fDV4Km6pnSnGz1TCVMmud7s/gLKkf5UjqJ0aCWSUx0yYMwYuqd
- CjcsnCpNwFUHVyCH4kq0TYeGbfCS0n+MFQaG+M+MtqjI8lTJMoOPnVFppkLTlxG/9BfM
- EBPA9PjuNZHBsNZfeYQC33LfZqqfbte/QmvyuA78n13I5bfOF31H/3cgz76Rm8qQuJN0
- BkWQ==
-X-Gm-Message-State: AOJu0YwR7jgoQIM9Bmk9KJ7kSZ0INBaEKP4dtiQxWtZ/g2/6+sbxJsPv
- LYnXKyS5fol9QVMiCSkstGwJjI7km3ckh9hPWQiatfE9A+Ym+S2UvFABKoriDbrqmEaf+86McSH
- V2egojF5krAN9Tm/o6pQJ7XJcnhBgiL78kfqwBA==
-X-Google-Smtp-Source: AGHT+IE3KuIo7ZwznkrHyccFF6gnnfFRuY85mk8h9FFkhccxfKLgBR3Mf62OSUsihXV+pRWrNzthxyyDhB7RoieMxL8=
-X-Received: by 2002:a05:6402:5011:b0:5c9:3026:cf85 with SMTP id
- 4fb4d7f45d1cf-5cbbf92077amr7536536a12.22.1730125086885; Mon, 28 Oct 2024
- 07:18:06 -0700 (PDT)
+ bh=KryVam8B1QeiyXDX/LEC5cXrGo7Bp2ehnvaqDurb+ic=;
+ b=EE0DmVzk9pPt+SVbWnU2ilp3tsf4zu4bsuoXxwlMmf1FJNle8zUYq2Rv3tcRTcdPky
+ 1JVTgzR3j5HRO1E/VnjTuf5l5lfZvCQK5xHK6Qme1fNUhD1Es2xZEhYySAESOmjLzB+/
+ FcqDEqMN49+6MB+Danhac1NXp82ewTgwMcHq58pgopSaQPsgUKEQSS/Ie9CRy2kiUpLG
+ pbcnmOkFaArBgPY/arAlFVQ5d2NSCxMbckfali7AxySZJtAVsYRMq0lARtBjNmAAAq6s
+ c6K92HfglEA4UAWaPg/Drf4I+ZQWAa9RD8XzIH3/mSv5ukLbXxplqjHifknlu1F/iFAh
+ HaTA==
+X-Gm-Message-State: AOJu0YyTNUUXAx4LQQ+SJuoIvfM3joHoRJ9EJiV2WEwPHWALzhLXEgQD
+ eMfbrHJWy4CBoRZubh4NrE9y54XK0YV22sXVcRu8VP0e4qVR11FQVhHkorCdjT9OmEGJktkU7zb
+ KcavurmN022vpXvc/58HN2QTZ8fnO+NzoReNdqgxT9kdLdrMGw3Zs9hsY5iyemcgQJbnT589HmA
+ PHm9T2GCJ0KUbZdW2ktQdQnhyFZRs=
+X-Received: by 2002:a05:600c:500a:b0:431:561b:b32a with SMTP id
+ 5b1f17b1804b1-4319acb8ce7mr74501645e9.19.1730125557603; 
+ Mon, 28 Oct 2024 07:25:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGFIEWhdP7PMNUIadkfCXOK0l0J4+U99CZs9JgcZC+dmcafgti+xaB2/XQDAvxlMXyox/zSuPc8jMnBF+v7Bxc=
+X-Received: by 2002:a05:600c:500a:b0:431:561b:b32a with SMTP id
+ 5b1f17b1804b1-4319acb8ce7mr74501485e9.19.1730125557274; Mon, 28 Oct 2024
+ 07:25:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241024095603.1813285-1-alex.bennee@linaro.org>
-In-Reply-To: <20241024095603.1813285-1-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 28 Oct 2024 14:17:55 +0000
-Message-ID: <CAFEAcA82w6FHUFOC=nTudph7-0vz830dT59MGd89YHYvQUSFNw@mail.gmail.com>
-Subject: Re: [PULL 00/17] testing, gdbstub and plugin updates
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
+References: <cover.1729807947.git.babu.moger@amd.com>
+ <b4b7abae-669a-4a86-81d3-d1f677a82929@redhat.com>
+ <24ea79dc-1a15-4e54-a741-e88332476646@amd.com>
+In-Reply-To: <24ea79dc-1a15-4e54-a741-e88332476646@amd.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 28 Oct 2024 15:25:44 +0100
+Message-ID: <CABgObfZ6hCjs35Z8JDLonsRB=7RAdxhBK5a+pr0qja=6LpEdFg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/7] target/i386: Add support for perfmon-v2, RAS bits
+ and EPYC-Turin CPU model
+To: babu.moger@amd.com
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,44 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 24 Oct 2024 at 10:58, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+On Mon, Oct 28, 2024 at 3:23=E2=80=AFPM Moger, Babu <babu.moger@amd.com> wr=
+ote:
 >
-> The following changes since commit 6f625ce2f21d6a1243065d236298277c56f972=
-d5:
+> Hi Paolo,
 >
->   Merge tag 'pull-request-2024-10-21' of https://gitlab.com/thuth/qemu in=
-to staging (2024-10-21 17:12:59 +0100)
+> On 10/28/24 03:37, Paolo Bonzini wrote:
+> > On 10/25/24 00:18, Babu Moger wrote:
+> >>
+> >> This series adds the support for following features in qemu.
+> >> 1. RAS feature bits (SUCCOR, McaOverflowRecov)
+> >> 2. perfmon-v2
+> >> 3. Update EPYC-Genoa to support perfmon-v2 and RAS bits
+> >> 4. Support for bits related to SRSO (sbpb, ibpb-brtype,
+> >> srso-user-kernel-no)
+> >> 5. Added support for feature bits CPUID_Fn80000021_EAX/CPUID_Fn8000002=
+1_EBX
+> >>     to address CPUID enforcement requirement in Turin platforms.
+> >> 6. Add support for EPYC-Turin.
+> >
+> > Queued, thanks.  I looked at
 >
-> are available in the Git repository at:
+> Thanks.
 >
->   https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-oct-misc-24102=
-4-1
+> > https://gitlab.com/qemu-project/qemu/-/issues/2571 and I think it's cau=
+sed
+> > by the ignore_msrs=3D1 parameter on the KVM kernel module.
 >
-> for you to fetch changes up to b56f7dd203c301231d3bb2d071b4e32b345f49d6:
+> Thanks again.
 >
->   plugins: fix qemu_plugin_reset (2024-10-24 10:04:09 +0100)
+> >
+> > However, can you look into adding new CPUID_SVM_* bits?
 >
-> ----------------------------------------------------------------
-> testing, gdbstub and plugin updates
->
->   - update MAINTAINERS with pointers to foo/next
->   - add NOFETCH to help test custom docker builds
->   - update microblaze toolchain with atomic fixes
->   - update tsan build and documentation
->   - don't restrict build-environment by arch unless needed
->   - add cross-modifying code test
->   - add tracepoints for cpu_step_atomic fallbacks
->   - fix defaults for loongarch cross build
->   - make check-[dco|patch] a little more verbose
->   - fix gdbstub bug preventing aarch64_be-linux-user starting
->   - add basic test for aarch64_be
->   - clean up some gdbstub test scripts
->   - fix qemu_plugin_reset
+> I normally pickup bits when it is added in kernel/kvm. Are you thinking o=
+f
+> any specific bits here?
 
+Yes, KVM already supports vGIF, virtual VMLOAD/VMSAVE, virtual TSC
+rate MSR, vNMI, virtual LBR, virtual pause filter and virtual pause
+filter threshold.
 
+Paolo
 
-Applied to target-arm.next, thanks.
-
--- PMM
 
