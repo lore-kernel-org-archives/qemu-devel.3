@@ -4,164 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF78D13588
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 07:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCC88D13595
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 08:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5KUJ-0007ar-UR; Mon, 28 Oct 2024 03:48:31 -0400
+	id 1t5KqD-0002Hb-73; Mon, 28 Oct 2024 04:11:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1t5KUH-0007ad-UX
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 03:48:30 -0400
-Received: from mail-bn8nam04on2061.outbound.protection.outlook.com
- ([40.107.100.61] helo=NAM04-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1t5KqB-0002HT-IG
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 04:11:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1t5KUG-0005vK-1k
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 03:48:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YgDE4085ttJ119mHS2ooq1qpH4Xr8GleG7pLsjjjqbErfWJL8tOtTNfCSnncvYl/AXdyK7CuCh4Ue6UQ+u5J9ljC+ASgjbeeEkKV217kvH7SoAozyUUS24Nzg07lTmfi9NzuA8aaudl6dqXSA8NYyxInMElGt0EVI5nCjgv7i2Lg2rfcQTi0EO60jFf0rAqknOnManvmnoVXFC2s8fVkNBo0nhGEeeXCrhj57JE1ppNjeAMY0e4g4u0ASDruvWLLnp05/x8aq/uzqsAL0B2Ukty0hHaJw0nHUyEZ+Hkd1T5tQhTWluhMs3I1YamK9SaBYguLWghOlw+96K+4z1nMGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sZp7njGal3D00WWOpVtn+9avy4JlmmoOuM5+u7dQxgU=;
- b=NbBtiU4v1oE4NMtLuYLQvdHea0l1G12QREl0Fl7jUQt6nUkK/bAzq+mc7GD9Ozff6/3ZbcYGpRJfl+WscJwxkRu2JXUXMe7fZEp0YHwjeHNiT5yOK3yOahlEELjjy5QbUXmKF2/SdKJ36VtSYA2HbYWwJmbMAeZpoTF95XDFjVbxB9Mv0HVxPAFpeJC+xDL6Sxjh5BkZNelAJhZNcNB2Bb3mBEfCRjpP5ajxfp2o04hw/icT3JfWdIR8N9cEDyXpK7W1HwdNO1pBFgUfN7DF5DbblqJgUZtAK0zqvrXzjf88pVl6mmM6UpJvinZTr1qxhm7BID0h2EVBl6Hy/CwtFQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sZp7njGal3D00WWOpVtn+9avy4JlmmoOuM5+u7dQxgU=;
- b=kFSAmAgCFDHiFm3V7Mz6jzhQZN5y1cgYab21B4LrabZSltC+iwqx2R79kBRUxm8tkX0E9fF6fQo5ZVhzoSPj0bkekPJZ+xIXATxsIVT+chayA4sABYfSWFU/q1QuKI0FJtMfx+bmgN+oMaCXG31AJiFPLurSSv12qxO+50ogXvFvWQgZ6oCOd15/gb+BQwuh6/IqwpWjDf0Vkwml8jyzXEOn+UkPUdozZOuYBzt3IBRs6iouIck0tjlWP1/tqSHwcNyJ3vUabPvnx/nMM2VKvDDehSGSyFVwjyyE2IQBe3uNePtcwUxzzYqGrS2K1KlnUZrslUrwSAWyTOoWcNYkHw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by CH0PR12MB8552.namprd12.prod.outlook.com (2603:10b6:610:18e::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.24; Mon, 28 Oct
- 2024 07:43:21 +0000
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91%6]) with mapi id 15.20.8093.024; Mon, 28 Oct 2024
- 07:43:20 +0000
-Message-ID: <78729b4b-3747-4408-8146-12d49e70fed1@nvidia.com>
-Date: Mon, 28 Oct 2024 09:43:16 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/8] migration: Unexport migration_is_active()
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex.williamson@redhat.com>
-References: <20241024213056.1395400-1-peterx@redhat.com>
- <20241024213056.1395400-8-peterx@redhat.com>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <20241024213056.1395400-8-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P302CA0021.GBRP302.PROD.OUTLOOK.COM
- (2603:10a6:600:2c1::12) To DM6PR12MB5549.namprd12.prod.outlook.com
- (2603:10b6:5:209::13)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1t5Kq6-0008O1-Tx
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 04:11:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730103058;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GBA1YxgDNCASIocty/4uKmofbTwSuRxTlUGVaRCDEkc=;
+ b=a3fSCaL/4dTfKOMoL5O6O0a3/bskpWJEtKy/hTbgPYZVS/il4qtxfGJua4gfF2JiZO++0P
+ I0dqKyOqUWbY3zKuDM+EWqn/L76IsK1G/mqJMopoRzIEBSgSeESa36OZTiDl96aQrqo/js
+ 3Mi7+j+TZk43QikNEHsl/ugPz4T5F40=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-127-BqYgpN7wMrS0Op-FR4o72Q-1; Mon, 28 Oct 2024 04:10:57 -0400
+X-MC-Unique: BqYgpN7wMrS0Op-FR4o72Q-1
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-6e321d26b38so60640227b3.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 01:10:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730103057; x=1730707857;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GBA1YxgDNCASIocty/4uKmofbTwSuRxTlUGVaRCDEkc=;
+ b=f57JMq5TozPJRiswPeiB0QzYGEL44+iVsW3uHHM/WW0K/+BgE8uNxHAM05UdW9TZaH
+ JU7hYpVU1iop7uGb/yUeWVeB5zQl22N/TV+rCyrqRuiBjGTrrtrpUkS8h1jbTPpgUdKZ
+ FoVXHahHI1e5fp6aaQ2ykAAdMeeQy4iRVC40gKmQh+MHjGAyLMYy9YkyT4n14QZosgkX
+ 3qGMeJXI1QzcyHhHZkETH/eQfhq382+tgNtIrTXKVGIM5+z1LZcs8g68ZHfTRcdvS5EK
+ 5IUrOxdIU86rvOD6Y6LIHupkgPYoxIhpTUVbIHcP8tmUUVtCmAF9mq8wHXS/Pq8kJ2tI
+ c4vg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXoBlGz+uvQgUWNvKUWgWizVeRYgaVOyT/tH3xyqeyiRdCsq8RUkp9JM0S9mnavVuYqDEXkLcmcQaQ0@nongnu.org
+X-Gm-Message-State: AOJu0Yyi8x/3D0ON5flAuM1y8l+W8QuModLRGCTYTSjoUjMwUX5GM5V5
+ YOcajNwZzOxZ88Q+fZb0mzYfs4BBpYLwpYC4r0R8bHGiV+I3GlwExghYyaAhZ+xF48sPn/e7+/b
+ /EI5EfzbJthsiQV4Ch6WXYost9hJ77VRIu+BcTWcz1INfXnNAINYWcgLRPbjVT7QNr1763j6PuV
+ LfVZdrlCnu1pu8p1ep0IjrYOxrSJk=
+X-Received: by 2002:a05:690c:ecd:b0:6e5:d35b:ca80 with SMTP id
+ 00721157ae682-6e9d88fd872mr55939357b3.5.1730103056934; 
+ Mon, 28 Oct 2024 01:10:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH4VWqToN+BaD2vYBcw384AOXym7dS+iRXYL63Aw4BgKISxQX+vnk857yMzm+vunA30iLHe0u2M+GIKwSfojXo=
+X-Received: by 2002:a05:690c:ecd:b0:6e5:d35b:ca80 with SMTP id
+ 00721157ae682-6e9d88fd872mr55939217b3.5.1730103056639; Mon, 28 Oct 2024
+ 01:10:56 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|CH0PR12MB8552:EE_
-X-MS-Office365-Filtering-Correlation-Id: bc84fada-436c-4032-d029-08dcf72431c0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?endWUitvbUxaZHJqT0dhRS9IRjlIVVVOcWNvMXcvRHpFR29ielhtVzdvQjFv?=
- =?utf-8?B?MkpscFYxakRFbmM3SmVZVDhWZ1RWcXdNbWhZc2pCb3llVVFiNU83R3QxQnhC?=
- =?utf-8?B?cGlRWm9jenZjQTVSY1dyZGljb0pjUE5ZTWxBSXFITEtYcWV5c1NXK2ZYM2F2?=
- =?utf-8?B?NCtXeVFqQ2dWYThiTHR4bzJzWkRZYStyTmxzRm12KzJaem5FUXlSbTZjTFRv?=
- =?utf-8?B?aEhVTisrd0RjWmVqaWM5cGpiVk5SRTJtcTlxMVNDbC9EdEtNWE41ZXFGV1VI?=
- =?utf-8?B?N0ZIMlMrdkU2M3lHYVlTTUJmcllYc3Z1YkdEc1c4aUpZUzEzYzJ3UTROdmxL?=
- =?utf-8?B?T0YzczdZeHVTQ2JmSVhrbi9XdGo0UjlxcWlORUdrOURMZ1NVYWFrSnR3Y0FU?=
- =?utf-8?B?U0FxU3BYbFhJbXNPbDdkMzZEbzhzVGJXdlZPOHFUSTRyR01Bbi8xYy9FLy93?=
- =?utf-8?B?NVVpNXZjUzRQQ2JHb3IxdWFUMUxVYi8zYUx3eWFQSTFxRm4rQzZac2F6Nkpn?=
- =?utf-8?B?N0hqYXhTV1o3MWxZSll6c3JYVExydVJ1RjJKVG9RK0Q2aVRzQWJvQzlyVWxG?=
- =?utf-8?B?Z3A3b1ZKQ0dEK1VCNGM3WlBNY2VvblNaWGhIUjVtK1p0VG1tQVQ0VE9Pa0g3?=
- =?utf-8?B?NHI2dDk1cHFEajZrVEJYQ1N5djdwcjdtOFFscU1PUE1Ub3NaNUtLZWhzT3Z2?=
- =?utf-8?B?U3gydjNpSk1WMDNhMTNmZTVib0VBYWNPbjczOHFuazV3eW1QbExzcmRCdSs4?=
- =?utf-8?B?R2tEOFZpMmNnRmVOZnhhaElZcU9sYldHNlNXOUZqeGdyQjVuQjJ2NUtaOE5p?=
- =?utf-8?B?QWFCSVVPbHFVVlZQSjdqdTZHVDJoZk5DdTFuSC93MDduN05CU2M4d0JiSGdO?=
- =?utf-8?B?Mmx3ZVF5OW5CeEZKZndIbnRSQitJL2psNGNsN00zQjBNU1VTSXNWMnZ6Wi9L?=
- =?utf-8?B?YWg0Z0xkcCs1NkRqelFTWVhvRm5aOTdWL2JsTS9GYVpxSHkzSWt5UVFmL1pj?=
- =?utf-8?B?czlxNk8wTjVMV0dIQVVTRjYrNlUrTks5YmM2QnBSNE02UWo0UjZWRE8wb2pU?=
- =?utf-8?B?N2NzTHdwRWQ3ZWxDUk5nekU5NlhzamgvK0FFZG1abVZBZGF0REk2NGYwVTVU?=
- =?utf-8?B?Q2lQUytvK1dGRThBZE9YckhvZWt1UzUxdDFuSUljazlwSnpNQlFWSEE0NlRh?=
- =?utf-8?B?bzNoU1VFT0k4Y3NIMmNmTllwL1FiT1NnWGNPSTR4TFl3NFJRNGhObFVLTGZi?=
- =?utf-8?B?RFFZd0MramtzVEI1U0xHWkRPMngwT1pNZ0pyblFBNVhldmxPTG5EQ0laMGtY?=
- =?utf-8?B?N2RwUm90YiszWHdoOHlaaDB5QXpESEVyQVVUcVVsMWVta2ZOMnBGa1JKdDBK?=
- =?utf-8?B?WExDMHp6cGFBVklJdGMxNWhWTVQxOC9ncWliREJNNVVnMXExczYzblZtSmZO?=
- =?utf-8?B?aGhXcFZrWXZuRm14VmZWcmpjK2dCWXhWaGtrdi9jcXRpRDBKcWJNUE1kRS9m?=
- =?utf-8?B?MjBWM0V2NjNGMy9CaWd0MUl1bEZ3S05KdjdXL2tNM0l2UllPdHVrM05EcWlX?=
- =?utf-8?B?VmdnOEJaNzBiY0J6WmI0SjhyZkoyNVAxV3FrcmZkcE80T2FiakxHbHpwbC9I?=
- =?utf-8?B?RHZZM2tIdktuMHNuOGVNT0E4bm9jRzFseHJqZjIydDFIVlMyYXBGeFZBb21j?=
- =?utf-8?B?ZlZSZnN5REVJcmZkYkRXQkZvQ2gzay8yRU14RXRaUFlHMHpka2RBT1NETit1?=
- =?utf-8?Q?V/3EuTIinrsVVnIpwmC8gVyXEJMzJyR6HReFHen?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MmI5UVZIVVRvbTREQ1pCSkE5Y2w4Yy9OVjdCTG8vdUwrcjU1M3dSTnlHK0ZS?=
- =?utf-8?B?MDJrZkRTUTNGU1RMWEhIdUt6TXNDTjV3WXBhTTVaZEhaQnVmNE1POUh6dWpH?=
- =?utf-8?B?RGhtUFRjU2xkdVkxemtQZ3lqRUVjZit5L1dQMXRXWnk1ZGpKTm1QYlVBUnk1?=
- =?utf-8?B?RTFmeDVZYjcxSkUxOUMyVm1wMGtIZTB0UXlqbFg1emFmSXp5d3M1NSs3bmJC?=
- =?utf-8?B?N2ZoeS82anp4MXk0Z3dzUTcwbkxCVDR6N0kzeEZCdFdyZ01nQlNuTjJUdzc5?=
- =?utf-8?B?eVZrc09VbjhaYW9xT1pPUWtJZzQyY2pxWkVhVnpqc1ZhQmp1SEpCVHdwWFhw?=
- =?utf-8?B?MFJTd2V2RjU4ZFpVSHZpa1h6RE4xRTB4ZVVoa1lsK1V0dHdXcURYbnB4L0Zn?=
- =?utf-8?B?Y1R4dWY5a0JBMnJWdEFyZGU4UksyS2ZvNDBkaE9ZYWFqR3c3MnFteldHNnZs?=
- =?utf-8?B?YXJLbmVFS1p3OENTOEJGbWVTdjJpQ21CazhHV0d4NjFMWXg4TlFzVmt4TTJJ?=
- =?utf-8?B?VkRzUlhKQUZzTHQ2bTQ2WHBDZTVvM2tWYkpJbUJITnBIS05yenRGYmttVlIy?=
- =?utf-8?B?OWlqZlZzd2IwM2lqdzdTd21ZejllL1NFTlhBbGk5QkhKd3I0VHBUUFMxa0N6?=
- =?utf-8?B?bkJ6UGVBMDBiU3ArQWIxSnluTWRkL0U3RVRxWmRPQXM3QXJLQlR6Vmh0VU5Z?=
- =?utf-8?B?eDlTYnhkRm80WnJwdGNrdUtxN29ESlhwTys0K0ZNbjhBcHYyNktTVU5DOERN?=
- =?utf-8?B?MWNyOTcxbmhFZjh2UUl0S1F4NnFWNFpCMFRZMERJZ0VzaCtwRUx1djhrQnBm?=
- =?utf-8?B?Sm4rSStmSmxaWnBocWR2T0tacnMvWkx5SlFPcU9KM1hhdGNndkVKN2x3M3Yr?=
- =?utf-8?B?TnZxQk4xUnhha0tSNElucnYzTVZrV1JQMVBLVHAzYTZPamVqOFMrZndDNzdw?=
- =?utf-8?B?Q2hQeVB4SnRoTDAwWlljYzdYZjhnS2pSNXhJaldkcEJtTHNBTkR1WHgrT2tk?=
- =?utf-8?B?NTMzdnhMZVZleDdDQzh4QUlIS1I2L0dHeWI0MVJNSGpWOFpoOUxRMU5FMU5M?=
- =?utf-8?B?ejhzUUl4ZVNoNHlTYmFiUktHSFBDS0hJMDd4UGVaaHFSUGRaQkkrdUFhenFG?=
- =?utf-8?B?MEFlSHNjUDl2b0xnbE5FWjQrWkEwMGNWWEtoU2E4WUZIanl5QzBJbEQ2UUEz?=
- =?utf-8?B?MVQwRjhGZmg5N2RSREY3b25JQ1E3Ly9lMGtOTmNyVVNNSzRNc1lhdDJvdVN3?=
- =?utf-8?B?aFJWUE5Da25QSWFRaFJSNGZIVkhOM01kdW1KQzEyQkppUC85dkV5UDE5ZjhU?=
- =?utf-8?B?VGFDT1R1cXNZblJqUS9HR0pYcmU2blQ3anRtM1RHMURPaTFVSjdHYU5kbVlL?=
- =?utf-8?B?SlBWUkgrVGxiYyt4eXVJVDFWTDhYUDIrVEFncEFnQ3NkSS9FMFRnYVE5VDE4?=
- =?utf-8?B?K0NYd0lQQmRjTTlUb3c0U0p6SlY4eFFPQlo1K2NnUEtmNXRGbXMwdkFYTjcx?=
- =?utf-8?B?akN2d1hqQlhRY2VwRlRTT1ltMHZmbmlCY0pZb1NGNGdmcDhXMStNZmtUV244?=
- =?utf-8?B?ckRvSDUzMkZ6SUlGMENjUWFoZmRUczRPVUpFUDRpOG5OUm1tcitHU3FFdm9I?=
- =?utf-8?B?czVha2ZCaE1QTGFDQVV6NVNFUmROU25ZWDByTTVtcEdzQ3R1SDJoa1JycWNs?=
- =?utf-8?B?QjUwQ25UYnd5eEtRRVZiZ3dBMldrcWFVN2h3aHY3YnBUVVoyNzNBVVljOFNJ?=
- =?utf-8?B?ZlZIN24yaWhxODgxSkNPNjNKTEtaU1laa3lPTDNQV09FREFJWGo3eFNab3Rq?=
- =?utf-8?B?QUVidjdGZU1sTnVTQ1N0NGJud2JuK1UyNjM5dHBVSnREOFhtVXdaRTlrOUQ4?=
- =?utf-8?B?UUJMZXIxRFJFd25FQ0Q0VTZXWE04ajNzckNhQWVrVU54VFQrU1BtN1p3SnlK?=
- =?utf-8?B?NU5oeUU1Z0lieVFNWkE1UUhMWmpSajBUODdJY2FCSEJodGs4S3VZWU1SMWM2?=
- =?utf-8?B?RHdYb2tGVC92Ym85QzdvQ0tZOUNRdVdtRUlKcm5QV2VEcVZWeURxdE4wUStm?=
- =?utf-8?B?SHNSZy9LT1Raem0xYW1zd2o0Z1Z6Uy9UZjgrMzFKYm5JZzFESkVaRXZKUUhy?=
- =?utf-8?Q?hZ2izs/0rFsW7WTbG8xda3THX?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bc84fada-436c-4032-d029-08dcf72431c0
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2024 07:43:20.7847 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QOouC4tYxPw9gD+92DQ0TR6r0ui4CvnSoZh90AJkjg28ODJCp6eFDEcrxxlcNfbnMoSfNEkTvL3l0XvtQio8nA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR12MB8552
-Received-SPF: softfail client-ip=40.107.100.61;
- envelope-from=avihaih@nvidia.com;
- helo=NAM04-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20240802112138.46831-1-sahilcdq@proton.me>
+ <3311761.aeNJFYEL58@valdaarhun>
+ <CAJaqyWeus1zqEqE4ZzoGOzrY=w=_vEMdPGoHrv+Gxvc6zhiNmw@mail.gmail.com>
+ <1904291.tdWV9SEqCh@valdaarhun>
+ <CAFcRUGb-Nh0E0tKJkKiw7X2E+wOcA6yavRBe7Ly9WKeTK46ENA@mail.gmail.com>
+In-Reply-To: <CAFcRUGb-Nh0E0tKJkKiw7X2E+wOcA6yavRBe7Ly9WKeTK46ENA@mail.gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 28 Oct 2024 09:10:20 +0100
+Message-ID: <CAJaqyWePYh43fTmVSFxUS8VYijZUAg1U5mM3WhXi9fQPDG6GWw@mail.gmail.com>
+Subject: Re: [RFC v3 3/3] vhost: Allocate memory for packed vring
+To: Sahil Siddiq <icegambit91@gmail.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
+ Sahil Siddiq <sahilcdq@proton.me>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.287,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -177,105 +104,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Oct 28, 2024 at 6:38=E2=80=AFAM Sahil Siddiq <icegambit91@gmail.com=
+> wrote:
+>
+> Hi,
+>
+> It's been a while since I gave my last update. I have one more update
+> that I would like to give.
+>
+> > On Tue, Sep 24, 2024 at 7:31=E2=80=AFAM Sahil <icegambit91@gmail.com> w=
+rote:
+> > > And I booted L2 by running:
+> > >
+> > > # ./qemu/build/qemu-system-x86_64 \
+> > > -nographic \
+> > > -m 4G \
+> > > -enable-kvm \
+> > > -M q35 \
+> > > -drive file=3D//root/L2.qcow2,media=3Ddisk,if=3Dvirtio \
+> > > -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdp=
+a0 \
+> > > -device
+> > > virtio-net-pci,netdev=3Dvhost-vdpa0,disable-legacy=3Don,disable-moder=
+n=3Doff,ev
+> > > ent_idx=3Doff,bus=3Dpcie.0,addr=3D0x7 \ -smp 4 \
+> > > -cpu host \
+> > > 2>&1 | tee vm.log
+> >
+> > With packed=3Don in the device option, I see that the packed feature bi=
+t is
+> > set in L2 :)
+> >
+> > However, I see that vhost shadow virtqueues are still not being used. I=
+ am
+> > currently trying to find the reason behind this. I have narrowed down t=
+he
+> > issue to hw/virtio/vhost-vdpa.c [1]. The "vhost_vdpa_svqs_start" functi=
+on
+> > is being called but in the loop, vhost_svq_start is never called. I thi=
+nk it
+> > might be because there's an issue with "vhost_vdpa_svq_setup".
+> >
+> > I'll send an update once I find something.
+> >
+> > Thanks,
+> > Sahil
+> >
+> > [1] https://github.com/qemu/qemu/blob/master/hw/virtio/vhost-vdpa.c#L12=
+43
+>
+> I spent some time tinkering with the L0-L1-L2 test environment setup,
+> and understanding QEMU's hw/virtio/vhost-vdpa.c [1] as well as Linux's
+> drivers/vhost/vdpa.c [2] and /drivers/vhost/vhost.c [3]. I don't think th=
+ere
+> is an issue with the environment itself.
+>
+> When I boot L2 with the following combinations of "x-svq" and
+> "packed", this is what I observe:
+>
+> 1. x-svq=3Don and packed=3Doff
+>
+> The virtio device in L2 has the packed feature bit turned off. Vhost
+> shadow virtqueues are used as expected.
+>
+> 2. x-svq=3Doff and packed=3Don
+>
+> The virtio device in L2 has the packed feature bit turned on. Vhost
+> shadow virtqueues are not used.
+>
+> I don't see any issues in either of the above environment
+> configurations.
+>
+> 3. x-svq=3Don and packed=3Don
+>
+> This is the configuration that I need for testing. The virtio device in
+> L2 has the packed feature bit turned on. However, vhost shadow
+> virtqueues are not being used. This is due to the
+> VHOST_SET_VRING_BASE ioctl call returning a EOPNOTSUPP in
+> hw/virtio/vhost-vdpa.c:vhost_vdpa_set_dev_vring_base() [4].
+>
+> I spent some time going through the ioctl's implementation in Linux.
+> I used ftrace to trace the functions that were being called in the kernel=
+.
+> With x-svq=3Don (regardless of whether split virtqueues are used or packe=
+d
+> virtqueues), I got the following trace:
+>
+> [...]
+>  qemu-system-x86-1737    [001] ...1.  3613.371358:
+> vhost_vdpa_unlocked_ioctl <-__x64_sys_ioctl
+>  qemu-system-x86-1737    [001] ...1.  3613.371358: vhost_vring_ioctl
+> <-vhost_vdpa_unlocked_ioctl
+>  qemu-system-x86-1737    [001] ...1.  3613.371362:
+> vp_vdpa_set_vq_state <-vhost_vdpa_unlocked_ioctl
+> [...]
+>
+> There are 3 virtqueues that the vdpa device offers in L1. There were no
+> issues when using split virtqueues and the trace shown above appears
+> 3 times. With packed virtqueues, the first call to VHOST_SET_VRING_BASE
+> fails because drivers/vdpa/virtio_pci/vp_vdpa.c:vp_vdpa_set_vq_state_pack=
+ed
+> [5] returns EOPNOTSUPP.
+>
+> The payload that VHOST_SET_VRING_BASE accepts depends on whether
+> split virtqueues or packed virtqueues are used [6].  In hw/virtio/vhost-
+> vdpa.c:vhost_vdpa_svq_setup() [7], the following payload is used which is
+> not suitable for packed virtqueues:
+>
+> struct vhost_vring_state s =3D {
+>         .index =3D vq_index,
+> };
+>
+> Based on the implementation in the linux kernel, the payload needs to
+> be as shown below for the ioctl to succeed for packed virtqueues:
+>
+> struct vhost_vring_state s =3D {
+>         .index =3D vq_index,
+>         .num =3D 0x80008000,
+> };
+>
 
-On 25/10/2024 0:30, Peter Xu wrote:
-> External email: Use caution opening links or attachments
->
->
-> We have two outside users of this API, so it's exported.
->
-> Is it really necessary?  Does it matter whether it must be
-> ACTIVE/POSTCOPY_ACTIVE/DEVICE?  I guess no.
+Wow, that's a great analysis, very good catch!
 
-Actually for VFIO it does matter, because we don't want VFIO to do DPT 
-log_sync in SETUP stage when DPT might not have been started yet.
-See commit ff180c6bd7a8 ("vfio/migration: Skip log_sync during migration 
-SETUP state").
+> After making these changes, it looks like QEMU is able to set up the
+> virtqueues
+> and shadow virtqueues are enabled as well.
+>
+> Unfortunately, before the L2 VM can finish booting the kernel crashes.
+> The reason is that even though packed virtqueues are to be used, the
+> kernel tries to run
+> drivers/virtio/virtio_ring.c:virtqueue_get_buf_ctx_split() [8]
+> (instead of virtqueue_get_buf_ctx_packed) and throws an "invalid vring
+> head" error. I am still investigating this issue.
+>
 
-Thanks.
+That's interesting. It's been a while since I haven't tested that
+code, maybe you also discovered a regression here :).
 
+> I'll send an update once I resolve this issue. I'll also send a patch tha=
+t
+> crafts the payload correctly based on the format of the virtqueue in
+> vhost_vdpa_svq_setup().
 >
-> The external user is trying to detect whether migration is running or not,
-> as simple as that.
+
+The QEMU's vhost_vdpa_svq_setup is a valid patch so if you have the
+bandwith please send it ASAP and we move it forward :).
+
+Thanks!
+
+> Thanks,
+> Sahil
 >
-> To make the migration_is*() APIs even shorter, let's use
-> migration_is_running() for outside worlds.
+> [1] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-vd=
+pa.c
+> [2] https://github.com/torvalds/linux/blob/master/drivers/vhost/vdpa.c
+> [3] https://github.com/torvalds/linux/blob/master/drivers/vhost/vhost.c
+> [4] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-vd=
+pa.c#L1002
+> [5] https://github.com/torvalds/linux/blob/master/drivers/vdpa/virtio_pci=
+/vp_vdpa.c#L278
+> [6] https://qemu-project.gitlab.io/qemu/interop/vhost-user.html#front-end=
+-message-types
+> [7] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-vd=
+pa.c#L1223
+> [8] https://github.com/torvalds/linux/blob/master/drivers/virtio/virtio_r=
+ing.c#L823
 >
-> Internally there're actually three places that literally needs
-> migration_is_active() rather than running().  Keep that an internal helper.
->
-> After this patch, we finally only export one helper that allows external
-> world to try detect migration status, which is migration_is_running().
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   include/migration/misc.h | 1 -
->   migration/migration.h    | 1 +
->   hw/vfio/common.c         | 4 ++--
->   system/dirtylimit.c      | 3 +--
->   4 files changed, 4 insertions(+), 5 deletions(-)
->
-> diff --git a/include/migration/misc.h b/include/migration/misc.h
-> index ad1e25826a..c0e23fdac9 100644
-> --- a/include/migration/misc.h
-> +++ b/include/migration/misc.h
-> @@ -53,7 +53,6 @@ void dump_vmstate_json_to_file(FILE *out_fp);
->   void migration_object_init(void);
->   void migration_shutdown(void);
->
-> -bool migration_is_active(void);
->   bool migration_is_running(void);
->   bool migration_thread_is_self(void);
->
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 0956e9274b..9fa26ab06a 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -492,6 +492,7 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
->
->   int migrate_init(MigrationState *s, Error **errp);
->   bool migration_is_blocked(Error **errp);
-> +bool migration_is_active(void);
->   /* True if outgoing migration has entered postcopy phase */
->   bool migration_in_postcopy(void);
->   bool migration_postcopy_is_alive(MigrationStatus state);
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index cc72282c71..7eb99ebd4d 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -174,7 +174,7 @@ static bool vfio_devices_all_dirty_tracking(VFIOContainerBase *bcontainer)
->   {
->       VFIODevice *vbasedev;
->
-> -    if (!migration_is_active()) {
-> +    if (!migration_is_running()) {
->           return false;
->       }
->
-> @@ -219,7 +219,7 @@ vfio_devices_all_running_and_mig_active(const VFIOContainerBase *bcontainer)
->   {
->       VFIODevice *vbasedev;
->
-> -    if (!migration_is_active()) {
-> +    if (!migration_is_running()) {
->           return false;
->       }
->
-> diff --git a/system/dirtylimit.c b/system/dirtylimit.c
-> index ab20da34bb..d7a855c603 100644
-> --- a/system/dirtylimit.c
-> +++ b/system/dirtylimit.c
-> @@ -80,8 +80,7 @@ static void vcpu_dirty_rate_stat_collect(void)
->       int i = 0;
->       int64_t period = DIRTYLIMIT_CALC_TIME_MS;
->
-> -    if (migrate_dirty_limit() &&
-> -        migration_is_active()) {
-> +    if (migrate_dirty_limit() && migration_is_running()) {
->           period = migrate_vcpu_dirty_limit_period();
->       }
->
-> --
-> 2.45.0
->
+
 
