@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4485DD5B154
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 22:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6940ED5B845
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 22:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5XsV-0005Mp-Da; Mon, 28 Oct 2024 18:06:23 -0400
+	id 1t5Y79-0008N6-N2; Mon, 28 Oct 2024 18:21:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5XsP-0005LE-H4
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:06:18 -0400
+ id 1t5Y78-0008Lp-5J
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:21:30 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5XsN-0001aX-5R
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:06:17 -0400
+ id 1t5Y76-0003Iw-78
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:21:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=kjTMBbbWoL5xR3Z8ZC0qqp2QHBPA/EQ2n9rX1UmXlq8=; b=PvuqQRE7TCbdVw32PvoiXbXqWG
- TLEn7Z8QFZ4v5QctqlEtWYItxgraIKGnWGv+xBJsbik3QIrzbEMoQ0O20Uus6Gx9DE8KX9DrEW7HC
- 0ZX89bOhF6Done2RS+BLoWkp+7OJsqPngLZn1B+W1OYqqsxSoWMWKERfSto6PaZrswxL7RgI4grQB
- UShs0sx1Iex/TJhsSgn4nPj8d00lX2UszBX0P5LJj5/p6BRjJTorSrweJxVeBqCYvPZTdq8QHdWdA
- uY9WnVytZsJeowCpmgtOtb4yzTr4vosrqlo3+0N05cUWqutb7uYs1t/DkEICwly+54AzdFHPaHaoN
- 8tjEiXTyVzMmd1ox6sk5vXxDoy4aDRk5PJfBpqm/GMamNyjUwZRxxYchBLl1M388ktYpH5ls7McEB
- AHDHgmU8KJodIQDFqEVn+Kdv13b4jPSjHHwgousxU2J0wN/2zAkiIpFjW00cCGqlUD3WT7fmpHAH4
- s0KhvocGgIq/olRNsSuTBzrFfya/15iiGONF8ZnXHHO9mUP8Gldaj1ERM0Gh8xtbYGYYLogppio1e
- /Yb96himc/lCcbuVHF+z4kaSARhq26I39gUnsfdmmQ0NObIMzVUxc6O1V7jiafpJC5Y9MQMeleJho
- 4EQoArH7rGCa7HZjHWWdqSnLyL9qi3LfGE52o/RJI=;
+ bh=FCDDP2ztBT60fQlMy88L38XWdWYWs0Eoyc2hxnH1Rig=; b=O7GMir7u0KTVKhzuiYXVvRJH2Y
+ S5Rf9hkHPbaagkbBFseCNB7h1DNqzENXdMcFbOxvroV3BkEVuVCyiEp4Kf528XhDxl14AAhMCyxkz
+ nPpVAXq/dFKf+DvVYtSbW9A4AFCCAZQtLbikarVzfJGxjBD55r5IluKGZD8OkzhtMUmlTcqLgDQ0j
+ 4VgT2k/almrdriuSZZxRHaQnuVWcnU4c58En84QPlrQG910IgFgTT+X5q3rgLYhiQKcAWNzCwxHF/
+ vowjuVvhP9ob0mxBEIW3EchpUYb9uE/pFZRmF6GRklMR22ZU3pvnK6KFML0WkpbKHdgD+8q4WVj0d
+ AGSd0rzHxsedXyVpA19+XVK9E4b0Jt0fTzjD1iszDcE/TbGHB0wyTDadOqTdDoYs5GebtgYFq5mG2
+ vtZzxeK7MXi9uui6xSzfSU701OhE8btLqbDJN+rcU3AAyWqYzR1z0UUNvBEtY9ZeuYGhgNLV0IFeu
+ NsDx+Thl/CxPqOmGW+OBQD4bpHa9b4hXs+PR/w1quP1qNlfp79oXr0b+YaQmL+rAj42a0kAN7sj2U
+ ZkmbVLn0CERLq3KU940GD4s08Wc+dDHjAMPqXP7J00yGnKbndfSd4ZDLWheweGs0K/KuyMCyw9Imd
+ zEI7qwzF28UwIXWdZF47qsfUs0vjwl9NVxbFIPCd4=;
 Received: from [2a00:23c4:8bb8:f600:b5e6:5818:bcfd:7571]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5Xs0-0006KM-2G; Mon, 28 Oct 2024 22:05:56 +0000
-Message-ID: <8293abfc-08d5-4b5e-a46e-2052fa4db2b0@ilande.co.uk>
-Date: Mon, 28 Oct 2024 22:06:07 +0000
+ id 1t5Y6j-0006V5-AZ; Mon, 28 Oct 2024 22:21:09 +0000
+Message-ID: <a6df2717-e3b3-464e-87ca-d2c776d24900@ilande.co.uk>
+Date: Mon, 28 Oct 2024 22:21:20 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Thomas Huth <huth@tuxfamily.org>
 Cc: qemu-devel@nongnu.org
 References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-4-mark.cave-ayland@ilande.co.uk>
- <20241026095648.15865fbb@tpx1>
- <80f404f7-a8e7-4fcc-8e7d-d82d285113e5@ilande.co.uk>
- <20241027122429.50163254@tpx1>
+ <20241023085852.1061031-10-mark.cave-ayland@ilande.co.uk>
+ <20241028172122.23bcb98c@tpx1>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -76,13 +74,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20241027122429.50163254@tpx1>
+In-Reply-To: <20241028172122.23bcb98c@tpx1>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:b5e6:5818:bcfd:7571
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 03/36] next-cube: remove overlap between next.dma and
- next.mmio memory regions
+Subject: Re: [PATCH 09/36] next-cube: move SCSI CSRs from next-pc to the
+ next-scsi device
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -108,188 +106,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/10/2024 11:24, Thomas Huth wrote:
+On 28/10/2024 16:21, Thomas Huth wrote:
 
-> Am Sat, 26 Oct 2024 22:13:25 +0100
+> Am Wed, 23 Oct 2024 09:58:25 +0100
 > schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 > 
->> On 26/10/2024 08:56, Thomas Huth wrote:
+>> The SCSI CSRs are located within the SCSI subsystem of the NeXT PC (Peripheral
+>> Contoller) which is now modelled as a separate QEMU device.
 >>
->>> Am Wed, 23 Oct 2024 09:58:19 +0100
->>> schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
->>>    
->>>> Change the start of the next.mmio memory region so that it follows on directly
->>>> after the next.dma memory region, adjusting the address offsets in
->>>> next_mmio_read() and next_mmio_write() accordingly.
->>>>
->>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->>>> ---
->>>>    hw/m68k/next-cube.c | 28 ++++++++++++++--------------
->>>>    1 file changed, 14 insertions(+), 14 deletions(-)
->>>>
->>>> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
->>>> index 4e8e55a8bd..e1d94c1ce0 100644
->>>> --- a/hw/m68k/next-cube.c
->>>> +++ b/hw/m68k/next-cube.c
->>>> @@ -266,23 +266,23 @@ static uint64_t next_mmio_read(void *opaque, hwaddr addr, unsigned size)
->>>>        uint64_t val;
->>>>    
->>>>        switch (addr) {
->>>> -    case 0x7000:
->>>> +    case 0x2000:
->>>>            /* DPRINTF("Read INT status: %x\n", s->int_status); */
->>>>            val = s->int_status;
->>>>            break;
->>>>    
->>>> -    case 0x7800:
->>>> +    case 0x2800:
->>>>            DPRINTF("MMIO Read INT mask: %x\n", s->int_mask);
->>>>            val = s->int_mask;
->>>>            break;
->>>>    
->>>> -    case 0xc000 ... 0xc003:
->>>> -        val = extract32(s->scr1, (4 - (addr - 0xc000) - size) << 3,
->>>> +    case 0x7000 ... 0x7003:
->>>> +        val = extract32(s->scr1, (4 - (addr - 0x7000) - size) << 3,
->>>>                            size << 3);
->>>>            break;
->>>>    
->>>> -    case 0xd000 ... 0xd003:
->>>> -        val = extract32(s->scr2, (4 - (addr - 0xd000) - size) << 3,
->>>> +    case 0x8000 ... 0x8003:
->>>> +        val = extract32(s->scr2, (4 - (addr - 0x8000) - size) << 3,
->>>>                            size << 3);
->>>>            break;
->>>>    
->>>> @@ -301,25 +301,25 @@ static void next_mmio_write(void *opaque, hwaddr addr, uint64_t val,
->>>>        NeXTPC *s = NEXT_PC(opaque);
->>>>    
->>>>        switch (addr) {
->>>> -    case 0x7000:
->>>> +    case 0x2000:
->>>>            DPRINTF("INT Status old: %x new: %x\n", s->int_status,
->>>>                    (unsigned int)val);
->>>>            s->int_status = val;
->>>>            break;
->>>>    
->>>> -    case 0x7800:
->>>> +    case 0x2800:
->>>>            DPRINTF("INT Mask old: %x new: %x\n", s->int_mask, (unsigned int)val);
->>>>            s->int_mask  = val;
->>>>            break;
->>>
->>> Could you please add comments at the end of the "case" lines, stating which
->>> mmio addresses are handled in each case? Otherwise, it's harder to grep for
->>> certain addresses later. E.g:
->>>
->>>       case 0x2800:     /* 0x2007800 */
+>> Add a new VMStateDescription for the next-scsi device to enable the SCSI CSRs
+>> to be migrated.
 >>
->> If you think it will help? Presumably this is to aid with comparing with other source
->> code/documentation?
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> ---
+>>   hw/m68k/next-cube.c | 88 +++++++++++++++++++++++++++++++++++++++------
+>>   1 file changed, 78 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+>> index 266f57ac63..32466a425f 100644
+>> --- a/hw/m68k/next-cube.c
+>> +++ b/hw/m68k/next-cube.c
+>> @@ -93,6 +93,10 @@ struct NeXTSCSI {
+>>       MemoryRegion scsi_mem;
+>>   
+>>       SysBusESPState sysbus_esp;
+>> +
+>> +    MemoryRegion scsi_csr_mem;
+>> +    uint8_t scsi_csr_1;
+>> +    uint8_t scsi_csr_2;
+>>   };
+>>   
+>>   #define TYPE_NEXT_PC "next-pc"
+>> @@ -115,8 +119,6 @@ struct NeXTPC {
+>>       uint32_t led;
+>>   
+>>       NeXTSCSI next_scsi;
+>> -    uint8_t scsi_csr_1;
+>> -    uint8_t scsi_csr_2;
+>>   
+>>       qemu_irq scsi_reset;
+>>       qemu_irq scsi_dma;
+>> @@ -364,6 +366,7 @@ static const MemoryRegionOps next_mmio_ops = {
+>>   static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+>>   {
+>>       NeXTPC *s = NEXT_PC(opaque);
+>> +    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
+>>       uint64_t val;
+>>   
+>>       switch (addr) {
+>> @@ -373,12 +376,12 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+>>           break;
+>>   
+>>       case 0x14020:
+>> -        DPRINTF("SCSI 4020  STATUS READ %X\n", s->scsi_csr_1);
+>> -        val = s->scsi_csr_1;
+>> +        DPRINTF("SCSI 4020  STATUS READ %X\n", ns->scsi_csr_1);
+>> +        val = ns->scsi_csr_1;
+>>           break;
+>>   
+>>       case 0x14021:
+>> -        DPRINTF("SCSI 4021 STATUS READ %X\n", s->scsi_csr_2);
+>> +        DPRINTF("SCSI 4021 STATUS READ %X\n", ns->scsi_csr_2);
+>>           val = 0x40;
+>>           break;
+>>   
+>> @@ -411,6 +414,7 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+>>                                unsigned size)
+>>   {
+>>       NeXTPC *s = NEXT_PC(opaque);
+>> +    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
+>>   
+>>       switch (addr) {
+>>       case 0x14108:
+>> @@ -445,7 +449,7 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+>>               DPRINTF("SCSICSR Reset\n");
+>>               /* I think this should set DMADIR. CPUDMA and INTMASK to 0 */
+>>               qemu_irq_raise(s->scsi_reset);
+>> -            s->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
+>> +            ns->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
+>>               qemu_irq_lower(s->scsi_reset);
+>>           }
+>>           if (val & SCSICSR_DMADIR) {
+>> @@ -838,6 +842,54 @@ static void nextscsi_write(void *opaque, uint8_t *buf, int size)
+>>       nextdma_write(opaque, buf, size, NEXTDMA_SCSI);
+>>   }
+>>   
+>> +static void next_scsi_csr_write(void *opaque, hwaddr addr, uint64_t val,
+>> +                                unsigned size)
+>> +{
+>> +    NeXTSCSI *s = NEXT_SCSI(opaque);
+>> +
+>> +    switch (addr) {
+>> +    case 0:
+>> +        s->scsi_csr_1 = val;
+>> +        break;
+>> +
+>> +    case 1:
+>> +        s->scsi_csr_2 = val;
+>> +        break;
 > 
-> Yes, it will help with 1) debugging code that is running in the guest (so
-> you can find IO addresses that it is accessing more easily) and 2) help
-> when comparing the code with "Previous":
-> 
->   https://sourceforge.net/p/previous/code/HEAD/tree/trunk/src/ioMemTabNEXT.c#l36
-> 
->>>> @@ -1000,7 +1000,7 @@ static void next_cube_init(MachineState *machine)
->>>>        sysbus_create_simple(TYPE_NEXTFB, 0x0B000000, NULL);
->>>>    
->>>>        /* MMIO */
->>>> -    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 0, 0x02000000);
->>>> +    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 0, 0x02005000);
->>>
->>> Why 0x02005000 and not directly 0x02007000 ?
->>
->> Before this patch the output of "info mtree" shows as follows:
->>
->> (qemu) info mtree
->> address-space: cpu-memory-0
->> address-space: memory
->>     0000000000000000-ffffffffffffffff (prio 0, i/o): system
->>       0000000000000000-000000000001ffff (prio 0, rom): alias next.rom2 @next.rom
->> 0000000000000000-000000000001ffff
->>       0000000001000000-000000000101ffff (prio 0, rom): next.rom
->>       0000000002000000-0000000002004fff (prio 0, i/o): next.dma
->>       0000000002000000-00000000020cffff (prio 0, i/o): next.mmio
->>       000000000200e000-000000000200efff (prio 0, i/o): next.kbd
->>       00000000020c0000-00000000020c003f (prio 0, ram): next.bmapmem
->>       0000000002100000-000000000211ffff (prio 0, i/o): next.scr
->>       0000000002114000-000000000211400f (prio 0, i/o): esp-regs
->>       0000000002118000-0000000002118003 (prio 0, i/o): escc
->>       0000000004000000-0000000007ffffff (prio 0, ram): next.ram
->>       000000000b000000-000000000b1cb0ff (prio 0, ram): next-video
->>       00000000820c0000-00000000820c003f (prio 0, ram): alias next.bmapmem2
->> @next.bmapmem 0000000000000000-000000000000003f
->>
->> All this patch does is move the start of next.mmio to 0x2005000 to avoid the overlap.
->>
->>> I think there is another range at 0x02006000 related to the ethernet
->>> controller, so directly going with 0x02007000 might cause less friction
->>> later when we add the NIC?
->>
->> By the end of the series, everything except the "global" registers in next.mmio have
->> their own memory region (or empty-slot if the target is unknown) so that "info mtree"
->> output looks like this:
->>
->> (qemu) info mtree
->> address-space: cpu-memory-0
->> address-space: memory
->>     0000000000000000-ffffffffffffffff (prio 0, i/o): system
->>       0000000000000000-000000000001ffff (prio 0, rom): alias next.rom2 @next.rom
->> 0000000000000000-000000000001ffff
->>       0000000001000000-000000000101ffff (prio 0, rom): next.rom
->>       0000000002000000-0000000002004fff (prio 0, i/o): next.dma
->>       0000000002005000-000000000200dfff (prio 0, i/o): next.mmio
->>       000000000200e000-000000000200efff (prio 0, i/o): next.kbd
->>       00000000020c0000-00000000020c003f (prio 0, ram): next.bmapmem
->>       0000000002106000-000000000210601f (prio 0, i/o): next.en
->>       0000000002110000-000000000211000f (prio -10000, i/o): empty-slot
->>       0000000002112000-000000000211200f (prio -10000, i/o): empty-slot
->>       0000000002114000-000000000211403f (prio 0, i/o): next.scsi
->>         0000000002114000-000000000211400f (prio 0, i/o): esp-regs
->>         0000000002114020-0000000002114021 (prio 0, i/o): csrs
->>       0000000002114108-000000000211410b (prio 0, i/o): next.floppy
->>       0000000002118000-0000000002118003 (prio 0, i/o): escc
->>       0000000002118004-0000000002118013 (prio -10000, i/o): empty-slot
->>       000000000211a000-000000000211a003 (prio 0, i/o): next.timer
->>       0000000004000000-0000000007ffffff (prio 0, ram): next.ram
->>       000000000b000000-000000000b1cb0ff (prio 0, ram): next-video
->>       00000000820c0000-00000000820c003f (prio 0, ram): alias next.bmapmem2
->> @next.bmapmem 0000000000000000-000000000000003f
->>
->> In this case next.en is a dummy memory region which can easily be replaced with a
->> proper device implementation: see the final version of next-cube.c after the series
->> at https://gitlab.com/mcayland/qemu/-/blob/next-cube-improvements/hw/m68k/next-cube.c.
-> 
-> If I get it right, the IO memory is mirrored at 0x2000000 and 0x2100000,
-> so the ethernet region should show up in both, 0x2006000 and 0x2106000 in
-> the end? ... those memory regions on the NeXT are very confusing, but at
-> least this is what I get from
->   https://sourceforge.net/p/previous/code/HEAD/tree/trunk/src/cpu/memory.c#l1167
-> (IO_bank is mapped twice, unless it's the 030 Cube)
+> The old code never set the scsi_csr_x directly like this, so I'm not sure
+> whether this is right?
 
-That's definitely not something I've seen before, but that certainly looks like the 
-case in Previous. I wonder whether this is something that has been measured on real 
-hardware?
+Well I initially did this on a hunch that something had gone wrong with an earlier 
+refactoring, but I just did a quick check with Previous and it also treats them as 
+normal registers (see 
+https://sourceforge.net/p/previous/code/HEAD/tree/trunk/src/esp.c#l160). So I think 
+this should be fine for now?
 
-> So I think we should make sure that we can mirror the ethernet registers at
-> 0x2006000, too?
+> Also, maybe best squash this patch together with the next patch, otherwise
+> this is temporary change in behaviour, isn't it?
 
-Yes, that's possible. I haven't really given a great deal of thought to how the 
-series reflects real hardware, but I can confirm that each commit is structured such 
-that it always boots the kernel to the same point as current master.
+If possible could I keep it as-is? It just means there is separation between the 
+change of the memory region topology and then consolidating the SCSI CSR access 
+routines in the following patch.
 
-The address decoding looks odd, but if we were to decide to do this then I'd be 
-inclined to create a memory subregion for the next-pc device, move everything from 
-0x2000000-0x20fffff into it, and then create an alias from the 0x2100000-0x21fffff 
-region back onto it.
-
-Would it be okay to leave such a change to a follow-up series? There is already a 
-huge amount of value in this series in terms of detangling the memory regions and 
-sorting out the IRQ wiring, and I think the final decision as to how to implement it 
-would depend a lot upon what happens once the DMA controller has been reworked.
+>> +    default:
+>> +        g_assert_not_reached();
+>> +    }
+>> +}
+>> +
+>> +static uint64_t next_scsi_csr_read(void *opaque, hwaddr addr, unsigned size)
+>> +{
+>> +    NeXTSCSI *s = NEXT_SCSI(opaque);
+>> +    uint64_t val;
+>> +
+>> +    switch (addr) {
+>> +    case 0:
+>> +        val = s->scsi_csr_1;
+>> +        break;
+>> +
+>> +    case 1:
+>> +        val = s->scsi_csr_2;
+>> +        break;
+>> +
+>> +    default:
+>> +        g_assert_not_reached();
+>> +    }
+>> +
+>> +    return val;
+>> +}
+>> +
+>> +static const MemoryRegionOps next_scsi_csr_ops = {
+>> +    .read = next_scsi_csr_read,
+>> +    .write = next_scsi_csr_write,
+>> +    .valid.min_access_size = 1,
+>> +    .valid.max_access_size = 1,
+>> +    .endianness = DEVICE_BIG_ENDIAN,
+>> +};
+>> +
+>>   static void next_scsi_init(Object *obj)
+>>   {
+>>       NeXTSCSI *s = NEXT_SCSI(obj);
+>> @@ -845,6 +897,9 @@ static void next_scsi_init(Object *obj)
+>>   
+>>       object_initialize_child(obj, "esp", &s->sysbus_esp, TYPE_SYSBUS_ESP);
+>>   
+>> +    memory_region_init_io(&s->scsi_csr_mem, obj, &next_scsi_csr_ops,
+>> +                          s, "csrs", 2);
+>> +
+>>       memory_region_init(&s->scsi_mem, obj, "next.scsi", 0x40);
+>>       sysbus_init_mmio(sbd, &s->scsi_mem);
+>>   }
+>> @@ -874,15 +929,30 @@ static void next_scsi_realize(DeviceState *dev, Error **errp)
+>>       memory_region_add_subregion(&s->scsi_mem, 0x0,
+>>                                   sysbus_mmio_get_region(sbd, 0));
+>>   
+>> +    /* SCSI CSRs */
+>> +    memory_region_add_subregion(&s->scsi_mem, 0x20, &s->scsi_csr_mem);
+>> +
+>>       scsi_bus_legacy_handle_cmdline(&s->sysbus_esp.esp.bus);
+>>   }
+>>   
+>> +static const VMStateDescription next_scsi_vmstate = {
+>> +    .name = "next-scsi",
+>> +    .version_id = 0,
+>> +    .minimum_version_id = 0,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_UINT8(scsi_csr_1, NeXTSCSI),
+>> +        VMSTATE_UINT8(scsi_csr_2, NeXTSCSI),
+>> +        VMSTATE_END_OF_LIST()
+>> +    },
+>> +};
+>> +
+>>   static void next_scsi_class_init(ObjectClass *klass, void *data)
+>>   {
+>>       DeviceClass *dc = DEVICE_CLASS(klass);
+>>   
+>>       dc->desc = "NeXT SCSI Controller";
+>>       dc->realize = next_scsi_realize;
+>> +    dc->vmsd = &next_scsi_vmstate;
+>>   }
+>>   
+>>   static const TypeInfo next_scsi_info = {
+>> @@ -1000,8 +1070,8 @@ static const VMStateDescription next_rtc_vmstate = {
+>>   
+>>   static const VMStateDescription next_pc_vmstate = {
+>>       .name = "next-pc",
+>> -    .version_id = 2,
+>> -    .minimum_version_id = 2,
+>> +    .version_id = 3,
+>> +    .minimum_version_id = 3,
+>>       .fields = (const VMStateField[]) {
+>>           VMSTATE_UINT32(scr1, NeXTPC),
+>>           VMSTATE_UINT32(scr2, NeXTPC),
+>> @@ -1009,8 +1079,6 @@ static const VMStateDescription next_pc_vmstate = {
+>>           VMSTATE_UINT32(int_mask, NeXTPC),
+>>           VMSTATE_UINT32(int_status, NeXTPC),
+>>           VMSTATE_UINT32(led, NeXTPC),
+>> -        VMSTATE_UINT8(scsi_csr_1, NeXTPC),
+>> -        VMSTATE_UINT8(scsi_csr_2, NeXTPC),
+>>           VMSTATE_STRUCT(rtc, NeXTPC, 0, next_rtc_vmstate, NextRtc),
+>>           VMSTATE_END_OF_LIST()
+>>       },
 
 
 ATB,
