@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F73D5B845
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 22:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EECED5B846
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 22:29:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Y9a-0000eD-1k; Mon, 28 Oct 2024 18:24:02 -0400
+	id 1t5YEW-00028Q-TX; Mon, 28 Oct 2024 18:29:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5Y9Y-0000dy-Dz
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:24:00 -0400
+ id 1t5YEU-000285-UC
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:29:07 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5Y9W-0003PE-4C
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:23:59 -0400
+ id 1t5YET-0003zS-7U
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:29:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=D3XEZ/zrR9hAA7o+N0+QdCKWn/p0B8ZG/pvdbjoH8Ek=; b=kE5t393289VRcochhwHwbEQRFD
- 0bUQhuHvgOMtPidyfnUG4xpMKMgRs8wz57k9wWcSOd9GVqWeuWx5WkI53t30Z9X6fnYujwWd5kInr
- 0zK0jMEYQwL49vhAT+u+gmCfRswGUQb9zLyKnCJsN52DYDRbpLFH8JHtJWjCJOlcLzVq0r5PA/aCO
- J5/RFw1GG8Alk/teCdIQnzHs65WfNBVNnX8d8xlA7yT1KsqnETkp0KqRDy/tBhMFaQSip+gly+/Ud
- JSlciYndw+72t/kUGlA9r1g0i2+fHPirTF9GYCqKi96ZFMRQY8lLJcve0U9tLjRmfyxSZAZZBJbNK
- K8rXFq7S7/sWggh+lZm9Xdh7iTGzwk5/drxwrSnDOmCoOlig2h6VPmRnDeCfJ3u8fRMogc9TqKUmM
- ZXL+gqjLYBcRUK3OdGmdwKqKDtiomMMfQBgZ+UK6hdZBAGLDPV3XpcZ4LF4Fhlyhl04PNrBd0XgjL
- bWpJ3WjoxN3ThOiGZqGTSI4RQVMqd0K8ZXpASImZgrInA8nKwfq0T+okC5GaYGJLMYCbnKXTumNAh
- U9DYxSdD+0DwFm9CVBRITN2HHcE8XtFtbW3pl2ubu2+AHoxkILSHvAPvD2TMcyPDNZLQD0NNjrS53
- C5OtdvXLbW92yFDDPT8N3R0DqnECAXQA5YNbdyeos=;
+ bh=/wXX8Y+cP1zNs8PZmc0ODTnEVpgArysQj+1HbjJ7Mwg=; b=MKVK0z83+WH+vY7U0od7/JmmjQ
+ EH++spqMYN+jenC6kXyZa5XcBM3FUd3K7oOIpXiSYEa244FG7WQpV/OXvbIbUOhFpegft649l3Wxp
+ MnXdwskgnkKWGN3MadvdRTDvfqknCV62KWAqFxY9hkxyI+dfPdSSZO4ljUoWl//s/2Dp8VPPOR4D2
+ XMEEtX0KIMwjK/GcStHybylHl89qyQkOT7A7fQAnXq2mZgOmlRE/LWooSvIJRhNaUe7m+fP0+GX8v
+ Z4hJ7OXJGC7gCg3hSZNxYouNqEA5Zvyeiy91RXEeA9pmhLUYDNShvy0qVDFPP4kO4m3r5521qo/Fh
+ OKjVxV1wxQlKYnOB4b0S7suombCHMay7Xfv5bKWMndPJW6j1lQBI7uFc4gv6AnPdzq/9cAw+oFXN1
+ iLlLiTCnr9z9tGF5jczYxxc+azxzCwMvUygKf7GZpebYl0HlZqyqg8eirhAA4KfwdrL35mLKZzMiA
+ gXMtOa7hEMZlaLU5f4xnJLF/SHlMNrADNC/hk6Iv6pmNIb9vVKC++TKN6SACCxz4ilnD3I/Iz376+
+ CZz80Frss6471gXxwesYfTNkTTlpSn/FiVfsb8NdIb1IsVc0gyZWQcwTOqHLEMrKZnLfDZaDaq36N
+ spX7QLMbuNvj4cAWK+Jpij/xmBvTekyA7Z+B0A58c=;
 Received: from [2a00:23c4:8bb8:f600:b5e6:5818:bcfd:7571]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5Y9A-0006Wg-1x; Mon, 28 Oct 2024 22:23:40 +0000
-Message-ID: <3ba91ec4-b0a9-4985-98f9-70c59b87c49a@ilande.co.uk>
-Date: Mon, 28 Oct 2024 22:23:51 +0000
+ id 1t5YE6-0006Zb-16; Mon, 28 Oct 2024 22:28:46 +0000
+Message-ID: <0e056742-396c-4bc8-91a8-e0a9a4dfb805@ilande.co.uk>
+Date: Mon, 28 Oct 2024 22:28:58 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Thomas Huth <huth@tuxfamily.org>
 Cc: qemu-devel@nongnu.org
 References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-11-mark.cave-ayland@ilande.co.uk>
- <20241028172237.21e83c92@tpx1>
+ <20241023085852.1061031-14-mark.cave-ayland@ilande.co.uk>
+ <20241028173939.6fada306@tpx1>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,13 +74,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20241028172237.21e83c92@tpx1>
+In-Reply-To: <20241028173939.6fada306@tpx1>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:b5e6:5818:bcfd:7571
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 10/36] next-cube: move SCSI 4020 logic from next-pc device
- to next-scsi device
+Subject: Re: [PATCH 13/36] next-cube: move ESCC to be QOM child of next-pc
+ device
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -106,229 +106,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/10/2024 16:22, Thomas Huth wrote:
-
-> Am Wed, 23 Oct 2024 09:58:26 +0100
+On 28/10/2024 16:39, Thomas Huth wrote:
+> Am Wed, 23 Oct 2024 09:58:29 +0100
 > schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 > 
->> The SCSI 4020 logic refers to the offset of the SCSI CSRs within the NeXTCube
->> address space. Due to the previously overlapping memory regions, there were
->> duplicate MMIO accessors in the next.scr memory region for these registers but
->> now this has been resolved. This allows us to move the more complex prototype
->> logic into the next-scsi MMIO accessors.
+>> Since the ESCC is part of the next-pc device, move the ESCC to be a QOM child
+>> of the next-pc device.
 >>
 >> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 >> ---
->>   hw/m68k/next-cube.c | 139 ++++++++++++++++++++------------------------
->>   1 file changed, 62 insertions(+), 77 deletions(-)
+>>   hw/m68k/next-cube.c | 54 ++++++++++++++++++++++-----------------------
+>>   1 file changed, 26 insertions(+), 28 deletions(-)
 >>
 >> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
->> index 32466a425f..22da777006 100644
+>> index 7f714640da..915dd80f6f 100644
 >> --- a/hw/m68k/next-cube.c
 >> +++ b/hw/m68k/next-cube.c
->> @@ -365,8 +365,6 @@ static const MemoryRegionOps next_mmio_ops = {
+>> @@ -124,6 +124,8 @@ struct NeXTPC {
+>>       qemu_irq scsi_reset;
+>>       qemu_irq scsi_dma;
 >>   
->>   static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
->>   {
->> -    NeXTPC *s = NEXT_PC(opaque);
->> -    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
->>       uint64_t val;
+>> +    ESCCState escc;
+>> +
+>>       NextRtc rtc;
+>>   };
 >>   
->>       switch (addr) {
->> @@ -375,16 +373,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
->>           val = 0x40 | 0x04 | 0x2 | 0x1;
->>           break;
+>> @@ -978,31 +980,6 @@ static const MemoryRegionOps next_floppy_ops = {
+>>       .endianness = DEVICE_BIG_ENDIAN,
+>>   };
 >>   
->> -    case 0x14020:
->> -        DPRINTF("SCSI 4020  STATUS READ %X\n", ns->scsi_csr_1);
->> -        val = ns->scsi_csr_1;
->> -        break;
+>> -static void next_escc_init(DeviceState *pcdev)
+>> -{
+>> -    NeXTPC *next_pc = NEXT_PC(pcdev);
+>> -    DeviceState *dev;
+>> -    SysBusDevice *s;
 >> -
->> -    case 0x14021:
->> -        DPRINTF("SCSI 4021 STATUS READ %X\n", ns->scsi_csr_2);
->> -        val = 0x40;
+>> -    dev = qdev_new(TYPE_ESCC);
+>> -    qdev_prop_set_uint32(dev, "disabled", 0);
+>> -    qdev_prop_set_uint32(dev, "frequency", 9600 * 384);
+>> -    qdev_prop_set_uint32(dev, "it_shift", 0);
+>> -    qdev_prop_set_bit(dev, "bit_swap", true);
+>> -    qdev_prop_set_chr(dev, "chrB", serial_hd(1));
+>> -    qdev_prop_set_chr(dev, "chrA", serial_hd(0));
+>> -    qdev_prop_set_uint32(dev, "chnBtype", escc_serial);
+>> -    qdev_prop_set_uint32(dev, "chnAtype", escc_serial);
+>> -
+>> -    s = SYS_BUS_DEVICE(dev);
+>> -    sysbus_realize_and_unref(s, &error_fatal);
+>> -    sysbus_connect_irq(s, 0, qdev_get_gpio_in(pcdev, NEXT_SCC_I));
+>> -    sysbus_connect_irq(s, 1, qdev_get_gpio_in(pcdev, NEXT_SCC_DMA_I));
+>> -
+>> -    memory_region_add_subregion(&next_pc->scrmem, 0x18000,
+>> -                                sysbus_mmio_get_region(s, 0));
+>> -}
+>> -
+>>   static void next_pc_reset(DeviceState *dev)
+>>   {
+>>       NeXTPC *s = NEXT_PC(dev);
+>> @@ -1043,6 +1020,28 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+>>       /* Floppy */
+>>       memory_region_add_subregion(&s->scrmem, 0x14108,
+>>                                   &s->floppy_mem);
+>> +
+>> +    /* ESCC */
+>> +    d = DEVICE(object_resolve_path_component(OBJECT(dev), "escc"));
+>> +    qdev_prop_set_uint32(d, "disabled", 0);
+>> +    qdev_prop_set_uint32(d, "frequency", 9600 * 384);
+>> +    qdev_prop_set_uint32(d, "it_shift", 0);
+>> +    qdev_prop_set_bit(d, "bit_swap", true);
+>> +    qdev_prop_set_chr(d, "chrB", serial_hd(1));
+>> +    qdev_prop_set_chr(d, "chrA", serial_hd(0));
+>> +    qdev_prop_set_uint32(d, "chnBtype", escc_serial);
+>> +    qdev_prop_set_uint32(d, "chnAtype", escc_serial);
+>> +
+>> +    sbd = SYS_BUS_DEVICE(d);
+>> +    if (!sysbus_realize(sbd, errp)) {
+>> +        return;
+>> +    }
+>> +    sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(dev, NEXT_SCC_I));
+>> +    sysbus_connect_irq(sbd, 1, qdev_get_gpio_in(dev, NEXT_SCC_DMA_I));
+>> +
+>> +    memory_region_add_subregion(&s->scrmem, 0x18000,
+>> +                                sysbus_mmio_get_region(sbd, 0));
 > 
-> Where is that hard-coded 0x40 gone now? Please mention this in the commit
-> description, otherwise this looks like a mistake?
+> You could also keep the next_escc_init() function, and call next_escc_init()
+> here?
 
-Heh I guess the part about the duplicate MMIO accessors was a little bit too cryptic? 
-I'll have a think as to how to improve the commit message for v2.
+Normally a non-QOM _init() function suffix is used to both init() and realize() a 
+device, whereas here since the ESCC device is a child of the next-pc device these 
+operations must be separate. I think I can see why this convention is used elsewhere 
+in the codebase, as otherwise you end up calling a function with a _init() prefix 
+from _realize() which can get confusing with respect to the QOM model...
 
 
 ATB,
 
 Mark.
 
->> -        break;
->> -
->>       /*
->>        * These 4 registers are the hardware timer, not sure which register
->>        * is the latch instead of data, but no problems so far.
->> @@ -413,9 +401,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
->>   static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
->>                                unsigned size)
->>   {
->> -    NeXTPC *s = NEXT_PC(opaque);
->> -    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
->> -
->>       switch (addr) {
->>       case 0x14108:
->>           DPRINTF("FDCSR Write: %"PRIx64 "\n", val);
->> @@ -424,68 +409,6 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+>>   }
+>>   
+>>   static void next_pc_init(Object *obj)
+>> @@ -1064,6 +1063,8 @@ static void next_pc_init(Object *obj)
+>>   
+>>       memory_region_init_io(&s->floppy_mem, OBJECT(s), &next_floppy_ops, s,
+>>                             "next.floppy", 4);
+>> +
+>> +    object_initialize_child(obj, "escc", &s->escc, TYPE_ESCC);
+>>   }
+>>   
+>>   /*
+>> @@ -1201,9 +1202,6 @@ static void next_cube_init(MachineState *machine)
 >>           }
->>           break;
+>>       }
 >>   
->> -    case 0x14020: /* SCSI Control Register */
->> -        if (val & SCSICSR_FIFOFL) {
->> -            DPRINTF("SCSICSR FIFO Flush\n");
->> -            /* will have to add another irq to the esp if this is needed */
->> -            /* esp_puflush_fifo(esp_g); */
->> -        }
+>> -    /* Serial */
+>> -    next_escc_init(pcdev);
 >> -
->> -        if (val & SCSICSR_ENABLE) {
->> -            DPRINTF("SCSICSR Enable\n");
->> -            /*
->> -             * qemu_irq_raise(s->scsi_dma);
->> -             * s->scsi_csr_1 = 0xc0;
->> -             * s->scsi_csr_1 |= 0x1;
->> -             * qemu_irq_pulse(s->scsi_dma);
->> -             */
->> -        }
->> -        /*
->> -         * else
->> -         *     s->scsi_csr_1 &= ~SCSICSR_ENABLE;
->> -         */
->> -
->> -        if (val & SCSICSR_RESET) {
->> -            DPRINTF("SCSICSR Reset\n");
->> -            /* I think this should set DMADIR. CPUDMA and INTMASK to 0 */
->> -            qemu_irq_raise(s->scsi_reset);
->> -            ns->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
->> -            qemu_irq_lower(s->scsi_reset);
->> -        }
->> -        if (val & SCSICSR_DMADIR) {
->> -            DPRINTF("SCSICSR DMAdir\n");
->> -        }
->> -        if (val & SCSICSR_CPUDMA) {
->> -            DPRINTF("SCSICSR CPUDMA\n");
->> -            /* qemu_irq_raise(s->scsi_dma); */
->> -            s->int_status |= 0x4000000;
->> -        } else {
->> -            /* fprintf(stderr,"SCSICSR CPUDMA disabled\n"); */
->> -            s->int_status &= ~(0x4000000);
->> -            /* qemu_irq_lower(s->scsi_dma); */
->> -        }
->> -        if (val & SCSICSR_INTMASK) {
->> -            DPRINTF("SCSICSR INTMASK\n");
->> -            /*
->> -             * int_mask &= ~0x1000;
->> -             * s->scsi_csr_1 |= val;
->> -             * s->scsi_csr_1 &= ~SCSICSR_INTMASK;
->> -             * if (s->scsi_queued) {
->> -             *     s->scsi_queued = 0;
->> -             *     next_irq(s, NEXT_SCSI_I, level);
->> -             * }
->> -             */
->> -        } else {
->> -            /* int_mask |= 0x1000; */
->> -        }
->> -        if (val & 0x80) {
->> -            /* int_mask |= 0x1000; */
->> -            /* s->scsi_csr_1 |= 0x80; */
->> -        }
->> -        DPRINTF("SCSICSR Write: %"PRIx64 "\n", val);
->> -        /* s->scsi_csr_1 = val; */
->> -        break;
->> -
->>       /* Hardware timer latch - not implemented yet */
->>       case 0x1a000:
->>       default:
->> @@ -846,13 +769,73 @@ static void next_scsi_csr_write(void *opaque, hwaddr addr, uint64_t val,
->>                                   unsigned size)
->>   {
->>       NeXTSCSI *s = NEXT_SCSI(opaque);
->> +    NeXTPC *pc = NEXT_PC(container_of(s, NeXTPC, next_scsi));
+>>       /* TODO: */
+>>       /* Network */
 >>   
->>       switch (addr) {
->>       case 0:
->> +        if (val & SCSICSR_FIFOFL) {
->> +            DPRINTF("SCSICSR FIFO Flush\n");
->> +            /* will have to add another irq to the esp if this is needed */
->> +            /* esp_puflush_fifo(esp_g); */
->> +        }
->> +
->> +        if (val & SCSICSR_ENABLE) {
->> +            DPRINTF("SCSICSR Enable\n");
->> +            /*
->> +             * qemu_irq_raise(s->scsi_dma);
->> +             * s->scsi_csr_1 = 0xc0;
->> +             * s->scsi_csr_1 |= 0x1;
->> +             * qemu_irq_pulse(s->scsi_dma);
->> +             */
->> +        }
->> +        /*
->> +         * else
->> +         *     s->scsi_csr_1 &= ~SCSICSR_ENABLE;
->> +         */
->> +
->> +        if (val & SCSICSR_RESET) {
->> +            DPRINTF("SCSICSR Reset\n");
->> +            /* I think this should set DMADIR. CPUDMA and INTMASK to 0 */
->> +            qemu_irq_raise(pc->scsi_reset);
->> +            s->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
->> +            qemu_irq_lower(pc->scsi_reset);
->> +        }
->> +        if (val & SCSICSR_DMADIR) {
->> +            DPRINTF("SCSICSR DMAdir\n");
->> +        }
->> +        if (val & SCSICSR_CPUDMA) {
->> +            DPRINTF("SCSICSR CPUDMA\n");
->> +            /* qemu_irq_raise(s->scsi_dma); */
->> +            pc->int_status |= 0x4000000;
->> +        } else {
->> +            /* fprintf(stderr,"SCSICSR CPUDMA disabled\n"); */
->> +            pc->int_status &= ~(0x4000000);
->> +            /* qemu_irq_lower(s->scsi_dma); */
->> +        }
->> +        if (val & SCSICSR_INTMASK) {
->> +            DPRINTF("SCSICSR INTMASK\n");
->> +            /*
->> +             * int_mask &= ~0x1000;
->> +             * s->scsi_csr_1 |= val;
->> +             * s->scsi_csr_1 &= ~SCSICSR_INTMASK;
->> +             * if (s->scsi_queued) {
->> +             *     s->scsi_queued = 0;
->> +             *     next_irq(s, NEXT_SCSI_I, level);
->> +             * }
->> +             */
->> +        } else {
->> +            /* int_mask |= 0x1000; */
->> +        }
->> +        if (val & 0x80) {
->> +            /* int_mask |= 0x1000; */
->> +            /* s->scsi_csr_1 |= 0x80; */
->> +        }
->> +        DPRINTF("SCSICSR1 Write: %"PRIx64 "\n", val);
->>           s->scsi_csr_1 = val;
->>           break;
->>   
->>       case 1:
->> +        DPRINTF("SCSICSR2 Write: %"PRIx64 "\n", val);
->>           s->scsi_csr_2 = val;
->>           break;
->>   
->> @@ -868,10 +851,12 @@ static uint64_t next_scsi_csr_read(void *opaque, hwaddr addr, unsigned size)
->>   
->>       switch (addr) {
->>       case 0:
->> +        DPRINTF("SCSI 4020  STATUS READ %X\n", s->scsi_csr_1);
->>           val = s->scsi_csr_1;
->>           break;
->>   
->>       case 1:
->> +        DPRINTF("SCSI 4021 STATUS READ %X\n", s->scsi_csr_2);
->>           val = s->scsi_csr_2;
->>           break;
->>   
+> 
 
 
