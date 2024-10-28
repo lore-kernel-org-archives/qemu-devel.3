@@ -4,71 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D65E4D339A8
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 17:30:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFB6BD339AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 18:01:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5TYe-00008T-JG; Mon, 28 Oct 2024 13:29:36 -0400
+	id 1t5U2e-0003OY-IP; Mon, 28 Oct 2024 14:00:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oliver.upton@linux.dev>)
- id 1t5T3H-0000Nt-1O
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:57:11 -0400
-Received: from out-189.mta1.migadu.com ([2001:41d0:203:375::bd])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oliver.upton@linux.dev>)
- id 1t5T3D-00032M-MY
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:57:10 -0400
-Date: Mon, 28 Oct 2024 09:56:51 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1730134621;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/KOhnqIpYwSqkh+if8TVn48GnX568QbnMCx/zN5PUM4=;
- b=cCvZSEcFd/1XGsQIynCXj1VZLmsOYP6o3327svSfwJaceesyFRqzjIO6goaWG2ST7TPqHO
- 8RV5bF238tMqz1xocrZBoQ5YPb4CYfFjXZ0WlGrD50G1L/rUtASS+lTVhayvg+go7wmbgx
- +srcoP8+vCGtfmwRcmYlVuiW7ho49zY=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Oliver Upton <oliver.upton@linux.dev>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- cohuck@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- kvmarm@lists.linux.dev, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com,
- mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
-Subject: Re: [RFC 18/21] arm/cpu: Introduce a customizable kvm host cpu model
-Message-ID: <Zx_CU9eeQByANMRW@linux.dev>
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <20241025101959.601048-19-eric.auger@redhat.com>
- <ZxuX4i9NjVRizB72@redhat.com>
- <cb6c8f62-c5dc-416d-865f-fbdf96164dac@redhat.com>
- <Zxub7ol4p8P_sWF8@redhat.com>
- <CAFEAcA_wQu17y0PyQwxw0wuf2H5y2VE5aX16nLP2-u7QUP2ggA@mail.gmail.com>
- <Zx-9WxXkmkMuGIlQ@redhat.com>
- <CAFEAcA9w0mb5bcU8p+fScQony-=oqLmNurGWpnL_sBneQCzxUg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1t5U2c-0003OF-Ah
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 14:00:34 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1t5U2Z-0001Hy-S6
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 14:00:33 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-20c767a9c50so40211275ad.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 11:00:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1730138428; x=1730743228; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=b0rW5l2XZ6Nw2fu/nZcpUdxNW/V8lTRBDsOwCDhO4vM=;
+ b=OKZjCbpWKlrMXxNhohWQh8C+nPQcrKLGhu5m5jD5ajbe+aSM1vcyBxtZNik1BBA/e7
+ jv5OGr4lCM0usIh2wE1qBzsHA7u9eOCGGh8veP+pCy++44uoYpcr4Czt8Z4DcsG0g/O9
+ 3ndPxs5Xt0H5CCLRP87d6KOabmUFVgBZjVcf9TlUz/KRD2Xg2K2qR2Zv/t8rcbyUvvmZ
+ WpEQebcdniFq8u3BYyvn+7SAe1WXgJ8y5aHqlBI+yMN5HfrlLQWea73tgmhB/6Y3mVwW
+ Quwu+KKzo1Hs5m56o5jfkuPQk3lyr2itw8RKQV9h5CSs3rW4OzRtC3EIl/KFpOEUCJTW
+ qCUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730138428; x=1730743228;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=b0rW5l2XZ6Nw2fu/nZcpUdxNW/V8lTRBDsOwCDhO4vM=;
+ b=LWRIZnfiTReb6uFL8wCiCbaJrSt2SN+pwF67IYYwUhGvk9YHvbiUrcJlHNRf6CnUsq
+ Z4o877NVy0pxAiMX3w37B+JTEgEKtpLBpAisIBcnd56snnHLNkEMDk2j7F+ykp6KQA/G
+ XOpWIg4+bTLdy1sugMuTwJwK661PhzATyrOV2QzZJRMyVA0Om4uHYJtw9p75m0JwL4/Y
+ QlAqfeZ454JfoUmnORg0kga1Dw+dpTyAAx3BvarYOn9+eqguvxMhbawcxr3aZBlQtBlf
+ wSrkF7WnjYy0aYTUd9xFdu3mKsjGFNv9so1QDOpHEgwCZ9FTX+fmIBUkGgaWosJsgtFf
+ qegw==
+X-Gm-Message-State: AOJu0YwGQzVxoBE1kxbyD8xJicXA9CN5r755m3lO8a5ny3jTDgFE1N1L
+ aCcqJ1g8yZL8bN/ox5Z4srh4Np2Qu6FrS6O2RS112TZa3XBen0ZnWEubaeT89euluDv0Wliiy5B
+ H
+X-Google-Smtp-Source: AGHT+IFnATb/+FAwNaLpgWCyPgmeYbk/TYlvB5aqkNF3AVjctXP6rHbInR+JvR4bHPTigH5jRykjnQ==
+X-Received: by 2002:a17:902:e842:b0:20b:920e:8fd3 with SMTP id
+ d9443c01a7336-210c6c30b32mr128560115ad.35.1730138426895; 
+ Mon, 28 Oct 2024 11:00:26 -0700 (PDT)
+Received: from [192.168.68.110] ([191.8.109.222])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-210bc02ebcdsm52977805ad.223.2024.10.28.11.00.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Oct 2024 11:00:26 -0700 (PDT)
+Message-ID: <f6d26471-9137-498f-b295-2bd6fad7241f@ventanamicro.com>
+Date: Mon, 28 Oct 2024 15:00:22 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA9w0mb5bcU8p+fScQony-=oqLmNurGWpnL_sBneQCzxUg@mail.gmail.com>
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:203:375::bd;
- envelope-from=oliver.upton@linux.dev; helo=out-189.mta1.migadu.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] target/riscv/kvm: add riscv-aia bool props
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com
+References: <20240924124407.766495-1-dbarboza@ventanamicro.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240924124407.766495-1-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 28 Oct 2024 13:29:26 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,57 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 28, 2024 at 04:48:18PM +0000, Peter Maydell wrote:
-> On Mon, 28 Oct 2024 at 16:35, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Mon, Oct 28, 2024 at 04:16:31PM +0000, Peter Maydell wrote:
-> > > On Fri, 25 Oct 2024 at 14:24, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > > On Fri, Oct 25, 2024 at 03:18:25PM +0200, Eric Auger wrote:
-> > > > > On 10/25/24 15:06, Daniel P. Berrangé wrote:
-> > > > > > Also, is this naming convention really the same one that users
-> > > > > > will see when they look at /proc/cpuinfo to view features ? It
-> > > > > No it is not. I do agree that the custom cpu model is very low level. It
-> > > > > is very well suited to test all series turning ID regs as writable but
-> > > > > this would require an extra layer that adapts /proc/cpuinfo feature
-> > > > > level to this regid/field abstraction.
-> > > > >
-> > > > > In /cpu/proc you will see somethink like:
-> > > > >  Features    : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp
-> > > > > asimdhp cpuid asimdrdm lrcpc dcpop asimddp
-> > > >
-> > > > Right, IMHO, this is the terminology that QEMU must use in user
-> > > > facing APIs.
-> > >
-> > > /proc/cpuinfo's naming is rather weird for historical
-> > > reasons (for instance there is only one FEAT_FP16 feature
-> > > but cpuinfo lists "fphp" and "asimdhp" separately).
-> >
-> > There's plenty of wierd history in x86 too. In this
-> > case I might suggest just picking one of the two
-> > common names, and ignoring the other.
-> >
-> > If we really wanted to, we could alias the 2nd name
-> > to the first, but its likely not worth the bother.
+Hi,
+
+I had a change of heart w.r.t this work. I still believe that the boolean properties
+are better to deal with since we don't have to deal with string parsing, and that we
+should avoid creating new string props in the future.
+
+But as far as the user API goes it doesn't matter that much. Having to do
+
+-accel kvm,riscv-aia=emul
+
+or
+
+-accel kvm,riscv-aia-emul=on
+
+is basically the same thing. Deprecate properties always creates some form of hassle
+for existing scripts and whatnot and we should avoid it.
+
+String properties aren't that great to report to APIs though, so what we can do is to
+create internal bools to track the string value and then use it for QMP.
+
+
+Long story short, I'll re-send this series with only patches 1 and 2. Thanks,
+
+
+Daniel
+
+
+
+On 9/24/24 9:44 AM, Daniel Henrique Barboza wrote:
+> Hi,
 > 
-> Or we could use the standard set of architectural
-> feature names, and not have the problem at all, and not
-> have to document what we mean by our nonstandard names.
-
-+1
-
-There's existing documentation [*] for the standard feature names, which
-provides:
-
- - A short description of what the feature does
- - Any dependencies a particular feature has (e.g.FEAT_VHE implies
-   FEAT_LSE, FEAT_Debugv8p1, and FEAT_AA64EL2)
- - The register fields/values that are used to discover the feature.
-
-This seems like the most user-friendly option...
-
-[*]: https://developer.arm.com/documentation/109697/2024_09
-
--- 
-Thanks,
-Oliver
+> Boolean properties are easier to deal with in the protocol side (e.g.
+> QMP) since they don't require string parsing. We should always use them
+> when applicable.
+> 
+> This series adds 3 new riscv-aia bool options for the KVM accel driver,
+> each one representing the possible values (emul, hwaccel and auto).
+> We're also deprecating the existing 'riscv-aia' string option.
+> 
+> The idea is to use the new properties to enable AIA support in libvirt.
+> 
+> Patches based on riscv-to-apply.next.
+> 
+> Daniel Henrique Barboza (4):
+>    target/riscv/kvm: set 'aia_mode' to default in error path
+>    target/riscv/kvm: clarify how 'riscv-aia' default works
+>    target/riscv/kvm: add kvm-aia bools props
+>    target/riscv/kvm: deprecate riscv-aia string prop
+> 
+>   docs/about/deprecated.rst  |   8 +++
+>   target/riscv/kvm/kvm-cpu.c | 100 +++++++++++++++++++++++++++++++++----
+>   2 files changed, 98 insertions(+), 10 deletions(-)
+> 
 
