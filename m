@@ -4,71 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9723DD13588
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 08:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0730D13588
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 08:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5LIa-0006Tw-VU; Mon, 28 Oct 2024 04:40:29 -0400
+	id 1t5LJb-00075H-Og; Mon, 28 Oct 2024 04:41:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t5LIQ-0006Se-EV
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 04:40:19 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
+ id 1t5LJZ-00074t-1a
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 04:41:29 -0400
+Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t5LIO-0002jj-2p
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 04:40:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730104816; x=1761640816;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=giOUIlMYY9g+1lp8uUNbkptN/mLl6W7Jm/JD1/sGYxQ=;
- b=RM8RwWzp8o8sA91OsDeCcb0GtcVWJzG0IRP1d5glGL7OfooCfCEp00Kx
- 3bDI8bEXffQFEI0gJJe80CT5Ne1DJBxFR8w/NDJSDoLCMPC+2nA3/Qvmd
- De3qFPiDcRxFs6KSfz7jfz8yO9mSaTrE2szGScbW74I4PkCZwQrEKNffI
- DB7c82a2x1yBlaRgLgsU7Pt3K4H6lIDz2n6REOxunVCx7fBDzd8bQjXZM
- PZ+5OMgFf15Oecbnjay41d29lCOii0AzbTUP5buNFqW7yo16D0xLwV6UY
- L2r1GsTdVDqeBAvJhSumK2Y13LJzviKcTqhUp1d5+aFX6PgRzeV+uHyOe A==;
-X-CSE-ConnectionGUID: NXnVoC/7QOyRp37bh4o8rw==
-X-CSE-MsgGUID: mSLpcJ6UTjO75bXoTWjExw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="29553258"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="29553258"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Oct 2024 01:39:57 -0700
-X-CSE-ConnectionGUID: ePYqHz3ZTLCh3IhLXteREA==
-X-CSE-MsgGUID: wxQqWWDYQZSja73delKz4g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="86292516"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa003.jf.intel.com with ESMTP; 28 Oct 2024 01:39:55 -0700
-Date: Mon, 28 Oct 2024 16:56:14 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Babu Moger <babu.moger@amd.com>
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v3 5/7] target/i386: Expose bits related to SRSO
- vulnerability
-Message-ID: <Zx9Rrtks38sqcn44@intel.com>
-References: <cover.1729807947.git.babu.moger@amd.com>
- <dadbd70c38f4e165418d193918a3747bd715c5f4.1729807947.git.babu.moger@amd.com>
+ (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
+ id 1t5LJX-0002pB-I8
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 04:41:28 -0400
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+ by metis.whiteo.stw.pengutronix.de with esmtps
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <jlu@pengutronix.de>)
+ id 1t5LJA-00020f-Oi; Mon, 28 Oct 2024 09:41:04 +0100
+Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77])
+ by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <jlu@pengutronix.de>) id 1t5LJ9-000orQ-2Y;
+ Mon, 28 Oct 2024 09:41:03 +0100
+Received: from localhost ([127.0.0.1])
+ by ptz.office.stw.pengutronix.de with esmtp (Exim 4.96)
+ (envelope-from <jlu@pengutronix.de>) id 1t5LJ9-008dmI-0C;
+ Mon, 28 Oct 2024 09:41:03 +0100
+Message-ID: <670fa7bf052d8f292f9bd25c330c8d7bdba02770.camel@pengutronix.de>
+Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
+From: Jan =?ISO-8859-1?Q?L=FCbbe?= <jlu@pengutronix.de>
+To: Guenter Roeck <linux@roeck-us.net>, =?ISO-8859-1?Q?C=E9dric?= Le Goater	
+ <clg@kaod.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
+ <thuth@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>, Joel Stanley
+ <joel@jms.id.au>, qemu-block <qemu-block@nongnu.org>
+Date: Mon, 28 Oct 2024 09:41:03 +0100
+In-Reply-To: <4246f82b-597c-4a5d-9a55-18a584e7d8c7@roeck-us.net>
+References: <20241017163247.711244-1-peter.maydell@linaro.org>
+ <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
+ <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
+ <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
+ <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
+ <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
+ <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
+ <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
+ <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
+ <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
+ <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
+ <53cbb597-e7f2-4742-bf85-928c704ddbcf@linaro.org>
+ <443f1b0c-8184-4bf4-9f68-c23d7de3bc36@roeck-us.net>
+ <1bce4c22-9281-44c5-8acb-860881dc271c@kaod.org>
+ <c27fbed6-596e-4ce7-a6ca-6d12d7205e99@roeck-us.net>
+ <86fa6e68-5861-4d4d-941f-95b278074eb6@kaod.org>
+ <1c917e4a-de50-45b9-ac9c-eb04d51401a2@roeck-us.net>
+ <00997cca-6f4a-4b99-9616-2af6a25cd4fb@kaod.org>
+ <4246f82b-597c-4a5d-9a55-18a584e7d8c7@roeck-us.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.1 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <dadbd70c38f4e165418d193918a3747bd715c5f4.1729807947.git.babu.moger@amd.com>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: jlu@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
+ SAEximRunCond expanded to false
+X-PTX-Original-Recipient: qemu-devel@nongnu.org
+Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
+ envelope-from=jlu@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.287,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,100 +95,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Babu
+On Sun, 2024-10-27 at 20:32 -0700, Guenter Roeck wrote:
+> On 10/27/24 15:26, C=C3=A9dric Le Goater wrote:
+> > On 10/27/24 23:11, Guenter Roeck wrote:
+> > > On 10/27/24 14:13, C=C3=A9dric Le Goater wrote:
+> > > > On 10/26/24 17:32, Guenter Roeck wrote:
+> > > > > On 10/26/24 03:02, C=C3=A9dric Le Goater wrote:
+> > > > > [ ... ]
+> > > > >=20
+> > > > > >=20
+> > > > > Works for me, though, and it is much better than mandating the ex=
+istence
+> > > > > of boot partitions.
+> > > >=20
+> > > > Yes. However, if the emmc device was user creatable, we could use :
+> > > >=20
+> > > > =C2=A0=C2=A0 -blockdev node-name=3Demmc0,driver=3Dfile,filename=3Dm=
+mc-ast2600-evb-noboot.raw \
+> > > > =C2=A0=C2=A0 -device emmc,bus=3Dsdhci-bus.2,drive=3Demmc0
+> > > >=20
+> > > > and with boot partitions:
+> > > >=20
+> > > > =C2=A0=C2=A0 -M boot-emmc=3Dtrue \
+> > > > =C2=A0=C2=A0 -blockdev node-name=3Demmc0,driver=3Dfile,filename=3Dm=
+mc-ast2600-evb.raw \
+> > > > =C2=A0=C2=A0 -device emmc,bus=3Dsdhci-bus.2,drive=3Demmc0,boot-part=
+ition-size=3D1048576,boot-config=3D8
+> > > >=20
+> > > > The above would be my preferred approach if acceptable. The "sd-bus=
+"
+> > > > bus identifier should be changed in other machines tough.
+> > >=20
+> > > No real preference here, though my understanding is that emmc devices
+> > > are by definition built-in, and that is what emmc_class_init() says a=
+s well.
+> > > Also, there does not seem to be an sdhci-bus, only sd-bus, and that d=
+oes
+> > > not support any index values. That may be just my lack of knowledge, =
+though.
+> >=20
+> > No, you are right. On a real ast2600-evb, the eMMC device is indeed
+> > soldered on the board. But, for testing purposes, it is sometime
+> > interesting to add some flexibility in the machine definition and
+> > in the modeling too. This avoids "hard-coding" default devices in
+> > the machines and lets the user define its own variant models using
+> > the QEMU command line.
+>=20
+> I would agree, but I had a number of my patches rejected because while
+> they would be useful for testing they would not accurately reflect the
+> hardware. So nowadays I gave up even trying to upstream such changes.
 
-On Thu, Oct 24, 2024 at 05:18:23PM -0500, Babu Moger wrote:
-> Date: Thu, 24 Oct 2024 17:18:23 -0500
-> From: Babu Moger <babu.moger@amd.com>
-> Subject: [PATCH v3 5/7] target/i386: Expose bits related to SRSO
->  vulnerability
-> X-Mailer: git-send-email 2.34.1
-> 
-> Add following bits related Speculative Return Stack Overflow (SRSO).
-> Guests can make use of these bits if supported.
-> 
-> These bits are reported via CPUID Fn8000_0021_EAX.
-> ===================================================================
-> Bit Feature Description
-> ===================================================================
-> 27  SBPB                Indicates support for the Selective Branch Predictor Barrier.
-> 28  IBPB_BRTYPE         MSR_PRED_CMD[IBPB] flushes all branch type predictions.
-> 29  SRSO_NO             Not vulnerable to SRSO.
-> 30  SRSO_USER_KERNEL_NO Not vulnerable to SRSO at the user-kernel boundary.
-> ===================================================================
-> 
-> Link: https://www.amd.com/content/dam/amd/en/documents/corporate/cr/speculative-return-stack-overflow-whitepaper.pdf
-> Link: https://www.amd.com/content/dam/amd/en/documents/epyc-technical-docs/programmer-references/57238.zip
+My patch to make eMMCs user creatable [1] was applied to target-
+arm.next by Peter Maydell [2] last week.
 
-I suggest updating the description of SRSO-related mitigations in the
-"Important CPU features for AMD x86 hosts" section of docs/system/
-cpu-models-x86.rst.inc.
+Jan
 
-If you could also synchronize the CPU model (you added in this series)
-in the "Preferred CPU models for AMD x86 hosts" section, that would be
-even better. :-)
+[1] https://lore.kernel.org/qemu-devel/20241015135649.4189256-1-jlu@pengutr=
+onix.de/
+[2] https://lore.kernel.org/qemu-devel/CAFEAcA9sjszCj=3DFu-A-=3DqQV_jawnomJ=
+-Nqnd=3DVx2vLKmYZ1-nQ@mail.gmail.com/
 
-> Signed-off-by: Babu Moger <babu.moger@amd.com>
-> ---
-> v3: New patch
-> ---
->  target/i386/cpu.c |  2 +-
->  target/i386/cpu.h | 14 +++++++++++---
->  2 files changed, 12 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 690efd4085..642e71b636 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -1221,7 +1221,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
->              NULL, NULL, NULL, NULL,
->              NULL, NULL, NULL, NULL,
->              NULL, NULL, NULL, "sbpb",
-> -            "ibpb-brtype", NULL, NULL, NULL,
-> +            "ibpb-brtype", "srso-no", "srso-user-kernel-no", NULL,
->          },
->          .cpuid = { .eax = 0x80000021, .reg = R_EAX, },
->          .tcg_features = 0,
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index e0dea1ba54..792518b62d 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -1015,13 +1015,21 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
->  #define CPUID_8000_0008_EBX_AMD_PSFD    (1U << 28)
->  
->  /* Processor ignores nested data breakpoints */
-> -#define CPUID_8000_0021_EAX_NO_NESTED_DATA_BP    (1U << 0)
-> +#define CPUID_8000_0021_EAX_NO_NESTED_DATA_BP            (1U << 0)
->  /* LFENCE is always serializing */
->  #define CPUID_8000_0021_EAX_LFENCE_ALWAYS_SERIALIZING    (1U << 2)
->  /* Null Selector Clears Base */
-> -#define CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE    (1U << 6)
-> +#define CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE            (1U << 6)
->  /* Automatic IBRS */
-> -#define CPUID_8000_0021_EAX_AUTO_IBRS   (1U << 8)
-> +#define CPUID_8000_0021_EAX_AUTO_IBRS                    (1U << 8)
-> +/* Selective Branch Predictor Barrier */
-> +#define CPUID_8000_0021_EAX_SBPB                         (1U << 27)
-> +/* IBPB includes branch type prediction flushing */
-> +#define CPUID_8000_0021_EAX_IBPB_BRTYPE                  (1U << 28)
-> +/* Not vulnerable to Speculative Return Stack Overflow */
-> +#define CPUID_8000_0021_EAX_SRSO_NO                      (1U << 29)
-> +/* Not vulnerable to SRSO at the user-kernel boundary */
-> +#define CPUID_8000_0021_EAX_SRSO_USER_KERNEL_NO          (1U << 30)
+--=20
+Pengutronix e.K.                        |                             |
+Steuerwalder Str. 21                    | https://www.pengutronix.de/ |
+31137 Hildesheim, Germany               | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686        | Fax:   +49-5121-206917-5555 |
 
-These feature bits defination could be added in patch 7 because only
-patch 7 uses these macros.
 
-BTW, which platform supports CPUID_8000_0021_EAX_SRSO_NO? I found that
-even the Turin model added in patch 7 does not support this feature.
-
-Thanks,
-Zhao
-
->  /* Performance Monitoring Version 2 */
->  #define CPUID_8000_0022_EAX_PERFMON_V2  (1U << 0)
-> -- 
-> 2.34.1
-> 
-> 
 
