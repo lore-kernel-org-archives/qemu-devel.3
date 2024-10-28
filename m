@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380F4D13570
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 08:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91A67D13570
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 08:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5LJm-00076G-61; Mon, 28 Oct 2024 04:41:42 -0400
+	id 1t5LNn-00009u-CC; Mon, 28 Oct 2024 04:45:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5LJW-00074b-Dt
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 04:41:26 -0400
+ id 1t5LNk-00009a-QV
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 04:45:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5LJU-0002os-Uq
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 04:41:26 -0400
+ id 1t5LNi-0003KC-SZ
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 04:45:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730104884;
+ s=mimecast20190719; t=1730105145;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1iXUFwt0qqJJD1gEo8JfaHTVjJrF7vv8mzvggylZaVI=;
- b=ZFFsAPotTOaYvGaGvt1f6sYstoZl4tOdrHLhvLNG2/NyCifWYwBfaWz4rz7u76MmXdBafG
- T2D+EWEXB/u3Az0RsygDd2XUls+aOLiLnk9G09veKhn9zxT9wP2b6lgP6UTwPhFF4AI51U
- L51AGQ6oclplHuGmS3yUA98HmY1T81E=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=W9d2md+rF/DE41CkAgSmJLWRtunHWpx/LhJn21u4iQ0=;
+ b=IDNx1GkesJgmeB9jIDsTlc2xPW+oYNsHN44JLWOvnuUboSL/vy4B2LR4R+cOr/V45EWvlU
+ khLprZ9pOaDw8V1wndNxbzA0Fk+DvGa+rQ5sF+7CiHaPILfNrpWmxjTO1Qiwtx/eAPOgGK
+ xfv/JwrPmYWMQbQAvf7S48DYi1gc644=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-52-HUwmuZV7N5iF3kQAo7eL7g-1; Mon, 28 Oct 2024 04:41:21 -0400
-X-MC-Unique: HUwmuZV7N5iF3kQAo7eL7g-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-431518e6d8fso30058685e9.0
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 01:41:20 -0700 (PDT)
+ us-mta-202-T4fEIHTFOxemm0M8gLkgPA-1; Mon, 28 Oct 2024 04:45:44 -0400
+X-MC-Unique: T4fEIHTFOxemm0M8gLkgPA-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-539e4cd976dso2208316e87.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 01:45:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730104880; x=1730709680;
+ d=1e100.net; s=20230601; t=1730105142; x=1730709942;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1iXUFwt0qqJJD1gEo8JfaHTVjJrF7vv8mzvggylZaVI=;
- b=tju4Uz1dqcS8A5wvbyld55WmKV4vu3lBhgBq8X0BnlzqCR/8twfENvj4g3qJRDeDtx
- 8k+RLVWE9jki+5LOojTUP0IJlSmJ7+zWJxQcmIUJjX8NZS6MAAA9qXXorHVXFHYkzHh8
- t6xmxJG6TuQxY4pFYHKANXa2ha/M4h4zqf9uzLTokOdeMnOsE31r73on6WUpZsFJecEO
- lrLgVs6nWEr37FbTgF4Rwg/eMlxnG/nUNk+FqosEbZARiMcPmOsLMQKxhvG3rFfV+Lkk
- Fy8X+epvJk69jrrNA58XGOFruXColZVKjkpcszD8a4Ui/Njbq6gRPCTvXOFqwhqBJGpd
- od0w==
+ bh=W9d2md+rF/DE41CkAgSmJLWRtunHWpx/LhJn21u4iQ0=;
+ b=o7viXieoRiRIMkcw/uXxr+tGnyuEY9KR/WqnwphNN4ZDg3hii93WO3ImbGwgnrjl4W
+ ZTbXTOQpurnhAywhKMv/ZxozjTVFDa9Ls/VzzgnYnHx4GcOEeVcL5CAfJnI663hHeyft
+ eQcRTREqMlOJ+sgZnL7KHEYoqLxVnOlJltMeOvvPOzCpEzf5niVU8BGX2u/sBEEzYfEu
+ 667Za+2zWryiz/WOF1F43ukDXrgvKnDcOYDpXWAzGHYgb5pQwRNUeQPin9tEmBpzNdZ1
+ PKytEX0Th83cRhN8dJq1slnJtZE60ZIFpy5NhxM1PvA3mKOpXRzdDMINtaVEu3X7iYzC
+ jJXA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXsKnDU1guVFPdxeZrKCJFqSsY0TUFmKVU4dqrcsSTcNr2+di2gc88lm2hthUHwj4fuwSa7Y0v3HFUt@nongnu.org
-X-Gm-Message-State: AOJu0YwsGUCOjIKccvcU0boAv8wR4EtOSxr28OM8SGJ6yNSS0c/wrQgg
- yObW49vmxhmLewIjviG8Rzn1F8E1Y+jbRzhQ9sq+0a3YHP61rWFIdhBCD7o7n8MYDXOzXZXB8nj
- m2e/UMOnMnjopL4ruz9+meezjeuglghc0UpqB2aQUUESh10/sZBCk
-X-Received: by 2002:a05:600c:19d3:b0:431:58c4:2eb9 with SMTP id
- 5b1f17b1804b1-4319ac78f0cmr66124285e9.3.1730104878381; 
- Mon, 28 Oct 2024 01:41:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFd+k0tsAIdgsyRxb3u9QEYAbKijzCZpR1Dme8HAZuOYEYBuZ6Pzo77eZ85GI5uS00f5fOUSQ==
-X-Received: by 2002:a05:600c:19d3:b0:431:58c4:2eb9 with SMTP id
- 5b1f17b1804b1-4319ac78f0cmr66123385e9.3.1730104876429; 
- Mon, 28 Oct 2024 01:41:16 -0700 (PDT)
+ AJvYcCWS2t7OI6u8KrpuPZCZZvN0eaTjoQDZB38JMneYzztmXFUps58sfEYftjI7OgqzHs1N1LtmMXM7bz14@nongnu.org
+X-Gm-Message-State: AOJu0YyHX9cf3OSNCNFSKrxJPxqzYHCIRiUejj9Vakug/u6JmTuY+mV0
+ /a4nT/qbkqGTtp6lubECo3B/MyFKTi3W+rX0xtOfPox/mxsdYfOs4NPTMNCqSYNv5wpWDVK+khm
+ LrHVrgCS7lTOV4lyZKVl2x3uIs+Naer5HoJOsVyqgdmxUHVre9YcqI6v4LzcQUFM=
+X-Received: by 2002:a05:6512:1585:b0:539:8c02:64d5 with SMTP id
+ 2adb3069b0e04-53b348da77amr2558975e87.27.1730105141613; 
+ Mon, 28 Oct 2024 01:45:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9vxRbcMZRS7XDi98pU/jnSfP14wjCsRyU1v9rHz3EborQaGOV4g6rEdani0lMCUd7BQaW+g==
+X-Received: by 2002:a05:6512:1585:b0:539:8c02:64d5 with SMTP id
+ 2adb3069b0e04-53b348da77amr2558962e87.27.1730105141182; 
+ Mon, 28 Oct 2024 01:45:41 -0700 (PDT)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-4318b567fe8sm131443385e9.28.2024.10.28.01.41.15
+ 5b1f17b1804b1-4318b542d3csm132084215e9.9.2024.10.28.01.45.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Oct 2024 01:41:15 -0700 (PDT)
-Message-ID: <3adc6dab-25c2-4303-b382-153e843123bf@redhat.com>
-Date: Mon, 28 Oct 2024 09:41:14 +0100
+ Mon, 28 Oct 2024 01:45:40 -0700 (PDT)
+Message-ID: <b9ca7c3e-86e6-4a25-9295-573dbacf0ce1@redhat.com>
+Date: Mon, 28 Oct 2024 09:45:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] target/i386: Add AVX512 state when AVX10 is supported
+Subject: Re: [PATCH 4/6] target/i386: Add feature dependencies for AVX10
 To: Tao Su <tao1.su@linux.intel.com>, qemu-devel@nongnu.org
 Cc: mtosatti@redhat.com, xiaoyao.li@intel.com, xuelian.guo@intel.com
 References: <20241028024512.156724-1-tao1.su@linux.intel.com>
- <20241028024512.156724-2-tao1.su@linux.intel.com>
+ <20241028024512.156724-5-tao1.su@linux.intel.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -114,7 +114,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20241028024512.156724-2-tao1.su@linux.intel.com>
+In-Reply-To: <20241028024512.156724-5-tao1.su@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -143,71 +143,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/28/24 03:45, Tao Su wrote:
-> AVX10 state enumeration in CPUID leaf D and enabling in XCR0 register
-> are identical to AVX512 state regardless of the supported vector lengths.
+> Since the highest supported vector length for a processor implies that
+> all lesser vector lengths are also supported, add the dependencies of
+> the supported vector lengths. If all vector lengths aren't supported,
+> clear AVX10 enable bit as well.
 > 
-> Given that some E-cores will support AVX10 but not support AVX512, add
-> AVX512 state components to guest when AVX10 is enabled.
-> 
-> Tested-by: Xuelian Guo <xuelian.guo@intel.com>
-> Signed-off-by: Tao Su <tao1.su@linux.intel.com>
-> ---
->   target/i386/cpu.c | 14 ++++++++++++++
->   target/i386/cpu.h |  2 ++
->   2 files changed, 16 insertions(+)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 1ff1af032e..d845ff5e4e 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -7177,6 +7177,13 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
->           }
->           if (env->features[esa->feature] & esa->bits) {
->               xcr0 |= 1ull << i;
-> +            continue;
-> +        }
-> +        if (i == XSTATE_OPMASK_BIT || i == XSTATE_ZMM_Hi256_BIT ||
-> +            i == XSTATE_Hi16_ZMM_BIT) {
+> Note that the order of AVX10 related dependencies should be kept as:
+>          CPUID_24_0_EBX_AVX10_128     -> CPUID_24_0_EBX_AVX10_256,
+>          CPUID_24_0_EBX_AVX10_256     -> CPUID_24_0_EBX_AVX10_512,
+>          CPUID_24_0_EBX_AVX10_VL_MASK -> CPUID_7_1_EDX_AVX10,
 
-Can you confirm that XSTATE_ZMM_Hi256_BIT depends on AVX10 and not 
-AVX10-512?
+I think you need to add a set of dependencies so that avx10 cannot be 
+set, unless all the older AVX features that it's composed of are 
+available.  From the manual these are
+
+AVX512F, AVX512CD, AVX512VW, AVX512DQ, AVX512_VBMI, AVX512_IFMA, 
+AVX512_VNNI, AVX512_BF16, AVX512_VPOPCNTDQ, AVX512_VBMI2, VAES, GFNI,
+VPCLMULQDQ, AVX512_BITALG, AVX512_FP16.
+
+Otherwise, the changes look good.
 
 Thanks,
 
 Paolo
-
-> +            if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) {
-> +                xcr0 |= 1ull << i;
-> +            }
->           }
->       }
->   
-> @@ -7315,6 +7322,13 @@ static void x86_cpu_enable_xsave_components(X86CPU *cpu)
->           const ExtSaveArea *esa = &x86_ext_save_areas[i];
->           if (env->features[esa->feature] & esa->bits) {
->               mask |= (1ULL << i);
-> +            continue;
-> +        }
-> +        if (i == XSTATE_OPMASK_BIT || i == XSTATE_ZMM_Hi256_BIT ||
-> +            i == XSTATE_Hi16_ZMM_BIT) {
-> +            if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) {
-> +                mask |= (1ULL << i);
-> +            }
->           }
->       }
->   
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 74886d1580..280bec701c 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -972,6 +972,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
->   #define CPUID_7_1_EDX_AMX_COMPLEX       (1U << 8)
->   /* PREFETCHIT0/1 Instructions */
->   #define CPUID_7_1_EDX_PREFETCHITI       (1U << 14)
-> +/* Support for Advanced Vector Extensions 10 */
-> +#define CPUID_7_1_EDX_AVX10             (1U << 19)
->   /* Flexible return and event delivery (FRED) */
->   #define CPUID_7_1_EAX_FRED              (1U << 17)
->   /* Load into IA32_KERNEL_GS_BASE (LKGS) */
 
 
