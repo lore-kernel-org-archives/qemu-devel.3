@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 559CBD3398C
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:30:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA6FCD3398C
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Qkm-0000A9-VQ; Mon, 28 Oct 2024 10:29:59 -0400
+	id 1t5Qkv-0000Cf-9w; Mon, 28 Oct 2024 10:30:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5Qkd-00009K-P6
+ id 1t5Qkd-00009N-R0
  for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:29:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5Qkb-0003gw-D2
+ id 1t5Qkb-0003gz-V3
  for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:29:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730125784;
+ s=mimecast20190719; t=1730125781;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xLiFAGc03L9VlsBrqIPUlTjf8Uu0ODAtffzXEXaCymk=;
- b=ZzcyOXopGhF2f1MDMX968DYXRULv1wnt4UPQD2EE7Y33D70D6BmERLinjLabLL7ruyXWxN
- tjM7cyWuuWOvC0591akXVuWj8HcXJH+c1PI1F0WJD4BIkpRsSBN2B7PXgUksjfIlYa9dxK
- 1jwWh5JQYNj6Fv2Wvg4KkcV5Or1vaeY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/IqAdLZglfKpF6mjDCcx9wZhknDWLZEahtdtuSLLUoE=;
+ b=Pv//e51lOQrZ6rufJ3L1+1yXw/e+G1Ufd3dxbKbdIf7mu6tEbyJtRO5JW8UEmpHWV15YsK
+ AU6oW8ZiG1NiX8ACjkTi6N1Z3jtwQvLrY3NlKJQO7Lqhp44nDd3plZlif4CTAY0z8p291V
+ fmwOpAuSVxRsU/CO4k25gt28k8uSvj4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-410-NOoFlOf_Oi-OlNzH2l_isQ-1; Mon, 28 Oct 2024 10:29:42 -0400
-X-MC-Unique: NOoFlOf_Oi-OlNzH2l_isQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-431518ae047so27971345e9.0
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:29:42 -0700 (PDT)
+ us-mta-13-0mqi-hBPNWq4wv9AVN2EwQ-1; Mon, 28 Oct 2024 10:29:38 -0400
+X-MC-Unique: 0mqi-hBPNWq4wv9AVN2EwQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4315af466d9so29854315e9.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:29:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730125781; x=1730730581;
+ d=1e100.net; s=20230601; t=1730125776; x=1730730576;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xLiFAGc03L9VlsBrqIPUlTjf8Uu0ODAtffzXEXaCymk=;
- b=OBcQVVp1qQUO09dnwT0cQ9gC/iM/0uuDh6SjdRF0i67POt6NzhiYyCSwlYJJGicaty
- t8tmlBFxiB4/r+lD/HwMFmo+HoTY+MnkQswGcT4ZLo4mN9i/drC2omzR7ploL934LUUo
- P1YPTkiuMGJdYgUWDy8rripiy4UD+I+qbmXQxiKAmJ0dPcBHD+qhqwmBkS/gFXYqJSJe
- ih6pPwJIOjyRmN9hfBSCUjQBle+gL2qfaan+TsGNlU1sh+Q5DBE4tGegdxPUW8lJavKH
- 0Tw4mzIylVNd6+hwKebLs/XEPrj4EOrJ86iYN8N8/ovtNpF0prUNAk4g28McALYuz+Mi
- 7Ctg==
-X-Gm-Message-State: AOJu0Yy4/u9qus4ha49KcF+fvznVKuwQ7LfWoIJgqvDR2QbSIyoBnJxe
- EC5nJ0a0C6oY5BCFqDHBCizLVjTGU5qbtp1Z6cnxIiUYfO9wRTcjXbycxQ7GJuwuNO1zae+xqJ/
- 7PqwZZeH7DaZ23P5Tk0Pag2BcVgjAhx8cjCR8IoqOoEjjjvghp+Rvv53shBQI/c6d2n5mkoTyZV
- IKpe6jWaJflmDW407ddN3KPe040XFIw++2GoR5Jko=
-X-Received: by 2002:adf:e685:0:b0:37c:ca20:52a with SMTP id
- ffacd0b85a97d-38080e234c9mr30747f8f.8.1730125780788; 
- Mon, 28 Oct 2024 07:29:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGnIkTg1TFSWhJsYHy+SikxXzaeXzI4WVhJXb+3RXddnnJ8AeJOnaSqPiWFbiNeQm8dlG9XgA==
-X-Received: by 2002:adf:e685:0:b0:37c:ca20:52a with SMTP id
- ffacd0b85a97d-38080e234c9mr30715f8f.8.1730125780436; 
- Mon, 28 Oct 2024 07:29:40 -0700 (PDT)
+ bh=/IqAdLZglfKpF6mjDCcx9wZhknDWLZEahtdtuSLLUoE=;
+ b=Jw4A0I3sV2TOXeFvLQeFVXdyUtgmP7IhdRsrsy1ww5ZWmk0xYade+t5xcXHN/gdhhZ
+ 7rygtzuKgkfMl6PTOaiJMD1ZomjcSGK1ZLJu37giEP17QaVG8C3LiBw/VRNGla4WRMjq
+ ppfL5KawaVcGbbb9HXLoArCMlIMXIu120zxne+n77jj21Oia+MWCpYMT2AEI5li7fL0g
+ 8UP9VzioOcdEN8o1/+W23B8DSwNoFdg/1BKMOMpaNVcBngNqgmMFGMWL2NKBMefOgkhk
+ kOzWikm/Ec4Y8P+kWfg8BQJ3OK+t2XoeJMYdaf9HiMSoVPD7XNQZYI4G6onl3xHxhSFF
+ ASFg==
+X-Gm-Message-State: AOJu0YxqPcJ/Da476cAt3CWsRK03V0c71n62cbclLgjeEysVPdZYLgpx
+ SAFg72uwEjZskttA1A4Nn6JsueEJ8/FhyNpAIoZdp94onp2fMfEW0vcgaRIKDsqOzA13ncsT6Bm
+ T30g0/WdxfNddIrIcY3N/Pzz7Emt8FvuFS/vJV7Dbvn9Z/dLqbM2jle2xMd5XDaIB++SWfqNhvW
+ tiL9q1z5bmkV0UJbAvwrFvCoioX5b4g1jp2gBf4W8=
+X-Received: by 2002:a05:600c:4f0b:b0:431:4b88:d408 with SMTP id
+ 5b1f17b1804b1-4319ac6e80dmr70740695e9.5.1730125776128; 
+ Mon, 28 Oct 2024 07:29:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFqUzzKkrLxGnnmzUunDFhhXcb8gYMbwma7vCxKjnQfl8CL0X/p91jNpNksPKrrXKe6+8/xA==
+X-Received: by 2002:a05:600c:4f0b:b0:431:4b88:d408 with SMTP id
+ 5b1f17b1804b1-4319ac6e80dmr70740535e9.5.1730125775773; 
+ Mon, 28 Oct 2024 07:29:35 -0700 (PDT)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38058b47f59sm9622490f8f.54.2024.10.28.07.29.39
+ ffacd0b85a97d-38058b9294dsm9598866f8f.105.2024.10.28.07.29.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Oct 2024 07:29:39 -0700 (PDT)
+ Mon, 28 Oct 2024 07:29:35 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 03/24] ci: enable rust in the Fedora system build job
-Date: Mon, 28 Oct 2024 15:29:10 +0100
-Message-ID: <20241028142932.363687-4-pbonzini@redhat.com>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 01/24] stubs: avoid duplicate symbols in libqemuutil.a
+Date: Mon, 28 Oct 2024 15:29:08 +0100
+Message-ID: <20241028142932.363687-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028142932.363687-1-pbonzini@redhat.com>
 References: <20241028142932.363687-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,34 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+qapi_event_send_device_deleted is always included (together with the
+rest of QAPI) in libqemuutil.a if either system-mode emulation or tools
+are being built, and in that case the stub causes a duplicate symbol
+to appear in libqemuutil.a.
 
-We previously added a new job running Fedora with nightly rust
-toolchain.
+Add the symbol only if events are not being requested.
 
-The standard rust toolchain distributed by Fedora is new enough,
-however, to let us enable a CI build with that too.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Link: https://lore.kernel.org/r/20241015133925.311587-3-berrange@redhat.com
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ stubs/meson.build | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index f0cbdf19924..19ba5b9c818 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -115,7 +115,7 @@ build-system-fedora:
-     job: amd64-fedora-container
-   variables:
-     IMAGE: fedora
--    CONFIGURE_ARGS: --disable-gcrypt --enable-nettle --enable-docs --enable-crypto-afalg
-+    CONFIGURE_ARGS: --disable-gcrypt --enable-nettle --enable-docs --enable-crypto-afalg --enable-rust
-     TARGETS: microblaze-softmmu mips-softmmu
-       xtensa-softmmu m68k-softmmu riscv32-softmmu ppc-softmmu sparc64-softmmu
-     MAKE_CHECK_ARGS: check-build
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 772a3e817df..e91614a874d 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -55,7 +55,12 @@ endif
+ if have_user
+   # Symbols that are used by hw/core.
+   stub_ss.add(files('cpu-synchronize-state.c'))
+-  stub_ss.add(files('qdev.c'))
++
++  # Stubs for QAPI events.  Those can always be included in the build, but
++  # they are not built at all for --disable-system --disable-tools builds.
++  if not (have_system or have_tools)
++    stub_ss.add(files('qdev.c'))
++  endif
+ endif
+ 
+ if have_system
 -- 
 2.47.0
 
