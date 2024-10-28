@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B9ED3399B
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C0B4D3399E
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:48:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Sr8-0004br-JG; Mon, 28 Oct 2024 12:44:39 -0400
+	id 1t5Suy-0005sr-Ui; Mon, 28 Oct 2024 12:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5Squ-0004av-5G
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:44:26 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1t5Suu-0005rL-F9
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:48:32 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5Sqs-0001aq-Js
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:44:23 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5cb6ca2a776so6079147a12.0
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 09:44:21 -0700 (PDT)
+ id 1t5Sus-0001z2-Qu
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:48:32 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9c28c1ecbso6167116a12.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 09:48:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730133861; x=1730738661; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=KVW3ua7sJWaIAit3EE0t5f2qivxeSre5gEdtobhzZ2k=;
- b=tp/STJCaOIGW7QQK0FIcuSH+adi8/yFjgqxrRn/JUhteqf0yUlx+dNzXmIUk0RI3YV
- ueSU9P/7N+Ukiyp+zZ7Nvzoi1s4qH5uBHjflJnDs416w5zHb5fiTttHczFEFZQX3fa57
- i3p4Baf1tw14xPaS3z1Zg0GPtbR6pUgCSfITkG19LUN7yKhF/gr6ZvI6cPJMVDDxCYuA
- ZUWCKSfOf2PyNc12sN+Zwv1rxDHUW1kF/Vsg7c1MRoYBAU+x+8APwHrGWqRepQA0yesz
- iFoV7JPwg+P1kCSU0AkNnbDz6gObE2e4eo3gmhyEh+fKwCAEltUecWtcKunzX0BBb5xx
- mPYA==
+ d=linaro.org; s=google; t=1730134109; x=1730738909; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7KnUNLueAKjDgxYCEbUwQTT/VPUr4XHGzj00PvTOp+E=;
+ b=q8v9oMMshiB2s24u1h2W9+rU7KXnzhMZGoYy/cMn2yTAlgOQPetqsm7EQoN7cW6KaT
+ OvqwBdsoz3dug+Hpv7FzvsqdfGHNvAqJPeVz+siXJPkmu0cLIvR3dLIYmwAeNBUThpAX
+ G4gfZy8PCfbMdcbEStH6ta5BH/dqYLTtBKhYWpXRTU/6SCHqaUVypoP13PU17WLKAuAg
+ 9ULJ6wS9UjBC8CgX0Vc8fndP6kMeaxidKPFkh57snUXL0hMTDKmQB5suHbVqeWXDIN/I
+ ENctnRviruasgITUO1ko82PqArpVhOUennfs9Od1SX6QsAR9o8fm6rH6KLYMRML5bJc7
+ mdGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730133861; x=1730738661;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KVW3ua7sJWaIAit3EE0t5f2qivxeSre5gEdtobhzZ2k=;
- b=KAsT/MFVjy9e2A1KMR0gqLKpp38d7rcg2Nb0PxI08Ci+iZRgJXez8VRkjcY10trJCH
- pxjQdRypBpDXp9R58pWsLk7v9m6s5REHeyBIHPvRD4gkj4VFVdvofJ0S9ZxqHXkUfmjX
- 5YrnfHhvM9cMTNpXgCmSKpX80fTvoq49BQNAbqZN0TLy/y+hxHLKIYOs6YaPf07pICBe
- LLtL6P5lG6EW0Qa3rfqTLk9KivYIwxRtKNOzKuMCItA0McFeaGFWoT6NOEJrX9dygpAb
- 24/INvdeVzhlwV2IsWfNIu2jloFmrziGUbJFya0kI8ZmINFQ+uVAl9aHDTHDVqMXOzic
- IQBw==
+ d=1e100.net; s=20230601; t=1730134109; x=1730738909;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7KnUNLueAKjDgxYCEbUwQTT/VPUr4XHGzj00PvTOp+E=;
+ b=naz0uzE78z9FSUFbhYXekXIqOSAooDxDMXvBo7hTH+WHFVRzxM4uH66YKSwdlKWfmt
+ 5IDJWlNH3qWp9BeQbVwIRu0+Tg41Jw6jkrWJpYGwAaB/bGeSiUVo4SVO7OM8GGLzDczt
+ 7QyGiSEwTTGflxYvWcYYgwkcylR14YNz5gkfjL7mYgCHexiFjALvY8dVUGYFXPhNOJAz
+ HhWeLGrpNpxEf0fBMjhNDFzBL84Nz2Nm8Nk5CuXvvFq4pmnQJ7RvPQ3g8mEGYsgXe0Ou
+ CO+dScs22SS0NKzIH/1E6L2wrcifNF5uWftNr2IbBk45MZNxuWXg25QcrxzD3lXVOHBw
+ afiw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWoN12AxJlGBbcMdBvLWiRlIWypYN7MFEeQrTiqEMtvmxDd/n8ZrAmu9nwcol8kdKGZq+prGyK8ED3T@nongnu.org
-X-Gm-Message-State: AOJu0Yxs3rtUUizkq3aNHslaQqQtt5gerYmsu/37B1qiJYDBOXJ+6H8H
- hJ9nKFHdj9EN1kDdkf5oCfXLglPZTmnJgtMp2rjcg1OQsSEYeeRBkWUyXjD/fjTXBXf9saKvMym
- lVyacTA85OR63U/Pc+ii3JuiwOxyRpCiyjYxykg==
-X-Google-Smtp-Source: AGHT+IHibvVnzv7R808yofL15SsQp9qWs+wpjwny1r44N3Tr9WhPaNu6tWT/+u4yguYgNE3Vex7W8x8V7/yGfguoMx0=
-X-Received: by 2002:a05:6402:34cc:b0:5c8:8bde:a1d3 with SMTP id
- 4fb4d7f45d1cf-5cbbfa548b3mr7619120a12.22.1730133860747; Mon, 28 Oct 2024
- 09:44:20 -0700 (PDT)
+ AJvYcCUCtOdHCyjK8MZQJ5HR6Y9cczqsB03rJ2NGF19vjqOrWAuFr9CmTUWA6yVnZ/+fg54FJ0UvcWRa5fxc@nongnu.org
+X-Gm-Message-State: AOJu0YxOiUOSnEmQHc6nf3NHDXriU3gyZ8jL5Di0JqO3Tnb+zP9aQ4NR
+ sIodarmE4bMSdS9mPEvkWXCFZ9iMolSRVc2Ns7XBneuz9662cE9p0Kvp5KOvZQmkUf4WA4aBoJ3
+ rNApe3WNpQ4UL4CfJ35W51J6yUGIx6X9QLT87aw==
+X-Google-Smtp-Source: AGHT+IGfJV04ZqowAK9zEadNBVsMz49bjr9g5V5cwHxrCIWiztesrHX+uwsDooy37BW15MpUHvqKweovZtxtaKLQHXA=
+X-Received: by 2002:a05:6402:26c9:b0:5cb:69be:db47 with SMTP id
+ 4fb4d7f45d1cf-5cbbf922bb5mr7338589a12.28.1730134108942; Mon, 28 Oct 2024
+ 09:48:28 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241025101959.601048-1-eric.auger@redhat.com>
- <ZxuwZw2plMI6dNyE@pinwheel> <87v7xcnqrs.fsf@redhat.com>
-In-Reply-To: <87v7xcnqrs.fsf@redhat.com>
+ <20241025101959.601048-19-eric.auger@redhat.com> <ZxuX4i9NjVRizB72@redhat.com>
+ <cb6c8f62-c5dc-416d-865f-fbdf96164dac@redhat.com>
+ <Zxub7ol4p8P_sWF8@redhat.com>
+ <CAFEAcA_wQu17y0PyQwxw0wuf2H5y2VE5aX16nLP2-u7QUP2ggA@mail.gmail.com>
+ <Zx-9WxXkmkMuGIlQ@redhat.com>
+In-Reply-To: <Zx-9WxXkmkMuGIlQ@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 28 Oct 2024 16:44:09 +0000
-Message-ID: <CAFEAcA9qqGMduMC_yXm5Jzbpfy0RVEPkxMoN4q72japiHfRCsg@mail.gmail.com>
-Subject: Re: [RFC 00/21] kvm/arm: Introduce a customizable aarch64 KVM host
- model
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: Kashyap Chamarthy <kchamart@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- eric.auger.pro@gmail.com, 
+Date: Mon, 28 Oct 2024 16:48:18 +0000
+Message-ID: <CAFEAcA9w0mb5bcU8p+fScQony-=oqLmNurGWpnL_sBneQCzxUg@mail.gmail.com>
+Subject: Re: [RFC 18/21] arm/cpu: Introduce a customizable kvm host cpu model
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ cohuck@redhat.com, 
  qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev, 
  richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org, 
  oliver.upton@linux.dev, sebott@redhat.com, 
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, berrange@redhat.com, 
- abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com, 
- mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, abologna@redhat.com, 
+ jdenemar@redhat.com, shahuang@redhat.com, mark.rutland@arm.com, 
+ philmd@linaro.org, pbonzini@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,43 +103,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 28 Oct 2024 at 16:20, Cornelia Huck <cohuck@redhat.com> wrote:
-> On Fri, Oct 25 2024, Kashyap Chamarthy <kchamart@redhat.com> wrote:
-> > (b) The current CPU features doc[2] for Arm doesn't mention "host
-> >     passthrough" at all.  It is only implied by the last part of this
-> >     paragraph, from the section titled "A note about CPU models and
-> >     KVM"[3]:
-> >
-> >       "Named CPU models generally do not work with KVM. There are a few
-> >       cases that do work [...] but mostly if KVM is enabled the 'host'
-> >       CPU type must be used."
-> >
-> >     Related: in your reply[4] to Dan in this series, you write: "Having
-> >     named models is the next thing".  So named CPU models will be a
-> >     thing in Arm, too?  Then the above statement in the Arm
-> >     'cpu-features' will need updating :-)
+On Mon, 28 Oct 2024 at 16:35, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> The currently existing named models are for cpus like cortex-a57; you
-> can use them for KVM if you happen to run on a matching host cpu, but
-> they only really make sense for use with tcg.
+> On Mon, Oct 28, 2024 at 04:16:31PM +0000, Peter Maydell wrote:
+> > On Fri, 25 Oct 2024 at 14:24, Daniel P. Berrang=C3=A9 <berrange@redhat.=
+com> wrote:
+> > > On Fri, Oct 25, 2024 at 03:18:25PM +0200, Eric Auger wrote:
+> > > > On 10/25/24 15:06, Daniel P. Berrang=C3=A9 wrote:
+> > > > > Also, is this naming convention really the same one that users
+> > > > > will see when they look at /proc/cpuinfo to view features ? It
+> > > > No it is not. I do agree that the custom cpu model is very low leve=
+l. It
+> > > > is very well suited to test all series turning ID regs as writable =
+but
+> > > > this would require an extra layer that adapts /proc/cpuinfo feature
+> > > > level to this regid/field abstraction.
+> > > >
+> > > > In /cpu/proc you will see somethink like:
+> > > >  Features    : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics f=
+php
+> > > > asimdhp cpuid asimdrdm lrcpc dcpop asimddp
+> > >
+> > > Right, IMHO, this is the terminology that QEMU must use in user
+> > > facing APIs.
+> >
+> > /proc/cpuinfo's naming is rather weird for historical
+> > reasons (for instance there is only one FEAT_FP16 feature
+> > but cpuinfo lists "fphp" and "asimdhp" separately).
+>
+> There's plenty of wierd history in x86 too. In this
+> case I might suggest just picking one of the two
+> common names, and ignoring the other.
+>
+> If we really wanted to, we could alias the 2nd name
+> to the first, but its likely not worth the bother.
 
-Note that those are a relic of an old and quickly abandoned
-design direction in KVM for Arm, where the idea was that
-userspace would specify the target CPU via a KVM_ARM_TARGET_*
-constant (initially only permitted on the matching host CPU
-but with some vague idea that eventually KVM would emulate
-the specified CPU type on different host CPUs also)
-On the QEMU side we feed the KVM_ARM_TARGET_* through for the two
-CPU models we support in TCG which also have a KVM_ARM_TARGET_*
-constant, which is to say Cortex-A57 and Cortex-A53. But none
-of the other named CPU models QEMU supports for TCG have that
-kind of constant.
-
-Presumably now that KVM supports "pass the guest ID regs
-that don't match the host" we would want to support our
-existing TCG-modelled named CPU types (for which we
-already know the ID register values, for TCG) by telling
-the kernel what the ID register values are.
+Or we could use the standard set of architectural
+feature names, and not have the problem at all, and not
+have to document what we mean by our nonstandard names.
+(cpuinfo names do actually mostly line up with the
+standard names, just not 100%. Similarly gcc/clang command
+line options are mostly the architectural feature name.)
 
 thanks
 -- PMM
