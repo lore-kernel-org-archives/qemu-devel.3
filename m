@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 593DBD5B154
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 21:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0354FD5B156
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 21:22:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5X9U-0004iI-Hj; Mon, 28 Oct 2024 17:19:52 -0400
+	id 1t5XBB-0005Sm-NT; Mon, 28 Oct 2024 17:21:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5X9S-0004hZ-Cx; Mon, 28 Oct 2024 17:19:50 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5X9Q-0004zw-He; Mon, 28 Oct 2024 17:19:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=+v724DJc12iPhItmB1lNVasu/ZLuJhbEmh/QQKm67yE=; b=FQW5g/8+eNYiEVE7zxHTaEaUoM
- c4zGhR7/Swy5OlvQJZQRLXSrBMDpXKkWWWaJsPmFax3k6J4ix3iS7b7uW4/QsXz7WqP2gzRtYajTt
- nb1I29fU2DK4anNwv4SgSOnsyI0U9E9HQUhAJKUkdLMjK62qGIC7hyVEwzubmiOom9fyHweccH+5w
- DtmtXY99o5rMACXGUMkW5+aKiDCsr9wTcC8SUytjKngcUbwRcuH5XHBsNMbOKbet8mzWCzvlUfE1i
- AG0gspJp33H1/Wb6D+UwDfcicwT/lFEjjXEfozEB80qEQvMvsLIv3yXkaZVQHxVKSxgyntp/KWE89
- Q+6fLcas5pI9CxNLYWdOjxQq+r0/HTsHnS0FPvqqh0KsO1EXLvoAP0/ncXh/JektlAiXG2UYJmBxs
- A1Rqflvb0+62eM72mE1KT/DA7ipYbImEXzA5yYqkhsjWFKEZW5Oj+DQ5zo3TurVjlv70M4EVe3R3s
- UyKZFtZy6rqvd2yZH+WhNUylUiacWBFyMCD2/UBxgNoZ9un71DzM/XmKJ8/efCFOCz6VpolZMsDS1
- zy9BXEX/ejJdP3rHPbVX4HlTk8G5ZD0/7MgXHCIm6il/LK2DVFUegboSSIE2LVUQaHdyqyzLKtU8L
- DO+N2D2WnPEOkPM2+bcdoUGoV4N4Y21JG8CvnJgv0=;
-Received: from [2a00:23c4:8bb8:f600:b5e6:5818:bcfd:7571]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5X96-0005vq-9h; Mon, 28 Oct 2024 21:19:28 +0000
-Message-ID: <c9874282-4f5b-41ff-95cf-1059066188e1@ilande.co.uk>
-Date: Mon, 28 Oct 2024 21:19:40 +0000
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t5XBA-0005Sb-De
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 17:21:36 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t5XB8-0005FS-C6
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 17:21:35 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-7ed9c16f687so3760718a12.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 14:21:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730150493; x=1730755293; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=j0iJVhoRpdeUvteOGUnPJKMywbu0q2dowPa4nk25deo=;
+ b=JtEJI4S5fPSkjpTQpzc/Ffs/gLLZmCjT32/HGbpzUqjbP6PZn9m+KTmvTTlBDPlqLx
+ oypzf87ep4auiS1jeFJfiafzPq/y3ctSFaORbcPTrRQBJgWO/8fzURaMMavfW69uGqWk
+ DDpQd3RAZs3bFH0ZzBjI90AHJCp9E44eu8H7tuQ725GLvZt+RovQCEHUuKc1pCoiQwoE
+ uwFZ9EAhTsiVzbvCK1zbZRRHQ9iO4ihA4/H11MnHhOzueqmEvp4bc9/fpm2nNXRP2SLr
+ /yv6nsYqeOTX+l3Iw6j7dC2aZsd63wq0UDiCpldVzBC8tDsJ4fCR8Hp5z4K8aCS+WB+O
+ b46Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730150493; x=1730755293;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=j0iJVhoRpdeUvteOGUnPJKMywbu0q2dowPa4nk25deo=;
+ b=ac/w1p/AG/fsXkEE/IXyOWoWTbG1j5GUYRPMpNfgKpEtjt+fzJQq8rxQaSZCIEgRoG
+ EZGTSWPJym8VpKLpoSITfKobLNMeriwSXRmPlFwLeUmtfiaX82FE0muZNnZSOX8ARJxA
+ 5SR+ZuIOW2EuzRA/gdXNA4hh3ptXTXA27LEWbIFJhWxipDZhkeapNZA6cC7Qm9zt43dd
+ +jm3TZNGQrPtehDsfHLqOVn67FTaQ4AonUnVOOGwCfeDgaJbImTcpuGkZZJ9AhF6HQ1W
+ I2VBIL7EdHrDTRDdC6NvEhSsmmFblCCSlD081WsailhmIEYp4pM8KmJ7hfGizfbsv9nE
+ VUHA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQiTxPA3h4BrVcs0tvqqRjueCuYxx/4gYR76KyvXcIQR1w5X5/pUNmz8K72cE2zpw9P2SxxiCNCEGt@nongnu.org
+X-Gm-Message-State: AOJu0YzFSBsd5PhjJ2NYPzxrs+Bc5bp11/0oB2Engff8DsnaN5y5uYlN
+ wE3gbvWK2XeVguXmFpeE4kWb11q5nRWy7mlZgSDYvgVEQiTWSpptBtEfW5xWu5k=
+X-Google-Smtp-Source: AGHT+IG/S1TlxE22WFDTUsJgjDbWr6XoQmA8whxmlNSVe4u7t2s22SglvL2GR5iRgEQMWHuiN+szAA==
+X-Received: by 2002:a05:6a00:230b:b0:71e:4cff:2654 with SMTP id
+ d2e1a72fcca58-72062f86088mr14669738b3a.6.1730150492652; 
+ Mon, 28 Oct 2024 14:21:32 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72057a0b9b1sm6253547b3a.133.2024.10.28.14.21.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Oct 2024 14:21:32 -0700 (PDT)
+Message-ID: <33cfeae7-d392-4d03-8f22-bb1a1e5dd48b@linaro.org>
+Date: Mon, 28 Oct 2024 14:21:31 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org
-References: <20241024191432.1802089-1-clg@redhat.com>
+Subject: Re: check-function failing on func-arm-arm_aspeed
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20241024191432.1802089-1-clg@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Thomas Huth <thuth@redhat.com>
+References: <CAFEAcA_Z+o3HYfjapAeADAmjJqTYvswAfAbtj8i=3rSBDLwsyA@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAFEAcA_Z+o3HYfjapAeADAmjJqTYvswAfAbtj8i=3rSBDLwsyA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:b5e6:5818:bcfd:7571
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 0/2] MAINTAINERS: Remove myself from ppc subsystems
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,30 +99,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/10/2024 20:14, Cédric Le Goater wrote:
+Hi Peter,
 
-> Hello,
+On 10/28/24 10:14, Peter Maydell wrote:
+> Trying a "make check-functional" I find that the func-arm-arm_aspeed
+> test seems to hit a timeout:
 > 
-> My experience with PPC has been over for a few years and now, I'm
-> moving away from PowerNV and XIVE. I wish you the best !
+> 18/18 qemu:func-thorough+func-arm-thorough+thorough /
+> func-arm-arm_aspeed              TIMEOUT        600.08s   killed by
+> signal 15 SIGTERM
 > 
-> Cheers,
+> This is with commit cea8ac78545a.
 > 
-> C.
+> Does anybody else see this, or is it some oddity happening only
+> on my local dev machine?
 > 
-> Cédric Le Goater (2):
->    MAINTAINERS: Remove myself from the PowerNV machines
->    MAINTAINERS: Remove myself from XIVE
+> The "full log" in testlog-thorough.txt doesn't seem to be
+> very full. All it has for this test is:
 > 
->   MAINTAINERS | 2 --
->   1 file changed, 2 deletions(-)
+> =================================== 18/18 ====================================
+> test:         qemu:func-thorough+func-arm-thorough+thorough /
+> func-arm-arm_aspeed
+> start time:   16:54:50
+> duration:     600.08s
+> result:       killed by signal 15 SIGTERM
+> command:      G_TEST_SLOW=1
+> PYTHONPATH=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/python:/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/functional
+> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
+> MALLOC_PERTURB_=238
+> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1
+> MESON_TEST_ITERATION=1
+> QEMU_TEST_QEMU_IMG=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/qemu-img
+> MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
+> QEMU_TEST_QEMU_BINARY=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/qemu-system-arm
+> QEMU_BUILD_ROOT=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang
+> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/pyvenv/bin/python3
+> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/functional/test_arm_aspeed.py
+> ----------------------------------- stdout -----------------------------------
+> TAP version 13
+> ok 1 test_arm_aspeed.AST1030Machine.test_ast1030_zephyros_1_04
+> ok 2 test_arm_aspeed.AST1030Machine.test_ast1030_zephyros_1_07
+> ok 3 test_arm_aspeed.AST2x00Machine.test_arm_ast2400_palmetto_openbmc_v2_9_0
+> ==============================================================================
+> 
+> Is it possible to get the log to include a pointer to the
+> actual log for the test (including the guest console output)?
+> It's hard to debug tests if they don't report what they're doing.
+> 
+> thanks
+> -- PMM
+> 
 
-Cédric: FWIW thanks for all for your help with the Macintosh machines over the past 
-few years, all your work has been greatly appreciated.
+I didn't observe such failure in last run for my dev branch (which 
+includes commit you mentioned) [1].
 
+97/148 qemu:func-thorough+func-arm-thorough+thorough / 
+func-arm-arm_aspeed                                         OK 
+    141.44s   8 subtests passed
 
-ATB,
+[1] 
+https://github.com/pbo-linaro/qemu-ci/actions/runs/11559006814/job/32172747854
 
-Mark.
-
+Regards,
+Pierrick
 
