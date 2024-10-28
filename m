@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C805D33991
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0136D33991
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:37:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Qlb-000178-Eu; Mon, 28 Oct 2024 10:30:47 -0400
+	id 1t5Qo7-0003bY-Ia; Mon, 28 Oct 2024 10:33:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5Ql6-0000Lj-02
+ id 1t5Ql6-0000Lk-0B
  for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:30:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5Ql3-0003wM-CE
+ id 1t5Ql3-0003wp-8W
  for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:30:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730125809;
+ s=mimecast20190719; t=1730125811;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EGXu5CBuE8xwKZlIqcgq1tN+U8GgEV5+6D9N6jIde4E=;
- b=BTjYqQzwBxVY4ejSez+F67VHSjFtxS/D5QV471LKELPj1OZX6jZjupqfpAYClnGgehYU7V
- euGbrjlsEd8Y+xmH0Rk+XglVOGWWiHXlBd8T++BFDriJoh1O0ZOQjEl904fzClZzRh+2us
- HlZVEZ8Y1fM4kwcNcHuGW+rBVuEl3oE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZoEppBkNJR/14g0bmNDZNUQB+Nk2QV/cd9OKt2f5MTM=;
+ b=K+Kxr4R0mojXxu1YaZpMUzrYKpfjkRPGjT/gwFUf2n6bEKKQfJqwrQYmH1d7lg9s6p01s4
+ 2RJi0uB+lLWVf3GqKrkPN8bbF64i6PYHGSheQrXbqZDL1HRNZHooQ9x8lysxSKVLT2uyW0
+ s/mXBHijL7pjnb4xiNVmFviKDO6F5fc=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-48-JCOujsw9OBKzUebCaS2XHA-1; Mon, 28 Oct 2024 10:30:06 -0400
-X-MC-Unique: JCOujsw9OBKzUebCaS2XHA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d4d51b4efso2022390f8f.3
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:30:06 -0700 (PDT)
+ us-mta-663-V-eYszI3OJSzEGutMtscCA-1; Mon, 28 Oct 2024 10:30:10 -0400
+X-MC-Unique: V-eYszI3OJSzEGutMtscCA-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-53a017bc09dso2852471e87.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:30:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730125805; x=1730730605;
+ d=1e100.net; s=20230601; t=1730125808; x=1730730608;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EGXu5CBuE8xwKZlIqcgq1tN+U8GgEV5+6D9N6jIde4E=;
- b=unSAgC3nZ5yxDxxJIstosSNwT2ki7bh+o+Ana1N2bs6YCdnTiv+yUm6f0PI6BIpMwd
- X6pbwnA3ypPbXlq+xD27CeEUHhKCtQuEqyC9UsyEa0ixCpqn/GdJBonvjs1N0c3rBX3F
- h79yNraoEF548FMxh/eC7T//bxgZjzxd84x626NyF6SOjZaCVeUaKpIhff3Yqt8kdV+q
- 7RqmfzBo9yTjIGZS/b+7OWPl70Gf6Ka19pDSvX0E3UvQ/kK+vO5of1Ex5OB8q+fhxx00
- Sc17sYiS87i9s+VVVIZcZcf12+TaEM4NE77bzU09ZfFjfplO80b8fkudWqpq+7XNMh8U
- u+Zw==
-X-Gm-Message-State: AOJu0YyT8a31ig51se0HPk9vkvOWkyMPimkQ04QtdABGzLhnVLnHDEBM
- 9oSW+siuEiz7m9AvRSQ/eK8LiCrA7/quthN5/YgvK7mnNOGHEPxmDOcyAvPrmgss5TswSiMeTEg
- T2JroX0dRtu6JmVLZk1sHlCVLP0+H8MWdUkXiK+i85hH1xvjfKnNY46Bwv2qs3a1yGUfM6IgkaB
- ETvAerhA3hS32+v90TR9i2DwRQ5ltxKT9n8KjWsKQ=
-X-Received: by 2002:a5d:5cd0:0:b0:37d:4c4a:77b with SMTP id
- ffacd0b85a97d-3806120e398mr5402837f8f.58.1730125804874; 
- Mon, 28 Oct 2024 07:30:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEp+H0MC6HV87o1T9ea9Ubcv7gqAsQ+PvLq8Op8rXLZxyS6lrnYoNLN7w2YFX8mpitRB3stNQ==
-X-Received: by 2002:a5d:5cd0:0:b0:37d:4c4a:77b with SMTP id
- ffacd0b85a97d-3806120e398mr5402823f8f.58.1730125804402; 
- Mon, 28 Oct 2024 07:30:04 -0700 (PDT)
+ bh=ZoEppBkNJR/14g0bmNDZNUQB+Nk2QV/cd9OKt2f5MTM=;
+ b=Pc+H6Ne/RD7PzhyhIp4nXXhRUgs6bTMd2oALAQ0frmXcVIRmR1/e72HmngEBf31UmU
+ qEHbHkdkT10wNoBl0DoFhUZjPzKKG53bB/8rbQGLMiTTz/s//AilT0lPSWpty6vjsMCM
+ B5ZdwLYeP6Zi8Snb1Yb0FaVpkNLnNwk6dBDWcm57YlawOFPrPf3PcuAdbSMEz8omLObj
+ 2zaZcCWb9I80dOTAiBOE7DJ62UQW7CHEzT5u2jj7bHG8CLg4P72TN8P9po4/JljWJoCR
+ atjgXBarlf4ENH5b5IycquWzfN/d3ZZjCCKur9Sqz85bpDpgePgL7ggue9tw1d4bnhS4
+ BKuA==
+X-Gm-Message-State: AOJu0YxKiE87vRZ9xoUXLJ+Ukw+qZIiOgia+i4me41+EFuVKMLekage8
+ YTuWt2JshvdAwcNsRNwnMUXxy58A/RDEdTZ2vO4w4BUYD8brIH2Wcx0o7XRAECSVtlHihSGVG8b
+ bLpPBci0hVCsj0RLl5R+jTM1juHLsUw8cQTc6W0tFc9kNd19FFF9sZudAJER9ojUoParlf1z6/N
+ 25P1jHY6gTGbuZ4GzfBzH+U6S7vVCjQFFwAPyd4C0=
+X-Received: by 2002:a05:6512:2211:b0:53a:40e:d54f with SMTP id
+ 2adb3069b0e04-53b347c0d7bmr3359910e87.8.1730125807921; 
+ Mon, 28 Oct 2024 07:30:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHdHIPi5rEXMula3+AoKp8exEomSbld+95bY7Ip3L05SSzYWpR2hp238PzoYfEE60cR8DJC4Q==
+X-Received: by 2002:a05:6512:2211:b0:53a:40e:d54f with SMTP id
+ 2adb3069b0e04-53b347c0d7bmr3359888e87.8.1730125807444; 
+ Mon, 28 Oct 2024 07:30:07 -0700 (PDT)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38058b13223sm9643238f8f.1.2024.10.28.07.30.02
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-43193573ce2sm111718585e9.10.2024.10.28.07.30.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Oct 2024 07:30:02 -0700 (PDT)
+ Mon, 28 Oct 2024 07:30:05 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/24] rust: do not always select X_PL011_RUST
-Date: Mon, 28 Oct 2024 15:29:19 +0100
-Message-ID: <20241028142932.363687-13-pbonzini@redhat.com>
+Cc: Junjie Mao <junjie.mao@hotmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 13/24] rust: do not use --no-size_t-is-usize
+Date: Mon, 28 Oct 2024 15:29:20 +0100
+Message-ID: <20241028142932.363687-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028142932.363687-1-pbonzini@redhat.com>
 References: <20241028142932.363687-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,23 +103,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Right now the Rust pl011 device is included in all QEMU system
-emulator binaries if --enable-rust is passed.  This is not needed
-since the board logic in hw/arm/Kconfig will pick it.
+This is not necessary and makes it harder to write code that is
+portable between 32- and 64-bit systems: it adds extra casts even
+though size_of, align_of or offset_of already return the right type.
 
+Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ meson.build                      | 1 -
+ rust/qemu-api/src/definitions.rs | 6 +++---
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/rust/hw/char/Kconfig b/rust/hw/char/Kconfig
-index a1732a9e97f..5fe800c4806 100644
---- a/rust/hw/char/Kconfig
-+++ b/rust/hw/char/Kconfig
-@@ -1,3 +1,2 @@
- config X_PL011_RUST
-     bool
--    default y if HAVE_RUST
+diff --git a/meson.build b/meson.build
+index 0b8c3495eab..6c268ef2445 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3934,7 +3934,6 @@ if have_rust and have_system
+     '--no-doc-comments',
+     '--use-core',
+     '--with-derive-default',
+-    '--no-size_t-is-usize',
+     '--no-layout-tests',
+     '--no-prepend-enum-name',
+     '--allowlist-file', meson.project_source_root() + '/include/.*',
+diff --git a/rust/qemu-api/src/definitions.rs b/rust/qemu-api/src/definitions.rs
+index 60bd3f8aaa6..0b681c593f2 100644
+--- a/rust/qemu-api/src/definitions.rs
++++ b/rust/qemu-api/src/definitions.rs
+@@ -81,13 +81,13 @@ macro_rules! type_info {
+             } else {
+                 ::core::ptr::null_mut()
+             },
+-            instance_size: ::core::mem::size_of::<$t>() as $crate::bindings::size_t,
+-            instance_align: ::core::mem::align_of::<$t>() as $crate::bindings::size_t,
++            instance_size: ::core::mem::size_of::<$t>(),
++            instance_align: ::core::mem::align_of::<$t>(),
+             instance_init: <$t as $crate::definitions::ObjectImpl>::INSTANCE_INIT,
+             instance_post_init: <$t as $crate::definitions::ObjectImpl>::INSTANCE_POST_INIT,
+             instance_finalize: <$t as $crate::definitions::ObjectImpl>::INSTANCE_FINALIZE,
+             abstract_: <$t as $crate::definitions::ObjectImpl>::ABSTRACT,
+-            class_size:  ::core::mem::size_of::<<$t as $crate::definitions::ObjectImpl>::Class>() as $crate::bindings::size_t,
++            class_size:  ::core::mem::size_of::<<$t as $crate::definitions::ObjectImpl>::Class>(),
+             class_init: <<$t as $crate::definitions::ObjectImpl>::Class as $crate::definitions::Class>::CLASS_INIT,
+             class_base_init: <<$t as $crate::definitions::ObjectImpl>::Class as $crate::definitions::Class>::CLASS_BASE_INIT,
+             class_data: ::core::ptr::null_mut(),
 -- 
 2.47.0
 
