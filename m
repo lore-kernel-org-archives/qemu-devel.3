@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29C29D3398C
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A87AD3398C
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:31:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5QlB-0000Qz-6A; Mon, 28 Oct 2024 10:30:21 -0400
+	id 1t5Qla-00012k-RU; Mon, 28 Oct 2024 10:30:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5Qke-00009a-0K
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:29:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t5Qkq-0000Bc-Q3
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:30:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5Qkb-0003gv-AA
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:29:47 -0400
+ id 1t5Qki-0003ie-T0
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:29:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730125784;
+ s=mimecast20190719; t=1730125791;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Cu9aA/o8xY620Gq2pXnEleLdjXMeArjsOBIgEnKBdxU=;
- b=RM+q5qwU6D4ElFK8gcXOkznCHI0KjeWnipz2VT+P3VXTqmMsjEPBWHVT+6wYpnzI5Qn7SE
- zvAx2tce96ur6ktXbtIrduIgzfOqCUl3ZVrSI772+LsjscL5P+svQcbVYUSoTNajBq0PBi
- t7FiIxxBPkxKfnFEn0uWc09XZr64iWk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=G41Gm1r+0jL4g/l3GF6vapafdMpPd/OeL9O59Yu11q4=;
+ b=HEuNJUcxg1cyqKuJJHaDcVUOuZtBjpvFLp2uJP579p+PmnxfkS5uJrQIm1hsAkaUBARCy+
+ HZBiVUh908/SaAt1WFxUnscZwaO+alRmfu6C9Ts//Fwu5xWt7C3icyAnQzZGRYZh41SGXO
+ 2qOSz+4e67oP3KDE4/z35G7h9hqmSrY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-306-4oQu5R8mOeqXzj8UrS1Dzg-1; Mon, 28 Oct 2024 10:29:42 -0400
-X-MC-Unique: 4oQu5R8mOeqXzj8UrS1Dzg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-431518ae047so27970415e9.0
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:29:42 -0700 (PDT)
+ us-mta-307-ttVURFloOwiXvQbWt7owTA-1; Mon, 28 Oct 2024 10:29:49 -0400
+X-MC-Unique: ttVURFloOwiXvQbWt7owTA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d603515cfso2081154f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:29:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730125780; x=1730730580;
+ d=1e100.net; s=20230601; t=1730125787; x=1730730587;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Cu9aA/o8xY620Gq2pXnEleLdjXMeArjsOBIgEnKBdxU=;
- b=Q37yeJ534JZSsqEaQv4bxprV+BiCb662XzgwpbBxufLCz6KqYqOWzI4aTYT+pF2faL
- mCHFakBTla+43Ac50gOxHo1YJ1GjG83fS4h7Hp8rK7RVZs88N96fc0ILgGf0DjQWIvW8
- 13RfQUItHg7anV17BPZy+ofIK4QZ9ToAoXZFBjwSjdgJuuHz2TohSZ6Rhd976ZolY01j
- V4qqQjngEyU4fUUWctf26X0JIlTuu9lZB3e35sqGz+SkWF4ylmGqiCAJ+27SPXt37rbw
- QT3u+X1p0qHKJWXKOxFGMXr00qShMoJgnXExRTn0PgzMtl0+/+tfeUNp+pEkvV5X8jc8
- d/iw==
-X-Gm-Message-State: AOJu0YxC7M8wGZn7VmCCLTqP3eiKLxe8qxS2VIURwndIDEPgSSXNoQMN
- nAoTPoKvkZuDhkXSlYm9inAByPkNEZ/p1ekYP+LNZjdRnL4f+1D+kUTK/Yr18GzAE8/NzAfsAwP
- bX80/RY920kQftHQurzVpE8FvlSVg6ibG9HCY+WFKtzMSW9ZzJ+io8YocKJxaa/NzWc/fPXOsw5
- GTL9c5qdNu+lf5XV4lD0BIuqqxDRb2I3wOpzBuMh8=
-X-Received: by 2002:a5d:58db:0:b0:378:8b56:4665 with SMTP id
- ffacd0b85a97d-38080ef7a63mr2837f8f.24.1730125779899; 
- Mon, 28 Oct 2024 07:29:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxgOxdq9cqMl1utrqHDYKKgMH8HtA5YvvFIlWj4DfNUXtYh6c3LIrlPg19srSYo+z4vkXvXQ==
-X-Received: by 2002:a5d:58db:0:b0:378:8b56:4665 with SMTP id
- ffacd0b85a97d-38080ef7a63mr2800f8f.24.1730125779372; 
- Mon, 28 Oct 2024 07:29:39 -0700 (PDT)
+ bh=G41Gm1r+0jL4g/l3GF6vapafdMpPd/OeL9O59Yu11q4=;
+ b=irtI573FwGNnr0P3zt/viSHdxZO0OKR/pNdT74kPH0zFCXC6D9Y/VqGg7QRmSXC5Wf
+ KnAR7O/wO4NjC4MQzhh7tvXs23z5/lldQjH1epseYjBZMWBdO/oVQwGCZ5uFBwWlO2/4
+ heI8yiZyMw479/QI0iytTl+IknNWa3fKo7/g+Kh36K+lbgbKH9wl9NJIzl3X0agNlxe6
+ iAloA5rAGl+nlu1f41aSXnKEfugJ1hwDEP6ERIpJurZe15kJUkSxsChuI1S8jGfhljL6
+ jZF4LhnNDg5g9BITR40R1/GB/3cDzMmpZV32S/nPbF0wh6IluwiBabEWYk37L0BV1KUj
+ xz1w==
+X-Gm-Message-State: AOJu0YweN0MMT0nCcu47QQ4GF0Rc/vqaF0kYMIo4AbqmCkveBllZklyH
+ Yxc/c/h5kkmSt3OaOGWKL0Lq8WQvz3mzTOM8xkhRf5gp8cejBgmEqZC9dqfUD4vFjlcF5W7GQba
+ ZQoUMoc/NHEic1L4PGoP8slPxwQH028Ef9PP14lhdjYOiUI6iB6OhleOFti78AbNMAQPDjSzRUA
+ CLzVMzJTmANvwhaxfvFAQS1/axwL4Kx7Bm0DtU4Sg=
+X-Received: by 2002:a5d:4e0e:0:b0:37c:c842:a16e with SMTP id
+ ffacd0b85a97d-380610f7b1dmr6225498f8f.5.1730125787280; 
+ Mon, 28 Oct 2024 07:29:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+hV3tLkrtrPg64ndAhOqzXSCM99qMMX/Epw7B3a+e7H60f1GxQRMud7t12Siuqzibn6GcDQ==
+X-Received: by 2002:a5d:4e0e:0:b0:37c:c842:a16e with SMTP id
+ ffacd0b85a97d-380610f7b1dmr6225477f8f.5.1730125786788; 
+ Mon, 28 Oct 2024 07:29:46 -0700 (PDT)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38058b3bb4csm9604068f8f.33.2024.10.28.07.29.36
+ ffacd0b85a97d-38058b3bb57sm9626362f8f.38.2024.10.28.07.29.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Oct 2024 07:29:37 -0700 (PDT)
+ Mon, 28 Oct 2024 07:29:46 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 02/24] tests: add 'rust' and 'bindgen' to CI package list
-Date: Mon, 28 Oct 2024 15:29:09 +0100
-Message-ID: <20241028142932.363687-3-pbonzini@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Subject: [PULL 06/24] qdev: make properties array "const"
+Date: Mon, 28 Oct 2024 15:29:13 +0100
+Message-ID: <20241028142932.363687-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028142932.363687-1-pbonzini@redhat.com>
 References: <20241028142932.363687-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,524 +102,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+Constify all accesses to qdev properties, except for the
+ObjectPropertyAccessor itself.  This makes it possible to place them in
+read-only memory, and also lets Rust bindings switch from "static mut"
+arrays to "static"; which is advantageous, because mutable statics are
+highly discouraged.
 
-Although we're not enabling rust by default yet, we can still add
-rust and bindgen to the CI package list.
-
-This demonstrates that we're not accidentally triggering unexpected
-build behaviour merely from Rust being present. When we do dev work
-to enable rust by default, this will show we're building correctly
-on all platforms we target.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Link: https://lore.kernel.org/r/20241015133925.311587-2-berrange@redhat.com
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- .gitlab-ci.d/cirrus/freebsd-14.vars                   | 2 +-
- .gitlab-ci.d/cirrus/macos-14.vars                     | 2 +-
- .gitlab-ci.d/cirrus/macos-15.vars                     | 2 +-
- scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml      | 2 ++
- scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml        | 2 ++
- tests/docker/dockerfiles/alpine.docker                | 2 ++
- tests/docker/dockerfiles/centos9.docker               | 2 ++
- tests/docker/dockerfiles/debian-amd64-cross.docker    | 3 +++
- tests/docker/dockerfiles/debian-arm64-cross.docker    | 3 +++
- tests/docker/dockerfiles/debian-armhf-cross.docker    | 3 +++
- tests/docker/dockerfiles/debian-i686-cross.docker     | 3 +++
- tests/docker/dockerfiles/debian-mips64el-cross.docker | 3 +++
- tests/docker/dockerfiles/debian-mipsel-cross.docker   | 3 +++
- tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 3 +++
- tests/docker/dockerfiles/debian-s390x-cross.docker    | 3 +++
- tests/docker/dockerfiles/debian.docker                | 2 ++
- tests/docker/dockerfiles/fedora-rust-nightly.docker   | 2 ++
- tests/docker/dockerfiles/fedora-win64-cross.docker    | 2 ++
- tests/docker/dockerfiles/fedora.docker                | 2 ++
- tests/docker/dockerfiles/opensuse-leap.docker         | 2 ++
- tests/docker/dockerfiles/ubuntu2204.docker            | 2 ++
- tests/lcitool/projects/qemu.yml                       | 2 ++
- tests/vm/generated/freebsd.json                       | 2 ++
- 23 files changed, 51 insertions(+), 3 deletions(-)
+ include/hw/qdev-core.h       |  4 ++--
+ include/hw/qdev-properties.h |  4 ++--
+ hw/core/qdev-properties.c    | 26 +++++++++++++-------------
+ system/qdev-monitor.c        |  2 +-
+ 4 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/.gitlab-ci.d/cirrus/freebsd-14.vars b/.gitlab-ci.d/cirrus/freebsd-14.vars
-index c0655b21e91..044cec7c145 100644
---- a/.gitlab-ci.d/cirrus/freebsd-14.vars
-+++ b/.gitlab-ci.d/cirrus/freebsd-14.vars
-@@ -11,6 +11,6 @@ MAKE='/usr/local/bin/gmake'
- NINJA='/usr/local/bin/ninja'
- PACKAGING_COMMAND='pkg'
- PIP3='/usr/local/bin/pip-3.8'
--PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-sphinx py311-sphinx_rtd_theme py311-tomli python3 rpm2cpio sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
-+PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-sphinx py311-sphinx_rtd_theme py311-tomli python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
- PYPI_PKGS=''
- PYTHON='/usr/local/bin/python3'
-diff --git a/.gitlab-ci.d/cirrus/macos-14.vars b/.gitlab-ci.d/cirrus/macos-14.vars
-index 24cfec3b897..1fd03d68b97 100644
---- a/.gitlab-ci.d/cirrus/macos-14.vars
-+++ b/.gitlab-ci.d/cirrus/macos-14.vars
-@@ -11,6 +11,6 @@ MAKE='/opt/homebrew/bin/gmake'
- NINJA='/opt/homebrew/bin/ninja'
- PACKAGING_COMMAND='brew'
- PIP3='/opt/homebrew/bin/pip3'
--PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
-+PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
- PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
- PYTHON='/opt/homebrew/bin/python3'
-diff --git a/.gitlab-ci.d/cirrus/macos-15.vars b/.gitlab-ci.d/cirrus/macos-15.vars
-index 23b2c1d22f4..b6b6d71d473 100644
---- a/.gitlab-ci.d/cirrus/macos-15.vars
-+++ b/.gitlab-ci.d/cirrus/macos-15.vars
-@@ -11,6 +11,6 @@ MAKE='/opt/homebrew/bin/gmake'
- NINJA='/opt/homebrew/bin/ninja'
- PACKAGING_COMMAND='brew'
- PIP3='/opt/homebrew/bin/pip3'
--PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
-+PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
- PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
- PYTHON='/opt/homebrew/bin/python3'
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-index 71a0f0c4336..dd89ba1b3a7 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-@@ -7,6 +7,7 @@
- packages:
-   - bash
-   - bc
-+  - bindgen
-   - bison
-   - bsdextrautils
-   - bzip2
-@@ -113,6 +114,7 @@ packages:
-   - python3-venv
-   - python3-yaml
-   - rpm2cpio
-+  - rustc
-   - sed
-   - socat
-   - sparse
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-index d8de967b186..74f14d8d0fe 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-@@ -7,6 +7,7 @@
- packages:
-   - bash
-   - bc
-+  - bindgen
-   - bison
-   - bsdextrautils
-   - bzip2
-@@ -111,6 +112,7 @@ packages:
-   - python3-venv
-   - python3-yaml
-   - rpm2cpio
-+  - rustc
-   - sed
-   - socat
-   - sparse
-diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
-index 54b97219974..9ce7b5280c0 100644
---- a/tests/docker/dockerfiles/alpine.docker
-+++ b/tests/docker/dockerfiles/alpine.docker
-@@ -90,6 +90,8 @@ RUN apk update && \
-         py3-yaml \
-         python3 \
-         rpm2cpio \
-+        rust \
-+        rust-bindgen \
-         samurai \
-         sdl2-dev \
-         sdl2_image-dev \
-diff --git a/tests/docker/dockerfiles/centos9.docker b/tests/docker/dockerfiles/centos9.docker
-index 0256865b9e9..a9681c8a96f 100644
---- a/tests/docker/dockerfiles/centos9.docker
-+++ b/tests/docker/dockerfiles/centos9.docker
-@@ -16,6 +16,7 @@ RUN dnf distro-sync -y && \
-         alsa-lib-devel \
-         bash \
-         bc \
-+        bindgen-cli \
-         bison \
-         brlapi-devel \
-         bzip2 \
-@@ -102,6 +103,7 @@ RUN dnf distro-sync -y && \
-         python3-sphinx_rtd_theme \
-         python3-tomli \
-         rdma-core-devel \
-+        rust \
-         sed \
-         snappy-devel \
-         socat \
-diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
-index 136c3a79a1f..b86949b2e6c 100644
---- a/tests/docker/dockerfiles/debian-amd64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
-@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-@@ -53,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -170,6 +172,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/x86_64-linux-gnu && \
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index aa97c34a4be..f9fa291cc63 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -132,7 +132,7 @@ struct DeviceClass {
+      * ensures a compile-time error if someone attempts to assign
+      * dc->props directly.
+      */
+-    Property *props_;
++    const Property *props_;
  
- ENV ABI "x86_64-linux-gnu"
- ENV MESON_OPTS "--cross-file=x86_64-linux-gnu"
-+ENV RUST_TARGET "x86_64-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=x86_64-linux-gnu-
- ENV DEF_TARGET_LIST x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
-index 233f6ee1dea..68789791121 100644
---- a/tests/docker/dockerfiles/debian-arm64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
-@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-@@ -53,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -169,6 +171,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/aarch64-linux-gnu && \
+     /**
+      * @user_creatable: Can user instantiate with -device / device_add?
+@@ -935,7 +935,7 @@ char *qdev_get_own_fw_dev_path_from_handler(BusState *bus, DeviceState *dev);
+  * you attempt to add an existing property defined by a parent class.
+  * To modify an inherited property you need to use????
+  */
+-void device_class_set_props(DeviceClass *dc, Property *props);
++void device_class_set_props(DeviceClass *dc, const Property *props);
  
- ENV ABI "aarch64-linux-gnu"
- ENV MESON_OPTS "--cross-file=aarch64-linux-gnu"
-+ENV RUST_TARGET "aarch64-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=aarch64-linux-gnu-
- ENV DEF_TARGET_LIST aarch64-softmmu,aarch64-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
-index f26385e0b92..e38b8fcc412 100644
---- a/tests/docker/dockerfiles/debian-armhf-cross.docker
-+++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
-@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-@@ -53,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -169,6 +171,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/arm-linux-gnueabihf && \
+ /**
+  * device_class_set_parent_realize() - set up for chaining realize fns
+diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
+index 09aa04ca1e2..26ebd230685 100644
+--- a/include/hw/qdev-properties.h
++++ b/include/hw/qdev-properties.h
+@@ -37,7 +37,7 @@ struct PropertyInfo {
+     int (*print)(Object *obj, Property *prop, char *dest, size_t len);
+     void (*set_default_value)(ObjectProperty *op, const Property *prop);
+     ObjectProperty *(*create)(ObjectClass *oc, const char *name,
+-                              Property *prop);
++                              const Property *prop);
+     ObjectPropertyAccessor *get;
+     ObjectPropertyAccessor *set;
+     ObjectPropertyRelease *release;
+@@ -223,7 +223,7 @@ void error_set_from_qdev_prop_error(Error **errp, int ret, Object *obj,
+  * On error, store error in @errp.  Static properties access data in a struct.
+  * The type of the QOM property is derived from prop->info.
+  */
+-void qdev_property_add_static(DeviceState *dev, Property *prop);
++void qdev_property_add_static(DeviceState *dev, const Property *prop);
  
- ENV ABI "arm-linux-gnueabihf"
- ENV MESON_OPTS "--cross-file=arm-linux-gnueabihf"
-+ENV RUST_TARGET "armv7-unknown-linux-gnueabihf"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=arm-linux-gnueabihf-
- ENV DEF_TARGET_LIST arm-softmmu,arm-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index 2328ee1732a..b4d06187390 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-@@ -53,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -168,6 +170,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/i686-linux-gnu && \
+ /**
+  * qdev_alias_all_properties: Create aliases on source for all target properties
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index 86a583574dd..315196bd85a 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -749,7 +749,7 @@ const PropertyInfo qdev_prop_array = {
  
- ENV ABI "i686-linux-gnu"
- ENV MESON_OPTS "--cross-file=i686-linux-gnu"
-+ENV RUST_TARGET "i686-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=i686-linux-gnu-
- ENV DEF_TARGET_LIST x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-index bfa96cb507f..4f6c816b3fe 100644
---- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-@@ -53,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -158,6 +160,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/mips64el-linux-gnuabi64 && \
+ /* --- public helpers --- */
  
- ENV ABI "mips64el-linux-gnuabi64"
- ENV MESON_OPTS "--cross-file=mips64el-linux-gnuabi64"
-+ENV RUST_TARGET "mips64el-unknown-linux-gnuabi64"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=mips64el-linux-gnuabi64-
- ENV DEF_TARGET_LIST mips64el-softmmu,mips64el-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-index 4ac314e22e2..a238526b4c5 100644
---- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-@@ -53,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -166,6 +168,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/mipsel-linux-gnu && \
+-static Property *qdev_prop_walk(Property *props, const char *name)
++static const Property *qdev_prop_walk(const Property *props, const char *name)
+ {
+     if (!props) {
+         return NULL;
+@@ -763,10 +763,10 @@ static Property *qdev_prop_walk(Property *props, const char *name)
+     return NULL;
+ }
  
- ENV ABI "mipsel-linux-gnu"
- ENV MESON_OPTS "--cross-file=mipsel-linux-gnu"
-+ENV RUST_TARGET "mipsel-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=mipsel-linux-gnu-
- ENV DEF_TARGET_LIST mipsel-softmmu,mipsel-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-index 8c1dcec9cf7..b6c6f5b7b00 100644
---- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-@@ -53,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -168,6 +170,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/powerpc64le-linux-gnu && \
+-static Property *qdev_prop_find(DeviceState *dev, const char *name)
++static const Property *qdev_prop_find(DeviceState *dev, const char *name)
+ {
+     ObjectClass *class;
+-    Property *prop;
++    const Property *prop;
  
- ENV ABI "powerpc64le-linux-gnu"
- ENV MESON_OPTS "--cross-file=powerpc64le-linux-gnu"
-+ENV RUST_TARGET "powerpc64le-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=powerpc64le-linux-gnu-
- ENV DEF_TARGET_LIST ppc64-softmmu,ppc64-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
-index 72668e03152..14f169984eb 100644
---- a/tests/docker/dockerfiles/debian-s390x-cross.docker
-+++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
-@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-@@ -53,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -167,6 +169,7 @@ endian = 'big'\n" > /usr/local/share/meson/cross/s390x-linux-gnu && \
+     /* device properties */
+     class = object_get_class(OBJECT(dev));
+@@ -840,7 +840,7 @@ void qdev_prop_set_string(DeviceState *dev, const char *name, const char *value)
  
- ENV ABI "s390x-linux-gnu"
- ENV MESON_OPTS "--cross-file=s390x-linux-gnu"
-+ENV RUST_TARGET "s390x-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=s390x-linux-gnu-
- ENV DEF_TARGET_LIST s390x-softmmu,s390x-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
-index 42bd0067d1b..22b064cbf01 100644
---- a/tests/docker/dockerfiles/debian.docker
-+++ b/tests/docker/dockerfiles/debian.docker
-@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-@@ -120,6 +121,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-index e642db163c7..c2029cc4c6e 100644
---- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
-+++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-@@ -23,6 +23,7 @@ exec "$@"\n' > /usr/bin/nosync && \
-                alsa-lib-devel \
-                bash \
-                bc \
-+               bindgen-cli \
-                bison \
-                brlapi-devel \
-                bzip2 \
-@@ -113,6 +114,7 @@ exec "$@"\n' > /usr/bin/nosync && \
-                python3-sphinx_rtd_theme \
-                python3-zombie-imp \
-                rdma-core-devel \
-+               rust \
-                sed \
-                snappy-devel \
-                socat \
-diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
-index 6b264d901f7..3ba62b55ad7 100644
---- a/tests/docker/dockerfiles/fedora-win64-cross.docker
-+++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
-@@ -20,6 +20,7 @@ exec "$@"\n' > /usr/bin/nosync && \
-     nosync dnf install -y \
-                bash \
-                bc \
-+               bindgen-cli \
-                bison \
-                bzip2 \
-                ca-certificates \
-@@ -53,6 +54,7 @@ exec "$@"\n' > /usr/bin/nosync && \
-                python3-sphinx \
-                python3-sphinx_rtd_theme \
-                python3-zombie-imp \
-+               rust \
-                sed \
-                socat \
-                sparse \
-diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
-index ecdefaff1a1..1980421f6ae 100644
---- a/tests/docker/dockerfiles/fedora.docker
-+++ b/tests/docker/dockerfiles/fedora.docker
-@@ -23,6 +23,7 @@ exec "$@"\n' > /usr/bin/nosync && \
-                alsa-lib-devel \
-                bash \
-                bc \
-+               bindgen-cli \
-                bison \
-                brlapi-devel \
-                bzip2 \
-@@ -113,6 +114,7 @@ exec "$@"\n' > /usr/bin/nosync && \
-                python3-sphinx_rtd_theme \
-                python3-zombie-imp \
-                rdma-core-devel \
-+               rust \
-                sed \
-                snappy-devel \
-                socat \
-diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
-index e359a4e5c19..53b94610308 100644
---- a/tests/docker/dockerfiles/opensuse-leap.docker
-+++ b/tests/docker/dockerfiles/opensuse-leap.docker
-@@ -96,6 +96,8 @@ RUN zypper update -y && \
-            python311-pip \
-            python311-setuptools \
-            rdma-core-devel \
-+           rust \
-+           rust-bindgen \
-            sed \
-            snappy-devel \
-            sndio-devel \
-diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
-index 3a7de6a3183..ce3aa39d4f3 100644
---- a/tests/docker/dockerfiles/ubuntu2204.docker
-+++ b/tests/docker/dockerfiles/ubuntu2204.docker
-@@ -13,6 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-@@ -120,6 +121,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
-index 252e871f802..6852918642e 100644
---- a/tests/lcitool/projects/qemu.yml
-+++ b/tests/lcitool/projects/qemu.yml
-@@ -3,6 +3,7 @@ packages:
-  - alsa
-  - bash
-  - bc
-+ - bindgen
-  - bison
-  - brlapi
-  - bzip2
-@@ -101,6 +102,7 @@ packages:
-  - python3-tomli
-  - python3-venv
-  - rpm2cpio
-+ - rust
-  - sdl2
-  - sdl2-image
-  - sed
-diff --git a/tests/vm/generated/freebsd.json b/tests/vm/generated/freebsd.json
-index 1eb2757c955..5da8d30bcdf 100644
---- a/tests/vm/generated/freebsd.json
-+++ b/tests/vm/generated/freebsd.json
-@@ -61,6 +61,8 @@
-     "py311-tomli",
-     "python3",
-     "rpm2cpio",
-+    "rust",
-+    "rust-bindgen-cli",
-     "sdl2",
-     "sdl2_image",
-     "snappy",
+ void qdev_prop_set_enum(DeviceState *dev, const char *name, int value)
+ {
+-    Property *prop;
++    const Property *prop;
+ 
+     prop = qdev_prop_find(dev, name);
+     object_property_set_str(OBJECT(dev), name,
+@@ -956,7 +956,7 @@ const PropertyInfo qdev_prop_size = {
+ /* --- object link property --- */
+ 
+ static ObjectProperty *create_link_property(ObjectClass *oc, const char *name,
+-                                            Property *prop)
++                                            const Property *prop)
+ {
+     return object_class_property_add_link(oc, name, prop->link_type,
+                                           prop->offset,
+@@ -969,7 +969,7 @@ const PropertyInfo qdev_prop_link = {
+     .create = create_link_property,
+ };
+ 
+-void qdev_property_add_static(DeviceState *dev, Property *prop)
++void qdev_property_add_static(DeviceState *dev, const Property *prop)
+ {
+     Object *obj = OBJECT(dev);
+     ObjectProperty *op;
+@@ -980,7 +980,7 @@ void qdev_property_add_static(DeviceState *dev, Property *prop)
+                              field_prop_getter(prop->info),
+                              field_prop_setter(prop->info),
+                              prop->info->release,
+-                             prop);
++                             (Property *)prop);
+ 
+     object_property_set_description(obj, prop->name,
+                                     prop->info->description);
+@@ -994,7 +994,7 @@ void qdev_property_add_static(DeviceState *dev, Property *prop)
+ }
+ 
+ static void qdev_class_add_property(DeviceClass *klass, const char *name,
+-                                    Property *prop)
++                                    const Property *prop)
+ {
+     ObjectClass *oc = OBJECT_CLASS(klass);
+     ObjectProperty *op;
+@@ -1007,7 +1007,7 @@ static void qdev_class_add_property(DeviceClass *klass, const char *name,
+                                        field_prop_getter(prop->info),
+                                        field_prop_setter(prop->info),
+                                        prop->info->release,
+-                                       prop);
++                                       (Property *)prop);
+     }
+     if (prop->set_default) {
+         prop->info->set_default_value(op, prop);
+@@ -1046,7 +1046,7 @@ static void qdev_get_legacy_property(Object *obj, Visitor *v,
+  * Do not use this in new code!  QOM Properties added through this interface
+  * will be given names in the "legacy" namespace.
+  */
+-static void qdev_class_add_legacy_property(DeviceClass *dc, Property *prop)
++static void qdev_class_add_legacy_property(DeviceClass *dc, const Property *prop)
+ {
+     g_autofree char *name = NULL;
+ 
+@@ -1058,12 +1058,12 @@ static void qdev_class_add_legacy_property(DeviceClass *dc, Property *prop)
+     name = g_strdup_printf("legacy-%s", prop->name);
+     object_class_property_add(OBJECT_CLASS(dc), name, "str",
+         prop->info->print ? qdev_get_legacy_property : prop->info->get,
+-        NULL, NULL, prop);
++        NULL, NULL, (Property *)prop);
+ }
+ 
+-void device_class_set_props(DeviceClass *dc, Property *props)
++void device_class_set_props(DeviceClass *dc, const Property *props)
+ {
+-    Property *prop;
++    const Property *prop;
+ 
+     dc->props_ = props;
+     for (prop = props; prop && prop->name; prop++) {
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 44994ea0e16..c346ea6ae4b 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -751,7 +751,7 @@ DeviceState *qdev_device_add(QemuOpts *opts, Error **errp)
+ 
+ #define qdev_printf(fmt, ...) monitor_printf(mon, "%*s" fmt, indent, "", ## __VA_ARGS__)
+ 
+-static void qdev_print_props(Monitor *mon, DeviceState *dev, Property *props,
++static void qdev_print_props(Monitor *mon, DeviceState *dev, const Property *props,
+                              int indent)
+ {
+     if (!props)
 -- 
 2.47.0
 
