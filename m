@@ -4,83 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9624BD13593
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 01:50:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26FE7D13592
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 01:59:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5EtO-0000zX-5V; Sun, 27 Oct 2024 21:50:02 -0400
+	id 1t5F1O-0002kw-48; Sun, 27 Oct 2024 21:58:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1t5EtL-0000yy-Rl
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 21:49:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jeeheng.sia@starfivetech.com>)
+ id 1t5F1M-0002jB-Dr; Sun, 27 Oct 2024 21:58:16 -0400
+Received: from mail-bjschn02on20701.outbound.protection.partner.outlook.cn
+ ([2406:e500:4440:2::701]
+ helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1t5EtK-0006bD-27
- for qemu-devel@nongnu.org; Sun, 27 Oct 2024 21:49:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730080197;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=E9H0dQeR/Uo20wW8hInSF4MnhGyBqEv/w/zJnlsalY4=;
- b=Pq5ATXZldDVM+DMJQZ6heRxL/FMiAiE2dvHxedCvMT8bgbn+M9E9tNyIR3smxsEpHKZCNu
- 28ExomO/pVmUpTPeGwZJ/G2KCshTpfQpCz80PFxgvkPkP98YSK8X105HWyFLQDTS2NopuJ
- VzZcBFF56iPTtisqubTThhw7JoMZhyc=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-461-m1QVgsRhNeOTzjrMMWYsmA-1; Sun, 27 Oct 2024 21:49:55 -0400
-X-MC-Unique: m1QVgsRhNeOTzjrMMWYsmA-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5cbaeb24cb2so1924745a12.0
- for <qemu-devel@nongnu.org>; Sun, 27 Oct 2024 18:49:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730080194; x=1730684994;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=E9H0dQeR/Uo20wW8hInSF4MnhGyBqEv/w/zJnlsalY4=;
- b=ifrR+IxH6IM68oXwCjjKwBl9sBJLjB7kZWTj81w6oe58/+36iCY8ubF8thewSX+5Bz
- p4+UaHgrKqRNDl0sppY/lZ+uGDuQ/YtdqLfaeAxmHaxSHalqH/BDxT7eSZAlRpx236ST
- hrqtevqRB6HGILmVG+yJ7fUXlXV+853AFWJ8goLEjKwozEBgxZchpIAsTNC7PjBfsWNC
- MFZQLuq/K+OvLiyDoeBp+eGJ7BXnD6f+cz/7GHOOXQCO9T/q/5era9Ei9VDkVoDOLt9Y
- it8QVpx87UdJlldTESBhr42xKKg9pFbHaYY2omp67vM0mDWyaooS9m5pBcJGu6GAKc6J
- 8uQQ==
-X-Gm-Message-State: AOJu0YyH3BbyFjGh2seiM0uXSDaHuPMIq5yUXlr2VNKO8OnFQL9j8TSl
- t604vUPr7XskQEyyx5QPxGMlsrIQwoWn5LY2Gt2rJrd6Gd6ePGvAq+Nn2AeWXDzd2nlT0up4tw4
- btrsUU8Tc3foGBRcsIX+F+ShzYlA6pK1WcNpCjmGvUa9YttsqrNI92n49GAliHKTvphy33Gu/aH
- 0v1BlVOpoLiURVqhIEXYmHQQclchA=
-X-Received: by 2002:a05:6402:d09:b0:5c8:8d5e:19b0 with SMTP id
- 4fb4d7f45d1cf-5cbbfa74da6mr4498545a12.30.1730080193867; 
- Sun, 27 Oct 2024 18:49:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZCOl2DzsJG5PdSZSa9YryC/lJ46D6qsh+s3a8YhywkxLKDYmA3w0koUXKNl0csdyHRBIp8lUamZbziDPfO/w=
-X-Received: by 2002:a05:6402:d09:b0:5c8:8d5e:19b0 with SMTP id
- 4fb4d7f45d1cf-5cbbfa74da6mr4498531a12.30.1730080193517; Sun, 27 Oct 2024
- 18:49:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jeeheng.sia@starfivetech.com>)
+ id 1t5F1K-0007Ma-Qo; Sun, 27 Oct 2024 21:58:15 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DjZUvgdiksopPZUHEMx3W5WgxRhczgp95xmCFkHbOgWW6I+b3ebbgfWvS+U+fXShiCXPDSYBPHs5hm72OHdHK16VmB1QpuADLvMbMKpKIuUBdMOaAc7h7cz/0vtJVGIeIXRwghTWqr/mpHNHV+fkN9kyJtbVdlJ2NZd/mmWqujTNEvl526cll72bLyKrOyzcgzTju9NhRaNB78NHMKiwd1vbiZFq2vzfbsDyIR2zDYLxK6InJ0omCs/cwR3Mzm7jWiozyo0dmnaAv89H1phWwwZPiIklBbd+HuDP993kEf+iAR285gtpuB8rrxaXsviWXRn5RbRFzMvoGUFRgYS2Ug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Nc19MmBYw6Vx2TYDeNGr+OaoONIwYD2PizJpxZnmVMQ=;
+ b=C1GPpvtlflJLN7pspzlk1NeUamm7AmmkshpKZ1ZcHeRpC+XFuRdUmz0/XdKiAmzqC22OBUeIeRAGnTIFTN8SgUmJ10YJ7qbqZHl9jlHbvtdGOJfUj8Md37lOVYIL1Z6vnJnINioWWjlzeaTaYjqbHLbfLJD/wXCln01rl3aEiew+4ew0M35FENEZbDtkA2Ejz6phLyHaZughvm1lTuYA7RV3FcQUQ3foVKQYkMwHzf0SPLo4VGyOQd1exRsCWiriSzxUGOeXupAUPNCa6unTGRgCLVbA3HjS5790n9xV6Es35s6wlw2qQhZygqGy8qNGzkM7RNT1Hh7ZeZzWKW606g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=starfivetech.com; dmarc=pass action=none
+ header.from=starfivetech.com; dkim=pass header.d=starfivetech.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=starfivetech.com;
+Received: from NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c510:12::10) by NT0PR01MB1263.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c510:11::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.34; Mon, 28 Oct
+ 2024 01:58:10 +0000
+Received: from NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
+ ([fe80::affa:7fe4:57c8:11ce]) by
+ NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn ([fe80::affa:7fe4:57c8:11ce%6])
+ with mapi id 15.20.8069.031; Mon, 28 Oct 2024 01:58:10 +0000
+From: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ peter.maydell@linaro.org, jeeheng.sia@starfivetech.com,
+ shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ gaosong@loongson.cn, jiaxun.yang@flygoat.com, maobibo@loongson.cn
+Subject: [PATCH v6 1/3] qtest: allow SPCR acpi table changes
+Date: Sun, 27 Oct 2024 18:57:42 -0700
+Message-ID: <20241028015744.624943-2-jeeheng.sia@starfivetech.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241028015744.624943-1-jeeheng.sia@starfivetech.com>
+References: <20241028015744.624943-1-jeeheng.sia@starfivetech.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: NT0PR01CA0024.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c510:c::8) To NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c510:12::10)
 MIME-Version: 1.0
-References: <20241022142948.531325-1-demeng@redhat.com>
- <20241022142948.531325-6-demeng@redhat.com>
- <ZxuUI15RQxuEZHbx@redhat.com>
-In-Reply-To: <ZxuUI15RQxuEZHbx@redhat.com>
-From: Dehan Meng <demeng@redhat.com>
-Date: Mon, 28 Oct 2024 09:49:42 +0800
-Message-ID: <CA+kPPJzk-vEYDcJbjp_oPkfRyPpo_z+6ouJ7e4ZB3WQXHjY_WA@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] qemu-ga: Replace g_new0() with g_autoptr()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com, michael.roth@amd.com, 
- peter.maydell@linaro.org
-Content-Type: multipart/alternative; boundary="0000000000005e36b306257faf62"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=demeng@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.287,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: NT0PR01MB1278:EE_|NT0PR01MB1263:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4dc88187-db58-4503-ec1b-08dcf6f3f927
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|52116014|366016|41320700013|1800799024|38350700014; 
+X-Microsoft-Antispam-Message-Info: o4iG6wQMkiAYjNjprd3cjepT3gz74JP58qvlfnphscWFcTUmhOW7F03Z3dQ161kR3LJVi8mdoe+RHBDV0hKKnz982kHIshgaCK06LOE7mSU/PL/mpq3lIw0SPCdEir3mKk3q/h/9QqASYNRbL+rz49WO9TNgWQ2KtOgUufBcEMlJ0bmv3BKKTrJP5yaQAZika+3vNpDpqqsstSJCZgJ3Mktbl4pzWQaL0YE4PBwBlqQN0Uc6SOAY6/j1QooVsLRJmGCrdSqOEIFMZW1oet64gsQZPtCoDxmIlS3dG22QACkPFfAmw5BpqT4WNLAU3VQkzkOy3Hg1aBmJbH3xLFZyUTyAZiV2YDi+LlvLOAMPsLTiXM0XK+DueleEJP0qQRyRWSrjY5z+oM2CaAIOVOBCHBvHw87Cpxdcb5/kIZyqQB9ZMzRDkgh+wRVCxPNt45DqLiGxuY3LF5QAKCSpomJEMUa/7oUgIENhhb2NIt3WApwgcFuCS+4nk+r9P7R5cJ6rLE4aoKwhAZ1RmukOh8J3HfYUq7alTLcu5hiqBPAkAUrX7zzD9Uil3RNGvp1PoJD2QjvSvjmnS8Hys3QAflDzfvsk+4hiKGpj1+d+7ml1W6dZoBzXn4PzgzERCMPiNEKl
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(7416014)(52116014)(366016)(41320700013)(1800799024)(38350700014);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?uGAwT9KEubI9jxz9FiH8uEQvC7DbppGX0KPOw8lvAglk8LJD8iM3exyd/6X3?=
+ =?us-ascii?Q?nEDOWKu8D2GWdNQ2/MKH3sPvlkxQ+ZAJbKbBKpwZauz+pv7CbK+BUOo5/mBV?=
+ =?us-ascii?Q?0D37HyZJjhSTOJklj1Dyue9KsAaQgR6Vii8RoOZau1wD6jt9ONea0OMjidXr?=
+ =?us-ascii?Q?uHecflzP/+kbokP26+cL7oBL8voSzbFX7nDZzbnW+YhMPXjd7Z1n7OztJL9R?=
+ =?us-ascii?Q?M3Mnw8yKHhk6M8NHjg/50o1pqG4hdwcG5I400VnMBzsikn79j03ffMfyzlf2?=
+ =?us-ascii?Q?dAwcx4OaTyEngupQeNU3ADnYkT0cfkmHFwV0IW/M0XQpFsSEpd7Goaa1+ui5?=
+ =?us-ascii?Q?LlhWZX5mEZifiYij/uO7dwlR04CDNZ+b7lBsJIJJ+hjhymg8RJKAeWje2yC5?=
+ =?us-ascii?Q?Nm09BukEr8rEr/ZCYsi8kFhuLaSEE1ExFOcGXLsfDUOnr6iLUKymQj75XzdA?=
+ =?us-ascii?Q?cKYI+tLInVc10KwD35tntqWN4LsrbWthpZwpWXfu+KYJHZRSIfgtJ7TMpK7v?=
+ =?us-ascii?Q?WbpkBzw9OnAwuB45qm6XQAYzVoMGSHLWiUZor51zfb5nYhm4itgvppMnGyZb?=
+ =?us-ascii?Q?nQS7Q9O9RMgckMIU8rugLO8SLFQktOk1Hi+isHM2BlHX0dihe5aRugeUqdoT?=
+ =?us-ascii?Q?Mb7eE8WeVLrfqirHxZvZ8HVgSt4jBqB6DPnIgP0L4Sw/gBhM/WnjcM/6QH1c?=
+ =?us-ascii?Q?j3jyrZpWe8RH1H6zCfHVNGtOQJ1sRi8xDEtstBnwbw0nXpgnj/Opy/ywnDKT?=
+ =?us-ascii?Q?+Uyppt0NPRLo9NApjrSzjvACDjkzcY6opC/UmuL8GzVYtjkrCvsCXLJt4CbD?=
+ =?us-ascii?Q?24DDXy3NL9nHyEFGmMhSjIMBIK8psKZTB8LpF0BiRv/zHLL8rrDfG36w/UPF?=
+ =?us-ascii?Q?3rrLbKVgmr6ERltFTthkfipChx0N8QNpolfIEy21eBeAtO0J0LcNZeh6og9d?=
+ =?us-ascii?Q?KJ2mN4hI60MWyXsS1bL4Egesrne92HwGGmuXUYUVoIXoEdLQsnoUD/XD1MNZ?=
+ =?us-ascii?Q?P/kvoBLhBjzrndbKgeSQDr8BPwb7UETPevtQmR6rbKmIcHiphxWU4EVaWaw0?=
+ =?us-ascii?Q?TwRa1MZiHlhd/AeOFA614ccUMkLBLQfLNGAGzzfQJWHT3+U5iCGFcXutf4Nl?=
+ =?us-ascii?Q?6fC25gVp9YhHjojjw2sizAJk6Q2C9buOy0SOWqPEAXyH7KOnajEUgBrg7EXU?=
+ =?us-ascii?Q?tmcGaUBAWTO2wL+4C8GBTz9ejrTD8qhQaeJJYo7WeP5tfK2OmzK5DSHoskjN?=
+ =?us-ascii?Q?XtU48VM4UssyV9dEUabbgj72WxVtfEIvxoGzrnsa3VgN7WTB/PKUur3BYIfW?=
+ =?us-ascii?Q?dIy+eSHTJGGWjycJZ6hyp6b60NOX5bLTL6QFjozpGirxyLLmjXfSm99L9Hlu?=
+ =?us-ascii?Q?Rix8yULmR8mwLtsPiUvfSLDqosCdiWnnj+5HgaN6EcTrqnZKhgsywYsh/CeW?=
+ =?us-ascii?Q?VsmnbNTjVTjUgdGuom7jJCqconXDOh4H8Z/UTOBwbW4g2YiJrgItsi0ngx/G?=
+ =?us-ascii?Q?fdffoA38CvdxzARbpyIwiaIada6YOt05RQy/Inl4QxnkWkD2jmnxjrqgkVOi?=
+ =?us-ascii?Q?2PnmFxTbggwtwuz0jL6cOFirKuasmkDI5JA6gHpqaJWY2E3L6X9AsluNxxFT?=
+ =?us-ascii?Q?6w=3D=3D?=
+X-OriginatorOrg: starfivetech.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4dc88187-db58-4503-ec1b-08dcf6f3f927
+X-MS-Exchange-CrossTenant-AuthSource: NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2024 01:58:09.9541 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 06fe3fa3-1221-43d3-861b-5a4ee687a85c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Hdxy9iKmqrH25DuxkdyvLAr8rwa7AYJojabN3IqcpOJxdA9ellShpSjE5z+jaJZxagoBa4j/3+rbgwMpOIS4BCUm1rkRSIyjMcznwWYa6zw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: NT0PR01MB1263
+Received-SPF: pass client-ip=2406:e500:4440:2::701;
+ envelope-from=jeeheng.sia@starfivetech.com;
+ helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,226 +137,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005e36b306257faf62
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thank you for reviewing, I'll summarize all of the patches.
-
-On Fri, Oct 25, 2024 at 8:50=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com>
-wrote:
-
-> On Tue, Oct 22, 2024 at 10:29:48PM +0800, Dehan Meng wrote:
-> > Replace g_new0() with g_autoptr() to simplify the code
-> >
-> > Signed-off-by: Dehan Meng <demeng@redhat.com>
-> > ---
-> >  qga/commands-linux.c | 16 ++++++----------
-> >  1 file changed, 6 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-> > index 9fb31956b4..ee4f345938 100644
-> > --- a/qga/commands-linux.c
-> > +++ b/qga/commands-linux.c
-> > @@ -2158,15 +2158,13 @@ GuestNetworkRouteList
-> *qmp_guest_network_get_route(Error **errp)
-> >                      continue;
-> >                  }
-> >
-> > -                GuestNetworkRoute *route =3D g_new0(GuestNetworkRoute,=
- 1);
-> > +                g_autoptr(GuestNetworkRoute) route =3D
-> g_new0(GuestNetworkRoute, 1);
-> >
-> >                  route->destination =3D hex_to_ip_address(destination, =
-1);
-> > -                if (route->destination =3D=3D NULL) {
-> > -                    g_free(route);
-> > +                route->iface =3D g_strdup(iface);
-> > +                if (route->destination =3D=3D NULL  || route->iface =
-=3D=3D
-> NULL) {
->
-> Checking "iface" for NULL is not required, since  g_strdup will never
-> fail to allocate memory.
->
-> Also, these changes to use g_autoptr need to be part of the first patch,
-> as each step in the patch series needs to be correct.
->
-> >                      continue;
-> >                  }
-> > -                route->iface =3D g_strdup(iface);
-> > -                route->destination =3D hex_to_ip_address(destination, =
-1);
-> >                  route->source =3D hex_to_ip_address(source, 1);
-> >                  route->nexthop =3D hex_to_ip_address(next_hop, 1);
-> >                  route->desprefixlen =3D g_strdup_printf("%d",
-> des_prefixlen);
-> > @@ -2188,15 +2186,13 @@ GuestNetworkRouteList
-> *qmp_guest_network_get_route(Error **errp)
-> >                      continue;
-> >                  }
-> >
-> > -                GuestNetworkRoute *route =3D g_new0(GuestNetworkRoute,=
- 1);
-> > +                g_autoptr(GuestNetworkRoute) route =3D
-> g_new0(GuestNetworkRoute, 1);
-> >
-> >                  route->destination =3D hex_to_ip_address(destination, =
-1);
-> > -                if (route->destination =3D=3D NULL) {
-> > -                    g_free(route);
-> > +                route->iface =3D g_strdup(iface);
-> > +                if (route->destination =3D=3D NULL  || route->iface =
-=3D=3D
-> NULL) {
-> >                      continue;
-> >                  }
-> > -                route->iface =3D g_strdup(iface);
-> > -                route->destination =3D hex_to_ip_address(&destination,=
- 0);
-> >                  route->gateway =3D hex_to_ip_address(&gateway, 0);
-> >                  route->mask =3D hex_to_ip_address(&mask, 0);
-> >                  route->metric =3D metric;
-> > --
-> > 2.40.1
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
->
-
---0000000000005e36b306257faf62
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thank you for reviewing, I&#39;ll summarize all of the pat=
-ches.</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_a=
-ttr">On Fri, Oct 25, 2024 at 8:50=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a=
- href=3D"mailto:berrange@redhat.com">berrange@redhat.com</a>&gt; wrote:<br>=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, Oct 22, 202=
-4 at 10:29:48PM +0800, Dehan Meng wrote:<br>
-&gt; Replace g_new0() with g_autoptr() to simplify the code<br>
-&gt; <br>
-&gt; Signed-off-by: Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" tar=
-get=3D"_blank">demeng@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 qga/commands-linux.c | 16 ++++++----------<br>
-&gt;=C2=A0 1 file changed, 6 insertions(+), 10 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/qga/commands-linux.c b/qga/commands-linux.c<br>
-&gt; index 9fb31956b4..ee4f345938 100644<br>
-&gt; --- a/qga/commands-linux.c<br>
-&gt; +++ b/qga/commands-linux.c<br>
-&gt; @@ -2158,15 +2158,13 @@ GuestNetworkRouteList *qmp_guest_network_get_r=
-oute(Error **errp)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 continue;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 <br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GuestNetworkR=
-oute *route =3D g_new0(GuestNetworkRoute, 1);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_autoptr(Gue=
-stNetworkRoute) route =3D g_new0(GuestNetworkRoute, 1);<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&g=
-t;destination =3D hex_to_ip_address(destination, 1);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (route-&gt=
-;destination =3D=3D NULL) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- g_free(route);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&gt;ifa=
-ce =3D g_strdup(iface);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (route-&gt=
-;destination =3D=3D NULL=C2=A0 || route-&gt;iface =3D=3D NULL) {<br>
-<br>
-Checking &quot;iface&quot; for NULL is not required, since=C2=A0 g_strdup w=
-ill never<br>
-fail to allocate memory.<br>
-<br>
-Also, these changes to use g_autoptr need to be part of the first patch,<br=
->
-as each step in the patch series needs to be correct.<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 continue;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&gt;ifa=
-ce =3D g_strdup(iface);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&gt;des=
-tination =3D hex_to_ip_address(destination, 1);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&g=
-t;source =3D hex_to_ip_address(source, 1);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&g=
-t;nexthop =3D hex_to_ip_address(next_hop, 1);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&g=
-t;desprefixlen =3D g_strdup_printf(&quot;%d&quot;, des_prefixlen);<br>
-&gt; @@ -2188,15 +2186,13 @@ GuestNetworkRouteList *qmp_guest_network_get_r=
-oute(Error **errp)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 continue;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 <br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GuestNetworkR=
-oute *route =3D g_new0(GuestNetworkRoute, 1);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_autoptr(Gue=
-stNetworkRoute) route =3D g_new0(GuestNetworkRoute, 1);<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&g=
-t;destination =3D hex_to_ip_address(destination, 1);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (route-&gt=
-;destination =3D=3D NULL) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- g_free(route);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&gt;ifa=
-ce =3D g_strdup(iface);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (route-&gt=
-;destination =3D=3D NULL=C2=A0 || route-&gt;iface =3D=3D NULL) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 continue;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&gt;ifa=
-ce =3D g_strdup(iface);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&gt;des=
-tination =3D hex_to_ip_address(&amp;destination, 0);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&g=
-t;gateway =3D hex_to_ip_address(&amp;gateway, 0);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&g=
-t;mask =3D hex_to_ip_address(&amp;mask, 0);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 route-&g=
-t;metric =3D metric;<br>
-&gt; -- <br>
-&gt; 2.40.1<br>
-&gt; <br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
-s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
-oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
-nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
-"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
-https://www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div>
-
---0000000000005e36b306257faf62--
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..aae973048a 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/riscv64/virt/SPCR",
+-- 
+2.43.0
 
 
