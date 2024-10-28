@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 699D2D5B84C
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 06:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB36D5B84C
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 06:17:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5fRZ-0001fd-Ko; Tue, 29 Oct 2024 02:11:05 -0400
+	id 1t5fRZ-0001fi-Op; Tue, 29 Oct 2024 02:11:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t5fRV-0001a4-13
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:11:01 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1t5fRQ-0001Va-Lw
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:10:56 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t5fRS-0007F3-Dl
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:11:00 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4315baec69eso51213185e9.2
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 23:10:57 -0700 (PDT)
+ id 1t5fRO-0007D8-B9
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:10:56 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43169902057so49040955e9.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 23:10:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730182257; x=1730787057; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730182251; x=1730787051; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Vs7nasybbX7ls6pt1vDzRGbzY5szh6TT52y5XwKAnFk=;
- b=qFEwmeC3ES0ej9rQ1K6U1nf8lnxb+XYjlraeBx23238VrkUcqy/Rnyr3bED1N7aeXS
- 4PUv+l0TtjWv6/Z8485vXJk9+y17bUgYfXqekLWZ0OCv1pohBzuvbug+gZosAUi97ZWB
- FENtvCfpm7lc3/QPK+4MNuQ58PLRuJKbEoc19C79f1rGoKKJjcK8NGpJz9l+P9fWjJHv
- vnZ3IVvp96rhiZ6RmYufyfuUMnxmuraFf8gE3f+Ow0GanqkM39besllf4SPvwjbSJC1n
- P3fnj6QYdKMXwOdWMqCaFGXDhQYfa2KzNod+taBUqkcqQNg003o7/9gK6gdKad72r3u0
- ex+g==
+ bh=1F1wQfyGlx2dTe0Op+HmZFdGoAZYpgptW9U5JoHUQ6Q=;
+ b=eRIr5Gtc3mTX+c+pzVOkpUONV07yXnrMWu8TAYNvyRveALhHJlU3WZCwNLQEArArI8
+ nRYrgsRTa/MwbLw1zPLnTu34SsEsgdvAOyS7nKWEiRZwybmyLHHCu2h6fAh+08y6c168
+ u4gExahLLlCTCThJ8SnuteXPzJStuAuoJ3n67mBpV/sGvegIrUomVkNqWYmtL8UU3pnc
+ hFKZ/uQ818rPoa7J4la5cpRK+VnhCTrvOBbMAQAB2aXFLSUoKW2Ucagl0t8TEvqsFnkw
+ v5/rvv4CkJLlxTmL9d2o9IRrmFw2dytGTn/Gu5kdf9L+U4rOcwzmgXLsUKqafAkwKSix
+ 16TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730182257; x=1730787057;
+ d=1e100.net; s=20230601; t=1730182251; x=1730787051;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Vs7nasybbX7ls6pt1vDzRGbzY5szh6TT52y5XwKAnFk=;
- b=U5Lly7P5JLlEKgdWpXKEWnx98B/qQHRF3pM9pYt4vWYHZBZdLQcvhd1FnhYDkhCCTN
- 1W+i5Z27u7af2vEPcQQJMFLwLgYyC1SeX8TcpGrhGjWfxxrgpPb+kgbEdrqbem3D4P59
- AivF4+9Hp7OzsREDmK0LGRGTZ1dydy4qXT+G3g2+Pe3AoS42XsSyxB3F2LLvd/+TN4+i
- Ws03eh8iyNOz3J4+DRfMJMNc9fU8qGhEeSssgTDHTuepERIXdCJ7Xzomrn+Ihku0wmy1
- Zj2YASygFjqB4ONVHfzJkPIIX8EjJbRCiDtj8brS7RAyg/MXi47BHctVZfPHTPi4/xJg
- hIIg==
+ bh=1F1wQfyGlx2dTe0Op+HmZFdGoAZYpgptW9U5JoHUQ6Q=;
+ b=mHlXj4r1UCKQOoZgH/9//YQQN9KkMNATi+T6ocGhKjKPYJuc+OSBWCypP45E6baUCJ
+ WOjBWjhQ/QWFi3upnZ3zpvoHFgUl55Bb5oHeGP2nQVrGesxIk6PaejKP9X1keC3ECuxT
+ pjCAOnsvJmlQPmL2s14hTC0cSaEyKQstEvkyp+zOZMIhUGS9eksVpxWU+HggBEYmtwSt
+ RKdU+vgq+73Coy8A2jv/8OEBvGgGN+GTfAxu59hwxsTUMF25GlTmPeIubiTJpypVeDra
+ MKfsP2JyiYhPUwSOKq5tfUx/o5azhKPS2aR7uOAux+JJz+rfXkewWblEcdHJGpKw9gVo
+ 9/ng==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUomIaS+Qzqqn41PRbzZGP3BugBHYiPw75cVzpvaOYTL2jxtehV7qP6+ec0CRRi9Rq+VvDpZYxu3i06@nongnu.org
-X-Gm-Message-State: AOJu0YwGquWD+DIh8lwPHAg5ucOyWu2Qy5Fmi1hCTybyMCpCjxZ0RI/V
- 45qcEAkQz/5nqdJvZc31LM3ufQOGHxj8z7r3Emv31QQ5ZXGLezpFEc424kpb2/I=
-X-Google-Smtp-Source: AGHT+IF//bT0LVXj2kSSkPbfeR4r1Hvob0c7rviyW7x51yDzFgNZrfk2lCsSnPc3y2bKfJaP94qSBA==
-X-Received: by 2002:a05:600c:458f:b0:42b:a7c7:5667 with SMTP id
- 5b1f17b1804b1-4319ad02659mr89169725e9.25.1730182256877; 
- Mon, 28 Oct 2024 23:10:56 -0700 (PDT)
+ AJvYcCV01f2CpZmS9raHC8F7YXTTpH0tS0OB32Kqyr9sa/2hHlQwz7i4SPd3dNbsj03Mo8eMeV2QaFeGZOhV@nongnu.org
+X-Gm-Message-State: AOJu0Yy+KQbWYh/TPKNG10mBcvncDbOqQWPmIhBsgUDYEcctpRdmD/an
+ jysXQEi5sGbydyOG3Ocho/xQRfvMuIkCCE3PQURNjMmodoaNnvvJyRySyJIRDzM=
+X-Google-Smtp-Source: AGHT+IF/XEB3t8rDOX9R8wrFa9AB5OgvhKOca5YZ5ZgPCiex9iqGl6fRuzz5nlT11jaQr2JRP8bScQ==
+X-Received: by 2002:a05:600c:4fcb:b0:431:5ed4:7e7d with SMTP id
+ 5b1f17b1804b1-4319acad048mr72454495e9.18.1730182251258; 
+ Mon, 28 Oct 2024 23:10:51 -0700 (PDT)
 Received: from [192.168.21.227] ([90.197.151.65])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431b45aa058sm12150405e9.1.2024.10.28.23.10.55
+ 5b1f17b1804b1-4318b55f5e1sm165298915e9.14.2024.10.28.23.10.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Oct 2024 23:10:56 -0700 (PDT)
-Message-ID: <e38214df-2ef9-4bc7-8f23-a29c0b01913f@linaro.org>
-Date: Mon, 28 Oct 2024 12:21:43 +0000
+ Mon, 28 Oct 2024 23:10:50 -0700 (PDT)
+Message-ID: <797f110c-8615-4e43-aec6-62564a654c47@linaro.org>
+Date: Mon, 28 Oct 2024 12:20:15 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/21] target/xtensa: Factor out calls to
- set_use_first_nan()
+Subject: Re: [PATCH 11/21] target/sparc: Move cpu_put_fsr(env, 0) call to reset
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -83,14 +82,14 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
  qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
 References: <20241025141254.2141506-1-peter.maydell@linaro.org>
- <20241025141254.2141506-14-peter.maydell@linaro.org>
+ <20241025141254.2141506-12-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241025141254.2141506-14-peter.maydell@linaro.org>
+In-Reply-To: <20241025141254.2141506-12-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -114,23 +113,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/25/24 15:12, Peter Maydell wrote:
-> In xtensa we currently call set_use_first_nan() in a lot of
-> places where we want to switch the NaN-propagation handling.
-> We're about to change the softfloat API we use to do that,
-> so start by factoring all the calls out into a single
-> xtensa_use_first_nan() function.
+> Currently we call cpu_put_fsr(0) in sparc_cpu_realizefn(), which
+> initializes various fields in the CPU struct:
+>   * fsr_cexc_ftt
+>   * fcc[]
+>   * fsr_qne
+>   * fsr
+> It also sets the rounding mode in env->fp_status.
 > 
-> The bulk of this change was done with
->   sed -i -e 's/set_use_first_nan(\([^,]*\),[^)]*)/xtensa_use_first_nan(env, \1)/'  target/xtensa/fpu_helper.c
+> This is largely pointless, because when we later reset the CPU
+> this will zero out all the fields up until the "end_reset_fields"
+> label, which includes all of these (but not fp_status!)
 > 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> Move the cpu_put_fsr(env, 0) call to reset, because that expresses
+> the logical requirement: we want to reset FSR to 0 on every reset.
+> This isn't a behaviour change because the fields are all zero anyway.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/xtensa/cpu.h        |  6 ++++++
->   target/xtensa/cpu.c        |  2 +-
->   target/xtensa/fpu_helper.c | 33 +++++++++++++++++++--------------
->   3 files changed, 26 insertions(+), 15 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
