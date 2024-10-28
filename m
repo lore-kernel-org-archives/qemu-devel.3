@@ -4,165 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD42FD3399E
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6409D3399E
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:42:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Sof-0003I9-1Y; Mon, 28 Oct 2024 12:42:05 -0400
+	id 1t5Sou-0003KS-6K; Mon, 28 Oct 2024 12:42:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1t5Soa-0003Hv-2z
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:42:00 -0400
-Received: from mail-dm6nam04on20614.outbound.protection.outlook.com
- ([2a01:111:f403:2409::614]
- helo=NAM04-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t5Sos-0003K8-NH
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:42:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1t5SoX-0001UL-O2
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:41:59 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=awrUhyFMy/Fjy3VNzWzrhzvSsbHiczYuVNYlBNmHo23xCTitBuCXgZkcrq5juST65OXUYyGS3ezdgAt4Zy5rN5BBgkE/ZhAKA1SslzJ+/Ww5qGhif+4hHZJ9s8Xw77o2Xx8reCtJT0SYEB+t22VGO3SJzgdLkG/LfCZ56JYSAfEPfPYEMgsB5XN3RnPXoo3U0CdH1enIFLWWH3d7zKf2r1KqTXT9Cm+DH0mBF3q7In4dK6sFbp/pvIWaOmGUg4HRdJxvjayIAaKj60wjWrJyy7lc+FK9Z0jJN+EIVg9lHuALKw59EhLBNOMoYUxSKMykY9gTdACuqpiMPeX3GwnMbA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ADyi2VLuBu15sJZt+ldZDdm21HdZ6/0R6sojBpCgtdo=;
- b=IPmeGe/vcu6RFN9BXqnmUo3oAiwaNMcz1A/ln3Nnsh42fYhY4+zsrhx5P7U8naBKMxpW3UhRiputiPVgk617rKOp92mkRHvFuDg8Z1d97lECDIFHakF1AOh2R3a9sySeRJtOV58GQGk1w5Grk+nKNP8XEoqc6sVbnpY/k1exUkZKbEsZu1iIuCtLCGlKBXgWSzVIv+WHQUaQl/vnEeyJRvO2K38WfTMt/zSn8/D9b69q7+L/qaXDVR/KzxO+HWg96tkQi+4FCGz0YyCgtvP+19T38qg/apJQnsYArMCp0wKefGlEWvTf1tPImLDZJx/zRr0+HHyu5Mg0tYOUxUOevw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ADyi2VLuBu15sJZt+ldZDdm21HdZ6/0R6sojBpCgtdo=;
- b=WxrTyB7IH7L10abvhjCYqKXdSnYFkYra1AD5abZ6Lyh00IcpL9HxIX4t9kXeclmQsgFInlMat3VUgVcnpQQOW1/xJDooMvF1f0OfsIwwX47eBmmNeirdwvYaMRQIfXA8LtYXn/E/RfZneK9Rd9Yzn8eEHoJ6rWBv2/yvfuEDPIggJL4/RSqUGU6jati2LS0cFjK/ZkYMqfc78Ew8sLOF/Q5Zly8j4WaSp/UP7hDT/nHX/0SRpy91JbSvybWcDcxonyL9eNxvLIsypW5GaqxBMeq7T/dIbVjhrt3SKtlVIQLwK4jpVTyPCvjGJ5CK19oSplWLEkbukzjEXgCSuMyyYQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by IA1PR12MB9062.namprd12.prod.outlook.com (2603:10b6:208:3aa::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.25; Mon, 28 Oct
- 2024 16:41:48 +0000
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91%6]) with mapi id 15.20.8093.024; Mon, 28 Oct 2024
- 16:41:47 +0000
-Message-ID: <4c6bb701-dd6d-4cca-be80-156c19f2a088@nvidia.com>
-Date: Mon, 28 Oct 2024 18:41:42 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/8] migration: Unexport migration_is_active()
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20241024213056.1395400-1-peterx@redhat.com>
- <20241024213056.1395400-8-peterx@redhat.com>
- <78729b4b-3747-4408-8146-12d49e70fed1@nvidia.com> <Zx-xpZzYG_1KuCQu@x1n>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <Zx-xpZzYG_1KuCQu@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR3P281CA0029.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:1c::22) To DM6PR12MB5549.namprd12.prod.outlook.com
- (2603:10b6:5:209::13)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t5Soq-0001V6-00
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:42:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730133734;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=T0UAX23+37ZRrHea98bsMhwQ80Lb1MZgJknkx7BqqeA=;
+ b=aXUh+JZaPYkgO7in/M85tlp+SD6OKZ6tA72r22hjY63v0+oyn69HTQlUWUW4ny7G8BIYOz
+ QzflzjIPyk+QeafLHh02W5p6bopuhPs5XFOT/FxUSKTYtHjRYFJSJ3h9xNwjE1r9URsKKC
+ nbNGwZi+pFbOUM6tkoCrlmerc3/5b6k=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-383-cKd3ofIKMGCZ3fNFR5dQ6A-1; Mon, 28 Oct 2024 12:42:13 -0400
+X-MC-Unique: cKd3ofIKMGCZ3fNFR5dQ6A-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4315afcae6cso25284575e9.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 09:42:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730133732; x=1730738532;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=T0UAX23+37ZRrHea98bsMhwQ80Lb1MZgJknkx7BqqeA=;
+ b=V/Du1nPWngtbihCiwX2zemL0JnTx9MjeL556rCiudwqSUUOCQFca5uzA21n2uEavI8
+ KW1i/S7HFksP8nYnROls1GiC5IAkMcE19f5OaHEfocKjM2wgqlzQnvrfQGN+/AWHtDDn
+ m5UwwNQEK+ip8LnAvhoCVxnskIDyz6AJW201pG80PyVlVD7uV8o4AnipnKiwlcA01UEf
+ mg9WBoGylwxN91KEqT1HckQ9IpVVaxJ4MxPqmxapDtdhIgIBShUxZXDlaeTlnwxgmZgg
+ Obd6xRW3b0L2Vx3Y6XlEsDzULOKRveGZsu7f6+Vtzgs9u1nrDT9Syf37oUmGRvLljXRm
+ 3eww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUeLLm2DOOfesgmRim9EiwUviQYxi2hRGicvUCdI9xlXwMmweKYoR6IZNd6pG+5e96TiZ6P+zwWdeS3@nongnu.org
+X-Gm-Message-State: AOJu0YzVz9ZUGlaVptndPwIhZ7CRpSuGiMVkO4gV52i/YLlhvwYLn2hx
+ WJkoE5wCaKaJhFvw4EHRHBwjJFbgyjHmrPNmmK6/dIiOKlC2nyikGTQme4rhnrVblXLX027QQLB
+ 7VB8KtM549gQZMQKjdEprXzV0/I14sFPH7ASaaQZs/rbQC+gUlhFZ
+X-Received: by 2002:a05:600c:450f:b0:431:7ccd:ff8a with SMTP id
+ 5b1f17b1804b1-431b2f326c8mr2055625e9.14.1730133731986; 
+ Mon, 28 Oct 2024 09:42:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFGBesCrSu0q4i2SZfeVQIYSHgqs3Pn9F5uTcLGHdCRZm3VZfc0mDe/6YB2p/qzRtKR5IbJeA==
+X-Received: by 2002:a05:600c:450f:b0:431:7ccd:ff8a with SMTP id
+ 5b1f17b1804b1-431b2f326c8mr2055315e9.14.1730133731552; 
+ Mon, 28 Oct 2024 09:42:11 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c722:3c00:70fc:90a8:2c65:79b4?
+ (p200300cbc7223c0070fc90a82c6579b4.dip0.t-ipconnect.de.
+ [2003:cb:c722:3c00:70fc:90a8:2c65:79b4])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43193573551sm115340055e9.6.2024.10.28.09.42.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Oct 2024 09:42:11 -0700 (PDT)
+Message-ID: <9a49fc5f-bf9e-4e72-bd3e-13975d4913bd@redhat.com>
+Date: Mon, 28 Oct 2024 17:42:10 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|IA1PR12MB9062:EE_
-X-MS-Office365-Filtering-Correlation-Id: 04b6b61b-4da0-46bd-e934-08dcf76f6a3d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?aHpFNnZqRzNFMWVDOUNoM2dJdVdrL1FHWkNCcWZEOFNNRm93SkJlelFkNFNr?=
- =?utf-8?B?dEUvWHI3TnFGQ3UzMDlUaGRvYTVBRUIwTVRmdnlWY3BXemUwdDRwc0RYUFRQ?=
- =?utf-8?B?dythSXRINU9Kekw3UVVQL1BaM1BnRHRhN0YwWTlINGF3OG9jRzJtS0tJVnRZ?=
- =?utf-8?B?dWsyeXFsaWtyV0EydHdLR29iOUVVSVJmdldVdThRbGxWMmk0czhpNnBXb1Rl?=
- =?utf-8?B?dE5rc3U3YU9iTDlHZUt2SDVXQTNhQ2FVbHA1RitvRFBzQ0lvK212bXdXQTh1?=
- =?utf-8?B?cW5rV05CWTJ4RjYxSDdYMFo4SkdJekhLZkx4bVRYTGEyS2s1NEpUeVZKSG1N?=
- =?utf-8?B?ZHNPcFJuMGhkSldCOUhGenlvSmg1SENHdE9TRmIrOE1VVkk1cGtlcWpNMXJz?=
- =?utf-8?B?VE1OMGR1ckFqL1hIWEJkdW4vLzIvMmNIVU9tSUR5WDFwbzYxQlZyMW9NWjN5?=
- =?utf-8?B?dGEra2lmekVaT1JBeEFwWXltOTVLWWxIM1o1R0MyU2RqT2lxUnVydll2TkpV?=
- =?utf-8?B?WjRwSzhwRzVhU1lUWThLYnZMaC91dGxVMkZzQWdsK2Nua0ZZMzBJelRxaDV2?=
- =?utf-8?B?N3VManpQbXJzbkhYbW9TWTd2Y1pnTHFqQU1leU5pdkQ1UXcwZmVOUlhoL3ZO?=
- =?utf-8?B?QmdoOWF2aW1BTmJhZ292d1FZa2w2ckF5NklES0hHWW5TeUY3QlBHU3Q4Mk5Z?=
- =?utf-8?B?bEhtKzRVb1NJdkhKREh2enJieCtSMUYyVm5oWVg3WXQycXNJd2ZyR3Q5ZlJ1?=
- =?utf-8?B?WXk1QlhCMVNXREFRdlVlNjBNZ2RITlZVWDlGRHBUUnNETm5lSWw4bk03b0Qr?=
- =?utf-8?B?dkVXVFhjTVFoR1lnbWdaTjJPaDdEVFl2TDhVdlRHcnpWL1FKV2svRzBMMnAz?=
- =?utf-8?B?SFdQaE5KaGlMckdRcjVaWDFCY3h5UGZCaDY1MnhhaEZvVkxNSzlDQTJ1cVVM?=
- =?utf-8?B?U2h3Wk5xMWJydnVpVzdmQ05vMy95V0VJdFFwRFB5RW4wWEg1MmdUajhrM2ph?=
- =?utf-8?B?a3pCUnlWV3pVVjVFTlNCWjIzYnNXWEVhSVZnUUlwWmdUbG5McnArTjhma3Jr?=
- =?utf-8?B?NXpTTGovdk9jNEZ3QVZSYUMxTnFaTHZ2Q0Jmck5pTmxDQ0kwRW02RzJHS3B6?=
- =?utf-8?B?Qno5NmxtTEFEeTBvNWtsb0hPR1NqN1JZSlNzSVA5dm85YjE1VVJ4Q3VkVllX?=
- =?utf-8?B?V29HUFBwczEwcHdxdVBHM1VLbGlYdU9RMWNHZ1pnL1NNZE9DakxkTk05K0pX?=
- =?utf-8?B?QngyOUxzbVlzcDk4QU96VExtTTNmYStkTmtRQjNsb0hqamxUcCtDbDZzVGh6?=
- =?utf-8?B?cFg0MEpLOS9zcHpQdUpxV3FxeTVEbWJubWJ6N3oxcEh6UTl3QjFLRDVYYTN4?=
- =?utf-8?B?OHQ4QUo5eUN1cmh4WEthV2llVmNEUHlXMEgrUzZZanAvRkMvR1BWUkZVVU1o?=
- =?utf-8?B?ZExxYnFQY3EvWW5MbXZ3M29ua2pEbkpjai85WW96ZjA0bFVQWVdPMFIxRHlB?=
- =?utf-8?B?VTlKNmNiRWF3NExneHlXeitabkt0SjIvKytHWkVMOUk5Skp5UVNxaERsUFlK?=
- =?utf-8?B?MmRkVXozSFdNSzNody9mdG5RWlhHc29SYTcrVVl5Yk0rQkk4cE5nRHFIT0Fw?=
- =?utf-8?B?dFl1ei9BT2doUkdubXhJclZ3bnVwQlFiTjJ2cnJiQ2pyVDdTUjVtTnZjbm5D?=
- =?utf-8?B?Zi83TXJac1cvODdNdENOMFlPeC9vZXNhWW1VY0pDQnd3eitZM0N3SXlabGM3?=
- =?utf-8?Q?cwO6Av62bHm0Pj2MesEeTgTaYSRITSmyMVIKO14?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ckZRWWFuc0U1ekk3alNSWjdVaWxyWkhieVdzTDBHaVR4d3dCQSs3aVoxU3pP?=
- =?utf-8?B?a1RXR3VyZGdrYm0rR3FQTEJJMmFZQnB0OXVaMy9WbjlXQ2FrbWtZaGtLYmtF?=
- =?utf-8?B?b3BWbW84S2lQWFcvZHdtSVNRRlIrc0lUcm9yaGtVQVZKa2ZFWTNRNXhweU5X?=
- =?utf-8?B?VVI4SllOMHdGTjJ0MXpvSjFBMU4wbXhVbkZjNGdTNlozeTRtNWgzKzV6Wm53?=
- =?utf-8?B?V3J6Rjh3YTdsaHZkYzRJQkgyUEkvdmc0ODdXc1paM2c1anZrQUJiTGJQTUFj?=
- =?utf-8?B?K0ZBUXIyMzhhUW1YUTlmYWxOUkgwNGFKQTFaQ1o4dkdiR3hiZUNDcjNpUGEz?=
- =?utf-8?B?UUNUZkNERzMweTVybk9lZC84MXZHbW9HbzZVcUdLR3NaZHRXQ1o0Y3pKNFZ2?=
- =?utf-8?B?a1pVdjhPZEtGWjFLWnVrdTREMGdYaDVpTXdPZkRrTEJWa1JSZmhvWWIyeVhx?=
- =?utf-8?B?NjhwUTZNMmZUYUJnYXV4eWlUNkxLWFZPVTl1VDYzOUdCM0Z3SGNFdjl0RW5G?=
- =?utf-8?B?REFNWjNGcEgvUHNHMDZHSGlrdDliS2N0MFdCdXpHdjY4N0ZmYXVoeXI2SmdW?=
- =?utf-8?B?YnFaa0UrS3hCWURPZm9MMGNsVHFjUzEyWDlieSs2T1JjRERRSVRGdnM4eEVk?=
- =?utf-8?B?cytqWU52WE4zOFkrQW14VTAxWXNZNVgxMzRQd3JXeVdMV1Q0ZG5UTUJEYkhu?=
- =?utf-8?B?Y2YrUHBJUUFEVk9lNlNYZk9qR1AzNFQ0ZGFnalRRcjZya24yUDBNekpjNDg2?=
- =?utf-8?B?WGl4M3ljMTR0b3ByOVB2SENwV3RFZSsxbWFteksvTjByTzIxRVVpZkQ2TVc4?=
- =?utf-8?B?TFRUZngrNUNyaTJBVlFncWxtNWI1aTVtekNNR2Y4K2VtNEF1amYyMUdjbzlj?=
- =?utf-8?B?NVV3RnhlTERjZUZqR1NodUtEbTJNT2dkK001NDkwbC94SGVKZ0hNTm1Xcnhx?=
- =?utf-8?B?c2RKZm9TK1BrY2xYdHllajhhVEoxQ0sxc3VRRWh4NGJTVWdTR1phMTk1TDZK?=
- =?utf-8?B?TGZnaWFyK2JNS3NYSGE5eThhbmdwUnR1UG1jT1c4dGlENVZ1QzlnQ2JwbEE5?=
- =?utf-8?B?QitCQUVLeVpQbGhsVTQwaXRhUUEvTDNiSFY0S0dMSStZRnprQnJhdVUwVC9z?=
- =?utf-8?B?NjVkUmE5OUp0OVh6ajBxYWs3citPOGMrOGx0MXpyTjVpK1hEbGJNQ29EbGV3?=
- =?utf-8?B?a1paMlBJRDRNTVo4RUdSTm5XTlY2dCtGdnkzakgwQ1czK0FXbTNIanRIVkY0?=
- =?utf-8?B?SXFZTmIwU1Y4Rytka0Z1eklsaGpmdmF1UWtwYVBkaXVIKzhCbUxZTEkwb2xP?=
- =?utf-8?B?MVVKWDFZWm1qdHFpQ29zbEpuYWdhQnFSRERMT2xmcTBGUFZjaFJmcGlIbFlR?=
- =?utf-8?B?bG03NHBJZUI0Rm5kNVZyaXRzVlpKUjJNdzhoWWFXM051eWRlcXZYMjNWYnN1?=
- =?utf-8?B?RDh6dWdUdTR1WWxBNUg1cU5GWWpwS3FkS2krVmhMOWhycituNjlqUCtPYU9B?=
- =?utf-8?B?UWgzQU1hRFBWakdaRTRVRmd4OS9ZaTZYMWNycVBqZ3drUjJxaXB4SjEvWUdI?=
- =?utf-8?B?SVBwcTlqS2EyVWRweHp5Q3JQbFN1cHNCMWNnUFhJSDEzOWVHTmxJQjlCVE90?=
- =?utf-8?B?TFI1UzIvbng3NmgrM054R25mU0YrSW1Mb2lkWUthRG1UUjlyQ2V5S3ZtU21E?=
- =?utf-8?B?UGNoUStxNzJ1T2J2aEhrTGNsSloxRmNNNnVLNGxLZjVQeFEyMkh2VlpyZDht?=
- =?utf-8?B?VGMyNEJ2ZEpiQkRRRjN0aFVoUkNkYnhXTmNIaUY1UCtlZWlOeVF3WGtweHRx?=
- =?utf-8?B?ekhVWU5qeDJJbjlpQnhMTk50OE9lOUF0cjFGVXExaDA5QXZueEZHZk1oeUsv?=
- =?utf-8?B?VzVLdHFqTU1yQ2dqdk1QTFpndmg0RU5IdE4xVE5PZlcyT1daMGczT29vaUZk?=
- =?utf-8?B?N2JvY1g3YjY5dDdNMnh5aHU4L2hYYmhGNjFBRXpuWmtJV3Z2T0dkWWV5aVR5?=
- =?utf-8?B?MUlHRzkwZTBtQkF2NGZIbE9aZlZhN3YvcGdzd1NOZkNvcWJkQU51WVE1UFVR?=
- =?utf-8?B?SlhIMkJZWTVEa1FobHFpNXN3VklmQ2h4SE5mcVhGWmcxajZ0S2t4disyV1pF?=
- =?utf-8?Q?DvR5Sjn13i3GPggbkcWIVcgdD?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 04b6b61b-4da0-46bd-e934-08dcf76f6a3d
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2024 16:41:47.8187 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pAWIu0xfoHO7kSa1IzD72gENQFvq9Rhdwakl+ooRl9wCrlF298vYFAW+wFy0AQrJp8UzTk9TTBLIaUlNDn7+CA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB9062
-Received-SPF: softfail client-ip=2a01:111:f403:2409::614;
- envelope-from=avihaih@nvidia.com;
- helo=NAM04-DM6-obe.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/4] accel/kvm: Keep track of the HWPoisonPage page_size
+To: William Roche <william.roche@oracle.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
+ joao.m.martins@oracle.com
+References: <ZwalK7Dq_cf-EA_0@x1n>
+ <20241022213503.1189954-1-william.roche@oracle.com>
+ <20241022213503.1189954-3-william.roche@oracle.com>
+ <a0fda9e7-d55b-455b-aeaa-27162b6cdc65@redhat.com>
+ <9b17600d-4473-4bb6-841f-00f93d86f720@oracle.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <9b17600d-4473-4bb6-841f-00f93d86f720@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_PH_BODY_ACCOUNTS_PRE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,152 +159,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 28/10/2024 17:45, Peter Xu wrote:
-> External email: Use caution opening links or attachments
->
->
-> On Mon, Oct 28, 2024 at 09:43:16AM +0200, Avihai Horon wrote:
->> On 25/10/2024 0:30, Peter Xu wrote:
->>> External email: Use caution opening links or attachments
+On 26.10.24 01:27, William Roche wrote:
+> On 10/23/24 09:28, David Hildenbrand wrote:
+> 
+>> On 22.10.24 23:35, “William Roche wrote:
+>>> From: William Roche <william.roche@oracle.com>
 >>>
+>>> Add the page size information to the hwpoison_page_list elements.
+>>> As the kernel doesn't always report the actual poisoned page size,
+>>> we adjust this size from the backend real page size.
+>>> We take into account the recorded page size to adjust the size
+>>> and location of the memory hole.
 >>>
->>> We have two outside users of this API, so it's exported.
->>>
->>> Is it really necessary?  Does it matter whether it must be
->>> ACTIVE/POSTCOPY_ACTIVE/DEVICE?  I guess no.
->> Actually for VFIO it does matter, because we don't want VFIO to do DPT
->> log_sync in SETUP stage when DPT might not have been started yet.
->> See commit ff180c6bd7a8 ("vfio/migration: Skip log_sync during migration
->> SETUP state").
-> This seems to be a known issue for migration in general, rather than VFIO
-> specific.  Hyman has a patch for it, not yet reviewed..
->
-> https://lore.kernel.org/r/cover.1729648695.git.yong.huang@smartx.com
->
-> That corresponds to your comment here:
->
->      Redundant -- all RAM is marked dirty in migration SETUP state and is
->      transferred only after migration is set to ACTIVE state, so doing
->      log_sync during migration SETUP is pointless.
->
-> So I wonder whether it's only VFIO that should skip it, or log_sync()
-> simply shouldn't be called at all during SETUP, because of its redundancy.
-
-Not sure why this sync was there in the first place, but if its only 
-purpose was to sync dirty pages then yes, I guess it be dropped.
-
->
-> The other thing you mentioned here:
->
->      Can fail -- there is a time window, between setting migration state to
->      SETUP and starting dirty tracking by RAM save_live_setup handler, during
->      which dirty tracking is still not started. Any VFIO log_sync call that
->      is issued during this time window will fail. For example, this error can
->      be triggered by migrating a VM when a GUI is active, which constantly
->      calls log_sync.
->
-> This is VFIO specific.  Why this can fail even if global tracking is
-> started already?
-
-It can fail if global tracking is *not* started yet.
-As mentioned in the commit message, there is a time window where 
-migration is in SETUP state but global tracking is not started yet.
-
-Thanks.
-
-> I didn't yet get why a GUI being active in guest could
-> affect log_sync() from working.. after vfio_listener_log_global_start()
-> properly setup everything.
->
-> Thanks,
->
->> Thanks.
->>
->>> The external user is trying to detect whether migration is running or not,
->>> as simple as that.
->>>
->>> To make the migration_is*() APIs even shorter, let's use
->>> migration_is_running() for outside worlds.
->>>
->>> Internally there're actually three places that literally needs
->>> migration_is_active() rather than running().  Keep that an internal helper.
->>>
->>> After this patch, we finally only export one helper that allows external
->>> world to try detect migration status, which is migration_is_running().
->>>
->>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>>> Signed-off-by: William Roche <william.roche@oracle.com>
 >>> ---
->>>    include/migration/misc.h | 1 -
->>>    migration/migration.h    | 1 +
->>>    hw/vfio/common.c         | 4 ++--
->>>    system/dirtylimit.c      | 3 +--
->>>    4 files changed, 4 insertions(+), 5 deletions(-)
+>>>   accel/kvm/kvm-all.c       | 14 ++++++++++----
+>>>   include/exec/cpu-common.h |  1 +
+>>>   include/sysemu/kvm.h      |  3 ++-
+>>>   include/sysemu/kvm_int.h  |  3 ++-
+>>>   system/physmem.c          | 20 ++++++++++++++++++++
+>>>   target/arm/kvm.c          |  8 ++++++--
+>>>   target/i386/kvm/kvm.c     |  8 ++++++--
+>>>   7 files changed, 47 insertions(+), 10 deletions(-)
 >>>
->>> diff --git a/include/migration/misc.h b/include/migration/misc.h
->>> index ad1e25826a..c0e23fdac9 100644
->>> --- a/include/migration/misc.h
->>> +++ b/include/migration/misc.h
->>> @@ -53,7 +53,6 @@ void dump_vmstate_json_to_file(FILE *out_fp);
->>>    void migration_object_init(void);
->>>    void migration_shutdown(void);
->>>
->>> -bool migration_is_active(void);
->>>    bool migration_is_running(void);
->>>    bool migration_thread_is_self(void);
->>>
->>> diff --git a/migration/migration.h b/migration/migration.h
->>> index 0956e9274b..9fa26ab06a 100644
->>> --- a/migration/migration.h
->>> +++ b/migration/migration.h
->>> @@ -492,6 +492,7 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
->>>
->>>    int migrate_init(MigrationState *s, Error **errp);
->>>    bool migration_is_blocked(Error **errp);
->>> +bool migration_is_active(void);
->>>    /* True if outgoing migration has entered postcopy phase */
->>>    bool migration_in_postcopy(void);
->>>    bool migration_postcopy_is_alive(MigrationStatus state);
->>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->>> index cc72282c71..7eb99ebd4d 100644
->>> --- a/hw/vfio/common.c
->>> +++ b/hw/vfio/common.c
->>> @@ -174,7 +174,7 @@ static bool vfio_devices_all_dirty_tracking(VFIOContainerBase *bcontainer)
->>>    {
->>>        VFIODevice *vbasedev;
->>>
->>> -    if (!migration_is_active()) {
->>> +    if (!migration_is_running()) {
->>>            return false;
->>>        }
->>>
->>> @@ -219,7 +219,7 @@ vfio_devices_all_running_and_mig_active(const VFIOContainerBase *bcontainer)
->>>    {
->>>        VFIODevice *vbasedev;
->>>
->>> -    if (!migration_is_active()) {
->>> +    if (!migration_is_running()) {
->>>            return false;
->>>        }
->>>
->>> diff --git a/system/dirtylimit.c b/system/dirtylimit.c
->>> index ab20da34bb..d7a855c603 100644
->>> --- a/system/dirtylimit.c
->>> +++ b/system/dirtylimit.c
->>> @@ -80,8 +80,7 @@ static void vcpu_dirty_rate_stat_collect(void)
->>>        int i = 0;
->>>        int64_t period = DIRTYLIMIT_CALC_TIME_MS;
->>>
->>> -    if (migrate_dirty_limit() &&
->>> -        migration_is_active()) {
->>> +    if (migrate_dirty_limit() && migration_is_running()) {
->>>            period = migrate_vcpu_dirty_limit_period();
->>>        }
->>>
->>> --
->>> 2.45.0
->>>
-> --
-> Peter Xu
->
+>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>>> index 2adc4d9c24..40117eefa7 100644
+>>> --- a/accel/kvm/kvm-all.c
+>>> +++ b/accel/kvm/kvm-all.c
+>>> @@ -1266,6 +1266,7 @@ int kvm_vm_check_extension(KVMState *s, 
+>>> unsigned int extension)
+>>>    */
+>>>   typedef struct HWPoisonPage {
+>>>       ram_addr_t ram_addr;
+>>> +    size_t     page_size;
+>>>       QLIST_ENTRY(HWPoisonPage) list;
+>>>   } HWPoisonPage;
+>>>   @@ -1278,15 +1279,18 @@ static void kvm_unpoison_all(void *param)
+>>>         QLIST_FOREACH_SAFE(page, &hwpoison_page_list, list, next_page) {
+>>>           QLIST_REMOVE(page, list);
+>>> -        qemu_ram_remap(page->ram_addr, TARGET_PAGE_SIZE);
+>>> +        qemu_ram_remap(page->ram_addr, page->page_size);
+>>
+>> Can't we just use the page size from the RAMBlock in qemu_ram_remap? 
+>> There we lookup the RAMBlock, and all pages in a RAMBlock have the 
+>> same size.
+> 
+> 
+> Yes, we could use the page size from the RAMBlock in qemu_ram_remap() 
+> that is called when the VM is resetting. I think that knowing the 
+> information about the size of poisoned chunk of memory when the poison 
+> is created is useful to give a trace of what is going on, before seeing 
+> maybe other pages being reported as poisoned. That's the 4th patch goal 
+> to give an information as soon as we get it.
+> It also helps to filter the new errors reported and only create an entry 
+> in the hwpoison_page_list for new large pages.
+> Now we could delay the page size retrieval until we are resetting and 
+> present the information (post mortem). I do think that having the 
+> information earlier is better in this case.
+
+If it is not required for this patch, then please move the other stuff 
+to patch #4.
+
+Here, we really only have to discard a large page, which we can derive 
+from the QEMU RAMBlock page size.
+
+> 
+> 
+>>
+>> I'll note that qemu_ram_remap() is rather stupid and optimized only 
+>> for private memory (not shmem etc).
+>>
+>> mmap(MAP_FIXED|MAP_SHARED, fd) will give you the same poisoned page 
+>> from the pagecache; you'd have to punch a hole instead.
+>>
+>> It might be better to use ram_block_discard_range() in the long run. 
+>> Memory preallocation + page pinning is tricky, but we could simply 
+>> bail out in these cases (preallocation failing, ram discard being 
+>> disabled).
+> 
+> 
+> I see that ram_block_discard_range() adds more control before discarding 
+> the RAM region and can also call madvise() in addition to the fallocate 
+> punch hole for standard sized memory pages. Now as the range is supposed 
+> to be recreated, I'm not convinced that these madvise calls are necessary.
+
+They are the proper replacement for the mmap(MAP_FIXED) + fallocate.
+
+That function handles all cases of properly discarding guest RAM.
+
+> 
+> But we can also notice that this function will report the following 
+> warning in all cases of not shared file backends:
+> "ram_block_discard_range: Discarding RAM in private file mappings is 
+> possibly dangerous, because it will modify the underlying file and will 
+> affect other users of the file"
+
+Yes, because it's a clear warning sign that something weird is 
+happening. You might be throwing away data that some other process might 
+be relying on.
+
+How are you making QEMU consume hugetlbs?
+
+We could suppress these warnings, but let's first see how you are able 
+to trigger it.
+
+> Which means that hugetlbfs configurations do see this new cryptic 
+> warning message on reboot if it is impacted by a memory poisoning.
+> So I would prefer to leave the fallocate call in the qemu_ram_remap() 
+> function. Or would you prefer to enhance ram_block_discard_range()code 
+> to avoid the message in a reset situation (when called from qemu_ram_remap)?
+
+Please try reusing the mechanism to discard guest RAM instead of 
+open-coding this. We still have to use mmap(MAP_FIXED) as a backup, but 
+otherwise this function should mostly do+check what you need.
+
+(-warnings we might want to report differently / suppress)
+
+If you want, I can start a quick prototype of what it could look like 
+when using ram_block_discard_range() + ram_block_discard_is_disabled() + 
+fallback to existing mmap(MAP_FIXED).
+
+> 
+> 
+>>
+>> qemu_ram_remap() might be problematic with page pinning (vfio) as is 
+>> in any way :(
+> 
+> I agree. If qemu_ram_remap() fails, Qemu is ended either abort() or 
+> exit(1). Do you say that memory pinning could be detected by 
+> ram_block_discard_range() or maybe mmap call for the impacted region and 
+> make one of them fail ? This would be an additional reason to call 
+> ram_block_discard_range() from qemu_ram_remap().   Is it what you are 
+> suggesting ?
+
+ram_block_discard_is_disabled() might be the right test. If discarding 
+is disabled, then rebooting might create an inconsistency with 
+e.g.,vfio, resulting in the issues we know from memory ballooning where 
+the state vfio sees will be different from the state the guest kernel 
+sees. It's tricky ... and we much rather quit the VM early instead of 
+corrupting data later :/
+
+-- 
+Cheers,
+
+David / dhildenb
+
 
