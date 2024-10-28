@@ -4,105 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B0AD33998
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99B2FD33998
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:08:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5SGl-0003m0-Ev; Mon, 28 Oct 2024 12:07:03 -0400
+	id 1t5SI0-0004qM-CF; Mon, 28 Oct 2024 12:08:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t5SGK-0003c4-5K
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:06:37 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t5SGF-0005q2-VU
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:06:35 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-71e8235f0b6so3322027b3a.3
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 09:06:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1730131587; x=1730736387;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=rsS8mQxKeZhOGBSkMTChVuCtbwvG+Jwr+mFK42BwE2g=;
- b=Ou4b0G4A1myPBNa1G9y70pL6SdVTShcJV7aa90pJUG9HaB90RbYbHSRGeRXOyY1r9A
- a7oht9XDQgbVp2VqoPiam5rbjkluUJpTfFj/QGl4jj/dzYnt0UXVSzRAzPFnPXIOHggR
- hYxcFAx/BPuz28ukHTEG9RmaZHRJmL/QYwsDtz5ZJOOfQZ4/a9/Ih7dBVKqgPDpkjL6D
- xA37FH6MWUvm9XFBlcKPHuihtFMt1T7m3cXZGpMYNYzhGwEDkXmlVY0zecsV6KaiAl2J
- fMLJV99IhKSohrYQcLwOtuOQR0742eIxYnSKR6B418tt2M1vlchY7NgTDP873xWGKwG9
- tNKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730131587; x=1730736387;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rsS8mQxKeZhOGBSkMTChVuCtbwvG+Jwr+mFK42BwE2g=;
- b=aMZ1mlqaX48V79o7FW7mda0ZvE8+vcCcu52+Wo82NZ1CrjvV2kSKsLxP4hHD686QTB
- yX5UojSb6Of+dZJ5p29plmESuyjhxjCi6pjSVPXBBeFvVrtOk0dvcylU6NhpJeuHZhcP
- yXELtPMh1yt8K5QL3RhIGcpXkea8SlbqVKl3GWCvTFgzzBWYGlC3R0pOwSmBGKqtj18X
- 9MfI7XT0izuY/s6teMIRosdovs71/M60x1Ij4CMV2BUcXhYtA3DF8R7CbV1zC/8UimaF
- caUqzNTgoRWvCwYp9rYwDlLkTUICnCW7ZVDlJ6A+f+bXv0B12Ns5dUuf4MxVhBrI41zc
- vrHg==
-X-Gm-Message-State: AOJu0YyDwDOIW1WzRao3CgDhodNg6jijV5L9sjVq0ZrMP5F4UBmC5ILO
- 2DiXRHa5PKr86m3j4oTWM9emq0v+Wm4mWWI64lzrMDy1+HhALmzvSJx7BZRatHk=
-X-Google-Smtp-Source: AGHT+IF2wbIa9dMfNv0XonyLdwY1eNGBFmryOUE1sM7hTkkjHoZyMmZ6PFddnmxUZdlcLuGWQSfTdQ==
-X-Received: by 2002:a62:f24d:0:b0:71e:8049:474e with SMTP id
- d2e1a72fcca58-72063098067mr9804467b3a.26.1730131586858; 
- Mon, 28 Oct 2024 09:06:26 -0700 (PDT)
-Received: from ?IPV6:2400:4050:a840:1e00:32ed:25ae:21b1:72d6?
- ([2400:4050:a840:1e00:32ed:25ae:21b1:72d6])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72057939950sm5959797b3a.85.2024.10.28.09.06.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Oct 2024 09:06:26 -0700 (PDT)
-Message-ID: <dbb394d4-f8fe-484d-974c-c84275f7a1c7@daynix.com>
-Date: Tue, 29 Oct 2024 01:06:18 +0900
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1t5SHG-0004Za-Uz; Mon, 28 Oct 2024 12:07:40 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1t5SH9-0005wO-5a; Mon, 28 Oct 2024 12:07:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730131647; x=1761667647;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=cAqwY1XF8hqGObk66oZMn7HelNt56rNfyRRrhLSM5Tc=;
+ b=JAKiNpTza5IsHY4GGoUDrXBKJinDfQLoPuInB0zGWAxGqYVnPidEkKQD
+ 8Ji+lUX1c5ba61coiSwuIpHA1IiSYP8wjIOt2xznN6UujQbGIOLTybW2/
+ i8FoxAltVvqaOBxmn5DTy2xjoMVj3lyCU9lrTwjPP1L+pa4oyQhG4W/72
+ 8bM2WNMF2+sgAVotk/GUNFcvMaOiA6D2ClHhEgJWG0WeuZM1yO4hKo87b
+ KlCyWa6vwTO0hlNWbmHI5dLMhIJnTDZNlhOtgx1nGSuv3Ri6mPTvKVWpg
+ uscYqvlLcp+uIlFEvjxOjrqNjf9YLi0/Hg3+CjN7Sq66SBSNiN/VFSYuR A==;
+X-CSE-ConnectionGUID: TF5IxHyBTr6Dy1PS+XmtzQ==
+X-CSE-MsgGUID: 5QqIJmgvTd+AjqRgLR+DUw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11239"; a="29193447"
+X-IronPort-AV: E=Sophos;i="6.11,239,1725346800"; d="scan'208";a="29193447"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 09:07:24 -0700
+X-CSE-ConnectionGUID: 9I81pdsRR8K6KTY0h4mTSw==
+X-CSE-MsgGUID: KR41nrrcRJehZKSe8OrtCw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,239,1725346800"; d="scan'208";a="86230788"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.227.172])
+ ([10.124.227.172])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 09:07:22 -0700
+Message-ID: <b43557f7-49ff-43bb-8a8c-887b8220e1e8@intel.com>
+Date: Tue, 29 Oct 2024 00:07:18 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH v4 02/15] hw/display/apple-gfx: Introduce
- ParavirtualizedGraphics.Framework support
-To: Phil Dennis-Jordan <phil@philjordan.eu>
-Cc: qemu-devel@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org,
- pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com,
- marcin.juszkiewicz@linaro.org, stefanha@redhat.com, mst@redhat.com,
- slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com,
- chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com,
- philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, qemu-riscv@nongnu.org,
- Alexander Graf <graf@amazon.com>
-References: <20241024102813.9855-1-phil@philjordan.eu>
- <20241024102813.9855-3-phil@philjordan.eu>
- <9e310d5e-ab73-47b9-b9ed-5a16d4db3fb9@daynix.com>
- <CAAibmn0NA+K63OvrsBpN1HivndyZo-fgeLwzY8AVE4hPrQR26w@mail.gmail.com>
- <dd2aae75-348d-44ad-bbd9-5d45aad15bc6@daynix.com>
- <CAAibmn1z+7yizwH8DogfcCWOWzA8Ox6e=p+Hc1pu-CS4SjAirg@mail.gmail.com>
- <6a989d04-6416-4bd9-98ac-e1230a1095a9@daynix.com>
- <CAAibmn3YEOT0O55-bwJkpi_oEGkA1WwvhC0w3jGbgXOZLTVa0w@mail.gmail.com>
- <CAAibmn3HZeDeK8FrYhHa1GGwc+N8rBuB2VvMRm7LCt0mUGmsYQ@mail.gmail.com>
- <27ced2db-472d-47ae-9047-9efc0b589a1e@daynix.com>
- <CAAibmn17=iTaEW0Q_E_n6gsS7vd-d8-w36yee9f2eZ+SR-d-ng@mail.gmail.com>
+Subject: Re: [PATCH v6] i386/cpu: fixup number of addressable IDs for logical
+ processors in the physical package
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, pbonzini@redhat.com,
+ imammedo@redhat.com, xieyongji@bytedance.com, chaiwen.cc@bytedance.com,
+ qemu-stable@nongnu.org, Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>, qemu-devel@nongnu.org
+References: <20241009035638.59330-1-xuchuangxclwt@bytedance.com>
+ <cc83fc31-7a77-4e32-a861-3c1dc8592a04@intel.com>
+ <2f6b952d-4c21-4db5-9a8a-84a0c10feca8@bytedance.com>
+ <a48fcd78-d1c4-4359-bc18-d04147a93f50@intel.com> <ZwyRsq4EIooifRvb@intel.com>
+ <bbcfcbbd-1666-4e97-ae18-f47202d89009@intel.com> <ZxDS4L8vSr3HfFIh@intel.com>
 Content-Language: en-US
-In-Reply-To: <CAAibmn17=iTaEW0Q_E_n6gsS7vd-d8-w36yee9f2eZ+SR-d-ng@mail.gmail.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <ZxDS4L8vSr3HfFIh@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::429;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.782, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,214 +91,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/28 23:13, Phil Dennis-Jordan wrote:
+On 10/17/2024 5:03 PM, Zhao Liu wrote:
+> On Thu, Oct 17, 2024 at 04:18:06PM +0800, Xiaoyao Li wrote:
+>> Date: Thu, 17 Oct 2024 16:18:06 +0800
+>> From: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Subject: Re: [PATCH v6] i386/cpu: fixup number of addressable IDs for
+>>   logical processors in the physical package
+>>
+>> On 10/14/2024 11:36 AM, Zhao Liu wrote:
+>>>>>> On 10/9/2024 11:56 AM, Chuang Xu wrote:
+>>>>>>> When QEMU is started with:
+>>>>>>> -cpu host,migratable=on,host-cache-info=on,l3-cache=off
+>>>>>>> -smp 180,sockets=2,dies=1,cores=45,threads=2
+>>>>>>>
+>>>>>>> On Intel platform:
+>>>>>>> CPUID.01H.EBX[23:16] is defined as "max number of addressable IDs for
+>>>>>>> logical processors in the physical package".
+>>>>>>>
+>>>>>>> When executing "cpuid -1 -l 1 -r" in the guest, we obtain a
+>>>>>>> value of 90 for
+>>>>>>> CPUID.01H.EBX[23:16], whereas the expected value is 128. Additionally,
+>>>>>>> executing "cpuid -1 -l 4 -r" in the guest yields a value of 63 for
+>>>>>>> CPUID.04H.EAX[31:26], which matches the expected result.
+>>>>>>>
+>>>>>>> As (1+CPUID.04H.EAX[31:26]) rounds up to the nearest power-of-2 integer,
+>>>>>>> we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+>>>>>>> integer too. Otherwise we may encounter unexpected results in guest.
+>>>>>>>
+>>>>>>> For example, when QEMU is started with CLI above and xtopology
+>>>>>>> is disabled,
+>>>>>>> guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/
+>>>>>>> (1+CPUID.04H.EAX[31:26]) to
+>>>>>>> calculate threads-per-core in detect_ht(). Then guest will get
+>>>>>>> "90/ (1+63)=1"
+>>>>>>> as the result, even though threads-per-core should actually be 2.
+>>>>>>
+>>>>>> It's kernel's bug instead.
+>>>>>>
+>>>>>> In 1.5.3 "Sub ID Extraction Parameters for initial APIC ID" of
+>>>>>> "Intel 64 Architecture Processor Topology Enumeration" [1], it is
+>>>>>>
+>>>>>>     - SMT_Mask_Width = Log2(RoundToNearestPof2(CPUID.1:EBX[23:16])/
+>>>>>> (CPUID.(EAX=4,ECX=0):EAX[31:26]) + 1))
+>>>>>>
+>>>>>> The value of CPUID.1:EBX[23:16] needs to be *rounded* to the
+>>>>>> neartest power-of-two integer instead of itself being the
+>>>>>> power-of-two.
+>>>>>>
+>>>>>> This also is consistency with the SDM, where the comment for bit
+>>>>>> 23-16 of CPUID.1:EBX is:
+>>>>>>
+>>>>>>     The nearest power-of-2 integer that is not smaller than EBX[23:16] is
+>>>>>>     the number of unique initial APIC IDs reserved for addressing
+>>>>>>     different logical processors in a physical package.
+>>>>>>
+>>>>>> What I read from this is, the nearest power-of-2 integer that is not
+>>>>>> smaller than EBX[23:16] is a different thing than EBX[23:16]. i.e.,
+>>>>>
+>>>>> Yes, when I read sdm, I also thought it was a kernel bug. But on my
+>>>>> 192ht spr host, the value of CPUID.1:EBX[23:16] was indeed rounded up
+>>>>>
+>>>>> to the nearest power of 2 by the hardware. After communicating with
+>>>>> Intel technical support staff, we thought that perhaps the description
+>>>>> in sdm
+>>>>>
+>>>>> is not so accurate, and rounding up CPUID.1:EBX[23:16] to the power of 2
+>>>>> in qemu may be more in line with the hardware behavior.
+>>>>
+>>>> I think above justification is important. We need to justify our changes
+>>>> with the fact and correct reason.
+>>>>
+>>>> I somehow agree to set EBX[23:16] to a value of power-of-2, because the
+>>>> 1.5.3 "Sub ID Extraction Parameters for initial APIC ID" of "Intel 64
+>>>> Architecture Processor Topology Enumeration" spec says
+>>>>
+>>>>       CPUID.1:EBX[23:16] represents the maximum number of addressable IDs
+>>>>       (initial APIC ID) that can be assigned to logical processors in a
+>>>>       physical package. The value may not be the same as the number of
+>>>>       logical processors that are present in the hardware of a physical
+>>>>       package.
+>>>>
+>>>> It uses the word "may not".
+>>>
+>>> IMO, I don't quite understand your confusion regarding this. I've already
+>>> explained the meaning of addressable ID, and the spec you referenced also
+>>> clarifies its significance. The reason for this modification is not
+>>> because of the two words "may not".
+>>>
+>>> Whether it is "be" or "not be" the same as the number of logical
+>>> processors, the essence is that due to topology, the actual number of
+>>> initial IDs that can be accommodated in the APIC ID may exceed the number
+>>> of logical processors.
+>>
+>> I have the confusion because no matter from SDM:
+>>
+>>    Bit 23-16: Maximum number of addressable IDs for logical processors in
+>>               this physical package*
+>>
+>>    * The nearest power-of-2 integer that is not smaller than EBX[23:16]
+>>      is the number of unique initial APIC IDs reserved for addressing
+>>      different logical processors in a physical package.
+>>
+>> or from "Intel 64 Architecture Processor Topology Enumeration" spec，(Jan
+>> 2018, revision 1.1), 1.5.3 "sub ID Extraction Parameters for Inital APIC ID"
+>>
+>>    RoundToNearestPof2(CPUID.1:EBX[23:16])
+>>
+>> or from "Intel 64 Architecture Processor Topology Enumeration" spec，(April
+>> 2023, revision 2.0), 1.6.1 Legacy Extraction Algorithm
+>>
+>> https://cdrdv2-public.intel.com/775917/intel-64-architecture-processor-topology-enumeration.pdf
+>>
+>>    "MaximumLogicalProcessorIDsPerPackage" is calculated by rounding
+>>     CPUID.01H.EBX[23:16] to nearest power of 2.
+>>
+>> what I read from them is that EBX[23:16] is a different thing than
+>> pow2ceil(EBX[23:16]) and EBX[23:16] doesn't need to be power-of-2, but the
+>> patch are trying to make it power-of-2.
 > 
+> Yes, no one requires it must be power-of-2. But power-of-2 is just
+> the result, not the reason.
 > 
-> On Mon, 28 Oct 2024 at 15:02, Akihiko Odaki <akihiko.odaki@daynix.com 
-> <mailto:akihiko.odaki@daynix.com>> wrote:
+> The core point is not power-of-2, but is the meaning of EBX[23:16].
 > 
->     On 2024/10/28 22:31, Phil Dennis-Jordan wrote:
->      >
->      >
->      > On Mon, 28 Oct 2024 at 10:00, Phil Dennis-Jordan
->     <phil@philjordan.eu <mailto:phil@philjordan.eu>
->      > <mailto:phil@philjordan.eu <mailto:phil@philjordan.eu>>> wrote:
->      >
->      >
->      >          >      >
->      >          >      > Hmm. I think if we were to use that, we would
->     need to
->      >         create a new
->      >          >      > QemuEvent for every job and destroy it afterward,
->      >         which seems
->      >          >     expensive.
->      >          >      > We can't rule out multiple concurrent jobs being
->      >         submitted, and the
->      >          >      > QemuEvent system only supports a single producer as
->      >         far as I can
->      >          >     tell.
->      >          >      >
->      >          >      > You can probably sort of hack around it with
->     just one
->      >         QemuEvent by
->      >          >      > putting the qemu_event_wait into a loop and turning
->      >         the job.done
->      >          >     flag
->      >          >      > into an atomic (because it would now need to be
->      >         checked outside the
->      >          >      > lock) but this all seems unnecessarily complicated
->      >         considering the
->      >          >      > QemuEvent uses the same mechanism QemuCond/
->     QemuMutex
->      >         internally
->      >          >     on macOS
->      >          >      > (the only platform relevant here), except we
->     can use it as
->      >          >     intended with
->      >          >      > QemuCond/QemuMutex rather than having to work
->     against the
->      >          >     abstraction.
->      >          >
->      >          >     I don't think it's going to be used concurrently. It
->      >         would be difficult
->      >          >     to reason even for the framework if it performs memory
->      >          >     unmapping/mapping/reading operations concurrently.
->      >          >
->      >          >
->      >          > I've just performed a very quick test by wrapping the job
->      >         submission/
->      >          > wait in the 2 mapMemory callbacks and the 1 readMemory
->      >         callback with
->      >          > atomic counters and logging whenever a counter went
->     above 1.
->      >          >
->      >          >   * Overall, concurrent callbacks across all types were
->      >         common (many per
->      >          > second when the VM is busy). It's not exactly a
->     "thundering
->      >         herd" (I
->      >          > never saw >2) but it's probably not a bad idea to use
->     a separate
->      >          > condition variable for each job type. (task map,
->     surface map,
->      >         memory read)
->      >          >   * While I did not observe any concurrent memory mapping
->      >         operations
->      >          > *within* a type of memory map (2 task mappings or 2
->     surface
->      >         mappings) I
->      >          > did see very occasional concurrent memory *read*
->     callbacks.
->      >         These would,
->      >          > as far as I can tell, not be safe with QemuEvents,
->     unless we
->      >         placed the
->      >          > event inside the job struct and init/destroyed it on every
->      >         callback
->      >          > (which seems like excessive overhead).
->      >
->      >         I think we can tolerate that overhead. init/destroy
->     essentially
->      >         sets the
->      >         fields in the data structure and I estimate its total size is
->      >         about 100
->      >         bytes. It is probably better than waking an irrelevant thread
->      >         up. I also
->      >         hope that keeps the code simple; it's not worthwhile
->     adding code to
->      >         optimize this.
->      >
->      >
->      >     At least pthread_cond_{init,destroy} and
->      >     pthread_mutex_{init,destroy} don't make any syscalls, so yeah
->     it's
->      >     probably an acceptable overhead.
->      >
->      >
->      > I've just experimented with QemuEvents created on-demand and ran
->     into
->      > some weird deadlocks, which then made me sit down and think about it
->      > some more. I've come to the conclusion that creating (and crucially,
->      > destroying) QemuEvents on demand in this way is not safe.
->      >
->      > Specifically, you must not call qemu_event_destroy() - which
->      > transitively destroys the mutex and condition variable - unless
->     you can
->      > guarantee that the qemu_event_set() call on that event object has
->     completed.
->      >
->      > In qemu_event_set, the event object's value is atomically set to
->     EV_SET.
->      > If the previous value was EV_BUSY, qemu_futex_wake() is called.
->     All of
->      > this is outside any mutex, however, so apart from memory coherence
->      > (there are barriers) this can race with the waiting thread.
->      > qemu_event_wait() reads the event's value. If EV_FREE, it's
->     atomically
->      > set to EV_BUSY. Then the mutex is locked, the value is checked
->     again,
->      > and if it's still EV_BUSY, it waits for the condition variable,
->      > otherwise the mutex is immediately unlocked again. If the trigger
->      > thread's qemu_event_set() flip to EV_SET occurs between the waiting
->      > thread's two atomic reads of the value, the waiting thread will
->     never
->      > wait for the condition variable, but the trigger thread WILL try to
->      > acquire the mutex and signal the condition variable in
->      > qemu_futex_wake(), by which  time the waiting thread may have
->     advanced
->      > outside of qemu_event_wait().
+> Sorry, I have to re-emphasize:
 > 
->     Sorry if I'm making a mistake again, but the waiting thread won't
->     set to
->     EV_BUSY unless the value is EV_FREE on the second read so the trigger
->     thread will not call qemu_futex_wake() if it manages to set to EV_SET
->     before the second read, will it?
+> Pls remember it's not real number of logical processors per package,
+> and it's "addressable ID", which is the initial APIC ID. The maximum
+> capacity of addressable ID is calculated by the APIC layout, and the
+> final value is “power-of-2”. The calculation by APIC ID or pow2ceil()
+> are mathematically equivalent. That's the way to get addressable IDs.
 > 
-> 
-> This sequence of events will cause the problem:
-> 
-> WAITER (in qemu_event_wait):
-> value = qatomic_load_acquire(&ev->value);
-> -> EV_FREE
-> 
-> TRIGGER (in qemu_event_set):
-> qatomic_read(&ev->value) != EV_SET
-> -> EV_FREE (condition is false)
-> 
-> WAITER:
-> qatomic_cmpxchg(&ev->value, EV_FREE, EV_BUSY) == EV_SET
-> -> cmpxchg returns EV_FREE, condition false.
-> ev->value =  EV_BUSY.
-> > TRIGGER:
->          int old = qatomic_xchg(&ev->value, EV_SET);
->          smp_mb__after_rmw();
->          if (old == EV_BUSY) {
-> -> old = EV_BUSY, condition true.
-> ev->value = EV_SET
-> 
-> WAITER (in qemu_futex_wait(ev, EV_BUSY)):
->      pthread_mutex_lock(&ev->lock);
->      if (ev->value == val) {
-> -> false, because value is EV_SET
-> 
-> WAITER:
->      pthread_mutex_unlock(&ev->lock);
->      …
->      qemu_event_destroy(&job->done_event);
-> 
-> TRIGGER (in qemu_futex_wake(ev, INT_MAX)):
->      pthread_mutex_lock(&ev->lock);
-> -> hangs, because mutex has been destroyed
+> The spec is expressed in such a way to help software understands this
+> value, while the QEMU is designed to emulate hardware behavior.
 
-Thanks for clarification. This is very insightful.
+To me, what SDM describes are ambiguous and misleading. It has
 
+- EBX[23:16]: Maximum number of addressable IDs for logical processors
+               in this physical package.
 
+- The nearest power-of-2 integer that is not smaller than EBX[23:16]:
+	      The number of unique initial APIC IDs reserved for
+               addressing different logical processors in a physical
+               package.
+
+To me, the latter is much more equal to what you called "the maximum 
+capacity of addressable ID".
+
+Anyway, as what SDM describes are confusing (at least to me), and based 
+on the real value modern Intel CPUs report, I won't argue against it 
+anymore.
+
+However, back to the patch, I think we cannot change it as this patch 
+directly. Instead, we need a compat_props for the changed behavior, 
+because this isn't a bug fix and it introduces guest-visible differences.
+
+For ancient Intel CPUs, EBX[23:16] did represent the number of Logical 
+processor per package. I believe this should be the reason why QEMU 
+implemented it as is:
+
+   - on SDM version 013, EBX[23:16]: Number of logical processors per 
+physical processor; two for the Pentium 4 processor supporting 
+Hyper-Threading Technology.
+
+   - on SDM version 015, it changed to: Number of initial APIC IDs 
+reserved for this physical package. Normally, this is the number of 
+logical processors per physical package.
+
+   - on SDM version 016, it changed to: Maximum number of logical 
+processors in this physical package.
+
+   - finally, starting from SDM version 026, it changed to what reads 
+now: Maximum number of addressable IDs for logical processors in this 
+physical package.
+
+>> Then I consult it with Intel internal architect. I was told that EBX[23:16]
+>> used to be that software was to round to the next power of 2. However,
+>> software had issues a long time ago because applications could then compute
+>> the wrong power of 2 based on APIC ID holes or some applications would use
+>> it directly (without round it up to power-of-2).
+>> So intel became to report exact power-of-2 and this behavior is not
+>> documented.
 > 
->      >
->      > This is all fine usually, BUT if you destroy the QemuEvent
->     immediately
->      > after the qemu_event_wait() call, qemu_futex_wake() may try to
->     lock a
->      > mutex that has been destroyed, or signal a condition variable
->     which has
->      > been destroyed. I don't see a reasonable way of making this safe
->     other
->      > than using long-lived mutexes and condition variables. And
->     anyway, we
->      > have much, MUCH bigger contention/performance issues coming from
->     almost
->      > everything being covered by the BQL. (If waking these callbacks
->     can even
->      > be considered an issue: I haven't seen it show up in profiling,
->     whereas
->      > BQL contention very much does.)
->      >
->      > I'll submit v5 of this patch set with separate condition
->     variables for
->      > each job type. This should make the occurrence of waking the wrong
->      > thread quite rare, while reasoning about correctness is pretty
->      > straightforward. I think that's good enough.
+> Again, I suggest you think in terms of the meaning of number of
+> addressable IDs, it's not a matter of how power-of-2 is calculated, you
+> can choose to calculate number of addressable IDs in other ways, but
+> the final value is still a power of 2.
+> 
+> -Zhao
+> 
 
-What about using QemuSemaphore then? It does not seem to have the 
-problem same with QemuEvent.
 
