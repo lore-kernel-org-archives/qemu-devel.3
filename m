@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0354FD5B156
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 21:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159DBD5B156
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 21:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5XBB-0005Sm-NT; Mon, 28 Oct 2024 17:21:37 -0400
+	id 1t5XCz-0006S4-RS; Mon, 28 Oct 2024 17:23:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t5XBA-0005Sb-De
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 17:21:36 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t5XB8-0005FS-C6
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 17:21:35 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-7ed9c16f687so3760718a12.0
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 14:21:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730150493; x=1730755293; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=j0iJVhoRpdeUvteOGUnPJKMywbu0q2dowPa4nk25deo=;
- b=JtEJI4S5fPSkjpTQpzc/Ffs/gLLZmCjT32/HGbpzUqjbP6PZn9m+KTmvTTlBDPlqLx
- oypzf87ep4auiS1jeFJfiafzPq/y3ctSFaORbcPTrRQBJgWO/8fzURaMMavfW69uGqWk
- DDpQd3RAZs3bFH0ZzBjI90AHJCp9E44eu8H7tuQ725GLvZt+RovQCEHUuKc1pCoiQwoE
- uwFZ9EAhTsiVzbvCK1zbZRRHQ9iO4ihA4/H11MnHhOzueqmEvp4bc9/fpm2nNXRP2SLr
- /yv6nsYqeOTX+l3Iw6j7dC2aZsd63wq0UDiCpldVzBC8tDsJ4fCR8Hp5z4K8aCS+WB+O
- b46Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730150493; x=1730755293;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j0iJVhoRpdeUvteOGUnPJKMywbu0q2dowPa4nk25deo=;
- b=ac/w1p/AG/fsXkEE/IXyOWoWTbG1j5GUYRPMpNfgKpEtjt+fzJQq8rxQaSZCIEgRoG
- EZGTSWPJym8VpKLpoSITfKobLNMeriwSXRmPlFwLeUmtfiaX82FE0muZNnZSOX8ARJxA
- 5SR+ZuIOW2EuzRA/gdXNA4hh3ptXTXA27LEWbIFJhWxipDZhkeapNZA6cC7Qm9zt43dd
- +jm3TZNGQrPtehDsfHLqOVn67FTaQ4AonUnVOOGwCfeDgaJbImTcpuGkZZJ9AhF6HQ1W
- I2VBIL7EdHrDTRDdC6NvEhSsmmFblCCSlD081WsailhmIEYp4pM8KmJ7hfGizfbsv9nE
- VUHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQiTxPA3h4BrVcs0tvqqRjueCuYxx/4gYR76KyvXcIQR1w5X5/pUNmz8K72cE2zpw9P2SxxiCNCEGt@nongnu.org
-X-Gm-Message-State: AOJu0YzFSBsd5PhjJ2NYPzxrs+Bc5bp11/0oB2Engff8DsnaN5y5uYlN
- wE3gbvWK2XeVguXmFpeE4kWb11q5nRWy7mlZgSDYvgVEQiTWSpptBtEfW5xWu5k=
-X-Google-Smtp-Source: AGHT+IG/S1TlxE22WFDTUsJgjDbWr6XoQmA8whxmlNSVe4u7t2s22SglvL2GR5iRgEQMWHuiN+szAA==
-X-Received: by 2002:a05:6a00:230b:b0:71e:4cff:2654 with SMTP id
- d2e1a72fcca58-72062f86088mr14669738b3a.6.1730150492652; 
- Mon, 28 Oct 2024 14:21:32 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72057a0b9b1sm6253547b3a.133.2024.10.28.14.21.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Oct 2024 14:21:32 -0700 (PDT)
-Message-ID: <33cfeae7-d392-4d03-8f22-bb1a1e5dd48b@linaro.org>
-Date: Mon, 28 Oct 2024 14:21:31 -0700
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t5XCy-0006RT-0Z; Mon, 28 Oct 2024 17:23:28 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t5XCw-0005JH-10; Mon, 28 Oct 2024 17:23:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=Fx2CfJgiVDT8TX3SECiCRggfwHVTGEYZGsiHQKo/ve4=; b=QiVS8gQZfQITpDuPPHvWKRfNQC
+ r9Hlp7qzAAutQrZ0Gar5wmx/rbfygyALNtn4sXEQ3dhbbjyNjw7kQY1YpqxVHux53bOpY8E7tgS8y
+ +YRqQb2gqYsAvka0OitqDPe8Xy+fUMvb+Dnmo/w5pV3QwE0iAXBAD6VZcIiOqZOZNlNeuAI2czCvo
+ C9n7a/3+48rKH+61MTE+bT7HoMonSoKVRZp5LA9fdmjj+mjiOaZCHGeGc0HXl/cep0TrKf/NBRsc+
+ O4c6NnjRUbB1emU7YRnXiUUEVbCTZvtQlyd/tA2eXxEEx3ak78jJ5Z5vfzi59/6ZgBxDHG1mEp/IP
+ evdarfKdtB8/CkmKwVbmLOFtSUQd+jdm0gGfg5vryL2b0TceCSv55pSSQKZhV9ySq26V2quvyPHy1
+ UEsPA7BBplcdJs0QlNxS4+iDX0DJQO5U4c4wS6Z+egGfLeG6zK72eVjBx98a08cSldGZPGZ5meeY3
+ RZsj7eWHAVlYGsm+2WMKaJl0/yG0n7nok6Goii+qcDrdIzNl6979LzXYM90Blo29KOX9fjKEtEPlx
+ f1qjvna7CEaoR4o7dcBNwNL2ZjjjesbQgHHLYy10L+P30g//Mb+TCDhKcgXIY0O3vCDQYDm8/pRdM
+ yUf0+BQZrgdow3B5AliIsQVVmDzJNbyQKx6rxM610=;
+Received: from [2a00:23c4:8bb8:f600:b5e6:5818:bcfd:7571]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t5XCZ-0005xk-0Q; Mon, 28 Oct 2024 21:23:07 +0000
+Message-ID: <585870ac-e84c-4de7-9a61-3e3d3a8cb4f4@ilande.co.uk>
+Date: Mon, 28 Oct 2024 21:23:18 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: check-function failing on func-arm-arm_aspeed
+To: David Gibson <david@gibson.dropbear.id.au>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20241028095109.1611019-1-david@gibson.dropbear.id.au>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Thomas Huth <thuth@redhat.com>
-References: <CAFEAcA_Z+o3HYfjapAeADAmjJqTYvswAfAbtj8i=3rSBDLwsyA@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <CAFEAcA_Z+o3HYfjapAeADAmjJqTYvswAfAbtj8i=3rSBDLwsyA@mail.gmail.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20241028095109.1611019-1-david@gibson.dropbear.id.au>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:b5e6:5818:bcfd:7571
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] MAINTAINERS: Remove myself as reviewer
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,67 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On 28/10/2024 09:51, David Gibson wrote:
 
-On 10/28/24 10:14, Peter Maydell wrote:
-> Trying a "make check-functional" I find that the func-arm-arm_aspeed
-> test seems to hit a timeout:
+> I've now well and truly moved on from ppc and qemu maintenance.  I'm
+> occupied with other things and am pretty much just ignoring mails on these
+> topics I'm CCed on.  Time to remove myself.
 > 
-> 18/18 qemu:func-thorough+func-arm-thorough+thorough /
-> func-arm-arm_aspeed              TIMEOUT        600.08s   killed by
-> signal 15 SIGTERM
+> I'm still listed as a reviewer for Device Tree, I'll keep this for now,
+> since I do have some interest and it's lower volume.
 > 
-> This is with commit cea8ac78545a.
+> Signed-off-by: David Gibson <david@gibson.dropbear.id.au>
+> ---
+>   MAINTAINERS | 2 --
+>   1 file changed, 2 deletions(-)
 > 
-> Does anybody else see this, or is it some oddity happening only
-> on my local dev machine?
-> 
-> The "full log" in testlog-thorough.txt doesn't seem to be
-> very full. All it has for this test is:
-> 
-> =================================== 18/18 ====================================
-> test:         qemu:func-thorough+func-arm-thorough+thorough /
-> func-arm-arm_aspeed
-> start time:   16:54:50
-> duration:     600.08s
-> result:       killed by signal 15 SIGTERM
-> command:      G_TEST_SLOW=1
-> PYTHONPATH=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/python:/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/functional
-> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
-> MALLOC_PERTURB_=238
-> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1
-> MESON_TEST_ITERATION=1
-> QEMU_TEST_QEMU_IMG=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/qemu-img
-> MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
-> QEMU_TEST_QEMU_BINARY=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/qemu-system-arm
-> QEMU_BUILD_ROOT=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/pyvenv/bin/python3
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/functional/test_arm_aspeed.py
-> ----------------------------------- stdout -----------------------------------
-> TAP version 13
-> ok 1 test_arm_aspeed.AST1030Machine.test_ast1030_zephyros_1_04
-> ok 2 test_arm_aspeed.AST1030Machine.test_ast1030_zephyros_1_07
-> ok 3 test_arm_aspeed.AST2x00Machine.test_arm_ast2400_palmetto_openbmc_v2_9_0
-> ==============================================================================
-> 
-> Is it possible to get the log to include a pointer to the
-> actual log for the test (including the guest console output)?
-> It's hard to debug tests if they don't report what they're doing.
-> 
-> thanks
-> -- PMM
-> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index bcaf36e525..5cc9873861 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1465,7 +1465,6 @@ F: tests/functional/test_ppc_40p.py
+>   sPAPR (pseries)
+>   M: Nicholas Piggin <npiggin@gmail.com>
+>   R: Daniel Henrique Barboza <danielhb413@gmail.com>
+> -R: David Gibson <david@gibson.dropbear.id.au>
+>   R: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>   L: qemu-ppc@nongnu.org
+>   S: Odd Fixes
+> @@ -1555,7 +1554,6 @@ F: tests/functional/test_ppc_amiga.py
+>   
+>   Virtual Open Firmware (VOF)
+>   M: Alexey Kardashevskiy <aik@ozlabs.ru>
+> -R: David Gibson <david@gibson.dropbear.id.au>
+>   L: qemu-ppc@nongnu.org
+>   S: Odd Fixes
+>   F: hw/ppc/spapr_vof*
 
-I didn't observe such failure in last run for my dev branch (which 
-includes commit you mentioned) [1].
+Hi David,
 
-97/148 qemu:func-thorough+func-arm-thorough+thorough / 
-func-arm-arm_aspeed                                         OK 
-    141.44s   8 subtests passed
+Thanks for all your support over the years with the Macintosh machines - your help 
+and advice will be greatly missed.
 
-[1] 
-https://github.com/pbo-linaro/qemu-ci/actions/runs/11559006814/job/32172747854
 
-Regards,
-Pierrick
+ATB,
+
+Mark.
+
 
