@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C6E3D3399B
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39ACDD3399B
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5SQj-0000B7-EY; Mon, 28 Oct 2024 12:17:21 -0400
+	id 1t5SSF-0000uu-CA; Mon, 28 Oct 2024 12:18:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5SQZ-00009f-GV
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:17:11 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5SQH-0006oV-FW
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:17:08 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c937b5169cso6993598a12.1
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 09:16:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730132204; x=1730737004; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6wqc0Mytncd4ocb+4kmZP30a/3t9yuKUeJQBreLTvPE=;
- b=q9grr5nPu2m+5BMejm3PAv/Z9HU0UqSNZMYWDhDwVQsgBMDz7RbF8oXXAAY8fzwCHt
- J2eALhsE+G9tbuZJ7z53g+TCXhF0tSP6LOYrJ70X3mXgpT8LflhfZ8ExacIwQ12JziE2
- N3vwrHFtFBJNtlbOikMXAJ9N7B3KPAZC4RwV/498nqqkfHq/AscEBM3HV5mxuFZCkSwX
- yiAChqEivICxWx5FoUiV/hcHAm4reDgBbA+yyGPvFoL+n6TgsMBo21JDRKBzmqFK7Qvt
- HFmx8w3hMqG+BeMrdXfxuZsaAUmcoOpLE/H/+K3meAULxZxgfkMSsTXbofVT721CVO50
- 6FSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730132204; x=1730737004;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6wqc0Mytncd4ocb+4kmZP30a/3t9yuKUeJQBreLTvPE=;
- b=LqZ+a8mew05Ka1u+0ROHNssQgnbWzOy2LWYO5jYFfpCTXtbYBoM8JzF5G/Q1HTil5i
- cEsMJGqE6ywIkBi9cqe5uOr/a2c2QUFshNUIBDeB/zmJzShUJcBAlwUVitGjeiDCcrrb
- fkErXBUMl50jchvO56jNr6Jqm/7UcehCrNCcuCj8kLJHknJnFRogOqOkhk6VlO0OJvZw
- kBq5Oy+FW9u9J7I8rQuJ8Omh3KOuW7VMcS98Vo1XNsdti4KE7Vh7VLPVm/1RXWtqX148
- M2d1XgiqjK9Ibeg70EH3daBNjA0OF0IbBsKhaBXoHQgUOLpaLInhc8xWnYcuC76WUrVR
- 8jUg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVkVS534qKYn2/fQMCUi2NT4ILGIdRpRbCC4VX7lAVKsHY24XQb/AHTsTSg3fnDW81697m880/WVvAc@nongnu.org
-X-Gm-Message-State: AOJu0Ywj5myR2YPJTTJbUxQVZr2iCwV2kgBiAeuHEa8dUDGduW+xSF+S
- MEgq/Ze0v5FooQ242wCk4cr/FAY10RX2ctIEQtAAqfj4g8rHGME93xf1CWzgU8wfI63ndQSWPAA
- DD7IJFuEmzFWkSobhbsCBE2xEMZLNkvUw2S3dSg==
-X-Google-Smtp-Source: AGHT+IFSr9SWfgXnn1VX0OvmWu0cAtcZmGcuumJXCuQuyg7HC2Kje6V2twZXQfCfvpGcOd/Llmg2R9DBtIU36NHY3sQ=
-X-Received: by 2002:a05:6402:d08:b0:5cb:77d1:fd7f with SMTP id
- 4fb4d7f45d1cf-5cc196360f8mr133123a12.7.1730132203869; Mon, 28 Oct 2024
- 09:16:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <BATV+f257fec23c2a4eabf337+7736+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1t5SSD-0000uR-DP
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:18:53 -0400
+Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <BATV+f257fec23c2a4eabf337+7736+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1t5SSB-0006uO-D0
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:18:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=desiato.20200630; h=Content-Transfer-Encoding:Content-Type
+ :MIME-Version:Message-ID:References:In-Reply-To:Subject:CC:To:From:Date:
+ Sender:Reply-To:Content-ID:Content-Description;
+ bh=C8mX4PXEjoqXMUGgb5Mn9KAI5YZMFTWUiBiXo2pQxEU=; b=CSixJc9KbGoYLDfMbDpJHLrYeW
+ aeqSc6UBpwLif9DvpVrg/Kg9xn2TRK3rAuUoDII7dSly1eXME5mL2ZMwuFA+twED1xRHK5Xyj8jE3
+ PB1J6eq1bxEYglvPRauXsodP5jp+wcoUCpULXLVnsekUjdTUXxyfzI12GHSHVxQDctVyEjUmYlyjC
+ a7BWHea/obZJrLtPXkdC6Daj+AEl52k1zVOzqV8U11nC4JNIrUbzjZkGZrdpp2aSMheR9OJnXRUE2
+ NMXhOoN5ws6i7ZrvSC3bUOBf+5jdQBKOtrFCVUHooMo0YpdQEy/v/H2uPF/O6t7WAU9GABJvcqCVp
+ XZjdmJaA==;
+Received: from [78.133.40.109] (helo=[127.0.0.1])
+ by desiato.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+ id 1t5SRi-00000009hqM-19H1; Mon, 28 Oct 2024 16:18:22 +0000
+Date: Mon, 28 Oct 2024 17:17:14 +0100
+From: David Woodhouse <dwmw2@infradead.org>
+To: Jakub Kicinski <kuba@kernel.org>
+CC: Richard Cochran <richardcochran@gmail.com>,
+ Peter Hilber <peter.hilber@opensynergy.com>, linux-kernel@vger.kernel.org,
+ virtualization@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-rtc@vger.kernel.org, "Ridoux, Julien" <ridouxj@amazon.com>,
+ virtio-dev@lists.linux.dev, "Luu, Ryan" <rluu@amazon.com>,
+ "Chashper, David" <chashper@amazon.com>,
+ "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>,
+ Paolo Abeni <pabeni@redhat.com>,
+ "Christopher S . Hall" <christopher.s.hall@intel.com>,
+ Jason Wang <jasowang@redhat.com>, John Stultz <jstultz@google.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, netdev@vger.kernel.org,
+ Stephen Boyd <sboyd@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+ Xuan Zhuo <xuanzhuo@linux.alibaba.com>, Marc Zyngier <maz@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Alessandro Zummo <a.zummo@towertech.it>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_net-next_v7=5D_ptp=3A_Add_supp?=
+ =?US-ASCII?Q?ort_for_the_AMZNC10C_=27vmclock=27_device?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20241028091256.1b0752b4@kernel.org>
+References: <78969a39b51ec00e85551b752767be65f6794b46.camel@infradead.org>
+ <20241009173253.5eb545db@kernel.org>
+ <c20d5f27c9106f3cb49e2d8467ade680f0092f91.camel@infradead.org>
+ <20241014131238.405c1e58@kernel.org>
+ <c1eb33ffd66d45af77dea58db8bdca3dcd2468c4.camel@infradead.org>
+ <20241028091256.1b0752b4@kernel.org>
+Message-ID: <5077F160-52F0-4E76-B2B9-F0EA9DA76FB4@infradead.org>
 MIME-Version: 1.0
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <20241025101959.601048-19-eric.auger@redhat.com> <ZxuX4i9NjVRizB72@redhat.com>
- <cb6c8f62-c5dc-416d-865f-fbdf96164dac@redhat.com>
- <Zxub7ol4p8P_sWF8@redhat.com>
-In-Reply-To: <Zxub7ol4p8P_sWF8@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 28 Oct 2024 16:16:31 +0000
-Message-ID: <CAFEAcA_wQu17y0PyQwxw0wuf2H5y2VE5aX16nLP2-u7QUP2ggA@mail.gmail.com>
-Subject: Re: [RFC 18/21] arm/cpu: Introduce a customizable kvm host cpu model
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- cohuck@redhat.com, 
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev, 
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org, 
- oliver.upton@linux.dev, sebott@redhat.com, 
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, abologna@redhat.com, 
- jdenemar@redhat.com, shahuang@redhat.com, mark.rutland@arm.com, 
- philmd@linaro.org, pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ desiato.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
+ envelope-from=BATV+f257fec23c2a4eabf337+7736+infradead.org+dwmw2@desiato.srs.infradead.org;
+ helo=desiato.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,56 +98,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 25 Oct 2024 at 14:24, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
-> On Fri, Oct 25, 2024 at 03:18:25PM +0200, Eric Auger wrote:
-> > On 10/25/24 15:06, Daniel P. Berrang=C3=A9 wrote:
-> > > Also, is this naming convention really the same one that users
-> > > will see when they look at /proc/cpuinfo to view features ? It
-> > No it is not. I do agree that the custom cpu model is very low level. I=
-t
-> > is very well suited to test all series turning ID regs as writable but
-> > this would require an extra layer that adapts /proc/cpuinfo feature
-> > level to this regid/field abstraction.
-> >
-> > In /cpu/proc you will see somethink like:
-> >  Features    : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp
-> > asimdhp cpuid asimdrdm lrcpc dcpop asimddp
+On 28 October 2024 17:12:56 CET, Jakub Kicinski <kuba@kernel=2Eorg> wrote:
+>On Sat, 19 Oct 2024 18:49:24 +0100 David Woodhouse wrote:
+>> > Yes please and thank you! We gotta straighten it out before=20
+>> > the merge window=2E =20
+>>=20
+>> Hm, as I (finally) come to do that, I realise that many of the others
+>> defined in drivers/ptp/Kconfig are also 'default y'=2E Which is only
+>> really 'default PTP_1588_CLOCK' in practice since they all depend on
+>> that=2E
 >
-> Right, IMHO, this is the terminology that QEMU must use in user
-> facing APIs.
+>AFAICT nothing defaulted to enabled since 2017, so I'd chalk it up
+>to us getting better at catching mistakes over time=2E
+>
+>> Most importantly, PTP_1588_CLOCK_KVM is 'default y'=2E And that one is
+>> fundamentally broken (at least in the presence of live migration if
+>> guests care about their clock suddenly being wrong) which is why it's
+>> being superseded by the new VMCLOCK thing=2E We absolutely don't want t=
+o
+>> leave the _KVM one enabled by default and not its _VMCLOCK replacement=
+=2E
+>
+>You can default to =2E=2E_CLOCK_KVM, and provide the explanation in
+>the commit message and Kconfig help=2E
 
-/proc/cpuinfo's naming is rather weird for historical
-reasons (for instance there is only one FEAT_FP16 feature
-but cpuinfo lists "fphp" and "asimdhp" separately).
-Currently QEMU only has to care about cpuinfo name tags
-in linux-user/elfload.c where there's a bunch of data
-structures for "what hwcaps do we need to advertise
-given what the CPU has?". I would definitely prefer it if
-we could use architectural feature names...
+That works for me=2E But now it's my vacation time so it'll be at least Th=
+ursday before I can do that=2E I'll offer a preemptive Acked-by: David Wood=
+house <dwmw@amazon=2Eco=2Euk> to anyone who beats me to it :)
 
-On other architectures do we do anything to forbid
-invalid combinations? For Arm there are architectural
-rules about feature X requiring features Y and Z.
-Are we going to just let the user create a CPU that
-the guest OS will barf on if they want to? (The
-user-experience for that is potentially not very nice,
-because something like "-cpu cortex-a57,+sve" seems like
-something you might want to do but isn't actually valid;
-even listing the direct required dependency of FEAT_SVE
-like "-cpu cortex-a57,+sve,+fp16" isn't sufficient
-because SVE is optional-from-v8.2 and so a guest could
-in theory assume the presence of anything mandatory in
-v8.1 and v8.2. But even merely diagnosing invalid
-combinations is a huge pain, and automagically pulling
-in every mandatory implicit or explicit dependency
-seems like it might be surprising to users, as well as
-being annoying to implement. Currently we sidestep
-all of these problems by (a) only allowing the command
-line to disable a feature, not to enable it where it
-didn't previously exist and (b) mostly not providing
-command line flags for individual features...)
-
-thanks
--- PMM
 
