@@ -4,92 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63261D1359C
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 12:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C275DD1359C
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 12:29:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Opo-0002Qo-Sl; Mon, 28 Oct 2024 08:27:01 -0400
+	id 1t5Orb-0003fs-1l; Mon, 28 Oct 2024 08:28:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t5Opk-0002Nh-Ml
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 08:26:56 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t5Opj-0003k0-4X
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 08:26:56 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-37d5689eea8so2870984f8f.1
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 05:26:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730118412; x=1730723212; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uBs5xDk4TGYtQdob6XEzJ6YA3qTpXTKOlDd65gE5D2c=;
- b=Tvyk0yUlsbL5pXhoBijIdH+bXAwl9Zu+APaMAT77A/OZF5Zlcg283agrE6i/haRYGu
- 4ad2hPbqS6X4r+y8pxWZpJ9428S/IlN/N2iZpe98XMhgtg7UMX5GP/1nBJkio7zVzEhr
- 6p9pbsdWKUUx0RzsQrxXqlrQkxoStflpTcYRr652Z3wE0S4WUzgYnqceacib1SMPcodq
- FWDy5XGyKT/em0eoaDN3oyHOI7+sbtmOJiEUrbZQHao+sZu6jkEfDXit2On7ncipdeKf
- 5fBCTm3/qsbYlMtU8/3NuNOM0DiIzC8yK11TqgEeK/tAFa2xBEKu3wwOq3Klkzgt+7Db
- ex6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730118412; x=1730723212;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uBs5xDk4TGYtQdob6XEzJ6YA3qTpXTKOlDd65gE5D2c=;
- b=TZI3T4oLHUJrLjVIdbh74J1JYT1tbM9OsTzcJgAOD5hMURL32L0wvmRgOG1G+PMDN3
- g/nJ/Pp5dXSkB1txvRu7TrEEPs37QCqO3RmMXdPBW0oIJBmoSlJ4sFYOdqHP4QOdvM7b
- PcoUcNbP45DyfJP4eQpuaWq25f9vdYyO0x1xlieBUxbOQ06QU1jTudztPcWkNW2UUauX
- swLUv/mepfrjupTyrXT0c8vUfdyWhmPjveHUggcbEPKsxg2ivSYcZks+TEQgTE/38haN
- 6a4ulexOXELch0gPjoun+cKICzxBJiBIaJz7zusKYxk0Ty1qXsLazm4nK+RjfbWB/RPI
- k6iw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmf6lSG/KISXRDUtL43C5+n5CfDekKLxU2J0zL80CE8Cm4lQeD8pQQhcs9noyB8Edh3Zivp9MlLELB@nongnu.org
-X-Gm-Message-State: AOJu0YxFhzZryHpSu3auTymOhN0ss7X4j34Xe5ScQFHEM8CDRdH4ngEh
- mNmpYK7d9JtmUA+chz3xtn0yMfSmpmGhCqBTChgBbv9KziShp+6bplNo8UWRjKs=
-X-Google-Smtp-Source: AGHT+IHo4Z1T/Ivd1LWi11KJ+CWGtOEwlMrnE3rzvTwrnhxRGobBoZzu9ndMxIi8T9oztwdzSrmg0Q==
-X-Received: by 2002:adf:e6cc:0:b0:374:c640:8596 with SMTP id
- ffacd0b85a97d-38061172331mr5561969f8f.32.1730118411872; 
- Mon, 28 Oct 2024 05:26:51 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38058bac1cfsm9353511f8f.109.2024.10.28.05.26.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Oct 2024 05:26:51 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 702B75F8C4;
- Mon, 28 Oct 2024 12:26:50 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>,  Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org,  manos.pitsidianakis@linaro.org,
- zhao1.liu@intel.com,  junjie.mao@hotmail.com
-Subject: Re: [PATCH v3 00/23] rust: fix CI + allow older versions of rustc
- and bindgen
-In-Reply-To: <Zx9XbxxA5iXmfVWC@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Mon, 28 Oct 2024 09:21:08 +0000")
-References: <20241025160209.194307-1-pbonzini@redhat.com>
- <95b07b6b-0980-4a32-86fd-602985750104@tls.msk.ru>
- <Zx9XbxxA5iXmfVWC@redhat.com>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Mon, 28 Oct 2024 12:26:50 +0000
-Message-ID: <87h68w8lbp.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1t5OrX-0003fa-Sh
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 08:28:48 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1t5OrV-0003xs-C7
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 08:28:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730118526; x=1761654526;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=siFmZi8VcZLVYXar2GiMWlREwVrrPWOHJ5ZLBL7DrX0=;
+ b=DIN97rxpRYaB8x/J5hkenShLw8jxZK2kJ5b/I6zRtrAYrdT1rk/1FCya
+ ddGnd2DeId9doaiTZqnO9YQV2qnS7WKlaA4uS0VxzXypi9UGHQ4xgmsoP
+ OmgsUly9zyR7jwj0tJBS57xzQMf+QVN/u8J6WUfYLfggdvPxseHpOTrFD
+ fzrXe5kEpik1d6iF5yngZQaY87UArqrjog/8V3A1J2FWwXdQwrKRaeV9M
+ 0CDOwl79cz/Grx/oJS2b/5e3rQ51+GbKtyrkB+04vkDNVGb7r5MZTPpY+
+ YW2NSW31DT8BLqVYORMM6WuLaNbDJ8KFY478WtMsqVHEZUKsTx2bUHzjY g==;
+X-CSE-ConnectionGUID: EJryCDo0RuO+licfkig42g==
+X-CSE-MsgGUID: o2v4pFDPTweWFkQI+pYyug==
+X-IronPort-AV: E=McAfee;i="6700,10204,11238"; a="55118167"
+X-IronPort-AV: E=Sophos;i="6.11,239,1725346800"; d="scan'208";a="55118167"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 05:28:43 -0700
+X-CSE-ConnectionGUID: fqwgcN1ISr6ULAzo/kZWnA==
+X-CSE-MsgGUID: tEN0GPGGS9qykskwM7ntMQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,239,1725346800"; d="scan'208";a="119065573"
+Received: from linux.bj.intel.com ([10.238.157.71])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 05:28:41 -0700
+Date: Mon, 28 Oct 2024 20:23:33 +0800
+From: Tao Su <tao1.su@linux.intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, mtosatti@redhat.com, xiaoyao.li@intel.com,
+ xuelian.guo@intel.com
+Subject: Re: [PATCH 4/6] target/i386: Add feature dependencies for AVX10
+Message-ID: <Zx+CRVe8fYzCnCqt@linux.bj.intel.com>
+References: <20241028024512.156724-1-tao1.su@linux.intel.com>
+ <20241028024512.156724-5-tao1.su@linux.intel.com>
+ <b9ca7c3e-86e6-4a25-9295-573dbacf0ce1@redhat.com>
+ <Zx9hPncYMxsF3Hkh@linux.bj.intel.com>
+ <340b5b33-8b77-43ab-b0dc-c6e9f610b4a2@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <340b5b33-8b77-43ab-b0dc-c6e9f610b4a2@redhat.com>
+Received-SPF: none client-ip=192.198.163.7;
+ envelope-from=tao1.su@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,50 +87,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Mon, Oct 28, 2024 at 11:45:25AM +0100, Paolo Bonzini wrote:
+> On 10/28/24 11:02, Tao Su wrote:
+> > On Mon, Oct 28, 2024 at 09:45:39AM +0100, Paolo Bonzini wrote:
+> > > On 10/28/24 03:45, Tao Su wrote:
+> > > > Since the highest supported vector length for a processor implies that
+> > > > all lesser vector lengths are also supported, add the dependencies of
+> > > > the supported vector lengths. If all vector lengths aren't supported,
+> > > > clear AVX10 enable bit as well.
+> > > > 
+> > > > Note that the order of AVX10 related dependencies should be kept as:
+> > > >           CPUID_24_0_EBX_AVX10_128     -> CPUID_24_0_EBX_AVX10_256,
+> > > >           CPUID_24_0_EBX_AVX10_256     -> CPUID_24_0_EBX_AVX10_512,
+> > > >           CPUID_24_0_EBX_AVX10_VL_MASK -> CPUID_7_1_EDX_AVX10,
+> > > 
+> > > I think you need to add a set of dependencies so that avx10 cannot be set,
+> > > unless all the older AVX features that it's composed of are available.  From
+> > > the manual these are
+> > > 
+> > > AVX512F, AVX512CD, AVX512VW, AVX512DQ, AVX512_VBMI, AVX512_IFMA,
+> > > AVX512_VNNI, AVX512_BF16, AVX512_VPOPCNTDQ, AVX512_VBMI2, VAES, GFNI,
+> > > VPCLMULQDQ, AVX512_BITALG, AVX512_FP16.
+> > 
+> > Thanks for such a quick review!!
+> > 
+> > AVX10.1 spec said:
+> > Intel AVX-512 will continue to be supported on P-core-only processors for
+> > the foreseeable future to support legacy applications. However, new vector
+> > ISA features will only be added to the Intel AVX10 ISA moving forward.
+> > While Intel AVX10/512 includes all Intel AVX-512 instructions, it
+> > important to note that applications compiled to Intel AVX-512 with vector
+> > length limited to 256 bits are not guaranteed to be compatible on an Intel
+> > AVX10/256 processor.
+> > 
+> > I.e. AVX10/256 processors will support old AVX-512 instructions
+> > (limited to 256 bits and enumerated by AVX10) but not set AVX-512 related
+> > CPUIDs. So, I think we can't add these dependencies…
+> 
+> Of course you're right about AVX10 in general, you still need to add the
+> dependency but only for CPUID_24_0_EBX_AVX10_512.
+> 
 
-> On Sun, Oct 27, 2024 at 10:01:26AM +0300, Michael Tokarev wrote:
->> I think this is the wrong direction (ie, backwards).
->>=20
->> Sacrificing current code to be compatible with old stuff feels wrong.
->> Especially for really old, like rustc in debian bookworm.
->>=20
->> bookworm has rustc-web (and a few related packages) which is regular
->> rustc version 1.78, just renamed.  It is regular bookworm, not backports.
->> It has some packages disabled (compared to regular rust) and is a hack,
->> but it exists and can be used for now (dunno if it is sufficient for
->> qemu though).
->>=20
->> Also debian has backports mechanism, which also can be used for qemu -
->> I can try back-porting regular rust (and llvm) to bookworm.
->>=20
->> I think this is a better way (at least a way forward) than trying to
->> move backwards.
->>=20
->> But generally, what is the reason to support debian stable?  I understand
->> the CI thing, - we need a way to test stuff.  For this, I'd say a better
->> alternative would be to target debian testing (currently trixie), not
->> debian stable.
->
-> The stable distros are what our community of contributors are usually
-> using, as few people want non-released bleeding edge distros as their
-> primary development platform.
->
-> Custom installing latest upstream pieces is not a user friendly position
-> to take. Occassionally it is unavoidable, but it is something to be
-> avoided wherever practical.
+I agree, will add in v2, thanks!
 
-At least rustup makes this reasonably easy for the rust bits. We do rely
-on the excellent Debian backports for getting QEMU quickly into testing
-images but I was assuming we would have trixie before --enable-rust
-became mandatory so I'm not too worried if bookworm is the outlier for
-old versions.
-
->
-> With regards,
-> Daniel
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
