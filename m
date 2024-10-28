@@ -4,90 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3AC4D33990
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5562D33994
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 15:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5R53-0001vs-UQ; Mon, 28 Oct 2024 10:50:53 -0400
+	id 1t5RI3-00040O-Ia; Mon, 28 Oct 2024 11:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5R50-0001vR-Kw
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:50:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1t5RI2-00040B-03
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 11:04:18 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5R4y-000612-F2
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:50:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730127046;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ENzyasIEjfwzerBBI+Rg521CcoB5LwAA60Ba9gFCwUA=;
- b=A9/DnU6Qmq/s4zfChtiZQXQeucTZu28G7rAFQNrvVmF181qAOUwFPezNpc6sUEOl6CRdIf
- 7sbjvKUBl86qIo1UYTuxdFEqhrIJsZlVqgUikfByfd64BoDCzvf/3Uv5Iffjgh5oc33Akh
- C2BaeVxILYLWLQpONcf/krYkIcJnE4Q=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-173-8zNePljTO92ofmyKrTMv9Q-1; Mon, 28 Oct 2024 10:50:43 -0400
-X-MC-Unique: 8zNePljTO92ofmyKrTMv9Q-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37d458087c0so3135797f8f.1
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:50:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730127042; x=1730731842;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ENzyasIEjfwzerBBI+Rg521CcoB5LwAA60Ba9gFCwUA=;
- b=CW2lzUuSlRZTX4p7J4UmUfOpmJox/GMlXpn6TeHY7EqdUiU629uxHJ6xXg2C4h60KL
- fLowcFfwSadqcIOsjAFOxzea6hsi3yHD9JTLleGEDD+CSvgM3kCW9uluwtaGgSYxaxmN
- ZWRyneVQcRgHXx4N3vZx5R0CS1O3kz6ZBcJrFqJ546cbL+9WAlxr//mVZ9jVsaAiAQdU
- ruq+IVvM91Gc5nj3MHFGmi1AYLo1K2cxUcLCRTSH7NWHPZ8oXuHC8XCe7h6EsOmRA6qm
- 3Zf3WEcG+wb5Kwoj98JvHJ36YrMTjdyGFxbQRNG0gM4BrvH0iqOR207QnOMBI8JfUWf/
- CdzA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVat4bIioz6fsUSwqKAaE9ibvUosmX8Hiw4ASdYz+VjT4FA940i0JEkqT7kwTIjs8WQPsQsWvjqvjuW@nongnu.org
-X-Gm-Message-State: AOJu0YymxDidlogKMfq7Oh4il563Rzzchb/WSKTyMFPFfEY73NOACnQ1
- KiEEtjrKA8NwnoRKP0ia7A2fUiaGoh31s4uF9/NMz3z/09ndiQFxZvB6fBXzhMPhJY9hA/AnvX1
- CaWohMorsq8hdJvfxZDLLFStQwH0CPj4cupaciJQ+rUO9mDunFsycOawdvj1JBdu23TfTNY9LQA
- fdr8brUPIamjyI9eXF+WMCB4CKXDY=
-X-Received: by 2002:a5d:6dce:0:b0:37c:cce8:4acc with SMTP id
- ffacd0b85a97d-38080e37d84mr80308f8f.13.1730127042603; 
- Mon, 28 Oct 2024 07:50:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWz7RliIqZXQxW1AAK21aPrfkRvIpU2mCv8K19Zjx+8HZ8hKSHZ36v8iwHUOQwXEcx+ghpTkBIlbor5jER2yc=
-X-Received: by 2002:a5d:6dce:0:b0:37c:cce8:4acc with SMTP id
- ffacd0b85a97d-38080e37d84mr80288f8f.13.1730127042291; Mon, 28 Oct 2024
- 07:50:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1t5RI0-0007Kj-3y
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 11:04:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730127856; x=1761663856;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=qx9SVCajdLTz8S81QXmNIF3I/bU3fxREmwfySjzT1uk=;
+ b=WtbsE84H6vkDC6Cc2wJDn+DAQzHyWBHnNGxBi4oSA8j8HcEKofO9K2nm
+ Ipfw4PgbCilg7DfYoBFqQWb6pG3faia/NToIUiOjAr9bEX4mYLrmtamw3
+ BeIDgatX37QokCfU3X5cNnD2bBCrj7vZlzE87aEo8r7N1/y18vAw0gylO
+ zioVjYg6bKZIX2O7evLjjFVxpVLxVyZlf+gdgYbg2sb2Jue1cx//8eZ45
+ YyuPnxfzGKAvh29n09CVuMnBMCxlEsczx9JeWkUvvqglENGT67yIEAK1L
+ ZTlO0r93mySfM77sLoEyjTxuxOb1R2L+PwSndIrW1fmpqkxfX4YfC3J4x g==;
+X-CSE-ConnectionGUID: nhDx8UR1Qn2bkCpnTLionA==
+X-CSE-MsgGUID: Lbhfs3SfRFKo2KtTn9h72A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11239"; a="29158521"
+X-IronPort-AV: E=Sophos;i="6.11,239,1725346800"; d="scan'208";a="29158521"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 08:04:12 -0700
+X-CSE-ConnectionGUID: PBlL2weyQYiFCTorvBgDig==
+X-CSE-MsgGUID: IIO81g+OQt2eVmE6HQd2pw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,239,1725346800"; d="scan'208";a="81539501"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.227.172])
+ ([10.124.227.172])
+ by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 08:04:09 -0700
+Message-ID: <c9d9414c-41aa-4ee5-be23-9a12b9bb768d@intel.com>
+Date: Mon, 28 Oct 2024 23:04:07 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] target/i386: Add CPUID.24 leaf for AVX10
+To: Tao Su <tao1.su@linux.intel.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, xuelian.guo@intel.com
 References: <20241028024512.156724-1-tao1.su@linux.intel.com>
- <20241028024512.156724-5-tao1.su@linux.intel.com>
- <b9ca7c3e-86e6-4a25-9295-573dbacf0ce1@redhat.com>
- <Zx9hPncYMxsF3Hkh@linux.bj.intel.com>
- <340b5b33-8b77-43ab-b0dc-c6e9f610b4a2@redhat.com>
- <14c432e8-5049-4051-ba1f-303f76bfbe19@intel.com>
-In-Reply-To: <14c432e8-5049-4051-ba1f-303f76bfbe19@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 28 Oct 2024 15:50:30 +0100
-Message-ID: <CABgObfYq4itG4ivTqh5nc74dfc11_FG7NA1UQi5Yx7z+1FNG3w@mail.gmail.com>
-Subject: Re: [PATCH 4/6] target/i386: Add feature dependencies for AVX10
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Tao Su <tao1.su@linux.intel.com>, qemu-devel@nongnu.org,
- mtosatti@redhat.com, xuelian.guo@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
+ <20241028024512.156724-4-tao1.su@linux.intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20241028024512.156724-4-tao1.su@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.782, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,70 +86,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 28, 2024 at 3:48=E2=80=AFPM Xiaoyao Li <xiaoyao.li@intel.com> w=
-rote:
->
-> On 10/28/2024 6:45 PM, Paolo Bonzini wrote:
-> > On 10/28/24 11:02, Tao Su wrote:
-> >> On Mon, Oct 28, 2024 at 09:45:39AM +0100, Paolo Bonzini wrote:
-> >>> On 10/28/24 03:45, Tao Su wrote:
-> >>>> Since the highest supported vector length for a processor implies th=
-at
-> >>>> all lesser vector lengths are also supported, add the dependencies o=
-f
-> >>>> the supported vector lengths. If all vector lengths aren't supported=
-,
-> >>>> clear AVX10 enable bit as well.
-> >>>>
-> >>>> Note that the order of AVX10 related dependencies should be kept as:
-> >>>>           CPUID_24_0_EBX_AVX10_128     -> CPUID_24_0_EBX_AVX10_256,
-> >>>>           CPUID_24_0_EBX_AVX10_256     -> CPUID_24_0_EBX_AVX10_512,
-> >>>>           CPUID_24_0_EBX_AVX10_VL_MASK -> CPUID_7_1_EDX_AVX10,
-> >>>
-> >>> I think you need to add a set of dependencies so that avx10 cannot be
-> >>> set,
-> >>> unless all the older AVX features that it's composed of are
-> >>> available.  From
-> >>> the manual these are
-> >>>
-> >>> AVX512F, AVX512CD, AVX512VW, AVX512DQ, AVX512_VBMI, AVX512_IFMA,
-> >>> AVX512_VNNI, AVX512_BF16, AVX512_VPOPCNTDQ, AVX512_VBMI2, VAES, GFNI,
-> >>> VPCLMULQDQ, AVX512_BITALG, AVX512_FP16.
-> >>
-> >> Thanks for such a quick review!!
-> >>
-> >> AVX10.1 spec said:
-> >> Intel AVX-512 will continue to be supported on P-core-only processors =
-for
-> >> the foreseeable future to support legacy applications. However, new
-> >> vector
-> >> ISA features will only be added to the Intel AVX10 ISA moving forward.
-> >> While Intel AVX10/512 includes all Intel AVX-512 instructions, it
-> >> important to note that applications compiled to Intel AVX-512 with vec=
-tor
-> >> length limited to 256 bits are not guaranteed to be compatible on an
-> >> Intel
-> >> AVX10/256 processor.
-> >>
-> >> I.e. AVX10/256 processors will support old AVX-512 instructions
-> >> (limited to 256 bits and enumerated by AVX10) but not set AVX-512 rela=
-ted
-> >> CPUIDs. So, I think we can't add these dependencies=E2=80=A6
-> >
-> > Of course you're right about AVX10 in general, you still need to add th=
-e
-> > dependency but only for CPUID_24_0_EBX_AVX10_512.
->
-> What if future E-core processor starts to support AVX10/512 but not
-> enumerating any individual AVX512 bit? (AVX10.1 spec only states the
-> compatibility behavior for P-core-only processors)
+On 10/28/2024 10:45 AM, Tao Su wrote:
+> When AVX10 enable bit is set, the 0x24 leaf will be present as "AVX10
+> Converged Vector ISA leaf" containing fields for the version number and
+> the supported vector bit lengths.
+> 
+> Tested-by: Xuelian Guo <xuelian.guo@intel.com>
+> Signed-off-by: Tao Su <tao1.su@linux.intel.com>
+> ---
+>   target/i386/cpu.c     | 40 ++++++++++++++++++++++++++++++++++++++++
+>   target/i386/cpu.h     |  8 ++++++++
+>   target/i386/kvm/kvm.c |  3 ++-
+>   3 files changed, 50 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 5b434a107a..91fae0dcb7 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -898,6 +898,7 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
+>   #define TCG_SGX_12_0_EAX_FEATURES 0
+>   #define TCG_SGX_12_0_EBX_FEATURES 0
+>   #define TCG_SGX_12_1_EAX_FEATURES 0
+> +#define TCG_24_0_EBX_FEATURES 0
+>   
+>   #if defined CONFIG_USER_ONLY
+>   #define CPUID_8000_0008_EBX_KERNEL_FEATURES (CPUID_8000_0008_EBX_IBPB | \
+> @@ -1163,6 +1164,20 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+>           },
+>           .tcg_features = TCG_7_2_EDX_FEATURES,
+>       },
+> +    [FEAT_24_0_EBX] = {
+> +        .type = CPUID_FEATURE_WORD,
+> +        .feat_names = {
+> +            [16] = "avx10-128",
+> +            [17] = "avx10-256",
+> +            [18] = "avx10-512",
+> +        },
+> +        .cpuid = {
+> +            .eax = 0x24,
+> +            .needs_ecx = true, .ecx = 0,
+> +            .reg = R_EBX,
+> +        },
+> +        .tcg_features = TCG_24_0_EBX_FEATURES,
+> +    },
+>       [FEAT_8000_0007_EDX] = {
+>           .type = CPUID_FEATURE_WORD,
+>           .feat_names = {
+> @@ -6835,6 +6850,26 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>           }
+>           break;
+>       }
+> +    case 0x24: {
+> +        *eax = 0;
+> +        *ebx = 0;
+> +        *ecx = 0;
+> +        *edx = 0;
+> +        if (!(env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10)) {
+> +            break;
+> +        }
+> +
+> +        if (count == 0) {
+> +            uint8_t v = kvm_arch_get_supported_cpuid(cs->kvm_state, 0x24,
+> +                                                     0, R_EBX);
+> +            if (env->avx10_version && env->avx10_version < v) {
+> +                v = env->avx10_version;
+> +            }
 
-KVM and QEMU could always specify the bits. If you want to ask around
-if this is possible then go ahead.
+Here, if user specified avx10_version is >= kvm reported value, it uses 
+KVM's reported value silently.
 
-In the meanwhile I actually can apply Tao Su's patches, since the
-dependencies are merely a safety feature.
+I think it's not good. It'd better to validate if user specified value 
+can be satisfied or not, and emit a warning when not. e.g., in 
+x86_cpu_filter_features() or in kvm_cpu_realizefn(). Also we can put the 
+behavior along with it that "use KVM reported maximum value when 
+avx10_version is 0 "
 
-Paolo
+then, here we can simply do
+
+	*ebx = env->features[FEAT_24_0_EBX] | env->avx10_version;
+
+> +            *ebx = env->features[FEAT_24_0_EBX] | v;
+> +        }
+> +        break;
+> +    }
+>       case 0x40000000:
+>           /*
+>            * CPUID code in kvm_arch_init_vcpu() ignores stuff
+> @@ -7483,6 +7518,11 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>               x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x1F);
+>           }
+>   
+> +        /* Advanced Vector Extensions 10 (AVX10) requires CPUID[0x24] */
+> +        if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) {
+> +            x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x24);
+> +        }
+> +
+>           /* SVM requires CPUID[0x8000000A] */
+>           if (env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_SVM) {
+>               x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x8000000A);
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index d845384dcd..5566a13f4f 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -662,6 +662,7 @@ typedef enum FeatureWord {
+>       FEAT_XSAVE_XSS_HI,     /* CPUID[EAX=0xd,ECX=1].EDX */
+>       FEAT_7_1_EDX,       /* CPUID[EAX=7,ECX=1].EDX */
+>       FEAT_7_2_EDX,       /* CPUID[EAX=7,ECX=2].EDX */
+> +    FEAT_24_0_EBX,      /* CPUID[EAX=0x24,ECX=0].EBX */
+>       FEATURE_WORDS,
+>   } FeatureWord;
+>   
+> @@ -990,6 +991,13 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+>   /* Packets which contain IP payload have LIP values */
+>   #define CPUID_14_0_ECX_LIP              (1U << 31)
+>   
+> +/* AVX10 128-bit vector support is present */
+> +#define CPUID_24_0_EBX_AVX10_128        (1U << 16)
+> +/* AVX10 256-bit vector support is present */
+> +#define CPUID_24_0_EBX_AVX10_256        (1U << 17)
+> +/* AVX10 512-bit vector support is present */
+> +#define CPUID_24_0_EBX_AVX10_512        (1U << 18)
+> +
+>   /* RAS Features */
+>   #define CPUID_8000_0007_EBX_OVERFLOW_RECOV    (1U << 0)
+>   #define CPUID_8000_0007_EBX_SUCCOR      (1U << 1)
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index fd9f198892..8e17942c3b 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -1923,7 +1923,8 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
+>           case 0x7:
+>           case 0x14:
+>           case 0x1d:
+> -        case 0x1e: {
+> +        case 0x1e:
+> +        case 0x24: {
+>               uint32_t times;
+>   
+>               c->function = i;
 
 
