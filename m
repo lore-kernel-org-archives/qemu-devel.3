@@ -4,87 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F239AD33990
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D0FCD33992
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 14:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Qlb-000181-Iy; Mon, 28 Oct 2024 10:30:47 -0400
+	id 1t5R2t-0000WY-Jr; Mon, 28 Oct 2024 10:48:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5QlS-0000f9-Lk
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:30:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1t5R2p-0000WJ-C4
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:48:36 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5QlQ-00040v-Ux
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:30:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730125836;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tsUT3jzMYD5+Mr0ZTkd2XlGREse/Gg+yaEc3jtKi334=;
- b=WgY6MVDlrQo5HmSjHa4WRWiQo0xwP1cWxmGlQUb0Tmu4+5yEkBGFGoMmo1+vgS8Yi5U6/2
- 44VhRJ/locTnkD7jI/bktW9/OG4bqYl6bexDc6T4Z53/eAzucipHR58loSULTZBE1pn/Nk
- PwNYxOCXmCNPBebtMyCttbKghDWfvIw=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-486-nze5tk_gMXir6vA3YIA44Q-1; Mon, 28 Oct 2024 10:30:34 -0400
-X-MC-Unique: nze5tk_gMXir6vA3YIA44Q-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d458087c0so3124044f8f.1
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 07:30:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730125832; x=1730730632;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tsUT3jzMYD5+Mr0ZTkd2XlGREse/Gg+yaEc3jtKi334=;
- b=QBc4K0DYNvY58uQ500qbcNynmLMOGCQkcGRX3xaRmQKnZKMOx0FRZXNxnOLMQpoc93
- 6HMPd1uOBuLhltmb+YmO4OS8/jNBv02Ja94UodTHOpzTbJlIFtDQHxgmc4jQiG231xDB
- DkFsDt2s/sdYFabL7olIf6lyNTeKaORLtkM2h00/PfdkqX4v1SuirXQ7unZGyae5FJN7
- vddXiV3NafIEAp7YJPUmwmVDjf3iXOtcWXQIorYaxTg2iYSlu9GdyeymysxO9qNHB1Zc
- kLTpMQy+hmUF/kyvggkpxu5Qvj77ccmbYpsAGiz+jDfn1unMm/lsW9Ow8+KupSIKLwjz
- AH2g==
-X-Gm-Message-State: AOJu0Yy/dQimcq7CrwzVUH+n3OQgNUb0IgqOc8xiO2OLgKRjFfR1HokT
- P9k7Ln718H1BgMz/LmeMWYMoevc7+twRKosnpMtLT5k6r1Y1i4AnJ3sLGVaXwTdcDrInDvyakcI
- jITkUYCsbvgyKOjp0CdNhXW3hd37tQ/ZfAqybrdIMY6A9Ac1VKRmABNb/u04lAAS4geFF3I/7sN
- Heie8PZVf17rJHnSXA4uzAEg/zGqNPcjjfCLnWIIU=
-X-Received: by 2002:adf:fc46:0:b0:37d:2e74:2eea with SMTP id
- ffacd0b85a97d-38080de743dmr42006f8f.5.1730125832279; 
- Mon, 28 Oct 2024 07:30:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHjUw2i4fDkeujYQFXV913oG/kfCdMj35U3jcTi6vhFaBrR96+X2A04i4+e/UFQbC9lR18vYQ==
-X-Received: by 2002:adf:fc46:0:b0:37d:2e74:2eea with SMTP id
- ffacd0b85a97d-38080de743dmr41979f8f.5.1730125831862; 
- Mon, 28 Oct 2024 07:30:31 -0700 (PDT)
-Received: from [192.168.10.3] ([151.49.226.83])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38058981ae4sm9687871f8f.0.2024.10.28.07.30.29
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Oct 2024 07:30:29 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 23/24] configure, meson: deprecate 32-bit MIPS
-Date: Mon, 28 Oct 2024 15:29:30 +0100
-Message-ID: <20241028142932.363687-24-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241028142932.363687-1-pbonzini@redhat.com>
-References: <20241028142932.363687-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1t5R2l-0005gE-KR
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 10:48:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730126912; x=1761662912;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=DJL8wQQzsb0xYiPOXsVHauDQKrxuOxW7vpHL52cjzF0=;
+ b=ek2mb8RpviM/w+6OjfgDlLcX3mzV/av9m41jnPOLo5uOPpBxnqtQFk0j
+ JU9P/2A6Z/eCSea9O8qLpKz3QRKPL5ybyNRuHnipAmBq2/7aCi1TiPb+S
+ tdgRr2tGJBrBJq7VgLjwFuoRrE6E3Bz/ujM3VXD0frWjYgNRkQMr7rm+1
+ myWhZGl8Pm0uKwbufsM307ZpHB/xZeBjOMWd5GPc/7+V4dZUmk2xhOHEm
+ 2pI7ItuTKAy3iQpGoMef5nPrrh7lfeiHrpfqOWV3e70QDN6HR9NWqoqhF
+ g0tFknJTc4C01FZhFDsQuNs2f3k1n4KxN3jCr1kPbS8sLWe4NxllfD2B1 A==;
+X-CSE-ConnectionGUID: XMafktynRZy+IfyxbECVgQ==
+X-CSE-MsgGUID: zpH0lCecSOCI24A7RW9f5A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11238"; a="40302148"
+X-IronPort-AV: E=Sophos;i="6.11,239,1725346800"; d="scan'208";a="40302148"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 07:48:27 -0700
+X-CSE-ConnectionGUID: kCjLcRMXRUy5TpZ0I4KHzg==
+X-CSE-MsgGUID: /zlekO4FRO+jtqRyvMx0Rg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,239,1725346800"; d="scan'208";a="82066902"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.227.172])
+ ([10.124.227.172])
+ by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 07:48:24 -0700
+Message-ID: <14c432e8-5049-4051-ba1f-303f76bfbe19@intel.com>
+Date: Mon, 28 Oct 2024 22:48:21 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/6] target/i386: Add feature dependencies for AVX10
+To: Paolo Bonzini <pbonzini@redhat.com>, Tao Su <tao1.su@linux.intel.com>
+Cc: qemu-devel@nongnu.org, mtosatti@redhat.com, xuelian.guo@intel.com
+References: <20241028024512.156724-1-tao1.su@linux.intel.com>
+ <20241028024512.156724-5-tao1.su@linux.intel.com>
+ <b9ca7c3e-86e6-4a25-9295-573dbacf0ce1@redhat.com>
+ <Zx9hPncYMxsF3Hkh@linux.bj.intel.com>
+ <340b5b33-8b77-43ab-b0dc-c6e9f610b4a2@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <340b5b33-8b77-43ab-b0dc-c6e9f610b4a2@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.782, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,79 +89,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The mipsel architecture is not available in Debian Trixie, and it will
-likely be a hard failure as soon as we drop support for the old Rust
-toolchain in Debian Bookworm.  Prepare by deprecating 32-bit little
-endian MIPS in QEMU 9.2.
+On 10/28/2024 6:45 PM, Paolo Bonzini wrote:
+> On 10/28/24 11:02, Tao Su wrote:
+>> On Mon, Oct 28, 2024 at 09:45:39AM +0100, Paolo Bonzini wrote:
+>>> On 10/28/24 03:45, Tao Su wrote:
+>>>> Since the highest supported vector length for a processor implies that
+>>>> all lesser vector lengths are also supported, add the dependencies of
+>>>> the supported vector lengths. If all vector lengths aren't supported,
+>>>> clear AVX10 enable bit as well.
+>>>>
+>>>> Note that the order of AVX10 related dependencies should be kept as:
+>>>>           CPUID_24_0_EBX_AVX10_128     -> CPUID_24_0_EBX_AVX10_256,
+>>>>           CPUID_24_0_EBX_AVX10_256     -> CPUID_24_0_EBX_AVX10_512,
+>>>>           CPUID_24_0_EBX_AVX10_VL_MASK -> CPUID_7_1_EDX_AVX10,
+>>>
+>>> I think you need to add a set of dependencies so that avx10 cannot be 
+>>> set,
+>>> unless all the older AVX features that it's composed of are 
+>>> available.  From
+>>> the manual these are
+>>>
+>>> AVX512F, AVX512CD, AVX512VW, AVX512DQ, AVX512_VBMI, AVX512_IFMA,
+>>> AVX512_VNNI, AVX512_BF16, AVX512_VPOPCNTDQ, AVX512_VBMI2, VAES, GFNI,
+>>> VPCLMULQDQ, AVX512_BITALG, AVX512_FP16.
+>>
+>> Thanks for such a quick review!!
+>>
+>> AVX10.1 spec said:
+>> Intel AVX-512 will continue to be supported on P-core-only processors for
+>> the foreseeable future to support legacy applications. However, new 
+>> vector
+>> ISA features will only be added to the Intel AVX10 ISA moving forward.
+>> While Intel AVX10/512 includes all Intel AVX-512 instructions, it
+>> important to note that applications compiled to Intel AVX-512 with vector
+>> length limited to 256 bits are not guaranteed to be compatible on an 
+>> Intel
+>> AVX10/256 processor.
+>>
+>> I.e. AVX10/256 processors will support old AVX-512 instructions
+>> (limited to 256 bits and enumerated by AVX10) but not set AVX-512 related
+>> CPUIDs. So, I think we can't add these dependencies…
+> 
+> Of course you're right about AVX10 in general, you still need to add the 
+> dependency but only for CPUID_24_0_EBX_AVX10_512.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- docs/about/build-platforms.rst |  2 +-
- docs/about/deprecated.rst      | 12 ++++++++----
- meson.build                    |  8 ++++++++
- 3 files changed, 17 insertions(+), 5 deletions(-)
+What if future E-core processor starts to support AVX10/512 but not 
+enumerating any individual AVX512 bit? (AVX10.1 spec only states the 
+compatibility behavior for P-core-only processors)
 
-diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index 8fd7da140a3..b779eb54934 100644
---- a/docs/about/build-platforms.rst
-+++ b/docs/about/build-platforms.rst
-@@ -41,7 +41,7 @@ Those hosts are officially supported, with various accelerators:
-      - Accelerators
-    * - Arm
-      - kvm (64 bit only), tcg, xen
--   * - MIPS (little endian only)
-+   * - MIPS (64 bit little endian only)
-      - kvm, tcg
-    * - PPC
-      - kvm, tcg
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index ce38a3d0cf0..f3f4cd4059f 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -164,15 +164,19 @@ property types.
- Host Architectures
- ------------------
- 
--BE MIPS (since 7.2)
--'''''''''''''''''''
-+Big endian MIPS since 7.2; 32-bit little endian MIPS since 9.2
-+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
- As Debian 10 ("Buster") moved into LTS the big endian 32 bit version of
- MIPS moved out of support making it hard to maintain our
- cross-compilation CI tests of the architecture. As we no longer have
- CI coverage support may bitrot away before the deprecation process
--completes. The little endian variants of MIPS (both 32 and 64 bit) are
--still a supported host architecture.
-+completes.
-+
-+Likewise, the little endian variant of 32 bit MIPS is not supported by
-+Debian 13 ("Trixie") and newer.
-+
-+64 bit little endian MIPS is still a supported host architecture.
- 
- System emulation on 32-bit x86 hosts (since 8.0)
- ''''''''''''''''''''''''''''''''''''''''''''''''
-diff --git a/meson.build b/meson.build
-index 5e2b0fb82b2..110e93f84e9 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4721,6 +4721,14 @@ if host_arch == 'unknown'
-     message('configure has succeeded and you can continue to build, but')
-     message('QEMU will use a slow interpreter to emulate the target CPU.')
-   endif
-+elif host_arch == 'mips'
-+  message()
-+  warning('DEPRECATED HOST CPU')
-+  message()
-+  message('Support for CPU host architecture ' + cpu + ' is going to be')
-+  message('dropped as soon as the QEMU project stops supporting Debian 12')
-+  message('("Bookworm"). Going forward, the QEMU project will not guarantee')
-+  message('that QEMU will compile or work on this host CPU.')
- endif
- 
- if not supported_oses.contains(host_os)
--- 
-2.47.0
+> Paolo
+> 
 
 
