@@ -4,117 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99953D1356B
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 03:10:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4480D1356B
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 03:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5G87-0003vC-2F; Sun, 27 Oct 2024 23:09:19 -0400
+	id 1t5GNJ-0006in-No; Sun, 27 Oct 2024 23:25:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1t5G84-0003ug-DI; Sun, 27 Oct 2024 23:09:16 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t5GNH-0006ib-R8
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 23:24:59 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1t5G82-0004to-IJ; Sun, 27 Oct 2024 23:09:16 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49RKtdPT018534;
- Mon, 28 Oct 2024 03:09:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=7bFrF9
- gKIieUhdsqnr20xbKFX+L8hxaUoKZhLAzSUU8=; b=A3xoYPi5lgGQizAOHjUyXk
- +yrcUzK+/Mk2lWFbjvd4L+9Mhb5jxaIJO4rINhm5uXoxmh0keJjZp6qWrQ85S8S5
- zfeUs57imjAMIUeUrpyaPsYyjLIOy9PjHtr0hAD6PwPKmGCGQdUAuvNUOL4m4RjP
- Z/jtKh//qFozgNTYcoudgr7Gy121KeUDu27MDJ17iH76o7D1eWZqodVNnYDpbdnQ
- 7XBl45zdT9pr9752FdTXHHJ8HT5jfeSPk+KrLraCBkJDRvnnrpjpsOrgp2Ti/s3N
- iwLj57GQHWr8bXhdjuhJhNs22ef8mumD6KTEfYiN3u65q3eCOPzNzq6H/sBnXuTQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42grwaxwc2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 28 Oct 2024 03:09:00 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49S390Ah010853;
- Mon, 28 Oct 2024 03:09:00 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42grwaxwby-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 28 Oct 2024 03:09:00 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49S2BMwB017386;
- Mon, 28 Oct 2024 03:08:59 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42hars4hgk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 28 Oct 2024 03:08:59 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49S38tFC22872378
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 28 Oct 2024 03:08:55 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8E61520043;
- Mon, 28 Oct 2024 03:08:55 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF0EA20040;
- Mon, 28 Oct 2024 03:08:51 +0000 (GMT)
-Received: from [9.124.208.76] (unknown [9.124.208.76])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 28 Oct 2024 03:08:51 +0000 (GMT)
-Message-ID: <50194bd5-cef8-484c-b8c3-bd616414f280@linux.ibm.com>
-Date: Mon, 28 Oct 2024 08:38:50 +0530
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t5GNF-0006Dz-Pz
+ for qemu-devel@nongnu.org; Sun, 27 Oct 2024 23:24:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730085897; x=1761621897;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=+DoVMk67zblu+b37B6E5uAiS+mO4TLNtp2kdYeUmHEQ=;
+ b=kYQMpwzSzJ8gSPGXo10XLYhUXUM466QtxRJMpLRbpcQ1Uq1mMl+PxBXw
+ 0VS2DEnOoB0j8ttOoO8zOpAIdclVjNqGINx6rn62FIWcICH2TjIi6cDd4
+ 0BKx/70TaXs0ar41XDJBDLIM3A6kzImP/96j4aa1+CiEh+0y9/QWsbrmu
+ jj8GMPB149V1xeA6nJ5XF1RKtB3c4c5ONb03mpPqK6D1OD/jBdGuobG0k
+ 2zQcIB3CLrU/+cZEDcoW8U+/nopwiMmAyUZkuFHmKRDZxAb4Pk5cCdPTp
+ XnYNVygzetvFjmChfPGVt2Pmr4Fhb/wOQjprDbd64DgTTOYihte0EXKIf Q==;
+X-CSE-ConnectionGUID: TRY1IchSRtWK8LKKlxM50g==
+X-CSE-MsgGUID: o3oARS6KRwqoPhmaQC9buA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="52229193"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="52229193"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Oct 2024 20:24:52 -0700
+X-CSE-ConnectionGUID: 07U5wF8zTbGGMUom7qVg0w==
+X-CSE-MsgGUID: oxB4oV3tRLC9uuUPLPfUag==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,238,1725346800"; d="scan'208";a="112315117"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa001.fm.intel.com with ESMTP; 27 Oct 2024 20:24:50 -0700
+Date: Mon, 28 Oct 2024 11:41:09 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Babu Moger <babu.moger@amd.com>
+Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, kvm@vger.kernel.org
+Subject: Re: [PATCH v3 1/7] target/i386: Fix minor typo in NO_NESTED_DATA_BP
+ feature bit
+Message-ID: <Zx8H1RJTniBeDNvV@intel.com>
+References: <cover.1729807947.git.babu.moger@amd.com>
+ <a6749acd125670d3930f4ca31736a91b1d965f2f.1729807947.git.babu.moger@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 02/14] hw/ppc/spapr_pci: Do not create DT for disabled
- PCI device
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20241022-reuse-v17-0-bd7c133237e4@daynix.com>
- <20241022-reuse-v17-2-bd7c133237e4@daynix.com>
-Content-Language: en-US
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-In-Reply-To: <20241022-reuse-v17-2-bd7c133237e4@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 28yY9JMasl_lSJLl6x0WBkyyUiakbFB0
-X-Proofpoint-ORIG-GUID: bpzg_EWBO5w7FdIqhL5ngyT0vgPjOO9O
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0
- priorityscore=1501 mlxscore=0 clxscore=1011 phishscore=0 mlxlogscore=999
- impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410280025
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=sbhat@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a6749acd125670d3930f4ca31736a91b1d965f2f.1729807947.git.babu.moger@amd.com>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.287,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,77 +84,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 10/22/24 2:06 PM, Akihiko Odaki wrote:
-> Disabled means it is a disabled SR-IOV VF and hidden from the guest.
-> Do not create DT when starting the system and also keep the disabled PCI
-> device not linked to DRC, which generates DT in case of hotplug.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+On Thu, Oct 24, 2024 at 05:18:19PM -0500, Babu Moger wrote:
+> Date: Thu, 24 Oct 2024 17:18:19 -0500
+> From: Babu Moger <babu.moger@amd.com>
+> Subject: [PATCH v3 1/7] target/i386: Fix minor typo in NO_NESTED_DATA_BP
+>  feature bit
+> X-Mailer: git-send-email 2.34.1
+> 
+> Rename CPUID_8000_0021_EAX_No_NESTED_DATA_BP to
+>        CPUID_8000_0021_EAX_NO_NESTED_DATA_BP.
+> 
+> No functional change intended.
+> 
+> Signed-off-by: Babu Moger <babu.moger@amd.com>
 > ---
->   hw/ppc/spapr_pci.c | 14 +++++++++-----
->   1 file changed, 9 insertions(+), 5 deletions(-)
->
-> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-> index 5c0024bef9c4..679a22fe4e79 100644
-> --- a/hw/ppc/spapr_pci.c
-> +++ b/hw/ppc/spapr_pci.c
-> @@ -1291,8 +1291,7 @@ static void spapr_dt_pci_device_cb(PCIBus *bus, PCIDevice *pdev,
->       PciWalkFdt *p = opaque;
->       int err;
->   
-> -    if (p->err) {
-> -        /* Something's already broken, don't keep going */
-> +    if (p->err || !pdev->enabled) {
->           return;
->       }
->   
-> @@ -1592,10 +1591,10 @@ static void spapr_pci_plug(HotplugHandler *plug_handler,
->       uint32_t slotnr = PCI_SLOT(pdev->devfn);
->   
->       /*
-> -     * If DR is disabled we don't need to do anything in the case of
-> -     * hotplug or coldplug callbacks.
-> +     * If DR or the PCI device is disabled we don't need to do anything
-> +     * in the case of hotplug or coldplug callbacks.
->        */
-> -    if (!phb->dr_enabled) {
-> +    if (!phb->dr_enabled || !pdev->enabled) {
->           return;
->       }
+> v3: New patch.
+> ---
+>  target/i386/cpu.c | 2 +-
+>  target/i386/cpu.h | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 
-Thank you. This is the right place to be called from the hotplug handler
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-instead of the spapr_pci_dt_populate() unlike I mentioned before..
-
-
->   
-> @@ -1680,6 +1679,11 @@ static void spapr_pci_unplug_request(HotplugHandler *plug_handler,
->       }
->   
->       g_assert(drc);
-> +
-> +    if (!drc->dev) {
-> +        return;
-
-I agree with the change here, but were you able to get to this path? I 
-don't see
-
-  this if condition being entered with,
-
-qemu-system-ppc64 -nographic  -serial none -device 
-spapr-pci-host-bridge,index=4,id=pci.1  -device igb,id=igb0 <<< 
-'device_del igb0'
-
-
-Regards,
-
-Shivaprasad
-
-> +    }
-> +
->       g_assert(drc->dev == plugged_dev);
->   
->       if (!spapr_drc_unplug_requested(drc)) {
->
 
