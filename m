@@ -4,74 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 382B8D13570
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 09:56:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D83D13570
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 10:01:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5MTh-0006GV-GP; Mon, 28 Oct 2024 05:56:01 -0400
+	id 1t5MYI-0007KA-Fv; Mon, 28 Oct 2024 06:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1t5MTf-0006GI-24
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 05:55:59 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
+ (Exim 4.90_1) (envelope-from <yshxxsjt715@163.com>)
+ id 1t5MYE-0007Jv-T7
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 06:00:43 -0400
+Received: from m16.mail.163.com ([220.197.31.3])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1t5MTc-0003RX-Lf
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 05:55:58 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxyuCnXx9nx7cYAA--.50964S3;
- Mon, 28 Oct 2024 17:55:51 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMDxPEemXx9ntD8iAA--.14945S3;
- Mon, 28 Oct 2024 17:55:50 +0800 (CST)
-Subject: Re: [PATCH v3 1/3] linux-headers: Add unistd_64.h
-To: gaosong <gaosong@loongson.cn>, "Michael S . Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bmeng.cn@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org
-References: <20241028023809.1554405-1-maobibo@loongson.cn>
- <20241028023809.1554405-2-maobibo@loongson.cn>
- <b5f4a39a-278a-1918-29f2-b9da197ce055@loongson.cn>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <08fa5950-8ca4-b6fc-fac7-77bc5c16893a@loongson.cn>
-Date: Mon, 28 Oct 2024 17:55:26 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (envelope-from <yshxxsjt715@163.com>) id 1t5MYB-0003wM-E6
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 06:00:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+ Message-ID; bh=Rd6MIx5/0lQQ3Bsx24W+NUfZbdDWqfkNvJxemBBbBQc=; b=T
+ ZlSHXikVV9fBjwKD+r4K8DHPI5inv35nSTRgoOBubxKl2gUoYHq2iF2PpZVy+qLH
+ 6UiNCRWZkZExImz5PAXHiB0vqLY2/ZB5g+UeeSlwsjgrJkRudx17KHWxddEUDLux
+ Trf46JPoBe4R6h1Xs5VtW09+undkXUI1044msykBnw=
+Received: from yshxxsjt715$163.com ( [60.249.21.29] ) by
+ ajax-webmail-wmsvr-40-127 (Coremail) ; Mon, 28 Oct 2024 18:00:25 +0800
+ (CST)
+X-Originating-IP: [60.249.21.29]
+Date: Mon, 28 Oct 2024 18:00:25 +0800 (CST)
+From: Norman  <yshxxsjt715@163.com>
+To: qemu-devel@nongnu.org
+Subject: Re:[PATCH] Fix negative lost clock causing VM crash
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <20241015022416.804072-1-yshxxsjt715@163.com>
+References: <20241015022416.804072-1-yshxxsjt715@163.com>
+X-NTES-SC: AL_Qu2YAv2btk4p4ySfYOkfmk4bg+Y8UcG0uf0i2YdWO5lwjA/p5CkfUG5SHnLb3Me0GSKTmgmGWxdDzcdzeKl9fYIqA9/XowJm5GuP+hwWBNqFpQ==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_163004_4139472.1730109625479"
 MIME-Version: 1.0
-In-Reply-To: <b5f4a39a-278a-1918-29f2-b9da197ce055@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxPEemXx9ntD8iAA--.14945S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7CF1ktw4fJr45Xw4ktFW7WrX_yoW8tr17pr
- 92yr18Gr98Gas3tw1qvw12grWUtFs8C3ZIgry8GFyqy390qr1IqrsrWrn09r4DJayrAFyU
- ZF43Gw15u3WxXrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
- ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jn
- UUUUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.811,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-ID: <6843be9.a7e8.192d291d487.Coremail.yshxxsjt715@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: fygvCgD3v626YB9nuhAaAA--.60820W
+X-CM-SenderInfo: h1vk555vmwliqv6rljoofrz/1tbiMQB5L2cNzFjJkgABsD
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Received-SPF: pass client-ip=220.197.31.3; envelope-from=yshxxsjt715@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,67 +73,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+------=_Part_163004_4139472.1730109625479
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
+Z2VudGxlIHBpbmcKCgoKCgoKCgoKCgoKCgoKCgpBdCAyMDI0LTEwLTE1IDEwOjI0OjA5LCAic2hl
+bmppYXRvbmciIDx5c2h4eHNqdDcxNUAxNjMuY29tPiB3cm90ZToKPlVuZGVyIHNpdHVhdGlvbiB3
+aGVyZSB2aXJ0dWFsIG1hY2hpbmUgaXMgcnVubmluZyBpbiBhIGRlcGxveW1lbnQgd2hlcmUKPnRo
+ZSBzeXN0ZW0gdGltZSBpcyB1bnN0YWJsZSwgdGhlcmUgaXMgYSBjaGFuY2UgdGhhdCBsZWdhY3kg
+T3BlblN0YWNrCj5XaW5kb3dzIG1hY2hpbmVzIHdpdGhvdXQgc3RpbWVyIGVuYWJsZWQgd2lsbCBj
+cmFzaCBpZiBzeXN0ZW0gdGltZSBtb3Zlcwo+YmFja3dhcmRzIGFuZCBkaWZ0Zml4PXNsZXcgaXMg
+ZW5hYmxlZC4gVGhpcyBwcmltYXJpbHkgY2F1c2VkIGJ5IHRoZSBmYWN0Cj50aGUgc3lzdGVtIHRp
+bWUgbW92ZXMgZmFzdGVyIHRoYW4gTlRQIHNlcnZlciBhbmQgYWZ0ZXIgc3luY2hyb25pemF0aW9u
+LAo+c3lzdGVtIHRpbWUgZmxvd3MgYmFja3dhcmRzLgo+Cj5TaWduZWQtb2ZmLWJ5OiBzaGVuamlh
+dG9uZyA8eXNoeHhzanQ3MTVAMTYzLmNvbT4KPi0tLQo+IGh3L3J0Yy9tYzE0NjgxOHJ0Yy5jIHwg
+MTMgKysrKysrKysrLS0tLQo+IDEgZmlsZSBjaGFuZ2VkLCA5IGluc2VydGlvbnMoKyksIDQgZGVs
+ZXRpb25zKC0pCj4KPmRpZmYgLS1naXQgYS9ody9ydGMvbWMxNDY4MThydGMuYyBiL2h3L3J0Yy9t
+YzE0NjgxOHJ0Yy5jCj5pbmRleCA4Y2NlZTlhMzg1Li5mYTVkNzkxNWIxIDEwMDY0NAo+LS0tIGEv
+aHcvcnRjL21jMTQ2ODE4cnRjLmMKPisrKyBiL2h3L3J0Yy9tYzE0NjgxOHJ0Yy5jCj5AQCAtMTgw
+LDcgKzE4MCw2IEBAIHN0YXRpYyB2b2lkIHBlcmlvZGljX3RpbWVyX3VwZGF0ZShNQzE0NjgxOFJ0
+Y1N0YXRlICpzLCBpbnQ2NF90IGN1cnJlbnRfdGltZSwKPiAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIFJUQ19DTE9DS19SQVRFLCBOQU5PU0VDT05EU19QRVJfU0VDT05EKTsKPiAgICAg
+ICAgIGxhc3RfcGVyaW9kaWNfY2xvY2sgPSBuZXh0X3BlcmlvZGljX2Nsb2NrIC0gb2xkX3Blcmlv
+ZDsKPiAgICAgICAgIGxvc3RfY2xvY2sgPSBjdXJfY2xvY2sgLSBsYXN0X3BlcmlvZGljX2Nsb2Nr
+Owo+LSAgICAgICAgYXNzZXJ0KGxvc3RfY2xvY2sgPj0gMCk7Cj4gICAgIH0KPiAKPiAgICAgLyoK
+PkBAIC0xOTksMTAgKzE5OCwxNSBAQCBzdGF0aWMgdm9pZCBwZXJpb2RpY190aW1lcl91cGRhdGUo
+TUMxNDY4MThSdGNTdGF0ZSAqcywgaW50NjRfdCBjdXJyZW50X3RpbWUsCj4gICAgICAqLwo+ICAg
+ICBpZiAocy0+bG9zdF90aWNrX3BvbGljeSA9PSBMT1NUX1RJQ0tfUE9MSUNZX1NMRVcpIHsKPiAg
+ICAgICAgIHVpbnQzMl90IG9sZF9pcnFfY29hbGVzY2VkID0gcy0+aXJxX2NvYWxlc2NlZDsKPisg
+ICAgICAgIGlmIChsb3N0X2Nsb2NrID49IDApIHsKPisgICAgICAgICAgICBsb3N0X2Nsb2NrICs9
+IG9sZF9pcnFfY29hbGVzY2VkICogb2xkX3BlcmlvZDsKPisgICAgICAgICAgICBzLT5pcnFfY29h
+bGVzY2VkID0gbG9zdF9jbG9jayAvIHMtPnBlcmlvZDsKPisgICAgICAgICAgICBsb3N0X2Nsb2Nr
+ICU9IHMtPnBlcmlvZDsKPisgICAgICAgIH0gZWxzZSB7Cj4rICAgICAgICAgICAgcy0+aXJxX2Nv
+YWxlc2NlZCA9IDA7Cj4rICAgICAgICAgICAgbG9zdF9jbG9jayA9IDA7Cj4rICAgICAgICB9Cj4g
+Cj4tICAgICAgICBsb3N0X2Nsb2NrICs9IG9sZF9pcnFfY29hbGVzY2VkICogb2xkX3BlcmlvZDsK
+Pi0gICAgICAgIHMtPmlycV9jb2FsZXNjZWQgPSBsb3N0X2Nsb2NrIC8gcy0+cGVyaW9kOwo+LSAg
+ICAgICAgbG9zdF9jbG9jayAlPSBzLT5wZXJpb2Q7Cj4gICAgICAgICBpZiAob2xkX2lycV9jb2Fs
+ZXNjZWQgIT0gcy0+aXJxX2NvYWxlc2NlZCB8fAo+ICAgICAgICAgICAgIG9sZF9wZXJpb2QgIT0g
+cy0+cGVyaW9kKSB7Cj4gICAgICAgICAgICAgRFBSSU5URl9DKCJjbW9zOiBjb2FsZXNjZWQgaXJx
+cyBzY2FsZWQgZnJvbSAlZCB0byAlZCwgIgo+QEAgLTIxNSw2ICsyMTksNyBAQCBzdGF0aWMgdm9p
+ZCBwZXJpb2RpY190aW1lcl91cGRhdGUoTUMxNDY4MThSdGNTdGF0ZSAqcywgaW50NjRfdCBjdXJy
+ZW50X3RpbWUsCj4gICAgICAgICAgKiBubyB3YXkgdG8gY29tcGVuc2F0ZSB0aGUgaW50ZXJydXB0
+IGlmIExPU1RfVElDS19QT0xJQ1lfU0xFVwo+ICAgICAgICAgICogaXMgbm90IHVzZWQsIHdlIHNo
+b3VsZCBtYWtlIHRoZSB0aW1lIHByb2dyZXNzIGFueXdheS4KPiAgICAgICAgICAqLwo+KyAgICAg
+ICAgbG9zdF9jbG9jayA9IE1BWCgwLCBsb3N0X2Nsb2NrKTsKPiAgICAgICAgIGxvc3RfY2xvY2sg
+PSBNSU4obG9zdF9jbG9jaywgcGVyaW9kKTsKPiAgICAgfQo+IAo+LS0gCj4yLjQzLjAK
+------=_Part_163004_4139472.1730109625479
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-On 2024/10/28 下午3:39, gaosong wrote:
-> 在 2024/10/28 上午10:38, Bibo Mao 写道:
->> since 6.11, unistd.h includes header file unistd_64.h directly on
->> some platforms, here add unistd_64.h on these platforms. Affected
->> platforms are ARM64, LoongArch64 and Riscv. Otherwise there will
->> be compiling error such as:
->>
->> linux-headers/asm/unistd.h:3:10: fatal error: asm/unistd_64.h: No such 
->> file or directory
->>   #include <asm/unistd_64.h>
-> Hi,  Bibo
-> 
-> Could you help tested this patch on ARM machine? I don't have an ARM 
-> machine.
-yeap, I test on arm64 machine, it passes to compile with header files 
-updated. However there is no riscv machine by hand.
-
-Regards
-Bibo Mao
-> 
-> Thanks.
-> Song Gao
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   scripts/update-linux-headers.sh | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>
->> diff --git a/scripts/update-linux-headers.sh 
->> b/scripts/update-linux-headers.sh
->> index c34ac6454e..203f48d089 100755
->> --- a/scripts/update-linux-headers.sh
->> +++ b/scripts/update-linux-headers.sh
->> @@ -163,6 +163,7 @@ EOF
->>       fi
->>       if [ $arch = arm64 ]; then
->>           cp "$hdrdir/include/asm/sve_context.h" 
->> "$output/linux-headers/asm-arm64/"
->> +        cp "$hdrdir/include/asm/unistd_64.h" 
->> "$output/linux-headers/asm-arm64/"
->>       fi
->>       if [ $arch = x86 ]; then
->>           cp "$hdrdir/include/asm/unistd_32.h" 
->> "$output/linux-headers/asm-x86/"
->> @@ -185,6 +186,11 @@ EOF
->>       fi
->>       if [ $arch = riscv ]; then
->>           cp "$hdrdir/include/asm/ptrace.h" 
->> "$output/linux-headers/asm-riscv/"
->> +        cp "$hdrdir/include/asm/unistd_32.h" 
->> "$output/linux-headers/asm-riscv/"
->> +        cp "$hdrdir/include/asm/unistd_64.h" 
->> "$output/linux-headers/asm-riscv/"
->> +    fi
->> +    if [ $arch = loongarch ]; then
->> +        cp "$hdrdir/include/asm/unistd_64.h" 
->> "$output/linux-headers/asm-loongarch/"
->>       fi
->>   done
->>   arch=
-> 
+PGRpdiBkYXRhLW50ZXM9Im50ZXNfbWFpbF9ib2R5X3Jvb3QiIHN0eWxlPSJsaW5lLWhlaWdodDox
+Ljc7Y29sb3I6IzAwMDAwMDtmb250LXNpemU6MTRweDtmb250LWZhbWlseTpBcmlhbCI+PGRpdiBp
+ZD0ic3BuRWRpdG9yQ29udGVudCI+PHAgc3R5bGU9Im1hcmdpbjogMDsiPmdlbnRsZSBwaW5nPC9w
+PjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+
+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48
+YnI+PC9wPjwvZGl2PjxkaXYgc3R5bGU9InBvc2l0aW9uOnJlbGF0aXZlO3pvb206MSI+PC9kaXY+
+PGRpdiBpZD0iZGl2TmV0ZWFzZU1haWxDYXJkIj48L2Rpdj48cCBzdHlsZT0ibWFyZ2luOiAwOyI+
+PGJyPjwvcD48cHJlPjxicj5BdCAyMDI0LTEwLTE1IDEwOjI0OjA5LCAic2hlbmppYXRvbmciICZs
+dDt5c2h4eHNqdDcxNUAxNjMuY29tJmd0OyB3cm90ZToKJmd0O1VuZGVyIHNpdHVhdGlvbiB3aGVy
+ZSB2aXJ0dWFsIG1hY2hpbmUgaXMgcnVubmluZyBpbiBhIGRlcGxveW1lbnQgd2hlcmUKJmd0O3Ro
+ZSBzeXN0ZW0gdGltZSBpcyB1bnN0YWJsZSwgdGhlcmUgaXMgYSBjaGFuY2UgdGhhdCBsZWdhY3kg
+T3BlblN0YWNrCiZndDtXaW5kb3dzIG1hY2hpbmVzIHdpdGhvdXQgc3RpbWVyIGVuYWJsZWQgd2ls
+bCBjcmFzaCBpZiBzeXN0ZW0gdGltZSBtb3ZlcwomZ3Q7YmFja3dhcmRzIGFuZCBkaWZ0Zml4PXNs
+ZXcgaXMgZW5hYmxlZC4gVGhpcyBwcmltYXJpbHkgY2F1c2VkIGJ5IHRoZSBmYWN0CiZndDt0aGUg
+c3lzdGVtIHRpbWUgbW92ZXMgZmFzdGVyIHRoYW4gTlRQIHNlcnZlciBhbmQgYWZ0ZXIgc3luY2hy
+b25pemF0aW9uLAomZ3Q7c3lzdGVtIHRpbWUgZmxvd3MgYmFja3dhcmRzLgomZ3Q7CiZndDtTaWdu
+ZWQtb2ZmLWJ5OiBzaGVuamlhdG9uZyAmbHQ7eXNoeHhzanQ3MTVAMTYzLmNvbSZndDsKJmd0Oy0t
+LQomZ3Q7IGh3L3J0Yy9tYzE0NjgxOHJ0Yy5jIHwgMTMgKysrKysrKysrLS0tLQomZ3Q7IDEgZmls
+ZSBjaGFuZ2VkLCA5IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0pCiZndDsKJmd0O2RpZmYg
+LS1naXQgYS9ody9ydGMvbWMxNDY4MThydGMuYyBiL2h3L3J0Yy9tYzE0NjgxOHJ0Yy5jCiZndDtp
+bmRleCA4Y2NlZTlhMzg1Li5mYTVkNzkxNWIxIDEwMDY0NAomZ3Q7LS0tIGEvaHcvcnRjL21jMTQ2
+ODE4cnRjLmMKJmd0OysrKyBiL2h3L3J0Yy9tYzE0NjgxOHJ0Yy5jCiZndDtAQCAtMTgwLDcgKzE4
+MCw2IEBAIHN0YXRpYyB2b2lkIHBlcmlvZGljX3RpbWVyX3VwZGF0ZShNQzE0NjgxOFJ0Y1N0YXRl
+ICpzLCBpbnQ2NF90IGN1cnJlbnRfdGltZSwKJmd0OyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIFJUQ19DTE9DS19SQVRFLCBOQU5PU0VDT05EU19QRVJfU0VDT05EKTsKJmd0OyAgICAg
+ICAgIGxhc3RfcGVyaW9kaWNfY2xvY2sgPSBuZXh0X3BlcmlvZGljX2Nsb2NrIC0gb2xkX3Blcmlv
+ZDsKJmd0OyAgICAgICAgIGxvc3RfY2xvY2sgPSBjdXJfY2xvY2sgLSBsYXN0X3BlcmlvZGljX2Ns
+b2NrOwomZ3Q7LSAgICAgICAgYXNzZXJ0KGxvc3RfY2xvY2sgJmd0Oz0gMCk7CiZndDsgICAgIH0K
+Jmd0OyAKJmd0OyAgICAgLyoKJmd0O0BAIC0xOTksMTAgKzE5OCwxNSBAQCBzdGF0aWMgdm9pZCBw
+ZXJpb2RpY190aW1lcl91cGRhdGUoTUMxNDY4MThSdGNTdGF0ZSAqcywgaW50NjRfdCBjdXJyZW50
+X3RpbWUsCiZndDsgICAgICAqLwomZ3Q7ICAgICBpZiAocy0mZ3Q7bG9zdF90aWNrX3BvbGljeSA9
+PSBMT1NUX1RJQ0tfUE9MSUNZX1NMRVcpIHsKJmd0OyAgICAgICAgIHVpbnQzMl90IG9sZF9pcnFf
+Y29hbGVzY2VkID0gcy0mZ3Q7aXJxX2NvYWxlc2NlZDsKJmd0OysgICAgICAgIGlmIChsb3N0X2Ns
+b2NrICZndDs9IDApIHsKJmd0OysgICAgICAgICAgICBsb3N0X2Nsb2NrICs9IG9sZF9pcnFfY29h
+bGVzY2VkICogb2xkX3BlcmlvZDsKJmd0OysgICAgICAgICAgICBzLSZndDtpcnFfY29hbGVzY2Vk
+ID0gbG9zdF9jbG9jayAvIHMtJmd0O3BlcmlvZDsKJmd0OysgICAgICAgICAgICBsb3N0X2Nsb2Nr
+ICU9IHMtJmd0O3BlcmlvZDsKJmd0OysgICAgICAgIH0gZWxzZSB7CiZndDsrICAgICAgICAgICAg
+cy0mZ3Q7aXJxX2NvYWxlc2NlZCA9IDA7CiZndDsrICAgICAgICAgICAgbG9zdF9jbG9jayA9IDA7
+CiZndDsrICAgICAgICB9CiZndDsgCiZndDstICAgICAgICBsb3N0X2Nsb2NrICs9IG9sZF9pcnFf
+Y29hbGVzY2VkICogb2xkX3BlcmlvZDsKJmd0Oy0gICAgICAgIHMtJmd0O2lycV9jb2FsZXNjZWQg
+PSBsb3N0X2Nsb2NrIC8gcy0mZ3Q7cGVyaW9kOwomZ3Q7LSAgICAgICAgbG9zdF9jbG9jayAlPSBz
+LSZndDtwZXJpb2Q7CiZndDsgICAgICAgICBpZiAob2xkX2lycV9jb2FsZXNjZWQgIT0gcy0mZ3Q7
+aXJxX2NvYWxlc2NlZCB8fAomZ3Q7ICAgICAgICAgICAgIG9sZF9wZXJpb2QgIT0gcy0mZ3Q7cGVy
+aW9kKSB7CiZndDsgICAgICAgICAgICAgRFBSSU5URl9DKCJjbW9zOiBjb2FsZXNjZWQgaXJxcyBz
+Y2FsZWQgZnJvbSAlZCB0byAlZCwgIgomZ3Q7QEAgLTIxNSw2ICsyMTksNyBAQCBzdGF0aWMgdm9p
+ZCBwZXJpb2RpY190aW1lcl91cGRhdGUoTUMxNDY4MThSdGNTdGF0ZSAqcywgaW50NjRfdCBjdXJy
+ZW50X3RpbWUsCiZndDsgICAgICAgICAgKiBubyB3YXkgdG8gY29tcGVuc2F0ZSB0aGUgaW50ZXJy
+dXB0IGlmIExPU1RfVElDS19QT0xJQ1lfU0xFVwomZ3Q7ICAgICAgICAgICogaXMgbm90IHVzZWQs
+IHdlIHNob3VsZCBtYWtlIHRoZSB0aW1lIHByb2dyZXNzIGFueXdheS4KJmd0OyAgICAgICAgICAq
+LwomZ3Q7KyAgICAgICAgbG9zdF9jbG9jayA9IE1BWCgwLCBsb3N0X2Nsb2NrKTsKJmd0OyAgICAg
+ICAgIGxvc3RfY2xvY2sgPSBNSU4obG9zdF9jbG9jaywgcGVyaW9kKTsKJmd0OyAgICAgfQomZ3Q7
+IAomZ3Q7LS0gCiZndDsyLjQzLjAKPC9wcmU+PC9kaXY+
+------=_Part_163004_4139472.1730109625479--
 
 
