@@ -4,94 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EECED5B846
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 22:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C1F2D5B846
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 22:32:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5YEW-00028Q-TX; Mon, 28 Oct 2024 18:29:08 -0400
+	id 1t5YHX-0003cW-S0; Mon, 28 Oct 2024 18:32:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5YEU-000285-UC
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:29:07 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5YET-0003zS-7U
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:29:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=/wXX8Y+cP1zNs8PZmc0ODTnEVpgArysQj+1HbjJ7Mwg=; b=MKVK0z83+WH+vY7U0od7/JmmjQ
- EH++spqMYN+jenC6kXyZa5XcBM3FUd3K7oOIpXiSYEa244FG7WQpV/OXvbIbUOhFpegft649l3Wxp
- MnXdwskgnkKWGN3MadvdRTDvfqknCV62KWAqFxY9hkxyI+dfPdSSZO4ljUoWl//s/2Dp8VPPOR4D2
- XMEEtX0KIMwjK/GcStHybylHl89qyQkOT7A7fQAnXq2mZgOmlRE/LWooSvIJRhNaUe7m+fP0+GX8v
- Z4hJ7OXJGC7gCg3hSZNxYouNqEA5Zvyeiy91RXEeA9pmhLUYDNShvy0qVDFPP4kO4m3r5521qo/Fh
- OKjVxV1wxQlKYnOB4b0S7suombCHMay7Xfv5bKWMndPJW6j1lQBI7uFc4gv6AnPdzq/9cAw+oFXN1
- iLlLiTCnr9z9tGF5jczYxxc+azxzCwMvUygKf7GZpebYl0HlZqyqg8eirhAA4KfwdrL35mLKZzMiA
- gXMtOa7hEMZlaLU5f4xnJLF/SHlMNrADNC/hk6Iv6pmNIb9vVKC++TKN6SACCxz4ilnD3I/Iz376+
- CZz80Frss6471gXxwesYfTNkTTlpSn/FiVfsb8NdIb1IsVc0gyZWQcwTOqHLEMrKZnLfDZaDaq36N
- spX7QLMbuNvj4cAWK+Jpij/xmBvTekyA7Z+B0A58c=;
-Received: from [2a00:23c4:8bb8:f600:b5e6:5818:bcfd:7571]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5YE6-0006Zb-16; Mon, 28 Oct 2024 22:28:46 +0000
-Message-ID: <0e056742-396c-4bc8-91a8-e0a9a4dfb805@ilande.co.uk>
-Date: Mon, 28 Oct 2024 22:28:58 +0000
+ (Exim 4.90_1) (envelope-from <patrick.eads@gmail.com>)
+ id 1t5Y5r-00087T-W5
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:20:12 -0400
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <patrick.eads@gmail.com>)
+ id 1t5Y5n-000358-8Y
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:20:11 -0400
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e2908e8d45eso4632494276.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 15:20:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730154004; x=1730758804; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=D1X1FWYW6yo2GgSCGfLqzH+MajoCLVyZGYlqDb1GwYA=;
+ b=ACtI+eClD58psxDttHSppWgXB7T2aVMRfEKja6JUgwmDLLEL+3GGfmpwrBAHYd1i8G
+ ftXESbu8xQSOt6gr/xKzsjRY/IwC0jIRMZ6ifQoet5DV7eIGsDgD3oXOeSh3Mt9ZrRol
+ 5Ckn+o6W+bPgjUWZf4dfibVZyoVpgqKFV+9Az4w/5lRCzQDdh/D2kqO5jZ4+rYNZdMV6
+ z1mJg0qjNy/u0KQeB/rwiMYLtGzxn1GS8s0qYQUfGPNkCmqe4WBROzKUbwl6ZjrnU28g
+ VQgX5Pyf9rRUf9EIaL2M8sYJ2WcwkH/IBr3Od3CeLRXKaU5pRqzO5IEeTkecS2H9b5Vr
+ QEUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730154004; x=1730758804;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=D1X1FWYW6yo2GgSCGfLqzH+MajoCLVyZGYlqDb1GwYA=;
+ b=KiYi4P+n72FFgNVo8zQo9xPVJAAk+oaF/vhtBQdCQayKlrcii7vDYS7PtCPT/lvOXb
+ fHK2mDzvD5zZ7u9gnaClnxqKOhyubcpAqeYnMsug8IS3s+ApDxC3RRc5zvaxePWcC5dw
+ 0Tqcb0bYxR6QaHel72aGXQE/89WoBvIY1JMstsw7kq//H0g24gG5te/SlEaAH5F7lQl3
+ l0qkyhQcya0/qJ/5V4TNfSXXRy7JF3AyUjK+KIncut0n7PTnxGlfpM0I6NRk0fvq+uRl
+ 88sWwVhjRPqMLXBDiiH/72bRcFrKFEGfGzoa3T5UE4v62EJdmYCcvxBmH9rGObMdLruo
+ VCiw==
+X-Gm-Message-State: AOJu0YxbuQoiYgg2tJpnyeKxySqYq4MCCphULdhlvFG7xPkyoVeZEvQF
+ Bedv7LHnN6in3YLVNsSo91NWKtUMUbfu3tioDW9baJDMUS7iWZAn6/89VNpZ
+X-Google-Smtp-Source: AGHT+IFomHPUbnH0mxy7JU4HXQ+K6Qvyvo1wc4bLUP1wdwOG9lHKKlrqMyyx6eORj8iNJXYXiH7uDw==
+X-Received: by 2002:a05:6902:114a:b0:e29:296d:780e with SMTP id
+ 3f1490d57ef6-e3087a40862mr8670651276.12.1730154003704; 
+ Mon, 28 Oct 2024 15:20:03 -0700 (PDT)
+Received: from tungsten-chungus.. (c-174-169-154-147.hsd1.nh.comcast.net.
+ [174.169.154.147]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b18d27911asm365116185a.26.2024.10.28.15.20.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Oct 2024 15:20:03 -0700 (PDT)
+From: Patrick Eads <patrick.eads@gmail.com>
+X-Google-Original-From: Patrick Eads <peads@users.noreply.github.com>
+To: qemu-devel@nongnu.org
+Cc: Patrick Eads <patrick.eads@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] Plumbed previously ununsed defaults_enabled in vl.c,
+ s.t. it provides the status of the '-nodefaults' flag to created
+ machines
+Date: Mon, 28 Oct 2024 22:13:46 +0000
+Message-ID: <20241028221814.329577-2-peads@users.noreply.github.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Thomas Huth <huth@tuxfamily.org>
-Cc: qemu-devel@nongnu.org
-References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-14-mark.cave-ayland@ilande.co.uk>
- <20241028173939.6fada306@tpx1>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20241028173939.6fada306@tpx1>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:b5e6:5818:bcfd:7571
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 13/36] next-cube: move ESCC to be QOM child of next-pc
- device
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=patrick.eads@gmail.com; helo=mail-yb1-xb30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 28 Oct 2024 18:32:13 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,125 +99,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/10/2024 16:39, Thomas Huth wrote:
-> Am Wed, 23 Oct 2024 09:58:29 +0100
-> schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
-> 
->> Since the ESCC is part of the next-pc device, move the ESCC to be a QOM child
->> of the next-pc device.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> ---
->>   hw/m68k/next-cube.c | 54 ++++++++++++++++++++++-----------------------
->>   1 file changed, 26 insertions(+), 28 deletions(-)
->>
->> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
->> index 7f714640da..915dd80f6f 100644
->> --- a/hw/m68k/next-cube.c
->> +++ b/hw/m68k/next-cube.c
->> @@ -124,6 +124,8 @@ struct NeXTPC {
->>       qemu_irq scsi_reset;
->>       qemu_irq scsi_dma;
->>   
->> +    ESCCState escc;
->> +
->>       NextRtc rtc;
->>   };
->>   
->> @@ -978,31 +980,6 @@ static const MemoryRegionOps next_floppy_ops = {
->>       .endianness = DEVICE_BIG_ENDIAN,
->>   };
->>   
->> -static void next_escc_init(DeviceState *pcdev)
->> -{
->> -    NeXTPC *next_pc = NEXT_PC(pcdev);
->> -    DeviceState *dev;
->> -    SysBusDevice *s;
->> -
->> -    dev = qdev_new(TYPE_ESCC);
->> -    qdev_prop_set_uint32(dev, "disabled", 0);
->> -    qdev_prop_set_uint32(dev, "frequency", 9600 * 384);
->> -    qdev_prop_set_uint32(dev, "it_shift", 0);
->> -    qdev_prop_set_bit(dev, "bit_swap", true);
->> -    qdev_prop_set_chr(dev, "chrB", serial_hd(1));
->> -    qdev_prop_set_chr(dev, "chrA", serial_hd(0));
->> -    qdev_prop_set_uint32(dev, "chnBtype", escc_serial);
->> -    qdev_prop_set_uint32(dev, "chnAtype", escc_serial);
->> -
->> -    s = SYS_BUS_DEVICE(dev);
->> -    sysbus_realize_and_unref(s, &error_fatal);
->> -    sysbus_connect_irq(s, 0, qdev_get_gpio_in(pcdev, NEXT_SCC_I));
->> -    sysbus_connect_irq(s, 1, qdev_get_gpio_in(pcdev, NEXT_SCC_DMA_I));
->> -
->> -    memory_region_add_subregion(&next_pc->scrmem, 0x18000,
->> -                                sysbus_mmio_get_region(s, 0));
->> -}
->> -
->>   static void next_pc_reset(DeviceState *dev)
->>   {
->>       NeXTPC *s = NEXT_PC(dev);
->> @@ -1043,6 +1020,28 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
->>       /* Floppy */
->>       memory_region_add_subregion(&s->scrmem, 0x14108,
->>                                   &s->floppy_mem);
->> +
->> +    /* ESCC */
->> +    d = DEVICE(object_resolve_path_component(OBJECT(dev), "escc"));
->> +    qdev_prop_set_uint32(d, "disabled", 0);
->> +    qdev_prop_set_uint32(d, "frequency", 9600 * 384);
->> +    qdev_prop_set_uint32(d, "it_shift", 0);
->> +    qdev_prop_set_bit(d, "bit_swap", true);
->> +    qdev_prop_set_chr(d, "chrB", serial_hd(1));
->> +    qdev_prop_set_chr(d, "chrA", serial_hd(0));
->> +    qdev_prop_set_uint32(d, "chnBtype", escc_serial);
->> +    qdev_prop_set_uint32(d, "chnAtype", escc_serial);
->> +
->> +    sbd = SYS_BUS_DEVICE(d);
->> +    if (!sysbus_realize(sbd, errp)) {
->> +        return;
->> +    }
->> +    sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(dev, NEXT_SCC_I));
->> +    sysbus_connect_irq(sbd, 1, qdev_get_gpio_in(dev, NEXT_SCC_DMA_I));
->> +
->> +    memory_region_add_subregion(&s->scrmem, 0x18000,
->> +                                sysbus_mmio_get_region(sbd, 0));
-> 
-> You could also keep the next_escc_init() function, and call next_escc_init()
-> here?
+From: Patrick Eads <patrick.eads@gmail.com>
 
-Normally a non-QOM _init() function suffix is used to both init() and realize() a 
-device, whereas here since the ESCC device is a child of the next-pc device these 
-operations must be separate. I think I can see why this convention is used elsewhere 
-in the codebase, as otherwise you end up calling a function with a _init() prefix 
-from _realize() which can get confusing with respect to the QOM model...
+Signed-off-by: Patrick Eads <patrick.eads@gmail.com>
+---
+ .gitignore          |  2 ++
+ hw/core/machine.c   | 15 +++++++++++++++
+ hw/m68k/q800.c      | 15 ++++++++-------
+ include/hw/boards.h |  1 +
+ system/vl.c         |  2 +-
+ 5 files changed, 27 insertions(+), 8 deletions(-)
 
-
-ATB,
-
-Mark.
-
->>   }
->>   
->>   static void next_pc_init(Object *obj)
->> @@ -1064,6 +1063,8 @@ static void next_pc_init(Object *obj)
->>   
->>       memory_region_init_io(&s->floppy_mem, OBJECT(s), &next_floppy_ops, s,
->>                             "next.floppy", 4);
->> +
->> +    object_initialize_child(obj, "escc", &s->escc, TYPE_ESCC);
->>   }
->>   
->>   /*
->> @@ -1201,9 +1202,6 @@ static void next_cube_init(MachineState *machine)
->>           }
->>       }
->>   
->> -    /* Serial */
->> -    next_escc_init(pcdev);
->> -
->>       /* TODO: */
->>       /* Network */
->>   
-> 
+diff --git a/.gitignore b/.gitignore
+index 61fa39967b..306799820c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -20,3 +20,5 @@ GTAGS
+ *.swp
+ *.patch
+ *.gcov
++.idea
++buildDir
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index adaba17eba..5b133cc3f2 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -475,6 +475,16 @@ static void machine_set_usb(Object *obj, bool value, Error **errp)
+     ms->usb_disabled = !value;
+ }
+ 
++static bool machine_get_defaults(Object *obj, __attribute__((unused)) Error **errp) {
++    MachineState *ms = MACHINE(obj);
++    return ms->has_defaults;
++}
++
++static void machine_set_defaults(Object *obj, bool val, __attribute__((unused)) Error **errp) {
++    MachineState *ms = MACHINE(obj);
++    ms->has_defaults = val;
++}
++
+ static bool machine_get_graphics(Object *obj, Error **errp)
+ {
+     MachineState *ms = MACHINE(obj);
+@@ -1083,6 +1093,11 @@ static void machine_class_init(ObjectClass *oc, void *data)
+     object_class_property_set_description(oc, "usb",
+         "Set on/off to enable/disable usb");
+ 
++    object_class_property_add_bool(oc, "defaults",
++                                          machine_get_defaults, machine_set_defaults);
++    object_class_property_set_description(oc, "defaults",
++                                          "Set on/off to enable/disable hardware defaults");
++
+     object_class_property_add_bool(oc, "graphics",
+         machine_get_graphics, machine_set_graphics);
+     object_class_property_set_description(oc, "graphics",
+diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
+index 556604e1dc..63782315fe 100644
+--- a/hw/m68k/q800.c
++++ b/hw/m68k/q800.c
+@@ -262,13 +262,13 @@ static void q800_machine_init(MachineState *machine)
+     const char *initrd_filename = machine->initrd_filename;
+     const char *kernel_cmdline = machine->kernel_cmdline;
+     const char *bios_name = machine->firmware ?: MACROM_FILENAME;
++    const bool has_defaults = m->parent_obj.has_defaults;
+     hwaddr parameters_base;
+     CPUState *cs;
+     DeviceState *dev;
+     SysBusESPState *sysbus_esp;
+     ESPState *esp;
+     SysBusDevice *sysbus;
+-    BusState *adb_bus;
+     NubusBus *nubus;
+     DriveInfo *dinfo;
+     NICInfo *nd;
+@@ -354,12 +354,13 @@ static void q800_machine_init(MachineState *machine)
+     qdev_connect_gpio_out(DEVICE(&m->via1), 0,
+                           qdev_get_gpio_in_named(DEVICE(&m->glue),
+                                                  "auxmode", 0));
+-
+-    adb_bus = qdev_get_child_bus(DEVICE(&m->via1), "adb.0");
+-    dev = qdev_new(TYPE_ADB_KEYBOARD);
+-    qdev_realize_and_unref(dev, adb_bus, &error_fatal);
+-    dev = qdev_new(TYPE_ADB_MOUSE);
+-    qdev_realize_and_unref(dev, adb_bus, &error_fatal);
++    if (has_defaults) {
++        BusState *adb_bus = qdev_get_child_bus(DEVICE(&m->via1), "adb.0");
++        dev = qdev_new(TYPE_ADB_KEYBOARD);
++        qdev_realize_and_unref(dev, adb_bus, &error_fatal);
++        dev = qdev_new(TYPE_ADB_MOUSE);
++        qdev_realize_and_unref(dev, adb_bus, &error_fatal);
++    }
+ 
+     /* VIA 2 */
+     object_initialize_child(OBJECT(machine), "via2", &m->via2,
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 5966069baa..6d0e22e73a 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -387,6 +387,7 @@ struct MachineState {
+     bool mem_merge;
+     bool usb;
+     bool usb_disabled;
++    bool has_defaults;
+     char *firmware;
+     bool iommu;
+     bool suppress_vmdesc;
+diff --git a/system/vl.c b/system/vl.c
+index e83b3b2608..e4f330f49b 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2122,7 +2122,7 @@ static void qemu_create_machine(QDict *qdict)
+     object_property_add_child(container_get(OBJECT(current_machine),
+                                             "/unattached"),
+                               "sysbus", OBJECT(sysbus_get_default()));
+-
++    current_machine->has_defaults = defaults_enabled();
+     if (machine_class->minimum_page_bits) {
+         if (!set_preferred_target_page_bits(machine_class->minimum_page_bits)) {
+             /* This would be a board error: specifying a minimum smaller than
+-- 
+2.45.2
 
 
