@@ -4,146 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6409D3399E
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B9ED3399B
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 16:45:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5Sou-0003KS-6K; Mon, 28 Oct 2024 12:42:20 -0400
+	id 1t5Sr8-0004br-JG; Mon, 28 Oct 2024 12:44:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t5Sos-0003K8-NH
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:42:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t5Soq-0001V6-00
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:42:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730133734;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=T0UAX23+37ZRrHea98bsMhwQ80Lb1MZgJknkx7BqqeA=;
- b=aXUh+JZaPYkgO7in/M85tlp+SD6OKZ6tA72r22hjY63v0+oyn69HTQlUWUW4ny7G8BIYOz
- QzflzjIPyk+QeafLHh02W5p6bopuhPs5XFOT/FxUSKTYtHjRYFJSJ3h9xNwjE1r9URsKKC
- nbNGwZi+pFbOUM6tkoCrlmerc3/5b6k=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-383-cKd3ofIKMGCZ3fNFR5dQ6A-1; Mon, 28 Oct 2024 12:42:13 -0400
-X-MC-Unique: cKd3ofIKMGCZ3fNFR5dQ6A-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4315afcae6cso25284575e9.0
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 09:42:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t5Squ-0004av-5G
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:44:26 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t5Sqs-0001aq-Js
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 12:44:23 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5cb6ca2a776so6079147a12.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 09:44:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730133861; x=1730738661; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=KVW3ua7sJWaIAit3EE0t5f2qivxeSre5gEdtobhzZ2k=;
+ b=tp/STJCaOIGW7QQK0FIcuSH+adi8/yFjgqxrRn/JUhteqf0yUlx+dNzXmIUk0RI3YV
+ ueSU9P/7N+Ukiyp+zZ7Nvzoi1s4qH5uBHjflJnDs416w5zHb5fiTttHczFEFZQX3fa57
+ i3p4Baf1tw14xPaS3z1Zg0GPtbR6pUgCSfITkG19LUN7yKhF/gr6ZvI6cPJMVDDxCYuA
+ ZUWCKSfOf2PyNc12sN+Zwv1rxDHUW1kF/Vsg7c1MRoYBAU+x+8APwHrGWqRepQA0yesz
+ iFoV7JPwg+P1kCSU0AkNnbDz6gObE2e4eo3gmhyEh+fKwCAEltUecWtcKunzX0BBb5xx
+ mPYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730133732; x=1730738532;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=T0UAX23+37ZRrHea98bsMhwQ80Lb1MZgJknkx7BqqeA=;
- b=V/Du1nPWngtbihCiwX2zemL0JnTx9MjeL556rCiudwqSUUOCQFca5uzA21n2uEavI8
- KW1i/S7HFksP8nYnROls1GiC5IAkMcE19f5OaHEfocKjM2wgqlzQnvrfQGN+/AWHtDDn
- m5UwwNQEK+ip8LnAvhoCVxnskIDyz6AJW201pG80PyVlVD7uV8o4AnipnKiwlcA01UEf
- mg9WBoGylwxN91KEqT1HckQ9IpVVaxJ4MxPqmxapDtdhIgIBShUxZXDlaeTlnwxgmZgg
- Obd6xRW3b0L2Vx3Y6XlEsDzULOKRveGZsu7f6+Vtzgs9u1nrDT9Syf37oUmGRvLljXRm
- 3eww==
+ d=1e100.net; s=20230601; t=1730133861; x=1730738661;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KVW3ua7sJWaIAit3EE0t5f2qivxeSre5gEdtobhzZ2k=;
+ b=KAsT/MFVjy9e2A1KMR0gqLKpp38d7rcg2Nb0PxI08Ci+iZRgJXez8VRkjcY10trJCH
+ pxjQdRypBpDXp9R58pWsLk7v9m6s5REHeyBIHPvRD4gkj4VFVdvofJ0S9ZxqHXkUfmjX
+ 5YrnfHhvM9cMTNpXgCmSKpX80fTvoq49BQNAbqZN0TLy/y+hxHLKIYOs6YaPf07pICBe
+ LLtL6P5lG6EW0Qa3rfqTLk9KivYIwxRtKNOzKuMCItA0McFeaGFWoT6NOEJrX9dygpAb
+ 24/INvdeVzhlwV2IsWfNIu2jloFmrziGUbJFya0kI8ZmINFQ+uVAl9aHDTHDVqMXOzic
+ IQBw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUeLLm2DOOfesgmRim9EiwUviQYxi2hRGicvUCdI9xlXwMmweKYoR6IZNd6pG+5e96TiZ6P+zwWdeS3@nongnu.org
-X-Gm-Message-State: AOJu0YzVz9ZUGlaVptndPwIhZ7CRpSuGiMVkO4gV52i/YLlhvwYLn2hx
- WJkoE5wCaKaJhFvw4EHRHBwjJFbgyjHmrPNmmK6/dIiOKlC2nyikGTQme4rhnrVblXLX027QQLB
- 7VB8KtM549gQZMQKjdEprXzV0/I14sFPH7ASaaQZs/rbQC+gUlhFZ
-X-Received: by 2002:a05:600c:450f:b0:431:7ccd:ff8a with SMTP id
- 5b1f17b1804b1-431b2f326c8mr2055625e9.14.1730133731986; 
- Mon, 28 Oct 2024 09:42:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGBesCrSu0q4i2SZfeVQIYSHgqs3Pn9F5uTcLGHdCRZm3VZfc0mDe/6YB2p/qzRtKR5IbJeA==
-X-Received: by 2002:a05:600c:450f:b0:431:7ccd:ff8a with SMTP id
- 5b1f17b1804b1-431b2f326c8mr2055315e9.14.1730133731552; 
- Mon, 28 Oct 2024 09:42:11 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c722:3c00:70fc:90a8:2c65:79b4?
- (p200300cbc7223c0070fc90a82c6579b4.dip0.t-ipconnect.de.
- [2003:cb:c722:3c00:70fc:90a8:2c65:79b4])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43193573551sm115340055e9.6.2024.10.28.09.42.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Oct 2024 09:42:11 -0700 (PDT)
-Message-ID: <9a49fc5f-bf9e-4e72-bd3e-13975d4913bd@redhat.com>
-Date: Mon, 28 Oct 2024 17:42:10 +0100
+ AJvYcCWoN12AxJlGBbcMdBvLWiRlIWypYN7MFEeQrTiqEMtvmxDd/n8ZrAmu9nwcol8kdKGZq+prGyK8ED3T@nongnu.org
+X-Gm-Message-State: AOJu0Yxs3rtUUizkq3aNHslaQqQtt5gerYmsu/37B1qiJYDBOXJ+6H8H
+ hJ9nKFHdj9EN1kDdkf5oCfXLglPZTmnJgtMp2rjcg1OQsSEYeeRBkWUyXjD/fjTXBXf9saKvMym
+ lVyacTA85OR63U/Pc+ii3JuiwOxyRpCiyjYxykg==
+X-Google-Smtp-Source: AGHT+IHibvVnzv7R808yofL15SsQp9qWs+wpjwny1r44N3Tr9WhPaNu6tWT/+u4yguYgNE3Vex7W8x8V7/yGfguoMx0=
+X-Received: by 2002:a05:6402:34cc:b0:5c8:8bde:a1d3 with SMTP id
+ 4fb4d7f45d1cf-5cbbfa548b3mr7619120a12.22.1730133860747; Mon, 28 Oct 2024
+ 09:44:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/4] accel/kvm: Keep track of the HWPoisonPage page_size
-To: William Roche <william.roche@oracle.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
- philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
- joao.m.martins@oracle.com
-References: <ZwalK7Dq_cf-EA_0@x1n>
- <20241022213503.1189954-1-william.roche@oracle.com>
- <20241022213503.1189954-3-william.roche@oracle.com>
- <a0fda9e7-d55b-455b-aeaa-27162b6cdc65@redhat.com>
- <9b17600d-4473-4bb6-841f-00f93d86f720@oracle.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <9b17600d-4473-4bb6-841f-00f93d86f720@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20241025101959.601048-1-eric.auger@redhat.com>
+ <ZxuwZw2plMI6dNyE@pinwheel> <87v7xcnqrs.fsf@redhat.com>
+In-Reply-To: <87v7xcnqrs.fsf@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 28 Oct 2024 16:44:09 +0000
+Message-ID: <CAFEAcA9qqGMduMC_yXm5Jzbpfy0RVEPkxMoN4q72japiHfRCsg@mail.gmail.com>
+Subject: Re: [RFC 00/21] kvm/arm: Introduce a customizable aarch64 KVM host
+ model
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: Kashyap Chamarthy <kchamart@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ eric.auger.pro@gmail.com, 
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev, 
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org, 
+ oliver.upton@linux.dev, sebott@redhat.com, 
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, berrange@redhat.com, 
+ abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com, 
+ mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_PH_BODY_ACCOUNTS_PRE=0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,149 +98,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.10.24 01:27, William Roche wrote:
-> On 10/23/24 09:28, David Hildenbrand wrote:
-> 
->> On 22.10.24 23:35, “William Roche wrote:
->>> From: William Roche <william.roche@oracle.com>
->>>
->>> Add the page size information to the hwpoison_page_list elements.
->>> As the kernel doesn't always report the actual poisoned page size,
->>> we adjust this size from the backend real page size.
->>> We take into account the recorded page size to adjust the size
->>> and location of the memory hole.
->>>
->>> Signed-off-by: William Roche <william.roche@oracle.com>
->>> ---
->>>   accel/kvm/kvm-all.c       | 14 ++++++++++----
->>>   include/exec/cpu-common.h |  1 +
->>>   include/sysemu/kvm.h      |  3 ++-
->>>   include/sysemu/kvm_int.h  |  3 ++-
->>>   system/physmem.c          | 20 ++++++++++++++++++++
->>>   target/arm/kvm.c          |  8 ++++++--
->>>   target/i386/kvm/kvm.c     |  8 ++++++--
->>>   7 files changed, 47 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->>> index 2adc4d9c24..40117eefa7 100644
->>> --- a/accel/kvm/kvm-all.c
->>> +++ b/accel/kvm/kvm-all.c
->>> @@ -1266,6 +1266,7 @@ int kvm_vm_check_extension(KVMState *s, 
->>> unsigned int extension)
->>>    */
->>>   typedef struct HWPoisonPage {
->>>       ram_addr_t ram_addr;
->>> +    size_t     page_size;
->>>       QLIST_ENTRY(HWPoisonPage) list;
->>>   } HWPoisonPage;
->>>   @@ -1278,15 +1279,18 @@ static void kvm_unpoison_all(void *param)
->>>         QLIST_FOREACH_SAFE(page, &hwpoison_page_list, list, next_page) {
->>>           QLIST_REMOVE(page, list);
->>> -        qemu_ram_remap(page->ram_addr, TARGET_PAGE_SIZE);
->>> +        qemu_ram_remap(page->ram_addr, page->page_size);
->>
->> Can't we just use the page size from the RAMBlock in qemu_ram_remap? 
->> There we lookup the RAMBlock, and all pages in a RAMBlock have the 
->> same size.
-> 
-> 
-> Yes, we could use the page size from the RAMBlock in qemu_ram_remap() 
-> that is called when the VM is resetting. I think that knowing the 
-> information about the size of poisoned chunk of memory when the poison 
-> is created is useful to give a trace of what is going on, before seeing 
-> maybe other pages being reported as poisoned. That's the 4th patch goal 
-> to give an information as soon as we get it.
-> It also helps to filter the new errors reported and only create an entry 
-> in the hwpoison_page_list for new large pages.
-> Now we could delay the page size retrieval until we are resetting and 
-> present the information (post mortem). I do think that having the 
-> information earlier is better in this case.
+On Mon, 28 Oct 2024 at 16:20, Cornelia Huck <cohuck@redhat.com> wrote:
+> On Fri, Oct 25 2024, Kashyap Chamarthy <kchamart@redhat.com> wrote:
+> > (b) The current CPU features doc[2] for Arm doesn't mention "host
+> >     passthrough" at all.  It is only implied by the last part of this
+> >     paragraph, from the section titled "A note about CPU models and
+> >     KVM"[3]:
+> >
+> >       "Named CPU models generally do not work with KVM. There are a few
+> >       cases that do work [...] but mostly if KVM is enabled the 'host'
+> >       CPU type must be used."
+> >
+> >     Related: in your reply[4] to Dan in this series, you write: "Having
+> >     named models is the next thing".  So named CPU models will be a
+> >     thing in Arm, too?  Then the above statement in the Arm
+> >     'cpu-features' will need updating :-)
+>
+> The currently existing named models are for cpus like cortex-a57; you
+> can use them for KVM if you happen to run on a matching host cpu, but
+> they only really make sense for use with tcg.
 
-If it is not required for this patch, then please move the other stuff 
-to patch #4.
+Note that those are a relic of an old and quickly abandoned
+design direction in KVM for Arm, where the idea was that
+userspace would specify the target CPU via a KVM_ARM_TARGET_*
+constant (initially only permitted on the matching host CPU
+but with some vague idea that eventually KVM would emulate
+the specified CPU type on different host CPUs also)
+On the QEMU side we feed the KVM_ARM_TARGET_* through for the two
+CPU models we support in TCG which also have a KVM_ARM_TARGET_*
+constant, which is to say Cortex-A57 and Cortex-A53. But none
+of the other named CPU models QEMU supports for TCG have that
+kind of constant.
 
-Here, we really only have to discard a large page, which we can derive 
-from the QEMU RAMBlock page size.
+Presumably now that KVM supports "pass the guest ID regs
+that don't match the host" we would want to support our
+existing TCG-modelled named CPU types (for which we
+already know the ID register values, for TCG) by telling
+the kernel what the ID register values are.
 
-> 
-> 
->>
->> I'll note that qemu_ram_remap() is rather stupid and optimized only 
->> for private memory (not shmem etc).
->>
->> mmap(MAP_FIXED|MAP_SHARED, fd) will give you the same poisoned page 
->> from the pagecache; you'd have to punch a hole instead.
->>
->> It might be better to use ram_block_discard_range() in the long run. 
->> Memory preallocation + page pinning is tricky, but we could simply 
->> bail out in these cases (preallocation failing, ram discard being 
->> disabled).
-> 
-> 
-> I see that ram_block_discard_range() adds more control before discarding 
-> the RAM region and can also call madvise() in addition to the fallocate 
-> punch hole for standard sized memory pages. Now as the range is supposed 
-> to be recreated, I'm not convinced that these madvise calls are necessary.
-
-They are the proper replacement for the mmap(MAP_FIXED) + fallocate.
-
-That function handles all cases of properly discarding guest RAM.
-
-> 
-> But we can also notice that this function will report the following 
-> warning in all cases of not shared file backends:
-> "ram_block_discard_range: Discarding RAM in private file mappings is 
-> possibly dangerous, because it will modify the underlying file and will 
-> affect other users of the file"
-
-Yes, because it's a clear warning sign that something weird is 
-happening. You might be throwing away data that some other process might 
-be relying on.
-
-How are you making QEMU consume hugetlbs?
-
-We could suppress these warnings, but let's first see how you are able 
-to trigger it.
-
-> Which means that hugetlbfs configurations do see this new cryptic 
-> warning message on reboot if it is impacted by a memory poisoning.
-> So I would prefer to leave the fallocate call in the qemu_ram_remap() 
-> function. Or would you prefer to enhance ram_block_discard_range()code 
-> to avoid the message in a reset situation (when called from qemu_ram_remap)?
-
-Please try reusing the mechanism to discard guest RAM instead of 
-open-coding this. We still have to use mmap(MAP_FIXED) as a backup, but 
-otherwise this function should mostly do+check what you need.
-
-(-warnings we might want to report differently / suppress)
-
-If you want, I can start a quick prototype of what it could look like 
-when using ram_block_discard_range() + ram_block_discard_is_disabled() + 
-fallback to existing mmap(MAP_FIXED).
-
-> 
-> 
->>
->> qemu_ram_remap() might be problematic with page pinning (vfio) as is 
->> in any way :(
-> 
-> I agree. If qemu_ram_remap() fails, Qemu is ended either abort() or 
-> exit(1). Do you say that memory pinning could be detected by 
-> ram_block_discard_range() or maybe mmap call for the impacted region and 
-> make one of them fail ? This would be an additional reason to call 
-> ram_block_discard_range() from qemu_ram_remap().   Is it what you are 
-> suggesting ?
-
-ram_block_discard_is_disabled() might be the right test. If discarding 
-is disabled, then rebooting might create an inconsistency with 
-e.g.,vfio, resulting in the issues we know from memory ballooning where 
-the state vfio sees will be different from the state the guest kernel 
-sees. It's tricky ... and we much rather quit the VM early instead of 
-corrupting data later :/
-
--- 
-Cheers,
-
-David / dhildenb
-
+thanks
+-- PMM
 
