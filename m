@@ -4,96 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43628D3A696
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 20:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41050D3A696
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 20:12:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5sYf-0001Rk-38; Tue, 29 Oct 2024 16:11:17 -0400
+	id 1t5sZ6-0001YC-M7; Tue, 29 Oct 2024 16:11:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t5sYc-0001Qx-MY
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:11:14 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t5sYa-0000UI-Oj
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:11:14 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-539ebb5a20aso6069844e87.2
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 13:11:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730232668; x=1730837468; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mVffrm7ORWtwr/oTU7Spuj4YBIi+VLsXfNiPlPYNk9Q=;
- b=pYlMVtrgkWt/fXrWr6xRpa0xd22PSjid7b52NOBbTxLn8HuzWA0J8+a2PAIrW1iolG
- OEwKpcaN2Ig+tH4jU02xi/ulEAaG7cVjlBo2x8nklB5+fYlS+4s9E4kAWOA68TvyRvL2
- LdPgd8kCnSj+ZR41F7SKCncUpIuETG+AvN5Frrxc3QX2yAjYPxCFT9VRswoXeVo+Gjt4
- AhwoLrrUiKb7STt0WbuTGDRrsrJTPKwYNH35tzKLT7DaLbQ5xXxjTBTxd3m3Y6O+9tbi
- r5P5ElOiG4ewnP2QVvI1x2fEV+dl/t4NXQJjUl7Hl82AXAGFo3Dyb2uOIboOef9U30Rm
- FIvQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t5sZ4-0001Xz-Gr
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:11:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t5sZ2-0000Vm-By
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:11:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730232698;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Mtvr8GVZiE0wc6HS2Qh6BjQJZ5oec/5TsFMOmIsz8w0=;
+ b=YGSjR8X6K0fy/rLw2F0a0cPV7SC9D3gOpfG7hbRnn/eY1coO8JxCUn7xpeVx/D8XU0DLVg
+ qk1ef5yeIWWvy00f8G9AdGK7punARxaKuQITN0rOmyO8LXZi02eWTam9oReiCP3xu7ak/j
+ DXinULPIEckqYnYA1F906vqy5BSbJjY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-I3pg-AE0PZekRvtegwet-g-1; Tue, 29 Oct 2024 16:11:23 -0400
+X-MC-Unique: I3pg-AE0PZekRvtegwet-g-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4315d98a75fso44002755e9.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 13:11:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730232668; x=1730837468;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mVffrm7ORWtwr/oTU7Spuj4YBIi+VLsXfNiPlPYNk9Q=;
- b=q0SgSmV2KFZEwRNwitTDHvu3x72NE3XhnMFTW15zDgYVn7GS0/FQqtG6BRWvEKrGd6
- t4I/IKRjL0vI06l6rAcWyfk+jtHQJqvgVtt5GtrtwPoIzEyGDD0fKGc+CGRUxeaF+uTP
- vnhrStPMy9AiovBsXq6WSw+evhVkbnH7tr98qGkGnlOIeIfvRV1e5EeWCcozmtwGjo4T
- f0CYbePmgiXbi29EENlwO0xzLk5cSsksHGSg3p9Na8ru3Q8aMP2h7JNkI5DUsrTd9mnA
- XIUT6dAnEykWK//FBuQelSfVv9JeztnEieqw5qpaTchYKfMpq5pRnLLu/37JFpvCyUH8
- ak3w==
-X-Gm-Message-State: AOJu0YyeM7OIljaFilwT9tMP7nIU7IsKPo8/9FQQWHy/Jf7USNtme4Jc
- oQe5+kcXt+8fcVjY5BkElOyIvn71zom6nfBg/StRqCGDSAgDSGcymCrctFC6/xg=
-X-Google-Smtp-Source: AGHT+IEQm7S7HhrAefu6bB3WsI9sjvU1NibhMhK2h3mgqHzs6Ac3q/ixT/MrrVYq2nNiKqsosFqETQ==
-X-Received: by 2002:a05:6512:1285:b0:539:e513:1f66 with SMTP id
- 2adb3069b0e04-53b3491e086mr6508337e87.37.1730232667785; 
- Tue, 29 Oct 2024 13:11:07 -0700 (PDT)
-Received: from [192.168.156.226] ([91.223.100.133])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53bc0d5f161sm40364e87.213.2024.10.29.13.10.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Oct 2024 13:11:07 -0700 (PDT)
-Message-ID: <31e8dc51-f70f-44eb-a768-61cfa50eed5b@linaro.org>
-Date: Tue, 29 Oct 2024 17:10:52 -0300
+ d=1e100.net; s=20230601; t=1730232682; x=1730837482;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Mtvr8GVZiE0wc6HS2Qh6BjQJZ5oec/5TsFMOmIsz8w0=;
+ b=jqDD+4xjt6ehM2xBQ0CDErskvei1KkJvKS8sJmEWJxRWrV0TKynWrsLuQvdTrFJ1LK
+ y5hZeYC4LNM2N1yPVx8NtmlkpXnPIz1PAkbhDh0XstwZ/4upzW1gvofKABDNNY0jS+nj
+ SfTgjWPUtzewx2k6TP2e1U/lDzBA8v5N5H/105MI5zSnJv09OYEERI3w590GVQhCqevz
+ nZfaNWNB90ld9+93a4iNAIHTGnHs7Z3trqxT4EEDluv9D3QUQlaoYeNdTk+7L9Z9vvTh
+ KFXmw5JWJn1ukhT2S+b7AlVelemRUEgd/SFgIQdvkmgraIcbjTrYfy099oodupfrDh/r
+ RB1A==
+X-Gm-Message-State: AOJu0YxV00bH+65rXpTqGzw4V3tVjGA/1WAjMkkQiTozengKYvi+kMa+
+ i5R0ze4VD0EjLqQo7qPEE6xMhCw08lXul/G7dZ2xE63tmuwlmICY/CBVr8FbLQ2T4WUoJSdAdOU
+ cLs5sL7G+3HEyJZlL6CoPiqzcjbS9fMkzmlYizhd7X8hfzAH5EVWQNbUDjHyxlIhi1wdVOkmHkD
+ ONUpq+xnFTHlr2qMX8IIH5ymVzjnTldNQKiO/9V/nk
+X-Received: by 2002:a05:600c:470b:b0:42c:b750:1a1e with SMTP id
+ 5b1f17b1804b1-4319ab94b8fmr111136855e9.0.1730232681774; 
+ Tue, 29 Oct 2024 13:11:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGF2vF2gkR7TRJC3H0+yySosKDr+agQPms1Q6WREZyvcTye9bGDA1fkZM4esq830oIjwPKgHYbvP1k95UtGLhQ=
+X-Received: by 2002:a05:600c:470b:b0:42c:b750:1a1e with SMTP id
+ 5b1f17b1804b1-4319ab94b8fmr111136745e9.0.1730232681439; Tue, 29 Oct 2024
+ 13:11:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/9] hw/core: Make CPU topology enumeration
- arch-agnostic
-To: Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org,
- qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
-References: <20241022135151.2052198-1-zhao1.liu@intel.com>
- <20241022135151.2052198-3-zhao1.liu@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241022135151.2052198-3-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20241029151858.550269-1-pbonzini@redhat.com>
+ <20241029151858.550269-8-pbonzini@redhat.com>
+In-Reply-To: <20241029151858.550269-8-pbonzini@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 29 Oct 2024 21:11:09 +0100
+Message-ID: <CABgObfa1A2ax4a1ezJeqpdqgUjcRjoTRPb6bQn7FhP7Rn0z59Q@mail.gmail.com>
+Subject: Re: [PATCH 7/8] target/i386: Add AVX512 state when AVX10 is supported
+To: qemu-devel@nongnu.org
+Cc: tao1.su@linux.intel.com, zhao1.liu@intel.com, xiaoyao.li@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,125 +98,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/10/24 10:51, Zhao Liu wrote:
-> Cache topology needs to be defined based on CPU topology levels. Thus,
-> define CPU topology enumeration in qapi/machine.json to make it generic
-> for all architectures.
-> 
-> To match the general topology naming style, rename CPU_TOPO_LEVEL_* to
-> CPU_TOPOLOGY_LEVEL_*, and rename SMT and package levels to thread and
-> socket.
-> 
-> Also, enumerate additional topology levels for non-i386 arches, and add
-> a CPU_TOPOLOGY_LEVEL_DEFAULT to help future smp-cache object to work
-> with compatibility requirement of arch-specific cache topology models.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+On Tue, Oct 29, 2024 at 4:19=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+>
+> From: Tao Su <tao1.su@linux.intel.com>
+>
+> AVX10 state enumeration in CPUID leaf D and enabling in XCR0 register
+> are identical to AVX512 state regardless of the supported vector lengths.
+>
+> Given that some E-cores will support AVX10 but not support AVX512, add
+> AVX512 state components to guest when AVX10 is enabled.
+>
+> Based on a patch by Tao Su <tao1.su@linux.intel.com>
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
-> Changes since Patch v3:
->   * Dropped "invalid" level to avoid an unsettable option. (Daniel)
-> ---
->   hw/i386/x86-common.c       |   4 +-
->   include/hw/i386/topology.h |  23 ++----
->   qapi/machine-common.json   |  44 +++++++++++-
->   target/i386/cpu.c          | 144 ++++++++++++++++++-------------------
->   target/i386/cpu.h          |   4 +-
->   5 files changed, 123 insertions(+), 96 deletions(-)
-> 
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index b86c38212eab..bc360a9ea44b 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -273,12 +273,12 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
->   
->       if (ms->smp.modules > 1) {
->           env->nr_modules = ms->smp.modules;
-> -        set_bit(CPU_TOPO_LEVEL_MODULE, env->avail_cpu_topo);
-> +        set_bit(CPU_TOPOLOGY_LEVEL_MODULE, env->avail_cpu_topo);
->       }
->   
->       if (ms->smp.dies > 1) {
->           env->nr_dies = ms->smp.dies;
-> -        set_bit(CPU_TOPO_LEVEL_DIE, env->avail_cpu_topo);
-> +        set_bit(CPU_TOPOLOGY_LEVEL_DIE, env->avail_cpu_topo);
->       }
->   
->       /*
-> diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
-> index 48b43edc5a90..b2c8bf2de158 100644
-> --- a/include/hw/i386/topology.h
-> +++ b/include/hw/i386/topology.h
-> @@ -39,7 +39,7 @@
->    *  CPUID Fn8000_0008_ECX[ApicIdCoreIdSize[3:0]] is set to apicid_core_width().
->    */
->   
-> -
-> +#include "qapi/qapi-types-machine-common.h"
->   #include "qemu/bitops.h"
->   
->   /*
-> @@ -62,22 +62,7 @@ typedef struct X86CPUTopoInfo {
->       unsigned threads_per_core;
->   } X86CPUTopoInfo;
->   
-> -#define CPU_TOPO_LEVEL_INVALID CPU_TOPO_LEVEL_MAX
-> -
-> -/*
-> - * CPUTopoLevel is the general i386 topology hierarchical representation,
-> - * ordered by increasing hierarchical relationship.
-> - * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
-> - * or AMD (CPUID[0x80000026]).
-> - */
-> -enum CPUTopoLevel {
-> -    CPU_TOPO_LEVEL_SMT,
-> -    CPU_TOPO_LEVEL_CORE,
-> -    CPU_TOPO_LEVEL_MODULE,
-> -    CPU_TOPO_LEVEL_DIE,
-> -    CPU_TOPO_LEVEL_PACKAGE,
-> -    CPU_TOPO_LEVEL_MAX,
-> -};
-> +#define CPU_TOPOLOGY_LEVEL_INVALID CPU_TOPOLOGY_LEVEL__MAX
+>  target/i386/cpu.c | 10 +++++++++-
+>  1 file changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 4c86a49ad05..b6799ddafa9 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7166,7 +7166,15 @@ static bool cpuid_has_xsave_feature(CPUX86State *e=
+nv, const ExtSaveArea *esa)
+>          return false;
+>      }
+>
+> -    return (env->features[esa->feature] & esa->bits);
+> +    if (env->features[esa->feature] & esa->bits) {
+> +        return true;
+> +    }
+> +    if (esa->feature =3D=3D FEAT_7_0_EBX && esa->bits =3D CPUID_7_0_EBX_=
+AVX512F
+> +        && (features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10)) {
+> +        return true;
+> +    }
 
+Oops, a few syntax issues in this hunk. :(
 
-> @@ -341,18 +341,18 @@ static uint32_t apicid_offset_by_topo_level(X86CPUTopoInfo *topo_info,
->       return 0;
->   }
->   
-> -static uint32_t cpuid1f_topo_type(enum CPUTopoLevel topo_level)
-> +static uint32_t cpuid1f_topo_type(enum CpuTopologyLevel topo_level)
->   {
->       switch (topo_level) {
-> -    case CPU_TOPO_LEVEL_INVALID:
-> +    case CPU_TOPOLOGY_LEVEL_INVALID:
+The right version is at branch avx10-for-intel of
+https://gitlab.com/bonzini/qemu/.
 
-Since we use an enum, I'd rather directly use CPU_TOPOLOGY_LEVEL__MAX.
-
-Or maybe in this case ...
-
->           return CPUID_1F_ECX_TOPO_LEVEL_INVALID;
-> -    case CPU_TOPO_LEVEL_SMT:
-> +    case CPU_TOPOLOGY_LEVEL_THREAD:
->           return CPUID_1F_ECX_TOPO_LEVEL_SMT;
-> -    case CPU_TOPO_LEVEL_CORE:
-> +    case CPU_TOPOLOGY_LEVEL_CORE:
->           return CPUID_1F_ECX_TOPO_LEVEL_CORE;
-> -    case CPU_TOPO_LEVEL_MODULE:
-> +    case CPU_TOPOLOGY_LEVEL_MODULE:
->           return CPUID_1F_ECX_TOPO_LEVEL_MODULE;
-> -    case CPU_TOPO_LEVEL_DIE:
-> +    case CPU_TOPOLOGY_LEVEL_DIE:
->           return CPUID_1F_ECX_TOPO_LEVEL_DIE;
->       default:
-            /* Other types are not supported in QEMU. */
-            g_assert_not_reached();
-
-... return CPUID_1F_ECX_TOPO_LEVEL_INVALID as default.
-
-Can be cleaned on top, so:
-
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+> +
+> +    return false;
+>  }
+>
+>  static void x86_cpu_reset_hold(Object *obj, ResetType type)
+> --
+> 2.47.0
+>
 
 
