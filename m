@@ -4,87 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C1F2D5B846
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Oct 2024 22:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33B7CD5B845
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 00:02:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5YHX-0003cW-S0; Mon, 28 Oct 2024 18:32:15 -0400
+	id 1t5Zfj-0008NY-2k; Mon, 28 Oct 2024 20:01:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <patrick.eads@gmail.com>)
- id 1t5Y5r-00087T-W5
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:20:12 -0400
-Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <patrick.eads@gmail.com>)
- id 1t5Y5n-000358-8Y
- for qemu-devel@nongnu.org; Mon, 28 Oct 2024 18:20:11 -0400
-Received: by mail-yb1-xb30.google.com with SMTP id
- 3f1490d57ef6-e2908e8d45eso4632494276.2
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 15:20:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730154004; x=1730758804; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=D1X1FWYW6yo2GgSCGfLqzH+MajoCLVyZGYlqDb1GwYA=;
- b=ACtI+eClD58psxDttHSppWgXB7T2aVMRfEKja6JUgwmDLLEL+3GGfmpwrBAHYd1i8G
- ftXESbu8xQSOt6gr/xKzsjRY/IwC0jIRMZ6ifQoet5DV7eIGsDgD3oXOeSh3Mt9ZrRol
- 5Ckn+o6W+bPgjUWZf4dfibVZyoVpgqKFV+9Az4w/5lRCzQDdh/D2kqO5jZ4+rYNZdMV6
- z1mJg0qjNy/u0KQeB/rwiMYLtGzxn1GS8s0qYQUfGPNkCmqe4WBROzKUbwl6ZjrnU28g
- VQgX5Pyf9rRUf9EIaL2M8sYJ2WcwkH/IBr3Od3CeLRXKaU5pRqzO5IEeTkecS2H9b5Vr
- QEUQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5Zfh-0008NO-5s
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 20:01:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5Zff-0007PR-Bk
+ for qemu-devel@nongnu.org; Mon, 28 Oct 2024 20:01:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730160073;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ve/bWMagi2UauByStQ7ucEE19C8pbx0bo+KnRxxoALU=;
+ b=VtiB79ky8QFQEBCD+14fJc6wSLVI1kQs8V5E2S3sn49HBK509mG9wIRkk7vuXGekoyXde1
+ W0E4WohFCwgZjLJbFP3N12G8VRKZy8+sLneC+dEDZk0ezufSisWt7naUEOZrtNuPDlXyPK
+ xgQ60RSxRBZMRpHBbfs35XULigGEkig=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687-ZP3si6M6P9qUjs-kzN9YXg-1; Mon, 28 Oct 2024 20:01:07 -0400
+X-MC-Unique: ZP3si6M6P9qUjs-kzN9YXg-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4615d80492eso14679071cf.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 17:01:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730154004; x=1730758804;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=D1X1FWYW6yo2GgSCGfLqzH+MajoCLVyZGYlqDb1GwYA=;
- b=KiYi4P+n72FFgNVo8zQo9xPVJAAk+oaF/vhtBQdCQayKlrcii7vDYS7PtCPT/lvOXb
- fHK2mDzvD5zZ7u9gnaClnxqKOhyubcpAqeYnMsug8IS3s+ApDxC3RRc5zvaxePWcC5dw
- 0Tqcb0bYxR6QaHel72aGXQE/89WoBvIY1JMstsw7kq//H0g24gG5te/SlEaAH5F7lQl3
- l0qkyhQcya0/qJ/5V4TNfSXXRy7JF3AyUjK+KIncut0n7PTnxGlfpM0I6NRk0fvq+uRl
- 88sWwVhjRPqMLXBDiiH/72bRcFrKFEGfGzoa3T5UE4v62EJdmYCcvxBmH9rGObMdLruo
- VCiw==
-X-Gm-Message-State: AOJu0YxbuQoiYgg2tJpnyeKxySqYq4MCCphULdhlvFG7xPkyoVeZEvQF
- Bedv7LHnN6in3YLVNsSo91NWKtUMUbfu3tioDW9baJDMUS7iWZAn6/89VNpZ
-X-Google-Smtp-Source: AGHT+IFomHPUbnH0mxy7JU4HXQ+K6Qvyvo1wc4bLUP1wdwOG9lHKKlrqMyyx6eORj8iNJXYXiH7uDw==
-X-Received: by 2002:a05:6902:114a:b0:e29:296d:780e with SMTP id
- 3f1490d57ef6-e3087a40862mr8670651276.12.1730154003704; 
- Mon, 28 Oct 2024 15:20:03 -0700 (PDT)
-Received: from tungsten-chungus.. (c-174-169-154-147.hsd1.nh.comcast.net.
- [174.169.154.147]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b18d27911asm365116185a.26.2024.10.28.15.20.02
+ d=1e100.net; s=20230601; t=1730160066; x=1730764866;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ve/bWMagi2UauByStQ7ucEE19C8pbx0bo+KnRxxoALU=;
+ b=fk0MLameWZv5YeT3siamH3VrdPE7qq8Ep2eE4Zl8LCcGUiBEtz6cVETFnlijutugFc
+ 51A83Tj1rK6Z7IlX8n3dFn1TtRXVEJB/gG3/6Jor/tL3GK2n4iptxz9nksib50rtJ90J
+ OhlKcxvsamMrG6oYjvrC4U1YLwcPedDDBYWxFi20vH1qck51uMm0M5qq6eec5xNqr3oI
+ nEopj6Pwts7+uPyhvLi6PI84kBntNViJLnVptrPB12xs71rNs2fQ1fsnqDr5BoiW8i/t
+ E/TGnL8IjgyUb4OoSweNslpDWBqJs55je4aMigCc8gN+GkidsDEwJ+h6UZl5c9Hfd4yc
+ gwBA==
+X-Gm-Message-State: AOJu0YzrVX6qBGKnVpTtMtPYXFKFIBPOIeQp7Ne3NrcSSOHnN58RzTor
+ b2gW/yOUaUE7xwJArFQWuaJ7T+Cy486PvW0RUD7eLl7LeLPaqu6z/odK+5j2ankDkuror6ONtEk
+ GPPN9Nq5N8i/Ju/2CCqlotWemzC9u6fifwZTr8biQW9ww5EMznVhN
+X-Received: by 2002:ac8:580f:0:b0:460:e907:ed4a with SMTP id
+ d75a77b69052e-4613c176f43mr187378531cf.46.1730160066324; 
+ Mon, 28 Oct 2024 17:01:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2wgn8nvTYAtMX0HwI4wCcd5PL929QcGEZjwX1HBPxlOXwuD7p7N81rh9d6/n5HFKxPtfYlw==
+X-Received: by 2002:ac8:580f:0:b0:460:e907:ed4a with SMTP id
+ d75a77b69052e-4613c176f43mr187378101cf.46.1730160065899; 
+ Mon, 28 Oct 2024 17:01:05 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4613211a0fasm39385461cf.10.2024.10.28.17.01.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Oct 2024 15:20:03 -0700 (PDT)
-From: Patrick Eads <patrick.eads@gmail.com>
-X-Google-Original-From: Patrick Eads <peads@users.noreply.github.com>
-To: qemu-devel@nongnu.org
-Cc: Patrick Eads <patrick.eads@gmail.com>,
+ Mon, 28 Oct 2024 17:01:04 -0700 (PDT)
+Date: Mon, 28 Oct 2024 20:01:02 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Igor Mammedov <imammedo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] Plumbed previously ununsed defaults_enabled in vl.c,
- s.t. it provides the status of the '-nodefaults' flag to created
- machines
-Date: Mon, 28 Oct 2024 22:13:46 +0000
-Message-ID: <20241028221814.329577-2-peads@users.noreply.github.com>
-X-Mailer: git-send-email 2.45.2
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 1/4] qom: TYPE_SINGLETON interface
+Message-ID: <ZyAlvozM73CY7oYn@x1n>
+References: <20241024165627.1372621-1-peterx@redhat.com>
+ <20241024165627.1372621-2-peterx@redhat.com>
+ <ZxtqGQbd4Hq4APtm@redhat.com> <ZxvEfrj5B59J5HHj@x1n>
+ <ZxvFqYASUdSNtlr6@redhat.com> <ZxwXZmrZN9EW6LIn@x1n>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
- envelope-from=patrick.eads@gmail.com; helo=mail-yb1-xb30.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <ZxwXZmrZN9EW6LIn@x1n>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 28 Oct 2024 18:32:13 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,125 +112,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Patrick Eads <patrick.eads@gmail.com>
+On Fri, Oct 25, 2024 at 06:10:46PM -0400, Peter Xu wrote:
+> On Fri, Oct 25, 2024 at 05:22:01PM +0100, Daniel P. Berrangé wrote:
+> > On Fri, Oct 25, 2024 at 12:17:02PM -0400, Peter Xu wrote:
+> > > On Fri, Oct 25, 2024 at 10:51:21AM +0100, Daniel P. Berrangé wrote:
+> > > > > diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+> > > > > index e91a235347..ecc1cf781c 100644
+> > > > > --- a/qom/qom-qmp-cmds.c
+> > > > > +++ b/qom/qom-qmp-cmds.c
+> > > > > @@ -126,6 +126,7 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
+> > > > >      ObjectProperty *prop;
+> > > > >      ObjectPropertyIterator iter;
+> > > > >      ObjectPropertyInfoList *prop_list = NULL;
+> > > > > +    bool create;
+> > > > >  
+> > > > >      klass = module_object_class_by_name(typename);
+> > > > >      if (klass == NULL) {
+> > > > > @@ -141,7 +142,15 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
+> > > > >          return NULL;
+> > > > >      }
+> > > > >  
+> > > > > -    obj = object_new(typename);
+> > > > > +    /* Avoid creating multiple instances if the class is a singleton */
+> > > > > +    create = !object_class_is_singleton(klass) ||
+> > > > > +        !singleton_get_instance(klass);
+> > > > > +
+> > > > > +    if (create) {
+> > > > > +        obj = object_new(typename);
+> > > > > +    } else {
+> > > > > +        obj = singleton_get_instance(klass);
+> > > > > +    }
+> > > > 
+> > > > This is the first foot-gun example.
+> > > > 
+> > > > I really strongly dislike that the design pattern forces us to
+> > > > create code like this, as we can never be confident we've
+> > > > correctly identified all the places which may call object_new
+> > > > on a singleton...
+> > > 
+> > > Yeah I agree it's not pretty, IMHO it's a trade-off comparing to glib's,
+> > > I'll comment below for that.
+> > > 
+> > > Meanwhile I hope there should be very limited places in QEMU to randomly
+> > > create "any" object on the fly.. so far only qom/device-list-properties
+> > > that I see.
+> > 
+> > There's -object/-device CLI, and their corresponding object_add
+> > / device_add commands.
+> 
+> Ah I didn't mention that when reply, but this patch blocks properly any
+> device-add for singleton objects for more than once.  Please see the change
+> in qdev_device_add_from_qdict().
+> 
+> For migration object, it means it'll always fail because migration object
+> is created very early, before someone can try to create it.  Not to mention
+> it also has dc->hotpluggable==false, so things like -device will never work
+> on migration object.
+> 
+> For object-add, IIUC migration object should always be safe because it has
+> no USER_CREATABLE interface.
+> 
+> > 
+> > They are not relevant for the migration object, but you're adding
+> > this feature to QOM, so we have to take them into account. If anyone
+> > defines another Object or Device class as a singleton, we will have
+> > quite a few places where we can trigger the assert. This is especially
+> > bad if we trigger it from anything in QMP as that kills a running
+> > guest.
 
-Signed-off-by: Patrick Eads <patrick.eads@gmail.com>
----
- .gitignore          |  2 ++
- hw/core/machine.c   | 15 +++++++++++++++
- hw/m68k/q800.c      | 15 ++++++++-------
- include/hw/boards.h |  1 +
- system/vl.c         |  2 +-
- 5 files changed, 27 insertions(+), 8 deletions(-)
+Sorry, for some reason I think I didn't notice the 2nd paragraph.. And
+somehow I was only thinking the migration use case.
 
-diff --git a/.gitignore b/.gitignore
-index 61fa39967b..306799820c 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -20,3 +20,5 @@ GTAGS
- *.swp
- *.patch
- *.gcov
-+.idea
-+buildDir
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index adaba17eba..5b133cc3f2 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -475,6 +475,16 @@ static void machine_set_usb(Object *obj, bool value, Error **errp)
-     ms->usb_disabled = !value;
- }
- 
-+static bool machine_get_defaults(Object *obj, __attribute__((unused)) Error **errp) {
-+    MachineState *ms = MACHINE(obj);
-+    return ms->has_defaults;
-+}
-+
-+static void machine_set_defaults(Object *obj, bool val, __attribute__((unused)) Error **errp) {
-+    MachineState *ms = MACHINE(obj);
-+    ms->has_defaults = val;
-+}
-+
- static bool machine_get_graphics(Object *obj, Error **errp)
- {
-     MachineState *ms = MACHINE(obj);
-@@ -1083,6 +1093,11 @@ static void machine_class_init(ObjectClass *oc, void *data)
-     object_class_property_set_description(oc, "usb",
-         "Set on/off to enable/disable usb");
- 
-+    object_class_property_add_bool(oc, "defaults",
-+                                          machine_get_defaults, machine_set_defaults);
-+    object_class_property_set_description(oc, "defaults",
-+                                          "Set on/off to enable/disable hardware defaults");
-+
-     object_class_property_add_bool(oc, "graphics",
-         machine_get_graphics, machine_set_graphics);
-     object_class_property_set_description(oc, "graphics",
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index 556604e1dc..63782315fe 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -262,13 +262,13 @@ static void q800_machine_init(MachineState *machine)
-     const char *initrd_filename = machine->initrd_filename;
-     const char *kernel_cmdline = machine->kernel_cmdline;
-     const char *bios_name = machine->firmware ?: MACROM_FILENAME;
-+    const bool has_defaults = m->parent_obj.has_defaults;
-     hwaddr parameters_base;
-     CPUState *cs;
-     DeviceState *dev;
-     SysBusESPState *sysbus_esp;
-     ESPState *esp;
-     SysBusDevice *sysbus;
--    BusState *adb_bus;
-     NubusBus *nubus;
-     DriveInfo *dinfo;
-     NICInfo *nd;
-@@ -354,12 +354,13 @@ static void q800_machine_init(MachineState *machine)
-     qdev_connect_gpio_out(DEVICE(&m->via1), 0,
-                           qdev_get_gpio_in_named(DEVICE(&m->glue),
-                                                  "auxmode", 0));
--
--    adb_bus = qdev_get_child_bus(DEVICE(&m->via1), "adb.0");
--    dev = qdev_new(TYPE_ADB_KEYBOARD);
--    qdev_realize_and_unref(dev, adb_bus, &error_fatal);
--    dev = qdev_new(TYPE_ADB_MOUSE);
--    qdev_realize_and_unref(dev, adb_bus, &error_fatal);
-+    if (has_defaults) {
-+        BusState *adb_bus = qdev_get_child_bus(DEVICE(&m->via1), "adb.0");
-+        dev = qdev_new(TYPE_ADB_KEYBOARD);
-+        qdev_realize_and_unref(dev, adb_bus, &error_fatal);
-+        dev = qdev_new(TYPE_ADB_MOUSE);
-+        qdev_realize_and_unref(dev, adb_bus, &error_fatal);
-+    }
- 
-     /* VIA 2 */
-     object_initialize_child(OBJECT(machine), "via2", &m->via2,
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 5966069baa..6d0e22e73a 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -387,6 +387,7 @@ struct MachineState {
-     bool mem_merge;
-     bool usb;
-     bool usb_disabled;
-+    bool has_defaults;
-     char *firmware;
-     bool iommu;
-     bool suppress_vmdesc;
-diff --git a/system/vl.c b/system/vl.c
-index e83b3b2608..e4f330f49b 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2122,7 +2122,7 @@ static void qemu_create_machine(QDict *qdict)
-     object_property_add_child(container_get(OBJECT(current_machine),
-                                             "/unattached"),
-                               "sysbus", OBJECT(sysbus_get_default()));
--
-+    current_machine->has_defaults = defaults_enabled();
-     if (machine_class->minimum_page_bits) {
-         if (!set_preferred_target_page_bits(machine_class->minimum_page_bits)) {
-             /* This would be a board error: specifying a minimum smaller than
+Indeed this part is not easy to get right.  I hope this is not a blocker
+yet so far.  We can have a look when I send the new version; I'll start to
+mark the series RFC.
+
+Meanwhile I'll have a closer look, hopefully object_class_is_abstract() is
+a good point of reference where I can track most of dynamic creations of
+objects, and I'll go from there.
+
+My current plan is we can have one helper object_new_allowed(), where it
+should contain both the check over abstract & singleton classes before any
+instantiations happen.
+
 -- 
-2.45.2
+Peter Xu
 
 
