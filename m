@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB1CCD2AB2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 12:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD26ED2AB30
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 12:12:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5l3Y-0004a0-HS; Tue, 29 Oct 2024 08:10:40 -0400
+	id 1t5l3n-0004f6-9Y; Tue, 29 Oct 2024 08:10:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t5l3U-0004Yz-VF
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:10:36 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1t5l3Y-0004aJ-6M
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:10:40 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t5l3S-0007Rl-3r
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:10:36 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4314f38d274so70709375e9.1
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 05:10:33 -0700 (PDT)
+ id 1t5l3W-0007Sr-HM
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:10:39 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4314fa33a35so51562255e9.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 05:10:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730203832; x=1730808632; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730203837; x=1730808637; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pUPdzr3axCBtNpWLG3/6d3bv+WC8e9tr/zVd9fr5GLY=;
- b=Re6vA2H9Vm+RXwhXvWRSzB+j5lGhtNddfsDFhvwFbPueJx4TbQH6RvV6YwtEMThUdv
- 5K5OYlxP6Ps7l9TfrVoGXl31MBHPZYgZpqkvL7eAVAoxX9Ii8IXlF7xFIFVv/sxqYKXF
- xgKVwdLmkFcQnfr/4hQBVyNryvgtNu3msb1My32ALOIhxf3WIKSiv86UOhAxl1tGWwtj
- Y1jdy4RT1v+Hauhk2YiMFnN3YCAmt623SKg51ubDyZDwTlv547KFhHQieJSJJkhgCJqg
- pq1D+fUZj0ud0l1J3vRfpI/mgiiVAVrhlYfqoOsayKecN2vR4K5QmhQsOMuGI9g/w3e7
- 7zEA==
+ bh=TcXCjHXJMHI5YxkHU4VEpqalzCQd34FPSXySjBFHomU=;
+ b=OsRZdESB1ZV8N7vlZGYCtqrNL0japx/T/JeCoviMDoF7UeHiEJWSo18qrvaeTJ4TW5
+ 8hyW2gdJ6Ih0d2VnarTAFeRlvZSkcY7cekpceYMOexH1KmLOi/4TjKGVyGA8IF/RElPj
+ ykqADmTtSRCoBhXfF0FB6LAJ5OffJAh1KdNT4oEBuWypVUvShXbxpmt7oNkLRb1DRox7
+ imu0MY2uJbmlZCZbndRjlIiqu+CsnBg+0WrBqFkibm7UytsXtNwIn7yo+q8Poyx1vwXy
+ JpT0mejofDF1+0DW5GV01fN5qCfefUXXZAMuF46AjiHoCVI0VG/1BsLNQMQhaYECHDu1
+ jFBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730203832; x=1730808632;
+ d=1e100.net; s=20230601; t=1730203837; x=1730808637;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pUPdzr3axCBtNpWLG3/6d3bv+WC8e9tr/zVd9fr5GLY=;
- b=PNpxk2e0b5KTa4eCTDxGTvzror8H1uYHNHrlbvrreCSy9lot44E0Eozbiy1iXTX9tp
- 0AU09YBijM765uON/XKkYBlxSpk/syiPaxp1mOEa4n/pCp7mf5iS4IzM4On2xOG7pgux
- x9h6W4aRxGdCwIWCt2TemwFrgCxYNI9QpHOtvTmAbHrLGTWj5qDSCivkjMFv+sHjcNRQ
- 1scxGpBnGqrwgKf3j3iSYjV0BYUV0DR/PKdO4zaXklQLfLU+k+/mjqe4sPa5kpsM4wrm
- jx1Hj6Buae00V4IK8U+Z1oZsk4f9G7JupoEnr3vehSiJ95UEaUHrfJ8+/ITlyHoywdgL
- v7Ug==
-X-Gm-Message-State: AOJu0YyHx0WLFWFFiL7DQLDmgAsq578u0bxwfzz9ZWsytpziMAien6K9
- QkQiPnDJUbHQHOcnX7Jy9KPBBZeWd2PYg/uSYjO7OtMrxFG9tKHiZpYuIRC0Ezs=
-X-Google-Smtp-Source: AGHT+IG1tiGow53VxMw8x2rFsV4CPG2Fbzhmcv/Jf5RwxLv6Nv4NgMlv33bpPuWM/hy28o5cWT4KvA==
-X-Received: by 2002:a05:600c:1910:b0:431:5c3d:1700 with SMTP id
- 5b1f17b1804b1-4319acadd83mr130824285e9.21.1730203832051; 
- Tue, 29 Oct 2024 05:10:32 -0700 (PDT)
+ bh=TcXCjHXJMHI5YxkHU4VEpqalzCQd34FPSXySjBFHomU=;
+ b=Z/tQ28cMz352bE0PGCUsPoy+H/aqoZWwtzye6Ak/17YBxlMqNIaJTvBw2ynblnPKgu
+ tqbB/sXuh18JjSl2v834Ue1QXiTv6cu9pEilwqApcsEIjhM1pGklbL8OU6V84wXZbkxg
+ 1Oi0I5QyfkuKMctOuQKf5LckSb39JiaRBUUA0VXZBvqrMda+K+DzX+g42He/W61vZLzo
+ IuGDjpYu8tOwq/O5HUQb/oLLpBqd7/7trptA5V7czU/A1Vd6uI8oIdGvgC0DN8S1qAYC
+ b06RTzB9AQs30fN6DFccwWCloZJUxclDRm6zQpLDRtTHLh76r1IWOyMKO1U6/mJJyxDG
+ Bzsw==
+X-Gm-Message-State: AOJu0Yw5bze9gYEerG+hUlRleROju49tK9JhVDUNK8iZl/pQtGEzV313
+ 2dR5ONSB1HJsPQmOZNQ4bmdFj9GLsefw3bOEQ5rdZc0qX+fTguD+FyWAIpyc7Gw=
+X-Google-Smtp-Source: AGHT+IHb8QTLbZByAnyQ79rJl3T62PWXkkFQRtveQ79c2ROrSYdOyvEIKl6W+bB6EfLf9EKHV4p01w==
+X-Received: by 2002:a05:600c:3512:b0:431:588a:4498 with SMTP id
+ 5b1f17b1804b1-4319ac9ad1bmr114123305e9.14.1730203836823; 
+ Tue, 29 Oct 2024 05:10:36 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4318b5797c3sm172938845e9.40.2024.10.29.05.10.31
+ 5b1f17b1804b1-4318b567fe8sm171774435e9.28.2024.10.29.05.10.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2024 05:10:31 -0700 (PDT)
+ Tue, 29 Oct 2024 05:10:34 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A704F5FA99;
- Tue, 29 Oct 2024 12:10:30 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 0B3245FABF;
+ Tue, 29 Oct 2024 12:10:31 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PULL 02/13] virtio-gpu: Move fence_poll timer to VirtIOGPUGL
-Date: Tue, 29 Oct 2024 12:10:19 +0000
-Message-Id: <20241029121030.4007014-3-alex.bennee@linaro.org>
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 06/13] virtio-gpu: Use pkgconfig version to decide which virgl
+ features are available
+Date: Tue, 29 Oct 2024 12:10:23 +0000
+Message-Id: <20241029121030.4007014-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241029121030.4007014-1-alex.bennee@linaro.org>
 References: <20241029121030.4007014-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,71 +104,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Move fence_poll timer to VirtIOGPUGL for consistency with cmdq_resume_bh
-that are used only by GL device.
+New virglrerenderer features were stabilized with release of v1.0.0.
+Presence of symbols in virglrenderer.h doesn't guarantee ABI compatibility
+with pre-release development versions of libvirglerender. Use virglrenderer
+version to decide reliably which virgl features are available.
 
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-Id: <20241024210311.118220-3-dmitry.osipenko@collabora.com>
+Message-Id: <20241024210311.118220-7-dmitry.osipenko@collabora.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index e343110e23..48a67d662d 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -194,7 +194,6 @@ struct VirtIOGPU {
-     uint64_t hostmem;
- 
-     bool processing_cmdq;
--    QEMUTimer *fence_poll;
-     QEMUTimer *print_stats;
- 
-     uint32_t inflight;
-@@ -229,6 +228,8 @@ struct VirtIOGPUGL {
- 
-     bool renderer_inited;
-     bool renderer_reset;
-+
-+    QEMUTimer *fence_poll;
- };
- 
- struct VhostUserGPU {
+diff --git a/meson.build b/meson.build
+index 85594fd3f1..8dc53c12fb 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2437,10 +2437,7 @@ config_host_data.set('CONFIG_VNC', vnc.found())
+ config_host_data.set('CONFIG_VNC_JPEG', jpeg.found())
+ config_host_data.set('CONFIG_VNC_SASL', sasl.found())
+ if virgl.found()
+-  config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT',
+-                       cc.has_member('struct virgl_renderer_resource_info_ext', 'd3d_tex2d',
+-                                     prefix: '#include <virglrenderer.h>',
+-                                     dependencies: virgl))
++  config_host_data.set('VIRGL_VERSION_MAJOR', virgl.version().split('.')[0])
+ endif
+ config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+ config_host_data.set('CONFIG_VTE', vte.found())
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 14091b191e..91dce90f91 100644
+index a63d1f540f..ca6f4d6cbb 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -594,11 +594,12 @@ static void virtio_gpu_print_stats(void *opaque)
- static void virtio_gpu_fence_poll(void *opaque)
- {
-     VirtIOGPU *g = opaque;
-+    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+@@ -171,7 +171,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+         struct virgl_renderer_resource_info info;
+         void *d3d_tex2d = NULL;
  
-     virgl_renderer_poll();
-     virtio_gpu_process_cmdq(g);
-     if (!QTAILQ_EMPTY(&g->cmdq) || !QTAILQ_EMPTY(&g->fenceq)) {
--        timer_mod(g->fence_poll, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 10);
-+        timer_mod(gl->fence_poll, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 10);
-     }
- }
- 
-@@ -626,6 +627,7 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
- {
-     int ret;
-     uint32_t flags = 0;
-+    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
- 
- #if VIRGL_RENDERER_CALLBACKS_VERSION >= 4
-     if (qemu_egl_display) {
-@@ -645,8 +647,8 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-         return ret;
-     }
- 
--    g->fence_poll = timer_new_ms(QEMU_CLOCK_VIRTUAL,
--                                 virtio_gpu_fence_poll, g);
-+    gl->fence_poll = timer_new_ms(QEMU_CLOCK_VIRTUAL,
-+                                  virtio_gpu_fence_poll, g);
- 
-     if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
-         g->print_stats = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+-#ifdef HAVE_VIRGL_D3D_INFO_EXT
++#if VIRGL_VERSION_MAJOR >= 1
+         struct virgl_renderer_resource_info_ext ext;
+         memset(&ext, 0, sizeof(ext));
+         ret = virgl_renderer_resource_get_info_ext(ss.resource_id, &ext);
 -- 
 2.39.5
 
