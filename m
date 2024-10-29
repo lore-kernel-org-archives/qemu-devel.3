@@ -4,98 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18430D7494D
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 23:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D124D7494E
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 23:44:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5veo-0006Cr-Jt; Tue, 29 Oct 2024 19:29:50 -0400
+	id 1t5vsG-0000Ah-Ca; Tue, 29 Oct 2024 19:43:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t5ven-0006Cj-JU
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 19:29:49 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1t5vsC-00009N-O7; Tue, 29 Oct 2024 19:43:40 -0400
+Received: from pi.codeconstruct.com.au ([203.29.241.158]
+ helo=codeconstruct.com.au)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t5vel-0004dx-O8
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 19:29:49 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TLKBtw031393;
- Tue, 29 Oct 2024 23:29:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Qgp8xA
- Xg3gN6oIBDJgJgZkQL+D/I7T0l6HX1fajGDOg=; b=oDrlxSofdwHtR7mJ4yQMnF
- /GXv9bc8kPg0AsFGRf5cL+H9wJ1JFKpThCuul7LUjl4u2JE5i6/ZyIe7nniU1Jrs
- 856L4TodeDximL3Dc4TahdvKSaOP+wAkeUn/Adap6JcLmGddrtwjLU8GLSwTkyqa
- IbJ24zxq+OXVRmlrecFuDxgMccjaWbxkmxN+XbaKDfirVQrbo9DAdo5eI9g2e6qs
- wMzfywZcnRGFcEAJded0ym73UFUQXBwL9Ff4zSQx86q5NpB9h7mERzQZ+tj0BKCU
- UEaZdczXY2+dQ+XzNuk7AKyZ53hTVHcRoFN60jpfSrIEHlqei68de+sGwhMdm/QA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42j3nsut9d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Oct 2024 23:29:44 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49TMEBIe013585;
- Tue, 29 Oct 2024 23:29:43 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42hbrmwdu9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Oct 2024 23:29:43 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49TNTfIt53543390
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 29 Oct 2024 23:29:41 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BBA42004B;
- Tue, 29 Oct 2024 23:29:41 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 30E7620049;
- Tue, 29 Oct 2024 23:29:41 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 29 Oct 2024 23:29:41 +0000 (GMT)
-Message-ID: <4f0cab2f2d564037e1a36a75ad1fb9d350c0f0e1.camel@linux.ibm.com>
-Subject: Re: [PATCH] tests/tcg: Do not use inttypes.h in
- multiarch/system/memory.c
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>, Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Date: Wed, 30 Oct 2024 00:29:40 +0100
-In-Reply-To: <59b7a93e-7acb-4a73-9aae-bbfb36101c5d@redhat.com>
-References: <20241010085906.226249-1-iii@linux.ibm.com>
- <59b7a93e-7acb-4a73-9aae-bbfb36101c5d@redhat.com>
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1t5vs9-0006RL-Fx; Tue, 29 Oct 2024 19:43:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=codeconstruct.com.au; s=2022a; t=1730245408;
+ bh=Xso3sElEGkFiueOKiSwOZboNeXIBDkpOIXEJKbLNR4o=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=AN0iIpU7fiFeK7dqdcHJXRydv4jUQ7gV/vrqV2ey1ssSJ5S7x2b76/mrh3gCE0aDv
+ +elGr+Or38vqxW3Eipt1oma9+kJj2Zn4ZXbKz0Gnw/0ZQj5qZXBqM3y7EHrBMtvI/A
+ t032z4jo/vpUTvor/oHQjgu/yOPx7JCemhpidKasA3Mw0ok7Ew36GdwavAsVbKqW/i
+ bM+7G7P8O19WOqpL2X5D2B04fkzLDjUqh5FgTyon4W6QYFkrY8ICtuk5nc7bTHqv+7
+ PEC8kG8Ynlw0JoHF19nGqFZtP4ni5smkie4sie46T1H/rSDXtmjNBx4ugAJ06WRJ4X
+ KNvUpJzPI04Kg==
+Received: from [192.168.68.112]
+ (ppp118-210-190-243.adl-adc-lon-bras34.tpg.internode.on.net
+ [118.210.190.243])
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 9AE8F67E6D;
+ Wed, 30 Oct 2024 07:43:25 +0800 (AWST)
+Message-ID: <7e1b21bf2f0c0654e63cd4b3c39f39162a3e3485.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v1 3/8] hw/timer/aspeed: Fix interrupt status does not
+ be cleared for AST2600
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?ISO-8859-1?Q?C=E9dric?= Le
+ Goater <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Joel Stanley
+ <joel@jms.id.au>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>,  Bin Meng <bmeng.cn@gmail.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:SD (Secure Card)"
+ <qemu-block@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+Date: Wed, 30 Oct 2024 10:13:25 +1030
+In-Reply-To: <20241029091729.3317512-4-jamin_lin@aspeedtech.com>
+References: <20241029091729.3317512-1-jamin_lin@aspeedtech.com>
+ <20241029091729.3317512-4-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: s6X2BsEs1VJ0TYQM-daL4m3EsdtFjExg
-X-Proofpoint-GUID: s6X2BsEs1VJ0TYQM-daL4m3EsdtFjExg
 Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0
- bulkscore=0 mlxlogscore=957 clxscore=1015 priorityscore=1501
- suspectscore=0 lowpriorityscore=0 mlxscore=0 impostorscore=0
- malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410290175
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=203.29.241.158;
+ envelope-from=andrew@codeconstruct.com.au; helo=codeconstruct.com.au
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,41 +79,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2024-10-10 at 11:20 +0200, Paolo Bonzini wrote:
-> On 10/10/24 10:58, Ilya Leoshkevich wrote:
-> > make check-tcg fails on Fedora with the following error message:
-> >=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0 alpha-linux-gnu-gcc [...]
-> > qemu/tests/tcg/multiarch/system/memory.c -o memory [...]
-> > =C2=A0=C2=A0=C2=A0=C2=A0 qemu/tests/tcg/multiarch/system/memory.c:17:10=
-: fatal error:
-> > inttypes.h: No such file or directory
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 17 | #include <inttypes.h>
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~~~~~~~~~
-> > =C2=A0=C2=A0=C2=A0=C2=A0 compilation terminated.
-> >=20
-> > The reason is that Fedora has cross-compilers, but no cross-glibc
-> > headers. Fix by hardcoding the format specifiers and dropping the
-> > include.
-> >=20
-> > An alternative fix would be to introduce a configure check for
-> > inttypes.h. But this would make it impossible to use Fedora
-> > cross-compilers for softmmu tests, which used to work so far.
-> >=20
-> > Fixes: ecbcc9ead2f8 ("tests/tcg: add a system test to check memory
-> > instrumentation")
-> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+On Tue, 2024-10-29 at 17:17 +0800, Jamin Lin wrote:
+> According to the datasheet of AST2600 description, interrupt status
+> set by HW
+> and clear to "0" by software writing "1" on the specific bit.
 >=20
-> Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+> Therefore, if firmware set the specific bit "1" in the interrupt
+> status
+> register(0x34), the specific bit of "s->irq_sts" should be cleared 0.
+>=20
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-[...]
+Hah, the datasheet table for the register uses `RW` to describe the
+bits and not `W1C`, but there's a foot-note in the table that says
+they're W1C bits.
 
-Thanks for the review!
+Fixes: fadefada4d07 ("aspeed/timer: Add support for IRQ status register on =
+the AST2600")
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 
-Could someone please pick this one and also [1] up?
-Both patches are aimed at improving the situation with the test builds.
+Thanks,
 
-[1]
-https://lore.kernel.org/qemu-devel/20241023131250.48510-1-iii@linux.ibm.com/
+Andrew
 
