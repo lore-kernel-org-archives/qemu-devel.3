@@ -4,67 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36462D3A675
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 17:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B7AD3A670
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 17:06:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5pfK-0001s4-MP; Tue, 29 Oct 2024 13:06:00 -0400
+	id 1t5pfS-0001tP-88; Tue, 29 Oct 2024 13:06:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5pfH-0001rk-SG
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 13:05:55 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t5pfP-0001sn-BH
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 13:06:03 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5pfG-0004li-9d
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 13:05:55 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5c95a962c2bso6944104a12.2
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 10:05:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t5pfN-0004mE-Rm
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 13:06:03 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43161c0068bso53998135e9.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 10:06:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730221552; x=1730826352; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VsKA5yUCykpyGe2Gag/8i+s+VfUkkJK/EU1jMr3m3b0=;
- b=GJQQEgHNiw0NC75GZMzIF1CHkeNP400X1XwPBTUeuUyqpqKOkQ2PEPPpnW/wDVNDLZ
- zc1qVV346qFGWSqHaTnYJyw0Ij3Ww8EZApOYg8gcsni+MmikYe8b9VoTgyB4u89Ii2pB
- aC/El5lFSHBh+LhR429MHJSb/s2EdrRAvjoDoUhtCGa6vpxrMEOS9+c+ufCyQT0bFUkk
- jYoxqaafAL2qahO5ZLSneEzonjo171AuZ1aP+yUpiciCDCmBxjwKUhVGO+RGNQS3oD1Q
- hUxTqrVNZ5/Pn33DNebT80wz7OSHPkpCZCTKFcoh4FSXMtKE2m1YXxjFk3dXOTGJ5X0K
- VBtQ==
+ d=linaro.org; s=google; t=1730221560; x=1730826360; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PkpUJV7hMa7BM00qylqF1QL5dJ4OlpRsQdA5/f6IlDE=;
+ b=BmJqj/m/l6RrE8H4/o9gf75mwhXI8YvcT2tZf2KQzpQdRkwB/ySiB7/EH7K+eWj6tO
+ A7DVtxhjy91cjEK1g211Pxu3ob7Dgboki3ldNQvLWnGKpJ1F7x0a/AWL61+/Hcln6kMk
+ d7Li/7pGIZaNKhO5Fvmys4Z4H8qAREitGMm48fCh4GLv2MYqjnPn54TkbulqhdhNB3c7
+ vPZyGQec0BRYMjYx2BqrswBZJV+LUkXwqCsHecR7TqNxUQM/nYqcl+XHvG30Ahxcp5qJ
+ o/dMSfuyOnZ7Oa7t2Jx8XE3rGSuw0A37bKjyFkj4QWfEEL+7jdPkGcO02Jkrs9T6vZVS
+ lUCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730221552; x=1730826352;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VsKA5yUCykpyGe2Gag/8i+s+VfUkkJK/EU1jMr3m3b0=;
- b=aYQTdMB3ig4S7pgjc3jywLwhInk0B0h9Tqg6RQISV8KOrcMqFGOrazLhVuAMzvCvVa
- S558IKz+Av1kLupumrSDEeLP9EujO40zsPlgu3ec5LmO4S02WFQxH/7EQG/dXEbp8fo/
- CXL38wOQmrDbgvZ/CNV8v+hbfNzlGVjUArH0R0cvaD0R9AdGYnymnUdBulfLoKJjwcoV
- Q7vCgYu0jvkWSCciy1PQZUIiuk31Yi9CCRcKePgkLIyqUOTUqdRdfdmjoWyllyiTojzb
- f50ZRU8hGjFTJTIo7RWzBb8NigmfZMwengebHWKz4h4YcS1sWEGDjnRUrT2DoRAl4Uq7
- 3ctA==
-X-Gm-Message-State: AOJu0YxjUXnHOxiGbCtLq/fYIPq5lSHw5I4LnjcYIJd2smlTD76KsOKP
- DkeI8WVa8XQXMia2Chmplo/wQrv5oc2sP5l0DqWGyl3GwCPvd9w4zNw7N2St5teHLJQ2LY76TN4
- JUyIKpOProvz/FGr5ChY6NCQhwwk6u6yazCq3AA==
-X-Google-Smtp-Source: AGHT+IGpCZE9US7F6LoXBpVvuV8ltsKENyjlPdpm9PTiLhhiJ+da3LWkIZXeciiQK0XjwuDE9SvbD7+zhPNu1gVIrbs=
-X-Received: by 2002:a05:6402:5107:b0:5c9:8ab0:296a with SMTP id
- 4fb4d7f45d1cf-5cbbfa62b4fmr9838385a12.25.1730221552268; Tue, 29 Oct 2024
- 10:05:52 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1730221560; x=1730826360;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PkpUJV7hMa7BM00qylqF1QL5dJ4OlpRsQdA5/f6IlDE=;
+ b=luzvszRxJSgoSjNzRhcVeRdZmdVLIJfu+Eo6FYzrEYh/JuDFUCipcnvhqT0YGL5QV7
+ 4dDvGXLH5qg0MxJWpuXUq2ZIgPLNcbWqWBTl0+/VUWGGgapg/MQWIwhTvHfRaK+UzQ+3
+ j36UNOKANfV/VU0BPU8n+As0A++gfxcZPZNd+LsIYXP57U5Ldun6uxOK0EYkARGgWVJG
+ MQwxA3RSudMPXW4sengVBVlCubV+/IqfHQs68gdfMyBIKWx65MQStBHppZn+ScvzhgYW
+ PbpBB450QkA2JOCiafcXeQLf/SVJIt7wKn3WGmnrd+oI3rENMei37AlrdER62bz/gFah
+ 367w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU6sK5J3KQOagkCtdwLlU5vnYoH6vTHMJiuldG6aaEv2oC6GCEEU8cP0XGKUlCZZ67vlNIpFcGOdUWf@nongnu.org
+X-Gm-Message-State: AOJu0YwYToboMcO+fRpREOFAErlOKq3rOR+DhdXJadEzEE5juekqRIKH
+ szw5iQaax6fhSdXXqZiFT9DoluxFsrkhHaZgETSfD5Xaukic1uDUqovrV8g7u70=
+X-Google-Smtp-Source: AGHT+IEbYjPwPKe42XRQd1tt5B93dG4sN0UFEEWN4Qi8MzxWq5h4TiUuHCjtm/cb/5g+4QWLyQIJQA==
+X-Received: by 2002:a05:600c:1c82:b0:431:5503:43ca with SMTP id
+ 5b1f17b1804b1-4319ad16173mr99812185e9.28.1730221559883; 
+ Tue, 29 Oct 2024 10:05:59 -0700 (PDT)
+Received: from [192.168.21.227] ([89.100.107.89])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38058b47aa8sm13142740f8f.51.2024.10.29.10.05.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Oct 2024 10:05:59 -0700 (PDT)
+Message-ID: <36e339ee-276c-4239-81d0-4145c4edd0f2@linaro.org>
+Date: Tue, 29 Oct 2024 17:05:57 +0000
 MIME-Version: 1.0
-References: <20241029080705.3238-1-jasowang@redhat.com>
-In-Reply-To: <20241029080705.3238-1-jasowang@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 29 Oct 2024 17:05:39 +0000
-Message-ID: <CAFEAcA8OOQ2_GHJwnpZV-nfQ8hpamq5T-sBAiMvAYkk8seeLhg@mail.gmail.com>
-Subject: Re: [PULL 00/14] Net patches
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] qom: module loading cleanups
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: armbru@redhat.com
+References: <20241029122609.514347-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241029122609.514347-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,39 +97,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 29 Oct 2024 at 08:09, Jason Wang <jasowang@redhat.com> wrote:
->
-> The following changes since commit cea8ac78545a83e1f01c94d89d6f5a3f6b5c05d2:
->
->   Merge tag 'pull-aspeed-20241024' of https://github.com/legoater/qemu into staging (2024-10-25 13:35:22 +0100)
->
-> are available in the Git repository at:
->
->   https://github.com/jasowang/qemu.git tags/net-pull-request
->
-> for you to fetch changes up to cd76e8fcbe1a340776ae61b4e182be3a45b26219:
->
->   virtio-net: Avoid indirection_table_mask overflow (2024-10-29 15:53:29 +0800)
->
-> ----------------------------------------------------------------
-> -----BEGIN PGP SIGNATURE-----
->
-> iQEzBAABCAAdFiEEIV1G9IJGaJ7HfzVi7wSWWzmNYhEFAmcglKYACgkQ7wSWWzmN
-> YhEm/wf/cYA7i3asKMUoYqlff5mBiY3aFCWzTR5qHLBcWfnB33f9FYpAW6RgDwMa
-> 3aFAJm1VZAynmUWgz+f537+e+7900M+P54zbD7kHCthAy7l/E7t9SkKNpe6jZHEA
-> P4hB09CSKm/TY1XtsFMvO5tkF9IgY51VEO+mZJesO1H2X2+3ulJYusx9fh/P6yST
-> bG8sbXr55v23R3z4UOovqfkuskPETwRh3qoiOLPPBy8CWkBVze8J+siC7HC+eFIo
-> KrQ+jhUYpIK8CAgHV09ZnlurLo6UZ0+vlo9IcJN+GQp/gsmg8OErjvzPdKKbynC/
-> 1zjvkgyW27aHsei+baTMXGCE0P8dIw==
-> =6+yo
-> -----END PGP SIGNATURE-----
->
+On 10/29/24 12:26, Paolo Bonzini wrote:
+> Paolo Bonzini (5):
+>    qom: remove unused function
+>    qom: use object_new_with_class when possible
+>    qom: centralize module-loading functionality
+>    qom: let object_new use a module if the type is not present
+>    qom: allow user-creatable classes to be in modules
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
-
--- PMM
+r~
 
