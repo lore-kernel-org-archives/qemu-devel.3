@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A240D5B165
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 300F9D5B164
 	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 08:08:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5hGJ-00079v-5H; Tue, 29 Oct 2024 04:07:35 -0400
+	id 1t5hGl-0007Na-Ni; Tue, 29 Oct 2024 04:08:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t5hGH-00079Z-GW
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:07:33 -0400
+ id 1t5hGj-0007MV-GS
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:08:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t5hGF-0003wV-Ol
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:07:33 -0400
+ id 1t5hGh-0003zt-Eb
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:08:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730189251;
+ s=mimecast20190719; t=1730189278;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1bv3Ni3J1teSkGbpGS4vKRXQ+UmcTRKnZUd/nHd5DYY=;
- b=UOx0fhUNr9N4t4JufYo+T2FCYFnf5MCetymSwNs61M/HPGJbVGc1Uz9RjiE/ZYAsS2dg2M
- aT/C26A7h1b07zMC8VV3rWEE3ALu7rgw5PiPlyO0Ba28og8OkAFagYWsrbpbbZ/d5RlI8v
- tCiqE1sMu/eRCwQ5cX0bQjDqWu84+KA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=pmBl+PlUk+WLhosQ/iw737LCHOPlPsBsjyy9DE6lu7Q=;
+ b=gM0bnBqtf2+pls+i4pt47s9T3uZYjxrqhA7oihFiQtGsQV6Gyy/NCG2fefsBiubSFi34DP
+ j47zNxGfTtIyhwbUZZDFaV5XUc/KoAjirkWPqn6XQJSvh7G0bUZdDvhvY8/BtppklRg/a5
+ Bq03/Sq+2ZGXpQe6AgUxtSqOw5ilcNU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-UOQ1082XMmeVbf4_98UQmw-1; Tue,
- 29 Oct 2024 04:07:24 -0400
-X-MC-Unique: UOQ1082XMmeVbf4_98UQmw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-482-u2WQqTEVMlCFJlzrGtm9lA-1; Tue,
+ 29 Oct 2024 04:07:55 -0400
+X-MC-Unique: u2WQqTEVMlCFJlzrGtm9lA-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 81BEE1955F3B; Tue, 29 Oct 2024 08:07:18 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1FC4019560AF; Tue, 29 Oct 2024 08:07:53 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.36])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 963B81956086; Tue, 29 Oct 2024 08:07:15 +0000 (UTC)
+ id 2E0411956086; Tue, 29 Oct 2024 08:07:47 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: Bernhard Beschow <shentey@gmail.com>, qemu-stable@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Jason Wang <jasowang@redhat.com>
-Subject: [PULL 02/14] hw/net: fix typo s/epbf/ebpf/ in virtio-net
-Date: Tue, 29 Oct 2024 16:06:53 +0800
-Message-ID: <20241029080705.3238-3-jasowang@redhat.com>
+Subject: [PULL 11/14] net/tap-win32: Fix gcc 14 format truncation errors
+Date: Tue, 29 Oct 2024 16:07:02 +0800
+Message-ID: <20241029080705.3238-12-jasowang@redhat.com>
 In-Reply-To: <20241029080705.3238-1-jasowang@redhat.com>
 References: <20241029080705.3238-1-jasowang@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
@@ -69,7 +70,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,57 +86,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+The patch fixes the following errors generated by GCC 14.2:
+
+../src/net/tap-win32.c:343:19: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 176 [-Werror=format-truncation=]
+  343 |              "%s\\%s\\Connection",
+      |                   ^~
+  344 |              NETWORK_CONNECTIONS_KEY, enum_name);
+      |                                       ~~~~~~~~~
+
+../src/net/tap-win32.c:341:9: note: 'snprintf' output between 92 and 347 bytes into a destination of size 256
+  341 |         snprintf(connection_string,
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+  342 |              sizeof(connection_string),
+      |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+  343 |              "%s\\%s\\Connection",
+      |              ~~~~~~~~~~~~~~~~~~~~~
+  344 |              NETWORK_CONNECTIONS_KEY, enum_name);
+      |              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+../src/net/tap-win32.c:242:58: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 178 [-Werror=format-truncation=]
+  242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
+      |                                                          ^~
+  243 |                   ADAPTER_KEY, enum_name);
+      |                                ~~~~~~~~~
+
+../src/net/tap-win32.c:242:9: note: 'snprintf' output between 79 and 334 bytes into a destination of size 256
+  242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  243 |                   ADAPTER_KEY, enum_name);
+      |                   ~~~~~~~~~~~~~~~~~~~~~~~
+
+../src/net/tap-win32.c:620:52: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 245 [-Werror=format-truncation=]
+  620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
+      |                                                    ^~
+  621 |               USERMODEDEVICEDIR,
+  622 |               device_guid,
+      |               ~~~~~~~~~~~
+../src/net/tap-win32.c:620:5: note: 'snprintf' output between 16 and 271 bytes into a destination of size 256
+  620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  621 |               USERMODEDEVICEDIR,
+      |               ~~~~~~~~~~~~~~~~~~
+  622 |               device_guid,
+      |               ~~~~~~~~~~~~
+  623 |               TAPSUFFIX);
+      |               ~~~~~~~~~~
+
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2607
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- hw/net/virtio-net.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/tap-win32.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index fb84d142ee..7c050246ea 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1254,7 +1254,7 @@ static void rss_data_to_rss_config(struct VirtioNetRssData *data,
-     config->default_queue = data->default_queue;
- }
+diff --git a/net/tap-win32.c b/net/tap-win32.c
+index 7edbd71633..671dee970f 100644
+--- a/net/tap-win32.c
++++ b/net/tap-win32.c
+@@ -214,7 +214,7 @@ static int is_tap_win32_dev(const char *guid)
  
--static bool virtio_net_attach_epbf_rss(VirtIONet *n)
-+static bool virtio_net_attach_ebpf_rss(VirtIONet *n)
+     for (;;) {
+         char enum_name[256];
+-        char unit_string[256];
++        g_autofree char *unit_string = NULL;
+         HKEY unit_key;
+         char component_id_string[] = "ComponentId";
+         char component_id[256];
+@@ -239,8 +239,7 @@ static int is_tap_win32_dev(const char *guid)
+             return FALSE;
+         }
+ 
+-        snprintf (unit_string, sizeof(unit_string), "%s\\%s",
+-                  ADAPTER_KEY, enum_name);
++        unit_string = g_strdup_printf("%s\\%s", ADAPTER_KEY, enum_name);
+ 
+         status = RegOpenKeyEx(
+             HKEY_LOCAL_MACHINE,
+@@ -315,7 +314,7 @@ static int get_device_guid(
+     while (!stop)
+     {
+         char enum_name[256];
+-        char connection_string[256];
++        g_autofree char *connection_string = NULL;
+         HKEY connection_key;
+         char name_data[256];
+         DWORD name_type;
+@@ -338,9 +337,7 @@ static int get_device_guid(
+             return -1;
+         }
+ 
+-        snprintf(connection_string,
+-             sizeof(connection_string),
+-             "%s\\%s\\Connection",
++        connection_string = g_strdup_printf("%s\\%s\\Connection",
+              NETWORK_CONNECTIONS_KEY, enum_name);
+ 
+         status = RegOpenKeyEx(
+@@ -595,7 +592,7 @@ static void tap_win32_free_buffer(tap_win32_overlapped_t *overlapped,
+ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+                           const char *preferred_name)
  {
-     struct EBPFRSSConfig config = {};
+-    char device_path[256];
++    g_autofree char *device_path = NULL;
+     char device_guid[0x100];
+     int rc;
+     HANDLE handle;
+@@ -617,7 +614,7 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+     if (rc)
+         return -1;
  
-@@ -1276,7 +1276,7 @@ static bool virtio_net_attach_epbf_rss(VirtIONet *n)
-     return true;
- }
- 
--static void virtio_net_detach_epbf_rss(VirtIONet *n)
-+static void virtio_net_detach_ebpf_rss(VirtIONet *n)
- {
-     virtio_net_attach_ebpf_to_backend(n->nic, -1);
- }
-@@ -1286,8 +1286,8 @@ static void virtio_net_commit_rss_config(VirtIONet *n)
-     if (n->rss_data.enabled) {
-         n->rss_data.enabled_software_rss = n->rss_data.populate_hash;
-         if (n->rss_data.populate_hash) {
--            virtio_net_detach_epbf_rss(n);
--        } else if (!virtio_net_attach_epbf_rss(n)) {
-+            virtio_net_detach_ebpf_rss(n);
-+        } else if (!virtio_net_attach_ebpf_rss(n)) {
-             if (get_vhost_net(qemu_get_queue(n->nic)->peer)) {
-                 warn_report("Can't load eBPF RSS for vhost");
-             } else {
-@@ -1300,7 +1300,7 @@ static void virtio_net_commit_rss_config(VirtIONet *n)
-                                     n->rss_data.indirections_len,
-                                     sizeof(n->rss_data.key));
-     } else {
--        virtio_net_detach_epbf_rss(n);
-+        virtio_net_detach_ebpf_rss(n);
-         trace_virtio_net_rss_disable();
-     }
- }
+-    snprintf (device_path, sizeof(device_path), "%s%s%s",
++    device_path = g_strdup_printf("%s%s%s",
+               USERMODEDEVICEDIR,
+               device_guid,
+               TAPSUFFIX);
 -- 
 2.42.0
 
