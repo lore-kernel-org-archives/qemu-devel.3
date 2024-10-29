@@ -4,86 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B17D3A66D
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0FEFD3A661
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:53:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5oU6-0006UP-3x; Tue, 29 Oct 2024 11:50:18 -0400
+	id 1t5oWv-0007tH-Fg; Tue, 29 Oct 2024 11:53:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t5oTy-0006TC-LP
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:50:11 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t5oTv-0004Fx-IC
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:50:10 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-20cceb8d8b4so32729415ad.1
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:50:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730217006; x=1730821806; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IIyfpaAlcP/8/dG+hj3vP/WkWeV+zJOT0Dr2xeLMIdY=;
- b=bEkahMEXP4aE4/2heU1Wg5GAKMDSCJnbN0tBBoLfTFmJ8oam3IBVKE7s8ZJ4aWr6l9
- bJWz5KnoAu9ps3ri+vyfYXvgnPwG3lfhLwvgx7nEfscUSfMmZclwKL1gFG3JViNzjxHJ
- bsRq8igIH22AjO5mPNzrkLV4uiFAmgoyDo6OqIdK/sAQCmcoqrRmRq49902pgBWZ9KGJ
- BZJOVTYB8DPURuoz3lsLpIb7CaMC7LvYXVskiB6KxDFXT5CBggTn3GC36AZIdhL8eT2h
- pDZsSWN7H0o2edYe4QskEIivED9o4A8KV/WpcJg1lEM8ZF6se/1giuV0zUQgI+daOrHk
- N3cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730217006; x=1730821806;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IIyfpaAlcP/8/dG+hj3vP/WkWeV+zJOT0Dr2xeLMIdY=;
- b=v7+MY89v23CPeUcxa2Bvlwt1KO2zOj4CFLGGkOWyk0GyyIg97nlytFevVDjqjT7+Vk
- MwlYYymCjQ2qqPBrf/Fs69IUO1INg/kWUM9NpFDHVX8WwkmSukYrP8BpE8Rp/ElJiiHQ
- RGrAZhsiYxNs8zvLGAlwU3Q/SX3xmtRRZVj1w7sOES+Y0wfpwiYekdBx1vc8Q0CQcp3h
- rXxgOt6imW3RZQ36Ix24mPe8pCHVwOJyXPchvX8KYqIaLz20HydLVMYwNn0PCRjVf2Zt
- 3Z7EmyzVNo2whagJarGhlRxum9o5X5mb7BbXNjM2jr+d6ouPoYBcOIfOMFmskhM29ziq
- Fpmw==
-X-Gm-Message-State: AOJu0YyyBRlLH4qCFzMtS6N0ud9jigPIGvlioWL0/E9W7ymO2NxYEHta
- 1eWiVZvONRiDpDsbe7Imk9qZrus7mWJBU3CBEMCWsALFmQn0/WuwVXQFXUXj3s4=
-X-Google-Smtp-Source: AGHT+IEq1uyvd2bOd8ey2JGSiEBSRzmrkU5tISuYdlbgvQ8V/Z0neE9vEM17G+dYHxyQQ9guVzfQMg==
-X-Received: by 2002:a17:902:dac6:b0:20c:6bff:fcb1 with SMTP id
- d9443c01a7336-210ed3b249fmr39179185ad.1.1730217005920; 
- Tue, 29 Oct 2024 08:50:05 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-210bbf441b1sm67422455ad.50.2024.10.29.08.50.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Oct 2024 08:50:05 -0700 (PDT)
-Message-ID: <8f249581-59dd-4d2e-9b4b-fb4af082d2ad@linaro.org>
-Date: Tue, 29 Oct 2024 08:50:04 -0700
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t5oWt-0007sl-Ad
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:53:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t5oWq-0004U2-Oo
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:53:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730217187;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=vjGgL7xNyj6S68OjjWQ9TjTVd7zAJ7IK0g0AB1F3qpk=;
+ b=ek6Ovp5zP7U6806lpMHS03gfIQ2Lhi3Ya98tvb1Q68p2BAWEM3JGEDEhsNfEXLBDNEDjW9
+ zMrcwC788dqgLPsi5gxRSkdCJmhUQD9kq6G6qKf30DyBTZ14U4wea3RHOINzARSePNuCm5
+ NMgZTLBpVCqhqqNPVFKP+7y53ks6LX0=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-cG_TFjhEMFehhuET7_wSDg-1; Tue,
+ 29 Oct 2024 11:53:03 -0400
+X-MC-Unique: cG_TFjhEMFehhuET7_wSDg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 03EB81955E7F; Tue, 29 Oct 2024 15:52:57 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.142])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7FE2719560A3; Tue, 29 Oct 2024 15:52:42 +0000 (UTC)
+Date: Tue, 29 Oct 2024 15:52:39 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
+ Markus Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>, cw@f00f.org,
+ dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>,
+ eblot@rivosinc.com, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>,
+ Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
+ Luc Michel <luc@lmichel.fr>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Max Chou <max.chou@sifive.com>,
+ Mark Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
+ mimu@linux.vnet.ibm.com, Paul Walmsley <paul.walmsley@sifive.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>,
+ z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ zwu.kernel@gmail.com
+Subject: Re: QEMU/KVM Community Call (29/10/24) agenda items?
+Message-ID: <ZyEEx1UWqYin1Spq@redhat.com>
+References: <87bjz38j8p.fsf@draig.linaro.org>
+ <3a6a8109-196e-49ac-8416-49f69b688e5e@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] scripts/symlink-install-tree.py: Fix MESONINTROSPECT
- parsing
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Christophe Lyon <christophe.lyon@linaro.org>
-References: <20241018130852.931509-1-peter.maydell@linaro.org>
- <153648b2-1978-45ca-9731-b922da98d81d@linaro.org>
- <CAFEAcA-s4uji7rufaE394=kWMxEtWA3+XQMozfjx0uHscpnO5Q@mail.gmail.com>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <CAFEAcA-s4uji7rufaE394=kWMxEtWA3+XQMozfjx0uHscpnO5Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3a6a8109-196e-49ac-8416-49f69b688e5e@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,77 +109,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/29/24 03:04, Peter Maydell wrote:
-> On Mon, 28 Oct 2024 at 19:43, Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
->>
->> On 10/18/24 06:08, Peter Maydell wrote:
->>> From: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>
->>> The arguments in MESONINTROSPECT are quoted with shlex.quote() so it
->>> must be parsed with shlex.split().  Otherwise the script will fail if
->>> the build directory has a character like "~" in it.
->>>
->>> Note: this fix cannot be backported directly to any stable branch
->>> that doesn't require Meson version 1.4.0 or better; otherwise it will
->>> work OK on Linux but will break on Windows hosts.
->>>
->>> (Unfortunately, Meson prior to version 1.4.0 was inconsistent between
->>> host OSes about how it quoted arguments, and used a different quoting
->>> process on Windows hosts.  Our current git trunk already requires
->>> 1.5.0 as of commit 07f0d32641e ("Require meson version 1.5.0"), but
->>> the stable branches are still on older Meson.)
->>>
->>> Fixes: cf60ccc330 ("cutils: Introduce bundle mechanism")
->>> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
->>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> [PMM: Updated commit message to give all the detail about the
->>> Meson version compability requirements.]
->>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>> ---
->>> This is essentially back to version 1 of Akihiko's patch, now we
->>> have a new enough Meson; I just updated the commit message.
->>>    https://patchew.org/QEMU/20230812061540.5398-1-akihiko.odaki@daynix.com/
->>> (I have dropped the various reviewed-by and tested-by headers because
->>> I figured the passage of time was enough to make them moot.)
->>>
->>>    scripts/symlink-install-tree.py | 3 ++-
->>>    1 file changed, 2 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/scripts/symlink-install-tree.py b/scripts/symlink-install-tree.py
->>> index 8ed97e3c943..b72563895c5 100644
->>> --- a/scripts/symlink-install-tree.py
->>> +++ b/scripts/symlink-install-tree.py
->>> @@ -4,6 +4,7 @@
->>>    import errno
->>>    import json
->>>    import os
->>> +import shlex
->>>    import subprocess
->>>    import sys
->>>
->>> @@ -14,7 +15,7 @@ def destdir_join(d1: str, d2: str) -> str:
->>>        return str(PurePath(d1, *PurePath(d2).parts[1:]))
->>>
->>>    introspect = os.environ.get('MESONINTROSPECT')
->>> -out = subprocess.run([*introspect.split(' '), '--installed'],
->>> +out = subprocess.run([*shlex.split(introspect), '--installed'],
->>>                         stdout=subprocess.PIPE, check=True).stdout
->>>    for source, dest in json.loads(out).items():
->>>        bundle_dest = destdir_join('qemu-bundle', dest)
->>
->> Hi,
->>
->> would that be possible to pull this patch please?
->> It's currently blocking the devs who reported it initially.
+On Tue, Oct 29, 2024 at 02:05:44PM +0100, Paolo Bonzini wrote:
+> I would like to discuss the next steps for Rust bindings, but probably it's
+> already too late to have a call today; we can have the discussion on the
+> mailing list as well.
 > 
-> Yes, I'll put it in my upcoming pullreq.
+> In particular I would like to understand:
 > 
-> thanks
-> -- PMM
+> - if it's desirable to have https://lore.kernel.org/qemu-devel/1d6034ef-9e41-4ef4-9a95-d03885b09b2b@redhat.com/
+> in QEMU 9.2.
+> 
+> - if we agree on (the plan of) bringing the Rust PL011 to feature completion
+> in 10.0 and at the same time toggling the --enable-rust default from
+> "disabled" to "auto"
 
-Thanks a lot Peter :).
+That sounds like reasonable goal. If PL011 work slips, then we just
+punt the enable-rust default change to 10.1.
+
+> I would also like to reach an agreement on how Rust patches enter qemu.git
+> (that is, whether via my tree or a new one).
+
+IIUC, we decided we ought to have a rust mailing list for QEMU, such that
+Rust patches would be cc'd on qemu-devel & qemu-rust. Along with that it
+probably makes sense to have a designated "rust staging" tree that people
+can base their work against.
+
+Initially I presume "rust staging" would be for all Rust related work to
+flow through. At a later date, then we can devolve maintainership back
+to the respective subsystem maintainers, and have "rust staging" solely
+be for core rust infrastructure patches.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
