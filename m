@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 274B1D5B85F
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 21:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C8DD5B87C
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 21:04:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5tJp-0004oD-6s; Tue, 29 Oct 2024 17:00:01 -0400
+	id 1t5tIm-0003e4-Vh; Tue, 29 Oct 2024 16:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t5tJX-00047d-UD
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:59:46 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1t5tIk-0003bF-Pc
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:58:55 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t5tJV-0005i2-Rd
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:59:43 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c94c4ad9d8so7379642a12.2
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 13:59:41 -0700 (PDT)
+ id 1t5tIe-0005XO-Ny
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:58:54 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9454f3bfaso7058588a12.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 13:58:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1730235580; x=1730840380;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1730235527; x=1730840327;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/7At35sOPcE3GUUaFg/vHYoUFWhiVUqXzP1FpK3MLlI=;
- b=uRZXdsaDBnBCh4fxpzJsE0PPMEOrTHfu/K2mqi0yPaymxpH76qmomJTgV+SFk6zlu+
- /1WKcx1LHsSNUg43PZq9d5TcpPPfTQfTWO7RvDkz199xLRuuBY/bXtT4hhqLf3ryd6sV
- 0mrOAaRcrniSgWiWwvG50isCHToMhmDIWDr6TDlTfj/V95Hb4rwIXwj9LNbaBEcoSKBX
- XCkpqVNH1sWd5j42GALO87su56Aj+BM8lQyqgfh+xu3jh9ks0VlwK6F3fGdDbUC/Cd80
- I6KQ868SBzKGUbo/pcRrNnhszhixMK6S7txC5m5rEwetFQJF5ymNPEDVwa7uczxGzfdH
- WhCg==
+ bh=eHMN46rJt9QcxyBveWaVh/b2Y4BBk6tAt2nO8pjIz70=;
+ b=MyG+cP5UkEMFyOHjTzNLkMibFV63+8eOhV+4CzBDhho8EC5QGE5XUhNCTrpzCVfuc5
+ B7TsAJWPelSya+g9aLqbNH9etbuyFNMUssWByzE8nAsLWC0iyUjVUJ2qsl14gXqPsr07
+ K1iLDIvYMSbscdB4jrJfkGtw6W+WIv7xZTr+Lq68fWd83Kja+7po8wIaWergS77FlPA6
+ XzqbngmPQp5AaJcNqngOOLWF0/OsyCAZLcSSSrU2jzRu38mcVHwVwgqin5pTSz6AE6am
+ tpDkGYamD1ITxmBQYc4zrBBFMqkwQXXlJ9evsurmODV5PqM5rpFq1rC4r5RdCuJv+Oqo
+ 62pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730235580; x=1730840380;
+ d=1e100.net; s=20230601; t=1730235527; x=1730840327;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/7At35sOPcE3GUUaFg/vHYoUFWhiVUqXzP1FpK3MLlI=;
- b=WKjd2nAhP4w9fMfJ/on56wJg33Upz+mDnsrc5FZR/GNV2UgNhqio54KzaTk7iLCQ2I
- hIufuUGtSbWY0dEEXlvULmyK1+UOtSBzaPduP2813JDfkG3yeME4E90H87spJEV8Zbji
- wkZfJXe4t9FqCYrlqyq/6QY4JHWsCVSYBcn+1PVHwWCP01FQBV4f4qoQ9awzPyyhLUZT
- pin0R2i9fZjbY/h+RIOmiFdBQ1O7Ks83Y9UYBNWqFOSQQCHzFOrNmCRq9MeXFuIc7ftw
- 2rp5BWGpqmZ7M9kM/8iIGAT++Ti+G197/xaCMCUxhk1mYm00rbdnklcEFR46nXoWSfnR
- IsTQ==
-X-Gm-Message-State: AOJu0YyBC7KydbhWIflL1Be3RTLGF96liZ/eJnFy8DngCLstcQZ0hcGK
- 72q/tzS+25oQ1uvb0ur6hyTFZTuUJ93kE6aOJdDZ7hQWjYfRbWfQBjmXImhAXawEiCF812ihTJh
- 6BQ==
-X-Google-Smtp-Source: AGHT+IEiJedYW9w9RUfc5r9VLQm4R26VynSTf30Urbcmv1yQDNIiR9kyszNz71od+crDO/BFVWnzow==
-X-Received: by 2002:a05:6402:234c:b0:5cb:6ca4:f552 with SMTP id
- 4fb4d7f45d1cf-5cbbfaef98cmr11395949a12.35.1730235580182; 
- Tue, 29 Oct 2024 13:59:40 -0700 (PDT)
+ bh=eHMN46rJt9QcxyBveWaVh/b2Y4BBk6tAt2nO8pjIz70=;
+ b=fVcOdQs+rPZu4vDOtAtpvbzPeZM9V7N3LLjUBBlADKAjcrCa2f1db+lANJtZt3LLSD
+ yBGlkewvf+jKRd/qJlAPOOEl1Fef+p7GtpNPoPRokRUNL800ShOXJub9718Tq1krC+ub
+ cv+N3gmJqcvJ4e0FtJC0XW6DOnkoB1mlLXU7lN99kvx0sWxpDFwEx4RXb1U13puBEABH
+ zhwR36jOD90ZSiPOqv0+2LbvsIu6ah6jQ8XE7rJHjZfnEgnN1tH66BXUjOoo+fOr1qJw
+ FbQLQra/ibso8DyVFXrA1b4R0fZzxLLWSqHXosZCMsvm1E10OO9qw4jo6cN6u4Xyb0DQ
+ yXxg==
+X-Gm-Message-State: AOJu0YwfMfn1lutGYrnD2sJdLWYvYY7ybJ9v4gLPp57zZHwAdKJdDeGq
+ J4En4zJ48/4rPkQkxG02vMIc1G9AcbiIerC0iXM7jyOO8UmIGWGKFCwVyAbz8CYsUjScAZYu0+v
+ 08Q==
+X-Google-Smtp-Source: AGHT+IG0c5iaxrQkuxUH/XYReAYUlCoqOEq8E9gLnYtMS85x1xYncJsFBiQ63dUCUeVy7q2jGm8fpw==
+X-Received: by 2002:a05:6402:51d0:b0:5cb:66c6:d82a with SMTP id
+ 4fb4d7f45d1cf-5cbbf88a35fmr9930969a12.3.1730235527106; 
+ Tue, 29 Oct 2024 13:58:47 -0700 (PDT)
 Received: from localhost.localdomain (h082218084190.host.wavenet.at.
  [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cbb629d5besm4217341a12.33.2024.10.29.13.59.37
+ 4fb4d7f45d1cf-5cbb629d5besm4217341a12.33.2024.10.29.13.58.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 29 Oct 2024 13:59:39 -0700 (PDT)
+ Tue, 29 Oct 2024 13:58:46 -0700 (PDT)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
 Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
@@ -74,17 +74,16 @@ Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
  jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com,
  akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  qemu-riscv@nongnu.org
-Subject: [PATCH v5 14/15] hw/block/virtio-blk: Replaces request free function
- with g_free
-Date: Tue, 29 Oct 2024 21:58:18 +0100
-Message-Id: <20241029205819.69888-15-phil@philjordan.eu>
+Subject: [PATCH v5 04/15] hw/display/apple-gfx: Adds configurable mode list
+Date: Tue, 29 Oct 2024 21:58:08 +0100
+Message-Id: <20241029205819.69888-5-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.3 (Apple Git-145)
 In-Reply-To: <20241029205819.69888-1-phil@philjordan.eu>
 References: <20241029205819.69888-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::529;
- envelope-from=phil@philjordan.eu; helo=mail-ed1-x529.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::535;
+ envelope-from=phil@philjordan.eu; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -106,230 +105,324 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtio_blk_free_request() function has been a 1-liner forwarding
-to g_free() for a while now. We may as well call g_free on the request
-pointer directly.
+This change adds a property 'display_modes' on the graphics device
+which permits specifying a list of display modes. (screen resolution
+and refresh rate)
+
+The property is an array of a custom type to make the syntax slightly
+less awkward to use, for example:
+
+-device '{"driver":"apple-gfx-pci", "display-modes":["1920x1080@60", "3840x2160@60"]}'
 
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/block/virtio-blk.c          | 43 +++++++++++++++-------------------
- hw/vmapple/virtio-blk.c        |  2 +-
- include/hw/virtio/virtio-blk.h |  1 -
- 3 files changed, 20 insertions(+), 26 deletions(-)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 9e8337bb639..40d2c9bc591 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -50,11 +50,6 @@ static void virtio_blk_init_request(VirtIOBlock *s, VirtQueue *vq,
-     req->mr_next = NULL;
+v4:
+
+ * Switched to the native array property type, which recently gained
+	 command line support.
+ * The property has also been added to the -mmio variant.
+ * Tidied up the code a little.
+
+v5:
+
+ * Better error handling and buffer management in property parsing and
+   output.
+
+ hw/display/apple-gfx-mmio.m |   8 +++
+ hw/display/apple-gfx-pci.m  |   9 ++-
+ hw/display/apple-gfx.h      |  12 ++++
+ hw/display/apple-gfx.m      | 121 ++++++++++++++++++++++++++++++++----
+ hw/display/trace-events     |   2 +
+ 5 files changed, 139 insertions(+), 13 deletions(-)
+
+diff --git a/hw/display/apple-gfx-mmio.m b/hw/display/apple-gfx-mmio.m
+index b0c5669a344..a801c5fa722 100644
+--- a/hw/display/apple-gfx-mmio.m
++++ b/hw/display/apple-gfx-mmio.m
+@@ -364,6 +364,12 @@ static void apple_gfx_mmio_reset(Object *obj, ResetType type)
+     [s->common.pgdev reset];
  }
  
--void virtio_blk_free_request(VirtIOBlockReq *req)
--{
--    g_free(req);
--}
--
- void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status)
++static Property apple_gfx_mmio_properties[] = {
++    DEFINE_PROP_ARRAY("display-modes", AppleGFXMMIOState,
++                      common.num_display_modes, common.display_modes,
++                      qdev_prop_display_mode, AppleGFXDisplayMode),
++    DEFINE_PROP_END_OF_LIST(),
++};
+ 
+ static void apple_gfx_mmio_class_init(ObjectClass *klass, void *data)
  {
-     VirtIOBlock *s = req->dev;
-@@ -93,7 +88,7 @@ static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
-         if (acct_failed) {
-             block_acct_failed(blk_get_stats(s->blk), &req->acct);
-         }
--        virtio_blk_free_request(req);
-+        g_free(req);
-     }
- 
-     blk_error_action(s->blk, action, is_read, error);
-@@ -136,7 +131,7 @@ static void virtio_blk_rw_complete(void *opaque, int ret)
- 
-         virtio_blk_req_complete(req, VIRTIO_BLK_S_OK);
-         block_acct_done(blk_get_stats(s->blk), &req->acct);
--        virtio_blk_free_request(req);
-+        g_free(req);
-     }
+@@ -373,6 +379,8 @@ static void apple_gfx_mmio_class_init(ObjectClass *klass, void *data)
+     rc->phases.hold = apple_gfx_mmio_reset;
+     dc->hotpluggable = false;
+     dc->realize = apple_gfx_mmio_realize;
++
++    device_class_set_props(dc, apple_gfx_mmio_properties);
  }
  
-@@ -151,7 +146,7 @@ static void virtio_blk_flush_complete(void *opaque, int ret)
- 
-     virtio_blk_req_complete(req, VIRTIO_BLK_S_OK);
-     block_acct_done(blk_get_stats(s->blk), &req->acct);
--    virtio_blk_free_request(req);
-+    g_free(req);
+ static TypeInfo apple_gfx_mmio_types[] = {
+diff --git a/hw/display/apple-gfx-pci.m b/hw/display/apple-gfx-pci.m
+index 870d0c41e66..e2fa2567c99 100644
+--- a/hw/display/apple-gfx-pci.m
++++ b/hw/display/apple-gfx-pci.m
+@@ -113,6 +113,13 @@ static void apple_gfx_pci_reset(Object *obj, ResetType type)
+     [s->common.pgdev reset];
  }
  
- static void virtio_blk_discard_write_zeroes_complete(void *opaque, int ret)
-@@ -169,7 +164,7 @@ static void virtio_blk_discard_write_zeroes_complete(void *opaque, int ret)
-     if (is_write_zeroes) {
-         block_acct_done(blk_get_stats(s->blk), &req->acct);
-     }
--    virtio_blk_free_request(req);
-+    g_free(req);
++static Property apple_gfx_pci_properties[] = {
++    DEFINE_PROP_ARRAY("display-modes", AppleGFXPCIState,
++                      common.num_display_modes, common.display_modes,
++                      qdev_prop_display_mode, AppleGFXDisplayMode),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
+ static void apple_gfx_pci_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -129,7 +136,7 @@ static void apple_gfx_pci_class_init(ObjectClass *klass, void *data)
+     pci->class_id = PCI_CLASS_DISPLAY_OTHER;
+     pci->realize = apple_gfx_pci_realize;
+ 
+-    // TODO: Property for setting mode list
++    device_class_set_props(dc, apple_gfx_pci_properties);
  }
  
- static VirtIOBlockReq *virtio_blk_get_request(VirtIOBlock *s, VirtQueue *vq)
-@@ -214,7 +209,7 @@ static void virtio_blk_handle_scsi(VirtIOBlockReq *req)
+ static TypeInfo apple_gfx_pci_types[] = {
+diff --git a/hw/display/apple-gfx.h b/hw/display/apple-gfx.h
+index ef34e8160c8..e9fef09e37e 100644
+--- a/hw/display/apple-gfx.h
++++ b/hw/display/apple-gfx.h
+@@ -16,6 +16,7 @@
+ #import <ParavirtualizedGraphics/ParavirtualizedGraphics.h>
+ #include "qemu/typedefs.h"
+ #include "exec/memory.h"
++#include "hw/qdev-properties.h"
+ #include "ui/surface.h"
  
- fail:
-     virtio_blk_req_complete(req, status);
--    virtio_blk_free_request(req);
-+    g_free(req);
- }
+ @class PGDeviceDescriptor;
+@@ -27,6 +28,7 @@
  
- static inline void submit_requests(VirtIOBlock *s, MultiReqBuffer *mrb,
-@@ -612,7 +607,7 @@ static void virtio_blk_zone_report_complete(void *opaque, int ret)
+ typedef QTAILQ_HEAD(, PGTask_s) PGTaskList;
  
- out:
-     virtio_blk_req_complete(req, err_status);
--    virtio_blk_free_request(req);
-+    g_free(req);
-     g_free(data->zone_report_data.zones);
-     g_free(data);
- }
-@@ -661,7 +656,7 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
-     return;
- out:
-     virtio_blk_req_complete(req, err_status);
--    virtio_blk_free_request(req);
-+    g_free(req);
- }
++struct AppleGFXDisplayMode;
+ typedef struct AppleGFXState {
+     /* Initialised on init/realize() */
+     MemoryRegion iomem_gfx;
+@@ -36,6 +38,8 @@ typedef struct AppleGFXState {
+     id<MTLDevice> mtl;
+     id<MTLCommandQueue> mtl_queue;
+     dispatch_queue_t render_queue;
++    struct AppleGFXDisplayMode *display_modes;
++    uint32_t num_display_modes;
+     /*
+      * QemuMutex & QemuConds for awaiting completion of PVG memory-mapping and
+      * reading requests after submitting them to run in the AIO context.
+@@ -66,6 +70,12 @@ typedef struct AppleGFXState {
+     id<MTLTexture> texture;
+ } AppleGFXState;
  
- static void virtio_blk_zone_mgmt_complete(void *opaque, int ret)
-@@ -677,7 +672,7 @@ static void virtio_blk_zone_mgmt_complete(void *opaque, int ret)
-     }
++typedef struct AppleGFXDisplayMode {
++    uint16_t width_px;
++    uint16_t height_px;
++    uint16_t refresh_rate_hz;
++} AppleGFXDisplayMode;
++
+ void apple_gfx_common_init(Object *obj, AppleGFXState *s, const char* obj_name);
+ void apple_gfx_common_realize(AppleGFXState *s, PGDeviceDescriptor *desc,
+                               Error **errp);
+@@ -75,5 +85,7 @@ uintptr_t apple_gfx_host_address_for_gpa_range(uint64_t guest_physical,
+ void apple_gfx_await_bh_job(AppleGFXState *s, QemuCond *job_cond,
+                             bool *job_done_flag);
  
-     virtio_blk_req_complete(req, err_status);
--    virtio_blk_free_request(req);
-+    g_free(req);
- }
- 
- static int virtio_blk_handle_zone_mgmt(VirtIOBlockReq *req, BlockZoneOp op)
-@@ -719,7 +714,7 @@ static int virtio_blk_handle_zone_mgmt(VirtIOBlockReq *req, BlockZoneOp op)
-     return 0;
- out:
-     virtio_blk_req_complete(req, err_status);
--    virtio_blk_free_request(req);
-+    g_free(req);
-     return err_status;
- }
- 
-@@ -750,7 +745,7 @@ static void virtio_blk_zone_append_complete(void *opaque, int ret)
- 
- out:
-     virtio_blk_req_complete(req, err_status);
--    virtio_blk_free_request(req);
-+    g_free(req);
-     g_free(data);
- }
- 
-@@ -788,7 +783,7 @@ static int virtio_blk_handle_zone_append(VirtIOBlockReq *req,
- 
- out:
-     virtio_blk_req_complete(req, err_status);
--    virtio_blk_free_request(req);
-+    g_free(req);
-     return err_status;
- }
- 
-@@ -855,7 +850,7 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
-             virtio_blk_req_complete(req, VIRTIO_BLK_S_IOERR);
-             block_acct_invalid(blk_get_stats(s->blk),
-                                is_write ? BLOCK_ACCT_WRITE : BLOCK_ACCT_READ);
--            virtio_blk_free_request(req);
-+            g_free(req);
-             return 0;
-         }
- 
-@@ -911,7 +906,7 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
-                               VIRTIO_BLK_ID_BYTES));
-         iov_from_buf(in_iov, in_num, 0, serial, size);
-         virtio_blk_req_complete(req, VIRTIO_BLK_S_OK);
--        virtio_blk_free_request(req);
-+        g_free(req);
-         break;
-     }
-     case VIRTIO_BLK_T_ZONE_APPEND & ~VIRTIO_BLK_T_OUT:
-@@ -943,7 +938,7 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
-         if (unlikely(!(type & VIRTIO_BLK_T_OUT) ||
-                      out_len > sizeof(dwz_hdr))) {
-             virtio_blk_req_complete(req, VIRTIO_BLK_S_UNSUPP);
--            virtio_blk_free_request(req);
-+            g_free(req);
-             return 0;
-         }
- 
-@@ -960,7 +955,7 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
-                                                             is_write_zeroes);
-         if (err_status != VIRTIO_BLK_S_OK) {
-             virtio_blk_req_complete(req, err_status);
--            virtio_blk_free_request(req);
-+            g_free(req);
-         }
- 
-         break;
-@@ -975,7 +970,7 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
-         if (!vbk->handle_unknown_request ||
-             !vbk->handle_unknown_request(req, mrb, type)) {
-             virtio_blk_req_complete(req, VIRTIO_BLK_S_UNSUPP);
--            virtio_blk_free_request(req);
-+            g_free(req);
-         }
-     }
-     }
-@@ -998,7 +993,7 @@ void virtio_blk_handle_vq(VirtIOBlock *s, VirtQueue *vq)
-         while ((req = virtio_blk_get_request(s, vq))) {
-             if (virtio_blk_handle_request(req, &mrb)) {
-                 virtqueue_detach_element(req->vq, &req->elem, 0);
--                virtio_blk_free_request(req);
-+                g_free(req);
-                 break;
-             }
-         }
-@@ -1048,7 +1043,7 @@ static void virtio_blk_dma_restart_bh(void *opaque)
-             while (req) {
-                 next = req->next;
-                 virtqueue_detach_element(req->vq, &req->elem, 0);
--                virtio_blk_free_request(req);
-+                g_free(req);
-                 req = next;
-             }
-             break;
-@@ -1131,7 +1126,7 @@ static void virtio_blk_reset(VirtIODevice *vdev)
-             /* No other threads can access req->vq here */
-             virtqueue_detach_element(req->vq, &req->elem, 0);
- 
--            virtio_blk_free_request(req);
-+            g_free(req);
-         }
-     }
- 
-diff --git a/hw/vmapple/virtio-blk.c b/hw/vmapple/virtio-blk.c
-index 1652151ec9c..fee1cf0ecaf 100644
---- a/hw/vmapple/virtio-blk.c
-+++ b/hw/vmapple/virtio-blk.c
-@@ -58,7 +58,7 @@ static bool vmapple_virtio_blk_handle_unknown_request(VirtIOBlockReq *req,
-         qemu_log_mask(LOG_UNIMP, "%s: Barrier requests are currently no-ops\n",
-                       __func__);
-         virtio_blk_req_complete(req, VIRTIO_BLK_S_OK);
--        virtio_blk_free_request(req);
-+        g_free(req);
-         return true;
-     default:
-         return false;
-diff --git a/include/hw/virtio/virtio-blk.h b/include/hw/virtio/virtio-blk.h
-index 28d5046ea6c..dcb2c89aed5 100644
---- a/include/hw/virtio/virtio-blk.h
-+++ b/include/hw/virtio/virtio-blk.h
-@@ -109,7 +109,6 @@ typedef struct VirtIOBlkClass {
- } VirtIOBlkClass;
- 
- void virtio_blk_handle_vq(VirtIOBlock *s, VirtQueue *vq);
--void virtio_blk_free_request(VirtIOBlockReq *req);
- void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status);
- 
++extern const PropertyInfo qdev_prop_display_mode;
++
  #endif
+ 
+diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+index 101b38e8a6e..2e264e5561f 100644
+--- a/hw/display/apple-gfx.m
++++ b/hw/display/apple-gfx.m
+@@ -31,9 +31,10 @@
+ #include "sysemu/dma.h"
+ #include "ui/console.h"
+ 
+-static const PGDisplayCoord_t apple_gfx_modes[] = {
+-    { .x = 1440, .y = 1080 },
+-    { .x = 1280, .y = 1024 },
++static const AppleGFXDisplayMode apple_gfx_default_modes[] = {
++    { 1920, 1080, 60 },
++    { 1440, 1080, 60 },
++    { 1280, 1024, 60 },
+ };
+ 
+ /* This implements a type defined in <ParavirtualizedGraphics/PGDevice.h>
+@@ -320,7 +321,6 @@ static void set_mode(AppleGFXState *s, uint32_t width, uint32_t height)
+ static void create_fb(AppleGFXState *s)
+ {
+     s->con = graphic_console_init(NULL, 0, &apple_gfx_fb_ops, s);
+-    set_mode(s, 1440, 1080);
+ 
+     s->cursor_show = true;
+ }
+@@ -686,20 +686,25 @@ static void apple_gfx_register_task_mapping_handlers(AppleGFXState *s,
+     return disp_desc;
+ }
+ 
+-static NSArray<PGDisplayMode*>* apple_gfx_prepare_display_mode_array(void)
++static NSArray<PGDisplayMode*>* apple_gfx_create_display_mode_array(
++    const AppleGFXDisplayMode display_modes[], uint32_t display_mode_count)
+ {
+-    PGDisplayMode *modes[ARRAY_SIZE(apple_gfx_modes)];
++    PGDisplayMode **modes = alloca(sizeof(modes[0]) * display_mode_count);
+     NSArray<PGDisplayMode*>* mode_array = nil;
+-    int i;
++    uint32_t i;
+ 
+-    for (i = 0; i < ARRAY_SIZE(apple_gfx_modes); i++) {
++    for (i = 0; i < display_mode_count; i++) {
++        const AppleGFXDisplayMode *mode = &display_modes[i];
++        trace_apple_gfx_display_mode(i, mode->width_px, mode->height_px);
++        PGDisplayCoord_t mode_size = { mode->width_px, mode->height_px };
+         modes[i] =
+-            [[PGDisplayMode alloc] initWithSizeInPixels:apple_gfx_modes[i] refreshRateInHz:60.];
++            [[PGDisplayMode alloc] initWithSizeInPixels:mode_size
++                                        refreshRateInHz:mode->refresh_rate_hz];
+     }
+ 
+-    mode_array = [NSArray arrayWithObjects:modes count:ARRAY_SIZE(apple_gfx_modes)];
++    mode_array = [NSArray arrayWithObjects:modes count:display_mode_count];
+ 
+-    for (i = 0; i < ARRAY_SIZE(apple_gfx_modes); i++) {
++    for (i = 0; i < display_mode_count; i++) {
+         [modes[i] release];
+         modes[i] = nil;
+     }
+@@ -737,6 +742,8 @@ void apple_gfx_common_realize(AppleGFXState *s, PGDeviceDescriptor *desc,
+                               Error **errp)
+ {
+     PGDisplayDescriptor *disp_desc = nil;
++    const AppleGFXDisplayMode *display_modes = apple_gfx_default_modes;
++    int num_display_modes = ARRAY_SIZE(apple_gfx_default_modes);
+ 
+     if (apple_gfx_mig_blocker == NULL) {
+         error_setg(&apple_gfx_mig_blocker,
+@@ -763,7 +770,14 @@ void apple_gfx_common_realize(AppleGFXState *s, PGDeviceDescriptor *desc,
+     s->pgdisp = [s->pgdev newDisplayWithDescriptor:disp_desc
+                                               port:0 serialNum:1234];
+     [disp_desc release];
+-    s->pgdisp.modeList = apple_gfx_prepare_display_mode_array();
++
++    if (s->display_modes != NULL && s->num_display_modes > 0) {
++        trace_apple_gfx_common_realize_modes_property(s->num_display_modes);
++        display_modes = s->display_modes;
++        num_display_modes = s->num_display_modes;
++    }
++    s->pgdisp.modeList =
++        apple_gfx_create_display_mode_array(display_modes, num_display_modes);
+ 
+     create_fb(s);
+ 
+@@ -771,3 +785,86 @@ void apple_gfx_common_realize(AppleGFXState *s, PGDeviceDescriptor *desc,
+     qemu_cond_init(&s->task_map_job_cond);
+     qemu_cond_init(&s->mem_read_job_cond);
+ }
++
++static void apple_gfx_get_display_mode(Object *obj, Visitor *v,
++                                       const char *name, void *opaque,
++                                       Error **errp)
++{
++    Property *prop = opaque;
++    AppleGFXDisplayMode *mode = object_field_prop_ptr(obj, prop);
++    /* 3 uint16s (max 5 digits) + 2 separator characters + nul. */
++    char buffer[5 * 3 + 2 + 1];
++    char *pos = buffer;
++
++    int rc = snprintf(buffer, sizeof(buffer),
++                      "%"PRIu16"x%"PRIu16"@%"PRIu16,
++                      mode->width_px, mode->height_px,
++                      mode->refresh_rate_hz);
++    assert(rc < sizeof(buffer));
++
++    visit_type_str(v, name, &pos, errp);
++}
++
++static void apple_gfx_set_display_mode(Object *obj, Visitor *v,
++                                       const char *name, void *opaque,
++                                       Error **errp)
++{
++    Property *prop = opaque;
++    AppleGFXDisplayMode *mode = object_field_prop_ptr(obj, prop);
++    Error *local_err = NULL;
++    const char *endptr;
++    g_autofree char *str = NULL;
++    int ret;
++    int val;
++
++    visit_type_str(v, name, &str, &local_err);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    endptr = str;
++
++    ret = qemu_strtoi(endptr, &endptr, 10, &val);
++    if (ret || val > UINT16_MAX || val <= 0) {
++        error_setg(errp, "width in '%s' must be a decimal integer number "
++                   "of pixels in the range 1..65535", name);
++        return;
++    }
++    mode->width_px = val;
++    if (*endptr != 'x') {
++        goto separator_error;
++    }
++
++    ret = qemu_strtoi(endptr + 1, &endptr, 10, &val);
++    if (ret || val > UINT16_MAX || val <= 0) {
++        error_setg(errp, "height in '%s' must be a decimal integer number "
++                   "of pixels in the range 1..65535", name);
++        return;
++    }
++    mode->height_px = val;
++    if (*endptr != '@') {
++        goto separator_error;
++    }
++
++    ret = qemu_strtoi(endptr + 1, &endptr, 10, &val);
++    if (ret || val > UINT16_MAX || val <= 0) {
++        error_setg(errp, "refresh rate in '%s'"
++                   " must be a positive decimal integer (Hertz)", name);
++    }
++    mode->refresh_rate_hz = val;
++    return;
++
++separator_error:
++    error_setg(errp, "Each display mode takes the format "
++               "'<width>x<height>@<rate>'");
++}
++
++const PropertyInfo qdev_prop_display_mode = {
++    .name  = "display_mode",
++    .description =
++        "Display mode in pixels and Hertz, as <width>x<height>@<refresh-rate> "
++        "Example: 3840x2160@60",
++    .get   = apple_gfx_get_display_mode,
++    .set   = apple_gfx_set_display_mode,
++};
+diff --git a/hw/display/trace-events b/hw/display/trace-events
+index d63fba6d094..0e223075375 100644
+--- a/hw/display/trace-events
++++ b/hw/display/trace-events
+@@ -209,6 +209,8 @@ apple_gfx_cursor_set(uint32_t bpp, uint64_t width, uint64_t height) "bpp=%d widt
+ apple_gfx_cursor_show(uint32_t show) "show=%d"
+ apple_gfx_cursor_move(void) ""
+ apple_gfx_common_init(const char *device_name, size_t mmio_size) "device: %s; MMIO size: %zu bytes"
++apple_gfx_common_realize_modes_property(uint32_t num_modes) "using %u modes supplied by 'display-modes' device property"
++apple_gfx_display_mode(uint32_t mode_idx, uint16_t width_px, uint16_t height_px) "mode %2"PRIu32": %4"PRIu16"x%4"PRIu16
+ 
+ # apple-gfx-mmio.m
+ apple_gfx_mmio_iosfc_read(uint64_t offset, uint64_t res) "offset=0x%"PRIx64" res=0x%"PRIx64
 -- 
 2.39.3 (Apple Git-145)
 
