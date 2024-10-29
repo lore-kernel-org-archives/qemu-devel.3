@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 335F7D3A66B
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE74D3A661
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5nu4-0003PP-QJ; Tue, 29 Oct 2024 11:13:05 -0400
+	id 1t5ntd-0002LD-1l; Tue, 29 Oct 2024 11:12:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5ns1-0000bz-EU
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:10:58 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1t5ns3-0000co-4i
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:11:02 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5nrw-0007fe-TM
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:10:57 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-37d495d217bso5161208f8f.0
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:10:52 -0700 (PDT)
+ id 1t5nry-0007g5-Il
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:10:58 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-539e3f35268so6622067e87.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:10:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730214651; x=1730819451; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730214652; x=1730819452; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dknCWSvVj+vWyVYJJ1Ez77BInxMJDBp2lSUr7yhH5zA=;
- b=yHW6WtftA35UFMaHCRPtzBn8MMLT5Z9FyEOq0pmrehq2IIVPi9waMQj+aKHb5U1vrh
- Nbt0OUtK5C6Dz/5EKs7FnaAwxUBslD8EGaWIDIRtFTWRcXbBXMbjFCAPu87diBllVzrq
- MGER+1skamBTFJPRehQK0rhqoP2gQzbW5lu1pu6TGDY5I3ARE91HyUGnclU1TjSjGyJp
- 8XFZps4TE+a+8D6Tg4L9eguGI6uLfT8LPYaU5uArK3VI16VQR6x9Af42l3FcfpyiJy7c
- 22pbB74wW1dA+eFwDoVDZQGUJtMouEEaqpSgfamlCmpQ+BTnBvBAnsc1suv45Yj/ZTWP
- lyZQ==
+ :reply-to; bh=Mn+Xz1D2FUsiusPJC2SlclU8g8noCDEQAV1urES3kd8=;
+ b=b0t7fMnrjPZLilMjagCrX7NXp/LoXisyj7cHNlIemC0xsxuZkF7QssSdhtRz4vxxzD
+ lyByXm2wji+WmrNaezmt8GXrAEIgmGoJ0i7kfkLM414AS/o927B00d8DTIb5jsOHf8k7
+ IJKemtcRCQYPnTO2hJ1SN+ZjyT7bsfZ4ls1z4rY+Mn28HRHXPRgNtLLdg0IoVHLgvejS
+ JiQVi3PZ7ATCyMG57sr2JD6ukfsP00ttJ7yKLFXS42X0EuNTRaawB8OKxYh2eO/zt4wz
+ ulyKponb8SF0lxyEdMi0aFA6UF5aFTn3lYDKZRtZdvL3qcGdj+CyqvnQokJ3WfMOz/7r
+ IXcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730214651; x=1730819451;
+ d=1e100.net; s=20230601; t=1730214652; x=1730819452;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dknCWSvVj+vWyVYJJ1Ez77BInxMJDBp2lSUr7yhH5zA=;
- b=NbiucLRlypwIX1ddzBv66bkwT3oVBrgKBT5rddQ64l6wUs8XvH1tt60px08mPRCV1X
- 4A1/SJpiIHlFQbp30mfQdYYfz+bnrZhl1QjsCM0MYEDV0orf624CnBeKwMZeunBzVm70
- FmL/eSQ6On95SgmjwtrZFiQZziDaaqyV0A5FrESkeS6almDMnvBUs2gwyvz9frWCnakK
- ntg2COrGFWkwMvIpoTTY139uNfwlSTQbnZd/XeYt23mvKpz98mI5NuVFyGrjztwMqEAi
- AF2PL9Q5vxpygKjTxiFpnGuQhXhLaUS4v2M9K7qLKUUqJbkUz9wjm+9h4sMuRx03aTkU
- rUhQ==
+ bh=Mn+Xz1D2FUsiusPJC2SlclU8g8noCDEQAV1urES3kd8=;
+ b=o5Nr6OC/LFPsFuyvMsOUEOXAz3NgozmGoUJuqSTzwAAucFK0ZppifZLA25R7Du3P/7
+ FF1VwOvabXSaKV+DUFOGvqtCvoCT9HEWykqK6H4skVE2wzTKMSw218TDOA8nbwQDnvdF
+ zdNOaA41m3Tg01az0AjY6ekfM67BHd3CAHlPaIFoNBVrD/lGftYnO/sE1uZbSr2CvE2l
+ OGXc2Q16bU8bF2whCDKsaKX2tLR2ZPfSs3SHc1jncxSYMVxZtkyu63dyQ8zz7eZX/9wW
+ iExb4yKl4prZc5YrmW7O8gvRd33VWC46sCTdpO+9soVnru/6qr/Q1G+KXmXLkammhDhr
+ ko/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1G57KwRypS+QCCLv0OtfJhLI6KkK+ZQplKZFHqCTjbGEiH4iViQT244ZggB8uYPFtuNZGopX8UPfR@nongnu.org
-X-Gm-Message-State: AOJu0Yxku+xBgS83JQ2UgVL2JOs4THXwpcv8O1trfdNXXbpnKI/bSbdJ
- 5ofPFEy/pNCCNhiL/x17i6RPyyNLiaU42Ha2a6TyOcGP3xJH+MHLJrUul0GFi5E=
-X-Google-Smtp-Source: AGHT+IHEZvNARZKjq6zqxMGupeDAZWsO96QAXfE9T+sZt5jT6xgSLiAWER5beNAzBwQH1NNgdoVjwg==
-X-Received: by 2002:a5d:5508:0:b0:37d:51b7:5e08 with SMTP id
- ffacd0b85a97d-3806117ea93mr10332755f8f.18.1730214651219; 
- Tue, 29 Oct 2024 08:10:51 -0700 (PDT)
+ AJvYcCUFCuuw8QzzaivDG730nt6pLQDXTQTLmTR9mdYB06/pp7Xk8OyurpsyqCVBXLS8J+omuacONjtINdYX@nongnu.org
+X-Gm-Message-State: AOJu0YxdwAk+AFx9iy2edOJ3oAhVCxAGd7E6NjF/zgrzZ//gba8HGxwP
+ X3TOMRn1Hnc6F8GtFGwPFvdOvQb8Ng/eWyHgJF20MS6UYNy6jfRaC2ymS2qhV1vsf0NcWOzBRF+
+ D
+X-Google-Smtp-Source: AGHT+IGXO0iltyo3erh/VaUsX0EJDZ/rcXUTJr4OuDTd9mF6DRjJjStH2en8PBpe9ZPzi6rVSN7gMQ==
+X-Received: by 2002:a05:6512:398d:b0:535:68ab:7fdd with SMTP id
+ 2adb3069b0e04-53b348ceb33mr6201931e87.19.1730214652423; 
+ Tue, 29 Oct 2024 08:10:52 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4319360cc2esm146835865e9.44.2024.10.29.08.10.50
+ 5b1f17b1804b1-4319360cc2esm146835865e9.44.2024.10.29.08.10.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2024 08:10:50 -0700 (PDT)
+ Tue, 29 Oct 2024 08:10:52 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 03/18] target/arm: Store FPSR cumulative exception bits in
- env->vfp.fpsr
-Date: Tue, 29 Oct 2024 15:10:33 +0000
-Message-Id: <20241029151048.1047247-4-peter.maydell@linaro.org>
+Subject: [PULL 05/18] hw/sd/omap_mmc: Don't use sd_cmd_type_t
+Date: Tue, 29 Oct 2024 15:10:35 +0000
+Message-Id: <20241029151048.1047247-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241029151048.1047247-1-peter.maydell@linaro.org>
 References: <20241029151048.1047247-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,145 +96,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we store the FPSR cumulative exception bits in the
-float_status fields, and use env->vfp.fpsr only for the NZCV bits.
-(The QC bit is stored in env->vfp.qc[].)
+In commit 1ab08790bb75e4 we did some refactoring of the SD card
+implementation, which included a rearrangement of the sd_cmd_type_t
+enum values.  Unfortunately we didn't notice that this enum is not
+used solely inside the SD card model itself, but is also used by the
+OMAP MMC controller device.  In the OMAP MMC controller, it is used
+to implement the handling of the Type field of the MMC_CMD register,
+so changing the enum values so that they no longer lined up with the
+bit definitions for that register field broke the controller model.
+The effect is that Linux fails to boot from an SD card on the "sx1"
+machine.
 
-This works for TCG, but if QEMU was built without CONFIG_TCG (i.e.
-with KVM support only) then we use the stub versions of
-vfp_get_fpsr_from_host() and vfp_set_fpsr_to_host() which do nothing,
-throwing away the cumulative exception bit state.  The effect is that
-if the FPSR state is round-tripped from KVM to QEMU then we lose the
-cumulative exception bits.  In particular, this will happen if the VM
-is migrated.  There is no user-visible bug when using KVM with a QEMU
-binary that was built with CONFIG_TCG.
-
-Fix this by always storing the cumulative exception bits in
-env->vfp.fpsr.  If we are using TCG then we may also keep pending
-cumulative exception information in the float_status fields, so we
-continue to fold that in on reads.
-
-This change will also be helpful for implementing FEAT_AFP later,
-because that includes a feature where in some situations we want to
-cause input denormals to be flushed to zero without affecting the
-existing state of the FPSR.IDC bit, so we need a place to store IDC
-which is distinct from the various float_status fields.
-
-(Note for stable backports: the bug goes back to 4a15527c9fee but
-this code was refactored in commits ea8618382aba..a8ab8706d4cc461, so
-fixing it in branches without those refactorings will mean either
-backporting the refactor or else implementing a conceptually similar
-fix for the old code.)
+Give omap-mmc its own enum which we can document as needing to match
+the encoding used in this device's register, so it isn't sharing
+sd_cmd_type_t with the SD card model any more.  We can then move
+sd_cmd_type_t's definition out of sd.h and into sd.c, which is the
+only place that uses it.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 4a15527c9fee ("target/arm/vfp_helper: Restrict the SoftFloat use to TCG")
+Fixes: 1ab08790bb75 ("hw/sd/sdcard: Store command type in SDProto")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241011162401.3672735-1-peter.maydell@linaro.org
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20241017162755.710698-1-peter.maydell@linaro.org
 ---
- target/arm/vfp_helper.c | 56 ++++++++++++-----------------------------
- 1 file changed, 16 insertions(+), 40 deletions(-)
+ include/hw/sd/sd.h |  8 --------
+ hw/sd/omap_mmc.c   | 22 ++++++++++++++++------
+ hw/sd/sd.c         |  8 ++++++++
+ 3 files changed, 24 insertions(+), 14 deletions(-)
 
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index 203d37303bd..62638d2b1f9 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -59,32 +59,6 @@ static inline int vfp_exceptbits_from_host(int host_bits)
-     return target_bits;
- }
+diff --git a/include/hw/sd/sd.h b/include/hw/sd/sd.h
+index d35a839f5ef..f2458f37b3c 100644
+--- a/include/hw/sd/sd.h
++++ b/include/hw/sd/sd.h
+@@ -75,14 +75,6 @@ typedef enum  {
+     UHS_III             = 3,    /* currently not supported */
+ } sd_uhs_mode_t;
  
--/* Convert vfp exception flags to target form.  */
--static inline int vfp_exceptbits_to_host(int target_bits)
--{
--    int host_bits = 0;
+-typedef enum {
+-    sd_spi,
+-    sd_bc,     /* broadcast -- no response */
+-    sd_bcr,    /* broadcast with response */
+-    sd_ac,     /* addressed -- no data transfer */
+-    sd_adtc,   /* addressed with data transfer */
+-} sd_cmd_type_t;
 -
--    if (target_bits & 1) {
--        host_bits |= float_flag_invalid;
--    }
--    if (target_bits & 2) {
--        host_bits |= float_flag_divbyzero;
--    }
--    if (target_bits & 4) {
--        host_bits |= float_flag_overflow;
--    }
--    if (target_bits & 8) {
--        host_bits |= float_flag_underflow;
--    }
--    if (target_bits & 0x10) {
--        host_bits |= float_flag_inexact;
--    }
--    if (target_bits & 0x80) {
--        host_bits |= float_flag_input_denormal;
--    }
--    return host_bits;
--}
--
- static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
- {
-     uint32_t i;
-@@ -99,15 +73,14 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
-     return vfp_exceptbits_from_host(i);
- }
- 
--static void vfp_set_fpsr_to_host(CPUARMState *env, uint32_t val)
-+static void vfp_clear_float_status_exc_flags(CPUARMState *env)
- {
-     /*
--     * The exception flags are ORed together when we read fpscr so we
--     * only need to preserve the current state in one of our
--     * float_status values.
-+     * Clear out all the exception-flag information in the float_status
-+     * values. The caller should have arranged for env->vfp.fpsr to
-+     * be the architecturally up-to-date exception flag information first.
-      */
--    int i = vfp_exceptbits_to_host(val);
--    set_float_exception_flags(i, &env->vfp.fp_status);
-+    set_float_exception_flags(0, &env->vfp.fp_status);
-     set_float_exception_flags(0, &env->vfp.fp_status_f16);
-     set_float_exception_flags(0, &env->vfp.standard_fp_status);
-     set_float_exception_flags(0, &env->vfp.standard_fp_status_f16);
-@@ -164,7 +137,7 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
-     return 0;
- }
- 
--static void vfp_set_fpsr_to_host(CPUARMState *env, uint32_t val)
-+static void vfp_clear_float_status_exc_flags(CPUARMState *env)
- {
- }
- 
-@@ -216,8 +189,6 @@ void vfp_set_fpsr(CPUARMState *env, uint32_t val)
- {
-     ARMCPU *cpu = env_archcpu(env);
- 
--    vfp_set_fpsr_to_host(env, val);
--
-     if (arm_feature(env, ARM_FEATURE_NEON) ||
-         cpu_isar_feature(aa32_mve, cpu)) {
-         /*
-@@ -231,13 +202,18 @@ void vfp_set_fpsr(CPUARMState *env, uint32_t val)
+ typedef struct {
+     uint8_t cmd;
+     uint32_t arg;
+diff --git a/hw/sd/omap_mmc.c b/hw/sd/omap_mmc.c
+index 91e9a3f1c6a..1d4e30e6b7b 100644
+--- a/hw/sd/omap_mmc.c
++++ b/hw/sd/omap_mmc.c
+@@ -103,6 +103,7 @@ static void omap_mmc_fifolevel_update(struct omap_mmc_s *host)
      }
- 
-     /*
--     * The only FPSR bits we keep in vfp.fpsr are NZCV:
--     * the exception flags IOC|DZC|OFC|UFC|IXC|IDC are stored in
--     * fp_status, and QC is in vfp.qc[]. Store the NZCV bits there,
--     * and zero any of the other FPSR bits.
-+     * NZCV lives only in env->vfp.fpsr. The cumulative exception flags
-+     * IOC|DZC|OFC|UFC|IXC|IDC also live in env->vfp.fpsr, with possible
-+     * extra pending exception information that hasn't yet been folded in
-+     * living in the float_status values (for TCG).
-+     * Since this FPSR write gives us the up to date values of the exception
-+     * flags, we want to store into vfp.fpsr the NZCV and CEXC bits, zeroing
-+     * anything else. We also need to clear out the float_status exception
-+     * information so that the next vfp_get_fpsr does not fold in stale data.
-      */
--    val &= FPSR_NZCV_MASK;
-+    val &= FPSR_NZCV_MASK | FPSR_CEXC_MASK;
-     env->vfp.fpsr = val;
-+    vfp_clear_float_status_exc_flags(env);
  }
  
- static void vfp_set_fpcr_masked(CPUARMState *env, uint32_t val, uint32_t mask)
++/* These must match the encoding of the MMC_CMD Response field */
+ typedef enum {
+     sd_nore = 0,	/* no response */
+     sd_r1,		/* normal response command */
+@@ -112,8 +113,17 @@ typedef enum {
+     sd_r1b = -1,
+ } sd_rsp_type_t;
+ 
++/* These must match the encoding of the MMC_CMD Type field */
++typedef enum {
++    SD_TYPE_BC = 0,     /* broadcast -- no response */
++    SD_TYPE_BCR = 1,    /* broadcast with response */
++    SD_TYPE_AC = 2,     /* addressed -- no data transfer */
++    SD_TYPE_ADTC = 3,   /* addressed with data transfer */
++} MMCCmdType;
++
+ static void omap_mmc_command(struct omap_mmc_s *host, int cmd, int dir,
+-                sd_cmd_type_t type, int busy, sd_rsp_type_t resptype, int init)
++                             MMCCmdType type, int busy,
++                             sd_rsp_type_t resptype, int init)
+ {
+     uint32_t rspstatus, mask;
+     int rsplen, timeout;
+@@ -128,7 +138,7 @@ static void omap_mmc_command(struct omap_mmc_s *host, int cmd, int dir,
+     if (resptype == sd_r1 && busy)
+         resptype = sd_r1b;
+ 
+-    if (type == sd_adtc) {
++    if (type == SD_TYPE_ADTC) {
+         host->fifo_start = 0;
+         host->fifo_len = 0;
+         host->transfer = 1;
+@@ -433,10 +443,10 @@ static void omap_mmc_write(void *opaque, hwaddr offset,
+         for (i = 0; i < 8; i ++)
+             s->rsp[i] = 0x0000;
+         omap_mmc_command(s, value & 63, (value >> 15) & 1,
+-                (sd_cmd_type_t) ((value >> 12) & 3),
+-                (value >> 11) & 1,
+-                (sd_rsp_type_t) ((value >> 8) & 7),
+-                (value >> 7) & 1);
++                         (MMCCmdType)((value >> 12) & 3),
++                         (value >> 11) & 1,
++                         (sd_rsp_type_t) ((value >> 8) & 7),
++                         (value >> 7) & 1);
+         omap_mmc_update(s);
+         break;
+ 
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index a5d2d929a8a..b2e2d58e013 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -71,6 +71,14 @@ typedef enum {
+     sd_illegal = -2,
+ } sd_rsp_type_t;
+ 
++typedef enum {
++    sd_spi,
++    sd_bc,     /* broadcast -- no response */
++    sd_bcr,    /* broadcast with response */
++    sd_ac,     /* addressed -- no data transfer */
++    sd_adtc,   /* addressed with data transfer */
++} sd_cmd_type_t;
++
+ enum SDCardModes {
+     sd_inactive,
+     sd_card_identification_mode,
 -- 
 2.34.1
 
