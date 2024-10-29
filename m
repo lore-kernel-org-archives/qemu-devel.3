@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A67BD74941
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B29D74942
 	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 21:17:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5tZm-0002N3-UV; Tue, 29 Oct 2024 17:16:30 -0400
+	id 1t5tZk-0002Mh-WF; Tue, 29 Oct 2024 17:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5tZa-0002Lh-LV
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5tZa-0002Lg-KJ
  for qemu-devel@nongnu.org; Tue, 29 Oct 2024 17:16:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5tZZ-0007cM-34
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5tZY-0007c6-0g
  for qemu-devel@nongnu.org; Tue, 29 Oct 2024 17:16:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730236576;
+ s=mimecast20190719; t=1730236574;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kY+kbURi2Pxc2UnQSzuDl6KSUoQC+SP5OP047RlJNdA=;
- b=cbomNCfFVD1AFHSAaYXds2R5bR2LxZydIrUNBDSDCrRFOz2OovB6BdJdddb/sO7IFnxR97
- ND+xTY5wpwT2fuoC31T6vgy5KBSX0rovLUbOAVM1uC86Mx2lXeZsZ8HVdyebnsnHAV2n5f
- cGD8Y3ec7mIqYHrxXo6pkk5u1fOIKn0=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=86RBqmSukf/9+sijE7cB2yS2uPB9cqKNvkRro1SRjh4=;
+ b=FzRAXZLFeHr/euwTa/+VlCEHnGAmtMhJSqu0/pqvWA5PdTiKlPkRpS+ORf2tF6N3Wx/lOd
+ wPqL+WUOvacZJ7MrPCrjWcQ3WcY4BcVYmTNZnpoqnPzeQU54vEBkqrK4aoTd3rhj2OqKWa
+ nLMENnDkCzRW18uK2ZUN3pAw/7+wPUE=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-XXRtcpj2PMaKvtFwaHe2dA-1; Tue, 29 Oct 2024 17:16:15 -0400
-X-MC-Unique: XXRtcpj2PMaKvtFwaHe2dA-1
-Received: by mail-ot1-f69.google.com with SMTP id
- 46e09a7af769-7181a10a0bbso5006147a34.3
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 14:16:14 -0700 (PDT)
+ us-mta-86-Iz3XicskPBe-gCSAR_01mw-1; Tue, 29 Oct 2024 17:16:12 -0400
+X-MC-Unique: Iz3XicskPBe-gCSAR_01mw-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-460c368028eso92799341cf.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 14:16:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730236573; x=1730841373;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kY+kbURi2Pxc2UnQSzuDl6KSUoQC+SP5OP047RlJNdA=;
- b=gw8A7H9sNjC/ov+1Pmrw0NLzjY5ehQbNrB853oqD2cEl1KW+HIwoFBkKUmDGEjHObA
- evHeBjm/VaBMYzzVUsFzf2mm2DwhvR1Y6IV+ifLWDDvlVCvTkBHkkGnsOIdkad4pmBU5
- DOhSGUVghqNBMtWnfck0YL8kH5H+Ix8pRQrK9oLZ/hm+PL+11JhghOBzyvSlEXFmES4w
- exVhGcyJhc5OpSOBIJ7DCt07Xngor5U6wCmhRGEoMenFLfcQuZFVnzXhAnZI+EaKICm/
- k2cSDOs4XcXTdntVlubshfgS9D4WGZYayMNJPPMMF2fwjoducyo8fXT0gWmuFFjVUtQ5
- Bk7Q==
-X-Gm-Message-State: AOJu0YzfmnoXYayllHtfq/hJpVoI0jbnQZw7010yZSfzIPXdSEI2cqcn
- 4/1N1Zyjued8IzKtzz5Pq5LgCq2tFpFRoUYF2HsPD1ru5y61fR2Uu1G89wowqnhhJahQODXl7V/
- t0N0KlQ/BIgB+pRKUlZibXs+OiO7G7UjTkUHQBQWA81TjwETfpGekr9WCPX2vpDlwNn21ZPVLR6
- I2QE9OGO70CrDtDsLwu0gX2CEJGWnGJ3htVA==
-X-Received: by 2002:a05:6830:6001:b0:718:fcc:cf76 with SMTP id
- 46e09a7af769-71867eb1b81mr14233948a34.0.1730236573431; 
- Tue, 29 Oct 2024 14:16:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFo1LujMOyCXcfV15vIuQeNgLjRPkQ7LJc5r34HjPDZ/VLz4YMl2Vxa8htGQxlOEKsCoX+dSA==
-X-Received: by 2002:a05:6830:6001:b0:718:fcc:cf76 with SMTP id
- 46e09a7af769-71867eb1b81mr14233915a34.0.1730236572869; 
- Tue, 29 Oct 2024 14:16:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1730236571; x=1730841371;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=86RBqmSukf/9+sijE7cB2yS2uPB9cqKNvkRro1SRjh4=;
+ b=vHXrym+jip53GOJ+v9wylwlMKz5kD8dmb61rsVPAwTNh+LqRDOdH9V9AM6v8lfwtZY
+ 1ks+rKMYbYdOl81HY4maKvl3wo8dEC/jACBQSMjhfmkXZuOSVwnky4qR8fE0hx9pMu77
+ tG6MlpZK1f0kGQdjhLl8lA/HBdzBycluAc6edp/RtplfPYhKJni8tOVo7FfROC2QyoNs
+ aqCeSdEb2D5onTpK/i33bXy3v6vYgHPFvdtWbXHYH4VcCtCUDT59rqkl+ywaV8vwGMib
+ 0NegX8kHFe4j4GSApKQC3Lk3dFv+Ilj47yTBPFnJuE+92NQJgH3tZhatR90mvNfzQhCo
+ MtfA==
+X-Gm-Message-State: AOJu0Yy3tnVLcEkQFY8rBzYfDptzS/lefTlM3yC2lYiVNyxz4IJ5ZiLQ
+ 5iK4/0BDzf04f7oDLxXqus1yQEk8k62DjetkJ+bHf9mgUofzVqrGaFzmPTrWiIpPrFb+Smy/yRv
+ 1aGSo9O1qsh7tJKp6AtPuFC9Qw2qKb9luf+qnvwAHL4Qt1TTeg9kNY6+38uVdI08Ad/JsqrW5nV
+ 3qMWa0eZMdmc4cPWYtHU8Fncyhnlz6zqiIig==
+X-Received: by 2002:a05:622a:408:b0:461:6157:99d0 with SMTP id
+ d75a77b69052e-4616157a277mr77540271cf.41.1730236571194; 
+ Tue, 29 Oct 2024 14:16:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFS8tl83vLhh2e2heMDhYib41L9C8qCeveEt84llZ0oVUuIYIS8WpsDbgu5KiMW84yRJk+wWQ==
+X-Received: by 2002:a05:622a:408:b0:461:6157:99d0 with SMTP id
+ d75a77b69052e-4616157a277mr77539791cf.41.1730236570584; 
+ Tue, 29 Oct 2024 14:16:10 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46132292c97sm48481691cf.49.2024.10.29.14.16.10
+ d75a77b69052e-46132292c97sm48481691cf.49.2024.10.29.14.16.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2024 14:16:11 -0700 (PDT)
+ Tue, 29 Oct 2024 14:16:09 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -78,13 +77,11 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH RFC v2 1/7] qom: Track dynamic initiations of random object
- class
-Date: Tue, 29 Oct 2024 17:16:01 -0400
-Message-ID: <20241029211607.2114845-2-peterx@redhat.com>
+Subject: [PATCH RFC v2 0/7] QOM: Singleton interface
+Date: Tue, 29 Oct 2024 17:16:00 -0400
+Message-ID: <20241029211607.2114845-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20241029211607.2114845-1-peterx@redhat.com>
-References: <20241029211607.2114845-1-peterx@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
@@ -112,159 +109,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a helper object_new_allowed(), use it to track all the places in QEMU
-where a new (and especially, random) object can be created.
+v1: https://lore.kernel.org/r/20241024165627.1372621-1-peterx@redhat.com
 
-Currently, it is some form of a cleanup, just to put together all the
-errors where QEMU wants to avoid instantiations of abstract classes.  The
-follow up patch will add more restriction on what object we can create.
+This patchset introduces the singleton interface for QOM.  I didn't add a
+changelog because there're quite a few changes here and there, plus new
+patches.  So it might just be easier to re-read, considering the patchset
+isn't large.
 
-A side effect of the cleanup: we could have reported the error message in
-different ways even if the reason is always the same (attempts to create an
-instance for an abstract class). Now we always report the same message,
-could be different from before, but hopefully still worthwhile to change.
+I switched v2 into RFC, because we have reviewer concerns (Phil and Dan so
+far) that it could be error prone to try to trap every attempts to create
+an object.  My argument is, if we already have abstract class, meanwhile we
+do not allow instantiation of abstract class, so the complexity is already
+there.  I prepared patch 1 this time to collect and track all similar
+random object creations; it might be helpful as a cleanup on its own to
+deduplicate some similar error messages.  Said that, I'm still always open
+to rejections to this proposal.
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- include/qom/object.h    | 13 +++++++++++++
- chardev/char.c          |  4 +---
- hw/core/cpu-common.c    | 13 +++++++++----
- qom/object.c            | 17 +++++++++++++++--
- qom/object_interfaces.c |  3 +--
- system/qdev-monitor.c   |  4 +---
- 6 files changed, 40 insertions(+), 14 deletions(-)
+I hope v2 looks slightly cleaner by having not only object_new_allowed()
+but also object_new_or_fetch().
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 2af9854675..32f1af2986 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -627,6 +627,19 @@ Object *object_new_with_class(ObjectClass *klass);
-  */
- Object *object_new(const char *typename);
- 
-+/**
-+ * object_new_allowed:
-+ * @klass: The class to instantiate, or fetch instance from.
-+ * @errp: The pointer to an Error* that might be filled
-+ *
-+ * This function detects whether creating a new object of specificed class
-+ * is allowed.  For example, we do not allow initiations of abstract class.
-+ *
-+ * Returns: True if new objects allowed, false otherwise.  When false is
-+ *          returned, errp will be set with a proper error message.
-+ */
-+bool object_new_allowed(ObjectClass *klass, Error **errp);
-+
- /**
-  * object_new_with_props:
-  * @typename:  The name of the type of the object to instantiate.
-diff --git a/chardev/char.c b/chardev/char.c
-index a1722aa076..7fa5b82585 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -533,9 +533,7 @@ static const ChardevClass *char_get_class(const char *driver, Error **errp)
-         return NULL;
-     }
- 
--    if (object_class_is_abstract(oc)) {
--        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "driver",
--                   "a non-abstract device type");
-+    if (!object_new_allowed(oc, errp)) {
-         return NULL;
-     }
- 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 09c7903594..1815b08ba0 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -154,12 +154,17 @@ ObjectClass *cpu_class_by_name(const char *typename, const char *cpu_model)
-     assert(cc->class_by_name);
-     assert(cpu_model);
-     oc = cc->class_by_name(cpu_model);
--    if (object_class_dynamic_cast(oc, typename) &&
--        !object_class_is_abstract(oc)) {
--        return oc;
-+
-+    if (!object_class_dynamic_cast(oc, typename)) {
-+        return NULL;
-     }
- 
--    return NULL;
-+    /* TODO: allow error message to be passed to the callers */
-+    if (!object_new_allowed(oc, NULL)) {
-+        return NULL;
-+    }
-+
-+    return oc;
- }
- 
- static void cpu_common_parse_features(const char *typename, char *features,
-diff --git a/qom/object.c b/qom/object.c
-index 11424cf471..4f3739fd85 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -797,6 +797,19 @@ Object *object_new(const char *typename)
-     return object_new_with_type(ti);
- }
- 
-+bool object_new_allowed(ObjectClass *klass, Error **errp)
-+{
-+    ERRP_GUARD();
-+
-+    /* Abstract classes are not instantiable */
-+    if (object_class_is_abstract(klass)) {
-+        error_setg(errp, "Object type '%s' is abstract",
-+                   klass->type->name);
-+        return false;
-+    }
-+
-+    return true;
-+}
- 
- Object *object_new_with_props(const char *typename,
-                               Object *parent,
-@@ -831,10 +844,10 @@ Object *object_new_with_propv(const char *typename,
-         return NULL;
-     }
- 
--    if (object_class_is_abstract(klass)) {
--        error_setg(errp, "object type '%s' is abstract", typename);
-+    if (!object_new_allowed(klass, errp)) {
-         return NULL;
-     }
-+
-     obj = object_new_with_type(klass->type);
- 
-     if (!object_set_propv(obj, errp, vargs)) {
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index e0833c8bfe..d68faf2234 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -102,8 +102,7 @@ Object *user_creatable_add_type(const char *type, const char *id,
-         return NULL;
-     }
- 
--    if (object_class_is_abstract(klass)) {
--        error_setg(errp, "object type '%s' is abstract", type);
-+    if (!object_new_allowed(klass, errp)) {
-         return NULL;
-     }
- 
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 44994ea0e1..5609e73635 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -255,9 +255,7 @@ static DeviceClass *qdev_get_device_class(const char **driver, Error **errp)
-         return NULL;
-     }
- 
--    if (object_class_is_abstract(oc)) {
--        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "driver",
--                   "a non-abstract device type");
-+    if (!object_new_allowed(oc, errp)) {
-         return NULL;
-     }
- 
+Patch layout:
+
+Patch 1-2:        The patches to introduce QOM singleton interface
+Patch 3-5:        Add support for vIOMMU singleton, some qdev change needed
+Patch 6-7:        Add support for migration singleton, fix dangle pointer
+
+Below are copy-paste of the commit message of patch 2, that I could have
+put into the cover letter too.
+
+====8<====
+
+The singleton interface declares an object class which can only create one
+instance globally.
+
+Backgrounds / Use Cases
+=======================
+
+There can be some existing classes that can start to benefit from it.  One
+example is vIOMMU implementations.
+
+QEMU emulated vIOMMUs are normally implemented on top of a generic device,
+however it's special enough to normally only allow one instance of it for
+the whole system, attached to the root complex.
+
+These vIOMMU classes can be singletons in this case, so that QEMU can fail
+or detect yet another attempt of creating such devices for more than once,
+which can be fatal errors to a system.
+
+We used to have some special code guarding it from happening.  In x86,
+pc_machine_device_pre_plug_cb() has code to detect when vIOMMU is created
+more than once, for instance.  With singleton class, logically we could
+consider dropping the special code, but start to rely on QOM to make sure
+there's only one vIOMMU for the whole system emulation.
+
+There is a similar demand raising recently (even if the problem existed
+over years) in migration.
+
+Firstly, the migration object can currently be created randomly, even
+though not wanted, e.g. during qom-list-properties QMP commands.  Ideally,
+there can be cases where we want to have an object walking over the
+properties, we could use the existing migration object instead of
+dynamically create one.
+
+Meanwhile, migration has a long standing issue on current_migration
+pointer, where it can point to freed data after the migration object is
+finalized.  It is debatable that the pointer can be cleared after the main
+thread (1) join() the migration thread first, then (2) release the last
+refcount for the migration object and clear the pointer.  However there's
+still major challenges [1].  With singleton, we could have a slightly but
+hopefully working workaround to clear the pointer during finalize().
+
+Design
+======
+
+The idea behind is pretty simple: any object that can only be created once
+can now declare the TYPE_SINGLETON interface. Then, QOM facilities will
+make sure it won't be created more than once for the whole QEMU lifecycle.
+Whenever possible (e.g., on object_new_allowed() checks), pretty error
+message will be generated to report an error.  QOM also guards at the core
+of object_new() so that any further violation of trying to create a
+singleton more than once will crash QEMU as a programming error.
+
+For example, qom-list-properties, device-list-properties, etc., will be
+smart enough to not try to create temporary singleton objects if the class
+is a singleton class and if there's existing instance created.  Such usages
+should be rare, and this patch introduced object_new_or_fetch() just for
+it, which either create a new temp object when available, or fetch the
+instance if we found an existing singleton instance.  There're only two
+such use cases.
+
+Meanwhile, we also guard device-add or similar paths using the singleton
+check in object_new_allowed(), so that it'll fail properly if a singleton
+class instantiate more than one object.
+
+Glib Singleton implementation
+=============================
+
+One note here to mention the Glib implementation of singletons [1].
+
+QEMU chose not to follow Glib's implementation because Glib's version is
+not thread safe on the constructor, so that two concurrent g_object_new()
+on a single can race.  It's not ideal to QEMU, as QEMU has to not only
+support the event-driven context which is normally lock-free, but also
+the case where threads are heavily used.
+
+It could be QEMU's desire to properly support multi-threading by default on
+such new interface.  The "bad" side effect of that is, QEMU's object_new()
+on singletons can assert failures if the singleton existed, but that's also
+part of the design so as to forbid such from happening, taking which as a
+programming error.  Meanwhile since we have pretty ways to fail elsewhere
+on qdev creations, it should already guard us in a clean way, from anywhere
+that the user could try to create the singleton more than once.
+
+The current QEMU impl also guarantees object_new() always return a newly
+allocated object as long as properly returned, rather than silently return
+an existing object as what Glib's impl would do.  I see it a benefit, so as
+to avoid unknown caller manipulate a global object, wrongly assuming it was
+temporarily created.
+
+[1] https://lore.kernel.org/qemu-devel/20190228122822.GD4970@work-vm/
+[2] https://lore.kernel.org/r/ZxtqGQbd4Hq4APtm@redhat.com
+
+Thanks,
+
+Peter Xu (7):
+  qom: Track dynamic initiations of random object class
+  qom: TYPE_SINGLETON interface
+  qdev: Make device_set_realized() be fully prepared with !machine
+  qdev: Make qdev_get_machine() safe before machine creates
+  x86/iommu: Make x86-iommu a singleton object
+  migration: Make migration object a singleton object
+  migration: Reset current_migration properly
+
+ qapi/qdev.json                  |  2 +-
+ qapi/qom.json                   |  2 +-
+ include/qom/object.h            | 25 ++++++++++++++++
+ include/qom/object_interfaces.h | 51 +++++++++++++++++++++++++++++++++
+ chardev/char.c                  |  4 +--
+ hw/core/cpu-common.c            | 13 ++++++---
+ hw/core/qdev.c                  | 20 +++++++++++--
+ hw/i386/x86-iommu.c             | 26 +++++++++++++++--
+ migration/migration.c           | 36 +++++++++++++++++++++--
+ qom/object.c                    | 50 ++++++++++++++++++++++++++++++--
+ qom/object_interfaces.c         | 33 +++++++++++++++++++--
+ qom/qom-qmp-cmds.c              |  4 +--
+ system/qdev-monitor.c           |  4 +--
+ 13 files changed, 243 insertions(+), 27 deletions(-)
+
 -- 
 2.45.0
 
