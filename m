@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9858CD2AB31
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC36D2AB32
 	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 12:11:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5l3k-0004dp-VZ; Tue, 29 Oct 2024 08:10:53 -0400
+	id 1t5l3W-0004Zh-WC; Tue, 29 Oct 2024 08:10:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t5l3Z-0004at-HY
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:10:41 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ id 1t5l3U-0004Yy-UT
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:10:36 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t5l3X-0007Sz-Ai
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:10:41 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-539f1292a9bso6285352e87.2
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 05:10:38 -0700 (PDT)
+ id 1t5l3S-0007Rm-5R
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:10:36 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43193678216so40866065e9.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 05:10:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730203837; x=1730808637; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Lowm4YyV2GElWtVAlyi9nUtaFHXu7/ajO637WhpLQKM=;
- b=xYVnIbC1ac2tJEgnUEHNJ5uDPzfWmZOspdwbWTOJZeSK7W1KaszhF8Tv1JuSlWW12Y
- xoqvrHwtSn3F7RO5dEr+WN2VgBW3mALQRrjUtkukKk389p6gg/ajflX3Ers02zwzYyk1
- Yxhk/yQkET3vSy2exjA99tc+rWOC9fSgQ8Zdc1Ojl0BEgGi27bLqeCF/E3PRfO175GZt
- NBnfoNDiveSzVzhytri2CpDCVlY6ig6yCXZo+/NyLSplIpw3L+sAl1tes0qnKIig+tzM
- PG4Ax5qkC2a/efXz/0Dvn0vW3LsqJJvNCJsCSbbHntVYDxlKeTJ/+tnZaTT6R6meRvzs
- R2Ig==
+ d=linaro.org; s=google; t=1730203832; x=1730808632; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3Qn3VnlLWDra9koZ9LR5i1hb7kIkeKEhWw6Jyi9oumY=;
+ b=kvDuLxs2ksdkYxt1OFNG1qE1o8CDD2fBMBLReMW1GK1PWHbcprdzKE+sMbA5pkr4UN
+ IKHhMyVKFvdlsdxZBMje3/3W+Sc06PXJvgy13DRIpk35nqYDbv0WaupZcsJkj+wArNr8
+ fajNvh3oy6V+UOanO1hUGHTMNmqOvwIZXKwOkb9kEnmeVX9zTARIZsV6uVv/4LMNHYTQ
+ 8jDoQn01XCKx6EnsBi3y3h6eiWjQznBYpeum71zYsq/e3IxwoRde0eSdZNYOw1RyxWX5
+ QGIffRuHG/UghFK6gtwNk9Ji3rs1H8JhR1K+vwwLxXCPH0a1k4Tr0as3/EAXe0oebyY7
+ mdPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730203837; x=1730808637;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Lowm4YyV2GElWtVAlyi9nUtaFHXu7/ajO637WhpLQKM=;
- b=nl+IMkaj4CEBtM/KzVerhAz1J7DuRvGIwoQOePe5tRNC5Av+LMeEVlVAYzIKnqzj37
- GIxGi2SYMvAovPMMmYN3XOw7KG2ezOwZYvhcdSvjUBoZ+mITUAxBPr6qmtCFfLvxVdh/
- s0k9lBCVfQH8s9u/pI3QP5wNi77Fko9hGek0bNqtjvTyloot2LZ0e4PmZaqKpXPN+GFR
- p0gXpC7cEFsAVGO29Wzl6ZMSQBlYoiQ/U6xJFlqiRDa6LQUn11GV0wL7dGuhbqKJlMRf
- 8yO5XFu6Up8vkHw+JQekudQvd6GDGREUG01xUtV/H4mFfDYTzx09f9rQoSoYea2WNKYb
- uuGQ==
-X-Gm-Message-State: AOJu0YyDC46IDAyu18SjKEtcRig/XD+Jh5itfexF9WgI5BR+XNjimpaq
- zKM/YyYXRO6TDLdrJXnvG+EcBTr0wL9rNWAYux5KdYfx6rF2nQM6dEsT3yUYJio=
-X-Google-Smtp-Source: AGHT+IGjTGDiRCVJEGBE/cC71k3FucS4hi/JgbbTrHBY1hEvAen5h8YiyW29FV5Mr80LPRlpKVmEcQ==
-X-Received: by 2002:a05:6512:32c7:b0:539:a353:279c with SMTP id
- 2adb3069b0e04-53b348d8f6cmr6306914e87.28.1730203837419; 
- Tue, 29 Oct 2024 05:10:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1730203832; x=1730808632;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3Qn3VnlLWDra9koZ9LR5i1hb7kIkeKEhWw6Jyi9oumY=;
+ b=nhsyRghNMrwnTtMmoAJy4hVugl1pdYQhkfV95ObI2IBsX9vxxNFPT0rwLX44DgoYJ7
+ c0HRzsDf0ceK/j7X/+LO36GQHBhOe2rkHsfFmlpszVkZgmlObUp+s9SkQm+UJAN+xUQP
+ H+9q/TKc1cH9VqNTw7bmTWqeH3X3RPcQkknQv4H/8/0DlvWAzxA8tDe5rgX+PZ1xs1of
+ 8rPCOfPfqB7bly4UY3JM44nWOCEhzMC99Gu0BACYRcY21DcOajeXXyHrOOn4dC9Xipac
+ rrfgyVKfgwq1Y95OCvUjAgNA09OwHXa0otXXpUVDdg37JigZBySdSfIyYrjpbvvyAN8i
+ CX+A==
+X-Gm-Message-State: AOJu0YwwMejk/TwMnwfPAg/bIotbwDm/avzcVlOO4ghycebd6AmWvQBM
+ RvookyLeoLWK0wttP4WNbQS7sK1S4f6wLj5EqL60y/Ks0GEN2dAbhqg4/U1rMKDqMtprjLGP3lV
+ 8
+X-Google-Smtp-Source: AGHT+IELqIgGR3Ny8//GN7zkjzF3NQGG0Uy4ofKGbc1GjxCYUpeNbbg49hQW75VSMF1Ao05vrUf6/Q==
+X-Received: by 2002:a05:600c:4f83:b0:42c:c28c:e477 with SMTP id
+ 5b1f17b1804b1-4319ad089b0mr83155255e9.23.1730203832329; 
+ Tue, 29 Oct 2024 05:10:32 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38058bb1bc3sm12200227f8f.110.2024.10.29.05.10.32
+ 5b1f17b1804b1-431935f7213sm142369085e9.32.2024.10.29.05.10.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2024 05:10:34 -0700 (PDT)
+ Tue, 29 Oct 2024 05:10:31 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2676B5FACF;
- Tue, 29 Oct 2024 12:10:31 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 79E3B5F860;
+ Tue, 29 Oct 2024 12:10:30 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Huang Rui <ray.huang@amd.com>,
- Antonio Caggiano <antonio.caggiano@collabora.com>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PULL 07/13] virtio-gpu: Support context-init feature with
- virglrenderer
-Date: Tue, 29 Oct 2024 12:10:24 +0000
-Message-Id: <20241029121030.4007014-8-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 00/13] virtio-gpu vulkan support
+Date: Tue, 29 Oct 2024 12:10:17 +0000
+Message-Id: <20241029121030.4007014-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241029121030.4007014-1-alex.bennee@linaro.org>
-References: <20241029121030.4007014-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,65 +94,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Huang Rui <ray.huang@amd.com>
+The following changes since commit fdf250e5a37830615e324017cb3a503e84b3712c:
 
-Patch "virtio-gpu: CONTEXT_INIT feature" has added the context_init
-feature flags. Expose this feature and support creating virglrenderer
-context with flags using context_id if libvirglrenderer is new enough.
+  Merge tag 'pull-maintainer-oct-misc-241024-1' of https://gitlab.com/stsquad/qemu into staging (2024-10-25 19:12:06 +0100)
 
-Originally-by: Antonio Caggiano <antonio.caggiano@collabora.com>
-Signed-off-by: Huang Rui <ray.huang@amd.com>
-Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-Id: <20241024210311.118220-8-dmitry.osipenko@collabora.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+are available in the Git repository at:
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 753b35ed69..bf87ba4232 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -147,6 +147,10 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
-     VIRTIO_GPU_BASE(g)->virtio_config.num_capsets =
-         virtio_gpu_virgl_get_num_capsets(g);
- 
-+#if VIRGL_VERSION_MAJOR >= 1
-+    g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED;
-+#endif
-+
-     virtio_gpu_device_realize(qdev, errp);
- }
- 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index ca6f4d6cbb..b3aa444bcf 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -106,8 +106,24 @@ static void virgl_cmd_context_create(VirtIOGPU *g,
-     trace_virtio_gpu_cmd_ctx_create(cc.hdr.ctx_id,
-                                     cc.debug_name);
- 
--    virgl_renderer_context_create(cc.hdr.ctx_id, cc.nlen,
--                                  cc.debug_name);
-+    if (cc.context_init) {
-+        if (!virtio_gpu_context_init_enabled(g->parent_obj.conf)) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: context_init disabled",
-+                          __func__);
-+            cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-+            return;
-+        }
-+
-+#if VIRGL_VERSION_MAJOR >= 1
-+        virgl_renderer_context_create_with_flags(cc.hdr.ctx_id,
-+                                                 cc.context_init,
-+                                                 cc.nlen,
-+                                                 cc.debug_name);
-+        return;
-+#endif
-+    }
-+
-+    virgl_renderer_context_create(cc.hdr.ctx_id, cc.nlen, cc.debug_name);
- }
- 
- static void virgl_cmd_context_destroy(VirtIOGPU *g,
+  https://gitlab.com/stsquad/qemu.git tags/pull-virtio-gpu-vulkan-291024-1
+
+for you to fetch changes up to 94d0ea1c19289d76ced934711fccd2269e69bb29:
+
+  virtio-gpu: Support Venus context (2024-10-28 16:56:36 +0000)
+
+----------------------------------------------------------------
+virtio-gpu: add venus/vulkan capability
+
+We are currently lacking a declared maintainer for the sub-system so
+while we look for one I'm merging after testing locally.
+
+  - convert some fprintfs to proper trace events
+  - move timers used by GL devices into GL structures
+  - handle virtio_gpu_virgl_init() failure better
+  - implement unrealize for GL devices
+  - use virgl version numbering to gate features
+  - support context-init feature
+  - don't require udmabuf for virgl only
+  - add virgl resource tracker
+  - allow command submission to be suspended
+  - handle resource blob commands
+  - dynamically handle capabilit sets
+  - add venus context support for passing vulkan
+
+----------------------------------------------------------------
+Antonio Caggiano (1):
+      virtio-gpu: Support Venus context
+
+Dmitry Osipenko (8):
+      virtio-gpu: Use trace events for tracking number of in-flight fences
+      virtio-gpu: Move fence_poll timer to VirtIOGPUGL
+      virtio-gpu: Move print_stats timer to VirtIOGPUGL
+      virtio-gpu: Handle virtio_gpu_virgl_init() failure
+      virtio-gpu: Unrealize GL device
+      virtio-gpu: Use pkgconfig version to decide which virgl features are available
+      virtio-gpu: Don't require udmabuf when blobs and virgl are enabled
+      virtio-gpu: Support suspension of commands processing
+
+Huang Rui (2):
+      virtio-gpu: Support context-init feature with virglrenderer
+      virtio-gpu: Add virgl resource management
+
+Pierre-Eric Pelloux-Prayer (1):
+      virtio-gpu: Register capsets dynamically
+
+Robert Beckett (1):
+      virtio-gpu: Handle resource blob commands
+
+ docs/system/devices/virtio-gpu.rst |  11 +
+ meson.build                        |   5 +-
+ include/hw/virtio/virtio-gpu.h     |  32 +-
+ hw/display/virtio-gpu-gl.c         |  62 +++-
+ hw/display/virtio-gpu-virgl.c      | 585 +++++++++++++++++++++++++++++++++++--
+ hw/display/virtio-gpu.c            |  44 ++-
+ hw/display/trace-events            |   3 +
+ 7 files changed, 685 insertions(+), 57 deletions(-)
+
+
 -- 
 2.39.5
 
