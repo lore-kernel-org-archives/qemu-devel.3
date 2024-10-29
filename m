@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443D8D7494F
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 23:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18430D7494D
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 23:30:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5vXg-0004Do-4G; Tue, 29 Oct 2024 19:22:28 -0400
+	id 1t5veo-0006Cr-Jt; Tue, 29 Oct 2024 19:29:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t5vXc-0004D7-6K
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 19:22:24 -0400
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t5ven-0006Cj-JU
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 19:29:49 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t5vXa-00045t-E2
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 19:22:23 -0400
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t5vel-0004dx-O8
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 19:29:49 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TLKBfW031401;
- Tue, 29 Oct 2024 23:22:18 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TLKBtw031393;
+ Tue, 29 Oct 2024 23:29:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=9BbXIVBdJZZMWwDof
- 7aKer9V95VsJYCKUjtzhRofcng=; b=EpfkGEYGN3DNbYStlv8HlHRleOpAVPSII
- Ai4jWIqPRBOPj5gy5J1AApD94NUFyPyp9QjGl4+VYZP04170POPKLX7HggrdCz6P
- Vk45MJwQxt5VoLUHrHW2sOmO+auPde2+LHb3oGlFuWbZmRQzFdCcC+61tzL5uqjh
- 3xEbT+qe/aQIs+NGd+/6I4rnbztoEOeZGsNx624n8ZliV68YXH5ka+1kdRrzgS2J
- j3muiLKFNjj91oS1JyADNgJAYGhPRIkBDynXw9bDpKJ1OVwnsrIndvV0fuXu9Kkj
- pHyKe5/X65Bvu4xQ/6dZ3CsyNxTun3TK2fAkPyGJEQY98RuoiIv6g==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42j3nsusff-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Qgp8xA
+ Xg3gN6oIBDJgJgZkQL+D/I7T0l6HX1fajGDOg=; b=oDrlxSofdwHtR7mJ4yQMnF
+ /GXv9bc8kPg0AsFGRf5cL+H9wJ1JFKpThCuul7LUjl4u2JE5i6/ZyIe7nniU1Jrs
+ 856L4TodeDximL3Dc4TahdvKSaOP+wAkeUn/Adap6JcLmGddrtwjLU8GLSwTkyqa
+ IbJ24zxq+OXVRmlrecFuDxgMccjaWbxkmxN+XbaKDfirVQrbo9DAdo5eI9g2e6qs
+ wMzfywZcnRGFcEAJded0ym73UFUQXBwL9Ff4zSQx86q5NpB9h7mERzQZ+tj0BKCU
+ UEaZdczXY2+dQ+XzNuk7AKyZ53hTVHcRoFN60jpfSrIEHlqei68de+sGwhMdm/QA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42j3nsut9d-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Oct 2024 23:22:18 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49TNMHXQ030433;
- Tue, 29 Oct 2024 23:22:18 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42j3nsusfd-1
+ Tue, 29 Oct 2024 23:29:44 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49TMEBIe013585;
+ Tue, 29 Oct 2024 23:29:43 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42hbrmwdu9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Oct 2024 23:22:17 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49TJXprH024535;
- Tue, 29 Oct 2024 23:22:17 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 42hcyjd51g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Oct 2024 23:22:16 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49TNMF0x35521144
+ Tue, 29 Oct 2024 23:29:43 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49TNTfIt53543390
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 29 Oct 2024 23:22:15 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 34A8F20040;
- Tue, 29 Oct 2024 23:22:15 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C77DC2004B;
- Tue, 29 Oct 2024 23:22:14 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.12.2])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 29 Oct 2024 23:22:14 +0000 (GMT)
+ Tue, 29 Oct 2024 23:29:41 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7BBA42004B;
+ Tue, 29 Oct 2024 23:29:41 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 30E7620049;
+ Tue, 29 Oct 2024 23:29:41 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 29 Oct 2024 23:29:41 +0000 (GMT)
+Message-ID: <4f0cab2f2d564037e1a36a75ad1fb9d350c0f0e1.camel@linux.ibm.com>
+Subject: Re: [PATCH] tests/tcg: Do not use inttypes.h in
+ multiarch/system/memory.c
 From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Brian Cain <bcain@quicinc.com>,
- "ltaylorsimpson @ gmail . com" <ltaylorsimpson@gmail.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v3 2/2] tests/tcg: Add SIGRTMIN/SIGRTMAX test
-Date: Wed, 30 Oct 2024 00:17:48 +0100
-Message-ID: <20241029232211.206766-3-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241029232211.206766-1-iii@linux.ibm.com>
-References: <20241029232211.206766-1-iii@linux.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: Paolo Bonzini <pbonzini@redhat.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
+ <alex.bennee@linaro.org>, Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Date: Wed, 30 Oct 2024 00:29:40 +0100
+In-Reply-To: <59b7a93e-7acb-4a73-9aae-bbfb36101c5d@redhat.com>
+References: <20241010085906.226249-1-iii@linux.ibm.com>
+ <59b7a93e-7acb-4a73-9aae-bbfb36101c5d@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 41-FSsKq4XLsZ3YEd4b-WjwZpGH21lpB
-X-Proofpoint-GUID: aSnoV_l9HxwjdReTVJoBpIKLAUpau_ML
+X-Proofpoint-ORIG-GUID: s6X2BsEs1VJ0TYQM-daL4m3EsdtFjExg
+X-Proofpoint-GUID: s6X2BsEs1VJ0TYQM-daL4m3EsdtFjExg
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  phishscore=0 adultscore=0
- bulkscore=0 mlxlogscore=897 clxscore=1015 priorityscore=1501
+ bulkscore=0 mlxlogscore=957 clxscore=1015 priorityscore=1501
  suspectscore=0 lowpriorityscore=0 mlxscore=0 impostorscore=0
  malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2410290175
@@ -118,117 +111,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Test the lowest and the highest real-time signals. This requires
-configuring the real-time signal mapping, and therefore some knowledge
-about the host. To this end, pass the emulator path in the QEMU
-environment variable to all tests (this should not disturb the existing
-ones), and assume that all hosts have signals 36-39 available.
+On Thu, 2024-10-10 at 11:20 +0200, Paolo Bonzini wrote:
+> On 10/10/24 10:58, Ilya Leoshkevich wrote:
+> > make check-tcg fails on Fedora with the following error message:
+> >=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0 alpha-linux-gnu-gcc [...]
+> > qemu/tests/tcg/multiarch/system/memory.c -o memory [...]
+> > =C2=A0=C2=A0=C2=A0=C2=A0 qemu/tests/tcg/multiarch/system/memory.c:17:10=
+: fatal error:
+> > inttypes.h: No such file or directory
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 17 | #include <inttypes.h>
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~~~~~~~~~
+> > =C2=A0=C2=A0=C2=A0=C2=A0 compilation terminated.
+> >=20
+> > The reason is that Fedora has cross-compilers, but no cross-glibc
+> > headers. Fix by hardcoding the format specifiers and dropping the
+> > include.
+> >=20
+> > An alternative fix would be to introduce a configure check for
+> > inttypes.h. But this would make it impossible to use Fedora
+> > cross-compilers for softmmu tests, which used to work so far.
+> >=20
+> > Fixes: ecbcc9ead2f8 ("tests/tcg: add a system test to check memory
+> > instrumentation")
+> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>=20
+> Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- tests/tcg/Makefile.target                     |  4 +-
- tests/tcg/multiarch/linux/linux-sigrtminmax.c | 74 +++++++++++++++++++
- 2 files changed, 76 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/multiarch/linux/linux-sigrtminmax.c
+[...]
 
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-index 9722145b976..95ff76ea44d 100644
---- a/tests/tcg/Makefile.target
-+++ b/tests/tcg/Makefile.target
-@@ -179,10 +179,10 @@ run-plugin-%-with-libmem.so: PLUGIN_ARGS=$(COMMA)inline=true
- 
- ifeq ($(filter %-softmmu, $(TARGET)),)
- run-%: %
--	$(call run-test, $<, $(QEMU) $(QEMU_OPTS) $<)
-+	$(call run-test, $<, env QEMU=$(QEMU) $(QEMU) $(QEMU_OPTS) $<)
- 
- run-plugin-%:
--	$(call run-test, $@, $(QEMU) $(QEMU_OPTS) \
-+	$(call run-test, $@, env QEMU=$(QEMU) $(QEMU) $(QEMU_OPTS) \
- 		-plugin $(PLUGIN_LIB)/$(call extract-plugin,$@)$(PLUGIN_ARGS) \
- 		-d plugin -D $*.pout \
- 		 $(call strip-plugin,$<))
-diff --git a/tests/tcg/multiarch/linux/linux-sigrtminmax.c b/tests/tcg/multiarch/linux/linux-sigrtminmax.c
-new file mode 100644
-index 00000000000..a7059aacd9c
---- /dev/null
-+++ b/tests/tcg/multiarch/linux/linux-sigrtminmax.c
-@@ -0,0 +1,74 @@
-+/*
-+ * Test the lowest and the highest real-time signals.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdbool.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <unistd.h>
-+
-+/* For hexagon and microblaze. */
-+#ifndef __SIGRTMIN
-+#define __SIGRTMIN 32
-+#endif
-+
-+extern char **environ;
-+
-+static bool seen_sigrtmin, seen_sigrtmax;
-+
-+static void handle_signal(int sig)
-+{
-+    if (sig == SIGRTMIN) {
-+        seen_sigrtmin = true;
-+    } else if (sig == SIGRTMAX) {
-+        seen_sigrtmax = true;
-+    } else {
-+        _exit(1);
-+    }
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    char *qemu = getenv("QEMU");
-+    struct sigaction act;
-+
-+    assert(qemu);
-+
-+    if (!getenv("QEMU_RTSIG_MAP")) {
-+        char **new_argv = malloc((argc + 2) + sizeof(char *));
-+        int tsig1, hsig1, count1, tsig2, hsig2, count2;
-+        char rt_sigmap[64];
-+
-+        /* Re-exec with a mapping that includes SIGRTMIN and SIGRTMAX. */
-+        new_argv[0] = qemu;
-+        memcpy(&new_argv[1], argv, (argc + 1) * sizeof(char *));
-+        tsig1 = __SIGRTMIN;
-+        /* The host must have a few signals starting from this one. */
-+        hsig1 = 36;
-+        count1 = SIGRTMIN - __SIGRTMIN + 1;
-+        tsig2 = SIGRTMAX;
-+        hsig2 = hsig1 + count1;
-+        count2 = 1;
-+        snprintf(rt_sigmap, sizeof(rt_sigmap), "%d %d %d,%d %d %d",
-+                 tsig1, hsig1, count1, tsig2, hsig2, count2);
-+        setenv("QEMU_RTSIG_MAP", rt_sigmap, 0);
-+        assert(execve(new_argv[0], new_argv, environ) == 0);
-+        return EXIT_FAILURE;
-+    }
-+
-+    memset(&act, 0, sizeof(act));
-+    act.sa_handler = handle_signal;
-+    assert(sigaction(SIGRTMIN, &act, NULL) == 0);
-+    assert(sigaction(SIGRTMAX, &act, NULL) == 0);
-+
-+    assert(kill(getpid(), SIGRTMIN) == 0);
-+    assert(seen_sigrtmin);
-+    assert(kill(getpid(), SIGRTMAX) == 0);
-+    assert(seen_sigrtmax);
-+
-+    return EXIT_SUCCESS;
-+}
--- 
-2.47.0
+Thanks for the review!
 
+Could someone please pick this one and also [1] up?
+Both patches are aimed at improving the situation with the test builds.
+
+[1]
+https://lore.kernel.org/qemu-devel/20241023131250.48510-1-iii@linux.ibm.com/
 
