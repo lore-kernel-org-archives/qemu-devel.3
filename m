@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E97DD3A66E
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5489DD3A661
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:46:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5oPX-0003Ho-Bg; Tue, 29 Oct 2024 11:45:35 -0400
+	id 1t5oQ4-0003tD-4U; Tue, 29 Oct 2024 11:46:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t5oPV-0003Bx-1w
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:45:33 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1t5oQ1-0003sn-Ky
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:46:05 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t5oPT-0003i8-Dr
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:45:32 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4314c4cb752so55204705e9.2
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:45:31 -0700 (PDT)
+ id 1t5oQ0-0003kH-8A
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:46:05 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-431616c23b5so40227935e9.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:46:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730216730; x=1730821530; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730216763; x=1730821563; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FJPOESiGSRpd0rRX1XLnheFUZTmMEaZE1cP6Ie8IL28=;
- b=NJ0zIVxW2xilAEAnVCO36qqTRPX78S5iYnQIzNDqnSAI7iAQBLH0D1BXA6tLbmhRKG
- wdd6LrVUitPxLzEIg0lcLb6hI14+DAF8SlBPSDt46eXxlHGRJX0unVzyiDffyLKFBgjx
- OKybdhwzby6N2pK+6R2etqOrrvJOoD+NV3FPXb8g21fb58lENLt6Q3ceYlnCcCjlrDRo
- uhh8KHsh5RSNkqAL+VtP4e8ixVH5z91lTFYqecu/rCn+ub+rLcF7DLDhZyt7AQU0KlmH
- 9IgEoKjp85waiXE0BMoqGCEtjfc1adqknFtUimj2ybncWQoOo26bFSB6NZZDijDZJj/m
- XqEA==
+ bh=cj753F+hvTDyLj8bJVVZzpyE5puWDfwyIGxtEnBX27s=;
+ b=XtMVcW2n3kFM9BO40tI/YDLkQGrwY+dCREECV89NfNXrLm4U1uqs9LHxlsl//P1mvF
+ KpXS50sCOu61iQZ1w0OG9xSRP0Gl2b4k21AFe/Mm33U8AShrlgH37LvvwGFim+/O0RXz
+ leCxO0PhEtOGKetZlI+G66fteyZSjEap9Sgwns8MbXs1udWfsdHjQZ47YaARxARJ/QdC
+ MvM7EDlE0HaAMUu7IYxZr3Ji/PhylpQ5zdU79lbKbmiAWan6m0QOjETgC4CDQpjHEwfS
+ 4cmOKl5nbigeBvZ2JJ/u8olKPbIrbKZjifz254P4ynNPaOetd9nsquUL2K+QSDALc/tL
+ 55dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730216730; x=1730821530;
+ d=1e100.net; s=20230601; t=1730216763; x=1730821563;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FJPOESiGSRpd0rRX1XLnheFUZTmMEaZE1cP6Ie8IL28=;
- b=Df0i8rhyyQpuE1ry/+7qFBPkAfYFfSZphGASHkJRc0RmSnV6qikRLKM6XubN4zGhjV
- 9HyfY+5o6TRovoI7qxD3PMlD0lIKN+iVt65Rs2Yr75xsy4FNLf1IrAzqHp0jYtJrks97
- +bzNKDQ3M2IqbywymaKPKC9fTTzTLJpPgFz9Ly9d4TfmD0Mz1xX4TzdxPYULCnL12Ru4
- op4MPkFbJL+al3bY+akPVVhwcspQMStu4UIDIMmj7C7PUa21nNGL+4KyBEzMOXDfnkTm
- R0QqTYTAztAbyDJiWF09E8FYvyUAeSP57AiyRNAKBcdPZ6wbhSO2uPaoYaDCrbfAzHx/
- wQWA==
+ bh=cj753F+hvTDyLj8bJVVZzpyE5puWDfwyIGxtEnBX27s=;
+ b=Gc7vCM4BHPf1LWqf/cRvpFKs0eDPHq9gl+PRx/tad1I3WtKkf0bOdDPRwcQDvPcEeR
+ 58qE8TrTSGETT1Cec+gZTfXDIVoph6OubNRVWN53VUAmgklEvltmC66k3rdLbU4sBbSQ
+ ywTw/OVXAjrwa/XYojW9XBDl4E4PlTLErp0GEXT6qMz2nssc8MY/3MG5wGsVnqCHlW9B
+ znkwXvvROq/GQLOualXpN4zQVgRsdxZkbTUABoNwVwO3x60xg4A6/zzBr8xn1sdx3Xep
+ /GP8S7W1te2JmqgTt7JlHA0Vr4h2jTZy00vLqitShJ8FqV64KedTka7MrksPxcWPTezX
+ udTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVF7KvD4ZntIlk6al/VLgbhqwFgOhfkdetxO86+E6nP6sRT93hqLYa/Zpc4gkDAa+AFk6f9NWSIyec9@nongnu.org
-X-Gm-Message-State: AOJu0YyCFRrdjztxlyFBai1Iafm2Nj3Hli7SCVNPkB/q4eJWcxKKfx6n
- 25mAbd5rzlFu7daqcTokha4NyQVGvjC3ccNwCt+QCYE22JU5ad2iVbxxTcQMkUplCCWmRGx/LgN
- r9Ln+2A==
-X-Google-Smtp-Source: AGHT+IFUojVzVd4Pivm3zKHl7HaARm3aDUj4Kt4nL9rDifWhenGkdbot+WuannVsySbXZnOB2KeJZQ==
-X-Received: by 2002:a05:600c:1c85:b0:431:1512:743b with SMTP id
- 5b1f17b1804b1-4319acc2afdmr109733545e9.21.1730216729786; 
- Tue, 29 Oct 2024 08:45:29 -0700 (PDT)
+ AJvYcCXWOE+1r04pmyDCzd72/HGKiee6ZCtiznNnT/+qMQW1sx6kDVQ6GhlBlerFTsue4VfinYvQA33n1Buq@nongnu.org
+X-Gm-Message-State: AOJu0YyuuAlbetJIRDTde1r4u6Qck4+qNc0JqM+L+1QyKqnStxua4jGa
+ qhghUnTwWfDbTBLV8Ymmn+xkjrNWOD9p95he+hjUreGvOWmH0Rs28gvXCeIHFa5+QoBcrY0DPed
+ L7iP7jw==
+X-Google-Smtp-Source: AGHT+IG3g7DH46FlmnjkT9ZZaJVkz4hrFMzqOIXB4ykMuPWTIJicxZHqMzvMsFjLTIrccxDPgm43GA==
+X-Received: by 2002:a05:600c:314f:b0:42c:b826:a26c with SMTP id
+ 5b1f17b1804b1-431b55e6087mr22929095e9.8.1730216762646; 
+ Tue, 29 Oct 2024 08:46:02 -0700 (PDT)
 Received: from [192.168.21.227] ([89.100.107.89])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431b437cf66sm18733835e9.0.2024.10.29.08.45.28
+ 5b1f17b1804b1-4318b55f779sm177001325e9.18.2024.10.29.08.46.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Oct 2024 08:45:29 -0700 (PDT)
-Message-ID: <f9a53be7-cb0c-45ee-ba77-c7eb831618b0@linaro.org>
-Date: Tue, 29 Oct 2024 15:45:27 +0000
+ Tue, 29 Oct 2024 08:46:02 -0700 (PDT)
+Message-ID: <5985cc17-c123-496a-a6b8-23c651a97f68@linaro.org>
+Date: Tue, 29 Oct 2024 15:46:00 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/14] target/i386: use compiler builtin to compute PF
+Subject: Re: [PATCH 13/14] target/i386: use higher-precision arithmetic to
+ compute CF
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20241028151851.376355-1-pbonzini@redhat.com>
- <20241028151851.376355-13-pbonzini@redhat.com>
+ <20241028151851.376355-14-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241028151851.376355-13-pbonzini@redhat.com>
+In-Reply-To: <20241028151851.376355-14-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,17 +100,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/28/24 15:18, Paolo Bonzini wrote:
-> This removes the 256 byte parity table from the executable.
-> 
-> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
+> If the operands of the arithmetic instruction fit within a half-register,
+> it's easiest to use a comparison instruction to compute the carry.
+> `
 > Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   include/qemu/host-utils.h                |  9 ++++++
->   target/i386/tcg/helper-tcg.h             |  6 +++-
->   target/i386/tcg/cc_helper_template.h.inc | 20 +++++++-------
->   target/i386/tcg/cc_helper.c              | 35 ------------------------
->   target/i386/tcg/int_helper.c             |  4 +--
->   5 files changed, 26 insertions(+), 48 deletions(-)
+>   target/i386/tcg/cc_helper_template.h.inc | 37 ++++++++++++++++++++++++
+>   1 file changed, 37 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
