@@ -4,99 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87C8D5B87D
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 06:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5ED8D5B874
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 06:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5fS7-0002BE-75; Tue, 29 Oct 2024 02:11:39 -0400
+	id 1t5fZn-0001ne-Tc; Tue, 29 Oct 2024 02:19:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t5fRd-0001jG-WF
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:11:11 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t5fRc-0007IM-JG
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:11:09 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43162cf1eaaso67347415e9.0
- for <qemu-devel@nongnu.org>; Mon, 28 Oct 2024 23:11:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730182267; x=1730787067; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EPgvrwRXgs6YdX0wc7Q6CeG9N1eKPyqo915zRFEZ3GE=;
- b=lqv3ocL14BwjRsOjX2yIklz78YxtLjo9+rFdVdNM9by/yjAySdh4d+TMQegx/m/N/Q
- Ea/KlM4Xt99f2Zgjz6/VmPzq89oYQOI3jdE5GgxjmJUxTl/M9oP/nnKD3/HGTLk51zjr
- J00sxupA7Luy/bTGhjLwfT09edNXLnTX2EEoGBRvaY7b19kcLQA5AP9LI1oiahCPQacU
- TWhKCbP2bfd0RAYKY9CTetclekER2Od3CA/l7dPodkynC+sd5aE6eoVN636DKzG91v70
- 9yB9Z5wk99zkbPJmQqlmlWvv6CPAl+/h5G7IwzpAMWor/5x/iqGu64/nvSpypR5PYwEr
- 1d9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730182267; x=1730787067;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EPgvrwRXgs6YdX0wc7Q6CeG9N1eKPyqo915zRFEZ3GE=;
- b=Sr4MOThxd5TEnwFbFHnnMoPAFsPh2hPRGLX+HKI9hc9drBoiyOs4ecFr7Mb4lvrTCM
- kxdRSMaHXs3DCJccP6+vZ1ZYhD+a8QZyS4CSZbIhmRejCFcxijDJr9ViknLtM+kjXpnF
- Oc4gVrzZrJqGWm6Tc3l1iyVv9DsdR5S8ON4zj7pyKLzO1NNLwmjY5nqPnwsy8f3XUOkX
- E4GmKOKPSGEqqLfWpm44IBtBwpmCI24en5GP2uyxEtRfU2i1VLKun9wBdWKWrFFl6c2F
- wKN6TP5waaCFERy322U5HRVsQX9d2Ir8uFmr7Ooy1hzMxdm65wbeQrAAaxj/v5ONJrx1
- w0lw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUavVbZZ1tPUsN8GrTRNRE2ErTRc02CDcqdCEFquVUNmF8Gd+iOoQbvEtrx89PGpOXlDDkVG4tQTVgX@nongnu.org
-X-Gm-Message-State: AOJu0YwonTMZUfG7UdBYidp9eorITG5QppTff898z5QNLXx/jf6rlNNq
- B1ffcHRM716iotZmklwsxoNHm22Z1edUk5JQgc51Fcw2l374XhGwMsysStEZ8Bs=
-X-Google-Smtp-Source: AGHT+IGfHNy5H0Hd0IC6l1qPeffkj1tdJUwywBIv8CIOw2z0yrIjr9ELO5TbkU3saiQoQujsHIRRWA==
-X-Received: by 2002:a05:600c:4ecb:b0:431:52a3:d9d5 with SMTP id
- 5b1f17b1804b1-4319ab8cbfbmr113599395e9.0.1730182267250; 
- Mon, 28 Oct 2024 23:11:07 -0700 (PDT)
-Received: from [192.168.21.227] ([90.197.151.65])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431b45aa058sm12150405e9.1.2024.10.28.23.11.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Oct 2024 23:11:06 -0700 (PDT)
-Message-ID: <1b1973d8-a04e-41f1-9b12-f265b523655a@linaro.org>
-Date: Mon, 28 Oct 2024 12:25:15 +0000
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1t5fZm-0001jd-0p
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:19:34 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1t5fZk-00086w-8s
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 02:19:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730182772; x=1761718772;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=za1muQm4U7f4LIt8RWK3PHQpDP1rimCjsfRVMU7u0P4=;
+ b=LbxY0coQuR29nsl3BJATe9nVURNOjyW1k48hsNq//nuKkDSqAgS9bytR
+ 5rBYaAWtiE9yiwpewto+o8jqKA/lJe2UbMbSLfaMm2yawbgj+F5gaqySv
+ n2uxRqck8F5BOfiXbwMuJvKs7f5CCBBj3rwMzAQeKe1WP5ijeoPlRqBj+
+ ZDRaXN/N5KrLTkRJ2Ex//8hwlySzd6q/5soehx/7cqqgAwOVk0Q5pZ1un
+ OYlrp+8U7iXfE4PDuZ61kA8bDN9RMZjkMurMQgfBEg6Z7dTm7UU68R7yR
+ 4RT0rrt2bSzBru1KJ+Da4lK76tg/BSe4MV9qcZfEcIXYHGUlDxmamDEP1 Q==;
+X-CSE-ConnectionGUID: i+66eHJeTBm4jiID1odv3g==
+X-CSE-MsgGUID: JCBC4G/3T1ix2T1O90It7Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11239"; a="32662541"
+X-IronPort-AV: E=Sophos;i="6.11,241,1725346800"; d="scan'208";a="32662541"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 23:19:30 -0700
+X-CSE-ConnectionGUID: 2+hduodWREOWNFRi2hV8vw==
+X-CSE-MsgGUID: s+ynI1FnQkauZP3ICXnoHw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,241,1725346800"; d="scan'208";a="112660275"
+Received: from linux.bj.intel.com ([10.238.157.71])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2024 23:19:28 -0700
+Date: Tue, 29 Oct 2024 14:14:23 +0800
+From: Tao Su <tao1.su@linux.intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
+ xuelian.guo@intel.com
+Subject: Re: [PATCH 2/6] target/i386: add avx10-version property
+Message-ID: <ZyB9P83M1TrQ24Ou@linux.bj.intel.com>
+References: <20241028024512.156724-1-tao1.su@linux.intel.com>
+ <20241028024512.156724-3-tao1.su@linux.intel.com>
+ <65cd917f-b0d2-40f3-9818-a52b340b32e6@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/21] target/alpha: Explicitly set 2-NaN propagation rule
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>, Eduardo Habkost <eduardo@habkost.net>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo
- <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-References: <20241025141254.2141506-1-peter.maydell@linaro.org>
- <20241025141254.2141506-17-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241025141254.2141506-17-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <65cd917f-b0d2-40f3-9818-a52b340b32e6@intel.com>
+Received-SPF: none client-ip=192.198.163.13;
+ envelope-from=tao1.su@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,26 +84,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/25/24 15:12, Peter Maydell wrote:
-> Set the NaN propagation rule explicitly for the float_status word
-> used in this target.
+On Mon, Oct 28, 2024 at 11:10:45PM +0800, Xiaoyao Li wrote:
+> On 10/28/2024 10:45 AM, Tao Su wrote:
+> > Introduce avx10-version property so that avx10 version can be controlled
+> > by user and cpu model. Per spec, avx10 version can never be 0, the default
+> > value of avx10-version is set to 0 to determine whether it is specified by
+> > user.
 > 
-> This is a no-behaviour-change commit, so we retain the existing
-> behaviour of x87-style pick-largest-significand NaN propagation.
-> This is however not the architecturally correct handling, so we leave
-> a TODO note to that effect.
+> I think it's better to merge this patch into next one. It's intact to show
+> how avx10_version is supposed to work.
 > 
-> We also leave a TODO note pointing out that all this code in the cpu
-> initfn (including the existing setting up of env->flags and the FPCR)
-> should be in a currently non-existent CPU reset function.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   target/alpha/cpu.c             | 11 +++++++++++
->   fpu/softfloat-specialize.c.inc |  2 +-
->   2 files changed, 12 insertions(+), 1 deletion(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Will do in v2, thanks for this suggestion!
 
-r~
 
