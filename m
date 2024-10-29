@@ -4,155 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA16D2AB3B
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 13:06:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE29BD2AB3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 13:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5lvH-0005r9-QH; Tue, 29 Oct 2024 09:06:12 -0400
+	id 1t5m9F-00005V-5C; Tue, 29 Oct 2024 09:20:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5lv6-0005oo-64
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 09:06:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5lv4-0005Dm-Do
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 09:05:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730207156;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t5m9D-00004u-0e
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 09:20:35 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t5m98-0007LE-WE
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 09:20:32 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B945721CBA;
+ Tue, 29 Oct 2024 13:20:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1730208027; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=n3V+iokuxP+tGKyPZwQ6bYcR0hmGueOk2fVpM3km11s=;
- b=KyNg0D2DqZqo5qdveYpoKaWBSaG4H/yMX7W9/q1dtE5/CXJhy5jYSEGUTSFteLrEf80gOl
- fcv1JYBWiYGiVKPJkJ1NIDI77vu6ODtaXXDYv74rgZY8No7wGv4WXma88Bkis8Iq7Uv6L6
- q/ouqWk1/GNfmNdgNkKtICu2g/djBec=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-UUMyInRVO1C8CRL9emhutQ-1; Tue, 29 Oct 2024 09:05:52 -0400
-X-MC-Unique: UUMyInRVO1C8CRL9emhutQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-37d52ca258eso2907617f8f.3
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 06:05:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730207151; x=1730811951;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=n3V+iokuxP+tGKyPZwQ6bYcR0hmGueOk2fVpM3km11s=;
- b=TAZJzu6h2osac5AQg+0TO7FYouPJL+Ye2w6OkB8Nm5ojfiUih9ruiaZuI1Z94dBpxO
- KKTB0KRKFxz2K4K3qIiElqJoxvqxlc5Pr/4oYTC344lOcO4DWk6Mz0nftUy358/vJyXv
- lCX7tD0jNJo1fxiiwDvhcT8RGtanKQOIHxq918O5sPN3vOZJomSVCo8yaA/kg61sKoZP
- hDsH1m61X1c4sidxyjLmDA2JPCpdfJSnFlbY7X7ck7422PsIs0OliDjHGS/dLkQAzz1X
- 2mZOpMA06I6Z/EpcwztbCFZ+bvYim7k5u2stEQEquUL9IyOSlcb++MlgQFvcnNnBeFG2
- N0UA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXzIL8lNXkp/Gx2gcLGo1jDpfN3YgQE5WIXXf0lr8pTbvZragg2fSLN8HQQGfabetZnwziiTiJjXQ+@nongnu.org
-X-Gm-Message-State: AOJu0Ywb/IqDDaTm/kAKXkt5hIkpcKM7nEt5fYldy6DSnWL87NAEEilE
- nrLfQ/hMD+HnkORAe4ifq/owz7uWdi7XlgWzU8UY3JbNSESm1zP5btoGEfK1nPacROfIxu25YVE
- zPaZ+EEQG05WAg6q9IlKyJxi9/JbxuCGy9lngd9gmN16vHHzEJ7u0cLuGwU4Y7Qw=
-X-Received: by 2002:adf:fe02:0:b0:37c:d512:d427 with SMTP id
- ffacd0b85a97d-380611524c5mr8238368f8f.35.1730207151013; 
- Tue, 29 Oct 2024 06:05:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFSZq94IERiRbrq4QgCp02d//nwg8ZfNoOQMwWFwa26344XnwWkQEaryGzNijOCkgBs59b8Ig==
-X-Received: by 2002:adf:fe02:0:b0:37c:d512:d427 with SMTP id
- ffacd0b85a97d-380611524c5mr8238334f8f.35.1730207150580; 
- Tue, 29 Oct 2024 06:05:50 -0700 (PDT)
-Received: from [192.168.10.3] ([151.49.226.83])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-38058b928cesm12527797f8f.102.2024.10.29.06.05.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Oct 2024 06:05:49 -0700 (PDT)
-Message-ID: <3a6a8109-196e-49ac-8416-49f69b688e5e@redhat.com>
-Date: Tue, 29 Oct 2024 14:05:44 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=46drK5DwYJCW7cr8JBAIHXMtqACQZtCUO2rGL6Z1LgU=;
+ b=yczjUWRqF4dmLwWSeFBi31PP5bNti1NToaankiYF9R+FiKtY4dAryQgR7ospUOkHWm9dj5
+ aqFvKB5SI/LNTJeZ1qctSh3bX2XYOiq/ufRaivhs3r5X9t48eG3+349YTpRMU47VzXjwDg
+ Q6hyYiCVfWGcKnvKgCOocTv3Xte3C50=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1730208027;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=46drK5DwYJCW7cr8JBAIHXMtqACQZtCUO2rGL6Z1LgU=;
+ b=eF5yuncuNQ0o4IiKB6L5WT9hCrHApljeHkNBlY3dHqEpo/uT1BsB+utPoDfWuG/lnIPkd9
+ gZ15SspZSWsCTIBg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=yczjUWRq;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=eF5yuncu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1730208027; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=46drK5DwYJCW7cr8JBAIHXMtqACQZtCUO2rGL6Z1LgU=;
+ b=yczjUWRqF4dmLwWSeFBi31PP5bNti1NToaankiYF9R+FiKtY4dAryQgR7ospUOkHWm9dj5
+ aqFvKB5SI/LNTJeZ1qctSh3bX2XYOiq/ufRaivhs3r5X9t48eG3+349YTpRMU47VzXjwDg
+ Q6hyYiCVfWGcKnvKgCOocTv3Xte3C50=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1730208027;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=46drK5DwYJCW7cr8JBAIHXMtqACQZtCUO2rGL6Z1LgU=;
+ b=eF5yuncuNQ0o4IiKB6L5WT9hCrHApljeHkNBlY3dHqEpo/uT1BsB+utPoDfWuG/lnIPkd9
+ gZ15SspZSWsCTIBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 38DD1139A2;
+ Tue, 29 Oct 2024 13:20:27 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id dMRAABvhIGfYaAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 29 Oct 2024 13:20:27 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Steven Sistare
+ <steven.sistare@oracle.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, David Hildenbrand
+ <david@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [RFC V1 00/14] precreate phase
+In-Reply-To: <ZyDDcmDoCE_qHgfT@redhat.com>
+References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
+ <b36283ff-2e14-4ee0-a64e-a5c4f9e86534@redhat.com>
+ <fd8977f7-2787-4387-81fa-240665d0bf1d@oracle.com>
+ <Zxta2w6iu2n_5YBa@redhat.com>
+ <922177b7-216f-4176-a57a-a86f32252664@oracle.com>
+ <ZxugavgmHrawXPNQ@redhat.com> <ZyDDcmDoCE_qHgfT@redhat.com>
+Date: Tue, 29 Oct 2024 10:20:24 -0300
+Message-ID: <878qu7cag7.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: QEMU/KVM Community Call (29/10/24) agenda items?
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>
-Cc: Alessandro Di Federico <ale@rev.ng>,
- Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
- Markus Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, cw@f00f.org,
- dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com, iggy@theiggy.com,
- Warner Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>,
- Jason Gunthorpe <jgg@nvidia.com>, jidong.xiao@gmail.com,
- Jim Shu <jim.shu@sifive.com>, Joao Martins <joao.m.martins@oracle.com>,
- Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Max Chou <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>,
- mdean@redhat.com, mimu@linux.vnet.ibm.com,
- Paul Walmsley <paul.walmsley@sifive.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Bernhard Beschow <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>,
- Thomas Huth <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>,
- z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- zwu.kernel@gmail.com
-References: <87bjz38j8p.fsf@draig.linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <87bjz38j8p.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: B945721CBA
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FREEMAIL_TO(0.00)[redhat.com,oracle.com,nongnu.org,gmail.com,habkost.net,linaro.org];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; MID_RHS_MATCH_FROM(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
+ TAGGED_RCPT(0.00)[]; MISSING_XM_UA(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,36 +142,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/29/24 08:24, Alex Bennée wrote:
-> 
-> Hi,
-> 
-> After a missing a few weeks due to travel and conferences the KVM/QEMU
-> community call is at:
-> 
-> https://meet.jit.si/kvmcallmeeting
-> @
-> 29/10/2024 14:00 UTC
-> 
-> Are there any agenda items for the sync-up?
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-I would like to discuss the next steps for Rust bindings, but probably 
-it's already too late to have a call today; we can have the discussion 
-on the mailing list as well.
+> On Fri, Oct 25, 2024 at 02:43:06PM +0100, Daniel P. Berrang=C3=A9 wrote:
+>>=20
+>> The migration QAPI design has always felt rather odd to me, in that we
+>> have perfectly good commands "migrate" & "migrate-incoming" that are able
+>> to accept an arbitrary list of parameters when invoked. Instead of passi=
+ng
+>> parameters to them though, we instead require apps use the separate
+>> migreate-set-parameters/capabiltiies commands many times over to set
+>> global variables which the later 'migrate' command then uses.
+>>=20
+>> The reason for this is essentially a historical mistake - we copied the
+>> way we did it from HMP, which was this way because HMP was bad at suppor=
+ting
+>> arbitrary customizable paramters to commands. I wish we hadn't copied th=
+is
+>> design over to QMP.
+>>=20
+>> To bring it back on topic, we need QMP on the dest to set parameters,
+>> because -incoming  was limited to only take the URI.
+>>=20
+>> If the "migrate-incoming" command accepted all parameters directly,
+>> then we could use QAPI visitor to usupport a "-incoming ..." command
+>> that took an arbitrary JSON document and turned it into a call to
+>> "migrate-incoming".
+>>=20
+>> With that we would never need QMP on the target for cpr-exec, avoiding
+>> this ordering poblem you're facing....assuming we put processing of
+>> -incoming at the right point in the code flow
+>>=20
+>> Can we fix this design and expose the full configurability on the
+>> CLI using QAPI schema & inline JSON, like we do for other QAPI-ified
+>> CLI args.
+>>=20
+>> It seems entirely practical to me to add parameters to 'migrate-incoming'
+>> in a backwards compatible manner and deprecate set-parameters/capabiliti=
+es
+>
+> Incidentally, if we were going to evolve the migration API at all, then
+> it probably ought to start making use of the async job infrastructure
+> we have available. This is use by block jobs, and by the internal snapshot
 
-In particular I would like to understand:
+I'm all for standardization on core infrastructure, but unfortunately
+putting migration in a coroutine would open a can of worms. In fact,
+we've been discussing about moving the incoming side out of coroutines
+for a while.
 
-- if it's desirable to have 
-https://lore.kernel.org/qemu-devel/1d6034ef-9e41-4ef4-9a95-d03885b09b2b@redhat.com/ 
-in QEMU 9.2.
-
-- if we agree on (the plan of) bringing the Rust PL011 to feature 
-completion in 10.0 and at the same time toggling the --enable-rust 
-default from "disabled" to "auto"
-
-I would also like to reach an agreement on how Rust patches enter 
-qemu.git (that is, whether via my tree or a new one).
-
-Paolo
-
+> commands, and was intended to be used for any case where we had a long
+> running operation triggered by a command. Migration was a poster-child
+> example of what its intended for, but was left alone when we first
+> introduced the job APIs.
+>
+> The 'job-cancel' API would obsolete 'migrate-cancel'.
+>
+> The other interestnig thing is that the job framework creates a well
+> defined lifecycle for a job, that allows querying information about
+> the job after completeion, but without QEMU having to keep that info
+> around forever. ie once a job has finished, an app can query info
+> about completion, and when it no longer needs that info, it can
+> call 'job-dismiss' to tell QEMU to discard it.
+>
+> If "MigrationState" were associated a job, then it would thus have a
+> clear 'creation' and 'deletion' time.
+>
+> With regards,
+> Daniel
 
