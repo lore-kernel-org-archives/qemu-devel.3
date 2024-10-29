@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8122ED2AB3B
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 12:52:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13401D2AB3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 12:59:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5lhl-00006o-Ce; Tue, 29 Oct 2024 08:52:13 -0400
+	id 1t5lo3-0003D6-8g; Tue, 29 Oct 2024 08:58:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5lhU-0008RU-20
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:52:01 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5lhS-0003SV-8F
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:51:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=OAyJepC+e7zGhnl0SDdF9d0gegPEtcKzCQRlT4wx1mk=; b=bvJq+Rus0ZhB+DwgybzweUjpAp
- 98mogO9980w72nTHG+kFNHV/8r4WAsjVIMPfe3sdZkgyecZzdBpBx2WsgV4AdKpLCd+37oyJfuQ7T
- UJ0tESsNJZlnuZFfgFTlBWBF4aCvyKeaSIP615Nu2EHxq0AA3+GQdg+IcVRZXvgKPvRK9GApsSkqn
- mTKinfQnHpiVioGQJW0u9V8e1axOqmYqEn1Z8yqmVA/9DpPVvpG5aqTl+v39eNNF5/eVUMmgHnX4M
- tV/nJgQONs6JYVok0/lJZ9K2pwpUQd6W9ecdss9EC8s58vCCzjzh5C5Q2a0fbS+gP4scEQflQ7Dbj
- RVeMlLL6Swuf8jCe5aSa30zmW98stQRcWUefSi+ZGl+z+clau4DfwTmsB6VHrvLWIqQ7frXPTDAQi
- uAV20+fe9Yk21tiJKWVCkv+L/7mV1DfmIjKewHsP5hbf8wevobC4ebvyvQsFS2P17aLVapAl5su7D
- kpHRxl0f0xaDtXnHCfWXyzoY9/QYYltcaPU+FrK2A6zEiwmaVrf392wi9bsvj9KLraGnRErFEjSAI
- 8XxWBCawaFhacyqzhb/m76WCmAm+Nmm7oQsRzN1vAOhOFPMcxbSteZeZ73JbcOIAPOSP6ZaGFeuoP
- 8EP41mRVfjCMjAlIu53GTJ9sNNC5DkHqhUihN1m2g=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t5lh3-0000Qd-4C; Tue, 29 Oct 2024 12:51:33 +0000
-Message-ID: <74b53c6c-d239-42fe-97ce-93f52c10c1cf@ilande.co.uk>
-Date: Tue, 29 Oct 2024 12:51:42 +0000
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t5lo2-0003Cx-EG
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:58:42 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t5lo0-0004AB-Hm
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:58:42 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-37d63a79bb6so3815333f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 05:58:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730206717; x=1730811517; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yHxAvFj+ZMvpi1xXlJf1uTSVkbPDoJ5QlNNixnWD9mw=;
+ b=D/TVDEN3IYxden+09Bn6B9qaRBhxEXXvO09AdvWdEKkPte3JGaYORrqzDtfKcG74D4
+ 0iG1SJAyeg8R8Z6S7MoatZXUflu6IQUhbgUVzTVX7H3187Zx2c0lgICVifePNxV/+wBy
+ AwvROfnye3NhWQ7+KoosNFKKhX/ouuNuwqB9bNs61UwaxXcfnAtj4bVkMSXcXHYVPLg1
+ TgkbtMBSXbQMgA92lmHzqPUuz7zvCuez5eo6iuc8bEKzIOuKLeH9Uxlzx2shvBf0kSTV
+ pIJSEJ0AJtbuN/7kcm/t+WGyVsrHskbvu+gMEOMQHEwkTdYjum/s76p0aEKFbhcwDJ2w
+ xFaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730206717; x=1730811517;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=yHxAvFj+ZMvpi1xXlJf1uTSVkbPDoJ5QlNNixnWD9mw=;
+ b=M3rJhznlrlI5qtyhjE5gJgoeNXUZ+Hi2hU78zp2/ch84vHsjRj3gfZ03tm1UXQl+Mb
+ HSobJ5ZwqpERa/zw0YBvS0jmsCqomhdPVgN+M1DjATBcuDkIwzss0sNxe0H7RCYJGwHu
+ g9bkE+ViEUjJ6UN2dJgzB73Jq6gCvESrkW4hv+ctx+OCemG7YdTsQlZlfe3vHlE/j1rp
+ xW0fI0ijPVsielW101MdiWWWjDMbqseyr5I3JqDwd4/7sfoQgTeTiF14f8mLCw1zBAAd
+ a1U6OLPaBjAOGrLaJUNHvEAExlyDOD+4JMsJyel0sgp9BTFF+JG/d6Vp7mFY8Lzn9RjM
+ L7cQ==
+X-Gm-Message-State: AOJu0YwuLrnCTgn5+tnTqXMZuNvSomSVZcksrrksNo5+1uA3HhF69tAB
+ 9LY4T06XjgsIpcLHXZONuV446tB5nO5RW3uVnWv2o29iHh0nZ96yTWnS1/TjKNnrOUXzbq5h8bQ
+ e
+X-Google-Smtp-Source: AGHT+IFjsO+pM0KI20Syj9pEOfPRrueTscjZLR2+vHQoywWKdA2S8B02R7P6rLtvHHXjBDWgX31Wmw==
+X-Received: by 2002:a05:6000:89:b0:37d:5296:4b2a with SMTP id
+ ffacd0b85a97d-380612126famr8039725f8f.58.1730206716768; 
+ Tue, 29 Oct 2024 05:58:36 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38058b71231sm12387355f8f.66.2024.10.29.05.58.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Oct 2024 05:58:36 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 7BF725F860;
+ Tue, 29 Oct 2024 12:58:35 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] accel: remove dead statement and useless assertion
+In-Reply-To: <20241029102326.473133-1-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Tue, 29 Oct 2024 11:23:26 +0100")
+References: <20241029102326.473133-1-pbonzini@redhat.com>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Tue, 29 Oct 2024 12:58:35 +0000
+Message-ID: <87ttcv6p6s.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: huth@tuxfamily.org, qemu-devel@nongnu.org
-References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <CAFEAcA9XK85TBHmty5WJRtwTtX-0--bgNKXitTpxs6t7jpqj0A@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CAFEAcA9XK85TBHmty5WJRtwTtX-0--bgNKXitTpxs6t7jpqj0A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 00/36] next-cube: more tidy-ups and improvements
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,48 +98,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/10/2024 11:22, Peter Maydell wrote:
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> On Wed, 23 Oct 2024 at 09:59, Mark Cave-Ayland
-> <mark.cave-ayland@ilande.co.uk> wrote:
->>
->> This series contains a number of tidy-ups and improvements to the NeXTCube machine
->> which include:
->>
->>    - Bringing the code up-to-date with our latest coding standards/APIs, in particular
->>      related to the board configuration and IRQ wiring
->>
->>    - Remove the remaining overlapping memory regions and consolidating multiple
->>      register implementations into a single place
->>
->>    - Add a new next-scsi device containing the ESP device and its associated
->>      CSRs
->>
->>    - Adding the empty_slot device to fill unimplemented devices and removing
->>      the "catch-all" next.scr memory region
->>
->>    - QOMifying the next-rtc device and wiring it up with gpios as required
->>
->> The next-cube machine looks in fairly good shape now, the main remaining work is to
->> create a separate device for the DMA controller and update the wiring of the IRQs
->> (including to the CPU) accordingly.
-> 
-> Would you have time to consider updating hw/m68k/next-kbd.c
-> to stop using qemu_add_kbd_event_handler()? It's the only
-> user left in the codebase of that input-legacy.c API.
-> Generally using qemu_input_handler_register() should simplify
-> the code because it will no longer need to decode multi-byte
-> PS2 code sequences back into "what is the single key event
-> that this corresponds to?". Commit ff7888dcc6c701 is an
-> example of the conversion (though that input device
-> is somewhat simpler than a full real keyboard).
+> ops is assigned again just below, and the result of the assignment must
+> be non-NULL.
+>
+> Originally, the check for NULL was meant to be a check for the existence
+> of the ops class:
+>
+>     ops =3D ACCEL_OPS_CLASS(object_class_by_name(ops_name));
+>     ...
+>     g_assert(ops !=3D NULL);
+>
+> (where the ops assignment begot the one that I am removing); but this is
+> meaningless now that oc is checked to be non-NULL before ops is assigned
+> (commit 5141e9a23fc, "accel: abort if we fail to load the accelerator
+> plugin", 2022-11-06).
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Sure, I'll have a look and see if I can manage it - removing legacy APIs is always a 
-good thing :)
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 
-ATB,
+Although we could further clean-up with:
 
-Mark.
+modified   accel/accel-system.c
+@@ -65,7 +65,7 @@ void accel_setup_post(MachineState *ms)
+ void accel_system_init_ops_interfaces(AccelClass *ac)
+ {
+     const char *ac_name;
+-    char *ops_name;
++    g_autofree char *ops_name =3D NULL;
+     ObjectClass *oc;
+     AccelOpsClass *ops;
+=20
+@@ -79,7 +79,6 @@ void accel_system_init_ops_interfaces(AccelClass *ac)
+         error_report("fatal: could not load module for type '%s'", ops_nam=
+e);
+         exit(1);
+     }
+-    g_free(ops_name);
+     ops =3D ACCEL_OPS_CLASS(oc);
+     /*
+      * all accelerators need to define ops, providing at least a mandatory
 
+
+> ---
+>  accel/accel-system.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/accel/accel-system.c b/accel/accel-system.c
+> index f6c947dd821..61d689935e1 100644
+> --- a/accel/accel-system.c
+> +++ b/accel/accel-system.c
+> @@ -73,19 +73,17 @@ void accel_system_init_ops_interfaces(AccelClass *ac)
+>      g_assert(ac_name !=3D NULL);
+>=20=20
+>      ops_name =3D g_strdup_printf("%s" ACCEL_OPS_SUFFIX, ac_name);
+> -    ops =3D ACCEL_OPS_CLASS(module_object_class_by_name(ops_name));
+>      oc =3D module_object_class_by_name(ops_name);
+>      if (!oc) {
+>          error_report("fatal: could not load module for type '%s'", ops_n=
+ame);
+>          exit(1);
+>      }
+>      g_free(ops_name);
+> -    ops =3D ACCEL_OPS_CLASS(oc);
+>      /*
+>       * all accelerators need to define ops, providing at least a mandato=
+ry
+>       * non-NULL create_vcpu_thread operation.
+>       */
+> -    g_assert(ops !=3D NULL);
+> +    ops =3D ACCEL_OPS_CLASS(oc);
+>      if (ops->ops_init) {
+>          ops->ops_init(ops);
+>      }
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
