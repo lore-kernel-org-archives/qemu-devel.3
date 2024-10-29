@@ -4,85 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C7DD5B171
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 08:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7869AD5B16F
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 09:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5hzF-0005Md-6J; Tue, 29 Oct 2024 04:54:01 -0400
+	id 1t5i9N-0006vV-Uv; Tue, 29 Oct 2024 05:04:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1t5hzC-0005LT-17
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:53:58 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1t5hzA-0000ZC-Ep
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:53:57 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-20caea61132so43756435ad.2
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 01:53:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1730192034; x=1730796834; darn=nongnu.org;
- h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QleYexr9+tm5N5SA4HTO2UkzwktUaJf0v24qt9fMIW8=;
- b=fJRalSfX1UZ87iydapoZly7xBTYy1M1Dtpv92O11TD2qGsdWfNWLWztzWsuwHDF7Dx
- zdktlJs+vZB1UUMQs0ccF8BRF9dhcQ+GnuwaX/QLOdomxGe4YECYuWuHfRYHBOvDEwUG
- DPtyY1M2SzCulIs+2eFNbM8yyie+VCu4f7YWXOyghUl6UF2rYJZ5ymJpAv3FOdIWTv7A
- 2K5OrG6iJ6jJB3pt8Ll/o5inAXE0oBM4A0PtlUZAAgQ00Sw4KiHHGxrYSuF8aIYjiSBb
- Foo67/sNtwb/TRhAgDerrRA9MXtfAuyOmKxOjQrq+ahPfd5oGdL4BNDW0PC2J+S9G9RZ
- +aAg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t5i9H-0006uj-Ii
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 05:04:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t5i9G-0001na-Bs
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 05:04:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730192660;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=BS4TD/+Z7P4ygBJ0pLLXFqoq3raVYgYFXIY0ssVkis0n52aFz7/TfDiKyJXMaiNk/NEWVU
+ KTspZ/fvhHcoHblbndMVGIl1aAL1cZrWeAwvz0CcuKjOD672Sz13gTGgNi2wCmXKD71DXS
+ ab9EBZAY79VC6I/zlw1sKTB2+UTR7W8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-103-hT4dAiUmOSigHipSsZaHiQ-1; Tue, 29 Oct 2024 05:04:18 -0400
+X-MC-Unique: hT4dAiUmOSigHipSsZaHiQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4316ac69e6dso40270885e9.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 02:04:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730192034; x=1730796834;
- h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1730192657; x=1730797457;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QleYexr9+tm5N5SA4HTO2UkzwktUaJf0v24qt9fMIW8=;
- b=gcvWt79nHQnhV737DvjnrXQ90H7iuMx9mehj9xEJmpiI3ahnaDhlYp9K9bgUmmH9sH
- bTt69k1MR6VCkPHBTG85kj2h71xTWlOjaVKOr31kmhXiA6MT8I/tR7o1JEDZq5BwCjgw
- xA3aSYFWYa0GmYK1mDRb0Dtk/Nd81L00U+z166TdjMDO0GJ1JaiwUtboZprJ2n1SgxMQ
- n1UJblJjXThB2aG4HYdUQWs0kOKutO00mJTHjaYDkfM8qwgAx3PrNkgxvng3xkjMJqFG
- tQXGR/qVcmh1JHKBtiVEEmZou1GDPPknJLZ+3yXq3gY/+iT5/OySGnUHbrwo9dvEFpZQ
- kWvQ==
-X-Gm-Message-State: AOJu0Yzbji59IDV5TOtDduXuYnqidVNXEh4ARxCFx6kAWU+yiierkR4A
- 4R6qx+0F9ri0nwgcv0DYi+E4sND1cPEwVw+owvo0KvsoxEPZt6I6eLewoLxtUuX63g3ju1oYihj
- mXDw313zyU2uRBeyPf4Z4+5/5Q4EVNADd7SpgsvXkjvSqz3X3WxtRj9zAJp4elMcfYNF5N6Qp1J
- g8sAWCpvPx9MVkLBED/J5jGbqxJNdlC0IReOPr/0YRnYVI
-X-Google-Smtp-Source: AGHT+IH3EicZQRzCcIvKA0rU2PmLB+if3q4tB9zgSXXKMlnEHz5yb8hMSoP+Mrtoemgt6vyTKzKF0Q==
-X-Received: by 2002:a05:6a20:5512:b0:1d9:c5de:9089 with SMTP id
- adf61e73a8af0-1d9c5de9213mr6907544637.5.1730192034410; 
- Tue, 29 Oct 2024 01:53:54 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=QdkX/LMlUGrXPJqatEDGsStsY4XuHX5slfvhJyprOD+drw/UyLr27rNg5mJfLGst2Q
+ IvWJtd4MDFpqlvXULWeb+Vr+iI6UhDYhQ8p0UNu3KQdVPDru5qlo+AAokPm9LHOhTPiX
+ JHm0nyoHO7IeDBoZxK7nwJDQmA8plvvJkc9WAIZe3WkMI3sRAZdX1NVu5p/4I0S5KZFm
+ XNhe4ITXCDB1pe1h1XNo9h2HImeio4fQhxRwJfK6TS5GAoIXOB5lhjh9dTR1swOCJLvM
+ Jlto4RPkb4drZ6Fh8e0z0IWz5mgX0vkBxcbltqpr21RFIxskjqTVcNZMRF67RhgA5eI1
+ mgqg==
+X-Gm-Message-State: AOJu0Yz60YvSxXOiPPRguQ+JxsLxfX2NoqII09CgQ0nqS/zElECQ8q77
+ P+Ky9mwaLWSX0J8ZHwPpsTCeP7Ulos/hJzuZEKXqRYxLusDxsXZXRU7rvzqBYtwr2yXTRSZSiM9
+ c2DmJF311SBzlj3OfOnRffrvIdFsUPDxljHPROwvaSmIfUc3bmjsl
+X-Received: by 2002:adf:ff86:0:b0:37d:4818:f8b1 with SMTP id
+ ffacd0b85a97d-380611e493bmr7322781f8f.39.1730192657216; 
+ Tue, 29 Oct 2024 02:04:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESXjs3sJWhrcR6JLn9ghHmd7Xk43+lLlB6QMGLDX0tFBcUsqtD7e8fvNgcVZhZ5K5Nk6BmcA==
+X-Received: by 2002:adf:ff86:0:b0:37d:4818:f8b1 with SMTP id
+ ffacd0b85a97d-380611e493bmr7322756f8f.39.1730192656846; 
+ Tue, 29 Oct 2024 02:04:16 -0700 (PDT)
+Received: from [192.168.10.47] ([151.49.226.83])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72057a3cf5asm7070760b3a.201.2024.10.29.01.53.52
+ ffacd0b85a97d-38058b132ecsm11959729f8f.5.2024.10.29.02.04.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2024 01:53:54 -0700 (PDT)
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com,
- jim.shu@sifive.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH v2 1/1] hw/intc/riscv_aplic: Fix APLIC in_clrip and clripnum
- write emulation
-Date: Tue, 29 Oct 2024 16:53:47 +0800
-Message-Id: <20241029085349.30412-1-yongxuan.wang@sifive.com>
-X-Mailer: git-send-email 2.17.1
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=yongxuan.wang@sifive.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Tue, 29 Oct 2024 02:04:16 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v2] rust/wrapper.h: define memory_order enum
+Date: Tue, 29 Oct 2024 10:04:14 +0100
+Message-ID: <20241029090414.450707-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241027-rust-wrapper-stdatomic-v2-1-dab27bbf93ea@linaro.org>
+References: 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.373,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,55 +111,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the section "4.7 Precise effects on interrupt-pending bits"
-of the RISC-V AIA specification defines that:
+Queued, thanks.
 
-"If the source mode is Level1 or Level0 and the interrupt domain
-is configured in MSI delivery mode (domaincfg.DM = 1):
-The pending bit is cleared whenever the rectified input value is
-low, when the interrupt is forwarded by MSI, or by a relevant
-write to an in_clrip register or to clripnum."
-
-Update the riscv_aplic_set_pending() to match the spec.
-
-Fixes: bf31cf06eb ("hw/intc/riscv_aplic: Fix setipnum_le write emulation for APLIC MSI-mode")
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
----
-v2:
-- add fixes tag (Daniel)
-- follow the suggestion from https://lore.kernel.org/kvm/CAAhSdy3NmwbHY9Qef9LUeXfr0iE7wC-u0d_fHzC47PXk-MzmRg@mail.gmail.com/
-  (Anup)
----
- hw/intc/riscv_aplic.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 4a262c82f078..74c82a841101 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -248,9 +248,12 @@ static void riscv_aplic_set_pending(RISCVAPLICState *aplic,
- 
-     if ((sm == APLIC_SOURCECFG_SM_LEVEL_HIGH) ||
-         (sm == APLIC_SOURCECFG_SM_LEVEL_LOW)) {
--        if (!aplic->msimode || (aplic->msimode && !pending)) {
-+        if (!aplic->msimode) {
-             return;
-         }
-+        if (aplic->msimode && !pending) {
-+            goto noskip_write_pending;
-+        }
-         if ((aplic->state[irq] & APLIC_ISTATE_INPUT) &&
-             (sm == APLIC_SOURCECFG_SM_LEVEL_LOW)) {
-             return;
-@@ -261,6 +264,7 @@ static void riscv_aplic_set_pending(RISCVAPLICState *aplic,
-         }
-     }
- 
-+noskip_write_pending:
-     riscv_aplic_set_pending_raw(aplic, irq, pending);
- }
- 
--- 
-2.17.1
+Paolo
 
 
