@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1800DD3A66C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B1E1D3A66B
 	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5nv3-0005Lp-KR; Tue, 29 Oct 2024 11:14:06 -0400
+	id 1t5nt3-0001pm-K8; Tue, 29 Oct 2024 11:12:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5ns9-0000oD-Dy
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:11:07 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ id 1t5ns7-0000gS-7f
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:11:04 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5nrz-0007gd-Jz
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:11:05 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-539f84907caso6028076e87.3
+ id 1t5ns0-0007h5-E9
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:11:01 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4315baa51d8so55049605e9.0
  for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:10:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730214654; x=1730819454; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730214655; x=1730819455; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JhCeGWwX+tCxadLKUoZwKSNi6auX4Bcb310fZRJpZwY=;
- b=nvg4SirYKVtBrZr2NEhqjm1qRD05b5tzunOTEDNN7wKHoXkhA276b68sd120ltCpCY
- t4cCrY576zyMQqMQ+hslPQyIJpuRhMcdvLEe8OmiVIfBZ/MDUC7cH32yJnV5U58BJVfY
- +tN+Xo+PWfQYVxBa3hVbFOWSDU9Rgo5MaBxf9EmYuBlFW6bevvPGzyOFG9eC/pOXxhyG
- Mgj7RR+2ylloef2jsH5raTgrSREL9iR2wLWT/+Sv5Ql2blqOt+V4VpS2lk+qFp/j3MBJ
- M6NwqkvzeSkHJOjHBEr+ACZC3cBY5hgeSdnZmrAe6w0hGMfS+zehWOxXc14UxsYSLkti
- XO6A==
+ :reply-to; bh=5gzoNBFS1PLdNZcKXEgXxV1vP4J/3wc0pQNMQSx1OQQ=;
+ b=QCRyY+uDL00zLmayy4lwh8kK8/AAH5OdlWrdJttfqh/dsWqL7Mwg2XqxlI80j47/6Y
+ 8eSGsgjeF7WZD/XAXZZdzTLa5u4ZasPbha6v9CwjQYtrZyLnXXXUHhE8hnFtKykzvSp0
+ RX3RDLZswZkhG73HEbivgqLgUSUEAt1+aX9LWkreAPerfv8o4NkDwZ2E47fYhVewjjh2
+ k55naODQZ3J6zC0rh/JTtJegDEQgUAUuoGPAtstkH7XRZlyKqBAVLot35w9YzIAoRYAo
+ 5f22XNsGvN1gk7GEHkvFMr+oRg6aVrWoNFpIw/NaUTeaG0Dxr6w8MW7H9DAb5rHQeDLv
+ t8Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730214654; x=1730819454;
+ d=1e100.net; s=20230601; t=1730214655; x=1730819455;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JhCeGWwX+tCxadLKUoZwKSNi6auX4Bcb310fZRJpZwY=;
- b=viSveYRzwJwmMJI9eu0o5k7sI436xAf1mTz3nMo2/UIXE/grlzVy1lP0pAeSnhqIGm
- +pq6NG1lcmx9WzsvOu6k/YAsO6sfwiglLVVEos/dmstjEo0BTcBMr0h8+psWGqMWhbX7
- zLJ+KxwxbT0FIg0kpBJL7oh7zx0kkW//NFgKZOSCh4uwHTWQKuckol0B4z09L4+wV1qA
- gdCbE+b+rPiUSs9ATRI7E/N3TVXWEf1UQgr3Gd8FrNUoPI5GRdTu0HOqlxc2F3g06gAt
- LgC8oGO1NlQAnzQdxQhEAIF4RQ7Wup+gzX5A6bNrv88BpleDaN5LQ38e33eCG+KdFoe+
- PX4w==
+ bh=5gzoNBFS1PLdNZcKXEgXxV1vP4J/3wc0pQNMQSx1OQQ=;
+ b=N/Y7AQyK9kHdIZIYd4v4uHKAP9xsinuKSXQ+Wk045djWWBSUYtCbAWAGUt9Av3KAPs
+ z6eZ7jr1MzomzbMpJWukZpRrQQl73jmQLVo3vDE6RH8RAUo62fsYvwLaX72p3hBVdlhm
+ p6XtrMqDFaPbvAJlYY98WHNLhfNKVPfW5j3kk0rMC46Wm9VcGPqVJcRSPrxcRBncyaRb
+ mKhc6naUlp4h5tOjGcpAT6cPGzpE2A1UuvN0qZPKtYeVxM3fR2RfnVuJ/dwak/kmlHT1
+ GaaAon7SZ//dhhGH8C/zrOIaQNDXozGq1z8fvMy0Th2Yxp/nmzl+b9GfQP9XOLTu+G4t
+ 55/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX9wXt1cJ6jMomO+G/CY75qfvjf9+EEOwsx9M6pFP+YnTwT49g+ufiIeE5Uc+kiC7O36yYKKR7CQEic@nongnu.org
-X-Gm-Message-State: AOJu0YxMJjrBG6PHtJxGWuthg43YFZUpHPn9VWecLYuNtqHcVzsiQdId
- mu6KhFt9CeS2I4QYrqv46fyoab3jqqTJeJUATLXn20pVUAok1P8N2qHkfZs72X8MePvBAhKmzPP
- 8
-X-Google-Smtp-Source: AGHT+IFk1CR/zSgpv7hKTo+4OGVx6uDRuIIHA6PRaLxfcRkcnLwbV6FowNoU5G9hK5vboDagERTQKA==
-X-Received: by 2002:a05:6512:3ca7:b0:539:e873:6e2 with SMTP id
- 2adb3069b0e04-53b348ec22cmr5019179e87.8.1730214653629; 
- Tue, 29 Oct 2024 08:10:53 -0700 (PDT)
+ AJvYcCWyZO6yb+LljXSphC5ZeM/b3Z527GFmpOjla0o11vPAvxMI/yqjH9+U4WsnaT2TlGSabeZwIopT3zm2@nongnu.org
+X-Gm-Message-State: AOJu0YxwPegeSOpHM1iyxrShfHJClB5XhBXGa/0dnB8SdWNizMZ582ZS
+ TmeEHUszWVCsWgEGMns2i+njHotDWdcA2cSvWGc2nJqoAHtgqraLbWb+jME6laY=
+X-Google-Smtp-Source: AGHT+IESzTEPICDYCgoR+XrEPcdLu7K8JvYYNE1diNIeXXgO7EKRF8btnCMKo9wAr0gfzDmBtXCK5Q==
+X-Received: by 2002:a05:600c:4fc5:b0:42f:8515:e490 with SMTP id
+ 5b1f17b1804b1-4319ac7427fmr102316295e9.5.1730214654766; 
+ Tue, 29 Oct 2024 08:10:54 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4319360cc2esm146835865e9.44.2024.10.29.08.10.53
+ 5b1f17b1804b1-4319360cc2esm146835865e9.44.2024.10.29.08.10.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2024 08:10:53 -0700 (PDT)
+ Tue, 29 Oct 2024 08:10:54 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 07/18] tests/functional: Add a functional test for the sx1 board
-Date: Tue, 29 Oct 2024 15:10:37 +0000
-Message-Id: <20241029151048.1047247-8-peter.maydell@linaro.org>
+Subject: [PULL 09/18] docs/system/arm/stm32: List olimex-stm32-h405 in
+ document title
+Date: Tue, 29 Oct 2024 15:10:39 +0000
+Message-Id: <20241029151048.1047247-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241029151048.1047247-1-peter.maydell@linaro.org>
 References: <20241029151048.1047247-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,131 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a functional test for the sx1 board that uses the kernel and
-rootfs provided by Guenter Roeck in the linux-test-downloads repo:
- https://github.com/groeck/linux-test-downloads/
-
-We have three variants of the test for this board:
-  * just boot initrd
-  * boot with filesystem on SD card
-  * boot from flash
-
-In all cases these images have a userspace that is configured to
-immediately reboot the system on successful boot, and the board
-itself supports telling QEMU to do the reboot, so we only need to
-wait for QEMU to exit (via -no-reboot).
-
-Since there are three subtests, the test as a whole takes about
-80s on my local machine. That's about the same as the aarch64_virt
-test, so give it the same overall test timeout as that one.
+List the olimex-stm32-h405 board in the document title, so that the
+board name appears in the table of contents in system/target-arm.rst.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-id: 20241017163247.711244-3-peter.maydell@linaro.org
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-id: 20241018141332.942844-2-peter.maydell@linaro.org
 ---
- tests/functional/meson.build     |  2 +
- tests/functional/test_arm_sx1.py | 72 ++++++++++++++++++++++++++++++++
- 2 files changed, 74 insertions(+)
- create mode 100755 tests/functional/test_arm_sx1.py
+ docs/system/arm/stm32.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 9538e103d6e..84a07970d41 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -18,6 +18,7 @@ test_timeouts = {
-   'arm_aspeed' : 600,
-   'arm_raspi2' : 120,
-   'arm_tuxrun' : 120,
-+  'arm_sx1' : 360,
-   'mips_malta' : 120,
-   'netdev_ethtool' : 180,
-   'ppc_40p' : 240,
-@@ -57,6 +58,7 @@ tests_arm_system_thorough = [
-   'arm_collie',
-   'arm_integratorcp',
-   'arm_raspi2',
-+  'arm_sx1',
-   'arm_vexpress',
-   'arm_tuxrun',
- ]
-diff --git a/tests/functional/test_arm_sx1.py b/tests/functional/test_arm_sx1.py
-new file mode 100755
-index 00000000000..2d86405831e
---- /dev/null
-+++ b/tests/functional/test_arm_sx1.py
-@@ -0,0 +1,72 @@
-+#!/usr/bin/env python3
-+#
-+# Copyright (c) 2024 Linaro Ltd.
-+#
-+# Functional test that boots a Linux kernel on an sx1 machine
-+# and checks the console. We have three variants:
-+#  * just boot initrd
-+#  * boot with filesystem on SD card
-+#  * boot from flash
-+# In all cases these images have a userspace that is configured
-+# to immediately reboot the system on successful boot, so we
-+# only need to wait for QEMU to exit (via -no-reboot).
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import LinuxKernelTest, Asset
-+from qemu_test.utils import archive_extract
-+
-+class SX1Test(LinuxKernelTest):
-+
-+    ASSET_ZIMAGE = Asset(
-+        'https://github.com/groeck/linux-test-downloads/raw/225223f2ad7d637b34426810bf6c3b727b76a718/sx1/zImage',
-+        'a0271899a8dc2165f9e0adb2d0a57fc839ae3a469722ffc56c77e108a8887615')
-+
-+    ASSET_INITRD = Asset(
-+        'https://github.com/groeck/linux-test-downloads/raw/225223f2ad7d637b34426810bf6c3b727b76a718/sx1/rootfs-armv4.cpio',
-+        '35b0721249821aa544cd85b85d3cb8901db4c6d128eed86ab261e5d9e37d58f8')
-+
-+    ASSET_SD_FS = Asset(
-+        'https://github.com/groeck/linux-test-downloads/raw/225223f2ad7d637b34426810bf6c3b727b76a718/sx1/rootfs-armv4.ext2',
-+        'c1db7f43ef92469ebc8605013728c8950e7608439f01d13678994f0ce101c3a8')
-+
-+    ASSET_FLASH = Asset(
-+        'https://github.com/groeck/linux-test-downloads/raw/225223f2ad7d637b34426810bf6c3b727b76a718/sx1/flash',
-+        '17e6a2758fa38efd2666be0879d4751fd37d194f25168a8deede420df519b676')
-+
-+    CONSOLE_ARGS = 'console=ttyS0,115200 earlycon=uart8250,mmio32,0xfffb0000,115200n8'
-+
-+    def test_arm_sx1_initrd(self):
-+        self.set_machine('sx1')
-+        zimage_path = self.ASSET_ZIMAGE.fetch()
-+        initrd_path = self.ASSET_INITRD.fetch()
-+        self.vm.add_args('-append', f'kunit.enable=0 rdinit=/sbin/init {self.CONSOLE_ARGS}')
-+        self.vm.add_args('-no-reboot')
-+        self.launch_kernel(zimage_path,
-+                           initrd=initrd_path)
-+        self.vm.wait()
-+
-+    def test_arm_sx1_sd(self):
-+        self.set_machine('sx1')
-+        zimage_path = self.ASSET_ZIMAGE.fetch()
-+        sd_fs_path = self.ASSET_SD_FS.fetch()
-+        self.vm.add_args('-append', f'kunit.enable=0 root=/dev/mmcblk0 rootwait {self.CONSOLE_ARGS}')
-+        self.vm.add_args('-no-reboot')
-+        self.vm.add_args('-snapshot')
-+        self.vm.add_args('-drive', f'format=raw,if=sd,file={sd_fs_path}')
-+        self.launch_kernel(zimage_path)
-+        self.vm.wait()
-+
-+    def test_arm_sx1_flash(self):
-+        self.set_machine('sx1')
-+        zimage_path = self.ASSET_ZIMAGE.fetch()
-+        flash_path = self.ASSET_FLASH.fetch()
-+        self.vm.add_args('-append', f'kunit.enable=0 root=/dev/mtdblock3 rootwait {self.CONSOLE_ARGS}')
-+        self.vm.add_args('-no-reboot')
-+        self.vm.add_args('-snapshot')
-+        self.vm.add_args('-drive', f'format=raw,if=pflash,file={flash_path}')
-+        self.launch_kernel(zimage_path)
-+        self.vm.wait()
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+diff --git a/docs/system/arm/stm32.rst b/docs/system/arm/stm32.rst
+index ca7a55841b4..511e3eb9ac1 100644
+--- a/docs/system/arm/stm32.rst
++++ b/docs/system/arm/stm32.rst
+@@ -1,5 +1,5 @@
+-STMicroelectronics STM32 boards (``netduino2``, ``netduinoplus2``, ``stm32vldiscovery``)
+-========================================================================================
++STMicroelectronics STM32 boards (``netduino2``, ``netduinoplus2``, ``olimex-stm32-h405``, ``stm32vldiscovery``)
++===============================================================================================================
+ 
+ The `STM32`_ chips are a family of 32-bit ARM-based microcontroller by
+ STMicroelectronics.
 -- 
 2.34.1
 
