@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 062E3D2AB15
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD873D3A69F
 	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 20:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5t6x-0000fE-5G; Tue, 29 Oct 2024 16:46:46 -0400
+	id 1t5t6w-0000Yj-BB; Tue, 29 Oct 2024 16:46:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1t5t6W-0000VK-7q
+ id 1t5t6W-0000VL-9F
  for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:46:16 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1t5t6T-0004Vn-Tc
+ id 1t5t6T-0004Vl-RM
  for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:46:15 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1t5t6P-000000014bG-0Lbs; Tue, 29 Oct 2024 21:46:09 +0100
-Message-ID: <deb046cd-a6f0-463d-b3a5-37ff7bbdac01@maciej.szmigiero.name>
-Date: Tue, 29 Oct 2024 21:46:08 +0100
+ id 1t5t6N-000000014bG-0ZBZ; Tue, 29 Oct 2024 21:46:07 +0100
+Message-ID: <4836f787-5e39-441a-b8b1-a2238bdf228e@maciej.szmigiero.name>
+Date: Tue, 29 Oct 2024 21:46:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] Trivial patches from multifd device state transfer
- support patch set
+Subject: Re: [PATCH 4/4] migration: Document the BQL behavior of load
+ SaveVMHandlers
 To: Peter Xu <peterx@redhat.com>
 Cc: Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
@@ -39,7 +39,8 @@ Cc: Fabiano Rosas <farosas@suse.de>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1730203967.git.maciej.szmigiero@oracle.com>
- <ZyFILpY21mLNBIDv@x1n>
+ <6976f129df610c8207da4e531c8c0475ec204fa4.1730203967.git.maciej.szmigiero@oracle.com>
+ <ZyFHEOVShZUp-RvO@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +84,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <ZyFILpY21mLNBIDv@x1n>
+In-Reply-To: <ZyFHEOVShZUp-RvO@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: none client-ip=145.239.82.108;
@@ -110,56 +111,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.10.2024 21:40, Peter Xu wrote:
-> On Tue, Oct 29, 2024 at 03:58:12PM +0100, Maciej S. Szmigiero wrote:
+On 29.10.2024 21:35, Peter Xu wrote:
+> On Tue, Oct 29, 2024 at 03:58:16PM +0100, Maciej S. Szmigiero wrote:
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> A new version of the multifd device state transfer support with VFIO consumer
->> patch set is being prepared, the previous version and the associated
->> discussion is available here:
->> https://lore.kernel.org/qemu-devel/cover.1724701542.git.maciej.szmigiero@oracle.com/
+>> Some of these SaveVMHandlers were missing the BQL behavior annotation,
+>> making people wonder what it exactly is.
 >>
->> This new version was originally targeting QEMU 9.2 but such schedule proved
->> to be too optimistic due to sheer number of invasive changes/rework required,
->> especially with respect to the VFIO internal threads management and their
->> synchronization with the migration core.
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>   include/migration/register.h | 4 ++++
+>>   1 file changed, 4 insertions(+)
 >>
->> In addition to these changes, recently merged commit 3b5948f808e3
->> ("vfio/migration: Report only stop-copy size in vfio_state_pending_exact()")
->> seems to have uncovered a race between multifd RAM and device state transfers:
->> RAM transfer sender finishes the multifd stream with a SYNC in
->> ram_save_complete() but the multifd receive channels are only released
->> from this SYNC after the migration is wholly complete in
->> process_incoming_migration_bh().
->>
->> The above causes problems if the multifd channels need to still be
->> running after the RAM transfer is completed, for example because
->> there is still remaining device state to be transferred.
->>
->> Since QEMU 9.2 code freeze is coming I've separated small uncontroversial
->> commits from that WiP main patch set here, some of which were already
->> reviewed during previous main patch set iterations.
->>
->> This way at least future code conflicts can be reduced and the amount
->> of patches that need to be carried in the future versions of the main
->> patch set is reduced.
->>
->>
->> Maciej S. Szmigiero (4):
->>    vfio/migration: Add save_{iterate,complete_precopy}_started trace
->>      events
->>    migration/ram: Add load start trace event
->>    migration/multifd: Zero p->flags before starting filling a packet
->>    migration: Document the BQL behavior of load SaveVMHandlers
+>> diff --git a/include/migration/register.h b/include/migration/register.h
+>> index f60e797894e5..c411d84876ec 100644
+>> --- a/include/migration/register.h
+>> +++ b/include/migration/register.h
+>> @@ -210,6 +210,8 @@ typedef struct SaveVMHandlers {
+>>       void (*state_pending_exact)(void *opaque, uint64_t *must_precopy,
+>>                                   uint64_t *can_postcopy);
+>>   
+>> +    /* This runs inside the BQL. */
+>> +
+>>       /**
+>>        * @load_state
+>>        *
+>> @@ -227,6 +229,8 @@ typedef struct SaveVMHandlers {
+>>        */
+>>       int (*load_state)(QEMUFile *f, void *opaque, int version_id);
+>>   
+>> +    /* The following handlers run inside the BQL. */
 > 
-> I queued patch 2-3.  Patch 4 is ok to be merged even after softfreeze if
-> it's a doc only change, but we don't need to rush either..
-> 
-> Thanks,
-> 
+> If above also requires BQL, why not move this line upper?
 
-Thanks!
+The reason for this is that my main patch set also adds
+"load_state_buffer" handler, which runs without BQL.
 
+That handler is ordered next after "load_state" and I tried
+to avoid further comment churn here.
+
+But if you prefer to change these comments in the patch
+introducing "load_state_buffer" handler instead then it's
+fine.
+  
+> OTOH, I think resume_prepare() doesn't require BQL..
+
+Yes, it seems like resume_prepare() is only called outside BQL.
+Will update the patch.
+
+Thanks,
 Maciej
 
 
