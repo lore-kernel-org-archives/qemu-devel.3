@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77C3BD3A692
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 19:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18657D3A692
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 19:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5rbu-000590-T8; Tue, 29 Oct 2024 15:10:35 -0400
+	id 1t5rti-0007JA-Jh; Tue, 29 Oct 2024 15:28:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t5rbs-00058A-Mb
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 15:10:32 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t5rth-0007J2-1d
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 15:28:57 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t5rbr-0002wP-7N
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 15:10:32 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t5rtf-0004h7-DN
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 15:28:56 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 8755E21EF9;
- Tue, 29 Oct 2024 19:10:29 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id DE4A91FE59;
+ Tue, 29 Oct 2024 19:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730229029; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1730230133; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Owzhiz95hPoIaWvIkXR6Te8jT63hc+jLVOu7dMs+MUA=;
- b=WWX+ZCGwywsW/eeE+HwBHJIgLjuo/lsf5/Na8EoFB2sW8yN7jeS/u2L9uSDmyD+Oo8XeRM
- N91SjyOjo8bUdzOD/vEhektyz4Z0kOkZHSESF0Jysj4cpE5WMaNmZoRRZobpdETsl7O9xk
- R1zONk9e6o3D3qDVZ47YMJwLTN8lg2Q=
+ bh=msx24Za2TtJoTer6u4vgIZVFYauzmIpXe7By8vlZoV4=;
+ b=VinbzMsJpYOiAwsk128hTLV8GmbYmcoNcDo9XBpc8+ITvRgjXO8iLIAHun1pMuO4nOp8UW
+ UGeVqkByJIwXr6ou4YVPdwDZ8NZP3lnH/0YkGa/jVU1wh+nH2JIBbjYoxf+yI9T4lYTEdD
+ zGMO7a9tj18wv9IuKfVmK6CykVqqPoo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730229029;
+ s=susede2_ed25519; t=1730230133;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Owzhiz95hPoIaWvIkXR6Te8jT63hc+jLVOu7dMs+MUA=;
- b=2ZQXBnKH6wmHF6Lj2XUwZlszNGFn15TUXhhcvCtIYI56ROPT6r+N6jHVeHE7uYR+DbtiIk
- DjfwAe+cNpJmzbDQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=WWX+ZCGw;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=2ZQXBnKH
+ bh=msx24Za2TtJoTer6u4vgIZVFYauzmIpXe7By8vlZoV4=;
+ b=RoLB/qYrmLNFfpEW6l0IZlj8QiU9OoCLPmqyI+mw6JVg8iB9jsICDPAfIFuP8sKMWukxPH
+ 3/S8dLKU+2Wr0zBQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730229029; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1730230132; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Owzhiz95hPoIaWvIkXR6Te8jT63hc+jLVOu7dMs+MUA=;
- b=WWX+ZCGwywsW/eeE+HwBHJIgLjuo/lsf5/Na8EoFB2sW8yN7jeS/u2L9uSDmyD+Oo8XeRM
- N91SjyOjo8bUdzOD/vEhektyz4Z0kOkZHSESF0Jysj4cpE5WMaNmZoRRZobpdETsl7O9xk
- R1zONk9e6o3D3qDVZ47YMJwLTN8lg2Q=
+ bh=msx24Za2TtJoTer6u4vgIZVFYauzmIpXe7By8vlZoV4=;
+ b=uBs/RYUdkSSTplKviYeRE4asR7RVsTtxy2CEVPGmvlcCyLy1vHKHqxDThvJZAHPDg6kwHu
+ oktx2DXL8EzMr305A3f738OGsNRWbobny/b3odvMgS0PCF/RPq9HM9jpfp8qamUZuN5eZE
+ ENRJAORIS69fRxQBqi5DCDMb2DP7xJA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730229029;
+ s=susede2_ed25519; t=1730230132;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Owzhiz95hPoIaWvIkXR6Te8jT63hc+jLVOu7dMs+MUA=;
- b=2ZQXBnKH6wmHF6Lj2XUwZlszNGFn15TUXhhcvCtIYI56ROPT6r+N6jHVeHE7uYR+DbtiIk
- DjfwAe+cNpJmzbDQ==
+ bh=msx24Za2TtJoTer6u4vgIZVFYauzmIpXe7By8vlZoV4=;
+ b=SZqMmyWv3MFNlrlYaQMIYZXhNy59IC67cskC73LEDrNhmeuUogclA88sw1uIkHNEDZvHVA
+ HblfQFbM8KJ74jCw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 007A613503;
- Tue, 29 Oct 2024 19:10:28 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6039B13503;
+ Tue, 29 Oct 2024 19:28:52 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id dR/oLSQzIWfLUQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 29 Oct 2024 19:10:28 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 1lPfCXQ3IWc7VgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 29 Oct 2024 19:28:52 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Peter Xu
  <peterx@redhat.com>
@@ -78,36 +76,30 @@ Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le
  <berrange@redhat.com>, Avihai
  Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/4] migration/ram: Add load start trace event
-In-Reply-To: <94ddfa7ecb83a78f73b82867dd30c8767592d257.1730203967.git.maciej.szmigiero@oracle.com>
+Subject: Re: [PATCH 4/4] migration: Document the BQL behavior of load
+ SaveVMHandlers
+In-Reply-To: <6976f129df610c8207da4e531c8c0475ec204fa4.1730203967.git.maciej.szmigiero@oracle.com>
 References: <cover.1730203967.git.maciej.szmigiero@oracle.com>
- <94ddfa7ecb83a78f73b82867dd30c8767592d257.1730203967.git.maciej.szmigiero@oracle.com>
-Date: Tue, 29 Oct 2024 16:10:26 -0300
-Message-ID: <87r07ybu8t.fsf@suse.de>
+ <6976f129df610c8207da4e531c8c0475ec204fa4.1730203967.git.maciej.szmigiero@oracle.com>
+Date: Tue, 29 Oct 2024 16:26:24 -0300
+Message-ID: <87o732bti7.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Rspamd-Queue-Id: 8755E21EF9
-X-Spamd-Result: default: False [-4.14 / 50.00]; BAYES_HAM(-2.63)[98.35%];
+X-Spamd-Result: default: False [-3.97 / 50.00]; BAYES_HAM(-2.67)[98.56%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- MIME_TRACE(0.00)[0:+];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FUZZY_BLOCKED(0.00)[rspamd.com]; MID_RHS_MATCH_FROM(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[10]; RCVD_COUNT_TWO(0.00)[2];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -135,7 +127,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >
-> There's a RAM load complete trace event but there wasn't its start equivalent.
+> Some of these SaveVMHandlers were missing the BQL behavior annotation,
+> making people wonder what it exactly is.
 >
 > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
