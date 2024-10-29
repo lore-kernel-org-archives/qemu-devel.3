@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A80D3A66F
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 16:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93DD6D3A66F
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 16:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5p3W-0008RV-NC; Tue, 29 Oct 2024 12:26:54 -0400
+	id 1t5p7s-00010L-Kn; Tue, 29 Oct 2024 12:31:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1t5p3U-0008RK-Tg
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 12:26:53 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t5p7o-0000zp-KW
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 12:31:21 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1t5p3T-0008Jr-22
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 12:26:52 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-6ea0b25695dso18803437b3.2
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 09:26:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t5p7m-0000pe-HE
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 12:31:20 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-71e4244fdc6so4093561b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 09:31:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730219208; x=1730824008; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hNz7zvIV8dkYQqm5r25/46W/cbbWVnUCIgSSCm4lcoc=;
- b=FaXpl07+yFXAQIGQk5Abt+Z5aBPRVyOJ5Paxl8byUuqtAJlgmkIXp536CDXX2WPxEi
- eqMKrfhwBMaqu8kfGQqnAbd/iXBXqQNYpo4A0oJSfDY6qpqbJXbIwRDNdijF7h0lYQzF
- 6pkYETzHC1O5eje9SE68+tminQwG35ymyP8a2RrSDYcIL5KkfzR97GOFUs72Se8pAwxF
- c2l9yHFL6ypok4n7aT4S7ieXy/HzGg24pZGlKfQFW15d2+AnH4WNS5y7HpJY9bQHTgAf
- 8Dd9BHCs2C5v0x20HcE8DdbHGmdmITgbTpPmSrYPRSG5gRxUB+AO6xsh2SfWDSeJOl53
- VfXw==
+ d=linaro.org; s=google; t=1730219476; x=1730824276; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GluvrkFpzjprinBJrorJ6GPoWP4Kppr9WPEXb916Ol8=;
+ b=AxhMNeJMfLItRp6z0s+7leViic04Oz3nynfDuC2raNGgC1z8iIZ00B3nuB7w2hBv6U
+ W4EMju7WGIWtSuHFqYmx0Ye6Cl9l26xyf770aWdHezevvQ8LhPXpOGIi/Cidv9v3CgqU
+ k+VslFg4QmxFqYv58GztbY3Yz4ZtVlnfFxDq9Ob0jyWRmksP6IDk88F6QwDS6a0Fd3aM
+ ddD8GtuIu8EMAbpogQJ6NL3Cc5XVSKDDKO+ubItlusy7pIUr4LY5hIh/XgSqJPE5jkRl
+ uwyw7jYG082vU+6sr4UcndRPZkrHKJd5Fl2OGjAppBvhAxHkKGX57znhZFGxHX4XbmHT
+ lHmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730219208; x=1730824008;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hNz7zvIV8dkYQqm5r25/46W/cbbWVnUCIgSSCm4lcoc=;
- b=NPL9wZWx4TbZfgawves4NIpunBUmPVlLRBVrYlVXJherWPBGYXzyskSBQTTA7KmL4O
- ovp/qviWq09Dv06bzuB3kVhjHi4Uotu8PlYhbBVvsKWVxQuVk3XjepcRvPVcswChBqNZ
- DXa6od/Op3MFoUUQTNbsb+rZSUwp/enszZY+BZkB24P7T9VM3eBzJesUltr4fQcLUp3K
- hY7vladfwVf/bA/tO/og9QXmxzZc4VOEUz09O0yTTlwsOVz04Y34ZYL5B4a+6UmE5G6m
- jE5sJCJFjyvhZ8A3CGtYrZMCA1+eDv6sG6O01gv2iPttSrcFabc2FbjRM0oviHjVte0q
- mLlQ==
+ d=1e100.net; s=20230601; t=1730219476; x=1730824276;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GluvrkFpzjprinBJrorJ6GPoWP4Kppr9WPEXb916Ol8=;
+ b=kZ8HyJgZSE+iPb9Fsrll5DY6VI7L5z3hcAy1kCESKQVikX1NypImU/k8+uZE/ZQ3VX
+ iUhn5JNvqxrFhdPT1w9Bbq2sYj9eBP/4gFXUOKuW2Vsna/m0q11mmH2xDdFZwSgDpqGx
+ z8y/eR0t+bF9sEchn7oNxDGnJoMgaOytxz9ax5ZW1Dj11YavWJt60bZL+3K8IctbIL2i
+ jCQ9bt2v4vrw4zwkrBgABfKmE/7re77IEJesmxMVJtEHoM5Hsn8DS0gR1DXkbVWXGaDe
+ pLs6pqmm7EJIQkE58OS7T9lRT60hd82JJbIXjhd9GfD+Tl3AP1w6SZIE39zPf8+OfWJ6
+ AHTA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmA9xn6A9nbd7InOMxiEDFSXMiW7wwo/kdJdXz2lxsC9ckBOelm7AZ7PD6vTciPBmuD5Pfnnju2bCC@nongnu.org
-X-Gm-Message-State: AOJu0Yyo8HUP2nzADD95WjNTtv9Aj9L58aZ+Y3s/U4uxW3UkOp7k/cT0
- 1N5Sz/a90JtQtzJqePQnksgVzF7+HA4HDSqhH1BcvrA7uvThb2U9
-X-Google-Smtp-Source: AGHT+IEx5cx+H/vRnj3+XiSrvVcTyv5l1RSnPWY4t3VZwdC+aoAcizhYS0/Ff5Hx1OnoFRckiGxU1Q==
-X-Received: by 2002:a05:690c:9c0f:b0:6de:a3:a7ca with SMTP id
- 00721157ae682-6e9d8acb4a9mr154068787b3.32.1730219208085; 
- Tue, 29 Oct 2024 09:26:48 -0700 (PDT)
-Received: from fan ([50.205.20.42]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-6e9c6bdd42esm20204777b3.47.2024.10.29.09.26.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2024 09:26:47 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Tue, 29 Oct 2024 09:26:41 -0700
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: mst@redhat.com, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org, linuxarm@huawei.com,
- linux-cxl@vger.kernel.org, marcel.apfelbaum@gmail.com,
- Dave Jiang <dave.jiang@intel.com>, Huang Ying <ying.huang@intel.com>,
- Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 1/6] hw/pci-bridge/cxl_root_port: Provide x-speed and
- x-width properties.
-Message-ID: <ZyEMwUnnufY0bbvU@fan>
-References: <20240916173518.1843023-1-Jonathan.Cameron@huawei.com>
- <20240916173518.1843023-2-Jonathan.Cameron@huawei.com>
+ AJvYcCWUC3o8SFyPF3SBZ1qXmyKsdFtN+je1I+tATemITGMo6kbA63cxYmxNYR/wc48da7eS9npOJ/jc4mCk@nongnu.org
+X-Gm-Message-State: AOJu0YykO4dTNfnOiCCrqjZ/U1LqCOczPBJNQko4BYwbJluHDNTBgjR2
+ f1II2CvjyDr5pXkFYtPDhiNPhigUQzCXJRm+MKcWGteHgamYgVwctJZpwW+zGpA=
+X-Google-Smtp-Source: AGHT+IF0OZUtFM5HbXrxMxCFkvz81regxiylae73oX4bdOf9tftE7gOu/u23BmMdlqlg8COXG8Khew==
+X-Received: by 2002:a05:6a20:439f:b0:1d9:a72:87e9 with SMTP id
+ adf61e73a8af0-1d9a83a3dc9mr19430899637.10.1730219476344; 
+ Tue, 29 Oct 2024 09:31:16 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72057a3c2c9sm7710532b3a.196.2024.10.29.09.31.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Oct 2024 09:31:15 -0700 (PDT)
+Message-ID: <c5ff463d-c5fb-4d00-95fc-f3c3ce9178d5@linaro.org>
+Date: Tue, 29 Oct 2024 09:31:15 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240916173518.1843023-2-Jonathan.Cameron@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=nifan.cxl@gmail.com; helo=mail-yw1-x112b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Convert the BananaPi and OrangePi Avacodo tests
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Joel Stanley <joel@jms.id.au>
+References: <20241029092440.25021-1-thuth@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20241029092440.25021-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,49 +99,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 16, 2024 at 06:35:13PM +0100, Jonathan Cameron wrote:
-> Approach copied from gen_pcie_root_port.c
-> Previously the link defaulted to a maximum of 2.5GT/s and 1x.  Enable setting
-> it's maximum values.  The actual value after 'training' will depend on the
-> downstream device configuration.
-> 
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
->  hw/pci-bridge/cxl_root_port.c | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
-> index 2dd10239bd..5e2156d7ba 100644
-> --- a/hw/pci-bridge/cxl_root_port.c
-> +++ b/hw/pci-bridge/cxl_root_port.c
-> @@ -24,6 +24,7 @@
->  #include "hw/pci/pcie_port.h"
->  #include "hw/pci/msi.h"
->  #include "hw/qdev-properties.h"
-> +#include "hw/qdev-properties-system.h"
->  #include "hw/sysbus.h"
->  #include "qapi/error.h"
->  #include "hw/cxl/cxl.h"
-> @@ -206,6 +207,10 @@ static Property gen_rp_props[] = {
->                       -1),
->      DEFINE_PROP_SIZE("pref64-reserve", CXLRootPort, res_reserve.mem_pref_64,
->                       -1),
-> +    DEFINE_PROP_PCIE_LINK_SPEED("x-speed", PCIESlot,
-> +                                speed, PCIE_LINK_SPEED_64),
-> +    DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
-> +                                width, PCIE_LINK_WIDTH_32),
->      DEFINE_PROP_END_OF_LIST()
->  };
-LGTM.
+Hi Thomas,
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-
-Fan
->  
-> -- 
-> 2.43.0
+On 10/29/24 02:24, Thomas Huth wrote:
+> Some of the URLs in the Avocado tests stopped working since the
+> original assets have been removed from the servers or moved location,
+> see:
+> 
+>   https://lore.kernel.org/qemu-devel/CACPK8Xc=jsz5iT_WR7s-rcu1cRzryiK+-0o=6vUK_D_qMMrP3A@mail.gmail.com/
+> 
+> Since we are currently in progress of converting the Avocado tests
+> to the new functional framework, this is a good opportunity to convert
+> these tests and adjust the URLs (and hashsums) along the way to make
+> these tests work again.
+> 
+> Thomas Huth (2):
+>    tests/functional: Convert BananaPi tests to the functional framework
+>    tests/functional: Convert the OrangePi tests to the functional
+>      framework
+> 
+>   MAINTAINERS                           |   1 +
+>   tests/avocado/boot_linux_console.py   | 411 --------------------------
+>   tests/functional/meson.build          |   4 +
+>   tests/functional/qemu_test/utils.py   |  21 ++
+>   tests/functional/test_arm_bpim2u.py   | 206 +++++++++++++
+>   tests/functional/test_arm_orangepi.py | 270 +++++++++++++++++
+>   6 files changed, 502 insertions(+), 411 deletions(-)
+>   create mode 100755 tests/functional/test_arm_bpim2u.py
+>   create mode 100755 tests/functional/test_arm_orangepi.py
 > 
 
--- 
-Fan Ni
+I have a general question regarding tests in QEMU.
+Is the current goal to convert all avocado tests to functional ones, and 
+then remove avocado from codebase?
+
+Thanks,
+Pierrick
 
