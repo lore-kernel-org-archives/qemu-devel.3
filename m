@@ -4,89 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7869AD5B16F
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 09:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63ECBD5B176
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 09:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5i9N-0006vV-Uv; Tue, 29 Oct 2024 05:04:29 -0400
+	id 1t5iEV-0007pr-8I; Tue, 29 Oct 2024 05:09:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5i9H-0006uj-Ii
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 05:04:24 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t5iET-0007pe-Oa
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 05:09:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t5i9G-0001na-Bs
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 05:04:23 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t5iER-0002JT-Up
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 05:09:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730192660;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1730192982;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=BS4TD/+Z7P4ygBJ0pLLXFqoq3raVYgYFXIY0ssVkis0n52aFz7/TfDiKyJXMaiNk/NEWVU
- KTspZ/fvhHcoHblbndMVGIl1aAL1cZrWeAwvz0CcuKjOD672Sz13gTGgNi2wCmXKD71DXS
- ab9EBZAY79VC6I/zlw1sKTB2+UTR7W8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-103-hT4dAiUmOSigHipSsZaHiQ-1; Tue, 29 Oct 2024 05:04:18 -0400
-X-MC-Unique: hT4dAiUmOSigHipSsZaHiQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4316ac69e6dso40270885e9.0
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 02:04:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730192657; x=1730797457;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=QdkX/LMlUGrXPJqatEDGsStsY4XuHX5slfvhJyprOD+drw/UyLr27rNg5mJfLGst2Q
- IvWJtd4MDFpqlvXULWeb+Vr+iI6UhDYhQ8p0UNu3KQdVPDru5qlo+AAokPm9LHOhTPiX
- JHm0nyoHO7IeDBoZxK7nwJDQmA8plvvJkc9WAIZe3WkMI3sRAZdX1NVu5p/4I0S5KZFm
- XNhe4ITXCDB1pe1h1XNo9h2HImeio4fQhxRwJfK6TS5GAoIXOB5lhjh9dTR1swOCJLvM
- Jlto4RPkb4drZ6Fh8e0z0IWz5mgX0vkBxcbltqpr21RFIxskjqTVcNZMRF67RhgA5eI1
- mgqg==
-X-Gm-Message-State: AOJu0Yz60YvSxXOiPPRguQ+JxsLxfX2NoqII09CgQ0nqS/zElECQ8q77
- P+Ky9mwaLWSX0J8ZHwPpsTCeP7Ulos/hJzuZEKXqRYxLusDxsXZXRU7rvzqBYtwr2yXTRSZSiM9
- c2DmJF311SBzlj3OfOnRffrvIdFsUPDxljHPROwvaSmIfUc3bmjsl
-X-Received: by 2002:adf:ff86:0:b0:37d:4818:f8b1 with SMTP id
- ffacd0b85a97d-380611e493bmr7322781f8f.39.1730192657216; 
- Tue, 29 Oct 2024 02:04:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IESXjs3sJWhrcR6JLn9ghHmd7Xk43+lLlB6QMGLDX0tFBcUsqtD7e8fvNgcVZhZ5K5Nk6BmcA==
-X-Received: by 2002:adf:ff86:0:b0:37d:4818:f8b1 with SMTP id
- ffacd0b85a97d-380611e493bmr7322756f8f.39.1730192656846; 
- Tue, 29 Oct 2024 02:04:16 -0700 (PDT)
-Received: from [192.168.10.47] ([151.49.226.83])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38058b132ecsm11959729f8f.5.2024.10.29.02.04.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2024 02:04:16 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v2] rust/wrapper.h: define memory_order enum
-Date: Tue, 29 Oct 2024 10:04:14 +0100
-Message-ID: <20241029090414.450707-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241027-rust-wrapper-stdatomic-v2-1-dab27bbf93ea@linaro.org>
-References: 
+ bh=YkjBf4SpwjBt0hLpZ+Kwjx5LdiIvAvMBMCUFQEEwQAg=;
+ b=hd/W7HHehb0BpOA/DBMZCBizgJavcxFAa26X2uJLUwiNdBs8IF3JS832Pdi56FN8KMz5RM
+ RovrlHQOf1pzioczQyD0IQYrWKfDM0yubAhktMia+X4W2PkfxEXfv+FUhBMuZV0KUqonKg
+ z0E0cl6LnDw/gAT5RnyMWl/4mfob6Yk=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-2psJe6hDMTS_RSm8fic3wA-1; Tue,
+ 29 Oct 2024 05:09:41 -0400
+X-MC-Unique: 2psJe6hDMTS_RSm8fic3wA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BA1211955F41; Tue, 29 Oct 2024 09:09:39 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.142])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 97C9F19560A2; Tue, 29 Oct 2024 09:09:36 +0000 (UTC)
+Date: Tue, 29 Oct 2024 09:09:33 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Steven Sistare <steven.sistare@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [RFC V1 00/14] precreate phase
+Message-ID: <ZyCmQEDkmnpd8zb1@redhat.com>
+References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
+ <b36283ff-2e14-4ee0-a64e-a5c4f9e86534@redhat.com>
+ <fd8977f7-2787-4387-81fa-240665d0bf1d@oracle.com>
+ <Zxta2w6iu2n_5YBa@redhat.com>
+ <922177b7-216f-4176-a57a-a86f32252664@oracle.com>
+ <ZxugavgmHrawXPNQ@redhat.com> <ZyAIem3AhrSFAm4e@x1n>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+In-Reply-To: <ZyAIem3AhrSFAm4e@x1n>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -108,11 +94,96 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+On Mon, Oct 28, 2024 at 05:56:10PM -0400, Peter Xu wrote:
+> On Fri, Oct 25, 2024 at 02:43:06PM +0100, Daniel P. Berrangé wrote:
+> > On Fri, Oct 25, 2024 at 09:33:51AM -0400, Steven Sistare wrote:
+> > > On 10/25/2024 4:46 AM, Daniel P. Berrangé wrote:
+> > > > On Thu, Oct 24, 2024 at 05:16:14PM -0400, Steven Sistare wrote:
+> > > > > 
+> > > > > Regarding: "what you want is effectively to execute monitor commands
+> > > > > from the migration stream"
+> > > > > 
+> > > > > That is not the goal of this series.  It could be someone else's goal, when
+> > > > > fully developing a precreate phase, and in that context I understand and
+> > > > > agree with your comments.  I have a narrower immediate problem to solve,
+> > > > > however.
+> > > > > 
+> > > > > For CPR, src qemu sends file descriptors to dst qemu using SCM_RIGHTS over
+> > > > > a dedicated channel, then src qemu sends migration state over the normal
+> > > > > migration channel.
+> > > > > 
+> > > > > Dst qemu reads the fds early, then calls the backend and device creation
+> > > > > functions which use them.  Dst qemu then accepts and reads the migration
+> > > > > channel.
+> > > > > 
+> > > > > We need a way to send monitor commands that set dst migration capabilities,
+> > > > > before src qemu starts the migration.  Hence the dst cannot proceed to
+> > > > > backend and device creation because the src has not sent fd's yet.  Hence
+> > > > > we need a dst monitor before device creation.  The precreate phase does that.
+> > > > 
+> > > > Sigh, what we obviously need here, is what we've always talked about as our
+> > > > long term design goal:
+> > > > 
+> > > > A way to launch QEMU with the CLI only specifying the QMP socket, and every
+> > > > other config aspect done by issuing QMP commands, which are processed in the
+> > > > order the mgmt app sends them, so QEMU hasn't have to hardcode processing
+> > > > of different pieces in different phases.
+> > > > 
+> > > > Anything that isn't that, is piling more hacks on top of our existing
+> > > > mountain of hacks. That's OK if it does something useful as a side effect
+> > > > that moves us incrementally closer towards that desired end goal.
+> > > > 
+> > > > > Regarding: "This series makes this much more complex."
+> > > > > 
+> > > > > I could simplify it if I abandon CPR for chardevs.  Then qemu_create_early_backends
+> > > > > and other early dependencies can remain as is.  I would drop the notion of
+> > > > > a precreate phase, and instead leverage the preconfig phase.  I would move
+> > > > > qemu_create_late_backends, and a small part at the end of qemu_init, to
+> > > > > qmp_x_exit_preconfig.
+> > > > 
+> > > > Is CPR still going to useful enough in the real world if you drop chardev
+> > > > support ? Every VM has at least one chardev for a serial device doesn't
+> > > > it, and often more since we wire chardevs into all kinds of places.
+> > > 
+> > > CPR for chardev is not as useful for cpr-transfer mode because the mgmt layer already
+> > > knows how to create and manage new connections to dest qemu, as it would for normal
+> > > migration.
+> > > 
+> > > CPR for chardev is very useful for cpr-exec mode.  And cpr-exec mode does not need any
+> > > of these monitor patches, because old qemu exec's new qemu, and they are never active
+> > > at the same time.  One must completely specify the migration using src qemu before
+> > > initiating the exec.  I mourn cpr-exec mode.
+> > > 
+> > > Which begs the question, do we really need to allow migration parameters to be set
+> > > in the dest monitor when using cpr?  CPR is a very restricted mode of migration.
+> > > Let me discuss this with Peter.
+> > 
+> > The migration QAPI design has always felt rather odd to me, in that we
+> > have perfectly good commands "migrate" & "migrate-incoming" that are able
+> > to accept an arbitrary list of parameters when invoked. Instead of passing
+> > parameters to them though, we instead require apps use the separate
+> > migreate-set-parameters/capabiltiies commands many times over to set
+> > global variables which the later 'migrate' command then uses.
+> 
+> Just to mention, we will still need some special parameters that can change
+> during migration, like max-bandwidth, max-downtime etc.  So not all of them
+> can be made into "migrate"/"migrate-incoming" arguments.
 
-Paolo
+I guess we can leave migrate-set-parameters with the sub-set of
+parameters needed at runtime, or have a 'migrate-update' command
+for those, to make it clear  which are valid to set at runtime,
+and which are not valid at initial start.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
