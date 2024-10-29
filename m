@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15A1FD3A67B
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 18:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE82FD3A67C
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 18:42:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5r4M-0001xu-Sv; Tue, 29 Oct 2024 14:35:55 -0400
+	id 1t5r9u-0003Ek-As; Tue, 29 Oct 2024 14:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t5r4B-0001xO-LI
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 14:35:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t5r9r-0003EC-F1
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 14:41:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t5r49-0006ym-JE
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 14:35:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t5r9p-0007Vd-0o
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 14:41:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730226939;
+ s=mimecast20190719; t=1730227291;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1RMEc/ysDXZI4pEIXjciVdF8roGTPgfZI2KlNJe5TVo=;
- b=a7rBB0VyAEPcRg9ZexJaRzYT2BqusPFuJrnKr1QwCUZnysRjHq2ACxj8JmT5nVMpxgpCpR
- 6En1/HBdb4A3xovDgw6nK1ZQfZYbIdD7kuzi0yDNr83Z3+IiXHZVgE40wUbzMVh2k7yWfy
- Z0VGfKmhTHr2PCjbbRydvgDNaDHOM9U=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SBskgoXwgCQ3bcV+8yC2YCMYgCh5cogJzuk0jM5BAds=;
+ b=WfUhkRJHHcw0EwPzsV9WlIr2F5xJNSrVXveGQdI+oLnsnkkPbxU870WKJpVzkB23b1H1uh
+ 2v/x7f8nlPo+PS8Ayia/UnnQ1o4RILqINEEnwFXKqSbwFHGwaYs1DyrTr+z3yU3EA50nXK
+ 3moX+kTVcydduLmkRStiJNUO4fLj68M=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-346-GBSzamFiMtW6KdiNJOdNBg-1; Tue, 29 Oct 2024 14:35:35 -0400
-X-MC-Unique: GBSzamFiMtW6KdiNJOdNBg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4315af466d9so38035195e9.3
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 11:35:35 -0700 (PDT)
+ us-mta-447--86Yinm9Na68zG_7U9WDPw-1; Tue, 29 Oct 2024 14:41:30 -0400
+X-MC-Unique: -86Yinm9Na68zG_7U9WDPw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37d45f1e935so3213958f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 11:41:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730226934; x=1730831734;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1RMEc/ysDXZI4pEIXjciVdF8roGTPgfZI2KlNJe5TVo=;
- b=Npzls9hGTUFvdNsJEVgaxC8LXkuALCH4/DSjNDF/LTpaujKXOpNlYcjUD4tyUgjhmd
- 2mJxrp6VFXiBroC1c+8XyEsKUScROmMJeRJrrYqbjvVJ9ioSfwuAABo7sv/G4Xrf915r
- l24pEwOwsFrx/+KDFYcoeaR/3LKRhqkdGG8hbhhCpSgNZJ5qgqiAIcsUkHhILLzUcqcn
- EXaDfTfM0UjmaK4dOvAkGuu7qEvVvM7RIci2Iu+UpizG6IvGNCfHItIIbtbfzB2IaQge
- yt0W0ohfIjo8EYkD3tfrQEIsoZIcst4VcmI4USgcfSOsIaqe2HmjPsXWUaomSycaTPQb
- cgvg==
+ d=1e100.net; s=20230601; t=1730227289; x=1730832089;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SBskgoXwgCQ3bcV+8yC2YCMYgCh5cogJzuk0jM5BAds=;
+ b=lL7BMBi26xHk7oYFTuucuIEFfHqtZ/dRl411lHtw+4+dE1ch2Q6GN42AkCKthvN4om
+ Am0bkrms9ATJOQ0c2YQjZouaLTIDrBcPL29Gc0ITyBrJWj+3OWgoZOx3npBBcetRDkum
+ +szQfnQesYSMl8U51/AlJC7Jdlnfn9v8eRZjB30sWijXmBcP4n50xH8bK55X7L/RqYPX
+ y06puPlNU0gmJSIWzlel/8blibb1XUsoSX6Se4GZcGW8fInR24N1RNp/NO8BHtwDT0zR
+ sPwpu0U78b4Tp538LgreXa+JhzQRIZmnkfXsKdEtLEMwJQVofmyq0XXvycUnQaDXKBKY
+ klnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCViRpM5on18RR8N4o89A/Ka5iCU4k9ZIMzLJMDqYRFNzWk7Gj/cVIuahfkAjhReULju+FqkSCJvxCw7@nongnu.org
-X-Gm-Message-State: AOJu0Yx4vuFJ4jGVwYVr+30JgJkQfFmd9AOYM6eJibMNEns3V+ULaQav
- w8N53+vl0eEP3sUOnZkRqTjyQnqQZmN3B+S3mbLolijacTXJaI8tM+gBZvJKPLnbl4f1A6/UJYu
- ZcoLTa66E+rv3htugG96AG7R9uAPOIrnYAzVIWKSJbqjJJ31cTFQf
-X-Received: by 2002:a05:600c:1d8c:b0:431:5e3c:2ff0 with SMTP id
- 5b1f17b1804b1-4319ac94a2emr111493025e9.8.1730226934611; 
- Tue, 29 Oct 2024 11:35:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHD45T9ksW68kupNEDeYOaMK9FK4gPKwvIve6QiCUFCsqznfYLoYK4J/m9yODDMyC1VcM+Uxg==
-X-Received: by 2002:a05:600c:1d8c:b0:431:5e3c:2ff0 with SMTP id
- 5b1f17b1804b1-4319ac94a2emr111492865e9.8.1730226934227; 
- Tue, 29 Oct 2024 11:35:34 -0700 (PDT)
+ AJvYcCWOSImanHMACLBY2OC8d/RCM1UWEV/NHyFJ8jf5+4sPReaOnTnEYUcOsAdeHk+Dgtcrr7/gmPxJjsTg@nongnu.org
+X-Gm-Message-State: AOJu0Yw21p2kwILdEjMHPUTKUy7ytWesbddHqYW/gBAENT8oCDVHO4jG
+ dtQuJdn6VSYvQYoVIzYOdphxaeXjT8s1ZyXZcfMiFx4vj7GGHkFWDEF+6FMXUwxVIDW6tSSoGah
+ PxJLij27/YBq/D5576/uJYWbZUvK4vsCVbRZJm8RAgUV6iUhu9/kA
+X-Received: by 2002:a5d:620b:0:b0:37d:940c:7394 with SMTP id
+ ffacd0b85a97d-3806115a72dmr8008842f8f.32.1730227288742; 
+ Tue, 29 Oct 2024 11:41:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEVZKCfCuLcOsDUtjnq3YrbWHLUD08Nl8IAdExAXD+UOKn+u0qf50R5b4H8SoluYBgwlLDR7w==
+X-Received: by 2002:a5d:620b:0:b0:37d:940c:7394 with SMTP id
+ ffacd0b85a97d-3806115a72dmr8008831f8f.32.1730227288365; 
+ Tue, 29 Oct 2024 11:41:28 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-48-251.web.vodafone.de.
  [109.42.48.251]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4319360833asm152146185e9.39.2024.10.29.11.35.33
+ ffacd0b85a97d-38058b70c44sm13236593f8f.80.2024.10.29.11.41.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Oct 2024 11:35:33 -0700 (PDT)
-Message-ID: <b5719add-52d3-4fd9-a2a2-a3797e30f017@redhat.com>
-Date: Tue, 29 Oct 2024 19:35:32 +0100
+ Tue, 29 Oct 2024 11:41:27 -0700 (PDT)
+Message-ID: <e4d010dd-cadf-4c23-bf13-3da86713a057@redhat.com>
+Date: Tue, 29 Oct 2024 19:41:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] Revert "Remove the unused sh4eb target"
+Subject: Re: [PATCH 2/2] tests/functional: Add a test for sh4eb
 To: Rob Landley <rob@landley.net>, qemu-devel@nongnu.org,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: Yoshinori Sato <ysato@users.sourceforge.jp>,
  Magnus Damm <magnus.damm@gmail.com>
 References: <20241024082735.42324-1-thuth@redhat.com>
- <20241024082735.42324-2-thuth@redhat.com>
- <b45ff481-bae0-413d-a3a6-bf5a308aae76@landley.net>
-Content-Language: en-US
+ <20241024082735.42324-3-thuth@redhat.com>
+ <17599c22-6aba-4855-b8a0-43412131823b@landley.net>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -123,20 +123,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <b45ff481-bae0-413d-a3a6-bf5a308aae76@landley.net>
+In-Reply-To: <17599c22-6aba-4855-b8a0-43412131823b@landley.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
 X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,24 +151,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/10/2024 18.09, Rob Landley wrote:
+On 29/10/2024 18.58, Rob Landley wrote:
 > On 10/24/24 03:27, Thomas Huth wrote:
->> This reverts commit 73ceb12960e686b763415f0880cc5171ccce01cf.
->>
->> The "r2d" machine can work in big endian mode, see:
->>
->>   https://lore.kernel.org/qemu-devel/ 
->> d6755445-1060-48a8-82b6-2f392c21f9b9@landley.net/
->>
->> So the reasoning for removing sh4eb was wrong.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> Now that we are aware of binaries that are available for sh4eb,
+>> we should make sure that there are no regressions with this
+>> target and test it regularly in our CI.
 > 
-> Signed-off-by: Rob Landley <rob@landley.net>
+> Any progress on restoring this? Didn't see it in "git pull" just now...
 
-I'll take that as a "Reviewed-by" ;-)
+I'll make sure to put the patches in my next pull request before the QEMU 
+soft freeze starts next week.
 
-  Thanks,
-   Thomas
+>> +class R2dEBTest(LinuxKernelTest):
+>> +
+>> +    ASSET_TGZ = Asset(
+>> +        'https://landley.net/bin/mkroot/0.8.11/sh4eb.tgz',
+>> +        'be8c6cb5aef8406899dc5aa5e22b6aa45840eb886cdd3ced51555c10577ada2c')
+> 
+> Feel free to pull binaries from my site, but from a reliability perspective 
+> "some random dude got hit by a bus so a site went down that broke our test 
+> infrastructure" seems a bit dodgy. (Even the Internet Archive has been 
+> having reliability issues of late, and "as long as Brewster Kahle's dot-com 
+> money holds out" seems a similar bus number.)
+> 
+> Building it yourself from source seems more reliable. Is there any sort of 
+> policy here?
+
+We don't really have any infrastructure in place for building such assets 
+within the QEMU CI, but the binaries get cached locally after the initial 
+download, so we should at least be able to retrieve them from these caches 
+in case your original site becomes unavailable ...
+
+> And even do automated smoketests on them showing it can boot, run a shell 
+> script, and access a virtual block device and network connection:
+> 
+>    https://github.com/landley/toybox/blob/master/mkroot/testroot.sh
+
+... but if you're using github anyway, maybe you could also build the 
+binaries via github actions and publish the assets there? That would make it 
+easier for cloning and reproducing the stuff, I think.
+
+Anyway, thank you very much for providing the binaries already on your site, 
+that's really helpful!
+
+  Thomas
 
 
