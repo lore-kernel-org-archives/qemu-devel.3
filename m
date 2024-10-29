@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BCC3D3A66C
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3285D3A66B
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:00:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5ngR-0006Fi-6x; Tue, 29 Oct 2024 10:58:59 -0400
+	id 1t5ngP-0006E8-HI; Tue, 29 Oct 2024 10:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1t5ngN-0006Cw-3Y
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 10:58:55 -0400
+ id 1t5ngM-0006Bw-6r
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 10:58:54 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1t5ngJ-0004gg-Iy
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 10:58:54 -0400
+ id 1t5ngJ-0004ey-Fs
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 10:58:53 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1t5ng6-000000014Cw-07kk; Tue, 29 Oct 2024 15:58:38 +0100
+ id 1t5nfv-000000014CZ-38fu; Tue, 29 Oct 2024 15:58:27 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH 3/4] migration/multifd: Zero p->flags before starting filling
- a packet
-Date: Tue, 29 Oct 2024 15:58:15 +0100
-Message-ID: <1c96b6cdb797e6f035eb1a4ad9bfc24f4c7f5df8.1730203967.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH 1/4] vfio/migration: Add save_{iterate,
+ complete_precopy}_started trace events
+Date: Tue, 29 Oct 2024 15:58:13 +0100
+Message-ID: <68f51cf0eb3daf448ae80219dded4b10984e32db.1730203967.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1730203967.git.maciej.szmigiero@oracle.com>
 References: <cover.1730203967.git.maciej.szmigiero@oracle.com>
@@ -68,36 +68,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-This way there aren't stale flags there.
+This way both the start and end points of migrating a particular VFIO
+device are known.
 
-p->flags can't contain SYNC to be sent at the next RAM packet since syncs
-are now handled separately in multifd_send_thread.
+Add also a vfio_save_iterate_empty_hit trace event so it is known when
+there's no more data to send for that device.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- migration/multifd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/vfio/migration.c           | 13 +++++++++++++
+ hw/vfio/trace-events          |  3 +++
+ include/hw/vfio/vfio-common.h |  3 +++
+ 3 files changed, 19 insertions(+)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 9b200f4ad912..c9b24caa64bc 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -600,6 +600,7 @@ static void *multifd_send_thread(void *opaque)
-          * qatomic_store_release() in multifd_send().
-          */
-         if (qatomic_load_acquire(&p->pending_job)) {
-+            p->flags = 0;
-             p->iovs_num = 0;
-             assert(!multifd_payload_empty(p->data));
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 992dc3b10257..1b1ddf527d69 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -472,6 +472,9 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+         return -ENOMEM;
+     }
  
-@@ -651,7 +652,6 @@ static void *multifd_send_thread(void *opaque)
-                 }
-                 /* p->next_packet_size will always be zero for a SYNC packet */
-                 stat64_add(&mig_stats.multifd_bytes, p->packet_len);
--                p->flags = 0;
-             }
++    migration->save_iterate_started = false;
++    migration->save_iterate_empty_hit = false;
++
+     if (vfio_precopy_supported(vbasedev)) {
+         switch (migration->device_state) {
+         case VFIO_DEVICE_STATE_RUNNING:
+@@ -602,9 +605,17 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
+     VFIOMigration *migration = vbasedev->migration;
+     ssize_t data_size;
  
-             qatomic_set(&p->pending_sync, false);
++    if (!migration->save_iterate_started) {
++        trace_vfio_save_iterate_started(vbasedev->name);
++        migration->save_iterate_started = true;
++    }
++
+     data_size = vfio_save_block(f, migration);
+     if (data_size < 0) {
+         return data_size;
++    } else if (data_size == 0 && !migration->save_iterate_empty_hit) {
++        trace_vfio_save_iterate_empty_hit(vbasedev->name);
++        migration->save_iterate_empty_hit = true;
+     }
+ 
+     vfio_update_estimated_pending_data(migration, data_size);
+@@ -630,6 +641,8 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+     int ret;
+     Error *local_err = NULL;
+ 
++    trace_vfio_save_complete_precopy_started(vbasedev->name);
++
+     /* We reach here with device state STOP or STOP_COPY only */
+     ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
+                                    VFIO_DEVICE_STATE_STOP, &local_err);
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index 29789e8d276d..e58deab232ed 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -159,8 +159,11 @@ vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
+ vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
+ vfio_save_cleanup(const char *name) " (%s)"
+ vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
++vfio_save_complete_precopy_started(const char *name) " (%s)"
+ vfio_save_device_config_state(const char *name) " (%s)"
+ vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
++vfio_save_iterate_empty_hit(const char *name) " (%s)"
++vfio_save_iterate_started(const char *name) " (%s)"
+ vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
+ vfio_state_pending_estimate(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+ vfio_state_pending_exact(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index fed499b199f0..997ee5af2d5b 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -73,6 +73,9 @@ typedef struct VFIOMigration {
+     uint64_t precopy_init_size;
+     uint64_t precopy_dirty_size;
+     bool initial_data_sent;
++
++    bool save_iterate_started;
++    bool save_iterate_empty_hit;
+ } VFIOMigration;
+ 
+ struct VFIOGroup;
 
