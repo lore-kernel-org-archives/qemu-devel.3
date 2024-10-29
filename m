@@ -4,70 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F0A3D2AB37
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 12:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FCB6D2AB33
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 12:34:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5lP4-0002GY-Oi; Tue, 29 Oct 2024 08:32:54 -0400
+	id 1t5lQS-00039G-Nm; Tue, 29 Oct 2024 08:34:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t5lOz-0002G9-5W
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:32:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1t5lPv-0002up-Sw; Tue, 29 Oct 2024 08:33:47 -0400
+Received: from fhigh-a5-smtp.messagingengine.com ([103.168.172.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t5lOv-0001B3-D7
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:32:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730205163;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=HQOWDfw0w0sRNUpdq0NvfxM2F+WPo2kG+38sNBk8Xus=;
- b=IhjOkusoABVrvA9yP+ivRRkBnaWxY1Q5eqAXSa9zdbxUo/Jq5AHhaCTwoWBW4uhWdTxZJD
- pdxODTQgjJeQ4r8JBEyOE6r0W5OM3hycrzi4GnynnKDFPGyu95hB4jWDEDuoXmKMDpfHea
- Yr9JuC5v1kCbodr6kxBsMhfxlaX26Z4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-163-3eRFZXbHMFebDkTQou0G4Q-1; Tue,
- 29 Oct 2024 08:32:37 -0400
-X-MC-Unique: 3eRFZXbHMFebDkTQou0G4Q-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DDE681955F3C; Tue, 29 Oct 2024 12:32:36 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.142])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9C0A719560A2; Tue, 29 Oct 2024 12:32:35 +0000 (UTC)
-Date: Tue, 29 Oct 2024 12:32:32 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: liequan che <liequanche@gmail.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH V2] crypto: Introduce SM3 hash hmac pbkdf algorithm
-Message-ID: <ZyDV4M5zOvdLx8CI@redhat.com>
-References: <CAAsfc_qfHe8hgr06AjhhfhWkOvKxU-Wz-02EjFCpo6HNkRhzgg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1t5lPr-0001Hu-3w; Tue, 29 Oct 2024 08:33:46 -0400
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal
+ [10.202.2.49])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 37D8911401C4;
+ Tue, 29 Oct 2024 08:33:41 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-09.internal (MEProxy); Tue, 29 Oct 2024 08:33:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1730205221; x=
+ 1730291621; bh=neIx3kK3H0h0J1vT5KJpEOHRgh8qFCvAbpIoimK4DKk=; b=W
+ qw2h9R+RtaB13Zz60JBS4G70HBMEfbpz11y5DxqOCsgOX9nAMNbL8acSh6gIKhPp
+ xwLgRVNLi0Cjgt/AUeT0yELUmED68R7HVjloWXdX68OzhfuGOnkwx87tKiryN+qq
+ NDJJvxzLJ3yopZXQ2knfV1DPKI+ffA9Nex2ouaI7nD6yuV6P0x0djSdddUTzaY3z
+ in8CLr6jYLib0sn78h2gOzxPYE4xhxtphkAGM0PbcBgR1zOYcPy2e+dLPVKYO9FX
+ D+kJW4W52ffBSXHCKRnwSonzvb/oGGBi+mQFpFyfRwiqnW/VgLgB450LL9H3NxRS
+ YsXakcSt3FTXemSBF75bg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1730205221; x=1730291621; bh=neIx3kK3H0h0J1vT5KJpEOHRgh8qFCvAbpI
+ oimK4DKk=; b=VEBxkbUlPngGXqzI1lZrLFFmaKpgM4TWd44tHDUSLE7wqAJNQL/
+ 2AQOXHX3stXKWJa5o1oubmA1QJOIzRPLJ13FLsGNzh8WcllemusorcxA186LwAGh
+ bY5SHofc4heg1pytrHB/CiO1Vpmnj3hw+uaw26Q9EPB3jmBTn7b+calojaR/J5ns
+ pPCa8VH4ZfK0WBsw+syKRlTCSESBAPwRyJzzQK4LfA8Dh/4Y61gAj6stvrvGk2Yp
+ WGMpKKhx4X4qZWy31p+OVJEB8Hsz91qRvPpdVM+gpmOj7wAaI1590YVVdbBZO+AH
+ rNYMoPV7+4WD6oWtqRwttuRSqglZgepboFA==
+X-ME-Sender: <xms:JNYgZ5QQ4TEeChxgHq9v7R3HreG-dUVYmaBcYfegleWc_k9uCeJg3Q>
+ <xme:JNYgZywjH1pzutNydJ7mhDg6BvIgO9d0mFs2FV6gVRG7dj8R5b2lurpMO6KpM0SOd
+ Y_MgiCUcT3i6v4uCjE>
+X-ME-Received: <xmr:JNYgZ-3Zy-RbAKMfDDbIahdCWamd4shJf8XanmTNuPhc7zHyssSiMZPZaWvshg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekuddgfeejucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtjeen
+ ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
+ gukheqnecuggftrfgrthhtvghrnhepieevffffhfeludekhefhteeuleekffduueeikedt
+ geethfegfeelieduleevleeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+ hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
+ ohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgsuhhstghhsehkvghrnh
+ gvlhdrohhrghdprhgtphhtthhopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphht
+ thhopehqvghmuhdqsghlohgtkhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmh
+ huqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehkrdhjvghnshgvnhes
+ shgrmhhsuhhnghdrtghomhdprhgtphhtthhopehqvghmuhdqshhtrggslhgvsehnohhngh
+ hnuhdrohhrghdprhgtphhtthhopehjfihkohiirggtiihukhesghhmrghilhdrtghomhdp
+ rhgtphhtthhopehithhssehirhhrvghlvghvrghnthdrughk
+X-ME-Proxy: <xmx:JNYgZxAk9kF104VYB00mdVt2YpZ5iOe5-nqURq0P9WB8IjLr7yvm5Q>
+ <xmx:JNYgZyh_N5X-H51Jj2Zr1a0Yfjo3gw2tG_pkW9Is2b_NT1r3Eqbtdg>
+ <xmx:JNYgZ1qwpc6l9US8JRh1E8wvrtmI-vQdVmBf_isTbqfU-bYRnrHeyA>
+ <xmx:JNYgZ9iDkupyQFtpW5Lx0j9isz0WxA0TWn0VaxSkiw0D8uFJeumnFw>
+ <xmx:JdYgZ9NoHCDEPN3p2GMrpeBMsB1lzIog0RlUcRhyd-DK6sas9YojnaZz>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Oct 2024 08:33:39 -0400 (EDT)
+Date: Tue, 29 Oct 2024 13:33:38 +0100
+From: Klaus Jensen <its@irrelevant.dk>
+To: Keith Busch <kbusch@kernel.org>
+Cc: Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ qemu-stable@nongnu.org, Waldemar Kozaczuk <jwkozaczuk@gmail.com>
+Subject: Re: [PATCH] hw/nvme: fix handling of over-committed queues
+Message-ID: <ZyDWImCgEqVJmtfE@AALNPWKJENSEN.aal.scsc.local>
+References: <20241025-issue-2388-v1-1-16707e0d3342@samsung.com>
+ <ZxvLQ5rSQtDAfE-H@kbusch-mbp.dhcp.thefacebook.com>
+ <Zx9S_tOkgB9MoY7J@AALNPWKJENSEN.aal.scsc.local>
+ <Zx-qdQqRZZlczmf5@kbusch-mbp>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="CWbromSLOaW+i3ze"
 Content-Disposition: inline
-In-Reply-To: <CAAsfc_qfHe8hgr06AjhhfhWkOvKxU-Wz-02EjFCpo6HNkRhzgg@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+In-Reply-To: <Zx-qdQqRZZlczmf5@kbusch-mbp>
+Received-SPF: pass client-ip=103.168.172.156; envelope-from=its@irrelevant.dk;
+ helo=fhigh-a5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,127 +113,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 29, 2024 at 08:06:39PM +0800, liequan che wrote:
-> Introduce the SM3 cryptographic hash algorithm (GB/T 32905-2016).
-> 
-> SM3 (GB/T 32905-2016) is a cryptographic standard issued by the
-> Organization of State Commercial Cryptography Administration (OSCCA)
-> as an authorized cryptographic algorithm for use within China.
-> 
-> Detect the SM3 cryptographic hash algorithm and enable the feature silently
-> if it is available.
-> 
-> Signed-off-by: cheliequan <cheliequan@inspur.com>
-> ---
->  crypto/hash-gcrypt.c           |  3 +++
->  crypto/hash-nettle.c           | 14 ++++++++++++
->  crypto/hash.c                  |  3 +++
->  crypto/hmac-gcrypt.c           |  3 +++
->  crypto/hmac-nettle.c           | 11 ++++++++++
->  crypto/pbkdf-gcrypt.c          |  6 ++++++
->  crypto/pbkdf-nettle.c          | 13 ++++++++++++
->  include/crypto/hash.h          |  1 +
->  meson.build                    | 39 ++++++++++++++++++++++++++++++++++
->  qapi/crypto.json               |  3 ++-
->  tests/unit/test-crypto-hash.c  | 16 ++++++++++++++
->  tests/unit/test-crypto-hmac.c  |  8 +++++++
->  tests/unit/test-crypto-pbkdf.c | 16 ++++++++++++++
->  13 files changed, 135 insertions(+), 1 deletion(-)
-> 
 
-> diff --git a/meson.build b/meson.build
-> index 85594fd3f1..611c13d182 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1754,6 +1754,7 @@ gcrypt = not_found
->  nettle = not_found
->  hogweed = not_found
->  crypto_sm4 = not_found
-> +crypto_sm3 = not_found
->  xts = 'none'
-> 
->  if get_option('nettle').enabled() and get_option('gcrypt').enabled()
-> @@ -1789,6 +1790,17 @@ if not gnutls_crypto.found()
->        }''', dependencies: gcrypt)
->        crypto_sm4 = not_found
->      endif
-> +    crypto_sm3 = gcrypt
-> +    # SM3 ALG is available in libgcrypt >= 1.8
+--CWbromSLOaW+i3ze
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The gcrypt NEWS says SM3 was added in 1.9, not 1.8
+On Oct 28 09:15, Keith Busch wrote:
+> On Mon, Oct 28, 2024 at 10:01:50AM +0100, Klaus Jensen wrote:
+> > On Oct 25 10:45, Keith Busch wrote:
+> > > On Fri, Oct 25, 2024 at 12:50:45PM +0200, Klaus Jensen wrote:
+> > > > @@ -1520,9 +1520,16 @@ static void nvme_post_cqes(void *opaque)
+> > > >          nvme_inc_cq_tail(cq);
+> > > >          nvme_sg_unmap(&req->sg);
+> > > > +
+> > > > +        if (QTAILQ_EMPTY(&sq->req_list) && !nvme_sq_empty(sq)) {
+> > > > +            qemu_bh_schedule(sq->bh);
+> > > > +        }
+> > > > +
+> > > >          QTAILQ_INSERT_TAIL(&sq->req_list, req, entry);
+> > > >      }
+> > >=20
+> > > Shouldn't we schedule the bottom half after the req has been added to
+> > > the list? I think everything the callback needs to be written prior to
+> > > calling qemu_bh_schedule().
+> > >=20
+> >=20
+> > Not as far as I know. It is only queued up; it won't be executed
+> > immediately. It might run next (ASAP) if we are already in a bottom
+> > half, but not before whatever context we are in returns.
+>=20
+> Okay. I was trying to come up with an explanation for why Waldek was
+> still able to reproduce the problem, and that was all I have so far.
+>=20
 
-> +    if gcrypt.found() and not cc.links('''
-> +      #include <gcrypt.h>
-> +      int main(void) {
-> +        gcry_md_hd_t handler;
-> +        gcry_md_open(&handler, GCRY_MD_SM3, 0);
-> +        return 0;
-> +      }''', dependencies: gcrypt)
-> +      crypto_sm3 = not_found
-> +    endif
->    endif
->    if (not get_option('nettle').auto() or have_system) and not
-> gcrypt.found()
->      nettle = dependency('nettle', version: '>=3.4',
-> @@ -1809,6 +1821,31 @@ if not gnutls_crypto.found()
->        }''', dependencies: nettle)
->        crypto_sm4 = not_found
->      endif
-> +    crypto_sm3 = nettle
-> +    # SM3 ALG is available in nettle >= 3.4
+I was too eager in removing the start_sqs stuff. I removed kicking the
+cq when transitioning from full to non-full. The core fix is the right
+one, but I introduced a bug...
 
-The nettle NEWS says SM3 was added in 3.8, not 3.4
+v2 just posted should be good. Verified it with OSv master.
 
-> +    if nettle.found() and not cc.links('''
-> +      #include <nettle/sm3.h>
-> +      #include <nettle/hmac.h>
-> +      int main(void) {
-> +      struct sm3_ctx ctx;
-> +      struct hmac_sm3_ctx hmac_ctx;
-> +      unsigned char data[64] = {0};
-> +      unsigned char output[32];
-> +
-> +      // SM3 hash function test
-> +      sm3_init(&ctx);
-> +      sm3_update(&ctx, 64, data);
-> +      sm3_digest(&ctx, 32, data);
-> +
-> +      // HMAC-SM3 test
-> +      hmac_sm3_set_key(&hmac_ctx, 32, data);
-> +      hmac_sm3_update(&hmac_ctx, 64, data);
-> +      hmac_sm3_digest(&hmac_ctx, 32, output);
-> +
-> +      return 0;
-> +      }''', dependencies: nettle)
-> +      crypto_sm3 = not_found
-> +    endif
->    endif
->  endif
+--CWbromSLOaW+i3ze
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> diff --git a/qapi/crypto.json b/qapi/crypto.json
-> index 9431522768..3645a4649b 100644
-> --- a/qapi/crypto.json
-> +++ b/qapi/crypto.json
-> @@ -55,11 +55,12 @@
->  # @sha512: SHA-512.  (since 2.7)
->  #
->  # @ripemd160: RIPEMD-160.  (since 2.7)
-> +# @sm3: SM3. (since 8.2.0)
+-----BEGIN PGP SIGNATURE-----
 
-QEMU's current release is 9.1, so the next version this
-can be added to is 9.2.0, not 8.2.0
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmcg1h8ACgkQTeGvMW1P
+Denk4wf/XuRFF9GE+CJRSDj8wvPMt3JNOgm8aK/rlaVcpcZ9pCXMfllMPevmvI9Z
+Y4UPBu2xTrTkOhHOcLVTmdI7ZzDARltZNKNClqCD9V/hz4geAAQxBY8D/6nrPcdV
+iAB6gERKLYI0XLqIwh0YvUBbgfqvWxrReF55cKEwz6TzM40A2D11tj0e8Vr8bjbw
+W5R+qVqvtamp27OJ7fQxD6QbS2Crgy4/cdOxF+GFrXuPYDEpZQombdjxjuSQq3AB
+KzaN+sZrBQhwd74pIhpz7obO/0kS1STYV3bg4ZRViSyabhzZKcaBiooujufwqISK
+HA+h70VlaTERD4lkmwgJE2Z6zS+tYQ==
+=jsrp
+-----END PGP SIGNATURE-----
 
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--CWbromSLOaW+i3ze--
 
