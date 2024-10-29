@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC6DBD3A66C
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D87D3A66B
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:47:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5oQH-0004Bo-RC; Tue, 29 Oct 2024 11:46:21 -0400
+	id 1t5oRK-00050U-8h; Tue, 29 Oct 2024 11:47:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t5oQG-00047v-OH
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:46:20 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1t5oRA-0004wW-E2
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:47:17 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t5oQF-0003lT-0g
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:46:20 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4315e62afe0so57855065e9.1
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:46:18 -0700 (PDT)
+ id 1t5oR8-0003r1-Bf
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:47:15 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43167ff0f91so55333805e9.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:47:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730216777; x=1730821577; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730216832; x=1730821632; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ssB1Rg94YwUmTla3o0BYcYDWI6c4SPCfzBE2mdXUziQ=;
- b=hQzn6+BKTnq9OUojlb37Gfo2Z4GRkYUMTlw72NQm+PVpkjzF1WrgQf6F/BCH1rDDnL
- lejGs5XZXJG0P1mheyvj/Tnf8Q5eCNNF1wMKVkJEhrJ9suZCGRIcDNc2SXal4i0lGFNI
- ssxsP+hG2Fq88JcqozAWLplJTL3x0UYSfgHqYIuGwpkCP+ffm/lqFnLznTNuHqQdqPwk
- UGx6DUCgBJAaLu9DMuxYW3vFfXwCDmcLYkxhVSccyyRjjFUVqhZJEd30u3WO1Obf5p1E
- GpDSVQQuwkZsb18mwAk4V5ySJSnnNhXQTpmndduSEdu+JoG7Gae7TdxWtdgTR1mTpBzD
- 9gdw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KNHGe5yniRX1hwI0HOOCgdnzsmEGRjjjmVbvHQs4sFs=;
+ b=qIdF+ZF6DomKDkEiaDJTmA/LyIVWJIyWIwefyFdgEHGglA2GLpIT4QHbYmt2xHCa8S
+ iVlqQJh6SEbi+1wLjsCFRCAQZXDHsJW+2whoDZfER8a7sxBA7DU5POryD3lD/Mx0fteJ
+ GNgNuc9czOFUumBHIPr7qBOM6ujp+S3Xp6QQFNr54goYZDrxKR2Nusw0/p9vup2jYnUP
+ q5/R9DIajBpMdPWnIczdP9Jkkfo627bOD6no6rdhrTJHx5IcCal3N5hx0nFq6+FnQBRy
+ gyuORSZo3wo5n3nsqLHARIorNjXU30/b+LuLKc0duu7vQuSreymnsVEvxS4RPhLgVBOZ
+ EdWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730216777; x=1730821577;
+ d=1e100.net; s=20230601; t=1730216832; x=1730821632;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ssB1Rg94YwUmTla3o0BYcYDWI6c4SPCfzBE2mdXUziQ=;
- b=m0gJI0VDZt0PIoE94jdVTRM/7jx8Ot59vL/j4sxTMFNEQfT1H2Y1GBLL+CrCLChXc7
- bixYBO/3kQI87W4DXtZmSm1bAhCHBKtxBtjUDwVCpCy0jpmX8GY+u61CO6kGpmTFOuwl
- 6j59rp2AYnaIb0Ep+zA87xrKNMWwJGMx3/TRaKM9R3IEJ+y5DQlE8/mKYceGA6uxEFDM
- jEG7xCz3/7+gTASrQGdjDD9cwODTv1Is/ucVX/nAry5RmRKYe4f3QB7/hPllijfYSSiy
- RHYf/eSEwaYHkbR7XxdTUo6ZsjbjDzfcR6B86JAVXZU1ZJ+CqLkxsQeiOZjro+4dcrza
- vBpA==
+ bh=KNHGe5yniRX1hwI0HOOCgdnzsmEGRjjjmVbvHQs4sFs=;
+ b=ImC/RyOIWCkwU0APXK/AjLlEKaA22bO8fSGXdfrQd1NXYu7dQclTpeTWQtxGCbT5sp
+ fzjCOFISIzD6bI+uh1+ETnZQUg3/eP/cOHkseByIbYaurXMlg5jRG8y88X5CwsmNp9Wy
+ JFIhi4Z0IxXBjlh+pbidlGIfwZ+2YLIxEyH8Amnkos9NwbEpIrVY+8daS8FLifNL1VpI
+ W6ffbTp6QUdZsdEOmh0y7uOlGAEuAG4bJNoHdZ+g+2eYkKRMhGtN750ZFk3jsIUtqNz/
+ QQHJvJM5gPOq6brE5kYN7sd/DPfQZiZ/8w5Zo6rbCnORirv9pXLmcTmfgSJRhN6KEAXw
+ 48/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhLyuHk+aESubbwnNscJKq46S5xQsv1OQ4+8euEzSB6zQ/AuwGHaJBhqWHraGbNZh5nszosVpoQEEX@nongnu.org
-X-Gm-Message-State: AOJu0YxtCB/ZzZqESl7XJwTkTCCJ8oYB35dy8TIlB203c8oY4ZHBGO1d
- uAq9R41INt1F65FjvU7xbfr37mqpBgB2E8NBb1JHwoqVNfLOR3nbumNpDQaHOWw=
-X-Google-Smtp-Source: AGHT+IHzRFsTzvqsT/mQTl1M18K9I/0K3sa81NQtEvWNWpry248Je5B2vq7Dq2I84BqAdWBBrKuwww==
-X-Received: by 2002:a05:600c:350b:b0:42c:e0da:f15c with SMTP id
- 5b1f17b1804b1-4319acbb947mr87609175e9.20.1730216777411; 
- Tue, 29 Oct 2024 08:46:17 -0700 (PDT)
+ AJvYcCUW8XxBaMfPCCTjwpWQy5CUqbB3VOTT0vVQ8TX5kNj2MbXZqbqHkBhxPzB+PYRo8O12KYUN2IUMmAhS@nongnu.org
+X-Gm-Message-State: AOJu0YxmFdnylFMAqopXtEnhtFRYdC6eDgD7f1SWGvw2JkYQpeX/95wg
+ Klvy0Rzj08qi2DF43JXrButKeZ1XcPniu1su3O9wZbRX43wQGFQZZCc5neIjQpybja+mja7PvIy
+ wxXVq5A==
+X-Google-Smtp-Source: AGHT+IGitqa9Fnt1dvoJlv+ck52C3sbqi/WhPVLq0bFrs1MVzYxeioxy6JrhD/H1G37023sLFRSX9w==
+X-Received: by 2002:a05:600c:3b94:b0:42c:acb0:dda5 with SMTP id
+ 5b1f17b1804b1-4319ac74274mr114190795e9.1.1730216831765; 
+ Tue, 29 Oct 2024 08:47:11 -0700 (PDT)
 Received: from [192.168.21.227] ([89.100.107.89])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431935f7789sm148779855e9.36.2024.10.29.08.46.16
+ 5b1f17b1804b1-43193595470sm146663255e9.15.2024.10.29.08.47.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Oct 2024 08:46:17 -0700 (PDT)
-Message-ID: <571547f1-3fb2-4704-904e-aa6e6f461c33@linaro.org>
-Date: Tue, 29 Oct 2024 15:46:14 +0000
+ Tue, 29 Oct 2024 08:47:11 -0700 (PDT)
+Message-ID: <1d3e5017-f0ee-4dbd-b4b9-5e97c56d63e7@linaro.org>
+Date: Tue, 29 Oct 2024 15:47:08 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/14] target/i386: use + to put flags together
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20241028151851.376355-1-pbonzini@redhat.com>
- <20241028151851.376355-15-pbonzini@redhat.com>
+Subject: Re: [PATCH v3 1/2] target/i386: fix hang when using slow path for
+ ptw_setl
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20241025175857.2554252-1-pierrick.bouvier@linaro.org>
+ <20241025175857.2554252-2-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241028151851.376355-15-pbonzini@redhat.com>
+In-Reply-To: <20241025175857.2554252-2-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,17 +100,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/28/24 15:18, Paolo Bonzini wrote:
-> This gives greater opportunity for reassociation on x86 targets,
-> since addition can use the LEA instruction.
+On 10/25/24 18:58, Pierrick Bouvier wrote:
+> When instrumenting memory accesses for plugin, we force memory accesses
+> to use the slow path for mmu [1]. This create a situation where we end
+> up calling ptw_setl_slow. This was fixed recently in [2] but the issue
+> still could appear out of plugins use case.
 > 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> Since this function gets called during a cpu_exec, start_exclusive then
+> hangs. This exclusive section was introduced initially for security
+> reasons [3].
+> 
+> I suspect this code path was never triggered, because ptw_setl_slow
+> would always be called transitively from cpu_exec, resulting in a hang.
+> 
+> [1]https://gitlab.com/qemu-project/qemu/-/commit/6d03226b42247b68ab2f0b3663e0f624335a4055
+> [2]https://gitlab.com/qemu-project/qemu/-/commit/115ade42d50144c15b74368d32dc734ea277d853
+> [3]https://gitlab.com/qemu-project/qemu/-/issues/279
+> 
+> Fixes:https://gitlab.com/qemu-project/qemu/-/issues/2566
+> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
 > ---
->   target/i386/tcg/cc_helper_template.h.inc | 24 ++++++++++++------------
->   1 file changed, 12 insertions(+), 12 deletions(-)
+>   target/i386/tcg/sysemu/excp_helper.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
