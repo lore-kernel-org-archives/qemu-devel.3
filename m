@@ -4,82 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE0A4D3A697
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 20:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43628D3A696
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 20:11:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5sWK-0000fe-NR; Tue, 29 Oct 2024 16:08:52 -0400
+	id 1t5sYf-0001Rk-38; Tue, 29 Oct 2024 16:11:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1t5sWF-0000fG-NM
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:08:49 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t5sYc-0001Qx-MY
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:11:14 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1t5sWD-0000Aq-8a
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:08:46 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-7180ab89c58so3023728a34.1
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 13:08:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t5sYa-0000UI-Oj
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:11:14 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-539ebb5a20aso6069844e87.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 13:11:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730232522; x=1730837322; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=egpZkoNRhocGja0LxHpjqqxUHMRtS/AkYTsO1oJFueo=;
- b=C0xfBDW5eSfuWjyXHy6/UKoGbd6L/K1K6IHj2GSl98McCihfoRGYQKMkSJeNNZiI4z
- ohdtULx+Uv01Qfi1GM4trvFCvisClF35UvY6zw8iggzp4lzpPWNEQx2dq3dPwTwGEC3P
- OApOGozjXbie1RRMnx/DZZeUPAuZirdDfK8dRelB1fnnKRSqrAbYNzmXkumC1VHMcfML
- CqJCwyKHNrOJGzMqWChcUW8d/PykSxEgjrnpmXF3E01bRAoCDW5Me4+qUigYs2x9i9e1
- IyRsve6XMhtdxqt/Gp1WY7MwjvM1LKbXIqmHc021B6gxM/i32bauIrqXBXgoibFcQN5J
- KkUQ==
+ d=linaro.org; s=google; t=1730232668; x=1730837468; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mVffrm7ORWtwr/oTU7Spuj4YBIi+VLsXfNiPlPYNk9Q=;
+ b=pYlMVtrgkWt/fXrWr6xRpa0xd22PSjid7b52NOBbTxLn8HuzWA0J8+a2PAIrW1iolG
+ OEwKpcaN2Ig+tH4jU02xi/ulEAaG7cVjlBo2x8nklB5+fYlS+4s9E4kAWOA68TvyRvL2
+ LdPgd8kCnSj+ZR41F7SKCncUpIuETG+AvN5Frrxc3QX2yAjYPxCFT9VRswoXeVo+Gjt4
+ AhwoLrrUiKb7STt0WbuTGDRrsrJTPKwYNH35tzKLT7DaLbQ5xXxjTBTxd3m3Y6O+9tbi
+ r5P5ElOiG4ewnP2QVvI1x2fEV+dl/t4NXQJjUl7Hl82AXAGFo3Dyb2uOIboOef9U30Rm
+ FIvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730232522; x=1730837322;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=egpZkoNRhocGja0LxHpjqqxUHMRtS/AkYTsO1oJFueo=;
- b=SKc3P+Yk3A4PoM5w7gznYQIcFfVOIqVOaMf5C4BHzWzLdqJeLcIoYJfOiPb5Q+Wd/W
- OquYX852VC3sOG3LF3/hj1XlNmEwXjcSzijeZ/fckUM85DK+TOHand5ZD1V93F5AIZRN
- 2v4aKYpA/ddzRY6PP2A/jQIjIuBo+4F+UzEdsYpBwyBDz03EgIMi49ZXtMufhC1nixCH
- kG1f+fQtvA4EpRNKBsHlTRgQAErd8vgut1bzFXSBVdistb04MhFXQYfjPXHR9hApkasd
- B7T1nSOQnc0vOAx2N7PF+CV7M615qs/lFnHKJM2TAyT9nhdwUgdFZUbCBvI2uk/mdG4X
- +TiA==
-X-Gm-Message-State: AOJu0Ywm8KnTEUHwYRoisJjVcDRfeuLQLR2xVbBntzct+W6D6gPYBDvj
- n2gDkVACcWfyfG/aoQ0U2QNvzNl/50p2LQCvd7fKXlbzW+8ofCkIEh8jBJ7+u3iVwZAJAxTLD2y
- YcQCaF+gxEkaOfVaHOY0i0L67Ntc=
-X-Google-Smtp-Source: AGHT+IHexexWjhXel3YT5miqHqOeduyz4JnfFL9SEibwpkwrX6cH6T66Cu0seiGcgMEGYQTXqaxW5ucR92h5RGuEK9A=
-X-Received: by 2002:a05:6808:648d:b0:3e6:4652:a4c5 with SMTP id
- 5614622812f47-3e64652a5a3mr8054282b6e.26.1730232522531; Tue, 29 Oct 2024
- 13:08:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1730232668; x=1730837468;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mVffrm7ORWtwr/oTU7Spuj4YBIi+VLsXfNiPlPYNk9Q=;
+ b=q0SgSmV2KFZEwRNwitTDHvu3x72NE3XhnMFTW15zDgYVn7GS0/FQqtG6BRWvEKrGd6
+ t4I/IKRjL0vI06l6rAcWyfk+jtHQJqvgVtt5GtrtwPoIzEyGDD0fKGc+CGRUxeaF+uTP
+ vnhrStPMy9AiovBsXq6WSw+evhVkbnH7tr98qGkGnlOIeIfvRV1e5EeWCcozmtwGjo4T
+ f0CYbePmgiXbi29EENlwO0xzLk5cSsksHGSg3p9Na8ru3Q8aMP2h7JNkI5DUsrTd9mnA
+ XIUT6dAnEykWK//FBuQelSfVv9JeztnEieqw5qpaTchYKfMpq5pRnLLu/37JFpvCyUH8
+ ak3w==
+X-Gm-Message-State: AOJu0YyeM7OIljaFilwT9tMP7nIU7IsKPo8/9FQQWHy/Jf7USNtme4Jc
+ oQe5+kcXt+8fcVjY5BkElOyIvn71zom6nfBg/StRqCGDSAgDSGcymCrctFC6/xg=
+X-Google-Smtp-Source: AGHT+IEQm7S7HhrAefu6bB3WsI9sjvU1NibhMhK2h3mgqHzs6Ac3q/ixT/MrrVYq2nNiKqsosFqETQ==
+X-Received: by 2002:a05:6512:1285:b0:539:e513:1f66 with SMTP id
+ 2adb3069b0e04-53b3491e086mr6508337e87.37.1730232667785; 
+ Tue, 29 Oct 2024 13:11:07 -0700 (PDT)
+Received: from [192.168.156.226] ([91.223.100.133])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-53bc0d5f161sm40364e87.213.2024.10.29.13.10.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Oct 2024 13:11:07 -0700 (PDT)
+Message-ID: <31e8dc51-f70f-44eb-a768-61cfa50eed5b@linaro.org>
+Date: Tue, 29 Oct 2024 17:10:52 -0300
 MIME-Version: 1.0
-References: <20241008211727.49088-1-dorjoychy111@gmail.com>
- <5839222b-4d61-419b-80a2-cc7afb36abc9@amazon.com>
- <CAFfO_h5HquFuWQSo0n009dgi48Qoi_5MdRFuHOuHMGWNB2Q8+A@mail.gmail.com>
- <CAFfO_h4QCDc5qTP_U+-c0NTxPh5J53x876e5aVskMHx28OUerQ@mail.gmail.com>
- <54fe9ff2-ee5c-42dc-adb0-b4131a496a0a@redhat.com>
-In-Reply-To: <54fe9ff2-ee5c-42dc-adb0-b4131a496a0a@redhat.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Wed, 30 Oct 2024 02:08:44 +0600
-Message-ID: <CAFfO_h7pFJUkm=BgJwyMYoVfj5GOb8oGivfcPfu9UrSix19_Ow@mail.gmail.com>
-Subject: Re: [PATCH v8 0/6] AWS Nitro Enclave emulation support
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, agraf@csgraf.de, Alexander Graf <graf@amazon.com>, 
- stefanha@redhat.com, slp@redhat.com, richard.henderson@linaro.org, 
- eduardo@habkost.net, mst@redhat.com, marcel.apfelbaum@gmail.com, 
- berrange@redhat.com, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
- envelope-from=dorjoychy111@gmail.com; helo=mail-ot1-x334.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/9] hw/core: Make CPU topology enumeration
+ arch-agnostic
+To: Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
+References: <20241022135151.2052198-1-zhao1.liu@intel.com>
+ <20241022135151.2052198-3-zhao1.liu@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241022135151.2052198-3-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,70 +109,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+On 22/10/24 10:51, Zhao Liu wrote:
+> Cache topology needs to be defined based on CPU topology levels. Thus,
+> define CPU topology enumeration in qapi/machine.json to make it generic
+> for all architectures.
+> 
+> To match the general topology naming style, rename CPU_TOPO_LEVEL_* to
+> CPU_TOPOLOGY_LEVEL_*, and rename SMT and package levels to thread and
+> socket.
+> 
+> Also, enumerate additional topology levels for non-i386 arches, and add
+> a CPU_TOPOLOGY_LEVEL_DEFAULT to help future smp-cache object to work
+> with compatibility requirement of arch-specific cache topology models.
+> 
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+> Changes since Patch v3:
+>   * Dropped "invalid" level to avoid an unsettable option. (Daniel)
+> ---
+>   hw/i386/x86-common.c       |   4 +-
+>   include/hw/i386/topology.h |  23 ++----
+>   qapi/machine-common.json   |  44 +++++++++++-
+>   target/i386/cpu.c          | 144 ++++++++++++++++++-------------------
+>   target/i386/cpu.h          |   4 +-
+>   5 files changed, 123 insertions(+), 96 deletions(-)
+> 
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index b86c38212eab..bc360a9ea44b 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -273,12 +273,12 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+>   
+>       if (ms->smp.modules > 1) {
+>           env->nr_modules = ms->smp.modules;
+> -        set_bit(CPU_TOPO_LEVEL_MODULE, env->avail_cpu_topo);
+> +        set_bit(CPU_TOPOLOGY_LEVEL_MODULE, env->avail_cpu_topo);
+>       }
+>   
+>       if (ms->smp.dies > 1) {
+>           env->nr_dies = ms->smp.dies;
+> -        set_bit(CPU_TOPO_LEVEL_DIE, env->avail_cpu_topo);
+> +        set_bit(CPU_TOPOLOGY_LEVEL_DIE, env->avail_cpu_topo);
+>       }
+>   
+>       /*
+> diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
+> index 48b43edc5a90..b2c8bf2de158 100644
+> --- a/include/hw/i386/topology.h
+> +++ b/include/hw/i386/topology.h
+> @@ -39,7 +39,7 @@
+>    *  CPUID Fn8000_0008_ECX[ApicIdCoreIdSize[3:0]] is set to apicid_core_width().
+>    */
+>   
+> -
+> +#include "qapi/qapi-types-machine-common.h"
+>   #include "qemu/bitops.h"
+>   
+>   /*
+> @@ -62,22 +62,7 @@ typedef struct X86CPUTopoInfo {
+>       unsigned threads_per_core;
+>   } X86CPUTopoInfo;
+>   
+> -#define CPU_TOPO_LEVEL_INVALID CPU_TOPO_LEVEL_MAX
+> -
+> -/*
+> - * CPUTopoLevel is the general i386 topology hierarchical representation,
+> - * ordered by increasing hierarchical relationship.
+> - * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
+> - * or AMD (CPUID[0x80000026]).
+> - */
+> -enum CPUTopoLevel {
+> -    CPU_TOPO_LEVEL_SMT,
+> -    CPU_TOPO_LEVEL_CORE,
+> -    CPU_TOPO_LEVEL_MODULE,
+> -    CPU_TOPO_LEVEL_DIE,
+> -    CPU_TOPO_LEVEL_PACKAGE,
+> -    CPU_TOPO_LEVEL_MAX,
+> -};
+> +#define CPU_TOPOLOGY_LEVEL_INVALID CPU_TOPOLOGY_LEVEL__MAX
 
-On Wed, Oct 30, 2024 at 1:32=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> On 10/23/24 16:27, Dorjoy Chowdhury wrote:
-> > On Wed, Oct 16, 2024 at 7:58=E2=80=AFPM Dorjoy Chowdhury <dorjoychy111@=
-gmail.com> wrote:
-> >>
-> >> Ping
-> >>
-> >> This patch series has been reviewed by Alex. I am not sure if it needs
-> >> more review. If not, maybe this can be picked up for merging. Thanks!
-> >>
-> >
-> > Gentle ping.
-> >
-> > This patch series has been reviewed by Alex and there hasn't been any
-> > more reviews. it would be great if this could be picked up for
-> > merging. Thanks!
->
-> Hi,
->
-> sorry about the delay -- the patches failed CI and I didn't have much
-> time to investigate until now.
->
-> The issues are basically:
->
-> 1) some rST syntax errors
->
-> 2) failures on non-Linux due to lack of VHOST_USER
->
-> 3) failures on 32-bit due to uint64_t/long mismatch.
->
->
-> While fixing (2) I also moved the dependency on libcbor and gnutls from
-> meson to Kconfig, and added --enable-libcbor to configure.  I also split
-> hw/core/eif.c to a separate symbol, just to simplify reproducing the
-> 32-bit failure on the right commit.
->
-> And finally, VIRTIO_NSM should default to no (the nitro-enclave machne
-> takes care of selecting it).
->
-> No big deal; it's easier done than described.  See attached patch for
-> the differences.
->
 
-Thanks for fixing. The attached patch looks great to me. I just have
-one suggestion. Now that the CONFIG_* symbols have the dependencies
-listed explicitly in the Kconfig files, maybe we don't need the
-explicit dependencies in the meson.build files? For example, the
-following line in hw/core/meson.build file:
-system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c'), zlib,
-libcbor, gnutls])
-can be changed to:
-system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c')])
+> @@ -341,18 +341,18 @@ static uint32_t apicid_offset_by_topo_level(X86CPUTopoInfo *topo_info,
+>       return 0;
+>   }
+>   
+> -static uint32_t cpuid1f_topo_type(enum CPUTopoLevel topo_level)
+> +static uint32_t cpuid1f_topo_type(enum CpuTopologyLevel topo_level)
+>   {
+>       switch (topo_level) {
+> -    case CPU_TOPO_LEVEL_INVALID:
+> +    case CPU_TOPOLOGY_LEVEL_INVALID:
 
-I am not sure if zlib is a required dependency for QEMU, probably not
-needed to be listed above as well. I am just guessing.
+Since we use an enum, I'd rather directly use CPU_TOPOLOGY_LEVEL__MAX.
 
-Same goes for files added in hw/virtio/meson.build.
+Or maybe in this case ...
 
-Thanks!
+>           return CPUID_1F_ECX_TOPO_LEVEL_INVALID;
+> -    case CPU_TOPO_LEVEL_SMT:
+> +    case CPU_TOPOLOGY_LEVEL_THREAD:
+>           return CPUID_1F_ECX_TOPO_LEVEL_SMT;
+> -    case CPU_TOPO_LEVEL_CORE:
+> +    case CPU_TOPOLOGY_LEVEL_CORE:
+>           return CPUID_1F_ECX_TOPO_LEVEL_CORE;
+> -    case CPU_TOPO_LEVEL_MODULE:
+> +    case CPU_TOPOLOGY_LEVEL_MODULE:
+>           return CPUID_1F_ECX_TOPO_LEVEL_MODULE;
+> -    case CPU_TOPO_LEVEL_DIE:
+> +    case CPU_TOPOLOGY_LEVEL_DIE:
+>           return CPUID_1F_ECX_TOPO_LEVEL_DIE;
+>       default:
+            /* Other types are not supported in QEMU. */
+            g_assert_not_reached();
 
-Regards,
-Dorjoy
+... return CPUID_1F_ECX_TOPO_LEVEL_INVALID as default.
+
+Can be cleaned on top, so:
+
+Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+
 
