@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D71D3A661
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF259D3A661
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:18:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5ntx-0002z0-7K; Tue, 29 Oct 2024 11:12:57 -0400
+	id 1t5nuK-0003xl-GE; Tue, 29 Oct 2024 11:13:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5nsE-0000qM-0b
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:11:11 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1t5ns8-0000o5-LA
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:11:07 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5ns7-0007kR-2K
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:11:09 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4314f38d274so72966795e9.1
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:11:00 -0700 (PDT)
+ id 1t5ns2-0007ho-Fb
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:11:04 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-539f72c8fc1so6906034e87.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:10:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730214659; x=1730819459; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730214654; x=1730819454; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uWF1bVue0jp3RIgvuBCykNspwtoTgYc0dfBnutz7ERk=;
- b=fLBQDEtvf44K4GlWtqJCpbBlCfW0Ln7nU5Rx2zN/lVmBKl5m4SvviMAkCnvZLakOH4
- yMfE/vuqtXI41RUU8k1NIs+RoFLjXFpHb2HxFWOY68fHtuaOl/XH+0XLJe+GOrbrMKpq
- qC621i0DMBmPGpSfw5Kssj+6tb5bWnzgXAUIAdpNQjR7crr35zeKzmfIwiJLfPRlgrcV
- oPZ9kwLyiqDKdNcY2Aax2lw2lONcI2zys4IitWodcGIJqeo9bp6cASLBGaKram9DwNIR
- LLjrf8bi/v99YEiezcuO2uohQdVX9MLgmJ8Jg9OI7dj4Xn8hRRxANcL/y0R3iCQywTz2
- fQig==
+ :reply-to; bh=8e1aymOVILrgw7W2xEL/OiCjMGpomvllpnPzHFIUe8Q=;
+ b=Q+uhP822wY6j/2OBE1UFo1lAZMKykhjOlk99R3Qhx5Cp0L6s6e9NHQHQ4YV/r9V+mF
+ 1oMK+swtLxZUfOWzVdERvc8Wp09vchH9dBsXcSmB72gw7EVPvK7gzj/4tzAhR2rwdARd
+ xGysPczgnYoLzYjGjeVCx2mV+h5LJdEA8yJ+RNdlRgmcGQ9VMYti4zQwp9vof6jZX2qj
+ 4lwObM7eQcUPWuR7NlOwsvq6rnbtySLF3oJDHRyyEd1YN7Dy3FDg953hLErwuOSOYCGX
+ hw23IlegJ1blTbOClb48Kcb0LCbuAMSVqV0EdvQeBsTq7aWQoUCurbLKbyUG9hfmjGAS
+ FWeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730214659; x=1730819459;
+ d=1e100.net; s=20230601; t=1730214654; x=1730819454;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uWF1bVue0jp3RIgvuBCykNspwtoTgYc0dfBnutz7ERk=;
- b=tmYR8yFEQrGo8V67HsAFTu1QKh7rTOE4octwHD+9QMVJTYvpVYeGqaXiAXLQPkjwwu
- 6Gg+nIPmDX3mmNHzkGEA/4dONzaIILPT13ye0JC02eYyXHe30uE1Obyh31XunSLv5mw6
- LN9mR2eSMLXF8f7o7t/Z0YwpT3dxtTVCg9BC7ydGMEB4OPM8CEqI8LInOveLlRo8JIPy
- ZAeloge7FSTXYdXuGIRWnz0pcYDpIoSjZ7GZFoU4Mhl2OAdP0MQMm2aLjsfhJoKa/Z2T
- EA7549E8011NugUDg+w6S6RMz2izBVv9JGyk9hbF/26+y00KFicD8iA2GhgjSn1251bv
- p5gw==
+ bh=8e1aymOVILrgw7W2xEL/OiCjMGpomvllpnPzHFIUe8Q=;
+ b=DmQSFpOkF3tDltipc/EtSjP9nQqFbbrNCXzEUMGg3oxUrdMegHDRfCs6Ie0bIBLZhV
+ mLRiZgG1i7YR2edo0cEQiNxCLBh/UsEWcdMlH3mADMLn5E53VxaDR6mXh2ZkokJeT3ID
+ B5P14A5TUMTdwQj6m+6mvmhC+Gps9shpsvxfoHlmVcjQjYTKqj1F0OAeED9Yg6U4xaCC
+ FekcD4DjduAOXsSEzCD/tkwfmE4O5v2aQeVLly48rvk9JQwtZxTikfrb4fxaWid6tDW8
+ uSUngGyB0H+QFOIKVgaV75/DrBl0gcYIKnjLeMdtda6l7d1VtWZAmuwm5P9PUYqXOZmJ
+ el3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJ38+Ah4yiK0ZuQtVrqA1LBR7vAL65LyUUF7/IxdCD15MCPdPJdrqy6jlhu3U+9qhlbxqYa1l7QIsV@nongnu.org
-X-Gm-Message-State: AOJu0YxIi6npE6cWyhaK5kc72HrcvrWQqGQz3YNh/Iv60hh26f52QLi0
- TajeM/VhmZdrX5GwTliF+ozbtayUM2mAYklZALJYom9iFA2M8PtAfmmyDBCC1PzCaNjuMgK69hR
- e
-X-Google-Smtp-Source: AGHT+IHesOqiNZf7/muW4vtiOXktibG9kP49U+9Z2jLrofLw5/lMiFCNSHx3Ap2ta5sCucdyCl0QJg==
-X-Received: by 2002:a05:6000:1ccc:b0:37d:4f69:c9b with SMTP id
- ffacd0b85a97d-380611e0c40mr10835699f8f.35.1730214659106; 
- Tue, 29 Oct 2024 08:10:59 -0700 (PDT)
+ AJvYcCWZptH/4dR92OxUSpPxh2EX1X+rDZ36je8uJcq6OwJk0z4jsxrw9Ddkb3dVkoWMu/G2FXtQDwAjZIU3@nongnu.org
+X-Gm-Message-State: AOJu0YyQ6erRQssKJvTHl84NI/vBov2roWIfBLqBGagI4RO537wZBSS4
+ q3rYppOae+z6L+NqHHFNf1cMUTkwm0KGJ8ZUpJgGpiB0KX+Y4fZsLDgAnC4oq8A=
+X-Google-Smtp-Source: AGHT+IE0TmVRwKjR6vccZ6UsBJL1woKDhnZKHRJO5Edvjzh2eHwlbk5pi7p4O+9VEzAJvMCZiVlHQw==
+X-Received: by 2002:a05:6512:1392:b0:539:e0ee:4f5f with SMTP id
+ 2adb3069b0e04-53b7ecdeed7mr35054e87.18.1730214654213; 
+ Tue, 29 Oct 2024 08:10:54 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4319360cc2esm146835865e9.44.2024.10.29.08.10.58
+ 5b1f17b1804b1-4319360cc2esm146835865e9.44.2024.10.29.08.10.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2024 08:10:58 -0700 (PDT)
+ Tue, 29 Oct 2024 08:10:53 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 18/18] target/arm: kvm: require KVM_CAP_DEVICE_CTRL
-Date: Tue, 29 Oct 2024 15:10:48 +0000
-Message-Id: <20241029151048.1047247-19-peter.maydell@linaro.org>
+Subject: [PULL 08/18] scripts/symlink-install-tree.py: Fix MESONINTROSPECT
+ parsing
+Date: Tue, 29 Oct 2024 15:10:38 +0000
+Message-Id: <20241029151048.1047247-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241029151048.1047247-1-peter.maydell@linaro.org>
 References: <20241029151048.1047247-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,108 +95,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-The device control API was added in 2013, assume that it is present.
+The arguments in MESONINTROSPECT are quoted with shlex.quote() so it
+must be parsed with shlex.split().  Otherwise the script will fail if
+the build directory has a character like "~" in it.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-id: 20241024113126.44343-1-pbonzini@redhat.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Note: this fix cannot be backported directly to any stable branch
+that doesn't require Meson version 1.4.0 or better; otherwise it will
+work OK on Linux but will break on Windows hosts.
+
+(Unfortunately, Meson prior to version 1.4.0 was inconsistent between
+host OSes about how it quoted arguments, and used a different quoting
+process on Windows hosts.  Our current git trunk already requires
+1.5.0 as of commit 07f0d32641e ("Require meson version 1.5.0"), but
+the stable branches are still on older Meson.)
+
+Fixes: cf60ccc330 ("cutils: Introduce bundle mechanism")
+Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-id: 20241018130852.931509-1-peter.maydell@linaro.org
+[PMM: Updated commit message to give all the detail about the
+Meson version compability requirements.]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/kvm_arm.h  | 16 +++++++---------
- hw/intc/arm_gic_kvm.c |  9 +--------
- target/arm/kvm.c      | 17 +++++------------
- 3 files changed, 13 insertions(+), 29 deletions(-)
+ scripts/symlink-install-tree.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 4d293618a78..2e6b49bf137 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -22,17 +22,15 @@
-  * @devid: the KVM device ID
-  * @group: device control API group for setting addresses
-  * @attr: device control API address type
-- * @dev_fd: device control device file descriptor (or -1 if not supported)
-+ * @dev_fd: device control device file descriptor
-  * @addr_ormask: value to be OR'ed with resolved address
-  *
-- * Remember the memory region @mr, and when it is mapped by the
-- * machine model, tell the kernel that base address using the
-- * KVM_ARM_SET_DEVICE_ADDRESS ioctl or the newer device control API.  @devid
-- * should be the ID of the device as defined by KVM_ARM_SET_DEVICE_ADDRESS or
-- * the arm-vgic device in the device control API.
-- * The machine model may map
-- * and unmap the device multiple times; the kernel will only be told the final
-- * address at the point where machine init is complete.
-+ * Remember the memory region @mr, and when it is mapped by the machine
-+ * model, tell the kernel that base address using the device control API.
-+ * @devid should be the ID of the device as defined by  the arm-vgic device
-+ * in the device control API.  The machine model may map and unmap the device
-+ * multiple times; the kernel will only be told the final address at the
-+ * point where machine init is complete.
-  */
- void kvm_arm_register_device(MemoryRegion *mr, uint64_t devid, uint64_t group,
-                              uint64_t attr, int dev_fd, uint64_t addr_ormask);
-diff --git a/hw/intc/arm_gic_kvm.c b/hw/intc/arm_gic_kvm.c
-index 53defee7d59..e2a73337b1e 100644
---- a/hw/intc/arm_gic_kvm.c
-+++ b/hw/intc/arm_gic_kvm.c
-@@ -547,17 +547,10 @@ static void kvm_arm_gic_realize(DeviceState *dev, Error **errp)
-                               KVM_DEV_ARM_VGIC_CTRL_INIT, NULL, true,
-                               &error_abort);
-         }
--    } else if (kvm_check_extension(kvm_state, KVM_CAP_DEVICE_CTRL)) {
-+    } else {
-         error_setg_errno(errp, -ret, "error creating in-kernel VGIC");
-         error_append_hint(errp,
-                           "Perhaps the host CPU does not support GICv2?\n");
--    } else if (ret != -ENODEV && ret != -ENOTSUP) {
--        /*
--         * Very ancient kernel without KVM_CAP_DEVICE_CTRL: assume that
--         * ENODEV or ENOTSUP mean "can't create GICv2 with KVM_CREATE_DEVICE",
--         * and that we will get a GICv2 via KVM_CREATE_IRQCHIP.
--         */
--        error_setg_errno(errp, -ret, "error creating in-kernel VGIC");
-         return;
-     }
+diff --git a/scripts/symlink-install-tree.py b/scripts/symlink-install-tree.py
+index 8ed97e3c943..b72563895c5 100644
+--- a/scripts/symlink-install-tree.py
++++ b/scripts/symlink-install-tree.py
+@@ -4,6 +4,7 @@
+ import errno
+ import json
+ import os
++import shlex
+ import subprocess
+ import sys
  
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 000afa03631..7b6812c0de2 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -42,6 +42,7 @@
- #include "migration/blocker.h"
+@@ -14,7 +15,7 @@ def destdir_join(d1: str, d2: str) -> str:
+     return str(PurePath(d1, *PurePath(d2).parts[1:]))
  
- const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-+    KVM_CAP_INFO(DEVICE_CTRL),
-     KVM_CAP_LAST_INFO
- };
- 
-@@ -691,19 +692,11 @@ static void kvm_arm_set_device_addr(KVMDevice *kd)
- {
-     struct kvm_device_attr *attr = &kd->kdattr;
-     int ret;
-+    uint64_t addr = kd->kda.addr;
- 
--    /* If the device control API is available and we have a device fd on the
--     * KVMDevice struct, let's use the newer API
--     */
--    if (kd->dev_fd >= 0) {
--        uint64_t addr = kd->kda.addr;
--
--        addr |= kd->kda_addr_ormask;
--        attr->addr = (uintptr_t)&addr;
--        ret = kvm_device_ioctl(kd->dev_fd, KVM_SET_DEVICE_ATTR, attr);
--    } else {
--        ret = kvm_vm_ioctl(kvm_state, KVM_ARM_SET_DEVICE_ADDR, &kd->kda);
--    }
-+    addr |= kd->kda_addr_ormask;
-+    attr->addr = (uintptr_t)&addr;
-+    ret = kvm_device_ioctl(kd->dev_fd, KVM_SET_DEVICE_ATTR, attr);
- 
-     if (ret < 0) {
-         fprintf(stderr, "Failed to set device address: %s\n",
+ introspect = os.environ.get('MESONINTROSPECT')
+-out = subprocess.run([*introspect.split(' '), '--installed'],
++out = subprocess.run([*shlex.split(introspect), '--installed'],
+                      stdout=subprocess.PIPE, check=True).stdout
+ for source, dest in json.loads(out).items():
+     bundle_dest = destdir_join('qemu-bundle', dest)
 -- 
 2.34.1
 
