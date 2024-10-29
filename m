@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DA68D5B16F
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 08:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCD60D5B16B
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 08:45:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5hpF-000325-Cj; Tue, 29 Oct 2024 04:43:41 -0400
+	id 1t5hp8-0002zb-NU; Tue, 29 Oct 2024 04:43:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t5hpC-000310-LR
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:43:38 -0400
+ id 1t5hp6-0002yQ-Qg
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:43:32 -0400
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t5hpB-00081u-2f
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:43:38 -0400
+ id 1t5hp5-00082C-5K
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:43:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730191417; x=1761727417;
+ t=1730191411; x=1761727411;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Rnz6R4FgIlH4YI0tBu1NrnmfxYTvCccvvkVAtxUSMQE=;
- b=eNbNrMaaZiuhWK1sGZDTm7SVMmCXrdXzwfCehYIweGxISn2shMOwrB+y
- Whlp3zr599XtuMRQsAKqP7rlnrvY/gCz3M7yfyAKPXvusyVj6f7dtqpxH
- oqXs5z/TgdRVosreZB6g6M8DC9iYAs9/WNZIHTyuB19el2FBPyWccvnye
- 6eFW4mLBckXDz5qi4qdK80sczWSRBnybsi1nYODtVkqJp+MhbRCvYlgRO
- f7dgMKbePlwpZCPh4SYDQLizSYAVev/6W5SqNChk6AG6OnX+pUBuQyz+j
- bOX2KIspZ2jzvB36cZuLMsPqslXDiW+MrK6EolfiwCbFN9Pg0/qC2Q7CK w==;
-X-CSE-ConnectionGUID: FnKqjB4tSVOxzWHweLW0FA==
-X-CSE-MsgGUID: QlLNunbjQh6zVjHQjMV/Hg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="29592802"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="29592802"
+ bh=yIyb1abKVnDFJMflWs366PCqnWxkWmaMhCPGF5VbeKc=;
+ b=cXqOJNS6Rhgtp2CDX52QQ5j3sk6xanATw3g47cObUvju7PJn2lCp4H8/
+ /koLJvWyK820nWPvFSe9XNbPCiBy1+7lhWwxFFYjcB/nmUpEP6AeCTCJM
+ y/0xg9cBQVr9g3D/6/9OXL1ll1k3Y7Yr50Ory61LAmUmMcZ2JAtY7MO3S
+ zuIBN/PIl0UNkX3l3/sxTTPFoya/Md+w7B7o8CXOQU5vvcKj9cjtt4hJU
+ NQDw0TE2eKax1p4p5wrrD17fk0cumWQScE0Of0pQ9MESW59M+IpC0mHEV
+ ABocYuTTq0DJowVHXyOn8lFiGeS2mlALEV+5vJlDgmG12cgMMcCyj60Wn w==;
+X-CSE-ConnectionGUID: /ZtrOBH1SyGwUCQ9oN0Frw==
+X-CSE-MsgGUID: Zn38FSwCTtaBiN7PiTSnWA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="29592774"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="29592774"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Oct 2024 01:43:35 -0700
-X-CSE-ConnectionGUID: vxj9VGx9R4ia+Yd8Z5qx4g==
-X-CSE-MsgGUID: UxiJgwwGRf2HtJAVLYq2MQ==
+ 29 Oct 2024 01:43:27 -0700
+X-CSE-ConnectionGUID: 6vq/QPBkRbG/5rlI1kn72Q==
+X-CSE-MsgGUID: lOZi8fveSjegZ71TBuSZKw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,241,1725346800"; d="scan'208";a="85847182"
+X-IronPort-AV: E=Sophos;i="6.11,241,1725346800"; d="scan'208";a="85847119"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 29 Oct 2024 01:43:33 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 29 Oct 2024 01:43:25 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>
 Cc: qemu-devel@nongnu.org,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 07/16] hw/sensor: Replace type_register() with
+Subject: [PATCH 02/16] hw/block: Replace type_register() with
  type_register_static()
-Date: Tue, 29 Oct 2024 16:59:25 +0800
-Message-Id: <20241029085934.2799066-8-zhao1.liu@intel.com>
+Date: Tue, 29 Oct 2024 16:59:20 +0800
+Message-Id: <20241029085934.2799066-3-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241029085934.2799066-1-zhao1.liu@intel.com>
 References: <20241029085934.2799066-1-zhao1.liu@intel.com>
@@ -90,16 +90,16 @@ type_register() will be deprecated.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/sensor/tmp421.c | 2 +-
+ hw/block/m25p80.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/sensor/tmp421.c b/hw/sensor/tmp421.c
-index b6f0b62ab11b..82e604279c5a 100644
---- a/hw/sensor/tmp421.c
-+++ b/hw/sensor/tmp421.c
-@@ -384,7 +384,7 @@ static void tmp421_register_types(void)
-             .class_init = tmp421_class_init,
-             .class_data = (void *) &devices[i],
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index e2e84f8b5f8d..748594524e3f 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -1894,7 +1894,7 @@ static void m25p80_register_types(void)
+             .class_init = m25p80_class_init,
+             .class_data = (void *)&known_devices[i],
          };
 -        type_register(&ti);
 +        type_register_static(&ti);
