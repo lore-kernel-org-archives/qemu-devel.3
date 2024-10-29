@@ -4,69 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22C0CD2AB20
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 11:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 574CED2AB1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 11:33:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5kJg-0006GH-Tu; Tue, 29 Oct 2024 07:23:16 -0400
+	id 1t5kT2-0007zh-3i; Tue, 29 Oct 2024 07:32:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5kJe-0006G9-2o
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 07:23:14 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5kJc-0002CO-Hf
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 07:23:13 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5c9693dc739so7281511a12.3
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 04:23:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730200990; x=1730805790; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kd+G31MLEI1OctWkbnt8RLu/iSHpowKrGa+V+QCeBns=;
- b=Bw+4W5StG9KRlGT/JwMl2uLGHOHkADezq9sbAgp4L7D29UjTJVB2Rh+YCGLWkWnUYo
- jpHDLwxEN0GThIrtvyePhp0ncM6Msb0G5/rU/Yso3jAb5Dy4BOg5bx3l31QdcycHjXqC
- s7pbfeW0VI5Utkt5sFVVA9zbPU3ODtHdLWhZQivbdHtaNSYhrXGdyBJRaLUBPRZo7Mr2
- YIFpZ1m4w2SgR4xz8ncLd8UCm9vIaGh2cVLLslutxwBOgzPD2Jq7xJVHYy1Jw4PxD25g
- JbBXTQqB76hHyW9nQNFJd8ddTu4ImIztkghacriMeVdh+fpnTa5k/BGFLZAVQrRn/uEN
- n+5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730200990; x=1730805790;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kd+G31MLEI1OctWkbnt8RLu/iSHpowKrGa+V+QCeBns=;
- b=nTfHScpIYlPx8aLHP3NCvTNW5XYfWKq3oFT5coqYQWRD7C0F6WyoBuA2Dj8Y5cBuYJ
- gvQr3Ha3unJIWmp7DDr6MNJehJzDZvROP2irIyZo5ioKYQBqbAHkwTwUdebl8shx+NQG
- gzT/Wo8bojcErQk0Rp8nBreX2BUXQ6f3XuujYfhTndLT+8Y83Tb7dN2mNcvXgJadc/uq
- 5lSHxyBDEji1gJ6aw0/9N76hvyeBOqY/KMLW/QHmMmkbe1DKtmXp8qpj4HU2VfaYPbvG
- 2vr1Ou3Tv8xNj/5fz9zMZEv1IkYJoR21ekKzH5sgLm1223rkrBKN5m69pTf57GzMioFB
- mPvw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/ZDYjx9zxfHWCbIg+7E624Pdo+TFDEgT6YcQ2k9H7hU2FCuNDH/8W3jIbhTAbJr5ufS4FRvq5uHpG@nongnu.org
-X-Gm-Message-State: AOJu0YyAAxX+Z56PXv/TD7gPoNTCBDy5t8PX50CjzJF73GhJ2MpvjHrl
- ZPSkudJ9qCRmmAnpgerekrwQP9pBEVg3SauipTTCSwMZazRnj4OyEq9wRmcRUgOXHhg7jthV3H/
- ARaFGO7adTJj1od4v9El2MsPXU55So2KcOU37GYfLL+HuAv2M
-X-Google-Smtp-Source: AGHT+IFXsmMef2xubLGTh4Cd9UxHNLq1VGHDfOAH3E5+A15/yz/zO6qs4/XQ1i2mGaiclGXyT0qo2lzI3ieXT6CUzUk=
-X-Received: by 2002:a05:6402:42d6:b0:5c8:9e36:ccaf with SMTP id
- 4fb4d7f45d1cf-5cbbf944324mr8848740a12.33.1730200989943; Tue, 29 Oct 2024
- 04:23:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1t5kSv-0007z8-0p; Tue, 29 Oct 2024 07:32:49 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1t5kSr-0003Bv-Iz; Tue, 29 Oct 2024 07:32:48 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:2e8b:0:640:9795:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 928E6615EE;
+ Tue, 29 Oct 2024 14:32:37 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:8908::1:27] (unknown
+ [2a02:6b8:b081:8908::1:27])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id aWXMGW0IfSw0-zAu71Ent; Tue, 29 Oct 2024 14:32:36 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1730201556;
+ bh=+qDpaN58y+xVuMGdw9iAyvEWoGl+X8W90gmp4pwuWDU=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=BZAsBhOiPRhwwEamnE9Oe4wttCLoqzwQQ1bchPcjZpF4POA26ZLd+oO9+GqtHkblc
+ DxkOmNinTJQQ/CR5rJXQzVdZRCZDh7T4zNre3z+gy7aDz3NNFv5J3qqFhkMbwJLmCb
+ P2BBtGjgfuQKjfwmwPVDN+QGm4n6vnMvp8+oEoFw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <197ecb4c-6c1c-48be-8f29-15430402c2d9@yandex-team.ru>
+Date: Tue, 29 Oct 2024 14:32:36 +0300
 MIME-Version: 1.0
-References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
-In-Reply-To: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 29 Oct 2024 11:22:58 +0000
-Message-ID: <CAFEAcA9XK85TBHmty5WJRtwTtX-0--bgNKXitTpxs6t7jpqj0A@mail.gmail.com>
-Subject: Re: [PATCH 00/36] next-cube: more tidy-ups and improvements
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: huth@tuxfamily.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/7] qapi: block-job-change: make copy-mode parameter
+ optional
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
+ eblake@redhat.com, devel@lists.libvirt.org, hreitz@redhat.com,
+ jsnow@redhat.com, pkrempa@redhat.com
+References: <20241002140616.561652-1-vsementsov@yandex-team.ru>
+ <20241002140616.561652-4-vsementsov@yandex-team.ru>
+ <ZxecANVZTYjhpeye@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <ZxecANVZTYjhpeye@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,40 +80,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 23 Oct 2024 at 09:59, Mark Cave-Ayland
-<mark.cave-ayland@ilande.co.uk> wrote:
->
-> This series contains a number of tidy-ups and improvements to the NeXTCube machine
-> which include:
->
->   - Bringing the code up-to-date with our latest coding standards/APIs, in particular
->     related to the board configuration and IRQ wiring
->
->   - Remove the remaining overlapping memory regions and consolidating multiple
->     register implementations into a single place
->
->   - Add a new next-scsi device containing the ESP device and its associated
->     CSRs
->
->   - Adding the empty_slot device to fill unimplemented devices and removing
->     the "catch-all" next.scr memory region
->
->   - QOMifying the next-rtc device and wiring it up with gpios as required
->
-> The next-cube machine looks in fairly good shape now, the main remaining work is to
-> create a separate device for the DMA controller and update the wiring of the IRQs
-> (including to the CPU) accordingly.
+On 22.10.24 15:35, Kevin Wolf wrote:
+> Am 02.10.2024 um 16:06 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>> We are going to add more parameters to change. We want to make possible
+>> to change only one or any subset of available options. So all the
+>> options should be optional.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> Acked-by: Markus Armbruster <armbru@redhat.com>
+> 
+> This is different from blockdev-reopen, which requires repeating all
+> options (and can therefore reuse the type from blockdev-add). One of the
+> reasons why we made it like that is that we had some options for which
+> "option absent" was a meaningful value in itself, so it would have
+> become ambiguous if an absent option in blockdev-reopen should mean
+> "leave the existing value unchanged" or "unset the option".
+> 
 
-Would you have time to consider updating hw/m68k/next-kbd.c
-to stop using qemu_add_kbd_event_handler()? It's the only
-user left in the codebase of that input-legacy.c API.
-Generally using qemu_input_handler_register() should simplify
-the code because it will no longer need to decode multi-byte
-PS2 code sequences back into "what is the single key event
-that this corresponds to?". Commit ff7888dcc6c701 is an
-example of the conversion (though that input device
-is somewhat simpler than a full real keyboard).
+Right.. Thanks for noting this. I'll try to apply blockdev-reopen approach here.
 
-thanks
--- PMM
+> Are we confident that this will never happen with job options? In case
+> of doubt, I would go for consistency with blockdev-reopen.
+> 
+> Either way, it would be good to document the reasoning for whatever
+> option we choose in the commit message.
+> 
+> Kevin
+> 
+
+-- 
+Best regards,
+Vladimir
+
 
