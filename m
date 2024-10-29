@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D824D3A696
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 19:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE0A4D3A697
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 20:09:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5sFw-00061t-D2; Tue, 29 Oct 2024 15:51:56 -0400
+	id 1t5sWK-0000fe-NR; Tue, 29 Oct 2024 16:08:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t5sFt-00061e-Gx
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 15:51:53 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t5sWF-0000fG-NM
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:08:49 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t5sFr-00071B-NR
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 15:51:53 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-539e8607c2aso6032291e87.3
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 12:51:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t5sWD-0000Aq-8a
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:08:46 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-7180ab89c58so3023728a34.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 13:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730231510; x=1730836310; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=H3eIWPZg76QyyZL8cBf93m/bKwuNwEf1TbEXWtlbFQ0=;
- b=bRs5DClsZmWv5z2UABo11PPnU5Dny9tWyKwH0Mt1n4Do5zjMbI7FltIPD90brObzup
- 2tk+Y7RqMKACpEYtP/ssVadjQtzu07J0nFh2CI38wqV5PPhGQDqgpYkDZySm9Ik8kbb+
- jj7AokR9+Ve6lYIEaHf4/CAgMBexSe5H3ipWOrulgxfEIx5bgajrEv9TkSeoo2A+a2MP
- Ox8IVTuNP9ZmxGxQijPZCIAevqGpf4SYrV3L6oKgELdxyo3z1sgA7OQCpsUx7d5MSkzh
- TObtzQjQ4k9OsRm97gk3pBCvV0FmCmkF0Wz35+fzdfjzeWUbP+xOuK3Aosv9zmfgfvyD
- soPA==
+ d=gmail.com; s=20230601; t=1730232522; x=1730837322; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=egpZkoNRhocGja0LxHpjqqxUHMRtS/AkYTsO1oJFueo=;
+ b=C0xfBDW5eSfuWjyXHy6/UKoGbd6L/K1K6IHj2GSl98McCihfoRGYQKMkSJeNNZiI4z
+ ohdtULx+Uv01Qfi1GM4trvFCvisClF35UvY6zw8iggzp4lzpPWNEQx2dq3dPwTwGEC3P
+ OApOGozjXbie1RRMnx/DZZeUPAuZirdDfK8dRelB1fnnKRSqrAbYNzmXkumC1VHMcfML
+ CqJCwyKHNrOJGzMqWChcUW8d/PykSxEgjrnpmXF3E01bRAoCDW5Me4+qUigYs2x9i9e1
+ IyRsve6XMhtdxqt/Gp1WY7MwjvM1LKbXIqmHc021B6gxM/i32bauIrqXBXgoibFcQN5J
+ KkUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730231510; x=1730836310;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H3eIWPZg76QyyZL8cBf93m/bKwuNwEf1TbEXWtlbFQ0=;
- b=RYGvEm9PBK5GmvlCK2fyFG71+q19feL5LXT8IQWCg79PU7OMkP98EEVTDPH5X8QLb+
- c15HMVkpYN9MVSVB6zUZlgRUxowqnqKUELRKcN4iHFq7mibKLQR37iD5livYp4PZi/3W
- aC3QHisDhWOvRO6byoqmMxA4VTlE4RF/YqWGamBNGIvXxwY4olq0rLTZgKUl/6CkRsrg
- 210M+IWc4D3EEGrsU5o4U4tWK1M1dCLjHwLVO9NN3HDujS74q2V37gf+t/uIEKRqjDnl
- rUlihCOZREppjCVwUTmYnKh3QH0BrrMbwcBwSW220i7G/OiDF54IZci7jf4eTsAjgauq
- 71Jw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUic16HeZN+gexhCzJPQN+W30wTCv+E+J6sNmCBr7B79NjkXIf+iBeD5PEfEjAHyzJwqTrlJ87pKA62@nongnu.org
-X-Gm-Message-State: AOJu0Ywm9drnigd72y5ScAeZlKuZe5+/x6oVI1Odcr5OBQKKvXJfEerH
- Gdsd1Esfzpu+P4Zm3VxqY6emP6GT7TiUNRuj3mr7/zqmVihdg/V9VvmCsT5h2ME=
-X-Google-Smtp-Source: AGHT+IHa066BQO3Qh+K0uXO0CAixqbi+D94oQ1o6Zt46VMgVuNfZtXc3jfyOlsBlQp/+8uVXDfL1UA==
-X-Received: by 2002:a05:6512:3ba0:b0:52c:e17c:3741 with SMTP id
- 2adb3069b0e04-53b348b7c07mr5981707e87.5.1730231509649; 
- Tue, 29 Oct 2024 12:51:49 -0700 (PDT)
-Received: from [192.168.156.226] ([91.223.100.133])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53bc0d52d66sm37265e87.124.2024.10.29.12.51.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Oct 2024 12:51:48 -0700 (PDT)
-Message-ID: <0219fcb3-96da-4ce4-94f1-8b3221a82da1@linaro.org>
-Date: Tue, 29 Oct 2024 16:51:41 -0300
+ d=1e100.net; s=20230601; t=1730232522; x=1730837322;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=egpZkoNRhocGja0LxHpjqqxUHMRtS/AkYTsO1oJFueo=;
+ b=SKc3P+Yk3A4PoM5w7gznYQIcFfVOIqVOaMf5C4BHzWzLdqJeLcIoYJfOiPb5Q+Wd/W
+ OquYX852VC3sOG3LF3/hj1XlNmEwXjcSzijeZ/fckUM85DK+TOHand5ZD1V93F5AIZRN
+ 2v4aKYpA/ddzRY6PP2A/jQIjIuBo+4F+UzEdsYpBwyBDz03EgIMi49ZXtMufhC1nixCH
+ kG1f+fQtvA4EpRNKBsHlTRgQAErd8vgut1bzFXSBVdistb04MhFXQYfjPXHR9hApkasd
+ B7T1nSOQnc0vOAx2N7PF+CV7M615qs/lFnHKJM2TAyT9nhdwUgdFZUbCBvI2uk/mdG4X
+ +TiA==
+X-Gm-Message-State: AOJu0Ywm8KnTEUHwYRoisJjVcDRfeuLQLR2xVbBntzct+W6D6gPYBDvj
+ n2gDkVACcWfyfG/aoQ0U2QNvzNl/50p2LQCvd7fKXlbzW+8ofCkIEh8jBJ7+u3iVwZAJAxTLD2y
+ YcQCaF+gxEkaOfVaHOY0i0L67Ntc=
+X-Google-Smtp-Source: AGHT+IHexexWjhXel3YT5miqHqOeduyz4JnfFL9SEibwpkwrX6cH6T66Cu0seiGcgMEGYQTXqaxW5ucR92h5RGuEK9A=
+X-Received: by 2002:a05:6808:648d:b0:3e6:4652:a4c5 with SMTP id
+ 5614622812f47-3e64652a5a3mr8054282b6e.26.1730232522531; Tue, 29 Oct 2024
+ 13:08:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] qom: use object_new_with_class when possible
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: armbru@redhat.com
-References: <20241029122609.514347-1-pbonzini@redhat.com>
- <20241029122609.514347-3-pbonzini@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241029122609.514347-3-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20241008211727.49088-1-dorjoychy111@gmail.com>
+ <5839222b-4d61-419b-80a2-cc7afb36abc9@amazon.com>
+ <CAFfO_h5HquFuWQSo0n009dgi48Qoi_5MdRFuHOuHMGWNB2Q8+A@mail.gmail.com>
+ <CAFfO_h4QCDc5qTP_U+-c0NTxPh5J53x876e5aVskMHx28OUerQ@mail.gmail.com>
+ <54fe9ff2-ee5c-42dc-adb0-b4131a496a0a@redhat.com>
+In-Reply-To: <54fe9ff2-ee5c-42dc-adb0-b4131a496a0a@redhat.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Wed, 30 Oct 2024 02:08:44 +0600
+Message-ID: <CAFfO_h7pFJUkm=BgJwyMYoVfj5GOb8oGivfcPfu9UrSix19_Ow@mail.gmail.com>
+Subject: Re: [PATCH v8 0/6] AWS Nitro Enclave emulation support
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, agraf@csgraf.de, Alexander Graf <graf@amazon.com>, 
+ stefanha@redhat.com, slp@redhat.com, richard.henderson@linaro.org, 
+ eduardo@habkost.net, mst@redhat.com, marcel.apfelbaum@gmail.com, 
+ berrange@redhat.com, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-ot1-x334.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,18 +97,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/10/24 09:26, Paolo Bonzini wrote:
-> A small optimization/code simplification, that also makes it clear that
-> we won't look for a type in a not-loaded-yet module---the module will
-> have been loaded by a call to module_object_class_by_name(), if present.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   hw/core/qdev.c          | 5 +++--
->   qom/object_interfaces.c | 2 +-
->   qom/qom-qmp-cmds.c      | 2 +-
->   3 files changed, 5 insertions(+), 4 deletions(-)
+Hi Paolo,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Wed, Oct 30, 2024 at 1:32=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+>
+> On 10/23/24 16:27, Dorjoy Chowdhury wrote:
+> > On Wed, Oct 16, 2024 at 7:58=E2=80=AFPM Dorjoy Chowdhury <dorjoychy111@=
+gmail.com> wrote:
+> >>
+> >> Ping
+> >>
+> >> This patch series has been reviewed by Alex. I am not sure if it needs
+> >> more review. If not, maybe this can be picked up for merging. Thanks!
+> >>
+> >
+> > Gentle ping.
+> >
+> > This patch series has been reviewed by Alex and there hasn't been any
+> > more reviews. it would be great if this could be picked up for
+> > merging. Thanks!
+>
+> Hi,
+>
+> sorry about the delay -- the patches failed CI and I didn't have much
+> time to investigate until now.
+>
+> The issues are basically:
+>
+> 1) some rST syntax errors
+>
+> 2) failures on non-Linux due to lack of VHOST_USER
+>
+> 3) failures on 32-bit due to uint64_t/long mismatch.
+>
+>
+> While fixing (2) I also moved the dependency on libcbor and gnutls from
+> meson to Kconfig, and added --enable-libcbor to configure.  I also split
+> hw/core/eif.c to a separate symbol, just to simplify reproducing the
+> 32-bit failure on the right commit.
+>
+> And finally, VIRTIO_NSM should default to no (the nitro-enclave machne
+> takes care of selecting it).
+>
+> No big deal; it's easier done than described.  See attached patch for
+> the differences.
+>
 
+Thanks for fixing. The attached patch looks great to me. I just have
+one suggestion. Now that the CONFIG_* symbols have the dependencies
+listed explicitly in the Kconfig files, maybe we don't need the
+explicit dependencies in the meson.build files? For example, the
+following line in hw/core/meson.build file:
+system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c'), zlib,
+libcbor, gnutls])
+can be changed to:
+system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c')])
+
+I am not sure if zlib is a required dependency for QEMU, probably not
+needed to be listed above as well. I am just guessing.
+
+Same goes for files added in hw/virtio/meson.build.
+
+Thanks!
+
+Regards,
+Dorjoy
 
