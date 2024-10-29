@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1544AD3A661
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8472D3A66B
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5noT-0004ny-DO; Tue, 29 Oct 2024 11:07:17 -0400
+	id 1t5nqj-0006WJ-Oy; Tue, 29 Oct 2024 11:09:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5noR-0004n5-IO
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:07:15 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t5noP-0006yC-JC
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:07:15 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-2fb388e64b0so54956131fa.0
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:07:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730214430; x=1730819230; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=EGEbjh5u6szWNHkRhl2caYH8N/sQ0kH2YYfs9KEO8fQ=;
- b=NXsdzKnh+eUboz7lhokAzmQuIqT2ixeAUjMXolw6Hn+Nx5J0ZTELyiU8zhZj4j95/7
- CXNT9Sj9M6KQdfSGdJtjQsQqg1ZSnUtvjPbGUbn4OdtlLhnSvYTfgYruKygpamyaBIOs
- LjMTykid59+w5P92Q5xZf9nT93IrjcN3oEfh38J39aOuCFb1hCGw1E6WNGhFxl5dtpjV
- Tm4ZJMKa6oIHL5W2B6X4jjWtpqSKdrV+FYSOIG9E6sMiwYMVfTpEJU58NZ4U2Zeu4SiQ
- kXzWwwB6Aqs3iGfmgECJ4uGfaVEZOz8ET4uHjxDSyvy79iudWnqpfxH2qumJw7ayhmcu
- cYBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730214430; x=1730819230;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EGEbjh5u6szWNHkRhl2caYH8N/sQ0kH2YYfs9KEO8fQ=;
- b=d7QufFfGSVyrNy4qoMnbRHjDTElF7oOY6OW7vil2PvrArNRbtiMdEl1cCHLGIGJvZ0
- zM1uCOD6joMutyU0hANOxB/YPbXdpOI99C1fTg+3s3yvfGwFjgDj9w6xTFvgUZ88bBiD
- YYrbJmdRNbXQ7OQJJsUPqVcXwMXAYLYqw09qEcgQZGSIneC/aMjoXb2zKa/LDSZ72Ub2
- r9RKl4rnjeBslhIoziPo8Wn6Axvksm1MWQhylDLfEJsKvd3mgrUX0ziyJRpQEAfYgUS6
- K0ohL3sEkCkZi/+qFKFDuLA+ZqOqp0MDeK9Iy0Id4KZnNf2JV/fw73mTSvIgh1UpVND4
- 0rRg==
-X-Gm-Message-State: AOJu0YxCDQV2zJvbq5QOxoODQojc7WlbaMrBJoYiXHXgJu6Hbm3Ox5eS
- /Xs6vkOo7ppH0uVyHg1ibTTibaPNpLCAL5Te4J9BM2Ppb0bLX5ilZvcb+xDvmFZnOruq04QdO56
- EvpLjcCxBXj/I0nQsl0UiLlBeKDpbOIw1sjOB1A==
-X-Google-Smtp-Source: AGHT+IH/6b91sXCwJhDdGuZ3bQhF4amky2goKaaubdjfRVvajfQXO89hspHC+z5NTI04cMzSGSyJkTqOnuvAuw0ML6g=
-X-Received: by 2002:a2e:a550:0:b0:2fa:d84a:bd83 with SMTP id
- 38308e7fff4ca-2fd0595132cmr606131fa.24.1730214430230; Tue, 29 Oct 2024
- 08:07:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t5nqi-0006Vr-Uf
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:09:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t5nqf-0007K3-Es
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:09:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730214572;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EawrAMiqZPHCdfZ9f5osnaUKjQDNMwjBz2dwMHPU2NM=;
+ b=RwzE2gh55IAmilFoiSQiDPtthMRMTbw3w6Kej3+5OUUw6gpgITXl49eNe00KqVssw66cGu
+ 0foiVu7wCXrr5so18nx0RO8icU7nBoiWTYt5NwCGLJ3Ru2uN9A31cJb9ozRGaS2UqZug/b
+ GJWuufp+GzV+SsSX4MaRUH2mRs0u8jo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-Sf4MOfgjPmKRKAhmnb6HKQ-1; Tue,
+ 29 Oct 2024 11:09:29 -0400
+X-MC-Unique: Sf4MOfgjPmKRKAhmnb6HKQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2228F195609D; Tue, 29 Oct 2024 15:09:28 +0000 (UTC)
+Received: from kaapi.redhat.com (unknown [10.74.16.130])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B9EF51956086; Tue, 29 Oct 2024 15:09:23 +0000 (UTC)
+From: Prasad Pandit <ppandit@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH 2/5] migration/postcopy: magic value for postcopy channel
+Date: Tue, 29 Oct 2024 20:39:05 +0530
+Message-ID: <20241029150908.1136894-3-ppandit@redhat.com>
+In-Reply-To: <20241029150908.1136894-1-ppandit@redhat.com>
+References: <20241029150908.1136894-1-ppandit@redhat.com>
 MIME-Version: 1.0
-References: <20241015135649.4189256-1-jlu@pengutronix.de>
- <CAFEAcA9sjszCj=Fu-A-=qQV_jawnomJ-Nqnd=Vx2vLKmYZ1-nQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA9sjszCj=Fu-A-=qQV_jawnomJ-Nqnd=Vx2vLKmYZ1-nQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 29 Oct 2024 15:06:56 +0000
-Message-ID: <CAFEAcA_a4bYU=KQbKQmWtqvPF3fmtttbhgi0BB0hS1wcCV_U4w@mail.gmail.com>
-Subject: Re: [PATCH] hw/sd/sdcard: Allow user creation of eMMCs
-To: Jan Luebbe <jlu@pengutronix.de>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,47 +83,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 18 Oct 2024 at 16:42, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Tue, 15 Oct 2024 at 14:57, Jan Luebbe <jlu@pengutronix.de> wrote:
-> >
-> > For testing eMMC-specific functionality (such as handling boot
-> > partitions), it would be very useful to attach them to generic VMs such
-> > as x86_64 via the sdhci-pci device:
-> >  ...
-> >  -drive if=none,id=emmc-drive,file=emmc.img,format=raw \
-> >  -device sdhci-pci \
-> >  -device emmc,id=emmc0,drive=emmc-drive,boot-partition-size=1048576 \
-> >  ...
-> >
-> > While most eMMCs are soldered to boards, they can also be connected to
-> > SD controllers with just a passive adapter, such as:
-> >  https://docs.radxa.com/en/accessories/emmc-to-usd
-> >  https://github.com/voltlog/emmc-wfbga153-microsd
-> >
-> > The only change necessary to make the options above work is to avoid
-> > disabling user_creatable, so do that. The SDHCI-PCI driver in the Linux
-> > kernel already supports this just fine.
-> >
-> > Signed-off-by: Jan Luebbe <jlu@pengutronix.de>
->
-> Applied to target-arm.next, thanks (unless anybody would
-> prefer it to go via some other route).
+From: Prasad Pandit <pjp@fedoraproject.org>
 
-I'm dropping this from target-arm.next since it seems like
-we have a problem with the handling of boot partitions
-and how the user should provide an image for an emmc card
-that has boot partitions). Since that's an emmc specific
-thing, sorting that out with a minimum of breaking
-compatibility with previously working setups is going to
-be easier if we stay temporarily in the state of "emmc
-only happens for the specific board that creates them
-and the user can't arbitrarily create them on the
-command line".
+During migration, the precopy and the multifd channels
+send magic value (4-bytes) to the destination side,
+for it to identify the channel and properly establish
+connection. But Postcopy channel did not send such value.
 
-I expect this to just be a temporary delay while we sort
-out in the other thread how emmc boot partitions should work.
+Introduce a magic value to be sent on the postcopy channel.
+It helps to identify channels when both multifd and postcopy
+migration are enabled together. An explicitly defined magic
+value makes code easier to follow, because it is consistent
+with the other channels.
 
-thanks
--- PMM
+Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+---
+ migration/postcopy-ram.c | 7 +++++++
+ migration/postcopy-ram.h | 3 +++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 83f6160a36..5bc19b541c 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -1580,6 +1580,9 @@ void postcopy_unregister_shared_ufd(struct PostCopyFD *pcfd)
+ 
+ void postcopy_preempt_new_channel(MigrationIncomingState *mis, QEMUFile *file)
+ {
++    if (mis->postcopy_qemufile_dst) {
++        return;
++    }
+     /*
+      * The new loading channel has its own threads, so it needs to be
+      * blocked too.  It's by default true, just be explicit.
+@@ -1612,6 +1615,10 @@ postcopy_preempt_send_channel_done(MigrationState *s,
+      * postcopy_qemufile_src to know whether it failed or not.
+      */
+     qemu_sem_post(&s->postcopy_qemufile_src_sem);
++
++    /* Send magic value to identify postcopy channel on the destination */
++    uint32_t magic = cpu_to_be32(POSTCOPY_MAGIC);
++    qio_channel_write_all(ioc, (char *)&magic, sizeof(magic), NULL);
+ }
+ 
+ static void
+diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
+index a6df1b2811..49e2982558 100644
+--- a/migration/postcopy-ram.h
++++ b/migration/postcopy-ram.h
+@@ -15,6 +15,9 @@
+ 
+ #include "qapi/qapi-types-migration.h"
+ 
++/* Magic value to identify postcopy channel on the destination */
++#define POSTCOPY_MAGIC  0x55667788U
++
+ /* Return true if the host supports everything we need to do postcopy-ram */
+ bool postcopy_ram_supported_by_host(MigrationIncomingState *mis,
+                                     Error **errp);
+-- 
+2.47.0
+
 
