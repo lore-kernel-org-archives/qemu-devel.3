@@ -4,61 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E08DAD2AB1B
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 10:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3968DD2AB1B
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 10:29:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5jQU-0004oL-VY; Tue, 29 Oct 2024 06:26:15 -0400
+	id 1t5jTO-0005VD-NC; Tue, 29 Oct 2024 06:29:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t5jQI-0004nC-8R
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 06:26:04 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t5jTG-0005Ua-3f
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 06:29:07 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t5jQB-0003PQ-UQ
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 06:26:00 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xd5wB3cDrz6JB3N;
- Tue, 29 Oct 2024 18:24:26 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 74A551400D9;
- Tue, 29 Oct 2024 18:25:41 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 29 Oct
- 2024 11:25:40 +0100
-Date: Tue, 29 Oct 2024 10:25:38 +0000
-To: <imammedo@redhat.com>, <mst@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, <qemu-devel@nongnu.org>, <ankita@nvidia.com>
-CC: <linux-cxl@vger.kernel.org>, <marcel.apfelbaum@gmail.com>,
- <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>, "Dave
- Jiang" <dave.jiang@intel.com>, Huang Ying <ying.huang@intel.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>, <eduardo@habkost.net>, Michael Roth
- <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- <linuxarm@huawei.com>
-Subject: Re: [PATCH v6 00/15] acpi: NUMA nodes for CXL HB as GP + complex
- NUMA test
-Message-ID: <20241029102517.00003f56@huawei.com>
-In-Reply-To: <20240916171017.1841767-1-Jonathan.Cameron@huawei.com>
-References: <20240916171017.1841767-1-Jonathan.Cameron@huawei.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t5jTC-0003kO-Do
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 06:29:05 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id A8AA49D610;
+ Tue, 29 Oct 2024 13:28:10 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4664615FA2C;
+ Tue, 29 Oct 2024 13:28:49 +0300 (MSK)
+Message-ID: <b850dc83-ec29-4f65-9166-0091d6df4153@tls.msk.ru>
+Date: Tue, 29 Oct 2024 13:28:49 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/20] UI patches
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
+References: <20241014133935.470709-1-marcandre.lureau@redhat.com>
+ <d14c6eab-eebe-4844-a02b-9b3d1d9d43bd@tls.msk.ru>
+ <CAJ+F1CJbWVwbEN_xnqMX9Vuz2eefcGehvk3KTcYvbtuNO+HhjA@mail.gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <CAJ+F1CJbWVwbEN_xnqMX9Vuz2eefcGehvk3KTcYvbtuNO+HhjA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -73,123 +102,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+16.10.2024 09:34, Marc-André Lureau wrote:
+> Hi Michael
 
-Gentle ping.
-This series still applied to upstream when I tested it yesterday.
+>      > Marc-André Lureau (19):
+>      >    hw/audio/hda: free timer on exit
+>      >    hw/audio/hda: fix memory leak on audio setup
+>      >    ui/dbus: fix leak on message filtering
+>      >    ui/win32: fix potential use-after-free with dbus shared memory
+>      >    ui/dbus: fix filtering all update messages
 
-On Mon, 16 Sep 2024 18:10:05 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 
-> v6 changes:
-> - 2 new patches (11 and 12) to improve things in existing code after
->   Igor pointed them out in the new code.
-> - More detailed example provided for docs for control of Generic Ports.
->   This has proved a difficult concept to convey.
->   Note there is one question Igor raised for Markus:
->   - Is exit(1) ok for failure paths rather than error_fatal.
->     Markus has acked the patch (10) but maybe this part was not his
->     focus.
-> - Rebased.  Table data regenerated as other series touched DSDT.
-> 
-> Title becoming a little misleading as now this does a bunch of other
-> stuff as precursors, but I've kept it to maintain association with v3 and
-> before. A more accurate series title is probably
-> acpi: Rework GI affinity structure generation, add GPs + complex NUMA test.
-> 
-> ACPI 6.5 introduced Generic Port Affinity Structures to close a system
-> description gap that was a problem for CXL memory systems.
-> It defines an new SRAT Affinity structure (and hence allows creation of an
-> ACPI Proximity Node which can only be defined via an SRAT structure)
-> for the boundary between a discoverable fabric and a non discoverable
-> system interconnects etc.
-> 
-> The HMAT data on latency and bandwidth is combined with discoverable
-> information from the CXL bus (link speeds, lane counts) and CXL devices
-> (switch port to port characteristics and USP to memory, via CDAT tables
-> read from the device).  QEMU has supported the rest of the elements
-> of this chain for a while but now the kernel has caught up and we need
-> the missing element of Generic Ports (this code has been used extensively
-> in testing and debugging that kernel support, some resulting fixes
-> currently under review).
-> 
-> Generic Port Affinity Structures are very similar to the recently
-> added Generic Initiator Affinity Structures (GI) so this series
-> factors out and reuses much of that infrastructure for reuse
-> There are subtle differences (beyond the obvious structure ID change).
-> 
-> - The ACPI spec example (and linux kernel support) has a Generic
->   Port not as associated with the CXL root port, but rather with
->   the CXL Host bridge. As a result, an ACPI handle is used (rather
->   than the PCI SBDF option for GIs). In QEMU the easiest way
->   to get to this is to target the root bridge PCI Bus, and
->   conveniently the root bridge bus number is used for the UID allowing
->   us to construct an appropriate entry.
-> 
-> A key addition of this series is a complex NUMA topology example that
-> stretches the QEMU emulation code for GI, GP and nodes with just
-> CPUS, just memory, just hot pluggable memory, mixture of memory and CPUs.
-> 
-> A similar test showed up a few NUMA related bugs with fixes applied for
-> 9.0 (note that one of these needs linux booted to identify that it
-> rejects the HMAT table and this test is a regression test for the
-> table generation only).
-> 
-> https://lore.kernel.org/qemu-devel/2eb6672cfdaea7dacd8e9bb0523887f13b9f85ce.1710282274.git.mst@redhat.com/
-> https://lore.kernel.org/qemu-devel/74e2845c5f95b0c139c79233ddb65bb17f2dd679.1710282274.git.mst@redhat.com/
+>     Or, actually, here (I replied to a wrong thread) -- is there something
+>     for qemu-stable in there?  First 7 changes seems to be good fit there.
 > 
 > 
-> Jonathan Cameron (15):
->   hw/acpi: Fix ordering of BDF in Generic Initiator PCI Device Handle.
->   hw/acpi/GI: Fix trivial parameter alignment issue.
->   hw/acpi: Move AML building code for Generic Initiators to aml_build.c
->   hw/acpi: Rename build_all_acpi_generic_initiators() to
->     build_acpi_generic_initiator()
->   hw/pci: Add a busnr property to pci_props and use for acpi/gi
->   acpi/pci: Move Generic Initiator object handling into acpi/pci.*
->   hw/pci-bridge: Add acpi_uid property to TYPE_PXB_BUS
->   hw/i386/acpi: Use TYPE_PXB_BUS property acpi_uid for DSDT
->   hw/pci-host/gpex-acpi: Use acpi_uid property.
->   hw/acpi: Generic Port Affinity Structure support
->   hw/acpi: Make storage of node id uint32_t to reduce fragility
->   hw/acpi: Generic Initiator - add missing object class property
->     descriptions.
->   bios-tables-test: Allow for new acpihmat-generic-x test data.
->   bios-tables-test: Add complex SRAT / HMAT test for GI GP
->   bios-tables-test: Add data for complex numa test (GI, GP etc)
-> 
->  qapi/qom.json                                 |  41 +++
->  include/hw/acpi/acpi_generic_initiator.h      |  47 ----
->  include/hw/acpi/aml-build.h                   |   7 +
->  include/hw/acpi/pci.h                         |   3 +
->  include/hw/pci/pci_bridge.h                   |   1 +
->  hw/acpi/acpi_generic_initiator.c              | 148 -----------
->  hw/acpi/aml-build.c                           |  83 ++++++
->  hw/acpi/pci.c                                 | 242 ++++++++++++++++++
->  hw/arm/virt-acpi-build.c                      |   3 +-
->  hw/i386/acpi-build.c                          |   8 +-
->  hw/pci-bridge/pci_expander_bridge.c           |  14 +-
->  hw/pci-host/gpex-acpi.c                       |   5 +-
->  hw/pci/pci.c                                  |  14 +
->  tests/qtest/bios-tables-test.c                |  97 +++++++
->  hw/acpi/meson.build                           |   1 -
->  .../data/acpi/x86/q35/APIC.acpihmat-generic-x | Bin 0 -> 136 bytes
->  .../data/acpi/x86/q35/CEDT.acpihmat-generic-x | Bin 0 -> 68 bytes
->  .../data/acpi/x86/q35/DSDT.acpihmat-generic-x | Bin 0 -> 12566 bytes
->  .../data/acpi/x86/q35/HMAT.acpihmat-generic-x | Bin 0 -> 360 bytes
->  .../data/acpi/x86/q35/SRAT.acpihmat-generic-x | Bin 0 -> 520 bytes
->  20 files changed, 511 insertions(+), 203 deletions(-)
->  delete mode 100644 include/hw/acpi/acpi_generic_initiator.h
->  delete mode 100644 hw/acpi/acpi_generic_initiator.c
->  create mode 100644 tests/data/acpi/x86/q35/APIC.acpihmat-generic-x
->  create mode 100644 tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x
->  create mode 100644 tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x
->  create mode 100644 tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x
->  create mode 100644 tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x
-> 
+> Or only the first 5. It would be nice to have a second look before!
 
+So.. the second look has apparently been needed ;)
+
+See https://gitlab.com/qemu-project/qemu/-/issues/2639
+
+I'm not yet sure what's going on there, but will try to take a look
+hopefullt later today.
+
+/mjt
 
