@@ -4,92 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C281D2AB33
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 12:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F0A3D2AB37
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 12:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5lMg-0001c6-Bx; Tue, 29 Oct 2024 08:30:26 -0400
+	id 1t5lP4-0002GY-Oi; Tue, 29 Oct 2024 08:32:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t5lMc-0001bY-0e
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:30:22 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t5lOz-0002G9-5W
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:32:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t5lMT-00012V-PC
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:30:20 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1A8419D6BA;
- Tue, 29 Oct 2024 15:29:32 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C73E215FADB;
- Tue, 29 Oct 2024 15:30:10 +0300 (MSK)
-Message-ID: <f0b1df5e-4eee-4a56-a8a0-5426cdf2b3d5@tls.msk.ru>
-Date: Tue, 29 Oct 2024 15:30:10 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t5lOv-0001B3-D7
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 08:32:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730205163;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=HQOWDfw0w0sRNUpdq0NvfxM2F+WPo2kG+38sNBk8Xus=;
+ b=IhjOkusoABVrvA9yP+ivRRkBnaWxY1Q5eqAXSa9zdbxUo/Jq5AHhaCTwoWBW4uhWdTxZJD
+ pdxODTQgjJeQ4r8JBEyOE6r0W5OM3hycrzi4GnynnKDFPGyu95hB4jWDEDuoXmKMDpfHea
+ Yr9JuC5v1kCbodr6kxBsMhfxlaX26Z4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-163-3eRFZXbHMFebDkTQou0G4Q-1; Tue,
+ 29 Oct 2024 08:32:37 -0400
+X-MC-Unique: 3eRFZXbHMFebDkTQou0G4Q-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DDE681955F3C; Tue, 29 Oct 2024 12:32:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.142])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9C0A719560A2; Tue, 29 Oct 2024 12:32:35 +0000 (UTC)
+Date: Tue, 29 Oct 2024 12:32:32 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: liequan che <liequanche@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH V2] crypto: Introduce SM3 hash hmac pbkdf algorithm
+Message-ID: <ZyDV4M5zOvdLx8CI@redhat.com>
+References: <CAAsfc_qfHe8hgr06AjhhfhWkOvKxU-Wz-02EjFCpo6HNkRhzgg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 11/13] ui/console: Remove dpy_cursor_define_supported()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-References: <20240716180941.40211-1-philmd@linaro.org>
- <20240716180941.40211-12-philmd@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20240716180941.40211-12-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAAsfc_qfHe8hgr06AjhhfhWkOvKxU-Wz-02EjFCpo6HNkRhzgg@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,43 +80,127 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-16.07.2024 21:09, Philippe Mathieu-Daudé wrote:
-> From: Akihiko Odaki <akihiko.odaki@daynix.com>
+On Tue, Oct 29, 2024 at 08:06:39PM +0800, liequan che wrote:
+> Introduce the SM3 cryptographic hash algorithm (GB/T 32905-2016).
 > 
-> Remove dpy_cursor_define_supported() as it brings no benefit today and
-> it has a few inherent problems.
+> SM3 (GB/T 32905-2016) is a cryptographic standard issued by the
+> Organization of State Commercial Cryptography Administration (OSCCA)
+> as an authorized cryptographic algorithm for use within China.
 > 
-> All graphical displays except egl-headless support cursor composition
-> without DMA-BUF, and egl-headless is meant to be used in conjunction
-> with another graphical display, so dpy_cursor_define_supported()
-> always returns true and meaningless.
+> Detect the SM3 cryptographic hash algorithm and enable the feature silently
+> if it is available.
 > 
-> Even if we add a new display without cursor composition in the future,
-> dpy_cursor_define_supported() will be problematic as a cursor display
-> fix for it because some display devices like virtio-gpu cannot tell the
-> lack of cursor composition capability to the guest and are unable to
-> utilize the value the function returns. Therefore, all non-headless
-> graphical displays must actually implement cursor composition for
-> correct cursor display.
+> Signed-off-by: cheliequan <cheliequan@inspur.com>
+> ---
+>  crypto/hash-gcrypt.c           |  3 +++
+>  crypto/hash-nettle.c           | 14 ++++++++++++
+>  crypto/hash.c                  |  3 +++
+>  crypto/hmac-gcrypt.c           |  3 +++
+>  crypto/hmac-nettle.c           | 11 ++++++++++
+>  crypto/pbkdf-gcrypt.c          |  6 ++++++
+>  crypto/pbkdf-nettle.c          | 13 ++++++++++++
+>  include/crypto/hash.h          |  1 +
+>  meson.build                    | 39 ++++++++++++++++++++++++++++++++++
+>  qapi/crypto.json               |  3 ++-
+>  tests/unit/test-crypto-hash.c  | 16 ++++++++++++++
+>  tests/unit/test-crypto-hmac.c  |  8 +++++++
+>  tests/unit/test-crypto-pbkdf.c | 16 ++++++++++++++
+>  13 files changed, 135 insertions(+), 1 deletion(-)
 > 
-> Another problem with dpy_cursor_define_supported() is that it returns
-> true even if only some of the display listeners support cursor
-> composition, which is wrong unless all display listeners that lack
-> cursor composition is headless.
 
-Apparently this commit made windows10 guest to freeze.  There's a rather
-hairy bugreport at https://bugs.debian.org/1084199 .  Also there's an
-interesting bug filed against qemu, https://gitlab.com/qemu-project/qemu/-/issues/1628 ,
-which seems to be relevant.
+> diff --git a/meson.build b/meson.build
+> index 85594fd3f1..611c13d182 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1754,6 +1754,7 @@ gcrypt = not_found
+>  nettle = not_found
+>  hogweed = not_found
+>  crypto_sm4 = not_found
+> +crypto_sm3 = not_found
+>  xts = 'none'
+> 
+>  if get_option('nettle').enabled() and get_option('gcrypt').enabled()
+> @@ -1789,6 +1790,17 @@ if not gnutls_crypto.found()
+>        }''', dependencies: gcrypt)
+>        crypto_sm4 = not_found
+>      endif
+> +    crypto_sm3 = gcrypt
+> +    # SM3 ALG is available in libgcrypt >= 1.8
 
-Can you take a look please?
+The gcrypt NEWS says SM3 was added in 1.9, not 1.8
 
-This user did a great job bisecting qemu with no experience whatsoever..
+> +    if gcrypt.found() and not cc.links('''
+> +      #include <gcrypt.h>
+> +      int main(void) {
+> +        gcry_md_hd_t handler;
+> +        gcry_md_open(&handler, GCRY_MD_SM3, 0);
+> +        return 0;
+> +      }''', dependencies: gcrypt)
+> +      crypto_sm3 = not_found
+> +    endif
+>    endif
+>    if (not get_option('nettle').auto() or have_system) and not
+> gcrypt.found()
+>      nettle = dependency('nettle', version: '>=3.4',
+> @@ -1809,6 +1821,31 @@ if not gnutls_crypto.found()
+>        }''', dependencies: nettle)
+>        crypto_sm4 = not_found
+>      endif
+> +    crypto_sm3 = nettle
+> +    # SM3 ALG is available in nettle >= 3.4
 
-Thanks,
+The nettle NEWS says SM3 was added in 3.8, not 3.4
 
-/mjt
+> +    if nettle.found() and not cc.links('''
+> +      #include <nettle/sm3.h>
+> +      #include <nettle/hmac.h>
+> +      int main(void) {
+> +      struct sm3_ctx ctx;
+> +      struct hmac_sm3_ctx hmac_ctx;
+> +      unsigned char data[64] = {0};
+> +      unsigned char output[32];
+> +
+> +      // SM3 hash function test
+> +      sm3_init(&ctx);
+> +      sm3_update(&ctx, 64, data);
+> +      sm3_digest(&ctx, 32, data);
+> +
+> +      // HMAC-SM3 test
+> +      hmac_sm3_set_key(&hmac_ctx, 32, data);
+> +      hmac_sm3_update(&hmac_ctx, 64, data);
+> +      hmac_sm3_digest(&hmac_ctx, 32, output);
+> +
+> +      return 0;
+> +      }''', dependencies: nettle)
+> +      crypto_sm3 = not_found
+> +    endif
+>    endif
+>  endif
+
+> diff --git a/qapi/crypto.json b/qapi/crypto.json
+> index 9431522768..3645a4649b 100644
+> --- a/qapi/crypto.json
+> +++ b/qapi/crypto.json
+> @@ -55,11 +55,12 @@
+>  # @sha512: SHA-512.  (since 2.7)
+>  #
+>  # @ripemd160: RIPEMD-160.  (since 2.7)
+> +# @sm3: SM3. (since 8.2.0)
+
+QEMU's current release is 9.1, so the next version this
+can be added to is 9.2.0, not 8.2.0
+
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
