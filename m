@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B718D2AB01
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 09:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BBDD2AB01
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 09:19:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5iMB-0000WO-OY; Tue, 29 Oct 2024 05:17:43 -0400
+	id 1t5iMk-0000ld-NZ; Tue, 29 Oct 2024 05:18:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t5iM8-0000V9-Ff; Tue, 29 Oct 2024 05:17:40 -0400
+ id 1t5iMX-0000cX-TZ; Tue, 29 Oct 2024 05:18:07 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t5iM6-0003A3-Au; Tue, 29 Oct 2024 05:17:40 -0400
+ id 1t5iMW-0003A3-8N; Tue, 29 Oct 2024 05:18:05 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 29 Oct
- 2024 17:17:29 +0800
+ 2024 17:17:32 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 29 Oct 2024 17:17:29 +0800
+ Transport; Tue, 29 Oct 2024 17:17:32 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -34,10 +34,13 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 0/8] Support RTC for AST2700
-Date: Tue, 29 Oct 2024 17:17:21 +0800
-Message-ID: <20241029091729.3317512-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 8/8] aspeed: Support create flash devices via command line
+ for AST1030
+Date: Tue, 29 Oct 2024 17:17:29 +0800
+Message-ID: <20241029091729.3317512-9-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241029091729.3317512-1-jamin_lin@aspeedtech.com>
+References: <20241029091729.3317512-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -66,33 +69,50 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-change from v1:
-1. Support RTC for AST2700.
-2. Support SDHCI write protected pin inverted for AST2500 and AST2600.
-3. Introduce Capabilities Register 2 for SD slot 0 and 1.
-4. Support create flash devices via command line for AST1030.
+Add a "if-statement" in aspeed_minibmc_machine_init function. If users add
+"-nodefaults" in command line, the flash devices should be created by users
+setting. Otherwise, the flash devices are created at machine init.
 
-Jamin Lin (8):
-  aspeed/soc: Support RTC for AST2700
-  hw/timer/aspeed: Fix coding style
-  hw/timer/aspeed: Fix interrupt status does not be cleared for AST2600
-  hw/sd/sdhci: Fix coding style
-  hw/sd/sdhci: Introduce a new Write Protected pin inverted property
-  hw/sd/aspeed_sdhci: Introduce Capabilities Register 2 for SD slot 0
-    and 1
-  hw/arm/aspeed: Invert sdhci write protected pin for AST2600 and
-    AST2500 EVBs
-  aspeed: Support create flash devices via command line for AST1030
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/arm/aspeed.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
- hw/arm/aspeed.c         | 30 ++++++++++++------
- hw/arm/aspeed_ast27x0.c | 11 +++++++
- hw/sd/aspeed_sdhci.c    | 40 ++++++++++++++++-------
- hw/sd/sdhci.c           | 70 ++++++++++++++++++++++++++++-------------
- hw/timer/aspeed_timer.c | 15 +++++----
- include/hw/arm/aspeed.h |  1 +
- include/hw/sd/sdhci.h   |  5 +++
- 7 files changed, 123 insertions(+), 49 deletions(-)
-
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 0468602d95..e161e6b1c5 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1602,18 +1602,20 @@ static void aspeed_minibmc_machine_init(MachineState *machine)
+     connect_serial_hds_to_uarts(bmc);
+     qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);
+ 
+-    aspeed_board_init_flashes(&bmc->soc->fmc,
+-                              bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
+-                              amc->num_cs,
+-                              0);
++    if (defaults_enabled()) {
++        aspeed_board_init_flashes(&bmc->soc->fmc,
++                            bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
++                            amc->num_cs,
++                            0);
+ 
+-    aspeed_board_init_flashes(&bmc->soc->spi[0],
+-                              bmc->spi_model ? bmc->spi_model : amc->spi_model,
+-                              amc->num_cs, amc->num_cs);
++        aspeed_board_init_flashes(&bmc->soc->spi[0],
++                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
++                            amc->num_cs, amc->num_cs);
+ 
+-    aspeed_board_init_flashes(&bmc->soc->spi[1],
+-                              bmc->spi_model ? bmc->spi_model : amc->spi_model,
+-                              amc->num_cs, (amc->num_cs * 2));
++        aspeed_board_init_flashes(&bmc->soc->spi[1],
++                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
++                            amc->num_cs, (amc->num_cs * 2));
++    }
+ 
+     if (amc->i2c_init) {
+         amc->i2c_init(bmc);
 -- 
 2.34.1
 
