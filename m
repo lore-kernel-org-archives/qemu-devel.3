@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A98D1D3A66B
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 471B7D3A661
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:10:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5nqt-0006Y4-9m; Tue, 29 Oct 2024 11:09:47 -0400
+	id 1t5nqu-0006YY-FV; Tue, 29 Oct 2024 11:09:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1t5nqr-0006XR-6W
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:09:45 -0400
+ id 1t5nqs-0006Xk-E8
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:09:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1t5nql-0007LC-Nn
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:09:40 -0400
+ id 1t5nqq-0007LI-Pm
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:09:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730214578;
+ s=mimecast20190719; t=1730214580;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gnKvSAGsXn7wVbU9jG9Lh0cUI9aeI16g1oxT5Kl0Gq8=;
- b=OogzQWEU5Dw3T2nEvuqPWxdQkkqSgP96lscRcJN5yNVLFXbCsQ8GiGURHv11hJj2hVfUm+
- p+enFbX1uN1FF+CbWefKR6p/KBfxLQxXvumlqo4bSPC4h8fVBhNQrf4vEh039qMKhkei8S
- yrvEJ0XF+r52Gha1v5zlwQTa9sMvnOA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=KmZ8F0qsUU0LCTzHXDV9zhG89gZuFvGDJ+PdF5DBmig=;
+ b=Rqi4fhBBPdKvhwTtHkxDXZb2lUiRJC/5ekB7ombA5uyTWyVSlDAsMS2R2o17efsacM62Rv
+ NrFBl7EBvyy24x+dkjLGCUiCrvuprnqCEFXDlqKFzhvUzVi0xQ3LnGNUkrw3kdLS0xNiJm
+ RIKj6yNSUnZmuYiNY/Qf7iHVli27E+A=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-X9M4qPLePCKOWphul-yhjw-1; Tue,
- 29 Oct 2024 11:09:33 -0400
-X-MC-Unique: X9M4qPLePCKOWphul-yhjw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-L2KPxKaFOU-XQknto7eVlw-1; Tue,
+ 29 Oct 2024 11:09:38 -0400
+X-MC-Unique: L2KPxKaFOU-XQknto7eVlw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F28201955F42; Tue, 29 Oct 2024 15:09:32 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D89219560A3; Tue, 29 Oct 2024 15:09:37 +0000 (UTC)
 Received: from kaapi.redhat.com (unknown [10.74.16.130])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D3AB61956086; Tue, 29 Oct 2024 15:09:28 +0000 (UTC)
+ id 9609C195607C; Tue, 29 Oct 2024 15:09:33 +0000 (UTC)
 From: Prasad Pandit <ppandit@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH 3/5] migration: remove multifd check with postcopy
-Date: Tue, 29 Oct 2024 20:39:06 +0530
-Message-ID: <20241029150908.1136894-4-ppandit@redhat.com>
+Subject: [PATCH 4/5] migration: refactor ram_save_target_page functions
+Date: Tue, 29 Oct 2024 20:39:07 +0530
+Message-ID: <20241029150908.1136894-5-ppandit@redhat.com>
 In-Reply-To: <20241029150908.1136894-1-ppandit@redhat.com>
 References: <20241029150908.1136894-1-ppandit@redhat.com>
 MIME-Version: 1.0
@@ -85,47 +85,108 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Prasad Pandit <pjp@fedoraproject.org>
 
-Remove multifd capability check with Postcopy mode.
-This helps to enable both multifd and postcopy together.
-
-Update migrate_multifd() to return false when migration
-reaches Postcopy phase. In Postcopy phase, source guest
-is paused, so the migration threads on the source stop
-sending/pushing data on the channels. The destination
-guest starts running and Postcopy threads there begin
-to request/pull data from the source side.
+Refactor ram_save_target_page legacy and multifd
+functions into one. Other than simplifying it,
+it avoids reinitialization of the 'migration_ops'
+object, when migration moves from multifd to postcopy
+phase.
 
 Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
 ---
- migration/options.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ migration/ram.c | 54 ++++++++++++++++++++-----------------------------
+ 1 file changed, 22 insertions(+), 32 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index ad8d6989a8..47c5137d5f 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -266,7 +266,8 @@ bool migrate_multifd(void)
- {
-     MigrationState *s = migrate_get_current();
- 
--    return s->capabilities[MIGRATION_CAPABILITY_MULTIFD];
-+    return s->capabilities[MIGRATION_CAPABILITY_MULTIFD]
-+            && !migration_in_postcopy();
+diff --git a/migration/ram.c b/migration/ram.c
+index 326ce7eb79..f9a6395d00 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -1985,18 +1985,36 @@ int ram_save_queue_pages(const char *rbname, ram_addr_t start, ram_addr_t len,
  }
  
- bool migrate_pause_before_switchover(void)
-@@ -479,11 +480,6 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
-             error_setg(errp, "Postcopy is not compatible with ignore-shared");
-             return false;
-         }
+ /**
+- * ram_save_target_page_legacy: save one target page
++ * ram_save_target_page_common:
++ * send one target page to multifd workers OR save one target page.
+  *
+- * Returns the number of pages written
++ * Multifd mode: returns 1 if the page was queued, -1 otherwise.
++ *
++ * Non-multifd mode: returns the number of pages written
+  *
+  * @rs: current RAM state
+  * @pss: data about the page we want to send
+  */
+-static int ram_save_target_page_legacy(RAMState *rs, PageSearchStatus *pss)
++static int ram_save_target_page_common(RAMState *rs, PageSearchStatus *pss)
+ {
+     ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
+     int res;
+ 
++    if (migrate_multifd()) {
++        RAMBlock *block = pss->block;
++        /*
++         * While using multifd live migration, we still need to handle zero
++         * page checking on the migration main thread.
++         */
++        if (migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
++            if (save_zero_page(rs, pss, offset)) {
++                return 1;
++            }
++        }
++
++        return ram_save_multifd_page(block, offset);
++    }
++
+     if (control_save_page(pss, offset, &res)) {
+         return res;
+     }
+@@ -2008,32 +2026,6 @@ static int ram_save_target_page_legacy(RAMState *rs, PageSearchStatus *pss)
+     return ram_save_page(rs, pss);
+ }
+ 
+-/**
+- * ram_save_target_page_multifd: send one target page to multifd workers
+- *
+- * Returns 1 if the page was queued, -1 otherwise.
+- *
+- * @rs: current RAM state
+- * @pss: data about the page we want to send
+- */
+-static int ram_save_target_page_multifd(RAMState *rs, PageSearchStatus *pss)
+-{
+-    RAMBlock *block = pss->block;
+-    ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
 -
--        if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
--            error_setg(errp, "Postcopy is not yet compatible with multifd");
--            return false;
+-    /*
+-     * While using multifd live migration, we still need to handle zero
+-     * page checking on the migration main thread.
+-     */
+-    if (migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
+-        if (save_zero_page(rs, pss, offset)) {
+-            return 1;
 -        }
+-    }
+-
+-    return ram_save_multifd_page(block, offset);
+-}
+-
+ /* Should be called before sending a host page */
+ static void pss_host_page_prepare(PageSearchStatus *pss)
+ {
+@@ -3055,12 +3047,10 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
      }
  
-     if (new_caps[MIGRATION_CAPABILITY_BACKGROUND_SNAPSHOT]) {
+     migration_ops = g_malloc0(sizeof(MigrationOps));
++    migration_ops->ram_save_target_page = ram_save_target_page_common;
+ 
+     if (migrate_multifd()) {
+         multifd_ram_save_setup();
+-        migration_ops->ram_save_target_page = ram_save_target_page_multifd;
+-    } else {
+-        migration_ops->ram_save_target_page = ram_save_target_page_legacy;
+     }
+ 
+     bql_unlock();
 -- 
 2.47.0
 
