@@ -4,56 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13A92D3A66B
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2704D3A66B
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 15:28:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5o70-0006BM-NZ; Tue, 29 Oct 2024 11:26:27 -0400
+	id 1t5o8N-0006oa-3h; Tue, 29 Oct 2024 11:27:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1t5o6y-0006BD-Iq
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:26:24 -0400
-Received: from mx22.baidu.com ([220.181.50.185] helo=baidu.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1t5o6v-0001O5-SM
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:26:24 -0400
-To: "Michael S. Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>
-CC: "Zuo,Boqun" <zuoboqun@baidu.com>, "david@redhat.com" <david@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Junjie Mao
- <junjie.mao@hotmail.com>, "Wang,Liang(ACG CCN)" <wangliang44@baidu.com>
-Subject: Re: [PATCH v2 1/1] virtio-pci: fix memory_region_find for
- VirtIOPCIRegion's MR
-Thread-Topic: [PATCH v2 1/1] virtio-pci: fix memory_region_find for
- VirtIOPCIRegion's MR
-Thread-Index: AQHbGjHNI0UmWrvTF0yOcHo1u1qtN7Kd+CQA
-Date: Tue, 29 Oct 2024 15:21:46 +0000
-Message-ID: <ADF782CB-9DB4-4180-B0F1-BFCED2B73D95@baidu.com>
-References: <20241009095827.67393-1-gaoshiyuan@baidu.com>
-In-Reply-To: <20241009095827.67393-1-gaoshiyuan@baidu.com>
-Accept-Language: en-US, zh-CN
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.127.81.64]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <0AFE22F9A323BE4ABB96802210797FC5@internal.baidu.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
+ id 1t5o8K-0006o0-Ec
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:27:49 -0400
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
+ id 1t5o8I-0001U3-Oe
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 11:27:48 -0400
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-718078c7f53so2541095a34.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:27:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730215664; x=1730820464; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+Nhul674GEg7qP7yMeE0m5dN+ZvQJNgcJpp88KqUawg=;
+ b=L50U+AMlbNNFYmbWeRcpvosoe4HuHUeOKlaQSDVQOjV6hqaIA1pBttP5tgAgDQOSDI
+ fn5ljdrq4l+XpsQyKjFplZFkuJouvXUahNY+RnZLYhYAsoqfCWjotD5+z0nZX53tSRe2
+ IEdoBfhHnAeRz9vHYiyktep9PRoOSALV8WjEubC3mRDn3GwA66xo2FbWoHibBPV9bfyr
+ +Tzpsr1j/8rv/C6jB89XafD2jeJcasAZeC712nVS3ioooOrRqJt3pWsGKM1e1YX12orl
+ 1cbzD2fbVz8w1XuNcj2aSnDWQOlzTzdw1+S9uhLTduBO3mJQo8yjOL/CBUUS/CA084dX
+ 273A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730215664; x=1730820464;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+Nhul674GEg7qP7yMeE0m5dN+ZvQJNgcJpp88KqUawg=;
+ b=FzmG3SmnE5BcO54F4RtHBlrccgwNKP4B9fs4gT/UFZ/Cr9L/ecrsOdqkzWGZE7IUby
+ 6MlNHsD0a4Z4bDdttiR4VesGlrshptd0KiHLPBmNt+ygc4H4F1dNGG3ZNdoGimFgU8Bp
+ BwDC+R1ycyotUTyfXwlnUrVt/K4M5l+/eqkmrrLl+OWW4POJ7CLS1EEPdIFyT74Faqco
+ +RoFIs7b0cipDw07Nq6KWayJkQsNDjSgYxFD4EAyxiJOv6/e+yR4ShOTVXgUXgrCK3sh
+ QQfMkQE8U+E0yP48caqVm/ILASNxk2sOF+yJwpnGzEjppd3awLmqbkxywqCF5dCxPfrb
+ CctQ==
+X-Gm-Message-State: AOJu0YwIGNjsnLHjA15IvRwHNYmKgqqWJqzrVYT7KMbMBU6/Z24lSKNH
+ GQY7HfoQp11pvkIzsSP0YyYTTz3aD4VcSIItSTyexp+bgkV5z1mdlf7PK214Iy1M5PlafKi8Nw6
+ 1RvvY17RjEAjd4JR4MDeFQ+HpQXg=
+X-Google-Smtp-Source: AGHT+IFrjiyE9bC03zMuisyvCFR3zPmUR2zRynt9zIAW7f1hhcaTAmv4WRsOvuakJoUsdBFGqlF3Qjpp9KzZJAaEIro=
+X-Received: by 2002:a05:6830:7196:b0:710:f1e3:f681 with SMTP id
+ 46e09a7af769-7188a128d01mr1459510a34.9.1730215664162; Tue, 29 Oct 2024
+ 08:27:44 -0700 (PDT)
 MIME-Version: 1.0
-X-FEAS-Client-IP: 10.127.64.13
-X-FE-Last-Public-Client-IP: 100.100.100.60
-X-FE-Policy-ID: 52:10:53:SYSTEM
-Received-SPF: pass client-ip=220.181.50.185; envelope-from=gaoshiyuan@baidu.com;
- helo=baidu.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
+ <87iktb6ih6.fsf@draig.linaro.org>
+In-Reply-To: <87iktb6ih6.fsf@draig.linaro.org>
+From: Noah Goldstein <goldstein.w.n@gmail.com>
+Date: Tue, 29 Oct 2024 10:27:33 -0500
+Message-ID: <CAFUsyfL1hz-xi3D7Pfd3wty4AZGq=mb-_bc_GoKcZ4sM3e1vtA@mail.gmail.com>
+Subject: Re: [PATCH v1] linux-user: Add option to run `execve`d programs
+ through QEMU
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, laurent@vivier.eu
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=goldstein.w.n@gmail.com; helo=mail-ot1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,128 +88,184 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Gao,Shiyuan" <gaoshiyuan@baidu.com>
-From:  "Gao,Shiyuan" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-UGluZy4NCg0KPiBBcyBzaG93biBiZWxvdywgaWYgYSB2aXJ0aW8gUENJIGRldmljZSBpcyBhdHRh
-Y2hlZCB1bmRlciBhIHBjaS1icmlkZ2UsIHRoZSBNUg0KPiBvZiBWaXJ0SU9QQ0lSZWdpb24gZG9l
-cyBub3QgYmVsb25nIHRvIGFueSBhZGRyZXNzIHNwYWNlLiBTbyBtZW1vcnlfcmVnaW9uX2ZpbmQN
-Cj4gY2Fubm90IGJlIHVzZWQgdG8gc2VhcmNoIGZvciB0aGlzIE1SLg0KPg0KPiBJbnRyb2R1Y2Ug
-dGhlIHZpcnRpby1wY2kgYW5kIHBjaV9icmlkZ2UgYWRkcmVzcyBzcGFjZXMgdG8gc29sdmUgdGhp
-cyBwcm9ibGVtLg0KPg0KPiBCZWZvcmU6DQo+IG1lbW9yeS1yZWdpb246IHBjaV9icmlkZ2VfcGNp
-DQo+ICAgMDAwMDAwMDAwMDAwMDAwMC1mZmZmZmZmZmZmZmZmZmZmIChwcmlvIDAsIGkvbyk6IHBj
-aV9icmlkZ2VfcGNpDQo+ICAgICAwMDAwMDAwMGZlODQwMDAwLTAwMDAwMDAwZmU4NDBmZmYgKHBy
-aW8gMSwgaS9vKTogdmlydGlvLW5ldC1wY2ktbXNpeA0KPiAgICAgICAwMDAwMDAwMGZlODQwMDAw
-LTAwMDAwMDAwZmU4NDAwM2YgKHByaW8gMCwgaS9vKTogbXNpeC10YWJsZQ0KPiAgICAgICAwMDAw
-MDAwMGZlODQwODAwLTAwMDAwMDAwZmU4NDA4MDcgKHByaW8gMCwgaS9vKTogbXNpeC1wYmENCj4g
-ICAgIDAwMDAzODAwMDAwMDAwMDAtMDAwMDM4MDAwMDAwM2ZmZiAocHJpbyAxLCBpL28pOiB2aXJ0
-aW8tcGNpDQo+ICAgICAgIDAwMDAzODAwMDAwMDAwMDAtMDAwMDM4MDAwMDAwMGZmZiAocHJpbyAw
-LCBpL28pOiB2aXJ0aW8tcGNpLWNvbW1vbi12aXJ0aW8tbmV0DQo+ICAgICAgIDAwMDAzODAwMDAw
-MDEwMDAtMDAwMDM4MDAwMDAwMWZmZiAocHJpbyAwLCBpL28pOiB2aXJ0aW8tcGNpLWlzci12aXJ0
-aW8tbmV0DQo+ICAgICAgIDAwMDAzODAwMDAwMDIwMDAtMDAwMDM4MDAwMDAwMmZmZiAocHJpbyAw
-LCBpL28pOiB2aXJ0aW8tcGNpLWRldmljZS12aXJ0aW8tbmV0DQo+ICAgICAgIDAwMDAzODAwMDAw
-MDMwMDAtMDAwMDM4MDAwMDAwM2ZmZiAocHJpbyAwLCBpL28pOiB2aXJ0aW8tcGNpLW5vdGlmeS12
-aXJ0aW8tbmV0DQo+DQo+IEFmdGVyOg0KPiBhZGRyZXNzLXNwYWNlOiB2aXJ0aW8tcGNpLWNmZy1t
-ZW0tYXMNCj4gICAwMDAwMzgwMDAwMDAwMDAwLTAwMDAzODAwMDAwMDNmZmYgKHByaW8gMSwgaS9v
-KTogdmlydGlvLXBjaQ0KPiAgICAgMDAwMDM4MDAwMDAwMDAwMC0wMDAwMzgwMDAwMDAwZmZmIChw
-cmlvIDAsIGkvbyk6IHZpcnRpby1wY2ktY29tbW9uLXZpcnRpby1uZXQNCj4gICAgIDAwMDAzODAw
-MDAwMDEwMDAtMDAwMDM4MDAwMDAwMWZmZiAocHJpbyAwLCBpL28pOiB2aXJ0aW8tcGNpLWlzci12
-aXJ0aW8tbmV0DQo+ICAgICAwMDAwMzgwMDAwMDAyMDAwLTAwMDAzODAwMDAwMDJmZmYgKHByaW8g
-MCwgaS9vKTogdmlydGlvLXBjaS1kZXZpY2UtdmlydGlvLW5ldA0KPiAgICAgMDAwMDM4MDAwMDAw
-MzAwMC0wMDAwMzgwMDAwMDAzZmZmIChwcmlvIDAsIGkvbyk6IHZpcnRpby1wY2ktbm90aWZ5LXZp
-cnRpby1uZXQNCj4NCj4gYWRkcmVzcy1zcGFjZTogcGNpX2JyaWRnZV9wY2lfbWVtDQo+ICAgMDAw
-MDAwMDAwMDAwMDAwMC1mZmZmZmZmZmZmZmZmZmZmIChwcmlvIDAsIGkvbyk6IHBjaV9icmlkZ2Vf
-cGNpDQo+ICAgICAwMDAwMDAwMGZlODQwMDAwLTAwMDAwMDAwZmU4NDBmZmYgKHByaW8gMSwgaS9v
-KTogdmlydGlvLW5ldC1wY2ktbXNpeA0KPiAgICAgICAwMDAwMDAwMGZlODQwMDAwLTAwMDAwMDAw
-ZmU4NDAwM2YgKHByaW8gMCwgaS9vKTogbXNpeC10YWJsZQ0KPiAgICAgICAwMDAwMDAwMGZlODQw
-ODAwLTAwMDAwMDAwZmU4NDA4MDcgKHByaW8gMCwgaS9vKTogbXNpeC1wYmENCj4gICAgIDAwMDAz
-ODAwMDAwMDAwMDAtMDAwMDM4MDAwMDAwM2ZmZiAocHJpbyAxLCBpL28pOiB2aXJ0aW8tcGNpDQo+
-ICAgICAgIDAwMDAzODAwMDAwMDAwMDAtMDAwMDM4MDAwMDAwMGZmZiAocHJpbyAwLCBpL28pOiB2
-aXJ0aW8tcGNpLWNvbW1vbi12aXJ0aW8tbmV0DQo+ICAgICAgIDAwMDAzODAwMDAwMDEwMDAtMDAw
-MDM4MDAwMDAwMWZmZiAocHJpbyAwLCBpL28pOiB2aXJ0aW8tcGNpLWlzci12aXJ0aW8tbmV0DQo+
-ICAgICAgIDAwMDAzODAwMDAwMDIwMDAtMDAwMDM4MDAwMDAwMmZmZiAocHJpbyAwLCBpL28pOiB2
-aXJ0aW8tcGNpLWRldmljZS12aXJ0aW8tbmV0DQo+ICAgICAgIDAwMDAzODAwMDAwMDMwMDAtMDAw
-MDM4MDAwMDAwM2ZmZiAocHJpbyAwLCBpL28pOiB2aXJ0aW8tcGNpLW5vdGlmeS12aXJ0aW8tbmV0
-DQo+DQo+IFJlc29sdmVzOiBodHRwczovL2dpdGxhYi5jb20vcWVtdS1wcm9qZWN0L3FlbXUvLS9p
-c3N1ZXMvMjU3Ng0KPiBGaXhlczogZmZhOGEzZTNiMmU2ICgidmlydGlvLXBjaTogQWRkIGxvb2t1
-cCBzdWJyZWdpb24gb2YgVmlydElPUENJUmVnaW9uIE1SIikNCj4NCj4gU2lnbmVkLW9mZi1ieTog
-R2FvIFNoaXl1YW4gPGdhb3NoaXl1YW5AYmFpZHUuY29tPg0KPiBTaWduZWQtb2ZmLWJ5OiBadW8g
-Qm9xdW4gPHp1b2JvcXVuQGJhaWR1LmNvbT4NCj4gU2lnbmVkLW9mZi1ieTogV2FuZyBMaWFuZyA8
-d2FuZ2xpYW5nNDRAYmFpZHUuY29tPg0KPiAtLS0NCj4gaHcvcGNpL3BjaV9icmlkZ2UuYyAgICAg
-ICAgICAgIHwgNCArKysrDQo+IGh3L3ZpcnRpby92aXJ0aW8tcGNpLmMgICAgICAgICB8IDUgKysr
-KysNCj4gaW5jbHVkZS9ody9wY2kvcGNpX2JyaWRnZS5oICAgIHwgMiArKw0KPiBpbmNsdWRlL2h3
-L3ZpcnRpby92aXJ0aW8tcGNpLmggfCAzICsrKw0KPiA0IGZpbGVzIGNoYW5nZWQsIDE0IGluc2Vy
-dGlvbnMoKykNCj4NCj4gdjEgLT4gdjI6DQo+ICogbW9kaWZ5IGNvbW1pdCBtZXNzYWdlDQo+ICog
-YWRkIGFkZHJlc3Mgc3BhY2UgZm9yIHBvcnQgSS9PIG5vdGlmaWNhdGlvbiBjb25maWcgcmVnaW9u
-DQo+DQo+IGRpZmYgLS1naXQgYS9ody9wY2kvcGNpX2JyaWRnZS5jIGIvaHcvcGNpL3BjaV9icmlk
-Z2UuYw0KPiBpbmRleCA2YTRlMzg4NTZkLi4wOTllYTllMjRlIDEwMDY0NA0KPiAtLS0gYS9ody9w
-Y2kvcGNpX2JyaWRnZS5jDQo+ICsrKyBiL2h3L3BjaS9wY2lfYnJpZGdlLmMNCj4gQEAgLTM4MCw5
-ICszODAsMTEgQEAgdm9pZCBwY2lfYnJpZGdlX2luaXRmbihQQ0lEZXZpY2UgKmRldiwgY29uc3Qg
-Y2hhciAqdHlwZW5hbWUpDQo+ICAgICAgc2VjX2J1cy0+bWFwX2lycSA9IGJyLT5tYXBfaXJxID8g
-YnItPm1hcF9pcnEgOiBwY2lfc3dpenpsZV9tYXBfaXJxX2ZuOw0KPiAgICAgIHNlY19idXMtPmFk
-ZHJlc3Nfc3BhY2VfbWVtID0gJmJyLT5hZGRyZXNzX3NwYWNlX21lbTsNCj4gICAgICBtZW1vcnlf
-cmVnaW9uX2luaXQoJmJyLT5hZGRyZXNzX3NwYWNlX21lbSwgT0JKRUNUKGJyKSwgInBjaV9icmlk
-Z2VfcGNpIiwgVUlOVDY0X01BWCk7DQo+ICsgICAgYWRkcmVzc19zcGFjZV9pbml0KCZici0+YXNf
-bWVtLCAmYnItPmFkZHJlc3Nfc3BhY2VfbWVtLCAicGNpX2JyaWRnZV9wY2lfbWVtIik7DQo+ICAg
-ICAgc2VjX2J1cy0+YWRkcmVzc19zcGFjZV9pbyA9ICZici0+YWRkcmVzc19zcGFjZV9pbzsNCj4g
-ICAgICBtZW1vcnlfcmVnaW9uX2luaXQoJmJyLT5hZGRyZXNzX3NwYWNlX2lvLCBPQkpFQ1QoYnIp
-LCAicGNpX2JyaWRnZV9pbyIsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgIDQgKiBHaUIpOw0K
-PiArICAgIGFkZHJlc3Nfc3BhY2VfaW5pdCgmYnItPmFzX2lvLCAmYnItPmFkZHJlc3Nfc3BhY2Vf
-aW8sICJwY2lfYnJpZGdlX3BjaV9pbyIpOw0KPiAgICAgIHBjaV9icmlkZ2VfcmVnaW9uX2luaXQo
-YnIpOw0KPiAgICAgIFFMSVNUX0lOSVQoJnNlY19idXMtPmNoaWxkKTsNCj4gICAgICBRTElTVF9J
-TlNFUlRfSEVBRCgmcGFyZW50LT5jaGlsZCwgc2VjX2J1cywgc2libGluZyk7DQo+IEBAIC0zOTks
-NiArNDAxLDggQEAgdm9pZCBwY2lfYnJpZGdlX2V4aXRmbihQQ0lEZXZpY2UgKnBjaV9kZXYpDQo+
-ICAgICAgUENJQnJpZGdlICpzID0gUENJX0JSSURHRShwY2lfZGV2KTsNCj4gICAgICBhc3NlcnQo
-UUxJU1RfRU1QVFkoJnMtPnNlY19idXMuY2hpbGQpKTsNCj4gICAgICBRTElTVF9SRU1PVkUoJnMt
-PnNlY19idXMsIHNpYmxpbmcpOw0KPiArICAgIGFkZHJlc3Nfc3BhY2VfZGVzdHJveSgmcy0+YXNf
-bWVtKTsNCj4gKyAgICBhZGRyZXNzX3NwYWNlX2Rlc3Ryb3koJnMtPmFzX2lvKTsNCj4gICAgICBw
-Y2lfYnJpZGdlX3JlZ2lvbl9kZWwocywgJnMtPndpbmRvd3MpOw0KPiAgICAgIHBjaV9icmlkZ2Vf
-cmVnaW9uX2NsZWFudXAocywgJnMtPndpbmRvd3MpOw0KPiAgICAgIC8qIG9iamVjdF91bnBhcmVu
-dCgpIGlzIGNhbGxlZCBhdXRvbWF0aWNhbGx5IGR1cmluZyBkZXZpY2UgZGVsZXRpb24gKi8NCj4g
-ZGlmZiAtLWdpdCBhL2h3L3ZpcnRpby92aXJ0aW8tcGNpLmMgYi9ody92aXJ0aW8vdmlydGlvLXBj
-aS5jDQo+IGluZGV4IDRkODMyZmU4NDUuLjFlODYyZGQwZGYgMTAwNjQ0DQo+IC0tLSBhL2h3L3Zp
-cnRpby92aXJ0aW8tcGNpLmMNCj4gKysrIGIvaHcvdmlydGlvL3ZpcnRpby1wY2kuYw0KPiBAQCAt
-MjA1Nyw2ICsyMDU3LDcgQEAgc3RhdGljIHZvaWQgdmlydGlvX3BjaV9kZXZpY2VfcGx1Z2dlZChE
-ZXZpY2VTdGF0ZSAqZCwgRXJyb3IgKiplcnJwKQ0KPiAgICAgICAgICBpZiAobW9kZXJuX3Bpbykg
-ew0KPiAgICAgICAgICAgICAgbWVtb3J5X3JlZ2lvbl9pbml0KCZwcm94eS0+aW9fYmFyLCBPQkpF
-Q1QocHJveHkpLA0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2aXJ0aW8tcGNp
-LWlvIiwgMHg0KTsNCj4gKyAgICAgICAgICAgIGFkZHJlc3Nfc3BhY2VfaW5pdCgmcHJveHktPm1v
-ZGVybl9jZmdfaW9fYXMsICZwcm94eS0+aW9fYmFyLCAidmlydGlvLXBjaS1jZmctaW8tYXMiKTsN
-Cj4NCj4gICAgICAgICAgICAgIHBjaV9yZWdpc3Rlcl9iYXIoJnByb3h5LT5wY2lfZGV2LCBwcm94
-eS0+bW9kZXJuX2lvX2Jhcl9pZHgsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFBD
-SV9CQVNFX0FERFJFU1NfU1BBQ0VfSU8sICZwcm94eS0+aW9fYmFyKTsNCj4gQEAgLTIxODAsNiAr
-MjE4MSw4IEBAIHN0YXRpYyB2b2lkIHZpcnRpb19wY2lfcmVhbGl6ZShQQ0lEZXZpY2UgKnBjaV9k
-ZXYsIEVycm9yICoqZXJycCkNCj4gICAgICAgICAgICAgICAgICAgICAgICAgLyogUENJIEJBUiBy
-ZWdpb25zIG11c3QgYmUgcG93ZXJzIG9mIDIgKi8NCj4gICAgICAgICAgICAgICAgICAgICAgICAg
-cG93MmNlaWwocHJveHktPm5vdGlmeS5vZmZzZXQgKyBwcm94eS0+bm90aWZ5LnNpemUpKTsNCj4N
-Cj4gKyAgICBhZGRyZXNzX3NwYWNlX2luaXQoJnByb3h5LT5tb2Rlcm5fY2ZnX21lbV9hcywgJnBy
-b3h5LT5tb2Rlcm5fYmFyLCAidmlydGlvLXBjaS1jZmctbWVtLWFzIik7DQo+ICsNCj4gICAgICBp
-ZiAocHJveHktPmRpc2FibGVfbGVnYWN5ID09IE9OX09GRl9BVVRPX0FVVE8pIHsNCj4gICAgICAg
-ICAgcHJveHktPmRpc2FibGVfbGVnYWN5ID0gcGNpZV9wb3J0ID8gT05fT0ZGX0FVVE9fT04gOiBP
-Tl9PRkZfQVVUT19PRkY7DQo+ICAgICAgfQ0KPiBAQCAtMjI3NSw2ICsyMjc4LDggQEAgc3RhdGlj
-IHZvaWQgdmlydGlvX3BjaV9leGl0KFBDSURldmljZSAqcGNpX2RldikNCj4gICAgICAgICAgcGNp
-X2lzX2V4cHJlc3MocGNpX2RldikpIHsNCj4gICAgICAgICAgcGNpZV9hZXJfZXhpdChwY2lfZGV2
-KTsNCj4gICAgICB9DQo+ICsgICAgYWRkcmVzc19zcGFjZV9kZXN0cm95KCZwcm94eS0+bW9kZXJu
-X2NmZ19tZW1fYXMpOw0KPiArICAgIGFkZHJlc3Nfc3BhY2VfZGVzdHJveSgmcHJveHktPm1vZGVy
-bl9jZmdfaW9fYXMpOw0KPiB9DQo+DQo+IHN0YXRpYyB2b2lkIHZpcnRpb19wY2lfcmVzZXQoRGV2
-aWNlU3RhdGUgKnFkZXYpDQo+IGRpZmYgLS1naXQgYS9pbmNsdWRlL2h3L3BjaS9wY2lfYnJpZGdl
-LmggYi9pbmNsdWRlL2h3L3BjaS9wY2lfYnJpZGdlLmgNCj4gaW5kZXggNWNkNDUyMTE1YS4uYmQx
-MmZiZTRlZiAxMDA2NDQNCj4gLS0tIGEvaW5jbHVkZS9ody9wY2kvcGNpX2JyaWRnZS5oDQo+ICsr
-KyBiL2luY2x1ZGUvaHcvcGNpL3BjaV9icmlkZ2UuaA0KPiBAQCAtNzIsNiArNzIsOCBAQCBzdHJ1
-Y3QgUENJQnJpZGdlIHsNCj4gICAgICAgKi8NCj4gICAgICBNZW1vcnlSZWdpb24gYWRkcmVzc19z
-cGFjZV9tZW07DQo+ICAgICAgTWVtb3J5UmVnaW9uIGFkZHJlc3Nfc3BhY2VfaW87DQo+ICsgICAg
-QWRkcmVzc1NwYWNlIGFzX21lbTsNCj4gKyAgICBBZGRyZXNzU3BhY2UgYXNfaW87DQo+DQo+ICAg
-ICAgUENJQnJpZGdlV2luZG93cyB3aW5kb3dzOw0KPg0KPiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9o
-dy92aXJ0aW8vdmlydGlvLXBjaS5oIGIvaW5jbHVkZS9ody92aXJ0aW8vdmlydGlvLXBjaS5oDQo+
-IGluZGV4IDllNjdiYTM4YzcuLjk3MWM1ZmFiZDQgMTAwNjQ0DQo+IC0tLSBhL2luY2x1ZGUvaHcv
-dmlydGlvL3ZpcnRpby1wY2kuaA0KPiArKysgYi9pbmNsdWRlL2h3L3ZpcnRpby92aXJ0aW8tcGNp
-LmgNCj4gQEAgLTE0Nyw2ICsxNDcsOSBAQCBzdHJ1Y3QgVmlydElPUENJUHJveHkgew0KPiAgICAg
-IH07DQo+ICAgICAgTWVtb3J5UmVnaW9uIG1vZGVybl9iYXI7DQo+ICAgICAgTWVtb3J5UmVnaW9u
-IGlvX2JhcjsNCj4gKyAgICAvKiBhZGRyZXNzIHNwYWNlIGZvciBWaXJ0SU9QQ0lSZWdpb25zICov
-DQo+ICsgICAgQWRkcmVzc1NwYWNlIG1vZGVybl9jZmdfbWVtX2FzOw0KPiArICAgIEFkZHJlc3NT
-cGFjZSBtb2Rlcm5fY2ZnX2lvX2FzOw0KPiAgICAgIHVpbnQzMl90IGxlZ2FjeV9pb19iYXJfaWR4
-Ow0KPiAgICAgIHVpbnQzMl90IG1zaXhfYmFyX2lkeDsNCj4gICAgICB1aW50MzJfdCBtb2Rlcm5f
-aW9fYmFyX2lkeDsNCj4gLS0NCj4gMi4zNC4xDQoNCg==
+On Tue, Oct 29, 2024 at 10:23=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@lina=
+ro.org> wrote:
+>
+> Noah Goldstein <goldstein.w.n@gmail.com> writes:
+>
+> > The new option '-qemu-children' makes it so that on `execve` the child
+> > process will be launch by the same `qemu` executable that is currently
+> > running along with its current commandline arguments.
+> >
+> > The motivation for the change is to make it so that plugins running
+> > through `qemu` can continue to run on children.  Why not just
+> > `binfmt`?: Plugins can be desirable regardless of system/architecture
+> > emulation, and can sometimes be useful for elf files that can run
+> > natively. Enabling `binfmt` for all natively runnable elf files may
+> > not be desirable.
+>
+> Broadly I don't see anything wrong with the patch. However my principle
+> concern is how test it. Currently nothing in check-tcg ensures this
+> mechanism works and stresses the argument copying.
+
+Fair enough. I will add some tests.
+>
+> >
+> > Signed-off-by: Noah Goldstein <goldstein.w.n@gmail.com>
+> > ---
+> >  linux-user/main.c           | 22 ++++++++++++++++++++++
+> >  linux-user/syscall.c        | 20 +++++++++++++++-----
+> >  linux-user/user-internals.h |  4 ++++
+> >  3 files changed, 41 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/linux-user/main.c b/linux-user/main.c
+> > index 8143a0d4b0..dfb303a1f2 100644
+> > --- a/linux-user/main.c
+> > +++ b/linux-user/main.c
+> > @@ -81,6 +81,10 @@ unsigned long mmap_min_addr;
+> >  uintptr_t guest_base;
+> >  bool have_guest_base;
+> >
+> > +bool qemu_dup_for_children;
+> > +int qemu_argc;
+> > +char ** qemu_argv;
+> > +
+> >  /*
+> >   * Used to implement backwards-compatibility for the `-strace`, and
+> >   * QEMU_STRACE options. Without this, the QEMU_LOG can be overwritten =
+by
+> > @@ -451,6 +455,11 @@ static void handle_arg_jitdump(const char *arg)
+> >      perf_enable_jitdump();
+> >  }
+> >
+> > +static void handle_arg_qemu_children(const char *arg)
+> > +{
+> > +    qemu_dup_for_children =3D true;
+> > +}
+> > +
+> >  static QemuPluginList plugins =3D QTAILQ_HEAD_INITIALIZER(plugins);
+> >
+> >  #ifdef CONFIG_PLUGIN
+> > @@ -526,6 +535,10 @@ static const struct qemu_argument arg_table[] =3D =
+{
+> >       "",           "Generate a /tmp/perf-${pid}.map file for perf"},
+> >      {"jitdump",    "QEMU_JITDUMP",     false, handle_arg_jitdump,
+> >       "",           "Generate a jit-${pid}.dump file for perf"},
+> > +    {"qemu-children",
+> > +                   "QEMU_CHILDREN",    false, handle_arg_qemu_children=
+,
+> > +     "",           "Run child processes (created with execve) with qem=
+u "
+> > +                   "(as instantiated for the parent)"},
+> >      {NULL, NULL, false, NULL, NULL, NULL}
+> >  };
+> >
+> > @@ -729,6 +742,15 @@ int main(int argc, char **argv, char **envp)
+> >
+> >      optind =3D parse_args(argc, argv);
+> >
+> > +    if (qemu_dup_for_children) {
+> > +        int i;
+> > +        qemu_argc =3D optind;
+> > +        qemu_argv =3D g_new0(char *, qemu_argc);
+> > +        for (i =3D 0; i < optind; ++i) {
+> > +            qemu_argv[i] =3D strdup(argv[i]);
+> > +        }
+> > +    }
+> > +
+> >      qemu_set_log_filename_flags(last_log_filename,
+> >                                  last_log_mask | (enable_strace * LOG_S=
+TRACE),
+> >                                  &error_fatal);
+> > diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> > index 9d5415674d..732ef89054 100644
+> > --- a/linux-user/syscall.c
+> > +++ b/linux-user/syscall.c
+> > @@ -8459,13 +8459,14 @@ static int do_execv(CPUArchState *cpu_env, int =
+dirfd,
+> >                      abi_long pathname, abi_long guest_argp,
+> >                      abi_long guest_envp, int flags, bool is_execveat)
+> >  {
+> > -    int ret;
+> > +    int ret, argp_offset;
+> >      char **argp, **envp;
+> >      int argc, envc;
+> >      abi_ulong gp;
+> >      abi_ulong addr;
+> >      char **q;
+> >      void *p;
+> > +    bool through_qemu =3D !is_execveat && qemu_dup_for_children;
+> >
+> >      argc =3D 0;
+> >
+> > @@ -8489,10 +8490,11 @@ static int do_execv(CPUArchState *cpu_env, int =
+dirfd,
+> >          envc++;
+> >      }
+> >
+> > -    argp =3D g_new0(char *, argc + 1);
+> > +    argp_offset =3D through_qemu ? qemu_argc : 0;
+> > +    argp =3D g_new0(char *, argc + argp_offset + 1);
+> >      envp =3D g_new0(char *, envc + 1);
+> >
+> > -    for (gp =3D guest_argp, q =3D argp; gp; gp +=3D sizeof(abi_ulong),=
+ q++) {
+> > +    for (gp =3D guest_argp, q =3D argp + argp_offset; gp; gp +=3D size=
+of(abi_ulong), q++) {
+> >          if (get_user_ual(addr, gp)) {
+> >              goto execve_efault;
+> >          }
+> > @@ -8537,9 +8539,17 @@ static int do_execv(CPUArchState *cpu_env, int d=
+irfd,
+> >      }
+> >
+> >      const char *exe =3D p;
+> > -    if (is_proc_myself(p, "exe")) {
+> > +    if (through_qemu) {
+> > +        int i;
+> > +        for (i =3D 0; i < argp_offset; ++i) {
+> > +            argp[i] =3D qemu_argv[i];
+> > +        }
+> > +        exe =3D qemu_argv[0];
+> > +    }
+> > +    else if (is_proc_myself(p, "exe")) {
+> >          exe =3D exec_path;
+> >      }
+> > +
+> >      ret =3D is_execveat
+> >          ? safe_execveat(dirfd, exe, argp, envp, flags)
+> >          : safe_execve(exe, argp, envp);
+> > @@ -8553,7 +8563,7 @@ execve_efault:
+> >      ret =3D -TARGET_EFAULT;
+> >
+> >  execve_end:
+> > -    for (gp =3D guest_argp, q =3D argp; *q; gp +=3D sizeof(abi_ulong),=
+ q++) {
+> > +    for (gp =3D guest_argp, q =3D argp + argp_offset; *q; gp +=3D size=
+of(abi_ulong), q++) {
+> >          if (get_user_ual(addr, gp) || !addr) {
+> >              break;
+> >          }
+> > diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+> > index 5c7f173ceb..0719e65ff4 100644
+> > --- a/linux-user/user-internals.h
+> > +++ b/linux-user/user-internals.h
+> > @@ -30,6 +30,10 @@ void stop_all_tasks(void);
+> >  extern const char *qemu_uname_release;
+> >  extern unsigned long mmap_min_addr;
+> >
+> > +extern bool qemu_dup_for_children;
+> > +extern int qemu_argc;
+> > +extern char ** qemu_argv;
+> > +
+> >  typedef struct IOCTLEntry IOCTLEntry;
+> >
+> >  typedef abi_long do_ioctl_fn(const IOCTLEntry *ie, uint8_t *buf_temp,
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
 
