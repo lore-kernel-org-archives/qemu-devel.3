@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D124D7494E
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 23:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 259A4D7494D
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 23:51:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5vsG-0000Ah-Ca; Tue, 29 Oct 2024 19:43:44 -0400
+	id 1t5vzG-0001If-V1; Tue, 29 Oct 2024 19:50:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1t5vsC-00009N-O7; Tue, 29 Oct 2024 19:43:40 -0400
+ id 1t5vzD-0001Hs-Jl; Tue, 29 Oct 2024 19:50:55 -0400
 Received: from pi.codeconstruct.com.au ([203.29.241.158]
  helo=codeconstruct.com.au)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1t5vs9-0006RL-Fx; Tue, 29 Oct 2024 19:43:40 -0400
+ id 1t5vzA-0007NG-Vt; Tue, 29 Oct 2024 19:50:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=codeconstruct.com.au; s=2022a; t=1730245408;
- bh=Xso3sElEGkFiueOKiSwOZboNeXIBDkpOIXEJKbLNR4o=;
+ d=codeconstruct.com.au; s=2022a; t=1730245845;
+ bh=YYBKmi3qVitdy25cvaeEwxwunuCrFaSkdZsXaa8Yn48=;
  h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=AN0iIpU7fiFeK7dqdcHJXRydv4jUQ7gV/vrqV2ey1ssSJ5S7x2b76/mrh3gCE0aDv
- +elGr+Or38vqxW3Eipt1oma9+kJj2Zn4ZXbKz0Gnw/0ZQj5qZXBqM3y7EHrBMtvI/A
- t032z4jo/vpUTvor/oHQjgu/yOPx7JCemhpidKasA3Mw0ok7Ew36GdwavAsVbKqW/i
- bM+7G7P8O19WOqpL2X5D2B04fkzLDjUqh5FgTyon4W6QYFkrY8ICtuk5nc7bTHqv+7
- PEC8kG8Ynlw0JoHF19nGqFZtP4ni5smkie4sie46T1H/rSDXtmjNBx4ugAJ06WRJ4X
- KNvUpJzPI04Kg==
+ b=AwnD5qKSkIkWKA8UO6LjIG1PWdo14ZCaHk7zM8QSx+KqntShUapCIm6JZ3Wdho1ZA
+ C0m5AnYXPPqgIGJZ80hoTAmJJC7Zcz8FtFOldqys/l6pkMGa9PVfEQFkDe/PA+zLIX
+ GIrheV0E5Hwbw1l/g/IfWklRYOiq79ZfhdHbunuMUOvoNT4sLG68b0C4x/1TVmqBo5
+ vq2CBqpDjntYn1JTFAtXeDGHVPpbHgNe30NdtRseHDe/b9x0rEK+JV/ILP+uSrQUPS
+ vgEXkzxwCSUynKjR4xJsgcuaLr+QBLA8HasmqB5R7NG9xjScyxYBkvRQysEh8D+XK/
+ s6MLrRcPIEtjA==
 Received: from [192.168.68.112]
  (ppp118-210-190-243.adl-adc-lon-bras34.tpg.internode.on.net
  [118.210.190.243])
- by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 9AE8F67E6D;
- Wed, 30 Oct 2024 07:43:25 +0800 (AWST)
-Message-ID: <7e1b21bf2f0c0654e63cd4b3c39f39162a3e3485.camel@codeconstruct.com.au>
-Subject: Re: [PATCH v1 3/8] hw/timer/aspeed: Fix interrupt status does not
- be cleared for AST2600
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 20DC567E6D;
+ Wed, 30 Oct 2024 07:50:45 +0800 (AWST)
+Message-ID: <41d563a4c0de07ad4cc363c6a3599734608454a9.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v1 5/8] hw/sd/sdhci: Introduce a new Write Protected pin
+ inverted property
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
 To: Jamin Lin <jamin_lin@aspeedtech.com>, =?ISO-8859-1?Q?C=E9dric?= Le
  Goater <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Steven Lee
@@ -47,10 +47,10 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, =?ISO-8859-1?Q?C=E9dric?= Le
  <qemu-devel@nongnu.org>, "open list:SD (Secure Card)"
  <qemu-block@nongnu.org>
 Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-Date: Wed, 30 Oct 2024 10:13:25 +1030
-In-Reply-To: <20241029091729.3317512-4-jamin_lin@aspeedtech.com>
+Date: Wed, 30 Oct 2024 10:20:44 +1030
+In-Reply-To: <20241029091729.3317512-6-jamin_lin@aspeedtech.com>
 References: <20241029091729.3317512-1-jamin_lin@aspeedtech.com>
- <20241029091729.3317512-4-jamin_lin@aspeedtech.com>
+ <20241029091729.3317512-6-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.46.4-2 
@@ -80,25 +80,83 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 2024-10-29 at 17:17 +0800, Jamin Lin wrote:
-> According to the datasheet of AST2600 description, interrupt status
-> set by HW
-> and clear to "0" by software writing "1" on the specific bit.
->=20
-> Therefore, if firmware set the specific bit "1" in the interrupt
-> status
-> register(0x34), the specific bit of "s->irq_sts" should be cleared 0.
+> The Write Protect pin of SDHCI model is default active low to match
+> the SDHCI
+> spec. So, write enable the bit 19 should be 1 and write protected the
+> bit 19
+> should be 0 at the Present State Register (0x24). However, some board
+> are
+> design Write Protected pin active high. In other words, write enable
+> the bit 19
+> should be 0 and write protected the bit 19 should be 1 at the
+> Present State Register (0x24). To support it, introduces a new
+> "wp_invert"
+> property and set it false by default.
 >=20
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+> =C2=A0hw/sd/sdhci.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 6 +=
++++++
+> =C2=A0include/hw/sd/sdhci.h | 5 +++++
+> =C2=A02 files changed, 11 insertions(+)
+>=20
+> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+> index db7d547156..bdf5cbfb80 100644
+> --- a/hw/sd/sdhci.c
+> +++ b/hw/sd/sdhci.c
+> @@ -275,6 +275,10 @@ static void sdhci_set_readonly(DeviceState *dev,
+> bool level)
+> =C2=A0{
+> =C2=A0=C2=A0=C2=A0=C2=A0 SDHCIState *s =3D (SDHCIState *)dev;
+> =C2=A0
+> +=C2=A0=C2=A0=C2=A0 if (s->wp_invert) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 level =3D !level;
+> +=C2=A0=C2=A0=C2=A0 }
+> +
+> =C2=A0=C2=A0=C2=A0=C2=A0 if (level) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->prnsts &=3D ~SDHC_WRI=
+TE_PROTECT;
+> =C2=A0=C2=A0=C2=A0=C2=A0 } else {
+> @@ -1551,6 +1555,8 @@ static Property sdhci_sysbus_properties[] =3D {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 false),
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_LINK("dma", SDHCIState,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dma_mr, TYPE_MEMORY_=
+REGION, MemoryRegion *),
+> +=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("wp-invert", SDHCIState,
 
-Hah, the datasheet table for the register uses `RW` to describe the
-bits and not `W1C`, but there's a foot-note in the table that says
-they're W1C bits.
+Can we line the name up with the mmc-controller devicetree binding
+("wp-inverted")?
 
-Fixes: fadefada4d07 ("aspeed/timer: Add support for IRQ status register on =
-the AST2600")
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-
-Thanks,
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Doc=
+umentation/devicetree/bindings/mmc/mmc-controller.yaml#n71
 
 Andrew
+
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 wp_invert, false),
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_END_OF_LIST(),
+> =C2=A0};
+> =C2=A0
+> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+> index 6cd2822f1d..d68f4788e7 100644
+> --- a/include/hw/sd/sdhci.h
+> +++ b/include/hw/sd/sdhci.h
+> @@ -100,6 +100,11 @@ struct SDHCIState {
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint8_t sd_spec_version;
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint8_t uhs_mode;
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint8_t vendor;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 /* For vendor specific functionality */
+> +=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * Write Protect pin default active low for dete=
+cting SD card
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * to be protected. Set wp_invert to true invert=
+ed the signal.
+> +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0 bool wp_invert;
+> =C2=A0};
+> =C2=A0typedef struct SDHCIState SDHCIState;
+> =C2=A0
+
 
