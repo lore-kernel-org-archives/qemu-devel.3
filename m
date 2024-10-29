@@ -4,74 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 461D3D3A661
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 16:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F3D6D3A670
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 16:22:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5oij-000475-9K; Tue, 29 Oct 2024 12:05:25 -0400
+	id 1t5oyT-0007AK-O3; Tue, 29 Oct 2024 12:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t5oiS-00040p-Go
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 12:05:10 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5oyR-00079q-MW
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 12:21:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t5oiP-0005zF-My
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 12:05:08 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5oyP-0007ot-JQ
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 12:21:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730217903;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1730218895;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=luY34srzC7dIG9dtaoaWtGuL6Te6kmr+/CJsGv4qCnM=;
- b=StjdIYYquuO+DmKoqhA0fLcUQJKete3PvJcHjdmccnmP8fSYNKC505sxgl026ZZDGfH6EP
- R6pKSehCKdu7dgnVF0kDXqigyrHaTW49XxRcfC6d5Zq4kvg0kyIVvLx74+q7Nw/39KsaNt
- DkQXtzyjXb8ciEDDqBRNqw1FjNW1rCM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-SVCNCqBmNiKVVxh3eyXFag-1; Tue,
- 29 Oct 2024 12:05:00 -0400
-X-MC-Unique: SVCNCqBmNiKVVxh3eyXFag-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 688D81955D4B; Tue, 29 Oct 2024 16:04:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.142])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9340C300018D; Tue, 29 Oct 2024 16:04:53 +0000 (UTC)
-Date: Tue, 29 Oct 2024 16:04:50 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Igor Mammedov <imammedo@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 0/4] QOM: Singleton interface
-Message-ID: <ZyEHoj3Mrm3OGtnX@redhat.com>
-References: <20241024165627.1372621-1-peterx@redhat.com>
- <87h690my2w.fsf@pond.sub.org> <Zxuy5CjKNlK49TUL@x1n>
- <ZyC8MmM7k6df2Awi@redhat.com> <ZyD1BarDJUSA7Nen@x1n>
+ bh=duau9z6Bnsc0LpyXqUCeu8KGx1v9eb7hlTHdnLz21vM=;
+ b=NIDFmpT+rGMEWYEa+6/KEQ6v3FY9lpHKFCm11ZtkUv53LA/jKV7qCAfia6U5SkUk+mBDPs
+ iElAVUq5XRmt21Powj4OpdqBY1Q+iVwgit+oa49czSeVG5N8q62FOalpNp0xTgYT0a9/Z8
+ KHaGk/op+g8gHeyXErEUqKEn4iCndJo=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-631-jVrAxT1INseUf9OOszh1Zw-1; Tue, 29 Oct 2024 12:21:33 -0400
+X-MC-Unique: jVrAxT1INseUf9OOszh1Zw-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6cbceb26182so91085386d6.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 09:21:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730218893; x=1730823693;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=duau9z6Bnsc0LpyXqUCeu8KGx1v9eb7hlTHdnLz21vM=;
+ b=HRAPD/+RMM9pfKI685wKhOyoRL8HaXS+JjNMRd+nqd3KUUjnWs4LPkcuSxCDjKRhdv
+ U2QG2GRM4hH/8jc2M2yZ71EmSwjoOkuO6NYpZieVik5KKGt++xRUK2hHlRfk8ZLzDhlb
+ 2j6TRKlkmP90idpWKvW+Qe77B49AbsFVBdssuQdF7Gz2QGranO+AeZPIE7tKeG7duLVb
+ fACjZ3+J7doVSxXSz8VpEe5Ys4vEv33wGm7FAgk1Qi0t+41MH6t6W4epzB8dP0MD3Ld0
+ x1YhbDiXmIz0fHnQ+hAP/qejilAEctF8cvZmmbwDFCayyD54uBn3ZSh/ZoRkK5qbq/ov
+ mWyg==
+X-Gm-Message-State: AOJu0YydQDg7d2oqEluS/L5Iq6H7l3B3d9upaMYCkwUgt/jAyqgLHNhl
+ sGA6eM8BKzZ+z7LqU/xLi/lpI0eWcnWYSb1knOP0nX5Vs0F+05zaa9KOeqga+0q7XQEjhja7Knr
+ tCRovT/3PddeWhWcRwtluqDtJkIj6rLR4Pr95zhoIyyoTChaa/0Dp
+X-Received: by 2002:a05:6214:3103:b0:6cd:ef7a:8c82 with SMTP id
+ 6a1803df08f44-6d185854b79mr196132636d6.41.1730218893062; 
+ Tue, 29 Oct 2024 09:21:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEhOO2quCl2cnJgcXmgcjEE9bLj0QoGMSO0cpYQAC51BF+4w/b54RZV/OHbVgD4BfevP0CnsA==
+X-Received: by 2002:a05:6214:3103:b0:6cd:ef7a:8c82 with SMTP id
+ 6a1803df08f44-6d185854b79mr196132366d6.41.1730218892629; 
+ Tue, 29 Oct 2024 09:21:32 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d179a2c3c2sm43447506d6.118.2024.10.29.09.21.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Oct 2024 09:21:32 -0700 (PDT)
+Date: Tue, 29 Oct 2024 12:21:31 -0400
+From: Peter Xu <peterx@redhat.com>
+To: yong.huang@smartx.com
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH RFC 2/2] migration: Avoid doing RAMBlock dirty sync in
+ the initial iteration
+Message-ID: <ZyELi_ax8zM_kFbZ@x1n>
+References: <cover.1729648695.git.yong.huang@smartx.com>
+ <76f0ea57ac7f4c2a68203d17fec1c34bb3d16a4a.1729648695.git.yong.huang@smartx.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZyD1BarDJUSA7Nen@x1n>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <76f0ea57ac7f4c2a68203d17fec1c34bb3d16a4a.1729648695.git.yong.huang@smartx.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -93,139 +98,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 29, 2024 at 10:45:25AM -0400, Peter Xu wrote:
-> On Tue, Oct 29, 2024 at 10:42:58AM +0000, Daniel P. Berrangé wrote:
-> > On Fri, Oct 25, 2024 at 11:01:56AM -0400, Peter Xu wrote:
-> > > On Fri, Oct 25, 2024 at 09:38:31AM +0200, Markus Armbruster wrote:
-> > > > Peter Xu <peterx@redhat.com> writes:
-> > > > 
-> > > > > This patchset introduces the singleton interface for QOM.
-> > > > >
-> > > > > The singleton interface is as simple as "this class can only create one
-> > > > > instance".
-> > > > >
-> > > > > We used to have similar demand when working on all kinds of vIOMMUs,
-> > > > > because in most cases that I am aware of, vIOMMU must be a singleton as
-> > > > > it's closely bound to the machine and also the root PCIe systems.  We used
-> > > > > to have a bunch of special code guarding those, for example, X86 has
-> > > > > pc_machine_device_pre_plug_cb() just to detect when vIOMMU is created more
-> > > > > than once.
-> > > > >
-> > > > > There is a similar demand raising recently (even if the problem existed
-> > > > > over years) when we were looking at a migration bug, that part of it was
-> > > > > involved with the current_migration global pointer being referenced
-> > > > > anywhere, even after the migration object was finalize()ed.  So far without
-> > > > > singleton support, there's no way to reset the variable properly.
-> > > > > Declaring migration object to be a singleton also just makes sense, e.g.,
-> > > > > dynamically creating migration objects on the fly with QMP commands doesn't
-> > > > > sound right..
-> > > > >
-> > > > > The idea behind is pretty simple: any object that can only be created once
-> > > > > can now declare the TYPE_SINGLETON interface, then QOM facilities will make
-> > > > > sure it won't be created more than once.  For example, qom-list-properties,
-> > > > > device-list-properties, etc., will be smart enough to not try to create
-> > > > > temporary singleton objects now.
-> > > > 
-> > > > QOM design assumption: object_new() followed by object_unref() is always
-> > > > possible and has no side effect.
-> > > 
-> > > I see.
-> > > 
-> > > > 
-> > > > QOM introspection relies on this.  Your PATCH 1 makes non-class
-> > > > properties of singletons invisible in introspection.  Making something
-> > > > with such properties a singleton would be a regression.
-> > > > 
-> > > > Anything that violates the design assumption must be delayed to a
-> > > > suitable state transition.  For devices (subtypes of TYPE_DEVICE), this
-> > > > is ->realize().  For user-creatable objects (provide interface
-> > > > TYPE_USER_CREATABLE), this is ->complete().  For anything else, it's
-> > > > something else that probably doesn't even exist, yet.  See "Problem 5:
-> > > > QOM lacks a clear life cycle" in
-> > > > 
-> > > >     Subject: Dynamic & heterogeneous machines, initial configuration: problems
-> > > >     Date: Wed, 31 Jan 2024 21:14:21 +0100
-> > > >     Message-ID: <87o7d1i7ky.fsf@pond.sub.org>
-> > > >     https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
-> > > 
-> > > The major challenge here might be that, in migration's use case we want to
-> > > do something after the last refcount is released.
-> > 
-> > This is rather a strange idea, and feels back to front. An object's last
-> > refcount must never be released until code has entirely finished using
-> > the object.
-> > 
-> > > IOW, I don't yet see an easy way to explicit do qdev_unrealize() (even if
-> > > migration object will use realize(), while it doesn't yet..), because there
-> > > can be more than one thread holding refcount of the object, and we don't
-> > > know where to invoke it, and we don't want to do the cleanup if the other
-> > > one still holds a refcount.
-> > 
-> > This sounds like the code is missing some synchronization mechanism
-> > beween the threads, which need to communicate with each other when
-> > they are "done", so that the "primary" thread can then finally
-> > release any resources.
-> > 
-> > > Maybe I can also try do that with a "magic property" with its set/get, as
-> > > that's indeed the other hook (basically, object_property_del_all()) that is
-> > > only invoked after the final refcount is released.  However I think we
-> > > still need the singleton idea somehow..
-> > 
-> > Based on the description above it feels like the problem is outside
-> > of QOM, around the lack of synchronization across threads.
+On Wed, Oct 23, 2024 at 10:09:51AM +0800, yong.huang@smartx.com wrote:
+> From: Hyman Huang <yong.huang@smartx.com>
 > 
-> Right, this used to be discussed here and you were also in the loop:
+> KVM always returns 1 when userspace retrieves a dirty bitmap for
+> the first time when KVM_DIRTY_LOG_INITIALLY_SET is enabled; in such
+> scenario, the RAMBlock dirty sync of the initial iteration can be
+> skipped.
 > 
-> https://lore.kernel.org/qemu-devel/20190228122822.GD4970@work-vm/
+> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> ---
+>  migration/cpu-throttle.c |  3 ++-
+>  migration/ram.c          | 30 +++++++++++++++++++++++++++---
+>  2 files changed, 29 insertions(+), 4 deletions(-)
 > 
-> I kind of agree join() would be perfect, disregard the question on whether
-> QEMU would still benefit from a singleton interface, no matter migration
-> would rely on that for refcounting, or simply it'll also make sense to just
-> avoid people creating random migration objects.
-> 
-> So yes, I think migration can benefit from singleton idea for more than one
-> reason, while the refcount issue here might be even better resolved by
-> join() in main.
-> 
-> It's just that in the thread Dave raised a few points on possible
-> challenges on join() in the main thread.  I'm not sure whether we should go
-> that route instead.  Obviously I am digging one of our legacy rabbit holes
-> from when I started to look at this "access current_migration anywhere"
-> issue reported from VFIO.  But if some of us think we should give it a
-> shot, I can try.  After all, I started digging.
-> 
-> Another simpler but direct solution to "access current_migration" is, we
-> simply don't free it at all, leaving process exit() to do the job.  Then I
-> can drop all object_[un]ref() for the migration object.  I think that could
-> work too, but ugly, for the refcount issue.
+> diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
+> index 342681cdd4..06e3b1be78 100644
+> --- a/migration/cpu-throttle.c
+> +++ b/migration/cpu-throttle.c
+> @@ -27,6 +27,7 @@
+>  #include "hw/core/cpu.h"
+>  #include "qemu/main-loop.h"
+>  #include "sysemu/cpus.h"
+> +#include "sysemu/kvm.h"
+>  #include "cpu-throttle.h"
+>  #include "migration.h"
+>  #include "migration-stats.h"
+> @@ -141,7 +142,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaque)
+>       * effect on guest performance, therefore omit it to avoid
+>       * paying extra for the sync penalty.
+>       */
+> -    if (sync_cnt <= 1) {
+> +    if (sync_cnt <= (kvm_dirty_log_manual_enabled() ? 0 : 1)) {
+>          goto end;
+>      }
+>  
+> diff --git a/migration/ram.c b/migration/ram.c
+> index d284f63854..b312ebd69d 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -2718,7 +2718,7 @@ static void ram_list_init_bitmaps(void)
+>  {
+>      MigrationState *ms = migrate_get_current();
+>      RAMBlock *block;
+> -    unsigned long pages;
+> +    unsigned long pages, clear_bmap_pages;
+>      uint8_t shift;
+>  
+>      /* Skip setting bitmap if there is no RAM */
+> @@ -2736,6 +2736,7 @@ static void ram_list_init_bitmaps(void)
+>  
+>          RAMBLOCK_FOREACH_NOT_IGNORED(block) {
+>              pages = block->max_length >> TARGET_PAGE_BITS;
+> +            clear_bmap_pages = clear_bmap_size(pages, shift);
+>              /*
+>               * The initial dirty bitmap for migration must be set with all
+>               * ones to make sure we'll migrate every guest RAM page to
+> @@ -2751,7 +2752,17 @@ static void ram_list_init_bitmaps(void)
+>                  block->file_bmap = bitmap_new(pages);
+>              }
+>              block->clear_bmap_shift = shift;
+> -            block->clear_bmap = bitmap_new(clear_bmap_size(pages, shift));
+> +            block->clear_bmap = bitmap_new(clear_bmap_pages);
+> +            /*
+> +             * Set the clear bitmap by default to enable dirty logging.
+> +             *
+> +             * Note that with KVM_DIRTY_LOG_INITIALLY_SET, dirty logging
+> +             * will be enabled gradually in small chunks using
+> +             * KVM_CLEAR_DIRTY_LOG
+> +             */
+> +            if (kvm_dirty_log_manual_enabled()) {
+> +                bitmap_set(block->clear_bmap, 0, clear_bmap_pages);
+> +            }
 
-I tend to feel that having MigrationState exist for the whole lifetime
-of QEMU is a bug, forced on us by the unfortunate need to call
-migrate-set-parameters/capabilities separately from the migrate
-command, and by the need to query migrate info an arbitrary amount of
-time after it finishes.
+Why it needs to be relevant to whether DIRTY_LOG is enabled?
 
-This puts libvirt in the awkward position of having to manually reset
-all migration parameters, just to ensure earlier settings don't
-accidentally affect a future migration operation :-( This is a design
-that encourages mistakes.
+I wonder if we should always set clear_bmap to 1 unconditionally, as we
+always set bmap to all 1s by default.
 
-Rather than MigrationState become a singleton, I'd really encourage
-trying to see if we can fix the lifecycle design problems, so that
-we have a clear beginning & end of the migration operation, with the
-state discarded at the end, such that every future migrate starts
-from a clean base.
+Then we skip sync always during setup, dropping patch 1.
 
+>          }
+>      }
+>  }
+> @@ -2771,6 +2782,7 @@ static void migration_bitmap_clear_discarded_pages(RAMState *rs)
+>  
+>  static bool ram_init_bitmaps(RAMState *rs, Error **errp)
+>  {
+> +    Error *local_err = NULL;
+>      bool ret = true;
+>  
+>      qemu_mutex_lock_ramlist();
+> @@ -2783,7 +2795,19 @@ static bool ram_init_bitmaps(RAMState *rs, Error **errp)
+>              if (!ret) {
+>                  goto out_unlock;
+>              }
+> -            migration_bitmap_sync_precopy(false);
+> +
+> +            if (kvm_dirty_log_manual_enabled()) {
+> +                /*
+> +                 * Bypass the RAMBlock dirty sync and still publish a
+> +                 * notification.
+> +                 */
+> +                if (precopy_notify(PRECOPY_NOTIFY_AFTER_BITMAP_SYNC,
+> +                            &local_err)) {
+> +                    error_report_err(local_err);
+> +                }
+> +            } else {
+> +                migration_bitmap_sync_precopy(false);
+> +            }
+>          }
+>      }
+>  out_unlock:
+> -- 
+> 2.27.0
+> 
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
