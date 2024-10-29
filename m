@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CC9CD5B16B
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 08:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75A80D5B16F
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 08:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5hpW-000350-NX; Tue, 29 Oct 2024 04:43:58 -0400
+	id 1t5hpG-00032j-I8; Tue, 29 Oct 2024 04:43:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t5hpV-00034n-Dn
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:43:57 -0400
+ id 1t5hpD-00031U-Ag
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:43:39 -0400
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t5hpT-00084o-Jb
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:43:56 -0400
+ id 1t5hpB-00083O-MW
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:43:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730191436; x=1761727436;
+ t=1730191418; x=1761727418;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Q27tShPjg+XTXhgkfZZQgStLn96wPei7nUviWn4ZH2w=;
- b=N6aaS6WsjhDxm2DZhel4Io0tH4KAZPLG56Gd7zh5atrkkT9kq9mBRjgI
- 13JapUkU50vZpWicW4rK/t5ueZDPZtnSJhPknpMPy31mrvaGYWzdqAqVZ
- Dx+7i7WbjuyT/berrfxDIqdhaHgqvkGfo8J5NVyOIYnWNNRuQBcZmMkax
- 32MtUzyS83mN0M/BkHr5fYvAonYCi7FLM4SsPSpQ7lXQ3u0gcyMQ/VM8k
- GLIyy+/hIKZKIrUkFvaV1i1q1skO7ojSqM/sK4YSbcTdAlLulXqCyToXI
- +wmFGPPe3G0Ld23kxy07wJ7ItITNWEPSgoOqZZq4bv0Z1YoKXlvC4GZaj Q==;
-X-CSE-ConnectionGUID: gKiG8XX3Rd61jTzAfCnTww==
-X-CSE-MsgGUID: buHepiFgQ56msxAQyAO+aw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="29592829"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="29592829"
+ bh=b3ghL1kjS2+0w0jZmmgjLxWWfkCh8dYffVl5sBe8rfI=;
+ b=feip1Mb2T8TEkpwLouXBY2ksVz6LobRsyTU6ar0Oe6TWVVFdWKqOEUCQ
+ bcUGd3QAe9JXSwNgpnZs8Zay9BYppytBQCCUdXo7hA9W3GHCk9E5KovxZ
+ xTPUT4Tcy4Cj8R+W5X65+wKkDONWxt9kfN4/P9nHNGiDu6WA5UyTMC577
+ aeqwduv6TzdcuM/AVHIyS5P6RbMuUeeRfro+6bLfmsycQXIlgsmjTPCf/
+ 98ezze+VjTI/SuDVRt097y5G+0FE7hQPHSYT8dVuyvyDMwpv3ROrHCKEG
+ GEtTxS0UtZ27S6XvSpQtCTCztwUzmCyH+hjvzUXvPijrcUVUaUdxsuYck g==;
+X-CSE-ConnectionGUID: Zxq2saP5SMi2dG/CyV87Yw==
+X-CSE-MsgGUID: Bwg9dMbURsC5yWR+0JjPeQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="29592807"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="29592807"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Oct 2024 01:43:44 -0700
-X-CSE-ConnectionGUID: RTtDknDSTvKXLxPiR5fi5Q==
-X-CSE-MsgGUID: My0Y86LpQ3ChBSJcYNJZQQ==
+ 29 Oct 2024 01:43:36 -0700
+X-CSE-ConnectionGUID: Gw1v7kf4RcOYYIbVXgxJOg==
+X-CSE-MsgGUID: Ume+FI35ThWzhNDLcrc3Ng==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,241,1725346800"; d="scan'208";a="85847224"
+X-IronPort-AV: E=Sophos;i="6.11,241,1725346800"; d="scan'208";a="85847193"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 29 Oct 2024 01:43:42 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 29 Oct 2024 01:43:35 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>
 Cc: qemu-devel@nongnu.org,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 13/16] target/xtensa: Replace type_register() with
+Subject: [PATCH 08/16] hw/usb: Replace type_register() with
  type_register_static()
-Date: Tue, 29 Oct 2024 16:59:31 +0800
-Message-Id: <20241029085934.2799066-14-zhao1.liu@intel.com>
+Date: Tue, 29 Oct 2024 16:59:26 +0800
+Message-Id: <20241029085934.2799066-9-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241029085934.2799066-1-zhao1.liu@intel.com>
 References: <20241029085934.2799066-1-zhao1.liu@intel.com>
@@ -90,20 +90,34 @@ type_register() will be deprecated.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/xtensa/helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/usb/hcd-ehci-pci.c | 2 +-
+ hw/usb/hcd-uhci.c     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
-index ca214b948a96..2978c471c1fc 100644
---- a/target/xtensa/helper.c
-+++ b/target/xtensa/helper.c
-@@ -198,7 +198,7 @@ void xtensa_register_core(XtensaConfigList *node)
-     node->next = xtensa_cores;
-     xtensa_cores = node;
-     type.name = g_strdup_printf(XTENSA_CPU_TYPE_NAME("%s"), node->config->name);
--    type_register(&type);
-+    type_register_static(&type);
-     g_free((gpointer)type.name);
+diff --git a/hw/usb/hcd-ehci-pci.c b/hw/usb/hcd-ehci-pci.c
+index c94fc9f6c587..dd06451e234f 100644
+--- a/hw/usb/hcd-ehci-pci.c
++++ b/hw/usb/hcd-ehci-pci.c
+@@ -228,7 +228,7 @@ static void ehci_pci_register_types(void)
+     for (i = 0; i < ARRAY_SIZE(ehci_pci_info); i++) {
+         ehci_type_info.name = ehci_pci_info[i].name;
+         ehci_type_info.class_data = ehci_pci_info + i;
+-        type_register(&ehci_type_info);
++        type_register_static(&ehci_type_info);
+     }
+ }
+ 
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index 3d0339af7b9e..65c1f93cc9f3 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -1362,7 +1362,7 @@ static void uhci_register_types(void)
+     for (i = 0; i < ARRAY_SIZE(uhci_info); i++) {
+         uhci_type_info.name = uhci_info[i].name;
+         uhci_type_info.class_data = uhci_info + i;
+-        type_register(&uhci_type_info);
++        type_register_static(&uhci_type_info);
+     }
  }
  
 -- 
