@@ -4,98 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9671BD3A67B
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 18:48:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56B74D3A67B
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 18:48:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5rGL-0005Fh-D1; Tue, 29 Oct 2024 14:48:17 -0400
+	id 1t5rGW-0005Gs-8e; Tue, 29 Oct 2024 14:48:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t5rGJ-0005FY-3z
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 14:48:15 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t5rGU-0005Ga-W2
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 14:48:27 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t5rGG-0008L7-Ea
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 14:48:14 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t5rGT-0008N8-Fh
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 14:48:26 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9364221AC1;
- Tue, 29 Oct 2024 18:48:08 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id F3F711F799;
+ Tue, 29 Oct 2024 18:48:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730227688; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1730227704; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fsmBZ+w5yd2DMImeC5CdS0xCDRR97Dy6ZCcQtQryybc=;
- b=P9IqZX6SQ40HhFWtvh0iXzk2K+ThUMwjyh9hEhFkBdjsA+4qL37pJrFqJVQHC9eoNLwCBz
- PD74Fb86A+P6GASkNGU7D47bN7ff6Fj+02Ld3q2F64hUC1a/d9Yf1ghtNK8CS71Hind7HH
- 2C6yv2nA66/+D5lxjR3FCFRPsm0AF7o=
+ bh=Qiv5dnWp2y4zzgP67W1x1kCUY7hfm0cjd8RxgMjSt9c=;
+ b=Rc2JIFRF5yBMyHhDiIay3+XVwIdPR3BiApdsfiNsPT+0TKB0x1oYAM/efITz46Aq4RPOsI
+ VL9tssjOsuwh2dPiW+MMI1lPan+Xgyl71vqjBGCgo1AJZLzl1fUHYNNx/JVLSWW0cWRG4K
+ YQTGwoJA+BZcHpiTon8qZBRdLPpfGPw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730227688;
+ s=susede2_ed25519; t=1730227704;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fsmBZ+w5yd2DMImeC5CdS0xCDRR97Dy6ZCcQtQryybc=;
- b=65Z4d1q0HB4PADKBkHwLWHd5YdjX2QlWatdWySStSX9e6rXMc+UNZXMOjSica5ZztYSyiB
- mSwqP+Z1tmGYDlCA==
-Authentication-Results: smtp-out1.suse.de;
-	none
+ bh=Qiv5dnWp2y4zzgP67W1x1kCUY7hfm0cjd8RxgMjSt9c=;
+ b=eYT49oXQ7XK9ER2Dii/Z90BdtjP40wxUXen0F+EbBec2PnDfKcgNDnp/n6QnR007Rp5coE
+ Zt3QMWcGH0TQy+DQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Rc2JIFRF;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=eYT49oXQ
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730227688; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1730227704; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fsmBZ+w5yd2DMImeC5CdS0xCDRR97Dy6ZCcQtQryybc=;
- b=P9IqZX6SQ40HhFWtvh0iXzk2K+ThUMwjyh9hEhFkBdjsA+4qL37pJrFqJVQHC9eoNLwCBz
- PD74Fb86A+P6GASkNGU7D47bN7ff6Fj+02Ld3q2F64hUC1a/d9Yf1ghtNK8CS71Hind7HH
- 2C6yv2nA66/+D5lxjR3FCFRPsm0AF7o=
+ bh=Qiv5dnWp2y4zzgP67W1x1kCUY7hfm0cjd8RxgMjSt9c=;
+ b=Rc2JIFRF5yBMyHhDiIay3+XVwIdPR3BiApdsfiNsPT+0TKB0x1oYAM/efITz46Aq4RPOsI
+ VL9tssjOsuwh2dPiW+MMI1lPan+Xgyl71vqjBGCgo1AJZLzl1fUHYNNx/JVLSWW0cWRG4K
+ YQTGwoJA+BZcHpiTon8qZBRdLPpfGPw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730227688;
+ s=susede2_ed25519; t=1730227704;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fsmBZ+w5yd2DMImeC5CdS0xCDRR97Dy6ZCcQtQryybc=;
- b=65Z4d1q0HB4PADKBkHwLWHd5YdjX2QlWatdWySStSX9e6rXMc+UNZXMOjSica5ZztYSyiB
- mSwqP+Z1tmGYDlCA==
+ bh=Qiv5dnWp2y4zzgP67W1x1kCUY7hfm0cjd8RxgMjSt9c=;
+ b=eYT49oXQ7XK9ER2Dii/Z90BdtjP40wxUXen0F+EbBec2PnDfKcgNDnp/n6QnR007Rp5coE
+ Zt3QMWcGH0TQy+DQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1DA64136A5;
- Tue, 29 Oct 2024 18:48:07 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7D59E136A5;
+ Tue, 29 Oct 2024 18:48:23 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id wP4bNectIWdwTAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 29 Oct 2024 18:48:07 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 9JwBEfctIWd+TAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 29 Oct 2024 18:48:23 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Avihai Horon <avihaih@nvidia.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater
  <clg@redhat.com>,
  peterx@redhat.com, Alex Williamson <alex.williamson@redhat.com>
-Subject: Re: [PATCH v3 1/8] migration: Take migration object refcount
- earlier for threads
-In-Reply-To: <20241024213056.1395400-2-peterx@redhat.com>
+Subject: Re: [PATCH v3 2/8] migration: Unexport dirty_bitmap_mig_init()
+In-Reply-To: <20241024213056.1395400-3-peterx@redhat.com>
 References: <20241024213056.1395400-1-peterx@redhat.com>
- <20241024213056.1395400-2-peterx@redhat.com>
-Date: Tue, 29 Oct 2024 15:48:05 -0300
-Message-ID: <875xpad9ui.fsf@suse.de>
+ <20241024213056.1395400-3-peterx@redhat.com>
+Date: Tue, 29 Oct 2024 15:48:21 -0300
+Message-ID: <8734ked9u2.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: F3F711F799
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:email,suse.de:dkim,suse.de:mid];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,20 +134,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> Both migration thread or background snapshot thread will take a refcount of
-> the migration object at the entrace of the thread function.
+> It's only used within migration/, so it shouldn't be exported.
 >
-> That makes sense, because it protects the object from being freed by the
-> main thread in migration_shutdown() later, but it might still race with it
-> if the thread is scheduled too late.  Consider the case right after
-> pthread_create() happened, VM shuts down with the object released, but
-> right after that the migration thread finally got created, referencing
-> MigrationState* in the opaque pointer which is already freed.
->
-> The only 100% safe way to make sure it won't get freed is taking the
-> refcount right before the thread is created, meanwhile when BQL is held.
->
+> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  include/migration/misc.h | 3 ---
+>  migration/migration.h    | 4 ++++
+>  2 files changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/include/migration/misc.h b/include/migration/misc.h
+> index bfadc5613b..df57be6b5e 100644
+> --- a/include/migration/misc.h
+> +++ b/include/migration/misc.h
+> @@ -108,7 +108,4 @@ bool migration_incoming_postcopy_advised(void);
+>  /* True if background snapshot is active */
+>  bool migration_in_bg_snapshot(void);
+>=20=20
+> -/* migration/block-dirty-bitmap.c */
+> -void dirty_bitmap_mig_init(void);
+> -
+>  #endif
+> diff --git a/migration/migration.h b/migration/migration.h
+> index 7dc59c5e8d..0956e9274b 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -552,4 +552,8 @@ int migration_rp_wait(MigrationState *s);
+>  void migration_rp_kick(MigrationState *s);
+>=20=20
+>  void migration_bitmap_sync_precopy(bool last_stage);
+> +
+> +/* migration/block-dirty-bitmap.c */
+> +void dirty_bitmap_mig_init(void);
+> +
+>  #endif
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
