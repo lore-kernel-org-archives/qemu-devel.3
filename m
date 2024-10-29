@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92181D5B16A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC5FD5B166
 	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 08:08:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5hGP-0007BA-Pm; Tue, 29 Oct 2024 04:07:42 -0400
+	id 1t5hGg-0007Lp-VT; Tue, 29 Oct 2024 04:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t5hGN-0007B1-EN
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:07:39 -0400
+ id 1t5hGf-0007LE-Ls
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:07:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t5hGM-0003xB-0Y
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:07:39 -0400
+ id 1t5hGd-0003z1-SH
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 04:07:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730189255;
+ s=mimecast20190719; t=1730189275;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m2suDZfQpDqpwj6AS4dJJjae/UH5ptWRp3zP+J83GOs=;
- b=S4D2V5RVhfFhvZS+mwP5tHakufMuOZFZyCZP/LC9ZpJIWLC3HHQ88+5ZSFXtpOWbsnmKOL
- PyFORHhBsiB+2IwYXuB0aAADOAMT5tNNOTP5PqZQFtvZMw2qS6194kWYAzKCWgZs6to+Wu
- lrT+s6R8K54znhtdR3+3DRbYJMmAVP4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=83qmr+KeO4ilJ6A4acIZ0fhA1JeMw3DwdEi4oQ6Mnqo=;
+ b=YbHxeia+5zZSqC21Qx30ij+k5STt+S//YS4C0xHeSPP+UdLXawQFbVT9z1bbSr6swxp07y
+ xG1q1hKTYxlt2ARAdHYA1xwllj5D72kDIWS0SG68c8Xrmy/Mk/LMfutRXgFuMrLmeLeLrF
+ 8vGxYGzWvi36M3RRrydwnQr3oDew6QM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-AV2E5m3vN3GbVJ5q5ECWHQ-1; Tue,
- 29 Oct 2024 04:07:33 -0400
-X-MC-Unique: AV2E5m3vN3GbVJ5q5ECWHQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-5whvoLufPqWcHEXLQ03uRA-1; Tue,
+ 29 Oct 2024 04:07:48 -0400
+X-MC-Unique: 5whvoLufPqWcHEXLQ03uRA-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0D79F1956048
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 08:07:33 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 47F491955DBF; Tue, 29 Oct 2024 08:07:47 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.36])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0D751956086; Tue, 29 Oct 2024 08:07:30 +0000 (UTC)
+ id 5F0CC1956086; Tue, 29 Oct 2024 08:07:43 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Jason Wang <jasowang@redhat.com>
-Subject: [PULL 06/14] hw/net: report errors from failing to use eBPF RSS FDs
-Date: Tue, 29 Oct 2024 16:06:57 +0800
-Message-ID: <20241029080705.3238-7-jasowang@redhat.com>
+Subject: [PULL 10/14] chardev: finalize 'reconnect' deprecation
+Date: Tue, 29 Oct 2024 16:07:01 +0800
+Message-ID: <20241029080705.3238-11-jasowang@redhat.com>
 In-Reply-To: <20241029080705.3238-1-jasowang@redhat.com>
 References: <20241029080705.3238-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -85,105 +85,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-If the user/mgmt app passed in a set of pre-opened FDs for eBPF RSS,
-then it is expecting QEMU to use them. Any failure to do so must be
-considered a fatal error and propagated back up the stack, otherwise
-deployment mistakes will not be detectable in a prompt manner. When
-not using pre-opened FDs, then eBPF RSS is tried on a "best effort"
-basis only and thus fallback to software RSS is valid.
+Change all related docs and tests to use the new 'reconnect-ms' option
+instead of the now deprecated 'reconnect'.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- hw/net/virtio-net.c | 41 +++++++++++++++++++++++++++++------------
- 1 file changed, 29 insertions(+), 12 deletions(-)
+ docs/COLO-FT.txt              |  4 ++--
+ docs/system/ppc/powernv.rst   |  2 +-
+ qemu-options.hx               | 22 +++++++++++-----------
+ tests/qtest/ipmi-bt-test.c    |  2 +-
+ tests/qtest/vhost-user-test.c |  2 +-
+ tests/unit/test-char.c        |  8 ++++----
+ 6 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 289fba8152..c08ae55424 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1316,28 +1316,27 @@ static void virtio_net_disable_rss(VirtIONet *n)
-     virtio_net_commit_rss_config(n);
- }
+diff --git a/docs/COLO-FT.txt b/docs/COLO-FT.txt
+index 2e760a4aee..2283a09c08 100644
+--- a/docs/COLO-FT.txt
++++ b/docs/COLO-FT.txt
+@@ -193,8 +193,8 @@ any IP's here, except for the $primary_ip variable.
+    -device piix3-usb-uhci -device usb-tablet -name secondary \
+    -netdev tap,id=hn0,vhost=off,helper=/usr/lib/qemu/qemu-bridge-helper \
+    -device rtl8139,id=e0,netdev=hn0 \
+-   -chardev socket,id=red0,host=$primary_ip,port=9003,reconnect=1 \
+-   -chardev socket,id=red1,host=$primary_ip,port=9004,reconnect=1 \
++   -chardev socket,id=red0,host=$primary_ip,port=9003,reconnect-ms=1000 \
++   -chardev socket,id=red1,host=$primary_ip,port=9004,reconnect-ms=1000 \
+    -object filter-redirector,id=f1,netdev=hn0,queue=tx,indev=red0 \
+    -object filter-redirector,id=f2,netdev=hn0,queue=rx,outdev=red1 \
+    -object filter-rewriter,id=rew0,netdev=hn0,queue=all \
+diff --git a/docs/system/ppc/powernv.rst b/docs/system/ppc/powernv.rst
+index 09f3965858..de7a807ac7 100644
+--- a/docs/system/ppc/powernv.rst
++++ b/docs/system/ppc/powernv.rst
+@@ -181,7 +181,7 @@ connected to a remote QEMU machine acting as BMC, using these options
  
--static bool virtio_net_load_ebpf_fds(VirtIONet *n)
-+static bool virtio_net_load_ebpf_fds(VirtIONet *n, Error **errp)
+ .. code-block:: bash
+ 
+-  -chardev socket,id=ipmi0,host=localhost,port=9002,reconnect=10 \
++  -chardev socket,id=ipmi0,host=localhost,port=9002,reconnect-ms=10000 \
+   -device ipmi-bmc-extern,id=bmc0,chardev=ipmi0 \
+   -device isa-ipmi-bt,bmc=bmc0,irq=10 \
+   -nodefaults
+diff --git a/qemu-options.hx b/qemu-options.hx
+index bb228f6200..dacc9790a4 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -1102,7 +1102,7 @@ SRST
+     external entity that provides the IPMI services.
+ 
+     A connection is made to an external BMC simulator. If you do this,
+-    it is strongly recommended that you use the "reconnect=" chardev
++    it is strongly recommended that you use the "reconnect-ms=" chardev
+     option to reconnect to the simulator if the connection is lost. Note
+     that if this is not used carefully, it can be a security issue, as
+     the interface has the ability to send resets, NMIs, and power off
+@@ -3318,8 +3318,8 @@ SRST
+     ``ipv6=on|off``
+         whether to accept IPv6 addresses, default to try both IPv4 and IPv6
+ 
+-    ``reconnect=seconds``
+-        for a client socket, if a socket is disconnected, then attempt a reconnect after the given number of seconds.
++    ``reconnect-ms=milliseconds``
++        for a client socket, if a socket is disconnected, then attempt a reconnect after the given number of milliseconds.
+         Setting this to zero disables this function.  (default: 0)
+ 
+     Example (two guests connected using a TCP/IP socket):
+@@ -3388,8 +3388,8 @@ SRST
+     ``addr.str=file-descriptor``
+         file descriptor number to use as a socket
+ 
+-    ``reconnect=seconds``
+-        for a client socket, if a socket is disconnected, then attempt a reconnect after the given number of seconds.
++    ``reconnect-ms=milliseconds``
++        for a client socket, if a socket is disconnected, then attempt a reconnect after the given number of milliseconds.
+         Setting this to zero disables this function.  (default: 0)
+ 
+ ``-netdev dgram,id=str,remote.type=inet,remote.host=maddr,remote.port=port[,local.type=inet,local.host=addr]``
+@@ -3679,9 +3679,9 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
+     "-chardev help\n"
+     "-chardev null,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
+     "-chardev socket,id=id[,host=host],port=port[,to=to][,ipv4=on|off][,ipv6=on|off][,nodelay=on|off]\n"
+-    "         [,server=on|off][,wait=on|off][,telnet=on|off][,websocket=on|off][,reconnect=seconds][,mux=on|off]\n"
++    "         [,server=on|off][,wait=on|off][,telnet=on|off][,websocket=on|off][,reconnect-ms=milliseconds][,mux=on|off]\n"
+     "         [,logfile=PATH][,logappend=on|off][,tls-creds=ID][,tls-authz=ID] (tcp)\n"
+-    "-chardev socket,id=id,path=path[,server=on|off][,wait=on|off][,telnet=on|off][,websocket=on|off][,reconnect=seconds]\n"
++    "-chardev socket,id=id,path=path[,server=on|off][,wait=on|off][,telnet=on|off][,websocket=on|off][,reconnect-ms=milliseconds]\n"
+     "         [,mux=on|off][,logfile=PATH][,logappend=on|off][,abstract=on|off][,tight=on|off] (unix)\n"
+     "-chardev udp,id=id[,host=host],port=port[,localaddr=localaddr]\n"
+     "         [,localport=localport][,ipv4=on|off][,ipv6=on|off][,mux=on|off]\n"
+@@ -3792,7 +3792,7 @@ The available backends are:
+     A void device. This device will not emit any data, and will drop any
+     data it receives. The null backend does not take any options.
+ 
+-``-chardev socket,id=id[,TCP options or unix options][,server=on|off][,wait=on|off][,telnet=on|off][,websocket=on|off][,reconnect=seconds][,tls-creds=id][,tls-authz=id]``
++``-chardev socket,id=id[,TCP options or unix options][,server=on|off][,wait=on|off][,telnet=on|off][,websocket=on|off][,reconnect-ms=milliseconds][,tls-creds=id][,tls-authz=id]``
+     Create a two-way stream socket, which can be either a TCP or a unix
+     socket. A unix socket will be created if ``path`` is specified.
+     Behaviour is undefined if TCP options are specified for a unix
+@@ -3809,9 +3809,9 @@ The available backends are:
+     ``websocket=on|off`` specifies that the socket uses WebSocket protocol for
+     communication.
+ 
+-    ``reconnect`` sets the timeout for reconnecting on non-server
++    ``reconnect-ms`` sets the timeout for reconnecting on non-server
+     sockets when the remote end goes away. qemu will delay this many
+-    seconds and then attempt to reconnect. Zero disables reconnecting,
++    milliseconds and then attempt to reconnect. Zero disables reconnecting,
+     and is the default.
+ 
+     ``tls-creds`` requests enablement of the TLS protocol for
+@@ -4427,7 +4427,7 @@ SRST
+         The WebSocket protocol is used instead of raw tcp socket. The
+         port acts as a WebSocket server. Client mode is not supported.
+ 
+-    ``unix:path[,server=on|off][,wait=on|off][,reconnect=seconds]``
++    ``unix:path[,server=on|off][,wait=on|off][,reconnect-ms=milliseconds]``
+         A unix domain socket is used instead of a tcp socket. The option
+         works the same as if you had specified ``-serial tcp`` except
+         the unix domain socket path is used for connections.
+diff --git a/tests/qtest/ipmi-bt-test.c b/tests/qtest/ipmi-bt-test.c
+index 13f7c841f5..637732fd5a 100644
+--- a/tests/qtest/ipmi-bt-test.c
++++ b/tests/qtest/ipmi-bt-test.c
+@@ -411,7 +411,7 @@ int main(int argc, char **argv)
+     g_test_init(&argc, &argv, NULL);
+ 
+     global_qtest = qtest_initf(
+-        " -chardev socket,id=ipmi0,host=127.0.0.1,port=%d,reconnect=10"
++        " -chardev socket,id=ipmi0,host=127.0.0.1,port=%d,reconnect-ms=10000"
+         " -device ipmi-bmc-extern,chardev=ipmi0,id=bmc0"
+         " -device isa-ipmi-bt,bmc=bmc0", emu_port);
+     qtest_irq_intercept_in(global_qtest, "ioapic");
+diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
+index d6075001e7..8948fb81ef 100644
+--- a/tests/qtest/vhost-user-test.c
++++ b/tests/qtest/vhost-user-test.c
+@@ -920,7 +920,7 @@ static void wait_for_rings_started(TestServer *s, size_t count)
+ 
+ static inline void test_server_connect(TestServer *server)
  {
-     int fds[EBPF_RSS_MAX_FDS] = { [0 ... EBPF_RSS_MAX_FDS - 1] = -1};
-     int ret = true;
-     int i = 0;
- 
-     if (n->nr_ebpf_rss_fds != EBPF_RSS_MAX_FDS) {
--        warn_report("Expected %d file descriptors but got %d",
--                    EBPF_RSS_MAX_FDS, n->nr_ebpf_rss_fds);
--       return false;
--   }
-+        error_setg(errp, "Expected %d file descriptors but got %d",
-+                   EBPF_RSS_MAX_FDS, n->nr_ebpf_rss_fds);
-+        return false;
-+    }
- 
-     for (i = 0; i < n->nr_ebpf_rss_fds; i++) {
--        fds[i] = monitor_fd_param(monitor_cur(), n->ebpf_rss_fds[i],
--                                  &error_warn);
-+        fds[i] = monitor_fd_param(monitor_cur(), n->ebpf_rss_fds[i], errp);
-         if (fds[i] < 0) {
-             ret = false;
-             goto exit;
-         }
-     }
- 
--    ret = ebpf_rss_load_fds(&n->ebpf_rss, fds[0], fds[1], fds[2], fds[3], NULL);
-+    ret = ebpf_rss_load_fds(&n->ebpf_rss, fds[0], fds[1], fds[2], fds[3], errp);
- 
- exit:
-     if (!ret) {
-@@ -1349,13 +1348,15 @@ exit:
-     return ret;
+-    test_server_create_chr(server, ",reconnect=1");
++    test_server_create_chr(server, ",reconnect-ms=1000");
  }
  
--static bool virtio_net_load_ebpf(VirtIONet *n)
-+static bool virtio_net_load_ebpf(VirtIONet *n, Error **errp)
- {
-     bool ret = false;
- 
-     if (virtio_net_attach_ebpf_to_backend(n->nic, -1)) {
--        if (!(n->ebpf_rss_fds && virtio_net_load_ebpf_fds(n))) {
--            ret = ebpf_rss_load(&n->ebpf_rss, NULL);
-+        if (n->ebpf_rss_fds) {
-+            ret = virtio_net_load_ebpf_fds(n, errp);
-+        } else {
-+            ret = ebpf_rss_load(&n->ebpf_rss, errp);
-         }
-     }
- 
-@@ -3761,7 +3762,23 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-     net_rx_pkt_init(&n->rx_pkt);
- 
-     if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
--        virtio_net_load_ebpf(n);
-+        Error *err = NULL;
-+        if (!virtio_net_load_ebpf(n, &err)) {
-+            /*
-+             * If user explicitly gave QEMU RSS FDs to use, then
-+             * failing to use them must be considered a fatal
-+             * error. If no RSS FDs were provided, QEMU is trying
-+             * eBPF on a "best effort" basis only, so report a
-+             * warning and allow fallback to software RSS.
-+             */
-+            if (n->ebpf_rss_fds) {
-+                error_propagate(errp, err);
-+            } else {
-+                warn_report("unable to load eBPF RSS: %s",
-+                            error_get_pretty(err));
-+                error_free(err);
-+            }
-+        }
-     }
- }
- 
+ static gboolean
+diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
+index a1c6bb874c..a6e8753e1c 100644
+--- a/tests/unit/test-char.c
++++ b/tests/unit/test-char.c
+@@ -1545,18 +1545,18 @@ int main(int argc, char **argv)
+     static CharSocketClientTestConfig client2 ## name =                 \
+         { addr, NULL, true, false, char_socket_event };                 \
+     static CharSocketClientTestConfig client3 ## name =                 \
+-        { addr, ",reconnect=1", false, false, char_socket_event };      \
++        { addr, ",reconnect-ms=1000", false, false, char_socket_event }; \
+     static CharSocketClientTestConfig client4 ## name =                 \
+-        { addr, ",reconnect=1", true, false, char_socket_event };       \
++        { addr, ",reconnect-ms=1000", true, false, char_socket_event }; \
+     static CharSocketClientTestConfig client5 ## name =                 \
+         { addr, NULL, false, true, char_socket_event };                 \
+     static CharSocketClientTestConfig client6 ## name =                 \
+         { addr, NULL, true, true, char_socket_event };                  \
+     static CharSocketClientTestConfig client7 ## name =                 \
+-        { addr, ",reconnect=1", true, false,                            \
++        { addr, ",reconnect-ms=1000", true, false,                      \
+             char_socket_event_with_error };                             \
+     static CharSocketClientTestConfig client8 ## name =                 \
+-        { addr, ",reconnect=1", false, false, char_socket_event };      \
++        { addr, ",reconnect-ms=1000", false, false, char_socket_event };\
+     g_test_add_data_func("/char/socket/client/mainloop/" # name,        \
+                          &client1 ##name, char_socket_client_test);     \
+     g_test_add_data_func("/char/socket/client/wait-conn/" # name,       \
 -- 
 2.42.0
 
