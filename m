@@ -4,57 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CEA9D2AB1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 10:31:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D34FCD2AB1B
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 10:44:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5jVX-0006Ez-Mu; Tue, 29 Oct 2024 06:31:27 -0400
+	id 1t5jh0-0007zO-Jr; Tue, 29 Oct 2024 06:43:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t5jVD-0006EV-DS
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 06:31:09 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t5jgy-0007yw-NS
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 06:43:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t5jV8-00048s-9W
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 06:31:07 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xd6105SX7z6K6Wm;
- Tue, 29 Oct 2024 18:28:36 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 4C2561404F5;
- Tue, 29 Oct 2024 18:30:53 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 29 Oct
- 2024 11:30:52 +0100
-Date: Tue, 29 Oct 2024 10:30:50 +0000
-To: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>
-CC: <linux-cxl@vger.kernel.org>, <marcel.apfelbaum@gmail.com>, Dave Jiang
- <dave.jiang@intel.com>, Huang Ying <ying.huang@intel.com>, Michael Roth
- <michael.roth@amd.com>, <fan.ni@samsung.com>, <linuxarm@huawei.com>
-Subject: Re: [PATCH qemu 0/6] hw/cxl: Link speed and width control
-Message-ID: <20241029102850.000052c5@huawei.com>
-In-Reply-To: <20240916173518.1843023-1-Jonathan.Cameron@huawei.com>
-References: <20240916173518.1843023-1-Jonathan.Cameron@huawei.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t5jgu-0005iR-Db
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 06:43:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730198590;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=ortyQ82awpGNF/5ch39Tufg7eZbIlHNqQW0/rQ4NCE0=;
+ b=PlaCzLG7IleW9XcPv80WtlqkZCou7mplBMMWl0i43VTdk5eQbNBa7KEYKf+0MEufGg6wam
+ VZNg+0BvBgrODuiQbrzlIbRJQP0asIUsCy3MBvpnhm31SppErleKaPtkc33WPFgSO3WT0H
+ pDpFHPwK8bgslN5ZOU4KOxH8RaEnnEs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-57-6PzBKahBPqOIE8zu6lV92w-1; Tue,
+ 29 Oct 2024 06:43:09 -0400
+X-MC-Unique: 6PzBKahBPqOIE8zu6lV92w-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CDD341956088; Tue, 29 Oct 2024 10:43:06 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.142])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1DD75300018D; Tue, 29 Oct 2024 10:43:01 +0000 (UTC)
+Date: Tue, 29 Oct 2024 10:42:58 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Igor Mammedov <imammedo@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 0/4] QOM: Singleton interface
+Message-ID: <ZyC8MmM7k6df2Awi@redhat.com>
+References: <20241024165627.1372621-1-peterx@redhat.com>
+ <87h690my2w.fsf@pond.sub.org> <Zxuy5CjKNlK49TUL@x1n>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Zxuy5CjKNlK49TUL@x1n>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -69,78 +89,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gentle ping.
+On Fri, Oct 25, 2024 at 11:01:56AM -0400, Peter Xu wrote:
+> On Fri, Oct 25, 2024 at 09:38:31AM +0200, Markus Armbruster wrote:
+> > Peter Xu <peterx@redhat.com> writes:
+> > 
+> > > This patchset introduces the singleton interface for QOM.
+> > >
+> > > The singleton interface is as simple as "this class can only create one
+> > > instance".
+> > >
+> > > We used to have similar demand when working on all kinds of vIOMMUs,
+> > > because in most cases that I am aware of, vIOMMU must be a singleton as
+> > > it's closely bound to the machine and also the root PCIe systems.  We used
+> > > to have a bunch of special code guarding those, for example, X86 has
+> > > pc_machine_device_pre_plug_cb() just to detect when vIOMMU is created more
+> > > than once.
+> > >
+> > > There is a similar demand raising recently (even if the problem existed
+> > > over years) when we were looking at a migration bug, that part of it was
+> > > involved with the current_migration global pointer being referenced
+> > > anywhere, even after the migration object was finalize()ed.  So far without
+> > > singleton support, there's no way to reset the variable properly.
+> > > Declaring migration object to be a singleton also just makes sense, e.g.,
+> > > dynamically creating migration objects on the fly with QMP commands doesn't
+> > > sound right..
+> > >
+> > > The idea behind is pretty simple: any object that can only be created once
+> > > can now declare the TYPE_SINGLETON interface, then QOM facilities will make
+> > > sure it won't be created more than once.  For example, qom-list-properties,
+> > > device-list-properties, etc., will be smart enough to not try to create
+> > > temporary singleton objects now.
+> > 
+> > QOM design assumption: object_new() followed by object_unref() is always
+> > possible and has no side effect.
+> 
+> I see.
+> 
+> > 
+> > QOM introspection relies on this.  Your PATCH 1 makes non-class
+> > properties of singletons invisible in introspection.  Making something
+> > with such properties a singleton would be a regression.
+> > 
+> > Anything that violates the design assumption must be delayed to a
+> > suitable state transition.  For devices (subtypes of TYPE_DEVICE), this
+> > is ->realize().  For user-creatable objects (provide interface
+> > TYPE_USER_CREATABLE), this is ->complete().  For anything else, it's
+> > something else that probably doesn't even exist, yet.  See "Problem 5:
+> > QOM lacks a clear life cycle" in
+> > 
+> >     Subject: Dynamic & heterogeneous machines, initial configuration: problems
+> >     Date: Wed, 31 Jan 2024 21:14:21 +0100
+> >     Message-ID: <87o7d1i7ky.fsf@pond.sub.org>
+> >     https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
+> 
+> The major challenge here might be that, in migration's use case we want to
+> do something after the last refcount is released.
 
-I'm less worried about hitting this cycle for this than the Generic Port
-work but this is the missing piece for ensuring we can test the kernel
-code that builds NUMA description for CXL devices. I'd like to have
-the full solution for that upstream.
+This is rather a strange idea, and feels back to front. An object's last
+refcount must never be released until code has entirely finished using
+the object.
 
-The bulk of this is a refactor with functional changes limited to
-the CXL components.
+> IOW, I don't yet see an easy way to explicit do qdev_unrealize() (even if
+> migration object will use realize(), while it doesn't yet..), because there
+> can be more than one thread holding refcount of the object, and we don't
+> know where to invoke it, and we don't want to do the cleanup if the other
+> one still holds a refcount.
 
-Jonathan
+This sounds like the code is missing some synchronization mechanism
+beween the threads, which need to communicate with each other when
+they are "done", so that the "primary" thread can then finally
+release any resources.
 
+> Maybe I can also try do that with a "magic property" with its set/get, as
+> that's indeed the other hook (basically, object_property_del_all()) that is
+> only invoked after the final refcount is released.  However I think we
+> still need the singleton idea somehow..
 
-On Mon, 16 Sep 2024 18:35:12 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+Based on the description above it feels like the problem is outside
+of QOM, around the lack of synchronization across threads.
 
-> Changes since RFC:
-> - rebase
-> 
-> Question:
-> - I could enable this for all PCIe device (including ports).
->   Does that makes sense, or is it better to limit this to my cases?
->   It is quite easy to build broken setups (downstream device reports
->   faster link than the port etc) because QEMU 'link' training' is
->   simplistic.  I'm not sure it is worth making it more clever.
-> 
-> The Generic Ports support added the ability to describe the bandwidth and
-> Latency within a host to a CXL host bridge.  To be able to test the of the
-> discovery path used by Linux [1] we also need to be able to create
-> bottlenecks at difference places in the topology. There are two parts to
-> this
-> * CXL link characteristics as described by PCI Express Capability Link
->   status etc.
-> * Bandwidth and latency across CXL Switches (via CDAT data from the switch
->   USP)
-> * Bandwidth and latency from the CXL type 3 device port to the actual
->   memory (Via CDAT data from the EP).
-> 
-> Currently we have fixed values for the CXL CDAT tables, and to test this
-> I recommend changing those as per the patch at the end of this cover letter
-> (so they aren't always the bottleneck). Making those configurable will be
-> handled in a future patch set.
-> 
-> RFC has a set of examples but those were to help testing the kernel code
-> rather than providing much info for QEMU review so I haven't repeated
-> them ehre.
-> 
-> https://lore.kernel.org/qemu-devel/20240712122414.1448284-1-Jonathan.Cameron@huawei.com/
-> 
-> Jonathan Cameron (6):
->   hw/pci-bridge/cxl_root_port: Provide x-speed and x-width properties.
->   hw/pci-bridge/cxl_upstream: Provide x-speed and x-width properties.
->   hw/pcie: Factor out PCI Express link register filling common to EP.
->   hw/pcie: Provide a utility function for control of EP / SW USP link
->   hw/mem/cxl-type3: Add properties to control link speed and width
->   hw/pci-bridge/cxl-upstream: Add properties to control link speed and
->     width
-> 
->  include/hw/cxl/cxl_device.h               |   4 +
->  include/hw/pci-bridge/cxl_upstream_port.h |   4 +
->  include/hw/pci/pcie.h                     |   2 +
->  hw/mem/cxl_type3.c                        |   6 ++
->  hw/pci-bridge/cxl_downstream.c            |  23 +++--
->  hw/pci-bridge/cxl_root_port.c             |   5 ++
->  hw/pci-bridge/cxl_upstream.c              |   6 ++
->  hw/pci/pcie.c                             | 105 ++++++++++++++--------
->  8 files changed, 103 insertions(+), 52 deletions(-)
-> 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
