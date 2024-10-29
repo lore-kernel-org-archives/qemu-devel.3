@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BBDD2AB01
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 09:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BDAED2AB08
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 09:19:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5iMk-0000ld-NZ; Tue, 29 Oct 2024 05:18:18 -0400
+	id 1t5iMh-0000ho-Ii; Tue, 29 Oct 2024 05:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t5iMX-0000cX-TZ; Tue, 29 Oct 2024 05:18:07 -0400
+ id 1t5iMM-0000aR-Io; Tue, 29 Oct 2024 05:17:54 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t5iMW-0003A3-8N; Tue, 29 Oct 2024 05:18:05 -0400
+ id 1t5iMJ-0003A3-SA; Tue, 29 Oct 2024 05:17:53 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 29 Oct
- 2024 17:17:32 +0800
+ 2024 17:17:31 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 29 Oct 2024 17:17:32 +0800
+ Transport; Tue, 29 Oct 2024 17:17:31 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -34,10 +34,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 8/8] aspeed: Support create flash devices via command line
- for AST1030
-Date: Tue, 29 Oct 2024 17:17:29 +0800
-Message-ID: <20241029091729.3317512-9-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 5/8] hw/sd/sdhci: Introduce a new Write Protected pin
+ inverted property
+Date: Tue, 29 Oct 2024 17:17:26 +0800
+Message-ID: <20241029091729.3317512-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241029091729.3317512-1-jamin_lin@aspeedtech.com>
 References: <20241029091729.3317512-1-jamin_lin@aspeedtech.com>
@@ -69,50 +69,60 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a "if-statement" in aspeed_minibmc_machine_init function. If users add
-"-nodefaults" in command line, the flash devices should be created by users
-setting. Otherwise, the flash devices are created at machine init.
+The Write Protect pin of SDHCI model is default active low to match the SDHCI
+spec. So, write enable the bit 19 should be 1 and write protected the bit 19
+should be 0 at the Present State Register (0x24). However, some board are
+design Write Protected pin active high. In other words, write enable the bit 19
+should be 0 and write protected the bit 19 should be 1 at the
+Present State Register (0x24). To support it, introduces a new "wp_invert"
+property and set it false by default.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ hw/sd/sdhci.c         | 6 ++++++
+ include/hw/sd/sdhci.h | 5 +++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 0468602d95..e161e6b1c5 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1602,18 +1602,20 @@ static void aspeed_minibmc_machine_init(MachineState *machine)
-     connect_serial_hds_to_uarts(bmc);
-     qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index db7d547156..bdf5cbfb80 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -275,6 +275,10 @@ static void sdhci_set_readonly(DeviceState *dev, bool level)
+ {
+     SDHCIState *s = (SDHCIState *)dev;
  
--    aspeed_board_init_flashes(&bmc->soc->fmc,
--                              bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
--                              amc->num_cs,
--                              0);
-+    if (defaults_enabled()) {
-+        aspeed_board_init_flashes(&bmc->soc->fmc,
-+                            bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
-+                            amc->num_cs,
-+                            0);
- 
--    aspeed_board_init_flashes(&bmc->soc->spi[0],
--                              bmc->spi_model ? bmc->spi_model : amc->spi_model,
--                              amc->num_cs, amc->num_cs);
-+        aspeed_board_init_flashes(&bmc->soc->spi[0],
-+                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
-+                            amc->num_cs, amc->num_cs);
- 
--    aspeed_board_init_flashes(&bmc->soc->spi[1],
--                              bmc->spi_model ? bmc->spi_model : amc->spi_model,
--                              amc->num_cs, (amc->num_cs * 2));
-+        aspeed_board_init_flashes(&bmc->soc->spi[1],
-+                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
-+                            amc->num_cs, (amc->num_cs * 2));
++    if (s->wp_invert) {
++        level = !level;
 +    }
++
+     if (level) {
+         s->prnsts &= ~SDHC_WRITE_PROTECT;
+     } else {
+@@ -1551,6 +1555,8 @@ static Property sdhci_sysbus_properties[] = {
+                      false),
+     DEFINE_PROP_LINK("dma", SDHCIState,
+                      dma_mr, TYPE_MEMORY_REGION, MemoryRegion *),
++    DEFINE_PROP_BOOL("wp-invert", SDHCIState,
++                     wp_invert, false),
+     DEFINE_PROP_END_OF_LIST(),
+ };
  
-     if (amc->i2c_init) {
-         amc->i2c_init(bmc);
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index 6cd2822f1d..d68f4788e7 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -100,6 +100,11 @@ struct SDHCIState {
+     uint8_t sd_spec_version;
+     uint8_t uhs_mode;
+     uint8_t vendor;        /* For vendor specific functionality */
++    /*
++     * Write Protect pin default active low for detecting SD card
++     * to be protected. Set wp_invert to true inverted the signal.
++     */
++    bool wp_invert;
+ };
+ typedef struct SDHCIState SDHCIState;
+ 
 -- 
 2.34.1
 
