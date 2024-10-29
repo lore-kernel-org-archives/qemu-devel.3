@@ -4,80 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1282D3A699
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 20:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D97D3A699
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Oct 2024 20:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5sjn-0003hh-Om; Tue, 29 Oct 2024 16:22:47 -0400
+	id 1t5swE-00065D-8s; Tue, 29 Oct 2024 16:35:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5sjl-0003hG-VC
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:22:45 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5swC-00064y-Qw
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:35:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5sjj-0001d2-QO
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:22:45 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t5swA-0003Ev-Kq
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 16:35:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730233361;
+ s=mimecast20190719; t=1730234132;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=I+Onz6IjTTzjIjp+XvTzR9Tz5Twl+EL1x6odngjGIds=;
- b=ISkx2S6nAvLwTqx8jTs3BQ0meTPjDzOPt51zTcl4W/wINm31qlW8RofSD/Ga0F3PLJSQVv
- ovvfyZJYWUxY+WvqbkR+31p0FTkA2uuXw0mp6qtxA/2yP1aO2h9rKBsB8NabD9IhRXfhU3
- W5BffzDAtdGMZDgT9IvUFVnPmo7v/m4=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+GzwjzWPUoQYDM3pqnwqrbMw+r1C8GBJWqD9OzRRt14=;
+ b=iowJeyZVS5viZTrmovqgvSVXFTpbiqqYxv1dFtKKb50nUqXOovy2yl4OJUwYuoY7y/vC5G
+ rDaOZ+f8l/yP3DRz9ukqOFrQEz9JLtu1C9uRqA90n38tZ/fIaSfTo3mXKtplMtSz4x3M0P
+ dSXlZbfRp310KruCvmjbw/A5+WST9AY=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-354-8jaM0QJKPumcSqBSSNSx8w-1; Tue, 29 Oct 2024 16:22:39 -0400
-X-MC-Unique: 8jaM0QJKPumcSqBSSNSx8w-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-460a9b67fadso89013361cf.3
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 13:22:39 -0700 (PDT)
+ us-mta-218-d7R2A1hpMLCHIQAlLhrMOw-1; Tue, 29 Oct 2024 16:35:31 -0400
+X-MC-Unique: d7R2A1hpMLCHIQAlLhrMOw-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7b1473a4640so79972385a.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 13:35:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730233358; x=1730838158;
+ d=1e100.net; s=20230601; t=1730234131; x=1730838931;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I+Onz6IjTTzjIjp+XvTzR9Tz5Twl+EL1x6odngjGIds=;
- b=szDJP+OUEXQ8KgOYPv3/TQqLQd8JHlAU6eZXBtbnaP9lXTxTT79MY/9driSLXl79Te
- vSmuB8za4sbZkg3EMhJEQgP+qQrD7TUwHe0IO4rtORalzIfySWCppnu7ayOQPyBhG8gu
- ENcinVZW0HwpMA+ghKT7ONcx359z82HYiU5T1oSU5RUZ8w9i35PigSDjWNsx44MqR0fR
- eERoz6mM5UNnYwhIyQVyMl8bqkuYDciOsQPIIoFoQ7k5hpS0klowRxIobpSkS21iTagE
- x74SEhGH80aiIIPPTLCddabc8rTqgbGKgW4NtCRcD84tzocPfBvD7DZ07rfslsGFI7Lz
- PlWA==
-X-Gm-Message-State: AOJu0YxIiQapbyZDLTrhGRgo398eq4MKIeysfq8yEGoOHCOCPnZjaUd5
- eA2BBFCS70mW0Jf0GeG/Ek3N02TADHRwIJGBTL53ULA7lc0l8DKpAa7+inGc3zJlatAfCMKiPsR
- BzqvfLzaXEXl3FRC8qsb69QK+MK+jz9C/UFZdhu7lPXged2Jiim0KTMAwXjE4uolz7u1JoZucGO
- N4mJJqEqllTJXid+Uut9A1zNAIEWn0XzhHRw==
-X-Received: by 2002:a05:622a:1490:b0:45e:f2df:2ed3 with SMTP id
- d75a77b69052e-4613c047c88mr158365361cf.32.1730233358089; 
- Tue, 29 Oct 2024 13:22:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGExOKCXHJ/0WxNbDnPzXxQ7gu5QiuCtTvuZ49SGoS8W8US+cLGG/64FEbTB55nWMklGpXkUQ==
-X-Received: by 2002:a05:622a:1490:b0:45e:f2df:2ed3 with SMTP id
- d75a77b69052e-4613c047c88mr158365121cf.32.1730233357667; 
- Tue, 29 Oct 2024 13:22:37 -0700 (PDT)
+ bh=+GzwjzWPUoQYDM3pqnwqrbMw+r1C8GBJWqD9OzRRt14=;
+ b=OuhxJt49OixJmM9ESQHCgOHUPTjR592rJuOE3PR/vJVsGi3rtw6tb7Ec26yerh5kQ8
+ HOBFpg+tMsPCN/QrERys2tjBdNN9tMAGFXUruFBnOZErAg7jeLJyWphiMstoPyq4wvKO
+ +mb3ZtpNRSK7KQFfy1oUNF6Zzqom7Pd3CuLQtdu9a2w+sOG6N/d3J2l5Yv2hrZLHIQ9x
+ pAHP43OmMMbj2XE72GCs+ud9mf6rFt+XBW7dfloY17eqO8apo3uXn+PXDoUtnH4i5IC0
+ PLUxSZ0jfDT0oogmHj459A8X2eWlhKiaR+Qk+Aof8e2OrUQmUYd4DugMbCICLqvqi6Ij
+ I6vA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5L2RwBSlzwSxGPAGR1yPy/VZcbgNbDBbNRMXKZxTr0b9ubv6aY7JH2Te0nx3dtDYbKJjp69NB/dz3@nongnu.org
+X-Gm-Message-State: AOJu0YyAIpfFQlV0n6HXN04RRmGvCGdArG6ipTf3JAt+SvV2+TN3ER8o
+ wfnZ/yL4DoFPHHC6hFd7ByoKjP8oNd6nKn270rknixraocON4bPlzvAFnxEyJtRubv2Amo1iyy0
+ 07OwH6kJHZpsNfr6orOWmZV1J4a7lpUigWBgc8/dJmATQmiAFXRJW
+X-Received: by 2002:a05:620a:45a0:b0:7b1:49cb:5852 with SMTP id
+ af79cd13be357-7b1b06a234bmr4942485a.32.1730234130679; 
+ Tue, 29 Oct 2024 13:35:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHLDX09YGNmTMkE6rlOAnq1/A9FsgoFZi2vkb8lt6Att0o81AohZucq3Cc7vDj1lgKTOGGulw==
+X-Received: by 2002:a05:620a:45a0:b0:7b1:49cb:5852 with SMTP id
+ af79cd13be357-7b1b06a234bmr4940285a.32.1730234130375; 
+ Tue, 29 Oct 2024 13:35:30 -0700 (PDT)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4613211a228sm47697811cf.19.2024.10.29.13.22.36
+ af79cd13be357-7b18d2aaeb5sm449957485a.63.2024.10.29.13.35.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2024 13:22:37 -0700 (PDT)
-Date: Tue, 29 Oct 2024 16:22:35 -0400
+ Tue, 29 Oct 2024 13:35:29 -0700 (PDT)
+Date: Tue, 29 Oct 2024 16:35:28 -0400
 From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Avihai Horon <avihaih@nvidia.com>,
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>
-Subject: Re: [PATCH v3 0/8] Migration: Make misc.h helpers available for
- whole VM lifecycle
-Message-ID: <ZyFECyaVpNwfnPiI@x1n>
-References: <20241024213056.1395400-1-peterx@redhat.com>
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 4/4] migration: Document the BQL behavior of load
+ SaveVMHandlers
+Message-ID: <ZyFHEOVShZUp-RvO@x1n>
+References: <cover.1730203967.git.maciej.szmigiero@oracle.com>
+ <6976f129df610c8207da4e531c8c0475ec204fa4.1730203967.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241024213056.1395400-1-peterx@redhat.com>
+In-Reply-To: <6976f129df610c8207da4e531c8c0475ec204fa4.1730203967.git.maciej.szmigiero@oracle.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -103,75 +108,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 24, 2024 at 05:30:48PM -0400, Peter Xu wrote:
-> Based-on: <20241024165627.1372621-1-peterx@redhat.com>
-> CI:       https://gitlab.com/peterx/qemu/-/pipelines/1511349805
+On Tue, Oct 29, 2024 at 03:58:16PM +0100, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> This is a follow up of below patch from Avihai as a replacement:
+> Some of these SaveVMHandlers were missing the BQL behavior annotation,
+> making people wonder what it exactly is.
 > 
-> https://lore.kernel.org/qemu-devel/20241020130108.27148-3-avihaih@nvidia.com/
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> ---
+>  include/migration/register.h | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> This is v3 of the series, and it happened again: changelog doesn't make
-> sense to compare to v2 because it's rewritten.  Meanwhile, now this series
-> is based on the other TYPE_SINGLETON series I posted just now:
-> 
-> https://lore.kernel.org/r/20241024165627.1372621-1-peterx@redhat.com
-> 
-> It turns out I found more things to cleanup, as the versions spin up.
-> 
-> Patch 1:     I found that object_ref() in migration thread is actually also
->              racy..  this should fix it.
-> 
-> Patch 2-7:   It turns out I decided to clean things up first, then it'll
->              make my last patch easier on adding the mutex protection for
->              the current_migration reference
-> 
-> Patch 8:     The fix for NULL-dereference / race for the exported
->              functions.  VFIO can hit it only because VFIO's specialty
->              in using migration helpers in vmstate handlers, I guess.  I
->              found most functions always safe because even if they're used
->              outside migration/ they're most likely still invoked with
->              migration thread context.  So I found only two functions that
->              really need protections, exactly what VFIO is using.
+> diff --git a/include/migration/register.h b/include/migration/register.h
+> index f60e797894e5..c411d84876ec 100644
+> --- a/include/migration/register.h
+> +++ b/include/migration/register.h
+> @@ -210,6 +210,8 @@ typedef struct SaveVMHandlers {
+>      void (*state_pending_exact)(void *opaque, uint64_t *must_precopy,
+>                                  uint64_t *can_postcopy);
+>  
+> +    /* This runs inside the BQL. */
+> +
+>      /**
+>       * @load_state
+>       *
+> @@ -227,6 +229,8 @@ typedef struct SaveVMHandlers {
+>       */
+>      int (*load_state)(QEMUFile *f, void *opaque, int version_id);
+>  
+> +    /* The following handlers run inside the BQL. */
 
-I queued patch 1-5.
+If above also requires BQL, why not move this line upper?
 
-Ideally 6+7 can be a single patch, then we don't need to move DEVICE into
-migration_is_active() at all.  Also that might break VFIO as Avihai pointed
-out on VGA sync.  Avihai, I'd still appreciate if you could consider look
-at vfio to behave like what kvm/vhost/.. is doing, by accepting log_sync()
-before log_start().
+OTOH, I think resume_prepare() doesn't require BQL..
 
-Patch 8 still rely on singleton series, which will become rfc to be
-reposted, so probably no rush on that.
-
-> 
-> Comments welcomed, thanks.
-> 
-> Peter Xu (8):
->   migration: Take migration object refcount earlier for threads
->   migration: Unexport dirty_bitmap_mig_init()
->   migration: Unexport ram_mig_init()
->   migration: Drop migration_is_setup_or_active()
->   migration: Drop migration_is_idle()
->   migration: Drop migration_is_device()
->   migration: Unexport migration_is_active()
->   migration: Protect updates to current_migration with a mutex
-> 
->  include/migration/misc.h |  11 +---
->  migration/migration.h    |   8 +++
->  migration/ram.h          |   1 +
->  hw/vfio/common.c         |   6 +-
->  hw/virtio/virtio-mem.c   |   2 +-
->  migration/migration.c    | 118 +++++++++++++++++++--------------------
->  migration/ram.c          |   7 +--
->  net/vhost-vdpa.c         |   3 +-
->  system/dirtylimit.c      |   3 +-
->  system/qdev-monitor.c    |   4 +-
->  10 files changed, 81 insertions(+), 82 deletions(-)
-> 
-> -- 
-> 2.45.0
+> +
+>      /**
+>       * @load_setup
+>       *
 > 
 
 -- 
