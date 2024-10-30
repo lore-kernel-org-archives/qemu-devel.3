@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10DA4D6B6C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 19:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9468D6B6DA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 22:47:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6EbS-0002ar-GE; Wed, 30 Oct 2024 15:43:38 -0400
+	id 1t6HSd-0003bJ-NV; Wed, 30 Oct 2024 18:46:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6EbP-0002ag-Br
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 15:43:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6EbI-0004OE-U5
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 15:43:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730317407;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=snPQo/q0D2hJ7gxDH09kDwj+hKYA7cXpGbhPP/Yz29o=;
- b=VQ1RXyU6qji01N+VfY/jL458MEfXxsSnk194GY4FfXHqjAma74Q5VCNXY25qNdO6l9M386
- Ka0fvj9ZHEGm6XApefg5jw8u5CjMIMWl6V2JLcYZmaT6cnq6k2oGZm+PLBCxFpAUv0XL57
- yNo81TjDjA1DI5MZ71nU9nsFgBcgSmQ=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-VxX3c16sOvWOZwixBZ7sxw-1; Wed, 30 Oct 2024 15:43:24 -0400
-X-MC-Unique: VxX3c16sOvWOZwixBZ7sxw-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-460a85907b7so3760751cf.0
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 12:43:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t6HSZ-0003am-NI
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 18:46:40 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t6HSY-0007MQ-5O
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 18:46:39 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-7ea68af2f62so328845a12.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 15:46:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730328393; x=1730933193; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2579xJtxKaAkYw3IpR8jJ1sJ06OcM1BYTUKIrYbMtts=;
+ b=MRvR/33RAl+9zngTE6YwDjHZ1RdHorg1iP9+FIIaJfKAAMUnh9HSoFjuyLt3nvmzKx
+ c5rfcxX2L5G0Rsq38XFuJqSHh6yyEWylwJmtgv2NGQMpXEPFsinWJm801Mce6vcmDrQY
+ EfL80KzJd7t/cBEmzJRp6EDYfJxi79sobdgXlDVg8JouKrOL9FV0Xgt7Q5Tx9lONMP/K
+ YMlhZBL3WY2tgBDGq34wa3ADVhMH4M1Q8rrE5L43/8mxKAyFJkxcnb2fBLEGDzdGuWXy
+ ae6j0FI4u3aJhWAQ5kbihZ+2PG/pvsbkwTE6Z6PYvHFcqCGbeBO9rGGNLM5birkAqPUL
+ VjBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730317403; x=1730922203;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1730328393; x=1730933193;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=snPQo/q0D2hJ7gxDH09kDwj+hKYA7cXpGbhPP/Yz29o=;
- b=mwJMBmhB/948qVk3FqX+6N+RXnnfADarCldrsULzhAi4tAOdJc/onoTur4N/duthF/
- kvfuvEGgFnyMgXOZh3K8FYOxY/+Tw39Qa78/pWwRukHQrERDsFc/xnw+W/whWuD9UJdO
- kbYTkmbO5PCsAJ/f7z2ina3HGA9HKq20tthMzL9zBA4W3/0mlklD5/oVj750r8Na8eGb
- 3cX7NHL963HByunck6z8RCD26ZwrZ/tcyOHdvbesV8ThYBxZx0VuVtebXa8fxNiI1EkO
- qC904lNuIvFYgCu7QDYNUMevJvivnQMeEesqAEY9aLbPThpdIpRcJGNo9LgwStm4+TRA
- rhiw==
-X-Gm-Message-State: AOJu0Yxh6p3mRjykq2ejCmvSFzenaA+MQ7oSmko5Cr7Os61sYrNCRs2h
- aZlXISq+pkwEk9OdZVQWPBk9mW6BERsEn9sTdltIeBW32OapgV6/1012/S4NlNGexMlqdwDUffw
- KDN914EBbZNpZyWBEHa25RmzlGu5mYB9n5kbg++xU/aUaDgDyayBT
-X-Received: by 2002:ac8:5742:0:b0:460:a825:636c with SMTP id
- d75a77b69052e-4613bff0d99mr282931271cf.14.1730317403353; 
- Wed, 30 Oct 2024 12:43:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH97O8Xruv3M/HOobDzT9v3XZOzfUbOim9WXh9YQAAOZP3FrAgGjV7VRhuLGeN8/yPZU3CPCQ==
-X-Received: by 2002:ac8:5742:0:b0:460:a825:636c with SMTP id
- d75a77b69052e-4613bff0d99mr282930891cf.14.1730317402906; 
- Wed, 30 Oct 2024 12:43:22 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46132142c60sm57630431cf.33.2024.10.30.12.43.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 12:43:21 -0700 (PDT)
-Date: Wed, 30 Oct 2024 15:43:19 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH RFC 2/2] migration: Avoid doing RAMBlock dirty sync in
- the initial iteration
-Message-ID: <ZyKMVxuJyb3SZXkj@x1n>
-References: <cover.1729648695.git.yong.huang@smartx.com>
- <76f0ea57ac7f4c2a68203d17fec1c34bb3d16a4a.1729648695.git.yong.huang@smartx.com>
- <ZyELi_ax8zM_kFbZ@x1n>
- <CAK9dgmZ_++jEmhRfO9QR3WQFs18AwUnvn=_dTyfUnv5PHXYBYA@mail.gmail.com>
+ bh=2579xJtxKaAkYw3IpR8jJ1sJ06OcM1BYTUKIrYbMtts=;
+ b=w/H/KpQOgTdRiOFZD9UJZg77Y+SJtMdr1fbKmb62floDnIUT71EB17Lwjoj6LiSgSp
+ meG8xwYtyWzhqFPDnU/wFO19ijv/Yy7Z0k/iXQXTGSLig1fD4n5InbwY/kMuzGndvfoN
+ okc2xeIGyjC931eU8g9vBEtvGH4dyjm6E9u0TiVGvJ+WSzTmZwZlrJvNcCddmD6uRilW
+ w7/zCtjPBNgIXRUYnrnKED+b4jl7peundR6ZP/aqapJkX8qJQ/ZuNjEjTHuUz7pz5e4g
+ zoDWqK4+tXNpT94/7ZEDfzqRTe94NAlJtGXbZhuVJHBL02+P2bzp2k1zUtKhVBjDsPik
+ 8fLw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUD+0g55GyOI7AvMZP6pWt91y9kaDiSCcZA8iwPsqtEY2K4vXlS+zyjnKDRzdDGoGW5GWseDZPBnqoE@nongnu.org
+X-Gm-Message-State: AOJu0YyeYVo73SNS/4fCWBU0u9hedbBIsBCnF7dDzQPfwHR31awZ3zCD
+ DkRYsa4ASaP8ScEkWDwzatzN9jaXFbx26+q5aFB/D2Bp1utIZhZlvByu53yKJ5w=
+X-Google-Smtp-Source: AGHT+IHAqxvJqWmKwNFQz4MFGLNQwPeFlv4IlQj6W4lecHgNYCTGFwwPnDSuV8DJlAMRwV2RjUzrDQ==
+X-Received: by 2002:a05:6a20:c998:b0:1d8:a3ab:720d with SMTP id
+ adf61e73a8af0-1d9a81c64abmr23746609637.0.1730328392877; 
+ Wed, 30 Oct 2024 15:46:32 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-720bc31c5cdsm143599b3a.211.2024.10.30.15.46.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 30 Oct 2024 15:46:32 -0700 (PDT)
+Message-ID: <01f61fd9-d46d-48bd-bc2c-4b3cb78ac17c@linaro.org>
+Date: Wed, 30 Oct 2024 15:46:31 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAK9dgmZ_++jEmhRfO9QR3WQFs18AwUnvn=_dTyfUnv5PHXYBYA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/9] target/mips: Extract decode_64bit_enabled() helper
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>
+References: <20241026175349.84523-1-philmd@linaro.org>
+ <20241026175349.84523-2-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20241026175349.84523-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,141 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 30, 2024 at 10:09:38AM +0800, Yong Huang wrote:
-> On Wed, Oct 30, 2024 at 12:21 AM Peter Xu <peterx@redhat.com> wrote:
-> 
-> > On Wed, Oct 23, 2024 at 10:09:51AM +0800, yong.huang@smartx.com wrote:
-> > > From: Hyman Huang <yong.huang@smartx.com>
-> > >
-> > > KVM always returns 1 when userspace retrieves a dirty bitmap for
-> > > the first time when KVM_DIRTY_LOG_INITIALLY_SET is enabled; in such
-> > > scenario, the RAMBlock dirty sync of the initial iteration can be
-> > > skipped.
-> > >
-> > > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-> > > ---
-> > >  migration/cpu-throttle.c |  3 ++-
-> > >  migration/ram.c          | 30 +++++++++++++++++++++++++++---
-> > >  2 files changed, 29 insertions(+), 4 deletions(-)
-> > >
-> > > diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
-> > > index 342681cdd4..06e3b1be78 100644
-> > > --- a/migration/cpu-throttle.c
-> > > +++ b/migration/cpu-throttle.c
-> > > @@ -27,6 +27,7 @@
-> > >  #include "hw/core/cpu.h"
-> > >  #include "qemu/main-loop.h"
-> > >  #include "sysemu/cpus.h"
-> > > +#include "sysemu/kvm.h"
-> > >  #include "cpu-throttle.h"
-> > >  #include "migration.h"
-> > >  #include "migration-stats.h"
-> > > @@ -141,7 +142,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaque)
-> > >       * effect on guest performance, therefore omit it to avoid
-> > >       * paying extra for the sync penalty.
-> > >       */
-> > > -    if (sync_cnt <= 1) {
-> > > +    if (sync_cnt <= (kvm_dirty_log_manual_enabled() ? 0 : 1)) {
-> > >          goto end;
-> > >      }
-> > >
-> > > diff --git a/migration/ram.c b/migration/ram.c
-> > > index d284f63854..b312ebd69d 100644
-> > > --- a/migration/ram.c
-> > > +++ b/migration/ram.c
-> > > @@ -2718,7 +2718,7 @@ static void ram_list_init_bitmaps(void)
-> > >  {
-> > >      MigrationState *ms = migrate_get_current();
-> > >      RAMBlock *block;
-> > > -    unsigned long pages;
-> > > +    unsigned long pages, clear_bmap_pages;
-> > >      uint8_t shift;
-> > >
-> > >      /* Skip setting bitmap if there is no RAM */
-> > > @@ -2736,6 +2736,7 @@ static void ram_list_init_bitmaps(void)
-> > >
-> > >          RAMBLOCK_FOREACH_NOT_IGNORED(block) {
-> > >              pages = block->max_length >> TARGET_PAGE_BITS;
-> > > +            clear_bmap_pages = clear_bmap_size(pages, shift);
-> > >              /*
-> > >               * The initial dirty bitmap for migration must be set with
-> > all
-> > >               * ones to make sure we'll migrate every guest RAM page to
-> > > @@ -2751,7 +2752,17 @@ static void ram_list_init_bitmaps(void)
-> > >                  block->file_bmap = bitmap_new(pages);
-> > >              }
-> > >              block->clear_bmap_shift = shift;
-> > > -            block->clear_bmap = bitmap_new(clear_bmap_size(pages,
-> > shift));
-> > > +            block->clear_bmap = bitmap_new(clear_bmap_pages);
-> > > +            /*
-> > > +             * Set the clear bitmap by default to enable dirty logging.
-> > > +             *
-> > > +             * Note that with KVM_DIRTY_LOG_INITIALLY_SET, dirty logging
-> > > +             * will be enabled gradually in small chunks using
-> > > +             * KVM_CLEAR_DIRTY_LOG
-> > > +             */
-> > > +            if (kvm_dirty_log_manual_enabled()) {
-> > > +                bitmap_set(block->clear_bmap, 0, clear_bmap_pages);
-> > > +            }
-> >
-> > Why it needs to be relevant to whether DIRTY_LOG is enabled?
-> >
-> > I wonder if we should always set clear_bmap to 1 unconditionally, as we
-> > always set bmap to all 1s by default.
-> >
-> 
-> OK, this works. We can drop it.
-> 
-> 
-> >
-> > Then we skip sync always during setup, dropping patch 1.
-> >
-> 
-> IIUC, KVM initializes the slot->dirty_bitmap with 1 only when
-> KVM_DIRTY_LOG_INITIALLY_SET is enabled, 0 otherwize.
-> This means that if KVM does not support the
-> KVM_DIRTY_LOG_INITIALLY_SET feature, userspace should
-> do the first sync so that KVM could set the WP bit and clear
-> the D-bit of the PTE.
-> 
-> Skipping first sync could handle this scenario?
-
-Yes, the old kernels could be tricky (!CLEAR_LOG support), but I hope it's
-also working.
-
-The thing is log_start() should also protect all pages if that's the case.
-For x86, that should corresponds to:
-
-kvm_mmu_slot_apply_flags():
-
-		/*
-		 * Initially-all-set does not require write protecting any page,
-		 * because they're all assumed to be dirty.
-		 */
-		if (kvm_dirty_log_manual_protect_and_init_set(kvm))
-			return;
-
-		if (READ_ONCE(eager_page_split))
-			kvm_mmu_slot_try_split_huge_pages(kvm, new, PG_LEVEL_4K);
-
-		if (kvm_x86_ops.cpu_dirty_log_size) {
-			kvm_mmu_slot_leaf_clear_dirty(kvm, new);
-			kvm_mmu_slot_remove_write_access(kvm, new, PG_LEVEL_2M);
-		} else {
-			kvm_mmu_slot_remove_write_access(kvm, new, PG_LEVEL_4K);
-		}
-
-In general, I think even if GET_DIRTY_LOG in setup() is omitted, all pages
-should still be wr-protected already right after log_start().  Then follow
-up log_clear()s will be noop, until the next sync which will reprotect
-every page again.
-
-Please double check.
-
-Thanks,
-
--- 
-Peter Xu
-
+T24gMTAvMjYvMjQgMTA6NTMsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPiBF
+eHRyYWN0IHRoZSBkZWNvZGVfNjRiaXRfZW5hYmxlZCgpIGhlbHBlciB3aGljaCBkZXRlY3Rz
+DQo+IHdoZXRoZXIgQ1BVcyBjYW4gcnVuIDY0LWJpdCBpbnN0cnVjdGlvbnMuDQo+IA0KPiBT
+aWduZWQtb2ZmLWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFyby5v
+cmc+DQo+IC0tLQ0KPiAgIHRhcmdldC9taXBzL3RjZy90cmFuc2xhdGUuaCB8IDIgKysNCj4g
+ICB0YXJnZXQvbWlwcy90Y2cvdHJhbnNsYXRlLmMgfCA3ICsrKysrKy0NCj4gICAyIGZpbGVz
+IGNoYW5nZWQsIDggaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KPiANCj4gZGlmZiAt
+LWdpdCBhL3RhcmdldC9taXBzL3RjZy90cmFuc2xhdGUuaCBiL3RhcmdldC9taXBzL3RjZy90
+cmFuc2xhdGUuaA0KPiBpbmRleCA1ZDE5NmU2OWFjNC4uYWU2YzI1YWEwYzQgMTAwNjQ0DQo+
+IC0tLSBhL3RhcmdldC9taXBzL3RjZy90cmFuc2xhdGUuaA0KPiArKysgYi90YXJnZXQvbWlw
+cy90Y2cvdHJhbnNsYXRlLmgNCj4gQEAgLTIxNyw2ICsyMTcsOCBAQCB2b2lkIG1zYV90cmFu
+c2xhdGVfaW5pdCh2b2lkKTsNCj4gICB2b2lkIG14dV90cmFuc2xhdGVfaW5pdCh2b2lkKTsN
+Cj4gICBib29sIGRlY29kZV9hc2VfbXh1KERpc2FzQ29udGV4dCAqY3R4LCB1aW50MzJfdCBp
+bnNuKTsNCj4gICANCj4gK2Jvb2wgZGVjb2RlXzY0Yml0X2VuYWJsZWQoRGlzYXNDb250ZXh0
+ICpjdHgpOw0KPiArDQo+ICAgLyogZGVjb2RldHJlZSBnZW5lcmF0ZWQgKi8NCj4gICBib29s
+IGRlY29kZV9pc2FfcmVsNihEaXNhc0NvbnRleHQgKmN0eCwgdWludDMyX3QgaW5zbik7DQo+
+ICAgYm9vbCBkZWNvZGVfYXNlX21zYShEaXNhc0NvbnRleHQgKmN0eCwgdWludDMyX3QgaW5z
+bik7DQo+IGRpZmYgLS1naXQgYS90YXJnZXQvbWlwcy90Y2cvdHJhbnNsYXRlLmMgYi90YXJn
+ZXQvbWlwcy90Y2cvdHJhbnNsYXRlLmMNCj4gaW5kZXggZDkyZmM0MThlZGQuLjZjODgxYWY1
+NjE4IDEwMDY0NA0KPiAtLS0gYS90YXJnZXQvbWlwcy90Y2cvdHJhbnNsYXRlLmMNCj4gKysr
+IGIvdGFyZ2V0L21pcHMvdGNnL3RyYW5zbGF0ZS5jDQo+IEBAIC0xNjQ1LDEzICsxNjQ1LDE4
+IEBAIHN0YXRpYyBpbmxpbmUgdm9pZCBjaGVja19wcyhEaXNhc0NvbnRleHQgKmN0eCkNCj4g
+ICAgICAgY2hlY2tfY3AxXzY0Yml0bW9kZShjdHgpOw0KPiAgIH0NCj4gICANCj4gK2Jvb2wg
+ZGVjb2RlXzY0Yml0X2VuYWJsZWQoRGlzYXNDb250ZXh0ICpjdHgpDQo+ICt7DQo+ICsgICAg
+cmV0dXJuIGN0eC0+aGZsYWdzICYgTUlQU19IRkxBR182NDsNCj4gK30NCj4gKw0KPiAgIC8q
+DQo+ICAgICogVGhpcyBjb2RlIGdlbmVyYXRlcyBhICJyZXNlcnZlZCBpbnN0cnVjdGlvbiIg
+ZXhjZXB0aW9uIGlmIGNwdSBpcyBub3QNCj4gICAgKiA2NC1iaXQgb3IgNjQtYml0IGluc3Ry
+dWN0aW9ucyBhcmUgbm90IGVuYWJsZWQuDQo+ICAgICovDQo+ICAgdm9pZCBjaGVja19taXBz
+XzY0KERpc2FzQ29udGV4dCAqY3R4KQ0KPiAgIHsNCj4gLSAgICBpZiAodW5saWtlbHkoKFRB
+UkdFVF9MT05HX0JJVFMgIT0gNjQpIHx8ICEoY3R4LT5oZmxhZ3MgJiBNSVBTX0hGTEFHXzY0
+KSkpIHsNCj4gKyAgICBpZiAodW5saWtlbHkoKFRBUkdFVF9MT05HX0JJVFMgIT0gNjQpIHx8
+ICFkZWNvZGVfNjRiaXRfZW5hYmxlZChjdHgpKSkgew0KPiAgICAgICAgICAgZ2VuX3Jlc2Vy
+dmVkX2luc3RydWN0aW9uKGN0eCk7DQo+ICAgICAgIH0NCj4gICB9DQoNClJldmlld2VkLWJ5
+OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo=
 
