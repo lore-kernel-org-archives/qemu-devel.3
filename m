@@ -4,93 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BD56D5CCB4
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 14:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E9CCD5CCB4
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 14:45:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t69lu-0002Be-4t; Wed, 30 Oct 2024 10:34:06 -0400
+	id 1t69wQ-0004ow-3b; Wed, 30 Oct 2024 10:44:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhexu@redhat.com>) id 1t69ls-0002Au-Bt
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 10:34:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1t69wN-0004mi-Cd
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 10:44:56 -0400
+Received: from mail-bn8nam12on2052.outbound.protection.outlook.com
+ ([40.107.237.52] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhexu@redhat.com>) id 1t69lp-0003bp-R3
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 10:34:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730298838;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9rfkSaI8h+VjDobPhzXllw1GtNDVTbGeWvP+C1EcWH0=;
- b=OFy26s7cMG8zv9yWNMYGppHS96aTyE4vh5DTmVlFlI6+HE35F1QxCfq9aige8W796WTBUY
- mTX1Cvpb6yxVRZAesd+ltNkX1CUldilR0joBPSN//aV4KvctV3EFTxeePq5HIgWRB4Is8/
- BXDfKf7omZDbTV7GZcFHN1QTllR/T08=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-nNGWyPxcN1OAbgyjtmi-ig-1; Wed, 30 Oct 2024 10:33:57 -0400
-X-MC-Unique: nNGWyPxcN1OAbgyjtmi-ig-1
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-7ea69eeb659so5725921a12.0
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 07:33:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730298836; x=1730903636;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9rfkSaI8h+VjDobPhzXllw1GtNDVTbGeWvP+C1EcWH0=;
- b=C/lh9JBxupwPE3SGw7MNYJtztfjT2VKrxHinsmYgdirVa+GjiK7hVOGencAUnTfYx+
- zzLX3F+AZLOvgSBvxr1q7Kh1sYCfSG+tIh00YPXRhnQhQ1tkQn0opwwv68iGiE4OrwbO
- gP5qMOPGIlmbfEOLiESX/d/R3sPkV3U9PfFkJO+Z90+FD8tK1cuxUGstUG/TnftTetpJ
- txNi3k0tJPhiFVvNNrXdh8SRr+HdgCfnlesmzf5SRnr/RSdFqW2TkhojwhA/Fsswxr0Q
- KGjEmb38Gp6lgmWUIJXK86Cl9cN+NRe4vBN/Y0su64MJgJPNE/M8JXvtDFpZtN6LeDYN
- BOkA==
-X-Gm-Message-State: AOJu0YwUQvmRllbV7yeE5+auZrsV6bKu8Qm863f5BMgee1ju+sr6HJUa
- 1X3MZyuhsYoBJ6DYfv3tomcf1+rM702KFtDLUo7/1o19dZ7L+fn+64Qm7x42p812YWqcCcYiCv5
- nh9mEi10wPQ74jIOW2VYHQLhxS+MNIvZKkAX9zHzloPXxUPmmJf8xRH0u8KGJZITM4sUXxURFhn
- R49Glc7/zxa495YECNeD7VpzUhe84=
-X-Received: by 2002:a05:6a21:3941:b0:1d9:69cd:ae22 with SMTP id
- adf61e73a8af0-1d9a8431ab7mr16997836637.30.1730298835860; 
- Wed, 30 Oct 2024 07:33:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGh9fK6sY6tbHG8fyAgpnjOh4OONm6aLb72gxUx73cKaJPVhvPKYJwbi/DifSm/nSCuiF1pROXwOlN8hDdBAk0=
-X-Received: by 2002:a05:6a21:3941:b0:1d9:69cd:ae22 with SMTP id
- adf61e73a8af0-1d9a8431ab7mr16997793637.30.1730298835428; Wed, 30 Oct 2024
- 07:33:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1t69wK-0005As-MI
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 10:44:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PdpRKax8yucm60tHiklaDA78Kdgkt9ErGu0s01xT9GKk7qtN+abGaxQy/6TWe9AeThV3IuI0vkTp6dWpNTaRzm4Gyb3czz5WJuMQVjVG98l0zH6I3yLNUCON+uBZzZX6WTvPzuNpBOLG7+nSI//aWv8qzGrv/rJYGMJHzmev+kkn7BLo6rp35hkbVviuIAI9K3nvezMy44v5VJn58nfHoBIeD8Q6/xyvLYUOpK9ToVUx65IO0U3S/XmF+PWxjq646MK58kBSSBoIzCKoLQbtkgzMhgjJPPbpwXDl+2djTkUPW+kQZpy2wcKKkRJE55baMvfZ2LF1Rxe+9ukMOhA9gg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=txn3DqWSTcnRPpmFtwHqeSNrVgCTUHXBgMdr1Lm5lgQ=;
+ b=mFqCHwoJwzJJp2KHp3LnZC07OKLn/qWWJVSLvryaOhxmT+dyPCJLvEuAtZXLI0BZL1rMoXblnQYDOb0cuw7OHR0UE0eqJ/JXwL8pKiRorei8nxvob9KqaqlGVkuk9SZUejpxc6choqFO+5fJ/bznnZZZJyv5DFNDQ5SDsjskDYvuis1JDgOcQ5komLD5/GYn13CLBwtiKwC7Szfj3hkIFkPMw6VcReLJ67TqH6lnOETNLFGR5PF+SYlduZStOJeCgpr7YjluUgTAqTSA3MMbWX43gLHNPwMA+lypEMaBtGdPPkdVKCefXfzE3HJzggFi3LLNX9CgOp+x/jjafHmhkg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=txn3DqWSTcnRPpmFtwHqeSNrVgCTUHXBgMdr1Lm5lgQ=;
+ b=fy8cpVera7ztdtte+ewPhXDoCbSTGEgvXSMF7tUBjKuY5uUpZODcgw2zR4HMRhG5OphXcf/Vneg9ETOI85kNYTUiqaKIY5WDaAehG1hC7v0P9WSMFPuqvwDZL5nU581MYlDtYkPOppuSokoiJKYsZ7LXBTwVzRByM+AtKd/JKp3JoD7WZgmpy8D1pOAI2X+67Ab2kerpeNSFr/hfS+3bnBq9l/F7NdA1mbR97aUR4Qk2bMCVhNspFNInRLjX4BWnoDFvwBAhvwg1EDRlVGQWuoE2nuXTJz3Go8iw4qliGZoSmCS4Dkh22UcHP7xWI0/PauuHpH5fZ/15qEG2FVFD1w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
+ by SN7PR12MB8818.namprd12.prod.outlook.com (2603:10b6:806:34b::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.25; Wed, 30 Oct
+ 2024 14:39:46 +0000
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::e2a0:b00b:806b:dc91%6]) with mapi id 15.20.8093.027; Wed, 30 Oct 2024
+ 14:39:45 +0000
+Message-ID: <58146556-d3fa-4d8b-a1db-9bdc68168c78@nvidia.com>
+Date: Wed, 30 Oct 2024 16:39:39 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 7/8] migration: Unexport migration_is_active()
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20241024213056.1395400-1-peterx@redhat.com>
+ <20241024213056.1395400-8-peterx@redhat.com>
+ <78729b4b-3747-4408-8146-12d49e70fed1@nvidia.com> <Zx-xpZzYG_1KuCQu@x1n>
+ <4c6bb701-dd6d-4cca-be80-156c19f2a088@nvidia.com> <Zx_C0hrRZK34qc7I@x1n>
+ <a96a8f31-ef8d-48b5-999c-8ca8a917f3c1@nvidia.com> <Zx_gzdJ549ApAiBp@x1n>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <Zx_gzdJ549ApAiBp@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR0P281CA0193.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:ab::19) To DM6PR12MB5549.namprd12.prod.outlook.com
+ (2603:10b6:5:209::13)
 MIME-Version: 1.0
-References: <20241029211607.2114845-1-peterx@redhat.com>
- <20241029211607.2114845-6-peterx@redhat.com>
- <ZyILcz3XnwK0nRI8@redhat.com> <ZyIuD-SQA0Q2Sr7L@x1n>
- <ZyIvqQIzDq3JQNWW@redhat.com>
-In-Reply-To: <ZyIvqQIzDq3JQNWW@redhat.com>
-From: Peter Xu <peterx@redhat.com>
-Date: Wed, 30 Oct 2024 10:33:43 -0400
-Message-ID: <CADLectk-EyoMUD7j+mwwEVdUjMyKdJf0kwWUe8x0SyyO5Wb-uQ@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 5/7] x86/iommu: Make x86-iommu a singleton object
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Markus Armbruster <armbru@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
- Alex Williamson <alex.williamson@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000070fd550625b2975f"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=zhexu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|SN7PR12MB8818:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3772c29b-e535-430f-19d4-08dcf8f0b2d3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?ckY5TWRlQlNzT1BwVjVhWmJ4ckhXWXdoSlhjN0dLbW1QUmhZV0ZsZTI2b0Zy?=
+ =?utf-8?B?N0NyclRiV2RaeVVOVmM4bFRrVW1MK01jZlVlb1Z6UTAxMVk3bE9OejRzaytV?=
+ =?utf-8?B?RjgwTG5DbHJBL3Z2Y2xDUVN1NjhRK2NuajI5L013ZEdOQkZSUTdPeXIzMDVp?=
+ =?utf-8?B?RzM0S0pUZkFPN29od3FLbTZpbUtLUnNVTUVtUTRSVWYyQXh1dHJXZXNFTXVa?=
+ =?utf-8?B?WHBGSGQ4endvYm4waTQyK3hESUZ5V1d4aXo3Q21adWpBUVczSlBrdDdiWlhC?=
+ =?utf-8?B?dnc1eTlodENLaTJORmdmdEFWRWhTc1g0Y3Fpd3drOEFQME5JMk1CZXR1Qkp1?=
+ =?utf-8?B?ajhmSnhOc3FnYkdCRkwrUENxMDkzV2VYV3BLRmY3VWE1c0ZwTkN0SXVwRWlh?=
+ =?utf-8?B?eFJmZWw4WjRuWXh5WTVlK1ZYRFRlOFZIRHN0MGhWYlFsZjg0MnRGbXFrZk50?=
+ =?utf-8?B?SDg4aUI4THZ5QUVxd3hYdllNM01lc2pwdzczUCt4bVlZcGg4cEU4aGF4QWxC?=
+ =?utf-8?B?WmlGQy9lMFpwb1RHS1ZrWlQ2U056cmVRdG42R0I4TnpnaytWZEQxanVrcXlU?=
+ =?utf-8?B?V3IvZW15WnJBT2k4TDY4NktDNlM0c3JFV3ZsTTVWTFIxMTVJZS9TSFlUb3JI?=
+ =?utf-8?B?T0QvbGMyL0J1SzNrRENEcmI0WW1lVEhMc01VTEp1R1ZJRDRQL0Y3c1JEWTJk?=
+ =?utf-8?B?WWpmMklEd3FWdHBqRkNzREwyOG5uek5IczZaOXNudVU4R0t5YmozN0w1cWxM?=
+ =?utf-8?B?cGJuMFNvdTlCaERUTlU3dnluUzkreG16YWE1dTNJSlNhQzlxQjRNemN2a3B0?=
+ =?utf-8?B?NU5uRHFnSDhRekRtNGIzVEd1RVU5QzMreFVVdFR6N1IvWVJ5bUMzdHFkOFlm?=
+ =?utf-8?B?V293ZzRaeVFxa2FUaE53WnB1Z1BKVUVxL280YXJUalp2Tnp3RlAwUHFHN0Jk?=
+ =?utf-8?B?VWM1Q05hSG9sSUFNbWVNKzlOcm1WNUpveThNa3RNN3pJaWZoOHFyaXhSVXN3?=
+ =?utf-8?B?bml0YzRMRlh2YUNkRUppajJqOHJrYjBIMGM2UFVNRENRRG9EWituZWRFUmN6?=
+ =?utf-8?B?QXB2YTM0WGZ1T2hVVjNIK25vdXFYTFVVWnBHcm9aNkMycEY4dmhvVjNzbmJX?=
+ =?utf-8?B?TVV5YklKS0xSaFVCME9qR0hQVm82b09lL2xiS20yeVlkMXdNZVNZUElwZHlQ?=
+ =?utf-8?B?QXdBR0xhK3BJaUZobTMrTDYyenV5Z0F6NjVZUnNDdE05dG8ydHJBSjJIWkJj?=
+ =?utf-8?B?VzNnOFNVeVpPdzFVbDYwTEpLYk1HRmlYUjhuYThZV0plSTUzUU9yRmZzTzhZ?=
+ =?utf-8?B?elljaHI2YXg2cUY4SzUwb2YyQkNvLzFEamFkTndrWkdISDZYUVFjOEczVHp1?=
+ =?utf-8?B?N0VvcFhXK0VzMUlwa2MvRnhvdkZUWUpPZnVSd3NKbTMwMlVkZmRCMUsrRjZR?=
+ =?utf-8?B?UDArTmJlbEZDeVd4UXk3V2VqcGN6U3ZTcE5qRjIyUUtIWWJzQWY1VkhjVmVy?=
+ =?utf-8?B?UXEvOFN1Q2kwNmJMTysrTEE1bHlwRnAraW93dHV5ZUVJMjRodVF5YVNzdHE0?=
+ =?utf-8?B?cElNSUFuMU84RG1UVEhES2FQcjBpSXpGMGs3VFh4ME1hSWdiMjQxSGJYMjhX?=
+ =?utf-8?B?N3l5aWdPMng2WDRKREhKaTU1ZVgvRVNTZk1nZkZ0VDc3bkYvYU9uakhKREsw?=
+ =?utf-8?B?dlppcEIwK2FmT2xlN0FHY0tYejcwL0JMYk41amhuR2VXNFBoeGQyYmMxa1dO?=
+ =?utf-8?Q?EOWmtT/XdvFYt8yoJqL6CXEGU1IiBtZqWKWHBCE?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZllzMHo3NUhheFljb0V2bTk3eUU4enFsenlDUDF3M3RNWlJLcW94YUxLa0o1?=
+ =?utf-8?B?alNEZFNSM2dwd3V4Ty9YUWZTV1lvS1VnR3NMRHV0azdUQnF1T0hML3ZWR0ZZ?=
+ =?utf-8?B?REg2NTMzaGtiWkJyZWxOZDVtTmQ4ZkpNdVhQa0ZwVDRhUzVMNjFvK2hTcng3?=
+ =?utf-8?B?dDkvQmhEWHVMMndLaWNuZDM2NlFtdjg2cXJ3a3RYL05qNU5sdkZZY3FlU0tW?=
+ =?utf-8?B?RnJIdTRaNHpLS0RjWEVYM01PRWtpMEZ5Z3ZaRmpLL2FFaFZyd3kwWE5NZ0NK?=
+ =?utf-8?B?d1h0ZDA5WVcxSnRkNy9qejdEbUV1YTA4cW9sbkxrb09vMXpDRFhFOXRTazVS?=
+ =?utf-8?B?ZmVXQ1F0MDNBd2tMaklZdWV6TmZNSlo4c1ZaUEd5d0pDazMzSVdNWTluZ05X?=
+ =?utf-8?B?UGpWb1dVVDByZElQcG15aTNScU95VE5jN2Z3VzBTNGJWQ01YbFVVSWhNWThT?=
+ =?utf-8?B?L3R4U0pGZlA0T0k2dWFUNzBtUnFNVlFVZGVzbnptWGxNeGhycGhtbmhUSW5l?=
+ =?utf-8?B?UWhCN2FXVy8wcFk5N2R2bG1hL0RtUjNnT1ZBamZTZmlMSU9KeTl5ZGxMRURF?=
+ =?utf-8?B?OTk2c1BRcXdUeFU5aWhRY3ZobVByQlBmckIrNGo4eDZUYmdYRjlBYmNsNEZa?=
+ =?utf-8?B?VXI4SG5TTFk4dXprQ0NDY2hXSlFUTnE0cVFSZWlmdi85ZTVDMUZDRFlZZ25v?=
+ =?utf-8?B?Z1FsQlBJTWFXeklDMlRlUFBOY3lWdVdtTUgzdXhzREJWdEh5MFZzN0dDUTNN?=
+ =?utf-8?B?VHNVMlYvajFaVWVkZUtPaUVTbk5tVWxhc28rVnlyV1FkTGZONkhhNGxYRjlu?=
+ =?utf-8?B?Rk5oY1g3SXFaakdKR1kwSk9pUWUxdGFWbzJtZUFQcEdLT1hkczFUWGJJWFda?=
+ =?utf-8?B?dEhsaExPeng0c1g2M3hWeWp5Ulo3NExicVM3aWl5Wjd3ZzVEQmlseGdaSWxs?=
+ =?utf-8?B?M1FST0lKam0xVUorL01FYmRqVWJJV0tCbldvWCtwKzMzMjAwTHRaR1lueW1M?=
+ =?utf-8?B?TFY5WDkzQkR1NjhjYlpQRnZJQWFoN0F2bjJ0cmlIaTZ6Y2lhb1p0U3FVMmtp?=
+ =?utf-8?B?bDN1VC9iNGs5MUlLZlRTNFdFanVleXltcDJJNmo5SytaclBQeGtFak5BeGdC?=
+ =?utf-8?B?VFZXdUlUWWZvZGs3cVNDN2pOMnBZN3NpOHVxQjdZdm1vdWVWcjJ5cTNGY2pT?=
+ =?utf-8?B?RUtmeTlBY0RWM3kwU2p5RExDNTZjdmJxTUlkUDVqS0dnbGp3YmQ0TUFrQ1BJ?=
+ =?utf-8?B?OWJ2aStMb1B6aHBReXpSTVBqNEt4WXp0U1p5cnFqcCtKcWdtYjA3b2VCZXQw?=
+ =?utf-8?B?RVhWS1B6L0dPQm5hVHNTWkFhMXVKekhNT09EOVFJM0dWSDNsbDVUSmpTK1px?=
+ =?utf-8?B?MHg3UW1aeFdQNGJZNTl3QWpEbTRjYU02MFBqVnV5UWJHMUxtS0lMYXNpMHVs?=
+ =?utf-8?B?dmw2bHVHbmlBTDVteUhGVU5mZTVwQkR0K050dk92MjZDQ01Ea0tIMER2d25P?=
+ =?utf-8?B?Y1RRK0lnbFFYT3gxV24zQWdKanZScStoOFpyUTVVU251ZWE0K3NkbEhuZ1ZH?=
+ =?utf-8?B?Q1FXRmxSWUhFZzlMNDJ6cDVpQURCODQ5UVdLMHpEb1dGMmpRZkRDeHJNakI3?=
+ =?utf-8?B?UzNTanBXdHMrUGREUEdDdnN4ZVRrZzAxVlp2T3p4TURlcFZlY1VRTms1Tngw?=
+ =?utf-8?B?T0VmU2VETThNc2pJemQ2QjM2NTJQZTM0WTFNNENzUUlCcjdqK1dqeFUvUTds?=
+ =?utf-8?B?b2I1Rk9hRU82UTM4VXI0MmtjYktUbURaS1crcWQzV1ZQckJnUnhMZnN2NmY5?=
+ =?utf-8?B?WnRxZTVVRGZDY0VsanYxRjNDSzZyazVJVXEwdTZldEk4b25OanNlTFNMNzhO?=
+ =?utf-8?B?TU0yci9xTXFnRmd2OGZURnBBREZ2bllQUUxJa2YyZ2lTdDdFTkZBSldYMEVX?=
+ =?utf-8?B?RkZac0NRZThTZVoyZ0F6SjZoeWVqakNiY280RWNldFZKWk90cytTdktiNW03?=
+ =?utf-8?B?VVJlRWRYMlFQNy9IUnR3bms3R0duenJoMzZvclVqSkNpNHlSNXUreHloRGFh?=
+ =?utf-8?B?TFA5NVZpUjJnaVJNcWhmL0xDOVQxZDZHWFhuTDRNN1VQdVIzdEVWUithOHRk?=
+ =?utf-8?Q?q200JJT4ybiGghekpUXywpBMt?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3772c29b-e535-430f-19d4-08dcf8f0b2d3
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2024 14:39:45.8643 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: r4kNbGGKajMYmWfRTivWKcHUSV/vcEGWZmFwnx64ao0drAzBuhurHpB0ISzLiQdU605QKbeFuUAvsPYPKOjJfA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8818
+Received-SPF: softfail client-ip=40.107.237.52;
+ envelope-from=avihaih@nvidia.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,207 +181,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000070fd550625b2975f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 30, 2024, 9:08=E2=80=AFa.m. Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com>
-wrote:
-
-> On Wed, Oct 30, 2024 at 09:01:03AM -0400, Peter Xu wrote:
-> > On Wed, Oct 30, 2024 at 10:33:23AM +0000, Daniel P. Berrang=C3=A9 wrote=
-:
-> > > On Tue, Oct 29, 2024 at 05:16:05PM -0400, Peter Xu wrote:
-> > > > X86 IOMMUs cannot be created more than one on a system yet.  Make i=
-t
-> a
-> > > > singleton so it guards the system from accidentally create yet
-> another
-> > > > IOMMU object when one already presents.
-> > > >
-> > > > Now if someone tries to create more than one, e.g., via:
-> > > >
-> > > >   ./qemu -M q35 -device intel-iommu -device intel-iommu
-> > > >
-> > > > The error will change from:
-> > > >
-> > > >   qemu-system-x86_64: -device intel-iommu: QEMU does not support
-> multiple vIOMMUs for x86 yet.
-> > > >
-> > > > To:
-> > > >
-> > > >   qemu-system-x86_64: -device intel-iommu: Class 'intel-iommu' only
-> supports one instance
-> > > >
-> > > > Unfortunately, yet we can't remove the singleton check in the machi=
-ne
-> > > > hook (pc_machine_device_pre_plug_cb), because there can also be
-> > > > virtio-iommu involved, which doesn't share a common parent class ye=
-t.
-> > > >
-> > > > But with this, it should be closer to reach that goal to check
-> singleton by
-> > > > QOM one day.
-> > >
-> > > Looking at the other iommu impls, I noticed that they all have
-> something
-> > > in common, in that they call pci_setup_iommu from their realize()
-> > > function to register their set of callback functions.
-> > >
-> > > This pci_setup_iommu can happily be called multiple times and just
-> > > over-writes previously registered callbacks. I wonder if this is a
-> better
-> > > place to diagnose incorrect usage of multiple impls. If pci_setup_iom=
-mu
-> > > raised an error, it wouldn't matter that virtio-iommu doesn't share
-> > > a common parent with intel-iommu. This would also perhaps be better f=
-or
-> > > a future heterogeneous machine types, where it might be valid to have
-> > > multiple iommus concurrently. Checking at the resource
-> setup/registration
-> > > point reflects where the physical constraint comes from.
-> >
-> > There can still be side effects that vIOMMU code, at least so far,
-> consider
-> > it the only object even during init/realize.  E.g. vtd_decide_config()
-> has
-> > kvm_enable_x2apic() calls which we definitely don't want to be triggere=
-d
-> > during machine running.  The pci_setup_iommu() idea could work indeed b=
-ut
-> > it might still need cleanups here and there all over the places.
->
-> The side effects surely don't matter, because when we hit the error
-> scenario, we'll propagate that up the stack until something calls
-> exit(), since this is a cold boot path, rather than hotplug ?
->
-
-Yes, intel iommus are not hot pluggable so it shouldn't be a major concern.
-But my point is we could have similar devices that either operate on
-globals or system wide behaviors.  Singleton may properly protect it from
-ever being created.
-
-
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
+On 28/10/2024 21:06, Peter Xu wrote:
+> External email: Use caution opening links or attachments
 >
 >
+> On Mon, Oct 28, 2024 at 07:20:27PM +0200, Avihai Horon wrote:
+>> On 28/10/2024 18:58, Peter Xu wrote:
+>>> External email: Use caution opening links or attachments
+>>>
+>>>
+>>> On Mon, Oct 28, 2024 at 06:41:42PM +0200, Avihai Horon wrote:
+>>>> On 28/10/2024 17:45, Peter Xu wrote:
+>>>>> External email: Use caution opening links or attachments
+>>>>>
+>>>>>
+>>>>> On Mon, Oct 28, 2024 at 09:43:16AM +0200, Avihai Horon wrote:
+>>>>>> On 25/10/2024 0:30, Peter Xu wrote:
+>>>>>>> External email: Use caution opening links or attachments
+>>>>>>>
+>>>>>>>
+>>>>>>> We have two outside users of this API, so it's exported.
+>>>>>>>
+>>>>>>> Is it really necessary?  Does it matter whether it must be
+>>>>>>> ACTIVE/POSTCOPY_ACTIVE/DEVICE?  I guess no.
+>>>>>> Actually for VFIO it does matter, because we don't want VFIO to do DPT
+>>>>>> log_sync in SETUP stage when DPT might not have been started yet.
+>>>>>> See commit ff180c6bd7a8 ("vfio/migration: Skip log_sync during migration
+>>>>>> SETUP state").
+>>>>> This seems to be a known issue for migration in general, rather than VFIO
+>>>>> specific.  Hyman has a patch for it, not yet reviewed..
+>>>>>
+>>>>> https://lore.kernel.org/r/cover.1729648695.git.yong.huang@smartx.com
+>>>>>
+>>>>> That corresponds to your comment here:
+>>>>>
+>>>>>        Redundant -- all RAM is marked dirty in migration SETUP state and is
+>>>>>        transferred only after migration is set to ACTIVE state, so doing
+>>>>>        log_sync during migration SETUP is pointless.
+>>>>>
+>>>>> So I wonder whether it's only VFIO that should skip it, or log_sync()
+>>>>> simply shouldn't be called at all during SETUP, because of its redundancy.
+>>>> Not sure why this sync was there in the first place, but if its only purpose
+>>>> was to sync dirty pages then yes, I guess it be dropped.
+>>>>
+>>>>> The other thing you mentioned here:
+>>>>>
+>>>>>        Can fail -- there is a time window, between setting migration state to
+>>>>>        SETUP and starting dirty tracking by RAM save_live_setup handler, during
+>>>>>        which dirty tracking is still not started. Any VFIO log_sync call that
+>>>>>        is issued during this time window will fail. For example, this error can
+>>>>>        be triggered by migrating a VM when a GUI is active, which constantly
+>>>>>        calls log_sync.
+>>>>>
+>>>>> This is VFIO specific.  Why this can fail even if global tracking is
+>>>>> started already?
+>>>> It can fail if global tracking is *not* started yet.
+>>>> As mentioned in the commit message, there is a time window where migration
+>>>> is in SETUP state but global tracking is not started yet.
+>>> Hmm, I'm totally confused now..
+>>>
+>>> The only thing that can kickoff the sync during SETUP, AFAICT, is:
+>>>
+>>>               ret = memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION, errp);
+>>>               if (!ret) {
+>>>                   goto out_unlock;
+>>>               }
+>>>               migration_bitmap_sync_precopy(false);   <------------- here
+>>>
+>>> I need to confess this may not be the right place to invoke it in ram.c (I
+>>> think we probably should move it out at some point.. into generic migration
+>>> code).  However I don't yet see why log_start() is not called first in your
+>>> case before log_sync().
+>>>
+>>> Could you elaborate?
+>> Indeed, in the above code log_start is called before log_sync.
+>>
+>> I was referring to the case where some other code path triggers log_sync.
+>> E.g., if you open a VNC to the guest then it constantly calls log_sync to
+>> refresh the graphics. In that case, one of these log_syncs can happen
+>> between "migration status is set to SETUP" and "global tracking is started".
+> I see.  That's unfortunate..
+>
+> Though this is also the case where it shouldn't be VFIO's problem alone.
+> See some other users of log_sync():
+>
+> vhost_sync_dirty_bitmap():
+>      if (!dev->log_enabled || !dev->started) {
+>          return 0;
+>      }
+>
+> kvm_slot_get_dirty_log():
+>      if (ret == -ENOENT) {
+>          /* kernel does not have dirty bitmap in this slot */
+>          ret = 0;
+>      }
+>
+> And I didn't further look.
+>
+> In short, IMHO looks like VFIO still shouldn't be special on differeciating
+> and make migration export the SETUP phase just for this..  as VFIO has
+> log_start() like all the rest, so VFIO can also know whether tracking is
+> enabled at all, then it can silently no-op the log_sync() like all the rest
+> of the users.
+>
+> If you agree, I'd prefer we keep this patch - it'll be nice we only ever
+> expose migration_is_running() for migration status checks, without exposing
+> SETUP only for this VFIO use case even if it could have followed what other
+> modules are doing.
 
---00000000000070fd550625b2975f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Yes, I agree this could be a nice cleanup.
 
-<div dir=3D"auto"><div><br><br><br><div class=3D"gmail_quote"><div dir=3D"l=
-tr" class=3D"gmail_attr">On Wed, Oct 30, 2024, 9:08=E2=80=AFa.m. Daniel P. =
-Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berrange@redhat.co=
-m</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin=
-:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Wed, Oct 30, 20=
-24 at 09:01:03AM -0400, Peter Xu wrote:<br>
-&gt; On Wed, Oct 30, 2024 at 10:33:23AM +0000, Daniel P. Berrang=C3=A9 wrot=
-e:<br>
-&gt; &gt; On Tue, Oct 29, 2024 at 05:16:05PM -0400, Peter Xu wrote:<br>
-&gt; &gt; &gt; X86 IOMMUs cannot be created more than one on a system yet.=
-=C2=A0 Make it a<br>
-&gt; &gt; &gt; singleton so it guards the system from accidentally create y=
-et another<br>
-&gt; &gt; &gt; IOMMU object when one already presents.<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt; Now if someone tries to create more than one, e.g., via:<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt;=C2=A0 =C2=A0./qemu -M q35 -device intel-iommu -device intel-=
-iommu<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt; The error will change from:<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt;=C2=A0 =C2=A0qemu-system-x86_64: -device intel-iommu: QEMU do=
-es not support multiple vIOMMUs for x86 yet.<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt; To:<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt;=C2=A0 =C2=A0qemu-system-x86_64: -device intel-iommu: Class &=
-#39;intel-iommu&#39; only supports one instance<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt; Unfortunately, yet we can&#39;t remove the singleton check i=
-n the machine<br>
-&gt; &gt; &gt; hook (pc_machine_device_pre_plug_cb), because there can also=
- be<br>
-&gt; &gt; &gt; virtio-iommu involved, which doesn&#39;t share a common pare=
-nt class yet.<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt; But with this, it should be closer to reach that goal to che=
-ck singleton by<br>
-&gt; &gt; &gt; QOM one day.<br>
-&gt; &gt; <br>
-&gt; &gt; Looking at the other iommu impls, I noticed that they all have so=
-mething<br>
-&gt; &gt; in common, in that they call pci_setup_iommu from their realize()=
-<br>
-&gt; &gt; function to register their set of callback functions.<br>
-&gt; &gt; <br>
-&gt; &gt; This pci_setup_iommu can happily be called multiple times and jus=
-t<br>
-&gt; &gt; over-writes previously registered callbacks. I wonder if this is =
-a better<br>
-&gt; &gt; place to diagnose incorrect usage of multiple impls. If pci_setup=
-_iommu<br>
-&gt; &gt; raised an error, it wouldn&#39;t matter that virtio-iommu doesn&#=
-39;t share<br>
-&gt; &gt; a common parent with intel-iommu. This would also perhaps be bett=
-er for<br>
-&gt; &gt; a future heterogeneous machine types, where it might be valid to =
-have<br>
-&gt; &gt; multiple iommus concurrently. Checking at the resource setup/regi=
-stration<br>
-&gt; &gt; point reflects where the physical constraint comes from.<br>
-&gt; <br>
-&gt; There can still be side effects that vIOMMU code, at least so far, con=
-sider<br>
-&gt; it the only object even during init/realize.=C2=A0 E.g. vtd_decide_con=
-fig() has<br>
-&gt; kvm_enable_x2apic() calls which we definitely don&#39;t want to be tri=
-ggered<br>
-&gt; during machine running.=C2=A0 The pci_setup_iommu() idea could work in=
-deed but<br>
-&gt; it might still need cleanups here and there all over the places.<br>
-<br>
-The side effects surely don&#39;t matter, because when we hit the error<br>
-scenario, we&#39;ll propagate that up the stack until something calls<br>
-exit(), since this is a cold boot path, rather than hotplug ?<br></blockquo=
-te></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Yes, intel iom=
-mus are not hot pluggable so it shouldn&#39;t be a major concern. But my po=
-int is we could have similar devices that either operate on globals or syst=
-em wide behaviors.=C2=A0 Singleton may properly protect it from ever being =
-created.=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div clas=
-s=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .=
-8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer" target=3D=
-"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a h=
-ref=3D"https://www.flickr.com/photos/dberrange" rel=3D"noreferrer noreferre=
-r" target=3D"_blank">https://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer" target=3D"=
-_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com=
-" rel=3D"noreferrer noreferrer" target=3D"_blank">https://fstop138.berrange=
-.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer noreferrer" tar=
-get=3D"_blank">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0=
- <a href=3D"https://www.instagram.com/dberrange" rel=3D"noreferrer noreferr=
-er" target=3D"_blank">https://www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div></div></div>
+>
+> If you would like to propose a patch for VFIO, I'd be happy to include your
+> patch before this patch (just in case this patch could land some day) to
+> make sure VFIO works as before.  Since I don't have VFIO HW to test, it'll
+> be challenging for me to propose and test such patch otherwise.
 
---00000000000070fd550625b2975f--
+I can do that, though it may be a bit involved because VFIO has multiple 
+dirty tracking mechanisms (legacy, device DPT and IOMMU DPT). Plus, I 
+don't have HW that supports IOMMU DPT at hand for testing.
+I assume this is not an urgent cleanup, right?
+
+Thanks.
 
 
