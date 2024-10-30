@@ -4,132 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E71BD74954
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 03:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E8F0D7495A
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 04:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5zfJ-0006At-Rg; Tue, 29 Oct 2024 23:46:37 -0400
+	id 1t5zz1-0008ID-VU; Wed, 30 Oct 2024 00:07:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Lei.Huang@amd.com>) id 1t5zfI-0006Aj-34
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 23:46:36 -0400
-Received: from mail-bn8nam12on2062f.outbound.protection.outlook.com
- ([2a01:111:f403:2418::62f]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Lei.Huang@amd.com>) id 1t5zfF-0004SL-HZ
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 23:46:35 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yq/O6F9Jdl6i1GI6MeM5q3tZSGGGMJYS+LkhpsotqDPcbLG2t6SqeMNq1BTHi0SWBioQ7+3WTI4UluGO848uz6gDB8H0YWNkvQA31xl+8rD9sDVnCLvbUTc4uE5X21DrHl3IK+r4YZRWDZnToekX2K3JI14NUULkX6LuYkYztgI5NufVC+U7hRZ6YmVcgsBIRLcrQx8vmNV+jgBu+Lk5QX2W8sk/3CdOjZOtq4Ak1jAmfElozoBi8oPQBf/w+FGmdzCfDOOvymjwg8ZxBZAv9I1pfBbJKE5X/DvRv1nxr3KzsJxIWskoVso36YYw9FBwxUrQcjo7LUij8JoO3tChJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ybMgaK8pm9IUCREVombtuH2yv9X1g5GCZr+oie9i8nI=;
- b=UknZIAp3yxNg0SzgBW9ODMzPl9zpYk1mjAuao2XlOrgmfFmDLQ8y9XNd6/TVvKKVlTYClvSUGyjqIIbtULlGGh1TRyEUrs0VJ97nOKL/Z1YdXr2bpglvKLPJCloytSDQ+wU9MjrymcQe673zkwGzn1n0L4RxLsNoMSA6MIV20EJc6BEBUlec0ck+T0UJmu0R+UjOMKqr5ntJQXw6iLluMJuxwXzUc0iegWbYCTzJbvljGPdmd1E74RCF79hs4IoufhOxLE+4ur/xtWIWqLlI3QN7uK3ax+lUaOaiQBVWAD2TsKoFavonrZYlXEBQuxJIycglkDPe0kJRvk5NlZZq5A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=eik.bme.hu smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ybMgaK8pm9IUCREVombtuH2yv9X1g5GCZr+oie9i8nI=;
- b=WtNnLfaiEs5XyZcuL2Y+ThaGCC+mBVBR7Wpbnan32HVz6qsCvt1J5xuKhdYwRP5vaVre91Z3hlBOiudQl5zQuV98UKaMnFp1g8HWlm0ciKk371NZMQl+xkyQonmAFA7f6wJs2/rRPpfGiPLVgD8DkCh7HE6o/9XHVNjZ+NcbLLo=
-Received: from DS7PR03CA0212.namprd03.prod.outlook.com (2603:10b6:5:3ba::7) by
- PH8PR12MB7256.namprd12.prod.outlook.com (2603:10b6:510:223::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.32; Wed, 30 Oct
- 2024 03:46:21 +0000
-Received: from CY4PEPF0000EE32.namprd05.prod.outlook.com
- (2603:10b6:5:3ba:cafe::e0) by DS7PR03CA0212.outlook.office365.com
- (2603:10b6:5:3ba::7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.26 via Frontend
- Transport; Wed, 30 Oct 2024 03:46:20 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CY4PEPF0000EE32.mail.protection.outlook.com (10.167.242.38) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8114.16 via Frontend Transport; Wed, 30 Oct 2024 03:45:36 +0000
-Received: from SHA-L-LEIHUANG.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 29 Oct
- 2024 22:44:24 -0500
-From: Lei Huang <Lei.Huang@amd.com>
-To: <balaton@eik.bme.hu>
-CC: <marcandre.lureau@redhat.com>, <qemu-devel@nongnu.org>,
- <pierre-eric.pelloux-prayer@amd.com>, <ken.xue@amd.com>, <Lei.Huang@amd.com>
-Subject: [PATCH v2] ui/sdl: Mouse event optimization
-Date: Wed, 30 Oct 2024 11:43:53 +0800
-Message-ID: <20241030034353.1588-1-Lei.Huang@amd.com>
-X-Mailer: git-send-email 2.44.0.windows.1
-In-Reply-To: <20241030032014.1564-1-Lei.Huang@amd.com>
-References: <20241030032014.1564-1-Lei.Huang@amd.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t5zys-0008Hm-ID
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 00:06:54 -0400
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t5zyr-0006uH-4z
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 00:06:50 -0400
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-4a46d662fccso2061026137.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 21:06:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730261207; x=1730866007; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qKNag8kvCVAwcSFrD5wZs2oqPhzGbSq/NfVP+BmorYo=;
+ b=Y9q4Q4edydFw1maHSnFlJspRr+j4phKkUKxxsKhzq3mLscMNPwXJbDHrYoy8q9oxNy
+ IE5Bx2cGS1HIXnKhNyWWtqk2Y9OZ1/5aXSZIfuU/QSF91sbPwqwgfTwZWGBk+ioml3LC
+ 3TmJmJn/7A9fmVNgwPirDbkvelmPxz/cfZR7rUHJHqiSRg2v9Kf7aopQqhQKzlDQUHqJ
+ n/9KdUji1t0Pv7tKkQjIqoygsuthSZKRbez7oTledPxRMk9orc697UgQ2OeGGJd8WgBi
+ S48JIugXpcaHabl06F5YcEtlogork/3uaBA4srQqQ8+ESHys3TJH6TbCeZ1Le3BSL+dA
+ S4wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730261207; x=1730866007;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qKNag8kvCVAwcSFrD5wZs2oqPhzGbSq/NfVP+BmorYo=;
+ b=Lya8IyfIszIKNf2fRnVPf6n06qTiJgFWwwX4QQYgarhRu3MUMKqtOudz0z/L7Ww0xA
+ xLPfqc4oGTr9PQFDdJ0OlM3TddMMiT7ebXV9b7XFRJEQY5jEnb70eJYoimPuCL4fjyCm
+ 6j/W1aRLixuXb381MqqDvT4i3sg9eTphpFZFyR7brmwUNzTtukmGp70iPgssDw+HLYrj
+ EgucTuiWKQ+IHlFQ9WQY7KUzl5x2y72HsiDRJ0/vmItoBlcHH2FySn99y35Es0s6KjE6
+ NGfnqufMch0VEVbIN4XO9I2J0c2lfGT/CHbJlWfpsOgTlWkOyqmLkGBF39eNpMl9m1cT
+ g2Cg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV3b0uO6vqznkpaDyGNWGHJl8agAYR9HNBjSi0/MSYKtZBG9VNRzO3MJhUCOKbxEPNsL86YV9KFtPjl@nongnu.org
+X-Gm-Message-State: AOJu0YzxHGZds1dcAXs7vbQvAhbq9FZHJp8HeXMZonCx6uL0HPODiiOY
+ zflchcoHOCsI+wjtw+g3HDerLp1qcsBeMsA/wMpco+19zoLYxpB7dLEGSjWRuvPXPwZ/Mp7Rrz9
+ ldenfy7bDIUKaIohpklNJN/BdxnY=
+X-Google-Smtp-Source: AGHT+IESIki4URh1tyrqlvYWsOUWqoV4EL82z199gSIWFBO1H1UgDaGfZbX3YEhkyuQt2a4QEK1i1joSDZTDG4XeHF0=
+X-Received: by 2002:a05:6102:418a:b0:4a4:8d6d:a37d with SMTP id
+ ada2fe7eead31-4a8cfd888a5mr14038027137.28.1730261207295; Tue, 29 Oct 2024
+ 21:06:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE32:EE_|PH8PR12MB7256:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2ff33ece-e70a-4c71-36ff-08dcf8956ac7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?uvjJrHSVLRwFIly1jRk28m6IxnY8L1sNG86nYyO46NjsSjtIA0dCWujbvSNF?=
- =?us-ascii?Q?ruOmUdXbxed6Nuhhl9Pzu47wn1q4mpLqrFEWPZeLaGZwOWu/AQ+ml2p4j5L8?=
- =?us-ascii?Q?BS+e3ls+ABUpsD/xOldI6r/3G47j2HZH551Pjlvpad0QUwx8IZjT4wOHHDuW?=
- =?us-ascii?Q?BGjfGdQreCeQ++r6/+YnO1k9qm6meTsfKge2JcyJq534vmCaUp3U6WiF2402?=
- =?us-ascii?Q?DKmnDqvdnb3BpJaVr/yMbGu1NYylK6CNQIHV0Pj16ZPkGepkFYB5V3vwzi3G?=
- =?us-ascii?Q?At01yoNFZUL0BaJFdXU0i44D5s/GDEYoCz55gpjVKaOfTpSonCVX2WfjBbZT?=
- =?us-ascii?Q?S12hkqNOrQ4n+5afD57j0TR12lz9x7LxI5GX+dE1tre0Ghqa5/3bD9fcqQSU?=
- =?us-ascii?Q?DrdeWoSO+x6VkcDDPSxpCRMeSdYPS9JNKewgKsfKbkmGphRI1KOyjkBP5cxQ?=
- =?us-ascii?Q?2aavF77S2qtd7BNrmBbv0hv2RgBC4yn7xBxXf1gROso+pqF6ne9pdDFg2PQe?=
- =?us-ascii?Q?sDOEzwWmy5LvjxjdGXqTK+3h7Rw4CvA88vqPn74GulSJu2BdKtcTlIyknXrN?=
- =?us-ascii?Q?1CUky0zZ9IIBt2ScFYUrBAxJpxKx8Tan26TccK4VvUAwm/w7p+dvJjISzDPf?=
- =?us-ascii?Q?yOWxP4HDkIAnaMcJUQAh0/gYinL0e2YqMEAvW0TIsw2b3om7Wb8ts5Giqj4g?=
- =?us-ascii?Q?IXcs1gZZvlVpXfVKQy1hK33oEQzmLNVn4ZRO3GB9zme1TEr4se0dGNTlJ/TG?=
- =?us-ascii?Q?6EAfZrv9R888SENOUEjH5y/LZc9FzkGwV0E1QjCOEr8ldVJPNkVzwBGywPCS?=
- =?us-ascii?Q?fDP2n+N59T8Rta90Avyj2GJeyYEaHc8/CLdvBGK+HLRSoAWrdxzD5jYPk++A?=
- =?us-ascii?Q?qRcc/4KhPoi40riPib8nKr6le2GkEQn006s1a0se69QwPAsQrWX1vmwHpDUp?=
- =?us-ascii?Q?9H8/3N6zUnG6jlqY0twd0QXZpsDVFm7H0BZgSMpOKDcFpYhxdH7NIVOznfiP?=
- =?us-ascii?Q?NvOxRomi7rJzzW4a7vqF+P9Umq/mtmqrpqDEfzjii6RSFltPKdDJe+LYxsYl?=
- =?us-ascii?Q?yPRmEVkURCqedQfpndYOHizcgS0WYv04OMay6K9Mu0shJz5ESnEN2dlfmcbG?=
- =?us-ascii?Q?iOj7HfPVn1pefCG6CcBnr03t/YpPJlyH3inbdF0dFe0VhDjfJ0G1JEFK9xWB?=
- =?us-ascii?Q?Ljl9/CY3zPEJlWKq/aSn/QcZjitMXc0aZelU0SoJg6HQtn3ewYf0N+BtG5V2?=
- =?us-ascii?Q?kQnnRJpFetkxa2GDi0NMyZZWAdXqiv7tZgSor3WZryn5wTUyTFJTthT/x04c?=
- =?us-ascii?Q?sG4OdkNxlI/4pwdzV1wMXq2vEbHDjMf6X/1toD5RiaqoJL0/s/Pq3Sm0bG7/?=
- =?us-ascii?Q?3U3UMf9lCh/ZNUg3jdP6x5ARPeq8cO1ozGaPgQuyPp7+UogmWA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2024 03:45:36.2204 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2ff33ece-e70a-4c71-36ff-08dcf8956ac7
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE32.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7256
-Received-SPF: permerror client-ip=2a01:111:f403:2418::62f;
- envelope-from=Lei.Huang@amd.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241028023809.1554405-1-maobibo@loongson.cn>
+ <20241028023809.1554405-2-maobibo@loongson.cn>
+ <b5f4a39a-278a-1918-29f2-b9da197ce055@loongson.cn>
+ <08fa5950-8ca4-b6fc-fac7-77bc5c16893a@loongson.cn>
+ <8b7dfe0f-f4cd-d61a-c850-d92b5aec39e8@loongson.cn>
+In-Reply-To: <8b7dfe0f-f4cd-d61a-c850-d92b5aec39e8@loongson.cn>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 30 Oct 2024 14:06:21 +1000
+Message-ID: <CAKmqyKOGcjOFqUMiySYxtCyx-5_Rbx3=w9BYeUuS8mSrQ0bhxg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] linux-headers: Add unistd_64.h
+To: gaosong <gaosong@loongson.cn>
+Cc: maobibo <maobibo@loongson.cn>, Peter Maydell <peter.maydell@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe32.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,67 +101,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a convergence factor to make the VM's input
-global coordinates more closely approach the global
-coordinates of host.
+On Wed, Oct 30, 2024 at 11:47=E2=80=AFAM gaosong <gaosong@loongson.cn> wrot=
+e:
+>
+> =E5=9C=A8 2024/10/28 =E4=B8=8B=E5=8D=885:55, maobibo =E5=86=99=E9=81=93:
+> >
+> >
+> > On 2024/10/28 =E4=B8=8B=E5=8D=883:39, gaosong wrote:
+> >> =E5=9C=A8 2024/10/28 =E4=B8=8A=E5=8D=8810:38, Bibo Mao =E5=86=99=E9=81=
+=93:
+> >>> since 6.11, unistd.h includes header file unistd_64.h directly on
+> >>> some platforms, here add unistd_64.h on these platforms. Affected
+> >>> platforms are ARM64, LoongArch64 and Riscv. Otherwise there will
+> >>> be compiling error such as:
+> >>>
+> >>> linux-headers/asm/unistd.h:3:10: fatal error: asm/unistd_64.h: No
+> >>> such file or directory
+> >>>   #include <asm/unistd_64.h>
+> >> Hi,  Bibo
+> >>
+> >> Could you help tested this patch on ARM machine? I don't have an ARM
+> >> machine.
+> > yeap, I test on arm64 machine, it passes to compile with header files
+> > updated. However there is no riscv machine by hand.
+> >
+> Thank you,
+>
+> @Peter and  @Alistair Francis Could you help tested this patch on RISCV
+> machine?
 
-Change-Id: I2c3f12f1fe7dfb9306d1fc40c4fd4d299937f4c6
-Signed-off-by: Lei Huang <Lei.Huang@amd.com>
----
- ui/sdl2.c | 32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+I don't have a RISC-V machine either unfortunately.
 
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index bd4f5a9da14..ea3fd74dd63 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -303,6 +303,34 @@ static void sdl_mouse_mode_change(Notifier *notify, void *data)
-     }
- }
- 
-+/*
-+ * guest_x and guest_y represent the global coordinates on the VM side,
-+ * while x and y represent the global coordinates on the host side.
-+ * The goal of this entire process is to align the global coordinates of
-+ * the VM with those of host using dx and dy. The current approach aims
-+ * for precise calibration in once attempt; however, because guest_x
-+ * and guest_y are non-zero values, they are not accurate values when
-+ * they are counted out to become negative. Therefore, achieving perfect
-+ * alignment in one attempt is impossible. Since the same calibration method
-+ * is used each time, repeated attempts cannot achieve alignment either.
-+ * By introducing a convergence factor, guest_x and guest_y can be made to
-+ * approach host x and y indefinitely.
-+ *
-+ *                   QEMU                       (dx,dy)  VM
-+ * calculates dx and dy using guest_x and guest_y ---->  input driver
-+ *            ^                                            |
-+ *            |                                            |
-+ *            |                                            V
-+ *            |     update
-+ *            | guest_x,guest_y              input dispatcher ---> WindowManager
-+ *            |                                            |                 |
-+ *            |                                            |                 |
-+ *            |                 libdrm                     V                 |
-+ *    display device  <------ drmModeMoveCursor <------ compositor <-------  |
-+ *                            (guest_x,guest_y)   calculates guest_x and
-+ *                                                guest_y dy using dx and dy
-+ */
-+#define CONVERGENCE_FACTOR 3
- static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
-                                  int x, int y, int state)
- {
-@@ -331,8 +359,8 @@ static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
-             y -= guest_y;
-             guest_x += x;
-             guest_y += y;
--            dx = x;
--            dy = y;
-+            dx = x / CONVERGENCE_FACTOR;
-+            dy = y / CONVERGENCE_FACTOR;
-         }
-         qemu_input_queue_rel(scon->dcl.con, INPUT_AXIS_X, dx);
-         qemu_input_queue_rel(scon->dcl.con, INPUT_AXIS_Y, dy);
--- 
-2.45.2
+You can test it with QEMU though
 
+Alistair
 
