@@ -4,78 +4,177 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7063CD74956
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 02:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35557D74954
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 02:11:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5y9q-00077c-8x; Tue, 29 Oct 2024 22:10:02 -0400
+	id 1t5yAV-0007HU-Su; Tue, 29 Oct 2024 22:10:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t5y9o-00076r-5A
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 22:10:00 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t5y9l-0003r1-Ak
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 22:09:59 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-718066adb47so3508761a34.0
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 19:09:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1730254195; x=1730858995;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=McJGDH3h6u6nNKhdSV/u1OcErpChP9H3jvZMdwZf8I8=;
- b=Bg+ZtLBnQdYz3wI244P303S/9vjERCQw7XtcTRwbzI/dGCylRKVFsElGG57NoW83+7
- Xjvf5hFn8mUst7uNwojX3ARgVLIMK+7pMo5es8S0V49ex2fEWwxWJeB6tIjNg+5cXYRU
- JzkGe2tjbqiPJSRdzkQnNvOF+l30RsdfnSkx2CEcqiqnF5SX8fkDYkfxW/Eho9EnoWa8
- chSfYeFonu59roDmUqJgsetAFrhyFWsqnOPz0Jgg9+JExFa0X+I2/eROuJQU4SEl5eos
- RiNvc+tCWr1Q+faEsKocROtUuWXIvENlkZSQ0dhEbZHwgIrtstZjAdAPa/lRZXnqWNKS
- eexg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730254195; x=1730858995;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=McJGDH3h6u6nNKhdSV/u1OcErpChP9H3jvZMdwZf8I8=;
- b=tEZe4BxKrQqgARPojJLXgqWDC+OyPjUHS0fNRa9/0XmNqh1JJpTvJ1gRcKPDXRdPXC
- acmi4TemFJU1oBLiWiM56uqYWbVBp25uW0joMBak5aOF9qYPfAqI8f3hRAc0jYUL33gT
- SBB9f4/gGOrMXuiBUOB8AZtm4OWDqSpIpiRl0itJRSfZyvgRMs+vLuJvugmCMLk4adNK
- pBehMPhD75UfeBPG0m0QRV1HM0wZuTdVNOG5ANBCsNpCXU/bJdtCDwnony4PH2wPu0kq
- QrU5ETqYwCfZm9Popa0b3iIY2KCVpdyOVCoUoINCfdBi4euRcshZ6l7xWypM/tLAZ/d2
- 534w==
-X-Gm-Message-State: AOJu0YxU2dL66JqJAeBR+GHgD9tGwpjlcJI2qlCNEyhgE0W1R9wTeARl
- I73uz7515sxw9jTE8YEHlmkRFuzx4Tj1ZnfCZqTwjYIrr1CKN3ay/oqNFujP08E9eXZyPMJjxIz
- pwHGHvLg3ACQuFiC9um2OqSWm4gqAQq3apm2muw==
-X-Google-Smtp-Source: AGHT+IEYnzM22jsv4F+yFwrvwaojtG839AQCKiWqpdLkRZz84VwQUiwRF15bJT4QGH0cxsii1iWRalvKN8GRu+P39eU=
-X-Received: by 2002:a05:6870:7ec5:b0:260:e3fa:ab8d with SMTP id
- 586e51a60fabf-29051d6ba0bmr12558518fac.37.1730254194389; Tue, 29 Oct 2024
- 19:09:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1t5yAS-0007Fy-6b; Tue, 29 Oct 2024 22:10:40 -0400
+Received: from mail-eastasiaazlp170110002.outbound.protection.outlook.com
+ ([2a01:111:f403:c400::2] helo=HK3PR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1t5yAN-00045W-Ht; Tue, 29 Oct 2024 22:10:39 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XhLKHWsq7c75qzU/umul4yTMpEsOldLrDd1+Iuxd5hvhfv/wVP6HbE+OfnANW73a8aXsRCrdyFtx7jsABr4rQXV2xI32pLgrds/y+x0i/uIwHDsDLzZ6eCB6xFEfrIkjcZ/QSJ5OfLi6gPQq93tgmAdc0SQ2BFY+4n4BC6Wbcono9fW2LgH1hKQWWnSHYt1njNqmdTa3Sbdq7cJEVLPAeW+2C15tNj0RGQiJrDJR5xtP15GQKZVXoP81Zs2ohIUlVDWji8i3jXAjpzr8Ps3oA4uFPms5l3KrJF4Ww6AdEYgjbl3xj3hLwm5XvfHrIEGxYPydcd48Yb2NuUmqChuDvw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=d9IUlYyjfjfAJONIsFIM17n/pAWXdYYiZUHIgrPvmrI=;
+ b=PgIRV0fElVpXGj/uuZKxcAFK34w7Cse/QW4o18ORcoKDmIw2QnrBVLky9j9yqmqJ3hvBK01vWzIHMrGyLe4DZA7qGZ2XP+3+FNRon5Q0YbSaL6aGjkbpNCdq5912aaK35B72oGYbVMSoqbUwQDj5Jrv1ClHlxUfmUB4RlYB7+U2zeykc1g3KzVVuPORmDZW9CUF5ooqEuJ5OqAeEllI0riS0bOUH2s7MD6JXMP3HMFA9ejPIzn9NjdLS3ssnDWv3xncPnzFMV5yL8Sk6t6mu8SBKW2AAwZ4jfh2xSuuCUx4QJu6y0ddrkFMKqhUzy56dGzFwlBdY+BScB3YEmZbZNw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=d9IUlYyjfjfAJONIsFIM17n/pAWXdYYiZUHIgrPvmrI=;
+ b=a8DDQEqwTq5DYsr7zChatTbzuCX7Dq+rXQityo28lNEqA8J9zpO/97Epz9W0iwJ7Hjrm8M9UyNwjySAzauCMF/FSYuBi/fo6Xg8LwwjKK2ilIomQMyHVT4JgcQJr8rOZBczptu9gPCMvUiVeyej+HkWZ04OWZjNDZIkgrv+VaQiSnbZLFiT4vFpSUqM/8+u7qI4RONe7W+Yw9BjuSst/4TTWSarPvScNseyXHptegdK3NBhpefDfCGPDia00Q4DrLWlWYeftmT3hwpbCSK4cdBb9I/v1dt8WbeaDBDhSj+q4QXvz7OUwzatwTiEK1M47mkQo//KnFqrP6P8URuzhaQ==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ PUZPR06MB5474.apcprd06.prod.outlook.com (2603:1096:301:102::6) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8114.12; Wed, 30 Oct 2024 02:10:23 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56%5]) with mapi id 15.20.8114.015; Wed, 30 Oct 2024
+ 02:10:23 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Andrew Jeffery <andrew@codeconstruct.com.au>,
+ =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Joel Stanley <joel@jms.id.au>,
+ =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Bin Meng
+ <bmeng.cn@gmail.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
+ list:All patches CC here" <qemu-devel@nongnu.org>, "open list:SD (Secure
+ Card)" <qemu-block@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang
+ <yunlin.tang@aspeedtech.com>
+Subject: RE: [PATCH v1 5/8] hw/sd/sdhci: Introduce a new Write Protected pin
+ inverted property
+Thread-Topic: [PATCH v1 5/8] hw/sd/sdhci: Introduce a new Write Protected pin
+ inverted property
+Thread-Index: AQHbKeNpz/KnDT+fU0akNPgndaaF8rKeZvUAgAAmqJA=
+Date: Wed, 30 Oct 2024 02:10:22 +0000
+Message-ID: <SI2PR06MB5041C2A4F68C5C2C8E7B9552FC542@SI2PR06MB5041.apcprd06.prod.outlook.com>
+References: <20241029091729.3317512-1-jamin_lin@aspeedtech.com>
+ <20241029091729.3317512-6-jamin_lin@aspeedtech.com>
+ <41d563a4c0de07ad4cc363c6a3599734608454a9.camel@codeconstruct.com.au>
+In-Reply-To: <41d563a4c0de07ad4cc363c6a3599734608454a9.camel@codeconstruct.com.au>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|PUZPR06MB5474:EE_
+x-ms-office365-filtering-correlation-id: 2358ec21-4a27-4e8e-ee38-08dcf888030b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|1800799024|921020|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?L0YwNk9sVjlNb2Flbk5zTWloTzk0NTJWL09IQnpkVUVlNGRmVTBwYThKU0wx?=
+ =?utf-8?B?cDFhNjZ3UStsZURnYjBRZDl2cXZuQzArV1hmMEgzeENNcWNYQUJFUGRIbTRL?=
+ =?utf-8?B?YnlPaGVBYW9ZbXlobmdUeGRWR1BJUWR5b29LSUhhT3FpMXZZM0xSUFBBdDRB?=
+ =?utf-8?B?NzFFUXI4TnluaTZESHpadmtNUVpJNDRUd3RxT21BZWZHTWRLQk5UK2ozbmxu?=
+ =?utf-8?B?dlo1dmJzWTZDODFjZUVneUQxNGpqL1J6T3RJb21nNU01azhic1p6akdBNzFT?=
+ =?utf-8?B?MWJlbkVJbmRiT0hPa0JRMjhQMFJzRTFEZnoraDJzb3JtV3FXQVo0MjlDVzND?=
+ =?utf-8?B?WlZyM1hCV0xoaEFGVGlJMkVnNmFqNFpuOWsvMWE2NHIwdXgwenBJbUh2b2ZC?=
+ =?utf-8?B?dWhRZldGZlNxcXY4ak5zelN1NytUT0tYbXhlYXA4NkNxbmpFaGdJallXUzB4?=
+ =?utf-8?B?YlRIaUZZL3c1N3dDM1lXWncyUEFtRWdnaVJwRVBoQTNGNUtlQlRrYWVFNnNy?=
+ =?utf-8?B?Q2M1ZkJ1QXZVaHBsVVc3MWM2aFJ0ek91ZzNFN1NIdUhrdExKNlBzeGFsMzhx?=
+ =?utf-8?B?OFU5Z24zampTRW9WNno3ZzlHVVhWdGlTK01lY0tKbEwzenhsUytYOGNUL25Q?=
+ =?utf-8?B?NldUNEU2NktuQzhTSXc4c1hxRFp2a2NXanM4OWVkd2hucUx5M0lDeTZwRGc4?=
+ =?utf-8?B?eVRjZDZJazRTMkpxWllPVlAyWU1zRi9tTlhkSllEM3QzRHRRdVJ0OHJZSXFO?=
+ =?utf-8?B?cUk2Z09ZUldjdjcwT1hoNGp6d3VYeUthUHc2eThXVGlhajZwU2w4VzZEWTk4?=
+ =?utf-8?B?aE0zMFpFVlhBdERuTndIek9uUHV0RGxSK2lIbjhwNjF2MU9COVFFUTRkZk9u?=
+ =?utf-8?B?YWZaWHJqQXYrdEpKdnZKNGU2WWcvL0ZXWHFlbEIrY1ArS05URUlra2Q3Uksz?=
+ =?utf-8?B?VlMvTzJSWUhNZ3pqVzZyczVGVGpFTk44ZU9OcGRUblhuQU9taVJLZlVGLzJz?=
+ =?utf-8?B?cEtLWjE3dDVDMThlWEZWT0RvZGdpcklMNTkyRytkOTBPcWdBeTJvNmx2OWxW?=
+ =?utf-8?B?b2Q4U2l1bjlQemFEdXFyNG15QUM2NG1QZlhqclJaVWt4cFpNd0dtYUJYYU1Q?=
+ =?utf-8?B?THFkWWhGQzlFWXJHd1c2Y0FaWm9TWDNjYmNoRkFMaVBIWFFjZVo5UllMYkxY?=
+ =?utf-8?B?MjVCMWluNjlodmZoODU4SnhjUiszbUZsbkVIM0pxNWNoMzhTekFWUCtHY1M2?=
+ =?utf-8?B?VXFCKzVCMzZIbDFjTTMvcU9oYUhlV28xUkdpSTNOK0srcmFaT2thbUFudDVW?=
+ =?utf-8?B?T0U3RElVNE1JNVJkMHhUbEtHL2s5RWRDay9lbnJwMVNSbUNTU2M2dktnUTht?=
+ =?utf-8?B?Qy9lRnc2SkZYNnZIK1I5cHJxc2VrS2xMV21JaVJJVUIxaDZuV3JXZFVEZHY1?=
+ =?utf-8?B?UGFZYUxPa2FiMzkySHBRZCtDWXgrdVdPbGhZU29vRGpJYklMeTR2ZUg3WTBD?=
+ =?utf-8?B?YnJFa3F6WTJZblF6YWoyMDZPbk9MMnFLM2xnLzQ3L0lvb0pTMSs4d254REEr?=
+ =?utf-8?B?UUVzSHgwaVFCdm9TUktGOXpoRGFMbUl5Mjd4ZUdDVVQ2dWFLaTlPSGtNUlgv?=
+ =?utf-8?B?Z2VXdjRJVnlKVVhBN0F5VUJweGQ2NEdtZ3VBd3ZXRzNLRW44bzgxOURGQWxv?=
+ =?utf-8?B?bG1MMGJ5Q1Z1ZEJZZ1p2MXpjS3h4U092dC9XNGhUbTBCMFBvbkpYbk1RMFJw?=
+ =?utf-8?B?UVlwdTYvbjhOYkJLbEV3cThhckRSRTA4OFRweFdmalNPazNHN0JxcGRQaEtS?=
+ =?utf-8?B?bkw5OEF3anpYci9zTWRacXhLWFp4RFVSQUViYi93ckVhaXN5dS9mUzlDRDNk?=
+ =?utf-8?B?RlRPdGxXRDV2cXNTa0E1ZlE1eDRoTEVWWDVmUllVTjJuNEE9PQ==?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(921020)(38070700018);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WUw2R0VrM3lnb24vMDUxT0FZY2k1cW9PemF3N21DNktBMnFLbkZoL0E4VEYz?=
+ =?utf-8?B?Y0IvMkFOcnVpS3JtbnQ0UG5mWXBSQUlhdFZXSmdjNnZNY1h2WWlNeVAzYU9Y?=
+ =?utf-8?B?TkxMNVpZZzQvMEhqOVVORTUvR3hEN1dXVk80QmN4UFNUMFNIS2FzU2lLWkN3?=
+ =?utf-8?B?a2VUdUJscEt5YTJ6K0NneU1VVFFUWUNOek9pTlFsNXVrR1Q0QklLTE1VWm1S?=
+ =?utf-8?B?cVRiZVdiQWtlNFlxVmhHbWcrWGpSWTBOM1JabElacWQ5S2VDYVNxM2JnRUNj?=
+ =?utf-8?B?blJUZEFyZnFvenh5ODlGSEVBTVRhV1RYL1M2VmlzK3lROGg1YzkxYVlhVk9r?=
+ =?utf-8?B?U1lsajY5WDVCalBhZ3U2TkVyb2NBdkdIbGJWY252WWJNd1dZc2ovcEhINit5?=
+ =?utf-8?B?MkpYeTY1QnppRmNuM0lvMFBuZ3lMQ2IvUDhvU0pENlZ2TDZqN3NUVzVvc3JJ?=
+ =?utf-8?B?cExObWsvU3pUMmJvd3BEL0tmTVllV3hCODRpS1N2T1pOSFlOZ0RSTmRzVFRH?=
+ =?utf-8?B?dHVQVjl5K2MyT0JoVzdDSHVMKzlzMGdKdjB3a1I4cjlFRDZ6Y2hIbFVZYVBU?=
+ =?utf-8?B?OFJhOUdXdEdCRzFkSWJhd3I1S0VTUjNZcUpJWDdGQXlYZkIyYUp4Y0xmYXJS?=
+ =?utf-8?B?SDJvWDlEekJZOEtlNkZnd3R1eUNZTXJLSXU5NzNucHBSZVBuREJIc2J1MjBL?=
+ =?utf-8?B?Q2VHaGNWYW0zWEwxZG96TkxMcXJoNHEzRU1vSW5sL3NUZGxmaGNDbkxPckZG?=
+ =?utf-8?B?bDJKOFFiTm5JWXBHVHpsUzU4MFIwaDM3bFNNNlhxT0RGWGlPT1BOV0lNdHNG?=
+ =?utf-8?B?T3pjcWdzOTNhSjlZSFpJNU4yK3pJUU5NWXdIZ2xQcTJyQmZNWU1QdFhVcGJY?=
+ =?utf-8?B?Nng5T2laTGtrWURVQVNOcGpEY2VSRDdQTG9Ga1RZakROUG1sR2lZOHdUV0Zq?=
+ =?utf-8?B?SktuS0J3TG1XcEtpaXpFcVYrblpXRnpDeU9sL0Jtc21FU1FBSTFGRDFXUU9U?=
+ =?utf-8?B?cGFNSXZKcEF6ZTRBUXBtRGxTL1lPaDBXM1oveEF1TkpwNm5QTXJnMTY2bmpE?=
+ =?utf-8?B?aEF3UzZTR0JqdjVqcVNRczlYVDFvcEtvMm10ZFd5WnNRcndGRFpIdHovV3dS?=
+ =?utf-8?B?cE92YVNlT3cwWHVDNmE1N2IxN2Q0U0U0VXV4STZmc0RPWE9MeFRVS0Qxbkl2?=
+ =?utf-8?B?bFlGTzNpVHFSeDU5T0hCSW1UVzVzSlVFdUt1eHNGY3U2bHFaZ05CeEdCR2Nm?=
+ =?utf-8?B?VWZGSE54T0J4M2ZNLzdlWlJUUzA2ZEp1VHNKYTVHWXRrSGY3d0QxL0gwN1Vx?=
+ =?utf-8?B?SlJsMGRwZDBYTGhnRzZ1YThXMmxwaUt4LzJOTmc3Z29ESGZOalVKdUtxY1dv?=
+ =?utf-8?B?QllrUVJXOEFkNTNXOVhEOE1YYmFLRm42MnlMaUk1VzF1SnQvd2JBOWpqSUtt?=
+ =?utf-8?B?aEVFSC9FbWtGamJtN2dUbDdoSU9YN2EyV2lSZGdEQ3RuYjFCVEYvdDhRR2Jh?=
+ =?utf-8?B?MWpJL2RPQ0QwamZhSkN0Y0M0NVRVRGlhZEk0T0Y4SitmeEppT21lN1RjTkFD?=
+ =?utf-8?B?UTJMS1BIRXc4dlZaU2o4Sk9rcEdYL3ZqV1k0c1VWWFBJN3AxRFJackttWVV4?=
+ =?utf-8?B?UGFhRE1jREJjUG5keWFMZW0rNUVybEtxQ3VTc053TmxBMndyVmxHNjM1cW9G?=
+ =?utf-8?B?M2UySmlSQzQzNWtRck04eEY1dXNVc2N0dHl1VE1PQzhSNWg0UjZLQ1hyMUhI?=
+ =?utf-8?B?cVRSaHlUL3ZxR2ZEMGNqYktpTUFXcU9PRmhyTVllR09nV05DWjhnMTF6UU1s?=
+ =?utf-8?B?UlFjeGg0azVzdktGZjdhZTBJamg5SWFTZFQ4cHVkNTUvUHFNOEJHRDFrMWdk?=
+ =?utf-8?B?VzZCdHhGTlRkS1JnbVNLM1FPNE1Ud0pvcXlDdkhCL2ppazQrVXMrbFo0REk3?=
+ =?utf-8?B?NGs0MEgrTkpsUStoM1poUEJ1b0NsRjQwbmdIZUlCMmNHbEJ2WGhPWFhxYVNm?=
+ =?utf-8?B?VkJzcGFLYk1CcGhwL3lya0xMQnAxTzlzV01aYk9NYWpoYnZwUXBjSklzdUNs?=
+ =?utf-8?B?MndoZlB2YldZbVBRTTB1RWswblZJdXdNcklzMmtEU2ZWSy92VTQ0elJqTVdN?=
+ =?utf-8?Q?Oi13aEAfCWRvkGsvoHc6AJoqR?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <cover.1729648695.git.yong.huang@smartx.com>
- <76f0ea57ac7f4c2a68203d17fec1c34bb3d16a4a.1729648695.git.yong.huang@smartx.com>
- <ZyELi_ax8zM_kFbZ@x1n>
-In-Reply-To: <ZyELi_ax8zM_kFbZ@x1n>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Wed, 30 Oct 2024 10:09:38 +0800
-Message-ID: <CAK9dgmZ_++jEmhRfO9QR3WQFs18AwUnvn=_dTyfUnv5PHXYBYA@mail.gmail.com>
-Subject: Re: [PATCH RFC 2/2] migration: Avoid doing RAMBlock dirty sync in the
- initial iteration
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000a0d0c10625a832d9"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=yong.huang@smartx.com; helo=mail-ot1-x331.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2358ec21-4a27-4e8e-ee38-08dcf888030b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Oct 2024 02:10:23.0054 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: p2mK+0mo3lrY4VxkaI2RgSURbgvk14VDndTaheejyQTEHDv6RutfV1FZ1VMmdNwx0RhOh7y+TlZSEj/48muviv8xgQybeuTIYS68W8rU5es=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5474
+Received-SPF: pass client-ip=2a01:111:f403:c400::2;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=HK3PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,352 +190,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a0d0c10625a832d9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Oct 30, 2024 at 12:21=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote=
-:
-
-> On Wed, Oct 23, 2024 at 10:09:51AM +0800, yong.huang@smartx.com wrote:
-> > From: Hyman Huang <yong.huang@smartx.com>
-> >
-> > KVM always returns 1 when userspace retrieves a dirty bitmap for
-> > the first time when KVM_DIRTY_LOG_INITIALLY_SET is enabled; in such
-> > scenario, the RAMBlock dirty sync of the initial iteration can be
-> > skipped.
-> >
-> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-> > ---
-> >  migration/cpu-throttle.c |  3 ++-
-> >  migration/ram.c          | 30 +++++++++++++++++++++++++++---
-> >  2 files changed, 29 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
-> > index 342681cdd4..06e3b1be78 100644
-> > --- a/migration/cpu-throttle.c
-> > +++ b/migration/cpu-throttle.c
-> > @@ -27,6 +27,7 @@
-> >  #include "hw/core/cpu.h"
-> >  #include "qemu/main-loop.h"
-> >  #include "sysemu/cpus.h"
-> > +#include "sysemu/kvm.h"
-> >  #include "cpu-throttle.h"
-> >  #include "migration.h"
-> >  #include "migration-stats.h"
-> > @@ -141,7 +142,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaqu=
-e)
-> >       * effect on guest performance, therefore omit it to avoid
-> >       * paying extra for the sync penalty.
-> >       */
-> > -    if (sync_cnt <=3D 1) {
-> > +    if (sync_cnt <=3D (kvm_dirty_log_manual_enabled() ? 0 : 1)) {
-> >          goto end;
-> >      }
-> >
-> > diff --git a/migration/ram.c b/migration/ram.c
-> > index d284f63854..b312ebd69d 100644
-> > --- a/migration/ram.c
-> > +++ b/migration/ram.c
-> > @@ -2718,7 +2718,7 @@ static void ram_list_init_bitmaps(void)
-> >  {
-> >      MigrationState *ms =3D migrate_get_current();
-> >      RAMBlock *block;
-> > -    unsigned long pages;
-> > +    unsigned long pages, clear_bmap_pages;
-> >      uint8_t shift;
-> >
-> >      /* Skip setting bitmap if there is no RAM */
-> > @@ -2736,6 +2736,7 @@ static void ram_list_init_bitmaps(void)
-> >
-> >          RAMBLOCK_FOREACH_NOT_IGNORED(block) {
-> >              pages =3D block->max_length >> TARGET_PAGE_BITS;
-> > +            clear_bmap_pages =3D clear_bmap_size(pages, shift);
-> >              /*
-> >               * The initial dirty bitmap for migration must be set with
-> all
-> >               * ones to make sure we'll migrate every guest RAM page to
-> > @@ -2751,7 +2752,17 @@ static void ram_list_init_bitmaps(void)
-> >                  block->file_bmap =3D bitmap_new(pages);
-> >              }
-> >              block->clear_bmap_shift =3D shift;
-> > -            block->clear_bmap =3D bitmap_new(clear_bmap_size(pages,
-> shift));
-> > +            block->clear_bmap =3D bitmap_new(clear_bmap_pages);
-> > +            /*
-> > +             * Set the clear bitmap by default to enable dirty logging=
-.
-> > +             *
-> > +             * Note that with KVM_DIRTY_LOG_INITIALLY_SET, dirty loggi=
-ng
-> > +             * will be enabled gradually in small chunks using
-> > +             * KVM_CLEAR_DIRTY_LOG
-> > +             */
-> > +            if (kvm_dirty_log_manual_enabled()) {
-> > +                bitmap_set(block->clear_bmap, 0, clear_bmap_pages);
-> > +            }
->
-> Why it needs to be relevant to whether DIRTY_LOG is enabled?
->
-> I wonder if we should always set clear_bmap to 1 unconditionally, as we
-> always set bmap to all 1s by default.
->
-
-OK, this works. We can drop it.
-
-
->
-> Then we skip sync always during setup, dropping patch 1.
->
-
-IIUC, KVM initializes the slot->dirty_bitmap with 1 only when
-KVM_DIRTY_LOG_INITIALLY_SET is enabled, 0 otherwize.
-This means that if KVM does not support the
-KVM_DIRTY_LOG_INITIALLY_SET feature, userspace should
-do the first sync so that KVM could set the WP bit and clear
-the D-bit of the PTE.
-
-Skipping first sync could handle this scenario?
-
-
-> >          }
-> >      }
-> >  }
-> > @@ -2771,6 +2782,7 @@ static void
-> migration_bitmap_clear_discarded_pages(RAMState *rs)
-> >
-> >  static bool ram_init_bitmaps(RAMState *rs, Error **errp)
-> >  {
-> > +    Error *local_err =3D NULL;
-> >      bool ret =3D true;
-> >
-> >      qemu_mutex_lock_ramlist();
-> > @@ -2783,7 +2795,19 @@ static bool ram_init_bitmaps(RAMState *rs, Error
-> **errp)
-> >              if (!ret) {
-> >                  goto out_unlock;
-> >              }
-> > -            migration_bitmap_sync_precopy(false);
-> > +
-> > +            if (kvm_dirty_log_manual_enabled()) {
-> > +                /*
-> > +                 * Bypass the RAMBlock dirty sync and still publish a
-> > +                 * notification.
-> > +                 */
-> > +                if (precopy_notify(PRECOPY_NOTIFY_AFTER_BITMAP_SYNC,
-> > +                            &local_err)) {
-> > +                    error_report_err(local_err);
-> > +                }
-> > +            } else {
-> > +                migration_bitmap_sync_precopy(false);
-> > +            }
-> >          }
-> >      }
-> >  out_unlock:
-> > --
-> > 2.27.0
-> >
->
-> --
-> Peter Xu
->
->
-
---=20
-Best regards
-
---000000000000a0d0c10625a832d9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
-ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct 30, 20=
-24 at 12:21=E2=80=AFAM Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com">pe=
-terx@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
-tyle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:so=
-lid;border-left-color:rgb(204,204,204);padding-left:1ex">On Wed, Oct 23, 20=
-24 at 10:09:51AM +0800, <a href=3D"mailto:yong.huang@smartx.com" target=3D"=
-_blank">yong.huang@smartx.com</a> wrote:<br>
-&gt; From: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=
-=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
-&gt; <br>
-&gt; KVM always returns 1 when userspace retrieves a dirty bitmap for<br>
-&gt; the first time when KVM_DIRTY_LOG_INITIALLY_SET is enabled; in such<br=
->
-&gt; scenario, the RAMBlock dirty sync of the initial iteration can be<br>
-&gt; skipped.<br>
-&gt; <br>
-&gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com=
-" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 migration/cpu-throttle.c |=C2=A0 3 ++-<br>
-&gt;=C2=A0 migration/ram.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 30 +++++++++=
-++++++++++++++++++---<br>
-&gt;=C2=A0 2 files changed, 29 insertions(+), 4 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c<br>
-&gt; index 342681cdd4..06e3b1be78 100644<br>
-&gt; --- a/migration/cpu-throttle.c<br>
-&gt; +++ b/migration/cpu-throttle.c<br>
-&gt; @@ -27,6 +27,7 @@<br>
-&gt;=C2=A0 #include &quot;hw/core/cpu.h&quot;<br>
-&gt;=C2=A0 #include &quot;qemu/main-loop.h&quot;<br>
-&gt;=C2=A0 #include &quot;sysemu/cpus.h&quot;<br>
-&gt; +#include &quot;sysemu/kvm.h&quot;<br>
-&gt;=C2=A0 #include &quot;cpu-throttle.h&quot;<br>
-&gt;=C2=A0 #include &quot;migration.h&quot;<br>
-&gt;=C2=A0 #include &quot;migration-stats.h&quot;<br>
-&gt; @@ -141,7 +142,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaq=
-ue)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* effect on guest performance, therefore omi=
-t it to avoid<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* paying extra for the sync penalty.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; -=C2=A0 =C2=A0 if (sync_cnt &lt;=3D 1) {<br>
-&gt; +=C2=A0 =C2=A0 if (sync_cnt &lt;=3D (kvm_dirty_log_manual_enabled() ? =
-0 : 1)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto end;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 <br>
-&gt; diff --git a/migration/ram.c b/migration/ram.c<br>
-&gt; index d284f63854..b312ebd69d 100644<br>
-&gt; --- a/migration/ram.c<br>
-&gt; +++ b/migration/ram.c<br>
-&gt; @@ -2718,7 +2718,7 @@ static void ram_list_init_bitmaps(void)<br>
-&gt;=C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 MigrationState *ms =3D migrate_get_current();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 RAMBlock *block;<br>
-&gt; -=C2=A0 =C2=A0 unsigned long pages;<br>
-&gt; +=C2=A0 =C2=A0 unsigned long pages, clear_bmap_pages;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 uint8_t shift;<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 /* Skip setting bitmap if there is no RAM */<br>
-&gt; @@ -2736,6 +2736,7 @@ static void ram_list_init_bitmaps(void)<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 RAMBLOCK_FOREACH_NOT_IGNORED(block) =
-{<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pages =3D block-&gt;ma=
-x_length &gt;&gt; TARGET_PAGE_BITS;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 clear_bmap_pages =3D clear_=
-bmap_size(pages, shift);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* The initial di=
-rty bitmap for migration must be set with all<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* ones to make s=
-ure we&#39;ll migrate every guest RAM page to<br>
-&gt; @@ -2751,7 +2752,17 @@ static void ram_list_init_bitmaps(void)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&g=
-t;file_bmap =3D bitmap_new(pages);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;clear_bmap_s=
-hift =3D shift;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;clear_bmap =3D bi=
-tmap_new(clear_bmap_size(pages, shift));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;clear_bmap =3D bi=
-tmap_new(clear_bmap_pages);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Set the clear bitma=
-p by default to enable dirty logging.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Note that with KVM_=
-DIRTY_LOG_INITIALLY_SET, dirty logging<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* will be enabled gra=
-dually in small chunks using<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* KVM_CLEAR_DIRTY_LOG=
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (kvm_dirty_log_manual_en=
-abled()) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bitmap_set(bl=
-ock-&gt;clear_bmap, 0, clear_bmap_pages);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-Why it needs to be relevant to whether DIRTY_LOG is enabled?<br>
-<br>
-I wonder if we should always set clear_bmap to 1 unconditionally, as we<br>
-always set bmap to all 1s by default.<br></blockquote><div><br></div><div><=
-div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gma=
-il_default">OK, this works. We can drop it.</div></div><div>=C2=A0</div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t-width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);padd=
-ing-left:1ex">
-<br>
-Then we skip sync always during setup, dropping patch 1.<br></blockquote><d=
-iv><br></div><div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-=
-serif" class=3D"gmail_default">IIUC, KVM initializes the slot-&gt;dirty_bit=
-map with 1 only when</div><div class=3D"gmail_default"><font face=3D"comic =
-sans ms, sans-serif">KVM_DIRTY_LOG_INITIALLY_SET is enabled, 0 otherwize.</=
-font></div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" =
-class=3D"gmail_default"></div></div><div style=3D"font-family:&quot;comic s=
-ans ms&quot;,sans-serif" class=3D"gmail_default">This means that if KVM doe=
-s not support the</div><div style=3D"font-family:&quot;comic sans ms&quot;,=
-sans-serif" class=3D"gmail_default">KVM_DIRTY_LOG_INITIALLY_SET feature, us=
-erspace should</div><div style=3D"font-family:&quot;comic sans ms&quot;,san=
-s-serif" class=3D"gmail_default">do the first sync so that KVM could set th=
-e WP bit and clear</div><div style=3D"font-family:&quot;comic sans ms&quot;=
-,sans-serif" class=3D"gmail_default">the D-bit of the PTE.</div><div style=
-=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_defaul=
-t"><br></div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif=
-" class=3D"gmail_default">Skipping first sync could handle this scenario?</=
-div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-color=
-:rgb(204,204,204);padding-left:1ex">
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 }<br>
-&gt; @@ -2771,6 +2782,7 @@ static void migration_bitmap_clear_discarded_pag=
-es(RAMState *rs)<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 static bool ram_init_bitmaps(RAMState *rs, Error **errp)<br>
-&gt;=C2=A0 {<br>
-&gt; +=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 bool ret =3D true;<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 qemu_mutex_lock_ramlist();<br>
-&gt; @@ -2783,7 +2795,19 @@ static bool ram_init_bitmaps(RAMState *rs, Erro=
-r **errp)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!ret) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out=
-_unlock;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 migration_bitmap_sync_preco=
-py(false);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (kvm_dirty_log_manual_en=
-abled()) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Bypas=
-s the RAMBlock dirty sync and still publish a<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* notif=
-ication.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (precopy_n=
-otify(PRECOPY_NOTIFY_AFTER_BITMAP_SYNC,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;local_err)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- error_report_err(local_err);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 migration_bit=
-map_sync_precopy(false);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 out_unlock:<br>
-&gt; -- <br>
-&gt; 2.27.0<br>
-&gt; <br>
-<br>
--- <br>
-Peter Xu<br>
-<br>
-</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
-=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
-ignature"><div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best re=
-gards</font></div></div></div>
-
---000000000000a0d0c10625a832d9--
+SGkgQW5kcmV3LCANCg0KPiBTdWJqZWN0OiBSZTogW1BBVENIIHYxIDUvOF0gaHcvc2Qvc2RoY2k6
+IEludHJvZHVjZSBhIG5ldyBXcml0ZSBQcm90ZWN0ZWQgcGluDQo+IGludmVydGVkIHByb3BlcnR5
+DQo+IA0KPiBPbiBUdWUsIDIwMjQtMTAtMjkgYXQgMTc6MTcgKzA4MDAsIEphbWluIExpbiB3cm90
+ZToNCj4gPiBUaGUgV3JpdGUgUHJvdGVjdCBwaW4gb2YgU0RIQ0kgbW9kZWwgaXMgZGVmYXVsdCBh
+Y3RpdmUgbG93IHRvIG1hdGNoDQo+ID4gdGhlIFNESENJIHNwZWMuIFNvLCB3cml0ZSBlbmFibGUg
+dGhlIGJpdCAxOSBzaG91bGQgYmUgMSBhbmQgd3JpdGUNCj4gPiBwcm90ZWN0ZWQgdGhlIGJpdCAx
+OSBzaG91bGQgYmUgMCBhdCB0aGUgUHJlc2VudCBTdGF0ZSBSZWdpc3RlciAoMHgyNCkuDQo+ID4g
+SG93ZXZlciwgc29tZSBib2FyZCBhcmUgZGVzaWduIFdyaXRlIFByb3RlY3RlZCBwaW4gYWN0aXZl
+IGhpZ2guIEluDQo+ID4gb3RoZXIgd29yZHMsIHdyaXRlIGVuYWJsZSB0aGUgYml0IDE5IHNob3Vs
+ZCBiZSAwIGFuZCB3cml0ZSBwcm90ZWN0ZWQNCj4gPiB0aGUgYml0IDE5IHNob3VsZCBiZSAxIGF0
+IHRoZSBQcmVzZW50IFN0YXRlIFJlZ2lzdGVyICgweDI0KS4gVG8NCj4gPiBzdXBwb3J0IGl0LCBp
+bnRyb2R1Y2VzIGEgbmV3ICJ3cF9pbnZlcnQiDQo+ID4gcHJvcGVydHkgYW5kIHNldCBpdCBmYWxz
+ZSBieSBkZWZhdWx0Lg0KPiA+DQo+ID4gU2lnbmVkLW9mZi1ieTogSmFtaW4gTGluIDxqYW1pbl9s
+aW5AYXNwZWVkdGVjaC5jb20+DQo+ID4gLS0tDQo+ID4gwqBody9zZC9zZGhjaS5jwqDCoMKgwqDC
+oMKgwqDCoCB8IDYgKysrKysrDQo+ID4gwqBpbmNsdWRlL2h3L3NkL3NkaGNpLmggfCA1ICsrKysr
+DQo+ID4gwqAyIGZpbGVzIGNoYW5nZWQsIDExIGluc2VydGlvbnMoKykNCj4gPg0KPiA+IGRpZmYg
+LS1naXQgYS9ody9zZC9zZGhjaS5jIGIvaHcvc2Qvc2RoY2kuYyBpbmRleA0KPiA+IGRiN2Q1NDcx
+NTYuLmJkZjVjYmZiODAgMTAwNjQ0DQo+ID4gLS0tIGEvaHcvc2Qvc2RoY2kuYw0KPiA+ICsrKyBi
+L2h3L3NkL3NkaGNpLmMNCj4gPiBAQCAtMjc1LDYgKzI3NSwxMCBAQCBzdGF0aWMgdm9pZCBzZGhj
+aV9zZXRfcmVhZG9ubHkoRGV2aWNlU3RhdGUgKmRldiwNCj4gPiBib29sIGxldmVsKQ0KPiA+IMKg
+ew0KPiA+IMKgwqDCoMKgIFNESENJU3RhdGUgKnMgPSAoU0RIQ0lTdGF0ZSAqKWRldjsNCj4gPg0K
+PiA+ICvCoMKgwqAgaWYgKHMtPndwX2ludmVydCkgew0KPiA+ICvCoMKgwqDCoMKgwqDCoCBsZXZl
+bCA9ICFsZXZlbDsNCj4gPiArwqDCoMKgIH0NCj4gPiArDQo+ID4gwqDCoMKgwqAgaWYgKGxldmVs
+KSB7DQo+ID4gwqDCoMKgwqDCoMKgwqDCoCBzLT5wcm5zdHMgJj0gflNESENfV1JJVEVfUFJPVEVD
+VDsNCj4gPiDCoMKgwqDCoCB9IGVsc2Ugew0KPiA+IEBAIC0xNTUxLDYgKzE1NTUsOCBAQCBzdGF0
+aWMgUHJvcGVydHkgc2RoY2lfc3lzYnVzX3Byb3BlcnRpZXNbXSA9IHsNCj4gPiDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZmFsc2UpLA0KPiA+IMKgwqDCoMKgIERF
+RklORV9QUk9QX0xJTksoImRtYSIsIFNESENJU3RhdGUsDQo+ID4gwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGRtYV9tciwgVFlQRV9NRU1PUllfUkVHSU9OLA0KPiBN
+ZW1vcnlSZWdpb24gKiksDQo+ID4gK8KgwqDCoCBERUZJTkVfUFJPUF9CT09MKCJ3cC1pbnZlcnQi
+LCBTREhDSVN0YXRlLA0KPiANCj4gQ2FuIHdlIGxpbmUgdGhlIG5hbWUgdXAgd2l0aCB0aGUgbW1j
+LWNvbnRyb2xsZXIgZGV2aWNldHJlZSBiaW5kaW5nDQo+ICgid3AtaW52ZXJ0ZWQiKT8NCj4gDQpU
+aGFua3MgZm9yIHN1Z2dlc3Rpb24gYW5kIHJldmlldy4NCldpbGwgdXBkYXRlIGl0Lg0KDQpKYW1p
+bg0KPiBodHRwczovL2dpdC5rZXJuZWwub3JnL3B1Yi9zY20vbGludXgva2VybmVsL2dpdC90b3J2
+YWxkcy9saW51eC5naXQvdHJlZS9Eb2N1bWUNCj4gbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdz
+L21tYy9tbWMtY29udHJvbGxlci55YW1sI243MQ0KPiANCj4gQW5kcmV3DQo+IA0KPiA+ICvCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHdwX2ludmVydCwgZmFsc2UpLA0K
+PiA+IMKgwqDCoMKgIERFRklORV9QUk9QX0VORF9PRl9MSVNUKCksDQo+ID4gwqB9Ow0KPiA+DQo+
+ID4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvaHcvc2Qvc2RoY2kuaCBiL2luY2x1ZGUvaHcvc2Qvc2Ro
+Y2kuaCBpbmRleA0KPiA+IDZjZDI4MjJmMWQuLmQ2OGY0Nzg4ZTcgMTAwNjQ0DQo+ID4gLS0tIGEv
+aW5jbHVkZS9ody9zZC9zZGhjaS5oDQo+ID4gKysrIGIvaW5jbHVkZS9ody9zZC9zZGhjaS5oDQo+
+ID4gQEAgLTEwMCw2ICsxMDAsMTEgQEAgc3RydWN0IFNESENJU3RhdGUgew0KPiA+IMKgwqDCoMKg
+IHVpbnQ4X3Qgc2Rfc3BlY192ZXJzaW9uOw0KPiA+IMKgwqDCoMKgIHVpbnQ4X3QgdWhzX21vZGU7
+DQo+ID4gwqDCoMKgwqAgdWludDhfdCB2ZW5kb3I7wqDCoMKgwqDCoMKgwqAgLyogRm9yIHZlbmRv
+ciBzcGVjaWZpYyBmdW5jdGlvbmFsaXR5ICovDQo+ID4gK8KgwqDCoCAvKg0KPiA+ICvCoMKgwqDC
+oCAqIFdyaXRlIFByb3RlY3QgcGluIGRlZmF1bHQgYWN0aXZlIGxvdyBmb3IgZGV0ZWN0aW5nIFNE
+IGNhcmQNCj4gPiArwqDCoMKgwqAgKiB0byBiZSBwcm90ZWN0ZWQuIFNldCB3cF9pbnZlcnQgdG8g
+dHJ1ZSBpbnZlcnRlZCB0aGUgc2lnbmFsLg0KPiA+ICvCoMKgwqDCoCAqLw0KPiA+ICvCoMKgwqAg
+Ym9vbCB3cF9pbnZlcnQ7DQo+ID4gwqB9Ow0KPiA+IMKgdHlwZWRlZiBzdHJ1Y3QgU0RIQ0lTdGF0
+ZSBTREhDSVN0YXRlOw0KPiA+DQoNCg==
 
