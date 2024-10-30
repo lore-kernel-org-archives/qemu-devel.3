@@ -4,79 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC659D7494E
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 01:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6681ED74954
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 01:33:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5xXB-0004L8-3a; Tue, 29 Oct 2024 21:30:05 -0400
+	id 1t5xaT-0005Dy-Sy; Tue, 29 Oct 2024 21:33:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t5xX9-0004Jy-0T; Tue, 29 Oct 2024 21:30:03 -0400
-Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t5xX7-0008UE-5w; Tue, 29 Oct 2024 21:30:02 -0400
-Received: by mail-ua1-x92b.google.com with SMTP id
- a1e0cc1a2514c-84fd01c9defso1929169241.0; 
- Tue, 29 Oct 2024 18:30:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730251800; x=1730856600; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LcsuV1giHEMWV/84waaTqLHpKCE7Q0iQAptGH4wCTmE=;
- b=k9goHvsKwoEWgT0JK+G0zabv5yNmUjHZ6J2/CGfra/4ELH3nsusSYEu0Rw2+NIjxbT
- ds4USxeAlUvrIaWB4g4NGnQLm5bGKvsCxDOvDonl5CjCGCrWRI9wNUK8zw4K7BTVgP1y
- 8i8K8irplJrsuIerXzsWqMg3crtcIQiZGms8b+/mRdwPJY4/GUBrb/fpnhlXYUhb6WAP
- 7UydJu07ed1t8IJBCV42CieO7iRPn3yt3ikon0td24PguCjommQrK+ZnVNNpm4pl50yD
- zC4OFO4XCTg6MswYLzvNSn0T1UBKGHbVWVwPM0IwrvSec5Tau1gsoBNkqQy5GfMO3Ee7
- NHyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730251800; x=1730856600;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LcsuV1giHEMWV/84waaTqLHpKCE7Q0iQAptGH4wCTmE=;
- b=Y64w4lvx6iej+asi/hZArStWF65W7a30MxlL45d8aGnuAGptNM7UqjKCYS3JCrXMWJ
- OZiWqzseiR7QsGLQn0DBc7OGqRTvbpvAMfwMQzyjbL8X0kwxfxPWbBmWUSGb9Dynx2iQ
- sDnF2Kh4dVkok9O92qtOeb29FQkMB+xQLNnwAWoZuMAL0ZeYpMmpig+Z/oKigxBp4x/+
- MqqakmhD6OL143AOhXjbQxP/xMqOwpcOK+ZQg1sqQt20MrR9ROz9WylrnUajXicqWgCp
- MQo2K4CYuTPW3Cb3WslSm14D10gt0DoqWpOQJMjPPQtSEMo7wWkjIFoRgGR5RnJYENpX
- 5nSA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUDubjuCvutA4RR+7kXGNU6NlA/jgQa5LnOeiq91tv0yhvrIgEwKm+UefTc3jViGyCoL7eaUdP2OaXw@nongnu.org
-X-Gm-Message-State: AOJu0YydF0IF2k30PQylLnO1217oIVGSsSUXXeBSEW/uA7fZz/wfDWy/
- 2pVfn99qtDaIiUh51NFz71fXsOe/iXNOqZlBulhgGi/ZF0ox7TW+Tv86YS3vbNlaIaxzx7KiRyz
- 5r7Z2/Xs0R8wDtgotLvACWwjGCx8=
-X-Google-Smtp-Source: AGHT+IH0jRTQld5Qvc0UZS1MMPuyd/DR5bydrPtnZItp0LzgZuTDnYjtG4xgHM2C6P0FxG4nZnRt8RHDfJTfH0NIW5c=
-X-Received: by 2002:a05:6102:304f:b0:4a8:c03f:f4bd with SMTP id
- ada2fe7eead31-4a8cfd8cd2amr12636926137.29.1730251799676; Tue, 29 Oct 2024
- 18:29:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1t5xaR-0005Dq-Qw
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 21:33:27 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1t5xaP-0000Ok-4V
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 21:33:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730252005; x=1761788005;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=z2P0U/8mUkG39DfQ491blLTMEkVTyrhIBMZJ2F9krM4=;
+ b=Uzi5UNgXvEXts6vO1DYZF47tKaQs5TQkjvxwlfUPcTvsqUz2FscED9/q
+ KWUczK/W0vgFBFXNT4d4o1UnyeemJOQ5Ac214/fcs2mN3KOI1AAMII8LE
+ oEqEpM7E5gEnEQS5ALAsEvnvITzyWrwScWupocxNDd8cFSe3cqLiqu2Qp
+ mWyOdHjR652LxTDN/SwGMwLMhHq3RxpQlUa3Gtmry8GnYQokRNa+N956G
+ 6D2FnLjPnHJIlmDtu1pQoIZcuNSC+PZlgqmfjSaPxhGDNL4g7MiReMbzv
+ e6udw9u5eTislomq4uk2pPmt6AofYaE/7vx+2wSTYO0kSDGP/LTKH6Wws w==;
+X-CSE-ConnectionGUID: GwaSdyJxQv6k3gvds/dbRA==
+X-CSE-MsgGUID: S9z+pP/lRbCc1Ne11q/6+A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11240"; a="33732060"
+X-IronPort-AV: E=Sophos;i="6.11,243,1725346800"; d="scan'208";a="33732060"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Oct 2024 18:33:23 -0700
+X-CSE-ConnectionGUID: NLrlIXE5S+qE6bvw0hrvhQ==
+X-CSE-MsgGUID: FjN4udZRRqimcEsEfQb1qQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,243,1725346800"; d="scan'208";a="112951107"
+Received: from linux.bj.intel.com ([10.238.157.71])
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Oct 2024 18:33:21 -0700
+Date: Wed, 30 Oct 2024 09:28:14 +0800
+From: Tao Su <tao1.su@linux.intel.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
+ xiaoyao.li@intel.com, xuelian.guo@intel.com
+Subject: Re: [PATCH 6/6] target/i386: Introduce GraniteRapids-v2 model
+Message-ID: <ZyGLrphgAQd6ubKL@linux.bj.intel.com>
+References: <20241028024512.156724-1-tao1.su@linux.intel.com>
+ <20241028024512.156724-7-tao1.su@linux.intel.com>
+ <ZyD4HyATnm1CfZZN@intel.com>
 MIME-Version: 1.0
-References: <20241016204038.649340-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20241016204038.649340-1-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 30 Oct 2024 11:29:32 +1000
-Message-ID: <CAKmqyKMJYxrucf+b4JecTF3vn6ZhbP9ZMBFm1tP71gm=ZsiQsQ@mail.gmail.com>
-Subject: Re: [PATCH v10 00/12] riscv: QEMU RISC-V IOMMU support
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZyD4HyATnm1CfZZN@intel.com>
+Received-SPF: none client-ip=198.175.65.14;
+ envelope-from=tao1.su@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,87 +84,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 6:41=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> Hi,
->
-> In this new version we fixed address alignment issues in some command
-> queue commands, pointed out by Jason in v9.
->
-> No other changes made. Series based on alistair/riscv-to-apply.next.
->
-> All patches reviewed.
->
-> Changes from v9:
-> - patch 3:
->   - fixed cmd.dword1 alignment in riscv_iommu_process_cq_tail()
-> - patch 8:
->   - fixed cmd.dword1 alignment in riscv_iommu_process_cq_tail()
-> - v9 link: https://lore.kernel.org/qemu-riscv/20241004155721.2154626-1-db=
-arboza@ventanamicro.com/
->
->
-> Daniel Henrique Barboza (4):
->   pci-ids.rst: add Red Hat pci-id for RISC-V IOMMU device
->   test/qtest: add riscv-iommu-pci tests
->   qtest/riscv-iommu-test: add init queues test
->   docs/specs: add riscv-iommu
->
-> Tomasz Jeznach (8):
->   exec/memtxattr: add process identifier to the transaction attributes
->   hw/riscv: add riscv-iommu-bits.h
->   hw/riscv: add RISC-V IOMMU base emulation
->   hw/riscv: add riscv-iommu-pci reference device
->   hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice hotplug
->   hw/riscv/riscv-iommu: add Address Translation Cache (IOATC)
->   hw/riscv/riscv-iommu: add ATS support
->   hw/riscv/riscv-iommu: add DBG support
+On Tue, Oct 29, 2024 at 10:58:39PM +0800, Zhao Liu wrote:
+> On Mon, Oct 28, 2024 at 10:45:12AM +0800, Tao Su wrote:
+> > Date: Mon, 28 Oct 2024 10:45:12 +0800
+> > From: Tao Su <tao1.su@linux.intel.com>
+> > Subject: [PATCH 6/6] target/i386: Introduce GraniteRapids-v2 model
+> > X-Mailer: git-send-email 2.34.1
+> > 
+> > Update GraniteRapids CPU model to add AVX10 and the missing features(ss,
+> > tsc-adjust, cldemote, movdiri, movdir64b).
+> 
+> Do you have datasheet link? It's better to add the link in the commit
+> message for easy comparison checking.
+> 
 
-Thanks!
+Sorry, I think we can get new CPUIDs in ISE[*], but as far as I know,
+there is no datasheet which lists all CPUIDs.
 
-Applied to riscv-to-apply.next
+[*] https://cdrdv2.intel.com/v1/dl/getContent/671368
 
-Alistair
+> > Tested-by: Xuelian Guo <xuelian.guo@intel.com>
+> > Signed-off-by: Tao Su <tao1.su@linux.intel.com>
+> > ---
+> >  target/i386/cpu.c | 17 +++++++++++++++++
+> >  1 file changed, 17 insertions(+)
+> > 
+> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> > index adde98fd26..8d72c08b66 100644
+> > --- a/target/i386/cpu.c
+> > +++ b/target/i386/cpu.c
+> > @@ -4375,6 +4375,23 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+> >          .model_id = "Intel Xeon Processor (GraniteRapids)",
+> >          .versions = (X86CPUVersionDefinition[]) {
+> >              { .version = 1 },
+> > +            {
+> > +                .version = 2,
+> > +                .props = (PropValue[]) {
+> > +                    { "ss", "on" },
+> > +                    { "tsc-adjust", "on" },
+> > +                    { "cldemote", "on" },
+> > +                    { "movdiri", "on" },
+> > +                    { "movdir64b", "on" },
+> > +                    { "avx10", "on" },
+> > +                    { "avx10-128", "on" },
+> > +                    { "avx10-256", "on" },
+> > +                    { "avx10-512", "on" },
+> > +                    { "avx10-version", "1" },
+> > +                    { "stepping", "1" },
+> > +                    { /* end of list */ }
+> > +                }
+> > +            },
+> >              { /* end of list */ },
+> >          },
+> >      },
+> > -- 
+> > 2.34.1
+> > 
+> 
+> LGTM,
+> 
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> 
+> BTW, Could you please update the CPU model you added in
+> docs/system/cpu-models-x86.rst.inc (section "Preferred CPU models for
+> Intel x86 hosts") as well? Although this document has been inactive for
+> some time, it hasn't been deprecated, and we can pick it up again to
+> continue updating it, helping QEMU users understand QEMU's support for
+> x86 CPU/features.
 
->
->  docs/specs/index.rst             |    1 +
->  docs/specs/pci-ids.rst           |    2 +
->  docs/specs/riscv-iommu.rst       |   90 ++
->  docs/system/riscv/virt.rst       |   13 +
->  hw/riscv/Kconfig                 |    4 +
->  hw/riscv/meson.build             |    1 +
->  hw/riscv/riscv-iommu-bits.h      |  421 ++++++
->  hw/riscv/riscv-iommu-pci.c       |  202 +++
->  hw/riscv/riscv-iommu.c           | 2399 ++++++++++++++++++++++++++++++
->  hw/riscv/riscv-iommu.h           |  130 ++
->  hw/riscv/trace-events            |   17 +
->  hw/riscv/trace.h                 |    1 +
->  hw/riscv/virt.c                  |   33 +-
->  include/exec/memattrs.h          |    5 +
->  include/hw/pci/pci.h             |    1 +
->  include/hw/riscv/iommu.h         |   36 +
->  meson.build                      |    1 +
->  tests/qtest/libqos/meson.build   |    4 +
->  tests/qtest/libqos/riscv-iommu.c |   76 +
->  tests/qtest/libqos/riscv-iommu.h |  101 ++
->  tests/qtest/meson.build          |    1 +
->  tests/qtest/riscv-iommu-test.c   |  210 +++
->  22 files changed, 3748 insertions(+), 1 deletion(-)
->  create mode 100644 docs/specs/riscv-iommu.rst
->  create mode 100644 hw/riscv/riscv-iommu-bits.h
->  create mode 100644 hw/riscv/riscv-iommu-pci.c
->  create mode 100644 hw/riscv/riscv-iommu.c
->  create mode 100644 hw/riscv/riscv-iommu.h
->  create mode 100644 hw/riscv/trace-events
->  create mode 100644 hw/riscv/trace.h
->  create mode 100644 include/hw/riscv/iommu.h
->  create mode 100644 tests/qtest/libqos/riscv-iommu.c
->  create mode 100644 tests/qtest/libqos/riscv-iommu.h
->  create mode 100644 tests/qtest/riscv-iommu-test.c
->
-> --
-> 2.45.2
->
->
+Yes, thanks for this suggestion! I think I can update the doc when I
+introduce new CPU models (e.g. upcoming Clearwater Forest).
 
