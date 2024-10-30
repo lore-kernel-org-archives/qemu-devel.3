@@ -4,93 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 438F9D5CC9A
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 11:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D07D5CCA0
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 11:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t673u-0001KG-BW; Wed, 30 Oct 2024 07:40:30 -0400
+	id 1t67Jy-0003g5-QS; Wed, 30 Oct 2024 07:57:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t673q-0001HI-8V
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 07:40:28 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t673o-00070F-Ae
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 07:40:25 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2fb59652cb9so64515171fa.3
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 04:40:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730288422; x=1730893222; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+PZ5CdN9uKOMDhAIHDmLsvqs+nzb3ZYzgPxMXigN5+Y=;
- b=y4FqjvKtEJLn2KX8OZ5qhszyciyQVO4cm+5XfpRZAX1KF5ZyrTDMnwQ5KhPexRW3X2
- DX6SwWWSVu5z38ZwVU3gAilF1avwAGpvmeZ1+xVO/F6TYuGllv7labRlVMkmdWPmgJa/
- bmetXFenLZDMD71DGzbKxkYy5GpNhIDivuQethwpFEctpDsMzun/Bxh6lsedWstl9DYU
- ZcZNcEZY6GAW8sj/aiwggdES69rsO0tL2WcayFIE289tGbRdLRNSm53LBXZwBEHKtpM/
- USiEU1CSnvoNLwY33KRhGXYk0cjFJY3GHZN6VV3DcY/HW2afHsvmnB8Ec2Px0wQ6yZe0
- wQqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730288422; x=1730893222;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+PZ5CdN9uKOMDhAIHDmLsvqs+nzb3ZYzgPxMXigN5+Y=;
- b=SQVKe8C78anCQeXZ4WLOxPN5DMJGFKSHukyqhRmdPBZXYCxyxynX4xH57T32wrkUkK
- GOzk+npDffLIjEoDRoFLjq9e64CWGqJRAWFwyU92LyqBNztFZQVZjVA2Gia7Dh9TqgjG
- hQRf5Fd0fQ+s36rGuzEYjhFCGxTVN/nGsjWSwNL+pzmvL5hry2Er0EIzP54watXoEWAw
- 3VOrXnSA7+KOACTDElhcthp+IT9fApPsmhONHL2BNJvHZit9SvQKwP4huOUpcTSVx5KX
- i/hfPo+Vcjeqvms8Wqo5sB/MQOHJp5vodQLH3E7nChNMi0d8HhRaap2Ua3v1xzZj3Pwe
- oKKA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWhXMyd80PYhXYmzz1XIACIK0jTHKg849u9bNpilhfu4J25gvp9fZHO752y7VqgQBxxoBPCubl6kw1h@nongnu.org
-X-Gm-Message-State: AOJu0Yw8yj0pBjHT/+ZLk1x7XBTsm/IhmkWcJctetX8pwZEvAaPZBfUC
- h+T0Z3x+Sig+ZCEkcjcBQRrUf/suVz/uKV9zEoZOoI8XmymWEe4mX2OWmwJTYNU=
-X-Google-Smtp-Source: AGHT+IGwco1axtQNIEF4+zACnRZ5JFnRnGzlc+t+8hW3f7Fgls0nfOwbwfcHTonW6JFTRcaXUmXvpQ==
-X-Received: by 2002:a05:6512:2304:b0:53a:aea:a9e1 with SMTP id
- 2adb3069b0e04-53b34a1afd9mr8447421e87.54.1730288422041; 
- Wed, 30 Oct 2024 04:40:22 -0700 (PDT)
-Received: from [192.168.21.227] ([89.100.107.89])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bd9ca8eesm19100815e9.43.2024.10.30.04.40.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Oct 2024 04:40:21 -0700 (PDT)
-Message-ID: <7a046c99-c4e7-4395-8dc9-9139e9bfba06@linaro.org>
-Date: Wed, 30 Oct 2024 11:40:19 +0000
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t67Jv-0003fh-T8
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 07:57:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t67Js-00004r-E5
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 07:57:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730289418;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U+N0H1B0MA9hvpjt5R/6tUfhVLls/ZeuOgKaKy+cMRw=;
+ b=NFTTcchoEclIdqj1LSQrVgqG7HZkc67Ckw9osUOfmY8OAiCJjcwvmUKAE72wjzCfGerYgY
+ bGf3DXnxdmQ2nxgR3o1HUhNzgGA1BwrMNbNgAIpLTg08sa6sGym76yZKgReja6n2qX1N5w
+ 5i8sS6lvmFL9pgOTDtwTKwJWTyp4wfI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-435-dy-fwaTbPpiOIvRVteR4Qg-1; Wed,
+ 30 Oct 2024 07:56:55 -0400
+X-MC-Unique: dy-fwaTbPpiOIvRVteR4Qg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 765AD19560B0; Wed, 30 Oct 2024 11:56:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.92])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7103E19560A2; Wed, 30 Oct 2024 11:56:52 +0000 (UTC)
+Date: Wed, 30 Oct 2024 11:56:49 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: liequan che <liequanche@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH V3] crypto: Introduce SM3 hash hmac pbkdf algorithm
+Message-ID: <ZyIfAd_tWU-FzzbM@redhat.com>
+References: <CAAsfc_puem7rZtC2TkEvP81P9edMvNuT3tVM7TPH3NQbR-VC9g@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 2/2] target/riscv: rvv: improve performance of RISC-V
- vector loads and stores on large amounts of data.
-To: Paolo Savini <paolo.savini@embecosm.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
- Max Chou <max.chou@sifive.com>
-References: <20241029194348.59574-1-paolo.savini@embecosm.com>
- <20241029194348.59574-3-paolo.savini@embecosm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241029194348.59574-3-paolo.savini@embecosm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAAsfc_puem7rZtC2TkEvP81P9edMvNuT3tVM7TPH3NQbR-VC9g@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,64 +83,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/29/24 19:43, Paolo Savini wrote:
-> This patch optimizes the emulation of unit-stride load/store RVV instructions
-> when the data being loaded/stored per iteration amounts to 16 bytes or more.
-> The optimization consists of calling __builtin_memcpy on chunks of data of 16
-> bytes between the memory address of the simulated vector register and the
-> destination memory address and vice versa.
-> This is done only if we have direct access to the RAM of the host machine,
-> if the host is little endiand and if it supports atomic 128 bit memory
-> operations.
+On Wed, Oct 30, 2024 at 08:58:21AM +0800, liequan che wrote:
+> Introduce the SM3 cryptographic hash algorithm (GB/T 32905-2016).
 > 
-> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+> SM3 (GB/T 32905-2016) is a cryptographic standard issued by the
+> Organization of State Commercial Cryptography Administration (OSCCA)
+> as an authorized cryptographic algorithm for use within China.
+> 
+> Detect the SM3 cryptographic hash algorithm and enable the feature silently
+> if it is available.
+> 
+> Signed-off-by: cheliequan <cheliequan@inspur.com>
 > ---
->   target/riscv/vector_helper.c    | 17 ++++++++++++++++-
->   target/riscv/vector_internals.h | 12 ++++++++++++
->   2 files changed, 28 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 75c24653f0..e1c100e907 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -488,7 +488,22 @@ vext_group_ldst_host(CPURISCVState *env, void *vd, uint32_t byte_end,
->       }
->   
->       fn = fns[is_load][group_size];
-> -    fn(vd, byte_offset, host + byte_offset);
-> +
-> +    /* __builtin_memcpy uses host 16 bytes vector loads and stores if supported.
-> +     * We need to make sure that these instructions have guarantees of atomicity.
-> +     * E.g. x86 processors provide strong guarantees of atomicity for 16-byte
-> +     * memory operations if the memory operands are 16-byte aligned */
-> +    if (!HOST_BIG_ENDIAN && (byte_offset + 16 < byte_end) &&
-> +		    ((byte_offset % 16) == 0) && HOST_128_ATOMIC_MEM_OP) {
-> +      group_size = MO_128;
-> +      if (is_load) {
-> +        __builtin_memcpy((uint8_t *)(vd + byte_offset), (uint8_t *)(host + byte_offset), 16);
-> +      } else {
-> +        __builtin_memcpy((uint8_t *)(host + byte_offset), (uint8_t *)(vd + byte_offset), 16);
-> +      }
+>  crypto/hash-gcrypt.c           |  3 +++
+>  crypto/hash-nettle.c           | 14 ++++++++++++
+>  crypto/hash.c                  |  3 +++
+>  crypto/hmac-gcrypt.c           |  3 +++
+>  crypto/hmac-nettle.c           | 11 ++++++++++
+>  crypto/pbkdf-gcrypt.c          |  6 ++++++
+>  crypto/pbkdf-nettle.c          | 13 ++++++++++++
+>  include/crypto/hash.h          |  1 +
+>  meson.build                    | 39 ++++++++++++++++++++++++++++++++++
+>  qapi/crypto.json               |  3 ++-
+>  tests/unit/test-crypto-hash.c  | 16 ++++++++++++++
+>  tests/unit/test-crypto-hmac.c  |  8 +++++++
+>  tests/unit/test-crypto-pbkdf.c | 16 ++++++++++++++
+>  13 files changed, 135 insertions(+), 1 deletion(-)
 
-I said this last time and I'll say it again:
+  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-     __builtin_memcpy DOES NOT equal VMOVDQA
+In testing this, I hit a pre-existing bug in our hash availability
+detection which causes tests on fail on RHEL/Fedora. Not the fault
+of your patch, it merely exposes the problem:
 
-Your comment there about 'if supported' does not really apply.
+ https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05589.html
 
-(1) You'd need a compile-time test not the runtime test that is HOST_128_ATOMIC_MEM_OP to 
-ensure that the compiler knows that AVX vector support is present.
-
-(2) Even then, you're not giving the compiler any reason to use VMOVDQA over VMOVDQU or 
-ANY OTHER vector load/store.  So you're not really doing what you say you're doing.
+I'm queuing your patch, but I have to wait for review of the
+above two fixes before merging.
 
 
-Frankly, I think this entire patch set is premature.
-We need to get Max Chou's patch set landed first.
+BTW, your email here was sent as mixed plain/HTML and your mail client
+has applied line-wrapping to the plain text. This prevented git from
+applying the patch.
 
+It was easy enough for me to fixup the line wrapping, so no need to
+resend this, but in future please ensure to send patches as only
+plain text, no HTML, and without line wrapping.
 
-r~
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
