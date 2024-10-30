@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6AED5CCB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 14:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C6DD5CCAF
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 14:19:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t69Qq-0006CC-Ne; Wed, 30 Oct 2024 10:12:21 -0400
+	id 1t69Wj-0008LF-7m; Wed, 30 Oct 2024 10:18:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t69Qo-00068V-Ke
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 10:12:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t69Qm-0000vb-LB
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 10:12:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730297534;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3OLwsRqvaje6ZFYe2h/Cnzx/Qq9kiOFaAkrjIfM40lQ=;
- b=DXSoZ7SgKLk3WNQejGyGitIe3cv4uZ1Dd0I+DXbQGW7UlRUU/rt+QQ6kVK85JC+wiq+UVL
- 3JKwq+lkb/SLKL8ocVBgL+MRkE8/CFcEcnUdBNU6QTkFdAuaV7lChzdTY851TcRyMqj+yf
- I7RI7F4rpdrzOpvSID5YFdt4LTNgT+g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-eRpjIZaaPw6I5YsuCRZOPw-1; Wed,
- 30 Oct 2024 10:12:07 -0400
-X-MC-Unique: eRpjIZaaPw6I5YsuCRZOPw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA0CE196CE13; Wed, 30 Oct 2024 14:11:54 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.92])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A40F1955F39; Wed, 30 Oct 2024 14:11:50 +0000 (UTC)
-Date: Wed, 30 Oct 2024 14:11:46 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gao Shiyuan <gaoshiyuan@baidu.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, zuoboqun@baidu.com,
- david@redhat.com, qemu-devel@nongnu.org,
- Junjie Mao <junjie.mao@hotmail.com>, wangliang44@baidu.com
-Subject: Re: [PATCH v3 1/1] virtio-pci: fix memory_region_find for
- VirtIOPCIRegion's MR
-Message-ID: <ZyI-ohjzBP7vYXnQ@redhat.com>
-References: <20241030131324.34144-1-gaoshiyuan@baidu.com>
+ (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
+ id 1t69WT-0008I7-7a; Wed, 30 Oct 2024 10:18:11 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
+ id 1t69WQ-0001ap-0S; Wed, 30 Oct 2024 10:18:08 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-7d4fa972cbeso5696445a12.2; 
+ Wed, 30 Oct 2024 07:18:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730297883; x=1730902683; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=zJmJ20THFnIcC53RQa41yl5zTrD9wJ2uzgCdDYyeOoQ=;
+ b=f5K2QYE0rL7Kax3rt2UDguaXbEu9p+vhAzIxsa8VCW8RemXZXxL2q9zhi0wYrDpUTh
+ vVMylEQT2Di0B4yuMqFZVe3qPDFEwyWcI4JcziLWWYTstloe+on36LCcaG3cWjI/DHKI
+ pjlmwmlGY/DXyaus1PxHbGyDegmOk7xJYpeUzeZDU/eb/kXYKc/HldFbD1KMR7gqLNcy
+ fT+t6uMTRVV7RHhCRR5+2o6rduLkB3hxFjgvyw9CsoeGU9nIAvBtOVBQurAegT9R7xoe
+ IvgCqC1epznX5W3p/6cN9f5CNjd3bp8oI43KMbdsI6z6A8X7iclFv1gI2szuAeuZjo5l
+ gb2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730297883; x=1730902683;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zJmJ20THFnIcC53RQa41yl5zTrD9wJ2uzgCdDYyeOoQ=;
+ b=htgT1P5l+UPfiWoObWtWqZf7b/OGchQfHd+Xd6zedk5xc13+efEYrmWB25yRyiZQDl
+ 3a5jOoWZY/M5p4z/NzzusoOH/CcVQYGoe9+eWYHdxX6Xag7pVal8QHWoM6YIHuqYJdnA
+ 08qyqltCaD4ZT4vaWhDt7Qq83IKvMMfhIW3QXZExlSvBEJhUbuUiSCcKCdXJxhYwtLRn
+ Q5aTn5giwkHBpJSyarfXZMHUNJXCngAOfmheQ6GfN4T2Zqbw8AdweJEiF37Mx6zrMvUR
+ 6F1IixHA5lYMJijCL0fEYmWkqhi0HOP6z+0S5TMR0XadLEbLhBy6FHztwLDAUJ38CWwb
+ 3xKw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+V/Y7kJzmc7SjzC7Gt9/p9HMGr3jGcqzWSPKfNjX9sUiz/fXfgWPPJNTb/gLFbZ11htPRbLtjZeJPBQ==@nongnu.org,
+ AJvYcCWYg0OappymSwu7EqjEj18OqEplhPgh9Bxn+/UhFFnTZJvo+PYUZ4aUq+XXkrF3U6VBzKU9WJaMNbq/@nongnu.org
+X-Gm-Message-State: AOJu0YyYhcymk9u9bT7nHFiSvG/rzikhJjYeTtsrOyuluhkl1Gse0ayX
+ yHwhas8rTp2vimR+ZphH3xJ+h0N01yyjIax1iqvjjky+DZkN9Nbs/l+OeEmhPhqV1lg5Xxd1Kb1
+ zZSTQS0QxASVt1io7NTkRZ0hYkuc=
+X-Google-Smtp-Source: AGHT+IGkZuAfHgeIBobVushfP3V0CUbXjcxT2ybe4cdMTshXL0qs6UwIlOU5oWeB8BmVUjyLogzNkaoladtpIwuDM0I=
+X-Received: by 2002:a05:6a21:2d05:b0:1d5:10d6:92b9 with SMTP id
+ adf61e73a8af0-1d9a840b059mr18278365637.30.1730297882688; Wed, 30 Oct 2024
+ 07:18:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241030131324.34144-1-gaoshiyuan@baidu.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20240511101053.1875596-1-me@deliversmonkey.space>
+ <d4241c7b-ae97-4dc1-bc60-5f0eed58d3a5@ventanamicro.com>
+In-Reply-To: <d4241c7b-ae97-4dc1-bc60-5f0eed58d3a5@ventanamicro.com>
+From: Alexey Baturo <baturo.alexey@gmail.com>
+Date: Wed, 30 Oct 2024 17:17:49 +0300
+Message-ID: <CAFukJ-D081Jta287S5XKtEch3CyzgFxJ-SQGF-VyU4j165DdBw@mail.gmail.com>
+Subject: Re: [PATCH v9 0/6] Pointer Masking update for Zjpm v1.0
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: richard.henderson@linaro.org, space.monkey.delivers@gmail.com, 
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000a7488b0625b25e3d"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=baturo.alexey@gmail.com; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,81 +88,278 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 30, 2024 at 09:13:24PM +0800, Gao Shiyuan wrote:
-> As shown below, if a virtio PCI device is attached under a pci-bridge, the MR
-> of VirtIOPCIRegion does not belong to any address space. So memory_region_find
-> cannot be used to search for this MR.
-> 
-> Introduce the virtio-pci and pci_bridge address spaces to solve this problem.
-> 
-> Before:
-> memory-region: pci_bridge_pci
->   0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
->     00000000fe840000-00000000fe840fff (prio 1, i/o): virtio-net-pci-msix
->       00000000fe840000-00000000fe84003f (prio 0, i/o): msix-table
->       00000000fe840800-00000000fe840807 (prio 0, i/o): msix-pba
->     0000380000000000-0000380000003fff (prio 1, i/o): virtio-pci
->       0000380000000000-0000380000000fff (prio 0, i/o): virtio-pci-common-virtio-net
->       0000380000001000-0000380000001fff (prio 0, i/o): virtio-pci-isr-virtio-net
->       0000380000002000-0000380000002fff (prio 0, i/o): virtio-pci-device-virtio-net
->       0000380000003000-0000380000003fff (prio 0, i/o): virtio-pci-notify-virtio-net
-> 
-> After:
-> address-space: virtio-pci-cfg-mem-as
->   0000380000000000-0000380000003fff (prio 1, i/o): virtio-pci
->     0000380000000000-0000380000000fff (prio 0, i/o): virtio-pci-common-virtio-net
->     0000380000001000-0000380000001fff (prio 0, i/o): virtio-pci-isr-virtio-net
->     0000380000002000-0000380000002fff (prio 0, i/o): virtio-pci-device-virtio-net
->     0000380000003000-0000380000003fff (prio 0, i/o): virtio-pci-notify-virtio-net
-> 
-> address-space: pci_bridge_pci_mem
->   0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
->     00000000fe840000-00000000fe840fff (prio 1, i/o): virtio-net-pci-msix
->       00000000fe840000-00000000fe84003f (prio 0, i/o): msix-table
->       00000000fe840800-00000000fe840807 (prio 0, i/o): msix-pba
->     0000380000000000-0000380000003fff (prio 1, i/o): virtio-pci
->       0000380000000000-0000380000000fff (prio 0, i/o): virtio-pci-common-virtio-net
->       0000380000001000-0000380000001fff (prio 0, i/o): virtio-pci-isr-virtio-net
->       0000380000002000-0000380000002fff (prio 0, i/o): virtio-pci-device-virtio-net
->       0000380000003000-0000380000003fff (prio 0, i/o): virtio-pci-notify-virtio-net
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2576
-> Fixes: ffa8a3e3b2e6 ("virtio-pci: Add lookup subregion of VirtIOPCIRegion MR")
-> Co-developed-by: Zuo Boqun <zuoboqun@baidu.com>
-> Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
-> Co-developed-by: Wang Liang <wangliang44@baidu.com>
-> Signed-off-by: Wang Liang <wangliang44@baidu.com>
-> Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
-> ---
->  hw/pci/pci_bridge.c                    |  5 ++++
->  hw/virtio/virtio-pci.c                 | 10 +++++++
->  include/hw/pci/pci_bridge.h            |  2 ++
->  include/hw/virtio/virtio-pci.h         |  3 +++
->  tests/qtest/fuzz-virtio-balloon-test.c | 37 ++++++++++++++++++++++++++
->  tests/qtest/meson.build                |  1 +
->  6 files changed, 58 insertions(+)
->  create mode 100644 tests/qtest/fuzz-virtio-balloon-test.c
-> 
-> v2 -> v3:
-> * add qtest for the issue
-> * fix a bug, only when enable modern_pio, destroy modern_cfg_io_as
-> 
-> v1 -> v2:
-> * modify commit message
-> * add address space for port I/O notification config region
+--000000000000a7488b0625b25e3d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Tested-by: Daniel P. Berrangé <berrange@redhat.com>
+Hi Daniel,
 
+Let's try to push it before EOY.
+I'm planning to start working on it in the first half of November.
+Does that work for you?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Thanks
 
+=D0=B2=D1=82, 29 =D0=BE=D0=BA=D1=82. 2024=E2=80=AF=D0=B3. =D0=B2 20:40, Dan=
+iel Henrique Barboza <
+dbarboza@ventanamicro.com>:
+
+> Hi Alexey,
+>
+>
+> Do you have plans to post a new version of this series? Aside from a few
+> comments
+> it seems like this was almost there.
+>
+> We might not be able to get it merged in time for this current release
+> (code freeze
+> is Nov 5th) but we can get it in Alistair's tree for the next release.
+>
+>
+> Thanks,
+>
+> Daniel
+>
+> On 5/11/24 7:10 AM, Alexey Baturo wrote:
+> > From: Alexey Baturo <baturo.alexey@gmail.com>
+> >
+> > Hi,
+> >
+> > It looks like Pointer Masking spec has reached v1.0 and been frozen,
+> > rebasing on riscv-to-apply.next branch and resubmitting patches.
+> >
+> > Thanks.
+> >
+> > [v8]:
+> > Rebasing patches on current qemu branch and resubmitting them.
+> >
+> >
+> > [v7]:
+> > I'm terribly sorry, but previous rebase went wrong and somehow I missed
+> it.
+> > This time I double-checked rebased version.
+> > This patch series is properly rebased on
+> https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+> >
+> > [v6]:
+> > This patch series is rebased on
+> https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+> >
+> > [v5]:
+> > This patch series targets Zjpm v0.8 extension.
+> > The spec itself could be found here:
+> https://github.com/riscv/riscv-j-extension/blob/8088461d8d66a7676872b61c9=
+08cbeb7cf5c5d1d/zjpm-spec.pdf
+> > This patch series is updated after the suggested comments:
+> > - add "x-" to the extension names to indicate experimental
+> >
+> > [v4]:
+> > Patch series updated after the suggested comments:
+> > - removed J-letter extension as it's unused
+> > - renamed and fixed function to detect if address should be sign-extend=
+ed
+> > - zeroed unused context variables and moved computation logic to anothe=
+r
+> patch
+> > - bumped pointer masking version_id and minimum_version_id by 1
+> >
+> > [v3]:
+> > There patches are updated after Richard's comments:
+> > - moved new tb flags to the end
+> > - used tcg_gen_(s)extract to get the final address
+> > - properly handle CONFIG_USER_ONLY
+> >
+> > [v2]:
+> > As per Richard's suggestion I made pmm field part of tb_flags.
+> > It allowed to get rid of global variable to store pmlen.
+> > Also it allowed to simplify all the machinery around it.
+> >
+> > [v1]:
+> > It looks like Zjpm v0.8 is almost frozen and we don't expect it change
+> drastically anymore.
+> > Compared to the original implementation with explicit base and mask
+> CSRs, we now only have
+> > several fixed options for number of masked bits which are set using
+> existing CSRs.
+> > The changes have been tested with handwritten assembly tests and LLVM
+> HWASAN
+> > test suite.
+> >
+> > Alexey Baturo (6):
+> >    target/riscv: Remove obsolete pointer masking  extension code.
+> >    target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
+> >      of Zjpm v0.8
+> >    target/riscv: Add helper functions to calculate current number of
+> >      masked bits for pointer masking
+> >    target/riscv: Add pointer masking tb flags
+> >    target/riscv: Update address modify functions to take into account
+> >      pointer masking
+> >    target/riscv: Enable updates for pointer masking variables and thus
+> >      enable pointer masking extension
+> >
+> >   target/riscv/cpu.c           |  21 +--
+> >   target/riscv/cpu.h           |  46 +++--
+> >   target/riscv/cpu_bits.h      |  90 +---------
+> >   target/riscv/cpu_cfg.h       |   3 +
+> >   target/riscv/cpu_helper.c    |  97 +++++-----
+> >   target/riscv/csr.c           | 337 ++--------------------------------=
+-
+> >   target/riscv/machine.c       |  20 +--
+> >   target/riscv/pmp.c           |  13 +-
+> >   target/riscv/pmp.h           |  11 +-
+> >   target/riscv/tcg/tcg-cpu.c   |   5 +-
+> >   target/riscv/translate.c     |  46 ++---
+> >   target/riscv/vector_helper.c |  15 +-
+> >   12 files changed, 158 insertions(+), 546 deletions(-)
+> >
+>
+
+--000000000000a7488b0625b25e3d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Daniel,<div><br></div><div>Let&#39;s try to push it bef=
+ore EOY.</div><div>I&#39;m planning to start working on it in the first hal=
+f of November.</div><div>Does that work for you?</div><div><br></div><div>T=
+hanks</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"g=
+mail_attr">=D0=B2=D1=82, 29 =D0=BE=D0=BA=D1=82. 2024=E2=80=AF=D0=B3. =D0=B2=
+ 20:40, Daniel Henrique Barboza &lt;<a href=3D"mailto:dbarboza@ventanamicro=
+.com">dbarboza@ventanamicro.com</a>&gt;:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">Hi Alexey,<br>
+<br>
+<br>
+Do you have plans to post a new version of this series? Aside from a few co=
+mments<br>
+it seems like this was almost there.<br>
+<br>
+We might not be able to get it merged in time for this current release (cod=
+e freeze<br>
+is Nov 5th) but we can get it in Alistair&#39;s tree for the next release.<=
+br>
+<br>
+<br>
+Thanks,<br>
+<br>
+Daniel<br>
+<br>
+On 5/11/24 7:10 AM, Alexey Baturo wrote:<br>
+&gt; From: Alexey Baturo &lt;<a href=3D"mailto:baturo.alexey@gmail.com" tar=
+get=3D"_blank">baturo.alexey@gmail.com</a>&gt;<br>
+&gt; <br>
+&gt; Hi,<br>
+&gt; <br>
+&gt; It looks like Pointer Masking spec has reached v1.0 and been frozen,<b=
+r>
+&gt; rebasing on riscv-to-apply.next branch and resubmitting patches.<br>
+&gt; <br>
+&gt; Thanks.<br>
+&gt; <br>
+&gt; [v8]:<br>
+&gt; Rebasing patches on current qemu branch and resubmitting them.<br>
+&gt; <br>
+&gt; <br>
+&gt; [v7]:<br>
+&gt; I&#39;m terribly sorry, but previous rebase went wrong and somehow I m=
+issed it.<br>
+&gt; This time I double-checked rebased version.<br>
+&gt; This patch series is properly rebased on <a href=3D"https://github.com=
+/alistair23/qemu/tree/riscv-to-apply.next" rel=3D"noreferrer" target=3D"_bl=
+ank">https://github.com/alistair23/qemu/tree/riscv-to-apply.next</a><br>
+&gt; <br>
+&gt; [v6]:<br>
+&gt; This patch series is rebased on <a href=3D"https://github.com/alistair=
+23/qemu/tree/riscv-to-apply.next" rel=3D"noreferrer" target=3D"_blank">http=
+s://github.com/alistair23/qemu/tree/riscv-to-apply.next</a><br>
+&gt; <br>
+&gt; [v5]:<br>
+&gt; This patch series targets Zjpm v0.8 extension.<br>
+&gt; The spec itself could be found here: <a href=3D"https://github.com/ris=
+cv/riscv-j-extension/blob/8088461d8d66a7676872b61c908cbeb7cf5c5d1d/zjpm-spe=
+c.pdf" rel=3D"noreferrer" target=3D"_blank">https://github.com/riscv/riscv-=
+j-extension/blob/8088461d8d66a7676872b61c908cbeb7cf5c5d1d/zjpm-spec.pdf</a>=
+<br>
+&gt; This patch series is updated after the suggested comments:<br>
+&gt; - add &quot;x-&quot; to the extension names to indicate experimental<b=
+r>
+&gt; <br>
+&gt; [v4]:<br>
+&gt; Patch series updated after the suggested comments:<br>
+&gt; - removed J-letter extension as it&#39;s unused<br>
+&gt; - renamed and fixed function to detect if address should be sign-exten=
+ded<br>
+&gt; - zeroed unused context variables and moved computation logic to anoth=
+er patch<br>
+&gt; - bumped pointer masking version_id and minimum_version_id by 1<br>
+&gt; <br>
+&gt; [v3]:<br>
+&gt; There patches are updated after Richard&#39;s comments:<br>
+&gt; - moved new tb flags to the end<br>
+&gt; - used tcg_gen_(s)extract to get the final address<br>
+&gt; - properly handle CONFIG_USER_ONLY<br>
+&gt; <br>
+&gt; [v2]:<br>
+&gt; As per Richard&#39;s suggestion I made pmm field part of tb_flags.<br>
+&gt; It allowed to get rid of global variable to store pmlen.<br>
+&gt; Also it allowed to simplify all the machinery around it.<br>
+&gt; <br>
+&gt; [v1]:<br>
+&gt; It looks like Zjpm v0.8 is almost frozen and we don&#39;t expect it ch=
+ange drastically anymore.<br>
+&gt; Compared to the original implementation with explicit base and mask CS=
+Rs, we now only have<br>
+&gt; several fixed options for number of masked bits which are set using ex=
+isting CSRs.<br>
+&gt; The changes have been tested with handwritten assembly tests and LLVM =
+HWASAN<br>
+&gt; test suite.<br>
+&gt; <br>
+&gt; Alexey Baturo (6):<br>
+&gt;=C2=A0 =C2=A0 target/riscv: Remove obsolete pointer masking=C2=A0 exten=
+sion code.<br>
+&gt;=C2=A0 =C2=A0 target/riscv: Add new CSR fields for S{sn,mn,m}pm extensi=
+ons as part<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 of Zjpm v0.8<br>
+&gt;=C2=A0 =C2=A0 target/riscv: Add helper functions to calculate current n=
+umber of<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 masked bits for pointer masking<br>
+&gt;=C2=A0 =C2=A0 target/riscv: Add pointer masking tb flags<br>
+&gt;=C2=A0 =C2=A0 target/riscv: Update address modify functions to take int=
+o account<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 pointer masking<br>
+&gt;=C2=A0 =C2=A0 target/riscv: Enable updates for pointer masking variable=
+s and thus<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 enable pointer masking extension<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0target/riscv/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0|=C2=A0 21 +--<br>
+&gt;=C2=A0 =C2=A0target/riscv/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0|=C2=A0 46 +++--<br>
+&gt;=C2=A0 =C2=A0target/riscv/cpu_bits.h=C2=A0 =C2=A0 =C2=A0 |=C2=A0 90 +--=
+-------<br>
+&gt;=C2=A0 =C2=A0target/riscv/cpu_cfg.h=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =
+=C2=A03 +<br>
+&gt;=C2=A0 =C2=A0target/riscv/cpu_helper.c=C2=A0 =C2=A0 |=C2=A0 97 +++++---=
+--<br>
+&gt;=C2=A0 =C2=A0target/riscv/csr.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0| 337 ++---------------------------------<br>
+&gt;=C2=A0 =C2=A0target/riscv/machine.c=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 2=
+0 +--<br>
+&gt;=C2=A0 =C2=A0target/riscv/pmp.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0|=C2=A0 13 +-<br>
+&gt;=C2=A0 =C2=A0target/riscv/pmp.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0|=C2=A0 11 +-<br>
+&gt;=C2=A0 =C2=A0target/riscv/tcg/tcg-cpu.c=C2=A0 =C2=A0|=C2=A0 =C2=A05 +-<=
+br>
+&gt;=C2=A0 =C2=A0target/riscv/translate.c=C2=A0 =C2=A0 =C2=A0|=C2=A0 46 ++-=
+--<br>
+&gt;=C2=A0 =C2=A0target/riscv/vector_helper.c |=C2=A0 15 +-<br>
+&gt;=C2=A0 =C2=A012 files changed, 158 insertions(+), 546 deletions(-)<br>
+&gt; <br>
+</blockquote></div>
+
+--000000000000a7488b0625b25e3d--
 
