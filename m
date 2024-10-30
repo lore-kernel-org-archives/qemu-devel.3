@@ -4,70 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F03BD74954
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 03:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FC6D74954
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 03:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5zT0-0003mN-CZ; Tue, 29 Oct 2024 23:33:54 -0400
+	id 1t5zY6-0004gN-SB; Tue, 29 Oct 2024 23:39:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t5zSx-0003lv-UU
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 23:33:52 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t5zSv-000373-BS
- for qemu-devel@nongnu.org; Tue, 29 Oct 2024 23:33:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730259229; x=1761795229;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=vj083Zi6n+Z84b6DtfTG/RDIrqN14QpAbExOTQeiB6I=;
- b=MekMkCejF4vpb0J/6do6zw5e32pw57iPzd6/kn/0S1bhtc0D281D1Trz
- KVvLJ6BcJqdZgOtoUheuA3yIm4pF+JfARVPkVXU3+9RXBEisq/4REWkPY
- nbC0omFRSIfVNl7zz0YEb4Stx3IXeqZcxujdEd1NV9YIPOoUf+w8hzYzS
- gLORvbVV76D7+afZY8UWGTuADMOqwT5vHIcuLJ75QSaJKrBrDkw8VkYSo
- 42MrWwqsrXmvXfxTWva73uRaHsex9MFizFhaO//yk2MpXQIz8epR64pjI
- PhH0G1mq23Z8RbzEJLlHM1gZV1cmkmGAIMCnhYRVGKNYkPsZiBziI3v0A g==;
-X-CSE-ConnectionGUID: ANuHBzcXQKmi99MuEhJbjw==
-X-CSE-MsgGUID: Rq/v44NcSAu1jrNvniJeFg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11240"; a="33867741"
-X-IronPort-AV: E=Sophos;i="6.11,243,1725346800"; d="scan'208";a="33867741"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Oct 2024 20:33:43 -0700
-X-CSE-ConnectionGUID: wVvrJ8SHR5yetpfrVSoZCQ==
-X-CSE-MsgGUID: ViL0M3BTSWOfN9OeuLdp3Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,243,1725346800"; d="scan'208";a="87312093"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 29 Oct 2024 20:33:42 -0700
-Date: Wed, 30 Oct 2024 11:50:01 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, tao1.su@linux.intel.com, xiaoyao.li@intel.com
-Subject: Re: [PATCH 2/8] target/i386: do not rely on ExtSaveArea for
- accelerator-supported XCR0 bits
-Message-ID: <ZyGs6YTRpKtwWG/x@intel.com>
-References: <20241029151858.550269-1-pbonzini@redhat.com>
- <20241029151858.550269-3-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t5zY4-0004fr-Tq; Tue, 29 Oct 2024 23:39:08 -0400
+Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t5zY3-0003U1-J2; Tue, 29 Oct 2024 23:39:08 -0400
+Received: by mail-vk1-xa32.google.com with SMTP id
+ 71dfb90a1353d-50d4797098dso1993920e0c.3; 
+ Tue, 29 Oct 2024 20:39:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730259546; x=1730864346; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t/lV+XwUWAMJSFFLGFaLaELYuAfJgk45jt5oIh0XI7s=;
+ b=TYJzXK3fcX1WR7Y4JRsrHuhZB+vj/fbKDmK1H2gn+qKDl55btlZNCcF5Qe2BjDL4ds
+ iV7crN1B9Hm8Bk689TOKlXDJ8xMQO/AaDX0I4U4LF2yifp90hqiuq5CwTbhUPphRnJns
+ oY68dq/nph0voNSbTcykKAiR46Ha1i4Ak/yHsxMV3H9dACwkZJ34Tot+Q4L2OoEzTeH0
+ 6L8meA3O6hzyv/5+iwcsbddkH0aR798EhrVgqhvaSD3pULxAMvXFVD/6D18CKPqXK+gu
+ eAQ+crvWdeeE+WuXBRxLT+m0e1TLlsYODTc/c6TN1ZEthigddO+i1EjIbmVvkfjPw0t9
+ sPlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730259546; x=1730864346;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=t/lV+XwUWAMJSFFLGFaLaELYuAfJgk45jt5oIh0XI7s=;
+ b=Ol2Dw0hcpq2U2ck5UJHHM7axCyQyw0UDXbTvLISRBHfC4nSeFqqrQmx2ar7xN5BONC
+ C9tj5ozg9+pZwl6kpjQZkskKjS22jXekoMINsMHSD5Qf7cO6tjsRcoWuAEQ1UCtP4qd6
+ 0UvEzl+7f0qQMX5qiDWvbGTL6TFVuNcz1zhuas8IjJ+vuc+wW55DTQaOlInukKbYhNZR
+ Eq7Y+SGXpx0+KecyaSJHz8ekjsQXdZMjKzP1w9vHySC8PD918vlMEFuXZg/ap+heePOR
+ dRYJfLCpaZhplqhQowaH+QEEr+QxO9Ry+96mSrA4aOsxakqigUMOM9JCAM++bR6qH8MK
+ Zz9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCVXTq5wAkD4taUkbU1eqNJ4/5rheZ91ceSrrFseqEpsqtxGqsT9QYcOtGsva0kBkMBk7uWfHged7U@nongnu.org
+X-Gm-Message-State: AOJu0YywRaLAHQEyD22nUPvQYB+TmPBbSRR9FArUrRlVZ6Inx6y5POBx
+ yix563Ld2iEb/znRpx324i46bJmSzoaqi8v79F+jNsqglI1wxsZziF87ZAwklELmWedvn9rH2Z8
+ yMs4cecOtdTipeIKin2qk+W+9j14=
+X-Google-Smtp-Source: AGHT+IEvloXoEHO0S4QFLeAVtsh1d3lWOd8ndf15CUyRoVRI5T0tmC3Jitmy4GsHtuAwk/RvIdDGv98qqdC1d9h7tC0=
+X-Received: by 2002:a05:6122:78f:b0:50c:e37a:97e3 with SMTP id
+ 71dfb90a1353d-510153410b0mr12761651e0c.11.1730259544805; Tue, 29 Oct 2024
+ 20:39:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241029151858.550269-3-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20241030004146.935656-1-antonb@tenstorrent.com>
+In-Reply-To: <20241030004146.935656-1-antonb@tenstorrent.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 30 Oct 2024 13:38:38 +1000
+Message-ID: <CAKmqyKMJ0Lu7Jvh2KM7yGjq00uHnAmav9sV7cmWnzrkchQR2xQ@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Fix vcompress with rvv_ta_all_1s
+To: Anton Blanchard <antonb@tenstorrent.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,29 +95,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 29, 2024 at 04:18:52PM +0100, Paolo Bonzini wrote:
-> Date: Tue, 29 Oct 2024 16:18:52 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 2/8] target/i386: do not rely on ExtSaveArea for
->  accelerator-supported XCR0 bits
-> X-Mailer: git-send-email 2.47.0
-> 
-> Right now, QEMU is using the "feature" and "bits" fields of ExtSaveArea
-> to query the accelerator for the support status of extended save areas.
-> This is a problem for AVX10, which attaches two feature bits (AVX512F
-> and AVX10) to the same extended save states.
-> 
-> To keep the AVX10 hacks to the minimum, limit usage of esa->features
-> and esa->bits.  Instead, just query the accelerator for the 0xD leaf.
-> Do it in common code and clear esa->size if an extended save state is
-> unsupported.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  target/i386/cpu.c         | 33 +++++++++++++++++++++++++++++++--
->  target/i386/kvm/kvm-cpu.c |  4 ----
->  2 files changed, 31 insertions(+), 6 deletions(-)
+On Wed, Oct 30, 2024 at 11:13=E2=80=AFAM Anton Blanchard <antonb@tenstorren=
+t.com> wrote:
+>
+> vcompress packs vl or less fields into vd, so the tail starts after the
+> last packed field.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Is that right?
 
+It's different from every other vector command. Although the wording
+in the spec is very confusing
+
+Alistair
 
