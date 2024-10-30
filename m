@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4735CD5CCB0
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 13:39:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC4FD5CCB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 14:08:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t68uY-0006z2-3A; Wed, 30 Oct 2024 09:38:58 -0400
+	id 1t69MW-0003j9-RY; Wed, 30 Oct 2024 10:07:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t68uV-0006x4-L8
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 09:38:55 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
+ id 1t69MT-0003i4-OD
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 10:07:49 -0400
+Received: from mx.astralinux.ru ([89.232.161.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t68uQ-0004gx-Es
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 09:38:53 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 766EE4E600E;
- Wed, 30 Oct 2024 14:38:44 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id NYy-M8Pw9tsH; Wed, 30 Oct 2024 14:38:42 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 78B624E600F; Wed, 30 Oct 2024 14:38:42 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 76D8A746F60;
- Wed, 30 Oct 2024 14:38:42 +0100 (CET)
-Date: Wed, 30 Oct 2024 14:38:42 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Lei Huang <Lei.Huang@amd.com>
-cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org, 
- pierre-eric.pelloux-prayer@amd.com, ken.xue@amd.com, 
- Howard Spoelstra <hsp.cat7@gmail.com>
-Subject: Re: [PATCH v2] ui/sdl: Mouse event optimization
-In-Reply-To: <20241030034353.1588-1-Lei.Huang@amd.com>
-Message-ID: <73cd533a-8818-4212-f7ea-0f89bd2b78cd@eik.bme.hu>
-References: <20241030032014.1564-1-Lei.Huang@amd.com>
- <20241030034353.1588-1-Lei.Huang@amd.com>
+ (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
+ id 1t69MR-0000HO-Ac
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 10:07:49 -0400
+Received: from gca-yc-ruca-srv-mail05.astralinux.ru ([10.177.185.111]
+ helo=new-mail.astralinux.ru)
+ by mx.astralinux.ru with esmtps (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <abelova@astralinux.ru>)
+ id 1t69M9-005S6o-6n; Wed, 30 Oct 2024 17:07:29 +0300
+Received: from MBP-Anastasia.astralinux.ru (unknown [10.198.14.135])
+ by new-mail.astralinux.ru (Postfix) with ESMTPA id 4XdpqB6ks1z1c0mR;
+ Wed, 30 Oct 2024 17:07:34 +0300 (MSK)
+From: Anastasia Belova <abelova@astralinux.ru>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: Anastasia Belova <abelova@astralinux.ru>, qemu-devel@nongnu.org,
+ sdl.qemu@linuxtesting.org
+Subject: [PATCH] monitor: fix cases in switch in memory_dump
+Date: Wed, 30 Oct 2024 17:06:51 +0300
+Message-ID: <20241030140656.36540-1-abelova@astralinux.ru>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Content-Transfer-Encoding: 8bit
+X-DrWeb-SpamScore: 0
+X-DrWeb-SpamState: legit
+X-DrWeb-SpamDetail: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehuddgtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfftfghgfeunecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomheptehnrghsthgrshhirgcuuegvlhhovhgruceorggsvghlohhvrgesrghsthhrrghlihhnuhigrdhruheqnecuggftrfgrthhtvghrnhepffdvvdeuheevvdfgiedvuedvudetueelgfefheeifffgheetuddtgfevfedvieehnecuffhomhgrihhnpehlihhnuhigthgvshhtihhnghdrohhrghenucfkphepuddtrdduleekrddugedrudefheenucfrrghrrghmpehhvghlohepofeurfdqtehnrghsthgrshhirgdrrghsthhrrghlihhnuhigrdhruhdpihhnvghtpedutddrudelkedrudegrddufeehmeehfeekkedvpdhmrghilhhfrhhomheprggsvghlohhvrgesrghsthhrrghlihhnuhigrdhruhdpnhgspghrtghpthhtohepgedprhgtphhtthhopegurghvvgesthhrvggslhhighdrohhrghdprhgtphhtthhopegrsggvlhhovhgrsegrshhtrhgrlhhinhhugidrrhhupdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehsughlrdhqvghmuheslhhinhhugihtvghsthhinhhgrdhorhhgnecuffhrrdghvggsucetnhhtihhsphgrmhemucenucfvrghgshem
+X-DrWeb-SpamVersion: Dr.Web Antispam 1.0.8.202410220#1730287075
+X-AntiVirus: Checked by Dr.Web [MailD: 11.1.19.2307031128,
+ SE: 11.1.12.2210241838, Core engine: 7.00.65.05230, Virus records: 12230125,
+ Updated: 2024-Oct-30 12:59:00 UTC]
+Received-SPF: pass client-ip=89.232.161.68; envelope-from=abelova@astralinux.ru;
+ helo=mx.astralinux.ru
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -68,108 +69,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Oct 2024, Lei Huang wrote:
-> Use a convergence factor to make the VM's input
-> global coordinates more closely approach the global
-> coordinates of host.
->
-> Change-Id: I2c3f12f1fe7dfb9306d1fc40c4fd4d299937f4c6
-> Signed-off-by: Lei Huang <Lei.Huang@amd.com>
-> ---
-> ui/sdl2.c | 32 ++++++++++++++++++++++++++++++--
-> 1 file changed, 30 insertions(+), 2 deletions(-)
->
-> diff --git a/ui/sdl2.c b/ui/sdl2.c
-> index bd4f5a9da14..ea3fd74dd63 100644
-> --- a/ui/sdl2.c
-> +++ b/ui/sdl2.c
-> @@ -303,6 +303,34 @@ static void sdl_mouse_mode_change(Notifier *notify, void *data)
->     }
-> }
->
-> +/*
-> + * guest_x and guest_y represent the global coordinates on the VM side,
-> + * while x and y represent the global coordinates on the host side.
-> + * The goal of this entire process is to align the global coordinates of
-> + * the VM with those of host using dx and dy. The current approach aims
-> + * for precise calibration in once attempt; however, because guest_x
+default case has no condition. So if it is placed
+higher that other cases, they are unreachable.
 
-There's still another one here. You can say "in one attempt" or "at once" 
-but combining the two is not correct.
+Move dafult case down.
 
-> + * and guest_y are non-zero values, they are not accurate values when
-> + * they are counted out to become negative. Therefore, achieving perfect
-> + * alignment in one attempt is impossible. Since the same calibration method
-> + * is used each time, repeated attempts cannot achieve alignment either.
-> + * By introducing a convergence factor, guest_x and guest_y can be made to
-> + * approach host x and y indefinitely.
-> + *
-> + *                   QEMU                       (dx,dy)  VM
-> + * calculates dx and dy using guest_x and guest_y ---->  input driver
-> + *            ^                                            |
-> + *            |                                            |
-> + *            |                                            V
-> + *            |     update
-> + *            | guest_x,guest_y              input dispatcher ---> WindowManager
-> + *            |                                            |                 |
-> + *            |                                            |                 |
-> + *            |                 libdrm                     V                 |
-> + *    display device  <------ drmModeMoveCursor <------ compositor <-------  |
-> + *                            (guest_x,guest_y)   calculates guest_x and
-> + *                                                guest_y dy using dx and dy
+Found by Linux Verification Center (linuxtesting.org)
 
-Maybe adding (e.g. virtio-gpu) below display device would make it clearer. 
-Also under compositor there's "guest_y dy" where the dy seems to be left 
-there by mistake from some editing or I don't get this sentence. (Did 
-checkpatch.pl complain about too long lines? Maybe you could shorten the 
-arrows a bit and wrap the text under QEMU in two lines to try to fit in 80 
-chars.)
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+---
+ monitor/hmp-cmds-target.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Sorry that I can only comment on the comments and not the actual change 
-but I've cc'd Howard who I think saw this issue before so may be able to 
-give it a test.
+diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
+index ff01cf9d8d..eea8ca047b 100644
+--- a/monitor/hmp-cmds-target.c
++++ b/monitor/hmp-cmds-target.c
+@@ -189,7 +189,6 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
+         i = 0;
+         while (i < l) {
+             switch(wsize) {
+-            default:
+             case 1:
+                 v = ldub_p(buf + i);
+                 break;
+@@ -202,6 +201,9 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
+             case 8:
+                 v = ldq_p(buf + i);
+                 break;
++            default:
++                v = ldub_p(buf + i);
++                break;
+             }
+             monitor_printf(mon, " ");
+             switch(format) {
+-- 
+2.47.0
 
-> + */
-> +#define CONVERGENCE_FACTOR 3
-> static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
->                                  int x, int y, int state)
-> {
-> @@ -331,8 +359,8 @@ static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
->             y -= guest_y;
->             guest_x += x;
->             guest_y += y;
-> -            dx = x;
-> -            dy = y;
-> +            dx = x / CONVERGENCE_FACTOR;
-> +            dy = y / CONVERGENCE_FACTOR;
-
-Looking at this calculation I don't quite get what's intended here and I 
-think this could be simplified. Originally in 47c03744b37 it seems the 
-qemu_input_queue_rel() was called with the modified value of x and y but 
-then afbc0dd6498 have introduced dx, dy. After that changing x and y seems 
-unnecessary as they are locals never used after this calculation. If I try 
-to expand these equations I get:
-
-x = x - guest_x;
-guest_x = guest_x + x - guest_x;
-
-So isn't this equivalent to just:
-
-dx = x - guest_x;
-guest_x = x;
-
-which seems to make more sense but I don't know if it's correct.
-
-Then this patch takes the third of dx to avoid it overshooting the desired 
-value. The question is what causes this overshoot and can we calculate the 
-actual value of it to compensate for it in one calculation? Isn't it the 
-other line that sets guest_x to x that needs some correction?
-
-Regards,
-BALATON Zoltan
-
->         }
->         qemu_input_queue_rel(scon->dcl.con, INPUT_AXIS_X, dx);
->         qemu_input_queue_rel(scon->dcl.con, INPUT_AXIS_Y, dy);
->
 
