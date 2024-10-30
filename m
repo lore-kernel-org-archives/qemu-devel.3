@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72548D74956
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 01:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D22CD74956
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 01:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t5xnP-0001Pr-6x; Tue, 29 Oct 2024 21:46:51 -0400
+	id 1t5xnW-0001R0-EZ; Tue, 29 Oct 2024 21:46:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t5xnM-0001Pc-W0; Tue, 29 Oct 2024 21:46:49 -0400
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t5xnL-0001pp-DH; Tue, 29 Oct 2024 21:46:48 -0400
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-84fc9005dccso1633337241.3; 
- Tue, 29 Oct 2024 18:46:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730252806; x=1730857606; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/RrsnZ4un5P3fiw9/MjGP5pRGQfzoHDPJLADMDoBZNY=;
- b=jrdkRQgfP3zfDgJlPPjlTqocD5wtr0zf3YaOKNZ8Q+c2F6r5RIn4H7V1ShE/J7FAnW
- wAGgKI3ltoONLCcT/1y+TmULnbrhg9hr6yFPuiOEugDRXdpAq+vKYkjeyNgFJ90B3wqX
- BPBtGr71fUUsxaw4VL7kjGgiVaxIa8MV4TdvDMg2gNAuZ138qIJKpOGOqsyxcfguEb6F
- nQbT0N8y+zHiOSbiptnq082Rh6rl+mFDaX94YESIIaZPF1fopvwGwYzHLlHBs7X23AmN
- 4kOLLal0517i2fiULhZj3xwTXUuS43trqe+OeIxtkTBogxys+pSSIOt9Rx1eISBBPxnf
- n1vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730252806; x=1730857606;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/RrsnZ4un5P3fiw9/MjGP5pRGQfzoHDPJLADMDoBZNY=;
- b=s+7NjmZg9P+GDPrCAzH8MADGCUj0/yJE2t69q+oDdvc0wBqW2IYgxGKM0QimZdPWgg
- Sha5LPbSIRheBPqbIX+PUQ9POm92709UwhjswQhV8sAIJ9FxUPmZ0a29WoGZoTjQFELF
- Y0jFGgZHbu+Nh6qaFM7qUkZMPXePfktMS3w62PTAPn960LyYfOCxQV0ve+siWEsKltXh
- 8pxoG+y42/2Z4IqvIwPPnWvO6emRSYuWu2jXEl8WGYR/JYSUW7Pn5s/9apZ1fL6qZYUc
- otecScDBp65Xz9i6nNMpVI5YsLKgk0NHwWxHBuuu7nRxBh+PnEMjbFwo2n2MPg2Nx7Mc
- Y8fg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXsTH+AjEOlEmIgBxnMfVYJottMOeMajd0ZxfyCk28wwz+CUXOyw7oP/0AqBfAvCuGfm26LfTGRGfgn@nongnu.org
-X-Gm-Message-State: AOJu0Yw4PGIRu/OvpXfqZD6NgY52kdlvdgmrnfx7ZmKi2QpI1MgW87mA
- Rha/BkLb00h8wg1Euh53pKeoJ8r/4HWaN5r9Qa0OrZ0CwlTWbbXH38OryEHF4UUAu1JHvT8fqs4
- HfXg7dOnuePunDd9U15Est61giwI=
-X-Google-Smtp-Source: AGHT+IHCgwD51E/EqZr8dquL8PuwhG01rplWjfzBJJbVH/gs2aicNls2DOy/ZRpvCWfKefyJJ+7x1fL+fKC1GPH7tkQ=
-X-Received: by 2002:a05:6102:50a6:b0:498:d12b:4774 with SMTP id
- ada2fe7eead31-4a8cfb58dc5mr13136035137.7.1730252805843; Tue, 29 Oct 2024
- 18:46:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1t5xnT-0001Qe-0t
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 21:46:55 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1t5xnQ-0001q2-8R
+ for qemu-devel@nongnu.org; Tue, 29 Oct 2024 21:46:54 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8DxGeEIkCFni0YdAA--.60494S3;
+ Wed, 30 Oct 2024 09:46:48 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowMAxDEcFkCFnWjooAA--.22887S3;
+ Wed, 30 Oct 2024 09:46:47 +0800 (CST)
+Subject: Re: [PATCH v3 1/3] linux-headers: Add unistd_64.h
+To: maobibo <maobibo@loongson.cn>, Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20241028023809.1554405-1-maobibo@loongson.cn>
+ <20241028023809.1554405-2-maobibo@loongson.cn>
+ <b5f4a39a-278a-1918-29f2-b9da197ce055@loongson.cn>
+ <08fa5950-8ca4-b6fc-fac7-77bc5c16893a@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <8b7dfe0f-f4cd-d61a-c850-d92b5aec39e8@loongson.cn>
+Date: Wed, 30 Oct 2024 09:47:47 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20241028182037.290171-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20241028182037.290171-1-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 30 Oct 2024 11:46:19 +1000
-Message-ID: <CAKmqyKM4Ugk5aWFzSwng-7AYtapMpJpXrwYOjKK-JnFeGFjswQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] target/riscv/kvm: riscv-aia fixes
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <08fa5950-8ca4-b6fc-fac7-77bc5c16893a@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowMAxDEcFkCFnWjooAA--.22887S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7Kry7XF43tF18ur1fAw1xXrc_yoW8Kw43pr
+ yvyF18Cr98G3s3tw129w12grWUtF4DC3ZFqryUGFyvvrWDtr1IgrsrWr1q9r4DJayrAF1j
+ vF43Gw15Z3WfXrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1EksDUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.804,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,41 +88,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 29, 2024 at 4:21=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+在 2024/10/28 下午5:55, maobibo 写道:
 >
-> Hi,
 >
-> In this second version we removed patches 3 and 4 from v1. The reasoning
-> behind is that the deprecation process is too harsh in comparison with
-> the user benefit from using bools instead of strings.
+> On 2024/10/28 下午3:39, gaosong wrote:
+>> 在 2024/10/28 上午10:38, Bibo Mao 写道:
+>>> since 6.11, unistd.h includes header file unistd_64.h directly on
+>>> some platforms, here add unistd_64.h on these platforms. Affected
+>>> platforms are ARM64, LoongArch64 and Riscv. Otherwise there will
+>>> be compiling error such as:
+>>>
+>>> linux-headers/asm/unistd.h:3:10: fatal error: asm/unistd_64.h: No 
+>>> such file or directory
+>>>   #include <asm/unistd_64.h>
+>> Hi,  Bibo
+>>
+>> Could you help tested this patch on ARM machine? I don't have an ARM 
+>> machine.
+> yeap, I test on arm64 machine, it passes to compile with header files 
+> updated. However there is no riscv machine by hand.
 >
-> We'll expose the string property as bools when it's time to expose them
-> in QMP and users will keep using the existing str prop.
->
-> Patches based on alistair/riscv-to-apply.next.
->
-> Changes from v1:
-> - patches 3 and 4 from v1: dropped
-> - v1 link: https://lore.kernel.org/qemu-riscv/20240924124407.766495-1-dba=
-rboza@ventanamicro.com/
->
-> Daniel Henrique Barboza (2):
->   target/riscv/kvm: set 'aia_mode' to default in error path
->   target/riscv/kvm: clarify how 'riscv-aia' default works
+Thank you,
 
-Thanks!
+@Peter and  @Alistair Francis Could you help tested this patch on RISCV 
+machine?
 
-Applied to riscv-to-apply.next
+Thanks.
+Song Gao
 
-Alistair
+> Regards
+> Bibo Mao
+>>
+>> Thanks.
+>> Song Gao
+>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>>> ---
+>>>   scripts/update-linux-headers.sh | 6 ++++++
+>>>   1 file changed, 6 insertions(+)
+>>>
+>>> diff --git a/scripts/update-linux-headers.sh 
+>>> b/scripts/update-linux-headers.sh
+>>> index c34ac6454e..203f48d089 100755
+>>> --- a/scripts/update-linux-headers.sh
+>>> +++ b/scripts/update-linux-headers.sh
+>>> @@ -163,6 +163,7 @@ EOF
+>>>       fi
+>>>       if [ $arch = arm64 ]; then
+>>>           cp "$hdrdir/include/asm/sve_context.h" 
+>>> "$output/linux-headers/asm-arm64/"
+>>> +        cp "$hdrdir/include/asm/unistd_64.h" 
+>>> "$output/linux-headers/asm-arm64/"
+>>>       fi
+>>>       if [ $arch = x86 ]; then
+>>>           cp "$hdrdir/include/asm/unistd_32.h" 
+>>> "$output/linux-headers/asm-x86/"
+>>> @@ -185,6 +186,11 @@ EOF
+>>>       fi
+>>>       if [ $arch = riscv ]; then
+>>>           cp "$hdrdir/include/asm/ptrace.h" 
+>>> "$output/linux-headers/asm-riscv/"
+>>> +        cp "$hdrdir/include/asm/unistd_32.h" 
+>>> "$output/linux-headers/asm-riscv/"
+>>> +        cp "$hdrdir/include/asm/unistd_64.h" 
+>>> "$output/linux-headers/asm-riscv/"
+>>> +    fi
+>>> +    if [ $arch = loongarch ]; then
+>>> +        cp "$hdrdir/include/asm/unistd_64.h" 
+>>> "$output/linux-headers/asm-loongarch/"
+>>>       fi
+>>>   done
+>>>   arch=
+>>
 
->
->  target/riscv/kvm/kvm-cpu.c | 22 ++++++++++++----------
->  1 file changed, 12 insertions(+), 10 deletions(-)
->
-> --
-> 2.45.2
->
->
 
