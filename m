@@ -4,90 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144F6D6B6AD
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 16:37:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AABE0D6B6AD
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 16:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6BhM-0008Ey-Jt; Wed, 30 Oct 2024 12:37:34 -0400
+	id 1t6Buq-000291-B5; Wed, 30 Oct 2024 12:51:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t6Bh9-0008E0-Kx
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 12:37:21 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <roqueh@google.com>) id 1t6Buo-00028l-LZ
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 12:51:26 -0400
+Received: from mail-vs1-xe36.google.com ([2607:f8b0:4864:20::e36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t6Bh6-0005a6-En
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 12:37:19 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-20cbca51687so334815ad.1
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 09:37:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <roqueh@google.com>) id 1t6Bum-0007Ff-Rn
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 12:51:26 -0400
+Received: by mail-vs1-xe36.google.com with SMTP id
+ ada2fe7eead31-4a4864b8f98so2308423137.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 09:51:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1730306235; x=1730911035; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hMiLNWIGV7NSnAU7TASNWBFCWHlLdkbPLiy10xQAdAI=;
- b=Dsl8rKtYdHGdwy6ideCcAYwcwXBIyJTqao8rFPOLUNc5hZFIx+F1DUyVNXEhw3YcoB
- 3iAot+6rVXpM3h3S/Cj8tz//pJUMTOgb9lUpNaBTJ0979zA/64pH2ls4zvd9SZhOz+Em
- xGuEsscBPC9L7ACNLfESeY8aVdmrg7H6jwHtqDLb4EqFcvM5Q/UJY+/kBqTQqYMBer8y
- nab/Obk1AvI2xxz4Oc9CwNuBtWhXDS0Yi989YhHH3N5no4np3DY/foPeBnzLFVn49AEj
- M39DDG4CjqqXQEAFsMkHKI52aCUUAdYT2+KGyke/yIXpVeeRfmVNt0HvxVedY8Iqhb+z
- Isqg==
+ d=google.com; s=20230601; t=1730307083; x=1730911883; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vgSyPqaOMIfPVMD+02xDfEtUowOQZCGgLM/7SPiELvY=;
+ b=ApeshYAEtOHp1iwkrTG73KZycHCg2tBny4oTacMdKpO4fp6XpLwS+Zy0OAH/bfplpx
+ vuoydPpvbZPYOGfif/NNbIGtdZJrHXjbzkqCe8YkvltIAYfRHMQbYVAVYVFFZchAI0ME
+ X4BpDIOY6Eg7ktMl4Nw67Nf8lwvIP2NUxANRFtJQag6KJcyd/T3xEWt4Hjj0RiQ6lXsR
+ Bv7KB+efrvg4B2NALqHp+J+4Sn0o/gV5w2JGEe00QKrGEdFdvgZpiKZf/56GDviaq7gE
+ /4nFURqiH+2kH0pMtpeQQmrUh8CZ4LeVe1jkdG2lfz9QaxhbpeV4VJtgrxALJ81o7pSx
+ /bTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730306235; x=1730911035;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hMiLNWIGV7NSnAU7TASNWBFCWHlLdkbPLiy10xQAdAI=;
- b=G0eSw3Q68MK9FDUjFbTB5x2wBJMpAiXyTCGPf9cmqPFs0VONH1PRX15sFAShhAD7RO
- M52PJub4EAXnPXfHzdUXUMu8z8PT3tb4YeZmoBI3CXyDUZZzbotcbKwVEJDnlev17isR
- lalXRX1b9fJFkjofzmw/fhshqydHjYax0ji7rh7rx/nMwzqn8QNhCvx+W6pAtxAodbqc
- afiSz1eNBVhO2f2D3pIqnopq+21a4Ptceh0koW9DIQIVHo5OSZ/wRvDkgsArYLIWNE8Z
- DXGpqnaxo8NtIiUwVBy+ovDSCj9yoJRE9MyXC2JLCHvogCinXtW3bCp+80QaPg/6I0L3
- L+tA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUVB1qt2nwsuHqyuuC1fc9nWwNbumuSqXkg2Qv2m3H7W1Y6EZappbeW5Px4f4bFPOimLMWlJnZxVdNe@nongnu.org
-X-Gm-Message-State: AOJu0Yy7rB//suZNKZIeD9DGWohxWwWzaLeom2wkdv6q4xCl0+QziN3F
- 0Xc0rUR6F4OTzYBK6gB0i0giL4G/hGEbCzSh7IUIVqBjaEPW62IG6ozGBs/+Z8c=
-X-Google-Smtp-Source: AGHT+IGT+bk8x385PUKg5L/+PH/MUZqFRLFP4LP0v0+IW5qWzBjN47w8b0vqfuAH06jEjSHR9LybIw==
-X-Received: by 2002:a17:903:2343:b0:20c:716c:5c2 with SMTP id
- d9443c01a7336-210c68995d7mr220835845ad.13.1730306234672; 
- Wed, 30 Oct 2024 09:37:14 -0700 (PDT)
-Received: from [192.168.68.110] ([191.8.109.222])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-210f691eda1sm16658815ad.196.2024.10.30.09.37.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Oct 2024 09:37:14 -0700 (PDT)
-Message-ID: <25b14d26-0951-4079-af3f-251a9a821af9@ventanamicro.com>
-Date: Wed, 30 Oct 2024 13:37:09 -0300
+ d=1e100.net; s=20230601; t=1730307083; x=1730911883;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vgSyPqaOMIfPVMD+02xDfEtUowOQZCGgLM/7SPiELvY=;
+ b=KCsqjTIO2Hyq91ljceG+l0nyN9NW4PtDZ8ztyoaRm5Qdj5bD7eoQE5hFBG9CCQc7hj
+ 4LxeKlImWnmYcunPAnjkMhKzTPUvih/dtCYvVAto1joTBzbjGMmoEmFVKn14OtMSNEVC
+ eP+F2f4HnVhagGCeHTlo1gDdg4iLPq1x/EsSTJPH6k8Cl/d0TvRm/nn7mS9hpvhFO6zw
+ YsxXsESc+1DWjjVg4BclpgChB/HYUNDRKo5CLRWSux1fmTESGCdJ/NTjoGTeYwvzsois
+ b2JyGrxyI6F0w5lix0J77zmGhZ0l7t5QdiTcUZkk4t32ZabQDXmelRFnKxfxz2Z1FDmt
+ IoyA==
+X-Gm-Message-State: AOJu0Yw593mQSWq8BQdV+FnnQIk4xLGHZC6JeblxdCFg8sA5iGK8BQqo
+ ZA1CVFKHpgkJRY9DHh5Jx3LQKBFwjqnf5f98RQqKWD3VLWZSE3Bjr5fy1FXzzJijISKZ5No319F
+ beZDKP4aseEqo67IMu3Eg4ulXuaTiagPSoMee
+X-Google-Smtp-Source: AGHT+IEo6R/YlxCkDNDrnYiEfHzulbIJbRb/zDXPJmg76TPFr00yO8ZvKlWxdk6fxm+4mskGQFVpSxhxmEplNMElSjY=
+X-Received: by 2002:a05:6102:a4e:b0:4a3:b91d:78b1 with SMTP id
+ ada2fe7eead31-4a8cfd538abmr14434530137.27.1730307082659; Wed, 30 Oct 2024
+ 09:51:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 7/7] target/riscv: Inline unit-stride ld/st and
- corresponding functions for performance
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- richard.henderson@linaro.org, negge@google.com
-References: <20240918171412.150107-1-max.chou@sifive.com>
- <20240918171412.150107-8-max.chou@sifive.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240918171412.150107-8-max.chou@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20241017153745.509978-1-roqueh@google.com>
+In-Reply-To: <20241017153745.509978-1-roqueh@google.com>
+From: Roque Arcudia Hernandez <roqueh@google.com>
+Date: Wed, 30 Oct 2024 09:51:10 -0700
+Message-ID: <CAKbPEtbN8M6LUJuWKXRTznsA4O2UtKLudoL=O8XuO-fJw1ggYg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Fix for multi-process gdbstub breakpoints
+To: richard.henderson@linaro.org, pbonzini@redhat.com, alex.bennee@linaro.org, 
+ philmd@linaro.org, slongfield@google.com, komlodi@google.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e36;
+ envelope-from=roqueh@google.com; helo=mail-vs1-xe36.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,90 +89,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello,
 
+This is the second version of the patch. I have taken into
+consideration the feedback from the first discussion thread. Is there
+anything else to do?
 
-On 9/18/24 2:14 PM, Max Chou wrote:
-> In the vector unit-stride load/store helper functions. the vext_ldst_us
-> & vext_ldst_whole functions corresponding most of the execution time.
-> Inline the functions can avoid the function call overhead to improve the
-> helper function performance.
-> 
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+Thanks
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Roque
 
->   target/riscv/vector_helper.c | 18 +++++++++++-------
->   1 file changed, 11 insertions(+), 7 deletions(-)
-> 
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 654d5e111f3..0d5ed950486 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -152,14 +152,16 @@ typedef void vext_ldst_elem_fn_tlb(CPURISCVState *env, abi_ptr addr,
->   typedef void vext_ldst_elem_fn_host(void *vd, uint32_t idx, void *host);
->   
->   #define GEN_VEXT_LD_ELEM(NAME, ETYPE, H, LDSUF)             \
-> -static void NAME##_tlb(CPURISCVState *env, abi_ptr addr,    \
-> +static inline QEMU_ALWAYS_INLINE                            \
-> +void NAME##_tlb(CPURISCVState *env, abi_ptr addr,           \
->                   uint32_t idx, void *vd, uintptr_t retaddr)  \
->   {                                                           \
->       ETYPE *cur = ((ETYPE *)vd + H(idx));                    \
->       *cur = cpu_##LDSUF##_data_ra(env, addr, retaddr);       \
->   }                                                           \
->                                                               \
-> -static void NAME##_host(void *vd, uint32_t idx, void *host) \
-> +static inline QEMU_ALWAYS_INLINE                            \
-> +void NAME##_host(void *vd, uint32_t idx, void *host)        \
->   {                                                           \
->       ETYPE *cur = ((ETYPE *)vd + H(idx));                    \
->       *cur = (ETYPE)LDSUF##_p(host);                          \
-> @@ -171,14 +173,16 @@ GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl)
->   GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq)
->   
->   #define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)             \
-> -static void NAME##_tlb(CPURISCVState *env, abi_ptr addr,    \
-> +static inline QEMU_ALWAYS_INLINE                            \
-> +void NAME##_tlb(CPURISCVState *env, abi_ptr addr,           \
->                   uint32_t idx, void *vd, uintptr_t retaddr)  \
->   {                                                           \
->       ETYPE data = *((ETYPE *)vd + H(idx));                   \
->       cpu_##STSUF##_data_ra(env, addr, data, retaddr);        \
->   }                                                           \
->                                                               \
-> -static void NAME##_host(void *vd, uint32_t idx, void *host) \
-> +static inline QEMU_ALWAYS_INLINE                            \
-> +void NAME##_host(void *vd, uint32_t idx, void *host)        \
->   {                                                           \
->       ETYPE data = *((ETYPE *)vd + H(idx));                   \
->       STSUF##_p(host, data);                                  \
-> @@ -317,7 +321,7 @@ GEN_VEXT_ST_STRIDE(vsse64_v, int64_t, ste_d_tlb)
->    */
->   
->   /* unmasked unit-stride load and store operation */
-> -static void
-> +static inline QEMU_ALWAYS_INLINE void
->   vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
->                     uint32_t elems, uint32_t nf, uint32_t max_elems,
->                     uint32_t log2_esz, bool is_load, int mmu_index,
-> @@ -369,7 +373,7 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
->       }
->   }
->   
-> -static void
-> +static inline QEMU_ALWAYS_INLINE void
->   vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
->                vext_ldst_elem_fn_tlb *ldst_tlb,
->                vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz,
-> @@ -756,7 +760,7 @@ GEN_VEXT_LDFF(vle64ff_v, int64_t, lde_d_tlb, lde_d_host)
->   /*
->    * load and store whole register instructions
->    */
-> -static void
-> +static inline QEMU_ALWAYS_INLINE void
->   vext_ldst_whole(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
->                   vext_ldst_elem_fn_tlb *ldst_tlb,
->                   vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz,
+On Thu, Oct 17, 2024 at 8:37=E2=80=AFAM Roque Arcudia Hernandez
+<roqueh@google.com> wrote:
+>
+> This patch series modifies the gdbstub to address a bug running a
+> multi cluster machine in QEMU using TCG. The machine where the
+> problem was seen had several clusters of CPUs with similar
+> architectures and similar memory layout all working with physical
+> addresses. It was discovered under gdb debugging that a breakpoint
+> targeting one cluster misfired on the wrong cluster quite frequently
+> with no possible workaround since gdb was also unaware of any
+> breakpoint in that cluster and simply reported SIGTRAP.
+>
+> The sequence that discovered the bug adds N inferiors and adds a
+> breakpoint on inferior N. Then after continuing an unrelated thread
+> stops the execution when its PC hits the same address of the break
+> targeting a different inferior.
+>
+> target extended-remote :1234
+> add-inferior
+> inferior 2
+> attach 2
+> ...
+> add-inferior
+> inferior N
+> attach N
+> add-symbol-file /path/to/foo.elf
+> break foo
+> > Breakpoint 1 at 0xf00add
+> info break
+> > Num     Type           Disp Enb Address    What
+> > 1       breakpoint     keep y   0x00f00add in foo
+> >                                            at foo.c:1234 inf N
+> continue
+> > Continuing.
+> >
+> > Thread 2.1 received signal SIGTRAP, Trace/breakpoint trap.
+> > [Switching to Thread 2.2]
+> > 0xf00add in ?? ()
+>
+> The main problem is the current implementation of
+> 'tcg_insert_breakpoint' and 'tcg_remove_breakpoint' insert and remove
+> breakpoints to all the CPUs in the system regardless of what the
+> remote gdb protocol implements.
+>
+> If we look at the current source code of GDB we can see that the
+> function 'remote_target::insert_breakpoint' in file gdb/remote.c has
+> the intention to select the process ID of the inferior where the
+> break was inserted.
+>
+> int
+> remote_target::insert_breakpoint (struct gdbarch *gdbarch,
+>                                   struct bp_target_info *bp_tgt)
+> {
+> ...
+>   /* Make sure the remote is pointing at the right process, if
+>      necessary.  */
+>   if (!gdbarch_has_global_breakpoints (current_inferior ()->arch ()))
+>     set_general_process ();
+> ...
+> }
+>
+> https:sourceware.org/git/?p=3Dbinutils-gdb.git;a=3Dblob;f=3Dgdb/remote.c;=
+h=3D2c3988cb5075655e8a799d1cc5d4760ad8ed426e;hb=3DHEAD#l11023
+>
+> This would not happen when we input the 'break' in gdb but it is
+> deferred until the time we execute the 'continue' command. Because we
+> might be currently selecting an inferior that is not the one where we
+> previously set the breakpoint, the remote gdb has to make sure we
+> move the focus to the process ID of the inferior where we inserted
+> the break.
+>
+> In the previous example this will translate to something like:
+>
+> HgpN.M
+> Z0,00f00add,4
+>
+> Another thing that is wrong with the current implementation (and it
+> affects both TCG and KVM mode) is that the remote gdb protocol uses
+> 'Hg' and not 'Hc' to select the process. Functions
+> 'gdb_breakpoint_insert' and 'gdb_breakpoint_remove' receive wrongly
+> 'gdbserver_state.c_cpu' instead of 'gdbserver_state.g_cpu'.
+>
+> This is supported by the documentation of 'H op thread-id' where op =3D
+> 'c' is reserved to the step and continue:
+>
+> https:sourceware.org/gdb/current/onlinedocs/gdb.html/Packets.html
+>
+> And it can be verified that the function 'set_general_process' in the
+> previous code snippet will eventually call
+> 'remote_target::set_general_thread' and not
+> 'remote_target::set_continue_thread' if it needs to change focus.
+>
+> A third scenario that has to be taken into account is the case of a
+> break on a specific thread, for instance the sequence:
+>
+> inferior 1
+> break bar thread 1.3
+> break bar thread 1.4
+>
+> The remote protocol expects the gdbstub to apply the break to the
+> process ID of inferior 1 and considers the specific thread-id as a
+> breakpoint condition (not too different from a 'break if').
+>
+> In this case the packet exchange may look like:
+>
+> Hgp1.1
+> Z0,00ba2add,4
+>
+> There wouldn't be an independent set of packets for 'Hgp1.3' and
+> 'Hgp1.4'.
+>
+> In the gdb source code, the handling of the specific thread-id
+> happens during breakpoint evaluation in function
+> 'bpstat_check_breakpoint_conditions' of file gdb/breakpoint.c
+>
+> https:sourceware.org/git/?p=3Dbinutils-gdb.git;a=3Dblob;f=3Dgdb/breakpoin=
+t.c;h=3D17bd627f867cf3d4dc81322ed1919ba40cbb237d;hb=3DHEAD#l5550
+>
+> The proposed fix inserts or removes a breakpoint to all the cpus
+> sharing the same process ID as the one selected with the latest
+> received 'Hg' packet.
+>
+> Roque Arcudia Hernandez (2):
+>   gdbstub: Fix wrong CPUState pointer in breakpoint functions
+>   gdbstub: Apply breakpoints only to the relevant CPUs
+>
+>  accel/tcg/tcg-accel-ops.c | 37 +++++++++++++++++++++++--------------
+>  gdbstub/gdbstub.c         | 10 ++++++++--
+>  gdbstub/internals.h       | 13 +++++++++++--
+>  include/exec/gdbstub.h    | 12 ++++++++++++
+>  4 files changed, 54 insertions(+), 18 deletions(-)
+>
+> --
+> 2.47.0.rc1.288.g06298d1525-goog
+>
 
