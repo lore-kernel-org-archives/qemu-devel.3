@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9EAFD5B86D
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 15:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69AB2D5B86D
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 15:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6B4y-0003Xk-A6; Wed, 30 Oct 2024 11:57:52 -0400
+	id 1t6B5G-0003lv-6Z; Wed, 30 Oct 2024 11:58:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6B4w-0003XL-Si
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 11:57:50 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6B5E-0003jr-C8
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 11:58:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6B4v-0007lx-CK
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 11:57:50 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6B5D-0007pN-0U
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 11:58:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730303868;
+ s=mimecast20190719; t=1730303885;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LPVTPWOgvdRxt04d1ASLhb7X2V2plDFvoFd5bfX+Z30=;
- b=O/JT2bM97RQHgvm1la8F2gOteDQ0eGCqAm6gFKc0keXLvUJY0ZvzQEVKzVGqLnqMuW4217
- bNC3QHSR/wPaBKjx5ETRn4dYp5ozFhJDDdiRSpJxVvJTqB3+8SHE0E78fP/sK45f/fZc4d
- 9bWM+rDaahs/8YIWMKtkBZEqhcnLwD4=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yT8lUIBKet6fbgptE6xA8GhBp1fdHflDGVquMTNAch4=;
+ b=QX/4hs9lLefTS7kMTc5H2NE790Wb+ARSan6VeGGRPD5aKmNqGfBM67jGlUxwXXaXP6MF5z
+ HUgOLzSZQTXa86fj2Zc+M9ZeC7fukwiA6Mr1TSobGiAUgmZlGnoq2qACNy92buE/UN+Axi
+ vep+4ZXn/pfFyY3StiICAEsr2lqVGl0=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-225-vRu3npNEMiygzj8w3sbVcg-1; Wed, 30 Oct 2024 11:57:46 -0400
-X-MC-Unique: vRu3npNEMiygzj8w3sbVcg-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6d35062e1fcso59336d6.1
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 08:57:46 -0700 (PDT)
+ us-mta-641-7ByceYOuNhSLx-DjwpRpBw-1; Wed, 30 Oct 2024 11:58:04 -0400
+X-MC-Unique: 7ByceYOuNhSLx-DjwpRpBw-1
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-3e601bc6ddaso6605053b6e.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 08:58:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730303866; x=1730908666;
+ d=1e100.net; s=20230601; t=1730303883; x=1730908683;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LPVTPWOgvdRxt04d1ASLhb7X2V2plDFvoFd5bfX+Z30=;
- b=PGvmSkb+L/hqdFd88kxeH3c+HQnqRaT6PAzp2kOm7oRQwlu6cbQxE++Ph39NasgjF3
- zY20NJoNKrQCm+eSKJu2wPb+yjYoKPdVpJ6Lrr9QzMJFJiSokA6NphFZfiUzbz2oebbU
- DVgJG1hh1b3XBS3mDWGCoEwK5tySwMgGI2pCTITyKNcfghQ723MoZHTvt1Hf7gZRcbVD
- Jbki48e7tvdpZP/LVFkgcyqitMxH6dGTHCJQH/ZhgchVpXzQ/Xgd8EwFsfWagTQNimou
- H5UPX3RyyAmG/ByyUNj5w98l75sjtmElHTQ3YqjI4VQ7Jd5q741Jf/5oPfEJxsLO2YFO
- qiwA==
-X-Gm-Message-State: AOJu0YyK2/wj0u++WunCu9P8NxoBeD0ukyM41gwgzd92CK2nB7tTNMce
- ZCCSQkO25icRjvH9yp/xEEge4NJNCJn8zpbxQX4EkysP0ipDPG5QS+zCy8NtwncoUIZ/7LsLLZx
- Gzs6vvs0W82ukb8YI4JQYIaljJ8r7LTi19/HGBKLGQZHZwCGK97HNo39T5elkbKio0tV9Iqy+8Z
- BMoAtKGaeyesHcPhdjgwWudrvwwlwJV9bVVQ==
-X-Received: by 2002:a05:6214:5a0b:b0:6cc:2d3c:6472 with SMTP id
- 6a1803df08f44-6d1856b4898mr207007696d6.14.1730303865797; 
- Wed, 30 Oct 2024 08:57:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEIszSgVBjS+zerSZyizB+9+ynJ/mMCVgJPmtbKtXxBQCXLHsgEuEo4q3PtErowkRb+Df7Ezw==
-X-Received: by 2002:a05:6214:5a0b:b0:6cc:2d3c:6472 with SMTP id
- 6a1803df08f44-6d1856b4898mr207007416d6.14.1730303865389; 
- Wed, 30 Oct 2024 08:57:45 -0700 (PDT)
+ bh=yT8lUIBKet6fbgptE6xA8GhBp1fdHflDGVquMTNAch4=;
+ b=LFHUtDx0rnIgLvY603/TlRIzHnXMeSfdX8FueywA8jejsHw0u5J8M8RKVNH43tQ+f7
+ LpctCX2Z7V3s5WbZtzQEcgBsjo5oXBMLiBagQv/COJE12vfzbhdGgYzQD7JxPOws29zu
+ 5zhNlDTCrzlPkTRRTjrI199t/m6e/7zq83mc0GhtPkqkkVmiN988tgQ0Lp3WjYCXyGaE
+ /IdgpsoIUC6rtiB0i+tE3jLJoApcjIVY/SzM/KJRkTeTcRNCjMcSeC64+mPGHlMoSZeN
+ rl/tBXr25r4Fe7uHVX4EPS8MZmicV7G4GuoqXsMP9ukRUAhvMTjLalWKVjYGYmYai9Dv
+ pEqw==
+X-Gm-Message-State: AOJu0Ywg4k0ltnkdpTWjcL5jCtFGoaFMylwLNxT0JGTkAgqfnG0ndvY0
+ 8M4uQsWRgmkT68pKPRPaiNFN4HsKEyDn7iNOk6562RXWLpU5cchP5BttH19I61GiHYXRTPuxGhK
+ SyQtKb/hcZx5J3oUDYFhz85W6oXhtWt918Prl0OgWuytzVT+4U9VGsckWELRdSO4H3zLeR2kBzf
+ H+sH+3X8VAnYgWGoO2Ef9iVy0OI/sI1XO2nQ==
+X-Received: by 2002:a05:6808:1812:b0:3e4:d683:c24d with SMTP id
+ 5614622812f47-3e6384cb1aamr13902976b6e.43.1730303881535; 
+ Wed, 30 Oct 2024 08:58:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERI0OV8OSpAGe4Y7v6MLFTthvZUkoiUcrFyAkVum4xQPHelymS+o6v8fX6BTYTC+h7wsjXyw==
+X-Received: by 2002:a05:6808:1812:b0:3e4:d683:c24d with SMTP id
+ 5614622812f47-3e6384cb1aamr13902945b6e.43.1730303881108; 
+ Wed, 30 Oct 2024 08:58:01 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d19c57c1ffsm22802276d6.89.2024.10.30.08.57.43
+ 6a1803df08f44-6d19c57c1ffsm22802276d6.89.2024.10.30.08.57.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 08:57:43 -0700 (PDT)
+ Wed, 30 Oct 2024 08:58:00 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
- Hyman Huang <yong.huang@smartx.com>, Peter Xu <peterx@redhat.com>
-Subject: [PULL 05/18] migration: Stop CPU throttling conditionally
-Date: Wed, 30 Oct 2024 11:57:21 -0400
-Message-ID: <20241030155734.2141398-6-peterx@redhat.com>
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 14/18] migration: Unexport ram_mig_init()
+Date: Wed, 30 Oct 2024 11:57:30 -0400
+Message-ID: <20241030155734.2141398-15-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20241030155734.2141398-1-peterx@redhat.com>
 References: <20241030155734.2141398-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -101,34 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@smartx.com>
+It's only used within migration/.
 
-Since CPU throttling only occurs when auto-converge
-is on, stop it conditionally.
-
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/f0c787080bb9ab0c37952f0ca5bfaa525d5ddd14.1729146786.git.yong.huang@smartx.com
+Link: https://lore.kernel.org/r/20241024213056.1395400-4-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/migration/misc.h | 1 -
+ migration/ram.h          | 1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 7609e0feed..e81c70b9d2 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3295,7 +3295,9 @@ static MigIterateState migration_iteration_run(MigrationState *s)
- static void migration_iteration_finish(MigrationState *s)
- {
-     /* If we enabled cpu throttling for auto-converge, turn it off. */
--    cpu_throttle_stop();
-+    if (migrate_auto_converge()) {
-+        cpu_throttle_stop();
-+    }
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index df57be6b5e..e8490e3af5 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -39,7 +39,6 @@ void precopy_add_notifier(NotifierWithReturn *n);
+ void precopy_remove_notifier(NotifierWithReturn *n);
+ int precopy_notify(PrecopyNotifyReason reason, Error **errp);
  
-     bql_lock();
-     switch (s->state) {
+-void ram_mig_init(void);
+ void qemu_guest_free_page_hint(void *addr, size_t len);
+ bool migrate_ram_is_ignored(RAMBlock *block);
+ 
+diff --git a/migration/ram.h b/migration/ram.h
+index bc0318b834..0d1981f888 100644
+--- a/migration/ram.h
++++ b/migration/ram.h
+@@ -44,6 +44,7 @@ extern XBZRLECacheStats xbzrle_counters;
+     INTERNAL_RAMBLOCK_FOREACH(block)                   \
+         if (!qemu_ram_is_migratable(block)) {} else
+ 
++void ram_mig_init(void);
+ int xbzrle_cache_resize(uint64_t new_size, Error **errp);
+ uint64_t ram_bytes_remaining(void);
+ uint64_t ram_bytes_total(void);
 -- 
 2.45.0
 
