@@ -4,146 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DBE0D6B6BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 18:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BDBED6B6C0
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 19:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6DuA-0001Rm-DE; Wed, 30 Oct 2024 14:58:56 -0400
+	id 1t6Dyt-00030d-GU; Wed, 30 Oct 2024 15:03:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <John.Allen@amd.com>)
- id 1t6Du4-0001Ok-Jq
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 14:58:48 -0400
-Received: from mail-dm6nam04on2081.outbound.protection.outlook.com
- ([40.107.102.81] helo=NAM04-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <John.Allen@amd.com>)
- id 1t6Du2-0005nd-40
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 14:58:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yXKXzr4yTFBwNQBp1i9ZLtagiimI1wzmx32uWawUhEb71z+Tktwd25cUXARbHNuHsn0z13yKls5cUqc2aITYJx2h/+g3pzp/+55dAAfWKR9onuQt8poJMgRyzVbfnDBNN6ITfwX8x1SHEm/XgCtu1rHjGTFSCa9dMEU4H6hkQkeuD93Pzg28cn/PtbCZ5g0OskefNw69bUZ7i05wCQoaunFbByRRcaQPYFM9FngoaW0nTf/x9WwXp7G1bZiY6VsIlidZAoA7p5lFxdtktR+ewmQ/eohMwMRgQPRfHGTHSQvD/DJE70CcEmFezToHLzHHQHu3x1V7CfDv0617cY/Jzg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1GiqJ3eoo1I/nerVik9cXXidtMQ6sXRof/TkWZWyXVs=;
- b=L0jqPvyZV3IS7NCI0BHXuL47kMdTYU1iDfqcZ0HYwvgZJdrktYk8uzujPO4hXwxR6UHXqP0IgRMfEEdFNi6Eq8tK2SpGn5Y2RaLyTGdUy2bJ0gJR0yt7ktHg5yuKhaRrKi7Mxq6lHLZj/oF+0YJnpxYM2rWFrebMFaoXbLDLTg2TLzWs4DwtmzwlhUUm2tT0Pi4JV28Svwtf+mYwiBAEEybqfHJV0cNDdDfcWgSePgZLAT32116zlvZrIVhFvrB6byccbN0nGvnrbRrjPII/b52VQi71mjClT28RVj/D7V/SELw4HlC7oRWITe6nB0cuNmSHtxZNAvyTaBtJyVCD3A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1GiqJ3eoo1I/nerVik9cXXidtMQ6sXRof/TkWZWyXVs=;
- b=km+izFB9Y/i34Muahb4UJr363aVNpwACaI+LVawX2uI53weNUkEsuG+Tiqidty4s+DQjN7QBlkrDtj2I076Rg2XuY+Hru+lQD937A9ZoXTiqGDd1WdRpAFkuA4zdwb/pGZhUiC9c3PiHc/vI//u/bzN1u95nnMnpMfJRGwp/sMY=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BL1PR12MB5995.namprd12.prod.outlook.com (2603:10b6:208:39b::20)
- by MW4PR12MB6899.namprd12.prod.outlook.com (2603:10b6:303:208::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.23; Wed, 30 Oct
- 2024 18:53:39 +0000
-Received: from BL1PR12MB5995.namprd12.prod.outlook.com
- ([fe80::7298:510:d37d:fa92]) by BL1PR12MB5995.namprd12.prod.outlook.com
- ([fe80::7298:510:d37d:fa92%5]) with mapi id 15.20.8093.021; Wed, 30 Oct 2024
- 18:53:39 +0000
-Date: Wed, 30 Oct 2024 13:53:35 -0500
-From: John Allen <john.allen@amd.com>
-To: Zhao Liu <zhao1.liu@intel.com>, pbonzini@redhat.com
-Cc: Babu Moger <babu.moger@amd.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v3 2/7] target/i386: Add RAS feature bits on EPYC CPU
- models
-Message-ID: <ZyKAr/KTkX7vgh16@AUSJOHALLEN.amd.com>
-References: <cover.1729807947.git.babu.moger@amd.com>
- <63d01f172cabd5a7741434fb923ed7e1447776ee.1729807947.git.babu.moger@amd.com>
- <Zx82ReAE9h7bLSNN@intel.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zx82ReAE9h7bLSNN@intel.com>
-X-ClientProxiedBy: SJ0PR03CA0014.namprd03.prod.outlook.com
- (2603:10b6:a03:33a::19) To BL1PR12MB5995.namprd12.prod.outlook.com
- (2603:10b6:208:39b::20)
+ (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
+ id 1t6Dyr-00030M-FJ
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 15:03:45 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
+ id 1t6Dyo-0006ZZ-UP
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 15:03:45 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-71e5a1c9071so142763b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 12:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1730315021; x=1730919821;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=w0sMXoheruX8J/YvB4XhrBL5xFSwAg8s95rXfLJ3DJU=;
+ b=hNmiZV7OdItn8JrEi9d40/PLQ7YOJlHsxoG1no4Db02w3knsF9AxlCnxrNumWsq98t
+ OqVrGSiuMJOhXsITbvFXfZ5z4DabDQxV5vLIcB4x/XARujLqHVQttgVBok9MQ/AJFlSU
+ APbWfDsMh0EoSusuKlrjNgebDpQnlpH9SYA59ogUTJfGaM2wy/d6TyTzQbeK8MBTE6XC
+ A8dOTnMxenFKvVKJWd9Cyje/Fk+3A7ThVTu4WOz5CE1aRlqwYIFePy1yKdXMvMek6Lz+
+ Dj5JlTjm8UmERJbw4gABGuc2VBpTzn1Vvrx1Bue7nPGifyba1Xga/a317rzmSzq8OfOX
+ F67A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730315021; x=1730919821;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=w0sMXoheruX8J/YvB4XhrBL5xFSwAg8s95rXfLJ3DJU=;
+ b=XbNQiDchtdYEW7r0w5lfsI7LBm8yWC4Q7ea7R1oo0cEXDv3UkSOcGnOuZ6BOSFQd0g
+ c91FA4BEWEpB2ZQjMdJdvcpt7sdwIrJYZoP98lQmoagJDeo5GsND/LtqT5GOIjOyIBJN
+ iRPYpoGOw1Y0wF/XyHKvGlBk9XGhMuRmN/zM4Jr0cqrE1fDHZ7yBMAcSdo83rs/zU1U2
+ QB5pxh1Uzg4Z1PTXc3OQdtTlnRkoBALxld9BDdM30w7W+WYfn0Irp8pFMZRtNuMeN141
+ 4a/QKwtUYkONYOlN6Z3ALSYJnVS4Orlyi+I/NreS/Do+BZeNBstLwZUP2wbR/wuW4U+d
+ 73YA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVGV5YFzZ+ml5yDrFodVeAVsfesR+fJqm5mDOt2yTlEc95ekx4DfDAbzCUZgQFfuDfSZOpe3nOEsnkZ@nongnu.org
+X-Gm-Message-State: AOJu0YyjMR1FDcWopTrIYHIIQB8COND97D5wVFtpjmxRrDNASSUrvrXC
+ 2shFZ494rKR5KI4lgeJQIcxlRA6KCFR552zPdDUaXWHNlZthPAvY7V6flvTml7zcAFNR4FGzcDr
+ qpkP8tTj+XtEV2ccRTx23WUgR6Dq7ZRe3rEP/gxN01r9H5dH3FA==
+X-Google-Smtp-Source: AGHT+IGtQWlDCebpgto4ZcWx/Dlsa0qEMeEfq7f1ojU0gObG5fIfOnKIdxj8S3Yb4kWx5VYUAueq85H/HjYLvJ1gAQk=
+X-Received: by 2002:aa7:88c6:0:b0:71d:feb7:37f4 with SMTP id
+ d2e1a72fcca58-720ab39eca2mr6125616b3a.6.1730315020943; Wed, 30 Oct 2024
+ 12:03:40 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5995:EE_|MW4PR12MB6899:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5cf6d3e5-4b61-45ec-4828-08dcf9142ae4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?yNf0CXLzL0FZW9AUDiaGKu8oidW5cgyK65Fd1U0UQmcS/pVMeiWcqvS5gEo1?=
- =?us-ascii?Q?tKNNomWP+gXvZbfPEI6C8pGiHk/VfVHeFHOwDKOmExvut7HIaHcH2tfKq6H8?=
- =?us-ascii?Q?yKu1I7/5CQDl4FpRYshW0CI4/4jMfiBm7sKGv94CIyyjlMvg23SrQjqj9UvF?=
- =?us-ascii?Q?tJHFBCWG5fgZik/791EScGdbuCmllsWip9O1IRldzEx178hnZP6oIJD9XeNT?=
- =?us-ascii?Q?SGBplAxTjxszHbS1IJ2c1Sbinlylez3WnR9iFi4m2EYa1Z2JdljbgddwJFDJ?=
- =?us-ascii?Q?0UswKbur14tVmjx3N5E9xSKqkv71PoXQfvgByMcPtPRYdL8aacK+xBm2sOMl?=
- =?us-ascii?Q?7TpXfuvByJw0dOXVP+RLD8KpZQS+oAXY+iopO9a5LyaCHzizZ2MjwhvE74x9?=
- =?us-ascii?Q?QRloybFiyvd/3shJId7UeaX6cp0gFDeiP8x0FCAjS1UgkWwhKgm9XxnrwEfH?=
- =?us-ascii?Q?lmYXhv1GFGTR45amSjnYtxvc5E/VRSTdkyzZF5KCh4G9xbhJhoCQNm5z5F7A?=
- =?us-ascii?Q?W6vQdLnS0d1itSa+4vGhorBfrn8ARvHFVfNI9KXMBUEhbSgDjhWD1Ee25wBu?=
- =?us-ascii?Q?ZJ9ioYRbXSVGmQmQTPKNHYVYw7muS7CqMi0qSRj77GCW1X+MB7eBjmfFvSAJ?=
- =?us-ascii?Q?Q97/ZVsL6JhwHyGtGg3F7PPe/2l+ON4f5CZgUm9y2bMMH6C9B7xmVA99nn+T?=
- =?us-ascii?Q?X5vm6GDnqH5EjJHaoBz0Ls+ioxhGN8Cig8irk54KrQufWvqV0Cs8q6nPBB50?=
- =?us-ascii?Q?+TcC9KzA5oJU+EXWQZZltuvFSQG7S/H5ovM2asqllXxMbiC4gyNxqOmK/mKQ?=
- =?us-ascii?Q?ptWxfchr+qWWeN3XUUPO6xhgXJyQFxIcDNepQ5vs2W/9aIdb7fD3uGa0BtPB?=
- =?us-ascii?Q?QZHRayLgVin7bF4XZjiyeQQbr8rEn73oOAKd/UrbIxG8nmMW8FAp8w4JxhJx?=
- =?us-ascii?Q?WAjIxafhy77/VMdutsiVCs1r2dTKtlmYR2n3LRUW+hRPotlHchxcbEFhzRRQ?=
- =?us-ascii?Q?4L9wjKQUaiW+1JlzjapuSz8C2IYQUs70BYmWSgkKyjaNQrYXKTUwSU/jz9A0?=
- =?us-ascii?Q?Z/L7Pe4txW5t+J44UEn+tncJvM2595jcuqtaklRnpJRxAZ17pdPgGyZ3hHOA?=
- =?us-ascii?Q?vvqBVW4mDR/RWRrWP9i7l8CZjS0c7n2zEsW3fWpwuv/JmfpXWa0CLZaWYnFH?=
- =?us-ascii?Q?WvQBT2urZZsT3TeC/wYYhbIB9//UJ9JpXelk7EXR4fLMBU+vhofkyXll2oAS?=
- =?us-ascii?Q?gFlZqCq59TWTZkL68pQXGdOFVI0o85kICBGCZ8wunMFHcf9S7kDZQy8iauts?=
- =?us-ascii?Q?8CnVMC7h9M2b/dojEZ7eDEml?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR12MB5995.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?PfF5HVVudwzAnjYjMEaM9AmpVNQ1BA99i6xSYN+1xNTHUcO0VRWsblcNbuKT?=
- =?us-ascii?Q?ELFPtJ7MPVK7Gv3WBLkJo6e7lcA5D0ag6H4yibLDALrFWZHQ27PCsLuR4ifP?=
- =?us-ascii?Q?L3MFVjRgwkbnoo08THx4pooafCqgbRnJqjhhSKUinFsMUY0Qp3KUGxk5cYsn?=
- =?us-ascii?Q?bwcgr12PnLKh4UASlyUhxDK9+Z5IovJoTBXQALwORU3zXFERoQWv04Gq3a68?=
- =?us-ascii?Q?uZBuklGEukPjMO3EqQryQ0wfmuZw+8Ekll2bOh1QqaAGCv93bYptBxsHdKA4?=
- =?us-ascii?Q?rdNeb8is54imbek/Dqvns8SVtcGsp3LBqBtDOkoRhyTrVgkwAwXSLZzrD1bf?=
- =?us-ascii?Q?BpCcIy78bDqRUeD/tczkdqq158X4uaiPIabU8nN1/fyL8TvzwMpuQYSnt7D4?=
- =?us-ascii?Q?bcveOnm0nv6MlBwQwE9YjBgk06gJMRN7NbHoM2h3XlkmM5XaIMftOrwjsA8W?=
- =?us-ascii?Q?1UATC2wwTR1diNwBLQOCB9b13aaQcFeCJEpkp/gkxjX//yNeKo/mhc3uvWoj?=
- =?us-ascii?Q?PvdXhhViWVcBM0Hvj/kxzpPE4TTG0lTy0tE9ouAdczsX3I9e8gDDoHX/qUfw?=
- =?us-ascii?Q?McEHFyBer3vTxv/zHZxfpPQEw8jVaXSk5Qbt3zHIJFNT094GtRo3U8eV33/q?=
- =?us-ascii?Q?48KLmMvrqtlLark5ArCW+7xyC8khpvdehlEUDNTL8FZPJ4iwqh/eyNv4K65R?=
- =?us-ascii?Q?E/AgTwYpzv/EceoJVxh8+cCpAjs2eAzMQIFKsGzk+rzsYxTRPfqRdaQQVtyp?=
- =?us-ascii?Q?jPYRZYbLudVqHFVyYuUjzl1eF+0Cj07ylt8KIJyvzoUaqlYb9GCalsH+V9ao?=
- =?us-ascii?Q?y68vSFQAa8psJ/F+jXJSb8mDOzQuIAKwyR3CpK1efSw7Kg0t5DfUtEWs/MiK?=
- =?us-ascii?Q?JsEhqSc1gG1UuxkgfIWq4sizUZxEDPB0CF9Jo8WnUwW9bnK6mzFR0eus0k2Z?=
- =?us-ascii?Q?wO9ox63Pq56i3GuK5/wWDBYWEWpjQKx3TPyu0hHzwn9e2717d8GpCmB5P3VC?=
- =?us-ascii?Q?2fOeZpYLHI3g9OEwMUVhTp+0jGBywweTrPO/xRUHQfsa7rXbkXDANELf++2I?=
- =?us-ascii?Q?aoOB6JF08puHI7NhUfeo5LXHZ2E+CvyAfWo5WA9mT2SIsI5Mei/77xmg1ahw?=
- =?us-ascii?Q?JAQE82c8pZ9ARu7DtP8U0aTgoWTIz82zZb4NgaqJO6t67JkHwmepKZgik57o?=
- =?us-ascii?Q?Io7/24sMhvXHRYmjW6kPnRVzD0ZajAG5lg+aLHOpdWuFLlZGWP2U5i8rAy6H?=
- =?us-ascii?Q?jkSsKg306E616MGvLvEsv8EX1o2+S/2S4kGv6D6dKtsCi6Ye7D2a18ecz6d0?=
- =?us-ascii?Q?DifpAdpD35lWg7X1WCss74cKViPN1sg37IHnOOTKIOP7lEStvdmnHGK/dK23?=
- =?us-ascii?Q?kMtYKb7yf8oikVl1tfpo6tUSlakhkws1IKjVlMYfwk51A/Uzygc9vuWwhs6m?=
- =?us-ascii?Q?8IZtEaURG2uMPB/sOi6y0UM4ZOgKexwFJNbzm4C+7j0bHq+3eYjMfVhV69IG?=
- =?us-ascii?Q?t6HLgzYis/C6hfOYfZyGez6G/733LjE46/whkR8CfsmpVEHkXp3SB/Am0z3G?=
- =?us-ascii?Q?vi1nUB/bwLmgLR6AlQP/1YqGmTYWYNxrkGSi0ZaS?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5cf6d3e5-4b61-45ec-4828-08dcf9142ae4
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5995.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2024 18:53:39.5813 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: B63aqgOWbzLTT6PMjn27hFpQOa+R4SXreWFWi6chY878fybYixg8rEMB3Z2AHExrNENtPR8VToMdhbk4iEdCYg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6899
-Received-SPF: permerror client-ip=40.107.102.81;
- envelope-from=John.Allen@amd.com;
- helo=NAM04-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241030140656.36540-1-abelova@astralinux.ru>
+In-Reply-To: <20241030140656.36540-1-abelova@astralinux.ru>
+From: Phil Dennis-Jordan <lists@philjordan.eu>
+Date: Wed, 30 Oct 2024 20:03:30 +0100
+Message-ID: <CAGCz3vuqRAkPtRRpqbPM+3z5iqVHOkr5fYotmva=6uqA7JnGcQ@mail.gmail.com>
+Subject: Re: [PATCH] monitor: fix cases in switch in memory_dump
+To: Anastasia Belova <abelova@astralinux.ru>
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-devel@nongnu.org,
+ sdl.qemu@linuxtesting.org
+Content-Type: multipart/alternative; boundary="0000000000002c725a0625b65cae"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=lists@philjordan.eu; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,57 +90,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 28, 2024 at 02:59:17PM +0800, Zhao Liu wrote:
-> (+John)
-> 
-> Hi Babu,
-> 
-> This patch is fine for me.
-> 
-> However, users recently reported an issue with SUCCOR support on AMD
-> hosts: https://gitlab.com/qemu-project/qemu/-/issues/2571.
-> 
-> Could you please double check and clarify that issue on AMD host?
+--0000000000002c725a0625b65cae
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks for the heads up. I can reproduce this on an AMD host with
-kvm.ignore_msrs=1. It seems like kvm will need to block this feature on
-the guest when ignore_msrs is set, but it's not clear to me how that
-should be done yet.
+On Wed 30. Oct 2024 at 15:09, Anastasia Belova <abelova@astralinux.ru>
+wrote:
 
-Paolo,
+> default case has no condition. So if it is placed
+> higher that other cases, they are unreachable.
+>
+> Move dafult case down.
+>
 
-Do you have any ideas about how we should handle this situation?
+The stylistic merits might be debatable, but: the order of cases in a
+switch block in C does not matter, the default case can appear anywhere.
+The other cases are still reachable. So at minimum, the commit message is
+incorrect.
 
-Thanks,
-John
 
-> 
-> Thanks,
-> Zhao
-> 
-> On Thu, Oct 24, 2024 at 05:18:20PM -0500, Babu Moger wrote:
-> > Date: Thu, 24 Oct 2024 17:18:20 -0500
-> > From: Babu Moger <babu.moger@amd.com>
-> > Subject: [PATCH v3 2/7] target/i386: Add RAS feature bits on EPYC CPU models
-> > X-Mailer: git-send-email 2.34.1
-> > 
-> > Add the support for following RAS features bits on AMD guests.
-> > 
-> > SUCCOR: Software uncorrectable error containment and recovery capability.
-> > 	The processor supports software containment of uncorrectable errors
-> > 	through context synchronizing data poisoning and deferred error
-> > 	interrupts.
-> > 
-> > McaOverflowRecov: MCA overflow recovery support.
-> > 
-> > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> > Signed-off-by: Babu Moger <babu.moger@amd.com>
-> > ---
-> > v3: No changes
-> > 
-> > v2: Added reviewed by from Zhao.
-> > ---
-> >  target/i386/cpu.c | 30 ++++++++++++++++++++++++++++++
-> >  1 file changed, 30 insertions(+)
-> 
+
+> Found by Linux Verification Center (linuxtesting.org)
+>
+> Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+> ---
+>  monitor/hmp-cmds-target.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
+> index ff01cf9d8d..eea8ca047b 100644
+> --- a/monitor/hmp-cmds-target.c
+> +++ b/monitor/hmp-cmds-target.c
+> @@ -189,7 +189,6 @@ static void memory_dump(Monitor *mon, int count, int
+> format, int wsize,
+>          i = 0;
+>          while (i < l) {
+>              switch(wsize) {
+> -            default:
+>              case 1:
+>                  v = ldub_p(buf + i);
+>                  break;
+> @@ -202,6 +201,9 @@ static void memory_dump(Monitor *mon, int count, int
+> format, int wsize,
+>              case 8:
+>                  v = ldq_p(buf + i);
+>                  break;
+> +            default:
+> +                v = ldub_p(buf + i);
+> +                break;
+>              }
+>              monitor_printf(mon, " ");
+>              switch(format) {
+> --
+> 2.47.0
+>
+>
+>
+
+--0000000000002c725a0625b65cae
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Wed 30. Oct 2024 at 15:09, Anastasia Belova &lt;<a href=
+=3D"mailto:abelova@astralinux.ru" target=3D"_blank">abelova@astralinux.ru</=
+a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">de=
+fault case has no condition. So if it is placed<br>
+higher that other cases, they are unreachable.<br>
+<br>
+Move dafult case down.<br></blockquote><div><br></div><div><div dir=3D"auto=
+">The stylistic merits might be debatable, but: the order of cases in a swi=
+tch block in C does not matter, the default case can appear anywhere. The o=
+ther cases are still reachable. So at minimum, the commit message is incorr=
+ect.<br></div></div><div><br></div><div>=C2=A0</div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">
+Found by Linux Verification Center (<a href=3D"http://linuxtesting.org" rel=
+=3D"noreferrer" target=3D"_blank">linuxtesting.org</a>)<br>
+<br>
+Signed-off-by: Anastasia Belova &lt;<a href=3D"mailto:abelova@astralinux.ru=
+" target=3D"_blank">abelova@astralinux.ru</a>&gt;<br>
+---<br>
+=C2=A0monitor/hmp-cmds-target.c | 4 +++-<br>
+=C2=A01 file changed, 3 insertions(+), 1 deletion(-)<br>
+<br>
+diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c<br>
+index ff01cf9d8d..eea8ca047b 100644<br>
+--- a/monitor/hmp-cmds-target.c<br>
++++ b/monitor/hmp-cmds-target.c<br>
+@@ -189,7 +189,6 @@ static void memory_dump(Monitor *mon, int count, int fo=
+rmat, int wsize,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0i =3D 0;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0while (i &lt; l) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0switch(wsize) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 default:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 1:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0v =3D ldub_p(=
+buf + i);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
+@@ -202,6 +201,9 @@ static void memory_dump(Monitor *mon, int count, int fo=
+rmat, int wsize,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 8:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0v =3D ldq_p(b=
+uf + i);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 default:<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 v =3D ldub_p(buf +=
+ i);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0monitor_printf(mon, &quot; =
+&quot;);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0switch(format) {<br>
+-- <br>
+2.47.0<br>
+<br>
+<br>
+</blockquote></div></div>
+</div>
+
+--0000000000002c725a0625b65cae--
 
