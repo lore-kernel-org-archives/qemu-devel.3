@@ -4,85 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4778BD7495F
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 04:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D067D74962
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 05:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t60Rd-0003x1-HY; Wed, 30 Oct 2024 00:36:33 -0400
+	id 1t60r4-0006AI-AW; Wed, 30 Oct 2024 01:02:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1t60Rc-0003wk-BZ
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 00:36:32 -0400
-Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1t60Ra-0001JL-NY
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 00:36:32 -0400
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e290222fdd0so5559711276.2
- for <qemu-devel@nongnu.org>; Tue, 29 Oct 2024 21:36:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1730262989; x=1730867789; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=H85AbNTysqI7cuJO3FcIVkkH22m9A/gdkrfO0/GMUOw=;
- b=Z0KtnYLqWfQl/3kdYzT8lDibNWqWjrWU+ZYZlxOurfKtVluwWypFcU5KMfvVQhIrU4
- wNXb/WZK0sTwosDCRih2fWCLsLZKkEzXnKRS4eClehy1tzKPnOpD/MjOYYW7Tk1fW30f
- SgWKJ9Rg9cvg+5g6uAk63G9POZsOBYhFjAbBspScAMfnPZRkAMzUT/TPL1N+5zfQ9GXm
- vmJDosZTtyippKh1QENH8Ri322STVqJpK5tSgwCd9sTu8NBYDrsOqmE+kXbTW4Mf02Fi
- RRDqJ+gDFxEMR5bScDwzpdHm3AYk31Pzma5eLtzVCd1vkCCT5yb/kAJZpud7XJdax862
- y2DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730262989; x=1730867789;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=H85AbNTysqI7cuJO3FcIVkkH22m9A/gdkrfO0/GMUOw=;
- b=BbLlm0YrTsxDuOV8SpzkvtR2zBjNcC/EZUucgj1xwT9OZzYWKYIWNHwi4i/5SZ+sn/
- yO6b8I7R7BofTYZBLtBER6MKtOcpQ/BOgbes5+k6x14RSu4wWmb75IYAY3h5pGuCu+hq
- vIdtX4RqUKrEt8LHKkJVy9TNc4JANBx7Kws/b2T+hELYcS/AiRg48Uuz+XWBIqolF5Gy
- xos54g1GikN0SywCrjHQIAQ3qPKKSbaOh4g/g2KMGkeamc55RlCCBqU58TFU0ilQrrhP
- pF4DhcrdXJouo6q7Qnrk7bacaX3BA3Jcu0xpnIWFg/oQPVJEyLhzVafcGV3lmfC08LYy
- qISA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX14H280Hk4VH2Bu3mvDbWKNTFD2T1tJFeMLyKbFuLstqgpnoN44Ewn2G92+Ktd40BQSR7IwFCub3x8@nongnu.org
-X-Gm-Message-State: AOJu0YyuIL4gi+WISVyceqRye720PpwTcsasv3w/KxInzlnC+K3nr8Ot
- h6SQNQleCb7V5oWjQTG9czvzyXa8zHabSrpYXezQf3ibJL4+jkxS5rSx9t6j6+UUr+4BpQwHaVc
- ZANg=
-X-Google-Smtp-Source: AGHT+IEWU64858/fh+MqXBbPbZH/T7ePu8ZYyzchbNkowm8JNBn6bPtmGl5Kx8jEsCnutD1QWU1+NA==
-X-Received: by 2002:a05:6902:1021:b0:e2b:a8b3:d650 with SMTP id
- 3f1490d57ef6-e3087a6b53cmr11823420276.24.1730262988862; 
- Tue, 29 Oct 2024 21:36:28 -0700 (PDT)
-Received: from ausc-rvsw-c-01-anton.tail89d63.ts.net ([38.104.49.66])
- by smtp.gmail.com with ESMTPSA id
- 3f1490d57ef6-e308fbc3e26sm1633860276.27.2024.10.29.21.36.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2024 21:36:28 -0700 (PDT)
-From: Anton Blanchard <antonb@tenstorrent.com>
-To: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Anton Blanchard <antonb@tenstorrent.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH v2] target/riscv: Fix vcompress with rvv_ta_all_1s
-Date: Wed, 30 Oct 2024 15:35:38 +1100
-Message-Id: <20241030043538.939712-1-antonb@tenstorrent.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t60r3-0006A9-3R
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 01:02:49 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t60r0-0003UP-S1
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 01:02:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730264567; x=1761800567;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=zAf/zWoKGkfr+BCM09VBwFQQ6XnLx2Fc/Cft5W4uFW4=;
+ b=JS20ynHzTpp66FumdoU7ac/ppapG4kVvEX43WXnH1lOAnG7O+vH5s2Cl
+ hwo3BTb6leoPX+p+nQ3XDck7ooSV/Y2iHTVrH3NpjDt4YnUPMWGhyl1TA
+ UPIgP3VWsz+hsCHh6vc/1BzX6YYd82Gc0r9iiCjUa8uNMmzZATmp8j/jx
+ YSTt+MUL60eivBT6qVJssJlXU01RNFsnclUZX89AagMuveID0BXBZZhfM
+ dQ/vOmcnaUEAglS+2WncAhmvLyp1c96B+OKN+SRFh+JoI0+YN47Lqtug3
+ aRsXMk+RaI5ZR71SXw5NKQs/gpkTUWV5WQ5oIanwciqsLljTTMAdK2raU A==;
+X-CSE-ConnectionGUID: Z64+CPWeTa2pIvbVIh33Nw==
+X-CSE-MsgGUID: VZsauNXQSW+RY0720e3Ygg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11240"; a="33873695"
+X-IronPort-AV: E=Sophos;i="6.11,244,1725346800"; d="scan'208";a="33873695"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Oct 2024 22:02:43 -0700
+X-CSE-ConnectionGUID: UeS7uvp3Td2y1K+ByRGnUw==
+X-CSE-MsgGUID: JbISFIS8T3ymBPXdmc2F9g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,244,1725346800"; d="scan'208";a="82610086"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa007.jf.intel.com with ESMTP; 29 Oct 2024 22:02:42 -0700
+Date: Wed, 30 Oct 2024 13:19:01 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, tao1.su@linux.intel.com, xiaoyao.li@intel.com
+Subject: Re: [PATCH 3/8] target/i386: return bool from x86_cpu_filter_features
+Message-ID: <ZyHBxSqZVfDtT4q9@intel.com>
+References: <20241029151858.550269-1-pbonzini@redhat.com>
+ <20241029151858.550269-4-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
- envelope-from=antonb@tenstorrent.com; helo=mail-yb1-xb2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241029151858.550269-4-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,31 +83,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vcompress packs vl or less fields into vd, so the tail starts after the
-last packed field. This could be more clearly expressed in the ISA,
-but for now this thread helps to explain it:
+[snip]
 
-https://github.com/riscv/riscv-v-spec/issues/796
+> @@ -7558,7 +7558,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>   *
+>   * Returns: 0 if all flags are supported by the host, non-zero otherwise.
 
-Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
----
- target/riscv/vector_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Comment can be updated as well. :-)
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 072bd444b1..ccb32e6122 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -5132,7 +5132,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,               \
-     }                                                                     \
-     env->vstart = 0;                                                      \
-     /* set tail elements to 1s */                                         \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
-+    vext_set_elems_1s(vd, vta, num * esz, total_elems * esz);             \
- }
- 
- /* Compress into vd elements of vs2 where vs1 is enabled */
--- 
-2.34.1
+Returns: true if any flag is not supported by the host, false otherwise.
+
+>   */
+> -static void x86_cpu_filter_features(X86CPU *cpu, bool verbose)
+> +static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
+>  {
+>      CPUX86State *env = &cpu->env;
+>      FeatureWord w;
+> @@ -7610,6 +7610,8 @@ static void x86_cpu_filter_features(X86CPU *cpu, bool verbose)
+>              mark_unavailable_features(cpu, FEAT_7_0_EBX, CPUID_7_0_EBX_INTEL_PT, prefix);
+>          }
+>      }
+> +
+> +    return x86_cpu_have_filtered_features(cpu);
+>  }
+>  
+>  static void x86_cpu_hyperv_realize(X86CPU *cpu)
+> @@ -7707,14 +7709,14 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>          }
+>      }
+>  
+> -    x86_cpu_filter_features(cpu, cpu->check_cpuid || cpu->enforce_cpuid);
+> -
+> -    if (cpu->enforce_cpuid && x86_cpu_have_filtered_features(cpu)) {
+> -        error_setg(&local_err,
+> -                   accel_uses_host_cpuid() ?
+> +    if (x86_cpu_filter_features(cpu, cpu->check_cpuid || cpu->enforce_cpuid)) {
+> +        if (cpu->enforce_cpuid) {
+> +            error_setg(&local_err,
+
+It seems that we don't need local_err here, as this function already has
+an errp parameter. I will clean up the error handling of this function
+later.
+
+> +                       accel_uses_host_cpuid() ?
+>                         "Host doesn't support requested features" :
+>                         "TCG doesn't support requested features");
+> -        goto out;
+> +            goto out;
+> +        }
+>      }
+
+LGTM,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
