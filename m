@@ -4,78 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0103D6B6BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 18:51:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F1BD6B6C0
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 18:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6Dmd-0006el-2R; Wed, 30 Oct 2024 14:51:07 -0400
+	id 1t6Do7-0007Ii-UC; Wed, 30 Oct 2024 14:52:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Dmb-0006eZ-Iq
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 14:51:05 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Do6-0007IR-In
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 14:52:38 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6DmZ-0004sB-IK
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 14:51:05 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a99f629a7aaso25846166b.1
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 11:51:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Do5-00052p-5N
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 14:52:38 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a9a26a5d6bfso17252166b.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 11:52:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730314261; x=1730919061; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730314355; x=1730919155; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+w9PwpNYhsS0XAY23sT7/ICSpkG/mbY4+j6vB1dDeR8=;
- b=lD3lsbP+5Z3lGaDpeynNAdKPdWgeanHSb/X1t6yW6fcrmax2Qb5VIqxjzfA5aqcPJh
- phw2ePJNpPPTFJKm+MjsA2lkjlFlROqJtrhwJfIm0t6MBW2zPpya1oCXSbbx+MczdOQg
- 2jd2Q78fketUn68lGldsvreuZk0wr/87EwuvPUs9+Fhb7WfX1hLc5RbXNYDxAzs8umei
- Fcn+1jUx4h0LoxVOHVQRPe/xBpIS/ATP7g1BehlM3U2YJWAfA856WMvLrond2qJMwgeh
- pHl4W7eNABenoFgGtO9ALljd2dlNHTLSpMNLvtoblvf1P4jeAThtmKd/jUX668i8/Bc1
- ge8g==
+ bh=jb5pTcZcxb6tN9DenFJaeS/1PURpitaqFPCnu9lbrEc=;
+ b=sXpwCY9ncCeURyhPY7PQcPXlB0ZrO3PRVTGcv7t1X9ZpytlOGBSiFNpf8SdNYE9Y9w
+ OT1j73MFZGF1omkW9odGAueo0kwxHr7LYm/FuZArFRRpaqus9jdqEls/u7OjacakdPHC
+ rLftAE194kJAViOvt3yXgmlkZiZDD5X+vk7rC71l4bQWA1h9OKZSghc37w+cqLGq3Wj+
+ T6E2sWQuQXzzAJLFPodkXkNT+vhY8kyvhTqR2KDjpJH6AYDcdvN1kOoqfScUe1o49O6h
+ dAD3torNFVpZFzccBtu7VoDtUJ5tDM7hP3UPgRk+Yf1yOb5gEYwzGHdQJ+tWJVYChBZM
+ LDvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730314261; x=1730919061;
+ d=1e100.net; s=20230601; t=1730314355; x=1730919155;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+w9PwpNYhsS0XAY23sT7/ICSpkG/mbY4+j6vB1dDeR8=;
- b=fDPx2grLW2G0FeIYQd0iX2Ptpdxf/rkAB7O0JjYSrRODiLnLCc3J6kVtxInScLV+Oz
- FQInkJWmAh56mtay4lQ/Rm8TLh399VaIZjyD3X5Y+A7eO+us8BUlCTtpcxWCnB2iGV6o
- ZByw9Z8hMKC4uLEIQLkfGqiCOf3ukeYtrKZiQQO1j/i6sTP7ElGgcJ0+cf/gs6fUroMA
- Y4ZGONPNCjcvc9kt34o0a6GurE3eVp/BcHLUQWWXPuh1loFBnoLqt98Fdl8CXuOlfEWM
- T1ndP51vL3gb7WpfMqGs219YqIY6Ngq0IM2gFNh+FMdiPMWO4Ghy+V3n/FO8DDlBHkHi
- DtNg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4SnoVeQRaybLjohU739I74UYUd7+M0GgW5Ia0438/Bw0Glz8E+hQmHUWpGw6xjoKjtVlnwk6hBDH6@nongnu.org
-X-Gm-Message-State: AOJu0YyIAHp3QGwgxSGVMkvNCDfjrY3fKdUdrF5H15eR4xaBdbfzZayz
- G2yrUpjjJH0rqAGeeY1FrIj9m1MQPT9ILQxLtNv7dyewyLQqGUJ80xIq/F2OcXo=
-X-Google-Smtp-Source: AGHT+IHyR+1j+oFIqE3oN1BSISIfN2Odaf4Egy1bbmdXGJexHpjiG5YhxWw2GyTV48p24mGYm1GM1Q==
-X-Received: by 2002:a17:907:96a1:b0:a99:3db2:eb00 with SMTP id
- a640c23a62f3a-a9e4105fd75mr304693866b.28.1730314260712; 
- Wed, 30 Oct 2024 11:51:00 -0700 (PDT)
+ bh=jb5pTcZcxb6tN9DenFJaeS/1PURpitaqFPCnu9lbrEc=;
+ b=iyG4ektteEuqX1v9CgxB/gcYpJahPEoAEkb4Ax7YHEqtXCeEpelmj+95S9QoeYSTzp
+ G6a20lOZSPnNqnI4Xmj/Ey5uiTDqxpKAtGRER6+BMg+cIZpAliPUEOvESC3YuLW0d/8u
+ Q1Nj1afRG6qK0oJOEAPIEqE0mY4i24Pi8p5nS1Gx6FV2tTSZdWoIRN6vTu9y/LFG/2OL
+ Wiu6H49qS4xOuKFKFoSQwvGSpcSWgE7ZhnxxW9BRWfyOkXz9Y6Uao3/cMeVpm3jqfe4b
+ mB4HYRJVoXizIIn0ElJw4A0qsjDCACrlUFhvo00tS9yUgVoEB583pyQtnZ0wmE3CASEf
+ AfAg==
+X-Gm-Message-State: AOJu0Ywo62J7C/f5vpF4HHU2HDbPSi3d2/uT528+44Aw08OTtOJPrrWt
+ +eJWoVVUVrA67OoO/utBYS3u4J8CViXR1gkCZz/d2vH48rkctQkNXVCMIisXe/s=
+X-Google-Smtp-Source: AGHT+IHVoceKDfQQmSJ/XoHlY9gmgmHhv+iO8MzJqqrtF3yBFm9DykWUVleyx/LQBe8TO72onHKXYg==
+X-Received: by 2002:a17:906:c105:b0:a99:6791:5449 with SMTP id
+ a640c23a62f3a-a9de615ad79mr1641841866b.52.1730314334305; 
+ Wed, 30 Oct 2024 11:52:14 -0700 (PDT)
 Received: from [192.168.243.226] ([91.209.212.192])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9b1dec802csm604770766b.13.2024.10.30.11.50.57
+ a640c23a62f3a-a9b30d70064sm592633666b.161.2024.10.30.11.52.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Oct 2024 11:51:00 -0700 (PDT)
-Message-ID: <08cb3768-a7a9-4e01-a574-4af2affbbd30@linaro.org>
-Date: Wed, 30 Oct 2024 15:50:51 -0300
+ Wed, 30 Oct 2024 11:52:13 -0700 (PDT)
+Message-ID: <76857da2-1615-4410-9f1e-d026b7a2a4a4@linaro.org>
+Date: Wed, 30 Oct 2024 15:52:07 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] crypto: purge 'loaded' property that was documented as
- already removed
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>
-References: <20241030084718.2980247-1-berrange@redhat.com>
+Subject: Re: [PATCH] hw/net: Changing log error to trace message
+To: Roque Arcudia Hernandez <roqueh@google.com>, kfting@nuvoton.com,
+ wuhaotsh@google.com, jasowang@redhat.com, qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, Nabih Estefan <nabihestefan@google.com>
+References: <20241014184847.1594056-1-roqueh@google.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241030084718.2980247-1-berrange@redhat.com>
+In-Reply-To: <20241014184847.1594056-1-roqueh@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -98,23 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/10/24 05:47, Daniel P. Berrangé wrote:
-> The 'loaded' property on TLS creds and secret objects was marked as
-> deprected in 6.0.0 and then marked as removed in 7.1.0.
+On 14/10/24 15:48, Roque Arcudia Hernandez wrote:
+> From: Nabih Estefan <nabihestefan@google.com>
 > 
-> Except it wasn't actually removed, it was just made read-only, while
-> claiming it was removed. Finish the long overdue removal job.
+> Converting error to trace message to avoid spamming of message when
+> there is nothing to transmit.
 > 
-> Fixes: 0310641c06dd5f7ea031b2b6170cb2edc63e4cea
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+> Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
 > ---
->   crypto/secret_common.c          | 12 --------
->   crypto/tlscredsanon.c           | 35 ----------------------
->   crypto/tlscredspsk.c            | 34 ----------------------
->   crypto/tlscredsx509.c           | 30 -------------------
->   docs/about/removed-features.rst |  6 ++--
->   qapi/crypto.json                | 51 +++------------------------------
->   6 files changed, 7 insertions(+), 161 deletions(-)
+>   hw/net/npcm_gmac.c  | 5 ++---
+>   hw/net/trace-events | 1 +
+>   2 files changed, 3 insertions(+), 3 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
