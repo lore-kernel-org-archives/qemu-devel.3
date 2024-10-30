@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69AB2D5B86D
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 15:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 667EED5CCB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 15:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6B5G-0003lv-6Z; Wed, 30 Oct 2024 11:58:10 -0400
+	id 1t6B4t-0003WH-40; Wed, 30 Oct 2024 11:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6B5E-0003jr-C8
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 11:58:08 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6B4q-0003Vc-QI
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 11:57:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6B5D-0007pN-0U
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 11:58:08 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6B4o-0007kX-Cz
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 11:57:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730303885;
+ s=mimecast20190719; t=1730303861;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yT8lUIBKet6fbgptE6xA8GhBp1fdHflDGVquMTNAch4=;
- b=QX/4hs9lLefTS7kMTc5H2NE790Wb+ARSan6VeGGRPD5aKmNqGfBM67jGlUxwXXaXP6MF5z
- HUgOLzSZQTXa86fj2Zc+M9ZeC7fukwiA6Mr1TSobGiAUgmZlGnoq2qACNy92buE/UN+Axi
- vep+4ZXn/pfFyY3StiICAEsr2lqVGl0=
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
- [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=G1yNXxsh8dTvITSx4+B06H/+QaPAvo9R+7WdzcB0NcI=;
+ b=EPQ4R1BmC4fC8nuacrJ7sR3r0RXKR+QMzFl8/gk4lPNfN5zvlKWl1YJqJirLLWm7w8/L29
+ ZVYjbmHBDDjiCk1GF0E0YRKTNvBHR8/Q/gFKGnHiJ3loNse7EUGCt8yKvmNMveLp9Es6QG
+ 250uNo4Dr2vHJYqHUWri2M9nmhXV210=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-7ByceYOuNhSLx-DjwpRpBw-1; Wed, 30 Oct 2024 11:58:04 -0400
-X-MC-Unique: 7ByceYOuNhSLx-DjwpRpBw-1
-Received: by mail-oi1-f200.google.com with SMTP id
- 5614622812f47-3e601bc6ddaso6605053b6e.3
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 08:58:04 -0700 (PDT)
+ us-mta-575-Ay1XWW5sMxSp-OPi81BmtA-1; Wed, 30 Oct 2024 11:57:38 -0400
+X-MC-Unique: Ay1XWW5sMxSp-OPi81BmtA-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6cbd2cb2f78so391406d6.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 08:57:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730303883; x=1730908683;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yT8lUIBKet6fbgptE6xA8GhBp1fdHflDGVquMTNAch4=;
- b=LFHUtDx0rnIgLvY603/TlRIzHnXMeSfdX8FueywA8jejsHw0u5J8M8RKVNH43tQ+f7
- LpctCX2Z7V3s5WbZtzQEcgBsjo5oXBMLiBagQv/COJE12vfzbhdGgYzQD7JxPOws29zu
- 5zhNlDTCrzlPkTRRTjrI199t/m6e/7zq83mc0GhtPkqkkVmiN988tgQ0Lp3WjYCXyGaE
- /IdgpsoIUC6rtiB0i+tE3jLJoApcjIVY/SzM/KJRkTeTcRNCjMcSeC64+mPGHlMoSZeN
- rl/tBXr25r4Fe7uHVX4EPS8MZmicV7G4GuoqXsMP9ukRUAhvMTjLalWKVjYGYmYai9Dv
- pEqw==
-X-Gm-Message-State: AOJu0Ywg4k0ltnkdpTWjcL5jCtFGoaFMylwLNxT0JGTkAgqfnG0ndvY0
- 8M4uQsWRgmkT68pKPRPaiNFN4HsKEyDn7iNOk6562RXWLpU5cchP5BttH19I61GiHYXRTPuxGhK
- SyQtKb/hcZx5J3oUDYFhz85W6oXhtWt918Prl0OgWuytzVT+4U9VGsckWELRdSO4H3zLeR2kBzf
- H+sH+3X8VAnYgWGoO2Ef9iVy0OI/sI1XO2nQ==
-X-Received: by 2002:a05:6808:1812:b0:3e4:d683:c24d with SMTP id
- 5614622812f47-3e6384cb1aamr13902976b6e.43.1730303881535; 
- Wed, 30 Oct 2024 08:58:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERI0OV8OSpAGe4Y7v6MLFTthvZUkoiUcrFyAkVum4xQPHelymS+o6v8fX6BTYTC+h7wsjXyw==
-X-Received: by 2002:a05:6808:1812:b0:3e4:d683:c24d with SMTP id
- 5614622812f47-3e6384cb1aamr13902945b6e.43.1730303881108; 
- Wed, 30 Oct 2024 08:58:01 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1730303856; x=1730908656;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=G1yNXxsh8dTvITSx4+B06H/+QaPAvo9R+7WdzcB0NcI=;
+ b=Hpfg0vpN1hNA5TTEQUeST0fD0CHzR906hHtEJgnulDCvLcCH91o5qOF3VyPSsQgDMu
+ pK41QgadsETQpBoCDzNBY1hI46R49eixGjRogfLfSISeMJloJg6s69AlPL7HD8Zx+3tp
+ hBg9O1hM8VDGbiCX1ZQsK9v8TXhT9KNlP/UvXIq8bKSclvmH1tne7Cyj4gpopxYmcKhA
+ s41gkhskNXCyt2T6yakZjz+D+sRyaLFU73QXmWayrKDP/mVo18NS4MnuUSVizTTz3jpJ
+ /Ri7CBdOk4/FeBb+LcEj0dojenOASmicLI9lal6IrmIiWVdBGfu6h+iRU+S9etZ/1rce
+ LPiA==
+X-Gm-Message-State: AOJu0YwJ5l8voykq/WFL/QMKEhVBziVBeQQ56pTgsbK80OvJ5h58HskT
+ rLjOe3JQ2feM6IvalagYk6V+F2boUHXgxi4SaGH+vWQugBopengM21ebYBLjX3OQYwAJ2eqREbK
+ dg4HLaZkGP8hBjGTrJa4JfusWxZqwYejnPt9qJqbPhVnCjutEcAv871xW/eTRP9As/e1AthrdFJ
+ sji0oXXNFGzafvtSd65MjSVCSzC4+aaldP8g==
+X-Received: by 2002:a05:6214:5690:b0:6cc:255:2038 with SMTP id
+ 6a1803df08f44-6d2d91a53f2mr88763346d6.4.1730303856363; 
+ Wed, 30 Oct 2024 08:57:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHuiw55GRoIrPM+ou+c3z4K9pNheyGVO/c5c+UzxQ4cDlEQ+WdPJTxScliHxDrC8jkhuM6gyA==
+X-Received: by 2002:a05:6214:5690:b0:6cc:255:2038 with SMTP id
+ 6a1803df08f44-6d2d91a53f2mr88762986d6.4.1730303855916; 
+ Wed, 30 Oct 2024 08:57:35 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d19c57c1ffsm22802276d6.89.2024.10.30.08.57.59
+ 6a1803df08f44-6d19c57c1ffsm22802276d6.89.2024.10.30.08.57.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 08:58:00 -0700 (PDT)
+ Wed, 30 Oct 2024 08:57:35 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 14/18] migration: Unexport ram_mig_init()
-Date: Wed, 30 Oct 2024 11:57:30 -0400
-Message-ID: <20241030155734.2141398-15-peterx@redhat.com>
+ Peter Xu <peterx@redhat.com>
+Subject: [PULL 00/18] Migration 20241030 patches
+Date: Wed, 30 Oct 2024 11:57:16 -0400
+Message-ID: <20241030155734.2141398-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20241030155734.2141398-1-peterx@redhat.com>
-References: <20241030155734.2141398-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,41 +99,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's only used within migration/.
+The following changes since commit cc5adbbd50d81555b8eb73602ec16fde40b55be4:
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20241024213056.1395400-4-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- include/migration/misc.h | 1 -
- migration/ram.h          | 1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+  Merge tag 'pull-tpm-2024-10-18-1' of https://github.com/stefanberger/qemu-tpm into staging (2024-10-18 15:45:02 +0100)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index df57be6b5e..e8490e3af5 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -39,7 +39,6 @@ void precopy_add_notifier(NotifierWithReturn *n);
- void precopy_remove_notifier(NotifierWithReturn *n);
- int precopy_notify(PrecopyNotifyReason reason, Error **errp);
- 
--void ram_mig_init(void);
- void qemu_guest_free_page_hint(void *addr, size_t len);
- bool migrate_ram_is_ignored(RAMBlock *block);
- 
-diff --git a/migration/ram.h b/migration/ram.h
-index bc0318b834..0d1981f888 100644
---- a/migration/ram.h
-+++ b/migration/ram.h
-@@ -44,6 +44,7 @@ extern XBZRLECacheStats xbzrle_counters;
-     INTERNAL_RAMBLOCK_FOREACH(block)                   \
-         if (!qemu_ram_is_migratable(block)) {} else
- 
-+void ram_mig_init(void);
- int xbzrle_cache_resize(uint64_t new_size, Error **errp);
- uint64_t ram_bytes_remaining(void);
- uint64_t ram_bytes_total(void);
+are available in the Git repository at:
+
+  https://gitlab.com/peterx/qemu.git tags/migration-20241030-pull-request
+
+for you to fetch changes up to 53a60118d2654dd8e595e61f4e767ff747fd0b69:
+
+  migration/multifd: Zero p->flags before starting filling a packet (2024-10-30 11:32:41 -0400)
+
+----------------------------------------------------------------
+Migration pull request for softfreeze
+
+NOTE: checkpatch.pl could report a false positive on this branch:
+
+  WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+  #21:
+   {include/sysemu => migration}/cpu-throttle.h | 0
+
+That's covered by "F: migration/" entry.
+
+Changelog:
+
+- Peter's cleanup patch on migrate_fd_cleanup()
+- Peter's cleanup patch to introduce thread name macros
+- Hanna's error path fix for vmstate subsection save()s
+- Hyman's auto converge enhancement on background dirty sync
+- Peter's additional tracepoints for save state entries
+- Thomas's build fix for OpenBSD in dirtyrate.c
+- Peter's deprecation of query-migrationthreads command
+- Peter's cleanup/fixes from the "export misc.h" series
+- Maciej's two small patches from multifd+vfio series
+
+----------------------------------------------------------------
+
+Hanna Czenczek (1):
+  migration: Ensure vmstate_save() sets errp
+
+Hyman Huang (6):
+  accel/tcg/icount-common: Remove the reference to the unused header
+    file
+  migration: Stop CPU throttling conditionally
+  migration: Move cpu-throttole.c from system to migration
+  migration: Remove "rs" parameter in migration_bitmap_sync_precopy
+  migration: Support periodic RAMBlock dirty bitmap sync
+  tests/migration: Add case for periodic ramblock dirty sync
+
+Maciej S. Szmigiero (2):
+  migration/ram: Add load start trace event
+  migration/multifd: Zero p->flags before starting filling a packet
+
+Peter Xu (8):
+  migration: Cleanup migrate_fd_cleanup() on accessing to_dst_file
+  migration: Put thread names together with macros
+  migration: Deprecate query-migrationthreads command
+  migration: Take migration object refcount earlier for threads
+  migration: Unexport dirty_bitmap_mig_init()
+  migration: Unexport ram_mig_init()
+  migration: Drop migration_is_setup_or_active()
+  migration: Drop migration_is_idle()
+
+Thomas Huth (1):
+  migration/dirtyrate: Silence warning about strcpy() on OpenBSD
+
+ docs/about/deprecated.rst                    |   8 ++
+ qapi/migration.json                          |   7 +-
+ include/migration/misc.h                     |   9 +-
+ {include/sysemu => migration}/cpu-throttle.h |  14 ++
+ migration/migration.h                        |  19 +++
+ migration/ram.h                              |   1 +
+ accel/tcg/icount-common.c                    |   1 -
+ hw/vfio/common.c                             |   2 +-
+ hw/virtio/virtio-mem.c                       |   2 +-
+ migration/colo.c                             |   3 +-
+ {system => migration}/cpu-throttle.c         |  72 +++++++++-
+ migration/dirtyrate.c                        |  11 +-
+ migration/migration.c                        | 130 ++++++++-----------
+ migration/multifd.c                          |   8 +-
+ migration/postcopy-ram.c                     |   6 +-
+ migration/ram.c                              |  21 +--
+ migration/savevm.c                           |   3 +-
+ migration/vmstate.c                          |  13 +-
+ net/vhost-vdpa.c                             |   3 +-
+ system/cpu-timers.c                          |   3 -
+ system/qdev-monitor.c                        |   4 +-
+ tests/qtest/migration-test.c                 |  32 +++++
+ migration/meson.build                        |   1 +
+ migration/trace-events                       |   5 +
+ system/meson.build                           |   1 -
+ system/trace-events                          |   3 -
+ 26 files changed, 257 insertions(+), 125 deletions(-)
+ rename {include/sysemu => migration}/cpu-throttle.h (87%)
+ rename {system => migration}/cpu-throttle.c (64%)
+
 -- 
 2.45.0
 
