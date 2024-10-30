@@ -4,71 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B841D5CC88
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 10:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0172DD5CC87
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 10:29:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t65gU-0004Fj-3Z; Wed, 30 Oct 2024 06:12:14 -0400
+	id 1t65wD-0006zz-W3; Wed, 30 Oct 2024 06:28:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t65gP-0004Ex-NG
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 06:12:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t65gM-0004C6-Cc
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 06:12:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730283125;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=K5TCNaEd+j7wAtXxqyMyUlUmafiCl4lFp6wdNk9FZx4=;
- b=SScBAe4aIsKWJ7GaVfqtkgB+ZOpceJj337qvSjYIMi6Kukm/RoE+RGPgXGXr1B2XMGRZ1/
- 8CYx+haGSeW7gILK5rQVF2R9/N7znQG1/kofWTLxaiPhHgM+Y6wKeMLFEnOGktV9dIx9Um
- wRq/AtC2JHWEVQAl0tcFC/hVMFHovNI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-O-mQItuIMaiRM1sfUcs5sg-1; Wed,
- 30 Oct 2024 06:12:01 -0400
-X-MC-Unique: O-mQItuIMaiRM1sfUcs5sg-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB2C919560A3
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 10:11:59 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.92])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7911119560A2; Wed, 30 Oct 2024 10:11:53 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 1/2] crypto: fix error check on gcry_md_open
-Date: Wed, 30 Oct 2024 10:11:49 +0000
-Message-ID: <20241030101150.3023300-2-berrange@redhat.com>
-In-Reply-To: <20241030101150.3023300-1-berrange@redhat.com>
-References: <20241030101150.3023300-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t65w6-0006ze-7M
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 06:28:23 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t65w4-0006JE-MD
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 06:28:21 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4314fa33a35so60069375e9.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 03:28:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730284098; x=1730888898; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OdGpkY+IZSYBeN9zJJflyw2VSPVt9gvA9o/Gu45fqtc=;
+ b=sskv1N6u4MeKO+xilvC99JXRYdUVt1j76DH1REXDVtZdALoLj7vMiOyPgttLLIatJD
+ 3f8mJS3xBmLy3zBcwyqCMxVMXXC28xv+9IhNnf1mBcU2SS0FLTxkA3PoyNR1mTQ/Bhz/
+ VTbwO8zRQyAlZju0NrnwIq1TmChbI8S4L+gmZT4UAAVtU0UuK0Hto3FYZrT/1IXu3A5n
+ +POnd5UvV5K4AWyaERKHC4I8w0r6+apDEXbmUzWmILHds8NEvaebVeiAUrhwrOqzmP0X
+ R9/hSo0GDYvW62qBtBruJL40PZ3UkovLE0fJB/cCo9KWuNz56PRh7s6rVrjwI1uXzGEv
+ YNfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730284098; x=1730888898;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OdGpkY+IZSYBeN9zJJflyw2VSPVt9gvA9o/Gu45fqtc=;
+ b=YUoFKyzjY+qlbgReo4YQA+y9nZruPVhgtc3VABx603JiO+pnQhdLtc6tWli+JTb9P8
+ NrydUSwdyfQhMUETsIF7IV4z6ZhvR29mNpKUcP19H6ZL0Xw8CG9AZxMALFfR5Lbjvqk4
+ e31+jE7WFBdC+OxK+sThbufVynFbzEapd5MbgrkY+a3dSmdLYPCpQUkC/3gMjKuitgma
+ jH4QKf411rHWbVSS3W8w+yJxdm7hgMiu6Z4eksAW6z6TNBnY/DDGT+OQK6+Ca3A7zo0M
+ v8JhhdtVP/l/1HKRVTwAO85JXiWRvO4KO2rTcGlFdk0TdCwZPjh8pX1g9Bjm0UOWiSTC
+ o6mw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVbKlXJgD9L7TYSKgDXv7aFO9wLR6h1wEVCSTRSE+Chy5N7FxoAwGxAk/8yCwuJ4Dpj76wQpbbfOEj1@nongnu.org
+X-Gm-Message-State: AOJu0YznRkDjSbU+ckjzIPD/yKZCOpnGoJ5gjhIPrnHFoyLRK8TQPSuE
+ 48Vj6vpGI4oESvn3VBWQ8BaJ1Vh0oWj3AoJVRVKh82Rh9VfzrshY2rFMeYBHCLQ=
+X-Google-Smtp-Source: AGHT+IG3CF7Bz1So+LTGgahIkcxLRJfGaOwgyl3oyWbvoLYskHrQtiufS9+z4OhSPK82P9BGeDy+6A==
+X-Received: by 2002:a05:600c:1f82:b0:430:57f2:bae2 with SMTP id
+ 5b1f17b1804b1-431bb9d14afmr20044305e9.23.1730284098590; 
+ Wed, 30 Oct 2024 03:28:18 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-431bd98e6aesm17073495e9.32.2024.10.30.03.28.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 30 Oct 2024 03:28:17 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 044F95F87D;
+ Wed, 30 Oct 2024 10:28:17 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: peter.maydell@linaro.org,  huth@tuxfamily.org,  qemu-devel@nongnu.org
+Subject: Re: [PATCH] next-kbd: convert to use qemu_input_handler_register()
+In-Reply-To: <20241030091803.1315752-1-mark.cave-ayland@ilande.co.uk> (Mark
+ Cave-Ayland's message of "Wed, 30 Oct 2024 09:18:03 +0000")
+References: <20241030091803.1315752-1-mark.cave-ayland@ilande.co.uk>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Wed, 30 Oct 2024 10:28:16 +0000
+Message-ID: <87cyjhkhq7.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.302,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,38 +99,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gcrypt does not return negative values on error, it returns non-zero
-values. This caused QEMU not to detect failure to open an unsupported
-hash, resulting in a later crash trying to use a NULL context.
+Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk> writes:
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- crypto/hash-gcrypt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> Convert the next-kbd device from the legacy UI qemu_add_kbd_event_handler=
+()
+> function to use qemu_input_handler_register().
 
-diff --git a/crypto/hash-gcrypt.c b/crypto/hash-gcrypt.c
-index 73533a4949..22ddf394ec 100644
---- a/crypto/hash-gcrypt.c
-+++ b/crypto/hash-gcrypt.c
-@@ -49,7 +49,7 @@ static
- QCryptoHash *qcrypto_gcrypt_hash_new(QCryptoHashAlgo alg, Error **errp)
- {
-     QCryptoHash *hash;
--    int ret;
-+    gcry_error_t ret;
- 
-     hash = g_new(QCryptoHash, 1);
-     hash->alg = alg;
-@@ -57,7 +57,7 @@ QCryptoHash *qcrypto_gcrypt_hash_new(QCryptoHashAlgo alg, Error **errp)
- 
-     ret = gcry_md_open((gcry_md_hd_t *) hash->opaque,
-                        qcrypto_hash_alg_map[alg], 0);
--    if (ret < 0) {
-+    if (ret != 0) {
-         error_setg(errp,
-                    "Unable to initialize hash algorithm: %s",
-                    gcry_strerror(ret));
--- 
-2.46.0
+If that is the last user we should probably remove the function as well.
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
