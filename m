@@ -4,95 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A637D2AB2C
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 08:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 479FCD2AB2C
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 09:19:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t64WX-0002D1-O3; Wed, 30 Oct 2024 04:57:54 -0400
+	id 1t64qK-0004t9-9Q; Wed, 30 Oct 2024 05:18:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1t64WV-0002CD-JE
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 04:57:51 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1t64WT-0003NW-Ev
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 04:57:51 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-37d4a5ecc44so4059002f8f.2
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 01:57:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1730278667; x=1730883467;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/uNAEeIssZK3ynFfRGiGINMEGYrxwuoRbyQtC8r+gx4=;
- b=RUrmO09Xw8aT6QMug/EMyN2b/V9gBgAZJDogRIBwa6zneZQexuBNPhsLTnLbTYsaXc
- e+K0K7kui2DQIpWLcyO1k9uqtxF/G7veWHX4Fw9ov4UhrsckJgyyyHAUo4hbjhXz8pXo
- wU5ig+yJRcFGDSEDXPSui+CM5tdd9lqAZlHd/gtDF25LDRNV7nTx8LDI6YTlYGIIC7T7
- KmBaK8PxX1OzO+g43MFXmWcChcGahHef/F/6t6pwBfxDlScqffoFFlTj6fqjCOZqtc68
- EMCbj91gNTFPauwtEFRNZQvPCAAbS+SamvZ8ZHRcUjJ4x0fVnkCSLLppP1wLKwhDtyph
- 71Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730278667; x=1730883467;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/uNAEeIssZK3ynFfRGiGINMEGYrxwuoRbyQtC8r+gx4=;
- b=ipbidlAKYguglKAxyyJgAynvWZVMrUMA5sgU0zIzJFyfh55kYIjlDiaZS230bCZ7EO
- 12EJlHHL+nWXXqPqtCKUnS9XF++F/5v12Z0Icfh2ehnpq+J+uqjftaChgyJV/WUXhnKf
- tlPFR9e8FcBp6kNv95N7p2c/tnSCuY0U4La2XmO2lfoCB92F0uEy7zK9RdadHVoqtRew
- +H6hEcIS9juPXfrwS4otEcLpFhr7zZn0CdLlpb1bAgUQAMfpJcvczjKyLhWwfUuEjfZF
- sUsr8LVtx5u6qZ1bb+coQxaYUnJFkmEyFoZlJLbTfsC68oC+CY7t3xXo7E5/VAYDuwqg
- MgvQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXpqFqNLOxV7FtpMvhRgxNF7Q0Q4SHMK9DwtKOLXv2od+eBmJoUn0RMGT8rMdItbKnoYeDdiqCuKxhD@nongnu.org
-X-Gm-Message-State: AOJu0YwHq3ov4UR1XSMLLA2aiD/ssmj7vM5ubJihCmzmIqg7Cgd/fyq7
- rI0jGO8XwejiwEqP72SkeiZnStWXX12B5DupMDBQdwcSwwvg5g2bZEEsMUbI+2I=
-X-Google-Smtp-Source: AGHT+IEZxRL9FJpoXBtxaqPXbQWIsfJZ6Pgbx338NFVRZQmMHHEMRgZ4FC4aFG8krlaJRZToE4OC3w==
-X-Received: by 2002:a5d:52c1:0:b0:37d:529f:ac1e with SMTP id
- ffacd0b85a97d-3806120087bmr10977977f8f.53.1730278667297; 
- Wed, 30 Oct 2024 01:57:47 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:e17:9700:16d2:7456:6634:9626?
- ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38058b47f6fsm14736927f8f.50.2024.10.30.01.57.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Oct 2024 01:57:46 -0700 (PDT)
-Message-ID: <99d02504-92c4-4e8c-8f28-113dcdfb951b@rivosinc.com>
-Date: Wed, 30 Oct 2024 09:57:46 +0100
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t64qH-0004su-Tj
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 05:18:17 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t64qG-0005KS-1W
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 05:18:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=n6f2/O7DlRyDlg0M6jzWm/1lLESkuEBJWRofCl1Lobk=; b=Jr5/AAOE47l3KM5q2EFPO8gbcb
+ O/unU2E+JBhl+qM6yMLWNDUZfHpz/bjRfAWJkZ/PHVSB8WCSjvffih7s64QbxmVEkbMerOK8fzmM3
+ e409xklccJka+U6UUtKxWcdpugXhKKXQjjMmcbxRtdTGD+ojfYHazA1PT8V8deVEEhMqNz1dQr2m9
+ DCH0sjjFUczkqcpIx+Eje7px8mTSly/gW0FfizOCavIiYOgDBg4UEer+7vpZzZVr4m2RcP5OLYt2n
+ NzORNiVkpADEMQouKLOitSY5ekMLcE6Iye7c7WBd0+Yrj0MvjWv8uL8XpbOdXNDAnzu0jgLEukDQG
+ vYkucRx8Q4etZpQbx2rJvEHpypRAVbleM8BfiEtbw4zMIBZtrPyML+NE4DabVY37Sz4f+H6khCZmK
+ c4gf7CsrLP4Z7B6LAU1vuwTbR2WCrLoGWcj0KSreuOiQoCri1IWklwCcj5r17IRrEWBzAsMN1HNcH
+ pQYXJJ9QVS0R51VoIna528qOxcQQ4npcs/mewO31pv6kU6yJGHrYjyCyLgTsyJotjYrddCKk9UxQJ
+ QxtGjyGS88YZWUr2slc+tULj17dhyEnjpXZH7N53iHkTqLi4s80To51VAMItuxt0wZIwW98xp1qUF
+ QcH1Qq63OrbedXbK4jLWbTcSfLUaVK2MZopEQWyjY=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ (helo=cheesecake.fritz.box)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t64pp-0008ew-7K; Wed, 30 Oct 2024 09:17:53 +0000
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: peter.maydell@linaro.org,
+	huth@tuxfamily.org,
+	qemu-devel@nongnu.org
+Date: Wed, 30 Oct 2024 09:18:03 +0000
+Message-Id: <20241030091803.1315752-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/9] target/riscv: fix henvcfg potentially containing
- stale bits
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue
- <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
-References: <20241017145226.365825-1-cleger@rivosinc.com>
- <20241017145226.365825-2-cleger@rivosinc.com>
- <CAKmqyKMoDSFaJz7LhX4GMV9AhOQUDLOt79Fctw_k97SazpSjjQ@mail.gmail.com>
- <f99c19eb-2986-49a7-a334-b086e19ad4c4@rivosinc.com>
- <CAKmqyKM2dsjF4YaVbvemqA73=xmgVFsUd64v7k0qjBzT_n=JDw@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-In-Reply-To: <CAKmqyKM2dsjF4YaVbvemqA73=xmgVFsUd64v7k0qjBzT_n=JDw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=cleger@rivosinc.com; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH] next-kbd: convert to use qemu_input_handler_register()
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,160 +77,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Convert the next-kbd device from the legacy UI qemu_add_kbd_event_handler()
+function to use qemu_input_handler_register().
 
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+---
+ hw/m68k/next-kbd.c | 158 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 103 insertions(+), 55 deletions(-)
 
-On 23/10/2024 04:51, Alistair Francis wrote:
-> On Mon, Oct 21, 2024 at 7:30 PM Clément Léger <cleger@rivosinc.com> wrote:
->>
->>
->>
->> On 21/10/2024 02:46, Alistair Francis wrote:
->>> On Fri, Oct 18, 2024 at 12:55 AM Clément Léger <cleger@rivosinc.com> wrote:
->>>>
->>>> With the current implementation, if we had the current scenario:
->>>> - set bit x in menvcfg
->>>> - set bit x in henvcfg
->>>> - clear bit x in menvcfg
->>>> then, the internal variable env->henvcfg would still contain bit x due
->>>> to both a wrong menvcfg mask used in write_henvcfg() as well as a
->>>> missing update of henvcfg upon menvcfg update.
->>>> This can lead to some wrong interpretation of the context. In order to
->>>> update henvcfg upon menvcfg writing, call write_henvcfg() after writing
->>>> menvcfg and fix the mask computation used in write_henvcfg() that is
->>>> used to mesk env->menvcfg value (which could still lead to some stale
->>>> bits). The same mechanism is also applied for henvcfgh writing.
->>>>
->>>> Signed-off-by: Clément Léger <cleger@rivosinc.com>
->>>> ---
->>>>  target/riscv/csr.c | 17 +++++++++++++----
->>>>  1 file changed, 13 insertions(+), 4 deletions(-)
->>>>
->>>> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
->>>> index b84b436151..9e832e0b39 100644
->>>> --- a/target/riscv/csr.c
->>>> +++ b/target/riscv/csr.c
->>>> @@ -2345,6 +2345,8 @@ static RISCVException read_menvcfg(CPURISCVState *env, int csrno,
->>>>      return RISCV_EXCP_NONE;
->>>>  }
->>>>
->>>> +static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
->>>> +                                    target_ulong val);
->>>>  static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
->>>>                                      target_ulong val)
->>>>  {
->>>> @@ -2357,6 +2359,7 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
->>>>                  (cfg->ext_svadu ? MENVCFG_ADUE : 0);
->>>>      }
->>>>      env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
->>>> +    write_henvcfg(env, CSR_HENVCFG, env->henvcfg);
->>>>
->>>>      return RISCV_EXCP_NONE;
->>>>  }
->>>> @@ -2368,6 +2371,8 @@ static RISCVException read_menvcfgh(CPURISCVState *env, int csrno,
->>>>      return RISCV_EXCP_NONE;
->>>>  }
->>>>
->>>> +static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
->>>> +                                    target_ulong val);
->>>>  static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
->>>>                                       target_ulong val)
->>>>  {
->>>> @@ -2378,6 +2383,7 @@ static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
->>>>      uint64_t valh = (uint64_t)val << 32;
->>>>
->>>>      env->menvcfg = (env->menvcfg & ~mask) | (valh & mask);
->>>> +    write_henvcfgh(env, CSR_HENVCFGH, env->henvcfg >> 32);
->>>>
->>>>      return RISCV_EXCP_NONE;
->>>>  }
->>>> @@ -2435,6 +2441,7 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
->>>>                                      target_ulong val)
->>>>  {
->>>>      uint64_t mask = HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CBZE;
->>>> +    uint64_t menvcfg_mask = 0;
->>>>      RISCVException ret;
->>>>
->>>>      ret = smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
->>>> @@ -2443,10 +2450,11 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
->>>>      }
->>>>
->>>>      if (riscv_cpu_mxl(env) == MXL_RV64) {
->>>> -        mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE);
->>>> +        menvcfg_mask = HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE;
->>>> +        mask |= env->menvcfg & menvcfg_mask;
->>>
->>> This doesn't seem right.
->>>
->>> Should it be something like
->>
->> That is what I did before but that didn't work, henvcfg still contained
->> some stale bits.
->>
->>>
->>>     if (riscv_cpu_mxl(env) == MXL_RV64) {
->>>         mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE);
->>>     }
->>>
->>>     mask = env->menvcfg & mask;
->>>
->>>>      }
->>>>
->>>> -    env->henvcfg = (env->henvcfg & ~mask) | (val & mask);
->>>> +    env->henvcfg = (env->henvcfg & ~menvcfg_mask) | (val & mask);
->>>
->>> Using both menvcfg_mask and mask seems wrong here
->>
->> The problem is that if you use:
->>
->> mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE)
->>
->> Then, if a bit was cleared in menvcfg before writing henvcfg (let's say
->> HENVCFG_ADUE), then env->henvcfg will be masked with mask =
->> HENVCFG_PBMTE | HENVCFG_STCE, leaving the HENVCFG_ADUE stale bit in
->> env->henvcfg which is wrong for the internal state.
->>
->> The idea here is to actually clear any menvcfg related bit (the 1:1
->> bits) using the raw mask (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE)
->> to clear everything and then OR it with the value to be written (which
->> is masked with raw bits + menvcfg content) to avoid any stale bits.
-> 
-> When calling write_henvcfg() can't you just do:
-> 
-> write_henvcfg(env, CSR_HENVCFG, env->henvcfg & env->menvcfg)
-
-Yeah it's clearer and I thought of that but you'll end up with the same
-result since the problem does not come from the value you supply but
-rather by the old masked henvcfg value used at the end of
-write_henvcg()(and the mask is computed independently of the new value),
-ie this line:
-
-env->henvcfg = (env->henvcfg & ~mask) | (val & mask);
-
-The mask is actually not containing the bits that were cleared in menvcfg.
-
-We could actually use
-
-write_henvcfg(env, CSR_HENVCFG, env->henvcfg & env->menvcfg)
-
-But maybe we could call it prior to menvcfg update in order to clear all
-currently set bit in menvcfg and mask env->henvcfg with the new value to
-be written. That seems a bit off as well. But I'll take whatever you
-think is clearer.
-
-Clément
-
-> 
-> I feel like that's clearer then the current approach
-> 
-> Alistair
-> 
->>
->> Thanks,
->>
->> Clément
->>
->>>
->>> Alistair
->>
+diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
+index bc67810f31..85ef784491 100644
+--- a/hw/m68k/next-kbd.c
++++ b/hw/m68k/next-kbd.c
+@@ -68,7 +68,6 @@ struct NextKBDState {
+     uint16_t shift;
+ };
+ 
+-static void queue_code(void *opaque, int code);
+ 
+ /* lots of magic numbers here */
+ static uint32_t kbd_read_byte(void *opaque, hwaddr addr)
+@@ -166,68 +165,79 @@ static const MemoryRegionOps kbd_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
+ 
+-static void nextkbd_event(void *opaque, int ch)
+-{
+-    /*
+-     * Will want to set vars for caps/num lock
+-     * if (ch & 0x80) -> key release
+-     * there's also e0 escaped scancodes that might need to be handled
+-     */
+-    queue_code(opaque, ch);
+-}
+-
+-static const unsigned char next_keycodes[128] = {
+-    0x00, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x50, 0x4F,
+-    0x4E, 0x1E, 0x1F, 0x20, 0x1D, 0x1C, 0x1B, 0x00,
+-    0x42, 0x43, 0x44, 0x45, 0x48, 0x47, 0x46, 0x06,
+-    0x07, 0x08, 0x00, 0x00, 0x2A, 0x00, 0x39, 0x3A,
+-    0x3B, 0x3C, 0x3D, 0x40, 0x3F, 0x3E, 0x2D, 0x2C,
+-    0x2B, 0x26, 0x00, 0x00, 0x31, 0x32, 0x33, 0x34,
+-    0x35, 0x37, 0x36, 0x2e, 0x2f, 0x30, 0x00, 0x00,
+-    0x00, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
++#define NEXTKDB_NO_KEY 0xff
++
++static const int qcode_to_nextkbd_keycode[] = {
++    /* Make sure future additions are automatically set to NEXTKDB_NO_KEY */
++    [0 ... 0xff]               = NEXTKDB_NO_KEY,
++
++    [Q_KEY_CODE_ESC]           = 0x49,
++    [Q_KEY_CODE_1]             = 0x4a,
++    [Q_KEY_CODE_2]             = 0x4b,
++    [Q_KEY_CODE_3]             = 0x4c,
++    [Q_KEY_CODE_4]             = 0x4d,
++    [Q_KEY_CODE_5]             = 0x50,
++    [Q_KEY_CODE_6]             = 0x4f,
++    [Q_KEY_CODE_7]             = 0x4e,
++    [Q_KEY_CODE_8]             = 0x1e,
++    [Q_KEY_CODE_9]             = 0x1f,
++    [Q_KEY_CODE_0]             = 0x20,
++    [Q_KEY_CODE_MINUS]         = 0x1d,
++    [Q_KEY_CODE_EQUAL]         = 0x1c,
++    [Q_KEY_CODE_BACKSPACE]     = 0x1b,
++    [Q_KEY_CODE_TAB]           = 0x00,
++
++    [Q_KEY_CODE_Q]             = 0x42,
++    [Q_KEY_CODE_W]             = 0x43,
++    [Q_KEY_CODE_E]             = 0x44,
++    [Q_KEY_CODE_R]             = 0x45,
++    [Q_KEY_CODE_T]             = 0x48,
++    [Q_KEY_CODE_Y]             = 0x47,
++    [Q_KEY_CODE_U]             = 0x46,
++    [Q_KEY_CODE_I]             = 0x06,
++    [Q_KEY_CODE_O]             = 0x07,
++    [Q_KEY_CODE_P]             = 0x08,
++    [Q_KEY_CODE_RET]           = 0x2a,
++    [Q_KEY_CODE_A]             = 0x39,
++    [Q_KEY_CODE_S]             = 0x3a,
++
++    [Q_KEY_CODE_D]             = 0x3b,
++    [Q_KEY_CODE_F]             = 0x3c,
++    [Q_KEY_CODE_G]             = 0x3d,
++    [Q_KEY_CODE_H]             = 0x40,
++    [Q_KEY_CODE_J]             = 0x3f,
++    [Q_KEY_CODE_K]             = 0x3e,
++    [Q_KEY_CODE_L]             = 0x2d,
++    [Q_KEY_CODE_SEMICOLON]     = 0x2c,
++    [Q_KEY_CODE_APOSTROPHE]    = 0x2b,
++    [Q_KEY_CODE_GRAVE_ACCENT]  = 0x26,
++    [Q_KEY_CODE_SHIFT]         = 0x00,
++    [Q_KEY_CODE_BACKSLASH]     = 0x00,
++    [Q_KEY_CODE_Z]             = 0x31,
++    [Q_KEY_CODE_X]             = 0x32,
++    [Q_KEY_CODE_C]             = 0x33,
++    [Q_KEY_CODE_V]             = 0x34,
++
++    [Q_KEY_CODE_B]             = 0x35,
++    [Q_KEY_CODE_N]             = 0x37,
++    [Q_KEY_CODE_M]             = 0x36,
++    [Q_KEY_CODE_COMMA]         = 0x2e,
++    [Q_KEY_CODE_DOT]           = 0x2f,
++    [Q_KEY_CODE_SLASH]         = 0x30,
++    [Q_KEY_CODE_SHIFT_R]       = 0x00,
++
++    [Q_KEY_CODE_SPC]           = 0x38,
+ };
+ 
+-static void queue_code(void *opaque, int code)
++static void nextkbd_put_keycode(NextKBDState *s, int keycode)
+ {
+-    NextKBDState *s = NEXTKBD(opaque);
+     KBDQueue *q = &s->queue;
+-    int key = code & KD_KEYMASK;
+-    int release = code & 0x80;
+-    static int ext;
+-
+-    if (code == 0xE0) {
+-        ext = 1;
+-    }
+-
+-    if (code == 0x2A || code == 0x1D || code == 0x36) {
+-        if (code == 0x2A) {
+-            s->shift = KD_LSHIFT;
+-        } else if (code == 0x36) {
+-            s->shift = KD_RSHIFT;
+-            ext = 0;
+-        } else if (code == 0x1D && !ext) {
+-            s->shift = KD_LCOMM;
+-        } else if (code == 0x1D && ext) {
+-            ext = 0;
+-            s->shift = KD_RCOMM;
+-        }
+-        return;
+-    } else if (code == (0x2A | 0x80) || code == (0x1D | 0x80) ||
+-               code == (0x36 | 0x80)) {
+-        s->shift = 0;
+-        return;
+-    }
+ 
+     if (q->count >= KBD_QUEUE_SIZE) {
+         return;
+     }
+ 
+-    q->data[q->wptr] = next_keycodes[key] | release;
+-
++    q->data[q->wptr] = keycode;
+     if (++q->wptr == KBD_QUEUE_SIZE) {
+         q->wptr = 0;
+     }
+@@ -241,6 +251,44 @@ static void queue_code(void *opaque, int code)
+     /* s->update_irq(s->update_arg, 1); */
+ }
+ 
++static void nextkbd_event(DeviceState *dev, QemuConsole *src, InputEvent *evt)
++{
++    NextKBDState *s = NEXTKBD(dev);
++    int qcode, keycode;
++    bool key_down = evt->u.key.data->down;
++
++    qcode = qemu_input_key_value_to_qcode(evt->u.key.data->key);
++    if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
++        return;
++    }
++
++    keycode = qcode_to_nextkbd_keycode[qcode];
++    if (keycode == NEXTKDB_NO_KEY) {
++        return;
++    }
++
++    if (qcode == Q_KEY_CODE_SHIFT) {
++        s->shift = key_down ? KD_LSHIFT : 0;
++    }
++
++    if (qcode == Q_KEY_CODE_SHIFT_R) {
++        s->shift = key_down ? KD_RSHIFT : 0;
++    }
++
++    /* If key release event, create keyboard break code */
++    if (!key_down) {
++        keycode = keycode | 0x80;
++    }
++
++    nextkbd_put_keycode(s, keycode);
++}
++
++static const QemuInputHandler nextkbd_handler = {
++    .name  = "QEMU NeXT Keyboard",
++    .mask  = INPUT_EVENT_MASK_KEY,
++    .event = nextkbd_event,
++};
++
+ static void nextkbd_reset(DeviceState *dev)
+ {
+     NextKBDState *nks = NEXTKBD(dev);
+@@ -256,7 +304,7 @@ static void nextkbd_realize(DeviceState *dev, Error **errp)
+     memory_region_init_io(&s->mr, OBJECT(dev), &kbd_ops, s, "next.kbd", 0x1000);
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
+ 
+-    qemu_add_kbd_event_handler(nextkbd_event, s);
++    qemu_input_handler_register(dev, &nextkbd_handler);
+ }
+ 
+ static const VMStateDescription nextkbd_vmstate = {
+-- 
+2.39.5
 
 
