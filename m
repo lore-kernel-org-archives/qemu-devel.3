@@ -4,77 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BDBED6B6C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 19:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A641D6B6C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Oct 2024 19:09:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6Dyt-00030d-GU; Wed, 30 Oct 2024 15:03:47 -0400
+	id 1t6E3L-0004MA-Bw; Wed, 30 Oct 2024 15:08:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
- id 1t6Dyr-00030M-FJ
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 15:03:45 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
- id 1t6Dyo-0006ZZ-UP
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 15:03:45 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-71e5a1c9071so142763b3a.0
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 12:03:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1730315021; x=1730919821;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=w0sMXoheruX8J/YvB4XhrBL5xFSwAg8s95rXfLJ3DJU=;
- b=hNmiZV7OdItn8JrEi9d40/PLQ7YOJlHsxoG1no4Db02w3knsF9AxlCnxrNumWsq98t
- OqVrGSiuMJOhXsITbvFXfZ5z4DabDQxV5vLIcB4x/XARujLqHVQttgVBok9MQ/AJFlSU
- APbWfDsMh0EoSusuKlrjNgebDpQnlpH9SYA59ogUTJfGaM2wy/d6TyTzQbeK8MBTE6XC
- A8dOTnMxenFKvVKJWd9Cyje/Fk+3A7ThVTu4WOz5CE1aRlqwYIFePy1yKdXMvMek6Lz+
- Dj5JlTjm8UmERJbw4gABGuc2VBpTzn1Vvrx1Bue7nPGifyba1Xga/a317rzmSzq8OfOX
- F67A==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6E3J-0004Lh-7s
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 15:08:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6E3H-0007Os-A9
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 15:08:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730315297;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tpv/a7sxV2NHsoE3vWIjJzNbWW53ACUFNPdx8V7HSmg=;
+ b=gVvavV/NzGfg+hEqPBy663tr+cqfMJVsY52It7i22sv4OzgF4Xx3b839Xv78IdzZGWfAZ2
+ TCg5Dn7fX9dNyYwK/c4cVvSDzIYKOZraaP6vfQM1uEuV1xZF4Tk1CJhWemUHSbLErzBqfS
+ qBEvCfLh4C/vloTlfutgWabryzneSa8=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-299-Al0Vua9SOR2in25NY3p1xA-1; Wed, 30 Oct 2024 15:08:13 -0400
+X-MC-Unique: Al0Vua9SOR2in25NY3p1xA-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6cbf496eda1so4280346d6.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 12:08:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730315021; x=1730919821;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=w0sMXoheruX8J/YvB4XhrBL5xFSwAg8s95rXfLJ3DJU=;
- b=XbNQiDchtdYEW7r0w5lfsI7LBm8yWC4Q7ea7R1oo0cEXDv3UkSOcGnOuZ6BOSFQd0g
- c91FA4BEWEpB2ZQjMdJdvcpt7sdwIrJYZoP98lQmoagJDeo5GsND/LtqT5GOIjOyIBJN
- iRPYpoGOw1Y0wF/XyHKvGlBk9XGhMuRmN/zM4Jr0cqrE1fDHZ7yBMAcSdo83rs/zU1U2
- QB5pxh1Uzg4Z1PTXc3OQdtTlnRkoBALxld9BDdM30w7W+WYfn0Irp8pFMZRtNuMeN141
- 4a/QKwtUYkONYOlN6Z3ALSYJnVS4Orlyi+I/NreS/Do+BZeNBstLwZUP2wbR/wuW4U+d
- 73YA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGV5YFzZ+ml5yDrFodVeAVsfesR+fJqm5mDOt2yTlEc95ekx4DfDAbzCUZgQFfuDfSZOpe3nOEsnkZ@nongnu.org
-X-Gm-Message-State: AOJu0YyjMR1FDcWopTrIYHIIQB8COND97D5wVFtpjmxRrDNASSUrvrXC
- 2shFZ494rKR5KI4lgeJQIcxlRA6KCFR552zPdDUaXWHNlZthPAvY7V6flvTml7zcAFNR4FGzcDr
- qpkP8tTj+XtEV2ccRTx23WUgR6Dq7ZRe3rEP/gxN01r9H5dH3FA==
-X-Google-Smtp-Source: AGHT+IGtQWlDCebpgto4ZcWx/Dlsa0qEMeEfq7f1ojU0gObG5fIfOnKIdxj8S3Yb4kWx5VYUAueq85H/HjYLvJ1gAQk=
-X-Received: by 2002:aa7:88c6:0:b0:71d:feb7:37f4 with SMTP id
- d2e1a72fcca58-720ab39eca2mr6125616b3a.6.1730315020943; Wed, 30 Oct 2024
- 12:03:40 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1730315293; x=1730920093;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tpv/a7sxV2NHsoE3vWIjJzNbWW53ACUFNPdx8V7HSmg=;
+ b=t+hyczvM0MJfwjrLVtpeFXByfaLq5ARnybfzSi8IUjIB6loAtLlEHK71VhQtKn+mxO
+ YyJAqqDbgk9MMqy5RS68aXr69nYvXUsap/dybnj0/sJwSY+7X+YSFx8wNOIcxIKybgtD
+ OPn1sSLqmBlRfV7BikALmNn0psn8G6sGY58gHMwgXHzh/NMiDx78txa9gpPKS5XlUd0N
+ 8g1lI+kLhamXlk5sHso+oVazUBiyrGkqGoRaPx8hAiuy5SJuTrwadG+bWfbiLUHsLfo6
+ yARVLHztgniIsxrX78WYmCkWQi3KkLQlPjUVzBl4G+aDYbXkR1BJbj208BTjkAUKYezL
+ 1cuA==
+X-Gm-Message-State: AOJu0YzKVJVa+gE0VLlPTp8hRd3bi07tKyaX1KY7FH8iptq9hD/FMbLS
+ QA5iFt3oqWLuuNNGtJT/nIwqneh4u+m33O80mqLNA/dA72Ohvb6vxQsai7ukbbSJnw1m+NJbaZ0
+ ARhuyOwlUPzyy4X6fGqa/peyqT1YKvbeGd3QWMd3XfENqN1grc+AK
+X-Received: by 2002:ad4:5443:0:b0:6d3:413c:745b with SMTP id
+ 6a1803df08f44-6d351b2084dmr8830116d6.34.1730315292651; 
+ Wed, 30 Oct 2024 12:08:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAJPmAd06hl3pZspvZKmpm/9c515KeuErV+4Hi+1YvOdVTqzXzYrPyE1y6XuGXZko9bPRnEw==
+X-Received: by 2002:ad4:5443:0:b0:6d3:413c:745b with SMTP id
+ 6a1803df08f44-6d351b2084dmr8829846d6.34.1730315292283; 
+ Wed, 30 Oct 2024 12:08:12 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d179a2d466sm54492996d6.115.2024.10.30.12.08.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 30 Oct 2024 12:08:11 -0700 (PDT)
+Date: Wed, 30 Oct 2024 15:08:08 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Igor Mammedov <imammedo@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH RFC v2 0/7] QOM: Singleton interface
+Message-ID: <ZyKEGIQzVZ7c1OTV@x1n>
+References: <20241029211607.2114845-1-peterx@redhat.com>
+ <ZyJ1zJoOaLuNHPI-@redhat.com>
 MIME-Version: 1.0
-References: <20241030140656.36540-1-abelova@astralinux.ru>
-In-Reply-To: <20241030140656.36540-1-abelova@astralinux.ru>
-From: Phil Dennis-Jordan <lists@philjordan.eu>
-Date: Wed, 30 Oct 2024 20:03:30 +0100
-Message-ID: <CAGCz3vuqRAkPtRRpqbPM+3z5iqVHOkr5fYotmva=6uqA7JnGcQ@mail.gmail.com>
-Subject: Re: [PATCH] monitor: fix cases in switch in memory_dump
-To: Anastasia Belova <abelova@astralinux.ru>
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-devel@nongnu.org,
- sdl.qemu@linuxtesting.org
-Content-Type: multipart/alternative; boundary="0000000000002c725a0625b65cae"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::42e;
- envelope-from=lists@philjordan.eu; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZyJ1zJoOaLuNHPI-@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,124 +111,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002c725a0625b65cae
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Oct 30, 2024 at 06:07:08PM +0000, Daniel P. Berrangé wrote:
+> On Tue, Oct 29, 2024 at 05:16:00PM -0400, Peter Xu wrote:
+> > v1: https://lore.kernel.org/r/20241024165627.1372621-1-peterx@redhat.com
+> > 
+> > This patchset introduces the singleton interface for QOM.  I didn't add a
+> > changelog because there're quite a few changes here and there, plus new
+> > patches.  So it might just be easier to re-read, considering the patchset
+> > isn't large.
+> > 
+> > I switched v2 into RFC, because we have reviewer concerns (Phil and Dan so
+> > far) that it could be error prone to try to trap every attempts to create
+> > an object.  My argument is, if we already have abstract class, meanwhile we
+> > do not allow instantiation of abstract class, so the complexity is already
+> > there.  I prepared patch 1 this time to collect and track all similar
+> > random object creations; it might be helpful as a cleanup on its own to
+> > deduplicate some similar error messages.  Said that, I'm still always open
+> > to rejections to this proposal.
+> > 
+> > I hope v2 looks slightly cleaner by having not only object_new_allowed()
+> > but also object_new_or_fetch().
+> 
+> For me, that doesn't really make it much more appealing. Yes, we already have
+> an abstract class, but that has narrower impact, as there are fewer places
+> in which which we can trigger instantiation of an abstract class, than
+> where we can trigger instantiation of arbitrary objects and devices.
 
-On Wed 30. Oct 2024 at 15:09, Anastasia Belova <abelova@astralinux.ru>
-wrote:
+There should be exactly the same number of places that will need care for
+either abstract or singleton.  I tried to justify this with patch 1.
 
-> default case has no condition. So if it is placed
-> higher that other cases, they are unreachable.
->
-> Move dafult case down.
->
+I still think patch 1 can be seen as a cleanup too on its own (dedups the
+same "The class is abstract" error message), tracking random object
+creations so logically we could have the idea on whether a class can be
+instantiated at all, starting with abstract class.
 
-The stylistic merits might be debatable, but: the order of cases in a
-switch block in C does not matter, the default case can appear anywhere.
-The other cases are still reachable. So at minimum, the commit message is
-incorrect.
+The real extra "complexity" is object_new_or_fetch(), but I hope it's not a
+major concern either.  We only have two such use (aka, "please give me an
+object of class XXX"), which is qom/device-list-properties.  I don't expect
+it to be common, I hope it's easy to maintain.
 
+> 
+> The conversion of the iommu code results in worse error reporting, and
+> doesn't handle the virtio-iommu case, and the migration problems appear
+> solvable without inventing a singleton interface. So this doesn't feel
+> like it is worth the the trouble.
 
+IMHO that's not a major issue, I can drop patch 3-5 just to make it simple
+as of now.  Btw, I have a TODO in patch 2 where I mentioned we can provide
+better error report if we want, so we can easily have exactly the same
+error as before with maybe a few or 10+ LOCs on top.  It's trivial.
 
-> Found by Linux Verification Center (linuxtesting.org)
->
-> Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-> ---
->  monitor/hmp-cmds-target.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
-> index ff01cf9d8d..eea8ca047b 100644
-> --- a/monitor/hmp-cmds-target.c
-> +++ b/monitor/hmp-cmds-target.c
-> @@ -189,7 +189,6 @@ static void memory_dump(Monitor *mon, int count, int
-> format, int wsize,
->          i = 0;
->          while (i < l) {
->              switch(wsize) {
-> -            default:
->              case 1:
->                  v = ldub_p(buf + i);
->                  break;
-> @@ -202,6 +201,9 @@ static void memory_dump(Monitor *mon, int count, int
-> format, int wsize,
->              case 8:
->                  v = ldq_p(buf + i);
->                  break;
-> +            default:
-> +                v = ldub_p(buf + i);
-> +                break;
->              }
->              monitor_printf(mon, " ");
->              switch(format) {
-> --
-> 2.47.0
->
->
->
+object_new_allowed():
 
---0000000000002c725a0625b65cae
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
++    if (object_class_is_singleton(klass)) {
++        Object *obj = singleton_get_instance(klass);
++
++        if (obj) {
++            object_unref(obj);
++            /*
++             * TODO: Enhance the error message.  E.g., the singleton class
++             * can provide a per-class error message in SingletonClass.
++             */
++            error_setg(errp, "Object type '%s' conflicts with "
++                       "an existing singleton instance",
++                       klass->type->name);
++            return false;
++        }
++    }
 
-<div dir=3D"ltr"><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Wed 30. Oct 2024 at 15:09, Anastasia Belova &lt;<a href=
-=3D"mailto:abelova@astralinux.ru" target=3D"_blank">abelova@astralinux.ru</=
-a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">de=
-fault case has no condition. So if it is placed<br>
-higher that other cases, they are unreachable.<br>
-<br>
-Move dafult case down.<br></blockquote><div><br></div><div><div dir=3D"auto=
-">The stylistic merits might be debatable, but: the order of cases in a swi=
-tch block in C does not matter, the default case can appear anywhere. The o=
-ther cases are still reachable. So at minimum, the commit message is incorr=
-ect.<br></div></div><div><br></div><div>=C2=A0</div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">
-Found by Linux Verification Center (<a href=3D"http://linuxtesting.org" rel=
-=3D"noreferrer" target=3D"_blank">linuxtesting.org</a>)<br>
-<br>
-Signed-off-by: Anastasia Belova &lt;<a href=3D"mailto:abelova@astralinux.ru=
-" target=3D"_blank">abelova@astralinux.ru</a>&gt;<br>
----<br>
-=C2=A0monitor/hmp-cmds-target.c | 4 +++-<br>
-=C2=A01 file changed, 3 insertions(+), 1 deletion(-)<br>
-<br>
-diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c<br>
-index ff01cf9d8d..eea8ca047b 100644<br>
---- a/monitor/hmp-cmds-target.c<br>
-+++ b/monitor/hmp-cmds-target.c<br>
-@@ -189,7 +189,6 @@ static void memory_dump(Monitor *mon, int count, int fo=
-rmat, int wsize,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0i =3D 0;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0while (i &lt; l) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0switch(wsize) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 default:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 1:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0v =3D ldub_p(=
-buf + i);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-@@ -202,6 +201,9 @@ static void memory_dump(Monitor *mon, int count, int fo=
-rmat, int wsize,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 8:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0v =3D ldq_p(b=
-uf + i);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 default:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 v =3D ldub_p(buf +=
- i);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0monitor_printf(mon, &quot; =
-&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0switch(format) {<br>
--- <br>
-2.47.0<br>
-<br>
-<br>
-</blockquote></div></div>
-</div>
+> 
+> NB, my view point would have been different if  'object_new' had an
+> "Error *errp" parameter. That would have made handling failure a
+> standard part of the design pattern for object construction, thus
+> avoiding adding asserts in the 'object_new' codepath which could be
+> triggered by unexpected/badly validated user input.
 
---0000000000002c725a0625b65cae--
+Yes I also wished object_new() can take an Error** when I started working
+on it.  It would make this much easier, indeed.  I suppose we don't need
+that by not allowing instance_init() to fail at all, postponing things to
+realize().  I suppose that's a "tactic" QEMU chose explicitly to make it
+easy that object_new() callers keep like before with zero error handling
+needed.  At least for TYPE_DEVICE it looks all fine if all such operations
+can be offloaded into realize().  I'm not sure user creatable has those
+steps also because of this limitation.
+
+I was trying to do that with object_new_allowed() here instead, whenever it
+could be triggered by an user input.  We could have an extra layer before
+reaching object_new() to guard any user input, and I think
+object_new_allowed() could play that role.  When / If we want to introduce
+Error** to object_new() some day (or a variance of it), we could simply
+move object_new_allowed() into it.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
