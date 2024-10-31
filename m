@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 416B7E68958
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A16A0E68953
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6Mhg-0006qd-SF; Thu, 31 Oct 2024 00:22:36 -0400
+	id 1t6Mi9-0008OC-E3; Thu, 31 Oct 2024 00:23:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Mhc-0006in-4h
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:22:32 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Mi7-0008KJ-LX
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:23:03 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Mha-0006rS-GT
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:22:31 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2fb51e00c05so7304051fa.0
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:22:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Mi5-0006sa-TI
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:23:03 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2fb50e84ec7so3131851fa.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:23:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730348548; x=1730953348; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730348579; x=1730953379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DMGxpn8Fe7mTj/qWvu1FAZjbLfiL4gHv/dM/0NNZ6VM=;
- b=TIuvswHA9OrgdujY36XoOGH3Vy3xhr/Ymp0gBHxQK1oL843znj5rHx/Z8+3cLG2sCt
- tFCl7OLYiiTO/Mr1+WOr8EOgXIGqRxGc8B2Y05lAzyil71FEQWe9EnlwjRnVu3aKJlNB
- rr/O5KIIX/jL1MUsXEzscHIMCJRLVTBJe8Rh2pIOVHqo+AvKz3ydTHMojgqpxLcBEVQ5
- sdfV3RGuqAtjrL9MyMfcK/7aj9IvUBchxfgrKj3z6kUSekb92dmrCGcMGhkjGmx7K9uQ
- pmrQfT4/7eJGwT9y6Su5YFXJcRBXefl2OW4kAxBCtqeMNrodf46Wj1QLEIsu4bjuDh45
- UZCw==
+ bh=szXkpmPSUeROwD+6VYjwTLHIGyNjyw7b2MJe2LmUrMg=;
+ b=b2dFHgtB6RJju2nkBz4nPYMPLsrXddN4WQZlvN59N+Cy/OF26Kr597EIVHut1nI0pl
+ UJ+/R0HNQ77Jr3qPjrhU5895tUIcEXV3r/CmXM8M5+2X7abhgWLWh86eviVGK2K2WlKs
+ W2q+RVxilbAVOr0chSiP2kQxSWO7KxELd3SgXlpHKHAcgyyE/j5eWn1FaMn/RcFdTFxY
+ 6/HdaLets86hI+CBQGzN19ZBcg7yJtCNDatoLyngu7XhqaG3FZowxkQqchfi1j6ZeODI
+ /LC9XchAqC/KhV3e4DuUNrIqT1fEWyWz5XOX+g0sSzNJ+aIHKrvCIacJdK1OcSlJKJBd
+ muOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730348548; x=1730953348;
+ d=1e100.net; s=20230601; t=1730348579; x=1730953379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DMGxpn8Fe7mTj/qWvu1FAZjbLfiL4gHv/dM/0NNZ6VM=;
- b=oCnr7doufs0v6EGUlGnyVa6IfUU1pI02zbieYwR6B7c/tf5uMnll+WiANBHzQvpfwi
- Ow0+hvCFIOMiDTS6rQHixcenBWZvUbhKtT3Ap0RpyrzhTSLZdU4S/H/GBY26TjAzaPPJ
- F2oRBxFDHBObqcB90Q8YwNf7dlcw7PNdVRwWxTUE4oZNcZ/PBLt9M/77Eg7RFkVctI1e
- ii3ynNfB1gBaWdbjPt0osy9ozqTYL10hhlv9sW1XHzkuusFWQLgmULp/NlNtfeyeolku
- 9B7W/s0lJZDp6mCjAn8RIYO2YKiGv4wl8RGTgz/CLgc1W9FhI5u6jQ5rcMggy94oQch4
- eUSw==
-X-Gm-Message-State: AOJu0YzMGvDWb4eOBINVuixbuGzamWiW5o7CSvXEAohrq93rt4NM+0Rz
- ke0N2Du1TdYxgvloYai5Hy6Mi9lL5LLZQH8Z6LtPKbMl8kQj5ORJY0L4Ko1my4mjvi4MTxZb8Iy
- w
-X-Google-Smtp-Source: AGHT+IHml7PnlzY70ROiQDm8q6GpTmp5IllcCLur2HKBKpWKRv8G9ePHzBOEQEuvxm3P3it5eE7oSg==
-X-Received: by 2002:a2e:b8c9:0:b0:2fa:fdd1:be23 with SMTP id
- 38308e7fff4ca-2fcbe0646e6mr149162631fa.28.1730348548194; 
- Wed, 30 Oct 2024 21:22:28 -0700 (PDT)
+ bh=szXkpmPSUeROwD+6VYjwTLHIGyNjyw7b2MJe2LmUrMg=;
+ b=Z7o0Rnux0oswQd16iy9fj8GC5DAO0bis5b7ZlnTty8c7vzBs3zt0fOq21Yp5Li5G0p
+ kZNS/KlGiZNAOBcU19A1WZTYdWtlSuxddkBLwznBTUyRm/sA1eHoyz8YtAz8vNWdcmrY
+ gy+XpQNDDlbzcxJHZcymfuGvRiZTtUjeB6z/JeJcnS7Pn/h1wFKEV4LUkezMhiggMzKB
+ kOU0NrFM+Vhlk8eyW8Y1D39dHQL0EEhpMst41jeCEvHhWk0kzDzOUlTlkTbR2qqbqlN4
+ JajUvh3Nc1NnJubUFZY8ADLIOb8lgcTE94pFKHSriaB2mg/kQ7yNTJpMCWejrow9Bdth
+ yNHg==
+X-Gm-Message-State: AOJu0YzegyI/twVDlq/SBdgCjNBWCC51YFcuiaVdzcfGFhUQq/Ecegvg
+ 2ta6Fv1nF45lmazrtQRT/TYLTxun7KiChpOmGgg3IeDVeA6hOu1O9KzmKFMSgoJXEZc/AjLVq3e
+ u
+X-Google-Smtp-Source: AGHT+IHI8qtOjZt0yKqV6lmEqZAw3k8wCbOOzCT9MD7gKBiLCg1KRWQ31kZgOHyWozLxdDhRsGldRA==
+X-Received: by 2002:a2e:a543:0:b0:2fa:cc50:41b with SMTP id
+ 38308e7fff4ca-2fcbdf5fa9amr85198681fa.5.1730348579299; 
+ Wed, 30 Oct 2024 21:22:59 -0700 (PDT)
 Received: from localhost.localdomain ([91.223.100.208])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2fdef8a62d6sm965961fa.86.2024.10.30.21.22.22
+ 38308e7fff4ca-2fdef8c393asm937971fa.107.2024.10.30.21.22.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 30 Oct 2024 21:22:26 -0700 (PDT)
+ Wed, 30 Oct 2024 21:22:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 03/14] target/mips: Extract decode_64bit_enabled() helper
-Date: Thu, 31 Oct 2024 01:21:19 -0300
-Message-ID: <20241031042130.98450-4-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 05/14] target/mips: Re-introduce OPC_ADDUH_QB_DSP and
+ OPC_MUL_PH_DSP
+Date: Thu, 31 Oct 2024 01:21:21 -0300
+Message-ID: <20241031042130.98450-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241031042130.98450-1-philmd@linaro.org>
 References: <20241031042130.98450-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,54 +97,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract the decode_64bit_enabled() helper which detects
-whether CPUs can run 64-bit instructions.
+From: Philippe Mathieu-Daudé <f4bug@amsat.org>
 
+There is no issue having multiple enum declarations with
+the same value. As we are going to remove the OPC_MULT_G_2E
+definition in few commits, restore the OPC_ADDUH_QB_DSP and
+OPC_MUL_PH_DSP definitions and use them where they belong.
+
+Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20241026175349.84523-4-philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20241026175349.84523-2-philmd@linaro.org>
 ---
- target/mips/tcg/translate.h | 2 ++
- target/mips/tcg/translate.c | 7 ++++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ target/mips/tcg/translate.c | 18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
-diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-index 5d196e69ac4..ae6c25aa0c4 100644
---- a/target/mips/tcg/translate.h
-+++ b/target/mips/tcg/translate.h
-@@ -217,6 +217,8 @@ void msa_translate_init(void);
- void mxu_translate_init(void);
- bool decode_ase_mxu(DisasContext *ctx, uint32_t insn);
- 
-+bool decode_64bit_enabled(DisasContext *ctx);
-+
- /* decodetree generated */
- bool decode_isa_rel6(DisasContext *ctx, uint32_t insn);
- bool decode_ase_msa(DisasContext *ctx, uint32_t insn);
 diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index d92fc418edd..6c881af5618 100644
+index 6d7e913263e..509488fdc7a 100644
 --- a/target/mips/tcg/translate.c
 +++ b/target/mips/tcg/translate.c
-@@ -1645,13 +1645,18 @@ static inline void check_ps(DisasContext *ctx)
-     check_cp1_64bitmode(ctx);
- }
+@@ -389,16 +389,14 @@ enum {
+     OPC_ADDU_OB_DSP    = 0x14 | OPC_SPECIAL3,
+     OPC_ABSQ_S_PH_DSP  = 0x12 | OPC_SPECIAL3,
+     OPC_ABSQ_S_QH_DSP  = 0x16 | OPC_SPECIAL3,
+-    /* OPC_ADDUH_QB_DSP is same as OPC_MULT_G_2E.  */
+-    /* OPC_ADDUH_QB_DSP   = 0x18 | OPC_SPECIAL3,  */
++    OPC_ADDUH_QB_DSP   = 0x18 | OPC_SPECIAL3,
+     OPC_CMPU_EQ_QB_DSP = 0x11 | OPC_SPECIAL3,
+     OPC_CMPU_EQ_OB_DSP = 0x15 | OPC_SPECIAL3,
+     /* MIPS DSP GPR-Based Shift Sub-class */
+     OPC_SHLL_QB_DSP    = 0x13 | OPC_SPECIAL3,
+     OPC_SHLL_OB_DSP    = 0x17 | OPC_SPECIAL3,
+     /* MIPS DSP Multiply Sub-class insns */
+-    /* OPC_MUL_PH_DSP is same as OPC_ADDUH_QB_DSP.  */
+-    /* OPC_MUL_PH_DSP     = 0x18 | OPC_SPECIAL3,  */
++    OPC_MUL_PH_DSP     = 0x18 | OPC_SPECIAL3,
+     OPC_DPA_W_PH_DSP   = 0x30 | OPC_SPECIAL3,
+     OPC_DPAQ_W_QH_DSP  = 0x34 | OPC_SPECIAL3,
+     /* DSP Bit/Manipulation Sub-class */
+@@ -556,7 +554,6 @@ enum {
+     OPC_MULQ_S_PH      = (0x1E << 6) | OPC_ADDU_QB_DSP,
+ };
  
-+bool decode_64bit_enabled(DisasContext *ctx)
-+{
-+    return ctx->hflags & MIPS_HFLAG_64;
-+}
-+
- /*
-  * This code generates a "reserved instruction" exception if cpu is not
-  * 64-bit or 64-bit instructions are not enabled.
-  */
- void check_mips_64(DisasContext *ctx)
- {
--    if (unlikely((TARGET_LONG_BITS != 64) || !(ctx->hflags & MIPS_HFLAG_64))) {
-+    if (unlikely((TARGET_LONG_BITS != 64) || !decode_64bit_enabled(ctx))) {
-         gen_reserved_instruction(ctx);
-     }
- }
+-#define OPC_ADDUH_QB_DSP OPC_MULT_G_2E
+ #define MASK_ADDUH_QB(op)           (MASK_SPECIAL3(op) | (op & (0x1F << 6)))
+ enum {
+     /* MIPS DSP Arithmetic Sub-class */
+@@ -11587,8 +11584,7 @@ static void gen_mipsdsp_arith(DisasContext *ctx, uint32_t op1, uint32_t op2,
+     gen_load_gpr(v2_t, v2);
+ 
+     switch (op1) {
+-    /* OPC_MULT_G_2E is equal OPC_ADDUH_QB_DSP */
+-    case OPC_MULT_G_2E:
++    case OPC_ADDUH_QB_DSP:
+         check_dsp_r2(ctx);
+         switch (op2) {
+         case OPC_ADDUH_QB:
+@@ -12271,11 +12267,7 @@ static void gen_mipsdsp_multiply(DisasContext *ctx, uint32_t op1, uint32_t op2,
+     gen_load_gpr(v2_t, v2);
+ 
+     switch (op1) {
+-    /*
+-     * OPC_MULT_G_2E, OPC_ADDUH_QB_DSP, OPC_MUL_PH_DSP have
+-     * the same mask and op1.
+-     */
+-    case OPC_MULT_G_2E:
++    case OPC_MUL_PH_DSP:
+         check_dsp_r2(ctx);
+         switch (op2) {
+         case  OPC_MUL_PH:
+@@ -13811,7 +13803,7 @@ static void decode_opc_special3_legacy(CPUMIPSState *env, DisasContext *ctx)
+          * OPC_MULT_G_2E, OPC_ADDUH_QB_DSP, OPC_MUL_PH_DSP have
+          * the same mask and op1.
+          */
+-        if ((ctx->insn_flags & ASE_DSP_R2) && (op1 == OPC_MULT_G_2E)) {
++        if ((ctx->insn_flags & ASE_DSP_R2) && (op1 == OPC_MUL_PH_DSP)) {
+             op2 = MASK_ADDUH_QB(ctx->opcode);
+             switch (op2) {
+             case OPC_ADDUH_QB:
 -- 
 2.45.2
 
