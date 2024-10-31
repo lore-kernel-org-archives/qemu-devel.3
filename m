@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69407E68952
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:09:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB14DE68951
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MQs-0003nb-C4; Thu, 31 Oct 2024 00:05:14 -0400
+	id 1t6MQv-0003qp-T1; Thu, 31 Oct 2024 00:05:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQk-0003et-87
+ id 1t6MQl-0003f8-PV
  for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:07 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQi-0004rb-Fu
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:06 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2e30116efc9so392197a91.2
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:04 -0700 (PDT)
+ id 1t6MQj-00051r-QF
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:07 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2e2e050b1c3so1262011a91.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730347503; x=1730952303; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730347504; x=1730952304; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sm6RxNg+VAWQBzeQTWA0D+UajI2IQKoU/Rfc9RmIGOo=;
- b=pH+r6WuB1/avRqOvfla8F/QlXyWZ9btRtaNenea9XTvpn3fFCEJSJgy64mQER8e2ba
- QjWphNg3beNj1vHzvxYlosBu+nBsuqvmVG2vt/TCpdQw1c5Ca0cAkorSZPhSHZpKz6jw
- HH+FWtPmWqdYg6+QA0nYyJgCkbzmiyZKBnDaLOXzk1RUnqNOhWOmyNXyiBKu3F+gfvxX
- sdKHMoKAoK0AAXaHRPSDFQDay+pWALkE9ztIfvarp6tjfzH4vx4QHghbvqFxA2QvmSxe
- juzYdgReBS5P5fsHhOkQdzXc29EAxfsO573A3W2Mh+ZVtyh3FxTz2/uvzPxBoyWe0dHm
- e6qw==
+ bh=hoWX44V0fGpE1g+o7be5wb7qyUlUtcMzAcPzXC+tmrQ=;
+ b=AJje5q7AMb9ky9l+pbiX5Ssnqng4Qol4bftjvOb0F7xQa0hL+cG24V8NMe+nUam9QZ
+ jE672JLpQBhjqAnDUIf0rfuu2VduD4BydNFsWrxNEWSqLQ5GXhKhTt5JHmRSZoO8G+G1
+ Asm1KoMgikqt0SAJamCw8j1M/O6+LYTLuGWIqyrWW2W63J+uFeVMpxv5c97vMTtNi8QZ
+ cPnhfJ6DjRIP3sQH0fB99uGXU34VNeIBc2L7MY2YiqZP0To3XI9O03c7x7U8gnNL0nfg
+ m1T3qwSzoHl2ONM4hQey3Gi0/SFgeUJFu7XHWJP2YF3fCmPucdUdt6JHmaPo1ZRNlYO/
+ s7bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730347503; x=1730952303;
+ d=1e100.net; s=20230601; t=1730347504; x=1730952304;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sm6RxNg+VAWQBzeQTWA0D+UajI2IQKoU/Rfc9RmIGOo=;
- b=TaI0yb1QXIFjTYSTdsql0KmJNn4BSxQwdqnKU9XPcak0kWIF0DUluMOEz+LaDvHptL
- 49DN5iz5kFdVOR46e45YSRZsPXEqwWj7W7YqtCNU1WJQFmHnquzjsOVCGv04dxtiDUvk
- LmAWXvNbENfK0rKp348ySjnpG52w8racO4lPyyh7qx8h5Fn73tTsLwmV9uwVKeJ55nQl
- 3w88UchIomeam16ZZIZM44t+vge/GEnNqtMWm3z6i3rShh/5WoVANlb9xI7R9GilWzcj
- lCJn6S09WbjUuLYyxUw6eM02gcYHVFv5i4vkp4tDy8YtkLJIvyVzN3jY8Kll/Gc83B/2
- M6kQ==
-X-Gm-Message-State: AOJu0YxwwCV0aHzQoLcZwCTI4vDjvPq5CaNCfCZLLYoWAZjcpnJel8ZV
- s6Mc5RJXPfPMV0D9LZFdpN2iOPIMKQgE3ZWneHKwSH77Lrj5KrMLrcxjW+C+REjKVVwGgrP6ve0
- n9Znd9A==
-X-Google-Smtp-Source: AGHT+IHwyu+hau5X04RX9j6EFsNSJrEUmxTeMe33/MNSYJBt0a7atlZ0f5/7jO3Ig2+f2jwmlyTBnQ==
-X-Received: by 2002:a17:90a:4e0a:b0:2e2:c6b9:fd4a with SMTP id
- 98e67ed59e1d1-2e8f1072087mr20872679a91.18.1730347502813; 
- Wed, 30 Oct 2024 21:05:02 -0700 (PDT)
+ bh=hoWX44V0fGpE1g+o7be5wb7qyUlUtcMzAcPzXC+tmrQ=;
+ b=dM3FTvnZfHhK3Glt91ODYCwSZ+toDaF1AW2Gsg2yw7EeTeU2uy8VIL83FXdbWiHKV0
+ W5EgYBcJHKvG2xf0S2wkugACcMIUNhAiuLWeQQVwtDObr2euSA9IKdndovgBAKLYAcW5
+ y1nNjoAqsSxoQCC7ShWnNPQ0YHNGVuIrZ8tNipDa4s6oQmkS30vCYk2Hvhd7xjoP6G39
+ etwktfmldGRcSaAWm5Hk4Fve3MDbJ2jz7c81H3OQSsk/LriKKGIaycwj94IWJ4qw+wjV
+ vzn0Mav/OTBIPZAnHO4seTwbBAVCpRjJBoBZZzJsy7KanmoRBalxaUDmp13aF1GMr8cV
+ w42Q==
+X-Gm-Message-State: AOJu0YwjEHgcY2Y0HbxfaOpktRQse9p1nMygwKr7iW7aPW/8MuTajWdM
+ OT85raQdiDxdhLEH2fCW2IM9p+Wljmte3gp2sniO6beevdZsE8DZ3Qghda5ITvzCanqwQdEVzcs
+ oxNurbw==
+X-Google-Smtp-Source: AGHT+IHE8BrDQ0Lf7lFYuWM7cfuT09fTZKXigQJc4Y6aGz7tpvHkrpIFJePpZfaeejeZGXKiO+LZjg==
+X-Received: by 2002:a17:90b:1844:b0:2da:6e46:ad48 with SMTP id
+ 98e67ed59e1d1-2e93e058c03mr1631473a91.1.1730347503974; 
+ Wed, 30 Oct 2024 21:05:03 -0700 (PDT)
 Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
  98e67ed59e1d1-2e93db3a023sm428438a91.49.2024.10.30.21.05.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 21:05:02 -0700 (PDT)
+ Wed, 30 Oct 2024 21:05:03 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
@@ -73,16 +73,17 @@ Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 06/12] qga: fix missing static and prototypes windows warnings
-Date: Wed, 30 Oct 2024 21:04:20 -0700
-Message-Id: <20241031040426.772604-7-pierrick.bouvier@linaro.org>
+Subject: [PATCH 07/12] win32: use compiler option instead of attribute
+ gcc_struct
+Date: Wed, 30 Oct 2024 21:04:21 -0700
+Message-Id: <20241031040426.772604-8-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
 References: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,126 +106,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reported by clang++, but not by g++.
-
-../qga/vss-win32/provider.cpp:48:6: error: no previous prototype for function 'LockModule' [-Werror,-Wmissing-prototypes]
-   48 | void LockModule(BOOL lock)
-      |      ^
-../qga/vss-win32/provider.cpp:48:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-   48 | void LockModule(BOOL lock)
-      | ^
-      | static
-../qga/vss-win32/provider.cpp:531:13: error: no previous prototype for function 'DllMain' [-Werror,-Wmissing-prototypes]
-  531 | BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID lpReserved)
-      |             ^
-../qga/vss-win32/provider.cpp:531:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-  531 | BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID lpReserved)
-      | ^
-      | static
+This attribute is not recognized by clang, but the associated option is.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- qga/vss-win32/install.cpp   | 6 +++++-
- qga/vss-win32/provider.cpp  | 5 ++++-
- qga/vss-win32/requester.cpp | 8 ++++----
- 3 files changed, 13 insertions(+), 6 deletions(-)
+ meson.build                               | 8 ++++----
+ include/qemu/compiler.h                   | 7 +------
+ subprojects/libvhost-user/libvhost-user.h | 6 +-----
+ 3 files changed, 6 insertions(+), 15 deletions(-)
 
-diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-index 84944133f79..5cea5bcf747 100644
---- a/qga/vss-win32/install.cpp
-+++ b/qga/vss-win32/install.cpp
-@@ -39,7 +39,7 @@ const GUID CLSID_WbemLocator = { 0x4590f811, 0x1d3a, 0x11d0,
- const GUID IID_IWbemLocator = { 0xdc12a687, 0x737f, 0x11cf,
-     {0x88, 0x4d, 0x00, 0xaa, 0x00, 0x4b, 0x2e, 0x24} };
+diff --git a/meson.build b/meson.build
+index d8af08299e0..d0d5dbe1479 100644
+--- a/meson.build
++++ b/meson.build
+@@ -330,10 +330,10 @@ elif host_os == 'sunos'
+ elif host_os == 'haiku'
+   qemu_common_flags += ['-DB_USE_POSITIVE_POSIX_ERRORS', '-D_BSD_SOURCE', '-fPIC']
+ elif host_os == 'windows'
+-  if not compiler.compiles('struct x { int y; } __attribute__((gcc_struct));',
+-                           args: '-Werror')
+-    error('Your compiler does not support __attribute__((gcc_struct)) - please use GCC instead of Clang')
+-  endif
++  # https://gcc.gnu.org/onlinedocs/gcc/x86-Type-Attributes.html
++  # We use this compilation option instead of relying on gcc_struct attribute
++  # because clang does not support it (but supports the option).
++  qemu_common_flags += ['-mno-ms-bitfields']
+ endif
  
--void errmsg(DWORD err, const char *text)
-+static void errmsg(DWORD err, const char *text)
- {
-     /*
-      * `text' contains function call statement when errmsg is called via chk().
-@@ -242,6 +242,7 @@ out:
- }
+ # Choose instruction set (currently x86-only)
+diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
+index c06954ccb41..d904408e5ed 100644
+--- a/include/qemu/compiler.h
++++ b/include/qemu/compiler.h
+@@ -22,12 +22,7 @@
+ #define QEMU_EXTERN_C extern
+ #endif
  
- /* Unregister this module from COM+ Applications Catalog */
-+STDAPI COMUnregister(void);
- STDAPI COMUnregister(void)
- {
-     qga_debug_begin;
-@@ -256,6 +257,7 @@ out:
- }
+-#if defined(_WIN32) && (defined(__x86_64__) || defined(__i386__))
+-# define QEMU_PACKED __attribute__((gcc_struct, packed))
+-#else
+-# define QEMU_PACKED __attribute__((packed))
+-#endif
+-
++#define QEMU_PACKED __attribute__((packed))
+ #define QEMU_ALIGNED(X) __attribute__((aligned(X)))
  
- /* Register this module to COM+ Applications Catalog */
-+STDAPI COMRegister(void);
- STDAPI COMRegister(void)
- {
-     qga_debug_begin;
-@@ -380,11 +382,13 @@ out:
-     return hr;
- }
+ #ifndef glue
+diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
+index deb40e77b3f..2ffc58c11b1 100644
+--- a/subprojects/libvhost-user/libvhost-user.h
++++ b/subprojects/libvhost-user/libvhost-user.h
+@@ -186,11 +186,7 @@ typedef struct VhostUserShared {
+     unsigned char uuid[UUID_LEN];
+ } VhostUserShared;
  
-+STDAPI_(void) CALLBACK DLLCOMRegister(HWND, HINSTANCE, LPSTR, int);
- STDAPI_(void) CALLBACK DLLCOMRegister(HWND, HINSTANCE, LPSTR, int)
- {
-     COMRegister();
- }
+-#if defined(_WIN32) && (defined(__x86_64__) || defined(__i386__))
+-# define VU_PACKED __attribute__((gcc_struct, packed))
+-#else
+-# define VU_PACKED __attribute__((packed))
+-#endif
++#define VU_PACKED __attribute__((packed))
  
-+STDAPI_(void) CALLBACK DLLCOMUnregister(HWND, HINSTANCE, LPSTR, int);
- STDAPI_(void) CALLBACK DLLCOMUnregister(HWND, HINSTANCE, LPSTR, int)
- {
-     COMUnregister();
-diff --git a/qga/vss-win32/provider.cpp b/qga/vss-win32/provider.cpp
-index cc72e5ef1b9..a102a23fbf1 100644
---- a/qga/vss-win32/provider.cpp
-+++ b/qga/vss-win32/provider.cpp
-@@ -45,7 +45,7 @@ const IID IID_IVssEnumObject = { 0xAE1C7110, 0x2F60, 0x11d3,
-     {0x8A, 0x39, 0x00, 0xC0, 0x4F, 0x72, 0xD8, 0xE3} };
- 
- 
--void LockModule(BOOL lock)
-+static void LockModule(BOOL lock)
- {
-     if (lock) {
-         InterlockedIncrement(&g_nComObjsInUse);
-@@ -527,6 +527,9 @@ STDAPI DllCanUnloadNow()
-     return g_nComObjsInUse == 0 ? S_OK : S_FALSE;
- }
- 
-+EXTERN_C
-+BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID lpReserved);
-+
- EXTERN_C
- BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID lpReserved)
- {
-diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
-index 9884c65e707..4401d55e3a4 100644
---- a/qga/vss-win32/requester.cpp
-+++ b/qga/vss-win32/requester.cpp
-@@ -254,8 +254,8 @@ out:
-     qga_debug_end;
- }
- 
--DWORD get_reg_dword_value(HKEY baseKey, LPCSTR subKey, LPCSTR valueName,
--                          DWORD defaultData)
-+static DWORD get_reg_dword_value(HKEY baseKey, LPCSTR subKey, LPCSTR valueName,
-+                                 DWORD defaultData)
- {
-     qga_debug_begin;
- 
-@@ -272,12 +272,12 @@ DWORD get_reg_dword_value(HKEY baseKey, LPCSTR subKey, LPCSTR valueName,
-     return dwordData;
- }
- 
--bool is_valid_vss_backup_type(VSS_BACKUP_TYPE vssBT)
-+static bool is_valid_vss_backup_type(VSS_BACKUP_TYPE vssBT)
- {
-     return (vssBT > VSS_BT_UNDEFINED && vssBT < VSS_BT_OTHER);
- }
- 
--VSS_BACKUP_TYPE get_vss_backup_type(
-+static VSS_BACKUP_TYPE get_vss_backup_type(
-     VSS_BACKUP_TYPE defaultVssBT = DEFAULT_VSS_BACKUP_TYPE)
- {
-     qga_debug_begin;
+ typedef struct VhostUserMsg {
+     int request;
 -- 
 2.39.5
 
