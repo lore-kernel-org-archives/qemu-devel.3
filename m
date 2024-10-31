@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 307E5E68949
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C12B7E68949
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:55:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MFa-0007Cz-Js; Wed, 30 Oct 2024 23:53:34 -0400
+	id 1t6MHa-0003JK-Ih; Wed, 30 Oct 2024 23:55:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MFY-0007CT-VC
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:53:32 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1t6MHH-0002Ah-NH
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:55:21 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MFX-0003sN-Ee
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:53:32 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-20e576dbc42so5428675ad.0
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:53:31 -0700 (PDT)
+ id 1t6MHG-0004Dy-8w
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:55:19 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20c805a0753so5216185ad.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730346810; x=1730951610; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730346917; x=1730951717; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2Yu9l8eltS3GqEhoKZQqPKNc4z7ST450TJjjoaz/+KI=;
- b=iS5TvKBsOhi9zWeB0u+3ytwXryYYstuvzyXuFNHkMr+nLo94EA06tQhbjUrLiCl/CX
- wf3DPyafoUHLCoRFqlrj+4lllgV7I+/OKUdRsLL8xHf8QrOd0MTpU47tIy9GIBaB0iq1
- iCZmORX4s4dRtWF66FUZpeNGFZ9HxVuR+o+qu8nSQLXIrO/r8nifsM4uf58anG4m2DAN
- umUY4BqmQvpbdDG7p2Un8axytBimE16DorfvB9aj1jGjInpoHd762QDTdathD0ls7wvp
- /Uwo4edvS/qsGDG3noBLkC/w+CQvpTrEKta7I2gubXg8z+HUFZIviaOnknGVFyWfC85Z
- ikQw==
+ bh=MhXxbqcgvmHHW26aIl/bBdwA+G3ldEL9efdtDSBpHQk=;
+ b=X5e0PWPXVhdEH6ccGeGdUjKuMlE6z2pU4uxakfdDaOnwowYjPHSVzjy+24buaqM7Qd
+ ICFTqkl3dLT2lRYxRM9VX0DYOGnajjFNohg6rDPiWWaG0xIO6dHdsa7WiDQFzAXW0hfP
+ BK/kNIXIzJxEiyapvedJXnVxGEFcCfpTXsYzy83HTcGbjVvUBeiC2WJXrTf+7N3KY1tJ
+ 4+5WWTv9m4Ne5pImO/yF/SvescnKrbFnLjf0TkUBikN96nwmqNPV3RHUwssKwuqnlqmT
+ /vWO4IoOxwRJNJXRlkR5mOaxNW5oqJUv1rMwGEe2wSVSU8qqGVr9EFSHZTg8lskSONnJ
+ duXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730346810; x=1730951610;
+ d=1e100.net; s=20230601; t=1730346917; x=1730951717;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2Yu9l8eltS3GqEhoKZQqPKNc4z7ST450TJjjoaz/+KI=;
- b=R/h+E3fTKgfzeRfvJ3+YuKwELVN+7t7tZnRZ/B9hLct4RwbxFzLDjza6NwVLmPrgmj
- b9TfXKG0tviSqWxhzDfCS9TYwQ/2yOrDOjC4/Q0Yyt1uA7ngxGnEyn9z8UJjg62N6lsJ
- 4hS/517+4rVOBU/tpp4O93WTG5YrKn+4RBcVFD05r3MvpnZYa9dD3o4YkP7vlRB0greL
- zREJ3ENHQkvypwYj7d2L8MLersUv+6Koabr5SHvbh6WmNjVx/nhFWN8NnfxXD+dbaZDd
- G6fudePf5tXBjJE/LSpz4oiRLV06ANEWmIZ0MBlbKLrwrRzhshI2p+mk1tMWqd2Q7trE
- Rghw==
-X-Gm-Message-State: AOJu0Yzc/J+JU+z77PxzZzBBrNzNri6sU8vyq9jy8u/Xbm0dXsD6rISU
- 2sMbZmsDGQ1chuMLXF12EgBk6q3Sjk8Lxl7OB9G/15R77djFxafRh7XC/p08
-X-Google-Smtp-Source: AGHT+IFFB9xchlzOCWRmRZ2W5AiaX/XDaU6oladBNFYEAsroF6ZGljbN8tZ0bPoAIJGoQmJsYJComQ==
-X-Received: by 2002:a17:902:c943:b0:20c:d072:c89a with SMTP id
- d9443c01a7336-21103ccbe1dmr20630715ad.59.1730346809712; 
- Wed, 30 Oct 2024 20:53:29 -0700 (PDT)
+ bh=MhXxbqcgvmHHW26aIl/bBdwA+G3ldEL9efdtDSBpHQk=;
+ b=vVslpln38MO28CHjEzxyj166OZW07J4nImnStRRa5S4d0M7M1aPOLHA4FXJlzusnzV
+ KqVYlRbATMXVxSkdXF4Mm5iYYrvrS9DUJt0Om4xReEtNG5zknNd65b2lDghuiWGUd4cM
+ KLVEhA50iFXF3vgG44siHLLgUNYKyD5wDeZafLONC4tBdxxM67I7PfmKUcgFms6PZAwp
+ azdRoN6k+mFrMBxcUfuYOh/dKErQDrgN1sW4YAhx64V2FxrjuHltApBIg9udW6FvVXpm
+ iid3IZnCrp8Gb7Bm0M6PJMpwKew6UsXE1swdFTXU+OYCZPa1FH/YJBGMMa1JvwqIXpeP
+ aJxQ==
+X-Gm-Message-State: AOJu0YwqMbJkPoDpj6WPgFDW6u+fohpEhsDuxqHInINbv6j+9EFXGZKl
+ VhzPMFFT/4Pm8OzWzNwDv96KnNE4nqzosGy+iDq49IrRtSRoCyiYhHAUMeWz
+X-Google-Smtp-Source: AGHT+IG/2Pnjh6NZJItQ3HGuq4GJIYwcv/aHRvOkf4q4uU2mEFZh4gyUHKloD/Or1dNulHz2DWvKiA==
+X-Received: by 2002:a17:902:cf08:b0:20c:3d9e:5f2b with SMTP id
+ d9443c01a7336-210c6cba5f1mr260681375ad.57.1730346916711; 
+ Wed, 30 Oct 2024 20:55:16 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.53.27
+ d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.55.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 20:53:29 -0700 (PDT)
+ Wed, 30 Oct 2024 20:55:16 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, Deepak Gupta <debug@rivosinc.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 01/50] target/riscv/csr.c: Fix an access to VXSAT
-Date: Thu, 31 Oct 2024 13:52:29 +1000
-Message-ID: <20241031035319.731906-2-alistair.francis@wdc.com>
+Subject: [PULL 35/50] target/riscv: Expose zicfiss extension as a cpu property
+Date: Thu, 31 Oct 2024 13:53:03 +1000
+Message-ID: <20241031035319.731906-36-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241031035319.731906-1-alistair.francis@wdc.com>
 References: <20241031035319.731906-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,49 +98,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
+From: Deepak Gupta <debug@rivosinc.com>
 
-The register VXSAT should be RW only to the first bit.
-The remaining bits should be 0.
-
-The RISC-V Instruction Set Manual Volume I: Unprivileged Architecture
-
-The vxsat CSR has a single read-write least-significant bit (vxsat[0])
-that indicates if a fixed-point instruction has had to saturate an output
-value to fit into a destination format. Bits vxsat[XLEN-1:1]
-should be written as zeros.
-
-Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Deepak Gupta <debug@rivosinc.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241002084436.89347-1-evgenii.prokopiev@syntacore.com>
+Message-ID: <20241008225010.1861630-21-debug@rivosinc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/riscv/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index ea3560342c..c88ee1265e 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -734,7 +734,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
- static RISCVException read_vxsat(CPURISCVState *env, int csrno,
-                                  target_ulong *val)
- {
--    *val = env->vxsat;
-+    *val = env->vxsat & BIT(0);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -744,7 +744,7 @@ static RISCVException write_vxsat(CPURISCVState *env, int csrno,
- #if !defined(CONFIG_USER_ONLY)
-     env->mstatus |= MSTATUS_VS;
- #endif
--    env->vxsat = val;
-+    env->vxsat = val & BIT(0);
-     return RISCV_EXCP_NONE;
- }
- 
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index afdba29995..f219f0c3b5 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1475,6 +1475,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("smcntrpmf", ext_smcntrpmf, false),
+     MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
+     MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
++    MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
+     MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
+     MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
+     MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
 -- 
 2.47.0
 
