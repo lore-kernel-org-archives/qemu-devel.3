@@ -4,70 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34360E68958
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFFEE68959
 	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:22:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6Mgu-0006WB-IR; Thu, 31 Oct 2024 00:21:48 -0400
+	id 1t6MhP-0006ZI-9r; Thu, 31 Oct 2024 00:22:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Mgt-0006W2-2w
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:21:47 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6MhN-0006Yv-IT
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:22:17 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Mgr-0006pF-31
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:21:46 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-539ee1acb86so531673e87.0
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:21:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6MhL-0006qs-T6
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:22:17 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-53c73f01284so637502e87.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:22:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730348502; x=1730953302; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=M7oPehoUXUYuGOIvRvIXcbR6GBA549zaEK6MYXZJM+E=;
- b=aLQCCBvl/+vc3lKNvwtN9fujlKyHllVmbjYl+m1nXan391pfCQeYe/kCJvlobA+IYQ
- 5orJRfe757b+QbrI4yZmchiDiOdGhKDbvKxLfSrNqOUebPvaIB6lFH2yVk6Z5XJ6HvYp
- 96rlNptqhi3n2CsnZ1sc56hteGumEcXyrFung70iQyoqiggjjsu4TXICyz82SBWkquO8
- TUZe1WICW5wAm7/olQQM0bUflq7T7/syGdX+l9/xtUBLDgG6rj8/0wYHdDJ5abME/wD8
- FCQvWRjlc1tfGIdfAbsqeOrlbHetTSFMK786Wce7slKK3GhYdBJaI7kmGFD/3R9FzOyT
- /IVg==
+ d=linaro.org; s=google; t=1730348534; x=1730953334; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wD31lxn0+ab/GE8FyDVCBUwUXNUGOzaYUAIP9ie+DaI=;
+ b=ot405l/sRPbjhJqfKpWaRQAn9iYK0BCNrQ3eYAVdwGk0hplEzDwbQabIQpDpWtO/LU
+ Q1e40I/1pAzKJ9aVA5oh85Qj5yghA6EtJ3JUwmffctH+SEHxzXMc+Dpp7rsF2Kc1Ki0m
+ 1ruW2yDQ1g/FxBnixIFgLcjtJjgAyQ6DQNnxabNx+BlZ6mW6k62Ksozn0XS4jM6r6vwO
+ fCiLE7iFW+d0DNrImRnSRhNTpJ9HPVU3auyzWka1rZgXgW5IP+LJ+/mMTBxhBC3YXwS+
+ EDVX1vVs2qqci3vNxOdORoiIzn5Tx6vwVDfiX8CXD4Ste8+7zCM8E53gfkyhWuIc28Qo
+ Kahw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730348502; x=1730953302;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=M7oPehoUXUYuGOIvRvIXcbR6GBA549zaEK6MYXZJM+E=;
- b=h7MWrsb+KP2l9dVPVWCignmanHDEL5Ir3OHmniyXNXdHVkE0SDlX+fPpOk5r/cCmjy
- X2FuBkiOAdvrGhT0GjOfm3HYeHkDeHs/UbHw7zXnVjm3EF/77DwXiuv7Hv3U1Fvk1ADo
- DfjeLivyhnQJDk2Q+/L+MHrlpZIbnf6hJk0TgPB3xyQWwfz7bJw7E/F1BqJhoqEicFuD
- 2WP/qj8zmckMLp8lTOXD5v18uSC28xvKFulizMaZQ8GBI4jSBt1E4kJE+eubNMBzOO7q
- dplHlA4yTdpb2Vcv/U3WYttgQcxCUxzLERY2PvUk9DMhVYIyqPdeq8ZTeB7IpeVypaAz
- W0rg==
-X-Gm-Message-State: AOJu0YyULF9nRzai/B+ieaIRCr4nTLKB57BbEU4F0+Svi4sHK1oyCqGV
- zR6KmfbrZp3DktvzkqmtYfr9mp5NOIeVd1bActrVvDXNI/uLsdcGtKLUoVgzgQZJVbvkDDapyyP
- 2
-X-Google-Smtp-Source: AGHT+IFsFvDghagLR1lbVoDQd8RunamCI4uB7id5/ZbNBnE7xyHFQ0TPCNMkgxwcY3k9GsNjyCGe+w==
-X-Received: by 2002:a05:6512:3e11:b0:535:66ff:c681 with SMTP id
- 2adb3069b0e04-53b34a1b681mr8728786e87.48.1730348502235; 
- Wed, 30 Oct 2024 21:21:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1730348534; x=1730953334;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wD31lxn0+ab/GE8FyDVCBUwUXNUGOzaYUAIP9ie+DaI=;
+ b=YebH8tYkTralwbdecwaxrfCj1uHy0srBjoFdAAlTbu4tnce1E995sOPJo0O921mw/K
+ 0rSX3u2GwMC7DU7Q+GBOnfaxDZZ3HuB8oXxlAUZ6xDNhcGDstF6fd1Fq5zyXMcydCF5U
+ c4pkR7vF0yDTHqKqFoICLBal4/7kZC+UqHE1FXw5tDsNdJqEO36g3986BU8qhiITjZa+
+ hOIPy9meDIg0fMz1Zu+MP3Os6LDtDc++AsI/MCZdnK7a98IVa4H95bMGS7+55ogXVIfX
+ TKtdIx/zZtkS8WArqeK80mPKgaLrhrSYEg32GnDz10ImoUfHg8a7/sU/Djri26YZ74DA
+ 2zJw==
+X-Gm-Message-State: AOJu0Yzz0dzDvKFlhtm8gdBOltZF1uQ+o3tTNcnzeeXWZg6sIXLq0zIq
+ fZqbb/dBqVvtZi+BcEUs/r0ZKI64c/oELjQpq8OlAisBZn5E+9zRecroZlfKkVcYLKTLSa9gJtc
+ l
+X-Google-Smtp-Source: AGHT+IGvCLGR8X0HpPg94V/VP0xEjJaKkPTpC8F7x1Hlm0f1arWoY402Fv/m7oAZOzHifmwuTlt8UQ==
+X-Received: by 2002:ac2:4e0b:0:b0:539:d2e2:41ff with SMTP id
+ 2adb3069b0e04-53c79e3254amr793241e87.23.1730348533491; 
+ Wed, 30 Oct 2024 21:22:13 -0700 (PDT)
 Received: from localhost.localdomain ([91.223.100.208])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53c7bdcf1e0sm74685e87.216.2024.10.30.21.21.38
+ 2adb3069b0e04-53c7bdcbe17sm76195e87.197.2024.10.30.21.22.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 30 Oct 2024 21:21:41 -0700 (PDT)
+ Wed, 30 Oct 2024 21:22:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/14] MIPS patches for 2024-10-31
-Date: Thu, 31 Oct 2024 01:21:16 -0300
-Message-ID: <20241031042130.98450-1-philmd@linaro.org>
+Cc: Aleksandar Markovic <amarkovic@wavecomp.com>,
+ Faraz Shahbazker <fshahbazker@wavecomp.com>,
+ Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 02/14] target/mips: Enable MSA ASE for mips32r6-generic
+Date: Thu, 31 Oct 2024 01:21:18 -0300
+Message-ID: <20241031042130.98450-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241031042130.98450-1-philmd@linaro.org>
+References: <20241031042130.98450-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,64 +97,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 58d49b5895f2e0b5cfe4b2901bf24f3320b74f29:
+From: Aleksandar Markovic <amarkovic@wavecomp.com>
 
-  Merge tag 'net-pull-request' of https://github.com/jasowang/qemu into staging (2024-10-29 14:00:43 +0000)
+Enable MSA ASE for mips32r6-generic CPU.
 
-are available in the Git repository at:
+Signed-off-by: Aleksandar Markovic <amarkovic@wavecomp.com>
+Signed-off-by: Faraz Shahbazker <fshahbazker@wavecomp.com>
+Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+Reviewed-by: Aleksandar Rikalo <arikalo@gmail.com>
+Message-ID: <AM9PR09MB485153B7CB706E188DED763484402@AM9PR09MB4851.eurprd09.prod.outlook.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/mips/cpu-defs.c.inc | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-  https://github.com/philmd/qemu.git tags/mips-20241031
-
-for you to fetch changes up to dcc3c68c844fef7bc018ab53f0993b8d44137d77:
-
-  target/mips: Remove unused CPUMIPSState::current_fpu field (2024-10-31 00:48:45 -0300)
-
-----------------------------------------------------------------
-MIPS patches queue
-
-- Migrate missing CP0 TLB MemoryMapID register (Yongbok)
-- Enable MSA ASE for mips32r6-generic (Aleksandar)
-- Convert Loongson LEXT opcodes to decodetree (Phil)
-- Introduce ase_3d_available and disas_mt_available helpers (Phil)
-
-----------------------------------------------------------------
-
-Aleksandar Markovic (1):
-  target/mips: Enable MSA ASE for mips32r6-generic
-
-Philippe Mathieu-Daudé (12):
-  target/mips: Extract decode_64bit_enabled() helper
-  target/mips: Simplify Loongson MULTU.G opcode
-  target/mips: Re-introduce OPC_ADDUH_QB_DSP and OPC_MUL_PH_DSP
-  target/mips: Convert Loongson DDIV.G opcodes to decodetree
-  target/mips: Convert Loongson DIV.G opcodes to decodetree
-  target/mips: Convert Loongson [D]DIVU.G opcodes to decodetree
-  target/mips: Convert Loongson [D]MOD[U].G opcodes to decodetree
-  target/mips: Convert Loongson [D]MULT[U].G opcodes to decodetree
-  target/mips: Remove unreachable 32-bit code on 64-bit Loongson Ext
-  target/mips: Introduce ase_3d_available() helper
-  target/mips: Introduce disas_mt_available()
-  target/mips: Remove unused CPUMIPSState::current_fpu field
-
-Yongbok Kim (1):
-  target/mips: Migrate TLB MemoryMapID register
-
- target/mips/cpu.h                         |   7 +-
- target/mips/mips-defs.h                   |   2 -
- target/mips/tcg/translate.h               |   8 +
- target/mips/tcg/godson2.decode            |  27 ++
- target/mips/tcg/loong-ext.decode          |  28 ++
- target/mips/sysemu/machine.c              |   9 +-
- target/mips/tcg/loong_translate.c         | 271 ++++++++++++++
- target/mips/tcg/translate.c               | 415 +++++-----------------
- target/mips/cpu-defs.c.inc                |  16 +-
- target/mips/tcg/micromips_translate.c.inc |   5 +-
- target/mips/tcg/meson.build               |   3 +
- 11 files changed, 452 insertions(+), 339 deletions(-)
- create mode 100644 target/mips/tcg/godson2.decode
- create mode 100644 target/mips/tcg/loong-ext.decode
- create mode 100644 target/mips/tcg/loong_translate.c
-
+diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
+index fbf787d8ce1..1ab026c57e7 100644
+--- a/target/mips/cpu-defs.c.inc
++++ b/target/mips/cpu-defs.c.inc
+@@ -478,14 +478,15 @@ const mips_def_t mips_defs[] =
+                        (2 << CP0C1_DS) | (4 << CP0C1_DL) | (3 << CP0C1_DA) |
+                        (0 << CP0C1_PC) | (1 << CP0C1_WR) | (1 << CP0C1_EP),
+         .CP0_Config2 = MIPS_CONFIG2,
+-        .CP0_Config3 = MIPS_CONFIG3 | (1 << CP0C3_BP) | (1 << CP0C3_BI) |
++        .CP0_Config3 = MIPS_CONFIG3 | (1 << CP0C3_MSAP) |
++                       (1 << CP0C3_BP) | (1 << CP0C3_BI) |
+                        (2 << CP0C3_ISA) | (1 << CP0C3_ULRI) |
+                        (1 << CP0C3_RXI) | (1U << CP0C3_M),
+         .CP0_Config4 = MIPS_CONFIG4 | (0xfc << CP0C4_KScrExist) |
+                        (3 << CP0C4_IE) | (1U << CP0C4_M),
+         .CP0_Config5 = MIPS_CONFIG5 | (1 << CP0C5_XNP) | (1 << CP0C5_LLB),
+-        .CP0_Config5_rw_bitmask = (1 << CP0C5_SBRI) | (1 << CP0C5_FRE) |
+-                                  (1 << CP0C5_UFE),
++        .CP0_Config5_rw_bitmask = (1 << CP0C5_MSAEn) | (1 << CP0C5_UFE) |
++                                  (1 << CP0C5_FRE) | (1 << CP0C5_SBRI),
+         .CP0_LLAddr_rw_bitmask = 0,
+         .CP0_LLAddr_shift = 0,
+         .SYNCI_Step = 32,
+@@ -499,6 +500,7 @@ const mips_def_t mips_defs[] =
+                     (1 << FCR0_S) | (0x00 << FCR0_PRID) | (0x0 << FCR0_REV),
+         .CP1_fcr31 = (1 << FCR31_ABS2008) | (1 << FCR31_NAN2008),
+         .CP1_fcr31_rw_bitmask = 0x0103FFFF,
++        .MSAIR = 0x03 << MSAIR_ProcID,
+         .SEGBITS = 32,
+         .PABITS = 32,
+         .insn_flags = CPU_MIPS32R6 | ASE_MICROMIPS,
 -- 
 2.45.2
 
