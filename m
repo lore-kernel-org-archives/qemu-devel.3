@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A47D8D767F2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6A30D767F7
 	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 17:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6ZM8-0000v1-FP; Thu, 31 Oct 2024 13:53:12 -0400
+	id 1t6ZNt-0005aV-Fz; Thu, 31 Oct 2024 13:55:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t6ZM2-0000QF-0t
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:53:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t6ZMW-00027q-Ti
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:53:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t6ZLy-0007MX-BU
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:53:04 -0400
+ id 1t6ZMV-0007Q7-3V
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:53:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730397181;
+ s=mimecast20190719; t=1730397214;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V6mbwd5mVuHOheuhPwduKLnjqSBNQFGENe6yVIdzQXM=;
- b=fZBxpcGu3oZkI2EhI6s+7IaX3dPy1t74jI1aCH6ur+rCXxnqMz3HZgq1RP4bfUMBqFvAcy
- 0FSCc/XSrZED6Kdx5tOgO4O9DP651qjigDWHmpzikFqWazXEm1PnnFeDrh/MZDiK6F5aMe
- DPUPi1zulgi5x6jfM5Jh7VNZTxfigoI=
+ bh=hXWKUxEScRO0x2Vpd3yUytpTHeCcdbqyX30ALU4opb4=;
+ b=dWIo2p4+1aX2eQDLdHXxpC+lxxpTmY/fw+NKndi3CGOmm/rpYHo9tppdZCEpDmHetShFMa
+ ccq1zm7GqhnLlFmvaowRVsl58kqV8vOTy63QiXraSVPNfhYtSKV9/XZWZZzTzTtC4Q4nV5
+ IMJGTCmdZnmhQBOMv1CTRuHligotuR0=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-290-qolOYyK_PwmvhGkLcgKxPQ-1; Thu, 31 Oct 2024 13:52:58 -0400
-X-MC-Unique: qolOYyK_PwmvhGkLcgKxPQ-1
+ us-mta-195-LHR7PSVXNX-FG5SxNURLEw-1; Thu, 31 Oct 2024 13:53:30 -0400
+X-MC-Unique: LHR7PSVXNX-FG5SxNURLEw-1
 Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d5ca5bfc8so583395f8f.0
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 10:52:58 -0700 (PDT)
+ ffacd0b85a97d-37d531a19a9so613776f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 10:53:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730397177; x=1731001977;
+ d=1e100.net; s=20230601; t=1730397208; x=1731002008;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=V6mbwd5mVuHOheuhPwduKLnjqSBNQFGENe6yVIdzQXM=;
- b=qZoXvhFch20bKMdhDxZOlzXVihuTiYwdgHDqoGfPpjkZlgfE57tDPXAxw5PAKVmARg
- uR3t1LGDUAcaC52Vl0PPzGVBfr9eIIoONaSQwYx4PJOnEEqEyzilXXl69VZAfCyLz8ff
- aMfCl/WLLuS7AOHJpWmMmWeWDm9HESB8dtkf+S+cwrEh17hXNCveQsIWlVNQ9l8YXhrF
- M939K5VQXlCslQepaVt1pgP9se/9CvzxU+H+wOylUJ524ISq1bHs1fVsVrnd1UooTmn7
- 1nbl03CqNdRjcetTH/QFwzsLJKkJRcyqTVKNvzpXf5eUiOcJw4PIGNG5y+OINYvs/smc
- VAeg==
-X-Gm-Message-State: AOJu0Yw+lQHdu6IPzWUCTM0FE9A/r8xyVfm3XTjqANzBHVX2v6m57tbh
- 1rZiZDJhMgjtvR8PQZB5bVj0ckoEWVRjX9359SdWCBAWCewUpJMhUx1kwbE+01pOXQE4XZt2Cpg
- ClORIBv2R2Ro5goAJLiyk9sExGrzvklGVc/K2rf7D64AWttZ9v3QiLKKP4pT587G40c69vW5E9z
- ++dW0c7DhXKFmMZeAP4G9mBh4Coh6y4hfeV/j05Lw=
-X-Received: by 2002:a5d:64ae:0:b0:37c:d11f:c591 with SMTP id
- ffacd0b85a97d-381be776602mr3707330f8f.17.1730397176985; 
- Thu, 31 Oct 2024 10:52:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEg3dmJgtTCYQrEwJ/YrnpVfpEBgm9WkcbNxBr7+blGY2DXxNefPtkpExadaU6sO+orodGPsg==
-X-Received: by 2002:a5d:64ae:0:b0:37c:d11f:c591 with SMTP id
- ffacd0b85a97d-381be776602mr3707301f8f.17.1730397176448; 
- Thu, 31 Oct 2024 10:52:56 -0700 (PDT)
+ bh=hXWKUxEScRO0x2Vpd3yUytpTHeCcdbqyX30ALU4opb4=;
+ b=SUyG9ZNMx8tqiJRmGnltQ/wGyZWMikfu8rL/LueXou8tRKTpLh2Hkz1vgTKPePAEp7
+ RAeKHotNucHrDTISaJVhZFo0jA08JT+Q7ggoKd0ZJVyRo6FMojrpEJDyt4bc9O4MnbHh
+ YMH/hUMO0ttnZtJhyAVPxK3Ju6Uy/IfxYip5pxRIsKJhytK+AD1QkQWBrxB0n125cRM6
+ ZRRzZd3UVHc8d1VIGB5XEa/SYV5O/cDyeTqyLOQ8KaYkX/Q8hF2+jNeu3vXEd3xw4piI
+ xEWx6C+SQN0H1Fus4XyM7RGPDAkhgjCy/4mex6lfpPZXiymsUoujduJY+w1S4thzx4hS
+ z7kg==
+X-Gm-Message-State: AOJu0YxGn4CBE/m/9dnRF2Cwh+H5XyTzUegPW1FeSG1xDHiNQOA8bom8
+ Auvwg3uamsAxfaxopZbUsqVn1FKD25DC0j5/PiMrv+tj/czG3Pad2lOpzF5rqWJsob+/xfACxCY
+ gyU/f5urvqndl4lbFgIKFGqlG/2+7XhCMT7DqtiwAgLnxa0ntgAlDhcfioEC+d/ZnPnqo0ZZZXQ
+ nesezRZ+wx1+HEiuVYwmirb/RwYrhHdkwIBtVcKD0=
+X-Received: by 2002:a05:6000:410a:b0:37d:2d45:b3d4 with SMTP id
+ ffacd0b85a97d-381bea1093fmr4193548f8f.52.1730397208538; 
+ Thu, 31 Oct 2024 10:53:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFR9bYcjySqFre0Qvml4dmdhID4w5TiWwVlbrMegxo99F93TXniKXN/crFY0ZrkuAMRfiIX2g==
+X-Received: by 2002:a05:6000:410a:b0:37d:2d45:b3d4 with SMTP id
+ ffacd0b85a97d-381bea1093fmr4193517f8f.52.1730397207844; 
+ Thu, 31 Oct 2024 10:53:27 -0700 (PDT)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4327d685308sm33440155e9.33.2024.10.31.10.52.54
+ ffacd0b85a97d-381c10ea91bsm2777007f8f.61.2024.10.31.10.53.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 31 Oct 2024 10:52:54 -0700 (PDT)
+ Thu, 31 Oct 2024 10:53:26 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Babu Moger <babu.moger@amd.com>
-Subject: [PULL 18/49] target/i386: Expose bits related to SRSO vulnerability
-Date: Thu, 31 Oct 2024 18:51:42 +0100
-Message-ID: <20241031175214.214455-19-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 32/49] target/i386: Introduce cc_op_size
+Date: Thu, 31 Oct 2024 18:51:56 +0100
+Message-ID: <20241031175214.214455-33-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241031175214.214455-1-pbonzini@redhat.com>
 References: <20241031175214.214455-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,73 +102,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Babu Moger <babu.moger@amd.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Add following bits related Speculative Return Stack Overflow (SRSO).
-Guests can make use of these bits if supported.
+Replace arithmetic on cc_op with a helper function.
+Assert that the op has a size and that it is valid
+for the configuration.
 
-These bits are reported via CPUID Fn8000_0021_EAX.
-===================================================================
-Bit Feature Description
-===================================================================
-27  SBPB                Indicates support for the Selective Branch Predictor Barrier.
-28  IBPB_BRTYPE         MSR_PRED_CMD[IBPB] flushes all branch type predictions.
-29  SRSO_NO             Not vulnerable to SRSO.
-30  SRSO_USER_KERNEL_NO Not vulnerable to SRSO at the user-kernel boundary.
-===================================================================
-
-Link: https://www.amd.com/content/dam/amd/en/documents/corporate/cr/speculative-return-stack-overflow-whitepaper.pdf
-Link: https://www.amd.com/content/dam/amd/en/documents/epyc-technical-docs/programmer-references/57238.zip
-Signed-off-by: Babu Moger <babu.moger@amd.com>
-Link: https://lore.kernel.org/r/dadbd70c38f4e165418d193918a3747bd715c5f4.1729807947.git.babu.moger@amd.com
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20240701025115.1265117-6-richard.henderson@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h | 14 +++++++++++---
- target/i386/cpu.c |  2 +-
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ target/i386/cpu.h           | 17 ++++++++++++++++-
+ target/i386/tcg/translate.c | 17 +++++++----------
+ target/i386/tcg/emit.c.inc  |  5 +++--
+ 3 files changed, 26 insertions(+), 13 deletions(-)
 
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index e0dea1ba54a..792518b62d4 100644
+index 6ec63380473..1bf4dfdc5bb 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -1015,13 +1015,21 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define CPUID_8000_0008_EBX_AMD_PSFD    (1U << 28)
+@@ -24,6 +24,7 @@
+ #include "cpu-qom.h"
+ #include "kvm/hyperv-proto.h"
+ #include "exec/cpu-defs.h"
++#include "exec/memop.h"
+ #include "hw/i386/topology.h"
+ #include "qapi/qapi-types-common.h"
+ #include "qemu/cpu-float.h"
+@@ -1304,7 +1305,9 @@ typedef enum {
+     CC_OP_ADOX = 2,    /* CC_SRC2 = O, CC_SRC = rest.  */
+     CC_OP_ADCOX = 3,   /* CC_DST = C, CC_SRC2 = O, CC_SRC = rest.  */
  
- /* Processor ignores nested data breakpoints */
--#define CPUID_8000_0021_EAX_NO_NESTED_DATA_BP    (1U << 0)
-+#define CPUID_8000_0021_EAX_NO_NESTED_DATA_BP            (1U << 0)
- /* LFENCE is always serializing */
- #define CPUID_8000_0021_EAX_LFENCE_ALWAYS_SERIALIZING    (1U << 2)
- /* Null Selector Clears Base */
--#define CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE    (1U << 6)
-+#define CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE            (1U << 6)
- /* Automatic IBRS */
--#define CPUID_8000_0021_EAX_AUTO_IBRS   (1U << 8)
-+#define CPUID_8000_0021_EAX_AUTO_IBRS                    (1U << 8)
-+/* Selective Branch Predictor Barrier */
-+#define CPUID_8000_0021_EAX_SBPB                         (1U << 27)
-+/* IBPB includes branch type prediction flushing */
-+#define CPUID_8000_0021_EAX_IBPB_BRTYPE                  (1U << 28)
-+/* Not vulnerable to Speculative Return Stack Overflow */
-+#define CPUID_8000_0021_EAX_SRSO_NO                      (1U << 29)
-+/* Not vulnerable to SRSO at the user-kernel boundary */
-+#define CPUID_8000_0021_EAX_SRSO_USER_KERNEL_NO          (1U << 30)
+-    CC_OP_MULB, /* modify all flags, C, O = (CC_SRC != 0) */
++    /* Low 2 bits = MemOp constant for the size */
++#define CC_OP_FIRST_BWLQ CC_OP_MULB
++    CC_OP_MULB = 4, /* modify all flags, C, O = (CC_SRC != 0) */
+     CC_OP_MULW,
+     CC_OP_MULL,
+     CC_OP_MULQ,
+@@ -1374,6 +1377,7 @@ typedef enum {
+     CC_OP_POPCNTL__,
+     CC_OP_POPCNTQ__,
+     CC_OP_POPCNT = sizeof(target_ulong) == 8 ? CC_OP_POPCNTQ__ : CC_OP_POPCNTL__,
++#define CC_OP_LAST_BWLQ CC_OP_POPCNTQ__
  
- /* Performance Monitoring Version 2 */
- #define CPUID_8000_0022_EAX_PERFMON_V2  (1U << 0)
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 846d3a9ef9c..8d4d3d9e3d5 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1221,7 +1221,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, "sbpb",
--            "ibpb-brtype", NULL, NULL, NULL,
-+            "ibpb-brtype", "srso-no", "srso-user-kernel-no", NULL,
-         },
-         .cpuid = { .eax = 0x80000021, .reg = R_EAX, },
-         .tcg_features = 0,
+     CC_OP_DYNAMIC, /* must use dynamic code to get cc_op */
+     CC_OP_NB,
+@@ -1382,6 +1386,17 @@ typedef enum {
+ /* See X86DecodedInsn.cc_op, using int8_t. */
+ QEMU_BUILD_BUG_ON(CC_OP_DYNAMIC > INT8_MAX);
+ 
++static inline MemOp cc_op_size(CCOp op)
++{
++    MemOp size = op & 3;
++
++    QEMU_BUILD_BUG_ON(CC_OP_FIRST_BWLQ & 3);
++    assert(op >= CC_OP_FIRST_BWLQ && op <= CC_OP_LAST_BWLQ);
++    assert(size <= MO_TL);
++
++    return size;
++}
++
+ typedef struct SegmentCache {
+     uint32_t selector;
+     target_ulong base;
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index a20fbb019c8..46062002c02 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -885,7 +885,7 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
+ 
+     case CC_OP_ADDB ... CC_OP_ADDQ:
+         /* (DATA_TYPE)CC_DST < (DATA_TYPE)CC_SRC */
+-        size = s->cc_op - CC_OP_ADDB;
++        size = cc_op_size(s->cc_op);
+         tcg_gen_ext_tl(cpu_cc_dst, cpu_cc_dst, size);
+         tcg_gen_ext_tl(cpu_cc_src, cpu_cc_src, size);
+         return (CCPrepare) { .cond = TCG_COND_LTU, .reg = cpu_cc_dst,
+@@ -902,7 +902,7 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
+ 
+     case CC_OP_SHLB ... CC_OP_SHLQ:
+         /* (CC_SRC >> (DATA_BITS - 1)) & 1 */
+-        size = s->cc_op - CC_OP_SHLB;
++        size = cc_op_size(s->cc_op);
+         return gen_prepare_sign_nz(cpu_cc_src, size);
+ 
+     case CC_OP_MULB ... CC_OP_MULQ:
+@@ -910,11 +910,11 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
+                              .reg = cpu_cc_src };
+ 
+     case CC_OP_BMILGB ... CC_OP_BMILGQ:
+-        size = s->cc_op - CC_OP_BMILGB;
++        size = cc_op_size(s->cc_op);
+         return gen_prepare_val_nz(cpu_cc_src, size, true);
+ 
+     case CC_OP_BLSIB ... CC_OP_BLSIQ:
+-        size = s->cc_op - CC_OP_BLSIB;
++        size = cc_op_size(s->cc_op);
+         return gen_prepare_val_nz(cpu_cc_src, size, false);
+ 
+     case CC_OP_ADCX:
+@@ -966,10 +966,7 @@ static CCPrepare gen_prepare_eflags_s(DisasContext *s, TCGv reg)
+     case CC_OP_POPCNT:
+         return (CCPrepare) { .cond = TCG_COND_NEVER };
+     default:
+-        {
+-            MemOp size = (s->cc_op - CC_OP_ADDB) & 3;
+-            return gen_prepare_sign_nz(cpu_cc_dst, size);
+-        }
++        return gen_prepare_sign_nz(cpu_cc_dst, cc_op_size(s->cc_op));
+     }
+ }
+ 
+@@ -1007,7 +1004,7 @@ static CCPrepare gen_prepare_eflags_z(DisasContext *s, TCGv reg)
+                              .imm = CC_Z };
+     default:
+         {
+-            MemOp size = (s->cc_op - CC_OP_ADDB) & 3;
++            MemOp size = cc_op_size(s->cc_op);
+             return gen_prepare_val_nz(cpu_cc_dst, size, true);
+         }
+     }
+@@ -1028,7 +1025,7 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
+     switch (s->cc_op) {
+     case CC_OP_SUBB ... CC_OP_SUBQ:
+         /* We optimize relational operators for the cmp/jcc case.  */
+-        size = s->cc_op - CC_OP_SUBB;
++        size = cc_op_size(s->cc_op);
+         switch (jcc_op) {
+         case JCC_BE:
+             tcg_gen_ext_tl(s->cc_srcT, s->cc_srcT, size);
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 790307dbba8..45ac5edb1ae 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1466,7 +1466,7 @@ static void gen_bt_flags(DisasContext *s, X86DecodedInsn *decode, TCGv src, TCGv
+          */
+         decode->cc_src = tcg_temp_new();
+         decode->cc_dst = cpu_cc_dst;
+-        decode->cc_op = ((s->cc_op - CC_OP_MULB) & 3) + CC_OP_SARB;
++        decode->cc_op = CC_OP_SARB + cc_op_size(s->cc_op);
+         tcg_gen_shr_tl(decode->cc_src, src, s->T1);
+     }
+ }
+@@ -3346,7 +3346,8 @@ static bool gen_eflags_adcox(DisasContext *s, X86DecodedInsn *decode, bool want_
+          * bit, we might as well fish CF out of EFLAGS and save a shift.
+          */
+         if (want_carry && (!need_flags || s->cc_op == CC_OP_SHLB + MO_TL)) {
+-            tcg_gen_shri_tl(decode->cc_dst, cpu_cc_src, (8 << (s->cc_op - CC_OP_SHLB)) - 1);
++            MemOp size = cc_op_size(s->cc_op);
++            tcg_gen_shri_tl(decode->cc_dst, cpu_cc_src, (8 << size) - 1);
+             got_cf = true;
+         }
+         gen_mov_eflags(s, decode->cc_src);
 -- 
 2.47.0
 
