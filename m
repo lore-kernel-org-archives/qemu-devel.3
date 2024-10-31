@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9DC5E6894F
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:56:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17393E6894F
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:56:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MGp-0000zF-OJ; Wed, 30 Oct 2024 23:54:51 -0400
+	id 1t6MGD-0007L7-C2; Wed, 30 Oct 2024 23:54:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MGm-0000qq-NQ
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:48 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1t6MGB-0007Kl-SH
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:11 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MGl-0003zj-1K
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:48 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-20c7ee8fe6bso4794355ad.2
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:54:46 -0700 (PDT)
+ id 1t6MGA-0003vg-6Z
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:11 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-20cdb889222so5108355ad.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:54:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730346885; x=1730951685; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730346848; x=1730951648; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gfuE5NhnsNq1iMZF0U/EeFJxBpIDraqGn4mQOTBcvQ8=;
- b=lTEMa+6uPEk5xfa8dR8PiWluTB4ZuWfQQYNsTRj/W5j892Y4+xlaUpxeFbkWFtkulS
- Ade9YvMb9l7AK/nPpi4rHs1VV0LalWKgB7JERdgDRs54u/qNs0Rw7oc9gTOywOUZndzO
- ubfQucgdP2iS3GY4RHPvzoZYblA+ArQlrz67xkHiGtbIrpZgf7422w2+bJg2I49xu7Jy
- KmOcAmOSv0GhjxpDJd2GKf0tC2AxZFcX6MyVt19QA8uOiuTS9igNjIGHoDNIpAGP8sRn
- bXOQFwvFsFbdn2cqvIWNW7vu8U22+WxGYfEkCbQ7fLummgNoG/SdZFBtnpFMA5KBo5ky
- IeHg==
+ bh=aECLQYoFa6jL11vXtmcyRzHRyOWnIrCCQVCMGwmJA+M=;
+ b=CTuSX0T8Y9Q9kfqSpGqmaBZpUk2zeTIbduBkFs3Epkz8DHh9zyZGbWgEtObXeIQpsX
+ Pruf5EjjQifoYnV0kJ7BMZJ8Y38n6Ol5rBXP+o9Bhnx1MQl8s2B1KDWxPjj48BAnuZAT
+ YvsIo6rreB5l6sDXW7/Z83uORZuHbmWtbLMwOOn12bASc1qJv3/rCODLJrAa4ozmqqC1
+ EU9jHgSGfXqcV+9VJoqVdyvoWIDCsicQtpmBgDEUsk8sF/NDTQT/UeEBmDnhR2+DUoj4
+ +R26mWH9BhR9hW0KaF0IVEqQNUvk72qNq+4prdHr4yBIumSXGTZereODLFhuWJD0MkxC
+ xnTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730346885; x=1730951685;
+ d=1e100.net; s=20230601; t=1730346848; x=1730951648;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gfuE5NhnsNq1iMZF0U/EeFJxBpIDraqGn4mQOTBcvQ8=;
- b=Gfg/EM0QHloEZXE/WJj3JwyZnibQbtp/tpj5YJVp2kpdbJ0ZpVylsBw/ZPVNgHs/oF
- Xd4P1weDIErIiwiAXBX/xamvld2uoIKP1nb1Y1oaMYlQowvhbTxmAMNc1MbXgiagL8/p
- ECwDISdecSgXseVKcjKnYRdW7rwBgEhDks2MgaK2yaK+YVv3Fc+Fh8AAFmMbUhggFcq+
- U4wfurpb2qGmDFErzPa+rX90p/Br72Vce1mCBna0bKBlcSwRo9WDOpQtNPOy+/XuUt93
- wkXIpvSoXPcuBk8l2TtdM+tGfxy10gFYZF0L+PqFDmYrKHbOxz/YuJ8AYWrtrfPrFuRN
- C9Tw==
-X-Gm-Message-State: AOJu0YyOQ2UvOLEF6Y1OYVnxCTEa39x8+jGGMlRJpOToUlBwVH+kGHdi
- vQT25ix1q5OkQqaXMc4SqwR8DFJ6H1aMzzr3t2qP5ns3v8thv08xiRMnBqao
-X-Google-Smtp-Source: AGHT+IE6xE33aulT7v5voK7ax0JIHEvSdheM1HACRUctV2m5ZraPVX/4B5Z4M2t0LY6MQkphW0EX6Q==
-X-Received: by 2002:a17:902:f681:b0:20c:98f8:e0fa with SMTP id
- d9443c01a7336-210c687851emr245576015ad.11.1730346885271; 
- Wed, 30 Oct 2024 20:54:45 -0700 (PDT)
+ bh=aECLQYoFa6jL11vXtmcyRzHRyOWnIrCCQVCMGwmJA+M=;
+ b=dTGMzvL6tqeGWT2mqlOhTeLHRs9w/RRlz1WA7pRzXGr7v8/NgUWeQJX+CpXkdtncFl
+ Z/bD1s+Pe8WLqpqgkAdOZvFRsRm79Ia5KCj8+IEy/vN0+c1Vx2FMLlZJYT2brR/UXXa3
+ ujzCxbDBZiD038ylFKHt/19LH1basynEkZli+sYDeL7fgM4yCwz4Rf8OflR0CPAjSR6i
+ B3oLtzkeAbXEG64VeXl8s5x9oDXWzXy4lIzTvj6NqyDgOVJ8pa92TnqrEjS3XFxMSwgI
+ L7BvZZZ6xzO+VmlshoC0aKfBYkHrMNjuF7I448FX8vCGKX/dTsAT83rQWyg/DmcYbGWJ
+ A24Q==
+X-Gm-Message-State: AOJu0YyScYvEynJkYbHp2Y7jkK4Gl03G3yPtAXTEY0++94GGg2gkOsNR
+ b0C1J2x2ymfY/5XD5DpiKgwDt3sNJLLN4LO/rQlYMKpQ+G1+Lan5SXs2+GW2
+X-Google-Smtp-Source: AGHT+IGGJ+LrXXl1kj3QmXcEAwBF7AtJncdMumGMQkTQzNLmYGTNYxOUvRHsgOM00sN7i+5kLs9hbA==
+X-Received: by 2002:a17:903:2a84:b0:207:4c7c:743b with SMTP id
+ d9443c01a7336-211039ecf51mr26714795ad.0.1730346848614; 
+ Wed, 30 Oct 2024 20:54:08 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.54.42
+ d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.54.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 20:54:44 -0700 (PDT)
+ Wed, 30 Oct 2024 20:54:08 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Deepak Gupta <debug@rivosinc.com>,
- Jim Shu <jim.shu@sifive.com>, Andy Chiu <andy.chiu@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 25/50] target/riscv: Add zicfiss extension
-Date: Thu, 31 Oct 2024 13:52:53 +1000
-Message-ID: <20241031035319.731906-26-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 14/50] hw/char: riscv_htif: Use blocking qemu_chr_fe_write_all
+Date: Thu, 31 Oct 2024 13:52:42 +1000
+Message-ID: <20241031035319.731906-15-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241031035319.731906-1-alistair.francis@wdc.com>
 References: <20241031035319.731906-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,85 +101,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Deepak Gupta <debug@rivosinc.com>
+The current approach of using qemu_chr_fe_write() and ignoring the
+return values results in dropped characters [1]. Ideally we want to
+report FIFO status to the guest, but the HTIF isn't a real UART, so we
+don't really have a way to do that.
 
-zicfiss [1] riscv cpu extension enables backward control flow integrity.
+Instead let's just use qemu_chr_fe_write_all() so at least we don't drop
+characters.
 
-This patch sets up space for zicfiss extension in cpuconfig. And imple-
-ments dependency on A, zicsr, zimop and zcmop extensions.
+1: https://gitlab.com/qemu-project/qemu/-/issues/2114
 
-[1] - https://github.com/riscv/riscv-cfi
-
-Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-Co-developed-by: Jim Shu <jim.shu@sifive.com>
-Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241008225010.1861630-11-debug@rivosinc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240910045419.1252277-2-alistair.francis@wdc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_cfg.h     |  1 +
- target/riscv/cpu.c         |  1 +
- target/riscv/tcg/tcg-cpu.c | 23 +++++++++++++++++++++++
- 3 files changed, 25 insertions(+)
+ hw/char/riscv_htif.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index fe7ad85b66..59d6fc445d 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -68,6 +68,7 @@ struct RISCVCPUConfig {
-     bool ext_zicbop;
-     bool ext_zicboz;
-     bool ext_zicfilp;
-+    bool ext_zicfiss;
-     bool ext_zicond;
-     bool ext_zihintntl;
-     bool ext_zihintpause;
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index ee6646848b..377661bae9 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -107,6 +107,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(zicfilp, PRIV_VERSION_1_12_0, ext_zicfilp),
-+    ISA_EXT_DATA_ENTRY(zicfiss, PRIV_VERSION_1_13_0, ext_zicfiss),
-     ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
-     ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
-     ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 963c1c604a..6c0c319499 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -618,6 +618,29 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         cpu->cfg.ext_zihpm = false;
-     }
- 
-+    if (cpu->cfg.ext_zicfiss) {
-+        if (!cpu->cfg.ext_zicsr) {
-+            error_setg(errp, "zicfiss extension requires zicsr extension");
-+            return;
-+        }
-+        if (!riscv_has_ext(env, RVA)) {
-+            error_setg(errp, "zicfiss extension requires A extension");
-+            return;
-+        }
-+        if (!riscv_has_ext(env, RVS)) {
-+            error_setg(errp, "zicfiss extension requires S");
-+            return;
-+        }
-+        if (!cpu->cfg.ext_zimop) {
-+            error_setg(errp, "zicfiss extension requires zimop extension");
-+            return;
-+        }
-+        if (cpu->cfg.ext_zca && !cpu->cfg.ext_zcmop) {
-+            error_setg(errp, "zicfiss with zca requires zcmop extension");
-+            return;
-+        }
-+    }
-+
-     if (!cpu->cfg.ext_zihpm) {
-         cpu->cfg.pmu_mask = 0;
-         cpu->pmu_avail_ctrs = 0;
+diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
+index 54fd55c3e6..0345088e8b 100644
+--- a/hw/char/riscv_htif.c
++++ b/hw/char/riscv_htif.c
+@@ -217,7 +217,11 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
+                     tswap64(syscall[3]) == HTIF_CONSOLE_CMD_PUTC) {
+                     uint8_t ch;
+                     cpu_physical_memory_read(tswap64(syscall[2]), &ch, 1);
+-                    qemu_chr_fe_write(&s->chr, &ch, 1);
++                    /*
++                     * XXX this blocks entire thread. Rewrite to use
++                     * qemu_chr_fe_write and background I/O callbacks
++                     */
++                    qemu_chr_fe_write_all(&s->chr, &ch, 1);
+                     resp = 0x100 | (uint8_t)payload;
+                 } else {
+                     qemu_log_mask(LOG_UNIMP,
+@@ -236,7 +240,11 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
+             return;
+         } else if (cmd == HTIF_CONSOLE_CMD_PUTC) {
+             uint8_t ch = (uint8_t)payload;
+-            qemu_chr_fe_write(&s->chr, &ch, 1);
++            /*
++             * XXX this blocks entire thread. Rewrite to use
++             * qemu_chr_fe_write and background I/O callbacks
++             */
++            qemu_chr_fe_write_all(&s->chr, &ch, 1);
+             resp = 0x100 | (uint8_t)payload;
+         } else {
+             qemu_log("HTIF device %d: unknown command\n", device);
 -- 
 2.47.0
 
