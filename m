@@ -4,95 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 373BAE68956
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 07:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FF19E68956
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 07:24:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6PVN-0004b8-0Q; Thu, 31 Oct 2024 03:22:05 -0400
+	id 1t6PXf-0005qU-D7; Thu, 31 Oct 2024 03:24:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t6PVL-0004am-7Z
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:22:03 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t6PVJ-0000RQ-AH
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:22:02 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3807dd08cfcso472531f8f.1
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 00:22:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1730359320; x=1730964120;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=k+vCVdG01nVCL6ewv08nkx+w0ZPhuAMWeXO+duAdUmI=;
- b=tkLbt6/ruO8fKn2kCe8zDNkU3hbJvD0fA+mER6RYsBrk7S31OsIRKd1HIBSaGqYoCI
- UAYIZ0IirLvCjxI3Ln7SF9d0KLF0mTUNCh9SoI4+JV9C0IufdrXjwbNarZje9Yj6aB40
- 3VX9nTIQ5KX+pWVZupeSWIt3lWvDZgAncK6azd+VoB+MIZUoEa5JjgJa/yMF0BjDa3k+
- 0fTcu12St6hdYSh9kZkvQB/heICTrOtxpdHaMwe7tx7aOJTS1s8pEb/3wxNZo6MoCMqP
- tCv9soLjOL5JyJedVLmTjFyn6OGOYEz3kxRiQLY9sc/wHhDa7M6LD4gaKn1cfuMc0bff
- zM+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730359320; x=1730964120;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=k+vCVdG01nVCL6ewv08nkx+w0ZPhuAMWeXO+duAdUmI=;
- b=iiQLegzIvayaR+WOGbYMeWfH5N4uowaeMSu9vTU+40msjrPQOU3W/eBp5SpPl+y1Ak
- nCgC2q29HU7h8A8ZGVlgNf1uaMk1IQCcYIB1+U+caoEmmh773IpkO0Zj555OX1lX+KKG
- NpcReqrD5YuOBgZDOkzwtg6lXwlNJCe/R+sBPSDMOWgc2J9FZEr7WYSrB4LNcoiLlXlf
- W/FxGVTijGPItfHRNxHc4i86N18SZq2avvZqRj8uO64A6EWl+vORBhljfusn/KYVwUe8
- FXK+Lnj7ljyeum5Adw/l2uHziTzOTZXL16FFczL8EvVOc/d69NdfIcx1TfliIHwdGpaw
- BCag==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUGwpihjVq3bshNZjORKMVQl4Tm2H4Fd9uaXxYxVg3fmJdwxJEhXV9cqSlP1FXajOfmEzpQCjltc7dx@nongnu.org
-X-Gm-Message-State: AOJu0YycCEBX5mvc4RjF6bppJ3O4jOdvcyicHtDvkHFd4TF4skvnIDH1
- 4cN/EJaQmMJqlQP0+6vlJL5iZ/9RIqwLBVB3iN5BZT3wVuKs5vOj9DLWCicJwzg=
-X-Google-Smtp-Source: AGHT+IHfo3dnxhz3fn58/onxTE0nDKASDgOSrAwqFVTtqRSBMF9yQH27czKKesaAHvb2RGN1n/waVw==
-X-Received: by 2002:adf:e341:0:b0:37d:9508:1947 with SMTP id
- ffacd0b85a97d-3806123ee9fmr15871922f8f.51.1730359319705; 
- Thu, 31 Oct 2024 00:21:59 -0700 (PDT)
-Received: from [157.82.207.167] ([157.82.207.167])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4327d5e94cdsm14524755e9.28.2024.10.31.00.21.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Oct 2024 00:21:59 -0700 (PDT)
-Message-ID: <fcff076c-5616-46f3-aaa1-45d3ad1bbb44@daynix.com>
-Date: Thu, 31 Oct 2024 16:21:53 +0900
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1t6PXd-0005qE-NG
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:24:25 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1t6PXa-0000YE-BA
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:24:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730359462; x=1761895462;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=WYP0MXSn7t4wnA7qxi6MRVAUezIV9psOcckRlSojAE0=;
+ b=UVb2mNBxyR1cnRmp1m+oYbW5XP/M1E+Pxk3N0osfXHol4LDmdV8OktIM
+ ySUeXb9n4lajMZofjc3q4jgZePBuKPsGQRvkgnuhqg0oV1VFa564KewDL
+ fihjfkgnp6rHz2K3qmVDngTVBo+Y3wbwGAx887FfUfBov08rXYdrZzlUd
+ JHgsocsdmR1f84zr0mEyHmK1xhzifkvSFdwNhg0ImSRMHjoX3eCWJPzQK
+ 1J9DFgCwZmIlZrzvIS+4hFl53n38r93PNndzvpohF17n/l4rGXCqiXdBZ
+ u0ytYUZNom1eHZMh3IwCmZLpXaW4rfwdC4gWhfcbOT2PHHl0KorcVCWEZ g==;
+X-CSE-ConnectionGUID: rm/0X7saQWOKIkJg8ljEmA==
+X-CSE-MsgGUID: JojIAKT6Q2WSuCRl0WBOYQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11241"; a="30298328"
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="30298328"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Oct 2024 00:24:19 -0700
+X-CSE-ConnectionGUID: NdN7i7YtS76ILlPFXanLKA==
+X-CSE-MsgGUID: cda5iVK7Qxi0LR821hNRUQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="87138763"
+Received: from linux.bj.intel.com ([10.238.157.71])
+ by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Oct 2024 00:24:18 -0700
+Date: Thu, 31 Oct 2024 15:19:12 +0800
+From: Tao Su <tao1.su@linux.intel.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ xiaoyao.li@intel.com
+Subject: Re: [PATCH 4/8] target/i386: add AVX10 feature and AVX10 version
+ property
+Message-ID: <ZyMvcPlRWH7v0z9O@linux.bj.intel.com>
+References: <20241029151858.550269-1-pbonzini@redhat.com>
+ <20241029151858.550269-5-pbonzini@redhat.com>
+ <ZyHyBnPvOHsSdh8D@intel.com> <ZyH+RB3v55cQ43+S@linux.bj.intel.com>
+ <ZyIy4OGSGPhAZutK@intel.com> <ZyI9P1ftFOTUhDzb@linux.bj.intel.com>
+ <ZyJW9nGgpEXqiyli@intel.com> <ZyMKAwq4lsk+ozu3@linux.bj.intel.com>
+ <ZyMvTcW1QzA1ycUI@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] qdev-properties: Add
- DEFINE_PROP_ON_OFF_AUTO_BIT64()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
-References: <20241022-virtio-v2-0-b2394236e053@daynix.com>
- <20241022-virtio-v2-2-b2394236e053@daynix.com> <Zx_AuOl7l5b2UIjG@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <Zx_AuOl7l5b2UIjG@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2a00:1450:4864:20::435;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZyMvTcW1QzA1ycUI@intel.com>
+Received-SPF: none client-ip=192.198.163.14;
+ envelope-from=tao1.su@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,179 +88,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/29 1:50, Daniel P. Berrangé wrote:
-> On Tue, Oct 22, 2024 at 01:50:39PM +0900, Akihiko Odaki wrote:
->> DEFINE_PROP_ON_OFF_AUTO_BIT64() corresponds to DEFINE_PROP_ON_OFF_AUTO()
->> as DEFINE_PROP_BIT64() corresponds to DEFINE_PROP_BOOL(). The difference
->> is that DEFINE_PROP_ON_OFF_AUTO_BIT64() exposes OnOffAuto instead of
->> bool.
+On Thu, Oct 31, 2024 at 03:18:37PM +0800, Zhao Liu wrote:
+> > > > > > > @@ -7674,13 +7682,21 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
+> > > > > > >                                      &eax_0, &ebx_0, &ecx_0, &edx_0);
+> > > > > > >          uint8_t version = ebx_0 & 0xff;
+> > > > > > > 
+> > > > > > > -        if (version < env->avx10_version) {
+> > > > > > > +        if (!env->avx10_version) {
+> > > > > > > +            env->avx10_version = version;
+> > > > > > 
+> > > > > > x86_cpu_filter_features() is not a good place to assign avx10_version, I
+> > > > > > still tend to set it in max_x86_cpu_realize().
+> > > > > 
+> > > > > It's not proper to get the host's version when AVX10 cannot be enabled,
+> > > > > even maybe host doesn't support AVX10.
+> > > > > 
+> > > > > As you found out earlier, max_x86_cpu_realize doesn't know if AVX10 can
+> > > > > be enabled or not.
+> > > > > 
+> > > > 
+> > > > How about moving to x86_cpu_expand_features()? We can set when checking
+> > > > cpu->max_features.
+> > > 
+> > > The feature bit set in x86_cpu_expand_features() is unstable since it
+> > > may be masked later in x86_cpu_filter_features(). :)
+> > > 
+> > 
+> > A lot of feature bits are set in x86_cpu_expand_features() with reported
+> > value, so I think avx10_version can also be set to reported value there.
+> > 
+> > I mainly want to let avx10_version be assigned only when -cpu host or max,
+> > so that it can be distinguished from the cpu model. This should also be
+> > Paolo's original intention in v2.
 > 
-> Again, same feedback as last time.
+> OK. In this case, extend avx10-version is also consistent with the
+> semantics of this function. Even if host doesn't support avx10, then in
+> principle it's ok to read unimplemented avx10-version as 0.
 > 
-> With this design, existing users of DEFINE_PROP_BIT64 that
-> get converted to DEFINE_PROP_ON_OFF_AUTO_BIT64, in addition
-> to gaining the desired "auto" value, also gain redundant
-> 'on' and 'off' values as side-effects.
-> 
-> In the next patch, the stated problem is that virtio code
-> needs to distinguish between bits that are user set, and
-> bits that are set based on available host backend features.
-> 
-> That doesn't seem to require us to accept any new values
-> from the user. It should be sufficient to track user
-> specified features, separately from user specified values.
-> ie when parsing user input for bitfields, we need to parse
-> into a pair of fields
-> 
->    uint64_t has_user_features;  /* which bits were specified */
->    uint64_t user_features;      /* values of specified bits*/
+> Pls go ahead. :)
 
-Properties also have getters. We don't know what to return with them 
-without the new value.
-
-Regards,
-Akihiko Odaki
-
-> 
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   include/hw/qdev-properties.h | 18 ++++++++++++
->>   hw/core/qdev-properties.c    | 66 +++++++++++++++++++++++++++++++++++++++++++-
->>   2 files changed, 83 insertions(+), 1 deletion(-)
->>
->> diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
->> index 09aa04ca1e27..afec53a48470 100644
->> --- a/include/hw/qdev-properties.h
->> +++ b/include/hw/qdev-properties.h
->> @@ -43,11 +43,22 @@ struct PropertyInfo {
->>       ObjectPropertyRelease *release;
->>   };
->>   
->> +/**
->> + * struct OnOffAutoBit64 - OnOffAuto storage with 64 elements.
->> + * @on_bits: Bitmap of elements with "on".
->> + * @auto_bits: Bitmap of elements with "auto".
->> + */
->> +typedef struct OnOffAutoBit64 {
->> +    uint64_t on_bits;
->> +    uint64_t auto_bits;
->> +} OnOffAutoBit64;
->> +
->>   
->>   /*** qdev-properties.c ***/
->>   
->>   extern const PropertyInfo qdev_prop_bit;
->>   extern const PropertyInfo qdev_prop_bit64;
->> +extern const PropertyInfo qdev_prop_on_off_auto_bit64;
->>   extern const PropertyInfo qdev_prop_bool;
->>   extern const PropertyInfo qdev_prop_enum;
->>   extern const PropertyInfo qdev_prop_uint8;
->> @@ -100,6 +111,13 @@ extern const PropertyInfo qdev_prop_link;
->>                   .set_default = true,                              \
->>                   .defval.u  = (bool)_defval)
->>   
->> +#define DEFINE_PROP_ON_OFF_AUTO_BIT64(_name, _state, _field, _bit, _defval) \
->> +    DEFINE_PROP(_name, _state, _field, qdev_prop_on_off_auto_bit64,         \
->> +                OnOffAutoBit64,                                             \
->> +                .bitnr    = (_bit),                                         \
->> +                .set_default = true,                                        \
->> +                .defval.i = (OnOffAuto)_defval)
->> +
->>   #define DEFINE_PROP_BOOL(_name, _state, _field, _defval)     \
->>       DEFINE_PROP(_name, _state, _field, qdev_prop_bool, bool, \
->>                   .set_default = true,                         \
->> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
->> index f0a270bb4f61..cc76ff0dfae6 100644
->> --- a/hw/core/qdev-properties.c
->> +++ b/hw/core/qdev-properties.c
->> @@ -187,7 +187,8 @@ const PropertyInfo qdev_prop_bit = {
->>   
->>   static uint64_t qdev_get_prop_mask64(Property *prop)
->>   {
->> -    assert(prop->info == &qdev_prop_bit64);
->> +    assert(prop->info == &qdev_prop_bit64 ||
->> +           prop->info == &qdev_prop_on_off_auto_bit64);
->>       return 0x1ull << prop->bitnr;
->>   }
->>   
->> @@ -232,6 +233,69 @@ const PropertyInfo qdev_prop_bit64 = {
->>       .set_default_value = set_default_value_bool,
->>   };
->>   
->> +static void prop_get_on_off_auto_bit64(Object *obj, Visitor *v,
->> +                                       const char *name, void *opaque,
->> +                                       Error **errp)
->> +{
->> +    Property *prop = opaque;
->> +    OnOffAutoBit64 *p = object_field_prop_ptr(obj, prop);
->> +    int value;
->> +    uint64_t mask = qdev_get_prop_mask64(prop);
->> +
->> +    if (p->auto_bits & mask) {
->> +        value = ON_OFF_AUTO_AUTO;
->> +    } else if (p->on_bits & mask) {
->> +        value = ON_OFF_AUTO_ON;
->> +    } else {
->> +        value = ON_OFF_AUTO_OFF;
->> +    }
->> +
->> +    visit_type_enum(v, name, &value, &OnOffAuto_lookup, errp);
->> +}
->> +
->> +static void prop_set_on_off_auto_bit64(Object *obj, Visitor *v,
->> +                                       const char *name, void *opaque,
->> +                                       Error **errp)
->> +{
->> +    Property *prop = opaque;
->> +    OnOffAutoBit64 *p = object_field_prop_ptr(obj, prop);
->> +    bool bool_value;
->> +    int value;
->> +    uint64_t mask = qdev_get_prop_mask64(prop);
->> +
->> +    if (visit_type_bool(v, name, &bool_value, NULL)) {
->> +        value = bool_value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
->> +    } else if (!visit_type_enum(v, name, &value, &OnOffAuto_lookup, errp)) {
->> +        return;
->> +    }
->> +
->> +    switch (value) {
->> +    case ON_OFF_AUTO_AUTO:
->> +        p->on_bits &= ~mask;
->> +        p->auto_bits |= mask;
->> +        break;
->> +
->> +    case ON_OFF_AUTO_ON:
->> +        p->on_bits |= mask;
->> +        p->auto_bits &= ~mask;
->> +        break;
->> +
->> +    case ON_OFF_AUTO_OFF:
->> +        p->on_bits &= ~mask;
->> +        p->auto_bits &= ~mask;
->> +        break;
->> +    }
->> +}
->> +
->> +const PropertyInfo qdev_prop_on_off_auto_bit64 = {
->> +    .name  = "OnOffAuto",
->> +    .description = "on/off/auto",
->> +    .enum_table = &OnOffAuto_lookup,
->> +    .get = prop_get_on_off_auto_bit64,
->> +    .set = prop_set_on_off_auto_bit64,
->> +    .set_default_value = qdev_propinfo_set_default_value_enum,
->> +};
->> +
->>   /* --- bool --- */
->>   
->>   static void get_bool(Object *obj, Visitor *v, const char *name, void *opaque,
->>
->> -- 
->> 2.47.0
->>
->>
-> 
-> With regards,
-> Daniel
+I will submit v3 based on all your comments, thanks for review :)
 
 
