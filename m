@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C6DE68974
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 11:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB92AE68975
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 11:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6T5f-0005Q6-BM; Thu, 31 Oct 2024 07:11:47 -0400
+	id 1t6T9B-0007Q3-Js; Thu, 31 Oct 2024 07:15:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t6T5S-0005Kr-Me
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:11:34 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t6T5Q-0003Yv-NW
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:11:34 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-539f4d8ef84so1028763e87.0
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 04:11:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730373090; x=1730977890; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Akj3cIQJJohptA+ixAnzPlQ1QYu7yfnHtV2Ht8J8iDI=;
- b=U1qNDvV9YdDIMB6XQKHZ/cIGmr3quFdVAgG1GQ/fX8mKJzqzAOpUy/zKLWg+5M5dTE
- 8o87dBzACYZ3Z50Y03O23Z9kX5tFVaJz3z1QbWBhl+K2V8V5MOcScWKddyaLCzbydy+a
- Df41zRd6+zVeafjwFMpPpgiNaI2u9VF30ZH7yfzKq7PKBTHpI+73HUQpo0nkI4GEqIye
- kS3RrFtUJFpmdOPI3b0HnYA4Y58HYXMUio+f/o6K2iQLp98TRrWRAZ4lIXzf+jqe9dej
- DB8ReDG3DFHPp2TXa9hZOKrECCzIlExh9SPOsKF5H0/AP+GL1HuHJBieTmRHMkyVri7g
- mFlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730373090; x=1730977890;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Akj3cIQJJohptA+ixAnzPlQ1QYu7yfnHtV2Ht8J8iDI=;
- b=e9T2eoqiIbS/mspIyK7Qt/oxf0NnUimH3d2qW7Nb1sikfX4VLw7jBJaU365PCTZg1I
- jD0rGEUuV/quq83GFiT69J6rYOGG571enk8RIoEmEuHwy6IL/unwNsnI7vvFdf9w8aI7
- 6g0SxaRviS9bqqiT2lBGeO2m6tkl06wANKyHuop57xgZDCuNxCSPQwhi8yttmfjcppaq
- VKOf2gFn0ih9cOwg5lCqiFrm7z8ZCnJlkUK015GvFb2of0XOCG5sWUIsNcTGD9FmmuyN
- TBc8noA/zKp6OFqnzXUrOUHPjRHHVCfa38vfZw9PlahMuzgawmum7crr2/7mjJmB/+sI
- wB4Q==
-X-Gm-Message-State: AOJu0YxdR6rdc5dMQpfgD8Md/wdedsiaoek0FVfTiwnHFIHYHR1D7nXj
- gQXpZWJXCGHwMCOyzOqwRhfIP5xDAzeGRH9CRQ+rUginzrhhSnldsnLlVfsu+8C+iihFWXMw1IE
- ICvggkPJ9FAnfVzLhcqVf8ghxxAkeAylHLlg0jA==
-X-Google-Smtp-Source: AGHT+IFjoqVXZ62UiELHx3A+tPelEZcM0FUxLXVgEhM4oidJkCbZ/llZssjiQZCwVEGBASLhXcRoXNxQ+K/oiVdJug8=
-X-Received: by 2002:a05:6512:138e:b0:536:53f0:2f8e with SMTP id
- 2adb3069b0e04-53c79e8ecbdmr1337539e87.37.1730373090124; Thu, 31 Oct 2024
- 04:11:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t6T96-0007O2-9a
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:15:21 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t6T91-0004EL-42
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:15:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730373316; x=1761909316;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=tw9eIcIn49m5DnJkgd+UYwuXkMe8QSLIQifeqZSrvdM=;
+ b=TMB3Iu6rRenStaNfCnHxgiNTukKbAaqtqVMnosA1GVIKlvkikRN4ZN0C
+ u0Y61bDTrbb2//dYSvEszL4WvZRYq5gUUIH00IC4ZRJFb6/iehOfmj9Mg
+ xgnvuIcMFwdSZot8n7qCnmwT9S8z+ZOb+Fmc9ff4MDiEMLoSl3I5BFtSP
+ G/DqV7dk0VN9KnroukvS+YTrXgFx6bu4q2gIxzwVLKYO40vqqn317owVm
+ Y/t6Ncshmtw/5Q/N2cjsFbQ9UqdeEVvGuRVRtcasFC5OdQ8Jyn0gaymK/
+ gFstH8EGIXtKlDbd7lrEblrUXK1dS9xcXO3A3UDsdMak4J3dkTduvUP2+ A==;
+X-CSE-ConnectionGUID: WsqkYZYVQxquhsHx+VBvLA==
+X-CSE-MsgGUID: Cac/dwsUTzq1nNaih1dfEg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="52659498"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="52659498"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Oct 2024 04:15:12 -0700
+X-CSE-ConnectionGUID: fJsT1pKLRg+wrUbw9hu0uQ==
+X-CSE-MsgGUID: 0dthywenT3exf9sYYz3S0w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="113447174"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa001.fm.intel.com with ESMTP; 31 Oct 2024 04:15:10 -0700
+Date: Thu, 31 Oct 2024 19:31:30 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org,
+ junjie.mao@hotmail.com, berrange@redhat.com
+Subject: Re: [PATCH 13/23] rust: synchronize dependencies between subprojects
+ and Cargo.lock
+Message-ID: <ZyNqkmgGR3lgIWm7@intel.com>
+References: <20241025160209.194307-1-pbonzini@redhat.com>
+ <20241025160209.194307-14-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20241017144316.517709-1-r.peniaev@gmail.com>
-In-Reply-To: <20241017144316.517709-1-r.peniaev@gmail.com>
-From: Roman Penyaev <r.peniaev@gmail.com>
-Date: Thu, 31 Oct 2024 12:09:09 +0100
-Message-ID: <CACZ9PQXT9xxuX40u_4J22d66hP73x4r8gUunPsMzhMS=MMTn9Q@mail.gmail.com>
-Subject: Re: [PATCH v5 0/8] chardev: implement backend chardev multiplexing
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=r.peniaev@gmail.com; helo=mail-lf1-x12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241025160209.194307-14-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,130 +85,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Marc-Andr=C3=A9,
+On Fri, Oct 25, 2024 at 06:01:58PM +0200, Paolo Bonzini wrote:
+> Date: Fri, 25 Oct 2024 18:01:58 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 13/23] rust: synchronize dependencies between subprojects
+>  and Cargo.lock
+> X-Mailer: git-send-email 2.47.0
+> 
+> The next commit will introduce a new build.rs dependency for rust/qemu-api,
+> version_check.  Before adding it, ensure that all dependencies are
+> synchronized between the Meson- and cargo-based build systems.
+> 
+> Note that it's not clear whether in the long term we'll use Cargo for
+> anything; it seems that the three main uses (clippy, rustfmt, rustdoc)
 
-In this 5th version of the mux-be series it seems I addressed all the
-comments and concerns. Could you please take a look once again?
+not sure whether cargo update could help to know if the dependenies can
+be updated or not...
 
---
-Roman
+> can all be invoked manually---either via glue code in QEMU, or by
+> extending Meson to gain the relevant functionality.  However, for
+> the time being we're stuck with Cargo so it should at least look at
+> the same code as the rest of the build system.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/hw/char/pl011/Cargo.lock   |  3 +++
+>  rust/qemu-api-macros/Cargo.lock |  9 ++++---
+>  rust/qemu-api/Cargo.lock        | 47 +++++++++++++++++++++++++++++++++
+>  rust/qemu-api/Cargo.toml        |  1 +
+>  4 files changed, 56 insertions(+), 4 deletions(-)
+> 
+> diff --git a/rust/hw/char/pl011/Cargo.lock b/rust/hw/char/pl011/Cargo.lock
+> index b58cebb186e..9f43b33e8b8 100644
+> --- a/rust/hw/char/pl011/Cargo.lock
+> +++ b/rust/hw/char/pl011/Cargo.lock
+> @@ -91,6 +91,9 @@ dependencies = [
+>  [[package]]
+>  name = "qemu_api"
+>  version = "0.1.0"
+> +dependencies = [
+> + "qemu_api_macros",
+> +]
+>  
+>  [[package]]
+>  name = "qemu_api_macros"
+> diff --git a/rust/qemu-api-macros/Cargo.lock b/rust/qemu-api-macros/Cargo.lock
+> index fdc0fce116c..f989e25829f 100644
+> --- a/rust/qemu-api-macros/Cargo.lock
+> +++ b/rust/qemu-api-macros/Cargo.lock
+> @@ -4,9 +4,9 @@ version = 3
+>  
+>  [[package]]
+>  name = "proc-macro2"
+> -version = "1.0.86"
+> +version = "1.0.84"
+>  source = "registry+https://github.com/rust-lang/crates.io-index"
+> -checksum = "5e719e8df665df0d1c8fbfd238015744736151d4445ec0836b8e628aae103b77"
+> +checksum = "ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6"
+>  dependencies = [
+>   "unicode-ident",
+>  ]
+> @@ -18,6 +18,7 @@ dependencies = [
+>   "proc-macro2",
+>   "quote",
+>   "syn",
+> + "unicode-ident",
+>  ]
 
-On Thu, Oct 17, 2024 at 4:45=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.com>=
- wrote:
->
-> Mux is a character backend (host side) device, which multiplexes
-> multiple frontends with one backend device. The following is a
-> few lines from the QEMU manpage [1]:
->
->   A multiplexer is a "1:N" device, and here the "1" end is your
->   specified chardev backend, and the "N" end is the various parts
->   of QEMU that can talk to a chardev.
->
-> But sadly multiple backends are not supported.
->
-> This work implements multiplexing capability of several backend
-> devices, which opens up an opportunity to use a single frontend
-> device on the guest, which can be manipulated from several
-> backend devices.
->
-> The motivation is the EVE project [2], where it would be very
-> convenient to have a virtio console frontend device on the guest that
-> can be controlled from multiple backend devices, namely VNC and local
-> TTY emulator. The following is an example of the QEMU command line:
->
->    -chardev mux-be,id=3Dmux0 \
->    -chardev socket,path=3D/tmp/sock,server=3Don,wait=3Doff,id=3Dsock0,mux=
--be-id=3Dmux0 \
->    -chardev vc,id=3Dvc0,mux-be-id=3Dmux0 \
->    -device virtconsole,chardev=3Dmux0 \
->    -vnc 0.0.0.0:0
->
-> Which creates two backend devices:
->
-> * Text virtual console (`vc0`)
-> * A socket (`sock0`) connected to the single virtio hvc console with the
->   help of the backend multiplexer (`mux0`)
->
-> `vc0` renders text to an image, which can be shared over the VNC protocol=
-.
-> `sock0` is a socket backend which provides bidirectional communication to
-> the virtio hvc console.
->
-> Once QEMU starts, the VNC client and any TTY emulator can be used to
-> control a single hvc console. For example, these two different
-> consoles should have similar input and output due to the buffer
-> multiplexing:
->
->    # VNC client
->    vncviewer :0
->
->    # TTY emulator
->    socat unix-connect:/tmp/sock pty,link=3D/tmp/pty
->    tio /tmp/pty
->
-> v4 .. v5:
->
-> * Spelling fixes in qemu-options description
-> * Memory leaks fixes in mux-be tests
-> * Add sanity checks to chardev to avoid stacking of mux devices
-> * Add corresponding unit test case to cover the creation of stacked
->   muxers: `-chardev mux-be,mux-id-be=3DID`, which is forbidden
-> * Reflect the fact that stacking is not supported in the documentation
->
-> v3 .. v4:
->
-> * Rebase on latest chardev changes
-> * Add unit tests which test corner cases:
->    * Inability to remove mux with active frontend
->    * Inability to add more chardevs to a mux than `MUX_MAX`
->    * Inability to mix mux-fe and mux-be for the same chardev
->
-> v2 .. v3:
->
-> * Split frontend and backend multiplexer implementations and
->   move them to separate files: char-mux-fe.c and char-mux-be.c
->
-> v1 .. v2:
->
-> * Separate type for the backend multiplexer `mux-be`
-> * Handle EAGAIN on write to the backend device
-> * Support of watch of previously failed backend device
-> * Proper json support of the `mux-be-id` option
-> * Unit test for the `mux-be` multiplexer
->
-> [1] https://www.qemu.org/docs/master/system/qemu-manpage.html#hxtool-6
-> [2] https://github.com/lf-edge/eve
->
-> Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-> Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
-> Cc: qemu-devel@nongnu.org
->
-> Roman Penyaev (8):
->   chardev/char: rename `MuxChardev` struct to `MuxFeChardev`
->   chardev/char: rename `char-mux.c` to `char-mux-fe.c`
->   chardev/char: move away mux suspend/resume calls
->   chardev/char: rename frontend mux calls
->   chardev/char: introduce `mux-be-id=3DID` option
->   chardev/char-mux: implement backend chardev multiplexing
->   tests/unit/test-char: add unit test for the `mux-be` multiplexer
->   qemu-options.hx: describe multiplexing of several backend devices
->
->  chardev/char-fe.c                     |  25 +-
->  chardev/char-mux-be.c                 | 290 +++++++++++++++++++++++
->  chardev/{char-mux.c =3D> char-mux-fe.c} | 157 ++++---------
->  chardev/char.c                        | 139 +++++++++--
->  chardev/chardev-internal.h            |  55 ++++-
->  chardev/meson.build                   |   3 +-
->  include/chardev/char.h                |   8 +-
->  qapi/char.json                        |  31 ++-
->  qemu-options.hx                       |  80 +++++--
->  system/vl.c                           |   4 +-
->  tests/unit/test-char.c                | 323 +++++++++++++++++++++++++-
->  11 files changed, 947 insertions(+), 168 deletions(-)
->  create mode 100644 chardev/char-mux-be.c
->  rename chardev/{char-mux.c =3D> char-mux-fe.c} (71%)
->
-> --
-> 2.34.1
->
+With cargo build, it seems this dependency doesn't need to be added here.
+
+I compared the versions and checksums of the wrap files, and I also
+built it using cargo build based on this commit. The only change by
+Cargo is the one mentioned above; everything else looks good.
+
+With the nit fixed or otherwise,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
