@@ -4,134 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE05D767DD
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 15:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC43AD767D8
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 15:54:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6XRb-0004dN-3f; Thu, 31 Oct 2024 11:50:43 -0400
+	id 1t6XUw-0005Na-P5; Thu, 31 Oct 2024 11:54:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t6XRa-0004dF-8M
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 11:50:42 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t6XUv-0005My-73
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 11:54:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t6XRY-0005uw-Tj
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 11:50:42 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t6XUt-0006KV-5S
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 11:54:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730389840;
+ s=mimecast20190719; t=1730390046;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JK4ii2m/JRazGr9tdncSLYx/ta/Sjz5+u6YvLYeTtsg=;
- b=LtnemjpxHLIlGOLGf9scIuy5FP1PKzDoYgFtO4Ab3dwzzhEWGJ0MvxSKZgQkwISHL5lC9a
- 6kBRn9jI2qIcYEaJQmgITAeO+D1UtzTUbhv7DsHSx71judVYgCx7IPRDrmCQ+epW+R2BMn
- x1BgvR8WnZS/9/aEo9hoOq5nh7pvi9s=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-527-rhVVr_2CN2ilYCZi3J4uug-1; Thu, 31 Oct 2024 11:50:36 -0400
-X-MC-Unique: rhVVr_2CN2ilYCZi3J4uug-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4315eaa3189so9067505e9.1
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 08:50:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730389835; x=1730994635;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JK4ii2m/JRazGr9tdncSLYx/ta/Sjz5+u6YvLYeTtsg=;
- b=mkeCS5pGcALL9ww7j6VRiB6wxgDfqHQX2bDTMajxEfuFHCw75iIyia4iO3jf96D9uD
- tgX0KDUH+gN/XDbdoTd3j8AHfwth/6MBEMeBi4O/GeEP/qar73/JvuwWTP33cRXpDpZ0
- oGyhtpYxbwy3EugPdXQfegtOK4Vghds78dUI+m3CVqYd2zSv25Hj32ptejrb9rHb7pWV
- Ep+iGVDyBWVmyO8BnGSQC6uxbBr8K2DhaB0cCBYhIbhv/KngGBVJoG+eTzQcFYlldL7+
- vcEbuxzhh/XKsCPN0NUlrZGUBH307DiRXo9up1HMUmuTgiEocIpchdE/ZE4rFULDbFjs
- v8+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7W8xqoW8xRs3y96YeR7q+wbixGHRW1DPyEZKrCvtQydaqucqh6OvA6Runu1F3uRlny3O52424yaCl@nongnu.org
-X-Gm-Message-State: AOJu0YyjpgNJtxoq25QZpQckY+xbz0tyA9+2ANR4POqd1cLp2cc+eo1s
- jqH5rWcIktiwW8w5JkUtHPSCuUmSbAjrO/0yZeqK4YGjYyzTh/+7wxB4Y4LlgkXE69nnpreRri5
- u6sh2E6kMJhbyqqiS0+JgM74RsW6sx/ZzSpYKXE6jiRjdrnJdrmDG
-X-Received: by 2002:a05:600c:3d8a:b0:42b:ac3d:3abc with SMTP id
- 5b1f17b1804b1-4328327e0bemr3263445e9.24.1730389834714; 
- Thu, 31 Oct 2024 08:50:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEjgiMKhXiJn9vPyptg3bhuKfHp1F/mbKOqJEHDvWwOL5KGtMpy3kjlj9+HEZl1BakCseXKZw==
-X-Received: by 2002:a05:600c:3d8a:b0:42b:ac3d:3abc with SMTP id
- 5b1f17b1804b1-4328327e0bemr3263335e9.24.1730389834404; 
- Thu, 31 Oct 2024 08:50:34 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-48-251.web.vodafone.de.
- [109.42.48.251]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4327d5e8562sm31449155e9.23.2024.10.31.08.50.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Oct 2024 08:50:34 -0700 (PDT)
-Message-ID: <7800f880-d362-40b6-aaef-2085dcb78ad0@redhat.com>
-Date: Thu, 31 Oct 2024 16:50:32 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=jx77iETQYs06DrQ8yZJRqTrlVINZpRE4CtA3A5HTGPg=;
+ b=FdbAXTx5kBv63+yxTh+vXoX37P4uNeWQdDOwFZA+VVmoxf5gba6bg2VPl9iWKSa63QOxJ0
+ cPNrTiZ8mp+vuwUtDWDmOTmz8jEa18tzNXoofrAEiXfrv4D19NMJ1bMCn72wonVQxyH8RO
+ GqHqO8rCrf1m8fZyyvdxwQh5z4fMrTs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-159-Vm1DpznDO8KEu6coV4aH0g-1; Thu,
+ 31 Oct 2024 11:54:00 -0400
+X-MC-Unique: Vm1DpznDO8KEu6coV4aH0g-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16D83195609D
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 15:54:00 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.18])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6909D1956054; Thu, 31 Oct 2024 15:53:58 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [RFC 3/5] convert code to object_new_dynamic() where appropriate
+Date: Thu, 31 Oct 2024 15:53:48 +0000
+Message-ID: <20241031155350.3240361-4-berrange@redhat.com>
+In-Reply-To: <20241031155350.3240361-1-berrange@redhat.com>
+References: <20241031155350.3240361-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/19] s390x: Add Full Boot Order Support
-To: jrossi@linux.ibm.com, qemu-s390x@nongnu.org
-Cc: frankja@linux.ibm.com, Sebastian Mitterle <smitterl@redhat.com>,
- qemu-devel@nongnu.org
-References: <20241020012953.1380075-1-jrossi@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241020012953.1380075-1-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,57 +85,338 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/10/2024 03.29, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> changes v4 -> v5:
-> - Fix a bug with per-deice loadparm support:
->      The machine loadparm is no longer overwritten by device values, which now
->      allows an empty machine loadparm to propagate to later devices even if
->      the primary boot device set an initial loadparm
-> - Fix two instances where changes were squashed into wrong patch
-> - Fix an instance where NULL_BLOCK_NR was returned instead of ERROR_BLOCK_NR
-> - Fix an instance of logical AND being used instead of bitwise AND
-> - Standardize all error values to be negative in all device type paths
-> - Minor stylistic changes and code simplification
+In cases where object_new() is not being passed a static, const
+string, the caller cannot be sure what type they are instantiating.
+There is a risk that instantiation could fail, if it is an abstract
+type.
 
-  Hi Jared!
+Convert such cases over to use object_new_dynamic() such that they
+are forced to expect failure. In some cases failure can be easily
+propagated, but in others using &error_abort maintainers existing
+behaviour.
 
-Our QE Sebastian also had a try with the patches today, and discovered some 
-non-working scenarios:
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ chardev/char.c                   |  5 ++++-
+ hw/core/bus.c                    |  2 +-
+ hw/core/cpu-common.c             |  2 +-
+ hw/core/qdev.c                   |  4 ++--
+ hw/i386/x86-common.c             |  5 ++++-
+ hw/i386/xen/xen-pvh.c            |  2 +-
+ hw/vfio/common.c                 |  6 +++++-
+ hw/vfio/container.c              |  6 +++++-
+ qom/object_interfaces.c          |  7 ++-----
+ qom/qom-qmp-cmds.c               | 15 +++++++++------
+ tests/unit/check-qom-interface.c |  3 ++-
+ tests/unit/test-smp-parse.c      | 20 ++++++++++----------
+ 12 files changed, 46 insertions(+), 31 deletions(-)
 
-Try to boot from non-working CD image first, then from a working HD image:
-
-dd if=/dev/zero of=/tmp/zero.dat bs=1M count=10
-qemu-system-s390x -nographic -accel kvm -m 2G \
-  -drive if=none,id=d1,file=/tmp/zero.dat,format=raw,media=cdrom \
-  -device virtio-scsi -device scsi-cd,drive=d1,bootindex=1 \
-  -drive if=none,file=good-image.qcow2,id=d2 \
-  -device virtio-blk,drive=d2,bootindex=2
-
-This outputs something like the following text, then aborts:
-
-LOADPARM=[        ]
-
-Using virtio-scsi.
-SCSI CD-ROM detected.
-Failed to IPL this ISO image!
-LOADPARM=[        ]
-
-Using virtio-blk.
-Failed to IPL this ISO image!
-ERROR: No suitable device for IPL. Halting...
-
-Looks like the s390-ccw bios is treating the virtio-blk device as CD-ROM in 
-this case?
-
-Almost the same setup, first device is again a non-working CD image, but the 
-second device is a virtio-net device - results in the same error message (so 
-it's likely the same or at least a very similar problem).
-
-Could you please have a look?
-
-  Thanks!
-   Thomas
+diff --git a/chardev/char.c b/chardev/char.c
+index a1722aa076..4de9a496a2 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -996,7 +996,10 @@ static Chardev *chardev_new(const char *id, const char *typename,
+     assert(g_str_has_prefix(typename, "chardev-"));
+     assert(id);
+ 
+-    obj = object_new(typename);
++    if (!(obj = object_new_dynamic(typename, errp))) {
++        return NULL;
++    }
++    
+     chr = CHARDEV(obj);
+     chr->handover_yank_instance = handover_yank_instance;
+     chr->label = g_strdup(id);
+diff --git a/hw/core/bus.c b/hw/core/bus.c
+index b9d89495cd..2de714b274 100644
+--- a/hw/core/bus.c
++++ b/hw/core/bus.c
+@@ -163,7 +163,7 @@ BusState *qbus_new(const char *typename, DeviceState *parent, const char *name)
+ {
+     BusState *bus;
+ 
+-    bus = BUS(object_new(typename));
++    bus = BUS(object_new_dynamic(typename, &error_abort));
+     qbus_init_internal(bus, parent, name);
+ 
+     return bus;
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 09c7903594..8768ae39ed 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -57,7 +57,7 @@ bool cpu_exists(int64_t id)
+ CPUState *cpu_create(const char *typename)
+ {
+     Error *err = NULL;
+-    CPUState *cpu = CPU(object_new(typename));
++    CPUState *cpu = CPU(object_new_dynamic(typename, &error_abort));
+     if (!qdev_realize(DEVICE(cpu), NULL, &err)) {
+         error_report_err(err);
+         object_unref(OBJECT(cpu));
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index db36f54d91..a143d8b721 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -162,7 +162,7 @@ DeviceState *qdev_new(const char *name)
+         error_report("unknown type '%s'", name);
+         abort();
+     }
+-    return DEVICE(object_new(name));
++    return DEVICE(object_new_dynamic(name, &error_abort));
+ }
+ 
+ DeviceState *qdev_try_new(const char *name)
+@@ -170,7 +170,7 @@ DeviceState *qdev_try_new(const char *name)
+     if (!module_object_class_by_name(name)) {
+         return NULL;
+     }
+-    return DEVICE(object_new(name));
++    return DEVICE(object_new_dynamic(name, &error_abort));
+ }
+ 
+ static QTAILQ_HEAD(, DeviceListener) device_listeners
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index b86c38212e..b75443ec26 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -55,7 +55,10 @@ static size_t pvh_start_addr;
+ 
+ static void x86_cpu_new(X86MachineState *x86ms, int64_t apic_id, Error **errp)
+ {
+-    Object *cpu = object_new(MACHINE(x86ms)->cpu_type);
++    Object *cpu = object_new_dynamic(MACHINE(x86ms)->cpu_type, errp);
++    if (!cpu) {
++        return;
++    }
+ 
+     if (!object_property_set_uint(cpu, "apic-id", apic_id, errp)) {
+         goto out;
+diff --git a/hw/i386/xen/xen-pvh.c b/hw/i386/xen/xen-pvh.c
+index f1f02d3311..9aeb4e430b 100644
+--- a/hw/i386/xen/xen-pvh.c
++++ b/hw/i386/xen/xen-pvh.c
+@@ -28,7 +28,7 @@ struct XenPVHx86State {
+ static DeviceState *xen_pvh_cpu_new(MachineState *ms,
+                                     int64_t apic_id)
+ {
+-    Object *cpu = object_new(ms->cpu_type);
++    Object *cpu = object_new_dynamic(ms->cpu_type, &error_abort);
+ 
+     object_property_add_child(OBJECT(ms), "cpu[*]", cpu);
+     object_property_set_uint(cpu, "apic-id", apic_id, &error_fatal);
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 36d0cf6585..d57097a194 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1550,7 +1550,11 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+ 
+ 
+     if (!vbasedev->mdev) {
+-        hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
++        Object *obj = object_new_dynamic(ops->hiod_typename, errp);
++        if (!obj) {
++            return false;
++        }
++        hiod = HOST_IOMMU_DEVICE(obj);
+         vbasedev->hiod = hiod;
+     }
+ 
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 9ccdb639ac..5964009a3c 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -419,6 +419,7 @@ static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
+ {
+     int iommu_type;
+     const char *vioc_name;
++    Object *obj;
+     VFIOContainer *container;
+ 
+     iommu_type = vfio_get_iommu_type(fd, errp);
+@@ -432,7 +433,10 @@ static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
+ 
+     vioc_name = vfio_get_iommu_class_name(iommu_type);
+ 
+-    container = VFIO_IOMMU_LEGACY(object_new(vioc_name));
++    if (!(obj = object_new_dynamic(vioc_name, NULL))) {
++        return NULL;
++    }
++    container = VFIO_IOMMU_LEGACY(obj);
+     container->fd = fd;
+     container->iommu_type = iommu_type;
+     return container;
+diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+index e0833c8bfe..756fca3649 100644
+--- a/qom/object_interfaces.c
++++ b/qom/object_interfaces.c
+@@ -102,13 +102,10 @@ Object *user_creatable_add_type(const char *type, const char *id,
+         return NULL;
+     }
+ 
+-    if (object_class_is_abstract(klass)) {
+-        error_setg(errp, "object type '%s' is abstract", type);
++    assert(qdict);
++    if (!(obj = object_new_dynamic(type, errp))) {
+         return NULL;
+     }
+-
+-    assert(qdict);
+-    obj = object_new(type);
+     object_set_properties_from_qdict(obj, qdict, v, &local_err);
+     if (local_err) {
+         goto out;
+diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+index e91a235347..b1590231d7 100644
+--- a/qom/qom-qmp-cmds.c
++++ b/qom/qom-qmp-cmds.c
+@@ -134,14 +134,15 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
+         return NULL;
+     }
+ 
+-    if (!object_class_dynamic_cast(klass, TYPE_DEVICE)
+-        || object_class_is_abstract(klass)) {
+-        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "typename",
+-                   "a non-abstract device type");
++    if (!object_class_dynamic_cast(klass, TYPE_DEVICE)) {
++        error_setg(errp, "Object type '%s' is not a device",
++                   typename);
+         return NULL;
+     }
+ 
+-    obj = object_new(typename);
++    if (!(obj = object_new_dynamic(typename, errp))) {
++        return NULL;
++    }
+ 
+     object_property_iter_init(&iter, obj);
+     while ((prop = object_property_iter_next(&iter))) {
+@@ -202,7 +203,9 @@ ObjectPropertyInfoList *qmp_qom_list_properties(const char *typename,
+     if (object_class_is_abstract(klass)) {
+         object_class_property_iter_init(&iter, klass);
+     } else {
+-        obj = object_new(typename);
++        if (!(obj = object_new_dynamic(typename, errp))) {
++            return NULL;
++        }
+         object_property_iter_init(&iter, obj);
+     }
+     while ((prop = object_property_iter_next(&iter))) {
+diff --git a/tests/unit/check-qom-interface.c b/tests/unit/check-qom-interface.c
+index c99be97ed8..e4532ae814 100644
+--- a/tests/unit/check-qom-interface.c
++++ b/tests/unit/check-qom-interface.c
+@@ -13,6 +13,7 @@
+ 
+ #include "qom/object.h"
+ #include "qemu/module.h"
++#include "qapi/error.h"
+ 
+ 
+ #define TYPE_TEST_IF "test-interface"
+@@ -67,7 +68,7 @@ static const TypeInfo intermediate_impl_info = {
+ 
+ static void test_interface_impl(const char *type)
+ {
+-    Object *obj = object_new(type);
++    Object *obj = object_new_dynamic(type, &error_abort);
+     TestIf *iobj = TEST_IF(obj);
+     TestIfClass *ioc = TEST_IF_GET_CLASS(iobj);
+ 
+diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
+index f9bccb56ab..f4893d5f24 100644
+--- a/tests/unit/test-smp-parse.c
++++ b/tests/unit/test-smp-parse.c
+@@ -1008,7 +1008,7 @@ static void machine_full_topo_class_init(ObjectClass *oc, void *data)
+ static void test_generic_valid(const void *opaque)
+ {
+     const char *machine_type = opaque;
+-    Object *obj = object_new(machine_type);
++    Object *obj = object_new_dynamic(machine_type, &error_abort);
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+     SMPTestData data = {};
+@@ -1027,7 +1027,7 @@ static void test_generic_valid(const void *opaque)
+ static void test_generic_invalid(const void *opaque)
+ {
+     const char *machine_type = opaque;
+-    Object *obj = object_new(machine_type);
++    Object *obj = object_new_dynamic(machine_type, &error_abort);
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+     SMPTestData data = {};
+@@ -1046,7 +1046,7 @@ static void test_generic_invalid(const void *opaque)
+ static void test_with_modules(const void *opaque)
+ {
+     const char *machine_type = opaque;
+-    Object *obj = object_new(machine_type);
++    Object *obj = object_new_dynamic(machine_type, &error_abort);
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+     SMPTestData data = {};
+@@ -1096,7 +1096,7 @@ static void test_with_modules(const void *opaque)
+ static void test_with_dies(const void *opaque)
+ {
+     const char *machine_type = opaque;
+-    Object *obj = object_new(machine_type);
++    Object *obj = object_new_dynamic(machine_type, &error_abort);
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+     SMPTestData data = {};
+@@ -1146,7 +1146,7 @@ static void test_with_dies(const void *opaque)
+ static void test_with_modules_dies(const void *opaque)
+ {
+     const char *machine_type = opaque;
+-    Object *obj = object_new(machine_type);
++    Object *obj = object_new_dynamic(machine_type, &error_abort);
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+     SMPTestData data = {};
+@@ -1207,7 +1207,7 @@ static void test_with_modules_dies(const void *opaque)
+ static void test_with_clusters(const void *opaque)
+ {
+     const char *machine_type = opaque;
+-    Object *obj = object_new(machine_type);
++    Object *obj = object_new_dynamic(machine_type, &error_abort);
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+     SMPTestData data = {};
+@@ -1257,7 +1257,7 @@ static void test_with_clusters(const void *opaque)
+ static void test_with_books(const void *opaque)
+ {
+     const char *machine_type = opaque;
+-    Object *obj = object_new(machine_type);
++    Object *obj = object_new_dynamic(machine_type, &error_abort);
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+     SMPTestData data = {};
+@@ -1307,7 +1307,7 @@ static void test_with_books(const void *opaque)
+ static void test_with_drawers(const void *opaque)
+ {
+     const char *machine_type = opaque;
+-    Object *obj = object_new(machine_type);
++    Object *obj = object_new_dynamic(machine_type, &error_abort);
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+     SMPTestData data = {};
+@@ -1357,7 +1357,7 @@ static void test_with_drawers(const void *opaque)
+ static void test_with_drawers_books(const void *opaque)
+ {
+     const char *machine_type = opaque;
+-    Object *obj = object_new(machine_type);
++    Object *obj = object_new_dynamic(machine_type, &error_abort);
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+     SMPTestData data = {};
+@@ -1418,7 +1418,7 @@ static void test_with_drawers_books(const void *opaque)
+ static void test_full_topo(const void *opaque)
+ {
+     const char *machine_type = opaque;
+-    Object *obj = object_new(machine_type);
++    Object *obj = object_new_dynamic(machine_type, &error_abort);
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+     SMPTestData data = {};
+-- 
+2.46.0
 
 
