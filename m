@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 115D3D767FB
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 20:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8714DD767FA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 20:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6bRD-00078K-Dl; Thu, 31 Oct 2024 16:06:35 -0400
+	id 1t6bRp-00080d-QD; Thu, 31 Oct 2024 16:07:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t6bR8-00077p-RF; Thu, 31 Oct 2024 16:06:31 -0400
+ id 1t6bRm-0007rw-RZ; Thu, 31 Oct 2024 16:07:10 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t6bR7-0007Uy-BJ; Thu, 31 Oct 2024 16:06:30 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XfZjF54Ynz6JBc6;
- Fri,  1 Nov 2024 04:05:05 +0800 (CST)
+ id 1t6bRl-0007Xg-3u; Thu, 31 Oct 2024 16:07:10 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XfZdy1Y0Wz6LDJl;
+ Fri,  1 Nov 2024 04:02:14 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 8617D140B35;
- Fri,  1 Nov 2024 04:06:27 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 39E5B14058E;
+ Fri,  1 Nov 2024 04:07:07 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.48.152.207) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 31 Oct 2024 21:06:08 +0100
+ 15.1.2507.39; Thu, 31 Oct 2024 21:06:47 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,10 +45,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH V2 2/6] hw/acpi: Update ACPI CPU Hotplug state during vCPU
- hot(un)plug
-Date: Thu, 31 Oct 2024 20:04:58 +0000
-Message-ID: <20241031200502.3869-3-salil.mehta@huawei.com>
+Subject: [PATCH V2 4/6] hw/acpi: Update CPUs AML's `is_enabled` state in ACPI
+ _STA method
+Date: Thu, 31 Oct 2024 20:05:00 +0000
+Message-ID: <20241031200502.3869-5-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241031200502.3869-1-salil.mehta@huawei.com>
 References: <20241031200502.3869-1-salil.mehta@huawei.com>
@@ -84,35 +84,54 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the `is_enabled` state in `AcpiCpuStatus` when vCPUs are
+Update the CPUs AML code to reflect the ACPI CPU Hotplug `is_enabled`
+state in the `_STA.Enabled` Bit when the ACPI `_STA` method is evaluated
+by the Guest Kernel during initialization, as well as when vCPUs are
 hot-plugged or hot-unplugged.
 
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- hw/acpi/cpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/acpi/cpu.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-index 238a0edbc1..8940687f90 100644
+index 8940687f90..017b847815 100644
 --- a/hw/acpi/cpu.c
 +++ b/hw/acpi/cpu.c
-@@ -265,6 +265,7 @@ void acpi_cpu_plug_cb(HotplugHandler *hotplug_dev,
-     }
+@@ -63,7 +63,7 @@ static uint64_t cpu_hotplug_rd(void *opaque, hwaddr addr, unsigned size)
+     cdev = &cpu_st->devs[cpu_st->selector];
+     switch (addr) {
+     case ACPI_CPU_FLAGS_OFFSET_RW: /* pack and return is_* fields */
+-        val |= cdev->cpu ? 1 : 0;
++        val |= cdev->is_enabled ? 1 : 0;
+         val |= cdev->is_inserting ? 2 : 0;
+         val |= cdev->is_removing  ? 4 : 0;
+         val |= cdev->fw_remove  ? 16 : 0;
+@@ -463,15 +463,23 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
+         {
+             Aml *idx = aml_arg(0);
+             Aml *sta = aml_local(0);
++            Aml *else_ctx;
  
-     cdev->cpu = CPU(dev);
-+    cdev->is_enabled = true;
-     if (dev->hotplugged) {
-         cdev->is_inserting = true;
-         acpi_send_event(DEVICE(hotplug_dev), ACPI_CPU_HOTPLUG_STATUS);
-@@ -296,6 +297,7 @@ void acpi_cpu_unplug_cb(CPUHotplugState *cpu_st,
-         return;
-     }
- 
-+    cdev->is_enabled = false;
-     cdev->cpu = NULL;
- }
- 
+             aml_append(method, aml_acquire(ctrl_lock, 0xFFFF));
+             aml_append(method, aml_store(idx, cpu_selector));
+             aml_append(method, aml_store(zero, sta));
+             ifctx = aml_if(aml_equal(is_enabled, one));
+             {
++                /* cpu is present and enabled */
+                 aml_append(ifctx, aml_store(aml_int(0xF), sta));
+             }
+             aml_append(method, ifctx);
++            else_ctx = aml_else();
++            {
++                /* cpu is present but disabled */
++                aml_append(else_ctx, aml_store(aml_int(0xD), sta));
++            }
++            aml_append(method, else_ctx);
+             aml_append(method, aml_release(ctrl_lock));
+             aml_append(method, aml_return(sta));
+         }
 -- 
 2.34.1
 
