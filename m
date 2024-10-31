@@ -4,88 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14740D767C8
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 14:07:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8DDCD767D6
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 14:22:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6Vp2-0002eV-90; Thu, 31 Oct 2024 10:06:48 -0400
+	id 1t6W3i-00056b-3l; Thu, 31 Oct 2024 10:21:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1t6Vp0-0002eA-IV
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 10:06:46 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1t6Voy-0002k4-HO
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 10:06:46 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-37d49a7207cso703716f8f.0
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 07:06:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1730383602; x=1730988402; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=NfnBAMHxRdHwHD3vUVludur5p2ItyJIfYaCHMSZoWbI=;
- b=FPscv8Q0nJ+Gn5KLWnTdfgjh5aiLrJ+fsd3CweNQ0zbZfmpbThTGj8LRPNK6OrGZ6M
- 5Kxqa49bc80Df85n2IcfVpkwP5TpRaaXrlqG7OSxYii2iU3mcxePZsnQfdOtrIEwbolB
- bjI5NYeewTBbBDl/fQg54tfZvf56MOlhTj621XnSUeYU+FnNTyAnEfZTUyanmCFzgA5o
- GZhAvWApUnIogj3AJT9y7ILP5FN2rvfXg6+6M+WQEpySF791J/5balQvkMVBm2bnudH9
- 1Agb7aprC1ZhWkT5fn4jZzXhiRwKD8cmEpSkgOKGWguPYq6P0rG5HiBOgosAfRdCPWQ+
- nE1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730383602; x=1730988402;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NfnBAMHxRdHwHD3vUVludur5p2ItyJIfYaCHMSZoWbI=;
- b=wvVu8/7sU4OWkTRMLNlXz9jjxI4ozORHZMMkaQsc3moljpLyBidBANnO3gfUtYRl9u
- AfdOmKtswkbNrAyco3ZGBkd2t0tuOKEZ8dHWxwmueWE3Jpq1DOc0WFsfbLtTrhIugXSS
- pMG2Foue1BzxyzD8/vtCBd1hHKbgTSJodz4j3BqGFE1fDPOulUvQLuiZB9LSc1rCPYTz
- KLsA/NppqCE1iH2exdodZLg6pIgdRaI5lznQ7mih+96xDpY0tIeGCqJ2wGk8vCMyNPeo
- HNBSr1FakvBFuKOu5ALVQ5u28KbzKEljD7614nA+eXM9BFdYr7exenHZ6VoluvjoeYmh
- JpAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXwUSQjGhc4zg0L0QnSxSB2/qmZM9hxmGvd5qzzwTRMxIB4yvZTEBC9TUFKVdCPVM5xXOlHFGhgrbqE@nongnu.org
-X-Gm-Message-State: AOJu0YxAND8rNrmRtAuA7q9btc1VbzjiEjRATIdguU2nPrHlaBEF/aqb
- pe0PcQh9EjoAPI+9wjd8fsSBMTl8as83Zb9gDqe988hLrOBnXSQ6sw7WkCM4zRU=
-X-Google-Smtp-Source: AGHT+IHlh0UtuPOE+u+4bJo+XiEIyLMxvvpTC8hDH/OTBiQOifFGNPAqJ52SDFhskNDwLdMykJ0Inw==
-X-Received: by 2002:a05:6000:400d:b0:37c:fdc9:fc17 with SMTP id
- ffacd0b85a97d-381c7a4cea7mr73338f8f.23.1730383602016; 
- Thu, 31 Oct 2024 07:06:42 -0700 (PDT)
-Received: from localhost (cst2-173-13.cust.vodafone.cz. [31.30.173.13])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c113dd95sm2206171f8f.83.2024.10.31.07.06.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 31 Oct 2024 07:06:41 -0700 (PDT)
-Date: Thu, 31 Oct 2024 15:06:40 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Subject: Re: [PATCH 0/4] target/riscv/kvm: add riscv-aia bool props
-Message-ID: <20241031-20473647edbfb74109eb3b95@orel>
-References: <20240924124407.766495-1-dbarboza@ventanamicro.com>
- <f6d26471-9137-498f-b295-2bd6fad7241f@ventanamicro.com>
- <CAKmqyKPLdt3KQqzGSMVov2557MOsEmzP=+g9iR-irw_4YK8-mQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1t6W3c-00056A-Ei
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 10:21:52 -0400
+Received: from mail-dm6nam11on20622.outbound.protection.outlook.com
+ ([2a01:111:f403:2415::622]
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1t6W3a-0004KW-5I
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 10:21:52 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=T8Yl20u3C+WEquJNF0AJ6C4Yq8cXW7LWkT1f7PzOxUeEXoAnTNf1wjwjLoIO2l5mTMZoBkUIyD3XKp79JVg/IybGEyGYqJRJlrz/nfNMLC41ssWWtjxJdM+YWh+LYMv+A/OTYyi1CtKK+bFWUrQgMPG9ocDW+R1StxjkV5R/xwGADA7M9zryF1mzB5EHTFVmPa1jqBMlAXJRgeApaIhNfd6dOKPV2qD4JWwVoh5zsXPRUGHNnNcIFsiO7Gz/2E2dzUyWA7EsL9jUxDLxLbOi5bjc/qNOxC1z6KpZWOzJlqggo6uQjW+PagQ6CwDkKvPjgXjp2POQ61sH9gWy+rqatA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gGhSr0nvSZfAFzp31z4M/BGASUC/6TslzQgHUJnCBbU=;
+ b=bEatIB129Hi+W4XvT1aBaUxnsNLoy/lfot8/8ewBYCdLbRIW7162EXbXrW5tmXV4RUP1/gzm+DJfFwcPQJqxENbIcn3m9fl6tl4fM4TSntx/abM3V7D62ZSXZo9dCXCLBSnIoLX9yMz9tQtKo3bIh6SeMowt8i12Kh3zdwnj4qgtsYC6rjg64lMr42SA5vK9ruQYgwsvPPRQIocwDkiFr+UiDxDygpqsoKG93zFJs3w3Wa/U41FWgV+sLs1VRvK/aUhQZPf60aefm4cfZNlAsfED7HIC0t7zaklhKDRnwJNGw6GVRL0B6jqAoazRNE5zQ0NYTBVNDqKDLuF4P4Te0g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gGhSr0nvSZfAFzp31z4M/BGASUC/6TslzQgHUJnCBbU=;
+ b=tQKSWyRPLeMwclI2CJ/3PREtyldseG0llXPl+h06T/e2rM+DJfMO8MKOdjRLsjXduCjZlfHKuSeTcikMkNdlzmHP9wpE6WLUFkK0vsQ7gUsfcGh8MbWB7+J27Bt+xZmrE9/MguvwibEDeu3jnOPpAT3DFs9sKy9Xa8TjSUgKrds3oEFU/00+nmEyRb4HFwR2qN9qjlUk7Iv5mIO7x9yUVx+GubnUOqy91LiV945IkS1sWlkggP8Klh2ijLVXj0SCHMkcr4DGpq71seV22G1bYpCiaKdbSBEhcyioTD7cFOmJpfJ2QcWjtMwhhFZ1ukp2AobJXMngFSpe/BqzOeZgsg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
+ by SJ1PR12MB6050.namprd12.prod.outlook.com (2603:10b6:a03:48b::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.20; Thu, 31 Oct
+ 2024 14:21:40 +0000
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::e2a0:b00b:806b:dc91%6]) with mapi id 15.20.8114.015; Thu, 31 Oct 2024
+ 14:21:40 +0000
+Message-ID: <1eac2eb5-c154-438c-91a3-fb7ac7e3baef@nvidia.com>
+Date: Thu, 31 Oct 2024 16:21:32 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] vfio/migration: Add
+ save_{iterate,complete_precopy}_started trace events
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+References: <cover.1730203967.git.maciej.szmigiero@oracle.com>
+ <68f51cf0eb3daf448ae80219dded4b10984e32db.1730203967.git.maciej.szmigiero@oracle.com>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <68f51cf0eb3daf448ae80219dded4b10984e32db.1730203967.git.maciej.szmigiero@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKPLdt3KQqzGSMVov2557MOsEmzP=+g9iR-irw_4YK8-mQ@mail.gmail.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ClientProxiedBy: FR4P281CA0252.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:f5::17) To DM6PR12MB5549.namprd12.prod.outlook.com
+ (2603:10b6:5:209::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|SJ1PR12MB6050:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0eb62916-f011-4fa7-16e0-08dcf9b755f3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?bDNkZ3ZFY09tYWRZRWY0WjlOMmlpVndEOVV3RTg0UkJjakdwQzhYSmJzUDRP?=
+ =?utf-8?B?STAvUlVET2hTMnJtNWtNcHFXUXlqYUdXTXFraWJncE1TR3F4Z1VuZUpxN3ho?=
+ =?utf-8?B?alprQjdjY1VITHJRMnB5UHRZbTc2TzFlUzJLSysrOFAvUHFTSFhaLzVjblNN?=
+ =?utf-8?B?dFB2ZmM1dWhwN1lFa3ZtUnZHM3ltUUREVzNRdCt2RkhYaUlmV0htUktCWVJB?=
+ =?utf-8?B?Skc2WnVwYUZKZi9JbWYwUGZDN3ZuZTg3NllLNGVRc0ZyUWNoTllqUkMrSzBB?=
+ =?utf-8?B?UDM4ZUZ0UEU0cnVVaWpVa2xjQXhHMGVrNXk4Qmpra2xsVEhXS2Jyb3JqRjVi?=
+ =?utf-8?B?TnFuRnNDTUdiVXo5NnF4ZHAzU1lwZnpqSlllYlNkZEpkYk9SbEdnTTcrYzhx?=
+ =?utf-8?B?aWtXd3FzdEZPV2Znc1h4bHFoeWdSYTB3cW5tNmkxT21JNWlKQWhlWS9xek5W?=
+ =?utf-8?B?OXlOQ3dqWmFzWGRjZ0xOUzFJdDVFcm80bVcyVldJQlk0MHd6TVd2Z3hOSGVk?=
+ =?utf-8?B?TWdJTU5CbUk4VGtKT1Zma2hFTWRIKzFwMEhablRKSkZsTjVndUwyVDlNT1ZL?=
+ =?utf-8?B?amcxMndaWHR0QlpkSkQyQ1hUdVFLL2hGTXVpQUhxbnpXY2RIdHdvMzJYNjBM?=
+ =?utf-8?B?WWlkVHJLQmdYWGxjZDJvZlpncUxkN2tsZWE5R0krOVVjWDhpU1N4cUJsSTFh?=
+ =?utf-8?B?SHYyZDdKd1BFZHBhbXNPbjBZWC9qanA2dXVqSEpqZzdoL0pzS0s3cytuakV4?=
+ =?utf-8?B?N0tpZkpKQVRndUY0NlB2enVZQmYwWE1CMi9CajZrK0JUdHBpTHhBc0svRURx?=
+ =?utf-8?B?WVVhRUtPT0FTaGU2N0tMc21FajFITGEvN2tCMEszcSs1QkYwZnFtNXZ6RmZ0?=
+ =?utf-8?B?WWtUbVl3dEU5OWM5OWFOaXEyczZiS2t1UHVoZENCMUJDRHIra3MvRGZtOTZo?=
+ =?utf-8?B?aVJEQi8rOVVxckNOaURJc2RvRWd0amM2OU8zWFJJcUJjYVlQNGhKL1ZFTTQv?=
+ =?utf-8?B?amFvUXlmS0NRR2pnNTlwZVJNOVhscnZMK20zWS94UVhaMUk1dFhHVTFCOTQ5?=
+ =?utf-8?B?WFdsN3pYeWhmRktaZ2U1M3l5ajNWMm1JdzI0djZtMnR0aUtQSkJTN0l5NzNR?=
+ =?utf-8?B?UlBxM3UzQml3RU0yR2VrK2E5RDB1ZDZTUFA2T1lydkhFZUxQWTNBWGxNZVI2?=
+ =?utf-8?B?a2ZCSHVPN2Jpend5ZUcwUVB3WjdkTW53TkpEeGlPNGZiaDkxS2FHSk9lckZw?=
+ =?utf-8?B?dU5VVDVqUlJXMStJdHJUUDFRV01aMFZzdFZJQzEvUDVHZjJZLzc0UFh6Q2l1?=
+ =?utf-8?B?eUoyN0dKRkkyZ2FlUWVMeExRS2dsckFQOFFOZ2FtT2sxeFR1aDM0Q0dZL0dY?=
+ =?utf-8?B?V1NRekw0eGNOR1hiSlFKS2x6UGxNMjR0MDhwZ0NPNU1CeGt2MFBKcWlOZ1d6?=
+ =?utf-8?B?Mjd2TnNYNUtJNTFVSGNUN3R4K3JZa1JFTU5iTzhxb05NTVNlc0h2Mk5RVUhO?=
+ =?utf-8?B?UDJlSEhtSGlOSHp4bWsycTczYmpDa080QUdyQkV6Rko5UUEvWkppWlpvaFVj?=
+ =?utf-8?B?Ry9NRnBuZmg5NzhaMjZhUk9lZkdMUHgzU1ZvUVRQOW1LRGt2UDFZRis5WlFC?=
+ =?utf-8?B?TFVHLzkxM3p1bGc2Tno3eXJhNUFnSmd5RkI0bHd1K1VUM20wYzZSZ09BOW9p?=
+ =?utf-8?B?dlJ1L2x3SU11UHBQSFFpREdsMlgxZWdnZWttcEdyV2JPWklkMTYrRlpQdkRW?=
+ =?utf-8?Q?NyitPjEuU+3ZNIVcqzLEeJQ/swsk6NEd5y77T+L?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZVdlQk9KMGRKMjlpVm0xYVAxM1J2VkhPRkpxdy9JVTlTR2w2RDQ1SFlkaWNZ?=
+ =?utf-8?B?YTdYNGI0TVQwdEd4ZS9tMktiSkdvaUhpUWVDbVN2UURJWThVU0MyKzloUElT?=
+ =?utf-8?B?N1hPNHJEaE5UZlFXYm0zN3MxSXFwQnhxVm9uNzZzOHdCcTE3NTNxMmt1Q0Z5?=
+ =?utf-8?B?TUIzUnBPNkUzZk5JbDIvVkpJVmtBOGpkZjB2Yk9SeDAzMFRRNHUyaDlsdDJm?=
+ =?utf-8?B?NHlEN2x6c3laSGw3K0hLZFczUVdQZmFNbUpDeGRaUmdJU1R5TEFneEZZMGZT?=
+ =?utf-8?B?N0pvakxtMlVxSkw5cWhMT1hyTlFzT1UvWWhvdzNiaWFhaHZtQTN5cndldE1O?=
+ =?utf-8?B?T3ZndGduS1VnU2xhQ2VRRGs2d1hkLy9wYzZKUzkrS2dlVGpXVEUzUkRBd3VD?=
+ =?utf-8?B?VmxaaEQ4MHMzQ2RLZk9FNGJPK202NHNRUUJ5S0REbk5WVmVqSVVML0UvN3o2?=
+ =?utf-8?B?MjBoUStPN1JORVVOQUlnN3AxWlpYRC9aazhaNklFRDJVQVNLaldiY2E1VHFl?=
+ =?utf-8?B?eFhPR2JPL1RTUHJsOTVKNG5TOTlJSU9jb0FSNzNLVm03STJjaVFKU2tHdUlF?=
+ =?utf-8?B?bGxvRWw4UEpsMzI5TTkyeTQ4eHh6RHVpQWE5ZkU3a2IzQUdkMVJMVjVsNm9Y?=
+ =?utf-8?B?WDQ1VS9jcjVWOWJtb3ZtTVNTVmg4cVFBaENmMXBzb3dZVjhTZW9POHAvbG5C?=
+ =?utf-8?B?UlNWYTlvSnBvYk5qTldwZ2JlR0xKVk9BVm5uaXpxME0zbXBYdG1KWXljbDlr?=
+ =?utf-8?B?aHZ6WktTa1YrRXJSWnJNV3NMbkgvVkQzU1FrM0dGT2VxRldlUHhSai93L0wv?=
+ =?utf-8?B?Z0xVUDdkbEptL2hZK0JVaUFFN3QyL24xNjlNcG1lKzV3NXg4NDFTQkthYWtp?=
+ =?utf-8?B?Q0RPSUxwSU02ZTY1djkwY0xKYkRkQmFGWE9aLytXUEdRbjBkdzArUTErU1Vn?=
+ =?utf-8?B?QzNFcVlUcHY5a2QwSlVmYUcyT1ZSby80WVROUjM3TEdBWnpwN0RvY3JKZzdY?=
+ =?utf-8?B?VjM1VmFTQTBMZ2Jia2JPREdoTHhpUVZUTlp2OEdhMGZuOFhzNzgyUzlBaUl6?=
+ =?utf-8?B?cnRuaUpsWmVwY21LV0NmR3FYQ0dnTVU2dkVlOVIvZy9tRnQrb3JxNlB5bXpl?=
+ =?utf-8?B?VDZYd2RLMjEzMVRMQ0Z6RTlsUTNvNEdGc2t4blZaMjlpejk5NUkyTWVWekRm?=
+ =?utf-8?B?bCtNYTVnMStxZ2h0dGp3YldpRUVxMWY5WGJSUkllZWhZK3JFLytmNk52SFNn?=
+ =?utf-8?B?ZW9tK3FvL2RNTWh3MFN0ZXZya0pneFZvejYvUmNtNG1MNUtiOUFrVjZmN3dX?=
+ =?utf-8?B?QlNsVXlwMmg1WkV5VlJXZXN5TE93bHY4d2lwWnZIQmtxaDhuZjJqV0F1bnBB?=
+ =?utf-8?B?eGFEUHZwR0NKZUtNSXhyOXFUVUgyVUU4TFFFVitPcTFHYi9XOHppV2VmRmh2?=
+ =?utf-8?B?WVdOZ2hpMTJwSWhFU0VYcy84Nkg4eUpzZGZFWWFqdmFGNW1GMWxKOEdXcnFa?=
+ =?utf-8?B?NTdiK2xTRUhiREpzeVUvdG1FM3NRaVVTQSs0YVJSSjNCK3FxUGlwZmF5cHhJ?=
+ =?utf-8?B?TStET1RBa0VkcTc5SXJlWGFOTXIxSklNcUNKc3FtaldoY0dSWXJTKytSUERM?=
+ =?utf-8?B?dnpMYitUUGIyTmlSMTRud0orK29hLyswNFZhang3Zmg3N3QzWmRkcTFqWWZm?=
+ =?utf-8?B?b0NPczREMVhCRVpQRnRJRm9GZjdWMncwOTFVV254OGhUQkQ3WEptdWRGT0NV?=
+ =?utf-8?B?U1FTai8wK2dCY3JuelBJR2JHV2F3cFdsTHVvTDJiQ21ZSW52N3BrL2ZVbGox?=
+ =?utf-8?B?T2l2WGpJcEFaR1Ruai9mK3lJWUtzNWZLbCtmL1lFSkNweG85UjJJVHZpdGgr?=
+ =?utf-8?B?K1RlWXptK3c3bEgvdFNTVGgydXhVeTJrZWxNczVZR0dGdW5KU2E5NzZmeU45?=
+ =?utf-8?B?OHBmV0NmdUttMHZkNHNaMXVCVXNuT2wxOG12cGxLUlRYMjhuR1VuVzB1d1U4?=
+ =?utf-8?B?eFFGZDF3UDVLSVp2OHNBMnZlMmxJREthdHAyVXRHSklpZVdSVTFucHBuWUJR?=
+ =?utf-8?B?bFFQRnRabWk3UlN1NThid3FTV01ERnFYd3FkZzN0NDFzOGY1YkJSSmxLRUVp?=
+ =?utf-8?Q?StgvOaPTuIVnM5E1FYZpxQpP7?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0eb62916-f011-4fa7-16e0-08dcf9b755f3
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2024 14:21:39.8694 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: DjkKJ0PBtZ0huEe/QkW4wLd52aLruKRRX62VBT10JxPJjMHP5tc2VxcSJ/R++OHtybuXw3TZ0Vuf8TTUUG0MUA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6050
+Received-SPF: softfail client-ip=2a01:111:f403:2415::622;
+ envelope-from=avihaih@nvidia.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,46 +181,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 30, 2024 at 11:44:19AM +1000, Alistair Francis wrote:
-> On Tue, Oct 29, 2024 at 4:01 AM Daniel Henrique Barboza
-> <dbarboza@ventanamicro.com> wrote:
-> >
-> > Hi,
-> >
-> > I had a change of heart w.r.t this work. I still believe that the boolean properties
-> > are better to deal with since we don't have to deal with string parsing, and that we
-> > should avoid creating new string props in the future.
-> >
-> > But as far as the user API goes it doesn't matter that much. Having to do
-> >
-> > -accel kvm,riscv-aia=emul
-> >
-> > or
-> >
-> > -accel kvm,riscv-aia-emul=on
-> >
-> > is basically the same thing. Deprecate properties always creates some form of hassle
-> > for existing scripts and whatnot and we should avoid it.
-> >
-> > String properties aren't that great to report to APIs though, so what we can do is to
-> > create internal bools to track the string value and then use it for QMP.
-> >
-> >
-> > Long story short, I'll re-send this series with only patches 1 and 2. Thanks,
-> 
-> Ah, I should have read this before responding to your other patch.
-> 
-> Sounds good to me. Although I don't have the same dislike of string
-> properties as you, but I guess I'm also not using APIs :)
+Hi Maciej,
 
-libvirt and other upper layers which use qmp would need to learn about
-each property's possible values, possibly requiring QEMU to provide
-different APIs for each different property type. With only boolean
-properties, all an object's properties can be queried and modified in the
-same way, which also allows immediately knowing how to enable and disable
-new properties which QEMU adds without the need to update the upper layers
-at all.
+On 29/10/2024 16:58, Maciej S. Szmigiero wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>
+> This way both the start and end points of migrating a particular VFIO
+> device are known.
+>
+> Add also a vfio_save_iterate_empty_hit trace event so it is known when
+> there's no more data to send for that device.
+>
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> ---
+>   hw/vfio/migration.c           | 13 +++++++++++++
+>   hw/vfio/trace-events          |  3 +++
+>   include/hw/vfio/vfio-common.h |  3 +++
+>   3 files changed, 19 insertions(+)
+>
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 992dc3b10257..1b1ddf527d69 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -472,6 +472,9 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>           return -ENOMEM;
+>       }
+>
+> +    migration->save_iterate_started = false;
+> +    migration->save_iterate_empty_hit = false;
+> +
+>       if (vfio_precopy_supported(vbasedev)) {
+>           switch (migration->device_state) {
+>           case VFIO_DEVICE_STATE_RUNNING:
+> @@ -602,9 +605,17 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
+>       VFIOMigration *migration = vbasedev->migration;
+>       ssize_t data_size;
+>
+> +    if (!migration->save_iterate_started) {
+> +        trace_vfio_save_iterate_started(vbasedev->name);
+> +        migration->save_iterate_started = true;
+> +    }
+> +
+>       data_size = vfio_save_block(f, migration);
+>       if (data_size < 0) {
+>           return data_size;
+> +    } else if (data_size == 0 && !migration->save_iterate_empty_hit) {
+> +        trace_vfio_save_iterate_empty_hit(vbasedev->name);
+> +        migration->save_iterate_empty_hit = true;
+>       }
 
-Thanks,
-drew
+Can we instead use trace_vfio_save_iterate to understand if the device 
+reached 0?
+
+In any case, I think the above could fit better in vfio_save_block(), 
+where ENOMSG indicates that the device has no more data to send during 
+pre-copy phase:
+
+...
+if (data_size < 0) {
+     /*
+      * Pre-copy emptied all the device state for now. For more information,
+      * please refer to the Linux kernel VFIO uAPI.
+      */
+     if (errno == ENOMSG) {
+trace_vfio_save_iterate_empty_hit(vbasedev->name)              
+<--------------- move it here
+         return 0;
+     }
+
+     return -errno;
+}
+...
+
+If you move the trace there, maybe renaming it to 
+trace_vfio_precopy_empty_hit() will be more accurate?
+And trying to avoid adding the extra 
+VFIOMigration->save_iterate_empty_hit flag, can we simply trace it every 
+time?
+
+>
+>       vfio_update_estimated_pending_data(migration, data_size);
+> @@ -630,6 +641,8 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+>       int ret;
+>       Error *local_err = NULL;
+>
+> +    trace_vfio_save_complete_precopy_started(vbasedev->name);
+
+I assume this trace is used to measure how long it takes for 
+vfio_save_complete_precopy() to run? If so, can we use 
+trace_vmstate_downtime_save to achieve the same goal?
+
+Thanks.
+
+> +
+>       /* We reach here with device state STOP or STOP_COPY only */
+>       ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
+>                                      VFIO_DEVICE_STATE_STOP, &local_err);
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index 29789e8d276d..e58deab232ed 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -159,8 +159,11 @@ vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
+>   vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
+>   vfio_save_cleanup(const char *name) " (%s)"
+>   vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
+> +vfio_save_complete_precopy_started(const char *name) " (%s)"
+>   vfio_save_device_config_state(const char *name) " (%s)"
+>   vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+> +vfio_save_iterate_empty_hit(const char *name) " (%s)"
+> +vfio_save_iterate_started(const char *name) " (%s)"
+>   vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
+>   vfio_state_pending_estimate(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+>   vfio_state_pending_exact(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index fed499b199f0..997ee5af2d5b 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -73,6 +73,9 @@ typedef struct VFIOMigration {
+>       uint64_t precopy_init_size;
+>       uint64_t precopy_dirty_size;
+>       bool initial_data_sent;
+> +
+> +    bool save_iterate_started;
+> +    bool save_iterate_empty_hit;
+>   } VFIOMigration;
+>
+>   struct VFIOGroup;
 
