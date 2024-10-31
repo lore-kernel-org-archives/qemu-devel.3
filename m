@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E23A1E68960
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 09:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34300E68960
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 09:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6R0h-0000ic-PG; Thu, 31 Oct 2024 04:58:31 -0400
+	id 1t6R1G-0000sw-H4; Thu, 31 Oct 2024 04:59:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
- id 1t6R0g-0000iI-NL
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 04:58:30 -0400
+ id 1t6R18-0000m7-M4
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 04:58:59 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
- id 1t6R0f-0003Df-7g
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 04:58:30 -0400
+ id 1t6R16-0003GX-Rp
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 04:58:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730365109; x=1761901109;
+ t=1730365137; x=1761901137;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=9VjjJYDFcgFlWNJ1FOvFU9s2rvOXHSEg5LYj3IBDpC4=;
- b=emWixkBKKuSuQwRXqK1lyxwbnTBoOxgEOFVarzwjbZj/NbBaI5KyQXgn
- MdHotUPlF2ZeIXTSp0CEn2zcZxaKtDKaj9pXpGIoqxRNyhc5uU2Bn95wl
- EAWy1qGnTfL+JUNR8aUFjU7XtzH2QxgE0GYg3E0sBkcs+BAMZazqh94pY
- 6h+jIoV8F2FODuFr9QXRnGr+dsZDRHKKiX0KvkLU4f7S5j0NKj7u39MvY
- OFmnH39KQ3fwSRIOXpmxRpOEvPLWIHhQI7FtIcTBskVUoYzHfGKHsF7pm
- hipJqDbxzBqWF0AV4z9r15osq00XeNHT69TFNsMMjTBNCCsjRQ7uPV+uG w==;
-X-CSE-ConnectionGUID: YwknYi9UQmCbi1vRkpSl5Q==
-X-CSE-MsgGUID: jR/35ci4Qs+JwO5s57IUqQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11241"; a="55492678"
-X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="55492678"
+ bh=O+ps4gCQE+MIUJn7vxlxvfPld8Y2qokFJ/P0+6xKo2k=;
+ b=WLGxoXFienHry37dADWmZA0tz86+QibccR87D3R2qeuA/lmBqm8yWH3e
+ U6bseQrRGn9HeKNYUdqeBtW+SFIAbFaF9if6FM4ZoCb/+KL8o1yI8SRpJ
+ 0xFcA7CS1HXDmHHzYdyWQtXCSdc99ueo3pkhRr0/P6ndTtBu6m8XP+2bN
+ 5I5sG8PGQ/8LSWZryzGH/U4csYO3fb5rykcN/+8+Ps1L1Hu+rkTtpbGXm
+ CF3V+UMR0SOkzhPJ6ZsOJ7HRj8Zl3iIVeHleBPKyPSMuVAeH/mLaJXuBa
+ +esjjUGwo5DROLzXcvO71BkDABlQacCh47F93sxIaiwU8eNWl1CR87JTj Q==;
+X-CSE-ConnectionGUID: HM//nMkZQ/KZlVcbZ4YcVQ==
+X-CSE-MsgGUID: 5ec3n6D0SSy+A1nU0I3mBQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11241"; a="55492759"
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="55492759"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Oct 2024 01:58:27 -0700
-X-CSE-ConnectionGUID: egAIj5/iTq6fwvHykiUjiA==
-X-CSE-MsgGUID: Q9e0wZbwRwG9rLtFGutQNQ==
+ 31 Oct 2024 01:58:36 -0700
+X-CSE-ConnectionGUID: rcJGz0P2RVyuMBIxEhv2fw==
+X-CSE-MsgGUID: 9MkbZiopTOC8FY7CLgf8Hw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="82489510"
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="82489564"
 Received: from st-server.bj.intel.com ([10.240.193.102])
- by orviesa010.jf.intel.com with ESMTP; 31 Oct 2024 01:58:25 -0700
+ by orviesa010.jf.intel.com with ESMTP; 31 Oct 2024 01:58:34 -0700
 From: Tao Su <tao1.su@linux.intel.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mtosatti@redhat.com, xiaoyao.li@intel.com,
  zhao1.liu@intel.com, xuelian.guo@intel.com, tao1.su@linux.intel.com
-Subject: [PATCH v3 3/8] target/i386: return bool from x86_cpu_filter_features
-Date: Thu, 31 Oct 2024 16:52:28 +0800
-Message-Id: <20241031085233.425388-4-tao1.su@linux.intel.com>
+Subject: [PATCH v3 7/8] target/i386: Add AVX512 state when AVX10 is supported
+Date: Thu, 31 Oct 2024 16:52:32 +0800
+Message-Id: <20241031085233.425388-8-tao1.su@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241031085233.425388-1-tao1.su@linux.intel.com>
 References: <20241031085233.425388-1-tao1.su@linux.intel.com>
@@ -81,72 +81,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+AVX10 state enumeration in CPUID leaf D and enabling in XCR0 register
+are identical to AVX512 state regardless of the supported vector lengths.
 
-Prepare for filtering non-boolean features such as AVX10 version.
+Given that some E-cores will support AVX10 but not support AVX512, add
+AVX512 state components to guest when AVX10 is enabled.
+
+Based on a patch by Tao Su <tao1.su@linux.intel.com>
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Tested-by: Xuelian Guo <xuelian.guo@intel.com>
 Signed-off-by: Tao Su <tao1.su@linux.intel.com>
 ---
- target/i386/cpu.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ target/i386/cpu.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index f8b5c28caf..8fbbf1fd9e 100644
+index d8d86edd67..cc7e4ce665 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -5818,7 +5818,7 @@ static void x86_cpu_parse_featurestr(const char *typename, char *features,
+@@ -7123,7 +7123,15 @@ static bool cpuid_has_xsave_feature(CPUX86State *env, const ExtSaveArea *esa)
+         return false;
      }
- }
  
--static void x86_cpu_filter_features(X86CPU *cpu, bool verbose);
-+static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose);
- 
- /* Build a list with the name of all features on a feature word array */
- static void x86_cpu_list_feature_names(FeatureWordArray features,
-@@ -7523,9 +7523,9 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-  * Finishes initialization of CPUID data, filters CPU feature
-  * words based on host availability of each feature.
-  *
-- * Returns: 0 if all flags are supported by the host, non-zero otherwise.
-+ * Returns: true if any flag is not supported by the host, false otherwise.
-  */
--static void x86_cpu_filter_features(X86CPU *cpu, bool verbose)
-+static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
- {
-     CPUX86State *env = &cpu->env;
-     FeatureWord w;
-@@ -7577,6 +7577,8 @@ static void x86_cpu_filter_features(X86CPU *cpu, bool verbose)
-             mark_unavailable_features(cpu, FEAT_7_0_EBX, CPUID_7_0_EBX_INTEL_PT, prefix);
-         }
-     }
+-    return (env->features[esa->feature] & esa->bits);
++    if (env->features[esa->feature] & esa->bits) {
++        return true;
++    }
++    if (esa->feature == FEAT_7_0_EBX && esa->bits == CPUID_7_0_EBX_AVX512F
++        && (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10)) {
++        return true;
++    }
 +
-+    return x86_cpu_have_filtered_features(cpu);
++    return false;
  }
  
- static void x86_cpu_hyperv_realize(X86CPU *cpu)
-@@ -7674,14 +7676,14 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-         }
-     }
- 
--    x86_cpu_filter_features(cpu, cpu->check_cpuid || cpu->enforce_cpuid);
--
--    if (cpu->enforce_cpuid && x86_cpu_have_filtered_features(cpu)) {
--        error_setg(&local_err,
--                   accel_uses_host_cpuid() ?
-+    if (x86_cpu_filter_features(cpu, cpu->check_cpuid || cpu->enforce_cpuid)) {
-+        if (cpu->enforce_cpuid) {
-+            error_setg(&local_err,
-+                       accel_uses_host_cpuid() ?
-                        "Host doesn't support requested features" :
-                        "TCG doesn't support requested features");
--        goto out;
-+            goto out;
-+        }
-     }
- 
-     /* On AMD CPUs, some CPUID[8000_0001].EDX bits must match the bits on
+ static void x86_cpu_reset_hold(Object *obj, ResetType type)
 -- 
 2.34.1
 
