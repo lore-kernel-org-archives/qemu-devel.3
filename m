@@ -4,71 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A371ED74959
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 13:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB427D74959
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 13:32:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6VHn-0004U8-A0; Thu, 31 Oct 2024 09:32:27 -0400
+	id 1t6VI0-0004Uw-Ox; Thu, 31 Oct 2024 09:32:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t6VHk-0004Ti-Rp
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 09:32:25 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t6VHj-0007QX-3P
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 09:32:24 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2fb3da341c9so8811451fa.2
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 06:32:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730381541; x=1730986341; darn=nongnu.org;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=eJGafJg+d1IxoFjpERz9al47u602kMESqI2izULfSgY=;
- b=Vv/C+rua7N13NatL7tnge+r+qu/JgH2U/OALkvKbHaonlJ/xS8khZr2WZZ7LUBMCZ/
- yEvaokqPa7Zk8VXJ0TXCuE39BIy7BTCuNCtk7jacKGSy5HIQkhr/1ge0p7wkEhmzUtWg
- OYgPBrf7VsklUCccY7DMibYi8zKfpNbtsMJXB6hue77EYgYIS1E7p4RKa1k96y9nyAMJ
- EOxl0uHNgWFPO/QbqRQ3DQ43sSYiSw7r98TFq1aQpF7JE8KqiQSJCp5Xq4x2/w5TvUJ6
- rbV3+NuPXFyNPAk59QRP4hCiHLD6DeLJeeC9mfJ13H8Gq9MAWycX7pOSE3aSU/FffaVD
- okJQ==
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1t6VHv-0004UX-V4
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 09:32:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1t6VHt-0007RY-7k
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 09:32:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730381549;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Txppf2VGNEnsd3vI71CLXhHDR3bMIO9vF9lACX7b3wo=;
+ b=Mi/M0x5Wv6gG/1sjhoLhpaoAbr0ZohcORQJbhP62VRH+WJAjAIH4duHPZqYTuDMHORURz6
+ S9Ef65LS4uv5zP+iPzLkUaDJBhifTNb+WfviPz26kX0HWQTXgbOcLtmGHlfIbUOszhpdXP
+ IwBiljayRTL8kqD7YlyXvm+GKIvAy+E=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-124-lC4pc03zN_qnNLSNVT57-Q-1; Thu, 31 Oct 2024 09:32:24 -0400
+X-MC-Unique: lC4pc03zN_qnNLSNVT57-Q-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6cbe7713563so12771386d6.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 06:32:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730381541; x=1730986341;
- h=content-transfer-encoding:to:subject:message-id:date:from
+ d=1e100.net; s=20230601; t=1730381543; x=1730986343;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=eJGafJg+d1IxoFjpERz9al47u602kMESqI2izULfSgY=;
- b=DAM0eWzRta9b+jtvlH+8IWVITdqC+WkCBGgtVj2xkGx2j2ve07uV7NXSfp0LsS8ss4
- ESw2Wx8pU4VhWf1zTQwarZfdjQFg2NGFH/qv6+qDCdrR9TaJVwTWvdK0iFgxkERyMf5H
- Hb/e7u/Bfj/axfiNlwkog04/p4IhwFsMD50nAooucIiiSbd7/uO/uIdNH378/SerKrEs
- +3cHmIGcH/I5w8fNNmenM9fwz2ibQJYz/k6V+x3b+NXj2Z52UvV3su3mdYSxPKAO5OJ1
- uK74m3v3674N29wXFeabmYIh5xPRnvf0URFRIW4dHsLrFm7V9453N17ECEzH9LDr0B+0
- IO8w==
-X-Gm-Message-State: AOJu0Yx8qd3uwMygN59wWwvmpA5tmauGiiLzGuGqmNEL9gUCHWhQGs2j
- 4NEJrdKtNwPaIT4jqBOdoVeyt4nYze2krjZfzFMh89y127izz0s4si968YKsWMLlPC0VuYrLSJX
- CxnXlDGsE+QDx0U5YqT1WO0Q7HQe3/DAcItwXU4AbTfqHUonV
-X-Google-Smtp-Source: AGHT+IGuQ57xjDviIvacKolPis8qAc3tFuOsjTIq3Gi0saAtEdf4pjT91WZaAkMld9s6QeZzGSiLOL+/ns50DO8eu8Y=
-X-Received: by 2002:a05:651c:2123:b0:2fa:d31a:1b77 with SMTP id
- 38308e7fff4ca-2fcbdf62829mr96070431fa.9.1730381540588; Thu, 31 Oct 2024
- 06:32:20 -0700 (PDT)
+ bh=Txppf2VGNEnsd3vI71CLXhHDR3bMIO9vF9lACX7b3wo=;
+ b=GlGWrLLDCZIhv+tJV99AtW1rFJ8wcyV9npo8aJbySQDju3YQt68creNEH2DnZCQTAX
+ KJirF5Xws8LYw3Aouf2T8+rMuMQ5a70AXA4IzdkJErNh9y9ExyyyNE+pHmDC720N0VTD
+ UUZahisLcvGKbN080ucgzyEPiA/Xbrg/50bp3Mz9HAhFU7gc0geIqeAlj6ebVBhtro+J
+ D8yxtWMYjTN0rTvPWksx09YFi44xKxs30xyoem6HM7U3ZqPfg5reoocVY60TKGlZKMUJ
+ Scyi19HC6bQaXSwWAx2O0w+nxT6JsgynEZp7ov/5XR/G1IA+Zm+aGDZkSoWesld0xG6g
+ NB0g==
+X-Gm-Message-State: AOJu0YyPQBhBu1gztmphGDqSXxJCaDDyj9eH1+DiXQ9EtgUBEvv0RE+M
+ d7097YKXL6MqDk6hgm3Dj85pNInJ2no9a+vLmiCT87j1siJvTidgAIPhDMkbVpcgIT9KP/QMNpC
+ P3VMH7x3ddrZtVgKmwuIIUoVvqeCjvsOKPBXkUaimorAxt5/u4vmWpJ1bUD4k2aJQVYcMxhU9N+
+ 4OhSa0JvP1M3YzZ8YlAc9POlCBbc8=
+X-Received: by 2002:a05:6214:398c:b0:6cb:ef7e:9bc4 with SMTP id
+ 6a1803df08f44-6d185832a61mr264657306d6.34.1730381543652; 
+ Thu, 31 Oct 2024 06:32:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFMAZBFYKY/C0cEfwdZIxz40YmAND2bclArfc5NZ63VbWpyJ7NJIZZh6Mx/RLPhczGNg+eG1NPHpF5WRVVLz70=
+X-Received: by 2002:a05:6214:398c:b0:6cb:ef7e:9bc4 with SMTP id
+ 6a1803df08f44-6d185832a61mr264657026d6.34.1730381543378; Thu, 31 Oct 2024
+ 06:32:23 -0700 (PDT)
 MIME-Version: 1.0
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 31 Oct 2024 13:32:09 +0000
-Message-ID: <CAFEAcA8pqjY-VKXPOe9W7J6upVhMeX8jJ=9Gmb8e64EtqHMQ_g@mail.gmail.com>
-Subject: QEMU Summit Minutes 2024
-To: QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
+ <20241031040426.772604-6-pierrick.bouvier@linaro.org>
+In-Reply-To: <20241031040426.772604-6-pierrick.bouvier@linaro.org>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Thu, 31 Oct 2024 15:32:12 +0200
+Message-ID: <CAPMcbCqhhHp0swCu=eQhmBtq1osssnAbShMNCRaGKL0V+1Na9w@mail.gmail.com>
+Subject: Re: [PATCH 05/12] qga: fix -Wsometimes-uninitialized windows warning
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, Alexandre Iooss <erdnaxe@crans.org>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>
+Content-Type: multipart/alternative; boundary="00000000000038274a0625c5d97d"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,98 +106,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU Summit Minutes 2024
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+--00000000000038274a0625c5d97d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-As usual, we held a QEMU Summit meeting at KVM Forum.  This is an
-invite-only meeting for the most active maintainers and submaintainers
-in the project, and we discuss various project-wide issues, usually
-process stuff. We then post the minutes of the meeting to the list as
-a jumping off point for wider discussion and for those who weren't
-able to attend.
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 
-Attendees
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
+On Thu, Oct 31, 2024 at 6:05=E2=80=AFAM Pierrick Bouvier <
+pierrick.bouvier@linaro.org> wrote:
 
-Dan Berrang=C3=A9
-C=C3=A9dric Le Goater
-Kevin Wolf
-Michael S. Tsirkin
-Stefan Hajnoczi
-Philippe Mathieu-Daud=C3=A9
-Markus Armbruster
-Thomas Huth
-Peter Maydell
-Paolo Bonzini
-Alex Graf
-Alex Benn=C3=A9e
-Richard Henderson
+> Reported by clang, but not gcc.
+>
+> [5123/5678] Compiling C object qga/qemu-ga.exe.p/commands-windows-ssh.c.o=
+bj
+> FAILED: qga/qemu-ga.exe.p/commands-windows-ssh.c.obj
+> "cc" "-Iqga/qemu-ga.exe.p" "-Iqga" "-I../qga" "-I." "-Iqapi" "-Itrace"
+> "-Iui" "-Iui/shader" "-IC:/msys64/clangarm64/include/glib-2.0"
+> "-IC:/msys64/clangarm64/lib/glib-2.0/include" "-fdiagnostics-color=3Dauto=
+"
+> "-Wall" "-Winvalid-pch" "-Werror" "-std=3Dgnu11" "-O2" "-g"
+> "-fstack-protector-strong" "-Wempty-body" "-Wendif-labels"
+> "-Wexpansion-to-defined" "-Wformat-security" "-Wformat-y2k"
+> "-Wignored-qualifiers" "-Winit-self" "-Wmissing-format-attribute"
+> "-Wmissing-prototypes" "-Wnested-externs" "-Wold-style-definition"
+> "-Wredundant-decls" "-Wstrict-prototypes" "-Wtype-limits" "-Wundef" "-Wvl=
+a"
+> "-Wwrite-strings" "-Wno-gnu-variable-sized-type-not-at-end"
+> "-Wno-initializer-overrides" "-Wno-missing-include-dirs" "-Wno-psabi"
+> "-Wno-shift-negative-value" "-Wno-string-plus-int"
+> "-Wno-tautological-type-limit-compare" "-Wno-typedef-redefinition"
+> "-Wthread-safety" "-iquote" "." "-iquote" "C:/w/qemu" "-iquote"
+> "C:/w/qemu/include" "-iquote" "C:/w/qemu/host/include/aarch64" "-iquote"
+> "C:/w/qemu/host/include/generic" "-iquote" "C:/w/qemu/tcg/aarch64"
+> "-D_GNU_SOURCE" "-D_FILE_OFFSET_BITS=3D64" "-D_LARGEFILE_SOURCE"
+> "-fno-strict-aliasing" "-fno-common" "-fwrapv" "-fno-pie"
+> "-ftrivial-auto-var-init=3Dzero" "-fzero-call-used-regs=3Dused-gpr" -MD -=
+MQ
+> qga/qemu-ga.exe.p/commands-windows-ssh.c.obj -MF
+> "qga/qemu-ga.exe.p/commands-windows-ssh.c.obj.d" -o
+> qga/qemu-ga.exe.p/commands-windows-ssh.c.obj "-c"
+> ../qga/commands-windows-ssh.c
+> ../qga/commands-windows-ssh.c:383:9: error: variable 'userPSID' is used
+> uninitialized whenever 'if' condition is true
+> [-Werror,-Wsometimes-uninitialized]
+>   383 |     if (!create_acl(userInfo, &pACL, errp)) {
+>       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> ../qga/commands-windows-ssh.c:415:15: note: uninitialized use occurs here
+>   415 |     LocalFree(userPSID);
+>       |               ^~~~~~~~
+> ../qga/commands-windows-ssh.c:383:5: note: remove the 'if' if its
+> condition is always false
+>   383 |     if (!create_acl(userInfo, &pACL, errp)) {
+>       |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   384 |         goto error;
+>       |         ~~~~~~~~~~~
+>   385 |     }
+>       |     ~
+> ../qga/commands-windows-ssh.c:380:18: note: initialize the variable
+> 'userPSID' to silence this warning
+>   380 |     PSID userPSID;
+>       |                  ^
+>       |                   =3D NULL
+> 1 error generated.
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  qga/commands-windows-ssh.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/qga/commands-windows-ssh.c b/qga/commands-windows-ssh.c
+> index 6a642e3ba81..df45c17b757 100644
+> --- a/qga/commands-windows-ssh.c
+> +++ b/qga/commands-windows-ssh.c
+> @@ -377,7 +377,7 @@ error:
+>  static bool set_file_permissions(PWindowsUserInfo userInfo, Error **errp=
+)
+>  {
+>      PACL pACL =3D NULL;
+> -    PSID userPSID;
+> +    PSID userPSID =3D NULL;
+>
+>      /* Creates the access control structure */
+>      if (!create_acl(userInfo, &pACL, errp)) {
+> --
+> 2.39.5
+>
+>
 
-Infrastructure and Funding
---------------------------
+--00000000000038274a0625c5d97d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Up until now we have been running our CI and infrastructure based on
-donations of services/credits from various hosting providers (first
-Rackspace, then Azure, and now DigitalOcean).  But because each of
-these infrastructure sponsors has their own differing idea of what
-infra to offer OSS projects for free, we end up with awkward
-migrations of our systems each time we switch to a different infra
-sponsor.
+<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
+tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><di=
+v class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 3=
+1, 2024 at 6:05=E2=80=AFAM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.=
+bouvier@linaro.org">pierrick.bouvier@linaro.org</a>&gt; wrote:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex">Reported by clang, but not g=
+cc.<br>
+<br>
+[5123/5678] Compiling C object qga/qemu-ga.exe.p/commands-windows-ssh.c.obj=
+<br>
+FAILED: qga/qemu-ga.exe.p/commands-windows-ssh.c.obj<br>
+&quot;cc&quot; &quot;-Iqga/qemu-ga.exe.p&quot; &quot;-Iqga&quot; &quot;-I..=
+/qga&quot; &quot;-I.&quot; &quot;-Iqapi&quot; &quot;-Itrace&quot; &quot;-Iu=
+i&quot; &quot;-Iui/shader&quot; &quot;-IC:/msys64/clangarm64/include/glib-2=
+.0&quot; &quot;-IC:/msys64/clangarm64/lib/glib-2.0/include&quot; &quot;-fdi=
+agnostics-color=3Dauto&quot; &quot;-Wall&quot; &quot;-Winvalid-pch&quot; &q=
+uot;-Werror&quot; &quot;-std=3Dgnu11&quot; &quot;-O2&quot; &quot;-g&quot; &=
+quot;-fstack-protector-strong&quot; &quot;-Wempty-body&quot; &quot;-Wendif-=
+labels&quot; &quot;-Wexpansion-to-defined&quot; &quot;-Wformat-security&quo=
+t; &quot;-Wformat-y2k&quot; &quot;-Wignored-qualifiers&quot; &quot;-Winit-s=
+elf&quot; &quot;-Wmissing-format-attribute&quot; &quot;-Wmissing-prototypes=
+&quot; &quot;-Wnested-externs&quot; &quot;-Wold-style-definition&quot; &quo=
+t;-Wredundant-decls&quot; &quot;-Wstrict-prototypes&quot; &quot;-Wtype-limi=
+ts&quot; &quot;-Wundef&quot; &quot;-Wvla&quot; &quot;-Wwrite-strings&quot; =
+&quot;-Wno-gnu-variable-sized-type-not-at-end&quot; &quot;-Wno-initializer-=
+overrides&quot; &quot;-Wno-missing-include-dirs&quot; &quot;-Wno-psabi&quot=
+; &quot;-Wno-shift-negative-value&quot; &quot;-Wno-string-plus-int&quot; &q=
+uot;-Wno-tautological-type-limit-compare&quot; &quot;-Wno-typedef-redefinit=
+ion&quot; &quot;-Wthread-safety&quot; &quot;-iquote&quot; &quot;.&quot; &qu=
+ot;-iquote&quot; &quot;C:/w/qemu&quot; &quot;-iquote&quot; &quot;C:/w/qemu/=
+include&quot; &quot;-iquote&quot; &quot;C:/w/qemu/host/include/aarch64&quot=
+; &quot;-iquote&quot; &quot;C:/w/qemu/host/include/generic&quot; &quot;-iqu=
+ote&quot; &quot;C:/w/qemu/tcg/aarch64&quot; &quot;-D_GNU_SOURCE&quot; &quot=
+;-D_FILE_OFFSET_BITS=3D64&quot; &quot;-D_LARGEFILE_SOURCE&quot; &quot;-fno-=
+strict-aliasing&quot; &quot;-fno-common&quot; &quot;-fwrapv&quot; &quot;-fn=
+o-pie&quot; &quot;-ftrivial-auto-var-init=3Dzero&quot; &quot;-fzero-call-us=
+ed-regs=3Dused-gpr&quot; -MD -MQ qga/qemu-ga.exe.p/commands-windows-ssh.c.o=
+bj -MF &quot;qga/qemu-ga.exe.p/commands-windows-ssh.c.obj.d&quot; -o qga/qe=
+mu-ga.exe.p/commands-windows-ssh.c.obj &quot;-c&quot; ../qga/commands-windo=
+ws-ssh.c<br>
+../qga/commands-windows-ssh.c:383:9: error: variable &#39;userPSID&#39; is =
+used uninitialized whenever &#39;if&#39; condition is true [-Werror,-Wsomet=
+imes-uninitialized]<br>
+=C2=A0 383 |=C2=A0 =C2=A0 =C2=A0if (!create_acl(userInfo, &amp;pACL, errp))=
+ {<br>
+=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~~~~~<br>
+../qga/commands-windows-ssh.c:415:15: note: uninitialized use occurs here<b=
+r>
+=C2=A0 415 |=C2=A0 =C2=A0 =C2=A0LocalFree(userPSID);<br>
+=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0^~~~~~~~<br>
+../qga/commands-windows-ssh.c:383:5: note: remove the &#39;if&#39; if its c=
+ondition is always false<br>
+=C2=A0 383 |=C2=A0 =C2=A0 =C2=A0if (!create_acl(userInfo, &amp;pACL, errp))=
+ {<br>
+=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~<br>
+=C2=A0 384 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto error;<br>
+=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0~~~~~~~~~~~<br>
+=C2=A0 385 |=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0~<br>
+../qga/commands-windows-ssh.c:380:18: note: initialize the variable &#39;us=
+erPSID&#39; to silence this warning<br>
+=C2=A0 380 |=C2=A0 =C2=A0 =C2=A0PSID userPSID;<br>
+=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 ^<br>
+=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0=3D NULL<br>
+1 error generated.<br>
+<br>
+Signed-off-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@lina=
+ro.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0qga/commands-windows-ssh.c | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/qga/commands-windows-ssh.c b/qga/commands-windows-ssh.c<br>
+index 6a642e3ba81..df45c17b757 100644<br>
+--- a/qga/commands-windows-ssh.c<br>
++++ b/qga/commands-windows-ssh.c<br>
+@@ -377,7 +377,7 @@ error:<br>
+=C2=A0static bool set_file_permissions(PWindowsUserInfo userInfo, Error **e=
+rrp)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0PACL pACL =3D NULL;<br>
+-=C2=A0 =C2=A0 PSID userPSID;<br>
++=C2=A0 =C2=A0 PSID userPSID =3D NULL;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0/* Creates the access control structure */<br>
+=C2=A0 =C2=A0 =C2=A0if (!create_acl(userInfo, &amp;pACL, errp)) {<br>
+-- <br>
+2.39.5<br>
+<br>
+</blockquote></div>
 
-Paolo proposed, going forward, to instead seek monetary sponsorships,
-potentially multi-year, that give us a recurring funding stream long
-term.  We can then use this to fund CI and similar requirements.
+--00000000000038274a0625c5d97d--
 
-The KVM Forum conference itself made a small profit; we plan to keep
-this separate to help with the financing of the conference in future
-years.
-
-Link GitLab handles in MAINTAINERS or have a .handlemap a la .mailmap
----------------------------------------------------------------------
-
-Philippe Mathieu-Daud=C3=A9 pointed out that it's awkward to find a
-maintainer's gitlab handle if you want to cc them on a bug report in
-GitLab.  We agreed that it would be good to record this in
-MAINTAINERS or something similar.  Philippe will post a proposal to
-the list at some point.
-
-Enforce SPDX license tag in new contributions
----------------------------------------------
-
-We currently have SPDX tags in some files, but don't mandate them.
-The suggestion here was to make them mandatory in new files, so we
-can automatically catch accidental license problems like "user refers
-to a non-existent license or a license that's probably not what they
-meant like LGPLv2" or "user forgets to say 'or later' for GPL code"
-or "user forgets to put in license comment at all" or "user uses a
-license that is GPL-compatible but which we don't use at all at the
-moment, with no strong reason why they couldn't use some license we
-do already use".  These are all very easy to clear up if we catch
-them before the code gets upstream and potentially painful to deal
-with after the fact.
-
-There were no objections, so Dan Berrang=C3=A9 has posted a checkpatch
-update that enforces the SPDX rule.
-
-Code-of-Conduct Committee
--------------------------
-
-Though we decided last year that there should be a separate set of
-persons taking care of Code-of-Conduct violation reports, there
-hasn't been much progress on this topic during the past year.  Thomas
-Huth has now volunteered to have a try to assemble such a team by
-doing a request on the qemu-devel mailing list.
-
-Rust
-----
-
-We had some discussion about the project maintenance aspects of
-adding Rust to QEMU.  Alex has already sent out a "Rust BoF and
-maintainer minutes and planning the roadmap to Rust" thread last
-month which covers this discussion and the BoF; I won't summarise
-here so as to not bifurcate the discussion.
-
-
-thanks
--- PMM
 
