@@ -4,133 +4,211 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B4ACE68944
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 08:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD7D5E6895F
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 08:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6QOF-0001Mc-K8; Thu, 31 Oct 2024 04:18:47 -0400
+	id 1t6Qmw-0005WT-PM; Thu, 31 Oct 2024 04:44:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Lei.Huang@amd.com>) id 1t6QOD-0001ML-Kd
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 04:18:45 -0400
-Received: from mail-bn8nam12on2070.outbound.protection.outlook.com
- ([40.107.237.70] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <michal.simek@amd.com>)
+ id 1t6Qmv-0005W7-6e; Thu, 31 Oct 2024 04:44:17 -0400
+Received: from mail-co1nam11on20621.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::621]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Lei.Huang@amd.com>) id 1t6QOB-0006do-3U
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 04:18:45 -0400
+ (Exim 4.90_1) (envelope-from <michal.simek@amd.com>)
+ id 1t6Qms-0001gE-H3; Thu, 31 Oct 2024 04:44:17 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qUeiFVQzSt70zl4cAlLS9o3bXTBR1oHMvdV5TP8fuRBbGSMBKlCZFUbklk3Byvlqnepqg1AYW4luHqSXaQC+y3wQW37aAbg9/T7jpyuI5euqEUfBjdT5WLo9mXzg7wFMmKOGeCnYCyWl/GPIATgN4BUzOxFa8jO/vBC/UY8cB6sM5DPAbX7Cjw+Rr6COUHiLzwYJSCGVXnLOehdtU6JngrMpjBEFr96PuIdRnhBsZKqeftTnDypXeD6JkBPrcNWZnZoA94KMHUJynhEBZXHgzxMrsX9PdMifbircvvtQfLDOr7f4XOnB0ThO1prj+LpG/bGENAnlyaDqY8f6nC0Ziw==
+ b=i+kc3/F++T35gjTP990NP/tXu2TFBXLct2yLZStQbnejYUzFyxZbHQfMVsFndSqZ5ZS4Q19gWSbFBQMASVO31TOIhnK4QvvDfxJlGGxoBjFJrfMfM5kJP8+YMJkozQg0YNlrUmxcxEuvaU5qxkGS5B1owXDEUDYLW5o1QvnHcSJx4jDDDuv3d5fJvDLK1TGSiysTkH7K67dPBKOSDOdaYOMjIpt8i/gjZd1IR55GNyQ1xdmSg7hot6Wa4KOh4lKwpAWqxTorQUYy7zoW6xcwhhaWTcmLM+lBS3Oqv1NxhCzuBDj4LlwsZrkFHJ9uQc+s6eddvUhLh9aIBsqSdnoTQA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=INA57DyoX+B3O9EGjvZs1KeYBxULHGSRoJTw88BAAkk=;
- b=qsYeiGD+J4uODc45sbV2Quvku5uKzFI+WrHUf5Th1YP9TU4cOcZZ2OyuBYZqORX/oa0urUpWx6PQwQ57gVrVgn9jC8SztE/ZB0SdPnhDSALvJkuc4/qOcKSh/9kEDRMMnRBV5PoDdO/SXidCi2bOkQQdJOui3TCrXNWXg2QNFxD02cWq2qeNRkiV7ZkJVecKP89BVFcGvF/C8dA9+PNRnWIux+7tWwC94RAGD3/mmui1qxVGhY9YEBKrcqclEveGzmj8959BKLwZZhH8kDKR/+9Vcgwra3HdJIjChRhmlnToxqmtOpQAnTtt+A3I0oN0Wg/VTJWuilDXWZ035eoFMA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=eik.bme.hu smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
+ bh=PRF7E6uSOraU5QhF8Mu08PTLmPhviVyZ7Yt1r2Niz08=;
+ b=TgXkw1uuAUmn/gxpNCqATSwCBAM7x4xVCCaVrVH3p+Y4N8LoN4dpwTX5piL1gYUB3eGbVWB7TlHAqAZTNRtzSyNabrA5rW3jKjNeyLQADUPjxp78stOqAMqJ1/AZbALZkO+1WVaRkegWdE6fU19gPnhLLc1Skqm5TBfWHgd+YxUIMhIXmkcP3mcLk3xvrKBnt3lEPl37EG1p9B3DeQm78VD3ogpitB8r2NGXoLPvL+qWNEMMFNn5XS5eFt9OwEIlMmH/kFu4LB1WzZRWKD0X88C5QLENZ+irtmj5RqA7IAav3cxbdgkOQGtxHJlOZA7z7OjSbY+uoucqSqIjMw7ufA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=INA57DyoX+B3O9EGjvZs1KeYBxULHGSRoJTw88BAAkk=;
- b=Btx9Q7/xpGIt5Ih4b3O5PSYKtqwbjHohufw2THdpLPdur7nxIhOTw4Tadq1JoauByYa3Y+EBEV50UbbfPaZtVqTT5cZ8bgncFJZd0dxMA1aILqu8ejW/xQ3gdm9M7PGR5kFlNjgm5maoqWjrkXsd4ltBEIalCqtINR6YeJ7R7uM=
-Received: from SJ0PR13CA0029.namprd13.prod.outlook.com (2603:10b6:a03:2c0::34)
- by PH7PR12MB6978.namprd12.prod.outlook.com (2603:10b6:510:1b8::10)
+ bh=PRF7E6uSOraU5QhF8Mu08PTLmPhviVyZ7Yt1r2Niz08=;
+ b=ihRyFrYT4VOsB9lr32ITQcgFsQ0/9m6l+x2SyuQ6VkwbMkXWQs8HUWJWIp6lV2gIKXN+LFxCh9qhAbvVWkJEBuHXRz1EE//ziAKJe04dw1f5c93j7B8h/9ECdXScLpodlbyIXpeW9sUYW1aa0b8jc51iiaUCf4pIO6S7mqU0Ev0=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SJ2PR12MB8109.namprd12.prod.outlook.com (2603:10b6:a03:4f5::8)
+ by MN0PR12MB5812.namprd12.prod.outlook.com (2603:10b6:208:378::11)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.32; Thu, 31 Oct
- 2024 08:13:33 +0000
-Received: from SJ1PEPF000023D0.namprd02.prod.outlook.com
- (2603:10b6:a03:2c0:cafe::9c) by SJ0PR13CA0029.outlook.office365.com
- (2603:10b6:a03:2c0::34) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.17 via Frontend
- Transport; Thu, 31 Oct 2024 08:13:33 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- SJ1PEPF000023D0.mail.protection.outlook.com (10.167.244.4) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8114.16 via Frontend Transport; Thu, 31 Oct 2024 08:13:32 +0000
-Received: from SHA-L-LEIHUANG.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 31 Oct
- 2024 03:13:29 -0500
-From: Lei Huang <Lei.Huang@amd.com>
-To: <balaton@eik.bme.hu>
-CC: <marcandre.lureau@redhat.com>, <qemu-devel@nongnu.org>,
- <pierre-eric.pelloux-prayer@amd.com>, <ken.xue@amd.com>, <Lei.Huang@amd.com>, 
- <hsp.cat7@gmail.com>
-Subject: Re: [PATCH v2] ui/sdl: Mouse event optimization
-Date: Thu, 31 Oct 2024 16:13:13 +0800
-Message-ID: <20241031081313.1617-1-Lei.Huang@amd.com>
-X-Mailer: git-send-email 2.44.0.windows.1
-In-Reply-To: <73cd533a-8818-4212-f7ea-0f89bd2b78cd@eik.bme.hu>
-References: <73cd533a-8818-4212-f7ea-0f89bd2b78cd@eik.bme.hu>
-MIME-Version: 1.0
+ 2024 08:44:07 +0000
+Received: from SJ2PR12MB8109.namprd12.prod.outlook.com
+ ([fe80::7f35:efe7:5e82:5e30]) by SJ2PR12MB8109.namprd12.prod.outlook.com
+ ([fe80::7f35:efe7:5e82:5e30%6]) with mapi id 15.20.8093.027; Thu, 31 Oct 2024
+ 08:44:07 +0000
+Message-ID: <47b60bf0-e43e-43a6-b9d7-0d072cd8d4ad@amd.com>
+Date: Thu, 31 Oct 2024 09:43:52 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/riscv: Add Microblaze V 32bit virt board
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair23@gmail.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20241017072507.4033413-1-sai.pavan.boddu@amd.com>
+ <CAKmqyKNfoakaJ66PCN49x5+=gVkAnQVV1UWTdPe7ARr3RA8ouA@mail.gmail.com>
+ <7dbcb2de-89f9-445b-a096-2a3d03a2dfe7@amd.com>
+ <34d6acf1-2106-481e-a016-375e697f31cf@linaro.org>
+Content-Language: en-US
+From: Michal Simek <michal.simek@amd.com>
+Autocrypt: addr=michal.simek@amd.com; keydata=
+ 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
+ 3i3l5DA=
+In-Reply-To: <34d6acf1-2106-481e-a016-375e697f31cf@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
+X-ClientProxiedBy: VI1P190CA0013.EURP190.PROD.OUTLOOK.COM
+ (2603:10a6:802:2b::26) To SJ2PR12MB8109.namprd12.prod.outlook.com
+ (2603:10b6:a03:4f5::8)
+MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF000023D0:EE_|PH7PR12MB6978:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8b820b9f-d539-4599-bd8d-08dcf983e949
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB8109:EE_|MN0PR12MB5812:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5eec2318-4cb1-4bad-a965-08dcf9882e74
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|36860700013|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?EFgfw7e36Ns7Jx7AxTHAtAHQgr/ZHRLuLa+2xINOiD6sRfESrTlLKoRgvrAa?=
- =?us-ascii?Q?LsclvLGxr5tBYvTbMkieP4Z5AytBuZ8mFo7lXTtUzdYOOi2P2gtW1zpKvPE9?=
- =?us-ascii?Q?pkQTkHIX9lL3CS4Q+93+RhetJLSOZg8pIQV45X1KamXVSpGR8YsPobLcIJ5O?=
- =?us-ascii?Q?jYFst1XmRRXuIxPd1EpWFB5kylNvNmHr1CZZosND6xdRF34keFfBMgdmsvob?=
- =?us-ascii?Q?A8Gm9WAxokmGMKnemrrNEp2+Vlx6WBpHxrP6eJKrInzn8Hlp++T3DgFt9lEa?=
- =?us-ascii?Q?YuNnRLwvd+ynPeJ7w7CD+UvlcKNwC8YpRfFxSFcf0fkt/b9mIGzo/09crQ70?=
- =?us-ascii?Q?nhuHR3jLwS7dBqB21jGmCp/ihdgz1nXZOM+GNjkxqDdD6SthxyADJ5U01Qi6?=
- =?us-ascii?Q?S2qiHwYC01Ep2ivEj+K6dToj0v5QQLmTYNP9mg7OBXo+HuxXoyBFiQBRdYSw?=
- =?us-ascii?Q?1H+kPkdMyWVSZcZMZ3YUhavn6nTDIkLbmjtR76MnFgFqrNiG+BhqPweQ248g?=
- =?us-ascii?Q?sMCmuBpsZX5NTIKo/+l/V3RK4dcqk79IymZjggA+LY99UOvOiRDlgMUi4adq?=
- =?us-ascii?Q?2UCOimj8UY2G1uXzyARHPBzzTwFee0VlGRdhlJ7yGJNL16Mk9iMB8P6+y4J3?=
- =?us-ascii?Q?z3z4ht/W+ztaQ62o0Ma/FdFlwIcGkql1Gv8N5I4YczwuIzNnlPwLhgGDlNuM?=
- =?us-ascii?Q?yyKCjmg2Zk8xOwm8uJR8dZf/3v2tZpoKNC1Dl0aEyWM/uvM4cywhJKjAK/iO?=
- =?us-ascii?Q?pCbsHexKvfl/4lLOW+F2reTcE8qKyj+f2eVLOuAYEBHgMf+FzGT1AoERnyb6?=
- =?us-ascii?Q?848GMgtLn/gx6I7+nbt8ArBv35bccGxoQNSqPz7o8/Xi0j15L0E59//rgmDW?=
- =?us-ascii?Q?b748/s7kvVXbNb1dSgYqrkhKXbzgQOqGUuabd/g7z7XlQnNImTksAKlcV7aq?=
- =?us-ascii?Q?eV5XRncCCQdlPn/WJV2H7i9ZpyMx5gFklM9tGjVdvy9Idc1wLlj4S4WH0bi3?=
- =?us-ascii?Q?ee6EDikr6exo2kJXGP3wLNPsKHBSFIZbtl7p339BlA/vBhbo2ZYDZNoTgCqH?=
- =?us-ascii?Q?KhA3X2RNocM4K96bPdZdflyCg/nnLyOJdsz7KPYC+CtN5Pptj85q78jsE4Zg?=
- =?us-ascii?Q?UMGnYAO2C4+5xjDoKD3kO14kfmhIJIcbE8bJvMfNaUZlHEAyyp1a0Vkjlo7w?=
- =?us-ascii?Q?ApJ5/NiZR/V8EagpLy6X4qJ0R/51VKPO8vqvQtOIzhYIu8017z563GwpRaV9?=
- =?us-ascii?Q?N6OFc0kuSnVPTG4wBcDXcPr5gBKtWBZrP9aru7RRDXL1lDPEukVRzKY7hD2p?=
- =?us-ascii?Q?wunzW+8FBqPWFM3gaVjhDi6NRY0Xv160+K59/9HL0zEZ6aaxX8gt4a6SfF3g?=
- =?us-ascii?Q?+q0l4pNTqQKRjTbHvXtBDIMubTBdDdI4KjCGYqExT52BaJmb4A=3D=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(36860700013)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NXk5WTBjS25IbnBwQkZnOENwZzhTL1ZjakR3WnpnRmJocjJRVzhaN2tkYkRj?=
+ =?utf-8?B?N2FxT2xVYVEvdTRSVWN0Q3g2VWNaUTRNZUhaR2hCMjQwVkFka1lZM2FpMldO?=
+ =?utf-8?B?VC9xVHVCQ2xRbFU3K0NsUzhMOVhtUTVsRzRaZkFXS3Y1Q25zRitYRE40MzA1?=
+ =?utf-8?B?K09KSkt5cnNUT1A0RUxObkk4UENUTnI0b1RzS0RycWRpVHgyRlhZSzBVNHBP?=
+ =?utf-8?B?c0RJU1dIbjhUVnFYVTJlemdaNWh6eU9UWnB3QVFCT3RRbjZaWWhDbVdCV3Nl?=
+ =?utf-8?B?UFJqdHNmMVJpcFh2SUc0eGVpNGtTdCtqRnBVUzN5SGJtSEJTeWRJYVhSYytV?=
+ =?utf-8?B?OWVXb1pvTlJvbmNPdkU4OHE3QWlmYlhxL0Nvc2ZqditzYStGbm8vRzc5NjlN?=
+ =?utf-8?B?eEtTekx3ZEVqY0NhN2dDRktOVlRsb1JKRnlJZnA0SEU5YU45OUJyZGg4MW1k?=
+ =?utf-8?B?bjlpeitTREhsUjFvcnhTQS9yeURKV21qSUM2RWtrUFphNXlCOEhsR3o1VVdN?=
+ =?utf-8?B?bTY0THUySnNCbkJvNkpUVFhxM3VqdTBTSUM0dWFVRzQxQUpMRXFqN1BwRnBP?=
+ =?utf-8?B?K05oNVVCZDJqWTRiUktjQXRhNGNnTFFQQWk2TklKVDg0TmRZbEIzSDJ2MnhS?=
+ =?utf-8?B?S08xUktTM1FVb3pSejhBYXV5YnN3d1pubTg1ZXF3SGFGWUlkK2dQRWVuNkVB?=
+ =?utf-8?B?YVQwT2RscmV5NlU2NkxickN0Q0xiRTY2a3NWaDA1aGxQY2tOWVJRb3MrMGQ3?=
+ =?utf-8?B?SXVicGl5aVZnVUNQbWhpQS8yUzBVZlMwT0Exd1FMQTY1WHovYm51UXpMbVZq?=
+ =?utf-8?B?K1BKNWdWNXdLTzBOeVNIY1l1RFRMMXdSc2Q1ZWM0ejFtSlZQZnpPbU4vTmZj?=
+ =?utf-8?B?RVNERmJOSVVjOUhUSDBjdXF0ZXdnUThKS2NuV2FuaGZ6NVRYNTJqeGxyU21Z?=
+ =?utf-8?B?MHJRQnVKN0xvcC9kdGJLOUd3dDB1OHFCSWdpbEg0UzA0dG9iTlYvd1Jxd09w?=
+ =?utf-8?B?OXQwOSsvUE1jYUJraHZBS045SEo3eU1LQ2VxVGJHTWFNVVF4MC9UOGxUQ1VI?=
+ =?utf-8?B?NjhRRFFLMExSVFVBcnJ6QkxGN1VWbUxhNXB4QS9wNDRaaHVLV01Sd0dCa3pz?=
+ =?utf-8?B?c0cwckJ6RS9FcXpOWjlzSVFPL280ZTNseUsrT1BIK3Vwc3QreVRTRnJLWVV2?=
+ =?utf-8?B?VmtVZWlnR1lvc1lrOGVweWFwMU5La1FNeUtIL21ITXFtU0ZMOGtFRG1ZUnVq?=
+ =?utf-8?B?Z3ZGKzRycGRsSEk3Z2YxSTlFTFNHTUc5YzArSGdzb2o4MlBRczFtYzFhd1ho?=
+ =?utf-8?B?WTJJT1QrZlpyY08zbW04aWYyUU00QVpzcm1qUDZzYnBIZEFPYlVUOWgrL0xr?=
+ =?utf-8?B?OVdhU1JzQkFtWG0xNFArYWZWVXlVNmlMZWpEMDBCQSswek1KcHVSL0JtbHI4?=
+ =?utf-8?B?WEpYTUhiN2xyMEM1QVhhODhzMnYzMXNWbXVwdTNwRnpLUFZwd3NBYmN1U0Ju?=
+ =?utf-8?B?QmdKd2RGNDJJWmZsdi84Nk1DSldUdkF1MjZmQ3k1dW9EWjFCTHhCKzluYWl5?=
+ =?utf-8?B?ODZrT3hoSzYxWjBnVFNReXpJV1Bpb1NLQ0xwSlRaVmJQZ0hmREtYUms0b0Yx?=
+ =?utf-8?B?VFBjZHRuR2ZqQ2ZQZjU2Zi9YRkt5QnYrdzdxU1UrRGdnSXc3a1RzRHVGOTN1?=
+ =?utf-8?B?MWVvbWRhalJaS2pYMUJSeTg5Y2F3bElnVThPRmZMckVnb0l2OEFvaWlXQkx6?=
+ =?utf-8?Q?0jsy1CpaYrWNc3EbG/5txeRekM5yJjqGAaE0Dge?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR12MB8109.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NlNnV25KNlZQZ0VWeWFkbWlkeE5lOE41blE2SGRsRHBYaWxyanFlL2tja1ZJ?=
+ =?utf-8?B?Vm9yZ0J6RjR0WjFJYXBFQVZPcysrdFR3bExuamRsa3VmaFlGS1FXdXB5STJi?=
+ =?utf-8?B?Wk1EWXY3TVd0bmZjbUNNcWJKbnAwVXhxV0d1MEwwbURaa0JmVmNCRC95dmpV?=
+ =?utf-8?B?ckYzL0libjA5c0FGQ2lEOWN5ZFkxb3grNzV6Z240K0NxUGFybnBRKzhiUkNs?=
+ =?utf-8?B?SFNic3J2YkM3NzAyRzVlTHVBTW1Hb2x4L3F3RDc4dzhYaUtzNWNOTWdVRjU1?=
+ =?utf-8?B?QUlWQzV1dHhDUGUxK2tqNC8veDhoaVhYcDZpdjVkVGMxSVJERUlIN05hR2RD?=
+ =?utf-8?B?ZVFyRllDUEl5RUQvaUNWY0t4WnhKRTB0UVo4cHRLMm4wQVNQWXArUXlSeEth?=
+ =?utf-8?B?OFc1VVI0TjJMRjRJUUFRS3ZLRzZpZjJGNWlqanJPOWU2dzRCWmExa0VwVkJM?=
+ =?utf-8?B?S0EyVmVORlJycWl2KytOckQyOE81VGhnL2FxdHJxcU1wL1hmQ0NyZlVRMXFa?=
+ =?utf-8?B?Z0N3YmZLL2dtUmFkK09YaXU4KzZOeW05YkxiOE94SXExWUNRb1dNRGNwWUZQ?=
+ =?utf-8?B?RzZzV1Vyd2NuVzF3ajZkMlZZQmswK3FrbVhzd1R5MHB0Zk9vTmFMU0habFR0?=
+ =?utf-8?B?L1BuaDNVZTQxSndjaG1GUFBJdGwwRGJxQkZDZ3EwN2ttV1dmSk96UUNabjlj?=
+ =?utf-8?B?L043NUMvTlA1OGNCcmRFS3ZUZFVZUWZvS1RKWWJxZXgwVWJuN01lYmtLMEFr?=
+ =?utf-8?B?TUxMdjVSUVN2amJObWVPV1pZWGVCN3BsUHVzcmNlSGxKamlUV1pKMGJpZCsr?=
+ =?utf-8?B?azB4QUJSS20rWGRzaklYd3E5R2J5RjJabkpnK1ZBck10ZmJ2MnQwRlZ3bkVQ?=
+ =?utf-8?B?eWtWbWZLQU16WjZVb0d4VVRBWE5WNE5SWVFyZXBmamdWeXF4MllIdUh6cE9M?=
+ =?utf-8?B?OGd6QkRyTEZhR3lrZE1OcC9sY1pBMHJZU1ZGaFlEMWNQd2FiYUUyU0xHZUFl?=
+ =?utf-8?B?N3NZSmdzSW9tWE5iQzFhRVBOeldGRWptcjBQWVVHdnRPR2kvUHhpWXZFZkdw?=
+ =?utf-8?B?cDhwU0plckZqVElMT0EyQWE3NzRYWk90bDY1Nkw4dk1mRURtMzk2VXJqMXBR?=
+ =?utf-8?B?TFdSckFyOXJNT2xtQUJKSnppUVUwb0w5N2Q2RnhsMTJ3amU5VndqMU5oNnBC?=
+ =?utf-8?B?eXljWE0wRk1PWTlCV2ZEYXlUNmwwV2RnU2NBeERMenFDcmQ2SVh5VytHSnNH?=
+ =?utf-8?B?YXk5NXRBek5nb0RmRGNsYzczUU9nQVlWcGpNOTh2V2UyMW5LSkRROHBZNXE1?=
+ =?utf-8?B?aGZHc1JnUXM2eEo5dytwVEhNZU50bTBDNjQvOEl2clUrVlF0VUhkSXZ2cmpq?=
+ =?utf-8?B?STc1TGtDQzJMcGFHdk5wdnNzLzNPa21tOXZHM3EwN3k1dWxVTGdyR3p1b3Fa?=
+ =?utf-8?B?ZlRqRTY5K05zQUxheURDNUNLMjhZdFkvRmNLVHBHSDhzNkdzS2YrR2FaU1Zq?=
+ =?utf-8?B?ZmJndmNkR0dsUzBGSlFYQks1NjF3S2JML1BlVWNQMG1Sb0toWmhkTGF5YlJK?=
+ =?utf-8?B?ay8ya3FLampTV05OdzVZVk5CTXlKSDF5WXBMeDJHU3ZvZUY0cjJCZXdIazFL?=
+ =?utf-8?B?eU5aTjRYUGZQYkJYUlhaN0xwZGlldUlJcHRIRXBRVldVckxTSTNwbVByLyt0?=
+ =?utf-8?B?UlpQYjlaamdIemREMGtQdi93U2gwUU50RWNONDVtOW9kMmU0RHlkOGFWWndi?=
+ =?utf-8?B?akppSGF4UzhSR3pNMzlaY3d2WENaUVYzajBkV21ZVkM5VXk1WGl5RytwYUVq?=
+ =?utf-8?B?aXlPZHpJdEhmSDJRQVFDOXdxaVlSL1JtcTM5MmNKVDRONmZmN3NMbkJwTytK?=
+ =?utf-8?B?TUVpeFd3clBtMXloanJTUnUzRWVQdHNBSDhnYno3TmQvMjh5N1F2MzU1RHQ3?=
+ =?utf-8?B?RlhWY2tCYllFeEpyQ1dQWlE4dnVLK3RVd0pxS2FYN0hHK3NRVCs5bjBvbzlN?=
+ =?utf-8?B?eTNYMTY3ekh6aytRVWJ3SXFZNVlYZG5xeHkwNFp4TFhwenZVKzBsbnQwbEFp?=
+ =?utf-8?B?bG5ieTZ4Zm5zbmN4TUF0cnlveEhvaTRJY1VMU3BiRmVrMjRRd2hMQWt6eDIw?=
+ =?utf-8?Q?X78tf5pTGkblSao+Jyn1h8hr/?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2024 08:13:32.8161 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8b820b9f-d539-4599-bd8d-08dcf983e949
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5eec2318-4cb1-4bad-a965-08dcf9882e74
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8109.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2024 08:44:07.2654 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000023D0.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6978
-Received-SPF: permerror client-ip=40.107.237.70;
- envelope-from=Lei.Huang@amd.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GARenO7Q/nLnW49g0zxYyS0YfBOu5sM4FQKnjS0eDidlkyq90WhAAP2bZ2vGQnND
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5812
+Received-SPF: permerror client-ip=2a01:111:f403:2416::621;
+ envelope-from=michal.simek@amd.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,132 +225,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->On Wed, 30 Oct 2024, Lei Huang wrote:
->> Use a convergence factor to make the VM's input
->> global coordinates more closely approach the global
->> coordinates of host.
+Hi,
+
+On 10/31/24 05:06, Philippe Mathieu-Daudé wrote:
+> Hi Michal,
+> 
+> On 30/10/24 02:53, Michal Simek wrote:
+>> Hi Alistair,
 >>
->> Change-Id: I2c3f12f1fe7dfb9306d1fc40c4fd4d299937f4c6
->> Signed-off-by: Lei Huang <Lei.Huang@amd.com>
->> ---
->> ui/sdl2.c | 32 ++++++++++++++++++++++++++++++--
->> 1 file changed, 30 insertions(+), 2 deletions(-)
+>> On 10/30/24 03:54, Alistair Francis wrote:
+>>> On Thu, Oct 17, 2024 at 5:26 PM Sai Pavan Boddu <sai.pavan.boddu@amd.com> wrote:
 >>
->> diff --git a/ui/sdl2.c b/ui/sdl2.c
->> index bd4f5a9da14..ea3fd74dd63 100644
->> --- a/ui/sdl2.c
->> +++ b/ui/sdl2.c
->> @@ -303,6 +303,34 @@ static void sdl_mouse_mode_change(Notifier *notify, void *data)
->>     }
->> }
->>
->> +/*
->> + * guest_x and guest_y represent the global coordinates on the VM side,
->> + * while x and y represent the global coordinates on the host side.
->> + * The goal of this entire process is to align the global coordinates of
->> + * the VM with those of host using dx and dy. The current approach aims
->> + * for precise calibration in once attempt; however, because guest_x
->
->There's still another one here. You can say "in one attempt" or "at once" 
->but combining the two is not correct.
+>>>> diff --git a/hw/riscv/microblaze-v-virt.c b/hw/riscv/microblaze-v-virt.c
+>>>> new file mode 100644
+>>>> index 00000000000..6603e6d6b06
+>>>> --- /dev/null
+>>>> +++ b/hw/riscv/microblaze-v-virt.c
+>>>> @@ -0,0 +1,181 @@
+>>>> +/*
+>>>> + * QEMU model of Microblaze V (32bit version)
+> 
+> Is there a 64-bit model planned?
 
-Oh, okay, got it
+This guide is talking about 64bit too
+https://docs.amd.com/r/en-US/ug1629-microblaze-v-user-guide
 
->
->> + * and guest_y are non-zero values, they are not accurate values when
->> + * they are counted out to become negative. Therefore, achieving perfect
->> + * alignment in one attempt is impossible. Since the same calibration method
->> + * is used each time, repeated attempts cannot achieve alignment either.
->> + * By introducing a convergence factor, guest_x and guest_y can be made to
->> + * approach host x and y indefinitely.
->> + *
->> + *                   QEMU                       (dx,dy)  VM
->> + * calculates dx and dy using guest_x and guest_y ---->  input driver
->> + *            ^                                            |
->> + *            |                                            |
->> + *            |                                            V
->> + *            |     update
->> + *            | guest_x,guest_y              input dispatcher ---> WindowManager
->> + *            |                                            |                 |
->> + *            |                                            |                 |
->> + *            |                 libdrm                     V                 |
->> + *    display device  <------ drmModeMoveCursor <------ compositor <-------  |
->> + *                            (guest_x,guest_y)   calculates guest_x and
->> + *                                                guest_y dy using dx and dy
->
->Maybe adding (e.g. virtio-gpu) below display device would make it clearer. 
->Also under compositor there's "guest_y dy" where the dy seems to be left 
->there by mistake from some editing or I don't get this sentence. (Did 
->checkpatch.pl complain about too long lines? Maybe you could shorten the 
->arrows a bit and wrap the text under QEMU in two lines to try to fit in 80 
->chars.)
+It means answer is yes. And pretty much this generic model with the same layout 
+should be possible to use with generic 64bit version too.
 
-okay, thanks, got it
+I expect that means that default_cpu_type should be TYPE_RISCV_CPU_BASE.
+and Kconfig should be extended
++    depends on RISCV32 || RISCV64
 
->
->Sorry that I can only comment on the comments and not the actual change 
->but I've cc'd Howard who I think saw this issue before so may be able to 
->give it a test.
->
->> + */
->> +#define CONVERGENCE_FACTOR 3
->> static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
->>                                  int x, int y, int state)
->> {
->> @@ -331,8 +359,8 @@ static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
->>             y -= guest_y;
->>             guest_x += x;
->>             guest_y += y;
->> -            dx = x;
->> -            dy = y;
->> +            dx = x / CONVERGENCE_FACTOR;
->> +            dy = y / CONVERGENCE_FACTOR;
->
->Looking at this calculation I don't quite get what's intended here and I 
->think this could be simplified. Originally in 47c03744b37 it seems the 
->qemu_input_queue_rel() was called with the modified value of x and y but 
->then afbc0dd6498 have introduced dx, dy. After that changing x and y seems 
->unnecessary as they are locals never used after this calculation. If I try 
->to expand these equations I get:
->
->x = x - guest_x;
->guest_x = guest_x + x - guest_x;
->
->So isn't this equivalent to just:
->
->dx = x - guest_x;
->guest_x = x;
->
->which seems to make more sense but I don't know if it's correct.
+Also some small updates in documentation to cover it.
 
-yes, it is correct.
+Is there something else what should be updated?
 
->
->Then this patch takes the third of dx to avoid it overshooting the desired 
->value. The question is what causes this overshoot and can we calculate the 
->actual value of it to compensate for it in one calculation? Isn't it the 
->other line that sets guest_x to x that needs some correction?
-
-It's not the reason of guest_x += x;. I previously tried removing guest_x += x;
-and only letting sdl_mouse_warp update guest_x, but the issue still persists.
-
-The behavior of different virtual machines varies. In the Ubuntu VM, the cursor
-jitters violently within a small range; for example, when moving a folder, it rapidly
-flickers back and forth. On Android 14, it can barely be used, though individual coordinates
-may deviate significantly, but they can be quickly corrected. However, on Android 15, it is
-completely unusable. The reason for the issue in Android 15 is that the initial global
-coordinates of Android are random values, not (0, 0). During the second calibration,
-it is possible to calculate negative values, which are forced to be set to 0, resulting in
-a continuous loop. The occurrence of negative values is an extreme situation.
-
->
->Regards,
->BALATON Zoltan
->
->>         }
->>         qemu_input_queue_rel(scon->dcl.con, INPUT_AXIS_X, dx);
->>         qemu_input_queue_rel(scon->dcl.con, INPUT_AXIS_Y, dy);
->>
-
+Thanks,
+Michal
 
 
