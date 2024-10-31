@@ -4,84 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ABADE68974
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 11:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C6DE68974
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 11:11:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6T4c-0004w4-Po; Thu, 31 Oct 2024 07:10:43 -0400
+	id 1t6T5f-0005Q6-BM; Thu, 31 Oct 2024 07:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1t6T4U-0004u1-Li
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:10:36 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1t6T5S-0005Kr-Me
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:11:34 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1t6T4R-0003SP-85
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:10:34 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-539ee1acb86so821662e87.0
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 04:10:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1t6T5Q-0003Yv-NW
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:11:34 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-539f4d8ef84so1028763e87.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 04:11:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730373028; x=1730977828; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=rETJV9+KIqR5YA/MkCI+vDownHRPVSloNnbyhKq0WnU=;
- b=wVyTltky1w7N7G+N8Xq0w/G5Mbf9XCLtYQJTEbZzYxKpkNUe/DkbsFa8GrxH8+iOwR
- 8Q2wns7PAhVZDw8sms5dX3W9PwjvcPh8na/2kxamy7aJLB4O/5Jtsrs9RayxAY6LDbIH
- rciFoCOgDEY7bk9YyqTz2+rOp+7g9jmYepkn0UAFZBx+4nSfc6AQ6c/ciD2T8chjAMKw
- j8eG/4NNVaGhv1YBGZjv6k5O4WHz9C2YRdTManr1aqF8H7i+wcwTPfxABt4Jc85vvgO0
- RRjqWczq2PiRHzCDXcBOof4f1FMDXNhznRi/The9Acvr0G9oBfd4a5LswSaobZb+bEZV
- wVGg==
+ d=gmail.com; s=20230601; t=1730373090; x=1730977890; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Akj3cIQJJohptA+ixAnzPlQ1QYu7yfnHtV2Ht8J8iDI=;
+ b=U1qNDvV9YdDIMB6XQKHZ/cIGmr3quFdVAgG1GQ/fX8mKJzqzAOpUy/zKLWg+5M5dTE
+ 8o87dBzACYZ3Z50Y03O23Z9kX5tFVaJz3z1QbWBhl+K2V8V5MOcScWKddyaLCzbydy+a
+ Df41zRd6+zVeafjwFMpPpgiNaI2u9VF30ZH7yfzKq7PKBTHpI+73HUQpo0nkI4GEqIye
+ kS3RrFtUJFpmdOPI3b0HnYA4Y58HYXMUio+f/o6K2iQLp98TRrWRAZ4lIXzf+jqe9dej
+ DB8ReDG3DFHPp2TXa9hZOKrECCzIlExh9SPOsKF5H0/AP+GL1HuHJBieTmRHMkyVri7g
+ mFlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730373028; x=1730977828;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rETJV9+KIqR5YA/MkCI+vDownHRPVSloNnbyhKq0WnU=;
- b=MpkiTi2Mx5ptkYJ6q5kRrg+/Kkcsy6mOgNAl7J+Vt+BFzO7ch2/31/bYYkkimgx2vs
- OmrK+xYU3Gk3eq7uWjcQXKRVzhAyi1Y1JlE84qcvw4TJbuv8z30FPRRYeEsU0kkzZQOy
- BbsaqP83sB94JkswVzbDyguIvJxZ0CaLXhjCKYqK5DqlpzHzlgzRo9xLau40rIu7kCKH
- zyPCQ9dZLgk28KJYgANXTyrmKBGiU7LtF6TZbMz5acjUcHnF1F7YjqvIERdr9KUageBR
- TvsLvx21+R9FAomFtZsHnoO6iucdgqorvgXB3FFLM20bDNffHnH3t64q75FIum0pxnPp
- mnUQ==
-X-Gm-Message-State: AOJu0Ywec6bJxgIB/yflgpHs6Ujbewkxqgeqo+jQ8nAY7XeJjO5s60YF
- CUBnmoq5/OA6afQhgUfjigGOiICaZXnunFTBUq66RmLbPUHSomAqGRe0zjYjzAsNMvzB+QZcta/
- S
-X-Google-Smtp-Source: AGHT+IGzuxrub5SE/fpi4fkWiG3D0BBzaAhKW5moBsYYOxKKA8S+ymXKX+d/xAn1GSjjbgFZ3aEoCw==
-X-Received: by 2002:a05:6512:e99:b0:536:a583:2777 with SMTP id
- 2adb3069b0e04-53b348c0e4emr9136980e87.9.1730373027766; 
- Thu, 31 Oct 2024 04:10:27 -0700 (PDT)
-Received: from [192.168.210.26] (83.11.19.101.ipv4.supernova.orange.pl.
- [83.11.19.101]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53c7bc958cbsm169073e87.52.2024.10.31.04.10.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Oct 2024 04:10:27 -0700 (PDT)
-Message-ID: <0a77763b-94b0-42de-96a3-5fc6882be06c@linaro.org>
-Date: Thu, 31 Oct 2024 12:10:26 +0100
+ d=1e100.net; s=20230601; t=1730373090; x=1730977890;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Akj3cIQJJohptA+ixAnzPlQ1QYu7yfnHtV2Ht8J8iDI=;
+ b=e9T2eoqiIbS/mspIyK7Qt/oxf0NnUimH3d2qW7Nb1sikfX4VLw7jBJaU365PCTZg1I
+ jD0rGEUuV/quq83GFiT69J6rYOGG571enk8RIoEmEuHwy6IL/unwNsnI7vvFdf9w8aI7
+ 6g0SxaRviS9bqqiT2lBGeO2m6tkl06wANKyHuop57xgZDCuNxCSPQwhi8yttmfjcppaq
+ VKOf2gFn0ih9cOwg5lCqiFrm7z8ZCnJlkUK015GvFb2of0XOCG5sWUIsNcTGD9FmmuyN
+ TBc8noA/zKp6OFqnzXUrOUHPjRHHVCfa38vfZw9PlahMuzgawmum7crr2/7mjJmB/+sI
+ wB4Q==
+X-Gm-Message-State: AOJu0YxdR6rdc5dMQpfgD8Md/wdedsiaoek0FVfTiwnHFIHYHR1D7nXj
+ gQXpZWJXCGHwMCOyzOqwRhfIP5xDAzeGRH9CRQ+rUginzrhhSnldsnLlVfsu+8C+iihFWXMw1IE
+ ICvggkPJ9FAnfVzLhcqVf8ghxxAkeAylHLlg0jA==
+X-Google-Smtp-Source: AGHT+IFjoqVXZ62UiELHx3A+tPelEZcM0FUxLXVgEhM4oidJkCbZ/llZssjiQZCwVEGBASLhXcRoXNxQ+K/oiVdJug8=
+X-Received: by 2002:a05:6512:138e:b0:536:53f0:2f8e with SMTP id
+ 2adb3069b0e04-53c79e8ecbdmr1337539e87.37.1730373090124; Thu, 31 Oct 2024
+ 04:11:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] pcie: enable Extended tag field support
-To: qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20241023113820.486017-1-marcin.juszkiewicz@linaro.org>
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Content-Language: pl-PL, en-GB
-Organization: Linaro
-In-Reply-To: <20241023113820.486017-1-marcin.juszkiewicz@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lf1-x136.google.com
+References: <20241017144316.517709-1-r.peniaev@gmail.com>
+In-Reply-To: <20241017144316.517709-1-r.peniaev@gmail.com>
+From: Roman Penyaev <r.peniaev@gmail.com>
+Date: Thu, 31 Oct 2024 12:09:09 +0100
+Message-ID: <CACZ9PQXT9xxuX40u_4J22d66hP73x4r8gUunPsMzhMS=MMTn9Q@mail.gmail.com>
+Subject: Re: [PATCH v5 0/8] chardev: implement backend chardev multiplexing
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=r.peniaev@gmail.com; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,107 +89,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 23.10.2024 o 13:38, Marcin Juszkiewicz pisze:
->  From what I read PCI has 32 transactions, PCI Express devices can handle
-> 256 with Extended tag enabled (spec mentions also larger values but I
-> lack PCIe knowledge).
+Hi Marc-Andr=C3=A9,
 
-Ping?
+In this 5th version of the mux-be series it seems I addressed all the
+comments and concerns. Could you please take a look once again?
 
+--
+Roman
 
-> QEMU leaves 'Extended tag field' with 0 as value:
-> 
-> Capabilities: [e0] Express (v1) Root Complex Integrated Endpoint, IntMsgNum 0
->          DevCap: MaxPayload 128 bytes, PhantFunc 0
->                  ExtTag- RBE+ FLReset- TEE-IO-
-> 
-> SBSA ACS has test 824 which checks for PCIe device capabilities. BSA
-> specification [1] (SBSA is on top of BSA) in section F.3.2 lists
-> expected values for Device Capabilities Register:
-> 
-> Device Capabilities Register     Requirement
-> Role based error reporting       RCEC and RCiEP: Hardwired to 1
-> Endpoint L0s acceptable latency  RCEC and RCiEP: Hardwired to 0
-> L1 acceptable latency            RCEC and RCiEP: Hardwired to 0
-> Captured slot power limit scale  RCEC and RCiEP: Hardwired to 0
-> Captured slot power limit value  RCEC and RCiEP: Hardwired to 0
-> Max payload size                 value must be compliant with PCIe spec
-> Phantom functions                RCEC and RCiEP: Recommendation is to
->                                   hardwire this bit to 0.
-> Extended tag field               Hardwired to 1
-> 
-> 1. https://developer.arm.com/documentation/den0094/c/
-> 
-> This change enables Extended tag field. All versioned platforms should
-> have it disabled for older versions (tested with Arm/virt).
-> 
-> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-> ---
->   hw/core/machine.c    | 4 +++-
->   hw/pci/pci.c         | 2 ++
->   hw/pci/pcie.c        | 8 +++++++-
->   include/hw/pci/pci.h | 2 ++
->   4 files changed, 14 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index adaba17eba..8ccc74067a 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -34,7 +34,9 @@
->   #include "hw/virtio/virtio-iommu.h"
->   #include "audio/audio.h"
->   
-> -GlobalProperty hw_compat_9_1[] = {};
-> +GlobalProperty hw_compat_9_1[] = {
-> +    { TYPE_PCI_DEVICE, "x-pcie-ext-tag", "false" },
-> +};
->   const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
->   
->   GlobalProperty hw_compat_9_0[] = {
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 87da35ca9b..9a3b0e4a43 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -87,6 +87,8 @@ static Property pci_props[] = {
->                       QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
->       DEFINE_PROP_SIZE32("x-max-bounce-buffer-size", PCIDevice,
->                        max_bounce_buffer_size, DEFAULT_MAX_BOUNCE_BUFFER_SIZE),
-> +    DEFINE_PROP_BIT("x-pcie-ext-tag", PCIDevice, cap_present,
-> +                    QEMU_PCIE_EXT_TAG_BITNR, true),
->       DEFINE_PROP_END_OF_LIST()
->   };
->   
-> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-> index 4b2f0805c6..9f369c2b6c 100644
-> --- a/hw/pci/pcie.c
-> +++ b/hw/pci/pcie.c
-> @@ -86,7 +86,13 @@ pcie_cap_v1_fill(PCIDevice *dev, uint8_t port, uint8_t type, uint8_t version)
->        * Specification, Revision 1.1., or subsequent PCI Express Base
->        * Specification revisions.
->        */
-> -    pci_set_long(exp_cap + PCI_EXP_DEVCAP, PCI_EXP_DEVCAP_RBER);
-> +    uint32_t devcap = PCI_EXP_DEVCAP_RBER;
-> +
-> +    if (dev->cap_present & QEMU_PCIE_EXT_TAG) {
-> +        devcap = PCI_EXP_DEVCAP_RBER | PCI_EXP_DEVCAP_EXT_TAG;
-> +    }
-> +
-> +    pci_set_long(exp_cap + PCI_EXP_DEVCAP, devcap);
->   
->       pci_set_long(exp_cap + PCI_EXP_LNKCAP,
->                    (port << PCI_EXP_LNKCAP_PN_SHIFT) |
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index eb26cac810..5b14f9d375 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -213,6 +213,8 @@ enum {
->       QEMU_PCIE_ERR_UNC_MASK = (1 << QEMU_PCIE_ERR_UNC_MASK_BITNR),
->   #define QEMU_PCIE_ARI_NEXTFN_1_BITNR 12
->       QEMU_PCIE_ARI_NEXTFN_1 = (1 << QEMU_PCIE_ARI_NEXTFN_1_BITNR),
-> +#define QEMU_PCIE_EXT_TAG_BITNR 13
-> +    QEMU_PCIE_EXT_TAG = (1 << QEMU_PCIE_EXT_TAG_BITNR),
->   };
->   
->   typedef struct PCIINTxRoute {
-
+On Thu, Oct 17, 2024 at 4:45=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.com>=
+ wrote:
+>
+> Mux is a character backend (host side) device, which multiplexes
+> multiple frontends with one backend device. The following is a
+> few lines from the QEMU manpage [1]:
+>
+>   A multiplexer is a "1:N" device, and here the "1" end is your
+>   specified chardev backend, and the "N" end is the various parts
+>   of QEMU that can talk to a chardev.
+>
+> But sadly multiple backends are not supported.
+>
+> This work implements multiplexing capability of several backend
+> devices, which opens up an opportunity to use a single frontend
+> device on the guest, which can be manipulated from several
+> backend devices.
+>
+> The motivation is the EVE project [2], where it would be very
+> convenient to have a virtio console frontend device on the guest that
+> can be controlled from multiple backend devices, namely VNC and local
+> TTY emulator. The following is an example of the QEMU command line:
+>
+>    -chardev mux-be,id=3Dmux0 \
+>    -chardev socket,path=3D/tmp/sock,server=3Don,wait=3Doff,id=3Dsock0,mux=
+-be-id=3Dmux0 \
+>    -chardev vc,id=3Dvc0,mux-be-id=3Dmux0 \
+>    -device virtconsole,chardev=3Dmux0 \
+>    -vnc 0.0.0.0:0
+>
+> Which creates two backend devices:
+>
+> * Text virtual console (`vc0`)
+> * A socket (`sock0`) connected to the single virtio hvc console with the
+>   help of the backend multiplexer (`mux0`)
+>
+> `vc0` renders text to an image, which can be shared over the VNC protocol=
+.
+> `sock0` is a socket backend which provides bidirectional communication to
+> the virtio hvc console.
+>
+> Once QEMU starts, the VNC client and any TTY emulator can be used to
+> control a single hvc console. For example, these two different
+> consoles should have similar input and output due to the buffer
+> multiplexing:
+>
+>    # VNC client
+>    vncviewer :0
+>
+>    # TTY emulator
+>    socat unix-connect:/tmp/sock pty,link=3D/tmp/pty
+>    tio /tmp/pty
+>
+> v4 .. v5:
+>
+> * Spelling fixes in qemu-options description
+> * Memory leaks fixes in mux-be tests
+> * Add sanity checks to chardev to avoid stacking of mux devices
+> * Add corresponding unit test case to cover the creation of stacked
+>   muxers: `-chardev mux-be,mux-id-be=3DID`, which is forbidden
+> * Reflect the fact that stacking is not supported in the documentation
+>
+> v3 .. v4:
+>
+> * Rebase on latest chardev changes
+> * Add unit tests which test corner cases:
+>    * Inability to remove mux with active frontend
+>    * Inability to add more chardevs to a mux than `MUX_MAX`
+>    * Inability to mix mux-fe and mux-be for the same chardev
+>
+> v2 .. v3:
+>
+> * Split frontend and backend multiplexer implementations and
+>   move them to separate files: char-mux-fe.c and char-mux-be.c
+>
+> v1 .. v2:
+>
+> * Separate type for the backend multiplexer `mux-be`
+> * Handle EAGAIN on write to the backend device
+> * Support of watch of previously failed backend device
+> * Proper json support of the `mux-be-id` option
+> * Unit test for the `mux-be` multiplexer
+>
+> [1] https://www.qemu.org/docs/master/system/qemu-manpage.html#hxtool-6
+> [2] https://github.com/lf-edge/eve
+>
+> Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+> Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
+> Cc: qemu-devel@nongnu.org
+>
+> Roman Penyaev (8):
+>   chardev/char: rename `MuxChardev` struct to `MuxFeChardev`
+>   chardev/char: rename `char-mux.c` to `char-mux-fe.c`
+>   chardev/char: move away mux suspend/resume calls
+>   chardev/char: rename frontend mux calls
+>   chardev/char: introduce `mux-be-id=3DID` option
+>   chardev/char-mux: implement backend chardev multiplexing
+>   tests/unit/test-char: add unit test for the `mux-be` multiplexer
+>   qemu-options.hx: describe multiplexing of several backend devices
+>
+>  chardev/char-fe.c                     |  25 +-
+>  chardev/char-mux-be.c                 | 290 +++++++++++++++++++++++
+>  chardev/{char-mux.c =3D> char-mux-fe.c} | 157 ++++---------
+>  chardev/char.c                        | 139 +++++++++--
+>  chardev/chardev-internal.h            |  55 ++++-
+>  chardev/meson.build                   |   3 +-
+>  include/chardev/char.h                |   8 +-
+>  qapi/char.json                        |  31 ++-
+>  qemu-options.hx                       |  80 +++++--
+>  system/vl.c                           |   4 +-
+>  tests/unit/test-char.c                | 323 +++++++++++++++++++++++++-
+>  11 files changed, 947 insertions(+), 168 deletions(-)
+>  create mode 100644 chardev/char-mux-be.c
+>  rename chardev/{char-mux.c =3D> char-mux-fe.c} (71%)
+>
+> --
+> 2.34.1
+>
 
