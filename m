@@ -4,75 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4ED2E68956
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 07:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313F8E68956
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 07:22:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6PCM-0001ej-CE; Thu, 31 Oct 2024 03:02:26 -0400
+	id 1t6PUg-0004Xe-AO; Thu, 31 Oct 2024 03:21:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6PCI-0001eF-Si
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:02:22 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6PCG-00072A-Ht
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:02:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730358141; x=1761894141;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=1uLbxR5aLR6yFMicCtuhn4ntzlEHWQ0jaJkDQayEaIw=;
- b=Qfk6kQlJut/wKbrDYgMjiIJfKdgfr+tCpe6C19ZutUp9MBcLvgJrdNpp
- pBcE6XD7POFGtHyiyyXUTcNS0QDTb6IBDOTq76UWDf0lCUXB5s0voxxEV
- 55+SSjepHGvCXbkJlQX4HkeDZf3uTZJHYkbXQpd9tTtMlolxmROEp7EuS
- OMJzAlTfMS0jqFs0mWtlZolCQcfgDQmU9PGOCpQxBU9N5Cf1pVk23dY3K
- 3naNWNqxoA6VQyDWhBjuekKqmER7AAHx3Z6UREWQ6ttdfEp3doRRhf02A
- +Q4QBax7812iqYdfdU4v+gpCOBejfURLNLUGDtPMnC9GcmYhD4hJoLmsu w==;
-X-CSE-ConnectionGUID: xAAoldaJSMeZr99vfrEXQQ==
-X-CSE-MsgGUID: wKaHjDhVSYavDiSEpMI1jw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="47540913"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="47540913"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Oct 2024 00:02:19 -0700
-X-CSE-ConnectionGUID: Q3ET6XQQRQSP08iL/Hhc+w==
-X-CSE-MsgGUID: jxlgvlKCSTeQ88Hw/BhoAA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="87135339"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 31 Oct 2024 00:02:17 -0700
-Date: Thu, 31 Oct 2024 15:18:37 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Tao Su <tao1.su@linux.intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- xiaoyao.li@intel.com
-Subject: Re: [PATCH 4/8] target/i386: add AVX10 feature and AVX10 version
- property
-Message-ID: <ZyMvTcW1QzA1ycUI@intel.com>
-References: <20241029151858.550269-1-pbonzini@redhat.com>
- <20241029151858.550269-5-pbonzini@redhat.com>
- <ZyHyBnPvOHsSdh8D@intel.com> <ZyH+RB3v55cQ43+S@linux.bj.intel.com>
- <ZyIy4OGSGPhAZutK@intel.com> <ZyI9P1ftFOTUhDzb@linux.bj.intel.com>
- <ZyJW9nGgpEXqiyli@intel.com> <ZyMKAwq4lsk+ozu3@linux.bj.intel.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t6PUf-0004XW-HR
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:21:21 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t6PUd-0000Nu-AA
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:21:21 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43159c9f617so4670305e9.2
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 00:21:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1730359277; x=1730964077;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Zuop8CXsJhNCYhcpwiLCpRtqG7leKD1xs9iMRDLK5ss=;
+ b=nIMC4ZFJapATy5kQ8AmkWdHkEKMkIA2LZjYdSiEDmn2sSebTMWkkI8msCobwb3xxlu
+ /+CBMiahCI0aPpGnGZ7EReeKOiiQIKGzDpW3VX6rCzHuXz8XWXExhlrrOhYSvGP1icpM
+ as4DqB29EZWIHlDT2LAfdB/ykIaSkxvqdmXNwMogPcgcNJTIpRuPc9uID+HRjnUFcy8C
+ uKyPXjuTqsCjAbUiQTp7nrpeaAYtjGK7Wp0Nxz7k7Md6KVKTdNM5HL40NknRPj8NxEuf
+ 6Cx3+NEThmKohPmTIqnKVBLiQ5qWIcEt85zPrL/KZkoFMXd5hUI1/Da/JXnia0fmFmSs
+ O1Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730359277; x=1730964077;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Zuop8CXsJhNCYhcpwiLCpRtqG7leKD1xs9iMRDLK5ss=;
+ b=TsP+N6naztzY5bqEhKbZ8XQxn0td7OQ08UMJRviFKOv15T/YVpdn1d5tpEzJP6KbQ1
+ 9slU1xDUV4Mnt244gyAWLGNANjmMs3G18zwdT/zPlQbQS2Z6Nl/TWfQu3sUAeOpqTMiH
+ QvimwXK65Iq3nwb2Sa9cKZDuh4Z1hkdWyeMYtsN2dst5RvGDxaC20wY2X3zToFHs2rj/
+ PFGA/sYzQz+0hVWmoZI4OWMEApj14XVxZSmGej4YNXoExooFQKgpIMTi83oFa72kk+MN
+ Yx213NiEp06WKgi8/t3na7F5VxG/YYtmRfBHoZr0YL8zyIzXjCniE/rTVvy3AMGa5RUe
+ kyWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVWkEwUI20O9IqTa5QsFQOQDoYsWTSfzdVtkdxi12BF+AwtR7ZiHr39dT5B1nNyLWIi+9tVmcyfMRjp@nongnu.org
+X-Gm-Message-State: AOJu0YxvCHBPMItiVXkHaeO+AxRrdt4TpQuNkc+5UuAZ6IaltbNBHg8i
+ 5bnUDtX4SPKotGN6zj4jL03q6ENTUaPhXj5SdZcdBMs0Awp+kjQ8gK8dx5/8sIQ=
+X-Google-Smtp-Source: AGHT+IGrg3X1DdmdhZO748tL7DC6hyRq9UXo3Wi1H32ZincFc1rcu24LKp6mq1TUxv/prl5bJr4saA==
+X-Received: by 2002:adf:f5d2:0:b0:37d:4afe:8c9b with SMTP id
+ ffacd0b85a97d-3806122165amr11617195f8f.54.1730359277096; 
+ Thu, 31 Oct 2024 00:21:17 -0700 (PDT)
+Received: from [157.82.207.167] ([157.82.207.167])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c10e7435sm1207056f8f.52.2024.10.31.00.21.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 31 Oct 2024 00:21:16 -0700 (PDT)
+Message-ID: <3dd9b22b-2e0c-4999-aab0-eac751923c35@daynix.com>
+Date: Thu, 31 Oct 2024 16:21:08 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZyMKAwq4lsk+ozu3@linux.bj.intel.com>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] qdev-properties: Accept bool for OnOffAuto
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+References: <20241022-virtio-v2-0-b2394236e053@daynix.com>
+ <20241022-virtio-v2-1-b2394236e053@daynix.com> <Zx_Ag0_MFem7Qn3a@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <Zx_Ag0_MFem7Qn3a@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2a00:1450:4864:20::331;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,45 +107,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > > > > > @@ -7674,13 +7682,21 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
-> > > > > >                                      &eax_0, &ebx_0, &ecx_0, &edx_0);
-> > > > > >          uint8_t version = ebx_0 & 0xff;
-> > > > > > 
-> > > > > > -        if (version < env->avx10_version) {
-> > > > > > +        if (!env->avx10_version) {
-> > > > > > +            env->avx10_version = version;
-> > > > > 
-> > > > > x86_cpu_filter_features() is not a good place to assign avx10_version, I
-> > > > > still tend to set it in max_x86_cpu_realize().
-> > > > 
-> > > > It's not proper to get the host's version when AVX10 cannot be enabled,
-> > > > even maybe host doesn't support AVX10.
-> > > > 
-> > > > As you found out earlier, max_x86_cpu_realize doesn't know if AVX10 can
-> > > > be enabled or not.
-> > > > 
-> > > 
-> > > How about moving to x86_cpu_expand_features()? We can set when checking
-> > > cpu->max_features.
-> > 
-> > The feature bit set in x86_cpu_expand_features() is unstable since it
-> > may be masked later in x86_cpu_filter_features(). :)
-> > 
+On 2024/10/29 1:49, Daniel P. Berrangé wrote:
+> The parent msg was sent off-list orignially, so below is a copy
+> of my feedback to that off-list posting.
 > 
-> A lot of feature bits are set in x86_cpu_expand_features() with reported
-> value, so I think avx10_version can also be set to reported value there.
+> On Tue, Oct 22, 2024 at 01:50:38PM +0900, Akihiko Odaki wrote:
+>> Accept bool literals for OnOffAuto properties for consistency with bool
+>> properties. This enables users to set the "on" or "off" value in a
+>> uniform syntax without knowing whether the "auto" value is accepted.
+>> This behavior is especially useful when converting an existing bool
+>> property to OnOffAuto or vice versa.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   hw/core/qdev-properties.c | 17 ++++++++++++++++-
+>>   1 file changed, 16 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+>> index 86a583574dd0..f0a270bb4f61 100644
+>> --- a/hw/core/qdev-properties.c
+>> +++ b/hw/core/qdev-properties.c
+>> @@ -491,6 +491,21 @@ const PropertyInfo qdev_prop_string = {
+>>       .set   = set_string,
+>>   };
+>>   
+>> +static void set_on_off_auto(Object *obj, Visitor *v, const char *name,
+>> +                            void *opaque, Error **errp)
+>> +{
+>> +    Property *prop = opaque;
+>> +    int *ptr = object_field_prop_ptr(obj, prop);
+>> +    bool value;
+>> +
+>> +    if (visit_type_bool(v, name, &value, NULL)) {
+>> +        *ptr = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+>> +        return;
+>> +    }
+>> +
+>> +    qdev_propinfo_set_enum(obj, v, name, opaque, errp);
+>> +}
 > 
-> I mainly want to let avx10_version be assigned only when -cpu host or max,
-> so that it can be distinguished from the cpu model. This should also be
-> Paolo's original intention in v2.
+> My feedback is the same as last time this was posted.
+> 
+> This is adding redundant new input-only & secret syntax for every
+> usage of OnOffAuto across QEMU.
+> 
+> "consistency with bool" isn't a expressing a compelling advantage.
+> 
+> The new permitted values are invisible to applications, beacuse
+> introspecting QAPI schema for the "OnOffAuto" type will never
+> report them, and querying the value of a property will also never
+> report them.
+> 
+> I'm not seeing an advantage, or clear problem solved, by adding
+> this.
 
-OK. In this case, extend avx10-version is also consistent with the
-semantics of this function. Even if host doesn't support avx10, then in
-principle it's ok to read unimplemented avx10-version as 0.
+The intent of this patch is to ease migration from bool to OnOffAuto; a 
+user should be able to set the "on" or "off" value without knowing the 
+"auto" value is accepted.
 
-Pls go ahead. :)
+The redundancy of syntax is already present with bool. If it is 
+problematic, the redundant syntax should be deprecated altogether, 
+whether the type is OnOffAuto or bool.
 
-Thanks,
-Zhao
+We can add a alternate type of OnOffAuto and bool to the QAPI schema, 
+but this type is not used in QAPI and is unnecessary.
+
+Regards,
+Akihiko Odaki
+
+> 
+>> +
+>>   /* --- on/off/auto --- */
+>>   
+>>   const PropertyInfo qdev_prop_on_off_auto = {
+>> @@ -498,7 +513,7 @@ const PropertyInfo qdev_prop_on_off_auto = {
+>>       .description = "on/off/auto",
+>>       .enum_table = &OnOffAuto_lookup,
+>>       .get = qdev_propinfo_get_enum,
+>> -    .set = qdev_propinfo_set_enum,
+>> +    .set = set_on_off_auto,
+>>       .set_default_value = qdev_propinfo_set_default_value_enum,
+>>   };
+>>   
+>>
+>> -- 
+>> 2.47.0
+>>
+> 
+> With regards,
+> Daniel
 
 
