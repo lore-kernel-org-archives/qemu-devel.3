@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 716F0D767FC
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 20:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0319D767FC
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 20:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6bQl-00075s-Om; Thu, 31 Oct 2024 16:06:07 -0400
+	id 1t6bRU-0007Rv-38; Thu, 31 Oct 2024 16:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t6bQh-000751-TN; Thu, 31 Oct 2024 16:06:03 -0400
+ id 1t6bRT-0007Qd-18; Thu, 31 Oct 2024 16:06:51 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t6bQd-0007Ru-Rj; Thu, 31 Oct 2024 16:06:03 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XfZcR0Y1sz6L6yZ;
- Fri,  1 Nov 2024 04:00:55 +0800 (CST)
+ id 1t6bRR-0007WL-BQ; Thu, 31 Oct 2024 16:06:50 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XfZdZ2mSnz6LDK5;
+ Fri,  1 Nov 2024 04:01:54 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 1801E140B35;
- Fri,  1 Nov 2024 04:05:48 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 63E2414058E;
+ Fri,  1 Nov 2024 04:06:47 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.48.152.207) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 31 Oct 2024 21:05:28 +0100
+ 15.1.2507.39; Thu, 31 Oct 2024 21:06:27 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,14 +45,15 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH V2 0/6] Arch agnostic ACPI changes to support vCPU Hotplug (on
- Archs like ARM)
-Date: Thu, 31 Oct 2024 20:04:56 +0000
-Message-ID: <20241031200502.3869-1-salil.mehta@huawei.com>
+Subject: [PATCH V2 3/6] qtest: allow ACPI DSDT Table changes
+Date: Thu, 31 Oct 2024 20:04:59 +0000
+Message-ID: <20241031200502.3869-4-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241031200502.3869-1-salil.mehta@huawei.com>
+References: <20241031200502.3869-1-salil.mehta@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.48.152.207]
 X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
  frapeml500007.china.huawei.com (7.182.85.172)
@@ -82,155 +83,61 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change Log
-==========
+list changed files in tests/qtest/bios-tables-test-allowed-diff.h
 
-Patch V1 -> V2:
-1. Addressed Igor Mammedov's (Redhat) raised issues:
-   - Removed `ACPICPUstatus::is_present` State and its handling in the
-     ACPI APUs AML code and now all QOM vCPUs are present.
-   - Dropped the concept of `acpi_persistent` because now QOM vCPUs
-     states and the ACPI vCPU states are consistent.
-   - QOM vCPU objects are always present now (accompanying RFC V6)
-   - Added .needed() hook to the GED VMSD toconditionally migrate the
-     ACPI CPU hotplug state at the source VM.
-2. Addressed Zhao Liu's (Intel) reported x86 DSDT Table bios-acpi-test failure 
-3. Incorporated Gustavo Romero's comments and added his Tag to [Patches 1,2,4]
-4. Addressed Gavin Shan's comment to reduce the inline code comments
-   wherever possible.
+Reported-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h | 41 +++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-
-Brief Recall
-============
-With the advent of multi-core SoCs, the concept of CPU-level hotplugging
-has become less distinct, often functioning as a power on/off event
-rather than a full hotplug operation. However, hotplug support at the
-die/NUMA/socket level remains meaningful and is architecture-specific.
-Virtual CPU hotplug can be supported regardless of architectural support
-for physical CPU hotplug, as it serves resource management needs—such as
-dynamically scaling VM compute capacity based on demand or SLAs,
-optimizing boot times, or reducing memory footprint. Although, its
-desing must be scalable and must co-exist with future die/NUMA/socket
-level hotplug features.
-
-
-Motivation for this patch-set
-=============================
-In architectures that support vCPU hotplug, firmware or the VMM/QEMU
-typically reflects vCPU status changes to the OS via the ACPI
-`_STA.Present` bit. However, certain CPU architectures prohibit [1]
-modifications to CPU presence after kernel boot. This restriction [2][3]
-could be due to closely integrated per-CPU components—like interrupt
-controllers or other features— that may not support reconfiguration
-post-boot and are often in an `always-on` power domain. Consequently,
-specifications for these architectures require all CPUs to remain
-present i.e.`_STA.Present=True`, once the system is initialized.
-
-To be able to support vCPU Hotplug feature, as a workaround to the above
-limitation,  ACPI method `_STA.Enabled` Bit could be used to reflect the
-plugged and unplugged states of the QOM vCPUs.
-
-This patch set introduces the following changes:
-
-1. Explicit `ACPICPUstatus::is_enabled` State: Adds an `is_enabled`
-   state, initialized during machine setup and updated during CPU
-   hotplug and hot-unplug events.
-   
-2. Support for Migrating ACPI CPU State: Facilitates the migration of
-   the ACPI CPU state. (This needs reconsideration as per Igor. Last
-   patch can be dropped if this affects the acceptability of other
-   patches of this patch-set)
-
-3. Updates the Qtest bios-acpi-test
-
-This patch set is designed to work independently and is meant to ensures
-compatibility with existing hotplug support across different
-architectures. This patch-set has been tested alongside ARM-specific
-vCPU hotplug changes (included in the upcoming RFC V6 [4]), and
-hot(un)plug functionalities performed as expected which concerns this
-patch-set. Please have a look.
-
-Thank you!
-
-
-Repository of this patch-set
-============================
-(*) Latest Architecture Agnostic ACPI changes patch-set:
-    https://github.com/salil-mehta/qemu.git   virt-cpuhp-armv8/rfc-v6.arch.agnostic.acpi.v2
-    Link: https://github.com/salil-mehta/qemu/commits/virt-cpuhp-armv8/rfc-v6.arch.agnostic.acpi.v2
-(*) Works with upcoming ARM architecture specific patch-set RFC V6 [4]
-
-
-References
-==========
-[1] Check comment 5 in the bugzilla entry
-    Link: https://bugzilla.tianocore.org/show_bug.cgi?id=4481#c5
-[2] KVMForum 2023 Presentation: Challenges Revisited in Supporting Virt CPU Hotplug on
-    architectures that don’t Support CPU Hotplug (like ARM64)
-    a. Kernel Link: https://kvm-forum.qemu.org/2023/KVM-forum-cpu-hotplug_7OJ1YyJ.pdf
-    b. Qemu Link:  https://kvm-forum.qemu.org/2023/Challenges_Revisited_in_Supporting_Virt_CPU_Hotplug_-__ii0iNb3.pdf
-[3] KVMForum 2020 Presentation: Challenges in Supporting Virtual CPU Hotplug on
-    SoC Based Systems (like ARM64)
-    Link: https://kvmforum2020.sched.com/event/eE4m
-[4] Upcoming RFC V6, Support of Virtual CPU Hotplug for ARMv8 Arch
-    Link: https://github.com/salil-mehta/qemu/commits/virt-cpuhp-armv8/rfc-v6-rc4
-
-
-Salil Mehta (6):
-  hw/acpi: Introduce `is_enabled` state in ACPI CPU Hotplug Status
-  hw/acpi: Update ACPI CPU Hotplug state during vCPU hot(un)plug
-  qtest: allow ACPI DSDT Table changes
-  hw/acpi: Update CPUs AML's `is_enabled` state in ACPI _STA method
-  tests/qtest/bios-tables-test: Update DSDT golden masters for
-    x86/{pc,q35}
-  hw/acpi: Update GED with vCPU Hotplug VMSD for migration
-
- hw/acpi/cpu.c                                 |  22 ++++++++++++++++--
- hw/acpi/generic_event_device.c                |  19 +++++++++++++++
- include/hw/acpi/cpu.h                         |   2 +-
- tests/data/acpi/x86/pc/DSDT                   | Bin 8527 -> 8533 bytes
- tests/data/acpi/x86/pc/DSDT.acpierst          | Bin 8438 -> 8444 bytes
- tests/data/acpi/x86/pc/DSDT.acpihmat          | Bin 9852 -> 9858 bytes
- tests/data/acpi/x86/pc/DSDT.bridge            | Bin 15398 -> 15404 bytes
- tests/data/acpi/x86/pc/DSDT.cphp              | Bin 8991 -> 8997 bytes
- tests/data/acpi/x86/pc/DSDT.dimmpxm           | Bin 10181 -> 10187 bytes
- tests/data/acpi/x86/pc/DSDT.hpbridge          | Bin 8478 -> 8484 bytes
- tests/data/acpi/x86/pc/DSDT.hpbrroot          | Bin 5034 -> 5040 bytes
- tests/data/acpi/x86/pc/DSDT.ipmikcs           | Bin 8599 -> 8605 bytes
- tests/data/acpi/x86/pc/DSDT.memhp             | Bin 9886 -> 9892 bytes
- tests/data/acpi/x86/pc/DSDT.nohpet            | Bin 8385 -> 8391 bytes
- tests/data/acpi/x86/pc/DSDT.numamem           | Bin 8533 -> 8539 bytes
- tests/data/acpi/x86/pc/DSDT.roothp            | Bin 12320 -> 12326 bytes
- tests/data/acpi/x86/q35/DSDT                  | Bin 8355 -> 8361 bytes
- tests/data/acpi/x86/q35/DSDT.acpierst         | Bin 8372 -> 8378 bytes
- tests/data/acpi/x86/q35/DSDT.acpihmat         | Bin 9680 -> 9686 bytes
- .../acpi/x86/q35/DSDT.acpihmat-noinitiator    | Bin 8634 -> 8640 bytes
- tests/data/acpi/x86/q35/DSDT.applesmc         | Bin 8401 -> 8407 bytes
- tests/data/acpi/x86/q35/DSDT.bridge           | Bin 11968 -> 11974 bytes
- tests/data/acpi/x86/q35/DSDT.core-count       | Bin 12913 -> 12919 bytes
- tests/data/acpi/x86/q35/DSDT.core-count2      | Bin 33770 -> 33776 bytes
- tests/data/acpi/x86/q35/DSDT.cphp             | Bin 8819 -> 8825 bytes
- tests/data/acpi/x86/q35/DSDT.cxl              | Bin 13148 -> 13154 bytes
- tests/data/acpi/x86/q35/DSDT.dimmpxm          | Bin 10009 -> 10015 bytes
- tests/data/acpi/x86/q35/DSDT.ipmibt           | Bin 8430 -> 8436 bytes
- tests/data/acpi/x86/q35/DSDT.ipmismbus        | Bin 8443 -> 8449 bytes
- tests/data/acpi/x86/q35/DSDT.ivrs             | Bin 8372 -> 8378 bytes
- tests/data/acpi/x86/q35/DSDT.memhp            | Bin 9714 -> 9720 bytes
- tests/data/acpi/x86/q35/DSDT.mmio64           | Bin 9485 -> 9491 bytes
- tests/data/acpi/x86/q35/DSDT.multi-bridge     | Bin 13208 -> 13214 bytes
- tests/data/acpi/x86/q35/DSDT.noacpihp         | Bin 8235 -> 8241 bytes
- tests/data/acpi/x86/q35/DSDT.nohpet           | Bin 8213 -> 8219 bytes
- tests/data/acpi/x86/q35/DSDT.numamem          | Bin 8361 -> 8367 bytes
- tests/data/acpi/x86/q35/DSDT.pvpanic-isa      | Bin 8456 -> 8462 bytes
- tests/data/acpi/x86/q35/DSDT.thread-count     | Bin 12913 -> 12919 bytes
- tests/data/acpi/x86/q35/DSDT.thread-count2    | Bin 33770 -> 33776 bytes
- tests/data/acpi/x86/q35/DSDT.tis.tpm12        | Bin 8961 -> 8967 bytes
- tests/data/acpi/x86/q35/DSDT.tis.tpm2         | Bin 8987 -> 8993 bytes
- tests/data/acpi/x86/q35/DSDT.type4-count      | Bin 18589 -> 18595 bytes
- tests/data/acpi/x86/q35/DSDT.viot             | Bin 14615 -> 14621 bytes
- tests/data/acpi/x86/q35/DSDT.xapic            | Bin 35718 -> 35724 bytes
- 44 files changed, 40 insertions(+), 3 deletions(-)
-
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..512d40665d 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,42 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/x86/pc/DSDT",
++"tests/data/acpi/x86/pc/DSDT.acpierst",
++"tests/data/acpi/x86/pc/DSDT.acpihmat",
++"tests/data/acpi/x86/pc/DSDT.bridge",
++"tests/data/acpi/x86/pc/DSDT.cphp",
++"tests/data/acpi/x86/pc/DSDT.dimmpxm",
++"tests/data/acpi/x86/pc/DSDT.hpbridge",
++"tests/data/acpi/x86/pc/DSDT.hpbrroot",
++"tests/data/acpi/x86/pc/DSDT.ipmikcs",
++"tests/data/acpi/x86/pc/DSDT.memhp",
++"tests/data/acpi/x86/pc/DSDT.nohpet",
++"tests/data/acpi/x86/pc/DSDT.numamem",
++"tests/data/acpi/x86/pc/DSDT.roothp",
++"tests/data/acpi/x86/q35/DSDT",
++"tests/data/acpi/x86/q35/DSDT.acpierst",
++"tests/data/acpi/x86/q35/DSDT.acpihmat",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
++"tests/data/acpi/x86/q35/DSDT.applesmc",
++"tests/data/acpi/x86/q35/DSDT.bridge",
++"tests/data/acpi/x86/q35/DSDT.core-count",
++"tests/data/acpi/x86/q35/DSDT.core-count2",
++"tests/data/acpi/x86/q35/DSDT.cphp",
++"tests/data/acpi/x86/q35/DSDT.cxl",
++"tests/data/acpi/x86/q35/DSDT.dimmpxm",
++"tests/data/acpi/x86/q35/DSDT.ipmibt",
++"tests/data/acpi/x86/q35/DSDT.ipmismbus",
++"tests/data/acpi/x86/q35/DSDT.ivrs",
++"tests/data/acpi/x86/q35/DSDT.memhp",
++"tests/data/acpi/x86/q35/DSDT.mmio64",
++"tests/data/acpi/x86/q35/DSDT.multi-bridge",
++"tests/data/acpi/x86/q35/DSDT.noacpihp",
++"tests/data/acpi/x86/q35/DSDT.nohpet",
++"tests/data/acpi/x86/q35/DSDT.numamem",
++"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
++"tests/data/acpi/x86/q35/DSDT.thread-count",
++"tests/data/acpi/x86/q35/DSDT.thread-count2",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
++"tests/data/acpi/x86/q35/DSDT.type4-count",
++"tests/data/acpi/x86/q35/DSDT.viot",
++"tests/data/acpi/x86/q35/DSDT.xapic",
 -- 
 2.34.1
 
