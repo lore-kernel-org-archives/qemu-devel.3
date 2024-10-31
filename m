@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D67E6894E
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 004E7E6894E
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MG9-0007KQ-Bh; Wed, 30 Oct 2024 23:54:09 -0400
+	id 1t6MFs-0007Gl-OV; Wed, 30 Oct 2024 23:53:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MG8-0007KC-Hn
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:08 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1t6MFq-0007GM-UO
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:53:51 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MG7-0003vR-2W
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:08 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-20c7edf2872so12556025ad.1
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:54:06 -0700 (PDT)
+ id 1t6MFp-0003tn-D4
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:53:50 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-71e6cec7227so392290b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:53:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730346845; x=1730951645; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730346828; x=1730951628; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C32AOSRvgJJm4SKEesOSC4GwO3dBVLrjKqkchj8pJHU=;
- b=WGtpxRu/tFg/o3UQSuCZL7I9KsHvjniHeahBJinAg3Gh2oikjXl4LKl5tSILbZtKvB
- n0WeXqjFq6hq1/XpdmN3cqW3eOsmo7Aq/FxMyFlsXupC98r/N+9EsTru1+1HyFEEnkYe
- r4VT99nfMZtiCc+pxzNAVhcjSHYTjfyavKahp9e4GauWKPAm8038VsmF6yPH8Ubhb3Wi
- iXbJFonKk8iHLIEqe48EbXrPK+KJm54fyE4Lcj3syRTVJo1q5fvmKBgVODMnxr+qMFMP
- eAhNiauzxvG2tWr03bP5ZanO6f8ChYkhADcUi6NZaEySQy1NY8pgLXJCDhR1TBvkquku
- ZZVQ==
+ bh=0gb/JqbpikR1+WgRi3jNu9TsaWD1IY/ZLQT0qI8W7o0=;
+ b=L2ZgpL3woHwW8dlMeAPrMReld+H42xLJuj6cC1CkOf3h0iWtcomy61T8B/+SXQmskI
+ OenjoVPX7dWXtRfBI1I031eDGcM+r7peRZOr5C4NFMo6pPSqKwTLs3xny6fd4/B7Ul0M
+ qa1e7K+qt3y6CH5DiwDpTZkFjP6PDyLTuDD3c+aaXHo6RDHEHvk73+QjR8tw5GFp2qm2
+ 0jLcHeRwED9ujHiY6JwRbSOncuPpKTOmaEHvwagKzWgkJpElf6Rq+maKxBg9ayMq8xg3
+ cZdSVZXhxdpKG7FcD8S5nBLAxjO5dU/EvrqztdGGJKIlCbqVjt2X+Jkj8c6ZHHCgGO52
+ ykIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730346845; x=1730951645;
+ d=1e100.net; s=20230601; t=1730346828; x=1730951628;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C32AOSRvgJJm4SKEesOSC4GwO3dBVLrjKqkchj8pJHU=;
- b=rKGqnkX39dU3hKPjYClEh5+pQ6N6FzKnPr5PFieH0fHgdizcKzptiH3in1bYEKvYsA
- BYSN3U4i5/JBnFFtCmRO5VRiwF+GWmHXDEWHCobcVb+khDosVrjRMQnSKrHZPSM2j+K8
- 6PzsZClBScv8WK3qTDkuMpL2w21Wv7/jjrokK45dpf/ZAwwEPD6L197IngR1Xpa0zBhg
- B1lFwRSxQxHCsGjT0fxJOPqJIb6lnRhORbCeo1K0diI5sgFbnGRazfJMeMOkvM3tIJae
- SBw/7d6Duc4Bq7fXRO4RL+wfI3E9U+ALn0+AxvR0Fx+N6Fx+NmNFvQ2IIV7FUJ9MFRId
- tnlg==
-X-Gm-Message-State: AOJu0Yy3DiFkPGdKtS68UzII4a4K3FizDB3uFpKMpaML+gSqCCR5NKCj
- NrNihvVENFQhTFZSu9oS3LBqDZw0pg22rgCxE/B2Eza/wbNUgjBWQ+G80ODK
-X-Google-Smtp-Source: AGHT+IH7V4UQESPDWKiZbwqWQstmhWpIWygZqKIYPWuED9bdsBWP7SqT1dbKdxuYNEvdyyJjtvglZQ==
-X-Received: by 2002:a17:903:234c:b0:20c:cd01:79ae with SMTP id
- d9443c01a7336-21105803b19mr14734255ad.24.1730346845319; 
- Wed, 30 Oct 2024 20:54:05 -0700 (PDT)
+ bh=0gb/JqbpikR1+WgRi3jNu9TsaWD1IY/ZLQT0qI8W7o0=;
+ b=PQHI9LJUZL+qxhhGeE25iK1bhllKVYVZ+F7Rjk/ObEfzJG3EQSs9f8WdtkuBMh+1hY
+ PkmuNOuTG29ooX6Bk1a0XG9yYaASU/av9RIVQ7ukSgDKihTvcFzGw7ZG02wLC6b7pkbO
+ 3v41b4QUrOcFFzZlw72Ek5uWIzluXcaxu2VSCzeNOF8hJt+gs0nCovYtBmLz9wiqXUdl
+ 1RlR2PXE8nhpMYDwPQzgjq5zXfNFiK+nUc0OdQItwVi2gsaYHd67IbIllBql2G4NNpGT
+ yR3xT70wvmlltCGhBPM97qiNPCPJWk1f0vBwex8iDQMDCFDYNXUosyM3KuDWwcgaqeBw
+ fyng==
+X-Gm-Message-State: AOJu0YyvlPD49FQQl8SjQPfSOmvfgCR8A6HBgT1QD33Tb+2OQTnsbTOY
+ TzSZdJpv/up4ERQ7puBNpvAfZN2gs3EbkExX+ovsgsV3WJcAGWDa47qIwSFd
+X-Google-Smtp-Source: AGHT+IEDwffmxmbV+5n0eNTfrTUcP454s4c8X5VXUjVCsTXy2DrDEPxvu8nvDddYuIPiXgI4oQRv+Q==
+X-Received: by 2002:a05:6a21:3a82:b0:1d9:8275:cd70 with SMTP id
+ adf61e73a8af0-1d9a84d0918mr21152521637.40.1730346827845; 
+ Wed, 30 Oct 2024 20:53:47 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.54.02
+ d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.53.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 20:54:04 -0700 (PDT)
+ Wed, 30 Oct 2024 20:53:47 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+Cc: alistair23@gmail.com, TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 13/50] hw/intc/riscv_aplic: Check and update pending when write
- sourcecfg
-Date: Thu, 31 Oct 2024 13:52:41 +1000
-Message-ID: <20241031035319.731906-14-alistair.francis@wdc.com>
+Subject: [PULL 07/50] target/riscv: Enable RV32 CPU support in RV64 QEMU
+Date: Thu, 31 Oct 2024 13:52:35 +1000
+Message-ID: <20241031035319.731906-8-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241031035319.731906-1-alistair.francis@wdc.com>
 References: <20241031035319.731906-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,112 +99,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 
-The section 4.5.2 of the RISC-V AIA specification says that any write
-to a sourcecfg register of an APLIC might (or might not) cause the
-corresponding interrupt-pending bit to be set to one if the rectified
-input value is high (= 1) under the new source mode.
+Add gdb XML files and adjust CPU initialization to allow running RV32 CPUs
+in RV64 QEMU.
 
-If an interrupt is asserted before the driver configs its interrupt
-type to APLIC, it's pending bit will not be set except a relevant
-write to a setip or setipnum register. When we write the interrupt
-type to sourcecfg register, if the APLIC device doesn't check
-rectified input value and update the pending bit, this interrupt
-might never becomes pending.
-
-For APLIC.m, we can manully set pending by setip or setipnum
-registers in driver. But for APLIC.w, the pending status totally
-depends on the rectified input value, we can't control the pending
-status via mmio registers. In this case, hw should check and update
-pending status for us when writing sourcecfg registers.
-
-Update QEMU emulation to handle "pre-existing" interrupts.
-
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241004104649.13129-1-yongxuan.wang@sifive.com>
+Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240919055048.562-7-zhiwei_liu@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/intc/riscv_aplic.c | 51 ++++++++++++++++++++++++++++---------------
- 1 file changed, 33 insertions(+), 18 deletions(-)
+ configs/targets/riscv64-softmmu.mak |  2 +-
+ target/riscv/cpu.c                  | 16 +++++++++++++---
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 32edd6d07b..4a262c82f0 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -159,31 +159,42 @@ static bool is_kvm_aia(bool msimode)
-     return kvm_irqchip_in_kernel() && msimode;
+diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
+index 917980e63e..6c5de72e03 100644
+--- a/configs/targets/riscv64-softmmu.mak
++++ b/configs/targets/riscv64-softmmu.mak
+@@ -2,6 +2,6 @@ TARGET_ARCH=riscv64
+ TARGET_BASE_ARCH=riscv
+ TARGET_SUPPORTS_MTTCG=y
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+-TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
++TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-virtual.xml
+ # needed by boot.c
+ TARGET_NEED_FDT=y
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 658bdb4ae1..44288013cc 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -615,7 +615,10 @@ static void rv64e_bare_cpu_init(Object *obj)
+     riscv_cpu_set_misa_ext(env, RVE);
  }
  
-+static bool riscv_aplic_irq_rectified_val(RISCVAPLICState *aplic,
-+                                          uint32_t irq)
-+{
-+    uint32_t sourcecfg, sm, raw_input, irq_inverted;
+-#else /* !TARGET_RISCV64 */
++#endif /* !TARGET_RISCV64 */
 +
-+    if (!irq || aplic->num_irqs <= irq) {
-+        return false;
-+    }
-+
-+    sourcecfg = aplic->sourcecfg[irq];
-+    if (sourcecfg & APLIC_SOURCECFG_D) {
-+        return false;
-+    }
-+
-+    sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
-+    if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
-+        return false;
-+    }
-+
-+    raw_input = (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
-+    irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
-+                    sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
-+
-+    return !!(raw_input ^ irq_inverted);
-+}
-+
- static uint32_t riscv_aplic_read_input_word(RISCVAPLICState *aplic,
-                                             uint32_t word)
++#if defined(TARGET_RISCV32) || \
++    (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
+ 
+ static void rv32_base_cpu_init(Object *obj)
  {
--    uint32_t i, irq, sourcecfg, sm, raw_input, irq_inverted, ret = 0;
-+    uint32_t i, irq, rectified_val, ret = 0;
- 
-     for (i = 0; i < 32; i++) {
-         irq = word * 32 + i;
--        if (!irq || aplic->num_irqs <= irq) {
--            continue;
--        }
- 
--        sourcecfg = aplic->sourcecfg[irq];
--        if (sourcecfg & APLIC_SOURCECFG_D) {
--            continue;
--        }
--
--        sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
--        if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
--            continue;
--        }
--
--        raw_input = (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
--        irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
--                        sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
--        ret |= (raw_input ^ irq_inverted) << i;
-+        rectified_val = riscv_aplic_irq_rectified_val(aplic, irq);
-+        ret |= rectified_val << i;
-     }
- 
-     return ret;
-@@ -702,6 +713,10 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
-             (aplic->sourcecfg[irq] == 0)) {
-             riscv_aplic_set_pending_raw(aplic, irq, false);
-             riscv_aplic_set_enabled_raw(aplic, irq, false);
-+        } else {
-+            if (riscv_aplic_irq_rectified_val(aplic, irq)) {
-+                riscv_aplic_set_pending_raw(aplic, irq, true);
-+            }
-         }
-     } else if (aplic->mmode && aplic->msimode &&
-                (addr == APLIC_MMSICFGADDR)) {
+@@ -2941,6 +2944,12 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+     },
+ #if defined(TARGET_RISCV32)
+     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX,       MXL_RV32,  riscv_max_cpu_init),
++#elif defined(TARGET_RISCV64)
++    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX,       MXL_RV64,  riscv_max_cpu_init),
++#endif
++
++#if defined(TARGET_RISCV32) || \
++    (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
+     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE32,    MXL_RV32,  rv32_base_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_IBEX,       MXL_RV32,  rv32_ibex_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E31, MXL_RV32,  rv32_sifive_e_cpu_init),
+@@ -2948,8 +2957,9 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_U34, MXL_RV32,  rv32_sifive_u_cpu_init),
+     DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV32I,        MXL_RV32,  rv32i_bare_cpu_init),
+     DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV32E,        MXL_RV32,  rv32e_bare_cpu_init),
+-#elif defined(TARGET_RISCV64)
+-    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX,       MXL_RV64,  riscv_max_cpu_init),
++#endif
++
++#if defined(TARGET_RISCV64)
+     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE64,    MXL_RV64,  rv64_base_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E51, MXL_RV64,  rv64_sifive_e_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_U54, MXL_RV64,  rv64_sifive_u_cpu_init),
 -- 
 2.47.0
 
