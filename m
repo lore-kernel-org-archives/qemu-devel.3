@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5473FD767D8
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 15:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B0D7D767E0
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 15:54:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6XUp-0005M4-Vd; Thu, 31 Oct 2024 11:54:03 -0400
+	id 1t6XUy-0005Nl-DE; Thu, 31 Oct 2024 11:54:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t6XUo-0005Ld-Ez
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 11:54:02 -0400
+ id 1t6XUw-0005NH-D6
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 11:54:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t6XUn-0006Jv-0J
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 11:54:02 -0400
+ id 1t6XUt-0006KX-DF
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 11:54:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730390040;
+ s=mimecast20190719; t=1730390046;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NLPrzmQ5UMpbUPSWrOqziRjGmE/Ue1bsgTA6gqEC2ag=;
- b=QyNjOc6f1v5zDwownn6lcz3CdD3c2LINxZ8e+dQCDBcGHw83e/cQD6WewC27i+S2QMfKPl
- rsZNm8xZ1UMqiCbBufQBNSbXIBxX3Hf9iyjVtRfr5QLBmSWthtYAZFPqwTBTg0Of0tB5Lk
- iTOsAkIY4BreqIvwbCff6IOZGRIIQA4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=XOdL1KTzerHFUwTSFzsMidxfSqzGyYcF44bdrJkUdk0=;
+ b=fDHtuG13Xgs9tLoGtvtOp1zt1V6RVEoE1GnCg+4YToyPOQF+Iwd0XEoQZB9zV6OPbs1VGG
+ EjZwbjaf4ah3CUvD8SLc2mYgMZBxdVGU4Fw4yO8rrRm7UbSAPwJ9Wio49anLBCCBXsqN4x
+ DzaTyj5y7ik5nebU8WabTlkdxrhXNqo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-VhmfsewaP_GP5oXQXeBp1A-1; Thu,
- 31 Oct 2024 11:53:56 -0400
-X-MC-Unique: VhmfsewaP_GP5oXQXeBp1A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-383-nOYgTYpYOWmnp1MZOdbKqQ-1; Thu,
+ 31 Oct 2024 11:54:03 -0400
+X-MC-Unique: nOYgTYpYOWmnp1MZOdbKqQ-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB355195608C
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 15:53:55 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9F75D1955EA5
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 15:54:02 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.18])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6D1A81956054; Thu, 31 Oct 2024 15:53:54 +0000 (UTC)
+ id C748D1956054; Thu, 31 Oct 2024 15:54:00 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [RFC 1/5] qom: refactor checking abstract property when creating
- instances
-Date: Thu, 31 Oct 2024 15:53:46 +0000
-Message-ID: <20241031155350.3240361-2-berrange@redhat.com>
+Subject: [RFC 4/5] qom: introduce object_new_dynamic()
+Date: Thu, 31 Oct 2024 15:53:49 +0000
+Message-ID: <20241031155350.3240361-5-berrange@redhat.com>
 In-Reply-To: <20241031155350.3240361-1-berrange@redhat.com>
 References: <20241031155350.3240361-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -86,110 +85,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Push an Error object into object_initialize_with_type, so that
-reporting of attempts to create an abstract type is handled at
-the lowest level.
+object_new() has a failure scenario where it will assert() if given
+an abstract type. Callers which are creating objects based on user
+input, or unknown/untrusted type names, must manually check the
+result of object_class_is_abstract() before calling object_new()
+to propagate an Error, instead of asserting.
+
+Introduce a object_new_dynamic() method which is a counterpart to
+object_new() that directly returns an Error, instead of asserting.
+This new method is to be used where the typename is specified
+dynamically by code separate from the immediate caller.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qom/object.c | 28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ include/qom/object.h | 27 +++++++++++++++++++++++++++
+ qom/object.c         |  6 ++++++
+ 2 files changed, 33 insertions(+)
 
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 222c60e205..8c2f3551c5 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -624,14 +624,41 @@ Object *object_new_with_class(ObjectClass *klass, Error **errp);
+  * object_new:
+  * @typename: The name of the type of the object to instantiate.
+  *
++ * This method should be used where @typename is statically specified
++ * from a const string at build time, where the caller does not expect
++ * failure to be possible.
++ *
+  * This function will initialize a new object using heap allocated memory.
+  * The returned object has a reference count of 1, and will be freed when
+  * the last reference is dropped.
+  *
++ * If an instance of @typename is not permitted to be instantiated, an
++ * assert will be raised. This can happen if @typename is abstract.
++ *
+  * Returns: The newly allocated and instantiated object.
+  */
+ Object *object_new(const char *typename);
+ 
++/**
++ * object_new_dynamic:
++ * @typename: The name of the type of the object to instantiate.
++ * @errp: pointer to be filled with error details on failure
++ *
++ * This method should be used where @typename is dynamically chosen
++ * at runtime, which has the possibility of unexpected choices leading
++ * to failures.
++ *
++ * This function will initialize a new object using heap allocated memory.
++ * The returned object has a reference count of 1, and will be freed when
++ * the last reference is dropped.
++ *
++ * If an instance of @typename is not permitted to be instantiated, an
++ * error will be raised. This can happen if @typename is abstract.
++ *
++ * Returns: The newly allocated and instantiated object.
++ */
++Object *object_new_dynamic(const char *typename, Error **errp);
++
+ /**
+  * object_new_with_props:
+  * @typename:  The name of the type of the object to instantiate.
 diff --git a/qom/object.c b/qom/object.c
-index 11424cf471..8eed5f6ed3 100644
+index 1f139aa9c8..1ed62dc2c9 100644
 --- a/qom/object.c
 +++ b/qom/object.c
-@@ -545,14 +545,19 @@ static void object_class_property_init_all(Object *obj)
-     }
+@@ -807,6 +807,12 @@ Object *object_new(const char *typename)
+     return object_new_with_type(ti, &error_abort);
  }
  
--static void object_initialize_with_type(Object *obj, size_t size, TypeImpl *type)
-+static bool object_initialize_with_type(Object *obj, size_t size, TypeImpl *type, Error **errp)
- {
-     type_initialize(type);
- 
-     g_assert(type->instance_size >= sizeof(Object));
--    g_assert(type->abstract == false);
-     g_assert(size >= type->instance_size);
- 
-+    if (type->abstract) {
-+        error_setg(errp, "Abstract type '%s' cannot be instantiated",
-+                   type->name);
-+        return false;
-+    }
++Object *object_new_dynamic(const char *typename, Error **errp)
++{
++    TypeImpl *ti = type_get_by_name(typename);
 +
-     memset(obj, 0, type->instance_size);
-     obj->class = type->class;
-     object_ref(obj);
-@@ -561,6 +566,8 @@ static void object_initialize_with_type(Object *obj, size_t size, TypeImpl *type
-                                             NULL, object_property_free);
-     object_init_with_type(obj, type);
-     object_post_init_with_type(obj, type);
-+
-+    return true;
- }
++    return object_new_with_type(ti, errp);
++}
  
- void object_initialize(void *data, size_t size, const char *typename)
-@@ -583,7 +590,7 @@ void object_initialize(void *data, size_t size, const char *typename)
-         abort();
-     }
- 
--    object_initialize_with_type(data, size, type);
-+    object_initialize_with_type(data, size, type, &error_abort);
- }
- 
- bool object_initialize_child_with_props(Object *parentobj,
-@@ -755,7 +762,7 @@ typedef union {
- } qemu_max_align_t;
- #endif
- 
--static Object *object_new_with_type(Type type)
-+static Object *object_new_with_type(Type type, Error **errp)
- {
-     Object *obj;
-     size_t size, align;
-@@ -779,7 +786,10 @@ static Object *object_new_with_type(Type type)
-         obj_free = qemu_vfree;
-     }
- 
--    object_initialize_with_type(obj, size, type);
-+    if (!object_initialize_with_type(obj, size, type, errp)) {
-+        g_free(obj);
-+        return NULL;
-+    }
-     obj->free = obj_free;
- 
-     return obj;
-@@ -787,14 +797,14 @@ static Object *object_new_with_type(Type type)
- 
- Object *object_new_with_class(ObjectClass *klass)
- {
--    return object_new_with_type(klass->type);
-+    return object_new_with_type(klass->type, &error_abort);
- }
- 
- Object *object_new(const char *typename)
- {
-     TypeImpl *ti = type_get_by_name(typename);
- 
--    return object_new_with_type(ti);
-+    return object_new_with_type(ti, &error_abort);
- }
- 
- 
-@@ -831,11 +841,9 @@ Object *object_new_with_propv(const char *typename,
-         return NULL;
-     }
- 
--    if (object_class_is_abstract(klass)) {
--        error_setg(errp, "object type '%s' is abstract", typename);
-+    if (!(obj = object_new_with_type(klass->type, errp))) {
-         return NULL;
-     }
--    obj = object_new_with_type(klass->type);
- 
-     if (!object_set_propv(obj, errp, vargs)) {
-         goto error;
+ Object *object_new_with_props(const char *typename,
+                               Object *parent,
 -- 
 2.46.0
 
