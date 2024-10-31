@@ -4,87 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04906D767D8
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 14:36:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6508AD767D8
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 14:43:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6WHK-00081d-8T; Thu, 31 Oct 2024 10:36:02 -0400
+	id 1t6WNN-0000iG-5h; Thu, 31 Oct 2024 10:42:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t6WHI-00081Q-3X
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 10:36:00 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t6WHC-0005vB-El
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 10:35:59 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-431616c23b5so6398255e9.0
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 07:35:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730385350; x=1730990150; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ulYpTjDeZag//WThlC70rNrZet2A1R1XnVC5a5LlhwM=;
- b=WxDNJtmmfduaJi1NIGtUeQQTrwaBIIJmqUQlYhl8tGu/zmeXzg2tyZITsCQnT+lxVg
- 8MiLwoOcJ7PLA4vgU+rqB6qIKitSOQLVl9gqWqJc1VBsEDf16gxGYAzlJkCetW+h3lba
- ZT6GsjBkwNAGz8Ad3SgNKjk+XYKY4ZmEe2gW0C/Tp+1WD8PAkHnud9L+H/ykwjKMgRZP
- g3KCDGmm9BivIzdG9EHToi75wxTwEcDKKym0ucfrsElH6wSEVJ0V+bm4R05dpYLTvHwf
- /Ci21x8Lgd8d4ivclrDui7y7bCDZ0GrUoLXqpnEfRvz+cq/mJrQmtdgSC2PGmBpV4Xq5
- Bhqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730385350; x=1730990150;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ulYpTjDeZag//WThlC70rNrZet2A1R1XnVC5a5LlhwM=;
- b=kcings+4dRhY4DqO/ltSss28SPN23vwEOHTwMr7f7igqUcS183/qgD/qUk6W5MeoL9
- ZKVmizzXnMqZ71ROHd0p3bUdSJ6feHVBvG64BYSVs1ZOHQQa+a9GWRX5S7lXV4n5/kko
- b9Eu3SPATuzAzcEgTPhRWgTmy8k9r9H7vJoYtJ5uSZ8+4vUCtsC4RD5Z153MM3CyzJF/
- mOhCgDfBIKHA1dklhc24dbahTI8hZIZCQnD8xsk6MfzzDgKT3urFSnnWkbUBuEcJKF31
- HOmYeVSRp+MM6JYCgc1QhCeo/xjAbl/KnYCAjvZscrvK73AmzCcwyzxG5Qtzw8gReW0T
- yvZg==
-X-Gm-Message-State: AOJu0Ywk8q4VtqhyZdCj5+CyZuHQC7E09WbOGN5Grbm0tfmwVpmEB9ij
- RVW50h9EH28SiIeuMt5NChfXaVfERlvdblNaNubmducxwbNgcOlnvPtD282pfAI=
-X-Google-Smtp-Source: AGHT+IGexTux1jmtrLFhzOf7rQq6/dh+5/Yo30eYwGDizV90Q+AeBD401P7ce/MQWtvXQmo7ja0Qug==
-X-Received: by 2002:a05:600c:35c1:b0:42c:b826:a26c with SMTP id
- 5b1f17b1804b1-43282ff61d5mr2287365e9.8.1730385349988; 
- Thu, 31 Oct 2024 07:35:49 -0700 (PDT)
-Received: from [192.168.21.227] ([89.101.223.26])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bb78b809sm70539355e9.1.2024.10.31.07.35.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Oct 2024 07:35:49 -0700 (PDT)
-Message-ID: <36722300-bdfd-4add-b70b-8e99182325cc@linaro.org>
-Date: Thu, 31 Oct 2024 14:35:38 +0000
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t6WNK-0000hs-TK
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 10:42:15 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t6WNI-0006jE-7X
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 10:42:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730385732; x=1761921732;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=KRXxxUtsXLtlaP7XhwfUMjqSa8q2H5R35Nxxu/rLzw8=;
+ b=PLWlSmYhsSrWwODIhZvOCJcSsnZptlMjocXmL6p9F/NreL1o2XE7ulQk
+ w5EPJwiPdG58DYC5GIqxeqMM73jd8vPHJ7PbG0BUsLfRMTRggzt5zAPp8
+ fuEkPJEP0BzVRYUuvXi2PhSU/P2nwkAquR65sKzRrb82ZXPENMn489NeH
+ OvCZjIatqeoje1NsUNyRUPUoD7TcuiC0Xka/k3iKJVYYF7VY2qxbUxBOb
+ 0y7pxJHK+D5c4idK3FiX73C5zSsAkvO2keKd49xncGWDaCkDpzEutRab5
+ dvUjGU7Po4DXyphrUrGZoB+bYazNULxU0lSTlHavNzSd/cS6I/BjMgp9V g==;
+X-CSE-ConnectionGUID: WxuR/dJfQq2yZoJmmJm81A==
+X-CSE-MsgGUID: LtrfOvPJTJSPvVrIBt+a+g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11242"; a="30343517"
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="30343517"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Oct 2024 07:42:09 -0700
+X-CSE-ConnectionGUID: PlrwYunITtGMtmRRx+6L2w==
+X-CSE-MsgGUID: 0jFFnuJnRc6UoJxTHxAqmg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="86564427"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 31 Oct 2024 07:42:07 -0700
+Date: Thu, 31 Oct 2024 22:58:28 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org,
+ junjie.mao@hotmail.com, berrange@redhat.com
+Subject: Re: [PATCH 05/23] rust/pl011: add TYPE_PL011_LUMINARY device
+Message-ID: <ZyObFKPfEaaDrxrS@intel.com>
+References: <20241025160209.194307-1-pbonzini@redhat.com>
+ <20241025160209.194307-6-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] linux-user: Allow custom rt signal mappings
-To: Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Brian Cain <bcain@quicinc.com>,
- "ltaylorsimpson @ gmail . com" <ltaylorsimpson@gmail.com>
-References: <20241029232211.206766-1-iii@linux.ibm.com>
- <20241029232211.206766-2-iii@linux.ibm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241029232211.206766-2-iii@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241025160209.194307-6-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,34 +84,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/29/24 23:17, Ilya Leoshkevich wrote:
-> Some applications want to use low priority realtime signals (e.g.,
-> SIGRTMAX). Currently QEMU cannot map all target realtime signals to
-> host realtime signals, and chooses to sacrifice the end of the target
-> realtime signal range.
+On Fri, Oct 25, 2024 at 06:01:50PM +0200, Paolo Bonzini wrote:
+> Date: Fri, 25 Oct 2024 18:01:50 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 05/23] rust/pl011: add TYPE_PL011_LUMINARY device
+> X-Mailer: git-send-email 2.47.0
 > 
-> Allow users to choose how to map target realtime signals to host
-> realtime signals using the new -t option, the new QEMU_RTSIG_MAP
-> environment variable, and the new -Drtsig_map=\"...\" meson flag.
-> To simplify things, the meson flag is not per-target, because the
-> intended use case is app-specific qemu-user builds.
+> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > 
-> The mapping is specified using the "tsig hsig count[,...]" syntax.
-> Target realtime signals [tsig,tsig+count) are mapped to host realtime
-> signals [hsig,hsig+count). Care is taken to avoid double and
-> out-of-range mappings.
+> Add a device specialization for the Luminary UART device.
 > 
-> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
+> This commit adds a DeviceId enum that utilizes the Index trait to return
+> different bytes depending on what device id the UART has (Arm -default-
+> or Luminary)
+> 
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Link: https://lore.kernel.org/r/20241024-rust-round-2-v1-6-051e7a25b978@linaro.org
 > ---
->   linux-user/main.c             |  12 +++-
->   linux-user/signal-common.h    |   2 +-
->   linux-user/signal.c           | 108 +++++++++++++++++++++++++++-------
->   meson.build                   |   3 +-
->   meson_options.txt             |   2 +
->   scripts/meson-buildoptions.sh |   2 +
->   6 files changed, 106 insertions(+), 23 deletions(-)
+>  rust/hw/char/pl011/src/device.rs | 77 ++++++++++++++++++++++++++++++--
+>  rust/hw/char/pl011/src/lib.rs    |  1 +
+>  2 files changed, 75 insertions(+), 3 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Great! All tests passed on my side (x86 platform).
 
-r~
+Tested-by: Zhao Liu <zhao1.liu@intel.com>
+
 
