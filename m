@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D49FE68951
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F18E6E68951
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MR1-0003tp-13; Thu, 31 Oct 2024 00:05:23 -0400
+	id 1t6MQy-0003sP-OX; Thu, 31 Oct 2024 00:05:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQq-0003mk-Ue
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:13 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1t6MQp-0003kW-43
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:11 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQo-00054S-Rk
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:12 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2e2e2d09decso1245881a91.1
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:10 -0700 (PDT)
+ id 1t6MQn-00053e-5A
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:10 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2e91403950dso392295a91.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730347509; x=1730952309; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730347507; x=1730952307; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GWEffwDMJmqQqCBLwXmQs/G5t8KhBeTNj8bmbTesV98=;
- b=MzooNerjm+E/rAukrg6fEbUq1DSZU+9dh/YsTMo2A22dnDCg/WtZ+mvAfoUB2m6v4k
- olz9MzGTlR6QxBGez5mMinalIjowCaWmj36INhSxBPS2VBuQPPAAsiB+0NE7rIo8JjCd
- h2ACLzzLW7EWRkbNhN0fF/D0Zox/tIOvAlwpXvW6O75Bip0KbmZMg5VMPhl2Vruhen3M
- ItrTdF+qDvfSkzWNbw+j31TMpfvtoJk7aiJIzEhlT1Vzdu+C9HGDDgzSWoD6dJaBoBed
- YBmI48nKnr7+KBkohRQVUpovWIcpkroVMNeeeEnVwc1NEhYj8xbM8hMkAmooMKRHQVNt
- DUgA==
+ bh=2sPdHdQJ35Fr/SOKKnyBguzQdXGmWsCiWtlEfDPVHMQ=;
+ b=eqhjkCZ5x0rnw1R4BkY/zmAK2bN604e2aRg5MdiXurbRxcr/V0iKEsj56O8h+M+5Gb
+ NcqiWa4m6fvfpcYDQG056R1Y1sMt/LPyw6z8TzXXbgsSxIhhA8LHEJjXdZ7WMtxsrkZu
+ P1vkV9LuMwLrX0GA2AHVzUonzjJjFhlDx+a74PjTnJYcXG0hE/R7zsqiUmjTVNksfAIt
+ +iuiCU5Bjmq0Ue7Rit8xVCatW0/IXsQAifXfxNQyuRc+GbKEydBvPL6mUOmLOX04x9d2
+ q0NiHHtSDexLuJHKILvCeh1rhdf9EZZPGW+yDHT/dwpZt/0hWxsY4QdRTQUIbGtuseh9
+ gTpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730347509; x=1730952309;
+ d=1e100.net; s=20230601; t=1730347507; x=1730952307;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GWEffwDMJmqQqCBLwXmQs/G5t8KhBeTNj8bmbTesV98=;
- b=gGfTKRSlxtBDNd/iUNuiM4fNS3T8AwdLfxBKmObce59UBPOmZxcForXRw6hpxXsfok
- 4MGOyXFhpBvOm2/VdPLt26gA0hZy/CMLXh5ozNSgPy5dDPfPeOAVDOL728UNUmGdXM4/
- +SPKcVMkSfm/mU+31QYlnvy9XF6l5yzoVjrxeSncOvtYivPzeOSg9OgV5f6Ow7hS18OW
- rADB0IowN7QI6rTbf6Ud1+Lisdg+bZ0azAa3h4Ymyo4MWHqdFyjBmQPekLai6djbxSiH
- wiDxLlikGCgUzo/KBWx8ZLjy4xWTaW83y6khK4zfM838npsiS5QgTEx8LKG5EOX6HqOy
- KeSw==
-X-Gm-Message-State: AOJu0YzVi9+PORBv8d+Dmn6wEN5g97SpR3A+M2oLkTUrhnWHZfSO4hjT
- ijLnfPXieW8p0FL3VWNfL2wMUVFWt5NB96Mt/rXIrqnyiGXihNZFZFgTEtc5RgdWzrZGokiXNwZ
- I9e0Wxg==
-X-Google-Smtp-Source: AGHT+IHOoM3tEWzAnGhPN1UKbuZKTnRT34eQEk6fVTfJXxyEDAW6r8rADEtdNbbcSAHYBQSR/nCVhw==
-X-Received: by 2002:a17:90b:510b:b0:2e2:bb32:73e7 with SMTP id
- 98e67ed59e1d1-2e93e0df6d2mr1575949a91.15.1730347509245; 
- Wed, 30 Oct 2024 21:05:09 -0700 (PDT)
+ bh=2sPdHdQJ35Fr/SOKKnyBguzQdXGmWsCiWtlEfDPVHMQ=;
+ b=vLvZqAxXbgGW0kZG55O9bElB2tFUc4WpC85XOR0Q5lH8I8+agJ3MDnXN6Bda7czmSF
+ 8ik3xlGkpCVsDcxFwF6WP9BfiyX3f7ny2tB/YH9ZkoPRvrMfnbNPLzeNhSic4fVeiehZ
+ oIQjx9Syk3CEymSwSJXNBef1nRIPhfo9xpWHpV6+c4/tmq+7AksVOWqJZ0M6z413Ks3g
+ VKz9WV20dYtaof9YfyRmRxCafriCNGtrK+kA+vZ0kIwB6oLOlhF9dcCDd17r0NwANLqj
+ IpEZqnU1tGHIy9vol7Vp55VJx7fUygxiJ8Ng6KH2Q8LipGsMwHZpylt5scxHqY3gW4Er
+ d/8g==
+X-Gm-Message-State: AOJu0YxhvEsAgkJNPkTQzCrYlMG2wiqWUmR2XiXrhcgA6evRGFNpVtZ/
+ PWG1EV3Czu6Qs8Av+pONai4krkuZnFkawYhMPf/+dcpG4Dq6iqef94m7Rd4ONjHI/9dQg4DLG62
+ A9+jozQ==
+X-Google-Smtp-Source: AGHT+IHuNs/tznTYNp/AUVQMJ6NqDV9uYOqGmX0xPvakJbIHYFI2CFPqQ3UO41+4oI0oxgBxhgTN2g==
+X-Received: by 2002:a17:90a:d481:b0:2e0:d957:1b9d with SMTP id
+ 98e67ed59e1d1-2e8f1071c8dmr21944997a91.13.1730347507133; 
+ Wed, 30 Oct 2024 21:05:07 -0700 (PDT)
 Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e93db3a023sm428438a91.49.2024.10.30.21.05.08
+ 98e67ed59e1d1-2e93db3a023sm428438a91.49.2024.10.30.21.05.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 21:05:08 -0700 (PDT)
+ Wed, 30 Oct 2024 21:05:06 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
@@ -73,23 +73,23 @@ Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 12/12] docs: add information on how to setup build environments
-Date: Wed, 30 Oct 2024 21:04:26 -0700
-Message-Id: <20241031040426.772604-13-pierrick.bouvier@linaro.org>
+Subject: [PATCH 10/12] plugins: detect qemu plugin API symbols from header
+Date: Wed, 30 Oct 2024 21:04:24 -0700
+Message-Id: <20241031040426.772604-11-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
 References: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,145 +105,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MacOS and Linux are straightforward, but Windows needs a bit more
-details.
+Instead of using a static file (error prone and hard to keep in sync),
+we generate it using a script.
+
+Note: if a symbol is not exported, we'll now notice it when linking for
+Windows/MacOS platforms.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- docs/about/build-platforms.rst |   4 +-
- docs/devel/build-system.rst    | 100 +++++++++++++++++++++++++++++++++
- 2 files changed, 103 insertions(+), 1 deletion(-)
+ MAINTAINERS                    |  1 +
+ plugins/meson.build            | 12 ++++++---
+ scripts/qemu-plugin-symbols.py | 45 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 55 insertions(+), 3 deletions(-)
+ create mode 100755 scripts/qemu-plugin-symbols.py
 
-diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index 8fd7da140a3..fd1a8cabe36 100644
---- a/docs/about/build-platforms.rst
-+++ b/docs/about/build-platforms.rst
-@@ -29,6 +29,9 @@ The `Repology`_ site is a useful resource to identify
- currently shipped versions of software in various operating systems,
- though it does not cover all distros listed below.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f48d9142b8a..d34b6606e95 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3719,6 +3719,7 @@ F: plugins/
+ F: tests/tcg/plugins/
+ F: tests/avocado/tcg_plugins.py
+ F: contrib/plugins/
++F: scripts/qemu-plugin-symbols.py
  
-+You can find how to install build dependencies for different systems on the
-+:ref:`setup-build-env` page.
-+
- Supported host architectures
- ----------------------------
+ AArch64 TCG target
+ M: Richard Henderson <richard.henderson@linaro.org>
+diff --git a/plugins/meson.build b/plugins/meson.build
+index 51297582f93..d60be2a4d6d 100644
+--- a/plugins/meson.build
++++ b/plugins/meson.build
+@@ -2,11 +2,17 @@ if not get_option('plugins')
+   subdir_done()
+ endif
  
-@@ -118,7 +121,6 @@ Optional build dependencies
-   cross compilation using ``docker`` or ``podman``, or to use pre-built
-   binaries distributed with QEMU.
++qemu_plugin_symbols = configure_file(
++  input: files('../include/qemu/qemu-plugin.h'),
++  output: 'qemu-plugin.symbols',
++  capture: true,
++  command: [files('../scripts/qemu-plugin-symbols.py'), '@INPUT@'])
++
+ # Modules need more symbols than just those in plugins/qemu-plugins.symbols
+ if not enable_modules
+   if host_os == 'darwin'
+     configure_file(
+-      input: files('qemu-plugins.symbols'),
++      input: qemu_plugin_symbols,
+       output: 'qemu-plugins-ld64.symbols',
+       capture: true,
+       command: ['sed', '-ne', 's/^[[:space:]]*\\(qemu_.*\\);/_\\1/p', '@INPUT@'])
+@@ -15,7 +21,7 @@ if not enable_modules
+     # LLVM/lld does not support exporting specific symbols. However, it works
+     # out of the box with dllexport/dllimport attribute we set in the code.
+   else
+-    emulator_link_args += ['-Xlinker', '--dynamic-list=' + (meson.project_source_root() / 'plugins/qemu-plugins.symbols')]
++    emulator_link_args += ['-Xlinker', '--dynamic-list=' + qemu_plugin_symbols.full_path()]
+   endif
+ endif
  
--
- Windows
- -------
- 
-diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-index d42045a2325..fa5601fed82 100644
---- a/docs/devel/build-system.rst
-+++ b/docs/devel/build-system.rst
-@@ -595,3 +595,103 @@ Built by Makefile:
-   meson.build.  The rules are produced from Meson's JSON description of
-   tests (obtained with "meson introspect --tests") through the script
-   scripts/mtest2make.py.
+@@ -24,7 +30,7 @@ if host_os == 'windows'
+   # First, create a .def file listing all the symbols a plugin should expect to have
+   # available in qemu
+   win32_plugin_def = configure_file(
+-    input: files('qemu-plugins.symbols'),
++    input: qemu_plugin_symbols,
+     output: 'qemu_plugin_api.def',
+     capture: true,
+     command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
+diff --git a/scripts/qemu-plugin-symbols.py b/scripts/qemu-plugin-symbols.py
+new file mode 100755
+index 00000000000..e285ebb8f9e
+--- /dev/null
++++ b/scripts/qemu-plugin-symbols.py
+@@ -0,0 +1,45 @@
++#!/usr/bin/env python3
++# -*- coding: utf-8 -*-
++#
++# Extract QEMU Plugin API symbols from a header file
++#
++# Copyright 2024 Linaro Ltd
++#
++# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or later.
++# See the COPYING file in the top-level directory.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+.. _setup-build-env:
++import argparse
++import re
 +
-+Setup build environment
-+=======================
++def extract_symbols(plugin_header):
++    with open(plugin_header) as file:
++        content = file.read()
++    # Remove QEMU_PLUGIN_API macro definition.
++    content = content.replace('#define QEMU_PLUGIN_API', '')
++    expected = content.count('QEMU_PLUGIN_API')
++    # Find last word between QEMU_PLUGIN_API and (, matching on several lines.
++    # We use *? non-greedy quantifier.
++    syms = re.findall(r'QEMU_PLUGIN_API.*?(\w+)\s*\(', content, re.DOTALL)
++    syms.sort()
++    # Ensure we found as many symbols as API markers.
++    assert len(syms) == expected
++    return syms
 +
-+Linux
-+-----
++def main() -> None:
++    parser = argparse.ArgumentParser(description='Extract QEMU plugin symbols')
++    parser.add_argument('plugin_header', help='Path to QEMU plugin header.')
++    args = parser.parse_args()
 +
-+Fedora
-+++++++
++    syms = extract_symbols(args.plugin_header)
 +
-+::
++    print('{')
++    for s in syms:
++        print("  {};".format(s))
++    print('};')
 +
-+    sudo dnf update && sudo dnf builddep qemu
-+
-+Debian/Ubuntu
-++++++++++++++
-+
-+You first need to enable `Sources List <https://wiki.debian.org/SourcesList>`_.
-+Then, use apt to install dependencies:
-+
-+::
-+
-+    sudo apt update && sudo apt build-dep qemu
-+
-+MacOS
-+-----
-+
-+You first need to install `Homebrew <https://brew.sh/>`_. Then, use it to
-+install dependencies:
-+
-+::
-+
-+    brew update && brew install $(brew deps --include-build qemu)
-+
-+Windows
-+-------
-+
-+You first need to install `MSYS2 <https://www.msys2.org/>`_.
-+MSYS2 offers `different environments <https://www.msys2.org/docs/environments/>`_.
-+x86_64 environments are based on GCC, while aarch64 is based on Clang.
-+
-+We recommend to use UCRT64 for windows-x86_64 and CLANGARM64 for windows-aarch64
-+(only available on windows-aarch64 hosts).
-+
-+Then, you can open a windows shell, and enter msys2 env using:
-+
-+::
-+
-+    c:/msys64/msys2_shell.cmd -defterm -here -no-start -ucrt64
-+    # Replace -ucrt64 by -clangarm64 or -mingw64 for other environments.
-+
-+MSYS2 package manager does not offer a built-in way to install build
-+dependencies. You can start with this list of packages using pacman:
-+
-+Note: Dependencies need to be installed again if you use a different MSYS2
-+environment.
-+
-+::
-+
-+    # update MSYS2 itself, you need to reopen your shell at the end.
-+    pacman -Syu
-+    pacman -S \
-+        base-devel binutils bison diffutils flex git grep make sed \
-+        ${MINGW_PACKAGE_PREFIX}-toolchain \
-+        ${MINGW_PACKAGE_PREFIX}-glib2 \
-+        ${MINGW_PACKAGE_PREFIX}-gtk3 \
-+        ${MINGW_PACKAGE_PREFIX}-libnfs \
-+        ${MINGW_PACKAGE_PREFIX}-libssh \
-+        ${MINGW_PACKAGE_PREFIX}-ninja \
-+        ${MINGW_PACKAGE_PREFIX}-pixman \
-+        ${MINGW_PACKAGE_PREFIX}-pkgconf \
-+        ${MINGW_PACKAGE_PREFIX}-python \
-+        ${MINGW_PACKAGE_PREFIX}-SDL2 \
-+        ${MINGW_PACKAGE_PREFIX}-zstd
-+
-+If you want to install all dependencies, it's possible to use recipe used to
-+build QEMU in MSYS2 itself.
-+
-+::
-+
-+    pacman -S wget
-+    wget https://raw.githubusercontent.com/msys2/MINGW-packages/refs/heads/master/mingw-w64-qemu/PKGBUILD
-+    # Some packages may be missing for your environment, installation will still
-+    # be done though.
-+    makepkg -s PKGBUILD || true
-+
-+Build on windows-aarch64
-+++++++++++++++++++++++++
-+
-+When trying to cross compile meson for x86_64 using UCRT64 or MINGW64 env,
-+configure will run into an error because the cpu detected is not correct.
-+
-+Meson detects x86_64 processes emulated, so you need to manually set the cpu,
-+and force a cross compilation (with empty prefix).
-+
-+::
-+
-+    ./configure --cpu=x86_64 --cross-prefix=
++if __name__ == '__main__':
++    main()
 -- 
 2.39.5
 
