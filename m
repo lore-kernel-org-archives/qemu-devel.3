@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 247FAE68950
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A8D5E68951
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:57:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MHZ-00037n-2r; Wed, 30 Oct 2024 23:55:37 -0400
+	id 1t6MFy-0007I3-Dz; Wed, 30 Oct 2024 23:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MHP-0002Kf-MJ
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:55:27 -0400
+ id 1t6MFx-0007Hv-4A
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:53:57 -0400
 Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MHN-0004Ei-Ch
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:55:27 -0400
+ id 1t6MFv-0003uP-KI
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:53:56 -0400
 Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-20cb47387ceso5267295ad.1
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:55:25 -0700 (PDT)
+ d9443c01a7336-20cb89a4e4cso4238615ad.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730346924; x=1730951724; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730346834; x=1730951634; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YX6HhIu3gU0fkTO9G4Tsxwlo+LYCi4dGIT+lnobffqg=;
- b=ISpE9JSMHFTBaH6hofuSY4nBuKc9ElHBgCEx68UBvaStVwV+1xpQoZrLP3paZr86M+
- cmsWZrTGd0UfFhMnUuFeFkcfcAh+uQ0u6zmrg7kkamwPW9JBcr+7YszyBk4ABZx+74pr
- ItAhkgDgAstrzdBA/BSzBTtBTE7cvl/jSV3LpcbLyDCfQMzZmgQtaIKALwMOS08UePw0
- zcf2inm1d8+B1CnN5EtOuZnQx2iYRmnmWZxUqivryY5m9Jh9rqiP7323PTViz1Dz7vVr
- 3u9oi5DjhorEkwM5AHokcWfDp9WfnW25B3OkgymDnA856pXzofYP3G2dVfR2dNHYTKNw
- NefQ==
+ bh=JH0jRHToVF3C8lmDDZmUohZ5ReWzqmRHE5aVJm2dCjo=;
+ b=clivB+/2ehshLhlGMP9qm65rZs2dCuQsmNzIoIQeIOghw7rCB+h/Es8N3h2e/1UWQj
+ qp4zLA9p/hrkvdr0GM2hPUAaYSStZIqDOzYWI7ER8HY/wEc9RSLZBpIoItdKb/GE/clP
+ /fc3VjqnGqKxiQKgt5YJcz3BtjKLKsCRCqCOCTS4Veq5rkOnB14Tda67TgK03G51/rgF
+ 5Vo/r5/oKzY3hP8Gj/c/AJt9vWu2oQzsVyDJMh0aBTNRGwc6FiSZY5451u0Gnn+DcPcB
+ +3jzx8q8IWrd33dY81Fod9YGX5/As1+ptsuJdqvMu1077jcEI39LvLBDKimXxjtgAORU
+ fFaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730346924; x=1730951724;
+ d=1e100.net; s=20230601; t=1730346834; x=1730951634;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YX6HhIu3gU0fkTO9G4Tsxwlo+LYCi4dGIT+lnobffqg=;
- b=iXYsBjHI+0XcGVB0Yd/mJUHKvmifq8+reC7M1nrrIKzOOx6knPqL5qp7pXVD1r7pmN
- CB1x/9E7Rv/9lEg7aZ3p78HjK4XcMZKQPHVF0aE3SXR11jNXbZqV+UFdi1iMXdooiEBn
- TqMj5lHMR7TYFgGMSx4Sd0BD9W+E5OlyenJbQnVAMYJQOcJIoZeUYgsehkfYszbYI38Z
- ZQGrrihy+CAUb3qsSwE0wWmalNCiNCtONzgdW+ss/R16/hLAxd5gP2l6u5QDm0ya36NC
- s0huvQ+Hfw55x/3L1+pEEHfod2s9NdCstXZ5EzVAPs2N2QeIjkjSx/QRCxx6mFv1XnmO
- CWKw==
-X-Gm-Message-State: AOJu0YzKP4TsDmuIk3K329IWlW3Yz5CsbJ1Ig9w69x/TKEOtlFB6gxFA
- d3R3UmuefGfZh1vPxOjuZtIsq7eKdF8mn5lb+c3JYarLdcX9b1tbJBzQ2OTA
-X-Google-Smtp-Source: AGHT+IH8dOu/MMouuCBWsxQTDHDNmb5d+mQWaXR1wPKj/9m6muffHy1zglJSz+NVyr+MpRe+bGtPkA==
-X-Received: by 2002:a17:902:e751:b0:20e:552c:5408 with SMTP id
- d9443c01a7336-210c6c5de09mr264315485ad.51.1730346923823; 
- Wed, 30 Oct 2024 20:55:23 -0700 (PDT)
+ bh=JH0jRHToVF3C8lmDDZmUohZ5ReWzqmRHE5aVJm2dCjo=;
+ b=wfO9Gw+2t2CJyjc3ij2O+j0j+zVMHdu8iPB4KgI/z/H8AwetPet+km204ehBTKD46P
+ 3QY/XsR8Jdr+SWddaL8n7CJAsJ1t2dbpn+3JidKj5Nd3CX56JgwNnYtBFW76BY8+LyGU
+ nwmrfbQehbrMeFssodH/YJPLa7be/NFBaNtPM9HnopDuEZ1G4m1pO48pIhvzyPb8UPYa
+ 0d8Ob/12YGLTLa9bRxuA+MYU2vHIqQsOXXdfIG2YApg4Lg2ES9M/nzmLUVdly7jGvXMk
+ URrPSlwQjOTSWXtWekV8hVT7vKnh02LrSyP45vD/16NCdU8ND99Iexdxgf6GS0kEbdqk
+ ctgg==
+X-Gm-Message-State: AOJu0YzyP4C4zoxTrGJ0Urc5lvtEnlV7Ipw0jF+C2OHbUGDWwaPwAI6x
+ BCEKxubqqc9xci1z8r83VZlNnKbcSzoYLsYqBewGY5LLxslJp1r9o0Q4fbYk
+X-Google-Smtp-Source: AGHT+IGZfc+cl+nWT+b1TgT1INzemUp8OW1FODf/n2GrLZDCPTG3gyvTqNd1NTnjoOJeB7uhdTs5Fw==
+X-Received: by 2002:a17:903:1205:b0:20b:a6f5:2780 with SMTP id
+ d9443c01a7336-210c689c390mr214042315ad.17.1730346834002; 
+ Wed, 30 Oct 2024 20:53:54 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.55.20
+ d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.53.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 20:55:23 -0700 (PDT)
+ Wed, 30 Oct 2024 20:53:53 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Tomasz Jeznach <tjeznach@rivosinc.com>,
+Cc: alistair23@gmail.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Frank Chang <frank.chang@sifive.com>, Jason Chien <jason.chien@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 37/50] hw/riscv: add riscv-iommu-bits.h
-Date: Thu, 31 Oct 2024 13:53:05 +1000
-Message-ID: <20241031035319.731906-38-alistair.francis@wdc.com>
+Subject: [PULL 09/50] tests/avocado: Boot Linux for RV32 cpu on RV64 QEMU
+Date: Thu, 31 Oct 2024 13:52:37 +1000
+Message-ID: <20241031035319.731906-10-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241031035319.731906-1-alistair.francis@wdc.com>
 References: <20241031035319.731906-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
  envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
@@ -84,8 +82,8 @@ X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,380 +99,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-This header will be used by the RISC-V IOMMU emulation to be added
-in the next patch. Due to its size it's being sent in separate for
-an easier review.
+make check-avocado AVOCADO_TESTS=tests/avocado/tuxrun_baselines.py: \
+TuxRunBaselineTest:test_riscv64_rv32
 
-One thing to notice is that this header can be replaced by the future
-Linux RISC-V IOMMU driver header, which would become a linux-header we
-would import instead of keeping our own. The Linux implementation isn't
-upstream yet so for now we'll have to manage riscv-iommu-bits.h.
-
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jason Chien <jason.chien@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241016204038.649340-3-dbarboza@ventanamicro.com>
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Suggested-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20240919055048.562-9-zhiwei_liu@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu-bits.h | 345 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 345 insertions(+)
- create mode 100644 hw/riscv/riscv-iommu-bits.h
+ tests/avocado/tuxrun_baselines.py | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-new file mode 100644
-index 0000000000..c46d7d18ab
---- /dev/null
-+++ b/hw/riscv/riscv-iommu-bits.h
-@@ -0,0 +1,345 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright © 2022-2023 Rivos Inc.
-+ * Copyright © 2023 FORTH-ICS/CARV
-+ * Copyright © 2023 RISC-V IOMMU Task Group
-+ *
-+ * RISC-V IOMMU - Register Layout and Data Structures.
-+ *
-+ * Based on the IOMMU spec version 1.0, 3/2023
-+ * https://github.com/riscv-non-isa/riscv-iommu
-+ */
+diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
+index 38064840da..366c262e32 100644
+--- a/tests/avocado/tuxrun_baselines.py
++++ b/tests/avocado/tuxrun_baselines.py
+@@ -222,3 +222,19 @@ def test_arm64be(self):
+                  "rootfs.ext4.zst" :
+                  "e6ffd8813c8a335bc15728f2835f90539c84be7f8f5f691a8b01451b47fb4bd7"}
+         self.common_tuxrun(csums=sums)
 +
-+#ifndef HW_RISCV_IOMMU_BITS_H
-+#define HW_RISCV_IOMMU_BITS_H
++    def test_riscv64_rv32(self):
++        """
++        :avocado: tags=arch:riscv64
++        :avocado: tags=machine:virt
++        :avocado: tags=tuxboot:riscv32
++        :avocado: tags=cpu:rv32
++        """
++        sums = { "Image" :
++                 "89599407d7334de629a40e7ad6503c73670359eb5f5ae9d686353a3d6deccbd5",
++                 "fw_jump.elf" :
++                 "f2ef28a0b77826f79d085d3e4aa686f1159b315eff9099a37046b18936676985",
++                 "rootfs.ext4.zst" :
++                 "7168d296d0283238ea73cd5a775b3dd608e55e04c7b92b76ecce31bb13108cba" }
 +
-+#define RISCV_IOMMU_SPEC_DOT_VER 0x010
-+
-+#ifndef GENMASK_ULL
-+#define GENMASK_ULL(h, l) (((~0ULL) >> (63 - (h) + (l))) << (l))
-+#endif
-+
-+/*
-+ * struct riscv_iommu_fq_record - Fault/Event Queue Record
-+ * See section 3.2 for more info.
-+ */
-+struct riscv_iommu_fq_record {
-+    uint64_t hdr;
-+    uint64_t _reserved;
-+    uint64_t iotval;
-+    uint64_t iotval2;
-+};
-+/* Header fields */
-+#define RISCV_IOMMU_FQ_HDR_CAUSE        GENMASK_ULL(11, 0)
-+#define RISCV_IOMMU_FQ_HDR_PID          GENMASK_ULL(31, 12)
-+#define RISCV_IOMMU_FQ_HDR_PV           BIT_ULL(32)
-+#define RISCV_IOMMU_FQ_HDR_TTYPE        GENMASK_ULL(39, 34)
-+#define RISCV_IOMMU_FQ_HDR_DID          GENMASK_ULL(63, 40)
-+
-+/*
-+ * struct riscv_iommu_pq_record - PCIe Page Request record
-+ * For more infos on the PCIe Page Request queue see chapter 3.3.
-+ */
-+struct riscv_iommu_pq_record {
-+      uint64_t hdr;
-+      uint64_t payload;
-+};
-+/* Header fields */
-+#define RISCV_IOMMU_PREQ_HDR_PID        GENMASK_ULL(31, 12)
-+#define RISCV_IOMMU_PREQ_HDR_PV         BIT_ULL(32)
-+#define RISCV_IOMMU_PREQ_HDR_PRIV       BIT_ULL(33)
-+#define RISCV_IOMMU_PREQ_HDR_EXEC       BIT_ULL(34)
-+#define RISCV_IOMMU_PREQ_HDR_DID        GENMASK_ULL(63, 40)
-+/* Payload fields */
-+#define RISCV_IOMMU_PREQ_PAYLOAD_M      GENMASK_ULL(2, 0)
-+
-+/* Common field positions */
-+#define RISCV_IOMMU_PPN_FIELD           GENMASK_ULL(53, 10)
-+#define RISCV_IOMMU_QUEUE_LOGSZ_FIELD   GENMASK_ULL(4, 0)
-+#define RISCV_IOMMU_QUEUE_INDEX_FIELD   GENMASK_ULL(31, 0)
-+#define RISCV_IOMMU_QUEUE_ENABLE        BIT(0)
-+#define RISCV_IOMMU_QUEUE_INTR_ENABLE   BIT(1)
-+#define RISCV_IOMMU_QUEUE_MEM_FAULT     BIT(8)
-+#define RISCV_IOMMU_QUEUE_OVERFLOW      BIT(9)
-+#define RISCV_IOMMU_QUEUE_ACTIVE        BIT(16)
-+#define RISCV_IOMMU_QUEUE_BUSY          BIT(17)
-+#define RISCV_IOMMU_ATP_PPN_FIELD       GENMASK_ULL(43, 0)
-+#define RISCV_IOMMU_ATP_MODE_FIELD      GENMASK_ULL(63, 60)
-+
-+/* 5.3 IOMMU Capabilities (64bits) */
-+#define RISCV_IOMMU_REG_CAP             0x0000
-+#define RISCV_IOMMU_CAP_VERSION         GENMASK_ULL(7, 0)
-+#define RISCV_IOMMU_CAP_MSI_FLAT        BIT_ULL(22)
-+#define RISCV_IOMMU_CAP_MSI_MRIF        BIT_ULL(23)
-+#define RISCV_IOMMU_CAP_T2GPA           BIT_ULL(26)
-+#define RISCV_IOMMU_CAP_IGS             GENMASK_ULL(29, 28)
-+#define RISCV_IOMMU_CAP_PAS             GENMASK_ULL(37, 32)
-+#define RISCV_IOMMU_CAP_PD8             BIT_ULL(38)
-+#define RISCV_IOMMU_CAP_PD17            BIT_ULL(39)
-+#define RISCV_IOMMU_CAP_PD20            BIT_ULL(40)
-+
-+/* 5.4 Features control register (32bits) */
-+#define RISCV_IOMMU_REG_FCTL            0x0008
-+#define RISCV_IOMMU_FCTL_WSI            BIT(1)
-+
-+/* 5.5 Device-directory-table pointer (64bits) */
-+#define RISCV_IOMMU_REG_DDTP            0x0010
-+#define RISCV_IOMMU_DDTP_MODE           GENMASK_ULL(3, 0)
-+#define RISCV_IOMMU_DDTP_BUSY           BIT_ULL(4)
-+#define RISCV_IOMMU_DDTP_PPN            RISCV_IOMMU_PPN_FIELD
-+
-+enum riscv_iommu_ddtp_modes {
-+    RISCV_IOMMU_DDTP_MODE_OFF = 0,
-+    RISCV_IOMMU_DDTP_MODE_BARE = 1,
-+    RISCV_IOMMU_DDTP_MODE_1LVL = 2,
-+    RISCV_IOMMU_DDTP_MODE_2LVL = 3,
-+    RISCV_IOMMU_DDTP_MODE_3LVL = 4,
-+    RISCV_IOMMU_DDTP_MODE_MAX = 4
-+};
-+
-+/* 5.6 Command Queue Base (64bits) */
-+#define RISCV_IOMMU_REG_CQB             0x0018
-+#define RISCV_IOMMU_CQB_LOG2SZ          RISCV_IOMMU_QUEUE_LOGSZ_FIELD
-+#define RISCV_IOMMU_CQB_PPN             RISCV_IOMMU_PPN_FIELD
-+
-+/* 5.7 Command Queue head (32bits) */
-+#define RISCV_IOMMU_REG_CQH             0x0020
-+
-+/* 5.8 Command Queue tail (32bits) */
-+#define RISCV_IOMMU_REG_CQT             0x0024
-+
-+/* 5.9 Fault Queue Base (64bits) */
-+#define RISCV_IOMMU_REG_FQB             0x0028
-+#define RISCV_IOMMU_FQB_LOG2SZ          RISCV_IOMMU_QUEUE_LOGSZ_FIELD
-+#define RISCV_IOMMU_FQB_PPN             RISCV_IOMMU_PPN_FIELD
-+
-+/* 5.10 Fault Queue Head (32bits) */
-+#define RISCV_IOMMU_REG_FQH             0x0030
-+
-+/* 5.11 Fault Queue tail (32bits) */
-+#define RISCV_IOMMU_REG_FQT             0x0034
-+
-+/* 5.12 Page Request Queue base (64bits) */
-+#define RISCV_IOMMU_REG_PQB             0x0038
-+#define RISCV_IOMMU_PQB_LOG2SZ          RISCV_IOMMU_QUEUE_LOGSZ_FIELD
-+#define RISCV_IOMMU_PQB_PPN             RISCV_IOMMU_PPN_FIELD
-+
-+/* 5.13 Page Request Queue head (32bits) */
-+#define RISCV_IOMMU_REG_PQH             0x0040
-+
-+/* 5.14 Page Request Queue tail (32bits) */
-+#define RISCV_IOMMU_REG_PQT             0x0044
-+
-+/* 5.15 Command Queue CSR (32bits) */
-+#define RISCV_IOMMU_REG_CQCSR           0x0048
-+#define RISCV_IOMMU_CQCSR_CQEN          RISCV_IOMMU_QUEUE_ENABLE
-+#define RISCV_IOMMU_CQCSR_CIE           RISCV_IOMMU_QUEUE_INTR_ENABLE
-+#define RISCV_IOMMU_CQCSR_CQMF          RISCV_IOMMU_QUEUE_MEM_FAULT
-+#define RISCV_IOMMU_CQCSR_CMD_TO        BIT(9)
-+#define RISCV_IOMMU_CQCSR_CMD_ILL       BIT(10)
-+#define RISCV_IOMMU_CQCSR_FENCE_W_IP    BIT(11)
-+#define RISCV_IOMMU_CQCSR_CQON          RISCV_IOMMU_QUEUE_ACTIVE
-+#define RISCV_IOMMU_CQCSR_BUSY          RISCV_IOMMU_QUEUE_BUSY
-+
-+/* 5.16 Fault Queue CSR (32bits) */
-+#define RISCV_IOMMU_REG_FQCSR           0x004C
-+#define RISCV_IOMMU_FQCSR_FQEN          RISCV_IOMMU_QUEUE_ENABLE
-+#define RISCV_IOMMU_FQCSR_FIE           RISCV_IOMMU_QUEUE_INTR_ENABLE
-+#define RISCV_IOMMU_FQCSR_FQMF          RISCV_IOMMU_QUEUE_MEM_FAULT
-+#define RISCV_IOMMU_FQCSR_FQOF          RISCV_IOMMU_QUEUE_OVERFLOW
-+#define RISCV_IOMMU_FQCSR_FQON          RISCV_IOMMU_QUEUE_ACTIVE
-+#define RISCV_IOMMU_FQCSR_BUSY          RISCV_IOMMU_QUEUE_BUSY
-+
-+/* 5.17 Page Request Queue CSR (32bits) */
-+#define RISCV_IOMMU_REG_PQCSR           0x0050
-+#define RISCV_IOMMU_PQCSR_PQEN          RISCV_IOMMU_QUEUE_ENABLE
-+#define RISCV_IOMMU_PQCSR_PIE           RISCV_IOMMU_QUEUE_INTR_ENABLE
-+#define RISCV_IOMMU_PQCSR_PQMF          RISCV_IOMMU_QUEUE_MEM_FAULT
-+#define RISCV_IOMMU_PQCSR_PQOF          RISCV_IOMMU_QUEUE_OVERFLOW
-+#define RISCV_IOMMU_PQCSR_PQON          RISCV_IOMMU_QUEUE_ACTIVE
-+#define RISCV_IOMMU_PQCSR_BUSY          RISCV_IOMMU_QUEUE_BUSY
-+
-+/* 5.18 Interrupt Pending Status (32bits) */
-+#define RISCV_IOMMU_REG_IPSR            0x0054
-+#define RISCV_IOMMU_IPSR_CIP            BIT(0)
-+#define RISCV_IOMMU_IPSR_FIP            BIT(1)
-+#define RISCV_IOMMU_IPSR_PIP            BIT(3)
-+
-+enum {
-+    RISCV_IOMMU_INTR_CQ,
-+    RISCV_IOMMU_INTR_FQ,
-+    RISCV_IOMMU_INTR_PM,
-+    RISCV_IOMMU_INTR_PQ,
-+    RISCV_IOMMU_INTR_COUNT
-+};
-+
-+/* 5.27 Interrupt cause to vector (64bits) */
-+#define RISCV_IOMMU_REG_ICVEC           0x02F8
-+
-+/* 5.28 MSI Configuration table (32 * 64bits) */
-+#define RISCV_IOMMU_REG_MSI_CONFIG      0x0300
-+
-+#define RISCV_IOMMU_REG_SIZE            0x1000
-+
-+#define RISCV_IOMMU_DDTE_VALID          BIT_ULL(0)
-+#define RISCV_IOMMU_DDTE_PPN            RISCV_IOMMU_PPN_FIELD
-+
-+/* Struct riscv_iommu_dc - Device Context - section 2.1 */
-+struct riscv_iommu_dc {
-+      uint64_t tc;
-+      uint64_t iohgatp;
-+      uint64_t ta;
-+      uint64_t fsc;
-+      uint64_t msiptp;
-+      uint64_t msi_addr_mask;
-+      uint64_t msi_addr_pattern;
-+      uint64_t _reserved;
-+};
-+
-+/* Translation control fields */
-+#define RISCV_IOMMU_DC_TC_V             BIT_ULL(0)
-+#define RISCV_IOMMU_DC_TC_EN_PRI        BIT_ULL(2)
-+#define RISCV_IOMMU_DC_TC_T2GPA         BIT_ULL(3)
-+#define RISCV_IOMMU_DC_TC_DTF           BIT_ULL(4)
-+#define RISCV_IOMMU_DC_TC_PDTV          BIT_ULL(5)
-+#define RISCV_IOMMU_DC_TC_PRPR          BIT_ULL(6)
-+#define RISCV_IOMMU_DC_TC_DPE           BIT_ULL(9)
-+#define RISCV_IOMMU_DC_TC_SBE           BIT_ULL(10)
-+#define RISCV_IOMMU_DC_TC_SXL           BIT_ULL(11)
-+
-+/* Second-stage (aka G-stage) context fields */
-+#define RISCV_IOMMU_DC_IOHGATP_PPN      RISCV_IOMMU_ATP_PPN_FIELD
-+#define RISCV_IOMMU_DC_IOHGATP_GSCID    GENMASK_ULL(59, 44)
-+#define RISCV_IOMMU_DC_IOHGATP_MODE     RISCV_IOMMU_ATP_MODE_FIELD
-+
-+enum riscv_iommu_dc_iohgatp_modes {
-+    RISCV_IOMMU_DC_IOHGATP_MODE_BARE = 0,
-+    RISCV_IOMMU_DC_IOHGATP_MODE_SV32X4 = 8,
-+    RISCV_IOMMU_DC_IOHGATP_MODE_SV39X4 = 8,
-+    RISCV_IOMMU_DC_IOHGATP_MODE_SV48X4 = 9,
-+    RISCV_IOMMU_DC_IOHGATP_MODE_SV57X4 = 10
-+};
-+
-+/* Translation attributes fields */
-+#define RISCV_IOMMU_DC_TA_PSCID         GENMASK_ULL(31, 12)
-+
-+/* First-stage context fields */
-+#define RISCV_IOMMU_DC_FSC_PPN          RISCV_IOMMU_ATP_PPN_FIELD
-+#define RISCV_IOMMU_DC_FSC_MODE         RISCV_IOMMU_ATP_MODE_FIELD
-+
-+/* Generic I/O MMU command structure - check section 3.1 */
-+struct riscv_iommu_command {
-+    uint64_t dword0;
-+    uint64_t dword1;
-+};
-+
-+#define RISCV_IOMMU_CMD_OPCODE          GENMASK_ULL(6, 0)
-+#define RISCV_IOMMU_CMD_FUNC            GENMASK_ULL(9, 7)
-+
-+#define RISCV_IOMMU_CMD_IOTINVAL_OPCODE         1
-+#define RISCV_IOMMU_CMD_IOTINVAL_FUNC_VMA       0
-+#define RISCV_IOMMU_CMD_IOTINVAL_FUNC_GVMA      1
-+#define RISCV_IOMMU_CMD_IOTINVAL_AV     BIT_ULL(10)
-+#define RISCV_IOMMU_CMD_IOTINVAL_PSCID  GENMASK_ULL(31, 12)
-+#define RISCV_IOMMU_CMD_IOTINVAL_PSCV   BIT_ULL(32)
-+#define RISCV_IOMMU_CMD_IOTINVAL_GV     BIT_ULL(33)
-+#define RISCV_IOMMU_CMD_IOTINVAL_GSCID  GENMASK_ULL(59, 44)
-+
-+#define RISCV_IOMMU_CMD_IOFENCE_OPCODE          2
-+#define RISCV_IOMMU_CMD_IOFENCE_FUNC_C          0
-+#define RISCV_IOMMU_CMD_IOFENCE_AV      BIT_ULL(10)
-+#define RISCV_IOMMU_CMD_IOFENCE_DATA    GENMASK_ULL(63, 32)
-+
-+#define RISCV_IOMMU_CMD_IODIR_OPCODE            3
-+#define RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT    0
-+#define RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_PDT    1
-+#define RISCV_IOMMU_CMD_IODIR_PID       GENMASK_ULL(31, 12)
-+#define RISCV_IOMMU_CMD_IODIR_DV        BIT_ULL(33)
-+#define RISCV_IOMMU_CMD_IODIR_DID       GENMASK_ULL(63, 40)
-+
-+enum riscv_iommu_dc_fsc_atp_modes {
-+    RISCV_IOMMU_DC_FSC_MODE_BARE = 0,
-+    RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV32 = 8,
-+    RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV39 = 8,
-+    RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV48 = 9,
-+    RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV57 = 10,
-+    RISCV_IOMMU_DC_FSC_PDTP_MODE_PD8 = 1,
-+    RISCV_IOMMU_DC_FSC_PDTP_MODE_PD17 = 2,
-+    RISCV_IOMMU_DC_FSC_PDTP_MODE_PD20 = 3
-+};
-+
-+enum riscv_iommu_fq_causes {
-+    RISCV_IOMMU_FQ_CAUSE_INST_FAULT           = 1,
-+    RISCV_IOMMU_FQ_CAUSE_RD_ADDR_MISALIGNED   = 4,
-+    RISCV_IOMMU_FQ_CAUSE_RD_FAULT             = 5,
-+    RISCV_IOMMU_FQ_CAUSE_WR_ADDR_MISALIGNED   = 6,
-+    RISCV_IOMMU_FQ_CAUSE_WR_FAULT             = 7,
-+    RISCV_IOMMU_FQ_CAUSE_INST_FAULT_S         = 12,
-+    RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S           = 13,
-+    RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S           = 15,
-+    RISCV_IOMMU_FQ_CAUSE_INST_FAULT_VS        = 20,
-+    RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS          = 21,
-+    RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS          = 23,
-+    RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED         = 256,
-+    RISCV_IOMMU_FQ_CAUSE_DDT_LOAD_FAULT       = 257,
-+    RISCV_IOMMU_FQ_CAUSE_DDT_INVALID          = 258,
-+    RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED    = 259,
-+    RISCV_IOMMU_FQ_CAUSE_TTYPE_BLOCKED        = 260,
-+    RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT       = 261,
-+    RISCV_IOMMU_FQ_CAUSE_MSI_INVALID          = 262,
-+    RISCV_IOMMU_FQ_CAUSE_MSI_MISCONFIGURED    = 263,
-+    RISCV_IOMMU_FQ_CAUSE_MRIF_FAULT           = 264,
-+    RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT       = 265,
-+    RISCV_IOMMU_FQ_CAUSE_PDT_INVALID          = 266,
-+    RISCV_IOMMU_FQ_CAUSE_PDT_MISCONFIGURED    = 267,
-+    RISCV_IOMMU_FQ_CAUSE_DDT_CORRUPTED        = 268,
-+    RISCV_IOMMU_FQ_CAUSE_PDT_CORRUPTED        = 269,
-+    RISCV_IOMMU_FQ_CAUSE_MSI_PT_CORRUPTED     = 270,
-+    RISCV_IOMMU_FQ_CAUSE_MRIF_CORRUIPTED      = 271,
-+    RISCV_IOMMU_FQ_CAUSE_INTERNAL_DP_ERROR    = 272,
-+    RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT         = 273,
-+    RISCV_IOMMU_FQ_CAUSE_PT_CORRUPTED         = 274
-+};
-+
-+/* MSI page table pointer */
-+#define RISCV_IOMMU_DC_MSIPTP_PPN       RISCV_IOMMU_ATP_PPN_FIELD
-+#define RISCV_IOMMU_DC_MSIPTP_MODE      RISCV_IOMMU_ATP_MODE_FIELD
-+#define RISCV_IOMMU_DC_MSIPTP_MODE_OFF  0
-+#define RISCV_IOMMU_DC_MSIPTP_MODE_FLAT 1
-+
-+/* Translation attributes fields */
-+#define RISCV_IOMMU_PC_TA_V             BIT_ULL(0)
-+
-+/* First stage context fields */
-+#define RISCV_IOMMU_PC_FSC_PPN          GENMASK_ULL(43, 0)
-+
-+enum riscv_iommu_fq_ttypes {
-+    RISCV_IOMMU_FQ_TTYPE_NONE = 0,
-+    RISCV_IOMMU_FQ_TTYPE_UADDR_INST_FETCH = 1,
-+    RISCV_IOMMU_FQ_TTYPE_UADDR_RD = 2,
-+    RISCV_IOMMU_FQ_TTYPE_UADDR_WR = 3,
-+    RISCV_IOMMU_FQ_TTYPE_TADDR_INST_FETCH = 5,
-+    RISCV_IOMMU_FQ_TTYPE_TADDR_RD = 6,
-+    RISCV_IOMMU_FQ_TTYPE_TADDR_WR = 7,
-+    RISCV_IOMMU_FW_TTYPE_PCIE_MSG_REQ = 8,
-+};
-+
-+/* Fields on pte */
-+#define RISCV_IOMMU_MSI_PTE_V           BIT_ULL(0)
-+#define RISCV_IOMMU_MSI_PTE_M           GENMASK_ULL(2, 1)
-+
-+#define RISCV_IOMMU_MSI_PTE_M_MRIF      1
-+#define RISCV_IOMMU_MSI_PTE_M_BASIC     3
-+
-+/* When M == 1 (MRIF mode) */
-+#define RISCV_IOMMU_MSI_PTE_MRIF_ADDR   GENMASK_ULL(53, 7)
-+/* When M == 3 (basic mode) */
-+#define RISCV_IOMMU_MSI_PTE_PPN         RISCV_IOMMU_PPN_FIELD
-+#define RISCV_IOMMU_MSI_PTE_C           BIT_ULL(63)
-+
-+/* Fields on mrif_info */
-+#define RISCV_IOMMU_MSI_MRIF_NID        GENMASK_ULL(9, 0)
-+#define RISCV_IOMMU_MSI_MRIF_NPPN       RISCV_IOMMU_PPN_FIELD
-+#define RISCV_IOMMU_MSI_MRIF_NID_MSB    BIT_ULL(60)
-+
-+#endif /* _RISCV_IOMMU_BITS_H_ */
++        self.common_tuxrun(csums=sums)
 -- 
 2.47.0
 
