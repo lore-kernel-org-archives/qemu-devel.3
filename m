@@ -4,82 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C582D767E1
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 16:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7ABD767D8
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 16:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6Xr2-0006f7-QW; Thu, 31 Oct 2024 12:17:00 -0400
+	id 1t6XyJ-0000Lg-PO; Thu, 31 Oct 2024 12:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Xr0-0006eg-Ib
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:16:58 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Xqy-00017G-PE
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:16:58 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-71e467c3996so875214b3a.2
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 09:16:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730391415; x=1730996215; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VfZ7/Ord9Q8h0h5GU2lWOt3rg0jcM9+XNU9aSGGnko0=;
- b=sVwI83tQ5afKJSZEZ7MyQsR/dvd8tMpLEeiNXrUNTzKT/vq6UiEAikJIim6chOEnJH
- KcU15aF0TMwYOXTBa9CBEkQ8NpVYZwDoS7eDottTwFIdXicDtcuLJy9IWHoWYZ1zSRRc
- P9jMsYj9381vro3opJhXt6IAVkvvKrif+qSyUfnlPG+Pg8VnLaJlfF99WPo2UCiWjBvZ
- HVZR6sWlmtyDPbtzAu6BMZk4yAJpsg+86WWalT+xEcNK7xqZfZwv1xPPRQ9D+I8K3dCJ
- 0RzBZ+Y/RyHPfk2LGiOUZf7+xliLmUURsPJbonudoF879gh+aJ5gv10I7VK32GGYpref
- RAyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730391415; x=1730996215;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VfZ7/Ord9Q8h0h5GU2lWOt3rg0jcM9+XNU9aSGGnko0=;
- b=wu/idPVweJLnJmKLmHfmg0Ue3NvWcBp1L03ryR/A39kgecuccAFSZ4O/6fs+QV76mN
- cAkpdT/PGfOXtsIUBVWukvVfytfwtjPdnjSMFQ2ARdn7gK8WTDjlJgawBE+I6qHCTPMo
- /nv7ckfJFuyfW0LuIjYQmVjBBu3re3Z0gBZ02h6Mp6SrBDsKLrN8I5ocQHeqZc4uTWBg
- X5H+Y0X/lXgDpuyWrHCgzfEQ5oYhgMBMcxy9mror1T0yfQA1NbTeYufidCRwf1q7J6Av
- BKSMlnNYv+ll7pRgvWj1giROLCzp/Y1VsxBZkjyJn4hEE+/YpmFoERMOv8XX9IHoRJ2b
- nRFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUU2d3WQ/2Yn3iSlKaDlJUq+cr4YItCScj86myf7RTxcVnUNdVZOAtq59NvMuBkhLR2Oy6/BYvQtiBl@nongnu.org
-X-Gm-Message-State: AOJu0YwlTYf5jJboeIZkagNzmsv/AOaX8pJQygKkmhrGLjt7eQsPc1nM
- TBNo8jN/C2DED8ix1A6paO/4w+Zvp4vvJwxoxqBTV1KVHdk3Xshk9PgGkw87EBA=
-X-Google-Smtp-Source: AGHT+IEayCxP5ugVBphu7BQy5CmKCeLHz5VpBQuu/3NXPn+8JyhyDvvyZGO3mJZkP+hiO1nKI5FrzQ==
-X-Received: by 2002:a05:6a00:18a0:b0:71e:786c:3fa9 with SMTP id
- d2e1a72fcca58-72062a5d8e2mr30563372b3a.0.1730391414719; 
- Thu, 31 Oct 2024 09:16:54 -0700 (PDT)
-Received: from [10.0.12.195] ([190.210.133.43])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-720bc313888sm1292215b3a.185.2024.10.31.09.16.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Oct 2024 09:16:54 -0700 (PDT)
-Message-ID: <971b47d0-949b-4454-884b-28ec070f9365@linaro.org>
-Date: Thu, 31 Oct 2024 13:16:07 -0300
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t6Xy7-0000Ji-OT
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:24:23 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t6Xy0-00024G-Oa
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:24:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730391853; x=1761927853;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=SaMSW5dqKpu1S/+h0T6Umguv0j6pHee0GJQFILgnvbc=;
+ b=KbIiXrZkaWpxHgImTd2JEbiMZnNW7S8MpylArx+DpDfM0FOQHqNHxF/V
+ XrhX7tEXp5RjHDPmkkLzvW9DWtZQYrZ2FnJU9WnDFmVVZma6FSGXapZ84
+ FLfEj+lmRzPXMUOWAXlnz1ErMy5j+ZzMS/XyYdu9g8hyJe/f1bLL9DJe7
+ XLyrJd1R2jta+mWsf8pOMSiS+tRrcNpqt+qZBZYS2bexxab+SlZEwKoQV
+ uggyVTVqpPRmz2Siph46Z6J50Nb9ND/eKNEz5LUKJH6Fe90bilmuSYAEQ
+ W9V3cO2tk6a9dPpktgL1MXV7bW6j3X8Mzi0ja1NHscRAhcyLjZw93+e1U g==;
+X-CSE-ConnectionGUID: yMCkz/t3Q+GsSEoaFSnvqg==
+X-CSE-MsgGUID: 8oFj9pP8Rsajz+pSkL+OLg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11242"; a="30258925"
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="30258925"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Oct 2024 09:24:08 -0700
+X-CSE-ConnectionGUID: ae4nvHklSYS0LYth8nlHxQ==
+X-CSE-MsgGUID: XTlmUYvnTsGG4cmd50YCpQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="86606598"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 31 Oct 2024 09:24:07 -0700
+Date: Fri, 1 Nov 2024 00:41:57 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org,
+ junjie.mao@hotmail.com, berrange@redhat.com
+Subject: Re: [PATCH v3 00/23] rust: fix CI + allow older versions of rustc
+ and bindgen
+Message-ID: <ZyOzVYpqHYx8O6Yc@intel.com>
+References: <20241025160209.194307-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/loongarch/virt: Add reset interface for virt-machine
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20241031065418.3111892-1-maobibo@loongson.cn>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241031065418.3111892-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241025160209.194307-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,134 +84,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing Peter who is working on the Reset API.
+> This series can be found at branch rust-next of my git repository
+> (https://gitlab.com/bonzini/qemu.git), which also helps with the
+> problems in applying patch 8.  Everything up to commit f6a46d2a4eb
+> ("rust: do not use TYPE_CHARDEV unnecessarily", 2024-10-25) will be
+> my next pull request, which I will send early next week (to give
+> people some more days to complain).
+> 
+> Paolo
+> 
+> Supersedes: <20241022100956.196657-1-pbonzini@redhat.com>
+> 
+> CI: https://gitlab.com/bonzini/qemu/-/pipelines/1512732399
 
-On 31/10/24 03:54, Bibo Mao wrote:
-> With generic cpu reset interface, pc register is entry of FLASH for
-> UEFI BIOS. However with direct kernel booting requirement, there is
-> little different, pc register of primary cpu is entry address of ELF
-> file.
-> 
-> At the same time with requirement of cpu hotplug, hot-added CPU should
-> register reset interface for this cpu object. Now reset callback is
-> not registered for hot-added CPU.
-> 
-> With this patch reset callback for CPU is register when CPU instance
-> is created, and reset interface is added for virt-machine board. In
-> reset interface of virt-machine, reset for direct kernel booting
-> requirement is called.
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   hw/loongarch/boot.c         |  9 +--------
->   hw/loongarch/virt.c         | 14 ++++++++++++++
->   include/hw/loongarch/boot.h |  1 +
->   target/loongarch/cpu.c      | 10 ++++++++++
->   4 files changed, 26 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-> index cb668703bd..cbb4e3737d 100644
-> --- a/hw/loongarch/boot.c
-> +++ b/hw/loongarch/boot.c
-> @@ -216,12 +216,11 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
->       return kernel_entry;
->   }
->   
-> -static void reset_load_elf(void *opaque)
-> +void reset_load_elf(void *opaque)
->   {
->       LoongArchCPU *cpu = opaque;
->       CPULoongArchState *env = &cpu->env;
->   
-> -    cpu_reset(CPU(cpu));
->       if (env->load_elf) {
->   	if (cpu == LOONGARCH_CPU(first_cpu)) {
->               env->gpr[4] = env->boot_info->a0;
-> @@ -320,12 +319,6 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
->   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
-> -    int i;
-> -
-> -    /* register reset function */
-> -    for (i = 0; i < ms->smp.cpus; i++) {
-> -        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cpu(i)));
-> -    }
->   
->       info->kernel_filename = ms->kernel_filename;
->       info->kernel_cmdline = ms->kernel_cmdline;
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 9a635d1d3d..80680d178c 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -1434,6 +1434,19 @@ static int64_t virt_get_default_cpu_node_id(const MachineState *ms, int idx)
->       }
->   }
->   
-> +static void virt_reset(MachineState *machine, ResetType type)
-> +{
-> +    CPUState *cs;
-> +
-> +    /* Reset all devices including CPU devices */
-> +    qemu_devices_reset(type);
-> +
-> +    /* Reset PC and register context for kernel direct booting method */
-> +    CPU_FOREACH(cs) {
-> +        reset_load_elf(LOONGARCH_CPU(cs));
-> +    }
-> +}
-> +
->   static void virt_class_init(ObjectClass *oc, void *data)
->   {
->       MachineClass *mc = MACHINE_CLASS(oc);
-> @@ -1457,6 +1470,7 @@ static void virt_class_init(ObjectClass *oc, void *data)
->       mc->auto_enable_numa_with_memdev = true;
->       mc->get_hotplug_handler = virt_get_hotplug_handler;
->       mc->default_nic = "virtio-net-pci";
-> +    mc->reset = virt_reset;
->       hc->plug = virt_device_plug_cb;
->       hc->pre_plug = virt_device_pre_plug;
->       hc->unplug_request = virt_device_unplug_request;
-> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-> index b3b870df1f..c7020ec9bb 100644
-> --- a/include/hw/loongarch/boot.h
-> +++ b/include/hw/loongarch/boot.h
-> @@ -115,5 +115,6 @@ struct memmap_entry {
->   };
->   
->   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
-> +void reset_load_elf(void *opaque);
->   
->   #endif /* HW_LOONGARCH_BOOT_H */
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index 7212fb5f8f..f7f8fcc024 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -592,6 +592,13 @@ static void loongarch_cpu_disas_set_info(CPUState *s, disassemble_info *info)
->       info->print_insn = print_insn_loongarch;
->   }
->   
-> +#ifndef CONFIG_USER_ONLY
-> +static void loongarch_cpu_reset_cb(void *opaque)
-> +{
-> +    cpu_reset((CPUState *) opaque);
-> +}
-> +#endif
-> +
->   static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
->   {
->       CPUState *cs = CPU(dev);
-> @@ -607,6 +614,9 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
->       loongarch_cpu_register_gdb_regs_for_features(cs);
->   
->       cpu_reset(cs);
-> +#ifndef CONFIG_USER_ONLY
-> +    qemu_register_reset(loongarch_cpu_reset_cb, dev);
-> +#endif
->       qemu_init_vcpu(cs);
->   
->       lacc->parent_realize(dev, errp);
-> 
-> base-commit: 58d49b5895f2e0b5cfe4b2901bf24f3320b74f29
+Compiled with v1.63 and ran "make check" on my x86 platform.
+
+Everything looks good!
+
+Tested-by: Zhao Liu <zhao1.liu@intel.com>
 
 
