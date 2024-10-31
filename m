@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 291A8E68954
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443ABE68953
 	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:10:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MQv-0003po-Cy; Thu, 31 Oct 2024 00:05:17 -0400
+	id 1t6MQv-0003qy-VN; Thu, 31 Oct 2024 00:05:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQi-0003ef-RB
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:07 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1t6MQp-0003lO-O5
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:12 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQh-0004qs-4Z
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:04 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-20cbb1cf324so4545895ad.0
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:02 -0700 (PDT)
+ id 1t6MQn-00053v-Oy
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:11 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2e2b549799eso388370a91.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730347502; x=1730952302; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730347508; x=1730952308; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=stB6xsCXZvGGgXKJAPY9QdgEF+16xwQAb0j6tVuAwQI=;
- b=QJ3fHpt2h4XeDHUo0UbLB4hh7VNbO1TvqaAuymV3ZpFgjA7R1yVesL31n0Y7R7JDqX
- UcKymBK60J80KUcKtYH9SYgKhNPd3OOUwOEoLINp5C3HMXwqPWmOiHO5E4ww7Y9IPBt3
- geIDUwuLz87JBx6ZvxyEPSCXliaJH48DNGHBJ7gt9go9KU5+GAdKu2Cb1uEQAATj1KqT
- phQ1OghgGaFT3BJeYd6u9Y5N/gtPdjzYeCFdYhnyy3RGnkyF+/wo3jWiwyBBr81I4+xq
- BoQSBv/EhXqqQHKEoSKvyc1RthM1ba8ADO0lFrWbP6kxJ9syFYkqxzOWuBXplGs2NMI1
- 5dMw==
+ bh=R6PRNouRIX8nn07oym8VUYNLwY1A8W1UJP1nr46hRjQ=;
+ b=AMpCfDAkTEj6oJvuJxwzCViBuUmhDOC63RdXnyVNx/AW1Z2oUH8jJnwvYWyErbKbsp
+ 5700OyiYx8D2UTLbA2HORLl84eIIrkAFvk7dM4BMITfXEGAIeSQAp5Q4guatFvlDCzBV
+ 4V3ywzw0vuET1vibMVvcwmTssI3JjBb5RXXiQOlg4uTbARHYI850fl6EaQu4mvnUnAE4
+ jteVSWA74D+leYakZcYV6d7q7mxlLYyiioLgTyxycsx6ZW1gsV6xujwR1ZHImk6NIUXi
+ wYffuAcBkWqRY7mU+OcBYpIzfCSrLp48hhdsz1q/CnYEBc/l3RVSv+ZQO1SeSuf7Hji4
+ evPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730347502; x=1730952302;
+ d=1e100.net; s=20230601; t=1730347508; x=1730952308;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=stB6xsCXZvGGgXKJAPY9QdgEF+16xwQAb0j6tVuAwQI=;
- b=w2rwUJf44AkCP7F+EaQV2YwL8IE4K32AECRQFtq5n2jQFdE/dDNN7+k6QPFKvmhdZC
- IiQTDS3ZjBMQBxAEXfIQriFsvQIxgf1j3YhhTIqFVFSuzV2jaxeKCqjli8dfSkNiwq5F
- LLhL/0LrsLNyym1x6KNisc0+hYkIRH+TmAnGGeHTnRgVRqCJDGYqvGrbPDSL2BPU1J8d
- DHNahCYI1CMMlP4/ef1DhxPPZcD00UxV44Cmbz3wE6MqMe1s2OOw/tVsXLQs0O1mvdRG
- Pzk1TGrJG4BOeJHv8Vj3beOXYWNVqxcw6k7VZ2rzet7mxsOPQeO3b8pE62f2PPgvqbqF
- FViQ==
-X-Gm-Message-State: AOJu0YwwCVt5/SFa1y9VVStO5wCErgN17yKza2Rc96AE7lSTYx4FV0Yk
- dydK7CCwnLcA7saGA0kfPIfxqac04FbwHRLZFeO2/w4IiWzTgEof+sUx0MOYVzPebJ02XxVbZpX
- LZZc2tg==
-X-Google-Smtp-Source: AGHT+IEyNjojfk3YLrfbuYwwa6l3GsRh8rmuKIQ9uchPrZ0E4gGV0nFH3OnCIuZG5z3c0+Wx+bkACw==
-X-Received: by 2002:a17:902:eccb:b0:20e:5792:32ed with SMTP id
- d9443c01a7336-210c6c6cf5bmr217904555ad.41.1730347501863; 
- Wed, 30 Oct 2024 21:05:01 -0700 (PDT)
+ bh=R6PRNouRIX8nn07oym8VUYNLwY1A8W1UJP1nr46hRjQ=;
+ b=DZ+uEAVBAFUJqv5XudobKxkPmpHk15QGOtaf82Iy4TnxpaghRontVrYs+deuO7RkJC
+ 0AqaDzPd7hal3rfdmhiBmHCMIScrXCV7d5ssUdQkr//QBcA4+hQip5KLkNWE39C0eJLv
+ AnE/jqCJQXVWXyXddYznfFlfo0I9QmX/2v3XR3sZiiOFXgUm+By46JyQG+68qYOespqc
+ eP8/KAyn60gGqXnalvOUVY0NEK4eJKrHYXP8NvIFWF9C31Ew9SMyNmocbieVeVAat9qs
+ gYrQqeSIoPo3BwbnGPxzctAkk0sVV8U47XciSRMQkJ8UCLt9/fBaV5E+AupUA9OBTssi
+ T8DA==
+X-Gm-Message-State: AOJu0Yy0EHanhX99ZSodPU4WcDoC6bGR8+hJiX5Yrip/SxEMn+8cAnZ0
+ sUxDLpSakPk8ISQnmWDfT5lMVEmqKmJIN/QVlf32JTgleE8q2fhB39jOfQxzDsYyrSeqouZTNo4
+ ZXFWBrg==
+X-Google-Smtp-Source: AGHT+IFNUlZ9ZCHcHNB3MpmcCxQnAmblYQ8TaSXTg8sk2Me5P+2Lv1cChtmuJHLo7ls8+N42mBewLw==
+X-Received: by 2002:a17:90b:4f81:b0:2e2:cf63:224c with SMTP id
+ 98e67ed59e1d1-2e8f11d55b4mr17651623a91.35.1730347508125; 
+ Wed, 30 Oct 2024 21:05:08 -0700 (PDT)
 Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e93db3a023sm428438a91.49.2024.10.30.21.05.01
+ 98e67ed59e1d1-2e93db3a023sm428438a91.49.2024.10.30.21.05.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 21:05:01 -0700 (PDT)
+ Wed, 30 Oct 2024 21:05:07 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
@@ -73,16 +73,16 @@ Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 05/12] qga: fix -Wsometimes-uninitialized windows warning
-Date: Wed, 30 Oct 2024 21:04:19 -0700
-Message-Id: <20241031040426.772604-6-pierrick.bouvier@linaro.org>
+Subject: [PATCH 11/12] plugins: eradicate qemu-plugins.symbols static file
+Date: Wed, 30 Oct 2024 21:04:25 -0700
+Message-Id: <20241031040426.772604-12-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
 References: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,72 +105,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reported by clang, but not gcc.
-
-[5123/5678] Compiling C object qga/qemu-ga.exe.p/commands-windows-ssh.c.obj
-FAILED: qga/qemu-ga.exe.p/commands-windows-ssh.c.obj
-"cc" "-Iqga/qemu-ga.exe.p" "-Iqga" "-I../qga" "-I." "-Iqapi" "-Itrace" "-Iu=
-i" "-Iui/shader" "-IC:/msys64/clangarm64/include/glib-2.0" "-IC:/msys64/cla=
-ngarm64/lib/glib-2.0/include" "-fdiagnostics-color=3Dauto" "-Wall" "-Winval=
-id-pch" "-Werror" "-std=3Dgnu11" "-O2" "-g" "-fstack-protector-strong" "-We=
-mpty-body" "-Wendif-labels" "-Wexpansion-to-defined" "-Wformat-security" "-=
-Wformat-y2k" "-Wignored-qualifiers" "-Winit-self" "-Wmissing-format-attribu=
-te" "-Wmissing-prototypes" "-Wnested-externs" "-Wold-style-definition" "-Wr=
-edundant-decls" "-Wstrict-prototypes" "-Wtype-limits" "-Wundef" "-Wvla" "-W=
-write-strings" "-Wno-gnu-variable-sized-type-not-at-end" "-Wno-initializer-=
-overrides" "-Wno-missing-include-dirs" "-Wno-psabi" "-Wno-shift-negative-va=
-lue" "-Wno-string-plus-int" "-Wno-tautological-type-limit-compare" "-Wno-ty=
-pedef-redefinition" "-Wthread-safety" "-iquote" "." "-iquote" "C:/w/qemu" "=
--iquote" "C:/w/qemu/include" "-iquote" "C:/w/qemu/host/include/aarch64" "-i=
-quote" "C:/w/qemu/host/include/generic" "-iquote" "C:/w/qemu/tcg/aarch64" "=
--D_GNU_SOURCE" "-D_FILE_OFFSET_BITS=3D64" "-D_LARGEFILE_SOURCE" "-fno-stric=
-t-aliasing" "-fno-common" "-fwrapv" "-fno-pie" "-ftrivial-auto-var-init=3Dz=
-ero" "-fzero-call-used-regs=3Dused-gpr" -MD -MQ qga/qemu-ga.exe.p/commands-=
-windows-ssh.c.obj -MF "qga/qemu-ga.exe.p/commands-windows-ssh.c.obj.d" -o q=
-ga/qemu-ga.exe.p/commands-windows-ssh.c.obj "-c" ../qga/commands-windows-ss=
-h.c
-../qga/commands-windows-ssh.c:383:9: error: variable 'userPSID' is used uni=
-nitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitializ=
-ed]
-  383 |     if (!create_acl(userInfo, &pACL, errp)) {
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../qga/commands-windows-ssh.c:415:15: note: uninitialized use occurs here
-  415 |     LocalFree(userPSID);
-      |               ^~~~~~~~
-../qga/commands-windows-ssh.c:383:5: note: remove the 'if' if its condition=
- is always false
-  383 |     if (!create_acl(userInfo, &pACL, errp)) {
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  384 |         goto error;
-      |         ~~~~~~~~~~~
-  385 |     }
-      |     ~
-../qga/commands-windows-ssh.c:380:18: note: initialize the variable 'userPS=
-ID' to silence this warning
-  380 |     PSID userPSID;
-      |                  ^
-      |                   =3D NULL
-1 error generated.
-
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- qga/commands-windows-ssh.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ plugins/qemu-plugins.symbols | 59 ------------------------------------
+ 1 file changed, 59 deletions(-)
+ delete mode 100644 plugins/qemu-plugins.symbols
 
-diff --git a/qga/commands-windows-ssh.c b/qga/commands-windows-ssh.c
-index 6a642e3ba81..df45c17b757 100644
---- a/qga/commands-windows-ssh.c
-+++ b/qga/commands-windows-ssh.c
-@@ -377,7 +377,7 @@ error:
- static bool set_file_permissions(PWindowsUserInfo userInfo, Error **errp)
- {
-     PACL pACL =3D NULL;
--    PSID userPSID;
-+    PSID userPSID =3D NULL;
-=20
-     /* Creates the access control structure */
-     if (!create_acl(userInfo, &pACL, errp)) {
---=20
+diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+deleted file mode 100644
+index 032661f9ea7..00000000000
+--- a/plugins/qemu-plugins.symbols
++++ /dev/null
+@@ -1,59 +0,0 @@
+-{
+-  qemu_plugin_bool_parse;
+-  qemu_plugin_end_code;
+-  qemu_plugin_entry_code;
+-  qemu_plugin_get_hwaddr;
+-  qemu_plugin_get_registers;
+-  qemu_plugin_hwaddr_device_name;
+-  qemu_plugin_hwaddr_is_io;
+-  qemu_plugin_hwaddr_phys_addr;
+-  qemu_plugin_insn_data;
+-  qemu_plugin_insn_disas;
+-  qemu_plugin_insn_haddr;
+-  qemu_plugin_insn_size;
+-  qemu_plugin_insn_symbol;
+-  qemu_plugin_insn_vaddr;
+-  qemu_plugin_mem_get_value;
+-  qemu_plugin_mem_is_big_endian;
+-  qemu_plugin_mem_is_sign_extended;
+-  qemu_plugin_mem_is_store;
+-  qemu_plugin_mem_size_shift;
+-  qemu_plugin_num_vcpus;
+-  qemu_plugin_outs;
+-  qemu_plugin_path_to_binary;
+-  qemu_plugin_read_memory_vaddr;
+-  qemu_plugin_read_register;
+-  qemu_plugin_register_atexit_cb;
+-  qemu_plugin_register_flush_cb;
+-  qemu_plugin_register_vcpu_exit_cb;
+-  qemu_plugin_register_vcpu_idle_cb;
+-  qemu_plugin_register_vcpu_init_cb;
+-  qemu_plugin_register_vcpu_insn_exec_cb;
+-  qemu_plugin_register_vcpu_insn_exec_cond_cb;
+-  qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu;
+-  qemu_plugin_register_vcpu_mem_cb;
+-  qemu_plugin_register_vcpu_mem_inline_per_vcpu;
+-  qemu_plugin_register_vcpu_resume_cb;
+-  qemu_plugin_register_vcpu_syscall_cb;
+-  qemu_plugin_register_vcpu_syscall_ret_cb;
+-  qemu_plugin_register_vcpu_tb_exec_cb;
+-  qemu_plugin_register_vcpu_tb_exec_cond_cb;
+-  qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu;
+-  qemu_plugin_register_vcpu_tb_trans_cb;
+-  qemu_plugin_request_time_control;
+-  qemu_plugin_reset;
+-  qemu_plugin_scoreboard_free;
+-  qemu_plugin_scoreboard_find;
+-  qemu_plugin_scoreboard_new;
+-  qemu_plugin_start_code;
+-  qemu_plugin_tb_get_insn;
+-  qemu_plugin_tb_n_insns;
+-  qemu_plugin_tb_vaddr;
+-  qemu_plugin_u64_add;
+-  qemu_plugin_u64_get;
+-  qemu_plugin_u64_set;
+-  qemu_plugin_u64_sum;
+-  qemu_plugin_uninstall;
+-  qemu_plugin_update_ns;
+-  qemu_plugin_vcpu_for_each;
+-};
+-- 
 2.39.5
 
 
