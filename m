@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAAF4D767F4
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 17:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4482CD767F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 17:53:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6ZLU-00076E-K8; Thu, 31 Oct 2024 13:52:32 -0400
+	id 1t6ZM3-0000Q9-Jv; Thu, 31 Oct 2024 13:53:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t6ZLT-000758-G5
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:52:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t6ZLs-00005S-TH
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:52:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t6ZLS-0007CR-0v
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:52:31 -0400
+ id 1t6ZLq-0007J6-R5
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:52:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730397149;
+ s=mimecast20190719; t=1730397173;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=leQodRwO8cbwBZJdEKIZ8FGqkROJiM0fBvAauKBAI60=;
- b=ZMpNATsPxdEG2T6vfuM8bPmJ24zetXZw1nPpJhJtVqFurvcENX4xkZG+tNGX3PRl2e3n0X
- CxhNln9gBkBT+CtB2uu4CYgUxyLa3FDpbZpoFrwDEzcTSU2pTKxzo9QW7/6ufsw6oFICgc
- JtNA/CaSwtXBrgN8Au743EJXGYj+d1I=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VAf9Rw9T2ciU5LDleiHhXlQ4Sh6dCoA/J7BuqxW01SY=;
+ b=gIkdRZ7ZUGWg5Pk+X9wejFnYiUTE9vbt8BB6g+IAjAurXFMQRPx/fwzbXrGE7R7mouDADN
+ mHtwZfxoS+SHSAO+lMe+N6+m7xivTVHqSb/bbs/P1cXF2zNtGE91puwOepv07zq+CX5s+S
+ N1YOw44L1tuRG0T3W6Je/5pR2cgg3ws=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-23SLY1ZcOSqVgxQU69T-fw-1; Thu, 31 Oct 2024 13:52:28 -0400
-X-MC-Unique: 23SLY1ZcOSqVgxQU69T-fw-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d662dd3c8so530806f8f.1
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 10:52:27 -0700 (PDT)
+ us-mta-219-PZxhPfgJPruU6pY3SzE7uQ-1; Thu, 31 Oct 2024 13:52:52 -0400
+X-MC-Unique: PZxhPfgJPruU6pY3SzE7uQ-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43157cff1d1so8657995e9.2
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 10:52:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730397145; x=1731001945;
+ d=1e100.net; s=20230601; t=1730397170; x=1731001970;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=leQodRwO8cbwBZJdEKIZ8FGqkROJiM0fBvAauKBAI60=;
- b=J54VLHBsK6RzAM/aJYfLTzNqXzrs3s543wLeLdFSSZXG52C4TTgMuwNWUMHTJNJZb3
- 9kCBvDfYSj5HGwBLzkD/2+CsH0EppxZiX5dGQhQzSf13/+5I/vLuqOyHph+jZFiijijf
- FNbwzjCyFikdDtYQ2SFvt/s1/lE9ugT1ofarEetpw5tuTu20YnJtD+uZ5r7Tjv99o4TD
- MQyAHeNCgr/gyvcQodJMBwx+zWdTbTKZhVcrynLJMzHkku4wH/yhc7Eo4/dTSCFgXtDH
- K//PylP5A9uWxvlmRXKeghNB08ZY2dpgmaxHp+gvuznTcTAtsRblVlDY1F0haPMIua4P
- 4smQ==
-X-Gm-Message-State: AOJu0YwNKUrF8Sm2rcN6AS46xCJyxyZ3H1nxGXyaLprVM9tElLeL4h2B
- dI2JC9zKhZP+kQk61a61cYbTgGZJSRySrd8eL+IrUtWQ47fZMZRPnMa+eQrTI/2rHI2c9OGkh1i
- B+6QXZaDYGatsnoakpSxBfM8SESfAm5XUn6Rc1Z689X5iNX8upBiy1fWMxJN/E9Ejf766XbAFW4
- jjIFJ5lR/zbdDyMWjZdeTBS+oVwfmGegxgQFAwmIo=
-X-Received: by 2002:adf:ec4f:0:b0:374:c614:73df with SMTP id
- ffacd0b85a97d-381b710f3f4mr5615862f8f.57.1730397145217; 
- Thu, 31 Oct 2024 10:52:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWMh0EabJUHlFuCXm/NodT+fp49N5dtzKOI52zWCQbCsb0G8nzaBnepQL8h3NC/ZH3WJOHRA==
-X-Received: by 2002:adf:ec4f:0:b0:374:c614:73df with SMTP id
- ffacd0b85a97d-381b710f3f4mr5615815f8f.57.1730397143491; 
- Thu, 31 Oct 2024 10:52:23 -0700 (PDT)
+ bh=VAf9Rw9T2ciU5LDleiHhXlQ4Sh6dCoA/J7BuqxW01SY=;
+ b=SiR+NqRBJ74PzVly1SCTx6S2Ol4B60UZE0NZSkDY475lG7r0Je0HokUvEXtyfTf9PY
+ e2iH+m8tbTiJRFUtGtPhOP/vVkwbHZCWdWeZwoTTi8xDGeA6j7NaM7OEmh5BnFZV0WaO
+ 2e7f2qsA8BYq4YucENVSBbo47HKXuSF+6tfd++6Yc227mQm5A0NrHhfi+IZ43uL6h0yK
+ N5shhlYBy0LmHEaijsVid4iCs1hAG4r/cIpmLLWsqZckkqggC3pbex1kQwFoa35FRSAk
+ IyhVGAaWEmWcpp8ta5MVWH+z8KK4KcckRJQDcJOn/0dFbiJcxor5/gi1BFx4LzcHvIPJ
+ yaUw==
+X-Gm-Message-State: AOJu0Yym7pmimcEViklNCWVbC7wLdLxbH7rK2SitPtGovoLBAX8a65no
+ FT3mDJNWrx5/wsrw+dmDtNG6wgiZSsDBW+ugslaHdvPtY9qyCPjea1pNSbXIKxvZZdIb2HyHtGO
+ q1v/dltlD2bJ/Przef1hjs1cwAcCCHPwIAXaAw9I+Ntgknd3G105SnFR5kL679lideFKQNatfQp
+ I8aIb25KRN4+YQTVhdWXaReKh1yv4NVEeI3xKwpuI=
+X-Received: by 2002:a05:600c:46cf:b0:431:58bc:ad5e with SMTP id
+ 5b1f17b1804b1-4327b80c8bamr31313555e9.28.1730397170098; 
+ Thu, 31 Oct 2024 10:52:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEHFVRilZ/WGc/Jk37hYCkpBL7vnxcMIuV+FGyMJlBZaErCn/Zsx6+8Osyi0Gg9+0fuWZhseg==
+X-Received: by 2002:a05:600c:46cf:b0:431:58bc:ad5e with SMTP id
+ 5b1f17b1804b1-4327b80c8bamr31313445e9.28.1730397169728; 
+ Thu, 31 Oct 2024 10:52:49 -0700 (PDT)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c113e885sm2788798f8f.89.2024.10.31.10.52.21
+ ffacd0b85a97d-381c10b7b97sm2817710f8f.2.2024.10.31.10.52.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 31 Oct 2024 10:52:21 -0700 (PDT)
+ Thu, 31 Oct 2024 10:52:47 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	qemu-stable@nongnu.org
-Subject: [PULL 04/49] target/i386: fix CPUID check for LFENCE and SFENCE
-Date: Thu, 31 Oct 2024 18:51:28 +0100
-Message-ID: <20241031175214.214455-5-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 15/49] qom: allow user-creatable classes to be in modules
+Date: Thu, 31 Oct 2024 18:51:39 +0100
+Message-ID: <20241031175214.214455-16-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241031175214.214455-1-pbonzini@redhat.com>
 References: <20241031175214.214455-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,34 +102,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LFENCE and SFENCE were introduced with the original SSE instruction set;
-marking them incorrectly as cpuid(SSE2) causes failures for CPU models
-that lack SSE2, for example pentium3.
+There is no real reason to make user-creatable classes different
+from other backends in this respect.  This also allows modularized
+character devices to be treated by qom-list-properties just like
+builtin ones.
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Cc: qemu-stable@nongnu.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ qom/object_interfaces.c | 2 +-
+ qom/qom-qmp-cmds.c      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 1f193716468..48bf730cd3e 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -345,9 +345,9 @@ static void decode_group15(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
-         [1] = X86_OP_ENTRYw(RDxxBASE,   R,y, cpuid(FSGSBASE) chk(o64) p_f3),
-         [2] = X86_OP_ENTRYr(WRxxBASE,   R,y, cpuid(FSGSBASE) chk(o64) p_f3 zextT0),
-         [3] = X86_OP_ENTRYr(WRxxBASE,   R,y, cpuid(FSGSBASE) chk(o64) p_f3 zextT0),
--        [5] = X86_OP_ENTRY0(LFENCE,          cpuid(SSE2) p_00),
-+        [5] = X86_OP_ENTRY0(LFENCE,          cpuid(SSE) p_00),
-         [6] = X86_OP_ENTRY0(MFENCE,          cpuid(SSE2) p_00),
--        [7] = X86_OP_ENTRY0(SFENCE,          cpuid(SSE2) p_00),
-+        [7] = X86_OP_ENTRY0(SFENCE,          cpuid(SSE) p_00),
-     };
+diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+index 1f2aa133066..1a6f29c053e 100644
+--- a/qom/object_interfaces.c
++++ b/qom/object_interfaces.c
+@@ -90,7 +90,7 @@ Object *user_creatable_add_type(const char *type, const char *id,
+         return NULL;
+     }
  
-     static const X86OpEntry group15_mem[8] = {
+-    klass = object_class_by_name(type);
++    klass = module_object_class_by_name(type);
+     if (!klass) {
+         error_setg(errp, "invalid object type: %s", type);
+         return NULL;
+diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+index 69a8e17aa80..46e4562300c 100644
+--- a/qom/qom-qmp-cmds.c
++++ b/qom/qom-qmp-cmds.c
+@@ -186,7 +186,7 @@ ObjectPropertyInfoList *qmp_qom_list_properties(const char *typename,
+     ObjectPropertyIterator iter;
+     ObjectPropertyInfoList *prop_list = NULL;
+ 
+-    klass = object_class_by_name(typename);
++    klass = module_object_class_by_name(typename);
+     if (klass == NULL) {
+         error_set(errp, ERROR_CLASS_DEVICE_NOT_FOUND,
+                   "Class '%s' not found", typename);
 -- 
 2.47.0
 
