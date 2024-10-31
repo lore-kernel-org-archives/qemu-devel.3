@@ -4,71 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB92AE68975
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 11:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A3AE68974
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 11:27:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6T9B-0007Q3-Js; Thu, 31 Oct 2024 07:15:31 -0400
+	id 1t6TKD-0001N6-4U; Thu, 31 Oct 2024 07:26:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6T96-0007O2-9a
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:15:21 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6T91-0004EL-42
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:15:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730373316; x=1761909316;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=tw9eIcIn49m5DnJkgd+UYwuXkMe8QSLIQifeqZSrvdM=;
- b=TMB3Iu6rRenStaNfCnHxgiNTukKbAaqtqVMnosA1GVIKlvkikRN4ZN0C
- u0Y61bDTrbb2//dYSvEszL4WvZRYq5gUUIH00IC4ZRJFb6/iehOfmj9Mg
- xgnvuIcMFwdSZot8n7qCnmwT9S8z+ZOb+Fmc9ff4MDiEMLoSl3I5BFtSP
- G/DqV7dk0VN9KnroukvS+YTrXgFx6bu4q2gIxzwVLKYO40vqqn317owVm
- Y/t6Ncshmtw/5Q/N2cjsFbQ9UqdeEVvGuRVRtcasFC5OdQ8Jyn0gaymK/
- gFstH8EGIXtKlDbd7lrEblrUXK1dS9xcXO3A3UDsdMak4J3dkTduvUP2+ A==;
-X-CSE-ConnectionGUID: WsqkYZYVQxquhsHx+VBvLA==
-X-CSE-MsgGUID: Cac/dwsUTzq1nNaih1dfEg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="52659498"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="52659498"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Oct 2024 04:15:12 -0700
-X-CSE-ConnectionGUID: fJsT1pKLRg+wrUbw9hu0uQ==
-X-CSE-MsgGUID: 0dthywenT3exf9sYYz3S0w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="113447174"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 31 Oct 2024 04:15:10 -0700
-Date: Thu, 31 Oct 2024 19:31:30 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org,
- junjie.mao@hotmail.com, berrange@redhat.com
-Subject: Re: [PATCH 13/23] rust: synchronize dependencies between subprojects
- and Cargo.lock
-Message-ID: <ZyNqkmgGR3lgIWm7@intel.com>
-References: <20241025160209.194307-1-pbonzini@redhat.com>
- <20241025160209.194307-14-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t6TK8-0001Mk-Cf
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:26:44 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t6TK4-0005aU-VQ
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:26:43 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a9a5f555cfbso54477066b.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 04:26:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730373998; x=1730978798; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=JWnVP/zKgV5anlLtKlKjpjtCQBPMoRPfku0Dgugsdn0=;
+ b=RM+FZt72V86rkkOgYHYtsn6QaRvTjvj6t0uYfopHjDOvbVRYP96NqAGv5advvccRic
+ 1EVGLL8cTKNiCp6x4/XuyVFb12ubT1ZdAiOgAqoS2lGbhsd9VMYAIrRb2JEn4Fn3AZln
+ p1hF0vNtQX7YsXCY2QxZzK1E7muAJ8Ib1PSvcumwxNCgm3Jo7LkTmPNGcgubOopFB5pp
+ IWZWKrSMgbS0BcpWevjn1/Zi1fz+dTQGCfhiA3vd6e9p9VlrlR9GDV+CBK6WtKhhBL5v
+ 6kyRctHq5PGjQB/3+SPJ7Vww9FI4iWOwJruzavdfSC+6b3qvVopdGUuZuWUhqrM3+VuC
+ oTyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730373998; x=1730978798;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JWnVP/zKgV5anlLtKlKjpjtCQBPMoRPfku0Dgugsdn0=;
+ b=TiJRjx0TRx3QNzotRnbdNh5nHRMtQq/s48OL58UJIPl4WCgIIR33SW/YkZXvUSAOhG
+ 8dB8waJ9lAddDz+vfgNFk2a+TCpHYRiWVXuYP95VKLIDkzB59dn9EFNo5dze2mwoxVwf
+ FSM8l8NXTk9vLhCdNt37NX58zzQp+Kpif4Dk8eEUS0RSuQzU41nz34NnfzF5vLqr+4VZ
+ cA7kxBSzvmgBS3whLb0E5bPSyxk0W3w6hfecM/4lAYNc0398D4cjdMFPZn9O+pdRzARj
+ JcsguBNaAGsOuRkHlI/TErUKt7jGi+wivq2k62ReS4EXszbqeY43dTqhUpVsa+p0cWQc
+ 4Qig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVbKD6XY8ayxE58VLvVB4hhQlFWisWqXy93mhm4vDXFNeoNZtXVovMMInD0+XL1RDGqJ9kyuzxPGMkp@nongnu.org
+X-Gm-Message-State: AOJu0Yz6y4VlY2M6FAj8WqeAgBYeSLMs1dHJrFtNFAS3f0Mz6b2waaNG
+ LTdS92ahcu//YE9W+gP57651/gKOrJALpPJZdrOksijJFNkGvrT4Wd0OV8hMbFbQx82PHKxsm/c
+ 2LEfqLhCgvnI0E3d4HuMGewEljkPuv5g++DL17g==
+X-Google-Smtp-Source: AGHT+IFjn2blNlMfpQACHivKsp9BQJZP9JW3FhAnDyjxf1eGfx5X38Wob8Qvh0daJtNTWXk/basa/cFFqdXDZJVE/hs=
+X-Received: by 2002:a05:6402:26c9:b0:5cb:7318:aa2a with SMTP id
+ 4fb4d7f45d1cf-5cbbf8897c5mr19439818a12.7.1730373997823; Thu, 31 Oct 2024
+ 04:26:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241025160209.194307-14-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20241030140656.36540-1-abelova@astralinux.ru>
+ <CAGCz3vuqRAkPtRRpqbPM+3z5iqVHOkr5fYotmva=6uqA7JnGcQ@mail.gmail.com>
+ <ZyLPzbDy_0cI7HyD@gallifrey>
+ <CAFEAcA8r-TtExvoxU7qDV+QpjU3fPFH2hexsog+kbpRo++V3gQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA8r-TtExvoxU7qDV+QpjU3fPFH2hexsog+kbpRo++V3gQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 31 Oct 2024 11:26:26 +0000
+Message-ID: <CAFEAcA-3+jX3=TmM=yYq9D+4nh5yKZa2kRtw9qpxjBeFmMSYDQ@mail.gmail.com>
+Subject: Re: [PATCH] monitor: fix cases in switch in memory_dump
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: Phil Dennis-Jordan <lists@philjordan.eu>,
+ Anastasia Belova <abelova@astralinux.ru>, qemu-devel@nongnu.org, 
+ sdl.qemu@linuxtesting.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,81 +94,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 25, 2024 at 06:01:58PM +0200, Paolo Bonzini wrote:
-> Date: Fri, 25 Oct 2024 18:01:58 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 13/23] rust: synchronize dependencies between subprojects
->  and Cargo.lock
-> X-Mailer: git-send-email 2.47.0
-> 
-> The next commit will introduce a new build.rs dependency for rust/qemu-api,
-> version_check.  Before adding it, ensure that all dependencies are
-> synchronized between the Meson- and cargo-based build systems.
-> 
-> Note that it's not clear whether in the long term we'll use Cargo for
-> anything; it seems that the three main uses (clippy, rustfmt, rustdoc)
+On Thu, 31 Oct 2024 at 10:52, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Thu, 31 Oct 2024 at 00:32, Dr. David Alan Gilbert <dave@treblig.org> wrote:
+> >
+> > * Phil Dennis-Jordan (lists@philjordan.eu) wrote:
+> > > On Wed 30. Oct 2024 at 15:09, Anastasia Belova <abelova@astralinux.ru>
+> > > wrote:
+> > >
+> > > > default case has no condition. So if it is placed
+> > > > higher that other cases, they are unreachable.
+> > > >
+> > > > Move dafult case down.
+> > > >
+> > >
+> > > The stylistic merits might be debatable, but: the order of cases in a
+> > > switch block in C does not matter, the default case can appear anywhere.
+> > > The other cases are still reachable. So at minimum, the commit message is
+> > > incorrect.
+> >
+> > I'd agree;  the analysis is wrong - it works as intended.
+> > As for style, I'd normally agree that 'default' at end makes sense,
+> > but:
+> >   a) I hate duplicating code
+> >   b) in a way this reads nicely:
+> >                  default:
+> >                  case 1:
+> >
+> >       'default is the same as case 1'.
+>
+> Is it actually possible to get here with a wsize that
+> isn't 1,2,4 or 8, though? This function is used only
+> by the hmp 'x' and 'xp' commands. Those document that
+> the valid size specifications are b, h, w or g (for
+> 8, 16, 32 or 64 bits), and monitor_parse_arguments()
+> doesn't seem to have any undocumented handling that
+> would result in a different size value. And the
+> code in memory_dump() doesn't do anything sensible
+> with a wsize other than 1, 2, 4 or 8 -- if you hand
+> it a wsize of 3, for instance, I think it will print
+> every third byte.
+>
+> So I think that probably the default case here should
+> be g_assert_not_reached().
 
-not sure whether cargo update could help to know if the dependenies can
-be updated or not...
+...better still, we could replace the whole switch(wsize)
+with "v = ldn_p(buf + i, wsize);".
 
-> can all be invoked manually---either via glue code in QEMU, or by
-> extending Meson to gain the relevant functionality.  However, for
-> the time being we're stuck with Cargo so it should at least look at
-> the same code as the rest of the build system.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/hw/char/pl011/Cargo.lock   |  3 +++
->  rust/qemu-api-macros/Cargo.lock |  9 ++++---
->  rust/qemu-api/Cargo.lock        | 47 +++++++++++++++++++++++++++++++++
->  rust/qemu-api/Cargo.toml        |  1 +
->  4 files changed, 56 insertions(+), 4 deletions(-)
-> 
-> diff --git a/rust/hw/char/pl011/Cargo.lock b/rust/hw/char/pl011/Cargo.lock
-> index b58cebb186e..9f43b33e8b8 100644
-> --- a/rust/hw/char/pl011/Cargo.lock
-> +++ b/rust/hw/char/pl011/Cargo.lock
-> @@ -91,6 +91,9 @@ dependencies = [
->  [[package]]
->  name = "qemu_api"
->  version = "0.1.0"
-> +dependencies = [
-> + "qemu_api_macros",
-> +]
->  
->  [[package]]
->  name = "qemu_api_macros"
-> diff --git a/rust/qemu-api-macros/Cargo.lock b/rust/qemu-api-macros/Cargo.lock
-> index fdc0fce116c..f989e25829f 100644
-> --- a/rust/qemu-api-macros/Cargo.lock
-> +++ b/rust/qemu-api-macros/Cargo.lock
-> @@ -4,9 +4,9 @@ version = 3
->  
->  [[package]]
->  name = "proc-macro2"
-> -version = "1.0.86"
-> +version = "1.0.84"
->  source = "registry+https://github.com/rust-lang/crates.io-index"
-> -checksum = "5e719e8df665df0d1c8fbfd238015744736151d4445ec0836b8e628aae103b77"
-> +checksum = "ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6"
->  dependencies = [
->   "unicode-ident",
->  ]
-> @@ -18,6 +18,7 @@ dependencies = [
->   "proc-macro2",
->   "quote",
->   "syn",
-> + "unicode-ident",
->  ]
-
-With cargo build, it seems this dependency doesn't need to be added here.
-
-I compared the versions and checksums of the wrap files, and I also
-built it using cargo build based on this commit. The only change by
-Cargo is the one mentioned above; everything else looks good.
-
-With the nit fixed or otherwise,
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
+-- PMM
 
