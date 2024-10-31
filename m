@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443ABE68953
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E70E9E68951
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:12:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MQv-0003qy-VN; Thu, 31 Oct 2024 00:05:17 -0400
+	id 1t6MXQ-0003nQ-1F; Thu, 31 Oct 2024 00:12:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQp-0003lO-O5
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:12 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6MXJ-0003mo-A8
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:11:53 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQn-00053v-Oy
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:11 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2e2b549799eso388370a91.3
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6MXH-0005cm-Fo
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:11:52 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2fb4ec17f5cso3617931fa.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:11:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730347508; x=1730952308; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R6PRNouRIX8nn07oym8VUYNLwY1A8W1UJP1nr46hRjQ=;
- b=AMpCfDAkTEj6oJvuJxwzCViBuUmhDOC63RdXnyVNx/AW1Z2oUH8jJnwvYWyErbKbsp
- 5700OyiYx8D2UTLbA2HORLl84eIIrkAFvk7dM4BMITfXEGAIeSQAp5Q4guatFvlDCzBV
- 4V3ywzw0vuET1vibMVvcwmTssI3JjBb5RXXiQOlg4uTbARHYI850fl6EaQu4mvnUnAE4
- jteVSWA74D+leYakZcYV6d7q7mxlLYyiioLgTyxycsx6ZW1gsV6xujwR1ZHImk6NIUXi
- wYffuAcBkWqRY7mU+OcBYpIzfCSrLp48hhdsz1q/CnYEBc/l3RVSv+ZQO1SeSuf7Hji4
- evPg==
+ d=linaro.org; s=google; t=1730347909; x=1730952709; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lUwY95oUc548uEZ+b9sWEnJz9KpDia36DnB6rJhef9s=;
+ b=AtWAWRwWecciyeoTNNkkjIBkwzBEtZTw8Rc6UcP96TlKeKOSPmp4SS2lYCR4fvbRZ4
+ taG/aL2sCnNaUIZenrDQsMpBIX1NlmM/s/uaK6+WWQvVi/wZrn6T3AAN6w5p5KkQOZlL
+ j5WjDWgZqUYc0XAlhqOPt6wR3xyCZomHcTTXU1xZ+zmN6gXy8hGSTgjpvmh7RzHk1tM+
+ ly2uM7LuguUMGMhGg0bSXWh45EbO753I+D7pciAEj/8BeXcmsl9IPlESWJy+Y/eQLkhW
+ nettLcB0b6td7gaBjrP9qgxDxSUsJ/Q2zVelSeCLHUTHlp06zsUMXP1I08iQvZJPhyA1
+ 0+fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730347508; x=1730952308;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=R6PRNouRIX8nn07oym8VUYNLwY1A8W1UJP1nr46hRjQ=;
- b=DZ+uEAVBAFUJqv5XudobKxkPmpHk15QGOtaf82Iy4TnxpaghRontVrYs+deuO7RkJC
- 0AqaDzPd7hal3rfdmhiBmHCMIScrXCV7d5ssUdQkr//QBcA4+hQip5KLkNWE39C0eJLv
- AnE/jqCJQXVWXyXddYznfFlfo0I9QmX/2v3XR3sZiiOFXgUm+By46JyQG+68qYOespqc
- eP8/KAyn60gGqXnalvOUVY0NEK4eJKrHYXP8NvIFWF9C31Ew9SMyNmocbieVeVAat9qs
- gYrQqeSIoPo3BwbnGPxzctAkk0sVV8U47XciSRMQkJ8UCLt9/fBaV5E+AupUA9OBTssi
- T8DA==
-X-Gm-Message-State: AOJu0Yy0EHanhX99ZSodPU4WcDoC6bGR8+hJiX5Yrip/SxEMn+8cAnZ0
- sUxDLpSakPk8ISQnmWDfT5lMVEmqKmJIN/QVlf32JTgleE8q2fhB39jOfQxzDsYyrSeqouZTNo4
- ZXFWBrg==
-X-Google-Smtp-Source: AGHT+IFNUlZ9ZCHcHNB3MpmcCxQnAmblYQ8TaSXTg8sk2Me5P+2Lv1cChtmuJHLo7ls8+N42mBewLw==
-X-Received: by 2002:a17:90b:4f81:b0:2e2:cf63:224c with SMTP id
- 98e67ed59e1d1-2e8f11d55b4mr17651623a91.35.1730347508125; 
- Wed, 30 Oct 2024 21:05:08 -0700 (PDT)
-Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
+ d=1e100.net; s=20230601; t=1730347909; x=1730952709;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lUwY95oUc548uEZ+b9sWEnJz9KpDia36DnB6rJhef9s=;
+ b=aBSbosCAaUQrZnXlEVEuBAx7MF/OR3O5e6ayPBYJrURuSpZdAst1g34/aalvbCx1L1
+ KUHxdk2JtOYCCqltJGFWtb/ZAsMBZsNiBxE46JC1gKtFnflkB1L9I63n4wmnlQoBb6HQ
+ fmoMoPEq1Zi87gzzm339+HNMiCFsbv1KRFwsr3CF3BLmRd+GEteyEYChBGkwXe8tackQ
+ y4q0IendEKzi6QW7inlcppSrer+zQ9jQArpy6FGqaOnceMCNcxfFfhsm9ia1H/Lk2f7T
+ JGF8W7T9eMx+IMMm22EpglJykf32fFliatyr667Sl15Z/NFQAuG3n4+E8uHDEcHbLIWt
+ s4fw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVDmGk2ehK69gpRfNTrllM1+J7m2dVVAP+xj0SEWv9QzzSRMkg/fL8J0jVjuRbk4KK/KQtmQCndMlEX@nongnu.org
+X-Gm-Message-State: AOJu0Yz2Hjs484Vbp0ISMFO/SrvlhI7HHqrVfUZlFMexz12SK80pbhvZ
+ 3R2lxPwAE1X2TPwaG4sWXOphTkO/uZLxP8hXfuev6TiAabAUvImfkWlHy+wnHks=
+X-Google-Smtp-Source: AGHT+IE7Yme7AanAaUYSzsFJaLtpZdLnQlxXCVhTCYCTL/6PGjEyGgGgrXLUDczcjtlhQkWlBqEUoQ==
+X-Received: by 2002:a05:6512:1149:b0:539:edc9:e81b with SMTP id
+ 2adb3069b0e04-53b7ecf2341mr2952005e87.28.1730347909328; 
+ Wed, 30 Oct 2024 21:11:49 -0700 (PDT)
+Received: from [192.168.21.226] ([91.223.100.208])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e93db3a023sm428438a91.49.2024.10.30.21.05.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 21:05:07 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
+ 2adb3069b0e04-53c7bcce69esm74074e87.157.2024.10.30.21.11.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 30 Oct 2024 21:11:48 -0700 (PDT)
+Message-ID: <d784e3cf-18d4-4c67-9977-88aa2018d77c@linaro.org>
+Date: Thu, 31 Oct 2024 01:11:35 -0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/12] qga: fix missing static and prototypes windows
+ warnings
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Alexandre Iooss <erdnaxe@crans.org>,
  Konstantin Kostiuk <kkostiuk@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 11/12] plugins: eradicate qemu-plugins.symbols static file
-Date: Wed, 30 Oct 2024 21:04:25 -0700
-Message-Id: <20241031040426.772604-12-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
+ Mahmoud Mandour <ma.mandourr@gmail.com>
 References: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
-MIME-Version: 1.0
+ <20241031040426.772604-7-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241031040426.772604-7-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,78 +106,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- plugins/qemu-plugins.symbols | 59 ------------------------------------
- 1 file changed, 59 deletions(-)
- delete mode 100644 plugins/qemu-plugins.symbols
+On 31/10/24 01:04, Pierrick Bouvier wrote:
+> Reported by clang++, but not by g++.
+> 
+> ../qga/vss-win32/provider.cpp:48:6: error: no previous prototype for function 'LockModule' [-Werror,-Wmissing-prototypes]
+>     48 | void LockModule(BOOL lock)
+>        |      ^
+> ../qga/vss-win32/provider.cpp:48:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+>     48 | void LockModule(BOOL lock)
+>        | ^
+>        | static
+> ../qga/vss-win32/provider.cpp:531:13: error: no previous prototype for function 'DllMain' [-Werror,-Wmissing-prototypes]
+>    531 | BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID lpReserved)
+>        |             ^
+> ../qga/vss-win32/provider.cpp:531:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+>    531 | BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID lpReserved)
+>        | ^
+>        | static
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   qga/vss-win32/install.cpp   | 6 +++++-
+>   qga/vss-win32/provider.cpp  | 5 ++++-
+>   qga/vss-win32/requester.cpp | 8 ++++----
+>   3 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
-deleted file mode 100644
-index 032661f9ea7..00000000000
---- a/plugins/qemu-plugins.symbols
-+++ /dev/null
-@@ -1,59 +0,0 @@
--{
--  qemu_plugin_bool_parse;
--  qemu_plugin_end_code;
--  qemu_plugin_entry_code;
--  qemu_plugin_get_hwaddr;
--  qemu_plugin_get_registers;
--  qemu_plugin_hwaddr_device_name;
--  qemu_plugin_hwaddr_is_io;
--  qemu_plugin_hwaddr_phys_addr;
--  qemu_plugin_insn_data;
--  qemu_plugin_insn_disas;
--  qemu_plugin_insn_haddr;
--  qemu_plugin_insn_size;
--  qemu_plugin_insn_symbol;
--  qemu_plugin_insn_vaddr;
--  qemu_plugin_mem_get_value;
--  qemu_plugin_mem_is_big_endian;
--  qemu_plugin_mem_is_sign_extended;
--  qemu_plugin_mem_is_store;
--  qemu_plugin_mem_size_shift;
--  qemu_plugin_num_vcpus;
--  qemu_plugin_outs;
--  qemu_plugin_path_to_binary;
--  qemu_plugin_read_memory_vaddr;
--  qemu_plugin_read_register;
--  qemu_plugin_register_atexit_cb;
--  qemu_plugin_register_flush_cb;
--  qemu_plugin_register_vcpu_exit_cb;
--  qemu_plugin_register_vcpu_idle_cb;
--  qemu_plugin_register_vcpu_init_cb;
--  qemu_plugin_register_vcpu_insn_exec_cb;
--  qemu_plugin_register_vcpu_insn_exec_cond_cb;
--  qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu;
--  qemu_plugin_register_vcpu_mem_cb;
--  qemu_plugin_register_vcpu_mem_inline_per_vcpu;
--  qemu_plugin_register_vcpu_resume_cb;
--  qemu_plugin_register_vcpu_syscall_cb;
--  qemu_plugin_register_vcpu_syscall_ret_cb;
--  qemu_plugin_register_vcpu_tb_exec_cb;
--  qemu_plugin_register_vcpu_tb_exec_cond_cb;
--  qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu;
--  qemu_plugin_register_vcpu_tb_trans_cb;
--  qemu_plugin_request_time_control;
--  qemu_plugin_reset;
--  qemu_plugin_scoreboard_free;
--  qemu_plugin_scoreboard_find;
--  qemu_plugin_scoreboard_new;
--  qemu_plugin_start_code;
--  qemu_plugin_tb_get_insn;
--  qemu_plugin_tb_n_insns;
--  qemu_plugin_tb_vaddr;
--  qemu_plugin_u64_add;
--  qemu_plugin_u64_get;
--  qemu_plugin_u64_set;
--  qemu_plugin_u64_sum;
--  qemu_plugin_uninstall;
--  qemu_plugin_update_ns;
--  qemu_plugin_vcpu_for_each;
--};
--- 
-2.39.5
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
