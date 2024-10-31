@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D2C4E6894E
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:54:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E37BE68949
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:54:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MGH-0007M6-ST; Wed, 30 Oct 2024 23:54:17 -0400
+	id 1t6MGR-0007qw-Tb; Wed, 30 Oct 2024 23:54:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MGF-0007LG-AN
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:15 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1t6MGP-0007c6-DW
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:25 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MGD-0003w7-B0
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:15 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-20c6f492d2dso5819435ad.0
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:54:13 -0700 (PDT)
+ id 1t6MGN-0003xa-7D
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:25 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-20e6981ca77so5790535ad.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:54:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730346852; x=1730951652; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730346862; x=1730951662; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AktGiR8ovsGryNkBXTUT4evAW3zZcrfX6pzkUArGLbo=;
- b=R6B4F+NYYEtXXaEpekmTiBIDCE31sj0pZ3lQ0R6Lwc4+OMI7bZrmA/xfAeYufNmGIJ
- Rb4BnctPKv7xbr1xjpcWsTOG1mNKvWj3oDLqoPyaMOHN06H1uVwPIeMAYe0+t+RELlf5
- z4fCP6sVEb6obSnTgju6k66O2SlKWeCt75KA9bdeETlf1CLxM2TSI6Es3Tq1AdrLPuu0
- pY3dnFwd8UE6dd+1zSTaf1+dDFOlQcPijZxRFTiGB1q9q6fIi6Rkv5jqvzwYywv1WRa/
- Ldc0D4Bqp1WA3AXMzfsRlP7HGIvlbZcXNHj86/h4jBz3JQhD/Zk9T/C7zFj7Zay00x8c
- MWfw==
+ bh=6kQzrMfXF4jNckFUkc1Y8TzwHOUGgNTCayNN/f/ZzX4=;
+ b=TEVQoIQqFHXOybHTzQBaQoh+GKjtot97pchCK629WZJ0/E9yv6dKeFiVcUsszysLdB
+ VEk1puztkYcP/LD/0liVw4q7SFPDbuDf2/84+z7hE2Nnzr/KEWJLeBhu7RdiKuXjDBds
+ vvsKWWVjK+naEp9aTdEkxUGQdfbYb9uX+BCMJ37/8m8NOE1c/b+yKe/FT47rkSpvlWxM
+ 7nWLVHamuJCeZuJ14CJtWcJ1MejE91Yo8ScLw1fPm1Kb/113tFs6xDEkb7mlcvF1qTrC
+ RKOWTqSkEG+a+SN41Tq6XSPTYetoLzxX/CQu+HSMCHHEhKI3a0BzQuF0a7VPoEZiOm4z
+ pvuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730346852; x=1730951652;
+ d=1e100.net; s=20230601; t=1730346862; x=1730951662;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AktGiR8ovsGryNkBXTUT4evAW3zZcrfX6pzkUArGLbo=;
- b=LXJsQ+DB5mZZ0+ub+2NB+YtxdCR7D5C/rg1NgXFs685ulrisnAjdGj95EDYrtlpo8s
- q1M8cQHVBzHdrzf6/yHz9vpuMGJzm+hj1oMtZa41AliD0N5xGw4EOC7Yoru0l3sjZUjV
- s/H7Ka/nDzBlORe7m+bLBW8xtdD2ZfwyRm7DdmH/0Hvn1v5YnWV+9mbTEbJPfz5VXEAh
- +P5dWKQ/FE585JPM0NHI0pzPJ44kb+/nhz4hZ4xfszpA2SCQ87gGL+XAyr6fJRKPWICd
- Kmt8QeE1Gpa9i7k8dMjZUPnBgXyKv5WznivP7MVQFSQdXjlBb86Mo4zIYoPO2H9xSbaa
- 1pmg==
-X-Gm-Message-State: AOJu0YxFKnf1SMg0WN3mrtfPu8oSJHjIeSwwglKiZ43ReMlXv/wKbHXu
- TbBFjCEL/35eGoDSGH+UEu0KFDi3gAK9EQTTD/kMixGEhVmETt8yuTP8nhi/
-X-Google-Smtp-Source: AGHT+IFUSJZBuh0VkTrSktvMuWsYyQZqi4Sp8DVDy0BJQ8wqTMKlc+WSjwoxfjAXxv8b7V0h6DOLSw==
-X-Received: by 2002:a17:903:240b:b0:20c:c9ac:bd05 with SMTP id
- d9443c01a7336-210c689b948mr235408795ad.15.1730346851854; 
- Wed, 30 Oct 2024 20:54:11 -0700 (PDT)
+ bh=6kQzrMfXF4jNckFUkc1Y8TzwHOUGgNTCayNN/f/ZzX4=;
+ b=Kv831RVP1hpCZhUctPZBiIf8w8DsC0rjrfYb7bHPe1QZnUiTTwIKJZ9T/F0xaRA8HV
+ omVlDOCfX5wguGdyANHSLC3Z3GZ/pYu0ZB1BDiykihWRyFGQmHp5Gov06Ogan+ND13fu
+ T5KnS64qHJhbDOTpn1XrIf9y1Z1ra2SvEGnBhW0oGnAKhoNEzdCqwnE30Z049zVfB0FY
+ YOWO8NCG8YjZ+GDU1qpAOHXdB/s3eeVhQuicDSl7DHZk8AeUs5VRM19JWq7MRtAcu/V6
+ ex3OsHRhKzUtPFK1ayN4hw2v3XDDD8mG5HBR3snknCOAH+uNYjUpGOpi/+3DBUYufsIX
+ PwBA==
+X-Gm-Message-State: AOJu0Yz6M2ROk/HmzYJRnL7r8SvlawEq6U8c9H8zVVj2DrdZQvbSMXv7
+ n1hmBncg031DHXnADbZlZ6bqBvp33d9DfQiNBKadxz2CrT0PcU9clkSV+pYP
+X-Google-Smtp-Source: AGHT+IFi3NnjDa0WoHzvycgQu5bpFlajfdmOEB7bHqjaKwIl8XQBz1MhAtLLbPZklmbDniO/W9T99g==
+X-Received: by 2002:a17:903:943:b0:205:68a4:b2d8 with SMTP id
+ d9443c01a7336-21103aaa063mr25102975ad.11.1730346861743; 
+ Wed, 30 Oct 2024 20:54:21 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.54.09
+ d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.54.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 20:54:11 -0700 (PDT)
+ Wed, 30 Oct 2024 20:54:21 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 15/50] hw/char: sifive_uart: Print uart characters async
-Date: Thu, 31 Oct 2024 13:52:43 +1000
-Message-ID: <20241031035319.731906-16-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Deepak Gupta <debug@rivosinc.com>,
+ Jim Shu <jim.shu@sifive.com>, Andy Chiu <andy.chiu@sifive.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 18/50] target/riscv: Introduce elp state and enabling controls
+ for zicfilp
+Date: Thu, 31 Oct 2024 13:52:46 +1000
+Message-ID: <20241031035319.731906-19-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241031035319.731906-1-alistair.francis@wdc.com>
 References: <20241031035319.731906-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,251 +101,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current approach of using qemu_chr_fe_write() and ignoring the
-return values results in dropped characters [1].
+From: Deepak Gupta <debug@rivosinc.com>
 
-Let's update the SiFive UART to use a async sifive_uart_xmit() function
-to transmit the characters and apply back pressure to the guest with
-the SIFIVE_UART_TXFIFO_FULL status.
+zicfilp introduces a new state elp ("expected landing pad") in cpu.
+During normal execution, elp is idle (NO_LP_EXPECTED) i.e not expecting
+landing pad. On an indirect call, elp moves LP_EXPECTED. When elp is
+LP_EXPECTED, only a subsquent landing pad instruction can set state back
+to NO_LP_EXPECTED. On reset, elp is set to NO_LP_EXPECTED.
 
-This should avoid dropped characters and more realisticly model the
-hardware.
+zicfilp is enabled via bit2 in *envcfg CSRs. Enabling control for M-mode
+is in mseccfg CSR at bit position 10.
 
-1: https://gitlab.com/qemu-project/qemu/-/issues/2114
+On trap, elp state is saved away in *status.
+Adds elp to the migration state as well.
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240910045419.1252277-3-alistair.francis@wdc.com>
+Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+Co-developed-by: Jim Shu <jim.shu@sifive.com>
+Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241008225010.1861630-4-debug@rivosinc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/char/sifive_uart.h | 16 +++++-
- hw/char/sifive_uart.c         | 97 ++++++++++++++++++++++++++++++++---
- 2 files changed, 105 insertions(+), 8 deletions(-)
+ target/riscv/cpu.h      |  2 ++
+ target/riscv/cpu_bits.h |  6 ++++++
+ target/riscv/pmp.h      |  3 ++-
+ target/riscv/cpu.c      |  3 +++
+ target/riscv/csr.c      | 31 +++++++++++++++++++++++++++++++
+ target/riscv/machine.c  | 19 +++++++++++++++++++
+ target/riscv/pmp.c      |  5 +++++
+ 7 files changed, 68 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/char/sifive_uart.h b/include/hw/char/sifive_uart.h
-index 7f6c79f8bd..0846cf6218 100644
---- a/include/hw/char/sifive_uart.h
-+++ b/include/hw/char/sifive_uart.h
-@@ -24,6 +24,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/sysbus.h"
- #include "qom/object.h"
-+#include "qemu/fifo8.h"
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index b7b082833d..d68cb6e9e0 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -230,6 +230,8 @@ struct CPUArchState {
  
- enum {
-     SIFIVE_UART_TXFIFO        = 0,
-@@ -48,9 +49,13 @@ enum {
-     SIFIVE_UART_IP_RXWM       = 2  /* Receive watermark interrupt pending */
- };
+     target_ulong jvt;
  
-+#define SIFIVE_UART_TXFIFO_FULL    0x80000000
-+
- #define SIFIVE_UART_GET_TXCNT(txctrl)   ((txctrl >> 16) & 0x7)
- #define SIFIVE_UART_GET_RXCNT(rxctrl)   ((rxctrl >> 16) & 0x7)
-+
- #define SIFIVE_UART_RX_FIFO_SIZE 8
-+#define SIFIVE_UART_TX_FIFO_SIZE 8
++    /* elp state for zicfilp extension */
++    bool      elp;
+ #ifdef CONFIG_USER_ONLY
+     uint32_t elf_flags;
+ #endif
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index 7e3f629356..8df6043ef1 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -552,6 +552,8 @@
+ #define MSTATUS_TVM         0x00100000 /* since: priv-1.10 */
+ #define MSTATUS_TW          0x00200000 /* since: priv-1.10 */
+ #define MSTATUS_TSR         0x00400000 /* since: priv-1.10 */
++#define MSTATUS_SPELP       0x00800000 /* zicfilp */
++#define MSTATUS_MPELP       0x020000000000 /* zicfilp */
+ #define MSTATUS_GVA         0x4000000000ULL
+ #define MSTATUS_MPV         0x8000000000ULL
  
- #define TYPE_SIFIVE_UART "riscv.sifive.uart"
- OBJECT_DECLARE_SIMPLE_TYPE(SiFiveUARTState, SIFIVE_UART)
-@@ -63,13 +68,20 @@ struct SiFiveUARTState {
-     qemu_irq irq;
-     MemoryRegion mmio;
-     CharBackend chr;
--    uint8_t rx_fifo[SIFIVE_UART_RX_FIFO_SIZE];
--    uint8_t rx_fifo_len;
-+
-+    uint32_t txfifo;
-     uint32_t ie;
-     uint32_t ip;
-     uint32_t txctrl;
-     uint32_t rxctrl;
-     uint32_t div;
-+
-+    uint8_t rx_fifo[SIFIVE_UART_RX_FIFO_SIZE];
-+    uint8_t rx_fifo_len;
-+
-+    Fifo8 tx_fifo;
-+
-+    QEMUTimer *fifo_trigger_handle;
- };
+@@ -582,6 +584,7 @@ typedef enum {
+ #define SSTATUS_XS          0x00018000
+ #define SSTATUS_SUM         0x00040000 /* since: priv-1.10 */
+ #define SSTATUS_MXR         0x00080000
++#define SSTATUS_SPELP       MSTATUS_SPELP   /* zicfilp */
  
- SiFiveUARTState *sifive_uart_create(MemoryRegion *address_space, hwaddr base,
-diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-index 7fc6787f69..aeb45d3601 100644
---- a/hw/char/sifive_uart.c
-+++ b/hw/char/sifive_uart.c
-@@ -26,6 +26,8 @@
- #include "hw/char/sifive_uart.h"
- #include "hw/qdev-properties-system.h"
+ #define SSTATUS64_UXL       0x0000000300000000ULL
  
-+#define TX_INTERRUPT_TRIGGER_DELAY_NS 100
+@@ -754,6 +757,7 @@ typedef enum RISCVException {
+ 
+ /* Execution environment configuration bits */
+ #define MENVCFG_FIOM                       BIT(0)
++#define MENVCFG_LPE                        BIT(2) /* zicfilp */
+ #define MENVCFG_CBIE                       (3UL << 4)
+ #define MENVCFG_CBCFE                      BIT(6)
+ #define MENVCFG_CBZE                       BIT(7)
+@@ -767,11 +771,13 @@ typedef enum RISCVException {
+ #define MENVCFGH_STCE                      BIT(31)
+ 
+ #define SENVCFG_FIOM                       MENVCFG_FIOM
++#define SENVCFG_LPE                        MENVCFG_LPE
+ #define SENVCFG_CBIE                       MENVCFG_CBIE
+ #define SENVCFG_CBCFE                      MENVCFG_CBCFE
+ #define SENVCFG_CBZE                       MENVCFG_CBZE
+ 
+ #define HENVCFG_FIOM                       MENVCFG_FIOM
++#define HENVCFG_LPE                        MENVCFG_LPE
+ #define HENVCFG_CBIE                       MENVCFG_CBIE
+ #define HENVCFG_CBCFE                      MENVCFG_CBCFE
+ #define HENVCFG_CBZE                       MENVCFG_CBZE
+diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+index f5c10ce85c..e0530a17a3 100644
+--- a/target/riscv/pmp.h
++++ b/target/riscv/pmp.h
+@@ -44,7 +44,8 @@ typedef enum {
+     MSECCFG_MMWP  = 1 << 1,
+     MSECCFG_RLB   = 1 << 2,
+     MSECCFG_USEED = 1 << 8,
+-    MSECCFG_SSEED = 1 << 9
++    MSECCFG_SSEED = 1 << 9,
++    MSECCFG_MLPE =  1 << 10,
+ } mseccfg_field_t;
+ 
+ typedef struct {
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 6fa2689f35..27fbbd11b9 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1011,6 +1011,9 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+     env->menvcfg = 0;
+ #endif
+ 
++    /* on reset elp is clear */
++    env->elp = false;
 +
- /*
-  * Not yet implemented:
-  *
-@@ -64,6 +66,72 @@ static void sifive_uart_update_irq(SiFiveUARTState *s)
+     env->xl = riscv_cpu_mxl(env);
+     riscv_cpu_update_mask(env);
+     cs->exception_index = RISCV_EXCP_NONE;
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index c88ee1265e..02bcb8a23a 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1598,6 +1598,11 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+         }
      }
- }
  
-+static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
-+                                 void *opaque)
-+{
-+    SiFiveUARTState *s = opaque;
-+    int ret;
-+    const uint8_t *characters;
-+    uint32_t numptr = 0;
-+
-+    /* instant drain the fifo when there's no back-end */
-+    if (!qemu_chr_fe_backend_connected(&s->chr)) {
-+        fifo8_reset(&s->tx_fifo);
-+        return G_SOURCE_REMOVE;
++    /* If cfi lp extension is available, then apply cfi lp mask */
++    if (env_archcpu(env)->cfg.ext_zicfilp) {
++        mask |= (MSTATUS_MPELP | MSTATUS_SPELP);
 +    }
 +
-+    if (fifo8_is_empty(&s->tx_fifo)) {
-+        return G_SOURCE_REMOVE;
-+    }
+     mstatus = (mstatus & ~mask) | (val & mask);
+ 
+     env->mstatus = mstatus;
+@@ -2344,6 +2349,10 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+         mask |= (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+                 (cfg->ext_sstc ? MENVCFG_STCE : 0) |
+                 (cfg->ext_svadu ? MENVCFG_ADUE : 0);
 +
-+    /* Don't pop the FIFO in case the write fails */
-+    characters = fifo8_peek_bufptr(&s->tx_fifo,
-+                                   fifo8_num_used(&s->tx_fifo), &numptr);
-+    ret = qemu_chr_fe_write(&s->chr, characters, numptr);
-+
-+    if (ret >= 0) {
-+        /* We wrote the data, actually pop the fifo */
-+        fifo8_pop_bufptr(&s->tx_fifo, ret, NULL);
-+    }
-+
-+    if (!fifo8_is_empty(&s->tx_fifo)) {
-+        guint r = qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_HUP,
-+                                        sifive_uart_xmit, s);
-+        if (!r) {
-+            fifo8_reset(&s->tx_fifo);
-+            return G_SOURCE_REMOVE;
++        if (env_archcpu(env)->cfg.ext_zicfilp) {
++            mask |= MENVCFG_LPE;
 +        }
-+    }
-+
-+    /* Clear the TX Full bit */
-+    if (!fifo8_is_full(&s->tx_fifo)) {
-+        s->txfifo &= ~SIFIVE_UART_TXFIFO_FULL;
-+    }
-+
-+    sifive_uart_update_irq(s);
-+    return G_SOURCE_REMOVE;
-+}
-+
-+static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
-+                                      int size)
-+{
-+    uint64_t current_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+
-+    if (size > fifo8_num_free(&s->tx_fifo)) {
-+        size = fifo8_num_free(&s->tx_fifo);
-+        qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow");
-+    }
-+
-+    fifo8_push_all(&s->tx_fifo, buf, size);
-+
-+    if (fifo8_is_full(&s->tx_fifo)) {
-+        s->txfifo |= SIFIVE_UART_TXFIFO_FULL;
-+    }
-+
-+    timer_mod(s->fifo_trigger_handle, current_time +
-+                  TX_INTERRUPT_TRIGGER_DELAY_NS);
-+}
-+
- static uint64_t
- sifive_uart_read(void *opaque, hwaddr addr, unsigned int size)
- {
-@@ -82,7 +150,7 @@ sifive_uart_read(void *opaque, hwaddr addr, unsigned int size)
-         return 0x80000000;
+     }
+     env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
  
-     case SIFIVE_UART_TXFIFO:
--        return 0; /* Should check tx fifo */
-+        return s->txfifo;
-     case SIFIVE_UART_IE:
-         return s->ie;
-     case SIFIVE_UART_IP:
-@@ -106,12 +174,10 @@ sifive_uart_write(void *opaque, hwaddr addr,
- {
-     SiFiveUARTState *s = opaque;
-     uint32_t value = val64;
--    unsigned char ch = value;
+@@ -2396,6 +2405,10 @@ static RISCVException write_senvcfg(CPURISCVState *env, int csrno,
+         return ret;
+     }
  
-     switch (addr) {
-     case SIFIVE_UART_TXFIFO:
--        qemu_chr_fe_write(&s->chr, &ch, 1);
--        sifive_uart_update_irq(s);
-+        sifive_uart_write_tx_fifo(s, (uint8_t *) &value, 1);
-         return;
-     case SIFIVE_UART_IE:
-         s->ie = val64;
-@@ -131,6 +197,13 @@ sifive_uart_write(void *opaque, hwaddr addr,
-                   __func__, (int)addr, (int)value);
++    if (env_archcpu(env)->cfg.ext_zicfilp) {
++        mask |= SENVCFG_LPE;
++    }
++
+     env->senvcfg = (env->senvcfg & ~mask) | (val & mask);
+     return RISCV_EXCP_NONE;
  }
+@@ -2433,6 +2446,10 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
  
-+static void fifo_trigger_update(void *opaque)
-+{
-+    SiFiveUARTState *s = opaque;
+     if (riscv_cpu_mxl(env) == MXL_RV64) {
+         mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE);
 +
-+    sifive_uart_xmit(NULL, G_IO_OUT, s);
-+}
-+
- static const MemoryRegionOps sifive_uart_ops = {
-     .read = sifive_uart_read,
-     .write = sifive_uart_write,
-@@ -197,6 +270,9 @@ static void sifive_uart_realize(DeviceState *dev, Error **errp)
- {
-     SiFiveUARTState *s = SIFIVE_UART(dev);
++        if (env_archcpu(env)->cfg.ext_zicfilp) {
++            mask |= HENVCFG_LPE;
++        }
+     }
  
-+    s->fifo_trigger_handle = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                          fifo_trigger_update, s);
+     env->henvcfg = (env->henvcfg & ~mask) | (val & mask);
+@@ -2897,6 +2914,10 @@ static RISCVException read_sstatus_i128(CPURISCVState *env, int csrno,
+         mask |= SSTATUS64_UXL;
+     }
+ 
++    if (env_archcpu(env)->cfg.ext_zicfilp) {
++        mask |= SSTATUS_SPELP;
++    }
 +
-     qemu_chr_fe_set_handlers(&s->chr, sifive_uart_can_rx, sifive_uart_rx,
-                              sifive_uart_event, sifive_uart_be_change, s,
-                              NULL, true);
-@@ -206,12 +282,18 @@ static void sifive_uart_realize(DeviceState *dev, Error **errp)
- static void sifive_uart_reset_enter(Object *obj, ResetType type)
- {
-     SiFiveUARTState *s = SIFIVE_UART(obj);
-+
-+    s->txfifo = 0;
-     s->ie = 0;
-     s->ip = 0;
-     s->txctrl = 0;
-     s->rxctrl = 0;
-     s->div = 0;
-+
-     s->rx_fifo_len = 0;
-+
-+    memset(s->rx_fifo, 0, SIFIVE_UART_RX_FIFO_SIZE);
-+    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
+     *val = int128_make128(sstatus, add_status_sd(MXL_RV128, sstatus));
+     return RISCV_EXCP_NONE;
  }
- 
- static void sifive_uart_reset_hold(Object *obj, ResetType type)
-@@ -222,8 +304,8 @@ static void sifive_uart_reset_hold(Object *obj, ResetType type)
- 
- static const VMStateDescription vmstate_sifive_uart = {
-     .name = TYPE_SIFIVE_UART,
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT8_ARRAY(rx_fifo, SiFiveUARTState,
-                             SIFIVE_UART_RX_FIFO_SIZE),
-@@ -233,6 +315,9 @@ static const VMStateDescription vmstate_sifive_uart = {
-         VMSTATE_UINT32(txctrl, SiFiveUARTState),
-         VMSTATE_UINT32(rxctrl, SiFiveUARTState),
-         VMSTATE_UINT32(div, SiFiveUARTState),
-+        VMSTATE_UINT32(txfifo, SiFiveUARTState),
-+        VMSTATE_FIFO8(tx_fifo, SiFiveUARTState),
-+        VMSTATE_TIMER_PTR(fifo_trigger_handle, SiFiveUARTState),
-         VMSTATE_END_OF_LIST()
-     },
+@@ -2908,6 +2929,11 @@ static RISCVException read_sstatus(CPURISCVState *env, int csrno,
+     if (env->xl != MXL_RV32 || env->debugger) {
+         mask |= SSTATUS64_UXL;
+     }
++
++    if (env_archcpu(env)->cfg.ext_zicfilp) {
++        mask |= SSTATUS_SPELP;
++    }
++
+     /* TODO: Use SXL not MXL. */
+     *val = add_status_sd(riscv_cpu_mxl(env), env->mstatus & mask);
+     return RISCV_EXCP_NONE;
+@@ -2923,6 +2949,11 @@ static RISCVException write_sstatus(CPURISCVState *env, int csrno,
+             mask |= SSTATUS64_UXL;
+         }
+     }
++
++    if (env_archcpu(env)->cfg.ext_zicfilp) {
++        mask |= SSTATUS_SPELP;
++    }
++
+     target_ulong newval = (env->mstatus & ~mask) | (val & mask);
+     return write_mstatus(env, CSR_MSTATUS, newval);
+ }
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 492c2c6d9d..c3a06c288d 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -350,6 +350,24 @@ static const VMStateDescription vmstate_jvt = {
+     }
  };
+ 
++static bool elp_needed(void *opaque)
++{
++    RISCVCPU *cpu = opaque;
++
++    return cpu->cfg.ext_zicfilp;
++}
++
++static const VMStateDescription vmstate_elp = {
++    .name = "cpu/elp",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = elp_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BOOL(env.elp, RISCVCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
+     .version_id = 10,
+@@ -422,6 +440,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_debug,
+         &vmstate_smstateen,
+         &vmstate_jvt,
++        &vmstate_elp,
+         NULL
+     }
+ };
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 5e74b7220f..a1b36664fc 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -598,6 +598,11 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
+         val &= ~(MSECCFG_MMWP | MSECCFG_MML | MSECCFG_RLB);
+     }
+ 
++    /* M-mode forward cfi to be enabled if cfi extension is implemented */
++    if (env_archcpu(env)->cfg.ext_zicfilp) {
++        val |= (val & MSECCFG_MLPE);
++    }
++
+     env->mseccfg = val;
+ }
+ 
 -- 
 2.47.0
 
