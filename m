@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A9D9E68961
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 08:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFB1BE68960
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 08:59:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6R0g-0000i6-LJ; Thu, 31 Oct 2024 04:58:30 -0400
+	id 1t6R0h-0000iX-Hh; Thu, 31 Oct 2024 04:58:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
- id 1t6R0f-0000hi-55
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 04:58:29 -0400
+ id 1t6R0d-0000hU-U3
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 04:58:27 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
- id 1t6R0d-0003DC-C0
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 04:58:28 -0400
+ id 1t6R0c-0003Ct-Cu
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 04:58:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730365107; x=1761901107;
+ t=1730365106; x=1761901106;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Z19p8e9e9XND5Q1ITuGrozBRS19cwjl+L4Bn8F62g48=;
- b=dX+/FIiTvkRsmMtjnZB+pZj4W2NH5L+j0d4iBg0Y/5iX9aRkHtKIhZtf
- mom+xUYor+2HYcPBsqjcX+ad3mmBvy7VttR9V0BvpOC0LjLeV4cgotGuF
- hZ3TS9U/wEmVBfVeAU2/hrYyBDrPxSZgROXHoq1U+0pUf327fKnUi3/Bl
- H/Xcmler+OGVJXroarzj9+w0ldew1meGyvd9PEq4+U6dRBFKKh81bY9Qf
- VwrWHJ1jRiG+1ho3TcjqqNPpvjNnx2p9WPigWKiQVy6Cz6uIU/UW238rQ
- M6xeuy5j8GDwcO2mPeevHBmhDLAWEORJ9n3qq1L00c3QA4/7ycXNY5wkc g==;
-X-CSE-ConnectionGUID: UFVokdjaT8OQl1tnSbhKyw==
-X-CSE-MsgGUID: gWWqRkkiRbm1RFS8Tsk5zA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11241"; a="55492674"
-X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="55492674"
+ bh=cBVM67PjgPHVUfUCuivJND+qiKNLwjMKHkFx1MDlePg=;
+ b=DgHO+12g4ljb5/8lzT9LJsJitPyNDwrmSEuvYYR2ICi5eShrBb/wlFTD
+ G3aivr5dbMdvlHdWhUuRnTU8CvhzI3iFSxlMJPVxQbKNaxPq5GM2xLc/h
+ LBz8MBopwnzfdejCsvo8TOicmXL5dJjVkZW284BNSTZKR/TERFYml+fCr
+ Xixebkd2XPjyeZSqeTTpsU5rh5zbTgJ6Pa1YQN87Ns7JphTDMh+XMB3Xo
+ 93VOvwdrPb2egigaKY7celSxOx73H3aPo2yV4Ma3E1x7axLFfB4U1qxR8
+ 95OQKiK52P5GngnI7qQ04ZAsHbpDtEl4XcHJ1ga15t7o9C4SvqKtidwIu A==;
+X-CSE-ConnectionGUID: H5OkrsbGRseHLB0I8AoyJg==
+X-CSE-MsgGUID: KRfpvuNAR0OXBXIeUgHGjA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11241"; a="55492670"
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="55492670"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Oct 2024 01:58:25 -0700
-X-CSE-ConnectionGUID: qXq2jr3zR7yEwDd5vURq2Q==
-X-CSE-MsgGUID: Y6TKblfERNu78hWSJ7SQNw==
+ 31 Oct 2024 01:58:23 -0700
+X-CSE-ConnectionGUID: qey9tPBBTgqKLHV5K6BFkA==
+X-CSE-MsgGUID: sopHw02hRpmu+/KsG6i+sA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="82489504"
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="82489451"
 Received: from st-server.bj.intel.com ([10.240.193.102])
- by orviesa010.jf.intel.com with ESMTP; 31 Oct 2024 01:58:23 -0700
+ by orviesa010.jf.intel.com with ESMTP; 31 Oct 2024 01:58:21 -0700
 From: Tao Su <tao1.su@linux.intel.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mtosatti@redhat.com, xiaoyao.li@intel.com,
  zhao1.liu@intel.com, xuelian.guo@intel.com, tao1.su@linux.intel.com
-Subject: [PATCH v3 2/8] target/i386: do not rely on ExtSaveArea for
- accelerator-supported XCR0 bits
-Date: Thu, 31 Oct 2024 16:52:27 +0800
-Message-Id: <20241031085233.425388-3-tao1.su@linux.intel.com>
+Subject: [PATCH v3 1/8] target/i386: cpu: set correct supported XCR0 features
+ for TCG
+Date: Thu, 31 Oct 2024 16:52:26 +0800
+Message-Id: <20241031085233.425388-2-tao1.su@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241031085233.425388-1-tao1.su@linux.intel.com>
 References: <20241031085233.425388-1-tao1.su@linux.intel.com>
@@ -84,103 +84,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Paolo Bonzini <pbonzini@redhat.com>
 
-Right now, QEMU is using the "feature" and "bits" fields of ExtSaveArea
-to query the accelerator for the support status of extended save areas.
-This is a problem for AVX10, which attaches two feature bits (AVX512F
-and AVX10) to the same extended save states.
-
-To keep the AVX10 hacks to the minimum, limit usage of esa->features
-and esa->bits.  Instead, just query the accelerator for the 0xD leaf.
-Do it in common code and clear esa->size if an extended save state is
-unsupported.
-
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c         | 33 +++++++++++++++++++++++++++++++--
- target/i386/kvm/kvm-cpu.c |  4 ----
- 2 files changed, 31 insertions(+), 6 deletions(-)
+ target/i386/cpu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index b912dba2e5..f8b5c28caf 100644
+index 1ff1af032e..b912dba2e5 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -7069,6 +7069,15 @@ static void x86_cpu_set_sgxlepubkeyhash(CPUX86State *env)
- #endif
- }
- 
-+static bool cpuid_has_xsave_feature(CPUX86State *env, const ExtSaveArea *esa)
-+{
-+    if (!esa->size) {
-+        return false;
-+    }
-+
-+    return (env->features[esa->feature] & esa->bits);
-+}
-+
- static void x86_cpu_reset_hold(Object *obj, ResetType type)
- {
-     CPUState *cs = CPU(obj);
-@@ -7177,7 +7186,7 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
-         if (!((1 << i) & CPUID_XSTATE_XCR0_MASK)) {
-             continue;
-         }
--        if (env->features[esa->feature] & esa->bits) {
-+        if (cpuid_has_xsave_feature(env, esa)) {
-             xcr0 |= 1ull << i;
-         }
-     }
-@@ -7315,7 +7324,7 @@ static void x86_cpu_enable_xsave_components(X86CPU *cpu)
-     mask = 0;
-     for (i = 0; i < ARRAY_SIZE(x86_ext_save_areas); i++) {
-         const ExtSaveArea *esa = &x86_ext_save_areas[i];
--        if (env->features[esa->feature] & esa->bits) {
-+        if (cpuid_has_xsave_feature(env, esa)) {
-             mask |= (1ULL << i);
-         }
-     }
-@@ -7987,6 +7996,26 @@ static void x86_cpu_register_feature_bit_props(X86CPUClass *xcc,
- 
- static void x86_cpu_post_initfn(Object *obj)
- {
-+    static bool first = true;
-+    uint64_t supported_xcr0;
-+    int i;
-+
-+    if (first) {
-+        first = false;
-+
-+        supported_xcr0 =
-+            ((uint64_t) x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_HI) << 32) |
-+            x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_LO);
-+
-+        for (i = XSTATE_SSE_BIT + 1; i < XSAVE_STATE_AREA_COUNT; i++) {
-+            ExtSaveArea *esa = &x86_ext_save_areas[i];
-+
-+            if (!(supported_xcr0 & (1 << i))) {
-+                esa->size = 0;
-+            }
-+        }
-+    }
-+
-     accel_cpu_instance_init(CPU(obj));
- }
- 
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 6bf8dcfc60..99d1941cf5 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -143,10 +143,6 @@ static void kvm_cpu_xsave_init(void)
-         if (!esa->size) {
-             continue;
-         }
--        if ((x86_cpu_get_supported_feature_word(NULL, esa->feature) & esa->bits)
--            != esa->bits) {
--            continue;
--        }
-         host_cpuid(0xd, i, &eax, &ebx, &ecx, &edx);
-         if (eax != 0) {
-             assert(esa->size == eax);
+@@ -1296,7 +1296,9 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+             .needs_ecx = true, .ecx = 0,
+             .reg = R_EAX,
+         },
+-        .tcg_features = ~0U,
++        .tcg_features = XSTATE_FP_MASK | XSTATE_SSE_MASK |
++            XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
++            XSTATE_PKRU_MASK,
+         .migratable_flags = XSTATE_FP_MASK | XSTATE_SSE_MASK |
+             XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
+             XSTATE_OPMASK_MASK | XSTATE_ZMM_Hi256_MASK | XSTATE_Hi16_ZMM_MASK |
+@@ -1309,7 +1311,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+             .needs_ecx = true, .ecx = 0,
+             .reg = R_EDX,
+         },
+-        .tcg_features = ~0U,
++        .tcg_features = 0U,
+     },
+     /*Below are MSR exposed features*/
+     [FEAT_ARCH_CAPABILITIES] = {
 -- 
 2.34.1
 
