@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0319D767FC
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 20:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 115D3D767FB
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 20:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6bRU-0007Rv-38; Thu, 31 Oct 2024 16:06:52 -0400
+	id 1t6bRD-00078K-Dl; Thu, 31 Oct 2024 16:06:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t6bRT-0007Qd-18; Thu, 31 Oct 2024 16:06:51 -0400
+ id 1t6bR8-00077p-RF; Thu, 31 Oct 2024 16:06:31 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t6bRR-0007WL-BQ; Thu, 31 Oct 2024 16:06:50 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XfZdZ2mSnz6LDK5;
- Fri,  1 Nov 2024 04:01:54 +0800 (CST)
+ id 1t6bR7-0007Uy-BJ; Thu, 31 Oct 2024 16:06:30 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XfZjF54Ynz6JBc6;
+ Fri,  1 Nov 2024 04:05:05 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 63E2414058E;
- Fri,  1 Nov 2024 04:06:47 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 8617D140B35;
+ Fri,  1 Nov 2024 04:06:27 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.48.152.207) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 31 Oct 2024 21:06:27 +0100
+ 15.1.2507.39; Thu, 31 Oct 2024 21:06:08 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,9 +45,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH V2 3/6] qtest: allow ACPI DSDT Table changes
-Date: Thu, 31 Oct 2024 20:04:59 +0000
-Message-ID: <20241031200502.3869-4-salil.mehta@huawei.com>
+Subject: [PATCH V2 2/6] hw/acpi: Update ACPI CPU Hotplug state during vCPU
+ hot(un)plug
+Date: Thu, 31 Oct 2024 20:04:58 +0000
+Message-ID: <20241031200502.3869-3-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241031200502.3869-1-salil.mehta@huawei.com>
 References: <20241031200502.3869-1-salil.mehta@huawei.com>
@@ -83,61 +84,35 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-list changed files in tests/qtest/bios-tables-test-allowed-diff.h
+Update the `is_enabled` state in `AcpiCpuStatus` when vCPUs are
+hot-plugged or hot-unplugged.
 
-Reported-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 41 +++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ hw/acpi/cpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..512d40665d 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,42 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/x86/pc/DSDT",
-+"tests/data/acpi/x86/pc/DSDT.acpierst",
-+"tests/data/acpi/x86/pc/DSDT.acpihmat",
-+"tests/data/acpi/x86/pc/DSDT.bridge",
-+"tests/data/acpi/x86/pc/DSDT.cphp",
-+"tests/data/acpi/x86/pc/DSDT.dimmpxm",
-+"tests/data/acpi/x86/pc/DSDT.hpbridge",
-+"tests/data/acpi/x86/pc/DSDT.hpbrroot",
-+"tests/data/acpi/x86/pc/DSDT.ipmikcs",
-+"tests/data/acpi/x86/pc/DSDT.memhp",
-+"tests/data/acpi/x86/pc/DSDT.nohpet",
-+"tests/data/acpi/x86/pc/DSDT.numamem",
-+"tests/data/acpi/x86/pc/DSDT.roothp",
-+"tests/data/acpi/x86/q35/DSDT",
-+"tests/data/acpi/x86/q35/DSDT.acpierst",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
-+"tests/data/acpi/x86/q35/DSDT.applesmc",
-+"tests/data/acpi/x86/q35/DSDT.bridge",
-+"tests/data/acpi/x86/q35/DSDT.core-count",
-+"tests/data/acpi/x86/q35/DSDT.core-count2",
-+"tests/data/acpi/x86/q35/DSDT.cphp",
-+"tests/data/acpi/x86/q35/DSDT.cxl",
-+"tests/data/acpi/x86/q35/DSDT.dimmpxm",
-+"tests/data/acpi/x86/q35/DSDT.ipmibt",
-+"tests/data/acpi/x86/q35/DSDT.ipmismbus",
-+"tests/data/acpi/x86/q35/DSDT.ivrs",
-+"tests/data/acpi/x86/q35/DSDT.memhp",
-+"tests/data/acpi/x86/q35/DSDT.mmio64",
-+"tests/data/acpi/x86/q35/DSDT.multi-bridge",
-+"tests/data/acpi/x86/q35/DSDT.noacpihp",
-+"tests/data/acpi/x86/q35/DSDT.nohpet",
-+"tests/data/acpi/x86/q35/DSDT.numamem",
-+"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
-+"tests/data/acpi/x86/q35/DSDT.thread-count",
-+"tests/data/acpi/x86/q35/DSDT.thread-count2",
-+"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
-+"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
-+"tests/data/acpi/x86/q35/DSDT.type4-count",
-+"tests/data/acpi/x86/q35/DSDT.viot",
-+"tests/data/acpi/x86/q35/DSDT.xapic",
+diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
+index 238a0edbc1..8940687f90 100644
+--- a/hw/acpi/cpu.c
++++ b/hw/acpi/cpu.c
+@@ -265,6 +265,7 @@ void acpi_cpu_plug_cb(HotplugHandler *hotplug_dev,
+     }
+ 
+     cdev->cpu = CPU(dev);
++    cdev->is_enabled = true;
+     if (dev->hotplugged) {
+         cdev->is_inserting = true;
+         acpi_send_event(DEVICE(hotplug_dev), ACPI_CPU_HOTPLUG_STATUS);
+@@ -296,6 +297,7 @@ void acpi_cpu_unplug_cb(CPUHotplugState *cpu_st,
+         return;
+     }
+ 
++    cdev->is_enabled = false;
+     cdev->cpu = NULL;
+ }
+ 
 -- 
 2.34.1
 
