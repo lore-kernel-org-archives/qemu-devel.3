@@ -4,102 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2847E68972
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 10:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48478E68972
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 10:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6SIi-0000mx-QO; Thu, 31 Oct 2024 06:21:12 -0400
+	id 1t6SL6-0001dm-MQ; Thu, 31 Oct 2024 06:23:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t6SIh-0000mk-2E
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 06:21:11 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t6SIf-0005aq-4D
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 06:21:10 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-37d41894a32so424344f8f.1
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 03:21:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730370067; x=1730974867; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=989LZbxRnF6UzNiAW06QVm9ckKJdqwqMEsNulAnO9AE=;
- b=OsAz59BAKqwiQ9CTupPu/oMpX27P16z9ujLbu0dbla4OB1TjiulKxuDOjWKK5az3B+
- hApkVXShcENt2hHSiSiCFE1eMbMLtDZaaurGzTFFapT6kQEZvuwrKVSmbxwK7aWuiZBv
- /Ukyg5st9bgPajBujewvZj0CcA5r1Qo+xOamNDqm2SfS/uRbunnorNh4840dQ0uFpyps
- xyWj1QAn8uzUSiJchy8pDr34GDfYZdHI/evwc3ArOLPBnlhCyyM4MaVCxVBo3zy4eZas
- IfkJp5XqqYxwh9BDQhkJtzwht6wtUutbwZ8g55QDTvdO2mVaaoDzbLc7fZi0/jpDHP3a
- 07BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730370067; x=1730974867;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=989LZbxRnF6UzNiAW06QVm9ckKJdqwqMEsNulAnO9AE=;
- b=Ll54ALaECWVdbQA6XNIC2FE8diGgDtxTIuCVe4/yiEdtz646q2//tvuT0nRNLVgzxy
- NW7jFSKBwdbVPUxGQ6qfiNoN25gz06VUFVCbkt69bdckXrk0bQvCc+V9/O0/7Z9h1Cgu
- /9i9L2YjF/lYgWyhzk3jivSrHvCsjwNN4FnHQn+DqbCH28HCiMCRobpp/iSidLw7rVPF
- CixoUa2L3hXmbMsSS7MyZqGi6C+fteidK96G2OHYA6to+ZOruJE3AWcBHuqAUFeNM+g2
- vJuUMw4Ut/Zf+DtkTWKnZ3E+kRIHPjnANVLU1ncGnk7/8TzM3wr2pSQI9gzsPTIEgHCN
- F0pw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8GJdhtacX/tgGbNfs1baQsI0YdWuigY/QrDyfmhBZKiQSL06jxHjWIXzsQSrKTG59h60d6dBaozwE@nongnu.org
-X-Gm-Message-State: AOJu0YxziLg+eFekWCdimUyeUJ3WxVhuA0bWhvEKNSpDxZSR8EyZVbxr
- MwJ6gIq4iira4b6bytuCY8TRUlkZuR9Vh7NCCr1SzY4wqMkOVjM7+/36AD92Ekw=
-X-Google-Smtp-Source: AGHT+IEC7u7mGwV94xtXApMUkNnNBweDtMbxV7hPBAtJaZ9fVvpS/66OGW9PsYhgSoSxaKp7hRKMJw==
-X-Received: by 2002:a05:6000:144e:b0:37d:4330:c87a with SMTP id
- ffacd0b85a97d-381c13072e8mr1643674f8f.4.1730370066915; 
- Thu, 31 Oct 2024 03:21:06 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c113e51csm1687666f8f.79.2024.10.31.03.21.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 31 Oct 2024 03:21:06 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6AA285F780;
- Thu, 31 Oct 2024 10:21:05 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Gert Wollny <gert.wollny@collabora.com>,
- qemu-devel@nongnu.org,  Gurchetan Singh <gurchetansingh@chromium.org>,
- Alyssa Ross <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?=
- <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
- <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
- <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
- <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Yiwei Zhang
- <zzyiwei@chromium.org>,  Sergio Lopez Pascual <slp@redhat.com>
-Subject: Re: [PATCH v3 4/6] virtio-gpu: Handle virgl fence creation errors
-In-Reply-To: <20241024233355.136867-5-dmitry.osipenko@collabora.com> (Dmitry
- Osipenko's message of "Fri, 25 Oct 2024 02:33:52 +0300")
-References: <20241024233355.136867-1-dmitry.osipenko@collabora.com>
- <20241024233355.136867-5-dmitry.osipenko@collabora.com>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Thu, 31 Oct 2024 10:21:05 +0000
-Message-ID: <871pzwk1ym.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t6SL4-0001dc-Oh
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 06:23:38 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t6SL1-0005jJ-Tk
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 06:23:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730370216; x=1761906216;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=dZj8mX2sHWvJbxwOqDjN5V1LsRCVXmeEVj8nN2d88JQ=;
+ b=PtOXWbPxZuIX/c/oC/4xvB1M0VLWsSw13fw42JyQC9gWFoVj2YVmfWPw
+ lUhJDPI17xd7ZjdQ/1Cn6mJ2kOzYBSYI6fKTp3G6SXadBC31QSf5FrIak
+ 0UH0FofE9r8Fm9NUrn0+zeGa1U9wyhaCaNt2AGencFDWz+2CetU34Xchq
+ U4t/+o3wvHgruKsMLW8SQbp1j5laMXIKVjpPNeFoeHBdWOiPxWd/hLaIU
+ b+O2/tC7wmTUrpmIYzmnd8ZmVVz4WcrcYxeL4MABkc6TrmTIdbEK09lY3
+ CJ1/o2LoHk6qtY0fofsDYN0fuRsiCga2BcWbUBG2Cs8Oy1BU20hlws1vV w==;
+X-CSE-ConnectionGUID: oIEHxsARQkK2mLU5ES3oEg==
+X-CSE-MsgGUID: u5kpXAjlSA27KEiWIlZfGA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11241"; a="30207512"
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="30207512"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Oct 2024 03:23:33 -0700
+X-CSE-ConnectionGUID: BiIlKBbmQCGXtrP6Yd4NRA==
+X-CSE-MsgGUID: 3/i3vz2mT4eWRQCRPTc5uw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="82707451"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa008.fm.intel.com with ESMTP; 31 Oct 2024 03:23:31 -0700
+Date: Thu, 31 Oct 2024 18:39:51 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org,
+ junjie.mao@hotmail.com, berrange@redhat.com
+Subject: Re: [PATCH 11/23] rust: introduce a c_str macro
+Message-ID: <ZyNed5puZOaUcj42@intel.com>
+References: <20241025160209.194307-1-pbonzini@redhat.com>
+ <20241025160209.194307-12-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241025160209.194307-12-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,59 +84,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
-
-> Print out error messages when virgl fence creation fails to aid debugging
-> of the fence-related bugs.
->
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> ---
->  hw/display/virtio-gpu-virgl.c | 12 +++++++++++-
->  1 file changed, 11 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index eedae7357f1a..3c564683820b 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -892,6 +892,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->                                        struct virtio_gpu_ctrl_command *cm=
-d)
->  {
->      bool cmd_suspended =3D false;
-> +    int ret;
->=20=20
->      VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
->=20=20
-> @@ -990,7 +991,16 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->      }
->=20=20
->      trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type=
-);
-> -    virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type=
-);
+> +#[macro_export]
+> +/// Given a string constant _without_ embedded or trailing NULs, return
+> +/// a CStr.
+> +///
+> +/// Needed for compatibility with Rust <1.77.
+> +macro_rules! c_str {
+> +    ($str:expr) => {{
+> +        const STRING: &str = concat!($str, "\0");
+> +        const BYTES: &[u8] = STRING.as_bytes();
 > +
-> +    /*
-> +     * Unlike other virglrenderer functions, this one returns a positive
-> +     * error code.
-> +     */
-> +    ret =3D virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
-> +    if (ret)
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: virgl_renderer_create_fence error: %s",
-> +                      __func__, strerror(ret));
+> +        // "for" is not allowed in const context... oh well,
+> +        // everybody loves some lisp.  This could be turned into
+> +        // a procedural macro if this is a problem; alternatively
+> +        // Rust 1.72 makes CStr::from_bytes_with_nul a const function.
+> +        const fn f(b: &[u8], i: usize) {
+> +            if i == b.len() - 1 {
+> +            } else if b[i] == 0 {
+> +                panic!("c_str argument contains NUL")
+> +            } else {
+> +                f(b, i + 1)
+> +            }
+> +        }
+> +        f(BYTES, 0);
+> +
+> +        // SAFETY: absence of NULs apart from the final byte was checked above
+> +        unsafe { std::ffi::CStr::from_bytes_with_nul_unchecked(BYTES) }
+> +    }};
+> +}
+> +
 
-braces please. Also if ret is only used for the if leg you might as well
-combine it:
+It's not worth introducing the const_for crate for the loop, and I can't
+come up with a better solution. The current implementation is simple and
+effective, so for now, it's the best option for me.
 
-  if (virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0) !=3D 0) {
-    qemu_log_mask(...)=20
-  }
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
->  }
->=20=20
->  static void virgl_write_fence(void *opaque, uint32_t fence)
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
