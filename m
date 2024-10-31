@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E91F7E6894E
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 307E5E68949
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:55:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MGW-0008Dj-9W; Wed, 30 Oct 2024 23:54:32 -0400
+	id 1t6MFa-0007Cz-Js; Wed, 30 Oct 2024 23:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MGV-00088q-9Y
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:31 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1t6MFY-0007CT-VC
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:53:32 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MGT-0003yJ-OY
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:31 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-20cf6eea3c0so4688275ad.0
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:54:29 -0700 (PDT)
+ id 1t6MFX-0003sN-Ee
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:53:32 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-20e576dbc42so5428675ad.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:53:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730346868; x=1730951668; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730346810; x=1730951610; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+T1/qmTRYfbLgasuElLQo88//CQU/xJLxY5iXRbEKPI=;
- b=OKH5j+LJhBbwIh0Xk99SmeJivg0/6GDcw0etrhCgfppUBS87gdZeBMCgMZnZm5ZqUv
- VIZBLXyy2DnDMJoBD3UCGEqlXqQb6Nbn7BtYQKxuOoMgFOjdJLMIvFB0MDmY6uM+ArnU
- NBWGwg06WIlksH5OUA0nMPQ12vqHcRHlmKGtRGoQXo0mqEJ1f6WPhXsz3KP3Up0Tuly3
- /E5Id68Tpgrj5mWuHrYTUK98PZ7eEcwwhwVWmGVTfxhhRWmzGxrYfsyr7kAGJXJ6Nv5X
- QirwPZtrvvzLEg8Lpp0VTAC6XNWWfwA+L5xqdAGvZEjuukQ6R4TKHFTLX9WIUI77GxTC
- j1AQ==
+ bh=2Yu9l8eltS3GqEhoKZQqPKNc4z7ST450TJjjoaz/+KI=;
+ b=iS5TvKBsOhi9zWeB0u+3ytwXryYYstuvzyXuFNHkMr+nLo94EA06tQhbjUrLiCl/CX
+ wf3DPyafoUHLCoRFqlrj+4lllgV7I+/OKUdRsLL8xHf8QrOd0MTpU47tIy9GIBaB0iq1
+ iCZmORX4s4dRtWF66FUZpeNGFZ9HxVuR+o+qu8nSQLXIrO/r8nifsM4uf58anG4m2DAN
+ umUY4BqmQvpbdDG7p2Un8axytBimE16DorfvB9aj1jGjInpoHd762QDTdathD0ls7wvp
+ /Uwo4edvS/qsGDG3noBLkC/w+CQvpTrEKta7I2gubXg8z+HUFZIviaOnknGVFyWfC85Z
+ ikQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730346868; x=1730951668;
+ d=1e100.net; s=20230601; t=1730346810; x=1730951610;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+T1/qmTRYfbLgasuElLQo88//CQU/xJLxY5iXRbEKPI=;
- b=d9v8D58EuM2E57UYBWE9N3I1g19uNkkNQWJ4BP+UizvMvdnWSz1MZxnpaKMgUFQnOE
- 8o4cogG8XvFd31YO8dAulnzO56bX53bRvBthBh6qcX1foVrxk/4DLzJDYzbmDNCE8FiC
- 1uQVh8v2Fm8v2OknkMnnTlkgaYkZ18e+ccjjF6m/aI1dTHm5vRV/2IKIJuUwYtsLIkv/
- jJAgrF2BOrcLWt2W4AoyBFlmpbzSWNjyLhHV9Oqb+Iph2zbPXtKhKrRjXJxZ1QVCyCA4
- z+OmRyVNYUVnlVNS+5dnRuH5JMzm2Iv+wJAARTluztMiLL/i+85acGMGSUGPCURA8Q0y
- Y2YQ==
-X-Gm-Message-State: AOJu0YwrHhPp/aW0VaQIbyFSwTcCGEvYyADMFmXB4rTkKDAllFFQJD02
- dqHWZ9ougulzOPmGOALK7aferMM1C6HOseGCMGFd61usJru2TFeash5WpRgV
-X-Google-Smtp-Source: AGHT+IEePDL7jlW7H8Q/DfPdXG0bV7AITCggT+JesQvJ6XeKIkcZoEkca7pI/LMvlHw73rABVtU8cw==
-X-Received: by 2002:a17:903:2309:b0:20c:5e86:9b5e with SMTP id
- d9443c01a7336-210c687399amr216572905ad.3.1730346868310; 
- Wed, 30 Oct 2024 20:54:28 -0700 (PDT)
+ bh=2Yu9l8eltS3GqEhoKZQqPKNc4z7ST450TJjjoaz/+KI=;
+ b=R/h+E3fTKgfzeRfvJ3+YuKwELVN+7t7tZnRZ/B9hLct4RwbxFzLDjza6NwVLmPrgmj
+ b9TfXKG0tviSqWxhzDfCS9TYwQ/2yOrDOjC4/Q0Yyt1uA7ngxGnEyn9z8UJjg62N6lsJ
+ 4hS/517+4rVOBU/tpp4O93WTG5YrKn+4RBcVFD05r3MvpnZYa9dD3o4YkP7vlRB0greL
+ zREJ3ENHQkvypwYj7d2L8MLersUv+6Koabr5SHvbh6WmNjVx/nhFWN8NnfxXD+dbaZDd
+ G6fudePf5tXBjJE/LSpz4oiRLV06ANEWmIZ0MBlbKLrwrRzhshI2p+mk1tMWqd2Q7trE
+ Rghw==
+X-Gm-Message-State: AOJu0Yzc/J+JU+z77PxzZzBBrNzNri6sU8vyq9jy8u/Xbm0dXsD6rISU
+ 2sMbZmsDGQ1chuMLXF12EgBk6q3Sjk8Lxl7OB9G/15R77djFxafRh7XC/p08
+X-Google-Smtp-Source: AGHT+IFFB9xchlzOCWRmRZ2W5AiaX/XDaU6oladBNFYEAsroF6ZGljbN8tZ0bPoAIJGoQmJsYJComQ==
+X-Received: by 2002:a17:902:c943:b0:20c:d072:c89a with SMTP id
+ d9443c01a7336-21103ccbe1dmr20630715ad.59.1730346809712; 
+ Wed, 30 Oct 2024 20:53:29 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.54.25
+ d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.53.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 20:54:27 -0700 (PDT)
+ Wed, 30 Oct 2024 20:53:29 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Deepak Gupta <debug@rivosinc.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: alistair23@gmail.com, Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 20/50] target/riscv: additional code information for sw check
-Date: Thu, 31 Oct 2024 13:52:48 +1000
-Message-ID: <20241031035319.731906-21-alistair.francis@wdc.com>
+Subject: [PULL 01/50] target/riscv/csr.c: Fix an access to VXSAT
+Date: Thu, 31 Oct 2024 13:52:29 +1000
+Message-ID: <20241031035319.731906-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241031035319.731906-1-alistair.francis@wdc.com>
 References: <20241031035319.731906-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,64 +99,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Deepak Gupta <debug@rivosinc.com>
+From: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
 
-sw check exception support was recently added. This patch further augments
-sw check exception by providing support for additional code which is
-provided in *tval. Adds `sw_check_code` field in cpuarchstate. Whenever
-sw check exception is raised *tval gets the value deposited in
-`sw_check_code`.
+The register VXSAT should be RW only to the first bit.
+The remaining bits should be 0.
 
-Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The RISC-V Instruction Set Manual Volume I: Unprivileged Architecture
+
+The vxsat CSR has a single read-write least-significant bit (vxsat[0])
+that indicates if a fixed-point instruction has had to saturate an output
+value to fit into a destination format. Bits vxsat[XLEN-1:1]
+should be written as zeros.
+
+Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241008225010.1861630-6-debug@rivosinc.com>
+Message-ID: <20241002084436.89347-1-evgenii.prokopiev@syntacore.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h        | 2 ++
- target/riscv/cpu_helper.c | 3 +++
- target/riscv/csr.c        | 1 +
- 3 files changed, 6 insertions(+)
+ target/riscv/csr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 2170792ad7..67ce6e0a03 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -232,6 +232,8 @@ struct CPUArchState {
- 
-     /* elp state for zicfilp extension */
-     bool      elp;
-+    /* sw check code for sw check exception */
-+    target_ulong sw_check_code;
- #ifdef CONFIG_USER_ONLY
-     uint32_t elf_flags;
- #endif
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 62f455dbd3..fa4982e940 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1775,6 +1775,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-                 cs->watchpoint_hit = NULL;
-             }
-             break;
-+        case RISCV_EXCP_SW_CHECK:
-+            tval = env->sw_check_code;
-+            break;
-         default:
-             break;
-         }
 diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 02bcb8a23a..ec1e2af72d 100644
+index ea3560342c..c88ee1265e 100644
 --- a/target/riscv/csr.c
 +++ b/target/riscv/csr.c
-@@ -1377,6 +1377,7 @@ static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
-                          (1ULL << (RISCV_EXCP_INST_PAGE_FAULT)) | \
-                          (1ULL << (RISCV_EXCP_LOAD_PAGE_FAULT)) | \
-                          (1ULL << (RISCV_EXCP_STORE_PAGE_FAULT)) | \
-+                         (1ULL << (RISCV_EXCP_SW_CHECK)) | \
-                          (1ULL << (RISCV_EXCP_INST_GUEST_PAGE_FAULT)) | \
-                          (1ULL << (RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT)) | \
-                          (1ULL << (RISCV_EXCP_VIRT_INSTRUCTION_FAULT)) | \
+@@ -734,7 +734,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
+ static RISCVException read_vxsat(CPURISCVState *env, int csrno,
+                                  target_ulong *val)
+ {
+-    *val = env->vxsat;
++    *val = env->vxsat & BIT(0);
+     return RISCV_EXCP_NONE;
+ }
+ 
+@@ -744,7 +744,7 @@ static RISCVException write_vxsat(CPURISCVState *env, int csrno,
+ #if !defined(CONFIG_USER_ONLY)
+     env->mstatus |= MSTATUS_VS;
+ #endif
+-    env->vxsat = val;
++    env->vxsat = val & BIT(0);
+     return RISCV_EXCP_NONE;
+ }
+ 
 -- 
 2.47.0
 
