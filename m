@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D010E68952
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:07:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FAEBE68951
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:07:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MQp-0003lK-RT; Thu, 31 Oct 2024 00:05:12 -0400
+	id 1t6MSE-0005ye-Mg; Thu, 31 Oct 2024 00:06:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQg-0003dU-RU
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:03 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6MS4-0005kt-Bi
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:06:31 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQf-0004q1-2s
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:02 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2e56750bb0dso381466a91.0
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6MS2-00059j-IG
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:06:28 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2fb584a8f81so4170701fa.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:06:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730347500; x=1730952300; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fv7fP7ICWyfxL2x/CP9SZRa4THtQuAFnXp8RQEnngd8=;
- b=BJCL8X/lA4a8SS5Y57Zp/+YXEwlvrqdmuWrdCnynK/ZZYsZlzh6AT46FZ0uqSuPW+G
- EyvItsTlhYQh+NVMLBQvhba8byYj2l4n+nPx68wshcVBiw0tCMoGwi0tQEo+jr+9bRux
- oncAjkv5yKI+kt02BosphueN8+chuYdH1yZC/jqRyTDYzCwsr3fqEZY/TYYukncktwPW
- XVMbouGinVUsuWx/Phs0s1YZGVzpy2iR/y51+ZakxH3WWDJhZEE/FI1e5W2QdoiSftcL
- gtqFLaDxi4HUYdyIZHryVzMTZ3H/E9TneUWNRGXZTUlrP+l1rdXgKMyAIQo/3YBZjFMy
- Dumg==
+ d=linaro.org; s=google; t=1730347585; x=1730952385; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GmrS8B+JczQ1TlR014IIWntHN+nwu6EE4ORZxiZAXaM=;
+ b=w7kOI9te08Xynk6YkFiLDPSz2ruVm6r+XsFVQCZzN0rJPRRWB+rWXFRjB5wKYKeBTU
+ 5TYnHJXOlBfV6q5GcXD7JlVevm9FJ4t0jCTFVdC/E5iLpVPeDwEHN38FZ0XNESSwZLXm
+ o/XRX15kw/xKv2SO79SuVVWNvfnx8+XjF0GwxxJsXROr5ceZTcKFKeIXVWQmWdZHC9ex
+ fB0+q1NrbXesKXPKCGqFhPXHFKjk5CkDwptnZiEBrBqk85qZ40nTYBrgTHqvgK+hWCCV
+ ZJb3XqTrJWBihh8bmaCAZpuAlCs2ejMG2jabrYbH4TKoSlOy1HK8VLFFTrFRATmMPVqJ
+ B5Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730347500; x=1730952300;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fv7fP7ICWyfxL2x/CP9SZRa4THtQuAFnXp8RQEnngd8=;
- b=mbUkjh0zPXkzYmhfqPiamKEaqtxujvN0TQ6HDBay5CgSMW1O9s1wt5IoXWqwVcNMo2
- mne7XdA8OPfvHZrssZ1/miDwGSsh/tNtVGnnRVl7qzBx8I7juhMC+y7UnXE/M7GxA6+A
- 6z8xEtwKiTxA3IHKySf8jHkg6jjbCh47pFiauGCkEdH3ErcBoLCaqIhvkZFVhp2nN7Pz
- lxWVdi5FGCubXwQRfIzNTl/AG8vDV4/MQ9440cw1kxN9Ee2KAN9WUTDLAd7AL677hSKF
- dRDKgYQ3bWmqn5d01FFQlO3tJaVtPx+RUgAteuABIjHvkfcLN/piTudtTePtUVM/rWyo
- /4XA==
-X-Gm-Message-State: AOJu0YwSzh0NVegB27GfedA01GE6+GGf758zIt72ctffIgOJY4gK2ZEj
- eN7xRowLM4v2hSSf4UQZtREJsIqPHzZgSnldHf0ms5uaFfYNukJ0A/rbhUaqIWW4yOofkIENfOS
- fwVSOLg==
-X-Google-Smtp-Source: AGHT+IFpQxDk8p2VP4nriXIupYuXJBOVQI3fMflZN8u0ftZ0x8kXb92WWWiHWfBfhK898FPlWB2tsw==
-X-Received: by 2002:a17:90b:2741:b0:2e2:b64e:f506 with SMTP id
- 98e67ed59e1d1-2e8f105b461mr21551918a91.13.1730347499654; 
- Wed, 30 Oct 2024 21:04:59 -0700 (PDT)
-Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
+ d=1e100.net; s=20230601; t=1730347585; x=1730952385;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GmrS8B+JczQ1TlR014IIWntHN+nwu6EE4ORZxiZAXaM=;
+ b=SuxY3kZnxPXnUxE1nWd77Wt958s1vXiTJ0ATTrJ7T9moDEo21ry7NlCN4iy7mKGc8i
+ j7YkEKL0ZOOUrUPEAc83WZSoVIZyZeo9wdQMwdG0oXUd750u+7/OcauJYg2Vndg7lmXn
+ ogMHgYK9Q4x7azheEFoVWfbW4qAzzR09EH1XKVOglpqG4VVNFGC+6vBfwIiQJT91Qm9Z
+ mizdF2HMlys1OXUxt5RAkYW2rZsQXgkbY4uGnO/vpEe0FDxsQo3cC2lWUXZNdA5WWyWy
+ Y6EIhsgOFzjoZIPOs50zMs3diQf5TpFLCUszjTHq6chlu9y2GWHF1JYazvn3UAelYPas
+ Bl0w==
+X-Gm-Message-State: AOJu0YwecLGbjZ6FXTkyY59lW7IvKLm26S1DENknSfYR+SZiP23JEVs9
+ nwNZc+xtBCfPQ3NMuZ9eb3BxS0Ivchg1apt4tERpuvGrLje0RVXS2VxMW5Qd5aPRFpy+FTxmpPN
+ 0
+X-Google-Smtp-Source: AGHT+IH0YFVYChHlz/cDTEYxkXIRbSXAH/o0GY+XAzmKGJv7fq+/4RKBAFoIXrLbamZt4e13VmGvuA==
+X-Received: by 2002:a2e:6112:0:b0:2fb:599a:a900 with SMTP id
+ 38308e7fff4ca-2fcbdfb978emr74082851fa.15.1730347584453; 
+ Wed, 30 Oct 2024 21:06:24 -0700 (PDT)
+Received: from [192.168.21.226] ([91.223.100.208])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e93db3a023sm428438a91.49.2024.10.30.21.04.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 21:04:59 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 03/12] meson: build contrib/plugins with meson
-Date: Wed, 30 Oct 2024 21:04:17 -0700
-Message-Id: <20241031040426.772604-4-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
-References: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
+ 38308e7fff4ca-2fdef5d5ca0sm921721fa.30.2024.10.30.21.06.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 30 Oct 2024 21:06:22 -0700 (PDT)
+Message-ID: <34d6acf1-2106-481e-a016-375e697f31cf@linaro.org>
+Date: Thu, 31 Oct 2024 01:06:10 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/riscv: Add Microblaze V 32bit virt board
+To: Michal Simek <michal.simek@amd.com>,
+ Alistair Francis <alistair23@gmail.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20241017072507.4033413-1-sai.pavan.boddu@amd.com>
+ <CAKmqyKNfoakaJ66PCN49x5+=gVkAnQVV1UWTdPe7ARr3RA8ouA@mail.gmail.com>
+ <7dbcb2de-89f9-445b-a096-2a3d03a2dfe7@amd.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <7dbcb2de-89f9-445b-a096-2a3d03a2dfe7@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,70 +103,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tried to unify this meson.build with tests/tcg/plugins/meson.build but
-the resulting modules are not output in the right directory.
+Hi Michal,
 
-Originally proposed by Anton Kochkov, thank you!
+On 30/10/24 02:53, Michal Simek wrote:
+> Hi Alistair,
+> 
+> On 10/30/24 03:54, Alistair Francis wrote:
+>> On Thu, Oct 17, 2024 at 5:26 PM Sai Pavan Boddu 
+>> <sai.pavan.boddu@amd.com> wrote:
+> 
+>>> diff --git a/hw/riscv/microblaze-v-virt.c b/hw/riscv/microblaze-v-virt.c
+>>> new file mode 100644
+>>> index 00000000000..6603e6d6b06
+>>> --- /dev/null
+>>> +++ b/hw/riscv/microblaze-v-virt.c
+>>> @@ -0,0 +1,181 @@
+>>> +/*
+>>> + * QEMU model of Microblaze V (32bit version)
 
-Solves: https://gitlab.com/qemu-project/qemu/-/issues/1710
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- meson.build                 |  4 ++++
- contrib/plugins/meson.build | 28 ++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
- create mode 100644 contrib/plugins/meson.build
+Is there a 64-bit model planned?
 
-diff --git a/meson.build b/meson.build
-index f7d45175212..d8af08299e0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3684,6 +3684,10 @@ subdir('accel')
- subdir('plugins')
- subdir('ebpf')
- 
-+if 'CONFIG_TCG' in config_all_accel
-+  subdir('contrib/plugins')
-+endif
-+
- common_user_inc = []
- 
- subdir('common-user')
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-new file mode 100644
-index 00000000000..63a32c2b4f0
---- /dev/null
-+++ b/contrib/plugins/meson.build
-@@ -0,0 +1,28 @@
-+contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
-+                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger']
-+if host_os != 'windows'
-+  # lockstep uses socket.h
-+  contrib_plugins += 'lockstep'
-+endif
-+
-+t = []
-+if get_option('plugins')
-+  foreach i : contrib_plugins
-+    if host_os == 'windows'
-+      t += shared_module(i, files(i + '.c') + 'win32_linker.c',
-+                        include_directories: '../../include/qemu',
-+                        link_depends: [win32_qemu_plugin_api_lib],
-+                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
-+                        dependencies: glib)
-+    else
-+      t += shared_module(i, files(i + '.c'),
-+                        include_directories: '../../include/qemu',
-+                        dependencies: glib)
-+    endif
-+  endforeach
-+endif
-+if t.length() > 0
-+  alias_target('contrib-plugins', t)
-+else
-+  run_target('contrib-plugins', command: find_program('true'))
-+endif
--- 
-2.39.5
+>>> + *
+>>> + * based on hw/microblaze/petalogix_ml605_mmu.c
+>>
+>> Just a question, are you sure the virt board should be based on the
+>> petalogix_ml605_mmu?
+> 
+> It is definitely based on ml605 and it is fair to say it and keep origin 
+> copyrights around.
+> 
+>> This will be the reference Microblaze V implementation in QEMU, and
+>> the petalogix_ml605_mmu might be a bit old now. It also uses a lot of
+>> the Microblaze architecture components (like the interrupt controller)
+>> compared to the RISC-V architecture components which might cause
+>> issues for you in the future.
+>>
+>> Just something to keep in mind
+> 
+> And the reason is that it is really design like that in design tool 
+> (Vivado).
+> There is no risc-v specific interrupt controller use but origin axi intc 
+> used in origin Microblaze designs. Timer is the same story.
+> 
+> ml605 board and it's chip is old but IPs which are used are still 
+> supported and used in new designs.
+> 
+> And regarding using virt in name. We can create design like it is 
+> described but it is not going to work on standard evaluation boards 
+> without extra fmc cards for example.
+> It means word virt is just description that it is not really target any 
+> specific board. Definitely name can change and suggestions are welcome.
+
+What about 'generic'?
 
 
