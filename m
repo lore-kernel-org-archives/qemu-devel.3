@@ -4,85 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6A3CD767D8
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 16:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C582D767E1
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 16:17:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6Xap-0001Rh-Vg; Thu, 31 Oct 2024 12:00:16 -0400
+	id 1t6Xr2-0006f7-QW; Thu, 31 Oct 2024 12:17:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Xam-0001QJ-H8
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:00:12 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Xr0-0006eg-Ib
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:16:58 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Xaj-00070H-ES
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:00:12 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2e2e88cb0bbso849920a91.3
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 09:00:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6Xqy-00017G-PE
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:16:58 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-71e467c3996so875214b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 09:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730390407; x=1730995207; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730391415; x=1730996215; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Qs3xNgUSQQcOcNqOrruuArV+bArrHOw5PL6xS6xMqcs=;
- b=MWifq30VdRr3hddQCKLBtqBaR4VinrgH4he9bvH7BxkE7vX+d53DANXkck11dhDMS8
- 1YDZ4BU/c243UwKLHB7JmkSiae4p5NEPYwmFn+ciVyX5HRxqKy3sk7P8CsPk67mUoh7h
- Cbb110c3Zv8LIxqj+b5T5/QpCA533N2DlOKowmsOFq4GNxEwafxy0uGXAQEWorbAPrv5
- Kv1Ppzpc9jiiF8jAd+tKNtBG20bspFmNAMJN4uASH+RL6UWSeUGTPq9CMfkaG3JiJV67
- kKBRS8VY8uO4RK2IIlWiWCX6cVJQ0fVHdVkL4OfYlhTHv9hRN0ghRl06VpXPKw1HefBj
- pjVA==
+ bh=VfZ7/Ord9Q8h0h5GU2lWOt3rg0jcM9+XNU9aSGGnko0=;
+ b=sVwI83tQ5afKJSZEZ7MyQsR/dvd8tMpLEeiNXrUNTzKT/vq6UiEAikJIim6chOEnJH
+ KcU15aF0TMwYOXTBa9CBEkQ8NpVYZwDoS7eDottTwFIdXicDtcuLJy9IWHoWYZ1zSRRc
+ P9jMsYj9381vro3opJhXt6IAVkvvKrif+qSyUfnlPG+Pg8VnLaJlfF99WPo2UCiWjBvZ
+ HVZR6sWlmtyDPbtzAu6BMZk4yAJpsg+86WWalT+xEcNK7xqZfZwv1xPPRQ9D+I8K3dCJ
+ 0RzBZ+Y/RyHPfk2LGiOUZf7+xliLmUURsPJbonudoF879gh+aJ5gv10I7VK32GGYpref
+ RAyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730390407; x=1730995207;
+ d=1e100.net; s=20230601; t=1730391415; x=1730996215;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Qs3xNgUSQQcOcNqOrruuArV+bArrHOw5PL6xS6xMqcs=;
- b=qx4qSbpslKbntP3szEdXE7YW2XBOSIuoOVar1kLRkNFJRWy9w7Bq333wwAh7v760we
- lfHmz+/hArpgYwAmZkKGh42HhsJhNiFZSK6wS6+55mPRYpsaIvH1PV84HgBEriUkKgDI
- jPmPD4FK8KAQkdp4H5bWj7q93Bvbo4Ly8kqcTQTwla85j9HnjcZWEayBpSSU0bMJuEhL
- 6h6AcEOECOUuYAJvdl+9sOY7rUunYit82jXhOhPh/M3c4BSib7MHPSptXkH4DMDljfTJ
- cts2U15cSZacs8oXcmAx/wOm1+Yg6rX9e7Rp08puFLmomVcm6jnuzhMzsRqzwynIvY1T
- IjLQ==
-X-Gm-Message-State: AOJu0YyzFQu6Fk3HIZh9qQNucVpHOAxcmNkYnnEw5ztaCyHgBRWgyWuv
- yjQXI9ylTXd3w5wD46U6T1Zz+yLXlNcUDtCdZ4aaeucTDEn1cprC404j8pvu0+q3bKnIOrE4fc7
- nXrY=
-X-Google-Smtp-Source: AGHT+IHFePjYlx8yUS6uqa/0zDhWkd2H25rlFvqBzK665l4H7AsHuhObsc1uGlAvl9GepfUXoNU1aw==
-X-Received: by 2002:a17:90b:3003:b0:2e2:c6a6:84da with SMTP id
- 98e67ed59e1d1-2e8f11dcd91mr21593068a91.34.1730390407039; 
- Thu, 31 Oct 2024 09:00:07 -0700 (PDT)
+ bh=VfZ7/Ord9Q8h0h5GU2lWOt3rg0jcM9+XNU9aSGGnko0=;
+ b=wu/idPVweJLnJmKLmHfmg0Ue3NvWcBp1L03ryR/A39kgecuccAFSZ4O/6fs+QV76mN
+ cAkpdT/PGfOXtsIUBVWukvVfytfwtjPdnjSMFQ2ARdn7gK8WTDjlJgawBE+I6qHCTPMo
+ /nv7ckfJFuyfW0LuIjYQmVjBBu3re3Z0gBZ02h6Mp6SrBDsKLrN8I5ocQHeqZc4uTWBg
+ X5H+Y0X/lXgDpuyWrHCgzfEQ5oYhgMBMcxy9mror1T0yfQA1NbTeYufidCRwf1q7J6Av
+ BKSMlnNYv+ll7pRgvWj1giROLCzp/Y1VsxBZkjyJn4hEE+/YpmFoERMOv8XX9IHoRJ2b
+ nRFQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUU2d3WQ/2Yn3iSlKaDlJUq+cr4YItCScj86myf7RTxcVnUNdVZOAtq59NvMuBkhLR2Oy6/BYvQtiBl@nongnu.org
+X-Gm-Message-State: AOJu0YwlTYf5jJboeIZkagNzmsv/AOaX8pJQygKkmhrGLjt7eQsPc1nM
+ TBNo8jN/C2DED8ix1A6paO/4w+Zvp4vvJwxoxqBTV1KVHdk3Xshk9PgGkw87EBA=
+X-Google-Smtp-Source: AGHT+IEayCxP5ugVBphu7BQy5CmKCeLHz5VpBQuu/3NXPn+8JyhyDvvyZGO3mJZkP+hiO1nKI5FrzQ==
+X-Received: by 2002:a05:6a00:18a0:b0:71e:786c:3fa9 with SMTP id
+ d2e1a72fcca58-72062a5d8e2mr30563372b3a.0.1730391414719; 
+ Thu, 31 Oct 2024 09:16:54 -0700 (PDT)
 Received: from [10.0.12.195] ([190.210.133.43])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e93daac4f1sm1311327a91.15.2024.10.31.09.00.04
+ d2e1a72fcca58-720bc313888sm1292215b3a.185.2024.10.31.09.16.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Oct 2024 09:00:06 -0700 (PDT)
-Message-ID: <8caf45e4-0be8-46aa-923b-402c80f74060@linaro.org>
-Date: Thu, 31 Oct 2024 12:59:58 -0300
+ Thu, 31 Oct 2024 09:16:54 -0700 (PDT)
+Message-ID: <971b47d0-949b-4454-884b-28ec070f9365@linaro.org>
+Date: Thu, 31 Oct 2024 13:16:07 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/riscv: Add Microblaze V 32bit virt board
-To: Michal Simek <michal.simek@amd.com>,
- Alistair Francis <alistair23@gmail.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20241017072507.4033413-1-sai.pavan.boddu@amd.com>
- <CAKmqyKNfoakaJ66PCN49x5+=gVkAnQVV1UWTdPe7ARr3RA8ouA@mail.gmail.com>
- <7dbcb2de-89f9-445b-a096-2a3d03a2dfe7@amd.com>
- <34d6acf1-2106-481e-a016-375e697f31cf@linaro.org>
- <47b60bf0-e43e-43a6-b9d7-0d072cd8d4ad@amd.com>
+Subject: Re: [PATCH] hw/loongarch/virt: Add reset interface for virt-machine
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20241031065418.3111892-1-maobibo@loongson.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <47b60bf0-e43e-43a6-b9d7-0d072cd8d4ad@amd.com>
+In-Reply-To: <20241031065418.3111892-1-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=philmd@linaro.org; helo=mail-pj1-x1033.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,50 +96,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/10/24 05:43, Michal Simek wrote:
-> Hi,
-> 
-> On 10/31/24 05:06, Philippe Mathieu-Daudé wrote:
->> Hi Michal,
->>
->> On 30/10/24 02:53, Michal Simek wrote:
->>> Hi Alistair,
->>>
->>> On 10/30/24 03:54, Alistair Francis wrote:
->>>> On Thu, Oct 17, 2024 at 5:26 PM Sai Pavan Boddu 
->>>> <sai.pavan.boddu@amd.com> wrote:
->>>
->>>>> diff --git a/hw/riscv/microblaze-v-virt.c 
->>>>> b/hw/riscv/microblaze-v-virt.c
->>>>> new file mode 100644
->>>>> index 00000000000..6603e6d6b06
->>>>> --- /dev/null
->>>>> +++ b/hw/riscv/microblaze-v-virt.c
->>>>> @@ -0,0 +1,181 @@
->>>>> +/*
->>>>> + * QEMU model of Microblaze V (32bit version)
->>
->> Is there a 64-bit model planned?
-> 
-> This guide is talking about 64bit too
-> https://docs.amd.com/r/en-US/ug1629-microblaze-v-user-guide
+Cc'ing Peter who is working on the Reset API.
 
-Same board, different core (synthesized with C_DATA_SIZE = 64).
-
-> It means answer is yes. And pretty much this generic model with the same 
-> layout should be possible to use with generic 64bit version too.
+On 31/10/24 03:54, Bibo Mao wrote:
+> With generic cpu reset interface, pc register is entry of FLASH for
+> UEFI BIOS. However with direct kernel booting requirement, there is
+> little different, pc register of primary cpu is entry address of ELF
+> file.
 > 
-> I expect that means that default_cpu_type should be TYPE_RISCV_CPU_BASE.
-> and Kconfig should be extended
-> +    depends on RISCV32 || RISCV64
+> At the same time with requirement of cpu hotplug, hot-added CPU should
+> register reset interface for this cpu object. Now reset callback is
+> not registered for hot-added CPU.
 > 
-> Also some small updates in documentation to cover it.
+> With this patch reset callback for CPU is register when CPU instance
+> is created, and reset interface is added for virt-machine board. In
+> reset interface of virt-machine, reset for direct kernel booting
+> requirement is called.
 > 
-> Is there something else what should be updated?
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   hw/loongarch/boot.c         |  9 +--------
+>   hw/loongarch/virt.c         | 14 ++++++++++++++
+>   include/hw/loongarch/boot.h |  1 +
+>   target/loongarch/cpu.c      | 10 ++++++++++
+>   4 files changed, 26 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index cb668703bd..cbb4e3737d 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -216,12 +216,11 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>       return kernel_entry;
+>   }
+>   
+> -static void reset_load_elf(void *opaque)
+> +void reset_load_elf(void *opaque)
+>   {
+>       LoongArchCPU *cpu = opaque;
+>       CPULoongArchState *env = &cpu->env;
+>   
+> -    cpu_reset(CPU(cpu));
+>       if (env->load_elf) {
+>   	if (cpu == LOONGARCH_CPU(first_cpu)) {
+>               env->gpr[4] = env->boot_info->a0;
+> @@ -320,12 +319,6 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
+>   {
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+> -    int i;
+> -
+> -    /* register reset function */
+> -    for (i = 0; i < ms->smp.cpus; i++) {
+> -        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cpu(i)));
+> -    }
+>   
+>       info->kernel_filename = ms->kernel_filename;
+>       info->kernel_cmdline = ms->kernel_cmdline;
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index 9a635d1d3d..80680d178c 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -1434,6 +1434,19 @@ static int64_t virt_get_default_cpu_node_id(const MachineState *ms, int idx)
+>       }
+>   }
+>   
+> +static void virt_reset(MachineState *machine, ResetType type)
+> +{
+> +    CPUState *cs;
+> +
+> +    /* Reset all devices including CPU devices */
+> +    qemu_devices_reset(type);
+> +
+> +    /* Reset PC and register context for kernel direct booting method */
+> +    CPU_FOREACH(cs) {
+> +        reset_load_elf(LOONGARCH_CPU(cs));
+> +    }
+> +}
+> +
+>   static void virt_class_init(ObjectClass *oc, void *data)
+>   {
+>       MachineClass *mc = MACHINE_CLASS(oc);
+> @@ -1457,6 +1470,7 @@ static void virt_class_init(ObjectClass *oc, void *data)
+>       mc->auto_enable_numa_with_memdev = true;
+>       mc->get_hotplug_handler = virt_get_hotplug_handler;
+>       mc->default_nic = "virtio-net-pci";
+> +    mc->reset = virt_reset;
+>       hc->plug = virt_device_plug_cb;
+>       hc->pre_plug = virt_device_pre_plug;
+>       hc->unplug_request = virt_device_unplug_request;
+> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+> index b3b870df1f..c7020ec9bb 100644
+> --- a/include/hw/loongarch/boot.h
+> +++ b/include/hw/loongarch/boot.h
+> @@ -115,5 +115,6 @@ struct memmap_entry {
+>   };
+>   
+>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
+> +void reset_load_elf(void *opaque);
+>   
+>   #endif /* HW_LOONGARCH_BOOT_H */
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 7212fb5f8f..f7f8fcc024 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -592,6 +592,13 @@ static void loongarch_cpu_disas_set_info(CPUState *s, disassemble_info *info)
+>       info->print_insn = print_insn_loongarch;
+>   }
+>   
+> +#ifndef CONFIG_USER_ONLY
+> +static void loongarch_cpu_reset_cb(void *opaque)
+> +{
+> +    cpu_reset((CPUState *) opaque);
+> +}
+> +#endif
+> +
+>   static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
+>   {
+>       CPUState *cs = CPU(dev);
+> @@ -607,6 +614,9 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
+>       loongarch_cpu_register_gdb_regs_for_features(cs);
+>   
+>       cpu_reset(cs);
+> +#ifndef CONFIG_USER_ONLY
+> +    qemu_register_reset(loongarch_cpu_reset_cb, dev);
+> +#endif
+>       qemu_init_vcpu(cs);
+>   
+>       lacc->parent_realize(dev, errp);
+> 
+> base-commit: 58d49b5895f2e0b5cfe4b2901bf24f3320b74f29
 
-No issue, I was just checking.
-
-Regards,
-
-Phil.
 
