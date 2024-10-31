@@ -4,71 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7ABD767D8
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 16:25:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8052DD767E1
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 16:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6XyJ-0000Lg-PO; Thu, 31 Oct 2024 12:24:31 -0400
+	id 1t6Y2n-0001j3-St; Thu, 31 Oct 2024 12:29:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6Xy7-0000Ji-OT
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:24:23 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t6Y2m-0001iO-MP
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:29:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6Xy0-00024G-Oa
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:24:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730391853; x=1761927853;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=SaMSW5dqKpu1S/+h0T6Umguv0j6pHee0GJQFILgnvbc=;
- b=KbIiXrZkaWpxHgImTd2JEbiMZnNW7S8MpylArx+DpDfM0FOQHqNHxF/V
- XrhX7tEXp5RjHDPmkkLzvW9DWtZQYrZ2FnJU9WnDFmVVZma6FSGXapZ84
- FLfEj+lmRzPXMUOWAXlnz1ErMy5j+ZzMS/XyYdu9g8hyJe/f1bLL9DJe7
- XLyrJd1R2jta+mWsf8pOMSiS+tRrcNpqt+qZBZYS2bexxab+SlZEwKoQV
- uggyVTVqpPRmz2Siph46Z6J50Nb9ND/eKNEz5LUKJH6Fe90bilmuSYAEQ
- W9V3cO2tk6a9dPpktgL1MXV7bW6j3X8Mzi0ja1NHscRAhcyLjZw93+e1U g==;
-X-CSE-ConnectionGUID: yMCkz/t3Q+GsSEoaFSnvqg==
-X-CSE-MsgGUID: 8oFj9pP8Rsajz+pSkL+OLg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11242"; a="30258925"
-X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="30258925"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Oct 2024 09:24:08 -0700
-X-CSE-ConnectionGUID: ae4nvHklSYS0LYth8nlHxQ==
-X-CSE-MsgGUID: XTlmUYvnTsGG4cmd50YCpQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="86606598"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 31 Oct 2024 09:24:07 -0700
-Date: Fri, 1 Nov 2024 00:41:57 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org,
- junjie.mao@hotmail.com, berrange@redhat.com
-Subject: Re: [PATCH v3 00/23] rust: fix CI + allow older versions of rustc
- and bindgen
-Message-ID: <ZyOzVYpqHYx8O6Yc@intel.com>
-References: <20241025160209.194307-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t6Y2k-0002ty-KR
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 12:29:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730392145;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SfeeMAMU4m+uL/At8yEFn9cCeFJ7ktwzowe9PnW2klc=;
+ b=Xw4KxGmCAewJ3LTRKzyX8InItEq9UnfKHVvTMOZMNJAdDkihecZYeaiNV4xCAPU8zOeo8g
+ Eh/Bfy7Lh7wiCQVmIOEij4xpxx+c6Rl5XUwHJDMPgHsHfDBv5QLHqcQkUTYP2VWjRLL1CN
+ 7/xOxWlRuqAm45jfZEbEoIJ3AN+MwJs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-272-55Ta9gKUOSKs1xCTIv2ApA-1; Thu, 31 Oct 2024 12:29:03 -0400
+X-MC-Unique: 55Ta9gKUOSKs1xCTIv2ApA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4315e8e9b1cso6390245e9.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 09:29:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730392142; x=1730996942;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SfeeMAMU4m+uL/At8yEFn9cCeFJ7ktwzowe9PnW2klc=;
+ b=ijm/zDYxOgmybLyGh8XzVbI1JNVgLVoz2pjA1QU7nWt0uVOJ0plA6ZQVGofZzwBZPE
+ EKrt/8VWEvpvL8cFuqeJYgtMFcxhoLHXtXmnsl43bVKRdGP3+oAHjUvWJOIDesIcPoXP
+ Q7MAFs9YGDRKuxRVo5OuOREz++GZCDsD/VtHPSkvMYWIXuITqeGqzeK9y4iyW/sp3N/+
+ aLFWDsolqFvQW6rjkZQbJPF4PERroDNJR+vUK4pfn9IWUkXEDHB6291/+15okiOmele5
+ m1lktS2xWcF6OUvsxanLPFYaddURO+6mc0Es+gVYZDK4CsoPlFLRlaZPJ64/NcXfetZa
+ tIbw==
+X-Gm-Message-State: AOJu0YzSTqd7qKvi6+XmrG/ZfcqAeiWAP8/zomyj2Wh84CewVGEmRbDk
+ ib18JV3CRiKOFdk/m0WQBblcT5qHlVpwuj5gySOlPVA5K1hAzZ/EO3ODju6aOOR+XIw8YrJhFmU
+ Pf860HirTI3yBmFZoI1zyJyQXjz/pKGRGyvmTgnNKhksIIjLHeD2vXYL2fwbAO2C5pPw3csuOCv
+ 1JWY/Trm/Ovxk8i9ZoWG2nGyu4Cxs=
+X-Received: by 2002:a05:600c:1c26:b0:42c:b603:422 with SMTP id
+ 5b1f17b1804b1-4327daa3649mr26995275e9.8.1730392142256; 
+ Thu, 31 Oct 2024 09:29:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHWg1Jmwmu2WT/3cHPsbmle5nBbF8i/zC+2xGeqHEMsg4x6dYM5450nuZHh6jpshPW866pvHJJqh3sOtAFC+BM=
+X-Received: by 2002:a05:600c:1c26:b0:42c:b603:422 with SMTP id
+ 5b1f17b1804b1-4327daa3649mr26994985e9.8.1730392141901; Thu, 31 Oct 2024
+ 09:29:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241025160209.194307-1-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+References: <20241025160209.194307-1-pbonzini@redhat.com>
+ <CAAjaMXa+fyKHyufwmEQG5dqvFWW+uHtu9PDMkznD=3iViV6L1g@mail.gmail.com>
+In-Reply-To: <CAAjaMXa+fyKHyufwmEQG5dqvFWW+uHtu9PDMkznD=3iViV6L1g@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 31 Oct 2024 17:28:49 +0100
+Message-ID: <CABgObfb7=ZxgiasgB=dE8yV+bhd5-pd51n4qGpP8OFNBS3iMXQ@mail.gmail.com>
+Subject: Re: [PATCH v3 00/23] rust: fix CI + allow older versions of rustc and
+ bindgen
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, zhao1.liu@intel.com, junjie.mao@hotmail.com, 
+ berrange@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,23 +100,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> This series can be found at branch rust-next of my git repository
-> (https://gitlab.com/bonzini/qemu.git), which also helps with the
-> problems in applying patch 8.  Everything up to commit f6a46d2a4eb
-> ("rust: do not use TYPE_CHARDEV unnecessarily", 2024-10-25) will be
-> my next pull request, which I will send early next week (to give
-> people some more days to complain).
-> 
-> Paolo
-> 
-> Supersedes: <20241022100956.196657-1-pbonzini@redhat.com>
-> 
-> CI: https://gitlab.com/bonzini/qemu/-/pipelines/1512732399
+Manos,
 
-Compiled with v1.63 and ran "make check" on my x86 platform.
+I apologize for extracting these parts of your code without making my
+intention fully clear with you first. My intention was to move the CI
+integration forward while you focused on the procedural macros,
+because right now the partial CI is limiting other potential
+contributors.
 
-Everything looks good!
+In order to fix this in the 9.2 release, I would like to include the
+extracted patches in a pull request before soft freeze. They implement
+the core functionality required by the tests, and they have been
+tested already.
 
-Tested-by: Zhao Liu <zhao1.liu@intel.com>
+During the freeze we can evaluate how to best structure the remaining
+changes, including improved QOM bindings and your procedural macro
+work.
+
+Thanks,
+
+Paolo
+
+
+On Fri, Oct 25, 2024 at 6:24=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> Paolo, you picked up my patches without us first talking about it.
+> This is not how things should work.
+>
 
 
