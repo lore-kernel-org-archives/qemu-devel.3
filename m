@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AE33D767C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 13:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14740D767C8
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 14:07:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6VZH-00007d-W4; Thu, 31 Oct 2024 09:50:32 -0400
+	id 1t6Vp2-0002eV-90; Thu, 31 Oct 2024 10:06:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1t6VZG-00006E-GD
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 09:50:30 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1t6Vp0-0002eA-IV
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 10:06:46 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1t6VZE-00012b-TC
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 09:50:30 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4315839a7c9so8297475e9.3
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 06:50:27 -0700 (PDT)
+ id 1t6Voy-0002k4-HO
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 10:06:46 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-37d49a7207cso703716f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 07:06:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1730382627; x=1730987427; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1730383602; x=1730988402; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=duKTB6d8nWTy7cNKPOI7bfcN3ngKi9eUkLUS+Iab76o=;
- b=dupzzygw6TRYBcC8cM2MLaV0YAQQpizGdvpqVhq4xEaIM44qYQVj2Mf2oEubaP+szC
- 8qWp/dmDEEj9YniQMtzihBv3ol2ry34gcSaFWFV6Vg5n/0sS7l7NhVRNZCaHlEl+gckA
- ORsRxkCqtgrgbDCFmkwgSeeC87B4V9LmLZRPVHTzsNkgWFdKezk+xMVgGDrBd9SL8PgG
- TZ3E+hfI5qlzIgHRzIe2M61J92Z8WeoW6VR3ii7cXrSb979rzn8Pp5wGmvIp3h9xJ16L
- BIWOxPK4n33ngbg/ysxEStGTsJ1W5FcepqEgzXuq3Tw3UAxv5L5frY7gEVyI3VAzG9h7
- xyKA==
+ bh=NfnBAMHxRdHwHD3vUVludur5p2ItyJIfYaCHMSZoWbI=;
+ b=FPscv8Q0nJ+Gn5KLWnTdfgjh5aiLrJ+fsd3CweNQ0zbZfmpbThTGj8LRPNK6OrGZ6M
+ 5Kxqa49bc80Df85n2IcfVpkwP5TpRaaXrlqG7OSxYii2iU3mcxePZsnQfdOtrIEwbolB
+ bjI5NYeewTBbBDl/fQg54tfZvf56MOlhTj621XnSUeYU+FnNTyAnEfZTUyanmCFzgA5o
+ GZhAvWApUnIogj3AJT9y7ILP5FN2rvfXg6+6M+WQEpySF791J/5balQvkMVBm2bnudH9
+ 1Agb7aprC1ZhWkT5fn4jZzXhiRwKD8cmEpSkgOKGWguPYq6P0rG5HiBOgosAfRdCPWQ+
+ nE1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730382627; x=1730987427;
+ d=1e100.net; s=20230601; t=1730383602; x=1730988402;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=duKTB6d8nWTy7cNKPOI7bfcN3ngKi9eUkLUS+Iab76o=;
- b=vOX4pfCs1REGax+Rhsl8hivXMlBngySG5sSVz0Fc7t2rbLse29ROhAMlIC2qkiRP3r
- pycuYTzCvxK8pbHdxkgM0X7uo9oLaY9z7qYiNGg0lmGX8kYMA123y3m9jTE1h5nGKP6m
- W33o6ltQ5SNa5RLgRS4OLRXtTKR7ARcRRMTh7uBDHmQHo4nsGiA64bDnEKx5WiK+Y1Mx
- os7uLnXxbh8bUj7Fv/WNsGs7zX++MqRMlypCc5Yu82pM/rVCyqqEBWejJxu4AKg3qqWR
- AURsNL8GWcVrmyWDrEu3eAF9RWJb+W2XGrn54o6Os9Smz9cWDrQeBNfms5R1P+L7Cdhs
- HlVw==
+ bh=NfnBAMHxRdHwHD3vUVludur5p2ItyJIfYaCHMSZoWbI=;
+ b=wvVu8/7sU4OWkTRMLNlXz9jjxI4ozORHZMMkaQsc3moljpLyBidBANnO3gfUtYRl9u
+ AfdOmKtswkbNrAyco3ZGBkd2t0tuOKEZ8dHWxwmueWE3Jpq1DOc0WFsfbLtTrhIugXSS
+ pMG2Foue1BzxyzD8/vtCBd1hHKbgTSJodz4j3BqGFE1fDPOulUvQLuiZB9LSc1rCPYTz
+ KLsA/NppqCE1iH2exdodZLg6pIgdRaI5lznQ7mih+96xDpY0tIeGCqJ2wGk8vCMyNPeo
+ HNBSr1FakvBFuKOu5ALVQ5u28KbzKEljD7614nA+eXM9BFdYr7exenHZ6VoluvjoeYmh
+ JpAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUksTIexYpbDbwTTNOxeY7XgvCfbREbIAMZEWZvLHYbxoYip8NyxmX4+3extgOk1ZXvgzBl0dS2xd8z@nongnu.org
-X-Gm-Message-State: AOJu0YwbXr5faDJWW5AzWJ3vGcLxZO/gF8w4xtKhdvLd+LrADW87VYO7
- 5+cAQzW+4jsCqF6ZIGo83rBS5dEwAwaLZYKMGi4wtG+emqVehorJV4DbD6aYasM=
-X-Google-Smtp-Source: AGHT+IHQt5E5d0fFpFXgrihL2aM9NBwI6kU43T2f2TrhLfNy3nC0GlcpH7koWamsa8CTLYi6ZboDQA==
-X-Received: by 2002:a05:600c:3b9c:b0:42c:bb10:7292 with SMTP id
- 5b1f17b1804b1-4319ac70754mr186786145e9.1.1730382626719; 
- Thu, 31 Oct 2024 06:50:26 -0700 (PDT)
+ AJvYcCXwUSQjGhc4zg0L0QnSxSB2/qmZM9hxmGvd5qzzwTRMxIB4yvZTEBC9TUFKVdCPVM5xXOlHFGhgrbqE@nongnu.org
+X-Gm-Message-State: AOJu0YxAND8rNrmRtAuA7q9btc1VbzjiEjRATIdguU2nPrHlaBEF/aqb
+ pe0PcQh9EjoAPI+9wjd8fsSBMTl8as83Zb9gDqe988hLrOBnXSQ6sw7WkCM4zRU=
+X-Google-Smtp-Source: AGHT+IHlh0UtuPOE+u+4bJo+XiEIyLMxvvpTC8hDH/OTBiQOifFGNPAqJ52SDFhskNDwLdMykJ0Inw==
+X-Received: by 2002:a05:6000:400d:b0:37c:fdc9:fc17 with SMTP id
+ ffacd0b85a97d-381c7a4cea7mr73338f8f.23.1730383602016; 
+ Thu, 31 Oct 2024 07:06:42 -0700 (PDT)
 Received: from localhost (cst2-173-13.cust.vodafone.cz. [31.30.173.13])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bd9ca818sm56699215e9.40.2024.10.31.06.50.25
+ ffacd0b85a97d-381c113dd95sm2206171f8f.83.2024.10.31.07.06.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 31 Oct 2024 06:50:26 -0700 (PDT)
-Date: Thu, 31 Oct 2024 14:50:24 +0100
+ Thu, 31 Oct 2024 07:06:41 -0700 (PDT)
+Date: Thu, 31 Oct 2024 15:06:40 +0100
 From: Andrew Jones <ajones@ventanamicro.com>
 To: Alistair Francis <alistair23@gmail.com>
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
  qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com
-Subject: Re: [PATCH 3/4] target/riscv/kvm: add kvm-aia bools props
-Message-ID: <20241031-df22b8f334312420c2dadc09@orel>
+Subject: Re: [PATCH 0/4] target/riscv/kvm: add riscv-aia bool props
+Message-ID: <20241031-20473647edbfb74109eb3b95@orel>
 References: <20240924124407.766495-1-dbarboza@ventanamicro.com>
- <20240924124407.766495-4-dbarboza@ventanamicro.com>
- <CAKmqyKMMRCFvWYa1GjwkbJsBh8q_OgtA2UVdaNEJsr=N66hvkQ@mail.gmail.com>
- <b7271701-195a-461d-ba64-e2a02c634177@ventanamicro.com>
- <CAKmqyKPvfm7fxa7cCtNWpQaw_=SBvmUFJ15hfJemNg=-YQCbNA@mail.gmail.com>
+ <f6d26471-9137-498f-b295-2bd6fad7241f@ventanamicro.com>
+ <CAKmqyKPLdt3KQqzGSMVov2557MOsEmzP=+g9iR-irw_4YK8-mQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKPvfm7fxa7cCtNWpQaw_=SBvmUFJ15hfJemNg=-YQCbNA@mail.gmail.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x333.google.com
+In-Reply-To: <CAKmqyKPLdt3KQqzGSMVov2557MOsEmzP=+g9iR-irw_4YK8-mQ@mail.gmail.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,40 +101,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 30, 2024 at 11:40:57AM +1000, Alistair Francis wrote:
-> On Fri, Oct 11, 2024 at 9:19 PM Daniel Henrique Barboza
-...
-> > In case someone tries it out with multiple -accel options, this doesn't work. Only
-> > the first '-accel <type>' are parsed. This happens due to a known command line
-> > parsing/accel globals issue that I tried to fix in [1] and [2].
+On Wed, Oct 30, 2024 at 11:44:19AM +1000, Alistair Francis wrote:
+> On Tue, Oct 29, 2024 at 4:01 AM Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com> wrote:
 > >
-> > For now, using the existing 'riscv-aia' string option:
+> > Hi,
 > >
-> > -accel kvm,riscv-aia=emul -accel kvm,riscv-aia=hwaccel -accel kvm,riscv-aia=auto
+> > I had a change of heart w.r.t this work. I still believe that the boolean properties
+> > are better to deal with since we don't have to deal with string parsing, and that we
+> > should avoid creating new string props in the future.
 > >
-> > This will set riscv-aia to "emul" because all other "-accel kvm" options aren't
-> > being parsed. You can do silly stuff like:
+> > But as far as the user API goes it doesn't matter that much. Having to do
 > >
-> > -accel kvm,riscv-aia=emul -accel kvm,riscv-aia=this_is_not_an_option
+> > -accel kvm,riscv-aia=emul
 > >
-> > And the guest will boot normally, setting riscv-aia to 'emul'.
+> > or
+> >
+> > -accel kvm,riscv-aia-emul=on
+> >
+> > is basically the same thing. Deprecate properties always creates some form of hassle
+> > for existing scripts and whatnot and we should avoid it.
+> >
+> > String properties aren't that great to report to APIs though, so what we can do is to
+> > create internal bools to track the string value and then use it for QMP.
+> >
+> >
+> > Long story short, I'll re-send this series with only patches 1 and 2. Thanks,
 > 
-> Both of those are unfortunate, but I do at least feel that reading
-> them it's clear that something is wrong as the user has listed `-accel
-> kvm...` multiple times.
->
+> Ah, I should have read this before responding to your other patch.
+> 
+> Sounds good to me. Although I don't have the same dislike of string
+> properties as you, but I guess I'm also not using APIs :)
 
-I wish that multiple '-accel kvm...' would work since scripts can be
-written to set reasonable defaults, e.g.
-
- qemu-script.sh:
- qemu-system-riscv64 -cpu max -accel kvm,riscv-aia=auto ... $@
-
-but then anything the user tacks on through $@ would override those
-defaults. For example, 'qemu-script.sh -cpu max,some-ext=off' overrides
-the '-cpu max' in the script, disabling an extension. However,
-'qemu-script.sh -accel kvm,riscv-aia=emul' will not force KVM to use
-use AIA=emul mode since the tacked on '-accel' is ignored.
+libvirt and other upper layers which use qmp would need to learn about
+each property's possible values, possibly requiring QEMU to provide
+different APIs for each different property type. With only boolean
+properties, all an object's properties can be queried and modified in the
+same way, which also allows immediately knowing how to enable and disable
+new properties which QEMU adds without the need to update the upper layers
+at all.
 
 Thanks,
 drew
