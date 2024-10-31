@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2072D767FA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 19:33:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22DD1D767FA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 19:38:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6auC-00060J-0h; Thu, 31 Oct 2024 15:32:28 -0400
+	id 1t6azu-00022W-OC; Thu, 31 Oct 2024 15:38:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6au9-0005zv-LY
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 15:32:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t6au6-0001Uh-Je
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 15:32:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730403140;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=o/vwXC5JmUV9a25MdBRvgwoBQUq/oFzhyUR5/1LIRjA=;
- b=Mixy6G/EnHQKk3vZxp5r8b3dkuENh71AHH7FBzyQfJBZUxpstKjxyIESPtILmehk/j+y9s
- pR1/2Aavls++wLY0evsWKDBgZCgSBiDzkPrxOZo4VwUrfA2rulm6wNNJjNqJtZvzB8Z7aE
- pBjrkwXfWMoHpApcIc2a+5+EtfUcpRA=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-ZvYbUVqrMB-0nGUKZScZqg-1; Thu, 31 Oct 2024 15:32:19 -0400
-X-MC-Unique: ZvYbUVqrMB-0nGUKZScZqg-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4609594e306so47354111cf.0
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 12:32:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t6azp-00021j-Ic
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 15:38:18 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t6azn-0002Lg-Mi
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 15:38:17 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-20c693b68f5so14118335ad.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 12:38:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730403494; x=1731008294; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xXnjoSPlgyaqAPGgCHJ0WGtCxE2WQRYJKjYwdj3p1mg=;
+ b=w0XLxuSUQtxP6ZHeTRR0ovnrcm2IJiLISBlOeYXgxYuf/aUjFhILyNP7Q3KDrRZK2a
+ tN0lM6vlDcTC6i6e+gMvm+gnCCE6schxSvsqbjTUrdGHAy3aY2iWO3DAjsiMVtRoAuEh
+ Q+7g6ijseRunq9XDr7Z5yRxHt9qI2nol6iK6YTvBFgZms2kq2dh6zruH8p6qTi5vwz9k
+ Yn4X32AsmSI8NLYodrlCpLFB0hGLiVfP7/rrRXOe7AUpzyTcQSeMkNkH5/YPT/qp9Jc/
+ YQiBicO2uhTCkg+3pXVWE0Xwtwt+Qyfv+K/608IcOaNRLdirGGebYhuDGADSvUazzfT7
+ 4xzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730403138; x=1731007938;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1730403494; x=1731008294;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o/vwXC5JmUV9a25MdBRvgwoBQUq/oFzhyUR5/1LIRjA=;
- b=VSIKjDUBD0qB4+4Y1Z+n0vHjQ7I8CWUeQzunj11Lq6NIMYIcCPq7KQXJd5YZHbhzX5
- KVr72nZQTpVhty8zU5i1P8Hd3oE6yz+2JhD0699vwcWh7fJ7K6DN/APs9DQ/GAoxwruq
- 1ivXvunr6150220gC4Kfv4bV85226Jfv1t2j3FvepIUwKgEkS77hPTuYrbB/8poP9EY+
- hcVNMGNHPwDlrnkGDOKdMdk1gMP0oXmZNWyl86M9xWlY/SD+y+dqXwW7lbT86nHSikWF
- C8gI1lNz/EjrD/tFTsh+lk2PU/iOs7TPXKHDAPshkgw3zING6DWpw/TpDDQJSJzHwy7m
- B5OA==
-X-Gm-Message-State: AOJu0YyS2FCvb+TngAbqq+86qUnQMM9ZOEqAyz1SiwrMHVJK8Cj2eqX1
- vvf/0jftE9MkxBGDcG6u0LkpmVro1aMJes8btlY4EyZrBgE3/ephyDAOLvnxbVkDG0tI+ldxX/H
- TtQDbpE1ziv9CYoV1myKgxRfbFwIlqPJWHU68vhgIZySWt+M32HpS
-X-Received: by 2002:ac8:584c:0:b0:461:2221:3120 with SMTP id
- d75a77b69052e-462ad0adbb5mr56842671cf.0.1730403138424; 
- Thu, 31 Oct 2024 12:32:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEj7Gk3NBDAoymovgKQ/Dt55wB5vP6RzB1R7vrpuqvLQILf/HlEhh2c1zOQnWWsEkXzCAOscg==
-X-Received: by 2002:ac8:584c:0:b0:461:2221:3120 with SMTP id
- d75a77b69052e-462ad0adbb5mr56842401cf.0.1730403138040; 
- Thu, 31 Oct 2024 12:32:18 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-462ad161f33sm10705051cf.78.2024.10.31.12.32.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 31 Oct 2024 12:32:17 -0700 (PDT)
-Date: Thu, 31 Oct 2024 15:32:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [RFC 5/5] qom: enforce use of static, const string with
- object_new()
-Message-ID: <ZyPbPtkMBClKLa2Y@x1n>
-References: <20241031155350.3240361-1-berrange@redhat.com>
- <20241031155350.3240361-6-berrange@redhat.com>
+ bh=xXnjoSPlgyaqAPGgCHJ0WGtCxE2WQRYJKjYwdj3p1mg=;
+ b=amhVe2dWPjn2oFJRY5X29+UCaVDYI2zBGIk18t12ty5djnecD/wDOvgImj99kBsp2t
+ rRei3MCh/7hYiF5sKDymjzDzPiFDUO+1STVNOPmUJCS4HJ04eJp3D1e63KHm1EFt7S31
+ 1w6nxX+VGddsqDc+2dMX1M94Gki1hJio2mTAjSKCeu6nZZIwztAETtP217TrPKrttFj3
+ NwWqTb91eeOCL4H/59lq7J6k9PkX3ASzTE4GS4EftzDqNsiM2F8/4yb/QVIkQdQyeP5z
+ bf6UGOQgjuj7iedshNEmckihyGA5CUPR+ZvItdIU1z0mUlxY1Cef5d1H0h9mbn9VuI+b
+ 69Vg==
+X-Gm-Message-State: AOJu0YyqCsX0IHwsdNv2HYfZ7WCzcBsGikanzPJLVFPcsjMcwdQpSF9X
+ qLY1B1Eg2PvKwGCV3zbNwQW93ExFuA4cVF/DG4VV0KVvEz1+Xp0Uf8Ajt0RRMUA=
+X-Google-Smtp-Source: AGHT+IEU5umQciuyc8QqLWwlNm6AJuX0APwP4mgrz4nBD4iJ7KfAUmbJFKF6xHgsUNOrYWk1GIBebA==
+X-Received: by 2002:a17:902:db12:b0:20b:b26e:c149 with SMTP id
+ d9443c01a7336-21103b1b872mr61177805ad.29.1730403493672; 
+ Thu, 31 Oct 2024 12:38:13 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-211057087dasm12040295ad.85.2024.10.31.12.38.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 31 Oct 2024 12:38:13 -0700 (PDT)
+Message-ID: <862ebf44-765e-4cf9-9e6c-b08420eb6146@linaro.org>
+Date: Thu, 31 Oct 2024 12:38:12 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241031155350.3240361-6-berrange@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/12] docs: add information on how to setup build
+ environments
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Konstantin Kostiuk
+ <kkostiuk@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
+ <20241031040426.772604-13-pierrick.bouvier@linaro.org>
+ <ZyNMv46rHcmT8ILm@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <ZyNMv46rHcmT8ILm@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,54 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 31, 2024 at 03:53:50PM +0000, Daniel P. Berrangé wrote:
-> Since object_new() will assert(), it should only be used in scenarios
-> where the caller knows exactly what type it is asking to be created,
-> and can thus be confident in avoiding abstract types.
-> 
-> Enforce this by using a macro wrapper which types to paste "" to the
-> type name. This will generate a compile error if not passed a static
-> const string, forcing callers to use object_new_dynamic() instead.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->  include/qom/object.h | 12 +++++++++++-
->  qom/object.c         |  2 +-
->  2 files changed, 12 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/qom/object.h b/include/qom/object.h
-> index 8c2f3551c5..6a21cb6ca0 100644
-> --- a/include/qom/object.h
-> +++ b/include/qom/object.h
-> @@ -637,7 +637,17 @@ Object *object_new_with_class(ObjectClass *klass, Error **errp);
->   *
->   * Returns: The newly allocated and instantiated object.
->   */
-> -Object *object_new(const char *typename);
-> +
-> +/*
-> + * NB, object_new_helper is just an internal helper, wrapped by
-> + * the object_new() macro which prevents invokation unless given
-> + * a static, const string.
-> + *
-> + * Code should call object_new(), or object_new_dynamic(), not
-> + * object_new_helper().
-> + */
-> +Object *object_new_helper(const char *typename);
-
-Nit; personally I'd call it object_new_internal().  No strong opinions.
-
-> +#define object_new(typename) object_new_static(typename "")
-
-Interesting trick on const check.. I see why the test cases need change
-now.  Feel free to ignore the comment there then..
-
-Could be an improvement to enforce error checks on new dynamic allocations.
-This should be better than my patch 1 indeed.
-
-Thanks,
-
--- 
-Peter Xu
-
+T24gMTAvMzEvMjQgMDI6MjQsIERhbmllbCBQLiBCZXJyYW5nw6kgd3JvdGU6DQo+IE9uIFdl
+ZCwgT2N0IDMwLCAyMDI0IGF0IDA5OjA0OjI2UE0gLTA3MDAsIFBpZXJyaWNrIEJvdXZpZXIg
+d3JvdGU6DQo+PiBNYWNPUyBhbmQgTGludXggYXJlIHN0cmFpZ2h0Zm9yd2FyZCwgYnV0IFdp
+bmRvd3MgbmVlZHMgYSBiaXQgbW9yZQ0KPj4gZGV0YWlscy4NCj4+DQo+PiBTaWduZWQtb2Zm
+LWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+
+PiAtLS0NCj4+ICAgZG9jcy9hYm91dC9idWlsZC1wbGF0Zm9ybXMucnN0IHwgICA0ICstDQo+
+PiAgIGRvY3MvZGV2ZWwvYnVpbGQtc3lzdGVtLnJzdCAgICB8IDEwMCArKysrKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKysNCj4+ICAgMiBmaWxlcyBjaGFuZ2VkLCAxMDMgaW5zZXJ0
+aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KPiANCj4+ICtXaW5kb3dzDQo+PiArLS0tLS0tLQ0K
+Pj4gKw0KPj4gK1lvdSBmaXJzdCBuZWVkIHRvIGluc3RhbGwgYE1TWVMyIDxodHRwczovL3d3
+dy5tc3lzMi5vcmcvPmBfLg0KPj4gK01TWVMyIG9mZmVycyBgZGlmZmVyZW50IGVudmlyb25t
+ZW50cyA8aHR0cHM6Ly93d3cubXN5czIub3JnL2RvY3MvZW52aXJvbm1lbnRzLz5gXy4NCj4+
+ICt4ODZfNjQgZW52aXJvbm1lbnRzIGFyZSBiYXNlZCBvbiBHQ0MsIHdoaWxlIGFhcmNoNjQg
+aXMgYmFzZWQgb24gQ2xhbmcuDQo+PiArDQo+PiArV2UgcmVjb21tZW5kIHRvIHVzZSBVQ1JU
+NjQgZm9yIHdpbmRvd3MteDg2XzY0IGFuZCBDTEFOR0FSTTY0IGZvciB3aW5kb3dzLWFhcmNo
+NjQNCj4+ICsob25seSBhdmFpbGFibGUgb24gd2luZG93cy1hYXJjaDY0IGhvc3RzKS4NCj4g
+DQo+IEkgZG9uJ3QgYmVsaWV2ZSB3ZSBzaG91bGQgYmUgcmVjb21tZW5kaW5nIHVjcnQ2NCBm
+b3Igd2luZG93cy4gV2UgaGF2ZSB0d28NCj4gdGVzdGluZyBqb2JzLCBvbmUgY3Jvc3MgY29t
+cGlsZWQgZnJvbSBNaW5ndyBGZWRvcmEsIGFuZCBvbmUgbmF0aXZlIHVuZGVyDQo+IE1zeXMy
+LCBib3RoIG9mIHdoaWNoIGFyZSB2YWxpZGF0aW5nIG1pbmd3NjQuIFdlIGhhdmUgbm8gdWNy
+dDY0IHRlc3RpbmcuDQo+IElJVUMsIFN0ZWZhbidzIFFFTVUgaW5zdGFsbGVyIGJpbmFyaWVz
+IGFyZSBhbHNvIG1pbmd3MzIvbWluZ3c2NCBiYXNlZCwNCj4gbm90IHVjcnQ2NC4NCj4gDQoN
+CkkgaGF2ZSBubyBzdHJvbmcgb3BpbmlvbiwgYW5kIHdhcyBqdXN0IGZvbGxvd2luZyBkZWZh
+dWx0IHJlY29tbWVuZGF0aW9uIA0Kb2YgTVNZUzIgcHJvamVjdCB0byBzd2l0Y2ggdG8gVUNS
+VDY0Lg0KQWxsIG1zeXMyIGVudmlyb25tZW50IHVzZSBtaW5ndzY0LCBidXQgbWluZ3c2NCBj
+YW4gdGFyZ2V0IGRpZmZlcmVudCANCndpbmRvd3MgcnVudGltZS4gRnJvbSB3aGF0IEkgdW5k
+ZXJzdGFuZCwgYW55IGRpZmZlcmVuY2Ugb3IgYnVnIHdvdWxkIGJlIA0KYSBidWcgZm9yIG1p
+bmd3NjQgcHJvamVjdCwgbm90IGZvciB1cy4NCg0KVUNSVCBpcyBub3cgdGhlIGRlZmF1bHQg
+dGFyZ2V0IHVzZWQgYnkgbWluZ3c2NCBbMV0uDQpNb3JlIGluZm9ybWF0aW9uIG9uIHRoaXMg
+ZGlmZmVyZW5jZSBoZXJlIFsyXS4NCk1pZ3JhdGluZyB0byBVQ1JUNjQgc2VlbXMgdG8gYmUg
+dGhlIGJlc3Qgd2F5IGluIHRoZSBmdXR1cmUuDQoNCkFsbCB0aGF0IHNhaWQsIEknbGwgdXBk
+YXRlIHRoaXMgcmVjb21tZW5kYXRpb24gdG8gTUlOR1c2NCBmb3IgVjIgb2YgdGhpcyANCnNl
+cmllcywNCg0KWzFdIGh0dHBzOi8vd3d3Lm1pbmd3LXc2NC5vcmcvY2hhbmdlbG9nLyN2MTIw
+MC0yMDI0LTA1LTI5DQpbMl0gDQpodHRwczovL2dpdGh1Yi5jb20vbWluZ3ctdzY0L21pbmd3
+LXc2NC9ibG9iL21hc3Rlci9taW5ndy13NjQtZG9jL2hvd3RvLWJ1aWxkL3VjcnQtdnMtbXN2
+Y3J0LnR4dA0KDQo+IFdpdGggcmVnYXJkcywNCj4gRGFuaWVsDQo=
 
