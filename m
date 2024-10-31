@@ -4,84 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAEF1D6B6A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 12:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D0A8D74958
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 12:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6UEj-0005o8-Al; Thu, 31 Oct 2024 08:25:13 -0400
+	id 1t6UdT-0001H8-Ge; Thu, 31 Oct 2024 08:50:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1t6UEc-0005kQ-Ib
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:25:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1t6UdR-0001FQ-AH
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:50:45 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1t6UEb-0006Rz-6N
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:25:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730377497;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KPd7oDcX9eG7TVtE1AQlSacTh7/i7Z+qfMhr0px/qxo=;
- b=TiPecWKq0o3/ypSC0VlwdbZP0Oh/nTb5xMTCE836UT0CuMwjT0thixAoCpQUVSsXEPt2Wc
- Ogq4skR7lS11q4BgRDd2VDau93ohjZyZJHFNiH4olRI5dMdXvVHxaj9FNJGuVyPk5VkAO9
- 3KSTcqYCkvm614rMohvWERpNyanxRAc=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-410-oLV_MKhvOJit6ANUPC0mtw-1; Thu,
- 31 Oct 2024 08:24:51 -0400
-X-MC-Unique: oLV_MKhvOJit6ANUPC0mtw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 562F919560BC; Thu, 31 Oct 2024 12:24:48 +0000 (UTC)
-Received: from pinwheel (unknown [10.39.194.127])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB1821956054; Thu, 31 Oct 2024 12:24:40 +0000 (UTC)
-Date: Thu, 31 Oct 2024 13:24:37 +0100
-From: Kashyap Chamarthy <kchamart@redhat.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
- armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: Re: [RFC 21/21] arm/cpu-features: Document custom vcpu model
-Message-ID: <ZyN3A6dAEDkx51yb@pinwheel>
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <20241025101959.601048-22-eric.auger@redhat.com>
- <ZxuZkUFz_bwAA1pf@redhat.com>
- <0700af51-a1a6-4b11-a4bf-0eaf6e279c6d@redhat.com>
- <Zxudl5-fZV1vIaEL@redhat.com> <87y128nrfr.fsf@redhat.com>
- <Zx-3OUioG1l47hW3@redhat.com> <87plnknqco.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1t6UdO-0001et-GQ
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:50:44 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 44DF14E6013;
+ Thu, 31 Oct 2024 13:50:38 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id GDaWWLpmB_Xa; Thu, 31 Oct 2024 13:50:36 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 3D50D4E600F; Thu, 31 Oct 2024 13:50:36 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3B3A4746F60;
+ Thu, 31 Oct 2024 13:50:36 +0100 (CET)
+Date: Thu, 31 Oct 2024 13:50:36 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Lei Huang <Lei.Huang@amd.com>
+cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org, 
+ pierre-eric.pelloux-prayer@amd.com, ken.xue@amd.com, hsp.cat7@gmail.com
+Subject: Re: [PATCH v2] ui/sdl: Mouse event optimization
+In-Reply-To: <20241031081313.1617-1-Lei.Huang@amd.com>
+Message-ID: <75f12789-98a9-0b49-9629-4f722448b3c3@eik.bme.hu>
+References: <73cd533a-8818-4212-f7ea-0f89bd2b78cd@eik.bme.hu>
+ <20241031081313.1617-1-Lei.Huang@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87plnknqco.fsf@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kchamart@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,44 +67,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 28, 2024 at 05:29:11PM +0100, Cornelia Huck wrote:
-> On Mon, Oct 28 2024, Daniel P. Berrangé <berrange@redhat.com> wrote:
+On Thu, 31 Oct 2024, Lei Huang wrote:
+>> On Wed, 30 Oct 2024, Lei Huang wrote:
+>>> Use a convergence factor to make the VM's input
+>>> global coordinates more closely approach the global
+>>> coordinates of host.
+>>>
+>>> Change-Id: I2c3f12f1fe7dfb9306d1fc40c4fd4d299937f4c6
+>>> Signed-off-by: Lei Huang <Lei.Huang@amd.com>
+>>> ---
+>>> ui/sdl2.c | 32 ++++++++++++++++++++++++++++++--
+>>> 1 file changed, 30 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/ui/sdl2.c b/ui/sdl2.c
+>>> index bd4f5a9da14..ea3fd74dd63 100644
+>>> --- a/ui/sdl2.c
+>>> +++ b/ui/sdl2.c
+>>> @@ -303,6 +303,34 @@ static void sdl_mouse_mode_change(Notifier *notify, void *data)
+>>>     }
+>>> }
+>>>
+>>> +/*
+>>> + * guest_x and guest_y represent the global coordinates on the VM side,
+>>> + * while x and y represent the global coordinates on the host side.
+>>> + * The goal of this entire process is to align the global coordinates of
+>>> + * the VM with those of host using dx and dy. The current approach aims
+>>> + * for precise calibration in once attempt; however, because guest_x
+>>
+>> There's still another one here. You can say "in one attempt" or "at once"
+>> but combining the two is not correct.
+>
+> Oh, okay, got it
+>
+>>
+>>> + * and guest_y are non-zero values, they are not accurate values when
+>>> + * they are counted out to become negative. Therefore, achieving perfect
+>>> + * alignment in one attempt is impossible. Since the same calibration method
+>>> + * is used each time, repeated attempts cannot achieve alignment either.
+>>> + * By introducing a convergence factor, guest_x and guest_y can be made to
+>>> + * approach host x and y indefinitely.
+>>> + *
+>>> + *                   QEMU                       (dx,dy)  VM
+>>> + * calculates dx and dy using guest_x and guest_y ---->  input driver
+>>> + *            ^                                            |
+>>> + *            |                                            |
+>>> + *            |                                            V
+>>> + *            |     update
+>>> + *            | guest_x,guest_y              input dispatcher ---> WindowManager
+>>> + *            |                                            |                 |
+>>> + *            |                                            |                 |
+>>> + *            |                 libdrm                     V                 |
+>>> + *    display device  <------ drmModeMoveCursor <------ compositor <-------  |
+>>> + *                            (guest_x,guest_y)   calculates guest_x and
+>>> + *                                                guest_y dy using dx and dy
+>>
+>> Maybe adding (e.g. virtio-gpu) below display device would make it clearer.
+>> Also under compositor there's "guest_y dy" where the dy seems to be left
+>> there by mistake from some editing or I don't get this sentence. (Did
+>> checkpatch.pl complain about too long lines? Maybe you could shorten the
+>> arrows a bit and wrap the text under QEMU in two lines to try to fit in 80
+>> chars.)
+>
+> okay, thanks, got it
+>
+>>
+>> Sorry that I can only comment on the comments and not the actual change
+>> but I've cc'd Howard who I think saw this issue before so may be able to
+>> give it a test.
+>>
+>>> + */
+>>> +#define CONVERGENCE_FACTOR 3
+>>> static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
+>>>                                  int x, int y, int state)
+>>> {
+>>> @@ -331,8 +359,8 @@ static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
+>>>             y -= guest_y;
+>>>             guest_x += x;
+>>>             guest_y += y;
+>>> -            dx = x;
+>>> -            dy = y;
+>>> +            dx = x / CONVERGENCE_FACTOR;
+>>> +            dy = y / CONVERGENCE_FACTOR;
+>>
+>> Looking at this calculation I don't quite get what's intended here and I
+>> think this could be simplified. Originally in 47c03744b37 it seems the
+>> qemu_input_queue_rel() was called with the modified value of x and y but
+>> then afbc0dd6498 have introduced dx, dy. After that changing x and y seems
+>> unnecessary as they are locals never used after this calculation. If I try
+>> to expand these equations I get:
+>>
+>> x = x - guest_x;
+>> guest_x = guest_x + x - guest_x;
+>>
+>> So isn't this equivalent to just:
+>>
+>> dx = x - guest_x;
+>> guest_x = x;
+>>
+>> which seems to make more sense but I don't know if it's correct.
+>
+> yes, it is correct.
 
-[...]
+Then maybe it's a good opportunity to simplify this now.
 
-> >> We could consolidate that to the current "host" model, once we figure
-> >> out how to handle the currently already existing properties. Models
-> >> based on the different architecture extensions would probably be more
-> >> useable in the long run; maybe "custom" has a place for testing.
-> >
-> > If you can set the features against "host", then any testing could
-> > be done with "host" surely, making 'custom' pointless ?
-> 
-> We might differentiate between "do some consistency checks" and "allow
-> a completely weird wolpertinger"; if we agree that we don't need it,
-> then we surely could drop it again.
+>> Then this patch takes the third of dx to avoid it overshooting the desired
+>> value. The question is what causes this overshoot and can we calculate the
+>> actual value of it to compensate for it in one calculation? Isn't it the
+>> other line that sets guest_x to x that needs some correction?
+>
+> It's not the reason of guest_x += x;. I previously tried removing guest_x += x;
+> and only letting sdl_mouse_warp update guest_x, but the issue still persists.
+>
+> The behavior of different virtual machines varies. In the Ubuntu VM, the cursor
+> jitters violently within a small range; for example, when moving a folder, it rapidly
+> flickers back and forth. On Android 14, it can barely be used, though individual coordinates
+> may deviate significantly, but they can be quickly corrected. However, on Android 15, it is
+> completely unusable. The reason for the issue in Android 15 is that the initial global
+> coordinates of Android are random values, not (0, 0). During the second calibration,
+> it is possible to calculate negative values, which are forced to be set to 0, resulting in
+> a continuous loop. The occurrence of negative values is an extreme situation.
 
-Yeah, FWIW, I agree that it's best to drop "custom" if all the
-meaningful tests can be handled by being able to add/remove CPU flags
-from `-cpu host`.
+I still don't understand the reason for this behaviour. I thought it's 
+probably caused by different pointer acceleration settings on the host and 
+guest so a move by some value moves the host and guest pointer by 
+different amounts. QEMU could get the host settings but knows nothing 
+about the guest so this probably can't be fixed other than trying to 
+converge the values. The question is why 3 is a good value for 
+CONVERGENCE_FACTOR and is there a better value or can it be calculated 
+somehow. But if we don't know and this fixes the issue it's likely good 
+enough, I'm just trying to understand the issue better.
 
-
-Related: I don't see any mention of `-cpu max` here.  Is it not
-relevant?  It is currently defined as: "enables all features supported
-by the accelerator in the current host".  Does it make sense for `max`
-to allow disabling features?  Or is the idea that, why would you choose
-`-cpu max` if you want to disable features?  In that case, go with
-either:
-
-    -cpu host,feat1=off
-
-Or:
-
-    -cpu some_future_named_model,$feat1=off
-
-?
-
--- 
-/kashyap
-
+Regards,
+BALATON Zoltan
 
