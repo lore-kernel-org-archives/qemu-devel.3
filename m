@@ -4,87 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D66A3E68955
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 11:43:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1AE7D5CCAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 12:14:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6TZm-00059g-A2; Thu, 31 Oct 2024 07:42:55 -0400
+	id 1t6U34-0003Zc-LV; Thu, 31 Oct 2024 08:13:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t6TZj-00059N-CZ
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:42:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t6TZg-0007JD-LO
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:42:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730374963;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0d0XIuJT6jqOYuopAQDB6w2ik3Fx6ww1pyPefhqJJ10=;
- b=YUBbomUO3aBXjJcTjUoa38K2XIczIqr3p2n5HOIdqOpiGkQhQTqNmCEI2SVD8mzS8GKRuY
- O96n0MGVUTXBGskWLXAJsL1zkkRFD6RvKHflXztZhWI78tGN/sILGH59+fWuGd2+4T49/d
- l9V+YqW62w4LvX7Y4JCknD6z/qST/No=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-PvHACf0rNIiwF_i3omscCg-1; Thu, 31 Oct 2024 07:42:39 -0400
-X-MC-Unique: PvHACf0rNIiwF_i3omscCg-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4316e2dde9eso6961385e9.2
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 04:42:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1t6U33-0003YP-Nn
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:13:09 -0400
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1t6U2y-000510-MU
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:13:06 -0400
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-539f6e1f756so905252e87.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 05:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730376781; x=1730981581; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2eMWNaXkjORX+GkvdRZhTuaMZ7RsIVw64uLi9HVA9lU=;
+ b=FHpprGQo36ElrIDDKCHV4o0Ds/7F4HV008RN/9OTTLpfc85EOYYEMeUjcHDg6Y8v98
+ UHKDZ3GAI6Bq+O4g1G6K6KufdTfALuBiC6hn0MIVRQQCKNsFcHNgayPeGFXG20UcZ23W
+ RcC7T0lCzRKJGug3v8gpZeseDbCneB8XOXBbjV+Vk/kxlJ/Fwfym+52CW5Gn1+5/kT7V
+ llNqhycHggXXrSqOqxQtAIc7Ma5RL1d8g7Lt5sVzZTJy3cGZ2KGRDGYEY4YOZpP7rUPT
+ ULS+ZysX6tElkG0MfyC5XRsdbOVtzBffie4+ph/wSL/hUfSfND23PqEaclfvpVW2L3CS
+ p+zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730374958; x=1730979758;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0d0XIuJT6jqOYuopAQDB6w2ik3Fx6ww1pyPefhqJJ10=;
- b=mC3pi9CFPXjT1gxaE6U819RHl1JFOwbdcwa4zVqB7uhSk22+Qg6go/scYtyNsPnpoC
- dRU9vMCadsTdzWWTdIAGb07DjSc4z2G1HzfZJsgkwgKs9dursnjBDLuyo7gCZK52Imi0
- Kj28b/Jqu/q4b4j/DEb/j5jcVZgZLjd2zDy+78WDJhtbBukq8L8KEikeRT8UivuAtZkv
- 2X7scuInzp6/5zmmQYDE4o8aIwxnid54xWFPaED+4oDUaYUByGOfWjvqimlVZzf0KIFw
- WBFoG93RecyCqhYAoYOVeFAB81ODki8PlSBD0aft8zgYwHwIcA++abUZ3jG2dxLPGR8O
- GZIw==
-X-Gm-Message-State: AOJu0YwyuGewCi3S4RJ9ryNqmZA6ztZj+fmG4jfTXfIAXATY5vssQijl
- XQyp0qcfbBLf/iR7h4b+BgV7KCMJuRvckpC+CBy8sQ3fvNeJjC9Z0yhkjqMtHpkNGls+KrRg4mi
- pLzEA1YJTjJy0GfVCCNX30U8Up6jGS6wZSHdLZGSH5MdGrkLnmfqP
-X-Received: by 2002:a05:600c:3b8f:b0:431:4847:47c0 with SMTP id
- 5b1f17b1804b1-4319ac6f8f8mr209964115e9.7.1730374958095; 
- Thu, 31 Oct 2024 04:42:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVbpn0CsH4Gk+ZEZXPeNVwLcE14YlLLvJBgKaTpmiCfN2YpvPa/m4ugRYr52C1lWRB5fUTLQ==
-X-Received: by 2002:a05:600c:3b8f:b0:431:4847:47c0 with SMTP id
- 5b1f17b1804b1-4319ac6f8f8mr209963905e9.7.1730374957737; 
- Thu, 31 Oct 2024 04:42:37 -0700 (PDT)
-Received: from redhat.com ([2.52.14.134]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bd917fefsm52697485e9.16.2024.10.31.04.42.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 31 Oct 2024 04:42:37 -0700 (PDT)
-Date: Thu, 31 Oct 2024 07:42:33 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH v2 1/1] pcie: enable Extended tag field support
-Message-ID: <20241031074216-mutt-send-email-mst@kernel.org>
-References: <20241023113820.486017-1-marcin.juszkiewicz@linaro.org>
- <0a77763b-94b0-42de-96a3-5fc6882be06c@linaro.org>
+ d=1e100.net; s=20230601; t=1730376781; x=1730981581;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2eMWNaXkjORX+GkvdRZhTuaMZ7RsIVw64uLi9HVA9lU=;
+ b=uXc9gA87OXsiqwLBYKbEJDNeA8BzzoOFh+E4NLsR46xan8Dw0m+sqxlrkwFZ5tvTSx
+ hWNzLkn+zu2A0I8fVJYfudXyIl0c+5l43KiEpOFWPJpvR1QzamEblZqKRhOImxb5cYVW
+ OQS6tn8mZpefWijTlsnEebZH3GWgurjoHJLjfVJCgZXS6d5p3J8nvjhxCllaGStM2veW
+ dMF5ND4A4hlmNolg7eZH6ZLPhDgZvUGYHTfc1J9hGtj69mS02ELDx1NnFlBCXNgvb1br
+ kf8WsbJwsD9gDevx0jybEvB78Glkq/pIi6VMsKqFTpw8XOPuZ4VNwlwf1Eoa66/72F1e
+ GMGA==
+X-Gm-Message-State: AOJu0Yw1HRDROJfhIuT2Ycm36G4uFD1CMfFmFpPGBrt8NaQOBW2td528
+ fSwjNTds9Jt+DwUCpjfKzpZ2hD8vAzlX8wT2nS8HGMcQMHfluL9M3sJzOWQeQ2L1Ta5N86RRZL1
+ LVZ6xa7vXG3ZR3ipLNe98ZowarO0=
+X-Google-Smtp-Source: AGHT+IFiecuTcolYLuTc2NjJwKKyfwxmP0hetafQfoT900SxfIEOiOx4jABsVtoRM3alJm8c8PbBE7qwFoJt0nPKh/c=
+X-Received: by 2002:a05:6512:ad6:b0:539:fb6f:cb8d with SMTP id
+ 2adb3069b0e04-53b348e1452mr9799747e87.27.1730376780876; Thu, 31 Oct 2024
+ 05:13:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0a77763b-94b0-42de-96a3-5fc6882be06c@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20241017144316.517709-1-r.peniaev@gmail.com>
+ <CACZ9PQXT9xxuX40u_4J22d66hP73x4r8gUunPsMzhMS=MMTn9Q@mail.gmail.com>
+ <CAJ+F1CKtXFiYyoT3QkubESiTUo4VxYt2Ed0g_QjgU8YasAeZjw@mail.gmail.com>
+In-Reply-To: <CAJ+F1CKtXFiYyoT3QkubESiTUo4VxYt2Ed0g_QjgU8YasAeZjw@mail.gmail.com>
+From: Roman Penyaev <r.peniaev@gmail.com>
+Date: Thu, 31 Oct 2024 13:10:39 +0100
+Message-ID: <CACZ9PQV5ZkKsCJRd5U8aj1B0txmPyha3CQDHeM3j75Kj4hJWfg@mail.gmail.com>
+Subject: Re: [PATCH v5 0/8] chardev: implement backend chardev multiplexing
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=r.peniaev@gmail.com; helo=mail-lf1-x12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,105 +91,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 31, 2024 at 12:10:26PM +0100, Marcin Juszkiewicz wrote:
-> W dniu 23.10.2024 o 13:38, Marcin Juszkiewicz pisze:
-> >  From what I read PCI has 32 transactions, PCI Express devices can handle
-> > 256 with Extended tag enabled (spec mentions also larger values but I
-> > lack PCIe knowledge).
-> 
-> Ping?
-> 
+On Thu, Oct 31, 2024 at 12:34=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@gmail.com> wrote:
+>
+> Hi Roman
+>
+> On Thu, Oct 31, 2024 at 3:12=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.co=
+m> wrote:
+>>
+>> Hi Marc-Andr=C3=A9,
+>>
+>> In this 5th version of the mux-be series it seems I addressed all the
+>> comments and concerns. Could you please take a look once again?
+>>
+>
+> I am not sure adding a "mux-be-id" option to all chardevs is the way to g=
+o. To me it feels like working around the issue that arrays are not support=
+ed on the CLI.
 
-tagged, thanks!
+With CLI it seems not a problem: you can always use the ',,' sequence, or w=
+e
+can introduce another separator, for example ':'. With JSON I could not fin=
+d
+a working array example, but probably the same trick with any separator in =
+a
+string can work as well. What do you think?
 
-> > QEMU leaves 'Extended tag field' with 0 as value:
-> > 
-> > Capabilities: [e0] Express (v1) Root Complex Integrated Endpoint, IntMsgNum 0
-> >          DevCap: MaxPayload 128 bytes, PhantFunc 0
-> >                  ExtTag- RBE+ FLReset- TEE-IO-
-> > 
-> > SBSA ACS has test 824 which checks for PCIe device capabilities. BSA
-> > specification [1] (SBSA is on top of BSA) in section F.3.2 lists
-> > expected values for Device Capabilities Register:
-> > 
-> > Device Capabilities Register     Requirement
-> > Role based error reporting       RCEC and RCiEP: Hardwired to 1
-> > Endpoint L0s acceptable latency  RCEC and RCiEP: Hardwired to 0
-> > L1 acceptable latency            RCEC and RCiEP: Hardwired to 0
-> > Captured slot power limit scale  RCEC and RCiEP: Hardwired to 0
-> > Captured slot power limit value  RCEC and RCiEP: Hardwired to 0
-> > Max payload size                 value must be compliant with PCIe spec
-> > Phantom functions                RCEC and RCiEP: Recommendation is to
-> >                                   hardwire this bit to 0.
-> > Extended tag field               Hardwired to 1
-> > 
-> > 1. https://developer.arm.com/documentation/den0094/c/
-> > 
-> > This change enables Extended tag field. All versioned platforms should
-> > have it disabled for older versions (tested with Arm/virt).
-> > 
-> > Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-> > ---
-> >   hw/core/machine.c    | 4 +++-
-> >   hw/pci/pci.c         | 2 ++
-> >   hw/pci/pcie.c        | 8 +++++++-
-> >   include/hw/pci/pci.h | 2 ++
-> >   4 files changed, 14 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > index adaba17eba..8ccc74067a 100644
-> > --- a/hw/core/machine.c
-> > +++ b/hw/core/machine.c
-> > @@ -34,7 +34,9 @@
-> >   #include "hw/virtio/virtio-iommu.h"
-> >   #include "audio/audio.h"
-> > -GlobalProperty hw_compat_9_1[] = {};
-> > +GlobalProperty hw_compat_9_1[] = {
-> > +    { TYPE_PCI_DEVICE, "x-pcie-ext-tag", "false" },
-> > +};
-> >   const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
-> >   GlobalProperty hw_compat_9_0[] = {
-> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> > index 87da35ca9b..9a3b0e4a43 100644
-> > --- a/hw/pci/pci.c
-> > +++ b/hw/pci/pci.c
-> > @@ -87,6 +87,8 @@ static Property pci_props[] = {
-> >                       QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
-> >       DEFINE_PROP_SIZE32("x-max-bounce-buffer-size", PCIDevice,
-> >                        max_bounce_buffer_size, DEFAULT_MAX_BOUNCE_BUFFER_SIZE),
-> > +    DEFINE_PROP_BIT("x-pcie-ext-tag", PCIDevice, cap_present,
-> > +                    QEMU_PCIE_EXT_TAG_BITNR, true),
-> >       DEFINE_PROP_END_OF_LIST()
-> >   };
-> > diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-> > index 4b2f0805c6..9f369c2b6c 100644
-> > --- a/hw/pci/pcie.c
-> > +++ b/hw/pci/pcie.c
-> > @@ -86,7 +86,13 @@ pcie_cap_v1_fill(PCIDevice *dev, uint8_t port, uint8_t type, uint8_t version)
-> >        * Specification, Revision 1.1., or subsequent PCI Express Base
-> >        * Specification revisions.
-> >        */
-> > -    pci_set_long(exp_cap + PCI_EXP_DEVCAP, PCI_EXP_DEVCAP_RBER);
-> > +    uint32_t devcap = PCI_EXP_DEVCAP_RBER;
-> > +
-> > +    if (dev->cap_present & QEMU_PCIE_EXT_TAG) {
-> > +        devcap = PCI_EXP_DEVCAP_RBER | PCI_EXP_DEVCAP_EXT_TAG;
-> > +    }
-> > +
-> > +    pci_set_long(exp_cap + PCI_EXP_DEVCAP, devcap);
-> >       pci_set_long(exp_cap + PCI_EXP_LNKCAP,
-> >                    (port << PCI_EXP_LNKCAP_PN_SHIFT) |
-> > diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> > index eb26cac810..5b14f9d375 100644
-> > --- a/include/hw/pci/pci.h
-> > +++ b/include/hw/pci/pci.h
-> > @@ -213,6 +213,8 @@ enum {
-> >       QEMU_PCIE_ERR_UNC_MASK = (1 << QEMU_PCIE_ERR_UNC_MASK_BITNR),
-> >   #define QEMU_PCIE_ARI_NEXTFN_1_BITNR 12
-> >       QEMU_PCIE_ARI_NEXTFN_1 = (1 << QEMU_PCIE_ARI_NEXTFN_1_BITNR),
-> > +#define QEMU_PCIE_EXT_TAG_BITNR 13
-> > +    QEMU_PCIE_EXT_TAG = (1 << QEMU_PCIE_EXT_TAG_BITNR),
-> >   };
-> >   typedef struct PCIINTxRoute {
+> I would like others to comment..
 
+Probably makes sense to ping them once again.
+
+--
+Roman
 
