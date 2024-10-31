@@ -4,68 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E1CE68956
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 06:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4ED2E68956
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 07:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6P6p-0000aZ-2d; Thu, 31 Oct 2024 02:56:43 -0400
+	id 1t6PCM-0001ej-CE; Thu, 31 Oct 2024 03:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6P6k-0000aE-Ey
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 02:56:38 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
+ id 1t6PCI-0001eF-Si
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:02:22 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6P6h-0006ct-RN
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 02:56:38 -0400
+ id 1t6PCG-00072A-Ht
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:02:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730357796; x=1761893796;
+ t=1730358141; x=1761894141;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=vLBNE6uSRr8j7YA1eNmq7fSoavFcqmQB1jxc/j/18yw=;
- b=SJ0HNoI05d1LLUGlJllV7LvwWz3eGe2kwVrKcOYpzN+7QYD6eHUr/5SJ
- DYR5rPrglABq/KtjMsiljRm36NgbAAraHWUsakXyJBacz6uIGyoMQHhpZ
- FjKQjUDDRny7ATtIfUAL0XZehBTRwE33Hagu9DUJBGLhl7yXNedm9cc4j
- olq0kmliFEHZw7kHRyNYy4SDsOVJX757i82BrEiM6Y2rgLvB8jZAgWkkt
- YZgQG9J7DqG4p/jKoTejK6Ge8fJz309Y21epsC5vHxYVqOsjU9snPLFHm
- W20jFfszfOz1WbmHH3BH0OEmu4kJGTz9wCHXSsTc1RgWPgupoDmBbyioq g==;
-X-CSE-ConnectionGUID: EzODIaRxQTmOolobPlGHHA==
-X-CSE-MsgGUID: Ft+saN3MQPCP71V7VyHoxw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="40627400"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="40627400"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Oct 2024 23:56:32 -0700
-X-CSE-ConnectionGUID: pgFGRKEQQIi7oBfBYpyn7Q==
-X-CSE-MsgGUID: kN7q6qKDSBm6pVvvSjFxMg==
+ mime-version:in-reply-to;
+ bh=1uLbxR5aLR6yFMicCtuhn4ntzlEHWQ0jaJkDQayEaIw=;
+ b=Qfk6kQlJut/wKbrDYgMjiIJfKdgfr+tCpe6C19ZutUp9MBcLvgJrdNpp
+ pBcE6XD7POFGtHyiyyXUTcNS0QDTb6IBDOTq76UWDf0lCUXB5s0voxxEV
+ 55+SSjepHGvCXbkJlQX4HkeDZf3uTZJHYkbXQpd9tTtMlolxmROEp7EuS
+ OMJzAlTfMS0jqFs0mWtlZolCQcfgDQmU9PGOCpQxBU9N5Cf1pVk23dY3K
+ 3naNWNqxoA6VQyDWhBjuekKqmER7AAHx3Z6UREWQ6ttdfEp3doRRhf02A
+ +Q4QBax7812iqYdfdU4v+gpCOBejfURLNLUGDtPMnC9GcmYhD4hJoLmsu w==;
+X-CSE-ConnectionGUID: xAAoldaJSMeZr99vfrEXQQ==
+X-CSE-MsgGUID: wKaHjDhVSYavDiSEpMI1jw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="47540913"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="47540913"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Oct 2024 00:02:19 -0700
+X-CSE-ConnectionGUID: Q3ET6XQQRQSP08iL/Hhc+w==
+X-CSE-MsgGUID: jxlgvlKCSTeQ88Hw/BhoAA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="87328730"
+X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; d="scan'208";a="87135339"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by orviesa003.jf.intel.com with ESMTP; 30 Oct 2024 23:56:31 -0700
-Date: Thu, 31 Oct 2024 15:12:51 +0800
+ by fmviesa004.fm.intel.com with ESMTP; 31 Oct 2024 00:02:17 -0700
+Date: Thu, 31 Oct 2024 15:18:37 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Tao Su <tao1.su@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
+To: Tao Su <tao1.su@linux.intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ xiaoyao.li@intel.com
 Subject: Re: [PATCH 4/8] target/i386: add AVX10 feature and AVX10 version
  property
-Message-ID: <ZyMt8zsrXERRBQik@intel.com>
+Message-ID: <ZyMvTcW1QzA1ycUI@intel.com>
 References: <20241029151858.550269-1-pbonzini@redhat.com>
  <20241029151858.550269-5-pbonzini@redhat.com>
  <ZyHyBnPvOHsSdh8D@intel.com> <ZyH+RB3v55cQ43+S@linux.bj.intel.com>
  <ZyIy4OGSGPhAZutK@intel.com> <ZyI9P1ftFOTUhDzb@linux.bj.intel.com>
  <ZyJW9nGgpEXqiyli@intel.com> <ZyMKAwq4lsk+ozu3@linux.bj.intel.com>
- <92635403-e483-45a8-afcd-0e8fa5080f23@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <92635403-e483-45a8-afcd-0e8fa5080f23@intel.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <ZyMKAwq4lsk+ozu3@linux.bj.intel.com>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -47
 X-Spam_score: -4.8
@@ -90,133 +88,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 31, 2024 at 01:52:24PM +0800, Xiaoyao Li wrote:
-> Date: Thu, 31 Oct 2024 13:52:24 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: Re: [PATCH 4/8] target/i386: add AVX10 feature and AVX10 version
->  property
-> 
-> On 10/31/2024 12:39 PM, Tao Su wrote:
-> > On Wed, Oct 30, 2024 at 11:55:34PM +0800, Zhao Liu wrote:
-> > > On Wed, Oct 30, 2024 at 10:05:51PM +0800, Tao Su wrote:
-> > > > Date: Wed, 30 Oct 2024 22:05:51 +0800
-> > > > From: Tao Su <tao1.su@linux.intel.com>
-> > > > Subject: Re: [PATCH 4/8] target/i386: add AVX10 feature and AVX10 version
-> > > >   property
-> > > > 
-> > > > On Wed, Oct 30, 2024 at 09:21:36PM +0800, Zhao Liu wrote:
-> > > > > > > > Introduce avx10-version property so that avx10 version can be controlled
-> > > > > > > > by user and cpu model. Per spec, avx10 version can never be 0, the default
-> > > > > > > > value of avx10-version is set to 0 to determine whether it is specified by
-> > > > > > > > user.
-> > > > > > > 
-> > > > > > > The default value of 0 does not reflect whether the user has set it to 0.
-> > > > > > > According to the description here, the spec clearly prohibits 0, so
-> > > > > > > should we report an error when the user sets it to 0?
-> > > > > > > 
-> > > > > > > If so, it might be better to change the default value to -1 and adjust
-> > > > > > > based on the host's support.
-> > > > > > > 
+> > > > > > @@ -7674,13 +7682,21 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
+> > > > > >                                      &eax_0, &ebx_0, &ecx_0, &edx_0);
+> > > > > >          uint8_t version = ebx_0 & 0xff;
 > > > > > > 
-> > > > > > If user sets version to 0, it will directly use reported version, this
-> > > > > > should be a more neat and intuitive way?
+> > > > > > -        if (version < env->avx10_version) {
+> > > > > > +        if (!env->avx10_version) {
+> > > > > > +            env->avx10_version = version;
 > > > > > 
-> > > > > The code implementation is actually similar for different initial
-> > > > > values. And about this:
-> > > > > 
-> > > > > > If user sets version to 0, it will directly use reported version",
-> > > > > 
-> > > > > It's defining a special behavior for the API, which is based on the
-> > > > > special 0 value, and there needs to be documentation to let the user
-> > > > > know that 0 will be considered legal as well as that it will be quietly
-> > > > > overridden... But AFAIK there doesn't seem to be any place to add
-> > > > > documentation for the property ...
-> > > > > 
-> > > > > There may be similar problems with -1, e.g. if the user writes -1, there
-> > > > > is no way to report an error for the user's behavior. But it's better
-> > > > > than 0. After all, no one would think that a version of -1 is correct.
-> > > > > Topology IDs have been initialized to -1 to include the user's 0 value
-> > > > > in the check.
+> > > > > x86_cpu_filter_features() is not a good place to assign avx10_version, I
+> > > > > still tend to set it in max_x86_cpu_realize().
 > > > > 
-> > > > Thanks for your explanation, but I really think the users who set
-> > > > avx10-version should also know avx10.0 doesn¡¯t exist, so using 0 is same
-> > > > as -1¡­
-> > > 
-> > > I see. "Per spec, avx10 version can never be 0", so showing the warning
-> > > for avx10-version=0 is as it should be.
-> > > 
-> > > > To solve the initial value issue fundamentally, maybe we can add get/set
-> > > > callbacks when adding avx10-version property? It should be simpler to
-> > > > limit what users set.
-> > > 
-> > > It's unnecessary. Similar cases using -1 are already common, such as for
-> > > APIC ID, NUMA node ID, topology IDs, etc. The initial value is -1 simply
-> > > because we need to handle the case where users explicitly set it to 0.
-> > > If you don¡¯t want to see -1, you can define a macro like APIC ID did
-> > > (#define UNSET_AVX10_VERSION -1).
-> > > 
-> > 
-> > OK, I will change the default value to -1.
-> 
-> Then please remember to handle the issue like ...
-> 
-> > > > > > > @@ -7674,13 +7682,21 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
-> > > > > > >                                       &eax_0, &ebx_0, &ecx_0, &edx_0);
-> > > > > > >           uint8_t version = ebx_0 & 0xff;
-> > > > > > > 
-> > > > > > > -        if (version < env->avx10_version) {
-> > > > > > > +        if (!env->avx10_version) {
-> > > > > > > +            env->avx10_version = version;
-> > > > > > 
-> > > > > > x86_cpu_filter_features() is not a good place to assign avx10_version, I
-> > > > > > still tend to set it in max_x86_cpu_realize().
-> > > > > 
-> > > > > It's not proper to get the host's version when AVX10 cannot be enabled,
-> > > > > even maybe host doesn't support AVX10.
-> > > > > 
-> > > > > As you found out earlier, max_x86_cpu_realize doesn't know if AVX10 can
-> > > > > be enabled or not.
-> > > > > 
+> > > > It's not proper to get the host's version when AVX10 cannot be enabled,
+> > > > even maybe host doesn't support AVX10.
 > > > > 
-> > > > How about moving to x86_cpu_expand_features()? We can set when checking
-> > > > cpu->max_features.
+> > > > As you found out earlier, max_x86_cpu_realize doesn't know if AVX10 can
+> > > > be enabled or not.
+> > > > 
 > > > 
-> > > The feature bit set in x86_cpu_expand_features() is unstable since it
-> > > may be masked later in x86_cpu_filter_features(). :)
-> > > 
+> > > How about moving to x86_cpu_expand_features()? We can set when checking
+> > > cpu->max_features.
 > > 
-> > A lot of feature bits are set in x86_cpu_expand_features() with reported
-> > value, so I think avx10_version can also be set to reported value there.
+> > The feature bit set in x86_cpu_expand_features() is unstable since it
+> > may be masked later in x86_cpu_filter_features(). :)
+> > 
 > 
-> I agree.
+> A lot of feature bits are set in x86_cpu_expand_features() with reported
+> value, so I think avx10_version can also be set to reported value there.
 > 
-> > I mainly want to let avx10_version be assigned only when -cpu host or max,
-> > so that it can be distinguished from the cpu model. This should also be
-> > Paolo's original intention in v2.
-> 
-> avx10_version needs to be assigned with a default valid value, when user
-> enables avx10 explicitly without specifying avx10_version. It also applies
-> to (existing) named cpu models other than GraniteRapids-v2 (which is added
-> by this series). E.g.,
-> 
-> 	-cpu GraniteRapids-v1,+avx10
-> 
-> So if you are going to make default value as -1, then you need to add
-> something in x86_cpu_load_model()
-> 
->     if (!def->avx10_version) {
->         def->avx10_version = -1;
->     }
+> I mainly want to let avx10_version be assigned only when -cpu host or max,
+> so that it can be distinguished from the cpu model. This should also be
+> Paolo's original intention in v2.
 
-Yes, this is because the model's field defaults to 0, and avx10-version
-is set once when the model is loaded.
+OK. In this case, extend avx10-version is also consistent with the
+semantics of this function. Even if host doesn't support avx10, then in
+principle it's ok to read unimplemented avx10-version as 0.
 
-Such a check seems necessary, but it does make the code more redundant,
-so I'm starting to agree with default 0. :)
+Pls go ahead. :)
 
 Thanks,
 Zhao
-
-
 
 
