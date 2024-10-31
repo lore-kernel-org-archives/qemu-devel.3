@@ -4,62 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CCF6D767F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 17:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 606B2D767F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 17:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6ZID-0006v2-DH; Thu, 31 Oct 2024 13:49:09 -0400
+	id 1t6ZLS-00074V-HT; Thu, 31 Oct 2024 13:52:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t6ZIC-0006us-F9
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:49:08 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t6ZLP-00073z-Sj
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:52:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t6ZIA-0006b5-Vj
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:49:08 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t6ZLO-00079x-94
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:52:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730396946;
+ s=mimecast20190719; t=1730397145;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=y00hq7hGBjG7fuZG5v3i0QznRo5r2TQUBU556fEvdt0=;
- b=dRYMdrSWAclZN0mSNl/ZQUo7svsos0ujmbdMVnsW6hPBBoMUC051U4n+htSfmWEpJlyrF0
- wQYrmBNwx2tr5FEG1PavisTrGvP0rfx7PLoPLAm38X5m2L1zt4XTQUvJ5hxnyykIdvyPwl
- e3KDahkNU1kBb6h/gqcamY17GagKPcE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-347-aT35lCtyNCm56niOusXv_Q-1; Thu,
- 31 Oct 2024 13:49:00 -0400
-X-MC-Unique: aT35lCtyNCm56niOusXv_Q-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B5284195609D; Thu, 31 Oct 2024 17:48:59 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.53])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EF580300019D; Thu, 31 Oct 2024 17:48:56 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
+ bh=xLiFAGc03L9VlsBrqIPUlTjf8Uu0ODAtffzXEXaCymk=;
+ b=TxhzsBvNLTOXzVtaHW5J+lodlOUZEqn+XkihkoUkPCy8Ora0zgZe7cj20/BdMThK48s50f
+ 4pClZJqzPlEvS+kcQDP9dTS9yD04qj4yW1O9SA+Ek6yYuskFrh/dVPrAhtZIMGaq14YrpY
+ mPzkdpJK/Bf69k5UYt18Qcb+sfxfcgQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-39-5dNwjqzBOjeHQfk_bRWAiQ-1; Thu, 31 Oct 2024 13:52:24 -0400
+X-MC-Unique: 5dNwjqzBOjeHQfk_bRWAiQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4315cefda02so8788835e9.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 10:52:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730397141; x=1731001941;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xLiFAGc03L9VlsBrqIPUlTjf8Uu0ODAtffzXEXaCymk=;
+ b=QLwRgSNx+QWlqA2RYP1UobscPmuyB+eNSmhZt4sqBdAiNdlMGi6KQyw5ejOSJJo1fa
+ kNJ0V00SZ4Zki+FwhAIFc71AKxy5joM+FCM82u6UycH8Vv5ZcwQBuTgr//dnJP7LbBg0
+ WtQY937sqtxqncRDonBT490yBF3I5dtQAIxMO0auoLi9x94S1fWIP3aZYO73tUCy8WRS
+ VLnN/XAZ6Fv9weNFSbttsFqGLP2/sw4i7T1KJg28q8te2TNGoRCONTs8uxu79lvEfZ56
+ pIuTYwuN2u/kdBimLpriWeRoYDa4FSkQRuxei/zKJGhrcWXU0sZ+QqQxfRwDnyBWRVEP
+ jyvg==
+X-Gm-Message-State: AOJu0YzkyLe1KuUB5TFcBXzT+7nGCsawerZPmxF1CJ9kT0+u8fNeB5dm
+ 3Go/20PtFqpVGaE/Im3gcBjWeId7JHBKUyOwAaBDtNXmk8A9BB8MAXUwu4VtlFLCY9wViHpefs5
+ 4Ba3zZHvKzQTcJVHSCEbQfEUvuGdMtXZ0Ee7X/pzjdvQK9ro2HIbEu53txY66tazMkYJKgnRagt
+ vemmkgj1v05xCXzQGp5pjx+eAMhXvl8A+yqSyphYA=
+X-Received: by 2002:a05:600c:a09:b0:42c:b52b:4335 with SMTP id
+ 5b1f17b1804b1-4327b6fda39mr33862795e9.10.1730397141224; 
+ Thu, 31 Oct 2024 10:52:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8Fz+17nOiOt7Kx1V+WMas0zqU2/QfJC7rkxfYqcJCPJ3RDQ5Uh//PTnS9S64+gzadN1WvAQ==
+X-Received: by 2002:a05:600c:a09:b0:42c:b52b:4335 with SMTP id
+ 5b1f17b1804b1-4327b6fda39mr33862655e9.10.1730397140864; 
+ Thu, 31 Oct 2024 10:52:20 -0700 (PDT)
+Received: from [192.168.10.3] ([151.49.226.83])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4327d6984f0sm35201595e9.46.2024.10.31.10.52.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 31 Oct 2024 10:52:20 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Boris Fiuczynski <fiuczy@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 08/14] hw/s390x: Re-enable the pci-bridge device on s390x
-Date: Thu, 31 Oct 2024 18:48:26 +0100
-Message-ID: <20241031174832.6574-9-thuth@redhat.com>
-In-Reply-To: <20241031174832.6574-1-thuth@redhat.com>
-References: <20241031174832.6574-1-thuth@redhat.com>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 03/49] ci: enable rust in the Fedora system build job
+Date: Thu, 31 Oct 2024 18:51:27 +0100
+Message-ID: <20241031175214.214455-4-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241031175214.214455-1-pbonzini@redhat.com>
+References: <20241031175214.214455-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -84,40 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit e779e5c05a ("hw/pci-bridge: Add a Kconfig switch for the
-normal PCI bridge") added a config switch for the pci-bridge, so
-that the device is not included in the s390x target anymore (since
-the pci-bridge is not really useful on s390x).
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-However, it seems like libvirt is still adding pci-bridge devices
-automatically to the guests' XML definitions (when adding a PCI
-device to a non-zero PCI bus), so these guests are now broken due
-to the missing pci-bridge in the QEMU binary.
+We previously added a new job running Fedora with nightly rust
+toolchain.
 
-To avoid disruption of the users, let's re-enable the pci-bridge
-device on s390x for the time being.
+The standard rust toolchain distributed by Fedora is new enough,
+however, to let us enable a CI build with that too.
 
-Message-ID: <20241024130405.62134-1-thuth@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Boris Fiuczynski <fiuczy@linux.ibm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Link: https://lore.kernel.org/r/20241015133925.311587-3-berrange@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/s390x/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ .gitlab-ci.d/buildtest.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/s390x/Kconfig b/hw/s390x/Kconfig
-index 3bbf4ae56e..82afdaa9dc 100644
---- a/hw/s390x/Kconfig
-+++ b/hw/s390x/Kconfig
-@@ -7,6 +7,7 @@ config S390_CCW_VIRTIO
-     imply VFIO_AP
-     imply VFIO_CCW
-     imply WDT_DIAG288
-+    imply PCI_BRIDGE
-     imply PCIE_DEVICES
-     imply IOMMUFD
-     select PCI_EXPRESS
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index f0cbdf19924..19ba5b9c818 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -115,7 +115,7 @@ build-system-fedora:
+     job: amd64-fedora-container
+   variables:
+     IMAGE: fedora
+-    CONFIGURE_ARGS: --disable-gcrypt --enable-nettle --enable-docs --enable-crypto-afalg
++    CONFIGURE_ARGS: --disable-gcrypt --enable-nettle --enable-docs --enable-crypto-afalg --enable-rust
+     TARGETS: microblaze-softmmu mips-softmmu
+       xtensa-softmmu m68k-softmmu riscv32-softmmu ppc-softmmu sparc64-softmmu
+     MAKE_CHECK_ARGS: check-build
 -- 
 2.47.0
 
