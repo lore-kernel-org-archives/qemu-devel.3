@@ -4,52 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D0A8D74958
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 12:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C443D74958
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 12:55:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6UdT-0001H8-Ge; Thu, 31 Oct 2024 08:50:47 -0400
+	id 1t6Uh7-0004oe-72; Thu, 31 Oct 2024 08:54:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t6UdR-0001FQ-AH
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:50:45 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1t6Uh2-0004nr-Qz
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:54:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t6UdO-0001et-GQ
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:50:44 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 44DF14E6013;
- Thu, 31 Oct 2024 13:50:38 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id GDaWWLpmB_Xa; Thu, 31 Oct 2024 13:50:36 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3D50D4E600F; Thu, 31 Oct 2024 13:50:36 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3B3A4746F60;
- Thu, 31 Oct 2024 13:50:36 +0100 (CET)
-Date: Thu, 31 Oct 2024 13:50:36 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Lei Huang <Lei.Huang@amd.com>
-cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org, 
- pierre-eric.pelloux-prayer@amd.com, ken.xue@amd.com, hsp.cat7@gmail.com
-Subject: Re: [PATCH v2] ui/sdl: Mouse event optimization
-In-Reply-To: <20241031081313.1617-1-Lei.Huang@amd.com>
-Message-ID: <75f12789-98a9-0b49-9629-4f722448b3c3@eik.bme.hu>
-References: <73cd533a-8818-4212-f7ea-0f89bd2b78cd@eik.bme.hu>
- <20241031081313.1617-1-Lei.Huang@amd.com>
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1t6Uh0-0002Ld-J7
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:54:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730379264;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nEZ7Ebb4KpSyNTow6eMbvILiK+xSILLOTIBFlrBQkxw=;
+ b=dHfVC53jIWBuySKIP7Hl3S6K+ziZwSFOy6ENx/+4gkrhbC5h4Ic+2WLf43KPkeJp1UXt86
+ /nlvz7ktjXgXEUN6p81BGfev+4jnd7dGpQxw4GMXWmomN3AgNFb5HCvAulbph2CASzGQX0
+ gIELAxi3rm4bD6pIpf+fVds58bThOos=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-EPI1q_kwOZCsdEgGmRv12g-1; Thu,
+ 31 Oct 2024 08:54:19 -0400
+X-MC-Unique: EPI1q_kwOZCsdEgGmRv12g-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 826CD19560AA; Thu, 31 Oct 2024 12:54:12 +0000 (UTC)
+Received: from pinwheel (unknown [10.39.194.127])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 052201956086; Thu, 31 Oct 2024 12:54:09 +0000 (UTC)
+Date: Thu, 31 Oct 2024 13:54:07 +0100
+From: Kashyap Chamarthy <kchamart@redhat.com>
+To: qemu-devel@nongnu.org, kvm@vger.kernel.org, rust-vmm@lists.opendev.org,
+ devel@lists.libvirt.org
+Subject: [Call for Presentations] FOSDEM 2025: Virt & IaaS devroom
+Message-ID: <ZyN97_nF4Vz0ten1@pinwheel>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kchamart@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -67,136 +81,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 31 Oct 2024, Lei Huang wrote:
->> On Wed, 30 Oct 2024, Lei Huang wrote:
->>> Use a convergence factor to make the VM's input
->>> global coordinates more closely approach the global
->>> coordinates of host.
->>>
->>> Change-Id: I2c3f12f1fe7dfb9306d1fc40c4fd4d299937f4c6
->>> Signed-off-by: Lei Huang <Lei.Huang@amd.com>
->>> ---
->>> ui/sdl2.c | 32 ++++++++++++++++++++++++++++++--
->>> 1 file changed, 30 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/ui/sdl2.c b/ui/sdl2.c
->>> index bd4f5a9da14..ea3fd74dd63 100644
->>> --- a/ui/sdl2.c
->>> +++ b/ui/sdl2.c
->>> @@ -303,6 +303,34 @@ static void sdl_mouse_mode_change(Notifier *notify, void *data)
->>>     }
->>> }
->>>
->>> +/*
->>> + * guest_x and guest_y represent the global coordinates on the VM side,
->>> + * while x and y represent the global coordinates on the host side.
->>> + * The goal of this entire process is to align the global coordinates of
->>> + * the VM with those of host using dx and dy. The current approach aims
->>> + * for precise calibration in once attempt; however, because guest_x
->>
->> There's still another one here. You can say "in one attempt" or "at once"
->> but combining the two is not correct.
->
-> Oh, okay, got it
->
->>
->>> + * and guest_y are non-zero values, they are not accurate values when
->>> + * they are counted out to become negative. Therefore, achieving perfect
->>> + * alignment in one attempt is impossible. Since the same calibration method
->>> + * is used each time, repeated attempts cannot achieve alignment either.
->>> + * By introducing a convergence factor, guest_x and guest_y can be made to
->>> + * approach host x and y indefinitely.
->>> + *
->>> + *                   QEMU                       (dx,dy)  VM
->>> + * calculates dx and dy using guest_x and guest_y ---->  input driver
->>> + *            ^                                            |
->>> + *            |                                            |
->>> + *            |                                            V
->>> + *            |     update
->>> + *            | guest_x,guest_y              input dispatcher ---> WindowManager
->>> + *            |                                            |                 |
->>> + *            |                                            |                 |
->>> + *            |                 libdrm                     V                 |
->>> + *    display device  <------ drmModeMoveCursor <------ compositor <-------  |
->>> + *                            (guest_x,guest_y)   calculates guest_x and
->>> + *                                                guest_y dy using dx and dy
->>
->> Maybe adding (e.g. virtio-gpu) below display device would make it clearer.
->> Also under compositor there's "guest_y dy" where the dy seems to be left
->> there by mistake from some editing or I don't get this sentence. (Did
->> checkpatch.pl complain about too long lines? Maybe you could shorten the
->> arrows a bit and wrap the text under QEMU in two lines to try to fit in 80
->> chars.)
->
-> okay, thanks, got it
->
->>
->> Sorry that I can only comment on the comments and not the actual change
->> but I've cc'd Howard who I think saw this issue before so may be able to
->> give it a test.
->>
->>> + */
->>> +#define CONVERGENCE_FACTOR 3
->>> static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
->>>                                  int x, int y, int state)
->>> {
->>> @@ -331,8 +359,8 @@ static void sdl_send_mouse_event(struct sdl2_console *scon, int dx, int dy,
->>>             y -= guest_y;
->>>             guest_x += x;
->>>             guest_y += y;
->>> -            dx = x;
->>> -            dy = y;
->>> +            dx = x / CONVERGENCE_FACTOR;
->>> +            dy = y / CONVERGENCE_FACTOR;
->>
->> Looking at this calculation I don't quite get what's intended here and I
->> think this could be simplified. Originally in 47c03744b37 it seems the
->> qemu_input_queue_rel() was called with the modified value of x and y but
->> then afbc0dd6498 have introduced dx, dy. After that changing x and y seems
->> unnecessary as they are locals never used after this calculation. If I try
->> to expand these equations I get:
->>
->> x = x - guest_x;
->> guest_x = guest_x + x - guest_x;
->>
->> So isn't this equivalent to just:
->>
->> dx = x - guest_x;
->> guest_x = x;
->>
->> which seems to make more sense but I don't know if it's correct.
->
-> yes, it is correct.
+(Cross-posted to KVM, Rust-VMM, QEMU, and libvirt lists.)
 
-Then maybe it's a good opportunity to simplify this now.
+Hi,
 
->> Then this patch takes the third of dx to avoid it overshooting the desired
->> value. The question is what causes this overshoot and can we calculate the
->> actual value of it to compensate for it in one calculation? Isn't it the
->> other line that sets guest_x to x that needs some correction?
->
-> It's not the reason of guest_x += x;. I previously tried removing guest_x += x;
-> and only letting sdl_mouse_warp update guest_x, but the issue still persists.
->
-> The behavior of different virtual machines varies. In the Ubuntu VM, the cursor
-> jitters violently within a small range; for example, when moving a folder, it rapidly
-> flickers back and forth. On Android 14, it can barely be used, though individual coordinates
-> may deviate significantly, but they can be quickly corrected. However, on Android 15, it is
-> completely unusable. The reason for the issue in Android 15 is that the initial global
-> coordinates of Android are random values, not (0, 0). During the second calibration,
-> it is possible to calculate negative values, which are forced to be set to 0, resulting in
-> a continuous loop. The occurrence of negative values is an extreme situation.
+The CFP for the 'Virt & IaaS' (Infrastructure as a Service) 2025
+"devroom" is out[+].
 
-I still don't understand the reason for this behaviour. I thought it's 
-probably caused by different pointer acceleration settings on the host and 
-guest so a move by some value moves the host and guest pointer by 
-different amounts. QEMU could get the host settings but knows nothing 
-about the guest so this probably can't be fixed other than trying to 
-converge the values. The question is why 3 is a good value for 
-CONVERGENCE_FACTOR and is there a better value or can it be calculated 
-somehow. But if we don't know and this fixes the issue it's likely good 
-enough, I'm just trying to understand the issue better.
+  - Where? — Brussels, Belgium
+  - When?  — 02 Feb (Sunday) 2025
+  - Talk submission deadline — 01 Dec 2024
 
-Regards,
-BALATON Zoltan
+    (The CFP submission on the FOSDEM list[+] says 08 Dec 2024 is the
+    submission deadline in its intro paragraph.  But I clarified it with
+    Piotr Kliczewski, the deddline is *01* Dec 2024 and _not_ 08th Dec;
+    I updated it below.)
+
+========================================================================
+This devroom is a collaborative effort, and is organized by dedicated
+folks from projects such as OpenStack, Xen Project, KubeVirt, QEMU, KVM,
+and Foreman.  We invite everyone involved in these fields to submit your
+proposals by December *1st* 2024. 
+
+Important Dates
+---------------
+
+Submission deadline: 1st December 2024
+
+Acceptance notifications: 10th December 2024
+
+Final schedule announcement: 15th December 2024
+
+Devroom: 2nd February 2025
+
+
+About the Devroom
+-----------------
+
+The Virtualization & IaaS devroom will feature session topics such as open
+source hypervisors or virtual machine managers such as Xen Project, KVM,
+bhyve and VirtualBox as well as Infrastructure-as-a-Service projects such
+as KubeVirt, Apache CloudStack, OpenStack, QEMU and OpenNebula.
+
+This devroom will host presentations that focus on topics of shared
+interest, such as KVM; libvirt; shared storage; virtualized networking;
+cloud security; clustering and high availability; interfacing with multiple
+hypervisors; hyperconverged deployments; and scaling across hundreds or
+thousands of servers.
+
+Presentations in this devroom will be aimed at developers working on these
+platforms who are looking to collaborate and improve shared infrastructure
+or solve common problems. We seek topics that encourage dialog between
+projects and continued work post-FOSDEM.
+
+
+Submit Your Proposal
+--------------------
+
+All submissions must be made via the Pretalx event planning site[1]. It is
+a new submission system so you will need to create an account. If you
+submitted proposals for FOSDEM in previous years, you won’t be able to use
+your existing account.
+
+During submission please make sure to select Virtualization and Cloud
+infrastructure from the Track list. Please provide a meaningful abstract
+and description of your proposed session.
+
+
+Submission Guidelines
+---------------------
+
+We expect more proposals than we can possibly accept, so it is vitally
+important that you submit your proposal on or before the deadline. Late
+submissions are unlikely to be considered.
+
+All presentation slots are 30 minutes, with 20 minutes planned for
+presentations, and 10 minutes for Q&A.
+
+All presentations will be recorded and made available under Creative
+Commons licenses. In the Submission notes field, please indicate that you
+agree that your presentation will be licensed under the CC-By-SA-4.0 or
+CC-By-4.0 license and that you agree to have your presentation recorded.
+For example:
+
+"If my presentation is accepted for FOSDEM, I hereby agree to license all
+recordings, slides, and other associated materials under the Creative
+Commons Attribution Share-Alike 4.0 International License.
+
+Sincerely,
+
+<NAME>."
+
+In the Submission notes field, please also confirm that if your talk is
+accepted, you will be able to attend FOSDEM and deliver your presentation.
+We will not consider proposals from prospective speakers who are unsure
+whether they will be able to secure funds for travel and lodging to attend
+FOSDEM. (Sadly, we are not able to offer travel funding for prospective
+speakers.)
+
+
+Code of Conduct
+---------------
+
+Following the release of the updated code of conduct for FOSDEM[3], we'd
+like to remind all speakers and attendees that all of the presentations and
+discussions in our devroom are held under the guidelines set in the CoC and
+we expect attendees, speakers, and volunteers to follow the CoC at all
+times.
+
+If you submit a proposal and it is accepted, you will be required to
+confirm that you accept the FOSDEM CoC. If you have any questions about the
+CoC or wish to have one of the devroom organizers review your presentation
+slides or any other content for CoC compliance, please email us and we will
+do our best to assist you.
+
+Questions?
+----------
+
+If you have any questions about this devroom, please send your questions to
+
+our devroom mailing list. You can also subscribe to the list to receive
+
+updates about important dates, session announcements, and to connect with
+
+other attendees.
+
+See you all at FOSDEM!
+
+[1] https://fosdem.org/submit
+
+[2] virtualization-devroom-manager at fosdem.org
+
+[3] https://fosdem.org/2025/practical/conduct/
+========================================================================
+
+[+] https://lists.fosdem.org/pipermail/fosdem/2024q4/003574.html
+
+-- 
+/kashyap
+
 
