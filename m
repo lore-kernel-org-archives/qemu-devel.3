@@ -4,82 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CA2BD74959
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 13:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 508C3D7495C
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 13:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6UmL-0005p6-04; Thu, 31 Oct 2024 08:59:57 -0400
+	id 1t6VEI-0002W7-Jt; Thu, 31 Oct 2024 09:28:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t6UmH-0005og-Mo
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:59:53 -0400
+ id 1t6VEF-0002Vk-N9
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 09:28:48 -0400
 Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t6UmF-0002uo-OL
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 08:59:53 -0400
+ id 1t6VED-0006m0-B5
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 09:28:46 -0400
 Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5c96b2a10e1so1355513a12.2
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 05:59:51 -0700 (PDT)
+ 4fb4d7f45d1cf-5c941623a5aso3551662a12.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 06:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730379590; x=1730984390; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+cjV12eTgGM/W6VxKSYtL5Nw4UUw/HSAOYX1se12Zig=;
- b=qmJHJrCsnHRhWbgeVT6ReyJx0IpGG0Z6jjKd9iUfHWgYaxnJPi2ShtNyGd9uSjFVOA
- bCL1AionWfsF7YAnAmfMt+aQwu7Gizzc5Yg3aEWn1OqsZIn4DnwcGZkW8QJazywYOMFf
- 3EL/CdD0xh4t3XRgIBmJ3HMguxg1vlJUvHCA4BycWomyvQ5UpgM3WOqwn/LBAK+jm/Dx
- e93s5x6rzeXIS2oehwZD4KLuv2S45Hah0xwFQL153q7uFRULIsYQR/IOkZQ1bQxuvprD
- rNOve8LC9ZaAvZoGiKRhjHK2F5PmLtBY09+Lw/1wU0c6++7REMSINUS/+EuPC6LppfHI
- FqCA==
+ d=linaro.org; s=google; t=1730381323; x=1730986123; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZeP2QOZSEgr376nGAbwFxRp7c0KN6vb8QnoH0EUmki0=;
+ b=BSyFQLJXBDFhh8UxrCgQFyAbvIe+MXWIa40dcwz6158f+573MJlxgdxqSQ899Nv5Oq
+ FbnJgJsjfgOhy8Hnt5k/4IBGDn48Ng/oFLLxwFvjpyxXOhWWwYdtb3DQzzPG4BLIREff
+ B8YE9FX/Ae3/MWjEXZQwKF/Ez35mJnZMysZ0aVZw/Qdh1nsvAO2bUh+sNrMej7SENC5R
+ YdFzkM/0OaOk+j5NhtAPoLAowIDNeYIUb4zTSshFtfEeta9vMTyBUtoCoK6zWdTVVoOb
+ lA87RAgUqUhceHcScGbAyW3CTtP7f+Uq/waP+LYG5BXhHV1fxeTHN+ooqqB992lRjxjS
+ LxvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730379590; x=1730984390;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+cjV12eTgGM/W6VxKSYtL5Nw4UUw/HSAOYX1se12Zig=;
- b=Qm+aL7SbiiTHPH+/E8Lq3qicVLcRA5QbklqmEIeNt/0Fx2c0A+JtepoZLjRRBZ6gI1
- l35qOB++5rExiyAQt6FppYHYYozhJnUI+zXFQVw+Iy7UC+szdB+N9kWU9J1UhZuJXH0b
- fBQmB7gEeXL0n0qqjgkqKPLJwqj8WD4TRqULKJAZR6SAVev/Bpi1BN+7TRoN4sIdR9SK
- +q8GznuQvg3BNobZEZpJri3DA6KTII8AJ2bxfxo7vC1IGxv2wandjzEtVW4gVPcuqhbM
- 27iixjSyayYNbWBmBi+PvD9bBmGNQiNC6fILPjsWvzwA77AKj/hNtIWlb9zbg8hbfmAC
- kQ+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/M0zQEVf6YvKkI5C0wm/Q5RVCv7OEB0ejx1rPp7hdZpo7KRbBsfzEOxKY7nOYb7lpAoMYcq3qeNz9@nongnu.org
-X-Gm-Message-State: AOJu0YwBftIF0cM9rK5EEh8sSr4dzxKB+2SnA6GqvVPF0jnPRU4aP4xF
- xRXv/J/bltqGmi+tPRARKcgI0wtRJEIOv2Xq97ubD1FNu3f4ykjI8A8AXNOWfJGfS9E11FnTQUP
- r4x+REoqr80ZXIRBCxSdqEjJrl54RHCNvHcN5qA==
-X-Google-Smtp-Source: AGHT+IERALXckroa9H9wtBfFLwXEcQL525RIETUMpbqoyMAnjF9yZNCHsaFTftdbxaN4KRPpPN9q1vw89+BTyseQZR0=
-X-Received: by 2002:a05:6402:4022:b0:5c9:816e:45d with SMTP id
- 4fb4d7f45d1cf-5cbbf8ca1aamr19516036a12.17.1730379589860; Thu, 31 Oct 2024
- 05:59:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1730381323; x=1730986123;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZeP2QOZSEgr376nGAbwFxRp7c0KN6vb8QnoH0EUmki0=;
+ b=WWUscZcX1G3WDGJ1Ym6+edVlnR1Jx/A+LcwMtfxBkqroOJn++gCahIywK+H/ctYspC
+ ZaZ+w9FBCPpB9/JgB3qmNfOfw8pA1P38IAag5TvAe7QwFxqyP4Py6s0rdFS/g4DIpD+g
+ yase1NwN08qfGqWCzkdVxsMY2Od4cNGi+44uG1txEPI7X4psFcRl2w/zMGmLepRWRha2
+ VMWCbD4pBwskzfkV8ha4B3qH+J00oo6GdaOq9GJ5nJT5ZwZty5tb5qN+fErX05Ej3Z3r
+ P4sx1BhbAiahn9+hXBtgncu6PYoQ8uwVY7MWWtMhvvGnm83LsWfJNPT8E1aXj/YnDaci
+ X9KQ==
+X-Gm-Message-State: AOJu0Yx7Y967vmOQlRsLJUUbbtGTA78wk45SAiTqyJtn+Ird/sJeuHzr
+ RrvXVUE6KBQObZcBqHr1uKEU6ijIYntF4oIhqlf+zSnqFaNFm4kWP1E13xZzOKJtI50OpXcyK09
+ eXUvNPnPMWAgfTzkyNBBIpYPY2dgEd8p4cNuXzoSnJt7Zk8SF
+X-Google-Smtp-Source: AGHT+IH6850VMn/u0eYWh8Io6TeY20efmxavJ9p8ZaEZCyc+K6DlizjF1TJyH3t4Forg4/m9ivrHQqyUqrBhiTB8bkE=
+X-Received: by 2002:a05:6402:1ccc:b0:5c8:d9b8:9325 with SMTP id
+ 4fb4d7f45d1cf-5ceabefaf79mr2664128a12.5.1730381323176; Thu, 31 Oct 2024
+ 06:28:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <20241025101959.601048-22-eric.auger@redhat.com> <ZxuZkUFz_bwAA1pf@redhat.com>
- <0700af51-a1a6-4b11-a4bf-0eaf6e279c6d@redhat.com>
- <Zxudl5-fZV1vIaEL@redhat.com>
- <87y128nrfr.fsf@redhat.com> <Zx-3OUioG1l47hW3@redhat.com>
- <87plnknqco.fsf@redhat.com> <ZyN3A6dAEDkx51yb@pinwheel>
-In-Reply-To: <ZyN3A6dAEDkx51yb@pinwheel>
+References: <20241030155734.2141398-1-peterx@redhat.com>
+In-Reply-To: <20241030155734.2141398-1-peterx@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 31 Oct 2024 12:59:38 +0000
-Message-ID: <CAFEAcA_1R+xf-nBKCM7JDuNj7sLCA4KUjen6kPAng+1yjwHRrw@mail.gmail.com>
-Subject: Re: [RFC 21/21] arm/cpu-features: Document custom vcpu model
-To: Kashyap Chamarthy <kchamart@redhat.com>
-Cc: Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, richard.henderson@linaro.org, 
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev, 
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, 
- abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com, 
- mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+Date: Thu, 31 Oct 2024 13:28:31 +0000
+Message-ID: <CAFEAcA_p+LiT6wz2UaPBUs14XBnuCM9x46piOLSJP6WivMMbAQ@mail.gmail.com>
+Subject: Re: [PULL 00/18] Migration 20241030 patches
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2a00:1450:4864:20::535;
  envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
@@ -104,43 +87,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 31 Oct 2024 at 12:24, Kashyap Chamarthy <kchamart@redhat.com> wrote=
-:
+On Wed, 30 Oct 2024 at 15:57, Peter Xu <peterx@redhat.com> wrote:
 >
-> On Mon, Oct 28, 2024 at 05:29:11PM +0100, Cornelia Huck wrote:
-> > On Mon, Oct 28 2024, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrot=
-e:
+> The following changes since commit cc5adbbd50d81555b8eb73602ec16fde40b55be4:
 >
-> [...]
+>   Merge tag 'pull-tpm-2024-10-18-1' of https://github.com/stefanberger/qemu-tpm into staging (2024-10-18 15:45:02 +0100)
 >
-> > >> We could consolidate that to the current "host" model, once we figur=
-e
-> > >> out how to handle the currently already existing properties. Models
-> > >> based on the different architecture extensions would probably be mor=
-e
-> > >> useable in the long run; maybe "custom" has a place for testing.
-> > >
-> > > If you can set the features against "host", then any testing could
-> > > be done with "host" surely, making 'custom' pointless ?
-> >
-> > We might differentiate between "do some consistency checks" and "allow
-> > a completely weird wolpertinger"; if we agree that we don't need it,
-> > then we surely could drop it again.
+> are available in the Git repository at:
 >
-> Yeah, FWIW, I agree that it's best to drop "custom" if all the
-> meaningful tests can be handled by being able to add/remove CPU flags
-> from `-cpu host`.
+>   https://gitlab.com/peterx/qemu.git tags/migration-20241030-pull-request
 >
+> for you to fetch changes up to 53a60118d2654dd8e595e61f4e767ff747fd0b69:
 >
-> Related: I don't see any mention of `-cpu max` here.  Is it not
-> relevant?  It is currently defined as: "enables all features supported
-> by the accelerator in the current host".  Does it make sense for `max`
-> to allow disabling features?  Or is the idea that, why would you choose
-> `-cpu max` if you want to disable features?
+>   migration/multifd: Zero p->flags before starting filling a packet (2024-10-30 11:32:41 -0400)
+>
+> ----------------------------------------------------------------
+> Migration pull request for softfreeze
+>
+> NOTE: checkpatch.pl could report a false positive on this branch:
+>
+>   WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+>   #21:
+>    {include/sysemu => migration}/cpu-throttle.h | 0
+>
+> That's covered by "F: migration/" entry.
+>
+> Changelog:
+>
+> - Peter's cleanup patch on migrate_fd_cleanup()
+> - Peter's cleanup patch to introduce thread name macros
+> - Hanna's error path fix for vmstate subsection save()s
+> - Hyman's auto converge enhancement on background dirty sync
+> - Peter's additional tracepoints for save state entries
+> - Thomas's build fix for OpenBSD in dirtyrate.c
+> - Peter's deprecation of query-migrationthreads command
+> - Peter's cleanup/fixes from the "export misc.h" series
+> - Maciej's two small patches from multifd+vfio series
 
-Ideally, disabling features would work with any '-cpu' option
-(including our existing TCG CPUs). (The main reason for 'max'
-is as an option that works whether you're using TCG or KVM.)
 
+>  {include/sysemu => migration}/cpu-throttle.h |  14 ++
+
+Hi; this fails to build on macos:
+
+https://gitlab.com/qemu-project/qemu/-/jobs/8237753019
+
+../ui/cocoa.m:40:10: fatal error: 'sysemu/cpu-throttle.h' file not found
+    40 | #include "sysemu/cpu-throttle.h"
+       |          ^~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+
+thanks
 -- PMM
 
