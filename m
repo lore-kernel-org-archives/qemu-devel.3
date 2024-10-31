@@ -4,56 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C252D6B6B4
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 00:32:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5159E68940
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 01:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6J5s-0005Zo-6Z; Wed, 30 Oct 2024 20:31:20 -0400
+	id 1t6Jsh-0001UG-Jz; Wed, 30 Oct 2024 21:21:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1t6J5p-0005Ze-QA
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 20:31:18 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1t6J5o-0000aq-1F
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 20:31:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=RZDZhoMYhZ5jqjph3ksyRzRSw5oxvewBtAayqrdS1BA=; b=OONWsNiMoRqLZ0E1
- fhnoCZIhXOihhv3jTq93np5M688tsS4fpLRQHZGREGM59a2JIjmUNDV50iP3nmo0ZK/dH/r3R0YUn
- kUPjuZ7K+dQvP18VzPdGKAmS4ZbVplPaOss0K4pItQuqZa2HBJdqh2QCgWkZlzPIF/aMNHksut0id
- Wx5g5b/8eFjaNXB37UffMZo9O6Mdi3yIMzLjuG60h9iLOGIUcAyTribFG5oouyO9pek2z+pKgV5NN
- 9cbO+20LLmyQdtiVTA9V3zRsOIbjqG6X0r+4++YLMnAohYRVLd9gliJ9w1lsWSwbjiM7ImaEVlOM/
- nDS/bKC07/i5nsiNaQ==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1t6J5h-00EcAh-2F;
- Thu, 31 Oct 2024 00:31:09 +0000
-Date: Thu, 31 Oct 2024 00:31:09 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Phil Dennis-Jordan <lists@philjordan.eu>
-Cc: Anastasia Belova <abelova@astralinux.ru>, qemu-devel@nongnu.org,
- sdl.qemu@linuxtesting.org
-Subject: Re: [PATCH] monitor: fix cases in switch in memory_dump
-Message-ID: <ZyLPzbDy_0cI7HyD@gallifrey>
-References: <20241030140656.36540-1-abelova@astralinux.ru>
- <CAGCz3vuqRAkPtRRpqbPM+3z5iqVHOkr5fYotmva=6uqA7JnGcQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t6Jsf-0001TQ-Cm; Wed, 30 Oct 2024 21:21:45 -0400
+Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t6Jsd-0005yY-NC; Wed, 30 Oct 2024 21:21:45 -0400
+Received: by mail-ua1-x933.google.com with SMTP id
+ a1e0cc1a2514c-84fd764f6ddso231744241.1; 
+ Wed, 30 Oct 2024 18:21:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730337701; x=1730942501; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=me1PbElHIFNOFiPEPF4cHrVfyBn29FNW2l/yCg+EcOE=;
+ b=dzYQ+ZK3g94/eIDjG4T9z6MEHnfYSJAoTYM98fiGuEdKZHXX+OY7YTPLh3/+nxqztr
+ dg0z//wRLnosU/+zKwpzBnkYV6A7ui0V4HsLu21cE6Nu0vJUiLes7P0GZc/Ht1AjAwzK
+ ngaodXq19HGXa+CFzUFHOFzoB9gxRPKZXWNbpFQgNon5hU3V30T1zSZFoYnCKhRJEmMO
+ D9/Au6MLaPwSbcuNKZXS4Wh6UIplK0NPHJgOzDOSGIQwdvVppUthOX1Vd2jpSAKnRK8Z
+ S2RvvYGT7G6fKDtzANcL6aUk0VyvvSeW4KK4FDqpOr+uZkGMAPpeMlO1BbehO0CE0EBK
+ qBGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730337701; x=1730942501;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=me1PbElHIFNOFiPEPF4cHrVfyBn29FNW2l/yCg+EcOE=;
+ b=OewVBscLLv32dbkEd/qSqbXkWc/XbeNJdbMIdET9deh7o+3QjfHwh3heQHpke1N4RP
+ 2zxGe2qsqH3mWdKo/4li4n51M+VOSlfAxwmS8GFO5+aHTAO3cHE3FNP0KsblDvCHXcr3
+ q7MbYjzV7vMO7GpRtBopIS4kEU9Ig5VmiFX38UeG49q9Inp+XeQmMAWk90S6Ky2YsBdM
+ i/agOt/MDm+LEfE0prVN25udkbsQHRC3Ck2v6oSGYpkUUqZKVT6/v+CqlaMPYQGnZfOT
+ CrhjWyTcOz+yp/3CJyIU7/wKf3qVynsrvJHxT8tGOjH4r7YmSocdg9zr1pPQudmlmlIn
+ 2Zvg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVyvq7+9lddwSzJyVqMh5Pulq8VDFCHk3rhwxc/Ew0qN+tKR+kVD/GUi1suP/i9fV0ftVnMNip30QPW@nongnu.org
+X-Gm-Message-State: AOJu0YwbqwNShnvTOFRVpJRVHuLDtTMycdgNvOqoeWdSitJ9unQqiuAP
+ PR/5WzEznTQVwMqvFG10nsT+b8RpNexhdHiGE6XdzcSWHW/zFqhu6Q4iVv1r9hL+pJF2mnQOdhK
+ 26V5u/epEalueohBVez0T7C53I/Q=
+X-Google-Smtp-Source: AGHT+IF5A766HQ+YU30VPRPbzjxT2WXSK9MH6VOumIZuhev6a5kYcfc+yviKxYh3oaaOISJ63tsYT0AAeblS+wDCBVE=
+X-Received: by 2002:a05:6102:cd4:b0:4a4:532:82bd with SMTP id
+ ada2fe7eead31-4a956ccb44cmr532616137.4.1730337700654; Wed, 30 Oct 2024
+ 18:21:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <CAGCz3vuqRAkPtRRpqbPM+3z5iqVHOkr5fYotmva=6uqA7JnGcQ@mail.gmail.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 00:29:10 up 175 days, 11:43,  1 user,  load average: 0.03, 0.02, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+References: <20241030043538.939712-1-antonb@tenstorrent.com>
+In-Reply-To: <20241030043538.939712-1-antonb@tenstorrent.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 31 Oct 2024 11:21:14 +1000
+Message-ID: <CAKmqyKPb=0EVH2OzYGc45QcAimwzqYje9co0dQceiu3Bp9t_Hg@mail.gmail.com>
+Subject: Re: [PATCH v2] target/riscv: Fix vcompress with rvv_ta_all_1s
+To: Anton Blanchard <antonb@tenstorrent.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,74 +95,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Phil Dennis-Jordan (lists@philjordan.eu) wrote:
-> On Wed 30. Oct 2024 at 15:09, Anastasia Belova <abelova@astralinux.ru>
-> wrote:
-> 
-> > default case has no condition. So if it is placed
-> > higher that other cases, they are unreachable.
-> >
-> > Move dafult case down.
-> >
-> 
-> The stylistic merits might be debatable, but: the order of cases in a
-> switch block in C does not matter, the default case can appear anywhere.
-> The other cases are still reachable. So at minimum, the commit message is
-> incorrect.
+On Wed, Oct 30, 2024 at 2:37=E2=80=AFPM Anton Blanchard <antonb@tenstorrent=
+.com> wrote:
+>
+> vcompress packs vl or less fields into vd, so the tail starts after the
+> last packed field. This could be more clearly expressed in the ISA,
+> but for now this thread helps to explain it:
+>
+> https://github.com/riscv/riscv-v-spec/issues/796
+>
+> Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
 
-I'd agree;  the analysis is wrong - it works as intended.
-As for style, I'd normally agree that 'default' at end makes sense,
-but:
-  a) I hate duplicating code
-  b) in a way this reads nicely:
-                 default:
-                 case 1:
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-      'default is the same as case 1'.
+Alistair
 
-Dave
-
-> 
-> 
-> > Found by Linux Verification Center (linuxtesting.org)
-> >
-> > Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-> > ---
-> >  monitor/hmp-cmds-target.c | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
-> > index ff01cf9d8d..eea8ca047b 100644
-> > --- a/monitor/hmp-cmds-target.c
-> > +++ b/monitor/hmp-cmds-target.c
-> > @@ -189,7 +189,6 @@ static void memory_dump(Monitor *mon, int count, int
-> > format, int wsize,
-> >          i = 0;
-> >          while (i < l) {
-> >              switch(wsize) {
-> > -            default:
-> >              case 1:
-> >                  v = ldub_p(buf + i);
-> >                  break;
-> > @@ -202,6 +201,9 @@ static void memory_dump(Monitor *mon, int count, int
-> > format, int wsize,
-> >              case 8:
-> >                  v = ldq_p(buf + i);
-> >                  break;
-> > +            default:
-> > +                v = ldub_p(buf + i);
-> > +                break;
-> >              }
-> >              monitor_printf(mon, " ");
-> >              switch(format) {
-> > --
-> > 2.47.0
-> >
-> >
-> >
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+> ---
+>  target/riscv/vector_helper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 072bd444b1..ccb32e6122 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -5132,7 +5132,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, vo=
+id *vs2,               \
+>      }                                                                   =
+  \
+>      env->vstart =3D 0;                                                  =
+    \
+>      /* set tail elements to 1s */                                       =
+  \
+> -    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);            =
+  \
+> +    vext_set_elems_1s(vd, vta, num * esz, total_elems * esz);           =
+  \
+>  }
+>
+>  /* Compress into vd elements of vs2 where vs1 is enabled */
+> --
+> 2.34.1
+>
+>
 
