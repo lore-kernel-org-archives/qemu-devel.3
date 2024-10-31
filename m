@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C120D767F7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66895D767F8
 	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 17:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6ZMw-0002gj-7h; Thu, 31 Oct 2024 13:54:03 -0400
+	id 1t6ZNa-0003wq-9f; Thu, 31 Oct 2024 13:54:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t6ZMR-000276-IG
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:53:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t6ZMm-0002dN-63
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:53:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t6ZMQ-0007Pf-42
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:53:31 -0400
+ id 1t6ZMk-0007SQ-GU
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 13:53:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730397208;
+ s=mimecast20190719; t=1730397229;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7ybL7+9wAgz/1BKinmhWAD7p+qC2nAGKD3FTOM60MIM=;
- b=dKuIHWdq9i7oPUNRalZtpFFGvaKDVilvi6+IhwZSRgf6XAoCQbQGiUwLrVCt7dk4KUZFIo
- Oh4wNCjsurXRCOchsGQZfjiNoxXrrvrJIECS8Clh/xJqh4yyNWhwr9RbS3r8k2rlaguQxn
- /w3/IqUkjIzZZqvDqXq5vVoGDXX5gec=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=P1iy+2WvpN1bYE2vUYS/SUko4M/32FZ7LjWFyedrCk0=;
+ b=b/QNpIScm6eFJLkJ55JoonLAqyEMRgkMTdHT4969h0FPgmwVv26Yy/rcctxQoOo0p43Iag
+ 2yzQelPQi6H7DdpED8A6mdwn6Sjxw9WElmWj4d83VpgBWMUVOsXpSbk/WslWKFnV8ZEtcm
+ TDTqkSALbS9QA2TztbjdxAmTByIDhsM=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-214-VAvPovYeOkqTu7PGTQXpqw-1; Thu, 31 Oct 2024 13:53:27 -0400
-X-MC-Unique: VAvPovYeOkqTu7PGTQXpqw-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37d531a19a9so613765f8f.1
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 10:53:27 -0700 (PDT)
+ us-mta-171-r1-dKqPCM8q0pb3W9J_EUA-1; Thu, 31 Oct 2024 13:53:48 -0400
+X-MC-Unique: r1-dKqPCM8q0pb3W9J_EUA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a99fc3e2285so64821466b.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 10:53:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730397205; x=1731002005;
+ d=1e100.net; s=20230601; t=1730397226; x=1731002026;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7ybL7+9wAgz/1BKinmhWAD7p+qC2nAGKD3FTOM60MIM=;
- b=HWE+Q1MqCtI8mlDCQ32VltAVEJc9tFYeh5M8zcvpjgMP4PQzQFo7USogw54+qmhahk
- xPPMpJ6OhznITBxLkNHE8XbhaOPd4QxkAFv3d19kRX3M+YG6cV+aKLoVzzkqedjOJl1T
- a0aKsxOrxmV/Ue1xRrLTyVUEgCDrIm2CbsSc5akm6S8t3UzLhf19KVCrX36I2s8ebaD3
- Ph8/jZfy0R3EJp7vFoUSbpPscEb3LMt/5I17CSCLjM0D3xGCamqE/Cf+Znt98xfb6YOG
- RNK/FJgRJhz8wbZoMF4E+j9Tc6pfEUcvb8OSLDvtrg45/zDBwevuWfbkPtEbZnbQY10j
- NXyA==
-X-Gm-Message-State: AOJu0Ywn8SMp+hlkF6IONus48hlzHqYZAajqrJdaDjQ4madGhMrukFPK
- cwlrFtxNZT6ewojpFk5gZX8yWsY0+KRsNNYmGiOslMS+sC+/bGtf8Tiun1UCviNLSQs8D+nwcFu
- tIqLrzEbzhAAEWn6m7iIUCqobSO94cUxw7Fn2PhUiYNP+MNmjX4LdqMbv0lDj/Zyoh6MX81ousa
- 1aIDcgyiGeXv9hsmJil8bgzj6VgSun9o27SMbDUqU=
-X-Received: by 2002:a5d:59a2:0:b0:37d:5129:f454 with SMTP id
- ffacd0b85a97d-381be776c81mr3191064f8f.15.1730397205635; 
- Thu, 31 Oct 2024 10:53:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGwCSVH16m3sUt8+UgeAonUikdqP89j02XOps6SUEoj/WgH8jbBWMxlyypOO6qLRwwVRhyfyg==
-X-Received: by 2002:a5d:59a2:0:b0:37d:5129:f454 with SMTP id
- ffacd0b85a97d-381be776c81mr3191047f8f.15.1730397205151; 
- Thu, 31 Oct 2024 10:53:25 -0700 (PDT)
+ bh=P1iy+2WvpN1bYE2vUYS/SUko4M/32FZ7LjWFyedrCk0=;
+ b=U5MHxAPZFu/nC98uAI0S0oFCyyp9x+KqLLeln53vHQ6eDNMPweCJrMGE86uLMEdyoA
+ URpaakoVwDyRLMWjU00SCKVM2EDyoz82tlIlLHJlKhMj8WCNI8HwpjDbGNN1J3CAZtV9
+ T/rONXHeET7RxQB5eBerdzwwGuLu3BS9TrUze0OjzkIfDaRaJYeatopJOlwO+6W7hX56
+ ScAL3x9GaquPrGV2rk0+aTRJ0N4tfEqP370Z23FoCn2W6ylARQ2RbN/OzPSrMaRug8bm
+ 2hP1TqntMpb4ox4yNT/QnWFwfZip6uQbfSSW9olzSE+vL9+BFVy2cGTl6Up8dfJptMYC
+ iEfg==
+X-Gm-Message-State: AOJu0YwGSB4ARVrIoI2JdeyuPliJCgP3eOLqEO7ePy8f6gMwSPG9QjVG
+ Z3K1oHrPnRNdkp0JA3mS/1BIdmWt8gaHvgEk0UFzS9+iUg8b6AWn20Fw5AW2dHmYcj0YacBquyU
+ qHLdWQNeBr/esLP7P2QqFBhaqtR7wv8QYE/DwItnaVWDpGRnsnFuAMuUYCwIZOY1yWJO2s7v60u
+ WTqGglqWsQKrwELvTRM7K0ITaqjOGvKnUdfBpu7Vo=
+X-Received: by 2002:a17:907:7d87:b0:a9a:684e:9a64 with SMTP id
+ a640c23a62f3a-a9e50ba4055mr374335466b.61.1730397225899; 
+ Thu, 31 Oct 2024 10:53:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvkevg2XVei2N4iBt3CBIQNSI8hg+VxRfzGjgozdhBTO9V6v+QyfE6DkyRDX8R6058r+d4Vw==
+X-Received: by 2002:a17:907:7d87:b0:a9a:684e:9a64 with SMTP id
+ a640c23a62f3a-a9e50ba4055mr374333166b.61.1730397225445; 
+ Thu, 31 Oct 2024 10:53:45 -0700 (PDT)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10ea7a1sm2761271f8f.62.2024.10.31.10.53.22
+ a640c23a62f3a-a9e565df962sm89798966b.123.2024.10.31.10.53.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 31 Oct 2024 10:53:22 -0700 (PDT)
+ Thu, 31 Oct 2024 10:53:43 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 31/49] target/i386: Rearrange CCOp
-Date: Thu, 31 Oct 2024 18:51:55 +0100
-Message-ID: <20241031175214.214455-32-pbonzini@redhat.com>
+Subject: [PULL 40/49] target/i386: use higher-precision arithmetic to compute
+ CF
+Date: Thu, 31 Oct 2024 18:52:04 +0100
+Message-ID: <20241031175214.214455-41-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241031175214.214455-1-pbonzini@redhat.com>
 References: <20241031175214.214455-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,54 +103,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+If the operands of the arithmetic instruction fit within a half-register,
+it's easiest to use a comparison instruction to compute the carry.
 
-Give the first few enumerators explicit integer constants,
-align the BWLQ enumerators.
-
-This will be used to simplify ((op - CC_OP_*B) & 3).
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20240701025115.1265117-4-richard.henderson@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ target/i386/tcg/cc_helper_template.h.inc | 37 ++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 50172d7a6f9..6ec63380473 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1299,11 +1299,10 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
-  * are only needed for conditional branches.
-  */
- typedef enum {
--    CC_OP_DYNAMIC, /* must use dynamic code to get cc_op */
--    CC_OP_EFLAGS,  /* all cc are explicitly computed, CC_SRC = flags */
--    CC_OP_ADCX, /* CC_DST = C, CC_SRC = rest.  */
--    CC_OP_ADOX, /* CC_SRC2 = O, CC_SRC = rest.  */
--    CC_OP_ADCOX, /* CC_DST = C, CC_SRC2 = O, CC_SRC = rest.  */
-+    CC_OP_EFLAGS = 0,  /* all cc are explicitly computed, CC_SRC = flags */
-+    CC_OP_ADCX = 1,    /* CC_DST = C, CC_SRC = rest.  */
-+    CC_OP_ADOX = 2,    /* CC_SRC2 = O, CC_SRC = rest.  */
-+    CC_OP_ADCOX = 3,   /* CC_DST = C, CC_SRC2 = O, CC_SRC = rest.  */
- 
-     CC_OP_MULB, /* modify all flags, C, O = (CC_SRC != 0) */
-     CC_OP_MULW,
-@@ -1376,9 +1375,12 @@ typedef enum {
-     CC_OP_POPCNTQ__,
-     CC_OP_POPCNT = sizeof(target_ulong) == 8 ? CC_OP_POPCNTQ__ : CC_OP_POPCNTL__,
- 
-+    CC_OP_DYNAMIC, /* must use dynamic code to get cc_op */
-     CC_OP_NB,
- } CCOp;
--QEMU_BUILD_BUG_ON(CC_OP_NB >= 128);
+diff --git a/target/i386/tcg/cc_helper_template.h.inc b/target/i386/tcg/cc_helper_template.h.inc
+index 8af8b8539f9..628d942a161 100644
+--- a/target/i386/tcg/cc_helper_template.h.inc
++++ b/target/i386/tcg/cc_helper_template.h.inc
+@@ -22,12 +22,17 @@
+ #if DATA_BITS == 8
+ #define SUFFIX b
+ #define DATA_TYPE uint8_t
++#define WIDER_TYPE uint32_t
+ #elif DATA_BITS == 16
+ #define SUFFIX w
+ #define DATA_TYPE uint16_t
++#define WIDER_TYPE uint32_t
+ #elif DATA_BITS == 32
+ #define SUFFIX l
+ #define DATA_TYPE uint32_t
++#if HOST_LONG_BITS >= 64
++#define WIDER_TYPE uint64_t
++#endif
+ #elif DATA_BITS == 64
+ #define SUFFIX q
+ #define DATA_TYPE uint64_t
+@@ -62,9 +67,18 @@ static uint32_t glue(compute_all_adc, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1,
+                                          DATA_TYPE src3)
+ {
+     uint32_t cf, pf, af, zf, sf, of;
 +
-+/* See X86DecodedInsn.cc_op, using int8_t. */
-+QEMU_BUILD_BUG_ON(CC_OP_DYNAMIC > INT8_MAX);
++#ifdef WIDER_TYPE
++    WIDER_TYPE src13 = (WIDER_TYPE) src1 + (WIDER_TYPE) src3;
++    DATA_TYPE src2 = dst - src13;
++
++    cf = dst < src13;
++#else
+     DATA_TYPE src2 = dst - src1 - src3;
  
- typedef struct SegmentCache {
-     uint32_t selector;
+     cf = (src3 ? dst <= src1 : dst < src1);
++#endif
++
+     pf = compute_pf(dst);
+     af = (dst ^ src1 ^ src2) & 0x10;
+     zf = (dst == 0) << 6;
+@@ -76,7 +90,13 @@ static uint32_t glue(compute_all_adc, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1,
+ static int glue(compute_c_adc, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1,
+                                        DATA_TYPE src3)
+ {
++#ifdef WIDER_TYPE
++    WIDER_TYPE src13 = (WIDER_TYPE) src1 + (WIDER_TYPE) src3;
++
++    return dst < src13;
++#else
+     return src3 ? dst <= src1 : dst < src1;
++#endif
+ }
+ 
+ static uint32_t glue(compute_all_sub, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2)
+@@ -104,9 +124,18 @@ static uint32_t glue(compute_all_sbb, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2,
+                                          DATA_TYPE src3)
+ {
+     uint32_t cf, pf, af, zf, sf, of;
++
++#ifdef WIDER_TYPE
++    WIDER_TYPE src23 = (WIDER_TYPE) src2 + (WIDER_TYPE) src3;
++    DATA_TYPE src1 = dst + src23;
++
++    cf = src1 < src23;
++#else
+     DATA_TYPE src1 = dst + src2 + src3;
+ 
+     cf = (src3 ? src1 <= src2 : src1 < src2);
++#endif
++
+     pf = compute_pf(dst);
+     af = (dst ^ src1 ^ src2) & 0x10;
+     zf = (dst == 0) << 6;
+@@ -118,9 +147,16 @@ static uint32_t glue(compute_all_sbb, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2,
+ static int glue(compute_c_sbb, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2,
+                                        DATA_TYPE src3)
+ {
++#ifdef WIDER_TYPE
++    WIDER_TYPE src23 = (WIDER_TYPE) src2 + (WIDER_TYPE) src3;
++    DATA_TYPE src1 = dst + src23;
++
++    return src1 < src23;
++#else
+     DATA_TYPE src1 = dst + src2 + src3;
+ 
+     return (src3 ? src1 <= src2 : src1 < src2);
++#endif
+ }
+ 
+ static uint32_t glue(compute_all_logic, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
+@@ -258,3 +294,4 @@ static int glue(compute_c_blsi, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
+ #undef DATA_TYPE
+ #undef DATA_MASK
+ #undef SUFFIX
++#undef WIDER_TYPE
 -- 
 2.47.0
 
