@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C83E68974
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 11:02:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ABADE68974
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 11:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6Svf-0002J3-QA; Thu, 31 Oct 2024 07:01:28 -0400
+	id 1t6T4c-0004w4-Po; Thu, 31 Oct 2024 07:10:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t6Svd-0002Hp-Ig; Thu, 31 Oct 2024 07:01:25 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t6Svb-0001r1-Nv; Thu, 31 Oct 2024 07:01:25 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0A2709E26D;
- Thu, 31 Oct 2024 14:00:29 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 88E1916117B;
- Thu, 31 Oct 2024 14:01:10 +0300 (MSK)
-Message-ID: <9ea39adf-e276-484e-9c92-b7db2019ace8@tls.msk.ru>
-Date: Thu, 31 Oct 2024 14:01:10 +0300
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1t6T4U-0004u1-Li
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:10:36 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1t6T4R-0003SP-85
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 07:10:34 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-539ee1acb86so821662e87.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 04:10:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730373028; x=1730977828; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=rETJV9+KIqR5YA/MkCI+vDownHRPVSloNnbyhKq0WnU=;
+ b=wVyTltky1w7N7G+N8Xq0w/G5Mbf9XCLtYQJTEbZzYxKpkNUe/DkbsFa8GrxH8+iOwR
+ 8Q2wns7PAhVZDw8sms5dX3W9PwjvcPh8na/2kxamy7aJLB4O/5Jtsrs9RayxAY6LDbIH
+ rciFoCOgDEY7bk9YyqTz2+rOp+7g9jmYepkn0UAFZBx+4nSfc6AQ6c/ciD2T8chjAMKw
+ j8eG/4NNVaGhv1YBGZjv6k5O4WHz9C2YRdTManr1aqF8H7i+wcwTPfxABt4Jc85vvgO0
+ RRjqWczq2PiRHzCDXcBOof4f1FMDXNhznRi/The9Acvr0G9oBfd4a5LswSaobZb+bEZV
+ wVGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730373028; x=1730977828;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rETJV9+KIqR5YA/MkCI+vDownHRPVSloNnbyhKq0WnU=;
+ b=MpkiTi2Mx5ptkYJ6q5kRrg+/Kkcsy6mOgNAl7J+Vt+BFzO7ch2/31/bYYkkimgx2vs
+ OmrK+xYU3Gk3eq7uWjcQXKRVzhAyi1Y1JlE84qcvw4TJbuv8z30FPRRYeEsU0kkzZQOy
+ BbsaqP83sB94JkswVzbDyguIvJxZ0CaLXhjCKYqK5DqlpzHzlgzRo9xLau40rIu7kCKH
+ zyPCQ9dZLgk28KJYgANXTyrmKBGiU7LtF6TZbMz5acjUcHnF1F7YjqvIERdr9KUageBR
+ TvsLvx21+R9FAomFtZsHnoO6iucdgqorvgXB3FFLM20bDNffHnH3t64q75FIum0pxnPp
+ mnUQ==
+X-Gm-Message-State: AOJu0Ywec6bJxgIB/yflgpHs6Ujbewkxqgeqo+jQ8nAY7XeJjO5s60YF
+ CUBnmoq5/OA6afQhgUfjigGOiICaZXnunFTBUq66RmLbPUHSomAqGRe0zjYjzAsNMvzB+QZcta/
+ S
+X-Google-Smtp-Source: AGHT+IGzuxrub5SE/fpi4fkWiG3D0BBzaAhKW5moBsYYOxKKA8S+ymXKX+d/xAn1GSjjbgFZ3aEoCw==
+X-Received: by 2002:a05:6512:e99:b0:536:a583:2777 with SMTP id
+ 2adb3069b0e04-53b348c0e4emr9136980e87.9.1730373027766; 
+ Thu, 31 Oct 2024 04:10:27 -0700 (PDT)
+Received: from [192.168.210.26] (83.11.19.101.ipv4.supernova.orange.pl.
+ [83.11.19.101]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-53c7bc958cbsm169073e87.52.2024.10.31.04.10.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 31 Oct 2024 04:10:27 -0700 (PDT)
+Message-ID: <0a77763b-94b0-42de-96a3-5fc6882be06c@linaro.org>
+Date: Thu, 31 Oct 2024 12:10:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scripts: remove erroneous file that breaks git clone on
- Windows
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org
-References: <20241023073914.895438-1-pierrick.bouvier@linaro.org>
- <02bf77ef-9136-4976-b961-ffb889ed1181@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <02bf77ef-9136-4976-b961-ffb889ed1181@linaro.org>
+Subject: Re: [PATCH v2 1/1] pcie: enable Extended tag field support
+To: qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20241023113820.486017-1-marcin.juszkiewicz@linaro.org>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB
+Organization: Linaro
+In-Reply-To: <20241023113820.486017-1-marcin.juszkiewicz@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lf1-x136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,22 +99,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-29.10.2024 21:09, Pierrick Bouvier wrote:
-> On 10/23/24 00:39, Pierrick Bouvier wrote:
->> This file was created by mistake in recent ed7667188 (9p: remove
->> 'proxy' filesystem backend driver).
->>
->> When cloning the repository using native git for windows, we see this:
->> Error: error: invalid path 'scripts/meson-buildoptions.'
+W dniu 23.10.2024 o 13:38, Marcin Juszkiewicz pisze:
+>  From what I read PCI has 32 transactions, PCI Express devices can handle
+> 256 with Extended tag enabled (spec mentions also larger values but I
+> lack PCIe knowledge).
 
-> cc qemu-stable
+Ping?
 
-Yeah, I noticed this patch already.  Thankfully, the mentioned
-commit isn't in any released version yet (it's past 9.1), so
-the wrong file doesn't need to be deleted in any stable series.
 
-But thank you for caring for stable series, much appreciated!
-
-/mjt
+> QEMU leaves 'Extended tag field' with 0 as value:
+> 
+> Capabilities: [e0] Express (v1) Root Complex Integrated Endpoint, IntMsgNum 0
+>          DevCap: MaxPayload 128 bytes, PhantFunc 0
+>                  ExtTag- RBE+ FLReset- TEE-IO-
+> 
+> SBSA ACS has test 824 which checks for PCIe device capabilities. BSA
+> specification [1] (SBSA is on top of BSA) in section F.3.2 lists
+> expected values for Device Capabilities Register:
+> 
+> Device Capabilities Register     Requirement
+> Role based error reporting       RCEC and RCiEP: Hardwired to 1
+> Endpoint L0s acceptable latency  RCEC and RCiEP: Hardwired to 0
+> L1 acceptable latency            RCEC and RCiEP: Hardwired to 0
+> Captured slot power limit scale  RCEC and RCiEP: Hardwired to 0
+> Captured slot power limit value  RCEC and RCiEP: Hardwired to 0
+> Max payload size                 value must be compliant with PCIe spec
+> Phantom functions                RCEC and RCiEP: Recommendation is to
+>                                   hardwire this bit to 0.
+> Extended tag field               Hardwired to 1
+> 
+> 1. https://developer.arm.com/documentation/den0094/c/
+> 
+> This change enables Extended tag field. All versioned platforms should
+> have it disabled for older versions (tested with Arm/virt).
+> 
+> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> ---
+>   hw/core/machine.c    | 4 +++-
+>   hw/pci/pci.c         | 2 ++
+>   hw/pci/pcie.c        | 8 +++++++-
+>   include/hw/pci/pci.h | 2 ++
+>   4 files changed, 14 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index adaba17eba..8ccc74067a 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -34,7 +34,9 @@
+>   #include "hw/virtio/virtio-iommu.h"
+>   #include "audio/audio.h"
+>   
+> -GlobalProperty hw_compat_9_1[] = {};
+> +GlobalProperty hw_compat_9_1[] = {
+> +    { TYPE_PCI_DEVICE, "x-pcie-ext-tag", "false" },
+> +};
+>   const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
+>   
+>   GlobalProperty hw_compat_9_0[] = {
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 87da35ca9b..9a3b0e4a43 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -87,6 +87,8 @@ static Property pci_props[] = {
+>                       QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
+>       DEFINE_PROP_SIZE32("x-max-bounce-buffer-size", PCIDevice,
+>                        max_bounce_buffer_size, DEFAULT_MAX_BOUNCE_BUFFER_SIZE),
+> +    DEFINE_PROP_BIT("x-pcie-ext-tag", PCIDevice, cap_present,
+> +                    QEMU_PCIE_EXT_TAG_BITNR, true),
+>       DEFINE_PROP_END_OF_LIST()
+>   };
+>   
+> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+> index 4b2f0805c6..9f369c2b6c 100644
+> --- a/hw/pci/pcie.c
+> +++ b/hw/pci/pcie.c
+> @@ -86,7 +86,13 @@ pcie_cap_v1_fill(PCIDevice *dev, uint8_t port, uint8_t type, uint8_t version)
+>        * Specification, Revision 1.1., or subsequent PCI Express Base
+>        * Specification revisions.
+>        */
+> -    pci_set_long(exp_cap + PCI_EXP_DEVCAP, PCI_EXP_DEVCAP_RBER);
+> +    uint32_t devcap = PCI_EXP_DEVCAP_RBER;
+> +
+> +    if (dev->cap_present & QEMU_PCIE_EXT_TAG) {
+> +        devcap = PCI_EXP_DEVCAP_RBER | PCI_EXP_DEVCAP_EXT_TAG;
+> +    }
+> +
+> +    pci_set_long(exp_cap + PCI_EXP_DEVCAP, devcap);
+>   
+>       pci_set_long(exp_cap + PCI_EXP_LNKCAP,
+>                    (port << PCI_EXP_LNKCAP_PN_SHIFT) |
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index eb26cac810..5b14f9d375 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -213,6 +213,8 @@ enum {
+>       QEMU_PCIE_ERR_UNC_MASK = (1 << QEMU_PCIE_ERR_UNC_MASK_BITNR),
+>   #define QEMU_PCIE_ARI_NEXTFN_1_BITNR 12
+>       QEMU_PCIE_ARI_NEXTFN_1 = (1 << QEMU_PCIE_ARI_NEXTFN_1_BITNR),
+> +#define QEMU_PCIE_EXT_TAG_BITNR 13
+> +    QEMU_PCIE_EXT_TAG = (1 << QEMU_PCIE_EXT_TAG_BITNR),
+>   };
+>   
+>   typedef struct PCIINTxRoute {
 
 
