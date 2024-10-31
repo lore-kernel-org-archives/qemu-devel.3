@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C2EE68951
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D010E68952
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MQn-0003iO-LW; Thu, 31 Oct 2024 00:05:09 -0400
+	id 1t6MQp-0003lK-RT; Thu, 31 Oct 2024 00:05:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQi-0003eU-Ba
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:04 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1t6MQg-0003dU-RU
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:03 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQg-0004qT-GI
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:04 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-20c8b557f91so5319605ad.2
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:01 -0700 (PDT)
+ id 1t6MQf-0004q1-2s
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:02 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2e56750bb0dso381466a91.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730347501; x=1730952301; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730347500; x=1730952300; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s8/FoORAU+MbCzBkiE+YK/dNQraWToWCvs2DtBwW02Y=;
- b=M+u9yDEEMZfeVUY41bCuihIlEqXL3E744K4MGrk+PF7YhSNnXFx7cin8upM+xipYo2
- HjqwMJ2LUkn0FAx4sg0KeA+TWW5LZ5ORhDvcIrbRpXxqk5vyOPrleDQfAgHWCoM1+nAb
- 87hJFpyt8Cuw1/ALbDu8KU8wbnrWc4iph+EXOSba4vaRgoChfngXnWPHw4OdDaAP6yS8
- qdOaL2TgyzdCLz2KzYY54BYLi5ZMHy/f+gFasU2Az6a3TSpXTqCWT1o7Yn7DuawCDwzQ
- xdzJM8kGalI8GQLc2wAmsLWGVjLc9l3Jg+teWVg91gPyeAdL+qnpb1sgBqxtlWgEEVTE
- laCg==
+ bh=fv7fP7ICWyfxL2x/CP9SZRa4THtQuAFnXp8RQEnngd8=;
+ b=BJCL8X/lA4a8SS5Y57Zp/+YXEwlvrqdmuWrdCnynK/ZZYsZlzh6AT46FZ0uqSuPW+G
+ EyvItsTlhYQh+NVMLBQvhba8byYj2l4n+nPx68wshcVBiw0tCMoGwi0tQEo+jr+9bRux
+ oncAjkv5yKI+kt02BosphueN8+chuYdH1yZC/jqRyTDYzCwsr3fqEZY/TYYukncktwPW
+ XVMbouGinVUsuWx/Phs0s1YZGVzpy2iR/y51+ZakxH3WWDJhZEE/FI1e5W2QdoiSftcL
+ gtqFLaDxi4HUYdyIZHryVzMTZ3H/E9TneUWNRGXZTUlrP+l1rdXgKMyAIQo/3YBZjFMy
+ Dumg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730347501; x=1730952301;
+ d=1e100.net; s=20230601; t=1730347500; x=1730952300;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s8/FoORAU+MbCzBkiE+YK/dNQraWToWCvs2DtBwW02Y=;
- b=SP0f8nKuw8Jgj9kmbPRcqblDhr2gTwyuK6iXoTn2l6tQUkmj685WZfQdfDEeWuwhgO
- e/Wg1LsfUCA5oJghGynUjpq5MYG6NKMVDe5TZmmvZO6Xdkxjd2sk9u+RQ1Zaj0ez5Adn
- aJydUtoN3OrJabZs1bKw/r7MScDWk6KvNoXmt7g/QYbcDCiSPAgS5dDFIR7hxL3z36Ci
- aoXtiDpl2UT9tgPZHMexaTJJkGaDn92PaTH1NeZE7E9ETnXt5FhH/tiPEotSO/YbTK95
- f1Cj5J9YZ5uFH+yhDvO1COgmn4kyVjRMGxzQGwDqYO8NkhpaYfVDJb8nx8tUnJyU05dO
- 9ULQ==
-X-Gm-Message-State: AOJu0YxZH7Q0O9NQXvZGuhyJyIAynnCmgsBkJumG8X1VOKUGGOdv/2zd
- eSYZDnUXj4jwAxsmbMmCvfB605tmWwRHfPtVbRL1Ogl1YyeKBG8ZM+LxLEsy0FY1JCnBPrwSWqA
- wLHZePw==
-X-Google-Smtp-Source: AGHT+IG2rAYEErvzHSg3m0qkWXFcFOScpXKMPZL5dHjMebkKHgSGcvDogxFZVUhdAVzXSb4ClNN3sQ==
-X-Received: by 2002:a17:903:228d:b0:20b:9062:7b08 with SMTP id
- d9443c01a7336-210c6c6e7edmr287969295ad.45.1730347500835; 
- Wed, 30 Oct 2024 21:05:00 -0700 (PDT)
+ bh=fv7fP7ICWyfxL2x/CP9SZRa4THtQuAFnXp8RQEnngd8=;
+ b=mbUkjh0zPXkzYmhfqPiamKEaqtxujvN0TQ6HDBay5CgSMW1O9s1wt5IoXWqwVcNMo2
+ mne7XdA8OPfvHZrssZ1/miDwGSsh/tNtVGnnRVl7qzBx8I7juhMC+y7UnXE/M7GxA6+A
+ 6z8xEtwKiTxA3IHKySf8jHkg6jjbCh47pFiauGCkEdH3ErcBoLCaqIhvkZFVhp2nN7Pz
+ lxWVdi5FGCubXwQRfIzNTl/AG8vDV4/MQ9440cw1kxN9Ee2KAN9WUTDLAd7AL677hSKF
+ dRDKgYQ3bWmqn5d01FFQlO3tJaVtPx+RUgAteuABIjHvkfcLN/piTudtTePtUVM/rWyo
+ /4XA==
+X-Gm-Message-State: AOJu0YwSzh0NVegB27GfedA01GE6+GGf758zIt72ctffIgOJY4gK2ZEj
+ eN7xRowLM4v2hSSf4UQZtREJsIqPHzZgSnldHf0ms5uaFfYNukJ0A/rbhUaqIWW4yOofkIENfOS
+ fwVSOLg==
+X-Google-Smtp-Source: AGHT+IFpQxDk8p2VP4nriXIupYuXJBOVQI3fMflZN8u0ftZ0x8kXb92WWWiHWfBfhK898FPlWB2tsw==
+X-Received: by 2002:a17:90b:2741:b0:2e2:b64e:f506 with SMTP id
+ 98e67ed59e1d1-2e8f105b461mr21551918a91.13.1730347499654; 
+ Wed, 30 Oct 2024 21:04:59 -0700 (PDT)
 Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e93db3a023sm428438a91.49.2024.10.30.21.04.59
+ 98e67ed59e1d1-2e93db3a023sm428438a91.49.2024.10.30.21.04.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 21:05:00 -0700 (PDT)
+ Wed, 30 Oct 2024 21:04:59 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
@@ -73,17 +73,17 @@ Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 04/12] contrib/plugins: remove Makefile for contrib/plugins
-Date: Wed, 30 Oct 2024 21:04:18 -0700
-Message-Id: <20241031040426.772604-5-pierrick.bouvier@linaro.org>
+Subject: [PATCH 03/12] meson: build contrib/plugins with meson
+Date: Wed, 30 Oct 2024 21:04:17 -0700
+Message-Id: <20241031040426.772604-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
 References: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,181 +106,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now replaced by meson build.
+Tried to unify this meson.build with tests/tcg/plugins/meson.build but
+the resulting modules are not output in the right directory.
 
+Originally proposed by Anton Kochkov, thank you!
+
+Solves: https://gitlab.com/qemu-project/qemu/-/issues/1710
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- configure                | 18 ---------
- Makefile                 | 10 -----
- contrib/plugins/Makefile | 87 ----------------------------------------
- 3 files changed, 115 deletions(-)
- delete mode 100644 contrib/plugins/Makefile
+ meson.build                 |  4 ++++
+ contrib/plugins/meson.build | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+)
+ create mode 100644 contrib/plugins/meson.build
 
-diff --git a/configure b/configure
-index 4a0159e1832..8f0ba505187 100755
---- a/configure
-+++ b/configure
-@@ -1073,7 +1073,6 @@ if test "$plugins" != "no" && test $host_bits -eq 64; then
-         plugins="no"
-     else
-         plugins=yes
--        subdirs="$subdirs contrib/plugins"
-     fi
- fi
+diff --git a/meson.build b/meson.build
+index f7d45175212..d8af08299e0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3684,6 +3684,10 @@ subdir('accel')
+ subdir('plugins')
+ subdir('ebpf')
  
-@@ -1704,7 +1703,6 @@ LINKS="$LINKS .gdbinit scripts" # scripts needed by relative path in .gdbinit
- LINKS="$LINKS tests/avocado tests/data"
- LINKS="$LINKS tests/qemu-iotests/check tests/qemu-iotests/Makefile"
- LINKS="$LINKS python"
--LINKS="$LINKS contrib/plugins/Makefile "
- for f in $LINKS ; do
-     if [ -e "$source_path/$f" ]; then
-         symlink "$source_path/$f" "$f"
-@@ -1790,22 +1788,6 @@ if test "$default_targets" = "yes"; then
-   echo "CONFIG_DEFAULT_TARGETS=y" >> $config_host_mak
- fi
++if 'CONFIG_TCG' in config_all_accel
++  subdir('contrib/plugins')
++endif
++
+ common_user_inc = []
  
--# contrib/plugins configuration
--echo "# Automatically generated by configure - do not modify" > contrib/plugins/$config_host_mak
--echo "SRC_PATH=$source_path/contrib/plugins" >> contrib/plugins/$config_host_mak
--echo "PKG_CONFIG=${pkg_config}" >> contrib/plugins/$config_host_mak
--echo "CC=$cc $CPU_CFLAGS" >> contrib/plugins/$config_host_mak
--echo "CFLAGS=${CFLAGS-$default_cflags} $EXTRA_CFLAGS" >> contrib/plugins/$config_host_mak
--if test "$host_os" = windows; then
--  echo "DLLTOOL=$dlltool" >> contrib/plugins/$config_host_mak
--fi
--if test "$host_os" = darwin; then
--  echo "CONFIG_DARWIN=y" >> contrib/plugins/$config_host_mak
--fi
--if test "$host_os" = windows; then
--  echo "CONFIG_WIN32=y" >> contrib/plugins/$config_host_mak
--fi
--
- # tests/tcg configuration
- mkdir -p tests/tcg
- echo "# Automatically generated by configure - do not modify" > tests/tcg/$config_host_mak
-diff --git a/Makefile b/Makefile
-index 917c9a34d1c..b65b0bd41a8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -187,11 +187,6 @@ SUBDIR_RULES=$(foreach t, all clean distclean, $(addsuffix /$(t), $(SUBDIRS)))
- $(SUBDIR_RULES):
- 	$(call quiet-command,$(MAKE) $(SUBDIR_MAKEFLAGS) -C $(dir $@) V="$(V)" TARGET_DIR="$(dir $@)" $(notdir $@),)
- 
--ifneq ($(filter contrib/plugins, $(SUBDIRS)),)
--.PHONY: plugins
--plugins: contrib/plugins/all
--endif
--
- .PHONY: recurse-all recurse-clean
- recurse-all: $(addsuffix /all, $(SUBDIRS))
- recurse-clean: $(addsuffix /clean, $(SUBDIRS))
-@@ -307,11 +302,6 @@ help:
- 	$(call print-help,cscope,Generate cscope index)
- 	$(call print-help,sparse,Run sparse on the QEMU source)
- 	@echo  ''
--ifneq ($(filter contrib/plugins, $(SUBDIRS)),)
--	@echo  'Plugin targets:'
--	$(call print-help,plugins,Build the example TCG plugins)
--	@echo  ''
--endif
- 	@echo  'Cleaning targets:'
- 	$(call print-help,clean,Remove most generated files but keep the config)
- 	$(call print-help,distclean,Remove all generated files)
-diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
-deleted file mode 100644
-index bbddd4800ff..00000000000
---- a/contrib/plugins/Makefile
-+++ /dev/null
-@@ -1,87 +0,0 @@
--# -*- Mode: makefile -*-
--#
--# This Makefile example is fairly independent from the main makefile
--# so users can take and adapt it for their build. We only really
--# include config-host.mak so we don't have to repeat probing for
--# programs that the main configure has already done for us.
--#
--
--include config-host.mak
--
--TOP_SRC_PATH = $(SRC_PATH)/../..
--
--VPATH += $(SRC_PATH)
--
--NAMES :=
--NAMES += bbv
--NAMES += execlog
--NAMES += hotblocks
--NAMES += hotpages
--NAMES += howvec
--
--# The lockstep example communicates using unix sockets,
--# and can't be easily made to work on windows.
--ifneq ($(CONFIG_WIN32),y)
--NAMES += lockstep
--endif
--
--NAMES += hwprofile
--NAMES += cache
--NAMES += drcov
--NAMES += ips
--NAMES += stoptrigger
--NAMES += cflow
--
--ifeq ($(CONFIG_WIN32),y)
--SO_SUFFIX := .dll
--LDLIBS += $(shell $(PKG_CONFIG) --libs glib-2.0)
--else
--SO_SUFFIX := .so
--endif
--
--SONAMES := $(addsuffix $(SO_SUFFIX),$(addprefix lib,$(NAMES)))
--
--# The main QEMU uses Glib extensively so it is perfectly fine to use it
--# in plugins (which many example do).
--PLUGIN_CFLAGS := $(shell $(PKG_CONFIG) --cflags glib-2.0)
--PLUGIN_CFLAGS += -fPIC -Wall
--PLUGIN_CFLAGS += -I$(TOP_SRC_PATH)/include/qemu
--
--# Helper that honours V=1 so we get some output when compiling
--quiet-@ = $(if $(V),,@$(if $1,printf "  %-7s %s\n" "$(strip $1)" "$(strip $2)" && ))
--quiet-command = $(call quiet-@,$2,$3)$1
--
--# for including , in command strings
--COMMA := ,
--
--all: $(SONAMES)
--
--%.o: %.c
--	$(call quiet-command, \
--		$(CC) $(CFLAGS) $(PLUGIN_CFLAGS) -c -o $@ $<, \
--	        BUILD, plugin $@)
--
--ifeq ($(CONFIG_WIN32),y)
--lib%$(SO_SUFFIX): %.o win32_linker.o ../../plugins/libqemu_plugin_api.a
--	$(call quiet-command, \
--		$(CC) -shared -o $@ $^ $(LDLIBS), \
--		LINK, plugin $@)
--else ifeq ($(CONFIG_DARWIN),y)
--lib%$(SO_SUFFIX): %.o
--	$(call quiet-command, \
--		$(CC) -bundle -Wl$(COMMA)-undefined$(COMMA)dynamic_lookup -o $@ $^ $(LDLIBS), \
--		LINK, plugin $@)
--else
--lib%$(SO_SUFFIX): %.o
--	$(call quiet-command, \
--		$(CC) -shared -o $@ $^ $(LDLIBS), \
--		LINK, plugin $@)
--endif
--
--
--clean distclean:
--	rm -f *.o *$(SO_SUFFIX) *.d
--	rm -Rf .libs
--
--.PHONY: all clean
--.SECONDARY:
+ subdir('common-user')
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+new file mode 100644
+index 00000000000..63a32c2b4f0
+--- /dev/null
++++ b/contrib/plugins/meson.build
+@@ -0,0 +1,28 @@
++contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
++                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger']
++if host_os != 'windows'
++  # lockstep uses socket.h
++  contrib_plugins += 'lockstep'
++endif
++
++t = []
++if get_option('plugins')
++  foreach i : contrib_plugins
++    if host_os == 'windows'
++      t += shared_module(i, files(i + '.c') + 'win32_linker.c',
++                        include_directories: '../../include/qemu',
++                        link_depends: [win32_qemu_plugin_api_lib],
++                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
++                        dependencies: glib)
++    else
++      t += shared_module(i, files(i + '.c'),
++                        include_directories: '../../include/qemu',
++                        dependencies: glib)
++    endif
++  endforeach
++endif
++if t.length() > 0
++  alias_target('contrib-plugins', t)
++else
++  run_target('contrib-plugins', command: find_program('true'))
++endif
 -- 
 2.39.5
 
