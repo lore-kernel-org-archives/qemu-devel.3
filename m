@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85335E68952
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 882B5E68953
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MHR-0002Pz-IX; Wed, 30 Oct 2024 23:55:29 -0400
+	id 1t6MIE-0006gP-Bp; Wed, 30 Oct 2024 23:56:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MH9-0001uM-JX
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:55:13 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1t6MI4-0005X7-IC
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:56:09 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t6MH8-0004Cs-1a
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:55:11 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-20caccadbeeso5506035ad.2
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:55:09 -0700 (PDT)
+ id 1t6MI3-0004Hi-2n
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:56:08 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-20ce65c8e13so6045505ad.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730346908; x=1730951708; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730346965; x=1730951765; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ur8LYWZRvT+qQvnT17XmswKRLf3qm8o1ZqFivpailak=;
- b=In+lEud085vvdhCIbTT/Ne3n2e0SNyGkzRvySVCPOp4Zo1Ybx+SoKxxFg6yqzPPVvf
- wZpZ+YNVdWA2GSMYzF3oaTUbahqt+f5BK1Dg4vGVGoLDIJOgeRTnYF+4fnZex0xQrkKA
- VXM/9GxFVr0hR79BFW+UCSVxPDCZPsFdzd51QzaEsxN0vhePcVkKFXKRrfdQZYFXugIN
- 9rWcmFicaHRdbILOotYno2LlsY9oGsi4DPYNFSeA6MQHFkxkiL6edV3GXkIdnPEyPDJh
- Lt7IhpJgmGHTg7+WXE1woNGpur3Oez4voINAWNN41ToteGMuavfjEqiFnVJ8i/og2Jo6
- Wwow==
+ bh=f8Zz+Kse6TIUA+P8z+LFTfIC7op8OwD/N4ZO0gt+jmY=;
+ b=JqDPiMNgBskjPITMrDhwS25+3mKwVMqPfz1uTC74KBVQv6rElK4SATsMvXj/hMGLLe
+ mhIA6RAw52GuQHHEDJQjDXO6el+wR4ZtccsQibGncwnd1Mp0BQ9wxu555205UWmVokV/
+ U6r10H9rKdTYg6sbtYjDnHPGQsRoyisb4q5YXt3BQz49VhCNgpChUxh88pTS8tsDFFXq
+ uKLpVOUXnNpnfB9h/zWa5DxdwJdhRXiX8CNd+K1cpt8E3imuHzV/CQttCu0mz1KvqB65
+ c3ibQ+qO1II8FVp+977tonVJJeLuTDufRHE2XhMFoFtU+efN5VX6k/9Zew/dKrgqEKGF
+ vZnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730346908; x=1730951708;
+ d=1e100.net; s=20230601; t=1730346965; x=1730951765;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ur8LYWZRvT+qQvnT17XmswKRLf3qm8o1ZqFivpailak=;
- b=NzVRcs9qsGZYQTXEZg9j33lq2U55N4HPShRxHEPweP5s6YCBdu71ZQ7iH9OQywdPcK
- 7jPoRdAvxQOCS64fPO/sUkFn1LxTkQrzIq4t6SREURP3XlJSZzmcxcEXHkd41jf/98qK
- QzptjEgYzaDJGg3lcOXnUIcckLEPZTG6Ao8ewOiYAC7X/VGoN3aB/lFrqsUwLrFjr5M+
- 1mpAa+HCRAxj/o7t1VNbx23dXx6FutLJHtafm67QbrOgsoPN/I5jJGuO8oC7MqkFntNu
- MbkMxr9bVVS9PcnSa+afOHWn6sMASoyCWBW2+wxKzOMyyC+VgR5GNK+xfu9/igMzfeyQ
- J19Q==
-X-Gm-Message-State: AOJu0YwBDx+Mxajj1bH6kcX9d/1AWYZ1r6ze2UdWZCe8epllZXtsf6OT
- bsEwm1fiIOvLMFL0EbMqDd+aY9j1+AbDobvmo3rzczjBrGZhy1T/vNKjV5Vq
-X-Google-Smtp-Source: AGHT+IG5aV07CAXxuDbawFMLZu2NWexQGFkYx6nfvRKoS5WemIGOtqNw57TSBM4NN0WynF54KyO4Lg==
-X-Received: by 2002:a17:902:d2cc:b0:20c:5404:ed69 with SMTP id
- d9443c01a7336-21103b1de3emr24240595ad.31.1730346908512; 
- Wed, 30 Oct 2024 20:55:08 -0700 (PDT)
+ bh=f8Zz+Kse6TIUA+P8z+LFTfIC7op8OwD/N4ZO0gt+jmY=;
+ b=u0EuvBC/Ya7fgF0fEVe1TMwX0GJaIlEVn6DZ+tmnwoqWbNXotWg/WxVMBQfQ18rU9V
+ IoYP/EfhzD5axntq2pOBr/LONsOgrG6rl7pZleVh8YjkBtHRvFwVJkW4JjY+zwaZu5lK
+ UwOaMTjM4NTjjoPorfzJk4WruovOY7OHhfM8AoaN0Fm3KdPuUtkRfQLy58+vgdEhxUTn
+ 6zvVe+UA3vdhUC7b3i1dKcygf9tOimnlpLBhYzXq9eyhl3dCtz8VZ5Jdk1vmLpWLQhOH
+ vpAH54QR4nD+y2K9PFQIJiCWwh2AN1MYSjJOhIypjetBbTAQwOe5nfM827KbOnyIa5QX
+ oxXQ==
+X-Gm-Message-State: AOJu0YwC+ztK/tUdrw0oJKa5ea6qIU23A9Vmc5w9Rhu6PUc4zk2E3r0i
+ PHzWIzLlhDZ53uiUH2VY8pUkYAEctDucbEC+50ij+HkqVpC46mDWxLl5zj7L
+X-Google-Smtp-Source: AGHT+IEK02abrvO8IZCYLg22bAfLi1mJ/teppqSzxjxRwb3C7Vq8ElvDQVkBWuATBeYweMKSyudNrg==
+X-Received: by 2002:a17:902:ce07:b0:205:709e:1949 with SMTP id
+ d9443c01a7336-21103cc0a4emr18580765ad.57.1730346965319; 
+ Wed, 30 Oct 2024 20:56:05 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.55.05
+ d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.56.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 20:55:08 -0700 (PDT)
+ Wed, 30 Oct 2024 20:56:04 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Deepak Gupta <debug@rivosinc.com>,
- Jim Shu <jim.shu@sifive.com>, Andy Chiu <andy.chiu@sifive.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: alistair23@gmail.com, Anton Blanchard <antonb@tenstorrent.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 32/50] target/riscv: compressed encodings for sspush and
- sspopchk
-Date: Thu, 31 Oct 2024 13:53:00 +1000
-Message-ID: <20241031035319.731906-33-alistair.francis@wdc.com>
+Subject: [PULL 50/50] target/riscv: Fix vcompress with rvv_ta_all_1s
+Date: Thu, 31 Oct 2024 13:53:18 +1000
+Message-ID: <20241031035319.731906-51-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241031035319.731906-1-alistair.francis@wdc.com>
 References: <20241031035319.731906-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,41 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Deepak Gupta <debug@rivosinc.com>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-sspush/sspopchk have compressed encodings carved out of zcmops.
-compressed sspush is designated as c.mop.1 while compressed sspopchk
-is designated as c.mop.5.
+vcompress packs vl or less fields into vd, so the tail starts after the
+last packed field. This could be more clearly expressed in the ISA,
+but for now this thread helps to explain it:
 
-Note that c.sspush x1 exists while c.sspush x5 doesn't. Similarly
-c.sspopchk x5 exists while c.sspopchk x1 doesn't.
+https://github.com/riscv/riscv-v-spec/issues/796
 
-Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-Co-developed-by: Jim Shu <jim.shu@sifive.com>
-Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241008225010.1861630-18-debug@rivosinc.com>
+Message-ID: <20241030043538.939712-1-antonb@tenstorrent.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/insn16.decode | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/riscv/vector_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/riscv/insn16.decode b/target/riscv/insn16.decode
-index 3953bcf82d..bf893d1c2e 100644
---- a/target/riscv/insn16.decode
-+++ b/target/riscv/insn16.decode
-@@ -140,6 +140,10 @@ sw                110  ... ... .. ... 00 @cs_w
- addi              000 .  .....  ..... 01 @ci
- addi              010 .  .....  ..... 01 @c_li
- {
-+  # c.sspush x1 carving out of zcmops
-+  sspush          011 0  00001  00000 01 &r2_s rs2=1 rs1=0
-+  # c.sspopchk x5 carving out of zcmops
-+  sspopchk        011 0  00101  00000 01 &r2 rs1=5 rd=0
-   c_mop_n         011 0 0 n:3 1 00000 01
-   illegal         011 0  -----  00000 01 # c.addi16sp and c.lui, RES nzimm=0
-   addi            011 .  00010  ..... 01 @c_addi16sp
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 072bd444b1..ccb32e6122 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -5132,7 +5132,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,               \
+     }                                                                     \
+     env->vstart = 0;                                                      \
+     /* set tail elements to 1s */                                         \
+-    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
++    vext_set_elems_1s(vd, vta, num * esz, total_elems * esz);             \
+ }
+ 
+ /* Compress into vd elements of vs2 where vs1 is enabled */
 -- 
 2.47.0
 
