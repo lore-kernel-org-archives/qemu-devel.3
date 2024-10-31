@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152A4E6894E
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AAECE6894F
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 03:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MGJ-0007Ma-Oe; Wed, 30 Oct 2024 23:54:19 -0400
+	id 1t6MG7-0007Jw-B5; Wed, 30 Oct 2024 23:54:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6MGI-0007MM-Sc
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:18 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t6MG5-0007Jf-OG
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:05 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t6MGG-0003wU-Je
- for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:18 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-539f72c913aso785961e87.1
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:54:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t6MG4-0003vF-Ax
+ for qemu-devel@nongnu.org; Wed, 30 Oct 2024 23:54:05 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-207115e3056so5059875ad.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 20:54:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730346854; x=1730951654; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cNSOgPK/LUOornui0xSrRZ2dvpsKphrF5tK8UB5/hEY=;
- b=jFxBtlx2ocJdGw88JuXgu9hak8rEksHU8BeeshwhP22FA8pyih/wdJALRAG8fnrnzN
- MfN36MiyeHHj8XU1zNPx54EiwZTP0SnGqNtpXYe1PXn+MiZiPMB31/FBki9W2X61BQpx
- EL4e0slcs05sytkANyCXm5qkZz3mUekZYa9+DVBsksLhaN5t6yAK4uAGIMHQ0okkjcyK
- Da56L1YdvjHqcAM9bHg0qglr+SmDPDX2gaQ4K+GOXdAF2tws4v16SFyJAv+hruaOGl2A
- Hz1MeTWL/n6+6BRb4i2rmWQAijrDGJQFuTva3eo4MWWO/17lzh+x0xcTjC4x0HP2iAZc
- VGsA==
+ d=gmail.com; s=20230601; t=1730346842; x=1730951642; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zkMM+SpFMUglcfQaluT/IwK1QZ7oQxstOZNmSOLZ8cc=;
+ b=coJLaFGVd4pJHIKu7+YTZbwr4099XHQIVh+x8fCMj6iNnsurAapQO4g/MomxFPK9mc
+ e9JdZNqI41l+9vK91sRrrUS6B68V0hG6FN4VuFR5JaGA4QF68QIvT/ry6zEozoMuCE6S
+ fQ54d3dgBZ4Ui7mxZnv3c2oY/WkGyyhEOe4KJ3CXMddmc2IyDLFHKH8ODXEHSYkOWhBe
+ Dz+abLyJFO0LU3g2F2rmQgvcy1IiBAwY7wSXK0D6nVybFkDNF77YzQO9iWZdw2oAyv31
+ jB2qqR1lR496yR2IP/DBm9eBW7FoWk4n1hpHIlrRIjcolrFdy+cfdhSczHWDaLY6yvpd
+ mBzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730346854; x=1730951654;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cNSOgPK/LUOornui0xSrRZ2dvpsKphrF5tK8UB5/hEY=;
- b=OkAyjasMhbgUEa1Dwue5it+4B5n8ZNSp9OYw6VLWmMtXd4AxwiRabRnfbilseSDZLM
- fxP2APbIfKCqyVvJ9o8qqoxeZsJDkmSQiEVyUyKW4J083ZwUC9boiuFFrVLuPgVPlsrb
- W159V0aDAU8K3IH/QUYLyOm7Lg0RCCyjhp/nJpjktnwcptLIjlAxPAXSWnI3FvOj1tlI
- mmXfVhs17PhkbDo2ekJ3JDpJYOkpe28aJ8nxwaH4g2wqDjOr3hUEnbt+MU2QxjWVVskk
- 3ZiGX3BLY4RN7V0IBJ7dOaCSuwbg+LO4W/TqbNtgnnHxcJ8OFocj6tR/q8pY5H5BMDrp
- GUcg==
-X-Gm-Message-State: AOJu0Yyk7FTC/MJspNZ06F3wYkOEAqLtGiRMIEU2os8YvF1Cz5hosZPU
- gK03gZl8oKM1COVXpTlBnJ4n9iDK9ljE1FFZRo+q/OzfzqrJ5zg50J7RfgqZaWggIFiXRC7Pn0T
- W
-X-Google-Smtp-Source: AGHT+IEUAe7DSdkllbC9uM0SBKBzVKpcvUAX5zSFXs9WsHupPUQWRPwY3mJX1Bfq0sjFbZJx26Ztkg==
-X-Received: by 2002:a05:6512:1324:b0:539:f807:ada1 with SMTP id
- 2adb3069b0e04-53b34c463c1mr7155464e87.58.1730346854187; 
- Wed, 30 Oct 2024 20:54:14 -0700 (PDT)
-Received: from [192.168.21.226] ([91.223.100.208])
+ d=1e100.net; s=20230601; t=1730346842; x=1730951642;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zkMM+SpFMUglcfQaluT/IwK1QZ7oQxstOZNmSOLZ8cc=;
+ b=sApzUqjcW0H8cEEws6aheepPNxrLOQriW7QekvgMGzB08FW160BDtXAAgtwpL7RJ7i
+ rzOH8dxgjAdkkB5R1al/0i9K0Sj13txQABCMkpSC/ntLN8atESFPoYiTFh7YC2AE7mCe
+ q3ZCigRNk62L5t+UwZkBPk3RTuLAEOn+XvroAQdvmrDpT351c1svSDb49ZRAr8y2BTsW
+ +UnbOQ04rrd53EBa1c/5/SX4wnnRUBUqYHPd2OyigzMTqpSD87RAj6buyrlhiauFPPqd
+ S3eKGkiBZ8Mypy3jGMmLZ/vXxNz6yjafXyvW0F2bvzMPKCyHVjiphW3/qxQw6KHVa6nY
+ lSVg==
+X-Gm-Message-State: AOJu0YxP7obYRlrahjJadtuNcRpNeTY1cklGd78AC5984E/BwH1xRetc
+ tk2iCROamnHJK1vfj/vvxBMcbNhlxxnB72SPJQWb8oazM3C1VK6QH9U2F8cd
+X-Google-Smtp-Source: AGHT+IFAsR9ahUI3y+OceZKLRZtsJbREhCNARElu94LtcXJWVPKMvmNIJPKzh7NeQboMn8SZdMInXA==
+X-Received: by 2002:a17:903:244d:b0:20c:bb35:dae2 with SMTP id
+ d9443c01a7336-210c69e1c8emr218143015ad.28.1730346842559; 
+ Wed, 30 Oct 2024 20:54:02 -0700 (PDT)
+Received: from toolbox.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53c7bc95998sm73215e87.24.2024.10.30.20.54.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Oct 2024 20:54:13 -0700 (PDT)
-Message-ID: <eeed4a8d-d0e1-491a-8c24-665f5e531ab3@linaro.org>
-Date: Thu, 31 Oct 2024 00:54:07 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/9] target/mips: Convert Loongson LEXT opcodes to
- decodetree
+ d9443c01a7336-21105707064sm3022795ad.70.2024.10.30.20.53.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 30 Oct 2024 20:54:02 -0700 (PDT)
+From: Alistair Francis <alistair23@gmail.com>
+X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Aleksandar Rikalo <arikalo@gmail.com>
-References: <20241026175349.84523-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241026175349.84523-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: alistair23@gmail.com, Rob Bradford <rbradford@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 12/50] target/riscv: Set vtype.vill on CPU reset
+Date: Thu, 31 Oct 2024 13:52:40 +1000
+Message-ID: <20241031035319.731906-13-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241031035319.731906-1-alistair.francis@wdc.com>
+References: <20241031035319.731906-1-alistair.francis@wdc.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,18 +99,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/10/24 14:53, Philippe Mathieu-Daudé wrote:
+From: Rob Bradford <rbradford@rivosinc.com>
 
-> Philippe Mathieu-Daudé (9):
->    target/mips: Extract decode_64bit_enabled() helper
->    target/mips: Simplify Loongson MULTU.G opcode
->    target/mips: Re-introduce OPC_ADDUH_QB_DSP and OPC_MUL_PH_DSP
->    target/mips: Convert Loongson DDIV.G opcodes to decodetree
->    target/mips: Convert Loongson DIV.G opcodes to decodetree
->    target/mips: Convert Loongson [D]DIVU.G opcodes to decodetree
->    target/mips: Convert Loongson [D]MOD[U].G opcodes to decodetree
->    target/mips: Convert Loongson [D]MULT[U].G opcodes to decodetree
->    target/mips: Remove unreachable 32-bit code on 64-bit Loongson Ext
+The RISC-V unprivileged specification "31.3.11. State of Vector
+Extension at Reset" has a note that recommends vtype.vill be set on
+reset as part of ensuring that the vector extension have a consistent
+state at reset.
 
-Series queued.
+This change now makes QEMU consistent with Spike which sets vtype.vill
+on reset.
+
+Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20240930165258.72258-1-rbradford@rivosinc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 0c8e017f71..2a78cd639b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1010,6 +1010,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+     cs->exception_index = RISCV_EXCP_NONE;
+     env->load_res = -1;
+     set_default_nan_mode(1, &env->fp_status);
++    env->vill = true;
+ 
+ #ifndef CONFIG_USER_ONLY
+     if (cpu->cfg.debug) {
+-- 
+2.47.0
+
 
