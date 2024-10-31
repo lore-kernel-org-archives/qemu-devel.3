@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313F8E68956
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 07:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 373BAE68956
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 07:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6PUg-0004Xe-AO; Thu, 31 Oct 2024 03:21:22 -0400
+	id 1t6PVN-0004b8-0Q; Thu, 31 Oct 2024 03:22:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t6PUf-0004XW-HR
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:21:21 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1t6PVL-0004am-7Z
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:22:03 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t6PUd-0000Nu-AA
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:21:21 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43159c9f617so4670305e9.2
- for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 00:21:18 -0700 (PDT)
+ id 1t6PVJ-0000RQ-AH
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 03:22:02 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3807dd08cfcso472531f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Oct 2024 00:22:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1730359277; x=1730964077;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1730359320; x=1730964120;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Zuop8CXsJhNCYhcpwiLCpRtqG7leKD1xs9iMRDLK5ss=;
- b=nIMC4ZFJapATy5kQ8AmkWdHkEKMkIA2LZjYdSiEDmn2sSebTMWkkI8msCobwb3xxlu
- /+CBMiahCI0aPpGnGZ7EReeKOiiQIKGzDpW3VX6rCzHuXz8XWXExhlrrOhYSvGP1icpM
- as4DqB29EZWIHlDT2LAfdB/ykIaSkxvqdmXNwMogPcgcNJTIpRuPc9uID+HRjnUFcy8C
- uKyPXjuTqsCjAbUiQTp7nrpeaAYtjGK7Wp0Nxz7k7Md6KVKTdNM5HL40NknRPj8NxEuf
- 6Cx3+NEThmKohPmTIqnKVBLiQ5qWIcEt85zPrL/KZkoFMXd5hUI1/Da/JXnia0fmFmSs
- O1Zg==
+ bh=k+vCVdG01nVCL6ewv08nkx+w0ZPhuAMWeXO+duAdUmI=;
+ b=tkLbt6/ruO8fKn2kCe8zDNkU3hbJvD0fA+mER6RYsBrk7S31OsIRKd1HIBSaGqYoCI
+ UAYIZ0IirLvCjxI3Ln7SF9d0KLF0mTUNCh9SoI4+JV9C0IufdrXjwbNarZje9Yj6aB40
+ 3VX9nTIQ5KX+pWVZupeSWIt3lWvDZgAncK6azd+VoB+MIZUoEa5JjgJa/yMF0BjDa3k+
+ 0fTcu12St6hdYSh9kZkvQB/heICTrOtxpdHaMwe7tx7aOJTS1s8pEb/3wxNZo6MoCMqP
+ tCv9soLjOL5JyJedVLmTjFyn6OGOYEz3kxRiQLY9sc/wHhDa7M6LD4gaKn1cfuMc0bff
+ zM+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730359277; x=1730964077;
+ d=1e100.net; s=20230601; t=1730359320; x=1730964120;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zuop8CXsJhNCYhcpwiLCpRtqG7leKD1xs9iMRDLK5ss=;
- b=TsP+N6naztzY5bqEhKbZ8XQxn0td7OQ08UMJRviFKOv15T/YVpdn1d5tpEzJP6KbQ1
- 9slU1xDUV4Mnt244gyAWLGNANjmMs3G18zwdT/zPlQbQS2Z6Nl/TWfQu3sUAeOpqTMiH
- QvimwXK65Iq3nwb2Sa9cKZDuh4Z1hkdWyeMYtsN2dst5RvGDxaC20wY2X3zToFHs2rj/
- PFGA/sYzQz+0hVWmoZI4OWMEApj14XVxZSmGej4YNXoExooFQKgpIMTi83oFa72kk+MN
- Yx213NiEp06WKgi8/t3na7F5VxG/YYtmRfBHoZr0YL8zyIzXjCniE/rTVvy3AMGa5RUe
- kyWA==
+ bh=k+vCVdG01nVCL6ewv08nkx+w0ZPhuAMWeXO+duAdUmI=;
+ b=iiQLegzIvayaR+WOGbYMeWfH5N4uowaeMSu9vTU+40msjrPQOU3W/eBp5SpPl+y1Ak
+ nCgC2q29HU7h8A8ZGVlgNf1uaMk1IQCcYIB1+U+caoEmmh773IpkO0Zj555OX1lX+KKG
+ NpcReqrD5YuOBgZDOkzwtg6lXwlNJCe/R+sBPSDMOWgc2J9FZEr7WYSrB4LNcoiLlXlf
+ W/FxGVTijGPItfHRNxHc4i86N18SZq2avvZqRj8uO64A6EWl+vORBhljfusn/KYVwUe8
+ FXK+Lnj7ljyeum5Adw/l2uHziTzOTZXL16FFczL8EvVOc/d69NdfIcx1TfliIHwdGpaw
+ BCag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVWkEwUI20O9IqTa5QsFQOQDoYsWTSfzdVtkdxi12BF+AwtR7ZiHr39dT5B1nNyLWIi+9tVmcyfMRjp@nongnu.org
-X-Gm-Message-State: AOJu0YxvCHBPMItiVXkHaeO+AxRrdt4TpQuNkc+5UuAZ6IaltbNBHg8i
- 5bnUDtX4SPKotGN6zj4jL03q6ENTUaPhXj5SdZcdBMs0Awp+kjQ8gK8dx5/8sIQ=
-X-Google-Smtp-Source: AGHT+IGrg3X1DdmdhZO748tL7DC6hyRq9UXo3Wi1H32ZincFc1rcu24LKp6mq1TUxv/prl5bJr4saA==
-X-Received: by 2002:adf:f5d2:0:b0:37d:4afe:8c9b with SMTP id
- ffacd0b85a97d-3806122165amr11617195f8f.54.1730359277096; 
- Thu, 31 Oct 2024 00:21:17 -0700 (PDT)
+ AJvYcCUGwpihjVq3bshNZjORKMVQl4Tm2H4Fd9uaXxYxVg3fmJdwxJEhXV9cqSlP1FXajOfmEzpQCjltc7dx@nongnu.org
+X-Gm-Message-State: AOJu0YycCEBX5mvc4RjF6bppJ3O4jOdvcyicHtDvkHFd4TF4skvnIDH1
+ 4cN/EJaQmMJqlQP0+6vlJL5iZ/9RIqwLBVB3iN5BZT3wVuKs5vOj9DLWCicJwzg=
+X-Google-Smtp-Source: AGHT+IHfo3dnxhz3fn58/onxTE0nDKASDgOSrAwqFVTtqRSBMF9yQH27czKKesaAHvb2RGN1n/waVw==
+X-Received: by 2002:adf:e341:0:b0:37d:9508:1947 with SMTP id
+ ffacd0b85a97d-3806123ee9fmr15871922f8f.51.1730359319705; 
+ Thu, 31 Oct 2024 00:21:59 -0700 (PDT)
 Received: from [157.82.207.167] ([157.82.207.167])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10e7435sm1207056f8f.52.2024.10.31.00.21.10
+ 5b1f17b1804b1-4327d5e94cdsm14524755e9.28.2024.10.31.00.21.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Oct 2024 00:21:16 -0700 (PDT)
-Message-ID: <3dd9b22b-2e0c-4999-aab0-eac751923c35@daynix.com>
-Date: Thu, 31 Oct 2024 16:21:08 +0900
+ Thu, 31 Oct 2024 00:21:59 -0700 (PDT)
+Message-ID: <fcff076c-5616-46f3-aaa1-45d3ad1bbb44@daynix.com>
+Date: Thu, 31 Oct 2024 16:21:53 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] qdev-properties: Accept bool for OnOffAuto
+Subject: Re: [PATCH v2 2/3] qdev-properties: Add
+ DEFINE_PROP_ON_OFF_AUTO_BIT64()
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: Jason Wang <jasowang@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>,
@@ -76,16 +77,16 @@ Cc: Jason Wang <jasowang@redhat.com>,
  Andrew Melnychenko <andrew@daynix.com>,
  Yuri Benditovich <yuri.benditovich@daynix.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+ qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
 References: <20241022-virtio-v2-0-b2394236e053@daynix.com>
- <20241022-virtio-v2-1-b2394236e053@daynix.com> <Zx_Ag0_MFem7Qn3a@redhat.com>
+ <20241022-virtio-v2-2-b2394236e053@daynix.com> <Zx_AuOl7l5b2UIjG@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <Zx_Ag0_MFem7Qn3a@redhat.com>
+In-Reply-To: <Zx_AuOl7l5b2UIjG@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2a00:1450:4864:20::331;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-wm1-x331.google.com
+Received-SPF: none client-ip=2a00:1450:4864:20::435;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -107,91 +108,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/29 1:49, Daniel P. Berrangé wrote:
-> The parent msg was sent off-list orignially, so below is a copy
-> of my feedback to that off-list posting.
+On 2024/10/29 1:50, Daniel P. Berrangé wrote:
+> On Tue, Oct 22, 2024 at 01:50:39PM +0900, Akihiko Odaki wrote:
+>> DEFINE_PROP_ON_OFF_AUTO_BIT64() corresponds to DEFINE_PROP_ON_OFF_AUTO()
+>> as DEFINE_PROP_BIT64() corresponds to DEFINE_PROP_BOOL(). The difference
+>> is that DEFINE_PROP_ON_OFF_AUTO_BIT64() exposes OnOffAuto instead of
+>> bool.
 > 
-> On Tue, Oct 22, 2024 at 01:50:38PM +0900, Akihiko Odaki wrote:
->> Accept bool literals for OnOffAuto properties for consistency with bool
->> properties. This enables users to set the "on" or "off" value in a
->> uniform syntax without knowing whether the "auto" value is accepted.
->> This behavior is especially useful when converting an existing bool
->> property to OnOffAuto or vice versa.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   hw/core/qdev-properties.c | 17 ++++++++++++++++-
->>   1 file changed, 16 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
->> index 86a583574dd0..f0a270bb4f61 100644
->> --- a/hw/core/qdev-properties.c
->> +++ b/hw/core/qdev-properties.c
->> @@ -491,6 +491,21 @@ const PropertyInfo qdev_prop_string = {
->>       .set   = set_string,
->>   };
->>   
->> +static void set_on_off_auto(Object *obj, Visitor *v, const char *name,
->> +                            void *opaque, Error **errp)
->> +{
->> +    Property *prop = opaque;
->> +    int *ptr = object_field_prop_ptr(obj, prop);
->> +    bool value;
->> +
->> +    if (visit_type_bool(v, name, &value, NULL)) {
->> +        *ptr = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
->> +        return;
->> +    }
->> +
->> +    qdev_propinfo_set_enum(obj, v, name, opaque, errp);
->> +}
+> Again, same feedback as last time.
 > 
-> My feedback is the same as last time this was posted.
+> With this design, existing users of DEFINE_PROP_BIT64 that
+> get converted to DEFINE_PROP_ON_OFF_AUTO_BIT64, in addition
+> to gaining the desired "auto" value, also gain redundant
+> 'on' and 'off' values as side-effects.
 > 
-> This is adding redundant new input-only & secret syntax for every
-> usage of OnOffAuto across QEMU.
+> In the next patch, the stated problem is that virtio code
+> needs to distinguish between bits that are user set, and
+> bits that are set based on available host backend features.
 > 
-> "consistency with bool" isn't a expressing a compelling advantage.
+> That doesn't seem to require us to accept any new values
+> from the user. It should be sufficient to track user
+> specified features, separately from user specified values.
+> ie when parsing user input for bitfields, we need to parse
+> into a pair of fields
 > 
-> The new permitted values are invisible to applications, beacuse
-> introspecting QAPI schema for the "OnOffAuto" type will never
-> report them, and querying the value of a property will also never
-> report them.
-> 
-> I'm not seeing an advantage, or clear problem solved, by adding
-> this.
+>    uint64_t has_user_features;  /* which bits were specified */
+>    uint64_t user_features;      /* values of specified bits*/
 
-The intent of this patch is to ease migration from bool to OnOffAuto; a 
-user should be able to set the "on" or "off" value without knowing the 
-"auto" value is accepted.
-
-The redundancy of syntax is already present with bool. If it is 
-problematic, the redundant syntax should be deprecated altogether, 
-whether the type is OnOffAuto or bool.
-
-We can add a alternate type of OnOffAuto and bool to the QAPI schema, 
-but this type is not used in QAPI and is unnecessary.
+Properties also have getters. We don't know what to return with them 
+without the new value.
 
 Regards,
 Akihiko Odaki
 
 > 
->> +
->>   /* --- on/off/auto --- */
->>   
->>   const PropertyInfo qdev_prop_on_off_auto = {
->> @@ -498,7 +513,7 @@ const PropertyInfo qdev_prop_on_off_auto = {
->>       .description = "on/off/auto",
->>       .enum_table = &OnOffAuto_lookup,
->>       .get = qdev_propinfo_get_enum,
->> -    .set = qdev_propinfo_set_enum,
->> +    .set = set_on_off_auto,
->>       .set_default_value = qdev_propinfo_set_default_value_enum,
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   include/hw/qdev-properties.h | 18 ++++++++++++
+>>   hw/core/qdev-properties.c    | 66 +++++++++++++++++++++++++++++++++++++++++++-
+>>   2 files changed, 83 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
+>> index 09aa04ca1e27..afec53a48470 100644
+>> --- a/include/hw/qdev-properties.h
+>> +++ b/include/hw/qdev-properties.h
+>> @@ -43,11 +43,22 @@ struct PropertyInfo {
+>>       ObjectPropertyRelease *release;
 >>   };
 >>   
+>> +/**
+>> + * struct OnOffAutoBit64 - OnOffAuto storage with 64 elements.
+>> + * @on_bits: Bitmap of elements with "on".
+>> + * @auto_bits: Bitmap of elements with "auto".
+>> + */
+>> +typedef struct OnOffAutoBit64 {
+>> +    uint64_t on_bits;
+>> +    uint64_t auto_bits;
+>> +} OnOffAutoBit64;
+>> +
+>>   
+>>   /*** qdev-properties.c ***/
+>>   
+>>   extern const PropertyInfo qdev_prop_bit;
+>>   extern const PropertyInfo qdev_prop_bit64;
+>> +extern const PropertyInfo qdev_prop_on_off_auto_bit64;
+>>   extern const PropertyInfo qdev_prop_bool;
+>>   extern const PropertyInfo qdev_prop_enum;
+>>   extern const PropertyInfo qdev_prop_uint8;
+>> @@ -100,6 +111,13 @@ extern const PropertyInfo qdev_prop_link;
+>>                   .set_default = true,                              \
+>>                   .defval.u  = (bool)_defval)
+>>   
+>> +#define DEFINE_PROP_ON_OFF_AUTO_BIT64(_name, _state, _field, _bit, _defval) \
+>> +    DEFINE_PROP(_name, _state, _field, qdev_prop_on_off_auto_bit64,         \
+>> +                OnOffAutoBit64,                                             \
+>> +                .bitnr    = (_bit),                                         \
+>> +                .set_default = true,                                        \
+>> +                .defval.i = (OnOffAuto)_defval)
+>> +
+>>   #define DEFINE_PROP_BOOL(_name, _state, _field, _defval)     \
+>>       DEFINE_PROP(_name, _state, _field, qdev_prop_bool, bool, \
+>>                   .set_default = true,                         \
+>> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+>> index f0a270bb4f61..cc76ff0dfae6 100644
+>> --- a/hw/core/qdev-properties.c
+>> +++ b/hw/core/qdev-properties.c
+>> @@ -187,7 +187,8 @@ const PropertyInfo qdev_prop_bit = {
+>>   
+>>   static uint64_t qdev_get_prop_mask64(Property *prop)
+>>   {
+>> -    assert(prop->info == &qdev_prop_bit64);
+>> +    assert(prop->info == &qdev_prop_bit64 ||
+>> +           prop->info == &qdev_prop_on_off_auto_bit64);
+>>       return 0x1ull << prop->bitnr;
+>>   }
+>>   
+>> @@ -232,6 +233,69 @@ const PropertyInfo qdev_prop_bit64 = {
+>>       .set_default_value = set_default_value_bool,
+>>   };
+>>   
+>> +static void prop_get_on_off_auto_bit64(Object *obj, Visitor *v,
+>> +                                       const char *name, void *opaque,
+>> +                                       Error **errp)
+>> +{
+>> +    Property *prop = opaque;
+>> +    OnOffAutoBit64 *p = object_field_prop_ptr(obj, prop);
+>> +    int value;
+>> +    uint64_t mask = qdev_get_prop_mask64(prop);
+>> +
+>> +    if (p->auto_bits & mask) {
+>> +        value = ON_OFF_AUTO_AUTO;
+>> +    } else if (p->on_bits & mask) {
+>> +        value = ON_OFF_AUTO_ON;
+>> +    } else {
+>> +        value = ON_OFF_AUTO_OFF;
+>> +    }
+>> +
+>> +    visit_type_enum(v, name, &value, &OnOffAuto_lookup, errp);
+>> +}
+>> +
+>> +static void prop_set_on_off_auto_bit64(Object *obj, Visitor *v,
+>> +                                       const char *name, void *opaque,
+>> +                                       Error **errp)
+>> +{
+>> +    Property *prop = opaque;
+>> +    OnOffAutoBit64 *p = object_field_prop_ptr(obj, prop);
+>> +    bool bool_value;
+>> +    int value;
+>> +    uint64_t mask = qdev_get_prop_mask64(prop);
+>> +
+>> +    if (visit_type_bool(v, name, &bool_value, NULL)) {
+>> +        value = bool_value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+>> +    } else if (!visit_type_enum(v, name, &value, &OnOffAuto_lookup, errp)) {
+>> +        return;
+>> +    }
+>> +
+>> +    switch (value) {
+>> +    case ON_OFF_AUTO_AUTO:
+>> +        p->on_bits &= ~mask;
+>> +        p->auto_bits |= mask;
+>> +        break;
+>> +
+>> +    case ON_OFF_AUTO_ON:
+>> +        p->on_bits |= mask;
+>> +        p->auto_bits &= ~mask;
+>> +        break;
+>> +
+>> +    case ON_OFF_AUTO_OFF:
+>> +        p->on_bits &= ~mask;
+>> +        p->auto_bits &= ~mask;
+>> +        break;
+>> +    }
+>> +}
+>> +
+>> +const PropertyInfo qdev_prop_on_off_auto_bit64 = {
+>> +    .name  = "OnOffAuto",
+>> +    .description = "on/off/auto",
+>> +    .enum_table = &OnOffAuto_lookup,
+>> +    .get = prop_get_on_off_auto_bit64,
+>> +    .set = prop_set_on_off_auto_bit64,
+>> +    .set_default_value = qdev_propinfo_set_default_value_enum,
+>> +};
+>> +
+>>   /* --- bool --- */
+>>   
+>>   static void get_bool(Object *obj, Visitor *v, const char *name, void *opaque,
 >>
 >> -- 
 >> 2.47.0
+>>
 >>
 > 
 > With regards,
