@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F18E6E68951
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C2EE68951
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Oct 2024 04:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6MQy-0003sP-OX; Thu, 31 Oct 2024 00:05:20 -0400
+	id 1t6MQn-0003iO-LW; Thu, 31 Oct 2024 00:05:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQp-0003kW-43
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:11 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1t6MQi-0003eU-Ba
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:04 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t6MQn-00053e-5A
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:10 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2e91403950dso392295a91.3
- for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:08 -0700 (PDT)
+ id 1t6MQg-0004qT-GI
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 00:05:04 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-20c8b557f91so5319605ad.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Oct 2024 21:05:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730347507; x=1730952307; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730347501; x=1730952301; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2sPdHdQJ35Fr/SOKKnyBguzQdXGmWsCiWtlEfDPVHMQ=;
- b=eqhjkCZ5x0rnw1R4BkY/zmAK2bN604e2aRg5MdiXurbRxcr/V0iKEsj56O8h+M+5Gb
- NcqiWa4m6fvfpcYDQG056R1Y1sMt/LPyw6z8TzXXbgsSxIhhA8LHEJjXdZ7WMtxsrkZu
- P1vkV9LuMwLrX0GA2AHVzUonzjJjFhlDx+a74PjTnJYcXG0hE/R7zsqiUmjTVNksfAIt
- +iuiCU5Bjmq0Ue7Rit8xVCatW0/IXsQAifXfxNQyuRc+GbKEydBvPL6mUOmLOX04x9d2
- q0NiHHtSDexLuJHKILvCeh1rhdf9EZZPGW+yDHT/dwpZt/0hWxsY4QdRTQUIbGtuseh9
- gTpg==
+ bh=s8/FoORAU+MbCzBkiE+YK/dNQraWToWCvs2DtBwW02Y=;
+ b=M+u9yDEEMZfeVUY41bCuihIlEqXL3E744K4MGrk+PF7YhSNnXFx7cin8upM+xipYo2
+ HjqwMJ2LUkn0FAx4sg0KeA+TWW5LZ5ORhDvcIrbRpXxqk5vyOPrleDQfAgHWCoM1+nAb
+ 87hJFpyt8Cuw1/ALbDu8KU8wbnrWc4iph+EXOSba4vaRgoChfngXnWPHw4OdDaAP6yS8
+ qdOaL2TgyzdCLz2KzYY54BYLi5ZMHy/f+gFasU2Az6a3TSpXTqCWT1o7Yn7DuawCDwzQ
+ xdzJM8kGalI8GQLc2wAmsLWGVjLc9l3Jg+teWVg91gPyeAdL+qnpb1sgBqxtlWgEEVTE
+ laCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730347507; x=1730952307;
+ d=1e100.net; s=20230601; t=1730347501; x=1730952301;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2sPdHdQJ35Fr/SOKKnyBguzQdXGmWsCiWtlEfDPVHMQ=;
- b=vLvZqAxXbgGW0kZG55O9bElB2tFUc4WpC85XOR0Q5lH8I8+agJ3MDnXN6Bda7czmSF
- 8ik3xlGkpCVsDcxFwF6WP9BfiyX3f7ny2tB/YH9ZkoPRvrMfnbNPLzeNhSic4fVeiehZ
- oIQjx9Syk3CEymSwSJXNBef1nRIPhfo9xpWHpV6+c4/tmq+7AksVOWqJZ0M6z413Ks3g
- VKz9WV20dYtaof9YfyRmRxCafriCNGtrK+kA+vZ0kIwB6oLOlhF9dcCDd17r0NwANLqj
- IpEZqnU1tGHIy9vol7Vp55VJx7fUygxiJ8Ng6KH2Q8LipGsMwHZpylt5scxHqY3gW4Er
- d/8g==
-X-Gm-Message-State: AOJu0YxhvEsAgkJNPkTQzCrYlMG2wiqWUmR2XiXrhcgA6evRGFNpVtZ/
- PWG1EV3Czu6Qs8Av+pONai4krkuZnFkawYhMPf/+dcpG4Dq6iqef94m7Rd4ONjHI/9dQg4DLG62
- A9+jozQ==
-X-Google-Smtp-Source: AGHT+IHuNs/tznTYNp/AUVQMJ6NqDV9uYOqGmX0xPvakJbIHYFI2CFPqQ3UO41+4oI0oxgBxhgTN2g==
-X-Received: by 2002:a17:90a:d481:b0:2e0:d957:1b9d with SMTP id
- 98e67ed59e1d1-2e8f1071c8dmr21944997a91.13.1730347507133; 
- Wed, 30 Oct 2024 21:05:07 -0700 (PDT)
+ bh=s8/FoORAU+MbCzBkiE+YK/dNQraWToWCvs2DtBwW02Y=;
+ b=SP0f8nKuw8Jgj9kmbPRcqblDhr2gTwyuK6iXoTn2l6tQUkmj685WZfQdfDEeWuwhgO
+ e/Wg1LsfUCA5oJghGynUjpq5MYG6NKMVDe5TZmmvZO6Xdkxjd2sk9u+RQ1Zaj0ez5Adn
+ aJydUtoN3OrJabZs1bKw/r7MScDWk6KvNoXmt7g/QYbcDCiSPAgS5dDFIR7hxL3z36Ci
+ aoXtiDpl2UT9tgPZHMexaTJJkGaDn92PaTH1NeZE7E9ETnXt5FhH/tiPEotSO/YbTK95
+ f1Cj5J9YZ5uFH+yhDvO1COgmn4kyVjRMGxzQGwDqYO8NkhpaYfVDJb8nx8tUnJyU05dO
+ 9ULQ==
+X-Gm-Message-State: AOJu0YxZH7Q0O9NQXvZGuhyJyIAynnCmgsBkJumG8X1VOKUGGOdv/2zd
+ eSYZDnUXj4jwAxsmbMmCvfB605tmWwRHfPtVbRL1Ogl1YyeKBG8ZM+LxLEsy0FY1JCnBPrwSWqA
+ wLHZePw==
+X-Google-Smtp-Source: AGHT+IG2rAYEErvzHSg3m0qkWXFcFOScpXKMPZL5dHjMebkKHgSGcvDogxFZVUhdAVzXSb4ClNN3sQ==
+X-Received: by 2002:a17:903:228d:b0:20b:9062:7b08 with SMTP id
+ d9443c01a7336-210c6c6e7edmr287969295ad.45.1730347500835; 
+ Wed, 30 Oct 2024 21:05:00 -0700 (PDT)
 Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e93db3a023sm428438a91.49.2024.10.30.21.05.06
+ 98e67ed59e1d1-2e93db3a023sm428438a91.49.2024.10.30.21.04.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2024 21:05:06 -0700 (PDT)
+ Wed, 30 Oct 2024 21:05:00 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
@@ -73,16 +73,17 @@ Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 10/12] plugins: detect qemu plugin API symbols from header
-Date: Wed, 30 Oct 2024 21:04:24 -0700
-Message-Id: <20241031040426.772604-11-pierrick.bouvier@linaro.org>
+Subject: [PATCH 04/12] contrib/plugins: remove Makefile for contrib/plugins
+Date: Wed, 30 Oct 2024 21:04:18 -0700
+Message-Id: <20241031040426.772604-5-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
 References: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,124 +106,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of using a static file (error prone and hard to keep in sync),
-we generate it using a script.
+Now replaced by meson build.
 
-Note: if a symbol is not exported, we'll now notice it when linking for
-Windows/MacOS platforms.
-
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- MAINTAINERS                    |  1 +
- plugins/meson.build            | 12 ++++++---
- scripts/qemu-plugin-symbols.py | 45 ++++++++++++++++++++++++++++++++++
- 3 files changed, 55 insertions(+), 3 deletions(-)
- create mode 100755 scripts/qemu-plugin-symbols.py
+ configure                | 18 ---------
+ Makefile                 | 10 -----
+ contrib/plugins/Makefile | 87 ----------------------------------------
+ 3 files changed, 115 deletions(-)
+ delete mode 100644 contrib/plugins/Makefile
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f48d9142b8a..d34b6606e95 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3719,6 +3719,7 @@ F: plugins/
- F: tests/tcg/plugins/
- F: tests/avocado/tcg_plugins.py
- F: contrib/plugins/
-+F: scripts/qemu-plugin-symbols.py
+diff --git a/configure b/configure
+index 4a0159e1832..8f0ba505187 100755
+--- a/configure
++++ b/configure
+@@ -1073,7 +1073,6 @@ if test "$plugins" != "no" && test $host_bits -eq 64; then
+         plugins="no"
+     else
+         plugins=yes
+-        subdirs="$subdirs contrib/plugins"
+     fi
+ fi
  
- AArch64 TCG target
- M: Richard Henderson <richard.henderson@linaro.org>
-diff --git a/plugins/meson.build b/plugins/meson.build
-index 51297582f93..d60be2a4d6d 100644
---- a/plugins/meson.build
-+++ b/plugins/meson.build
-@@ -2,11 +2,17 @@ if not get_option('plugins')
-   subdir_done()
- endif
+@@ -1704,7 +1703,6 @@ LINKS="$LINKS .gdbinit scripts" # scripts needed by relative path in .gdbinit
+ LINKS="$LINKS tests/avocado tests/data"
+ LINKS="$LINKS tests/qemu-iotests/check tests/qemu-iotests/Makefile"
+ LINKS="$LINKS python"
+-LINKS="$LINKS contrib/plugins/Makefile "
+ for f in $LINKS ; do
+     if [ -e "$source_path/$f" ]; then
+         symlink "$source_path/$f" "$f"
+@@ -1790,22 +1788,6 @@ if test "$default_targets" = "yes"; then
+   echo "CONFIG_DEFAULT_TARGETS=y" >> $config_host_mak
+ fi
  
-+qemu_plugin_symbols = configure_file(
-+  input: files('../include/qemu/qemu-plugin.h'),
-+  output: 'qemu-plugin.symbols',
-+  capture: true,
-+  command: [files('../scripts/qemu-plugin-symbols.py'), '@INPUT@'])
-+
- # Modules need more symbols than just those in plugins/qemu-plugins.symbols
- if not enable_modules
-   if host_os == 'darwin'
-     configure_file(
--      input: files('qemu-plugins.symbols'),
-+      input: qemu_plugin_symbols,
-       output: 'qemu-plugins-ld64.symbols',
-       capture: true,
-       command: ['sed', '-ne', 's/^[[:space:]]*\\(qemu_.*\\);/_\\1/p', '@INPUT@'])
-@@ -15,7 +21,7 @@ if not enable_modules
-     # LLVM/lld does not support exporting specific symbols. However, it works
-     # out of the box with dllexport/dllimport attribute we set in the code.
-   else
--    emulator_link_args += ['-Xlinker', '--dynamic-list=' + (meson.project_source_root() / 'plugins/qemu-plugins.symbols')]
-+    emulator_link_args += ['-Xlinker', '--dynamic-list=' + qemu_plugin_symbols.full_path()]
-   endif
- endif
+-# contrib/plugins configuration
+-echo "# Automatically generated by configure - do not modify" > contrib/plugins/$config_host_mak
+-echo "SRC_PATH=$source_path/contrib/plugins" >> contrib/plugins/$config_host_mak
+-echo "PKG_CONFIG=${pkg_config}" >> contrib/plugins/$config_host_mak
+-echo "CC=$cc $CPU_CFLAGS" >> contrib/plugins/$config_host_mak
+-echo "CFLAGS=${CFLAGS-$default_cflags} $EXTRA_CFLAGS" >> contrib/plugins/$config_host_mak
+-if test "$host_os" = windows; then
+-  echo "DLLTOOL=$dlltool" >> contrib/plugins/$config_host_mak
+-fi
+-if test "$host_os" = darwin; then
+-  echo "CONFIG_DARWIN=y" >> contrib/plugins/$config_host_mak
+-fi
+-if test "$host_os" = windows; then
+-  echo "CONFIG_WIN32=y" >> contrib/plugins/$config_host_mak
+-fi
+-
+ # tests/tcg configuration
+ mkdir -p tests/tcg
+ echo "# Automatically generated by configure - do not modify" > tests/tcg/$config_host_mak
+diff --git a/Makefile b/Makefile
+index 917c9a34d1c..b65b0bd41a8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -187,11 +187,6 @@ SUBDIR_RULES=$(foreach t, all clean distclean, $(addsuffix /$(t), $(SUBDIRS)))
+ $(SUBDIR_RULES):
+ 	$(call quiet-command,$(MAKE) $(SUBDIR_MAKEFLAGS) -C $(dir $@) V="$(V)" TARGET_DIR="$(dir $@)" $(notdir $@),)
  
-@@ -24,7 +30,7 @@ if host_os == 'windows'
-   # First, create a .def file listing all the symbols a plugin should expect to have
-   # available in qemu
-   win32_plugin_def = configure_file(
--    input: files('qemu-plugins.symbols'),
-+    input: qemu_plugin_symbols,
-     output: 'qemu_plugin_api.def',
-     capture: true,
-     command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
-diff --git a/scripts/qemu-plugin-symbols.py b/scripts/qemu-plugin-symbols.py
-new file mode 100755
-index 00000000000..e285ebb8f9e
---- /dev/null
-+++ b/scripts/qemu-plugin-symbols.py
-@@ -0,0 +1,45 @@
-+#!/usr/bin/env python3
-+# -*- coding: utf-8 -*-
-+#
-+# Extract QEMU Plugin API symbols from a header file
-+#
-+# Copyright 2024 Linaro Ltd
-+#
-+# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or later.
-+# See the COPYING file in the top-level directory.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import argparse
-+import re
-+
-+def extract_symbols(plugin_header):
-+    with open(plugin_header) as file:
-+        content = file.read()
-+    # Remove QEMU_PLUGIN_API macro definition.
-+    content = content.replace('#define QEMU_PLUGIN_API', '')
-+    expected = content.count('QEMU_PLUGIN_API')
-+    # Find last word between QEMU_PLUGIN_API and (, matching on several lines.
-+    # We use *? non-greedy quantifier.
-+    syms = re.findall(r'QEMU_PLUGIN_API.*?(\w+)\s*\(', content, re.DOTALL)
-+    syms.sort()
-+    # Ensure we found as many symbols as API markers.
-+    assert len(syms) == expected
-+    return syms
-+
-+def main() -> None:
-+    parser = argparse.ArgumentParser(description='Extract QEMU plugin symbols')
-+    parser.add_argument('plugin_header', help='Path to QEMU plugin header.')
-+    args = parser.parse_args()
-+
-+    syms = extract_symbols(args.plugin_header)
-+
-+    print('{')
-+    for s in syms:
-+        print("  {};".format(s))
-+    print('};')
-+
-+if __name__ == '__main__':
-+    main()
+-ifneq ($(filter contrib/plugins, $(SUBDIRS)),)
+-.PHONY: plugins
+-plugins: contrib/plugins/all
+-endif
+-
+ .PHONY: recurse-all recurse-clean
+ recurse-all: $(addsuffix /all, $(SUBDIRS))
+ recurse-clean: $(addsuffix /clean, $(SUBDIRS))
+@@ -307,11 +302,6 @@ help:
+ 	$(call print-help,cscope,Generate cscope index)
+ 	$(call print-help,sparse,Run sparse on the QEMU source)
+ 	@echo  ''
+-ifneq ($(filter contrib/plugins, $(SUBDIRS)),)
+-	@echo  'Plugin targets:'
+-	$(call print-help,plugins,Build the example TCG plugins)
+-	@echo  ''
+-endif
+ 	@echo  'Cleaning targets:'
+ 	$(call print-help,clean,Remove most generated files but keep the config)
+ 	$(call print-help,distclean,Remove all generated files)
+diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+deleted file mode 100644
+index bbddd4800ff..00000000000
+--- a/contrib/plugins/Makefile
++++ /dev/null
+@@ -1,87 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# This Makefile example is fairly independent from the main makefile
+-# so users can take and adapt it for their build. We only really
+-# include config-host.mak so we don't have to repeat probing for
+-# programs that the main configure has already done for us.
+-#
+-
+-include config-host.mak
+-
+-TOP_SRC_PATH = $(SRC_PATH)/../..
+-
+-VPATH += $(SRC_PATH)
+-
+-NAMES :=
+-NAMES += bbv
+-NAMES += execlog
+-NAMES += hotblocks
+-NAMES += hotpages
+-NAMES += howvec
+-
+-# The lockstep example communicates using unix sockets,
+-# and can't be easily made to work on windows.
+-ifneq ($(CONFIG_WIN32),y)
+-NAMES += lockstep
+-endif
+-
+-NAMES += hwprofile
+-NAMES += cache
+-NAMES += drcov
+-NAMES += ips
+-NAMES += stoptrigger
+-NAMES += cflow
+-
+-ifeq ($(CONFIG_WIN32),y)
+-SO_SUFFIX := .dll
+-LDLIBS += $(shell $(PKG_CONFIG) --libs glib-2.0)
+-else
+-SO_SUFFIX := .so
+-endif
+-
+-SONAMES := $(addsuffix $(SO_SUFFIX),$(addprefix lib,$(NAMES)))
+-
+-# The main QEMU uses Glib extensively so it is perfectly fine to use it
+-# in plugins (which many example do).
+-PLUGIN_CFLAGS := $(shell $(PKG_CONFIG) --cflags glib-2.0)
+-PLUGIN_CFLAGS += -fPIC -Wall
+-PLUGIN_CFLAGS += -I$(TOP_SRC_PATH)/include/qemu
+-
+-# Helper that honours V=1 so we get some output when compiling
+-quiet-@ = $(if $(V),,@$(if $1,printf "  %-7s %s\n" "$(strip $1)" "$(strip $2)" && ))
+-quiet-command = $(call quiet-@,$2,$3)$1
+-
+-# for including , in command strings
+-COMMA := ,
+-
+-all: $(SONAMES)
+-
+-%.o: %.c
+-	$(call quiet-command, \
+-		$(CC) $(CFLAGS) $(PLUGIN_CFLAGS) -c -o $@ $<, \
+-	        BUILD, plugin $@)
+-
+-ifeq ($(CONFIG_WIN32),y)
+-lib%$(SO_SUFFIX): %.o win32_linker.o ../../plugins/libqemu_plugin_api.a
+-	$(call quiet-command, \
+-		$(CC) -shared -o $@ $^ $(LDLIBS), \
+-		LINK, plugin $@)
+-else ifeq ($(CONFIG_DARWIN),y)
+-lib%$(SO_SUFFIX): %.o
+-	$(call quiet-command, \
+-		$(CC) -bundle -Wl$(COMMA)-undefined$(COMMA)dynamic_lookup -o $@ $^ $(LDLIBS), \
+-		LINK, plugin $@)
+-else
+-lib%$(SO_SUFFIX): %.o
+-	$(call quiet-command, \
+-		$(CC) -shared -o $@ $^ $(LDLIBS), \
+-		LINK, plugin $@)
+-endif
+-
+-
+-clean distclean:
+-	rm -f *.o *$(SO_SUFFIX) *.d
+-	rm -Rf .libs
+-
+-.PHONY: all clean
+-.SECONDARY:
 -- 
 2.39.5
 
