@@ -4,94 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15F7AE6B240
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 11:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B2CEE6B243
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 11:24:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6pdL-0002FD-Es; Fri, 01 Nov 2024 07:16:03 -0400
+	id 1t6pl7-0004xl-J9; Fri, 01 Nov 2024 07:24:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1t6pdF-0002DG-P3; Fri, 01 Nov 2024 07:15:57 -0400
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1t6pl5-0004vo-0J
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 07:24:03 -0400
 Received: from fout-a5-smtp.messagingengine.com ([103.168.172.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1t6pdD-0004rj-Fu; Fri, 01 Nov 2024 07:15:57 -0400
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal
- [10.202.2.43])
- by mailfout.phl.internal (Postfix) with ESMTP id 7C91E13801D9;
- Fri,  1 Nov 2024 07:15:52 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-03.internal (MEProxy); Fri, 01 Nov 2024 07:15:52 -0400
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1t6pl2-0005q6-Nz
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 07:24:02 -0400
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal
+ [10.202.2.50])
+ by mailfout.phl.internal (Postfix) with ESMTP id 7C3901380166;
+ Fri,  1 Nov 2024 07:23:59 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-10.internal (MEProxy); Fri, 01 Nov 2024 07:23:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-type:content-type:date:date:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1730459752; x=
- 1730546152; bh=zEVjdua++dH9O+M4OCYGUnyqHMswMe8N6kj+OnKEAYg=; b=P
- UNqE7RuoljXLaPOTMFPClC4PnQ/A5W24W/2Uenq7WrBukSBX2FBoDO/WgtWMu0zX
- TUnDYqU7dXwE9wwVg6BUqmBMBykhTiomUkyk3YuUXvzIFiuFNXr3uC7JPdw+GwNe
- xPMGZdsIv79FhYgdyJw0vVOuOzKEii7xn6sfP5h9Op0P9leoWQnbZFiCCEAHSaLa
- /zQNQlRwvLfBR3+oC9lzGBhjUK8x8SZEw4612N6JHsUEQaQKKjFZyVJrQxkjiGfF
- 9dZomRtoNPFs4ZsJgYGL9/yi85exZLgvAfeX+IZRt4oUAtRAE2QwxMiqW29A+8WF
- +qPGl2ugzHwoaIyUzQyRA==
+ :reply-to:subject:subject:to:to; s=fm2; t=1730460239; x=
+ 1730546639; bh=/IO3LHSRPNm6dEghav1NSCErfilgt9M9CVQ931ZimMU=; b=Q
+ TlbPLXe82NrgP6NPKq7VkMXG2V8OLeFAMVYmAKEWvjLp+xqsOuh0YLLuhuf/8apb
+ p1pEEpgULm94DXHej9YxN2JuLtLQic7sTLgMv86+6JxWoiu6aevM2vuFLjT+trOH
+ azvk+t7+epM6U7eePhFxL0jcSyRs0nkofXMgHGZ7A9JOlpSkXiVG0i4xGG0OJNcf
+ 9j8zymFI86CD62jYMqqPLowTyGn9pKkHoSpREK2x7kVQZ8J0nrbpgXwAh8ndg4w0
+ QZSuAeqOVvh4tpfv1CXAzczR1be+3Ri8y7TveHFZ6EyebPCveC3qYm1pS6LlSEGz
+ xdJbKj+n4MNSmGuzYBHsw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-type:content-type:date:date
  :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
  :message-id:mime-version:references:reply-to:subject:subject:to
  :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1730459752; x=1730546152; bh=zEVjdua++dH9O+M4OCYGUnyqHMswMe8N6kj
- +OnKEAYg=; b=Y64qH84DcFwTN1NkfmHg7ehAxmQxwcsY4zEssc9qO76Q1rAaroF
- MUzmjelb6v7niYrg7Q/tIJdZpyVCou8ywz2WQOHcQqk5CucL3yjbEF3XANoWJk1c
- OuksrkLVjjq+b5TSBEO+qD3QqGPh7yC460R5kNaMOo2n04jbEXQ/eOtlVEdaO4A1
- doy6y6+AIDYBa+jiBo6Mhj6Bz5QxnZe5Dij6iXNYBgRO8aaHQ3X3eFv+GybV8VHi
- WbBoW4obkVI+Xr7tmku4ZlhhW+R0XxnpxCvjP4KZOD0EQs7sjRJBw1aUz01i8xTd
- /2V+SzcIgCcCg8DqZe3fYqDg0fo7k06bXIw==
-X-ME-Sender: <xms:ZrgkZ448Gmj01-UkLkxmFRtMKa5ydZ-PYTJDNrMSY_Ba5jW5UnTqGw>
- <xme:ZrgkZ554cSSQis8f84XyyfUEd7V8-iwcCIbcQZ0bj2j1UuKWKdIjWzEKDnbxsBSH3
- dEzxTknf4SLUaaAY9A>
-X-ME-Received: <xmr:ZrgkZ3entqOziCm3NX07Ap-KetXPHcavUFcrDiOhQTECwvzt-DcqBUYQkYCWqw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekledgvdehucetufdoteggodetrfdotf
+ 1730460239; x=1730546639; bh=/IO3LHSRPNm6dEghav1NSCErfilgt9M9CVQ
+ 931ZimMU=; b=jT0BQEyBe5w3o4CShvw62f2iVDbVIBkFenOkJAjErDdT0KLZJAf
+ 0qVQB9HMZ+MivgKErDyw04G6Zjy/HUOwteZelCXKz/hSVPLNnYZwgCM+VXwxr+sJ
+ gHj8RalUlQp+W2BXsrR4KxEaXfLQpNTP4sKRdwEEVZHRVN1Z+fB4pBnPZbg6jK2y
+ POiXbP4Wd1h3mq6I1bdVP73pC6QWzaRQ82OrezDuVRgcF/EqntI9k1tjuO0dKGDH
+ LaCGO+tuALhTmPCXW7fQadYM0pNpBjO5SG+dKrKDj131rhwAih4do1y7D0Ev2Mt6
+ XLGGVbXVscYNNtmR1ykI1cxyfXInDU09w3A==
+X-ME-Sender: <xms:T7okZ61IQaGJm_VJ_EbSlz5MRpR58IvWR6fL6rWcR_6RxSx7Hb6ehA>
+ <xme:T7okZ9F7iZ3ZDB1GhyUxDFk9sd8RFRgjj6hyvJB3gKe1b0dAMFYSGGKSZSA7z3S-6
+ aBbYdjEmu6958mVVR0>
+X-ME-Received: <xmr:T7okZy7W0_KkIx3E6xLch20s1DEA0pNSYZhEjNlCLdeS86sqjleDLKPfCsZn>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekledgvdejucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
- rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
- htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeen
- ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
- gukheqnecuggftrfgrthhtvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveej
- vedtuddugeeigeetffffjeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
- hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
- ohepudeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehluhgthhgrnhhgqhhird
- duvdefsegshihtvggurghntggvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdgslhhotghk
- sehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnh
- hurdhorhhgpdhrtghpthhtohepkhifohhlfhesrhgvughhrghtrdgtohhmpdhrtghpthht
- ohephhhrvghithiisehrvgguhhgrthdrtghomhdprhgtphhtthhopehsthgvfhgrnhhhrg
- esrhgvughhrghtrdgtohhmpdhrtghpthhtohepfhgrmhesvghuphhhohhnrdhnvghtpdhr
- tghpthhtoheprhhonhhnihgvshgrhhhlsggvrhhgsehgmhgrihhlrdgtohhmpdhrtghpth
- htohepphgsohhniihinhhisehrvgguhhgrthdrtghomh
-X-ME-Proxy: <xmx:ZrgkZ9Kj0adviKzjNqEz13nh_3WC2t6vczLx8J2y_FANNf6kCLqUsg>
- <xmx:ZrgkZ8IwTSva_8Fdl7BaUu4sLe4_KA_TmQxUbPfcXqkzwz7RpAn78g>
- <xmx:ZrgkZ-yqann8xpl2TLdn5i9wM-wlshSat1HK6qnqPqppj_-VAh-2VQ>
- <xmx:ZrgkZwJgKDSYCN8bYWPY7Bg_sy7rcdUQ_NrhTKXe1KoYYQHi8eMNcw>
- <xmx:aLgkZ97e0jVaBqUzAHqn4wWMat_pSeZM1m3qhQd4hlSBCEqbWJMIBocX>
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+ fukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgruhhsucflvghnshgvnhcu
+ oehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtthgvrhhnpeejgfejfe
+ ffvdeuhfeifefhgffgueelhedukeevjeevtdduudegieegteffffejveenucevlhhushht
+ vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhrvghlvg
+ hvrghnthdrughkpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgt
+ phhtthhopegrrhhunhdrkhhkrgesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehqvg
+ hmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhgsuhhstghhsehk
+ vghrnhgvlhdrohhrghdprhgtphhtthhopehfohhsshesuggvfhhmrggtrhhordhithdprh
+ gtphhtthhopehithhssehirhhrvghlvghvrghnthdrughk
+X-ME-Proxy: <xmx:T7okZ73x6lH_QkB-Fhx05mUVAvHcigA9zCUIVgCVHcPrAdBtd0In8A>
+ <xmx:T7okZ9F_uPLkeFsysr-4MbnR9U3A0glHAsdyJMyulo3_LtbwNxDL1w>
+ <xmx:T7okZ0_O9q5UMfdF1JcQIe-ASZK6oF_mKMRMtL6IYencKsPAxCUOkg>
+ <xmx:T7okZylj4mF3g_K6aByWEXH7lUFwtAahyR4L-aDpFO-vf7lwSVKD1Q>
+ <xmx:T7okZ2NGUcVCcwFn4FhoAKzRF1A8f582-L3A5WpO-BAit6V1SlBCsj0->
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Nov 2024 07:15:49 -0400 (EDT)
-Date: Fri, 1 Nov 2024 12:15:48 +0100
+ 1 Nov 2024 07:23:58 -0400 (EDT)
+Date: Fri, 1 Nov 2024 12:23:57 +0100
 From: Klaus Jensen <its@irrelevant.dk>
-To: Changqi Lu <luchangqi.123@bytedance.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
- kbusch@kernel.org, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com, k.jensen@samsung.com
-Subject: Re: [PATCH v14 09/10] hw/nvme: add reservation protocal command
-Message-ID: <ZyS4ZP63MRsuK1VI@AALNPWKJENSEN.aal.scsc.local>
-References: <20241011121231.18333-1-luchangqi.123@bytedance.com>
- <20241011121231.18333-10-luchangqi.123@bytedance.com>
+To: Arun Kumar <arun.kka@samsung.com>
+Cc: qemu-devel@nongnu.org, kbusch@kernel.org, foss@defmacro.it
+Subject: Re: [PATCH] hw/nvme : remove dead code
+Message-ID: <ZyS6TQgySZxmWTan@AALNPWKJENSEN.aal.scsc.local>
+References: <CGME20241023035127epcas5p241a150fcb18cbfc6975af8a8fc29d4c6@epcas5p2.samsung.com>
+ <20241022222105.3609223-1-arun.kka@samsung.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="annKKvWoLgjEyM/N"
+ protocol="application/pgp-signature"; boundary="NElsNcpjFo1Umfud"
 Content-Disposition: inline
-In-Reply-To: <20241011121231.18333-10-luchangqi.123@bytedance.com>
+In-Reply-To: <20241022222105.3609223-1-arun.kka@samsung.com>
 Received-SPF: pass client-ip=103.168.172.148; envelope-from=its@irrelevant.dk;
  helo=fout-a5-smtp.messagingengine.com
 X-Spam_score_int: -27
@@ -118,112 +110,59 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---annKKvWoLgjEyM/N
+--NElsNcpjFo1Umfud
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Oct 11 20:12, Changqi Lu wrote:
-> Add reservation acquire, reservation register,
-> reservation release and reservation report commands
-> in the nvme device layer.
+On Oct 23 03:51, Arun Kumar wrote:
+> remove dead code which always returns success, since prchk will have a
+> value of zero
 >=20
-> By introducing these commands, this enables the nvme
-> device to perform reservation-related tasks, including
-> querying keys, querying reservation status, registering
-> reservation keys, initiating and releasing reservations,
-> as well as clearing and preempting reservations held by
-> other keys.
->=20
-> These commands are crucial for management and control of
-> shared storage resources in a persistent manner.
-> Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
-> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-> Acked-by: Klaus Jensen <k.jensen@samsung.com>
+> Signed-off-by: Arun Kumar <arun.kka@samsung.com>
 > ---
->  hw/nvme/ctrl.c       | 347 +++++++++++++++++++++++++++++++++++++++++++
->  hw/nvme/ns.c         |   6 +
->  hw/nvme/nvme.h       |   9 ++
->  include/block/nvme.h |  58 ++++++++
->  4 files changed, 420 insertions(+)
+>  hw/nvme/dif.c | 5 -----
+>  1 file changed, 5 deletions(-)
 >=20
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index ad212de723..4821a7ff3b 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> +static uint16_t nvme_resv_report(NvmeCtrl *n, NvmeRequest *req)
-> +{
-> +    int num_keys;
-> +    uint32_t cdw10 =3D le32_to_cpu(req->cmd.cdw10);
-> +    uint32_t cdw11 =3D le32_to_cpu(req->cmd.cdw11);
-> +    size_t buflen =3D (cdw10 + 1) * sizeof(uint32_t);
-> +    bool eds =3D cdw11 & 0x1;
-> +    NvmeNamespace *ns =3D req->ns;
-> +    NvmeResvKeys *keys_info;
-> +
-> +    if (!nvme_support_pr(ns)) {
-> +        return NVME_INVALID_OPCODE;
-> +    }
-> +
-> +    if (eds) {
-> +        if (buflen < sizeof(NvmeReservationStatusExt)) {
-> +            return NVME_INVALID_FIELD;
-> +        }
-> +
-> +        num_keys =3D (buflen - sizeof(NvmeReservationStatusExt)) /
-> +                   sizeof(struct NvmeRegisteredCtrlExt);
-> +    } else {
-> +        if (buflen < sizeof(NvmeReservationStatusHeader)) {
-> +            return NVME_INVALID_FIELD;
-> +        }
-> +
-> +        num_keys =3D (buflen - sizeof(NvmeReservationStatusHeader)) /
-> +                   sizeof(struct NvmeRegisteredCtrl);
-> +    }
-> +
-> +    keys_info =3D g_new0(NvmeResvKeys, 1);
-> +    /* num_keys is the maximum number of keys that can be transmitted */
-> +    keys_info->num_keys =3D MAX(num_keys, 0);
-> +    keys_info->keys =3D g_malloc(sizeof(uint64_t) * num_keys);
-> +    keys_info->req =3D req;
-> +
-> +    req->aiocb =3D blk_aio_pr_read_keys(ns->blkconf.blk, &keys_info->gen=
-eration,
-> +                                      keys_info->num_keys, keys_info->ke=
-ys,
-> +                                      nvme_resv_read_keys_cb, keys_info);
-> +
-> +    return NVME_NO_COMPLETE;
-> +}
+> diff --git a/hw/nvme/dif.c b/hw/nvme/dif.c
+> index 01b19c3373..2805128498 100644
+> --- a/hw/nvme/dif.c
+> +++ b/hw/nvme/dif.c
+> @@ -575,11 +575,6 @@ uint16_t nvme_dif_rw(NvmeCtrl *n, NvmeRequest *req)
+>              uint8_t *mbuf, *end;
+>              int16_t pil =3D ns->lbaf.ms - nvme_pi_tuple_size(ns);
+> =20
+> -            status =3D nvme_check_prinfo(ns, prinfo, slba, reftag);
+> -            if (status) {
+> -                goto err;
+> -            }
+> -
+>              flags =3D 0;
+> =20
+>              ctx->mdata.bounce =3D g_malloc0(mlen);
+> --=20
+> 2.43.0
+>=20
+>=20
 
-This wasn't exactly what I meant when I mentioned that we could get rid
-of the MAX_KEYS. I was thinking you would do the transfer in chunks.
-With the above, I think there is a risk of DoS (we can end up allocating
-A LOT of memory here).
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 
-I kinda want this to get into 9.2, so I suggest that you revert this
-change to the MAX_KEYS approach you had in v13.
+Thanks, applied to nvme-next.
 
-With that sorted out, consider this R-b'ed.
-
-Stefan, I think it makes most sense this is PR'ed by block layer
-maintainers. Or, it can be split so you can take the reviewed block
-layer parts and I can PR the nvme one. What do you think?
-
---annKKvWoLgjEyM/N
+--NElsNcpjFo1Umfud
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmckuGEACgkQTeGvMW1P
-DemgTwf/ceE48EId8nFMCyll8nNWGzkDpt7aKRrly6ipMg/hwB2IRysZkCx5NjXW
-aN+sUceb70xWK2TOyx780tOWAA4j98b5V5dwRjbxeRdv9USR7dEsJjQTUrgfhoSq
-YQEZd7xbKQ4/JopZlhYtJH5RWCh+WorLQC1Wehpi/ayYYVu9o3j4wRG1D1r/aNxM
-Tm0/UqFUidXeVkZpfJWCvEImnGHNrVPW5VGpU4hx85OAJ9aYIVpq1o/+d+4Zr8Oy
-P5YwdlwFskS2mhspxCBW4ckKbk7BxHunqetWFnaILKNvfiEv+/txXHyreaODYb+V
-h31m1mLO7tiiX6g0uyY20YcRQGUR1w==
-=y/UR
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmckukwACgkQTeGvMW1P
+DekXRQgAqXY91iQMselCqx58RKVRX6OZe/6ZRqoRS7CaBxi7MvVW41vN6a6qTTKX
+oJRRH0Mk/XBU8ajLz7yA+wipBUGKzG52eMIs9C2tIg+xpYwoHoYRLbgFVXLZ4inW
+iL+rH1Oa5bwxvLh+7UBvMfpykaPeno1xxdfEEFSEQzRzeIJtuRn5PsRFxXqds/vX
+AfZNCzsEpFfAKN+40KSD/Z1I6Syc/yEMCmw+lPXRtVfjMkyMiNBBf8ad7DGrIzQu
+Zx9grLk3S+Up1WcI9bz10ddPL/K4wQltS4qUW2QShKiczXyr1vhBE82hbApdQLMV
+76Xnzx9+b8p9mLjfC2W8BPAeSyMtWw==
+=52Jv
 -----END PGP SIGNATURE-----
 
---annKKvWoLgjEyM/N--
+--NElsNcpjFo1Umfud--
 
