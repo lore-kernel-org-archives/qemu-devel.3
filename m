@@ -4,91 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1921AE6B244
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 11:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BAEEE6B246
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 11:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6q5n-0004J7-Id; Fri, 01 Nov 2024 07:45:27 -0400
+	id 1t6qFJ-0007Xj-AT; Fri, 01 Nov 2024 07:55:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t6q5k-0004Gt-D5
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 07:45:25 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t6q5g-0008Ps-KM
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 07:45:22 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-720c2db824eso1347055b3a.0
- for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 04:45:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1730461519; x=1731066319; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=E0a+XLtNlJ3S11rchV6Of5MW8vyVRGyYOCdBEmauSOY=;
- b=LytgbUxhqm90FB9u/oSJNpzXAyQIWzkZ8ux2WgSUpeY+MK6VFi5ZBoNM7mICRnYYDl
- 68bpsKyl2g8fnTQmZxRJ2kEtXVJHAbzQOrINfgHHYUgFYlHYLfXaPRMpmR7cVGBuI1SQ
- rM437KkZOLIPgnDceyD4ENOHORAjt9yLUvz5ep8Dlx3KeBX86XoKF1xh8kHGNwV4Bjz9
- EDxOfS5Fd2EVFPfJVyG75RAj+Cl9d7YNvW9Ipkl+yDAJbWP9RNzE0bs2xMkfa6J2xMN0
- OjvRUKh3RQb82zbETMzdimcznBJ6Gep5lFw7/qmZlH2FGW+q3/yJ7xbaNJLd/YhteU2w
- cnLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730461519; x=1731066319;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E0a+XLtNlJ3S11rchV6Of5MW8vyVRGyYOCdBEmauSOY=;
- b=eMbp9ZluDqtEk/olidE37gaQeb2Gacm6gw0s5TPrwDEen2lmjDcgf+cwhpS/zj+pcW
- 08jZbaemXvTppUyEgQ7Kc2DPFFWW61cLPhPobfok3jO6lzH0yA0FGjgQRlXycMLLp7mh
- 9nMMMf+ksyEHQHlnMskInboDv6bfbzR749IeBTCxJTkxOHtI8/OlW3nEX1MjEuhxOMHY
- xGGokJMD5C6i7Gthow4tiaIsd9p4ZPAiqybtRsf8SRf9x+D74shA5Ct/eRE4NXvkcmJY
- lF4l/7lXZrOPcjF1cB0Hm5MiePaExgqc4sf92QFtcKQOqDpgpsEqVVWJHYvJ2PiUi50V
- YnOg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXIOEwNbfdCTcRuYMe0srxbwaWTzKU7rGL91+lucif0agSL7KDBglP/5mmxIuHo+bzkPMu4jhnIHh7x@nongnu.org
-X-Gm-Message-State: AOJu0YxArCm2qz5M2kBE0ZtZwqiIftqsd00YO+E7qMjGRukcGPH7OQ5n
- 5THLaaanCk8RL/M4XSImQckj0kxpHfE7U3/DwRKu7BpmcyRYfw7Ci9boKHqVVO8poLoAQlcpukE
- H
-X-Google-Smtp-Source: AGHT+IFX9NnP9uaqquDCDVSEk7Uy8obp5Pug98D2mwk93e7dPbNPkKPWEqNa52HhTU1JdHYJqCcQOQ==
-X-Received: by 2002:a05:6a00:2384:b0:71e:68ae:aaed with SMTP id
- d2e1a72fcca58-72062f81e6dmr29558711b3a.1.1730461518735; 
- Fri, 01 Nov 2024 04:45:18 -0700 (PDT)
-Received: from [192.168.68.110] ([191.8.109.222])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-720bc2c3e08sm2447394b3a.105.2024.11.01.04.45.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Nov 2024 04:45:18 -0700 (PDT)
-Message-ID: <8ec6e960-8305-456c-b8f9-4c0dd14e51ff@ventanamicro.com>
-Date: Fri, 1 Nov 2024 08:45:13 -0300
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1t6qFF-0007Wv-Al; Fri, 01 Nov 2024 07:55:13 -0400
+Received: from mail-bn8nam11on20606.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::606]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1t6qFC-0000vl-NK; Fri, 01 Nov 2024 07:55:13 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tNtOZCY/TmrEdjkNeNDXUQaYRmht/Szv5lh21WK0Rwt2dAJAbtfIrq9xyJ8MiVy4jcxTvFv2UZ2+sItp00r2KBJgZy503nici/DxruC5Tc9tPPiXY1cQJnRwjdcjnkTrr6jCe8ISjGHZtGwpl9I5t6ZnEGx7MOCShoVXP27mo/6JFuBP9qYZooP2bEHx6vJx9JGWq0+eYW7gp9eQQB7aFrAW7I40Em9YY4wIo63wBseXDPUiwGyGu7t5MLtTsKvOZhUwMfGgnhnku4MtRzAl0l94gyQDfT8RKxk/vLlYu6koLa9wr18Es5yw8k0kmPLdODPxM6yIAB/ckzlMHD0rLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8KKsJn0VnIZ+qJ2wPmfvjsS5rRYpQHRRmX/JxSf5Pzg=;
+ b=g0jv1fvxAKXoQ5sE0m5a6AH+UV58fDCs//17ClToAmDpgwwC0I90cwvH1NtA9sZGaKKaHmN9LDpGFiDZMNrAOUn7VtacV3ObshJlEyZeowPWQPhs6RdhFpl5aaPVqn0YETvT4k9SqzsKA8nHN/QAAWCFyoCcLHZUyCWTMJZley1EMQblF7rllwD5k+1c7T6EDcBvevV13I6cxugG2QQvOqoKKGgW1eANohqDqQS831b6vRMsYmzieooINYrR9Kf/QLpOzwczXq5P5WAm+aQbBBPTgwWeZfyYzPtLp9AuGaxemyL+Cxp3uv++Cd2y2+D60WbWlUhh9FN6stUHK8qlLQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8KKsJn0VnIZ+qJ2wPmfvjsS5rRYpQHRRmX/JxSf5Pzg=;
+ b=EfU3vOMaQJROgKeuapIA8VrHmWczTlvJnFz/AFhacaxoYh8kYkN5n0rr32libdn0qOOE1FkioOiFq2A1bBsTDndUNDaXsDrYufvvNCftw2ylzytP3PT0alZlfJMeSfWi/TFEc4ehJHAlDS8aDxYxvnYNOiyJ54s/LLODeje35+tkYQo9/TpX1mxeTyGkADEJqizpUfQS1ebHeTlDy5qa9a5Ct9o4IuyqS7Y2TbWcSuJXh7EilX2EMs5PuYIgQuvK+1nKRli9lRaJULniGNdoIp2jSxfooUe6JQrh1h3IzffXunAcaGybiOfr0zsuy8ZaeZsT8rXl7QrH19ddt/Ymfw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by DS0PR12MB7725.namprd12.prod.outlook.com (2603:10b6:8:136::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.23; Fri, 1 Nov
+ 2024 11:55:02 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8093.018; Fri, 1 Nov 2024
+ 11:55:02 +0000
+Date: Fri, 1 Nov 2024 08:55:01 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Eric Auger <eric.auger@redhat.com>, Mostafa Saleh <smostafa@google.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Moritz Fischer <mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
+ Andrea Bolognani <abologna@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Zhangfei Gao <zhangfei.gao@linaro.org>, nathanc@nvidia.com,
+ arighi@nvidia.com, ianm@nvidia.com, jan@nvidia.com, mochs@nvidia.com
+Subject: Re: nested-smmuv3 topic for QEMU/libvirt, Nov 2024
+Message-ID: <20241101115501.GS10193@nvidia.com>
+References: <ZyRUcGKKS6NbIV5O@Asurada-Nvidia>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZyRUcGKKS6NbIV5O@Asurada-Nvidia>
+X-ClientProxiedBy: BN9PR03CA0332.namprd03.prod.outlook.com
+ (2603:10b6:408:f6::7) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] hw/riscv: virt: prevent to use AIA MSI when host
- doesn't support it
-To: Yong-Xuan Wang <yongxuan.wang@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com, 
- jim.shu@sifive.com, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Andrew Jones <ajones@ventanamicro.com>
-References: <20241101083606.5122-1-yongxuan.wang@sifive.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20241101083606.5122-1-yongxuan.wang@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DS0PR12MB7725:EE_
+X-MS-Office365-Filtering-Correlation-Id: b01b525a-4057-4461-38d4-08dcfa6c04d2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?nmFG8ZRK7XAoLRV0pJ+mvhBRAbPNoCJBbcEE/FWyr9NJ7C/0Gw4JNlMGNRdr?=
+ =?us-ascii?Q?G7FEQg9NtKYRt/TUVNeNT2CTKe0gfBLSkeIgsqkh1/s/1zTeSlyGYECTbllM?=
+ =?us-ascii?Q?a9eU+yMqu5ncyaC1cAfc2zhkNxvimVPlZylxXt6IVh5WWGp7izX56x3U32FV?=
+ =?us-ascii?Q?3uTLfqkskSY8dDDWrlZ1PLHEAUiUm6bM8sWJRTXX+PPKGN7ZAWPMvG1wV/wV?=
+ =?us-ascii?Q?C8hl1VkQHk2wBak41+uWhe+xtVN+mnDQA93C7IM3tp7dC8tMbzzL0qtA7U8y?=
+ =?us-ascii?Q?IDbiUQOkyuPyEDtWKRGAanZYSVxyoVirqtXHIK6eLGnOhrvcSO9qZjV377f9?=
+ =?us-ascii?Q?bwXlAFdX3rXTJqRThBpWyc/3pyQKsqzHpUHjXo2vAdNOXeLoB3r9ou0DHSpb?=
+ =?us-ascii?Q?PA1YwNqYHP4NHTJJtFWu4YhFJ34ZNU3bIToHm27Y2ilSXwk7NX06uPkx1GmK?=
+ =?us-ascii?Q?ApINlwddPAsPVntF/7YjL9K9/J5pohuVe31gPETwnv9pRUfvcH7Dfm7gaLi9?=
+ =?us-ascii?Q?8NILm7DJ9v8Y8ESFZwX/dbiAeBMJW1VXDJ4eCHE9GmUBl4vm4XQHTziFQ9Ds?=
+ =?us-ascii?Q?m3hddoc4gEyzvfSzm5DgGbksgD43mT62PEKzG6S912JI2BkexSW4UtoZphrJ?=
+ =?us-ascii?Q?/ZHs1+HEWglpnKSq5dP/OVP1Xuz5KXz8IDH0D0GgjP8tRXPS9AXk0uC7A6Ir?=
+ =?us-ascii?Q?uUGMDcKREJtxdfMa9u4wGmBlEomGl6RYsdlsMG/EnH55N6f/NvbWWvYgMm0E?=
+ =?us-ascii?Q?Tl8G/dVmt61ILhGpaPzaSRsFWw7C30OeTtogS6tllPSuyuCx9YyhQDwUnsiU?=
+ =?us-ascii?Q?5zLoKLhJTckRh779hIOzESw3nf1T4sCu3NB3pWC4lXCtOdOjXUXPVc0CbNV3?=
+ =?us-ascii?Q?/Idozzd9PZbTSD4upcyRMJbfhjWryktj/d0CRD8C/oEVZnkCjj3F2UOTg8xH?=
+ =?us-ascii?Q?6BCioq/DcPXGF3OOGNYjB3IYQoLTQthYq0+YSqIJuzvKWEjYiN98H2quwvco?=
+ =?us-ascii?Q?kb2kfiYPcTWmPTyke7eh9hszQzQ5FYcqHVVAMUy9QWZw1cf+kXP6nlWJlX+i?=
+ =?us-ascii?Q?K/Xaoo2UvLhpwYYwXurZ0CCPtNC7bQUOlryGD0HB3XsUi6wjL0MeE7C4AiBe?=
+ =?us-ascii?Q?9gN11dggwEZLWwwuKmhymgPud+JCXw9upbmeIJkneoEPvhPRguGlG0+WxVgA?=
+ =?us-ascii?Q?kC1QCAoQLMYLWQVMA2ndMGmjGKC0f+BCRHfCGZZUCH61qrscYtEQnferGRtH?=
+ =?us-ascii?Q?rIuJj3bSaoFsKtpl8ww1r2g81WMFXAkdwSCcBeCOuHNo/8zijLwu1gDYG1qg?=
+ =?us-ascii?Q?Rjk=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB8659.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?BC4yO265s0IttQxuUVR+IKkBK0eZY4O+a7H5ByvuPuqwvmIVaxe9dMC7g1jz?=
+ =?us-ascii?Q?GroLTVlK2WzwdgY1wPyuM9VEeGjq19GY6SyK6TkgDWgaTSKUSUiQNCTyh2gM?=
+ =?us-ascii?Q?2fGEMJOVhs2uIQG+Qe9LQaVBFr/uFsvbdqdBHK3SrMS0O37VZ/QNojWEa+E5?=
+ =?us-ascii?Q?jXxn9xyGzDgKZdx3iciSBYA2ZZJGXLxIGpXscPCcluZ9pe7Y5ZszS3yfT6oU?=
+ =?us-ascii?Q?oCfcu+TwJZDvZcMoGavYR2oRKybLTK0gJLBs7DYbjVx/V6X3/hKhWQRN3TY9?=
+ =?us-ascii?Q?4Mp0/XBs/59agEDGNqzoqcgqkOrItBwIduR4ZASS7CMkith/yhoMbkeHZ8Be?=
+ =?us-ascii?Q?Gfn9QAS8XVYJ88n9ShhG9DSPC1yP9b/JYKCT/qMy8B46eWgeaCcvnp8ox02v?=
+ =?us-ascii?Q?nQR1t4zsJN7XPnZQU1T6ZZZ6yi3rrbwWPLiWlHIJbNYUk2BymFl2QzmmPtzI?=
+ =?us-ascii?Q?FAsQu2Bmrh1RR4OpXzV/AVmZN+90hDvYX/OTHWKAqeyGHnecWdUZMBF/VDN1?=
+ =?us-ascii?Q?t0VPpgr/x5oCmwdalY9peBB3Gwa5J8ZD8cmz+hBwRAj38YuywGOjURgsfMt5?=
+ =?us-ascii?Q?ETzql1cDREmn/ag8veB5tFe9tVucVd40PP9K0x/VoJDiRWM1jacxbLNqhtx8?=
+ =?us-ascii?Q?yiSJmY2PXFsR6+NqBwr9XSPV+FGcbxunTIKh34oV7AaBKbak18SI4IrjdgkS?=
+ =?us-ascii?Q?PeaADHv+fBuDhmXzxNiFamUz2vpGXvqLKiQJfT6OsntzZ1duz2xox6ELECEB?=
+ =?us-ascii?Q?PzaFz4uwInMnzFLvn7exaFEi5zFRLHcx8zZcOL+FvjVIfk3uJJ3jxnPLgNhH?=
+ =?us-ascii?Q?v0MaZItATkhw060ndgfiA2T87NhWOGKOV/v33ts9bHLjT4zUzZ0JSHq1UYus?=
+ =?us-ascii?Q?sG+/xR4AZuKnS3GBnq0kOXvIPVyQHyuSLt7FpKE+RlrVWu4M7EyspAlG0CjB?=
+ =?us-ascii?Q?b7e7LU5RZXYDLoqz5YCGlDjCO3D0hpKcFwgcArpvCcieI2+r6jq2sH8dKPaB?=
+ =?us-ascii?Q?+Pdtc64lHJes2gbXPV0wZnOnvi0CDqmoDpKEZtIDi611/koQWXZeyY/UByOB?=
+ =?us-ascii?Q?5CE5K66wrPlVY8xfDB9BoGI6iK0tD6bihq4AQvUHhYC/TYcO0vbT2jayWQuP?=
+ =?us-ascii?Q?m/k4EXSHx9GQJ37e33yYESg8e0ly0M6nMeR1JsifVhSzMb+d5862mdwczFMr?=
+ =?us-ascii?Q?EQBV0bt7VKaoLwygtWkQN67s7Wd+flo+QOT0VEADDRHV9evE+dom9bkOpJYQ?=
+ =?us-ascii?Q?lePJOXop+mg4SiiUGQdjDEfEA79meb8MP03vmkGXXDucC2LC0+UO7dbGbumI?=
+ =?us-ascii?Q?82Ww2Vd67929wXIn2JQ9XfpKLVgcpOKKEogcb8ZDSKrDUlvm9KzQ+Xuc092v?=
+ =?us-ascii?Q?ufOyYi25t4T6OySGqwFu1YBwiOvjv0Z4gOLzQ7IR4nbrjNvRy4xHTVtK5z7h?=
+ =?us-ascii?Q?CetttMp9hZI4AoesbF9nUduXmyRI5ByCaVcOlLOd2D65t6t1FkwfbaNOACki?=
+ =?us-ascii?Q?5wVBLteC17i2l7Fd5qeOz+ea8bpOQUJ1C19/q6oaa4oQY9NLw62zI2ozjwdx?=
+ =?us-ascii?Q?987HMZ8diJb9HPVi5DY=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b01b525a-4057-4461-38d4-08dcfa6c04d2
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2024 11:55:02.6200 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: kKgK/YVSevXGPmlVhEJVCagBrl7HBPiS9eUhcsehoTgyTqymY7LVDrqUYqgg+V3r
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7725
+Received-SPF: softfail client-ip=2a01:111:f403:2414::606;
+ envelope-from=jgg@nvidia.com;
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,63 +164,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Oct 31, 2024 at 09:09:20PM -0700, Nicolin Chen wrote:
 
+> FWIW, Robin requested a different solution for MSI mapping [1], v.s.
+> the RMR one that we have been using since Eric's work. I drafted a
+> few VFIO/IOMMUFD patches for that, 
 
-On 11/1/24 5:36 AM, Yong-Xuan Wang wrote:
-> Currently QEMU will continue to emulate the AIA MSI devices and enable the
-> AIA extension for guest OS when the host kernel doesn't support the
-> in-kernel AIA irqchip. This will cause an illegal instruction exception
-> when the guest OS uses the IMSIC devices. Add additional checks to ensure
-> the guest OS only uses the AIA MSI device when the host kernel supports
-> the in-kernel AIA chip.
-> 
-> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-> Reviewed-by: Jim Shu <jim.shu@sifive.com>
-> ---
->   hw/riscv/virt.c | 19 +++++++++++++------
->   1 file changed, 13 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 45a8c4f8190d..0d8e047844a6 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -1567,12 +1567,19 @@ static void virt_machine_init(MachineState *machine)
->           }
->       }
->   
-> -    if (kvm_enabled() && virt_use_kvm_aia(s)) {
-> -        kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
-> -                             VIRT_IRQCHIP_NUM_SOURCES, VIRT_IRQCHIP_NUM_MSIS,
-> -                             memmap[VIRT_APLIC_S].base,
-> -                             memmap[VIRT_IMSIC_S].base,
-> -                             s->aia_guests);
-> +    if (kvm_enabled() && s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC) {
-> +        if (virt_use_kvm_aia(s)) {
-> +            kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
-> +                                 VIRT_IRQCHIP_NUM_SOURCES,
-> +                                 VIRT_IRQCHIP_NUM_MSIS,
-> +                                 memmap[VIRT_APLIC_S].base,
-> +                                 memmap[VIRT_IMSIC_S].base,
-> +                                 s->aia_guests);
-> +        } else {
-> +            error_report("Host machine doesn't support in-kernel APLIC MSI, "
-> +                         "please use aia=none or aia=aplic");
-> +            exit(1);
-> +        }
+I also talked to MarcZ about this at LPC and he seems willing to
+consider it. It took a bit to explain everything though. So I think we
+should try in Nov/Dec
 
-As you said in the commit msg it looks like we have a bug in this particular path: kvm accel,
-aia=aplic-imsic, no irqchip present. Erroring out is one possible solution but I wonder why we
-couldn't just emulate the APLIC and IMSIC controllers in this case. We have code that does
-that in TCG, so it would be a matter of adding the needed plumbing to treat KVM AIA without
-irqchip == TCG AIA.
-
-Drew, care to weight in? Thanks,
-
-
-Daniel
-
-
->       }
->   
->       if (riscv_is_32bit(&s->soc[0])) {
+Jason
 
