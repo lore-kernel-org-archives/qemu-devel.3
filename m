@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89F8E6F061
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 14:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD8DEE6F062
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 14:29:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6sQm-0007js-Nh; Fri, 01 Nov 2024 10:15:16 -0400
+	id 1t6sdw-00024k-Ry; Fri, 01 Nov 2024 10:28:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
- id 1t6sQf-0007c5-8j
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 10:15:11 -0400
-Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
- id 1t6sQc-0008M9-Bn
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 10:15:08 -0400
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
- by metis.whiteo.stw.pengutronix.de with esmtps
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <jlu@pengutronix.de>)
- id 1t6sQF-0007mN-JD; Fri, 01 Nov 2024 15:14:43 +0100
-Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77])
- by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
- (envelope-from <jlu@pengutronix.de>) id 1t6sQD-001WYz-1S;
- Fri, 01 Nov 2024 15:14:41 +0100
-Received: from localhost ([127.0.0.1])
- by ptz.office.stw.pengutronix.de with esmtp (Exim 4.96)
- (envelope-from <jlu@pengutronix.de>) id 1t6sQC-00BEXF-2F;
- Fri, 01 Nov 2024 15:14:41 +0100
-Message-ID: <9046a4327336d4425f1e7e7a973edef9e9948e80.camel@pengutronix.de>
-Subject: backing storage for eMMC boot partitions
-From: Jan =?ISO-8859-1?Q?L=FCbbe?= <jlu@pengutronix.de>
-To: Guenter Roeck <linux@roeck-us.net>, =?ISO-8859-1?Q?C=E9dric?= Le Goater	
- <clg@kaod.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
- <thuth@redhat.com>,  Joel Stanley <joel@jms.id.au>, qemu-block
- <qemu-block@nongnu.org>
-Date: Fri, 01 Nov 2024 15:14:40 +0100
-In-Reply-To: <b6641b83-33dc-46f8-b61b-fbdb9ab9bc40@roeck-us.net>
-References: <20241017163247.711244-1-peter.maydell@linaro.org>
- <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
- <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
- <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
- <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
- <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
- <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
- <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
- <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
- <53cbb597-e7f2-4742-bf85-928c704ddbcf@linaro.org>
- <443f1b0c-8184-4bf4-9f68-c23d7de3bc36@roeck-us.net>
- <1bce4c22-9281-44c5-8acb-860881dc271c@kaod.org>
- <c27fbed6-596e-4ce7-a6ca-6d12d7205e99@roeck-us.net>
- <86fa6e68-5861-4d4d-941f-95b278074eb6@kaod.org>
- <1c917e4a-de50-45b9-ac9c-eb04d51401a2@roeck-us.net>
- <00997cca-6f4a-4b99-9616-2af6a25cd4fb@kaod.org>
- <4246f82b-597c-4a5d-9a55-18a584e7d8c7@roeck-us.net>
- <670fa7bf052d8f292f9bd25c330c8d7bdba02770.camel@pengutronix.de>
- <b6641b83-33dc-46f8-b61b-fbdb9ab9bc40@roeck-us.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.1 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t6sdv-000245-H5
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 10:28:51 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t6sds-0001ve-VH
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 10:28:51 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43168d9c6c9so16311945e9.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 07:28:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730471327; x=1731076127; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=76KrJrVxLWGUKTLdIPXIfzklJeCw9lpwmI0f/85N4u8=;
+ b=bqt48wwlwtlRQiOs7c0pdvhI3uBUv5TSA0IHIJi0PYG2AOLfivN6Tbd0FhGXuNISJZ
+ DP8ygk9VPrJMeOAOSRqnCVeMdSGYV4bbZULgUO3+f+msnOZ56zr43vovuXDmN63RKge9
+ dMynPCpvojd57e849MVxEjiQPnVDJVYX5xqKU3lhUY7eBaJmpoG2675GJePU5ZI9RarU
+ FRS0u6ApgL+43ybKhQyeK7LDbZdnV6Eh/HHQGjVYXmxOWOy7ichqDNhkmvuxeHul5yZx
+ w5EovmzEXFkdLaWPElHC2+bYFWCjoR27AVwjjBtrRlNdXg0npyaoyMcGMCoguLDgOMnJ
+ cpHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730471327; x=1731076127;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=76KrJrVxLWGUKTLdIPXIfzklJeCw9lpwmI0f/85N4u8=;
+ b=LTFA3QetwpI2DevVfFSeZ/x+8UNze0gZj9onh6dQqtgttN570cp/rs4symnNf1sWRW
+ t2wptGiwL4/RARLP0s19dEjB1znuj96WfeYNAIsAeq4q9/OLgxOZhQIR6OmqowMjgk+e
+ HPIVa71vQitiuocOQ67QQBUW/aIXaCi4ItXuTCqZ92QnQPm0YvZYgoM+viumT8JNroT9
+ lUYGrnSm1rv6bLfDjjeIFffc9BPTJ7boFjjjZQELo1Wzgj5GFd3wMYiOFSz3KNoswo37
+ cRRg7Ev/zfQQADEkF00vNj9O8+kW2Mve/cBnbesTSguj7CWvyk723ywf4Wz0sEMY5wMa
+ 5dIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUhZnreJ6dPBNZezrYHWN0A+N7CjQGd+odo7SAcXkPFbID/GobS2hA1cwLUfyUXtb1098Cu2q9hk8YO@nongnu.org
+X-Gm-Message-State: AOJu0YyxlGqGjgxew6r2AcqyIWAEKeb0nTssugZFLnbL4AcJ1+9BH4Iq
+ jre1n9joUeZrGOTPFvmu+TR/dzX9zIZlE9XmKkTGZ0kg9MkLK6enSNi3JGkxyCCJIgbPDy5rSOw
+ Z
+X-Google-Smtp-Source: AGHT+IG0xEAsfafrNGWSg9K/+AxDx5t1AaUUUcXO/UI3vGKzemnU2hUAVppfYjGFmGlX01KR4pS14Q==
+X-Received: by 2002:a05:600c:4e8b:b0:431:40ca:ce44 with SMTP id
+ 5b1f17b1804b1-4319ad34a44mr194985185e9.30.1730471327221; 
+ Fri, 01 Nov 2024 07:28:47 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-431bd74f132sm97724275e9.0.2024.11.01.07.28.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Nov 2024 07:28:46 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 1/2] Revert "target/arm: Fix usage of MMU indexes when EL3 is
+ AArch32"
+Date: Fri,  1 Nov 2024 14:28:44 +0000
+Message-Id: <20241101142845.1712482-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241101142845.1712482-1-peter.maydell@linaro.org>
+References: <20241101142845.1712482-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: jlu@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
- SAEximRunCond expanded to false
-X-PTX-Original-Recipient: qemu-devel@nongnu.org
-Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
- envelope-from=jlu@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,161 +96,369 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2024-10-29 at 07:40 -0700, Guenter Roeck wrote:
-> On 10/28/24 01:41, Jan L=C3=BCbbe wrote:
-> > On Sun, 2024-10-27 at 20:32 -0700, Guenter Roeck wrote:
-> > > On 10/27/24 15:26, C=C3=A9dric Le Goater wrote:
-> > > > On 10/27/24 23:11, Guenter Roeck wrote:
-> > > > > On 10/27/24 14:13, C=C3=A9dric Le Goater wrote:
-> > > > > > On 10/26/24 17:32, Guenter Roeck wrote:
-> > > > > > > On 10/26/24 03:02, C=C3=A9dric Le Goater wrote:
-> > > > > > > [ ... ]
-> > > > > > >=20
-> > > > > > > >=20
-> > > > > > > Works for me, though, and it is much better than mandating th=
-e existence
-> > > > > > > of boot partitions.
-> > > > > >=20
-> > > > > > Yes. However, if the emmc device was user creatable, we could u=
-se :
-> > > > > >=20
-> > > > > > =C2=A0=C2=A0=C2=A0 -blockdev node-name=3Demmc0,driver=3Dfile,fi=
-lename=3Dmmc-ast2600-evb-noboot.raw \
-> > > > > > =C2=A0=C2=A0=C2=A0 -device emmc,bus=3Dsdhci-bus.2,drive=3Demmc0
-> > > > > >=20
-> > > > > > and with boot partitions:
-> > > > > >=20
-> > > > > > =C2=A0=C2=A0=C2=A0 -M boot-emmc=3Dtrue \
-> > > > > > =C2=A0=C2=A0=C2=A0 -blockdev node-name=3Demmc0,driver=3Dfile,fi=
-lename=3Dmmc-ast2600-evb.raw \
-> > > > > > =C2=A0=C2=A0=C2=A0 -device emmc,bus=3Dsdhci-bus.2,drive=3Demmc0=
-,boot-partition-size=3D1048576,boot-config=3D8
-> > > > > >=20
-> > > > > > The above would be my preferred approach if acceptable. The "sd=
--bus"
-> > > > > > bus identifier should be changed in other machines tough.
-> > > > >=20
-> > > > > No real preference here, though my understanding is that emmc dev=
-ices
-> > > > > are by definition built-in, and that is what emmc_class_init() sa=
-ys as well.
-> > > > > Also, there does not seem to be an sdhci-bus, only sd-bus, and th=
-at does
-> > > > > not support any index values. That may be just my lack of knowled=
-ge, though.
-> > > >=20
-> > > > No, you are right. On a real ast2600-evb, the eMMC device is indeed
-> > > > soldered on the board. But, for testing purposes, it is sometime
-> > > > interesting to add some flexibility in the machine definition and
-> > > > in the modeling too. This avoids "hard-coding" default devices in
-> > > > the machines and lets the user define its own variant models using
-> > > > the QEMU command line.
-> > >=20
-> > > I would agree, but I had a number of my patches rejected because whil=
-e
-> > > they would be useful for testing they would not accurately reflect th=
-e
-> > > hardware. So nowadays I gave up even trying to upstream such changes.
-> >=20
-> > My patch to make eMMCs user creatable [1] was applied to target-
-> > arm.next by Peter Maydell [2] last week.
-> >=20
->=20
-> That works for me with
->=20
-> drivecmd=3D"-drive file=3D${ROOTFS},format=3Draw,if=3Dnone,id=3Dd0"
-> drivecmd+=3D" -device emmc,drive=3Dd0"
->=20
-> but unless I am missing something
->=20
-> drivecmd=3D"-drive file=3D${ROOTFS},format=3Draw,if=3Dnone,id=3Dd0"
-> drivecmd+=3D" -device sd-card,drive=3Dd0"
->=20
-> also boots from the emmc controller. How do I provide the
-> bus and bus index ? "bus=3Dsdhci-bus.2" doesn't work for me.
-> There is "sd-bus", but it does not have an index.
+This reverts commit 4c2c0474693229c1f533239bb983495c5427784d.
 
-I've not really understood how to assemble more complex setups using
-qemu's commandline when the board already creates some of the devices.=C2=
-=A0
+This commit tried to fix a problem with our usage of MMU indexes when
+EL3 is AArch32, using what it described as a "more complicated
+approach" where we share the same MMU index values for Secure PL1&0
+and NonSecure PL1&0. In theory this should work, but the change
+didn't account for (at least) two things:
 
-Perhaps C=C3=A9dric can explain how the different boot options are
-configured for aspeed?
+(1) The design change means we need to flush the TLBs at any point
+where the CPU state flips from one to the other.  We already flush
+the TLB when SCR.NS is changed, but we don't flush the TLB when we
+take an exception from NS PL1&0 into Mon or when we return from Mon
+to NS PL1&0, and the commit didn't add any code to do that.
 
-I see three cases:
-1. specify the blockdev driver and options in the simple case where the
-board already creates the SD or eMMC device
-2. specify some custom options for the eMMC
-3. create a custom eMMC config on a generic machine via sdhci-pci
+(2) The ATS12NS* address translate instructions allow Mon code (which
+is Secure) to do a stage 1+2 page table walk for NS.  I thought this
+was OK because do_ats_write() does a page table walk which doesn't
+use the TLBs, so because it can pass both the MMU index and also an
+ARMSecuritySpace argument we can tell the table walk that we want NS
+stage1+2, not S.  But that means that all the code within the ptw
+that needs to find e.g.  the regime EL cannot do so only with an
+mmu_idx -- all these functions like regime_sctlr(), regime_el(), etc
+would need to pass both an mmu_idx and the security_space, so they
+can tell whether this is a translation regime controlled by EL1 or
+EL3 (and so whether to look at SCTLR.S or SCTLR.NS, etc).
 
+In particular, because regime_el() wasn't updated to look at the
+ARMSecuritySpace it would return 1 even when the CPU was in Monitor
+mode (and the controlling EL is 3).  This meant that page table walks
+in Monitor mode would look at the wrong SCTLR, TCR, etc and would
+generally fault when they should not.
 
-Case 1 is probably most common. The user has chosen a board and just
-wants to boot a rootfs image and doesn't care about boot partitions or
-anything else eMMC-specific.
+Rather than trying to make the complicated changes needed to rescue
+the design of 4c2c04746932, we revert it in order to instead take the
+route that that commit describes as "the most straightforward" fix,
+where we add new MMU indexes EL30_0, EL30_3, EL30_3_PAN to correspond
+to "Secure PL1&0 at PL0", "Secure PL1&0 at PL1", and "Secure PL1&0 at
+PL1 with PAN".
 
+This revert will re-expose the "spurious alignment faults in
+Secure PL0" issue #2326; we'll fix it again in the next commit.
 
-Some users may want to emulate an eMMC with boot partitions, as that
-allows them to emulate their physical boards more closely (case 2).
-Note that eMMC boot partitions are usually *not* used for storing a
-Linux kernel, but for the bootloader (including things like u-boot, TF-
-A, OP-TEE, ...). The ROM-code on many SoCs supports loading directly
-from eMMC boot partitions. One of the two boot partitions can be
-activated with an atomic eMMC EXT CSD register write, allowing atomic
-bootloader updates. I think this case was the motivation for C=C3=A9dric's
-eea55625df83 ("aspeed: Introduce a AspeedSoCClass 'boot_from_emmc'
-handler").
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/cpu.h               | 31 +++++++++++++------------------
+ target/arm/internals.h         | 27 ++++-----------------------
+ target/arm/tcg/translate.h     |  2 --
+ target/arm/helper.c            | 34 +++++++++++-----------------------
+ target/arm/ptw.c               |  6 +-----
+ target/arm/tcg/hflags.c        |  4 ----
+ target/arm/tcg/translate-a64.c |  2 +-
+ target/arm/tcg/translate.c     |  9 ++++-----
+ 8 files changed, 34 insertions(+), 81 deletions(-)
 
-These users are likely fine with assembling a backing file consisting
-of e.g.
-- bootloader image (boot0) @ offset 0MiB
-- empty space for bootloader updates (boot1) @ offset 1MiB
-- partitioned disk image (rootfs, ...) @ offset 2MiB
-to get the same setup as their real hardware.
-
-
-Case 3 is what I want to use the eMMC emulator for: Test eMMC-specific
-functionality in Linux userspace, specifically the boot partition
-update backend for RAUC, in a CI setup. To improve performance and
-because we don't need to emulate any specific board for CI, we use an
-x86 guest (q35). As it has PCIe, the easiest way to add the necessary
-eMMC emulation is to use sdhci-pci. That was the motivation behind my
-patch "hw/sd/sdcard: Allow user creation of eMMCs" [1].
-
-For that case, having one backing file for boot partitions + main area
-is fine as well.
-
-
-If we wanted more flexibility via separate backing files per eMMC
-partitions, it might work similar to NVMe Namespaces [2]. For me, that
-seems like a lot of complexity a very niche case like eMMC boot
-partitions.
-
-
-Potential future features such as more eMMC data partitions, RPMB
-support or separate backing files could be support in QEMU by new eMCC
-device options or even additional devices (following the NVMe
-approach), without breaking backwards compatibility.
-
-So it seems to me, that C=C3=A9dric's approach of enabling boot partitions
-in hw/arm/aspeed.c only when configured to boot from them via the "hw-
-strap1" property should solve cases 1 and 2 without introducing
-backwards compatibility issues. Case 3 has explicit configuration (if a
-boot partition is emulated), so shouldn't be a problem either.
-
-
-Thanks,
-Jan
-
-[1] https://lore.kernel.org/qemu-devel/20241015135649.4189256-1-jlu@pengutr=
-onix.de/T/
-[2] https://qemu-project.gitlab.io/qemu/system/devices/nvme.html#additional=
--namespaces
-
---=20
-Pengutronix e.K.                        |                             |
-Steuerwalder Str. 21                    | https://www.pengutronix.de/ |
-31137 Hildesheim, Germany               | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686        | Fax:   +49-5121-206917-5555 |
-
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index f065756c5c7..7674899109d 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2785,7 +2785,8 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
+  *  + NonSecure PL1 & 0 stage 1
+  *  + NonSecure PL1 & 0 stage 2
+  *  + NonSecure PL2
+- *  + Secure PL1 & 0
++ *  + Secure PL0
++ *  + Secure PL1
+  * (reminder: for 32 bit EL3, Secure PL1 is *EL3*, not EL1.)
+  *
+  * For QEMU, an mmu_idx is not quite the same as a translation regime because:
+@@ -2803,39 +2804,37 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
+  *     The only use of stage 2 translations is either as part of an s1+2
+  *     lookup or when loading the descriptors during a stage 1 page table walk,
+  *     and in both those cases we don't use the TLB.
+- *  4. we want to be able to use the TLB for accesses done as part of a
++ *  4. we can also safely fold together the "32 bit EL3" and "64 bit EL3"
++ *     translation regimes, because they map reasonably well to each other
++ *     and they can't both be active at the same time.
++ *  5. we want to be able to use the TLB for accesses done as part of a
+  *     stage1 page table walk, rather than having to walk the stage2 page
+  *     table over and over.
+- *  5. we need separate EL1/EL2 mmu_idx for handling the Privileged Access
++ *  6. we need separate EL1/EL2 mmu_idx for handling the Privileged Access
+  *     Never (PAN) bit within PSTATE.
+- *  6. we fold together most secure and non-secure regimes for A-profile,
++ *  7. we fold together most secure and non-secure regimes for A-profile,
+  *     because there are no banked system registers for aarch64, so the
+  *     process of switching between secure and non-secure is
+  *     already heavyweight.
+- *  7. we cannot fold together Stage 2 Secure and Stage 2 NonSecure,
++ *  8. we cannot fold together Stage 2 Secure and Stage 2 NonSecure,
+  *     because both are in use simultaneously for Secure EL2.
+  *
+  * This gives us the following list of cases:
+  *
+- * EL0 EL1&0 stage 1+2 (or AArch32 PL0 PL1&0 stage 1+2)
+- * EL1 EL1&0 stage 1+2 (or AArch32 PL1 PL1&0 stage 1+2)
+- * EL1 EL1&0 stage 1+2 +PAN (or AArch32 PL1 PL1&0 stage 1+2 +PAN)
++ * EL0 EL1&0 stage 1+2 (aka NS PL0)
++ * EL1 EL1&0 stage 1+2 (aka NS PL1)
++ * EL1 EL1&0 stage 1+2 +PAN
+  * EL0 EL2&0
+  * EL2 EL2&0
+  * EL2 EL2&0 +PAN
+  * EL2 (aka NS PL2)
+- * EL3 (not used when EL3 is AArch32)
++ * EL3 (aka S PL1)
+  * Stage2 Secure
+  * Stage2 NonSecure
+  * plus one TLB per Physical address space: S, NS, Realm, Root
+  *
+  * for a total of 14 different mmu_idx.
+  *
+- * Note that when EL3 is AArch32, the usage is potentially confusing
+- * because the MMU indexes are named for their AArch64 use, so code
+- * using the ARMMMUIdx_E10_1 might be at EL3, not EL1. This is because
+- * Secure PL1 is always at EL3.
+- *
+  * R profile CPUs have an MPU, but can use the same set of MMU indexes
+  * as A profile. They only need to distinguish EL0 and EL1 (and
+  * EL2 for cores like the Cortex-R52).
+@@ -3128,10 +3127,6 @@ FIELD(TBFLAG_A32, NS, 10, 1)
+  * This requires an SME trap from AArch32 mode when using NEON.
+  */
+ FIELD(TBFLAG_A32, SME_TRAP_NONSTREAMING, 11, 1)
+-/*
+- * Indicates whether we are in the Secure PL1&0 translation regime
+- */
+-FIELD(TBFLAG_A32, S_PL1_0, 12, 1)
+ 
+ /*
+  * Bit usage when in AArch32 state, for M-profile only.
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 299a96a81a7..aaa9b92faa9 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -275,20 +275,6 @@ FIELD(CNTHCTL, CNTPMASK, 19, 1)
+ #define M_FAKE_FSR_NSC_EXEC 0xf /* NS executing in S&NSC memory */
+ #define M_FAKE_FSR_SFAULT 0xe /* SecureFault INVTRAN, INVEP or AUVIOL */
+ 
+-/**
+- * arm_aa32_secure_pl1_0(): Return true if in Secure PL1&0 regime
+- *
+- * Return true if the CPU is in the Secure PL1&0 translation regime.
+- * This requires that EL3 exists and is AArch32 and we are currently
+- * Secure. If this is the case then the ARMMMUIdx_E10* apply and
+- * mean we are in EL3, not EL1.
+- */
+-static inline bool arm_aa32_secure_pl1_0(CPUARMState *env)
+-{
+-    return arm_feature(env, ARM_FEATURE_EL3) &&
+-        !arm_el_is_aa64(env, 3) && arm_is_secure(env);
+-}
+-
+ /**
+  * raise_exception: Raise the specified exception.
+  * Raise a guest exception with the specified value, syndrome register
+@@ -841,12 +827,7 @@ static inline ARMMMUIdx core_to_aa64_mmu_idx(int mmu_idx)
+     return mmu_idx | ARM_MMU_IDX_A;
+ }
+ 
+-/**
+- * Return the exception level we're running at if our current MMU index
+- * is @mmu_idx. @s_pl1_0 should be true if this is the AArch32
+- * Secure PL1&0 translation regime.
+- */
+-int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx, bool s_pl1_0);
++int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx);
+ 
+ /* Return the MMU index for a v7M CPU in the specified security state */
+ ARMMMUIdx arm_v7m_mmu_idx_for_secstate(CPUARMState *env, bool secstate);
+@@ -941,11 +922,11 @@ static inline uint32_t regime_el(CPUARMState *env, ARMMMUIdx mmu_idx)
+         return 3;
+     case ARMMMUIdx_E10_0:
+     case ARMMMUIdx_Stage1_E0:
+-    case ARMMMUIdx_E10_1:
+-    case ARMMMUIdx_E10_1_PAN:
++        return arm_el_is_aa64(env, 3) || !arm_is_secure_below_el3(env) ? 1 : 3;
+     case ARMMMUIdx_Stage1_E1:
+     case ARMMMUIdx_Stage1_E1_PAN:
+-        return arm_el_is_aa64(env, 3) || !arm_is_secure_below_el3(env) ? 1 : 3;
++    case ARMMMUIdx_E10_1:
++    case ARMMMUIdx_E10_1_PAN:
+     case ARMMMUIdx_MPrivNegPri:
+     case ARMMMUIdx_MUserNegPri:
+     case ARMMMUIdx_MPriv:
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 5a2e10d64d5..20cd0e851c4 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -165,8 +165,6 @@ typedef struct DisasContext {
+     uint8_t gm_blocksize;
+     /* True if the current insn_start has been updated. */
+     bool insn_start_updated;
+-    /* True if this is the AArch32 Secure PL1&0 translation regime */
+-    bool s_pl1_0;
+     /* Bottom two bits of XScale c15_cpar coprocessor access control reg */
+     int c15_cpar;
+     /* Offset from VNCR_EL2 when FEAT_NV2 redirects this reg to memory */
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 0a731a38e8f..0900034d42a 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3701,7 +3701,7 @@ static uint64_t do_ats_write(CPUARMState *env, uint64_t value,
+          */
+         format64 = arm_s1_regime_using_lpae_format(env, mmu_idx);
+ 
+-        if (arm_feature(env, ARM_FEATURE_EL2) && !arm_aa32_secure_pl1_0(env)) {
++        if (arm_feature(env, ARM_FEATURE_EL2)) {
+             if (mmu_idx == ARMMMUIdx_E10_0 ||
+                 mmu_idx == ARMMMUIdx_E10_1 ||
+                 mmu_idx == ARMMMUIdx_E10_1_PAN) {
+@@ -3775,11 +3775,13 @@ static void ats_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
+     case 0:
+         /* stage 1 current state PL1: ATS1CPR, ATS1CPW, ATS1CPRP, ATS1CPWP */
+         switch (el) {
++        case 3:
++            mmu_idx = ARMMMUIdx_E3;
++            break;
+         case 2:
+             g_assert(ss != ARMSS_Secure);  /* ARMv8.4-SecEL2 is 64-bit only */
+             /* fall through */
+         case 1:
+-        case 3:
+             if (ri->crm == 9 && arm_pan_enabled(env)) {
+                 mmu_idx = ARMMMUIdx_Stage1_E1_PAN;
+             } else {
+@@ -11860,11 +11862,8 @@ void arm_cpu_do_interrupt(CPUState *cs)
+ 
+ uint64_t arm_sctlr(CPUARMState *env, int el)
+ {
+-    if (arm_aa32_secure_pl1_0(env)) {
+-        /* In Secure PL1&0 SCTLR_S is always controlling */
+-        el = 3;
+-    } else if (el == 0) {
+-        /* Only EL0 needs to be adjusted for EL1&0 or EL2&0. */
++    /* Only EL0 needs to be adjusted for EL1&0 or EL2&0. */
++    if (el == 0) {
+         ARMMMUIdx mmu_idx = arm_mmu_idx_el(env, 0);
+         el = mmu_idx == ARMMMUIdx_E20_0 ? 2 : 1;
+     }
+@@ -12524,12 +12523,8 @@ int fp_exception_el(CPUARMState *env, int cur_el)
+     return 0;
+ }
+ 
+-/*
+- * Return the exception level we're running at if this is our mmu_idx.
+- * s_pl1_0 should be true if this is the AArch32 Secure PL1&0 translation
+- * regime.
+- */
+-int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx, bool s_pl1_0)
++/* Return the exception level we're running at if this is our mmu_idx */
++int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx)
+ {
+     if (mmu_idx & ARM_MMU_IDX_M) {
+         return mmu_idx & ARM_MMU_IDX_M_PRIV;
+@@ -12541,7 +12536,7 @@ int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx, bool s_pl1_0)
+         return 0;
+     case ARMMMUIdx_E10_1:
+     case ARMMMUIdx_E10_1_PAN:
+-        return s_pl1_0 ? 3 : 1;
++        return 1;
+     case ARMMMUIdx_E2:
+     case ARMMMUIdx_E20_2:
+     case ARMMMUIdx_E20_2_PAN:
+@@ -12579,15 +12574,6 @@ ARMMMUIdx arm_mmu_idx_el(CPUARMState *env, int el)
+             idx = ARMMMUIdx_E10_0;
+         }
+         break;
+-    case 3:
+-        /*
+-         * AArch64 EL3 has its own translation regime; AArch32 EL3
+-         * uses the Secure PL1&0 translation regime.
+-         */
+-        if (arm_el_is_aa64(env, 3)) {
+-            return ARMMMUIdx_E3;
+-        }
+-        /* fall through */
+     case 1:
+         if (arm_pan_enabled(env)) {
+             idx = ARMMMUIdx_E10_1_PAN;
+@@ -12607,6 +12593,8 @@ ARMMMUIdx arm_mmu_idx_el(CPUARMState *env, int el)
+             idx = ARMMMUIdx_E2;
+         }
+         break;
++    case 3:
++        return ARMMMUIdx_E3;
+     default:
+         g_assert_not_reached();
+     }
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index dd402683973..ba3dd38a729 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3607,11 +3607,7 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
+     case ARMMMUIdx_Stage1_E1:
+     case ARMMMUIdx_Stage1_E1_PAN:
+     case ARMMMUIdx_E2:
+-        if (arm_aa32_secure_pl1_0(env)) {
+-            ss = ARMSS_Secure;
+-        } else {
+-            ss = arm_security_space_below_el3(env);
+-        }
++        ss = arm_security_space_below_el3(env);
+         break;
+     case ARMMMUIdx_Stage2:
+         /*
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index bab7822ef66..f03977b4b00 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -198,10 +198,6 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
+         DP_TBFLAG_A32(flags, SME_TRAP_NONSTREAMING, 1);
+     }
+ 
+-    if (arm_aa32_secure_pl1_0(env)) {
+-        DP_TBFLAG_A32(flags, S_PL1_0, 1);
+-    }
+-
+     return rebuild_hflags_common_32(env, fp_el, mmu_idx, flags);
+ }
+ 
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index ec0b1ee2523..b2851ea5032 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -11690,7 +11690,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
+     dc->tbii = EX_TBFLAG_A64(tb_flags, TBII);
+     dc->tbid = EX_TBFLAG_A64(tb_flags, TBID);
+     dc->tcma = EX_TBFLAG_A64(tb_flags, TCMA);
+-    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx, false);
++    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx);
+ #if !defined(CONFIG_USER_ONLY)
+     dc->user = (dc->current_el == 0);
+ #endif
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index e2748ff2bb8..c5bc691d92b 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -7546,6 +7546,10 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ 
+     core_mmu_idx = EX_TBFLAG_ANY(tb_flags, MMUIDX);
+     dc->mmu_idx = core_to_arm_mmu_idx(env, core_mmu_idx);
++    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx);
++#if !defined(CONFIG_USER_ONLY)
++    dc->user = (dc->current_el == 0);
++#endif
+     dc->fp_excp_el = EX_TBFLAG_ANY(tb_flags, FPEXC_EL);
+     dc->align_mem = EX_TBFLAG_ANY(tb_flags, ALIGN_MEM);
+     dc->pstate_il = EX_TBFLAG_ANY(tb_flags, PSTATE__IL);
+@@ -7576,12 +7580,7 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+         }
+         dc->sme_trap_nonstreaming =
+             EX_TBFLAG_A32(tb_flags, SME_TRAP_NONSTREAMING);
+-        dc->s_pl1_0 = EX_TBFLAG_A32(tb_flags, S_PL1_0);
+     }
+-    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx, dc->s_pl1_0);
+-#if !defined(CONFIG_USER_ONLY)
+-    dc->user = (dc->current_el == 0);
+-#endif
+     dc->lse2 = false; /* applies only to aarch64 */
+     dc->cp_regs = cpu->cp_regs;
+     dc->features = env->features;
+-- 
+2.34.1
 
 
