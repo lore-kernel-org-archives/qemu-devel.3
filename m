@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD0EEE6B278
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:21:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2331DE6B278
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:40:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6raU-0007BO-9x; Fri, 01 Nov 2024 09:21:14 -0400
+	id 1t6rsC-0002xg-70; Fri, 01 Nov 2024 09:39:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t6raS-0007B4-0T
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:21:12 -0400
+ id 1t6rsA-0002x7-Kf
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:39:30 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t6raQ-0006Mk-JT
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:21:11 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xg1dn4G4Mz6K6H9;
- Fri,  1 Nov 2024 21:18:37 +0800 (CST)
+ id 1t6rs7-0000sk-SR
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:39:30 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xg22l4pr4z6K6Tt;
+ Fri,  1 Nov 2024 21:36:47 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 14373140453;
- Fri,  1 Nov 2024 21:21:09 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 38AFB140A36;
+ Fri,  1 Nov 2024 21:39:19 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 1 Nov 2024 14:21:08 +0100
-To: <linux-cxl@vger.kernel.org>, <mst@redhat.com>, <qemu-devel@nongnu.org>
+ 15.1.2507.39; Fri, 1 Nov 2024 14:39:18 +0100
+To: <linux-cxl@vger.kernel.org>, <mst@redhat.com>, <qemu-devel@nongnu.org>,
+ Esifiel <esifiel@gmail.com>
 CC: Fan Ni <fan.ni@samsung.com>, <linuxarm@huawei.com>
-Subject: [PATCH qemu 2/2] hw/cxl/cxl-mailbox-util: Fix output buffer index
- update when retrieving DC extents
-Date: Fri, 1 Nov 2024 13:20:05 +0000
-Message-ID: <20241101132005.26633-3-Jonathan.Cameron@huawei.com>
+Subject: [PATCH qemu 00/10] hw/cxl: Mailbox input parser hardening against
+ invalid input.
+Date: Fri, 1 Nov 2024 13:39:07 +0000
+Message-ID: <20241101133917.27634-1-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241101132005.26633-1-Jonathan.Cameron@huawei.com>
-References: <20241101132005.26633-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
  frapeml500008.china.huawei.com (7.182.85.71)
 Received-SPF: pass client-ip=185.176.79.56;
  envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
@@ -71,32 +70,46 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+The CXL device mailbox has some variable sized input commands. The payload
+length for each must be established using command especific structures.
 
-In the function of retrieving DC extents (cmd_dcd_get_dyn_cap_ext_list),
-the output buffer index was not correctly updated while iterating the
-extent list on the device, leaving the extents returned incorrect except for
-the first one.
+If user space is either buggy or malicious, it may use size fields to
+indicate fields beyond the end of the payload sent.  Some checks on this
+were missing and Esifiel picked up on this.  I've tagged all these fixes
+with Esifiel's Reported-by as either they were in the report or are similar
+issues in other commands.
 
-Fixes: 1c9221f19e62 ("hw/mem/cxl_type3: Add DC extent list representative and get DC extent list mailbox support")
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- hw/cxl/cxl-mailbox-utils.c | 1 +
- 1 file changed, 1 insertion(+)
+These can mostly be easily tested by using the raw mailbox commands option
+in Linux and injecting broken commands from user space.
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 8bb0d2dd29..97cb8bbcec 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -2227,6 +2227,7 @@ static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
-             stw_le_p(&out_rec->shared_seq, ent->shared_seq);
- 
-             record_done++;
-+            out_rec++;
-             if (record_done == record_count) {
-                 break;
-             }
+A typical command needs to first check that there is enough data to get to
+the command specific sizing fields, then check the reported size is less
+than or equal to the available payload.
+
+Note that I think it very unlikely anyone is currently using CXL emulation
+with a VM that they do not trust, but that may happen in future so good to
+fix these paths now.
+
+Jonathan Cameron (10):
+  hw/cxl: Check size of input data to dynamic capacity mailbox commands
+  hw/cxl: Check input includes at least the header in
+    cmd_features_set_feature()
+  hw/cxl: Check input length is large enough in
+    cmd_events_clear_records()
+  hw/cxl: Check enough data in cmd_firmware_update_transfer()
+  hw/cxl: Check the length of data requested fits in get_log()
+  hw/cxl: Avoid accesses beyond the end of cel_log.
+  hw/cxl: Ensuring enough data to read parameters in
+    cmd_tunnel_management_cmd()
+  hw/cxl: Check that writes do not go beyond end of target attributes
+  hw/cxl: Ensure there is enough data for the header in
+    cmd_ccls_set_lsa()
+  hw/cxl: Ensure there is enough data to read the input header in
+    cmd_get_physical_port_state()
+
+ hw/cxl/cxl-mailbox-utils.c | 73 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 62 insertions(+), 11 deletions(-)
+
 -- 
 2.43.0
 
