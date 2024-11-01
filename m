@@ -4,77 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF84E6F092
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 22:00:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAF6FE6F092
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 22:01:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6zg4-0003Wp-PF; Fri, 01 Nov 2024 17:59:32 -0400
+	id 1t6zhf-0004Kv-KV; Fri, 01 Nov 2024 18:01:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3Pk8lZwYKCrEifhlVYXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--roqueh.bounces.google.com>)
- id 1t6zg2-0003Wf-TG
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 17:59:30 -0400
-Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3Pk8lZwYKCrEifhlVYXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--roqueh.bounces.google.com>)
- id 1t6zg1-0002RM-Dw
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 17:59:30 -0400
-Received: by mail-yb1-xb4a.google.com with SMTP id
- 3f1490d57ef6-e30ceaa5feeso4417398276.2
- for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 14:59:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1730498366; x=1731103166; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=krdseIyYUptjoGlkS20dYXsB5X6RPQ/3yN6z5zilcLU=;
- b=M+QlXGTr4lqwdtuBexW5SmqK+grY/CGx52GubKe4MIvN3jKNKWFqq7sx98RobNeLrS
- pOhnEHg3h5FIe1AdwMISUvbj/zOJVJZfXraqVGUUFn8WMuJ1131ycCbXeSQpX2UxrPDO
- /01A1l1m3jdWtT4MQX8hpbsMuUa/J/sxBv/Tilw+zE8y+ddYcmnlkPo0REuJHv5Fq5yM
- bhQGUAizbMsd0iY/RlyxeeyruBHymgKSKAtQnh9TwfgEB56GqiZ/UleB4qwtnjKj3UlE
- BbHBWBPlRurIaQk/KjYvZThV++ZeowKwU4beCnD2lpFMKudem+IsA0qWQVdq32afGOp2
- PbJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730498366; x=1731103166;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=krdseIyYUptjoGlkS20dYXsB5X6RPQ/3yN6z5zilcLU=;
- b=ommh5v8yzaATD2by3KG4tPUvcjpSzqBy1v6BQbGvc51AYHKuWfNjE98wMqpBaCmKs0
- Ls61uMk/KXr/uthcOBo7q6bcUe86a08LQbd2LBnbfcVSxAgTcn5asPHBf4wdkTPf8SPx
- AJg3yK+59s/W/JrgqFbhf8AUv6flHsE6/6Uk53sYV5zWjXw+sjemyLKMgid6xZGUHHzy
- oUnG9IZv/bR34d6/zlw67+i+3G9wUFgBP4ZOk2w2WfwIg5x8MmvQ2JBy30VA9GbVu8CR
- dtHpyIyNf9q/mLCqtPhyOo2z6U7p0DVUeJk2XOYCx8sZNbm0kVqT5r/w9DASjWm0BlbF
- xhMw==
-X-Gm-Message-State: AOJu0YwRoLUkMXW1TYrRtlaPUDowtpJZFjBqxwBOYCAvll7MOauVQz9e
- 2e8MSOv1eaT3XBSi/niJBAydhR8FRPbJjw8ubF3ZV0I9eQqpYvYYxjQ+06U8CKK6LXYZ+8I+h9X
- XaA==
-X-Google-Smtp-Source: AGHT+IFXOaJUNUTXtVlDeNrR3iOb0Mqocj5Da7hZLcfH1BiY3037GciMsMeGMtPgv6zMpWKdfdA8N8Y2XBA=
-X-Received: from roqueh.c.googlers.com ([fda3:e722:ac3:cc00:4e:3bc9:ac1c:1ab])
- (user=roqueh job=sendgmr) by 2002:a25:b2a5:0:b0:e30:dccd:9aaa with
- SMTP id
- 3f1490d57ef6-e3302686a1fmr4977276.6.1730498366547; Fri, 01 Nov 2024 14:59:26
- -0700 (PDT)
-Date: Fri,  1 Nov 2024 21:59:23 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.163.g1226f6d8fa-goog
-Message-ID: <20241101215923.3399311-1-roqueh@google.com>
-Subject: [PATCH] hw/pci: Add parenthesis to PCI_BUILD_BDF macro
-From: Roque Arcudia Hernandez <roqueh@google.com>
-To: nabihestefan@google.com, mst@redhat.com, marcel.apfelbaum@gmail.com
-Cc: qemu-devel@nongnu.org, Roque Arcudia Hernandez <roqueh@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
- envelope-from=3Pk8lZwYKCrEifhlVYXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--roqueh.bounces.google.com;
- helo=mail-yb1-xb4a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t6zhd-0004KW-Pe
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 18:01:09 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t6zhY-0002nZ-M2
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 18:01:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=dz2qn4pcCOO+M1jGbs5LK5mD90i7lVDyT+Myoa7jZr8=; b=w+RPC8HiPWkHmibnQu7opopABp
+ Fnq/GxCGpgQFLvF3dSM/LCGTfdHNfVxkmqfKo4XIw+x9DigwGyksk/B/LH+bBtgxcnYEJwq4e4AR+
+ Kv5blCXEPWKNlmChjZ/tk67Rfmy9/KNuXeFKnKOW/Mj6jyqecFVChMw5n7kRVuIr/mfa/uw+uGnsO
+ /1CzTg+oMb3qo/73YvLro/kQBecR77BDbTuVocvpukXzfnQEWOfr0x1Bpt7Ycii2rdNTxpYk5pe2/
+ u+eIKN8k3Pvhycz4AzgphxDDIFFA1HGkbY5tolV8Jm2KKyOi78Mdmblmbv6t+nr5ZpZxfrJOKP708
+ 10UZU9pTq02tgjj5BgemqoX+zAYR9nbTxxtmFFdXYfNOJxlGTXA/0QxBBiCr87eDMgBsgEUmwJVVH
+ L5wj1Wj6AXP5eS8gzD3+Jzz2GvStX3FaWxE0CFZxyVyJKVGP0k4whE1LTx8C3x5lYR7M88NtxVXOD
+ 6eZS9avO9u9kTCoC18a3VQPEWMh4BNUUTWwwtRHYA0DB7/YuVaDm4lLaR5QQUmVkZe/g9DlV0tFGY
+ +dR/Woj6snQOVpS05pH82HhTir+6f1y1ssPYeFLccG+Uru9arZ+G4KbJklWnsa3s4JTzW4vYbYSRn
+ YoaIgTq0iOeATqE32StXNR2LKkfiblwDczSz63Btg=;
+Received: from [2a00:23c4:8bb8:f600:91a1:336d:3931:745]
+ (helo=localhost.localdomain)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t6zh8-0002pk-B5; Fri, 01 Nov 2024 22:00:42 +0000
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: pbonzini@redhat.com,
+	fam@euphon.net,
+	qemu-devel@nongnu.org
+Date: Fri,  1 Nov 2024 22:00:47 +0000
+Message-Id: <20241101220052.1463805-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.5
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:91a1:336d:3931:745
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH 0/5] esp.c: only allow ESP commands permitted in the current
+ mode
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,43 +78,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The bus parameter in the macro PCI_BUILD_BDF is not surrounded by
-parenthesis. This can create a compile error when warnings are
-treated as errors or can potentially create runtime errors due to the
-operator precedence.
+This series contains a few minor tidy-ups along with an implementation of the
+logic to only allow ESP commands permitted in the current mode. The motivation
+is to fix GitLab issue #2464 which causes Windows NT MIPS to bluescreen on
+boot.
 
-For instance:
+Patches 1 to 3 are simple tidy-ups from investigating the issue. Patch 4 adds
+a new asc_mode variable to indicate the current ESP mode, whilst patch 5 implements
+the feature which fixes GitLab issue #2464.
 
- file.c:x:32: error: suggest parentheses around '-' inside '<<'
- [-Werror=parentheses]
-   171 | uint16_t bdf = PCI_BUILD_BDF(a - b, sdev->devfn);
-       |                              ~~^~~
- include/hw/pci/pci.h:19:41: note: in definition of macro
- 'PCI_BUILD_BDF'
-    19 | #define PCI_BUILD_BDF(bus, devfn)     ((bus << 8) | (devfn))
-       |                                         ^~~
- cc1: all warnings being treated as errors
+IMPORTANT: unfortunately the SeaBIOS (and SeaBIOS hppa) binaries currently
+distributed with QEMU also use an illegal ESP command sequence, and so will
+fail to boot from an ESP SCSI device until binaries containing the relevant patch at
+https://github.com/coreboot/seabios/commit/2424e4c04aa30d90e85073ea41d18a7845460783
+have been merged. The hope is that the SeaBIOS binaries will be updated soon to
+allow this series to be merged in time for the 9.2 release.
 
-Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-Reviewed-by: Nabih Estefan <nabihestefan@google.com>
----
- include/hw/pci/pci.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 35d4fe0bbf..1daec974da 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -16,7 +16,7 @@ extern bool pci_available;
- #define PCI_BUS_NUM(x)          (((x) >> 8) & 0xff)
- #define PCI_SLOT(devfn)         (((devfn) >> 3) & 0x1f)
- #define PCI_FUNC(devfn)         ((devfn) & 0x07)
--#define PCI_BUILD_BDF(bus, devfn)     ((bus << 8) | (devfn))
-+#define PCI_BUILD_BDF(bus, devfn)     (((bus) << 8) | (devfn))
- #define PCI_BDF_TO_DEVFN(x)     ((x) & 0xff)
- #define PCI_BUS_MAX             256
- #define PCI_DEVFN_MAX           256
+
+Mark Cave-Ayland (5):
+  esp.c: only raise IRQ in esp_transfer_data() for CMD_SEL, CMD_SELATN
+    and CMD_TI commands
+  esp.c: improve comment in esp_transfer_data()
+  esp.h: remove separate ESPState typedef
+  esp.c: add asc_mode property to indicate the current ESP mode
+  esp.c: only allow ESP commands permitted in the current asc_mode
+
+ hw/scsi/esp.c         | 68 +++++++++++++++++++++++++++++++++++++++----
+ hw/scsi/trace-events  |  1 +
+ include/hw/scsi/esp.h | 15 +++++++++-
+ 3 files changed, 78 insertions(+), 6 deletions(-)
+
 -- 
-2.47.0.163.g1226f6d8fa-goog
+2.39.5
 
 
