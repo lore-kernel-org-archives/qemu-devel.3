@@ -4,117 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06670E674BF
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 09:21:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47CEBCEB2DF
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 09:27:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6npb-0000ae-TV; Fri, 01 Nov 2024 05:20:35 -0400
+	id 1t6nvm-0001ap-Tj; Fri, 01 Nov 2024 05:26:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demin.han@starfivetech.com>)
- id 1t6npY-0000aV-JU
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 05:20:32 -0400
-Received: from mail-sh0chn02on2072a.outbound.protection.partner.outlook.cn
- ([2406:e500:4420:2::72a]
- helo=CHN02-SH0-obe.outbound.protection.partner.outlook.cn)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demin.han@starfivetech.com>)
- id 1t6npV-0000ce-B4
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 05:20:32 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dqfmENop3DhxXtk0tVndvc2Mz5RU2mm0W8uOP0Q5v6yK9QudZq0/X4weN6BeA/45zxsFVzU1CP4m+uCD3EVtmxUVIDAPoh/N4OPj8VP4Kdp64Mo62VrWLtVW44bcLNsS9PxXmPDoLe+FxUgJouuV5tEVHvb9Ay0nui4B7nC+uq6XYxnivNkzaQ6Jiv5z7ckwDx5PesV+b//aKU5KxDiPr/1DzhdnuJCnc0/S8x5S9IpSj/6Y2r3BRPKGyOgES0YNCQd4/wcPDCk8olMgu20RFld58iNeuD0ZOsZJUVb4ZsiaUW01+4o7mv8D3E1KXOOKL+KEJ1D3kVo5u0WUPcCuTg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BHc+2ZexFmesMjJ/++g41KaYjEsRpcM5YOOO0I5hzto=;
- b=Us765OU6B9l0eJGXffqCt9DgyWnID/VjAD9jNCc8JIG/Fh8MEgpgPWPmHQmr2H8aKySP8HNkvcz0Quk/OuVyrqMVIjsTipaSmceBj/BMxaBffWRcuCsoT2T0A2Du/kHhQiP1h+OU1K8X3LReX8N2zAR+LlE852e+HS5DPC9PRx0vK75PZ3wqc5EY1Bza+3nsLXtLHw7u4vujZEwaTt9sDd7ajLegWt8uQDalYT2p07dQwnHUzgg5h68mEGUTcHP7p33gasrtb5ZE+PvfBPMILsaGHestn8Lgt8luGgWln0u7lcqGBZq5stmr7rz2n4xVR3wqmHxFLTfEA+VN3t5QZQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=starfivetech.com; dmarc=pass action=none
- header.from=starfivetech.com; dkim=pass header.d=starfivetech.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=starfivetech.com;
-Received: from ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c550:d::13) by ZQ0PR01MB1093.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c550::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.26; Fri, 1 Nov
- 2024 09:00:56 +0000
-Received: from ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
- ([fe80::7c03:71ed:a774:fa31]) by
- ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn ([fe80::7c03:71ed:a774:fa31%3])
- with mapi id 15.20.8093.027; Fri, 1 Nov 2024 09:00:55 +0000
-From: "demin.han" <demin.han@starfivetech.com>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, erdnaxe@crans.org, ma.mandourr@gmail.com,
- pierrick.bouvier@linaro.org
-Subject: [PATCH] plugins: add plugin API to get args passed to binary
-Date: Fri,  1 Nov 2024 17:00:32 +0800
-Message-ID: <20241101090032.1413255-1-demin.han@starfivetech.com>
-X-Mailer: git-send-email 2.46.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BJSPR01CA0014.CHNPR01.prod.partner.outlook.cn
- (10.43.34.154) To ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn (10.2.2.45)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t6nvi-0001aX-Cd
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 05:26:54 -0400
+Received: from mail-wr1-f51.google.com ([209.85.221.51])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t6nvf-0001AU-WA
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 05:26:54 -0400
+Received: by mail-wr1-f51.google.com with SMTP id
+ ffacd0b85a97d-37d51055097so1142199f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 02:26:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730453210; x=1731058010;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qVpakfrItOHbT9P0ZHauKO7SwRaS0boOL2PWJaMlfjw=;
+ b=BMcV0GOGxOTQ5zTAH2qcE0ZNvf2XjuX3tL/hbtWH8nNuWhGrPymFZqw/QJtRtQdFKr
+ d7V8n8qfYFi+aH1ccyx6qf9qm2AC+pJsDjP+DEJzb+HyYvO3jUsmYjwjdgXA/5jnckn9
+ gwGu5EQwOcMh8+ptlsUNMflDDhALii1JhQMOS/T2bsYQBaaXFp9An/8NirY1xaSWB6/r
+ MI+/oH33Kcp9TkA8fXZBwP3Mid7uRRtVNb9iOHZlkI15C4xOlZFcsqh+yJd4CAEtoLg0
+ h1KLoJkWZhN1Dz5ZhKzum00Cj4nmACerdMivwaH8AdbaOBOzNXLtsKOCFeqfaoTPUcw8
+ Xg2g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXaS7DxYNOQZxh/b1Se5LqJnF/w6DRfIccZjRNksWuZuUxT7D+lck3+pJJxvYZ7uboKeHOmFxt2zXyY@nongnu.org
+X-Gm-Message-State: AOJu0YxKvhKD/HJ5p+rlMaQJaW9J8fCpTNjsvAqifo0q6L/LBoxUkyJx
+ hmZl8tEGE8Yb2exHEKVDgLh4/o4gAYOibHnkuQhESjSWuhdxzcHz8u0BsA==
+X-Google-Smtp-Source: AGHT+IEeIG1d6N6t6yAuRIEchERnolSNVW8oLh6PFXua4/GSGSJALx8ltHVM31VGAE5yMfhlMg2mEw==
+X-Received: by 2002:a5d:64c5:0:b0:37d:5429:9004 with SMTP id
+ ffacd0b85a97d-381c7a3a52amr1935468f8f.3.1730453209544; 
+ Fri, 01 Nov 2024 02:26:49 -0700 (PDT)
+Received: from tpx1 (ip-109-42-48-251.web.vodafone.de. [109.42.48.251])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c10d49c9sm4507067f8f.37.2024.11.01.02.26.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Nov 2024 02:26:49 -0700 (PDT)
+Date: Fri, 1 Nov 2024 10:26:47 +0100
+From: Thomas Huth <huth@tuxfamily.org>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: peter.maydell@linaro.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] next-kbd: convert to use qemu_input_handler_register()
+Message-ID: <20241101102647.75bedfe2@tpx1>
+In-Reply-To: <20241030091803.1315752-1-mark.cave-ayland@ilande.co.uk>
+References: <20241030091803.1315752-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZQ0PR01MB1063:EE_|ZQ0PR01MB1093:EE_
-X-MS-Office365-Filtering-Correlation-Id: 78d22845-f7bc-4691-3cd3-08dcfa53b1ea
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|41320700013|52116014|1800799024|38350700014; 
-X-Microsoft-Antispam-Message-Info: 0GeXNZZsImkTn1T7XDwCjcGW+gdYj+ravwhhehaeTpBJBx0XI5GVINH3STtnQldAihIT8S7jKAGwvVkDsscIdAGxgfnk+MsqtvohZoOB05AqIvLb26hMZ39KfAy2jqDpD13lyTJVgkU76+4Kw27EbFAKKb7iu1c+jVbevtpn/u3aU+KQbAKO5YKB3220hIK8ZuvllxWpQuLAR7wY5VfQuWFIDgI66vvqGSjzGHjTxPpL34E84aXNoEM8TS9LtGxOYuAYIRzbgndqKPmRL6nqk5X5rJbcbj7fgk89rSPb8T7fga2C/pKE3tOLP3MiFHn2RJq+eHM+CUkmBwLECPX07LYlPr0VSA1LOn8aHuvr0thG/wuiX+/If75lIbeQIjqVbHdqrQKJl9xohADtuIdnatuVFCq3jDDDl/Wru/CfjJFxX6A1+Mvi8Qx0io5EOMUL94Thaf8pCim4mcJv/b66tXhhRkLQPcvOa/bIPJxRLWrLI3/HJ+JWhW5IByGXcCKqqEvJoYJCAnWB+CD1XPi3ec5hWqI14I05VxXJa4b6iHoK96719tcUDaLlsmcCfdrZ8w7DveI93V4HLwHQIwyWPn05C6UOiH47UMqn+m4rqraiftmMeza3b90PB1Bon4NI
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn; PTR:;
- CAT:NONE;
- SFS:(13230040)(366016)(41320700013)(52116014)(1800799024)(38350700014);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?29PE8hydMiS9YboR9+Olx6MvqBiFHGvoFwbQuBlEtHeb+Q7U6uVTbrUUjYDu?=
- =?us-ascii?Q?HkjdxrbyfrZrtHYjo/7HQqPDkxalNZcIfgvlD+YzSBUmjE9cuHqXRhaSMPG0?=
- =?us-ascii?Q?JtNyyV9aZVCJWPRrjiYJpMcrpkyosbKMPm9Dfjgzc79/c1sY/9Q6jagzLc44?=
- =?us-ascii?Q?7/QVlrJyFmI0c8KEMM0k15JqnagHH2Tgs0HdeszgFWV88s2WToxLaJgm7TaS?=
- =?us-ascii?Q?4+mDU3RaI/iFBBKix8w5n7xHLK6hvDNd+i9NIY9q4FQELRcheHS9+x1/3kbF?=
- =?us-ascii?Q?Y9k9OQWKmaI3AXC34Lgz1heJf5+DFWO9F5iLuLNH96XD3yEs1ppRmP7vr8GF?=
- =?us-ascii?Q?MWjk8uyFm0o68xmC3zfC47wuv8nM0FY7Wf/2BP3wJRDZ4T+4pVA5gF5Gc9T8?=
- =?us-ascii?Q?jiIAi4zKY70gASprfbToOYPN782ApfFBOCkU8IApsp3nqyvsjxMeWWjLUgVo?=
- =?us-ascii?Q?1hQ4+GIxeC3LQgiwrfv4cHIeJZ0xLokZYdvxAAZZpNiEjJn5SQLpaeUR2TdI?=
- =?us-ascii?Q?YYIqh7BWVBTxUluF+guznmb89lJ2dV1gOP/TwT6jAzlQfxJFLLgdPj3RJhHW?=
- =?us-ascii?Q?GoVpnUm6vkQh3gj8yGaS02xg1CUVzcJCwIyg/NeppzHUwhHMUNc2o3j0Uaqj?=
- =?us-ascii?Q?8KdDUFKL2lwCdhLstYK/0Toc8unyirxP4qSZqbSROxPvoPgDbQWFLrmOJo/D?=
- =?us-ascii?Q?P9O/mlIJBqFEFJAcDnUtyC9bCj5QK9F1kwL7FbSbyVSINXYNX/piIZbBEqul?=
- =?us-ascii?Q?5aooegmg6XtceiKbGD7Axma0w6domtqLUqdIuXvDDFkAzlugunoqW0m1WS6k?=
- =?us-ascii?Q?SjO3+Yi15K59tsa9S4E/UKXIJSN3isXfMyYu/5KxVHYFXCIaxllrHWCPWRI8?=
- =?us-ascii?Q?4SI8XOaOyh2N9FNyafZsqNVB9mD/5MYGo68e9gg0pSdFluHtFls+kUkFjM15?=
- =?us-ascii?Q?L4Y5uJfFNBDpL25FmMlyhztNfFTg8ZTVOrlptWjPy9UB+TitNi9vPpj0EJ6t?=
- =?us-ascii?Q?MCeXWrdPhZaD33w+Dn88LxeqHUsgHlLnhX+1Vt9hnEPiHsBT180aHepXk2tq?=
- =?us-ascii?Q?gJgoxDDrgRkJ+YI9pit759dWy5xwn7vzA9Wy+K7Nbu7+yG+x+cK2i2od5Qu+?=
- =?us-ascii?Q?ObJ7KmJVM1AQhQT2/iiAS2isaQmDkPTE4EITQHFFcnrvWepg0eLH7fsX0sOQ?=
- =?us-ascii?Q?nWaYzipojDPjX4G6uSw1KQRgF6od3h7Nfc+Q754wYvELYMQ7e7t+gQuzAmMb?=
- =?us-ascii?Q?p4pwQOKldCeucKbEyHlU2vhVhyX7dJ+ex8varPuva8THzsHv7hxEI6G9hSIR?=
- =?us-ascii?Q?iKYQ7h4o+LSrPFK/t6GPb/5/crEr0GexQkunynqsvhSsLfrMjDy6FHm9ZAWe?=
- =?us-ascii?Q?PQw9ZfN5d1wVtk7hbAAGVRSQB0/vwixoGhvhyjLelNMyEupdiNF6sYFz5iQd?=
- =?us-ascii?Q?C/2S3068PZttlmgvO6Ci6OFxM1WoGkGMRgljg0cQDXKvJYMHZiZ+U8h79ULU?=
- =?us-ascii?Q?YvWGYsWdh4dfp/o1eeIxD+GpCRX4LMAX5BTP4auY5SYMqyLtpV/DR+b0Uke5?=
- =?us-ascii?Q?qFJqqZ6ZBomiF/j9RVUb6DiurO6Com4pNWkzCHseIZYrCzT/+J5+AIVMpFAi?=
- =?us-ascii?Q?Lg=3D=3D?=
-X-OriginatorOrg: starfivetech.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 78d22845-f7bc-4691-3cd3-08dcfa53b1ea
-X-MS-Exchange-CrossTenant-AuthSource: ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2024 09:00:55.9633 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 06fe3fa3-1221-43d3-861b-5a4ee687a85c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9Q8ep04FYiIPqENF3+fdN0aynYLxJP2kzRSyl4T6H0PqAtojUUltL2UsXBNNrH2l3LkJEbZcsiqgvZ5mP8xHb5fj0C/fxjL9XvJpm+lqLxg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZQ0PR01MB1093
-Received-SPF: pass client-ip=2406:e500:4420:2::72a;
- envelope-from=demin.han@starfivetech.com;
- helo=CHN02-SH0-obe.outbound.protection.partner.outlook.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=209.85.221.51; envelope-from=th.huth@gmail.com;
+ helo=mail-wr1-f51.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,78 +84,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Why we need args?
-When plugin outputs log files, only binary path can't distinguish multiple
-runs if the binary passed with different args.
-This is bad for CI using plugin.
+Am Wed, 30 Oct 2024 09:18:03 +0000
+schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 
-Signed-off-by: demin.han <demin.han@starfivetech.com>
----
- include/qemu/qemu-plugin.h   | 11 +++++++++++
- plugins/api.c                | 16 ++++++++++++++++
- plugins/qemu-plugins.symbols |  1 +
- 3 files changed, 28 insertions(+)
+> Convert the next-kbd device from the legacy UI qemu_add_kbd_event_handler()
+> function to use qemu_input_handler_register().
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> ---
+>  hw/m68k/next-kbd.c | 158 +++++++++++++++++++++++++++++----------------
+>  1 file changed, 103 insertions(+), 55 deletions(-)
+> 
+> diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
+> index bc67810f31..85ef784491 100644
+> --- a/hw/m68k/next-kbd.c
+> +++ b/hw/m68k/next-kbd.c
+> @@ -68,7 +68,6 @@ struct NextKBDState {
+>      uint16_t shift;
+>  };
+>  
+> -static void queue_code(void *opaque, int code);
+>  
+>  /* lots of magic numbers here */
+>  static uint32_t kbd_read_byte(void *opaque, hwaddr addr)
+> @@ -166,68 +165,79 @@ static const MemoryRegionOps kbd_ops = {
+>      .endianness = DEVICE_NATIVE_ENDIAN,
+>  };
+>  
+> -static void nextkbd_event(void *opaque, int ch)
+> -{
+> -    /*
+> -     * Will want to set vars for caps/num lock
+> -     * if (ch & 0x80) -> key release
+> -     * there's also e0 escaped scancodes that might need to be handled
+> -     */
+> -    queue_code(opaque, ch);
+> -}
+> -
+> -static const unsigned char next_keycodes[128] = {
+> -    0x00, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x50, 0x4F,
+> -    0x4E, 0x1E, 0x1F, 0x20, 0x1D, 0x1C, 0x1B, 0x00,
+> -    0x42, 0x43, 0x44, 0x45, 0x48, 0x47, 0x46, 0x06,
+> -    0x07, 0x08, 0x00, 0x00, 0x2A, 0x00, 0x39, 0x3A,
+> -    0x3B, 0x3C, 0x3D, 0x40, 0x3F, 0x3E, 0x2D, 0x2C,
+> -    0x2B, 0x26, 0x00, 0x00, 0x31, 0x32, 0x33, 0x34,
+> -    0x35, 0x37, 0x36, 0x2e, 0x2f, 0x30, 0x00, 0x00,
+> -    0x00, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+> +#define NEXTKDB_NO_KEY 0xff
+> +
+> +static const int qcode_to_nextkbd_keycode[] = {
+> +    /* Make sure future additions are automatically set to NEXTKDB_NO_KEY */
+> +    [0 ... 0xff]               = NEXTKDB_NO_KEY,
 
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 622c9a0232..daf75c9f5a 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -837,6 +837,17 @@ bool qemu_plugin_bool_parse(const char *name, const char *val, bool *ret);
- QEMU_PLUGIN_API
- const char *qemu_plugin_path_to_binary(void);
- 
-+/**
-+ * qemu_plugin_argv_to_binary() - argv to binary file being executed
-+ *
-+ * Return a string array representing the argv to the binary. For user-mode
-+ * this is the main executable's argv. For system emulation we currently
-+ * return NULL. The user should g_free() the string array once no longer
-+ * needed.
-+ */
-+QEMU_PLUGIN_API
-+const char **qemu_plugin_argv_to_binary(void);
-+
- /**
-  * qemu_plugin_start_code() - returns start of text segment
-  *
-diff --git a/plugins/api.c b/plugins/api.c
-index 24ea64e2de..fa2735db03 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -485,6 +485,22 @@ const char *qemu_plugin_path_to_binary(void)
-     return path;
- }
- 
-+const char **qemu_plugin_argv_to_binary(void)
-+{
-+    const char **argv = NULL;
-+#ifdef CONFIG_USER_ONLY
-+    int i, argc;
-+    TaskState *ts = get_task_state(current_cpu);
-+    argc = ts->bprm->argc;
-+    argv = g_malloc(sizeof(char *) * (argc + 1));
-+    for (i = 0; i < argc; ++i) {
-+        argv[i] = g_strdup(ts->bprm->argv[i]);
-+    }
-+    argv[argc] = NULL;
-+#endif
-+    return argv;
-+}
-+
- uint64_t qemu_plugin_start_code(void)
- {
-     uint64_t start = 0;
-diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
-index 032661f9ea..532582effe 100644
---- a/plugins/qemu-plugins.symbols
-+++ b/plugins/qemu-plugins.symbols
-@@ -1,4 +1,5 @@
- {
-+  qemu_plugin_argv_to_binary;
-   qemu_plugin_bool_parse;
-   qemu_plugin_end_code;
-   qemu_plugin_entry_code;
--- 
-2.46.1
+I think it would be better to use Q_KEY_CODE__MAX here instead of 0xff ?
 
+> +    [Q_KEY_CODE_ESC]           = 0x49,
+> +    [Q_KEY_CODE_1]             = 0x4a,
+> +    [Q_KEY_CODE_2]             = 0x4b,
+> +    [Q_KEY_CODE_3]             = 0x4c,
+> +    [Q_KEY_CODE_4]             = 0x4d,
+> +    [Q_KEY_CODE_5]             = 0x50,
+> +    [Q_KEY_CODE_6]             = 0x4f,
+> +    [Q_KEY_CODE_7]             = 0x4e,
+> +    [Q_KEY_CODE_8]             = 0x1e,
+> +    [Q_KEY_CODE_9]             = 0x1f,
+> +    [Q_KEY_CODE_0]             = 0x20,
+> +    [Q_KEY_CODE_MINUS]         = 0x1d,
+> +    [Q_KEY_CODE_EQUAL]         = 0x1c,
+> +    [Q_KEY_CODE_BACKSPACE]     = 0x1b,
+> +    [Q_KEY_CODE_TAB]           = 0x00,
+> +
+> +    [Q_KEY_CODE_Q]             = 0x42,
+> +    [Q_KEY_CODE_W]             = 0x43,
+> +    [Q_KEY_CODE_E]             = 0x44,
+> +    [Q_KEY_CODE_R]             = 0x45,
+> +    [Q_KEY_CODE_T]             = 0x48,
+> +    [Q_KEY_CODE_Y]             = 0x47,
+> +    [Q_KEY_CODE_U]             = 0x46,
+> +    [Q_KEY_CODE_I]             = 0x06,
+> +    [Q_KEY_CODE_O]             = 0x07,
+> +    [Q_KEY_CODE_P]             = 0x08,
+> +    [Q_KEY_CODE_RET]           = 0x2a,
+> +    [Q_KEY_CODE_A]             = 0x39,
+> +    [Q_KEY_CODE_S]             = 0x3a,
+> +
+> +    [Q_KEY_CODE_D]             = 0x3b,
+> +    [Q_KEY_CODE_F]             = 0x3c,
+> +    [Q_KEY_CODE_G]             = 0x3d,
+> +    [Q_KEY_CODE_H]             = 0x40,
+> +    [Q_KEY_CODE_J]             = 0x3f,
+> +    [Q_KEY_CODE_K]             = 0x3e,
+> +    [Q_KEY_CODE_L]             = 0x2d,
+> +    [Q_KEY_CODE_SEMICOLON]     = 0x2c,
+> +    [Q_KEY_CODE_APOSTROPHE]    = 0x2b,
+> +    [Q_KEY_CODE_GRAVE_ACCENT]  = 0x26,
+> +    [Q_KEY_CODE_SHIFT]         = 0x00,
+> +    [Q_KEY_CODE_BACKSLASH]     = 0x00,
+> +    [Q_KEY_CODE_Z]             = 0x31,
+> +    [Q_KEY_CODE_X]             = 0x32,
+> +    [Q_KEY_CODE_C]             = 0x33,
+> +    [Q_KEY_CODE_V]             = 0x34,
+> +
+> +    [Q_KEY_CODE_B]             = 0x35,
+> +    [Q_KEY_CODE_N]             = 0x37,
+> +    [Q_KEY_CODE_M]             = 0x36,
+> +    [Q_KEY_CODE_COMMA]         = 0x2e,
+> +    [Q_KEY_CODE_DOT]           = 0x2f,
+> +    [Q_KEY_CODE_SLASH]         = 0x30,
+> +    [Q_KEY_CODE_SHIFT_R]       = 0x00,
+> +
+> +    [Q_KEY_CODE_SPC]           = 0x38,
+>  };
+>  
+> -static void queue_code(void *opaque, int code)
+> +static void nextkbd_put_keycode(NextKBDState *s, int keycode)
+>  {
+> -    NextKBDState *s = NEXTKBD(opaque);
+>      KBDQueue *q = &s->queue;
+> -    int key = code & KD_KEYMASK;
+> -    int release = code & 0x80;
+> -    static int ext;
+> -
+> -    if (code == 0xE0) {
+> -        ext = 1;
+> -    }
+> -
+> -    if (code == 0x2A || code == 0x1D || code == 0x36) {
+> -        if (code == 0x2A) {
+> -            s->shift = KD_LSHIFT;
+> -        } else if (code == 0x36) {
+> -            s->shift = KD_RSHIFT;
+> -            ext = 0;
+> -        } else if (code == 0x1D && !ext) {
+> -            s->shift = KD_LCOMM;
+> -        } else if (code == 0x1D && ext) {
+> -            ext = 0;
+> -            s->shift = KD_RCOMM;
+> -        }
+> -        return;
+> -    } else if (code == (0x2A | 0x80) || code == (0x1D | 0x80) ||
+> -               code == (0x36 | 0x80)) {
+> -        s->shift = 0;
+> -        return;
+> -    }
+>  
+>      if (q->count >= KBD_QUEUE_SIZE) {
+>          return;
+>      }
+>  
+> -    q->data[q->wptr] = next_keycodes[key] | release;
+> -
+> +    q->data[q->wptr] = keycode;
+>      if (++q->wptr == KBD_QUEUE_SIZE) {
+>          q->wptr = 0;
+>      }
+> @@ -241,6 +251,44 @@ static void queue_code(void *opaque, int code)
+>      /* s->update_irq(s->update_arg, 1); */
+>  }
+>  
+> +static void nextkbd_event(DeviceState *dev, QemuConsole *src, InputEvent *evt)
+> +{
+> +    NextKBDState *s = NEXTKBD(dev);
+> +    int qcode, keycode;
+> +    bool key_down = evt->u.key.data->down;
+> +
+> +    qcode = qemu_input_key_value_to_qcode(evt->u.key.data->key);
+> +    if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
+> +        return;
+> +    }
+> +
+> +    keycode = qcode_to_nextkbd_keycode[qcode];
+> +    if (keycode == NEXTKDB_NO_KEY) {
+> +        return;
+> +    }
+> +
+> +    if (qcode == Q_KEY_CODE_SHIFT) {
+> +        s->shift = key_down ? KD_LSHIFT : 0;
+> +    }
+> +
+> +    if (qcode == Q_KEY_CODE_SHIFT_R) {
+> +        s->shift = key_down ? KD_RSHIFT : 0;
+> +    }
+
+This does not work properly when you press both shift keys together, e.g.
+press the left shift key first and keep it pressed, then shortly press the
+right shift key and release it, then type some letters while you still hold
+down the left shift key.
+
+I think you should rather treat the shift value like a bitfield here, e.g.:
+
+    if (qcode == Q_KEY_CODE_SHIFT) {
+        if (key_down) {
+            s->shift |= KD_LSHIFT;
+        } else {
+            s->shift &= ~KD_LSHIFT;
+        }
+    }
+
+    if (qcode == Q_KEY_CODE_SHIFT_R) {
+        if (key_down) {
+            s->shift |= KD_RSHIFT;
+        } else {
+            s->shift &= ~KD_RSHIFT;
+        }
+    }
+
+ Thomas
+
+> +    /* If key release event, create keyboard break code */
+> +    if (!key_down) {
+> +        keycode = keycode | 0x80;
+> +    }
+> +
+> +    nextkbd_put_keycode(s, keycode);
+> +}
+> +
+> +static const QemuInputHandler nextkbd_handler = {
+> +    .name  = "QEMU NeXT Keyboard",
+> +    .mask  = INPUT_EVENT_MASK_KEY,
+> +    .event = nextkbd_event,
+> +};
+> +
+>  static void nextkbd_reset(DeviceState *dev)
+>  {
+>      NextKBDState *nks = NEXTKBD(dev);
+> @@ -256,7 +304,7 @@ static void nextkbd_realize(DeviceState *dev, Error **errp)
+>      memory_region_init_io(&s->mr, OBJECT(dev), &kbd_ops, s, "next.kbd", 0x1000);
+>      sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
+>  
+> -    qemu_add_kbd_event_handler(nextkbd_event, s);
+> +    qemu_input_handler_register(dev, &nextkbd_handler);
+>  }
+>  
+>  static const VMStateDescription nextkbd_vmstate = {
 
