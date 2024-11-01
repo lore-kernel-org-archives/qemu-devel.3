@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09A65E6F06D
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 16:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C7BCE6F06C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 16:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6uFU-0004J4-1a; Fri, 01 Nov 2024 12:11:44 -0400
+	id 1t6uFO-0004IW-EP; Fri, 01 Nov 2024 12:11:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t6uFI-0004H4-K4
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:11:33 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1t6uFG-0004GU-Q5
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:11:32 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t6uFG-0008Gn-VH
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:11:32 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-37d5aedd177so1382544f8f.1
- for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 09:11:30 -0700 (PDT)
+ id 1t6uFF-0008Ga-1Z
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:11:30 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-37ed3bd6114so1217692f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 09:11:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730477489; x=1731082289; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730477487; x=1731082287; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JgJweKIXis8k6s24MiQrusXcKHlFW60RT7XqGnm9h0Y=;
- b=M6zH/cU2JARQ2SeLyFgPteAT/rnMNbq1pIUSskmoGoVCAf41DuTALMy+OMC1fPDuR4
- vmqCqeEoT/Ezs1KCqkNdlIv2vvrfoNAgd7vxCmaPxdbwiDZiOf/esCSvrnlWGP4YFPGB
- 5A7hwcIWY0N9yuBw7A/+meMWN/REuuxT+lY7PyZxX9Jg3GOtAL1W74a+sty71Gbadm2n
- 5L3byWd3cyveOx9JYqlOVQg6d5my1SKhBijud0h4xp5Y5Lhla8ncz0YYz9HozMgVCf+B
- 3woJlScz6IJrnVQWsrXi6w39mk1ZbJGguTP+/MiNeUULDc8g7Xrp0ofpe0iOWB8QLdSt
- iLcg==
+ bh=6fhSn5hEytgSspXIQ7EOuLQkNlvmpGv4ycpV45iM8Ao=;
+ b=lumKceIHT6DbeCQehzEJizt2F3fG/mdecACmkJuJcUpf0USWdDBgJBKP4+DSDl8ett
+ 3x0MEnLrLSdD6ozEnKIM7Dby6JxuR0GNAhlJNyk2LZi02Nto4or3CpP58iYMlfiONH/Q
+ T4WOO60v6cntM+9WtCAyi6tKyxvxhlSlsKadiSAWG88i13WZSnw7DTnP+HQoDgXS8/Ok
+ +TyB5T2dYMlFXfwsxH5bqSiuyZPwMTArlsrFP+B5xI+WJmuA48RmbODYu7PYQZkb/O8e
+ 82gvCwVJ23c+fyZ0D9ou7NTpiWQoSnPPFRRsZ0zox4B5LdO/eaCVB2pT0BujSYZBq1Zf
+ SG1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730477489; x=1731082289;
+ d=1e100.net; s=20230601; t=1730477487; x=1731082287;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JgJweKIXis8k6s24MiQrusXcKHlFW60RT7XqGnm9h0Y=;
- b=MbjXQtN1JJDw8d8KXngNWWbUAPyCcunrVRzD4JLI89SDlqp24CPQAtstE5Z+wbd1sB
- nbmuD/rZsde89HZ5fBLk356KazPEZq4SrSb9j8p08HUHm95QZLSptPX18LdVnKlLTlg2
- mtk5UzyaNfZm3mih7KkUmmi6y4biHtm+1G33N0Y2/dH1PwT71vKCIDcQG3nUGQcO/sb8
- N7lDZu9t9J3cUOXcYOKCiAQutQ2QNQwGGQjYvMkbfL9QF9GHHYKypT7PWag5VgFvx1bU
- j9XmYR+UXOPqpojA3oRqIsmm5wdPT9mk7kY/7atEaX8XD6hPLXwHvXQ4tsUgMOLEL4U8
- ymGw==
+ bh=6fhSn5hEytgSspXIQ7EOuLQkNlvmpGv4ycpV45iM8Ao=;
+ b=En5SDgTFAPhOPD0rF3fjh6p7VNL9H9rRP23qDM5/ufnmyei/oeeH5iMKoiatfXoYXq
+ XFK56N4nH0Fj4pknP91zU1mGkYshHok6TO4TqL5RGpJgx/k+Ke2Nzw/jb0+FmGZRFE8R
+ ufsA8InFSartennBYhtwyra8MYmHscA9EsZ2SU3zAD3Wmcx42tPdnZXfrhMr6rPkZHfE
+ XfsRT4hpJiIKG68WeESZ6dF2j8THN7M05QI8HOQlUigGaMqbWcdyrAwahFdcSJa3VS7L
+ HTFBQH00EBEZbxyxgcQtMnG6SysRblagYM5iwPU/4Gur25SO3Y2pmqkJ+9mv5nLFs020
+ peKQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW3p9Six9G6UOud8YxwFiUAz7ptB/2Y3fyIECZ8qV9KrL3pto235i/tbRCXKAGqbckk2ekMxlxmlv1/@nongnu.org
-X-Gm-Message-State: AOJu0YytTs4lpYSFuyUg0tfAiar0vhTkE2lIjk5vjbgPyAyHVNrLDBKT
- Gr7r8Jzw0JYQN/SwYMk7f9ZBVsHI/eBKfJnwSkvDE9sN8R7Ly4C0duyAOJs9Zv9zzTPGI7Cif7D
- F
-X-Google-Smtp-Source: AGHT+IEwR9cEfTA8EnxaKkfOGWkuTFR8IWjI69woz7WU1qepY8PmPq39BO4gAg/m6Tnjz25EyK1n1Q==
-X-Received: by 2002:a05:6000:4711:b0:37c:cc67:8b1f with SMTP id
- ffacd0b85a97d-381bea0ee17mr5565634f8f.48.1730477489261; 
- Fri, 01 Nov 2024 09:11:29 -0700 (PDT)
+ AJvYcCWNAHU0L1eFxkatAPSS3tP0Zn8LLzN4NW6WnCh8jGylvJjIHepXYVEWPkY6ILe1rk4UWFojB68yZxpF@nongnu.org
+X-Gm-Message-State: AOJu0YzlJqhwVx8qHRaAtfqcp3mmhRApyKoiJ+KuXYDD/JZMtQaR3ezk
+ cCNeJuRotK+g6t3qd+Un0Xc0f0as15z2jSdqSUPUzMfPInLGOpmtACkPMNljVcXluKkrj2dX/or
+ q
+X-Google-Smtp-Source: AGHT+IGGfv/uuKbiQIDHLQv+l+YnMjhlnX8JlvMC0pnT2XgPhH8w77lfVsGRgB1YA1k6pmsaktcwnA==
+X-Received: by 2002:a05:6000:3c6:b0:37d:3650:fae5 with SMTP id
+ ffacd0b85a97d-381c7ab60efmr4083705f8f.52.1730477487282; 
+ Fri, 01 Nov 2024 09:11:27 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10b7f80sm5658313f8f.20.2024.11.01.09.11.27
+ ffacd0b85a97d-381c10b7f80sm5658313f8f.20.2024.11.01.09.11.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 01 Nov 2024 09:11:27 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
@@ -68,24 +68,23 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH 2/2] hw/arm/aspeed_ast27x0: Avoid hardcoded '256' in IRQ
- calculation
-Date: Fri,  1 Nov 2024 16:11:25 +0000
-Message-Id: <20241101161125.1901394-3-peter.maydell@linaro.org>
+Subject: [PATCH 1/2] hw/arm/aspeed_ast27x0: Use bsa.h for PPI definitions
+Date: Fri,  1 Nov 2024 16:11:24 +0000
+Message-Id: <20241101161125.1901394-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241101161125.1901394-1-peter.maydell@linaro.org>
 References: <20241101161125.1901394-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,55 +100,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When calculating the index into the GIC's GPIO array for per-CPU
-interrupts, we have to start with the number of SPIs.  The code
-currently hard-codes this to 'NUM_IRQS = 256'.  However the number of
-SPIs is set separately and implicitly by the value of
-AST2700_MAX_IRQ, which is the number of SPIs plus 32 (since it is
-what we set the GIC num-irq property to).
+Use the private peripheral interrupt definitions from bsa.h instead
+of defining them locally.
 
-Define AST2700_MAX_IRQ as the total number of SPIs; this brings
-AST2700 into line with AST2600, which defines AST2600_MAX_IRQ as the
-number of SPIs not including the 32 internal interrupts.  We can then
-use AST2700_MAX_IRQ instead of the hardcoded 256.
+Note that bsa.h defines these values as INTID values, which are all
+16 greater than the PPI values that we were previously using.  So we
+refactor the code to use INTID-based values to match that.
+
+This is the same thing we did in commit d40ab068c07d9 for sbsa-ref.
+It removes the "same constant, different values" confusion where this
+board code and bsa.h both define an ARCH_GIC_MAINT_IRQ, and allows us
+to use symbolic names for the timer interrupt IDs.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/aspeed_ast27x0.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
 diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 5638a7a5781..7b246440952 100644
+index dca660eb6be..5638a7a5781 100644
 --- a/hw/arm/aspeed_ast27x0.c
 +++ b/hw/arm/aspeed_ast27x0.c
-@@ -66,7 +66,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_GPIO]      =  0x14C0B000,
- };
- 
--#define AST2700_MAX_IRQ 288
-+#define AST2700_MAX_IRQ 256
- 
- /* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
- static const int aspeed_soc_ast2700_irqmap[] = {
-@@ -403,7 +403,7 @@ static bool aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error **errp)
-     gicdev = DEVICE(&a->gic);
-     qdev_prop_set_uint32(gicdev, "revision", 3);
-     qdev_prop_set_uint32(gicdev, "num-cpu", sc->num_cpus);
--    qdev_prop_set_uint32(gicdev, "num-irq", AST2700_MAX_IRQ);
-+    qdev_prop_set_uint32(gicdev, "num-irq", AST2700_MAX_IRQ + GIC_INTERNAL);
- 
-     redist_region_count = qlist_new();
-     qlist_append_int(redist_region_count, sc->num_cpus);
-@@ -417,8 +417,7 @@ static bool aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error **errp)
+@@ -13,6 +13,7 @@
+ #include "qapi/error.h"
+ #include "hw/misc/unimp.h"
+ #include "hw/arm/aspeed_soc.h"
++#include "hw/arm/bsa.h"
+ #include "qemu/module.h"
+ #include "qemu/error-report.h"
+ #include "hw/i2c/aspeed_i2c.h"
+@@ -416,28 +417,28 @@ static bool aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error **errp)
  
      for (i = 0; i < sc->num_cpus; i++) {
          DeviceState *cpudev = DEVICE(&a->cpu[i]);
--        int NUM_IRQS = 256;
--        int intidbase = NUM_IRQS + i * GIC_INTERNAL;
-+        int intidbase = AST2700_MAX_IRQ + i * GIC_INTERNAL;
+-        int NUM_IRQS = 256, ARCH_GIC_MAINT_IRQ = 9, VIRTUAL_PMU_IRQ = 7;
+-        int ppibase = NUM_IRQS + i * GIC_INTERNAL + GIC_NR_SGIS;
++        int NUM_IRQS = 256;
++        int intidbase = NUM_IRQS + i * GIC_INTERNAL;
  
          const int timer_irq[] = {
-             [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
+-            [GTIMER_PHYS] = 14,
+-            [GTIMER_VIRT] = 11,
+-            [GTIMER_HYP]  = 10,
+-            [GTIMER_SEC]  = 13,
++            [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
++            [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
++            [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
++            [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ,
+         };
+         int j;
+ 
+         for (j = 0; j < ARRAY_SIZE(timer_irq); j++) {
+             qdev_connect_gpio_out(cpudev, j,
+-                    qdev_get_gpio_in(gicdev, ppibase + timer_irq[j]));
++                    qdev_get_gpio_in(gicdev, intidbase + timer_irq[j]));
+         }
+ 
+         qemu_irq irq = qdev_get_gpio_in(gicdev,
+-                                        ppibase + ARCH_GIC_MAINT_IRQ);
++                                        intidbase + ARCH_GIC_MAINT_IRQ);
+         qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
+                                     0, irq);
+         qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
+-                qdev_get_gpio_in(gicdev, ppibase + VIRTUAL_PMU_IRQ));
++                qdev_get_gpio_in(gicdev, intidbase + VIRTUAL_PMU_IRQ));
+ 
+         sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+         sysbus_connect_irq(gicbusdev, i + sc->num_cpus,
 -- 
 2.34.1
 
