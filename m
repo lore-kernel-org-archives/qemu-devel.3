@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B69CE6B27D
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF7AE6B278
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:50:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6s18-0004jN-8P; Fri, 01 Nov 2024 09:48:46 -0400
+	id 1t6s18-0004hH-8Y; Fri, 01 Nov 2024 09:48:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t6s15-0004Up-Vk
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:44 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1t6s15-0004QL-8B
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:43 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t6s14-0002KI-4B
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:43 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A1Dffpl023740;
- Fri, 1 Nov 2024 13:48:36 GMT
+ id 1t6s13-0002Ju-50
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:42 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A1DfekZ010313;
+ Fri, 1 Nov 2024 13:48:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=IU/Mn09d2+EbLtQ8eeojMxP360v0lOYoa9uwDhEpKzo=; b=
- gxDyccqtlqyxC4PkpRt4Sc7PFTonit3xFpBj7WR2S5pp5DWuUVzaCGzrKgbTsDVu
- p0Ug7PXi5wvFULTr1k6EF4ji+FG46yx7wzJhACohEHVZAublACF3Dn4lbdOmRmbT
- KREPAJ7+MHW2TIaE7Sb9Ri/fcmFWv8ett/EdLkzlAcK2pfbxYQRoyMmCivI4NFo3
- 9LGEyhFqTK8tZobjFmD77SHTVJwlSQVGHufGaP048TE7XgKIm/lZIrJ/X+e/Ywy3
- fiJ6fhn3WIT8S7J1jW88/j+YKotNq09pwuBjygIVzKO1IfXXsr9bH0QsH9oyhPYT
- 6d6wynIjQOQ3DmD4lFgl+w==
+ corp-2023-11-20; bh=IGuir1SixE9HwG3JNgK0+QzvhULJSvM7M0POG8w4yRM=; b=
+ dZ/q2pQQEY7/vwb8RIio5kOe4XqBdsf5jpXSZesofvoJGKmiX1rf7DCTxA1CTNtf
+ WpLqGZ68Hdhh5mZTVDB4ucDYkktAFT2TmYrWXScerkuteuuZ325Qs9+rEKFi5tLi
+ 5IWsuhDotROMtJI6bHY2GpYew/SivRVa/RF6UTSvYKHffk2RoRx8ZINXxU1XGzHD
+ vqSdIgCPEyFByLd6f7/oZF5Ii5Y8haMv8LSyEqaZ01lJlkaSawBPWlH7mVfuxpgR
+ /5CCDIjiU0/TQRBQ8236hfGfanPKTDcyHjQgMvQrOVafLloO0vBpE9pfOhsRnAXo
+ eqWT9c3/3ujwicd571l/fA==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42grc94a3m-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42grc247h2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 01 Nov 2024 13:48:36 +0000 (GMT)
+ Fri, 01 Nov 2024 13:48:38 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4A1CJBnP010117; Fri, 1 Nov 2024 13:48:36 GMT
+ with ESMTP id 4A1BFOf2010296; Fri, 1 Nov 2024 13:48:37 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 42hn91ptmu-1
+ 42hn91ptnf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 01 Nov 2024 13:48:35 +0000
+ Fri, 01 Nov 2024 13:48:37 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A1DhuOQ006031;
- Fri, 1 Nov 2024 13:48:35 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A1DhuOW006031;
+ Fri, 1 Nov 2024 13:48:37 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 42hn91pt43-14; Fri, 01 Nov 2024 13:48:35 +0000
+ ESMTP id 42hn91pt43-17; Fri, 01 Nov 2024 13:48:37 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V3 13/16] tests/qtest: defer connection
-Date: Fri,  1 Nov 2024 06:47:52 -0700
-Message-Id: <1730468875-249970-14-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V3 16/16] migration: cpr-transfer documentation
+Date: Fri,  1 Nov 2024 06:47:55 -0700
+Message-Id: <1730468875-249970-17-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
 References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
@@ -78,10 +78,10 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  phishscore=0 suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2409260000
  definitions=main-2411010100
-X-Proofpoint-GUID: vSx5fPTEJJZgkTCV3NrWmgsFaBO3aNrB
-X-Proofpoint-ORIG-GUID: vSx5fPTEJJZgkTCV3NrWmgsFaBO3aNrB
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Proofpoint-GUID: lMenP9T4wO4MwAESgNqMNRFPs0157g4X
+X-Proofpoint-ORIG-GUID: lMenP9T4wO4MwAESgNqMNRFPs0157g4X
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -105,220 +105,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an option to defer making the connecting to the monitor and qtest
-sockets when calling qtest_init_with_env.  The client makes the connection
-later by calling qtest_connect_deferred and qtest_qmp_handshake.
-
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- tests/qtest/libqtest.c       | 69 +++++++++++++++++++++++++++++---------------
- tests/qtest/libqtest.h       | 19 +++++++++++-
- tests/qtest/migration-test.c |  4 +--
- 3 files changed, 65 insertions(+), 27 deletions(-)
+ docs/devel/migration/CPR.rst | 144 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 142 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 9d07de1..95408fb 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -75,6 +75,8 @@ struct QTestState
- {
-     int fd;
-     int qmp_fd;
-+    int sock;
-+    int qmpsock;
-     pid_t qemu_pid;  /* our child QEMU process */
-     int wstatus;
- #ifdef _WIN32
-@@ -443,7 +445,8 @@ static QTestState *G_GNUC_PRINTF(2, 3) qtest_spawn_qemu(const char *qemu_bin,
- }
+diff --git a/docs/devel/migration/CPR.rst b/docs/devel/migration/CPR.rst
+index 63c3647..732d5a6 100644
+--- a/docs/devel/migration/CPR.rst
++++ b/docs/devel/migration/CPR.rst
+@@ -5,7 +5,7 @@ CPR is the umbrella name for a set of migration modes in which the
+ VM is migrated to a new QEMU instance on the same host.  It is
+ intended for use when the goal is to update host software components
+ that run the VM, such as QEMU or even the host kernel.  At this time,
+-cpr-reboot is the only available mode.
++the cpr-reboot and cpr-transfer modes are available.
  
- static QTestState *qtest_init_internal(const char *qemu_bin,
--                                       const char *extra_args)
-+                                       const char *extra_args,
-+                                       bool defer_connect)
- {
-     QTestState *s;
-     int sock, qmpsock, i;
-@@ -485,22 +488,17 @@ static QTestState *qtest_init_internal(const char *qemu_bin,
-     qtest_client_set_rx_handler(s, qtest_client_socket_recv_line);
-     qtest_client_set_tx_handler(s, qtest_client_socket_send);
+ Because QEMU is restarted on the same host, with access to the same
+ local devices, CPR is allowed in certain cases where normal migration
+@@ -53,7 +53,7 @@ RAM is copied to the migration URI.
+ Outgoing:
+   * Set the migration mode parameter to ``cpr-reboot``.
+   * Set the ``x-ignore-shared`` capability if desired.
+-  * Issue the ``migrate`` command.  It is recommended the the URI be a
++  * Issue the ``migrate`` command.  It is recommended the URI be a
+     ``file`` type, but one can use other types such as ``exec``,
+     provided the command captures all the data from the outgoing side,
+     and provides all the data to the incoming side.
+@@ -145,3 +145,143 @@ Caveats
  
--    s->fd = socket_accept(sock);
--    if (s->fd >= 0) {
--        s->qmp_fd = socket_accept(qmpsock);
--    }
--    unlink(socket_path);
--    unlink(qmp_socket_path);
--    g_free(socket_path);
--    g_free(qmp_socket_path);
--
--    g_assert(s->fd >= 0 && s->qmp_fd >= 0);
--
-     s->rx = g_string_new("");
-     for (i = 0; i < MAX_IRQ; i++) {
-         s->irq_level[i] = false;
-     }
- 
-+    s->sock = sock;
-+    s->qmpsock = qmpsock;
-+    if (!defer_connect) {
-+        qtest_connect_deferred(s);
-+    }
+ cpr-reboot mode may not be used with postcopy, background-snapshot,
+ or COLO.
 +
-     /*
-      * Stopping QEMU for debugging is not supported on Windows.
-      *
-@@ -515,34 +513,57 @@ static QTestState *qtest_init_internal(const char *qemu_bin,
-     }
- #endif
- 
-+   return s;
-+}
++cpr-transfer mode
++-----------------
 +
-+void qtest_connect_deferred(QTestState *s)
-+{
-+    g_autofree gchar *socket_path = NULL;
-+    g_autofree gchar *qmp_socket_path = NULL;
++This mode allows the user to transfer a guest to a new QEMU instance
++on the same host with minimal guest pause time, by preserving guest
++RAM in place, albeit with new virtual addresses in new QEMU.
 +
-+    socket_path = g_strdup_printf("%s/qtest-%d.sock",
-+                                  g_get_tmp_dir(), getpid());
-+    qmp_socket_path = g_strdup_printf("%s/qtest-%d.qmp",
-+                                      g_get_tmp_dir(), getpid());
++The user starts new QEMU on the same host as old QEMU, with the
++same arguments as old QEMU, plus the ``-incoming option``.  The user
++issues the migrate command to old QEMU, which stops the VM, saves
++state to the migration channels, and enters the postmigrate state.
++Execution resumes in new QEMU.
 +
-+    s->fd = socket_accept(s->sock);
-+    if (s->fd >= 0) {
-+        s->qmp_fd = socket_accept(s->qmpsock);
-+    }
-+    unlink(socket_path);
-+    unlink(qmp_socket_path);
-+    g_assert(s->fd >= 0 && s->qmp_fd >= 0);
-     /* ask endianness of the target */
--
-     s->big_endian = qtest_query_target_endianness(s);
--
--   return s;
- }
- 
- QTestState *qtest_init_without_qmp_handshake(const char *extra_args)
- {
--    return qtest_init_internal(qtest_qemu_binary(NULL), extra_args);
-+    return qtest_init_internal(qtest_qemu_binary(NULL), extra_args, false);
- }
- 
--QTestState *qtest_init_with_env(const char *var, const char *extra_args)
-+void qtest_qmp_handshake(QTestState *s)
- {
--    QTestState *s = qtest_init_internal(qtest_qemu_binary(var), extra_args);
--    QDict *greeting;
--
-     /* Read the QMP greeting and then do the handshake */
--    greeting = qtest_qmp_receive(s);
-+    QDict *greeting = qtest_qmp_receive(s);
-     qobject_unref(greeting);
-     qobject_unref(qtest_qmp(s, "{ 'execute': 'qmp_capabilities' }"));
-+}
- 
-+QTestState *qtest_init_with_env(const char *var, const char *extra_args,
-+                                bool defer_connect)
-+{
-+    QTestState *s = qtest_init_internal(qtest_qemu_binary(var), extra_args,
-+                                        defer_connect);
-+    if (!defer_connect) {
-+        qtest_qmp_handshake(s);
-+    }
-     return s;
- }
- 
- QTestState *qtest_init(const char *extra_args)
- {
--    return qtest_init_with_env(NULL, extra_args);
-+    return qtest_init_with_env(NULL, extra_args, false);
- }
- 
- QTestState *qtest_vinitf(const char *fmt, va_list ap)
-@@ -1523,7 +1544,7 @@ static struct MachInfo *qtest_get_machines(const char *var)
- 
-     silence_spawn_log = !g_test_verbose();
- 
--    qts = qtest_init_with_env(qemu_var, "-machine none");
-+    qts = qtest_init_with_env(qemu_var, "-machine none", false);
-     response = qtest_qmp(qts, "{ 'execute': 'query-machines' }");
-     g_assert(response);
-     list = qdict_get_qlist(response, "return");
-@@ -1578,7 +1599,7 @@ static struct CpuModel *qtest_get_cpu_models(void)
- 
-     silence_spawn_log = !g_test_verbose();
- 
--    qts = qtest_init_with_env(NULL, "-machine none");
-+    qts = qtest_init_with_env(NULL, "-machine none", false);
-     response = qtest_qmp(qts, "{ 'execute': 'query-cpu-definitions' }");
-     g_assert(response);
-     list = qdict_get_qlist(response, "return");
-diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-index beb96b1..db76f2c 100644
---- a/tests/qtest/libqtest.h
-+++ b/tests/qtest/libqtest.h
-@@ -60,13 +60,15 @@ QTestState *qtest_init(const char *extra_args);
-  * @var: Environment variable from where to take the QEMU binary
-  * @extra_args: Other arguments to pass to QEMU.  CAUTION: these
-  * arguments are subject to word splitting and shell evaluation.
-+ * @defer_connect: do not connect to qemu monitor and qtest socket.
-  *
-  * Like qtest_init(), but use a different environment variable for the
-  * QEMU binary.
-  *
-  * Returns: #QTestState instance.
-  */
--QTestState *qtest_init_with_env(const char *var, const char *extra_args);
-+QTestState *qtest_init_with_env(const char *var, const char *extra_args,
-+                                bool defer_connect);
- 
- /**
-  * qtest_init_without_qmp_handshake:
-@@ -78,6 +80,21 @@ QTestState *qtest_init_with_env(const char *var, const char *extra_args);
- QTestState *qtest_init_without_qmp_handshake(const char *extra_args);
- 
- /**
-+ * qtest_connect_deferred:
-+ * @s: #QTestState instance to connect
-+ * Connect to qemu monitor and qtest socket, after deferring them in
-+ * qtest_init_with_env.  Does not handshake with the monitor.
-+ */
-+void qtest_connect_deferred(QTestState *s);
++This mode requires a second migration channel, specified by the
++``cpr-uri`` migration property on the outgoing side, and by the
++``cpr-uri`` QEMU command-line option on the incoming side.  The
++channel must be a type, such as unix socket, that supports SCM_RIGHTS.
 +
-+/**
-+ * qtest_qmp_handshake:
-+ * @s: #QTestState instance to operate on.
-+ * Perform handshake after connecting to qemu monitor.
-+ */
-+void qtest_qmp_handshake(QTestState *s);
++Usage
++^^^^^
 +
-+/**
-  * qtest_init_with_serial:
-  * @extra_args: other arguments to pass to QEMU.  CAUTION: these
-  * arguments are subject to word splitting and shell evaluation.
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index a008316..d359b10 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -844,7 +844,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-                                  args->opts_source ? args->opts_source : "",
-                                  ignore_stderr);
-     if (!args->only_target) {
--        *from = qtest_init_with_env(QEMU_ENV_SRC, cmd_source);
-+        *from = qtest_init_with_env(QEMU_ENV_SRC, cmd_source, false);
-         qtest_qmp_set_event_callback(*from,
-                                      migrate_watch_for_events,
-                                      &src_state);
-@@ -865,7 +865,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-                                  shmem_opts ? shmem_opts : "",
-                                  args->opts_target ? args->opts_target : "",
-                                  ignore_stderr);
--    *to = qtest_init_with_env(QEMU_ENV_DST, cmd_target);
-+    *to = qtest_init_with_env(QEMU_ENV_DST, cmd_target, false);
-     qtest_qmp_set_event_callback(*to,
-                                  migrate_watch_for_events,
-                                  &dst_state);
++Memory backend objects must have the ``share=on`` attribute.
++
++The VM must be started with the ``-machine anon-alloc=memfd``
++option.  This causes implicit RAM blocks (those not described by
++a memory-backend object) to be allocated by mmap'ing a memfd.
++Examples include VGA and ROM.
++
++Outgoing:
++  * Set the migration mode parameter to ``cpr-transfer``.
++  * Set the ``cpr-uri`` parameter.  It must be a ``unix`` type.
++  * Issue the ``migrate`` command.
++
++Incoming:
++  * Start new QEMU with the ``-incoming`` and ``-cpr-uri`` options.
++  * If the VM was running when the outgoing ``migrate`` command was
++    issued, then QEMU automatically resumes VM execution.
++
++Caveats
++^^^^^^^
++
++cpr-transfer mode may not be used with postcopy, background-snapshot,
++or COLO.
++
++memory-backend-epc and memory-backend-ram are not supported.
++
++The incoming migration channel cannot be a file type.
++
++If the incoming migration channel is a tcp type, then the port cannot
++be 0 (meaning dynamically choose a port).
++
++When using ``-incoming defer``, you must issue the migrate command to
++old QEMU before issuing any monitor commands to new QEMU, because new
++QEMU blocks waiting to read from cpr-uri before starting its monitor,
++and old QEMU does not write to cpr-uri until the migrate command is
++issued.  However, new QEMU does not open and read the migration stream
++until you issue the migrate incoming command.
++
++Example 1: incoming channel
++^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++In these examples, we simply restart the same version of QEMU, but
++in a real scenario one would start new QEMU on the incoming side.
++Note that new QEMU does not print the monitor prompt until old QEMU
++has issued the migrate command.
++
++::
++
++  Outgoing:                             Incoming:
++
++  # qemu-kvm -monitor stdio
++  -object memory-backend-file,id=ram0,size=4G,
++  mem-path=/dev/shm/ram0,share=on -m 4G
++  -machine anon-alloc=memfd'
++  ...
++                                        # qemu-kvm -incoming tcp:0:44444
++                                        -cpr-uri unix:cpr.sock
++                                        ...
++  QEMU 9.2.50 monitor
++  (qemu) info status
++  VM status: running
++  (qemu) migrate_set_parameter mode cpr-transfer
++  (qemu) migrate_set_parameter cpr-uri unix:cpr.sock
++  (qemu) migrate -d tcp:0:44444
++
++                                        QEMU 9.2.50 monitor
++                                        (qemu) info status
++                                        VM status: running
++
++  (qemu) info status
++  VM status: paused (postmigrate)
++
++
++Example 2: incoming defer
++^^^^^^^^^^^^^^^^^^^^^^^^^
++
++This example uses ``-incoming defer`` to hot plug a device before
++accepting the migration stream.  Again note you must issue the
++migrate command to old QEMU before you can issue any monitor
++commands to new QEMU.
++
++
++::
++
++  Outgoing:                             Incoming:
++
++  # qemu-kvm -monitor stdio
++  -object memory-backend-file,id=ram0,size=4G,
++  mem-path=/dev/shm/ram0,share=on -m 4G
++  -machine anon-alloc=memfd'
++  ...
++                                        # qemu-kvm -incoming defer
++                                        -cpr-uri unix:cpr.sock
++                                        ...
++  QEMU 9.2.50 monitor
++  (qemu) device_add pcie-root-port
++  (qemu) migrate_set_parameter mode cpr-transfer
++  (qemu) migrate_set_parameter cpr-uri unix:cpr.sock
++  (qemu) migrate -d tcp:0:44444
++
++                                        QEMU 9.2.50 monitor
++                                        (qemu) info status
++                                        VM status: paused (inmigrate)
++                                        (qemu) device_add pcie-root-port
++                                        (qemu) migrate_incoming tcp:0:44444
++                                        (qemu) info status
++                                        VM status: running
++
++  (qemu) info status
++  VM status: paused (postmigrate)
++
++Futures
++^^^^^^^
++
++cpr-transfer mode is based on a capability to transfer open file
++descriptors from old to new QEMU.  In the future, descriptors for
++vfio, iommufd, vhost, and char devices could be transferred,
++preserving those devices and their kernel state without interruption,
++even if they do not explicitly support live migration.
 -- 
 1.8.3.1
 
