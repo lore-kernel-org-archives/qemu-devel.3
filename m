@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF7AE6B278
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A7EE6B278
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:50:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6s18-0004hH-8Y; Fri, 01 Nov 2024 09:48:46 -0400
+	id 1t6s15-0004TN-NC; Fri, 01 Nov 2024 09:48:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t6s15-0004QL-8B
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:43 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1t6s13-0004Mb-Gc
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:41 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t6s13-0002Ju-50
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:42 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A1DfekZ010313;
- Fri, 1 Nov 2024 13:48:39 GMT
+ id 1t6s11-0002J4-KG
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:41 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A1Dfgww029215;
+ Fri, 1 Nov 2024 13:48:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=IGuir1SixE9HwG3JNgK0+QzvhULJSvM7M0POG8w4yRM=; b=
- dZ/q2pQQEY7/vwb8RIio5kOe4XqBdsf5jpXSZesofvoJGKmiX1rf7DCTxA1CTNtf
- WpLqGZ68Hdhh5mZTVDB4ucDYkktAFT2TmYrWXScerkuteuuZ325Qs9+rEKFi5tLi
- 5IWsuhDotROMtJI6bHY2GpYew/SivRVa/RF6UTSvYKHffk2RoRx8ZINXxU1XGzHD
- vqSdIgCPEyFByLd6f7/oZF5Ii5Y8haMv8LSyEqaZ01lJlkaSawBPWlH7mVfuxpgR
- /5CCDIjiU0/TQRBQ8236hfGfanPKTDcyHjQgMvQrOVafLloO0vBpE9pfOhsRnAXo
- eqWT9c3/3ujwicd571l/fA==
+ corp-2023-11-20; bh=VkW1dq6TTWsU3T6/rVxk+iWHYtUQ3SfxCOyN+XDGssQ=; b=
+ TGlmHrtIuFduxpSLATU+OHV+HdxoM/RlEwP5DZPv0uIl7s8KT7Nbtw3wovTZj1aJ
+ Et4zecmALwh6HuzTpL6O5oLRKUFJA42T7nd8S6daUKU32NpUr739s1a/wuZwFZbx
+ BUCZqO0uui/qjYLLKKmhUhO58tiCjRjKnXDPWogYP1NJ5Mv2SR20Lky/4ekUe14l
+ ynekpTELoz7+5NMW1F9Tn7NOjzFM8FgbfL8QFiaIgpgMTM8k3ZjREWgiWjPKDFNM
+ d2CsPVXbOW2AR9T8/4flc6zKESxy3d7VvBqeKJOotZzqg3FRTpSoPVKHSuo4BRxH
+ 4CyqBGamhSAEDIOsQum3Fw==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42grc247h2-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42grdxv9x0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 01 Nov 2024 13:48:38 +0000 (GMT)
+ Fri, 01 Nov 2024 13:48:33 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4A1BFOf2010296; Fri, 1 Nov 2024 13:48:37 GMT
+ with ESMTP id 4A1CXiVD009960; Fri, 1 Nov 2024 13:48:33 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 42hn91ptnf-1
+ 42hn91ptkx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 01 Nov 2024 13:48:37 +0000
+ Fri, 01 Nov 2024 13:48:33 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A1DhuOW006031;
- Fri, 1 Nov 2024 13:48:37 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A1DhuOI006031;
+ Fri, 1 Nov 2024 13:48:32 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 42hn91pt43-17; Fri, 01 Nov 2024 13:48:37 +0000
+ ESMTP id 42hn91pt43-10; Fri, 01 Nov 2024 13:48:32 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V3 16/16] migration: cpr-transfer documentation
-Date: Fri,  1 Nov 2024 06:47:55 -0700
-Message-Id: <1730468875-249970-17-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V3 09/16] migration: cpr-uri option
+Date: Fri,  1 Nov 2024 06:47:48 -0700
+Message-Id: <1730468875-249970-10-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
 References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
@@ -78,10 +78,10 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  phishscore=0 suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2409260000
  definitions=main-2411010100
-X-Proofpoint-GUID: lMenP9T4wO4MwAESgNqMNRFPs0157g4X
-X-Proofpoint-ORIG-GUID: lMenP9T4wO4MwAESgNqMNRFPs0157g4X
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Proofpoint-GUID: -c8mQU8Le5lkvJM4CYNvECXLl-8o7HUD
+X-Proofpoint-ORIG-GUID: -c8mQU8Le5lkvJM4CYNvECXLl-8o7HUD
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -105,177 +105,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- docs/devel/migration/CPR.rst | 144 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 142 insertions(+), 2 deletions(-)
+Define the cpr-uri QEMU command-line option to specify the URI from
+which CPR vmstate is loaded for cpr-transfer mode.
 
-diff --git a/docs/devel/migration/CPR.rst b/docs/devel/migration/CPR.rst
-index 63c3647..732d5a6 100644
---- a/docs/devel/migration/CPR.rst
-+++ b/docs/devel/migration/CPR.rst
-@@ -5,7 +5,7 @@ CPR is the umbrella name for a set of migration modes in which the
- VM is migrated to a new QEMU instance on the same host.  It is
- intended for use when the goal is to update host software components
- that run the VM, such as QEMU or even the host kernel.  At this time,
--cpr-reboot is the only available mode.
-+the cpr-reboot and cpr-transfer modes are available.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+---
+ include/migration/cpr.h |  3 +++
+ migration/cpr.c         | 12 ++++++++++++
+ qemu-options.hx         |  8 ++++++++
+ system/vl.c             |  4 ++++
+ 4 files changed, 27 insertions(+)
+
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index ae318da..c9c291f 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -15,6 +15,9 @@ void cpr_save_fd(const char *name, int id, int fd);
+ void cpr_delete_fd(const char *name, int id);
+ int cpr_find_fd(const char *name, int id);
  
- Because QEMU is restarted on the same host, with access to the same
- local devices, CPR is allowed in certain cases where normal migration
-@@ -53,7 +53,7 @@ RAM is copied to the migration URI.
- Outgoing:
-   * Set the migration mode parameter to ``cpr-reboot``.
-   * Set the ``x-ignore-shared`` capability if desired.
--  * Issue the ``migrate`` command.  It is recommended the the URI be a
-+  * Issue the ``migrate`` command.  It is recommended the URI be a
-     ``file`` type, but one can use other types such as ``exec``,
-     provided the command captures all the data from the outgoing side,
-     and provides all the data to the incoming side.
-@@ -145,3 +145,143 @@ Caveats
++void cpr_set_cpr_uri(const char *uri);
++const char *cpr_get_cpr_uri(void);
++
+ int cpr_state_save(Error **errp);
+ int cpr_state_load(Error **errp);
+ void cpr_state_close(void);
+diff --git a/migration/cpr.c b/migration/cpr.c
+index be1dc92..b72d1f4 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -116,6 +116,18 @@ QIOChannel *cpr_state_ioc(void)
+     return qemu_file_get_ioc(cpr_state_file);
+ }
  
- cpr-reboot mode may not be used with postcopy, background-snapshot,
- or COLO.
++static char *cpr_uri;
 +
-+cpr-transfer mode
-+-----------------
++void cpr_set_cpr_uri(const char *uri)
++{
++    cpr_uri = g_strdup(uri);
++}
 +
-+This mode allows the user to transfer a guest to a new QEMU instance
-+on the same host with minimal guest pause time, by preserving guest
-+RAM in place, albeit with new virtual addresses in new QEMU.
++const char *cpr_get_cpr_uri(void)
++{
++    return cpr_uri;
++}
 +
-+The user starts new QEMU on the same host as old QEMU, with the
-+same arguments as old QEMU, plus the ``-incoming option``.  The user
-+issues the migrate command to old QEMU, which stops the VM, saves
-+state to the migration channels, and enters the postmigrate state.
-+Execution resumes in new QEMU.
+ int cpr_state_save(Error **errp)
+ {
+     int ret;
+diff --git a/qemu-options.hx b/qemu-options.hx
+index fdd6bf2..89bbc9f 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4922,6 +4922,14 @@ SRST
+ 
+ ERST
+ 
++DEF("cpr-uri", HAS_ARG, QEMU_OPTION_cpr_uri, \
++    "-cpr-uri unix:socketpath\n",
++    QEMU_ARCH_ALL)
++SRST
++``-cpr-uri unix:socketpath``
++    URI for incoming CPR state, for the cpr-transfer migration mode.
++ERST
 +
-+This mode requires a second migration channel, specified by the
-+``cpr-uri`` migration property on the outgoing side, and by the
-+``cpr-uri`` QEMU command-line option on the incoming side.  The
-+channel must be a type, such as unix socket, that supports SCM_RIGHTS.
-+
-+Usage
-+^^^^^
-+
-+Memory backend objects must have the ``share=on`` attribute.
-+
-+The VM must be started with the ``-machine anon-alloc=memfd``
-+option.  This causes implicit RAM blocks (those not described by
-+a memory-backend object) to be allocated by mmap'ing a memfd.
-+Examples include VGA and ROM.
-+
-+Outgoing:
-+  * Set the migration mode parameter to ``cpr-transfer``.
-+  * Set the ``cpr-uri`` parameter.  It must be a ``unix`` type.
-+  * Issue the ``migrate`` command.
-+
-+Incoming:
-+  * Start new QEMU with the ``-incoming`` and ``-cpr-uri`` options.
-+  * If the VM was running when the outgoing ``migrate`` command was
-+    issued, then QEMU automatically resumes VM execution.
-+
-+Caveats
-+^^^^^^^
-+
-+cpr-transfer mode may not be used with postcopy, background-snapshot,
-+or COLO.
-+
-+memory-backend-epc and memory-backend-ram are not supported.
-+
-+The incoming migration channel cannot be a file type.
-+
-+If the incoming migration channel is a tcp type, then the port cannot
-+be 0 (meaning dynamically choose a port).
-+
-+When using ``-incoming defer``, you must issue the migrate command to
-+old QEMU before issuing any monitor commands to new QEMU, because new
-+QEMU blocks waiting to read from cpr-uri before starting its monitor,
-+and old QEMU does not write to cpr-uri until the migrate command is
-+issued.  However, new QEMU does not open and read the migration stream
-+until you issue the migrate incoming command.
-+
-+Example 1: incoming channel
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+In these examples, we simply restart the same version of QEMU, but
-+in a real scenario one would start new QEMU on the incoming side.
-+Note that new QEMU does not print the monitor prompt until old QEMU
-+has issued the migrate command.
-+
-+::
-+
-+  Outgoing:                             Incoming:
-+
-+  # qemu-kvm -monitor stdio
-+  -object memory-backend-file,id=ram0,size=4G,
-+  mem-path=/dev/shm/ram0,share=on -m 4G
-+  -machine anon-alloc=memfd'
-+  ...
-+                                        # qemu-kvm -incoming tcp:0:44444
-+                                        -cpr-uri unix:cpr.sock
-+                                        ...
-+  QEMU 9.2.50 monitor
-+  (qemu) info status
-+  VM status: running
-+  (qemu) migrate_set_parameter mode cpr-transfer
-+  (qemu) migrate_set_parameter cpr-uri unix:cpr.sock
-+  (qemu) migrate -d tcp:0:44444
-+
-+                                        QEMU 9.2.50 monitor
-+                                        (qemu) info status
-+                                        VM status: running
-+
-+  (qemu) info status
-+  VM status: paused (postmigrate)
-+
-+
-+Example 2: incoming defer
-+^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+This example uses ``-incoming defer`` to hot plug a device before
-+accepting the migration stream.  Again note you must issue the
-+migrate command to old QEMU before you can issue any monitor
-+commands to new QEMU.
-+
-+
-+::
-+
-+  Outgoing:                             Incoming:
-+
-+  # qemu-kvm -monitor stdio
-+  -object memory-backend-file,id=ram0,size=4G,
-+  mem-path=/dev/shm/ram0,share=on -m 4G
-+  -machine anon-alloc=memfd'
-+  ...
-+                                        # qemu-kvm -incoming defer
-+                                        -cpr-uri unix:cpr.sock
-+                                        ...
-+  QEMU 9.2.50 monitor
-+  (qemu) device_add pcie-root-port
-+  (qemu) migrate_set_parameter mode cpr-transfer
-+  (qemu) migrate_set_parameter cpr-uri unix:cpr.sock
-+  (qemu) migrate -d tcp:0:44444
-+
-+                                        QEMU 9.2.50 monitor
-+                                        (qemu) info status
-+                                        VM status: paused (inmigrate)
-+                                        (qemu) device_add pcie-root-port
-+                                        (qemu) migrate_incoming tcp:0:44444
-+                                        (qemu) info status
-+                                        VM status: running
-+
-+  (qemu) info status
-+  VM status: paused (postmigrate)
-+
-+Futures
-+^^^^^^^
-+
-+cpr-transfer mode is based on a capability to transfer open file
-+descriptors from old to new QEMU.  In the future, descriptors for
-+vfio, iommufd, vhost, and char devices could be transferred,
-+preserving those devices and their kernel state without interruption,
-+even if they do not explicitly support live migration.
+ DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
+     "-incoming tcp:[host]:port[,to=maxport][,ipv4=on|off][,ipv6=on|off]\n" \
+     "-incoming rdma:host:port[,ipv4=on|off][,ipv6=on|off]\n" \
+diff --git a/system/vl.c b/system/vl.c
+index df26264..5d08fade 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -77,6 +77,7 @@
+ #include "hw/block/block.h"
+ #include "hw/i386/x86.h"
+ #include "hw/i386/pc.h"
++#include "migration/cpr.h"
+ #include "migration/misc.h"
+ #include "migration/snapshot.h"
+ #include "sysemu/tpm.h"
+@@ -3479,6 +3480,9 @@ void qemu_init(int argc, char **argv)
+                     exit(1);
+                 }
+                 break;
++            case QEMU_OPTION_cpr_uri:
++                cpr_set_cpr_uri(optarg);
++                break;
+             case QEMU_OPTION_incoming:
+                 if (!incoming) {
+                     runstate_set(RUN_STATE_INMIGRATE);
 -- 
 1.8.3.1
 
