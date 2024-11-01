@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BCF7E6F06E
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 16:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42C9AE6F06E
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 16:38:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6ucF-0000gr-Qc; Fri, 01 Nov 2024 12:35:15 -0400
+	id 1t6uey-0001o1-Rv; Fri, 01 Nov 2024 12:38:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t6uc5-0000e7-HQ
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:35:05 -0400
-Received: from mail-wr1-f47.google.com ([209.85.221.47])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t6uev-0001lK-GN
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:38:01 -0400
+Received: from mail-lf1-f42.google.com ([209.85.167.42])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t6uc2-00022K-WA
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:35:05 -0400
-Received: by mail-wr1-f47.google.com with SMTP id
- ffacd0b85a97d-37d41894a32so1208731f8f.1
- for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 09:35:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t6ues-0002MZ-Tp
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:38:01 -0400
+Received: by mail-lf1-f42.google.com with SMTP id
+ 2adb3069b0e04-53a097aa3daso2111289e87.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 09:37:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730478900; x=1731083700;
+ d=1e100.net; s=20230601; t=1730479076; x=1731083876;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qgAu7qX8AdiRejp/9fk3koV0b20KYj8K8ot6PqfgLT4=;
- b=TKIB4ynGLzgr5fAw6YRyDYVwjy5O0n0xQ8ttBkqh03PUPREKj5ArUaC//GsJPQ6Jhz
- mtuIyJnHekrQs9owLlxAloc5BtwYSZ/TcsLYZGe+knLGsRd8+4awZ5rEDdsO7r0MDehs
- VnISXzIgnxlNeyWbnpVwgYKgsW03uF/NUBWTSNSp2Ig1ncmK5Y0wj3lrTej4lot4zCKx
- 7UVKpfWEssR2434wdFUzpLAJzIWf7GEY9STjg8Z3DHb/K+xPO2qBvqnXQw7LqmheATPW
- cU8Hh8aLHDMHwQ1fIIHGU0VAw08GA/Yrc+fpBn2GTYWiymullcx61A5SJp4AxdfstFzd
- BxCw==
-X-Gm-Message-State: AOJu0Yz3B4PEn5BhVg8AEbdKnKQux7vV88spknNuE055rhhBJHgEM55i
- +iZygM/yuLBMFLamRAZObmsj39C9zlBVGNrJRE43IO3y9pCUMFKQWa+gsA==
-X-Google-Smtp-Source: AGHT+IEJn2YWvapYT3iU57lYPJ9SpZNxeHHJSkgLwPPiKzkrSRSSpxGK2axpx8juqnhnstvQYMYsWg==
-X-Received: by 2002:a5d:6c69:0:b0:37e:eee5:80dc with SMTP id
- ffacd0b85a97d-381c14efbe8mr5853423f8f.28.1730478900277; 
- Fri, 01 Nov 2024 09:35:00 -0700 (PDT)
+ bh=tKrAZ+mKXrvBoNUf4MqRD6ioCmyK4Mh5D+Js5KbRj/0=;
+ b=FvWiT5wKolrrqzk5DVEpDzdNJtD6jbpTT0ax3BNGRbLPXxbtiAg10xGoX86f4ZAn8+
+ Zm557+bJWeSq05k96rVD0RUO7/JdSo0IEo3a+8eGPMhGii/KPlKi174Dvju3ndOSQdIE
+ IeS80uOtv5U4rTqpHxRciQQgybI9sGI4LZDmlrJX6wgnSWq41/AcKqng4XqXvcgw1cvb
+ QV725akGwsJcD5DSJO85Dt+ds2avLsP19Mn29ctK4NQc0JqV3eforevfPjXFOZ2eddVB
+ lirJYf7UnYjYsMAI71Z2IMXGHbtI3xvg0kpfGg09uCEi1YpnQ7fCm2VSiA3i2hKtkEES
+ 82TA==
+X-Gm-Message-State: AOJu0Yyjs6zbqDGa6ciyI9VgxKhVrzvb3mDBpRgWihTwXreEg4M73KpC
+ sfi8okokzmPc/VHrK0dy8yf9tOa53fQIzTnbr8AT1w0wTaF4EvTH
+X-Google-Smtp-Source: AGHT+IFwvEkqjYJlIbHsj3CtFZ0Z0uCBzvGW4Oy6+OeqH+GtACzWfjcT5VmaqCMXy4r4qjew+eU3FQ==
+X-Received: by 2002:a05:6512:3b8c:b0:539:d22c:37bd with SMTP id
+ 2adb3069b0e04-53d65e02641mr2667007e87.36.1730479075374; 
+ Fri, 01 Nov 2024 09:37:55 -0700 (PDT)
 Received: from tpx1 (ip-109-42-48-251.web.vodafone.de. [109.42.48.251])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c113dd95sm5662685f8f.83.2024.11.01.09.34.59
+ 5b1f17b1804b1-4327d5e7ca7sm66616845e9.24.2024.11.01.09.37.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Nov 2024 09:34:59 -0700 (PDT)
-Date: Fri, 1 Nov 2024 17:34:58 +0100
+ Fri, 01 Nov 2024 09:37:54 -0700 (PDT)
+Date: Fri, 1 Nov 2024 17:37:53 +0100
 From: Thomas Huth <huth@tuxfamily.org>
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 13/36] next-cube: move ESCC to be QOM child of next-pc
- device
-Message-ID: <20241101173458.5783e800@tpx1>
-In-Reply-To: <0e056742-396c-4bc8-91a8-e0a9a4dfb805@ilande.co.uk>
+Subject: Re: [PATCH 09/36] next-cube: move SCSI CSRs from next-pc to the
+ next-scsi device
+Message-ID: <20241101173753.415f66b9@tpx1>
+In-Reply-To: <a6df2717-e3b3-464e-87ca-d2c776d24900@ilande.co.uk>
 References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-14-mark.cave-ayland@ilande.co.uk>
- <20241028173939.6fada306@tpx1>
- <0e056742-396c-4bc8-91a8-e0a9a4dfb805@ilande.co.uk>
+ <20241023085852.1061031-10-mark.cave-ayland@ilande.co.uk>
+ <20241028172122.23bcb98c@tpx1>
+ <a6df2717-e3b3-464e-87ca-d2c776d24900@ilande.co.uk>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.221.47; envelope-from=th.huth@gmail.com;
- helo=mail-wr1-f47.google.com
+Received-SPF: pass client-ip=209.85.167.42; envelope-from=th.huth@gmail.com;
+ helo=mail-lf1-f42.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -86,102 +86,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Mon, 28 Oct 2024 22:28:58 +0000
+Am Mon, 28 Oct 2024 22:21:20 +0000
 schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 
-> On 28/10/2024 16:39, Thomas Huth wrote:
-> > Am Wed, 23 Oct 2024 09:58:29 +0100
+> On 28/10/2024 16:21, Thomas Huth wrote:
+> 
+> > Am Wed, 23 Oct 2024 09:58:25 +0100
 > > schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 > >   
-> >> Since the ESCC is part of the next-pc device, move the ESCC to be a QOM child
-> >> of the next-pc device.
+> >> The SCSI CSRs are located within the SCSI subsystem of the NeXT PC (Peripheral
+> >> Contoller) which is now modelled as a separate QEMU device.
+> >>
+> >> Add a new VMStateDescription for the next-scsi device to enable the SCSI CSRs
+> >> to be migrated.
 > >>
 > >> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > >> ---
-> >>   hw/m68k/next-cube.c | 54 ++++++++++++++++++++++-----------------------
-> >>   1 file changed, 26 insertions(+), 28 deletions(-)
+> >>   hw/m68k/next-cube.c | 88 +++++++++++++++++++++++++++++++++++++++------
+> >>   1 file changed, 78 insertions(+), 10 deletions(-)
 > >>
 > >> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-> >> index 7f714640da..915dd80f6f 100644
+> >> index 266f57ac63..32466a425f 100644
 > >> --- a/hw/m68k/next-cube.c
 > >> +++ b/hw/m68k/next-cube.c
-> >> @@ -124,6 +124,8 @@ struct NeXTPC {
+> >> @@ -93,6 +93,10 @@ struct NeXTSCSI {
+> >>       MemoryRegion scsi_mem;
+> >>   
+> >>       SysBusESPState sysbus_esp;
+> >> +
+> >> +    MemoryRegion scsi_csr_mem;
+> >> +    uint8_t scsi_csr_1;
+> >> +    uint8_t scsi_csr_2;
+> >>   };
+> >>   
+> >>   #define TYPE_NEXT_PC "next-pc"
+> >> @@ -115,8 +119,6 @@ struct NeXTPC {
+> >>       uint32_t led;
+> >>   
+> >>       NeXTSCSI next_scsi;
+> >> -    uint8_t scsi_csr_1;
+> >> -    uint8_t scsi_csr_2;
+> >>   
 > >>       qemu_irq scsi_reset;
 > >>       qemu_irq scsi_dma;
-> >>   
-> >> +    ESCCState escc;
-> >> +
-> >>       NextRtc rtc;
-> >>   };
-> >>   
-> >> @@ -978,31 +980,6 @@ static const MemoryRegionOps next_floppy_ops = {
-> >>       .endianness = DEVICE_BIG_ENDIAN,
-> >>   };
-> >>   
-> >> -static void next_escc_init(DeviceState *pcdev)
-> >> -{
-> >> -    NeXTPC *next_pc = NEXT_PC(pcdev);
-> >> -    DeviceState *dev;
-> >> -    SysBusDevice *s;
-> >> -
-> >> -    dev = qdev_new(TYPE_ESCC);
-> >> -    qdev_prop_set_uint32(dev, "disabled", 0);
-> >> -    qdev_prop_set_uint32(dev, "frequency", 9600 * 384);
-> >> -    qdev_prop_set_uint32(dev, "it_shift", 0);
-> >> -    qdev_prop_set_bit(dev, "bit_swap", true);
-> >> -    qdev_prop_set_chr(dev, "chrB", serial_hd(1));
-> >> -    qdev_prop_set_chr(dev, "chrA", serial_hd(0));
-> >> -    qdev_prop_set_uint32(dev, "chnBtype", escc_serial);
-> >> -    qdev_prop_set_uint32(dev, "chnAtype", escc_serial);
-> >> -
-> >> -    s = SYS_BUS_DEVICE(dev);
-> >> -    sysbus_realize_and_unref(s, &error_fatal);
-> >> -    sysbus_connect_irq(s, 0, qdev_get_gpio_in(pcdev, NEXT_SCC_I));
-> >> -    sysbus_connect_irq(s, 1, qdev_get_gpio_in(pcdev, NEXT_SCC_DMA_I));
-> >> -
-> >> -    memory_region_add_subregion(&next_pc->scrmem, 0x18000,
-> >> -                                sysbus_mmio_get_region(s, 0));
-> >> -}
-> >> -
-> >>   static void next_pc_reset(DeviceState *dev)
+> >> @@ -364,6 +366,7 @@ static const MemoryRegionOps next_mmio_ops = {
+> >>   static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
 > >>   {
-> >>       NeXTPC *s = NEXT_PC(dev);
-> >> @@ -1043,6 +1020,28 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
-> >>       /* Floppy */
-> >>       memory_region_add_subregion(&s->scrmem, 0x14108,
-> >>                                   &s->floppy_mem);
+> >>       NeXTPC *s = NEXT_PC(opaque);
+> >> +    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
+> >>       uint64_t val;
+> >>   
+> >>       switch (addr) {
+> >> @@ -373,12 +376,12 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+> >>           break;
+> >>   
+> >>       case 0x14020:
+> >> -        DPRINTF("SCSI 4020  STATUS READ %X\n", s->scsi_csr_1);
+> >> -        val = s->scsi_csr_1;
+> >> +        DPRINTF("SCSI 4020  STATUS READ %X\n", ns->scsi_csr_1);
+> >> +        val = ns->scsi_csr_1;
+> >>           break;
+> >>   
+> >>       case 0x14021:
+> >> -        DPRINTF("SCSI 4021 STATUS READ %X\n", s->scsi_csr_2);
+> >> +        DPRINTF("SCSI 4021 STATUS READ %X\n", ns->scsi_csr_2);
+> >>           val = 0x40;
+> >>           break;
+> >>   
+> >> @@ -411,6 +414,7 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+> >>                                unsigned size)
+> >>   {
+> >>       NeXTPC *s = NEXT_PC(opaque);
+> >> +    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
+> >>   
+> >>       switch (addr) {
+> >>       case 0x14108:
+> >> @@ -445,7 +449,7 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+> >>               DPRINTF("SCSICSR Reset\n");
+> >>               /* I think this should set DMADIR. CPUDMA and INTMASK to 0 */
+> >>               qemu_irq_raise(s->scsi_reset);
+> >> -            s->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
+> >> +            ns->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
+> >>               qemu_irq_lower(s->scsi_reset);
+> >>           }
+> >>           if (val & SCSICSR_DMADIR) {
+> >> @@ -838,6 +842,54 @@ static void nextscsi_write(void *opaque, uint8_t *buf, int size)
+> >>       nextdma_write(opaque, buf, size, NEXTDMA_SCSI);
+> >>   }
+> >>   
+> >> +static void next_scsi_csr_write(void *opaque, hwaddr addr, uint64_t val,
+> >> +                                unsigned size)
+> >> +{
+> >> +    NeXTSCSI *s = NEXT_SCSI(opaque);
 > >> +
-> >> +    /* ESCC */
-> >> +    d = DEVICE(object_resolve_path_component(OBJECT(dev), "escc"));
-> >> +    qdev_prop_set_uint32(d, "disabled", 0);
-> >> +    qdev_prop_set_uint32(d, "frequency", 9600 * 384);
-> >> +    qdev_prop_set_uint32(d, "it_shift", 0);
-> >> +    qdev_prop_set_bit(d, "bit_swap", true);
-> >> +    qdev_prop_set_chr(d, "chrB", serial_hd(1));
-> >> +    qdev_prop_set_chr(d, "chrA", serial_hd(0));
-> >> +    qdev_prop_set_uint32(d, "chnBtype", escc_serial);
-> >> +    qdev_prop_set_uint32(d, "chnAtype", escc_serial);
+> >> +    switch (addr) {
+> >> +    case 0:
+> >> +        s->scsi_csr_1 = val;
+> >> +        break;
 > >> +
-> >> +    sbd = SYS_BUS_DEVICE(d);
-> >> +    if (!sysbus_realize(sbd, errp)) {
-> >> +        return;
-> >> +    }
-> >> +    sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(dev, NEXT_SCC_I));
-> >> +    sysbus_connect_irq(sbd, 1, qdev_get_gpio_in(dev, NEXT_SCC_DMA_I));
-> >> +
-> >> +    memory_region_add_subregion(&s->scrmem, 0x18000,
-> >> +                                sysbus_mmio_get_region(sbd, 0));  
+> >> +    case 1:
+> >> +        s->scsi_csr_2 = val;
+> >> +        break;  
 > > 
-> > You could also keep the next_escc_init() function, and call next_escc_init()
-> > here?  
+> > The old code never set the scsi_csr_x directly like this, so I'm not sure
+> > whether this is right?  
 > 
-> Normally a non-QOM _init() function suffix is used to both init() and realize() a 
-> device, whereas here since the ESCC device is a child of the next-pc device these 
-> operations must be separate. I think I can see why this convention is used elsewhere 
-> in the codebase, as otherwise you end up calling a function with a _init() prefix 
-> from _realize() which can get confusing with respect to the QOM model...
+> Well I initially did this on a hunch that something had gone wrong with an earlier 
+> refactoring, but I just did a quick check with Previous and it also treats them as 
+> normal registers (see 
+> https://sourceforge.net/p/previous/code/HEAD/tree/trunk/src/esp.c#l160). So I think 
+> this should be fine for now?
 
-Ok, fair point, then let's keep this patch as it is!
+Ok, fine for me, but then please mention it in the commit description!
+
+> > Also, maybe best squash this patch together with the next patch, otherwise
+> > this is temporary change in behaviour, isn't it?  
+> 
+> If possible could I keep it as-is? It just means there is separation between the 
+> change of the memory region topology and then consolidating the SCSI CSR access 
+> routines in the following patch.
+
+Sure, it was just a suggestion! Keep it separate if you prefer it that way.
 
  Thomas
 
