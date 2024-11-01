@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA17E6F08C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 20:57:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C0EE6F08C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 21:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6yh1-0001Tf-Jg; Fri, 01 Nov 2024 16:56:27 -0400
+	id 1t6z1W-0004bH-Vp; Fri, 01 Nov 2024 17:17:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3dUAlZwYKCso746Auxw44w1u.s426u2A-tuBu1343w3A.47w@flex--roqueh.bounces.google.com>)
- id 1t6ygz-0001TN-CC
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 16:56:25 -0400
-Received: from mail-yb1-xb49.google.com ([2607:f8b0:4864:20::b49])
+ <3Y0UlZwYKCsIzwy2mpowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--roqueh.bounces.google.com>)
+ id 1t6z1L-0004aZ-R6
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 17:17:29 -0400
+Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3dUAlZwYKCso746Auxw44w1u.s426u2A-tuBu1343w3A.47w@flex--roqueh.bounces.google.com>)
- id 1t6ygx-0004Iw-I3
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 16:56:25 -0400
-Received: by mail-yb1-xb49.google.com with SMTP id
- 3f1490d57ef6-e2e3321aae0so4056968276.1
- for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 13:56:22 -0700 (PDT)
+ <3Y0UlZwYKCsIzwy2mpowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--roqueh.bounces.google.com>)
+ id 1t6z1J-0006bL-NQ
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 17:17:26 -0400
+Received: by mail-yb1-xb4a.google.com with SMTP id
+ 3f1490d57ef6-e30cf121024so4517399276.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 14:17:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1730494581; x=1731099381; darn=nongnu.org;
+ d=google.com; s=20230601; t=1730495843; x=1731100643; darn=nongnu.org;
  h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=MYrsCIc9rC3vw4f/MUeO4v8khFDjT5HOcW09op81Jj8=;
- b=yUTphOO49hkCkg5Km/Ypl9+EidR7Pp03vxB0gxI8UvM+afsRUEGg/8T/qwq7CIRbWm
- tGU34K5lUIRdbA1GeL4yOiNWTNK9GJyJb3TQKygxtC2ci+1/gRPLyyZ1ljuwORgWLpqD
- rKR7HEfRs+x8C0i3wr1iwyyHd8YrehtWPMco5cBG5ZydZDx4P5bxqBLtkUwXohdKD1lU
- dHDnr8BtseqG8YCG1V6pHTvpIvfKNyiFn9U458eB08WkHoW1iEUGvac9WUr85wDcr818
- /ZYa1lH/PFfZh5vjhltmb4YR6AbKSbpvY4CtUkVGb6znTI9qSr4yQRs0IGqQSoRTshpm
- D4gA==
+ bh=aMrTZ4STABqah8WQotlgzCCGyariF5g40NI1L5oOnQk=;
+ b=ZFhn4BAzh+Tqt3zHOt2TrPbGEp0GyU2GMY6qeb3MJuMLHhYkNHRoTkfDVf78gut6qF
+ E7Y4zR2I1cG7rYJ+xDTZdezA7e7d/eYEGtoOfawCBNfsg8Jlc7LI+K8lmP1lLJdGPikI
+ PHj7cZQMQcy2mRzk+lv2KMgZMWb+mmA3gmOxUoHWXf0gjI5g2MG70486La8F02qcmLoY
+ JivUIIkg9uO4vCEFVDrtnAL5sKjf4lEhBilpioxwlXyg7quLNqOhw5EHLyHcUJRNPHsr
+ pcw6wHhl32IK6Fg2gWI8JrtHzPMHBaNH5RUmFRUDRwttY0ojPxcGs3LvAte/OuzfyyyN
+ bO/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730494581; x=1731099381;
+ d=1e100.net; s=20230601; t=1730495843; x=1731100643;
  h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MYrsCIc9rC3vw4f/MUeO4v8khFDjT5HOcW09op81Jj8=;
- b=DVPgIUxd3Y4Wo/q04Rfx1rkByKeEow0yL7kDgpA1C7tCq6an3tkaLfzCJVgbVt6bub
- jIsZN0IVaFMROHx7nHjM7RLqO2LK3UzvzijiojzqpVhrKFfdGucLaeh3PYAKTQIRoOLY
- rbQH+gZPgUXiOhgjoXkKbAuA8FgS5MVOMHMaE7u3hj+h6r6HVV+neu5KIuDBPibdx6CN
- mhiUoDiW2wV3Hcop1aT3v0iov85W4T8arKdH12t39VZPvY/1y5bqva/hpF4R6VkxAvQ+
- vFe99HuYXnb3oQOJnPFURiXwBAmuCEAiTmR3+3RnWD080O2R6VHmtANXFgeWG0eZE9I6
- WmTw==
-X-Gm-Message-State: AOJu0YwNkfbNcUfuQAgPv3R40q8v5Rt/nZLTiNhkMTKjzbmXAggxQS3B
- 4SWBNCwu9vWtc9pX9/NTvpISMaUs7fhy0lHFvb6GHqofotblsPSeEJjIOxD+7WtoPr4HeGOnzl8
- V3w==
-X-Google-Smtp-Source: AGHT+IG0weoXVa6iXafIH1bRgRFDdY/01B3Oev/f/h+oSwQXmnQNbEeQEq98r+5C3Zd/kJauxUeYBZO9Q+A=
+ bh=aMrTZ4STABqah8WQotlgzCCGyariF5g40NI1L5oOnQk=;
+ b=HXPn9s5aWS0judYKOIQYSEeILkCKHQ4EfLXLCGdHVmQhA/fFD/zE4VWxlWhU5kbaho
+ efRWRWukxpPEJ/7CCh0BTSOk1EClz7xUY+PP95tvZvkjXPFMfybaCHT5sRrI4qK5Fg1K
+ nri0iNQQezmsYtX3KW4B0kWwfpCPQ4ONme8bdpXOebcPPgVBcmdzcJqzwnGM9s/eZmKQ
+ ZHtKK2zIIVC+wHHOIBFBuZyq98Q4pOAYd2FbpFekAhkPqVcssgfD+r8p2fagquQv+gPl
+ nDxeHwW4UMLcbbzc3AwjoPW98xIkRqc8a7ahCqCakqYA9OZ+cCb1nUEINNvN24E2uo6N
+ A6wQ==
+X-Gm-Message-State: AOJu0Yydf7q+4vZBgsRQSCK++0ofS3J0pqC9R0PUs8zwvblEJdjTP1AC
+ X2qYLCMY3wQG6KSgUD2HFPfRpr/I+HXA+BxZi9uLccZ8wH1cbg/1kaCuzJ19BY4ezWzC4ASnuHe
+ QPw==
+X-Google-Smtp-Source: AGHT+IEU0MGtxnVsF87k9bN21ViQZDxK8Zwb1BkKpLRzF8YW51W1q0Hz0sb8Vu1Jb1hohj6iZ7Q/q03l9+Q=
 X-Received: from roqueh.c.googlers.com ([fda3:e722:ac3:cc00:4e:3bc9:ac1c:1ab])
- (user=roqueh job=sendgmr) by 2002:a25:b847:0:b0:e30:dfb5:8a8d with
+ (user=roqueh job=sendgmr) by 2002:a25:83c3:0:b0:e30:c79e:16bc with
  SMTP id
- 3f1490d57ef6-e30e5a03f2fmr4667276.2.1730494581069; Fri, 01 Nov 2024 13:56:21
+ 3f1490d57ef6-e30c79e1861mr13959276.8.1730495843419; Fri, 01 Nov 2024 14:17:23
  -0700 (PDT)
-Date: Fri,  1 Nov 2024 20:56:16 +0000
+Date: Fri,  1 Nov 2024 21:17:20 +0000
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.47.0.163.g1226f6d8fa-goog
-Message-ID: <20241101205616.3332303-1-roqueh@google.com>
-Subject: [PATCH] scripts/tracetool:Use posix paths in trace event generation
+Message-ID: <20241101211720.3354111-1-roqueh@google.com>
+Subject: [PATCH] hw/usb: Use __attribute__((packed)) vs __packed
 From: Roque Arcudia Hernandez <roqueh@google.com>
-To: jansene@google.com, stefanha@redhat.com, mads@ynddal.dk
+To: thuth@redhat.com, richard.henderson@linaro.org, jansene@google.com, 
+ mjt@tls.msk.ru
 Cc: qemu-devel@nongnu.org, Roque Arcudia Hernandez <roqueh@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b49;
- envelope-from=3dUAlZwYKCso746Auxw44w1u.s426u2A-tuBu1343w3A.47w@flex--roqueh.bounces.google.com;
- helo=mail-yb1-xb49.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
+ envelope-from=3Y0UlZwYKCsIzwy2mpowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--roqueh.bounces.google.com;
+ helo=mail-yb1-xb4a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -90,114 +91,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On windows machines the path seperator is '\\' (backslash) which causes
-the tracetool generator to output line information in the source code
-with the '\\' character. This in turn confuses the compiler, causing
-build breaks.
-
-We now will always use posix paths, so the paths will use a '/'
-(forward) slash.
+__packed is non standard and is not present in clang-cl.
+__attribute__((packed)) has the same semantics.
 
 Signed-off-by: Erwin Jansen <jansene@google.com>
 Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
 ---
- scripts/tracetool/__init__.py       | 3 ++-
- scripts/tracetool/backend/ftrace.py | 5 +++--
- scripts/tracetool/backend/log.py    | 5 +++--
- scripts/tracetool/backend/syslog.py | 6 +++---
- 4 files changed, 11 insertions(+), 8 deletions(-)
+ include/hw/usb/dwc2-regs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index bc03238c0f..ccab820532 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -15,6 +15,7 @@
- import re
- import sys
- import weakref
-+from pathlib import Path
+diff --git a/include/hw/usb/dwc2-regs.h b/include/hw/usb/dwc2-regs.h
+index 523b112c5e..b8b4266543 100644
+--- a/include/hw/usb/dwc2-regs.h
++++ b/include/hw/usb/dwc2-regs.h
+@@ -838,7 +838,7 @@
+ struct dwc2_dma_desc {
+         uint32_t status;
+         uint32_t buf;
+-} __packed;
++} QEMU_PACKED;
  
- import tracetool.format
- import tracetool.backend
-@@ -55,7 +56,7 @@ def out(*lines, **kwargs):
-     for l in lines:
-         kwargs['out_lineno'] = out_lineno
-         kwargs['out_next_lineno'] = out_lineno + 1
--        kwargs['out_filename'] = out_filename
-+        kwargs['out_filename'] = Path(out_filename).as_posix()
-         output.append(l % kwargs)
-         out_lineno += 1
+ /* Host Mode DMA descriptor status quadlet */
  
-diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
-index baed2ae61c..940c9be980 100644
---- a/scripts/tracetool/backend/ftrace.py
-+++ b/scripts/tracetool/backend/ftrace.py
-@@ -12,7 +12,8 @@
- __email__      = "stefanha@redhat.com"
- 
- 
--import os.path
-+from os.path import relpath
-+from pathlib import Path
- 
- from tracetool import out
- 
-@@ -47,7 +48,7 @@ def generate_h(event, group):
-         args=event.args,
-         event_id="TRACE_" + event.name.upper(),
-         event_lineno=event.lineno,
--        event_filename=os.path.relpath(event.filename),
-+        event_filename=Path(relpath(event.filename)).as_posix(),
-         fmt=event.fmt.rstrip("\n"),
-         argnames=argnames)
- 
-diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
-index de27b7e62e..626840eef7 100644
---- a/scripts/tracetool/backend/log.py
-+++ b/scripts/tracetool/backend/log.py
-@@ -12,7 +12,8 @@
- __email__      = "stefanha@redhat.com"
- 
- 
--import os.path
-+from pathlib import Path
-+from os.path import relpath
- 
- from tracetool import out
- 
-@@ -55,7 +56,7 @@ def generate_h(event, group):
-         '    }',
-         cond=cond,
-         event_lineno=event.lineno,
--        event_filename=os.path.relpath(event.filename),
-+        event_filename=Path(relpath(event.filename)).as_posix(),
-         name=event.name,
-         fmt=event.fmt.rstrip("\n"),
-         argnames=argnames)
-diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/backend/syslog.py
-index 012970f6cc..32e4bba4f9 100644
---- a/scripts/tracetool/backend/syslog.py
-+++ b/scripts/tracetool/backend/syslog.py
-@@ -11,8 +11,8 @@
- __maintainer__ = "Stefan Hajnoczi"
- __email__      = "stefanha@redhat.com"
- 
--
--import os.path
-+from os.path import relpath
-+from pathlib import Path
- 
- from tracetool import out
- 
-@@ -43,7 +43,7 @@ def generate_h(event, group):
-         '    }',
-         cond=cond,
-         event_lineno=event.lineno,
--        event_filename=os.path.relpath(event.filename),
-+        event_filename=Path(relpath(event.filename)).as_posix(),
-         name=event.name,
-         fmt=event.fmt.rstrip("\n"),
-         argnames=argnames)
 -- 
 2.47.0.163.g1226f6d8fa-goog
 
