@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75246E67493
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 02:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A717E67498
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 03:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6hZU-0004tK-R4; Thu, 31 Oct 2024 22:39:32 -0400
+	id 1t6i8j-0000QG-N8; Thu, 31 Oct 2024 23:15:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6hZT-0004su-9d
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 22:39:31 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6hZN-0006aF-LV
- for qemu-devel@nongnu.org; Thu, 31 Oct 2024 22:39:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730428765; x=1761964765;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=BN5PTXd3QQtHaueKoRPQp6OLDirBsWc8JpwO1ja9xvA=;
- b=DINjNvUWTcHL3aGxeu12Ckg4HA6qTq0zkUxfrqdfnVpRG/cwIEEBVAKi
- RxC3+DFEE4oRWbFFDgYTCIQfOTx6ZhIs85Nr7IQhBE7ZEzGQT+MGf6qLP
- BprOEQicyjWU8K2mqdnRouOz3/QUNurXe+lAx2MoOhXgXvZRM6KaER9W5
- KZYDkbt6I2gbG821slCB0NYMeU5NH1yO8yN3y0gGnQ9DrEgFEhxnaaICV
- kprhc4vOHJg8drsdvSodT12+YQ2ndyPp+TJ7ZJefO68HN8qsaFladQGBY
- HRecAeLF67Cw3/+/tZixk0q+OHi+qn6iZHtaW2SaBzXDK39ILnrH4V524 Q==;
-X-CSE-ConnectionGUID: GFSdhlk+SGOs6I1ylxguTw==
-X-CSE-MsgGUID: 9bHL7LXrSaSaTVnk8vlGLg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11242"; a="33025812"
-X-IronPort-AV: E=Sophos;i="6.11,248,1725346800"; d="scan'208";a="33025812"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Oct 2024 19:39:24 -0700
-X-CSE-ConnectionGUID: EysHHiLeRhS6iMHWIuJd1Q==
-X-CSE-MsgGUID: dpIGOigrQsqt63/yrQPwyg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,248,1725346800"; d="scan'208";a="82937913"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa009.fm.intel.com with ESMTP; 31 Oct 2024 19:39:22 -0700
-Date: Fri, 1 Nov 2024 10:57:12 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Tao Su <tao1.su@linux.intel.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
- xiaoyao.li@intel.com, xuelian.guo@intel.com
-Subject: Re: [PATCH v3 4/8] target/i386: add AVX10 feature and AVX10 version
- property
-Message-ID: <ZyRDiGrEt5q2LIsC@intel.com>
-References: <20241031085233.425388-1-tao1.su@linux.intel.com>
- <20241031085233.425388-5-tao1.su@linux.intel.com>
- <ZyO1vL0o0SxgcW8q@intel.com> <ZyQ4RzWX4oJB3vP0@linux.bj.intel.com>
- <ZyRAhxjaeizc+FWm@intel.com> <ZyQ9cNUgUMyekQu7@linux.bj.intel.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1t6i8h-0000Q7-SL
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 23:15:55 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1t6i8e-0001kb-T4
+ for qemu-devel@nongnu.org; Thu, 31 Oct 2024 23:15:55 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx++HeRyRnGWEjAA--.7003S3;
+ Fri, 01 Nov 2024 11:15:42 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAx18DdRyRnbmwwAA--.33943S3;
+ Fri, 01 Nov 2024 11:15:41 +0800 (CST)
+Subject: Re: [PATCH v3 1/3] linux-headers: Add unistd_64.h
+To: Alistair Francis <alistair23@gmail.com>, gaosong <gaosong@loongson.cn>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+References: <20241028023809.1554405-1-maobibo@loongson.cn>
+ <20241028023809.1554405-2-maobibo@loongson.cn>
+ <b5f4a39a-278a-1918-29f2-b9da197ce055@loongson.cn>
+ <08fa5950-8ca4-b6fc-fac7-77bc5c16893a@loongson.cn>
+ <8b7dfe0f-f4cd-d61a-c850-d92b5aec39e8@loongson.cn>
+ <CAKmqyKOGcjOFqUMiySYxtCyx-5_Rbx3=w9BYeUuS8mSrQ0bhxg@mail.gmail.com>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <2c13c998-746c-8119-019b-71e3d6c16b01@loongson.cn>
+Date: Fri, 1 Nov 2024 11:15:15 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZyQ9cNUgUMyekQu7@linux.bj.intel.com>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.366,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <CAKmqyKOGcjOFqUMiySYxtCyx-5_Rbx3=w9BYeUuS8mSrQ0bhxg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMAx18DdRyRnbmwwAA--.33943S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWrZF15KFyxWr4DZr13Jw48Xwc_yoW8Jry5pa
+ 43AF1qyF4UWr4ftwn2kw1j9FsFvrnrKFW5XFy8Wr97Jas0kr13Xr1xJFZFkrWqv34rJFyU
+ u3yakay3ZF15ZrbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8Zw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70Pf
+ DUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -51
+X-Spam_score: -5.2
+X-Spam_bar: -----
+X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.257,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,32 +91,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 01, 2024 at 10:31:12AM +0800, Tao Su wrote:
-> Date: Fri, 1 Nov 2024 10:31:12 +0800
-> From: Tao Su <tao1.su@linux.intel.com>
-> Subject: Re: [PATCH v3 4/8] target/i386: add AVX10 feature and AVX10
->  version property
-> 
-> On Fri, Nov 01, 2024 at 10:44:23AM +0800, Zhao Liu wrote:
-> > > > prefix is just used to print warning. So here we should check prefix
-> > > > for warn_report.
-> > > > 
-> > > > +    } else if (env->avx10_version) {
-> > > > +        if (prefix) {
-> > > > +            warn_report("%s: avx10.%d.", prefix, env->avx10_version);
-> > > > +        }
-> > > > +        have_filtered_features = true;
-> > > > +    }
-> > > > 
-> > > 
-> > > Yes, thanks for pointing out! But I see this patch set is already pulled,
-> > > not sure whether it is easy to change...
-> > 
-> > I will soon have another clean-up series, and I can include this part.
-> > You can send me your patch, or I can help you with it.
-> 
-> Please help me do that, thanks! :-)
+It passed to compile on riscv machine, and the testbed is riscv qemu VM.
 
-Sure, you're welcome.
+Regards
+Bibo Mao
+
+On 2024/10/30 下午12:06, Alistair Francis wrote:
+> On Wed, Oct 30, 2024 at 11:47 AM gaosong <gaosong@loongson.cn> wrote:
+>>
+>> 在 2024/10/28 下午5:55, maobibo 写道:
+>>>
+>>>
+>>> On 2024/10/28 下午3:39, gaosong wrote:
+>>>> 在 2024/10/28 上午10:38, Bibo Mao 写道:
+>>>>> since 6.11, unistd.h includes header file unistd_64.h directly on
+>>>>> some platforms, here add unistd_64.h on these platforms. Affected
+>>>>> platforms are ARM64, LoongArch64 and Riscv. Otherwise there will
+>>>>> be compiling error such as:
+>>>>>
+>>>>> linux-headers/asm/unistd.h:3:10: fatal error: asm/unistd_64.h: No
+>>>>> such file or directory
+>>>>>    #include <asm/unistd_64.h>
+>>>> Hi,  Bibo
+>>>>
+>>>> Could you help tested this patch on ARM machine? I don't have an ARM
+>>>> machine.
+>>> yeap, I test on arm64 machine, it passes to compile with header files
+>>> updated. However there is no riscv machine by hand.
+>>>
+>> Thank you,
+>>
+>> @Peter and  @Alistair Francis Could you help tested this patch on RISCV
+>> machine?
+> 
+> I don't have a RISC-V machine either unfortunately.
+> 
+> You can test it with QEMU though
+> 
+> Alistair
+> 
 
 
