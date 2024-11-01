@@ -4,88 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 999DFE6F06C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 15:31:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B875E6F06C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 15:36:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6tbw-0001PN-4j; Fri, 01 Nov 2024 11:30:52 -0400
+	id 1t6tgu-0002yN-Az; Fri, 01 Nov 2024 11:36:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t6tbu-0001Ox-OI
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 11:30:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t6tbs-0003Xt-65
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 11:30:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730475043;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3lfwdotJ8PS1vtQC6/LpcXLJdqm3/JvvR9uQJwNBSyA=;
- b=c/crbBx+pOd5nzjK+1bLNoQBzWye0Uq4VoKxnk64ICdFve87No7/pklfU5ClMo4CBg9jEl
- OgQNoIRS/AefDVRK86jwUehm8011L+cdSbUFDX2j7GQNZRVIKMvVSq8GrDRucqPcSPbEKF
- FlUMXNEM6MvDmlbEj5xTraCzApweEG0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-14-bMsNignfM5az4cdS3ZZCPA-1; Fri, 01 Nov 2024 11:30:41 -0400
-X-MC-Unique: bMsNignfM5az4cdS3ZZCPA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37d589138a9so904486f8f.1
- for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 08:30:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t6tgs-0002xw-BP
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 11:35:58 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t6tgo-000462-D0
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 11:35:57 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9693dc739so2726176a12.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 08:35:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730475352; x=1731080152; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ox5zuqQkZjxezk9rgYnUQrTGz2TSASa/ElhWXn8NhKw=;
+ b=fRhagpMPj2ELUTLGjXLkAyqV8AsKCGYcrvIaXky+JFDOL6bNpxHMwE6NlLLhPaMYCv
+ XihKjacnKjkdnerolS/wTROTU5t0YqhDr7SiBYF5win6NXgEwP1o+JgLbaNj4rT+syJD
+ 5O6EOtYLe0fHqUIpPxelxPrW2rrUNd//qsOSnfZ+eHqlhdacr0hNhjJ5irs5QjY0Mxxu
+ xK0l/VX82liIpfyvXlfrQAy6sboj1L3VXbTtTZxhh44ygCrK+C6NXfMwyo3FgmXe2Fnr
+ f3P/4m97J/ntt7hjDYO8Yl7tqE10vMZlMs0nfC0doEYz8YxtSX6/3Xe601QJVohBadDq
+ CukA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730475040; x=1731079840;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3lfwdotJ8PS1vtQC6/LpcXLJdqm3/JvvR9uQJwNBSyA=;
- b=gRH2BEFk5AiwNUc3Duwoj8aeA1e72dZT55l+qfk0xyfDLLt4EcDqxmN8Ko2MVNVCii
- o4mqsih/Sm+FlgHBArmDXUxgeM5MXK0WqspuWcjBERJaaJJWRnSuXGXt4sODYhjrCctp
- GNNi9JOYOhCVncnp36xMk+ZJgQqOxCWYPRul/Wod/7TMEJFcPA6Y4bRd2r9RFKoUbJ4m
- jV7O5afQEGjkZB4yns7r/uOw5BVbEaUnZYe4LuMxBgvfecaC7gF2Ra9gSz2H9gLAgKcO
- naca7lOpmkyYtibYZ+9BHF4sZcIlRXje+O692OphM2mYZbMuZXfLp23HYfNxEZQ2J0fI
- n3zA==
-X-Gm-Message-State: AOJu0YwrB6vHbfNFTfi5Pz6NGyNPvX38n53EYUSGpmtRJlofZtklxyuL
- QN2d4T0l3ikqjt2lfxVtiS2oUS9C+Slaako2rWUKOksOpLYXyHDJq2ZNJ5NXHGMCf5XuhVJTXVf
- vBufjigy5fuMwoxSwTcT6wDzJmuYblrj7u4q1np//1XlQnXRPkhWM5g+Bu9EW06I0ysoBwWGaG6
- v4PcKPrKh0eQwLoy3NE1+pVZcAJmQ=
-X-Received: by 2002:a5d:6946:0:b0:37c:d2f0:7331 with SMTP id
- ffacd0b85a97d-38060fff529mr17384063f8f.0.1730475040624; 
- Fri, 01 Nov 2024 08:30:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFwEJkVDQTwUqqRbaswsLECo6fa7hHeG0EO8Wj2VAr1USq97rGbz3hG73NVCiKW4CPrtAYIhvpId21F5cK+QwQ=
-X-Received: by 2002:a5d:6946:0:b0:37c:d2f0:7331 with SMTP id
- ffacd0b85a97d-38060fff529mr17384048f8f.0.1730475040307; Fri, 01 Nov 2024
- 08:30:40 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1730475352; x=1731080152;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ox5zuqQkZjxezk9rgYnUQrTGz2TSASa/ElhWXn8NhKw=;
+ b=atuVErB0s+YwDuzYgsapbCin/q8r2bt21C5CTE05fiEK/u38MjT0R+dvM2bnROhhc8
+ PH7WBFxFNH7C7Be9F8uoUFUPAOuPuZCCA/2SStKyRb21VGggKqCnuORP8g8pj5mxEhKR
+ JfPMHvt02shAZJHIKJ8luSBPtPigGfa6OH9FW0sTrwPYi8PVD1rSbY40/LuvqpIifsFI
+ 5RXOA/eAaJR6XDQKdVt9hhzBSMPDkO1YQCsqlG96p+RS+91/S7gnsxhQtBjm7aK4Bd8/
+ vIQooD8wdDhPdjAXN+o8g+4Lrfjsu8/s+O8Cj+gcN+VFKLaLpiCpavOY1/0mmmPPYamf
+ k5UA==
+X-Gm-Message-State: AOJu0Yzar82vPibSrxB53/pPGgn9Bhf73ATbR9nJnPpBXtZ1GwJQrz78
+ kUpaKx6EHDq2FKEDYTa3TRNEPPpWPcIi2/sH/rurPpGWNB+3t5HEoTJp+U88dffjemZr4koZyc1
+ YUpzgOAShAXCHKBKMoVxh7R4I/+9ylT59nsh6E0BOjdsDzfx4
+X-Google-Smtp-Source: AGHT+IG9ZaB7+4L23HAx9rxhZ1UeH28UsTS1Go6kPEnoQlmeIEOLKJQ1v3Uiem7D7qr0u0FQIuD2uz6IV8IeLy9M9EE=
+X-Received: by 2002:a05:6402:3489:b0:5cb:b261:c34f with SMTP id
+ 4fb4d7f45d1cf-5ceb9236a6cmr2456885a12.6.1730475352282; Fri, 01 Nov 2024
+ 08:35:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241025160209.194307-1-pbonzini@redhat.com>
- <20241025160209.194307-14-pbonzini@redhat.com>
- <ME0P300MB1040C0B24C8ED1775CB0673795562@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
-In-Reply-To: <ME0P300MB1040C0B24C8ED1775CB0673795562@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 1 Nov 2024 16:30:28 +0100
-Message-ID: <CABgObfZKK4UYgox3sYfOG8a9fCS+h9ouLCwydgq1TQfEoc4t9Q@mail.gmail.com>
-Subject: Re: [PATCH 13/23] rust: synchronize dependencies between subprojects
- and Cargo.lock
-To: Junjie Mao <junjie.mao@hotmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, 
- Emmanouil Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, 
- "P. Berrange, Daniel" <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000012169e0625db9edc"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20241029121030.4007014-1-alex.bennee@linaro.org>
+ <20241029121030.4007014-12-alex.bennee@linaro.org>
+In-Reply-To: <20241029121030.4007014-12-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 1 Nov 2024 15:35:41 +0000
+Message-ID: <CAFEAcA8M1gu9Ow8n42i-ie9t-k=yoe0R+D0CUZodwoU_Kezfhw@mail.gmail.com>
+Subject: Re: [PULL 11/13] virtio-gpu: Handle resource blob commands
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Robert Beckett <bob.beckett@collabora.com>, 
+ Antonio Caggiano <antonio.caggiano@collabora.com>, 
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>, Huang Rui <ray.huang@amd.com>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,79 +94,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000012169e0625db9edc
-Content-Type: text/plain; charset="UTF-8"
-
-Il ven 1 nov 2024, 11:21 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
-
-> How about specifying also the exact version in Cargo.toml, e.g.:
+On Tue, 29 Oct 2024 at 12:11, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
->  [dependencies]
-> -proc-macro2 = "1"
-> -quote = "1"
-> -syn = { version = "2", features = ["extra-traits"] }
-> +proc-macro2 = "=1.0.84"
-> +quote = "=1.0.36"
-> +syn = { version = "=2.0.66", features = ["extra-traits"] }
+> From: Robert Beckett <bob.beckett@collabora.com>
 >
+> Support BLOB resources creation, mapping, unmapping and set-scanout by
+> calling the new stable virglrenderer 0.10 interface. Only enabled when
+> available and via the blob config. E.g. -device virtio-vga-gl,blob=3Dtrue
 >
-Unfortunately, versions of nested dependencies, such as either and
-> unicode-ident, may still have newer patch versions after a lockfile
-> regeneration. That can be worked around by turning nested dependencies
-> to direct ones with fixed version constraints, but looks quite ugly.
->
+> Signed-off-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+> Signed-off-by: Robert Beckett <bob.beckett@collabora.com> # added set_sca=
+nout_blob
+> Signed-off-by: Xenia Ragiadakou <xenia.ragiadakou@amd.com>
+> Signed-off-by: Huang Rui <ray.huang@amd.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Message-Id: <20241024210311.118220-12-dmitry.osipenko@collabora.com>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Yeah, that's the reason why I didn't do it... Since we don't have any
-security-sensitive dependencies, changes to the lock files are going to be
-rare and it's easier to just look at them more closely.
+Hi; Coverity points out some possible issues with this commit:
 
-Paolo
 
---
-> Best Regards
-> Junjie Mao
->
->
+> +    fb.bytes_pp =3D DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb.format), 8);
+> +    fb.width =3D ss.width;
+> +    fb.height =3D ss.height;
+> +    fb.stride =3D ss.strides[0];
+> +    fb.offset =3D ss.offsets[0] + ss.r.x * fb.bytes_pp + ss.r.y * fb.str=
+ide;
+> +
+> +    fbend =3D fb.offset;
+> +    fbend +=3D fb.stride * (ss.r.height - 1);
+> +    fbend +=3D fb.bytes_pp * ss.r.width;
 
---00000000000012169e0625db9edc
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Here 'fbend' is a uint64_t, but fb.stride, fb.bytes_pp,
+ss.r.height and ss.r.width are all uint32_t. So these
+multiplications will be done as 32x32->32 before being
+added to fbend, potentially overflowing. This probably
+isn't what was intended.
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il ven 1 nov 2024, 11:21 Junjie Mao &lt;<a href=3D"mai=
-lto:junjie.mao@hotmail.com">junjie.mao@hotmail.com</a>&gt; ha scritto:<br><=
-/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
-rder-left:1px solid rgb(204,204,204);padding-left:1ex">How about specifying=
- also the exact version in Cargo.toml, e.g.:<br>
-<br>=C2=A0[dependencies]<br>
--proc-macro2 =3D &quot;1&quot;<br>
--quote =3D &quot;1&quot;<br>
--syn =3D { version =3D &quot;2&quot;, features =3D [&quot;extra-traits&quot=
-;] }<br>
-+proc-macro2 =3D &quot;=3D1.0.84&quot;<br>
-+quote =3D &quot;=3D1.0.36&quot;<br>
-+syn =3D { version =3D &quot;=3D2.0.66&quot;, features =3D [&quot;extra-tra=
-its&quot;] }<br>=C2=A0<br></blockquote></div></div><div dir=3D"auto"><div c=
-lass=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Unfo=
-rtunately, versions of nested dependencies, such as either and<br>
-unicode-ident, may still have newer patch versions after a lockfile<br>
-regeneration. That can be worked around by turning nested dependencies<br>
-to direct ones with fixed version constraints, but looks quite ugly.<br></b=
-lockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Yeah, t=
-hat&#39;s the reason why I didn&#39;t do it... Since we don&#39;t have any =
-security-sensitive dependencies, changes to the lock files are going to be =
-rare and it&#39;s easier to just look at them more closely.</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">
---<br>
-Best Regards<br>
-Junjie Mao<br>
-<br>
-</blockquote></div></div></div>
+(This is Coverity CID 1564769, 1564770.)
 
---00000000000012169e0625db9edc--
+The calculation of fb.offset also might overflow, but
+Coverity doesn't spot that because fb.offset is uint32_t
+and so the whole calculation is 32-bit all the way through
+without a late-32-to-64 extension.
 
+> +    if (fbend > res->base.blob_size) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: fb end out of range\n",
+> +                      __func__);
+> +        cmd->error =3D VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+> +        return;
+> +    }
+
+thanks
+-- PMM
 
