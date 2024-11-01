@@ -4,74 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B63D4E6F07D
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 18:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ECD1E6F068
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 18:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6wJD-0007iw-Tg; Fri, 01 Nov 2024 14:23:43 -0400
+	id 1t6wUl-00022D-RZ; Fri, 01 Nov 2024 14:35:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t6wJ9-0007fJ-7X
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 14:23:39 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1t6wUj-00021a-NP; Fri, 01 Nov 2024 14:35:37 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t6wJ6-0005hK-1L
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 14:23:38 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1730485407; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=j+fi02N82g4wMxYP7wQJc0d3A/oJbj7r4/oCB30Q6lWo7TCczym4ev4UNFjOVse801jgHn3lnqyCqr25fO5kY8D0GwNzZyybsNPeou8kasMSo5up27zKUgQUnFlaFgpsNV3/OJ0Ab2O9gQbceNsCKB/UbT0qRHLFWAWKZ6ASG+4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1730485407;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=eyg2sKZ8tBZJnkc0qVebvV2qHARot8VXSqqLqyN50qM=; 
- b=bVcny07kXmje8xZlsnNzaTh+MvwJGw1nNK3jUGXovccD8Iv4Crb+IkkPwL4ze5KPX2gC+kXI1LQZHSlHB8aKLv7433wfaS42LBcs3a0Zd9a1bdEatpqwBIcR6RF9RsMp3VQvLqPVQe4nb2EAztEfIGxvLcVBGkoGx6Kbt49i5bo=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1730485407; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=eyg2sKZ8tBZJnkc0qVebvV2qHARot8VXSqqLqyN50qM=;
- b=M6zr/vaIpVDDKf+SfsNltuyt/1CSiWpLJxuMoyXMHARG4CAVc7NbtTtl00Pkm7ry
- yN4FRo3dsXZOPtGaPJBhlrl7f592tpBbj2A7YO54/UEYpU09bEzAv+HkDDDwjxMq17R
- p+VkvK2LgGq7bxg72eMbvBe+ZXKz2XmRkEti6Bwg=
-Received: by mx.zohomail.com with SMTPS id 1730485404923421.850459609931;
- Fri, 1 Nov 2024 11:23:24 -0700 (PDT)
-Message-ID: <7b4c6712-ed37-4973-88ef-5ef5efdfa232@collabora.com>
-Date: Fri, 1 Nov 2024 21:23:21 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 11/13] virtio-gpu: Handle resource blob commands
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Robert Beckett <bob.beckett@collabora.com>,
- Antonio Caggiano <antonio.caggiano@collabora.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>, Huang Rui <ray.huang@amd.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20241029121030.4007014-1-alex.bennee@linaro.org>
- <20241029121030.4007014-12-alex.bennee@linaro.org>
- <CAFEAcA8M1gu9Ow8n42i-ie9t-k=yoe0R+D0CUZodwoU_Kezfhw@mail.gmail.com>
- <87ldy2ho24.fsf@draig.linaro.org>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1t6wUg-00072r-Sn; Fri, 01 Nov 2024 14:35:37 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xg8cM6jNwz6K6NM;
+ Sat,  2 Nov 2024 02:32:51 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 1B634140517;
+ Sat,  2 Nov 2024 02:35:24 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 1 Nov 2024 19:35:23 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Fri, 1 Nov 2024 19:35:23 +0100
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: Eric Auger <eric.auger@redhat.com>, Mostafa Saleh <smostafa@google.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Jason
+ Gunthorpe" <jgg@nvidia.com>, Jean-Philippe Brucker
+ <jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, Michael Shavit
+ <mshavit@google.com>, "Andrea Bolognani" <abologna@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, "Peter Xu" <peterx@redhat.com>, Zhangfei Gao
+ <zhangfei.gao@linaro.org>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "arighi@nvidia.com" <arighi@nvidia.com>, "ianm@nvidia.com" <ianm@nvidia.com>, 
+ "jan@nvidia.com" <jan@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>
+Subject: RE: nested-smmuv3 topic for QEMU/libvirt, Nov 2024
+Thread-Topic: nested-smmuv3 topic for QEMU/libvirt, Nov 2024
+Thread-Index: AQHbLBPkDYWW/RlwrUqSJByfpx0jw7KisNtQ
+Date: Fri, 1 Nov 2024 18:35:23 +0000
+Message-ID: <cf4359b18f0d44f09b8901141b678a09@huawei.com>
+References: <ZyRUcGKKS6NbIV5O@Asurada-Nvidia>
+In-Reply-To: <ZyRUcGKKS6NbIV5O@Asurada-Nvidia>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-In-Reply-To: <87ldy2ho24.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,26 +79,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/1/24 20:16, Alex Bennée wrote:
-> Also what is the subtlety behind using both stride and bytes_pp in the
-> calculation. My naive thought would be:
-> 
->   fb.bytes_pp * ss.r.width == fb.stride
-> 
-> Can anyone enlighten me?
 
-GPUs want image line size to be aligned to a power of 2 value, like 64
-bytes for example. This aligned size of the line is called stride.
+Hi Nicolin,
 
-GPU's DMA engine operates with a predefined granularity when it accesses
-memory, it reads/writes memory chunks that are multiple of a stride.
-GPUs almost never support memory accesses at a granularity of one byte,
-like CPUs do it.
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Friday, November 1, 2024 4:09 AM
+> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> Cc: Eric Auger <eric.auger@redhat.com>; Mostafa Saleh
+> <smostafa@google.com>; qemu-arm@nongnu.org; qemu-
+> devel@nongnu.org; Peter Maydell <peter.maydell@linaro.org>; Jason
+> Gunthorpe <jgg@nvidia.com>; Jean-Philippe Brucker <jean-
+> philippe@linaro.org>; Moritz Fischer <mdf@kernel.org>; Michael Shavit
+> <mshavit@google.com>; Andrea Bolognani <abologna@redhat.com>;
+> Michael S. Tsirkin <mst@redhat.com>; Peter Xu <peterx@redhat.com>;
+> Zhangfei Gao <zhangfei.gao@linaro.org>; nathanc@nvidia.com;
+> arighi@nvidia.com; ianm@nvidia.com; jan@nvidia.com; mochs@nvidia.com
+> Subject: nested-smmuv3 topic for QEMU/libvirt, Nov 2024
+>=20
+> Hi,
+>=20
+> This is a continued discussion following previous month's:
+> https://lore.kernel.org/qemu-devel/Zvr%2Fbf7KgLN1cjOl@Asurada-Nvidia/
+>=20
+> Kernel changes are getting closer to merge, as Jason's planning to
+> take vIOMMU series and smmuv3_nesting series into the iommufd tree:
+> https://lore.kernel.org/all/cover.1730313494.git.nicolinc@nvidia.com/
+> https://lore.kernel.org/all/cover.1730313494.git.nicolinc@nvidia.com/
+> https://lore.kernel.org/all/0-v4-9e99b76f3518+3a8-
+> smmuv3_nesting_jgg@nvidia.com/
+>=20
+> So, I think it's probably a good time to align with each others and
+> talk about kicking off some QEMU upstream work in the month ahead.
+>=20
+> @Shameer,
+> Do you have some update on the pluggable smmuv3 module?
 
--- 
-Best regards,
-Dmitry
+I have a bare minimum prototype code that works with a pluggable smmuv3.
+
+...
+-device pxb-pcie,id=3Dpcie.1,bus_nr=3D2,bus=3Dpcie.0 \
+-device pcie-root-port,id=3Dpcie.port1,bus=3Dpcie.1 \
+-device arm-smmuv3-nested,id=3Dsmmuv1,pci-bus=3Dpcie.1 \
+-device vfio-pci-nohotplug,host=3D0000:75:00.1,bus=3Dpcie.port1,iommufd=3Di=
+ommufd0 \
+-device pxb-pcie,id=3Dpcie.2,bus_nr=3D8,bus=3Dpcie.0 \
+-device pcie-root-port,id=3Dpcie.port2,bus=3Dpcie.2,chassis=3D8 \
+-device arm-smmuv3-nested,id=3Dsmmuv2,pci-bus=3Dpcie.2 \
+-device vfio-pci-nohotplug,host=3D0000:7d:02.1,bus=3Dpcie.port2,iommufd=3Di=
+ommufd0 \
+...
+
+Something like above can now boot a Guest with the latest kernel. But I am =
+not
+sure it actually works correctly. I need a bit more time to update this and=
+ carry
+out some tests. Will target that in Nov.
+
+>=20
+> Updates on my side:
+> 1) I have kept uAPI updated to the latest version and verified too.
+>    There should be some polishing changes depending on how the basic
+>    nesting infrastructure would look like from Intel/Duan's work.
+> 2) I got some help from NVIDIA folks for the libvirt task. And they
+>    have done some drafting and are now verifying the PCI topology
+>    with "iommu=3Dnone".
+>=20
+> Once the pluggable smmuv3 module is ready to test, we will make some
+> change to libvirt for that and drop the auto-assigning patches from
+> the VIRT code, so as to converge for a libvirt+QEMU test.
+
+One query I have is, do Qemu still need to check whether the VFIO devices a=
+re
+assigned correctly behind the nested vSMMUv3 w.r.t the phys SMMUv3s or not?
+Or we can just trust whatever the user/libvirt specifies?
+
+(I think even if we don't explicitly check, at present  it will eventually =
+fail in s2
+HWPT attach  for the viommu if it belongs to a different phys SMMUv3).
+
+Thanks,
+Shameer
 
