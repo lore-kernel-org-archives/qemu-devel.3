@@ -4,103 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 115BAE6F06A
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 15:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3930DE6F06A
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 15:20:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6tHX-0002lz-L3; Fri, 01 Nov 2024 11:09:47 -0400
+	id 1t6tQw-0005ml-60; Fri, 01 Nov 2024 11:19:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1t6tHW-0002ld-28
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 11:09:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Zhigang.Luo@amd.com>)
+ id 1t6szM-0002IP-K6
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 10:51:00 -0400
+Received: from mail-mw2nam12on2077.outbound.protection.outlook.com
+ ([40.107.244.77] helo=NAM12-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1t6tHS-00016n-HJ
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 11:09:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730473780;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SG89O3ZcJkn/3n74/GcMsrPR+rAyb1vRFtP12ULI8+Q=;
- b=OoNm3oAZWnaV6FCK7XyoBgF3cnLMk0xoUCahW31QNZ/yPA80nxXy8L6XvcKLRCJWxUQrwa
- /IYUeIT9DZ6MAoM06iamlqbP2tOtI/CSju3xHFiXprleJvhD5Wfll5X1FnVdXTMru4UhvB
- z0eygdjbeW0rx/6qrMxh6n0rwnRZR5k=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-sbJ_R6mMNz6zV5TQQ0y77g-1; Fri, 01 Nov 2024 11:09:38 -0400
-X-MC-Unique: sbJ_R6mMNz6zV5TQQ0y77g-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4315cefda02so14949265e9.0
- for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 08:09:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730473777; x=1731078577;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SG89O3ZcJkn/3n74/GcMsrPR+rAyb1vRFtP12ULI8+Q=;
- b=rRgby/7Dk9M1hHUgwkTKKvMi7nSKektx0MSyqkYc7eau7FoCaEf1j+xGf4AvvxKmvY
- d5ZeiHr9szQ66QkmfpvpCeC3mQ0vHxnhwUORh5DGXna4d/zO0ES8mN8vIo5KTTKG8090
- EC2mEV9CbLfmqfBUBYk1PblrnMmfZpJ0XDQ5H3rlU/ztcjBK5bnWrdw2fbwwEgGcY9Yo
- b3/A8wsjYYE1V1PHm81FRv9bdrE8pa1JFt5ke+TlADS9rfxYeGi5tUNv24KI2OwI8Df9
- AP5FvNFXZ+6EPnCX35LlT2l92f9IKAv9FS+/cZFLHHlaAf4lblz7FzUiOsqlasVfjqfI
- lcGQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVswzvIjxrgFtWE8txWBbJ7V6wp24esk9uPtOcZMB5ys2DH07byih0zMyRGSzxaS+OmBq+Xvg0SYWF0@nongnu.org
-X-Gm-Message-State: AOJu0YzlPN5dh5/SKotKdl2A7S2DZ5OXG6pe2YNxNnSFsIbtiaBEetjm
- eyNeRyoUp8U9XUdLDq2c9k4P7RnqFc0NxsF8QYals2HzzfFoZlAHFFydIt+5NnJoSjDYJW1PN3A
- KpR8Cte+B3QrZ8bALAJHNCiSlqbjk6MW1My+Of7SQzp0Dsn3Htmtb
-X-Received: by 2002:a05:600c:35d0:b0:431:58cd:b259 with SMTP id
- 5b1f17b1804b1-4327b8214aemr70904465e9.31.1730473777052; 
- Fri, 01 Nov 2024 08:09:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF20hvGj0ogheTGX94mEBp9ZmTJzg6v/pyz4EFFfVxalM7jFEOkqbyxo5JXhZWA1K6wNJ4qYA==
-X-Received: by 2002:a05:600c:35d0:b0:431:58cd:b259 with SMTP id
- 5b1f17b1804b1-4327b8214aemr70904155e9.31.1730473776362; 
- Fri, 01 Nov 2024 08:09:36 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10b7d2bsm5437969f8f.16.2024.11.01.08.09.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Nov 2024 08:09:35 -0700 (PDT)
-Date: Fri, 1 Nov 2024 16:09:34 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: "Anthony Harivel" <aharivel@redhat.com>
-Cc: "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>,
- <pbonzini@redhat.com>, <mtosatti@redhat.com>, <qemu-devel@nongnu.org>,
- <vchundur@redhat.com>, <rjarry@redhat.com>, nathans@redhat.com,
- kenj@kenj.id.au, chorn@fluxcoil.net, sunyanan.choochotkaew1@ibm.com,
- vibhu.sharma2929@gmail.com
-Subject: Re: [PATCH v6 0/3] Add support for the RAPL MSRs series
-Message-ID: <20241101160934.42d46c9f@imammedo.users.ipa.redhat.com>
-In-Reply-To: <D52ED9BSZU9P.32LYD3328YTTN@redhat.com>
-References: <20240522153453.1230389-1-aharivel@redhat.com>
- <20241016135259.49021bca@imammedo.users.ipa.redhat.com>
- <D4X8WRR5F2GP.2MCBI9HDM3UHM@redhat.com>
- <20241018142526.34a2de0a@imammedo.users.ipa.redhat.com>
- <ZxJbtkMO1QcoiqVn@redhat.com>
- <20241022144615.203cf0da@imammedo.users.ipa.redhat.com>
- <ZxelgDeuZaia-Vqf@redhat.com>
- <D52ED9BSZU9P.32LYD3328YTTN@redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <Zhigang.Luo@amd.com>)
+ id 1t6szK-0005E4-C3
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 10:51:00 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wJ3dBrhlIkgV04II9Ljk6NNEu3P4hSIr6MEtij0pO+YWQyx+zMaU941gvBYJo0B6Ota6MvI4Ew9Qe8AA5nekAAwXaTytkajh69nu4cY2xlABzGOkFWecMQfOeuy4UHyxOzNAn8o3cZ4hBN/B8259PV1KkCbFpVD7vFCNaX5IKvp9jnwjoVIlHivBQL4xnuT23TqME4Oi20QXmCW5d3J/6cAqjG6ZG8qL1w5aoeSRfLatymhpz0qjQFQVV56bqVnZA15zQHrHr121oOQDzFIkZL+5tiHt/Na1A683v4ozETknUfDWU8VBpF24MjrupYdbeBbewgvS2nfIcPg+Bscwfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=B3JTmtVTyJMP3PGbNetA9C+k2MU73J2eTLW012MZ/ck=;
+ b=jP1BZ0BpUSi1NhdQU/5YLKN1F56aM5xxlMo0GWaDoCF3RaT5bVqK3Rp1wASRcw20kqOkT2oDuM4JcqQ3nE03MOZk05tlbFyP8g5mqwYwlN+56oab8IRUN+H+V/sWz1Ka/5iYnoW9BBAzFypKUeI214LuI7i2lm7emloffUPz5dvSzStQhBswT7JnbJB5MSS2V11FUlYctdQnauIZyljX9fpKxQad3kz3OHUVxmb3Qm3eC0f034h2nYvZUjfukQltuD4tb5HkP012ykkwo8zh98dP752q1iFMkAsJGfKtOnIeM0i0uKig9Vp+gc8DK2oDY8qFikqMIlUT5iAXUXwEkQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=B3JTmtVTyJMP3PGbNetA9C+k2MU73J2eTLW012MZ/ck=;
+ b=FpUR7t9uZKTOBvY/P9ZWq0yKXEefO6mh4f9xJmPp5Xi41OR9gYdIqdJLUCc+EFLvucIETP3APOUnBWri9MZ6AptMwUv5OcGfmfx8W1E+KSy4QIrNUpIX6pYhGqLdIU0YVwtozM2FmI93yg9/olD42azZ/jM+FShECY7L4R/WMYc=
+Received: from BL1PR12MB5317.namprd12.prod.outlook.com (2603:10b6:208:31f::17)
+ by CH2PR12MB4133.namprd12.prod.outlook.com (2603:10b6:610:7a::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.27; Fri, 1 Nov
+ 2024 14:45:44 +0000
+Received: from BL1PR12MB5317.namprd12.prod.outlook.com
+ ([fe80::bb8a:785:463:43ec]) by BL1PR12MB5317.namprd12.prod.outlook.com
+ ([fe80::bb8a:785:463:43ec%4]) with mapi id 15.20.8114.023; Fri, 1 Nov 2024
+ 14:45:44 +0000
+From: "Luo, Zhigang" <Zhigang.Luo@amd.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, Gerd
+ Hoffmann <kraxel@redhat.com>, =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: How to pass the EFI_MEMORY_SP type to VM in QEMU
+Thread-Topic: How to pass the EFI_MEMORY_SP type to VM in QEMU
+Thread-Index: AdssabKydgSiEnpeS2KT2d6BYKpm8A==
+Date: Fri, 1 Nov 2024 14:45:44 +0000
+Message-ID: <BL1PR12MB5317899723624202EDF03FC8F1562@BL1PR12MB5317.namprd12.prod.outlook.com>
+Accept-Language: en-US, en-CA
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_7ab537de-9a15-4e91-8150-78a9f873b18c_ActionId=ba8e94ed-fde9-473f-a583-85c655062c5e;
+ MSIP_Label_7ab537de-9a15-4e91-8150-78a9f873b18c_ContentBits=0;
+ MSIP_Label_7ab537de-9a15-4e91-8150-78a9f873b18c_Enabled=true;
+ MSIP_Label_7ab537de-9a15-4e91-8150-78a9f873b18c_Method=Privileged;
+ MSIP_Label_7ab537de-9a15-4e91-8150-78a9f873b18c_Name=Third
+ Party_New;
+ MSIP_Label_7ab537de-9a15-4e91-8150-78a9f873b18c_SetDate=2024-11-01T14:42:44Z;
+ MSIP_Label_7ab537de-9a15-4e91-8150-78a9f873b18c_SiteId=3dd8961f-e488-4e60-8e11-a82d994e183d;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL1PR12MB5317:EE_|CH2PR12MB4133:EE_
+x-ms-office365-filtering-correlation-id: e9d11d81-52cd-4cb2-a7d5-08dcfa83ddad
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|8096899003|38070700018; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?e5Ba1A18IpcJN+VaV0n5XcMfwrQIZQmpoACQ+OzjC2AlsBKkbNfMVQlZiT?=
+ =?iso-8859-1?Q?jlZshU3WqMrqe0720u3zelIt5igdevp7QB4qHKkIuDfp2xzsjcbr+JTzYW?=
+ =?iso-8859-1?Q?eEQBqfOp8LPyKxuPFAz/37JDrN6Kop98gm3Fy4HKc7j72VEKfyRedM3NmI?=
+ =?iso-8859-1?Q?rynWG+QTZyH7TLH8+OaU/9zbzhf1Bq0NADnHGVN6Uz1VNkVpOroz5o5Mrs?=
+ =?iso-8859-1?Q?uyJw02yAyrh282JHcft080eRTsnOEnOVpsvEFh+GoKychT5LmzJPrlZkbg?=
+ =?iso-8859-1?Q?4bzZcRo0a5SeGUCW79A2iujCUBytU/IH/y9cOJn8mVB3tJs/TnZJ/fc6QO?=
+ =?iso-8859-1?Q?PbeNPabMliOTcz1cog/K/QZj4h37b2Tq5a/QZRJQ/uRMG91zL2l33FE+iA?=
+ =?iso-8859-1?Q?SSHs3kJrMKgmW9JbmK5o4fd2QJ5SFAEwuugJ4s7O5e+/pf0DjzN0ckygen?=
+ =?iso-8859-1?Q?TgC8bbCIpOF/WBDrLC/ZxO2G7tK1FtTaQ1F1BOlszI/QY0Ldyv3dvjUmAI?=
+ =?iso-8859-1?Q?4TclcDm7r8ZAquR+mXoVCv5K4NIrTMzYFlZtrBjlfT/uAwqqEak7lQBRVm?=
+ =?iso-8859-1?Q?HsV2yBWpOFB8pBQDyo2rt8aoPjHHY/4es5ooCspfaCiAnORZEQUjYCV1hN?=
+ =?iso-8859-1?Q?bNi4dzdmqgEKXoyMaGfbTYZbkrccXqB3ZfLJ8yNTS/rJ2gzxXLFyKMVkCY?=
+ =?iso-8859-1?Q?Qd1+8OQyY4GpDJJH03ePKaeStDZl5lUJC3W119Fje5EED+RTGrJ3unVU3A?=
+ =?iso-8859-1?Q?pPASP8PDBCMz9dkFJcGL3rQHGwZrAxBnLBaJCarRTujMoQDOrR3LXM/ZDt?=
+ =?iso-8859-1?Q?QsrPKyFpA2irqVUYgOuY8C/m0VBkvq7lN2rKFPZG7ozo3UyCLOULjstIVS?=
+ =?iso-8859-1?Q?MqXOuGQUPNwdJrmQKSeetDA9hAFaijJb4if9lWwIQ8CIX7+p169kGbc+Dy?=
+ =?iso-8859-1?Q?0fDDqVz1aN9NSOZ8vlZjujAD7LjLiP3m4JT+bbP1p84U8yaHQzbYH9ID0d?=
+ =?iso-8859-1?Q?KKjf/FxPoZk+0a30Sx9h8UNgNjw5kx6P82070/pCAtPytK3eQTKCgzc+4C?=
+ =?iso-8859-1?Q?WmVJUF54jniOkOPWaSohzk2g4+r7V8tmWKouEx9LzY3lWMDLNc+4Vq49q3?=
+ =?iso-8859-1?Q?Dd6JKo9PjMfla/oHABMzhK3lAMDicXNIA1+xfyJyHrWbs/RnkDB5lY8M8X?=
+ =?iso-8859-1?Q?M8vtIlc/YVWddG00fF1iSeFG1koWQaWKTcDRlazoEFqh4hck2cE9OoCiBT?=
+ =?iso-8859-1?Q?VKcUAiCbMR1I0IAo9Nf94PjnCz4EGytGXfp3qqVYl3Xs7P/VqW+LVS4HUl?=
+ =?iso-8859-1?Q?H9bA12aaPDWwCYRB+HA26o+NannL06JYwgxMc9+5CW54San848n3mbFHGB?=
+ =?iso-8859-1?Q?XtIcAm2e00ldMM1nuj7XKFAUnBK/T1S8G6aKBsz7GoV/Hb6M2d9AQ=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5317.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(8096899003)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?HPptVdgen/2KogxLza9lJUy9/HpazYZoTM+uzs1fpsGjcwxuU83WjeYiRB?=
+ =?iso-8859-1?Q?UCiDWh9fMsLGmGBPrTs2AxxQP3egE7e/BDVO4lI4S98cEPVV9L4CPcGcOH?=
+ =?iso-8859-1?Q?pz3tXtcXHWLTIgJf6/cPZ69PbEtvZDD+gyDL2vbVqHTDF2BtG0GBVzqT/e?=
+ =?iso-8859-1?Q?g0vaA+pPTj0MhbibTjwOPsetZKmzwkhdEovkurhDZvw6anz9wN8VZ+rnzT?=
+ =?iso-8859-1?Q?QaEnR5uwGLkXsL/vbmu5wSrFOCpJKNp0K5DGuMzsNavSaaIrQMXDHP+a2Z?=
+ =?iso-8859-1?Q?UJ/WrKVgReI4eWASNwqu63kG7dmdniCGyJMkzycl7FXDWrYG+n7LFgMWM5?=
+ =?iso-8859-1?Q?+NxvJSzkTWb3gnDyhPvPvlieCc1nmFKMnmDYMTdsfxmMv1vUyl+Xg3A17I?=
+ =?iso-8859-1?Q?CLaiNH2bKYYN+Y50XwAfgzTJxQoWiWxdDZTVgMmxlGq7TX5GVcpxclEPe8?=
+ =?iso-8859-1?Q?+v1r+z6fAMNBxOYcQriaQEqtkBYYyQzJgxX6AA0lt4vkQoW+P5Ovj1YOLG?=
+ =?iso-8859-1?Q?suKYdOYIYXPlDEfKCpcx8b/Q6KbHdd/H1vR7IZoLbhSXk6f517xdil+DhS?=
+ =?iso-8859-1?Q?B+enB6LojpUBFOw4Qp4oImqgVC4KMeEh5WXLrKDmqbQITZrKSr7QKmD0Ib?=
+ =?iso-8859-1?Q?7PVYGWMrLbc3ky0L70XvphC86dKvqhmR+Xvu8Sb/4MHFUYgaSJq7OP1y9B?=
+ =?iso-8859-1?Q?7b0VvkxEDUQGRYmts8oIHtmSRFqeeRndqnqR1aaJM2wo6sQ3XbM859AJYN?=
+ =?iso-8859-1?Q?yMXfGmFmYlTldYhkWLcMxTqX0u9KsEcNfP1x0FWvvgucSqz4UtdwvJ+qmx?=
+ =?iso-8859-1?Q?Hn8LCas/O11VCjKfhy927g/SfszXEMp3v7WF0Kg6lriz8QPk/mgurH+TZR?=
+ =?iso-8859-1?Q?RgFLc/jLc8BfO7Cki8KEAKI4F/xF5WIEEIVRap5gXVZ5swF+1ankvNoHZu?=
+ =?iso-8859-1?Q?7jGqvyCVRJX3bxBQ6JZ5nmb+al9YGGG5IXstcpFQCBVVczwpupr/gfkBsa?=
+ =?iso-8859-1?Q?2uQ0z29v9LPm6r+6R12Zv039gcCimkkTuxgY0rYR2fvoj08U9Lw+FG9wf3?=
+ =?iso-8859-1?Q?lkdZNh3HjYdp7w2hYrL1hKuexuaZmpBOCC9+hYDe6WbyDmuzRA2k1HxsOH?=
+ =?iso-8859-1?Q?JI1BkeJxThgTlcfMV0oUwjG2gTvvcmlp68Ifb9DvKXrL6D04JT6uvobz6t?=
+ =?iso-8859-1?Q?bIWWjdiYfohG5+ANccGkwVkP3MCKa/6MlXFlNToUpgH3GFqdIeCmRnNyWO?=
+ =?iso-8859-1?Q?sYhPvk50Cth82cgOm+alO70tZFAZcHyjYJccXEqiv4EdaBDZvpFL7JcKDa?=
+ =?iso-8859-1?Q?nZSqcfvvW8583hU+wtXsjH/UQVNtgZyNn4IjeDSN4OKRunlmjngzelL2ou?=
+ =?iso-8859-1?Q?3m63UdLo5wdDrjwYokh+lLVjWuVTKlUogep/z564EcQZ6imjGmOVpGJ2x0?=
+ =?iso-8859-1?Q?XpNChnCIRsnp9FnOogZraCFUgmT135lO3kbYiA4c/mGv6gWyt2LyQ55yO2?=
+ =?iso-8859-1?Q?s1SV1H5vRNYuJ25LXsCgF9yaS5Q/pscLH2/Y7Q356ELGamJIP83kZWtshn?=
+ =?iso-8859-1?Q?md6j88LBkvznGUhzscThdG6HnS6xgSKl6GctpKDgYm3KoGtrQqVhbFxES2?=
+ =?iso-8859-1?Q?GFUeR5vx/Xxwg=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_BL1PR12MB5317899723624202EDF03FC8F1562BL1PR12MB5317namp_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5317.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e9d11d81-52cd-4cb2-a7d5-08dcfa83ddad
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Nov 2024 14:45:44.6254 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: iZEkIJVApZMLTtIxQRKkK39DiUCOrYkkxKQwyjy1IUc2/uc7CAfFgz02x01spsq8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4133
+Received-SPF: permerror client-ip=40.107.244.77;
+ envelope-from=Zhigang.Luo@amd.com;
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 01 Nov 2024 11:19:29 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -115,201 +172,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 22 Oct 2024 16:16:36 +0200
-"Anthony Harivel" <aharivel@redhat.com> wrote:
+--_000_BL1PR12MB5317899723624202EDF03FC8F1562BL1PR12MB5317namp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-> Daniel P. Berrang=C3=A9, Oct 22, 2024 at 15:15:
-> > On Tue, Oct 22, 2024 at 02:46:15PM +0200, Igor Mammedov wrote: =20
-> >> On Fri, 18 Oct 2024 13:59:34 +0100
-> >> Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
-> >>  =20
-> >> > On Fri, Oct 18, 2024 at 02:25:26PM +0200, Igor Mammedov wrote: =20
-> >> > > On Wed, 16 Oct 2024 14:56:39 +0200
-> >> > > "Anthony Harivel" <aharivel@redhat.com> wrote: =20
-> >> [...]
-> >>  =20
-> >> > >=20
-> >> > > This also leads to a question, if we should account for
-> >> > > not VCPU threads at all. Looking at real hardware, those
-> >> > > MSRs return power usage of CPUs only, and they do not
-> >> > > return consumption from auxiliary system components
-> >> > > (io/memory/...). One can consider non VCPU threads in QEMU
-> >> > > as auxiliary components, so we probably should not to
-> >> > > account for them at all when modeling the same hw feature.
-> >> > > (aka be consistent with what real hw does).   =20
-> >> >=20
-> >> > I understand your POV, but I think that would be a mistake,
-> >> > and would undermine the usefulness of the feature.
-> >> >=20
-> >> > The deployment model has a cluster of hosts and guests, all
-> >> > belonging to the same user. The user goal is to measure host
-> >> > power consumption imposed by the guest, and dynamically adjust
-> >> > guest workloads in order to minimize power consumption of the
-> >> > host. =20
-> >>=20
-> >> For cloud use-case, host side is likely in a better position
-> >> to accomplish the task of saving power by migrating VM to
-> >> another socket/host to compact idle load. (I've found at least 1
-> >> kubernetis tool[1], which does energy monitoring). Perhaps there
-> >> are schedulers out there that do that using its data. =20
->=20
-> I also work for Kepler project. I use it to monitor my VM has a black=20
-> box and I used it inside my VM with this feature enable. Thanks to that=20
-> I can optimize the workloads (dpdk application,database,..) inside my VM.=
-=20
->=20
-> This is the use-case in NFV deployment and I'm pretty sure this could be=
-=20
-> the use-case of many others.
->=20
-> >
-> > The host admin can merely shuffle workloads around, hoping that
-> > a different packing of workloads onto machines, will reduce power
-> > in some aount. You might win a few %, or low 10s of % with this
-> > if you're good at it.
-> >
-> > The guest admin can change the way their workload operates to
-> > reduce its inherant power consumption baseline. You could easily
-> > come across ways to win high 10s of % with this. That's why it
-> > is interesting to expose power consumption info to the guest
-> > admin.
-> >
-> > IOW, neither makes the other obsolete, both approaches are
-> > desirable.
-> > =20
-> >> > The guest workloads can impose non-negligble power consumption
-> >> > loads on non-vCPU threads in QEMU. Without that accounted for,
-> >> > any adjustments will be working from (sometimes very) inaccurate
-> >> > data. =20
-> >>=20
-> >> Perhaps adding one or several energy sensors (ex: some i2c ones),
-> >> would let us provide auxiliary threads consumption to guest, and
-> >> even make it more granular if necessary (incl. vhost user/out of
-> >> process device models or pass-through devices if they have PMU).
-> >> It would be better than further muddling vCPUs consumption
-> >> estimates with something that doesn't belong there. =20
->=20
-> I'm confused about your statement. Like every software power metering=20
-> tools out is using RAPL (Kepler, Scaphandre, PowerMon, etc) and custom=20
-> sensors would be better than a what everyone is using ?
+Dear QEMU Community,
 
-RAPL is used to measure CPU/DRAM/maybe GPU domains.
-see my other reply to Daniel RAPL + aux
- (https://www.mail-archive.com/qemu-devel@nongnu.org/msg1072593.html)
-My point wrt RAPL is: CPU domain on host and inside guest
-should be doing the same thing, i.e. report only package/core
-consumption of virtual CPU and nothing else (non vCPU induced load
-should not be included in CPU domain).
+I hope this message finds everyone well. My name is Zhigang, and I am curre=
+ntly engaged in a project that requires virtualization capabilities provide=
+d by QEMU. I am reaching out to the community for guidance on a specific co=
+nfiguration that I need to implement.
 
-For non vCPU consumption, we should do the same as bare-metal,
-i.e. add power sensors where necessary. As minimum we can add
-a system power meter sensor, which could account for total
-energy draw (and that can include not only QEMU aux threads,
-but also for other related processes (aka process handling dpdk NIC,
-or other vhost user backend)).
-Individual per device sensors also a possibility in the future
-(i.e per NIC) is we can find a suitable sensor on host to derive
-guest value.
+I am looking to pass the EFI_MEMORY_SP (Special Purpose Memory) type memory=
+ from host to a virtual machine within QEMU. This memory needs to be EFI_ME=
+MORY_SP type in the virtual machine as well. This particular memory type is=
+ essential for the functionality of my project, and I have been facing some=
+ difficulties in setting it up correctly.
 
-[...]
+I have reviewed the available documentation and resources, but I have not y=
+et found a clear method to achieve this. I would greatly appreciate it if a=
+nyone could provide insights, share their experiences, or direct me to rele=
+vant documentation or examples that pertain to configuring EFI_MEMORY_SP me=
+mory type for a VM in QEMU.
 
-> Adding RAPL inside VM makes total sens because you can use tools that=20
-> are already out in the market.
-no disagreement here.
+Here are the details of my current setup:
 
-Given the topic is relatively new, the tooling mostly concentrates on
-RAPL as most available sensor. But some tools can pull energy values
-from other sources, we surely can teach them to pull values from
-a sensor(s) we'd want to add to QEMU (i.e. for an easy start borrow
-sensor handling from lm_sensors). I'd pick acpi power meter as
-a possible candidate for it is being guest OS agnostic and
-we can attach it to anything in machine tree.
+QEMU version: 9.1.0
+Host OS: Ubuntu 22.04.4
+Guest OS: Ubuntu 22.04.4
 
-> > There's a tradeoff here in that info directly associated with
-> > backends threads, is effectively exposing private QEMU impl
-> > details as public ABI. IOW, we don't want too fine granularity
-> > here, we need it abstracted sufficiently, that different
-> > backend choices for a given don't change what sensors are
-> > exposed.
-> >
-> > I also wonder how existing power monitoring applications
-> > would consume such custom sensors - is there sufficient
-> > standardization in this are that we're not inventing
-> > something totally QEMU specific ?
-> > =20
-> >> > IOW, I think it is right to include non-vCPU threads usage in
-> >> > the reported info, as it is still fundamentally part of the
-> >> > load that the guest imposes on host pCPUs it is permitted to
-> >> > run on. =20
-> >>=20
-> >>=20
-> >> From what I've read, process energy usage done via RAPL is not
-> >> exactly accurate. But there are monitoring tools out there that
-> >> use RAPL and other sources to make energy consumption monitoring
-> >> more reliable.
-> >>=20
-> >> Reinventing that wheel and pulling all of the nuances of process
-> >> power monitoring inside of QEMU process, needlessly complicates it.
-> >> Maybe we should reuse one of existing tools and channel its data
-> >> through appropriate QEMU channels (RAPL/emulated PMU counters/...). =20
-> >
-> > Note, this feature is already released in QEMU 9.1.0.
-> > =20
-> >> Implementing RAPL in pure form though looks fine to me,
-> >> so the same tools could use it the same way as on the host
-> >> if needed without VM specific quirks. =20
-> >
-> > IMHO the so called "pure" form is misleading to applications, unless
-> > we first provided  some other pratical way to expose the data that
-> > we would be throwing away from RAPL.
-> > =20
->=20
-> The other possibility that I've think of is using a 3rd party tool to=20
-> give maybe more "accurate value" to QEMU.=20
-> For example, Kepler could be used to give value for each thread=20
-> of QEMU and so instead of calculating and using the qemu-vmsr-helper,=20
-> each values is transfered on request by QEMU via the UNIX thread that is=
-=20
-> used today between the daemon and QEMU. It's just an idea that I have=20
-> and I don't know if that is acceptable for each project (QEMU and=20
-> Kepler) that would really solve few issues.
+Any assistance or suggestions from the community would be invaluable and he=
+lp me progress with my project.
 
-=46rom QEMU point of view, it would be fine to get values from external
-process and just proxy them to guest (preferably without any massaging).
+Thank you for your time and support. I look forward to any responses and am=
+ happy to provide further details if needed.
 
-Also on QEMU side, I'd suggest to split current monolith functionality
-in 2 parts: frontend (KVM MSR interface for starters) and backend object
-(created with -object CLI option) that will handle communication
-with an external daemon. That way QEMU would be able easily change/add
-different frontend and backend options (ex: add frontend for RAPL
-with TCG accel, add backend for Kelper or other project(s)
-down the road). (it would be good to make this split even for
-qemu-vmsr-helper). (if you are interested, I can guide you wrt
-QEMU side of the question).
+Best regards,
+Zhigang Luo
 
-PS:
-As for other projects we probably should ask if they are open to an idea.
-They definitely would need some patches for per thread accounting,
-and maybe for some API to talk with external users (but the later
-might exist and it might be better for QEMU to adopt it (here QEMU
-backend object might help as translator of existing protocol to
-QEMU specific internals).
-The point is QEMU won't have to reinvent wheel, and other projects
-will get more exposure/user-base.
+--_000_BL1PR12MB5317899723624202EDF03FC8F1562BL1PR12MB5317namp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-On top of the projects, you've already pointed out for possible
-integration with. I could add pmdadenki (CCed few authors) which
-some distros are shipping/using.
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@DengXian";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;
+	mso-ligatures:standardcontextual;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Arial",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:1087265321;
+	mso-list-template-ids:913592250;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l0:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#467886" vlink=3D"#96607D" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">Dear QEMU Community,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">I hope this message finds everyone well. My name is Z=
+higang, and I am currently engaged in a project that requires virtualizatio=
+n capabilities provided by QEMU. I am reaching
+ out to the community for guidance on a specific configuration that I need =
+to implement.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">I am looking to pass the EFI_MEMORY_SP (Special Purpo=
+se Memory) type memory from host to a virtual machine within QEMU. This mem=
+ory needs to be EFI_MEMORY_SP type in the virtual
+ machine as well. This particular memory type is essential for the function=
+ality of my project, and I have been facing some difficulties in setting it=
+ up correctly.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">I have reviewed the available documentation and resou=
+rces, but I have not yet found a clear method to achieve this. I would grea=
+tly appreciate it if anyone could provide insights,
+ share their experiences, or direct me to relevant documentation or example=
+s that pertain to configuring EFI_MEMORY_SP memory type for a VM in QEMU.<o=
+:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">Here are the details of my current setup:<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">QEMU version: 9.1.0<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">Host OS: Ubuntu 22.04.4<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">Guest OS: Ubuntu 22.04.4<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">Any assistance or suggestions from the community woul=
+d be invaluable and help me progress with my project.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">Thank you for your time and support. I look forward t=
+o any responses and am happy to provide further details if needed.<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">Best regards,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">Zhigang Luo<o:p></o:p></span></p>
+</div>
+</body>
+</html>
 
-> > With regards,
-> > Daniel
-> > --=20
-> > |: https://berrange.com      -o-    https://www.flickr.com/photos/dberr=
-ange :|
-> > |: https://libvirt.org         -o-            https://fstop138.berrange=
-.com :|
-> > |: https://entangle-photo.org    -o-    https://www.instagram.com/dberr=
-ange :| =20
->=20
-
+--_000_BL1PR12MB5317899723624202EDF03FC8F1562BL1PR12MB5317namp_--
 
