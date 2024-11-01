@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2331DE6B278
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:40:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB8BE6B278
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:40:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6rsC-0002xg-70; Fri, 01 Nov 2024 09:39:32 -0400
+	id 1t6rsa-00032F-5Q; Fri, 01 Nov 2024 09:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t6rsA-0002x7-Kf
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:39:30 -0400
+ id 1t6rsY-00031w-L2
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:39:54 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t6rs7-0000sk-SR
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:39:30 -0400
+ id 1t6rsW-0000wB-LT
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:39:54 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xg22l4pr4z6K6Tt;
- Fri,  1 Nov 2024 21:36:47 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xg23L2VXPz6K6Qk;
+ Fri,  1 Nov 2024 21:37:18 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 38AFB140A36;
- Fri,  1 Nov 2024 21:39:19 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id DE5A6140A36;
+ Fri,  1 Nov 2024 21:39:49 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 1 Nov 2024 14:39:18 +0100
+ 15.1.2507.39; Fri, 1 Nov 2024 14:39:49 +0100
 To: <linux-cxl@vger.kernel.org>, <mst@redhat.com>, <qemu-devel@nongnu.org>,
  Esifiel <esifiel@gmail.com>
 CC: Fan Ni <fan.ni@samsung.com>, <linuxarm@huawei.com>
-Subject: [PATCH qemu 00/10] hw/cxl: Mailbox input parser hardening against
- invalid input.
-Date: Fri, 1 Nov 2024 13:39:07 +0000
-Message-ID: <20241101133917.27634-1-Jonathan.Cameron@huawei.com>
+Subject: [PATCH qemu 01/10] hw/cxl: Check size of input data to dynamic
+ capacity mailbox commands
+Date: Fri, 1 Nov 2024 13:39:08 +0000
+Message-ID: <20241101133917.27634-2-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241101133917.27634-1-Jonathan.Cameron@huawei.com>
+References: <20241101133917.27634-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -70,46 +72,67 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CXL device mailbox has some variable sized input commands. The payload
-length for each must be established using command especific structures.
+cxl_cmd_dcd_release_dyn_cap() and cmd_dcd_add_dyn_cap_rsp() are missing
+input message size checks.  These must be done in the individual
+commands when the command has a variable length input payload.
 
-If user space is either buggy or malicious, it may use size fields to
-indicate fields beyond the end of the payload sent.  Some checks on this
-were missing and Esifiel picked up on this.  I've tagged all these fixes
-with Esifiel's Reported-by as either they were in the report or are similar
-issues in other commands.
+A buggy or malicious guest might send undersized messages via the mailbox.
+As that size is used to take a copy of the mailbox content, each command
+must check there is sufficient data. In this case the first check is that
+there is enough data to read how many extents there are, and the second
+that there is enough for those elements to be accessed.
 
-These can mostly be easily tested by using the raw mailbox commands option
-in Linux and injecting broken commands from user space.
+Reported-by: Esifiel <esifiel@gmail.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+---
+ hw/cxl/cxl-mailbox-utils.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-A typical command needs to first check that there is enough data to get to
-the command specific sizing fields, then check the reported size is less
-than or equal to the available payload.
-
-Note that I think it very unlikely anyone is currently using CXL emulation
-with a VM that they do not trust, but that may happen in future so good to
-fix these paths now.
-
-Jonathan Cameron (10):
-  hw/cxl: Check size of input data to dynamic capacity mailbox commands
-  hw/cxl: Check input includes at least the header in
-    cmd_features_set_feature()
-  hw/cxl: Check input length is large enough in
-    cmd_events_clear_records()
-  hw/cxl: Check enough data in cmd_firmware_update_transfer()
-  hw/cxl: Check the length of data requested fits in get_log()
-  hw/cxl: Avoid accesses beyond the end of cel_log.
-  hw/cxl: Ensuring enough data to read parameters in
-    cmd_tunnel_management_cmd()
-  hw/cxl: Check that writes do not go beyond end of target attributes
-  hw/cxl: Ensure there is enough data for the header in
-    cmd_ccls_set_lsa()
-  hw/cxl: Ensure there is enough data to read the input header in
-    cmd_get_physical_port_state()
-
- hw/cxl/cxl-mailbox-utils.c | 73 ++++++++++++++++++++++++++++++++------
- 1 file changed, 62 insertions(+), 11 deletions(-)
-
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 97cb8bbcec..17924410dd 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -2465,11 +2465,20 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+     uint64_t dpa, len;
+     CXLRetCode ret;
+ 
++    if (len_in < sizeof(*in)) {
++        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++    }
++
+     if (in->num_entries_updated == 0) {
+         cxl_extent_group_list_delete_front(&ct3d->dc.extents_pending);
+         return CXL_MBOX_SUCCESS;
+     }
+ 
++    if (len_in <
++        sizeof(*in) + sizeof(*in->updated_entries) * in->num_entries_updated) {
++        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++    }
++
+     /* Adding extents causes exceeding device's extent tracking ability. */
+     if (in->num_entries_updated + ct3d->dc.total_extent_count >
+         CXL_NUM_EXTENTS_SUPPORTED) {
+@@ -2624,10 +2633,19 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
+     uint32_t updated_list_size;
+     CXLRetCode ret;
+ 
++    if (len_in < sizeof(*in)) {
++        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++    }
++
+     if (in->num_entries_updated == 0) {
+         return CXL_MBOX_INVALID_INPUT;
+     }
+ 
++    if (len_in <
++        sizeof(*in) + sizeof(*in->updated_entries) * in->num_entries_updated) {
++        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++    }
++
+     ret = cxl_detect_malformed_extent_list(ct3d, in);
+     if (ret != CXL_MBOX_SUCCESS) {
+         return ret;
 -- 
 2.43.0
 
