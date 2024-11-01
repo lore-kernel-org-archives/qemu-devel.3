@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B15BE6B278
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F00CE6B27C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:49:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6s10-0004EG-3j; Fri, 01 Nov 2024 09:48:38 -0400
+	id 1t6s13-0004MC-D7; Fri, 01 Nov 2024 09:48:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t6s0x-000492-Kp
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:35 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1t6s10-0004GU-V3
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:39 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t6s0v-0002Gz-TN
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:35 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A1DfegV010310;
- Fri, 1 Nov 2024 13:48:31 GMT
+ id 1t6s0z-0002I2-4H
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:48:38 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A1Dffpk023740;
+ Fri, 1 Nov 2024 13:48:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=jPMk7MCI/w6pg3ewTl45pooOG+03vx9ydl0E4fEeRBA=; b=
- UJ5dUk0LcE0yY1X/4fCUx9Cc4wYrVY5Ruaa3BZlL6k38RZ3h8VyOddcSaau5QYTu
- Bmfy2ppll8pVE/EZvWUQGn5ZAWKFbmNtS0lB4Zs2IWgYy/kuOmSf+eASsnaXB/0M
- zh9hZofNuBwxcpp/KRe8DHsqowTADXE7/bcU0++C4YIsfQx/I3WVG/W1uxxAPrzJ
- 877kW7+vuvl6o10RraGLoZJcJeNuy7NUS6gzhvQq+rUj9uHslV+k3MERFfpxvHlH
- s6K/nzZ0xK/W7sexMrHzZJ1YsVkiMlfNTprHSPtGwaG3cYmO3WDVRfz+nRKvA10r
- oazbXvcb/DkJyY2PX0Mdjg==
+ corp-2023-11-20; bh=e74YKrpv2MegEIZU64hNJKOHGS3V5LCX3aEL+so5b6c=; b=
+ myIl4H+H8OVARXIFoy4cS6RGNh5k6gUkPwZXf2m0DqtGdivDgi/c/ID8JOhJtwgf
+ ociAb+HKZD4ia1hAbQJYGkWRpJwbJsrPwNtbfChUiYwjak12N6Udp2kG5BcW6O+1
+ KJUYw7Un0FgnP8YeKQGglYfjIwF89CuvIZHd4FCk4ATqifLy1BFHC/JsG8nxr4W3
+ r16haOruWr4/Z6mapZppLMP2EFjkCwwvfnPdRPQOoUGlHeMN7YwSo1gSeyjK+W1p
+ bsdqiLeAj+PtGKR+XyVBCZCyn/DHUg2c/+/ZHfcjBht8CHUdLiiXrl9XJJKzpwYH
+ hkerqHKp9LsZcGaxdwHYVw==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42grc247gv-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42grc94a3b-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Fri, 01 Nov 2024 13:48:31 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4A1AnKHP010118; Fri, 1 Nov 2024 13:48:30 GMT
+ with ESMTP id 4A1CVS7d010127; Fri, 1 Nov 2024 13:48:31 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 42hn91ptjv-1
+ 42hn91ptk1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 01 Nov 2024 13:48:30 +0000
+ Fri, 01 Nov 2024 13:48:31 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A1DhuOA006031;
- Fri, 1 Nov 2024 13:48:29 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A1DhuOC006031;
+ Fri, 1 Nov 2024 13:48:30 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 42hn91pt43-6; Fri, 01 Nov 2024 13:48:29 +0000
+ ESMTP id 42hn91pt43-7; Fri, 01 Nov 2024 13:48:30 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V3 05/16] migration: SCM_RIGHTS for QEMUFile
-Date: Fri,  1 Nov 2024 06:47:44 -0700
-Message-Id: <1730468875-249970-6-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V3 06/16] migration: VMSTATE_FD
+Date: Fri,  1 Nov 2024 06:47:45 -0700
+Message-Id: <1730468875-249970-7-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
 References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
@@ -78,10 +78,10 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  phishscore=0 suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2409260000
  definitions=main-2411010100
-X-Proofpoint-GUID: 3hL5kCsFG5tfyk3bo-lcgskGwUjyhsRe
-X-Proofpoint-ORIG-GUID: 3hL5kCsFG5tfyk3bo-lcgskGwUjyhsRe
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Proofpoint-GUID: Wi57TUCZZ-x8LJU9fhNyChjuJ7UlGvC7
+X-Proofpoint-ORIG-GUID: Wi57TUCZZ-x8LJU9fhNyChjuJ7UlGvC7
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -105,189 +105,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define functions to put/get file descriptors to/from a QEMUFile, for qio
-channels that support SCM_RIGHTS.  Maintain ordering such that
-  put(A), put(fd), put(B)
-followed by
-  get(A), get(fd), get(B)
-always succeeds.  Other get orderings may succeed but are not guaranteed.
+Define VMSTATE_FD for declaring a file descriptor field in a
+VMStateDescription.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- migration/qemu-file.c  | 83 +++++++++++++++++++++++++++++++++++++++++++++++---
- migration/qemu-file.h  |  2 ++
- migration/trace-events |  2 ++
- 3 files changed, 83 insertions(+), 4 deletions(-)
+ include/migration/vmstate.h |  9 +++++++++
+ migration/vmstate-types.c   | 23 +++++++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index b6d2f58..7f951ab 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -37,6 +37,11 @@
- #define IO_BUF_SIZE 32768
- #define MAX_IOV_SIZE MIN_CONST(IOV_MAX, 64)
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index f313f2f..a1dfab4 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -230,6 +230,7 @@ extern const VMStateInfo vmstate_info_uint8;
+ extern const VMStateInfo vmstate_info_uint16;
+ extern const VMStateInfo vmstate_info_uint32;
+ extern const VMStateInfo vmstate_info_uint64;
++extern const VMStateInfo vmstate_info_fd;
  
-+typedef struct FdEntry {
-+    QTAILQ_ENTRY(FdEntry) entry;
-+    int fd;
-+} FdEntry;
-+
- struct QEMUFile {
-     QIOChannel *ioc;
-     bool is_writable;
-@@ -51,6 +56,9 @@ struct QEMUFile {
+ /** Put this in the stream when migrating a null pointer.*/
+ #define VMS_NULLPTR_MARKER (0x30U) /* '0' */
+@@ -902,6 +903,9 @@ extern const VMStateInfo vmstate_info_qlist;
+ #define VMSTATE_UINT64_V(_f, _s, _v)                                  \
+     VMSTATE_SINGLE(_f, _s, _v, vmstate_info_uint64, uint64_t)
  
-     int last_error;
-     Error *last_error_obj;
++#define VMSTATE_FD_V(_f, _s, _v)                                  \
++    VMSTATE_SINGLE(_f, _s, _v, vmstate_info_fd, int32_t)
 +
-+    bool fd_pass;
-+    QTAILQ_HEAD(, FdEntry) fds;
+ #ifdef CONFIG_LINUX
+ 
+ #define VMSTATE_U8_V(_f, _s, _v)                                   \
+@@ -936,6 +940,9 @@ extern const VMStateInfo vmstate_info_qlist;
+ #define VMSTATE_UINT64(_f, _s)                                        \
+     VMSTATE_UINT64_V(_f, _s, 0)
+ 
++#define VMSTATE_FD(_f, _s)                                            \
++    VMSTATE_FD_V(_f, _s, 0)
++
+ #ifdef CONFIG_LINUX
+ 
+ #define VMSTATE_U8(_f, _s)                                         \
+@@ -1009,6 +1016,8 @@ extern const VMStateInfo vmstate_info_qlist;
+ #define VMSTATE_UINT64_TEST(_f, _s, _t)                                  \
+     VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_uint64, uint64_t)
+ 
++#define VMSTATE_FD_TEST(_f, _s, _t)                                            \
++    VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_fd, int32_t)
+ 
+ #define VMSTATE_TIMER_PTR_TEST(_f, _s, _test)                             \
+     VMSTATE_POINTER_TEST(_f, _s, _test, vmstate_info_timer, QEMUTimer *)
+diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+index e83bfcc..f31deb3 100644
+--- a/migration/vmstate-types.c
++++ b/migration/vmstate-types.c
+@@ -314,6 +314,29 @@ const VMStateInfo vmstate_info_uint64 = {
+     .put  = put_uint64,
  };
  
- /*
-@@ -109,6 +117,8 @@ static QEMUFile *qemu_file_new_impl(QIOChannel *ioc, bool is_writable)
-     object_ref(ioc);
-     f->ioc = ioc;
-     f->is_writable = is_writable;
-+    f->fd_pass = qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS);
-+    QTAILQ_INIT(&f->fds);
- 
-     return f;
- }
-@@ -310,6 +320,10 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-     int len;
-     int pending;
-     Error *local_error = NULL;
-+    g_autofree int *fds = NULL;
-+    size_t nfd = 0;
-+    int **pfds = f->fd_pass ? &fds : NULL;
-+    size_t *pnfd = f->fd_pass ? &nfd : NULL;
- 
-     assert(!qemu_file_is_writable(f));
- 
-@@ -325,10 +339,9 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-     }
- 
-     do {
--        len = qio_channel_read(f->ioc,
--                               (char *)f->buf + pending,
--                               IO_BUF_SIZE - pending,
--                               &local_error);
-+        struct iovec iov = { f->buf + pending, IO_BUF_SIZE - pending };
-+        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
-+                                     &local_error);
-         if (len == QIO_CHANNEL_ERR_BLOCK) {
-             if (qemu_in_coroutine()) {
-                 qio_channel_yield(f->ioc, G_IO_IN);
-@@ -348,9 +361,65 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-         qemu_file_set_error_obj(f, len, local_error);
-     }
- 
-+    for (int i = 0; i < nfd; i++) {
-+        FdEntry *fde = g_new0(FdEntry, 1);
-+        fde->fd = fds[i];
-+        QTAILQ_INSERT_TAIL(&f->fds, fde, entry);
-+    }
++/* File descriptor communicated via SCM_RIGHTS */
 +
-     return len;
- }
- 
-+int qemu_file_put_fd(QEMUFile *f, int fd)
++static int get_fd(QEMUFile *f, void *pv, size_t size,
++                  const VMStateField *field)
 +{
-+    int ret = 0;
-+    QIOChannel *ioc = qemu_file_get_ioc(f);
-+    Error *err = NULL;
-+    struct iovec iov = { (void *)" ", 1 };
-+
-+    /*
-+     * Send a dummy byte so qemu_fill_buffer on the receiving side does not
-+     * fail with a len=0 error.  Flush first to maintain ordering wrt other
-+     * data.
-+     */
-+
-+    qemu_fflush(f);
-+    if (qio_channel_writev_full(ioc, &iov, 1, &fd, 1, 0, &err) < 1) {
-+        error_report_err(error_copy(err));
-+        qemu_file_set_error_obj(f, -EIO, err);
-+        ret = -1;
-+    }
-+    trace_qemu_file_put_fd(f->ioc->name, fd, ret);
-+    return ret;
++    int32_t *v = pv;
++    *v = qemu_file_get_fd(f);
++    return 0;
 +}
 +
-+int qemu_file_get_fd(QEMUFile *f)
++static int put_fd(QEMUFile *f, void *pv, size_t size,
++                  const VMStateField *field, JSONWriter *vmdesc)
 +{
-+    int fd = -1;
-+    FdEntry *fde;
-+
-+    if (!f->fd_pass) {
-+        Error *err = NULL;
-+        error_setg(&err, "%s does not support fd passing", f->ioc->name);
-+        error_report_err(error_copy(err));
-+        qemu_file_set_error_obj(f, -EIO, err);
-+        goto out;
-+    }
-+
-+    /* Force the dummy byte and its fd passenger to appear. */
-+    qemu_peek_byte(f, 0);
-+
-+    fde = QTAILQ_FIRST(&f->fds);
-+    if (fde) {
-+        qemu_get_byte(f);       /* Drop the dummy byte */
-+        fd = fde->fd;
-+        QTAILQ_REMOVE(&f->fds, fde, entry);
-+    }
-+out:
-+    trace_qemu_file_get_fd(f->ioc->name, fd);
-+    return fd;
++    int32_t *v = pv;
++    return qemu_file_put_fd(f, *v);
 +}
 +
- /** Closes the file
-  *
-  * Returns negative error value if any error happened on previous operations or
-@@ -361,11 +430,17 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-  */
- int qemu_fclose(QEMUFile *f)
- {
-+    FdEntry *fde, *next;
-     int ret = qemu_fflush(f);
-     int ret2 = qio_channel_close(f->ioc, NULL);
-     if (ret >= 0) {
-         ret = ret2;
-     }
-+    QTAILQ_FOREACH_SAFE(fde, &f->fds, entry, next) {
-+        warn_report("qemu_fclose: received fd %d was never claimed", fde->fd);
-+        close(fde->fd);
-+        g_free(fde);
-+    }
-     g_clear_pointer(&f->ioc, object_unref);
-     error_free(f->last_error_obj);
-     g_free(f);
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index 11c2120..3e47a20 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -79,5 +79,7 @@ size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-                           off_t pos);
++const VMStateInfo vmstate_info_fd = {
++    .name = "fd",
++    .get  = get_fd,
++    .put  = put_fd,
++};
++
+ static int get_nullptr(QEMUFile *f, void *pv, size_t size,
+                        const VMStateField *field)
  
- QIOChannel *qemu_file_get_ioc(QEMUFile *file);
-+int qemu_file_put_fd(QEMUFile *f, int fd);
-+int qemu_file_get_fd(QEMUFile *f);
- 
- #endif
-diff --git a/migration/trace-events b/migration/trace-events
-index 5356fb5..345506b 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -88,6 +88,8 @@ put_qlist_end(const char *field_name, const char *vmsd_name) "%s(%s)"
- 
- # qemu-file.c
- qemu_file_fclose(void) ""
-+qemu_file_put_fd(const char *name, int fd, int ret) "ioc %s, fd %d -> status %d"
-+qemu_file_get_fd(const char *name, int fd) "ioc %s -> fd %d"
- 
- # ram.c
- get_queued_page(const char *block_name, uint64_t tmp_offset, unsigned long page_abs) "%s/0x%" PRIx64 " page_abs=0x%lx"
 -- 
 1.8.3.1
 
