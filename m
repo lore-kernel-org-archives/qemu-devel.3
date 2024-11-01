@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90CECE6F07D
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 18:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84EC6E6F083
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 18:58:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6woI-0007X5-Vp; Fri, 01 Nov 2024 14:55:51 -0400
+	id 1t6wqU-0008Ia-7P; Fri, 01 Nov 2024 14:58:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t6woH-0007WM-4a
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 14:55:49 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t6woF-0000Zb-Do
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 14:55:48 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4315839a7c9so19287485e9.3
- for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 11:55:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730487345; x=1731092145; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=yDS9zlSiQ+PwoWX9xwv9cdCJ/JL5YOEq5jidXUjNycY=;
- b=kg1dqlL7w6b2GbwZUZOGuzBHKHiRlEdtMlCrouqdtJNifvWYG3DoLPL496FG1i6iAR
- QRfA+ANZsPwrRI+8+L5v6WcX+J/RN0ezb3xxn3/h0oWRem7Ih47OSeClM08YRUyl4gjH
- jzZK1kmC1K/3Y3Sj5x0w/a7vN9r7Vzb+Sjc8cW9F89XRS1VGNPNXhu6dNPYW93H5zjyU
- sm6nAOmdpD4WufCz1orao+7lVcgDPWdIMNVHvuDBnrEaNs0yyb1PntkcJIQCCXu7oVyW
- CdCzA/R77nKoU1pZUJxdQ4uodFi25Gm6S+i7PtfA+2FTgABHd5ZsNGodf5C3sfEE9o1/
- zKHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730487345; x=1731092145;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yDS9zlSiQ+PwoWX9xwv9cdCJ/JL5YOEq5jidXUjNycY=;
- b=OVPB6KE3OQiAUXKkGImyozvOcqd2p/wamz5aVE5uFBZySfwfcWALmawxifUVlxJdeJ
- m+p5WH+yIRO0OGp7TwKcgeaxQof6Uj7KYEE7Vt8pE1MgL9RiBZeI5QrloBTjr21j4TvY
- I4lGzcv93pfrINWeBzaemc1C5HukZiehKFyJWRVSOYWotHsWE/PExtruCIbhAmnkUwtR
- +IFnKee/6ISFYt3S5KAUjJDYAv/QcienKr1uUmuwibJO99ElSXUN2RZTSetHx7n7RhOl
- oMjGWpiCBj30wPP0zYyvCgYHi+NXHcgaOK/S7yid0Zxd9iOjA9QVrW1Whxj4ARXyOSrv
- YTGQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVNDphB4jX3M6dEWkEbncXhsUqiolDWI++il30Dey2WNPxhmLIUBaCb1VN7P6sZt4szehU/lWneeiFE@nongnu.org
-X-Gm-Message-State: AOJu0Yy+fYji1MbHCzK9ensRlRyvPVSJYTrd/2mFVasFO5vwoFoZeZQ6
- vNgNyUiUjdUeq6Qk37m+395YS7oxRzQhtrhPCOWW7t4zxf8ByPbQMgER3hI73os=
-X-Google-Smtp-Source: AGHT+IEs1b+KGcp+q275Ooj5z7DC3Mkk9HnXFMAe3Mk3OL1/Cx16V5cL8RGqQj6tqOX7oDfmleNPHg==
-X-Received: by 2002:a05:6000:d85:b0:371:8319:4dbd with SMTP id
- ffacd0b85a97d-38061127842mr16292134f8f.17.1730487345321; 
- Fri, 01 Nov 2024 11:55:45 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c113e771sm5951292f8f.81.2024.11.01.11.55.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Nov 2024 11:55:45 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] target/arm: Fix SVE SDOT/UDOT/USDOT (4-way, indexed)
-Date: Fri,  1 Nov 2024 18:55:44 +0000
-Message-Id: <20241101185544.2130972-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <dantan@linux.vnet.ibm.com>)
+ id 1t6wqP-0008IM-1Y; Fri, 01 Nov 2024 14:58:01 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dantan@linux.vnet.ibm.com>)
+ id 1t6wqN-0000gK-7Z; Fri, 01 Nov 2024 14:58:00 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A1FhCWO010353;
+ Fri, 1 Nov 2024 18:57:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=Ac6r120BdJTjqJVXWaaHnlCXJlgF/hXviBFU3h7LN
+ t8=; b=PBECCO31LMlGI2AelgsjZ5nzu5dsPT4VL76SzB+HYEibTWOir5nAj/pOQ
+ OzD1phgVNQkA8UJR46zjuFrDJZF3SnLSraFZ1KIkZ71mZ9Mr3qPrhpOQUEk2qoso
+ q4DrIjVNxGpwRNPKACFBngNW3m5HU1no/AZWzxQuRCyGkGCHb4cm8BhOeEDj2mEg
+ EakOiHDhJ99CF9QVK3Jg5U9lS21UxblCC5fCvn9PSOn+Cml/y05/vIa9ZTY3fc5U
+ FhIuwMxKbA5DIGPM3sQDMWeinJkLshQxe3up+5iI9MKY5rN0ZRw7Uf5Zgyh7/axO
+ Ghl2EU1ETjSFpBifvB2/qjiOE2HHw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42mw44syyv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 01 Nov 2024 18:57:48 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A1Hxl5g015817;
+ Fri, 1 Nov 2024 18:57:47 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 42hdf1tq2u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 01 Nov 2024 18:57:47 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A1IvlSa24838876
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 1 Nov 2024 18:57:47 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2679E58043;
+ Fri,  1 Nov 2024 18:57:47 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B282A58053;
+ Fri,  1 Nov 2024 18:57:46 +0000 (GMT)
+Received: from gfwa829.aus.stglabs.ibm.com (unknown [9.3.84.19])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  1 Nov 2024 18:57:46 +0000 (GMT)
+From: dan tan <dantan@linux.vnet.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, stefanb@linux.vnet.ibm.com, pbonzini@redhat.com,
+ farosas@suse.de, lvivier@redhat.com, clg@kaod.org
+Subject: [PATCH v3 0/5] TPM TIS SPI Support
+Date: Fri,  1 Nov 2024 13:57:13 -0500
+Message-Id: <20241101185718.5847-1-dantan@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Xw8ozcN5xm4ZXZNFGnJlaqISpWmPi87-
+X-Proofpoint-ORIG-GUID: Xw8ozcN5xm4ZXZNFGnJlaqISpWmPi87-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ bulkscore=0 spamscore=0 suspectscore=0 phishscore=0 adultscore=0
+ mlxscore=0 mlxlogscore=809 lowpriorityscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411010134
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=dantan@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,67 +104,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Our implementation of the indexed version of SVE SDOT/UDOT/USDOT got
-the calculation of the inner loop terminator wrong.  Although we
-correctly account for the element size when we calculate the
-terminator for the first iteration:
-   intptr_t segend = MIN(16 / sizeof(TYPED), opr_sz_n);
-we don't do that when we move it forward after the first inner loop
-completes.  The intention is that we process the vector in 128-bit
-segments, which for a 64-bit element size should mean (1, 2), (3, 4),
-(5, 6), etc.  This bug meant that we would iterate (1, 2), (3, 4, 5,
-6), (7, 8, 9, 10) etc and apply the wrong indexed element to some of
-the operations, and also index off the end of the vector.
+*** BLURB HERE ***
 
-You don't see this bug if the vector length is small enough that we
-don't need to iterate the outer loop, i.e.  if it is only 128 bits,
-or if it is the 64-bit special case from AA32/AA64 AdvSIMD.  If the
-vector length is 256 bits then we calculate the right results for the
-elements in the vector but do index off the end of the vector. Vector
-lengths greater than 256 bits see wrong answers. The instructions
-that produce 32-bit results behave correctly.
+Support TPM for SPI (Serial Peripheral Interface)
 
-Fix the recalculation of 'segend' for subsequent iterations, and
-restore a version of the comment that was lost in the refactor of
-commit 7020ffd656a5 that explains why we only need to clamp segend to
-opr_sz_n for the first iteration, not the later ones.
+Revision 3 summary:
+  device support:
+    - moved variable tis_addr from TPMStateSPI struct to local
+    - added the VM suspend/resume support:
+      - added vmstate_tpm_tis_spi declaration
+      - added tpm_tis_spi_pre_save() function
+    - fixed trace formatting string
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2595
-Fixes: 7020ffd656a5 ("target/arm: Macroize helper_gvec_{s,u}dot_idx_{b,h}")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/vec_helper.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+  qtest:
+    - removed the function prototypes declaration
+    - fixed code format to comply with convention
+    - changed function names and variable names to be the same
+      as the tpm-tis-i2c test.
+    - change hard coded numbers to #define's with meaningful
+      names that are identifiable with spec documentation
 
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index 22ddb968817..e825d501a22 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -836,6 +836,13 @@ void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
- {                                                                         \
-     intptr_t i = 0, opr_sz = simd_oprsz(desc);                            \
-     intptr_t opr_sz_n = opr_sz / sizeof(TYPED);                           \
-+    /*                                                                    \
-+     * Special case: opr_sz == 8 from AA64/AA32 advsimd means the         \
-+     * first iteration might not be a full 16 byte segment. But           \
-+     * for vector lengths beyond that this must be SVE and we know        \
-+     * opr_sz is a multiple of 16, so we need not clamp segend            \
-+     * to opr_sz_n when we advance it at the end of the loop.             \
-+     */                                                                   \
-     intptr_t segend = MIN(16 / sizeof(TYPED), opr_sz_n);                  \
-     intptr_t index = simd_data(desc);                                     \
-     TYPED *d = vd, *a = va;                                               \
-@@ -853,7 +860,7 @@ void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
-                     n[i * 4 + 2] * m2 +                                   \
-                     n[i * 4 + 3] * m3);                                   \
-         } while (++i < segend);                                           \
--        segend = i + 4;                                                   \
-+        segend = i + (16 / sizeof(TYPED));                                \
-     } while (i < opr_sz_n);                                               \
-     clear_tail(d, opr_sz, simd_maxsz(desc));                              \
- }
+Version 2 summary,
+    addressed the following review comments:
+    - break up patch into 3 separate commits;
+    - add more details in the commit logs;
+      - I added links to the TCG TPM standard documents as this device
+        model communicates to the TPM device (hw / swtpm) via
+        tpm_tis_commom.c which is standard compliant;
+      - the TPM SPI model implementation in itself is not platform
+        specific. However, the SPI interface is via the PowerNV SPI
+        bus master, thus it is only supported on the PowerNV platform
+    - change all qemu_log() calls to trace events;
+    - move static global variables to the TPMStateSPI struct;
+    - fixed code formatting (verified by scripts/checkpatch.pl);
+    - per requests, make the code more readable by using self-
+      explanatory #defines and adding comments;
+    - added some documentation support (tpm.rst);
+    - beefed up the unit test exercising major supported locality
+      functionality
+
+dan tan (5):
+  tpm/tpm_tis_spi: Support TPM for SPI (Serial Peripheral Interface)
+  tpm/tpm_tis_spi: activation for the PowerNV machines
+  tests/qtest/tpm: add unit test to tis-spi
+  tpm/tpm_tis_spi: Support TPM for SPI (rev 3)
+  tests/qtest/tpm: add unit test to tis-spi (rev 3)
+
+ docs/specs/tpm.rst                 |  15 +
+ include/sysemu/tpm.h               |   3 +
+ hw/tpm/tpm_tis_spi.c               | 360 +++++++++++++++
+ tests/qtest/tpm-tis-spi-pnv-test.c | 710 +++++++++++++++++++++++++++++
+ hw/ppc/Kconfig                     |   1 +
+ hw/tpm/Kconfig                     |   6 +
+ hw/tpm/meson.build                 |   1 +
+ hw/tpm/trace-events                |   7 +
+ tests/qtest/meson.build            |   2 +
+ 9 files changed, 1105 insertions(+)
+ create mode 100644 hw/tpm/tpm_tis_spi.c
+ create mode 100644 tests/qtest/tpm-tis-spi-pnv-test.c
+
 -- 
-2.34.1
+2.39.5
 
 
