@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81721E674B6
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 08:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33635E674B6
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 08:18:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6mpW-0004tq-Vr; Fri, 01 Nov 2024 04:16:27 -0400
+	id 1t6mpW-0004ss-Dt; Fri, 01 Nov 2024 04:16:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6mpQ-0004pj-Bb; Fri, 01 Nov 2024 04:16:20 -0400
+ id 1t6mpF-0004nc-5c; Fri, 01 Nov 2024 04:16:09 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6mpO-0001QQ-98; Fri, 01 Nov 2024 04:16:20 -0400
+ id 1t6mpC-0001O6-TV; Fri, 01 Nov 2024 04:16:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730448978; x=1761984978;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=HALGSkZif5e7pCsTOg8c8DiQzDTj2gfyF7Y1jclmLHE=;
- b=Qka/Eg4bGTJqXoi5BK7kENfdjqke2DBOEuqB6faFE2ACZBHI0i9nnPi7
- bxKereKcAFsn6sAyPMf1uz5b4/MZiRVe3e58qfgwFk3ENDHWltoUgeI6m
- wgz5pVlHVue9aR9NCXf/gJGZ52P4oksdylhw1hl76e+4wmQINfYpLFn6y
- wn+n4RsUQd7R7TK6TKz82YeUaJ2756wDIKQW/VbMYUSF3GoEK3o5nhS2d
- gJaT0LAa+Xe/GcM0/+0pBAxtgz4v3aJER+bbS7PF5ogpwZo4ZB/Ih2kPw
- s1SlDkM3qzECYXcYpPiiJ7J6cuWq2lGpa0q4xZEov4LJqKhVs48n7yex1 g==;
-X-CSE-ConnectionGUID: nV2FSl7eRZuoJLCZ8LiC2A==
-X-CSE-MsgGUID: z4FRA7JASMCzGtiyGxW9Bw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11242"; a="17846036"
-X-IronPort-AV: E=Sophos;i="6.11,249,1725346800"; d="scan'208";a="17846036"
+ t=1730448967; x=1761984967;
+ h=from:to:subject:date:message-id:in-reply-to:references:
+ mime-version:content-transfer-encoding;
+ bh=1dPWfn08NUNqOZ5PO7IBAQYY2uK5uWynR2m08PGiW3k=;
+ b=bw4rN5AAvNfOIXYcRU/EkOXz68rRXH9AAa/hfeAehTlZgn7crrKxNS/B
+ x8D3w2wJqVXQ85LAQkmvv4mN1IS4jisH6+zl4RUZANsfGjScI3Sjn1f6t
+ rmElxnjibVJWRc1Q7OnF6H/SOj6XwKrLkxsJrUuA7D8mmg0esKHcoDa1n
+ DpTvg6X0fKC4qQC0h9/8LThmg8eEVduKzsOCdJEr8GxRc7OkSLUZmjGSM
+ hk+MRDaFpaUc4TehzqO8JKV4Rdidc06NWAkYEinEKwmpvqWFZDuQGox2b
+ haWKQQSaECV6gwhwS9kc3gibHeYDyURaaLOApRqR8omHezYmhRpOBysfu Q==;
+X-CSE-ConnectionGUID: xgOUzljpRlK/ZrGprPOCBQ==
+X-CSE-MsgGUID: h+ALsnE1S4SORHx29wPjiw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11242"; a="17846010"
+X-IronPort-AV: E=Sophos;i="6.11,249,1725346800"; d="scan'208";a="17846010"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Nov 2024 01:16:16 -0700
-X-CSE-ConnectionGUID: /4ZSFMRjRhGAF69COqK5uw==
-X-CSE-MsgGUID: wRqSXi8qQzyM5ti9qlWkOQ==
+ 01 Nov 2024 01:16:04 -0700
+X-CSE-ConnectionGUID: LUBhdBhGQwKOVlizCOoROQ==
+X-CSE-MsgGUID: R3gWI9O9St23dpn0CDALbw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,249,1725346800"; d="scan'208";a="86834602"
+X-IronPort-AV: E=Sophos;i="6.11,249,1725346800"; d="scan'208";a="86834558"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 01 Nov 2024 01:16:11 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 01 Nov 2024 01:15:59 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -62,11 +62,10 @@ To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Cc: Yongwei Ma <yongwei.ma@intel.com>
-Subject: [PATCH v5 3/9] qapi/qom: Define cache enumeration and properties for
- machine
-Date: Fri,  1 Nov 2024 16:33:25 +0800
-Message-Id: <20241101083331.340178-4-zhao1.liu@intel.com>
+Subject: [PATCH v5 1/9] i386/cpu: Don't enumerate the "invalid" CPU topology
+ level
+Date: Fri,  1 Nov 2024 16:33:23 +0800
+Message-Id: <20241101083331.340178-2-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241101083331.340178-1-zhao1.liu@intel.com>
 References: <20241101083331.340178-1-zhao1.liu@intel.com>
@@ -97,294 +96,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The x86 and ARM need to allow user to configure cache properties
-(current only topology):
- * For x86, the default cache topology model (of max/host CPU) does not
-   always match the Host's real physical cache topology. Performance can
-   increase when the configured virtual topology is closer to the
-   physical topology than a default topology would be.
- * For ARM, QEMU can't get the cache topology information from the CPU
-   registers, then user configuration is necessary. Additionally, the
-   cache information is also needed for MPAM emulation (for TCG) to
-   build the right PPTT.
+In the follow-up change, the CPU topology enumeration will be moved to
+QAPI. And considerring "invalid" should not be exposed to QAPI as an
+unsettable item, so, as a preparation for future changes, remove
+"invalid" level from the current CPU topology enumeration structure
+and define it by a macro instead.
 
-Define smp-cache related enumeration and properties in QAPI, so that
-user could configure cache properties for SMP system through -machine in
-the subsequent patch.
+Due to the removal of the enumeration of "invalid", bit 0 of
+CPUX86State.avail_cpu_topo bitmap will no longer correspond to "invalid"
+level, but will start at the SMT level. Therefore, to honor this change,
+update the encoding rule for CPUID[0x1F].
 
-Cache enumeration (CacheLevelAndType) is implemented as the combination
-of cache level (level 1/2/3) and cache type (data/instruction/unified).
-
-Currently, separated L1 cache (L1 data cache and L1 instruction cache)
-with unified higher-level cache (e.g., unified L2 and L3 caches), is the
-most common cache architectures.
-
-Therefore, enumerate the L1 D-cache, L1 I-cache, L2 cache and L3 cache
-with smp-cache object to add the basic cache topology support. Other
-kinds of caches (e.g., L1 unified or L2/L3 separated caches) can be
-added directly into CacheLevelAndType if necessary.
-
-Cache properties (SmpCacheProperties) currently only contains cache
-topology information, and other cache properties can be added in it
-if necessary.
-
-Note, define cache topology based on CPU topology level with two
-reasons:
-
- 1. In practice, a cache will always be bound to the CPU container
-    (either private in the CPU container or shared among multiple
-    containers), and CPU container is often expressed in terms of CPU
-    topology level.
- 2. The x86's cache-related CPUIDs encode cache topology based on APIC
-    ID's CPU topology layout. And the ACPI PPTT table that ARM/RISCV
-    relies on also requires CPU containers to help indicate the private
-    shared hierarchy of the cache. Therefore, for SMP systems, it is
-    natural to use the CPU topology hierarchy directly in QEMU to define
-    the cache topology.
-
-With smp-cache QAPI support, add smp cache topology for machine by
-parsing the smp-cache object list.
-
-Also add the helper to access/update cache topology level of machine.
-
-Suggested-by: Daniel P. Berrange <berrange@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
-Suggested by credit:
- * Referred to Daniel's suggestion to introduce cache object list.
+Tested by the following cases to ensure 0x1f's behavior hasn't
+changed:
+  -smp cpus=24,sockets=2,dies=3,modules=2,cores=2,threads=1
+  -smp cpus=24,sockets=2,dies=1,modules=3,cores=2,threads=2
+  -smp cpus=24,sockets=2,modules=3,cores=2,threads=2
+  -smp cpus=24,sockets=2,dies=3,modules=1,cores=2,threads=2
+  -smp cpus=24,sockets=2,dies=3,cores=2,threads=2
 ---
 Changes since Patch v3:
- * Dropped "invalid" level check since now we don't enumerate it in
-   QAPI. (Daniel)
- * Added a helper to update MachineState.smp_cache (
-   machine_set_cache_topo_level).
+  * Now commit to stop exposing "invalid" enumeration in QAPI. (Daniel)
 ---
- hw/core/machine-smp.c    | 37 +++++++++++++++++++++++++++++
- hw/core/machine.c        | 44 +++++++++++++++++++++++++++++++++++
- include/hw/boards.h      | 12 ++++++++++
- qapi/machine-common.json | 50 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 143 insertions(+)
+ include/hw/i386/topology.h |  3 ++-
+ target/i386/cpu.c          | 13 ++++++++-----
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index 5d8d7edcbd3f..c6d90cd6d413 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -261,6 +261,31 @@ void machine_parse_smp_config(MachineState *ms,
-     }
- }
+diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
+index dff49fce1154..48b43edc5a90 100644
+--- a/include/hw/i386/topology.h
++++ b/include/hw/i386/topology.h
+@@ -62,6 +62,8 @@ typedef struct X86CPUTopoInfo {
+     unsigned threads_per_core;
+ } X86CPUTopoInfo;
  
-+bool machine_parse_smp_cache(MachineState *ms,
-+                             const SmpCachePropertiesList *caches,
-+                             Error **errp)
-+{
-+    const SmpCachePropertiesList *node;
-+    DECLARE_BITMAP(caches_bitmap, CACHE_LEVEL_AND_TYPE__MAX);
++#define CPU_TOPO_LEVEL_INVALID CPU_TOPO_LEVEL_MAX
 +
-+    for (node = caches; node; node = node->next) {
-+        /* Prohibit users from repeating settings. */
-+        if (test_bit(node->value->cache, caches_bitmap)) {
-+            error_setg(errp,
-+                       "Invalid cache properties: %s. "
-+                       "The cache properties are duplicated",
-+                       CacheLevelAndType_str(node->value->cache));
-+            return false;
-+        }
-+
-+        machine_set_cache_topo_level(ms, node->value->cache,
-+                                     node->value->topology);
-+        set_bit(node->value->cache, caches_bitmap);
-+    }
-+
-+    return true;
-+}
-+
- unsigned int machine_topo_get_cores_per_socket(const MachineState *ms)
- {
-     return ms->smp.cores * ms->smp.modules * ms->smp.clusters * ms->smp.dies;
-@@ -270,3 +295,15 @@ unsigned int machine_topo_get_threads_per_socket(const MachineState *ms)
- {
-     return ms->smp.threads * machine_topo_get_cores_per_socket(ms);
- }
-+
-+CpuTopologyLevel machine_get_cache_topo_level(const MachineState *ms,
-+                                              CacheLevelAndType cache)
-+{
-+    return ms->smp_cache.props[cache].topology;
-+}
-+
-+void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
-+                                  CpuTopologyLevel level)
-+{
-+    ms->smp_cache.props[cache].topology = level;
-+}
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 222799bc46e6..62aa3ad8a675 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -932,6 +932,40 @@ static void machine_set_smp(Object *obj, Visitor *v, const char *name,
-     machine_parse_smp_config(ms, config, errp);
- }
- 
-+static void machine_get_smp_cache(Object *obj, Visitor *v, const char *name,
-+                                  void *opaque, Error **errp)
-+{
-+    MachineState *ms = MACHINE(obj);
-+    SmpCache *cache = &ms->smp_cache;
-+    SmpCachePropertiesList *head = NULL;
-+    SmpCachePropertiesList **tail = &head;
-+
-+    for (int i = 0; i < CACHE_LEVEL_AND_TYPE__MAX; i++) {
-+        SmpCacheProperties *node = g_new(SmpCacheProperties, 1);
-+
-+        node->cache = cache->props[i].cache;
-+        node->topology = cache->props[i].topology;
-+        QAPI_LIST_APPEND(tail, node);
-+    }
-+
-+    visit_type_SmpCachePropertiesList(v, name, &head, errp);
-+    qapi_free_SmpCachePropertiesList(head);
-+}
-+
-+static void machine_set_smp_cache(Object *obj, Visitor *v, const char *name,
-+                                  void *opaque, Error **errp)
-+{
-+    MachineState *ms = MACHINE(obj);
-+    SmpCachePropertiesList *caches;
-+
-+    if (!visit_type_SmpCachePropertiesList(v, name, &caches, errp)) {
-+        return;
-+    }
-+
-+    machine_parse_smp_cache(ms, caches, errp);
-+    qapi_free_SmpCachePropertiesList(caches);
-+}
-+
- static void machine_get_boot(Object *obj, Visitor *v, const char *name,
-                             void *opaque, Error **errp)
- {
-@@ -1092,6 +1126,11 @@ static void machine_class_init(ObjectClass *oc, void *data)
-     object_class_property_set_description(oc, "smp",
-         "CPU topology");
- 
-+    object_class_property_add(oc, "smp-cache", "SmpCachePropertiesWrapper",
-+        machine_get_smp_cache, machine_set_smp_cache, NULL, NULL);
-+    object_class_property_set_description(oc, "smp-cache",
-+        "Cache properties list for SMP machine");
-+
-     object_class_property_add(oc, "phandle-start", "int",
-         machine_get_phandle_start, machine_set_phandle_start,
-         NULL, NULL);
-@@ -1230,6 +1269,11 @@ static void machine_initfn(Object *obj)
-     ms->smp.cores = 1;
-     ms->smp.threads = 1;
- 
-+    for (int i = 0; i < CACHE_LEVEL_AND_TYPE__MAX; i++) {
-+        ms->smp_cache.props[i].cache = (CacheLevelAndType)i;
-+        ms->smp_cache.props[i].topology = CPU_TOPOLOGY_LEVEL_DEFAULT;
-+    }
-+
-     machine_copy_boot_config(ms, &(BootConfiguration){ 0 });
- }
- 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 91f2edd3924b..f12a727b4008 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -44,8 +44,15 @@ void machine_set_cpu_numa_node(MachineState *machine,
-                                Error **errp);
- void machine_parse_smp_config(MachineState *ms,
-                               const SMPConfiguration *config, Error **errp);
-+bool machine_parse_smp_cache(MachineState *ms,
-+                             const SmpCachePropertiesList *caches,
-+                             Error **errp);
- unsigned int machine_topo_get_cores_per_socket(const MachineState *ms);
- unsigned int machine_topo_get_threads_per_socket(const MachineState *ms);
-+CpuTopologyLevel machine_get_cache_topo_level(const MachineState *ms,
-+                                              CacheLevelAndType cache);
-+void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
-+                                  CpuTopologyLevel level);
- void machine_memory_devices_init(MachineState *ms, hwaddr base, uint64_t size);
- 
- /**
-@@ -371,6 +378,10 @@ typedef struct CpuTopology {
-     unsigned int max_cpus;
- } CpuTopology;
- 
-+typedef struct SmpCache {
-+    SmpCacheProperties props[CACHE_LEVEL_AND_TYPE__MAX];
-+} SmpCache;
-+
- /**
-  * MachineState:
+ /*
+  * CPUTopoLevel is the general i386 topology hierarchical representation,
+  * ordered by increasing hierarchical relationship.
+@@ -69,7 +71,6 @@ typedef struct X86CPUTopoInfo {
+  * or AMD (CPUID[0x80000026]).
   */
-@@ -421,6 +432,7 @@ struct MachineState {
-     AccelState *accelerator;
-     CPUArchIdList *possible_cpus;
-     CpuTopology smp;
-+    SmpCache smp_cache;
-     struct NVDIMMState *nvdimms_state;
-     struct NumaState *numa_state;
- };
-diff --git a/qapi/machine-common.json b/qapi/machine-common.json
-index 1a5687fb99fc..298e51f373a3 100644
---- a/qapi/machine-common.json
-+++ b/qapi/machine-common.json
-@@ -60,3 +60,53 @@
- { 'enum': 'CpuTopologyLevel',
-   'data': [ 'thread', 'core', 'module', 'cluster', 'die',
-             'socket', 'book', 'drawer', 'default' ] }
-+
-+##
-+# @CacheLevelAndType:
-+#
-+# Caches a system may have.  The enumeration value here is the
-+# combination of cache level and cache type.
-+#
-+# @l1d: L1 data cache.
-+#
-+# @l1i: L1 instruction cache.
-+#
-+# @l2: L2 (unified) cache.
-+#
-+# @l3: L3 (unified) cache
-+#
-+# Since: 9.2
-+##
-+{ 'enum': 'CacheLevelAndType',
-+  'data': [ 'l1d', 'l1i', 'l2', 'l3' ] }
-+
-+##
-+# @SmpCacheProperties:
-+#
-+# Cache information for SMP system.
-+#
-+# @cache: Cache name, which is the combination of cache level
-+#     and cache type.
-+#
-+# @topology: Cache topology level.  It accepts the CPU topology
-+#     enumeration as the parameter, i.e., CPUs in the same
-+#     topology container share the same cache.
-+#
-+# Since: 9.2
-+##
-+{ 'struct': 'SmpCacheProperties',
-+  'data': {
-+  'cache': 'CacheLevelAndType',
-+  'topology': 'CpuTopologyLevel' } }
-+
-+##
-+# @SmpCachePropertiesWrapper:
-+#
-+# List wrapper of SmpCacheProperties.
-+#
-+# @caches: the list of SmpCacheProperties.
-+#
-+# Since 9.2
-+##
-+{ 'struct': 'SmpCachePropertiesWrapper',
-+  'data': { 'caches': ['SmpCacheProperties'] } }
+ enum CPUTopoLevel {
+-    CPU_TOPO_LEVEL_INVALID,
+     CPU_TOPO_LEVEL_SMT,
+     CPU_TOPO_LEVEL_CORE,
+     CPU_TOPO_LEVEL_MODULE,
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 3baa95481fbc..ca13cf66a787 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -370,20 +370,21 @@ static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
+                                 uint32_t *ecx, uint32_t *edx)
+ {
+     X86CPU *cpu = env_archcpu(env);
+-    unsigned long level, next_level;
++    unsigned long level, base_level, next_level;
+     uint32_t num_threads_next_level, offset_next_level;
+ 
+-    assert(count + 1 < CPU_TOPO_LEVEL_MAX);
++    assert(count <= CPU_TOPO_LEVEL_PACKAGE);
+ 
+     /*
+      * Find the No.(count + 1) topology level in avail_cpu_topo bitmap.
+-     * The search starts from bit 1 (CPU_TOPO_LEVEL_INVALID + 1).
++     * The search starts from bit 0 (CPU_TOPO_LEVEL_SMT).
+      */
+-    level = CPU_TOPO_LEVEL_INVALID;
++    level = CPU_TOPO_LEVEL_SMT;
++    base_level = level;
+     for (int i = 0; i <= count; i++) {
+         level = find_next_bit(env->avail_cpu_topo,
+                               CPU_TOPO_LEVEL_PACKAGE,
+-                              level + 1);
++                              base_level);
+ 
+         /*
+          * CPUID[0x1f] doesn't explicitly encode the package level,
+@@ -394,6 +395,8 @@ static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
+             level = CPU_TOPO_LEVEL_INVALID;
+             break;
+         }
++        /* Search the next level. */
++        base_level = level + 1;
+     }
+ 
+     if (level == CPU_TOPO_LEVEL_INVALID) {
 -- 
 2.34.1
 
