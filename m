@@ -4,128 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC9D7E6B242
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 10:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4014E6B244
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 10:34:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6ors-0000I6-HU; Fri, 01 Nov 2024 06:27:00 -0400
+	id 1t6oy2-0001R2-JH; Fri, 01 Nov 2024 06:33:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t6orn-0000Hk-R3
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 06:26:56 -0400
-Received: from mail-sy4aus01olkn2063.outbound.protection.outlook.com
- ([40.92.62.63] helo=AUS01-SY4-obe.outbound.protection.outlook.com)
+ id 1t6oy0-0001Qp-MN
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 06:33:20 -0400
+Received: from mail-sy4aus01olkn20831.outbound.protection.outlook.com
+ ([2a01:111:f403:2819::831]
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t6orj-0007WG-9t
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 06:26:55 -0400
+ id 1t6oxz-0008EJ-4t
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 06:33:20 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aBysYCf+kk8CCGqytbeQd4BCSalnh78znWl0fT8GDBo96cFgDnBmbLzJd/v21jXEv/WxYvzOQVbj5rJriDaGfgrF1YSDmX+BlepuQYkGMGmDZc1NMcqnFPpT6WOSnnQ8uIZHfI4Sktgqj1rF+G+ha7n4p4UrERxFiQ19vT08sZqn732BPRUVYsn+hTPhxGMjf8/xE7vWVMJOztUYGwzhzJo3QZJEOxirfkYPqOTHJb7MhR342E34EsQZM59Qmupv4UK+nx4X8eMiRNG7851S29Npm+YbhWxa7YvNbPWPQuXT5YvSkahYYb29qjncq+wsEHM6WPfaUeHiNZ2kRRtvFg==
+ b=DK6FYjATNRjSgRHuzaJ0eQWV4kNbbaTlD3Ru1GYvT1ibrofovZSijWfZmIyn/rlnHQi0qZ0UAIzyKjvg+wsgiGggHn+51dOvNbLdIz2wdo2V39WEdifIZz9+XNyXBmUcUYJmIXUqJQDPdUNjiOazkQqx5AJiDkyOR9kf3mAub0+MbNZ111KJj7U2fOJWYaKhXJlsdHNY8yFmLSNEmj3UKZ/r/SD6i/L/YDq3N48PTT3eis+O2/JnQfKkmctj18wsv1fl7KmEha5nvuST4sshhIJIE2y6F0rW2PCgv7dz0ls9dsRd9E5xqw6hezgD3ZGjFrb6aR2eHX4Bf95Cf/zR4A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HSQdwDf2xIDqw42IInfywyKCKJ/hICDAsNw+nwfU0oE=;
- b=n6aKSqsip/9c6te64cPL9CWjsth4F4U52En9QUViMgCucsrtQAQ8OqJWRtIBak6vcxhCDk8B6jRzL7xzc7TcPpCrRrSqqC1QbdYbDc265ak3ZZtP7EJZhuVC2K7M4TRcDgdasJcGdnsYMc6oXG0mX94YRdZYwRYavONPBBUdC14+/udW3mnfe5YYWzpeODIuuP3M2Vy6ZKhdi4f8Aq+R3U7a9ReWjA+8aMwSPuMRNk3av1MJYrOym/owYBf+GM1wGt2eW9T1U/0a/9hUpMPQ09PfGHO92fPG0l5FkcygMFtA/XZjGrIDvm7PHIvBwIJ8wBMdKBz/srwNhk9t3TOzcg==
+ bh=SahMM8GCyFO04M219lA46Wsv1FpvWke7zNJEMCQjUG8=;
+ b=BZKdtD/cBXIxIYPTSVTLVj/F7A9/FroJWXXVNfEpw21BX7E+sabqRh4Tg3qVX20SnpDE29STLIdjH9M3+zRbVnXcvSO4N5LlMp/JiAM+u6Tfca7bXk2cj0THxL/qSNxT9AP0wUj02REB76sCoebPFwRkz1C3SXDXrFCrkVUlxXwqkDYZFrk27y0oScRLajikhjEK3phyr2TM1Bcgug4z/vwaMxbPlF5teKX7+N0LhYK0u5dOFgrfLi5eBUggas7w0uuhsvhV7R2h0KdFnKR0fv5uQ0Cld5GtlMf9zK2VNYCBJpKYAvkSvP7jZtttMx6a3vkTaHBFgeglpgxxLkuxDQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HSQdwDf2xIDqw42IInfywyKCKJ/hICDAsNw+nwfU0oE=;
- b=QITG7NwRgKxAVDW8ZLfTeYI6Gy0FF8c4n0IAEB24bLeW0QWlwvWFhHA8K5217gDB4KUbqYHTMIbMhjB2Rtu15HZc/rmIg86jHnHb9w757r+NVowq7qaMrUt6yzC4bU995KR9Fq7VrciDov6npjaoIOcaAz01JfIf0fky7IumeBiJ8BP/zEQ8uWV5XPdpI6ztpGdx6O4vx3kOHGb+NVSWmiH+BMBCrkvKrzV+1CuhpbkhPAlJ/4EkRc1g/Awvq/9+rmSBGWnCPuW+7QoxBLaIjzKX83lfYaxsY/AUsavxEyT6oCUox/REX9gBSnxRCGKVdyIWwcY7JOIZ/C6tWXPIYw==
+ bh=SahMM8GCyFO04M219lA46Wsv1FpvWke7zNJEMCQjUG8=;
+ b=WS7f6V4qQ0MnLlbhukLP5Y2RQk2k8whAkxJoteBRHVcTroDVtLBNunZDLd56k59wgB3OiXAbrL+mZnwH44MhmZMztpuvSWJh9H38unxWNbJpjsVdiEpIyVgWq61Q3vnuqdRoZJ3LTafqKvMFaK8BZTfNLIwFd/ABMnlTlDMRQpD0CmwTAL64Hb0tP5UgO+ku5jYR1w4sJh6Y+iLiBLTinSCLkHpn6dE9it0W5bDRmKRfsedNxfBBfvhuJ7j2ukhAc2ZGfABJeeKGI3Xp530VProCtf4aM6AQsgqluj5NToG6/Jzd2qh1T1NvXLiHTTHvGN1huFQ8ow/P/q6+w3pxWQ==
 Received: from ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:231::14)
- by SY7P300MB0623.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:287::22) with
+ by SY8P300MB0249.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:262::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.24; Fri, 1 Nov
- 2024 10:21:38 +0000
+ 2024 10:33:12 +0000
 Received: from ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM
  ([fe80::f32e:6e2b:b854:7166]) by ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM
  ([fe80::f32e:6e2b:b854:7166%6]) with mapi id 15.20.8114.023; Fri, 1 Nov 2024
- 10:21:37 +0000
+ 10:33:11 +0000
 References: <20241025160209.194307-1-pbonzini@redhat.com>
- <20241025160209.194307-14-pbonzini@redhat.com>
+ <20241025160209.194307-15-pbonzini@redhat.com>
 User-agent: mu4e 1.6.10; emacs 27.1
 From: Junjie Mao <junjie.mao@hotmail.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org,
  zhao1.liu@intel.com, berrange@redhat.com
-Subject: Re: [PATCH 13/23] rust: synchronize dependencies between
- subprojects and Cargo.lock
-Date: Fri, 01 Nov 2024 18:14:25 +0800
-In-reply-to: <20241025160209.194307-14-pbonzini@redhat.com>
-Message-ID: <ME0P300MB1040C0B24C8ED1775CB0673795562@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
+Subject: Re: [PATCH 14/23] rust: create a cargo workspace
+Date: Fri, 01 Nov 2024 18:21:42 +0800
+In-reply-to: <20241025160209.194307-15-pbonzini@redhat.com>
+Message-ID: <ME0P300MB1040FFFE4020FC209D2FF1A795562@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
 Content-Type: text/plain
-X-ClientProxiedBy: SGBP274CA0011.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b0::23)
- To ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM
+X-ClientProxiedBy: SI1PR02CA0014.apcprd02.prod.outlook.com
+ (2603:1096:4:1f7::9) To ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM
  (2603:10c6:220:231::14)
-X-Microsoft-Original-Message-ID: <87y123tftm.fsf@hotmail.com>
+X-Microsoft-Original-Message-ID: <87ttcrtfab.fsf@hotmail.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ME0P300MB1040:EE_|SY7P300MB0623:EE_
-X-MS-Office365-Filtering-Correlation-Id: 30692496-926f-49cc-2c7e-08dcfa5ef794
+X-MS-TrafficTypeDiagnostic: ME0P300MB1040:EE_|SY8P300MB0249:EE_
+X-MS-Office365-Filtering-Correlation-Id: 72d4c800-4d74-4f3d-39a6-08dcfa60955c
 X-Microsoft-Antispam: BCL:0;
- ARA:14566002|5072599009|461199028|8060799006|19110799003|7092599003|15080799006|3412199025|440099028;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?b0HJlVe61XJroh2ILlWE2gwelvpXpmNdWhhUe/irWOMp6+KaLK0QbMqe1xXH?=
- =?us-ascii?Q?T3iiJR8ebvoyEN4xQ4oYYxQEkJvGD2O7c0APDwUvUTnKSJ0L1MKemPLBcPpN?=
- =?us-ascii?Q?8pTZtTjplSfeG++jVbbYmy/wcnZA2IQvEZTW5CY6B5uiFxqzuy8kayCwx/YN?=
- =?us-ascii?Q?vb/Y/WYIWDOOIKRsEzPjet4mEugQU6+r07KcFtIssahsU747xSQlhbkuXQA5?=
- =?us-ascii?Q?19xnSxuv9R5l70mCudG2an65NcOrxQ8TLKteNAEtqNyUnkAXPtCkOT9uERLI?=
- =?us-ascii?Q?vjxeyvjeM+aYc5Q/zC3jgcNoxgXkEcJU8YKUKoUAcgCpwX8G16sFsZ03k/O7?=
- =?us-ascii?Q?blBpqR8TrnGx2ZJVtXWOcPmXAAv4tVyZtSjI+cBGPTRz+L3fpZyNNXnlUPaT?=
- =?us-ascii?Q?Lm3yGJI5Vde8Q8gbOqf+raWuPLFlCu53ArTOHCWzg/HyYd8V/zgBlBre6O4M?=
- =?us-ascii?Q?rWCe/cb4u26bUOBtO8UDziABdryV3aqiTK7P5kkK8gWjkzI93MAWpTOW0LWH?=
- =?us-ascii?Q?vlPYeW4SxlPgBVP3iz1oXa5NJsr3xxjzPxnrPZbifZ1tpWnjhEr4TWZ09DZK?=
- =?us-ascii?Q?4flrvVwUOMv59GK6hEUJIhnPhGe/gGwV7YnrLFr2ydrCsNKCAwZYUMgWWEqj?=
- =?us-ascii?Q?Izja0Mx/KgzdWkPxSIJP86ehF4I4fRCv2WPvSq8VmeheK698vs/vMvK6Mrks?=
- =?us-ascii?Q?E7VLGDyjNglL/UohDV4xeiJhPR4pde46VQJBpZ4bVp/xJdGHzVJBfcPrKdtK?=
- =?us-ascii?Q?DlvTuE6dVHIj+ZCDMCW5apy+C+fFuqjTi2FMINUGq2LD0Vp9FeJbDQXwICJI?=
- =?us-ascii?Q?9mokVW01h+jLpgulIjdgENoHkNT1rAx6IO70maeuvH11+AWA6j3cU87QGIxI?=
- =?us-ascii?Q?R2ahcotFf0gLhD2S97YWB6H2LGjXNuujsPpOiFdtRrN8rYSOKx8tPG7L2DKf?=
- =?us-ascii?Q?ndLVvUarbs8CCzmMSfy+mRgSKI55nhnOEjTrjV/KQWbrwm2xsCAv1V1uuvKU?=
- =?us-ascii?Q?kxZSo0XJMElLSkoNiIT6MLVBxdC7H6tjbz+oNPM5+d512Fs=3D?=
+ ARA:14566002|7092599003|19110799003|5072599009|461199028|15080799006|8060799006|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?BBgdVAerxL0ZWAcFhVB84L51LG8gOVqAKcNJyT0j76o0cKGsxrGWjLzM7WMC?=
+ =?us-ascii?Q?RdiKMHhA8UzMtOVrY/rju/p6FQkmLcFWl94TlV0uSW0ei+v5I++Q2hdxV75L?=
+ =?us-ascii?Q?LI98QvLS4tg3ijsxoTUV+k9Hmr/ywDXRzO9oTDrAiFG/8QHd8A30YOAVpQz8?=
+ =?us-ascii?Q?Jjv5f/VkE/wNFJRqjBVLHbSh2fDzrvkTgepRkel8GpsrRHCLKT7eVYSWsQ1b?=
+ =?us-ascii?Q?Hwsu/oeBFtUT5vRrOb6L2CWGegORzy9CHwnGkj3AuNbVccdJEzWDKzO+ABwN?=
+ =?us-ascii?Q?nKGno/muYv6i+761JgANBPNlQN8Smexgy02YtXTgtLK8jFthVO5SlIPr0eSG?=
+ =?us-ascii?Q?hDBzwBnIK3JOefMyIY9Ssieiczv3dQrGAdJ8LSLEp4E7dkkNz/q184BFB5c4?=
+ =?us-ascii?Q?UBmckvafJYkWrNwhJ0hlbn2tVegXeUb1QiVxXd+R/aGgQhIHfjWZxUo2kmIU?=
+ =?us-ascii?Q?qAcaiisQFo0lhEx1pU5nCEk5sPuRdj64fYkw64Vs+HuHMrEfViIzxXTvi7Dk?=
+ =?us-ascii?Q?ApReKcjPqZVIgDyTMYvz9ENu9hYFw/ceM+wwVZvOiJk9LztXu7it/+FcnbB8?=
+ =?us-ascii?Q?gKr+e2z3gboV05NmxCoc8KGHTUEwv6uXiC1MYuCt9EXYrXFS26PTCUu07Knl?=
+ =?us-ascii?Q?MPXXiTC63yK7yVyvlxS2g3slmp7YhkbIwlwTQTA2UayfDoFMdx1iu0BpWUf5?=
+ =?us-ascii?Q?Qs3BfX21GeC+r/55iyWfWgmbchsaeM0cn2DydpdEf3tBOvYB4y9AMwkrMuhC?=
+ =?us-ascii?Q?ALP8TRlB1xva6q4dhJkL7JnHBNNPG7bZdM7D3fgoH8X+DKbPG+E8AUjpRjsl?=
+ =?us-ascii?Q?HR+CD66UEdhoCxa9OcmePSKG//RCe6ifld+m2ny3lE3/KtNsz//wWmqlaWDq?=
+ =?us-ascii?Q?T+hkDPirFMrX1wmWNApaqya7Mk1fGuO5MMBrLuXpOS5ivA73vnlBlu7vQ94b?=
+ =?us-ascii?Q?cor5OW/7WxoDxthAKJrlnGiwHfpq8I9TJ5b70JlOM1gusT8pONOD4GHdSdTC?=
+ =?us-ascii?Q?v41ncx03IQDKyCQFw1+AVHdb460WOdgCRx83hMXCiSKKX0I=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?VW1TYy6WdVuC7lPTEKdotFAL0NmnyFTKgueNJphKNoXNy/BPRQOlXuYv0LdX?=
- =?us-ascii?Q?ksOgh+igMD6/gWiQiW8nbJI9mCBFaPqksRcQJ/O2GqbWYCCNaYgbdaCNLnGl?=
- =?us-ascii?Q?+5RuXH9FuaPw4mVJZndEB2dnCEKVRDnshlqmBMexnl+4Go2ZLJy3CKxs3duw?=
- =?us-ascii?Q?cKyf1V8+Sg54bjBrQ0xOs17n+QtZXQE8zr2tLPz+QNm2qHEUIeICcLmFJMbp?=
- =?us-ascii?Q?6lZnoyA1ehblnRuPu0MtpFR7gf7f2BYSt8oQ1D9Pg8he2HXHdt+gBepcbhpR?=
- =?us-ascii?Q?w4DKy52U0fvDTwgKPKCRP+5JItn5T+t+Htg7G9lwS/V+uNZGzqjMLzOeWRnZ?=
- =?us-ascii?Q?IidYq5Tm7iBSw0bMEaQZiY5ccl9TU2lr5xC4q6iOXcANNbt0S7htMFdeVsGU?=
- =?us-ascii?Q?m6ulX1bOfWxWmYqgCRJ8wfF/i1r4FJSchFZVeUDp8wZdGAMzJVcyxlBDrZ82?=
- =?us-ascii?Q?t06q4HE/tiBJ5CNTmgr4/uu2L7n8dYHwr2JUfop2tzlriv+edT1K0e9o3JaS?=
- =?us-ascii?Q?5lWXB7d7jyxWnEpLRyzNNkeSxWpgDpXTpHrPEaphW+qE+yHVnrgaaZGVynZP?=
- =?us-ascii?Q?zmR8Qq2GFFn5zUJ8y7eB2GIG2WSulJ7s51guAWynSlWwQtKhOGjYgTUSqB9y?=
- =?us-ascii?Q?kL78Nr0EmJPBp9PgNQb4HDgU7wMAKMOkQ3A3/uHqRZZbPqCqMCUC+aChKIK4?=
- =?us-ascii?Q?pxqWKkU/CFB3Oqo7saAJRUGov734dGyuv7MwxYCNz0e6BhP6pl3/P2/dt0Mf?=
- =?us-ascii?Q?rUmLwbPlu/3bK6LCag0zPpK2716mr/JwsnDG7r2buPHNHSppYL9xPL1KNCHu?=
- =?us-ascii?Q?LdAufflwxK/O20WgPSkpnagsupR7HpqR5U4OzEGCqwrk/T3NYku8ZfZequD7?=
- =?us-ascii?Q?cbYSJb9CkrDbsNygz5Aaf7jTVICJVu4AhW1fKvZWBluENcwxhPiZepyAbG6e?=
- =?us-ascii?Q?vodonR2OtI+KYB4/C/B4c3ShK9fj2Cftj9TdgTYryzFGKh7+R6zzAO1Mr/Zv?=
- =?us-ascii?Q?y+MhNqZBmXbvJ8l7LGy7kt14Rs9dPfjpdr8qwXVO1KrUB+nmBnQd/wRwj2WE?=
- =?us-ascii?Q?lipdhWkOW+7kqqrCHUtGcpRS6F1CJaYuyQjGtOPgUgVeqcS5cLOhUUQ+Aa+3?=
- =?us-ascii?Q?9iYhSiU0/tIK0jjoQGgxw6IHJoWkl19kbRogzb5hRxXzfM1N/qHVL0cSLafY?=
- =?us-ascii?Q?89bxuDHoudoYjs8g6ffZvnfNNL1HOFHqjfk6dj6gs0QCZSg4XRFsJLBPG8o?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?lDsY6Yr0Sio1TfqdkHDLmtw9457dvZZ0o+HxaX5WkHPi8MfXA/AlCBQInCO9?=
+ =?us-ascii?Q?KWwr2RyZf0GnXy2zYfRsOyH5L8f93Yb8WF8oqtEQzSfe3quQPD5840yslpsu?=
+ =?us-ascii?Q?BODXVqlQmLqz4XnPwj1JP4JgUjMxqrDYnEjkkMWvzT2Yh4LSyDbjuCCTYPiu?=
+ =?us-ascii?Q?sgZWOHMS4+K/QDoOn4GlpkR3aYpcqeT9Za1Fsar8ed4aJDu/3e4rfbXgggJf?=
+ =?us-ascii?Q?NLmHUVsNoh5Ye4KpptDJ4+dMUCJ9v8EMDwUdL6Pm3Fs6WAygCLTdJDd6RUh/?=
+ =?us-ascii?Q?j96CHn6jnZFHMDRf/zwpl0VjYmvfUnGrVNTCBFlAMxTWlvFaZNgFD2kbofo6?=
+ =?us-ascii?Q?efSofzGtHgvssP86OOnfsC0tZrP5ysYQPT9OQ4FR0JLiRd9Hm5ZMWPfs9qcv?=
+ =?us-ascii?Q?BwtIZgEDyChLosnkDWBxzgCknwmQGVkEz+ro25bMWtDgmqrzpdgKfHQXE64b?=
+ =?us-ascii?Q?jmhqTEy+LZgVvKynXkg9utUHJUQcAi5M6v4D+QiuE2Rs83JFZ0AKWnR1YThn?=
+ =?us-ascii?Q?ddaUiUflGkNZYL7W7SoqnBD2K1LwGNp198g3UYdkqLH3XITYSET/f0b4n0Ae?=
+ =?us-ascii?Q?sOnQpIp3NdAtgSC1nDpmQdvZTMFplaBIIE5Sb//X58bUDSukJOCtLx20bZWP?=
+ =?us-ascii?Q?20dF8L+SamJBAbtS5KMXBZkfaGzpDOFwFVS+63APJBAB04PEcpgCs66a6j5s?=
+ =?us-ascii?Q?EaiGzrcxfKgh6+WrrRq+pgooUKiApqG9PTPH+c4z4iv8EZI9XXGASDuJhNdz?=
+ =?us-ascii?Q?pk9sgafU4CeBkwVKDxILfWiSF8rg80vj+7+lJnyfU0eV4dFUJCzf13Sb/tzT?=
+ =?us-ascii?Q?8vloskGj+pVR0nEPsPxbfNDTx7H0qqT/nnaN5fK2UmLLLWElvMlMLekf4Oaz?=
+ =?us-ascii?Q?dcsZAP6eNwsoXVRSbUoKIFEgKVXhP9L47QxLG/kwdcEPe7hBWtztZSvVd2L2?=
+ =?us-ascii?Q?ers+fhxtJJzVuhLxs9IDk6+7h9s5SFoKuzHFCPWKb8h2guOw9I5M1xfBM9br?=
+ =?us-ascii?Q?qn00+oKdts5f7Ljv6f+SyL4OMldw31vla5eqSpzMd5Xtp8egiBqbp68HMjy5?=
+ =?us-ascii?Q?Zk2tNzd6X723Bg8MiJTmr8KhyhBmujf/oxuekkF80ZePxLq2RccWMxh4JEg8?=
+ =?us-ascii?Q?X+v8XRpL8HDwaqEWpFp1wFsjmMZAdmJjus3f3NQQpK+H5Yc0LJ67vLGf4o03?=
+ =?us-ascii?Q?kKmDtWb5X2iU2izZfekqBxliPAg8d4X3b8DA9cyd3QtQrC1NVC9bKXeH5UA?=
  =?us-ascii?Q?=3D?=
 X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 30692496-926f-49cc-2c7e-08dcfa5ef794
+X-MS-Exchange-CrossTenant-Network-Message-Id: 72d4c800-4d74-4f3d-39a6-08dcfa60955c
 X-MS-Exchange-CrossTenant-AuthSource: ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2024 10:21:37.2285 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2024 10:33:11.1443 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY7P300MB0623
-Received-SPF: pass client-ip=40.92.62.63; envelope-from=junjie.mao@hotmail.com;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0249
+Received-SPF: pass client-ip=2a01:111:f403:2819::831;
+ envelope-from=junjie.mao@hotmail.com;
  helo=AUS01-SY4-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,77 +145,18 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> The next commit will introduce a new build.rs dependency for rust/qemu-api,
-> version_check.  Before adding it, ensure that all dependencies are
-> synchronized between the Meson- and cargo-based build systems.
+> Workspaces allows tracking dependencies for multiple crates at once,
+> by having a single Cargo.lock file at the top of the rust/ tree.
+> Because QEMU's Cargo.lock files have to be synchronized with the versions
+> of crates in subprojects/, using a workspace avoids the need to copy
+> over the Cargo.lock file when adding a new device (and thus a new crate)
+> under rust/hw/.
 >
-> Note that it's not clear whether in the long term we'll use Cargo for
-> anything; it seems that the three main uses (clippy, rustfmt, rustdoc)
-> can all be invoked manually---either via glue code in QEMU, or by
-> extending Meson to gain the relevant functionality.  However, for
-> the time being we're stuck with Cargo so it should at least look at
-> the same code as the rest of the build system.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/hw/char/pl011/Cargo.lock   |  3 +++
->  rust/qemu-api-macros/Cargo.lock |  9 ++++---
->  rust/qemu-api/Cargo.lock        | 47 +++++++++++++++++++++++++++++++++
->  rust/qemu-api/Cargo.toml        |  1 +
->  4 files changed, 56 insertions(+), 4 deletions(-)
->
-> diff --git a/rust/hw/char/pl011/Cargo.lock b/rust/hw/char/pl011/Cargo.lock
-> index b58cebb186e..9f43b33e8b8 100644
-> --- a/rust/hw/char/pl011/Cargo.lock
-> +++ b/rust/hw/char/pl011/Cargo.lock
-> @@ -91,6 +91,9 @@ dependencies = [
->  [[package]]
->  name = "qemu_api"
->  version = "0.1.0"
-> +dependencies = [
-> + "qemu_api_macros",
-> +]
->
->  [[package]]
->  name = "qemu_api_macros"
-> diff --git a/rust/qemu-api-macros/Cargo.lock b/rust/qemu-api-macros/Cargo.lock
-> index fdc0fce116c..f989e25829f 100644
-> --- a/rust/qemu-api-macros/Cargo.lock
-> +++ b/rust/qemu-api-macros/Cargo.lock
-> @@ -4,9 +4,9 @@ version = 3
->
->  [[package]]
->  name = "proc-macro2"
-> -version = "1.0.86"
-> +version = "1.0.84"
+> In addition, workspaces let cargo download and build dependencies just
+> once.  While right now we have one leaf crate (hw/char/pl011), this
+> will not be the case once more devices are added.
 
-How about specifying also the exact version in Cargo.toml, e.g.:
+Cargo workspace fits our use case very well!
 
---- a/rust/qemu-api-macros/Cargo.toml
-+++ b/rust/qemu-api-macros/Cargo.toml
-@@ -17,9 +17,9 @@ categories = []
- proc-macro = true
-
- [dependencies]
--proc-macro2 = "1"
--quote = "1"
--syn = { version = "2", features = ["extra-traits"] }
-+proc-macro2 = "=1.0.84"
-+quote = "=1.0.36"
-+syn = { version = "=2.0.66", features = ["extra-traits"] }
-
- [lints]
- workspace = true
-
-With that the versions of direct dependencies will be unchanged even
-after a cargo generate-lockfile.
-
-Unfortunately, versions of nested dependencies, such as either and
-unicode-ident, may still have newer patch versions after a lockfile
-regeneration. That can be worked around by turning nested dependencies
-to direct ones with fixed version constraints, but looks quite ugly.
-
---
-Best Regards
-Junjie Mao
+Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
 
