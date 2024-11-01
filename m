@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5CEE6B278
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50220E6B27C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:44:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6rwY-0000aM-5b; Fri, 01 Nov 2024 09:44:02 -0400
+	id 1t6rx3-0001GM-Rd; Fri, 01 Nov 2024 09:44:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t6rwW-0000WX-7H
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:44:00 -0400
+ id 1t6rx2-0001Fw-OW
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:44:32 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t6rwU-0001Py-Od
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:43:59 -0400
+ id 1t6rx1-0001S5-Ey
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:44:32 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xg25M2BJVz6LD4k;
- Fri,  1 Nov 2024 21:39:03 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xg28j17RQz6K6jJ;
+ Fri,  1 Nov 2024 21:41:57 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 67F0E140B73;
- Fri,  1 Nov 2024 21:43:57 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id AAD391404FC;
+ Fri,  1 Nov 2024 21:44:28 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 1 Nov 2024 14:43:56 +0100
+ 15.1.2507.39; Fri, 1 Nov 2024 14:44:28 +0100
 To: <linux-cxl@vger.kernel.org>, <mst@redhat.com>, <qemu-devel@nongnu.org>,
  Esifiel <esifiel@gmail.com>
 CC: Fan Ni <fan.ni@samsung.com>, <linuxarm@huawei.com>
-Subject: [PATCH qemu 09/10] hw/cxl: Ensure there is enough data for the header
- in cmd_ccls_set_lsa()
-Date: Fri, 1 Nov 2024 13:39:16 +0000
-Message-ID: <20241101133917.27634-10-Jonathan.Cameron@huawei.com>
+Subject: [PATCH qemu 10/10] hw/cxl: Ensure there is enough data to read the
+ input header in cmd_get_physical_port_state()
+Date: Fri, 1 Nov 2024 13:39:17 +0000
+Message-ID: <20241101133917.27634-11-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241101133917.27634-1-Jonathan.Cameron@huawei.com>
 References: <20241101133917.27634-1-Jonathan.Cameron@huawei.com>
@@ -72,30 +72,30 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The properties of the requested set command cannot be established if
-len_in is less than the size of the header.
+If len_in is smaller than the header length then the accessing the
+number of ports will result in an out of bounds access.
+Add a check to avoid this.
 
 Reported-by: Esifiel <esifiel@gmail.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/cxl/cxl-mailbox-utils.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/cxl/cxl-mailbox-utils.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 078782e8b9..f4a436e172 100644
+index f4a436e172..2d4d62c454 100644
 --- a/hw/cxl/cxl-mailbox-utils.c
 +++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1503,8 +1503,8 @@ static CXLRetCode cmd_ccls_set_lsa(const struct cxl_cmd *cmd,
-     const size_t hdr_len = offsetof(struct set_lsa_pl, data);
+@@ -530,6 +530,9 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+     in = (struct cxl_fmapi_get_phys_port_state_req_pl *)payload_in;
+     out = (struct cxl_fmapi_get_phys_port_state_resp_pl *)payload_out;
  
-     *len_out = 0;
--    if (!len_in) {
--        return CXL_MBOX_SUCCESS;
-+    if (len_in < hdr_len) {
++    if (len_in < sizeof(*in)) {
 +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-     }
- 
-     if (set_lsa_payload->offset + len_in > cvc->get_lsa_size(ct3d) + hdr_len) {
++    }
+     /* Check if what was requested can fit */
+     if (sizeof(*out) + sizeof(*out->ports) * in->num_ports > cci->payload_max) {
+         return CXL_MBOX_INVALID_INPUT;
 -- 
 2.43.0
 
