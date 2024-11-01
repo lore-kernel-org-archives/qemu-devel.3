@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 195CCE674B7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A311BE674B6
 	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 08:17:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6mpY-0004uq-O4; Fri, 01 Nov 2024 04:16:28 -0400
+	id 1t6mpe-0004w4-He; Fri, 01 Nov 2024 04:16:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6mpV-0004qy-3X; Fri, 01 Nov 2024 04:16:25 -0400
+ id 1t6mpa-0004uw-Dv; Fri, 01 Nov 2024 04:16:32 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t6mpT-0001QQ-Cr; Fri, 01 Nov 2024 04:16:24 -0400
+ id 1t6mpY-0001QQ-NJ; Fri, 01 Nov 2024 04:16:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730448984; x=1761984984;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=E+zkEptv6x8nT44rXYHjEFJL+24l6aO0fCh+CMO/upA=;
- b=N+Djl/DYimZ5O7JZxRb0c6UzqNhkhm6Us2hXIEJgWUz5O8kJcbeO4dqb
- 56YVvyM8MFxNgA7g1xX9nYrdp8Hx2x5PR/nxC8K/NEwX+kgZAnZFT6wsO
- NurS9S6wLMl/hb8Pu9I2+agw8pOd141RZa/sB0C1bIywWVgZGztfYQIJz
- xMg4Ay44Xwv5wLR4DWAWv0//6YpFRRJ+U+Lv4TsAmn/KRD/KZCHpDeCUw
- XturGG0cw+BebTlgN2YBUsfkO+QT8DL0xR11fmWeAM7FAiCY94Zznao/w
- BCEFR6OrN1HDtY1TZO722qLTxYHKY5FivSPijWEvWj4S1h/iwUfHAkVyl A==;
-X-CSE-ConnectionGUID: dw+hTohTRm+9+A9SgBbz/A==
-X-CSE-MsgGUID: W7T+RrhzT2G0wuvAdh16aA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11242"; a="17846045"
-X-IronPort-AV: E=Sophos;i="6.11,249,1725346800"; d="scan'208";a="17846045"
+ t=1730448989; x=1761984989;
+ h=from:to:subject:date:message-id:in-reply-to:references:
+ mime-version:content-transfer-encoding;
+ bh=hWW510RNnBQVWsS5NN5EuNjpKq2iNzrMpdnodY3x60Y=;
+ b=QNtwQWUvMTYlSKrkiEK0KsNl6EWM5MWRY35DGIpnIDYNdwlO+qCv4mc9
+ mEbZpnORHuhnD0XYU9Q559bDGFqlhNS9qMMrW4MP8ieS8mbxHZQVAlKuQ
+ KRWVPkYj5ZXWfS69EmvHgtVYffeQSU1k3gakOKWyolMN5nG0kG2DKuKCM
+ MZUoGCU8cUMJCW0c8053dK1OET5KlxyxJCi+0n+Hwl5BFNNMOuTm6xuVe
+ HURXM8oWBC7dOBSWtGZ7CvrBgTcgXn610zrDuW5yvgeX+wB/0P3jxbtlk
+ 5IMmaKok31kdqXOBh55LxrsaIFbAtrORUaFgFxbka6mFA4xqeP9RkDMMV w==;
+X-CSE-ConnectionGUID: vcpWeIVSQ2yttjGhsuPkSA==
+X-CSE-MsgGUID: WNwBiaFyTFmVRSmcCH+/Og==
+X-IronPort-AV: E=McAfee;i="6700,10204,11242"; a="17846059"
+X-IronPort-AV: E=Sophos;i="6.11,249,1725346800"; d="scan'208";a="17846059"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Nov 2024 01:16:22 -0700
-X-CSE-ConnectionGUID: lbUxUVPyRUaFO+h8PpQtzg==
-X-CSE-MsgGUID: j7+CQvoERvCthoCj5OUWJA==
+ 01 Nov 2024 01:16:27 -0700
+X-CSE-ConnectionGUID: p/96yex/QsCHlmwk96VuAQ==
+X-CSE-MsgGUID: bNhx6skIRDeQj4RNqMaPAA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,249,1725346800"; d="scan'208";a="86834611"
+X-IronPort-AV: E=Sophos;i="6.11,249,1725346800"; d="scan'208";a="86834620"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 01 Nov 2024 01:16:16 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 01 Nov 2024 01:16:22 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -62,10 +62,9 @@ To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Cc: Yongwei Ma <yongwei.ma@intel.com>
-Subject: [PATCH v5 4/9] hw/core: Check smp cache topology support for machine
-Date: Fri,  1 Nov 2024 16:33:26 +0800
-Message-Id: <20241101083331.340178-5-zhao1.liu@intel.com>
+Subject: [PATCH v5 5/9] hw/core: Add a helper to check the cache topology level
+Date: Fri,  1 Nov 2024 16:33:27 +0800
+Message-Id: <20241101083331.340178-6-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241101083331.340178-1-zhao1.liu@intel.com>
 References: <20241101083331.340178-1-zhao1.liu@intel.com>
@@ -96,107 +95,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add cache_supported flags in SMPCompatProps to allow machines to
-configure various caches support.
+Currently, we have no way to expose the arch-specific default cache
+model because the cache model is sometimes related to the CPU model
+(e.g., i386).
 
-And check the compatibility of the cache properties with the
-machine support in machine_parse_smp_cache().
+Since the user might configure "default" level, any comparison with
+"default" is meaningless before the machine knows the specific level
+that "default" refers to.
+
+We can only check the correctness of the cache topology after the arch
+loads the user-configured cache model from MachineState.smp_cache and
+consumes the special "default" level by replacing it with the specific
+level.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
 Changes since Patch v3:
- * Dropped cache level check because if some fields is marked as
-   default, then we can't guarentee the hierarchies are correct.
-   (Daniel)
+ * New commit to make cache topology check as a separate helper, so that
+   arch-specific code could use this helper to check cache topology.
 ---
- hw/core/machine-smp.c | 41 +++++++++++++++++++++++++++++++++++++++++
- include/hw/boards.h   |  3 +++
- 2 files changed, 44 insertions(+)
+ hw/core/machine-smp.c | 48 +++++++++++++++++++++++++++++++++++++++++++
+ include/hw/boards.h   |  1 +
+ 2 files changed, 49 insertions(+)
 
 diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index c6d90cd6d413..ebb7a134a7be 100644
+index ebb7a134a7be..640b2114b429 100644
 --- a/hw/core/machine-smp.c
 +++ b/hw/core/machine-smp.c
-@@ -261,10 +261,32 @@ void machine_parse_smp_config(MachineState *ms,
-     }
+@@ -348,3 +348,51 @@ void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
+ {
+     ms->smp_cache.props[cache].topology = level;
  }
- 
-+static bool machine_check_topo_support(MachineState *ms,
-+                                       CpuTopologyLevel topo,
-+                                       Error **errp)
-+{
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
 +
-+    if ((topo == CPU_TOPOLOGY_LEVEL_MODULE && !mc->smp_props.modules_supported) ||
-+        (topo == CPU_TOPOLOGY_LEVEL_CLUSTER && !mc->smp_props.clusters_supported) ||
-+        (topo == CPU_TOPOLOGY_LEVEL_DIE && !mc->smp_props.dies_supported) ||
-+        (topo == CPU_TOPOLOGY_LEVEL_BOOK && !mc->smp_props.books_supported) ||
-+        (topo == CPU_TOPOLOGY_LEVEL_DRAWER && !mc->smp_props.drawers_supported)) {
++/*
++ * When both cache1 and cache2 are configured with specific topology levels
++ * (not default level), is cache1's topology level higher than cache2?
++ */
++static bool smp_cache_topo_cmp(const SmpCache *smp_cache,
++                               CacheLevelAndType cache1,
++                               CacheLevelAndType cache2)
++{
++    /*
++     * Before comparing, the "default" topology level should be replaced
++     * with the specific level.
++     */
++    assert(smp_cache->props[cache1].topology != CPU_TOPOLOGY_LEVEL_DEFAULT);
++
++    return smp_cache->props[cache1].topology > smp_cache->props[cache2].topology;
++}
++
++/*
++ * Currently, we have no way to expose the arch-specific default cache model
++ * because the cache model is sometimes related to the CPU model (e.g., i386).
++ *
++ * We can only check the correctness of the cache topology after the arch loads
++ * the user-configured cache model from MachineState and consumes the special
++ * "default" level by replacing it with the specific level.
++ */
++bool machine_check_smp_cache(const MachineState *ms, Error **errp)
++{
++    if (smp_cache_topo_cmp(&ms->smp_cache, CACHE_LEVEL_AND_TYPE_L1D,
++                           CACHE_LEVEL_AND_TYPE_L2) ||
++        smp_cache_topo_cmp(&ms->smp_cache, CACHE_LEVEL_AND_TYPE_L1I,
++                           CACHE_LEVEL_AND_TYPE_L2)) {
 +        error_setg(errp,
-+                   "Invalid topology level: %s. "
-+                   "The topology level is not supported by this machine",
-+                   CpuTopologyLevel_str(topo));
++                   "Invalid smp cache topology. "
++                   "L2 cache topology level shouldn't be lower than L1 cache");
++        return false;
++    }
++
++    if (smp_cache_topo_cmp(&ms->smp_cache, CACHE_LEVEL_AND_TYPE_L2,
++                           CACHE_LEVEL_AND_TYPE_L3)) {
++        error_setg(errp,
++                   "Invalid smp cache topology. "
++                   "L3 cache topology level shouldn't be lower than L2 cache");
 +        return false;
 +    }
 +
 +    return true;
 +}
-+
- bool machine_parse_smp_cache(MachineState *ms,
-                              const SmpCachePropertiesList *caches,
-                              Error **errp)
- {
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
-     const SmpCachePropertiesList *node;
-     DECLARE_BITMAP(caches_bitmap, CACHE_LEVEL_AND_TYPE__MAX);
- 
-@@ -283,6 +305,25 @@ bool machine_parse_smp_cache(MachineState *ms,
-         set_bit(node->value->cache, caches_bitmap);
-     }
- 
-+    for (int i = 0; i < CACHE_LEVEL_AND_TYPE__MAX; i++) {
-+        const SmpCacheProperties *props = &ms->smp_cache.props[i];
-+
-+        /*
-+         * Reject non "default" topology level if the cache isn't
-+         * supported by the machine.
-+         */
-+        if (props->topology != CPU_TOPOLOGY_LEVEL_DEFAULT &&
-+            !mc->smp_props.cache_supported[props->cache]) {
-+            error_setg(errp,
-+                       "%s cache topology not supported by this machine",
-+                       CacheLevelAndType_str(node->value->cache));
-+            return false;
-+        }
-+
-+        if (!machine_check_topo_support(ms, props->topology, errp)) {
-+            return false;
-+        }
-+    }
-     return true;
- }
- 
 diff --git a/include/hw/boards.h b/include/hw/boards.h
-index f12a727b4008..cda12070fc52 100644
+index cda12070fc52..e07fcf0983e1 100644
 --- a/include/hw/boards.h
 +++ b/include/hw/boards.h
-@@ -153,6 +153,8 @@ typedef struct {
-  * @books_supported - whether books are supported by the machine
-  * @drawers_supported - whether drawers are supported by the machine
-  * @modules_supported - whether modules are supported by the machine
-+ * @cache_supported - whether cache (l1d, l1i, l2 and l3) configuration are
-+ *                    supported by the machine
-  */
- typedef struct {
-     bool prefer_sockets;
-@@ -162,6 +164,7 @@ typedef struct {
-     bool books_supported;
-     bool drawers_supported;
-     bool modules_supported;
-+    bool cache_supported[CACHE_LEVEL_AND_TYPE__MAX];
- } SMPCompatProps;
+@@ -53,6 +53,7 @@ CpuTopologyLevel machine_get_cache_topo_level(const MachineState *ms,
+                                               CacheLevelAndType cache);
+ void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
+                                   CpuTopologyLevel level);
++bool machine_check_smp_cache(const MachineState *ms, Error **errp);
+ void machine_memory_devices_init(MachineState *ms, hwaddr base, uint64_t size);
  
  /**
 -- 
