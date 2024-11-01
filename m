@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13484E6B27C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10D7AE6B278
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 13:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6rv7-000667-VO; Fri, 01 Nov 2024 09:42:35 -0400
+	id 1t6rvc-0007st-0C; Fri, 01 Nov 2024 09:43:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t6rv1-0005q8-Il
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:42:28 -0400
+ id 1t6rvW-0007qg-Kz
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:42:58 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t6rv0-0001K5-45
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:42:27 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xg26K0qkxz6K6jx;
- Fri,  1 Nov 2024 21:39:53 +0800 (CST)
+ id 1t6rvV-0001MI-4x
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 09:42:58 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xg2493JS6z6LD4f;
+ Fri,  1 Nov 2024 21:38:01 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id A67E1140C72;
- Fri,  1 Nov 2024 21:42:24 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 8DF2B1400D3;
+ Fri,  1 Nov 2024 21:42:55 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 1 Nov 2024 14:42:24 +0100
+ 15.1.2507.39; Fri, 1 Nov 2024 14:42:55 +0100
 To: <linux-cxl@vger.kernel.org>, <mst@redhat.com>, <qemu-devel@nongnu.org>,
  Esifiel <esifiel@gmail.com>
 CC: Fan Ni <fan.ni@samsung.com>, <linuxarm@huawei.com>
-Subject: [PATCH qemu 06/10] hw/cxl: Avoid accesses beyond the end of cel_log.
-Date: Fri, 1 Nov 2024 13:39:13 +0000
-Message-ID: <20241101133917.27634-7-Jonathan.Cameron@huawei.com>
+Subject: [PATCH qemu 07/10] hw/cxl: Ensuring enough data to read parameters in
+ cmd_tunnel_management_cmd()
+Date: Fri, 1 Nov 2024 13:39:14 +0000
+Message-ID: <20241101133917.27634-8-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241101133917.27634-1-Jonathan.Cameron@huawei.com>
 References: <20241101133917.27634-1-Jonathan.Cameron@huawei.com>
@@ -71,62 +72,29 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a check that the requested offset + length does not go beyond the end
-of the cel_log.
-
-Whilst the cci->cel_log is large enough to include all possible CEL
-entries, the guest might still ask for entries beyond the end of it.
-Move the comment to this new check rather than before the check on the
-type of log requested.
+If len_in is less than the minimum spec allowed value, then return
+CXL_MBOX_INVALID_PAYLOAD_LENGTH
 
 Reported-by: Esifiel <esifiel@gmail.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/cxl/cxl-mailbox-utils.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ hw/cxl/cxl-mailbox-utils.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 2aa7ffed84..5e571955b6 100644
+index 5e571955b6..a40d81219c 100644
 --- a/hw/cxl/cxl-mailbox-utils.c
 +++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -937,24 +937,28 @@ static CXLRetCode cmd_logs_get_log(const struct cxl_cmd *cmd,
+@@ -151,6 +151,9 @@ static CXLRetCode cmd_tunnel_management_cmd(const struct cxl_cmd *cmd,
+     in = (void *)payload_in;
+     out = (void *)payload_out;
  
-     get_log = (void *)payload_in;
- 
-+    if (get_log->length > cci->payload_max) {
-+        return CXL_MBOX_INVALID_INPUT;
++    if (len_in < sizeof(*in)) {
++        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
 +    }
-+
-+    if (!qemu_uuid_is_equal(&get_log->uuid, &cel_uuid)) {
-+        return CXL_MBOX_INVALID_LOG;
-+    }
-+
-     /*
-      * CXL r3.1 Section 8.2.9.5.2: Get Log (Opcode 0401h)
-      *   The device shall return Invalid Input if the Offset or Length
-      *   fields attempt to access beyond the size of the log as reported by Get
--     *   Supported Logs.
-+     *   Supported Log.
-      *
--     * The CEL buffer is large enough to fit all commands in the emulation, so
--     * the only possible failure would be if the mailbox itself isn't big
--     * enough.
-+     * Only valid for there to be one entry per opcode, but the length + offset
-+     * may still be greater than that if the inputs are not valid and so access
-+     * beyond the end of cci->cel_log.
-      */
--    if (get_log->length > cci->payload_max) {
-+    if ((uint64_t)get_log->offset + get_log->length >= sizeof(cci->cel_log)) {
-         return CXL_MBOX_INVALID_INPUT;
-     }
- 
--    if (!qemu_uuid_is_equal(&get_log->uuid, &cel_uuid)) {
--        return CXL_MBOX_INVALID_LOG;
--    }
--
-     /* Store off everything to local variables so we can wipe out the payload */
-     *len_out = get_log->length;
- 
+     /* Enough room for minimum sized message - no payload */
+     if (in->size < sizeof(in->ccimessage)) {
+         return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
 -- 
 2.43.0
 
