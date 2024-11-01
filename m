@@ -4,73 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E73CE6F06D
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 16:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09A65E6F06D
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 16:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6u8g-0002fH-Hc; Fri, 01 Nov 2024 12:04:42 -0400
+	id 1t6uFU-0004J4-1a; Fri, 01 Nov 2024 12:11:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t6u8e-0002eq-NC
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:04:40 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t6u8c-00078i-Ec
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:04:40 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1730477065; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=Xxb1b7qo3AjmPqUQKQtDrVammhNNN9Md+c+juVdEvuGNG+c6m0coXGB2dyPOlYXecirUr2witsiFk/AQfj3PeSElEekExDeWemxLUNOmhZ21WcU8gE3N+NDC+ztrtFTnC7absNVmneNUw7HaHpvWDW4HdKBDj5NVWL0/XcK9qDw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1730477065;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=5FTdUKuC8nCEXBCEwik4vOKbkJPip4j2tVYxhH4cxug=; 
- b=JNLIvQU5urs3cd/CmpvaVtbV10LDsyHPzVwXDNblOFKclN/3bI70GymUBFCBrfNfYvLCRZRfKA8W9R/+Xi9a35c7kGOG9Y0narpoT2dGn9BKTMGZ4fq9xVaClHZeRWy9xvUT/pI3UQtvzNQGfAnupDVYzf4tK/GtPOSolFs47qg=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1730477065; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=5FTdUKuC8nCEXBCEwik4vOKbkJPip4j2tVYxhH4cxug=;
- b=FOTHctiqp3bhQw6pg9PswnxK1CETg1YTU3qKUazTNacDb5ww94+SvbL3Ne3YX9Lh
- Cm+NMrlqMKGmP+HB4RVooU6pGP5rpdMyVGKjfTQx2hvjx3ocsr2heB+1LJysJ6Olx7l
- tguF4f6FM1hMGHK6K5Yqjrj5jFBQQ5gWXvrVCJjM=
-Received: by mx.zohomail.com with SMTPS id 1730477063447436.45407887834665;
- Fri, 1 Nov 2024 09:04:23 -0700 (PDT)
-Message-ID: <73bc5cb8-0540-47cd-8a1e-aed8bf772d3a@collabora.com>
-Date: Fri, 1 Nov 2024 19:04:14 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t6uFI-0004H4-K4
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:11:33 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t6uFG-0008Gn-VH
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 12:11:32 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-37d5aedd177so1382544f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 09:11:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730477489; x=1731082289; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JgJweKIXis8k6s24MiQrusXcKHlFW60RT7XqGnm9h0Y=;
+ b=M6zH/cU2JARQ2SeLyFgPteAT/rnMNbq1pIUSskmoGoVCAf41DuTALMy+OMC1fPDuR4
+ vmqCqeEoT/Ezs1KCqkNdlIv2vvrfoNAgd7vxCmaPxdbwiDZiOf/esCSvrnlWGP4YFPGB
+ 5A7hwcIWY0N9yuBw7A/+meMWN/REuuxT+lY7PyZxX9Jg3GOtAL1W74a+sty71Gbadm2n
+ 5L3byWd3cyveOx9JYqlOVQg6d5my1SKhBijud0h4xp5Y5Lhla8ncz0YYz9HozMgVCf+B
+ 3woJlScz6IJrnVQWsrXi6w39mk1ZbJGguTP+/MiNeUULDc8g7Xrp0ofpe0iOWB8QLdSt
+ iLcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730477489; x=1731082289;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JgJweKIXis8k6s24MiQrusXcKHlFW60RT7XqGnm9h0Y=;
+ b=MbjXQtN1JJDw8d8KXngNWWbUAPyCcunrVRzD4JLI89SDlqp24CPQAtstE5Z+wbd1sB
+ nbmuD/rZsde89HZ5fBLk356KazPEZq4SrSb9j8p08HUHm95QZLSptPX18LdVnKlLTlg2
+ mtk5UzyaNfZm3mih7KkUmmi6y4biHtm+1G33N0Y2/dH1PwT71vKCIDcQG3nUGQcO/sb8
+ N7lDZu9t9J3cUOXcYOKCiAQutQ2QNQwGGQjYvMkbfL9QF9GHHYKypT7PWag5VgFvx1bU
+ j9XmYR+UXOPqpojA3oRqIsmm5wdPT9mk7kY/7atEaX8XD6hPLXwHvXQ4tsUgMOLEL4U8
+ ymGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3p9Six9G6UOud8YxwFiUAz7ptB/2Y3fyIECZ8qV9KrL3pto235i/tbRCXKAGqbckk2ekMxlxmlv1/@nongnu.org
+X-Gm-Message-State: AOJu0YytTs4lpYSFuyUg0tfAiar0vhTkE2lIjk5vjbgPyAyHVNrLDBKT
+ Gr7r8Jzw0JYQN/SwYMk7f9ZBVsHI/eBKfJnwSkvDE9sN8R7Ly4C0duyAOJs9Zv9zzTPGI7Cif7D
+ F
+X-Google-Smtp-Source: AGHT+IEwR9cEfTA8EnxaKkfOGWkuTFR8IWjI69woz7WU1qepY8PmPq39BO4gAg/m6Tnjz25EyK1n1Q==
+X-Received: by 2002:a05:6000:4711:b0:37c:cc67:8b1f with SMTP id
+ ffacd0b85a97d-381bea0ee17mr5565634f8f.48.1730477489261; 
+ Fri, 01 Nov 2024 09:11:29 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c10b7f80sm5658313f8f.20.2024.11.01.09.11.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Nov 2024 09:11:27 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+Subject: [PATCH 2/2] hw/arm/aspeed_ast27x0: Avoid hardcoded '256' in IRQ
+ calculation
+Date: Fri,  1 Nov 2024 16:11:25 +0000
+Message-Id: <20241101161125.1901394-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241101161125.1901394-1-peter.maydell@linaro.org>
+References: <20241101161125.1901394-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 11/13] virtio-gpu: Handle resource blob commands
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Robert Beckett <bob.beckett@collabora.com>,
- Antonio Caggiano <antonio.caggiano@collabora.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>, Huang Rui <ray.huang@amd.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20241029121030.4007014-1-alex.bennee@linaro.org>
- <20241029121030.4007014-12-alex.bennee@linaro.org>
- <CAFEAcA8M1gu9Ow8n42i-ie9t-k=yoe0R+D0CUZodwoU_Kezfhw@mail.gmail.com>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA8M1gu9Ow8n42i-ie9t-k=yoe0R+D0CUZodwoU_Kezfhw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,54 +101,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/1/24 18:35, Peter Maydell wrote:
-> On Tue, 29 Oct 2024 at 12:11, Alex Bennée <alex.bennee@linaro.org> wrote:
->>
->> From: Robert Beckett <bob.beckett@collabora.com>
->>
->> Support BLOB resources creation, mapping, unmapping and set-scanout by
->> calling the new stable virglrenderer 0.10 interface. Only enabled when
->> available and via the blob config. E.g. -device virtio-vga-gl,blob=true
->>
->> Signed-off-by: Antonio Caggiano <antonio.caggiano@collabora.com>
->> Signed-off-by: Robert Beckett <bob.beckett@collabora.com> # added set_scanout_blob
->> Signed-off-by: Xenia Ragiadakou <xenia.ragiadakou@amd.com>
->> Signed-off-by: Huang Rui <ray.huang@amd.com>
->> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->> Message-Id: <20241024210311.118220-12-dmitry.osipenko@collabora.com>
->> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> Hi; Coverity points out some possible issues with this commit:
-> 
-> 
->> +    fb.bytes_pp = DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb.format), 8);
->> +    fb.width = ss.width;
->> +    fb.height = ss.height;
->> +    fb.stride = ss.strides[0];
->> +    fb.offset = ss.offsets[0] + ss.r.x * fb.bytes_pp + ss.r.y * fb.stride;
->> +
->> +    fbend = fb.offset;
->> +    fbend += fb.stride * (ss.r.height - 1);
->> +    fbend += fb.bytes_pp * ss.r.width;
-> 
-> Here 'fbend' is a uint64_t, but fb.stride, fb.bytes_pp,
-> ss.r.height and ss.r.width are all uint32_t. So these
-> multiplications will be done as 32x32->32 before being
-> added to fbend, potentially overflowing. This probably
-> isn't what was intended.
-> 
-> (This is Coverity CID 1564769, 1564770.)
-> 
-> The calculation of fb.offset also might overflow, but
-> Coverity doesn't spot that because fb.offset is uint32_t
-> and so the whole calculation is 32-bit all the way through
-> without a late-32-to-64 extension.
+When calculating the index into the GIC's GPIO array for per-CPU
+interrupts, we have to start with the number of SPIs.  The code
+currently hard-codes this to 'NUM_IRQS = 256'.  However the number of
+SPIs is set separately and implicitly by the value of
+AST2700_MAX_IRQ, which is the number of SPIs plus 32 (since it is
+what we set the GIC num-irq property to).
 
-Will make patch to silence this Coverity warning. AFAICT, there are
-other ways to cause integer overflows in that code, though I assume it
-all should be harmless. Thanks!
+Define AST2700_MAX_IRQ as the total number of SPIs; this brings
+AST2700 into line with AST2600, which defines AST2600_MAX_IRQ as the
+number of SPIs not including the 32 internal interrupts.  We can then
+use AST2700_MAX_IRQ instead of the hardcoded 256.
 
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/arm/aspeed_ast27x0.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 5638a7a5781..7b246440952 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -66,7 +66,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_GPIO]      =  0x14C0B000,
+ };
+ 
+-#define AST2700_MAX_IRQ 288
++#define AST2700_MAX_IRQ 256
+ 
+ /* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
+ static const int aspeed_soc_ast2700_irqmap[] = {
+@@ -403,7 +403,7 @@ static bool aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error **errp)
+     gicdev = DEVICE(&a->gic);
+     qdev_prop_set_uint32(gicdev, "revision", 3);
+     qdev_prop_set_uint32(gicdev, "num-cpu", sc->num_cpus);
+-    qdev_prop_set_uint32(gicdev, "num-irq", AST2700_MAX_IRQ);
++    qdev_prop_set_uint32(gicdev, "num-irq", AST2700_MAX_IRQ + GIC_INTERNAL);
+ 
+     redist_region_count = qlist_new();
+     qlist_append_int(redist_region_count, sc->num_cpus);
+@@ -417,8 +417,7 @@ static bool aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error **errp)
+ 
+     for (i = 0; i < sc->num_cpus; i++) {
+         DeviceState *cpudev = DEVICE(&a->cpu[i]);
+-        int NUM_IRQS = 256;
+-        int intidbase = NUM_IRQS + i * GIC_INTERNAL;
++        int intidbase = AST2700_MAX_IRQ + i * GIC_INTERNAL;
+ 
+         const int timer_irq[] = {
+             [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
 -- 
-Best regards,
-Dmitry
+2.34.1
+
 
