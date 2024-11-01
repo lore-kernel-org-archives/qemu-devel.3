@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08FF6E6F091
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 21:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF84E6F092
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Nov 2024 22:00:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t6zOI-0001O0-Tq; Fri, 01 Nov 2024 17:41:10 -0400
+	id 1t6zg4-0003Wp-PF; Fri, 01 Nov 2024 17:59:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <38EolZwYKClsKHJN7A9HH9E7.5HFJ7FN-67O7EGHG9GN.HK9@flex--roqueh.bounces.google.com>)
- id 1t6zOH-0001Ne-P5
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 17:41:09 -0400
-Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
+ <3Pk8lZwYKCrEifhlVYXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--roqueh.bounces.google.com>)
+ id 1t6zg2-0003Wf-TG
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 17:59:30 -0400
+Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <38EolZwYKClsKHJN7A9HH9E7.5HFJ7FN-67O7EGHG9GN.HK9@flex--roqueh.bounces.google.com>)
- id 1t6zOE-0000h8-Hf
- for qemu-devel@nongnu.org; Fri, 01 Nov 2024 17:41:09 -0400
-Received: by mail-yw1-x1149.google.com with SMTP id
- 00721157ae682-6e7fb84f999so41433467b3.2
- for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 14:41:05 -0700 (PDT)
+ <3Pk8lZwYKCrEifhlVYXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--roqueh.bounces.google.com>)
+ id 1t6zg1-0002RM-Dw
+ for qemu-devel@nongnu.org; Fri, 01 Nov 2024 17:59:30 -0400
+Received: by mail-yb1-xb4a.google.com with SMTP id
+ 3f1490d57ef6-e30ceaa5feeso4417398276.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Nov 2024 14:59:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1730497264; x=1731102064; darn=nongnu.org;
+ d=google.com; s=20230601; t=1730498366; x=1731103166; darn=nongnu.org;
  h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=qz9eXsz1a5BbljAcV0F6fGtTdpxxvDLM/JivjXSwJNg=;
- b=IbTvAFmD22qrbrv1HPHMVAY7GL2DqKuXAWxu4unSh3hjnCcgCPStIgsnMHhBAFybMC
- Y6wGspvw7bQEA5ofqOjnQN7k/NY6XgmeY8xC6mxBYRXwH5rz41g7uByG1Y5nyE35HZ25
- vAzXKAOvl7Kzl0AujVAJLvc7Jp+BCdTrcuq3zwFfYudDYRQSPV6213IEIN3PoMgXrWlU
- dEKphgSEB3x8S7WrjanYhZGF/z2IDZrKaIJe6aGyVnerlhHRGfMPcQS7q3qHkieD89Eo
- r2gNi73n/yTPRlPHIedx5y/Ub63lmi44VLRSkyCXhY9FMPXYNryRK6vELVFGVdPaviO8
- Ks4w==
+ bh=krdseIyYUptjoGlkS20dYXsB5X6RPQ/3yN6z5zilcLU=;
+ b=M+QlXGTr4lqwdtuBexW5SmqK+grY/CGx52GubKe4MIvN3jKNKWFqq7sx98RobNeLrS
+ pOhnEHg3h5FIe1AdwMISUvbj/zOJVJZfXraqVGUUFn8WMuJ1131ycCbXeSQpX2UxrPDO
+ /01A1l1m3jdWtT4MQX8hpbsMuUa/J/sxBv/Tilw+zE8y+ddYcmnlkPo0REuJHv5Fq5yM
+ bhQGUAizbMsd0iY/RlyxeeyruBHymgKSKAtQnh9TwfgEB56GqiZ/UleB4qwtnjKj3UlE
+ BbHBWBPlRurIaQk/KjYvZThV++ZeowKwU4beCnD2lpFMKudem+IsA0qWQVdq32afGOp2
+ PbJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730497264; x=1731102064;
+ d=1e100.net; s=20230601; t=1730498366; x=1731103166;
  h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qz9eXsz1a5BbljAcV0F6fGtTdpxxvDLM/JivjXSwJNg=;
- b=idW4RAFFyVKRqZWNrvMM36U4fglhZT9sQnKueuRL8RPWUzR05Emz55judPwuyuM7ab
- z4iq2xM8llTw1sNTsweDuIH60/AuRXM0baL3yUJWU/5Sse0LxUE1FG2xrjzRzgAoxIoQ
- 9PLXJy8cTo9xlVo6a/z3uOpOQ+6FJW39AwNYSDnf3XI48L3uboboyjEcPnVM6yRZ6huE
- 9tGJeCjCf/CUxEiuwB6nnvcX83uoCO4pl+OQmXwD0kSteMrgZxFBWcV60LGB+UD98f3H
- 5fZxY96mkuWhekhNbdNPys7MYWypbucGS8VocU9WEg8wE4JcXLg+RkbAQPln9UKc07nO
- HCTw==
-X-Gm-Message-State: AOJu0YwomsikvgAG60hZcjrPr3/L36ZQ1sAUNjR191qxEjqCRB3ibWc8
- LE7YvNqngmexywY3mnn8DgvqAV2e2SI5Ul6j/M1OgxNjbQ4P/8Ti6Z9vCKkNpgFmE+FqPbbFjQ5
- vPg==
-X-Google-Smtp-Source: AGHT+IFmbgWl4C3WqAmcPNh/43uY0h7e8wOu6VxyHRkc0tBeI0E0mJf9DTQlXzaTv3FNtkrF+manF8GEnSI=
+ bh=krdseIyYUptjoGlkS20dYXsB5X6RPQ/3yN6z5zilcLU=;
+ b=ommh5v8yzaATD2by3KG4tPUvcjpSzqBy1v6BQbGvc51AYHKuWfNjE98wMqpBaCmKs0
+ Ls61uMk/KXr/uthcOBo7q6bcUe86a08LQbd2LBnbfcVSxAgTcn5asPHBf4wdkTPf8SPx
+ AJg3yK+59s/W/JrgqFbhf8AUv6flHsE6/6Uk53sYV5zWjXw+sjemyLKMgid6xZGUHHzy
+ oUnG9IZv/bR34d6/zlw67+i+3G9wUFgBP4ZOk2w2WfwIg5x8MmvQ2JBy30VA9GbVu8CR
+ dtHpyIyNf9q/mLCqtPhyOo2z6U7p0DVUeJk2XOYCx8sZNbm0kVqT5r/w9DASjWm0BlbF
+ xhMw==
+X-Gm-Message-State: AOJu0YwRoLUkMXW1TYrRtlaPUDowtpJZFjBqxwBOYCAvll7MOauVQz9e
+ 2e8MSOv1eaT3XBSi/niJBAydhR8FRPbJjw8ubF3ZV0I9eQqpYvYYxjQ+06U8CKK6LXYZ+8I+h9X
+ XaA==
+X-Google-Smtp-Source: AGHT+IFXOaJUNUTXtVlDeNrR3iOb0Mqocj5Da7hZLcfH1BiY3037GciMsMeGMtPgv6zMpWKdfdA8N8Y2XBA=
 X-Received: from roqueh.c.googlers.com ([fda3:e722:ac3:cc00:4e:3bc9:ac1c:1ab])
- (user=roqueh job=sendgmr) by 2002:a05:690c:4510:b0:6e2:1ab6:699a
- with SMTP id
- 00721157ae682-6ea64beda72mr352017b3.7.1730497264464; Fri, 01 Nov 2024
- 14:41:04 -0700 (PDT)
-Date: Fri,  1 Nov 2024 21:41:01 +0000
+ (user=roqueh job=sendgmr) by 2002:a25:b2a5:0:b0:e30:dccd:9aaa with
+ SMTP id
+ 3f1490d57ef6-e3302686a1fmr4977276.6.1730498366547; Fri, 01 Nov 2024 14:59:26
+ -0700 (PDT)
+Date: Fri,  1 Nov 2024 21:59:23 +0000
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.47.0.163.g1226f6d8fa-goog
-Message-ID: <20241101214101.3376595-1-roqueh@google.com>
-Subject: [PATCH] sysemu/os-win32.h: Windows clang-cl compiler fixes
+Message-ID: <20241101215923.3399311-1-roqueh@google.com>
+Subject: [PATCH] hw/pci: Add parenthesis to PCI_BUILD_BDF macro
 From: Roque Arcudia Hernandez <roqueh@google.com>
-To: jansene@google.com, sw@weilnetz.de, peterx@redhat.com, farosas@suse.de, 
- lvivier@redhat.com, pbonzini@redhat.com
+To: nabihestefan@google.com, mst@redhat.com, marcel.apfelbaum@gmail.com
 Cc: qemu-devel@nongnu.org, Roque Arcudia Hernandez <roqueh@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
- envelope-from=38EolZwYKClsKHJN7A9HH9E7.5HFJ7FN-67O7EGHG9GN.HK9@flex--roqueh.bounces.google.com;
- helo=mail-yw1-x1149.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
+ envelope-from=3Pk8lZwYKCrEifhlVYXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--roqueh.bounces.google.com;
+ helo=mail-yb1-xb4a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -91,88 +90,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This contains a series of small compiler fixes to enable the compilation
-of qemu using clang-cl.
+The bus parameter in the macro PCI_BUILD_BDF is not surrounded by
+parenthesis. This can create a compile error when warnings are
+treated as errors or can potentially create runtime errors due to the
+operator precedence.
 
-It mainly involves adding some missing header files and updating #ifdefs
-to handle clang-cl specific things.
+For instance:
 
-Signed-off-by: Erwin Jansen <jansene@google.com>
+ file.c:x:32: error: suggest parentheses around '-' inside '<<'
+ [-Werror=parentheses]
+   171 | uint16_t bdf = PCI_BUILD_BDF(a - b, sdev->devfn);
+       |                              ~~^~~
+ include/hw/pci/pci.h:19:41: note: in definition of macro
+ 'PCI_BUILD_BDF'
+    19 | #define PCI_BUILD_BDF(bus, devfn)     ((bus << 8) | (devfn))
+       |                                         ^~~
+ cc1: all warnings being treated as errors
+
 Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
+Reviewed-by: Nabih Estefan <nabihestefan@google.com>
 ---
- include/qemu/compiler.h   | 3 ++-
- include/sysemu/dma.h      | 2 ++
- include/sysemu/os-win32.h | 2 +-
- migration/savevm.c        | 2 ++
- tests/qtest/libqtest.c    | 2 +-
- 5 files changed, 8 insertions(+), 3 deletions(-)
+ include/hw/pci/pci.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
-index c06954ccb4..7f532fe660 100644
---- a/include/qemu/compiler.h
-+++ b/include/qemu/compiler.h
-@@ -22,7 +22,8 @@
- #define QEMU_EXTERN_C extern
- #endif
- 
--#if defined(_WIN32) && (defined(__x86_64__) || defined(__i386__))
-+#if defined(_WIN32) && (defined(__x86_64__) || defined(__i386__)) && \
-+    !defined(__clang__)
- # define QEMU_PACKED __attribute__((gcc_struct, packed))
- #else
- # define QEMU_PACKED __attribute__((packed))
-diff --git a/include/sysemu/dma.h b/include/sysemu/dma.h
-index 5a49a30628..f53b751fe2 100644
---- a/include/sysemu/dma.h
-+++ b/include/sysemu/dma.h
-@@ -14,6 +14,8 @@
- #include "exec/address-spaces.h"
- #include "block/block.h"
- #include "block/accounting.h"
-+#include "block/aio.h"
-+#include "qemu/iov.h"
- 
- typedef enum {
-     DMA_DIRECTION_TO_DEVICE = 0,
-diff --git a/include/sysemu/os-win32.h b/include/sysemu/os-win32.h
-index b82a5d3ad9..b5f1c61df4 100644
---- a/include/sysemu/os-win32.h
-+++ b/include/sysemu/os-win32.h
-@@ -70,7 +70,7 @@ int __mingw_setjmp(jmp_buf);
- void __attribute__((noreturn)) __mingw_longjmp(jmp_buf, int);
- #define setjmp(env) __mingw_setjmp(env)
- #define longjmp(env, val) __mingw_longjmp(env, val)
--#elif defined(_WIN64)
-+#elif defined(_WIN64) && !defined(__clang__)
- /*
-  * On windows-x64, setjmp is implemented by _setjmp which needs a second parameter.
-  * If this parameter is NULL, longjump does no stack unwinding.
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 7e1e27182a..c082015e84 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -54,6 +54,8 @@
- #include "qemu/job.h"
- #include "qemu/main-loop.h"
- #include "block/snapshot.h"
-+#include "block/block-io.h"
-+#include "block/block-global-state.h"
- #include "qemu/cutils.h"
- #include "io/channel-buffer.h"
- #include "io/channel-file.h"
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 9d07de1fbd..1fcb749602 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -386,7 +386,7 @@ static pid_t qtest_create_process(char *cmd)
-         abort();
-     }
- 
--    return (pid_t)pi.hProcess;
-+    return (pid_t)GetProcessId(pi.hProcess);
- }
- #endif /* _WIN32 */
- 
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index 35d4fe0bbf..1daec974da 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -16,7 +16,7 @@ extern bool pci_available;
+ #define PCI_BUS_NUM(x)          (((x) >> 8) & 0xff)
+ #define PCI_SLOT(devfn)         (((devfn) >> 3) & 0x1f)
+ #define PCI_FUNC(devfn)         ((devfn) & 0x07)
+-#define PCI_BUILD_BDF(bus, devfn)     ((bus << 8) | (devfn))
++#define PCI_BUILD_BDF(bus, devfn)     (((bus) << 8) | (devfn))
+ #define PCI_BDF_TO_DEVFN(x)     ((x) & 0xff)
+ #define PCI_BUS_MAX             256
+ #define PCI_DEVFN_MAX           256
 -- 
 2.47.0.163.g1226f6d8fa-goog
 
