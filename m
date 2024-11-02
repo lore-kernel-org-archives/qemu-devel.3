@@ -4,64 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E34E677FC
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 12:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D2AFE677F5
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 12:31:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7DH1-0005XA-9N; Sat, 02 Nov 2024 08:30:35 -0400
+	id 1t7DH3-0005XP-46; Sat, 02 Nov 2024 08:30:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cn_yzr@qq.com>) id 1t7Cp0-00068f-IM
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 08:01:40 -0400
-Received: from out203-205-221-236.mail.qq.com ([203.205.221.236])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cn_yzr@qq.com>) id 1t7Cow-00038P-Co
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 08:01:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1730548884; bh=lhkfVtXcEQgCnD1Ub04Qbdb/2X9foDoCjJIAdaEByHc=;
- h=From:To:Subject:Date;
- b=tJJIJhGU5lO0RJGvUueT1XyXHXI5M47xyj9xYWgoYTxl9vNqfX+JOT6Vm4Hq80mcD
- okpMv8vQ/O8rWxam/pqYQQ2qvM14uYqCBQLYRCJ3jxKuk60VSxkuwtE6gjFoDNFMSS
- i0JV7iJLfenw0Dw9tAM02hqfRqF1o9Mv3rW8tu6U=
-Received: from inspiron-manjaro.localnet ([106.39.42.109])
- by newxmesmtplogicsvrsza36-0.qq.com (NewEsmtp) with SMTP
- id D83A8CE6; Sat, 02 Nov 2024 19:54:03 +0800
-X-QQ-mid: xmsmtpt1730548443tvc2xdv27
-Message-ID: <tencent_74B4817FC7CE8E511A71F3FAC45008618E09@qq.com>
-X-QQ-XMAILINFO: OEKczhWbxalFgFCUEmuAKKa8nBbtrk1CvYkI9e/QFit2sFJVCbpdvW0seBg7Le
- utHG8n5ZyTApNopFm8jLDiC4blZN9eR0Hm+JgZmjxeW15vPNAVgcGjSfSlFfgns/LF1Z2GvtZuGI
- OOnIImPMLfLfWJQClCrFZQGUNQozSTZ9fAWFxrxTPZPrPhQ/2nkFD8fClXsK2zkKdKa/RPYLBCms
- Y9WIBXPVcTF5UAzCCl+KEzykbDSFSL8PnPiLWIIZWBtDwsskUnwjrO899ZUwAgur3nYuAb588ULT
- kEofbb8cDV4LxVUa3v2fKT2yIR0YKPEt8CL/f9+cV/+L2SnAIPMRS7/Jw2DCgaCIQK++GBdu7s1G
- 2FRbZVximpYyTd1bwiU8ScLzYpezSIU3IzisePSB/LyxnA+nMSVbMMRfjV55bsYgQCa0bAa3gug0
- Q9wFixKVQzUJYg00IjXwzR3OcN9r9r0rUv8i4/uceWm5Cm3FPQIg/lQE5VZ3sMQLRbAPVF/K8pCw
- xrXcCjICirLM6hW/jN+gL1TrrmWFb+jBXkYJRzqXJGpIw4yJFWBbxo/LuIkstv/9/ZPfy2i13Y7V
- UAGeNXZNHDAQxKvS76nX+wt6XQ7M0ACjBJLIVFMF/RhAtpvd8NeleFq95AZJLaZLSlYkhHQaK3eh
- Jm9rkDZaotZ1eANCs5vsL5iBCzaBQzeHyV79cU5Gs057/t4TkmPDEs7rZkuUTn/DDo3ZLjAN1CBn
- jfV/MGQX3I+2stxeBMwj4DpXxq9rNGCrSOCqZtcdFhbG+8kXE0qrOMztIyka6q32LM5miAKGnQ5C
- vIbwIJW1BHEmdO6j+lTPL4UTyGPRjwI/t1wsR0GNRh3ux7keln+CX/WMcvsp228iKvh2Uj6+2qSs
- jTwqYkG0eGMYe6gEPtHdEJsJhzQnzvri2btLLN3FKsH6JJyFCLIYA=
-X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
-From: Yip Coekjan <cn_yzr@qq.com>
-To: qemu-devel@nongnu.org
-Subject: Inquiry About PC-Relative Code Generation in QEMU
-Date: Sat, 02 Nov 2024 19:54:03 +0800
-X-OQ-MSGID: <4960480.31r3eYUQgx@inspiron-manjaro>
+ (Exim 4.90_1) (envelope-from <ycoekjan@gmail.com>)
+ id 1t7Csi-0007QN-Td
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 08:05:30 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ycoekjan@gmail.com>)
+ id 1t7Csc-00046t-Br
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 08:05:25 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c941623a5aso6646762a12.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Nov 2024 05:05:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730549118; x=1731153918; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=N8UzXm3DGxTAw9snxekvgZQEX39pCi/j8bD6NoMWeBE=;
+ b=eCM6PoLJgZFCzUO3CNKqLy2H4rNaGFx/h3p72AWOokra8D49GWECgL0SQ7EbJG7YEr
+ CXewc9FvenZ1GcFpxhoShIZ9rqDTStn3aO1hJ76UylxjJIeX8cNyviP2S7KeCXuWpYog
+ ma+gIsaszqgG/ICYmhwrNttZLOHGOsz/NuhT6nDh4LkZTSJjWykKKkViWH5IY1CBLOv2
+ Tmoiqr+V9ADj49+diLXkD4ZVrKFMrgWfsJCsShj4wNz+7XDNU7TKrwqqyCnQ9rLFI6JG
+ nlLjggoRrsrINW79Ihgz2G/91e81vc0K+WhvqyLS/pqBzOG7a2bfdYfwyxD/Vc4gyLtE
+ XMcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730549118; x=1731153918;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=N8UzXm3DGxTAw9snxekvgZQEX39pCi/j8bD6NoMWeBE=;
+ b=gxshFlZRQbgGmN9yGxM3T5uEF6bO81yMkVTFkIaCsk0Sx8uSUsUWrfzMPxW3vUN597
+ dK/5v9x6FRxUw+qtq6+OQ/514quLvHuhWPl+DEJv6wooovW9R/m8124wJq/A/uHo+ITr
+ +4fABu6azjniZs+KG5zljFM22hVrcjg3DxUoX2qWlePcYKbKI2PDFMFMo97+XIwsuAJ3
+ vp2d4QgH/Vjlr7zprebVjJZs1AyM5I2RFaX/cjCFCkh0CQhRvBMo2JCb3Zqf3Cg/Sbko
+ 5fq7DGGyexHH+fCXl2jwr0rVkrGCJEMDcAje6DjTbBo8j0ZG+Qp/icD9Qpxep8WM+59a
+ Kwuw==
+X-Gm-Message-State: AOJu0Yz5PNcMfp/kuq8d+jOQOrlSExFln2sH/IchXseK930vW1DAP8nP
+ Dwn6xTr8Nic7o7TOBlSntfobZMKkczggxZkIkBpU3T8zlYLkydj4+fND11B7SjaMtGiLzfWVNWG
+ TBdVQ5PFoqHLDsF1Lfok0BreL99kYs9FynMQ=
+X-Google-Smtp-Source: AGHT+IF2/WR469/oK6ie+mPuPhHYgKi6HiUPxjq4QXu+7420CwM8XhLomxeMzAE8k4oxCQOwg0j9TqL2c+AEVADEQUc=
+X-Received: by 2002:a05:6402:320b:b0:5ce:cf4a:79a5 with SMTP id
+ 4fb4d7f45d1cf-5cecf4a7a9bmr731170a12.6.1730549117367; Sat, 02 Nov 2024
+ 05:05:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=203.205.221.236; envelope-from=cn_yzr@qq.com;
- helo=out203-205-221-236.mail.qq.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+From: Coekjan Yip <ycoekjan@gmail.com>
+Date: Sat, 2 Nov 2024 20:05:06 +0800
+Message-ID: <CA+Oymobc=DOOuy431LJHTq4sOPiLRjpxyTzFp-zRE+NXOCim2g@mail.gmail.com>
+Subject: Inquiry About PC-Relative Code Generation in QEMU
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=ycoekjan@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Sat, 02 Nov 2024 08:30:31 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,17 +85,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Dear QEMU Community,
+
 I hope this message finds you well.
-I recently started studying the QEMU TCG code, and I have noticed that QEMU 
-seems to support generating PC-Relative Code (`CF_PCREL`), but this feature 
-seems currently enabled only for System Emulation in version 9.1.0, while it 
-is not available for User Emulation. Could you please clarify if there are 
+
+I recently started studying the QEMU TCG code, and I have noticed that QEMU
+seems to support generating PC-Relative Code (`CF_PCREL`), but this feature
+seems currently enabled only for System Emulation in version 9.1.0, while it
+is not available for User Emulation. Could you please clarify if there are
 specific functionality or performance considerations behind this decision?
-Additionally, if this feature were to be enabled for User Emulation, could we 
+Additionally, if this feature were to be enabled for User Emulation, could we
 consider the code generated by QEMU as Position-Independent Code (PIC)?
 Thank you for your assistance.
+
 Best regards,
 Yip Coekjan
-
-
 
