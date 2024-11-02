@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA2DE677FC
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B665DE677FD
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:21:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7E14-0003Jm-Nr; Sat, 02 Nov 2024 09:18:11 -0400
+	id 1t7E18-0003Pu-EY; Sat, 02 Nov 2024 09:18:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0x-0003Cd-Bg; Sat, 02 Nov 2024 09:18:03 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1t7E0q-0003A5-Aa; Sat, 02 Nov 2024 09:17:56 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0v-00022M-SE; Sat, 02 Nov 2024 09:18:03 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a99f3a5a44cso378959166b.3; 
- Sat, 02 Nov 2024 06:18:00 -0700 (PDT)
+ id 1t7E0o-00020G-O8; Sat, 02 Nov 2024 09:17:56 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3807dd08cfcso2276488f8f.1; 
+ Sat, 02 Nov 2024 06:17:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730553479; x=1731158279; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730553471; x=1731158271; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XUm8qjOgywmx7gvdmgv03kZ9/zFDrArayrTzSFDEf8g=;
- b=Vwbi71CYTVH1cgw4KOUxs6FBs3+G7TJe+mZOtBG8TiZRZjuBBTN1RJfzy9ju1htIU7
- DSLSKzRC8BEjfVH8kPolXN4mXl7OVorNyeIGZvYH9Snmsnsk3auUxXulvGbCcUcZPzsr
- dSgVuHAqE20oSEoKY07uZwg7X242rJeswwLmY9X6ofeChSZNKreOEI/mTKW9PvA5OA+A
- OCdLU9P88nxmANX8+uR/y+gVGkMkzlrrMaZ/cR6cHHI19fiGH7d4kKpM8eydxay5JN8g
- z6apnoFDD0joWNyjTe+GiuzmuH5urqRWoxbC18zRyaYKXKmlE+vTxqr8h+Y4HLFR6bWf
- 1APA==
+ bh=pyBZgo+H9vb+N+fytpA0S3Ymlld/fAbgfJZrmoRBkU8=;
+ b=cnad/3dErhlR1nya1UDUF9+LWHssO6eBtJVOdIC1GAWqKKkkojCyHJHQvhYS3vsAco
+ JO4MnJ+iYRgFTIl+RpVscVHWsSxnJWBwyf50t3pAk34fLuj67PR+wIAfpgxjoMmIRJGd
+ OwtWyo3ij3A5cFD7TlP3joYPTMac12lQ3qhfYlejOl1UErudb+byNkyLV/ByuqQoTrWg
+ XKy46Of8eNXFVAhuT0Dx4V8hm/YB+E9CiWt6GIOXKRKzJBQxp85LHzdxWO0l46HkWVFu
+ Oxgr8OfLoqas/2Gs0ykx6fAe1VdFK00SbPXQHD4vPGPjVHFyjWtFoSFLaP6XJNYru09P
+ TMHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730553479; x=1731158279;
+ d=1e100.net; s=20230601; t=1730553471; x=1731158271;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XUm8qjOgywmx7gvdmgv03kZ9/zFDrArayrTzSFDEf8g=;
- b=Ue2aJivvYfcnf9e/XWdDT5DC+w6LFQHwyC+hRynMI4OQ4wCNlhnGsxQGG4NK8DLaAn
- Tw0igBDYjppLX0y8lQpgIaisZ8Bv2aSWTiINxs5W62yH9ITr4GfewZlvsjGakuu+IA9F
- zDKQd0w2t4m5YsmWoqgCYwF27YwqR+LumshUweorrjEtaiEgWcwFOdWzYpXmE8hM9Xu3
- Y5Py13Vec1HgdlFaXXkbWz25hG8Wx7n4pT3sCK83Fbbr7swgSpkmknEOF68wXOhhNox1
- H8RaVFxP9/ofExRwFxKl9iP72pOImoE0XzdgAZpTgwSer8QzeaIsMFU8bDw9AvttFyhr
- lYLA==
+ bh=pyBZgo+H9vb+N+fytpA0S3Ymlld/fAbgfJZrmoRBkU8=;
+ b=S7LJED5OWjFEN4mER8V3F24OJGd9/q2evvxEYBLYMnizqL87q0IANmrAvfgsVn4ml5
+ ieqJqO6dO6p3VneSzVIL1RkFJyHKCQgpI21c1JxmNCwOUxWbnfG9LMvXYc+sF+mcQhtc
+ UNmca0UH/orq0mKhQD37JrDjut07YP36c9aziYEXACm8jR8dpMXZzfh4ekgJTQC9H8Gm
+ IXVX/GpO/+E/PDtsTpDh3dB2grIhQH2Z2WZ3c5Lttp1LZ3hGFzcM1ZvcykepC93e5vIP
+ wJcmC9YNi+AJOwqnOu0uyk3LXpjZsWEb3dPVTwqUJPoBZ2XifdkUDXsxDs1k4OHvDb/t
+ m78Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7+8ZEy9D9V4/gYnVqW2n4SnYs5/Bm6T1S4o6zwogRFRcZdWdJBtW7/fOYAx6dlS+xhGPprT4S8TMX@nongnu.org,
- AJvYcCXui6lh3ZuEIk5n7A9MLXYNKFaxTzLuL7j6FcB5X3O8WVEXzf0GXZhl/A09p22+Bk61xZRSaDEIiLs=@nongnu.org
-X-Gm-Message-State: AOJu0YyvYhWv3mEKgHyXcG9MZkyS74FBdJOKHxc1b3JEuX6zoo/4CP3o
- WIKR71UOOD77PtBv02M3Z+gCbwAgXt6sZXfQw6LMHdAtUOkIbZwAs8mOXA==
-X-Google-Smtp-Source: AGHT+IFSs1F7VA7Fsy1GjJjGW/RL7wWm5sFOwhjWJKnYkvHtFSxVAslTGo5TJB9Pvf3myPzzPLGeZQ==
-X-Received: by 2002:a17:907:7dab:b0:a9a:55dd:4d52 with SMTP id
- a640c23a62f3a-a9de633078bmr2039459366b.63.1730553479141; 
- Sat, 02 Nov 2024 06:17:59 -0700 (PDT)
+ AJvYcCWwPnhQmpRxgx6GdbfoBWGQrKeu1I9MkkJzo23Mjnph5N9VcWArdpCBOFync6AhQE8eaH8kKj4tqkDH@nongnu.org,
+ AJvYcCXKrHJUNRXEXBQqJ2G8jMk8ledIha7hD2y7RtEZ8lZ2bN4McNJyyC9Q/HBU7ezQ7seLrPJBnIvFiuk=@nongnu.org
+X-Gm-Message-State: AOJu0Yw2+Qgf4EHhFMTvl3dkGRZFlQ9BWLttwWCkLMu6xAvf7gP6CZFX
+ AT+aV7UjlkIGTGHZKH5gBymP4F81Bpjn18aFovLeXl/mzRFqILhvJYmE6g==
+X-Google-Smtp-Source: AGHT+IFmo85UhsYj7yM/t9jVFu3LpfoBltx4O9rUXGdXmiiFp+UENhvv8OH+qjBlv8JKsxZ9VkUkAw==
+X-Received: by 2002:a5d:6d0f:0:b0:37d:9565:4db2 with SMTP id
+ ffacd0b85a97d-381c7a469cemr7604057f8f.6.1730553471197; 
+ Sat, 02 Nov 2024 06:17:51 -0700 (PDT)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.57
+ a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Nov 2024 06:17:58 -0700 (PDT)
+ Sat, 02 Nov 2024 06:17:50 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -70,17 +70,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org,
  Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH v3 22/26] hw/i2c/smbus_eeprom: Prefer DEFINE_TYPES() macro
-Date: Sat,  2 Nov 2024 14:17:11 +0100
-Message-ID: <20241102131715.548849-23-shentey@gmail.com>
+Subject: [PATCH v3 16/26] hw/net/fsl_etsec/etsec: Prefer DEFINE_TYPES() macro
+Date: Sat,  2 Nov 2024 14:17:05 +0100
+Message-ID: <20241102131715.548849-17-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241102131715.548849-1-shentey@gmail.com>
 References: <20241102131715.548849-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,41 +106,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/i2c/smbus_eeprom.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ hw/net/fsl_etsec/etsec.c | 22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/hw/i2c/smbus_eeprom.c b/hw/i2c/smbus_eeprom.c
-index 9e62c27a1a..1d4d9704bf 100644
---- a/hw/i2c/smbus_eeprom.c
-+++ b/hw/i2c/smbus_eeprom.c
-@@ -151,19 +151,16 @@ static void smbus_eeprom_class_initfn(ObjectClass *klass, void *data)
-     dc->user_creatable = false;
+diff --git a/hw/net/fsl_etsec/etsec.c b/hw/net/fsl_etsec/etsec.c
+index 3fdd16ef2e..9bd886b996 100644
+--- a/hw/net/fsl_etsec/etsec.c
++++ b/hw/net/fsl_etsec/etsec.c
+@@ -36,7 +36,6 @@
+ #include "registers.h"
+ #include "qapi/error.h"
+ #include "qemu/log.h"
+-#include "qemu/module.h"
+ 
+ /* #define HEX_DUMP */
+ /* #define DEBUG_REGISTER */
+@@ -431,17 +430,14 @@ static void etsec_class_init(ObjectClass *klass, void *data)
+     dc->user_creatable = true;
  }
  
--static const TypeInfo smbus_eeprom_info = {
--    .name          = TYPE_SMBUS_EEPROM,
--    .parent        = TYPE_SMBUS_DEVICE,
--    .instance_size = sizeof(SMBusEEPROMDevice),
--    .class_init    = smbus_eeprom_class_initfn,
+-static const TypeInfo etsec_info = {
+-    .name                  = TYPE_ETSEC_COMMON,
+-    .parent                = TYPE_SYS_BUS_DEVICE,
+-    .instance_size         = sizeof(eTSEC),
+-    .class_init            = etsec_class_init,
+-    .instance_init         = etsec_instance_init,
 +static const TypeInfo types[] = {
 +    {
-+        .name          = TYPE_SMBUS_EEPROM,
-+        .parent        = TYPE_SMBUS_DEVICE,
-+        .instance_size = sizeof(SMBusEEPROMDevice),
-+        .class_init    = smbus_eeprom_class_initfn,
++        .name          = TYPE_ETSEC_COMMON,
++        .parent        = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(eTSEC),
++        .class_init    = etsec_class_init,
++        .instance_init = etsec_instance_init,
 +    },
  };
  
--static void smbus_eeprom_register_types(void)
+-static void etsec_register_types(void)
 -{
--    type_register_static(&smbus_eeprom_info);
+-    type_register_static(&etsec_info);
 -}
 -
--type_init(smbus_eeprom_register_types)
+-type_init(etsec_register_types)
 +DEFINE_TYPES(types)
- 
- void smbus_eeprom_init_one(I2CBus *smbus, uint8_t address, uint8_t *eeprom_buf)
- {
 -- 
 2.47.0
 
