@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5042EE677FC
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0E6BE677FC
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:19:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7E0m-00036W-09; Sat, 02 Nov 2024 09:17:53 -0400
+	id 1t7E1B-0003eG-HW; Sat, 02 Nov 2024 09:18:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0c-00033N-3u; Sat, 02 Nov 2024 09:17:42 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1t7E0o-00037P-Kl; Sat, 02 Nov 2024 09:17:54 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0a-0001x2-GT; Sat, 02 Nov 2024 09:17:41 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a9a68480164so407177166b.3; 
- Sat, 02 Nov 2024 06:17:39 -0700 (PDT)
+ id 1t7E0m-0001zq-Od; Sat, 02 Nov 2024 09:17:54 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5ceca7df7f0so584295a12.1; 
+ Sat, 02 Nov 2024 06:17:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730553458; x=1731158258; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730553470; x=1731158270; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=scKsKjVwCuGqApOSyGEnsOwcmcTTDBAW30tcpamKwQc=;
- b=jrgErHtCrjLcKi9cmlkjLO89/eQpgNabmwJDlGntTB0eCGiVOQjCb4XWmsl/OUb79y
- 6rx7y6hkxTjqMOqn8tcPeBC/qXwJcBHcg4qOE+JOpVx1f5S5V8OKE2z65GYX0MG4gp9Y
- oBz8KZkWRih54tjF33T2h14JK1duFBQbqCHpPRKNtA4j3TrAnxSLTlRZ0+HyJ3SNr7wB
- Yb9oDtTaxK8nhTzBqp9poImchUQSBGHkTXyLJ0Z0MnSlHSXlW+tMwdgF96bV4u3IOS+1
- LUpfhQyXSBaT6heoOGFUkf4p7eBgt2C96T3aS2/s59t0nzPI6ZjjkueL+KCGEwBrRFHx
- qvJQ==
+ bh=FdlRSFSVE5+jilPfwmoz97fjdKJLulipSEMWN67GtgY=;
+ b=CVWIrmkYi0KYpKuOMb1qHxYC1pXe3XDmen5iar5Jdkv/6wqiSeW/p74Rvk9LV2Bpgx
+ nXvTadtsvI6cRiB6w/g6DN/ghUGhUqLwG5/ya7Advoy2llfouEILlUBAgfu8JYascu42
+ HG4l7XZ4d5PSwbR9+Nlk51E3oATWiVMOcodPL1r3B1nQ1V15kuitC68OZmkIeMTw0WOc
+ 7Ba8fRbFPMSzvCSFlUwepa74rftC2458INif55LSM0tbwO3VP0xEGLY89Fbt8HjOyu+9
+ 2zciP03G5R6t3n/BaBLt+2iDugk9Y53768iCw+eMHKxyawDAMnCGaG1XysyZQD9Whuk3
+ 9kMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730553458; x=1731158258;
+ d=1e100.net; s=20230601; t=1730553470; x=1731158270;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=scKsKjVwCuGqApOSyGEnsOwcmcTTDBAW30tcpamKwQc=;
- b=ovfUIvI+VpOiBh6I9lKDadfql3HTmPvv3Ewlhw5vUZTSS3zR1DM5uNYWPxeufN2thf
- QQlkTnntRHStIX6ckTpKgNF4EqoXZa7z7xVOUh+FK4h+vVcnSeTrFuE5SGw6kixIXWbe
- tP7zV1rls9xmKzdmpYagPUrT6RUHT86dtz+67HReooiMK4Dbsxwd4enzuDAoEE29GGsq
- qsyn0XkYAl21yT3vU9v0PmHU1rz9O/XEaq3s2avPB62InpWuil1BOpKn2nZqKgui5nQ7
- znFj4MwPYNqChGW4n7sd75lJ+58I0RDlma8KUU+IlWhwd17dVHt5lwBddq0XSiaUWc3D
- c8Gw==
+ bh=FdlRSFSVE5+jilPfwmoz97fjdKJLulipSEMWN67GtgY=;
+ b=NvMqgiECz4J/eE/YhpfJcCoDEa/vg06t5HnSEAwZot3xJ6fYD0dg+hgoAgU1zOM6o+
+ u8Y62NxtojC4KXaaVpq9IpdPTvrjXQ8+KiWypRk+3jnLSzADoAurCLZXS+z5746TW+Jc
+ 9UJsRVRF3P/UpZogH27j+evw7F4sxcFaY1sGwU9Nl1RU3e8yXDFVYnPxuyYfCFJ5/g2S
+ DgFcc2T+7MfxFa1qwptwVwNJXgoFzrf3bIx87MdBGnF3I5z5RQpdi6Eu1OJV799jCA3B
+ 7SYFvY603lRxaQqUFbGu4YyG6FM9O99g1+Jxyka9zlT5L2ZRT0P8bADmU+7O26vvFii0
+ hJcA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1CUKsDvZxVGupEALps2Ypfy5Sr+WtuNfPLoT6mC2z4oPH4z51H+s1LLl/UkmD+yX87FRSWo54hCle@nongnu.org,
- AJvYcCX9hkJTnEnnSR51hJ/hgti9QZdrxOaEa3OKkrA6RXKzF2dqrCZIts1fe/DqY8eASjINNtw63HvG4ng=@nongnu.org
-X-Gm-Message-State: AOJu0YzOh0tUrTjaPm1eJfJXntNxMBml2gfTMgLD1VkRez3s654KEhhc
- ViPJs/PrlOsNDd6VgV7Ozm2chE00/LdXajspTAS3hMYP8ZcQ04FYDZZpOg==
-X-Google-Smtp-Source: AGHT+IH5iD2Tc0Jah8AtXLEsdsVSLVjz7SsPxZn1HWY1NjSiT4KU6CD5Vl6f9bdezbOv+E5npNJa7w==
-X-Received: by 2002:a17:906:478f:b0:a99:f56e:ce40 with SMTP id
- a640c23a62f3a-a9de6166952mr2513568666b.47.1730553457457; 
- Sat, 02 Nov 2024 06:17:37 -0700 (PDT)
+ AJvYcCXFV0PvnW6+9dpbuJ8EMF4unAll3rgx8l25MFAK4aG8pojYiq62RNkpoTGqIBsz5q1dQu/0y9ijxW78@nongnu.org,
+ AJvYcCXUvytAgyWSnzhZVqTONEYe7Mz+GRJSi8g9nVeKrFedZfS/QXsckReryngX2qwCKYdnbjuaqM7TzNQ=@nongnu.org
+X-Gm-Message-State: AOJu0YwqsMaVuhpGRtkeVhBhj5Z7kRnq5IoohzG6mxIfb7wxZ6wCFtUr
+ 67EyKn7Uz9wj5CIVpR5tMHNAgtuTi/+JqiebDL+10FnldFjjv5RJwZb+8w==
+X-Google-Smtp-Source: AGHT+IHWAmadtq2H8x8vkXXajemY4CQNXF+sufmMYE8SBjrdsSdHgXnfrD3qtu/EGtdZe3bNK+Bcug==
+X-Received: by 2002:a17:907:9407:b0:a77:c30c:341 with SMTP id
+ a640c23a62f3a-a9e652a2f0dmr654804166b.0.1730553469923; 
+ Sat, 02 Nov 2024 06:17:49 -0700 (PDT)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.36
+ a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Nov 2024 06:17:36 -0700 (PDT)
+ Sat, 02 Nov 2024 06:17:49 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -70,16 +70,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org,
  Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH v3 06/26] hw/ppc/e500: Reuse TYPE_GPIO_PWR
-Date: Sat,  2 Nov 2024 14:16:55 +0100
-Message-ID: <20241102131715.548849-7-shentey@gmail.com>
+Subject: [PATCH v3 15/26] hw/net/fsl_etsec/miim: Reuse MII constants
+Date: Sat,  2 Nov 2024 14:17:04 +0100
+Message-ID: <20241102131715.548849-16-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241102131715.548849-1-shentey@gmail.com>
 References: <20241102131715.548849-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,82 +102,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Taking inspiration from the ARM virt machine, port away from
-qemu_allocate_irq() by reusing TYPE_GPIO_PWR.
+Instead of defining redundant constants and using magic numbers reuse the
+existing MII constants.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/ppc/e500.c  | 16 ++++------------
- hw/ppc/Kconfig |  1 +
- 2 files changed, 5 insertions(+), 12 deletions(-)
+ hw/net/fsl_etsec/miim.c | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index a0c856568b..5d75a090ee 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -30,7 +30,6 @@
- #include "sysemu/sysemu.h"
- #include "sysemu/kvm.h"
- #include "sysemu/reset.h"
--#include "sysemu/runstate.h"
- #include "kvm_ppc.h"
- #include "sysemu/device_tree.h"
- #include "hw/ppc/openpic.h"
-@@ -47,7 +46,6 @@
- #include "hw/platform-bus.h"
- #include "hw/net/fsl_etsec/etsec.h"
- #include "hw/i2c/i2c.h"
--#include "hw/irq.h"
- #include "hw/sd/sdhci.h"
- #include "hw/misc/unimp.h"
+diff --git a/hw/net/fsl_etsec/miim.c b/hw/net/fsl_etsec/miim.c
+index b48d2cb57b..4e9169907a 100644
+--- a/hw/net/fsl_etsec/miim.c
++++ b/hw/net/fsl_etsec/miim.c
+@@ -29,13 +29,6 @@
  
-@@ -887,13 +885,6 @@ static DeviceState *ppce500_init_mpic(PPCE500MachineState *pms,
-     return dev;
- }
+ /* #define DEBUG_MIIM */
  
--static void ppce500_power_off(void *opaque, int line, int on)
--{
--    if (on) {
--        qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
--    }
--}
+-#define MIIM_CONTROL    0
+-#define MIIM_STATUS     1
+-#define MIIM_PHY_ID_1   2
+-#define MIIM_PHY_ID_2   3
+-#define MIIM_T2_STATUS  10
+-#define MIIM_EXT_STATUS 15
 -
- void ppce500_init(MachineState *machine)
+ static void miim_read_cycle(eTSEC *etsec)
  {
-     MemoryRegion *address_space_mem = get_system_memory();
-@@ -1072,7 +1063,7 @@ void ppce500_init(MachineState *machine)
-     sysbus_create_simple("e500-spin", pmc->spin_base, NULL);
+     uint8_t  phy;
+@@ -47,14 +40,14 @@ static void miim_read_cycle(eTSEC *etsec)
+     addr = etsec->regs[MIIMADD].value & 0x1F;
  
-     if (pmc->has_mpc8xxx_gpio) {
--        qemu_irq poweroff_irq;
-+        DeviceState *gpio_pwr_dev;
+     switch (addr) {
+-    case MIIM_CONTROL:
++    case MII_BMCR:
+         value = etsec->phy_control;
+         break;
+-    case MIIM_STATUS:
++    case MII_BMSR:
+         value = etsec->phy_status;
+         break;
+-    case MIIM_T2_STATUS:
+-        value = 0x1800;           /* Local and remote receivers OK */
++    case MII_STAT1000:
++        value = MII_STAT1000_LOK | MII_STAT1000_ROK;
+         break;
+     default:
+         value = 0x0;
+@@ -84,8 +77,8 @@ static void miim_write_cycle(eTSEC *etsec)
+ #endif
  
-         dev = qdev_new("mpc8xxx_gpio");
-         s = SYS_BUS_DEVICE(dev);
-@@ -1082,8 +1073,9 @@ void ppce500_init(MachineState *machine)
-                                     sysbus_mmio_get_region(s, 0));
- 
-         /* Power Off GPIO at Pin 0 */
--        poweroff_irq = qemu_allocate_irq(ppce500_power_off, NULL, 0);
--        qdev_connect_gpio_out(dev, 0, poweroff_irq);
-+        gpio_pwr_dev = sysbus_create_simple("gpio-pwr", -1, NULL);
-+        qdev_connect_gpio_out(dev, 0, qdev_get_gpio_in_named(gpio_pwr_dev,
-+                                                             "shutdown", 0));
-     }
- 
-     /* Platform Bus Device */
-diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
-index b44d91bebb..12ca3caabf 100644
---- a/hw/ppc/Kconfig
-+++ b/hw/ppc/Kconfig
-@@ -158,6 +158,7 @@ config E500
-     imply VIRTIO_PCI
-     select ETSEC
-     select GPIO_MPC8XXX
-+    select GPIO_PWR
-     select OPENPIC
-     select PFLASH_CFI01
-     select PLATFORM_BUS
+     switch (addr) {
+-    case MIIM_CONTROL:
+-        etsec->phy_control = value & ~(0x8100);
++    case MII_BMCR:
++        etsec->phy_control = value & ~(MII_BMCR_RESET | MII_BMCR_FD);
+         break;
+     default:
+         break;
 -- 
 2.47.0
 
