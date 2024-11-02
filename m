@@ -4,38 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A76B4E677F0
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 08:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED29E677EE
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 08:07:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t799B-0007L6-AW; Sat, 02 Nov 2024 04:06:13 -0400
+	id 1t7999-0007Jj-BT; Sat, 02 Nov 2024 04:06:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1t7998-0007J3-D4
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 04:06:10 -0400
+ id 1t7997-0007Ic-1L
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 04:06:09 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1t7994-0001yy-Ht
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 04:06:10 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1t7994-0001z6-3Q
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 04:06:08 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxTOJm3SVnUn0nAA--.14339S3;
- Sat, 02 Nov 2024 16:05:58 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dx2uFp3SVnZX0nAA--.16057S3;
+ Sat, 02 Nov 2024 16:06:01 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMAx7uBh3SVnzZA1AA--.18827S2;
- Sat, 02 Nov 2024 16:05:54 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMAx7uBh3SVnzZA1AA--.18827S5;
+ Sat, 02 Nov 2024 16:06:00 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PULL v2 0/8] loongarch-to-apply queue
-Date: Sat,  2 Nov 2024 15:47:29 +0800
-Message-Id: <20241102074737.1394884-1-gaosong@loongson.cn>
+Cc: peter.maydell@linaro.org,
+	Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL v2 3/8] target/loongarch/kvm: Implement LoongArch PMU extension
+Date: Sat,  2 Nov 2024 15:47:32 +0800
+Message-Id: <20241102074737.1394884-4-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20241102074737.1394884-1-gaosong@loongson.cn>
+References: <20241102074737.1394884-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAx7uBh3SVnzZA1AA--.18827S2
+X-CM-TRANSID: qMiowMAx7uBh3SVnzZA1AA--.18827S5
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -63,77 +65,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 92ec7805190313c9e628f8fc4eb4f932c15247bd:
+From: Bibo Mao <maobibo@loongson.cn>
 
-  Merge tag 'pull-riscv-to-apply-20241031-1' of https://github.com/alistair23/qemu into staging (2024-10-31 16:34:25 +0000)
+Implement PMU extension for LoongArch kvm mode. Use OnOffAuto type
+variable pmu to check the PMU feature. If the PMU Feature is not supported
+with KVM host, it reports error if there is pmu=on command line.
 
-are available in the Git repository at:
+If there is no any command line about pmu parameter, it checks whether
+KVM host supports the PMU Feature and set the corresponding value in cpucfg.
 
-  https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20241102
+This patch is based on lbt patch located at
+  https://lore.kernel.org/qemu-devel/20240904061859.86615-1-maobibo@loongson.cn
 
-for you to fetch changes up to 47b54e15bbe78722c62dfafc3e04deded820c05e:
+Co-developed-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-Id: <20240918082315.2345034-1-maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/cpu.c                | 19 +++++++++++++
+ target/loongarch/cpu.h                |  2 ++
+ target/loongarch/kvm/kvm.c            | 41 +++++++++++++++++++++++++++
+ target/loongarch/loongarch-qmp-cmds.c |  2 +-
+ 4 files changed, 63 insertions(+), 1 deletion(-)
 
-  target/loongarch: Add steal time support on migration (2024-11-02 15:45:45 +0800)
-
-----------------------------------------------------------------
-pull-loongarch-20241102
-
-V2: Fix no 'asm/unistd_64.h' build error.
-    Add a new patch (hw/loongarch/boot: Use warn_report when no kernel filename).
-----------------------------------------------------------------
-Bibo Mao (7):
-      target/loongarch: Add loongson binary translation feature
-      target/loongarch: Implement lbt registers save/restore function
-      target/loongarch/kvm: Implement LoongArch PMU extension
-      linux-headers: Add unistd_64.h
-      linux-headers: loongarch: Add kvm_para.h
-      linux-headers: Update to Linux v6.12-rc5
-      target/loongarch: Add steal time support on migration
-
-Song Gao (1):
-      hw/loongarch/boot: Use warn_report when no kernel filename
-
- hw/loongarch/boot.c                                |   5 +-
- include/standard-headers/drm/drm_fourcc.h          |  43 +++
- include/standard-headers/linux/const.h             |  17 ++
- include/standard-headers/linux/ethtool.h           | 226 ++++++++++++++
- include/standard-headers/linux/fuse.h              |  22 +-
- include/standard-headers/linux/input-event-codes.h |   2 +
- include/standard-headers/linux/pci_regs.h          |  41 ++-
- include/standard-headers/linux/virtio_balloon.h    |  16 +-
- include/standard-headers/linux/virtio_gpu.h        |   1 +
- linux-headers/asm-arm64/mman.h                     |   9 +
- linux-headers/asm-arm64/unistd.h                   |  25 +-
- linux-headers/asm-arm64/unistd_64.h                | 324 ++++++++++++++++++++
- linux-headers/asm-generic/unistd.h                 |   6 +-
- linux-headers/asm-loongarch/kvm.h                  |  24 ++
- linux-headers/asm-loongarch/kvm_para.h             |  21 ++
- linux-headers/asm-loongarch/unistd.h               |   4 +-
- linux-headers/asm-loongarch/unistd_64.h            | 320 ++++++++++++++++++++
- linux-headers/asm-riscv/kvm.h                      |   7 +
- linux-headers/asm-riscv/unistd.h                   |  41 +--
- linux-headers/asm-riscv/unistd_32.h                | 315 ++++++++++++++++++++
- linux-headers/asm-riscv/unistd_64.h                | 325 +++++++++++++++++++++
- linux-headers/asm-x86/kvm.h                        |   2 +
- linux-headers/asm-x86/unistd_64.h                  |   1 +
- linux-headers/asm-x86/unistd_x32.h                 |   1 +
- linux-headers/linux/bits.h                         |   3 +
- linux-headers/linux/const.h                        |  17 ++
- linux-headers/linux/iommufd.h                      | 143 +++++++--
- linux-headers/linux/kvm.h                          |  23 +-
- linux-headers/linux/mman.h                         |   1 +
- linux-headers/linux/psp-sev.h                      |  28 ++
- scripts/update-linux-headers.sh                    |   7 +
- target/loongarch/cpu.c                             |  43 +++
- target/loongarch/cpu.h                             |  23 ++
- target/loongarch/kvm/kvm.c                         | 225 +++++++++++++-
- target/loongarch/loongarch-qmp-cmds.c              |   2 +-
- target/loongarch/machine.c                         |  30 +-
- 36 files changed, 2243 insertions(+), 100 deletions(-)
- create mode 100644 linux-headers/asm-arm64/unistd_64.h
- create mode 100644 linux-headers/asm-loongarch/kvm_para.h
- create mode 100644 linux-headers/asm-loongarch/unistd_64.h
- create mode 100644 linux-headers/asm-riscv/unistd_32.h
- create mode 100644 linux-headers/asm-riscv/unistd_64.h
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 29577e6b71..57cc4f314b 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -676,6 +676,18 @@ static void loongarch_set_lbt(Object *obj, bool value, Error **errp)
+     cpu->lbt = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+ }
+ 
++static bool loongarch_get_pmu(Object *obj, Error **errp)
++{
++    return LOONGARCH_CPU(obj)->pmu != ON_OFF_AUTO_OFF;
++}
++
++static void loongarch_set_pmu(Object *obj, bool value, Error **errp)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
++
++    cpu->pmu = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++}
++
+ void loongarch_cpu_post_init(Object *obj)
+ {
+     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+@@ -691,6 +703,13 @@ void loongarch_cpu_post_init(Object *obj)
+                                  loongarch_set_lbt);
+         object_property_set_description(obj, "lbt",
+                                    "Set off to disable Binary Tranlation.");
++
++        cpu->pmu = ON_OFF_AUTO_AUTO;
++        object_property_add_bool(obj, "pmu", loongarch_get_pmu,
++                                 loongarch_set_pmu);
++        object_property_set_description(obj, "pmu",
++                                   "Set off to performance monitor unit.");
++
+     } else {
+         cpu->lbt = ON_OFF_AUTO_OFF;
+     }
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 136866b7b8..95be58dd66 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -284,6 +284,7 @@ typedef struct LoongArchTLB LoongArchTLB;
+ 
+ enum loongarch_features {
+     LOONGARCH_FEATURE_LBT, /* loongson binary translation extension */
++    LOONGARCH_FEATURE_PMU,
+ };
+ 
+ typedef struct  LoongArchBT {
+@@ -399,6 +400,7 @@ struct ArchCPU {
+     QEMUTimer timer;
+     uint32_t  phy_id;
+     OnOffAuto lbt;
++    OnOffAuto pmu;
+ 
+     /* 'compatible' string for this CPU for Linux device trees */
+     const char *dtb_compatible;
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index 40115aff56..8bda8ae540 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -750,9 +750,18 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
+         attr.attr = KVM_LOONGARCH_VM_FEAT_MIPSBT;
+         ret |= kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
+         return (ret == 0);
++
++    case LOONGARCH_FEATURE_PMU:
++        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
++        attr.attr = KVM_LOONGARCH_VM_FEAT_PMU;
++        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
++        return (ret == 0);
++
+     default:
+         return false;
+     }
++
++    return false;
+ }
+ 
+ static int kvm_cpu_check_lbt(CPUState *cs, Error **errp)
+@@ -776,6 +785,32 @@ static int kvm_cpu_check_lbt(CPUState *cs, Error **errp)
+     return 0;
+ }
+ 
++static int kvm_cpu_check_pmu(CPUState *cs, Error **errp)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    CPULoongArchState *env = cpu_env(cs);
++    bool kvm_supported;
++
++    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_PMU);
++    if (cpu->pmu == ON_OFF_AUTO_ON) {
++        if (!kvm_supported) {
++            error_setg(errp, "'pmu' feature not supported by KVM on the host");
++            return -ENOTSUP;
++        }
++    } else if (cpu->pmu != ON_OFF_AUTO_AUTO) {
++        /* disable pmu if ON_OFF_AUTO_OFF is set */
++        kvm_supported = false;
++    }
++
++    if (kvm_supported) {
++        env->cpucfg[6] = FIELD_DP32(env->cpucfg[6], CPUCFG6, PMP, 1);
++        env->cpucfg[6] = FIELD_DP32(env->cpucfg[6], CPUCFG6, PMNUM, 3);
++        env->cpucfg[6] = FIELD_DP32(env->cpucfg[6], CPUCFG6, PMBITS, 63);
++        env->cpucfg[6] = FIELD_DP32(env->cpucfg[6], CPUCFG6, UPM, 1);
++    }
++    return 0;
++}
++
+ int kvm_arch_init_vcpu(CPUState *cs)
+ {
+     uint64_t val;
+@@ -793,6 +828,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     if (ret < 0) {
+         error_report_err(local_err);
+     }
++
++    ret = kvm_cpu_check_pmu(cs, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
++
+     return ret;
+ }
+ 
+diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
+index c6f6e1ef85..782fd511fd 100644
+--- a/target/loongarch/loongarch-qmp-cmds.c
++++ b/target/loongarch/loongarch-qmp-cmds.c
+@@ -40,7 +40,7 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
+ }
+ 
+ static const char *cpu_model_advertised_features[] = {
+-    "lsx", "lasx", "lbt", NULL
++    "lsx", "lasx", "lbt", "pmu", NULL
+ };
+ 
+ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+-- 
+2.34.1
 
 
