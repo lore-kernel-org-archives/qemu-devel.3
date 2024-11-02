@@ -4,136 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62C6FE67802
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 15:36:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF8FEE67807
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 17:25:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7GAe-0006Qc-Ns; Sat, 02 Nov 2024 11:36:12 -0400
+	id 1t7Hrf-0003KF-TB; Sat, 02 Nov 2024 13:24:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1t7GAd-0006QG-1M; Sat, 02 Nov 2024 11:36:11 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1t7Hrd-0003Jc-SD
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 13:24:41 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1t7GAZ-0005XT-69; Sat, 02 Nov 2024 11:36:10 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-20ce5e3b116so23031695ad.1; 
- Sat, 02 Nov 2024 08:36:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1t7Hrc-0008TM-1H
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 13:24:41 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-53a007743e7so3166313e87.1
+ for <qemu-devel@nongnu.org>; Sat, 02 Nov 2024 10:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730561765; x=1731166565; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=ir4bsmkC5gM1QHQB0cTjySbGrM9JmrsviXDE92WrX34=;
- b=H3tYa1e/fICThUxoLqWrhPtHzksXbg1YfxImDWg7Ii57YFZgjB+3LG3aJpvr+Ruewk
- 63KWybEoIXvQz/kqj9Zkm9evbuHn9ZmGO1v5+c3TVMadawlu6sTRmuhBVKQMpt7R5caJ
- oqEzh6x2XYGkhei3SeAiunb+SU7Cu3kcjGhtY6EWKmoYcJPUz6CMaRLL94T1I4gHGCeq
- FiIH2crpQkZgRuMbRop9hkfkzBNygS6QbwUUMOFWSo+JtM1hKSoiRXEZFjHKi1yNh1tN
- IxtHc1al4eCqufJ46raYD2dxPk9A+mIipIKJH/AGhNZzeeNQr5OmzvmNzoPzzlG+bQnf
- dnJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730561765; x=1731166565;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1730568277; x=1731173077;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ir4bsmkC5gM1QHQB0cTjySbGrM9JmrsviXDE92WrX34=;
- b=fFVkRfruerKZ/A2Q20eUoP8KvYoU8ukLzyomEurUEhSV16fBth+fRDVYnUkrbRdNuD
- ycfuM34xA0L7tisd7/f8/GqE5xKwL/1hhFRz9SWhH80Rx6uY98dfgHZU19ywpfz/YCno
- m3HCB4rnPB2Zkt5wMkGCr+5gD31PrlwZcZMKEET0u/X4ZZniTsYH20KoIoVc0FvQgGi0
- X2OjMvyzp9+3qqkb/oMI1euvw6egNsOIV6ha5UJ8AvrKf8ZFCUaIw56M4oHs4Z6tcIsO
- HHnZOkOMlqwxeLpLuJ1O4ikfGrtHcHXsjXzw3p9A/EL7kD5NMq1nKyrOziYCbBJIkjTh
- kmmg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViIgB7SS50/43CgLqOBJ1eiMhE975CHOlsjv2D8+KrdbDJYlwpYr1HoMBqBU5EhumSuePsW2VDtTCP1Q==@nongnu.org,
- AJvYcCW9Bh9yfpEG1PEcVLEqeh3v97TvMLbI3NS9ZWA+NwE15jtXgcJmRZ84mrsnw+S+bROB2jKi4pQdNw==@nongnu.org
-X-Gm-Message-State: AOJu0Yx0dqsOiL8pTi7bnoIVoDYw0B4mQ0Yv7cTsxfGR1ugtUomHY7Gd
- oNmfMuRZbDi1kF8dQC3tI65NcJZlEvv/nGc0inI4dIALoM56kJP3
-X-Google-Smtp-Source: AGHT+IE1JTltdmrzTUrFpzS7o7IIdzACR041r7Oq3K0IED8us8W+IdlWI2cgb0dei8Eqb9868jhIOQ==
-X-Received: by 2002:a17:903:2344:b0:20c:94d1:2cb9 with SMTP id
- d9443c01a7336-2111af1cdf2mr94705295ad.9.1730561764830; 
- Sat, 02 Nov 2024 08:36:04 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
- ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-211056edc5asm35135935ad.9.2024.11.02.08.36.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 02 Nov 2024 08:36:04 -0700 (PDT)
-Message-ID: <e3b7cbff-7cf9-4529-adfc-b650a4db0d81@roeck-us.net>
-Date: Sat, 2 Nov 2024 08:36:01 -0700
+ bh=6ikBgZ+L88jpe8vrOgdEvzV7rBj0Ggiq7vNLqo7AV/o=;
+ b=xZC3bynyBiBqywGjMvJC2abo+zuhUMus5EYS9vogFNttiBvudhXsf/QqER7b3r/rxn
+ TlGc/umPWluFkFHyCkFTijuWlW51pRbmVsGAzNA9SFW67707NL5zhZXAvR4ULzPOKceS
+ jUONi/f2KKkJeowamx30WUs4JKdm7EFU4tppiDrztQn51eq58fSDYxP8jQCzx2AWKYLZ
+ C7/udpWZo3sCD9Ma3Ts5zh7dkl9hdm/YrJ470C/atlOnPFvZi6ACNauS+R7sPCxEjEaj
+ 9MtKMdvA7ZydBboItG90ujVwBzQlxP2RiwVp6JbzNSAqgY2C//CQyfyyoW7vPZ+9iNT/
+ vqsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730568277; x=1731173077;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6ikBgZ+L88jpe8vrOgdEvzV7rBj0Ggiq7vNLqo7AV/o=;
+ b=bUZrq4Ri+C0/WrgMd8cwoT689Jiap7lGNOZZjCZnxhtZrZyhZ/dFD5fzyCpNc8aBp/
+ t9IBmzNJERJ3CPzQ5DVlKuGrMtRFtofS1NOKCw3TxEq8NJyod26aPHmPbdsg1Hzz6Hdk
+ 5dpm6/QPbh8q5PsU/eWrzGpLKchsac64HEJaVS9fZGhO31cvnwWEOav4Wy5hZRXZCFb6
+ 5yLj0ox3cK7BUQQnh6wO6hrU4QVAuYQWQl2Sm9McsJnYlzZxI22LE371F5/3/MGsHKsG
+ jLLMliSqo3Fankhg73w/B13d/lgZq5cGHScH+Xm37nOFoUwmn4esr5a6DNIfI8gxte5X
+ 9YUQ==
+X-Gm-Message-State: AOJu0YypyA0vxIVIrkHcmeoFSg81BURz7n5oZf/N5rufcI8fAGnll2jQ
+ 4FcI8fg0GChUC86br3CXbteRTGbVKwbBpV+kpQgQjXV/JiClFc3NH7lgvPqfT+27x8p9KyTqdOK
+ Jv6dkCcA9hChKr3XvYlHDPtLHqml+666H+wgD3A==
+X-Google-Smtp-Source: AGHT+IF7aFsdL1B+97ee0MXOCSW8hNbbV4v5OT8yhL6hKJjKDUspvqnQQUxrjRdQsURWRBlwb2VJ9puFtrfgZNHPI0k=
+X-Received: by 2002:a05:6512:b94:b0:539:f7ab:e161 with SMTP id
+ 2adb3069b0e04-53c79e8ec22mr6065850e87.45.1730568277102; Sat, 02 Nov 2024
+ 10:24:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] aspeed: Don't set always boot properties of the emmc
- device
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jan Luebbe <jlu@pengutronix.de>
-References: <20241102143943.1929177-1-clg@redhat.com>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20241102143943.1929177-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=groeck7@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
+References: <20241102131715.548849-1-shentey@gmail.com>
+ <20241102131715.548849-23-shentey@gmail.com>
+In-Reply-To: <20241102131715.548849-23-shentey@gmail.com>
+From: Corey Minyard <corey@minyard.net>
+Date: Sat, 2 Nov 2024 12:24:25 -0500
+Message-ID: <CAB9gMfrd+E=yv6L4JZ6KuTJv496omKdN3DAw+AyWQG6vjac5Bg@mail.gmail.com>
+Subject: Re: [PATCH v3 22/26] hw/i2c/smbus_eeprom: Prefer DEFINE_TYPES() macro
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ qemu-block@nongnu.org, 
+ Bin Meng <bmeng.cn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Jason Wang <jasowang@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org, 
+ Corey Minyard <cminyard@mvista.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: none client-ip=2a00:1450:4864:20::12c;
+ envelope-from=corey@minyard.net; helo=mail-lf1-x12c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,75 +97,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/2/24 07:39, Cédric Le Goater wrote:
-> Commit e554e45b4478 ("aspeed: Tune eMMC device properties to reflect
-> HW strapping") added support to boot from an eMMC device by setting
-> the boot properties of the eMMC device. This change made the
-> assumption that the device always has boot areas.
-> 
-> However, if the machine boots from the flash device (or -kernel) and
-> uses an eMMC device without boot areas, support would be broken. This
-> impacts the ast2600-evb machine which can choose to boot from flash or
-> eMMC using the "boot-emmc" machine option.
-> 
-> To provide some flexibility for Aspeed machine users to use different
-> flavors of eMMC devices (with or without boot areas), do not set the
-> eMMC device boot properties when the machine is not configured to boot
-> from eMMC. However, this approach makes another assumption about eMMC
-> devices, namely that eMMC devices from which the machine does not boot
-> do not have boot areas.
-> 
-> A preferable alternative would be to add support for user creatable
-> eMMC devices and define the device boot properties on the QEMU command
-> line :
-> 
->    -blockdev node-name=emmc0,driver=file,filename=mmc-ast2600-evb.raw \
->    -device emmc,bus=sdhci-bus.2,drive=emmc0,boot-partition-size=1048576,boot-config=8
-> 
-> This is a global change requiring more thinking. Nevertheless, in the
-> case of the ast2600-evb machine booting from an eMMC device and when
-> default devices are created, the proposed change still makes sense
-> since the device is required to have boot areas.
-> 
-> Cc: Jan Luebbe <jlu@pengutronix.de>
-> Fixes: e554e45b4478 ("aspeed: Tune eMMC device properties to reflect
-> HW strapping")
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> Tested-by: Guenter Roeck <linux@roeck-us.net>
+On Sat, Nov 2, 2024 at 8:25=E2=80=AFAM Bernhard Beschow <shentey@gmail.com>=
+ wrote:
+>
+> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->   hw/arm/aspeed.c | 13 ++++++++++++-
->   1 file changed, 12 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index e161e6b1c582..ac6d8dde71b3 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -338,7 +338,18 @@ static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc,
->               return;
->           }
->           card = qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
-> -        if (emmc) {
-> +
-> +        /*
-> +         * Force the boot properties of the eMMC device only when the
-> +         * machine is strapped to boot from eMMC. Without these
-> +         * settings, the machine would not boot.
-> +         *
-> +         * This also allows the machine to use an eMMC device without
-> +         * boot areas when booting from the flash device (or -kernel)
-> +         * Ideally, the device and its properties should be defined on
-> +         * the command line.
-> +         */
-> +        if (emmc && boot_emmc) {
->               qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
->               qdev_prop_set_uint8(card, "boot-config",
->                                   boot_emmc ? 0x1 << 3 : 0x0);
+>  hw/i2c/smbus_eeprom.c | 19 ++++++++-----------
+>  1 file changed, 8 insertions(+), 11 deletions(-)
+>
+> diff --git a/hw/i2c/smbus_eeprom.c b/hw/i2c/smbus_eeprom.c
+> index 9e62c27a1a..1d4d9704bf 100644
+> --- a/hw/i2c/smbus_eeprom.c
+> +++ b/hw/i2c/smbus_eeprom.c
+> @@ -151,19 +151,16 @@ static void smbus_eeprom_class_initfn(ObjectClass *=
+klass, void *data)
+>      dc->user_creatable =3D false;
+>  }
+>
+> -static const TypeInfo smbus_eeprom_info =3D {
+> -    .name          =3D TYPE_SMBUS_EEPROM,
+> -    .parent        =3D TYPE_SMBUS_DEVICE,
+> -    .instance_size =3D sizeof(SMBusEEPROMDevice),
+> -    .class_init    =3D smbus_eeprom_class_initfn,
+> +static const TypeInfo types[] =3D {
 
-That second boot_emmc check is no longer necessary, so this could be
-simplified to
-		qdev_prop_set_uint8(card, "boot-config", 0x1 << 3);
+This is better, but why did you change the name to "types".  The
+previous name was fairly descriptive, though you might change "info"
+to "types".
 
-Thanks,
-Guenter
+-corey
 
+> +    {
+> +        .name          =3D TYPE_SMBUS_EEPROM,
+> +        .parent        =3D TYPE_SMBUS_DEVICE,
+> +        .instance_size =3D sizeof(SMBusEEPROMDevice),
+> +        .class_init    =3D smbus_eeprom_class_initfn,
+> +    },
+>  };
+>
+> -static void smbus_eeprom_register_types(void)
+> -{
+> -    type_register_static(&smbus_eeprom_info);
+> -}
+> -
+> -type_init(smbus_eeprom_register_types)
+> +DEFINE_TYPES(types)
+>
+>  void smbus_eeprom_init_one(I2CBus *smbus, uint8_t address, uint8_t *eepr=
+om_buf)
+>  {
+> --
+> 2.47.0
+>
+>
 
