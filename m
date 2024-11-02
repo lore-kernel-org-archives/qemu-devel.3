@@ -4,73 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39681E67800
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 14:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D575E67802
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 14:59:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7FIU-0001Zt-7z; Sat, 02 Nov 2024 10:40:14 -0400
+	id 1t7Fa7-00042R-8R; Sat, 02 Nov 2024 10:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t7FIR-0001ZT-Gt
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 10:40:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=uVOK=R5=kaod.org=clg@ozlabs.org>)
+ id 1t7Fa5-00041v-Jg; Sat, 02 Nov 2024 10:58:25 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t7FIO-0007F4-Nz
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 10:40:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730558405;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=8MbxtM9zKtquGKObGbaLz0NeOQN2pH32upqIbkhv+60=;
- b=XHFx9ru88VAsT4B46VI992XL/6aJLwFbLBfH3qMHEBlbDDbYqF5uZ9OmirSaaqtreTxeaN
- 8aNunMHna5Ze/JZ+3yAGvOCtrZ9IkI43W8CAPZuMHeGzp0A9R2M5q1xvyI6Ngs5c5+2go0
- b/OkTC3JFZXe+Neqw+VU4a7zPn2iifg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-527-QJTKwB_KMgWO6tAURxTt-A-1; Sat,
- 02 Nov 2024 10:40:02 -0400
-X-MC-Unique: QJTKwB_KMgWO6tAURxTt-A-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (Exim 4.90_1) (envelope-from <SRS0=uVOK=R5=kaod.org=clg@ozlabs.org>)
+ id 1t7Fa3-0002zt-64; Sat, 02 Nov 2024 10:58:25 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XggpB6mbSz4x8W;
+ Sun,  3 Nov 2024 01:58:10 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B7F5195608A; Sat,  2 Nov 2024 14:39:54 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.193.155])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 542A21956086; Sat,  2 Nov 2024 14:39:45 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Jan Luebbe <jlu@pengutronix.de>, Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH] aspeed: Don't set always boot properties of the emmc device
-Date: Sat,  2 Nov 2024 15:39:43 +0100
-Message-ID: <20241102143943.1929177-1-clg@redhat.com>
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Xggp76Bv0z4x7G;
+ Sun,  3 Nov 2024 01:58:07 +1100 (AEDT)
+Message-ID: <966987ee-060d-49c0-ac71-f6675f63d52e@kaod.org>
+Date: Sat, 2 Nov 2024 15:58:07 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/arm: enable at24c with aspeed
+To: Patrick Leis <venture@google.com>, peter.maydell@linaro.org,
+ steven_lee@aspeedtech.com, "leetroy@gmail.com >> Troy Lee"
+ <leetroy@gmail.com>, jamin_lin@aspeedtech.com, andrew@codeconstruct.com.au,
+ joel@jms.id.au
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20241028181420.1438938-1-venture@google.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20241028181420.1438938-1-venture@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=uVOK=R5=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,69 +66,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit e554e45b4478 ("aspeed: Tune eMMC device properties to reflect
-HW strapping") added support to boot from an eMMC device by setting
-the boot properties of the eMMC device. This change made the
-assumption that the device always has boot areas.
+On 10/28/24 19:14, Patrick Leis wrote:
+> Enable AT24C with ASPEED in the KConfig because the boards build this
+> device.
+> 
+> Signed-off-by: Patrick Leis <venture@google.com>
+> ---
+>   hw/arm/Kconfig | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index e7fd9338d1..1b25e73578 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -539,6 +539,7 @@ config ASPEED_SOC
+>       select PMBUS
+>       select MAX31785
+>       select FSI_APB2OPB_ASPEED
+> +    select AT24C
+>   
+>   config MPS2
+>       bool
 
-However, if the machine boots from the flash device (or -kernel) and
-uses an eMMC device without boot areas, support would be broken. This
-impacts the ast2600-evb machine which can choose to boot from flash or
-eMMC using the "boot-emmc" machine option.
 
-To provide some flexibility for Aspeed machine users to use different
-flavors of eMMC devices (with or without boot areas), do not set the
-eMMC device boot properties when the machine is not configured to boot
-from eMMC. However, this approach makes another assumption about eMMC
-devices, namely that eMMC devices from which the machine does not boot
-do not have boot areas.
+Applied to aspeed-next.
 
-A preferable alternative would be to add support for user creatable
-eMMC devices and define the device boot properties on the QEMU command
-line :
+Thanks,
 
-  -blockdev node-name=emmc0,driver=file,filename=mmc-ast2600-evb.raw \
-  -device emmc,bus=sdhci-bus.2,drive=emmc0,boot-partition-size=1048576,boot-config=8
+C.
 
-This is a global change requiring more thinking. Nevertheless, in the
-case of the ast2600-evb machine booting from an eMMC device and when
-default devices are created, the proposed change still makes sense
-since the device is required to have boot areas.
-
-Cc: Jan Luebbe <jlu@pengutronix.de>
-Fixes: e554e45b4478 ("aspeed: Tune eMMC device properties to reflect
-HW strapping")
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
----
- hw/arm/aspeed.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index e161e6b1c582..ac6d8dde71b3 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -338,7 +338,18 @@ static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc,
-             return;
-         }
-         card = qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
--        if (emmc) {
-+
-+        /*
-+         * Force the boot properties of the eMMC device only when the
-+         * machine is strapped to boot from eMMC. Without these
-+         * settings, the machine would not boot.
-+         *
-+         * This also allows the machine to use an eMMC device without
-+         * boot areas when booting from the flash device (or -kernel)
-+         * Ideally, the device and its properties should be defined on
-+         * the command line.
-+         */
-+        if (emmc && boot_emmc) {
-             qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
-             qdev_prop_set_uint8(card, "boot-config",
-                                 boot_emmc ? 0x1 << 3 : 0x0);
--- 
-2.47.0
 
 
