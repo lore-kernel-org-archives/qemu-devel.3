@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D575E67802
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 14:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 579DFE67802
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 14:59:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7Fa7-00042R-8R; Sat, 02 Nov 2024 10:58:27 -0400
+	id 1t7FbF-0004fq-DP; Sat, 02 Nov 2024 10:59:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uVOK=R5=kaod.org=clg@ozlabs.org>)
- id 1t7Fa5-00041v-Jg; Sat, 02 Nov 2024 10:58:25 -0400
+ id 1t7FbB-0004f0-Gh; Sat, 02 Nov 2024 10:59:33 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uVOK=R5=kaod.org=clg@ozlabs.org>)
- id 1t7Fa3-0002zt-64; Sat, 02 Nov 2024 10:58:25 -0400
+ id 1t7Fb8-0004AB-WB; Sat, 02 Nov 2024 10:59:32 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XggpB6mbSz4x8W;
- Sun,  3 Nov 2024 01:58:10 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Xggqf4QNzz4x8g;
+ Sun,  3 Nov 2024 01:59:26 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Xggp76Bv0z4x7G;
- Sun,  3 Nov 2024 01:58:07 +1100 (AEDT)
-Message-ID: <966987ee-060d-49c0-ac71-f6675f63d52e@kaod.org>
-Date: Sat, 2 Nov 2024 15:58:07 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Xggqb641xz4x7H;
+ Sun,  3 Nov 2024 01:59:23 +1100 (AEDT)
+Message-ID: <cc10d775-2924-4fed-a64b-8ab5b320ede7@kaod.org>
+Date: Sat, 2 Nov 2024 15:59:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm: enable at24c with aspeed
-To: Patrick Leis <venture@google.com>, peter.maydell@linaro.org,
- steven_lee@aspeedtech.com, "leetroy@gmail.com >> Troy Lee"
- <leetroy@gmail.com>, jamin_lin@aspeedtech.com, andrew@codeconstruct.com.au,
- joel@jms.id.au
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20241028181420.1438938-1-venture@google.com>
+Subject: Re: [PATCH 0/2] hw/arm/aspeed_ast27x0: minor IRQ number cleanup
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+References: <20241101161125.1901394-1-peter.maydell@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20241028181420.1438938-1-venture@google.com>
+In-Reply-To: <20241101161125.1901394-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -66,28 +66,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/28/24 19:14, Patrick Leis wrote:
-> Enable AT24C with ASPEED in the KConfig because the boards build this
-> device.
+On 11/1/24 17:11, Peter Maydell wrote:
+> In the course of a conversation on IRC with somebody who was using
+> the ast27x0 code as a model for a new board, I noticed that the
+> code currently defines a local ARCH_GIC_MAINT_IRQ with a different
+> value from the constant of the same name that we define in the
+> include/hw/arm/bsa.h header. This patchset cleans that up and
+> also another minor awkwardness that I spotted in the process.
 > 
-> Signed-off-by: Patrick Leis <venture@google.com>
-> ---
->   hw/arm/Kconfig | 1 +
->   1 file changed, 1 insertion(+)
+> thanks
+> -- PMM
 > 
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index e7fd9338d1..1b25e73578 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -539,6 +539,7 @@ config ASPEED_SOC
->       select PMBUS
->       select MAX31785
->       select FSI_APB2OPB_ASPEED
-> +    select AT24C
->   
->   config MPS2
->       bool
-
+> Peter Maydell (2):
+>    hw/arm/aspeed_ast27x0: Use bsa.h for PPI definitions
+>    hw/arm/aspeed_ast27x0: Avoid hardcoded '256' in IRQ calculation
+> 
+>   hw/arm/aspeed_ast27x0.c | 22 +++++++++++-----------
+>   1 file changed, 11 insertions(+), 11 deletions(-)
+> 
 
 Applied to aspeed-next.
 
