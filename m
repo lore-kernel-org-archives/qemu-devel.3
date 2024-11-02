@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B665DE677FD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A04C1E677FC
 	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:21:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7E18-0003Pu-EY; Sat, 02 Nov 2024 09:18:14 -0400
+	id 1t7E0z-0003Ed-3H; Sat, 02 Nov 2024 09:18:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0q-0003A5-Aa; Sat, 02 Nov 2024 09:17:56 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1t7E0g-000359-3M; Sat, 02 Nov 2024 09:17:46 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0o-00020G-O8; Sat, 02 Nov 2024 09:17:56 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3807dd08cfcso2276488f8f.1; 
- Sat, 02 Nov 2024 06:17:52 -0700 (PDT)
+ id 1t7E0e-0001xy-F4; Sat, 02 Nov 2024 09:17:45 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a9a156513a1so466939266b.0; 
+ Sat, 02 Nov 2024 06:17:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730553471; x=1731158271; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730553461; x=1731158261; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pyBZgo+H9vb+N+fytpA0S3Ymlld/fAbgfJZrmoRBkU8=;
- b=cnad/3dErhlR1nya1UDUF9+LWHssO6eBtJVOdIC1GAWqKKkkojCyHJHQvhYS3vsAco
- JO4MnJ+iYRgFTIl+RpVscVHWsSxnJWBwyf50t3pAk34fLuj67PR+wIAfpgxjoMmIRJGd
- OwtWyo3ij3A5cFD7TlP3joYPTMac12lQ3qhfYlejOl1UErudb+byNkyLV/ByuqQoTrWg
- XKy46Of8eNXFVAhuT0Dx4V8hm/YB+E9CiWt6GIOXKRKzJBQxp85LHzdxWO0l46HkWVFu
- Oxgr8OfLoqas/2Gs0ykx6fAe1VdFK00SbPXQHD4vPGPjVHFyjWtFoSFLaP6XJNYru09P
- TMHA==
+ bh=a850vDBXzHXJ7cyIPByVZxmHOqLVyh2zVKfhVANSK04=;
+ b=ltvei1A9Yyg26aOH522sHjqN2XsYQ/iKDd7Ik9SGr9v1b2AxbNrB36qhqJ6j1RsZT4
+ lE11fFybLthciJW9f1xR1IbjeLoUEp/F79e5JfvvJoHcF5XwdqTLAzWkslz73jR5GHfS
+ gp2la/qdxsqbDoIMmRQODad0acLhH70dCkAVTCl1aVQUwxhXBvfZFbVGZzjZ5jr/fpNG
+ I17GmSYWFSq+CaGQMDTZc3mfQo5ccBxngN4FKmaE/0TJnAamNNduWd/juAqXFyqpzfGl
+ PnK3QdysRkyMliXj5RJqruWjbQOHoyRi5SA4hHDp+TNVjV6DlaBIyowm8W+wGaAbfAS0
+ hgGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730553471; x=1731158271;
+ d=1e100.net; s=20230601; t=1730553461; x=1731158261;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pyBZgo+H9vb+N+fytpA0S3Ymlld/fAbgfJZrmoRBkU8=;
- b=S7LJED5OWjFEN4mER8V3F24OJGd9/q2evvxEYBLYMnizqL87q0IANmrAvfgsVn4ml5
- ieqJqO6dO6p3VneSzVIL1RkFJyHKCQgpI21c1JxmNCwOUxWbnfG9LMvXYc+sF+mcQhtc
- UNmca0UH/orq0mKhQD37JrDjut07YP36c9aziYEXACm8jR8dpMXZzfh4ekgJTQC9H8Gm
- IXVX/GpO/+E/PDtsTpDh3dB2grIhQH2Z2WZ3c5Lttp1LZ3hGFzcM1ZvcykepC93e5vIP
- wJcmC9YNi+AJOwqnOu0uyk3LXpjZsWEb3dPVTwqUJPoBZ2XifdkUDXsxDs1k4OHvDb/t
- m78Q==
+ bh=a850vDBXzHXJ7cyIPByVZxmHOqLVyh2zVKfhVANSK04=;
+ b=CZcitGEHdX4GPQz9koJCkzTp2sY8FIfRQRFLDpC1Pu0j7i6bNA44SeiEsIefnJ7SEQ
+ HGiof3KbvpXtYGWYK2piW4L+c2iD0Q/kJpCCRwdI0pyklT2GNh7CH0xo5YvYE06JvPb3
+ FwqLr3AACxsJ6mxlRhr7d1zNKAVoPPjHWsk70p6RDBswkuIAwttqP0iD6NOcyvDQ1hE+
+ b0eHavuiwoTmf71aCYY6HC8hOSMc3FCVWKIEDjhSXulc6MC/SUAPbdHsZ1We0nhjF8rm
+ hPkeTsE1nrE9VNdd/2sI80V4jHe2UpTYKZXj2iAe28Q4PY9BHubQN82FwIhcAP5mEOWm
+ 95pQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWwPnhQmpRxgx6GdbfoBWGQrKeu1I9MkkJzo23Mjnph5N9VcWArdpCBOFync6AhQE8eaH8kKj4tqkDH@nongnu.org,
- AJvYcCXKrHJUNRXEXBQqJ2G8jMk8ledIha7hD2y7RtEZ8lZ2bN4McNJyyC9Q/HBU7ezQ7seLrPJBnIvFiuk=@nongnu.org
-X-Gm-Message-State: AOJu0Yw2+Qgf4EHhFMTvl3dkGRZFlQ9BWLttwWCkLMu6xAvf7gP6CZFX
- AT+aV7UjlkIGTGHZKH5gBymP4F81Bpjn18aFovLeXl/mzRFqILhvJYmE6g==
-X-Google-Smtp-Source: AGHT+IFmo85UhsYj7yM/t9jVFu3LpfoBltx4O9rUXGdXmiiFp+UENhvv8OH+qjBlv8JKsxZ9VkUkAw==
-X-Received: by 2002:a5d:6d0f:0:b0:37d:9565:4db2 with SMTP id
- ffacd0b85a97d-381c7a469cemr7604057f8f.6.1730553471197; 
- Sat, 02 Nov 2024 06:17:51 -0700 (PDT)
+ AJvYcCV6x0QaFshPBP6n+4iJiqU9yYFe0orC2XUkIP2GtILro7X4NwBZZJY6H/Ypz1LMM27fl6ocDf/VJCI=@nongnu.org,
+ AJvYcCWpau0qg7lgnt+lrKwWrwcXyOLyrBLVsN6EBvxgLF8wVUtboqwlBLrDhI1Q/0+zcM2rAIcJ0Cj11nR4@nongnu.org
+X-Gm-Message-State: AOJu0YwPcOaifMYgujln2vJmZnVP2LldGke4VTkvl7yI308GyBC7t1Wj
+ IQEdYf2AfYzYFGZiiG8j7hBwWWrQ+BNDpsftUaD17LeZJ99PhghCo6sf5w==
+X-Google-Smtp-Source: AGHT+IG7pSL75drlXt+jqIFdGmscG4ofpult5VeikrWGtLFmHWvMKj/e8ZBh6AXNI2qMgz/xrk+/dQ==
+X-Received: by 2002:a17:907:6d0d:b0:a9a:147d:fe9c with SMTP id
+ a640c23a62f3a-a9de61d5d59mr2694010666b.43.1730553461485; 
+ Sat, 02 Nov 2024 06:17:41 -0700 (PDT)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.50
+ a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Nov 2024 06:17:50 -0700 (PDT)
+ Sat, 02 Nov 2024 06:17:41 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -70,17 +70,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org,
  Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH v3 16/26] hw/net/fsl_etsec/etsec: Prefer DEFINE_TYPES() macro
-Date: Sat,  2 Nov 2024 14:17:05 +0100
-Message-ID: <20241102131715.548849-17-shentey@gmail.com>
+Subject: [PATCH v3 09/26] hw/ppc/ppce500_ccsr: Trace access to CCSR region
+Date: Sat,  2 Nov 2024 14:16:58 +0100
+Message-ID: <20241102131715.548849-10-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241102131715.548849-1-shentey@gmail.com>
 References: <20241102131715.548849-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,51 +102,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+The CCSR space is just a container which is meant to be covered by platform
+device memory regions. However, QEMU only implements a subset of these devices.
+Add some tracing to see which unimplemented devices a guest attempts to access.
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/net/fsl_etsec/etsec.c | 22 +++++++++-------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+ hw/ppc/ppce500_ccsr.c | 25 ++++++++++++++++++++++++-
+ hw/ppc/trace-events   |  3 +++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/hw/net/fsl_etsec/etsec.c b/hw/net/fsl_etsec/etsec.c
-index 3fdd16ef2e..9bd886b996 100644
---- a/hw/net/fsl_etsec/etsec.c
-+++ b/hw/net/fsl_etsec/etsec.c
-@@ -36,7 +36,6 @@
- #include "registers.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
--#include "qemu/module.h"
+diff --git a/hw/ppc/ppce500_ccsr.c b/hw/ppc/ppce500_ccsr.c
+index 5d0e1e0e89..dfd8e80c2d 100644
+--- a/hw/ppc/ppce500_ccsr.c
++++ b/hw/ppc/ppce500_ccsr.c
+@@ -13,12 +13,35 @@
  
- /* #define HEX_DUMP */
- /* #define DEBUG_REGISTER */
-@@ -431,17 +430,14 @@ static void etsec_class_init(ObjectClass *klass, void *data)
-     dc->user_creatable = true;
+ #include "qemu/osdep.h"
+ #include "ppce500_ccsr.h"
++#include "trace.h"
++
++static uint64_t ppce500_ccsr_io_read(void *opaque, hwaddr addr, unsigned size)
++{
++    uint64_t value = 0;
++
++    trace_ppce500_ccsr_io_read(addr, value, size);
++
++    return value;
++}
++
++static void ppce500_ccsr_io_write(void *opaque, hwaddr addr, uint64_t value,
++                                  unsigned size)
++{
++    trace_ppce500_ccsr_io_write(addr, value, size);
++}
++
++static const MemoryRegionOps ppce500_ccsr_ops = {
++    .read = ppce500_ccsr_io_read,
++    .write = ppce500_ccsr_io_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++};
+ 
+ static void ppce500_ccsr_init(Object *obj)
+ {
+     PPCE500CCSRState *s = CCSR(obj);
+ 
+-    memory_region_init(&s->ccsr_space, obj, "e500-ccsr", MPC85XX_CCSRBAR_SIZE);
++    memory_region_init_io(&s->ccsr_space, obj, &ppce500_ccsr_ops, obj,
++                          "e500-ccsr", MPC85XX_CCSRBAR_SIZE);
+     sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->ccsr_space);
  }
  
--static const TypeInfo etsec_info = {
--    .name                  = TYPE_ETSEC_COMMON,
--    .parent                = TYPE_SYS_BUS_DEVICE,
--    .instance_size         = sizeof(eTSEC),
--    .class_init            = etsec_class_init,
--    .instance_init         = etsec_instance_init,
-+static const TypeInfo types[] = {
-+    {
-+        .name          = TYPE_ETSEC_COMMON,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(eTSEC),
-+        .class_init    = etsec_class_init,
-+        .instance_init = etsec_instance_init,
-+    },
- };
+diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
+index 1f125ce841..ca4c231c9f 100644
+--- a/hw/ppc/trace-events
++++ b/hw/ppc/trace-events
+@@ -143,6 +143,9 @@ ppc_irq_cpu(const char *action) "%s"
+ ppc_dcr_read(uint32_t addr, uint32_t val) "DRCN[0x%x] -> 0x%x"
+ ppc_dcr_write(uint32_t addr, uint32_t val) "DRCN[0x%x] <- 0x%x"
  
--static void etsec_register_types(void)
--{
--    type_register_static(&etsec_info);
--}
--
--type_init(etsec_register_types)
-+DEFINE_TYPES(types)
++ppce500_ccsr_io_read(uint32_t index, uint32_t val, uint8_t size) "[0x%" PRIx32 "] -> 0x%08x (size: 0x%" PRIu8 ")"
++ppce500_ccsr_io_write(uint32_t index, uint32_t val, uint8_t size) "[0x%" PRIx32 "] <- 0x%08x (size: 0x%" PRIu8 ")"
++
+ # prep_systemio.c
+ prep_systemio_read(uint32_t addr, uint32_t val) "read addr=0x%x val=0x%x"
+ prep_systemio_write(uint32_t addr, uint32_t val) "write addr=0x%x val=0x%x"
 -- 
 2.47.0
 
