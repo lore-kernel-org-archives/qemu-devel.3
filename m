@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB35E677F5
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5DB0E677F5
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7E1D-0003lW-Uq; Sat, 02 Nov 2024 09:18:19 -0400
+	id 1t7E10-0003Fl-FG; Sat, 02 Nov 2024 09:18:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0t-0003Aj-3p; Sat, 02 Nov 2024 09:17:59 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1t7E0h-00035i-Pu; Sat, 02 Nov 2024 09:17:50 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0q-00020l-6P; Sat, 02 Nov 2024 09:17:57 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a99f1fd20c4so359053766b.0; 
- Sat, 02 Nov 2024 06:17:55 -0700 (PDT)
+ id 1t7E0f-0001yE-U8; Sat, 02 Nov 2024 09:17:47 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5cb6ca2a776so4007307a12.0; 
+ Sat, 02 Nov 2024 06:17:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730553474; x=1731158274; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730553463; x=1731158263; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tLhvTnGk1a2G1u/15BCaoUHmTdjX5JW0/q8sRHtkRz0=;
- b=Dud91Jgb9zX17GtYQTgj0PxozZaT7fObBx2+zgRSFZhmbFm4DaRASPZjrIKvFnFgzb
- zxB1mHedo5B+zwMX8dtKA0PEtPvNFGgIi+hfnX88hSlKedE/wZKkFeBnPvEE+jjNZc8D
- j0gWMMkn2GC6Wb8jZqIwRRw3tPR6KApyPkaM4Ukt4gXUNobi7CiMl1h+wUF1tI9tFeTy
- Bm1UDzl8iZLsnqJkpCNKhe9BenM+geGgwrvHI1OLLElpZ72KoMLPNmjGCy9Cz6TD5ZlZ
- hWy+a3ICsAoQAoKeYLsIdE8KAF9iJVzLy3Rp32oC7WNZSOXaxVinXh2gAIMAtDNBaYyM
- esaA==
+ bh=ek6CJz/W/BZPJLQDBSj5hrEIX9vzfAv/et55GzS0YMU=;
+ b=nLgd8/Qn/FvEGbteKmkT5h/uR7i3CknRldaC041UALlkpPnCWHJ4pGk1p6cGbN3B8V
+ BsTk6y3/Nlj9k0zKoZaO2uraesfcEgF+UJiw05vVPR1GlQjUWgz6cFtkA6Fpw97nLagn
+ MghBs8I3Zselyh9KE9wkyZL5aBxmqazyKK72+qf3DUJzMesQqbape42RHaaRnhQDf+Ro
+ I7+Hx5db9wlP/nAR2SWMb/5NZy7CySSCoGq5VIxAj2TnHxoNwPKLqI+GwC/RVOYMei49
+ NLHqoHewNYlnz2JhCVlw1HsLyyl0a8P+HirKZ7W6qdzDamerZ8euCPUt2qpHl3dmWPOw
+ bANA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730553474; x=1731158274;
+ d=1e100.net; s=20230601; t=1730553463; x=1731158263;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tLhvTnGk1a2G1u/15BCaoUHmTdjX5JW0/q8sRHtkRz0=;
- b=pd+njKRAYyFiWlW4n1bkyN5TvSXc8hEbB++VQIawtS1Qoew0zAW8v3l/S/mCk6Y3jI
- DdD5KhQsLzEGlHAMvuuIWl0/tOTLyNtPkzdD0YptqnXl0/ze6yqhTtWPhM80aEAOadEV
- BdfXb4Ooab2ZELtb6SK411gXVvBhshjYdGBmgUadIghSPUgZ6DLWZQkHSD4UVo34NoLq
- 7MaXZmIS9/npY+uQO23ygSbg7K2WD6OvEigUWfLqLZ99ZMRC6JsbYYC50I6BUlYwodNw
- tIhdYU5XqZJhcxzoiYCnR/o+TdD1GMtUZMOos04vH7pHgXGXY7HtvN4z7p7l12cqK/uh
- x3Ww==
+ bh=ek6CJz/W/BZPJLQDBSj5hrEIX9vzfAv/et55GzS0YMU=;
+ b=mRACrC8bJ79lw0guScfASnpFCGoy+pNwCgctxL3H40RsgPWMChT3DawQcNR+k70yHo
+ 7hJ6kWV81tAyyfzEemCNLCvSKgPxn5Pbngh3vLsG71uCoevLFHY3rD69jJLHSJbdKPlh
+ jHT/szLYae/CN7hKPe75wBWZXEpxzULRsKXfaZs/zIOxRgDgT+1U5TqyNzuxPYp8cua0
+ NESNB9uNsTYD0xCLqKvmNtRdy9cYgP53OsN8lDMy1oTnho8MfkCNXTJOGiocF0H2D+EU
+ 7FqK3/bA5UIXcBjQRSpJ0jmGNvDotsPMMj+4viDrnqk7+AY1Dwkb1VkpcPBJSo2QuY+P
+ thVQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUm58i/i08iEH/+J/TppvWdlJZDZtYFeJcH1B7nEfLutQAdZ4CXCAlTL7/FrLm+REQz50NGNrZCB1c=@nongnu.org,
- AJvYcCVkWWwvmClF+W35OozY1h1AUtf9OKVBD1kk/jputFDh0DONij7SWwPG2IUIUKNbP6JPpS5hMkUeXtv+@nongnu.org
-X-Gm-Message-State: AOJu0YxalX60z7AS+efTVCxeez6hfVBS7PydTAEMaCJDHcakqRVuy8rC
- WUWvqfEKg+O9Wh7i/uGWFD1WJr6zR9HzrpvKmUw9zBaFPvjEBJLObykQsw==
-X-Google-Smtp-Source: AGHT+IG4TqofOzMYlylLy2GxOiNDxCKKG+UEqxBvjxycuEV1l1cK0Pd3FKjpCN8Hz+2FMmc7qUgjow==
-X-Received: by 2002:a17:907:d1a:b0:a9a:c691:dcb7 with SMTP id
- a640c23a62f3a-a9e5092d45emr808853166b.30.1730553473527; 
- Sat, 02 Nov 2024 06:17:53 -0700 (PDT)
+ AJvYcCVjEwV3RylGt+UH0CIfUy7nzxYRt4jyYT5VpK1hXnuKqHWourf5ZGRw9vIn+x5xEBVeUxnwrePJkRg=@nongnu.org,
+ AJvYcCX+1eRpiQnfE/J8nsUeZbvBzTP9rWLoSwBSrealkO2BkzTskYBNP5EVq39SlZ2w5ThhrHDWI0G7PPPZ@nongnu.org
+X-Gm-Message-State: AOJu0YyuAFKTJxfTfUsXO7G2BCfJ3T/Ei+3eXbgpH9lvXx8grdKegCyf
+ 3yHeujn5xbxf6uJf1VFvYgbQS9zaGJ0VzS+cO70g6nkEa+Nl/hgIY+I+2g==
+X-Google-Smtp-Source: AGHT+IHWFe6cGCaufEG+XkBAm6iobJJIWeJKqiVLk0VPMUPq9+ZTuBGJOs+xgkYcXFmW8rxUHuS2TA==
+X-Received: by 2002:a17:907:948a:b0:a9a:238a:381d with SMTP id
+ a640c23a62f3a-a9e3a6ca29cmr1366243366b.52.1730553463105; 
+ Sat, 02 Nov 2024 06:17:43 -0700 (PDT)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.52
+ a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Nov 2024 06:17:52 -0700 (PDT)
+ Sat, 02 Nov 2024 06:17:42 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -69,18 +69,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org,
- Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH v3 18/26] hw/ppc/mpc8544_guts: Prefer DEFINE_TYPES() macro
-Date: Sat,  2 Nov 2024 14:17:07 +0100
-Message-ID: <20241102131715.548849-19-shentey@gmail.com>
+ Corey Minyard <cminyard@mvista.com>, BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH v3 10/26] hw/ppc/mpc8544_guts: Populate POR PLL ratio status
+ register
+Date: Sat,  2 Nov 2024 14:16:59 +0100
+Message-ID: <20241102131715.548849-11-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241102131715.548849-1-shentey@gmail.com>
 References: <20241102131715.548849-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,49 +103,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Populate this read-only register with some arbitrary values which avoids
+U-Boot's get_clocks() to hang().
+
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/ppc/mpc8544_guts.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ hw/ppc/mpc8544_guts.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
-index c02b34ccde..cf2317b3ab 100644
+index e3540b0281..c02b34ccde 100644
 --- a/hw/ppc/mpc8544_guts.c
 +++ b/hw/ppc/mpc8544_guts.c
-@@ -18,7 +18,6 @@
-  */
+@@ -29,6 +29,12 @@
+ #define MPC8544_GUTS_RSTCR_RESET      0x02
  
- #include "qemu/osdep.h"
--#include "qemu/module.h"
- #include "qemu/log.h"
- #include "sysemu/runstate.h"
- #include "cpu.h"
-@@ -141,16 +140,13 @@ static void mpc8544_guts_initfn(Object *obj)
-     sysbus_init_mmio(d, &s->iomem);
- }
+ #define MPC8544_GUTS_ADDR_PORPLLSR    0x00
++REG32(GUTS_PORPLLSR, 0x00)
++    FIELD(GUTS_PORPLLSR, E500_1_RATIO, 24, 6)
++    FIELD(GUTS_PORPLLSR, E500_0_RATIO, 16, 6)
++    FIELD(GUTS_PORPLLSR, DDR_RATIO, 9, 5)
++    FIELD(GUTS_PORPLLSR, PLAT_RATIO, 1, 5)
++
+ #define MPC8544_GUTS_ADDR_PORBMSR     0x04
+ #define MPC8544_GUTS_ADDR_PORIMPSCR   0x08
+ #define MPC8544_GUTS_ADDR_PORDEVSR    0x0C
+@@ -75,6 +81,12 @@ static uint64_t mpc8544_guts_read(void *opaque, hwaddr addr,
  
--static const TypeInfo mpc8544_guts_info = {
--    .name          = TYPE_MPC8544_GUTS,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(GutsState),
--    .instance_init = mpc8544_guts_initfn,
-+static const TypeInfo types[] = {
-+    {
-+        .name          = TYPE_MPC8544_GUTS,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(GutsState),
-+        .instance_init = mpc8544_guts_initfn,
-+    },
- };
- 
--static void mpc8544_guts_register_types(void)
--{
--    type_register_static(&mpc8544_guts_info);
--}
--
--type_init(mpc8544_guts_register_types)
-+DEFINE_TYPES(types)
+     addr &= MPC8544_GUTS_MMIO_SIZE - 1;
+     switch (addr) {
++    case MPC8544_GUTS_ADDR_PORPLLSR:
++        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_1_RATIO, 6); /* 3:1 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_0_RATIO, 6); /* 3:1 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, DDR_RATIO, 12); /* 12:1 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, PLAT_RATIO, 6); /* 6:1 */
++        break;
+     case MPC8544_GUTS_ADDR_PVR:
+         value = env->spr[SPR_PVR];
+         break;
 -- 
 2.47.0
 
