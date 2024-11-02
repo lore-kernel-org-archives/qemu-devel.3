@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E84E67801
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 15:02:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A04E67802
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 15:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7Fdd-0007C4-6W; Sat, 02 Nov 2024 11:02:05 -0400
+	id 1t7Fdy-0008Mw-SK; Sat, 02 Nov 2024 11:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uVOK=R5=kaod.org=clg@ozlabs.org>)
- id 1t7Fd5-0006hq-7N; Sat, 02 Nov 2024 11:01:31 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1t7Fdx-0008Md-W5; Sat, 02 Nov 2024 11:02:26 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uVOK=R5=kaod.org=clg@ozlabs.org>)
- id 1t7Fd3-0004Ul-3V; Sat, 02 Nov 2024 11:01:30 -0400
+ id 1t7Fdw-0004Y3-0J; Sat, 02 Nov 2024 11:02:25 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Xggsw2C8Tz4x7H;
- Sun,  3 Nov 2024 02:01:24 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Xggtz1F1pz4x8g;
+ Sun,  3 Nov 2024 02:02:19 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Xggsq6vtwz4x9D;
- Sun,  3 Nov 2024 02:01:19 +1100 (AEDT)
-Message-ID: <59097579-c7de-4871-a8c3-da5c1b4dd3b1@kaod.org>
-Date: Sat, 2 Nov 2024 16:01:19 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Xggtt65g2z4x7H;
+ Sun,  3 Nov 2024 02:02:14 +1100 (AEDT)
+Message-ID: <1c9a6356-4164-4c44-bea6-5c6a789f4673@kaod.org>
+Date: Sat, 2 Nov 2024 16:02:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 2/8] hw/timer/aspeed: Fix coding style
+Subject: Re: [SPAM] [PATCH v1 6/8] hw/sd/aspeed_sdhci: Introduce Capabilities
+ Register 2 for SD slot 0 and 1
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -42,19 +43,20 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
 Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
 References: <20241029091729.3317512-1-jamin_lin@aspeedtech.com>
- <20241029091729.3317512-3-jamin_lin@aspeedtech.com>
+ <20241029091729.3317512-7-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20241029091729.3317512-3-jamin_lin@aspeedtech.com>
+In-Reply-To: <20241029091729.3317512-7-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=uVOK=R5=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
 X-Spam_bar: ----
 X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,10 +74,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/29/24 10:17, Jamin Lin wrote:
-> Fix coding style issues from checkpatch.pl
+> The size of SDHCI capabilities register is 64bits, so introduces new
+> Capabilities Register 2 for SD slot 0 (0x144) and SD slot1 (0x244).
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
+I will fix the code alignment issues.
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -83,62 +87,100 @@ Thanks,
 
 C.
 
-
 > ---
->   hw/timer/aspeed_timer.c | 13 ++++++++-----
->   1 file changed, 8 insertions(+), 5 deletions(-)
+>   hw/sd/aspeed_sdhci.c | 40 +++++++++++++++++++++++++++++-----------
+>   1 file changed, 29 insertions(+), 11 deletions(-)
 > 
-> diff --git a/hw/timer/aspeed_timer.c b/hw/timer/aspeed_timer.c
-> index b1f860ecfb..5af268ea9e 100644
-> --- a/hw/timer/aspeed_timer.c
-> +++ b/hw/timer/aspeed_timer.c
-> @@ -276,7 +276,8 @@ static void aspeed_timer_set_value(AspeedTimerCtrlState *s, int timer, int reg,
->           old_reload = t->reload;
->           t->reload = calculate_min_ticks(t, value);
+> diff --git a/hw/sd/aspeed_sdhci.c b/hw/sd/aspeed_sdhci.c
+> index 427e5336a8..b73c18fbff 100644
+> --- a/hw/sd/aspeed_sdhci.c
+> +++ b/hw/sd/aspeed_sdhci.c
+> @@ -24,8 +24,10 @@
+>   #define  ASPEED_SDHCI_DEBOUNCE_RESET 0x00000005
+>   #define ASPEED_SDHCI_BUS             0x08
+>   #define ASPEED_SDHCI_SDIO_140        0x10
+> +#define ASPEED_SDHCI_SDIO_144        0x14
+>   #define ASPEED_SDHCI_SDIO_148        0x18
+>   #define ASPEED_SDHCI_SDIO_240        0x20
+> +#define ASPEED_SDHCI_SDIO_244        0x24
+>   #define ASPEED_SDHCI_SDIO_248        0x28
+>   #define ASPEED_SDHCI_WP_POL          0xec
+>   #define ASPEED_SDHCI_CARD_DET        0xf0
+> @@ -35,21 +37,27 @@
 >   
-> -        /* If the reload value was not previously set, or zero, and
-> +        /*
-> +         * If the reload value was not previously set, or zero, and
->            * the current value is valid, try to start the timer if it is
->            * enabled.
->            */
-> @@ -312,7 +313,8 @@ static void aspeed_timer_set_value(AspeedTimerCtrlState *s, int timer, int reg,
+>   static uint64_t aspeed_sdhci_read(void *opaque, hwaddr addr, unsigned int size)
+>   {
+> -    uint32_t val = 0;
+> +    uint64_t val = 0;
+>       AspeedSDHCIState *sdhci = opaque;
+>   
+>       switch (addr) {
+>       case ASPEED_SDHCI_SDIO_140:
+> -        val = (uint32_t)sdhci->slots[0].capareg;
+> +        val = extract64(sdhci->slots[0].capareg, 0, 32);
+> +        break;
+> +    case ASPEED_SDHCI_SDIO_144:
+> +        val = extract64(sdhci->slots[0].capareg, 32, 32);
+>           break;
+>       case ASPEED_SDHCI_SDIO_148:
+> -        val = (uint32_t)sdhci->slots[0].maxcurr;
+> +        val = extract64(sdhci->slots[0].maxcurr, 0, 32);
+>           break;
+>       case ASPEED_SDHCI_SDIO_240:
+> -        val = (uint32_t)sdhci->slots[1].capareg;
+> +        val = extract64(sdhci->slots[1].capareg, 0, 32);
+> +        break;
+> +    case ASPEED_SDHCI_SDIO_244:
+> +        val = extract64(sdhci->slots[1].capareg, 32, 32);
+>           break;
+>       case ASPEED_SDHCI_SDIO_248:
+> -        val = (uint32_t)sdhci->slots[1].maxcurr;
+> +         val = extract64(sdhci->slots[1].maxcurr, 0, 32);
+>           break;
+>       default:
+>           if (addr < ASPEED_SDHCI_REG_SIZE) {
+> @@ -61,9 +69,9 @@ static uint64_t aspeed_sdhci_read(void *opaque, hwaddr addr, unsigned int size)
+>           }
 >       }
+>   
+> -    trace_aspeed_sdhci_read(addr, size, (uint64_t) val);
+> +    trace_aspeed_sdhci_read(addr, size, val);
+>   
+> -    return (uint64_t)val;
+> +    return val;
 >   }
 >   
-> -/* Control register operations are broken out into helpers that can be
-> +/*
-> + * Control register operations are broken out into helpers that can be
->    * explicitly called on aspeed_timer_reset(), but also from
->    * aspeed_timer_ctrl_op().
->    */
-> @@ -396,7 +398,8 @@ static void aspeed_timer_set_ctrl(AspeedTimerCtrlState *s, uint32_t reg)
->       AspeedTimer *t;
->       const uint8_t enable_mask = BIT(op_enable);
->   
-> -    /* Handle a dependency between the 'enable' and remaining three
-> +    /*
-> +     * Handle a dependency between the 'enable' and remaining three
->        * configuration bits - i.e. if more than one bit in the control set has
->        * changed, including the 'enable' bit, then we want either disable the
->        * timer and perform configuration, or perform configuration and then
-> @@ -582,7 +585,6 @@ static void aspeed_2600_timer_write(AspeedTimerCtrlState *s, hwaddr offset,
->       case 0x3C:
->           aspeed_timer_set_ctrl(s, s->ctrl & ~tv);
+>   static void aspeed_sdhci_write(void *opaque, hwaddr addr, uint64_t val,
+> @@ -79,16 +87,26 @@ static void aspeed_sdhci_write(void *opaque, hwaddr addr, uint64_t val,
+>           sdhci->regs[TO_REG(addr)] = (uint32_t)val & ~ASPEED_SDHCI_INFO_RESET;
 >           break;
-> -
->       case 0x38:
+>       case ASPEED_SDHCI_SDIO_140:
+> -        sdhci->slots[0].capareg = (uint64_t)(uint32_t)val;
+> +    sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg, 0, 32, val);
+> +    break;
+> +    case ASPEED_SDHCI_SDIO_144:
+> +    sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg, 32, 32, val);
+>           break;
+>       case ASPEED_SDHCI_SDIO_148:
+> -        sdhci->slots[0].maxcurr = (uint64_t)(uint32_t)val;
+> +        sdhci->slots[0].maxcurr = deposit64(sdhci->slots[0].maxcurr,
+> +                                            0, 32, val);
+>           break;
+>       case ASPEED_SDHCI_SDIO_240:
+> -        sdhci->slots[1].capareg = (uint64_t)(uint32_t)val;
+> +        sdhci->slots[1].capareg = deposit64(sdhci->slots[1].capareg,
+> +                                            0, 32, val);
+> +        break;
+> +    case ASPEED_SDHCI_SDIO_244:
+> +        sdhci->slots[1].capareg = deposit64(sdhci->slots[1].capareg,
+> +                                            32, 32, val);
+>           break;
+>       case ASPEED_SDHCI_SDIO_248:
+> -        sdhci->slots[1].maxcurr = (uint64_t)(uint32_t)val;
+> +        sdhci->slots[1].maxcurr = deposit64(sdhci->slots[0].maxcurr,
+> +                                            0, 32, val);
+>           break;
 >       default:
->           qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIx "\n",
-> @@ -623,7 +625,8 @@ static void aspeed_timer_reset(DeviceState *dev)
->   
->       for (i = 0; i < ASPEED_TIMER_NR_TIMERS; i++) {
->           AspeedTimer *t = &s->timers[i];
-> -        /* Explicitly call helpers to avoid any conditional behaviour through
-> +        /*
-> +         * Explicitly call helpers to avoid any conditional behaviour through
->            * aspeed_timer_set_ctrl().
->            */
->           aspeed_timer_ctrl_enable(t, false);
+>           if (addr < ASPEED_SDHCI_REG_SIZE) {
 
 
