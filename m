@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72BFCE677F5
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D45C9E677F5
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:18:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7E0y-0003DJ-DN; Sat, 02 Nov 2024 09:18:04 -0400
+	id 1t7E0b-000331-RC; Sat, 02 Nov 2024 09:17:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0Z-00032j-Sn; Sat, 02 Nov 2024 09:17:40 -0400
+ id 1t7E0V-00031p-Ha; Sat, 02 Nov 2024 09:17:37 -0400
 Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0Y-0001wW-4N; Sat, 02 Nov 2024 09:17:39 -0400
+ id 1t7E0U-0001vU-19; Sat, 02 Nov 2024 09:17:35 -0400
 Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a9a5f555cfbso201796866b.1; 
- Sat, 02 Nov 2024 06:17:36 -0700 (PDT)
+ a640c23a62f3a-a99e3b3a411so592506366b.0; 
+ Sat, 02 Nov 2024 06:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730553455; x=1731158255; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730553451; x=1731158251; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n35w2VDiQsxwqNroL2qJeQnt4HfjJdNE+pLX1JQDjcs=;
- b=ljcOl5+v7+SMpVpuvpi/LqaC9Lcpo/PslmCREfdPC22OLSF5HiLXQKrYOiPShdsiJT
- JZ/vhNJAyeSVdh3pnHhClH8OWE3H5oOsLeBh7Z0UiD8L2SUdrEFMkcI/e7Iw3Il1AeCf
- RY4VyF/RlC4HOczmBaeXcFEiBsC0QpKfpzcbYY9jSs7jrnsjmUrC8CMeDWAEKcSsVQ8Q
- ZuPPbF1qbMi9awFhzbhlJqCQbz1MRy4pRf3zWHPU8O5i/lFTIio/g/UZz9F4t0YGBWS2
- O0GMQ5Z1PkIyF3tEV/aZhcE8HHHdhaHQ8pNg0WfVjbKJh0WVvd2PIGcdb9T67HQn7QY0
- 6DVw==
+ bh=+kcGj5THgATrhziRVv9fCQe0+3eD5yxcFJLfyqBCQbg=;
+ b=GslqzL8YoE/OnYE5d0JdKGxBMouqhJKkbfxP5Id/dL8nBWSmxMXUoH+Y2A+5ZyUv+8
+ 9NFcTDAgdJgRUPgm0+LQYhO6BaT5pjVjE+RLSAN3zyTpfsIINvlR4v+9kzvga8/Iieyo
+ 92yriv8zY/9Huhx1fep6Xfvzbj9FcgSnHG/Aw6dQ6V6LIcgCEeGqDm3CJgQffUmpQVtu
+ Q7cnpd2A4sUZtga/I74jgLOdKZJdowwIU7x65zRMIftY+CNop2l02b8G0cFQBAZzyHnD
+ zSR4F51lgCv/4rAUWe+kLz7fHCIZPfOX3pjQpswGeKL2AC5efRXuHyhym66zaMyxsOac
+ YdLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730553455; x=1731158255;
+ d=1e100.net; s=20230601; t=1730553451; x=1731158251;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n35w2VDiQsxwqNroL2qJeQnt4HfjJdNE+pLX1JQDjcs=;
- b=ZAIm+ZaXB9sJw0pHz8FNGh8Y1uQCDyZXpOUdSBJ0wZQtFgqPpTqMVxJ+gCiFzPRrNQ
- L6eEgzqXem+yqGfSFc0CU1aTjFbp0WnjZxjF94gB2zZk4fBhmG+QfQzIt49oGhMpmqpc
- g2GfUhdU66e6ZKly/k9AKWvPEusOZh9722sUh1t33/x8Jmr6jmG4uT4uYcRRABagrJpR
- xDa+FEJT6a4RTxoSeu77h55rXITXHk/xulcGUceeXd4dWT3YTspa+l7CRNU7LGgAIjTh
- xZK9vY77Q8lBaE3u0fb9nk82W7zdXWRtTgiV1ghVlNKOlVMjRYS+TPnjCWmEMHgiTmU6
- +2/w==
+ bh=+kcGj5THgATrhziRVv9fCQe0+3eD5yxcFJLfyqBCQbg=;
+ b=bg00uDRet3P44y97g7YdQShWMRc2voWRcxYf4SCmH6F8dJAo3iTnAesl4+GkORNVON
+ sPg/Y4Dw6J9ZyMpPnQn+1AWTCvbXeyVYqnMmF0DQvRpqFNkyM2Ly4Hh67dyf+pwq6Ldo
+ cmZsBQR5kpgWKKjoSsWFDv5pWvsEk62O/6HgVkBZaS1ycOKT+opFZBoaGYNu/StWTtyx
+ 9pKj2ZRfk3PLQpJg3EB3y6EEoriKpRjTlfKOFc511DwZbyq4hbG6zd1bAj+yIiKcwr3I
+ hdF2rAjxffSpILX2wKPNPDB6JQ0byV6AYyWk04F0OiRvb136BiCpcwRXhbpX7mE8wrcZ
+ GnnQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVU1vX6m9gIJdKsuo7e12bc+5KyG+42Ih+acjGiYtoiMfpe4BwOlbJXf6I9HzUiL9Ymvg1y06fBBCl7@nongnu.org,
- AJvYcCXNAUyeMLmOqWj5riuIaExyFT5nZEZcmhS59sZHDw4VWhiLoyE4K/6ICZs4qNDEUFq2ZikjGTiYiJo=@nongnu.org
-X-Gm-Message-State: AOJu0YwOhUZXnJLalPUtgDrG0tjylfIyN/VDfNSxEsuyy3ejMngM4e2R
- J+09JADJDTCg96S81PHFoeA7JqlMbtINbVyl+y0TBcI9RkdllN+/3IFGrQ==
-X-Google-Smtp-Source: AGHT+IH0+GjB2T+xG/7LWhUEDx+m5Jcqp2EFl5x8evcmMUqTVigJFrjh8hWMxlOb0egl2uhtTQdobA==
-X-Received: by 2002:a05:6402:524b:b0:5ce:afba:f48a with SMTP id
- 4fb4d7f45d1cf-5ceb935bbc3mr8312113a12.27.1730553455039; 
- Sat, 02 Nov 2024 06:17:35 -0700 (PDT)
+ AJvYcCW/XUsZYgzfZh6EXpc5iqJ7waZjPbJbHBxhXs5QRCcNMX6UVNUhRTgci+z06D3Y99MJAkDi+e0Uuvd6@nongnu.org,
+ AJvYcCXWlrF9c/4oXJ1+J7lOx7ClPrAhlmR77DRLhJuBkicmNzN67+cVkyfxAqFLSj78yw4yfHc/rN8A+Y4=@nongnu.org
+X-Gm-Message-State: AOJu0Yxed50SsUmtDam4756Swb2LFb9o8oz9GFhIbl/L4gOWDQANstjX
+ zP+60/BaR9LUmbvQsj6PV4Kh+pAD4Ve/O4B4ot672NF6YoKg1BZccuIAJA==
+X-Google-Smtp-Source: AGHT+IEnxgul9uLhsk3G0xkAYKbKaOFYkGNx2Q+eUGPRAy+dWb6Ln7E7QIKK90Je5/v7ykDPS8QCzw==
+X-Received: by 2002:a17:907:9487:b0:a99:f5d8:726 with SMTP id
+ a640c23a62f3a-a9e55abecaemr893323566b.23.1730553450734; 
+ Sat, 02 Nov 2024 06:17:30 -0700 (PDT)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.34
+ a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Nov 2024 06:17:34 -0700 (PDT)
+ Sat, 02 Nov 2024 06:17:29 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -69,10 +69,10 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org,
- Corey Minyard <cminyard@mvista.com>, BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 04/26] hw/ppc/e500: Remove unused "irqs" parameter
-Date: Sat,  2 Nov 2024 14:16:53 +0100
-Message-ID: <20241102131715.548849-5-shentey@gmail.com>
+ Corey Minyard <cminyard@mvista.com>
+Subject: [PATCH v3 01/26] hw/ppc/e500: Do not leak struct boot_info
+Date: Sat,  2 Nov 2024 14:16:50 +0100
+Message-ID: <20241102131715.548849-2-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241102131715.548849-1-shentey@gmail.com>
 References: <20241102131715.548849-1-shentey@gmail.com>
@@ -102,34 +102,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+The struct is allocated once with g_new0() but never free()'d. Fix the leakage
+by adding an attribute to struct PPCE500MachineState which avoids the
+allocation.
+
+While at it remove the obsolete /*< private >*/ markers.
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/ppc/e500.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/ppc/e500.h |  9 +++++++--
+ hw/ppc/e500.c | 17 ++++-------------
+ 2 files changed, 11 insertions(+), 15 deletions(-)
 
+diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
+index 8c09ef92e4..4a1b42d44b 100644
+--- a/hw/ppc/e500.h
++++ b/hw/ppc/e500.h
+@@ -5,18 +5,23 @@
+ #include "hw/platform-bus.h"
+ #include "qom/object.h"
+ 
++struct boot_info {
++    uint32_t dt_base;
++    uint32_t dt_size;
++    uint32_t entry;
++};
++
+ struct PPCE500MachineState {
+-    /*< private >*/
+     MachineState parent_obj;
+ 
+     /* points to instance of TYPE_PLATFORM_BUS_DEVICE if
+      * board supports dynamic sysbus devices
+      */
+     PlatformBusDevice *pbus_dev;
++    struct boot_info boot_info;
+ };
+ 
+ struct PPCE500MachineClass {
+-    /*< private >*/
+     MachineClass parent_class;
+ 
+     /* required -- must at least add toplevel board compatible */
 diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index 964a22c5b7..ecaaab1558 100644
+index b760c6d6a2..ba83f33033 100644
 --- a/hw/ppc/e500.c
 +++ b/hw/ppc/e500.c
-@@ -825,7 +825,7 @@ static DeviceState *ppce500_init_mpic_qemu(PPCE500MachineState *pms,
+@@ -80,13 +80,6 @@
+ 
+ #define PLATFORM_CLK_FREQ_HZ       (400 * 1000 * 1000)
+ 
+-struct boot_info
+-{
+-    uint32_t dt_base;
+-    uint32_t dt_size;
+-    uint32_t entry;
+-};
+-
+ static uint32_t *pci_map_create(void *fdt, uint32_t mpic, int first_slot,
+                                 int nr_slots, int *len)
+ {
+@@ -919,7 +912,6 @@ void ppce500_init(MachineState *machine)
+     bool kernel_as_payload;
+     hwaddr bios_entry = 0;
+     target_long payload_size;
+-    struct boot_info *boot_info = NULL;
+     int dt_size;
+     int i;
+     unsigned int smp_cpus = machine->smp.cpus;
+@@ -974,9 +966,8 @@ void ppce500_init(MachineState *machine)
+         /* Register reset handler */
+         if (!i) {
+             /* Primary CPU */
+-            boot_info = g_new0(struct boot_info, 1);
+             qemu_register_reset(ppce500_cpu_reset, cpu);
+-            env->load_info = boot_info;
++            env->load_info = &pms->boot_info;
+         } else {
+             /* Secondary CPUs */
+             qemu_register_reset(ppce500_cpu_reset_sec, cpu);
+@@ -1274,9 +1265,9 @@ void ppce500_init(MachineState *machine)
+     }
+     assert(dt_size < DTB_MAX_SIZE);
+ 
+-    boot_info->entry = bios_entry;
+-    boot_info->dt_base = dt_base;
+-    boot_info->dt_size = dt_size;
++    pms->boot_info.entry = bios_entry;
++    pms->boot_info.dt_base = dt_base;
++    pms->boot_info.dt_size = dt_size;
  }
  
- static DeviceState *ppce500_init_mpic_kvm(const PPCE500MachineClass *pmc,
--                                          IrqLines *irqs, Error **errp)
-+                                          Error **errp)
- {
- #ifdef CONFIG_KVM
-     DeviceState *dev;
-@@ -865,7 +865,7 @@ static DeviceState *ppce500_init_mpic(PPCE500MachineState *pms,
-         Error *err = NULL;
- 
-         if (kvm_kernel_irqchip_allowed()) {
--            dev = ppce500_init_mpic_kvm(pmc, irqs, &err);
-+            dev = ppce500_init_mpic_kvm(pmc, &err);
-         }
-         if (kvm_kernel_irqchip_required() && !dev) {
-             error_reportf_err(err,
+ static void e500_ccsr_initfn(Object *obj)
 -- 
 2.47.0
 
