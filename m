@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB3FE677F5
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB35E677F5
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:23:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7E0a-00032h-Hz; Sat, 02 Nov 2024 09:17:41 -0400
+	id 1t7E1D-0003lW-Uq; Sat, 02 Nov 2024 09:18:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0U-00031d-IH; Sat, 02 Nov 2024 09:17:35 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1t7E0t-0003Aj-3p; Sat, 02 Nov 2024 09:17:59 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0S-0001vI-Mm; Sat, 02 Nov 2024 09:17:34 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a9e44654ae3so335508566b.1; 
- Sat, 02 Nov 2024 06:17:31 -0700 (PDT)
+ id 1t7E0q-00020l-6P; Sat, 02 Nov 2024 09:17:57 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a99f1fd20c4so359053766b.0; 
+ Sat, 02 Nov 2024 06:17:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730553449; x=1731158249; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1zEI3lJSZSmhyWsVdXw4fUtvgV0geugfUic5JJ+BzKM=;
- b=aadotZwN/jHGgm4GkNOTKEDJlNQoa9BHn+RMrxrfEQlfD0l7bsqLeiqCuxaJcU/Gz5
- aNsmMZLlN5C6g/hpuofUnKtIr0LkJMFoY6klggA1Zs3CNScpHHni6Zva1pNzIKvtnb/J
- 6NT9D1ttc2B6eRnomqqMMrW9ZCd5bHWVzZI0NUNB7pArKJ9X3sRLEVSG9cXRWAxKEH17
- A2QptynpeDNNMVUNfSPeXaDepGOJ8xFFT1H+ZXOYQ7M+3jjxfdKXvkbpZYi7+Pm/Zv+h
- 2pEQVYcMQek55+cfl6Sj7ME66BQCWKgRNLXaYmzd16g/HCgUNj8tfjcZE7i4kcOGBu0T
- 3Yzg==
+ d=gmail.com; s=20230601; t=1730553474; x=1731158274; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tLhvTnGk1a2G1u/15BCaoUHmTdjX5JW0/q8sRHtkRz0=;
+ b=Dud91Jgb9zX17GtYQTgj0PxozZaT7fObBx2+zgRSFZhmbFm4DaRASPZjrIKvFnFgzb
+ zxB1mHedo5B+zwMX8dtKA0PEtPvNFGgIi+hfnX88hSlKedE/wZKkFeBnPvEE+jjNZc8D
+ j0gWMMkn2GC6Wb8jZqIwRRw3tPR6KApyPkaM4Ukt4gXUNobi7CiMl1h+wUF1tI9tFeTy
+ Bm1UDzl8iZLsnqJkpCNKhe9BenM+geGgwrvHI1OLLElpZ72KoMLPNmjGCy9Cz6TD5ZlZ
+ hWy+a3ICsAoQAoKeYLsIdE8KAF9iJVzLy3Rp32oC7WNZSOXaxVinXh2gAIMAtDNBaYyM
+ esaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730553449; x=1731158249;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1zEI3lJSZSmhyWsVdXw4fUtvgV0geugfUic5JJ+BzKM=;
- b=mDTI01X3l9Mncdsqi0ygu0Dw36swLDfpeK+PEyTtomt2ChUIobAeTfYXDgujiXOQ/b
- kNsGhNYCUQZ2Jq4/BCpse7769PFtGsL2/kM6DaMYaqIhj2pTgWNaiD/DHRmMd9Pc/JNl
- xZXtXOR6PN8FDsFduqm3nO4Ljj3PKqrbCBkLQdsgb3WCgPGqPhsJMCcgTqX7Y0jkiZpO
- eGkPbFibWloU9AcJ1V69Iq1Oalrx4BDkma/z7Zd/7eNAOgO04dNiiEXlpx/vRym4IQJx
- SX9YPSu0C3rYwMwqFsPMbnPU8rg+st5T5sQNoP9s5rVkeKYyahuZx+yyQeiC+7VXvXbO
- VO6A==
+ d=1e100.net; s=20230601; t=1730553474; x=1731158274;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tLhvTnGk1a2G1u/15BCaoUHmTdjX5JW0/q8sRHtkRz0=;
+ b=pd+njKRAYyFiWlW4n1bkyN5TvSXc8hEbB++VQIawtS1Qoew0zAW8v3l/S/mCk6Y3jI
+ DdD5KhQsLzEGlHAMvuuIWl0/tOTLyNtPkzdD0YptqnXl0/ze6yqhTtWPhM80aEAOadEV
+ BdfXb4Ooab2ZELtb6SK411gXVvBhshjYdGBmgUadIghSPUgZ6DLWZQkHSD4UVo34NoLq
+ 7MaXZmIS9/npY+uQO23ygSbg7K2WD6OvEigUWfLqLZ99ZMRC6JsbYYC50I6BUlYwodNw
+ tIhdYU5XqZJhcxzoiYCnR/o+TdD1GMtUZMOos04vH7pHgXGXY7HtvN4z7p7l12cqK/uh
+ x3Ww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUyKhmhxQmbvrAoropHQRH1664hNdEWSr7fO8zRhTsRuiuAWWWMHW0RK7c8AHAyO2qWHlOTvvFq8j0n@nongnu.org,
- AJvYcCXTlbCkB2kH/8oQR540e+YUD/i4yOFXmg4W9Hc5UW1gMAfmpNpHMGXTsd9FBDXqarwIVeQyRFdZDzU=@nongnu.org
-X-Gm-Message-State: AOJu0YyXEhqxPh1UnzeO7tbbFej3mCvjgZd2PXhdtQ9IPMmVzDazaKs9
- fNHm8BTxLFhmmbVxDn8lcsETmcgNfcLJ4U3CVw1QxsR8mpEXl28mvmmNHw==
-X-Google-Smtp-Source: AGHT+IEONsDM//JpDGyxiNz2qqKA9rflM64+LO+iipXuS85SWvvksZLM0bpVQximVBIO0U9EzYGuOg==
-X-Received: by 2002:a17:907:2d8e:b0:a9a:3705:9ad9 with SMTP id
- a640c23a62f3a-a9e50b95730mr839341266b.50.1730553449013; 
- Sat, 02 Nov 2024 06:17:29 -0700 (PDT)
+ AJvYcCUm58i/i08iEH/+J/TppvWdlJZDZtYFeJcH1B7nEfLutQAdZ4CXCAlTL7/FrLm+REQz50NGNrZCB1c=@nongnu.org,
+ AJvYcCVkWWwvmClF+W35OozY1h1AUtf9OKVBD1kk/jputFDh0DONij7SWwPG2IUIUKNbP6JPpS5hMkUeXtv+@nongnu.org
+X-Gm-Message-State: AOJu0YxalX60z7AS+efTVCxeez6hfVBS7PydTAEMaCJDHcakqRVuy8rC
+ WUWvqfEKg+O9Wh7i/uGWFD1WJr6zR9HzrpvKmUw9zBaFPvjEBJLObykQsw==
+X-Google-Smtp-Source: AGHT+IG4TqofOzMYlylLy2GxOiNDxCKKG+UEqxBvjxycuEV1l1cK0Pd3FKjpCN8Hz+2FMmc7qUgjow==
+X-Received: by 2002:a17:907:d1a:b0:a9a:c691:dcb7 with SMTP id
+ a640c23a62f3a-a9e5092d45emr808853166b.30.1730553473527; 
+ Sat, 02 Nov 2024 06:17:53 -0700 (PDT)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.28
+ a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Nov 2024 06:17:28 -0700 (PDT)
+ Sat, 02 Nov 2024 06:17:52 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -69,22 +70,24 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org,
  Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH v3 00/26] E500 Cleanup
-Date: Sat,  2 Nov 2024 14:16:49 +0100
-Message-ID: <20241102131715.548849-1-shentey@gmail.com>
+Subject: [PATCH v3 18/26] hw/ppc/mpc8544_guts: Prefer DEFINE_TYPES() macro
+Date: Sat,  2 Nov 2024 14:17:07 +0100
+Message-ID: <20241102131715.548849-19-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241102131715.548849-1-shentey@gmail.com>
+References: <20241102131715.548849-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FREEMAIL_REPLY=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,103 +103,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series is part of a bigger series exploring data-driven machine creati=
-on=0D
-using device tree blobs on top of the e500 machines [1]. It contains patche=
-s to=0D
-make this exploration easier which are also expected to provide value in=0D
-themselves.=0D
-=0D
-The cleanup starts with the e500 machine class itself, then proceeds with=0D
-machine-specific device models and concludes with more or less loosely rela=
-ted=0D
-devices. Device cleanup mostly consists of using the DEFINE_TYPES() macro.=
-=0D
-=0D
-v3:=0D
-* Pick up R-B tags (Kevin, Zoltan -- thanks!)=0D
-* Rely on trace events only and drop unimp logging in CCSR space after=0D
-  discussion=0D
-* Merge https://patchew.org/QEMU/20241005100228.28094-1-shentey@gmail.com/ =
-since=0D
-  ARM now mostly unaffected=0D
-* Add patch to reuse MII constants in etsec device=0D
-=0D
-Testing done:=0D
-* Build qemu_ppc64_e5500_defconfig in Buildroot, run it in the ppce500 mach=
-ine=0D
-  and issue the `poweroff` command. Observe that QEMU is shut down cleanly.=
-=0D
-=0D
-v2:=0D
-* Add R-b tags (Cedric, Zoltan -- thanks!)=0D
-* Add missing S-o-b tag to ds1338 patch (Cedric)=0D
-* Populate POR PLL ratio status register with real-world values (Zoltan)=0D
-* Rephrase one commit message (Zoltan)=0D
-* Also rename header of ppce500_ccsr to match struct name=0D
-* Don't mention ppc440_bamboo in license since unrelated (Zoltan)=0D
-* Various style changes (Zoltan)=0D
-=0D
-Supersedes: 20241005100228.28094-1-shentey@gmail.com=0D
-=0D
-Bernhard Beschow (26):=0D
-  hw/ppc/e500: Do not leak struct boot_info=0D
-  hw/ppc/e500: Remove firstenv variable=0D
-  hw/ppc/e500: Prefer QOM cast=0D
-  hw/ppc/e500: Remove unused "irqs" parameter=0D
-  hw/ppc/e500: Add missing device tree properties to i2c controller node=0D
-  hw/ppc/e500: Reuse TYPE_GPIO_PWR=0D
-  hw/ppc/e500: Use SysBusDevice API to access TYPE_CCSR's internal=0D
-    resources=0D
-  hw/ppc/e500: Extract ppce500_ccsr.c=0D
-  hw/ppc/ppce500_ccsr: Trace access to CCSR region=0D
-  hw/ppc/mpc8544_guts: Populate POR PLL ratio status register=0D
-  hw/i2c/mpc_i2c: Convert DPRINTF to trace events for register access=0D
-  hw/i2c/mpc_i2c: Prefer DEFINE_TYPES() macro=0D
-  hw/pci-host/ppce500: Reuse TYPE_PPC_E500_PCI_BRIDGE define=0D
-  hw/pci-host/ppce500: Prefer DEFINE_TYPES() macro=0D
-  hw/net/fsl_etsec/miim: Reuse MII constants=0D
-  hw/net/fsl_etsec/etsec: Prefer DEFINE_TYPES() macro=0D
-  hw/gpio/mpc8xxx: Prefer DEFINE_TYPES() macro=0D
-  hw/ppc/mpc8544_guts: Prefer DEFINE_TYPES() macro=0D
-  hw/intc: Guard openpic_kvm.c by dedicated OPENPIC_KVM Kconfig switch=0D
-  hw/sd/sdhci: Prefer DEFINE_TYPES() macro=0D
-  hw/block/pflash_cfi01: Prefer DEFINE_TYPES() macro=0D
-  hw/i2c/smbus_eeprom: Prefer DEFINE_TYPES() macro=0D
-  hw/rtc/ds1338: Prefer DEFINE_TYPES() macro=0D
-  hw/usb/hcd-ehci-sysbus: Prefer DEFINE_TYPES() macro=0D
-  hw/vfio/platform: Let vfio_start_eventfd_injection() take=0D
-    VFIOPlatformDevice pointer=0D
-  MAINTAINERS: Add hw/gpio/gpio_pwr.c=0D
-=0D
- MAINTAINERS                            |   3 +-=0D
- hw/ppc/e500.h                          |   9 +-=0D
- hw/ppc/{e500-ccsr.h =3D> ppce500_ccsr.h} |   8 +-=0D
- hw/block/pflash_cfi01.c                |  21 ++---=0D
- hw/gpio/mpc8xxx.c                      |  22 ++---=0D
- hw/i2c/mpc_i2c.c                       |  29 +++---=0D
- hw/i2c/smbus_eeprom.c                  |  19 ++--=0D
- hw/net/fsl_etsec/etsec.c               |  22 ++---=0D
- hw/net/fsl_etsec/miim.c                |  19 ++--=0D
- hw/pci-host/ppce500.c                  |  54 +++++------=0D
- hw/ppc/e500.c                          |  81 +++++------------=0D
- hw/ppc/mpc8544_guts.c                  |  32 ++++---=0D
- hw/ppc/ppce500_ccsr.c                  |  57 ++++++++++++=0D
- hw/rtc/ds1338.c                        |  20 ++---=0D
- hw/sd/sdhci.c                          |  62 ++++++-------=0D
- hw/usb/hcd-ehci-sysbus.c               | 118 +++++++++++--------------=0D
- hw/vfio/platform.c                     |   7 +-=0D
- hw/i2c/trace-events                    |   5 ++=0D
- hw/intc/Kconfig                        |   4 +=0D
- hw/intc/meson.build                    |   3 +-=0D
- hw/ppc/Kconfig                         |   1 +=0D
- hw/ppc/meson.build                     |   1 +=0D
- hw/ppc/trace-events                    |   3 +=0D
- 23 files changed, 290 insertions(+), 310 deletions(-)=0D
- rename hw/ppc/{e500-ccsr.h =3D> ppce500_ccsr.h} (71%)=0D
- create mode 100644 hw/ppc/ppce500_ccsr.c=0D
-=0D
--- =0D
-2.47.0=0D
-=0D
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/ppc/mpc8544_guts.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
+
+diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
+index c02b34ccde..cf2317b3ab 100644
+--- a/hw/ppc/mpc8544_guts.c
++++ b/hw/ppc/mpc8544_guts.c
+@@ -18,7 +18,6 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/module.h"
+ #include "qemu/log.h"
+ #include "sysemu/runstate.h"
+ #include "cpu.h"
+@@ -141,16 +140,13 @@ static void mpc8544_guts_initfn(Object *obj)
+     sysbus_init_mmio(d, &s->iomem);
+ }
+ 
+-static const TypeInfo mpc8544_guts_info = {
+-    .name          = TYPE_MPC8544_GUTS,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(GutsState),
+-    .instance_init = mpc8544_guts_initfn,
++static const TypeInfo types[] = {
++    {
++        .name          = TYPE_MPC8544_GUTS,
++        .parent        = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(GutsState),
++        .instance_init = mpc8544_guts_initfn,
++    },
+ };
+ 
+-static void mpc8544_guts_register_types(void)
+-{
+-    type_register_static(&mpc8544_guts_info);
+-}
+-
+-type_init(mpc8544_guts_register_types)
++DEFINE_TYPES(types)
+-- 
+2.47.0
+
 
