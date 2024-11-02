@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A69FE677EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 08:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99882E677EE
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 08:08:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t799A-0007KN-HR; Sat, 02 Nov 2024 04:06:12 -0400
+	id 1t799A-0007KK-EQ; Sat, 02 Nov 2024 04:06:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1t7998-0007Je-Qr
+ id 1t7998-0007J2-CC
  for qemu-devel@nongnu.org; Sat, 02 Nov 2024 04:06:10 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1t7994-0001zN-VW
+ (envelope-from <gaosong@loongson.cn>) id 1t7994-0001z1-Vl
  for qemu-devel@nongnu.org; Sat, 02 Nov 2024 04:06:10 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxaeFq3SVncn0nAA--.14754S3;
- Sat, 02 Nov 2024 16:06:02 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxTOJn3SVnW30nAA--.14341S3;
+ Sat, 02 Nov 2024 16:05:59 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMAx7uBh3SVnzZA1AA--.18827S9;
- Sat, 02 Nov 2024 16:06:02 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMAx7uBh3SVnzZA1AA--.18827S3;
+ Sat, 02 Nov 2024 16:05:59 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 7/8] hw/loongarch/boot: Use warn_report when no kernel
- filename
-Date: Sat,  2 Nov 2024 15:47:36 +0800
-Message-Id: <20241102074737.1394884-8-gaosong@loongson.cn>
+	Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL v2 1/8] target/loongarch: Add loongson binary translation
+ feature
+Date: Sat,  2 Nov 2024 15:47:30 +0800
+Message-Id: <20241102074737.1394884-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20241102074737.1394884-1-gaosong@loongson.cn>
 References: <20241102074737.1394884-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAx7uBh3SVnzZA1AA--.18827S9
+X-CM-TRANSID: qMiowMAx7uBh3SVnzZA1AA--.18827S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,40 +66,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we run “qemu-system-loongarch64 -qmp stdio -vnc none -S”,
-we get an error message “Need kernel filename” and then we can't use qmp cmd to query some information.
-So, we just throw a warning and then the cpus starts running from address VIRT_FLASH0_BASE.
+From: Bibo Mao <maobibo@loongson.cn>
 
+Loongson Binary Translation (LBT) is used to accelerate binary
+translation, which contains 4 scratch registers (scr0 to scr3), x86/ARM
+eflags (eflags) and x87 fpu stack pointer (ftop).
+
+Now LBT feature is added in kvm mode, not supported in TCG mode since
+it is not emulated. Feature variable lbt is added with OnOffAuto type,
+If lbt feature is not supported with KVM host, it reports error if there
+is lbt=on command line.
+
+If there is no any command line about lbt parameter, it checks whether
+KVM host supports lbt feature and set the corresponding value in cpucfg.
+
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-Id: <20240929070405.235200-2-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20241030012359.4040817-1-gaosong@loongson.cn>
 ---
- hw/loongarch/boot.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ target/loongarch/cpu.c                | 24 +++++++++++
+ target/loongarch/cpu.h                |  6 +++
+ target/loongarch/kvm/kvm.c            | 57 ++++++++++++++++++++++++++-
+ target/loongarch/loongarch-qmp-cmds.c |  2 +-
+ 4 files changed, 87 insertions(+), 2 deletions(-)
 
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index cb668703bd..f258eefe9a 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -278,7 +278,7 @@ static void init_boot_rom(struct loongarch_boot_info *info, void *p)
- static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
- {
-     void *p, *bp;
--    int64_t kernel_addr = 0;
-+    int64_t kernel_addr = VIRT_FLASH0_BASE;
-     LoongArchCPU *lacpu;
-     CPUState *cs;
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 7212fb5f8f..29577e6b71 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -664,12 +664,36 @@ static void loongarch_set_lasx(Object *obj, bool value, Error **errp)
+     }
+ }
  
-@@ -286,8 +286,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
-         kernel_addr = load_kernel_info(info);
-     } else {
-         if(!qtest_enabled()) {
--            error_report("Need kernel filename\n");
--            exit(1);
-+            warn_report("No kernel provided, booting from flash drive.");
-         }
++static bool loongarch_get_lbt(Object *obj, Error **errp)
++{
++    return LOONGARCH_CPU(obj)->lbt != ON_OFF_AUTO_OFF;
++}
++
++static void loongarch_set_lbt(Object *obj, bool value, Error **errp)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
++
++    cpu->lbt = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++}
++
+ void loongarch_cpu_post_init(Object *obj)
+ {
++    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
++
+     object_property_add_bool(obj, "lsx", loongarch_get_lsx,
+                              loongarch_set_lsx);
+     object_property_add_bool(obj, "lasx", loongarch_get_lasx,
+                              loongarch_set_lasx);
++    /* lbt is enabled only in kvm mode, not supported in tcg mode */
++    if (kvm_enabled()) {
++        cpu->lbt = ON_OFF_AUTO_AUTO;
++        object_property_add_bool(obj, "lbt", loongarch_get_lbt,
++                                 loongarch_set_lbt);
++        object_property_set_description(obj, "lbt",
++                                   "Set off to disable Binary Tranlation.");
++    } else {
++        cpu->lbt = ON_OFF_AUTO_OFF;
++    }
+ }
+ 
+ static void loongarch_cpu_init(Object *obj)
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 6c41fafb70..2b3f2758f6 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -153,6 +153,7 @@ FIELD(CPUCFG2, LLFTP_VER, 15, 3)
+ FIELD(CPUCFG2, LBT_X86, 18, 1)
+ FIELD(CPUCFG2, LBT_ARM, 19, 1)
+ FIELD(CPUCFG2, LBT_MIPS, 20, 1)
++FIELD(CPUCFG2, LBT_ALL, 18, 3)
+ FIELD(CPUCFG2, LSPW, 21, 1)
+ FIELD(CPUCFG2, LAM, 22, 1)
+ 
+@@ -281,6 +282,10 @@ struct LoongArchTLB {
+ typedef struct LoongArchTLB LoongArchTLB;
+ #endif
+ 
++enum loongarch_features {
++    LOONGARCH_FEATURE_LBT, /* loongson binary translation extension */
++};
++
+ typedef struct CPUArchState {
+     uint64_t gpr[32];
+     uint64_t pc;
+@@ -381,6 +386,7 @@ struct ArchCPU {
+     CPULoongArchState env;
+     QEMUTimer timer;
+     uint32_t  phy_id;
++    OnOffAuto lbt;
+ 
+     /* 'compatible' string for this CPU for Linux device trees */
+     const char *dtb_compatible;
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index 30ec16025d..079f8ca5d7 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -9,6 +9,7 @@
+ #include <sys/ioctl.h>
+ #include <linux/kvm.h>
+ 
++#include "qapi/error.h"
+ #include "qemu/timer.h"
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
+@@ -666,17 +667,71 @@ static void kvm_loongarch_vm_stage_change(void *opaque, bool running,
+     }
+ }
+ 
++static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
++{
++    int ret;
++    struct kvm_device_attr attr;
++
++    switch (feature) {
++    case LOONGARCH_FEATURE_LBT:
++        /*
++         * Return all if all the LBT features are supported such as:
++         *  KVM_LOONGARCH_VM_FEAT_X86BT
++         *  KVM_LOONGARCH_VM_FEAT_ARMBT
++         *  KVM_LOONGARCH_VM_FEAT_MIPSBT
++         */
++        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
++        attr.attr = KVM_LOONGARCH_VM_FEAT_X86BT;
++        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
++        attr.attr = KVM_LOONGARCH_VM_FEAT_ARMBT;
++        ret |= kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
++        attr.attr = KVM_LOONGARCH_VM_FEAT_MIPSBT;
++        ret |= kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
++        return (ret == 0);
++    default:
++        return false;
++    }
++}
++
++static int kvm_cpu_check_lbt(CPUState *cs, Error **errp)
++{
++    CPULoongArchState *env = cpu_env(cs);
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    bool kvm_supported;
++
++    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_LBT);
++    if (cpu->lbt == ON_OFF_AUTO_ON) {
++        if (kvm_supported) {
++            env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LBT_ALL, 7);
++        } else {
++            error_setg(errp, "'lbt' feature not supported by KVM on this host");
++            return -ENOTSUP;
++        }
++    } else if ((cpu->lbt == ON_OFF_AUTO_AUTO) && kvm_supported) {
++        env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LBT_ALL, 7);
++    }
++
++    return 0;
++}
++
+ int kvm_arch_init_vcpu(CPUState *cs)
+ {
+     uint64_t val;
++    int ret;
++    Error *local_err = NULL;
+ 
++    ret = 0;
+     qemu_add_vm_change_state_handler(kvm_loongarch_vm_stage_change, cs);
+ 
+     if (!kvm_get_one_reg(cs, KVM_REG_LOONGARCH_DEBUG_INST, &val)) {
+         brk_insn = val;
      }
  
+-    return 0;
++    ret = kvm_cpu_check_lbt(cs, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
++    return ret;
+ }
+ 
+ int kvm_arch_destroy_vcpu(CPUState *cs)
+diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
+index 8721a5eb13..c6f6e1ef85 100644
+--- a/target/loongarch/loongarch-qmp-cmds.c
++++ b/target/loongarch/loongarch-qmp-cmds.c
+@@ -40,7 +40,7 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
+ }
+ 
+ static const char *cpu_model_advertised_features[] = {
+-    "lsx", "lasx", NULL
++    "lsx", "lasx", "lbt", NULL
+ };
+ 
+ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
 -- 
 2.34.1
 
