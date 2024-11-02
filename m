@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1EDE677F5
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B215DE677F5
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7E19-0003R1-9a; Sat, 02 Nov 2024 09:18:15 -0400
+	id 1t7E1F-0003pF-36; Sat, 02 Nov 2024 09:18:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E12-0003HT-DD; Sat, 02 Nov 2024 09:18:08 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1t7E11-0003GB-7K; Sat, 02 Nov 2024 09:18:07 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E10-00023w-UV; Sat, 02 Nov 2024 09:18:08 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a9a2cdc6f0cso397994866b.2; 
- Sat, 02 Nov 2024 06:18:05 -0700 (PDT)
+ id 1t7E0z-00023W-OA; Sat, 02 Nov 2024 09:18:06 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a9a3dc089d8so443081666b.3; 
+ Sat, 02 Nov 2024 06:18:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730553484; x=1731158284; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730553483; x=1731158283; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dKFAh2MnjhZ1jF0dRDKV/YEAdE5+3y61mz+4DueAPJw=;
- b=SiSuRbGeGOC6u73/z7BYM9M2rPX2PsrI7EuocAZEdiJDF/T0/o+3BroTh7OZ5yvV7D
- /D7ZK6TOKsJczmG/3ufGv/1DJbb1IdW+XqgsB9Z+1RVD66AC5W1lnUVXAnxKXf9nhlRc
- D8HnbUJlRa5B4KJiW/RkqRFM/ZPe/ghhWEFfzFffYq/wCrMNYNmOgarPtMT2CZj3tjkH
- 0Ku7dF0QQY6MHrZ6/WwTrPazlOEb+u8+Yiu5YYr5AlxXauBmaVtOoFgeu0Mjm4b6eXGL
- 7Ydp/GdCkZMEC5PNQP7Ja7DA1cZAsD8jm/ihAqd3zQtRtY0qHXacGY1rHjZWtAW1Uh0m
- /N5g==
+ bh=uVflLGHPyO3cQe2iVaao8/FC1//CU9ki9Sx4TSq7Uus=;
+ b=MiUXX3OizJENZUznn57QnhRV8HgCt0IhxwOJs1GE4iqmBpdwgECyqw9opm1kpzZ0L9
+ 0bRYoxiv5+GFwVuBMMnd5vT3y0jn473eTE6Kv+QdYwjDstGcOmlt04NaVooXZQHspkuj
+ Agrw+5wvoTfThKt1tBZFhPwRKHvDLqYX/Ow0bz3KtokaEEhH9Fp0MaM+5DHkr2Zmzn72
+ 2cwCtIN2pOkcNkDuDf95jBsMMkqaSfmUCiCnLZy+P6SdANxGnKcMvsEjlbV6v/NtH/Qg
+ VhPegXiR3iPRuyAwCDGYmmEOEuSQoK0fm1EpalN9bKu8vq/zXFbm2Fb1kdRRUGEHABMm
+ qgmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730553484; x=1731158284;
+ d=1e100.net; s=20230601; t=1730553483; x=1731158283;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dKFAh2MnjhZ1jF0dRDKV/YEAdE5+3y61mz+4DueAPJw=;
- b=D8jZE2fUmIKsc3Cp1GbRfP31SQZd9pPacPYsW1H7YZ1LNsnD4OUksaVJidqsbZ+mRL
- dAnFvBjRwbpgnDhf0g+sWbNXootLMfABlkrB9Vc8tdNjfc9KnYAQHYCVrv1ZQX9Gds8J
- Yny5TAsvVZS75VtYxdZH8jqAsF7OZ2eYH0iwC40Zt0L1hCJ+t64h6/xGzCAppGkMs3Qg
- FbhRLBv2xKo4iPjW5WDFbvOUuvo01+38KBB43A3spprDtSdgoQ1lGGvyG8KdYFQnT/r1
- KE/ADQW2mRbnozlHJ3RUKKmba9qkI3tz6rLDi2NmJgsLx7kwUwoZEVc8JSS5CioXz60M
- SaAQ==
+ bh=uVflLGHPyO3cQe2iVaao8/FC1//CU9ki9Sx4TSq7Uus=;
+ b=Dax8xFjpVZZ9fl/2fldtoTEXbNsinQ6N70XkwBQWnjOtKkJebUOpPoq3txpd7NP3o1
+ q0R8WUdJT8c8ZdLedpsYNhPuwLB64NfaHshAzcvMVC26TUQ30wSe26qyIOVwx9/gmkfw
+ aKw77GrdbN5PLflAybmr0BohJ3d756ptKvj2uJlZivAQ5de2XrOvHS948GA+drRezPWD
+ TJwuLPx6GfCpUCgGlCSnWYQLbueC5XQPoiY6erFI0ikuHqJMHodNF/7I6lEEVMczBlkx
+ ulxEUsv82VX7vj0VvWGsGRtaDrIi5Fp7VBTyAOANYKGzeapuHdRzh1LXOiaPVrk03DL4
+ sRpw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVkGBgOS65DCYgo0Hh3Ge49733ir4TohIBFEkzKZUjWT/IUyDhwjoMmG6aZyJsStyqnx1LZHrhDqNg=@nongnu.org,
- AJvYcCWLxU8RmY690kDOCtwJDwG9CU944Uegdggfxx2dtJmT4XOLLEanDmWpxegETmV9G4oj+bERB8scrum7@nongnu.org
-X-Gm-Message-State: AOJu0YxAVC5Tayt08LeF8L/ne+IVM1Kuo9FF7eRL6K8BtDTooFH+z8mD
- 24+Pg+tyrAfhjWk6mki6WHTk0Lhu0mdfdepd8kG+ffQCFOcq0mDYoKi7nw==
-X-Google-Smtp-Source: AGHT+IFYwWYuRSHPcE/X4S/cTrh8u2hOfrffeR3dINDkdm1bHtWiGVWbKE6vZGcEzjkGcVuzykYvdA==
-X-Received: by 2002:a17:907:9706:b0:a9a:5004:cecf with SMTP id
- a640c23a62f3a-a9e5089f85fmr965614866b.9.1730553484389; 
- Sat, 02 Nov 2024 06:18:04 -0700 (PDT)
+ AJvYcCUVxiiZxXjqngd9EOE+a6gpzn7voguMnfQPRCxCzC7Vy9spXJiYEKqqB5yoTl8Qw9jXcv9tl7aW//U=@nongnu.org,
+ AJvYcCWCfxBOIO3/nu1kq75GNKn7EhMT0s80RKJ4fFiIFiFCUM4fuv1nHBM3dgEQghKoLRAZilLzeHe6hnoP@nongnu.org
+X-Gm-Message-State: AOJu0Ywb1OZ0AY168Jznb9OP0USqcm5sdQoOKh4kSRAU/e1qQIKVbrjR
+ NSe51FJa+L4eKK2IWtZ6y9Jh+6pOlXOYrGgNr+v30rsaqxWNMDvLNv+5Mw==
+X-Google-Smtp-Source: AGHT+IH5PGDTc6SlGfbnhzBXuo3b+WgsM54VmDBAmCKbB/wOziGCVfWNp3CiR7zv6m7Q2Drvy//8SQ==
+X-Received: by 2002:a17:907:1c85:b0:a9a:1f38:e736 with SMTP id
+ a640c23a62f3a-a9e654fb423mr655357866b.31.1730553482796; 
+ Sat, 02 Nov 2024 06:18:02 -0700 (PDT)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.18.02
+ a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.18.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Nov 2024 06:18:04 -0700 (PDT)
+ Sat, 02 Nov 2024 06:18:02 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -70,16 +70,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org,
  Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH v3 26/26] MAINTAINERS: Add hw/gpio/gpio_pwr.c
-Date: Sat,  2 Nov 2024 14:17:15 +0100
-Message-ID: <20241102131715.548849-27-shentey@gmail.com>
+Subject: [PATCH v3 25/26] hw/vfio/platform: Let vfio_start_eventfd_injection()
+ take VFIOPlatformDevice pointer
+Date: Sat,  2 Nov 2024 14:17:14 +0100
+Message-ID: <20241102131715.548849-26-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241102131715.548849-1-shentey@gmail.com>
 References: <20241102131715.548849-1-shentey@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,27 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The device is only used in the ARM virt machine and designed to be used on top
-of pl061 for use cases such as ARM Trusted Firmware. Add it to the same section
-as hw/gpio/pl061.c.
+Avoids one downcast, making the code more type-safe.
 
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ hw/vfio/platform.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a8f39aeb6f..5dd35f87ff 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -651,6 +651,7 @@ F: hw/display/pl110*
- F: hw/dma/pl080.c
- F: include/hw/dma/pl080.h
- F: hw/dma/pl330.c
-+F: hw/gpio/gpio_pwr.c
- F: hw/gpio/pl061.c
- F: hw/input/pl050.c
- F: include/hw/input/pl050.h
+diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+index a85c199c76..77bbfbf62c 100644
+--- a/hw/vfio/platform.c
++++ b/hw/vfio/platform.c
+@@ -318,13 +318,12 @@ static void vfio_platform_eoi(VFIODevice *vbasedev)
+ /**
+  * vfio_start_eventfd_injection - starts the virtual IRQ injection using
+  * user-side handled eventfds
+- * @sbdev: the sysbus device handle
++ * @vdev: the VFIO platform device handle
+  * @irq: the qemu irq handle
+  */
+ 
+-static void vfio_start_eventfd_injection(SysBusDevice *sbdev, qemu_irq irq)
++static void vfio_start_eventfd_injection(VFIOPlatformDevice *vdev, qemu_irq irq)
+ {
+-    VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(sbdev);
+     VFIOINTp *intp;
+ 
+     QLIST_FOREACH(intp, &vdev->intp_list, next) {
+@@ -417,7 +416,7 @@ fail_vfio:
+     kvm_irqchip_remove_irqfd_notifier(kvm_state, intp->interrupt, irq);
+     abort();
+ fail_irqfd:
+-    vfio_start_eventfd_injection(sbdev, irq);
++    vfio_start_eventfd_injection(vdev, irq);
+     return;
+ }
+ 
 -- 
 2.47.0
 
