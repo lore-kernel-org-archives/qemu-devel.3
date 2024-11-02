@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BF55E67802
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 15:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF71E67802
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 15:06:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7Fen-0000SS-Gv; Sat, 02 Nov 2024 11:03:19 -0400
+	id 1t7Fhm-0002mU-8w; Sat, 02 Nov 2024 11:06:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uVOK=R5=kaod.org=clg@ozlabs.org>)
- id 1t7FeU-0000Cd-IH; Sat, 02 Nov 2024 11:02:59 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1t7Fhg-0002lS-Gw; Sat, 02 Nov 2024 11:06:16 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uVOK=R5=kaod.org=clg@ozlabs.org>)
- id 1t7FeR-0004aK-Fk; Sat, 02 Nov 2024 11:02:56 -0400
+ id 1t7Fhe-000606-Tc; Sat, 02 Nov 2024 11:06:16 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XggvZ68n4z4x8R;
- Sun,  3 Nov 2024 02:02:50 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XggzQ1Kysz4x8W;
+ Sun,  3 Nov 2024 02:06:10 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XggvV3Z8Tz4wxf;
- Sun,  3 Nov 2024 02:02:46 +1100 (AEDT)
-Message-ID: <de5b9cd4-ed9f-4398-86d8-b4ad15849223@kaod.org>
-Date: Sat, 2 Nov 2024 16:02:46 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XggzL5tqDz4x7G;
+ Sun,  3 Nov 2024 02:06:06 +1100 (AEDT)
+Message-ID: <9fa94cbc-8010-4805-be44-939ce35182dc@kaod.org>
+Date: Sat, 2 Nov 2024 16:06:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 8/8] aspeed: Support create flash devices via
- command line for AST1030
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+Subject: Re: [PATCH] hw/sd/sdcard: Fix calculation of size when using eMMC
+ boot partitions
+To: Jan Luebbe <jlu@pengutronix.de>, qemu-devel@nongnu.org
+Cc: Guenter Roeck <linux@roeck-us.net>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bin Meng <bmeng.cn@gmail.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20241029091729.3317512-1-jamin_lin@aspeedtech.com>
- <20241029091729.3317512-9-jamin_lin@aspeedtech.com>
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org, qemu-block@nongnu.org
+References: <1bce4c22-9281-44c5-8acb-860881dc271c@kaod.org>
+ <20241028162308.2152712-1-jlu@pengutronix.de>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20241029091729.3317512-9-jamin_lin@aspeedtech.com>
+In-Reply-To: <20241028162308.2152712-1-jlu@pengutronix.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=uVOK=R5=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
 X-Spam_bar: ----
 X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,59 +69,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/29/24 10:17, Jamin Lin wrote:
-> Add a "if-statement" in aspeed_minibmc_machine_init function. If users add
-> "-nodefaults" in command line, the flash devices should be created by users
-> setting. Otherwise, the flash devices are created at machine init.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Philippe,
 
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+I can take this patch through the aspeed branch.
 
 Thanks,
 
 C.
 
-> ---
->   hw/arm/aspeed.c | 22 ++++++++++++----------
->   1 file changed, 12 insertions(+), 10 deletions(-)
+On 10/28/24 17:23, Jan Luebbe wrote:
+> The sd_bootpart_offset() function calculates the *runtime* offset which
+> changes as the guest switches between accessing the main user data area
+> and the boot partitions by writing to the EXT_CSD_PART_CONFIG_ACC_MASK
+> bits, so it shouldn't be used to calculate the main user data area size.
 > 
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index 0468602d95..e161e6b1c5 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -1602,18 +1602,20 @@ static void aspeed_minibmc_machine_init(MachineState *machine)
->       connect_serial_hds_to_uarts(bmc);
->       qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);
->   
-> -    aspeed_board_init_flashes(&bmc->soc->fmc,
-> -                              bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
-> -                              amc->num_cs,
-> -                              0);
-> +    if (defaults_enabled()) {
-> +        aspeed_board_init_flashes(&bmc->soc->fmc,
-> +                            bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
-> +                            amc->num_cs,
-> +                            0);
->   
-> -    aspeed_board_init_flashes(&bmc->soc->spi[0],
-> -                              bmc->spi_model ? bmc->spi_model : amc->spi_model,
-> -                              amc->num_cs, amc->num_cs);
-> +        aspeed_board_init_flashes(&bmc->soc->spi[0],
-> +                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
-> +                            amc->num_cs, amc->num_cs);
->   
-> -    aspeed_board_init_flashes(&bmc->soc->spi[1],
-> -                              bmc->spi_model ? bmc->spi_model : amc->spi_model,
-> -                              amc->num_cs, (amc->num_cs * 2));
-> +        aspeed_board_init_flashes(&bmc->soc->spi[1],
-> +                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
-> +                            amc->num_cs, (amc->num_cs * 2));
+> Instead, subtract the boot_part_size directly (twice, as there are two
+> identical boot partitions defined by the eMMC spec).
+> 
+> Suggested-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: Jan Luebbe <jlu@pengutronix.de>
+> --->   hw/sd/sd.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index 2d3467c3d956..8430d5ae361c 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -826,7 +826,9 @@ static void sd_reset(DeviceState *dev)
+>           sect = 0;
+>       }
+>       size = sect << HWBLOCK_SHIFT;
+> -    size -= sd_bootpart_offset(sd);
+> +    if (sd_is_emmc(sd)) {
+> +        size -= sd->boot_part_size * 2;
 > +    }
 >   
->       if (amc->i2c_init) {
->           amc->i2c_init(bmc);
+>       sect = sd_addr_to_wpnum(size) + 1;
+>   
 
 
