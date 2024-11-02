@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0E6BE677FC
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 867C9E677FC
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7E1B-0003eG-HW; Sat, 02 Nov 2024 09:18:17 -0400
+	id 1t7E19-0003SL-OF; Sat, 02 Nov 2024 09:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0o-00037P-Kl; Sat, 02 Nov 2024 09:17:54 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1t7E0j-00035v-P5; Sat, 02 Nov 2024 09:17:51 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0m-0001zq-Od; Sat, 02 Nov 2024 09:17:54 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5ceca7df7f0so584295a12.1; 
- Sat, 02 Nov 2024 06:17:51 -0700 (PDT)
+ id 1t7E0h-0001yS-2C; Sat, 02 Nov 2024 09:17:48 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5ceca7df7f0so584202a12.1; 
+ Sat, 02 Nov 2024 06:17:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730553470; x=1731158270; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730553464; x=1731158264; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FdlRSFSVE5+jilPfwmoz97fjdKJLulipSEMWN67GtgY=;
- b=CVWIrmkYi0KYpKuOMb1qHxYC1pXe3XDmen5iar5Jdkv/6wqiSeW/p74Rvk9LV2Bpgx
- nXvTadtsvI6cRiB6w/g6DN/ghUGhUqLwG5/ya7Advoy2llfouEILlUBAgfu8JYascu42
- HG4l7XZ4d5PSwbR9+Nlk51E3oATWiVMOcodPL1r3B1nQ1V15kuitC68OZmkIeMTw0WOc
- 7Ba8fRbFPMSzvCSFlUwepa74rftC2458INif55LSM0tbwO3VP0xEGLY89Fbt8HjOyu+9
- 2zciP03G5R6t3n/BaBLt+2iDugk9Y53768iCw+eMHKxyawDAMnCGaG1XysyZQD9Whuk3
- 9kMw==
+ bh=QCD24XbECn5QO23uS9iwkiZNOhv+pKq+MzdKGgL8qKM=;
+ b=edC2N3iJyc6FWUiQIJJXWwAwI2UbluuQSYgehgmiyL4N+aGJ+Wqf6Bi046ztKMB46w
+ lWgUdcXSf5pUu66qD2HaGkmu0HQPNiff8mtDJ115U+ojGJRhIcyfFtWz4xCaIRYC1ndB
+ b7MJBtjhOzWcJO8DTxe4Gj6T8UKDHfKNcdjThrvWSAwVpSLQV9h/HoUcOKYowrl41ci6
+ dLBDusZY10koSbZ2+S1Fan8/Sd8eGX2D0AV3KcgEj0tbNP1iFINnmiQqAlVAeQnWWyU4
+ Rm6A+ZjdadkkXMxEI11ctvn9QCmYuD6XwTpg80lTU7eYbk3kxJTPDzi0/RT4f3TP5E3i
+ w73g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730553470; x=1731158270;
+ d=1e100.net; s=20230601; t=1730553464; x=1731158264;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FdlRSFSVE5+jilPfwmoz97fjdKJLulipSEMWN67GtgY=;
- b=NvMqgiECz4J/eE/YhpfJcCoDEa/vg06t5HnSEAwZot3xJ6fYD0dg+hgoAgU1zOM6o+
- u8Y62NxtojC4KXaaVpq9IpdPTvrjXQ8+KiWypRk+3jnLSzADoAurCLZXS+z5746TW+Jc
- 9UJsRVRF3P/UpZogH27j+evw7F4sxcFaY1sGwU9Nl1RU3e8yXDFVYnPxuyYfCFJ5/g2S
- DgFcc2T+7MfxFa1qwptwVwNJXgoFzrf3bIx87MdBGnF3I5z5RQpdi6Eu1OJV799jCA3B
- 7SYFvY603lRxaQqUFbGu4YyG6FM9O99g1+Jxyka9zlT5L2ZRT0P8bADmU+7O26vvFii0
- hJcA==
+ bh=QCD24XbECn5QO23uS9iwkiZNOhv+pKq+MzdKGgL8qKM=;
+ b=ZwyJe1XvZAoRWu349aG/Yot55cMwP4wSfhuLM6njRnYbfJH7yl/7bAFy6qUQtEhMm+
+ 8i9p3xc4pBKdmBSzZCQpvRFa4kuemYkX/61/MdQ9cJK9YmfshtFDO2BDR6eVpxPnsk4o
+ oLa6q4Un71TMUe9aUpDjO/rR7WO37gxtpUyG8OGaffgdz8wuFYdfAWpExjhqXUUyyL00
+ o/ygApGqPZ3dtnq6MTR6CnNgHTknywxD/XwSd7UvJFiYP8fUlWeKwslTJGncsWYKQYYp
+ auxRPuIr0ZNjIg/Fw79WOnStdY9FXbbeT0/iQ/NpAALPnXQVm8lf/uQ1+Hlsjzr5W8Ck
+ z9ug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFV0PvnW6+9dpbuJ8EMF4unAll3rgx8l25MFAK4aG8pojYiq62RNkpoTGqIBsz5q1dQu/0y9ijxW78@nongnu.org,
- AJvYcCXUvytAgyWSnzhZVqTONEYe7Mz+GRJSi8g9nVeKrFedZfS/QXsckReryngX2qwCKYdnbjuaqM7TzNQ=@nongnu.org
-X-Gm-Message-State: AOJu0YwqsMaVuhpGRtkeVhBhj5Z7kRnq5IoohzG6mxIfb7wxZ6wCFtUr
- 67EyKn7Uz9wj5CIVpR5tMHNAgtuTi/+JqiebDL+10FnldFjjv5RJwZb+8w==
-X-Google-Smtp-Source: AGHT+IHWAmadtq2H8x8vkXXajemY4CQNXF+sufmMYE8SBjrdsSdHgXnfrD3qtu/EGtdZe3bNK+Bcug==
-X-Received: by 2002:a17:907:9407:b0:a77:c30c:341 with SMTP id
- a640c23a62f3a-a9e652a2f0dmr654804166b.0.1730553469923; 
- Sat, 02 Nov 2024 06:17:49 -0700 (PDT)
+ AJvYcCVsTl5/As1OEevYoUcx358RPgrY5FwzmUHY3NCCUPgPmJ/nZrLhYx/9pB00I2FHTQZLi11GQgHvFm0q@nongnu.org,
+ AJvYcCXw+MqLMnPHxtIVuxl0oSqX2N1f7RdKZ3O3Xgi2I6T4LIYv7iLjcbF3/dNHb+H4GS+MdhrgKtaN7uY=@nongnu.org
+X-Gm-Message-State: AOJu0YyD2+z7/Dd4YVCdaynjb7bXewG+glyTHXcsGpLJPAuUkGhWSWrs
+ wjeJWyZV2aDqUZbPgxJ30J5enzRBsX9tGZa6hdGA0NO7xv54dj97Wcc0RQ==
+X-Google-Smtp-Source: AGHT+IEYnUorv6VbFM+NKFRhQYrsQu6I7fZGWN6MCX0JY0aguL6S8OPZtNKcPGpxExfauUzSHH9mJQ==
+X-Received: by 2002:a17:907:7e82:b0:a9a:230b:ff2c with SMTP id
+ a640c23a62f3a-a9e654f8c59mr612763066b.30.1730553464362; 
+ Sat, 02 Nov 2024 06:17:44 -0700 (PDT)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.48
+ a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Nov 2024 06:17:49 -0700 (PDT)
+ Sat, 02 Nov 2024 06:17:43 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -70,16 +70,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org,
  Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH v3 15/26] hw/net/fsl_etsec/miim: Reuse MII constants
-Date: Sat,  2 Nov 2024 14:17:04 +0100
-Message-ID: <20241102131715.548849-16-shentey@gmail.com>
+Subject: [PATCH v3 11/26] hw/i2c/mpc_i2c: Convert DPRINTF to trace events for
+ register access
+Date: Sat,  2 Nov 2024 14:17:00 +0100
+Message-ID: <20241102131715.548849-12-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241102131715.548849-1-shentey@gmail.com>
 References: <20241102131715.548849-1-shentey@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,62 +104,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of defining redundant constants and using magic numbers reuse the
-existing MII constants.
-
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/net/fsl_etsec/miim.c | 19 ++++++-------------
- 1 file changed, 6 insertions(+), 13 deletions(-)
+ hw/i2c/mpc_i2c.c    | 9 +++++----
+ hw/i2c/trace-events | 5 +++++
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/hw/net/fsl_etsec/miim.c b/hw/net/fsl_etsec/miim.c
-index b48d2cb57b..4e9169907a 100644
---- a/hw/net/fsl_etsec/miim.c
-+++ b/hw/net/fsl_etsec/miim.c
-@@ -29,13 +29,6 @@
+diff --git a/hw/i2c/mpc_i2c.c b/hw/i2c/mpc_i2c.c
+index 2467d1a9aa..3d79c15653 100644
+--- a/hw/i2c/mpc_i2c.c
++++ b/hw/i2c/mpc_i2c.c
+@@ -24,6 +24,7 @@
+ #include "hw/sysbus.h"
+ #include "migration/vmstate.h"
+ #include "qom/object.h"
++#include "trace.h"
  
- /* #define DEBUG_MIIM */
+ /* #define DEBUG_I2C */
  
--#define MIIM_CONTROL    0
--#define MIIM_STATUS     1
--#define MIIM_PHY_ID_1   2
--#define MIIM_PHY_ID_2   3
--#define MIIM_T2_STATUS  10
--#define MIIM_EXT_STATUS 15
--
- static void miim_read_cycle(eTSEC *etsec)
+@@ -224,8 +225,8 @@ static uint64_t mpc_i2c_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+     }
+ 
+-    DPRINTF("%s: addr " HWADDR_FMT_plx " %02" PRIx32 "\n", __func__,
+-                                         addr, value);
++    trace_mpc_i2c_read(addr, value);
++
+     return (uint64_t)value;
+ }
+ 
+@@ -234,8 +235,8 @@ static void mpc_i2c_write(void *opaque, hwaddr addr,
  {
-     uint8_t  phy;
-@@ -47,14 +40,14 @@ static void miim_read_cycle(eTSEC *etsec)
-     addr = etsec->regs[MIIMADD].value & 0x1F;
+     MPCI2CState *s = opaque;
  
+-    DPRINTF("%s: addr " HWADDR_FMT_plx " val %08" PRIx64 "\n", __func__,
+-                                             addr, value);
++    trace_mpc_i2c_write(addr, value);
++
      switch (addr) {
--    case MIIM_CONTROL:
-+    case MII_BMCR:
-         value = etsec->phy_control;
-         break;
--    case MIIM_STATUS:
-+    case MII_BMSR:
-         value = etsec->phy_status;
-         break;
--    case MIIM_T2_STATUS:
--        value = 0x1800;           /* Local and remote receivers OK */
-+    case MII_STAT1000:
-+        value = MII_STAT1000_LOK | MII_STAT1000_ROK;
-         break;
-     default:
-         value = 0x0;
-@@ -84,8 +77,8 @@ static void miim_write_cycle(eTSEC *etsec)
- #endif
+     case MPC_I2C_ADR:
+         s->adr = value & CADR_MASK;
+diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
+index 6900e06eda..f708a7ace1 100644
+--- a/hw/i2c/trace-events
++++ b/hw/i2c/trace-events
+@@ -35,6 +35,11 @@ aspeed_i2c_bus_write(uint32_t busid, uint64_t offset, unsigned size, uint64_t va
+ aspeed_i2c_bus_send(const char *mode, int i, int count, uint8_t byte) "%s send %d/%d 0x%02x"
+ aspeed_i2c_bus_recv(const char *mode, int i, int count, uint8_t byte) "%s recv %d/%d 0x%02x"
  
-     switch (addr) {
--    case MIIM_CONTROL:
--        etsec->phy_control = value & ~(0x8100);
-+    case MII_BMCR:
-+        etsec->phy_control = value & ~(MII_BMCR_RESET | MII_BMCR_FD);
-         break;
-     default:
-         break;
++# mpc_i2c.c
++
++mpc_i2c_read(uint64_t addr, uint32_t value) "[0x%" PRIx64 "] -> 0x%02" PRIx32
++mpc_i2c_write(uint64_t addr, uint32_t value) "[0x%" PRIx64 "] <- 0x%02" PRIx32
++
+ # npcm7xx_smbus.c
+ 
+ npcm7xx_smbus_read(const char *id, uint64_t offset, uint64_t value, unsigned size) "%s offset: 0x%04" PRIx64 " value: 0x%02" PRIx64 " size: %u"
 -- 
 2.47.0
 
