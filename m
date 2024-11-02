@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E353E677FC
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8161FE677F5
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 13:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7E1F-0003qE-EW; Sat, 02 Nov 2024 09:18:21 -0400
+	id 1t7E0l-00036a-VO; Sat, 02 Nov 2024 09:17:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0w-0003CX-Ca; Sat, 02 Nov 2024 09:18:03 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1t7E0Y-00032W-PG; Sat, 02 Nov 2024 09:17:39 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7E0t-00021Z-Jq; Sat, 02 Nov 2024 09:18:02 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a9a0c40849cso466753266b.3; 
- Sat, 02 Nov 2024 06:17:57 -0700 (PDT)
+ id 1t7E0W-0001w8-Ka; Sat, 02 Nov 2024 09:17:37 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a9e44654ae3so335513266b.1; 
+ Sat, 02 Nov 2024 06:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730553476; x=1731158276; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730553454; x=1731158254; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=80K8OEm+6o8+JzT+l+kkS4hvMpMoaCr4IlAQyLMMIO0=;
- b=BFfG5T/rUvOzrgrN75/IYmqpYe3ifhGfePovRTpqu8n2C79AiVupW1slomcMSHuG7u
- gG0GmqLm11T64pBzOhF9xMgt/LN77tEhDq8q+1gxs4Fn8NMlxzjICLSReemShzkXsPew
- hyqPPnYvWhYors8T7ZlvUNoye3AZzWmD3c6zWKj2OvU9aYHdHfJnOrn6l+8fj2+cGZ/9
- sCPNpgA1Fw1szgRsCgySkg39wiOwPxofLQetc+TMYyd/Gb68EEMxsxZoj9r3EGcN0Iia
- H7VyO3lyimT8H253NKLs4nF+bA+1PQ1CHA3IL/oJmgrACrW7xJByQviJJGcRUFKvhKLi
- Z93g==
+ bh=tfVJw2OTp+OS1+DvQbkRZgABrzKigE/SljuSUg2aBz4=;
+ b=SgPeZdzvlPmTQoGIKuGTazf0O4cw5UxEYzdQVfRlYFkKTkpHjAfr4uxzBLSNyjjqdC
+ lnRHqk2pfV9iJGF1XKda0/gDyJ3CK7Q16egcTbP3LzT9lo0++ZVb+Liz1yUx7i0HuAaM
+ vIzPXeisxDTGMGF2IGcZq/j0EDNJU19xYUd/Z1YYG7S3Gxeq6C2UT65OLtDJRG2A85a0
+ KaKHIXsw6GGkc2OtFA9kYdtAvczvAGq+l/yPkCLPJ8xOUjhnmNd58gF8AVrMvzIlXkwR
+ D1knR45+Z2TcxRDsQZNTwyKa22/9SVZOjy/W67+JKB9GMRFL+q9aX53CnSK01+zNjlYC
+ 8f2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730553476; x=1731158276;
+ d=1e100.net; s=20230601; t=1730553454; x=1731158254;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=80K8OEm+6o8+JzT+l+kkS4hvMpMoaCr4IlAQyLMMIO0=;
- b=rIRheHFJMT3kdoYlAb8JdtzmFxPXuYGi+P4N6ho1BmYrjIeO63vW6wDARBqMxvoosT
- eizTUUrgVz9tpzakts0pL+Rqb6wBdlHarqso+E0KSrSI8SG8E0zH6I9vnst7PpqpEkWf
- vUiH6NuTCBk5ZRAiZmkhThnbkaFicS+DwJMmfmzpkmRwyUJN9WVR1XqjtGsKkXF3X3mz
- P4+C/02lzpF3kyncjIEiiVqgbACbY0ae+nOvTiLCAtPCVBPcoR8Hwjj0IquzLGGPifv0
- vJmBA/INVtoMPRM629gbrratmSODgeOqH3JBzGqrDaXxzYpw3VPvCelQOs4ruKDvgrI9
- gsHw==
+ bh=tfVJw2OTp+OS1+DvQbkRZgABrzKigE/SljuSUg2aBz4=;
+ b=qX1OVoX04YUxdQSWq6trnkqpRQD9eWRCVa/DYy58kIBbnDLo0T51Ic3DhBoXjJ9RYQ
+ LUW9CdAuT4urJmEBvqNtCSZMU/ICd29zLUEVuX0504nbMd0gPg3HbMfYNc1t87N6AM/a
+ 2onEnrF7Kf/057k06ucnJHPngbcOp8v7wH5F6EhKTDFYZIUYE+aadbYidNPWBivuXBSy
+ Ta4oQQmp1hYo6BZ2nDiey5nLm8WbF9lXsBpgPL0VSpzxwY+tCtCU7ooSZkPnsJIYTRdO
+ 01w+NsVEeERSM4GRbwb70m4o2YzhbXHuLSgLfc+gQpXzOq8s3Z9QOztpytAiAODfdhWK
+ TcKQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVkiVJ0MtjiPAMLpN7xnJDB5RK7T8x7yErWHUfXkrto6NNqIvDJdPIEXHeRe6c0Hb3R3h4cvToEcO/B@nongnu.org,
- AJvYcCWOf02X0VJiCyuBqNO6RL0BnKbsndmwCSbkldV2BqnkEf+tvdRuP8T6uir4Nzf8JYuAtjhPL3DxReg=@nongnu.org
-X-Gm-Message-State: AOJu0Yzz4ouA9n76g65+Rfy3whe7eStiZPMipftXywlgAakele8qR9WM
- HOVwMC2w+e86DHnM0LREjPKXyH9Yw5vRekym5YSnmn6TRV4PurujTzlJtg==
-X-Google-Smtp-Source: AGHT+IF7MDxOK6ZyXd9DeicGn8UMo/EyghaXt22av+4QTbbaetScuZ5Elw8H4a1AJwqr9pLayDfjnw==
-X-Received: by 2002:a17:907:9722:b0:a99:403e:2578 with SMTP id
- a640c23a62f3a-a9e3a57531amr1445849466b.5.1730553475978; 
- Sat, 02 Nov 2024 06:17:55 -0700 (PDT)
+ AJvYcCUgl2ij/q/jsPn8Pgj3ITPzsjKhi8wvVYvXfN17lwJbD3c5a0Q/vN1q78xkmj9F/ZbwFYRWjXhmwpBa@nongnu.org,
+ AJvYcCVxuofdi5A2nU4KGLTdtQHd5FmLZ3BkJIhcI1/et4w/Iuyarbgf9wEYma9MPy69tLkIUcAV8PuXuxk=@nongnu.org
+X-Gm-Message-State: AOJu0YzlMNUQz6OQ77CEJjweR7wzGrRjhvA6oLBqS4alMYlKZhBkJTAC
+ o4xBJWseg81haylAzzitABEeBOaJFcM4+UqexcKb91yx8WDgEax0L91YqQ==
+X-Google-Smtp-Source: AGHT+IEY0YtyH2q+SUklW2f073sIE4tcLpdwFgdSDVVDP3MvB/PF+a5hSHmVJc3sfd/xnScpg9HFzw==
+X-Received: by 2002:a17:907:7208:b0:a9a:15fb:727a with SMTP id
+ a640c23a62f3a-a9e508ac2dcmr1014763466b.13.1730553453917; 
+ Sat, 02 Nov 2024 06:17:33 -0700 (PDT)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.54
+ a640c23a62f3a-a9e5664350esm307859066b.159.2024.11.02.06.17.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Nov 2024 06:17:55 -0700 (PDT)
+ Sat, 02 Nov 2024 06:17:33 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -69,18 +69,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org,
- Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH v3 20/26] hw/sd/sdhci: Prefer DEFINE_TYPES() macro
-Date: Sat,  2 Nov 2024 14:17:09 +0100
-Message-ID: <20241102131715.548849-21-shentey@gmail.com>
+ Corey Minyard <cminyard@mvista.com>, BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH v3 03/26] hw/ppc/e500: Prefer QOM cast
+Date: Sat,  2 Nov 2024 14:16:52 +0100
+Message-ID: <20241102131715.548849-4-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241102131715.548849-1-shentey@gmail.com>
 References: <20241102131715.548849-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,112 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/sd/sdhci.c | 62 +++++++++++++++++++++------------------------------
- 1 file changed, 26 insertions(+), 36 deletions(-)
+ hw/ppc/e500.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index ed01499391..aa89513796 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -37,7 +37,6 @@
- #include "migration/vmstate.h"
- #include "sdhci-internal.h"
- #include "qemu/log.h"
--#include "qemu/module.h"
- #include "trace.h"
- #include "qom/object.h"
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 0683629ac0..964a22c5b7 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -1008,7 +1008,7 @@ void ppce500_init(MachineState *machine)
+     sysbus_connect_irq(s, 0, qdev_get_gpio_in(mpicdev, MPC8544_I2C_IRQ));
+     memory_region_add_subregion(ccsr_addr_space, MPC8544_I2C_REGS_OFFSET,
+                                 sysbus_mmio_get_region(s, 0));
+-    i2c = (I2CBus *)qdev_get_child_bus(dev, "i2c");
++    i2c = I2C_BUS(qdev_get_child_bus(dev, "i2c"));
+     i2c_slave_create_simple(i2c, "ds1338", RTC_REGS_OFFSET);
  
-@@ -1598,15 +1597,6 @@ static void sdhci_sysbus_class_init(ObjectClass *klass, void *data)
-     sdhci_common_class_init(klass, data);
- }
+     /* eSDHC */
+@@ -1057,7 +1057,7 @@ void ppce500_init(MachineState *machine)
+     memory_region_add_subregion(ccsr_addr_space, MPC8544_PCI_REGS_OFFSET,
+                                 sysbus_mmio_get_region(s, 0));
  
--static const TypeInfo sdhci_sysbus_info = {
--    .name = TYPE_SYSBUS_SDHCI,
--    .parent = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(SDHCIState),
--    .instance_init = sdhci_sysbus_init,
--    .instance_finalize = sdhci_sysbus_finalize,
--    .class_init = sdhci_sysbus_class_init,
--};
--
- /* --- qdev bus master --- */
+-    pci_bus = (PCIBus *)qdev_get_child_bus(dev, "pci.0");
++    pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
+     if (!pci_bus)
+         printf("couldn't create PCI controller!\n");
  
- static void sdhci_bus_class_init(ObjectClass *klass, void *data)
-@@ -1617,13 +1607,6 @@ static void sdhci_bus_class_init(ObjectClass *klass, void *data)
-     sbc->set_readonly = sdhci_set_readonly;
- }
- 
--static const TypeInfo sdhci_bus_info = {
--    .name = TYPE_SDHCI_BUS,
--    .parent = TYPE_SD_BUS,
--    .instance_size = sizeof(SDBus),
--    .class_init = sdhci_bus_class_init,
--};
--
- /* --- qdev i.MX eSDHC --- */
- 
- #define USDHC_MIX_CTRL                  0x48
-@@ -1882,12 +1865,6 @@ static void imx_usdhc_init(Object *obj)
-     s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
- }
- 
--static const TypeInfo imx_usdhc_info = {
--    .name = TYPE_IMX_USDHC,
--    .parent = TYPE_SYSBUS_SDHCI,
--    .instance_init = imx_usdhc_init,
--};
--
- /* --- qdev Samsung s3c --- */
- 
- #define S3C_SDHCI_CONTROL2      0x80
-@@ -1946,18 +1923,31 @@ static void sdhci_s3c_init(Object *obj)
-     s->io_ops = &sdhci_s3c_mmio_ops;
- }
- 
--static const TypeInfo sdhci_s3c_info = {
--    .name = TYPE_S3C_SDHCI  ,
--    .parent = TYPE_SYSBUS_SDHCI,
--    .instance_init = sdhci_s3c_init,
-+static const TypeInfo types[] = {
-+    {
-+        .name = TYPE_SDHCI_BUS,
-+        .parent = TYPE_SD_BUS,
-+        .instance_size = sizeof(SDBus),
-+        .class_init = sdhci_bus_class_init,
-+    },
-+    {
-+        .name = TYPE_SYSBUS_SDHCI,
-+        .parent = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(SDHCIState),
-+        .instance_init = sdhci_sysbus_init,
-+        .instance_finalize = sdhci_sysbus_finalize,
-+        .class_init = sdhci_sysbus_class_init,
-+    },
-+    {
-+        .name = TYPE_IMX_USDHC,
-+        .parent = TYPE_SYSBUS_SDHCI,
-+        .instance_init = imx_usdhc_init,
-+    },
-+    {
-+        .name = TYPE_S3C_SDHCI,
-+        .parent = TYPE_SYSBUS_SDHCI,
-+        .instance_init = sdhci_s3c_init,
-+    },
- };
- 
--static void sdhci_register_types(void)
--{
--    type_register_static(&sdhci_sysbus_info);
--    type_register_static(&sdhci_bus_info);
--    type_register_static(&imx_usdhc_info);
--    type_register_static(&sdhci_s3c_info);
--}
--
--type_init(sdhci_register_types)
-+DEFINE_TYPES(types)
 -- 
 2.47.0
 
