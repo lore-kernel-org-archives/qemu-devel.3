@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E299FE67807
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 17:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2927EE677E8
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 17:46:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7Htr-0004aT-Ck; Sat, 02 Nov 2024 13:27:00 -0400
+	id 1t7ICV-0007eF-Gh; Sat, 02 Nov 2024 13:46:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1t7Htj-0004a0-2X
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 13:26:51 -0400
-Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1t7ICU-0007dl-1q
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 13:46:14 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1t7Hth-0000Ma-Mf
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 13:26:50 -0400
-Received: by mail-oo1-xc2d.google.com with SMTP id
- 006d021491bc7-5ebc52deca0so1474578eaf.3
- for <qemu-devel@nongnu.org>; Sat, 02 Nov 2024 10:26:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1t7ICN-0004rm-RP
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 13:46:13 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-71e983487a1so2544951b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 02 Nov 2024 10:46:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1730568408; x=1731173208;
- darn=nongnu.org; 
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:reply-to:message-id:subject:cc:to:from:date
- :from:to:cc:subject:date:message-id:reply-to;
- bh=n7pi/FvajqeDym4oFzIPU75adzhGvht79NsxfkMVB+w=;
- b=qZl9s0nc30ZGtqRM2LNzhxfeiq50uKMGDhFXKPrdD6w0P5Kj6Dv3kV6haMuIExNhgZ
- mPnHKHqHyAak8PvpJ92alwc2gZFAeglV3CXc/+/W7SDCdZRemQozWKu5KSCtbbk4idlR
- jDWyahMDVP9rwS5z2hp6e5cDr/fJN0mv1ksTxHN4hMd6ByU1TSmkYVp5J4KH9TpzEYhP
- mvTVBckNI35g8nUFHR4NywLCje+vU4rXzh+nEMnwh63TKgpC5bOvB4pl5pqFKuNN+bsH
- wKwIWltYynHEXUnCi31uxMLGpY89k7HX0pPkybbGFZbF9t2GrViorbIec7UHdf4i8Y+F
- lkBQ==
+ d=linaro.org; s=google; t=1730569564; x=1731174364; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=83qvjAOJZ51I+JlkGTqYXn7h8AI1DUMZm0iJTg2Jb0E=;
+ b=WOZkRgIIk0+Us0IiwhKlPW7VEGpDwEzjtmGBpzy2g7URv9iqXP2WEyns5RCXCPNS63
+ D8rAOLsN6/OJOa7+gbc/LK0qJOk3ckbKJA6exKr5/a8HoFFUbDqgl5DctiCUxEtgkAwH
+ 9jdQrG0UzFlpLOfykIVGSQo/4fFJR2F3u8ufQ+xfDuvUk4yAT5GqqvjDPgghVjSwLXtU
+ hWrAzDmWlrAU3kBiouIPbfw4uiIGVhiKyQFARyXkuEBylTTUsaRnWy02AqijTVR6a+3y
+ JPg6u5xHz2K+TGoZAXtU72sioIhNK+IX0YyVvoYrUy1/c7/sbC9hhyiIDl4p0gv7wJXT
+ ldJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730568408; x=1731173208;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:reply-to:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1730569564; x=1731174364;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n7pi/FvajqeDym4oFzIPU75adzhGvht79NsxfkMVB+w=;
- b=AXEM9tdrmh/FMagKR5z5CM+xB0B2198Q8sXKlOYumOrwZhe71ISFt4+W8B9mwFcbZP
- 2U9VWxwCTkDW2N+B+UfJTxx3ldqzqYJlBC99+8T2uYZyp3KtNvxoF3GrI4As57aYs0Dk
- fZSH8W8uryy8MASo2w/RzOzIcD9tC+25GQKlg2W7Iw3JJYtYKEpaSEcnR7WuYMIOX3W5
- euYMNF54Nt5ZmDgsKyKOmWJfQPzGx6ueVEKjcXkuR16eZ+l4KVb8zkDFIabqET8//7tH
- K04/upHBps9EUY+Apr+ggzwaOCttBhjzSNZgQ3XzxB3pHgAFrSORc2XOKc0477Eh+oCs
- TCMQ==
-X-Gm-Message-State: AOJu0YxNAovug4HO6EnUwrTXnsZHCH9vrS4wdU8hOHUcOFSAa3irJX3p
- 145xQT0kkrG5svNJxiSv31wqH67Ulg5Iy8DQWw4lwPQ5oHt1NNhG4SwfDBYsG24=
-X-Google-Smtp-Source: AGHT+IGtMPc2XfCwz+1aRE7Fl66tohEb1E1+fvPbkpEyVa0BIL26Sw10v/O9QzfnPK7QnK8De3kEgw==
-X-Received: by 2002:a05:6870:332a:b0:288:6365:d7a2 with SMTP id
- 586e51a60fabf-2949f0b2f88mr6529969fac.44.1730568408222; 
- Sat, 02 Nov 2024 10:26:48 -0700 (PDT)
-Received: from mail.minyard.net ([2001:470:b8f6:1b:fa3e:9c23:b11b:a3])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-294874ba769sm1807732fac.23.2024.11.02.10.26.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Nov 2024 10:26:47 -0700 (PDT)
-Date: Sat, 2 Nov 2024 12:26:41 -0500
-From: Corey Minyard <corey@minyard.net>
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- qemu-block@nongnu.org, Bin Meng <bmeng.cn@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jason Wang <jasowang@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org,
- Corey Minyard <cminyard@mvista.com>
-Subject: Re: [PATCH v3 12/26] hw/i2c/mpc_i2c: Prefer DEFINE_TYPES() macro
-Message-ID: <ZyZg0QJqcT9WwvDs@mail.minyard.net>
-References: <20241102131715.548849-1-shentey@gmail.com>
- <20241102131715.548849-13-shentey@gmail.com>
+ bh=83qvjAOJZ51I+JlkGTqYXn7h8AI1DUMZm0iJTg2Jb0E=;
+ b=bkSDIg+uFvPvk2V19xPmwI7RMfMBtlRdLC1k8SZQVcDt67CfvAfbxu+yUToHsOKf4d
+ EE0f+Bo9nqKX67+jXpDP01Kd3FdiUHTM1QyGJFnoV3JLJQkYdq5vePp4c48HKi5cZ+24
+ D0J++hCOJTIscpVv8B/dlVKk0esyo6Vkzt1i+NzZb78mzvXI2q8G73pOVzLiZBLlEcgp
+ oxyFAiKtiPjwVpQvpkDYs689KAtNJNaFekD834PyrvDcpble1lucP2KKZAlKb6w9Xc93
+ QLoMEV7QJRHMXikk0oW8wXKMzLItS+aC4T2YtnEhpurnQS+b9Z7Usp11fbJdLDPfFdfa
+ ZrKw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCn1L7lycIMPne3S9AJei5A0JQGQhUQbcqVMMtDrmGbIoDENh4bo2goHOBLL8pp5DIhxO6cyxzAhJm@nongnu.org
+X-Gm-Message-State: AOJu0Yz0QqpNu24AjOnvdkibdiYQ7eNrtplRkIw0RpxbOz9/euDlZD85
+ oEKkpoX5zjTJfinuoDCir0NLFUbg9+6Ioo6pR3XfhQwp1X39Nq+kCRGMeTShtVC4+alaSNBLV3R
+ D
+X-Google-Smtp-Source: AGHT+IG6Ik3BaNq+G4GIYuArwqRs3BTSy/IniPHZcGDtoDlZvsSj9SHHBn0reXiaWi1/S+wcqc0yxA==
+X-Received: by 2002:a05:6a00:3c96:b0:71d:f4ef:6b3a with SMTP id
+ d2e1a72fcca58-720b9db22bfmr15700358b3a.21.1730569564301; 
+ Sat, 02 Nov 2024 10:46:04 -0700 (PDT)
+Received: from [192.168.0.102] (200-207-104-238.dsl.telesp.net.br.
+ [200.207.104.238]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-720bc313b55sm4362909b3a.186.2024.11.02.10.46.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 02 Nov 2024 10:46:03 -0700 (PDT)
+Message-ID: <8becca82-a708-4a19-9f67-92b4a418b6a3@linaro.org>
+Date: Sat, 2 Nov 2024 14:46:00 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241102131715.548849-13-shentey@gmail.com>
-Received-SPF: none client-ip=2607:f8b0:4864:20::c2d;
- envelope-from=corey@minyard.net; helo=mail-oo1-xc2d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] disas: Fix build against Capstone v6 (again)
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241022013047.830273-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20241022013047.830273-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,61 +95,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: corey@minyard.net
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Nov 02, 2024 at 02:17:01PM +0100, Bernhard Beschow wrote:
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Hi Richard,
+
+Sorry, I've missed that one and just found it when doing a
+check before the soft freeze :)
+
+On 10/21/24 22:30, Richard Henderson wrote:
+> Like 9971cbac2f3, which set CAPSTONE_AARCH64_COMPAT_HEADER,
+> also set CAPSTONE_SYSTEMZ_COMPAT_HEADER.  Fixes the build
+> against capstone v6-alpha.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  hw/i2c/mpc_i2c.c | 20 ++++++++------------
->  1 file changed, 8 insertions(+), 12 deletions(-)
+>   include/disas/capstone.h | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/i2c/mpc_i2c.c b/hw/i2c/mpc_i2c.c
-> index 3d79c15653..16f4309ea9 100644
-> --- a/hw/i2c/mpc_i2c.c
-> +++ b/hw/i2c/mpc_i2c.c
-> @@ -20,7 +20,6 @@
->  #include "qemu/osdep.h"
->  #include "hw/i2c/i2c.h"
->  #include "hw/irq.h"
-> -#include "qemu/module.h"
->  #include "hw/sysbus.h"
->  #include "migration/vmstate.h"
->  #include "qom/object.h"
-> @@ -345,16 +344,13 @@ static void mpc_i2c_class_init(ObjectClass *klass, void *data)
->      dc->desc = "MPC I2C Controller";
->  }
->  
-> -static const TypeInfo mpc_i2c_type_info = {
-> -    .name          = TYPE_MPC_I2C,
-> -    .parent        = TYPE_SYS_BUS_DEVICE,
-> -    .instance_size = sizeof(MPCI2CState),
-> -    .class_init    = mpc_i2c_class_init,
-> +static const TypeInfo types[] = {
+> diff --git a/include/disas/capstone.h b/include/disas/capstone.h
+> index a11985151d..c43033f7f6 100644
+> --- a/include/disas/capstone.h
+> +++ b/include/disas/capstone.h
+> @@ -4,6 +4,7 @@
+>   #ifdef CONFIG_CAPSTONE
+>   
+>   #define CAPSTONE_AARCH64_COMPAT_HEADER
+> +#define CAPSTONE_SYSTEMZ_COMPAT_HEADER
+>   #include <capstone.h>
+>   
+>   #else
 
-Same question as smbus_eeprom.  The old name was more descriptive.
 
--corey
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 
-> +    {
-> +        .name          = TYPE_MPC_I2C,
-> +        .parent        = TYPE_SYS_BUS_DEVICE,
-> +        .instance_size = sizeof(MPCI2CState),
-> +        .class_init    = mpc_i2c_class_init,
-> +    },
->  };
->  
-> -static void mpc_i2c_register_types(void)
-> -{
-> -    type_register_static(&mpc_i2c_type_info);
-> -}
-> -
-> -type_init(mpc_i2c_register_types)
-> +DEFINE_TYPES(types)
-> -- 
-> 2.47.0
-> 
-> 
+@Peter, would you mind adding this to your queue?
+
+
+Cheers,
+Gustavo
 
