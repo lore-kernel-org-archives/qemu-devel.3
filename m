@@ -4,53 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99882E677EE
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 08:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56300E677F1
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 08:28:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t799A-0007KK-EQ; Sat, 02 Nov 2024 04:06:12 -0400
+	id 1t79Tz-0005zk-H5; Sat, 02 Nov 2024 04:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1t7998-0007J2-CC
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 04:06:10 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1t7994-0001z1-Vl
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 04:06:10 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxTOJn3SVnW30nAA--.14341S3;
- Sat, 02 Nov 2024 16:05:59 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMAx7uBh3SVnzZA1AA--.18827S3;
- Sat, 02 Nov 2024 16:05:59 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
-	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL v2 1/8] target/loongarch: Add loongson binary translation
- feature
-Date: Sat,  2 Nov 2024 15:47:30 +0800
-Message-Id: <20241102074737.1394884-2-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20241102074737.1394884-1-gaosong@loongson.cn>
-References: <20241102074737.1394884-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t79Tx-0005zS-7B
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 04:27:41 -0400
+Received: from mail-wr1-f53.google.com ([209.85.221.53])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t79Tv-0006b1-EM
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 04:27:40 -0400
+Received: by mail-wr1-f53.google.com with SMTP id
+ ffacd0b85a97d-37d49ffaba6so1784544f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Nov 2024 01:27:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730536058; x=1731140858;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cZMRMRIpzHOCc++FNywspFrBJekG7HjAqziCIWx/r7M=;
+ b=QtpHPeXf7L5Bm5C4wUlqLQttPl8/zeG6rpZRurk67kPPlw1IZnjacb46l2Pwv2fwgN
+ pI8aeBmMGku3mwzUewPY4QLroO6FWsta1wBCiKehmjjOecYs2VqH8h+Hqv0de+2idnLB
+ OhLwEP/R0BBmFKFxf5EZR+55tb2dwJu6Vnsj/QUzqAfklITJgbGCdVfqHSWZHmgyl5AE
+ /tu4yNjnJsf7Zp6lCPU7s+28PvZqghGlh+PFSDQ9E1IL03uIIQJGGf2wCAiiaQK5TRol
+ GZ8wyFyUsxvhoJEYxSckPNFK4/J8G25GI1FKDDi9JD7C9oAQYRWQXIYp5sA0HZJ2AnC+
+ Bu3g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW/VnSOl9oKJBqqRaDPRx7RdbTdaMGE5KNarWRh7OiYGrl8LPG2RnqUpaLl5bfb9Q4WsuPPKzziDQqT@nongnu.org
+X-Gm-Message-State: AOJu0Yz+EjNoU2mg6xGm0PglXf+y3dMYldAP2xcWi20tl6SCnjS1VfII
+ a/XIo4zy71IyjITC7ZcqbvNgbeV1CTAiSWgnviuzRkqtlPyJNXhm
+X-Google-Smtp-Source: AGHT+IF3NP4P+bWq4josTQmSd6ffEdmIuq5iA+v3vREh4to0U7416keSbu4ijqsM++9FtZ6Fw5GgOg==
+X-Received: by 2002:a05:6000:b4c:b0:37d:3735:8fe7 with SMTP id
+ ffacd0b85a97d-381b708b14bmr8301350f8f.32.1730536057673; 
+ Sat, 02 Nov 2024 01:27:37 -0700 (PDT)
+Received: from tpx1 (ip-109-42-48-251.web.vodafone.de. [109.42.48.251])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-431bd910357sm120928995e9.11.2024.11.02.01.27.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 02 Nov 2024 01:27:36 -0700 (PDT)
+Date: Sat, 2 Nov 2024 09:27:34 +0100
+From: Thomas Huth <huth@tuxfamily.org>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: peter.maydell@linaro.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 1/2] next-kbd: convert to use
+ qemu_input_handler_register()
+Message-ID: <20241102092734.03fde080@tpx1>
+In-Reply-To: <20241101201106.1432336-2-mark.cave-ayland@ilande.co.uk>
+References: <20241101201106.1432336-1-mark.cave-ayland@ilande.co.uk>
+ <20241101201106.1432336-2-mark.cave-ayland@ilande.co.uk>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAx7uBh3SVnzZA1AA--.18827S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=209.85.221.53; envelope-from=th.huth@gmail.com;
+ helo=mail-wr1-f53.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,202 +86,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+Am Fri,  1 Nov 2024 20:11:05 +0000
+schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 
-Loongson Binary Translation (LBT) is used to accelerate binary
-translation, which contains 4 scratch registers (scr0 to scr3), x86/ARM
-eflags (eflags) and x87 fpu stack pointer (ftop).
+> Convert the next-kbd device from the legacy UI qemu_add_kbd_event_handler()
+> function to use qemu_input_handler_register().
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> ---
+>  hw/m68k/next-kbd.c | 166 ++++++++++++++++++++++++++++++---------------
+>  1 file changed, 111 insertions(+), 55 deletions(-)
 
-Now LBT feature is added in kvm mode, not supported in TCG mode since
-it is not emulated. Feature variable lbt is added with OnOffAuto type,
-If lbt feature is not supported with KVM host, it reports error if there
-is lbt=on command line.
-
-If there is no any command line about lbt parameter, it checks whether
-KVM host supports lbt feature and set the corresponding value in cpucfg.
-
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240929070405.235200-2-maobibo@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/cpu.c                | 24 +++++++++++
- target/loongarch/cpu.h                |  6 +++
- target/loongarch/kvm/kvm.c            | 57 ++++++++++++++++++++++++++-
- target/loongarch/loongarch-qmp-cmds.c |  2 +-
- 4 files changed, 87 insertions(+), 2 deletions(-)
-
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 7212fb5f8f..29577e6b71 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -664,12 +664,36 @@ static void loongarch_set_lasx(Object *obj, bool value, Error **errp)
-     }
- }
- 
-+static bool loongarch_get_lbt(Object *obj, Error **errp)
-+{
-+    return LOONGARCH_CPU(obj)->lbt != ON_OFF_AUTO_OFF;
-+}
-+
-+static void loongarch_set_lbt(Object *obj, bool value, Error **errp)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+
-+    cpu->lbt = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-+}
-+
- void loongarch_cpu_post_init(Object *obj)
- {
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+
-     object_property_add_bool(obj, "lsx", loongarch_get_lsx,
-                              loongarch_set_lsx);
-     object_property_add_bool(obj, "lasx", loongarch_get_lasx,
-                              loongarch_set_lasx);
-+    /* lbt is enabled only in kvm mode, not supported in tcg mode */
-+    if (kvm_enabled()) {
-+        cpu->lbt = ON_OFF_AUTO_AUTO;
-+        object_property_add_bool(obj, "lbt", loongarch_get_lbt,
-+                                 loongarch_set_lbt);
-+        object_property_set_description(obj, "lbt",
-+                                   "Set off to disable Binary Tranlation.");
-+    } else {
-+        cpu->lbt = ON_OFF_AUTO_OFF;
-+    }
- }
- 
- static void loongarch_cpu_init(Object *obj)
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 6c41fafb70..2b3f2758f6 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -153,6 +153,7 @@ FIELD(CPUCFG2, LLFTP_VER, 15, 3)
- FIELD(CPUCFG2, LBT_X86, 18, 1)
- FIELD(CPUCFG2, LBT_ARM, 19, 1)
- FIELD(CPUCFG2, LBT_MIPS, 20, 1)
-+FIELD(CPUCFG2, LBT_ALL, 18, 3)
- FIELD(CPUCFG2, LSPW, 21, 1)
- FIELD(CPUCFG2, LAM, 22, 1)
- 
-@@ -281,6 +282,10 @@ struct LoongArchTLB {
- typedef struct LoongArchTLB LoongArchTLB;
- #endif
- 
-+enum loongarch_features {
-+    LOONGARCH_FEATURE_LBT, /* loongson binary translation extension */
-+};
-+
- typedef struct CPUArchState {
-     uint64_t gpr[32];
-     uint64_t pc;
-@@ -381,6 +386,7 @@ struct ArchCPU {
-     CPULoongArchState env;
-     QEMUTimer timer;
-     uint32_t  phy_id;
-+    OnOffAuto lbt;
- 
-     /* 'compatible' string for this CPU for Linux device trees */
-     const char *dtb_compatible;
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 30ec16025d..079f8ca5d7 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -9,6 +9,7 @@
- #include <sys/ioctl.h>
- #include <linux/kvm.h>
- 
-+#include "qapi/error.h"
- #include "qemu/timer.h"
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
-@@ -666,17 +667,71 @@ static void kvm_loongarch_vm_stage_change(void *opaque, bool running,
-     }
- }
- 
-+static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
-+{
-+    int ret;
-+    struct kvm_device_attr attr;
-+
-+    switch (feature) {
-+    case LOONGARCH_FEATURE_LBT:
-+        /*
-+         * Return all if all the LBT features are supported such as:
-+         *  KVM_LOONGARCH_VM_FEAT_X86BT
-+         *  KVM_LOONGARCH_VM_FEAT_ARMBT
-+         *  KVM_LOONGARCH_VM_FEAT_MIPSBT
-+         */
-+        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
-+        attr.attr = KVM_LOONGARCH_VM_FEAT_X86BT;
-+        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-+        attr.attr = KVM_LOONGARCH_VM_FEAT_ARMBT;
-+        ret |= kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-+        attr.attr = KVM_LOONGARCH_VM_FEAT_MIPSBT;
-+        ret |= kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-+        return (ret == 0);
-+    default:
-+        return false;
-+    }
-+}
-+
-+static int kvm_cpu_check_lbt(CPUState *cs, Error **errp)
-+{
-+    CPULoongArchState *env = cpu_env(cs);
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    bool kvm_supported;
-+
-+    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_LBT);
-+    if (cpu->lbt == ON_OFF_AUTO_ON) {
-+        if (kvm_supported) {
-+            env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LBT_ALL, 7);
-+        } else {
-+            error_setg(errp, "'lbt' feature not supported by KVM on this host");
-+            return -ENOTSUP;
-+        }
-+    } else if ((cpu->lbt == ON_OFF_AUTO_AUTO) && kvm_supported) {
-+        env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LBT_ALL, 7);
-+    }
-+
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     uint64_t val;
-+    int ret;
-+    Error *local_err = NULL;
- 
-+    ret = 0;
-     qemu_add_vm_change_state_handler(kvm_loongarch_vm_stage_change, cs);
- 
-     if (!kvm_get_one_reg(cs, KVM_REG_LOONGARCH_DEBUG_INST, &val)) {
-         brk_insn = val;
-     }
- 
--    return 0;
-+    ret = kvm_cpu_check_lbt(cs, &local_err);
-+    if (ret < 0) {
-+        error_report_err(local_err);
-+    }
-+    return ret;
- }
- 
- int kvm_arch_destroy_vcpu(CPUState *cs)
-diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
-index 8721a5eb13..c6f6e1ef85 100644
---- a/target/loongarch/loongarch-qmp-cmds.c
-+++ b/target/loongarch/loongarch-qmp-cmds.c
-@@ -40,7 +40,7 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
- }
- 
- static const char *cpu_model_advertised_features[] = {
--    "lsx", "lasx", NULL
-+    "lsx", "lasx", "lbt", NULL
- };
- 
- CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
--- 
-2.34.1
-
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 
