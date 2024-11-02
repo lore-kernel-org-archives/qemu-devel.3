@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71164E677F5
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 10:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39EB6E677F8
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Nov 2024 10:59:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7Biv-0001Ur-2G; Sat, 02 Nov 2024 06:51:17 -0400
+	id 1t7BqA-0002UD-CB; Sat, 02 Nov 2024 06:58:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1t7Bit-0001Uf-HX
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 06:51:15 -0400
-Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1t7Bq6-0002Tr-Ri
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 06:58:43 -0400
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1t7Bir-0006Xe-VA
- for qemu-devel@nongnu.org; Sat, 02 Nov 2024 06:51:15 -0400
-Received: by mail-qk1-x732.google.com with SMTP id
- af79cd13be357-7b148919e82so185704485a.0
- for <qemu-devel@nongnu.org>; Sat, 02 Nov 2024 03:51:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1t7Bq4-00084e-Uo
+ for qemu-devel@nongnu.org; Sat, 02 Nov 2024 06:58:42 -0400
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2fb5fa911aaso40281391fa.2
+ for <qemu-devel@nongnu.org>; Sat, 02 Nov 2024 03:58:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730544673; x=1731149473; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=V/CuPBxOaPUksthtvanxN+Sr5/HQPk0LNiKwqtBK+MU=;
- b=mnvduXgkx4G7rN3a/HrnQpZjxXO7ldBYkPJkPYbls2wo8JzoETtr7YBnWc+9uTtGQX
- NpKNk0CAO6Qj/E3sEd2+wby7NhR5TITgEmV37peSUw4s+Pb8GUm6qwLDJuqZIyZNWn3r
- Xl6+ZVyVD8UMJ411wJ1X6amg2Ano1FseJNzwGTHFhW1Wgz6jS6BD4R/q2A1Yy3II+JZ+
- Lpbvmlzr+QTXyXQOdKHShXCSW5zDkXqXSjFx2Gf7kc2qKjfiUenhkwr/OEhI/A2e4hGm
- UapcTg5IWNc7Ku//Hk2prrWRpbAOmFIy8MJslA43vfX+RN7ovx9H0m9CfQ3v1oc3XMKb
- ueHg==
+ d=gmail.com; s=20230601; t=1730545119; x=1731149919; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GPycWZ7wjWzsUMQZMTg+1NhhPy8gLSG79qoVnmaxGuw=;
+ b=IetWN79gMaQnWoHHor5FIAQNyLN4kYue7mRG10/lk61vkSvn6vYiFEab0TtsJSF0NK
+ LUzjQR8WPOri2knIYwIXDT1gP6Gm+Y1OlMFJCc4TZnNEIaCxKia0INi59q9g+Voe+Vy5
+ zCJWsToTs12nf0pPxaG1YHvtO6IyUMLr5Z8OXYEGuB+BawFMYIMLnCI3iYmnN1ePa618
+ Do2v9wL4uqpo1T4shGkJvMtCV44ND5PNH4BCEkDtzXx5grnZ2NN2MW8Xzv6Iir0Ta0ga
+ Wdu/dTG4/ZwUc7qxf1aoIVaAGctKTNslG8/7rfDWDMmsabkYf6h91B4u/2UFnM+LcaCm
+ Ye8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730544673; x=1731149473;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=V/CuPBxOaPUksthtvanxN+Sr5/HQPk0LNiKwqtBK+MU=;
- b=YFSiQKfxshL4ZaHVt1Po7D9ZhKQ0Pk2VV8qnjyV+ZyoQtIJWhDqzJ78Pg9PITwuKlj
- gtgs3E8gJw/mu3O6djsnhC136iPFZEVwUSiHMGrL125hZwY+iNsLKFx94+Sj4HTHHbBd
- k7MN6Kbf0MTkibiMmP+eUFfTJGrm050NH+ueXYUXkK8EmqZTknwOxEXaif8/2zuMPsVh
- f22AsF7aRe9PSCYDdbVIRlg//1Y9+cw85oItEoDmFrfnJ7HuxZOtQLj0X9/3xsxgz/M6
- pp4+UpWX5EXHCBo/cMOZfts5Byvtf5LQ3IK+d7cQjSdHKQriS9+r/yz1ERUOGPJ8EHLQ
- zr0Q==
-X-Gm-Message-State: AOJu0YwIBgdPk/NRXE17JDuKntWH0EASbh/RCe8eZnckMqoZMyf/r8dI
- O2hEnmDFu6hcgubvL0VJE0/zufeqn0aJYSDWpO0DhQOW87YZSaYsS74ATpuFxWE4Wtoi1FZpUa0
- t7Zj6nnH5MxqlsZGnGB2aJVBtNIY=
-X-Google-Smtp-Source: AGHT+IFMXRXyaj7T+IZ4JqejIDU2bJXQQf+DwtFKMR7Q/6Llt4/jZB8zU8Di2ZJh/1EQSJh4bQTx/6foJI6XPq7vYFI=
-X-Received: by 2002:a05:620a:248f:b0:7b1:1269:44b4 with SMTP id
- af79cd13be357-7b2f24f0015mr1497298885a.36.1730544672602; Sat, 02 Nov 2024
- 03:51:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1730545119; x=1731149919;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GPycWZ7wjWzsUMQZMTg+1NhhPy8gLSG79qoVnmaxGuw=;
+ b=J3EW6ru9V2mggWSWPn/ZspPxSfusdbNltKUEmorczCXlXjOMJKzvM3Jh7rCtKc0VdM
+ EcvKdJg9bj9bgrVhS71svI17Eo4xKJByIM1ZlNfoS6VF1oG3olf7PSR2ny3EqgPIYgh+
+ O+DYdTWYs8FWqTAI2MLAb5e+qIITdjtEfRKE8AeiPUQTV9U2rzLThNmTGy4EsvxwFdFG
+ bZcHPbI5KqyPw1GlbioTgUPdiF5NIUpCLBnlBwBOBV5xCB67pqs13ArwRURWltYc1kAP
+ WA04XD/kZtZcVDZjI1PuCFSwpjMdvt0uAZBFjW7jBaFGEm2LVKdoRprQY2Pr2EWkhxSn
+ c6hw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX4XY723jPgI00p2uLUJXo6YenqX48yJ2Dtxf0C7xbF/H9PEmCp+gBBwgUNgKQCsSgvq9AZ9YPTbGRm@nongnu.org
+X-Gm-Message-State: AOJu0YxUOl5Cr+MllM2Anf2AA51JZ38WnJnvILVL8T3+YFFr401qNEDB
+ /Gqd6BC3khbMJcVbi+MdGx9uRuFJ3DoT3adL3ObOlebpxiX7zMg2cP+xWEAjGaSrap4k8j3qIhx
+ m+pyVU5H7nkabmfDPJ/1VAgmv2CY=
+X-Google-Smtp-Source: AGHT+IF7sbAQWXWnbSGQ+2Bd5Uy8HQUbsPYNwIsuVdVlcQ3bYU0FHZoT1eErXjimH0BoLTAL/ppN3qN3DZSy3Ofu+u8=
+X-Received: by 2002:a05:651c:893:b0:2f3:f1ee:2256 with SMTP id
+ 38308e7fff4ca-2fedb84a3a9mr50564851fa.44.1730545118393; Sat, 02 Nov 2024
+ 03:58:38 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241015085150.219486-1-marcandre.lureau@redhat.com>
  <20241015085150.219486-8-marcandre.lureau@redhat.com>
  <CAFEAcA8DztPbmp_PavV9EGs=1RUeszDOpGRtwVexQbcCOXWO0A@mail.gmail.com>
 In-Reply-To: <CAFEAcA8DztPbmp_PavV9EGs=1RUeszDOpGRtwVexQbcCOXWO0A@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Sat, 2 Nov 2024 14:51:01 +0400
-Message-ID: <CAJ+F1CK5N6ZH_VfR-VAFqo0or6TVWvCViSEYUh3wCj0HmqsO3w@mail.gmail.com>
+From: Roman Penyaev <r.peniaev@gmail.com>
+Date: Sat, 2 Nov 2024 11:56:17 +0100
+Message-ID: <CACZ9PQVYChQht8ykaCfdhrAKnF49RRsP0B7B66vesW1EjNBxjg@mail.gmail.com>
 Subject: Re: [PULL 7/8] chardev/mux: implement detach of frontends from mux
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Roman Penyaev <r.peniaev@gmail.com>, 
+Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org, 
  Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000007a82ae0625ebd4c8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x732.google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=r.peniaev@gmail.com; helo=mail-lj1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,16 +94,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007a82ae0625ebd4c8
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Peter,
 
-Hi
-
-On Fri, Nov 1, 2024 at 7:26=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
-org>
-wrote:
-
+On Fri, Nov 1, 2024 at 4:25=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
+>
 > On Tue, 15 Oct 2024 at 09:52, <marcandre.lureau@redhat.com> wrote:
 > >
 > > From: Roman Penyaev <r.peniaev@gmail.com>
@@ -135,125 +134,12 @@ wrote:
 >    if (!(d->mux_bitset & (1 << bit))) {
 >        ...
 >    }
->
 
-It's actually sort of checking the tag bit is set:
+Yep, that looks less confusing. I'll send a follow up commit
+on that.
 
-    bit =3D find_next_bit(&d->mux_bitset, MAX_MUX, tag);
-    if (bit !=3D tag) { // <- here
-        return false;
+Thanks.
 
-The function should probably assert(tag < MAX_MUX) though, that will help
-coverity I guess
-
-
-> Why do we want to find the next bit set after the
-> 'tag' bit ?
->
-> > +    if (bit !=3D tag) {
-> > +        return false;
-> > +    }
-> > +
-> > +    d->mux_bitset &=3D ~(1 << bit);
-> > +    d->backends[bit] =3D NULL;
-> > +
-> > +    return true;
-> > +}
->
-> (This is CID 1563776.)
->
-> thanks
-> -- PMM
->
->
-
---=20
-Marc-Andr=C3=A9 Lureau
-
---0000000000007a82ae0625ebd4c8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
-"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Nov 1, 2024 at 7:26=E2=80=
-=AFPM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.m=
-aydell@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">On Tue, 15 Oct 2024 at 09:52, &lt;<a href=3D"mailto:marcan=
-dre.lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt=
-; wrote:<br>
-&gt;<br>
-&gt; From: Roman Penyaev &lt;<a href=3D"mailto:r.peniaev@gmail.com" target=
-=3D"_blank">r.peniaev@gmail.com</a>&gt;<br>
-&gt;<br>
-&gt; With bitset management now it becomes feasible to implement<br>
-&gt; the logic of detaching frontends from multiplexer.<br>
-&gt;<br>
-&gt; Signed-off-by: Roman Penyaev &lt;<a href=3D"mailto:r.peniaev@gmail.com=
-" target=3D"_blank">r.peniaev@gmail.com</a>&gt;<br>
-&gt; Cc: &quot;Marc-Andr=C3=A9 Lureau&quot; &lt;<a href=3D"mailto:marcandre=
-.lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<b=
-r>
-&gt; Cc: <a href=3D"mailto:qemu-devel@nongnu.org" target=3D"_blank">qemu-de=
-vel@nongnu.org</a><br>
-&gt; Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lu=
-reau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
-&gt; Message-ID: &lt;<a href=3D"mailto:20241014152408.427700-8-r.peniaev@gm=
-ail.com" target=3D"_blank">20241014152408.427700-8-r.peniaev@gmail.com</a>&=
-gt;<br>
-<br>
-Hi; Coverity reports an issue with this patch. I think<br>
-it&#39;s probably a bit confused, but on the other hand<br>
-I read the code and am also a bit confused so we could<br>
-probably adjust it to be clearer...<br>
-<br>
-&gt; +bool mux_chr_detach_frontend(MuxChardev *d, unsigned int tag)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 unsigned int bit;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 bit =3D find_next_bit(&amp;d-&gt;mux_bitset, MAX_MUX, t=
-ag);<br>
-<br>
-Why are we calling find_next_bit() here? Coverity<br>
-points out that it can return MAX_MUX, which means that<br>
-if the caller passed in MAX_MUX then we will try to<br>
-dereference d-&gt;backends[MAX_MUX] which is off the<br>
-end of the array.<br>
-<br>
-What I was expecting this code to do was to check<br>
-&quot;is the bit actually currently set?&quot;, which would be<br>
-=C2=A0 =C2=A0if (!(d-&gt;mux_bitset &amp; (1 &lt;&lt; bit))) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0...<br>
-=C2=A0 =C2=A0}<br></blockquote><div><br></div><div>It&#39;s actually sort o=
-f checking the tag bit is set:<br></div><div><br></div><div>=C2=A0 =C2=A0 b=
-it =3D find_next_bit(&amp;d-&gt;mux_bitset, MAX_MUX, tag);<br>=C2=A0 =C2=A0=
- if (bit !=3D tag) { // &lt;- here<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 return fa=
-lse;<br></div><div>=C2=A0</div><div>The function should probably assert(tag=
- &lt; MAX_MUX) though, that will help coverity I guess</div><div><br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Why do we want to find the next bit set after the<br>
-&#39;tag&#39; bit ?<br>
-<br>
-&gt; +=C2=A0 =C2=A0 if (bit !=3D tag) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 d-&gt;mux_bitset &amp;=3D ~(1 &lt;&lt; bit);<br>
-&gt; +=C2=A0 =C2=A0 d-&gt;backends[bit] =3D NULL;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 return true;<br>
-&gt; +}<br>
-<br>
-(This is CID 1563776.)<br>
-<br>
-thanks<br>
--- PMM<br>
-<br>
-</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
-fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
-=A9 Lureau<br></div></div>
-
---0000000000007a82ae0625ebd4c8--
+--
+Roman
 
