@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 991CAD10C0E
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 11:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41BF5D10C0E
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 11:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7Z1h-0003Fa-RS; Sun, 03 Nov 2024 06:44:13 -0500
+	id 1t7Z5M-00045G-J1; Sun, 03 Nov 2024 06:48:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7Z1f-0003F7-Iz
- for qemu-devel@nongnu.org; Sun, 03 Nov 2024 06:44:11 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7Z5E-00044d-QY
+ for qemu-devel@nongnu.org; Sun, 03 Nov 2024 06:47:52 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7Z1d-0000rt-M1
- for qemu-devel@nongnu.org; Sun, 03 Nov 2024 06:44:11 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-37d49a7207cso2095820f8f.0
- for <qemu-devel@nongnu.org>; Sun, 03 Nov 2024 03:44:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7Z5B-0001DD-R6
+ for qemu-devel@nongnu.org; Sun, 03 Nov 2024 06:47:52 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4315c1c7392so28448555e9.1
+ for <qemu-devel@nongnu.org>; Sun, 03 Nov 2024 03:47:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730634246; x=1731239046; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730634468; x=1731239268; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WWpkTwRiyyjRfZFurAtTbBuIXa6/rIcbI84x8UjVMS4=;
- b=ClHrjZhHfNLnKmAb9fJ/o/6Z7eUB5b3jXu0bJPdc9i3nXdqBWhYuoKiuXB5a1nBIob
- CRBGsyK1TKRxMGvr/7tS/bZfaUG5VsqDftkAZx685x9nsL/DAX2B7722vbYD0JZ1UQjl
- 3EnptKBdErqUtxNFAxcAuITqgaumL7rW+F9OZ8veI2/q+v6Nq6HKv8zAYsK55L7Wravi
- E0gzOgWlOHHhBndSC6T3Ou6bCv7K662ADRpc8MIijOxuNpt2fV08wj1hkangKtvqFNr2
- 0ANdg6AOAnQufjLmzK6CrO90oBEfxeLdHotPhaUTK4unYCAJqs2a30Vx1PSIuYi2geKL
- qQxQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/ggWF+nPqi0KPxzFSWTmSy5QIbNzYd/k43hqgNb+iww=;
+ b=rTm6MpXfGM2h8hvrZ07u2HruF9YV6qxmDfcpTe3uYzwqp9vIicodh40bBUNsJ3zJKf
+ YBtNfHIeU2W1YS90BOf4J+jpIv1YT7bAaN20jMjWUzBhO1I3/FIL+Hg93tIuu4qw/tnT
+ rioIHZIh+S32Blah9RCps0uyoVob4GZ7sJ3rFCGV0gr5DE+usyD7tRjppSIqxM/Najhy
+ J2k5ZetCl4QU/pWK55H5EtlYmsvjTYre1LLqHGzP9iD1X0lOCUNhLa4poXP5OxciowKP
+ EI/Dq/hbVAlLCOrSY+d5DFNO9jATuXemvDknePLzCdWGyIvq3pusLaUqAnYjORTJ5//m
+ aAhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730634246; x=1731239046;
+ d=1e100.net; s=20230601; t=1730634468; x=1731239268;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WWpkTwRiyyjRfZFurAtTbBuIXa6/rIcbI84x8UjVMS4=;
- b=FQEzcQkF4KR0x1/UrN+Dsdy8DZmpT/r7No6u1uJtyoSj4CqKGqjZBA+qGnO7e2bpNS
- cTDUfU2jT99hPsYzxvwEfRIqn91iCVLajNiEiMkB+K7CzjNsoIsU+VSvKKxmPUAbUED1
- PSOrfz1iVtYqyapYA/5oR7hcClEl4pDt4+NrPipbW2tDLT+UFCjodTP9OScTWwEBjTZD
- EsvVYbu5D7K73QmP+0xaLMXoyQ4f+xXXT/oH8Pf/f/vJyNR3NePx+Tk+CgCKm7BvEWF7
- g2QzZ5tGTQ1wwRIWZSmytQ6E2k9t9US1hYlVjKkC9K8u0AXuhZmjuLxgLGjugqBYuQsE
- YrJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1pUhiXIw4vsywqe18mgBvf3meJpVaat3anI7L/8WD1x1xq+SpHoYzn7HUPzePaCCKmh0LkZsZ1CHS@nongnu.org
-X-Gm-Message-State: AOJu0YyWDdaBlJZTPgcQqJiA3dMPd0sc11rdMczdAJLOgE6LtOiyg6ho
- 2Brtz+q7RAoLdt/RZfoDQFEqHDhtCKTwl1o3LnB3Kjk8xi5TdBP+FP8wymf3SBI=
-X-Google-Smtp-Source: AGHT+IH9tEOA4ChHbDsdxIveW4O4fzngVYAwVXM4p/fehYZpUIXtR1oPK0LLq2P8vO33x4roKyghlQ==
-X-Received: by 2002:a05:6000:184b:b0:37d:45ad:8394 with SMTP id
- ffacd0b85a97d-381c7a4aecdmr6723606f8f.15.1730634246045; 
- Sun, 03 Nov 2024 03:44:06 -0800 (PST)
+ bh=/ggWF+nPqi0KPxzFSWTmSy5QIbNzYd/k43hqgNb+iww=;
+ b=oBiowBiYtjr3IroEGNj5/0S4P7uHFNclJG1FBb9LhekQudYEve8dhdoHrJSLV0HUJ/
+ rIY6+aQcxhjs1lh8HCubBW4he6bw18xA9G4e55wnvH70lZeVvyV8yiTs5jx9aLRWjS5t
+ UxZ9+PjZTTsrduie5pDmZt7dhciCKcMfJDglfoqXQg93tn5pJuj0upN+b5aUz1/UNY/u
+ l7tSkjT/QOSm+uAW/5bVOuapGHneHmEA0fSwqfNIuBgh+wDI8o58k8nHVwOYvqb+EFWl
+ Lq1Sod5eu162IB7yKmjpxGRpxIDpNRc+wkuEC1h8ikC51ILpqvdKSvDTAJh3gqkEX2Z5
+ Tfsw==
+X-Gm-Message-State: AOJu0YyBZPujbMSWjqion4yfyMB2qeQLXxzbmNULzdpPQ0MHFw5MDvp5
+ oliktdL8xut6mtf1ONNjIkOwuItyba1bdsv7l4C+LbN8nTY4+ZtT1lG+/gLOSXU=
+X-Google-Smtp-Source: AGHT+IE2krHXoyyw1GQoqFZs40lIc6cS5p6myEu5bmEy0y0fBwvdg8abHmOYs4nMkPExMqgjLgdz4w==
+X-Received: by 2002:a05:600c:5118:b0:431:5e3c:2ff0 with SMTP id
+ 5b1f17b1804b1-4328324aaacmr72041675e9.8.1730634468097; 
+ Sun, 03 Nov 2024 03:47:48 -0800 (PST)
 Received: from [172.33.63.88] (134.pool62-36-43.static.orange.es.
  [62.36.43.134]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10d473bsm10485654f8f.35.2024.11.03.03.44.05
+ 5b1f17b1804b1-4327d685287sm124132045e9.35.2024.11.03.03.47.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 03 Nov 2024 03:44:05 -0800 (PST)
-Message-ID: <edcd1e2d-7d16-4bc2-92d0-b3ac7ee46f1a@linaro.org>
-Date: Sun, 3 Nov 2024 08:40:13 -0300
+ Sun, 03 Nov 2024 03:47:46 -0800 (PST)
+Message-ID: <9d436b3b-4ff2-492b-8aea-c23bcfc2d7e7@linaro.org>
+Date: Sun, 3 Nov 2024 12:47:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] ui/input-legacy.c: remove unused legacy
- qemu_add_kbd_event_handler() function
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- peter.maydell@linaro.org, huth@tuxfamily.org, qemu-devel@nongnu.org
-References: <20241101201106.1432336-1-mark.cave-ayland@ilande.co.uk>
- <20241101201106.1432336-3-mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH] hw/pci: Add parenthesis to PCI_BUILD_BDF macro
+To: Roque Arcudia Hernandez <roqueh@google.com>, nabihestefan@google.com,
+ mst@redhat.com, marcel.apfelbaum@gmail.com
+Cc: qemu-devel@nongnu.org, QEMU Trivial <qemu-trivial@nongnu.org>
+References: <20241101215923.3399311-1-roqueh@google.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241101201106.1432336-3-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20241101215923.3399311-1-roqueh@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,19 +94,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/11/24 17:11, Mark Cave-Ayland wrote:
-> Since the last keyboard device has now been converted over to use
-> qemu_input_handler_register(), the legacy qemu_add_kbd_event_handler() function
-> is now unused and can be removed.
+On 1/11/24 18:59, Roque Arcudia Hernandez wrote:
+> The bus parameter in the macro PCI_BUILD_BDF is not surrounded by
+> parenthesis. This can create a compile error when warnings are
+> treated as errors or can potentially create runtime errors due to the
+> operator precedence.
 > 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> For instance:
+> 
+>   file.c:x:32: error: suggest parentheses around '-' inside '<<'
+>   [-Werror=parentheses]
+>     171 | uint16_t bdf = PCI_BUILD_BDF(a - b, sdev->devfn);
+>         |                              ~~^~~
+>   include/hw/pci/pci.h:19:41: note: in definition of macro
+>   'PCI_BUILD_BDF'
+>      19 | #define PCI_BUILD_BDF(bus, devfn)     ((bus << 8) | (devfn))
+>         |                                         ^~~
+>   cc1: all warnings being treated as errors
+> 
+> Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
+> Reviewed-by: Nabih Estefan <nabihestefan@google.com>
 > ---
->   include/ui/console.h |  2 --
->   ui/input-legacy.c    | 37 -------------------------------------
->   2 files changed, 39 deletions(-)
-
-Yay!
+>   include/hw/pci/pci.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index 35d4fe0bbf..1daec974da 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -16,7 +16,7 @@ extern bool pci_available;
+>   #define PCI_BUS_NUM(x)          (((x) >> 8) & 0xff)
+>   #define PCI_SLOT(devfn)         (((devfn) >> 3) & 0x1f)
+>   #define PCI_FUNC(devfn)         ((devfn) & 0x07)
+> -#define PCI_BUILD_BDF(bus, devfn)     ((bus << 8) | (devfn))
+> +#define PCI_BUILD_BDF(bus, devfn)     (((bus) << 8) | (devfn))
+>   #define PCI_BDF_TO_DEVFN(x)     ((x) & 0xff)
+>   #define PCI_BUS_MAX             256
+>   #define PCI_DEVFN_MAX           256
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
