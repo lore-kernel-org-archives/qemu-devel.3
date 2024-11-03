@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 688C3D10C0E
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 11:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 991CAD10C0E
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 11:44:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7Ysk-0001qm-Kb; Sun, 03 Nov 2024 06:34:58 -0500
+	id 1t7Z1h-0003Fa-RS; Sun, 03 Nov 2024 06:44:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7Ysj-0001qU-7X; Sun, 03 Nov 2024 06:34:57 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7Z1f-0003F7-Iz
+ for qemu-devel@nongnu.org; Sun, 03 Nov 2024 06:44:11 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7Ysh-0007ww-LX; Sun, 03 Nov 2024 06:34:56 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-71e3fce4a60so2651700b3a.0; 
- Sun, 03 Nov 2024 03:34:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7Z1d-0000rt-M1
+ for qemu-devel@nongnu.org; Sun, 03 Nov 2024 06:44:11 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-37d49a7207cso2095820f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 03 Nov 2024 03:44:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730633693; x=1731238493; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CtVJ6dyxoV/K/5YxWQMnGiMslLZ1jUynbInC7qgXZzk=;
- b=JOHCtxWmU4ifJ+imfo77wVASNQ9FpvAooVpdjiAny+Reg3mWuzwKp/oL2M1ip7e+ha
- +r7YyPyXna2Y/Lmlg76tFOEHUTzfhR6RoT2J9A6v3MQ5L6KBg5OQB83bf/FeDYSrS5qp
- iPPrpFBQoQ8gGMNmGdKXkLcPRZ4TA/BcsYmF8YACCG1ANNBug4hDIjI4UmXvl+FQshks
- iVIFR/b3Svy0b4evRuR7ZWXywD1I0cn3txEp4BBHkafPLBiSZk2Q3v3/CEGRL6T46DNW
- TbVrBLqqy5AlgyM8rcH+F+MiE1qM+p5xjHezv+1tnEv32ns2IE5JIhVTx8TtlN9zWXWU
- u10w==
+ d=linaro.org; s=google; t=1730634246; x=1731239046; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WWpkTwRiyyjRfZFurAtTbBuIXa6/rIcbI84x8UjVMS4=;
+ b=ClHrjZhHfNLnKmAb9fJ/o/6Z7eUB5b3jXu0bJPdc9i3nXdqBWhYuoKiuXB5a1nBIob
+ CRBGsyK1TKRxMGvr/7tS/bZfaUG5VsqDftkAZx685x9nsL/DAX2B7722vbYD0JZ1UQjl
+ 3EnptKBdErqUtxNFAxcAuITqgaumL7rW+F9OZ8veI2/q+v6Nq6HKv8zAYsK55L7Wravi
+ E0gzOgWlOHHhBndSC6T3Ou6bCv7K662ADRpc8MIijOxuNpt2fV08wj1hkangKtvqFNr2
+ 0ANdg6AOAnQufjLmzK6CrO90oBEfxeLdHotPhaUTK4unYCAJqs2a30Vx1PSIuYi2geKL
+ qQxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730633693; x=1731238493;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=CtVJ6dyxoV/K/5YxWQMnGiMslLZ1jUynbInC7qgXZzk=;
- b=kkqcu0uwx8+FpwdD6j0AaKSrTkx0cbODhwRO1kt76alainvS6bY0ERBtW8Hd0WjT3+
- MomE71m/rEK8Uj1IOSaxs54SyyQWzRgDY0fAsMRrV4TV/9KfZsVx0ILihPqyRQQRN8gy
- kFTSS9x0k3FqTGqOtBWnRPOuCoDznLqDGE0JsQDIzttd9rG/u20Vj/FaEMc7pedHvDWr
- aPyi8vZZPM4H1oNlCZElex912Wwwsd0LJHZwApjMz3KycNbAWc+eSRPYruOX08zEXHjf
- ZOkIQY68hNVRIJ1zUXQsTo2JeGCG+QNLV/Lv71jTNS0fa9IhMB1ky7ICthQWhOFpawxL
- rNbw==
+ d=1e100.net; s=20230601; t=1730634246; x=1731239046;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WWpkTwRiyyjRfZFurAtTbBuIXa6/rIcbI84x8UjVMS4=;
+ b=FQEzcQkF4KR0x1/UrN+Dsdy8DZmpT/r7No6u1uJtyoSj4CqKGqjZBA+qGnO7e2bpNS
+ cTDUfU2jT99hPsYzxvwEfRIqn91iCVLajNiEiMkB+K7CzjNsoIsU+VSvKKxmPUAbUED1
+ PSOrfz1iVtYqyapYA/5oR7hcClEl4pDt4+NrPipbW2tDLT+UFCjodTP9OScTWwEBjTZD
+ EsvVYbu5D7K73QmP+0xaLMXoyQ4f+xXXT/oH8Pf/f/vJyNR3NePx+Tk+CgCKm7BvEWF7
+ g2QzZ5tGTQ1wwRIWZSmytQ6E2k9t9US1hYlVjKkC9K8u0AXuhZmjuLxgLGjugqBYuQsE
+ YrJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVriK0AGcJaeI1JFeCCpU4PEJtD5PVJexkUQtMHLDXMSmf3qhuLrNP1/rX8TakwpkRsueP+12TOexM=@nongnu.org,
- AJvYcCWPpsn1MoXaGmt7PNGQk/Ufc9XVI57otJ4/X6kjyDK+LpDNaVlujO4CfT6P8IOxGOn/5LlqiUd1efjs@nongnu.org
-X-Gm-Message-State: AOJu0YzFH6ybGz+Cp8WON8qhH880wosK8LK6hSxa++HHjqkLO201VPzw
- AqcPSmXt2wdEkZEi1g65g/LY0vHE89QR1GHhS0VQPwj/JQSrjp9F
-X-Google-Smtp-Source: AGHT+IE152AiJm28fPeuQxES9dS93cYWY0jkHPlTHHseLIvaYy8NzD8JgmBXU27SJbJVitvsrpf7jg==
-X-Received: by 2002:a05:6a00:b55:b0:71e:52cd:9cd4 with SMTP id
- d2e1a72fcca58-72063028d8emr38907634b3a.20.1730633692937; 
- Sun, 03 Nov 2024 03:34:52 -0800 (PST)
-Received: from localhost (124-171-217-17.tpgi.com.au. [124.171.217.17])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72119bca1ccsm1293448b3a.128.2024.11.03.03.34.48
+ AJvYcCU1pUhiXIw4vsywqe18mgBvf3meJpVaat3anI7L/8WD1x1xq+SpHoYzn7HUPzePaCCKmh0LkZsZ1CHS@nongnu.org
+X-Gm-Message-State: AOJu0YyWDdaBlJZTPgcQqJiA3dMPd0sc11rdMczdAJLOgE6LtOiyg6ho
+ 2Brtz+q7RAoLdt/RZfoDQFEqHDhtCKTwl1o3LnB3Kjk8xi5TdBP+FP8wymf3SBI=
+X-Google-Smtp-Source: AGHT+IH9tEOA4ChHbDsdxIveW4O4fzngVYAwVXM4p/fehYZpUIXtR1oPK0LLq2P8vO33x4roKyghlQ==
+X-Received: by 2002:a05:6000:184b:b0:37d:45ad:8394 with SMTP id
+ ffacd0b85a97d-381c7a4aecdmr6723606f8f.15.1730634246045; 
+ Sun, 03 Nov 2024 03:44:06 -0800 (PST)
+Received: from [172.33.63.88] (134.pool62-36-43.static.orange.es.
+ [62.36.43.134]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c10d473bsm10485654f8f.35.2024.11.03.03.44.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 03 Nov 2024 03:34:52 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 03 Nov 2024 21:34:45 +1000
-Message-Id: <D5CIFVGK5UCZ.3S0N3TFQM5CCP@gmail.com>
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Aditya Gupta" <adityag@linux.ibm.com>,
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: "Mahesh J Salgaonkar" <mahesh@linux.ibm.com>, "Madhavan Srinivasan"
- <maddy@linux.ibm.com>, "Harsh Prateek Bora" <harshpb@linux.ibm.com>,
- =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>,
- =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>,
- <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
-Subject: Re: [PATCH v4] hw/ppc: Implement -dtb support for PowerNV
-X-Mailer: aerc 0.18.2
-References: <20240820103003.550735-1-adityag@linux.ibm.com>
-In-Reply-To: <20240820103003.550735-1-adityag@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+ Sun, 03 Nov 2024 03:44:05 -0800 (PST)
+Message-ID: <edcd1e2d-7d16-4bc2-92d0-b3ac7ee46f1a@linaro.org>
+Date: Sun, 3 Nov 2024 08:40:13 -0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] ui/input-legacy.c: remove unused legacy
+ qemu_add_kbd_event_handler() function
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ peter.maydell@linaro.org, huth@tuxfamily.org, qemu-devel@nongnu.org
+References: <20241101201106.1432336-1-mark.cave-ayland@ilande.co.uk>
+ <20241101201106.1432336-3-mark.cave-ayland@ilande.co.uk>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241101201106.1432336-3-mark.cave-ayland@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,24 +97,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Aug 20, 2024 at 8:30 PM AEST, Aditya Gupta wrote:
-> Currently any device tree passed with -dtb option in QEMU, was ignored
-> by the PowerNV code.
->
-> Read and pass the passed -dtb to the kernel, thus enabling easier
-> debugging with custom DTBs.
->
-> The existing behaviour when -dtb is 'not' passed, is preserved as-is.
->
-> But when a '-dtb' is passed, it completely overrides any dtb nodes or
-> changes QEMU might have done, such as '-append' arguments to the kernel
-> (which are mentioned in /chosen/bootargs in the dtb), hence add warning
-> when -dtb is being used
->
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+On 1/11/24 17:11, Mark Cave-Ayland wrote:
+> Since the last keyboard device has now been converted over to use
+> qemu_input_handler_register(), the legacy qemu_add_kbd_event_handler() function
+> is now unused and can be removed.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   include/ui/console.h |  2 --
+>   ui/input-legacy.c    | 37 -------------------------------------
+>   2 files changed, 39 deletions(-)
 
-Sorry for getting to it late,
+Yay!
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
