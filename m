@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D103AE6781B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4734E6B27E
 	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 10:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7Xnu-0006oo-2H; Sun, 03 Nov 2024 05:25:55 -0500
+	id 1t7Xo9-0006pt-KX; Sun, 03 Nov 2024 05:26:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t7Xnr-0006nx-9Q; Sun, 03 Nov 2024 05:25:51 -0500
+ id 1t7Xo7-0006ph-R8; Sun, 03 Nov 2024 05:26:07 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t7Xnp-0005gQ-J5; Sun, 03 Nov 2024 05:25:51 -0500
+ id 1t7Xo6-0005hh-8P; Sun, 03 Nov 2024 05:26:07 -0500
 Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xh9fM5ZkGz6K6JX;
- Sun,  3 Nov 2024 18:23:07 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xh9fl0pRWz6K5qb;
+ Sun,  3 Nov 2024 18:23:27 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 1A8D0140C98;
- Sun,  3 Nov 2024 18:25:45 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 6913F140B67;
+ Sun,  3 Nov 2024 18:26:04 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.48.154.43) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Sun, 3 Nov 2024 11:25:26 +0100
+ 15.1.2507.39; Sun, 3 Nov 2024 11:25:45 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,16 +45,15 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH V3 1/5] hw/acpi: Make CPUs ACPI `presence` conditional during
- vCPU hot-unplug
-Date: Sun, 3 Nov 2024 10:24:15 +0000
-Message-ID: <20241103102419.202225-2-salil.mehta@huawei.com>
+Subject: [PATCH V3 2/5] qtest: allow ACPI DSDT Table changes
+Date: Sun, 3 Nov 2024 10:24:16 +0000
+Message-ID: <20241103102419.202225-3-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241103102419.202225-1-salil.mehta@huawei.com>
 References: <20241103102419.202225-1-salil.mehta@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.48.154.43]
 X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
  frapeml500007.china.huawei.com (7.182.85.172)
@@ -84,89 +83,61 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On most architectures, during vCPU hot-plug and hot-unplug actions, the
-firmware or VMM/QEMU can update the OS on vCPU status by toggling the
-ACPI method `_STA.Present` bit. However, certain CPU architectures
-prohibit [1] modifications to a CPU’s `presence` status after the kernel
-has booted.
+list changed files in tests/qtest/bios-tables-test-allowed-diff.h
 
-This limitation [2][3] exists because many per-CPU components, such as
-interrupt controllers and various per-CPU features tightly integrated
-with CPUs, may not support reconfiguration once the kernel is
-initialized. Often, these components cannot be powered down, as they may
-belong to an `always-on` power domain. As a result, some architectures
-require all CPUs to remain `_STA.Present` after system initialization.
-
-Therefore, it is essential to mirror the exact QOM vCPU status through
-ACPI for the Guest kernel. For this, we should determine—via
-architecture-specific code[4]—whether vCPUs must always remain present
-and whether the associated `AcpiCpuStatus::cpu` object should remain
-valid, even following a vCPU hot-unplug operation.
-
-References:
-[1] Check comment 5 in the bugzilla entry
-    Link: https://bugzilla.tianocore.org/show_bug.cgi?id=4481#c5
-[2] KVMForum 2023 Presentation: Challenges Revisited in Supporting Virt CPU Hotplug on
-    architectures that don’t Support CPU Hotplug (like ARM64)
-    a. Kernel Link: https://kvm-forum.qemu.org/2023/KVM-forum-cpu-hotplug_7OJ1YyJ.pdf
-    b. Qemu Link:  https://kvm-forum.qemu.org/2023/Challenges_Revisited_in_Supporting_Virt_CPU_Hotplug_-__ii0iNb3.pdf
-[3] KVMForum 2020 Presentation: Challenges in Supporting Virtual CPU Hotplug on
-    SoC Based Systems (like ARM64)
-    Link: https://kvmforum2020.sched.com/event/eE4m
-[4] Example implementation of architecture-specific CPU persistence hook
-    Link: https://github.com/salil-mehta/qemu/commit/c0b416b11e5af6505e558866f0eb6c9f3709173e
-
+Reported-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 ---
- hw/acpi/cpu.c         | 15 ++++++++++++++-
- include/hw/core/cpu.h |  1 +
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 41 +++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-index 5cb60ca8bc..9b03b4292e 100644
---- a/hw/acpi/cpu.c
-+++ b/hw/acpi/cpu.c
-@@ -233,6 +233,17 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
-     memory_region_add_subregion(as, base_addr, &state->ctrl_reg);
- }
- 
-+static bool should_remain_acpi_present(DeviceState *dev)
-+{
-+    CPUClass *k = CPU_GET_CLASS(dev);
-+    /*
-+     * A system may contain CPUs that are always present on one die, NUMA node,
-+     * or socket, yet may be non-present on another simultaneously. Check from
-+     * architecture specific code.
-+     */
-+    return k->cpu_persistent_status && k->cpu_persistent_status(CPU(dev));
-+}
-+
- static AcpiCpuStatus *get_cpu_status(CPUHotplugState *cpu_st, DeviceState *dev)
- {
-     CPUClass *k = CPU_GET_CLASS(dev);
-@@ -289,7 +300,9 @@ void acpi_cpu_unplug_cb(CPUHotplugState *cpu_st,
-         return;
-     }
- 
--    cdev->cpu = NULL;
-+    if (!should_remain_acpi_present(dev)) {
-+        cdev->cpu = NULL;
-+    }
- }
- 
- static const VMStateDescription vmstate_cpuhp_sts = {
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index c3ca0babcb..e7de77dc6d 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -158,6 +158,7 @@ struct CPUClass {
-     void (*dump_state)(CPUState *cpu, FILE *, int flags);
-     void (*query_cpu_fast)(CPUState *cpu, CpuInfoFast *value);
-     int64_t (*get_arch_id)(CPUState *cpu);
-+    bool (*cpu_persistent_status)(CPUState *cpu);
-     void (*set_pc)(CPUState *cpu, vaddr value);
-     vaddr (*get_pc)(CPUState *cpu);
-     int (*gdb_read_register)(CPUState *cpu, GByteArray *buf, int reg);
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..512d40665d 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,42 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/x86/pc/DSDT",
++"tests/data/acpi/x86/pc/DSDT.acpierst",
++"tests/data/acpi/x86/pc/DSDT.acpihmat",
++"tests/data/acpi/x86/pc/DSDT.bridge",
++"tests/data/acpi/x86/pc/DSDT.cphp",
++"tests/data/acpi/x86/pc/DSDT.dimmpxm",
++"tests/data/acpi/x86/pc/DSDT.hpbridge",
++"tests/data/acpi/x86/pc/DSDT.hpbrroot",
++"tests/data/acpi/x86/pc/DSDT.ipmikcs",
++"tests/data/acpi/x86/pc/DSDT.memhp",
++"tests/data/acpi/x86/pc/DSDT.nohpet",
++"tests/data/acpi/x86/pc/DSDT.numamem",
++"tests/data/acpi/x86/pc/DSDT.roothp",
++"tests/data/acpi/x86/q35/DSDT",
++"tests/data/acpi/x86/q35/DSDT.acpierst",
++"tests/data/acpi/x86/q35/DSDT.acpihmat",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
++"tests/data/acpi/x86/q35/DSDT.applesmc",
++"tests/data/acpi/x86/q35/DSDT.bridge",
++"tests/data/acpi/x86/q35/DSDT.core-count",
++"tests/data/acpi/x86/q35/DSDT.core-count2",
++"tests/data/acpi/x86/q35/DSDT.cphp",
++"tests/data/acpi/x86/q35/DSDT.cxl",
++"tests/data/acpi/x86/q35/DSDT.dimmpxm",
++"tests/data/acpi/x86/q35/DSDT.ipmibt",
++"tests/data/acpi/x86/q35/DSDT.ipmismbus",
++"tests/data/acpi/x86/q35/DSDT.ivrs",
++"tests/data/acpi/x86/q35/DSDT.memhp",
++"tests/data/acpi/x86/q35/DSDT.mmio64",
++"tests/data/acpi/x86/q35/DSDT.multi-bridge",
++"tests/data/acpi/x86/q35/DSDT.noacpihp",
++"tests/data/acpi/x86/q35/DSDT.nohpet",
++"tests/data/acpi/x86/q35/DSDT.numamem",
++"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
++"tests/data/acpi/x86/q35/DSDT.thread-count",
++"tests/data/acpi/x86/q35/DSDT.thread-count2",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
++"tests/data/acpi/x86/q35/DSDT.type4-count",
++"tests/data/acpi/x86/q35/DSDT.viot",
++"tests/data/acpi/x86/q35/DSDT.xapic",
 -- 
 2.34.1
 
