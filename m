@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28789D11041
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 13:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 626A8D11041
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 13:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7al9-0006ZU-3t; Sun, 03 Nov 2024 08:35:15 -0500
+	id 1t7aku-0006D1-UQ; Sun, 03 Nov 2024 08:35:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7al3-0006T9-O2; Sun, 03 Nov 2024 08:35:10 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1t7aki-000678-Nc; Sun, 03 Nov 2024 08:34:50 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7al2-0001UC-8F; Sun, 03 Nov 2024 08:35:09 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a9e8522445dso192814466b.1; 
- Sun, 03 Nov 2024 05:35:07 -0800 (PST)
+ id 1t7akg-0001DE-JG; Sun, 03 Nov 2024 08:34:47 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5ceb03aadb1so3463643a12.0; 
+ Sun, 03 Nov 2024 05:34:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730640906; x=1731245706; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730640884; x=1731245684; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8PJZHCBpLf+Ed1Y0PojeiRWpqZynqPn/D87ewATJ+qo=;
- b=RnyLBvPmxX+pdSP8zVeG3MJzVduF+W6eOqNn9dhd5fs4GBKS3M3W8aeeUxppeHXrND
- haxNgrfCSn5lhD4dv/DUgcDs0SpyWcdIYRlmJRc0UXBvY1ghGI6hOMgxlFExUZM+CPEL
- 5usTXKoTXKWzJZNo446t+pP5VCPTKmBOIg77Or9O0HGisA/Yz38npX9A8yIChJlp2Vh5
- mJDPNkKtBbRZdZCz+A9xD+gS1wJjmsWsv2uH3aQMDpYNrwHol1a3uZDjXVn5pIfEiieI
- DRaUpV0RUR92TPjLxFZo0ewQO2SIaXLUZgsTW8zqJpSnzI6dqbwbrfkfBv7JVmkNW6tV
- 7AXg==
+ bh=OSUXdq93xqCIzRVUO2sgZ5ZRdMkGuWMIHhF5tQTYyjM=;
+ b=QQfeeZbaXBZBXD52GqBcCsyDcpX69eJBddMpbZh8ShWe4I+e7/D91lPKoImRcs/TXH
+ tTvi4pYvhOZppokSOqbOgFXo5yySckkdGjyTBNrXS0U2PbSwMdU+slR4NB9RKxYHimuw
+ 2V4E9u46V0ueCLFjB5UVtUBhgbk8xiVJckQRk+Ay7pN1e35PxAe0/F0e7TA9wX9w4A51
+ JgIMLtg+h7I6DuvguJspyIExjKLYhjEPxs4XBnV9pp/dcNZrEXX2+Bb9Y1hViZWkfbiH
+ rTozv/Z+W6qMngYZa0cVzr4mzScKeFcAtOUcMzDP2Wm4DwL310UF9y6dbqN4m0HLBEcv
+ qPWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730640906; x=1731245706;
+ d=1e100.net; s=20230601; t=1730640884; x=1731245684;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8PJZHCBpLf+Ed1Y0PojeiRWpqZynqPn/D87ewATJ+qo=;
- b=QTiq8HynetDDDz5TG67qTgj5GmyFIononfnMoYGgFmVOQd/5xCzEDzFpATgRcZ1IQ8
- mN4irgaatUr6rnBp5F2jub1VkfMk/JzuJ5rw9uI2WJTmJPWsDEonN0e2Vvp0i+sZHgPT
- JFQEk0e3fz6LxIJLjlUXcURcTgWoPlhnJiGtemRfoZVQ9nmLWNd93UAjt9picHJS43M9
- twZt8xakCG7LWfHp0Xk833+e2Kk20xLkuxah4CFV0rQqSHzy3yXoZMseaKfqe+zCwzl3
- jlpWLPftfPAshdlPUNhUVqheW8buyml/8jv362OI9KHh6a2QpmIatvY0SnASP2aWlUgx
- vyrg==
+ bh=OSUXdq93xqCIzRVUO2sgZ5ZRdMkGuWMIHhF5tQTYyjM=;
+ b=WXRQJSz6k5aiQ59OFy9EO2YKPqu0HsUDOBclWytGrLY6TXQVaP6rlZfmO04la6o3uk
+ UD2djZoWKTFTv3zLtlAJ1C8MfduWvidlbLCW/inPwiSb8D1NxdX39i0/3zacUGjb5XlU
+ gV545EtJh3PtM+xyrXZJQtonlbhdbJpWl+Mv6CkISDTQmJGUa2589L7Mz085a52Xvnk/
+ 1X+ixrSkty8a5ns7aOf0TyfNVaeTT2T+ALdJGqmVsQX9UITeNAG6njUQX5mVVTJZAn22
+ /AN5ODZtDpXCX9NsGEAmlICWV8geJKT2EZX3//ovpbN6F86RP/cXcD/27083HGBALMXj
+ s+fg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLFS7gFsylDR/ubAi5fGLFL5DqApWc+qdUKzmL8sD5Ke+63hce6V31kxxDIlEMHbC3ebmN42zvMhr3@nongnu.org,
- AJvYcCXKsSs+bcnsIVhX9sNv0qOqt3TAhqsnCPfxPJ42AZkQSduoIWAScTg/lMaiMiO/yVXcaYkK1+UyFLs=@nongnu.org
-X-Gm-Message-State: AOJu0YwU2arnRFZ57hFTEB8ZoZvht2os22opcmEfPeR11hHiMEc1f5JH
- AwWsV3lvRagr237NlJAVH4c/Sxan/pb1H7H3VxB6ASe6+lK9j27IgBA0Jw==
-X-Google-Smtp-Source: AGHT+IGtOLKgCt1GasDdGC2u2sCykJLirj/8W1heSBaSiaAYbStoa7SZh26WnkebgprhCvPOiEFYtw==
-X-Received: by 2002:a17:907:3f20:b0:a9a:33c:f6e1 with SMTP id
- a640c23a62f3a-a9e6553c10amr937310766b.5.1730640905543; 
- Sun, 03 Nov 2024 05:35:05 -0800 (PST)
+ AJvYcCWRaIrWdasinJePcYvH56hadVcS0M02HdpRXBcOyCCmQcyvUT8VN1JICeBBy49EbPGLgQjmi/yWp8w5@nongnu.org,
+ AJvYcCXzaXdXe4XGzhvmeHfa5SCtKd4ocFQsnIbNkTpRqrMsx+9M/U7I0ltCP0zJ9ngz2fFYolabz3xGu2Y=@nongnu.org
+X-Gm-Message-State: AOJu0YygDor/tfWacS7Wg/ptx6+yrl6/ZTab9JOEZMhZBumdcTIqao0i
+ 8rJJ/ylikoVR4mBjrT/ioqFmesugOjZZNj5/3uWFVa9p3Al+33bjiBhj6A==
+X-Google-Smtp-Source: AGHT+IFFoIXH+FAuPZ0vMVjN6afjo2lrtHwnrDcUbLgHXdwoGxTX3b9Sdqk6MQMli648IJ17O7cSTQ==
+X-Received: by 2002:a17:907:e87:b0:a99:ea2c:59d1 with SMTP id
+ a640c23a62f3a-a9e5092959amr1331511766b.26.1730640883543; 
+ Sun, 03 Nov 2024 05:34:43 -0800 (PST)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm424328866b.159.2024.11.03.05.35.04
+ a640c23a62f3a-a9e5664350esm424328866b.159.2024.11.03.05.34.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 05:35:04 -0800 (PST)
+ Sun, 03 Nov 2024 05:34:43 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
@@ -70,17 +70,16 @@ Cc: Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
  Bernhard Beschow <shentey@gmail.com>, qemu-block@nongnu.org,
  Alex Williamson <alex.williamson@redhat.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Subject: [PATCH v4 17/26] hw/gpio/mpc8xxx: Prefer DEFINE_TYPES() macro
-Date: Sun,  3 Nov 2024 14:34:03 +0100
-Message-ID: <20241103133412.73536-18-shentey@gmail.com>
+Subject: [PATCH v4 02/26] hw/ppc/e500: Remove firstenv variable
+Date: Sun,  3 Nov 2024 14:33:48 +0100
+Message-ID: <20241103133412.73536-3-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241103133412.73536-1-shentey@gmail.com>
 References: <20241103133412.73536-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,51 +102,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+The firstenv variable is never read, so remove it. The env variable is then only
+used inside the loop, so move it there to restrict its scope.
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/gpio/mpc8xxx.c | 22 +++++++++-------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+ hw/ppc/e500.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/hw/gpio/mpc8xxx.c b/hw/gpio/mpc8xxx.c
-index 63b7a5c881..a3c1d2fbf4 100644
---- a/hw/gpio/mpc8xxx.c
-+++ b/hw/gpio/mpc8xxx.c
-@@ -23,7 +23,6 @@
- #include "hw/irq.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "qemu/module.h"
- #include "qom/object.h"
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index ba83f33033..0683629ac0 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -899,7 +899,6 @@ void ppce500_init(MachineState *machine)
+     const PPCE500MachineClass *pmc = PPCE500_MACHINE_GET_CLASS(machine);
+     MachineClass *mc = MACHINE_CLASS(pmc);
+     PCIBus *pci_bus;
+-    CPUPPCState *env = NULL;
+     uint64_t loadaddr;
+     hwaddr kernel_base = -1LL;
+     int kernel_size = 0;
+@@ -921,7 +920,6 @@ void ppce500_init(MachineState *machine)
+     IrqLines *irqs;
+     DeviceState *dev, *mpicdev;
+     DriveInfo *dinfo;
+-    CPUPPCState *firstenv = NULL;
+     MemoryRegion *ccsr_addr_space;
+     SysBusDevice *s;
+     PPCE500CCSRState *ccsr;
+@@ -930,6 +928,7 @@ void ppce500_init(MachineState *machine)
+     irqs = g_new0(IrqLines, smp_cpus);
+     for (i = 0; i < smp_cpus; i++) {
+         PowerPCCPU *cpu;
++        CPUPPCState *env;
+         CPUState *cs;
  
- #define TYPE_MPC8XXX_GPIO "mpc8xxx_gpio"
-@@ -208,17 +207,14 @@ static void mpc8xxx_gpio_class_init(ObjectClass *klass, void *data)
-     device_class_set_legacy_reset(dc, mpc8xxx_gpio_reset);
- }
+         cpu = POWERPC_CPU(object_new(machine->cpu_type));
+@@ -950,10 +949,6 @@ void ppce500_init(MachineState *machine)
+                                  &error_abort);
+         qdev_realize_and_unref(DEVICE(cs), NULL, &error_fatal);
  
--static const TypeInfo mpc8xxx_gpio_info = {
--    .name          = TYPE_MPC8XXX_GPIO,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(MPC8XXXGPIOState),
--    .instance_init = mpc8xxx_gpio_initfn,
--    .class_init    = mpc8xxx_gpio_class_init,
-+static const TypeInfo mpc8xxx_gpio_types[] = {
-+    {
-+        .name          = TYPE_MPC8XXX_GPIO,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(MPC8XXXGPIOState),
-+        .instance_init = mpc8xxx_gpio_initfn,
-+        .class_init    = mpc8xxx_gpio_class_init,
-+    },
- };
- 
--static void mpc8xxx_gpio_register_types(void)
--{
--    type_register_static(&mpc8xxx_gpio_info);
--}
+-        if (!firstenv) {
+-            firstenv = env;
+-        }
 -
--type_init(mpc8xxx_gpio_register_types)
-+DEFINE_TYPES(mpc8xxx_gpio_types)
+         irqs[i].irq[OPENPIC_OUTPUT_INT] =
+             qdev_get_gpio_in(DEVICE(cpu), PPCE500_INPUT_INT);
+         irqs[i].irq[OPENPIC_OUTPUT_CINT] =
+@@ -974,8 +969,6 @@ void ppce500_init(MachineState *machine)
+         }
+     }
+ 
+-    env = firstenv;
+-
+     if (!QEMU_IS_ALIGNED(machine->ram_size, RAM_SIZES_ALIGN)) {
+         error_report("RAM size must be multiple of %" PRIu64, RAM_SIZES_ALIGN);
+         exit(EXIT_FAILURE);
 -- 
 2.47.0
 
