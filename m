@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB5CD11040
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 13:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6921D11041
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 13:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7akm-00068j-4z; Sun, 03 Nov 2024 08:34:52 -0500
+	id 1t7al8-0006Yw-GU; Sun, 03 Nov 2024 08:35:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7akg-00065i-M6; Sun, 03 Nov 2024 08:34:46 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1t7al1-0006OZ-I1; Sun, 03 Nov 2024 08:35:07 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7akf-0001D4-4N; Sun, 03 Nov 2024 08:34:46 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a99f3a5a44cso469327466b.3; 
- Sun, 03 Nov 2024 05:34:44 -0800 (PST)
+ id 1t7akz-0001Oo-86; Sun, 03 Nov 2024 08:35:07 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a7aa086b077so392521466b.0; 
+ Sun, 03 Nov 2024 05:35:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730640882; x=1731245682; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730640903; x=1731245703; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+kcGj5THgATrhziRVv9fCQe0+3eD5yxcFJLfyqBCQbg=;
- b=JxZdCnzecxv8Fs4J9oFXMam3pQtA0SnE1c/guwt4AWis6xL0XbKY1AW23qEKXIxIZI
- k+hDkamnJnW1scEVLagMydEChgG4660+1KODs+JT964dMf1Eu9gYMlAXjmyw9XVh5pHV
- r+l1f+U5t0a/vvLemeccHdnFJGtKGLC5zOjOJ7q0H+WlcmYZBxw3hnefLZT8xRm9qLzC
- /TWrRkLNhcrhRjxawNEg02oHCwXLtaWT7vda2SI5BVVyXhfsxfsYDMg4PebN22aGWI/j
- RxcHoxLs5NBJDD3xYpfMFX5qYdwt/n7gwSlx7fgJKvwQOM9Zt3ZwLm2VXcAEs55ywxK9
- yMLg==
+ bh=cFBJ0zSZIctgQGXUV1/Dx5zv1vWYaeefYYPzCtjTK4k=;
+ b=O6wYNxwy8VD5DPeJeIS74b3j+JXMI0JQztfge7aQzdQnu4qq/PSZrKffsKpT2YQRQx
+ vecJVrgJBQiPtSgfpOltt0BfEn7JUbxfwjZSAcRXFMBH1Qo8A8608LaCgm3rC549gB4u
+ zgYklTdS9dlVfkrGl5XqFrcC48AC4JererqSpr7tjZme3eKKdzRQLwgVXrsj1L73Ly88
+ KPxnBVM2l7a51iXjiukN/qw2OMVmgNHlOGzhgjbKdcLWj1MdzttDedF/0rZy68ZLqP4q
+ Bklq8uQa+Gu4UpdV4l+iD6Ey4GnsjkQG9U1/W3pYhShcPOgM21wmce8x0DVleS/ugZ+l
+ k4nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730640882; x=1731245682;
+ d=1e100.net; s=20230601; t=1730640903; x=1731245703;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+kcGj5THgATrhziRVv9fCQe0+3eD5yxcFJLfyqBCQbg=;
- b=TmZNd658al69wFwmlAZ6/oSi9ASb2BkcU5NafJUkuezttoqamgMy1Dvzk7I3pdeg0c
- prn2VNTK3g7s/alVHv6kVSwc/TDox1Od+2dFwJggA9WpiGGFzWctreN9iiV1Hopso0/3
- vceRtjYnZtT+TbggpXwP+zFmWrFkIWE4C6CONh9JIite12reyqrtl9Eh+BUOzBuer6TE
- hNJ8eThL8xg5zqLvANan/vzyQphcHt8lAHJnK8qwB3t94NUbpfA/wsIUC/YdgQgkh7u7
- +qBpSGh27bn+zt0bhRNMGSBD6L5I8NU4Gifb0/rcEBt8o49vPLzYL02GFSWcRBPd/u3V
- U4wg==
+ bh=cFBJ0zSZIctgQGXUV1/Dx5zv1vWYaeefYYPzCtjTK4k=;
+ b=EtEcRFQ9wNti8z623WSBB0ncG6gBSt+vh9gY65vEsR+CQXnLURXrrRwP5j9cuvstjB
+ IAs8DaUWD0zT0g+/EdVvyuhIznywyEnhNU+2J73s6yPax5cinix9a4TP1dKAYUxh7iv4
+ 5bev1isr0WxEtzizmPd6Y5/8AUGKdeCmoIWLwoMb3XvnTyxA9KWmEECdsykB7KE+nrTT
+ W7F84DiVFvjXqe7EoP3L24Wi4MTG/PT3fgB22x/gfKRhPyjceURcaaT6glGj2qF3PhPs
+ GhJHt4UEHGQowG1NQzKgDBCysKqnXE3GBPRdPksLw4DXW9kiKqVV9DpumIk3qKvDJzoJ
+ UvKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0AoB7TVNMqCsDOnDNSp7RtCO7uLwGoSlS18K5mi1T+MNx7x1KS/IoEzmlNyZao7VCcPTcq/7blSc=@nongnu.org,
- AJvYcCVmRy/XnAMXQnqwuQYYE1nwBAR8VqoFelVfkFxYaHpxbqCIb2ql7ehxqeXcajGGdwFY4nweoVSquGAD@nongnu.org
-X-Gm-Message-State: AOJu0YyKGO6CF1rwhfPmvYCthvl7z/6dvdj9o0cV1TC0kpekHl7oOMNP
- nvhtd3diYHgoZe/O438s2DsogdMecK3QJU2epLWgdPNWL6sltE4tLt+a6Q==
-X-Google-Smtp-Source: AGHT+IEY30HUHnATzk+Jh1Vg1LG0xMCN2LDUFv/lGfk4bEtvJKrgA7Rnz3ef/frMty/+0RpDj1AA2Q==
-X-Received: by 2002:a17:907:e88:b0:a99:7676:ceb7 with SMTP id
- a640c23a62f3a-a9de5f49bf7mr2870520966b.26.1730640882416; 
- Sun, 03 Nov 2024 05:34:42 -0800 (PST)
+ AJvYcCVPKtYwURpRlSgYnrZA1Ev/bE+5gZl8PEf9VVrdYdoESlrIAEOxtYFySivIRK5bJOnlzZyv6SbHS5Y=@nongnu.org,
+ AJvYcCWHmwYwcxBkUg1uUGzX9gekTEjLCqhEw5s9zzwxzXxyxsaWgqP7ClO+DbibecLG89q1GOL63spY1dSf@nongnu.org
+X-Gm-Message-State: AOJu0Yw7EViXtxrHAxru4C/ZmrBul666uOtq1dBcxnkI8oOQ1DG22Rxw
+ /sdFY66muCU1oTCwnf9XnwH9hXlvDVAlNKYSR//qJkUxpINbkX+LXHDGfQ==
+X-Google-Smtp-Source: AGHT+IFXj4j0Y10H5LIqoAwEtBBXj8psWXexpBTdoBmJgcDSvBL0d2TxaOMfGXPblOzLFo/UvK0uug==
+X-Received: by 2002:a17:907:6e8a:b0:a99:5021:bcf0 with SMTP id
+ a640c23a62f3a-a9e3a61eaa2mr1641429066b.34.1730640900969; 
+ Sun, 03 Nov 2024 05:35:00 -0800 (PST)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm424328866b.159.2024.11.03.05.34.41
+ a640c23a62f3a-a9e5664350esm424328866b.159.2024.11.03.05.34.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 05:34:41 -0800 (PST)
+ Sun, 03 Nov 2024 05:35:00 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
@@ -70,16 +70,17 @@ Cc: Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
  Bernhard Beschow <shentey@gmail.com>, qemu-block@nongnu.org,
  Alex Williamson <alex.williamson@redhat.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Subject: [PATCH v4 01/26] hw/ppc/e500: Do not leak struct boot_info
-Date: Sun,  3 Nov 2024 14:33:47 +0100
-Message-ID: <20241103133412.73536-2-shentey@gmail.com>
+Subject: [PATCH v4 14/26] hw/pci-host/ppce500: Prefer DEFINE_TYPES() macro
+Date: Sun,  3 Nov 2024 14:34:00 +0100
+Message-ID: <20241103133412.73536-15-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241103133412.73536-1-shentey@gmail.com>
 References: <20241103133412.73536-1-shentey@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,98 +103,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The struct is allocated once with g_new0() but never free()'d. Fix the leakage
-by adding an attribute to struct PPCE500MachineState which avoids the
-allocation.
-
-While at it remove the obsolete /*< private >*/ markers.
-
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/ppc/e500.h |  9 +++++++--
- hw/ppc/e500.c | 17 ++++-------------
- 2 files changed, 11 insertions(+), 15 deletions(-)
+ hw/pci-host/ppce500.c | 42 ++++++++++++++++++------------------------
+ 1 file changed, 18 insertions(+), 24 deletions(-)
 
-diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
-index 8c09ef92e4..4a1b42d44b 100644
---- a/hw/ppc/e500.h
-+++ b/hw/ppc/e500.h
-@@ -5,18 +5,23 @@
- #include "hw/platform-bus.h"
+diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
+index d7ff2ba778..2dded696aa 100644
+--- a/hw/pci-host/ppce500.c
++++ b/hw/pci-host/ppce500.c
+@@ -21,7 +21,6 @@
+ #include "hw/pci/pci_device.h"
+ #include "hw/pci/pci_host.h"
+ #include "qemu/bswap.h"
+-#include "qemu/module.h"
+ #include "hw/pci-host/ppce500.h"
  #include "qom/object.h"
  
-+struct boot_info {
-+    uint32_t dt_base;
-+    uint32_t dt_size;
-+    uint32_t entry;
-+};
-+
- struct PPCE500MachineState {
--    /*< private >*/
-     MachineState parent_obj;
- 
-     /* points to instance of TYPE_PLATFORM_BUS_DEVICE if
-      * board supports dynamic sysbus devices
-      */
-     PlatformBusDevice *pbus_dev;
-+    struct boot_info boot_info;
- };
- 
- struct PPCE500MachineClass {
--    /*< private >*/
-     MachineClass parent_class;
- 
-     /* required -- must at least add toplevel board compatible */
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index b760c6d6a2..ba83f33033 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -80,13 +80,6 @@
- 
- #define PLATFORM_CLK_FREQ_HZ       (400 * 1000 * 1000)
- 
--struct boot_info
--{
--    uint32_t dt_base;
--    uint32_t dt_size;
--    uint32_t entry;
--};
--
- static uint32_t *pci_map_create(void *fdt, uint32_t mpic, int first_slot,
-                                 int nr_slots, int *len)
- {
-@@ -919,7 +912,6 @@ void ppce500_init(MachineState *machine)
-     bool kernel_as_payload;
-     hwaddr bios_entry = 0;
-     target_long payload_size;
--    struct boot_info *boot_info = NULL;
-     int dt_size;
-     int i;
-     unsigned int smp_cpus = machine->smp.cpus;
-@@ -974,9 +966,8 @@ void ppce500_init(MachineState *machine)
-         /* Register reset handler */
-         if (!i) {
-             /* Primary CPU */
--            boot_info = g_new0(struct boot_info, 1);
-             qemu_register_reset(ppce500_cpu_reset, cpu);
--            env->load_info = boot_info;
-+            env->load_info = &pms->boot_info;
-         } else {
-             /* Secondary CPUs */
-             qemu_register_reset(ppce500_cpu_reset_sec, cpu);
-@@ -1274,9 +1265,9 @@ void ppce500_init(MachineState *machine)
-     }
-     assert(dt_size < DTB_MAX_SIZE);
- 
--    boot_info->entry = bios_entry;
--    boot_info->dt_base = dt_base;
--    boot_info->dt_size = dt_size;
-+    pms->boot_info.entry = bios_entry;
-+    pms->boot_info.dt_base = dt_base;
-+    pms->boot_info.dt_size = dt_size;
+@@ -508,17 +507,6 @@ static void e500_host_bridge_class_init(ObjectClass *klass, void *data)
+     dc->user_creatable = false;
  }
  
- static void e500_ccsr_initfn(Object *obj)
+-static const TypeInfo e500_host_bridge_info = {
+-    .name          = TYPE_PPC_E500_PCI_BRIDGE,
+-    .parent        = TYPE_PCI_DEVICE,
+-    .instance_size = sizeof(PPCE500PCIBridgeState),
+-    .class_init    = e500_host_bridge_class_init,
+-    .interfaces = (InterfaceInfo[]) {
+-        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+-        { },
+-    },
+-};
+-
+ static Property pcihost_properties[] = {
+     DEFINE_PROP_UINT32("first_slot", PPCE500PCIState, first_slot, 0x11),
+     DEFINE_PROP_UINT32("first_pin_irq", PPCE500PCIState, first_pin_irq, 0x1),
+@@ -535,17 +523,23 @@ static void e500_pcihost_class_init(ObjectClass *klass, void *data)
+     dc->vmsd = &vmstate_ppce500_pci;
+ }
+ 
+-static const TypeInfo e500_pcihost_info = {
+-    .name          = TYPE_PPC_E500_PCI_HOST_BRIDGE,
+-    .parent        = TYPE_PCI_HOST_BRIDGE,
+-    .instance_size = sizeof(PPCE500PCIState),
+-    .class_init    = e500_pcihost_class_init,
++static const TypeInfo e500_pci_types[] = {
++    {
++        .name          = TYPE_PPC_E500_PCI_BRIDGE,
++        .parent        = TYPE_PCI_DEVICE,
++        .instance_size = sizeof(PPCE500PCIBridgeState),
++        .class_init    = e500_host_bridge_class_init,
++        .interfaces    = (InterfaceInfo[]) {
++            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
++            { },
++        },
++    },
++    {
++        .name          = TYPE_PPC_E500_PCI_HOST_BRIDGE,
++        .parent        = TYPE_PCI_HOST_BRIDGE,
++        .instance_size = sizeof(PPCE500PCIState),
++        .class_init    = e500_pcihost_class_init,
++    },
+ };
+ 
+-static void e500_pci_register_types(void)
+-{
+-    type_register_static(&e500_pcihost_info);
+-    type_register_static(&e500_host_bridge_info);
+-}
+-
+-type_init(e500_pci_register_types)
++DEFINE_TYPES(e500_pci_types)
 -- 
 2.47.0
 
