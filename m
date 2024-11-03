@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A96D11100
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 15:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC93D11101
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 15:06:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7c6p-0000Rr-Ro; Sun, 03 Nov 2024 10:01:44 -0500
+	id 1t7c77-0000uU-Fl; Sun, 03 Nov 2024 10:02:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t7c6F-0008Kt-Bj
- for qemu-devel@nongnu.org; Sun, 03 Nov 2024 10:01:08 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1t7c6M-0008O8-4O
+ for qemu-devel@nongnu.org; Sun, 03 Nov 2024 10:01:15 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t7c6A-0006Y0-5d
- for qemu-devel@nongnu.org; Sun, 03 Nov 2024 10:01:07 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a998a5ca499so450162266b.0
- for <qemu-devel@nongnu.org>; Sun, 03 Nov 2024 07:01:01 -0800 (PST)
+ id 1t7c6J-0006ek-6K
+ for qemu-devel@nongnu.org; Sun, 03 Nov 2024 10:01:13 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a99e3b3a411so685713566b.0
+ for <qemu-devel@nongnu.org>; Sun, 03 Nov 2024 07:01:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1730646061; x=1731250861;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1730646069; x=1731250869;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ISm7gDuJ9v0T+ZU7rvr+a9WepmkkxEpFRMRSCMJ9FmQ=;
- b=ET3ek0liHPwAA7MbbXvxw1OumMv/qIa9cnLjZp8hNQT8glUE8u2gsgOiiUxx2F4RqU
- pPdBAHO3o1ha18OFBWxVK61t7DkZDKaWUs+Z+9pfFjphmdAtFQwX2ixglRbNKCUTFm9i
- RlMDcQsPHoBqEkOJnfOwHkvLfLLLd+FenEG3wZe4zp8MaFA+sIUPVr4Wq/VllLfYuY0N
- ywif90ddZPrxHu8X1072sNOfxncwJiVx/gnCDjXwx53MSz6j6pG4hBJNVtosNbtI2A7b
- ll7cruj6s5o//E51odONnNEHGJZV/NqxI0hc0BGp/T0pLOl3dFxGbgKMkl+JuGLaxNpY
- 0poQ==
+ bh=2hkldsO2fEwrmkcJZHvRyFsk7+mYicEnBiDor4gP31Y=;
+ b=c/6TQafi5FBdIL3x4ACCJM3+lILILsTCDZ4UWQeiIFWQK800HpJ2zmFgLfkKZ2aAu+
+ XO4fdcVSQ4TuqPIMPBQXopJmaiagnvDJmfQu+5cRNNdRLO3+eNKhtWz+F3DmDTUhJSEh
+ aAasgW/ZTXQTGFGUSLGjw6/iSiCi60GxxBds9w8vgK/1aqON0NDda7LlwwZpC9ubQtdB
+ UbxzMiIGG0+xNUWuJDj5j25lIt05wvCIjlz6tWtWx9wlBlRful2EHMx9gNX+Z1qXgcIA
+ VV3ZDu5i0F/FA4ShOundqyl1+MR28LkjhiEm3E0as7WtzGbS8KcvDzKSywT2NVv9UhGp
+ s0lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730646061; x=1731250861;
+ d=1e100.net; s=20230601; t=1730646069; x=1731250869;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ISm7gDuJ9v0T+ZU7rvr+a9WepmkkxEpFRMRSCMJ9FmQ=;
- b=SUpFxpZkwZGEHx6TK7SoviMiAIMySrmRgiiCml6yBJ7kE0dBqmIvU2QNRUCswuO6lX
- XGTPm773DzRNCGDc3tPgPvOaP1Ax7pCI6XXp2A1PkQYC03Z4lpOBAPioY+CMLJneNgrA
- ZW9Ji1vPSgRbPd2dKveWF+HpRmL1h79c7OyI9G0RT44VZHOAF854i6cD+N9hAQzrBG7b
- VLK54u/VMjQX0OmXk814HT+9zV611pccsYGvqev5c7B4fAnxvFdKwHN9txmvIsjEfCAM
- aFr53mIhNg56LBvxzWbrLPBt/N+ZSaPAEHvsTg5q0VYrYrjnCiOCeXp+BVRwDcXlIDuC
- 2z8g==
-X-Gm-Message-State: AOJu0Yz1Vx7YKCZb+dbvg5lgIHch39Ykw0rt+qVtpERA2trFx8QHY8Lo
- rYJ7l3Evg2lzFh0+4rDXNfGIeqTJye6/eMSAikegGSsGgf8GHWk2L+ZWWkFzHnktPGyfjXGOJE3
- q2A==
-X-Google-Smtp-Source: AGHT+IGJQ1y1/HtLZb+W7LxiIFc4IgLpX7VduPHr0qGALOCx0CWVGZB18/y/QuUtwA35NknZgBFWoQ==
-X-Received: by 2002:a17:907:97ce:b0:a99:8a5c:a357 with SMTP id
- a640c23a62f3a-a9e657fd8c3mr944191866b.58.1730646060067; 
- Sun, 03 Nov 2024 07:01:00 -0800 (PST)
+ bh=2hkldsO2fEwrmkcJZHvRyFsk7+mYicEnBiDor4gP31Y=;
+ b=nyG1fz/m7zETx0+We7vrprREVoHuJnsRD6paiNxXlwwChr2KN9bBngqin+5WqgOJYe
+ sMY3hE8bLVgWFyFpp94Idiqqs0w3r1cbjbzMErC5h3ruF1QIvh/79ldxgRfptsCqO1ce
+ oDbEE9THq9QIZDlJX7PnPKS1Z1oQos/qjb4gIMMSkke5ZslE7gRMnQ0aj4od671wmFpc
+ N7M/upfhJ/07P7U2mhhibk8MzYNrDxFkWMGNMkxJ+KFQIdAvEfeTCXKz8ReY8BS1W2Za
+ W2gJn+7CwasEnVtIAXiYpv5sId2jzWif6pM5oQiUAS08REb6LLXqHr1rzvDqVgXIHB7G
+ IVWQ==
+X-Gm-Message-State: AOJu0Yyy/M2s4/6W+/ydcI1pr65tkW+g5x5j+7hS4r4oeWEyOnvYRlA8
+ IW92cZA1xq5laL/FDdrEx5mw2PyhpMGhEg3+IbjbkgR1elLfjxpqTlQGwa/W5i0gQ8AchQ0PyAh
+ DDw==
+X-Google-Smtp-Source: AGHT+IG/CirMo1RFDy5f3mr+vrIpEm17fjknfioHiPNCd4wT8pgdnGWnTWxADgVaYrQzR0pGxLRAXA==
+X-Received: by 2002:a17:907:2d93:b0:a99:eef5:d360 with SMTP id
+ a640c23a62f3a-a9e6538f74bmr888436466b.19.1730646069469; 
+ Sun, 03 Nov 2024 07:01:09 -0800 (PST)
 Received: from localhost.localdomain (h082218084190.host.wavenet.at.
  [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm431536666b.159.2024.11.03.07.00.58
+ a640c23a62f3a-a9e5664350esm431536666b.159.2024.11.03.07.01.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 03 Nov 2024 07:00:59 -0800 (PST)
+ Sun, 03 Nov 2024 07:01:09 -0800 (PST)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
 Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
@@ -74,16 +74,17 @@ Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
  jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com,
  akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  qemu-riscv@nongnu.org, Alexander Graf <graf@amazon.com>
-Subject: [PATCH v6 06/15] hw: Add vmapple subdir
-Date: Sun,  3 Nov 2024 16:00:28 +0100
-Message-Id: <20241103150037.48194-7-phil@philjordan.eu>
+Subject: [PATCH v6 11/15] hw/vmapple/bdif: Introduce vmapple backdoor interface
+Date: Sun,  3 Nov 2024 16:00:33 +0100
+Message-Id: <20241103150037.48194-12-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.3 (Apple Git-145)
 In-Reply-To: <20241103150037.48194-1-phil@philjordan.eu>
 References: <20241103150037.48194-1-phil@philjordan.eu>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::635;
- envelope-from=phil@philjordan.eu; helo=mail-ej1-x635.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::62f;
+ envelope-from=phil@philjordan.eu; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -107,107 +108,340 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Graf <graf@amazon.com>
 
-We will introduce a number of devices that are specific to the vmapple
-target machine. To keep them all tidily together, let's put them into
-a single target directory.
+The VMApple machine exposes AUX and ROOT block devices (as well as USB OTG
+emulation) via virtio-pci as well as a special, simple backdoor platform
+device.
+
+This patch implements this backdoor platform device to the best of my
+understanding. I left out any USB OTG parts; they're only needed for
+guest recovery and I don't understand the protocol yet.
 
 Signed-off-by: Alexander Graf <graf@amazon.com>
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- MAINTAINERS             | 7 +++++++
- hw/Kconfig              | 1 +
- hw/meson.build          | 1 +
- hw/vmapple/Kconfig      | 1 +
- hw/vmapple/meson.build  | 0
- hw/vmapple/trace-events | 2 ++
- hw/vmapple/trace.h      | 1 +
- meson.build             | 1 +
- 8 files changed, 14 insertions(+)
- create mode 100644 hw/vmapple/Kconfig
- create mode 100644 hw/vmapple/meson.build
- create mode 100644 hw/vmapple/trace-events
- create mode 100644 hw/vmapple/trace.h
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index fa8b8e858f8..f26024c1835 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2740,6 +2740,13 @@ F: hw/hyperv/hv-balloon*.h
- F: include/hw/hyperv/dynmem-proto.h
- F: include/hw/hyperv/hv-balloon.h
- 
-+VMapple
-+M: Alexander Graf <agraf@csgraf.de>
-+R: Phil Dennis-Jordan <phil@philjordan.eu>
-+S: Maintained
-+F: hw/vmapple/*
-+F: include/hw/vmapple/*
-+
- Subsystems
- ----------
- Overall Audio backends
-diff --git a/hw/Kconfig b/hw/Kconfig
-index 1b4e9bb07f7..2871784cfdc 100644
---- a/hw/Kconfig
-+++ b/hw/Kconfig
-@@ -41,6 +41,7 @@ source ufs/Kconfig
- source usb/Kconfig
- source virtio/Kconfig
- source vfio/Kconfig
-+source vmapple/Kconfig
- source xen/Kconfig
- source watchdog/Kconfig
- 
-diff --git a/hw/meson.build b/hw/meson.build
-index b827c82c5d7..9c4f6d0d636 100644
---- a/hw/meson.build
-+++ b/hw/meson.build
-@@ -39,6 +39,7 @@ subdir('ufs')
- subdir('usb')
- subdir('vfio')
- subdir('virtio')
-+subdir('vmapple')
- subdir('watchdog')
- subdir('xen')
- subdir('xenpv')
+v4:
+
+ * Moved most header code to .c, rest to vmapple.h
+ * Better compliance with coding, naming, and formatting conventions.
+
+ hw/vmapple/Kconfig           |   3 +
+ hw/vmapple/bdif.c            | 261 +++++++++++++++++++++++++++++++++++
+ hw/vmapple/meson.build       |   1 +
+ hw/vmapple/trace-events      |   5 +
+ include/hw/vmapple/vmapple.h |   2 +
+ 5 files changed, 272 insertions(+)
+ create mode 100644 hw/vmapple/bdif.c
+
 diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
-new file mode 100644
-index 00000000000..8b137891791
---- /dev/null
+index a73504d5999..68f88876eb9 100644
+--- a/hw/vmapple/Kconfig
 +++ b/hw/vmapple/Kconfig
-@@ -0,0 +1 @@
+@@ -1,3 +1,6 @@
+ config VMAPPLE_AES
+     bool
+ 
++config VMAPPLE_BDIF
++    bool
 +
+diff --git a/hw/vmapple/bdif.c b/hw/vmapple/bdif.c
+new file mode 100644
+index 00000000000..7c7a277665a
+--- /dev/null
++++ b/hw/vmapple/bdif.c
+@@ -0,0 +1,261 @@
++/*
++ * VMApple Backdoor Interface
++ *
++ * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "trace.h"
++#include "hw/vmapple/vmapple.h"
++#include "hw/sysbus.h"
++#include "hw/block/block.h"
++#include "qapi/error.h"
++#include "sysemu/block-backend.h"
++
++OBJECT_DECLARE_SIMPLE_TYPE(VMAppleBdifState, VMAPPLE_BDIF)
++
++struct VMAppleBdifState {
++    SysBusDevice parent_obj;
++
++    BlockBackend *aux;
++    BlockBackend *root;
++    MemoryRegion mmio;
++};
++
++#define VMAPPLE_BDIF_SIZE   0x00200000
++
++#define REG_DEVID_MASK      0xffff0000
++#define DEVID_ROOT          0x00000000
++#define DEVID_AUX           0x00010000
++#define DEVID_USB           0x00100000
++
++#define REG_STATUS          0x0
++#define REG_STATUS_ACTIVE     BIT(0)
++#define REG_CFG             0x4
++#define REG_CFG_ACTIVE        BIT(1)
++#define REG_UNK1            0x8
++#define REG_BUSY            0x10
++#define REG_BUSY_READY        BIT(0)
++#define REG_UNK2            0x400
++#define REG_CMD             0x408
++#define REG_NEXT_DEVICE     0x420
++#define REG_UNK3            0x434
++
++typedef struct VblkSector {
++    uint32_t pad;
++    uint32_t pad2;
++    uint32_t sector;
++    uint32_t pad3;
++} VblkSector;
++
++typedef struct VblkReqCmd {
++    uint64_t addr;
++    uint32_t len;
++    uint32_t flags;
++} VblkReqCmd;
++
++typedef struct VblkReq {
++    VblkReqCmd sector;
++    VblkReqCmd data;
++    VblkReqCmd retval;
++} VblkReq;
++
++#define VBLK_DATA_FLAGS_READ  0x00030001
++#define VBLK_DATA_FLAGS_WRITE 0x00010001
++
++#define VBLK_RET_SUCCESS  0
++#define VBLK_RET_FAILED   1
++
++static uint64_t bdif_read(void *opaque, hwaddr offset, unsigned size)
++{
++    uint64_t ret = -1;
++    uint64_t devid = offset & REG_DEVID_MASK;
++
++    switch (offset & ~REG_DEVID_MASK) {
++    case REG_STATUS:
++        ret = REG_STATUS_ACTIVE;
++        break;
++    case REG_CFG:
++        ret = REG_CFG_ACTIVE;
++        break;
++    case REG_UNK1:
++        ret = 0x420;
++        break;
++    case REG_BUSY:
++        ret = REG_BUSY_READY;
++        break;
++    case REG_UNK2:
++        ret = 0x1;
++        break;
++    case REG_UNK3:
++        ret = 0x0;
++        break;
++    case REG_NEXT_DEVICE:
++        switch (devid) {
++        case DEVID_ROOT:
++            ret = 0x8000000;
++            break;
++        case DEVID_AUX:
++            ret = 0x10000;
++            break;
++        }
++        break;
++    }
++
++    trace_bdif_read(offset, size, ret);
++    return ret;
++}
++
++static void le2cpu_sector(VblkSector *sector)
++{
++    sector->sector = le32_to_cpu(sector->sector);
++}
++
++static void le2cpu_reqcmd(VblkReqCmd *cmd)
++{
++    cmd->addr = le64_to_cpu(cmd->addr);
++    cmd->len = le32_to_cpu(cmd->len);
++    cmd->flags = le32_to_cpu(cmd->flags);
++}
++
++static void le2cpu_req(VblkReq *req)
++{
++    le2cpu_reqcmd(&req->sector);
++    le2cpu_reqcmd(&req->data);
++    le2cpu_reqcmd(&req->retval);
++}
++
++static void vblk_cmd(uint64_t devid, BlockBackend *blk, uint64_t value,
++                     uint64_t static_off)
++{
++    VblkReq req;
++    VblkSector sector;
++    uint64_t off = 0;
++    char *buf = NULL;
++    uint8_t ret = VBLK_RET_FAILED;
++    int r;
++
++    cpu_physical_memory_read(value, &req, sizeof(req));
++    le2cpu_req(&req);
++
++    if (req.sector.len != sizeof(sector)) {
++        ret = VBLK_RET_FAILED;
++        goto out;
++    }
++
++    /* Read the vblk command */
++    cpu_physical_memory_read(req.sector.addr, &sector, sizeof(sector));
++    le2cpu_sector(&sector);
++
++    off = sector.sector * 512ULL + static_off;
++
++    /* Sanity check that we're not allocating bogus sizes */
++    if (req.data.len > 128 * MiB) {
++        goto out;
++    }
++
++    buf = g_malloc0(req.data.len);
++    switch (req.data.flags) {
++    case VBLK_DATA_FLAGS_READ:
++        r = blk_pread(blk, off, req.data.len, buf, 0);
++        trace_bdif_vblk_read(devid == DEVID_AUX ? "aux" : "root",
++                             req.data.addr, off, req.data.len, r);
++        if (r < 0) {
++            goto out;
++        }
++        cpu_physical_memory_write(req.data.addr, buf, req.data.len);
++        ret = VBLK_RET_SUCCESS;
++        break;
++    case VBLK_DATA_FLAGS_WRITE:
++        /* Not needed, iBoot only reads */
++        break;
++    default:
++        break;
++    }
++
++out:
++    g_free(buf);
++    cpu_physical_memory_write(req.retval.addr, &ret, 1);
++}
++
++static void bdif_write(void *opaque, hwaddr offset,
++                       uint64_t value, unsigned size)
++{
++    VMAppleBdifState *s = opaque;
++    uint64_t devid = (offset & REG_DEVID_MASK);
++
++    trace_bdif_write(offset, size, value);
++
++    switch (offset & ~REG_DEVID_MASK) {
++    case REG_CMD:
++        switch (devid) {
++        case DEVID_ROOT:
++            vblk_cmd(devid, s->root, value, 0x0);
++            break;
++        case DEVID_AUX:
++            vblk_cmd(devid, s->aux, value, 0x0);
++            break;
++        }
++        break;
++    }
++}
++
++static const MemoryRegionOps bdif_ops = {
++    .read = bdif_read,
++    .write = bdif_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++    },
++    .impl = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++    },
++};
++
++static void bdif_init(Object *obj)
++{
++    VMAppleBdifState *s = VMAPPLE_BDIF(obj);
++
++    memory_region_init_io(&s->mmio, obj, &bdif_ops, obj,
++                         "VMApple Backdoor Interface", VMAPPLE_BDIF_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
++}
++
++static Property bdif_properties[] = {
++    DEFINE_PROP_DRIVE("aux", VMAppleBdifState, aux),
++    DEFINE_PROP_DRIVE("root", VMAppleBdifState, root),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void bdif_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->desc = "VMApple Backdoor Interface";
++    device_class_set_props(dc, bdif_properties);
++}
++
++static const TypeInfo bdif_info = {
++    .name          = TYPE_VMAPPLE_BDIF,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(VMAppleBdifState),
++    .instance_init = bdif_init,
++    .class_init    = bdif_class_init,
++};
++
++static void bdif_register_types(void)
++{
++    type_register_static(&bdif_info);
++}
++
++type_init(bdif_register_types)
 diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
-new file mode 100644
-index 00000000000..e69de29bb2d
+index bcd4dcb28d2..d4624713deb 100644
+--- a/hw/vmapple/meson.build
++++ b/hw/vmapple/meson.build
+@@ -1 +1,2 @@
+ system_ss.add(when: 'CONFIG_VMAPPLE_AES',  if_true: files('aes.c'))
++system_ss.add(when: 'CONFIG_VMAPPLE_BDIF', if_true: files('bdif.c'))
 diff --git a/hw/vmapple/trace-events b/hw/vmapple/trace-events
-new file mode 100644
-index 00000000000..9ccc5790487
---- /dev/null
+index fbbef40eac0..824f6595d35 100644
+--- a/hw/vmapple/trace-events
 +++ b/hw/vmapple/trace-events
-@@ -0,0 +1,2 @@
-+# See docs/devel/tracing.rst for syntax documentation.
+@@ -14,3 +14,8 @@ aes_2_read(uint64_t offset, uint64_t res) "offset=0x%"PRIx64" res=0x%"PRIx64
+ aes_2_write(uint64_t offset, uint64_t val) "offset=0x%"PRIx64" val=0x%"PRIx64
+ aes_dump_data(const char *desc, const char *hex) "%s%s"
+ 
++# bdif.c
++bdif_read(uint64_t offset, uint32_t size, uint64_t value) "offset=0x%"PRIx64" size=0x%x value=0x%"PRIx64
++bdif_write(uint64_t offset, uint32_t size, uint64_t value) "offset=0x%"PRIx64" size=0x%x value=0x%"PRIx64
++bdif_vblk_read(const char *dev, uint64_t addr, uint64_t offset, uint32_t len, int r) "dev=%s addr=0x%"PRIx64" off=0x%"PRIx64" size=0x%x r=%d"
 +
-diff --git a/hw/vmapple/trace.h b/hw/vmapple/trace.h
-new file mode 100644
-index 00000000000..572adbefe04
---- /dev/null
-+++ b/hw/vmapple/trace.h
-@@ -0,0 +1 @@
-+#include "trace/trace-hw_vmapple.h"
-diff --git a/meson.build b/meson.build
-index d286b876d62..1b13ff24fd8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3490,6 +3490,7 @@ if have_system
-     'hw/usb',
-     'hw/vfio',
-     'hw/virtio',
-+    'hw/vmapple',
-     'hw/watchdog',
-     'hw/xen',
-     'hw/gpio',
+diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
+index 6762b6c869f..9090e9c5ac8 100644
+--- a/include/hw/vmapple/vmapple.h
++++ b/include/hw/vmapple/vmapple.h
+@@ -14,4 +14,6 @@
+ 
+ #define TYPE_APPLE_AES "apple-aes"
+ 
++#define TYPE_VMAPPLE_BDIF "vmapple-bdif"
++
+ #endif /* HW_VMAPPLE_VMAPPLE_H */
 -- 
 2.39.3 (Apple Git-145)
 
