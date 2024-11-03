@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D273D11181
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 16:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 721CED11182
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 16:37:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7dQ3-0003t6-KS; Sun, 03 Nov 2024 11:25:39 -0500
+	id 1t7dax-0005jl-7Q; Sun, 03 Nov 2024 11:36:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1t7dPr-0003sf-LL
- for qemu-devel@nongnu.org; Sun, 03 Nov 2024 11:25:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1t7dPp-0001gs-C3
- for qemu-devel@nongnu.org; Sun, 03 Nov 2024 11:25:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730651121;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=5h9Sva8QyeUXwD/rvc0sjEMJD/8QNSneBckMPuAzAAI=;
- b=Wog70I0d8yG+CZ6NfrkQKXcg1Ko1mitnETEQBAVUF8Q1PYe9yYEShrE/XDBtoe2Acqqvse
- 0I6+N+HimS2xViQ/9HqOuNxwCY85k7FwEKGlk747c2/EmpIurD6uWn0hplSKiE0BPJGVrA
- qvMqNSLIXpKlskqMPwdHx/Hjt6CoACU=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-344-48fA2Wp_PVSJxdKdMuDDNQ-1; Sun, 03 Nov 2024 11:25:19 -0500
-X-MC-Unique: 48fA2Wp_PVSJxdKdMuDDNQ-1
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2e2c3338a9dso4387443a91.0
- for <qemu-devel@nongnu.org>; Sun, 03 Nov 2024 08:25:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1t7dat-0005j9-KG; Sun, 03 Nov 2024 11:36:53 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1t7dar-0002zz-Vy; Sun, 03 Nov 2024 11:36:51 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-7ea76a12c32so2598138a12.1; 
+ Sun, 03 Nov 2024 08:36:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730651808; x=1731256608; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=k/pq+cpC0aPZEsD6BLyH7HxMMBRvDsnLjWpqZlfREaM=;
+ b=YNJfgH9omoNlaBuuyBobVRvf2qb74wCdFzuiztqw+xB2J5yDQyQF43gnPP6nuiAktc
+ tWUEU257tmibngtgkF9stOwOEV5jb7ih+KLB2RZzBK9avwaoF4IcJLzW5tkV5scOUWCn
+ SjO+wxvQ7gMFBPoD/nsP+rL6IHO8+twPSOAbOPCcw5bra8Dt6a+1Llct6fJPchrK2un2
+ wfn9Ud2iKwQSeJpM+QDOuPhf9sVLn9lwulfwnWJj5EouZjmzFKBYECXHLVZbnT4vclmX
+ oYa89DlBs6ahWuznl6I2dX9IOpgj3b6mSAo91UuStKpcnKuPd/ivJ9r+25mylbrpyXZc
+ siIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730651117; x=1731255917;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5h9Sva8QyeUXwD/rvc0sjEMJD/8QNSneBckMPuAzAAI=;
- b=uafsmKK9DS13UCq6tr3P7JPIR+iZEg26tUvoSCQSBsbPzBY/GGavCk0UkUpjJKV5Ii
- 7oL1cifvVJKnyvRZvCfXWaSbUTNiEz4rotDHKtvfs54/tJbLrqTsw/+Tyy/tGRtvWwO0
- qLpMfpgYDY0nJmiQkJ+2FV7/CCXkPj88eTP18GoIKFIqB95labjNtv6XIKeWQ7py6asW
- w6lRxHlimzd3qXoz1aTaQ92ku5qmWx7K0ZxwTx/PghaBJBv7+aZaQhtthVA1/Vp8TeCl
- ArA0Hi+Gno+veTInFs1gOjMN2lk3fw9BSwhUpCgDfDt0sFFUFjiBx3JZUfRInlFKvkYd
- WU3A==
-X-Gm-Message-State: AOJu0Yytp8MafJQndHFj9yeolir8wr4O1R1vJzJ+SIedhFPFXJmC6IZv
- Xdc80eELqn5wRa4AHKGqi7nF2poQL8JxRPolhMAqJh5KFH9XMcEza1YaMJmSPCi7ensW4/HG/y9
- 46U7K6Tp0LWFg5AredDg0FOf+VDzYi+lPRWQRRbXGyKh5B/RUFhTl070GQjtyAk7MDi47dr+GEq
- CvT3P7IIcLMT+liGFt3iZhuuNIqZLDLl89UB1S4Q==
-X-Received: by 2002:a17:90b:2243:b0:2e2:c421:894b with SMTP id
- 98e67ed59e1d1-2e93c14fd5dmr17134747a91.14.1730651117004; 
- Sun, 03 Nov 2024 08:25:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGEzBGONvpWNQUd3RyvTFYTG7ImW7I98q1I4RhMb5OF+q2SnCzuCM7ewWS9PjOWQuzeBxpN/bz9UEZ7V8Q8RWU=
-X-Received: by 2002:a17:90b:2243:b0:2e2:c421:894b with SMTP id
- 98e67ed59e1d1-2e93c14fd5dmr17134726a91.14.1730651116654; Sun, 03 Nov 2024
- 08:25:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730651808; x=1731256608;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=k/pq+cpC0aPZEsD6BLyH7HxMMBRvDsnLjWpqZlfREaM=;
+ b=NVwTVDIPXL5ITsZvWHQqO+by71BXPeJlj4N/vxBT3RiOiyEJodOk8FyAeWFCD5VDBG
+ iS5IHe1kll413UMrODt80T2OST2OMb7YVmBInN2DIAD88Nisl6fBw/efBfyVxL+S9ZdZ
+ 0zBkHOzE9+FSNJkvN8R6XshFqVM7Tepdkwo6c58kGWH1FdLT6mS+GQI8RWiBkjEX0tuA
+ SokhZKkim+I/w9E91T69MMFgEOolQX2D/jL1kqLJqjmYvh7lwuGGCGnYhgsaRrpSc7UG
+ sukYozRLm5Q1tZPACpso1SvqfsBsVQEOlFsirlygInohHxwxVVoIhXZv9Z4g9aELxeRw
+ VVJw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUBdjI6JdBYhZP3z03u3NcS/JPNCM4PEnS8QLdjIK2TXz5Vgpd8lTm6Fav4T7pjQNePbDWd88Q6+lfU@nongnu.org
+X-Gm-Message-State: AOJu0YzQWM5aNagxcwZPPXGdUGBikX2RLNzCF7i2aX9WOlmM+e05TO1c
+ RSMK3g1Mnn4FgBqkuyWBXxn2PQiUgoWsDF7WIepBooWGG3wTU2Y4+OysPg==
+X-Google-Smtp-Source: AGHT+IHEdyTIyvyihTGIXhrPM1HID+YBtLr1m4KOufqCK6NZu2i1Pm6l+wIowVmX869NUXq8BOjjEg==
+X-Received: by 2002:a17:90b:1804:b0:2e2:e597:6cdc with SMTP id
+ 98e67ed59e1d1-2e93c1750bamr17783082a91.22.1730651807630; 
+ Sun, 03 Nov 2024 08:36:47 -0800 (PST)
+Received: from wheely.local0.net (124-171-217-17.tpgi.com.au. [124.171.217.17])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e93dac03a8sm6741422a91.30.2024.11.03.08.36.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 03 Nov 2024 08:36:47 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH] ppc/xive: Fix ESB length overflow on 32-bit hosts
+Date: Mon,  4 Nov 2024 02:36:35 +1000
+Message-ID: <20241103163635.676443-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-From: John Snow <jsnow@redhat.com>
-Date: Sun, 3 Nov 2024 11:25:05 -0500
-Message-ID: <CAFn=p-b-j7Ucxv53ZqpE_e4uuzpsAG+5s=QgMPyiB8gSCsAV9g@mail.gmail.com>
-Subject: Where's jsnow?
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Daniel Berrange <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000009f4b90626049d54"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,102 +95,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000009f4b90626049d54
-Content-Type: text/plain; charset="UTF-8"
+The length of this region can be > 32-bits, which overflows size_t on
+32-bit hosts. Change to uint64_t.
 
-Hi all - Just a note to say that I am dealing with an ongoing family health
-crisis and I have been away from my desk for extended periods of time, and
-not reliably available for normal maintainership duties.
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+This turned up in CI running new xive tests (which is good, they
+caught a bug), so I'll add it ahead of that in the PR. Sorry it's
+taken me so long to get to.
 
-The python tests appear to be in a bad state at present and I have sent a
-series to fix the bulk of it, but there is work that remains to be done. If
-you run into any issues, please document them and CC me so that I can fix
-anything else when I return.
+Thanks,
+Nick
 
-(I am well aware that the lack of pinned versions for these tests when run
-locally is proving to be a major pain. I have plans to address this, but
-simply have not found the dedicated time to push the changes through yet.
-In the meantime, as long as any always-run, must-pass tests on GitLab are
-green, that should be sufficient for now until I get improvements merged
-for the optional-run and locally-run tests; ideally merging everything into
-"make check" and using the increasingly-not-new-anymore buildtime configure
-venv with more robustly pinned tool versions.)
+ hw/intc/spapr_xive_kvm.c | 4 ++--
+ hw/intc/xive.c           | 2 +-
+ include/hw/ppc/xive.h    | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-The new sphinx documentation project has also been delayed as a result,
-though I have been collaborating with Markus off-list to hammer out some of
-the nits that prevent the next RFC from being mailed out; work is still
-actively ongoing and progress is being made, albeit slowly. I will return
-to discussions concerning Sphinx versions et al when I return -- Sorry that
-I did not respond to that topic of discussion yet; you have all been very
-kind to participate in that discussion after my KVM Forum talk where I
-mentioned the difficulty of targeting a wide range of Sphinx versions, and
-I feel it has been rude to not participate in that thread yet. Thank you
-for your patience there - I meant to "strike while the iron is hot", but
-circumstances have had other plans for me.
-
-In my absence, please feel free to merge whatever you'd like if it's
-becoming a blocker and you cannot wait for my input -- I'll sort out any
-accidental only-python-people-would-care mess when I return. I trust the
-judgment of the iotests, qapi and build system maintainers :)
-
-(Ideally, just make sure "python-check-minreqs" on gitlab is green and that
-"make check-tox" passes, once the patches I mentioned above are merged. If
-getting check-tox to pass is too fiddly, it's okay to let it regress in
-order to fix a blocker elsewhere and I'll sort it out later.)
-
-I hope to be back to normal within two weeks or so, with efforts in the
-meantime sporadic and unreliable. Feel free to reach out with questions,
-but I may not be prompt in dealing with "emergencies", so please use your
-best judgment.
-
-Thanks everyone,
---jsnow
-
---00000000000009f4b90626049d54
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi all - Just a note to say that I am dealing with an=
- ongoing family health crisis and I have been away from my desk for extende=
-d periods of time, and not reliably available for normal maintainership dut=
-ies.</div><div><br></div><div>The python tests appear to be in a bad state =
-at present and I have sent a series to fix the bulk of it, but there is wor=
-k that remains to be done. If you run into any issues, please document them=
- and CC me so that I can fix anything else when I return.</div><div><br></d=
-iv><div>(I am well aware that the lack of pinned versions for these tests w=
-hen run locally is proving to be a major pain. I have plans to address this=
-, but simply have not found the dedicated time to push the changes through =
-yet. In the meantime, as long as any always-run, must-pass tests on GitLab =
-are green, that should be sufficient for now until I get improvements merge=
-d for the optional-run and locally-run tests; ideally merging everything in=
-to &quot;make check&quot; and using the increasingly-not-new-anymore buildt=
-ime configure venv with more robustly pinned tool versions.)<br></div><div>=
-<br></div><div>The new sphinx documentation project has also been delayed a=
-s a result, though I have been collaborating with Markus off-list to hammer=
- out some of the nits that prevent the next RFC from being mailed out; work=
- is still actively ongoing and progress is being made, albeit slowly. I wil=
-l return to discussions concerning Sphinx versions et al when I return -- S=
-orry that I did not respond to that topic of discussion yet; you have all b=
-een very kind to participate in that discussion after my KVM Forum talk whe=
-re I mentioned the difficulty of targeting a wide range of Sphinx versions,=
- and I feel it has been rude to not participate in that thread yet. Thank y=
-ou for your patience there - I meant to &quot;strike while the iron is hot&=
-quot;, but circumstances have had other plans for me.<br></div><div><br></d=
-iv><div>In my absence, please feel free to merge whatever you&#39;d like if=
- it&#39;s becoming a blocker and you cannot wait for my input -- I&#39;ll s=
-ort out any accidental only-python-people-would-care mess when I return. I =
-trust the judgment of the iotests, qapi and build system maintainers :)</di=
-v><div><br></div><div>(Ideally, just make sure &quot;python-check-minreqs&q=
-uot; on gitlab is green and that &quot;make check-tox&quot; passes, once th=
-e patches I mentioned above are merged. If getting check-tox to pass is too=
- fiddly, it&#39;s okay to let it regress in order to fix a blocker elsewher=
-e and I&#39;ll sort it out later.)<br></div><div><br></div><div>I hope to b=
-e back to normal within two weeks or so, with efforts in the meantime spora=
-dic and unreliable. Feel free to reach out with questions, but I may not be=
- prompt in dealing with &quot;emergencies&quot;, so please use your best ju=
-dgment.<br></div><div><br></div><div>Thanks everyone,</div><div>--jsnow<br>=
-</div></div>
-
---00000000000009f4b90626049d54--
+diff --git a/hw/intc/spapr_xive_kvm.c b/hw/intc/spapr_xive_kvm.c
+index 5789062379..7a86197fc9 100644
+--- a/hw/intc/spapr_xive_kvm.c
++++ b/hw/intc/spapr_xive_kvm.c
+@@ -720,7 +720,7 @@ int kvmppc_xive_connect(SpaprInterruptController *intc, uint32_t nr_servers,
+ {
+     SpaprXive *xive = SPAPR_XIVE(intc);
+     XiveSource *xsrc = &xive->source;
+-    size_t esb_len = xive_source_esb_len(xsrc);
++    uint64_t esb_len = xive_source_esb_len(xsrc);
+     size_t tima_len = 4ull << TM_SHIFT;
+     CPUState *cs;
+     int fd;
+@@ -824,7 +824,7 @@ void kvmppc_xive_disconnect(SpaprInterruptController *intc)
+ {
+     SpaprXive *xive = SPAPR_XIVE(intc);
+     XiveSource *xsrc;
+-    size_t esb_len;
++    uint64_t esb_len;
+ 
+     assert(xive->fd != -1);
+ 
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index efcb63e8aa..245e4d181a 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -1359,7 +1359,7 @@ static void xive_source_reset(void *dev)
+ static void xive_source_realize(DeviceState *dev, Error **errp)
+ {
+     XiveSource *xsrc = XIVE_SOURCE(dev);
+-    size_t esb_len = xive_source_esb_len(xsrc);
++    uint64_t esb_len = xive_source_esb_len(xsrc);
+ 
+     assert(xsrc->xive);
+ 
+diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
+index 31242f0406..ebee982528 100644
+--- a/include/hw/ppc/xive.h
++++ b/include/hw/ppc/xive.h
+@@ -218,7 +218,7 @@ static inline bool xive_source_esb_has_2page(XiveSource *xsrc)
+         xsrc->esb_shift == XIVE_ESB_4K_2PAGE;
+ }
+ 
+-static inline size_t xive_source_esb_len(XiveSource *xsrc)
++static inline uint64_t xive_source_esb_len(XiveSource *xsrc)
+ {
+     return (1ull << xsrc->esb_shift) * xsrc->nr_irqs;
+ }
+-- 
+2.45.2
 
 
