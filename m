@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C43FE67807
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 07:52:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5197E6781B
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 09:55:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7VOr-0003m1-0A; Sun, 03 Nov 2024 02:51:53 -0500
+	id 1t7XJs-0002cd-4F; Sun, 03 Nov 2024 04:54:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7VOp-0003lj-A7; Sun, 03 Nov 2024 02:51:51 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t7XJp-0002bs-If
+ for qemu-devel@nongnu.org; Sun, 03 Nov 2024 04:54:50 -0500
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7VOn-0006pj-Hh; Sun, 03 Nov 2024 02:51:51 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-37d4a5ecc44so2011999f8f.2; 
- Sun, 03 Nov 2024 00:51:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t7XJm-0001hy-7v
+ for qemu-devel@nongnu.org; Sun, 03 Nov 2024 04:54:49 -0500
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2fb561f273eso25307801fa.2
+ for <qemu-devel@nongnu.org>; Sun, 03 Nov 2024 01:54:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730620307; x=1731225107; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M3pEreXAeYA4y9REHP0khDzcGKOBknkGZcbn2/2Try8=;
- b=SLwfmKdfJM1azZqkRNOn6vOvoE+YurxfggQqX2l+wX/mLCHjwMWP+3p4eg1LB6o2ZJ
- rInKq1CtmV73ozQP7k7YRzxAA7HOwC1cO5zCtpZg3Aw+rEmvLDqxL7OfrMl5ZtXHSXaZ
- DsyODlHVFZT63JCCDPFZwclSNNGb/PJZjgM8dxWXgQMYo5Uae1MnqkX9XoUWPl+1Bt4C
- ilH1FXrxZkl6BHqyow/90OwR5FkWfbKzU8/Z0OuRBa+/SSBEoU5TGv+bFqigILlzedoJ
- bNnuwJE1TJa3H+KvEgPG8ev143Lk32qyzbjNxNdzhWRalxxdzmw4ERJGvhw0Jn/2FlrK
- VEDg==
+ d=linaro.org; s=google; t=1730627684; x=1731232484; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eK1ACBQdcVq11/sNE0g5q33esKHBWkQCzFbqxdrPPHs=;
+ b=OChaQh0Gy/9vb/kvttofSoEa5a/rYUj+gqmPF+46E7PNkx8H27tnvKMNPbFBmqvFQ9
+ STypYkR8MZPTivZ6Hr1yvZXHne/ZUO6Z4FsWrLU4DYR2mA0k9k4PaNeAB0FcpwvGylgO
+ 1VJ5FYaMpJ6XV2J1aOaqI+5n9zxTjHalNLP3eH8BP2fgv26M8vfvxwA+2esAJSKu8OjO
+ 4GBIwfYzXRctgD4LYcPoi9O0sWRfROAKaxIRp7fikBXvUKM3eZUXmWlYDib4eTUiGnEt
+ 0puzY6a1z0awNXOLgvTZP9oIAh17ZWW3DJEKC4y0eVv4hUA2QE79TQ2lFXxYnBkk4ua8
+ PCbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730620307; x=1731225107;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=M3pEreXAeYA4y9REHP0khDzcGKOBknkGZcbn2/2Try8=;
- b=u7bCx4uLQR6xnNG32pHRWiDLOcbiuI1B3mn40mQCkNFLoBqrDfFc8TLeAKQkAuGuFP
- yGcTpzzkWZIDQCs+QIf4rLJHdSrEHPypzbQxMM78QrGd5dwGVgwqOePIfd66b3QqfI0G
- 8eMxthKXoYiKvasfvBlTNXIHfIXNBA0x7VvdHHesDttN0WoITsDjUMqzbZokuTGHSEtg
- YhtD6ig50RwK5NkGErZNVjfUd/GQorVKDMg5VVbnleTBIGZaL7Fj1WJIfrGYH2I8DG7+
- /+6ffAeXHhDwhsouaobUzk06tPB/+gJBt6G4+f5tkjCzow4zeoF5Brfr6CKjLOU/clAF
- tr4A==
+ d=1e100.net; s=20230601; t=1730627684; x=1731232484;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eK1ACBQdcVq11/sNE0g5q33esKHBWkQCzFbqxdrPPHs=;
+ b=nhMMR9CE4AgzFNPYe6ZEsTO3qm3VwiEV6tfxyBfIUnrgEMXlRKKERU79R6g8gBh04r
+ F6PlddHhbX75MEi+LlYG85WMgCE9n8gEBte93h0DFCTWr2kZgneH6VQ0lQXa+23SXwCn
+ 9M+ENnej5Fwufo87ASZgRUCxU88GFpvRgMDRsfEp6xklVq0MynsGQ2RTBA5AMuU4XHSA
+ jqrt4owOdMvUDNYoUlhxVCddWDS5IwbV8rVHhBU3aVdfcKW4eAkv73Q2yyBqyOopBww7
+ Ivw6MRYmbM5UgBguWNfdW7YzBSMf1zHXxl/WyDGQwsiAuc4QqiAqMtEDuash4bdGZQ4Y
+ vQ6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQ/5WzJG00T1UkuD/cJVX1+F4PwYROrShExVzzVkHGNOLMeatkn8B0djfACvtpLbvOZ1tc7q3pzU0=@nongnu.org,
- AJvYcCXu5uZErDaoN9b6mMHLa1KLch+GGVyDq/B7PAvtCrsBBHuWI2mKB4/LSh65+ZJwQwqLX4jr+Ih4BP20@nongnu.org
-X-Gm-Message-State: AOJu0YxaCp7qOc1JY3LDquNOvhYP2HEu8KPMUrmFGjPe4in0LTTPXzq7
- zHS8cbtaZ/jg9JQEo0J1OdjVTvO8JxedI9GP8PHJpzxcKWT7cMY2
-X-Google-Smtp-Source: AGHT+IFJLWgQ+UIo1FIwmUObBlEZ/eZpSdBX+QSluDkMaXmWRVoXDkl4AOJn7Ka6D8u09Ceo/+BxrA==
-X-Received: by 2002:adf:9bd4:0:b0:37d:4e74:687 with SMTP id
- ffacd0b85a97d-380611e1392mr19503594f8f.41.1730620307039; 
- Sun, 03 Nov 2024 00:51:47 -0700 (PDT)
-Received: from ?IPv6:::1?
- (p200300faaf0043008d496915e5ce0c3d.dip0.t-ipconnect.de.
- [2003:fa:af00:4300:8d49:6915:e5ce:c3d])
+ AJvYcCWHqxT2TFHPdBnayjdsXi5UHAme0Az7KRo7IsQzoa2kU/v3aN/5kIVVsycwjTHUJvhxvF9Wk/EZt8QK@nongnu.org
+X-Gm-Message-State: AOJu0YxTcHsSo6/wLPw2ui3EYtgfyzrz+GZE143LQM6lRFHuwE2nzquJ
+ pQLhqEBc7jj851JX0NJvI1WS0/xOMJwtncoU3ge5CYyTdXT+04ilfJGSRR3rAkk=
+X-Google-Smtp-Source: AGHT+IG7pMezLXsiQfcFT+ZGiuUdY0/lqeT4KIz5/wIFo4ItTtf8fJXhlVWtTmRQj0rKIjgHigT/6w==
+X-Received: by 2002:a2e:a98e:0:b0:2fa:d4c1:3b6b with SMTP id
+ 38308e7fff4ca-2fd059d2d1fmr88755631fa.33.1730627683986; 
+ Sun, 03 Nov 2024 01:54:43 -0800 (PST)
+Received: from [192.168.21.227] ([91.209.212.64])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c1168afcsm10000234f8f.91.2024.11.03.00.51.46
+ 38308e7fff4ca-2fdef8a62c0sm12501271fa.75.2024.11.03.01.54.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 03 Nov 2024 00:51:46 -0700 (PDT)
-Date: Sun, 03 Nov 2024 07:51:46 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Corey Minyard <corey@minyard.net>
-CC: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- qemu-block@nongnu.org, Bin Meng <bmeng.cn@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Jason Wang <jasowang@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, qemu-ppc@nongnu.org,
- Corey Minyard <cminyard@mvista.com>
-Subject: Re: [PATCH v3 22/26] hw/i2c/smbus_eeprom: Prefer DEFINE_TYPES() macro
-In-Reply-To: <CAB9gMfrd+E=yv6L4JZ6KuTJv496omKdN3DAw+AyWQG6vjac5Bg@mail.gmail.com>
-References: <20241102131715.548849-1-shentey@gmail.com>
- <20241102131715.548849-23-shentey@gmail.com>
- <CAB9gMfrd+E=yv6L4JZ6KuTJv496omKdN3DAw+AyWQG6vjac5Bg@mail.gmail.com>
-Message-ID: <F35089BE-2008-4C0B-AECE-067A732EEFE6@gmail.com>
+ Sun, 03 Nov 2024 01:54:42 -0800 (PST)
+Message-ID: <cc3fe99c-11c9-4130-8559-e95b00688b2a@linaro.org>
+Date: Sun, 3 Nov 2024 09:54:36 +0000
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Fix SVE SDOT/UDOT/USDOT (4-way, indexed)
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20241101185544.2130972-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241101185544.2130972-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,71 +98,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 11/1/24 18:55, Peter Maydell wrote:
+> Our implementation of the indexed version of SVE SDOT/UDOT/USDOT got
+> the calculation of the inner loop terminator wrong.  Although we
+> correctly account for the element size when we calculate the
+> terminator for the first iteration:
+>     intptr_t segend = MIN(16 / sizeof(TYPED), opr_sz_n);
+> we don't do that when we move it forward after the first inner loop
+> completes.  The intention is that we process the vector in 128-bit
+> segments, which for a 64-bit element size should mean (1, 2), (3, 4),
+> (5, 6), etc.  This bug meant that we would iterate (1, 2), (3, 4, 5,
+> 6), (7, 8, 9, 10) etc and apply the wrong indexed element to some of
+> the operations, and also index off the end of the vector.
+> 
+> You don't see this bug if the vector length is small enough that we
+> don't need to iterate the outer loop, i.e.  if it is only 128 bits,
+> or if it is the 64-bit special case from AA32/AA64 AdvSIMD.  If the
+> vector length is 256 bits then we calculate the right results for the
+> elements in the vector but do index off the end of the vector. Vector
+> lengths greater than 256 bits see wrong answers. The instructions
+> that produce 32-bit results behave correctly.
+> 
+> Fix the recalculation of 'segend' for subsequent iterations, and
+> restore a version of the comment that was lost in the refactor of
+> commit 7020ffd656a5 that explains why we only need to clamp segend to
+> opr_sz_n for the first iteration, not the later ones.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2595
+> Fixes: 7020ffd656a5 ("target/arm: Macroize helper_gvec_{s,u}dot_idx_{b,h}")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/arm/tcg/vec_helper.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 
+D'oh.
 
-Am 2=2E November 2024 17:24:25 UTC schrieb Corey Minyard <corey@minyard=2E=
-net>:
->On Sat, Nov 2, 2024 at 8:25=E2=80=AFAM Bernhard Beschow <shentey@gmail=2E=
-com> wrote:
->>
->> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat=2Ecom>
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->>  hw/i2c/smbus_eeprom=2Ec | 19 ++++++++-----------
->>  1 file changed, 8 insertions(+), 11 deletions(-)
->>
->> diff --git a/hw/i2c/smbus_eeprom=2Ec b/hw/i2c/smbus_eeprom=2Ec
->> index 9e62c27a1a=2E=2E1d4d9704bf 100644
->> --- a/hw/i2c/smbus_eeprom=2Ec
->> +++ b/hw/i2c/smbus_eeprom=2Ec
->> @@ -151,19 +151,16 @@ static void smbus_eeprom_class_initfn(ObjectClass=
- *klass, void *data)
->>      dc->user_creatable =3D false;
->>  }
->>
->> -static const TypeInfo smbus_eeprom_info =3D {
->> -    =2Ename          =3D TYPE_SMBUS_EEPROM,
->> -    =2Eparent        =3D TYPE_SMBUS_DEVICE,
->> -    =2Einstance_size =3D sizeof(SMBusEEPROMDevice),
->> -    =2Eclass_init    =3D smbus_eeprom_class_initfn,
->> +static const TypeInfo types[] =3D {
->
->This is better, but why did you change the name to "types"=2E  The
->previous name was fairly descriptive, though you might change "info"
->to "types"=2E
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-I took inspiration from https://lore=2Ekernel=2Eorg/qemu-devel/20240215175=
-752=2E82828-20-philmd@linaro=2Eorg =2E I could preserve the old names (also=
- in the other patches) by simply converting to plural form=2E Here it would=
- be: smbus_eeprom_infos=2E OK?
-
-Best regards,
-Bernhard
-
->
->-corey
->
->> +    {
->> +        =2Ename          =3D TYPE_SMBUS_EEPROM,
->> +        =2Eparent        =3D TYPE_SMBUS_DEVICE,
->> +        =2Einstance_size =3D sizeof(SMBusEEPROMDevice),
->> +        =2Eclass_init    =3D smbus_eeprom_class_initfn,
->> +    },
->>  };
->>
->> -static void smbus_eeprom_register_types(void)
->> -{
->> -    type_register_static(&smbus_eeprom_info);
->> -}
->> -
->> -type_init(smbus_eeprom_register_types)
->> +DEFINE_TYPES(types)
->>
->>  void smbus_eeprom_init_one(I2CBus *smbus, uint8_t address, uint8_t *ee=
-prom_buf)
->>  {
->> --
->> 2=2E47=2E0
->>
->>
+r~
 
