@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14652D11041
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 13:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1213D11041
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 13:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7al5-0006W5-Qa; Sun, 03 Nov 2024 08:35:11 -0500
+	id 1t7alH-0006k3-Cc; Sun, 03 Nov 2024 08:35:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7aky-0006I8-0U; Sun, 03 Nov 2024 08:35:04 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1t7alE-0006fV-T0; Sun, 03 Nov 2024 08:35:21 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7akw-0001Hh-HF; Sun, 03 Nov 2024 08:35:03 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a9a2209bd7fso590720566b.2; 
- Sun, 03 Nov 2024 05:35:01 -0800 (PST)
+ id 1t7alD-0001YB-En; Sun, 03 Nov 2024 08:35:20 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a998a5ca499so443566266b.0; 
+ Sun, 03 Nov 2024 05:35:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730640900; x=1731245700; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730640917; x=1731245717; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ER63OFaSbqJru3HFylC612MYJYy6isDGIUx/mkHzX+E=;
- b=Z5jikzpC9DT26OF1Lr3zmTorrb3IaCt+a/H7h2+xykrmRCM49rYQ6cX6z+AKcHgTd3
- DVM4TTZD7kZYFhmYKWJFzlT+njz4ZJfUa8bz2rrbB7+tqvHeXsrQc0vehXUjdt3Tspn7
- 4y8zJsLp0q+nlA6jBuovsASjmb3bFHy41Fb1B0nmYDuIphOuDUnRs0Pkyb3NHc1DO4NJ
- 0Hz5A353SB+z3MIY6MX8Qd+Q4ykec9LNKZd3L0GVFhoGeb4x/J36DOOITANckN+8XpAS
- TkV85RFzbOSQwxMyQDYc9RPtje/kpG5hUT4UDhboxW4WyZCs+O2GAJIJ86uxkwS/qjoq
- jKEw==
+ bh=dKFAh2MnjhZ1jF0dRDKV/YEAdE5+3y61mz+4DueAPJw=;
+ b=TB8rMvLCrK3PU2S1JF5qsrsRmkccIenPfMEUeuKpcqwRXKe5+fl/AR5GlxxoIdlWSU
+ ayisoUbQtIflewMggyV7MuDZVQ5YnxkhYicg3yA62na7fWzr5ceZxn0b/sslWAX9dcNp
+ /Ynyi5970dKZn3OEvgrpaT6rI+SeGuxBSG5moB9UzIH5/kx4wcfU/MhZicVMLfD7MVHQ
+ yeJm5XcfpuCXeem0Ra8gysp/zeQ5TcmzI583EUCru44lf3MWADiOFc+vt2TjoADTxM6O
+ VhjRK2oBP4afDc+l1YOEGGPcCcKmEs2LdQl4GTMp7sVFQ4rx9kDFjK4Ucxf6mydzemwx
+ iJEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730640900; x=1731245700;
+ d=1e100.net; s=20230601; t=1730640917; x=1731245717;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ER63OFaSbqJru3HFylC612MYJYy6isDGIUx/mkHzX+E=;
- b=NzX+nJ3dNNAajp8n7wdQZjxUmNjUcaUhEBit+41u2HUpJDaQEMBlQ4+7aE2fv3H7pC
- UWbkfu962fIKqCR26nETkCQ2jmDKL2d7oe8P/0SZkPuSH+AarZ7RCDosyDZZ6vjbFwBz
- 4T4Poglsop/zLHdTSHuoA0LEDap8QspBvpf38L10NkxmbkTogNPj364lhtGC/k3vJg6x
- Y9EUkIhGDN/sxSStlniZo5rPoRtI6uN4rwBH0KW5ygvpVHSex1vJM3YPtf2w/k++sRSJ
- lRFKOtYTpZ3rPBki2wzBx1PE7Zud/Td3emKyCYnyyBxqZfWJ0qeyHm7aKjWqA48kDvJd
- WU6g==
+ bh=dKFAh2MnjhZ1jF0dRDKV/YEAdE5+3y61mz+4DueAPJw=;
+ b=PA7r9FvBIdNUlVvPnsz5vmmQqdD/K7sjxb/GDemc0AmJWbzVvZ3owUiakTvRt0WwJv
+ L8jF9PSYKukfI83AOHk0kHvXIm+sOn1iKml1iaZ2oRfQCUGH+mC+JBDlzMgX8SUQ3ab6
+ k6HxGO9pZ+c9uQAgMSqC9B9bmbU6V1kIRJw+WMQpNCkGX8/rtB/2HONBEA0UAyNr4oiX
+ KMLdtJfx3N9sO2Mo054Ns81tYqcMcX3ewa9KZrsqO34FafziTXx0QfFC64nvXFSpFnXJ
+ ayODfTeXLL3+vxL6T473QItJ1jP2gNdkB1oXFFNuhjc8nQ5bJsal2C5+SkQ7e0uTbKX7
+ HBYw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUo41KRSs6LqvmHT/qOH5As8rIu8tVC6mb0GBQToa7D0bzqR8pnD9sila8uP3nD8L88mfPvsPAwL+kt@nongnu.org,
- AJvYcCUyTRyimiocxIxz8Q2x6XB097ExE1bv/JJukwDP/9fKozPNoFdc8NQAVWhvNInxw/3T+M69xQw4/dM=@nongnu.org
-X-Gm-Message-State: AOJu0YyrVFBi7bsKEUDXgyn7J3qGyKlBlcHG3UDRR0aVjWELRqGtF5+P
- sDibsGIOQ5aM/K15yiFOYvsX913fpIz8D/9nzqpy3iN6Y5Rw+s5fypdiUQ==
-X-Google-Smtp-Source: AGHT+IG+AeFB/YT9Y7oMfdxq0o20C3QD+REAbj1Km5aeSINDXdqdJX5piKSzPElCQf5E3xMywqVpBA==
-X-Received: by 2002:a17:906:6a15:b0:a9a:a891:b43e with SMTP id
- a640c23a62f3a-a9de616dfeamr3071310366b.50.1730640899523; 
- Sun, 03 Nov 2024 05:34:59 -0800 (PST)
+ AJvYcCVhBYS+ERJING0QUKxq1mTesDJy/AzEiEhWy77kecfAbfbdB10h8kmf5RHoy8yx9eEV2E0Ajwx3mO4=@nongnu.org,
+ AJvYcCXtSENWWkNPv70ts7r0OQIQhgy5+Ctdzis89FsSEhNkjxuhsxWgUBmDuqJcGQGyE67w3hnUBXRrINHa@nongnu.org
+X-Gm-Message-State: AOJu0Yz1Mu5HpGBfzeNFA9jlvDVXyEnx7rGhNY9RsOP6Qsx3E4bLzlt4
+ JMJnWYFy/5ihLSRON5Z9/2Q2A5s1JiasViQJFeaB6uDuxm9NDFv68v8xsQ==
+X-Google-Smtp-Source: AGHT+IHLUHMg6DKNnMQwTTj7ahrL/XdEShaCsfcEDWq4r0QiHLHEzLbnKyt4GkcyPClIdjdLqNxcIg==
+X-Received: by 2002:a17:906:f8d1:b0:a9e:6e77:3ecd with SMTP id
+ a640c23a62f3a-a9e6e77407bmr699875266b.54.1730640916913; 
+ Sun, 03 Nov 2024 05:35:16 -0800 (PST)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm424328866b.159.2024.11.03.05.34.58
+ a640c23a62f3a-a9e5664350esm424328866b.159.2024.11.03.05.35.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 05:34:58 -0800 (PST)
+ Sun, 03 Nov 2024 05:35:15 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
@@ -69,19 +69,17 @@ Cc: Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>, qemu-block@nongnu.org,
  Alex Williamson <alex.williamson@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 13/26] hw/pci-host/ppce500: Reuse TYPE_PPC_E500_PCI_BRIDGE
- define
-Date: Sun,  3 Nov 2024 14:33:59 +0100
-Message-ID: <20241103133412.73536-14-shentey@gmail.com>
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Subject: [PATCH v4 26/26] MAINTAINERS: Add hw/gpio/gpio_pwr.c
+Date: Sun,  3 Nov 2024 14:34:12 +0100
+Message-ID: <20241103133412.73536-27-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241103133412.73536-1-shentey@gmail.com>
 References: <20241103133412.73536-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,27 +102,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer a macro rather than a string literal when instantiaging device models.
+The device is only used in the ARM virt machine and designed to be used on top
+of pl061 for use cases such as ARM Trusted Firmware. Add it to the same section
+as hw/gpio/pl061.c.
 
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/pci-host/ppce500.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
-index 97e5d47cec..d7ff2ba778 100644
---- a/hw/pci-host/ppce500.c
-+++ b/hw/pci-host/ppce500.c
-@@ -475,7 +475,7 @@ static void e500_pcihost_realize(DeviceState *dev, Error **errp)
-     address_space_init(&s->bm_as, &s->bm, "pci-bm");
-     pci_setup_iommu(b, &ppce500_iommu_ops, s);
- 
--    pci_create_simple(b, 0, "e500-host-bridge");
-+    pci_create_simple(b, 0, TYPE_PPC_E500_PCI_BRIDGE);
- 
-     memory_region_init(&s->container, OBJECT(h), "pci-container", PCIE500_ALL_SIZE);
-     memory_region_init_io(&h->conf_mem, OBJECT(h), &pci_host_conf_be_ops, h,
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a8f39aeb6f..5dd35f87ff 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -651,6 +651,7 @@ F: hw/display/pl110*
+ F: hw/dma/pl080.c
+ F: include/hw/dma/pl080.h
+ F: hw/dma/pl330.c
++F: hw/gpio/gpio_pwr.c
+ F: hw/gpio/pl061.c
+ F: hw/input/pl050.c
+ F: include/hw/input/pl050.h
 -- 
 2.47.0
 
