@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F75BD11041
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 13:36:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D96ED11040
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 13:37:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7akz-0006Mp-QN; Sun, 03 Nov 2024 08:35:05 -0500
+	id 1t7akz-0006Mk-PT; Sun, 03 Nov 2024 08:35:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7akv-0006EC-7l; Sun, 03 Nov 2024 08:35:01 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1t7akw-0006FQ-6q; Sun, 03 Nov 2024 08:35:02 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7aks-0001GH-K2; Sun, 03 Nov 2024 08:35:00 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a7aa086b077so392509566b.0; 
- Sun, 03 Nov 2024 05:34:56 -0800 (PST)
+ id 1t7aku-0001Ga-GP; Sun, 03 Nov 2024 08:35:01 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a9abe139088so506806666b.1; 
+ Sun, 03 Nov 2024 05:34:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730640895; x=1731245695; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730640897; x=1731245697; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ek6CJz/W/BZPJLQDBSj5hrEIX9vzfAv/et55GzS0YMU=;
- b=HX8XAsNb23G7vjga9CHfq1rLCNSNF4MQYiVtUzUjq8uJ4TJvMRlm1vJomnlURVjVvP
- mo9lVtwhKvwDetARdRCzKtK5UWmrDNEJRYs+vQ8iofcVuCkYjzG4aKYQxRKJiUqSJJKL
- ir+8AeVpYCyc8mdEP0bqgXSO+stj0J1FOY6mr7t9OXwyiflRbBdBtprrubvQ1l6xYU+O
- FxV2UlrbAKoNgdPfzpHuH5GgD6W98dF9ekRG6hcEaAAE8+kIDv7YlMvThb99C++BWZwR
- WS3PyV4R9cPG6TCuV0lbbqcyaL9GFnsxRHnzZL0QdTYEqPamHextT+aIYH6/Kl5iWde+
- DRQg==
+ bh=F19SeWagbzAvngzaU5ogyB638Uj1pnr+BrSpn2Lt6ZY=;
+ b=UPJrMTfiKadutZyRBP0DEMOj9Ml1WlW+LDaJzp+eqmOaljSMlEmi3/iCOZ8eoyQtGv
+ AYlD1xUXD0RtPjF307lod2U29/M5m0CtShADt5FfrOef1SF3CMY65Z8Y2B1+1IWTP4dy
+ z5Y5hmiCvq1wmWO1o05MJpo3127P2jeVBBUEl/XWrn4lslRsLSdKEywpurTEn2LCqE7+
+ xEnZLzultgYr4HhKIv+flV//9fTDEI6EXdFfvJNJo1mdv6nxOREB7X7qwqS89fMbf2IU
+ 5QoGmp+LkY+TxrIZMeHRuTH78IOGiGTKtDjoiVUzKZ88FcWap8A8bVlYZLTxDiyIffbo
+ yV1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730640895; x=1731245695;
+ d=1e100.net; s=20230601; t=1730640897; x=1731245697;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ek6CJz/W/BZPJLQDBSj5hrEIX9vzfAv/et55GzS0YMU=;
- b=j+DCeG+EUxQB9p5Yo1epW2E4gqpHdzDKpso8EDF3ps7BJ3pbvQ37mKAjdsO3pQgVTn
- 4WI4B+0Kpad8ZoEKJCkbwvKHWsGDMI/T9mgHR5uXPOw+Y6FSQbrnt3fR1VFzGfEfzCun
- +VYa5w+RfF/+Fgns7tKJ5X9DipivwGIulAJ/wH/ihl9FDYIu2ElEaheqZWrmjobxrL9Y
- QEvaX4/GwmXpF0KGQ2Vs/ot18l1FOLkp5JGT94YP2cg4Y6nOJGFBSE6H1nUeLX8VPt05
- POdbepMYGqPbFOdM7dgHww6pFVFw6ZHqfwp7nh3RAyBrHWNtqxraRESHiwqM7miIVQu/
- ClZA==
+ bh=F19SeWagbzAvngzaU5ogyB638Uj1pnr+BrSpn2Lt6ZY=;
+ b=mbFb+Dx2Bo2V2mSRz2kYo2SZ6VXUgzBKuR7qtgJuFrgMKLB659hRGNrB6eNmT5K9it
+ /cGNBJReNb2Xt8rUgag0UW9S3xhZ3/0THYvgDTXDSw0UOigJ4Rw3ZKSnLfgMz810KyON
+ x0ejZdX5GriNZdmsw2bKjh2HeeGObIA1BkXkpUL7ZxY+BTWYpCYdEzleRcawMV728XLI
+ ZD+PhFVfpbjaaZlPlgU1K/ztwmiv4SCdyD0NAw2rSG0c8PsiPckZl0qMIyQ54P7jZ907
+ FXPE0r/ziCBKjXJyk7QBGfezDyukxNJGLu568zx+ibqWSdlaybvTjkTzpdk1RjgjMOpn
+ H1Rw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWeGqh/tuDNCIvR9WcADU6AYdIILei7HAkHU7Ka4/BFIzrBzgvAc3MTNFFnV/mNgqYlkNBi7k5kwo=@nongnu.org,
- AJvYcCXDImv7Wmyk4ajO1IFMe9Zabdr7JKovOq18EohLmEoqJykqMkfCvetj/AQ1xKI2WGZqQs/vQMm08ck+@nongnu.org
-X-Gm-Message-State: AOJu0YxVbu0QKZtqStojm7gPwyUJRusTpkC9OaqZTBmXkW9TLCu+gAzO
- n5ycEo+PJn/h9YFl3bLJuJLpLNWBSSIDGj7RABYXoC0ggWiH1/Z3DEkd2g==
-X-Google-Smtp-Source: AGHT+IHU1zHgnSJYKblp4Y2Phk1qGDzo9lmKgHdHvby6tWb3uuE0Pzqbi12wiCC0k3hd9DC9+Y4wZg==
-X-Received: by 2002:a17:906:6a12:b0:a99:f746:385 with SMTP id
- a640c23a62f3a-a9e3a573d11mr1837250766b.1.1730640895195; 
- Sun, 03 Nov 2024 05:34:55 -0800 (PST)
+ AJvYcCUhoeZCU5eoff0oOZJbTB3HnoZcEnFm7VNaUPHSP4X9XzMWz+VD4RVSHEXxugyRMwdjq7ZqyHi2NgFN@nongnu.org,
+ AJvYcCXpoWER8Zm7EibWzd1cw3w2GV/bO1H3DC3VllBBvJxL20VXQ/iBQORF/Uhj0ixh6ajqcFvup6erZs4=@nongnu.org
+X-Gm-Message-State: AOJu0YxWJ9Z5Mvmm3CJr25xM84ou4LmxNReieO6Zstr0on8cHOSiQBaM
+ DyYDYzRpY53XZ8Qs/AXax3qR/91oO+9CykyJ7WJobCIj+hPOGJZqVg0oLQ==
+X-Google-Smtp-Source: AGHT+IFGl5YfqmwGHjo+DGZ0I/pa9ZuB30gwX2CQEq7ObFiuNcsCrmaVKsayMPJiv3wh5b7HIHfHNQ==
+X-Received: by 2002:a17:907:ea8:b0:a99:f3ab:c58d with SMTP id
+ a640c23a62f3a-a9de5ce139dmr3074317266b.16.1730640896471; 
+ Sun, 03 Nov 2024 05:34:56 -0800 (PST)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e5664350esm424328866b.159.2024.11.03.05.34.54
+ a640c23a62f3a-a9e5664350esm424328866b.159.2024.11.03.05.34.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 05:34:54 -0800 (PST)
+ Sun, 03 Nov 2024 05:34:55 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
@@ -69,19 +69,19 @@ Cc: Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>, qemu-block@nongnu.org,
  Alex Williamson <alex.williamson@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 10/26] hw/ppc/mpc8544_guts: Populate POR PLL ratio status
- register
-Date: Sun,  3 Nov 2024 14:33:56 +0100
-Message-ID: <20241103133412.73536-11-shentey@gmail.com>
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Subject: [PATCH v4 11/26] hw/i2c/mpc_i2c: Convert DPRINTF to trace events for
+ register access
+Date: Sun,  3 Nov 2024 14:33:57 +0100
+Message-ID: <20241103133412.73536-12-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241103133412.73536-1-shentey@gmail.com>
 References: <20241103133412.73536-1-shentey@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,45 +104,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Populate this read-only register with some arbitrary values which avoids
-U-Boot's get_clocks() to hang().
-
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Acked-by: Corey Minyard <cminyard@mvista.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/ppc/mpc8544_guts.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ hw/i2c/mpc_i2c.c    | 9 +++++----
+ hw/i2c/trace-events | 5 +++++
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
-index e3540b0281..c02b34ccde 100644
---- a/hw/ppc/mpc8544_guts.c
-+++ b/hw/ppc/mpc8544_guts.c
-@@ -29,6 +29,12 @@
- #define MPC8544_GUTS_RSTCR_RESET      0x02
+diff --git a/hw/i2c/mpc_i2c.c b/hw/i2c/mpc_i2c.c
+index 2467d1a9aa..3d79c15653 100644
+--- a/hw/i2c/mpc_i2c.c
++++ b/hw/i2c/mpc_i2c.c
+@@ -24,6 +24,7 @@
+ #include "hw/sysbus.h"
+ #include "migration/vmstate.h"
+ #include "qom/object.h"
++#include "trace.h"
  
- #define MPC8544_GUTS_ADDR_PORPLLSR    0x00
-+REG32(GUTS_PORPLLSR, 0x00)
-+    FIELD(GUTS_PORPLLSR, E500_1_RATIO, 24, 6)
-+    FIELD(GUTS_PORPLLSR, E500_0_RATIO, 16, 6)
-+    FIELD(GUTS_PORPLLSR, DDR_RATIO, 9, 5)
-+    FIELD(GUTS_PORPLLSR, PLAT_RATIO, 1, 5)
-+
- #define MPC8544_GUTS_ADDR_PORBMSR     0x04
- #define MPC8544_GUTS_ADDR_PORIMPSCR   0x08
- #define MPC8544_GUTS_ADDR_PORDEVSR    0x0C
-@@ -75,6 +81,12 @@ static uint64_t mpc8544_guts_read(void *opaque, hwaddr addr,
+ /* #define DEBUG_I2C */
  
-     addr &= MPC8544_GUTS_MMIO_SIZE - 1;
-     switch (addr) {
-+    case MPC8544_GUTS_ADDR_PORPLLSR:
-+        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_1_RATIO, 6); /* 3:1 */
-+        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_0_RATIO, 6); /* 3:1 */
-+        value = FIELD_DP32(value, GUTS_PORPLLSR, DDR_RATIO, 12); /* 12:1 */
-+        value = FIELD_DP32(value, GUTS_PORPLLSR, PLAT_RATIO, 6); /* 6:1 */
-+        break;
-     case MPC8544_GUTS_ADDR_PVR:
-         value = env->spr[SPR_PVR];
+@@ -224,8 +225,8 @@ static uint64_t mpc_i2c_read(void *opaque, hwaddr addr, unsigned size)
          break;
+     }
+ 
+-    DPRINTF("%s: addr " HWADDR_FMT_plx " %02" PRIx32 "\n", __func__,
+-                                         addr, value);
++    trace_mpc_i2c_read(addr, value);
++
+     return (uint64_t)value;
+ }
+ 
+@@ -234,8 +235,8 @@ static void mpc_i2c_write(void *opaque, hwaddr addr,
+ {
+     MPCI2CState *s = opaque;
+ 
+-    DPRINTF("%s: addr " HWADDR_FMT_plx " val %08" PRIx64 "\n", __func__,
+-                                             addr, value);
++    trace_mpc_i2c_write(addr, value);
++
+     switch (addr) {
+     case MPC_I2C_ADR:
+         s->adr = value & CADR_MASK;
+diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
+index 6900e06eda..f708a7ace1 100644
+--- a/hw/i2c/trace-events
++++ b/hw/i2c/trace-events
+@@ -35,6 +35,11 @@ aspeed_i2c_bus_write(uint32_t busid, uint64_t offset, unsigned size, uint64_t va
+ aspeed_i2c_bus_send(const char *mode, int i, int count, uint8_t byte) "%s send %d/%d 0x%02x"
+ aspeed_i2c_bus_recv(const char *mode, int i, int count, uint8_t byte) "%s recv %d/%d 0x%02x"
+ 
++# mpc_i2c.c
++
++mpc_i2c_read(uint64_t addr, uint32_t value) "[0x%" PRIx64 "] -> 0x%02" PRIx32
++mpc_i2c_write(uint64_t addr, uint32_t value) "[0x%" PRIx64 "] <- 0x%02" PRIx32
++
+ # npcm7xx_smbus.c
+ 
+ npcm7xx_smbus_read(const char *id, uint64_t offset, uint64_t value, unsigned size) "%s offset: 0x%04" PRIx64 " value: 0x%02" PRIx64 " size: %u"
 -- 
 2.47.0
 
