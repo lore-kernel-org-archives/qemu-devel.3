@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F5E6D110C0
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 14:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 890C9D110C0
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 14:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7bgY-0000TB-AM; Sun, 03 Nov 2024 09:34:34 -0500
+	id 1t7bgT-0000Pn-71; Sun, 03 Nov 2024 09:34:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7bgX-0000Sf-B7; Sun, 03 Nov 2024 09:34:33 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1t7bgR-0000Ol-Sm; Sun, 03 Nov 2024 09:34:27 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t7bgV-0001xQ-OH; Sun, 03 Nov 2024 09:34:33 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5c9362c26d8so6801802a12.1; 
- Sun, 03 Nov 2024 06:34:30 -0800 (PST)
+ id 1t7bgQ-0001vr-AD; Sun, 03 Nov 2024 09:34:27 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5c937b5169cso5433519a12.1; 
+ Sun, 03 Nov 2024 06:34:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730644469; x=1731249269; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730644464; x=1731249264; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MK2+7m6Ph4dw8VXtBR6y8ZzWbe55VMIAgVQqAY/2DDs=;
- b=A/oZD2xnXvZWnBIlJOKm/F0v3nXWpuxdrSpA+hiDUCILYJ69LTc7LpALGLv9f0TpNb
- 6EiFG7S/tgWLdSVnyJwiKHcikFxvpYQutqV9zngn5kafhJYlaMol9vw7OXticm2W4RXP
- +dfyA5BNlzjx0Wk7xuOg/isxR2xL3wJA5VyFEV4BUhRR8I2fjkGEeXkuDdPQcsFe2AtY
- u5+QsGGC2f7hrf5m03BYUNuW0rC2A3sQJKHyoxYhAvnjwM1K3XjvIgeCirREkLB1IxJo
- ZjrnU0ZM/3GKBw1g4DzE5/6HVTsfT0H5Ey2WWGCIAOiu/v+ntLHrscliVnVJF9lkNdHc
- 6fag==
+ bh=fPt9Z7KYXI4DBocHxmfd6avL+IjBwj9070TCXrToHt8=;
+ b=CZMQLACjamOj37fHPcvwC+s/L0ci2DCVBjBKyn8uNhTfId03XjOsetr3lqLlkPCNzE
+ //++433A42DWYDu/5+qEyd3HNpoylEOlfi+UP8UiQNZAJoS6rXuCbb9iTYMUJEAjwwrX
+ g8FCvTiW4/9/FOkyk4TFdPDkLU2ZihveLQYOXRrN7Ngvx7tdFCB5BfFULRs1RRukKjym
+ TRy2P2Q2tRxMrSyAl2xlYgK+ZGo4p/CyxgM2uVQfA2qjSCwtGEWRfMog/ymzCnbLAhkX
+ FPJe44HICySjrepfqtruEE1iy7RSKwX8tMEzVDtpj923NhfA9RXXGM8KBONvbHa+pOxh
+ AveA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730644469; x=1731249269;
+ d=1e100.net; s=20230601; t=1730644464; x=1731249264;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MK2+7m6Ph4dw8VXtBR6y8ZzWbe55VMIAgVQqAY/2DDs=;
- b=OD/2BWU9XhP5FZMwR7lfA4jo2p2svSLKHuTwZ4Req1xq+ucUI+mRhup6DkORKctsqQ
- aenQduwHeB3BmhOMj5NXAGsbiwdcW2yoAW2ViCgVfPWr+B3e3Cp/f3JVQZs9j6w6ZH7E
- /W3FWSu6nAnwVrPedjWQf/C5oX72ctP/4Nqye69wPFcHvgrSd7b40vuIWs1DSuRQLkbm
- FRfNMtHeP/mtx8KVFiKv3dp0Gr6prqFazh1BVJNu6sig45ESr3yNb4s0PacSM3nFGdcm
- 9sBBozRg6Kuv+bNpg+wY5Ol6ReD2yhcWxm/qp0DSLh3urHenmF+MyZrYrqN5tAZoDHpb
- sc2w==
+ bh=fPt9Z7KYXI4DBocHxmfd6avL+IjBwj9070TCXrToHt8=;
+ b=wxDPfilzEsrFyqIm+5w/R2BynvH8nT8AV1ahgaKPDrjyp/rC4Z3LF8fonWSI1L3SFq
+ +goQl9QDzaBngAovsGJMh245PJkCd0oDpMPcgNtd1Exn+HpdOk/w3oOnJBE/ITceT4SS
+ /HL0x6+zZ0acyR/kuPER9TMHA+DK3xsBSAxijEd+MWjq6VAfesnAPigVW0bYuio7du3R
+ ZdiBJ9820tzJzomhafyeMqN40A7wPHMUD/pRCQsHh2MG9dT2jhO0fET4Qy2EVXEwPXi7
+ W1J2Lm0EagWaWC+Wcn5KumPuA3bVc41e58g1Mf4xQ7IoOrZC5hPVIclQtPJIKAypVTc/
+ jTnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWz31zIO1CDwdjVhnXPG4tTgPzu38HPEhYVFLUT0Ja7I/E7k2/csO8fYib5JslIRagl1/WJOMrVFg==@nongnu.org,
- AJvYcCX08g4c/V4yvi/L/3ucRwR0zdfA3oRiHWi5Mwxy/5tv3tTiHP4OKIR5noqo6c5Fw5lVrjXaQQ6lfeDK+L3P@nongnu.org
-X-Gm-Message-State: AOJu0YxpJGgNI+4FLoTIqQPmW+N9yYTMuLjKY9AdY5ZBLPnEemOWtXHC
- NWVfb1yOP/8N2YUU5iJQwqOqfIB35Yn3thJbcKcUdcyoc8XbaJLv0DSS0Q==
-X-Google-Smtp-Source: AGHT+IF2sEqLJPr1efjsk7AEl8NUpOC2UjVnkBYQqcHq6BSA3lSSViDKMfBxctDn1E/AltBcLdDCig==
-X-Received: by 2002:a05:6402:1e8a:b0:5ce:caa1:ca55 with SMTP id
- 4fb4d7f45d1cf-5cecaa1cda1mr4871181a12.1.1730644469044; 
- Sun, 03 Nov 2024 06:34:29 -0800 (PST)
+ AJvYcCUT6b6hgxgajqyZDX4JFV77jKnDNBRy0MZoXe/mmACzBcZXkW0hxGkLVHIes5xTOhIfXFYYkmrJlA==@nongnu.org,
+ AJvYcCVVgcmikvv51f/sKqMcUCn5o10n2r2zb5xOY69eZDmAEu3WlNYMC4bv9eTNuX0OIxNtH812zvCbnasWNoFP@nongnu.org
+X-Gm-Message-State: AOJu0Yyu6w1sDrG21J2Ywa1vYHVeNwwzF4O/IYlcCsCSTzDovzXUbFpk
+ yV6JWgQE+sw4y4ai3KI8tyGUpCAB8YvWoik7pkkTKEaKTXYfvx+1NlnhCw==
+X-Google-Smtp-Source: AGHT+IGfNnAb1wz1FykA4re1f2cCF/TioZqTvCkc4RdPmcvDh496y7K3GgwxabxlDoyJhMDiQitfpw==
+X-Received: by 2002:a05:6402:2811:b0:5c9:3f1:e5cd with SMTP id
+ 4fb4d7f45d1cf-5ceb8b49f3fmr9232940a12.0.1730644463696; 
+ Sun, 03 Nov 2024 06:34:23 -0800 (PST)
 Received: from archlinux.. (pd9ed7f6d.dip0.t-ipconnect.de. [217.237.127.109])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ceac74c667sm3350723a12.20.2024.11.03.06.34.27
+ 4fb4d7f45d1cf-5ceac74c667sm3350723a12.20.2024.11.03.06.34.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 06:34:28 -0800 (PST)
+ Sun, 03 Nov 2024 06:34:22 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -70,17 +70,17 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-trivial@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v2 4/4] hw/sensor/tmp105: Convert printf() to trace event,
- add tracing for read/write access
-Date: Sun,  3 Nov 2024 15:33:30 +0100
-Message-ID: <20241103143330.123596-5-shentey@gmail.com>
+Subject: [PATCH v2 1/4] hw/rtc/ds1338: Trace send and receive operations
+Date: Sun,  3 Nov 2024 15:33:27 +0100
+Message-ID: <20241103143330.123596-2-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241103143330.123596-1-shentey@gmail.com>
 References: <20241103143330.123596-1-shentey@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,87 +103,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-printf() unconditionally prints to the console which disturbs `-serial stdio`.
-Fix that by converting into a trace event. While at it, add some tracing for
-read and write access.
-
-Fixes: 7e7c5e4c1ba5 "Nokia N800 machine support (ARM)."
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- meson.build            | 1 +
- hw/sensor/trace.h      | 1 +
- hw/sensor/tmp105.c     | 7 ++++++-
- hw/sensor/trace-events | 6 ++++++
- 4 files changed, 14 insertions(+), 1 deletion(-)
- create mode 100644 hw/sensor/trace.h
- create mode 100644 hw/sensor/trace-events
+ hw/rtc/ds1338.c     | 6 ++++++
+ hw/rtc/trace-events | 4 ++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index 2c9086a3fe..19df8d7125 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3476,6 +3476,7 @@ if have_system
-     'hw/s390x',
-     'hw/scsi',
-     'hw/sd',
-+    'hw/sensor',
-     'hw/sh4',
-     'hw/sparc',
-     'hw/sparc64',
-diff --git a/hw/sensor/trace.h b/hw/sensor/trace.h
-new file mode 100644
-index 0000000000..e4721560b0
---- /dev/null
-+++ b/hw/sensor/trace.h
-@@ -0,0 +1 @@
-+#include "trace/trace-hw_sensor.h"
-diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-index 9d7b911f59..ef2824f3e1 100644
---- a/hw/sensor/tmp105.c
-+++ b/hw/sensor/tmp105.c
-@@ -27,6 +27,7 @@
- #include "qapi/visitor.h"
+diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
+index a5fe221418..929a92f7bd 100644
+--- a/hw/rtc/ds1338.c
++++ b/hw/rtc/ds1338.c
+@@ -17,6 +17,7 @@
  #include "qemu/module.h"
- #include "hw/registerfields.h"
+ #include "qom/object.h"
+ #include "sysemu/rtc.h"
 +#include "trace.h"
  
- FIELD(CONFIG, SHUTDOWN_MODE,        0, 1)
- FIELD(CONFIG, THERMOSTAT_MODE,      1, 1)
-@@ -150,17 +151,21 @@ static void tmp105_read(TMP105State *s)
-         s->buf[s->len++] = ((uint16_t) s->limit[1]) >> 0;
-         break;
-     }
+ /* Size of NVRAM including both the user-accessible area and the
+  * secondary register area.
+@@ -126,6 +127,9 @@ static uint8_t ds1338_recv(I2CSlave *i2c)
+     uint8_t res;
+ 
+     res  = s->nvram[s->ptr];
 +
-+    trace_tmp105_read(s->i2c.address, s->pointer);
++    trace_ds1338_recv(s->ptr, res);
++
+     inc_regptr(s);
+     return res;
  }
- 
- static void tmp105_write(TMP105State *s)
+@@ -134,6 +138,8 @@ static int ds1338_send(I2CSlave *i2c, uint8_t data)
  {
-+    trace_tmp105_write(s->i2c.address, s->pointer);
-+
-     switch (s->pointer & 3) {
-     case TMP105_REG_TEMPERATURE:
-         break;
+     DS1338State *s = DS1338(i2c);
  
-     case TMP105_REG_CONFIG:
-         if (FIELD_EX8(s->buf[0] & ~s->config, CONFIG, SHUTDOWN_MODE)) {
--            printf("%s: TMP105 shutdown\n", __func__);
-+            trace_tmp105_write_shutdown(s->i2c.address);
-         }
-         s->config = FIELD_DP8(s->buf[0], CONFIG, ONE_SHOT, 0);
-         s->faults = tmp105_faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
-diff --git a/hw/sensor/trace-events b/hw/sensor/trace-events
-new file mode 100644
-index 0000000000..a3fe54fa6d
---- /dev/null
-+++ b/hw/sensor/trace-events
-@@ -0,0 +1,6 @@
-+# See docs/devel/tracing.rst for syntax documentation.
++    trace_ds1338_send(s->ptr, data);
 +
-+# tmp105.c
-+tmp105_read(uint8_t dev, uint8_t addr) "device: 0x%02x, addr: 0x%02x"
-+tmp105_write(uint8_t dev, uint8_t addr) "device: 0x%02x, addr 0x%02x"
-+tmp105_write_shutdown(uint8_t dev) "device: 0x%02x"
+     if (s->addr_byte) {
+         s->ptr = data & (NVRAM_SIZE - 1);
+         s->addr_byte = false;
+diff --git a/hw/rtc/trace-events b/hw/rtc/trace-events
+index ebb311a5b0..8012afe102 100644
+--- a/hw/rtc/trace-events
++++ b/hw/rtc/trace-events
+@@ -22,6 +22,10 @@ pl031_set_alarm(uint32_t ticks) "alarm set for %u ticks"
+ aspeed_rtc_read(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
+ aspeed_rtc_write(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
+ 
++# ds1338.c
++ds1338_recv(uint32_t addr, uint8_t value) "[0x%" PRIx32 "] -> 0x%02" PRIx8
++ds1338_send(uint32_t addr, uint8_t value) "[0x%" PRIx32 "] <- 0x%02" PRIx8
++
+ # m48t59.c
+ m48txx_nvram_io_read(uint64_t addr, uint64_t value) "io read addr:0x%04" PRIx64 " value:0x%02" PRIx64
+ m48txx_nvram_io_write(uint64_t addr, uint64_t value) "io write addr:0x%04" PRIx64 " value:0x%02" PRIx64
 -- 
 2.47.0
 
