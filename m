@@ -4,55 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7328D1118C
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 20:00:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CBB5D11190
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Nov 2024 20:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7glT-000230-P5; Sun, 03 Nov 2024 14:59:59 -0500
+	id 1t7hA8-0006BR-Px; Sun, 03 Nov 2024 15:25:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1t7glS-00022Z-JC
- for qemu-devel@nongnu.org; Sun, 03 Nov 2024 14:59:58 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1t7glQ-0007AY-23
- for qemu-devel@nongnu.org; Sun, 03 Nov 2024 14:59:57 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id C6FA35C4BF3;
- Sun,  3 Nov 2024 19:59:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8EA3C4CECD;
- Sun,  3 Nov 2024 19:59:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1730663984;
- bh=vQo3qH15XFFycg9P338rnmP8GR3HPX0/65ajYZ2tyvw=;
- h=From:To:Cc:Subject:Date:From;
- b=QiUcnk4DtWKr7NlXU1LGLN2ITdfdi242I3zoKEwcSfvkCzumX3SFta+a1P20PZL4n
- fAj/6lK6y/nFpZYz4uKpvfXUP5bvYJFEF30fgc+yjFRIoH7XQbORAUVffrC+tLXjbv
- j5L44N0D5DuIjYrcrmdlabpagoi+DtgpnzuDEQmicGU0BMSFfIxUFeLrdUvO0utiiw
- DyWVzHifmx9pqnTmtTJe/4aaUWT/B24f+cMSFn/eIzlpnK1hFfXmBJ7g/rBqBiClJf
- KS6mAc/ImVpI7EBvMIiKjyv3fBYCfAhqM1YsCY+bmm2sH/I9eNhgr0QLHleXGwgkwa
- c8xWgDf+E8nBg==
-From: deller@kernel.org
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: deller@gmx.de
-Subject: [PULL 0/1] Seabios hppa v17 patches
-Date: Sun,  3 Nov 2024 20:59:40 +0100
-Message-ID: <20241103195941.22724-1-deller@kernel.org>
-X-Mailer: git-send-email 2.47.0
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7hA0-0006AZ-AD
+ for qemu-devel@nongnu.org; Sun, 03 Nov 2024 15:25:20 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7h9y-0001nt-88
+ for qemu-devel@nongnu.org; Sun, 03 Nov 2024 15:25:19 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a998a5ca499so472671766b.0
+ for <qemu-devel@nongnu.org>; Sun, 03 Nov 2024 12:25:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730665515; x=1731270315; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9TO72BhcoqjDvsGnFAHcCIAG7XdTsEpDaHkOPHIanKE=;
+ b=OgGzDzx4g6E8zA+2PuM3I9ZlWRkb9Ja40auM7nX4QCh5j+0AwwuzmZoZ1NrY7FaE8r
+ 9xAIehcNbZh7hpOLdX1uvWRLuNZ8n8xkyMfdqOwa4vPf+JoQLJRhJdDgYRKIKF1wKSlW
+ ScVVx8KOtpBWntvt0852Sf6X60llE6+1tDMLhgBZ3PtUhyBiQAf4L/U6jyZ48Pni0/v3
+ fMxIMbJwaAPJSS0AHNbbJvu+CZd9whAIP9clc47qoVwTAXw7qzmQ1CF9qJscdyhfmR5e
+ 7qdctycGmHtUSsNNu0h5IzVWph9JAlNHdqLJX1cSoA/tP1tw3q1i3y92ekQtB6Wr00NY
+ xcTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730665515; x=1731270315;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9TO72BhcoqjDvsGnFAHcCIAG7XdTsEpDaHkOPHIanKE=;
+ b=W/vJ86r0is6u1BCePv5GJp7Cv/xB/FmpHsTBqC5tQ258IDSyFkoU+FBJxneqwUND04
+ +T01WE2Zambn9zSUp3LMfJlu5Yt/PQO3cKhcJ79f/7SPjE3H/D2Ktv85rbsL+RtM9/V/
+ AvVY/BolxKt6qIzCVT62KAK41AMOWz+Z+wtkYHMY6UMWONRevRh6e19oMKK0x3ikYf7R
+ vz10+AAKrBjlcxI7lZgIsbOx47SHGlbWlHsssg8Uz1hQOygXw4lVQ5ss8mJKhnPvi/D4
+ IhOQP4fdNJ6xtF+gDuxNKimtcUhePhPGLmvDhDGEBLgF/w0YaQbjYi7JkHEiWglPguUB
+ vFSA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUJcPuU/ke6eDgTwIAPdDjo6lzcacm4Ej2A2mqxYjboW8A/R2oFA3vNq3i793Z6LosATq/0s7XYFKkg@nongnu.org
+X-Gm-Message-State: AOJu0YyQdgd3gLqUMqsHBLbfiIc67/oMLEjRf1GGsn/Q8qCgvA307JFi
+ VAXkzHTcklLX+guB7a9b94NwobK3XsDq/hJFWQrkjScFQUbsPCjHbJk+bulE63Y=
+X-Google-Smtp-Source: AGHT+IGG5i24eklpfWj2+Dc6PM5O/iffRCVoUt457LJWODf8lSDey6LeeWk2dpevT/SA8yYP3clBxQ==
+X-Received: by 2002:a17:907:72ce:b0:a99:35eb:1301 with SMTP id
+ a640c23a62f3a-a9e654cdcd7mr988323366b.18.1730665515234; 
+ Sun, 03 Nov 2024 12:25:15 -0800 (PST)
+Received: from [192.168.69.126] ([176.176.145.27])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9e564c4f12sm458172866b.55.2024.11.03.12.25.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 03 Nov 2024 12:25:14 -0800 (PST)
+Message-ID: <07c00f31-508d-4a43-a0ca-0ee31ae7409a@linaro.org>
+Date: Sun, 3 Nov 2024 21:25:12 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] hw/sensor/tmp105: Convert printf() to trace event, 
+ add tracing for read/write access
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-trivial@nongnu.org
+References: <20241103143330.123596-1-shentey@gmail.com>
+ <20241103143330.123596-5-shentey@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241103143330.123596-5-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,66 +103,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+On 3/11/24 11:33, Bernhard Beschow wrote:
+> printf() unconditionally prints to the console which disturbs `-serial stdio`.
+> Fix that by converting into a trace event. While at it, add some tracing for
+> read and write access.
+> 
+> Fixes: 7e7c5e4c1ba5 "Nokia N800 machine support (ARM)."
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   meson.build            | 1 +
+>   hw/sensor/trace.h      | 1 +
+>   hw/sensor/tmp105.c     | 7 ++++++-
+>   hw/sensor/trace-events | 6 ++++++
+>   4 files changed, 14 insertions(+), 1 deletion(-)
+>   create mode 100644 hw/sensor/trace.h
+>   create mode 100644 hw/sensor/trace-events
 
-The following changes since commit 92ec7805190313c9e628f8fc4eb4f932c15247bd:
-
-  Merge tag 'pull-riscv-to-apply-20241031-1' of https://github.com/alistair23/qemu into staging (2024-10-31 16:34:25 +0000)
-
-are available in the Git repository at:
-
-  https://github.com/hdeller/qemu-hppa.git tags/seabios-hppa-v17-pull-request
-
-for you to fetch changes up to c9d77526bddba0803a1fa982fb59ec98057150f9:
-
-  target/hppa: Update SeaBIOS-hppa to version 17 (2024-11-03 20:46:06 +0100)
-
-----------------------------------------------------------------
-SeaBIOS-hppa v17 pull request
-
-Please pull a single commit, which updates SeaBIOS-hppa
-to version 17.
-
-If comes with some important firmware and SCSI fixes and
-prepares for futher development to support 64-bit HP-UX
-and MPE/UX in the future.
-
-New PDC functions & general enhancements:
-- Add PDC_MODEL_GET_INSTALL_KERNEL firmware call
-- Add PDC_PAT_EVENT firmware call
-- Support ENTRY_IO_BOOTOUT
-- Prefer memory-access over io-access of GSP serial port
-- Disable LMMIO_DIRECT0 range during modification
-- Small optimizations in IODC call
-
-Fixes:
-- esp-scsi: indicate acceptance of MESSAGE IN phase data
-- Avoid crash when booting without SCSI controller
-- Remove exec flag from hppa-firmware.img
-- Fix LMMIO detection for PCI cards on Astro/Elroy
-- Avoid trashing MPE IPL bootloader stack
-- HP-UX 11 64-bit saves number of RAM pages in PAGE0 at 0x33c
-- Fix return value of PDC_CACHE/PDC_CACHE_RET_SPID for space id hashing
-- Allow PDC functions to act when called in narrow mode
-- pcidevice: Use portaddr_t for io port addresses
-
-Cleanups:
-- Change default make target to "parisc"
-- Clean the "out-64" directory on "make clean"
-
-----------------------------------------------------------------
-
-Helge Deller (1):
-  target/hppa: Update SeaBIOS-hppa to version 17
-
- pc-bios/hppa-firmware.img   | Bin 167820 -> 676760 bytes
- pc-bios/hppa-firmware64.img | Bin 206024 -> 763416 bytes
- roms/seabios-hppa           |   2 +-
- 3 files changed, 1 insertion(+), 1 deletion(-)
- mode change 100755 => 100644 pc-bios/hppa-firmware.img
- mode change 100755 => 100644 pc-bios/hppa-firmware64.img
-
--- 
-2.47.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
