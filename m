@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1415D1BDDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 18:14:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D21D1BDD4
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 18:14:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t81ap-0001Ba-66; Mon, 04 Nov 2024 13:14:23 -0500
+	id 1t81ab-00019H-9F; Mon, 04 Nov 2024 13:14:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1t81ac-00019g-7I; Mon, 04 Nov 2024 13:14:10 -0500
-Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
+ id 1t81aZ-00018j-4o; Mon, 04 Nov 2024 13:14:07 -0500
+Received: from fout-b2-smtp.messagingengine.com ([202.12.124.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1t81aa-0004p5-M8; Mon, 04 Nov 2024 13:14:09 -0500
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal
- [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 364EF254012F;
- Mon,  4 Nov 2024 13:14:07 -0500 (EST)
+ id 1t81aX-0004oo-4Y; Mon, 04 Nov 2024 13:14:06 -0500
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal
+ [10.202.2.43])
+ by mailfout.stl.internal (Postfix) with ESMTP id C578A1140193;
+ Mon,  4 Nov 2024 13:14:03 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Mon, 04 Nov 2024 13:14:07 -0500
+ by phl-compute-03.internal (MEProxy); Mon, 04 Nov 2024 13:14:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1730744047; x=
- 1730830447; bh=MpG4NTZT+5UYGt1Sh7x7MRcpMX3wvO7yYEwaQpC2Kmk=; b=Z
- iPuCjQwZu3mNmz09FYZrskoBPZnn7b4Rxq4bxXsYihm5ZPuw55kOiKW2PBQ6h9/2
- vFug9VvvSyI3ylFKxPXA/+O0CUBlWflj2vSlzkcyncDKUlpE2iC7NMbdVHQD5OB3
- 30KtGafVczuKzJD8TeTDdsik2r3OlMWsMJsn8PMyuZZvS15NhuY8GJibBg5YQAI5
- Y1gdIiE0iekTZQNXSR53TB0TrNBFA7xbeM5BSrKmNHeZAZ+gM3pr3HNJAq+W9c5R
- 9YJ+PvRNXn5lKYv0zmPh2hvB5TjmgVscStAkLumTYm2eAkWsBCYe9Hn38sYyYICZ
- +zqddmnQDuiuTZct8IiOA==
+ :reply-to:subject:subject:to:to; s=fm2; t=1730744043; x=
+ 1730830443; bh=bFXuFCqrbvFPf5zmMlrXcMHnOMq7gmdgfhWDCGQFgjI=; b=m
+ PSjgKmPXFz3zU58L+aYJbdvXlwqGpyGFojvlve2wsRWUNTqOBgc/NCNdZQK+K0gO
+ q7tGOFGwvdLFhiYn9tRN29vKznmiJJ6nnQeSQNnDXsvGkNrP3s+F8+xXihOpsivh
+ ayCcwP0aQI034fkh9nnDa9bolpE3D9CVrox36V/3BgSZMJxly2h1qpl0MpWF4hMO
+ PI3qh0F5wXIgN6o2Ei2McLBwxStHy1UUfvMgyZEkZc0x1N6XddKCrt2uH6q1PINk
+ xJFrC1JY+RKM/vWHvJ/DVZ0Xt++ZPHz0vK90LoxD2giXZte2xto7k6M6l8iWm55i
+ U8iSVQsZAd1kb/QzJd11w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1730744047; x=1730830447; bh=M
- pG4NTZT+5UYGt1Sh7x7MRcpMX3wvO7yYEwaQpC2Kmk=; b=k/GvdYw0Fe7YiQC0k
- H2jrsygLcEv5y7V3CHH9J4OuXK2iFvP9IfMmCvX1y8eNN4OFJbHZTKKOzNh312dt
- Ax8wt7wdCbIiBZb/Hy5xTUVpezaLkOHmH8I4F0+5y0rjviEquqWyrEwo0FRnWqkQ
- 4Yu6KScCqBn3tA7AJA+iju247K8Y8g7cxGTfUs/JZ0mX8nRgTtUXvXPOBmRofvRn
- oM5wW5VfgkLhhwuEB9ORU3QuEOjrHKiWFlnjUsWBCdsFzcrxGVWDILD5cyD66lJY
- gYsDAxf7UCeHP4aIaqSpWbyuZ3Chdck+BP67qCgPv0jsevpwaP8O9u+YkA6VMfSi
- dlaaQ==
-X-ME-Sender: <xms:7g4pZzhNlDhHNXt58Io51nur1b83JLkunu-xVQ4oPkRRJgJV-kNN_g>
- <xme:7g4pZwBNG1w6dPbkckdV7y-wrLdWUORD1jktHd_zZoQZNuo4b-a9k6zurZoEQtj1e
- Mby15Gh4duS-2C09no>
-X-ME-Received: <xmr:7g4pZzEhLrKY32ueS3SkKHJiHpuuHmh4dl6cNRGhWyNoADtX-auTYDloTNoB7Y6RU5h6Q_YQLrcYIiPNI7VUdA>
+ :x-me-sender:x-sasl-enc; s=fm3; t=1730744043; x=1730830443; bh=b
+ FXuFCqrbvFPf5zmMlrXcMHnOMq7gmdgfhWDCGQFgjI=; b=T7a/OKh5AYGeslzoG
+ i1XTsb0Dsbe1We+YZAw7ArXjLVJXw5x2qTueCQzRYBBawf1hVkVMWzj2/v6v50dj
+ 4iLKVyaJCEB077vGcYw8nzGkUw8qxulwnZjfFffAb1wLCQLbbicc5MVbDl20tFhB
+ j8/P9VJMgMsokWFRBrsfxAzpkJxqe6vQORVe1ktyb5HKIkgBLmFkJTfeRM/tWa89
+ 4iDBLb2gr3MOEfnrkutlh2X25nGnOYyvYSnJMBT1WrnLMAEVy/7WKB0PvpCA3i+J
+ 5SFuYF824J/qMR6i1esRsJzsKpF6wANMofLCMrqB9dEygYoo5TcDkuCRbvEiTWO6
+ xH42g==
+X-ME-Sender: <xms:6g4pZ6PhPyz8FRBlAPA6PiqJCHxATgU7xaZ64qkLfMqNBBfpbzWJvw>
+ <xme:6g4pZ4-gJeDRhJl4bYQNlFLHO1SDLphVp9ghhbiX5oDZ-l-GH0aKzidx0N3u9Uito
+ mhWLE3dHIcFHO1AMRI>
+X-ME-Received: <xmr:6g4pZxQvejugyn7Mg_bQDaQddrbpuERbtdD43jpnN7QzKT2iomKyslCR3Gjsl-jf5VSwmn15j-V4peCh1fneRg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeliedguddtkecutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
  uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -63,47 +63,47 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeliedguddtkecutefuodetgg
  rhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepudefpdhmohguvgepshhmthhpoh
  huthdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghp
  thhtohepphgvthgvrhdrmhgrhiguvghllheslhhinhgrrhhordhorhhgpdhrtghpthhtoh
- eprgihuhhshhdrmhehheesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehkrdhjvghn
- shgvnhesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehksghushgthheskhgvrhhnvg
- hlrdhorhhgpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdprhgtphht
- thhopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhopehsthgvfhgrnhhhrg
- esrhgvughhrghtrdgtohhmpdhrtghpthhtohepfhgrmhesvghuphhhohhnrdhnvght
-X-ME-Proxy: <xmx:7g4pZwSUhasiAnOeCrBLbRIIMOsjdQd1-GrXajSvDwBkfrV1JUJv0w>
- <xmx:7g4pZwxizzJunYkKjsRC1AefjjiPhs_9ow_wTPwsrvJKAtDqI_vaYQ>
- <xmx:7g4pZ24jWkA6mHgBVPkeCvnl_-eIZqcI4Nmi9GH8rN6C5MRqdRllAg>
- <xmx:7g4pZ1x7O-I9CADv8sLNNxN-YP4S45vdQC0AAxboZb6N1ohDcpP7mw>
- <xmx:7w4pZ8go6qPXqpV6wbFlKQ4e9kx0uJENUfl0oZUfrL8nYZ6kBZrappIA>
+ eprghruhhnrdhkkhgrsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohepkhdrjhgvnhhs
+ vghnsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohepkhgsuhhstghhsehkvghrnhgvlh
+ drohhrghdprhgtphhtthhopehithhssehirhhrvghlvghvrghnthdrughkpdhrtghpthht
+ ohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepshhtvghfrghnhhgrse
+ hrvgguhhgrthdrtghomhdprhgtphhtthhopehfrghmsegvuhhphhhonhdrnhgvth
+X-ME-Proxy: <xmx:6g4pZ6tvpRySe7ggR4E2DVprEbEfUeT8OizTy2Fi8McxptFFn5MbrA>
+ <xmx:6g4pZyfyq0w3_aiHG4Pd-4mE-unY7Kmx32y1AQEIQn6gn2jeXte_5A>
+ <xmx:6g4pZ-3An6-Y8D9anymt18tN_Kn54nEzuhkL85UKebqJ4GQ3We7Ydw>
+ <xmx:6g4pZ2-kcyGtHcnTBQKN1ZrWDSOD9fKFGvjWbHE4zwWNK7ji_9adhQ>
+ <xmx:6w4pZ91tG80hHOwdezY8506oH6sGEeBYUNPTIjlK2Nmn-enak3Rv_wXK>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Nov 2024 13:14:04 -0500 (EST)
+ 4 Nov 2024 13:14:00 -0500 (EST)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Ayush Mishra <ayush.m55@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
+ Arun Kumar <arun.kka@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
  Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
  Jesper Devantier <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>,
  Fam Zheng <fam@euphon.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org
-Subject: [PULL 2/3] hw/nvme: add NPDAL/NPDGL
-Date: Mon,  4 Nov 2024 19:13:05 +0100
-Message-ID: <20241104181306.2329-3-its@irrelevant.dk>
+Subject: [PULL 1/3] hw/nvme: i/o cmd set independent namespace data structure
+Date: Mon,  4 Nov 2024 19:13:04 +0100
+Message-ID: <20241104181306.2329-2-its@irrelevant.dk>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241104181306.2329-1-its@irrelevant.dk>
 References: <20241104181306.2329-1-its@irrelevant.dk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.156; envelope-from=its@irrelevant.dk;
- helo=fhigh-b5-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.145; envelope-from=its@irrelevant.dk;
+ helo=fout-b2-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,86 +119,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ayush Mishra <ayush.m55@samsung.com>
+From: Arun Kumar <arun.kka@samsung.com>
 
-Add the NPDGL and NPDAL fields to support large alignment and
-granularities.
+Add support for the I/O Command Set Independent Namespace Data
+Structure (CNS 8h and 1fh).
 
-Signed-off-by: Ayush Mishra <ayush.m55@samsung.com>
+Signed-off-by: Arun Kumar <arun.kka@samsung.com>
 Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Link: https://lore.kernel.org/r/20241001012833.3551820-1-ayush.m55@samsung.com
-[k.jensen: renamed the enum values]
+Link: https://lore.kernel.org/r/20240925004407.3521406-1-arun.kka@samsung.com
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ns.c         |  5 ++++-
- include/block/nvme.h | 17 ++++++++++++++++-
- 2 files changed, 20 insertions(+), 2 deletions(-)
+ hw/nvme/ctrl.c       | 31 +++++++++++++++++++++++++++++++
+ hw/nvme/ns.c         |  6 +++++-
+ hw/nvme/nvme.h       |  1 +
+ hw/nvme/trace-events |  1 +
+ include/block/nvme.h | 23 +++++++++++++++++++++--
+ 5 files changed, 59 insertions(+), 3 deletions(-)
 
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index 6dbdcb49bfc1..526e15aa8018 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -30,6 +30,7 @@
- void nvme_ns_init_format(NvmeNamespace *ns)
- {
-     NvmeIdNs *id_ns = &ns->id_ns;
-+    NvmeIdNsNvm *id_ns_nvm = &ns->id_ns_nvm;
-     BlockDriverInfo bdi;
-     int npdg, ret;
-     int64_t nlbas;
-@@ -55,6 +56,8 @@ void nvme_ns_init_format(NvmeNamespace *ns)
-     }
- 
-     id_ns->npda = id_ns->npdg = npdg - 1;
-+    id_ns_nvm->npdal = npdg;
-+    id_ns_nvm->npdgl = npdg;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index f4e89203c1a6..8e4612e03567 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -5692,6 +5692,33 @@ static uint16_t nvme_identify_sec_ctrl_list(NvmeCtrl *n, NvmeRequest *req)
+     return nvme_c2h(n, (uint8_t *)&list, sizeof(list), req);
  }
  
- static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
-@@ -73,7 +76,7 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
-     ns->id_ns.dlfeat = 0x1;
- 
-     /* support DULBE and I/O optimization fields */
--    id_ns->nsfeat |= (0x4 | 0x10);
-+    id_ns->nsfeat |= (NVME_ID_NS_NSFEAT_DAE | NVME_ID_NS_NSFEAT_OPTPERF_ALL);
++static uint16_t nvme_identify_ns_ind(NvmeCtrl *n, NvmeRequest *req, bool alloc)
++{
++    NvmeNamespace *ns;
++    NvmeIdentify *c = (NvmeIdentify *)&req->cmd;
++    uint32_t nsid = le32_to_cpu(c->nsid);
++
++    trace_pci_nvme_identify_ns_ind(nsid);
++
++    if (!nvme_nsid_valid(n, nsid) || nsid == NVME_NSID_BROADCAST) {
++        return NVME_INVALID_NSID | NVME_DNR;
++    }
++
++    ns = nvme_ns(n, nsid);
++    if (unlikely(!ns)) {
++        if (alloc) {
++            ns = nvme_subsys_ns(n->subsys, nsid);
++            if (!ns) {
++                return nvme_rpt_empty_id_struct(n, req);
++            }
++        } else {
++            return nvme_rpt_empty_id_struct(n, req);
++        }
++    }
++
++    return nvme_c2h(n, (uint8_t *)&ns->id_ns_ind, sizeof(NvmeIdNsInd), req);
++}
++
+ static uint16_t nvme_identify_ns_csi(NvmeCtrl *n, NvmeRequest *req,
+                                      bool active)
+ {
+@@ -5946,6 +5973,10 @@ static uint16_t nvme_identify(NvmeCtrl *n, NvmeRequest *req)
+         return nvme_identify_sec_ctrl_list(n, req);
+     case NVME_ID_CNS_CS_NS:
+         return nvme_identify_ns_csi(n, req, true);
++    case NVME_ID_CNS_CS_IND_NS:
++        return nvme_identify_ns_ind(n, req, false);
++    case NVME_ID_CNS_CS_IND_NS_ALLOCATED:
++        return nvme_identify_ns_ind(n, req, true);
+     case NVME_ID_CNS_CS_NS_PRESENT:
+         return nvme_identify_ns_csi(n, req, false);
+     case NVME_ID_CNS_CTRL:
+diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+index ea8db175dbd1..6dbdcb49bfc1 100644
+--- a/hw/nvme/ns.c
++++ b/hw/nvme/ns.c
+@@ -62,6 +62,7 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
+     static uint64_t ns_count;
+     NvmeIdNs *id_ns = &ns->id_ns;
+     NvmeIdNsNvm *id_ns_nvm = &ns->id_ns_nvm;
++    NvmeIdNsInd *id_ns_ind = &ns->id_ns_ind;
+     uint8_t ds;
+     uint16_t ms;
+     int i;
+@@ -75,7 +76,9 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
+     id_ns->nsfeat |= (0x4 | 0x10);
  
      if (ns->params.shared) {
-         id_ns->nmic |= NVME_ID_NS_IND_NMIC_SHRNS;
+-        id_ns->nmic |= NVME_NMIC_NS_SHARED;
++        id_ns->nmic |= NVME_ID_NS_IND_NMIC_SHRNS;
++        id_ns_ind->nmic = NVME_ID_NS_IND_NMIC_SHRNS;
++        id_ns_ind->nstat = NVME_ID_NS_IND_NSTAT_NRDY;
+     }
+ 
+     /* Substitute a missing EUI-64 by an autogenerated one */
+@@ -770,6 +773,7 @@ static void nvme_ns_realize(DeviceState *dev, Error **errp)
+         subsys->namespaces[nsid] = ns;
+ 
+         ns->id_ns.endgid = cpu_to_le16(0x1);
++        ns->id_ns_ind.endgrpid = cpu_to_le16(0x1);
+ 
+         if (ns->params.detached) {
+             return;
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index 7566b316d12d..724220691057 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -233,6 +233,7 @@ typedef struct NvmeNamespace {
+     int64_t      moff;
+     NvmeIdNs     id_ns;
+     NvmeIdNsNvm  id_ns_nvm;
++    NvmeIdNsInd  id_ns_ind;
+     NvmeLBAF     lbaf;
+     unsigned int nlbaf;
+     size_t       lbasz;
+diff --git a/hw/nvme/trace-events b/hw/nvme/trace-events
+index 3a67680c6ad1..6be0bfa1c1fc 100644
+--- a/hw/nvme/trace-events
++++ b/hw/nvme/trace-events
+@@ -56,6 +56,7 @@ pci_nvme_identify(uint16_t cid, uint8_t cns, uint16_t ctrlid, uint8_t csi) "cid
+ pci_nvme_identify_ctrl(void) "identify controller"
+ pci_nvme_identify_ctrl_csi(uint8_t csi) "identify controller, csi=0x%"PRIx8""
+ pci_nvme_identify_ns(uint32_t ns) "nsid %"PRIu32""
++pci_nvme_identify_ns_ind(uint32_t nsid) "nsid %"PRIu32""
+ pci_nvme_identify_ctrl_list(uint8_t cns, uint16_t cntid) "cns 0x%"PRIx8" cntid %"PRIu16""
+ pci_nvme_identify_pri_ctrl_cap(uint16_t cntlid) "identify primary controller capabilities cntlid=%"PRIu16""
+ pci_nvme_identify_sec_ctrl_list(uint16_t cntlid, uint8_t numcntl) "identify secondary controller list cntlid=%"PRIu16" numcntl=%"PRIu8""
 diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 39955a63455f..f4d108841bf5 100644
+index a37be0d0da8e..39955a63455f 100644
 --- a/include/block/nvme.h
 +++ b/include/block/nvme.h
-@@ -1418,7 +1418,12 @@ typedef struct QEMU_PACKED NvmeIdNsNvm {
-     uint8_t     pic;
-     uint8_t     rsvd9[3];
-     uint32_t    elbaf[NVME_MAX_NLBAF];
--    uint8_t     rsvd268[3828];
-+    uint32_t    npdgl;
-+    uint32_t    nprg;
-+    uint32_t    npra;
-+    uint32_t    nors;
-+    uint32_t    npdal;
-+    uint8_t     rsvd288[3808];
- } NvmeIdNsNvm;
- 
- typedef struct QEMU_PACKED NvmeIdNsInd {
-@@ -1536,6 +1541,16 @@ enum NvmeIdNsMc {
-     NVME_ID_NS_MC_SEPARATE = 1 << 1,
+@@ -1077,6 +1077,7 @@ enum NvmeIdCns {
+     NVME_ID_CNS_CS_NS                 = 0x05,
+     NVME_ID_CNS_CS_CTRL               = 0x06,
+     NVME_ID_CNS_CS_NS_ACTIVE_LIST     = 0x07,
++    NVME_ID_CNS_CS_IND_NS             = 0x08,
+     NVME_ID_CNS_NS_PRESENT_LIST       = 0x10,
+     NVME_ID_CNS_NS_PRESENT            = 0x11,
+     NVME_ID_CNS_NS_ATTACHED_CTRL_LIST = 0x12,
+@@ -1087,6 +1088,7 @@ enum NvmeIdCns {
+     NVME_ID_CNS_CS_NS_PRESENT_LIST    = 0x1a,
+     NVME_ID_CNS_CS_NS_PRESENT         = 0x1b,
+     NVME_ID_CNS_IO_COMMAND_SET        = 0x1c,
++    NVME_ID_CNS_CS_IND_NS_ALLOCATED   = 0x1f,
  };
  
-+enum NvmeIdNsNsfeat {
-+    NVME_ID_NS_NSFEAT_THINP         = 1 << 0,
-+    NVME_ID_NS_NSFEAT_NSABPNS       = 1 << 1,
-+    NVME_ID_NS_NSFEAT_DAE           = 1 << 2,
-+    NVME_ID_NS_NSFEAT_UIDREUSE      = 1 << 3,
-+    NVME_ID_NS_NSFEAT_OPTPERF_ALL   = 3 << 4,
-+    NVME_ID_NS_NSFEAT_MAM           = 1 << 6,
-+    NVME_ID_NS_NSFEAT_OPTRPERF      = 1 << 7,
-+};
-+
- #define NVME_ID_NS_DPS_TYPE(dps) (dps & NVME_ID_NS_DPS_TYPE_MASK)
+ typedef struct QEMU_PACKED NvmeIdCtrl {
+@@ -1419,6 +1421,20 @@ typedef struct QEMU_PACKED NvmeIdNsNvm {
+     uint8_t     rsvd268[3828];
+ } NvmeIdNsNvm;
  
- enum NvmePIFormat {
++typedef struct QEMU_PACKED NvmeIdNsInd {
++    uint8_t     nsfeat;
++    uint8_t     nmic;
++    uint8_t     rescap;
++    uint8_t     fpi;
++    uint32_t    anagrpid;
++    uint8_t     nsattr;
++    uint8_t     rsvd9;
++    uint16_t    nvmsetid;
++    uint16_t    endgrpid;
++    uint8_t     nstat;
++    uint8_t     rsvd15[4081];
++} NvmeIdNsInd;
++
+ typedef struct QEMU_PACKED NvmeIdNsDescr {
+     uint8_t nidt;
+     uint8_t nidl;
+@@ -1439,8 +1455,10 @@ enum NvmeNsIdentifierType {
+     NVME_NIDT_CSI               = 0x04,
+ };
+ 
+-enum NvmeIdNsNmic {
+-    NVME_NMIC_NS_SHARED         = 1 << 0,
++enum NvmeIdNsIndependent {
++    NVME_ID_NS_IND_NMIC_SHRNS   = 1 << 0,
++    NVME_ID_NS_IND_NMIC_DISNS   = 1 << 1,
++    NVME_ID_NS_IND_NSTAT_NRDY   = 1 << 0,
+ };
+ 
+ enum NvmeCsi {
+@@ -1873,6 +1891,7 @@ static inline void _nvme_check_size(void)
+     QEMU_BUILD_BUG_ON(sizeof(NvmeLBAF) != 4);
+     QEMU_BUILD_BUG_ON(sizeof(NvmeLBAFE) != 16);
+     QEMU_BUILD_BUG_ON(sizeof(NvmeIdNs) != 4096);
++    QEMU_BUILD_BUG_ON(sizeof(NvmeIdNsInd) != 4096);
+     QEMU_BUILD_BUG_ON(sizeof(NvmeIdNsNvm) != 4096);
+     QEMU_BUILD_BUG_ON(sizeof(NvmeIdNsZoned) != 4096);
+     QEMU_BUILD_BUG_ON(sizeof(NvmeSglDescriptor) != 16);
 -- 
 2.45.2
 
