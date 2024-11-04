@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED490D132C7
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 13:43:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07D5FD132C8
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 13:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7xMd-0002kB-V1; Mon, 04 Nov 2024 08:43:28 -0500
+	id 1t7xNK-0003SD-Ci; Mon, 04 Nov 2024 08:44:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=br0a=R7=kaod.org=clg@ozlabs.org>)
- id 1t7xMQ-0002e7-4b
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 08:43:16 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1t7xN9-0003IZ-Hn
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 08:44:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=br0a=R7=kaod.org=clg@ozlabs.org>)
- id 1t7xMN-0002rI-An
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 08:43:13 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Xht2c45vzz4x8g;
- Tue,  5 Nov 2024 00:43:04 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Xht2Z3SHfz4wbr;
- Tue,  5 Nov 2024 00:43:02 +1100 (AEDT)
-Message-ID: <e8774e57-ede7-4a37-b0a0-2c38f61fd75c@kaod.org>
-Date: Mon, 4 Nov 2024 14:43:01 +0100
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1t7xN7-0002w3-40
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 08:43:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730727835;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IvGXeJ1DlZ4AMNl71vI+BrbU5+nUwfjDjsuGXGq8HdU=;
+ b=FGahK+1APWkshlIXl//mq+BNyE5NKcD7pZ8kVYSGbZx3W6k8b/OiiaCHN+Gn/FW1jYBEVc
+ VPG+IqA36TKwM7XV40wNtOghHYBNRvfDoHz+BHpvQ6N2VEkUw0bgwqPQ1HTjJXj5o+w+jl
+ 3YaO8CneaHJR2HpN3GQO38RAveAXeUA=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-537-itFDI-7qNriKk9WtUq5DYw-1; Mon, 04 Nov 2024 08:43:53 -0500
+X-MC-Unique: itFDI-7qNriKk9WtUq5DYw-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6cbf039dccfso79883496d6.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 05:43:53 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730727833; x=1731332633;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IvGXeJ1DlZ4AMNl71vI+BrbU5+nUwfjDjsuGXGq8HdU=;
+ b=WRnvWjL9wN3pIsVmeiyMGXWGzFVvS2QBXN6ndXSoYoBSP1UPfKYuBAhonngOD6lfPy
+ hPus3s0LZe4ESByRXxypRJiGUoIAhyQZRXeEf50qkEJjy8XNp3QKKLw3WQSD1PVGGVmE
+ vwypInxFwXbcYolgxRDKMwnTpEP2W8+MyAY9PRLCpif+PkRXvZNFVcg1M6J6eBL3x5+/
+ QDrwR/f5rJLzYElWMti6Oy1/9QC+lvEmg9NSjg8HoNElLOatocLXwILiQ+1jx8NXuw21
+ 75JFrP112HVLMtI7cR9KmfMz33V7w537+XkoARk+okig4g2nV5hQWjwqlYL88FqjQN0+
+ /5oQ==
+X-Gm-Message-State: AOJu0YwPMXGc72rTAUfd+n48zKAyCvHPlV6VNeKFRrLgJybodsZqod6b
+ g1U+qES2idTcri8Gb6gB/44lgQKu0t5ZyFxxzH+92LcNrO2XtuGlb0ll/bjTcPgyncBmOaQLVjv
+ 5lZZddf6x2sRidq/lfbrg0L+qE8yWoq9zcN10Rkk+b/VVr/u7LrUAgC73I6ogsVR2fIbuOa8sBj
+ JX5nmwdC28Xpw+KtBh20+g/2O+ERM=
+X-Received: by 2002:a05:6214:4406:b0:6d3:77b8:cb3 with SMTP id
+ 6a1803df08f44-6d377b80d00mr47169206d6.12.1730727833323; 
+ Mon, 04 Nov 2024 05:43:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGFjqYskCx2Nlv+Yutb6Ifqf+fVytGKFIFlqPOTv2htj7Y07yOBImq1mWDVJ7VG+1LaVCZKyipI72RSly4IDI0=
+X-Received: by 2002:a05:6214:4406:b0:6d3:77b8:cb3 with SMTP id
+ 6a1803df08f44-6d377b80d00mr47169036d6.12.1730727833061; Mon, 04 Nov 2024
+ 05:43:53 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: check-function failing on func-arm-arm_aspeed
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- QEMU Developers <qemu-devel@nongnu.org>
-Cc: "Daniel P. Berrange" <berrange@redhat.com>
-References: <CAFEAcA_Z+o3HYfjapAeADAmjJqTYvswAfAbtj8i=3rSBDLwsyA@mail.gmail.com>
- <28eba1fd-f5d8-4755-b8bb-074d3c087a75@redhat.com>
- <c88e891e-153e-4fc3-bb10-6b9dff5e7789@kaod.org>
- <89e98def-7e7a-40a0-ae38-5bdd5c634592@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <89e98def-7e7a-40a0-ae38-5bdd5c634592@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=br0a=R7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
+ <20241031040426.772604-7-pierrick.bouvier@linaro.org>
+ <CAPMcbCp8343bXBV36jwJBtdQxNjd8RjtbRO048jMpt-Q+Swh+g@mail.gmail.com>
+In-Reply-To: <CAPMcbCp8343bXBV36jwJBtdQxNjd8RjtbRO048jMpt-Q+Swh+g@mail.gmail.com>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Mon, 4 Nov 2024 15:43:42 +0200
+Message-ID: <CAPMcbCo74T9j0V9QE1Yr2EEdAYDOen8Kehzw1HLvUoy8MquxEw@mail.gmail.com>
+Subject: Re: [PATCH 06/12] qga: fix missing static and prototypes windows
+ warnings
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, Alexandre Iooss <erdnaxe@crans.org>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000b15c8506261679f2"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,61 +107,335 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/4/24 14:16, Cédric Le Goater wrote:
-> On 11/4/24 13:19, Cédric Le Goater wrote:
->> On 11/4/24 13:12, Thomas Huth wrote:
->>> On 28/10/2024 18.14, Peter Maydell wrote:
->>>> Trying a "make check-functional" I find that the func-arm-arm_aspeed
->>>> test seems to hit a timeout:
->>>>
->>>> 18/18 qemu:func-thorough+func-arm-thorough+thorough /
->>>> func-arm-arm_aspeed              TIMEOUT        600.08s   killed by
->>>> signal 15 SIGTERM
->>>>
->>>> This is with commit cea8ac78545a.
->>>
->>> Cédric, is it working reliable for you?
+--000000000000b15c8506261679f2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Pierrick,
+
+I got this patch in my PULL with QGA patches.
+
+Best Regards,
+Konstantin Kostiuk.
+
+
+On Thu, Oct 31, 2024 at 3:32=E2=80=AFPM Konstantin Kostiuk <kkostiuk@redhat=
+.com>
+wrote:
+
+> Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+>
+> On Thu, Oct 31, 2024 at 6:05=E2=80=AFAM Pierrick Bouvier <
+> pierrick.bouvier@linaro.org> wrote:
+>
+>> Reported by clang++, but not by g++.
 >>
->> I have never seen this issue on the systems I use. Let me try again.
-> 
-> On a (slow) ARM SBC, I am seeing a timeout indeed.
-> 
-> The log file contains :
-> 
-> 2024-11-04 13:59:01,219: Starting dropbear sshd: OK
-> 2024-11-04 13:59:01,628: Aspeed AST2600 EVB
-> 2024-11-04 13:59:01,829: ast2600-evb login: root
-> 2024-11-04 13:59:01,847: passw0rd
-> 2024-11-04 13:59:01,850: echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device
-> 2024-11-04 14:00:13,916: Password:
-> 2024-11-04 14:00:13,917: Login timed out after 60 seconds
-> 2024-11-04 14:00:15,418: Aspeed AST2600 EVB
-> 
-> This means that the sleep workaround failed :/
-> 
->          # the line before login:
->          self.wait_for_console_pattern(pattern)
->          time.sleep(0.1)
->          exec_command(self, 'root')
->          time.sleep(0.1)
->          exec_command(self, "passw0rd")
-> 
-> C.
+>> ../qga/vss-win32/provider.cpp:48:6: error: no previous prototype for
+>> function 'LockModule' [-Werror,-Wmissing-prototypes]
+>>    48 | void LockModule(BOOL lock)
+>>       |      ^
+>> ../qga/vss-win32/provider.cpp:48:1: note: declare 'static' if the
+>> function is not intended to be used outside of this translation unit
+>>    48 | void LockModule(BOOL lock)
+>>       | ^
+>>       | static
+>> ../qga/vss-win32/provider.cpp:531:13: error: no previous prototype for
+>> function 'DllMain' [-Werror,-Wmissing-prototypes]
+>>   531 | BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID
+>> lpReserved)
+>>       |             ^
+>> ../qga/vss-win32/provider.cpp:531:1: note: declare 'static' if the
+>> function is not intended to be used outside of this translation unit
+>>   531 | BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID
+>> lpReserved)
+>>       | ^
+>>       | static
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>  qga/vss-win32/install.cpp   | 6 +++++-
+>>  qga/vss-win32/provider.cpp  | 5 ++++-
+>>  qga/vss-win32/requester.cpp | 8 ++++----
+>>  3 files changed, 13 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
+>> index 84944133f79..5cea5bcf747 100644
+>> --- a/qga/vss-win32/install.cpp
+>> +++ b/qga/vss-win32/install.cpp
+>> @@ -39,7 +39,7 @@ const GUID CLSID_WbemLocator =3D { 0x4590f811, 0x1d3a,
+>> 0x11d0,
+>>  const GUID IID_IWbemLocator =3D { 0xdc12a687, 0x737f, 0x11cf,
+>>      {0x88, 0x4d, 0x00, 0xaa, 0x00, 0x4b, 0x2e, 0x24} };
+>>
+>> -void errmsg(DWORD err, const char *text)
+>> +static void errmsg(DWORD err, const char *text)
+>>  {
+>>      /*
+>>       * `text' contains function call statement when errmsg is called vi=
+a
+>> chk().
+>> @@ -242,6 +242,7 @@ out:
+>>  }
+>>
+>>  /* Unregister this module from COM+ Applications Catalog */
+>> +STDAPI COMUnregister(void);
+>>  STDAPI COMUnregister(void)
+>>  {
+>>      qga_debug_begin;
+>> @@ -256,6 +257,7 @@ out:
+>>  }
+>>
+>>  /* Register this module to COM+ Applications Catalog */
+>> +STDAPI COMRegister(void);
+>>  STDAPI COMRegister(void)
+>>  {
+>>      qga_debug_begin;
+>> @@ -380,11 +382,13 @@ out:
+>>      return hr;
+>>  }
+>>
+>> +STDAPI_(void) CALLBACK DLLCOMRegister(HWND, HINSTANCE, LPSTR, int);
+>>  STDAPI_(void) CALLBACK DLLCOMRegister(HWND, HINSTANCE, LPSTR, int)
+>>  {
+>>      COMRegister();
+>>  }
+>>
+>> +STDAPI_(void) CALLBACK DLLCOMUnregister(HWND, HINSTANCE, LPSTR, int);
+>>  STDAPI_(void) CALLBACK DLLCOMUnregister(HWND, HINSTANCE, LPSTR, int)
+>>  {
+>>      COMUnregister();
+>> diff --git a/qga/vss-win32/provider.cpp b/qga/vss-win32/provider.cpp
+>> index cc72e5ef1b9..a102a23fbf1 100644
+>> --- a/qga/vss-win32/provider.cpp
+>> +++ b/qga/vss-win32/provider.cpp
+>> @@ -45,7 +45,7 @@ const IID IID_IVssEnumObject =3D { 0xAE1C7110, 0x2F60,
+>> 0x11d3,
+>>      {0x8A, 0x39, 0x00, 0xC0, 0x4F, 0x72, 0xD8, 0xE3} };
+>>
+>>
+>> -void LockModule(BOOL lock)
+>> +static void LockModule(BOOL lock)
+>>  {
+>>      if (lock) {
+>>          InterlockedIncrement(&g_nComObjsInUse);
+>> @@ -527,6 +527,9 @@ STDAPI DllCanUnloadNow()
+>>      return g_nComObjsInUse =3D=3D 0 ? S_OK : S_FALSE;
+>>  }
+>>
+>> +EXTERN_C
+>> +BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID
+>> lpReserved);
+>> +
+>>  EXTERN_C
+>>  BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID
+>> lpReserved)
+>>  {
+>> diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
+>> index 9884c65e707..4401d55e3a4 100644
+>> --- a/qga/vss-win32/requester.cpp
+>> +++ b/qga/vss-win32/requester.cpp
+>> @@ -254,8 +254,8 @@ out:
+>>      qga_debug_end;
+>>  }
+>>
+>> -DWORD get_reg_dword_value(HKEY baseKey, LPCSTR subKey, LPCSTR valueName=
+,
+>> -                          DWORD defaultData)
+>> +static DWORD get_reg_dword_value(HKEY baseKey, LPCSTR subKey, LPCSTR
+>> valueName,
+>> +                                 DWORD defaultData)
+>>  {
+>>      qga_debug_begin;
+>>
+>> @@ -272,12 +272,12 @@ DWORD get_reg_dword_value(HKEY baseKey, LPCSTR
+>> subKey, LPCSTR valueName,
+>>      return dwordData;
+>>  }
+>>
+>> -bool is_valid_vss_backup_type(VSS_BACKUP_TYPE vssBT)
+>> +static bool is_valid_vss_backup_type(VSS_BACKUP_TYPE vssBT)
+>>  {
+>>      return (vssBT > VSS_BT_UNDEFINED && vssBT < VSS_BT_OTHER);
+>>  }
+>>
+>> -VSS_BACKUP_TYPE get_vss_backup_type(
+>> +static VSS_BACKUP_TYPE get_vss_backup_type(
+>>      VSS_BACKUP_TYPE defaultVssBT =3D DEFAULT_VSS_BACKUP_TYPE)
+>>  {
+>>      qga_debug_begin;
+>> --
+>> 2.39.5
+>>
+>>
 
-Also, curiously, I can't reproduce when run "manually" :
+--000000000000b15c8506261679f2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-   $ QEMU_TEST_QEMU_BINARY=build/qemu-system-arm PYTHONPATH=python:tests/functional build/pyvenv/bin/python3 tests/functional/test_arm_aspeed.py
-   TAP version 13
-   ok 1 test_arm_aspeed.AST1030Machine.test_ast1030_zephyros_1_04
-   ok 2 test_arm_aspeed.AST1030Machine.test_ast1030_zephyros_1_07
-   ok 3 test_arm_aspeed.AST2x00Machine.test_arm_ast2400_palmetto_openbmc_v2_9_0
-   ok 4 test_arm_aspeed.AST2x00Machine.test_arm_ast2500_evb_buildroot
-   ok 5 test_arm_aspeed.AST2x00Machine.test_arm_ast2500_romulus_openbmc_v2_9_0
-   ok 6 test_arm_aspeed.AST2x00Machine.test_arm_ast2600_evb_buildroot
-   ok 7 test_arm_aspeed.AST2x00Machine.test_arm_ast2600_evb_buildroot_tpm
-   ok 8 test_arm_aspeed.AST2x00MachineMMC.test_arm_aspeed_emmc_boot
-   1..8
+<div dir=3D"ltr"><div>Hi Pierrick,</div><div><br></div><div>I got this patc=
+h in my PULL with QGA patches.<br></div><div><br></div><div><div><div dir=
+=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div =
+dir=3D"ltr"><div>Best Regards,</div><div>Konstantin Kostiuk.</div></div></d=
+iv></div><br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cl=
+ass=3D"gmail_attr">On Thu, Oct 31, 2024 at 3:32=E2=80=AFPM Konstantin Kosti=
+uk &lt;<a href=3D"mailto:kkostiuk@redhat.com">kkostiuk@redhat.com</a>&gt; w=
+rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
+x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=
+=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@red=
+hat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 31, 2024=
+ at 6:05=E2=80=AFAM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier=
+@linaro.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt; wrote:<b=
+r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left:1px solid rgb(204,204,204);padding-left:1ex">Reported by clang=
+++, but not by g++.<br>
+<br>
+../qga/vss-win32/provider.cpp:48:6: error: no previous prototype for functi=
+on &#39;LockModule&#39; [-Werror,-Wmissing-prototypes]<br>
+=C2=A0 =C2=A048 | void LockModule(BOOL lock)<br>
+=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 ^<br>
+../qga/vss-win32/provider.cpp:48:1: note: declare &#39;static&#39; if the f=
+unction is not intended to be used outside of this translation unit<br>
+=C2=A0 =C2=A048 | void LockModule(BOOL lock)<br>
+=C2=A0 =C2=A0 =C2=A0 | ^<br>
+=C2=A0 =C2=A0 =C2=A0 | static<br>
+../qga/vss-win32/provider.cpp:531:13: error: no previous prototype for func=
+tion &#39;DllMain&#39; [-Werror,-Wmissing-prototypes]<br>
+=C2=A0 531 | BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID=
+ lpReserved)<br>
+=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^<br>
+../qga/vss-win32/provider.cpp:531:1: note: declare &#39;static&#39; if the =
+function is not intended to be used outside of this translation unit<br>
+=C2=A0 531 | BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID=
+ lpReserved)<br>
+=C2=A0 =C2=A0 =C2=A0 | ^<br>
+=C2=A0 =C2=A0 =C2=A0 | static<br>
+<br>
+Signed-off-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@lina=
+ro.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0qga/vss-win32/install.cpp=C2=A0 =C2=A0| 6 +++++-<br>
+=C2=A0qga/vss-win32/provider.cpp=C2=A0 | 5 ++++-<br>
+=C2=A0qga/vss-win32/requester.cpp | 8 ++++----<br>
+=C2=A03 files changed, 13 insertions(+), 6 deletions(-)<br>
+<br>
+diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp<br>
+index 84944133f79..5cea5bcf747 100644<br>
+--- a/qga/vss-win32/install.cpp<br>
++++ b/qga/vss-win32/install.cpp<br>
+@@ -39,7 +39,7 @@ const GUID CLSID_WbemLocator =3D { 0x4590f811, 0x1d3a, 0x=
+11d0,<br>
+=C2=A0const GUID IID_IWbemLocator =3D { 0xdc12a687, 0x737f, 0x11cf,<br>
+=C2=A0 =C2=A0 =C2=A0{0x88, 0x4d, 0x00, 0xaa, 0x00, 0x4b, 0x2e, 0x24} };<br>
+<br>
+-void errmsg(DWORD err, const char *text)<br>
++static void errmsg(DWORD err, const char *text)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0/*<br>
+=C2=A0 =C2=A0 =C2=A0 * `text&#39; contains function call statement when err=
+msg is called via chk().<br>
+@@ -242,6 +242,7 @@ out:<br>
+=C2=A0}<br>
+<br>
+=C2=A0/* Unregister this module from COM+ Applications Catalog */<br>
++STDAPI COMUnregister(void);<br>
+=C2=A0STDAPI COMUnregister(void)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0qga_debug_begin;<br>
+@@ -256,6 +257,7 @@ out:<br>
+=C2=A0}<br>
+<br>
+=C2=A0/* Register this module to COM+ Applications Catalog */<br>
++STDAPI COMRegister(void);<br>
+=C2=A0STDAPI COMRegister(void)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0qga_debug_begin;<br>
+@@ -380,11 +382,13 @@ out:<br>
+=C2=A0 =C2=A0 =C2=A0return hr;<br>
+=C2=A0}<br>
+<br>
++STDAPI_(void) CALLBACK DLLCOMRegister(HWND, HINSTANCE, LPSTR, int);<br>
+=C2=A0STDAPI_(void) CALLBACK DLLCOMRegister(HWND, HINSTANCE, LPSTR, int)<br=
+>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0COMRegister();<br>
+=C2=A0}<br>
+<br>
++STDAPI_(void) CALLBACK DLLCOMUnregister(HWND, HINSTANCE, LPSTR, int);<br>
+=C2=A0STDAPI_(void) CALLBACK DLLCOMUnregister(HWND, HINSTANCE, LPSTR, int)<=
+br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0COMUnregister();<br>
+diff --git a/qga/vss-win32/provider.cpp b/qga/vss-win32/provider.cpp<br>
+index cc72e5ef1b9..a102a23fbf1 100644<br>
+--- a/qga/vss-win32/provider.cpp<br>
++++ b/qga/vss-win32/provider.cpp<br>
+@@ -45,7 +45,7 @@ const IID IID_IVssEnumObject =3D { 0xAE1C7110, 0x2F60, 0x=
+11d3,<br>
+=C2=A0 =C2=A0 =C2=A0{0x8A, 0x39, 0x00, 0xC0, 0x4F, 0x72, 0xD8, 0xE3} };<br>
+<br>
+<br>
+-void LockModule(BOOL lock)<br>
++static void LockModule(BOOL lock)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0if (lock) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0InterlockedIncrement(&amp;g_nComObjsInUse=
+);<br>
+@@ -527,6 +527,9 @@ STDAPI DllCanUnloadNow()<br>
+=C2=A0 =C2=A0 =C2=A0return g_nComObjsInUse =3D=3D 0 ? S_OK : S_FALSE;<br>
+=C2=A0}<br>
+<br>
++EXTERN_C<br>
++BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID lpReserved)=
+;<br>
++<br>
+=C2=A0EXTERN_C<br>
+=C2=A0BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID lpRese=
+rved)<br>
+=C2=A0{<br>
+diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp<br>
+index 9884c65e707..4401d55e3a4 100644<br>
+--- a/qga/vss-win32/requester.cpp<br>
++++ b/qga/vss-win32/requester.cpp<br>
+@@ -254,8 +254,8 @@ out:<br>
+=C2=A0 =C2=A0 =C2=A0qga_debug_end;<br>
+=C2=A0}<br>
+<br>
+-DWORD get_reg_dword_value(HKEY baseKey, LPCSTR subKey, LPCSTR valueName,<b=
+r>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 DWORD defaultData)<br>
++static DWORD get_reg_dword_value(HKEY baseKey, LPCSTR subKey, LPCSTR value=
+Name,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0DWORD defaultData)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0qga_debug_begin;<br>
+<br>
+@@ -272,12 +272,12 @@ DWORD get_reg_dword_value(HKEY baseKey, LPCSTR subKey=
+, LPCSTR valueName,<br>
+=C2=A0 =C2=A0 =C2=A0return dwordData;<br>
+=C2=A0}<br>
+<br>
+-bool is_valid_vss_backup_type(VSS_BACKUP_TYPE vssBT)<br>
++static bool is_valid_vss_backup_type(VSS_BACKUP_TYPE vssBT)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0return (vssBT &gt; VSS_BT_UNDEFINED &amp;&amp; vssBT &l=
+t; VSS_BT_OTHER);<br>
+=C2=A0}<br>
+<br>
+-VSS_BACKUP_TYPE get_vss_backup_type(<br>
++static VSS_BACKUP_TYPE get_vss_backup_type(<br>
+=C2=A0 =C2=A0 =C2=A0VSS_BACKUP_TYPE defaultVssBT =3D DEFAULT_VSS_BACKUP_TYP=
+E)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0qga_debug_begin;<br>
+-- <br>
+2.39.5<br>
+<br>
+</blockquote></div>
+</blockquote></div>
 
+--000000000000b15c8506261679f2--
 
-C.
 
