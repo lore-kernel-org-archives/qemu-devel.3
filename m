@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BEF0D111A3
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 03:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E26FDD111A0
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 03:22:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7nel-0005uo-4J; Sun, 03 Nov 2024 22:21:31 -0500
+	id 1t7nej-0005uG-NM; Sun, 03 Nov 2024 22:21:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t7nec-0005sa-ST; Sun, 03 Nov 2024 22:21:26 -0500
+ id 1t7nea-0005sH-E7; Sun, 03 Nov 2024 22:21:21 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t7neb-0004QT-GQ; Sun, 03 Nov 2024 22:21:22 -0500
+ id 1t7neZ-0004QT-1g; Sun, 03 Nov 2024 22:21:20 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 4 Nov
@@ -34,10 +34,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 3/3] hw/arm/aspeed: Invert sdhci write protected pin for
- AST2600 and AST2500 EVBs
-Date: Mon, 4 Nov 2024 11:21:04 +0800
-Message-ID: <20241104032104.2784183-4-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 2/3] hw/sd/sdhci: Introduce a new Write Protected pin
+ inverted property
+Date: Mon, 4 Nov 2024 11:21:03 +0800
+Message-ID: <20241104032104.2784183-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241104032104.2784183-1-jamin_lin@aspeedtech.com>
 References: <20241104032104.2784183-1-jamin_lin@aspeedtech.com>
@@ -71,64 +71,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 The Write Protect pin of SDHCI model is default active low to match the SDHCI
 spec. So, write enable the bit 19 should be 1 and write protected the bit 19
-should be 0 at the Present State Register (0x24).
-
-According to the design of AST2500 and AST2600 EVBs, the Write Protected pin
-is active high by default. To support it, introduces a new "sdhci_wp_inverted"
-property in ASPEED MACHINE State and set it true for AST2500 and AST2600 EVBs
-and set "wp_inverted" property true of sdhci-generic model.
+should be 0 at the Present State Register (0x24). However, some boards are
+design Write Protected pin active high. In other words, write enable the bit 19
+should be 0 and write protected the bit 19 should be 1 at the
+Present State Register (0x24). To support it, introduces a new "wp-inverted"
+property and set it false by default.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 ---
- hw/arm/aspeed.c         | 8 ++++++++
- include/hw/arm/aspeed.h | 1 +
- 2 files changed, 9 insertions(+)
+ hw/sd/sdhci.c         | 6 ++++++
+ include/hw/sd/sdhci.h | 5 +++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index e447923536..b10033d536 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -403,6 +403,12 @@ static void aspeed_machine_init(MachineState *machine)
-                              OBJECT(get_system_memory()), &error_abort);
-     object_property_set_link(OBJECT(bmc->soc), "dram",
-                              OBJECT(machine->ram), &error_abort);
-+    if (amc->sdhci_wp_inverted) {
-+        for (i = 0; i < bmc->soc->sdhci.num_slots; i++) {
-+            object_property_set_bool(OBJECT(&bmc->soc->sdhci.slots[i]),
-+                                     "wp-inverted", true, &error_abort);
-+        }
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index db7d547156..c675543873 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -275,6 +275,10 @@ static void sdhci_set_readonly(DeviceState *dev, bool level)
+ {
+     SDHCIState *s = (SDHCIState *)dev;
+ 
++    if (s->wp_inverted) {
++        level = !level;
 +    }
-     if (machine->kernel_filename) {
-         /*
-          * When booting with a -kernel command line there is no u-boot
-@@ -1308,6 +1314,7 @@ static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc, void *data)
-     amc->fmc_model = "mx25l25635e";
-     amc->spi_model = "mx25l25635f";
-     amc->num_cs    = 1;
-+    amc->sdhci_wp_inverted = true;
-     amc->i2c_init  = ast2500_evb_i2c_init;
-     mc->default_ram_size       = 512 * MiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
-@@ -1409,6 +1416,7 @@ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc, void *data)
-     amc->num_cs    = 1;
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON |
-                      ASPEED_MAC3_ON;
-+    amc->sdhci_wp_inverted = true;
-     amc->i2c_init  = ast2600_evb_i2c_init;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
-diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-index cbeacb214c..9cae45a1c9 100644
---- a/include/hw/arm/aspeed.h
-+++ b/include/hw/arm/aspeed.h
-@@ -39,6 +39,7 @@ struct AspeedMachineClass {
-     uint32_t macs_mask;
-     void (*i2c_init)(AspeedMachineState *bmc);
-     uint32_t uart_default;
-+    bool sdhci_wp_inverted;
++
+     if (level) {
+         s->prnsts &= ~SDHC_WRITE_PROTECT;
+     } else {
+@@ -1551,6 +1555,8 @@ static Property sdhci_sysbus_properties[] = {
+                      false),
+     DEFINE_PROP_LINK("dma", SDHCIState,
+                      dma_mr, TYPE_MEMORY_REGION, MemoryRegion *),
++    DEFINE_PROP_BOOL("wp-inverted", SDHCIState,
++                     wp_inverted, false),
+     DEFINE_PROP_END_OF_LIST(),
  };
  
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index 6cd2822f1d..25ad9ed778 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -100,6 +100,11 @@ struct SDHCIState {
+     uint8_t sd_spec_version;
+     uint8_t uhs_mode;
+     uint8_t vendor;        /* For vendor specific functionality */
++    /*
++     * Write Protect pin default active low for detecting SD card
++     * to be protected. Set wp_inverted to true inverted the signal.
++     */
++    bool wp_inverted;
+ };
+ typedef struct SDHCIState SDHCIState;
  
 -- 
 2.34.1
