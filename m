@@ -4,55 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 019E7D1BDE5
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 18:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 474D8D1BDE7
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 19:30:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t82Gq-0005pz-8d; Mon, 04 Nov 2024 13:57:48 -0500
+	id 1t82lQ-00036l-VB; Mon, 04 Nov 2024 14:29:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1t82Gn-0005pI-AK; Mon, 04 Nov 2024 13:57:45 -0500
-Received: from nyc.source.kernel.org ([147.75.193.91])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t82lP-00036F-8y; Mon, 04 Nov 2024 14:29:23 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1t82Gl-0000vL-Nt; Mon, 04 Nov 2024 13:57:45 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 4622EA43306;
- Mon,  4 Nov 2024 18:55:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E956C4CECE;
- Mon,  4 Nov 2024 18:57:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1730746657;
- bh=7Gs5F1lfm/wZoRTwePr5MuZYpRPxEOao+m/MVnEbsmw=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=DzXMVfj9QcU8QBQEbAQ4Ds54GvY8nuDFCcW6HYjuDnpiMOVa0jeTEg2XeRTzx35rO
- PTDIZjvr5FkcsKyKqypSTJ8x4pOG7kIOZscvrb7olxbRIiABlRhBRcK6SUHdgdm2d6
- DiO37Z9BDTmO80NCWB5cNDLcQv6r98DJ8cBRHa9E+o1zzA65CT5qG7wDWZiTkq/+n5
- 8msNIGgRZCGeM2rIsx/Pz2BXT8cN9enp0UIk3ojagBC4rx9bHh7gsROHtS/Nmip5mf
- aYlBaP5LEuZMfnXUBAye89nxZgu7BPpT3zv63PjzZY0z+FKdz8kAlIIpsI58g1IVzF
- v5f1uYJZAQl+A==
-Date: Mon, 4 Nov 2024 11:57:34 -0700
-From: Keith Busch <kbusch@kernel.org>
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- qemu-stable@nongnu.org, Waldemar Kozaczuk <jwkozaczuk@gmail.com>
-Subject: Re: [PATCH v2] hw/nvme: fix handling of over-committed queues
-Message-ID: <ZykZHvL_PtMMttqX@kbusch-mbp.dhcp.thefacebook.com>
-References: <20241029-issue-2388-v2-1-e335658104cf@samsung.com>
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t82lN-0004K6-PV; Mon, 04 Nov 2024 14:29:23 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4JAFPk021838;
+ Mon, 4 Nov 2024 19:29:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=KU0Vx1
+ aqYPLiX9uu1CvidCGNNtjejqndZ1VXCCvTxa0=; b=Ia0AFyy++ph2S3HQ2+kicx
+ 6D+BJjV3fspusP7czamWpkJHWrKHDNYrB/XJtihxT8wFtmIf/krde0Gywaw5cg1L
+ fHobg/Hqm2BYuqqwhZUHUxWA7BPJL0En9uPXuPV/+tDWtfpouP8hD+Ub/7f12x9r
+ /USvg1UqI8SFsA0lX9EOCiL02DA0g7bl/A2yH3iECiyP5aC8+iTm8EG1V6WDZvJT
+ XTsTXU6A8aZR6cS7fCZgkDdkXbV3vprRxWRKmIDKkRSX8EJT6bFQqajjiWyu29hN
+ 5nF2TbQ5P+eJ4jxCh0/pQaGqNCkoNkIhLsfYvrBH6sn2pbIcfs10yKNF7UtWFpjg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42q46c03cx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 04 Nov 2024 19:29:12 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4IDXJq024174;
+ Mon, 4 Nov 2024 19:29:11 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nxsy0dvf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 04 Nov 2024 19:29:11 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A4JTAg845220234
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 4 Nov 2024 19:29:10 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 429BE58056;
+ Mon,  4 Nov 2024 19:29:10 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B42495805A;
+ Mon,  4 Nov 2024 19:29:09 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  4 Nov 2024 19:29:09 +0000 (GMT)
+Message-ID: <b2585b34-895c-4b95-b572-5e27515368ae@linux.ibm.com>
+Date: Mon, 4 Nov 2024 14:29:09 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241029-issue-2388-v2-1-e335658104cf@samsung.com>
-Received-SPF: pass client-ip=147.75.193.91; envelope-from=kbusch@kernel.org;
- helo=nyc.source.kernel.org
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 0/3] TPM TIS SPI Support
+To: dan tan <dantan@linux.vnet.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, stefanb@linux.vnet.ibm.com, pbonzini@redhat.com,
+ farosas@suse.de, lvivier@redhat.com, clg@kaod.org, dantan@linux.ibm.com
+References: <20241104171815.13853-1-dantan@linux.vnet.ibm.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20241104171815.13853-1-dantan@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: f29QcVf76uMbZkeqq1W3eRgF4qRn3uRQ
+X-Proofpoint-GUID: f29QcVf76uMbZkeqq1W3eRgF4qRn3uRQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 mlxlogscore=746 suspectscore=0
+ adultscore=0 spamscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411040156
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -70,19 +109,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 29, 2024 at 01:15:19PM +0100, Klaus Jensen wrote:
-> From: Klaus Jensen <k.jensen@samsung.com>
-> 
-> If a host chooses to use the SQHD "hint" in the CQE to know if there is
-> room in the submission queue for additional commands, it may result in a
-> situation where there are not enough internal resources (struct
-> NvmeRequest) available to process the command. For a lack of a better
-> term, the host may "over-commit" the device (i.e., it may have more
-> inflight commands than the queue size).
->
-> ...
 
-LGTM
 
-Reviewed-by: Keith Busch <kbusch@kernel.org>
+On 11/4/24 12:18 PM, dan tan wrote:
+> *** BLURB HERE ***
+
+Series:
+
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+
+
 
