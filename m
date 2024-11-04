@@ -4,82 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EF8AD132DC
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 15:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891AAD132DF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 15:15:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7ylM-00030o-8t; Mon, 04 Nov 2024 10:13:04 -0500
+	id 1t7ynK-0003pr-8g; Mon, 04 Nov 2024 10:15:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t7ylK-00030Z-Lx
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:13:02 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t7ylI-0000hU-Ul
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:13:02 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5cb6ca2a776so6401210a12.0
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 07:13:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730733179; x=1731337979; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=us5AWBKQWPEF3MTl3Vlg7m8VPLdGEoNyuWlrPb9j35Y=;
- b=pXAfbO5laLfHUnTbT5BmVnNsekGTSYCfH+bxxH4uvNv+Q2n/1VIQm919gEJwwJmZc3
- a6RV172z9fFnbwVx7xfvYQVfj5cNxcmjorB0e/iWHXAXkAwcdeGOh4qpso54/W+RDTIL
- +8qd9RDjeOn7WzrjPuJX5Jtf3BK67BDJcrjSPl0yrqZ/tjf47OcnY9hJF246ferwCgqt
- 0pd5b8T4MbtM60PmF9fZC7Ts1TUPAxvs1rmO6tmcy51/SepCLgvKyjcMFyAKobtCgADe
- K1r8VkD+QghCCjSikJ+iMjRRu9r19BkjJJNteUCNkwG57qJawvE86okHpSbxgKOr/U+p
- tD8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730733179; x=1731337979;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=us5AWBKQWPEF3MTl3Vlg7m8VPLdGEoNyuWlrPb9j35Y=;
- b=m4yU66XkLLx4yTT0w/Jqi70BG9nEPzeqEMUc2l5kUu/RbX2b78MLde0Jt/9hvgxC2a
- s5N2lqg2liYiwMOGdLNKONjEFReGPeFngNSQRl5VO1rkLToXHA5Eqi1XtJ36GfLv2oTw
- eeZQ4eatuLhxk7/pMIk2S6igxXj02b73vOFwzIJFNxEQOfWfc37wBVUf+SLt8tgL8Bz6
- 8JOxQDbDoIaVrnFj6U959j4JE1vxSHr3eCQF9lRjhxpp3YJVjzWTLgmosJhcjExDNvlN
- 8mAdD/VjhB3aAotCwkkF/ovy5tZxEuQBKAKVdrxly+Wqu8VuLFIbhOdEwHOsyAmvgqIP
- zJ/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1rf2N7VHXgpGHOK7qDPnlVfgexmfrYYaRIIUjNBJjV2PWiG1mT5S6nP15+czhhveBCv4jOtC1CfIW@nongnu.org
-X-Gm-Message-State: AOJu0Yx2TqawrovNcXYJcovD+jRJj80t0FaX8jkzOzsoU6NQccs/Lsvx
- 7+NBtWgQ9D4xewL+lcRRUR+XvfEavx/31Lhzrp/SOd87Llz1K4l3mJHRLQS6/lWFyIysrnlMx3y
- kEkaL6eLYtHPnj9+pRo81YPiusUzDoPD3bOKaPQ==
-X-Google-Smtp-Source: AGHT+IFdvne5Xir2A/KCUyfFT0Ycl+5iTF4+UKlk9uuS3pTC5/IiUlx20OmLJYwOeEzTS8ZTnOa8jf4/Y9FGJXRJ2pU=
-X-Received: by 2002:a05:6402:3482:b0:5ce:d378:b098 with SMTP id
- 4fb4d7f45d1cf-5ced378b241mr5331729a12.5.1730733178995; Mon, 04 Nov 2024
- 07:12:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t7ynC-0003mG-52; Mon, 04 Nov 2024 10:14:59 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t7yn7-0000pV-1r; Mon, 04 Nov 2024 10:14:56 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4BeHvD017813;
+ Mon, 4 Nov 2024 15:14:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=w016wU
+ oBR4uC8j0oCUkYMhCKSjwaid6uxyn3Cr9fgEY=; b=o1N4OBtgNlHG9cjTxE7Mly
+ y1SHqsWyTh7qZYz3v3sTvsc6/u9xjNZF40Y72sC+4D5sWerXw2EWFUQe0HYbsoPi
+ H0ueh5MxoMvh2QIKVfic9SN/EXtUJG3tCpZ0khKMuPX4Pulp0JQajkY1E9hFnvbm
+ aOx6xX2/+iZ87GBks4cmcGTpUEyOryI/zMZ46rUMX2HJ+Fs1WRvnELzcbLS1jlx/
+ 0c/nSakH+V4aY+tEgXLa54JgVndeQ+x5sF5wlRmtQCRKMEXltkZVYJCB+rwuexwB
+ XlOdnlgrL/2qUCXFaJjml+zBFWlJS3wybZFRIUT7ra6vKZZPDy0v954LslRX2w6w
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42pwkjs2yv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 04 Nov 2024 15:14:41 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A43UlXd013298;
+ Mon, 4 Nov 2024 15:14:40 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nydmja2w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 04 Nov 2024 15:14:40 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A4FEeK257475498
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 4 Nov 2024 15:14:40 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0ABBB58056;
+ Mon,  4 Nov 2024 15:14:40 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6DE3858052;
+ Mon,  4 Nov 2024 15:14:39 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  4 Nov 2024 15:14:39 +0000 (GMT)
+Message-ID: <1ffda8d1-06ba-4e8a-b62a-9b02f2844a6f@linux.ibm.com>
+Date: Mon, 4 Nov 2024 10:14:39 -0500
 MIME-Version: 1.0
-References: <CAFEAcA_Z+o3HYfjapAeADAmjJqTYvswAfAbtj8i=3rSBDLwsyA@mail.gmail.com>
- <28eba1fd-f5d8-4755-b8bb-074d3c087a75@redhat.com>
- <c88e891e-153e-4fc3-bb10-6b9dff5e7789@kaod.org>
- <89e98def-7e7a-40a0-ae38-5bdd5c634592@kaod.org>
-In-Reply-To: <89e98def-7e7a-40a0-ae38-5bdd5c634592@kaod.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 4 Nov 2024 15:12:47 +0000
-Message-ID: <CAFEAcA94oNvNs34UOwbSPWG-ZAWGVO_woprnFesNnH_BpbJE+w@mail.gmail.com>
-Subject: Re: check-function failing on func-arm-arm_aspeed
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Thomas Huth <thuth@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>, 
- "Daniel P. Berrange" <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/3] tpm/tpm_tis_spi: Support TPM for SPI (Serial
+ Peripheral Interface)
+To: dan tan <dantan@linux.vnet.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, stefanb@linux.vnet.ibm.com, pbonzini@redhat.com,
+ farosas@suse.de, lvivier@redhat.com, clg@kaod.org, dantan@linux.ibm.com
+References: <20241104064334.21468-1-dantan@linux.vnet.ibm.com>
+ <20241104064334.21468-2-dantan@linux.vnet.ibm.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20241104064334.21468-2-dantan@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: OO1rdhQlLEUoj0E8HVkUlBZ6Wp1IiEVE
+X-Proofpoint-ORIG-GUID: OO1rdhQlLEUoj0E8HVkUlBZ6Wp1IiEVE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 mlxscore=0
+ malwarescore=0 priorityscore=1501 impostorscore=0 spamscore=0 adultscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 mlxlogscore=999 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411040127
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,159 +111,536 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Nov 2024 at 13:16, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
->
-> On 11/4/24 13:19, C=C3=A9dric Le Goater wrote:
-> > On 11/4/24 13:12, Thomas Huth wrote:
-> >> On 28/10/2024 18.14, Peter Maydell wrote:
-> >>> Trying a "make check-functional" I find that the func-arm-arm_aspeed
-> >>> test seems to hit a timeout:
-> >>>
-> >>> 18/18 qemu:func-thorough+func-arm-thorough+thorough /
-> >>> func-arm-arm_aspeed              TIMEOUT        600.08s   killed by
-> >>> signal 15 SIGTERM
-> >>>
-> >>> This is with commit cea8ac78545a.
-> >>
-> >> C=C3=A9dric, is it working reliable for you?
-> >
-> > I have never seen this issue on the systems I use. Let me try again.
->
-> On a (slow) ARM SBC, I am seeing a timeout indeed.
->
-> The log file contains :
->
-> 2024-11-04 13:59:01,219: Starting dropbear sshd: OK
-> 2024-11-04 13:59:01,628: Aspeed AST2600 EVB
-> 2024-11-04 13:59:01,829: ast2600-evb login: root
-> 2024-11-04 13:59:01,847: passw0rd
-> 2024-11-04 13:59:01,850: echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device=
-/new_device
-> 2024-11-04 14:00:13,916: Password:
-> 2024-11-04 14:00:13,917: Login timed out after 60 seconds
-> 2024-11-04 14:00:15,418: Aspeed AST2600 EVB
->
-> This means that the sleep workaround failed :/
->
->          # the line before login:
->          self.wait_for_console_pattern(pattern)
->          time.sleep(0.1)
->          exec_command(self, 'root')
->          time.sleep(0.1)
->          exec_command(self, "passw0rd")
-
-Those sleeps are definitely dubious, but I did try a local
-change of bumping them to 2 seconds and it didn't fix the problem.
-Looking at
- tests/functional/arm/test_arm_aspeed.AST2x00Machine.test_arm_ast2500_evb_b=
-uildroot/console.log
-in the build tree (which I assume is the relevant log)
-it did log in OK, and proceeded through the test to try
-to power the machine off:
-
-2024-11-04 14:39:59,092: cat /sys/class/hwmon/hwmon1/temp1_input
-2024-11-04 14:39:59,110: # cat /sys/class/hwmon/hwmon1/temp1_input
-2024-11-04 14:39:59,131: 18000
-2024-11-04 14:39:59,131: poweroff
-2024-11-04 14:39:59,139: # poweroff
-2024-11-04 14:39:59,323: # Stopping dropbear sshd: OK
-2024-11-04 14:40:00,615: Stopping network:
-
-but that's where the log ends.
-
-Digging even further I have just found
-
-tests/functional/arm/test_arm_aspeed.AST2x00Machine.test_arm_ast2500_evb_bu=
-ildroot/qemu-machine-cgjbonzx/7f39a8515f90.log
-
-which has what looks like QEMU's stderr output, which reveals
-the culprit:
-
-../../net/checksum.c:106:9: runtime error: member access within
-misaligned address 0x55a2d1887a5e for type 'struct ip_header', which
-requires 4 byte alignment
-0x55a2d1887a5e: note: pointer points here
- 04 a8 08 00 45 00  01 48 37 9a 40 00 40 11  e9 fa 0a 00 02 0f 0a 00
-02 02 00 44 00 43 01 34  19 56
-             ^
-    #0 0x55a2cc1f87d4 in net_checksum_calculate
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../net/checks=
-um.c:106:9
-    #1 0x55a2cbcf00ad in ftgmac100_do_tx
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../hw/net/ftg=
-mac100.c:611:17
-    #2 0x55a2cbcf00ad in ftgmac100_write
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../hw/net/ftg=
-mac100.c:843:13
-    #3 0x55a2cc7af5af in memory_region_write_accessor
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/mem=
-ory.c:497:5
-    #4 0x55a2cc7aec6a in access_with_adjusted_size
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/mem=
-ory.c:573:18
-    #5 0x55a2cc7ae717 in memory_region_dispatch_write
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/mem=
-ory.c
-    #6 0x55a2cc7e5c85 in flatview_write_continue_step
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/phy=
-smem.c:2786:18
-    #7 0x55a2cc7dba0c in flatview_write_continue
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/phy=
-smem.c:2816:19
-    #8 0x55a2cc7dba0c in flatview_write
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/phy=
-smem.c:2847:12
-    #9 0x55a2cc7e4efa in subpage_write
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/phy=
-smem.c:2425:12
-    #10 0x55a2cc7afa66 in memory_region_write_with_attrs_accessor
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/mem=
-ory.c:518:12
-    #11 0x55a2cc7aec6a in access_with_adjusted_size
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/mem=
-ory.c:573:18
-    #12 0x55a2cc7ae717 in memory_region_dispatch_write
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/mem=
-ory.c
-    #13 0x55a2cc86f2c8 in int_st_mmio_leN
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../accel/tcg/=
-cputlb.c:2489:13
-    #14 0x55a2cc86f2c8 in do_st_mmio_leN
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../accel/tcg/=
-cputlb.c:2524:12
-    #15 0x55a2cc85d2e0 in do_st_4
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../accel/tcg/=
-cputlb.c:2694:9
-    #16 0x55a2cc85d2e0 in do_st4_mmu
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../accel/tcg/=
-cputlb.c:2770:9
-    #17 0x7fb73a213e05  (<unknown module>)
-
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
-../../net/checksum.c:106:9 in
 
 
-So the network device in this board has hit an undefined
-behaviour which clang's sanitizer has detected and
-made QEMU abort.
+On 11/4/24 1:43 AM, dan tan wrote:
+> Implement support for TPM via SPI interface. The SPI bus master
+> is provided by PowerNV SPI device which is an SSI peripheral.
+> It can uses the tpm_emulator driver backend with the external
+> swtpm.
+> 
+> Although the implementation is endian neutral, the SPI
+> bus master provider, pnv_spi.c is only supported on the
+> PowerNV platform, thus, is big endian specific.
 
-The test framework here seems to be severely lacking:
+I am not sure whether and how this sentence is related to this 
+implementation. I think you can remove it.
 
-(1) If QEMU exits with failure or crashes then we should
-report the test as a failure, not a timeout
-(2) If QEMU prints warnings or errors to stderr, we
-should collect these in the main log file, not buried
-under a rock with no pointers from the main log file
-to that rock
-(3) Ideally we should print at least a summary of that
-failure to the terminal so the user can clearly see
-"oh, this test failed because QEMU asserted or whatever"
-without having to dig through all the log files
+> 
+> Signed-off-by: dan tan <dantan@linux.ibm.com>
+> ---
+> 
+> v3:
+> - moved variable tis_addr from TPMStateSPI struct to local
+> - added the VM suspend/resume support:
+>    - added vmstate_tpm_tis_spi declaration
+>    - added tpm_tis_spi_pre_save() function
+> - fixed trace formatting string
+> 
+> v4:
+> - git commit amend only
+> 
+> v5:
+> - removed DEFINE_PROP_UINT32("irq", TPMStateSPI, tpm_state.irq_num, 0)
+>    from tpm_tis_spi_properties
+> - In tpm.rst document, under section 'The QEMU TPM emulator device',
+>    moved the 'PowerNV machine' section to immeidately below 'pSeriese
+>    machine'.
+> ---
+>   docs/specs/tpm.rst   |  15 ++
+>   include/sysemu/tpm.h |   3 +
+>   hw/tpm/tpm_tis_spi.c | 359 +++++++++++++++++++++++++++++++++++++++++++
+>   hw/tpm/Kconfig       |   6 +
+>   hw/tpm/meson.build   |   1 +
+>   hw/tpm/trace-events  |   7 +
+>   6 files changed, 391 insertions(+)
+>   create mode 100644 hw/tpm/tpm_tis_spi.c
+> 
+> diff --git a/docs/specs/tpm.rst b/docs/specs/tpm.rst
+> index 1ad36ad709..d92e7eed6f 100644
+> --- a/docs/specs/tpm.rst
+> +++ b/docs/specs/tpm.rst
+> @@ -24,6 +24,7 @@ QEMU files related to TPM TIS interface:
+>    - ``hw/tpm/tpm_tis_isa.c``
+>    - ``hw/tpm/tpm_tis_sysbus.c``
+>    - ``hw/tpm/tpm_tis_i2c.c``
+> + - ``hw/tpm/tpm_tis_spi.c``
+>    - ``hw/tpm/tpm_tis.h``
+>   
+>   Both an ISA device and a sysbus device are available. The former is
+> @@ -33,6 +34,9 @@ Arm virt machine.
+>   An I2C device support is also provided which can be instantiated in the Arm
+>   based emulation machines. This device only supports the TPM 2 protocol.
+>   
+> +A Serial Peripheral Interface (SPI) device support has been added to the
+> +PowerNV emulation machines. This device only supports the TPM 2 protocol.
+> +
+>   CRB interface
+>   -------------
+>   
+> @@ -339,6 +343,17 @@ In case a pSeries machine is emulated, use the following command line:
+>       -device virtio-blk-pci,bus=pci.0,addr=0x3,drive=drive-virtio-disk0,id=virtio-disk0 \
+>       -drive file=test.img,format=raw,if=none,id=drive-virtio-disk0
+>   
+> +In case a PowerNV machine is emulated and you want to use a TPM device
+> +attached to SPI bus, use the following command line (SPI bus master is
+> +provided by PowerNV SPI device):
+> +
+> +.. code-block:: console
+> +
+> +  qemu-system-ppc64 -m 2G -machine powernv10 -nographic \
+> +    -chardev socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock \
+> +    -tpmdev emulator,id=tpm0,chardev=chrtpm \
+> +    -device tpm-tis-spi,tpmdev=tpm0,bus=pnv-spi-bus.4
+> +
+>   In case an Arm virt machine is emulated, use the following command line:
+>   
+>   .. code-block:: console
+> diff --git a/include/sysemu/tpm.h b/include/sysemu/tpm.h
+> index 1ee568b3b6..22b05110e2 100644
+> --- a/include/sysemu/tpm.h
+> +++ b/include/sysemu/tpm.h
+> @@ -49,6 +49,7 @@ struct TPMIfClass {
+>   #define TYPE_TPM_CRB                "tpm-crb"
+>   #define TYPE_TPM_SPAPR              "tpm-spapr"
+>   #define TYPE_TPM_TIS_I2C            "tpm-tis-i2c"
+> +#define TYPE_TPM_TIS_SPI            "tpm-tis-spi"
+>   
+>   #define TPM_IS_TIS_ISA(chr)                         \
+>       object_dynamic_cast(OBJECT(chr), TYPE_TPM_TIS_ISA)
+> @@ -60,6 +61,8 @@ struct TPMIfClass {
+>       object_dynamic_cast(OBJECT(chr), TYPE_TPM_SPAPR)
+>   #define TPM_IS_TIS_I2C(chr)                      \
+>       object_dynamic_cast(OBJECT(chr), TYPE_TPM_TIS_I2C)
+> +#define TPM_IS_TIS_SPI(chr)                      \
+> +    object_dynamic_cast(OBJECT(chr), TYPE_TPM_TIS_SPI)
+>   
+>   /* returns NULL unless there is exactly one TPM device */
+>   static inline TPMIf *tpm_find(void)
+> diff --git a/hw/tpm/tpm_tis_spi.c b/hw/tpm/tpm_tis_spi.c
+> new file mode 100644
+> index 0000000000..87acbaaaf8
+> --- /dev/null
+> +++ b/hw/tpm/tpm_tis_spi.c
+> @@ -0,0 +1,359 @@
+> +/*
+> + * QEMU PowerPC SPI TPM 2.0 model
 
-If the actual cause of the test failure had been
-better reported to the user running the tests I would
-have figured this out a lot faster.
+I would say that this implementation is generic enough to work with 
+other architectures as well. So you could drop 'PowerPC'.
 
-thanks
--- PMM
+> + *
+> + * Copyright (c) 2024, IBM Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#define IBM_PONQ
+
+Did I miss this before? Is this necessary and what does it do?
+
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "hw/sysbus.h"
+> +#include "hw/acpi/tpm.h"
+> +#include "tpm_prop.h"
+> +#include "qemu/log.h"
+> +#include "trace.h"
+> +#include "tpm_tis.h"
+> +#include "hw/ssi/ssi.h"
+> +#include "migration/vmstate.h"
+> +
+> +typedef struct TPMStateSPI {
+> +    /*< private >*/
+> +    SSIPeripheral parent_object;
+> +
+> +    uint8_t     byte_offset;     /* byte offset in transfer */
+> +    uint8_t     wait_state_cnt;  /* wait state counter */
+> +    uint8_t     xfer_size;       /* data size of transfer */
+> +    uint32_t    reg_addr;        /* register address of transfer */
+> +
+> +    uint8_t     spi_state;       /* READ / WRITE / IDLE */
+> +#define SPI_STATE_IDLE   0
+> +#define SPI_STATE_WRITE  1
+> +#define SPI_STATE_READ   2
+> +
+> +    bool        command;
+> +
+> +    /*< public >*/
+> +    TPMState    tpm_state;       /* not a QOM object */
+> +
+> +} TPMStateSPI;
+> +
+> +#define CMD_BYTE_WRITE          (1 << 7)
+> +#define CMD_BYTE_XFER_SZ_MASK   0x1f
+> +#define TIS_SPI_HIGH_ADDR_BYTE  0xd4
+> +
+> +DECLARE_INSTANCE_CHECKER(TPMStateSPI, TPM_TIS_SPI, TYPE_TPM_TIS_SPI)
+> +
+> +static int tpm_tis_spi_pre_save(void *opaque)
+> +{
+> +    TPMStateSPI *spist = opaque;
+> +
+> +    return tpm_tis_pre_save(&spist->tpm_state);
+> +}
+> +
+> +static const VMStateDescription vmstate_tpm_tis_spi = {
+> +     .name = "tpm-tis-spi",
+> +     .version_id = 0,
+> +     .pre_save  = tpm_tis_spi_pre_save,
+> +     .fields = (const VMStateField[]) {
+> +         VMSTATE_BUFFER(tpm_state.buffer, TPMStateSPI),
+> +         VMSTATE_UINT16(tpm_state.rw_offset, TPMStateSPI),
+> +         VMSTATE_UINT8(tpm_state.active_locty, TPMStateSPI),
+> +         VMSTATE_UINT8(tpm_state.aborting_locty, TPMStateSPI),
+> +         VMSTATE_UINT8(tpm_state.next_locty, TPMStateSPI),
+> +
+> +         VMSTATE_STRUCT_ARRAY(tpm_state.loc, TPMStateSPI,
+> +                              TPM_TIS_NUM_LOCALITIES, 0,
+> +                              vmstate_locty, TPMLocality),
+> +
+> +         /* spi specifics */
+> +         VMSTATE_UINT8(byte_offset, TPMStateSPI),
+> +         VMSTATE_UINT8(wait_state_cnt, TPMStateSPI),
+> +         VMSTATE_UINT8(xfer_size, TPMStateSPI),
+> +         VMSTATE_UINT32(reg_addr, TPMStateSPI),
+> +         VMSTATE_UINT8(spi_state, TPMStateSPI),
+> +         VMSTATE_BOOL(command, TPMStateSPI),
+> +
+> +         VMSTATE_END_OF_LIST()
+> +     }
+> +};
+> +
+> +static inline void tpm_tis_spi_clear_data(TPMStateSPI *spist)
+> +{
+> +    spist->spi_state = SPI_STATE_IDLE;
+> +    spist->byte_offset = 0;
+> +    spist->wait_state_cnt = 0;
+> +    spist->xfer_size = 0;
+> +    spist->reg_addr = 0;
+> +
+> +    return;
+> +}
+> +
+> +/* Callback from TPM to indicate that response is copied */
+> +static void tpm_tis_spi_request_completed(TPMIf *ti, int ret)
+> +{
+> +    TPMStateSPI *spist = TPM_TIS_SPI(ti);
+> +    TPMState *s = &spist->tpm_state;
+> +
+> +    /* Inform the common code. */
+> +    tpm_tis_request_completed(s, ret);
+> +}
+> +
+> +static enum TPMVersion tpm_tis_spi_get_tpm_version(TPMIf *ti)
+> +{
+> +    TPMStateSPI *spist = TPM_TIS_SPI(ti);
+> +    TPMState *s = &spist->tpm_state;
+> +
+> +    return tpm_tis_get_tpm_version(s);
+> +}
+> +
+> +/*
+> + * TCG PC Client Platform TPM Profile Specification for TPM 2.0 ver 1.05 rev 14
+> + *
+> + * For system Software, the TPM has a 64-bit address of 0x0000_0000_FED4_xxxx.
+> + * On SPI, the chipset passes the least significant 24 bits to the TPM.
+> + * The upper bytes will be used by the chipset to select the TPM’s SPI CS#
+> + * signal. Table 9 shows the locality based on the 16 least significant address
+> + * bits and assume that either the LPC TPM sync or SPI TPM CS# is used.
+> + *
+> + */
+> +static void tpm_tis_spi_write(TPMStateSPI *spist, uint32_t addr, uint8_t val)
+> +{
+> +    TPMState *tpm_st = &spist->tpm_state;
+> +
+> +    trace_tpm_tis_spi_write(addr, val);
+> +    tpm_tis_write_data(tpm_st, addr, val, 1);
+> +}
+> +
+> +static uint8_t tpm_tis_spi_read(TPMStateSPI *spist, uint32_t addr)
+> +{
+> +    TPMState *tpm_st = &spist->tpm_state;
+> +    uint8_t data;
+> +
+> +    data = tpm_tis_read_data(tpm_st, addr, 1);
+> +    trace_tpm_tis_spi_read(addr, data);
+> +    return data;
+> +}
+> +
+> +static Property tpm_tis_spi_properties[] = {
+> +    DEFINE_PROP_TPMBE("tpmdev", TPMStateSPI, tpm_state.be_driver),
+> +    DEFINE_PROP_END_OF_LIST(),
+> +};
+> +
+> +static void tpm_tis_spi_reset(DeviceState *dev)
+> +{
+> +    TPMStateSPI *spist = TPM_TIS_SPI(dev);
+> +    TPMState *s = &spist->tpm_state;
+> +
+> +    tpm_tis_spi_clear_data(spist);
+> +    return tpm_tis_reset(s);
+> +}
+> +
+> +static uint32_t tpm_transfer(SSIPeripheral *ss, uint32_t tx)
+
+rename to tpm_tis_spi_transfer
+
+> +{
+> +    TPMStateSPI *spist = TPM_TIS_SPI(ss);
+> +    uint32_t rx = 0;
+> +    uint8_t byte;       /* reversed byte value */
+> +    uint8_t offset = 0; /* offset of byte in payload */
+> +    uint8_t index;      /* index of data byte in transfer */
+> +    uint32_t tis_addr;  /* tis address including locty */
+> +
+> +    /* new transfer or not */
+> +    if (spist->command) {   /* new transfer start */
+> +        if (spist->spi_state != SPI_STATE_IDLE) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "unexpected new transfer\n");
+> +        }
+> +        spist->byte_offset = 0;
+> +        spist->wait_state_cnt = 0;
+> +    }
+> +    /*
+> +     * Explanation of wait_state:
+> +     * The original TPM model did not have wait state or "flow control" support
+> +     * built in.  If you wanted to read a TPM register through SPI you sent
+> +     * the first byte with the read/write bit and size, then three address bytes
+> +     * and any additional bytes after that were don't care bytes for reads and
+> +     * the model would begin returning byte data to the SPI reader from the
+> +     * register address provided.  In the real world this would mean that a
+> +     * TPM device had only the time between the 31st clock and the 32nd clock
+> +     * to fetch the register data that it had to provide to SPI MISO starting
+> +     * with the 32nd clock.
+> +     *
+> +     * In reality the TPM begins introducing a wait state at the 31st clock
+> +     * by holding MISO low.  This is how it controls the "flow" of the
+> +     * operation. Once the data the TPM needs to return is ready it will
+> +     * select bit 31 + (8*N) to send back a 1 which indicates that it will
+> +     * now start returning data on MISO.
+> +     *
+> +     * The same wait states are applied to writes.  In either the read or write
+> +     * case the wait state occurs between the command+address (4 bytes) and the
+> +     * data (1-n bytes) sections of the SPI frame.  The code below introduces
+> +     * the support for a 32 bit wait state for P10.  All reads and writes
+> +     * through the SPI interface MUST now be aware of the need to do flow
+> +     * control in order to use the TPM via SPI.
+> +     *
+> +     * In conjunction with these changes there were changes made to the SPIM
+> +     * engine that was introduced in P10 to support the 6x op code which is
+> +     * used to receive wait state 0s on the MISO line until it sees the b'1'
+> +     * come back before continuing to read real data from the SPI device(TPM).
+> +     */
+> +
+> +    trace_tpm_tis_spi_transfer_data("Payload byte_offset", spist->byte_offset);
+> +    /* process payload data */
+> +    while (offset < 4) {
+> +        spist->command = false;
+> +        byte = (tx >> (24 - 8 * offset)) & 0xFF;
+> +        trace_tpm_tis_spi_transfer_data("Extracted byte", byte);
+> +        trace_tpm_tis_spi_transfer_data("Payload offset", offset);
+> +        switch (spist->byte_offset) {
+> +        case 0:    /* command byte */
+> +            if ((byte & CMD_BYTE_WRITE) == 0) {  /* bit-7 */
+> +                spist->spi_state = SPI_STATE_WRITE;
+> +                trace_tpm_tis_spi_transfer_event("spi write");
+> +            } else {
+> +                spist->spi_state = SPI_STATE_READ;
+> +                trace_tpm_tis_spi_transfer_event("spi read");
+> +            }
+> +            spist->xfer_size = (byte & CMD_BYTE_XFER_SZ_MASK) + 1;
+> +            trace_tpm_tis_spi_transfer_data("xfer_size", spist->xfer_size);
+> +            break;
+> +        case 1:     /* 1st address byte */
+> +            if (byte != TIS_SPI_HIGH_ADDR_BYTE) {
+> +                qemu_log_mask(LOG_GUEST_ERROR, "incorrect high address 0x%x\n",
+> +                              byte);
+> +            }
+> +            spist->reg_addr = byte << 16;
+> +            trace_tpm_tis_spi_transfer_data("first addr byte", byte);
+> +            trace_tpm_tis_spi_transfer_addr("reg_addr", spist->reg_addr);
+> +            break;
+> +        case 2:     /* 2nd address byte */
+> +            spist->reg_addr |= byte << 8;
+> +            trace_tpm_tis_spi_transfer_data("second addr byte", byte);
+> +            trace_tpm_tis_spi_transfer_addr("reg_addr", spist->reg_addr);
+> +            break;
+> +        case 3:     /* 3rd address byte */
+> +            spist->reg_addr |= byte;
+> +            trace_tpm_tis_spi_transfer_data("third addr byte", byte);
+> +            trace_tpm_tis_spi_transfer_addr("reg_addr", spist->reg_addr);
+> +            break;
+> +        default:    /* data bytes */
+> +            if (spist->wait_state_cnt < 4) {
+> +                spist->wait_state_cnt++;
+> +                if (spist->wait_state_cnt == 4) {
+> +                    trace_tpm_tis_spi_transfer_data("wait complete, count",
+> +                                                     spist->wait_state_cnt);
+> +                    rx = rx | (0x01 << (24 - offset * 8));
+> +                    return rx;
+> +                } else {
+> +                    trace_tpm_tis_spi_transfer_data("in wait state, count",
+> +                                                     spist->wait_state_cnt);
+> +                    rx = 0;
+> +                }
+> +            } else {
+> +                index = spist->byte_offset - 4;
+> +                trace_tpm_tis_spi_transfer_data("index", index);
+> +                trace_tpm_tis_spi_transfer_data("data byte", byte);
+> +                trace_tpm_tis_spi_transfer_addr("reg_addr", spist->reg_addr);
+> +                if (index >= spist->xfer_size) {
+> +                    /*
+> +                     * SPI SSI framework limits both rx and tx
+> +                     * to fixed 4-byte with each xfer
+> +                     */
+> +                    trace_tpm_tis_spi_transfer_event("index exceeds xfer_size");
+> +                    return rx;
+> +                }
+> +                tis_addr = spist->reg_addr + (index % 4);
+> +                if (spist->spi_state == SPI_STATE_WRITE) {
+> +                    tpm_tis_spi_write(spist, tis_addr, byte);
+> +                } else {
+> +                    byte = tpm_tis_spi_read(spist, tis_addr);
+> +                    rx = rx | (byte << (24 - offset * 8));
+> +                    trace_tpm_tis_spi_transfer_data("byte added to response",
+> +                                                     byte);
+> +                    trace_tpm_tis_spi_transfer_data("offset", offset);
+> +                }
+> +            }
+> +            break;
+> +        }
+> +        if ((spist->wait_state_cnt == 0) || (spist->wait_state_cnt == 4)) {
+> +            offset++;
+> +            spist->byte_offset++;
+> +        } else {
+> +            break;
+> +        }
+> +    }
+> +    return rx;
+> +}
+> +
+> +static int tpm_cs(SSIPeripheral *ss, bool select)
+
+tpm_tis_spi_cs
+
+> +{
+> +    TPMStateSPI *spist = TPM_TIS_SPI(ss);
+> +
+> +    if (select) {
+> +        spist->command = false;
+> +        spist->spi_state = SPI_STATE_IDLE;
+> +    } else {
+> +        spist->command = true;
+> +    }
+> +    return 0;
+> +}
+> +
+> +static void tpm_realize(SSIPeripheral *dev, Error **errp)
+
+tpm_tis_spi_realize
+
+> +{
+> +    TPMStateSPI *spist = TPM_TIS_SPI(dev);
+> +    TPMState *s = &spist->tpm_state;
+> +
+> +    if (!tpm_find()) {
+> +        error_setg(errp, "at most one TPM device is permitted");
+> +        return;
+> +    }
+> +
+> +    s->be_driver = qemu_find_tpm_be("tpm0");
+> +
+> +    if (!s->be_driver) {
+> +        error_setg(errp, "unable to find tpm backend device");
+> +        return;
+> +    }
+> +}
+> +
+> +static void tpm_tis_spi_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    TPMIfClass *tc = TPM_IF_CLASS(klass);
+> +    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
+> +
+> +    k->transfer = tpm_transfer;
+> +    k->realize = tpm_realize;
+> +    k->set_cs = tpm_cs;
+> +    k->cs_polarity = SSI_CS_LOW;
+> +
+> +    device_class_set_legacy_reset(dc, tpm_tis_spi_reset);
+> +    device_class_set_props(dc, tpm_tis_spi_properties);
+> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> +
+> +    dc->desc = "SPI TPM";
+> +    dc->vmsd = &vmstate_tpm_tis_spi;
+> +
+> +    tc->model = TPM_MODEL_TPM_TIS;
+> +    tc->request_completed = tpm_tis_spi_request_completed;
+> +    tc->get_version = tpm_tis_spi_get_tpm_version;
+> +}
+> +
+> +static const TypeInfo tpm_tis_spi_info = {
+> +    .name          = TYPE_TPM_TIS_SPI,
+> +    .parent        = TYPE_SSI_PERIPHERAL,
+> +    .instance_size = sizeof(TPMStateSPI),
+> +    .class_init    = tpm_tis_spi_class_init,
+> +    .interfaces    = (InterfaceInfo[]) {
+> +        { TYPE_TPM_IF },
+> +        { }
+> +    }
+> +};
+> +
+> +static void tpm_tis_spi_register_types(void)
+> +{
+> +    type_register_static(&tpm_tis_spi_info);
+> +}
+> +
+> +type_init(tpm_tis_spi_register_types)
+> diff --git a/hw/tpm/Kconfig b/hw/tpm/Kconfig
+> index a46663288c..5951c225cc 100644
+> --- a/hw/tpm/Kconfig
+> +++ b/hw/tpm/Kconfig
+> @@ -5,6 +5,12 @@ config TPM_TIS_I2C
+>       select I2C
+>       select TPM_TIS
+>   
+> +config TPM_TIS_SPI
+> +    bool
+> +    depends on TPM
+> +    select TPM_BACKEND
+> +    select TPM_TIS
+> +
+>   config TPM_TIS_ISA
+>       bool
+>       depends on TPM && ISA_BUS
+> diff --git a/hw/tpm/meson.build b/hw/tpm/meson.build
+> index 6968e60b3f..e03cfb11b9 100644
+> --- a/hw/tpm/meson.build
+> +++ b/hw/tpm/meson.build
+> @@ -2,6 +2,7 @@ system_ss.add(when: 'CONFIG_TPM_TIS', if_true: files('tpm_tis_common.c'))
+>   system_ss.add(when: 'CONFIG_TPM_TIS_ISA', if_true: files('tpm_tis_isa.c'))
+>   system_ss.add(when: 'CONFIG_TPM_TIS_SYSBUS', if_true: files('tpm_tis_sysbus.c'))
+>   system_ss.add(when: 'CONFIG_TPM_TIS_I2C', if_true: files('tpm_tis_i2c.c'))
+> +system_ss.add(when: 'CONFIG_TPM_TIS_SPI', if_true: files('tpm_tis_spi.c'))
+>   system_ss.add(when: 'CONFIG_TPM_CRB', if_true: files('tpm_crb.c'))
+>   system_ss.add(when: 'CONFIG_TPM_TIS', if_true: files('tpm_ppi.c'))
+>   system_ss.add(when: 'CONFIG_TPM_CRB', if_true: files('tpm_ppi.c'))
+> diff --git a/hw/tpm/trace-events b/hw/tpm/trace-events
+> index fa882dfefe..0324ceb6d0 100644
+> --- a/hw/tpm/trace-events
+> +++ b/hw/tpm/trace-events
+> @@ -42,3 +42,10 @@ tpm_tis_i2c_recv(uint8_t data) "TPM I2C read: 0x%X"
+>   tpm_tis_i2c_send(uint8_t data) "TPM I2C write: 0x%X"
+>   tpm_tis_i2c_event(const char *event) "TPM I2C event: %s"
+>   tpm_tis_i2c_send_reg(const char *name, int reg) "TPM I2C write register: %s(0x%X)"
+> +
+> +# tpm_tis_spi.c
+> +tpm_tis_spi_write(uint32_t addr, uint8_t val) "TPM SPI write - addr:0x%08X 0x%02x"
+> +tpm_tis_spi_read(uint32_t addr, uint8_t val) "TPM SPI read - addr:0x%08X 0x%02x"
+> +tpm_tis_spi_transfer_event(const char *event) "TPM SPI XFER event: %s"
+> +tpm_tis_spi_transfer_data(const char *name, uint8_t val) "TPM SPI XFER: %s = 0x%02x"
+> +tpm_tis_spi_transfer_addr(const char *name, uint32_t addr) "TPM SPI XFER: %s = 0x%08x"
+
 
