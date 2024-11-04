@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A68D1BDF4
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E2C2D1BDF3
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:09:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t84Gv-0003VY-AJ; Mon, 04 Nov 2024 16:06:01 -0500
+	id 1t84JM-00059i-9a; Mon, 04 Nov 2024 16:08:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Gr-0003S1-Vb
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:05:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84JK-0004wh-IN
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:08:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Gq-0005HU-Bi
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:05:57 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84JI-0005TI-NE
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:08:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730754355;
+ s=mimecast20190719; t=1730754507;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=5o6Iz1/wP5zB957KDr4w2+nYVqYKn/FATzH9r01QwTQ=;
- b=Hw7T8uhPdKy/YfA5FpQBatHSFDaeaGPmzKpccl+h14B+GNY7gkTeK0UVFWOolCPm632bEQ
- IZfv5gpx6+27/rqXF+WQMpvZfLe2rFNgBA/+o45R1VfTDdafQVjTIqkgGKjXLtQAdlNJ6C
- EVhPzE+Le1Efrq2xL8JguhWYmwSqt0k=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DreMzE5l8O9RuGS8oEwWkZEzopXOO7MX3eO79wqdwag=;
+ b=aqLwKdNxosxZZGaeday49iLfAcLtOTSylZ6IeL4+RlsZg2K6xfScbCDeVKWU20Jp++CpQp
+ +BjUpcIkBzo6/zLEULcFu8mexUKgLmhxBSmFxlxb5JkB7H0NLn8pc6gn37o3awkB8KowBK
+ P94H3czbcDndSZbpKg0waDBS0RZstjY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-310-jfhwKp3MMxGFBIMGJinqIQ-1; Mon, 04 Nov 2024 16:05:54 -0500
-X-MC-Unique: jfhwKp3MMxGFBIMGJinqIQ-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5c95b050667so4705633a12.2
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:05:54 -0800 (PST)
+ us-mta-663-1VtKnJMnPhyHCIex6-exig-1; Mon, 04 Nov 2024 16:08:26 -0500
+X-MC-Unique: 1VtKnJMnPhyHCIex6-exig-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43157cff1d1so34461725e9.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:08:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730754353; x=1731359153;
+ d=1e100.net; s=20230601; t=1730754505; x=1731359305;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5o6Iz1/wP5zB957KDr4w2+nYVqYKn/FATzH9r01QwTQ=;
- b=PO704yazaNdATFjxfEtHi/0Hc4dM4nw0rJCKLo0GLqeNdsGXsPtL7U5kyQel5RFR1R
- N+m+A5YMBRokdfisyAZ81h0S3DobLyN3kM+VOwN36IyRMPVSWqM6EKPd2D0NtooKmpu8
- KuOngDLKRJlHOhlRhLhU2gjWF1vd8bQiidXJJx+mOpzV+Librj2a1RliyYqMH/SEy2yl
- kOmAamHf/pp1/4tezcLtnxQ57noC1t7HYFdaHkF9AQTnz7XK6EmdSA6p4hsmafmUp42h
- VuyM8Xy/12OGy5SnK3f8Wvd/qmpov1yN3I7iE4/qZppuC6PgDxfXo5Kfvw+mH1nBuRP8
- Xekg==
-X-Gm-Message-State: AOJu0Yy4b88/CQ5cnNeiWifmXUVZo+yAdApMZBpqhaHkeI8EDeZ7UN5M
- 59pkeiD1LvESk+bHnE+FEqUUa/lSbe8wZFhThZe08e7WkCxIqD6jrvoAhtnZ44qWKVl9GPhgcCy
- JJz+4/oYkWZmNaXkskpvCfwNsZ6aQ/MHSt52Ttm/ZHQ5abW6A5WorG+r+RRI9Bj1JUUCF8mFtev
- yP9rYmqG2vPVlPjW4HG2dEqxzfjU1Dtw==
-X-Received: by 2002:a05:6402:3592:b0:5cd:5732:ecfe with SMTP id
- 4fb4d7f45d1cf-5cea966bd05mr15314543a12.5.1730754353032; 
- Mon, 04 Nov 2024 13:05:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFqt9FZqCcmy3VPlZTkcJKX4vYLKJdFxciWf0K/FLe0rmttyz/5F2xzOazkvwO8wp001NhmOg==
-X-Received: by 2002:a05:6402:3592:b0:5cd:5732:ecfe with SMTP id
- 4fb4d7f45d1cf-5cea966bd05mr15314526a12.5.1730754352536; 
- Mon, 04 Nov 2024 13:05:52 -0800 (PST)
+ bh=DreMzE5l8O9RuGS8oEwWkZEzopXOO7MX3eO79wqdwag=;
+ b=pfE81RWkgGdoVQElWwtLhpNssSI+MORpcw2oVCXfwCghlHsxllbj6+LsnF/ePyunMN
+ 3XcN+ykkhMrj55w4mv7AbdKqHbHRca2l/kgQA8l5Dwf6BvVszHhw32zEiIP+z1PbCxHj
+ nBUIG/v56A/Cb0zMWBIPu/Azk1N6jbK/IJPcQBlV3bSkb/IllnW2pXUhW4vxv1By6nNJ
+ rBkjdbqpXguOFf7zbLqmcvPBxMBMp1owfr7wmnbcZpmq4sYFlwghwbXYAUpNHqIHTCjn
+ PuYltrGomR6x0reMV+bRTAgX/vPGOW5DlAqBe6AUp4tDyP/gphyNbAMpexvB9/0LJ9MM
+ JPTg==
+X-Gm-Message-State: AOJu0YySjxUUdDf6eqJwsci8WfRc0W3EYoK1yIJxNQdDEs6CldNl+iro
+ zZMPW0BfQ+TWTzRzocltEbb6GpIkSXLiKLQePHEP1Gg8lZCV8O7LV2/Zcxr/FYbJJPMpPFSIUng
+ GsFSYZ+rBJSD4xeaPVRep1DaA3X+RIe8X4EwHlNhLQhGz//JLZHoB48eRee6T2lUOfqmEB2R/pi
+ 4cLUO/YyUvSKG9Uik5IZ+6xGJL5GlgsA==
+X-Received: by 2002:a05:600c:a41:b0:431:5021:32 with SMTP id
+ 5b1f17b1804b1-4327b6f9564mr136272385e9.6.1730754505028; 
+ Mon, 04 Nov 2024 13:08:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH5BfoHcABNNuxPmbIEF3HHjRET8q5SOeMgJ7vx6hop8SHt4ixfDa7XVntgZxKzdv2OPjulPQ==
+X-Received: by 2002:a05:600c:a41:b0:431:5021:32 with SMTP id
+ 5b1f17b1804b1-4327b6f9564mr136272205e9.6.1730754504579; 
+ Mon, 04 Nov 2024 13:08:24 -0800 (PST)
 Received: from redhat.com ([2.52.14.134]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cee6aae181sm300645a12.19.2024.11.04.13.05.49
+ 5b1f17b1804b1-432a26f51d4sm1020455e9.1.2024.11.04.13.08.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 13:05:51 -0800 (PST)
-Date: Mon, 4 Nov 2024 16:05:48 -0500
+ Mon, 04 Nov 2024 13:08:23 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:08:20 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, "Huang, Ying" <ying.huang@intel.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 06/65] hw/acpi: Rename build_all_acpi_generic_initiators() to
- build_acpi_generic_initiator()
-Message-ID: <a20b6c8f0b279edf370bc20b7845f87c36d03f7a.1730754238.git.mst@redhat.com>
+ Albert Esteve <aesteve@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 42/65] vhost-user: fix shared object return values
+Message-ID: <eea5aeef84e1b74f515b474d3a86377701f93750.1730754238.git.mst@redhat.com>
 References: <cover.1730754238.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -79,14 +77,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1730754238.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,43 +102,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Albert Esteve <aesteve@redhat.com>
 
-Igor noted that this function only builds one instance, so was rather
-misleadingly named. Fix that.
+VHOST_USER_BACKEND_SHARED_OBJECT_ADD and
+VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE state
+in the spec that they return 0 for successful
+operations, non-zero otherwise. However,
+implementation relies on the return types
+of the virtio-dmabuf library, with opposite
+semantics (true if everything is correct,
+false otherwise). Therefore, current
+implementation violates the specification.
 
-Suggested-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Tested-by: "Huang, Ying" <ying.huang@intel.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240916171017.1841767-5-Jonathan.Cameron@huawei.com>
+Revert the logic so that the implementation
+of the vhost-user handling methods matches
+the specification.
+
+Fixes: 043e127a126bb3ceb5fc753deee27d261fd0c5ce
+Fixes: 160947666276c5b7f6bca4d746bcac2966635d79
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
+Message-Id: <20241022124615.585596-1-aesteve@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/acpi/acpi_generic_initiator.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/virtio/vhost-user.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-index 7665b16107..73bafaaaea 100644
---- a/hw/acpi/acpi_generic_initiator.c
-+++ b/hw/acpi/acpi_generic_initiator.c
-@@ -74,7 +74,7 @@ static void acpi_generic_initiator_class_init(ObjectClass *oc, void *data)
-         acpi_generic_initiator_set_node, NULL, NULL);
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index d1b0893b4d..f170f0b25b 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -1623,9 +1623,14 @@ vhost_user_backend_handle_shared_object_add(struct vhost_dev *dev,
+     QemuUUID uuid;
+ 
+     memcpy(uuid.data, object->uuid, sizeof(object->uuid));
+-    return virtio_add_vhost_device(&uuid, dev);
++    return !virtio_add_vhost_device(&uuid, dev);
  }
  
--static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
-+static int build_acpi_generic_initiator(Object *obj, void *opaque)
- {
-     MachineState *ms = MACHINE(qdev_get_machine());
-     AcpiGenericInitiator *gi;
-@@ -111,6 +111,6 @@ static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
- void build_srat_generic_pci_initiator(GArray *table_data)
- {
-     object_child_foreach_recursive(object_get_root(),
--                                   build_all_acpi_generic_initiators,
-+                                   build_acpi_generic_initiator,
-                                    table_data);
++/*
++ * Handle VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE backend requests.
++ *
++ * Return: 0 on success, 1 on error.
++ */
+ static int
+ vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,
+                                                VhostUserShared *object)
+@@ -1639,16 +1644,16 @@ vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,
+         struct vhost_dev *owner = virtio_lookup_vhost_device(&uuid);
+         if (dev != owner) {
+             /* Not allowed to remove non-owned entries */
+-            return 0;
++            return 1;
+         }
+         break;
+     }
+     default:
+         /* Not allowed to remove non-owned entries */
+-        return 0;
++        return 1;
+     }
+ 
+-    return virtio_remove_resource(&uuid);
++    return !virtio_remove_resource(&uuid);
  }
+ 
+ static bool vhost_user_send_resp(QIOChannel *ioc, VhostUserHeader *hdr,
 -- 
 MST
 
