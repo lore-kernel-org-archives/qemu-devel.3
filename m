@@ -4,93 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 030E6D1BDD0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 290BAD1BDD4
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 17:36:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t80sO-0005UC-GM; Mon, 04 Nov 2024 12:28:28 -0500
+	id 1t80zn-0000kG-U3; Mon, 04 Nov 2024 12:36:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t80sL-0005S9-9o
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:28:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t80sH-0000Mq-Ao
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:28:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730741300;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rJilloWL9v8Cwa9SjhS4DIAn5GcNqvslur8KE0ijG6o=;
- b=X4xrpexINvbFFDL0da4aJr9LvX22u3f+YRIfoDPfMDs7LA8A9x/Z3hyr+ko3DigPh2Yebk
- /NNRI2U+sYtWaiVWQcNcEMyaRyhydFC93fhLd3+v6arpJRjo7Ejz1Wycnf7OjF7rLwQ3te
- 2uQeFPdp9BfgBCCswIZvhoHInaXK508=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-350-0j2yRt_-OgCveL_uA15gkQ-1; Mon, 04 Nov 2024 12:28:19 -0500
-X-MC-Unique: 0j2yRt_-OgCveL_uA15gkQ-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-539eb3416cdso4699051e87.1
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 09:28:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1t80ze-0000ZY-Rv
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:35:59 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1t80zc-0001Gx-L2
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:35:58 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4314c4cb752so39913535e9.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 09:35:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1730741753; x=1731346553; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GqDaH8FBkkxPNg8DatpDcuWIhwo3YQN0q5KUjv6axVU=;
+ b=MXjNH5H0E9r1qMRyj42epJ4E95+nDXNT/H4flHOVCnb9lgY+Rd9KgNaNL31U8zB1J+
+ klQ30awFab2NwtaYreWgezB/86wj0ll0ciRmcXK9y/djqdYnxh/yOz/Ya+7n7ufOBNNP
+ ZNo7ZrPaRQAZCjKks9KpO/M0lgcLg5hIPhx4hAXB5tkcH9MkPVS6KswWPnRTIclclowy
+ 5TwWlNsqrYn5dfybigTeTiU9MeNUgegvbNDqSVD9A+1oISRPgXH77SNj4+S7QnODpCL2
+ jxY4yhGgcn0HjpbiyuemU/UAPK0DAxunmQIN602HmZQr9cqJ5HYA1OJYRn0ZuMIVqJFu
+ ToQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730741296; x=1731346096;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rJilloWL9v8Cwa9SjhS4DIAn5GcNqvslur8KE0ijG6o=;
- b=EkGAH5XITy13LYgqf0nNcwYG+/i2SS0volPvcNG8bxZhbbxIDDPbcrbZDnHUQzfFVw
- tAJQR0a6awqHAtt1C9t56yGh85QkkXH40WLRddsWQrDLhSXIb2/4FmIRnW9tOlktf9ya
- SqDuY+EIRT/nQ0+A8ffMu0mXaafjiWYAkhmlIKd1/sN/QVhtjNAcfRAZ6SfLgWwmzSZo
- FBqmRbibNPcK5WVosr9myyvFT4dLau2WXLgv3m8jffXD/4bDa+d70q+HWs+btOlv5/jB
- ng/KSQ98V3xMekC7r4eJBFLyGyBT+IH2pEtdzHPr8fdTrKW/u6EIU0kzbkNLZLJx0y4F
- uwcA==
-X-Gm-Message-State: AOJu0YyvKIljqv2HH4WBzQJv2b1S52W+iODbcWaEVBp9loX/X25J+kn6
- 6Ir49rmKF/31I8lGA1UfVFjYQzW6y+aFJWFOfowUL+hAoxx+4Oy2Gpc9/BCZsgXXRf4xgNc9PFj
- C50ubNBm183/uQBCXumA1B9fBsH1KUZPYRd1n/tR5+LLoA7yEKDhsHhiuhiycWU7NaJlTdWztJi
- ldzFFas0EIiGnLJFw1yY7fvhj311EmrUOWVTrG9dk=
-X-Received: by 2002:a05:6512:6ca:b0:539:e88f:2398 with SMTP id
- 2adb3069b0e04-53b34a19082mr15881384e87.39.1730741296178; 
- Mon, 04 Nov 2024 09:28:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG5/G5lHJETWS/M2/T7irkPpf7iLkrl4EKM+E9y/4r8NpxspclCOoSsZkRoSxKxTKO27xMHtg==
-X-Received: by 2002:a05:6512:6ca:b0:539:e88f:2398 with SMTP id
- 2adb3069b0e04-53b34a19082mr15881347e87.39.1730741295631; 
- Mon, 04 Nov 2024 09:28:15 -0800 (PST)
-Received: from [192.168.10.3] ([151.49.226.83])
+ d=1e100.net; s=20230601; t=1730741753; x=1731346553;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GqDaH8FBkkxPNg8DatpDcuWIhwo3YQN0q5KUjv6axVU=;
+ b=rta1iZfFAoqcrv1NRXBKgkBleRUkPZlplCVRXyMqT2VXRxfHATvW/yzWi9zFYhOPMt
+ 75vurYAZcDdUfZg1qQ4ePrnNDZsYo/0zDmhvC5w8uBbENN0AU4MxnKDWAjTOh6+8McQf
+ OaBNUPAgW5U9F5P8e+wm7s/TJZvIVDXab89GnC+R8dHhjOGqw2B8Mtn2bzU7q3EDTcRW
+ q7Se3mAz5Kw0RzJi9TKAOsfwimAv6XcMWth5Tb93b9yIsSpTiXwnzwwaFbXgI1P4fDH9
+ br/vMG2MXhC78RzLpi4Sbg7FTdeOt65v0p9M2xxHDLxu4488wG6Y5BsacxS+arC9YbVV
+ 6a7g==
+X-Gm-Message-State: AOJu0YwrFuK1eLUO4ef7N3Az5AvqBfkhbJ1AmNo3VZA2a9tFsWI1K7Qd
+ vOEsRkxYEJ/vxe7hq47HzfUW8+Fd4x7W2A3snX8AHl84lXPTTkceFaCtbU3rRnamwiosQPRIIW3
+ 1
+X-Google-Smtp-Source: AGHT+IGNLjSfJDjKIVaaU3cbLo0NlN/k40pHJZkz97N2i+RohIklIxKhAuyH+Jsmw28gcknfrepc5w==
+X-Received: by 2002:a05:600c:3b14:b0:42c:de34:34c1 with SMTP id
+ 5b1f17b1804b1-4327b6f9590mr141796465e9.2.1730741753590; 
+ Mon, 04 Nov 2024 09:35:53 -0800 (PST)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4327d698055sm160636155e9.40.2024.11.04.09.28.14
+ 5b1f17b1804b1-431bd917fa7sm187499735e9.18.2024.11.04.09.35.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 09:28:14 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 24/40] rust/pl011: Use correct masks for IBRD and FBRD
-Date: Mon,  4 Nov 2024 18:27:03 +0100
-Message-ID: <20241104172721.180255-25-pbonzini@redhat.com>
+ Mon, 04 Nov 2024 09:35:53 -0800 (PST)
+From: Andrew Jones <ajones@ventanamicro.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH] target/riscv/kvm: Fix leak of reg list
+Date: Mon,  4 Nov 2024 18:35:52 +0100
+Message-ID: <20241104173551.125069-2-ajones@ventanamicro.com>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241104172721.180255-1-pbonzini@redhat.com>
-References: <20241104172721.180255-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,37 +94,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Free the temporary register list.
 
-Port fix from commit cd247eae16ab1b9ce97fd34c000c1b883feeda45
-"hw/char/pl011: Use correct masks for IBRD and FBRD"
-
-Related issue: <https://gitlab.com/qemu-project/qemu/-/issues/2610>
-
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20241024-rust-round-2-v1-9-051e7a25b978@linaro.org
+Fixes: 608bdebb6075 ("target/riscv/kvm: support KVM_GET_REG_LIST")
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
 ---
- rust/hw/char/pl011/src/device.rs | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/riscv/kvm/kvm-cpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 98357db04e8..788b47203b1 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -19,10 +19,10 @@
- };
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index cbda4596da73..effd8fed815d 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1170,6 +1170,8 @@ static void kvm_riscv_init_multiext_cfg(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
+     }
  
- /// Integer Baud Rate Divider, `UARTIBRD`
--const IBRD_MASK: u32 = 0x3f;
-+const IBRD_MASK: u32 = 0xffff;
+     kvm_riscv_check_sbi_dbcn_support(cpu, kvmcpu, reglist);
++
++    g_free(reglist);
+ }
  
- /// Fractional Baud Rate Divider, `UARTFBRD`
--const FBRD_MASK: u32 = 0xffff;
-+const FBRD_MASK: u32 = 0x3f;
- 
- const DATA_BREAK: u32 = 1 << 10;
- 
+ static void riscv_init_kvm_registers(Object *cpu_obj)
 -- 
 2.47.0
 
