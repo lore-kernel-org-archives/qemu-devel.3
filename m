@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7820D1BDF2
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A68D1BDF4
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:09:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t84J6-000347-1p; Mon, 04 Nov 2024 16:08:16 -0500
+	id 1t84Gv-0003VY-AJ; Mon, 04 Nov 2024 16:06:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Ip-0002mP-Bh
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:08:01 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Gr-0003S1-Vb
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:05:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84In-0005R1-Ni
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:07:59 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Gq-0005HU-Bi
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:05:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730754477;
+ s=mimecast20190719; t=1730754355;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=eiDVC07ihD3E+eT5P1KT2iajuWbM2zWQGNYOe37hqBQ=;
- b=O60Jb03p3DkbKd6vr/e5yEhf6/6vX95OBksH5pwBU8rmjhSEkCGECWBGL4DPJgtagJzLkT
- bxl5fDHTBOApV2wp+JBoGeN7CEwtMr035lHcu+mKo/VUQtmH1s62RctNh/01GCzY5KWpVJ
- OGYzNFlYRUvHUTniWUF/QQdNxLG7TgY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5o6Iz1/wP5zB957KDr4w2+nYVqYKn/FATzH9r01QwTQ=;
+ b=Hw7T8uhPdKy/YfA5FpQBatHSFDaeaGPmzKpccl+h14B+GNY7gkTeK0UVFWOolCPm632bEQ
+ IZfv5gpx6+27/rqXF+WQMpvZfLe2rFNgBA/+o45R1VfTDdafQVjTIqkgGKjXLtQAdlNJ6C
+ EVhPzE+Le1Efrq2xL8JguhWYmwSqt0k=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-212-vtt-YCSSM4-2qDPFFVq_ig-1; Mon, 04 Nov 2024 16:07:56 -0500
-X-MC-Unique: vtt-YCSSM4-2qDPFFVq_ig-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4315544642eso34449445e9.3
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:07:55 -0800 (PST)
+ us-mta-310-jfhwKp3MMxGFBIMGJinqIQ-1; Mon, 04 Nov 2024 16:05:54 -0500
+X-MC-Unique: jfhwKp3MMxGFBIMGJinqIQ-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5c95b050667so4705633a12.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:05:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730754474; x=1731359274;
+ d=1e100.net; s=20230601; t=1730754353; x=1731359153;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eiDVC07ihD3E+eT5P1KT2iajuWbM2zWQGNYOe37hqBQ=;
- b=Km8/vPRcW/u1XKNCgFrfKqmgbrUP0QQZWSojinE8dIs07kOWD6Q+lOoxHg0CRHUvrw
- AH8ygkAmC9bKVmuKbG7cL/X+WuGdn+Rh+QmWKCidm9eq772PlHFWw/+LBQZdrw7RcmDG
- UyKoqfVuMogZ2frWFE7TllQ1qSJWdsBa0RaKi+xy54Hj/6PkHRSSwKbB6BeQOonHM6kO
- P1BvadYi7TQLl8t5K8BdlGisvc1zMzTST4M/S6MZtIe6rbvmIRKTwO+ILE308mRVl7Sh
- 6AzpY0DHrCR8jRk/VfMn2JbBhp2ddlcPanOIaK53oXMiJ6wszI/4OUjklU/Bp/uUZROD
- niRg==
-X-Gm-Message-State: AOJu0YzxyOtfLi7EMAD5Wt7kowyjnq4GXBdCK8vlkBAXkv3aCkcpti3k
- uNWSiDjMKKFVTJDYW5lvToDS5VyyR0MQlNY7TQyB2TMmZs9uHKHlbuVQMAJHc6HoLmxT0NAfnx0
- FXIZwkwdl+xzZC0iixc48oE8XA/DwCqf8Jf8qUhLBbGiPOJbcPfK7ZYScBYEVRpAIui5vJRcQ2n
- Dww8xrJ6xtqMZSRgVWda5Ys5VnBMyFzQ==
-X-Received: by 2002:a05:600c:1c26:b0:432:9fdb:1490 with SMTP id
- 5b1f17b1804b1-4329fdb1571mr19515005e9.7.1730754474376; 
- Mon, 04 Nov 2024 13:07:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGg4zXy6CILSRzJGN51NdBd/XWyGadrcWz8GUqq7CELFdyOB6K4PU34S00rLv5jleFJwPP8ag==
-X-Received: by 2002:a05:600c:1c26:b0:432:9fdb:1490 with SMTP id
- 5b1f17b1804b1-4329fdb1571mr19514745e9.7.1730754473854; 
- Mon, 04 Nov 2024 13:07:53 -0800 (PST)
+ bh=5o6Iz1/wP5zB957KDr4w2+nYVqYKn/FATzH9r01QwTQ=;
+ b=PO704yazaNdATFjxfEtHi/0Hc4dM4nw0rJCKLo0GLqeNdsGXsPtL7U5kyQel5RFR1R
+ N+m+A5YMBRokdfisyAZ81h0S3DobLyN3kM+VOwN36IyRMPVSWqM6EKPd2D0NtooKmpu8
+ KuOngDLKRJlHOhlRhLhU2gjWF1vd8bQiidXJJx+mOpzV+Librj2a1RliyYqMH/SEy2yl
+ kOmAamHf/pp1/4tezcLtnxQ57noC1t7HYFdaHkF9AQTnz7XK6EmdSA6p4hsmafmUp42h
+ VuyM8Xy/12OGy5SnK3f8Wvd/qmpov1yN3I7iE4/qZppuC6PgDxfXo5Kfvw+mH1nBuRP8
+ Xekg==
+X-Gm-Message-State: AOJu0Yy4b88/CQ5cnNeiWifmXUVZo+yAdApMZBpqhaHkeI8EDeZ7UN5M
+ 59pkeiD1LvESk+bHnE+FEqUUa/lSbe8wZFhThZe08e7WkCxIqD6jrvoAhtnZ44qWKVl9GPhgcCy
+ JJz+4/oYkWZmNaXkskpvCfwNsZ6aQ/MHSt52Ttm/ZHQ5abW6A5WorG+r+RRI9Bj1JUUCF8mFtev
+ yP9rYmqG2vPVlPjW4HG2dEqxzfjU1Dtw==
+X-Received: by 2002:a05:6402:3592:b0:5cd:5732:ecfe with SMTP id
+ 4fb4d7f45d1cf-5cea966bd05mr15314543a12.5.1730754353032; 
+ Mon, 04 Nov 2024 13:05:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFqt9FZqCcmy3VPlZTkcJKX4vYLKJdFxciWf0K/FLe0rmttyz/5F2xzOazkvwO8wp001NhmOg==
+X-Received: by 2002:a05:6402:3592:b0:5cd:5732:ecfe with SMTP id
+ 4fb4d7f45d1cf-5cea966bd05mr15314526a12.5.1730754352536; 
+ Mon, 04 Nov 2024 13:05:52 -0800 (PST)
 Received: from redhat.com ([2.52.14.134]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bd9207d4sm191968705e9.20.2024.11.04.13.07.50
+ 4fb4d7f45d1cf-5cee6aae181sm300645a12.19.2024.11.04.13.05.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 13:07:52 -0800 (PST)
-Date: Mon, 4 Nov 2024 16:07:49 -0500
+ Mon, 04 Nov 2024 13:05:51 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:05:48 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- yaozhenguo <yaozhenguo1@gmail.com>, yaozhenguo <yaozhenguo@jd.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 34/65] virtio/vhost-user: fix qemu abort when hotunplug
- vhost-user-net device
-Message-ID: <963b02764537c66af88b82bd297c375b147e0756.1730754238.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, "Huang, Ying" <ying.huang@intel.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 06/65] hw/acpi: Rename build_all_acpi_generic_initiators() to
+ build_acpi_generic_initiator()
+Message-ID: <a20b6c8f0b279edf370bc20b7845f87c36d03f7a.1730754238.git.mst@redhat.com>
 References: <cover.1730754238.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -103,173 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: yaozhenguo <yaozhenguo1@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-During the hot-unplugging of vhost-user-net type network cards,
-the vhost_user_cleanup function may add the same rcu node to
-the rcu linked list. The function call in this case is as follows:
+Igor noted that this function only builds one instance, so was rather
+misleadingly named. Fix that.
 
-vhost_user_cleanup
-    ->vhost_user_host_notifier_remove
-        ->call_rcu(n, vhost_user_host_notifier_free, rcu);
-    ->g_free_rcu(n, rcu);
-
-When this happens, QEMU will abort in try_dequeue:
-
-if (head == &dummy && qatomic_mb_read(&tail) == &dummy.next) {
-    abort();
-}
-
-backtrace is as follows:
-0  __pthread_kill_implementation () at /usr/lib64/libc.so.6
-1  raise () at /usr/lib64/libc.so.6
-2  abort () at /usr/lib64/libc.so.6
-3  try_dequeue () at ../util/rcu.c:235
-4  call_rcu_thread (0) at ../util/rcu.c:288
-5  qemu_thread_start (0) at ../util/qemu-thread-posix.c:541
-6  start_thread () at /usr/lib64/libc.so.6
-7  clone3 () at /usr/lib64/libc.so.6
-
-The reason for the abort is that adding two identical nodes to
-the rcu linked list will cause the rcu linked list to become a ring,
-but when the dummy node is added after the two identical nodes,
-the ring is opened. But only one node is added to list with
-rcu_call_count added twice. This will cause rcu try_dequeue abort.
-
-This happens when n->addr != 0. In some scenarios, this does happen.
-For example, this situation will occur when using a 32-queue DPU
-vhost-user-net type network card for hot-unplug testing, because
-VhostUserHostNotifier->addr will be cleared during the processing of
-VHOST_USER_BACKEND_VRING_HOST_NOTIFIER_MSG. However,it is asynchronous,
-so we cannot guarantee that VhostUserHostNotifier->addr is zero in
-vhost_user_cleanup. Therefore, it is necessary to merge g_free_rcu
-and vhost_user_host_notifier_free into one rcu node.
-
-Fixes: 503e355465 ("virtio/vhost-user: dynamically assign VhostUserHostNotifiers")
-Signed-off-by: yaozhenguo <yaozhenguo@jd.com>
-Message-Id: <20241011102913.45582-1-yaozhenguo@jd.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Suggested-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Tested-by: "Huang, Ying" <ying.huang@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20240916171017.1841767-5-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/vhost-user.h |  1 +
- hw/virtio/vhost-user.c         | 46 +++++++++++++++++++---------------
- 2 files changed, 27 insertions(+), 20 deletions(-)
+ hw/acpi/acpi_generic_initiator.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 324cd8663a..9a3f238b43 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -54,6 +54,7 @@ typedef struct VhostUserHostNotifier {
-     void *addr;
-     void *unmap_addr;
-     int idx;
-+    bool destroy;
- } VhostUserHostNotifier;
+diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
+index 7665b16107..73bafaaaea 100644
+--- a/hw/acpi/acpi_generic_initiator.c
++++ b/hw/acpi/acpi_generic_initiator.c
+@@ -74,7 +74,7 @@ static void acpi_generic_initiator_class_init(ObjectClass *oc, void *data)
+         acpi_generic_initiator_set_node, NULL, NULL);
+ }
  
- /**
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 00561daa06..d1b0893b4d 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -1185,9 +1185,16 @@ static int vhost_user_set_vring_num(struct vhost_dev *dev,
- 
- static void vhost_user_host_notifier_free(VhostUserHostNotifier *n)
+-static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
++static int build_acpi_generic_initiator(Object *obj, void *opaque)
  {
--    assert(n && n->unmap_addr);
--    munmap(n->unmap_addr, qemu_real_host_page_size());
--    n->unmap_addr = NULL;
-+    if (n->unmap_addr) {
-+        munmap(n->unmap_addr, qemu_real_host_page_size());
-+        n->unmap_addr = NULL;
-+    }
-+    if (n->destroy) {
-+        memory_region_transaction_begin();
-+        object_unparent(OBJECT(&n->mr));
-+        memory_region_transaction_commit();
-+        g_free(n);
-+    }
- }
- 
- /*
-@@ -1195,17 +1202,28 @@ static void vhost_user_host_notifier_free(VhostUserHostNotifier *n)
-  * under rcu.
-  */
- static void vhost_user_host_notifier_remove(VhostUserHostNotifier *n,
--                                            VirtIODevice *vdev)
-+                                            VirtIODevice *vdev, bool destroy)
+     MachineState *ms = MACHINE(qdev_get_machine());
+     AcpiGenericInitiator *gi;
+@@ -111,6 +111,6 @@ static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
+ void build_srat_generic_pci_initiator(GArray *table_data)
  {
-+    /*
-+     * if destroy == false and n->addr == NULL, we have nothing to do.
-+     * so, just return.
-+     */
-+    if (!n || (!destroy && !n->addr)) {
-+        return;
-+    }
-+
-     if (n->addr) {
-         if (vdev) {
-+            memory_region_transaction_begin();
-             virtio_queue_set_host_notifier_mr(vdev, n->idx, &n->mr, false);
-+            memory_region_transaction_commit();
-         }
-         assert(!n->unmap_addr);
-         n->unmap_addr = n->addr;
-         n->addr = NULL;
--        call_rcu(n, vhost_user_host_notifier_free, rcu);
-     }
-+    n->destroy = destroy;
-+    call_rcu(n, vhost_user_host_notifier_free, rcu);
+     object_child_foreach_recursive(object_get_root(),
+-                                   build_all_acpi_generic_initiators,
++                                   build_acpi_generic_initiator,
+                                    table_data);
  }
- 
- static int vhost_user_set_vring_base(struct vhost_dev *dev,
-@@ -1279,9 +1297,7 @@ static int vhost_user_get_vring_base(struct vhost_dev *dev,
-     struct vhost_user *u = dev->opaque;
- 
-     VhostUserHostNotifier *n = fetch_notifier(u->user, ring->index);
--    if (n) {
--        vhost_user_host_notifier_remove(n, dev->vdev);
--    }
-+    vhost_user_host_notifier_remove(n, dev->vdev, false);
- 
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-@@ -1562,7 +1578,7 @@ static int vhost_user_backend_handle_vring_host_notifier(struct vhost_dev *dev,
-      * new mapped address.
-      */
-     n = fetch_or_create_notifier(user, queue_idx);
--    vhost_user_host_notifier_remove(n, vdev);
-+    vhost_user_host_notifier_remove(n, vdev, false);
- 
-     if (area->u64 & VHOST_USER_VRING_NOFD_MASK) {
-         return 0;
-@@ -2736,15 +2752,7 @@ static int vhost_user_set_inflight_fd(struct vhost_dev *dev,
- static void vhost_user_state_destroy(gpointer data)
- {
-     VhostUserHostNotifier *n = (VhostUserHostNotifier *) data;
--    if (n) {
--        vhost_user_host_notifier_remove(n, NULL);
--        object_unparent(OBJECT(&n->mr));
--        /*
--         * We can't free until vhost_user_host_notifier_remove has
--         * done it's thing so schedule the free with RCU.
--         */
--        g_free_rcu(n, rcu);
--    }
-+    vhost_user_host_notifier_remove(n, NULL, true);
- }
- 
- bool vhost_user_init(VhostUserState *user, CharBackend *chr, Error **errp)
-@@ -2765,9 +2773,7 @@ void vhost_user_cleanup(VhostUserState *user)
-     if (!user->chr) {
-         return;
-     }
--    memory_region_transaction_begin();
-     user->notifiers = (GPtrArray *) g_ptr_array_free(user->notifiers, true);
--    memory_region_transaction_commit();
-     user->chr = NULL;
- }
- 
 -- 
 MST
 
