@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC5AD1BDF2
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B13F7D1BDF3
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t84Hm-0005nG-6e; Mon, 04 Nov 2024 16:06:54 -0500
+	id 1t84K3-0000Is-C1; Mon, 04 Nov 2024 16:09:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Hj-0005dh-1l
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84K0-0008Sz-Ql
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:09:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Hf-0005L3-7E
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:49 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Jz-0005WO-7w
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:09:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730754406;
+ s=mimecast20190719; t=1730754550;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mvlW1QwJWNe5kggYv414OUm4j2VpwLnaPYotmjUzdE0=;
- b=jAGx9GwSMsJoEgadMl7+/hr0HE+ewPONiLDU0qjtTMdQQ/lZSewndbW9bj3YTSOeicGl/8
- PtfAO0WI+eki6vYJzL++fPpivFy6ii48rq26WY3i6lhE5hYLW2xC8aWjLHfO9qNEfwbXhU
- U8Cp9oviOrIKembO+KwU1dg/BQh5o/g=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+Qw3Qe8wV0ZOH6ROfQpES8yW2OtudwZHXLHI9Pq75U4=;
+ b=cjW3YhJo4eMYJc8dhjFEeSxnYITevv6zkIid2w++6xNDT7t3VC1cOZdJpv2pV/RDJh3LFQ
+ S4pHJ+f7FHFz3Xt0Q2oRxJ1IjDXHtv4k0PsYh2Ju1p9uTvXyAEGaH5fdS63BVYYYausly8
+ +LGYwglQ6ouLntTmpqUtJwTrUZGV4F8=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-gesHf-jNM6i366OtGH7hbg-1; Mon, 04 Nov 2024 16:06:45 -0500
-X-MC-Unique: gesHf-jNM6i366OtGH7hbg-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37d537292d7so3166616f8f.2
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:06:45 -0800 (PST)
+ us-mta-177-lyK73HrcNHmClx3GtGYq0A-1; Mon, 04 Nov 2024 16:09:09 -0500
+X-MC-Unique: lyK73HrcNHmClx3GtGYq0A-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37d4cf04bcfso2340520f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:09:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730754404; x=1731359204;
+ d=1e100.net; s=20230601; t=1730754547; x=1731359347;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mvlW1QwJWNe5kggYv414OUm4j2VpwLnaPYotmjUzdE0=;
- b=QK/vnNKiQFDB2qqdpWzSloWcgKWXCds1iW4EfWxDGY5zo06XFuj+TTh7nvV22MzlkZ
- e0pSSstjbmHfFjJoVibx6bIbyKR/2toIEn4pi7U67n+crVkdWDmg2N1ayQxYr1+4EeoD
- XB9bSK+PQfjZoEX2wzip8BtFzZo0xaGcl/FtVr6YAvVl0JYMmA0CJsVasqtsSKscERau
- xqol9lwfF8irhiHevPH2wIvlh88fPlJ/ZMbXgo9UT3SGcuGqmmp3cHiCQZairnf6w1SU
- HQu5ktkxkzraNCTKCq/SjklvZXy9adxPWFKLlyBLtbJKhACglj3Z112ZomsMtn378EgI
- FoRQ==
-X-Gm-Message-State: AOJu0YzoESRaD8q3GMcKY4apCzOoEs7yY4cIU3COTYOQN2By3ijBHDH4
- 5P6ugWq31+tfbqu0Rro4198J/HKdpK5jMhl41jecNOD3+taVwLXmpAae/YraL98NXxlTa6xknbU
- NJDZihX0NnybQxbeVj/dGF2fd9PR+CNbeMSJ663ZYx6vlh/MzVc71NDPCfmF20BSmASYdShnObO
- EqZ7WoNsxNycjEGVrcz49FKBFxKcOjsg==
-X-Received: by 2002:a5d:6d0f:0:b0:37d:9565:4db2 with SMTP id
- ffacd0b85a97d-381c7a469cemr15748905f8f.6.1730754403911; 
- Mon, 04 Nov 2024 13:06:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGstg4UaqKvsdNO9OWD014KkMqczeSPGWw9EyX+mw7O04nA7SsF/pefVSpUxfbyUtd8Q+x1CA==
-X-Received: by 2002:a5d:6d0f:0:b0:37d:9565:4db2 with SMTP id
- ffacd0b85a97d-381c7a469cemr15748878f8f.6.1730754403453; 
- Mon, 04 Nov 2024 13:06:43 -0800 (PST)
+ bh=+Qw3Qe8wV0ZOH6ROfQpES8yW2OtudwZHXLHI9Pq75U4=;
+ b=iibHN5/cfwrUMU6mnczy6VWdOXmDApVDOkOqOwxKm0A54q22tFpbmgOYK5tW5ozitA
+ TBzidQklelrZmvaQr84sXSUnI/l8jF52jon7MutHI3U/qpKf23FM5CfY2SmQ/BiMKjzl
+ zBjdZF825jr3em0HOxzbM5zhkei4FtDmlH/pQlqFJ4ZmCv3AGaTM92KxcpAjs1uM2rxq
+ 14RJOGA0Opp11ZmGucCCK52P8AXBFRb+9cLDMcG5HeRUREPFZnyQHJLUdj5RSU2wBs6S
+ 8+6smxJ2GPdHukaXuAehGd6BHaiX1me+jOEo/8Xt838b3H6woViyqv6fHaCMYHu0px5Y
+ OjOg==
+X-Gm-Message-State: AOJu0YwxM7gACGtTvPtDSifDJDGDNud5cXr37ELSBG3t3VX5ga0aoJZ9
+ k68NjbQRzqZOBQJWqTZUd28gK9uIxG6VpFbTtb/UY9UwtKXeAt/yH3ES5tvbyWB3U0Ec0/v4mN7
+ CcqKM9xLU0nZH2jFVus9OCkSbmeb7izam9vmAPMh2C5WXHS1nTPH2C/fWtPwr2gapPDKY9yI3Fb
+ FkMCUiNGtLaZ1KVKbcDfAzutP2Isr8YQ==
+X-Received: by 2002:a5d:6c63:0:b0:37d:3973:cb8d with SMTP id
+ ffacd0b85a97d-381c7a5e9d5mr10879861f8f.24.1730754547277; 
+ Mon, 04 Nov 2024 13:09:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEo6Rpo8Gsz0VvSJGu4BEwEmEsgBRwuTYZz22CLisHkg0ZRK6VwkjSrwpkk48lweqKCbpSQ2g==
+X-Received: by 2002:a5d:6c63:0:b0:37d:3973:cb8d with SMTP id
+ ffacd0b85a97d-381c7a5e9d5mr10879838f8f.24.1730754546785; 
+ Mon, 04 Nov 2024 13:09:06 -0800 (PST)
 Received: from redhat.com ([2.52.14.134]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bd9a99c8sm194245875e9.29.2024.11.04.13.06.41
+ ffacd0b85a97d-381c10e7392sm14121373f8f.55.2024.11.04.13.09.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 13:06:42 -0800 (PST)
-Date: Mon, 4 Nov 2024 16:06:40 -0500
+ Mon, 04 Nov 2024 13:09:06 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:09:03 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 18/65] hw/pcie: Provide a utility function for control of EP /
- SW USP link
-Message-ID: <ea3f0ebc1a3ba380e682ea8aad38f8e8cbc0d6f7.1730754238.git.mst@redhat.com>
+ Esifiel <esifiel@gmail.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 54/65] hw/cxl: Check that writes do not go beyond end of
+ target attributes
+Message-ID: <c1c4d6b38b13952b0a9e2d7393e1ccc70b2615a4.1730754238.git.mst@redhat.com>
 References: <cover.1730754238.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -78,14 +78,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1730754238.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,63 +105,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-Whilst similar to existing PCIESlot link configuration a few registers
-need to be set differently so that the downstream device presents
-a 'configured' state that is then used to 'train' the upstream port
-on the link.  Basically that means setting the status register to
-reflect it succeeding in training up to target settings.
+In cmd_features_set_feature() the an offset + data size schemed
+is used to allow for large features.  Ensure this does not write
+beyond the end fo the buffers used to accumulate the full feature
+attribute set.
 
+Reported-by: Esifiel <esifiel@gmail.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240916173518.1843023-5-Jonathan.Cameron@huawei.com>
+Message-Id: <20241101133917.27634-9-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/pci/pcie.h |  2 ++
- hw/pci/pcie.c         | 18 ++++++++++++++++++
- 2 files changed, 20 insertions(+)
+ hw/cxl/cxl-mailbox-utils.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index 5eddb90976..b8d59732bc 100644
---- a/include/hw/pci/pcie.h
-+++ b/include/hw/pci/pcie.h
-@@ -141,6 +141,8 @@ void pcie_acs_reset(PCIDevice *dev);
- void pcie_ari_init(PCIDevice *dev, uint16_t offset);
- void pcie_dev_ser_num_init(PCIDevice *dev, uint16_t offset, uint64_t ser_num);
- void pcie_ats_init(PCIDevice *dev, uint16_t offset, bool aligned);
-+void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
-+                               PCIExpLinkSpeed speed);
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index a40d81219c..078782e8b9 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1292,6 +1292,11 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
  
- void pcie_cap_slot_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
-                                Error **errp);
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 1ac6d89dcf..2738dbb28d 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -154,6 +154,24 @@ static void pcie_cap_fill_lnk(uint8_t *exp_cap, PCIExpLinkWidth width,
-     }
- }
+         ps_set_feature = (void *)payload_in;
+         ps_write_attrs = &ps_set_feature->feat_data;
++
++        if ((uint32_t)hdr->offset + bytes_to_copy >
++            sizeof(ct3d->patrol_scrub_wr_attrs)) {
++            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++        }
+         memcpy((uint8_t *)&ct3d->patrol_scrub_wr_attrs + hdr->offset,
+                ps_write_attrs,
+                bytes_to_copy);
+@@ -1314,6 +1319,11 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
  
-+void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
-+                               PCIExpLinkSpeed speed)
-+{
-+    uint8_t *exp_cap = dev->config + dev->exp.exp_cap;
+         ecs_set_feature = (void *)payload_in;
+         ecs_write_attrs = ecs_set_feature->feat_data;
 +
-+    /*
-+     * For an end point or USP need to set the current status as well
-+     * as the capabilities.
-+     */
-+    pci_long_test_and_clear_mask(exp_cap + PCI_EXP_LNKSTA,
-+                                 PCI_EXP_LNKSTA_CLS | PCI_EXP_LNKSTA_NLW);
-+    pci_long_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA,
-+                               QEMU_PCI_EXP_LNKSTA_NLW(width) |
-+                               QEMU_PCI_EXP_LNKSTA_CLS(speed));
-+
-+    pcie_cap_fill_lnk(exp_cap, width, speed);
-+}
-+
- static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
- {
-     PCIESlot *s = (PCIESlot *)object_dynamic_cast(OBJECT(dev), TYPE_PCIE_SLOT);
++        if ((uint32_t)hdr->offset + bytes_to_copy >
++            sizeof(ct3d->ecs_wr_attrs)) {
++            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++        }
+         memcpy((uint8_t *)&ct3d->ecs_wr_attrs + hdr->offset,
+                ecs_write_attrs,
+                bytes_to_copy);
 -- 
 MST
 
