@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 273DDD132A2
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 09:42:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F14BD132A3
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 09:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7tbJ-0004gj-6b; Mon, 04 Nov 2024 04:42:21 -0500
+	id 1t7tbS-0004qt-Sq; Mon, 04 Nov 2024 04:42:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1t7tbB-0004es-W1
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 04:42:15 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1t7tbJ-0004gl-Sl
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 04:42:22 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1t7tb8-0000l1-Ra
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 04:42:13 -0500
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A48fj4H012809;
- Mon, 4 Nov 2024 09:41:56 GMT
+ id 1t7tbH-0000nu-AP
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 04:42:20 -0500
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A48fdl3008884;
+ Mon, 4 Nov 2024 09:42:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2023-11-20; bh=8dj9+
- Fj2Y7+fcJzsYZdCfnhnZ64eJxfakPqpai/l9Oc=; b=UsR1EPUSgMA/8T3Uj4kdO
- IOMuRDOvkNtmec6hplYuqak/t05nN03z2SzN7ywRj462Mmg63oZ3g7VWZDBwtG3E
- fFNgIyI0SNSM5X5RjlrWki5kWOLZEDfMIsaDlityqtvuJoamNgBYvmJSvv6Nqkew
- 6AEiuTWyABosn7lJ+mXuhOKiEXLgK+2W+hx5Cb6ePcnN8Jtm4CLuQxm+6Y1lihu8
- 72BnNJe1ctP1YUXea5AmSXlgRUv2sweKIARO6AjWrIIAmJmSVLrp9jNS68HKD4cR
- EyzZ5AsU7KMp1SkB+R9VLNIn0tIGgVH2wVndFLkYFyBeWsBasnS9XmbwKFMVWpjz
- A==
+ :mime-version:references:subject:to; s=corp-2023-11-20; bh=Mtp7c
+ F2I5l+mbvT9VpcvvHwkRan/n1Y5vkihKlaMSj8=; b=eO4YEgkTJt/vUl+KFvawb
+ Zqn141sWKxt2CWtY6q/lhve6vKPipqDgRVEVAwhY1CiRmhELErXnHWuUa8rltHrl
+ RwUprTlhNgpeSmewqV1JCkPHYv2WVFvqZF1mdIb+rUW7rDDKbysPLf66qOkqqGU9
+ M83qxVLEmRBijKpz3+RojPsDKS+qpnqfv71uMIvZ93PzKzHgwX2toBbge3VX1W5j
+ KbjFRIYpDVCVgG8r+gdXCkUAjhpg1gIIi3JCc2FTGSJSH4x0vkhyRsWR9nPh1uhv
+ kZVzI+PH5cpI2rHvH/7hFdbvS+PDOGQtOzjh6NMwaShHNhU9U2x//Z6b2okWIKGL
+ g==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42nanytbxg-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42nbpsj991-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 04 Nov 2024 09:41:55 +0000 (GMT)
+ Mon, 04 Nov 2024 09:42:06 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4A48fZlX009108; Mon, 4 Nov 2024 09:41:54 GMT
+ with ESMTP id 4A48xrOO009864; Mon, 4 Nov 2024 09:42:05 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 42nahbt090-1
+ 42nahbt0fh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 04 Nov 2024 09:41:54 +0000
+ Mon, 04 Nov 2024 09:42:05 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A49fqfe018519;
- Mon, 4 Nov 2024 09:41:54 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A49fqfq018519;
+ Mon, 4 Nov 2024 09:42:05 GMT
 Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 42nahbt06k-2; Mon, 04 Nov 2024 09:41:53 +0000
+ 42nahbt06k-8; Mon, 04 Nov 2024 09:42:04 +0000
 From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org, kvm@vger.kernel.org
 Cc: pbonzini@redhat.com, mtosatti@redhat.com, sandipan.das@amd.com,
@@ -62,9 +62,9 @@ Cc: pbonzini@redhat.com, mtosatti@redhat.com, sandipan.das@amd.com,
  lyan@digitalocean.com, khorenko@virtuozzo.com,
  alexander.ivanov@virtuozzo.com, den@virtuozzo.com, joe.jin@oracle.com,
  davydov-max@yandex-team.ru
-Subject: [PATCH 1/7] target/i386: disable PerfMonV2 when PERFCORE unavailable
-Date: Mon,  4 Nov 2024 01:40:16 -0800
-Message-ID: <20241104094119.4131-2-dongli.zhang@oracle.com>
+Subject: [PATCH 7/7] target/i386/kvm: don't stop Intel PMU counters
+Date: Mon,  4 Nov 2024 01:40:22 -0800
+Message-ID: <20241104094119.4131-8-dongli.zhang@oracle.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20241104094119.4131-1-dongli.zhang@oracle.com>
 References: <20241104094119.4131-1-dongli.zhang@oracle.com>
@@ -78,10 +78,10 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  mlxlogscore=999 mlxscore=0 suspectscore=0 bulkscore=0 malwarescore=0
  spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2409260000 definitions=main-2411040085
-X-Proofpoint-ORIG-GUID: Q3sRATBTcJgcGAcqpnTcqUfqFtcCcV9-
-X-Proofpoint-GUID: Q3sRATBTcJgcGAcqpnTcqUfqFtcCcV9-
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Proofpoint-ORIG-GUID: 6e8ieF02pb_kFg_RZwb-GTQwlJliHIY0
+X-Proofpoint-GUID: 6e8ieF02pb_kFg_RZwb-GTQwlJliHIY0
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -105,44 +105,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the PERFCORE is disabled with "-cpu host,-perfctr-core", it is
-reflected in in guest dmesg.
+The kvm_put_msrs() sets the MSRs using KVM_SET_MSRS. The x86 KVM processes
+these MSRs one by one in a loop, only saving the config and triggering the
+KVM_REQ_PMU request. This approach does not immediately stop the event
+before updating PMC.
 
-[    0.285136] Performance Events: AMD PMU driver.
+In additional, PMU MSRs are set only at levels >= KVM_PUT_RESET_STATE,
+excluding runtime. Therefore, updating these MSRs without stopping events
+should be acceptable.
 
-However, the guest cpuid indicates the PerfMonV2 is still available.
+Finally, KVM creates kernel perf events with host mode excluded
+(exclude_host = 1). While the events remain active, they don't increment
+the counter during QEMU vCPU userspace mode.
 
-CPU:
-   Extended Performance Monitoring and Debugging (0x80000022):
-      AMD performance monitoring V2         = true
-      AMD LBR V2                            = false
-      AMD LBR stack & PMC freezing          = false
-      number of core perf ctrs              = 0x6 (6)
-      number of LBR stack entries           = 0x0 (0)
-      number of avail Northbridge perf ctrs = 0x0 (0)
-      number of available UMC PMCs          = 0x0 (0)
-      active UMCs bitmask                   = 0x0
+No Fixed tag is going to be added for the commit 0d89436786b0 ("kvm:
+migrate vPMU state"), because this isn't a bugfix.
 
-Disable PerfMonV2 in cpuid when PERFCORE is disabled.
-
-Fixes: 209b0ac12074 ("target/i386: Add PerfMonV2 feature bit")
 Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 ---
- target/i386/cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/i386/kvm/kvm.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 3baa95481f..4490a7a8d6 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7103,6 +7103,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         *eax = *ebx = *ecx = *edx = 0;
-         /* AMD Extended Performance Monitoring and Debug */
-         if (kvm_enabled() && cpu->enable_pmu &&
-+            (env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_PERFCORE) &&
-             (env->features[FEAT_8000_0022_EAX] & CPUID_8000_0022_EAX_PERFMON_V2)) {
-             *eax |= CPUID_8000_0022_EAX_PERFMON_V2;
-             *ebx |= kvm_arch_get_supported_cpuid(cs->kvm_state, index, count,
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 918dcb61fe..c4a11c2e80 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -4111,13 +4111,6 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+         }
+ 
+         if (IS_INTEL_CPU(env) && has_pmu_version > 0) {
+-            if (has_pmu_version > 1) {
+-                /* Stop the counter.  */
+-                kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+-                kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
+-            }
+-
+-            /* Set the counter values.  */
+             for (i = 0; i < num_pmu_fixed_counters; i++) {
+                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR0 + i,
+                                   env->msr_fixed_counters[i]);
+@@ -4133,8 +4126,6 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+                                   env->msr_global_status);
+                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_OVF_CTRL,
+                                   env->msr_global_ovf_ctrl);
+-
+-                /* Now start the PMU.  */
+                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL,
+                                   env->msr_fixed_ctr_ctrl);
+                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL,
 -- 
 2.39.3
 
