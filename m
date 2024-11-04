@@ -4,90 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD05D132A6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 09:43:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF35CD132A2
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 09:49:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7tbM-0004hB-SN; Mon, 04 Nov 2024 04:42:25 -0500
+	id 1t7ti4-0001CT-Df; Mon, 04 Nov 2024 04:49:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1t7tbG-0004gD-Iq
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 04:42:18 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1t7thu-00018e-BC
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 04:49:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1t7tbE-0000mo-JH
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 04:42:18 -0500
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A48fcC0018200;
- Mon, 4 Nov 2024 09:42:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2023-11-20; bh=Iclc0
- zYVet4nx97YIS/BP9FtQpieaSXD0nnk1nSLYTE=; b=mhhDRL664Gemhe8XLOnwp
- y3kTWMYkGSJI+MiKWwFekrw1xofWdDq4XhuB7kEYIUGkSMUMIdjo5tgYsAzhU/1V
- J43KiAjRc5aUn3o/WRWbyyI2ESAEf2OSDunXQruP1FapEfKsbANLbrTMKx1Jr9L7
- ZOkm0mFpT1GPwk7rJnm3k6jS3XtFbHaLdDTaJUUZBzKTX5YcwOP7Ki9NPGL8CSl+
- sksldJHzNXmSn5jLRsaKWw7cY95kkLyavvUJDdQe9zGO0Q+Elsb4v0h8GnIaV9KL
- s/t3QqBTlr0LwEdeXJd8GqVG1oXD+CdipWzkreEIVB3Qy6Zot0jpl9p3eZHoZJNX
- g==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42nc4bt9m6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 04 Nov 2024 09:42:02 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4A47aUTJ009324; Mon, 4 Nov 2024 09:42:02 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 42nahbt0d1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 04 Nov 2024 09:42:02 +0000
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A49fqfm018519;
- Mon, 4 Nov 2024 09:42:01 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 42nahbt06k-6; Mon, 04 Nov 2024 09:42:01 +0000
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org, kvm@vger.kernel.org
-Cc: pbonzini@redhat.com, mtosatti@redhat.com, sandipan.das@amd.com,
- babu.moger@amd.com, zhao1.liu@intel.com, likexu@tencent.com,
- like.xu.linux@gmail.com, zhenyuw@linux.intel.com, groug@kaod.org,
- lyan@digitalocean.com, khorenko@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, den@virtuozzo.com, joe.jin@oracle.com,
- davydov-max@yandex-team.ru
-Subject: [PATCH 5/7] target/i386/kvm: reset AMD PMU registers during VM reset
-Date: Mon,  4 Nov 2024 01:40:20 -0800
-Message-ID: <20241104094119.4131-6-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20241104094119.4131-1-dongli.zhang@oracle.com>
-References: <20241104094119.4131-1-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1t7thr-0001i7-9O
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 04:49:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730713745;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=94nbLz0HHUGeGq3U9FZbdzqouJRN5bo2rYq2cXVQ0zA=;
+ b=IzMHyEP2NCXpv8sC/1ZY850v7ZEg7syLkcPwQNZWCKO4GGm9LO1wd0kik8pmX1ZY2iO/5m
+ 4ds3+DJU/NtiZzu/biu9m6Z+yHn9p/4o+pAAHd8uQKDus27a1jqTpBYDJ9Gc9O9isu7vjg
+ cwrizL0j29r5raiNDpjA37yb1pKhPRA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-652-z7zsMyn4PgyzDIKVh2OrIQ-1; Mon, 04 Nov 2024 04:49:03 -0500
+X-MC-Unique: z7zsMyn4PgyzDIKVh2OrIQ-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d458087c0so2945662f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 01:49:03 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730713742; x=1731318542;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=94nbLz0HHUGeGq3U9FZbdzqouJRN5bo2rYq2cXVQ0zA=;
+ b=U205h9vsAhTZ0/v/vX/JNxT4Bv4Ch4ownqvYKVsUCqAcIx/0O71VVOd/lJRZ0xRNVf
+ 2LgFTQFtyLmHT7/ETKmvoHRgbViwYMZTd0RZrdxeQNEk4+Ojc5zork23JQ34/Y8N1szl
+ K37qIlazMXYE+vF/J7i3URT8e9i7X0kHoyWUOGvRcKpwd04g2Zs7a6/75TNDNHVFwQ0A
+ FsC4eqcS43bjAhTNBC5kOdNU1QvbzEoQMn0YUoV9tS9rwGe5rObK2lLd/5rqwBalYcHQ
+ 71Fw+wK6ogXmf0FltXwkLk7KuHxE8PzATgD19flSbRIl+tAtIT6zrzBYDQwxmT3glNI/
+ Ez1g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVykmj8L9pL9QEZhe7tY7BlvhU/rJCl2jU+FWMNSCCAe0LXAdQDWv1AFdZGzp5wW0dY63HpQ75zrny3@nongnu.org
+X-Gm-Message-State: AOJu0YyGa0xnaMmwWT/RPg8QDibGvu8td0lqlTeU9WdbhgGPyrqSiePj
+ FlCGbjuuJgju0m0QuVKLdCa8Y3+WB7Ogyu98P7houuTCkNol9Z3K3q1kKF9cihm+qykuBBGSSof
+ 2DhORJ2pBJ/UW95R0SnMyBCBqhAz1MIwzt0ypbH8y8WRKa2h/+13b
+X-Received: by 2002:a5d:6d8f:0:b0:381:c7b7:9f2d with SMTP id
+ ffacd0b85a97d-381c7b79f8amr11253487f8f.27.1730713741941; 
+ Mon, 04 Nov 2024 01:49:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHZTVhOsfqJNGjMoWx+3kkIkizXhtsJ/qrfXB3jrRyXYCsdNB1hoQXc/OD/GKk3ip2QdcjPyQ==
+X-Received: by 2002:a5d:6d8f:0:b0:381:c7b7:9f2d with SMTP id
+ ffacd0b85a97d-381c7b79f8amr11253451f8f.27.1730713741394; 
+ Mon, 04 Nov 2024 01:49:01 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c10e74casm12672435f8f.65.2024.11.04.01.49.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Nov 2024 01:49:00 -0800 (PST)
+Date: Mon, 4 Nov 2024 10:49:00 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: "Anthony Harivel" <aharivel@redhat.com>
+Cc: "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>,
+ <pbonzini@redhat.com>, <mtosatti@redhat.com>, <qemu-devel@nongnu.org>,
+ <vchundur@redhat.com>, <rjarry@redhat.com>, <nathans@redhat.com>,
+ <kenj@kenj.id.au>, <chorn@fluxcoil.net>, <sunyanan.choochotkaew1@ibm.com>,
+ <vibhu.sharma2929@gmail.com>
+Subject: Re: [PATCH v6 0/3] Add support for the RAPL MSRs series
+Message-ID: <20241104104900.1a2a0193@imammedo.users.ipa.redhat.com>
+In-Reply-To: <D5BL7KCTSON6.36X2ZEWWQUIQ1@redhat.com>
+References: <20240522153453.1230389-1-aharivel@redhat.com>
+ <20241016135259.49021bca@imammedo.users.ipa.redhat.com>
+ <D4X8WRR5F2GP.2MCBI9HDM3UHM@redhat.com>
+ <20241018142526.34a2de0a@imammedo.users.ipa.redhat.com>
+ <ZxJbtkMO1QcoiqVn@redhat.com>
+ <20241022144615.203cf0da@imammedo.users.ipa.redhat.com>
+ <ZxelgDeuZaia-Vqf@redhat.com>
+ <D52ED9BSZU9P.32LYD3328YTTN@redhat.com>
+ <20241101160934.42d46c9f@imammedo.users.ipa.redhat.com>
+ <D5BL7KCTSON6.36X2ZEWWQUIQ1@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-11-04_07,2024-11-01_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- phishscore=0
- mlxlogscore=999 mlxscore=0 suspectscore=0 bulkscore=0 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2409260000 definitions=main-2411040085
-X-Proofpoint-ORIG-GUID: LGLvVXHmiIkrbiWy_YSBI4nhmM2P3gqK
-X-Proofpoint-GUID: LGLvVXHmiIkrbiWy_YSBI4nhmM2P3gqK
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,275 +117,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU uses the kvm_get_msrs() function to save Intel PMU registers from KVM
-and kvm_put_msrs() to restore them to KVM. However, there is no support for
-AMD PMU registers. Currently, has_pmu_version and num_pmu_gp_counters are
-initialized based on cpuid(0xa), which does not apply to AMD processors.
-For AMD CPUs, prior to PerfMonV2, the number of general-purpose registers
-is determined based on the CPU version.
+On Sat, 02 Nov 2024 10:32:17 +0100
+"Anthony Harivel" <aharivel@redhat.com> wrote:
 
-To address this issue, we need to add support for AMD PMU registers.
-Without this support, the following problems can arise:
+> Hi Igor,
+>=20
+> Igor Mammedov, Nov 01, 2024 at 16:09:
+> > On Tue, 22 Oct 2024 16:16:36 +0200
+> > "Anthony Harivel" <aharivel@redhat.com> wrote:
+> > =20
+> >> Daniel P. Berrang=C3=A9, Oct 22, 2024 at 15:15: =20
+> >> > On Tue, Oct 22, 2024 at 02:46:15PM +0200, Igor Mammedov wrote:   =20
+> >> >> On Fri, 18 Oct 2024 13:59:34 +0100
+> >> >> Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+> >> >>    =20
+> >> >> > On Fri, Oct 18, 2024 at 02:25:26PM +0200, Igor Mammedov wrote:   =
+=20
+> >> >> > > On Wed, 16 Oct 2024 14:56:39 +0200
+> >> >> > > "Anthony Harivel" <aharivel@redhat.com> wrote:   =20
+> >> >> [...]
+> >> >>    =20
+> >> >> > >=20
+> >> >> > > This also leads to a question, if we should account for
+> >> >> > > not VCPU threads at all. Looking at real hardware, those
+> >> >> > > MSRs return power usage of CPUs only, and they do not
+> >> >> > > return consumption from auxiliary system components
+> >> >> > > (io/memory/...). One can consider non VCPU threads in QEMU
+> >> >> > > as auxiliary components, so we probably should not to
+> >> >> > > account for them at all when modeling the same hw feature.
+> >> >> > > (aka be consistent with what real hw does).     =20
+> >> >> >=20
+> >> >> > I understand your POV, but I think that would be a mistake,
+> >> >> > and would undermine the usefulness of the feature.
+> >> >> >=20
+> >> >> > The deployment model has a cluster of hosts and guests, all
+> >> >> > belonging to the same user. The user goal is to measure host
+> >> >> > power consumption imposed by the guest, and dynamically adjust
+> >> >> > guest workloads in order to minimize power consumption of the
+> >> >> > host.   =20
+> >> >>=20
+> >> >> For cloud use-case, host side is likely in a better position
+> >> >> to accomplish the task of saving power by migrating VM to
+> >> >> another socket/host to compact idle load. (I've found at least 1
+> >> >> kubernetis tool[1], which does energy monitoring). Perhaps there
+> >> >> are schedulers out there that do that using its data.   =20
+> >>=20
+> >> I also work for Kepler project. I use it to monitor my VM has a black=
+=20
+> >> box and I used it inside my VM with this feature enable. Thanks to tha=
+t=20
+> >> I can optimize the workloads (dpdk application,database,..) inside my =
+VM.=20
+> >>=20
+> >> This is the use-case in NFV deployment and I'm pretty sure this could =
+be=20
+> >> the use-case of many others.
+> >>  =20
+> >> >
+> >> > The host admin can merely shuffle workloads around, hoping that
+> >> > a different packing of workloads onto machines, will reduce power
+> >> > in some aount. You might win a few %, or low 10s of % with this
+> >> > if you're good at it.
+> >> >
+> >> > The guest admin can change the way their workload operates to
+> >> > reduce its inherant power consumption baseline. You could easily
+> >> > come across ways to win high 10s of % with this. That's why it
+> >> > is interesting to expose power consumption info to the guest
+> >> > admin.
+> >> >
+> >> > IOW, neither makes the other obsolete, both approaches are
+> >> > desirable.
+> >> >   =20
+> >> >> > The guest workloads can impose non-negligble power consumption
+> >> >> > loads on non-vCPU threads in QEMU. Without that accounted for,
+> >> >> > any adjustments will be working from (sometimes very) inaccurate
+> >> >> > data.   =20
+> >> >>=20
+> >> >> Perhaps adding one or several energy sensors (ex: some i2c ones),
+> >> >> would let us provide auxiliary threads consumption to guest, and
+> >> >> even make it more granular if necessary (incl. vhost user/out of
+> >> >> process device models or pass-through devices if they have PMU).
+> >> >> It would be better than further muddling vCPUs consumption
+> >> >> estimates with something that doesn't belong there.   =20
+> >>=20
+> >> I'm confused about your statement. Like every software power metering=
+=20
+> >> tools out is using RAPL (Kepler, Scaphandre, PowerMon, etc) and custom=
+=20
+> >> sensors would be better than a what everyone is using ? =20
+> >
+> > RAPL is used to measure CPU/DRAM/maybe GPU domains.
+> > see my other reply to Daniel RAPL + aux
+> >  (https://www.mail-archive.com/qemu-devel@nongnu.org/msg1072593.html)
+> > My point wrt RAPL is: CPU domain on host and inside guest
+> > should be doing the same thing, i.e. report only package/core
+> > consumption of virtual CPU and nothing else (non vCPU induced load
+> > should not be included in CPU domain).
+> >
+> > For non vCPU consumption, we should do the same as bare-metal,
+> > i.e. add power sensors where necessary. As minimum we can add
+> > a system power meter sensor, which could account for total
+> > energy draw (and that can include not only QEMU aux threads,
+> > but also for other related processes (aka process handling dpdk NIC,
+> > or other vhost user backend)).
+> > Individual per device sensors also a possibility in the future
+> > (i.e per NIC) is we can find a suitable sensor on host to derive
+> > guest value.
+> >
+> > [...]
+> > =20
+> >> Adding RAPL inside VM makes total sens because you can use tools that=
+=20
+> >> are already out in the market. =20
+> > no disagreement here.
+> >
+> > Given the topic is relatively new, the tooling mostly concentrates on
+> > RAPL as most available sensor. But some tools can pull energy values
+> > from other sources, we surely can teach them to pull values from
+> > a sensor(s) we'd want to add to QEMU (i.e. for an easy start borrow
+> > sensor handling from lm_sensors). I'd pick acpi power meter as
+> > a possible candidate for it is being guest OS agnostic and
+> > we can attach it to anything in machine tree.
+> > =20
+> >> > There's a tradeoff here in that info directly associated with
+> >> > backends threads, is effectively exposing private QEMU impl
+> >> > details as public ABI. IOW, we don't want too fine granularity
+> >> > here, we need it abstracted sufficiently, that different
+> >> > backend choices for a given don't change what sensors are
+> >> > exposed.
+> >> >
+> >> > I also wonder how existing power monitoring applications
+> >> > would consume such custom sensors - is there sufficient
+> >> > standardization in this are that we're not inventing
+> >> > something totally QEMU specific ?
+> >> >   =20
+> >> >> > IOW, I think it is right to include non-vCPU threads usage in
+> >> >> > the reported info, as it is still fundamentally part of the
+> >> >> > load that the guest imposes on host pCPUs it is permitted to
+> >> >> > run on.   =20
+> >> >>=20
+> >> >>=20
+> >> >> From what I've read, process energy usage done via RAPL is not
+> >> >> exactly accurate. But there are monitoring tools out there that
+> >> >> use RAPL and other sources to make energy consumption monitoring
+> >> >> more reliable.
+> >> >>=20
+> >> >> Reinventing that wheel and pulling all of the nuances of process
+> >> >> power monitoring inside of QEMU process, needlessly complicates it.
+> >> >> Maybe we should reuse one of existing tools and channel its data
+> >> >> through appropriate QEMU channels (RAPL/emulated PMU counters/...).=
+   =20
+> >> >
+> >> > Note, this feature is already released in QEMU 9.1.0.
+> >> >   =20
+> >> >> Implementing RAPL in pure form though looks fine to me,
+> >> >> so the same tools could use it the same way as on the host
+> >> >> if needed without VM specific quirks.   =20
+> >> >
+> >> > IMHO the so called "pure" form is misleading to applications, unless
+> >> > we first provided  some other pratical way to expose the data that
+> >> > we would be throwing away from RAPL.
+> >> >   =20
+> >>=20
+> >> The other possibility that I've think of is using a 3rd party tool to=
+=20
+> >> give maybe more "accurate value" to QEMU.=20
+> >> For example, Kepler could be used to give value for each thread=20
+> >> of QEMU and so instead of calculating and using the qemu-vmsr-helper,=
+=20
+> >> each values is transfered on request by QEMU via the UNIX thread that =
+is=20
+> >> used today between the daemon and QEMU. It's just an idea that I have=
+=20
+> >> and I don't know if that is acceptable for each project (QEMU and=20
+> >> Kepler) that would really solve few issues. =20
+> >
+> > From QEMU point of view, it would be fine to get values from external
+> > process and just proxy them to guest (preferably without any massaging).
+> >
+> > Also on QEMU side, I'd suggest to split current monolith functionality
+> > in 2 parts: frontend (KVM MSR interface for starters) and backend object
+> > (created with -object CLI option) that will handle communication
+> > with an external daemon. That way QEMU would be able easily change/add
+> > different frontend and backend options (ex: add frontend for RAPL
+> > with TCG accel, add backend for Kelper or other project(s)
+> > down the road). (it would be good to make this split even for
+> > qemu-vmsr-helper). (if you are interested, I can guide you wrt
+> > QEMU side of the question).
+> >
+> > PS:
+> > As for other projects we probably should ask if they are open to an ide=
+a.
+> > They definitely would need some patches for per thread accounting,
+> > and maybe for some API to talk with external users (but the later
+> > might exist and it might be better for QEMU to adopt it (here QEMU
+> > backend object might help as translator of existing protocol to
+> > QEMU specific internals).
+> > The point is QEMU won't have to reinvent wheel, and other projects
+> > will get more exposure/user-base.
+> >
+> > On top of the projects, you've already pointed out for possible
+> > integration with. I could add pmdadenki (CCed few authors) which
+> > some distros are shipping/using.
+> > =20
+>=20
+> I think you have a fair amount of ideas and opinions on how to handle the=
+=20
+> RAPL in QEMU and that's really good for improving the features.=20
+>=20
+> What I would really like is to have Paolo's opinions on all of that. When=
+=20
+> I started working on the subject I talked to him several time and we=20
+> agreed on the current implementation.=20
+>=20
+> Not that I disagree with all you said, to the contrary, but the amount=20
+> of change is quite significant and it would be very annoying if results=20
+> of this work doesn't make upstream because of Y & X.
 
-1. If the VM is reset (e.g., via QEMU system_reset or VM kdump/kexec) while
-running "perf top", the PMU registers are not disabled properly.
+split frontend/backend design is established pattern in QEMU, so I'm not
+suggesting anything revolutionary (probability that anyone would object
+to it is very low).
 
-2. Despite x86_cpu_reset() resetting many registers to zero, kvm_put_msrs()
-does not handle AMD PMU registers, causing some PMU events to remain
-enabled in KVM.
+sending an RFC can serve as a starting point for discussion. =20
 
-3. The KVM kvm_pmc_speculative_in_use() function consistently returns true,
-preventing the reclamation of these events. Consequently, the
-kvm_pmc->perf_event remains active.
+>=20
+> Let's see if we have more opinions from the people in the loop as well.
 
-4. After a reboot, the VM kernel may report the following error:
+yep, given that it would be better to reuse existing power monitoring
+projects, it would be nice to hear some feedback from them.=20
 
-[    0.092011] Performance Events: Fam17h+ core perfctr, Broken BIOS detected, complain to your hardware vendor.
-[    0.092023] [Firmware Bug]: the BIOS has corrupted hw-PMU resources (MSR c0010200 is 530076)
-
-5. In the worst case, the active kvm_pmc->perf_event may inject unknown
-NMIs randomly into the VM kernel:
-
-[...] Uhhuh. NMI received for unknown reason 30 on CPU 0.
-
-To resolve these issues, we propose resetting AMD PMU registers during the
-VM reset process.
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
----
- target/i386/cpu.h     |   8 +++
- target/i386/kvm/kvm.c | 156 +++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 161 insertions(+), 3 deletions(-)
-
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 59959b8b7a..0505eb3b08 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -488,6 +488,14 @@ typedef enum X86Seg {
- #define MSR_CORE_PERF_GLOBAL_CTRL       0x38f
- #define MSR_CORE_PERF_GLOBAL_OVF_CTRL   0x390
- 
-+#define MSR_K7_EVNTSEL0                 0xc0010000
-+#define MSR_K7_PERFCTR0                 0xc0010004
-+#define MSR_F15H_PERF_CTL0              0xc0010200
-+#define MSR_F15H_PERF_CTR0              0xc0010201
-+
-+#define AMD64_NUM_COUNTERS              4
-+#define AMD64_NUM_COUNTERS_CORE         6
-+
- #define MSR_MC0_CTL                     0x400
- #define MSR_MC0_STATUS                  0x401
- #define MSR_MC0_ADDR                    0x402
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index ca2b644e2c..83ec85a9b9 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2035,7 +2035,7 @@ full:
-     abort();
- }
- 
--static void kvm_init_pmu_info(CPUX86State *env)
-+static void kvm_init_pmu_info_intel(CPUX86State *env)
- {
-     uint32_t eax, edx;
-     uint32_t unused;
-@@ -2072,6 +2072,80 @@ static void kvm_init_pmu_info(CPUX86State *env)
-     }
- }
- 
-+static void kvm_init_pmu_info_amd(CPUX86State *env)
-+{
-+    int64_t family;
-+
-+    has_pmu_version = 0;
-+
-+    /*
-+     * To determine the CPU family, the following code is derived from
-+     * x86_cpuid_version_get_family().
-+     */
-+    family = (env->cpuid_version >> 8) & 0xf;
-+    if (family == 0xf) {
-+        family += (env->cpuid_version >> 20) & 0xff;
-+    }
-+
-+    /*
-+     * Performance-monitoring supported from K7 and later.
-+     */
-+    if (family < 6) {
-+        return;
-+    }
-+
-+    has_pmu_version = 1;
-+
-+    if (!(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_PERFCORE)) {
-+        num_pmu_gp_counters = AMD64_NUM_COUNTERS;
-+        return;
-+    }
-+
-+    num_pmu_gp_counters = AMD64_NUM_COUNTERS_CORE;
-+}
-+
-+static bool is_same_vendor(CPUX86State *env)
-+{
-+    static uint32_t host_cpuid_vendor1;
-+    static uint32_t host_cpuid_vendor2;
-+    static uint32_t host_cpuid_vendor3;
-+
-+    host_cpuid(0x0, 0, NULL, &host_cpuid_vendor1, &host_cpuid_vendor3,
-+               &host_cpuid_vendor2);
-+
-+    return env->cpuid_vendor1 == host_cpuid_vendor1 &&
-+           env->cpuid_vendor2 == host_cpuid_vendor2 &&
-+           env->cpuid_vendor3 == host_cpuid_vendor3;
-+}
-+
-+static void kvm_init_pmu_info(CPUX86State *env)
-+{
-+    /*
-+     * It is not supported to virtualize AMD PMU registers on Intel
-+     * processors, nor to virtualize Intel PMU registers on AMD processors.
-+     */
-+    if (!is_same_vendor(env)) {
-+        return;
-+    }
-+
-+    /*
-+     * If KVM_CAP_PMU_CAPABILITY is not supported, there is no way to
-+     * disable the AMD pmu virtualization.
-+     *
-+     * If KVM_CAP_PMU_CAPABILITY is supported, kvm_state->pmu_cap_disabled
-+     * indicates the KVM has already disabled the pmu virtualization.
-+     */
-+    if (kvm_state->pmu_cap_disabled) {
-+        return;
-+    }
-+
-+    if (IS_INTEL_CPU(env)) {
-+        kvm_init_pmu_info_intel(env);
-+    } else if (IS_AMD_CPU(env)) {
-+        kvm_init_pmu_info_amd(env);
-+    }
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     struct {
-@@ -4027,7 +4101,7 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
-             kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, env->poll_control_msr);
-         }
- 
--        if (has_pmu_version > 0) {
-+        if (IS_INTEL_CPU(env) && has_pmu_version > 0) {
-             if (has_pmu_version > 1) {
-                 /* Stop the counter.  */
-                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
-@@ -4058,6 +4132,38 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
-                                   env->msr_global_ctrl);
-             }
-         }
-+
-+        if (IS_AMD_CPU(env) && has_pmu_version > 0) {
-+            uint32_t sel_base = MSR_K7_EVNTSEL0;
-+            uint32_t ctr_base = MSR_K7_PERFCTR0;
-+            /*
-+             * The address of the next selector or counter register is
-+             * obtained by incrementing the address of the current selector
-+             * or counter register by one.
-+             */
-+            uint32_t step = 1;
-+
-+            /*
-+             * When PERFCORE is enabled, AMD PMU uses a separate set of
-+             * addresses for the selector and counter registers.
-+             * Additionally, the address of the next selector or counter
-+             * register is determined by incrementing the address of the
-+             * current register by two.
-+             */
-+            if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE) {
-+                sel_base = MSR_F15H_PERF_CTL0;
-+                ctr_base = MSR_F15H_PERF_CTR0;
-+                step = 2;
-+            }
-+
-+            for (i = 0; i < num_pmu_gp_counters; i++) {
-+                kvm_msr_entry_add(cpu, ctr_base + i * step,
-+                                  env->msr_gp_counters[i]);
-+                kvm_msr_entry_add(cpu, sel_base + i * step,
-+                                  env->msr_gp_evtsel[i]);
-+            }
-+        }
-+
-         /*
-          * Hyper-V partition-wide MSRs: to avoid clearing them on cpu hot-add,
-          * only sync them to KVM on the first cpu
-@@ -4503,7 +4609,8 @@ static int kvm_get_msrs(X86CPU *cpu)
-     if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_POLL_CONTROL)) {
-         kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
-     }
--    if (has_pmu_version > 0) {
-+
-+    if (IS_INTEL_CPU(env) && has_pmu_version > 0) {
-         if (has_pmu_version > 1) {
-             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
-             kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
-@@ -4519,6 +4626,35 @@ static int kvm_get_msrs(X86CPU *cpu)
-         }
-     }
- 
-+    if (IS_AMD_CPU(env) && has_pmu_version > 0) {
-+        uint32_t sel_base = MSR_K7_EVNTSEL0;
-+        uint32_t ctr_base = MSR_K7_PERFCTR0;
-+        /*
-+         * The address of the next selector or counter register is
-+         * obtained by incrementing the address of the current selector
-+         * or counter register by one.
-+         */
-+        uint32_t step = 1;
-+
-+        /*
-+         * When PERFCORE is enabled, AMD PMU uses a separate set of
-+         * addresses for the selector and counter registers.
-+         * Additionally, the address of the next selector or counter
-+         * register is determined by incrementing the address of the
-+         * current register by two.
-+         */
-+        if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE) {
-+            sel_base = MSR_F15H_PERF_CTL0;
-+            ctr_base = MSR_F15H_PERF_CTR0;
-+            step = 2;
-+        }
-+
-+        for (i = 0; i < num_pmu_gp_counters; i++) {
-+            kvm_msr_entry_add(cpu, ctr_base + i * step, 0);
-+            kvm_msr_entry_add(cpu, sel_base + i * step, 0);
-+        }
-+    }
-+
-     if (env->mcg_cap) {
-         kvm_msr_entry_add(cpu, MSR_MCG_STATUS, 0);
-         kvm_msr_entry_add(cpu, MSR_MCG_CTL, 0);
-@@ -4830,6 +4966,20 @@ static int kvm_get_msrs(X86CPU *cpu)
-         case MSR_P6_EVNTSEL0 ... MSR_P6_EVNTSEL0 + MAX_GP_COUNTERS - 1:
-             env->msr_gp_evtsel[index - MSR_P6_EVNTSEL0] = msrs[i].data;
-             break;
-+        case MSR_K7_EVNTSEL0 ... MSR_K7_EVNTSEL0 + 3:
-+            env->msr_gp_evtsel[index - MSR_K7_EVNTSEL0] = msrs[i].data;
-+            break;
-+        case MSR_K7_PERFCTR0 ... MSR_K7_PERFCTR0 + 3:
-+            env->msr_gp_counters[index - MSR_K7_PERFCTR0] = msrs[i].data;
-+            break;
-+        case MSR_F15H_PERF_CTL0 ... MSR_F15H_PERF_CTL0 + 0xb:
-+            index = index - MSR_F15H_PERF_CTL0;
-+            if (index & 0x1) {
-+                env->msr_gp_counters[index] = msrs[i].data;
-+            } else {
-+                env->msr_gp_evtsel[index] = msrs[i].data;
-+            }
-+            break;
-         case HV_X64_MSR_HYPERCALL:
-             env->msr_hv_hypercall = msrs[i].data;
-             break;
--- 
-2.39.3
+>=20
+> Thanks for feedback.
+>=20
+> Anthony
+>=20
 
 
