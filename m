@@ -4,112 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83F37D1BDD9
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 18:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0406BD1BDD9
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 18:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t81cM-0002gy-Ns; Mon, 04 Nov 2024 13:16:03 -0500
+	id 1t81cn-0002lp-PN; Mon, 04 Nov 2024 13:16:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1t81c3-0002Ww-Vt
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 13:15:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1t81c8-0002Yg-N3; Mon, 04 Nov 2024 13:15:50 -0500
+Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1t81c1-0004yq-CV
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 13:15:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730744135;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lBmPx7J81kPDhku9+xjmgrgbxAjE1ApCT3Q/Pe7qD4o=;
- b=V0Q7b4HeHI1zWgIvSPlqfjtl4VVdV+ej5Zos2UM//I+aN3uFyzK1W5nLJwJoWzcKU/gWxY
- 2Of6HUNbzZbgsqZsXGPqYlvRHpRc1gyPg39qy1mzTLdev13hSQuIlLZy7bqAlQQpU33HMm
- Nx6sX/jl0dX4EHyukoypW5b0znmryCM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-ZUdRDRkwPVCTwIvDbHkhgw-1; Mon, 04 Nov 2024 13:15:34 -0500
-X-MC-Unique: ZUdRDRkwPVCTwIvDbHkhgw-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-37d458087c0so3385261f8f.1
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 10:15:33 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730744133; x=1731348933;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lBmPx7J81kPDhku9+xjmgrgbxAjE1ApCT3Q/Pe7qD4o=;
- b=MN7TkCfu53qZO2JwE6aTuxhyAlO0UEDTThPPZy0V6K+ncAHBxm+TzWKWENIISdRCk/
- /bRrglYbU5kVPg/Bi2XZFqJyAFzrbppqznXbeDCDJRGbAWi5oSeHJ1ffbmOgVINqQxpG
- TdCaJMuB0M+zQ1rWxue4V7gQiR5dhse1Xw/KTbXciZ0/SquJsfg86a6bBZyhXKultcY1
- sUAk3D+m7K9S28gDgzte5Ylufssa7pOKSHvxr9JeuBBx+4syM9ea8g7B/Hk/xaHz7Vnh
- x5jjT2z0brSasL97J6F8RRPZ69KiPUUqN9GpbtLG0S55YGQdMPu/BDjnjEC44Vcskq+w
- 35Ew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXkTBp1EzNqDBlrb1jxF3UdJklCCvALjkvjYbiitAuVdk2X8R2X81iYV2o7sLq8XisOxHUh93/E6TA@nongnu.org
-X-Gm-Message-State: AOJu0Yzt2cM0bkSpprV+dWcwQ/OkEaDm6+faJLN/NOvY2kpuGvPfYhrM
- sEIn6Us9HzZctsgg0mKOyfLEtNtiQjfyfl4DuaHpclQQS5wLIoY0idfAEqBk5Mhy7t+Q5jJbUhq
- hvjiRi2lXv/GWXMoESGamOm3QEnKqmCznPswPpfW5C/uEPsXV4vQZ
-X-Received: by 2002:a5d:47ac:0:b0:37c:fdc8:77ab with SMTP id
- ffacd0b85a97d-381c7973202mr11463765f8f.7.1730744133002; 
- Mon, 04 Nov 2024 10:15:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF0xxiT0gNzh7c1eBS3/tOiILacXPaDItLf/SGOxQ5FHjMTBEFHqhkRjrtudfCG35tsJSGMPg==
-X-Received: by 2002:a5d:47ac:0:b0:37c:fdc8:77ab with SMTP id
- ffacd0b85a97d-381c7973202mr11463740f8f.7.1730744132625; 
- Mon, 04 Nov 2024 10:15:32 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432a153125asm1938525e9.2.2024.11.04.10.15.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Nov 2024 10:15:31 -0800 (PST)
-Message-ID: <d275b86b-75d0-40a4-90b6-b519748ccc5f@redhat.com>
-Date: Mon, 4 Nov 2024 19:15:28 +0100
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1t81c5-00055R-4q; Mon, 04 Nov 2024 13:15:42 -0500
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal
+ [10.202.2.48])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 68E422540130;
+ Mon,  4 Nov 2024 13:15:39 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-08.internal (MEProxy); Mon, 04 Nov 2024 13:15:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1730744139; x=
+ 1730830539; bh=A2f3X7IGTu83oPA15RMTeU8FaBa7kIhRp2LHBkGrTdo=; b=k
+ 5ZkzgTlj3VBHG3Lfuknt6+S43t951ecFY/Nw4CUxB22DtU7ZevHe2g8ShtlyO2Nn
+ yx3FgctKGolHIc2FDzbuNwsv0TuUnMjG0ZwFg/HKKEUr2dwauGdc0v6YSSXGAy+4
+ CDTHYyYPrVJN8ARUHT4jwmlfMu8M1QG+4b2PeR1wEwyKp2d1NpHcYdU36Pc1c3Dt
+ BUw6qcIpTfR+EnBKCqzgifhLDu+k0czdGWTeHGaiUILiCW9zJVHZcw8S5ZxShR1R
+ atPuwrvAfwDauVjbL0WNg6SpJQLR3cagEdR+er3yvMy51Ay0tFKzokYX7N/Np4LW
+ mtmJCwAcDWC8D9ktJyLpg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1730744139; x=1730830539; bh=A2f3X7IGTu83oPA15RMTeU8FaBa7kIhRp2L
+ HBkGrTdo=; b=gNvFDcpDUumZJ7LaLaiSfWzAsohe3hBzvMEIERGrhueDKXkpz3h
+ XVBQ/za3cpp8DhpSrHgNR+SpExVWGQPIvaIXxM7Rpimhl88l7QJbvByef3eCd0CE
+ 69ivKNS7O2zHm9E36khDxVMYlYmxzSk6lYzqKgeOXS5AuNQ+kh+BkjdKeBJ5Cn+K
+ yqhaGXK9ULwa8YP5FERGSMmRbnNIVzhs1v6PXip2gYp4fjkgx/YDI8QEJ1OR72o7
+ 1SKJDIBWt2jj0RzsVXsMLDvb/ZFuSEZXiOt7VJkvu90ywBQoQaEUQt8OC7Hd15Tc
+ qxkyn+BDrRinUo9KgudCLU6g4TCiJ2L+U5A==
+X-ME-Sender: <xms:Sw8pZ7aYxfSNkFRDMCQ4K39SJ3XdvOh3e6ux1EEuUH79IYJIcPco6Q>
+ <xme:Sw8pZ6alE6Pe7yuT_uEr8yc9KEiE26Ijj_Figk4fKzuOHpQW25j2MPralBMkfrZuY
+ clQvcE4zFNpE-c_dH0>
+X-ME-Received: <xmr:Sw8pZ98DmbYb4DIj0O9iwMlcMhyV7J1E46Bn8W2PKcCO-JVE62M4EXt293fLqA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeliedguddtkecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+ uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+ hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdej
+ necuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnth
+ drughkqeenucggtffrrghtthgvrhhnpeefvdeffedvuddvkeetjeffiedvffeugfetgfev
+ udegkefgieehleeifedtlefhjeenucffohhmrghinhepghhithhlrggsrdgtohhmpdhkvg
+ hrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+ fhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopeekpd
+ hmohguvgepshhmthhpohhuthdprhgtphhtthhopehksghushgthheskhgvrhhnvghlrdho
+ rhhgpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepqh
+ gvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggv
+ vhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmsh
+ hunhhgrdgtohhmpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdho
+ rhhgpdhrtghpthhtohepjhifkhhoiigrtgiiuhhksehgmhgrihhlrdgtohhmpdhrtghpth
+ htohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:Sw8pZxpsGHG7sFfwe11fv5NWYKpogOVtCuMP3MXvBeHcmTrjB7LO2w>
+ <xmx:Sw8pZ2onwYi3UDbVKMmNgiWiyynLhQmzzhhyLpbY1rGHkYKq1S9UsA>
+ <xmx:Sw8pZ3SgRYaW6xX8kE4CN30JLuhPozZOoi0JCfH9vBnFn47kXtx4jg>
+ <xmx:Sw8pZ-oaW6-xSTMUywDI6HF0r2xdf2aX9hmx-MrjKG_9vXBMB6Qb9A>
+ <xmx:Sw8pZyeinCf9oAhUnA0qmB3MpExX9_MrPi7gfTYPbJhXTnldFn6DQZbe>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 4 Nov 2024 13:15:38 -0500 (EST)
+Date: Mon, 4 Nov 2024 19:15:37 +0100
+From: Klaus Jensen <its@irrelevant.dk>
+To: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org
+Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
+ Waldemar Kozaczuk <jwkozaczuk@gmail.com>
+Subject: Re: [PATCH v2] hw/nvme: fix handling of over-committed queues
+Message-ID: <ZykPSWjwhLPe1K3h@AALNPWKJENSEN.aal.scsc.local>
+References: <20241029-issue-2388-v2-1-e335658104cf@samsung.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 18/21] arm/cpu: Introduce a customizable kvm host cpu model
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Oliver Upton <oliver.upton@linux.dev>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- eric.auger.pro@gmail.com, cohuck@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com,
- mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <20241025101959.601048-19-eric.auger@redhat.com>
- <ZxuX4i9NjVRizB72@redhat.com>
- <cb6c8f62-c5dc-416d-865f-fbdf96164dac@redhat.com>
- <Zxub7ol4p8P_sWF8@redhat.com>
- <CAFEAcA_wQu17y0PyQwxw0wuf2H5y2VE5aX16nLP2-u7QUP2ggA@mail.gmail.com>
- <Zx-9WxXkmkMuGIlQ@redhat.com>
- <CAFEAcA9w0mb5bcU8p+fScQony-=oqLmNurGWpnL_sBneQCzxUg@mail.gmail.com>
- <Zx_CU9eeQByANMRW@linux.dev>
- <6c05fc4e-ce14-4000-bb2a-63496bce9e98@redhat.com>
- <CAFEAcA_XhkBrco=V3Ky+cgvyp3cwqHXjDkmm+dP7N2B2av03bA@mail.gmail.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CAFEAcA_XhkBrco=V3Ky+cgvyp3cwqHXjDkmm+dP7N2B2av03bA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="DCRh0ozZzAtltWBB"
+Content-Disposition: inline
+In-Reply-To: <20241029-issue-2388-v2-1-e335658104cf@samsung.com>
+Received-SPF: pass client-ip=202.12.124.156; envelope-from=its@irrelevant.dk;
+ helo=fhigh-b5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,31 +111,149 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
 
-On 11/4/24 18:16, Peter Maydell wrote:
-> On Mon, 4 Nov 2024 at 17:09, Eric Auger <eric.auger@redhat.com> wrote:
->> Was just wondering if all the writable ID reg fields were associated to
->> an official FEAT_ listed in this feature list.
->> Let's take for instance CTR_EL0.DIC. Is it associated to a given
->> extension or is it just implementation defined?
-> CTR_EL0.DIC is IMPDEF choice of 0 or 1. There's no associated
-> FEAT_* -- as an implementation, you are effectively just
-> reporting here what your implementation's properties are.
->
-> (CTR_EL0 is not an ID register in the architectural sense.)
+--DCRh0ozZzAtltWBB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-thank you for the confirmation. So this means we also need to be able to
-tune such bit although it does not have any fellow FEAT_*.
+On Oct 29 13:15, Klaus Jensen wrote:
+> From: Klaus Jensen <k.jensen@samsung.com>
+>=20
+> If a host chooses to use the SQHD "hint" in the CQE to know if there is
+> room in the submission queue for additional commands, it may result in a
+> situation where there are not enough internal resources (struct
+> NvmeRequest) available to process the command. For a lack of a better
+> term, the host may "over-commit" the device (i.e., it may have more
+> inflight commands than the queue size).
+>=20
+> For example, assume a queue with N entries. The host submits N commands
+> and all are picked up for processing, advancing the head and emptying
+> the queue. Regardless of which of these N commands complete first, the
+> SQHD field of that CQE will indicate to the host that the queue is
+> empty, which allows the host to issue N commands again. However, if the
+> device has not posted CQEs for all the previous commands yet, the device
+> will have less than N resources available to process the commands, so
+> queue processing is suspended.
+>=20
+> And here lies an 11 year latent bug. In the absense of any additional
+> tail updates on the submission queue, we never schedule the processing
+> bottom-half again unless we observe a head update on an associated full
+> completion queue. This has been sufficient to handle N-to-1 SQ/CQ setups
+> (in the absense of over-commit of course). Incidentially, that "kick all
+> associated SQs" mechanism can now be killed since we now just schedule
+> queue processing when we return a processing resource to a non-empty
+> submission queue, which happens to cover both edge cases. However, we
+> must retain kicking the CQ if it was previously full.
+>=20
+> So, apparently, no previous driver tested with hw/nvme has ever used
+> SQHD (e.g., neither the Linux NVMe driver or SPDK uses it). But then OSv
+> shows up with the driver that actually does. I salute you.
+>=20
+> Fixes: f3c507adcd7b ("NVMe: Initial commit for new storage interface")
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2388
+> Reported-by: Waldemar Kozaczuk <jwkozaczuk@gmail.com>
+> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+> ---
+> Changes in v2:
+> - Retain cq kick on previously full queue
+> - Link to v1: https://lore.kernel.org/r/20241025-issue-2388-v1-1-16707e0d=
+3342@samsung.com
+> ---
+>  hw/nvme/ctrl.c | 25 ++++++++++++++-----------
+>  1 file changed, 14 insertions(+), 11 deletions(-)
+>=20
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index f4e89203c1a6e3b051fd7185cbf01ec9bae9684a..1185455a94c4af43a39708b1b=
+97dba9624fc7ad3 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -1520,9 +1520,16 @@ static void nvme_post_cqes(void *opaque)
+>              stl_le_p(&n->bar.csts, NVME_CSTS_FAILED);
+>              break;
+>          }
+> +
+>          QTAILQ_REMOVE(&cq->req_list, req, entry);
+> +
+>          nvme_inc_cq_tail(cq);
+>          nvme_sg_unmap(&req->sg);
+> +
+> +        if (QTAILQ_EMPTY(&sq->req_list) && !nvme_sq_empty(sq)) {
+> +            qemu_bh_schedule(sq->bh);
+> +        }
+> +
+>          QTAILQ_INSERT_TAIL(&sq->req_list, req, entry);
+>      }
+>      if (cq->tail !=3D cq->head) {
+> @@ -7950,7 +7957,6 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr add=
+r, int val)
+>          /* Completion queue doorbell write */
+> =20
+>          uint16_t new_head =3D val & 0xffff;
+> -        int start_sqs;
+>          NvmeCQueue *cq;
+> =20
+>          qid =3D (addr - (0x1000 + (1 << 2))) >> 3;
+> @@ -8001,19 +8007,16 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr a=
+ddr, int val)
+> =20
+>          trace_pci_nvme_mmio_doorbell_cq(cq->cqid, new_head);
+> =20
+> -        start_sqs =3D nvme_cq_full(cq) ? 1 : 0;
+> -        cq->head =3D new_head;
+> -        if (!qid && n->dbbuf_enabled) {
+> -            stl_le_pci_dma(pci, cq->db_addr, cq->head, MEMTXATTRS_UNSPEC=
+IFIED);
+> -        }
+> -        if (start_sqs) {
+> -            NvmeSQueue *sq;
+> -            QTAILQ_FOREACH(sq, &cq->sq_list, entry) {
+> -                qemu_bh_schedule(sq->bh);
+> -            }
+> +        /* scheduled deferred cqe posting if queue was previously full */
+> +        if (nvme_cq_full(cq)) {
+>              qemu_bh_schedule(cq->bh);
+>          }
+> =20
+> +        cq->head =3D new_head;
+> +        if (!qid && n->dbbuf_enabled) {
+> +            stl_le_pci_dma(pci, cq->db_addr, cq->head, MEMTXATTRS_UNSPEC=
+IFIED);
+> +        }
+> +
+>          if (cq->tail =3D=3D cq->head) {
+>              if (cq->irq_enabled) {
+>                  n->cq_pending--;
+>=20
+> ---
+> base-commit: fdf250e5a37830615e324017cb3a503e84b3712c
+> change-id: 20241025-issue-2388-bd047487f74c
+>=20
+> Best regards,
+> --=20
+> Klaus Jensen <k.jensen@samsung.com>
+>=20
 
-Eric
->
-> thanks
-> -- PMM
->
+Ping. Tested, but would appreciate a review ;)
 
+--DCRh0ozZzAtltWBB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmcpD0kACgkQTeGvMW1P
+DelwEwf/aXEngXSvfQc6yUK1qdWyAdo8vHqB0DEWncHE4CYlK+yWWz9sgPpk0/3+
+CcVH85cxGnaMM+Aew+MVCkp+R+HhTy/VQvRb1IivI1JyC42SrWxCj/SLkznlU/sM
+4dqFrMos7J29zFRD3YvRSP0TycYaxn6jLilRDrA0MIDo0nt/YEP7/D3tLvannPdV
+sJbod4X9Xus+n2Mi+u5D0avdIT+JcfGP5jATk6VihTLdiODDGD48ie/MeRTuSE97
+0yH7Rimr8JucqDMjvFY9nutZFKJIRnoKXK6gFg/pVvqijFHY63QwK0NMkmwAG6A9
+4x6xheKt0lgnbzSSPMCW8qC2eGrj4g==
+=HYpL
+-----END PGP SIGNATURE-----
+
+--DCRh0ozZzAtltWBB--
 
