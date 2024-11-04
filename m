@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64232D1BDF2
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:13:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A4FDD1BDF3
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t84Jc-0007Bd-OJ; Mon, 04 Nov 2024 16:08:48 -0500
+	id 1t84KC-0001HI-VN; Mon, 04 Nov 2024 16:09:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Ja-00072t-HL
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:08:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84K8-0000wU-Jk
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:09:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84JZ-0005Uc-3i
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:08:46 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84K6-0005Wx-Nr
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:09:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730754524;
+ s=mimecast20190719; t=1730754557;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=6ga8DS27Sfi7rjz6dDrgfoTT5hS6O0iJNoMqFy2shrM=;
- b=DsxF6axFSRqRzkBOg+gPQe32ZsNxOoh68zTs3MYsnE6xGR8IpsLdDO5pay7NeVZSRPH9lW
- 9O8j6zg6OaKejYiMPhGos/TCYJjQ7QMO5bjfYpaj2tB6O4D/WB4rOX7hDm2DLTrckcQYDV
- pojrHhzyq2WHht/cIpvWHIySamYrERk=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kPkqbS0KzBZTstIImdMCo6tR4lv6gQtQBT2m2wr8v1o=;
+ b=PKQqahs28VwQZl0sXn98Uj/A3iibLGk10CPbsSdYi6pMkTTKRWLn3gdcpq7WqoDfQoT0gW
+ h+sWXdQvl2d73Wdn2l1DFPdPY/vJ1+CxYcPdrZkyh4LSjGC/Ghthsn7d3q9ZeLsiqqtIPO
+ 4aLs5V0Ha9STx75nznSIqlAuGPVeM5o=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-202-YsywGLu4NKyM6y6xT5Pr5g-1; Mon, 04 Nov 2024 16:08:43 -0500
-X-MC-Unique: YsywGLu4NKyM6y6xT5Pr5g-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-539eb3416cdso4957872e87.1
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:08:42 -0800 (PST)
+ us-mta-335-4kFSM8Q2OB2IQlezImmHRA-1; Mon, 04 Nov 2024 16:07:31 -0500
+X-MC-Unique: 4kFSM8Q2OB2IQlezImmHRA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d5016d21eso2136328f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:07:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730754521; x=1731359321;
+ d=1e100.net; s=20230601; t=1730754450; x=1731359250;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6ga8DS27Sfi7rjz6dDrgfoTT5hS6O0iJNoMqFy2shrM=;
- b=msLZNbScKG7jU/wcU2rqJVQiXAF693Ljm8BYSIIv3xxFsYrM0rg8PBsze8M49z4hEH
- JAWeAUuDB9MKBy9z/lLu2A/fkpxubrlZ/J1oWI6X2pn4xFpPFaLda0HdpQEc4A2sAd5O
- kemb9dZ3SEUv4+EfHAgX/hYhWovqLV+zcKUoNYXtjEyJBCE1fKcNQbD84bJKcV0Hepnm
- I3vO+N4JArqyQvGkCjGupjX9LhqEmTp6s/OcbikFXGGq2hNIHH/JEjuWLAxS67u3CEtT
- GzEYuzP//jLAUQ7CZUnuvTzDuQfLRepykAhZv1+KRnpPbYR5FmdhAvkpGTWTPOpzISfR
- BNig==
-X-Gm-Message-State: AOJu0Yz2oxuUfF2Nxdz2PRaK98rJnLulriDbUp2OWYJkxgskq2bvCX9q
- uZqkG5t1rk1g2NCJFlUPq/vpY4NOqwPx1qC2QgEZMqcCnITWd3Zf+vtt54PbhzIGCD69PXJuxe2
- g8bUYJpXos00q2m5e50RFqB8FiA4irNU68xToJPT7vHKbjje+1C+LfB/N9pYrvd+EXWgQfIAhy6
- deTfS+8toUiJiJRpSyK4e/KG/rfVxDtw==
-X-Received: by 2002:a05:6512:128b:b0:539:e5e9:2159 with SMTP id
- 2adb3069b0e04-53b348e56eamr17436241e87.31.1730754520611; 
- Mon, 04 Nov 2024 13:08:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFaPFMFEBs1G8FRUdZ8UdrkFfn+kD+IRU9PlCV4/st20rfyjFCmGEwrdwICNtzWTjpayV9JsA==
-X-Received: by 2002:a05:6512:128b:b0:539:e5e9:2159 with SMTP id
- 2adb3069b0e04-53b348e56eamr17436213e87.31.1730754520006; 
- Mon, 04 Nov 2024 13:08:40 -0800 (PST)
+ bh=kPkqbS0KzBZTstIImdMCo6tR4lv6gQtQBT2m2wr8v1o=;
+ b=RArsMd4c6HR9KVfZk+hpKWBKD5LIH9xZhkmwsygjbUdVlvbAVKjHt29TtyTrVq4ygk
+ HPu2iLTlB7FhqYu4ja1E+0919UvfwAD9FdcQu5GJLe9PBGk+WRGOFd2Do/3W9qOJqEMs
+ VXQIFFrS666rSBLKvkcb/xhBukeFYMQcoogwgqJDg4DZSe46N709Pa4/Lq+6EPl/n6EN
+ MJ5rwgAD6uJDI6EFa2PRAM3eSjASZqhKVmY1//qdkKgW2YV3xFqRGCZxpqOwHYss6Vxj
+ sRdxFPsgkzVz6AjVte5yORvpmEvpmX5Ae3mcBZv8YCoNrMVXHVzQEfbcDRrqDyzDOSYT
+ Z5/A==
+X-Gm-Message-State: AOJu0YzqtI5KWapFgoR1VVWmCpEFe6pwfIJeKJe0k+xg/q7aL9NqqbRL
+ ay7DbNMyU89jT8UyjeK0ebgBHf2Ethl11ENGANAizVn9puQKZ++ebI1jpXXGusYkNX1btdZbaGX
+ z7ZHflMaXtZ99RWmocy7EZtokjgXYv0IOXduhLhkF3rwfD4k5rVRuXKBUSEOkl+gvOPl3EK53v6
+ 2KamiY9mXoKVqFKLUzoBA7MfJoHgDUqQ==
+X-Received: by 2002:a5d:4a11:0:b0:374:c92e:f6b1 with SMTP id
+ ffacd0b85a97d-380611585f8mr24122078f8f.23.1730754449899; 
+ Mon, 04 Nov 2024 13:07:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGYK+/Sm79EkWZWY4QxUccwt4jIS0yVBLWIwJRdLMHcemcBVhyXJIizUL7Ro2dB2pu7dhBfdg==
+X-Received: by 2002:a5d:4a11:0:b0:374:c92e:f6b1 with SMTP id
+ ffacd0b85a97d-380611585f8mr24122054f8f.23.1730754449343; 
+ Mon, 04 Nov 2024 13:07:29 -0800 (PST)
 Received: from redhat.com ([2.52.14.134]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c113e67csm14150069f8f.75.2024.11.04.13.08.38
+ 5b1f17b1804b1-431bd917fa7sm192135615e9.18.2024.11.04.13.07.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 13:08:39 -0800 (PST)
-Date: Mon, 4 Nov 2024 16:08:36 -0500
+ Mon, 04 Nov 2024 13:07:28 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:07:25 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL 46/65] hw/cxl/cxl-mailbox-util: Fix output buffer index update
- when retrieving DC extents
-Message-ID: <802671c37a6ab4de116866883841bcc8b2318124.1730754238.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Santosh Shukla <santosh.shukla@amd.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 29/65] amd_iommu: Add support for pass though mode
+Message-ID: <c1f46999ef506d9854534560a94d02cf3cf9edd1.1730754238.git.mst@redhat.com>
 References: <cover.1730754238.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -77,14 +82,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1730754238.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,35 +107,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 
-In the function of retrieving DC extents (cmd_dcd_get_dyn_cap_ext_list),
-the output buffer index was not correctly updated while iterating the
-extent list on the device, leaving the extents returned incorrect except for
-the first one.
+Introduce 'nodma' shared memory region to support PT mode
+so that for each device, we only create an alias to shared memory
+region when DMA-remapping is disabled.
 
-Fixes: 1c9221f19e62 ("hw/mem/cxl_type3: Add DC extent list representative and get DC extent list mailbox support")
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20241101132005.26633-3-Jonathan.Cameron@huawei.com>
+Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Santosh Shukla <santosh.shukla@amd.com>
+Message-Id: <20240927172913.121477-3-santosh.shukla@amd.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/cxl/cxl-mailbox-utils.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/i386/amd_iommu.h |  2 ++
+ hw/i386/amd_iommu.c | 49 ++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 42 insertions(+), 9 deletions(-)
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 8bb0d2dd29..97cb8bbcec 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -2227,6 +2227,7 @@ static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
-             stw_le_p(&out_rec->shared_seq, ent->shared_seq);
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index e5c2ae94f2..be417e51c4 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -354,6 +354,8 @@ struct AMDVIState {
+     uint32_t pprlog_tail;        /* ppr log tail */
  
-             record_done++;
-+            out_rec++;
-             if (record_done == record_count) {
-                 break;
-             }
+     MemoryRegion mr_mmio;              /* MMIO region                  */
++    MemoryRegion mr_sys;
++    MemoryRegion mr_nodma;
+     uint8_t mmior[AMDVI_MMIO_SIZE];    /* read/write MMIO              */
+     uint8_t w1cmask[AMDVI_MMIO_SIZE];  /* read/write 1 clear mask      */
+     uint8_t romask[AMDVI_MMIO_SIZE];   /* MMIO read/only mask          */
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index abb64ea507..7c7760c573 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -60,8 +60,9 @@ struct AMDVIAddressSpace {
+     uint8_t bus_num;            /* bus number                           */
+     uint8_t devfn;              /* device function                      */
+     AMDVIState *iommu_state;    /* AMDVI - one per machine              */
+-    MemoryRegion root;          /* AMDVI Root memory map region */
++    MemoryRegion root;          /* AMDVI Root memory map region         */
+     IOMMUMemoryRegion iommu;    /* Device's address translation region  */
++    MemoryRegion iommu_nodma;   /* Alias of shared nodma memory region  */
+     MemoryRegion iommu_ir;      /* Device's interrupt remapping region  */
+     AddressSpace as;            /* device's corresponding address space */
+ };
+@@ -1412,6 +1413,7 @@ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
+     AMDVIState *s = opaque;
+     AMDVIAddressSpace **iommu_as, *amdvi_dev_as;
+     int bus_num = pci_bus_num(bus);
++    X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+ 
+     iommu_as = s->address_spaces[bus_num];
+ 
+@@ -1436,13 +1438,13 @@ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
+          * Memory region relationships looks like (Address range shows
+          * only lower 32 bits to make it short in length...):
+          *
+-         * |-----------------+-------------------+----------|
+-         * | Name            | Address range     | Priority |
+-         * |-----------------+-------------------+----------+
+-         * | amdvi_root      | 00000000-ffffffff |        0 |
+-         * |  amdvi_iommu    | 00000000-ffffffff |        1 |
+-         * |  amdvi_iommu_ir | fee00000-feefffff |       64 |
+-         * |-----------------+-------------------+----------|
++         * |--------------------+-------------------+----------|
++         * | Name               | Address range     | Priority |
++         * |--------------------+-------------------+----------+
++         * | amdvi-root         | 00000000-ffffffff |        0 |
++         * |  amdvi-iommu_nodma  | 00000000-ffffffff |       0 |
++         * |  amdvi-iommu_ir     | fee00000-feefffff |      64 |
++         * |--------------------+-------------------+----------|
+          */
+         memory_region_init_iommu(&amdvi_dev_as->iommu,
+                                  sizeof(amdvi_dev_as->iommu),
+@@ -1461,7 +1463,25 @@ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
+                                             64);
+         memory_region_add_subregion_overlap(&amdvi_dev_as->root, 0,
+                                             MEMORY_REGION(&amdvi_dev_as->iommu),
+-                                            1);
++                                            0);
++
++        /* Build the DMA Disabled alias to shared memory */
++        memory_region_init_alias(&amdvi_dev_as->iommu_nodma, OBJECT(s),
++                                 "amdvi-sys", &s->mr_sys, 0,
++                                 memory_region_size(&s->mr_sys));
++        memory_region_add_subregion_overlap(&amdvi_dev_as->root, 0,
++                                            &amdvi_dev_as->iommu_nodma,
++                                            0);
++
++        if (!x86_iommu->pt_supported) {
++            memory_region_set_enabled(&amdvi_dev_as->iommu_nodma, false);
++            memory_region_set_enabled(MEMORY_REGION(&amdvi_dev_as->iommu),
++                                      true);
++        } else {
++            memory_region_set_enabled(MEMORY_REGION(&amdvi_dev_as->iommu),
++                                      false);
++            memory_region_set_enabled(&amdvi_dev_as->iommu_nodma, true);
++        }
+     }
+     return &iommu_as[devfn]->as;
+ }
+@@ -1602,6 +1622,17 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+                           "amdvi-mmio", AMDVI_MMIO_SIZE);
+     memory_region_add_subregion(get_system_memory(), AMDVI_BASE_ADDR,
+                                 &s->mr_mmio);
++
++    /* Create the share memory regions by all devices */
++    memory_region_init(&s->mr_sys, OBJECT(s), "amdvi-sys", UINT64_MAX);
++
++    /* set up the DMA disabled memory region */
++    memory_region_init_alias(&s->mr_nodma, OBJECT(s),
++                             "amdvi-nodma", get_system_memory(), 0,
++                             memory_region_size(get_system_memory()));
++    memory_region_add_subregion_overlap(&s->mr_sys, 0,
++                                        &s->mr_nodma, 0);
++
+     pci_setup_iommu(bus, &amdvi_iommu_ops, s);
+     amdvi_init(s);
+ }
 -- 
 MST
 
