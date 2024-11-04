@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E26FDD111A0
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 03:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA223D111A0
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 03:22:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7nej-0005uG-NM; Sun, 03 Nov 2024 22:21:29 -0500
+	id 1t7nei-0005se-14; Sun, 03 Nov 2024 22:21:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t7nea-0005sH-E7; Sun, 03 Nov 2024 22:21:21 -0500
+ id 1t7neU-0005rU-Ri; Sun, 03 Nov 2024 22:21:16 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t7neZ-0004QT-1g; Sun, 03 Nov 2024 22:21:20 -0500
+ id 1t7neR-0004QT-Tv; Sun, 03 Nov 2024 22:21:13 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 4 Nov
- 2024 11:21:05 +0800
+ 2024 11:21:04 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Mon, 4 Nov 2024 11:21:05 +0800
+ Transport; Mon, 4 Nov 2024 11:21:04 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -34,16 +34,13 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 2/3] hw/sd/sdhci: Introduce a new Write Protected pin
- inverted property
-Date: Mon, 4 Nov 2024 11:21:03 +0800
-Message-ID: <20241104032104.2784183-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 0/3] Introduce a new Write Protected pin inverted property
+Date: Mon, 4 Nov 2024 11:21:01 +0800
+Message-ID: <20241104032104.2784183-1-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241104032104.2784183-1-jamin_lin@aspeedtech.com>
-References: <20241104032104.2784183-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -69,60 +66,27 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Write Protect pin of SDHCI model is default active low to match the SDHCI
-spec. So, write enable the bit 19 should be 1 and write protected the bit 19
-should be 0 at the Present State Register (0x24). However, some boards are
-design Write Protected pin active high. In other words, write enable the bit 19
-should be 0 and write protected the bit 19 should be 1 at the
-Present State Register (0x24). To support it, introduces a new "wp-inverted"
-property and set it false by default.
+change from v1:
+1. Support RTC for AST2700.
+2. Support SDHCI write protected pin inverted for AST2500 and AST2600.
+3. Introduce Capabilities Register 2 for SD slot 0 and 1.
+4. Support create flash devices via command line for AST1030.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- hw/sd/sdhci.c         | 6 ++++++
- include/hw/sd/sdhci.h | 5 +++++
- 2 files changed, 11 insertions(+)
+change from v2:
+replace wp-invert with wp-inverted and fix review issues.
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index db7d547156..c675543873 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -275,6 +275,10 @@ static void sdhci_set_readonly(DeviceState *dev, bool level)
- {
-     SDHCIState *s = (SDHCIState *)dev;
- 
-+    if (s->wp_inverted) {
-+        level = !level;
-+    }
-+
-     if (level) {
-         s->prnsts &= ~SDHC_WRITE_PROTECT;
-     } else {
-@@ -1551,6 +1555,8 @@ static Property sdhci_sysbus_properties[] = {
-                      false),
-     DEFINE_PROP_LINK("dma", SDHCIState,
-                      dma_mr, TYPE_MEMORY_REGION, MemoryRegion *),
-+    DEFINE_PROP_BOOL("wp-inverted", SDHCIState,
-+                     wp_inverted, false),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-index 6cd2822f1d..25ad9ed778 100644
---- a/include/hw/sd/sdhci.h
-+++ b/include/hw/sd/sdhci.h
-@@ -100,6 +100,11 @@ struct SDHCIState {
-     uint8_t sd_spec_version;
-     uint8_t uhs_mode;
-     uint8_t vendor;        /* For vendor specific functionality */
-+    /*
-+     * Write Protect pin default active low for detecting SD card
-+     * to be protected. Set wp_inverted to true inverted the signal.
-+     */
-+    bool wp_inverted;
- };
- typedef struct SDHCIState SDHCIState;
- 
+Jamin Lin (3):
+  hw/sd/sdhci: Fix coding style
+  hw/sd/sdhci: Introduce a new Write Protected pin inverted property
+  hw/arm/aspeed: Invert sdhci write protected pin for AST2600 and
+    AST2500 EVBs
+
+ hw/arm/aspeed.c         |  8 +++++
+ hw/sd/sdhci.c           | 70 ++++++++++++++++++++++++++++-------------
+ include/hw/arm/aspeed.h |  1 +
+ include/hw/sd/sdhci.h   |  5 +++
+ 4 files changed, 62 insertions(+), 22 deletions(-)
+
 -- 
 2.34.1
 
