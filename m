@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2165D1BDD0
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 17:20:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F3AD1BDD2
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 17:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t80jC-0000CR-TZ; Mon, 04 Nov 2024 12:18:59 -0500
+	id 1t80mL-0003gX-5Q; Mon, 04 Nov 2024 12:22:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t80im-0008PY-SQ
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:18:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1t80mI-0003g2-9t
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:22:10 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t80ij-0007Sq-Ty
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:18:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730740707;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=m5N6o+EaXcu+A7yyrqv2kISDSSCJ3BIxnlXM0nTQcw8=;
- b=XUN6q9zPa3fIK/+r9hvLNgAlqWnpFAxED9dUGDKfb4lZto1gjRJq+WcqymxGGGKjiksiZC
- J8tPlDZIwqo25ZF791p79iV/5A/nV+/BooBvjFA5hXEuxFayinlnoGqfOMgjMSeS+Bbvxb
- NJmOPC4spz6C++uckJ4/7k+Knbmb45M=
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-19-bmVeqBx5PCGTf7wvRWdZ8A-1; Mon, 04 Nov 2024 12:18:26 -0500
-X-MC-Unique: bmVeqBx5PCGTf7wvRWdZ8A-1
-Received: by mail-oa1-f70.google.com with SMTP id
- 586e51a60fabf-288c77e33a4so3490255fac.0
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 09:18:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730740705; x=1731345505;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m5N6o+EaXcu+A7yyrqv2kISDSSCJ3BIxnlXM0nTQcw8=;
- b=I5jUzMbwk8ZgnvzkJi/yyk1zBLux2tU4/Ooe7z2JnaoMJv+YHTSQqj+LDJlnt/YeLr
- 7VUYfWjeylVuxTmyDm1wZkGbf6aDIMReRtj/9Ygb/6ogifDFcthKlZohmukfjIU9Iddc
- 5P5xqu57UL/ru1nebQeNV4G9YommyuAF4T78FXBXkakN4kEqcsDEIgZMw/VUyJTIgpFF
- LvmWPYGpSaNv4qyHMM23SsxG477fuhrE3kg7iNXZDRY+Eg5RkdDab8Lo0VC3YtkkkJsa
- QuP34nXaWQ2x7p2T0BacTDj57EgObo59ApMs/M/i4H/JCmcevRawqI7nhqB7AyNKUAW2
- bcUg==
-X-Gm-Message-State: AOJu0YyEPEIn1LT47KxPKIApI/Qzz3hqiE7hCbE25hZaSXzRdgIOQH+y
- K6xRagQ8pDFWcgVs7H0r14pgojggkxTiO3morszbrOmDFC5tfcJ1W+qCcAsoAIYj9RVCYoNX5zs
- mj8CAD5ujjqNrfLyuY3UYeJt00shaJgKOJ/kmXZv96/gjMMcvNwFN
-X-Received: by 2002:a05:6870:170f:b0:288:18a0:e169 with SMTP id
- 586e51a60fabf-29051b4d49dmr26920274fac.19.1730740705558; 
- Mon, 04 Nov 2024 09:18:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IErS91NTVKt4ZQ/kMQAqBXwGemSMjqTQufbCoX/weI8J/1cZBvNWTsq/UbdAzjmCPlZ6dKBFA==
-X-Received: by 2002:a05:6870:170f:b0:288:18a0:e169 with SMTP id
- 586e51a60fabf-29051b4d49dmr26920246fac.19.1730740705119; 
- Mon, 04 Nov 2024 09:18:25 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29487429433sm3044133fac.6.2024.11.04.09.18.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 09:18:24 -0800 (PST)
-Date: Mon, 4 Nov 2024 12:18:22 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH 2/5] migration/postcopy: magic value for postcopy channel
-Message-ID: <ZykB3voFw_-ByWfh@x1n>
-References: <20241029150908.1136894-1-ppandit@redhat.com>
- <20241029150908.1136894-3-ppandit@redhat.com>
- <ZyTnBwpOwXcHGGPJ@x1n>
- <CAE8KmOyzWRqpGDOyAK7V2X8+SWVt_kR1897tiFm7vdBNRRE2QA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1t80mF-0007uO-N4
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:22:10 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1t80m6-00000001MWl-2OtE; Mon, 04 Nov 2024 18:21:58 +0100
+Message-ID: <3cdafdcd-570a-45ed-bb4d-f157842fcecb@maciej.szmigiero.name>
+Date: Mon, 4 Nov 2024 18:21:53 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAE8KmOyzWRqpGDOyAK7V2X8+SWVt_kR1897tiFm7vdBNRRE2QA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] vfio/migration: Add
+ save_{iterate,complete_precopy}_started trace events
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+References: <8fbb9cc40d9db570eff0a02e49104835014a5a4d.1730731549.git.maciej.szmigiero@oracle.com>
+ <01c3cab0-75f2-4e36-b39f-00afea6058a9@redhat.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <01c3cab0-75f2-4e36-b39f-00afea6058a9@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,51 +109,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 04, 2024 at 06:02:33PM +0530, Prasad Pandit wrote:
-> On Fri, 1 Nov 2024 at 20:04, Peter Xu <peterx@redhat.com> wrote:
-> > As we discussed internally, we can't do this unconditionally.  We at least
-> > some compat properties.
+Hi Cédric,
+
+On 4.11.2024 18:11, Cédric Le Goater wrote:
+> Hello Maciej,
 > 
-> * ie. we define a new compat property to check if postcopy sends a
-> magic value or not?
+> On 11/4/24 15:58, Maciej S. Szmigiero wrote:
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>
+>> This way both the start and end points of migrating a particular VFIO
+>> device are known.
+>>
+>> Add also a vfio_precopy_empty_hit trace event so it is known when
+>> there's no more data to send for that device.
 > 
-> >  Or we need to see whether Fabiano's handshake can
-> > simplify this, because the handshake will also re-design the channel
-> > establishment protocol.
+> Would you mind splitting the patch in 2, one patch for each event flag
+> added ?
+
+Sure,
+so you'd prefer 3 patches in total then, for 3 trace events added
+or vfio_save_{iterate,complete_precopy}_start* in the first and
+vfio_precopy_empty_hit in the second patch?
+
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>
+>> This is just the lone remaining functionality-affecting patch from this
+>> series of 4 trivial patches for QEMU 9.2:
+>> https://lore.kernel.org/qemu-devel/cover.1730203967.git.maciej.szmigiero@oracle.com/
+>> Two other such patches were already queued and the fourth one is only
+>> an annotation in a code comment block.
+>>
+>> Changes from the v1 that was posted as a part of the above series:
+>> * Move the vfio_save_iterate_empty_hit trace event to vfio_save_block(),
+>> trigger it on ENOMSG errno and rename it to vfio_precopy_empty_hit.
+>>
+>> * Re-arm the above trace event if we see another data read so not only
+>> the first "data present" -> "data not present" edge is logged.
+>>
+>>   hw/vfio/migration.c           | 17 +++++++++++++++++
+>>   hw/vfio/trace-events          |  3 +++
+>>   include/hw/vfio/vfio-common.h |  3 +++
+>>   3 files changed, 23 insertions(+)
+>>
+>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+>> index 992dc3b10257..e7b81f99e595 100644
+>> --- a/hw/vfio/migration.c
+>> +++ b/hw/vfio/migration.c
+>> @@ -370,6 +370,10 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
+>>            * please refer to the Linux kernel VFIO uAPI.
+>>            */
+>>           if (errno == ENOMSG) {
+>> +            if (!migration->precopy_empty_hit) {
+>> +                trace_vfio_precopy_empty_hit(migration->vbasedev->name);
 > 
-> * May I know more about this handshake change? Is there a repository?
-> OR a page/document that describes what is being planned? Is it just
-> channel establishment change or there's more to it?
+> 
+> There is a kind of implicit rule that is to keep the name of the
+> routine in the trace event. This is true for this file at least.
+> In this regard, could you please rename the event to :
+> 
+>      vfio_save_block_precopy_empty_hit
 
-After a 2nd thought, maybe we don't need a new compat property, and this
-should work even before handshake ready.
+Okay, will change to the above name.
 
-Firstly, we'll need a way to tell mgmt that the new qemu binary supports
-enablement of both multifd + postcopy feature.  That can be done with a
+> or
+>      vfio_save_block_precopy_empty
+> 
+> as you wish.
+> 
+>> +                migration->precopy_empty_hit = true;
+>> +            }
+>>               return 0;
+>>           }
+>> @@ -379,6 +383,9 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
+>>           return 0;
+>>       }
+>> +    /* Non-empty read -> re-arm the trace event */
+>> +    migration->precopy_empty_hit = false;
+>> +
+>>       qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE);
+>>       qemu_put_be64(f, data_size);
+>>       qemu_put_buffer(f, migration->data_buffer, data_size);
+>> @@ -472,6 +479,9 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>>           return -ENOMEM;
+>>       }
+>> +    migration->save_iterate_started = false;
+>> +    migration->precopy_empty_hit = false;
+>> +
+>>       if (vfio_precopy_supported(vbasedev)) {
+>>           switch (migration->device_state) {
+>>           case VFIO_DEVICE_STATE_RUNNING:
+>> @@ -602,6 +612,11 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
+>>       VFIOMigration *migration = vbasedev->migration;
+>>       ssize_t data_size;
+>> +    if (!migration->save_iterate_started) {
+>> +        trace_vfio_save_iterate_started(vbasedev->name);
+>> +        migration->save_iterate_started = true;
+>> +    }
+>> +
+>>       data_size = vfio_save_block(f, migration);
+>>       if (data_size < 0) {
+>>           return data_size;
+>> @@ -630,6 +645,8 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+>>       int ret;
+>>       Error *local_err = NULL;
+>> +    trace_vfio_save_complete_precopy_started(vbasedev->name);
+>> +
+>>       /* We reach here with device state STOP or STOP_COPY only */
+>>       ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
+>>                                      VFIO_DEVICE_STATE_STOP, &local_err);
+>> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+>> index 29789e8d276d..d5277cb7697a 100644
+>> --- a/hw/vfio/trace-events
+>> +++ b/hw/vfio/trace-events
+>> @@ -156,11 +156,14 @@ vfio_migration_realize(const char *name) " (%s)"
+>>   vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
+>>   vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
+>>   vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
+>> +vfio_precopy_empty_hit(const char *name) " (%s)"
+>>   vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
+>>   vfio_save_cleanup(const char *name) " (%s)"
+>>   vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
+>> +vfio_save_complete_precopy_started(const char *name) " (%s)"
+>>   vfio_save_device_config_state(const char *name) " (%s)"
+>>   vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+>> +vfio_save_iterate_started(const char *name) " (%s)"
+>>   vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
+>>   vfio_state_pending_estimate(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+>>   vfio_state_pending_exact(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+>> index fed499b199f0..0410111e9868 100644
+>> --- a/include/hw/vfio/vfio-common.h
+>> +++ b/include/hw/vfio/vfio-common.h
+>> @@ -73,6 +73,9 @@ typedef struct VFIOMigration {
+>>       uint64_t precopy_init_size;
+>>       uint64_t precopy_dirty_size;
+>>       bool initial_data_sent;
+>> +
+>> +    bool save_iterate_started;
+>> +    bool precopy_empty_hit;
+> 
+> Additionally, I would add an 'event_' prefix to give some indication
+> of what these new attributes are.
+> 
+> Also, how about replacing 'started' with 'start' ? That's fine if you
+> prefer start.
 
-  "features": [ "postcopy-with-multifd-precopy" ]
+Will change it the name suffix to '_start' for consistency with other
+trace events.
 
-Flag attached to the QMP "migrate" command.
-
-Then, I think we don't need a magic for preempt channel, because new qemu
-binaries (after 7.2) have no issue on out-of-order connections between main
-/ preempt channel.  Preempt channel is always connected later than main.
-
-It means in the test logic of "which channel is which", it should be:
-
-  - If it's a multifd channel (check multifd header match), it's a multifd
-    channel, otherwise,
-
-    - if main channel is not present yet, it must be the main channel (and
-      we can double check the main channel magic), otherwise,
-
-    - it's the preempt channel
-
-With that, I think we can drop the new magic sent here.
+> Tomorrow is soft-freeze, let's get these changes in for QEMU 9.2.
+> 
+> Thanks,
+> 
+> C.
 
 Thanks,
-
--- 
-Peter Xu
+Maciej
 
 
