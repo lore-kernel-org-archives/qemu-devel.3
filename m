@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C1FCD11198
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D4FD11194
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:29:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7kp7-0007Ns-6h; Sun, 03 Nov 2024 19:20:01 -0500
+	id 1t7kqI-0002KX-GE; Sun, 03 Nov 2024 19:21:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7kp5-0007Ms-5R; Sun, 03 Nov 2024 19:19:59 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1t7kqH-00029q-17; Sun, 03 Nov 2024 19:21:13 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7kp3-0002KN-Oq; Sun, 03 Nov 2024 19:19:58 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-71e4244fdc6so2800537b3a.0; 
- Sun, 03 Nov 2024 16:19:56 -0800 (PST)
+ id 1t7kqF-0002fk-KK; Sun, 03 Nov 2024 19:21:12 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-71e4c2e36daso3001145b3a.0; 
+ Sun, 03 Nov 2024 16:21:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730679595; x=1731284395; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730679670; x=1731284470; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vP9Pv6akJ9wvw7JMuu+7UGFu2Y8Q3rLCweqIbGkYo8w=;
- b=F3mH+JPiETqE28cN7BS9xoA3Z6Djv5obgzYy5hvte1gyf2I5cG52yVpjaXkVz28p6a
- iYAf2/Da7O2f1CINPTpYnK2uWH8WAS9uV/VCfKgW1AeWA2V3pYgyn+TXXyKgghfSq+w7
- zJzznobSzNyoCLgFSgWr/dEtD8b1wst9HgHM8L/J/bxZK8ZmXFvPEkbfQ0p3jhrzjb/L
- SLdb/OZHBsAL9SmM1z6IXEd56TZfy0nCIa0G6ANxHIHa94TDexlvTAliWPSPv+2n4Yyy
- vWJel5+9JplDtGKFKSiMUWUApSKPVE4it9P57PXrLexi2T/jjupeN6cEJb4GkUKFpV8i
- hvQw==
+ bh=eS5e0cmJm70PoeOBdgGBzyGD/H9fRXlahMrxXsRoESI=;
+ b=Kls0iBlXDPLpA2AS+Hrz4Mwi8QeGPt1DpfsSAVoB/LmD53V7nlTSghBU9FeXpYh+1q
+ YqoFgyT6WcQwO6iQDevLP4KvmRG6dK59uk6KFElaOG3teEHS/XWocCmxBJmH1Vuqt4Qf
+ FFLEpK0y0FRulz+QBi0nrQfkO7nhJ7dmp2oSgZeH+oVaDEvLDLrMeCoIxMGgzT6KExZi
+ Xk3o3aMpGmjRtmpQrzxctbQnBbCwQtNSEEhNTlS28XNtLCSsbV6t1VgkClHatxNNG4xQ
+ gWM8l9Aae52kjEXPSsTAskLZ8KSlGtc2xGgmUyuepNuCEgoIkv4wC68BgiwtocS5c//E
+ KqNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730679595; x=1731284395;
+ d=1e100.net; s=20230601; t=1730679670; x=1731284470;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vP9Pv6akJ9wvw7JMuu+7UGFu2Y8Q3rLCweqIbGkYo8w=;
- b=lh20I3GGuZuTNmP5DN6NQ1HnGLRXFWzY1UjhUe/L6AxEwPkiRpniEUNBwRbV/R+MlV
- iQFQ4BVo/a65UDhi9jNS1HAGUTs7pORufs06fePPjbFzH8VwY3w9310cBI8zDBODmW1B
- z1kMOAJgGMO2d0UJJmKJZ3b7Y0BU2DPeQ1cwTTIJ+YvtTWJAhexZ/kRyhmLBrYu1hZtq
- 1h42S1HfNHPTxoOSLFbZ56sNaMA0EjZ7JtEpoqw3tUbluYpjVi4ypF4Fp1lUWbA0X6uP
- Q95tGUoYwGIZqO9QJASbZMWoMJFd6jirWZETnwlo2KZqiX0EtRRlPNQvBZ0N3FDhCVv5
- 2hlA==
+ bh=eS5e0cmJm70PoeOBdgGBzyGD/H9fRXlahMrxXsRoESI=;
+ b=AwDKg3yApt7rGjCEIa1KnPa4w4iJc9+HrjemaY88PCeUKPsd+fXUJ2znYUbW4Pwtgg
+ Uhk+dJ93zwuMEtyupVq+C4dBkZ2GOxhpjutrjcsijiO0l2yWD1A2+2mCfkf2bZoh3DOt
+ eyIh8D+TXCfWuNfTLrN4sitRNwKk6V1NFI/xPryVZ+kRfgFpfy8iMdPx3s6OEMB0hSF0
+ xC8WGnzttOPjJW3lA2K/dCraDy0d6qIGEFhSN1BqjYCCNyw2O+USijH5YnCyWb+4KMMG
+ Q+hyra62oxWrGMmxHfgp/Efrlpcl4F2qrZDpP0JtLlKCfGWwcIGRUCgWMRocyUPiVMIu
+ nsEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUbSJlTudbu5AdlFOqvu6s92t1jeJ87INnKx117Qc1k+ZyGJUGeCs2TI1brGsuoVFA+y57+YkMGwWgZTOY=@nongnu.org,
- AJvYcCXBg3hEJnWyZVSEbqEZoLCzfZrdY2JO45RHIwwvstnAu1jccD941Pbt6TyNomHcKq4kmkBWwQ011w==@nongnu.org
-X-Gm-Message-State: AOJu0Ywj1FSFXr5DsXSMubTFDLqT7iauuJLbzPziv5ozxpTkfo3HG8yQ
- +Ss3JAXV3sUogGnRZVDRSkwInDN7TbgeAYzcg3v7GlrAWlNDDUIz+/nN6w==
-X-Google-Smtp-Source: AGHT+IHoskG9t740LaqJsduWGHY7u4himZXqnYPo8/hOXH3ClDh4aelVld8CREyNo5l5v3Lf/Y3ACQ==
-X-Received: by 2002:a05:6a21:670f:b0:1d9:266e:8216 with SMTP id
- adf61e73a8af0-1dba53bf472mr16052635637.22.1730679594691; 
- Sun, 03 Nov 2024 16:19:54 -0800 (PST)
+ AJvYcCUiASuwPdP3jkPrEVlY18E6++DvgHCRlkhG9DQMdsLXRF22x4x7AH9qDG4kXSKD33fG2pWl/khvig==@nongnu.org
+X-Gm-Message-State: AOJu0Ywbdj2xmuMy/ODMp4SMtQwPeMMdRDk2VB6uKf7bmJrOikZcPuci
+ lTd5nzO4YDEKkt1LSBkf5Jw9YAyxxN1BZ1GKzaV+mJdRDmZmU7MBUOyiow==
+X-Google-Smtp-Source: AGHT+IGBRdiqul7jiaZZZ1AkxZdusZUpcOV5ncl5HpqghuyoJO2uqGmoV7NgACPhz0GmVEtEgymy3A==
+X-Received: by 2002:a05:6a20:7289:b0:1d7:86c:189e with SMTP id
+ adf61e73a8af0-1dba41828fcmr15888482637.12.1730679669695; 
+ Sun, 03 Nov 2024 16:21:09 -0800 (PST)
 Received: from wheely.local0.net (124-171-217-17.tpgi.com.au. [124.171.217.17])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.19.51
+ 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.21.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 16:19:54 -0800 (PST)
+ Sun, 03 Nov 2024 16:21:09 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 12/67] hw/ssi/pnv_spi: Match _xfer_buffer_free() with
- _xfer_buffer_new()
-Date: Mon,  4 Nov 2024 10:18:01 +1000
-Message-ID: <20241104001900.682660-13-npiggin@gmail.com>
+ Aditya Gupta <adityag@linux.ibm.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>
+Subject: [PULL 32/67] target/ppc: Fix regression due to Power10 and Power11
+ having same PCR
+Date: Mon,  4 Nov 2024 10:18:21 +1000
+Message-ID: <20241104001900.682660-33-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241104001900.682660-1-npiggin@gmail.com>
 References: <20241104001900.682660-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,36 +96,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-pnv_spi_xfer_buffer_new() allocates %payload using g_malloc0(),
-and pnv_spi_xfer_buffer_write_ptr() allocates %payload->data
-using g_realloc(). Use the API equivalent g_free() to release
-the buffers.
+Power11 has the same PCR (Processor Compatibility Register) value, as
+Power10.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Due to this, QEMU considers Power11 as a valid compat-mode for Power10,
+ie. earlier it was possible to run QEMU with
+'-M pseries,max-compat-mode=power11 --cpu power10'
+
+Same PCR also introduced a regression where `-M pseries --cpu power10`
+boots as Power11 (ie. logical PVR is of Power11, even though PVR is
+Power10).  The regression was due to 'do_client_architecture_support'
+checking for valid compat modes and finding Power11 to be a valid compat
+mode for Power10 (it happens even without passing 'max-compat-mode'
+explicitly).
+
+Fix compat-mode issue and regression, by ensuring a future Power
+processor (with a higher logical_pvr value, eg. P11) cannot be valid
+compat-mode for an older Power processor (eg. P10)
+
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ssi/pnv_spi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/ppc/compat.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-index 9e7207bf7c..d15a5970b4 100644
---- a/hw/ssi/pnv_spi.c
-+++ b/hw/ssi/pnv_spi.c
-@@ -53,8 +53,8 @@ static PnvXferBuffer *pnv_spi_xfer_buffer_new(void)
- 
- static void pnv_spi_xfer_buffer_free(PnvXferBuffer *payload)
- {
--    free(payload->data);
--    free(payload);
-+    g_free(payload->data);
-+    g_free(payload);
- }
- 
- static uint8_t *pnv_spi_xfer_buffer_write_ptr(PnvXferBuffer *payload,
+diff --git a/target/ppc/compat.c b/target/ppc/compat.c
+index ebef2cccec..5b20fd7ef0 100644
+--- a/target/ppc/compat.c
++++ b/target/ppc/compat.c
+@@ -132,6 +132,10 @@ static bool pcc_compat(PowerPCCPUClass *pcc, uint32_t compat_pvr,
+         /* Outside specified range */
+         return false;
+     }
++    if (compat->pvr > pcc->spapr_logical_pvr) {
++        /* Older CPU cannot support a newer processor's compat mode */
++        return false;
++    }
+     if (!(pcc->pcr_supported & compat->pcr_level)) {
+         /* Not supported by this CPU */
+         return false;
 -- 
 2.45.2
 
