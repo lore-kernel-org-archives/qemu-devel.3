@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63400D132AC
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 11:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C692D132AE
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 11:16:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7unz-0006o9-Li; Mon, 04 Nov 2024 05:59:31 -0500
+	id 1t7v3B-0000eG-03; Mon, 04 Nov 2024 06:15:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t7uny-0006nr-I9
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:59:30 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1t7v2v-0000dM-2q
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 06:14:57 -0500
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t7unw-0004Wv-MK
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:59:30 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a86e9db75b9so652888166b.1
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 02:59:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1t7v2t-0006FS-4s
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 06:14:56 -0500
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-718065d6364so1882233a34.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 03:14:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730717966; x=1731322766; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=mz5OMtV/UHaaM9hW7xpbIoTcAeBFVS80t+xWnzGlhMA=;
- b=iqH3iZIc9T+cJWkiuhPHhq9ZJ3f+54bow5R1COM2jUyLWMJmB2QuqC4O+5HUToAZv9
- 8pk0NngAYPAxTP8jpeciQ9wV3UfM/AELwMZgQj8hlI4nNGrJMjMwzmR2SzUx1eDIlLy4
- hmrNRDXuPXczXqtPwnFciCNhB6CViunic+2ZegkFF0JeERv11s8JyTONM/DMAn8QjF51
- KRIhnB2jg+t2O7j/zHfA0DKMyPwoz2UMW0psZTRmwwM/n+fSQSVcT/YJag9XKk8qjxER
- g9n+QqFKvRLRAmJvfdAKn+VOWMPmllzt8D7bscdor12Y3T5cXVcuIqQD+l6JvRbNl8Um
- 9jkw==
+ d=sifive.com; s=google; t=1730718893; x=1731323693; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mtozNNuiFFFi4w1Zy1O7+ZhWvqKX2dDJF9x7QvW1LtQ=;
+ b=Fwmzv4Y6jxfBG1crQxKtmnxPT5h25fqeGPbJzTbCPePIdTd0qSNvS1dLjYNEZIdiOz
+ B/2vOtaRUO/SUXm1wqjiCg+7NOUSUkkWTeBNkgr+523AepQiY2acGnopm9Y9VUGG3Bqp
+ V1ndf2Zq90DiY7uaw8hS81GUV8I/ELQg/LuNgYcShzymFvviB+fdEa0zJ26mp8bbGpVS
+ betbV/3QLIScSlQOM5KJQwYEjX4uUd0vTGx7k8b3veIe6fb9cLpiJdjDXim7YyvFZMxv
+ Dyno0X21PjRs90qSYTqJSgEYT05ZlD/tuDPTV2bH0h3JYUAO4H/IyHMn0QL487pMNhcu
+ HxBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730717966; x=1731322766;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mz5OMtV/UHaaM9hW7xpbIoTcAeBFVS80t+xWnzGlhMA=;
- b=ZsuRVNsJaZ/YznZu9El9KEMeYFEBTH6/OadpSx7eqDYgFs+jr6cGJ/HsaG+nsq3Ixo
- rQIJWvjucaw0A29tdxTpwOFHgrQfcRNHVjVpNcxpSanpbLI7XHw8DLdvA63eRqhKQGqT
- qBOvcjH7fPCMfGWZAsVMx8YJ09/rbGiMs96RkHSxUZZ++3k8bM3jeVZcvkZ00LOSkt/x
- sUzrW48iEsxUWvIFpBbo8aafyJDqe4OOFDt1K/zgZ0Z5RzOsxl4clGOeYqxn3k/7Wo1v
- pN4RIU5hAlajB70qomGlphoTLvlNJMvlegcu7VCT7y38C3rD6rLTY8lmmOAV1mW7HiHW
- Ua3g==
+ d=1e100.net; s=20230601; t=1730718893; x=1731323693;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mtozNNuiFFFi4w1Zy1O7+ZhWvqKX2dDJF9x7QvW1LtQ=;
+ b=uc+LOl8xiUKgx3mtumw0z4Etpb9A7AeNpDXq76CzW9FdTji3vTxZ//BQKrinjor6i8
+ FD8fIgmsaQ9OU9pptDa5SqbQCSatSJfxzB30zbS2GwYIspDuaFhawP/mpJegi1HHnPCm
+ cJow723ctNWEF3EsZzkSP9Vfk95fi9AcBb8Qy8lz47IFSxEYCbDH6EjnkmBqe0skWLcj
+ 6Tuh6bA7esnPSS633SsqVkJEsJQ23B+jYL07ZKtrcM6x/UZc1KQ5DQE5C6MYZ4pfGqDm
+ 1Pv6Ko/Vb8rztedFGi6iBg6dYQQp5ZurBFneVEuUx5icQpSKTlsQVdRx5KEYV4aRn43R
+ J/1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUGF4GJlR7ceOfUZwy/dldOCpEiXyU1CqnswAMFnQHg7SxOjIBMlZ/0CjnfA9oDxCELuTTXRfNzJ9ku@nongnu.org
-X-Gm-Message-State: AOJu0YzT6MGd4Ld/flL1QYNLTTo3MkmlaXBKCeFYuOzD83qxFLaL2SEM
- 8cY3V6vJVUQFO5Zm1+aqa8eJBGaiOXUyJz7lEj8oV8I/3eDRy3YOyzqC4gDpdeo=
-X-Google-Smtp-Source: AGHT+IErrJSAtuCjMlQ1BeVsU2ECBAy6ra5jp7xH8Qm9FpUreP+5N1mNZHe+3ur+HWzWEjcDF80cug==
-X-Received: by 2002:a17:906:7310:b0:a99:f779:ae0c with SMTP id
- a640c23a62f3a-a9e50916803mr1632279666b.25.1730717966455; 
- Mon, 04 Nov 2024 02:59:26 -0800 (PST)
-Received: from [192.168.21.227] ([91.223.100.66])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9e565ef518sm538538466b.118.2024.11.04.02.59.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Nov 2024 02:59:26 -0800 (PST)
-Message-ID: <9994b8dd-0522-43ff-94ff-1a94aafd5ce2@linaro.org>
-Date: Mon, 4 Nov 2024 10:59:22 +0000
+ AJvYcCXQCLCnwDjCVhrkdaZWDC8J9bOG6KTOw7Hed+9N6lpCgC/dt95IUxqQc4wTxQg4i8Bm7j5lTPzq6v9j@nongnu.org
+X-Gm-Message-State: AOJu0YzErwGeEAZc+3irkbY3BCEs/eLaBtZQwAcoVwTouGLpMV21Qt9F
+ LwMPTdutOuK3tM8V2v+Y3BtZHUzlNqaY8x8rn3J/YiKC9+Tof/IzbDmeXJNBBBmKU+rIvW9mpEI
+ +qfeC3mx9Ad1gcqsYa5KOj8tYgrKw410iT/Iegg==
+X-Google-Smtp-Source: AGHT+IGE02lxffNu2taMIzdnd0qEj5C04JjiZgKoi0zh6SWwXPFQ2MbFQp30MvFDf/by+cfjtROl9MSEouhwE6hVXU8=
+X-Received: by 2002:a05:6871:283:b0:288:2b43:e0e3 with SMTP id
+ 586e51a60fabf-2949efafdaemr9274980fac.35.1730718893049; Mon, 04 Nov 2024
+ 03:14:53 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Enable FEAT_CMOW for -cpu max
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org
-References: <20241101013541.883785-1-gustavo.romero@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241101013541.883785-1-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x635.google.com
+References: <20241101083606.5122-1-yongxuan.wang@sifive.com>
+ <8ec6e960-8305-456c-b8f9-4c0dd14e51ff@ventanamicro.com>
+ <20241101-6ada91d63644e8d715b1cf35@orel>
+In-Reply-To: <20241101-6ada91d63644e8d715b1cf35@orel>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Date: Mon, 4 Nov 2024 19:14:42 +0800
+Message-ID: <CAMWQL2hwDZdB9TmHF4=krzrUa1_=P78aBYt6nJddGZxMjk702A@mail.gmail.com>
+Subject: Re: [PATCH 1/1] hw/riscv: virt: prevent to use AIA MSI when host
+ doesn't support it
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com, 
+ jim.shu@sifive.com, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
+ envelope-from=yongxuan.wang@sifive.com; helo=mail-ot1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,98 +99,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/1/24 01:35, Gustavo Romero wrote:
-> FEAT_CMOW introduces support for controlling cache maintenance
-> instructions executed in EL0/1 and is mandatory from Armv8.8.
-> 
-> On real hardware, the main use for this feature is to prevent processes
-> from invalidating or flushing cache lines for addresses they only have
-> read permission, which can impact the performance of other processes.
-> 
-> QEMU implements all cache instructions as NOPs, and, according to rule
-> [1], which states that generating any Permission fault when a cache
-> instruction is implemented as a NOP is implementation-defined, no
-> Permission fault is generated for any cache instruction when it lacks
-> read and write permissions.
-> 
-> QEMU does not model any cache topology, so the PoU and PoC are before
-> any cache, and rules [2] apply. These rules states that generating any
-> MMU fault for cache instructions in this topology is also
-> implementation-defined. Therefore, for FEAT_CMOW, we do not generate any
-> MMU faults either, instead, we only advertise it in the feature
-> register.
-> 
-> [1] Rule R_HGLYG of section D8.14.3, Arm ARM K.a.
-> [2] Rules R_MZTNR and R_DNZYL of section D8.14.3, Arm ARM K.a.
-> 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->   docs/system/arm/emulation.rst | 1 +
->   target/arm/cpu-features.h     | 5 +++++
->   target/arm/cpu.h              | 1 +
->   target/arm/tcg/cpu64.c        | 1 +
->   4 files changed, 8 insertions(+)
-> 
-> diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-> index 35f52a54b1..a2a388f091 100644
-> --- a/docs/system/arm/emulation.rst
-> +++ b/docs/system/arm/emulation.rst
-> @@ -26,6 +26,7 @@ the following architecture extensions:
->   - FEAT_BF16 (AArch64 BFloat16 instructions)
->   - FEAT_BTI (Branch Target Identification)
->   - FEAT_CCIDX (Extended cache index)
-> +- FEAT_CMOW (Control for cache maintenance permission)
->   - FEAT_CRC32 (CRC32 instructions)
->   - FEAT_Crypto (Cryptographic Extension)
->   - FEAT_CSV2 (Cache speculation variant 2)
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index 04ce281826..e806f138b8 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -802,6 +802,11 @@ static inline bool isar_feature_aa64_tidcp1(const ARMISARegisters *id)
->       return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, TIDCP1) != 0;
->   }
->   
-> +static inline bool isar_feature_aa64_cmow(const ARMISARegisters *id)
-> +{
-> +    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, CMOW) != 0;
-> +}
+Hi Daniel and Andrew,
 
-This isn't used, so it may be omitted.
+When handling an external interrupt via IMSIC, we need to use the stopei CS=
+R
+to claim the top interrupt. Even though the QEMU can emulate the IMSIC devi=
+ces
+without the in-kernel irqchip, we still need to trap and emulate the stopei
+CSR. But since the host machine doesn't support the AIA extension, the gues=
+t OS
+will hit the illegal instruction exception instead of the virutal instructi=
+on
+exception when it accesses the stopei CSR. We can't have a chance to redire=
+ct
+this instruction to QEMU. So I think we can directly report errors when the
+user wants to use KVM AIA(MSI) without in-kernel AIA irqchip support.
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Regards,
+Yong-Xuan
 
-
-r~
-
-> +
->   static inline bool isar_feature_aa64_hafs(const ARMISARegisters *id)
->   {
->       return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, HAFDBS) != 0;
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 8fc8b6398f..1ea4c545e0 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -1367,6 +1367,7 @@ void pmu_init(ARMCPU *cpu);
->   #define SCTLR_EnIB    (1U << 30) /* v8.3, AArch64 only */
->   #define SCTLR_EnIA    (1U << 31) /* v8.3, AArch64 only */
->   #define SCTLR_DSSBS_32 (1U << 31) /* v8.5, AArch32 only */
-> +#define SCTLR_CMOW    (1ULL << 32) /* FEAT_CMOW */
->   #define SCTLR_MSCEN   (1ULL << 33) /* FEAT_MOPS */
->   #define SCTLR_BT0     (1ULL << 35) /* v8.5-BTI */
->   #define SCTLR_BT1     (1ULL << 36) /* v8.5-BTI */
-> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-> index 0168920828..2963d7510f 100644
-> --- a/target/arm/tcg/cpu64.c
-> +++ b/target/arm/tcg/cpu64.c
-> @@ -1218,6 +1218,7 @@ void aarch64_max_tcg_initfn(Object *obj)
->       t = FIELD_DP64(t, ID_AA64MMFR1, ETS, 2);      /* FEAT_ETS2 */
->       t = FIELD_DP64(t, ID_AA64MMFR1, HCX, 1);      /* FEAT_HCX */
->       t = FIELD_DP64(t, ID_AA64MMFR1, TIDCP1, 1);   /* FEAT_TIDCP1 */
-> +    t = FIELD_DP64(t, ID_AA64MMFR1, CMOW, 1);     /* FEAT_CMOW */
->       cpu->isar.id_aa64mmfr1 = t;
->   
->       t = cpu->isar.id_aa64mmfr2;
-
+On Fri, Nov 1, 2024 at 11:09=E2=80=AFPM Andrew Jones <ajones@ventanamicro.c=
+om> wrote:
+>
+> On Fri, Nov 01, 2024 at 08:45:13AM -0300, Daniel Henrique Barboza wrote:
+> >
+> >
+> > On 11/1/24 5:36 AM, Yong-Xuan Wang wrote:
+> > > Currently QEMU will continue to emulate the AIA MSI devices and enabl=
+e the
+> > > AIA extension for guest OS when the host kernel doesn't support the
+> > > in-kernel AIA irqchip. This will cause an illegal instruction excepti=
+on
+> > > when the guest OS uses the IMSIC devices. Add additional checks to en=
+sure
+> > > the guest OS only uses the AIA MSI device when the host kernel suppor=
+ts
+> > > the in-kernel AIA chip.
+> > >
+> > > Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+> > > Reviewed-by: Jim Shu <jim.shu@sifive.com>
+> > > ---
+> > >   hw/riscv/virt.c | 19 +++++++++++++------
+> > >   1 file changed, 13 insertions(+), 6 deletions(-)
+> > >
+> > > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> > > index 45a8c4f8190d..0d8e047844a6 100644
+> > > --- a/hw/riscv/virt.c
+> > > +++ b/hw/riscv/virt.c
+> > > @@ -1567,12 +1567,19 @@ static void virt_machine_init(MachineState *m=
+achine)
+> > >           }
+> > >       }
+> > > -    if (kvm_enabled() && virt_use_kvm_aia(s)) {
+> > > -        kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
+> > > -                             VIRT_IRQCHIP_NUM_SOURCES, VIRT_IRQCHIP_=
+NUM_MSIS,
+> > > -                             memmap[VIRT_APLIC_S].base,
+> > > -                             memmap[VIRT_IMSIC_S].base,
+> > > -                             s->aia_guests);
+> > > +    if (kvm_enabled() && s->aia_type =3D=3D VIRT_AIA_TYPE_APLIC_IMSI=
+C) {
+> > > +        if (virt_use_kvm_aia(s)) {
+> > > +            kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIFT=
+,
+> > > +                                 VIRT_IRQCHIP_NUM_SOURCES,
+> > > +                                 VIRT_IRQCHIP_NUM_MSIS,
+> > > +                                 memmap[VIRT_APLIC_S].base,
+> > > +                                 memmap[VIRT_IMSIC_S].base,
+> > > +                                 s->aia_guests);
+> > > +        } else {
+> > > +            error_report("Host machine doesn't support in-kernel APL=
+IC MSI, "
+> > > +                         "please use aia=3Dnone or aia=3Daplic");
+> > > +            exit(1);
+> > > +        }
+> >
+> > As you said in the commit msg it looks like we have a bug in this parti=
+cular path: kvm accel,
+> > aia=3Daplic-imsic, no irqchip present. Erroring out is one possible sol=
+ution but I wonder why we
+> > couldn't just emulate the APLIC and IMSIC controllers in this case. We =
+have code that does
+> > that in TCG, so it would be a matter of adding the needed plumbing to t=
+reat KVM AIA without
+> > irqchip =3D=3D TCG AIA.
+> >
+> > Drew, care to weight in? Thanks,
+> >
+>
+> If I understand the motivation for this patch correctly, then we'll alway=
+s
+> need something like it anyway. With the proposal of supporting KVM with
+> usermode-imsic, then KVM would ultimately have three possible states:
+> inkernel-irqchip, usermode-imsic, nothing. usermode-imsic will need KVM
+> support for forwarding imsic accesses to QEMU, but when that support isn'=
+t
+> present (and the inkernel-irqchip isn't selected either), then we should
+> still want to error out before allowing the guest to try accesses that
+> can't work.
+>
+> Thanks,
+> drew
 
