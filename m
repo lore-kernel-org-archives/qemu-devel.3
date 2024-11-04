@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F806D1BDF2
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A54D1BDF4
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t84Ij-0002V8-I9; Mon, 04 Nov 2024 16:07:53 -0500
+	id 1t84II-0008J5-Ki; Mon, 04 Nov 2024 16:07:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Ie-0002Bf-PO
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:07:49 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84IF-00081w-B2
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:07:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Id-0005PX-8K
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:07:48 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84ID-0005Nv-Jv
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:07:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730754466;
+ s=mimecast20190719; t=1730754441;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=wlEJlaD4rUuzda7f+a8uqDdCRzttqpEXwtLO90XFWes=;
- b=hECaGtn83+pob7Ae833LUY+dVPS2iJlG/Vrnch8Mr67LDYi7Eetiia1N3pttNKZFF7i7AC
- FW1W3ZlBK/p/p1+tL1iGfE/PzOmyTMy9beCsXApuBCH2U4Bpxyrxpcps+ucIi58Xlje8Ju
- gIqmsbrn0f1+CzKxUTyWP5nZwoRYIpU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vprvKklVU3XFH5cq7J6dxp5ZuQRvYtysugY4oc0x0dU=;
+ b=WEZw2/moKyF6KLHK2Z0gesoaXmU8AAchaRm/jdToLlG/WcOjNFm2DxwEVLlLla3N/C1P9W
+ qYy3zQ1PmOU94fodznNPZklseroINkKODoOOqKn6oD+PtlYWwm8R74RMjsj90Pzq1hxy8W
+ qIFzSP+BcGrkoCmVJs8KdDV+SW5weI0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-uOmstuEKPYmvZB70NbgKGA-1; Mon, 04 Nov 2024 16:07:45 -0500
-X-MC-Unique: uOmstuEKPYmvZB70NbgKGA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d59ad50f3so2040294f8f.0
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:07:45 -0800 (PST)
+ us-mta-661-T20wPS8cM-uDMVXnysvk9w-1; Mon, 04 Nov 2024 16:07:19 -0500
+X-MC-Unique: T20wPS8cM-uDMVXnysvk9w-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4317391101aso30654405e9.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:07:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730754464; x=1731359264;
+ d=1e100.net; s=20230601; t=1730754438; x=1731359238;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wlEJlaD4rUuzda7f+a8uqDdCRzttqpEXwtLO90XFWes=;
- b=DS2ifeZ+j4r43u6jNYyGHZbpJFiXbjVJmLtUCuP6bmkDq2HRSmlVoEKdRbNgx+dQvz
- LMK0E/ZqV8jeKfLayJLDN4ge+rtFuyKEHpMRGswPpaFC6Hxm9WyqiyCMS+AJksnNk5Ea
- Stshl56jIL8IqdHciYVA0JDQ5gQJIRZpn0N2FuIGDtFjE8ul2ZXdyJEcSUA60iHF/FbL
- N+bVxBlIbkce1y73PbC5wg9xkEqOTRMoxWxWs11h+NEypAfGZrDTU+YoUBC6ZXkNssmo
- VjAOHPXc457DWSen118En8/sX0mfg9f8wM/KqQicJtNZv4InTjCWzuEEv6vmDDl2KAZ0
- ewJw==
-X-Gm-Message-State: AOJu0YwQDozKlS0b8Ul4p/16QklyU+nCp1b4RShOFQTD3ZNMC4AxAT54
- tA8q9ZXM4To9ekTgfRBMCzwuUXmRCGikA3v8rCfGzI47m5MD/82YgmwbQsdMAQRfhjA/WVMEKa9
- LbTvHkFmesUOorgNprOWi5wuI7pLNcXiX7ysptr7CfH1xD77XteLJQNQt3fZ4BfLpOIw6piyke8
- EIcLzobstK5pCgDh6qyZdvjcQ2Hcqzdg==
-X-Received: by 2002:adf:e84f:0:b0:37d:4956:b0c2 with SMTP id
- ffacd0b85a97d-3806122f97emr23131446f8f.58.1730754463982; 
- Mon, 04 Nov 2024 13:07:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHo0EeQBfWx0HoVLiVSOHZMoydRGICAHX+9E9mzd4tPJCajEwJMtYYqFdptKkUMDdamaW3m/A==
-X-Received: by 2002:adf:e84f:0:b0:37d:4956:b0c2 with SMTP id
- ffacd0b85a97d-3806122f97emr23131427f8f.58.1730754463475; 
- Mon, 04 Nov 2024 13:07:43 -0800 (PST)
+ bh=vprvKklVU3XFH5cq7J6dxp5ZuQRvYtysugY4oc0x0dU=;
+ b=s+XwURI4Jew4edrUDob8ujTwKra7Ao1ywnYU267Zl6k8LuxevqEAAKKsdB7BfRTLfM
+ Hs7G5HuYJQMT039XkRldI4umbEfpsb0aIu2XFX1QMXkEGTtbFsXAiAOzmRd2IX1lviCK
+ Kl00KvWwp9o9ucEp6SxrYZLJgZQixGwIgZiN9ic2DB7FMV3AfkaJjvJx/t13dS5izM4q
+ sBe6bVxhoqAVgBqva39+a2TGNVdK9s0WhUK1EAQueadT9WkbNOF8bmncPsm9A3tv49OB
+ AaGwqcoRMvDiOyUR57eJOTTZqP9SwZQqDR39tVcnK4454lGpeAR7KLUoi8vZRhb2R9V5
+ OXvQ==
+X-Gm-Message-State: AOJu0YzK3E0ramuiwRJi2Fk74GGLMNGngv8zQaRLd3MGZGAOmHt+qQbH
+ 36Wn8OG5kaLBdbMWGBR+0S4bF9N8+AVueofHCWnKJt+9aERetERrMHFw044V6WuLArUMcyacAPt
+ +IqspjrTOSWiFf8+ZmcAdEJR3nGO8FNTEVg/h6WFyf4FiJyhXSv08pb3v5NPjCvK/lDJ2w3ybc6
+ RiSeFI7eoH3nCn+nZ4DQ+rJi+Oyulfbg==
+X-Received: by 2002:a05:600c:1c14:b0:431:57e5:b245 with SMTP id
+ 5b1f17b1804b1-4328328492amr109793445e9.23.1730754438222; 
+ Mon, 04 Nov 2024 13:07:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFFxAqhEribnYGDcnTMzrSVWxFFC4H2juyyO/DSj5olVabGJGa+Y+9TE73CsxJ5J3tyQe5Fjg==
+X-Received: by 2002:a05:600c:1c14:b0:431:57e5:b245 with SMTP id
+ 5b1f17b1804b1-4328328492amr109793105e9.23.1730754437712; 
+ Mon, 04 Nov 2024 13:07:17 -0800 (PST)
 Received: from redhat.com ([2.52.14.134]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10b7bf7sm14347574f8f.9.2024.11.04.13.07.41
+ 5b1f17b1804b1-431bd8e853esm198914825e9.8.2024.11.04.13.07.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 13:07:42 -0800 (PST)
-Date: Mon, 4 Nov 2024 16:07:39 -0500
+ Mon, 04 Nov 2024 13:07:17 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:07:13 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Santosh Shukla <santosh.shukla@amd.com>,
+ Ricardo Ribalda <ribalda@chromium.org>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Ani Sinha <anisinha@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 32/65] amd_iommu: Check APIC ID > 255 for XTSup
-Message-ID: <b12cb3819baf6d9ee8140d4dd6d36fa829e2c6d9.1730754238.git.mst@redhat.com>
+Subject: [PULL 26/65] hw/i386/acpi-build: return a non-var package from _PRT()
+Message-ID: <7916bb54319a56be5c5eca0c890a4d2aa22b9bef.1730754238.git.mst@redhat.com>
 References: <cover.1730754238.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -107,50 +108,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-The XTSup mode enables x2APIC support for AMD IOMMU, which is needed
-to support vcpu w/ APIC ID > 255.
+Windows XP seems to have issues when _PRT() returns a variable package.
+We know in advance the size, so we can return a fixed package instead.
+https://lore.kernel.org/qemu-devel/c82d9331-a8ce-4bb0-b51f-2ee789e27c86@ilande.co.uk/T/#m541190c942676bccf7a7f7fbcb450d94a4e2da53
 
-Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Santosh Shukla <santosh.shukla@amd.com>
-Message-Id: <20240927172913.121477-6-santosh.shukla@amd.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reported-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Fixes: 99cb2c6c7b ("hw/i386/acpi-build: Return a pre-computed _PRT table")
+Closes: https://lore.kernel.org/all/eb11c984-ebe4-4a09-9d71-1e9db7fe7e6f@ilande.co.uk/
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Message-Id: <20240924132417.739809-3-ribalda@chromium.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/amd_iommu.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ hw/i386/acpi-build.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 38297376e7..13af7211e1 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -32,6 +32,7 @@
- #include "trace.h"
- #include "hw/i386/apic-msidef.h"
- #include "hw/qdev-properties.h"
-+#include "kvm/kvm_i386.h"
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index d01e704162..508a6094aa 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -740,7 +740,8 @@ static Aml *build_prt(bool is_pci0_prt)
+     int pin;
  
- /* used AMD-Vi MMIO registers */
- const char *amdvi_mmio_low[] = {
-@@ -1651,6 +1652,16 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion_overlap(&s->mr_sys, AMDVI_INT_ADDR_FIRST,
-                                         &s->mr_ir, 1);
+     method = aml_method("_PRT", 0, AML_NOTSERIALIZED);
+-    rt_pkg = aml_varpackage(nroutes);
++    assert(nroutes < 256);
++    rt_pkg = aml_package(nroutes);
  
-+    /* AMD IOMMU with x2APIC mode requires xtsup=on */
-+    if (x86ms->apic_id_limit > 255 && !s->xtsup) {
-+        error_report("AMD IOMMU with x2APIC confguration requires xtsup=on");
-+        exit(EXIT_FAILURE);
-+    }
-+    if (s->xtsup && kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-+        error_report("AMD IOMMU xtsup=on requires support on the KVM side");
-+        exit(EXIT_FAILURE);
-+    }
-+
-     pci_setup_iommu(bus, &amdvi_iommu_ops, s);
-     amdvi_init(s);
- }
+     for (pin = 0; pin < nroutes; pin++) {
+         Aml *pkg = aml_package(4);
 -- 
 MST
 
