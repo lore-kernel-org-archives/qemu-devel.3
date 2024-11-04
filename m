@@ -4,74 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBAEDD1BDC5
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 16:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40DB9D1BDC5
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 16:58:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t80Ky-00054j-Jd; Mon, 04 Nov 2024 11:53:56 -0500
+	id 1t80PK-0007jS-Sh; Mon, 04 Nov 2024 11:58:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t80Kv-00052d-Pd
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:53:53 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t80PI-0007ik-Nx
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:58:24 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t80Ku-0004gf-Ev
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:53:53 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a9e8522445dso394728166b.1
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 08:53:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t80PH-00058V-0N
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:58:24 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-37d43a9bc03so3024549f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 08:58:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730739231; x=1731344031; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=h208FfcvMiJmm0tnJW7SVVNKFW7oPgnIHJ7sZhG3bV0=;
- b=z5XgqII76qwapFuUFZKeOC/o5p2Cz55HdScA6yvBWXIEfDSraCNv7jKQgeNRkVZkJP
- qBgPAiGhWVdAgdyu0GhWWN+p2+SxW/9YoHhAManrYUB9j02oo0tHZW0K4U37LKUKAYQm
- Ho06NRDVBXnJOqAog2DwgahYJ0pri97W3URmFR7uZzBN3qET5/AU+bNNZT4mDU98LzYH
- aaT8BSCA64Yze6omBUAWtBOdm0XGIu7aVn++S+slVBayRzt8ycOBRJUxTuQ1d+fpUJeH
- Sjhi6W+orsRet4lkxjm5+Gv8Q5ZPrDAXA7rdHnd9If+0gv39DYFbpJ1z+D2iYY971utN
- 0USQ==
+ d=linaro.org; s=google; t=1730739501; x=1731344301; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=m0o2RgKkHP9t1oVMWCUj0yrb8kc+cMF2/vR0PNGAOy4=;
+ b=oW081eo2RibRnUuGIrhpG6TJtKY5U0a0R5ZtsiKlf8utQaUFBh2Asb2T9HuAKVpEq8
+ 4JllTfaTpVA0bbKXtIgk0p96Z3QKsO8MV+smoK56DUNSwmtT73fb+E5Uul8J52QzXqa3
+ g07btOXEYsAGuhBjt8C9vVpbk3Vj6h5dQLpY+jmXnUKbwXiGQ9UqMexQNh5Fq3oq4XM4
+ sobgZvL4YMaJbS6z3wgSd+NlJXDxqILSLrfEpXZc2ar0VgCYGBMcTO9mZ+TlPQtPubQ4
+ IRxzcUpPX4KGMX/lrdD67ZxBWzhbHJ1Gv0gigGvwlIm8CSJEG92l7BzWXaIUfAAYQ5z0
+ EUQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730739231; x=1731344031;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1730739501; x=1731344301;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=h208FfcvMiJmm0tnJW7SVVNKFW7oPgnIHJ7sZhG3bV0=;
- b=X53KpfL6heKmjEMWYIAI3+iazGAXULyLg3Gv8Z9eY23XuWh8fjE/Z9Jls1h503GhSm
- rA3kr1ONvrnnjpadFlBSFxU6R46Eg2cxGVXSwDq19H4RSJwFQAAuqALOwICe7wDr8jpT
- HmikRbKeyO2tZcTw7R4waJBkc+eCgaS99CJ4CKY3JYx79pTOFTuLzOdscA94I4RNPIGn
- IYGe+ExhuNEbIkA1lNOneDbpq8T646g0fLVAYPVjM34HRxsYl5FqYFQZTYsXwLwNmXDD
- 8GrHhP6qUJdjOYQ8XKmTbDvTPy1y/ub+vFq6bUV/Vaz1TC301BKObTRPOlbTC6L68VqN
- xKDg==
-X-Gm-Message-State: AOJu0Yz7FiurGoZc5VVzCiRI6gjvb5DPK2YK7IWPGRU3NZLdmTTYRkts
- l9qauJj/QDaNKx5cO9o2d04zI+bi1h9ZHUbbNidDtMGAPbK1lW9oDR8tDUoKsuM=
-X-Google-Smtp-Source: AGHT+IH3ZEIcLGUd1wVWXZMoaW7KtSYQhEVEDabRv1QAnSiEO6UclTG2+QNfN8/j+ScWYl4AgaKUMw==
-X-Received: by 2002:a17:906:6a1e:b0:a99:87ea:de57 with SMTP id
- a640c23a62f3a-a9e6553bc7amr1235008266b.2.1730739230667; 
- Mon, 04 Nov 2024 08:53:50 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9eb16a30c7sm5090966b.41.2024.11.04.08.53.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 08:53:49 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 49D6E5F882;
- Mon,  4 Nov 2024 16:53:48 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 0/2] virtio-gpu: coverity fixes
-Date: Mon,  4 Nov 2024 16:53:46 +0000
-Message-Id: <20241104165348.2361299-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ bh=m0o2RgKkHP9t1oVMWCUj0yrb8kc+cMF2/vR0PNGAOy4=;
+ b=OdbXHsB6DdWbcVRyxslAzmkTxZO0mICMbw61iFI0cgyqMYvWvy+eRuN252MXdwSsNH
+ 63PCg3cW/w26fFFZRwPI5Kw9m6xC/6L58/taBmpq9F2Oc/9/51rnGs/xEb6L94996vJl
+ QzB6QXNPkNuw5XumB3UMX7vXPyb/Mf1ejsYiuja+2ksy1u3WuHpTO40Vv/Wa01hq+RT+
+ I+E97GYClqvtvWPPqm205rY27W57G1DROhd1ON3yC1DUXfrLkG3mYQQhGe7qocBy4yy0
+ G9NWkun8CkI4Zy6LqQ+w/td+1yfGakyu/77v/DPuxCBp3EoQ3AG8CmzJchtNVsNNheL6
+ MzOg==
+X-Gm-Message-State: AOJu0YxyBdXqCWjrqV8dj5euPvYhEOwD92SXkpNtaEEgx/iaFjzjoETI
+ ExittvafUVkNlxn8HGsAkiSVi6wifBIUy1DJDNaS/UqtT1sAaYdyxBiLnkZNWpVKwOd0txBiCk3
+ SvoVge0J0SEhE69sNfix4fKBPXNTruG/e+bBW3g==
+X-Google-Smtp-Source: AGHT+IHlfbypLypjDRbkkufLGEWuzBXtPvG95UdaIRb7uMNRkLJ7lPcNZa3L/SUhBsFDrRudH6xZAFIYXSNCpA65k5Y=
+X-Received: by 2002:a05:6000:4027:b0:37d:4ebe:1646 with SMTP id
+ ffacd0b85a97d-381c7ac74d2mr10870950f8f.48.1730739500855; Mon, 04 Nov 2024
+ 08:58:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+References: <20241104142606.941638-1-gustavo.romero@linaro.org>
+In-Reply-To: <20241104142606.941638-1-gustavo.romero@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 4 Nov 2024 16:58:09 +0000
+Message-ID: <CAFEAcA85mXoskBCnackKpMAe936qGHwdkSpSRsOBespzeAFBjw@mail.gmail.com>
+Subject: Re: [PATCH v2] target/arm: Enable FEAT_CMOW for -cpu max
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org, 
+ richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,24 +88,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Dimitry,
+On Mon, 4 Nov 2024 at 14:26, Gustavo Romero <gustavo.romero@linaro.org> wrote:
+>
+> FEAT_CMOW introduces support for controlling cache maintenance
+> instructions executed in EL0/1 and is mandatory from Armv8.8.
+>
+> On real hardware, the main use for this feature is to prevent processes
+> from invalidating or flushing cache lines for addresses they only have
+> read permission, which can impact the performance of other processes.
+>
+> QEMU implements all cache instructions as NOPs, and, according to rule
+> [1], which states that generating any Permission fault when a cache
+> instruction is implemented as a NOP is implementation-defined, no
+> Permission fault is generated for any cache instruction when it lacks
+> read and write permissions.
+>
+> QEMU does not model any cache topology, so the PoU and PoC are before
+> any cache, and rules [2] apply. These rules state that generating any
+> MMU fault for cache instructions in this topology is also
+> implementation-defined. Therefore, for FEAT_CMOW, we do not generate any
+> MMU faults either, instead, we only advertise it in the feature
+> register.
+>
+> [1] Rule R_HGLYG of section D8.14.3, Arm ARM K.a.
+> [2] Rules R_MZTNR and R_DNZYL of section D8.14.3, Arm ARM K.a.
+>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-I'd already started this before I saw your email so I thought I might
-as well push what I had. Feel free to review/use as a base/ignore as
-you wish ;-)
 
-Alex.
 
-Alex Bennée (2):
-  hw/display: factor out the scanout blob to fb conversion
-  hw/display: check frame buffer can hold blob
+Applied to target-arm.next, thanks.
 
- include/hw/virtio/virtio-gpu.h | 15 ++++++++
- hw/display/virtio-gpu-virgl.c  | 21 +----------
- hw/display/virtio-gpu.c        | 65 ++++++++++++++++++++++------------
- 3 files changed, 58 insertions(+), 43 deletions(-)
-
--- 
-2.39.5
-
+-- PMM
 
