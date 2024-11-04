@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17B4CD132B5
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 12:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1867AD132B5
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 12:49:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7wVC-0001cr-LP; Mon, 04 Nov 2024 07:48:14 -0500
+	id 1t7wVn-00025Z-SD; Mon, 04 Nov 2024 07:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1t7wV5-0001VC-Bz
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:48:08 -0500
-Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t7wVX-0001so-IC
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:48:40 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1t7wV3-00038Z-Hu
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:48:07 -0500
-Received: by mail-oi1-x233.google.com with SMTP id
- 5614622812f47-3e5fbc40239so1977959b6e.3
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 04:48:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t7wVU-0003As-ED
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:48:34 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4315c1c7392so36046645e9.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 04:48:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1730724484; x=1731329284; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hZP6SGc3gobfNd6b+tAKnwm1CfqQ+SKmBFnWJAVkNMg=;
- b=hoJsiIbCQHFIGnkxEkUZkzkkmXC1W4cA1sfLhuZnMZ1z/arGjo9D2wYqKUMp3ZhLn+
- zj0eS2LB6mqD6qSppU/4mX7rpdrLhHoWjuGJYQ/pXlStRFAnA278iSgCUK3ub5dvbxwa
- /uv2Ct9FlpKS0ksyhTzhguIcbNrB6VpzBwZ7KBvcSZeKbgevo9Prz+tlGCKxlmjtbr2d
- ZPxJIzuiN2iIafrjBLW9UGn1Y1lqbuPdE3J71ycItAKEMd5prguLKY1lCBcSrHjNwVCN
- k9y+3FS2VNckLzssgTHvVWFcQFGhw5qzaMvcKYq4AG6BVMDo4Gzl2PAk5ZFssmhFeKxt
- 5NPw==
+ d=linaro.org; s=google; t=1730724510; x=1731329310; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LcEn+jhI8R3XvrV9KMQ/q343gWawxnMW6rdC6JsA3Ek=;
+ b=qBNp6J0X76BRX2N6UbXgLzGgU58PsGdWx9q3vcWG3fGjtVXZD8AjL9Vy6lyOSmCJ5g
+ qwIu9fHHPEFT/49aCnX/aQbMNR7lGHzCOc6QL4RqKCLysP2rTtVJ6t8Za1cDvTw0Pp4I
+ 3vddeaWB072SS0blhUmZxqaXU3VkqiRLOVgKxWve18OgHoP9TGzxXe8PZd77xFzRQQk7
+ TEREzfjZM6Prd1AAJFDnu59JQ86zsiMw43uGaHMum3FYvnsnLmH3dm33DIyIrapK/m7Z
+ 61p634AULwwwM6JFCl2KF4UP/if19N0LyUTbirKarpJdpJ0H0weFou1j8vc9BoX0It1p
+ Hz/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730724484; x=1731329284;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hZP6SGc3gobfNd6b+tAKnwm1CfqQ+SKmBFnWJAVkNMg=;
- b=ASyw4S4e+nEdNayb1Zic51qSeE9uc+2WpUBVAgNiDnf/C8PAQxvh7O9GrGchlbFTs9
- aMv/RksKVuj+3SjiAB58blfQ0O/xThDlRIpMLLU9B2D6ZAjYV021OdNJOcdAT896Uj3G
- lT3qKcm5TG0IM4++OuZOZYCys1F3tBCpO5TaGaNRV5Y2kY2PadAlbd5JpyyW2joS0c4U
- jD5O2hhwjoF/WgJIznhO99xkDKOgVg6iKSMoElPTTFMTeJfQ2S1ezOVmGuNCCjy7+DCh
- B1YU41V+YTL8WbpaoPAz4v3QE07cn3VkKsM+qig1+/1zJziLSCqnTRnco500PG06dymR
- bOng==
+ d=1e100.net; s=20230601; t=1730724510; x=1731329310;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LcEn+jhI8R3XvrV9KMQ/q343gWawxnMW6rdC6JsA3Ek=;
+ b=iqWcz777OPo/idKQbqT1D1VQO7FdqxLw10TJG5J1KvKbTW7jLsTbdIPEdVLgBRJN2o
+ pzvX3VkU0Q0Jm6jJ0a3bgHwdiUX2UTa/DMeMKVsoiduJ5LEN/mMU9B6EJQEt1ha526KX
+ HnXyQZCxkNGUeLoGElmeCFmUnIyhDuyFitys6k/adUJbiL1hLBY7vKXi+r3u3MBM4Y3q
+ r3WmyWQS0/BCuXQjY7WTAMi4CCitRvtfbAb4WAodMeKXdRezgUgpYlcGp1iYl5Xft2OD
+ C/8WY7qtdcTBRaYuAQOOsQ4eBFXQFdtaFgyUXsmKiCRoWVnZ5bv3ARwDQNYhI0qk1ikM
+ 14hw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNodiLsaqhhGPB/RiKqHmK1IiEioVI+DuW1FgAriKAj1fj5xq4p5rSdV8cdzOpHTMcoGhoK6+urUEj@nongnu.org
-X-Gm-Message-State: AOJu0Yw8ykz2Puas9SfERYcrUfRAwWrJbyjhku0AX9Lwak/QqywEsGwt
- kGnGIdsVbCTDS+fG/AMqJJEo//f2F6sj1ZocQ1RwujpxYp3R3fGVZ5Xf7Hm4p300RIVI+WOpxcL
- eqaOWTDZeaNFeiEoi068Eb4VwV1FkgAoz1jsQHQ==
-X-Google-Smtp-Source: AGHT+IH4U1GlMRQMyjvhD4HTjaABGrtw1BYQsNyA8FouBa+w0hbXCRGeDxfEl6u6W0m9f9frhuxHwEG+/OhWTJNBlPY=
-X-Received: by 2002:a05:6870:d1d4:b0:278:1f2:a23f with SMTP id
- 586e51a60fabf-2949ed9d559mr7891212fac.13.1730724483970; Mon, 04 Nov 2024
- 04:48:03 -0800 (PST)
+ AJvYcCU2eBafwmgcVLSdeA/rZfNFW/FohS0GrjFqsMMJTeA+x8c7Tp43ro5t5aWzZ+VQUtBbYYc6jLFVL7/V@nongnu.org
+X-Gm-Message-State: AOJu0YwOgjEL1YiCn7ZQpWvkfGUkKhyaH6yKRaPHPew3ljr+Go37z4EJ
+ BRYqSZ0mzEr1ka6Fp2mHGr5lWje3dJXThafzUkcjA4nf52Kts9JdWwKoHXRZIRQ=
+X-Google-Smtp-Source: AGHT+IFRCDSe5LTZ/HQFfImnXc1ZX0AVl1iZ1i5RkXcnr432FgVMB2EK8W5vJ58jB16/kRcCu4/h6A==
+X-Received: by 2002:a05:6000:78a:b0:37c:d299:b5f0 with SMTP id
+ ffacd0b85a97d-381c7ae0a06mr7782431f8f.59.1730724509628; 
+ Mon, 04 Nov 2024 04:48:29 -0800 (PST)
+Received: from [192.168.21.227] ([154.14.63.34])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c10e747csm13145345f8f.64.2024.11.04.04.48.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Nov 2024 04:48:29 -0800 (PST)
+Message-ID: <54c99505-21ef-422c-a7fe-a2d7dabc3d6c@linaro.org>
+Date: Mon, 4 Nov 2024 12:48:26 +0000
 MIME-Version: 1.0
-References: <20241101083606.5122-1-yongxuan.wang@sifive.com>
- <8ec6e960-8305-456c-b8f9-4c0dd14e51ff@ventanamicro.com>
- <20241101-6ada91d63644e8d715b1cf35@orel>
- <CAMWQL2hwDZdB9TmHF4=krzrUa1_=P78aBYt6nJddGZxMjk702A@mail.gmail.com>
- <f2614f02-b297-4320-84ca-42b7384f8f93@ventanamicro.com>
-In-Reply-To: <f2614f02-b297-4320-84ca-42b7384f8f93@ventanamicro.com>
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Date: Mon, 4 Nov 2024 20:47:53 +0800
-Message-ID: <CAMWQL2hm8-_+V-Jv7tcVy-KeztHk=tvp83ZTVoczjCoJG4cZUQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] hw/riscv: virt: prevent to use AIA MSI when host
- doesn't support it
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Andrew Jones <ajones@ventanamicro.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com, 
- jim.shu@sifive.com, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
- envelope-from=yongxuan.wang@sifive.com; helo=mail-oi1-x233.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 2/2] target/riscv: rvv: improve performance of RISC-V
+ vector loads and stores on large amounts of data.
+To: Paolo Savini <paolo.savini@embecosm.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
+ Max Chou <max.chou@sifive.com>
+References: <20241029194348.59574-1-paolo.savini@embecosm.com>
+ <20241029194348.59574-3-paolo.savini@embecosm.com>
+ <7a046c99-c4e7-4395-8dc9-9139e9bfba06@linaro.org>
+ <96e7601d-14aa-4741-8f6a-ae4a1c397a44@embecosm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <96e7601d-14aa-4741-8f6a-ae4a1c397a44@embecosm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,155 +108,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel and Andrew,
+On 10/30/24 15:25, Paolo Savini wrote:
+> Thanks for the review Richard.
+> 
+> On 10/30/24 11:40, Richard Henderson wrote:
+>> On 10/29/24 19:43, Paolo Savini wrote:
+>>> This patch optimizes the emulation of unit-stride load/store RVV instructions
+>>> when the data being loaded/stored per iteration amounts to 16 bytes or more.
+>>> The optimization consists of calling __builtin_memcpy on chunks of data of 16
+>>> bytes between the memory address of the simulated vector register and the
+>>> destination memory address and vice versa.
+>>> This is done only if we have direct access to the RAM of the host machine,
+>>> if the host is little endiand and if it supports atomic 128 bit memory
+>>> operations.
+>>>
+>>> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+>>> ---
+>>>   target/riscv/vector_helper.c    | 17 ++++++++++++++++-
+>>>   target/riscv/vector_internals.h | 12 ++++++++++++
+>>>   2 files changed, 28 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+>>> index 75c24653f0..e1c100e907 100644
+>>> --- a/target/riscv/vector_helper.c
+>>> +++ b/target/riscv/vector_helper.c
+>>> @@ -488,7 +488,22 @@ vext_group_ldst_host(CPURISCVState *env, void *vd, uint32_t byte_end,
+>>>       }
+>>>         fn = fns[is_load][group_size];
+>>> -    fn(vd, byte_offset, host + byte_offset);
+>>> +
+>>> +    /* __builtin_memcpy uses host 16 bytes vector loads and stores if supported.
+>>> +     * We need to make sure that these instructions have guarantees of atomicity.
+>>> +     * E.g. x86 processors provide strong guarantees of atomicity for 16-byte
+>>> +     * memory operations if the memory operands are 16-byte aligned */
+>>> +    if (!HOST_BIG_ENDIAN && (byte_offset + 16 < byte_end) &&
+>>> +            ((byte_offset % 16) == 0) && HOST_128_ATOMIC_MEM_OP) {
+>>> +      group_size = MO_128;
+>>> +      if (is_load) {
+>>> +        __builtin_memcpy((uint8_t *)(vd + byte_offset), (uint8_t *)(host + 
+>>> byte_offset), 16);
+>>> +      } else {
+>>> +        __builtin_memcpy((uint8_t *)(host + byte_offset), (uint8_t *)(vd + 
+>>> byte_offset), 16);
+>>> +      }
+>>
+>> I said this last time and I'll say it again:
+>>
+>>     __builtin_memcpy DOES NOT equal VMOVDQA
+> I am aware of this. I took __builtin_memcpy as a generic enough way to emulate loads and 
+> stores that should allow several hosts to generate the widest load/store instructions they 
+> can and on x86 I see this generates instructions vmovdpu/movdqu that are not always 
+> guaranteed to be atomic. x86 though guarantees them to be atomic if the memory address is 
+> aligned to 16 bytes.
 
-Sorry I found that I forgot a situation. Host kernel doesn't support
-in-kernel AIA is not equal to host machine doesn't support AIA extension.
+No, AMD guarantees MOVDQU is atomic if aligned, Intel does not.
+See the comment in util/cpuinfo-i386.c, and the two CPUINFO_ATOMIC_VMOVDQ[AU] bits.
 
-If user specifies aia=3Daplic-imsic when using KVM acceleration, we have 3
-possibilities:
-1. host doesn't support AIA extension -> report error since we can't handle
-   the stopei CSR.
-2. host support AIA extension but doesn't have in-kernel AIA -> use usermod=
-e
-   IMSIC and handle the stopei CSR in QEMU
-3. host support AIA extension and have in-kernel AIA -> use in-kernel AIA
-   and handle the stopei CSR in KVM
+See also host/include/*/host/atomic128-ldst.h, HAVE_ATOMIC128_RO, and atomic16_read_ro.
+Not that I think you should use that here; it's complicated, and I think you're better off 
+relying on the code in accel/tcg/ when more than byte atomicity is required.
 
-We need to update the kvm_riscv_handle_csr() for situation 2. And it's bett=
-er
-to determine the availability of AIA extension in riscv_imsic_realize().
 
-Please ignore this patch, I will send another patchset to handle the
-above situations.
-
-Regards,
-Yong-Xuan
-
-On Mon, Nov 4, 2024 at 8:15=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
->
->
-> On 11/4/24 8:14 AM, Yong-Xuan Wang wrote:
-> > Hi Daniel and Andrew,
-> >
-> > When handling an external interrupt via IMSIC, we need to use the stope=
-i CSR
-> > to claim the top interrupt. Even though the QEMU can emulate the IMSIC =
-devices
-> > without the in-kernel irqchip, we still need to trap and emulate the st=
-opei
-> > CSR. But since the host machine doesn't support the AIA extension, the =
-guest OS
-> > will hit the illegal instruction exception instead of the virutal instr=
-uction
-> > exception when it accesses the stopei CSR. We can't have a chance to re=
-direct
-> > this instruction to QEMU. So I think we can directly report errors when=
- the
-> > user wants to use KVM AIA(MSI) without in-kernel AIA irqchip support.
->
-> Can you please add this info in the commit message? This makes it clearer
-> that there's not much we can do in QEMU aside from erroring out.
->
-> Also, please add a:
->
-> Fixes: 48c2c33c52 ("target/riscv: select KVM AIA in riscv virt machine")
->
->
-> Thanks,
->
-> Daniel
->
-> >
-> > Regards,
-> > Yong-Xuan
-> >
-> > On Fri, Nov 1, 2024 at 11:09=E2=80=AFPM Andrew Jones <ajones@ventanamic=
-ro.com> wrote:
-> >>
-> >> On Fri, Nov 01, 2024 at 08:45:13AM -0300, Daniel Henrique Barboza wrot=
-e:
-> >>>
-> >>>
-> >>> On 11/1/24 5:36 AM, Yong-Xuan Wang wrote:
-> >>>> Currently QEMU will continue to emulate the AIA MSI devices and enab=
-le the
-> >>>> AIA extension for guest OS when the host kernel doesn't support the
-> >>>> in-kernel AIA irqchip. This will cause an illegal instruction except=
-ion
-> >>>> when the guest OS uses the IMSIC devices. Add additional checks to e=
-nsure
-> >>>> the guest OS only uses the AIA MSI device when the host kernel suppo=
-rts
-> >>>> the in-kernel AIA chip.
-> >>>>
-> >>>> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-> >>>> Reviewed-by: Jim Shu <jim.shu@sifive.com>
-> >>>> ---
-> >>>>    hw/riscv/virt.c | 19 +++++++++++++------
-> >>>>    1 file changed, 13 insertions(+), 6 deletions(-)
-> >>>>
-> >>>> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> >>>> index 45a8c4f8190d..0d8e047844a6 100644
-> >>>> --- a/hw/riscv/virt.c
-> >>>> +++ b/hw/riscv/virt.c
-> >>>> @@ -1567,12 +1567,19 @@ static void virt_machine_init(MachineState *=
-machine)
-> >>>>            }
-> >>>>        }
-> >>>> -    if (kvm_enabled() && virt_use_kvm_aia(s)) {
-> >>>> -        kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
-> >>>> -                             VIRT_IRQCHIP_NUM_SOURCES, VIRT_IRQCHIP=
-_NUM_MSIS,
-> >>>> -                             memmap[VIRT_APLIC_S].base,
-> >>>> -                             memmap[VIRT_IMSIC_S].base,
-> >>>> -                             s->aia_guests);
-> >>>> +    if (kvm_enabled() && s->aia_type =3D=3D VIRT_AIA_TYPE_APLIC_IMS=
-IC) {
-> >>>> +        if (virt_use_kvm_aia(s)) {
-> >>>> +            kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIF=
-T,
-> >>>> +                                 VIRT_IRQCHIP_NUM_SOURCES,
-> >>>> +                                 VIRT_IRQCHIP_NUM_MSIS,
-> >>>> +                                 memmap[VIRT_APLIC_S].base,
-> >>>> +                                 memmap[VIRT_IMSIC_S].base,
-> >>>> +                                 s->aia_guests);
-> >>>> +        } else {
-> >>>> +            error_report("Host machine doesn't support in-kernel AP=
-LIC MSI, "
-> >>>> +                         "please use aia=3Dnone or aia=3Daplic");
-> >>>> +            exit(1);
-> >>>> +        }
-> >>>
-> >>> As you said in the commit msg it looks like we have a bug in this par=
-ticular path: kvm accel,
-> >>> aia=3Daplic-imsic, no irqchip present. Erroring out is one possible s=
-olution but I wonder why we
-> >>> couldn't just emulate the APLIC and IMSIC controllers in this case. W=
-e have code that does
-> >>> that in TCG, so it would be a matter of adding the needed plumbing to=
- treat KVM AIA without
-> >>> irqchip =3D=3D TCG AIA.
-> >>>
-> >>> Drew, care to weight in? Thanks,
-> >>>
-> >>
-> >> If I understand the motivation for this patch correctly, then we'll al=
-ways
-> >> need something like it anyway. With the proposal of supporting KVM wit=
-h
-> >> usermode-imsic, then KVM would ultimately have three possible states:
-> >> inkernel-irqchip, usermode-imsic, nothing. usermode-imsic will need KV=
-M
-> >> support for forwarding imsic accesses to QEMU, but when that support i=
-sn't
-> >> present (and the inkernel-irqchip isn't selected either), then we shou=
-ld
-> >> still want to error out before allowing the guest to try accesses that
-> >> can't work.
-> >>
-> >> Thanks,
-> >> drew
+r~
 
