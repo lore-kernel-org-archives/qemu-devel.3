@@ -4,83 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA0D2D11194
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A5A1D11199
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 01:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7ksX-0001su-CN; Sun, 03 Nov 2024 19:23:33 -0500
+	id 1t7liQ-0005q8-Ll; Sun, 03 Nov 2024 20:17:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7ks0-0000dv-G8; Sun, 03 Nov 2024 19:23:00 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7krw-0002qK-VG; Sun, 03 Nov 2024 19:23:00 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-71e953f4e7cso2805300b3a.3; 
- Sun, 03 Nov 2024 16:22:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730679775; x=1731284575; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZpzrznLVC2YX8iFOUvc1lCqpFPhmopC1PE2Tm+iG0yc=;
- b=PF+ceMupfQfFGIx/2WfMX0IUBKVlWi0PGxu6lcjq3Gqc9XDC04dgx/pQM1PK5oEnB9
- eCzuN8nkVdl9nhhamXSq/HFVaRTr0kQ5w3Z/DXd4AkyT3bpW9NZ1qKD6Mmma9dAyITOx
- 5h+fybju9VwhT7I2ry7ml4TAT5UGwp9GysMaCMv6IG/rt58kcLgCEL+scB2JM+oKp5Re
- 52wlc3NxgGaQsQU4OoYu68QVASUdZ81ApPHTvvpRV8r8TX54Yntxj0JM1uxwuWwOPCad
- SiJkISgCs8t8yVUzvyGxxiIuZPwI9M8UP9oUUy+1Bopc5Gl/SLGYLNLrp7jjPTQgO6MA
- oBZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730679775; x=1731284575;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZpzrznLVC2YX8iFOUvc1lCqpFPhmopC1PE2Tm+iG0yc=;
- b=tAJqkE83aqJRmbyI+W05CY84ASLh0oO7nnilsWBXSUvTGGFQ3Q15kJj5fe9vPm72c6
- +oFgd2XVestizWtzdHsG1b5CHl9QvpNDAVKGhhVgl5/sh0bQe+A4sjCZJ6D0EuHUwFz1
- VCIzNtCr0KR57FZ6XBF6rKQIk+L8CuCOfNRvdR8FlJWsR97YAoy6s0/TdIuystbzWt0N
- mCsuer4Rlm/345DaU3ebxmADSX1vQS3BwQ1bzIOv3VR1/1oAJUzjuBIl8g8sbYmfqWZj
- Akk54Y+11+HyMA4zYle+N3nMQ1OgqT49AN5th4CuZHwQAbbvNdtSKBCnZOX4HKg1BO67
- f3gg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIKRgMRqosF7ENtuSZDUf/APucKh8twchSLuo78jd1i1XY2zotOsEOJfrQwpop/noclRJigWmpcQ==@nongnu.org
-X-Gm-Message-State: AOJu0Yxp99Ib+8ls2yNa5BBPHLOQMrZDcR780oZouRylZnjQyExc4L+Q
- VrrHOzRGKTpkKySNYoYKKYjQAJ7diTRgUSbPBBFsL7zrfMAOcLuTDtWZqw==
-X-Google-Smtp-Source: AGHT+IEGZ5vjGid00VF/vD1+Kb9kmGLGn5i3lSzNU1QWYbbhL1Hwk8l8ClP93f3pgok+c0Z69lJ3ww==
-X-Received: by 2002:a05:6a20:6f01:b0:1d5:1729:35ec with SMTP id
- adf61e73a8af0-1dba5219065mr16449862637.7.1730679774740; 
- Sun, 03 Nov 2024 16:22:54 -0800 (PST)
-Received: from wheely.local0.net (124-171-217-17.tpgi.com.au. [124.171.217.17])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.22.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 16:22:54 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Frederic Barrat <fbarrat@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 62/67] tests/qtest: Add XIVE tests for the powernv10 machine
-Date: Mon,  4 Nov 2024 10:18:51 +1000
-Message-ID: <20241104001900.682660-63-npiggin@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241104001900.682660-1-npiggin@gmail.com>
-References: <20241104001900.682660-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1t7liO-0005pi-L7; Sun, 03 Nov 2024 20:17:08 -0500
+Received: from mail-psaapc01on20706.outbound.protection.outlook.com
+ ([2a01:111:f403:200e::706]
+ helo=APC01-PSA-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1t7liM-0000FI-T9; Sun, 03 Nov 2024 20:17:08 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fMg9neJI58G8bcG+llGeCjMIcdXHLKkwSN//OJNxEXYBNZu7GUORBu/U2AWAj1JjB253mR0G/arrymWvZRDOA9v1jrjsiW1TUjWhztK/q/xMI+w+ci4p62Rq/ashJwL9tOZPfKoF57OpwZMXQSKoXgQuprqHSxpERwNAw+sna1icCpBqDC6DWHhbFFRT+zgWR4Nq6VRDA4s5AgfXdJn9UBpE6zfpmOSO1fPx6YEV2KVE3WBbrxMIeoTh88rlKGNutocL8bCD4+JnrRiMjGeazaviR8rBYPd+py3yrdn9ZWsLqqrlwxAyJCEK0hvFJENgI84qzbr1tDcqRLTxhMLsPg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=g5QKiRLKTT/hpSqINKZl+8TrlLejobwNeHHYz5nHPQU=;
+ b=T7MG9Jnqh7fWfUC4Gi08HwUCMdbB6QhFDTjZ25WZ86L/Zsf7ztnVyrZrs3rIGcR12HTR4rLG/BAximN6lHJcEElXoXwi9/IHgvAYrshTAx7/qU5LZjKlaYEAMM6Kjv4d8KQC/TmTvJYB9wjmmA5Y75QXDU16Zjh97y05J/z2Cmgyha7SwRU5bMuq1Eg/jP9evDjsBWUa2cjNm1iNsOe4YxW3+CDTydwBCV9FdG4Beqe6WIR40kROG0lEkWqQBwLlXFpIh598NnhIVSfkMuZFhTwFvNBeDyV+3EgjvM4pL6dno91ILz9xPAATZQAiUtn6YJVQudqZZxTfSBbIIrqQ2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=g5QKiRLKTT/hpSqINKZl+8TrlLejobwNeHHYz5nHPQU=;
+ b=bZ73oBGJdxvkIndqevRVZlTx7UPaeEL31l12AYaD3toF6uoVSgUmFrnMUYGDzwvEjZVsu+2wxCaDwBr6ST4TG+P2rhgBiDGne8MKxQKss/neF2R1G9GoTXEW0FvcTgYwAYn0IRYgUgFqWWNWIneq18Gg/APddlG12teD1WYmjAut6hm6xPrA23oRV8XcbfwPvqqR3tBdFas+J52t2OXKGaY3lfdqg1vFhIQD7SiNhGkXvbUDktlNGK5Hz/sS0sNSDhOgaDNI6wHSy0GWJDOOq2UfUTjfq/A4NOirWBw7NYzb+nUBWXzEknfgfighwI76Gq5lEjKhI9osVLd2Nm/50A==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ PUZPR06MB6267.apcprd06.prod.outlook.com (2603:1096:301:115::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.17; Mon, 4 Nov
+ 2024 01:16:53 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56%6]) with mapi id 15.20.8137.011; Mon, 4 Nov 2024
+ 01:16:53 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>, Bin Meng <bmeng.cn@gmail.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang
+ <yunlin.tang@aspeedtech.com>
+Subject: RE: [SPAM] [PATCH v1 0/8] Support RTC for AST2700
+Thread-Topic: [SPAM] [PATCH v1 0/8] Support RTC for AST2700
+Thread-Index: AQHbKeNklA36gRpU7kmIXYVXJiMgQ7KkHO4AgAI9ajA=
+Date: Mon, 4 Nov 2024 01:16:53 +0000
+Message-ID: <SI2PR06MB50412B856A25FAEB19FD10ABFC512@SI2PR06MB5041.apcprd06.prod.outlook.com>
+References: <20241029091729.3317512-1-jamin_lin@aspeedtech.com>
+ <9cf62dd0-2e88-4692-8a16-544b75665b6c@kaod.org>
+In-Reply-To: <9cf62dd0-2e88-4692-8a16-544b75665b6c@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|PUZPR06MB6267:EE_
+x-ms-office365-filtering-correlation-id: fb069bbe-562c-4a8c-8452-08dcfc6e5e32
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|7416014|1800799024|38070700018|921020|217643003; 
+x-microsoft-antispam-message-info: =?utf-8?B?OW1QdzYxRmFESzFSbjN5amZNMDhKOTBOcnVUYjVqSEkxQzN3bzZrcGowSDhL?=
+ =?utf-8?B?Qm9mVE9SM096a0VpZ2RqdnFvMXlNT3I3Z2hmRSt5QXg3RFBEZGdBczlQbzZR?=
+ =?utf-8?B?NGovOFpkdVFMRFZ5S3duUGhxUkNhSXRJNTVSKzBOTGI2VkxNbllPY1JwUUZO?=
+ =?utf-8?B?V0FtM21JbENmMTM5Y2czelVHU1VuN3FCWkZ2LzFGcTh1M0hVdWV6Unc0anEz?=
+ =?utf-8?B?ZXNLVHRUVk9kWE01MjFCK2pzNWFqNDFQYmVVOFFBT0V4UDdVTzIxT3EyakMz?=
+ =?utf-8?B?d2lucXI5RDZBRTRKMDlJZkFvRnBnVW5BV3MrWUZna1QwYnZra3NRYWxPUm9m?=
+ =?utf-8?B?ZWQ3d0lvZjNpRTBZTkJJL1hzbGhueWFDcWxudy9FM3djKzZxY1RCMnZ0dWNL?=
+ =?utf-8?B?NDgxOTNRMVppeHVFb0hEdkFiZ3ZrZDRsY092RlhZeUVWNFA3dW1JdExLdHVz?=
+ =?utf-8?B?WktteUVZSDM4SThNcmdTRVNkeDVVdExueDh6ZXNpU0RjMFNmVWdrSE0wR25H?=
+ =?utf-8?B?Zng0WHh3Tk1QOEMvNmdwcURid1VZd0ZJVzhkVE5TWThNSENDVzlnM25aRURZ?=
+ =?utf-8?B?YXh0czJydjRnOGdxell3MzFSY3IyMWpPamhpb0cvRXlYd1JUYUxmZFhySGN3?=
+ =?utf-8?B?L2ZnWW5TdEYvQVNLeHRSTlF2NE5tTzRodFl5RHRncHFUZU5lWUVYdjQ2bVo3?=
+ =?utf-8?B?TXp0NU15NEYvSE1DWTFONndHNE10b2dVZ1V2OElVd3FHTEF1MmYzaGg0VkJL?=
+ =?utf-8?B?bUlxcWY0bzBieXRLRTlmRGpLVWhVZ3R0V1RkQjZza2VZOGxSTElRblc1TEpN?=
+ =?utf-8?B?N0d3V0QweVl1c2oxQjl1WlQra2ZpMDd3dHoxYk05YXJhRGROYnhWVnBVTE9S?=
+ =?utf-8?B?OGg3eFluYmtJU1ZveVAwM1EyT3dxbHp1a2xvdmRkY2RuQitZUjhOUjR2ZDFo?=
+ =?utf-8?B?SVA0ekI0NVRncUQ5NGdVejdXSVVPWkp3U3JDUGVZRzQ3L2ZOUEY3UFI3ejJV?=
+ =?utf-8?B?ZkY3RWJDVkJYSVJwTHFLVGFpT090bzdxT25QUVZGNnNJRXJkckhiUWNLTFF3?=
+ =?utf-8?B?WUdBQ0Zvdm1IS3lKKzFTc1hDajBiWFF5QVVUUi9NOHN3WVlVRmIrL0VjYWc3?=
+ =?utf-8?B?UFhTaXl2dUVML2YycVBNQ0FVNTl4a3M3TG1WSnlETThJdDU0TXVqbUlsY2Jq?=
+ =?utf-8?B?UUdVS3JuOGdrL2cxemU5c2pnRHp2Wk9aNExmV2N1aXFCZE1aTjJBOVlIVjcv?=
+ =?utf-8?B?eGpEQUFabWxrL2wva0l0YWVucm54SWoyL201ZjZkaitPN3UrWFdhbXF0N2N3?=
+ =?utf-8?B?dkpTTkdIUmFQNmRsNEZ4cFdBQmx1bElZdW5ZMDdLQVMrSVlBbWxZQnM1blJ5?=
+ =?utf-8?B?UUcyUEVQU1lhYmRBZS9xNzUzODlWaHV1aFZQRkFWREZKazM3ZUFIcjFCUTEw?=
+ =?utf-8?B?R3Q0U3dTZDM0WFM2RGRJRWI2M0pQV3hkbHZsdUZnRFVtc05XZEtjaHdKcnIz?=
+ =?utf-8?B?ZUtpQUdVazRtVzZPK2RQQTl4aUFuMVRqTmdPQm9Nb0d1ZDJXdWFvRHErNHVB?=
+ =?utf-8?B?QUgxTi8zaWFkN3l1cnZqMWtMeUxMWTdDQlNob0dDY3gxUDRqTThoakxJcjdX?=
+ =?utf-8?B?Vyt4WDJQWTQyVVhjSVpjaklCTWRsOVNYM1lEUUdydXJZalJaeXYrT3BFNnNL?=
+ =?utf-8?B?RTVESjdlck1xZ1JFSG5BbkhRVTJQRGhHbWNhZHdkYk5TV0lVTHk2aFdwMDVE?=
+ =?utf-8?B?MEw2Nk5jN0RXa3FCa0wzc0Noa2Y2d2Z5Q1FXVlVJN1EzdXRPTGJQUDdFeU9J?=
+ =?utf-8?B?VytyVEg3MWt0WFFlOFdrS0VsQlVvR1JSRlExMmk4SnpHSlFZbmE4RVUyWWtO?=
+ =?utf-8?B?WS9mNGF2MkRYbTd5WlhicUQ1N1RmdVl2OC9VMjJMeXVUNXc9PQ==?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(366016)(376014)(7416014)(1800799024)(38070700018)(921020)(217643003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?a2s2Nkc1QWRXb3JRbXFvQitBdGlSQjJWbjlhWExkWC9YQWxPcWNHOHZYNnpV?=
+ =?utf-8?B?bDZXejhaV0V6VDRyU0VOYlIzUXR0aDlZb0srYzR1bEdkMmFIdEx1anhtUlBZ?=
+ =?utf-8?B?NjBqSXV4cmZyVDQrWnBpdFpndGVGSnVoMDlhYUpiSXh1bTBUZ0VSU24zZGdB?=
+ =?utf-8?B?ckNXcUxaWFRHVDgyQlZ0SmVuZFgyRUt1VGNIZlA4YzFHUVJzRUhqUlA5b1pF?=
+ =?utf-8?B?RUN2WHlrY3V4ZmU5dzZmNExxZk5tbHJvL3c3R3YrM2c2RWgwNGZWSGtpeERx?=
+ =?utf-8?B?TkxkMHEyRWtmNGJiQUh4dHFKMytHbHBacWdMTVZvZ0plUDc5dm1tazRoelU3?=
+ =?utf-8?B?Nk5KcmZKK3UydHl4cUd1S2MxenhOSDhMalRjTFJmYVRML2oyVzZuZHpjamNa?=
+ =?utf-8?B?WFFQWDhybDk5UytVWWZVbi8zd2tlRkc1V2lERkkxSjNxN0l5MmFtY3VHZExk?=
+ =?utf-8?B?QVdhRVIxZ2Q5cTNYVGpSUGtvRXkza0NqNEdUdjlReExObzdWR0IyaVduZ1JP?=
+ =?utf-8?B?V3BWR2Z5ajgzamovMFI3T2pwTVY1TEE2NnhReFFDTExBaWZmUGJlUE5UNkVi?=
+ =?utf-8?B?d1VpOWlvd3dYRFRpTjBxcnRSUEdTaEVZUFBKZTRucDh0WlluZWUyWkxVY3dU?=
+ =?utf-8?B?d2hCc3pkWEppTE9qTGNBd2p1M0NENUZ5T1EvZmoyeTg4dkQvK3h2VHVuYXo1?=
+ =?utf-8?B?VjNZcmFQejhiU3F2WlBpK3A3ZTRXc1RHOTRYVkFaYmZuSWI1eWNudXMvV0d6?=
+ =?utf-8?B?YXFzUWN6eHcvNFVjRjVCcXhFRDZtSkMzZTlBUXFHcWZwSmVCWlFrcUw3Ymtv?=
+ =?utf-8?B?MHlzQXZ3SWJaSmtqOWgvVzdRcWN6UWFndkZJaXdzbDdKU0FpVGF0MFlyaWxl?=
+ =?utf-8?B?R1VlY2lpVEJnQ2drOVN1Sm5mRmFkYW1vK2xhcUVGN0JRMEtRZFU4bjlyMnFj?=
+ =?utf-8?B?M3NIRlVDSWIycm1XUFFCVy83QVVQYjQzQzArSnN4Q09vRTBoZ0ZGWTN6dGVC?=
+ =?utf-8?B?UWM1RjJDTzBvYVFkL081ZnVZQlJONHhBVExqMUgrMWc3RmxQd1VzaDRnY3Nv?=
+ =?utf-8?B?b0czdzZhcWhXb3NHWnBjUVFhNElQdCsyQUV1bGp1aHYwVVdKZE1XNXh6dEFP?=
+ =?utf-8?B?QkZiNUV4aDZucUYxZGtLRks5eElVNi9EU2VXWnBDUVFQeUNxOWpkRTBYbytI?=
+ =?utf-8?B?TjdxaWJPU1k3bUNXd01KWENrbFZNeVNjeFBMdUpaa0xtTUdpdExzdlZ1YmV2?=
+ =?utf-8?B?eTEwZmY1MTJyRVlHQU1TcEUxRFQ3aEZIMm80QXFrdDh3SG5nRlBUNFpEZVpB?=
+ =?utf-8?B?dWw1dldINXJLMDZ6VFRVWmxJZUN1VVg1aFNhV0JnVG9KLzBGZjdZZkxKaXZp?=
+ =?utf-8?B?TVN6L1dIVGcwcXZWQjhZMHZFUzdsRjNVeWFlYVRnWnFoNHFKSjlyb2NDSXJD?=
+ =?utf-8?B?MkxIVFQyVDlYZkpIbGQ4WWp4ZVgyQ1czZ25VQ0NIcm83WlV0bFdET1lVOXF5?=
+ =?utf-8?B?R21pMTZ1aWdERGZVcGVONGpGL2s3dk0yYnQ1WHhuaFBHU3d3clBwRGgxRWIx?=
+ =?utf-8?B?My9sbTlWSVc1ZGNxMXBtMS9RUTVOY2NlSDMwOGQvMDdWUkZ4dGQ5VGlPcVQ4?=
+ =?utf-8?B?RWV2RUxXa1JzRzlUb1Z2U2twZDdPY1B1OStiNENzSDJ3Q0NzRFZ6RXNHZ3Rm?=
+ =?utf-8?B?dkFqLzJOcFo1V25MMVZmV2dDNjQvOE1UaWs1L3JrZjhjQ0l1YWU4U2xkNlFZ?=
+ =?utf-8?B?dGw5ZExLdm53T25vOEZNL1pjVk1CS3VKdFQzRkZHNnpHQUVPVGtzOWhhbnBp?=
+ =?utf-8?B?ekVCL05vWW1NenIrbTJoVFd3RVF2RktBaTNZNVJvU1EzcEpjcXpIWkI3d2lx?=
+ =?utf-8?B?Wjdrck9aZkdHeEU4amZ6WHlKVnV6SFlBSkM5d3NVd2owSWJOT3lwdjZBRTB1?=
+ =?utf-8?B?OTlhSUQ0MkFERVZrcCtROGlTUDFpeXBxTHB4N0dVV1pDWU9Ma3dOQUIyd05t?=
+ =?utf-8?B?b3Vra3dhYW9wY2R4ejVmcTdEckhjbEhmTmUzalJCM2EyT2FmdDJnQXBDeXdC?=
+ =?utf-8?B?anBKMUVnZ1phUUNSNzdtWTJUVHVWdXJPdFA2dTlkc0dheVZ5dUdYUXljbHMy?=
+ =?utf-8?Q?RYL1/Ja63FLa3oDzYrN2DbWdc?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x433.google.com
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fb069bbe-562c-4a8c-8452-08dcfc6e5e32
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Nov 2024 01:16:53.6703 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: iSxWO9wD5EoiSL9xt86nf60ZoJ0ZCugWz/KqvqksUNhyQuyBP4DO0HPqg9FDTw+FuxhzGSK0FMtwjmeKUJgKh3fe6wVSZAbDOzvFNtmFmJU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB6267
+Received-SPF: pass client-ip=2a01:111:f403:200e::706;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=APC01-PSA-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,944 +186,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frederic Barrat <fbarrat@linux.ibm.com>
-
-These XIVE tests include:
-- General interrupt IRQ tests that:
-  - enable and trigger an interrupt
-  - acknowledge the interrupt
-  - end of interrupt processing
-- Test the Pull Thread Context to Odd Thread Reporting Line
-- Test the different cache flush inject and queue sync inject operations
-
-Co-authored-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Co-authored-by: Glenn Miles <milesg@linux.ibm.com>
-Co-authored-by: Michael Kowal <kowal@linux.ibm.com>
-Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
-Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- MAINTAINERS                        |   1 +
- tests/qtest/meson.build            |   2 +
- tests/qtest/pnv-xive2-common.c     | 190 ++++++++++++++++
- tests/qtest/pnv-xive2-common.h     | 111 ++++++++++
- tests/qtest/pnv-xive2-flush-sync.c | 205 +++++++++++++++++
- tests/qtest/pnv-xive2-test.c       | 344 +++++++++++++++++++++++++++++
- 6 files changed, 853 insertions(+)
- create mode 100644 tests/qtest/pnv-xive2-common.c
- create mode 100644 tests/qtest/pnv-xive2-common.h
- create mode 100644 tests/qtest/pnv-xive2-flush-sync.c
- create mode 100644 tests/qtest/pnv-xive2-test.c
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index cf39ad4b7c..64b4ffa91c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2625,6 +2625,7 @@ L: qemu-ppc@nongnu.org
- S: Odd Fixes
- F: hw/*/*xive*
- F: include/hw/*/*xive*
-+F: tests/qtest/*xive*
- F: docs/*/*xive*
- 
- Renesas peripherals
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 9d51114539..db101cbbee 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -176,6 +176,7 @@ qtests_ppc64 = \
-   qtests_ppc + \
-   (config_all_devices.has_key('CONFIG_PSERIES') ? ['device-plug-test'] : []) +               \
-   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xscom-test'] : []) +                 \
-+  (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xive2-test'] : []) +                 \
-   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-spi-seeprom-test'] : []) +           \
-   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-host-i2c-test'] : []) +              \
-   (config_all_devices.has_key('CONFIG_PSERIES') ? ['numa-test'] : []) +                      \
-@@ -344,6 +345,7 @@ qtests = {
-   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
-   'migration-test': migration_files,
-   'pxe-test': files('boot-sector.c'),
-+  'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c'),
-   'qos-test': [chardev, io, qos_test_ss.apply({}).sources()],
-   'tpm-crb-swtpm-test': [io, tpmemu_files],
-   'tpm-crb-test': [io, tpmemu_files],
-diff --git a/tests/qtest/pnv-xive2-common.c b/tests/qtest/pnv-xive2-common.c
-new file mode 100644
-index 0000000000..bf2bce0056
---- /dev/null
-+++ b/tests/qtest/pnv-xive2-common.c
-@@ -0,0 +1,190 @@
-+/*
-+ * QTest testcase for PowerNV 10 interrupt controller (xive2)
-+ *  - Common functions for XIVE2 tests
-+ *
-+ * Copyright (c) 2024, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+#include "pnv-xive2-common.h"
-+
-+
-+static uint64_t pnv_xscom_addr(uint32_t pcba)
-+{
-+    return P10_XSCOM_BASE | ((uint64_t) pcba << 3);
-+}
-+
-+static uint64_t pnv_xive_xscom_addr(uint32_t reg)
-+{
-+    return pnv_xscom_addr(XIVE_XSCOM + reg);
-+}
-+
-+uint64_t pnv_xive_xscom_read(QTestState *qts, uint32_t reg)
-+{
-+    return qtest_readq(qts, pnv_xive_xscom_addr(reg));
-+}
-+
-+void pnv_xive_xscom_write(QTestState *qts, uint32_t reg, uint64_t val)
-+{
-+    qtest_writeq(qts, pnv_xive_xscom_addr(reg), val);
-+}
-+
-+static void xive_get_struct(QTestState *qts, uint64_t src, void *dest,
-+                            size_t size)
-+{
-+    uint8_t *destination = (uint8_t *)dest;
-+    size_t i;
-+
-+    for (i = 0; i < size; i++) {
-+        *(destination + i) = qtest_readb(qts, src + i);
-+    }
-+}
-+
-+static void xive_copy_struct(QTestState *qts, void *src, uint64_t dest,
-+                             size_t size)
-+{
-+    uint8_t *source = (uint8_t *)src;
-+    size_t i;
-+
-+    for (i = 0; i < size; i++) {
-+        qtest_writeb(qts, dest + i, *(source + i));
-+    }
-+}
-+
-+uint64_t xive_get_queue_addr(uint32_t end_index)
-+{
-+    return XIVE_QUEUE_MEM + (uint64_t)end_index * XIVE_QUEUE_SIZE;
-+}
-+
-+uint8_t get_esb(QTestState *qts, uint32_t index, uint8_t page,
-+                uint32_t offset)
-+{
-+    uint64_t addr;
-+
-+    addr = XIVE_ESB_ADDR + ((uint64_t)index << (XIVE_PAGE_SHIFT + 1));
-+    if (page == 1) {
-+        addr += 1 << XIVE_PAGE_SHIFT;
-+    }
-+    return qtest_readb(qts, addr + offset);
-+}
-+
-+void set_esb(QTestState *qts, uint32_t index, uint8_t page,
-+             uint32_t offset, uint32_t val)
-+{
-+    uint64_t addr;
-+
-+    addr = XIVE_ESB_ADDR + ((uint64_t)index << (XIVE_PAGE_SHIFT + 1));
-+    if (page == 1) {
-+        addr += 1 << XIVE_PAGE_SHIFT;
-+    }
-+    return qtest_writel(qts, addr + offset, cpu_to_be32(val));
-+}
-+
-+void get_nvp(QTestState *qts, uint32_t index, Xive2Nvp* nvp)
-+{
-+    uint64_t addr = XIVE_NVP_MEM + (uint64_t)index * sizeof(Xive2Nvp);
-+    xive_get_struct(qts, addr, nvp, sizeof(Xive2Nvp));
-+}
-+
-+void set_nvp(QTestState *qts, uint32_t index, uint8_t first)
-+{
-+    uint64_t nvp_addr;
-+    Xive2Nvp nvp;
-+    uint64_t report_addr;
-+
-+    nvp_addr = XIVE_NVP_MEM + (uint64_t)index * sizeof(Xive2Nvp);
-+    report_addr = (XIVE_REPORT_MEM + (uint64_t)index * XIVE_REPORT_SIZE) >> 8;
-+
-+    memset(&nvp, 0, sizeof(nvp));
-+    nvp.w0 = xive_set_field32(NVP2_W0_VALID, 0, 1);
-+    nvp.w0 = xive_set_field32(NVP2_W0_PGOFIRST, nvp.w0, first);
-+    nvp.w6 = xive_set_field32(NVP2_W6_REPORTING_LINE, nvp.w6,
-+                              (report_addr >> 24) & 0xfffffff);
-+    nvp.w7 = xive_set_field32(NVP2_W7_REPORTING_LINE, nvp.w7,
-+                              report_addr & 0xffffff);
-+    xive_copy_struct(qts, &nvp, nvp_addr, sizeof(nvp));
-+}
-+
-+static uint64_t get_cl_pair_addr(Xive2Nvp *nvp)
-+{
-+    uint64_t upper = xive_get_field32(0x0fffffff, nvp->w6);
-+    uint64_t lower = xive_get_field32(0xffffff00, nvp->w7);
-+    return (upper << 32) | (lower << 8);
-+}
-+
-+void get_cl_pair(QTestState *qts, Xive2Nvp *nvp, uint8_t *cl_pair)
-+{
-+    uint64_t addr = get_cl_pair_addr(nvp);
-+    xive_get_struct(qts, addr, cl_pair, XIVE_REPORT_SIZE);
-+}
-+
-+void set_cl_pair(QTestState *qts, Xive2Nvp *nvp, uint8_t *cl_pair)
-+{
-+    uint64_t addr = get_cl_pair_addr(nvp);
-+    xive_copy_struct(qts, cl_pair, addr, XIVE_REPORT_SIZE);
-+}
-+
-+void set_nvg(QTestState *qts, uint32_t index, uint8_t next)
-+{
-+    uint64_t nvg_addr;
-+    Xive2Nvgc nvg;
-+
-+    nvg_addr = XIVE_NVG_MEM + (uint64_t)index * sizeof(Xive2Nvgc);
-+
-+    memset(&nvg, 0, sizeof(nvg));
-+    nvg.w0 = xive_set_field32(NVGC2_W0_VALID, 0, 1);
-+    nvg.w0 = xive_set_field32(NVGC2_W0_PGONEXT, nvg.w0, next);
-+    xive_copy_struct(qts, &nvg, nvg_addr, sizeof(nvg));
-+}
-+
-+void set_eas(QTestState *qts, uint32_t index, uint32_t end_index,
-+             uint32_t data)
-+{
-+    uint64_t eas_addr;
-+    Xive2Eas eas;
-+
-+    eas_addr = XIVE_EAS_MEM + (uint64_t)index * sizeof(Xive2Eas);
-+
-+    memset(&eas, 0, sizeof(eas));
-+    eas.w = xive_set_field64(EAS2_VALID, 0, 1);
-+    eas.w = xive_set_field64(EAS2_END_INDEX, eas.w, end_index);
-+    eas.w = xive_set_field64(EAS2_END_DATA, eas.w, data);
-+    xive_copy_struct(qts, &eas, eas_addr, sizeof(eas));
-+}
-+
-+void set_end(QTestState *qts, uint32_t index, uint32_t nvp_index,
-+             uint8_t priority, bool i)
-+{
-+    uint64_t end_addr, queue_addr, queue_hi, queue_lo;
-+    uint8_t queue_size;
-+    Xive2End end;
-+
-+    end_addr = XIVE_END_MEM + (uint64_t)index * sizeof(Xive2End);
-+    queue_addr = xive_get_queue_addr(index);
-+    queue_hi = (queue_addr >> 32) & END2_W2_EQ_ADDR_HI;
-+    queue_lo = queue_addr & END2_W3_EQ_ADDR_LO;
-+    queue_size = ctz16(XIVE_QUEUE_SIZE) - 12;
-+
-+    memset(&end, 0, sizeof(end));
-+    end.w0 = xive_set_field32(END2_W0_VALID, 0, 1);
-+    end.w0 = xive_set_field32(END2_W0_ENQUEUE, end.w0, 1);
-+    end.w0 = xive_set_field32(END2_W0_UCOND_NOTIFY, end.w0, 1);
-+    end.w0 = xive_set_field32(END2_W0_BACKLOG, end.w0, 1);
-+
-+    end.w1 = xive_set_field32(END2_W1_GENERATION, 0, 1);
-+
-+    end.w2 = cpu_to_be32(queue_hi);
-+
-+    end.w3 = cpu_to_be32(queue_lo);
-+    end.w3 = xive_set_field32(END2_W3_QSIZE, end.w3, queue_size);
-+
-+    end.w6 = xive_set_field32(END2_W6_IGNORE, 0, i);
-+    end.w6 = xive_set_field32(END2_W6_VP_OFFSET, end.w6, nvp_index);
-+
-+    end.w7 = xive_set_field32(END2_W7_F0_PRIORITY, 0, priority);
-+    xive_copy_struct(qts, &end, end_addr, sizeof(end));
-+}
-+
-diff --git a/tests/qtest/pnv-xive2-common.h b/tests/qtest/pnv-xive2-common.h
-new file mode 100644
-index 0000000000..9ae34771aa
---- /dev/null
-+++ b/tests/qtest/pnv-xive2-common.h
-@@ -0,0 +1,111 @@
-+/*
-+ * QTest testcase for PowerNV 10 interrupt controller (xive2)
-+ *
-+ * Copyright (c) 2024, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef TEST_PNV_XIVE2_COMMON_H
-+#define TEST_PNV_XIVE2_COMMON_H
-+
-+#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
-+#define PPC_BIT32(bit)          (0x80000000 >> (bit))
-+#define PPC_BIT8(bit)           (0x80 >> (bit))
-+#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
-+#define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
-+                                 PPC_BIT32(bs))
-+#include "qemu/bswap.h"
-+#include "hw/intc/pnv_xive2_regs.h"
-+#include "hw/ppc/xive_regs.h"
-+#include "hw/ppc/xive2_regs.h"
-+
-+/*
-+ * sizing:
-+ * 128 interrupts
-+ *   => ESB BAR range: 16M
-+ * 256 ENDs
-+ *   => END BAR range: 16M
-+ * 256 VPs
-+ *   => NVPG,NVC BAR range: 32M
-+ */
-+#define MAX_IRQS                128
-+#define MAX_ENDS                256
-+#define MAX_VPS                 256
-+
-+#define XIVE_PAGE_SHIFT         16
-+
-+#define XIVE_TRIGGER_PAGE       0
-+#define XIVE_EOI_PAGE           1
-+
-+#define XIVE_IC_ADDR            0x0006030200000000ull
-+#define XIVE_IC_TM_INDIRECT     (XIVE_IC_ADDR + (256 << XIVE_PAGE_SHIFT))
-+#define XIVE_IC_BAR             ((0x3ull << 62) | XIVE_IC_ADDR)
-+#define XIVE_TM_BAR             0xc006030203180000ull
-+#define XIVE_ESB_ADDR           0x0006050000000000ull
-+#define XIVE_ESB_BAR            ((0x3ull << 62) | XIVE_ESB_ADDR)
-+#define XIVE_END_BAR            0xc006060000000000ull
-+#define XIVE_NVPG_ADDR          0x0006040000000000ull
-+#define XIVE_NVPG_BAR           ((0x3ull << 62) | XIVE_NVPG_ADDR)
-+#define XIVE_NVC_ADDR           0x0006030208000000ull
-+#define XIVE_NVC_BAR            ((0x3ull << 62) | XIVE_NVC_ADDR)
-+
-+/*
-+ * Memory layout
-+ * A check is done when a table is configured to ensure that the max
-+ * size of the resource fits in the table.
-+ */
-+#define XIVE_VST_SIZE           0x10000ull /* must be at least 4k */
-+
-+#define XIVE_MEM_START          0x10000000ull
-+#define XIVE_ESB_MEM            XIVE_MEM_START
-+#define XIVE_EAS_MEM            (XIVE_ESB_MEM + XIVE_VST_SIZE)
-+#define XIVE_END_MEM            (XIVE_EAS_MEM + XIVE_VST_SIZE)
-+#define XIVE_NVP_MEM            (XIVE_END_MEM + XIVE_VST_SIZE)
-+#define XIVE_NVG_MEM            (XIVE_NVP_MEM + XIVE_VST_SIZE)
-+#define XIVE_NVC_MEM            (XIVE_NVG_MEM + XIVE_VST_SIZE)
-+#define XIVE_SYNC_MEM           (XIVE_NVC_MEM + XIVE_VST_SIZE)
-+#define XIVE_QUEUE_MEM          (XIVE_SYNC_MEM + XIVE_VST_SIZE)
-+#define XIVE_QUEUE_SIZE         4096 /* per End */
-+#define XIVE_REPORT_MEM         (XIVE_QUEUE_MEM + XIVE_QUEUE_SIZE * MAX_VPS)
-+#define XIVE_REPORT_SIZE        256 /* two cache lines per NVP */
-+#define XIVE_MEM_END            (XIVE_REPORT_MEM + XIVE_REPORT_SIZE * MAX_VPS)
-+
-+#define P10_XSCOM_BASE          0x000603fc00000000ull
-+#define XIVE_XSCOM              0x2010800ull
-+
-+#define XIVE_ESB_RESET          0b00
-+#define XIVE_ESB_OFF            0b01
-+#define XIVE_ESB_PENDING        0b10
-+#define XIVE_ESB_QUEUED         0b11
-+
-+#define XIVE_ESB_GET            0x800
-+#define XIVE_ESB_SET_PQ_00      0xc00 /* Load */
-+#define XIVE_ESB_SET_PQ_01      0xd00 /* Load */
-+#define XIVE_ESB_SET_PQ_10      0xe00 /* Load */
-+#define XIVE_ESB_SET_PQ_11      0xf00 /* Load */
-+
-+#define XIVE_ESB_STORE_EOI      0x400 /* Store */
-+
-+
-+extern uint64_t pnv_xive_xscom_read(QTestState *qts, uint32_t reg);
-+extern void pnv_xive_xscom_write(QTestState *qts, uint32_t reg, uint64_t val);
-+extern uint64_t xive_get_queue_addr(uint32_t end_index);
-+extern uint8_t get_esb(QTestState *qts, uint32_t index, uint8_t page,
-+                       uint32_t offset);
-+extern void set_esb(QTestState *qts, uint32_t index, uint8_t page,
-+                    uint32_t offset, uint32_t val);
-+extern void get_nvp(QTestState *qts, uint32_t index, Xive2Nvp* nvp);
-+extern void set_nvp(QTestState *qts, uint32_t index, uint8_t first);
-+extern void get_cl_pair(QTestState *qts, Xive2Nvp *nvp, uint8_t *cl_pair);
-+extern void set_cl_pair(QTestState *qts, Xive2Nvp *nvp, uint8_t *cl_pair);
-+extern void set_nvg(QTestState *qts, uint32_t index, uint8_t next);
-+extern void set_eas(QTestState *qts, uint32_t index, uint32_t end_index,
-+                    uint32_t data);
-+extern void set_end(QTestState *qts, uint32_t index, uint32_t nvp_index,
-+                    uint8_t priority, bool i);
-+
-+
-+void test_flush_sync_inject(QTestState *qts);
-+
-+#endif /* TEST_PNV_XIVE2_COMMON_H */
-diff --git a/tests/qtest/pnv-xive2-flush-sync.c b/tests/qtest/pnv-xive2-flush-sync.c
-new file mode 100644
-index 0000000000..3b32446adb
---- /dev/null
-+++ b/tests/qtest/pnv-xive2-flush-sync.c
-@@ -0,0 +1,205 @@
-+/*
-+ * QTest testcase for PowerNV 10 interrupt controller (xive2)
-+ *  - Test cache flush/queue sync injection
-+ *
-+ * Copyright (c) 2024, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+#include "pnv-xive2-common.h"
-+#include "hw/intc/pnv_xive2_regs.h"
-+#include "hw/ppc/xive_regs.h"
-+#include "hw/ppc/xive2_regs.h"
-+
-+#define PNV_XIVE2_QUEUE_IPI              0x00
-+#define PNV_XIVE2_QUEUE_HW               0x01
-+#define PNV_XIVE2_QUEUE_NXC              0x02
-+#define PNV_XIVE2_QUEUE_INT              0x03
-+#define PNV_XIVE2_QUEUE_OS               0x04
-+#define PNV_XIVE2_QUEUE_POOL             0x05
-+#define PNV_XIVE2_QUEUE_HARD             0x06
-+#define PNV_XIVE2_CACHE_ENDC             0x08
-+#define PNV_XIVE2_CACHE_ESBC             0x09
-+#define PNV_XIVE2_CACHE_EASC             0x0a
-+#define PNV_XIVE2_QUEUE_NXC_LD_LCL_NCO   0x10
-+#define PNV_XIVE2_QUEUE_NXC_LD_LCL_CO    0x11
-+#define PNV_XIVE2_QUEUE_NXC_ST_LCL_NCI   0x12
-+#define PNV_XIVE2_QUEUE_NXC_ST_LCL_CI    0x13
-+#define PNV_XIVE2_QUEUE_NXC_ST_RMT_NCI   0x14
-+#define PNV_XIVE2_QUEUE_NXC_ST_RMT_CI    0x15
-+#define PNV_XIVE2_CACHE_NXC              0x18
-+
-+#define PNV_XIVE2_SYNC_IPI              0x000
-+#define PNV_XIVE2_SYNC_HW               0x080
-+#define PNV_XIVE2_SYNC_NxC              0x100
-+#define PNV_XIVE2_SYNC_INT              0x180
-+#define PNV_XIVE2_SYNC_OS_ESC           0x200
-+#define PNV_XIVE2_SYNC_POOL_ESC         0x280
-+#define PNV_XIVE2_SYNC_HARD_ESC         0x300
-+#define PNV_XIVE2_SYNC_NXC_LD_LCL_NCO   0x800
-+#define PNV_XIVE2_SYNC_NXC_LD_LCL_CO    0x880
-+#define PNV_XIVE2_SYNC_NXC_ST_LCL_NCI   0x900
-+#define PNV_XIVE2_SYNC_NXC_ST_LCL_CI    0x980
-+#define PNV_XIVE2_SYNC_NXC_ST_RMT_NCI   0xA00
-+#define PNV_XIVE2_SYNC_NXC_ST_RMT_CI    0xA80
-+
-+
-+static uint64_t get_sync_addr(uint32_t src_pir, int ic_topo_id, int type)
-+{
-+    int thread_nr = src_pir & 0x7f;
-+    uint64_t addr = XIVE_SYNC_MEM +  thread_nr * 512 + ic_topo_id * 32 + type;
-+    return addr;
-+}
-+
-+static uint8_t get_sync(QTestState *qts, uint32_t src_pir, int ic_topo_id,
-+                        int type)
-+{
-+    uint64_t addr = get_sync_addr(src_pir, ic_topo_id, type);
-+    return qtest_readb(qts, addr);
-+}
-+
-+static void clr_sync(QTestState *qts, uint32_t src_pir, int ic_topo_id,
-+                        int type)
-+{
-+    uint64_t addr = get_sync_addr(src_pir, ic_topo_id, type);
-+    qtest_writeb(qts, addr, 0x0);
-+}
-+
-+static void inject_cache_flush(QTestState *qts, int ic_topo_id,
-+                               uint64_t scom_addr)
-+{
-+    (void)ic_topo_id;
-+    pnv_xive_xscom_write(qts, scom_addr, 0);
-+}
-+
-+static void inject_queue_sync(QTestState *qts, int ic_topo_id, uint64_t offset)
-+{
-+    (void)ic_topo_id;
-+    uint64_t addr = XIVE_IC_ADDR + (VST_SYNC << XIVE_PAGE_SHIFT) + offset;
-+    qtest_writeq(qts, addr, 0);
-+}
-+
-+static void inject_op(QTestState *qts, int ic_topo_id, int type)
-+{
-+    switch (type) {
-+    case PNV_XIVE2_QUEUE_IPI:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_IPI);
-+        break;
-+    case PNV_XIVE2_QUEUE_HW:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_HW);
-+        break;
-+    case PNV_XIVE2_QUEUE_NXC:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NxC);
-+        break;
-+    case PNV_XIVE2_QUEUE_INT:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_INT);
-+        break;
-+    case PNV_XIVE2_QUEUE_OS:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_OS_ESC);
-+        break;
-+    case PNV_XIVE2_QUEUE_POOL:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_POOL_ESC);
-+        break;
-+    case PNV_XIVE2_QUEUE_HARD:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_HARD_ESC);
-+        break;
-+    case PNV_XIVE2_CACHE_ENDC:
-+        inject_cache_flush(qts, ic_topo_id, X_VC_ENDC_FLUSH_INJECT);
-+        break;
-+    case PNV_XIVE2_CACHE_ESBC:
-+        inject_cache_flush(qts, ic_topo_id, X_VC_ESBC_FLUSH_INJECT);
-+        break;
-+    case PNV_XIVE2_CACHE_EASC:
-+        inject_cache_flush(qts, ic_topo_id, X_VC_EASC_FLUSH_INJECT);
-+        break;
-+    case PNV_XIVE2_QUEUE_NXC_LD_LCL_NCO:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_LD_LCL_NCO);
-+        break;
-+    case PNV_XIVE2_QUEUE_NXC_LD_LCL_CO:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_LD_LCL_CO);
-+        break;
-+    case PNV_XIVE2_QUEUE_NXC_ST_LCL_NCI:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_ST_LCL_NCI);
-+        break;
-+    case PNV_XIVE2_QUEUE_NXC_ST_LCL_CI:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_ST_LCL_CI);
-+        break;
-+    case PNV_XIVE2_QUEUE_NXC_ST_RMT_NCI:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_ST_RMT_NCI);
-+        break;
-+    case PNV_XIVE2_QUEUE_NXC_ST_RMT_CI:
-+        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_ST_RMT_CI);
-+        break;
-+    case PNV_XIVE2_CACHE_NXC:
-+        inject_cache_flush(qts, ic_topo_id, X_PC_NXC_FLUSH_INJECT);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+        break;
-+    }
-+}
-+
-+const uint8_t xive_inject_tests[] = {
-+    PNV_XIVE2_QUEUE_IPI,
-+    PNV_XIVE2_QUEUE_HW,
-+    PNV_XIVE2_QUEUE_NXC,
-+    PNV_XIVE2_QUEUE_INT,
-+    PNV_XIVE2_QUEUE_OS,
-+    PNV_XIVE2_QUEUE_POOL,
-+    PNV_XIVE2_QUEUE_HARD,
-+    PNV_XIVE2_CACHE_ENDC,
-+    PNV_XIVE2_CACHE_ESBC,
-+    PNV_XIVE2_CACHE_EASC,
-+    PNV_XIVE2_QUEUE_NXC_LD_LCL_NCO,
-+    PNV_XIVE2_QUEUE_NXC_LD_LCL_CO,
-+    PNV_XIVE2_QUEUE_NXC_ST_LCL_NCI,
-+    PNV_XIVE2_QUEUE_NXC_ST_LCL_CI,
-+    PNV_XIVE2_QUEUE_NXC_ST_RMT_NCI,
-+    PNV_XIVE2_QUEUE_NXC_ST_RMT_CI,
-+    PNV_XIVE2_CACHE_NXC,
-+};
-+
-+void test_flush_sync_inject(QTestState *qts)
-+{
-+    int ic_topo_id = 0;
-+
-+    /*
-+     * Writes performed by qtest are not done in the context of a thread.
-+     * This means that QEMU XIVE code doesn't have a way to determine what
-+     * thread is originating the write.  In order to allow for some testing,
-+     * QEMU XIVE code will assume a PIR of 0 when unable to determine the
-+     * source thread for cache flush and queue sync inject operations.
-+     * See hw/intc/pnv_xive2.c: pnv_xive2_inject_notify() for details.
-+     */
-+    int src_pir = 0;
-+    int test_nr;
-+    uint8_t byte;
-+
-+    printf("# ============================================================\n");
-+    printf("# Starting cache flush/queue sync injection tests...\n");
-+
-+    for (test_nr = 0; test_nr < sizeof(xive_inject_tests);
-+         test_nr++) {
-+        int op_type = xive_inject_tests[test_nr];
-+
-+        printf("# Running test %d\n", test_nr);
-+
-+        /* start with status byte set to 0 */
-+        clr_sync(qts, src_pir, ic_topo_id, op_type);
-+        byte = get_sync(qts, src_pir, ic_topo_id, op_type);
-+        g_assert_cmphex(byte, ==, 0);
-+
-+        /* request cache flush or queue sync operation */
-+        inject_op(qts, ic_topo_id, op_type);
-+
-+        /* verify that status byte was written to 0xff */
-+        byte = get_sync(qts, src_pir, ic_topo_id, op_type);
-+        g_assert_cmphex(byte, ==, 0xff);
-+
-+        clr_sync(qts, src_pir, ic_topo_id, op_type);
-+    }
-+}
-+
-diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
-new file mode 100644
-index 0000000000..dd19e88861
---- /dev/null
-+++ b/tests/qtest/pnv-xive2-test.c
-@@ -0,0 +1,344 @@
-+/*
-+ * QTest testcase for PowerNV 10 interrupt controller (xive2)
-+ *  - Test irq to hardware thread
-+ *  - Test 'Pull Thread Context to Odd Thread Reporting Line'
-+ *
-+ * Copyright (c) 2024, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+#include "pnv-xive2-common.h"
-+#include "hw/intc/pnv_xive2_regs.h"
-+#include "hw/ppc/xive_regs.h"
-+#include "hw/ppc/xive2_regs.h"
-+
-+#define SMT                     4 /* some tests will break if less than 4 */
-+
-+
-+static void set_table(QTestState *qts, uint64_t type, uint64_t addr)
-+{
-+    uint64_t vsd, size, log_size;
-+
-+    /*
-+     * First, let's make sure that all the resources used fit in the
-+     * given table.
-+     */
-+    switch (type) {
-+    case VST_ESB:
-+        size = MAX_IRQS / 4;
-+        break;
-+    case VST_EAS:
-+        size = MAX_IRQS * 8;
-+        break;
-+    case VST_END:
-+        size = MAX_ENDS * 32;
-+        break;
-+    case VST_NVP:
-+    case VST_NVG:
-+    case VST_NVC:
-+        size = MAX_VPS * 32;
-+        break;
-+    case VST_SYNC:
-+        size = 64 * 1024;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    g_assert_cmpuint(size, <=, XIVE_VST_SIZE);
-+    log_size = ctzl(XIVE_VST_SIZE) - 12;
-+
-+    vsd = ((uint64_t) VSD_MODE_EXCLUSIVE) << 62 | addr | log_size;
-+    pnv_xive_xscom_write(qts, X_VC_VSD_TABLE_ADDR, type << 48);
-+    pnv_xive_xscom_write(qts, X_VC_VSD_TABLE_DATA, vsd);
-+
-+    if (type != VST_EAS && type != VST_IC && type != VST_ERQ) {
-+        pnv_xive_xscom_write(qts, X_PC_VSD_TABLE_ADDR, type << 48);
-+        pnv_xive_xscom_write(qts, X_PC_VSD_TABLE_DATA, vsd);
-+    }
-+}
-+
-+static void set_tima8(QTestState *qts, uint32_t pir, uint32_t offset,
-+                      uint8_t b)
-+{
-+    uint64_t ic_addr;
-+
-+    ic_addr = XIVE_IC_TM_INDIRECT + (pir << XIVE_PAGE_SHIFT);
-+    qtest_writeb(qts, ic_addr + offset, b);
-+}
-+
-+static void set_tima32(QTestState *qts, uint32_t pir, uint32_t offset,
-+                       uint32_t l)
-+{
-+    uint64_t ic_addr;
-+
-+    ic_addr = XIVE_IC_TM_INDIRECT + (pir << XIVE_PAGE_SHIFT);
-+    qtest_writel(qts, ic_addr + offset, l);
-+}
-+
-+static uint8_t get_tima8(QTestState *qts, uint32_t pir, uint32_t offset)
-+{
-+    uint64_t ic_addr;
-+
-+    ic_addr = XIVE_IC_TM_INDIRECT + (pir << XIVE_PAGE_SHIFT);
-+    return qtest_readb(qts, ic_addr + offset);
-+}
-+
-+static uint16_t get_tima16(QTestState *qts, uint32_t pir, uint32_t offset)
-+{
-+    uint64_t ic_addr;
-+
-+    ic_addr = XIVE_IC_TM_INDIRECT + (pir << XIVE_PAGE_SHIFT);
-+    return qtest_readw(qts, ic_addr + offset);
-+}
-+
-+static uint32_t get_tima32(QTestState *qts, uint32_t pir, uint32_t offset)
-+{
-+    uint64_t ic_addr;
-+
-+    ic_addr = XIVE_IC_TM_INDIRECT + (pir << XIVE_PAGE_SHIFT);
-+    return qtest_readl(qts, ic_addr + offset);
-+}
-+
-+static void reset_pool_threads(QTestState *qts)
-+{
-+    uint8_t first_group = 0;
-+    int i;
-+
-+    for (i = 0; i < SMT; i++) {
-+        uint32_t nvp_idx = 0x100 + i;
-+        set_nvp(qts, nvp_idx, first_group);
-+        set_tima32(qts, i, TM_QW2_HV_POOL + TM_WORD0, 0x000000ff);
-+        set_tima32(qts, i, TM_QW2_HV_POOL + TM_WORD1, 0);
-+        set_tima32(qts, i, TM_QW2_HV_POOL + TM_WORD2, TM_QW2W2_VP | nvp_idx);
-+    }
-+}
-+
-+static void reset_hw_threads(QTestState *qts)
-+{
-+    uint8_t first_group = 0;
-+    uint32_t w1 = 0x000000ff;
-+    int i;
-+
-+    if (SMT >= 4) {
-+        /* define 2 groups of 2, part of a bigger group of size 4 */
-+        set_nvg(qts, 0x80, 0x02);
-+        set_nvg(qts, 0x82, 0x02);
-+        set_nvg(qts, 0x81, 0);
-+        first_group = 0x01;
-+        w1 = 0x000300ff;
-+    }
-+
-+    for (i = 0; i < SMT; i++) {
-+        set_nvp(qts, 0x80 + i, first_group);
-+        set_tima32(qts, i, TM_QW3_HV_PHYS + TM_WORD0, 0x00ff00ff);
-+        set_tima32(qts, i, TM_QW3_HV_PHYS + TM_WORD1, w1);
-+        set_tima32(qts, i, TM_QW3_HV_PHYS + TM_WORD2, 0x80000000);
-+    }
-+}
-+
-+static void reset_state(QTestState *qts)
-+{
-+    size_t mem_used = XIVE_MEM_END - XIVE_MEM_START;
-+
-+    qtest_memset(qts, XIVE_MEM_START, 0, mem_used);
-+    reset_hw_threads(qts);
-+    reset_pool_threads(qts);
-+}
-+
-+static void init_xive(QTestState *qts)
-+{
-+    uint64_t val1, val2, range;
-+
-+    /*
-+     * We can take a few shortcuts here, as we know the default values
-+     * used for xive initialization
-+     */
-+
-+    /*
-+     * Set the BARs.
-+     * We reuse the same values used by firmware to ease debug.
-+     */
-+    pnv_xive_xscom_write(qts, X_CQ_IC_BAR, XIVE_IC_BAR);
-+    pnv_xive_xscom_write(qts, X_CQ_TM_BAR, XIVE_TM_BAR);
-+
-+    /* ESB and NVPG use 2 pages per resource. The others only one page */
-+    range = (MAX_IRQS << 17) >> 25;
-+    val1 = XIVE_ESB_BAR | range;
-+    pnv_xive_xscom_write(qts, X_CQ_ESB_BAR, val1);
-+
-+    range = (MAX_ENDS << 16) >> 25;
-+    val1 = XIVE_END_BAR | range;
-+    pnv_xive_xscom_write(qts, X_CQ_END_BAR, val1);
-+
-+    range = (MAX_VPS << 17) >> 25;
-+    val1 = XIVE_NVPG_BAR | range;
-+    pnv_xive_xscom_write(qts, X_CQ_NVPG_BAR, val1);
-+
-+    range = (MAX_VPS << 16) >> 25;
-+    val1 = XIVE_NVC_BAR | range;
-+    pnv_xive_xscom_write(qts, X_CQ_NVC_BAR, val1);
-+
-+    /*
-+     * Enable hw threads.
-+     * We check the value written. Useless with current
-+     * implementation, but it validates the xscom read path and it's
-+     * what the hardware procedure says
-+     */
-+    val1 = 0xF000000000000000ull; /* core 0, 4 threads */
-+    pnv_xive_xscom_write(qts, X_TCTXT_EN0, val1);
-+    val2 = pnv_xive_xscom_read(qts, X_TCTXT_EN0);
-+    g_assert_cmphex(val1, ==, val2);
-+
-+    /* Memory tables */
-+    set_table(qts, VST_ESB, XIVE_ESB_MEM);
-+    set_table(qts, VST_EAS, XIVE_EAS_MEM);
-+    set_table(qts, VST_END, XIVE_END_MEM);
-+    set_table(qts, VST_NVP, XIVE_NVP_MEM);
-+    set_table(qts, VST_NVG, XIVE_NVG_MEM);
-+    set_table(qts, VST_NVC, XIVE_NVC_MEM);
-+    set_table(qts, VST_SYNC, XIVE_SYNC_MEM);
-+
-+    reset_hw_threads(qts);
-+    reset_pool_threads(qts);
-+}
-+
-+static void test_hw_irq(QTestState *qts)
-+{
-+    uint32_t irq = 2;
-+    uint32_t irq_data = 0x600df00d;
-+    uint32_t end_index = 5;
-+    uint32_t target_pir = 1;
-+    uint32_t target_nvp = 0x80 + target_pir;
-+    uint8_t priority = 5;
-+    uint32_t reg32;
-+    uint16_t reg16;
-+    uint8_t pq, nsr, cppr;
-+
-+    printf("# ============================================================\n");
-+    printf("# Testing irq %d to hardware thread %d\n", irq, target_pir);
-+
-+    /* irq config */
-+    set_eas(qts, irq, end_index, irq_data);
-+    set_end(qts, end_index, target_nvp, priority, false /* group */);
-+
-+    /* enable and trigger irq */
-+    get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_SET_PQ_00);
-+    set_esb(qts, irq, XIVE_TRIGGER_PAGE, 0, 0);
-+
-+    /* check irq is raised on cpu */
-+    pq = get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_GET);
-+    g_assert_cmpuint(pq, ==, XIVE_ESB_PENDING);
-+
-+    reg32 = get_tima32(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD0);
-+    nsr = reg32 >> 24;
-+    cppr = (reg32 >> 16) & 0xFF;
-+    g_assert_cmphex(nsr, ==, 0x80);
-+    g_assert_cmphex(cppr, ==, 0xFF);
-+
-+    /* ack the irq */
-+    reg16 = get_tima16(qts, target_pir, TM_SPC_ACK_HV_REG);
-+    nsr = reg16 >> 8;
-+    cppr = reg16 & 0xFF;
-+    g_assert_cmphex(nsr, ==, 0x80);
-+    g_assert_cmphex(cppr, ==, priority);
-+
-+    /* check irq data is what was configured */
-+    reg32 = qtest_readl(qts, xive_get_queue_addr(end_index));
-+    g_assert_cmphex((reg32 & 0x7fffffff), ==, (irq_data & 0x7fffffff));
-+
-+    /* End Of Interrupt */
-+    set_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_STORE_EOI, 0);
-+    pq = get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_GET);
-+    g_assert_cmpuint(pq, ==, XIVE_ESB_RESET);
-+
-+    /* reset CPPR */
-+    set_tima8(qts, target_pir, TM_QW3_HV_PHYS + TM_CPPR, 0xFF);
-+    reg32 = get_tima32(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD0);
-+    nsr = reg32 >> 24;
-+    cppr = (reg32 >> 16) & 0xFF;
-+    g_assert_cmphex(nsr, ==, 0x00);
-+    g_assert_cmphex(cppr, ==, 0xFF);
-+}
-+
-+#define XIVE_ODD_CL 0x80
-+static void test_pull_thread_ctx_to_odd_thread_cl(QTestState *qts)
-+{
-+    uint32_t target_pir = 1;
-+    uint32_t target_nvp = 0x80 + target_pir;
-+    Xive2Nvp nvp;
-+    uint8_t cl_pair[XIVE_REPORT_SIZE];
-+    uint32_t qw1w0, qw3w0, qw1w2, qw2w2;
-+    uint8_t qw3b8;
-+    uint32_t cl_word;
-+    uint32_t word2;
-+
-+    printf("# ============================================================\n");
-+    printf("# Testing 'Pull Thread Context to Odd Thread Reporting Line'\n");
-+
-+    /* clear odd cache line prior to pull operation */
-+    memset(cl_pair, 0, sizeof(cl_pair));
-+    get_nvp(qts, target_nvp, &nvp);
-+    set_cl_pair(qts, &nvp, cl_pair);
-+
-+    /* Read some values from TIMA that we expect to see in cacheline */
-+    qw1w0 = get_tima32(qts, target_pir, TM_QW1_OS + TM_WORD0);
-+    qw3w0 = get_tima32(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD0);
-+    qw1w2 = get_tima32(qts, target_pir, TM_QW1_OS + TM_WORD2);
-+    qw2w2 = get_tima32(qts, target_pir, TM_QW2_HV_POOL + TM_WORD2);
-+    qw3b8 = get_tima8(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD2);
-+
-+    /* Execute the pull operation */
-+    set_tima8(qts, target_pir, TM_SPC_PULL_PHYS_CTX_OL, 0);
-+
-+    /* Verify odd cache line values match TIMA after pull operation */
-+    get_cl_pair(qts, &nvp, cl_pair);
-+    memcpy(&cl_word, &cl_pair[XIVE_ODD_CL + TM_QW1_OS + TM_WORD0], 4);
-+    g_assert_cmphex(qw1w0, ==, be32_to_cpu(cl_word));
-+    memcpy(&cl_word, &cl_pair[XIVE_ODD_CL + TM_QW3_HV_PHYS + TM_WORD0], 4);
-+    g_assert_cmphex(qw3w0, ==, be32_to_cpu(cl_word));
-+    memcpy(&cl_word, &cl_pair[XIVE_ODD_CL + TM_QW1_OS + TM_WORD2], 4);
-+    g_assert_cmphex(qw1w2, ==, be32_to_cpu(cl_word));
-+    memcpy(&cl_word, &cl_pair[XIVE_ODD_CL + TM_QW2_HV_POOL + TM_WORD2], 4);
-+    g_assert_cmphex(qw2w2, ==, be32_to_cpu(cl_word));
-+    g_assert_cmphex(qw3b8, ==,
-+                    cl_pair[XIVE_ODD_CL + TM_QW3_HV_PHYS + TM_WORD2]);
-+
-+    /* Verify that all TIMA valid bits for target thread are cleared */
-+    word2 = get_tima32(qts, target_pir, TM_QW1_OS + TM_WORD2);
-+    g_assert_cmphex(xive_get_field32(TM_QW1W2_VO, word2), ==, 0);
-+    word2 = get_tima32(qts, target_pir, TM_QW2_HV_POOL + TM_WORD2);
-+    g_assert_cmphex(xive_get_field32(TM_QW2W2_VP, word2), ==, 0);
-+    word2 = get_tima32(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD2);
-+    g_assert_cmphex(xive_get_field32(TM_QW3W2_VT, word2), ==, 0);
-+}
-+static void test_xive(void)
-+{
-+    QTestState *qts;
-+
-+    qts = qtest_initf("-M powernv10 -smp %d,cores=1,threads=%d -nographic "
-+                      "-nodefaults -serial mon:stdio -S "
-+                      "-d guest_errors -trace '*xive*'",
-+                      SMT, SMT);
-+    init_xive(qts);
-+
-+    test_hw_irq(qts);
-+
-+    /* omit reset_state here and use settings from test_hw_irq */
-+    test_pull_thread_ctx_to_odd_thread_cl(qts);
-+
-+    reset_state(qts);
-+    test_flush_sync_inject(qts);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("xive2", test_xive);
-+    return g_test_run();
-+}
--- 
-2.45.2
-
+SGkgQ2VkcmljLA0KDQo+IFN1YmplY3Q6IFJlOiBbU1BBTV0gW1BBVENIIHYxIDAvOF0gU3VwcG9y
+dCBSVEMgZm9yIEFTVDI3MDANCj4gDQo+IE9uIDEwLzI5LzI0IDEwOjE3LCBKYW1pbiBMaW4gd3Jv
+dGU6DQo+ID4gY2hhbmdlIGZyb20gdjE6DQo+ID4gMS4gU3VwcG9ydCBSVEMgZm9yIEFTVDI3MDAu
+DQo+ID4gMi4gU3VwcG9ydCBTREhDSSB3cml0ZSBwcm90ZWN0ZWQgcGluIGludmVydGVkIGZvciBB
+U1QyNTAwIGFuZCBBU1QyNjAwLg0KPiA+IDMuIEludHJvZHVjZSBDYXBhYmlsaXRpZXMgUmVnaXN0
+ZXIgMiBmb3IgU0Qgc2xvdCAwIGFuZCAxLg0KPiA+IDQuIFN1cHBvcnQgY3JlYXRlIGZsYXNoIGRl
+dmljZXMgdmlhIGNvbW1hbmQgbGluZSBmb3IgQVNUMTAzMC4NCj4gPg0KPiA+IEphbWluIExpbiAo
+OCk6DQo+ID4gICAgYXNwZWVkL3NvYzogU3VwcG9ydCBSVEMgZm9yIEFTVDI3MDANCj4gPiAgICBo
+dy90aW1lci9hc3BlZWQ6IEZpeCBjb2Rpbmcgc3R5bGUNCj4gPiAgICBody90aW1lci9hc3BlZWQ6
+IEZpeCBpbnRlcnJ1cHQgc3RhdHVzIGRvZXMgbm90IGJlIGNsZWFyZWQgZm9yIEFTVDI2MDANCj4g
+PiAgICBody9zZC9zZGhjaTogRml4IGNvZGluZyBzdHlsZQ0KPiA+ICAgIGh3L3NkL3NkaGNpOiBJ
+bnRyb2R1Y2UgYSBuZXcgV3JpdGUgUHJvdGVjdGVkIHBpbiBpbnZlcnRlZCBwcm9wZXJ0eQ0KPiA+
+ICAgIGh3L3NkL2FzcGVlZF9zZGhjaTogSW50cm9kdWNlIENhcGFiaWxpdGllcyBSZWdpc3RlciAy
+IGZvciBTRCBzbG90IDANCj4gPiAgICAgIGFuZCAxDQo+ID4gICAgaHcvYXJtL2FzcGVlZDogSW52
+ZXJ0IHNkaGNpIHdyaXRlIHByb3RlY3RlZCBwaW4gZm9yIEFTVDI2MDAgYW5kDQo+ID4gICAgICBB
+U1QyNTAwIEVWQnMNCj4gPiAgICBhc3BlZWQ6IFN1cHBvcnQgY3JlYXRlIGZsYXNoIGRldmljZXMg
+dmlhIGNvbW1hbmQgbGluZSBmb3IgQVNUMTAzMA0KPiA+DQo+ID4gICBody9hcm0vYXNwZWVkLmMg
+ICAgICAgICB8IDMwICsrKysrKysrKysrKy0tLS0tLQ0KPiA+ICAgaHcvYXJtL2FzcGVlZF9hc3Qy
+N3gwLmMgfCAxMSArKysrKysrDQo+ID4gICBody9zZC9hc3BlZWRfc2RoY2kuYyAgICB8IDQwICsr
+KysrKysrKysrKysrKystLS0tLS0tDQo+ID4gICBody9zZC9zZGhjaS5jICAgICAgICAgICB8IDcw
+DQo+ICsrKysrKysrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0tDQo+ID4gICBody90
+aW1lci9hc3BlZWRfdGltZXIuYyB8IDE1ICsrKysrLS0tLQ0KPiA+ICAgaW5jbHVkZS9ody9hcm0v
+YXNwZWVkLmggfCAgMSArDQo+ID4gICBpbmNsdWRlL2h3L3NkL3NkaGNpLmggICB8ICA1ICsrKw0K
+PiA+ICAgNyBmaWxlcyBjaGFuZ2VkLCAxMjMgaW5zZXJ0aW9ucygrKSwgNDkgZGVsZXRpb25zKC0p
+DQo+ID4NCj4gDQo+IEFwcGxpZWQgMSwyLDMsNiw4IHRvIGFzcGVlZC1uZXh0Lg0KPiANCg0KVGhh
+bmtzIGZvciB5b3VyIGhlbHAuDQpXaWxsIHJlc2VuZCA0LDUgYW5kIDcgcGF0Y2hlcyBpbiB2Mi4N
+ClRoYW5rcy1KYW1pbg0KPiBUaGFua3MsDQo+IA0KPiBDLg0KPiANCg0K
 
