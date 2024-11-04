@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3DF2D111B3
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 06:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0DBCD111B0
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 07:01:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7r2p-0005GZ-6R; Mon, 04 Nov 2024 01:58:35 -0500
+	id 1t7r5T-000651-GV; Mon, 04 Nov 2024 02:01:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1t7r2l-0005GR-Te
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 01:58:32 -0500
-Received: from mgamail.intel.com ([198.175.65.10])
+ id 1t7r5R-00064s-UV
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 02:01:17 -0500
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1t7r2i-0002BJ-8r
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 01:58:31 -0500
+ id 1t7r5P-0002gz-5V
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 02:01:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730703508; x=1762239508;
+ t=1730703675; x=1762239675;
  h=message-id:date:subject:to:cc:references:from:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=4G2MVOvWBAfxaIxr6wzrppzrkzw0AGTJ7fEHCjBcwYU=;
- b=L1ks5GnY2CQeP6e10Ify7L+vW+ENyDtFos86P0O6srLbdMfdEpmSrvS9
- M4xrB0EFYJg/YMn8ggKGcvlqk8HSw/vxf0PIbniTYoLs3R7QmZ/pkvlm2
- s4GIuqRNl2b8dzGVwFYWUckl2IKfCwrOPnBnRGO+HJ75B1wkOKxenLDkT
- DOPf9hLcefRWB6dmkeIo74KYSSaBn3MIpdqy6Q5W46IkeJcXrlCeQ+K25
- 3/xsjUYLpNz7MrcNnsv8TWx5ywbW82EBLNvdGHFzcnCw22m+YZi68t8P2
- FBRLtMxiqtlpadsUf/1NiTtajWGCkbB8EQQMx8+P1eMRhvx4+QK2TL+H4 A==;
-X-CSE-ConnectionGUID: O1jWnnPbQ6KcYqjSo/FTSQ==
-X-CSE-MsgGUID: nEVTlft7TGO8Cgz+LWOK4g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="47851442"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="47851442"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Nov 2024 22:58:26 -0800
-X-CSE-ConnectionGUID: sFFq9thORROre9sKd48X8Q==
-X-CSE-MsgGUID: Qve0j4LzRF6ASTKHfk0xzw==
+ bh=4tCweUi598HsyHVtgU6i54vttW92UpAcZhmmIdmy6/c=;
+ b=EnEi54f4Qe+yCZ0O+JDoWkg9IzfzKzdcYSRgJZNQlLHApSmozQbW97md
+ N1IcKduK8twvYbzy2cwFDCTbgvEmrx7MduxeMTx9mN+TEC5/VDdZOoWUT
+ d8xv9i2CbZp9FzfiiiiOJw1j/UDK9mPb9XySCAcJ+ovzGYdSwBOcf+ozN
+ /pH+Yni4qrCRJp/TB6oae8oltiTG1d9wRhoyslhmdbefUH+QMpGAh8c17
+ CRA+YacCiC9CihJwMXv2IiRyXZayvWHt4NzP+HGnUMaLchZqeRYHD+gOp
+ fnqACdTzv34vxtergHfk+bhsbZEUWjjz3J+5MhFSn21pvNg/gY5s9BOrn w==;
+X-CSE-ConnectionGUID: g987lVD2QcOVPQjsQVGfZA==
+X-CSE-MsgGUID: TXQZtc4CTP2RraVLNygZAg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11245"; a="29814454"
+X-IronPort-AV: E=Sophos;i="6.11,256,1725346800"; d="scan'208";a="29814454"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Nov 2024 23:01:11 -0800
+X-CSE-ConnectionGUID: UziYVFAkQgizSVxfYTtXkw==
+X-CSE-MsgGUID: pT/mJt4yRLq+ObICFOgSIw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,256,1725346800"; d="scan'208";a="88695529"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by orviesa004.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 03 Nov 2024 22:58:26 -0800
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+X-IronPort-AV: E=Sophos;i="6.11,256,1725346800"; d="scan'208";a="83659146"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+ by fmviesa009.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 03 Nov 2024 23:01:06 -0800
+Received: from fmsmsx601.amr.corp.intel.com (10.18.126.81) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Sun, 3 Nov 2024 22:58:25 -0800
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ 15.1.2507.39; Sun, 3 Nov 2024 23:01:05 -0800
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Sun, 3 Nov 2024 22:58:25 -0800
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.175)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ 15.1.2507.39 via Frontend Transport; Sun, 3 Nov 2024 23:01:05 -0800
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (104.47.73.42) by
+ edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Sun, 3 Nov 2024 22:58:24 -0800
+ 15.1.2507.39; Sun, 3 Nov 2024 23:01:05 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xW35C648usIPn42CLUjVrc4S7O185rophzXpLyzYL8nzIXQTVQebHFWDK7G1Mq7yln0nYuEuEfOYuJtK49783thkmXHretEjHosfm9/22GqohqtVeEz7eX0I3vdN7yBxyFzcwYr54cyLWNVGPpEkajZ03BO+r3iRC0aCwVhWgDXy7K/8LQ5uyZDz9l7HPSYjaaQjmKsHckiSqE9yStg/5rGv5HDD6N+C/IihaZGbvPUxWq9744INucf2kclRTfreMlxCMyoDQOlR6U58kaHYPpmn2EOCKFdKOeGd01mAcHQIpqca68aJyj38X16twQ+iOFDcRIBrzkf0GHB/S/dEkg==
+ b=Bzn2FFJem9PEer/PNsvOjFSFi0KVlCeiO8hI4YMPZaYw1G0S5NouJt/rpermTrzGfhhAHdxU3XlZEzx5gPS7sptMti7XgMjas8VIUMyAd/FAcXoNAgIx7MlTdXNxAaNMLNdp7qrSglM4vK8RSAQ+vnxF6p3YLfRLtAptOKGEFfmmy1VA/sxG/1XoMDBVVuSAcg3x6P9znQlTWitoP+Va7ble0+kqy1YykRy+zcJMEMEQ0cr8DywS/ANfEXR14l0eSdxXID7gskgcq74XXWtiHXT0AFVxg2gVZjVUG50BdaXxCw/g/M9C03Yv2W8PiVHOvytQtUt6vjDogW1pjQMXEg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ome2DimRlxZ9X3R7dwaukgVYXEQMLraIwjXJOo0Wsww=;
- b=LVe3RhUi+0MJR94btQphUmDQvyU6k4Y2pNJYLVdBHxPxSiavT7UGRzu2e3+Pjy9jcRcnmSJFTUWyGBxNyvPicFHocQfKeyuoMok2sG21Z+ZGe9Ud04rLH49MLr2OF3DmOe3cJ1FovSRFAA07f9L4/dHmQqssgtKKP/wOGaDRmWqT9GBETWoksU3+i0yazxxSiI2LxMFcOYFNdDgGIhZA7LGKx+y4vecGgWTYyrGL7Tu2qBJvr6n8W2d0pLFB1wJQtp9ccCtbvOIRI5P0Ly7V/vvHIMw9ZF7/f3A9WT2Pmp8x1xDqnNOic63RPT9H1bDyWHo2TfEzQvRsuGn4B/Lq0A==
+ bh=R/ZN4I3yhsCzz+9R6HiBZKHIV4BRXjPD7zmQDrztvVc=;
+ b=QhahCHCZokKTkDatkSCL7q0WtJtOEQisG9hokUvEpBXi/xwRyDxxXJuYR4nsVcM2JMXtUmdiKFqFbJkvBtbsns81BI6uvRFLzuP/7TNk9PGT3SerMUn/HRUPmMCHsWfI8smAdF3b8ggbgNxrNQGO3Km/F2XZ9YDdRaAV/fP4ZsJmjloSbv06J3Si2eXGM+rsshXem3l0Qo0le4lhAGElSii924posBtPtfuIXQ3WH5ruzyx+EhbBKLMHX2z6BhBK9YYR0E9mbCgeh7nhRY8DN5WUJUmiyMII4owaoH4AWemX0OY8sNRo6gFxDer4rAvGVZkaoGDeSRSVyVNsdkTfnA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -74,15 +74,16 @@ Received: from DS0PR11MB7529.namprd11.prod.outlook.com (2603:10b6:8:141::20)
  by SN7PR11MB6875.namprd11.prod.outlook.com (2603:10b6:806:2a6::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.29; Mon, 4 Nov
- 2024 06:58:22 +0000
+ 2024 07:01:03 +0000
 Received: from DS0PR11MB7529.namprd11.prod.outlook.com
  ([fe80::d244:15cd:1060:941a]) by DS0PR11MB7529.namprd11.prod.outlook.com
  ([fe80::d244:15cd:1060:941a%6]) with mapi id 15.20.8114.028; Mon, 4 Nov 2024
- 06:58:22 +0000
-Message-ID: <8640dcb7-1196-4935-82f2-136f66379c29@intel.com>
-Date: Mon, 4 Nov 2024 15:02:53 +0800
+ 07:01:02 +0000
+Message-ID: <121cdb54-fa7e-4f95-9468-edbd01dfc10f@intel.com>
+Date: Mon, 4 Nov 2024 15:05:36 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 06/17] intel_iommu: Implement stage-1 translation
+Subject: Re: [PATCH v4 10/17] intel_iommu: Process PASID-based iotlb
+ invalidation
 To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
 CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
@@ -93,110 +94,110 @@ CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
  "nicolinc@nvidia.com" <nicolinc@nvidia.com>, "joao.m.martins@oracle.com"
  <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
  <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
+ "Peng, Chao P" <chao.p.peng@intel.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, "Richard
+ Henderson" <richard.henderson@linaro.org>, Eduardo Habkost
+ <eduardo@habkost.net>
 References: <20240930092631.2997543-1-zhenzhong.duan@intel.com>
- <20240930092631.2997543-7-zhenzhong.duan@intel.com>
- <750c9440-b787-4500-b039-a4827e5d7d20@intel.com>
- <SJ0PR11MB6744A33C0CB281D832E809EA92512@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <20240930092631.2997543-11-zhenzhong.duan@intel.com>
+ <ca5e5eed-ea6b-4e74-beaf-990ba8ca5f07@intel.com>
+ <SJ0PR11MB6744981BA2E527F9F6E7959192512@SJ0PR11MB6744.namprd11.prod.outlook.com>
 Content-Language: en-US
 From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <SJ0PR11MB6744A33C0CB281D832E809EA92512@SJ0PR11MB6744.namprd11.prod.outlook.com>
+In-Reply-To: <SJ0PR11MB6744981BA2E527F9F6E7959192512@SJ0PR11MB6744.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI2PR04CA0009.apcprd04.prod.outlook.com
- (2603:1096:4:197::8) To DS0PR11MB7529.namprd11.prod.outlook.com
+X-ClientProxiedBy: SI2P153CA0027.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:4:190::22) To DS0PR11MB7529.namprd11.prod.outlook.com
  (2603:10b6:8:141::20)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DS0PR11MB7529:EE_|SN7PR11MB6875:EE_
-X-MS-Office365-Filtering-Correlation-Id: f9ccb34c-2435-4fb7-e51d-08dcfc9e1226
+X-MS-Office365-Filtering-Correlation-Id: 56ad9517-5730-427c-5745-08dcfc9e71dc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?cndZSjNJb1Exa0lZRE5SOTVrL0hvdmc5NTYwVEsxYy9BN2FNUGVqcHhzVHNE?=
- =?utf-8?B?anQ2amVNN0taODNDUU5OSlpQd2FLQnhiOG1ob0J4Y3BsUHNSempZeXM1N2o0?=
- =?utf-8?B?OEtaNmtvWC9lT2EwSWVRS3RuaVNOcmlDS0hBYUNLOUVSSmx5S0tvaW5qRldm?=
- =?utf-8?B?UmVqSnd4cXdWckhIVklhWlJsUGdBenpRaUJqaGF3a25TWkVMQWpiUUJTRUhF?=
- =?utf-8?B?RVg1OVZTaEtVeElWYVN0N2dCamZQcm1TV3VQOXhDaDA0N09PUnZURTRjZ3c5?=
- =?utf-8?B?V2dzbG1uTWpXVnpFTVhKLzZKOGRmUXpNU3hhTUh3cjBMbWQ5cE1GN0pVVHNn?=
- =?utf-8?B?RDNvUmltWWphYjlhVFF0OUVDVmRsUmMrcVI3MHdnZWhWYkR1KytaVVZyUHlm?=
- =?utf-8?B?b0pndml5UjY3NENTOEVnNlMrU0NmVWpFdWN2TFRkeFZJNHJoWDNqZlc3eFZR?=
- =?utf-8?B?SWhQM0V1Mm5FYlRyaEdsdVlGdFhrdWVHMENYc1R5dDFGRFpGZlJhQStjOVM1?=
- =?utf-8?B?cHZ1VGlmZzdsU3BnVWk2QnFQOHh1SmpSTDRzcHlhQmRRdWU5alQ2a3lyemIz?=
- =?utf-8?B?dDJkYlBxR0pudEVuVXBKL2pWQ0RwTmpEN3NFWTl5Ly9TTDQvRHpXc3NXbmx2?=
- =?utf-8?B?cDRHMUJYKzB6SXI1NUVwV1AyM3hYNGluS3NIWkhUUDB1bnptVDNZcyttL2xV?=
- =?utf-8?B?TjNkZ2VEbUJvRm5lUnlTRVM4NDBESzQrSEVBY2NYbnJkTGcxTjRIUk5VeURP?=
- =?utf-8?B?UHhMZDBCb3JscStrMGE1aE9xVlBTZ2MrRmYxMUg5SnhRQW52TGIxaGZBcHlr?=
- =?utf-8?B?TE9ZOENtUjZpVWNNOVcrb3ZleXc5blFmUWlpMCtDcXVRa053QXlFS0J4cngz?=
- =?utf-8?B?YVhxY0czM05Ba0ZCNzlqQVdaYkI2QUg4TWtqTXlQRERFamR3YTJYaWpHYm1K?=
- =?utf-8?B?SkN5cFJnQ0xybE8yVE1TY2VUUmU3K08vZVRMZEwyekhpY016RGhTbVRrQzJV?=
- =?utf-8?B?UFlHdWhISkVCdmpKdTBpMVF3YkMrQlJQS3pRZ2dGZ09iVkZyWXVVajhHeEN2?=
- =?utf-8?B?ZjNzVzRaL1IyVEZHNXNXbFo4SVpjalNKN2N0SEh6OG1acUR6ZVVHeUNGV25J?=
- =?utf-8?B?NzNSNDFHWTMrZ1ZSakplalZBQmx4Mlg3Q2VsYWErZVMwZ2V3RENjYjFQTW1O?=
- =?utf-8?B?WXFSWGU2L0lndHNYMlk2ZG90SmkrWWxiRjlrUFk0cXVyRWFiZUYyVjVEaTdy?=
- =?utf-8?B?c3hIMlBlRGowSlV6LytPYUl1NktXQTdScWxEL3ZrOWllTUtBdkY3SXlBUEJz?=
- =?utf-8?B?dmxTU3dEbWM5OEZoMjZkTEdXOWJWczQ0bi9jRnhDQ3VONlZkMmdNaGlWc05I?=
- =?utf-8?B?OFFYd2UwaTg3aFkxMG4vM2lLWnAyYkFQeWJpREFPaGRVZHkzYTI3VEN3UEg3?=
- =?utf-8?B?SlpyM3dBMzBST0VjWDJXUmJ1ZmhxcE81V0w3UlNmb093dHhma3hoSTVQcGxQ?=
- =?utf-8?B?dDZUd0JPQnNEVE4zVHVTbGNDWmFTTTF0ZE14bWo0bDEyODdaSndrL0gxdTV2?=
- =?utf-8?B?bVJjTGIreVJiR2E4akQ0VVdEdnRMbHpQdENKRDhlc2hoQ1BuSzR0U1dHcUpq?=
- =?utf-8?B?bUhROHh4TDlBS2RpNmlRSnkrMkdTTnZuVUpvUVpkVmFoNWRwOGRqVXhTL3U1?=
- =?utf-8?B?ODBqQVpRbVRlTzRGdXI4NEYwbTU1WTV6RFhBcjcvRXdSditnN21hVXlxNnpw?=
- =?utf-8?Q?7HeGeQuGnNbyRibJ3k=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?bXpjdEFzZWsvZVFpN2NCOVJlR3VyZ01WeWd4VlFsNC9wU2J4aE1wNnhJMEQw?=
+ =?utf-8?B?R3I1RC85cWZHR3B4SkxrT2tsVGRta25Ld3Q4QWRxa2VtY1Z4WGhqNHBsdHpv?=
+ =?utf-8?B?dllHZ2NQK3lnVElIUVI2MDJiQmlZdGNCWTgwY0NOd0JRRjRJbVo3d213TXpi?=
+ =?utf-8?B?R1BLalFKaWlRdThzSjhTM1FvV1JSdTk1TlU4a3FCL0JuZnVKMEhacWRyazdW?=
+ =?utf-8?B?MGErU2JCL1J1M1J2clB4d2UweHViSWxqU21MN3BrSWNJNHVCaW9QbEdURlNT?=
+ =?utf-8?B?d0VrTEl1L3RRY2JmbnY2c2JodE41M0FMSElSUEFua3VSSnlmbzRTRVdENjdx?=
+ =?utf-8?B?VGlPcG9jSi9GQ1VERXhPYWZRWll6YkFkNEoxUlNmR3NCV2xhWHpVNGMzZG9j?=
+ =?utf-8?B?WDhia3pZd09MRWNiUXBzcVFVM21EWWJtYlZVMHQ1ZXZadFZJRVg0RmFtS3o2?=
+ =?utf-8?B?bUVMWjBzV3VYYU5HTVBEa1dBN0E3ejYwek0zdHZldVlnektlS3JEOGJteGtw?=
+ =?utf-8?B?R1JxY2JzVHgzclU5cU1iZ1diRGpweFAxenR2cE9aU1M2UDhXZEEyRHBIOWpo?=
+ =?utf-8?B?NUpteFpyTFl4QnBsQjlack9rOVZBWW95ZWVKVVNIeWdtSmFma2wxd0pBcW9X?=
+ =?utf-8?B?KzNIa2kwVWV5aWl1bHIwd0d4aWdRakZ0NHF1Q0o3VG43ZGlFOHhkVlZyU1hs?=
+ =?utf-8?B?eTRaaVAxM1NwSTJTNlVuVFpDaGFBUzNydGxaMWpzQmR0NFJpZFozL0pKa0Ru?=
+ =?utf-8?B?Q1BXUlZmWVhYOU5iRUlZdVpzTVhpSmZCUE1TQ3U0SStlRy9pV1g0YWJ3M3hv?=
+ =?utf-8?B?T3JrTWdGUEI1WlZMbGkwOHFOZ25PVnRIU3pCQmJXczZPSW5YV2d6eTNMa3J3?=
+ =?utf-8?B?OXRHcFlBZk9seVNBOVIyYWFNaFVvSVcxenN1bXlsM3J3T2VoTzdHcGZiVWNn?=
+ =?utf-8?B?RGsxUEQxaEF6bTl3Z0t2WDRZcUtHNlVYQWgwSTl3ZUdZWlRCc1ZlcFhpVHQr?=
+ =?utf-8?B?YlEwVC9zSzN2ckZHbVZvKyt3d2ttSGR3dEJCdmFIengvL00wOU0xK21HMjB1?=
+ =?utf-8?B?L2M2cm5CU0VaYThjb29TaGJ4dFNvRzViMGZMUHNTVnYwRUhZRE9wSG5MbnA2?=
+ =?utf-8?B?dFBlbnphaCtEcEFoVks1TDVRMzBoRjFVNC83Z3RWZm9qS1RwcERIYXFNUVc2?=
+ =?utf-8?B?SWpkdUdXU04ydkNXdGlMWk1QUnBpTExMTEZYcjVXak5HMk9IV0lyc3FvRHkz?=
+ =?utf-8?B?TGdwcWxhS2RhbUpkVTU1QVRwbURieTFPaTdOc2UyQXNhYUFhQzJZTnR1Q0Fw?=
+ =?utf-8?B?dzR3bjFsNDZheDNGZ2hXUXJyUGFLUHVrY0docTFmMVVtUENEY1VUdUdpUGhj?=
+ =?utf-8?B?b0djd2VQclgrUnNHYm02aUU0bkVvVzVkaGNzZDcvdEEwZHFVUjdJZi9Mb2xZ?=
+ =?utf-8?B?elAycTZKYUlEVUFKTThnQXBsNFZFOTJESlJHTEU5TExJR0JVelk4cjUydUo4?=
+ =?utf-8?B?cUhHRHNJUnB0Q0JsbzBRSzBtT2VHWGRnTWZxOHlnWmk0eU9SWVhiVUFIV1dw?=
+ =?utf-8?B?WmZzVlVZRE5pcFJsN2lZQ2NMQzA1NVpHYndNVlZCaW1QWTlwbW9BODYxK3BY?=
+ =?utf-8?B?aUJheVZFQ0M2NnNCS2l4bkloTVBZaHNCaE1rK0dYQjd2TUJQNnlTSnFSSFRV?=
+ =?utf-8?B?aVlnWXFnd1FnTlphQkM1TUdjQlJvZ21TZUFqZHBObzR3WUd1UWQ3Ykp0aTlo?=
+ =?utf-8?Q?yRqyGpudGGZ1+lo/7st2xvpYNFQIpp2DIyd/RGJ?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:DS0PR11MB7529.namprd11.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(376014)(7416014)(1800799024); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dVpxbkRzVTdRK2lGQUppclY3RHRmV2xHaThXRUhhbkYyV0Y2SURxdkxIR2pV?=
- =?utf-8?B?b1ZqTjRPK0tDR3N3UjlCOThsZjliYS9oK3RuZVI1dmRsRGZib1hEVGpSODZw?=
- =?utf-8?B?bFJZbFhxL3FDWmhXb0kyY3h4OHYxNFdCYS9ackVrVVZteVg0b1hTQ1l5aXlr?=
- =?utf-8?B?OG4ycWtLRU5rVVdIdDY0NWViL0Q2ZHBZQkkrLzJqN1BsUGRJVXdEby84NnF0?=
- =?utf-8?B?a044YUpwRUNaOWNXcVNhVmN3MHNFb0RabmZHa0dMY3JnWnc3UnRSM05SaXFN?=
- =?utf-8?B?ZlI1dzZZSVZiSmhWOUV0VzE0ZVk2NFJ1V0oyNU9kOFNreUxKSjBCMUJ5cEx6?=
- =?utf-8?B?WnpSOExPakFMYThma29pM3FHdzVmUGFCRktYbkFtakRKQlNwSEp3eW9jOGd4?=
- =?utf-8?B?a0Vab0tVbFN6Zi9oSzdxTUZuYWxtRnFTdXZEeDRzTkpXWm5LR0lZVHlCdlpQ?=
- =?utf-8?B?QnZKR3FFQ25IQld6VUZCc3ZsSkFsVnVqN3gxcGl5M2ZtUG1YYndTUHJVLzdx?=
- =?utf-8?B?bjloaEpQcjNDd0RDS2hKYTVUUDF6WVJpZEYrQTdqdDkrdlNVbFFlcHlNcTNW?=
- =?utf-8?B?SWpTcWUrMHZnaC9FeHdaUnJoNFRPT1V0Z21TbjdFUW9rSmxKem9FOXNKVWU2?=
- =?utf-8?B?bWp4dkxuZEJ5bTNFemlXbmNkWG9uU0lkQURuWlM3RW1EaXMzS1FtUHZJZ0l1?=
- =?utf-8?B?THg5UjlnMEJLK3VvWlY5Rnc0T1ozZCtZcGh4aU1rTmhGY2VMQkJBbHZrbHFS?=
- =?utf-8?B?SDl2Z1ZhMjZJOVdnbXZydkFmVFRGSDdWWkpsMTdCNmYzdlVrUnZtbTFxa0Ew?=
- =?utf-8?B?UTNNeVFUb0h6WFdLbzVzclM4ODhRbVA3STJqOHlzZ3ppVmtrWTVORGJxeWJO?=
- =?utf-8?B?dVNKVVZMSW9tZy9UQUcyODZ0L1IwbnhjV21vQ1dNQWd1K2ZLWXA4S2RHVU5Q?=
- =?utf-8?B?VUxrc0tCQlI2Z2haS0dyV2QyQ2FyZHZvTkkyOGVCdjZUTkZyb015Z1htMkt0?=
- =?utf-8?B?N012N00rWFVlL1k4dlo2WGxFWHh5Vmc2eWc2aG55MS9QM1RWTzdJMm9yUGRv?=
- =?utf-8?B?NVFvV2JjMDNqbUd6MXdUcldhTTBWZURFcEV4WmFlTnl2QUdpMDZhOHZDRkkv?=
- =?utf-8?B?WlNCYzVQUTRORXNqWSt4MGFmZHB5b0N6azJVTHJ3NW9TSnpNT3dDakptaVU5?=
- =?utf-8?B?NUxNZTNEN2Rnakp1ZTdXWm01bTQxbER6NnpXNjVibkFzTEE3MUxKbjdsVVNR?=
- =?utf-8?B?dkV2ZGdYQWNQc3Z6emNXdE4zU0tQanAzVjhrYld0aCsrcVBISERaNnNCY0RZ?=
- =?utf-8?B?VWRSSmFFQ0FvQ0ZFMW9mMkp4SkJqazJLWHpUUXcxeTB1UkNvclVvTlk4Z1RQ?=
- =?utf-8?B?dzlSNHZ1WVo5M2ZYL2V5dDBTWTJEOFZJaHVwRTBmYjA4UjlBZjZBdW5NY0Jm?=
- =?utf-8?B?RTFXdjl6VnZ5dVlvRUNtcmtmaXJTclBtVmtrUllIK0xvdUF2anl6V2pCWVZt?=
- =?utf-8?B?T0ppUjRQSlU5Ty9sWktWck5JajUyaWo1L0xYOWlGUUUxWW1GanFRaE1JaFRM?=
- =?utf-8?B?a3FPTlNOTU9mWUxNKzJEZ2RmT2gvRmViS1luekdlMHpnZlZHRWlReHdaSjJJ?=
- =?utf-8?B?R1JFOVVzeXM2M2FJSmorcHBJeUg3Q0dNVHA2K2V3cC8vMlpWNVM3UFdRS1k0?=
- =?utf-8?B?QzE3K2lYV2FzSmFQUjV1SDJDKzVmbVJpeEljTUtyQTBuWHlwWUJhYTRSV3Ju?=
- =?utf-8?B?VmhyU04zMW9UYlZFZHluZ0N1bmVWMTNxd09uTHlEKzZIdUhycnVqQVl0WkhY?=
- =?utf-8?B?QStoYm51KzBVeWpSZmRIUm5qR01TMFA2eVVxbkg1R0swREcvNDlkM3dNYkJN?=
- =?utf-8?B?ZmlsRW90RFZ2bXplQkJGMytYOFFsWFZHeHlkejJxdnRIVWk3Q0I3KzdzeEx4?=
- =?utf-8?B?ZlVwY3IwR3JWMGNyOWg2cXNsM3NaTDZoRzF4aUNUQTRtdktXdGxxdGRPYkt4?=
- =?utf-8?B?M0NOajlLanNqU0dxMlhxeTBuZ3h6RlpmNU1JMUJUZ0VnRTM3aU5BWm1JZ0dl?=
- =?utf-8?B?cFZ5Q1ZkNnI3K3NQbzR1UmZyeEVTZDJ6dy9qc1YvK2dZVGN0YkZ0eVFrT1pp?=
- =?utf-8?Q?Mm9YptACQDjC9tqKuqFBzfFyl?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: f9ccb34c-2435-4fb7-e51d-08dcfc9e1226
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OTRicnZXOURiczRlNU9YaFN5LzZFRHJGbUMyaG9jKzNHcXh2RWk0cnlCZmVC?=
+ =?utf-8?B?WitBU1pnaklJOWM5dTVUa3ViUGhxNUFIbzZ0WnhOb1h2TkF3dTBjUU0xRHRw?=
+ =?utf-8?B?VlFQU2NSMDNXOTlCWThBVitjdTFETzZlRDFOV3h3OGs2VGRSaVEzM09pQ0xk?=
+ =?utf-8?B?T1h1N055dmxQUXowd2VKc2FFY1pQa25Fd3lKeXNIbzN0Q3JKakhsWUd1Nyt5?=
+ =?utf-8?B?cUJoK2R6Rjd6eVdhb2JtcGRGUUJUczB3R3dPU2tXSTJvTzZvY25TRTc5T052?=
+ =?utf-8?B?WGtnNXRIaXNGaGFneTc1M2ZXa3U2Qmx4V3RhRldjN2FwMEg4MmoyMmt0Q2dy?=
+ =?utf-8?B?bHhOMmRjT2Zvc1lVL08xWUh6SnluSkRxUDJYZUxQSmFPWEliSVE5V3JqTHZS?=
+ =?utf-8?B?Q00vYmM0YVNwaGpkMnFRcm9lNHoxR04waGxoZFlwajRmcE9sc0cxNElXMHFW?=
+ =?utf-8?B?WmFlcXhadjVqYnVkcnl2UllONVk2L2M0QThuWnJaMkZSVTVQUEVUdThFbU8y?=
+ =?utf-8?B?UGJZeSthcTdDK3UyLytzNVEzL0pJSVdHK3hKT1JmaWZyRmJqUWNXSEdmUU94?=
+ =?utf-8?B?Y0tHMmV5Q3JoMk5kdjNJbEFrMWs5QUlCRjJOQzkrT0svNXppVWFTanlVa05o?=
+ =?utf-8?B?a3gwcU00eFNTbnQ4OERWc053L0pXOG9ITHVIbSt1SXBrVVJBbUl4cW8yUHM4?=
+ =?utf-8?B?NjJBRk9jaEJ6c2Q0ZWppQktWbVNGcTc4Z091UWoxODBMVGVxQXZOcXlpdm4w?=
+ =?utf-8?B?ZzZ4eUVhNlhJa01leC9RVkdBdGhlenNWNExyWEpEWXpFb0gwdWFncC83ZHAz?=
+ =?utf-8?B?RUhVUytPU3pZczAwVHhJSnprVExkMWs2dEM0cEtJanh5bG5vU0JJNUNUazcx?=
+ =?utf-8?B?ZE1DZ1ZJTWZvcmxlL1VJRHJxL0syNDNqL2tKWERwRGZ0cVM2aFVQekxBNE52?=
+ =?utf-8?B?QTFCSCtGZ1hRQWdMTFRFT0Vsd2pxWWY5MXMrOGZPR2lyMElJamRxcjAwQXBj?=
+ =?utf-8?B?M25PSHQvdEJubUc5SDBGUGlCMzU4dHVLaU40SzFOU1R4SkowTkJoT0l2UjRQ?=
+ =?utf-8?B?MGRMbWNtVG1HRWh0bWYzVisxcFJpMUQ1N0RLeWJqNCtWUXlIUHJqdnZLVjZl?=
+ =?utf-8?B?akRjcjBna0ZlbHJzS2xtMklkcFZyUVRaQnNDU0lQaFU3RGxvTVhUdnBEek1C?=
+ =?utf-8?B?eWcrMGJFV0ltR3BoYkM5dnFoUTBOQmtNK3dmZWZwTDY1OXFYZWh2ZzFqT05G?=
+ =?utf-8?B?M3ZncmZCaE9Nc3hxOFhQQ1B2QVBRcVVsV2dTVmU0TUt0OWdSOHNEMzZib1JZ?=
+ =?utf-8?B?Mkh2SWxrTFdlM29kWkt6SXRQRnhPbEc3T2p5SWkzdHk4ajk4d2ttNzh3UW5F?=
+ =?utf-8?B?REIzUytUdjBuNHhidjNMWWw3ZHoxU0kzK0lpMERRUDJpbFg2UHRNbHlTYU9K?=
+ =?utf-8?B?TmNETWV4NTdNaC9tL085dnNxTlZ3M2hKYm84djh1OUJpdVBCNHNWOEh6VE8z?=
+ =?utf-8?B?dFpFclJYSzgxODRCQ25iMFgyblpzdGtNNHArRnp2VmlZNDV6K0RkdEVDTTdN?=
+ =?utf-8?B?T3hHQ1RCd3VlWmlIc0xhbEorNFk2WHo4cmJUMHZwaUJrZngwcGloQWlvNGhY?=
+ =?utf-8?B?cXZIcDFDRlgrMVUxL0kvalhYTUxiL2pqdGxvRkQ3RUVoMkhYQWRndWhDLzla?=
+ =?utf-8?B?dXp1ODlRVWFsVWJyaXQ3WnlIRHoyN0d0UmlyYnQvRUFlWUJNczd1Q1Fod09i?=
+ =?utf-8?B?ZDY3eUpMQUhxSDIwSE55WTYwYSt6VGVKUGJlL1ZBRG5KN2sxMTVYdzlwb3R6?=
+ =?utf-8?B?K0hzVEpPd0xOakJsei9sN0JCWjZwMnNiTUZxcmFWcElrR1BtOERDckJpVmIz?=
+ =?utf-8?B?bEgxaDA0N1FtQlZFeThEQ3k1TGd5bmJoSDl4c01yN3BGdjJXcWN0NUJCZmNQ?=
+ =?utf-8?B?aTVTaEdWQXArODQ3eEYreXJ6UzNvSzNvQURlR213MEd6ZVA5dDZIYi9HV0ZN?=
+ =?utf-8?B?WUs4SGJjdWhIOER2cURrRnRNRXUrNEYweVRrclExc2NIQ0phSytBRitMUENi?=
+ =?utf-8?B?cWo5Mmc3YjlleFBEcWtRZVgweHI1cGU2TkY1Mk9TeFBxSWRoZHBONUVCS1hF?=
+ =?utf-8?Q?YTGVBWV9O6Z6lm8d7HiUlhoc3?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 56ad9517-5730-427c-5745-08dcfc9e71dc
 X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7529.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2024 06:58:22.0539 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2024 07:01:02.8076 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Fey/1Ajr869mI+Yo3E4+NF8dZ1xhLMMU0WXmzZdjxq3QDwAdjHOAL1JqKfzSo9NOJadxThZ06nNwZdK+1qFERQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: K09ah5F8jrmS+D+InqKN4OTxkJ+DctP+bLqaNsJejUsuECrRY2HEDgY1fh3bqZFLKTF015xQ0GSjFo+MsrOXfg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB6875
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=yi.l.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=yi.l.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
@@ -221,337 +222,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/11/4 11:05, Duan, Zhenzhong wrote:
+On 2024/11/4 13:40, Duan, Zhenzhong wrote:
 > 
 > 
 >> -----Original Message-----
 >> From: Liu, Yi L <yi.l.liu@intel.com>
->> Sent: Sunday, November 3, 2024 10:22 PM
->> Subject: Re: [PATCH v4 06/17] intel_iommu: Implement stage-1 translation
+>> Sent: Monday, November 4, 2024 10:51 AM
+>> Subject: Re: [PATCH v4 10/17] intel_iommu: Process PASID-based iotlb
+>> invalidation
 >>
 >> On 2024/9/30 17:26, Zhenzhong Duan wrote:
->>> From: Yi Liu <yi.l.liu@intel.com>
+>>> PASID-based iotlb (piotlb) is used during walking Intel
+>>> VT-d stage-1 page table.
 >>>
->>> This adds stage-1 page table walking to support stage-1 only
->>> translation in scalable modern mode.
+>>> This emulates the stage-1 page table iotlb invalidation requested
+>>> by a PASID-based IOTLB Invalidate Descriptor (P_IOTLB).
 >>>
 >>> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
->>> Co-developed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
->>> Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
->>> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
 >>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>> Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
 >>> Acked-by: Jason Wang <jasowang@redhat.com>
 >>> ---
->>>    hw/i386/intel_iommu_internal.h |  24 ++++++
->>>    hw/i386/intel_iommu.c          | 143 ++++++++++++++++++++++++++++++++-
->>>    2 files changed, 163 insertions(+), 4 deletions(-)
+>>>    hw/i386/intel_iommu_internal.h |  3 +++
+>>>    hw/i386/intel_iommu.c          | 45 ++++++++++++++++++++++++++++++++++
+>>>    2 files changed, 48 insertions(+)
 >>>
 >>> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
->>> index 20fcc73938..38bf0c7a06 100644
+>>> index 4c3e75e593..20d922d600 100644
 >>> --- a/hw/i386/intel_iommu_internal.h
 >>> +++ b/hw/i386/intel_iommu_internal.h
->>> @@ -428,6 +428,22 @@ typedef union VTDInvDesc VTDInvDesc;
->>>    #define VTD_SPTE_LPAGE_L3_RSVD_MASK(aw) \
->>>            (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM))
->>>
->>> +/* Rsvd field masks for fpte */
->>> +#define VTD_FS_UPPER_IGNORED 0xfff0000000000000ULL
->>> +#define VTD_FPTE_PAGE_L1_RSVD_MASK(aw) \
->>> +        (~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
->>> +#define VTD_FPTE_PAGE_L2_RSVD_MASK(aw) \
->>> +        (~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
->>> +#define VTD_FPTE_PAGE_L3_RSVD_MASK(aw) \
->>> +        (~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
->>> +#define VTD_FPTE_PAGE_L4_RSVD_MASK(aw) \
->>> +        (0x80ULL | ~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
->>> +
->>> +#define VTD_FPTE_LPAGE_L2_RSVD_MASK(aw) \
->>> +        (0x1fe000ULL | ~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
->>> +#define VTD_FPTE_LPAGE_L3_RSVD_MASK(aw) \
->>> +        (0x3fffe000ULL | ~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
->>> +
->>>    /* Masks for PIOTLB Invalidate Descriptor */
->>>    #define VTD_INV_DESC_PIOTLB_G             (3ULL << 4)
->>>    #define VTD_INV_DESC_PIOTLB_ALL_IN_PASID  (2ULL << 4)
->>> @@ -520,6 +536,14 @@ typedef struct VTDRootEntry VTDRootEntry;
->>>    #define VTD_SM_PASID_ENTRY_AW          7ULL /* Adjusted guest-address-
->> width */
->>>    #define VTD_SM_PASID_ENTRY_DID(val)    ((val) & VTD_DOMAIN_ID_MASK)
->>>
->>> +#define VTD_SM_PASID_ENTRY_FLPM          3ULL
->>> +#define VTD_SM_PASID_ENTRY_FLPTPTR       (~0xfffULL)
->>> +
->>> +/* First Level Paging Structure */
->>> +/* Masks for First Level Paging Entry */
->>> +#define VTD_FL_P                    1ULL
->>> +#define VTD_FL_RW                   (1ULL << 1)
->>> +
->>>    /* Second Level Page Translation Pointer*/
->>>    #define VTD_SM_PASID_ENTRY_SLPTPTR     (~0xfffULL)
+>>> @@ -453,6 +453,9 @@ typedef union VTDInvDesc VTDInvDesc;
+>>>    #define VTD_INV_DESC_PIOTLB_PSI_IN_PASID  (3ULL << 4)
+>>>    #define VTD_INV_DESC_PIOTLB_DID(val)      (((val) >> 16) &
+>> VTD_DOMAIN_ID_MASK)
+>>>    #define VTD_INV_DESC_PIOTLB_PASID(val)    (((val) >> 32) & 0xfffffULL)
+>>> +#define VTD_INV_DESC_PIOTLB_AM(val)       ((val) & 0x3fULL)
+>>> +#define VTD_INV_DESC_PIOTLB_IH(val)       (((val) >> 6) & 0x1)
+>>> +#define VTD_INV_DESC_PIOTLB_ADDR(val)     ((val) & ~0xfffULL)
+>>>    #define VTD_INV_DESC_PIOTLB_RSVD_VAL0     0xfff000000000f1c0ULL
+>>>    #define VTD_INV_DESC_PIOTLB_RSVD_VAL1     0xf80ULL
 >>>
 >>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
->>> index 6f2414898c..56d5933e93 100644
+>>> index 46bde1ad40..289278ce30 100644
 >>> --- a/hw/i386/intel_iommu.c
 >>> +++ b/hw/i386/intel_iommu.c
->>> @@ -48,6 +48,8 @@
->>>
->>>    /* pe operations */
->>>    #define VTD_PE_GET_TYPE(pe) ((pe)->val[0] & VTD_SM_PASID_ENTRY_PGTT)
->>> +#define VTD_PE_GET_FL_LEVEL(pe) \
->>> +    (4 + (((pe)->val[2] >> 2) & VTD_SM_PASID_ENTRY_FLPM))
->>>    #define VTD_PE_GET_SL_LEVEL(pe) \
->>>        (2 + (((pe)->val[0] >> 2) & VTD_SM_PASID_ENTRY_AW))
->>>
->>> @@ -755,6 +757,11 @@ static inline bool
->> vtd_is_sl_level_supported(IntelIOMMUState *s, uint32_t level)
->>>               (1ULL << (level - 2 + VTD_CAP_SAGAW_SHIFT));
+>>> @@ -322,6 +322,28 @@ static gboolean vtd_hash_remove_by_page(gpointer
+>> key, gpointer value,
+>>>        return (entry->gfn & info->mask) == gfn || entry->gfn == gfn_tlb;
 >>>    }
 >>>
->>> +static inline bool vtd_is_fl_level_supported(IntelIOMMUState *s, uint32_t
->> level)
+>>> +static gboolean vtd_hash_remove_by_page_piotlb(gpointer key, gpointer
+>> value,
+>>> +                                               gpointer user_data)
 >>> +{
->>> +    return level == VTD_PML4_LEVEL;
->>> +}
->>> +
->>>    /* Return true if check passed, otherwise false */
->>>    static inline bool vtd_pe_type_check(X86IOMMUState *x86_iommu,
->>>                                         VTDPASIDEntry *pe)
->>> @@ -838,6 +845,11 @@ static int
->> vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
->>>                return -VTD_FR_PASID_TABLE_ENTRY_INV;
->>>        }
->>>
->>> +    if (pgtt == VTD_SM_PASID_ENTRY_FLT &&
->>> +        !vtd_is_fl_level_supported(s, VTD_PE_GET_FL_LEVEL(pe))) {
->>> +            return -VTD_FR_PASID_TABLE_ENTRY_INV;
->>> +    }
->>> +
->>>        return 0;
->>>    }
->>>
->>> @@ -973,7 +985,11 @@ static uint32_t vtd_get_iova_level(IntelIOMMUState
->> *s,
->>>
->>>        if (s->root_scalable) {
->>>            vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
->>> -        return VTD_PE_GET_SL_LEVEL(&pe);
->>> +        if (s->scalable_modern) {
->>> +            return VTD_PE_GET_FL_LEVEL(&pe);
->>> +        } else {
->>> +            return VTD_PE_GET_SL_LEVEL(&pe);
->>> +        }
->>>        }
->>>
->>>        return vtd_ce_get_level(ce);
->>> @@ -1060,7 +1076,11 @@ static dma_addr_t
->> vtd_get_iova_pgtbl_base(IntelIOMMUState *s,
->>>
->>>        if (s->root_scalable) {
->>>            vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
->>> -        return pe.val[0] & VTD_SM_PASID_ENTRY_SLPTPTR;
->>> +        if (s->scalable_modern) {
->>> +            return pe.val[2] & VTD_SM_PASID_ENTRY_FLPTPTR;
->>> +        } else {
->>> +            return pe.val[0] & VTD_SM_PASID_ENTRY_SLPTPTR;
->>> +        }
->>>        }
->>>
->>>        return vtd_ce_get_slpt_base(ce);
->>> @@ -1862,6 +1882,104 @@ out:
->>>        trace_vtd_pt_enable_fast_path(source_id, success);
->>>    }
->>>
->>> +/*
->>> + * Rsvd field masks for fpte:
->>> + *     vtd_fpte_rsvd 4k pages
->>> + *     vtd_fpte_rsvd_large large pages
->>> + *
->>> + * We support only 4-level page tables.
->>> + */
->>> +#define VTD_FPTE_RSVD_LEN 5
->>> +static uint64_t vtd_fpte_rsvd[VTD_FPTE_RSVD_LEN];
->>> +static uint64_t vtd_fpte_rsvd_large[VTD_FPTE_RSVD_LEN];
->>> +
->>> +static bool vtd_flpte_nonzero_rsvd(uint64_t flpte, uint32_t level)
->>> +{
->>> +    uint64_t rsvd_mask;
+>>> +    VTDIOTLBEntry *entry = (VTDIOTLBEntry *)value;
+>>> +    VTDIOTLBPageInvInfo *info = (VTDIOTLBPageInvInfo *)user_data;
+>>> +    uint64_t gfn = (info->addr >> VTD_PAGE_SHIFT_4K) & info->mask;
+>>> +    uint64_t gfn_tlb = (info->addr & entry->mask) >> VTD_PAGE_SHIFT_4K;
 >>> +
 >>> +    /*
->>> +     * We should have caught a guest-mis-programmed level earlier,
->>> +     * via vtd_is_fl_level_supported.
+>>> +     * According to spec, PASID-based-IOTLB Invalidation in page granularity
+>>> +     * doesn't invalidate IOTLB entries caching second-stage (PGTT=010b)
+>>> +     * or pass-through (PGTT=100b) mappings. Nested isn't supported yet,
+>>> +     * so only need to check first-stage (PGTT=001b) mappings.
 >>> +     */
->>> +    assert(level < VTD_FPTE_RSVD_LEN);
->>> +    /*
->>> +     * Zero level doesn't exist. The smallest level is VTD_PT_LEVEL=1 and
->>> +     * checked by vtd_is_last_pte().
->>> +     */
->>> +    assert(level);
->>> +
->>> +    if ((level == VTD_PD_LEVEL || level == VTD_PDP_LEVEL) &&
->>> +        (flpte & VTD_PT_PAGE_SIZE_MASK)) {
->>> +        /* large page */
->>> +        rsvd_mask = vtd_fpte_rsvd_large[level];
->>> +    } else {
->>> +        rsvd_mask = vtd_fpte_rsvd[level];
+>>> +    if (entry->pgtt != VTD_SM_PASID_ENTRY_FLT) {
+>>> +        return false;
 >>> +    }
 >>> +
->>> +    return flpte & rsvd_mask;
+>>> +    return entry->domain_id == info->domain_id && entry->pasid == info->pasid
+>> &&
+>>> +           ((entry->gfn & info->mask) == gfn || entry->gfn == gfn_tlb);
 >>> +}
 >>> +
->>> +static inline bool vtd_flpte_present(uint64_t flpte)
->>> +{
->>> +    return !!(flpte & VTD_FL_P);
->>> +}
->>> +
->>> +/*
->>> + * Given the @iova, get relevant @flptep. @flpte_level will be the last level
->>> + * of the translation, can be used for deciding the size of large page.
->>> + */
->>> +static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
->>> +                             uint64_t iova, bool is_write,
->>> +                             uint64_t *flptep, uint32_t *flpte_level,
->>> +                             bool *reads, bool *writes, uint8_t aw_bits,
->>> +                             uint32_t pasid)
->>> +{
->>> +    dma_addr_t addr = vtd_get_iova_pgtbl_base(s, ce, pasid);
->>> +    uint32_t level = vtd_get_iova_level(s, ce, pasid);
->>> +    uint32_t offset;
->>> +    uint64_t flpte;
->>> +
->>> +    while (true) {
->>> +        offset = vtd_iova_level_offset(iova, level);
->>> +        flpte = vtd_get_pte(addr, offset);
->>> +
->>> +        if (flpte == (uint64_t)-1) {
->>> +            if (level == vtd_get_iova_level(s, ce, pasid)) {
->>> +                /* Invalid programming of context-entry */
->>> +                return -VTD_FR_CONTEXT_ENTRY_INV;
->>> +            } else {
->>> +                return -VTD_FR_PAGING_ENTRY_INV;
->>> +            }
->>> +        }
->>> +        if (!vtd_flpte_present(flpte)) {
->>> +            *reads = false;
->>> +            *writes = false;
->>> +            return -VTD_FR_PAGING_ENTRY_INV;
->>> +        }
->>> +        *reads = true;
->>> +        *writes = (*writes) && (flpte & VTD_FL_RW);
->>> +        if (is_write && !(flpte & VTD_FL_RW)) {
->>> +            return -VTD_FR_WRITE;
->>> +        }
->>> +        if (vtd_flpte_nonzero_rsvd(flpte, level)) {
->>> +            error_report_once("%s: detected flpte reserved non-zero "
->>> +                              "iova=0x%" PRIx64 ", level=0x%" PRIx32
->>> +                              "flpte=0x%" PRIx64 ", pasid=0x%" PRIX32 ")",
->>> +                              __func__, iova, level, flpte, pasid);
->>> +            return -VTD_FR_PAGING_ENTRY_RSVD;
->>> +        }
->>> +
->>> +        if (vtd_is_last_pte(flpte, level)) {
->>> +            *flptep = flpte;
->>> +            *flpte_level = level;
->>> +            return 0;
->>> +        }
->>> +
->>> +        addr = vtd_get_pte_addr(flpte, aw_bits);
->>> +        level--;
->>> +    }
+>>>    /* Reset all the gen of VTDAddressSpace to zero and set the gen of
+>>>     * IntelIOMMUState to 1.  Must be called with IOMMU lock held.
+>>>     */
+>>> @@ -2884,11 +2906,30 @@ static void
+>> vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
+>>>        }
+>>>    }
+>>>
+>>> +static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t
+>> domain_id,
+>>> +                                       uint32_t pasid, hwaddr addr, uint8_t am,
+>>> +                                       bool ih)
 >>
->> As I replied in last version, it should check the ir range for the
->> translation result. I saw your reply, but that only covers the input
->> address, my comment is about the output addr.
->>
->> [1]
->> https://lore.kernel.org/qemu-
->> devel/SJ0PR11MB6744D2B572D278DAF8BF267692762@SJ0PR11MB6744.nampr
->> d11.prod.outlook.com/
+>> @ih is not used, perhaps you can drop it. Seems like we don't cache paging
+>> structure, hence ih can be ignored so far. Besides this, the patch looks
+>> good to me.
 > 
-> Oh, I see, you are right! As the check for ir range is common for both stage-2 and stage-1,
-> I plan to move it to common place with a separate patch like below, let me know if you
-> prefer to have separate check for both stage-2 and stage-1.
+> OK, will drop it. But nesting series needs it, see below.
+> I'll drop it in this series and add back in nesting series.
 
-checking it in the common place is ok.
-
-> 
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -1235,7 +1235,6 @@ static int vtd_iova_to_slpte(IntelIOMMUState *s, VTDContextEntry *ce,
->       uint32_t offset;
->       uint64_t slpte;
->       uint64_t access_right_check;
-> -    uint64_t xlat, size;
-> 
->       if (!vtd_iova_sl_range_check(s, iova, ce, aw_bits, pasid)) {
->           error_report_once("%s: detected IOVA overflow (iova=0x%" PRIx64 ","
-> @@ -1288,28 +1287,7 @@ static int vtd_iova_to_slpte(IntelIOMMUState *s, VTDContextEntry *ce,
->           level--;
->       }
-> 
-> -    xlat = vtd_get_pte_addr(*slptep, aw_bits);
-> -    size = ~vtd_pt_level_page_mask(level) + 1;
-> -
-> -    /*
-> -     * From VT-d spec 3.14: Untranslated requests and translation
-> -     * requests that result in an address in the interrupt range will be
-> -     * blocked with condition code LGN.4 or SGN.8.
-> -     */
-> -    if ((xlat > VTD_INTERRUPT_ADDR_LAST ||
-> -         xlat + size - 1 < VTD_INTERRUPT_ADDR_FIRST)) {
-> -        return 0;
-> -    } else {
-> -        error_report_once("%s: xlat address is in interrupt range "
-> -                          "(iova=0x%" PRIx64 ", level=0x%" PRIx32 ", "
-> -                          "slpte=0x%" PRIx64 ", write=%d, "
-> -                          "xlat=0x%" PRIx64 ", size=0x%" PRIx64 ", "
-> -                          "pasid=0x%" PRIx32 ")",
-> -                          __func__, iova, level, slpte, is_write,
-> -                          xlat, size, pasid);
-> -        return s->scalable_mode ? -VTD_FR_SM_INTERRUPT_ADDR :
-> -                                  -VTD_FR_INTERRUPT_ADDR;
-> -    }
-> +    return 0;
->   }
-> 
->   typedef int (*vtd_page_walk_hook)(const IOMMUTLBEvent *event, void *private);
-> @@ -2201,6 +2179,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
->       uint8_t access_flags, pgtt;
->       bool rid2pasid = (pasid == PCI_NO_PASID) && s->root_scalable;
->       VTDIOTLBEntry *iotlb_entry;
-> +    uint64_t xlat, size;
-> 
->       /*
->        * We have standalone memory region for interrupt addresses, we
-> @@ -2312,6 +2291,29 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
->                                      &reads, &writes, s->aw_bits, pasid);
->           pgtt = VTD_SM_PASID_ENTRY_SLT;
->       }
-> +    if (!ret_fr) {
-> +        xlat = vtd_get_pte_addr(pte, s->aw_bits);
-> +        size = ~vtd_pt_level_page_mask(level) + 1;
-> +
-> +        /*
-> +         * From VT-d spec 3.14: Untranslated requests and translation
-> +         * requests that result in an address in the interrupt range will be
-> +         * blocked with condition code LGN.4 or SGN.8.
-> +         */
-> +        if ((xlat <= VTD_INTERRUPT_ADDR_LAST &&
-> +             xlat + size - 1 >= VTD_INTERRUPT_ADDR_FIRST)) {
-> +            error_report_once("%s: xlat address is in interrupt range "
-> +                              "(iova=0x%" PRIx64 ", level=0x%" PRIx32 ", "
-> +                              "pte=0x%" PRIx64 ", write=%d, "
-> +                              "xlat=0x%" PRIx64 ", size=0x%" PRIx64 ", "
-> +                              "pasid=0x%" PRIx32 ")",
-> +                              __func__, addr, level, pte, is_write,
-> +                              xlat, size, pasid);
-> +            ret_fr = s->scalable_mode ? -VTD_FR_SM_INTERRUPT_ADDR :
-> +                                        -VTD_FR_INTERRUPT_ADDR;
-> +        }
-> +    }
-> +
->       if (ret_fr) {
->           vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
->                            addr, is_write, pasid != PCI_NO_PASID, pasid);
+yep, you can add it back when it's going to be used. :)
 
 -- 
 Regards,
