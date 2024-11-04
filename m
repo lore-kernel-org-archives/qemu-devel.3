@@ -4,77 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107CBD1CA0C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 23:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E03AD1CA0C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 23:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8692-0005kM-Oi; Mon, 04 Nov 2024 18:06:00 -0500
+	id 1t86BU-0006VY-6e; Mon, 04 Nov 2024 18:08:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8690-0005jm-LI; Mon, 04 Nov 2024 18:05:58 -0500
-Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
+ id 1t86BT-0006VL-1p; Mon, 04 Nov 2024 18:08:31 -0500
+Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t868z-0008Sa-9g; Mon, 04 Nov 2024 18:05:58 -0500
-Received: by mail-qk1-x733.google.com with SMTP id
- af79cd13be357-7b1488fde46so386564285a.2; 
- Mon, 04 Nov 2024 15:05:56 -0800 (PST)
+ id 1t86BR-0000DN-LW; Mon, 04 Nov 2024 18:08:30 -0500
+Received: by mail-ua1-x92c.google.com with SMTP id
+ a1e0cc1a2514c-851f5d3001fso1593494241.1; 
+ Mon, 04 Nov 2024 15:08:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730761555; x=1731366355; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730761708; x=1731366508; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=v7MANB0FoRxyVUOM9dZ2lrwnBCg67tKUbgcXwtlfdw4=;
- b=I+knGR+av4584AioYP5aCtgF5DgqO2va1D9ibs2hd5856drd+CHV3cWpCeQkQLkQBz
- lf1TtzD2OtptwVOPWbGqM+Covo+FKqpwKsu1D7eX1D9Z9Qui5WZtzxV2vB950uIZSZDt
- L7D9jiI0IXuj1smEBdBm3RWQmQDV3/naCnBqSY4HXipzhkomVGanzFSEZltxTC7KGBFV
- IMK6NdvyQtYBzRw2TPafbSd6QbeXpbGBSn7v1lQdgntiIkM8cH/ysVJ3IFzSf9n8vxnb
- ekAkDCH+yqv1x1CU5bUas3r4Dtr6FJYm5uYQaa0kkOI3CiUuqFbVZbYRdYaDgT2k6kXy
- Si8A==
+ bh=YnhmpQggdZ+78cX0KNI8tsSFl4U1Cnl27W5ZoCqJfac=;
+ b=j51C3kntvrLL8zz+dTZoX5UClmzvb4unDCSQ/KK6aZKUEM+sFioKpDvHpCfbjS+fqA
+ ObBm6Q4Uo7GOT8W66q117lGIX53yuWyjIzKJUHPxgHpkvZf+91gduli2vbBCRVSYTXxl
+ RYW3dI3G2uUQbeGGj5uiZQvQ2IYVJbdmzTMSH+D91wTaBVaQhoCI5yNX+gdtksB4YF4t
+ 47jPetJ/m3aegWNxeE1vry5wpmuP5Is+Fzm7a8LIpUSJZL5+ZkMwA8+LS9ILAabB8YoE
+ P/ae9bLOERJMAA2apr77UB6w9iyxeE1dzZ9i5xOeZOBbAuhfu4vO4p0Ego/q31cUSjyv
+ GJQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730761555; x=1731366355;
+ d=1e100.net; s=20230601; t=1730761708; x=1731366508;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=v7MANB0FoRxyVUOM9dZ2lrwnBCg67tKUbgcXwtlfdw4=;
- b=W53vUtGi0NKDARNx+cbBdNJJSVIVnDI/5nP2Q0QeywPKFKA1qqfABPEU860BOuEISx
- bekb0nhemCOtXWajI0yzCE/uSs8yAPT7K1pXQzDWPzprLBoxQOLzjlpnW8MUADRdglo+
- S8q81ZNU6a4H/PVnRl6enhnLwHhAe41dyJDx1x6tc8sQwkyGDBetF2kyifBG+iTPAvkF
- kHTzQmGnejEKogp71r1OsPazKB+nkBLGwcnEkKCTk/gozrB+I9B/bditxiwiRbhz7GOR
- 0jkkBCa0R1T+heKCsuolAAg9Xu/oeaxNhs61tmEhjAi4OE4I0imNe+3lf2N3BOlFMg7t
- tvxw==
+ bh=YnhmpQggdZ+78cX0KNI8tsSFl4U1Cnl27W5ZoCqJfac=;
+ b=mgThNpH5WJd3jSiUukHKjE1tiv/NVNpJqVM/HF5tGparxe3Z0YszmzaBT/D3xXHR6Q
+ opUQTMF7Dc7UL5nyz62frjwKAF221w/jbro5XH3YE57zJG5piqJ2Sd20r17juDjFGPZP
+ VBMILGVCY14gfYG6GUrm0Y4U7oD8/Dzk96CGlXDDxPLOQJ4BVxiWj8X4ntntc/ij+Wxu
+ sUI0n+sSsNflPfblre01F+ILpJMXFiA5qk2GiLFtgsvL5o/1A2+QmZDWgaMHo/oIVnSP
+ ywBq/EO93yTuXaZhXmc6Lonsve0fZ7t6ak8g8ThmILJVuy5GJa1X5dVI+PuTb86DRWIz
+ B4OQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZL7VhZADByQ5UnuCpPQsVKcMI2oDf7L4fIJK3oEYbuJDJlv7qjg9WZklFN4cP/Ma7zLNBh4m/gibv@nongnu.org,
- AJvYcCW1EJ6WBf9/0wTN8wAd8y+5v8UXsz6KJArUctYkUnG/+VFJSP49YshlM1xjSydags4UPU7C/XT2jEdg/A5g@nongnu.org,
- AJvYcCWO+qwH27OaaFg07+j+uAGo+b/vGCZGPdWMM08d+iq0Cl8LWjEBC3H/84Aem/A4B3VSfxoRRSURezkoHA==@nongnu.org
-X-Gm-Message-State: AOJu0Yw5woqof++lz518fhNUOr+jA8eXXUQ+mT03jmwexWOG/11BvLo9
- QX4MBkaNWyovtW3TKoTmGfDdiYY/uWNzc/xFMeLBciLrCs0HOoHv1Oc3R79+gV6KHd3puCMw6xE
- wAi4eTwuwtOLAgI9IJC0WCPEPET8=
-X-Google-Smtp-Source: AGHT+IFIfaTheuuvcvF0vo7sFE5da7dv6arCXGGGI6OdGggk5wPsifYEg3Mw3AkBrT7nQHikIYIWHp4Fe9V9/haj1Mg=
-X-Received: by 2002:a05:620a:2904:b0:7a9:a991:f6d7 with SMTP id
- af79cd13be357-7b193f4dcb4mr4731034485a.48.1730761555561; Mon, 04 Nov 2024
- 15:05:55 -0800 (PST)
+ AJvYcCVumUc3MY67DotiB8VizGjw0bnQwPH/1bq9t3VJZm5bGrLDNmLS+grJewePo2T9HKuRBbOuNzaq6iSB@nongnu.org
+X-Gm-Message-State: AOJu0YwrduU0PqDBUfvYoKEYfVHdtvcN1NN71dUMTyG9Biqv/dVysVTK
+ 6Q+TzuGPp+W/glKeGyCpCUXxYa47uM7COM+8lG33LZl0OwGVI/0uyqHlaoCN/+G92VKWoHRFzyG
+ fB7L4+kVBr1y0MJpF0stuTQ+domL+Cg==
+X-Google-Smtp-Source: AGHT+IGSxuBS5HSmHM+cwqd6tAMyqCkJyNmlQ9QvF4HLlq9H2hxKbaoULKomE/G0Yr+LQ3LTAIChI/qZWTnag3Ogsu0=
+X-Received: by 2002:a05:6102:e06:b0:4a9:a3a8:91ec with SMTP id
+ ada2fe7eead31-4a9a3a89260mr29942137.43.1730761708107; Mon, 04 Nov 2024
+ 15:08:28 -0800 (PST)
 MIME-Version: 1.0
-References: <20241104163504.305955-1-thuth@redhat.com>
-In-Reply-To: <20241104163504.305955-1-thuth@redhat.com>
+References: <20241104123839.533442-1-dbarboza@ventanamicro.com>
+ <20241104123839.533442-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20241104123839.533442-2-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 5 Nov 2024 09:05:29 +1000
-Message-ID: <CAKmqyKPYmv1VfMQKMa+fTzaSmwpbwGAUSvhdZTAPYfmPpc+zUQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/char/sifive_uart: Fix broken UART on big endian hosts
-To: Thomas Huth <thuth@redhat.com>
-Cc: Alistair Francis <Alistair.Francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Tue, 5 Nov 2024 09:08:02 +1000
+Message-ID: <CAKmqyKMyfubV1bd52rd978g780AF8XzS4LK-PaVT5FSwb0nH7A@mail.gmail.com>
+Subject: Re: [PATCH 1/2] hw/riscv/riscv-iommu: change 'depth' to int
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, peter.maydell@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
- envelope-from=alistair23@gmail.com; helo=mail-qk1-x733.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,45 +93,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 5, 2024 at 2:35=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrote=
-:
+On Mon, Nov 4, 2024 at 10:41=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> Casting a "uint32_t *" to a "uint8_t *" to get to the lowest 8-bit
-> part of the value does not work on big endian hosts. We've got to
-> take the proper detour through an 8-bit variable.
+> Coverity reports an unsigned overflow when doing:
 >
-> Fixes: 53c1557b23 ("hw/char: sifive_uart: Print uart characters async")
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>     for (; depth-- > 0; ) {
+>
+> When depth =3D 0 inside riscv_iommu_ctx_fetch().
+>
+> Building it with a recent GCC the code doesn't actually break with depth
+> =3D 0, i.e. the comparison "0-- > 0" will exit the loop instead of
+> proceeding,  but 'depth' will retain the overflow value afterwards.
+>
+> This behavior can be compiler dependent, so change 'depth' to int to
+> remove this potential ambiguity.
+>
+> Resolves: Coverity CID 1564783
+> Fixes: 0c54acb8243 ("hw/riscv: add RISC-V IOMMU base emulation")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  hw/char/sifive_uart.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  hw/riscv/riscv-iommu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-> index aeb45d3601..5ae2a29ed6 100644
-> --- a/hw/char/sifive_uart.c
-> +++ b/hw/char/sifive_uart.c
-> @@ -174,10 +174,11 @@ sifive_uart_write(void *opaque, hwaddr addr,
->  {
->      SiFiveUARTState *s =3D opaque;
->      uint32_t value =3D val64;
-> +    uint8_t ch =3D value;
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index feb650549a..05341ad20b 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -846,7 +846,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, =
+RISCVIOMMUContext *ctx)
+>      /* Device Context format: 0: extended (64 bytes) | 1: base (32 bytes=
+) */
+>      const int dc_fmt =3D !s->enable_msi;
+>      const size_t dc_len =3D sizeof(dc) >> dc_fmt;
+> -    unsigned depth;
+> +    int depth;
+>      uint64_t de;
 >
->      switch (addr) {
->      case SIFIVE_UART_TXFIFO:
-> -        sifive_uart_write_tx_fifo(s, (uint8_t *) &value, 1);
-> +        sifive_uart_write_tx_fifo(s, &ch, 1);
->          return;
->      case SIFIVE_UART_IE:
->          s->ie =3D val64;
+>      switch (mode) {
 > --
-> 2.47.0
+> 2.45.2
 >
 >
 
