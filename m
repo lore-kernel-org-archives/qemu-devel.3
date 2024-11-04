@@ -4,76 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2E5D1BDF2
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA8CD1BDF2
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t84Yi-0007mD-TF; Mon, 04 Nov 2024 16:24:24 -0500
+	id 1t84Ym-0007n6-0m; Mon, 04 Nov 2024 16:24:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Yh-0007lu-7R
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:24:23 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Yk-0007mj-Ox
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:24:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Yf-0006uV-Hw
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:24:22 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Yj-0006uo-4I
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:24:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730755460;
+ s=mimecast20190719; t=1730755464;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DreMzE5l8O9RuGS8oEwWkZEzopXOO7MX3eO79wqdwag=;
- b=bQoWnxh7Hyo2OMIxfXEuoETFPnrF/RCVOWOr1VGgVhlPqX0HH1n9hmTaGrxepX7EuViadn
- 4DiijjG+K+IQCAcQ9AGABI06bE1SPWcimkT09KXNfa+5wEvthPqL4NeTVa71YERKtIY5Ck
- /vl4K/04z0mk/mFbZJkWT5ONWUD7+qk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Jn4WUkhWFsTn3Zafq3qOV5CM6ns6biTKh9xhZYCuQz4=;
+ b=i05mk24TJQCSI0N6BdCQWM1WNJkWmhoOpjhkuJ+Vtd4EAsWBPeYx0JPR9laZ5754INqvqh
+ bWjTlULnIiJ9rkgZpJlSeXhM/3MaQ1XJJEz8/WfP+4ljmJQnbVXLTqaYM5YJWPaKEojIpo
+ C/CgkuRppzlDAYs1x/yxTPZPjzAtT2w=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-QdznsFODMhyGgsjteIZw9A-1; Mon, 04 Nov 2024 16:24:18 -0500
-X-MC-Unique: QdznsFODMhyGgsjteIZw9A-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43157cff1d1so34542295e9.2
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:24:18 -0800 (PST)
+ us-mta-689-dDGCEKz5Nnqk4Z_q3_Stqg-1; Mon, 04 Nov 2024 16:24:23 -0500
+X-MC-Unique: dDGCEKz5Nnqk4Z_q3_Stqg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4315544642eso34533135e9.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:24:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730755457; x=1731360257;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DreMzE5l8O9RuGS8oEwWkZEzopXOO7MX3eO79wqdwag=;
- b=YSY3aP6pb44gl1w1oP8gyr45nEsrUdcNjaFjY9IsI4bNLGmKx6RaJsXdl7fta1IuBD
- xKb8UPFPCIaJbFRPj0L1TNyNX7dzV5dDHh7I5ikaAHPYks4qJcPGTH5epc/1DelD4aG9
- LsbDgHs8lbJg0syhBwJFLqA7KXKyUFDUTccurxK1uycKE1XXLm+rzxEsXPrtn2fXyRYE
- tiYbdEZfqzcF4HIHRAaCuQCltC60RAZefUPYNtfeaC+sz8Gb6edC6x+QK7uTkeUFxrkH
- dWReVn+UMNkPNx1R5+hY3Nl5q8F/7kzTk2TNzdbWksCeM/A4kgDs9Co7LMxNnfPA37DT
- lEtA==
-X-Gm-Message-State: AOJu0YxknGkTApCpVha83ywtKVIXo7Fa3kZ/ubONGajUE2sR0jZAAx1Y
- C6LnVTUQBexfJ+QrkkTggBaJCUyOwZNodf2wA1fbIRlv1Lr/WY7Bn2GLmYy6VgjW+UREurAqKpu
- ZkR009rIfBdRjNuykepIy1jwxbP2ICFs+GF0X50mxaN6jLzy1l8ohaq/QiJhj+1uJM9PNbtS5KV
- 1yGnzhHXkgu7Mjq6FYYq0JTY4xksSQIQ==
-X-Received: by 2002:a05:600c:3b94:b0:42c:b74c:d8c3 with SMTP id
- 5b1f17b1804b1-4327b82138dmr138300975e9.32.1730755456998; 
- Mon, 04 Nov 2024 13:24:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFWeEt6h5fo5qV7ErSVl2DeEI9Shk/s98EvtWGsduzw3eN2kbn1sI82Y5axjaIWyqjo4MzFPA==
-X-Received: by 2002:a05:600c:3b94:b0:42c:b74c:d8c3 with SMTP id
- 5b1f17b1804b1-4327b82138dmr138300825e9.32.1730755456586; 
- Mon, 04 Nov 2024 13:24:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730755461; x=1731360261;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Jn4WUkhWFsTn3Zafq3qOV5CM6ns6biTKh9xhZYCuQz4=;
+ b=Akt6nKecfS/q8jsEw1pk+JZ62oBlU7/5/se1JwEKoP4GFIRb93NJ7/iwWDqMTVJXCP
+ ZPBSoDwdVoUadXsuqQhouccsipR37gbSgrG8dIwZ/SLATfB66XZy21DIoC4lNGkPjg67
+ M5/1jMDCdXhI444eQnhbLXpubUQnyN5b8Ly8FFxw2OMYa+R7clAFz7ArvqdQ6SgJoVBi
+ VFDJkekrNnZ+5cuU8NqEeATJqH3Iyh07UzjBnjXu9RtVTI7qWKIdpFUJXfRKD0IO+eTK
+ 5gzxm05u4Qk0quAzRVN8e6uUjE6DOi0ghz3BNXdQp7yif6vGcLOcAhAVblXfRkQwk8Nt
+ G5ZA==
+X-Gm-Message-State: AOJu0YxBwSB6zr2S5LmDr0osODGYPBiK9de+d3zMozqicGnbnFoZQ1Nj
+ G7nDKc8oZwZmYqpACy4R/xDTfnq7fr5TtK5FtyaaC76wpLOAJQ9tH7Ats0GRa2jmPSzyJknrdID
+ GMWYb4tXGndr1nlMJ+sY41LvMPWPw6cRr9TXq5RLEEeAvOLwazqkqUpbWbPJMC+n7n2o1KiWXrt
+ Fn16QH6NMwFalI7CKZdCPgBByV1E9rew==
+X-Received: by 2002:a5d:6da9:0:b0:37d:5035:451 with SMTP id
+ ffacd0b85a97d-381be7ad026mr15004845f8f.10.1730755461409; 
+ Mon, 04 Nov 2024 13:24:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFbGHe3QCslXUSewGBjhPHi7RP/RCi4LBKvKPnk5ppUjtXtGFtd/s65EVVYH6GMUJIkmUAffw==
+X-Received: by 2002:a5d:6da9:0:b0:37d:5035:451 with SMTP id
+ ffacd0b85a97d-381be7ad026mr15004825f8f.10.1730755460938; 
+ Mon, 04 Nov 2024 13:24:20 -0800 (PST)
 Received: from redhat.com ([2.52.14.134]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c113e771sm14249189f8f.81.2024.11.04.13.24.13
+ 5b1f17b1804b1-431bd947a9fsm199069825e9.22.2024.11.04.13.24.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 13:24:15 -0800 (PST)
-Date: Mon, 4 Nov 2024 16:24:12 -0500
+ Mon, 04 Nov 2024 13:24:20 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:24:17 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Albert Esteve <aesteve@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 42/65] vhost-user: fix shared object return values
-Message-ID: <eea5aeef84e1b74f515b474d3a86377701f93750.1730754238.git.mst@redhat.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Yi Liu <yi.l.liu@intel.com>, Jason Wang <jasowang@redhat.com>,
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 43/65] intel_iommu: Introduce property "stale-tm" to control
+ Transient Mapping (TM) field
+Message-ID: <6ce12bd29777d41afef859652eaa62b5c964d3f7.1730754238.git.mst@redhat.com>
 References: <cover.1730754238.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1730754238.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -101,75 +109,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-Message-ID: <20241104212412.xoRzNZqealRUl3iwShNcpgoTqsuThkob9nG1IoJ0j98@z>
 
-From: Albert Esteve <aesteve@redhat.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-VHOST_USER_BACKEND_SHARED_OBJECT_ADD and
-VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE state
-in the spec that they return 0 for successful
-operations, non-zero otherwise. However,
-implementation relies on the return types
-of the virtio-dmabuf library, with opposite
-semantics (true if everything is correct,
-false otherwise). Therefore, current
-implementation violates the specification.
+VT-d spec removed Transient Mapping (TM) field from second-level page-tables
+and treat the field as Reserved(0) since revision 3.2.
 
-Revert the logic so that the implementation
-of the vhost-user handling methods matches
-the specification.
+Changing the field as reserved(0) will break backward compatibility, so
+introduce a property "stale-tm" to allow user to control the setting.
 
-Fixes: 043e127a126bb3ceb5fc753deee27d261fd0c5ce
-Fixes: 160947666276c5b7f6bca4d746bcac2966635d79
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
-Message-Id: <20241022124615.585596-1-aesteve@redhat.com>
+Use pc_compat_9_1 to handle the compatibility for machines before 9.2 which
+allow guest to set the field. Starting from 9.2, this field is reserved(0)
+by default to match spec. Of course, user can force it on command line.
+
+This doesn't impact function of vIOMMU as there was no logic to emulate
+Transient Mapping.
+
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Suggested-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Message-Id: <20241028022514.806657-1-zhenzhong.duan@intel.com>
+Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/vhost-user.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ hw/i386/intel_iommu_internal.h | 12 ++++++------
+ include/hw/i386/intel_iommu.h  |  3 +++
+ hw/i386/intel_iommu.c          |  7 ++++---
+ hw/i386/pc.c                   |  1 +
+ 4 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index d1b0893b4d..f170f0b25b 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -1623,9 +1623,14 @@ vhost_user_backend_handle_shared_object_add(struct vhost_dev *dev,
-     QemuUUID uuid;
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 13d5d129ae..2f9bc0147d 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -412,8 +412,8 @@ typedef union VTDInvDesc VTDInvDesc;
+ /* Rsvd field masks for spte */
+ #define VTD_SPTE_SNP 0x800ULL
  
-     memcpy(uuid.data, object->uuid, sizeof(object->uuid));
--    return virtio_add_vhost_device(&uuid, dev);
-+    return !virtio_add_vhost_device(&uuid, dev);
- }
+-#define VTD_SPTE_PAGE_L1_RSVD_MASK(aw, dt_supported) \
+-        dt_supported ? \
++#define VTD_SPTE_PAGE_L1_RSVD_MASK(aw, stale_tm) \
++        stale_tm ? \
+         (0x800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM | VTD_SL_TM)) : \
+         (0x800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM))
+ #define VTD_SPTE_PAGE_L2_RSVD_MASK(aw) \
+@@ -423,12 +423,12 @@ typedef union VTDInvDesc VTDInvDesc;
+ #define VTD_SPTE_PAGE_L4_RSVD_MASK(aw) \
+         (0x880ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM))
  
-+/*
-+ * Handle VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE backend requests.
-+ *
-+ * Return: 0 on success, 1 on error.
-+ */
- static int
- vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,
-                                                VhostUserShared *object)
-@@ -1639,16 +1644,16 @@ vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,
-         struct vhost_dev *owner = virtio_lookup_vhost_device(&uuid);
-         if (dev != owner) {
-             /* Not allowed to remove non-owned entries */
--            return 0;
-+            return 1;
-         }
-         break;
-     }
-     default:
-         /* Not allowed to remove non-owned entries */
--        return 0;
-+        return 1;
-     }
+-#define VTD_SPTE_LPAGE_L2_RSVD_MASK(aw, dt_supported) \
+-        dt_supported ? \
++#define VTD_SPTE_LPAGE_L2_RSVD_MASK(aw, stale_tm) \
++        stale_tm ? \
+         (0x1ff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM | VTD_SL_TM)) : \
+         (0x1ff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM))
+-#define VTD_SPTE_LPAGE_L3_RSVD_MASK(aw, dt_supported) \
+-        dt_supported ? \
++#define VTD_SPTE_LPAGE_L3_RSVD_MASK(aw, stale_tm) \
++        stale_tm ? \
+         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM | VTD_SL_TM)) : \
+         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM))
  
--    return virtio_remove_resource(&uuid);
-+    return !virtio_remove_resource(&uuid);
- }
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index 1eb05c29fc..d372cd396b 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -306,6 +306,9 @@ struct IntelIOMMUState {
+     bool dma_translation;           /* Whether DMA translation supported */
+     bool pasid;                     /* Whether to support PASID */
  
- static bool vhost_user_send_resp(QIOChannel *ioc, VhostUserHeader *hdr,
++    /* Transient Mapping, Reserved(0) since VTD spec revision 3.2 */
++    bool stale_tm;
++
+     /*
+      * Protects IOMMU states in general.  Currently it protects the
+      * per-IOMMU IOTLB cache, and context entry cache in VTDAddressSpace.
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 08fe218935..8612d0917b 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3372,6 +3372,7 @@ static Property vtd_properties[] = {
+     DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
+     DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
+     DEFINE_PROP_BOOL("dma-translation", IntelIOMMUState, dma_translation, true),
++    DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, stale_tm, false),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+@@ -4138,15 +4139,15 @@ static void vtd_init(IntelIOMMUState *s)
+      */
+     vtd_spte_rsvd[0] = ~0ULL;
+     vtd_spte_rsvd[1] = VTD_SPTE_PAGE_L1_RSVD_MASK(s->aw_bits,
+-                                                  x86_iommu->dt_supported);
++                                        x86_iommu->dt_supported && s->stale_tm);
+     vtd_spte_rsvd[2] = VTD_SPTE_PAGE_L2_RSVD_MASK(s->aw_bits);
+     vtd_spte_rsvd[3] = VTD_SPTE_PAGE_L3_RSVD_MASK(s->aw_bits);
+     vtd_spte_rsvd[4] = VTD_SPTE_PAGE_L4_RSVD_MASK(s->aw_bits);
+ 
+     vtd_spte_rsvd_large[2] = VTD_SPTE_LPAGE_L2_RSVD_MASK(s->aw_bits,
+-                                                    x86_iommu->dt_supported);
++                                        x86_iommu->dt_supported && s->stale_tm);
+     vtd_spte_rsvd_large[3] = VTD_SPTE_LPAGE_L3_RSVD_MASK(s->aw_bits,
+-                                                    x86_iommu->dt_supported);
++                                        x86_iommu->dt_supported && s->stale_tm);
+ 
+     if (s->scalable_mode || s->snoop_control) {
+         vtd_spte_rsvd[1] &= ~VTD_SPTE_SNP;
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2047633e4c..830614d930 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -82,6 +82,7 @@
+ GlobalProperty pc_compat_9_1[] = {
+     { "ICH9-LPC", "x-smi-swsmi-timer", "off" },
+     { "ICH9-LPC", "x-smi-periodic-timer", "off" },
++    { TYPE_INTEL_IOMMU_DEVICE, "stale-tm", "on" },
+ };
+ const size_t pc_compat_9_1_len = G_N_ELEMENTS(pc_compat_9_1);
+ 
 -- 
 MST
 
