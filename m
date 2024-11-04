@@ -4,104 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF63AD111AB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 05:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3DA6D111AB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 05:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7pyE-0004v6-Hl; Mon, 04 Nov 2024 00:49:46 -0500
+	id 1t7q07-0005vG-0J; Mon, 04 Nov 2024 00:51:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1t7pyC-0004uS-LI; Mon, 04 Nov 2024 00:49:44 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1t7pyB-0003XU-29; Mon, 04 Nov 2024 00:49:44 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A42dpmK013726;
- Mon, 4 Nov 2024 05:49:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=YTXQFF
- vGr/yxT4pM0LgTbX5K8bCOE0eLTiHc4EuH/8Q=; b=Q6nTAojx/zOer5v9a3zUyI
- 6y7k9O2HnVVHxZFAIJ0HPc5xrbVKuVEpc4isNncqVXLqUYzq4FO3L3XgOitHG5Vg
- Q0KAe8iTZXHvMnJkeNS+XP880RjJO2WibRi399wU4zF2fTOZOxVEzZTJcVyntGMy
- mV5Z00oj8EXfI/jpLtnS8PtJ9fTeQZSpz2gM+6yanLG/sKqpFTMK9h7HjAL/IifN
- z6nNwHkmB2jl9SUTo7IcQAi8+W5HwcW9xhHvevc049CGWzZh7Q8htT5uqpEatTng
- hs3zed11txHFBSp/sfDiII0yliKt2MZuNlKltppXjx+M85T41/40roMd/9Tx6+rA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42pnp98e3v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 Nov 2024 05:49:31 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4A45loQg012238;
- Mon, 4 Nov 2024 05:49:31 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42pnp98e3u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 Nov 2024 05:49:31 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A43forx023984;
- Mon, 4 Nov 2024 05:49:30 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nxsxtd67-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 Nov 2024 05:49:30 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A45nSxq27525872
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 4 Nov 2024 05:49:28 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2AD2D20040;
- Mon,  4 Nov 2024 05:49:28 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1F25B2004D;
- Mon,  4 Nov 2024 05:49:26 +0000 (GMT)
-Received: from [9.39.21.98] (unknown [9.39.21.98])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  4 Nov 2024 05:49:25 +0000 (GMT)
-Message-ID: <d8ff3d90-a328-4be6-adf6-14ffed0faa38@linux.ibm.com>
-Date: Mon, 4 Nov 2024 11:19:24 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] hw/ppc: Implement -dtb support for PowerNV
-To: Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1t7q04-0005uY-JB; Mon, 04 Nov 2024 00:51:40 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1t7q02-0003tz-0l; Mon, 04 Nov 2024 00:51:40 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-723db2798caso271538b3a.0; 
+ Sun, 03 Nov 2024 21:51:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730699493; x=1731304293; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N9Oc+yfMD2aY5hBu3Js/0egPeWmhAXhud34lTJa7J+A=;
+ b=KCNLJUobU9bdpSWHFh8nsKD1ifnzs3trvB51t/NcF6+3ZcwjJ1H8al2RJNjbdtZJaD
+ SEZtJ+sQfM1D6+d7jqkBb/U8gt4PsMqzvsbQcUXHaGa3ovYRZKT8q4qxqgzCPHiGdU5i
+ p1ifsVe+a7BQaEX//n8d+U4XWaFTCHoIwiFyvK4MjvHls/X6x03akn1CAp7VczRTj5Rb
+ ISpYcejJqgYKahPT7DKCXJ3u9p3Fn3boKdK4jHNdTC2t3uouTgne+6D3zKzmzoxh1sqF
+ Mdg3BeL6tWw7LpR2nLYiKiFxvsBoGLcRYmzQAkZ6n0fMkYo8P7SdBhloIrQHbj+mXoKp
+ AAmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730699493; x=1731304293;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=N9Oc+yfMD2aY5hBu3Js/0egPeWmhAXhud34lTJa7J+A=;
+ b=gW/RlovumRPxtgG7x8/jzKkKK8bwzMuJVcGQGJYB+eUh0kTicncL5P7fgICPO4R8RF
+ 0Hy8Hw3ddidgHzxLCZapMd7p8hR3htLpmdyr4iSPphJ843l/qmLBhE4Aj5SCW0e0Pt27
+ ZpMoReP6bGQwIFhgwFW6iS0B/OHCJsycZm9+0VPTR/UZHHeIpcWBR07asgxF5xRsMm+Z
+ GteRi3XD4NIt+l93zweVi5Xry0exooMztV05LsAMmsTEOEoEmiOv7/KAnt3rcNirN1da
+ Y7TBQWLafrbQzC1FWbyZhWCyQrjC7iOQdSZWSFAKHYXZd8HCXwfY9XalnBpqGd2dp/Po
+ sFdw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWYrOgWgqfgZpLSXvNIFWCYhsI1gx//qrfBMcEkowp0Z+7VDnNGRyjQiOe2mhWUe0zBJJ8oM/4REec=@nongnu.org,
+ AJvYcCXaclezvq3pF0wzknGj2bUJUhrOb6qIimR88im6ouQpsWAReYFIpRIAe5Mnm9HJwjQ/VZ8GR8gG3WFz@nongnu.org
+X-Gm-Message-State: AOJu0YyXHmr07C5pzU2qwCgkc6XajbRIb1ttXyJS5QMMh/O2xLDIX4+L
+ IFexwRQZ4Xxv18DnALFqWQ6hhWHMVxeFmG1wmdDcUWB/XoI1la25
+X-Google-Smtp-Source: AGHT+IERyTKQZKUYQW0VNt77XOSHxzJ4zw1T4L25s3JOW+Ecg+pslq9wmsnHcJ+lVucnnwy4sgHuUg==
+X-Received: by 2002:a05:6a21:99a5:b0:1db:d738:f2ff with SMTP id
+ adf61e73a8af0-1dbd738f39bmr4363774637.2.1730699493474; 
+ Sun, 03 Nov 2024 21:51:33 -0800 (PST)
+Received: from localhost (124-171-217-17.tpgi.com.au. [124.171.217.17])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-720bc2eb6b0sm6640252b3a.158.2024.11.03.21.51.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 03 Nov 2024 21:51:33 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 04 Nov 2024 15:51:27 +1000
+Message-Id: <D5D5RKL2WBOS.2ITT02GVC3S71@gmail.com>
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ <qemu-devel@nongnu.org>
+Cc: "Glenn Miles" <milesg@linux.ibm.com>, "Caleb Schlossin"
+ <calebs@linux.vnet.ibm.com>, <qemu-ppc@nongnu.org>,
+ =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>, "Alistair
+ Francis" <alistair@alistair23.me>, =?utf-8?q?C=C3=A9dric_Le_Goater?=
  <clg@kaod.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20240820103003.550735-1-adityag@linux.ibm.com>
- <D5CIFVGK5UCZ.3S0N3TFQM5CCP@gmail.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <D5CIFVGK5UCZ.3S0N3TFQM5CCP@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: DHhcGJac7NGjqe2TLCck-nCOcEBxdtw3
-X-Proofpoint-GUID: s4TBF-INv2dAQtV0rTWefvhKn25Q5Jh0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0
- mlxscore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501
- clxscore=1015 mlxlogscore=607 suspectscore=0 spamscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411040048
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Subject: Re: [PATCH-for-9.1 v2 0/4] hw/ssi/pnv_spi: Fixes Coverity CID 1558831
+X-Mailer: aerc 0.18.2
+References: <20240807202804.56038-1-philmd@linaro.org>
+In-Reply-To: <20240807202804.56038-1-philmd@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,31 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/11/24 17:04, Nicholas Piggin wrote:
-
-> On Tue Aug 20, 2024 at 8:30 PM AEST, Aditya Gupta wrote:
->> Currently any device tree passed with -dtb option in QEMU, was ignored
->> by the PowerNV code.
->>
->> Read and pass the passed -dtb to the kernel, thus enabling easier
->> debugging with custom DTBs.
->>
->> The existing behaviour when -dtb is 'not' passed, is preserved as-is.
->>
->> But when a '-dtb' is passed, it completely overrides any dtb nodes or
->> changes QEMU might have done, such as '-append' arguments to the kernel
->> (which are mentioned in /chosen/bootargs in the dtb), hence add warning
->> when -dtb is being used
->>
->> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> Sorry for getting to it late,
+On Thu Aug 8, 2024 at 6:28 AM AEST, Philippe Mathieu-Daud=C3=A9 wrote:
+> v2:
+> - Cover PowerNV SSI in MAINTAINERS
+> - Use GLib API in pnv_spi_xfer_buffer_free()
+> - Simplify returning early
 >
-> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+> Supersedes: <20240806134829.351703-3-chalapathi.v@linux.ibm.com>
+>
+> Chalapathi V (1):
+>   hw/ssi/pnv_spi: Fixes Coverity CID 1558831
+>
+> Philippe Mathieu-Daud=C3=A9 (3):
+>   MAINTAINERS: Cover PowerPC SPI model in PowerNV section
+>   hw/ssi/pnv_spi: Match _xfer_buffer_free() with _xfer_buffer_new()
+>   hw/ssi/pnv_spi: Return early in transfer()
 
-That's okay. Thanks for the tag Nick !
+Note that I included this series in the ppc 9.2 PR, because Chalapathi
+has not found time to finish the better rework. There were a couple
+of comments about style / unnecessary code for these, but that will
+all get replaced by the rework so I prefer to leave unchanged. Thanks
+all for the help with this.
 
-
-- Aditya Gupta
-
-
+Thanks,
+Nick
 
