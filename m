@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C1A9D1BDF2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC8ADD1BDF4
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t84H8-0003Z8-RU; Mon, 04 Nov 2024 16:06:14 -0500
+	id 1t84H1-0003Ws-A1; Mon, 04 Nov 2024 16:06:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84H7-0003Y1-9i
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:13 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Gz-0003WI-HS
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84H5-0005If-O7
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:13 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Gx-0005Hp-Ok
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730754371;
+ s=mimecast20190719; t=1730754363;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Twycu9LeMPLWhT+3APHxCe65PWhI42c5Tsx7A0KoeC8=;
- b=UMgXrgY47RJzOBmpbkERTNfPip8HZokK4K3ACD9mdfxYgonb613yq3pyMmABI4rvvRDNC6
- bUSQH+mvEGh0oUbYZI6nKpz6b10lQ8EymrjlwnkGuVDiPWgYykyZQfKdwkO0JHn2e5xC5N
- m5Ye4RY13SWEYcStFGVkWLftEGXGvak=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SE9pXEMAmep9AJtTJezsr1YC4hkUva7ZKQGQAabu7F0=;
+ b=LaRk4AYYSWhcd6J4XAcEjftmETMyQ8aNVD6uV6/3HsWQtsL42LaRfeTCaEyJ9HkFuxL3kX
+ 8kFIYIpXEU66XRitoMD6SafsDFnu4opEKTZo3yT1uU3tVBk0EzgXdtVIEZptL3o8qkHTp0
+ FylXn6Cz3st/WrZwjAYy1R0ryntxKA8=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-382-hlx8OxVRMRKV95QxZyl2qg-1; Mon, 04 Nov 2024 16:06:08 -0500
-X-MC-Unique: hlx8OxVRMRKV95QxZyl2qg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4315dd8fe7fso39429795e9.3
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:06:08 -0800 (PST)
+ us-mta-294-or7VEbV7MYy4aSq1VzjSFQ-1; Mon, 04 Nov 2024 16:05:59 -0500
+X-MC-Unique: or7VEbV7MYy4aSq1VzjSFQ-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a9a1828916fso515190466b.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:05:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730754366; x=1731359166;
+ d=1e100.net; s=20230601; t=1730754357; x=1731359157;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Twycu9LeMPLWhT+3APHxCe65PWhI42c5Tsx7A0KoeC8=;
- b=qTm7HFLRLF4nBh8WHInEwU+S2D5xIGfOe9VfCXYsFw8eo8l5ZwDRLEPOgjrYEbxK4A
- qaB8kPGyiOZeJ8yJfQqCjYr/wI/bPWKo0jt1lKyZciG4Cfpp3qygdr5REmrIjZDsKHcc
- tnx0AhzaCGkqOsPHN/6MYUvYkA+6uQwDt0X6amWOCR0vH5gXAsEAOa/7SkAMGIlZVm4N
- 4KBMqNrShnGbXzwtfAw4UdsoTCHT1fIMEkFMnr/fZlm8fMhRs8NIdXakQU8oZh2pw24u
- VU69Qg3SKw+2HUtcz/cemBXwK8mrKYb3wuDbTqTntIMVqyM/d9iF1XHwqKcwB6khC+Rf
- lWKQ==
-X-Gm-Message-State: AOJu0YxPtHjamBJLYF93NYznKNz9TneqZG2USbkCp9G3CqjwpEY0u/f+
- V3koeti7XCABusGjK32/nwL+ndvQGfbSLBSNyZhvTdWCY2ntI+EoryxV1o6zpM27uJ/Ue63LJn9
- Y4py2Bxu0DhfKVfC2j3LHfMBvygknB0nPXKjmNtldlRVhDi++W6f/B3WHa1CdEIRryCvhXVMxR7
- LK32LCW34fgMCp43Xpfe22np+Vrq+Ahw==
-X-Received: by 2002:a05:6000:18ac:b0:37d:4f69:c9b with SMTP id
- ffacd0b85a97d-381c7a6ddd1mr15096079f8f.35.1730754366464; 
- Mon, 04 Nov 2024 13:06:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG403upuUw1/pSjERuBZvmBUJAi7cqFgpVdvOeZ8KP70NsIm3W+Y1VjgoyBaw8iAjV1LRramQ==
-X-Received: by 2002:a05:6000:18ac:b0:37d:4f69:c9b with SMTP id
- ffacd0b85a97d-381c7a6ddd1mr15096056f8f.35.1730754366056; 
- Mon, 04 Nov 2024 13:06:06 -0800 (PST)
+ bh=SE9pXEMAmep9AJtTJezsr1YC4hkUva7ZKQGQAabu7F0=;
+ b=IO0b89IQ1wvfuA5m56q7Uc4hCUc1q4X4wx8X6jMTib2WH5/ksuK909YnS6Uh6KQf+u
+ ykBbqEXMFe81Eop+EgcdlzhwYfyZBlPUhdYBRvjRfFpXRRFLCH+YFkViijvanmFnpP/o
+ 2AZPHbAfAGma3YFyEKW0/e2w3lUa8aGDtrI+L6vuv+4a+4w1ZTxtwQfC8nSQN5yozQS6
+ PPZYpBW74NO6tnmJKrYAurB8yyMz0nsMTlbrlOm1WdFeiltn5UmW2S9czL+zdRv6Af7Q
+ vWLJsS+kCv+FL/mJgociZtaCi4U9gLJ6X/f5PZJLIVtoSmnOqn1/1mCsKGDaIhH80YCO
+ 62Uw==
+X-Gm-Message-State: AOJu0YySvw1HO36AQ2H2MzMug0F3QlGBvRAH/qv3XleICA37fifTGKcz
+ VkrDTvRFiLU+MW/tELiF7VNBrNsYEvmwovhcLEThUsieuuwniJh7ND/TDu1OYz5GSaYaqYmftK2
+ P8vw1Kkur94xb1RQAVIumo9My97f3FBcH9jbMC7n1CixBJ2nlJ4XQOxtntcH1I72qWhtvG7ujoI
+ MTx2hxgI9nVxVYHDdyQ23/YSU5SX12tA==
+X-Received: by 2002:a17:907:1b98:b0:a9e:5747:9019 with SMTP id
+ a640c23a62f3a-a9e57479111mr1089861566b.8.1730754357344; 
+ Mon, 04 Nov 2024 13:05:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGK/zQa2XbXXxffRDFtVN6aR9pgaK0xY0QmNDB/64c01xS8gPQHF5LhMbVQu5iWHu394T/Miw==
+X-Received: by 2002:a17:907:1b98:b0:a9e:5747:9019 with SMTP id
+ a640c23a62f3a-a9e57479111mr1089859766b.8.1730754356931; 
+ Mon, 04 Nov 2024 13:05:56 -0800 (PST)
 Received: from redhat.com ([2.52.14.134]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bd8e7f33sm194127935e9.6.2024.11.04.13.06.04
+ a640c23a62f3a-a9eb16d6749sm31263266b.62.2024.11.04.13.05.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 13:06:05 -0800 (PST)
-Date: Mon, 4 Nov 2024 16:06:02 -0500
+ Mon, 04 Nov 2024 13:05:56 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:05:53 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, "Huang, Ying" <ying.huang@intel.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 09/65] hw/pci-bridge: Add acpi_uid property to TYPE_PXB_BUS
-Message-ID: <97b9cb066e5f10845b4bc4d2ec657deb1e73f910.1730754238.git.mst@redhat.com>
+Subject: [PULL 07/65] hw/pci: Add a busnr property to pci_props and use for
+ acpi/gi
+Message-ID: <df9ac7254fd943c834f9666969b0852b50e91692.1730754238.git.mst@redhat.com>
 References: <cover.1730754238.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -105,52 +106,92 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-Enable ACPI table creation for PCI Expander Bridges to be independent
-of PCI internals.  Note that the UID is currently the PCI bus number.
-This is motivated by the forthcoming ACPI Generic Port SRAT entries
-which can be made completely independent of PCI internals.
+Using a property allows us to hide the internal details of the PCI device
+from the code to build a SRAT Generic Initiator Affinity Structure with
+PCI Device Handle.
 
 Suggested-by: Igor Mammedov <imammedo@redhat.com>
-Tested-by: "Huang, Ying" <ying.huang@intel.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240916171017.1841767-8-Jonathan.Cameron@huawei.com>
+Message-Id: <20240916171017.1841767-6-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/pci-bridge/pci_expander_bridge.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ hw/acpi/acpi_generic_initiator.c | 14 +++++++++-----
+ hw/pci/pci.c                     | 14 ++++++++++++++
+ 2 files changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-index dfaea6cbf4..3d52ea5867 100644
---- a/hw/pci-bridge/pci_expander_bridge.c
-+++ b/hw/pci-bridge/pci_expander_bridge.c
-@@ -85,12 +85,25 @@ static uint16_t pxb_bus_numa_node(PCIBus *bus)
-     return pxb->numa_node;
- }
+diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
+index 73bafaaaea..365feb527f 100644
+--- a/hw/acpi/acpi_generic_initiator.c
++++ b/hw/acpi/acpi_generic_initiator.c
+@@ -9,6 +9,7 @@
+ #include "hw/boards.h"
+ #include "hw/pci/pci_device.h"
+ #include "qemu/error-report.h"
++#include "qapi/error.h"
  
-+static void prop_pxb_uid_get(Object *obj, Visitor *v, const char *name,
+ typedef struct AcpiGenericInitiatorClass {
+     ObjectClass parent_class;
+@@ -79,7 +80,8 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
+     MachineState *ms = MACHINE(qdev_get_machine());
+     AcpiGenericInitiator *gi;
+     GArray *table_data = opaque;
+-    PCIDevice *pci_dev;
++    int32_t devfn;
++    uint8_t bus;
+     Object *o;
+ 
+     if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
+@@ -100,10 +102,12 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
+         exit(1);
+     }
+ 
+-    pci_dev = PCI_DEVICE(o);
+-    build_srat_pci_generic_initiator(table_data, gi->node, 0,
+-                                     pci_bus_num(pci_get_bus(pci_dev)),
+-                                     pci_dev->devfn);
++    bus = object_property_get_uint(o, "busnr", &error_fatal);
++    devfn = object_property_get_int(o, "addr", &error_fatal);
++    /* devfn is constrained in PCI to be 8 bit but storage is an int32_t */
++    assert(devfn >= 0 && devfn < PCI_DEVFN_MAX);
++
++    build_srat_pci_generic_initiator(table_data, gi->node, 0, bus, devfn);
+ 
+     return 0;
+ }
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 87da35ca9b..0b6bdaa0d7 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -67,6 +67,19 @@ static char *pcibus_get_fw_dev_path(DeviceState *dev);
+ static void pcibus_reset_hold(Object *obj, ResetType type);
+ static bool pcie_has_upstream_port(PCIDevice *dev);
+ 
++static void prop_pci_busnr_get(Object *obj, Visitor *v, const char *name,
 +                             void *opaque, Error **errp)
 +{
-+    uint32_t uid = pci_bus_num(PCI_BUS(obj));
++    uint8_t busnr = pci_dev_bus_num(PCI_DEVICE(obj));
 +
-+    visit_type_uint32(v, name, &uid, errp);
++    visit_type_uint8(v, name, &busnr, errp);
 +}
 +
- static void pxb_bus_class_init(ObjectClass *class, void *data)
- {
-     PCIBusClass *pbc = PCI_BUS_CLASS(class);
- 
-     pbc->bus_num = pxb_bus_num;
-     pbc->numa_node = pxb_bus_numa_node;
++static const PropertyInfo prop_pci_busnr = {
++    .name = "busnr",
++    .get = prop_pci_busnr_get,
++};
 +
-+    object_class_property_add(class, "acpi_uid", "uint32",
-+                              prop_pxb_uid_get, NULL, NULL, NULL);
-+    object_class_property_set_description(class, "acpi_uid",
-+        "ACPI Unique ID used to distinguish this PCI Host Bridge / ACPI00016");
- }
+ static Property pci_props[] = {
+     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
+     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
+@@ -87,6 +100,7 @@ static Property pci_props[] = {
+                     QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
+     DEFINE_PROP_SIZE32("x-max-bounce-buffer-size", PCIDevice,
+                      max_bounce_buffer_size, DEFAULT_MAX_BOUNCE_BUFFER_SIZE),
++    { .name = "busnr", .info = &prop_pci_busnr },
+     DEFINE_PROP_END_OF_LIST()
+ };
  
- static const TypeInfo pxb_bus_info = {
 -- 
 MST
 
