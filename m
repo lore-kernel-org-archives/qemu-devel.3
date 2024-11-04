@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25BF6D11194
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5723BD11186
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:21:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7koj-00078i-83; Sun, 03 Nov 2024 19:19:37 -0500
+	id 1t7kq4-000131-Nl; Sun, 03 Nov 2024 19:21:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7koh-00078Q-Lu; Sun, 03 Nov 2024 19:19:35 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1t7kq2-0000oY-LA; Sun, 03 Nov 2024 19:20:58 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7kog-0002G5-78; Sun, 03 Nov 2024 19:19:35 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-72061bfec2dso3400875b3a.2; 
- Sun, 03 Nov 2024 16:19:33 -0800 (PST)
+ id 1t7kq1-0002eG-4y; Sun, 03 Nov 2024 19:20:58 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-71e592d7f6eso2831985b3a.3; 
+ Sun, 03 Nov 2024 16:20:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730679571; x=1731284371; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730679655; x=1731284455; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YRtDdUtAOQ8hbWJDgTNy6ROc/6VA9Q2cPv4bY78jXvQ=;
- b=Y3PSFh2PLeI4YXXXfzq4y+S57WjxxAZpNneVdcBQS6UhLV9m53DmHAkPh7fhOYV0/b
- N1tHDJ8kgzdgKAiH10hTPW7FtjONfGD57ci04ezI73QAJsvpATmAAh8ZH5rikKLm0RZg
- EfimqEVh4L25zeCZMw2u0BG9v8869kx4M4RS13im+DtK6n2eLuKmPauTBADOgspYNJyx
- RX0KIo98FPTiK0kWGpLZVjfLNgDlCg+82ZSVIDV9ojrslq3HjLmcWXOReRU6A0X2DtGc
- +9K2QJXPjAXpvx5OVprKwsFOnRPHPtHQ9b/Id8BbD513gs5kk8d2uAkhOxOjXBbk+1Ux
- /7WA==
+ bh=l94YX/AReXz7G4uDRXUPyQl8Y+x+XtS8cAUTSBbRCkw=;
+ b=lb3hU0D1WfxLk+uZ1MKKtQ4/aMAp2GfGFFQDCnb9nEnWcJkJdX15r6IkEji5PuRJXg
+ yrHebYwTOAoRFXXGsgCwt107ulVQsDd8pgtvf+7be8vf9C37MiSPDErkD+NJUI8rkUUH
+ wOU/Id5MIIGalp/ieOV2odz9nLiNc2d54a1hwQZstxhcbe7yEZCNBJQL38aKOR8rRyX+
+ yyYc01/ajF3Q5kElkMpKJwZ0SthCvIGvGQc80gGoGvcp3GN9lv5N90kTch4Zg33YDRoH
+ qqxfGVKLmbVLHiH14nM7V+rHTdoLXCGBHVq9qdzhc/9K6mhfIX9Lb6TQe5Jor+ku//vf
+ EY8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730679571; x=1731284371;
+ d=1e100.net; s=20230601; t=1730679655; x=1731284455;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YRtDdUtAOQ8hbWJDgTNy6ROc/6VA9Q2cPv4bY78jXvQ=;
- b=wgeeSZr89/gnZQc7W7LooD60vKh45wq7bMp2IVZlU79vKOF4WICX7qYAsWPnRR6hWU
- q2XQXrwpnJ+t6zo4J5kmr68a76StK5aDf6KcfdppCZ+WVLgJF4ujYU6+mKV2a2gO/oxH
- OJZLZArYQS3/Dt/6pnpdt8QvPIqFpAdqX+7LKfJ4aTzdAK4aJYy3SMO4IqqXiqKFxQjZ
- 3AxWck3XAa6/TWsYGCESzdKiJYeId+6Bji6mpMdDvZkWbbqy8IkiY7D02AXQoQIEPcj0
- /a6tGbNxXebEKUwsfVRZ9DxNrQoKb/sOgy4EcOXy1gQ4LMKVighPgCKztnJ7rIr1pRD0
- +goQ==
+ bh=l94YX/AReXz7G4uDRXUPyQl8Y+x+XtS8cAUTSBbRCkw=;
+ b=pVearEp1emb/HiF1Lgc6q8AEAWT5zUqqDGVHfQDQKYDvksLQlbDYRHxbUQLSWCLgbE
+ 6sDlj9veJ4eYamwqInkayRiX2vSTHBH3cWBJwsg3k29m07NHCPbGM/d/T7qzuFWtkzvH
+ TC4HEHVKP2p4XTrU4RyrXzqvVcHExVoPmynrVjxKQF1oK9k/1vdHm8aepIowDBFuDPSy
+ GRV7F5iiXrEHT//D3Bp1rKMry4XThPM1ISGlbO8xpqxd7DP6wRxRhDaJjz9a5+kBPvaY
+ QrqNWnFyi2RxzfNXfdv+WT2sufn2iuglOF7ChuMKupBt2BB7GtWcx7nvZM4E6/Iy4Q/J
+ 3E1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcCzL5CiWjUklAnv6ywNOUCnOPZEzqx7gm05vXlvaxDbyCEePxyRRJowxuU738VtP0WpsvWFA1/g==@nongnu.org,
- AJvYcCWpopvkQiHv33O99aPZVZJtGzemXsxxd2fv8vejQRxqWwQZMM9EedkLfaFdlsu1VAlMbfDNi2S1FN4Q5U8=@nongnu.org
-X-Gm-Message-State: AOJu0YwE7XQliDhrsCVOAwvWCnyQbPESHSZEIThryqsZU2WzUd5yJ7w+
- SmXcBZ28V9BGWpRIGkPKI/6D1jIpe90QMSY/Rb5PbawujM3+7+WiukSN6w==
-X-Google-Smtp-Source: AGHT+IEYPUgF/yuVF6HC9OqFpJJti0BFo84aY+nmCP39Pt56CW1TWjaQTHKNO2JifwZ+2LNa1caG4Q==
-X-Received: by 2002:a05:6a00:4fc4:b0:720:36c5:b53b with SMTP id
- d2e1a72fcca58-720c99b5c7fmr14477718b3a.17.1730679570929; 
- Sun, 03 Nov 2024 16:19:30 -0800 (PST)
+ AJvYcCXsOEFpVXwxkM8kPaAXtjnCPwqCANOHOHTU/88Cgm99xxhg+YKAdWCnd/cGVpbGrq4BqqDC4iNzwA==@nongnu.org
+X-Gm-Message-State: AOJu0YxKEtluFFyIqKqxMsivU3+7iqoGT9I/wYSiNAE4nBH7xrVs05J3
+ bgDXX2ny8lTf0QMK/blGaMk7nWoJTMxhBDuYrUXGaX0YMEl9/2LrVhljuA==
+X-Google-Smtp-Source: AGHT+IElnLRQgIUblUlRbMaqqTJtnFjL7sQFstDb/FD50U9/cEmA/5j5FSjF57KxsXyJToawiSzw0Q==
+X-Received: by 2002:a05:6a00:1708:b0:71d:f423:e6cc with SMTP id
+ d2e1a72fcca58-720c98d5c3dmr16120103b3a.8.1730679654941; 
+ Sun, 03 Nov 2024 16:20:54 -0800 (PST)
 Received: from wheely.local0.net (124-171-217-17.tpgi.com.au. [124.171.217.17])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.19.27
+ 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.20.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 16:19:30 -0800 (PST)
+ Sun, 03 Nov 2024 16:20:54 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 05/67] target/ppc: Fix mtDPDES targeting SMT siblings
-Date: Mon,  4 Nov 2024 10:17:54 +1000
-Message-ID: <20241104001900.682660-6-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 28/67] ppc/spapr: remove deprecated machine pseries-2.12-sxxm
+Date: Mon,  4 Nov 2024 10:18:17 +1000
+Message-ID: <20241104001900.682660-29-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241104001900.682660-1-npiggin@gmail.com>
 References: <20241104001900.682660-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,32 +97,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A typo in the loop over SMT threads to set irq level for doorbells
-when storing to DPDES meant everything was aimed at the CPU executing
-the instruction.
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Cc: qemu-stable@nongnu.org
-Fixes: d24e80b2ae ("target/ppc: Add msgsnd/p and DPDES SMT support")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Commit 0cac0f1b964 marked pseries-2.12 machines as deprecated
+with reasons mentioned in its commit log.
+Removing pseries-2.12-sxxm specific code with this patch.
+
+Suggested-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/misc_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/ppc/spapr.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index 1b83971375..f0ca80153b 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -288,7 +288,7 @@ void helper_store_dpdes(CPUPPCState *env, target_ulong val)
-         PowerPCCPU *ccpu = POWERPC_CPU(ccs);
-         uint32_t thread_id = ppc_cpu_tir(ccpu);
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index faf88a177b..aba0ad26f1 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4731,8 +4731,6 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
+     DEFINE_SPAPR_MACHINE_IMPL(true, major, minor)
+ #define DEFINE_SPAPR_MACHINE(major, minor) \
+     DEFINE_SPAPR_MACHINE_IMPL(false, major, minor)
+-#define DEFINE_SPAPR_MACHINE_TAGGED(major, minor, tag) \
+-    DEFINE_SPAPR_MACHINE_IMPL(false, major, minor, _, tag)
  
--        ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, val & (0x1 << thread_id));
-+        ppc_set_irq(ccpu, PPC_INTERRUPT_DOORBELL, val & (0x1 << thread_id));
-     }
-     bql_unlock();
- }
+ /*
+  * pseries-9.2
+@@ -5042,18 +5040,6 @@ static void spapr_machine_2_12_class_options(MachineClass *mc)
+ 
+ DEFINE_SPAPR_MACHINE(2, 12);
+ 
+-static void spapr_machine_2_12_sxxm_class_options(MachineClass *mc)
+-{
+-    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+-
+-    spapr_machine_2_12_class_options(mc);
+-    smc->default_caps.caps[SPAPR_CAP_CFPC] = SPAPR_CAP_WORKAROUND;
+-    smc->default_caps.caps[SPAPR_CAP_SBBC] = SPAPR_CAP_WORKAROUND;
+-    smc->default_caps.caps[SPAPR_CAP_IBS] = SPAPR_CAP_FIXED_CCD;
+-}
+-
+-DEFINE_SPAPR_MACHINE_TAGGED(2, 12, sxxm);
+-
+ static void spapr_machine_register_types(void)
+ {
+     type_register_static(&spapr_machine_info);
 -- 
 2.45.2
 
