@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BCB4D132AC
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 10:54:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63400D132AC
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 11:00:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7uhy-00028z-R2; Mon, 04 Nov 2024 05:53:18 -0500
+	id 1t7unz-0006o9-Li; Mon, 04 Nov 2024 05:59:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7uhx-00025X-AB
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:53:17 -0500
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t7uny-0006nr-I9
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:59:30 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7uhv-0003kX-5F
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:53:17 -0500
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-53c779ef19cso4656803e87.3
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 02:53:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t7unw-0004Wv-MK
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:59:30 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a86e9db75b9so652888166b.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 02:59:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730717593; x=1731322393; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lgccnnP+UjvTX7aelAiFn+L5m3xGf23vKE71VUw8sm8=;
- b=jOyuHkB5AxtG0eqJeOgUE2tpRjBaBphBb1CTxBUNWTpQUddGJn50/Ismp5l2IgQSKH
- 83CrH603lsUhJfe8/8t4Si4pVphJJnve7ADivICOU8Fg0ARF6fUA2c3OAcbqGyc1mnRV
- Ww/WMN/CYn8s5j6omEeSCfmLJSlOQilxLE6mXjpyP09/v6SZT6TpEgYUgEsiYYK4vStk
- miKFxR+YukPItpQoho2i9FlMp+4yuT9UVpeJqFxNWbIXA6mgphaUJPy/3tALOo6ww7yg
- 81GXbbr39uLQTd3G3khIy+v+WEjN22f7XW51T6Ze/Jzwt6IKUd8Qpm4zlUaMBu0ygzJZ
- XM5g==
+ d=linaro.org; s=google; t=1730717966; x=1731322766; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mz5OMtV/UHaaM9hW7xpbIoTcAeBFVS80t+xWnzGlhMA=;
+ b=iqH3iZIc9T+cJWkiuhPHhq9ZJ3f+54bow5R1COM2jUyLWMJmB2QuqC4O+5HUToAZv9
+ 8pk0NngAYPAxTP8jpeciQ9wV3UfM/AELwMZgQj8hlI4nNGrJMjMwzmR2SzUx1eDIlLy4
+ hmrNRDXuPXczXqtPwnFciCNhB6CViunic+2ZegkFF0JeERv11s8JyTONM/DMAn8QjF51
+ KRIhnB2jg+t2O7j/zHfA0DKMyPwoz2UMW0psZTRmwwM/n+fSQSVcT/YJag9XKk8qjxER
+ g9n+QqFKvRLRAmJvfdAKn+VOWMPmllzt8D7bscdor12Y3T5cXVcuIqQD+l6JvRbNl8Um
+ 9jkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730717593; x=1731322393;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lgccnnP+UjvTX7aelAiFn+L5m3xGf23vKE71VUw8sm8=;
- b=nvCG0i9xqomytLtobBqScLcYFUH12pswqZSI8dVbPsW6Yrmt6byODQlqRIG0gCpjFB
- h7vU/66QCjXRoGJAIBbcECKFa/N53O/wYv4ClhsyzgmEMb5P3K3qQVaWjui9oMaGklPP
- 9RFNTQ0ljK2kMr3a8+wVAb4do2KqJ/V3I/OTHXg8feXPLgaIl3COQNh6UWvXGBJubWm6
- GK+47LMX+r+dT0wJAS1ZyJHFyHKuf8gFNrGu6TrJA5itXdZ4zHoX7RKSbk9OUFXUgEvG
- QXr/j425rcQewfiquk1MQdFHnij40RSDaVYI5H30IKe0oAAnCuSPa+/5Kcp5o0JXSiiD
- Rjcw==
-X-Gm-Message-State: AOJu0YwY+FIpoy5H6v3k9/kYf39d4Fzz8Y2kxiqLMQNr+jAriP+TQ6jA
- Mv/2Uk74Lg9304Aa3EsZL0BxAb92yX0keAxdpolpBSqGAY1BRTIyYhazZUmTGyxL/B7x+WYCBIW
- PkS0=
-X-Google-Smtp-Source: AGHT+IHt4BkP7NW8/lWFMsCN90Bj0qwvkYQoS0v+HqkV1QZkQzqp5lanLIDwZuG/aj2PTH21WrfRcQ==
-X-Received: by 2002:a05:6512:12d3:b0:536:54db:ddd0 with SMTP id
- 2adb3069b0e04-53c79c976aamr6560917e87.0.1730717593063; 
- Mon, 04 Nov 2024 02:53:13 -0800 (PST)
-Received: from localhost.localdomain ([176.176.145.27])
+ d=1e100.net; s=20230601; t=1730717966; x=1731322766;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mz5OMtV/UHaaM9hW7xpbIoTcAeBFVS80t+xWnzGlhMA=;
+ b=ZsuRVNsJaZ/YznZu9El9KEMeYFEBTH6/OadpSx7eqDYgFs+jr6cGJ/HsaG+nsq3Ixo
+ rQIJWvjucaw0A29tdxTpwOFHgrQfcRNHVjVpNcxpSanpbLI7XHw8DLdvA63eRqhKQGqT
+ qBOvcjH7fPCMfGWZAsVMx8YJ09/rbGiMs96RkHSxUZZ++3k8bM3jeVZcvkZ00LOSkt/x
+ sUzrW48iEsxUWvIFpBbo8aafyJDqe4OOFDt1K/zgZ0Z5RzOsxl4clGOeYqxn3k/7Wo1v
+ pN4RIU5hAlajB70qomGlphoTLvlNJMvlegcu7VCT7y38C3rD6rLTY8lmmOAV1mW7HiHW
+ Ua3g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUGF4GJlR7ceOfUZwy/dldOCpEiXyU1CqnswAMFnQHg7SxOjIBMlZ/0CjnfA9oDxCELuTTXRfNzJ9ku@nongnu.org
+X-Gm-Message-State: AOJu0YzT6MGd4Ld/flL1QYNLTTo3MkmlaXBKCeFYuOzD83qxFLaL2SEM
+ 8cY3V6vJVUQFO5Zm1+aqa8eJBGaiOXUyJz7lEj8oV8I/3eDRy3YOyzqC4gDpdeo=
+X-Google-Smtp-Source: AGHT+IErrJSAtuCjMlQ1BeVsU2ECBAy6ra5jp7xH8Qm9FpUreP+5N1mNZHe+3ur+HWzWEjcDF80cug==
+X-Received: by 2002:a17:906:7310:b0:a99:f779:ae0c with SMTP id
+ a640c23a62f3a-a9e50916803mr1632279666b.25.1730717966455; 
+ Mon, 04 Nov 2024 02:59:26 -0800 (PST)
+Received: from [192.168.21.227] ([91.223.100.66])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4327d6983f6sm153743505e9.45.2024.11.04.02.53.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 04 Nov 2024 02:53:12 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/14] target/mips: Convert Loongson [D]MOD[U].G opcodes to
- decodetree
-Date: Mon,  4 Nov 2024 11:52:48 +0100
-Message-ID: <20241104105250.57818-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241104105250.57818-1-philmd@linaro.org>
-References: <20241104105250.57818-1-philmd@linaro.org>
+ a640c23a62f3a-a9e565ef518sm538538466b.118.2024.11.04.02.59.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Nov 2024 02:59:26 -0800 (PST)
+Message-ID: <9994b8dd-0522-43ff-94ff-1a94aafd5ce2@linaro.org>
+Date: Mon, 4 Nov 2024 10:59:22 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x132.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Enable FEAT_CMOW for -cpu max
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org
+References: <20241101013541.883785-1-gustavo.romero@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241101013541.883785-1-gustavo.romero@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,317 +97,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <f4bug@amsat.org>
+On 11/1/24 01:35, Gustavo Romero wrote:
+> FEAT_CMOW introduces support for controlling cache maintenance
+> instructions executed in EL0/1 and is mandatory from Armv8.8.
+> 
+> On real hardware, the main use for this feature is to prevent processes
+> from invalidating or flushing cache lines for addresses they only have
+> read permission, which can impact the performance of other processes.
+> 
+> QEMU implements all cache instructions as NOPs, and, according to rule
+> [1], which states that generating any Permission fault when a cache
+> instruction is implemented as a NOP is implementation-defined, no
+> Permission fault is generated for any cache instruction when it lacks
+> read and write permissions.
+> 
+> QEMU does not model any cache topology, so the PoU and PoC are before
+> any cache, and rules [2] apply. These rules states that generating any
+> MMU fault for cache instructions in this topology is also
+> implementation-defined. Therefore, for FEAT_CMOW, we do not generate any
+> MMU faults either, instead, we only advertise it in the feature
+> register.
+> 
+> [1] Rule R_HGLYG of section D8.14.3, Arm ARM K.a.
+> [2] Rules R_MZTNR and R_DNZYL of section D8.14.3, Arm ARM K.a.
+> 
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>   docs/system/arm/emulation.rst | 1 +
+>   target/arm/cpu-features.h     | 5 +++++
+>   target/arm/cpu.h              | 1 +
+>   target/arm/tcg/cpu64.c        | 1 +
+>   4 files changed, 8 insertions(+)
+> 
+> diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+> index 35f52a54b1..a2a388f091 100644
+> --- a/docs/system/arm/emulation.rst
+> +++ b/docs/system/arm/emulation.rst
+> @@ -26,6 +26,7 @@ the following architecture extensions:
+>   - FEAT_BF16 (AArch64 BFloat16 instructions)
+>   - FEAT_BTI (Branch Target Identification)
+>   - FEAT_CCIDX (Extended cache index)
+> +- FEAT_CMOW (Control for cache maintenance permission)
+>   - FEAT_CRC32 (CRC32 instructions)
+>   - FEAT_Crypto (Cryptographic Extension)
+>   - FEAT_CSV2 (Cache speculation variant 2)
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index 04ce281826..e806f138b8 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -802,6 +802,11 @@ static inline bool isar_feature_aa64_tidcp1(const ARMISARegisters *id)
+>       return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, TIDCP1) != 0;
+>   }
+>   
+> +static inline bool isar_feature_aa64_cmow(const ARMISARegisters *id)
+> +{
+> +    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, CMOW) != 0;
+> +}
 
-Convert the following opcodes to decodetree:
+This isn't used, so it may be omitted.
 
-- MOD.G - mod 32-bit signed integers
-- MODU.G - mod 32-bit unsigned integers
-- DMOD.G - mod 64-bit signed integers
-- DMODU.G - mod 64-bit unsigned integers
-
+Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
-Message-Id: <20241026175349.84523-8-philmd@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/mips/tcg/godson2.decode    |   5 ++
- target/mips/tcg/loong-ext.decode  |   5 ++
- target/mips/tcg/loong_translate.c | 111 ++++++++++++++++++++++++++++++
- target/mips/tcg/translate.c       |  82 ----------------------
- 4 files changed, 121 insertions(+), 82 deletions(-)
 
-diff --git a/target/mips/tcg/godson2.decode b/target/mips/tcg/godson2.decode
-index 581cb9c8608..c03c8b717d9 100644
---- a/target/mips/tcg/godson2.decode
-+++ b/target/mips/tcg/godson2.decode
-@@ -17,3 +17,8 @@ DIV_G           011111 ..... ..... ..... 00000 011010   @rs_rt_rd
- DIVU_G          011111 ..... ..... ..... 00000 011011   @rs_rt_rd
- DDIV_G          011111 ..... ..... ..... 00000 011110   @rs_rt_rd
- DDIVU_G         011111 ..... ..... ..... 00000 011111   @rs_rt_rd
-+
-+MOD_G           011111 ..... ..... ..... 00000 100010   @rs_rt_rd
-+MODU_G          011111 ..... ..... ..... 00000 100011   @rs_rt_rd
-+DMOD_G          011111 ..... ..... ..... 00000 100110   @rs_rt_rd
-+DMODU_G         011111 ..... ..... ..... 00000 100111   @rs_rt_rd
-diff --git a/target/mips/tcg/loong-ext.decode b/target/mips/tcg/loong-ext.decode
-index e222167af56..f0fd36c9218 100644
---- a/target/mips/tcg/loong-ext.decode
-+++ b/target/mips/tcg/loong-ext.decode
-@@ -18,3 +18,8 @@ DIV_G           011100 ..... ..... ..... 00000 010100   @rs_rt_rd
- DDIV_G          011100 ..... ..... ..... 00000 010101   @rs_rt_rd
- DIVU_G          011100 ..... ..... ..... 00000 010110   @rs_rt_rd
- DDIVU_G         011100 ..... ..... ..... 00000 010111   @rs_rt_rd
-+
-+MOD_G           011100 ..... ..... ..... 00000 011100   @rs_rt_rd
-+DMOD_G          011100 ..... ..... ..... 00000 011101   @rs_rt_rd
-+MODU_G          011100 ..... ..... ..... 00000 011110   @rs_rt_rd
-+DMODU_G         011100 ..... ..... ..... 00000 011111   @rs_rt_rd
-diff --git a/target/mips/tcg/loong_translate.c b/target/mips/tcg/loong_translate.c
-index 2484b8a68df..39afed7d5f8 100644
---- a/target/mips/tcg/loong_translate.c
-+++ b/target/mips/tcg/loong_translate.c
-@@ -141,6 +141,117 @@ static bool trans_DDIVU_G(DisasContext *s, arg_muldiv *a)
-     return gen_lext_DIVU_G(s, a->rd, a->rs, a->rt, true);
- }
- 
-+static bool gen_lext_MOD_G(DisasContext *s, int rd, int rs, int rt,
-+                           bool is_double)
-+{
-+    TCGv t0, t1;
-+    TCGLabel *l1, *l2, *l3;
-+
-+    if (is_double) {
-+        if (TARGET_LONG_BITS != 64) {
-+            return false;
-+        }
-+        check_mips_64(s);
-+    }
-+
-+    if (rd == 0) {
-+        /* Treat as NOP. */
-+        return true;
-+    }
-+
-+    t0 = tcg_temp_new();
-+    t1 = tcg_temp_new();
-+    l1 = gen_new_label();
-+    l2 = gen_new_label();
-+    l3 = gen_new_label();
-+
-+    gen_load_gpr(t0, rs);
-+    gen_load_gpr(t1, rt);
-+
-+    if (!is_double) {
-+        tcg_gen_ext32u_tl(t0, t0);
-+        tcg_gen_ext32u_tl(t1, t1);
-+    }
-+    tcg_gen_brcondi_tl(TCG_COND_EQ, t1, 0, l1);
-+    tcg_gen_brcondi_tl(TCG_COND_NE, t0, is_double && TARGET_LONG_BITS == 64
-+                                        ? LLONG_MIN : INT_MIN, l2);
-+    tcg_gen_brcondi_tl(TCG_COND_NE, t1, -1LL, l2);
-+    gen_set_label(l1);
-+    tcg_gen_movi_tl(cpu_gpr[rd], 0);
-+    tcg_gen_br(l3);
-+    gen_set_label(l2);
-+    tcg_gen_rem_tl(cpu_gpr[rd], t0, t1);
-+    if (!is_double) {
-+        tcg_gen_ext32s_tl(cpu_gpr[rd], cpu_gpr[rd]);
-+    }
-+    gen_set_label(l3);
-+
-+    return true;
-+}
-+
-+static bool trans_MOD_G(DisasContext *s, arg_muldiv *a)
-+{
-+    return gen_lext_MOD_G(s, a->rd, a->rs, a->rt, false);
-+}
-+
-+static bool trans_DMOD_G(DisasContext *s, arg_muldiv *a)
-+{
-+    return gen_lext_MOD_G(s, a->rd, a->rs, a->rt, true);
-+}
-+
-+static bool gen_lext_MODU_G(DisasContext *s, int rd, int rs, int rt,
-+                            bool is_double)
-+{
-+    TCGv t0, t1;
-+    TCGLabel *l1, *l2;
-+
-+    if (is_double) {
-+        if (TARGET_LONG_BITS != 64) {
-+            return false;
-+        }
-+        check_mips_64(s);
-+    }
-+
-+    if (rd == 0) {
-+        /* Treat as NOP. */
-+        return true;
-+    }
-+
-+    t0 = tcg_temp_new();
-+    t1 = tcg_temp_new();
-+    l1 = gen_new_label();
-+    l2 = gen_new_label();
-+
-+    gen_load_gpr(t0, rs);
-+    gen_load_gpr(t1, rt);
-+
-+    if (!is_double) {
-+        tcg_gen_ext32u_tl(t0, t0);
-+        tcg_gen_ext32u_tl(t1, t1);
-+    }
-+    tcg_gen_brcondi_tl(TCG_COND_NE, t1, 0, l1);
-+    tcg_gen_movi_tl(cpu_gpr[rd], 0);
-+    tcg_gen_br(l2);
-+    gen_set_label(l1);
-+    tcg_gen_remu_tl(cpu_gpr[rd], t0, t1);
-+    if (!is_double) {
-+        tcg_gen_ext32s_tl(cpu_gpr[rd], cpu_gpr[rd]);
-+    }
-+    gen_set_label(l2);
-+
-+    return true;
-+}
-+
-+static bool trans_MODU_G(DisasContext *s, arg_muldiv *a)
-+{
-+    return gen_lext_MODU_G(s, a->rd, a->rs, a->rt, false);
-+}
-+
-+static bool trans_DMODU_G(DisasContext *s, arg_muldiv *a)
-+{
-+    return gen_lext_MODU_G(s, a->rd, a->rs, a->rt, true);
-+}
-+
- bool decode_ext_loongson(DisasContext *ctx, uint32_t insn)
- {
-     if (!decode_64bit_enabled(ctx)) {
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 53bbbb761f8..4abc30a6a5f 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -332,10 +332,6 @@ enum {
-     OPC_DMULT_G_2F  = 0x11 | OPC_SPECIAL2,
-     OPC_MULTU_G_2F  = 0x12 | OPC_SPECIAL2,
-     OPC_DMULTU_G_2F = 0x13 | OPC_SPECIAL2,
--    OPC_MOD_G_2F    = 0x1c | OPC_SPECIAL2,
--    OPC_DMOD_G_2F   = 0x1d | OPC_SPECIAL2,
--    OPC_MODU_G_2F   = 0x1e | OPC_SPECIAL2,
--    OPC_DMODU_G_2F  = 0x1f | OPC_SPECIAL2,
-     /* Misc */
-     OPC_CLZ      = 0x20 | OPC_SPECIAL2,
-     OPC_CLO      = 0x21 | OPC_SPECIAL2,
-@@ -369,10 +365,6 @@ enum {
-     OPC_MULTU_G_2E  = 0x19 | OPC_SPECIAL3,
-     OPC_DMULT_G_2E  = 0x1C | OPC_SPECIAL3,
-     OPC_DMULTU_G_2E = 0x1D | OPC_SPECIAL3,
--    OPC_MOD_G_2E    = 0x22 | OPC_SPECIAL3,
--    OPC_MODU_G_2E   = 0x23 | OPC_SPECIAL3,
--    OPC_DMOD_G_2E   = 0x26 | OPC_SPECIAL3,
--    OPC_DMODU_G_2E  = 0x27 | OPC_SPECIAL3,
- 
-     /* MIPS DSP Load */
-     OPC_LX_DSP         = 0x0A | OPC_SPECIAL3,
-@@ -3607,42 +3599,6 @@ static void gen_loongson_integer(DisasContext *ctx, uint32_t opc,
-         tcg_gen_mul_tl(cpu_gpr[rd], t0, t1);
-         tcg_gen_ext32s_tl(cpu_gpr[rd], cpu_gpr[rd]);
-         break;
--    case OPC_MOD_G_2E:
--    case OPC_MOD_G_2F:
--        {
--            TCGLabel *l1 = gen_new_label();
--            TCGLabel *l2 = gen_new_label();
--            TCGLabel *l3 = gen_new_label();
--            tcg_gen_ext32u_tl(t0, t0);
--            tcg_gen_ext32u_tl(t1, t1);
--            tcg_gen_brcondi_tl(TCG_COND_EQ, t1, 0, l1);
--            tcg_gen_brcondi_tl(TCG_COND_NE, t0, INT_MIN, l2);
--            tcg_gen_brcondi_tl(TCG_COND_NE, t1, -1, l2);
--            gen_set_label(l1);
--            tcg_gen_movi_tl(cpu_gpr[rd], 0);
--            tcg_gen_br(l3);
--            gen_set_label(l2);
--            tcg_gen_rem_tl(cpu_gpr[rd], t0, t1);
--            tcg_gen_ext32s_tl(cpu_gpr[rd], cpu_gpr[rd]);
--            gen_set_label(l3);
--        }
--        break;
--    case OPC_MODU_G_2E:
--    case OPC_MODU_G_2F:
--        {
--            TCGLabel *l1 = gen_new_label();
--            TCGLabel *l2 = gen_new_label();
--            tcg_gen_ext32u_tl(t0, t0);
--            tcg_gen_ext32u_tl(t1, t1);
--            tcg_gen_brcondi_tl(TCG_COND_NE, t1, 0, l1);
--            tcg_gen_movi_tl(cpu_gpr[rd], 0);
--            tcg_gen_br(l2);
--            gen_set_label(l1);
--            tcg_gen_remu_tl(cpu_gpr[rd], t0, t1);
--            tcg_gen_ext32s_tl(cpu_gpr[rd], cpu_gpr[rd]);
--            gen_set_label(l2);
--        }
--        break;
- #if defined(TARGET_MIPS64)
-     case OPC_DMULT_G_2E:
-     case OPC_DMULT_G_2F:
-@@ -3652,36 +3608,6 @@ static void gen_loongson_integer(DisasContext *ctx, uint32_t opc,
-     case OPC_DMULTU_G_2F:
-         tcg_gen_mul_tl(cpu_gpr[rd], t0, t1);
-         break;
--    case OPC_DMOD_G_2E:
--    case OPC_DMOD_G_2F:
--        {
--            TCGLabel *l1 = gen_new_label();
--            TCGLabel *l2 = gen_new_label();
--            TCGLabel *l3 = gen_new_label();
--            tcg_gen_brcondi_tl(TCG_COND_EQ, t1, 0, l1);
--            tcg_gen_brcondi_tl(TCG_COND_NE, t0, -1LL << 63, l2);
--            tcg_gen_brcondi_tl(TCG_COND_NE, t1, -1LL, l2);
--            gen_set_label(l1);
--            tcg_gen_movi_tl(cpu_gpr[rd], 0);
--            tcg_gen_br(l3);
--            gen_set_label(l2);
--            tcg_gen_rem_tl(cpu_gpr[rd], t0, t1);
--            gen_set_label(l3);
--        }
--        break;
--    case OPC_DMODU_G_2E:
--    case OPC_DMODU_G_2F:
--        {
--            TCGLabel *l1 = gen_new_label();
--            TCGLabel *l2 = gen_new_label();
--            tcg_gen_brcondi_tl(TCG_COND_NE, t1, 0, l1);
--            tcg_gen_movi_tl(cpu_gpr[rd], 0);
--            tcg_gen_br(l2);
--            gen_set_label(l1);
--            tcg_gen_remu_tl(cpu_gpr[rd], t0, t1);
--            gen_set_label(l2);
--        }
--        break;
- #endif
-     }
- }
-@@ -13543,8 +13469,6 @@ static void decode_opc_special2_legacy(CPUMIPSState *env, DisasContext *ctx)
-         break;
-     case OPC_MULT_G_2F:
-     case OPC_MULTU_G_2F:
--    case OPC_MOD_G_2F:
--    case OPC_MODU_G_2F:
-         check_insn(ctx, INSN_LOONGSON2F | ASE_LEXT);
-         gen_loongson_integer(ctx, op1, rd, rs, rt);
-         break;
-@@ -13574,8 +13498,6 @@ static void decode_opc_special2_legacy(CPUMIPSState *env, DisasContext *ctx)
-         break;
-     case OPC_DMULT_G_2F:
-     case OPC_DMULTU_G_2F:
--    case OPC_DMOD_G_2F:
--    case OPC_DMODU_G_2F:
-         check_insn(ctx, INSN_LOONGSON2F | ASE_LEXT);
-         gen_loongson_integer(ctx, op1, rd, rs, rt);
-         break;
-@@ -13711,8 +13633,6 @@ static void decode_opc_special3_legacy(CPUMIPSState *env, DisasContext *ctx)
- 
-     op1 = MASK_SPECIAL3(ctx->opcode);
-     switch (op1) {
--    case OPC_MOD_G_2E:
--    case OPC_MODU_G_2E:
-     case OPC_MULT_G_2E:
-     case OPC_MULTU_G_2E:
-         /*
-@@ -13979,8 +13899,6 @@ static void decode_opc_special3_legacy(CPUMIPSState *env, DisasContext *ctx)
- #if defined(TARGET_MIPS64)
-     case OPC_DMULT_G_2E:
-     case OPC_DMULTU_G_2E:
--    case OPC_DMOD_G_2E:
--    case OPC_DMODU_G_2E:
-         check_insn(ctx, INSN_LOONGSON2E);
-         gen_loongson_integer(ctx, op1, rd, rs, rt);
-         break;
--- 
-2.45.2
+
+r~
+
+> +
+>   static inline bool isar_feature_aa64_hafs(const ARMISARegisters *id)
+>   {
+>       return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, HAFDBS) != 0;
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 8fc8b6398f..1ea4c545e0 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -1367,6 +1367,7 @@ void pmu_init(ARMCPU *cpu);
+>   #define SCTLR_EnIB    (1U << 30) /* v8.3, AArch64 only */
+>   #define SCTLR_EnIA    (1U << 31) /* v8.3, AArch64 only */
+>   #define SCTLR_DSSBS_32 (1U << 31) /* v8.5, AArch32 only */
+> +#define SCTLR_CMOW    (1ULL << 32) /* FEAT_CMOW */
+>   #define SCTLR_MSCEN   (1ULL << 33) /* FEAT_MOPS */
+>   #define SCTLR_BT0     (1ULL << 35) /* v8.5-BTI */
+>   #define SCTLR_BT1     (1ULL << 36) /* v8.5-BTI */
+> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+> index 0168920828..2963d7510f 100644
+> --- a/target/arm/tcg/cpu64.c
+> +++ b/target/arm/tcg/cpu64.c
+> @@ -1218,6 +1218,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+>       t = FIELD_DP64(t, ID_AA64MMFR1, ETS, 2);      /* FEAT_ETS2 */
+>       t = FIELD_DP64(t, ID_AA64MMFR1, HCX, 1);      /* FEAT_HCX */
+>       t = FIELD_DP64(t, ID_AA64MMFR1, TIDCP1, 1);   /* FEAT_TIDCP1 */
+> +    t = FIELD_DP64(t, ID_AA64MMFR1, CMOW, 1);     /* FEAT_CMOW */
+>       cpu->isar.id_aa64mmfr1 = t;
+>   
+>       t = cpu->isar.id_aa64mmfr2;
 
 
