@@ -4,73 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0928AD1CA05
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 22:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9964D1CA06
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 22:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t85Rn-00056q-43; Mon, 04 Nov 2024 17:21:19 -0500
+	id 1t85T1-0005pi-0r; Mon, 04 Nov 2024 17:22:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t85Rl-00056f-P5
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:21:17 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1t85Sy-0005m3-Qq
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:22:32 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t85Rk-0003n3-46
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:21:17 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-7ee11ff7210so3438473a12.1
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 14:21:15 -0800 (PST)
+ id 1t85Sx-0003pv-A7
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:22:32 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-723db2798caso1306085b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 14:22:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730758874; x=1731363674; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730758950; x=1731363750; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=CtjK6uM8BJttcc5DlKkj0akc4KPUoC3/df35iFHLVEY=;
- b=HQpGTFeAiXq8dtH39VNf694sq3V3jeaTLdoRH1M8B4f+YIE+8aAVYo6FnbOf9Qsu1B
- Wxm8WFkV4643RQOY1j6/0+QyfHQvfHQTrdffAaIBZOXUrRRhLAdKV243y02+zFg4IZ5N
- niGO9Gv8Tfbr7lHrVAjFVoNPF+QRtHzkWBUi4P7Cbhf8KYLzdIN4np1HhsuQRPMV6jD+
- oIsNOc/q4LEMpyzGPgmOWagb3MLc5bOkt58hWKuI4cFmydJHscnqB5f7hdPU5u8Whnw3
- amOihc3i0fjA4Y8PkMpyHrTWMSN2Nb8/nNOXC3koIMptModOIn2K8g4H0SUqpop3oxEl
- EKKw==
+ bh=xOcpy6BRgMc6xnewM0r89Ss5p3pXoDrbvOahXHbomVw=;
+ b=TWyKs4EM8NagFJDajQJnqq+NeicVzn203yNvCWRNZYFkKCiysW1zIsIYFZqA+GvEA7
+ yaQsF6XKCbzcPIp5Qd+Zu+XeXhKpEtT/NKcXzEDgDfn+VFXWsWEFAaJxxhsBUpaq276K
+ ApBPdE6oqv1DEe82A3PD91M9Ds4bUozvD6vo7fYV0IgWT/yQ0HeCitvOiBcFwF6A1Xjz
+ E6S52DyAzcCzM/wNi8a3JcpqsRXeuY2Tr9KC8YRnmHa0N0V8ezJXn5XBDJGtoRSsXBj0
+ lDHgPCglfHmThlRBgew9nNgvJBvJQP83ea+3MnLAiSRoIZQkPnwh+B5WCZ7b6uFWFIf0
+ J90A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730758874; x=1731363674;
+ d=1e100.net; s=20230601; t=1730758950; x=1731363750;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CtjK6uM8BJttcc5DlKkj0akc4KPUoC3/df35iFHLVEY=;
- b=cu3CS/PCoHq1EurW9ZemyKTfwlZG9jbM7gkGQLTFeRmxwqXoiOje6CNGUVS9BK4E3/
- eRKybX2Z3dzFAFoQf2L5gSWCRxoTZ3wsA6golqAvdothE7dSGZI2dOFnyjnyg+voEC/a
- 1tRaiCa1NbogmRXWinuQXWwFgB1f/cj7gIh5KfqM5G9/Y1ygsZDC/B2P++PhllKDcsZn
- QhC/VtQ5BU8aE7N67LGdlnN/pevp03Y3sqESNJ/WxTfbh+BEV5xEnAIkt5I+OZGCbVLZ
- oSQWSdc1xSntWkXow3bP+CGi864gcpnaTY8+6D9+SU2vHbFlrtUQQbdVNqpK/jKU/orx
- pgqA==
-X-Gm-Message-State: AOJu0YzJ8u7luHqyfMm40nhqMigTGSoAAvwmcrh6/7psb667+M75QAk5
- gTklnT5rxqZk15FscFmPf49cSKmlV4hxX+FidJJlHgWSG0xxgUOp2ph7MmBrLIrPvrD1z+jqpVh
- SZHg86Q==
-X-Google-Smtp-Source: AGHT+IFEZfAAgXcBOfbaUQH8AKA340IWSEJiu6JQC00u/RA1eztquMjBOjOGqVRa0Qty5ZDFJ1dOQQ==
-X-Received: by 2002:a17:90b:2e4d:b0:2e5:e269:1b5a with SMTP id
- 98e67ed59e1d1-2e94c54a67emr17180374a91.41.1730758873765; 
- Mon, 04 Nov 2024 14:21:13 -0800 (PST)
+ bh=xOcpy6BRgMc6xnewM0r89Ss5p3pXoDrbvOahXHbomVw=;
+ b=VNPF/jdPMKkyocMqkXBX0FgXzICvvQ9D3S2LbRGLLUpuJELrx9MwF4vFLi1JazK7SJ
+ JhUNUdg9gvidMYblCT1xFaAMBDvnknfFzNiM+JY/LibcjkxOC4qqWVqtxV/5hjpaxFbb
+ HNQTL7XLUfVdsruq8LtoRp3CnSPF8WxMBuSf/I/1v/lvdVNoyISQT61MdxVSEBjQ0ty+
+ 9NlDKMMPvUIbCJqB4BsJr1D5NZIbKona3t6dKLDf3yiDbvtVWNmNsgOKgc91FOyVmXK5
+ s4lREKKgjzPisKSPnnO9Q9rkIcxV470X16kfO6aV/XdBM5u92H6LtmCMzVUA8m14fmWH
+ Ppog==
+X-Gm-Message-State: AOJu0YzbW0l/PVALCpDGjozDvt1qhPQmqBPBC3dEcn7qP5wkdaMdPeA0
+ FAf50zj7QVgSRV0fzAMvAxlQhDyhF0xHu9K/tJofpiXjPGkMDGaILvNNh113ff8ephK0Da/FF67
+ dvS3t2A==
+X-Google-Smtp-Source: AGHT+IGutZwsUsx+khBWnYbs4LvGgFdZDrJ51/t0mm32rYPT2fxykQvhIlqKCKH53gkiH8x49k86Vg==
+X-Received: by 2002:a05:6a00:2e93:b0:71e:41b3:a56b with SMTP id
+ d2e1a72fcca58-720ab4c5d9bmr27670702b3a.24.1730758949707; 
+ Mon, 04 Nov 2024 14:22:29 -0800 (PST)
 Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e93da983edsm8100117a91.4.2024.11.04.14.21.12
+ d2e1a72fcca58-720bc2eb76esm8146465b3a.154.2024.11.04.14.22.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 14:21:13 -0800 (PST)
+ Mon, 04 Nov 2024 14:22:29 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, pbonzini@redhat.com,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+Cc: Roman Bolshakov <rbolshakov@ddn.com>, Bin Meng <bmeng.cn@gmail.com>,
+ tjeznach@rivosinc.com, qemu-riscv@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, pbonzini@redhat.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ peter.maydell@linaro.org, Cameron Esfahani <dirty@apple.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] target/i386/hvf: fix clang compilation warning
-Date: Mon,  4 Nov 2024 14:21:02 -0800
-Message-Id: <20241104222102.1522688-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2] hw/riscv: fix build error with clang
+Date: Mon,  4 Nov 2024 14:22:25 -0800
+Message-Id: <20241104222225.1523751-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,27 +98,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-../target/i386/hvf/x86_cpuid.c:35:28: error: a function declaration without a prototype is deprecated in all versions of C
+Introduced in 0c54ac, "hw/riscv: add RISC-V IOMMU base emulation"
 
-Fixes: 7cac7aa7040a823c585f1578a38f28e83c8bf3e1
+../hw/riscv/riscv-iommu.c:187:17: error: redefinition of '_pext_u64'
+
+  187 | static uint64_t _pext_u64(uint64_t val, uint64_t ext)
+
+      |                 ^
+
+D:/a/_temp/msys64/clang64/lib/clang/18/include/bmi2intrin.h:217:1: note: previous definition is here
+
+  217 | _pext_u64(unsigned long long __X, unsigned long long __Y)
+
+      | ^
+
+After a conversation on the mailing list, it was decided to rename and
+add a comment for this function.
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/i386/hvf/x86_cpuid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/riscv/riscv-iommu.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/hvf/x86_cpuid.c b/target/i386/hvf/x86_cpuid.c
-index 3a116548a3d..492e8bfc809 100644
---- a/target/i386/hvf/x86_cpuid.c
-+++ b/target/i386/hvf/x86_cpuid.c
-@@ -32,7 +32,7 @@
- static bool cached_xcr0;
- static uint64_t supported_xcr0;
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index feb650549ac..12f01a75f5d 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -183,8 +183,25 @@ static void riscv_iommu_pri(RISCVIOMMUState *s,
+     }
+ }
  
--static void cache_host_xcr0()
-+static void cache_host_xcr0(void)
+-/* Portable implementation of pext_u64, bit-mask extraction. */
+-static uint64_t _pext_u64(uint64_t val, uint64_t ext)
++/*
++ * Discards all bits from 'val' whose matching bits in the same
++ * positions in the mask 'ext' are zeros, and packs the remaining
++ * bits from 'val' contiguously at the least-significant end of the
++ * result, keeping the same bit order as 'val' and filling any
++ * other bits at the most-significant end of the result with zeros.
++ *
++ * For example, for the following 'val' and 'ext', the return 'ret'
++ * will be:
++ *
++ * val = a b c d e f g h
++ * ext = 1 0 1 0 0 1 1 0
++ * ret = 0 0 0 0 a c f g
++ *
++ * This function, taken from the riscv-iommu 1.0 spec, section 2.3.3
++ * "Process to translate addresses of MSIs", is similar to bit manip
++ * function PEXT (Parallel bits extract) from x86.
++ */
++static uint64_t riscv_iommu_pext_u64(uint64_t val, uint64_t ext)
  {
-     if (cached_xcr0) {
-         return;
+     uint64_t ret = 0;
+     uint64_t rot = 1;
+@@ -528,7 +545,7 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
+     int cause;
+ 
+     /* Interrupt File Number */
+-    intn = _pext_u64(PPN_DOWN(gpa), ctx->msi_addr_mask);
++    intn = riscv_iommu_pext_u64(PPN_DOWN(gpa), ctx->msi_addr_mask);
+     if (intn >= 256) {
+         /* Interrupt file number out of range */
+         res = MEMTX_ACCESS_ERROR;
 -- 
 2.39.5
 
