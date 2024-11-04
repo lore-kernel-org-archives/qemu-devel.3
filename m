@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8282D132AB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 10:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC8ED132AB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 10:53:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7ufo-0001E7-Hk; Mon, 04 Nov 2024 05:51:04 -0500
+	id 1t7uhm-0001v9-4C; Mon, 04 Nov 2024 05:53:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t7ufk-0001Dk-UI
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:51:00 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7uhj-0001uw-1s
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:53:03 -0500
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t7ufg-0003Q4-R8
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:50:59 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5ceb03aaddeso4207266a12.2
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 02:50:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7uhf-0003ip-LA
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:53:02 -0500
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-53a097aa3daso3693731e87.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 02:52:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730717453; x=1731322253; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gclXQ6NgDPQejj3W6tl371AcJXzxEWWNEMLWWOTGKfk=;
- b=E2seSSsms6uNeODnYpAA0rDx0BVgbGmhqzldTbPwUXlF7y0ik2ft5JdG5OKJw4cs0W
- mg3KjodX9zDHI8CPiCEyBl39LGxpDBEzzSK5Z1AR7+n1lljHsvASS2rWdMkLBalA+vHm
- A1AResLYdN3njaYJMRjBzfjwYRmy8W0+FN9Lern488pmiCz7rC0lkgeXEAS47kaJH0j6
- s6/XAlvaxFkx9esQzwZJ56FMCg6ClzcvtLeyKTlbWu64K9Cu3bvJVX+NEEWIVE0X0xc6
- uwZS3ZG+/ndK0PrJ06m14ijzclwqR12q2Et1daaw64mqT1KnI+C06lddfapIIEGZOmFc
- hJKA==
+ d=linaro.org; s=google; t=1730717577; x=1731322377; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iJ/L9dFPSPVFQVZy18IjLJxHNsXiBznVxbsWZ2vhz6A=;
+ b=x4eW3cq0fb1jl5yR+XWikyVJXA0WuoYpf190jMQkLctDt9FZzqI+eTlcJJiLUbHb90
+ peC+VsD3bp4Hr4eN/uD78mKZHTBbxAg/9ch3ZbixnrdfKnkJlfGxzDsNJI16NM8jhIuh
+ qM1IMvkRaYxWlni8aBPii/4d0TyI5fSFVvPSfxgti+ka0Um0viKlfBGw8kS4Dcs4LEvx
+ /hYdiWVo234Z7XyCN5cRAQZ/yYWj6LLMn4aqz78a2SdfpZqYSlx51HknE77NdcIZeSyC
+ f6m1UoXJqdjFLEEY31jtqyJcH/FvgkLosilPMRtWOPVGRyzRuSoFY5GXLAXsNqE7Oj+W
+ cpEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730717453; x=1731322253;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gclXQ6NgDPQejj3W6tl371AcJXzxEWWNEMLWWOTGKfk=;
- b=wWO2QsaptgyZnXeXJ/YHe/yNI0mmqxb158dGO75WVyV6ilc+Zy6yTJ2xtWBwOcugt7
- tOsQrOiOHNOzQc1CJ/wV2D/Z/zVG25K76/IqclGJUVKz18KTGOdCYxuUeVui/3KuRuju
- ymONEmNRjzoqe96o8yvH0wAzL593TqU9cI7i0mRr/7h4NVDz+4HfLb2UTnbKhzgQ67Pv
- tcG70N2AwOSNxcq3T0vogb+VAXbDHCZuVoESNn1n/zMpxhkKtk3oDiGv0iRlaIu8oG9n
- CalBDywsdZ/uxa9XEHW1o5FAOMIgbAHDjG6TjN5e8mvIRzWs9hRaPI9cwk7UmDwv7gTX
- dTYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWlLXMxIcUhpc4rOBipLmY8cb+ynz0yRwE7bJ2WWEt4mdaQPLkggoZeiwTtK98A/XLryukt2bgjjb2g@nongnu.org
-X-Gm-Message-State: AOJu0YxhoWMm2NT6xq76ysCglizFWTJSaoO937Vu+BZMuT5Z2agWdsTg
- TMDlp1NyjOjp1aZi2KngZbyqwVgsHsPOEvBVkO9ZJ9VZcqx8+XzIzXSBJvFQEoo=
-X-Google-Smtp-Source: AGHT+IEV9ywGBbr15GOvc6rij4jjEQpde9nyt4wfhpIYatlIVTQFcFdSd9PmFKzcmYJL/u72lycQJg==
-X-Received: by 2002:a05:6402:40c4:b0:5ce:b113:f38d with SMTP id
- 4fb4d7f45d1cf-5ceb113f6acmr11890018a12.28.1730717453059; 
- Mon, 04 Nov 2024 02:50:53 -0800 (PST)
-Received: from [192.168.21.227] ([91.223.100.66])
+ d=1e100.net; s=20230601; t=1730717577; x=1731322377;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iJ/L9dFPSPVFQVZy18IjLJxHNsXiBznVxbsWZ2vhz6A=;
+ b=n8Dr8l1DG2GLYMGG8yzuUYvXRSX6abySANY/1rNETnGD4LZatmakw95TRi9wwaGZxP
+ Hv1R2w63YzNq+kxORZ2gQgTcAWwgoJ7/rTke2/8sK4QYGRyPJUQHh+ZiMaTqDGm0TTAC
+ PZRzTi7Ia+nWL0GZzJU/VUtgcKKRUMKyH72yYsOmwmi0t6SIn9nRtGMs1YPxNf52m1JR
+ ubNhYUQIByljQdNmCDigJmkkmLs3RGWj2hAiIYt7vNzD5KHNjce1wrxf4rNL6X0Qm6Zt
+ B+DmY4TkqsfjTnNpH2vBPCEs7NLOn/unalohvQ2baxOQ1/EwX0zN8UJXVXLNPiGHQpgX
+ 89qA==
+X-Gm-Message-State: AOJu0YywV0tL/n8j875WVzy4JABm6H/2Toj7WHGu3FJwTYwaHVBMX8Iq
+ ZRiRpOA+oYh0pRq4EGbCb5ShxxB1ewbR1UXpnNiOyUH2W9ofGOKBL43RNjtJNHgZutDgdyG0QND
+ +jeQ=
+X-Google-Smtp-Source: AGHT+IFffErjvcL5Ibzr0seRFP7xLu1mjUBogyB/QrpkS0bngYZ935y2Un73rcte+YHRCVX3pDkWow==
+X-Received: by 2002:a05:6512:280a:b0:537:a824:7e5 with SMTP id
+ 2adb3069b0e04-53d65df26afmr5021513e87.18.1730717577435; 
+ Mon, 04 Nov 2024 02:52:57 -0800 (PST)
+Received: from localhost.localdomain ([176.176.145.27])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ceac76fb46sm4066687a12.26.2024.11.04.02.50.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Nov 2024 02:50:51 -0800 (PST)
-Message-ID: <0e767aee-f9c6-4efe-a91d-40fef98a285b@linaro.org>
-Date: Mon, 4 Nov 2024 10:50:48 +0000
+ 5b1f17b1804b1-431bd947b2bsm184406465e9.25.2024.11.04.02.52.56
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 04 Nov 2024 02:52:56 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 06/14] target/mips: Convert Loongson DDIV.G opcodes to
+ decodetree
+Date: Mon,  4 Nov 2024 11:52:45 +0100
+Message-ID: <20241104105250.57818-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241104105250.57818-1-philmd@linaro.org>
+References: <20241104105250.57818-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/arm: Add new MMU indexes for AArch32 Secure
- PL1&0
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20241101142845.1712482-1-peter.maydell@linaro.org>
- <20241101142845.1712482-3-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241101142845.1712482-3-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x532.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,64 +96,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/1/24 14:28, Peter Maydell wrote:
-> Our current usage of MMU indexes when EL3 is AArch32 is confused.
-> Architecturally, when EL3 is AArch32, all Secure code runs under the
-> Secure PL1&0 translation regime:
->   * code at EL3, which might be Mon, or SVC, or any of the
->     other privileged modes (PL1)
->   * code at EL0 (Secure PL0)
-> 
-> This is different from when EL3 is AArch64, in which case EL3 is its
-> own translation regime, and EL1 and EL0 (whether AArch32 or AArch64)
-> have their own regime.
-> 
-> We claimed to be mapping Secure PL1 to our ARMMMUIdx_EL3, but didn't
-> do anything special about Secure PL0, which meant it used the same
-> ARMMMUIdx_EL10_0 that NonSecure PL0 does.  This resulted in a bug
-> where arm_sctlr() incorrectly picked the NonSecure SCTLR as the
-> controlling register when in Secure PL0, which meant we were
-> spuriously generating alignment faults because we were looking at the
-> wrong SCTLR control bits.
-> 
-> The use of ARMMMUIdx_EL3 for Secure PL1 also resulted in the bug that
-> we wouldn't honour the PAN bit for Secure PL1, because there's no
-> equivalent _PAN mmu index for it.
-> 
-> Fix this by adding two new MMU indexes:
->   * ARMMMUIdx_E30_0 is for Secure PL0
->   * ARMMMUIdx_E30_3_PAN is for Secure PL1 when PAN is enabled
-> The existing ARMMMUIdx_E3 is used to mean "Secure PL1 without PAN"
-> (and would be named ARMMMUIdx_E30_3 in an AArch32-centric scheme).
-> 
-> These extra two indexes bring us up to the maximum of 16 that the
-> core code can currently support.
-> 
-> This commit:
->   * adds the new MMU index handling to the various places
->     where we deal in MMU index values
->   * adds assertions that we aren't AArch32 EL3 in a couple of
->     places that currently use the E10 indexes, to document why
->     they don't also need to handle the E30 indexes
->   * documents in a comment why regime_has_2_ranges() doesn't need
->     updating
-> 
-> Notes for backporting: this commit depends on the preceding revert of
-> 4c2c04746932; that revert and this commit should probably be
-> backported to everywhere that we originally backported 4c2c04746932.
-> 
-> Cc:qemu-stable@nongnu.org
-> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2326
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
-> The regime_has_2_ranges() part is correct but does leave a minor
-> beartrap for the future if we ever do for some reason need to
-> identify "has 2 ranges" in an AArch32 codepath...
-> ---
+From: Philippe Mathieu-Daudé <f4bug@amsat.org>
 
-Series:
+Introduce decode_loongson() to decode all Loongson vendor
+specific opcodes. Start converting a single opcode: DDIV.G
+(divide 64-bit signed integers).
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
+Message-Id: <20241026175349.84523-5-philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/mips/tcg/translate.h       |  1 +
+ target/mips/tcg/godson2.decode    | 16 ++++++
+ target/mips/tcg/loong-ext.decode  | 17 ++++++
+ target/mips/tcg/loong_translate.c | 86 +++++++++++++++++++++++++++++++
+ target/mips/tcg/translate.c       | 26 ++--------
+ target/mips/tcg/meson.build       |  3 ++
+ 6 files changed, 126 insertions(+), 23 deletions(-)
+ create mode 100644 target/mips/tcg/godson2.decode
+ create mode 100644 target/mips/tcg/loong-ext.decode
+ create mode 100644 target/mips/tcg/loong_translate.c
 
+diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
+index ae6c25aa0c4..23a489c0f38 100644
+--- a/target/mips/tcg/translate.h
++++ b/target/mips/tcg/translate.h
+@@ -223,6 +223,7 @@ bool decode_64bit_enabled(DisasContext *ctx);
+ bool decode_isa_rel6(DisasContext *ctx, uint32_t insn);
+ bool decode_ase_msa(DisasContext *ctx, uint32_t insn);
+ bool decode_ext_txx9(DisasContext *ctx, uint32_t insn);
++bool decode_ext_loongson(DisasContext *ctx, uint32_t insn);
+ #if defined(TARGET_MIPS64)
+ bool decode_ase_lcsr(DisasContext *ctx, uint32_t insn);
+ bool decode_ext_tx79(DisasContext *ctx, uint32_t insn);
+diff --git a/target/mips/tcg/godson2.decode b/target/mips/tcg/godson2.decode
+new file mode 100644
+index 00000000000..47ea5a1c438
+--- /dev/null
++++ b/target/mips/tcg/godson2.decode
+@@ -0,0 +1,16 @@
++# Godson2 64-bit Integer instructions
++#
++# Copyright (C) 2021  Philippe Mathieu-Daudé
++#
++# SPDX-License-Identifier: LGPL-2.1-or-later
++#
++# Reference:
++#       Godson-2E Software Manual
++#       (Document Number: godson2e-user-manual-V0.6)
++#
++
++&muldiv         rs rt rd
++
++@rs_rt_rd       ...... rs:5  rt:5  rd:5  ..... ......   &muldiv
++
++DDIV_G          011111 ..... ..... ..... 00000 011110   @rs_rt_rd
+diff --git a/target/mips/tcg/loong-ext.decode b/target/mips/tcg/loong-ext.decode
+new file mode 100644
+index 00000000000..8b78ec48599
+--- /dev/null
++++ b/target/mips/tcg/loong-ext.decode
+@@ -0,0 +1,17 @@
++# Loongson 64-bit Extension instructions
++#
++# Copyright (C) 2021  Philippe Mathieu-Daudé
++#
++# SPDX-License-Identifier: LGPL-2.1-or-later
++#
++# Reference:
++#       STLS2F01 User Manual
++#       Appendix A: new integer instructions
++#       (Document Number: UM0447)
++#
++
++&muldiv         rs rt rd !extern
++
++@rs_rt_rd       ...... rs:5  rt:5  rd:5  ..... ......   &muldiv
++
++DDIV_G          011100 ..... ..... ..... 00000 010101   @rs_rt_rd
+diff --git a/target/mips/tcg/loong_translate.c b/target/mips/tcg/loong_translate.c
+new file mode 100644
+index 00000000000..55adc0f6fc4
+--- /dev/null
++++ b/target/mips/tcg/loong_translate.c
+@@ -0,0 +1,86 @@
++/*
++ * MIPS Loongson 64-bit translation routines
++ *
++ *  Copyright (c) 2004-2005 Jocelyn Mayer
++ *  Copyright (c) 2006 Marius Groeger (FPU operations)
++ *  Copyright (c) 2006 Thiemo Seufer (MIPS32R2 support)
++ *  Copyright (c) 2011 Richard Henderson <rth@twiddle.net>
++ *  Copyright (c) 2021 Philippe Mathieu-Daudé
++ *
++ * This code is licensed under the GNU GPLv2 and later.
++ */
++
++#include "qemu/osdep.h"
++#include "translate.h"
++
++/* Include the auto-generated decoder.  */
++#include "decode-godson2.c.inc"
++#include "decode-loong-ext.c.inc"
++
++/*
++ * Word or double-word Fixed-point instructions.
++ * ---------------------------------------------
++ *
++ * Fixed-point multiplies and divisions write only
++ * one result into general-purpose registers.
++ */
++
++static bool gen_lext_DIV_G(DisasContext *s, int rd, int rs, int rt)
++{
++    TCGv t0, t1;
++    TCGLabel *l1, *l2, *l3;
++
++    if (TARGET_LONG_BITS != 64) {
++        return false;
++    }
++    check_mips_64(s);
++
++    if (rd == 0) {
++        /* Treat as NOP. */
++        return true;
++    }
++
++    t0 = tcg_temp_new();
++    t1 = tcg_temp_new();
++    l1 = gen_new_label();
++    l2 = gen_new_label();
++    l3 = gen_new_label();
++
++    gen_load_gpr(t0, rs);
++    gen_load_gpr(t1, rt);
++
++    tcg_gen_brcondi_tl(TCG_COND_NE, t1, 0, l1);
++    tcg_gen_movi_tl(cpu_gpr[rd], 0);
++    tcg_gen_br(l3);
++    gen_set_label(l1);
++
++    tcg_gen_brcondi_tl(TCG_COND_NE, t0, -1LL << 63, l2);
++    tcg_gen_brcondi_tl(TCG_COND_NE, t1, -1LL, l2);
++    tcg_gen_mov_tl(cpu_gpr[rd], t0);
++
++    tcg_gen_br(l3);
++    gen_set_label(l2);
++    tcg_gen_div_tl(cpu_gpr[rd], t0, t1);
++    gen_set_label(l3);
++
++    return true;
++}
++
++static bool trans_DDIV_G(DisasContext *s, arg_muldiv *a)
++{
++    return gen_lext_DIV_G(s, a->rd, a->rs, a->rt);
++}
++
++bool decode_ext_loongson(DisasContext *ctx, uint32_t insn)
++{
++    if (!decode_64bit_enabled(ctx)) {
++        return false;
++    }
++    if ((ctx->insn_flags & INSN_LOONGSON2E) && decode_godson2(ctx, ctx->opcode)) {
++        return true;
++    }
++    if ((ctx->insn_flags & ASE_LEXT) && decode_loong_ext(ctx, ctx->opcode)) {
++        return true;
++    }
++    return false;
++}
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 509488fdc7a..73445dd9074 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -333,7 +333,6 @@ enum {
+     OPC_MULTU_G_2F  = 0x12 | OPC_SPECIAL2,
+     OPC_DMULTU_G_2F = 0x13 | OPC_SPECIAL2,
+     OPC_DIV_G_2F    = 0x14 | OPC_SPECIAL2,
+-    OPC_DDIV_G_2F   = 0x15 | OPC_SPECIAL2,
+     OPC_DIVU_G_2F   = 0x16 | OPC_SPECIAL2,
+     OPC_DDIVU_G_2F  = 0x17 | OPC_SPECIAL2,
+     OPC_MOD_G_2F    = 0x1c | OPC_SPECIAL2,
+@@ -375,7 +374,6 @@ enum {
+     OPC_DIVU_G_2E   = 0x1B | OPC_SPECIAL3,
+     OPC_DMULT_G_2E  = 0x1C | OPC_SPECIAL3,
+     OPC_DMULTU_G_2E = 0x1D | OPC_SPECIAL3,
+-    OPC_DDIV_G_2E   = 0x1E | OPC_SPECIAL3,
+     OPC_DDIVU_G_2E  = 0x1F | OPC_SPECIAL3,
+     OPC_MOD_G_2E    = 0x22 | OPC_SPECIAL3,
+     OPC_MODU_G_2E   = 0x23 | OPC_SPECIAL3,
+@@ -3698,25 +3696,6 @@ static void gen_loongson_integer(DisasContext *ctx, uint32_t opc,
+     case OPC_DMULTU_G_2F:
+         tcg_gen_mul_tl(cpu_gpr[rd], t0, t1);
+         break;
+-    case OPC_DDIV_G_2E:
+-    case OPC_DDIV_G_2F:
+-        {
+-            TCGLabel *l1 = gen_new_label();
+-            TCGLabel *l2 = gen_new_label();
+-            TCGLabel *l3 = gen_new_label();
+-            tcg_gen_brcondi_tl(TCG_COND_NE, t1, 0, l1);
+-            tcg_gen_movi_tl(cpu_gpr[rd], 0);
+-            tcg_gen_br(l3);
+-            gen_set_label(l1);
+-            tcg_gen_brcondi_tl(TCG_COND_NE, t0, -1LL << 63, l2);
+-            tcg_gen_brcondi_tl(TCG_COND_NE, t1, -1LL, l2);
+-            tcg_gen_mov_tl(cpu_gpr[rd], t0);
+-            tcg_gen_br(l3);
+-            gen_set_label(l2);
+-            tcg_gen_div_tl(cpu_gpr[rd], t0, t1);
+-            gen_set_label(l3);
+-        }
+-        break;
+     case OPC_DDIVU_G_2E:
+     case OPC_DDIVU_G_2F:
+         {
+@@ -13654,7 +13633,6 @@ static void decode_opc_special2_legacy(CPUMIPSState *env, DisasContext *ctx)
+         break;
+     case OPC_DMULT_G_2F:
+     case OPC_DMULTU_G_2F:
+-    case OPC_DDIV_G_2F:
+     case OPC_DDIVU_G_2F:
+     case OPC_DMOD_G_2F:
+     case OPC_DMODU_G_2F:
+@@ -14061,7 +14039,6 @@ static void decode_opc_special3_legacy(CPUMIPSState *env, DisasContext *ctx)
+         }
+         break;
+ #if defined(TARGET_MIPS64)
+-    case OPC_DDIV_G_2E:
+     case OPC_DDIVU_G_2E:
+     case OPC_DMULT_G_2E:
+     case OPC_DMULTU_G_2E:
+@@ -15262,6 +15239,9 @@ static void decode_opc(CPUMIPSState *env, DisasContext *ctx)
+     if (cpu_supports_isa(env, INSN_VR54XX) && decode_ext_vr54xx(ctx, ctx->opcode)) {
+         return;
+     }
++    if (TARGET_LONG_BITS == 64 && decode_ext_loongson(ctx, ctx->opcode)) {
++        return;
++    }
+ #if defined(TARGET_MIPS64)
+     if (ase_lcsr_available(env) && decode_ase_lcsr(ctx, ctx->opcode)) {
+         return;
+diff --git a/target/mips/tcg/meson.build b/target/mips/tcg/meson.build
+index ea7fb582f2a..7b18e6c4c8b 100644
+--- a/target/mips/tcg/meson.build
++++ b/target/mips/tcg/meson.build
+@@ -5,6 +5,8 @@ gen = [
+   decodetree.process('vr54xx.decode', extra_args: '--decode=decode_ext_vr54xx'),
+   decodetree.process('octeon.decode', extra_args: '--decode=decode_ext_octeon'),
+   decodetree.process('lcsr.decode', extra_args: '--decode=decode_ase_lcsr'),
++  decodetree.process('godson2.decode', extra_args: ['--static-decode=decode_godson2']),
++  decodetree.process('loong-ext.decode', extra_args: ['--static-decode=decode_loong_ext']),
+ ]
+ 
+ mips_ss.add(gen)
+@@ -28,6 +30,7 @@ mips_ss.add(when: 'TARGET_MIPS64', if_true: files(
+   'tx79_translate.c',
+   'octeon_translate.c',
+   'lcsr_translate.c',
++  'loong_translate.c',
+ ), if_false: files(
+   'mxu_translate.c',
+ ))
+-- 
+2.45.2
 
-r~
 
