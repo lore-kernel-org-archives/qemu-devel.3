@@ -4,81 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C277DD132DF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 15:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A205AD132DF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 15:54:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7zKE-0000SX-Ut; Mon, 04 Nov 2024 10:49:06 -0500
+	id 1t7zO9-0002hj-JL; Mon, 04 Nov 2024 10:53:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1t7zKC-0000S1-LZ
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:49:05 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1t7zO7-0002g5-7L
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:53:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1t7zKA-0005Kj-Qm
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:49:04 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1t7zO3-00065h-PK
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:53:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730735340;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1730735582;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=L5qKSNIK6vQ6Q7JE8WWXcZJy6X0rXyRaC1H1Rdx2Ib0=;
- b=Qe374yvO4WLIqRmuPetbVa9cnnogqd06BbZm5dBhlQvU+QHeZZKhMQwXly+n3wgQ9LPTR2
- OL5Ap1oDAqsJNzTCiUjNhkUaZM9+37SmRgW6OzRDFi4cQzF7MBylJ6We15MRE1H1uSTuWH
- htHhLKeKJtj50w8xljgz5+37tiXVzWQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-e8lFgkbVPOG9bE--gIfUBg-1; Mon,
- 04 Nov 2024 10:48:56 -0500
-X-MC-Unique: e8lFgkbVPOG9bE--gIfUBg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89A1F19560B4; Mon,  4 Nov 2024 15:48:53 +0000 (UTC)
-Received: from localhost (dhcp-192-244.str.redhat.com [10.33.192.244])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 556421956086; Mon,  4 Nov 2024 15:48:51 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
- armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ bh=7mUA65axYf94RHzQ+FsEaE5eP349wKq6vreKY/gkmjE=;
+ b=X+Agbtwxe6HdQ8bJHrhPQNtQBmnyHpe39qSdwqZ1Hhv3yZOuVFGS5vj6WQgdl+MFLhWWI5
+ y9qR61t91H47Mw2xU1kNEppUauWXpO504lT1LfRzh53WLdZRHAX72zpA7Zjolp7lpTBVSi
+ YPMRlOaNiOwbZAGs/eGElcHB6Hcj8Yw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-287-ASk_Tt4GNlaiYJ9IN22ofw-1; Mon, 04 Nov 2024 10:52:59 -0500
+X-MC-Unique: ASk_Tt4GNlaiYJ9IN22ofw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-431673032e6so26534425e9.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 07:52:58 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730735578; x=1731340378;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7mUA65axYf94RHzQ+FsEaE5eP349wKq6vreKY/gkmjE=;
+ b=kb7qe7RD9/xcvEkOUiLQwJk5JquS4mLwmUotFhxkPTvCFC6ciU1bKVLEmK19tydMnR
+ QdCw1MF2H4xlZg6ZD8FoVsOAto2UkS8a7RN6bhGgerNhjZflaB+lmCbp4mqSeV4Kv2Sh
+ e9xYy6avPeJBVwJvtrdQqhz/AlF3hregW/9F2pehVe034xCdvAoGxbHGKAmrT0mFWjT2
+ zdNtFDP+CxdmZhe9Pi/EEPHLhz9hDnrBeHP0r774AuUrmazDTJqpYQavDwWxgsYOqgIe
+ EFz58+5QZ31JJefkcT4jeT06KbmnveEF4uNDNBjFVYiQEeDph//RrxiEtF7mNWowE9eF
+ F4Ow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUvs/MH8O6jfHCNSauXloQik6p7tW4S1KJHt0y5JBeGdBJvqwTKLqzpdC+81+k0cGUPlWHgW84dsW+2@nongnu.org
+X-Gm-Message-State: AOJu0YwqqgW64U5i7sAM8V1/GNya3CxRLNTRH9ywq99BCDCne55HaDOG
+ +F+pyZCsuRliIl/nPmELePM4OKTR+Aho3q5L7FvBHiAuPuncOS4Ed+wRb/3lPuyLenFYF/94UcC
+ zQ6fPyyRAvsKXooqWcqJrqpN7PJJEoj4Xvr026S6PN7geVVI5fUF+
+X-Received: by 2002:a05:600c:a01:b0:42c:ba83:3f01 with SMTP id
+ 5b1f17b1804b1-431bb984e8cmr179170755e9.8.1730735577940; 
+ Mon, 04 Nov 2024 07:52:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHM/sgFkPsRHyrJgwZBk+yGqKXTJjw6x9koC6zrD0mNzXVobnNx8Sxn9ebXaRxRRr6GdAwKOw==
+X-Received: by 2002:a05:600c:a01:b0:42c:ba83:3f01 with SMTP id
+ 5b1f17b1804b1-431bb984e8cmr179170445e9.8.1730735577520; 
+ Mon, 04 Nov 2024 07:52:57 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4327d698144sm162050515e9.39.2024.11.04.07.52.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Nov 2024 07:52:56 -0800 (PST)
+Message-ID: <0007b45a-0278-4dad-8b8f-a65bd0506dc2@redhat.com>
+Date: Mon, 4 Nov 2024 16:52:53 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 00/21] kvm/arm: Introduce a customizable aarch64 KVM host
+ model
+Content-Language: en-US
+To: Kashyap Chamarthy <kchamart@redhat.com>
+Cc: eric.auger.pro@gmail.com, cohuck@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
  shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
  pbonzini@redhat.com
-Subject: Re: [RFC 21/21] arm/cpu-features: Document custom vcpu model
-In-Reply-To: <ZyjnIMteSuCvpGPW@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
 References: <20241025101959.601048-1-eric.auger@redhat.com>
- <20241025101959.601048-22-eric.auger@redhat.com>
- <ZxuZkUFz_bwAA1pf@redhat.com>
- <0700af51-a1a6-4b11-a4bf-0eaf6e279c6d@redhat.com>
- <Zxudl5-fZV1vIaEL@redhat.com> <87y128nrfr.fsf@redhat.com>
- <Zx-3OUioG1l47hW3@redhat.com>
- <24ca0278-5018-41e3-a097-ac560a16f8fa@redhat.com>
- <ZyjgWJ3bZ69sueE2@redhat.com> <875xp3nigb.fsf@redhat.com>
- <ZyjnIMteSuCvpGPW@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Mon, 04 Nov 2024 16:48:48 +0100
-Message-ID: <8734k7ngnz.fsf@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ <ZxuwZw2plMI6dNyE@pinwheel>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <ZxuwZw2plMI6dNyE@pinwheel>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -99,99 +114,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 04 2024, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
-
-> On Mon, Nov 04, 2024 at 04:10:12PM +0100, Cornelia Huck wrote:
->> On Mon, Nov 04 2024, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
->>=20
->> >
->> > FYI, in x86 target the -cpu command has had a "migratable=3Dbool" prop=
-erty
->> > for a long time , which defaults to 'true' for 'host' model. This caus=
-es
->> > QEMU to explicitly drop features which would otherwise prevent migrati=
-on
->> > between two hosts with identical physical CPUs.
->> >
->> > IOW, if there are some bits present in 'host' that cause migration
->> > problems on Ampere hosts, ideally either QEMU (or KVM kmod) would
->> > detect them and turn them off automatically if migratable=3Dtrue is
->> > set. See commit message in 84f1b92f & 120eee7d1fd for some background
->> > info
->>=20
->> How does this work for version-sensitive features -- are they always
->> defaulting to off? How many features are left with that in the end?
+Hi Kashyap,
+On 10/25/24 16:51, Kashyap Chamarthy wrote:
+> On Fri, Oct 25, 2024 at 12:17:19PM +0200, Eric Auger wrote:
 >
-> Do you mean QEMU versions here ? The non-migratable feature list is
-> just hardcoded in QEMU right now, and there's only 1 of them.
-> eg grep for 'unmigratable_flags'
+> Hi Eric,
 >
-> Note, that "migratable" property is not defining a general purpose
-> migration mask between different hw generations. It was specifically
-> blocking just stuff that is known to make migration impossible, even
-> if HW is identical on both sides.
-
-I was more thinking of dependencies on the KVM version -- QEMU versions
-are easier to control for, but you don't really know what kernel version
-you are running with. In the end, we'd probably need to mark a lot of
-things as unmigratable.
-
+> I'm new to Arm, so please bear with my questions :)
 >
->> > NB "migratable" is defined in i386 target code today, but conceptually
->> > we should expand/move that to apply to all targets for consistency,
->> > even if it is effectively a no-op some targets (eg if they are
->> > guaranteed migratable out of the box already with '-cpu host').
->>=20
->> How does this compare to s390x, which defines some migration-safe cpu
->> models, based upon the different hw generations? If I look at the QEMU
->> code for x86 and s390x, the s390x approach seems cleaner to me (probably
->> because it came later, and therefore could start afresh without having
->> to care for legacy things.) Given that we'll cook up a new model for Arm
->> migration as well, we might as well start with a clean implementation :)
+>> This RFC series introduces a KVM host "custom" model.
+> (a) On terminology: as we know, in the x86 world, QEMU uses these
+>     terms[1]:
 >
-> The impression I get (as an distant observer) is that CPUs on s390x in
-> general have less complexity to worry about. A combination of not having
-> a vendor who creates loads off different SKUs for the same CPU model
-> family with slight variations between each, and also not seeming to have
-> a situation where CPU flags a known to disappear (or appear) arbitrarily
-> in microcode updates.
+>     - Host passthrough
+>     - Named CPU models
+>     - Then there's the libvirt abstraction, "host-model", that aims to
+>       provide the best of 'host-passthrough' + named CPU models.
 >
-> The s390x idea of a "migratable" and "non migratable" model for each
-> HW generation is a nice simplification, but I can't see how it could
-> be made to work for x86 when you can't predict ahead of time what
-> features are going to be removed from existing HW definition by the
-> next microcode update, or by the next CPU SKU that removes a feature
-> you had assumed would always be present in a given HW generation.
+>     Now I see the term "host 'custom' model" here.  Most
+>     management-layer tools and libvirt users are familiar with the
+>     classic terms "host-model" or "custom".  If we now say "host
+>     'custom' model", it can create confusion.  I hope we can settle on
+>     one of the existing terms, or create a new term if need be.
 >
-> I don't know much about how ARM world works, but having lots of vendors
-> competing with their own custom impls makes me worry complexity will
-> be closer to x86 than to s390.
-
-My concern was more about code complexity, not hw complexity. We'll
-probably end up with a zoo of weird creatures for Arm, but I don't see a
-reason why the code would need to have strange things tacked
-on. I.e. have a set of arch extensions that you can baseline to, and
-have individual cpus on top, so you can deal with both well-known cpus
-and more boutique ones.
-
+>     (I'll share one more thought on how layers above libvirt tend to use
+>     the term "custom", as a reply to patch 21/21, "arm/cpu-features:
+>     Document custom vcpu model".)
+agreed, as replied earlier, custom terminology most probably will be
+dropped.
 >
-> If the ARM specifications define a minimum require featureset for each
-> HW generation, maybe you can define a model based on that ? You might
-> still want to have vendor specific models though, if there are compelling
-> features they expose which are optional, or non-standardized.=20
+> (b) The current CPU features doc[2] for Arm doesn't mention "host
+>     passthrough" at all.  It is only implied by the last part of this
+>     paragraph, from the section titled "A note about CPU models and
+>     KVM"[3]:
+>
+>       "Named CPU models generally do not work with KVM. There are a few
+>       cases that do work [...] but mostly if KVM is enabled the 'host'
+>       CPU type must be used."
+indeed
+>
+>     Related: in your reply[4] to Dan in this series, you write: "Having
+>     named models is the next thing".  So named CPU models will be a
+>     thing in Arm, too?  Then the above statement in the Arm
+>     'cpu-features' will need updating :-)
 
-We have a list of features that are optional for a given arch extension,
-and a list of features that are mandatory, so I think we'd be able to
-generate a model with the mandatory features only. Models for individual
-cpus could base off these. (There are currently 13 vendors defined in
-MIDR, but I'm not sure how often new vendors might be added, and vendors
-may also be more or less active.) If you have a baseline of Arm v9.2 or
-so, that might already go a long way.
+Yes named models implementing a baseline are the end goal.
+>
+> [...]
+>
+>> - the QEMU layer does not take care of IDREG field value consistency.
+>>   The kernel neither. I imagine this could be the role of the upper
+>>   layer to implement a vcpu profile that makes sure settings are
+>>   consistent. Here we come to "named" models. What should they look
+>>   like on ARM?
+> Are there reasons why they can't be similar to how x86 reports in
+> `qemu-system-x86 -cpu help`?  
+>
+> E.g. If it's an NVIDIA "Grace A02" (Neoverse-V2) host, it can report:
+>
+>     [gracehopper] $> qemu-kvm -cpu help
+>     Available CPUs:
+>       gracehopper-neoverse-v2
+>       cortex-a57 (deprecated)
+>       host
+>       max
+>
+> Or whatever is the preferred nomenclature for ARM.  It also gives users
+> of both x86 and ARM deployments a consistent expectation.  
+>
+> Currently on a "Grace A02" ("Neoverse-V2") machine, it reports:
+>
+>     [gracehopper] $> qemu-kvm -cpu help
+>     Available CPUs:
+>       cortex-a57 (deprecated)
+>       host
+>       max
+>
+> I see it's because there are no named models yet on ARM :-)
+yes this is definitively because on ARM there is no such named KVM model
+besides cortex-a57 on aarch64.
+on x86 does it return the closest named model?
 
-[But I obviously have no idea how well that will work when it meats
-reality :)]
+Thanks
+
+Eric
+>
+> [...]
+>
+> [1] https://www.qemu.org/docs/master/system/i386/cpu.html
+> [2] https://www.qemu.org/docs/master/system/arm/cpu-features.html
+> [3] https://www.qemu.org/docs/master/system/arm/cpu-features.html#a-note-about-cpu-models-and-kvm
+> [4] https://lists.nongnu.org/archive/html/qemu-arm/2024-10/msg00891.html
+>
+>
 
 
