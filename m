@@ -4,90 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1082D132CF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 14:24:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A340D132D3
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 14:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7xzf-0003NG-Cq; Mon, 04 Nov 2024 09:23:47 -0500
+	id 1t7y2J-0004fA-JH; Mon, 04 Nov 2024 09:26:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1t7xza-0003Mq-Oh
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 09:23:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1t7xzY-00012n-Rd
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 09:23:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730730219;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2D9pXrURl9yEMfqJUnixHLlEbDT7tAItm7yIwWntHkU=;
- b=SEc4VxTRHEb3CvEFrQIAPnFSQxq+DcJOWQ2yTZkhyGI0ljnZze0z4va8SdX7w1Ko1GYdiV
- apZfE7VV1Vw8g0+bxQDwL/YEbGwWMj6aeyYZLa/ypMA+TFcDf7H9pEhHKTVhmufxjO6nce
- zeCiSw0FvAZHsxqcWPzOTOaov+QIphY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-0w-ggGVINgyw39_pGwP63g-1; Mon, 04 Nov 2024 09:23:38 -0500
-X-MC-Unique: 0w-ggGVINgyw39_pGwP63g-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37d462b64e3so2092239f8f.3
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 06:23:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1t7y2D-0004ek-Dp
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 09:26:25 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1t7y2B-0001QN-Le
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 09:26:25 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-20cdda5cfb6so41193965ad.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 06:26:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730730382; x=1731335182; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mLBSNwSWoqUYVY9eOkGeU5SytN91HgHe0GfN/b6c7mk=;
+ b=U4xYxIhYX8WwkgL0nNf9T2Ojk+BELKeePVGUbcekJaoWNJSiQJFI2ipxsdfelIWgLk
+ rzA5yzDm412pNhiFWTDYakIwLYG53gsesTXXIeAdynQSEx/pTRE9IB8EXJOsuSVwtMAW
+ FpolIz695JoGUaQSJVKhzCCtfXqzkoEfTNR4ARdy0CEX6b95SPTRHVxk+bxEgR8JZJHV
+ nylWgH6ulZxh5ApGzJjlgu9dayZmB8bY5fslxDZXltPTHpOWwB7lk6kgb3oIaBR0OhLA
+ hlJMzMQ7P1FVjxgeJ6Mx3DCf5xj5MavlQUbtEFpxhIz5vjT6OeXIkcqyqDxzqizuh+2R
+ zJPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730730217; x=1731335017;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2D9pXrURl9yEMfqJUnixHLlEbDT7tAItm7yIwWntHkU=;
- b=PFon2bZaaZyAutiJL5Dm5R0Gxfuu9Dhj+vB/wy36GvkRJW80GuXzuP+mexIOZ4wyCC
- 9XS5HQQon7ha9SUGy6BahIl9dCxLpoOELFQxhvI4ipU/piatUdEeEuVUedtbY9Rt4RzH
- 4C2fSS/RoYkpAg6UqSpPqD5z+0yQagfjUuxQw02tk+MNYSP8RS1RTE4rNhjSmCrzTxLT
- ogaZ19Y5Hv6LBici4kOoh6JFhBts+539GnaSFjnaoYuwwvxJkJUqFKOX0Sb0W9JizY5V
- P1By0pji+GxlkvsY9quO1dl7CawN6r4/Qu41RSeYGX1KNNizbvZHTMh2i5+tMaNxSZF+
- QrPw==
-X-Gm-Message-State: AOJu0Yw47xiA/sRozkNp25t8XfF2F8Vms+JeKRP3/XKgt/QHtujpA7IQ
- EOgyety5erZ0dt9h+Vk+0l6JA9uaE7ZNr7/L7AMZ1FvoN91mdK6Eh3WNa+f1rLvk6VLE4/Ndz8s
- +pbIPCvV0xTPvE5VujuvYQt165Vj8TEvbNwvMdTUq0ldzWt+t9djd
-X-Received: by 2002:a5d:6c63:0:b0:37d:3973:cb8d with SMTP id
- ffacd0b85a97d-381c7a5e9d5mr9630206f8f.24.1730730217518; 
- Mon, 04 Nov 2024 06:23:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGz5il9xRb0ELaEziJwcwmF9e7ug3cAmze1DFpFct86gdvBP0UO8cOErSCR1PAiHweGJZWysQ==
-X-Received: by 2002:a5d:6c63:0:b0:37d:3973:cb8d with SMTP id
- ffacd0b85a97d-381c7a5e9d5mr9630191f8f.24.1730730217141; 
- Mon, 04 Nov 2024 06:23:37 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4327d5bf4b0sm154480245e9.14.2024.11.04.06.23.36
+ d=1e100.net; s=20230601; t=1730730382; x=1731335182;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mLBSNwSWoqUYVY9eOkGeU5SytN91HgHe0GfN/b6c7mk=;
+ b=NOJrCaAHbHEAKYbuHVm8g7bAvSCOXohJnWBGnMHIMfQOk5DNvJS8RUccvbSXOPRaOJ
+ 28C2ccmzbDuGI6KAoTmO/EuY7e1AC54J5lipvmxRcuAqVy1AEW0gz6rQPqmFA2JGqcel
+ zt9pml3AD7necbfYzr0ShwvtI02tA+gFevzonlOyBcRc40QAD8NqNsuG05IzBUjjs22G
+ QujV46I+Q6S+xrsTMc12Q03r2fMGLyWZIfPKZ0nknkLvwoNg7dTX656tyQFxvNRfUZip
+ gKR2MGCyCZvRFO/EKtBjx40iui00c98OG5IK/6hufUgb0GRLBKiufLur+ZVW6jGcQCXE
+ fDoQ==
+X-Gm-Message-State: AOJu0YzsdEztjBk/tcu3VNvD5t2SUVRJzr84F2pkh4L+POHGhVCHyRcj
+ YYNbcpACxqlJ09zxgXbgNj4aR04OmiW5aU6VQ7Jn3jJ3VbwJ3Vn+hu6X5aQqEWtqZQU08IWFbdF
+ Y
+X-Google-Smtp-Source: AGHT+IFI4xxBtDEnokMtPBvDKc7+aTsOopejqiwpc6CakWh6jAtQniJlii93N1H4AfkyIxmVVrYoyg==
+X-Received: by 2002:a17:902:ecc5:b0:20c:b8a5:38e8 with SMTP id
+ d9443c01a7336-21103ad1900mr231477885ad.23.1730730381644; 
+ Mon, 04 Nov 2024 06:26:21 -0800 (PST)
+Received: from amd.. ([2804:7f0:b402:60a7:3e7c:3fff:fe7a:e83b])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-211056ee3e4sm61931205ad.3.2024.11.04.06.26.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 06:23:36 -0800 (PST)
-Date: Mon, 4 Nov 2024 15:23:35 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Sunil V L <sunilvl@ventanamicro.com>, Ani Sinha
- <anisinha@redhat.com>
-Subject: Re: [PATCH] acpi/disassemle-aml.sh: fix up after dir reorg
-Message-ID: <20241104152335.7dff1569@imammedo.users.ipa.redhat.com>
-In-Reply-To: <ce456091058734b7f765617ac5dfeebcb366d4a9.1730729695.git.mst@redhat.com>
-References: <ce456091058734b7f765617ac5dfeebcb366d4a9.1730729695.git.mst@redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Mon, 04 Nov 2024 06:26:21 -0800 (PST)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org,
+ richard.henderson@linaro.org, peter.maydell@linaro.org
+Cc: gustavo.romero@linaro.org
+Subject: [PATCH v2] target/arm: Enable FEAT_CMOW for -cpu max
+Date: Mon,  4 Nov 2024 14:26:06 +0000
+Message-Id: <20241104142606.941638-1-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,32 +92,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Nov 2024 09:14:57 -0500
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
+FEAT_CMOW introduces support for controlling cache maintenance
+instructions executed in EL0/1 and is mandatory from Armv8.8.
 
-> Fixes: 7c08eefcaf ("tests/data/acpi: Move x86 ACPI tables under x86/${machine} path")
-> Fixes: 7434f90467 ("tests/data/acpi/virt: Move ARM64 ACPI tables under aarch64/${machine} path")
-> Cc: "Sunil V L" <sunilvl@ventanamicro.com>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+On real hardware, the main use for this feature is to prevent processes
+from invalidating or flushing cache lines for addresses they only have
+read permission, which can impact the performance of other processes.
 
-Acked-by: Igor Mammedov <imammedo@redhat.com>
+QEMU implements all cache instructions as NOPs, and, according to rule
+[1], which states that generating any Permission fault when a cache
+instruction is implemented as a NOP is implementation-defined, no
+Permission fault is generated for any cache instruction when it lacks
+read and write permissions.
 
-> ---
->  tests/data/acpi/disassemle-aml.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/tests/data/acpi/disassemle-aml.sh b/tests/data/acpi/disassemle-aml.sh
-> index 253b7620a0..89561d233d 100755
-> --- a/tests/data/acpi/disassemle-aml.sh
-> +++ b/tests/data/acpi/disassemle-aml.sh
-> @@ -14,7 +14,7 @@ while getopts "o:" arg; do
->    esac
->  done
->  
-> -for machine in tests/data/acpi/*
-> +for machine in tests/data/acpi/*/*
->  do
->      if [[ ! -d "$machine" ]];
->      then
+QEMU does not model any cache topology, so the PoU and PoC are before
+any cache, and rules [2] apply. These rules state that generating any
+MMU fault for cache instructions in this topology is also
+implementation-defined. Therefore, for FEAT_CMOW, we do not generate any
+MMU faults either, instead, we only advertise it in the feature
+register.
+
+[1] Rule R_HGLYG of section D8.14.3, Arm ARM K.a.
+[2] Rules R_MZTNR and R_DNZYL of section D8.14.3, Arm ARM K.a.
+
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ docs/system/arm/emulation.rst | 1 +
+ target/arm/cpu-features.h     | 5 +++++
+ target/arm/cpu.h              | 1 +
+ target/arm/helper.c           | 5 +++++
+ target/arm/tcg/cpu64.c        | 1 +
+ 5 files changed, 13 insertions(+)
+
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 35f52a54b1..a2a388f091 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -26,6 +26,7 @@ the following architecture extensions:
+ - FEAT_BF16 (AArch64 BFloat16 instructions)
+ - FEAT_BTI (Branch Target Identification)
+ - FEAT_CCIDX (Extended cache index)
++- FEAT_CMOW (Control for cache maintenance permission)
+ - FEAT_CRC32 (CRC32 instructions)
+ - FEAT_Crypto (Cryptographic Extension)
+ - FEAT_CSV2 (Cache speculation variant 2)
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 04ce281826..e806f138b8 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -802,6 +802,11 @@ static inline bool isar_feature_aa64_tidcp1(const ARMISARegisters *id)
+     return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, TIDCP1) != 0;
+ }
+ 
++static inline bool isar_feature_aa64_cmow(const ARMISARegisters *id)
++{
++    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, CMOW) != 0;
++}
++
+ static inline bool isar_feature_aa64_hafs(const ARMISARegisters *id)
+ {
+     return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, HAFDBS) != 0;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 8fc8b6398f..1ea4c545e0 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1367,6 +1367,7 @@ void pmu_init(ARMCPU *cpu);
+ #define SCTLR_EnIB    (1U << 30) /* v8.3, AArch64 only */
+ #define SCTLR_EnIA    (1U << 31) /* v8.3, AArch64 only */
+ #define SCTLR_DSSBS_32 (1U << 31) /* v8.5, AArch32 only */
++#define SCTLR_CMOW    (1ULL << 32) /* FEAT_CMOW */
+ #define SCTLR_MSCEN   (1ULL << 33) /* FEAT_MOPS */
+ #define SCTLR_BT0     (1ULL << 35) /* v8.5-BTI */
+ #define SCTLR_BT1     (1ULL << 36) /* v8.5-BTI */
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 0a731a38e8..f55e8ced54 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6215,6 +6215,11 @@ static void hcrx_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     if (cpu_isar_feature(aa64_nmi, cpu)) {
+         valid_mask |= HCRX_TALLINT | HCRX_VINMI | HCRX_VFNMI;
+     }
++    /* FEAT_CMOW adds CMOW */
++
++    if (cpu_isar_feature(aa64_cmow, cpu)) {
++        valid_mask |= HCRX_CMOW;
++    }
+ 
+     /* Clear RES0 bits.  */
+     env->cp15.hcrx_el2 = value & valid_mask;
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 0168920828..2963d7510f 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1218,6 +1218,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64MMFR1, ETS, 2);      /* FEAT_ETS2 */
+     t = FIELD_DP64(t, ID_AA64MMFR1, HCX, 1);      /* FEAT_HCX */
+     t = FIELD_DP64(t, ID_AA64MMFR1, TIDCP1, 1);   /* FEAT_TIDCP1 */
++    t = FIELD_DP64(t, ID_AA64MMFR1, CMOW, 1);     /* FEAT_CMOW */
+     cpu->isar.id_aa64mmfr1 = t;
+ 
+     t = cpu->isar.id_aa64mmfr2;
+-- 
+2.34.1
 
 
