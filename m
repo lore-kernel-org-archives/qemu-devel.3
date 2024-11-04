@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49BA3D11198
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BB72D11198
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:25:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7krr-000879-5N; Sun, 03 Nov 2024 19:22:51 -0500
+	id 1t7kqb-0004HM-95; Sun, 03 Nov 2024 19:21:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7krm-0007cu-VC; Sun, 03 Nov 2024 19:22:47 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1t7kqY-0003wP-Ge; Sun, 03 Nov 2024 19:21:30 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7krl-0002oi-8l; Sun, 03 Nov 2024 19:22:46 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-720d14c8dbfso2326207b3a.0; 
- Sun, 03 Nov 2024 16:22:44 -0800 (PST)
+ id 1t7kqX-0002hH-0i; Sun, 03 Nov 2024 19:21:30 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-720cb6ac25aso2512745b3a.3; 
+ Sun, 03 Nov 2024 16:21:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730679763; x=1731284563; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730679687; x=1731284487; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bKJeZuECGCGYQRCE/Wz2aptnEpkzwWv0a7kXALVVYP8=;
- b=H4O4WLtx+QnA4byWd8SIocZZ8LpBKxCcy2eSIzD0UWtBsuBmsHniETIlR8sAj98TI3
- HRneZsHHw//e7ntb39nkcaRinrmSqnYw1cbCNUKIsm3HAdcUdeQMnvpQ/Ry3c3pSCKoi
- F8egmM2+t684qS+Tk393KmLjkoybdEQf7+JIe6YEYntvtt+GLT2o+1ZyLjNBycZZI+IN
- YpnHuPpJxLCVzkeJCHHaDsTxu24K6fr9fw1xrLX6pbfrIURrLoiSiv/rk4lxsXRABiA9
- Cby/Sq6ROOyfl2O5MDoRDT1hgTa0KK6PltL7Jtm/L6IUkNXf0LgwpWwBzB9OftArIhA9
- 66fw==
+ bh=8tRnHn0imyDgzIBjiEWjpE9f1p8r45aL3qXvb+TAFyY=;
+ b=hUxB8Oo0myL+52D5nNLtn/AWiH7W83P9DrW+Pbq4DGf7OGr/Ej4uZV2D+LxfLT+mtq
+ tLij58Sl0oN4st8/kNy3JmbqaeWU7tJvfN1rOcSgFUiDJiQdrFMi1U1eRlJxa2V5LPSj
+ bxwK6NoKt6s+KXAinWdqardSm6lt5l2jwcQHPrveplg12DH5AQwCgGHR0aQ5wR0Lzclf
+ T526TeE2TXK0Pdw+UK0zcDX/qk2OOq2NceN27OhxeaXMHCCseC2eUjcXqScaf7hGFmgZ
+ nbGL3H9i35n16qOhVunO4GkJS61Mz45SPpb6lg+zB53cr7MfEAL9KEZiIJ8blU1hkGl8
+ eDrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730679763; x=1731284563;
+ d=1e100.net; s=20230601; t=1730679687; x=1731284487;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bKJeZuECGCGYQRCE/Wz2aptnEpkzwWv0a7kXALVVYP8=;
- b=nPpMs6tovlu65fuNCxPwBSNKJndGLIH/jBySdONRMHvU6x69Zm1it+URYo80HpAHrf
- P8T2uCAYRh9MIk4TrNRWWnTsdgkbzSm6kV+AgGtqoSf9ezOY8nn/zvNB4k/4SvhqcN67
- N6KQm8iknGEoOrl1boHz2jUIOh2wAEBj7NU0jLnCtp5FG9EQLFLx09ZfGXBqqxC+lmjT
- zO9AU++Q8F4u1k3EIEneuBkDhoF7LS40wB9Cx488oTAZRfS4EcUFTHcE68iW5eh7+9hw
- WoT6HPDGiK9OAV10tC2LaY8Zwh7BnQR7XYYmY8BIewc3H9X9U7MVQkZsWk3tMVIJ6pQz
- 75Qw==
+ bh=8tRnHn0imyDgzIBjiEWjpE9f1p8r45aL3qXvb+TAFyY=;
+ b=snBFRq3QTHtvogaVwy8NjwBhVDYuZYY8l/YMGZ98xgd9MbCW2GCvSOSDyB5/4vOVtf
+ KptAxAQhkAxc/jWiazFAihMOQDF8BYiXisZVwo3x9ZWSBMob/P+cdR/A9grQyP4Lg87k
+ MHRd+5i51A4Bmo/7kk/PvYQT1+cXP9sj8G7T9RrTX0gG7hkkayPkJe3GbKDIvqW4fVM3
+ 5M3XLhUMbSmkK0m+qgEIoxmMvZL2ycVYrLGcpX84TrYc3Og4pjtlWN5bFk8qyJaUl1zA
+ 9+7oX1a5ha14AC5MQLh98UQehE0Y3daz8iD1a5j2CovLKKeETNm9CJ8ZWdm2LoA26LJV
+ Av0g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW81B0ptl+FDz9oA+bcwOIUbMEiiR9vm16JWPzfhf9Fjm9okszhRQGa1YMVbkLL+EDtg5H7OaOj3Q==@nongnu.org
-X-Gm-Message-State: AOJu0YzbNNVGwklpEBEyKu8y6jEONqlop3xcVYn9JKpWxyFydvHB7YtB
- nQYAFtkYcmjuUQsP0b+CSjw4HPTtt8SxaIdu0oSUyC7K2VNUaUb0uw/e9Q==
-X-Google-Smtp-Source: AGHT+IH8WTOaxPIx8AOQS8yZLRGGkYNd23+mHjiZsjacKdsC5+S/GCkrHz8LysRomM4VnF1nCp0L+Q==
-X-Received: by 2002:a05:6a20:d498:b0:1d9:1823:83bf with SMTP id
- adf61e73a8af0-1db91d516d0mr19815344637.8.1730679763291; 
- Sun, 03 Nov 2024 16:22:43 -0800 (PST)
+ AJvYcCWcTIuivwwzX3pxLvdygebl5oRGOReYJBR9sL+BDuuAQw6bTYImp+nRKAFf/dFDojG2WJytamdIpA==@nongnu.org
+X-Gm-Message-State: AOJu0Yy4wKkioLyk1PZQl3l0UL0wScM4zRy8kDJhOyG1+ROWMZ//64tu
+ e+DQEL/iZJ8yBNyXV9GRgJJrrq9p5yqBBbxrmVT99B48OFw9+Oa5/Oy1Tw==
+X-Google-Smtp-Source: AGHT+IFWApGiOfcYHz7vbNEMDbivSTmM0vv9xkOlR9XzcOoLYP+i6KY1cIDQoxmrJYGB/BDxqUpFYg==
+X-Received: by 2002:a05:6a21:2d87:b0:1d8:fbf3:a9ac with SMTP id
+ adf61e73a8af0-1d9a83a998cmr43381238637.2.1730679687155; 
+ Sun, 03 Nov 2024 16:21:27 -0800 (PST)
 Received: from wheely.local0.net (124-171-217-17.tpgi.com.au. [124.171.217.17])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.22.39
+ 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.21.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 16:22:42 -0800 (PST)
+ Sun, 03 Nov 2024 16:21:26 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Glenn Miles <milesg@linux.ibm.com>,
- Glenn Miles <milesg@linux.vnet.ibm.com>,
- Michael Kowal <kowal@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 59/67] pnv/xive: Update PIPR when updating CPPR
-Date: Mon,  4 Nov 2024 10:18:48 +1000
-Message-ID: <20241104001900.682660-60-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 37/67] target/ppc: optimize hreg_compute_pmu_hflags_value
+Date: Mon,  4 Nov 2024 10:18:26 +1000
+Message-ID: <20241104001900.682660-38-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241104001900.682660-1-npiggin@gmail.com>
 References: <20241104001900.682660-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,84 +95,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Glenn Miles <milesg@linux.ibm.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Current code was updating the PIPR inside the xive_tctx_accept() function
-instead of the xive_tctx_set_cppr function, which is where the HW would
-have it updated.
+The second if-condition can be true only if the first one above is true.
+Enclose the latter into the former to avoid un-necessary check if first
+condition fails.
 
-Moved the update to the xive_tctx_set_cppr function which required
-additional support for pool interrupts.
-
-Fixes: cdd4de68edb6 ("ppc/xive: notify the CPU when the interrupt priority is more privileged")
-Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
-Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/xive.c | 34 ++++++++++++++++++++++++++++++++--
- 1 file changed, 32 insertions(+), 2 deletions(-)
+ target/ppc/helper_regs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index baad7129ca..8460bd622a 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -89,7 +89,6 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
- 
-         /* Reset the pending buffer bit */
-         alt_regs[TM_IPB] &= ~xive_priority_to_ipb(cppr);
--        regs[TM_PIPR] = ipb_to_pipr(alt_regs[TM_IPB]);
- 
-         /* Drop Exception bit */
-         regs[TM_NSR] &= ~mask;
-@@ -143,6 +142,8 @@ void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring)
- static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
- {
-     uint8_t *regs = &tctx->regs[ring];
-+    uint8_t pipr_min;
-+    uint8_t ring_min;
- 
-     trace_xive_tctx_set_cppr(tctx->cs->cpu_index, ring,
-                              regs[TM_IPB], regs[TM_PIPR],
-@@ -154,8 +155,37 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
- 
-     tctx->regs[ring + TM_CPPR] = cppr;
- 
-+    /*
-+     * Recompute the PIPR based on local pending interrupts.  The PHYS
-+     * ring must take the minimum of both the PHYS and POOL PIPR values.
-+     */
-+    pipr_min = ipb_to_pipr(regs[TM_IPB]);
-+    ring_min = ring;
-+
-+    /* PHYS updates also depend on POOL values */
-+    if (ring == TM_QW3_HV_PHYS) {
-+        uint8_t *pool_regs = &tctx->regs[TM_QW2_HV_POOL];
-+
-+        /* POOL values only matter if POOL ctx is valid */
-+        if (pool_regs[TM_WORD2] & 0x80) {
-+
-+            uint8_t pool_pipr = ipb_to_pipr(pool_regs[TM_IPB]);
-+
-+            /*
-+             * Determine highest priority interrupt and
-+             * remember which ring has it.
-+             */
-+            if (pool_pipr < pipr_min) {
-+                pipr_min = pool_pipr;
-+                ring_min = TM_QW2_HV_POOL;
-+            }
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index 7b23e5ef0e..42c681ca4a 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -102,9 +102,9 @@ static uint32_t hreg_compute_pmu_hflags_value(CPUPPCState *env)
+ #ifndef CONFIG_USER_ONLY
+     if (env->pmc_ins_cnt) {
+         hflags |= 1 << HFLAGS_INSN_CNT;
+-    }
+-    if (env->pmc_ins_cnt & 0x1e) {
+-        hflags |= 1 << HFLAGS_PMC_OTHER;
++        if (env->pmc_ins_cnt & 0x1e) {
++            hflags |= 1 << HFLAGS_PMC_OTHER;
 +        }
-+    }
-+
-+    regs[TM_PIPR] = pipr_min;
-+
-     /* CPPR has changed, check if we need to raise a pending exception */
--    xive_tctx_notify(tctx, ring);
-+    xive_tctx_notify(tctx, ring_min);
- }
- 
- void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb)
+     }
+ #endif
+ #endif
 -- 
 2.45.2
 
