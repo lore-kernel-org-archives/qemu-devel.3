@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83407D132B5
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 12:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D32D132BC
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 12:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7wMI-0005vb-Pp; Mon, 04 Nov 2024 07:39:37 -0500
+	id 1t7wMu-00060P-D2; Mon, 04 Nov 2024 07:39:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t7wM8-0005uN-Hd
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:38:53 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1t7wMA-0005uX-B6
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:38:54 -0500
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t7wM4-0001oA-Qo
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:38:50 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-71e3fce4a60so3245693b3a.0
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 04:38:46 -0800 (PST)
+ id 1t7wM7-0001oe-T1
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:38:53 -0500
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7d4f85766f0so3141914a12.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 04:38:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1730723925; x=1731328725; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LPKbgvLMfho968esCntrdWI7jJaHDR7RVGOpPWZCRYo=;
- b=GlRLQtw+zwBWgqHW9tzlfz/50TMSPMy2frhIRdO+M/K6QnhR8OAHcwB4sBFFuD8wcc
- R7DRMZtY4Iw6R0RV6rk6DlvdvTAWlnKwplOk3jNhit+1sFcAvRaXpz/z4PXhN5GN/eDh
- rjjSfIoXpU9KXqr/uPqH3gqQ+RKD8Evuiv+4CT2u5qUW0GgrcWs8SNln/iQMjvP1faAe
- 3yCCPUTCRWPiTc+CHCn8qmAXLjyOrygk2XE6suH4/Ewlfg+OQJkTEwk3U48af90HCdI1
- XQ2OtQv4yfcugtebpk112S0z8QGGrfLVBhp58MugbfiFZV8KCymJy+SCMuu1K/3QihbV
- SQQQ==
+ d=ventanamicro.com; s=google; t=1730723929; x=1731328729; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=98jwi9p0o8fOmk8UPM/sqRh+geOrtT788L2sLhtj3/o=;
+ b=G5JIHuikYGh0vMLkut5DV3dGmGYpr01oEteH5elZ6nexl6/zy/eamzrKykjZ7s3nqz
+ vdeNXOLmu+FqN55h/++r/+8ngDj23xuAlmT92ZdfLeLOdzFrpHmzHpr2o7stE3xoYLJq
+ j05U5sKdY2uS/1ojnm9qY1XTjFbf5xdBgdg1CL1kKM3x0qaS2x3XoZkYh4u+CJRE4uVd
+ MVjO+X88wg68j6oc14MaIXMX53t7VOea+o1K1TrJomgtXwml7Q/YDMIvsGQYbj4AowVe
+ ktBSBw/74S/e9jirselnVqZg/X6E2MA4ScKj9iRMyosRPWaiCJTl3NYAIowMX/jVUhuv
+ P+9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730723925; x=1731328725;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LPKbgvLMfho968esCntrdWI7jJaHDR7RVGOpPWZCRYo=;
- b=HlG9F8N/ljK5CwHwfN52vQbxq0NTwDVx3nA6lDU+WEbKICs4h/gaBdlFdhMq0IG4oQ
- jWxhOcRjzRNrbnd14CqknrRvxrbWKFKQPipS+vsm+hkjjm5X7NlMeC3wqvvKwE4/Qk5B
- W0YufHEkceematsMBjoIGdb2/oh8FTfztR8jZtUBDMRZzHBPggEUwZai2OGXtIPkkOsK
- 5VpAuKPW9OLsl5LB7f9gcSqjD9zcK+KeGAshqe7rrOCT+YT+1LfFeFLUS9qpkdE1nGLY
- unsWr17WXqQNHFdLLs89d8PAU6qu5dWpQzWY4tVyVvh8usC87eiOuDAa94qqZsBAjfUA
- bRhg==
-X-Gm-Message-State: AOJu0YwuinTgpPIeRNLevPzUhVJ/8Blip3cnnR13726lBk4O2Mo857Jv
- cU1OY4tfV+oJbjYbJVVJ5W62mUQMFANToHWMZLttO/H1bFVRd7V5yUZ0rYISGVJvkZXxOd0d/vl
- z
-X-Google-Smtp-Source: AGHT+IHo7Afk6Q5Ei4TOnCly94b3l71h9PEK2PTrZmmwxXz/lRNpdVJ8PVuuGxsEBu/627nsI7MzVg==
-X-Received: by 2002:a05:6a00:4606:b0:71e:68ae:aae1 with SMTP id
- d2e1a72fcca58-72063028d99mr44037246b3a.19.1730723925194; 
- Mon, 04 Nov 2024 04:38:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730723929; x=1731328729;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=98jwi9p0o8fOmk8UPM/sqRh+geOrtT788L2sLhtj3/o=;
+ b=YjDMaDo+cCZRVmymTSQUwW1B19PsiUqF9G37UBD5Wcu22HI3YYbNEUy5BNVj0iId6W
+ pHPqa0X7jzBpPRr/RxBFDqHrd0hEu5i3PXCNihHWbmWupZzXj6fKtvkHPXCo6i375VGS
+ HAJ4ll3kS1PUSQ5eaoFT3rVbMrr5HScVZdj4FOsB+XlPRSANmwdRY1XDe0YDCzIXs9Ko
+ zCa+g+PUnUX9QPt7rJjR7aCtxspZ0gZBA1MaQ1QJ8IzPF3cX+aRvxSvPlD2zZbxZjRYQ
+ aAtIgrvw2yzF70c5KXGa6iT0TEWk3qp4c01Jh+AmA/u0RUBuyLBsv5wtGhXx78mLD2Q9
+ 4uUg==
+X-Gm-Message-State: AOJu0YyoExoZuWwqRUK9b9cvBP3Ae8jFLUMzWw6ejHoVxpOUbCK0E7J1
+ cHppH8p8igXOPUm93FvfuYXTeMiQccddH3cuCQL/IOuwW/61bHHCt2OPxC+jDHIWDQ99qzFnUqn
+ W
+X-Google-Smtp-Source: AGHT+IFKu7hqEN439YF4lNoCIO/jofqVEb5OHNN68TMEEivr50e8YKHlJgQl8U1e8nNiVEl2M4OeVw==
+X-Received: by 2002:a05:6a20:7483:b0:1db:e5ac:3d5b with SMTP id
+ adf61e73a8af0-1dbe5ac3d81mr1616634637.39.1730723928668; 
+ Mon, 04 Nov 2024 04:38:48 -0800 (PST)
 Received: from grind.. ([152.234.121.56]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-720bc20e4c2sm7550953b3a.91.2024.11.04.04.38.42
+ d2e1a72fcca58-720bc20e4c2sm7550953b3a.91.2024.11.04.04.38.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 04:38:44 -0800 (PST)
+ Mon, 04 Nov 2024 04:38:48 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  peter.maydell@linaro.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 0/2] hw/riscv/riscv-iommu: Coverity fixes
-Date: Mon,  4 Nov 2024 09:38:37 -0300
-Message-ID: <20241104123839.533442-1-dbarboza@ventanamicro.com>
+Subject: [PATCH 1/2] hw/riscv/riscv-iommu: change 'depth' to int
+Date: Mon,  4 Nov 2024 09:38:38 -0300
+Message-ID: <20241104123839.533442-2-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241104123839.533442-1-dbarboza@ventanamicro.com>
+References: <20241104123839.533442-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,57 +96,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Coverity reports an unsigned overflow when doing:
 
-This series fixes two issues detected by Coverity in the riscv-iommu
-code that just went upstream.
+    for (; depth-- > 0; ) {
 
-Peter, 
+When depth = 0 inside riscv_iommu_ctx_fetch().
 
-I'm fixing only 2 CIDs because the third one is a false positive:
+Building it with a recent GCC the code doesn't actually break with depth
+= 0, i.e. the comparison "0-- > 0" will exit the loop instead of
+proceeding,  but 'depth' will retain the overflow value afterwards.
 
-*** CID 1564781:  Integer handling issues  (INTEGER_OVERFLOW)
-/builds/qemu-project/qemu/hw/riscv/riscv-iommu-pci.c: 97 in riscv_iommu_pci_realize()
-91     
-92         /* Set device id for trace / debug */
-93         DEVICE(iommu)->id = g_strdup_printf("%02x:%02x.%01x",
-94             pci_dev_bus_num(dev), PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn));
-95         qdev_realize(DEVICE(iommu), NULL, errp);
-96     
->>>     CID 1564781:  Integer handling issues  (INTEGER_OVERFLOW)
->>>     Expression "memory_region_size(&iommu->regs_mr) + 4096UL", which is equal to 4095, where "memory_region_size(&iommu->regs_mr)" is known to be equal to 18446744073709551615, overflows the type that receives it, an unsigned integer 64 bits wide.
-97         memory_region_init(&s->bar0, OBJECT(s), "riscv-iommu-bar0",
-98             QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr), TARGET_PAGE_SIZE));
-99         memory_region_add_subregion(&s->bar0, 0, &iommu->regs_mr);
-100     
-101         pcie_endpoint_cap_init(dev, 0);
-102     
-----------
+This behavior can be compiler dependent, so change 'depth' to int to
+remove this potential ambiguity.
 
-The reason is that is that iommu->regs_mr is being initialized in riscv_iommu_realize()
-with 'RISCV_IOMMU_REG_SIZE':
+Resolves: Coverity CID 1564783
+Fixes: 0c54acb8243 ("hw/riscv: add RISC-V IOMMU base emulation")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ hw/riscv/riscv-iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-    memory_region_init_io(&s->regs_mr, OBJECT(dev), &riscv_iommu_mmio_ops, s,
-        "riscv-iommu-regs", RISCV_IOMMU_REG_SIZE);
-
-And we're doing "qdev_realize(DEVICE(iommu), NULL, errp);" right before
-the snippet Coverity found as problematic so it's guaranteed to be
-initialized. I ran it with a debugger and verified that
-QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr), TARGET_PAGE_SIZE) is
-in fact equal to 'RISCV_IOMMU_REG_SIZE' at that point, as intended.
-
-I was going to set it as false positive in Coverity but decided to
-verify with you first. If you agree I'll update the ticket.
-
-
-
-Daniel Henrique Barboza (2):
-  hw/riscv/riscv-iommu: change 'depth' to int
-  hw/riscv/riscv-iommu: fix riscv_iommu_validate_process_ctx() check
-
- hw/riscv/riscv-iommu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index feb650549a..05341ad20b 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -846,7 +846,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+     /* Device Context format: 0: extended (64 bytes) | 1: base (32 bytes) */
+     const int dc_fmt = !s->enable_msi;
+     const size_t dc_len = sizeof(dc) >> dc_fmt;
+-    unsigned depth;
++    int depth;
+     uint64_t de;
+ 
+     switch (mode) {
 -- 
 2.45.2
 
