@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BDAD1CA07
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 22:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62EF7D1CA08
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 22:52:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t85vj-0000NZ-AB; Mon, 04 Nov 2024 17:52:15 -0500
+	id 1t85vm-0000Nl-3y; Mon, 04 Nov 2024 17:52:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t85vg-0000N6-Jo
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:52:12 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1t85vk-0000Nb-Ax
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:52:16 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t85ve-0006zn-S8
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:52:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=qD84fLYq35QmJ+D+jLVLCabuRRjre3myGT2YyxrZ1ww=; b=WcIFE1H1HsILpONilR9wD8NNXV
- YqlvTJsjZOy3R5ta2edy8vXFLak1TrtTaycEPKlay4mUbLAR09y58TTja2gtzAOThe7+cfdogpC+h
- zqk6Qijwe+34bDoZRpORWKmoRU1b7GVXmDXL6YXzUusYiagxP1vx9NtDWVvj6sbNYHjkwzlrkR/GO
- PFh+k3GJwOSdPunJ8SiMZy5yS2Q4rtklFtOt7NuRni4wLY/WILzpGJMjvbApBk+2ZvC8uNO3DtXgk
- gqBuQhCVXhW1A908pAS0BP1YUACm9pyIrz4w4cHCQOBpu9v01TNrGByxrk/cr8F2fKdeaWPIAKv8O
- QsuloyBfUg8I1CYAElSpETr0H2MPpYldZOiRfWdVrQO6zHS7Os8pIl7ZIF8nyLE0YvxTmM1PlPxqL
- Q+Ioun56UCfS+AhZoOtcedb3cFoZjWd1nHQ2RpmceBKOdSkSPBxky73t9gR73bkAOmymjWYz5uSyM
- qknvptPypSZT4L/XL7THGaZ5d0S7w7wqyNFwFZk2wfUeN+fcXbCOonqDHlt+TOQG72A2hN0w+fVU/
- HnE043RbqeeluwvLnSYvzs+I43Onsc4bZyZt/3JEj0hjnCJ6bDlP/h9mOzPclVgt0l5dZfhWRxnC1
- oo0FdNbT0y70A2bdY4ZYDZoXwwyZYI/x2dquRLoAs=;
-Received: from [2a00:23c4:8bb8:f600:b478:1422:fb0f:30d5]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t85v6-00044V-EY; Mon, 04 Nov 2024 22:51:48 +0000
-Message-ID: <c186391e-ed40-4058-ba6a-22e69f123b8f@ilande.co.uk>
-Date: Mon, 4 Nov 2024 22:51:53 +0000
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1t85vh-0006zp-Hh
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:52:16 -0500
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4LJgll017647;
+ Mon, 4 Nov 2024 22:52:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ VxG9TYNPD2yFXrQ7gX9kiJvsoN3m0sgffG61ickwVYc=; b=P+iNnxrrMPH9Kdft
+ wcTFgKFWmEaM6Y/mf+plj+b19IMLW/XhBsG8D01Nsla8bnhVdisBYMnm6Ek88tbU
+ TJrsNVn7FXhPLwKAz0ScSCrVd8Uzt4zOmViCuo1BK1BH9hFsB+Aopnba/tLRk0kr
+ HS2eumdJgtPXH2NiGlHrf36bsBSbCcrCe4C2c7ELDpzvAcwCDVtLcipBHjqB+o7Y
+ ZihCd4nofSpWHKHrWR2UP1foDQGCWRYDnt9XPfwNYSMofe5Vyg6HJI6dOfw2uMAr
+ dDJPsJ+XFgLLNRUEc0/9CBL4PjzyMmGvbb3eDEYeqouMjAWLnKR4+KCnYmpoufj9
+ ooaHRQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42q5n8g768-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 04 Nov 2024 22:52:06 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
+ [10.47.97.35])
+ by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A4Mq6ME015970
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 4 Nov 2024 22:52:06 GMT
+Received: from [10.111.167.134] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 4 Nov 2024
+ 14:52:03 -0800
+Message-ID: <36e0fc16-b207-4c9b-9832-038fe97a55b6@quicinc.com>
+Date: Mon, 4 Nov 2024 16:51:43 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- peter.maydell@linaro.org, huth@tuxfamily.org, qemu-devel@nongnu.org
-References: <20241101201106.1432336-1-mark.cave-ayland@ilande.co.uk>
- <20241101201106.1432336-2-mark.cave-ayland@ilande.co.uk>
- <ZyicQT4eKlN07AHz@redhat.com> <ZyizniWmccEjAQBq@redhat.com>
+Subject: Re: [PATCH] Hexagon (target/hexagon) Remove HEX_DEBUG/HEX_DEBUG_LOG
+To: Taylor Simpson <ltaylorsimpson@gmail.com>, <qemu-devel@nongnu.org>
+CC: <bcain@quicinc.com>, <quic_mathbern@quicinc.com>, <sidneym@quicinc.com>,
+ <quic_mliebel@quicinc.com>, <richard.henderson@linaro.org>,
+ <philmd@linaro.org>, <ale@rev.ng>, <anjo@rev.ng>
+References: <20241104174904.61180-1-ltaylorsimpson@gmail.com>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <ZyizniWmccEjAQBq@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Brian Cain <quic_bcain@quicinc.com>
+In-Reply-To: <20241104174904.61180-1-ltaylorsimpson@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:b478:1422:fb0f:30d5
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 1/2] next-kbd: convert to use
- qemu_input_handler_register()
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: Ot6286W4OEM-ctQYTC60s0ii7NWoBVeB
+X-Proofpoint-ORIG-GUID: Ot6286W4OEM-ctQYTC60s0ii7NWoBVeB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0
+ suspectscore=0 lowpriorityscore=0 mlxlogscore=999 mlxscore=0
+ priorityscore=1501 bulkscore=0 adultscore=0 malwarescore=0 phishscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411040183
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,66 +104,479 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/11/2024 11:44, Daniel P. Berrangé wrote:
 
-> On Mon, Nov 04, 2024 at 10:04:49AM +0000, Daniel P. Berrangé wrote:
->> On Fri, Nov 01, 2024 at 08:11:05PM +0000, Mark Cave-Ayland wrote:
->>> Convert the next-kbd device from the legacy UI qemu_add_kbd_event_handler()
->>> function to use qemu_input_handler_register().
->>>
->>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->>> ---
->>>   hw/m68k/next-kbd.c | 166 ++++++++++++++++++++++++++++++---------------
->>>   1 file changed, 111 insertions(+), 55 deletions(-)
->>>
->>> diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
->>> index bc67810f31..283e98e9eb 100644
->>> --- a/hw/m68k/next-kbd.c
->>> +++ b/hw/m68k/next-kbd.c
+On 11/4/2024 11:49 AM, Taylor Simpson wrote:
+> All Hexagon debugging is now done with QEMU mechanisms
+> (e.g., -d in_asm) or with a connected debugger (lldb).
+>
+> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> ---
+>   target/hexagon/cpu.h       |   8 +--
+>   target/hexagon/helper.h    |   5 +-
+>   target/hexagon/internal.h  |  13 +----
+>   target/hexagon/translate.h |   2 -
+>   target/hexagon/genptr.c    |   9 +--
+>   target/hexagon/op_helper.c | 112 -------------------------------------
+>   target/hexagon/translate.c |  66 ----------------------
+>   target/hexagon/README      |   9 ---
+>   8 files changed, 4 insertions(+), 220 deletions(-)
+>
+> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+> index 764f3c38cc..bb7d83b53e 100644
+> --- a/target/hexagon/cpu.h
+> +++ b/target/hexagon/cpu.h
+> @@ -1,5 +1,5 @@
+>   /*
+> - *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
+> + *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+>    *
+
+You should not modify the QuIC copyright dates.  But you can add your 
+own copyright to these files for this change, if you like.
+
+>    *  This program is free software; you can redistribute it and/or modify
+>    *  it under the terms of the GNU General Public License as published by
+> @@ -79,12 +79,6 @@ typedef struct CPUArchState {
+>       uint8_t slot_cancelled;
+>       target_ulong new_value_usr;
 >   
->> Finding a reliable reference for the NeXT scancodes is very hard
->> in my googling so far. The best I've come across so far is
->>
->> https://github.com/spenczar/usb-next/blob/main/keymap.h
->>
->> who has defined a mapping to USB HID codes, which seems to
->> broadly match what's above here, plus has many of the gaps
->> fixed.
->>
->> Do you know of any other decent references for scancodes ?
->>
->> I'm going to see about adding NeXT scancodes to the giant
->> database of keycodes at:
->>
->>    https://gitlab.com/keycodemap/keycodemapdb
->>
->> then we can auto-generate this table as we do for most of
->> the other QEMU keyboard drivers.
-> 
-> FYI, I've opened this:
-> 
-> https://gitlab.com/keycodemap/keycodemapdb/-/merge_requests/21
-> 
-> if someone wants to sanity-check it, please comment there. Otherwise I'll
-> merge it after a short while if no one points out mistakes.
-
-Nice!
-
-> To use this from QEMU we would need:
-> 
->   * update ui/keycodemapdb submodule hash to point to the above (once
->     merged)
->   * update ui/meson.build  'keymaps' list to add ['qcode', 'next'] to
->     the generated map list
->   * import the new generated "ui/input-keymap-qcode-to-next.c.inc" from
->     next-kbd.c
-
-What would you recommend would be the best way forward for 9.2? To issue a v4 with 
-just the erroneous 0x00 values removed, or to try and use keycodemapdb?
-
-
-ATB,
-
-Mark.
-
+> -    /*
+> -     * Only used when HEX_DEBUG is on, but unconditionally included
+> -     * to reduce recompile time when turning HEX_DEBUG on/off.
+> -     */
+> -    target_ulong reg_written[TOTAL_PER_THREAD_REGS];
+> -
+>       MemLog mem_log_stores[STORES_MAX];
+>   
+>       float_status fp_status;
+> diff --git a/target/hexagon/helper.h b/target/hexagon/helper.h
+> index fa0ebaf7c8..e68f571abf 100644
+> --- a/target/hexagon/helper.h
+> +++ b/target/hexagon/helper.h
+> @@ -1,5 +1,5 @@
+>   /*
+> - *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
+> + *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+>    *
+>    *  This program is free software; you can redistribute it and/or modify
+>    *  it under the terms of the GNU General Public License as published by
+> @@ -19,9 +19,6 @@
+>   #include "helper_protos_generated.h.inc"
+>   
+>   DEF_HELPER_FLAGS_2(raise_exception, TCG_CALL_NO_RETURN, noreturn, env, i32)
+> -DEF_HELPER_1(debug_start_packet, void, env)
+> -DEF_HELPER_FLAGS_3(debug_check_store_width, TCG_CALL_NO_WG, void, env, int, int)
+> -DEF_HELPER_FLAGS_5(debug_commit_end, TCG_CALL_NO_WG, void, env, i32, int, int, int)
+>   DEF_HELPER_2(commit_store, void, env, int)
+>   DEF_HELPER_3(gather_store, void, env, i32, int)
+>   DEF_HELPER_1(commit_hvx_stores, void, env)
+> diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
+> index beb08cb7e3..fad78b8063 100644
+> --- a/target/hexagon/internal.h
+> +++ b/target/hexagon/internal.h
+> @@ -1,5 +1,5 @@
+>   /*
+> - *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
+> + *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+>    *
+>    *  This program is free software; you can redistribute it and/or modify
+>    *  it under the terms of the GNU General Public License as published by
+> @@ -20,17 +20,6 @@
+>   
+>   #include "qemu/log.h"
+>   
+> -/*
+> - * Change HEX_DEBUG to 1 to turn on debugging output
+> - */
+> -#define HEX_DEBUG 0
+> -#define HEX_DEBUG_LOG(...) \
+> -    do { \
+> -        if (HEX_DEBUG) { \
+> -            qemu_log(__VA_ARGS__); \
+> -        } \
+> -    } while (0)
+> -
+>   int hexagon_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+>   int hexagon_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
+>   int hexagon_hvx_gdb_read_register(CPUState *env, GByteArray *mem_buf, int n);
+> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+> index 00cc2bcd63..d251e2233f 100644
+> --- a/target/hexagon/translate.h
+> +++ b/target/hexagon/translate.h
+> @@ -73,7 +73,6 @@ typedef struct DisasContext {
+>       bool has_hvx_overlap;
+>       TCGv new_value[TOTAL_PER_THREAD_REGS];
+>       TCGv new_pred_value[NUM_PREGS];
+> -    TCGv pred_written;
+>       TCGv branch_taken;
+>       TCGv dczero_addr;
+>   } DisasContext;
+> @@ -271,7 +270,6 @@ extern TCGv hex_gpr[TOTAL_PER_THREAD_REGS];
+>   extern TCGv hex_pred[NUM_PREGS];
+>   extern TCGv hex_slot_cancelled;
+>   extern TCGv hex_new_value_usr;
+> -extern TCGv hex_reg_written[TOTAL_PER_THREAD_REGS];
+>   extern TCGv hex_store_addr[STORES_MAX];
+>   extern TCGv hex_store_width[STORES_MAX];
+>   extern TCGv hex_store_val32[STORES_MAX];
+> diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
+> index dbae6c570a..b375934bfa 100644
+> --- a/target/hexagon/genptr.c
+> +++ b/target/hexagon/genptr.c
+> @@ -1,5 +1,5 @@
+>   /*
+> - *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
+> + *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+>    *
+>    *  This program is free software; you can redistribute it and/or modify
+>    *  it under the terms of the GNU General Public License as published by
+> @@ -100,10 +100,6 @@ void gen_log_reg_write(DisasContext *ctx, int rnum, TCGv val)
+>   
+>       gen_masked_reg_write(val, hex_gpr[rnum], reg_mask);
+>       tcg_gen_mov_tl(get_result_gpr(ctx, rnum), val);
+> -    if (HEX_DEBUG) {
+> -        /* Do this so HELPER(debug_commit_end) will know */
+> -        tcg_gen_movi_tl(hex_reg_written[rnum], 1);
+> -    }
+>   }
+>   
+>   static void gen_log_reg_write_pair(DisasContext *ctx, int rnum, TCGv_i64 val)
+> @@ -151,9 +147,6 @@ void gen_log_pred_write(DisasContext *ctx, int pnum, TCGv val)
+>       } else {
+>           tcg_gen_and_tl(pred, pred, base_val);
+>       }
+> -    if (HEX_DEBUG) {
+> -        tcg_gen_ori_tl(ctx->pred_written, ctx->pred_written, 1 << pnum);
+> -    }
+>       set_bit(pnum, ctx->pregs_written);
+>   }
+>   
+> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+> index 90e7aaa097..01d1a1b1a7 100644
+> --- a/target/hexagon/op_helper.c
+> +++ b/target/hexagon/op_helper.c
+> @@ -54,9 +54,6 @@ G_NORETURN void HELPER(raise_exception)(CPUHexagonState *env, uint32_t excp)
+>   void log_store32(CPUHexagonState *env, target_ulong addr,
+>                    target_ulong val, int width, int slot)
+>   {
+> -    HEX_DEBUG_LOG("log_store%d(0x" TARGET_FMT_lx
+> -                  ", %" PRId32 " [0x08%" PRIx32 "])\n",
+> -                  width, addr, val, val);
+>       env->mem_log_stores[slot].va = addr;
+>       env->mem_log_stores[slot].width = width;
+>       env->mem_log_stores[slot].data32 = val;
+> @@ -65,35 +62,11 @@ void log_store32(CPUHexagonState *env, target_ulong addr,
+>   void log_store64(CPUHexagonState *env, target_ulong addr,
+>                    int64_t val, int width, int slot)
+>   {
+> -    HEX_DEBUG_LOG("log_store%d(0x" TARGET_FMT_lx
+> -                  ", %" PRId64 " [0x016%" PRIx64 "])\n",
+> -                   width, addr, val, val);
+>       env->mem_log_stores[slot].va = addr;
+>       env->mem_log_stores[slot].width = width;
+>       env->mem_log_stores[slot].data64 = val;
+>   }
+>   
+> -/* Handy place to set a breakpoint */
+> -void HELPER(debug_start_packet)(CPUHexagonState *env)
+> -{
+> -    HEX_DEBUG_LOG("Start packet: pc = 0x" TARGET_FMT_lx "\n",
+> -                  env->gpr[HEX_REG_PC]);
+> -
+> -    for (int i = 0; i < TOTAL_PER_THREAD_REGS; i++) {
+> -        env->reg_written[i] = 0;
+> -    }
+> -}
+> -
+> -/* Checks for bookkeeping errors between disassembly context and runtime */
+> -void HELPER(debug_check_store_width)(CPUHexagonState *env, int slot, int check)
+> -{
+> -    if (env->mem_log_stores[slot].width != check) {
+> -        HEX_DEBUG_LOG("ERROR: %d != %d\n",
+> -                      env->mem_log_stores[slot].width, check);
+> -        g_assert_not_reached();
+> -    }
+> -}
+> -
+>   static void commit_store(CPUHexagonState *env, int slot_num, uintptr_t ra)
+>   {
+>       uint8_t width = env->mem_log_stores[slot_num].width;
+> @@ -173,91 +146,6 @@ void HELPER(commit_hvx_stores)(CPUHexagonState *env)
+>       }
+>   }
+>   
+> -static void print_store(CPUHexagonState *env, int slot)
+> -{
+> -    if (!(env->slot_cancelled & (1 << slot))) {
+> -        uint8_t width = env->mem_log_stores[slot].width;
+> -        if (width == 1) {
+> -            uint32_t data = env->mem_log_stores[slot].data32 & 0xff;
+> -            HEX_DEBUG_LOG("\tmemb[0x" TARGET_FMT_lx "] = %" PRId32
+> -                          " (0x%02" PRIx32 ")\n",
+> -                          env->mem_log_stores[slot].va, data, data);
+> -        } else if (width == 2) {
+> -            uint32_t data = env->mem_log_stores[slot].data32 & 0xffff;
+> -            HEX_DEBUG_LOG("\tmemh[0x" TARGET_FMT_lx "] = %" PRId32
+> -                          " (0x%04" PRIx32 ")\n",
+> -                          env->mem_log_stores[slot].va, data, data);
+> -        } else if (width == 4) {
+> -            uint32_t data = env->mem_log_stores[slot].data32;
+> -            HEX_DEBUG_LOG("\tmemw[0x" TARGET_FMT_lx "] = %" PRId32
+> -                          " (0x%08" PRIx32 ")\n",
+> -                          env->mem_log_stores[slot].va, data, data);
+> -        } else if (width == 8) {
+> -            HEX_DEBUG_LOG("\tmemd[0x" TARGET_FMT_lx "] = %" PRId64
+> -                          " (0x%016" PRIx64 ")\n",
+> -                          env->mem_log_stores[slot].va,
+> -                          env->mem_log_stores[slot].data64,
+> -                          env->mem_log_stores[slot].data64);
+> -        } else {
+> -            HEX_DEBUG_LOG("\tBad store width %d\n", width);
+> -            g_assert_not_reached();
+> -        }
+> -    }
+> -}
+> -
+> -/* This function is a handy place to set a breakpoint */
+> -void HELPER(debug_commit_end)(CPUHexagonState *env, uint32_t this_PC,
+> -                              int pred_written, int has_st0, int has_st1)
+> -{
+> -    bool reg_printed = false;
+> -    bool pred_printed = false;
+> -    int i;
+> -
+> -    HEX_DEBUG_LOG("Packet committed: pc = 0x" TARGET_FMT_lx "\n", this_PC);
+> -    HEX_DEBUG_LOG("slot_cancelled = %d\n", env->slot_cancelled);
+> -
+> -    for (i = 0; i < TOTAL_PER_THREAD_REGS; i++) {
+> -        if (env->reg_written[i]) {
+> -            if (!reg_printed) {
+> -                HEX_DEBUG_LOG("Regs written\n");
+> -                reg_printed = true;
+> -            }
+> -            HEX_DEBUG_LOG("\tr%d = " TARGET_FMT_ld " (0x" TARGET_FMT_lx ")\n",
+> -                          i, env->gpr[i], env->gpr[i]);
+> -        }
+> -    }
+> -
+> -    for (i = 0; i < NUM_PREGS; i++) {
+> -        if (pred_written & (1 << i)) {
+> -            if (!pred_printed) {
+> -                HEX_DEBUG_LOG("Predicates written\n");
+> -                pred_printed = true;
+> -            }
+> -            HEX_DEBUG_LOG("\tp%d = 0x" TARGET_FMT_lx "\n",
+> -                          i, env->pred[i]);
+> -        }
+> -    }
+> -
+> -    if (has_st0 || has_st1) {
+> -        HEX_DEBUG_LOG("Stores\n");
+> -        if (has_st0) {
+> -            print_store(env, 0);
+> -        }
+> -        if (has_st1) {
+> -            print_store(env, 1);
+> -        }
+> -    }
+> -
+> -    HEX_DEBUG_LOG("Next PC = " TARGET_FMT_lx "\n", env->gpr[HEX_REG_PC]);
+> -    HEX_DEBUG_LOG("Exec counters: pkt = " TARGET_FMT_lx
+> -                  ", insn = " TARGET_FMT_lx
+> -                  ", hvx = " TARGET_FMT_lx "\n",
+> -                  env->gpr[HEX_REG_QEMU_PKT_CNT],
+> -                  env->gpr[HEX_REG_QEMU_INSN_CNT],
+> -                  env->gpr[HEX_REG_QEMU_HVX_CNT]);
+> -
+> -}
+> -
+>   int32_t HELPER(fcircadd)(int32_t RxV, int32_t offset, int32_t M, int32_t CS)
+>   {
+>       uint32_t K_const = extract32(M, 24, 4);
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index 4b1bee3c6d..bce85eaeb8 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -50,7 +50,6 @@ TCGv hex_gpr[TOTAL_PER_THREAD_REGS];
+>   TCGv hex_pred[NUM_PREGS];
+>   TCGv hex_slot_cancelled;
+>   TCGv hex_new_value_usr;
+> -TCGv hex_reg_written[TOTAL_PER_THREAD_REGS];
+>   TCGv hex_store_addr[STORES_MAX];
+>   TCGv hex_store_width[STORES_MAX];
+>   TCGv hex_store_val32[STORES_MAX];
+> @@ -195,21 +194,6 @@ static void gen_exception_end_tb(DisasContext *ctx, int excp)
+>   
+>   }
+>   
+> -#define PACKET_BUFFER_LEN              1028
+> -static void print_pkt(Packet *pkt)
+> -{
+> -    GString *buf = g_string_sized_new(PACKET_BUFFER_LEN);
+> -    snprint_a_pkt_debug(buf, pkt);
+> -    HEX_DEBUG_LOG("%s", buf->str);
+> -    g_string_free(buf, true);
+> -}
+> -#define HEX_DEBUG_PRINT_PKT(pkt) \
+> -    do { \
+> -        if (HEX_DEBUG) { \
+> -            print_pkt(pkt); \
+> -        } \
+> -    } while (0)
+> -
+>   static int read_packet_words(CPUHexagonState *env, DisasContext *ctx,
+>                                uint32_t words[])
+>   {
+> @@ -235,14 +219,6 @@ static int read_packet_words(CPUHexagonState *env, DisasContext *ctx,
+>           g_assert(ctx->base.num_insns == 1);
+>       }
+>   
+> -    HEX_DEBUG_LOG("decode_packet: pc = 0x%" VADDR_PRIx "\n",
+> -                  ctx->base.pc_next);
+> -    HEX_DEBUG_LOG("    words = { ");
+> -    for (int i = 0; i < nwords; i++) {
+> -        HEX_DEBUG_LOG("0x%x, ", words[i]);
+> -    }
+> -    HEX_DEBUG_LOG("}\n");
+> -
+>       return nwords;
+>   }
+>   
+> @@ -465,11 +441,6 @@ static void gen_start_packet(DisasContext *ctx)
+>        */
+>       bitmap_zero(ctx->pregs_written, NUM_PREGS);
+>   
+> -    if (HEX_DEBUG) {
+> -        /* Handy place to set a breakpoint before the packet executes */
+> -        gen_helper_debug_start_packet(tcg_env);
+> -    }
+> -
+>       /* Initialize the runtime state for packet semantics */
+>       if (need_slot_cancelled(pkt)) {
+>           tcg_gen_movi_tl(hex_slot_cancelled, 0);
+> @@ -484,10 +455,6 @@ static void gen_start_packet(DisasContext *ctx)
+>               tcg_gen_movi_tl(hex_gpr[HEX_REG_PC], next_PC);
+>           }
+>       }
+> -    if (HEX_DEBUG) {
+> -        ctx->pred_written = tcg_temp_new();
+> -        tcg_gen_movi_tl(ctx->pred_written, 0);
+> -    }
+>   
+>       /* Preload the predicated registers into get_result_gpr(ctx, i) */
+>       if (ctx->need_commit &&
+> @@ -635,15 +602,6 @@ static void gen_pred_writes(DisasContext *ctx)
+>       }
+>   }
+>   
+> -static void gen_check_store_width(DisasContext *ctx, int slot_num)
+> -{
+> -    if (HEX_DEBUG) {
+> -        TCGv slot = tcg_constant_tl(slot_num);
+> -        TCGv check = tcg_constant_tl(ctx->store_width[slot_num]);
+> -        gen_helper_debug_check_store_width(tcg_env, slot, check);
+> -    }
+> -}
+> -
+>   static bool slot_is_predicated(Packet *pkt, int slot_num)
+>   {
+>       for (int i = 0; i < pkt->num_insns; i++) {
+> @@ -691,25 +649,21 @@ void process_store(DisasContext *ctx, int slot_num)
+>            */
+>           switch (ctx->store_width[slot_num]) {
+>           case 1:
+> -            gen_check_store_width(ctx, slot_num);
+>               tcg_gen_qemu_st_tl(hex_store_val32[slot_num],
+>                                  hex_store_addr[slot_num],
+>                                  ctx->mem_idx, MO_UB);
+>               break;
+>           case 2:
+> -            gen_check_store_width(ctx, slot_num);
+>               tcg_gen_qemu_st_tl(hex_store_val32[slot_num],
+>                                  hex_store_addr[slot_num],
+>                                  ctx->mem_idx, MO_TEUW);
+>               break;
+>           case 4:
+> -            gen_check_store_width(ctx, slot_num);
+>               tcg_gen_qemu_st_tl(hex_store_val32[slot_num],
+>                                  hex_store_addr[slot_num],
+>                                  ctx->mem_idx, MO_TEUL);
+>               break;
+>           case 8:
+> -            gen_check_store_width(ctx, slot_num);
+>               tcg_gen_qemu_st_i64(hex_store_val64[slot_num],
+>                                   hex_store_addr[slot_num],
+>                                   ctx->mem_idx, MO_TEUQ);
+> @@ -937,16 +891,6 @@ static void gen_commit_packet(DisasContext *ctx)
+>           gen_commit_hvx(ctx);
+>       }
+>       update_exec_counters(ctx);
+> -    if (HEX_DEBUG) {
+> -        TCGv has_st0 =
+> -            tcg_constant_tl(pkt->pkt_has_store_s0 && !pkt->pkt_has_dczeroa);
+> -        TCGv has_st1 =
+> -            tcg_constant_tl(pkt->pkt_has_store_s1 && !pkt->pkt_has_dczeroa);
+> -
+> -        /* Handy place to set a breakpoint at the end of execution */
+> -        gen_helper_debug_commit_end(tcg_env, tcg_constant_tl(ctx->pkt->pc),
+> -                                    ctx->pred_written, has_st0, has_st1);
+> -    }
+>   
+>       if (pkt->vhist_insn != NULL) {
+>           ctx->pre_commit = false;
+> @@ -975,7 +919,6 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
+>       ctx->pkt = &pkt;
+>       if (decode_packet(ctx, nwords, words, &pkt, false) > 0) {
+>           pkt.pc = ctx->base.pc_next;
+> -        HEX_DEBUG_PRINT_PKT(&pkt);
+>           gen_start_packet(ctx);
+>           for (i = 0; i < pkt.num_insns; i++) {
+>               ctx->insn = &pkt.insn[i];
+> @@ -1093,7 +1036,6 @@ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+>   }
+>   
+>   #define NAME_LEN               64
+> -static char reg_written_names[TOTAL_PER_THREAD_REGS][NAME_LEN];
+>   static char store_addr_names[STORES_MAX][NAME_LEN];
+>   static char store_width_names[STORES_MAX][NAME_LEN];
+>   static char store_val32_names[STORES_MAX][NAME_LEN];
+> @@ -1112,14 +1054,6 @@ void hexagon_translate_init(void)
+>           hex_gpr[i] = tcg_global_mem_new(tcg_env,
+>               offsetof(CPUHexagonState, gpr[i]),
+>               hexagon_regnames[i]);
+> -
+> -        if (HEX_DEBUG) {
+> -            snprintf(reg_written_names[i], NAME_LEN, "reg_written_%s",
+> -                     hexagon_regnames[i]);
+> -            hex_reg_written[i] = tcg_global_mem_new(tcg_env,
+> -                offsetof(CPUHexagonState, reg_written[i]),
+> -                reg_written_names[i]);
+> -        }
+>       }
+>       hex_new_value_usr = tcg_global_mem_new(tcg_env,
+>           offsetof(CPUHexagonState, new_value_usr), "new_value_usr");
+> diff --git a/target/hexagon/README b/target/hexagon/README
+> index 7ffd517d70..ca617e3364 100644
+> --- a/target/hexagon/README
+> +++ b/target/hexagon/README
+> @@ -282,10 +282,6 @@ For Hexagon Vector eXtensions (HVX), the following fields are used
+>   
+>   *** Debugging ***
+>   
+> -You can turn on a lot of debugging by changing the HEX_DEBUG macro to 1 in
+> -internal.h.  This will stream a lot of information as it generates TCG and
+> -executes the code.
+> -
+>   To track down nasty issues with Hexagon->TCG generation, we compare the
+>   execution results with actual hardware running on a Hexagon Linux target.
+>   Run qemu with the "-d cpu" option.  Then, we can diff the results and figure
+> @@ -305,8 +301,3 @@ Here are some handy places to set breakpoints
+>       The helper function for each instruction is named helper_<TAG>, so here's
+>           an example that will set a breakpoint at the start
+>           br helper_A2_add
+> -    If you have the HEX_DEBUG macro set, the following will be useful
+> -        At the start of execution of a packet for a given PC
+> -            br helper_debug_start_packet if env->gpr[41] == 0xdeadbeef
+> -        At the end of execution of a packet for a given PC
+> -            br helper_debug_commit_end if this_PC == 0xdeadbeef
 
