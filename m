@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D4FD11194
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F7BD11198
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:29:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7kqI-0002KX-GE; Sun, 03 Nov 2024 19:21:14 -0500
+	id 1t7ks1-0000fg-Jx; Sun, 03 Nov 2024 19:23:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7kqH-00029q-17; Sun, 03 Nov 2024 19:21:13 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1t7krj-00078o-RO; Sun, 03 Nov 2024 19:22:43 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7kqF-0002fk-KK; Sun, 03 Nov 2024 19:21:12 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-71e4c2e36daso3001145b3a.0; 
- Sun, 03 Nov 2024 16:21:10 -0800 (PST)
+ id 1t7krh-0002oQ-Gn; Sun, 03 Nov 2024 19:22:43 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-71e592d7f6eso2832527b3a.3; 
+ Sun, 03 Nov 2024 16:22:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730679670; x=1731284470; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730679759; x=1731284559; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eS5e0cmJm70PoeOBdgGBzyGD/H9fRXlahMrxXsRoESI=;
- b=Kls0iBlXDPLpA2AS+Hrz4Mwi8QeGPt1DpfsSAVoB/LmD53V7nlTSghBU9FeXpYh+1q
- YqoFgyT6WcQwO6iQDevLP4KvmRG6dK59uk6KFElaOG3teEHS/XWocCmxBJmH1Vuqt4Qf
- FFLEpK0y0FRulz+QBi0nrQfkO7nhJ7dmp2oSgZeH+oVaDEvLDLrMeCoIxMGgzT6KExZi
- Xk3o3aMpGmjRtmpQrzxctbQnBbCwQtNSEEhNTlS28XNtLCSsbV6t1VgkClHatxNNG4xQ
- gWM8l9Aae52kjEXPSsTAskLZ8KSlGtc2xGgmUyuepNuCEgoIkv4wC68BgiwtocS5c//E
- KqNQ==
+ bh=kaMuQFrj1YjSWPzexi6V4O755YKfOagaKHbTPKYcJJ8=;
+ b=Zr/0Ryq5M24CmfDZQ2V7xKLLjbIJ2C+eU3GtCe4iB1B+rqpm9Kq9PdFrmScYPYN/JG
+ E+36BBkUj5LwEcPqn/2UwOjgiHItTmF6ri50Q/tTBIoede8gtBV+TBh5XGLwMMl7KpY7
+ XABbB8nxDj39sIL7+uQtjO96pQWUuMQdr7nm1zkMc4oDuWx2chY+Bavm/UZVp9AimFoh
+ HA0wSGMi0qj/PLFYp8QUsnO/px4tzPB4lONUM7jQosQZQRhVlicSsH7tsQ8kgoC25szM
+ B9zH2PeJ0dcQ4d900IXJxTDbNaeBrwuVwRPBBtXtU17TVo57O3ZGfAAMhJYs4HS+3jWy
+ zaSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730679670; x=1731284470;
+ d=1e100.net; s=20230601; t=1730679759; x=1731284559;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eS5e0cmJm70PoeOBdgGBzyGD/H9fRXlahMrxXsRoESI=;
- b=AwDKg3yApt7rGjCEIa1KnPa4w4iJc9+HrjemaY88PCeUKPsd+fXUJ2znYUbW4Pwtgg
- Uhk+dJ93zwuMEtyupVq+C4dBkZ2GOxhpjutrjcsijiO0l2yWD1A2+2mCfkf2bZoh3DOt
- eyIh8D+TXCfWuNfTLrN4sitRNwKk6V1NFI/xPryVZ+kRfgFpfy8iMdPx3s6OEMB0hSF0
- xC8WGnzttOPjJW3lA2K/dCraDy0d6qIGEFhSN1BqjYCCNyw2O+USijH5YnCyWb+4KMMG
- Q+hyra62oxWrGMmxHfgp/Efrlpcl4F2qrZDpP0JtLlKCfGWwcIGRUCgWMRocyUPiVMIu
- nsEA==
+ bh=kaMuQFrj1YjSWPzexi6V4O755YKfOagaKHbTPKYcJJ8=;
+ b=UM/50rGdbomJRzE08Duz5iezVmOeodgKntNaqwQl8eMO+yPGbVTm6tJwH4I+I4SAaS
+ GoHgDort7aKL0eCUpU5fGnZFDE+G9M1CiG5vRkh0egLYkIMni5dZ73ehYx0xJk/q7ink
+ /0OYSt+QqyP1mO3XY49v/mm0X50XiqPsMH0N4sI++5iJ4yIfwzSZW5BZDk+RFFDyyBrU
+ G/UOEKMNgPtUAkTlgkkyDCs2gc+NSGhfhygzTep7brU7u+/176SKZrFOaH1WdW+vkWFe
+ Tx6v9emnimAhYtPUVi9GAvJWputEEGSyqpR0V6UnwI50Pj4HNvjjkyn55HGU5ieiT6/Z
+ iuog==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUiASuwPdP3jkPrEVlY18E6++DvgHCRlkhG9DQMdsLXRF22x4x7AH9qDG4kXSKD33fG2pWl/khvig==@nongnu.org
-X-Gm-Message-State: AOJu0Ywbdj2xmuMy/ODMp4SMtQwPeMMdRDk2VB6uKf7bmJrOikZcPuci
- lTd5nzO4YDEKkt1LSBkf5Jw9YAyxxN1BZ1GKzaV+mJdRDmZmU7MBUOyiow==
-X-Google-Smtp-Source: AGHT+IGBRdiqul7jiaZZZ1AkxZdusZUpcOV5ncl5HpqghuyoJO2uqGmoV7NgACPhz0GmVEtEgymy3A==
-X-Received: by 2002:a05:6a20:7289:b0:1d7:86c:189e with SMTP id
- adf61e73a8af0-1dba41828fcmr15888482637.12.1730679669695; 
- Sun, 03 Nov 2024 16:21:09 -0800 (PST)
+ AJvYcCUDIuWdOYbPJ177N9GzX2etqzkG4oFskOYzi+37GXHZwhHNtMlYZ3xVLQRwDLXeOil9HuqMdkF0fg==@nongnu.org
+X-Gm-Message-State: AOJu0YwkjnZS6w4zYSDa1aD3i5gVTslm0e+Ayei4QWNOk6j49ap21e1K
+ RFzNxzIud9JiJ4LVzDjyalnPrMnWHdXqHydXWsyKQfDfTpc9kROLWmfDSQ==
+X-Google-Smtp-Source: AGHT+IESmOht7Ev6bKgKP5/9c7dwScgL4JhXwAi1nzNOcYBb86Q6XT1kgoCIgwEY0AWXeCwTqrZKnQ==
+X-Received: by 2002:a05:6a20:c6ca:b0:1d9:d8d:d0b0 with SMTP id
+ adf61e73a8af0-1dba5620c31mr13440992637.41.1730679759501; 
+ Sun, 03 Nov 2024 16:22:39 -0800 (PST)
 Received: from wheely.local0.net (124-171-217-17.tpgi.com.au. [124.171.217.17])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.21.06
+ 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.22.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 16:21:09 -0800 (PST)
+ Sun, 03 Nov 2024 16:22:39 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Aditya Gupta <adityag@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>
-Subject: [PULL 32/67] target/ppc: Fix regression due to Power10 and Power11
- having same PCR
-Date: Mon,  4 Nov 2024 10:18:21 +1000
-Message-ID: <20241104001900.682660-33-npiggin@gmail.com>
+ Glenn Miles <milesg@linux.vnet.ibm.com>,
+ Michael Kowal <kowal@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 58/67] pnv/xive: Add special handling for pool targets
+Date: Mon,  4 Nov 2024 10:18:47 +1000
+Message-ID: <20241104001900.682660-59-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241104001900.682660-1-npiggin@gmail.com>
 References: <20241104001900.682660-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,49 +97,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+From: Glenn Miles <milesg@linux.vnet.ibm.com>
 
-Power11 has the same PCR (Processor Compatibility Register) value, as
-Power10.
+Hypervisor "pool" targets do not get their own interrupt line and instead
+must share an interrupt line with the hypervisor "physical" targets.
+This also means that the pool ring must use some of the registers from the
+physical ring in the TIMA.  Specifically, the NSR, PIPR and CPPR registers:
 
-Due to this, QEMU considers Power11 as a valid compat-mode for Power10,
-ie. earlier it was possible to run QEMU with
-'-M pseries,max-compat-mode=power11 --cpu power10'
+  NSR = Notification Source Register
+  PIPR = Post Interrupt Priority Register
+  CPPR = Current Processor Priority Register
 
-Same PCR also introduced a regression where `-M pseries --cpu power10`
-boots as Power11 (ie. logical PVR is of Power11, even though PVR is
-Power10).  The regression was due to 'do_client_architecture_support'
-checking for valid compat modes and finding Power11 to be a valid compat
-mode for Power10 (it happens even without passing 'max-compat-mode'
-explicitly).
+The NSR specifies that there is an active interrupt.  The CPPR
+specifies the priority of the context and the PIPR specifies the
+priority of the interrupt.  For an interrupt to be presented to
+a context, the priority of the interrupt must be higher than the
+priority of the context it is interrupting (value must be lower).
 
-Fix compat-mode issue and regression, by ensuring a future Power
-processor (with a higher logical_pvr value, eg. P11) cannot be valid
-compat-mode for an older Power processor (eg. P10)
+The existing code was not aware of the sharing of these registers.
+This commit adds that support.
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/compat.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/intc/xive.c | 36 ++++++++++++++++++++++++++----------
+ 1 file changed, 26 insertions(+), 10 deletions(-)
 
-diff --git a/target/ppc/compat.c b/target/ppc/compat.c
-index ebef2cccec..5b20fd7ef0 100644
---- a/target/ppc/compat.c
-+++ b/target/ppc/compat.c
-@@ -132,6 +132,10 @@ static bool pcc_compat(PowerPCCPUClass *pcc, uint32_t compat_pvr,
-         /* Outside specified range */
-         return false;
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index 951aaf5279..baad7129ca 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -74,33 +74,49 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
+ 
+     if (regs[TM_NSR] & mask) {
+         uint8_t cppr = regs[TM_PIPR];
++        uint8_t alt_ring;
++        uint8_t *alt_regs;
++
++        /* POOL interrupt uses IPB in QW2, POOL ring */
++        if ((ring == TM_QW3_HV_PHYS) && (nsr & (TM_QW3_NSR_HE_POOL << 6))) {
++            alt_ring = TM_QW2_HV_POOL;
++        } else {
++            alt_ring = ring;
++        }
++        alt_regs = &tctx->regs[alt_ring];
+ 
+         regs[TM_CPPR] = cppr;
+ 
+         /* Reset the pending buffer bit */
+-        regs[TM_IPB] &= ~xive_priority_to_ipb(cppr);
+-        regs[TM_PIPR] = ipb_to_pipr(regs[TM_IPB]);
++        alt_regs[TM_IPB] &= ~xive_priority_to_ipb(cppr);
++        regs[TM_PIPR] = ipb_to_pipr(alt_regs[TM_IPB]);
+ 
+         /* Drop Exception bit */
+         regs[TM_NSR] &= ~mask;
+ 
+-        trace_xive_tctx_accept(tctx->cs->cpu_index, ring,
+-                               regs[TM_IPB], regs[TM_PIPR],
++        trace_xive_tctx_accept(tctx->cs->cpu_index, alt_ring,
++                               alt_regs[TM_IPB], regs[TM_PIPR],
+                                regs[TM_CPPR], regs[TM_NSR]);
      }
-+    if (compat->pvr > pcc->spapr_logical_pvr) {
-+        /* Older CPU cannot support a newer processor's compat mode */
-+        return false;
-+    }
-     if (!(pcc->pcr_supported & compat->pcr_level)) {
-         /* Not supported by this CPU */
-         return false;
+ 
+-    return (nsr << 8) | regs[TM_CPPR];
++    return ((uint64_t)nsr << 8) | regs[TM_CPPR];
+ }
+ 
+ static void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring)
+ {
++    /* HV_POOL ring uses HV_PHYS NSR, CPPR and PIPR registers */
++    uint8_t alt_ring = (ring == TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS : ring;
++    uint8_t *alt_regs = &tctx->regs[alt_ring];
+     uint8_t *regs = &tctx->regs[ring];
+ 
+-    if (regs[TM_PIPR] < regs[TM_CPPR]) {
++    if (alt_regs[TM_PIPR] < alt_regs[TM_CPPR]) {
+         switch (ring) {
+         case TM_QW1_OS:
+             regs[TM_NSR] |= TM_QW1_NSR_EO;
+             break;
++        case TM_QW2_HV_POOL:
++            alt_regs[TM_NSR] = (TM_QW3_NSR_HE_POOL << 6);
++            break;
+         case TM_QW3_HV_PHYS:
+             regs[TM_NSR] |= (TM_QW3_NSR_HE_PHYS << 6);
+             break;
+@@ -108,8 +124,8 @@ static void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring)
+             g_assert_not_reached();
+         }
+         trace_xive_tctx_notify(tctx->cs->cpu_index, ring,
+-                               regs[TM_IPB], regs[TM_PIPR],
+-                               regs[TM_CPPR], regs[TM_NSR]);
++                               regs[TM_IPB], alt_regs[TM_PIPR],
++                               alt_regs[TM_CPPR], alt_regs[TM_NSR]);
+         qemu_irq_raise(xive_tctx_output(tctx, ring));
+     }
+ }
+@@ -217,14 +233,14 @@ static uint64_t xive_tm_vt_poll(XivePresenter *xptr, XiveTCTX *tctx,
+ static const uint8_t xive_tm_hw_view[] = {
+     3, 0, 0, 0,   0, 0, 0, 0,   3, 3, 3, 3,   0, 0, 0, 0, /* QW-0 User */
+     3, 3, 3, 3,   3, 3, 0, 2,   3, 3, 3, 3,   0, 0, 0, 0, /* QW-1 OS   */
+-    0, 0, 3, 3,   0, 0, 0, 0,   3, 3, 3, 3,   0, 0, 0, 0, /* QW-2 POOL */
++    0, 0, 3, 3,   0, 3, 3, 0,   3, 3, 3, 3,   0, 0, 0, 0, /* QW-2 POOL */
+     3, 3, 3, 3,   0, 3, 0, 2,   3, 0, 0, 3,   3, 3, 3, 0, /* QW-3 PHYS */
+ };
+ 
+ static const uint8_t xive_tm_hv_view[] = {
+     3, 0, 0, 0,   0, 0, 0, 0,   3, 3, 3, 3,   0, 0, 0, 0, /* QW-0 User */
+     3, 3, 3, 3,   3, 3, 0, 2,   3, 3, 3, 3,   0, 0, 0, 0, /* QW-1 OS   */
+-    0, 0, 3, 3,   0, 0, 0, 0,   0, 3, 3, 3,   0, 0, 0, 0, /* QW-2 POOL */
++    0, 0, 3, 3,   0, 3, 3, 0,   0, 3, 3, 3,   0, 0, 0, 0, /* QW-2 POOL */
+     3, 3, 3, 3,   0, 3, 0, 2,   3, 0, 0, 3,   0, 0, 0, 0, /* QW-3 PHYS */
+ };
+ 
 -- 
 2.45.2
 
