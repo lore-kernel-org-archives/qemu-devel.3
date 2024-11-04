@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E419D1BDC2
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 16:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1909D1BDC2
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 16:03:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7zY3-0007uZ-FS; Mon, 04 Nov 2024 11:03:23 -0500
+	id 1t7zYE-0007vB-6t; Mon, 04 Nov 2024 11:03:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t7zY2-0007u9-3g
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:03:22 -0500
+ id 1t7zYD-0007uu-0Z
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:03:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t7zY0-0007C0-7d
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:03:21 -0500
+ id 1t7zYB-0007Df-Bt
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:03:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730736199;
+ s=mimecast20190719; t=1730736210;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7JZC3v6eydwHk6rZe8ncBZSlWNsGSCPyYUdAuTRxSck=;
- b=SecQ3SANRW6m7UJuuKibG2Urfkj+8VQ4UL4rcQUw0O7dUkjkhdvCumWZrNqhVunc2Dfq40
- U2nbxiwYrN096YcUhgMxtnjrsX8c/1LNupFwbz+LbBVr5XFqQkRklpRA0L8be1tpbT5q+x
- uo5GDMnxn5JsJfOX6PRLVh2zgYi6vI4=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LpQYnA1k4c8HMfsv15vj3Eak9a8JNRR68nrGPfYiw3Q=;
+ b=DmOlq4Hzm7xoBX9ClhLHU44oZn9EFKy1InLRSIRzAFTupC8w5V2wLBW269dl1X5FIlR/WF
+ aKaTd4hkxXb62l+RBTso5SJY0WcIxdZwvJnbMVCNQWebq0AhKiaRSCSWhnfVXKWs0vM451
+ jN5Tcaj1DBw6VlPs3ZA7TELraqsf+CA=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-459-7J6MbSZnPsWMJYkVUFj-iw-1; Mon, 04 Nov 2024 11:03:16 -0500
-X-MC-Unique: 7J6MbSZnPsWMJYkVUFj-iw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37d67f4bf98so1960377f8f.1
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 08:03:16 -0800 (PST)
+ us-mta-589-uCX0ujLWO9689PoO8-I4OQ-1; Mon, 04 Nov 2024 11:03:29 -0500
+X-MC-Unique: uCX0ujLWO9689PoO8-I4OQ-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-539eb3416cdso4567944e87.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 08:03:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730736195; x=1731340995;
+ d=1e100.net; s=20230601; t=1730736208; x=1731341008;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7JZC3v6eydwHk6rZe8ncBZSlWNsGSCPyYUdAuTRxSck=;
- b=NeYAmZ70qwvqjr6YjjrShKm2jrAmYVpPWrWKJ2fcTDj72GIP6GMIjvq+QEbDPmUBaR
- J5qH4n12ONlszJYFQqpth7xAZAy5kB4baHxRzyD8wrtrps/uaInRD60tPUj1yV7g3A4R
- nf2hPUqZDtutFmX0U4qdvkj3c8woaCJf+MZimwDMoi2m0JIsDnLYiJ8VpAcugzwW2nEX
- YMDeUJwKFzoRR52M91VhgPdnTRNADItEz3rYPuiBr2ZURhFqD4GjrRsoNPv3FX1n2vk0
- TvNYDYt2qsQKGIjG4hfFqOTIicEi/yMGPNW5ypSp2KDPMsTJPEw/ZNSn2ONtR662PoA0
- Y3NQ==
-X-Gm-Message-State: AOJu0YwjVZHK+sPU+uJT8wYE7GmPJLQZxydfm1g6SDtGcBcLjmMl9+c9
- 7I2X4Sga4fSH3OCGLF/Desh0JXgyw2sFwITQjcY7PQJTpSRC3nrqkzv0XWTEFRlREV7ApKWiuzH
- 8mwsUY9UIIT4m1N0hzhEqEOkAMfeMLbKqkXClbz/mPCqiU23vsupf
-X-Received: by 2002:a5d:5711:0:b0:37c:ccad:733a with SMTP id
- ffacd0b85a97d-38061219b44mr19847573f8f.59.1730736195053; 
- Mon, 04 Nov 2024 08:03:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEO6Paty3JJXjJI8yUnowCyn+GF+kPK7yGWvQUBMOPlzdD2i0CWR5lASleHjnZHFjqisS1u7w==
-X-Received: by 2002:a5d:5711:0:b0:37c:ccad:733a with SMTP id
- ffacd0b85a97d-38061219b44mr19847538f8f.59.1730736194488; 
- Mon, 04 Nov 2024 08:03:14 -0800 (PST)
+ bh=LpQYnA1k4c8HMfsv15vj3Eak9a8JNRR68nrGPfYiw3Q=;
+ b=dbgLJlGi+wR36loThnNeNgOtjZCaOrpg8WRbUjkmnvrhyaUJK2w638geNVvofmDIbg
+ hvGoFsmbzoHsg0wUAaO4Tzia5RUNj9Ti6JOaMiRRmyejHuo2pd6F0cOnfD5F9a512aVl
+ NFSqA0GITpt9PiV9AI2FHlm436hZTYzVLQmZXztx3ydHugrNmfC6u0ZT7iBCXcPrRZtL
+ XFukaDvqgk9rf6ybP/inaqVNJokWhbbin2vJupjMsDBTexaY0HcqXZGXBSP2CzjUn3BR
+ pQQv6C1tfYg0QE6TJv1ZcPaBGS5F0N+CLIhpKigeY596k/7RIrRGedYJnuM5WVvGnilx
+ SxRg==
+X-Gm-Message-State: AOJu0YzaZFBkHvrJJmG4iyuBaTJiorVyUk1mohCm4AuCNz6TnZnKwdML
+ bO8CRBufH71eAZsgIOxKGzEjkNPSnM4dhtf6Wvw52NZ84iFpIDndAzVMvx70PLSG0bdnZ1lcCKh
+ 3zV5BdJM2SMqRk126ifvxwy0gBVGCUvTDo0kcoQ1DVn+/nl5saRIl
+X-Received: by 2002:a05:6512:6ca:b0:539:e88f:2398 with SMTP id
+ 2adb3069b0e04-53b34a19082mr15598105e87.39.1730736207374; 
+ Mon, 04 Nov 2024 08:03:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG4FXlbNXBkWIazxdhSbRjbTcXNH6vBp7AEeUqHeYNJVeqrnzWIvapJzx2mnJsALZ+Yux2aXA==
+X-Received: by 2002:a05:6512:6ca:b0:539:e88f:2398 with SMTP id
+ 2adb3069b0e04-53b34a19082mr15598058e87.39.1730736206716; 
+ Mon, 04 Nov 2024 08:03:26 -0800 (PST)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-381c113e69fsm13551800f8f.69.2024.11.04.08.03.11
+ 5b1f17b1804b1-4327d5ab297sm157807115e9.8.2024.11.04.08.03.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Nov 2024 08:03:13 -0800 (PST)
-Message-ID: <f13766c1-12e2-46b2-a139-c926824c50e0@redhat.com>
-Date: Mon, 4 Nov 2024 17:03:10 +0100
+ Mon, 04 Nov 2024 08:03:26 -0800 (PST)
+Message-ID: <6f20610a-a9ab-48fc-83ae-1c0de791bd8d@redhat.com>
+Date: Mon, 4 Nov 2024 17:03:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 15/23] rust: introduce alternative implementation of
@@ -239,8 +239,8 @@ On 11/3/24 10:54, Junjie Mao wrote:
 > space does not impact building)?
 
 Ah, forgot to reply about this.  Personally I think it's clear enough 
-with the "=>", but if there's agreement on removing the space I don't 
-oppose it.
+with the space around both sides of "=>", but if there's agreement on 
+removing the space I don't oppose it.
 
 Paolo
 
