@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E40CD132DF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 15:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E645D132DE
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 15:26:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7ywk-0006ds-JL; Mon, 04 Nov 2024 10:24:50 -0500
+	id 1t7yxl-0007Cf-TB; Mon, 04 Nov 2024 10:25:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t7ywb-0006d3-Bh
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:24:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t7ywZ-00022z-23
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:24:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730733876;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4Rpq/uBr2y2YyfHOuA0rZNYcdp3Fhq0ehdI8m+Y3eq0=;
- b=C5uu3UWM+uwUFBilZ2YVZizF2nwT0l8R/kDtsZg8TpDuw81iJ7Qq7u65ocDa0CoHx2QdRu
- QJaz0ABOCKjqYOIJIl+gjhyFyGmx+FLiL7p9SxhgPDNGc+vXdft6+Ljs50zMViq6pbdFJc
- bDrPbRbNkOOVOkb6QRyaVB0noKegPtM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-372-nFxoB0yaNfuObz_1CF_hXA-1; Mon,
- 04 Nov 2024 10:24:33 -0500
-X-MC-Unique: nFxoB0yaNfuObz_1CF_hXA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A90081955BC7; Mon,  4 Nov 2024 15:24:26 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.152])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 33BC219560AA; Mon,  4 Nov 2024 15:24:19 +0000 (UTC)
-Date: Mon, 4 Nov 2024 15:24:16 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
- armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: Re: [RFC 21/21] arm/cpu-features: Document custom vcpu model
-Message-ID: <ZyjnIMteSuCvpGPW@redhat.com>
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <20241025101959.601048-22-eric.auger@redhat.com>
- <ZxuZkUFz_bwAA1pf@redhat.com>
- <0700af51-a1a6-4b11-a4bf-0eaf6e279c6d@redhat.com>
- <Zxudl5-fZV1vIaEL@redhat.com> <87y128nrfr.fsf@redhat.com>
- <Zx-3OUioG1l47hW3@redhat.com>
- <24ca0278-5018-41e3-a097-ac560a16f8fa@redhat.com>
- <ZyjgWJ3bZ69sueE2@redhat.com> <875xp3nigb.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7yxd-0007BC-MC
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:25:46 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t7yxb-0002Ms-W3
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:25:45 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a99f3a5a44cso615448666b.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 07:25:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730733941; x=1731338741; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yT+yOR60+TjWzvuax1qaxFFy+Bp2Rcc/ZkNW0+xeDCA=;
+ b=kuNXDDqrcwMRVT2R5Y+hA1gdtsS1iF+QmV1zYpii+MuBLECZ3VJmIakQJjdz3+L3al
+ FAEKvArY8nDGtmbVa3HeGQ/F+ToUPxP4cbRxjD+vXH1C7xFIkT4QJPMu57ooT+4Ay9la
+ Jo6CbY/qa3Wjh85btnPPkiZRi4ekBahI5RG2rxupjVySKz5IQwmZRAarDZS0qfPFNsg1
+ 5cQJ/Wf7nec+LzXP2WSvdwMh+VLUWchPpoz8O0JHfG9qkwl4PGgPajosvouVc5cQ3hro
+ HzrcMyH4Ld5VtjPyFJX3LupvjbZNppf3AcZ+n+sscgW/VVOoBAuo3uJFdy0z94YMgxiF
+ qfMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730733941; x=1731338741;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yT+yOR60+TjWzvuax1qaxFFy+Bp2Rcc/ZkNW0+xeDCA=;
+ b=NlM2FaOoGlxBvdkGoYmhENJOm5057/07WaUDuvhBqTuA0vkcFOM0kcMLx8yS+S3mJm
+ Zti8dU9sCRLAMwrtzAVzDlvLX32AStoUhlDNIB4Tr1jo2aMHyrlKfwoeXlg3mTZWESnq
+ 7fb7rYnz7+3cmnUGGYrAunnx+u3dFWQDBjCB3UPg2aE73hET41kFbAu1g/7nSbKYBzcM
+ pBOuZ9tFamlXsv+ksTYT/Lj7+H8Njco1PwKO5jh2g8c/No06hdckogJkb1Jv0Ht+6irS
+ X9I2NhK4g3yxOq1JyxePY4Unc6JUHzdbhEofSWKhTm6vgbRB91GZZfsjzNuQ2VAVTGUf
+ xIHQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVfFeHkckrmY4HL6FPqQGQe5ULmniN33Ky31Fk5t1dH1ZSQNAumVkGLZ0VCEVCTIlSxx+x03zD8+VYP@nongnu.org
+X-Gm-Message-State: AOJu0Yw7Ev9BSL9i8aC63Z4o9xCe3vLamEJ1cygjbAQ/ET8YVtNKfq2f
+ vuqpf/Pe1cGtPzJRUPBns1qSgmClI/1W3lHJhBP79cBKDX32W1xFTHPraf2esYcPmI+upL+bfr7
+ d
+X-Google-Smtp-Source: AGHT+IE/bCwuOVJgcdeaNzL/kAvvVICi+2o9jfYLZzbWQ2Mm3r+Ch+3bHovNW8gIpcRKjMKs/4J81w==
+X-Received: by 2002:a17:907:948c:b0:a9a:17b9:77a4 with SMTP id
+ a640c23a62f3a-a9de5ed3c96mr3382365966b.20.1730733941279; 
+ Mon, 04 Nov 2024 07:25:41 -0800 (PST)
+Received: from [192.168.69.126] (juv34-h02-176-184-26-5.dsl.sta.abo.bbox.fr.
+ [176.184.26.5]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9e565dfa8bsm567730666b.103.2024.11.04.07.25.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Nov 2024 07:25:40 -0800 (PST)
+Message-ID: <62320d09-007c-4435-b4cc-eebfd0668fd6@linaro.org>
+Date: Mon, 4 Nov 2024 16:25:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 15/50] hw/char: sifive_uart: Print uart characters async
+To: Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair23@gmail.com>,
+ qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241031035319.731906-1-alistair.francis@wdc.com>
+ <20241031035319.731906-16-alistair.francis@wdc.com>
+ <4c589c02-323a-4989-be30-619627124002@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <4c589c02-323a-4989-be30-619627124002@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <875xp3nigb.fsf@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,77 +98,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 04, 2024 at 04:10:12PM +0100, Cornelia Huck wrote:
-> On Mon, Nov 04 2024, Daniel P. Berrangé <berrange@redhat.com> wrote:
+On 4/11/24 11:38, Thomas Huth wrote:
+> On 31/10/2024 04.52, Alistair Francis wrote:
+>> The current approach of using qemu_chr_fe_write() and ignoring the
+>> return values results in dropped characters [1].
+>>
+>> Let's update the SiFive UART to use a async sifive_uart_xmit() function
+>> to transmit the characters and apply back pressure to the guest with
+>> the SIFIVE_UART_TXFIFO_FULL status.
+>>
+>> This should avoid dropped characters and more realisticly model the
+>> hardware.
+>>
+>> 1: https://gitlab.com/qemu-project/qemu/-/issues/2114
+>>
+>> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+>> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> Tested-by: Thomas Huth <thuth@redhat.com>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Message-ID: <20240910045419.1252277-3-alistair.francis@wdc.com>
+>> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+>> ---
+> ...
+>> @@ -106,12 +174,10 @@ sifive_uart_write(void *opaque, hwaddr addr,
+>>   {
+>>       SiFiveUARTState *s = opaque;
+>>       uint32_t value = val64;
+>> -    unsigned char ch = value;
+>>       switch (addr) {
+>>       case SIFIVE_UART_TXFIFO:
+>> -        qemu_chr_fe_write(&s->chr, &ch, 1);
+>> -        sifive_uart_update_irq(s);
+>> +        sifive_uart_write_tx_fifo(s, (uint8_t *) &value, 1);
 > 
-> >
-> > FYI, in x86 target the -cpu command has had a "migratable=bool" property
-> > for a long time , which defaults to 'true' for 'host' model. This causes
-> > QEMU to explicitly drop features which would otherwise prevent migration
-> > between two hosts with identical physical CPUs.
-> >
-> > IOW, if there are some bits present in 'host' that cause migration
-> > problems on Ampere hosts, ideally either QEMU (or KVM kmod) would
-> > detect them and turn them off automatically if migratable=true is
-> > set. See commit message in 84f1b92f & 120eee7d1fd for some background
-> > info
-> 
-> How does this work for version-sensitive features -- are they always
-> defaulting to off? How many features are left with that in the end?
+> This broke the sifive_u machine on big endian hosts. "value" is a 64-bit 
+> variable, so you cannot assume that you get the 8-bit character with 
+> such a pointer magic here. I think we have to re-introduce the detour 
+> via the 8-bit "ch" variable...
 
-Do you mean QEMU versions here ? The non-migratable feature list is
-just hardcoded in QEMU right now, and there's only 1 of them.
-eg grep for 'unmigratable_flags'
-
-Note, that "migratable" property is not defining a general purpose
-migration mask between different hw generations. It was specifically
-blocking just stuff that is known to make migration impossible, even
-if HW is identical on both sides.
-
-> > NB "migratable" is defined in i386 target code today, but conceptually
-> > we should expand/move that to apply to all targets for consistency,
-> > even if it is effectively a no-op some targets (eg if they are
-> > guaranteed migratable out of the box already with '-cpu host').
-> 
-> How does this compare to s390x, which defines some migration-safe cpu
-> models, based upon the different hw generations? If I look at the QEMU
-> code for x86 and s390x, the s390x approach seems cleaner to me (probably
-> because it came later, and therefore could start afresh without having
-> to care for legacy things.) Given that we'll cook up a new model for Arm
-> migration as well, we might as well start with a clean implementation :)
-
-The impression I get (as an distant observer) is that CPUs on s390x in
-general have less complexity to worry about. A combination of not having
-a vendor who creates loads off different SKUs for the same CPU model
-family with slight variations between each, and also not seeming to have
-a situation where CPU flags a known to disappear (or appear) arbitrarily
-in microcode updates.
-
-The s390x idea of a "migratable" and "non migratable" model for each
-HW generation is a nice simplification, but I can't see how it could
-be made to work for x86 when you can't predict ahead of time what
-features are going to be removed from existing HW definition by the
-next microcode update, or by the next CPU SKU that removes a feature
-you had assumed would always be present in a given HW generation.
-
-I don't know much about how ARM world works, but having lots of vendors
-competing with their own custom impls makes me worry complexity will
-be closer to x86 than to s390.
-
-If the ARM specifications define a minimum require featureset for each
-HW generation, maybe you can define a model based on that ? You might
-still want to have vendor specific models though, if there are compelling
-features they expose which are optional, or non-standardized. 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Sigh I got corrected for the same mistake but forgot it here:
+https://lore.kernel.org/qemu-devel/49918fad-56fc-150e-bb9c-bd00dc67df05@linaro.org/
 
