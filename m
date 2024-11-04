@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 147C6D1BDF2
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 20:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81120D1BDF2
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 20:53:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t841r-0007WI-2S; Mon, 04 Nov 2024 15:50:27 -0500
+	id 1t844R-0008R8-72; Mon, 04 Nov 2024 15:53:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t841p-0007Vo-PK
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 15:50:25 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t844P-0008Qw-UX
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 15:53:05 -0500
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t841n-0003me-6x
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 15:50:25 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-37d4fd00574so3138043f8f.0
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 12:50:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t844M-0003xc-HA
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 15:53:05 -0500
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2fb518014b9so39076611fa.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 12:53:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730753421; x=1731358221; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730753580; x=1731358380; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pMMxOBw2dh19te8EtH8Ezcy3wzinirkjVOWhdgBBZcc=;
- b=AVP50W23rdeUDybfD3+gvwK6s4ZvcklgWN6Da5S4PRIs7SXM+wcPZCs8zbzpyEPqg3
- ZLHSjvvdN2fwDZ7V8GlyvKlE/rQIdkO+Z0ryf0lRWe4fiI0ATGN8R+j3NwMkR0JOByzW
- 5OHfPCeJGegj6+p9eM12oIM8E1fM7f5UvcIubJ2pE4vqX0G8d2uHgrScpa/gUnhSIXkd
- GuQ+XFgfrrs3cX2xYPFRHG/ghogO1igOwEvpPSYx1A5j/1Gte0I+Urc1ysQXc/6SiTn2
- IukT47ze/9M/910yqChqI7pB7nfsn7mg9Low1lSqd8BF7GUHFNcJaYaDCk3OOVeoHAHb
- 1DIg==
+ bh=maV6uvj9XwFofKSFV3GccSYMu6V3RFhT/3qCFC/m2uM=;
+ b=HfIRLpPMcXCi2qxtLi1tyj4yuvehWzRipKSG2uM0et9+MwaqLlBOnBMCMXfUC204oQ
+ 62+WPCk/wv74PMCuWCN9vTvjeA/qvxd31OBpJ6RUOlqwmSClovENGcLnCkWnyPidyd0v
+ dK7Igd33JUbYBR5EnSK/gb06DskouK2kPMCZNQ1DtI+ksPRiQUV3WO9HFqX2Tnejrxcf
+ OdpbwUd58wxHnXAVyS9+LVbPtoGLgNIrcxmZqhrZSKIw7b3Ek7zthston+GRXsWJl/p/
+ C2ZLh7rRlEuT3spiRl9pwiHUnmsLiL0XeNBJp4HDmhTSkneSPTafrYjQJwHMvBoXRSrA
+ nLxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730753421; x=1731358221;
+ d=1e100.net; s=20230601; t=1730753580; x=1731358380;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pMMxOBw2dh19te8EtH8Ezcy3wzinirkjVOWhdgBBZcc=;
- b=lKJKtBd2PILWgOa2vA3jm265eKpHLD4KKGHXJOzGJuBAZbZJTSqgaJfrnM6tIpZanP
- 2dSYgcd8nlYpDMaFupkJS+0vmepyFp7PdHDOOfkJTKlIXJXi1HThMaTRkxF4XtWvDP+u
- 5Wp2XkMTN3CE8d5gvjKPxDb5k0jU7STSObPrLbALWEzlKHhefkRIKguwk7E2q4nqbPaY
- sM7SJM+NKwYqjTSZ15Lt4pzg5HiXZ9f9B2hxxeOlFNerXtfb/POKrD7ryRzKHJJ3TKgz
- zlNhUaRm9Yff5DNSQNaYvazkM9I+UtPxNBvJ+ZGmhgJxxVi5pD7hOpqsnZM1zAz4ZJpq
- /ixg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0SBrfnhWhdA0r7pEO3gbX7gzW930v75fYzqVaNapncVGuZLl2lAjaO7NkTO6JW4xP48mwDgxkt1+K@nongnu.org
-X-Gm-Message-State: AOJu0YzG3omTzda6HDrIz+0kEDguRYrjiIC/52t6C7wJ5Wn+j4OVVZLG
- dajghJOxh+pO7Ry5k/axith49Jkn8Pag0Mrug4ffnQ7rpCmYDczzNrgK4EJh68o=
-X-Google-Smtp-Source: AGHT+IE0CZNppMuuiYeNhmcmTQyGJhw5PmF5Sx3MpQB4+LDkChNCshQsFn01HrTYxRYAGTgm77R9tA==
-X-Received: by 2002:a05:6000:1865:b0:37d:460d:2d07 with SMTP id
- ffacd0b85a97d-381c7973ad1mr10363456f8f.10.1730753420993; 
- Mon, 04 Nov 2024 12:50:20 -0800 (PST)
-Received: from [192.168.69.126] (juv34-h02-176-184-26-5.dsl.sta.abo.bbox.fr.
- [176.184.26.5]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bd8e7f33sm193810075e9.6.2024.11.04.12.50.19
+ bh=maV6uvj9XwFofKSFV3GccSYMu6V3RFhT/3qCFC/m2uM=;
+ b=ROD2AzsWhr67Vh0DF59EOUij8rp3zV7Juz3HjbAO2gP4PWJHyncOSuuR3TOahvkOum
+ 5nXAS08F6QN4sMSoU48cnMiNF/cqbDk1HI0JApxWzJ2a/7MtN9kyElnF8eqla23tMzbk
+ HrrAzWaWVbC6/qdMbkcI+hsDaxysWg/6V7WjMD4b2DtaFDmDMZWO7wJh79PeUxoopsoM
+ 3zbEqJV6tDwgFHT6H0jM/USJHnZw3QuA7HOcpsKA4x6jlvFX61pWnThPqNMtUa1XgcDb
+ +OYJbu3Yg7wjz/L8wqFe4JKtwpFaS6O12RzVrB99e7I1Wb/VDFaWl3g6GAWU0HUC2CeX
+ Xjpg==
+X-Gm-Message-State: AOJu0YwjjolIbLtY7NZz4UFpf1lsXteiMYrjoLAn9xWV0k8Bqhx3nLaE
+ +dGNTKa7iWR4NYptKLpIeyldHf6eDOn/R2VpBXesrNtbqpJ72vlrRbClq7sEvAM=
+X-Google-Smtp-Source: AGHT+IEY6KHYZ+UHDyeH0I1wfa2X6/L7zGOounCp0FG8tZPb3yT4CwMNgP39jBjoiEof6i2xVWas6g==
+X-Received: by 2002:a05:651c:119b:b0:2f3:f358:8657 with SMTP id
+ 38308e7fff4ca-2fcbe095cfbmr111670451fa.44.1730753580095; 
+ Mon, 04 Nov 2024 12:53:00 -0800 (PST)
+Received: from [192.168.21.227] ([89.101.241.141])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4327d698405sm168150435e9.41.2024.11.04.12.52.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Nov 2024 12:50:20 -0800 (PST)
-Message-ID: <b2f85535-3f5d-4045-8b6d-2073639feb8d@linaro.org>
-Date: Mon, 4 Nov 2024 21:50:17 +0100
+ Mon, 04 Nov 2024 12:52:59 -0800 (PST)
+Message-ID: <03dd21a0-65a7-4b7f-82dd-1717c0041bc9@linaro.org>
+Date: Mon, 4 Nov 2024 20:52:57 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/char/sifive_uart: Fix broken UART on big endian hosts
-To: Thomas Huth <thuth@redhat.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-References: <20241104163504.305955-1-thuth@redhat.com>
+Subject: Re: [PATCH v3 0/2] linux-user: Allow mapping low priority rt signals
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Brian Cain <bcain@quicinc.com>,
+ "ltaylorsimpson @ gmail . com" <ltaylorsimpson@gmail.com>
+References: <20241029232211.206766-1-iii@linux.ibm.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241104163504.305955-1-thuth@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241029232211.206766-1-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x22a.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,17 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/11/24 13:35, Thomas Huth wrote:
-> Casting a "uint32_t *" to a "uint8_t *" to get to the lowest 8-bit
-> part of the value does not work on big endian hosts. We've got to
-> take the proper detour through an 8-bit variable.
+On 10/29/24 23:17, Ilya Leoshkevich wrote:
+> v1: Unfortunately lost.
 > 
-> Fixes: 53c1557b23 ("hw/char: sifive_uart: Print uart characters async")
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   hw/char/sifive_uart.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+> v2:https://lore.kernel.org/qemu-devel/20240212205022.242968-1-iii@linux.ibm.com/
+> v2 -> v3: Make the mapping configurable (Richard).
+> 
+> Hi,
+> 
+> There are apps out there that want to use SIGRTMAX, which linux-user
+> currently does not map to a host signal. The reason is that with the
+> current approach it's not possible to map all target signals, so it
+> was decided to sacrifice the end of the range.
+> 
+> This series improves the situation by making the mapping configurable.
+> Patch 1 is the implementation, patch 2 is a test.
+> 
+> Best regards,
+> Ilya
+> 
+> Ilya Leoshkevich (2):
+>    linux-user: Allow custom rt signal mappings
+>    tests/tcg: Add SIGRTMIN/SIGRTMAX test
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks, queued.
 
+
+r~
 
