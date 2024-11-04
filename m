@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA9D3D132B5
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 12:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 227EFD132B5
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 12:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7w7X-0000rf-Jj; Mon, 04 Nov 2024 07:23:47 -0500
+	id 1t7w8Y-0001R7-Je; Mon, 04 Nov 2024 07:24:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1t7w7W-0000rK-1d
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:23:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1t7w7T-00083v-Qh
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:23:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730723021;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=A+bRSgOp9ibYD55f28Gf+owCeO4wYGmYzCLyOiLBUYM=;
- b=F+miqm09TzvA4B8sog5N9EfYL6ta536xM3oguF0SrQ7SZJz4XrI9SoH98IHNEez7HX1UQp
- s2idlj9G7L/0vhRRK2PAcogf6HPLZUTDCv7YVnt3jaUKwhAcVj6RFA2fNDRBhi/eTc8DZ6
- 1qUwedndOU9KwpT8aAF151JJyLzCvvA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-122--2Ol_TwKOtygj1X58lNz3w-1; Mon, 04 Nov 2024 07:23:40 -0500
-X-MC-Unique: -2Ol_TwKOtygj1X58lNz3w-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37d458087c0so3058885f8f.1
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 04:23:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t7w8W-0001Qj-5f
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:24:48 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t7w8U-00087m-8D
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:24:47 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4315baec69eso35716585e9.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 04:24:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730723084; x=1731327884; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=6811aNLy2ASy5j7JljKKFGE/wpkaqg4cr/Y8FpjBLgs=;
+ b=corabx92GCIT3gWLTzqNTB1Ij134DCWc9iHioFWBXvUN/90f6ZLWnPZ+UPfgBN9O6W
+ /hExeX606/v7PHCg80kjhNxTNtoRafbGaX3jptoWXbfYv2jZ3Aak88Zl5AG0vPXxobx8
+ oppXxnLEQeIMFJYdIZXDJ96p2PCeQzCFUWIn/Ng3uSvCACDF6m3kMD2Ni64GDNKP19yW
+ AUcd/VpM+9d49b1dzAxjOYs4EsjcYGeRGsovccluSUEEIFZdg/YvFBSR7NodJx0jU5QL
+ KzYwwzfC39sDsNMBqvThnySTsYOpcgIE++F0fgFsfzj5lLuvnp8Fff2HpiYcEylCmdMp
+ l5Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730723019; x=1731327819;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=A+bRSgOp9ibYD55f28Gf+owCeO4wYGmYzCLyOiLBUYM=;
- b=EynXRq5bPhK9Qrsoc+jLWkU3MG3apyxxTg8cLWabvlbze/R7/Lk2UVE8HqHFJG8evc
- kwNPslonUFSc10o7+b9fFqHAv/3k8Js8xkoPsAxQYFoFxEe4olQyGrhhm1FrAjrSQ2X1
- QRe5oOHS3Fz7bL5AI7KOINSpJubaxPmGtUDOlFobqR1R2VPdzRKbd0V0ixjgu01kRi2a
- nUjGGkm9QNogFRXTPET4j+o7Yfe+eyk3mOFBNvZR2f9gSlDalp+ZJvparvnDkMdcPRKq
- OZM7PDAcboAtkmbqPA1H2CkkZ6dqKS/AQoDHie6XqRomtVe7sMYZfWsPNhdC0vkIoI5w
- AECA==
-X-Gm-Message-State: AOJu0YypArHQDzmPaFYjzDMY+U4vBpwFh8eQRyDv/Wt75LRUrCoQJTHv
- XCWzvQaGC7KG3QQSDHc1Z/AqeZQDiKSz2g9b2UKVHyjdlex39vN/O/VUPh2V0uBT9cfP683v9ac
- m7b9sdf0QfclOgSb3ASptoC8d4bZd/MOG8wh8yNhqL23tYRJoWge16SPm/LWiWwdWM8QGjbv97h
- KjpWXwidN7xF/EO9Aa/CWxRbBUNZA=
-X-Received: by 2002:a05:600c:4301:b0:431:4e25:fe31 with SMTP id
- 5b1f17b1804b1-4328308555cmr96478275e9.12.1730723019124; 
- Mon, 04 Nov 2024 04:23:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE1gDqEIOtaTZYycKpgy6ss5FT9jzZFnmWzeqCNlpKYgnlNfxZMudepsKwcOCgHnkytB6jdmZR0jT18MSvgwGk=
-X-Received: by 2002:a05:600c:4301:b0:431:4e25:fe31 with SMTP id
- 5b1f17b1804b1-4328308555cmr96478155e9.12.1730723018770; Mon, 04 Nov 2024
- 04:23:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730723084; x=1731327884;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6811aNLy2ASy5j7JljKKFGE/wpkaqg4cr/Y8FpjBLgs=;
+ b=QlPwD7nuvJqKsSymAwaOvdIQiiCHTdDXWuDynV1LEtPwtvCpoAJfa1NHYg8ZbLfSh/
+ NxPK9KXS8P9SEWWijAlVNuhs6g28pzEN7hQp/JvN5RjfmdSuDS+29mX+hm9mzagzi3i0
+ +3JJXKOBonS8LLvyPb46rNiM28x56xXE7VeGmhMHeSDKrPVRHj9yKyLWQZYH3wtMW8D9
+ Yk5GYR3RHJzvXrU15wkduWRaMk8Mi9iql+aIKs5W4zEtAtiO9i8XlMa/VkKdAJEoceOF
+ eH8ElywSiFjSylxPBEXUKnPJWZ/fgX9sFvR2COhuBbXob9vfZwSE+nw8esczuryOKa6n
+ 1y4Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXx0+gkK+KOkSg8YQZKP4NMhdDOtOadFnfHzIew/542oRy5l89FuhUDUTBpAmXfeOk7uXNnMFRx3GOE@nongnu.org
+X-Gm-Message-State: AOJu0YzTtcMCLa1vLv3HMa537FC7SYBWGWRt51R9X/uKuU6rMCjqCmiP
+ jVQAk0i4nw01eLOmAPGyT1tMMdLKxj16NLPSkEebFt2hEgk36dBA+79eih/wF+iOZW2LHtC4lZh
+ 9pF0=
+X-Google-Smtp-Source: AGHT+IGC7TH11P0rWmLnUGVxmw1c3l6IlzDm5SSP/DfXSQceJhFYCUftv4ickRnxk4Cerx9W/tmijQ==
+X-Received: by 2002:a05:600c:3ca1:b0:425:80d5:b8b2 with SMTP id
+ 5b1f17b1804b1-43283255489mr94372415e9.16.1730723084419; 
+ Mon, 04 Nov 2024 04:24:44 -0800 (PST)
+Received: from [192.168.21.227] ([89.101.134.25])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-431bd8e8466sm182906745e9.2.2024.11.04.04.24.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Nov 2024 04:24:43 -0800 (PST)
+Message-ID: <dcdf552b-5078-4d46-bdd0-4c39e1fcc75d@linaro.org>
+Date: Mon, 4 Nov 2024 12:24:40 +0000
 MIME-Version: 1.0
-References: <20241029150908.1136894-1-ppandit@redhat.com>
- <20241029150908.1136894-4-ppandit@redhat.com>
- <ZyTnWYyHlrJUYQRB@x1n>
-In-Reply-To: <ZyTnWYyHlrJUYQRB@x1n>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 4 Nov 2024 17:53:22 +0530
-Message-ID: <CAE8KmOzD3L2kO7AucYcyVEbjh-qc5H_1Xc9A2VPxT9mX_8nMGg@mail.gmail.com>
-Subject: Re: [PATCH 3/5] migration: remove multifd check with postcopy
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] linux-user: Fix GDB complaining about system-supplied
+ DSO string table index
+From: Richard Henderson <richard.henderson@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20241023202850.55211-1-iii@linux.ibm.com>
+ <5cb882c5-a455-408b-9ec2-4e8d4bd88350@linaro.org>
+Content-Language: en-US
+In-Reply-To: <5cb882c5-a455-408b-9ec2-4e8d4bd88350@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,27 +101,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 1 Nov 2024 at 20:06, Peter Xu <peterx@redhat.com> wrote:
-> > -    return s->capabilities[MIGRATION_CAPABILITY_MULTIFD];
-> > +    return s->capabilities[MIGRATION_CAPABILITY_MULTIFD]
-> > +            && !migration_in_postcopy();
-> >  }
->
-> We need to keep this as-is.. I'm afraid.
-> You can always do proper check with multifd & !postcopy in your use cases.
+On 10/25/24 12:41, Richard Henderson wrote:
+> On 10/23/24 21:27, Ilya Leoshkevich wrote:
+>> When debugging qemu-user processes using gdbstub, the following warning
+>> appears every time:
+>>
+>>      warning: BFD: warning: system-supplied DSO at 0x7f8253cc3000 has a corrupt string 
+>> table index
+>>
+>> The reason is that QEMU does not map the VDSO's section headers. The
+>> VDSO's ELF header's e_shoff points to zeros, which GDB fails to parse.
+>>
+>> The difference with the kernel's VDSO is that the latter is mapped as a
+>> blob, ignoring program headers - which also don't cover the section
+>> table. QEMU, on the other hand, loads it as an ELF file.
+>>
+>> There appears to be no way to place section headers inside a section,
+>> and, therefore, no way to refer to them from a linker script. Also, ld
+>> hardcodes section headers to be non-loadable, see
+>> _bfd_elf_assign_file_positions_for_non_load(). In theory ld could be
+>> enhanced by implementing an "SHDRS" keyword in addition to the existing
+>> "FILEHDR" and "PHDRS".
+>>
+>> There are multiple ways to resolve the issue:
+>>
+>> - Copy VDSO as a blob in load_elf_vdso(). This would require creating
+>>    specialized loader logic, that duplicates parts of load_elf_image().
+>>
+>> - Fix up VDSO's PHDR size in load_elf_vdso(). This would require either
+>>    duplicating the parsing logic, or adding an ugly parameter to
+>>    load_elf_image().
+>>
+>> - Fix up VDSO's PHDR size in gen-vdso. This is the simplest solution,
+>>    so do it.
+>>
+>> There are two tricky parts:
+>>
+>> - Byte-swaps need to be done either on local copies, or in-place and
+>>    then reverted in the end. To preserve the existing code structure, do
+>>    the former for Sym and Dyn, and the latter for Ehdr, Phdr, and Shdr.
+>>
+>> - There must be no .bss, which is already the case - but having an
+>>    explicit check is helpful to ensure correctness.
+>>
+>> To verify this change, I diffed the on-disk and the loaded VDSOs; the
+>> result does not show anything unusual, except for what seems to be an
+>> existing oversight (which should probably be fixed separately):
+>>
+>> │  Symbol table '.dynsym' contains 8 entries:
+>> │     Num:    Value          Size Type    Bind   Vis      Ndx Name
+>> │ -     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
+>> │ -     6: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.29
+>> │ +     0: 00007f61075bf000     0 NOTYPE  LOCAL  DEFAULT  UND
+>> │ +     6: 00007f61075bf000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.29
+>>
+>> Fixes: 2fa536d10797 ("linux-user: Add gen-vdso tool")
+>> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>> ---
+>>
+>> v1: https://lore.kernel.org/qemu-devel/20241023144744.50440-1-iii@linux.ibm.com/
+>> v1 -> v2: Check that there is no bss, mention linker scripts in the
+>>            commit message (Richard).
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> r~
 
-* Above change simplifies it a lot. Separate checks as
-migrate_multifd() && !migration_in_postcopy() make it more complicated
-to follow, because migrate_multifd() is often combined with other
-checks like migrate_multifd_flush, or migrate_mapped_ram etc. I was
-hoping to avoid adding one more check to those conditionals. Also,
-with the above change we don't have to explicitly check where to add
-!migration_in_postcopy() check.
+Queued, thanks.
 
-* Will try to separate them.
-
-Thank you.
----
-  - Prasad
-
+r~
 
