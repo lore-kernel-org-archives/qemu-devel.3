@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A681D1BDC0
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 16:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E419D1BDC2
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 16:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7zWv-0007FL-EX; Mon, 04 Nov 2024 11:02:13 -0500
+	id 1t7zY3-0007uZ-FS; Mon, 04 Nov 2024 11:03:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t7zWt-0007Ew-C9
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:02:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t7zY2-0007u9-3g
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:03:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t7zWr-00074T-Es
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:02:11 -0500
+ id 1t7zY0-0007C0-7d
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 11:03:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730736128;
+ s=mimecast20190719; t=1730736199;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qc2IAV67imz/GCu+bgSFt3ii1cTiiWNciz4wmk3XzHI=;
- b=LeSRcqObkBUSe9FDszFt937SRW/NcPrxn2wwdLxgoklkxq6oXXCmwcAd7yI+J/qSUqTCv4
- QbNVNg3erBt2cwhiYiyG/8LGA5BY+lJKqRwZOD3J3QMazwrZkY7d+OqqMfDjbmcuyhRE2g
- EkzP1IL1E6rnL64KU60oiQBmMYoxorY=
+ bh=7JZC3v6eydwHk6rZe8ncBZSlWNsGSCPyYUdAuTRxSck=;
+ b=SecQ3SANRW6m7UJuuKibG2Urfkj+8VQ4UL4rcQUw0O7dUkjkhdvCumWZrNqhVunc2Dfq40
+ U2nbxiwYrN096YcUhgMxtnjrsX8c/1LNupFwbz+LbBVr5XFqQkRklpRA0L8be1tpbT5q+x
+ uo5GDMnxn5JsJfOX6PRLVh2zgYi6vI4=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-464-UYd0vWUfNIOyDYQiLw7Wmw-1; Mon, 04 Nov 2024 11:02:06 -0500
-X-MC-Unique: UYd0vWUfNIOyDYQiLw7Wmw-1
+ us-mta-459-7J6MbSZnPsWMJYkVUFj-iw-1; Mon, 04 Nov 2024 11:03:16 -0500
+X-MC-Unique: 7J6MbSZnPsWMJYkVUFj-iw-1
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37d4d51b4efso1928447f8f.3
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 08:02:06 -0800 (PST)
+ ffacd0b85a97d-37d67f4bf98so1960377f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 08:03:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730736125; x=1731340925;
+ d=1e100.net; s=20230601; t=1730736195; x=1731340995;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qc2IAV67imz/GCu+bgSFt3ii1cTiiWNciz4wmk3XzHI=;
- b=PR1Le+wkXdCSdR/1398w6qFf/z2cAdoa4H+r4UR7CK2guD2QQ8WToO8nf4KzaPJ+3Q
- 0T55KEGgy1vGkh3C4YSzK10hsyOLMQ8P6leItVVAaymWfosRcpxq9N3m0qWKUUSI+ipD
- YlTdE2/BSIsnZLQ7fjB3j50VW2hS9Vn/jvuRnBwH5GlQeRqH6rHRcX0rYoPJq6ngEU0M
- 8Z7xu9VRXQ5+WsNseMmtQjM1LnfY4RszsGXq0aRraXTQULZHFnMcoeLWFuqkifhzWgNJ
- 5NyRI+/C8uNJE0bYwiOurplz5BUg1gcTCsliWEfMT/Jh/tSdhJLgY2VGHpUa1zGBYica
- Mpvw==
-X-Gm-Message-State: AOJu0Yzo608rwnd7LtxpnYOrrz2XSaTrAvQW8MVj1dFUS3JW3065hzjG
- Rbg4HnzoJjtWvQt337CSzfuVdZdbJN2k/vLjU+9z3s4IayvwaZI2tw0XKFI6yfCCQ/eD4eGkUlO
- ABmIY5dp64wBetLRVwdgikFrBfcv2xPTLScZZffCjSEoHROvehk2v
-X-Received: by 2002:adf:f18c:0:b0:374:c621:3d67 with SMTP id
- ffacd0b85a97d-38061137930mr24065254f8f.24.1730736124932; 
- Mon, 04 Nov 2024 08:02:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IExEacbyN3wnpiIofKjtchrXr+OrUS0Uqio1dCbmjFgvoZ+gPwagBLpU2ig0AuSfGD1X4Rf4A==
-X-Received: by 2002:adf:f18c:0:b0:374:c621:3d67 with SMTP id
- ffacd0b85a97d-38061137930mr24065189f8f.24.1730736124248; 
- Mon, 04 Nov 2024 08:02:04 -0800 (PST)
+ bh=7JZC3v6eydwHk6rZe8ncBZSlWNsGSCPyYUdAuTRxSck=;
+ b=NeYAmZ70qwvqjr6YjjrShKm2jrAmYVpPWrWKJ2fcTDj72GIP6GMIjvq+QEbDPmUBaR
+ J5qH4n12ONlszJYFQqpth7xAZAy5kB4baHxRzyD8wrtrps/uaInRD60tPUj1yV7g3A4R
+ nf2hPUqZDtutFmX0U4qdvkj3c8woaCJf+MZimwDMoi2m0JIsDnLYiJ8VpAcugzwW2nEX
+ YMDeUJwKFzoRR52M91VhgPdnTRNADItEz3rYPuiBr2ZURhFqD4GjrRsoNPv3FX1n2vk0
+ TvNYDYt2qsQKGIjG4hfFqOTIicEi/yMGPNW5ypSp2KDPMsTJPEw/ZNSn2ONtR662PoA0
+ Y3NQ==
+X-Gm-Message-State: AOJu0YwjVZHK+sPU+uJT8wYE7GmPJLQZxydfm1g6SDtGcBcLjmMl9+c9
+ 7I2X4Sga4fSH3OCGLF/Desh0JXgyw2sFwITQjcY7PQJTpSRC3nrqkzv0XWTEFRlREV7ApKWiuzH
+ 8mwsUY9UIIT4m1N0hzhEqEOkAMfeMLbKqkXClbz/mPCqiU23vsupf
+X-Received: by 2002:a5d:5711:0:b0:37c:ccad:733a with SMTP id
+ ffacd0b85a97d-38061219b44mr19847573f8f.59.1730736195053; 
+ Mon, 04 Nov 2024 08:03:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEO6Paty3JJXjJI8yUnowCyn+GF+kPK7yGWvQUBMOPlzdD2i0CWR5lASleHjnZHFjqisS1u7w==
+X-Received: by 2002:a5d:5711:0:b0:37c:ccad:733a with SMTP id
+ ffacd0b85a97d-38061219b44mr19847538f8f.59.1730736194488; 
+ Mon, 04 Nov 2024 08:03:14 -0800 (PST)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-381c10d4141sm13605880f8f.28.2024.11.04.08.02.03
+ ffacd0b85a97d-381c113e69fsm13551800f8f.69.2024.11.04.08.03.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Nov 2024 08:02:03 -0800 (PST)
-Message-ID: <b5f4bb6a-765b-4dce-b0b9-6a2be695d8a5@redhat.com>
-Date: Mon, 4 Nov 2024 17:02:01 +0100
+ Mon, 04 Nov 2024 08:03:13 -0800 (PST)
+Message-ID: <f13766c1-12e2-46b2-a139-c926824c50e0@redhat.com>
+Date: Mon, 4 Nov 2024 17:03:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 15/23] rust: introduce alternative implementation of
@@ -118,14 +118,14 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
 In-Reply-To: <SY0P300MB1026D525F3022164941671B895502@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -238,18 +238,9 @@ On 11/3/24 10:54, Junjie Mao wrote:
 > code". Should we follow that convention (even though the extra white
 > space does not impact building)?
 
-I think it'd be a bit too much to add 18 crates (of which 2 for both 
-native and non-native).
-
-Assuming you can make it work at all (because it's a lot of crates, 
-because there might be dependencies on Cargo, and because the toml crate 
-changes MSRV very often), it would increase build time a lot.  Plus, the 
-only time I worked with a crate that used trybuild, it tended to break a 
-lot due to changes in compiler errors.
-
-We're only adding macros for our own convenience, it's not like we're a 
-general purpose crate, so we can live with the limitation.  But thanks 
-for getting such a clear dep tree!
+Ah, forgot to reply about this.  Personally I think it's clear enough 
+with the "=>", but if there's agreement on removing the space I don't 
+oppose it.
 
 Paolo
 
