@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BB72D11198
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBEB9D11198
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7kqb-0004HM-95; Sun, 03 Nov 2024 19:21:33 -0500
+	id 1t7kpK-0007fx-Vn; Sun, 03 Nov 2024 19:20:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7kqY-0003wP-Ge; Sun, 03 Nov 2024 19:21:30 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1t7kpJ-0007fZ-HV; Sun, 03 Nov 2024 19:20:13 -0500
+Received: from mail-il1-x12a.google.com ([2607:f8b0:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7kqX-0002hH-0i; Sun, 03 Nov 2024 19:21:30 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-720cb6ac25aso2512745b3a.3; 
- Sun, 03 Nov 2024 16:21:28 -0800 (PST)
+ id 1t7kpI-0002ZD-3a; Sun, 03 Nov 2024 19:20:13 -0500
+Received: by mail-il1-x12a.google.com with SMTP id
+ e9e14a558f8ab-3a6af694220so9881845ab.1; 
+ Sun, 03 Nov 2024 16:20:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730679687; x=1731284487; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730679610; x=1731284410; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8tRnHn0imyDgzIBjiEWjpE9f1p8r45aL3qXvb+TAFyY=;
- b=hUxB8Oo0myL+52D5nNLtn/AWiH7W83P9DrW+Pbq4DGf7OGr/Ej4uZV2D+LxfLT+mtq
- tLij58Sl0oN4st8/kNy3JmbqaeWU7tJvfN1rOcSgFUiDJiQdrFMi1U1eRlJxa2V5LPSj
- bxwK6NoKt6s+KXAinWdqardSm6lt5l2jwcQHPrveplg12DH5AQwCgGHR0aQ5wR0Lzclf
- T526TeE2TXK0Pdw+UK0zcDX/qk2OOq2NceN27OhxeaXMHCCseC2eUjcXqScaf7hGFmgZ
- nbGL3H9i35n16qOhVunO4GkJS61Mz45SPpb6lg+zB53cr7MfEAL9KEZiIJ8blU1hkGl8
- eDrw==
+ bh=dTPOuJL+gEDvzg99HYFtkObHP58qYB3o1L++xvixkVI=;
+ b=akslZIp5P2K3gctEg5ZurbB5cBSIOfDzEtMUXZM0ZtuuswacZO6rKzkSiy3ETt/0Fz
+ f+b7Az8LpG+WKENYWqVmViQo+7NDldnSDaf3o5CbdUbPyiImk2I/fYtD6OqQsFUemIoh
+ ZdOynUbMOcGb26UKDFnbhsHCDUClYpGwM+30JnzyRR6bIIv13HbGUtsDRy1MlJ2d+3ih
+ fgZsj9w90LUFN2A2bJJdSD+yElrrfAWYCSDl8HBL0lSAcQpGGIRrD9x3q7ilKj2mpE1x
+ CctRbH/2LCnuDakDP2SkqEO/BsrGeg468gFsYCHNVim2D0lNrpbNaxzC2Scjbj0hoFNY
+ n7Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730679687; x=1731284487;
+ d=1e100.net; s=20230601; t=1730679610; x=1731284410;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8tRnHn0imyDgzIBjiEWjpE9f1p8r45aL3qXvb+TAFyY=;
- b=snBFRq3QTHtvogaVwy8NjwBhVDYuZYY8l/YMGZ98xgd9MbCW2GCvSOSDyB5/4vOVtf
- KptAxAQhkAxc/jWiazFAihMOQDF8BYiXisZVwo3x9ZWSBMob/P+cdR/A9grQyP4Lg87k
- MHRd+5i51A4Bmo/7kk/PvYQT1+cXP9sj8G7T9RrTX0gG7hkkayPkJe3GbKDIvqW4fVM3
- 5M3XLhUMbSmkK0m+qgEIoxmMvZL2ycVYrLGcpX84TrYc3Og4pjtlWN5bFk8qyJaUl1zA
- 9+7oX1a5ha14AC5MQLh98UQehE0Y3daz8iD1a5j2CovLKKeETNm9CJ8ZWdm2LoA26LJV
- Av0g==
+ bh=dTPOuJL+gEDvzg99HYFtkObHP58qYB3o1L++xvixkVI=;
+ b=D1WWb9TihzLjLIuqhE4JZiZoXbKl9/14N0WyFX7fG+YtPl3zm8tlBtcT0kz7ahxrbq
+ nm8eGuZhlbI4zPAuT6wziSnAHJwRwTrndte2PV/2vjcStQGlWh1oWof9+3oaPMdtsS38
+ olI/AYQ2NuvSdOaAegZj2u49k30ScnDA+CRfGw8O8432PjoDTFJ5yXzCfZftKU5KoP3e
+ aznWnWQwEwPE9vwSMoozMpKuyoA+4sTU01S0Al370b6HY0Em9RFTIH/Og7ibcxTLMeqq
+ m+R6fDQQVR2Sr0BoyLIDERdeH5D+e51o+9eDcW+gGAFYp4m9eJFW3NeOI6Ua/KBE60vn
+ PHeQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcTIuivwwzX3pxLvdygebl5oRGOReYJBR9sL+BDuuAQw6bTYImp+nRKAFf/dFDojG2WJytamdIpA==@nongnu.org
-X-Gm-Message-State: AOJu0Yy4wKkioLyk1PZQl3l0UL0wScM4zRy8kDJhOyG1+ROWMZ//64tu
- e+DQEL/iZJ8yBNyXV9GRgJJrrq9p5yqBBbxrmVT99B48OFw9+Oa5/Oy1Tw==
-X-Google-Smtp-Source: AGHT+IFWApGiOfcYHz7vbNEMDbivSTmM0vv9xkOlR9XzcOoLYP+i6KY1cIDQoxmrJYGB/BDxqUpFYg==
-X-Received: by 2002:a05:6a21:2d87:b0:1d8:fbf3:a9ac with SMTP id
- adf61e73a8af0-1d9a83a998cmr43381238637.2.1730679687155; 
- Sun, 03 Nov 2024 16:21:27 -0800 (PST)
+ AJvYcCWUaeG3YfyfvTTGbfBKq09RKBqHjg2n014aFaXTNml/6iim+S0hHLCKoAomhoOY0evjwfFOws+N5g==@nongnu.org
+X-Gm-Message-State: AOJu0Yy2t2TkwqWqj1knW13jHYzLCFATvIPsww9CMKBF4s/msfb6nglI
+ yXptOZRJaMK+F4VxjQ81rcgSy2y5ugxr3W/v9gaKSvb2F0U8oaymQ2oD4A==
+X-Google-Smtp-Source: AGHT+IEateCgHg4ilbu4YSkbnBLgK+EbtZ3L33Np7kbIZG6OAfQu3BBu4eeNV/ij7rzWNp1yeOjAAg==
+X-Received: by 2002:a92:ca4a:0:b0:3a0:9c20:8070 with SMTP id
+ e9e14a558f8ab-3a6b03b0c7emr101783335ab.20.1730679610129; 
+ Sun, 03 Nov 2024 16:20:10 -0800 (PST)
 Received: from wheely.local0.net (124-171-217-17.tpgi.com.au. [124.171.217.17])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.21.24
+ 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.20.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 16:21:26 -0800 (PST)
+ Sun, 03 Nov 2024 16:20:09 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 37/67] target/ppc: optimize hreg_compute_pmu_hflags_value
-Date: Mon,  4 Nov 2024 10:18:26 +1000
-Message-ID: <20241104001900.682660-38-npiggin@gmail.com>
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 16/67] hw/ppc: fix decrementer with BookE timers
+Date: Mon,  4 Nov 2024 10:18:05 +1000
+Message-ID: <20241104001900.682660-17-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241104001900.682660-1-npiggin@gmail.com>
 References: <20241104001900.682660-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12a;
+ envelope-from=npiggin@gmail.com; helo=mail-il1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,37 +96,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+From: Clément Chigot <chigot@adacore.com>
 
-The second if-condition can be true only if the first one above is true.
-Enclose the latter into the former to avoid un-necessary check if first
-condition fails.
+The BookE decrementer stops at 0, meaning that it won't decremented
+towards "negative" values. However, the current logic is inverted: decr
+is updated solely when the resulting value would be negative.
 
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Clément Chigot <chigot@adacore.com>
+Fixes: 8e0a5ac87800 ("hw/ppc: Avoid decrementer rounding errors")
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/helper_regs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/ppc/ppc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-index 7b23e5ef0e..42c681ca4a 100644
---- a/target/ppc/helper_regs.c
-+++ b/target/ppc/helper_regs.c
-@@ -102,9 +102,9 @@ static uint32_t hreg_compute_pmu_hflags_value(CPUPPCState *env)
- #ifndef CONFIG_USER_ONLY
-     if (env->pmc_ins_cnt) {
-         hflags |= 1 << HFLAGS_INSN_CNT;
--    }
--    if (env->pmc_ins_cnt & 0x1e) {
--        hflags |= 1 << HFLAGS_PMC_OTHER;
-+        if (env->pmc_ins_cnt & 0x1e) {
-+            hflags |= 1 << HFLAGS_PMC_OTHER;
-+        }
-     }
- #endif
- #endif
+diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+index fde4619412..b86b5847de 100644
+--- a/hw/ppc/ppc.c
++++ b/hw/ppc/ppc.c
+@@ -728,7 +728,9 @@ static inline int64_t __cpu_ppc_load_decr(CPUPPCState *env, int64_t now,
+     int64_t decr;
+ 
+     n = ns_to_tb(tb_env->decr_freq, now);
+-    if (next > n && tb_env->flags & PPC_TIMER_BOOKE) {
++
++    /* BookE timers stop when reaching 0.  */
++    if (next < n && tb_env->flags & PPC_TIMER_BOOKE) {
+         decr = 0;
+     } else {
+         decr = next - n;
 -- 
 2.45.2
 
