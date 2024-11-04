@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 005B8D1119A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 02:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AAC7D132DF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 15:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7mej-0007dI-3z; Sun, 03 Nov 2024 21:17:25 -0500
+	id 1t7yyT-0007rT-Sk; Mon, 04 Nov 2024 10:26:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dantan@linux.ibm.com>)
- id 1t7meg-0007d3-W7; Sun, 03 Nov 2024 21:17:23 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1t7yyK-0007YD-Ox; Mon, 04 Nov 2024 10:26:30 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dantan@linux.ibm.com>)
- id 1t7med-00065T-UV; Sun, 03 Nov 2024 21:17:22 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A42G34s012761;
- Mon, 4 Nov 2024 02:17:07 GMT
+ id 1t7yyH-0002QJ-QK; Mon, 04 Nov 2024 10:26:28 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4FAGw8027396;
+ Mon, 4 Nov 2024 15:26:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=V+eXW7
- s+WQsy5wMyNHRPfo2cRHChnF/QwFCape/eLDs=; b=EyLy+P56tZ92GeadSryFqI
- J8gnI/xQnwWWfhokumpMGmKGudajd8okdqnX635Ancx5pNEI9r+UpXq1SZO+iBRk
- gYpPE0olhhpUEpraZEBlz1jKARiM6FlhzlzL4IvxAz67FMYQBbLWniuaibxaAMfr
- Rgbdz1Ub5dSDJJgQDX6sBmH75RA6pV8WI14rkllHTfoxMRdUbXhCHaTidHH9MB/j
- d+NlXk/oymkP2/ggulJRgEBc5xlFXI1+ou2kh5v9pmzTomUkNJ4HzZOsh929iPE7
- ct6S2a3eO815D600eUC7e0QUQcfMQSZtBVLaJShsYgXtjqzBrk7cLfkgdzA1FaAg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=mPeMae
+ 10V1IEiEaaatL6CBQPch60tbAEvxTIvNi0AEE=; b=TJ51dm+J9JVnl6L4uuIOo/
+ vkLpx5eRzPXlkPioDcAE3Knb0QFqdcMSFx9DL4FEgEy8GrZ2dmIua7Qw0iQ9cAhr
+ NkEZWOIbC61nROEZ6YBaFXME1ewGGSmrFXu6JlQKrd8fK2G1FPJiZ+orOQd1pL76
+ qCKDOvD9j+LOW/RSt5GgTMf1yT+7Mxh9ew/ZE65FC/O+0IacEjo29N7yRP9XBR6P
+ lFuu7XXdUhgOt1zMlD9i/HO7bPVSptMrbXoxhIgyXEDJ4a6McYg317FEvyqt2XkT
+ 8U4mSEMqIET1wJDZZkfvaWykTsNMg8CV3EeD12C1DfC+bTCOIKRFwa037eEyA9cA
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42pmt4r2hj-1
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42q0nwr2n1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 Nov 2024 02:17:06 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A3HQHPH031474;
- Mon, 4 Nov 2024 02:17:05 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nydmhc1g-1
+ Mon, 04 Nov 2024 15:26:22 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4AFcv3019625;
+ Mon, 4 Nov 2024 15:26:21 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 42p0mj28kg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 Nov 2024 02:17:05 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A42H4sO56099072
+ Mon, 04 Nov 2024 15:26:21 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A4FQLb351511668
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 4 Nov 2024 02:17:04 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4C1F05804B;
- Mon,  4 Nov 2024 02:17:04 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8DFF65805B;
- Mon,  4 Nov 2024 02:17:03 +0000 (GMT)
+ Mon, 4 Nov 2024 15:26:21 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 783D158055;
+ Mon,  4 Nov 2024 15:26:21 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 133FD58043;
+ Mon,  4 Nov 2024 15:26:21 +0000 (GMT)
 Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  4 Nov 2024 02:17:03 +0000 (GMT)
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  4 Nov 2024 15:26:21 +0000 (GMT)
 MIME-Version: 1.0
-Date: Sun, 03 Nov 2024 20:17:03 -0600
+Date: Mon, 04 Nov 2024 09:26:20 -0600
 From: dan tan <dantan@linux.ibm.com>
 To: undisclosed-recipients:;
-Subject: Re: [PATCH v4 1/3] tpm/tpm_tis_spi: Support TPM for SPI (Serial
+Subject: Re: [PATCH v5 1/3] tpm/tpm_tis_spi: Support TPM for SPI (Serial
  Peripheral Interface)
-In-Reply-To: <78c4eb21-855a-494d-bc83-049914bbacfb@linux.ibm.com>
-References: <20241101202727.9023-1-dantan@linux.vnet.ibm.com>
- <20241101202727.9023-2-dantan@linux.vnet.ibm.com>
- <78c4eb21-855a-494d-bc83-049914bbacfb@linux.ibm.com>
-Message-ID: <081c8b4ca303ca36af018e252351f745@linux.ibm.com>
+In-Reply-To: <1ffda8d1-06ba-4e8a-b62a-9b02f2844a6f@linux.ibm.com>
+References: <20241104064334.21468-1-dantan@linux.vnet.ibm.com>
+ <20241104064334.21468-2-dantan@linux.vnet.ibm.com>
+ <1ffda8d1-06ba-4e8a-b62a-9b02f2844a6f@linux.ibm.com>
+Message-ID: <876abd2fae19ac99e8c385baa4889430@linux.ibm.com>
 X-Sender: dantan@linux.ibm.com
 Content-Type: text/plain; charset=UTF-8;
  format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Y7dGoQ1rmBBUhre4owONvPgCZWIEGDDB
-X-Proofpoint-GUID: Y7dGoQ1rmBBUhre4owONvPgCZWIEGDDB
+X-Proofpoint-ORIG-GUID: pRPSPVZ_ZlCAPtOlt5H0H1t9lwOAfJv1
+X-Proofpoint-GUID: pRPSPVZ_ZlCAPtOlt5H0H1t9lwOAfJv1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- suspectscore=0 phishscore=0 adultscore=0 mlxlogscore=999
- lowpriorityscore=0 bulkscore=0 malwarescore=0 mlxscore=0 clxscore=1011
- priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411040015
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=dantan@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ clxscore=1015 bulkscore=0
+ spamscore=0 impostorscore=0 phishscore=0 adultscore=0 mlxscore=0
+ mlxlogscore=999 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411040130
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=dantan@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -110,8 +110,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-11-02 09:19, Stefan Berger wrote:
-> On 11/1/24 4:27 PM, dan tan wrote:
+On 2024-11-04 09:14, Stefan Berger wrote:
+> On 11/4/24 1:43 AM, dan tan wrote:
 >> Implement support for TPM via SPI interface. The SPI bus master
 >> is provided by PowerNV SPI device which is an SSI peripheral.
 >> It can uses the tpm_emulator driver backend with the external
@@ -120,76 +120,46 @@ On 2024-11-02 09:19, Stefan Berger wrote:
 >> Although the implementation is endian neutral, the SPI
 >> bus master provider, pnv_spi.c is only supported on the
 >> PowerNV platform, thus, is big endian specific.
->> 
 > 
-> Did you try running this with Linux? Did the Linux TPM driver work?
-> 
-
-I am assuming that you mean, if I boot Linux on this PowerNV
-virtual machine, will this TPM device interact with the Linux
-TPM driver just like a hardware tpm device. The answer is I don't
-know.
-
-Our hypervisor has extensive interactions with the TPM device during
-its secure boot IPL. I have the trace enabled on "tpm_*". After Linux
-takes over, I don't see any access request in the QEMU trace, however,
-the following appears on the Linux console:
-
-[    0.884411] Key type encrypted registered^M
-[    0.884570] Secure boot mode disabled^M
-[    0.884678] ima: No TPM chip found, activating TPM-bypass!^M
-
-I am not sure if "No TPM chip found" is the result of the partition
-firmare not presenting it to the operating system, or there is other
-reason. There is no error or failure in the earlier hypervisor exchange
-and there is no request directed at the TPM device prior to the chip
-not found message. If this is important, I will spend sometime to
-chase it down.
-
->> tpm/tpm_tis_spi: Support TPM for SPI (rev 4)
-> 
-> Remove this. It seems to be from your patch merge.
+> I am not sure whether and how this sentence is related to this
+> implementation. I think you can remove it.
 > 
 
-done
+done.
 
 >> 
+>> Signed-off-by: dan tan <dantan@linux.ibm.com>
+>> ---
+>> 
+>> v3:
 >> - moved variable tis_addr from TPMStateSPI struct to local
 >> - added the VM suspend/resume support:
 >>    - added vmstate_tpm_tis_spi declaration
 >>    - added tpm_tis_spi_pre_save() function
 >> - fixed trace formatting string
-> 
-> Move this below your Signed-off-by after the dashes '---'
-> 
 >> 
->> Signed-off-by: dan tan <dantan@linux.vnet.ibm.com>
-> 
-> ---
-> 
-> v3:
->  - moved variable tis_addr from TPMStateSPI struct to local
->  - added the VM suspend/resume support:
->     - added vmstate_tpm_tis_spi declaration
->     - added tpm_tis_spi_pre_save() function
->  - fixed trace formatting string
-> 
-
-done
-
+>> v4:
+>> - git commit amend only
+>> 
+>> v5:
+>> - removed DEFINE_PROP_UINT32("irq", TPMStateSPI, tpm_state.irq_num, 0)
+>>    from tpm_tis_spi_properties
+>> - In tpm.rst document, under section 'The QEMU TPM emulator device',
+>>    moved the 'PowerNV machine' section to immeidately below 'pSeriese
+>>    machine'.
 >> ---
 >>   docs/specs/tpm.rst   |  15 ++
 >>   include/sysemu/tpm.h |   3 +
->>   hw/tpm/tpm_tis_spi.c | 360 
+>>   hw/tpm/tpm_tis_spi.c | 359 
 >> +++++++++++++++++++++++++++++++++++++++++++
 >>   hw/tpm/Kconfig       |   6 +
 >>   hw/tpm/meson.build   |   1 +
 >>   hw/tpm/trace-events  |   7 +
->>   6 files changed, 392 insertions(+)
+>>   6 files changed, 391 insertions(+)
 >>   create mode 100644 hw/tpm/tpm_tis_spi.c
 >> 
 >> diff --git a/docs/specs/tpm.rst b/docs/specs/tpm.rst
->> index 1ad36ad709..63c3a43c7d 100644
+>> index 1ad36ad709..d92e7eed6f 100644
 >> --- a/docs/specs/tpm.rst
 >> +++ b/docs/specs/tpm.rst
 >> @@ -24,6 +24,7 @@ QEMU files related to TPM TIS interface:
@@ -212,9 +182,12 @@ done
 >> +
 >>   CRB interface
 >>   -------------
->>   @@ -371,6 +375,17 @@ attached to I2C bus, use the following command 
->> line:
->>       echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device
+>>   @@ -339,6 +343,17 @@ In case a pSeries machine is emulated, use the 
+>> following command line:
+>>       -device 
+>> virtio-blk-pci,bus=pci.0,addr=0x3,drive=drive-virtio-disk0,id=virtio-disk0 
+>> \
+>>       -drive file=test.img,format=raw,if=none,id=drive-virtio-disk0
 >>   +In case a PowerNV machine is emulated and you want to use a TPM 
 >> device
 >> +attached to SPI bus, use the following command line (SPI bus master 
@@ -228,18 +201,10 @@ done
 >> +    -tpmdev emulator,id=tpm0,chardev=chrtpm \
 >> +    -device tpm-tis-spi,tpmdev=tpm0,bus=pnv-spi-bus.4
 >> +
-> 
-> 
-> If you move this a bit further up to after the 'pSeries machine' then
-> we have the ppc64 stuff in one place.
-> 
-
-done
-
->>   In case SeaBIOS is used as firmware, it should show the TPM menu 
->> item
->>   after entering the menu with 'ESC'.
->>   diff --git a/include/sysemu/tpm.h b/include/sysemu/tpm.h
+>>   In case an Arm virt machine is emulated, use the following command 
+>> line:
+>>     .. code-block:: console
+>> diff --git a/include/sysemu/tpm.h b/include/sysemu/tpm.h
 >> index 1ee568b3b6..22b05110e2 100644
 >> --- a/include/sysemu/tpm.h
 >> +++ b/include/sysemu/tpm.h
@@ -260,12 +225,19 @@ done
 >>   static inline TPMIf *tpm_find(void)
 >> diff --git a/hw/tpm/tpm_tis_spi.c b/hw/tpm/tpm_tis_spi.c
 >> new file mode 100644
->> index 0000000000..4aee1c6d6c
+>> index 0000000000..87acbaaaf8
 >> --- /dev/null
 >> +++ b/hw/tpm/tpm_tis_spi.c
->> @@ -0,0 +1,360 @@
+>> @@ -0,0 +1,359 @@
 >> +/*
 >> + * QEMU PowerPC SPI TPM 2.0 model
+> 
+> I would say that this implementation is generic enough to work with
+> other architectures as well. So you could drop 'PowerPC'.
+> 
+
+OK
+
 >> + *
 >> + * Copyright (c) 2024, IBM Corporation.
 >> + *
@@ -273,6 +245,13 @@ done
 >> + */
 >> +
 >> +#define IBM_PONQ
+> 
+> Did I miss this before? Is this necessary and what does it do?
+> 
+
+Sorry, it was added when I tried to do Linux boot test.
+Removed
+
 >> +
 >> +#include "qemu/osdep.h"
 >> +#include "qemu/log.h"
@@ -412,13 +391,6 @@ done
 >> +
 >> +static Property tpm_tis_spi_properties[] = {
 >> +    DEFINE_PROP_TPMBE("tpmdev", TPMStateSPI, tpm_state.be_driver),
->> +    DEFINE_PROP_UINT32("irq", TPMStateSPI, tpm_state.irq_num, 0),
-> 
-> Please remove this line.
-> 
-
-done
-
 >> +    DEFINE_PROP_END_OF_LIST(),
 >> +};
 >> +
@@ -432,6 +404,12 @@ done
 >> +}
 >> +
 >> +static uint32_t tpm_transfer(SSIPeripheral *ss, uint32_t tx)
+> 
+> rename to tpm_tis_spi_transfer
+> 
+
+All function names are corrected to comply with the convention.
+
 >> +{
 >> +    TPMStateSPI *spist = TPM_TIS_SPI(ss);
 >> +    uint32_t rx = 0;
@@ -605,6 +583,9 @@ done
 >> +}
 >> +
 >> +static int tpm_cs(SSIPeripheral *ss, bool select)
+> 
+> tpm_tis_spi_cs
+> 
 >> +{
 >> +    TPMStateSPI *spist = TPM_TIS_SPI(ss);
 >> +
@@ -618,6 +599,9 @@ done
 >> +}
 >> +
 >> +static void tpm_realize(SSIPeripheral *dev, Error **errp)
+> 
+> tpm_tis_spi_realize
+> 
 >> +{
 >> +    TPMStateSPI *spist = TPM_TIS_SPI(dev);
 >> +    TPMState *s = &spist->tpm_state;
@@ -729,7 +713,4 @@ done
 >> XFER: %s = 0x%02x"
 >> +tpm_tis_spi_transfer_addr(const char *name, uint32_t addr) "TPM SPI 
 >> XFER: %s = 0x%08x"
-> 
-> 
-> The rest looks good to me.
 
