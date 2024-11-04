@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F3AD1BDD0
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 17:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39C47D1BDD3
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 17:32:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t80s7-0005HE-NS; Mon, 04 Nov 2024 12:28:11 -0500
+	id 1t80sa-0006V0-6P; Mon, 04 Nov 2024 12:28:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t80s4-0005Gj-Lx
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:28:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t80sT-0005vw-5n
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:28:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t80s1-0000JH-Kd
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:28:08 -0500
+ id 1t80sQ-0000OU-Pl
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 12:28:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730741285;
+ s=mimecast20190719; t=1730741309;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cnNbN2/GG/cHatir8SHvYVVNQ8/dSXQusHp7oYcZdJw=;
- b=fLHHwqP9QsscfVzxCkIRfvWUod0DFsv0bjMCkVO3m0qJ2Nr1etjK/m2NFT8XX4TfH2kx/q
- 2vdKjdav5xyxZ3wcL+jf1Uh8uVMoBDB5silNQokf69dazxCA/Mkt5yM2vezlCdabQ0XoL+
- bDY/VX1hTqTKtHOjOagjkAYk8amcK+o=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3lFu90NjWg0SYteCDLmbz/R+IMonQxZkD/nPXECqYIo=;
+ b=QiBIU70+cphWbGy/HUEP43RTU4Xnywzfnp2xThjIKYJeHoIq2srCjVwe70EqcNh4lBLW0a
+ TXizQw4o13m1cEBBI8/4hKykeWttFnNtQ7+yHc75l8C8jpskZAjaiI7J9B1/eOul6D3PWf
+ FmxqH4L1xHz1iox2NBo70mfdjCPzMy8=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-390-en6nXlSyP4Kw2r6bJ1346A-1; Mon, 04 Nov 2024 12:28:03 -0500
-X-MC-Unique: en6nXlSyP4Kw2r6bJ1346A-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4317391101aso29007865e9.2
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 09:28:03 -0800 (PST)
+ us-mta-489-ZBIq9ld6Ma--gUdGCqix-Q-1; Mon, 04 Nov 2024 12:28:28 -0500
+X-MC-Unique: ZBIq9ld6Ma--gUdGCqix-Q-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37d5116f0a6so2225260f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 09:28:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730741281; x=1731346081;
+ d=1e100.net; s=20230601; t=1730741307; x=1731346107;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cnNbN2/GG/cHatir8SHvYVVNQ8/dSXQusHp7oYcZdJw=;
- b=mSGeCQGj63l0cmB/KVD6UkDCOLwnEheWIqnLC3OLNR27HpGHF+nkVeepEaQqWLGRFk
- SN3aB/4hUeqCN3kxkWUqS5O0ujwsszmOqDiHY7DB5fImIXlAfQCGViQQrZPhuTZIU8Cl
- n6iNdcT2uY/KuESG6rP1tJ+Zhc8gkhTTfkK+ybF0+wZEBIpi8mh1/lRR6JXBe20KCW7/
- zLRTh5wz4VSLbRhQXyt42HE+DzT9m0WBanYZscb4LrkP3UNbAks/nIucHZamAGMyGFdS
- 15VItKyyqL0xydfDe61LXqO3QEA9g0+WRJQHfSkgPLjmI7aB7qxOo+n2UXQYilDxql4I
- 2BYg==
-X-Gm-Message-State: AOJu0YxHHOtSdHMebwemepvqU8+odVt2y/cXSVCcaEfis3gAoY1rc0Os
- 0GnfJ5kSlDJCMvoZ4qNIkQbSG/7COUcvxszA3FUbQbtQvFMxjbqupTjQk9Iy/NL2VdJN0fPp6BL
- MAaBVn4qZ1L22ueI6XiGixUHBS0OKJggA1lJGA99lQXdL0rym6PJJWvgMHoCealc8EUSxPhJrO1
- 1tUMinWNTloEP4V+H/onVcu0Wm9c2rPL7UpAuEzrY=
-X-Received: by 2002:a05:600c:16ca:b0:431:5847:f63f with SMTP id
- 5b1f17b1804b1-43283246cb4mr109632935e9.13.1730741281454; 
- Mon, 04 Nov 2024 09:28:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEfxSOey6TZyJjVfmDTDe9k/TwZjeQYQc92a9I03gILRXMQw/VCMGkfvUlxrdaiJYLpFJrBpA==
-X-Received: by 2002:a05:600c:16ca:b0:431:5847:f63f with SMTP id
- 5b1f17b1804b1-43283246cb4mr109632615e9.13.1730741281071; 
- Mon, 04 Nov 2024 09:28:01 -0800 (PST)
+ bh=3lFu90NjWg0SYteCDLmbz/R+IMonQxZkD/nPXECqYIo=;
+ b=vVKcG/BK9ZzH/Dp93zbNhTMQ6yAC8CNBRajSMVBPj4oqpNNfy3ImMTEsbLFpKBoffs
+ acjfGuI2RvPcpfObQjWlRtskD4qKt3jPLQz9mxA12xzmuUt8NJLkoNWaoXaHiIoBcvxL
+ zwujGQ7/wbumR6Ev3tTfEiE26N9IgYc9+WYpFzQZ4e0VHWSsvkSTeG6sNVSoZcClr8pn
+ bQU2C7dxVxbYNrp+tulbmonNNNdw9RHR8KmI7iSjiyP9qOd/NDmBx8MTHrWK2Xux+4EM
+ gwk+UOUCkfXYsuBrpaEY2rN7KH7McRLB27sV/37qC+63PGzljbG7j9kiJmaUU2q/oZQ/
+ /nAw==
+X-Gm-Message-State: AOJu0YzYWFWxOZ/UCQKl6Fjg9k/QtUqGwGXO/41u5IzRZS5NUMZW5wHW
+ 8fi34JaDILpuVp9m/HFzG/Aji9O/Sh6FSx1GM2cJUV+SZtbuJNj7R3yGDcpzxrNDb+5yu53NJ11
+ fXmCY5gHvgkHiAOAdjThAXHrgeVVgzwNOAsvDY6Mug0jVP8hzXM2imxdfLq3dOr91Wh/lvlC/7L
+ ZXsB7Op1jbtPy/2APhHBST/V0rV2XZMy+ZU7+cKT4=
+X-Received: by 2002:a05:6000:4027:b0:37d:4ebe:164a with SMTP id
+ ffacd0b85a97d-381c7ac7704mr11244110f8f.50.1730741306752; 
+ Mon, 04 Nov 2024 09:28:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHWX9YvBoN2s2gc9thcdztDytmiVtAAfFVQut6N7TQ2ig1lwfrSbQvrt0IfyY4vpP1XrneOig==
+X-Received: by 2002:a05:6000:4027:b0:37d:4ebe:164a with SMTP id
+ ffacd0b85a97d-381c7ac7704mr11244067f8f.50.1730741306273; 
+ Mon, 04 Nov 2024 09:28:26 -0800 (PST)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4327d6983c2sm163506775e9.42.2024.11.04.09.27.59
+ ffacd0b85a97d-381c10b7bf7sm13917889f8f.9.2024.11.04.09.28.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 09:27:59 -0800 (PST)
+ Mon, 04 Nov 2024 09:28:24 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,22 +73,23 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 17/40] rust: do not use TYPE_CHARDEV unnecessarily
-Date: Mon,  4 Nov 2024 18:26:56 +0100
-Message-ID: <20241104172721.180255-18-pbonzini@redhat.com>
+Subject: [PULL 29/40] rust: silence unknown warnings for the sake of old
+ compilers
+Date: Mon,  4 Nov 2024 18:27:08 +0100
+Message-ID: <20241104172721.180255-30-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241104172721.180255-1-pbonzini@redhat.com>
 References: <20241104172721.180255-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,31 +107,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the invocation of qdev_prop_set_chr(), "chardev" is the name of a
-property rather than a type and has to match the name of the property
-in device_class.rs.  Do not use TYPE_CHARDEV here, just like in the C
-version of pl011_create.
+Occasionally, we may need to silence warnings and clippy lints that
+were only introduced in newer Rust compiler versions.  However, this
+would fail when compiling with an older rustc:
 
-Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+error: unknown lint: `non_local_definitions`
+   --> rust/qemu-api/rust-qemu-api-tests.p/structured/offset_of.rs:79:17
+
+So by default we need to block the unknown_lints warning.  To avoid
+misspelled lints or other similar issues, re-enable it in the CI job
+that uses nightly rust.
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ meson.build                   | 8 ++++++++
+ .gitlab-ci.d/buildtest.yml    | 2 +-
+ meson_options.txt             | 2 ++
+ scripts/meson-buildoptions.sh | 4 ++++
+ 4 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 0347a027c5f..b3d8bc004e0 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -573,7 +573,7 @@ pub fn update(&self) {
-         let dev: *mut DeviceState = qdev_new(PL011State::TYPE_INFO.name);
-         let sysbus: *mut SysBusDevice = dev.cast::<SysBusDevice>();
+diff --git a/meson.build b/meson.build
+index aa0b0fc5584..2f7e0550105 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3341,6 +3341,14 @@ if have_rust and have_system
+   # Prohibit code that is forbidden in Rust 2024
+   rustc_args += ['-D', 'unsafe_op_in_unsafe_fn']
  
--        qdev_prop_set_chr(dev, bindings::TYPE_CHARDEV.as_ptr(), chr);
-+        qdev_prop_set_chr(dev, c"chardev".as_ptr(), chr);
-         sysbus_realize_and_unref(sysbus, addr_of!(error_fatal) as *mut *mut Error);
-         sysbus_mmio_map(sysbus, 0, addr);
-         sysbus_connect_irq(sysbus, 0, irq);
++  # Occasionally, we may need to silence warnings and clippy lints that
++  # were only introduced in newer Rust compiler versions.  Do not croak
++  # in that case; a CI job with rust_strict_lints == true ensures that
++  # we do not have misspelled allow() attributes.
++  if not get_option('strict_rust_lints')
++    rustc_args += ['-A', 'unknown_lints']
++  endif
++
+   # Apart from procedural macros, our Rust executables will often link
+   # with C code, so include all the libraries that C code needs.  This
+   # is safe; https://github.com/rust-lang/rust/pull/54675 says that
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 19ba5b9c818..aba65ff833a 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -128,7 +128,7 @@ build-system-fedora-rust-nightly:
+     job: amd64-fedora-rust-nightly-container
+   variables:
+     IMAGE: fedora-rust-nightly
+-    CONFIGURE_ARGS: --disable-docs --enable-rust
++    CONFIGURE_ARGS: --disable-docs --enable-rust --enable-strict-rust-lints
+     TARGETS: aarch64-softmmu
+     MAKE_CHECK_ARGS: check-build
+   allow_failure: true
+diff --git a/meson_options.txt b/meson_options.txt
+index 0ee4d7bb86b..e46199a3232 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -376,3 +376,5 @@ option('x86_version', type : 'combo', choices : ['0', '1', '2', '3', '4'], value
+ 
+ option('rust', type: 'feature', value: 'disabled',
+        description: 'Rust support')
++option('strict_rust_lints', type: 'boolean', value: false,
++       description: 'Enable stricter set of Rust warnings')
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 6d08605b771..e898b20307d 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -47,6 +47,8 @@ meson_options_help() {
+   printf "%s\n" '                           getrandom()'
+   printf "%s\n" '  --enable-safe-stack      SafeStack Stack Smash Protection (requires'
+   printf "%s\n" '                           clang/llvm and coroutine backend ucontext)'
++  printf "%s\n" '  --enable-strict-rust-lints'
++  printf "%s\n" '                           Enable stricter set of Rust warnings'
+   printf "%s\n" '  --enable-strip           Strip targets on install'
+   printf "%s\n" '  --enable-tcg-interpreter TCG with bytecode interpreter (slow)'
+   printf "%s\n" '  --enable-trace-backends=CHOICES'
+@@ -490,6 +492,8 @@ _meson_option_parse() {
+     --disable-spice-protocol) printf "%s" -Dspice_protocol=disabled ;;
+     --enable-stack-protector) printf "%s" -Dstack_protector=enabled ;;
+     --disable-stack-protector) printf "%s" -Dstack_protector=disabled ;;
++    --enable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=true ;;
++    --disable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=false ;;
+     --enable-strip) printf "%s" -Dstrip=true ;;
+     --disable-strip) printf "%s" -Dstrip=false ;;
+     --sysconfdir=*) quote_sh "-Dsysconfdir=$2" ;;
 -- 
 2.47.0
 
