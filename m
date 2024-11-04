@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2442D1BDF3
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:11:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 867D9D1BDF2
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t84HR-0004i7-Fl; Mon, 04 Nov 2024 16:06:33 -0500
+	id 1t84JJ-0004a2-0H; Mon, 04 Nov 2024 16:08:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84HQ-0004eP-Gd
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:32 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Ix-0002yS-Gi
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:08:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84HO-0005Jj-Gt
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:32 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Iv-0005Rx-Pq
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:08:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730754389;
+ s=mimecast20190719; t=1730754485;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=q0uhS2hkjfzMF9odNW6FeM9PeY7E/hPIzXL+GkcXz8Q=;
- b=ahebj2IOzCIL4MeIYw2Gy+Kxw/H6+0ERFccW43r12DKmiCa98VrQiKUxW8lsDfxYkEvwQ2
- G1j9rGJ7cfXwHV7D/CSO+mBI8iU69qB3eMe0UYlgj7X/7oXAHPPH4z+ewLSA+ucgcz5XT9
- wYkdB8/0pZej93eail4CR6gawK6UquI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=37jtMIq9rcanrOImpOzg8HMHUHIFbVSYLgdcwzoI8+c=;
+ b=gRTVRudplq4r01yyrON7sBNFkfoHK6aMA9SIFEvAmyIQUKGa0bUdIuhvkwPj45hQuZj9MH
+ 3gGTKJEUFLdGiTQQxxAZQSqyJq1ObKJY+RGWrxpMNuF/hIEfrWkyOhGlSkzPliNpgbOsfo
+ lOO+0sR3L30hlbt04W7pnF/8AsNlVLs=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-208-EuztRBwvMY2UHozMTYlKWQ-1; Mon, 04 Nov 2024 16:06:28 -0500
-X-MC-Unique: EuztRBwvMY2UHozMTYlKWQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43152cd2843so27531785e9.3
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:06:28 -0800 (PST)
+ us-mta-10-7y-9oOzGOJaysatCyG-fdQ-1; Mon, 04 Nov 2024 16:08:03 -0500
+X-MC-Unique: 7y-9oOzGOJaysatCyG-fdQ-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-539eb3416cdso4957393e87.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:08:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730754387; x=1731359187;
+ d=1e100.net; s=20230601; t=1730754482; x=1731359282;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q0uhS2hkjfzMF9odNW6FeM9PeY7E/hPIzXL+GkcXz8Q=;
- b=daIYhpKnlVWk0cykYyYrAIQOduYHbuwi7w0jCV+dj2TaVpQGuk+B9zj18e6vaZYb84
- gIJAHoEQUmBmMFMBgFvvUNkiQ6WltOafnac2oul8J9Pgy+swl9ZSN9bmEUu1Zmz5NyQl
- OjExLe+26kyl8uCVEhTEgOinF/NGxlmWEU3Si5b9b4bzzqgZHWzWyMXr7blxt+/HGXGg
- OgyItPddnPyi+bF/iyDkZaguO/66n2IXFyWvURGvFuoy7fXWS95x1uSW8SWD4nyOgyEL
- VnX0m2uyvOFx7c2JREHFubyBUQMW6ebZkBUoVWrDXK9z2HasWPAZIU7es2zje+3ScOOg
- ekOg==
-X-Gm-Message-State: AOJu0Yz+Tb/t7OiKTHMKd+S+LnCBqMyb1AZZdzXEVuRicIbBPmZAMimq
- CwIoz05WT8dmWGKWs2BWb1EyK/KonjMeLxDa1Fwzm6YYyv1RQihGJr1+MI8ofVELQHZrxJSFP8D
- L+nfTTnDy0qYgx4DvEJq+SfTfBFoczjSmRTfO27zF6AuVFIDF/QQewiLO85Zrfy+rc0pVwCNXkX
- q6RpGQju4F4mplpddQ/wBFNjeLAdmx3w==
-X-Received: by 2002:a05:600c:1d97:b0:431:5459:33c2 with SMTP id
- 5b1f17b1804b1-431bb99053bmr214908565e9.17.1730754386672; 
- Mon, 04 Nov 2024 13:06:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFVTtiklzyTJrDLccgRW3ibAwEn75Ctz2tX9K5IR6uLXhhLZt/aojafCisItrOEI+UXHKxqXA==
-X-Received: by 2002:a05:600c:1d97:b0:431:5459:33c2 with SMTP id
- 5b1f17b1804b1-431bb99053bmr214908065e9.17.1730754385290; 
- Mon, 04 Nov 2024 13:06:25 -0800 (PST)
+ bh=37jtMIq9rcanrOImpOzg8HMHUHIFbVSYLgdcwzoI8+c=;
+ b=njERyIYMbNBM2fNaIofYpeU0Lx46ONTDL5WjSPggW820KfjjIBojxbYtp9SQDKRsLl
+ WUlridL1+8jI57zSoqd1CM1o6W8DEOlaXTb844rrMpQ7mlon+9YGzIwxQh5Uzji9ty48
+ IiISuVGjF1BACJFTEl4BpoTZAt9dye/TIzmV6Mzm2HbGRFEkjvdsLTk9o5mCNipfvFvF
+ StIYp0Lfl1PncBXLgAs6PmGCJtobAkSy37AnGFOZ8sz0AVU4S5LBluykDVZ7dPVC+JZR
+ SEDqnBtUVLmacX56r00NBZBWYQfzP1Ix63dL3tSrHpm81Z1lJCG/Dph2ne6ki2NNgND6
+ vs2w==
+X-Gm-Message-State: AOJu0Yx7/yTsG+aUwjuxU16O7+JQ+GoJSObxkQ2kFYxiacqKfj5GrMVW
+ YaNJJTdDC7haf1pk0demafovc9hDwN4i10MjkxwN6DI9jE1uSUkp4xgchIH+OSqqSPaD+ov35W8
+ ob4/4EluCvUMzktOGAIPrDlI0Pem3MRZdj+R2t3pMLEHHbCvC1h4mxFLM481eJg2EbQ/Y+RE7pU
+ NYQ5gLWAF0ks5hDDpWybzTSWJ98Ik4cQ==
+X-Received: by 2002:a05:6512:318c:b0:53b:1f14:e11a with SMTP id
+ 2adb3069b0e04-53b348d0d32mr16962586e87.15.1730754481925; 
+ Mon, 04 Nov 2024 13:08:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFll0SJdlhEH4BTrqg/ABdbN18+A/2NbktGTlZ/PmzeOpvhX3RhoWcDsy8iNsIIys5CS+NshQ==
+X-Received: by 2002:a05:6512:318c:b0:53b:1f14:e11a with SMTP id
+ 2adb3069b0e04-53b348d0d32mr16962567e87.15.1730754481361; 
+ Mon, 04 Nov 2024 13:08:01 -0800 (PST)
 Received: from redhat.com ([2.52.14.134]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bd9ca704sm194483875e9.41.2024.11.04.13.06.22
+ 5b1f17b1804b1-4327d5abfefsm164801235e9.4.2024.11.04.13.07.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 13:06:24 -0800 (PST)
-Date: Mon, 4 Nov 2024 16:06:21 -0500
+ Mon, 04 Nov 2024 13:08:00 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:07:57 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 13/65] hw/acpi: Make storage of node id uint32_t to reduce
- fragility
-Message-ID: <cf2181aef23e7f145e8fe7b8395694d32b115ae5.1730754238.git.mst@redhat.com>
+ Ajay Joshi <ajayjoshi@micron.com>, Ajay Joshi <ajay.opensrc@micron.com>,
+ Davidlohr Bueso <dave@stgolabs.net>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 36/65] hw/cxl: Fix background completion percentage calculation
+Message-ID: <8352756ffa72668773d6904bc76dfc0bf2619e5a.1730754238.git.mst@redhat.com>
 References: <cover.1730754238.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -103,64 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Ajay Joshi <ajayjoshi@micron.com>
 
->From review of generic port introduction.
+The current completion percentage calculation does not account for the
+relative time since the start of the background activity, this leads to
+showing incorrect start percentage vs what has actually been completed.
 
-The value is handled as a uint32_t so store it in that type.
-The value cannot in reality exceed MAX_NODES which is currently
-128 but if the types are matched there is no need to rely on that
-restriction.
+This patch calculates the percentage based on the actual elapsed time since
+the start of the operation.
 
+Fixes: 221d2cfbdb53 ("hw/cxl/mbox: Add support for background operations")
+Signed-off-by: Ajay Joshi <ajay.opensrc@micron.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Link: https://lore.kernel.org/r/20240729102338.22337-1-ajay.opensrc@micron.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240916174237.1843213-1-Jonathan.Cameron@huawei.com>
+Message-Id: <20241014121902.2146424-3-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/acpi/aml-build.h | 2 +-
- hw/acpi/aml-build.c         | 2 +-
- hw/acpi/pci.c               | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ hw/cxl/cxl-mailbox-utils.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-index 47a4692a7d..4fd5da49e7 100644
---- a/include/hw/acpi/aml-build.h
-+++ b/include/hw/acpi/aml-build.h
-@@ -486,7 +486,7 @@ Aml *build_crs(PCIHostState *host, CrsRangeSet *range_set, uint32_t io_offset,
- void build_srat_memory(GArray *table_data, uint64_t base,
-                        uint64_t len, int node, MemoryAffinityFlags flags);
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 9f794e4655..3a93966e77 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -2879,7 +2879,8 @@ static void bg_timercb(void *opaque)
+         }
+     } else {
+         /* estimate only */
+-        cci->bg.complete_pct = 100 * now / total_time;
++        cci->bg.complete_pct =
++            100 * (now - cci->bg.starttime) / cci->bg.runtime;
+         timer_mod(cci->bg.timer, now + CXL_MBOX_BG_UPDATE_FREQ);
+     }
  
--void build_srat_pci_generic_initiator(GArray *table_data, int node,
-+void build_srat_pci_generic_initiator(GArray *table_data, uint32_t node,
-                                       uint16_t segment, uint8_t bus,
-                                       uint8_t devfn);
- 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 7a06ffec5a..6a76626177 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -1972,7 +1972,7 @@ static void build_append_srat_acpi_device_handle(GArray *table_data,
-  * 5.2.16.6 Generic Initiator Affinity Structure
-  *    With PCI Device Handle.
-  */
--void build_srat_pci_generic_initiator(GArray *table_data, int node,
-+void build_srat_pci_generic_initiator(GArray *table_data, uint32_t node,
-                                       uint16_t segment, uint8_t bus,
-                                       uint8_t devfn)
- {
-diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
-index d7a0e91f01..a4835ce563 100644
---- a/hw/acpi/pci.c
-+++ b/hw/acpi/pci.c
-@@ -72,7 +72,7 @@ typedef struct AcpiGenericInitiator {
- 
-     /* public */
-     char *pci_dev;
--    uint16_t node;
-+    uint32_t node;
- } AcpiGenericInitiator;
- 
- typedef struct AcpiGenericInitiatorClass {
 -- 
 MST
 
