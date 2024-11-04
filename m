@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9110D1CA08
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 22:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BDAD1CA07
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 22:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t85qe-0007z3-RB; Mon, 04 Nov 2024 17:47:00 -0500
+	id 1t85vj-0000NZ-AB; Mon, 04 Nov 2024 17:52:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t85qd-0007yp-FE
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:46:59 -0500
+ id 1t85vg-0000N6-Jo
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:52:12 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t85qb-0006TI-F9
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:46:59 -0500
+ id 1t85ve-0006zn-S8
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 17:52:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=b9c/M7uP/2tSB3/e3APFPBj4w1JHgGll1rYEuMcrRt0=; b=b1RxlkEs2KCIfFtoWPiggwJ97y
- +sTe/hGCjMbxuCn95JvVca6WDiWoAoXYZhP3a80PBjpHwTpRYzrTALze/ikY0tzjfAnVi0RY/dAtl
- MsM3neyoOW4yLimqt5qNbnW1BxEEhBQEDFL3lhAzmWHeguK1cXNcuArxFpnYc3Rp98zKozZ/2ZrRK
- P8vRT7UL0QNQQids3EF7Emf9cohSS7HBCwLLaqbF8CaJWS2CEos4dnEM6oTmmYYK3A5rsRyxQ7YCR
- sNUBA0ZeJEM58ch9bbGI2c+889XMfOEMVdBaUUEQG5KWG6Mv+fQSpkBKXyuPd2mM2ExnjuPrnv6Sa
- QgPA8aPA1xZA7k1SY5cF3tCjqj4HAV00a6kKdu5U6OsgiGceLB8TkrdPGlshwG4PnidFGLneAyGU1
- EBHGVt9n6DsoLHNavNvZzepyVpLyx+aU9H6PcVpu6HUWX9st9YhIZpWkTsX/OwkXPVWpyfHRZ9F32
- 9yLB/hSaQG/2BMVpk+LWsJsszjosn8OYRw04wBtkpzc53QhF44AAWn6653W/S4QaxAIRrqn1toOPH
- DQ4NcXoFe7IiLAj4wRJAdIAlXYqvLa1PGEXZ/J21XUxPLuEVHfvsU9fWR1DTkRSZzaL8v0OM7C5ih
- gMR+w8hC97gE9c+rx/kTCIraSl60FssfQKcfWwpoE=;
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=qD84fLYq35QmJ+D+jLVLCabuRRjre3myGT2YyxrZ1ww=; b=WcIFE1H1HsILpONilR9wD8NNXV
+ YqlvTJsjZOy3R5ta2edy8vXFLak1TrtTaycEPKlay4mUbLAR09y58TTja2gtzAOThe7+cfdogpC+h
+ zqk6Qijwe+34bDoZRpORWKmoRU1b7GVXmDXL6YXzUusYiagxP1vx9NtDWVvj6sbNYHjkwzlrkR/GO
+ PFh+k3GJwOSdPunJ8SiMZy5yS2Q4rtklFtOt7NuRni4wLY/WILzpGJMjvbApBk+2ZvC8uNO3DtXgk
+ gqBuQhCVXhW1A908pAS0BP1YUACm9pyIrz4w4cHCQOBpu9v01TNrGByxrk/cr8F2fKdeaWPIAKv8O
+ QsuloyBfUg8I1CYAElSpETr0H2MPpYldZOiRfWdVrQO6zHS7Os8pIl7ZIF8nyLE0YvxTmM1PlPxqL
+ Q+Ioun56UCfS+AhZoOtcedb3cFoZjWd1nHQ2RpmceBKOdSkSPBxky73t9gR73bkAOmymjWYz5uSyM
+ qknvptPypSZT4L/XL7THGaZ5d0S7w7wqyNFwFZk2wfUeN+fcXbCOonqDHlt+TOQG72A2hN0w+fVU/
+ HnE043RbqeeluwvLnSYvzs+I43Onsc4bZyZt/3JEj0hjnCJ6bDlP/h9mOzPclVgt0l5dZfhWRxnC1
+ oo0FdNbT0y70A2bdY4ZYDZoXwwyZYI/x2dquRLoAs=;
 Received: from [2a00:23c4:8bb8:f600:b478:1422:fb0f:30d5]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t85q8-00041e-76; Mon, 04 Nov 2024 22:46:32 +0000
-Message-ID: <7708dea9-32b3-4ced-9fdd-de0c1a5aca85@ilande.co.uk>
-Date: Mon, 4 Nov 2024 22:46:45 +0000
+ id 1t85v6-00044V-EY; Mon, 04 Nov 2024 22:51:48 +0000
+Message-ID: <c186391e-ed40-4058-ba6a-22e69f123b8f@ilande.co.uk>
+Date: Mon, 4 Nov 2024 22:51:53 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: peter.maydell@linaro.org, huth@tuxfamily.org, qemu-devel@nongnu.org
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ peter.maydell@linaro.org, huth@tuxfamily.org, qemu-devel@nongnu.org
 References: <20241101201106.1432336-1-mark.cave-ayland@ilande.co.uk>
  <20241101201106.1432336-2-mark.cave-ayland@ilande.co.uk>
- <ZyicQT4eKlN07AHz@redhat.com>
+ <ZyicQT4eKlN07AHz@redhat.com> <ZyizniWmccEjAQBq@redhat.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,7 +74,7 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <ZyicQT4eKlN07AHz@redhat.com>
+In-Reply-To: <ZyizniWmccEjAQBq@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:b478:1422:fb0f:30d5
@@ -106,156 +106,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/11/2024 10:04, Daniel P. Berrangé wrote:
+On 04/11/2024 11:44, Daniel P. Berrangé wrote:
 
-> On Fri, Nov 01, 2024 at 08:11:05PM +0000, Mark Cave-Ayland wrote:
->> Convert the next-kbd device from the legacy UI qemu_add_kbd_event_handler()
->> function to use qemu_input_handler_register().
+> On Mon, Nov 04, 2024 at 10:04:49AM +0000, Daniel P. Berrangé wrote:
+>> On Fri, Nov 01, 2024 at 08:11:05PM +0000, Mark Cave-Ayland wrote:
+>>> Convert the next-kbd device from the legacy UI qemu_add_kbd_event_handler()
+>>> function to use qemu_input_handler_register().
+>>>
+>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>> ---
+>>>   hw/m68k/next-kbd.c | 166 ++++++++++++++++++++++++++++++---------------
+>>>   1 file changed, 111 insertions(+), 55 deletions(-)
+>>>
+>>> diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
+>>> index bc67810f31..283e98e9eb 100644
+>>> --- a/hw/m68k/next-kbd.c
+>>> +++ b/hw/m68k/next-kbd.c
+>   
+>> Finding a reliable reference for the NeXT scancodes is very hard
+>> in my googling so far. The best I've come across so far is
 >>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> ---
->>   hw/m68k/next-kbd.c | 166 ++++++++++++++++++++++++++++++---------------
->>   1 file changed, 111 insertions(+), 55 deletions(-)
+>> https://github.com/spenczar/usb-next/blob/main/keymap.h
 >>
->> diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
->> index bc67810f31..283e98e9eb 100644
->> --- a/hw/m68k/next-kbd.c
->> +++ b/hw/m68k/next-kbd.c
+>> who has defined a mapping to USB HID codes, which seems to
+>> broadly match what's above here, plus has many of the gaps
+>> fixed.
+>>
+>> Do you know of any other decent references for scancodes ?
+>>
+>> I'm going to see about adding NeXT scancodes to the giant
+>> database of keycodes at:
+>>
+>>    https://gitlab.com/keycodemap/keycodemapdb
+>>
+>> then we can auto-generate this table as we do for most of
+>> the other QEMU keyboard drivers.
 > 
+> FYI, I've opened this:
 > 
->> -static const unsigned char next_keycodes[128] = {
->> -    0x00, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x50, 0x4F,
->> -    0x4E, 0x1E, 0x1F, 0x20, 0x1D, 0x1C, 0x1B, 0x00,
->> -    0x42, 0x43, 0x44, 0x45, 0x48, 0x47, 0x46, 0x06,
->> -    0x07, 0x08, 0x00, 0x00, 0x2A, 0x00, 0x39, 0x3A,
->> -    0x3B, 0x3C, 0x3D, 0x40, 0x3F, 0x3E, 0x2D, 0x2C,
->> -    0x2B, 0x26, 0x00, 0x00, 0x31, 0x32, 0x33, 0x34,
->> -    0x35, 0x37, 0x36, 0x2e, 0x2f, 0x30, 0x00, 0x00,
->> -    0x00, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
->> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
->> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
->> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+> https://gitlab.com/keycodemap/keycodemapdb/-/merge_requests/21
 > 
-> The original code used '0' (or equivalently 0x00) to
-> indicate an unmapped scancode.
-> 
->> +#define NEXTKBD_NO_KEY 0xff
-> 
-> Now you're using 0xff for missing mappings, but....
-> 
->> +
->> +static const int qcode_to_nextkbd_keycode[] = {
->> +    /* Make sure future additions are automatically set to NEXTKBD_NO_KEY */
->> +    [0 ... Q_KEY_CODE__MAX]    = NEXTKBD_NO_KEY,
->> +
->> +    [Q_KEY_CODE_ESC]           = 0x49,
->> +    [Q_KEY_CODE_1]             = 0x4a,
->> +    [Q_KEY_CODE_2]             = 0x4b,
->> +    [Q_KEY_CODE_3]             = 0x4c,
->> +    [Q_KEY_CODE_4]             = 0x4d,
->> +    [Q_KEY_CODE_5]             = 0x50,
->> +    [Q_KEY_CODE_6]             = 0x4f,
->> +    [Q_KEY_CODE_7]             = 0x4e,
->> +    [Q_KEY_CODE_8]             = 0x1e,
->> +    [Q_KEY_CODE_9]             = 0x1f,
->> +    [Q_KEY_CODE_0]             = 0x20,
->> +    [Q_KEY_CODE_MINUS]         = 0x1d,
->> +    [Q_KEY_CODE_EQUAL]         = 0x1c,
->> +    [Q_KEY_CODE_BACKSPACE]     = 0x1b,
->> +    [Q_KEY_CODE_TAB]           = 0x00,
-> 
-> ...you've left 0x00 here and....
+> if someone wants to sanity-check it, please comment there. Otherwise I'll
+> merge it after a short while if no one points out mistakes.
 
-Ooops yes that line can be removed.
+Nice!
 
->> +    [Q_KEY_CODE_Q]             = 0x42,
->> +    [Q_KEY_CODE_W]             = 0x43,
->> +    [Q_KEY_CODE_E]             = 0x44,
->> +    [Q_KEY_CODE_R]             = 0x45,
->> +    [Q_KEY_CODE_T]             = 0x48,
->> +    [Q_KEY_CODE_Y]             = 0x47,
->> +    [Q_KEY_CODE_U]             = 0x46,
->> +    [Q_KEY_CODE_I]             = 0x06,
->> +    [Q_KEY_CODE_O]             = 0x07,
->> +    [Q_KEY_CODE_P]             = 0x08,
->> +    [Q_KEY_CODE_RET]           = 0x2a,
->> +    [Q_KEY_CODE_A]             = 0x39,
->> +    [Q_KEY_CODE_S]             = 0x3a,
->> +
->> +    [Q_KEY_CODE_D]             = 0x3b,
->> +    [Q_KEY_CODE_F]             = 0x3c,
->> +    [Q_KEY_CODE_G]             = 0x3d,
->> +    [Q_KEY_CODE_H]             = 0x40,
->> +    [Q_KEY_CODE_J]             = 0x3f,
->> +    [Q_KEY_CODE_K]             = 0x3e,
->> +    [Q_KEY_CODE_L]             = 0x2d,
->> +    [Q_KEY_CODE_SEMICOLON]     = 0x2c,
->> +    [Q_KEY_CODE_APOSTROPHE]    = 0x2b,
->> +    [Q_KEY_CODE_GRAVE_ACCENT]  = 0x26,
->> +    [Q_KEY_CODE_SHIFT]         = 0x00,
+> To use this from QEMU we would need:
+> 
+>   * update ui/keycodemapdb submodule hash to point to the above (once
+>     merged)
+>   * update ui/meson.build  'keymaps' list to add ['qcode', 'next'] to
+>     the generated map list
+>   * import the new generated "ui/input-keymap-qcode-to-next.c.inc" from
+>     next-kbd.c
 
-This should be kept.
-
->> +    [Q_KEY_CODE_BACKSLASH]     = 0x00,
-> 
-> ...here, and ...
-
-Indeed, that line can also be removed.
-
->> +    [Q_KEY_CODE_Z]             = 0x31,
->> +    [Q_KEY_CODE_X]             = 0x32,
->> +    [Q_KEY_CODE_C]             = 0x33,
->> +    [Q_KEY_CODE_V]             = 0x34,
->> +
->> +    [Q_KEY_CODE_B]             = 0x35,
->> +    [Q_KEY_CODE_N]             = 0x37,
->> +    [Q_KEY_CODE_M]             = 0x36,
->> +    [Q_KEY_CODE_COMMA]         = 0x2e,
->> +    [Q_KEY_CODE_DOT]           = 0x2f,
->> +    [Q_KEY_CODE_SLASH]         = 0x30,
->> +    [Q_KEY_CODE_SHIFT_R]       = 0x00,
-> 
-> ...here, which is surely not a correct conversion
-
-And this one should also be kept.
-
-The reason the two shift keys need to be kept as zero is so that they pass the "if 
-(keycode == NEXTKBD_NO_KEY) { return; }" check in nextkbd_event().
-
->> +
->> +    [Q_KEY_CODE_SPC]           = 0x38,
->>   };
-> 
-> 
-> Those missing mappings definitely have values too.
-> 
-> I can see the 'shift' and 'tab' keys on the real Next
-> keyboard I have in front of me right now :-)
-
-That's proof enough for me ;)
-
-> Finding a reliable reference for the NeXT scancodes is very hard
-> in my googling so far. The best I've come across so far is
-> 
-> https://github.com/spenczar/usb-next/blob/main/keymap.h
-> 
-> who has defined a mapping to USB HID codes, which seems to
-> broadly match what's above here, plus has many of the gaps
-> fixed.
-> 
-> Do you know of any other decent references for scancodes ?
-> 
-> I'm going to see about adding NeXT scancodes to the giant
-> database of keycodes at:
-> 
->    https://gitlab.com/keycodemap/keycodemapdb
-> 
-> then we can auto-generate this table as we do for most of
-> the other QEMU keyboard drivers.
-
-That would be great! Is this also possible for the ADB keyboard device, since that is 
-where I looked for inspiration when looking at next-kbd?
+What would you recommend would be the best way forward for 9.2? To issue a v4 with 
+just the erroneous 0x00 values removed, or to try and use keycodemapdb?
 
 
 ATB,
