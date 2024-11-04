@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88CD1D132A9
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 10:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FFBD132A8
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 10:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7u7m-0000rY-OR; Mon, 04 Nov 2024 05:15:54 -0500
+	id 1t7u7L-0000ig-08; Mon, 04 Nov 2024 05:15:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t7u7W-0000nP-IP
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:15:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t7u7D-0000hB-0j
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:15:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t7u7S-0006da-TD
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:15:38 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t7u7A-0006X4-Gz
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 05:15:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730715334;
+ s=mimecast20190719; t=1730715315;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tVjafkZnyxLi3ipSWKwXdxnsAegwe+glEiTN1gXul0Y=;
- b=Qe0Q+X6YV/VWRsRQRRb0EZuZor9u3yy5tP8jugwVyiLImH19UA5Q/RkluyWC4Mk4y2/1d5
- Jmeqj3GQDXhj6JTy/uBObiy/YujyAnPaBJ+eMVzAmKgiMjs/qa3Mv1S2NHYZ1dRDtLxhSr
- CHzURy5FPnUqj1hJs04ZLu+eVbZLlSA=
+ bh=kTHb1e+iHwXlenyiLDCCN2TDzp/q1TON6QHXNe/VOQY=;
+ b=PwNcGeruN71so3+Z1Y8C2ljK8MReoBvReaFr+5qGXedSFu3B4VsteWxzt2a48VY9ppmKgm
+ spOut8/Y6mLre8CWAgtnDH/yitLX/SXLq8neJ80Dpdq68+OTESvSMT5bQwZU7XrA7eVAHl
+ HjsT1QAVXTzbqgSHFOlLcy4W3EcTw9I=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-MzM_2Z0OMz6-inl4uFfUgQ-1; Mon,
- 04 Nov 2024 05:15:30 -0500
-X-MC-Unique: MzM_2Z0OMz6-inl4uFfUgQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-y64yqqUOO8OmgefVtIWuIw-1; Mon,
+ 04 Nov 2024 05:15:14 -0500
+X-MC-Unique: y64yqqUOO8OmgefVtIWuIw-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 59295193587B; Mon,  4 Nov 2024 10:15:29 +0000 (UTC)
+ id 25482193587B; Mon,  4 Nov 2024 10:15:13 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.67])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 612661956052; Mon,  4 Nov 2024 10:15:27 +0000 (UTC)
+ id B66941956052; Mon,  4 Nov 2024 10:15:11 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Jan Luebbe <jlu@pengutronix.de>, Guenter Roeck <linux@roeck-us.net>
-Subject: [PULL 10/10] aspeed: Don't set always boot properties of the emmc
- device
-Date: Mon,  4 Nov 2024 11:15:01 +0100
-Message-ID: <20241104101501.2487001-11-clg@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 03/10] hw/arm/aspeed_ast27x0: Use bsa.h for PPI definitions
+Date: Mon,  4 Nov 2024 11:14:54 +0100
+Message-ID: <20241104101501.2487001-4-clg@redhat.com>
 In-Reply-To: <20241104101501.2487001-1-clg@redhat.com>
 References: <20241104101501.2487001-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -84,73 +82,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit e554e45b4478 ("aspeed: Tune eMMC device properties to reflect
-HW strapping") added support to boot from an eMMC device by setting
-the boot properties of the eMMC device. This change made the
-assumption that the device always has boot areas.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-However, if the machine boots from the flash device (or -kernel) and
-uses an eMMC device without boot areas, support would be broken. This
-impacts the ast2600-evb machine which can choose to boot from flash or
-eMMC using the "boot-emmc" machine option.
+Use the private peripheral interrupt definitions from bsa.h instead
+of defining them locally.
 
-To provide some flexibility for Aspeed machine users to use different
-flavors of eMMC devices (with or without boot areas), do not set the
-eMMC device boot properties when the machine is not configured to boot
-from eMMC. However, this approach makes another assumption about eMMC
-devices, namely that eMMC devices from which the machine does not boot
-do not have boot areas.
+Note that bsa.h defines these values as INTID values, which are all
+16 greater than the PPI values that we were previously using.  So we
+refactor the code to use INTID-based values to match that.
 
-A preferable alternative would be to add support for user creatable
-eMMC devices and define the device boot properties on the QEMU command
-line :
+This is the same thing we did in commit d40ab068c07d9 for sbsa-ref.
+It removes the "same constant, different values" confusion where this
+board code and bsa.h both define an ARCH_GIC_MAINT_IRQ, and allows us
+to use symbolic names for the timer interrupt IDs.
 
-  -blockdev node-name=emmc0,driver=file,filename=mmc-ast2600-evb.raw \
-  -device emmc,bus=sdhci-bus.2,drive=emmc0,boot-partition-size=1048576,boot-config=8
-
-This is a global change requiring more thinking. Nevertheless, in the
-case of the ast2600-evb machine booting from an eMMC device and when
-default devices are created, the proposed change still makes sense
-since the device is required to have boot areas.
-
-Cc: Jan Luebbe <jlu@pengutronix.de>
-Fixes: e554e45b4478 ("aspeed: Tune eMMC device properties to reflect
-HW strapping")
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Jan Luebbe <jlu@pengutronix.de>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/aspeed.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index e447923536b4..6ca145362cbd 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -338,10 +338,20 @@ static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc,
-             return;
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index dca660eb6be2..5638a7a5781b 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -13,6 +13,7 @@
+ #include "qapi/error.h"
+ #include "hw/misc/unimp.h"
+ #include "hw/arm/aspeed_soc.h"
++#include "hw/arm/bsa.h"
+ #include "qemu/module.h"
+ #include "qemu/error-report.h"
+ #include "hw/i2c/aspeed_i2c.h"
+@@ -416,28 +417,28 @@ static bool aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error **errp)
+ 
+     for (i = 0; i < sc->num_cpus; i++) {
+         DeviceState *cpudev = DEVICE(&a->cpu[i]);
+-        int NUM_IRQS = 256, ARCH_GIC_MAINT_IRQ = 9, VIRTUAL_PMU_IRQ = 7;
+-        int ppibase = NUM_IRQS + i * GIC_INTERNAL + GIC_NR_SGIS;
++        int NUM_IRQS = 256;
++        int intidbase = NUM_IRQS + i * GIC_INTERNAL;
+ 
+         const int timer_irq[] = {
+-            [GTIMER_PHYS] = 14,
+-            [GTIMER_VIRT] = 11,
+-            [GTIMER_HYP]  = 10,
+-            [GTIMER_SEC]  = 13,
++            [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
++            [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
++            [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
++            [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ,
+         };
+         int j;
+ 
+         for (j = 0; j < ARRAY_SIZE(timer_irq); j++) {
+             qdev_connect_gpio_out(cpudev, j,
+-                    qdev_get_gpio_in(gicdev, ppibase + timer_irq[j]));
++                    qdev_get_gpio_in(gicdev, intidbase + timer_irq[j]));
          }
-         card = qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
--        if (emmc) {
-+
-+        /*
-+         * Force the boot properties of the eMMC device only when the
-+         * machine is strapped to boot from eMMC. Without these
-+         * settings, the machine would not boot.
-+         *
-+         * This also allows the machine to use an eMMC device without
-+         * boot areas when booting from the flash device (or -kernel)
-+         * Ideally, the device and its properties should be defined on
-+         * the command line.
-+         */
-+        if (emmc && boot_emmc) {
-             qdev_prop_set_uint64(card, "boot-partition-size", 1 * MiB);
--            qdev_prop_set_uint8(card, "boot-config",
--                                boot_emmc ? 0x1 << 3 : 0x0);
-+            qdev_prop_set_uint8(card, "boot-config", 0x1 << 3);
-         }
-         qdev_prop_set_drive_err(card, "drive", blk_by_legacy_dinfo(dinfo),
-                                 &error_fatal);
+ 
+         qemu_irq irq = qdev_get_gpio_in(gicdev,
+-                                        ppibase + ARCH_GIC_MAINT_IRQ);
++                                        intidbase + ARCH_GIC_MAINT_IRQ);
+         qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
+                                     0, irq);
+         qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
+-                qdev_get_gpio_in(gicdev, ppibase + VIRTUAL_PMU_IRQ));
++                qdev_get_gpio_in(gicdev, intidbase + VIRTUAL_PMU_IRQ));
+ 
+         sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+         sysbus_connect_irq(gicbusdev, i + sc->num_cpus,
 -- 
 2.47.0
 
