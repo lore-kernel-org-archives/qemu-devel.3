@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E03AD1CA0C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 23:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DADA9D1CA09
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 23:10:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t86BU-0006VY-6e; Mon, 04 Nov 2024 18:08:32 -0500
+	id 1t86DF-0007Js-MJ; Mon, 04 Nov 2024 18:10:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t86BT-0006VL-1p; Mon, 04 Nov 2024 18:08:31 -0500
-Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
+ id 1t86DD-0007JY-8b; Mon, 04 Nov 2024 18:10:19 -0500
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t86BR-0000DN-LW; Mon, 04 Nov 2024 18:08:30 -0500
-Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-851f5d3001fso1593494241.1; 
- Mon, 04 Nov 2024 15:08:28 -0800 (PST)
+ id 1t86D8-0000YS-0s; Mon, 04 Nov 2024 18:10:19 -0500
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-84fe1bc5284so1657547241.0; 
+ Mon, 04 Nov 2024 15:10:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730761708; x=1731366508; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730761812; x=1731366612; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YnhmpQggdZ+78cX0KNI8tsSFl4U1Cnl27W5ZoCqJfac=;
- b=j51C3kntvrLL8zz+dTZoX5UClmzvb4unDCSQ/KK6aZKUEM+sFioKpDvHpCfbjS+fqA
- ObBm6Q4Uo7GOT8W66q117lGIX53yuWyjIzKJUHPxgHpkvZf+91gduli2vbBCRVSYTXxl
- RYW3dI3G2uUQbeGGj5uiZQvQ2IYVJbdmzTMSH+D91wTaBVaQhoCI5yNX+gdtksB4YF4t
- 47jPetJ/m3aegWNxeE1vry5wpmuP5Is+Fzm7a8LIpUSJZL5+ZkMwA8+LS9ILAabB8YoE
- P/ae9bLOERJMAA2apr77UB6w9iyxeE1dzZ9i5xOeZOBbAuhfu4vO4p0Ego/q31cUSjyv
- GJQQ==
+ bh=K4zwPEK5X5oFh4CQ14cbiT4FLOr3hw9OaMGbpgUQOYA=;
+ b=H8Xpq/qQOuXHkqlutN0xW4gsX6LlOMP2GZu4pMcp4R0nbIIyjWk7R3ASbPA1ko0ll1
+ SAMzzrN8zC5y8AtSHmdJ22S+s7NKwcSx6pZiS6ReeAKCCNzdlBezEjZHkIJ1szvQ4B5H
+ obMEFNZRh0D65/n68QXiDYAcUu1TdsYfcEzaN6ko2S1AzpojNbiQj2XuLhaQ7AH2hoAc
+ N+nMPqChrW/+y0C0UhUD5cZ6cK8lyfKf1tOjUGb4UuGebdmC3x3DjSAICaHP8ZnJtwZx
+ ywVIkvGlCymAuL8HYnqPhUkfe+/d3jaV/0IidxZIl8tjJWRhyouBLEWcVNs6mdEfrFDv
+ fJLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730761708; x=1731366508;
+ d=1e100.net; s=20230601; t=1730761812; x=1731366612;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YnhmpQggdZ+78cX0KNI8tsSFl4U1Cnl27W5ZoCqJfac=;
- b=mgThNpH5WJd3jSiUukHKjE1tiv/NVNpJqVM/HF5tGparxe3Z0YszmzaBT/D3xXHR6Q
- opUQTMF7Dc7UL5nyz62frjwKAF221w/jbro5XH3YE57zJG5piqJ2Sd20r17juDjFGPZP
- VBMILGVCY14gfYG6GUrm0Y4U7oD8/Dzk96CGlXDDxPLOQJ4BVxiWj8X4ntntc/ij+Wxu
- sUI0n+sSsNflPfblre01F+ILpJMXFiA5qk2GiLFtgsvL5o/1A2+QmZDWgaMHo/oIVnSP
- ywBq/EO93yTuXaZhXmc6Lonsve0fZ7t6ak8g8ThmILJVuy5GJa1X5dVI+PuTb86DRWIz
- B4OQ==
+ bh=K4zwPEK5X5oFh4CQ14cbiT4FLOr3hw9OaMGbpgUQOYA=;
+ b=Ba1M4UauJhcGCzHummm+uABO+1IcPfCv34U0bT5Oimnyv/qdkpoAYrD4sn88N098Z+
+ QJpm5CZQMLEgKpPZr783gfn0DQQrAVL0f/2iW4q5QIJmbBAUAspUBa6VQwHZLgfInblN
+ YnetmgVyN3XaUx1WFYvROpxY9mpGuT+hzMj7BgGPHxp0x0wMsFMy/w6nMATL6wbT3/17
+ ZiCfI+uY5lPBatCTRKEjABpYyjgCFPzwZ1pSXFYfbaKXUolZnFOQ2ct721L6nvxZvI+e
+ Ia9R18K9xYtShJ2FnbCrKuhnBH4f4zvMVos6tcg7YAj6Ct+ucJbS32zk+sw68d7cumCi
+ jeXg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVumUc3MY67DotiB8VizGjw0bnQwPH/1bq9t3VJZm5bGrLDNmLS+grJewePo2T9HKuRBbOuNzaq6iSB@nongnu.org
-X-Gm-Message-State: AOJu0YwrduU0PqDBUfvYoKEYfVHdtvcN1NN71dUMTyG9Biqv/dVysVTK
- 6Q+TzuGPp+W/glKeGyCpCUXxYa47uM7COM+8lG33LZl0OwGVI/0uyqHlaoCN/+G92VKWoHRFzyG
- fB7L4+kVBr1y0MJpF0stuTQ+domL+Cg==
-X-Google-Smtp-Source: AGHT+IGSxuBS5HSmHM+cwqd6tAMyqCkJyNmlQ9QvF4HLlq9H2hxKbaoULKomE/G0Yr+LQ3LTAIChI/qZWTnag3Ogsu0=
-X-Received: by 2002:a05:6102:e06:b0:4a9:a3a8:91ec with SMTP id
- ada2fe7eead31-4a9a3a89260mr29942137.43.1730761708107; Mon, 04 Nov 2024
- 15:08:28 -0800 (PST)
+ AJvYcCUjoN9dMfLPmM87sPmnrBjUvCia5m9mQLBdbvsTKu55P3Uh8MXt/HKOIeAxFQMGr88BuVUZ0Jt5rAOz@nongnu.org
+X-Gm-Message-State: AOJu0YwguBqz3F3LYUfIWjMHnxdvMU07VmM4t7I9ztDIb02vqAVBOpjX
+ cUHQ4XME2YNbQfTOGDM71m18bJ2Cc3UVcgWzaTTuTZs0RChuq6owngC0USZp4lVPs8KS+gYUMoU
+ N0LK948bLfmPWZa4xx6Lnne+e5zk=
+X-Google-Smtp-Source: AGHT+IFbWJV8hCRHdrECcrdzM4FT4Vjny4A8hhoi0WkSXC2BiEDCWDlZ2dS3qbO4iZqMbvxkLaIfYhOKUUtCY0tWc0Y=
+X-Received: by 2002:a05:6102:3590:b0:4a7:49ca:4ba4 with SMTP id
+ ada2fe7eead31-4a962f7e1f3mr10110145137.27.1730761812497; Mon, 04 Nov 2024
+ 15:10:12 -0800 (PST)
 MIME-Version: 1.0
 References: <20241104123839.533442-1-dbarboza@ventanamicro.com>
- <20241104123839.533442-2-dbarboza@ventanamicro.com>
-In-Reply-To: <20241104123839.533442-2-dbarboza@ventanamicro.com>
+ <20241104123839.533442-3-dbarboza@ventanamicro.com>
+In-Reply-To: <20241104123839.533442-3-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 5 Nov 2024 09:08:02 +1000
-Message-ID: <CAKmqyKMyfubV1bd52rd978g780AF8XzS4LK-PaVT5FSwb0nH7A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] hw/riscv/riscv-iommu: change 'depth' to int
+Date: Tue, 5 Nov 2024 09:09:46 +1000
+Message-ID: <CAKmqyKOQKw54zFWpAGWowR8i=7yR7avjdToy3ikNNEP8evsfhg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/riscv/riscv-iommu: fix
+ riscv_iommu_validate_process_ctx() check
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com, peter.maydell@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -93,23 +94,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 4, 2024 at 10:41=E2=80=AFPM Daniel Henrique Barboza
+On Mon, Nov 4, 2024 at 10:40=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> Coverity reports an unsigned overflow when doing:
+> 'mode' will never be RISCV_IOMMU_CAP_SV32. We are erroring out in the
+> 'switch' right before it if 'mode' isn't 0, 8, 9 or 10.
 >
->     for (; depth-- > 0; ) {
+> 'mode' should be check with RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV32.
 >
-> When depth =3D 0 inside riscv_iommu_ctx_fetch().
+> Reported by Coverity via a "DEADCODE" ticket.
 >
-> Building it with a recent GCC the code doesn't actually break with depth
-> =3D 0, i.e. the comparison "0-- > 0" will exit the loop instead of
-> proceeding,  but 'depth' will retain the overflow value afterwards.
->
-> This behavior can be compiler dependent, so change 'depth' to int to
-> remove this potential ambiguity.
->
-> Resolves: Coverity CID 1564783
+> Resolves: Coverity CID 1564781
 > Fixes: 0c54acb8243 ("hw/riscv: add RISC-V IOMMU base emulation")
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
@@ -122,20 +117,19 @@ Alistair
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index feb650549a..05341ad20b 100644
+> index 05341ad20b..dd102b3c70 100644
 > --- a/hw/riscv/riscv-iommu.c
 > +++ b/hw/riscv/riscv-iommu.c
-> @@ -846,7 +846,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, =
-RISCVIOMMUContext *ctx)
->      /* Device Context format: 0: extended (64 bytes) | 1: base (32 bytes=
-) */
->      const int dc_fmt =3D !s->enable_msi;
->      const size_t dc_len =3D sizeof(dc) >> dc_fmt;
-> -    unsigned depth;
-> +    int depth;
->      uint64_t de;
+> @@ -803,7 +803,7 @@ static bool riscv_iommu_validate_process_ctx(RISCVIOM=
+MUState *s,
+>      }
 >
->      switch (mode) {
+>      if (ctx->tc & RISCV_IOMMU_DC_TC_SXL) {
+> -        if (mode =3D=3D RISCV_IOMMU_CAP_SV32 &&
+> +        if (mode =3D=3D RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV32 &&
+>              !(s->cap & RISCV_IOMMU_CAP_SV32)) {
+>                  return false;
+>          }
 > --
 > 2.45.2
 >
