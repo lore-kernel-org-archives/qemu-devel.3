@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4961D132C7
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 13:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34BB8D132C7
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 13:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7xLF-00017h-Gl; Mon, 04 Nov 2024 08:42:01 -0500
+	id 1t7xLc-0001AZ-2g; Mon, 04 Nov 2024 08:42:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1t7xLB-00016d-6h
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 08:41:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1t7xLC-00017B-MJ
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 08:41:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1t7xL9-0002nQ-DJ
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 08:41:56 -0500
+ id 1t7xLA-0002ns-Oj
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 08:41:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730727714;
+ s=mimecast20190719; t=1730727715;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RPthFrMxmhKGom/Zvwb9lQV5GfKcxFkTWB5GPax1qUo=;
- b=SNisPrYrvsAHV4d3QfgcVWSxUXgcTSQeqV1icRx2hB3HIPlsmSsl0uOube0ZIPYWzfMdlK
- HuAWRPJ1whJSFLmRseyHtcuxdNcNjeSpTpKPdle4U15tyes9tw9g23APDyV5PCA3+RfQq9
- ifzmVRfGupcLrwiNcIJKfolrlNxJO+I=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=IPgNMdwUA++5yD6QxalWg4dt+r96xlnr7ZEePzXiCwk=;
+ b=J0KAGhEsqmcDnU53WaMGOwbFlzFc78vIrVJWxOAjvC/o3Is4XCi2jnx9+hc5mSfo/rOUgm
+ 32wbV/4Hfo7Rr7jHaJMCpa9FIi0Mz8bfhNRGTfSfsSRg4t4mmGUVpubQFGw2f6OVHNzOOq
+ Xp5v2GXmKoomIQUOISUfdwHtKZuNaZc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-255-Ts0PFCkjPdmCvAydVlMPLw-1; Mon,
- 04 Nov 2024 08:41:48 -0500
-X-MC-Unique: Ts0PFCkjPdmCvAydVlMPLw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-SZ_qWaJlOR-ukP5RbUN8SQ-1; Mon,
+ 04 Nov 2024 08:41:52 -0500
+X-MC-Unique: SZ_qWaJlOR-ukP5RbUN8SQ-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7215419560AE; Mon,  4 Nov 2024 13:41:47 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CFDF21955EE8; Mon,  4 Nov 2024 13:41:51 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.45.226.47])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D25131956086; Mon,  4 Nov 2024 13:41:44 +0000 (UTC)
+ id 179021956086; Mon,  4 Nov 2024 13:41:49 +0000 (UTC)
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 1/3] qga: fix -Wsometimes-uninitialized windows warning
-Date: Mon,  4 Nov 2024 15:41:37 +0200
-Message-ID: <20241104134139.225514-2-kkostiuk@redhat.com>
+Subject: [PULL 3/3] qemu-ga: Fix a SIGSEGV in ga_run_command() helper
+Date: Mon,  4 Nov 2024 15:41:39 +0200
+Message-ID: <20241104134139.225514-4-kkostiuk@redhat.com>
 In-Reply-To: <20241104134139.225514-1-kkostiuk@redhat.com>
 References: <20241104134139.225514-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,78 +84,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Sunil Nimmagadda <sunil@nimmagadda.net>
 
-Reported by clang, but not gcc.
+qemu-ga on a NetBSD -current VM terminates with a SIGSEGV upon receiving
+'guest-set-time' command...
 
-[5123/5678] Compiling C object qga/qemu-ga.exe.p/commands-windows-ssh.c.obj
-FAILED: qga/qemu-ga.exe.p/commands-windows-ssh.c.obj
-"cc" "-Iqga/qemu-ga.exe.p" "-Iqga" "-I../qga" "-I." "-Iqapi" "-Itrace" "-Iu=
-i" "-Iui/shader" "-IC:/msys64/clangarm64/include/glib-2.0" "-IC:/msys64/cla=
-ngarm64/lib/glib-2.0/include" "-fdiagnostics-color=3Dauto" "-Wall" "-Winval=
-id-pch" "-Werror" "-std=3Dgnu11" "-O2" "-g" "-fstack-protector-strong" "-We=
-mpty-body" "-Wendif-labels" "-Wexpansion-to-defined" "-Wformat-security" "-=
-Wformat-y2k" "-Wignored-qualifiers" "-Winit-self" "-Wmissing-format-attribu=
-te" "-Wmissing-prototypes" "-Wnested-externs" "-Wold-style-definition" "-Wr=
-edundant-decls" "-Wstrict-prototypes" "-Wtype-limits" "-Wundef" "-Wvla" "-W=
-write-strings" "-Wno-gnu-variable-sized-type-not-at-end" "-Wno-initializer-=
-overrides" "-Wno-missing-include-dirs" "-Wno-psabi" "-Wno-shift-negative-va=
-lue" "-Wno-string-plus-int" "-Wno-tautological-type-limit-compare" "-Wno-ty=
-pedef-redefinition" "-Wthread-safety" "-iquote" "." "-iquote" "C:/w/qemu" "=
--iquote" "C:/w/qemu/include" "-iquote" "C:/w/qemu/host/include/aarch64" "-i=
-quote" "C:/w/qemu/host/include/generic" "-iquote" "C:/w/qemu/tcg/aarch64" "=
--D_GNU_SOURCE" "-D_FILE_OFFSET_BITS=3D64" "-D_LARGEFILE_SOURCE" "-fno-stric=
-t-aliasing" "-fno-common" "-fwrapv" "-fno-pie" "-ftrivial-auto-var-init=3Dz=
-ero" "-fzero-call-used-regs=3Dused-gpr" -MD -MQ qga/qemu-ga.exe.p/commands-=
-windows-ssh.c.obj -MF "qga/qemu-ga.exe.p/commands-windows-ssh.c.obj.d" -o q=
-ga/qemu-ga.exe.p/commands-windows-ssh.c.obj "-c" ../qga/commands-windows-ss=
-h.c
-../qga/commands-windows-ssh.c:383:9: error: variable 'userPSID' is used uni=
-nitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitializ=
-ed]
-  383 |     if (!create_acl(userInfo, &pACL, errp)) {
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../qga/commands-windows-ssh.c:415:15: note: uninitialized use occurs here
-  415 |     LocalFree(userPSID);
-      |               ^~~~~~~~
-../qga/commands-windows-ssh.c:383:5: note: remove the 'if' if its condition=
- is always false
-  383 |     if (!create_acl(userInfo, &pACL, errp)) {
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  384 |         goto error;
-      |         ~~~~~~~~~~~
-  385 |     }
-      |     ~
-../qga/commands-windows-ssh.c:380:18: note: initialize the variable 'userPS=
-ID' to silence this warning
-  380 |     PSID userPSID;
-      |                  ^
-      |                   =3D NULL
-1 error generated.
+Core was generated by `qemu-ga'.
+Program terminated with signal SIGSEGV, Segmentation fault.
+#0  0x000000000cd37a40 in ga_pipe_read_str (fd=fd@entry=0xffffff922a20, str=str@entry=0xffffff922a18)
+    at ../qga/commands-posix.c:88
+88	        *str[len] = '\0';
+[Current thread is 1 (process 1112)]
+(gdb) bt
+#0  0x000000000cd37a40 in ga_pipe_read_str (fd=fd@entry=0xffffff922a20, str=str@entry=0xffffff922a18)
+    at ../qga/commands-posix.c:88
+#1  0x000000000cd37b60 in ga_run_command (argv=argv@entry=0xffffff922a90,
+    action=action@entry=0xcda34b8 "set hardware clock to system time", errp=errp@entry=0xffffff922a70, in_str=0x0)
+    at ../qga/commands-posix.c:164
+#2  0x000000000cd380c4 in qmp_guest_set_time (has_time=<optimized out>, time_ns=<optimized out>,
+    errp=errp@entry=0xffffff922ad0) at ../qga/commands-posix.c:304
+#3  0x000000000cd253d8 in qmp_marshal_guest_set_time (args=<optimized out>, ret=<optimized out>, errp=0xffffff922b48)
+    at qga/qga-qapi-commands.c:193
+#4  0x000000000cd4e71c in qmp_dispatch (cmds=cmds@entry=0xcdf5b18 <ga_commands>, request=request@entry=0xf3c711a4b000,
+    allow_oob=allow_oob@entry=false, cur_mon=cur_mon@entry=0x0) at ../qapi/qmp-dispatch.c:220
+#5  0x000000000cd36524 in process_event (opaque=0xf3c711a79000, obj=0xf3c711a4b000, err=0x0) at ../qga/main.c:677
+#6  0x000000000cd526f0 in json_message_process_token (lexer=lexer@entry=0xf3c711a79018, input=0xf3c712072480,
+    type=type@entry=JSON_RCURLY, x=28, y=1) at ../qobject/json-streamer.c:99
+#7  0x000000000cd93860 in json_lexer_feed_char (lexer=lexer@entry=0xf3c711a79018, ch=125 '}', flush=flush@entry=false)
+    at ../qobject/json-lexer.c:313
+#8  0x000000000cd93a00 in json_lexer_feed (lexer=lexer@entry=0xf3c711a79018,
+    buffer=buffer@entry=0xffffff922d10 "{\"execute\":\"guest-set-time\"}\n", size=<optimized out>)
+    at ../qobject/json-lexer.c:350
+#9  0x000000000cd5290c in json_message_parser_feed (parser=parser@entry=0xf3c711a79000,
+    buffer=buffer@entry=0xffffff922d10 "{\"execute\":\"guest-set-time\"}\n", size=<optimized out>)
+    at ../qobject/json-streamer.c:121
+#10 0x000000000cd361fc in channel_event_cb (condition=<optimized out>, data=0xf3c711a79000) at ../qga/main.c:703
+#11 0x000000000cd3710c in ga_channel_client_event (channel=<optimized out>, condition=<optimized out>, data=0xf3c711b2d300)
+    at ../qga/channel-posix.c:94
+#12 0x0000f3c7120d9bec in g_main_dispatch () from /usr/pkg/lib/libglib-2.0.so.0
+#13 0x0000f3c7120dd25c in g_main_context_iterate_unlocked.constprop () from /usr/pkg/lib/libglib-2.0.so.0
+#14 0x0000f3c7120ddbf0 in g_main_loop_run () from /usr/pkg/lib/libglib-2.0.so.0
+#15 0x000000000cda00d8 in run_agent_once (s=0xf3c711a79000) at ../qga/main.c:1522
+#16 run_agent (s=0xf3c711a79000) at ../qga/main.c:1559
+#17 main (argc=<optimized out>, argv=<optimized out>) at ../qga/main.c:1671
+(gdb)
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The commandline options used on the host machine...
+qemu-system-aarch64 \
+   -machine type=virt,pflash0=rom \
+   -m 8G \
+   -cpu host \
+   -smp 8 \
+   -accel hvf \
+   -device virtio-net-pci,netdev=unet \
+   -device virtio-blk-pci,drive=hd \
+   -drive file=netbsd.qcow2,if=none,id=hd \
+   -netdev user,id=unet,hostfwd=tcp::2223-:22 \
+   -object rng-random,filename=/dev/urandom,id=viornd0 \
+   -device virtio-rng-pci,rng=viornd0 \
+   -serial mon:stdio \
+   -display none \
+   -blockdev node-name=rom,driver=file,filename=/opt/homebrew/Cellar/qemu/9.0.2/share/qemu/edk2-aarch64-code.fd,read-only=true \
+   -chardev socket,path=/tmp/qga_netbsd.sock,server=on,wait=off,id=qga0 \
+   -device virtio-serial \
+   -device virtconsole,chardev=qga0,name=org.qemu.guest_agent.0
+
+This patch rectifies the operator precedence while assigning the NUL
+terminator.
+
+Fixes: c3f32c13a325f1ca9a0b08c19fefe9e5cc04289d
+
+Signed-off-by: Sunil Nimmagadda <sunil@nimmagadda.net>
 Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-Link: https://lore.kernel.org/r/20241031040426.772604-6-pierrick.bouvier@li=
-naro.org
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Link: https://lore.kernel.org/r/m15xppk9qg.fsf@nimmagadda.net
 Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 ---
- qga/commands-windows-ssh.c | 2 +-
+ qga/commands-posix.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qga/commands-windows-ssh.c b/qga/commands-windows-ssh.c
-index 6a642e3ba8..df45c17b75 100644
---- a/qga/commands-windows-ssh.c
-+++ b/qga/commands-windows-ssh.c
-@@ -377,7 +377,7 @@ error:
- static bool set_file_permissions(PWindowsUserInfo userInfo, Error **errp)
- {
-     PACL pACL =3D NULL;
--    PSID userPSID;
-+    PSID userPSID =3D NULL;
-=20
-     /* Creates the access control structure */
-     if (!create_acl(userInfo, &pACL, errp)) {
---=20
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 389c5eeb5d..636307bedf 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -84,7 +84,7 @@ static ssize_t ga_pipe_read_str(int fd[2], char **str)
+         *str = g_realloc(*str, len + n + 1);
+         memcpy(*str + len, buf, n);
+         len += n;
+-        *str[len] = '\0';
++        (*str)[len] = '\0';
+     }
+     close(fd[0]);
+     fd[0] = -1;
+-- 
 2.47.0
 
 
