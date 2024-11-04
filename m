@@ -4,102 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA2BD1BDD9
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 18:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83F37D1BDD9
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 18:16:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t81au-0001C6-7g; Mon, 04 Nov 2024 13:14:28 -0500
+	id 1t81cM-0002gy-Ns; Mon, 04 Nov 2024 13:16:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1t81ae-0001AT-IF; Mon, 04 Nov 2024 13:14:13 -0500
-Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1t81c3-0002Ww-Vt
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 13:15:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1t81ac-0004pC-Q4; Mon, 04 Nov 2024 13:14:12 -0500
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal
- [10.202.2.42])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 7601D2540146;
- Mon,  4 Nov 2024 13:14:09 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Mon, 04 Nov 2024 13:14:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1730744049; x=
- 1730830449; bh=RJRcNBQJk++EiHlGSytaI/nqJ+tLHzU7H2CpK0Gr7J4=; b=m
- ot7IXVQmD53HITaup8UHK6UH5VgPiOFjjqDDE2WKBsZJ2KEUmxw2AM5bPzIo/0hA
- s3ukjzEQ8zTgVksdJkNA43VmeMxQU1UbqvRuSHceQ6pzhTPEhmCMiU/34yO09XKY
- ww7sdwhxyAy+agg1IDy+WaAJ8qu3l9IonG6WMB2kRr8S+kDAh56uNPtHOQxFoLoJ
- oGkTVqKNrqKlwYKmyIxFGYtOkV5bgIkXs3fSzXxVkSMrENY1NzlZCHDBhs46EGc3
- JHVCjYGX56QfeTUGK9k9lK6havYGPSZYcwfaXR2sdc/mIvDvrN9IMyQDEVpwwSAd
- ikTWysrRxkg8trWahAb+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1730744049; x=1730830449; bh=R
- JRcNBQJk++EiHlGSytaI/nqJ+tLHzU7H2CpK0Gr7J4=; b=hulsniKugekhh9SHx
- 0HYB2bz2WoUkWCW2/RCkbibtIJ3c9Jvbr7a0r8QGp7P62x5gRPlD91R9dIBHysBw
- 8gcxy/c6Iq2Lbbj/LKpZ9DF2me3x0a4PptxmMwUjm/Hkp0BUlc7MFu6d8XAwyeDU
- Q9u/JgvRhWhYgvsgz5RXd7nHQyJp9RXXTn8z8yhoppXPAgjTzsS/iJB6rxaP+Y35
- cCLPKvEGzgFUkHn8mmg5cu/3IO1TAa5XthCil/GJ9q/JmlF5wpR6T/4C8sZf+qFJ
- oQ6kMu19qDfDWpy245rze1xiND/6uW9VTa2ME4XGJf8JeQvajsIO+JxQB7G9gZhq
- em/tw==
-X-ME-Sender: <xms:8Q4pZ1LCNWPtr66z9x_L_Mwch0M3OvJz6owqn0gxMa5B2S97Q2t2ig>
- <xme:8Q4pZxKFBxKfVWPHR_N7XH_v6VrQYPwdTZA4LonfQmfg_U11so_w8kSYIeKn6Numw
- hrnx7ZEsEe5Fs6kVGQ>
-X-ME-Received: <xmr:8Q4pZ9ssuq5yUZvwhEPloAe45nFkjR7HkxMfI9w_eKPRgamgGupo3rwZtp07TRVlC6Cg_lMJzm6rj40iEQErmQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeliedguddtkecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
- hnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
- necuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnth
- drughkqeenucggtffrrghtthgvrhhnpeehfeekgfejjeejjedutdeigeegteefveekudef
- heevjeekieeuffeuleeiheeugeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
- hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesihhr
- rhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouh
- htpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphht
- thhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhope
- grrhhunhdrkhhkrgesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehkrdhjvghnshgv
- nhesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehksghushgthheskhgvrhhnvghlrd
- horhhgpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdprhgtphhtthho
- pehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhopehqvghmuhdqsghlohgtkh
- esnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:8Q4pZ2ZHWTJNFOApf4VuXu1CJq2OMktFa_czVQ7sbpeDeWbDQcJIkQ>
- <xmx:8Q4pZ8bOdCiYeU3i9FvtCcYMt3SLqj00uD-ZWOmmQG7QkSgNgUiEeA>
- <xmx:8Q4pZ6CK8P76ZnJwkfDa2kfbFuXZ6ONRfNaQqWRdZ-pkslxIjrFCCg>
- <xmx:8Q4pZ6ZXFKcugJqyMdlmaXls6KO6UKD_S3HCuyVVgC7HxPKZLTYt1g>
- <xmx:8Q4pZyMCinzxptj__szxb6d_yvT7FIAre3tc-D6udMzd5b6ahdv0z9R2>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Nov 2024 13:14:07 -0500 (EST)
-From: Klaus Jensen <its@irrelevant.dk>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Arun Kumar <arun.kka@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Subject: [PULL 3/3] hw/nvme: remove dead code
-Date: Mon,  4 Nov 2024 19:13:06 +0100
-Message-ID: <20241104181306.2329-4-its@irrelevant.dk>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241104181306.2329-1-its@irrelevant.dk>
-References: <20241104181306.2329-1-its@irrelevant.dk>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1t81c1-0004yq-CV
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 13:15:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730744135;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lBmPx7J81kPDhku9+xjmgrgbxAjE1ApCT3Q/Pe7qD4o=;
+ b=V0Q7b4HeHI1zWgIvSPlqfjtl4VVdV+ej5Zos2UM//I+aN3uFyzK1W5nLJwJoWzcKU/gWxY
+ 2Of6HUNbzZbgsqZsXGPqYlvRHpRc1gyPg39qy1mzTLdev13hSQuIlLZy7bqAlQQpU33HMm
+ Nx6sX/jl0dX4EHyukoypW5b0znmryCM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-379-ZUdRDRkwPVCTwIvDbHkhgw-1; Mon, 04 Nov 2024 13:15:34 -0500
+X-MC-Unique: ZUdRDRkwPVCTwIvDbHkhgw-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37d458087c0so3385261f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 10:15:33 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730744133; x=1731348933;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lBmPx7J81kPDhku9+xjmgrgbxAjE1ApCT3Q/Pe7qD4o=;
+ b=MN7TkCfu53qZO2JwE6aTuxhyAlO0UEDTThPPZy0V6K+ncAHBxm+TzWKWENIISdRCk/
+ /bRrglYbU5kVPg/Bi2XZFqJyAFzrbppqznXbeDCDJRGbAWi5oSeHJ1ffbmOgVINqQxpG
+ TdCaJMuB0M+zQ1rWxue4V7gQiR5dhse1Xw/KTbXciZ0/SquJsfg86a6bBZyhXKultcY1
+ sUAk3D+m7K9S28gDgzte5Ylufssa7pOKSHvxr9JeuBBx+4syM9ea8g7B/Hk/xaHz7Vnh
+ x5jjT2z0brSasL97J6F8RRPZ69KiPUUqN9GpbtLG0S55YGQdMPu/BDjnjEC44Vcskq+w
+ 35Ew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXkTBp1EzNqDBlrb1jxF3UdJklCCvALjkvjYbiitAuVdk2X8R2X81iYV2o7sLq8XisOxHUh93/E6TA@nongnu.org
+X-Gm-Message-State: AOJu0Yzt2cM0bkSpprV+dWcwQ/OkEaDm6+faJLN/NOvY2kpuGvPfYhrM
+ sEIn6Us9HzZctsgg0mKOyfLEtNtiQjfyfl4DuaHpclQQS5wLIoY0idfAEqBk5Mhy7t+Q5jJbUhq
+ hvjiRi2lXv/GWXMoESGamOm3QEnKqmCznPswPpfW5C/uEPsXV4vQZ
+X-Received: by 2002:a5d:47ac:0:b0:37c:fdc8:77ab with SMTP id
+ ffacd0b85a97d-381c7973202mr11463765f8f.7.1730744133002; 
+ Mon, 04 Nov 2024 10:15:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF0xxiT0gNzh7c1eBS3/tOiILacXPaDItLf/SGOxQ5FHjMTBEFHqhkRjrtudfCG35tsJSGMPg==
+X-Received: by 2002:a5d:47ac:0:b0:37c:fdc8:77ab with SMTP id
+ ffacd0b85a97d-381c7973202mr11463740f8f.7.1730744132625; 
+ Mon, 04 Nov 2024 10:15:32 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432a153125asm1938525e9.2.2024.11.04.10.15.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Nov 2024 10:15:31 -0800 (PST)
+Message-ID: <d275b86b-75d0-40a4-90b6-b519748ccc5f@redhat.com>
+Date: Mon, 4 Nov 2024 19:15:28 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.156; envelope-from=its@irrelevant.dk;
- helo=fhigh-b5-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 18/21] arm/cpu: Introduce a customizable kvm host cpu model
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Oliver Upton <oliver.upton@linux.dev>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ eric.auger.pro@gmail.com, cohuck@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com,
+ mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+References: <20241025101959.601048-1-eric.auger@redhat.com>
+ <20241025101959.601048-19-eric.auger@redhat.com>
+ <ZxuX4i9NjVRizB72@redhat.com>
+ <cb6c8f62-c5dc-416d-865f-fbdf96164dac@redhat.com>
+ <Zxub7ol4p8P_sWF8@redhat.com>
+ <CAFEAcA_wQu17y0PyQwxw0wuf2H5y2VE5aX16nLP2-u7QUP2ggA@mail.gmail.com>
+ <Zx-9WxXkmkMuGIlQ@redhat.com>
+ <CAFEAcA9w0mb5bcU8p+fScQony-=oqLmNurGWpnL_sBneQCzxUg@mail.gmail.com>
+ <Zx_CU9eeQByANMRW@linux.dev>
+ <6c05fc4e-ce14-4000-bb2a-63496bce9e98@redhat.com>
+ <CAFEAcA_XhkBrco=V3Ky+cgvyp3cwqHXjDkmm+dP7N2B2av03bA@mail.gmail.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CAFEAcA_XhkBrco=V3Ky+cgvyp3cwqHXjDkmm+dP7N2B2av03bA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,39 +122,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arun Kumar <arun.kka@samsung.com>
+Hi Peter,
 
-Remove dead code which always returns success, since PRCHK will have a
-value of zero.
+On 11/4/24 18:16, Peter Maydell wrote:
+> On Mon, 4 Nov 2024 at 17:09, Eric Auger <eric.auger@redhat.com> wrote:
+>> Was just wondering if all the writable ID reg fields were associated to
+>> an official FEAT_ listed in this feature list.
+>> Let's take for instance CTR_EL0.DIC. Is it associated to a given
+>> extension or is it just implementation defined?
+> CTR_EL0.DIC is IMPDEF choice of 0 or 1. There's no associated
+> FEAT_* -- as an implementation, you are effectively just
+> reporting here what your implementation's properties are.
+>
+> (CTR_EL0 is not an ID register in the architectural sense.)
 
-Signed-off-by: Arun Kumar <arun.kka@samsung.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Link: https://lore.kernel.org/r/20241022222105.3609223-1-arun.kka@samsung.com
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/dif.c | 5 -----
- 1 file changed, 5 deletions(-)
+thank you for the confirmation. So this means we also need to be able to
+tune such bit although it does not have any fellow FEAT_*.
 
-diff --git a/hw/nvme/dif.c b/hw/nvme/dif.c
-index 01b19c33734e..28051284984d 100644
---- a/hw/nvme/dif.c
-+++ b/hw/nvme/dif.c
-@@ -575,11 +575,6 @@ uint16_t nvme_dif_rw(NvmeCtrl *n, NvmeRequest *req)
-             uint8_t *mbuf, *end;
-             int16_t pil = ns->lbaf.ms - nvme_pi_tuple_size(ns);
- 
--            status = nvme_check_prinfo(ns, prinfo, slba, reftag);
--            if (status) {
--                goto err;
--            }
--
-             flags = 0;
- 
-             ctx->mdata.bounce = g_malloc0(mlen);
--- 
-2.45.2
+Eric
+>
+> thanks
+> -- PMM
+>
 
 
