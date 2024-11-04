@@ -4,86 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE82FD132D5
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 14:56:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C4B7D132D7
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 14:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7yUk-0006cd-1Y; Mon, 04 Nov 2024 09:55:54 -0500
+	id 1t7yX8-0007aP-Aw; Mon, 04 Nov 2024 09:58:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t7yUX-0006be-2v
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 09:55:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1t7yX5-0007aE-6m
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 09:58:19 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t7yUU-00066o-6L
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 09:55:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730732136;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0BIl1wV/POGxRVvJ/xgu9mieQi4BcYqsNXyUVVHmJCY=;
- b=Vc6ULyCB4USLP4yTTQccAPGmUSdtjQRItkCRKRsFIw3MfNLh7aKQ2NiEy10WxHV8HyLk3B
- gnHMaOpOSF10pXOAeAOHkF+omXFh/6EZU1VzHm7JJpbI5zaaYc7A+yLEusgGMS8EnH53PS
- uzS3fcdkfr1KxtnTb0sOfqdqt09lBgw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-ZgtPKhoHMHKsmHdXECW89g-1; Mon,
- 04 Nov 2024 09:55:33 -0500
-X-MC-Unique: ZgtPKhoHMHKsmHdXECW89g-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ABBC71956058; Mon,  4 Nov 2024 14:55:30 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.152])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 70DD219560A2; Mon,  4 Nov 2024 14:55:24 +0000 (UTC)
-Date: Mon, 4 Nov 2024 14:55:20 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
- armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: Re: [RFC 21/21] arm/cpu-features: Document custom vcpu model
-Message-ID: <ZyjgWJ3bZ69sueE2@redhat.com>
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <20241025101959.601048-22-eric.auger@redhat.com>
- <ZxuZkUFz_bwAA1pf@redhat.com>
- <0700af51-a1a6-4b11-a4bf-0eaf6e279c6d@redhat.com>
- <Zxudl5-fZV1vIaEL@redhat.com> <87y128nrfr.fsf@redhat.com>
- <Zx-3OUioG1l47hW3@redhat.com>
- <24ca0278-5018-41e3-a097-ac560a16f8fa@redhat.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1t7yX2-0006cZ-Og
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 09:58:18 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1t7yWw-00000001M2x-1Psi; Mon, 04 Nov 2024 15:58:10 +0100
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+To: Peter Xu <peterx@redhat.com>,
+	Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: [PATCH v2] vfio/migration: Add save_{iterate,
+ complete_precopy}_started trace events
+Date: Mon,  4 Nov 2024 15:58:04 +0100
+Message-ID: <8fbb9cc40d9db570eff0a02e49104835014a5a4d.1730731549.git.maciej.szmigiero@oracle.com>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <24ca0278-5018-41e3-a097-ac560a16f8fa@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: none client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,84 +61,125 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 04, 2024 at 03:45:13PM +0100, Eric Auger wrote:
-> Hi
-> 
-> On 10/28/24 17:09, Daniel P. Berrangé wrote:
-> > On Mon, Oct 28, 2024 at 05:05:44PM +0100, Cornelia Huck wrote:
-> >> On Fri, Oct 25 2024, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >>
-> >>> On Fri, Oct 25, 2024 at 03:28:35PM +0200, Eric Auger wrote:
-> >>>> Hi Daniel,
-> >>>>
-> >>>> On 10/25/24 15:13, Daniel P. Berrangé wrote:
-> >>>>> On Fri, Oct 25, 2024 at 12:17:40PM +0200, Eric Auger wrote:
-> >>>>>> From: Cornelia Huck <cohuck@redhat.com>
-> >>>>>>
-> >>>>>> Add some documentation for the custom model.
-> >>>>>>
-> >>>>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> >>>>>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> >>>>>> ---
-> >>>>>>  docs/system/arm/cpu-features.rst | 55 +++++++++++++++++++++++++++-----
-> >>>>>>  1 file changed, 47 insertions(+), 8 deletions(-)
-> >>>>>> @@ -167,6 +196,16 @@ disabling many SVE vector lengths would be quite verbose, the ``sve<N>`` CPU
-> >>>>>>  properties have special semantics (see "SVE CPU Property Parsing
-> >>>>>>  Semantics").
-> >>>>>>  
-> >>>>>> +The ``custom`` CPU model needs to be configured via individual ID register
-> >>>>>> +field properties, for example::
-> >>>>>> +
-> >>>>>> +  $ qemu-system-aarch64 -M virt -cpu custom,SYSREG_ID_AA64ISAR0_EL1_DP=0x0
-> >>>>>> +
-> >>>>>> +This forces ID_AA64ISAR0_EL1 DP field to 0.
-> >>>>> What is the "baseline" featureset implied by 'custom' ?
-> >>>> there is no baseline at the moment. By default this is a host
-> >>>> passthrough model.
-> >>> Why do we need to create "custom" at all, as opposed to just letting
-> >>> users toggle features on "-cpu host" ? 
-> >> We could consolidate that to the current "host" model, once we figure
-> >> out how to handle the currently already existing properties. Models
-> >> based on the different architecture extensions would probably be more
-> >> useable in the long run; maybe "custom" has a place for testing.
-> > If you can set the features against "host", then any testing could
-> > be done with "host" surely, making 'custom' pointless ?
-> Yeah I do agree that we may not need to introduce this "custom" model
-> bus just enhance the custom host model with the capability to tweek some
-> features. For instance we have the case where migration between 2 Ampere
-> systems fails with host model but if you tweek 1 field in CTR_EL0 it
-> passes. So I think in itself this modality can be useful. Same for
-> debug/test purpose. As mentionned in the cover letter the number of
-> writable ID regs continue to grow and this enhanced host model gives
-> flexibility to test new support and may provide enhanced debug
-> capabilities for migration (getting a straight understanding of which ID
-> reg field(s) causes the migration failure could be helpful I think)
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-FYI, in x86 target the -cpu command has had a "migratable=bool" property
-for a long time , which defaults to 'true' for 'host' model. This causes
-QEMU to explicitly drop features which would otherwise prevent migration
-between two hosts with identical physical CPUs.
+This way both the start and end points of migrating a particular VFIO
+device are known.
 
-IOW, if there are some bits present in 'host' that cause migration
-problems on Ampere hosts, ideally either QEMU (or KVM kmod) would
-detect them and turn them off automatically if migratable=true is
-set. See commit message in 84f1b92f & 120eee7d1fd for some background
-info
+Add also a vfio_precopy_empty_hit trace event so it is known when
+there's no more data to send for that device.
 
-NB "migratable" is defined in i386 target code today, but conceptually
-we should expand/move that to apply to all targets for consistency,
-even if it is effectively a no-op some targets (eg if they are
-guaranteed migratable out of the box already with '-cpu host').
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+---
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+This is just the lone remaining functionality-affecting patch from this
+series of 4 trivial patches for QEMU 9.2:
+https://lore.kernel.org/qemu-devel/cover.1730203967.git.maciej.szmigiero@oracle.com/
+Two other such patches were already queued and the fourth one is only
+an annotation in a code comment block.
 
+Changes from the v1 that was posted as a part of the above series:
+* Move the vfio_save_iterate_empty_hit trace event to vfio_save_block(),
+trigger it on ENOMSG errno and rename it to vfio_precopy_empty_hit.
+
+* Re-arm the above trace event if we see another data read so not only
+the first "data present" -> "data not present" edge is logged.
+
+ hw/vfio/migration.c           | 17 +++++++++++++++++
+ hw/vfio/trace-events          |  3 +++
+ include/hw/vfio/vfio-common.h |  3 +++
+ 3 files changed, 23 insertions(+)
+
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 992dc3b10257..e7b81f99e595 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -370,6 +370,10 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
+          * please refer to the Linux kernel VFIO uAPI.
+          */
+         if (errno == ENOMSG) {
++            if (!migration->precopy_empty_hit) {
++                trace_vfio_precopy_empty_hit(migration->vbasedev->name);
++                migration->precopy_empty_hit = true;
++            }
+             return 0;
+         }
+ 
+@@ -379,6 +383,9 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
+         return 0;
+     }
+ 
++    /* Non-empty read -> re-arm the trace event */
++    migration->precopy_empty_hit = false;
++
+     qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE);
+     qemu_put_be64(f, data_size);
+     qemu_put_buffer(f, migration->data_buffer, data_size);
+@@ -472,6 +479,9 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+         return -ENOMEM;
+     }
+ 
++    migration->save_iterate_started = false;
++    migration->precopy_empty_hit = false;
++
+     if (vfio_precopy_supported(vbasedev)) {
+         switch (migration->device_state) {
+         case VFIO_DEVICE_STATE_RUNNING:
+@@ -602,6 +612,11 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
+     VFIOMigration *migration = vbasedev->migration;
+     ssize_t data_size;
+ 
++    if (!migration->save_iterate_started) {
++        trace_vfio_save_iterate_started(vbasedev->name);
++        migration->save_iterate_started = true;
++    }
++
+     data_size = vfio_save_block(f, migration);
+     if (data_size < 0) {
+         return data_size;
+@@ -630,6 +645,8 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+     int ret;
+     Error *local_err = NULL;
+ 
++    trace_vfio_save_complete_precopy_started(vbasedev->name);
++
+     /* We reach here with device state STOP or STOP_COPY only */
+     ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
+                                    VFIO_DEVICE_STATE_STOP, &local_err);
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index 29789e8d276d..d5277cb7697a 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -156,11 +156,14 @@ vfio_migration_realize(const char *name) " (%s)"
+ vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
+ vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
+ vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
++vfio_precopy_empty_hit(const char *name) " (%s)"
+ vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
+ vfio_save_cleanup(const char *name) " (%s)"
+ vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
++vfio_save_complete_precopy_started(const char *name) " (%s)"
+ vfio_save_device_config_state(const char *name) " (%s)"
+ vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
++vfio_save_iterate_started(const char *name) " (%s)"
+ vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
+ vfio_state_pending_estimate(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+ vfio_state_pending_exact(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index fed499b199f0..0410111e9868 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -73,6 +73,9 @@ typedef struct VFIOMigration {
+     uint64_t precopy_init_size;
+     uint64_t precopy_dirty_size;
+     bool initial_data_sent;
++
++    bool save_iterate_started;
++    bool precopy_empty_hit;
+ } VFIOMigration;
+ 
+ struct VFIOGroup;
 
