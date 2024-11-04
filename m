@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891AAD132DF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 15:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01374D132DE
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 15:20:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7ynK-0003pr-8g; Mon, 04 Nov 2024 10:15:06 -0500
+	id 1t7ysQ-0005UK-35; Mon, 04 Nov 2024 10:20:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t7ynC-0003mG-52; Mon, 04 Nov 2024 10:14:59 -0500
+ id 1t7ysI-0005TU-AU; Mon, 04 Nov 2024 10:20:15 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t7yn7-0000pV-1r; Mon, 04 Nov 2024 10:14:56 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4BeHvD017813;
- Mon, 4 Nov 2024 15:14:42 GMT
+ id 1t7ysF-0001PR-SA; Mon, 04 Nov 2024 10:20:13 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4F9hmX010043;
+ Mon, 4 Nov 2024 15:20:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=w016wU
- oBR4uC8j0oCUkYMhCKSjwaid6uxyn3Cr9fgEY=; b=o1N4OBtgNlHG9cjTxE7Mly
- y1SHqsWyTh7qZYz3v3sTvsc6/u9xjNZF40Y72sC+4D5sWerXw2EWFUQe0HYbsoPi
- H0ueh5MxoMvh2QIKVfic9SN/EXtUJG3tCpZ0khKMuPX4Pulp0JQajkY1E9hFnvbm
- aOx6xX2/+iZ87GBks4cmcGTpUEyOryI/zMZ46rUMX2HJ+Fs1WRvnELzcbLS1jlx/
- 0c/nSakH+V4aY+tEgXLa54JgVndeQ+x5sF5wlRmtQCRKMEXltkZVYJCB+rwuexwB
- XlOdnlgrL/2qUCXFaJjml+zBFWlJS3wybZFRIUT7ra6vKZZPDy0v954LslRX2w6w
+ :message-id:mime-version:references:subject:to; s=pp1; bh=O7n6UB
+ BWUsXjZwuIxQ31N0HIiTlXjg8aAWnA1wBV+go=; b=lT0uQNQq6dpiIPK2poeND9
+ o4+k4s8U1RV804PTNyQSSkQrnp9HsWRbxzqQZV+GOlXj5U/kOm7aF2eBClIlpXen
+ HoBnjRsFqcVt05dmLSoLd7XV7nBJrcfrez8JgsE2JsxHRa/rTm6Y2yggYpm4VB97
+ L9kNlxF6VIYPT7KpBSZpL8G5ClZnk+12k9CGiPK7T/C9fNeDlconXH0D2Be/ncGr
+ CVDLL8WRAsSbhTUakweNJuGSPF/PCm/U/EIMwcBceqW6XHChJ95N7qnPU5L/fSbI
+ 7Pc5ikYcxqMbJFNbnZXSbyMRp5JRwSaIeXtfhYStHVLOrzC3r28hzFoeIk8IXs0Q
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42pwkjs2yv-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42q0nu81st-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 Nov 2024 15:14:41 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A43UlXd013298;
- Mon, 4 Nov 2024 15:14:40 GMT
+ Mon, 04 Nov 2024 15:20:07 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4AXIHM012243;
+ Mon, 4 Nov 2024 15:20:06 GMT
 Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nydmja2w-1
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 42p140t7n0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 Nov 2024 15:14:40 +0000
+ Mon, 04 Nov 2024 15:20:06 +0000
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
  by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A4FEeK257475498
+ 4A4FK52D24379980
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 4 Nov 2024 15:14:40 GMT
+ Mon, 4 Nov 2024 15:20:06 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0ABBB58056;
- Mon,  4 Nov 2024 15:14:40 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A3C5058062;
+ Mon,  4 Nov 2024 15:20:05 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6DE3858052;
- Mon,  4 Nov 2024 15:14:39 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1BD7F58063;
+ Mon,  4 Nov 2024 15:20:05 +0000 (GMT)
 Received: from [9.47.158.152] (unknown [9.47.158.152])
  by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  4 Nov 2024 15:14:39 +0000 (GMT)
-Message-ID: <1ffda8d1-06ba-4e8a-b62a-9b02f2844a6f@linux.ibm.com>
-Date: Mon, 4 Nov 2024 10:14:39 -0500
-MIME-Version: 1.0
+ Mon,  4 Nov 2024 15:20:04 +0000 (GMT)
+Message-ID: <1eed1859-4639-4b24-ba6a-347a3b3534fc@linux.ibm.com>
+Date: Mon, 4 Nov 2024 10:20:04 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/3] tpm/tpm_tis_spi: Support TPM for SPI (Serial
- Peripheral Interface)
+Subject: Re: [PATCH v5 3/3] tests/qtest/tpm: add unit test to tis-spi
 To: dan tan <dantan@linux.vnet.ibm.com>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, stefanb@linux.vnet.ibm.com, pbonzini@redhat.com,
  farosas@suse.de, lvivier@redhat.com, clg@kaod.org, dantan@linux.ibm.com
 References: <20241104064334.21468-1-dantan@linux.vnet.ibm.com>
- <20241104064334.21468-2-dantan@linux.vnet.ibm.com>
+ <20241104064334.21468-4-dantan@linux.vnet.ibm.com>
 Content-Language: en-US
 From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20241104064334.21468-2-dantan@linux.vnet.ibm.com>
+In-Reply-To: <20241104064334.21468-4-dantan@linux.vnet.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: OO1rdhQlLEUoj0E8HVkUlBZ6Wp1IiEVE
-X-Proofpoint-ORIG-GUID: OO1rdhQlLEUoj0E8HVkUlBZ6Wp1IiEVE
+X-Proofpoint-ORIG-GUID: -f0ikGPILzOZhB8KhBkAj6BTX_-SQWOL
+X-Proofpoint-GUID: -f0ikGPILzOZhB8KhBkAj6BTX_-SQWOL
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 mlxscore=0
- malwarescore=0 priorityscore=1501 impostorscore=0 spamscore=0 adultscore=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 mlxlogscore=999 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411040127
+ lowpriorityscore=0
+ impostorscore=0 priorityscore=1501 mlxscore=0 phishscore=0 suspectscore=0
+ mlxlogscore=999 adultscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411040130
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -114,533 +114,198 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 11/4/24 1:43 AM, dan tan wrote:
-> Implement support for TPM via SPI interface. The SPI bus master
-> is provided by PowerNV SPI device which is an SSI peripheral.
-> It can uses the tpm_emulator driver backend with the external
-> swtpm.
+> Add qtest cases to exercise main TPM functionality
+> The TPM device emulation is provided by swtpm, which is TCG
+> TPM 2.0, and TCG TPM TIS compliant. See
+> https://trustedcomputinggroup.org/wp-content/uploads/TCG_PC_Client_Platform_TPM_Profile_PTP_2.0_r1.03_v22.pdf
+> https://trustedcomputinggroup.org/wp-content/uploads/TCG_PCClientTPMInterfaceSpecification_TIS__1-3_27_03212013.pdf
+> The SPI registers are specific to the PowerNV platform
+> architecture
 > 
-> Although the implementation is endian neutral, the SPI
-> bus master provider, pnv_spi.c is only supported on the
-> PowerNV platform, thus, is big endian specific.
-
-I am not sure whether and how this sentence is related to this 
-implementation. I think you can remove it.
-
-> 
-> Signed-off-by: dan tan <dantan@linux.ibm.com>
+> Signed-off-by: dan tan <dantan@linux.vnet.ibm.com>
 > ---
 > 
 > v3:
-> - moved variable tis_addr from TPMStateSPI struct to local
-> - added the VM suspend/resume support:
->    - added vmstate_tpm_tis_spi declaration
->    - added tpm_tis_spi_pre_save() function
-> - fixed trace formatting string
+> - removed the function prototypes declaration
+> - fixed code format to comply with convention
+> - changed function names and variable names to be the same
+>    as the tpm-tis-i2c test.
+> - change hard coded numbers to #define's with meaningful
+>    names that are identifiable with spec documentation
 > 
 > v4:
 > - git commit amend only
 > 
 > v5:
-> - removed DEFINE_PROP_UINT32("irq", TPMStateSPI, tpm_state.irq_num, 0)
->    from tpm_tis_spi_properties
-> - In tpm.rst document, under section 'The QEMU TPM emulator device',
->    moved the 'PowerNV machine' section to immeidately below 'pSeriese
->    machine'.
+> - modified tpm_reg_readl() by
+>    - removing the special case for TPM_TIS_REG_DID_VID.
+>      - however, I did not use the more efficient 32bit access due
+>        to the SPI bus master implementation. The 16bit register
+>        still require special treatment with the SPI RWX bits.
+>    - correcting tpm_reg_readb() with uint16_t reg
+> - tpm_set_verify_loc() added checking for TPM_TIS_CAPABILITIES_SUPPORTED2_0
+> - test_spi_tpm_transmit_test() added
+>    - TPM_TIS_STS_TPM_FAMILY2_0 check in status register
+>    - TPM responses verification
+> - fixed the PowerNV stdout msg from running qtest-ppc64/tpm-tis-spi-pnv-test
 > ---
->   docs/specs/tpm.rst   |  15 ++
->   include/sysemu/tpm.h |   3 +
->   hw/tpm/tpm_tis_spi.c | 359 +++++++++++++++++++++++++++++++++++++++++++
->   hw/tpm/Kconfig       |   6 +
->   hw/tpm/meson.build   |   1 +
->   hw/tpm/trace-events  |   7 +
->   6 files changed, 391 insertions(+)
->   create mode 100644 hw/tpm/tpm_tis_spi.c
+>   tests/qtest/tpm-tis-spi-pnv-test.c | 713 +++++++++++++++++++++++++++++
+>   tests/qtest/meson.build            |   2 +
+>   2 files changed, 715 insertions(+)
+>   create mode 100644 tests/qtest/tpm-tis-spi-pnv-test.c
 > 
-> diff --git a/docs/specs/tpm.rst b/docs/specs/tpm.rst
-> index 1ad36ad709..d92e7eed6f 100644
-> --- a/docs/specs/tpm.rst
-> +++ b/docs/specs/tpm.rst
-> @@ -24,6 +24,7 @@ QEMU files related to TPM TIS interface:
->    - ``hw/tpm/tpm_tis_isa.c``
->    - ``hw/tpm/tpm_tis_sysbus.c``
->    - ``hw/tpm/tpm_tis_i2c.c``
-> + - ``hw/tpm/tpm_tis_spi.c``
->    - ``hw/tpm/tpm_tis.h``
->   
->   Both an ISA device and a sysbus device are available. The former is
-> @@ -33,6 +34,9 @@ Arm virt machine.
->   An I2C device support is also provided which can be instantiated in the Arm
->   based emulation machines. This device only supports the TPM 2 protocol.
->   
-> +A Serial Peripheral Interface (SPI) device support has been added to the
-> +PowerNV emulation machines. This device only supports the TPM 2 protocol.
-> +
->   CRB interface
->   -------------
->   
-> @@ -339,6 +343,17 @@ In case a pSeries machine is emulated, use the following command line:
->       -device virtio-blk-pci,bus=pci.0,addr=0x3,drive=drive-virtio-disk0,id=virtio-disk0 \
->       -drive file=test.img,format=raw,if=none,id=drive-virtio-disk0
->   
-> +In case a PowerNV machine is emulated and you want to use a TPM device
-> +attached to SPI bus, use the following command line (SPI bus master is
-> +provided by PowerNV SPI device):
-> +
-> +.. code-block:: console
-> +
-> +  qemu-system-ppc64 -m 2G -machine powernv10 -nographic \
-> +    -chardev socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock \
-> +    -tpmdev emulator,id=tpm0,chardev=chrtpm \
-> +    -device tpm-tis-spi,tpmdev=tpm0,bus=pnv-spi-bus.4
-> +
->   In case an Arm virt machine is emulated, use the following command line:
->   
->   .. code-block:: console
-> diff --git a/include/sysemu/tpm.h b/include/sysemu/tpm.h
-> index 1ee568b3b6..22b05110e2 100644
-> --- a/include/sysemu/tpm.h
-> +++ b/include/sysemu/tpm.h
-> @@ -49,6 +49,7 @@ struct TPMIfClass {
->   #define TYPE_TPM_CRB                "tpm-crb"
->   #define TYPE_TPM_SPAPR              "tpm-spapr"
->   #define TYPE_TPM_TIS_I2C            "tpm-tis-i2c"
-> +#define TYPE_TPM_TIS_SPI            "tpm-tis-spi"
->   
->   #define TPM_IS_TIS_ISA(chr)                         \
->       object_dynamic_cast(OBJECT(chr), TYPE_TPM_TIS_ISA)
-> @@ -60,6 +61,8 @@ struct TPMIfClass {
->       object_dynamic_cast(OBJECT(chr), TYPE_TPM_SPAPR)
->   #define TPM_IS_TIS_I2C(chr)                      \
->       object_dynamic_cast(OBJECT(chr), TYPE_TPM_TIS_I2C)
-> +#define TPM_IS_TIS_SPI(chr)                      \
-> +    object_dynamic_cast(OBJECT(chr), TYPE_TPM_TIS_SPI)
->   
->   /* returns NULL unless there is exactly one TPM device */
->   static inline TPMIf *tpm_find(void)
-> diff --git a/hw/tpm/tpm_tis_spi.c b/hw/tpm/tpm_tis_spi.c
+> diff --git a/tests/qtest/tpm-tis-spi-pnv-test.c b/tests/qtest/tpm-tis-spi-pnv-test.c
 > new file mode 100644
-> index 0000000000..87acbaaaf8
+> index 0000000000..9eeeea41f7
 > --- /dev/null
-> +++ b/hw/tpm/tpm_tis_spi.c
-> @@ -0,0 +1,359 @@
+> +++ b/tests/qtest/tpm-tis-spi-pnv-test.c
+> @@ -0,0 +1,713 @@
 > +/*
-> + * QEMU PowerPC SPI TPM 2.0 model
-
-I would say that this implementation is generic enough to work with 
-other architectures as well. So you could drop 'PowerPC'.
-
+> + * QTest testcase for a Nuvoton NPCT75x TPM SPI device
+> + *                      running on the PowerNV machine.
 > + *
 > + * Copyright (c) 2024, IBM Corporation.
 > + *
 > + * SPDX-License-Identifier: GPL-2.0-or-later
 > + */
-> +
-> +#define IBM_PONQ
-
-Did I miss this before? Is this necessary and what does it do?
-
-> +
 > +#include "qemu/osdep.h"
-> +#include "qemu/log.h"
-> +#include "hw/sysbus.h"
+> +#include <glib/gstdio.h>
+> +#include "libqtest-single.h"
 > +#include "hw/acpi/tpm.h"
-> +#include "tpm_prop.h"
-> +#include "qemu/log.h"
-> +#include "trace.h"
-> +#include "tpm_tis.h"
-> +#include "hw/ssi/ssi.h"
-> +#include "migration/vmstate.h"
+> +#include "hw/pci/pci_ids.h"
+> +#include "qtest_aspeed.h"
+> +#include "tpm-emu.h"
+> +#include "hw/ssi/pnv_spi_regs.h"
+> +#include "pnv-xscom.h"
 > +
-> +typedef struct TPMStateSPI {
-> +    /*< private >*/
-> +    SSIPeripheral parent_object;
+> +#define SPI_TPM_BASE            0xc0080
+> +#define SPI_SHIFT_COUNTER_N1    0x30000000
+> +#define SPI_SHIFT_COUNTER_N2    0x40000000
+> +#define SPI_RWX_OPCODE_SHIFT    56
+> +#define SPI_RWX_ADDR_SHIFT      32
+> +#define SPI_CMD_DATA_SHIFT      56
 > +
-> +    uint8_t     byte_offset;     /* byte offset in transfer */
-> +    uint8_t     wait_state_cnt;  /* wait state counter */
-> +    uint8_t     xfer_size;       /* data size of transfer */
-> +    uint32_t    reg_addr;        /* register address of transfer */
+> +#define CFG_COUNT_COMPARE_1     0x0000000200000000
+> +#define MM_REG_RDR_MATCH        0x00000000ff01ff00
+> +#define SEQ_OP_REG_BASIC        0x1134416200100000
 > +
-> +    uint8_t     spi_state;       /* READ / WRITE / IDLE */
-> +#define SPI_STATE_IDLE   0
-> +#define SPI_STATE_WRITE  1
-> +#define SPI_STATE_READ   2
+> +#define TPM_TIS_8BITS_MASK      0xff
+> +#define SPI_TPM_TIS_ADDR        0xd40000
+> +#define SPI_EXTEND              0x03
+> +#define TPM_WRITE_OP            0x0
+> +#define TPM_READ_OP             0x80
 > +
-> +    bool        command;
+> +#define SHORT_MAX_RETRIES       5
+> +#define LONG_MAX_RETRIES        10
 > +
-> +    /*< public >*/
-> +    TPMState    tpm_state;       /* not a QOM object */
+> +static const uint8_t TPM_CMD[12] =
+> +                     "\x80\x01\x00\x00\x00\x0c\x00\x00\x01\x44\x00\x00";
 > +
-> +} TPMStateSPI;
+> +#define DPRINTF(fmt, ...) do { \
+> +    if (DEBUG_TIS_TEST) { \
+> +        printf(fmt, ## __VA_ARGS__); \
+> +    } \
+> +} while (0)
 > +
-> +#define CMD_BYTE_WRITE          (1 << 7)
-> +#define CMD_BYTE_XFER_SZ_MASK   0x1f
-> +#define TIS_SPI_HIGH_ADDR_BYTE  0xd4
+> +#define DEBUG_TIS_TEST 0
 > +
-> +DECLARE_INSTANCE_CHECKER(TPMStateSPI, TPM_TIS_SPI, TYPE_TPM_TIS_SPI)
+> +#define DPRINTF_ACCESS \
+> +    DPRINTF("%s: %d: locty=%d l=%d access=0x%02x pending_request_flag=0x%x\n", \
+> +            __func__, __LINE__, locty, l, access, pending_request_flag)
 > +
-> +static int tpm_tis_spi_pre_save(void *opaque)
+> +#define DPRINTF_STS \
+> +    DPRINTF("%s: %d: sts = 0x%08x\n", __func__, __LINE__, sts)
+> +
+> +static uint64_t pnv_spi_tpm_read(const PnvChip *chip, uint32_t reg)
 > +{
-> +    TPMStateSPI *spist = opaque;
+> +    uint32_t pcba = SPI_TPM_BASE + reg;
 > +
-> +    return tpm_tis_pre_save(&spist->tpm_state);
+> +    return qtest_readq(global_qtest, pnv_xscom_addr(chip, pcba));
 > +}
 > +
-> +static const VMStateDescription vmstate_tpm_tis_spi = {
-> +     .name = "tpm-tis-spi",
-> +     .version_id = 0,
-> +     .pre_save  = tpm_tis_spi_pre_save,
-> +     .fields = (const VMStateField[]) {
-> +         VMSTATE_BUFFER(tpm_state.buffer, TPMStateSPI),
-> +         VMSTATE_UINT16(tpm_state.rw_offset, TPMStateSPI),
-> +         VMSTATE_UINT8(tpm_state.active_locty, TPMStateSPI),
-> +         VMSTATE_UINT8(tpm_state.aborting_locty, TPMStateSPI),
-> +         VMSTATE_UINT8(tpm_state.next_locty, TPMStateSPI),
-> +
-> +         VMSTATE_STRUCT_ARRAY(tpm_state.loc, TPMStateSPI,
-> +                              TPM_TIS_NUM_LOCALITIES, 0,
-> +                              vmstate_locty, TPMLocality),
-> +
-> +         /* spi specifics */
-> +         VMSTATE_UINT8(byte_offset, TPMStateSPI),
-> +         VMSTATE_UINT8(wait_state_cnt, TPMStateSPI),
-> +         VMSTATE_UINT8(xfer_size, TPMStateSPI),
-> +         VMSTATE_UINT32(reg_addr, TPMStateSPI),
-> +         VMSTATE_UINT8(spi_state, TPMStateSPI),
-> +         VMSTATE_BOOL(command, TPMStateSPI),
-> +
-> +         VMSTATE_END_OF_LIST()
-> +     }
-> +};
-> +
-> +static inline void tpm_tis_spi_clear_data(TPMStateSPI *spist)
+> +static void pnv_spi_tpm_write(const PnvChip *chip,
+> +                              uint32_t reg,
+> +                              uint64_t val)
 > +{
-> +    spist->spi_state = SPI_STATE_IDLE;
-> +    spist->byte_offset = 0;
-> +    spist->wait_state_cnt = 0;
-> +    spist->xfer_size = 0;
-> +    spist->reg_addr = 0;
+> +    uint32_t pcba = SPI_TPM_BASE + reg;
 > +
-> +    return;
+> +    qtest_writeq(global_qtest, pnv_xscom_addr(chip, pcba), val);
 > +}
 > +
-> +/* Callback from TPM to indicate that response is copied */
-> +static void tpm_tis_spi_request_completed(TPMIf *ti, int ret)
+> +static void spi_op_complete(const PnvChip *chip)
 > +{
-> +    TPMStateSPI *spist = TPM_TIS_SPI(ti);
-> +    TPMState *s = &spist->tpm_state;
+> +    uint64_t cfg_reg;
 > +
-> +    /* Inform the common code. */
-> +    tpm_tis_request_completed(s, ret);
+> +    cfg_reg = pnv_spi_tpm_read(chip, SPI_CLK_CFG_REG);
+> +    g_assert_cmpuint(CFG_COUNT_COMPARE_1, ==, cfg_reg);
+> +    pnv_spi_tpm_write(chip, SPI_CLK_CFG_REG, 0);
 > +}
 > +
-> +static enum TPMVersion tpm_tis_spi_get_tpm_version(TPMIf *ti)
+> +static void spi_write_reg(const PnvChip *chip, uint64_t val)
 > +{
-> +    TPMStateSPI *spist = TPM_TIS_SPI(ti);
-> +    TPMState *s = &spist->tpm_state;
+> +    int i;
+> +    uint64_t spi_sts;
 > +
-> +    return tpm_tis_get_tpm_version(s);
-> +}
-> +
-> +/*
-> + * TCG PC Client Platform TPM Profile Specification for TPM 2.0 ver 1.05 rev 14
-> + *
-> + * For system Software, the TPM has a 64-bit address of 0x0000_0000_FED4_xxxx.
-> + * On SPI, the chipset passes the least significant 24 bits to the TPM.
-> + * The upper bytes will be used by the chipset to select the TPM’s SPI CS#
-> + * signal. Table 9 shows the locality based on the 16 least significant address
-> + * bits and assume that either the LPC TPM sync or SPI TPM CS# is used.
-> + *
-> + */
-> +static void tpm_tis_spi_write(TPMStateSPI *spist, uint32_t addr, uint8_t val)
-> +{
-> +    TPMState *tpm_st = &spist->tpm_state;
-> +
-> +    trace_tpm_tis_spi_write(addr, val);
-> +    tpm_tis_write_data(tpm_st, addr, val, 1);
-> +}
-> +
-> +static uint8_t tpm_tis_spi_read(TPMStateSPI *spist, uint32_t addr)
-> +{
-> +    TPMState *tpm_st = &spist->tpm_state;
-> +    uint8_t data;
-> +
-> +    data = tpm_tis_read_data(tpm_st, addr, 1);
-> +    trace_tpm_tis_spi_read(addr, data);
-> +    return data;
-> +}
-> +
-> +static Property tpm_tis_spi_properties[] = {
-> +    DEFINE_PROP_TPMBE("tpmdev", TPMStateSPI, tpm_state.be_driver),
-> +    DEFINE_PROP_END_OF_LIST(),
-> +};
-> +
-> +static void tpm_tis_spi_reset(DeviceState *dev)
-> +{
-> +    TPMStateSPI *spist = TPM_TIS_SPI(dev);
-> +    TPMState *s = &spist->tpm_state;
-> +
-> +    tpm_tis_spi_clear_data(spist);
-> +    return tpm_tis_reset(s);
-> +}
-> +
-> +static uint32_t tpm_transfer(SSIPeripheral *ss, uint32_t tx)
+> +    for (i = 0; i < LONG_MAX_RETRIES; i++) {
+> +        spi_sts = pnv_spi_tpm_read(chip, SPI_STS_REG);
+> +        if (GETFIELD(SPI_STS_TDR_FULL, spi_sts) == 1) {
+> +            sleep(0.5);
 
-rename to tpm_tis_spi_transfer
 
-> +{
-> +    TPMStateSPI *spist = TPM_TIS_SPI(ss);
-> +    uint32_t rx = 0;
-> +    uint8_t byte;       /* reversed byte value */
-> +    uint8_t offset = 0; /* offset of byte in payload */
-> +    uint8_t index;      /* index of data byte in transfer */
-> +    uint32_t tis_addr;  /* tis address including locty */
-> +
-> +    /* new transfer or not */
-> +    if (spist->command) {   /* new transfer start */
-> +        if (spist->spi_state != SPI_STATE_IDLE) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "unexpected new transfer\n");
-> +        }
-> +        spist->byte_offset = 0;
-> +        spist->wait_state_cnt = 0;
-> +    }
-> +    /*
-> +     * Explanation of wait_state:
-> +     * The original TPM model did not have wait state or "flow control" support
-> +     * built in.  If you wanted to read a TPM register through SPI you sent
-> +     * the first byte with the read/write bit and size, then three address bytes
-> +     * and any additional bytes after that were don't care bytes for reads and
-> +     * the model would begin returning byte data to the SPI reader from the
-> +     * register address provided.  In the real world this would mean that a
-> +     * TPM device had only the time between the 31st clock and the 32nd clock
-> +     * to fetch the register data that it had to provide to SPI MISO starting
-> +     * with the 32nd clock.
-> +     *
-> +     * In reality the TPM begins introducing a wait state at the 31st clock
-> +     * by holding MISO low.  This is how it controls the "flow" of the
-> +     * operation. Once the data the TPM needs to return is ready it will
-> +     * select bit 31 + (8*N) to send back a 1 which indicates that it will
-> +     * now start returning data on MISO.
-> +     *
-> +     * The same wait states are applied to writes.  In either the read or write
-> +     * case the wait state occurs between the command+address (4 bytes) and the
-> +     * data (1-n bytes) sections of the SPI frame.  The code below introduces
-> +     * the support for a 32 bit wait state for P10.  All reads and writes
-> +     * through the SPI interface MUST now be aware of the need to do flow
-> +     * control in order to use the TPM via SPI.
-> +     *
-> +     * In conjunction with these changes there were changes made to the SPIM
-> +     * engine that was introduced in P10 to support the 6x op code which is
-> +     * used to receive wait state 0s on the MISO line until it sees the b'1'
-> +     * come back before continuing to read real data from the SPI device(TPM).
-> +     */
-> +
-> +    trace_tpm_tis_spi_transfer_data("Payload byte_offset", spist->byte_offset);
-> +    /* process payload data */
-> +    while (offset < 4) {
-> +        spist->command = false;
-> +        byte = (tx >> (24 - 8 * offset)) & 0xFF;
-> +        trace_tpm_tis_spi_transfer_data("Extracted byte", byte);
-> +        trace_tpm_tis_spi_transfer_data("Payload offset", offset);
-> +        switch (spist->byte_offset) {
-> +        case 0:    /* command byte */
-> +            if ((byte & CMD_BYTE_WRITE) == 0) {  /* bit-7 */
-> +                spist->spi_state = SPI_STATE_WRITE;
-> +                trace_tpm_tis_spi_transfer_event("spi write");
-> +            } else {
-> +                spist->spi_state = SPI_STATE_READ;
-> +                trace_tpm_tis_spi_transfer_event("spi read");
-> +            }
-> +            spist->xfer_size = (byte & CMD_BYTE_XFER_SZ_MASK) + 1;
-> +            trace_tpm_tis_spi_transfer_data("xfer_size", spist->xfer_size);
-> +            break;
-> +        case 1:     /* 1st address byte */
-> +            if (byte != TIS_SPI_HIGH_ADDR_BYTE) {
-> +                qemu_log_mask(LOG_GUEST_ERROR, "incorrect high address 0x%x\n",
-> +                              byte);
-> +            }
-> +            spist->reg_addr = byte << 16;
-> +            trace_tpm_tis_spi_transfer_data("first addr byte", byte);
-> +            trace_tpm_tis_spi_transfer_addr("reg_addr", spist->reg_addr);
-> +            break;
-> +        case 2:     /* 2nd address byte */
-> +            spist->reg_addr |= byte << 8;
-> +            trace_tpm_tis_spi_transfer_data("second addr byte", byte);
-> +            trace_tpm_tis_spi_transfer_addr("reg_addr", spist->reg_addr);
-> +            break;
-> +        case 3:     /* 3rd address byte */
-> +            spist->reg_addr |= byte;
-> +            trace_tpm_tis_spi_transfer_data("third addr byte", byte);
-> +            trace_tpm_tis_spi_transfer_addr("reg_addr", spist->reg_addr);
-> +            break;
-> +        default:    /* data bytes */
-> +            if (spist->wait_state_cnt < 4) {
-> +                spist->wait_state_cnt++;
-> +                if (spist->wait_state_cnt == 4) {
-> +                    trace_tpm_tis_spi_transfer_data("wait complete, count",
-> +                                                     spist->wait_state_cnt);
-> +                    rx = rx | (0x01 << (24 - offset * 8));
-> +                    return rx;
-> +                } else {
-> +                    trace_tpm_tis_spi_transfer_data("in wait state, count",
-> +                                                     spist->wait_state_cnt);
-> +                    rx = 0;
-> +                }
-> +            } else {
-> +                index = spist->byte_offset - 4;
-> +                trace_tpm_tis_spi_transfer_data("index", index);
-> +                trace_tpm_tis_spi_transfer_data("data byte", byte);
-> +                trace_tpm_tis_spi_transfer_addr("reg_addr", spist->reg_addr);
-> +                if (index >= spist->xfer_size) {
-> +                    /*
-> +                     * SPI SSI framework limits both rx and tx
-> +                     * to fixed 4-byte with each xfer
-> +                     */
-> +                    trace_tpm_tis_spi_transfer_event("index exceeds xfer_size");
-> +                    return rx;
-> +                }
-> +                tis_addr = spist->reg_addr + (index % 4);
-> +                if (spist->spi_state == SPI_STATE_WRITE) {
-> +                    tpm_tis_spi_write(spist, tis_addr, byte);
-> +                } else {
-> +                    byte = tpm_tis_spi_read(spist, tis_addr);
-> +                    rx = rx | (byte << (24 - offset * 8));
-> +                    trace_tpm_tis_spi_transfer_data("byte added to response",
-> +                                                     byte);
-> +                    trace_tpm_tis_spi_transfer_data("offset", offset);
-> +                }
-> +            }
-> +            break;
-> +        }
-> +        if ((spist->wait_state_cnt == 0) || (spist->wait_state_cnt == 4)) {
-> +            offset++;
-> +            spist->byte_offset++;
+One of the Travis builds complains about this:
+
+../tests/qtest/tpm-tis-spi-pnv-test.c:90:19: error: implicit conversion 
+from 'double' to 'unsigned int' changes value from 0.5 to 0 
+[-Werror,-Wliteral-conversion]
+
+             sleep(0.5);
+
+             ~~~~~ ^~~
+
+../tests/qtest/tpm-tis-spi-pnv-test.c:104:19: error: implicit conversion 
+from 'double' to 'unsigned int' changes value from 0.1 to 0 
+[-Werror,-Wliteral-conversion]
+
+             sleep(0.1);
+
+             ~~~~~ ^~~
+
+../tests/qtest/tpm-tis-spi-pnv-test.c:123:15: error: implicit conversion 
+from 'double' to 'unsigned int' changes value from 0.5 to 0 
+[-Werror,-Wliteral-conversion]
+
+         sleep(0.5);
+
+         ~~~~~ ^~~
+
+../tests/qtest/tpm-tis-spi-pnv-test.c:128:19: error: implicit conversion 
+from 'double' to 'unsigned int' changes value from 0.1 to 0 
+[-Werror,-Wliteral-conversion]
+
+             sleep(0.1);
+
+             ~~~~~ ^~~
+
+You need to use g_usleep() here.
+
+
+
 > +        } else {
 > +            break;
 > +        }
 > +    }
-> +    return rx;
-> +}
+> +    /* cannot write if SPI_STS_TDR_FULL bit is still set */
+> +    g_assert_cmpuint(0, ==, GETFIELD(SPI_STS_TDR_FULL, spi_sts));
+> +    pnv_spi_tpm_write(chip, SPI_XMIT_DATA_REG, val);
 > +
-> +static int tpm_cs(SSIPeripheral *ss, bool select)
+> +    for (i = 0; i < SHORT_MAX_RETRIES; i++) {
+> +        spi_sts = pnv_spi_tpm_read(chip, SPI_STS_REG);
+> +        if (GETFIELD(SPI_STS_SHIFTER_FSM, spi_sts) & FSM_DONE) {
+> +            break;
+> +        } else {
+> +            sleep(0.1);
 
-tpm_tis_spi_cs
+Also here.
 
-> +{
-> +    TPMStateSPI *spist = TPM_TIS_SPI(ss);
-> +
-> +    if (select) {
-> +        spist->command = false;
-> +        spist->spi_state = SPI_STATE_IDLE;
-> +    } else {
-> +        spist->command = true;
-> +    }
-> +    return 0;
-> +}
-> +
-> +static void tpm_realize(SSIPeripheral *dev, Error **errp)
-
-tpm_tis_spi_realize
-
-> +{
-> +    TPMStateSPI *spist = TPM_TIS_SPI(dev);
-> +    TPMState *s = &spist->tpm_state;
-> +
-> +    if (!tpm_find()) {
-> +        error_setg(errp, "at most one TPM device is permitted");
-> +        return;
-> +    }
-> +
-> +    s->be_driver = qemu_find_tpm_be("tpm0");
-> +
-> +    if (!s->be_driver) {
-> +        error_setg(errp, "unable to find tpm backend device");
-> +        return;
-> +    }
-> +}
-> +
-> +static void tpm_tis_spi_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    TPMIfClass *tc = TPM_IF_CLASS(klass);
-> +    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
-> +
-> +    k->transfer = tpm_transfer;
-> +    k->realize = tpm_realize;
-> +    k->set_cs = tpm_cs;
-> +    k->cs_polarity = SSI_CS_LOW;
-> +
-> +    device_class_set_legacy_reset(dc, tpm_tis_spi_reset);
-> +    device_class_set_props(dc, tpm_tis_spi_properties);
-> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-> +
-> +    dc->desc = "SPI TPM";
-> +    dc->vmsd = &vmstate_tpm_tis_spi;
-> +
-> +    tc->model = TPM_MODEL_TPM_TIS;
-> +    tc->request_completed = tpm_tis_spi_request_completed;
-> +    tc->get_version = tpm_tis_spi_get_tpm_version;
-> +}
-> +
-> +static const TypeInfo tpm_tis_spi_info = {
-> +    .name          = TYPE_TPM_TIS_SPI,
-> +    .parent        = TYPE_SSI_PERIPHERAL,
-> +    .instance_size = sizeof(TPMStateSPI),
-> +    .class_init    = tpm_tis_spi_class_init,
-> +    .interfaces    = (InterfaceInfo[]) {
-> +        { TYPE_TPM_IF },
-> +        { }
-> +    }
-> +};
-> +
-> +static void tpm_tis_spi_register_types(void)
-> +{
-> +    type_register_static(&tpm_tis_spi_info);
-> +}
-> +
-> +type_init(tpm_tis_spi_register_types)
-> diff --git a/hw/tpm/Kconfig b/hw/tpm/Kconfig
-> index a46663288c..5951c225cc 100644
-> --- a/hw/tpm/Kconfig
-> +++ b/hw/tpm/Kconfig
-> @@ -5,6 +5,12 @@ config TPM_TIS_I2C
->       select I2C
->       select TPM_TIS
->   
-> +config TPM_TIS_SPI
-> +    bool
-> +    depends on TPM
-> +    select TPM_BACKEND
-> +    select TPM_TIS
-> +
->   config TPM_TIS_ISA
->       bool
->       depends on TPM && ISA_BUS
-> diff --git a/hw/tpm/meson.build b/hw/tpm/meson.build
-> index 6968e60b3f..e03cfb11b9 100644
-> --- a/hw/tpm/meson.build
-> +++ b/hw/tpm/meson.build
-> @@ -2,6 +2,7 @@ system_ss.add(when: 'CONFIG_TPM_TIS', if_true: files('tpm_tis_common.c'))
->   system_ss.add(when: 'CONFIG_TPM_TIS_ISA', if_true: files('tpm_tis_isa.c'))
->   system_ss.add(when: 'CONFIG_TPM_TIS_SYSBUS', if_true: files('tpm_tis_sysbus.c'))
->   system_ss.add(when: 'CONFIG_TPM_TIS_I2C', if_true: files('tpm_tis_i2c.c'))
-> +system_ss.add(when: 'CONFIG_TPM_TIS_SPI', if_true: files('tpm_tis_spi.c'))
->   system_ss.add(when: 'CONFIG_TPM_CRB', if_true: files('tpm_crb.c'))
->   system_ss.add(when: 'CONFIG_TPM_TIS', if_true: files('tpm_ppi.c'))
->   system_ss.add(when: 'CONFIG_TPM_CRB', if_true: files('tpm_ppi.c'))
-> diff --git a/hw/tpm/trace-events b/hw/tpm/trace-events
-> index fa882dfefe..0324ceb6d0 100644
-> --- a/hw/tpm/trace-events
-> +++ b/hw/tpm/trace-events
-> @@ -42,3 +42,10 @@ tpm_tis_i2c_recv(uint8_t data) "TPM I2C read: 0x%X"
->   tpm_tis_i2c_send(uint8_t data) "TPM I2C write: 0x%X"
->   tpm_tis_i2c_event(const char *event) "TPM I2C event: %s"
->   tpm_tis_i2c_send_reg(const char *name, int reg) "TPM I2C write register: %s(0x%X)"
-> +
-> +# tpm_tis_spi.c
-> +tpm_tis_spi_write(uint32_t addr, uint8_t val) "TPM SPI write - addr:0x%08X 0x%02x"
-> +tpm_tis_spi_read(uint32_t addr, uint8_t val) "TPM SPI read - addr:0x%08X 0x%02x"
-> +tpm_tis_spi_transfer_event(const char *event) "TPM SPI XFER event: %s"
-> +tpm_tis_spi_transfer_data(const char *name, uint8_t val) "TPM SPI XFER: %s = 0x%02x"
-> +tpm_tis_spi_transfer_addr(const char *name, uint32_t addr) "TPM SPI XFER: %s = 0x%08x"
 
 
