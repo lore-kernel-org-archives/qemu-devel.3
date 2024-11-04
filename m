@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A2B9D111BC
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 08:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 029F2D111BC
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 08:11:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7sAW-0000hk-Kr; Mon, 04 Nov 2024 03:10:36 -0500
+	id 1t7sBX-0001vO-Pt; Mon, 04 Nov 2024 03:11:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t7sAT-0000d3-3g
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 03:10:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t7sBW-0001uZ-Ie
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 03:11:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t7sAR-0002VT-26
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 03:10:32 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t7sBU-0002YH-TF
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 03:11:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730707830;
+ s=mimecast20190719; t=1730707896;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hsvFWEW0xJGriJ1D6kxyQEeUqlfhMgoHBy+8WIhB1OE=;
- b=Vw7mVoBycAJR4D7T818Tg7v9vYS+3NUa67hKEfj+yi2hGJ7xtliQpnmuJ6Vi+nPnz1m1l2
- GStxbg4oo1T0JeRJgmrdBMW9Bw2VyG46bp8jRBETNwshC3aNjr8cBZ45ARRatfX4/QUxKb
- n2MBmcNscfMcQy381uvAznwUHA9AB90=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zlHyZuIhnhSXju1pnqOfdI6mKCFgXRaGgzCPA/D/r38=;
+ b=cG+X3LB9e+eN1j7JaQIyEFFK6PW5uiUNMtItMQf3Z37gvMzXN0bDHWkCVAYLz6eS5h9Cke
+ Q18WtC03aguSkuGXM8f4JITqd4TmvxXcXisbVqfpWy7N2sp3mQXLq16HgJOVHQnBiksf+K
+ aGb0IOM0SwGIlSwBZTGI/MlaqGm+tZA=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-fikFks9EM_qX-DKeeLXrQA-1; Mon, 04 Nov 2024 03:10:27 -0500
-X-MC-Unique: fikFks9EM_qX-DKeeLXrQA-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-539e13b8143so3942974e87.0
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 00:10:27 -0800 (PST)
+ us-mta-125-mgIazDoxNDO8fujgldxFyQ-1; Mon, 04 Nov 2024 03:11:34 -0500
+X-MC-Unique: mgIazDoxNDO8fujgldxFyQ-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-53a246ecb7bso1988566e87.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 00:11:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730707826; x=1731312626;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hsvFWEW0xJGriJ1D6kxyQEeUqlfhMgoHBy+8WIhB1OE=;
- b=EXaCBWSJ2fMtJcUY5eUkTgTPL6hWDBAybapaHgAQJjPFUNcsLCmgnw7gCgHM/KmX9p
- 1FHqSCbGevuEPlo8KxGxUynn+WrdbarZVzFzuNal9T/BGJ2/0X8FkYRvuJ+ZzdjEcRe5
- IrZwK7aQvIVBZpmfORSRHDuOISWAMSnaihhO0/uA6cQvojXPZl03HIsVWxSyrIXyHjrT
- cbBxwWR8+Yssb52gHOnzKlZwYUNsCNMsj5OS65pB7PFDpNPZw1dMmKXAxozpv0kCw/Ni
- ORGHmuCd9RIzZrljbqP5gOb5cV8NWFZgxO+K0ILkCJMSolzD5a4YLhszBScQz6KVq8To
- 3tUw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVZUDafmbJWidCIWzEW3VCxhjx3uXGlVUS05ixfe7UazWk+xrB/VTWFVgu6NMi6SUBXc3nZx5zjMUWW@nongnu.org
-X-Gm-Message-State: AOJu0YyYFWxKMPe9uA2h1S5nIjayqKjo1BUP9KfMyoM0xqH40CobzgiA
- 8xvvdzyOxIrIBwOqneYg909yFSuN61ysRoC2TbBZpKjZ92KNfh/ozmKs2y0yJTtcWy+D4JxCVAp
- 00LDxQrC2DaogvbXNrhIBl9P2637iv5PYDVGDnvlMUBdaO1fzNZAS
-X-Received: by 2002:a05:6512:3d11:b0:539:530e:9de5 with SMTP id
- 2adb3069b0e04-53c79ea55c2mr6851560e87.56.1730707825970; 
- Mon, 04 Nov 2024 00:10:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFKcNt6HNY8NHmRztp3U/CjW5lU7mCMXLpTuMbXxr55foxmCEkTGyGzGaj0juRPJsEW5JAg4w==
-X-Received: by 2002:a05:6512:3d11:b0:539:530e:9de5 with SMTP id
- 2adb3069b0e04-53c79ea55c2mr6851543e87.56.1730707825482; 
- Mon, 04 Nov 2024 00:10:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730707893; x=1731312693;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zlHyZuIhnhSXju1pnqOfdI6mKCFgXRaGgzCPA/D/r38=;
+ b=Er7aOd2dHYkAhbXaoRKstHC4amWTyyu0VRVvOxCu+TVjmgEHA8Taem4dvFvqXHOvxC
+ k6F90DbobUU7g5GF81g7n3Itvai+g9ybNlzT9PmzbxevaYhN0TS/L1FBBAPfZBGLoDV5
+ 1Etjhn3ZhaAQT12CsLhjrA67rtW46GcpWQojuk/a7xuxtK8Z9Pn2K/sRPb7JYPWtN0lS
+ iz5Oc62wRxXRF+ZnO9h8eFHYwdJNJozoIbn9epoz4VuNB2fxqrbsiWKHCrTMsZW14wGU
+ lvlDyoze9lIv1dPplCth7z9A9W4gUX+WPe7zw3RQV5Z+liG5jbdbT5y0s6rm8dlnUz6t
+ wR0A==
+X-Gm-Message-State: AOJu0YyX1xuIO/WFjSfLZaQCUW4oQiZn06BRAbSzGcKEXtaB1L4XdHRT
+ Wm4si8nU0HBnHpDBGc9edJVR0A4Th4gXNNam3hoogApBtp0Rba5a3QmC+bsXq7BA2RlttkB8GyD
+ 6fezpbMG7Y8uQeYBfVKJuaJHO13gMVNgg+mdbo/3BUcNuFzVjsTR2mO03Hhw8
+X-Received: by 2002:a05:6512:130e:b0:539:fbd4:9c9a with SMTP id
+ 2adb3069b0e04-53c79e61084mr7077564e87.35.1730707892971; 
+ Mon, 04 Nov 2024 00:11:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE0oi8dIBmzAahQkcawmQgo03spFxy3E5X6mink7ILXVZbameTWB7Nvpoy1Q4TYSX/150TDZw==
+X-Received: by 2002:a05:6512:130e:b0:539:fbd4:9c9a with SMTP id
+ 2adb3069b0e04-53c79e61084mr7077544e87.35.1730707892489; 
+ Mon, 04 Nov 2024 00:11:32 -0800 (PST)
 Received: from [10.33.192.239] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bd9ca6f8sm175297375e9.39.2024.11.04.00.10.24
+ ffacd0b85a97d-381c10b7d20sm12618482f8f.7.2024.11.04.00.11.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Nov 2024 00:10:24 -0800 (PST)
-Message-ID: <3db226a5-ade3-4ddb-a599-131805ac8f04@redhat.com>
-Date: Mon, 4 Nov 2024 09:10:24 +0100
+ Mon, 04 Nov 2024 00:11:32 -0800 (PST)
+Message-ID: <0022198f-abfa-4367-9b40-57f413861dc6@redhat.com>
+Date: Mon, 4 Nov 2024 09:11:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Fix EL3 AArch32 MMU index usage (again)
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20241101142845.1712482-1-peter.maydell@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PULL 12/14] tests/functional: Convert BananaPi tests to the
+ functional framework
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20241031174832.6574-1-thuth@redhat.com>
+ <20241031174832.6574-13-thuth@redhat.com>
+ <CAFEAcA8eQdD133X66a=0qxsNaOiVYpmi3PfGXK-CkOENXLWXaw@mail.gmail.com>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -117,17 +119,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241101142845.1712482-1-peter.maydell@linaro.org>
+In-Reply-To: <CAFEAcA8eQdD133X66a=0qxsNaOiVYpmi3PfGXK-CkOENXLWXaw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -145,56 +147,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/11/2024 15.28, Peter Maydell wrote:
-> In commit 4c2c0474693229 I tried to fix a problem with our
-> usage of MMU indexes when EL3 is AArch32. The problem we're
-> trying to fix is:
+On 01/11/2024 20.07, Peter Maydell wrote:
+> On Thu, 31 Oct 2024 at 17:49, Thomas Huth <thuth@redhat.com> wrote:
+>>
+>> Move the BananaPi tests from tests/avocado/boot_linux_console.py into
+>> a new file dedicated for Banana Pi tests in the functional framework.
+>> Update the hash sums of the assets to sha256 along the way and fix the
+>> broken link for the buildroot image from storage.kernelci.org.
+>>
+>> (Note: The test_arm_bpim2u_openwrt_22_03_3 test is currently broken
+>> due to a regression in commit 4c2c047469 ("target/arm: Fix usage of MMU
+>> indexes when EL3 is AArch32") - it works if that commit gets reverted)
 > 
->      Architecturally, when EL3 is AArch32, all Secure code runs under the
->      Secure PL1&0 translation regime:
->       * code at EL3, which might be Mon, or SVC, or any of the
->         other privileged modes (PL1)
->       * code at EL0 (Secure PL0)
->      
->      This is different from when EL3 is AArch64, in which case EL3 is its
->      own translation regime, and EL1 and EL0 (whether AArch32 or AArch64)
->      have their own regime.
->      
->      We claimed to be mapping Secure PL1 to our ARMMMUIdx_EL3, but didn't
->      do anything special about Secure PL0, which meant it used the same
->      ARMMMUIdx_EL10_0 that NonSecure PL0 does.  This resulted in a bug
->      where arm_sctlr() incorrectly picked the NonSecure SCTLR as the
->      controlling register when in Secure PL0, which meant we were
->      spuriously generating alignment faults because we were looking at the
->      wrong SCTLR control bits.
->      
->      The use of ARMMMUIdx_EL3 for Secure PL1 also resulted in the bug that
->      we wouldn't honour the PAN bit for Secure PL1, because there's no
->      equivalent _PAN mmu index for it.
-> 
-> The "spurious alignment faults" part is
-> https://gitlab.com/qemu-project/qemu/-/issues/2326
-> 
-> Commit 4c2c047469322 tried to fix this using what I described in the
-> commit message as a "more complicated approach", but didn't get it
-> right in several ways. Full detail in the commit message of patch 1,
-> but the major visible problem was that regime_el() would return 1
-> even when the CPU was in Monitor mode; this meant that page table
-> walks in Monitor mode would look at the wrong SCTLR, TCR, etc and
-> would generally fault when they should not.
-> 
-> Rather than trying to fix up the multiple problems with the complicated
-> approach, this series first reverts that commit and then fixes the
-> initial problem with the idea that commit 4c2c047469322 describes
-> as "the most straightforward" approach: we add new MMU indexes
-> EL30_0 and EL30_3_PAN, and use the EL3 index as EL30_3. These then
-> correspond to "Secure PL1&0 at PL0", "Secure PL1&0 at PL1", and
-> "Secure PL1&0 at PL1 with PAN", and parallel the NonSecure use
-> of EL10_0, EL10_1_PAN and EL10_1.
+> I think that the patchset
+> https://patchew.org/QEMU/20241101142845.1712482-1-peter.maydell@linaro.org/
+> should fix that regression.
 
-I can confirm that this fixes the problems with the bpim2u and orangepi 
-Ubuntu/Armbian tests, so if that counts:
+Yes, that fixes the problem, thanks!
 
-Tested-by: Thomas Huth <thuth@redhat.com>
+  Thomas
 
 
