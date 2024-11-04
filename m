@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE50D1BDF4
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1717D1BDF2
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 21:08:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t84Hq-00067x-L4; Mon, 04 Nov 2024 16:06:58 -0500
+	id 1t84HX-0005BC-Jf; Mon, 04 Nov 2024 16:06:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Hk-0005lM-TE
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:52 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84HV-000548-Qr
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84Hj-0005LO-Cb
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:52 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t84HU-0005KP-DQ
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 16:06:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730754410;
+ s=mimecast20190719; t=1730754395;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=U7NBjxcaDcjtzQHlNEnd4IoK3C/16CIfbxI1oLBTaFY=;
- b=GOWFsyo0SJZE2UeB3KebLwt522GhGAjbUZnj/K7jcGWw3zsCxiKTacYico6+9ejEYrhN27
- dECRwtbyM1fIyWjqcBUgjtVxzOTNCWlXolui5DwW09CH0hqchNRF9Di9gaByltriG6CBQN
- u6TjoMJCNTDjDeM0d+w7nZcGyD9YZuk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HT4p44lGhUJLiZNcVVDhq7UK1RgS21i7OPit+tLHM+w=;
+ b=I3vPxiRIVXLG8uYlDP8e3/nBdEnsRA6VsfmK23WKxOdXnkx7xkxY02lafjo3bH1t75Z18r
+ Ms6wOIk58r2RIxX23ODCzYzWd0M7N282wiwwS7CkhwYSY76/pgwz66AJeDDLtGCgWODIi1
+ ejHlcZxCSXzh12333nwggYlIeqEEI5Y=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-339-q7qS2VF1NYixV2akM0VnqQ-1; Mon, 04 Nov 2024 16:06:49 -0500
-X-MC-Unique: q7qS2VF1NYixV2akM0VnqQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4314c6ca114so34505545e9.1
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:06:49 -0800 (PST)
+ us-mta-609-mLO1yNvdNz6CK4M4SIi5iA-1; Mon, 04 Nov 2024 16:06:34 -0500
+X-MC-Unique: mLO1yNvdNz6CK4M4SIi5iA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d533a484aso2900116f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 13:06:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730754408; x=1731359208;
+ d=1e100.net; s=20230601; t=1730754393; x=1731359193;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U7NBjxcaDcjtzQHlNEnd4IoK3C/16CIfbxI1oLBTaFY=;
- b=E7Rq8BZee5etxT0WzfHpInOdKcXUk7Ud1yA6Blaa6aZcBwCEKShwxb42KZPnr8EBmo
- mOeKtkVO5564XbzFYaQHMDiP3UcXu0TII50nvIL23exby06TCtT4rBxVOQhfDy3XiB3d
- gkFrBXmGTuJ4J4y5VI29GyxTV5l1HK3e5/WWT932i6aOFYO4QbC5G1o9f6Z5mWhdD3kn
- naME9VeKi/Pgh2iZoPyvvUH7gcnbMxfkpcI8fsASu069fpUjzvvS8QLNqUgtNQu1AeRo
- eERUPkW2GU6Pqkq4rFzxip3Lx4/5SN92yjL6JQ7eclzzdGHYfliL4kaf68BTc4RU3MaJ
- 37RQ==
-X-Gm-Message-State: AOJu0YyId3oTuDUl00Z8IU8sfxTGTspFVt46ofiufZtMQ+z88DJV9m6W
- ESNtc+o0fJk7W1ZbgsVXjoQxCBv6f3b2K82zxCEXCYviZViVxwHplUhJnCJ4cDvHQe9yjNg4+73
- 8Qkoug9Frl4oCNSEq2OsIYYxKZg5ITz+HkF7UB7IQu876WxgvEVnK4harVKK1Q8eR2Wsg2EEW9J
- cO5YD3ZLW6+6E6pAPY/7LNhLug9pol6w==
-X-Received: by 2002:a05:600c:6014:b0:431:5d14:1cae with SMTP id
- 5b1f17b1804b1-4327b7019e9mr147152635e9.19.1730754408129; 
- Mon, 04 Nov 2024 13:06:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFW6sOthLSX7OSyJZXtfYhKKpA08xvh2xrUs/h4/mK3DqnVUTUaEwQtdpKe6NOsxHD7hUphHw==
-X-Received: by 2002:a05:600c:6014:b0:431:5d14:1cae with SMTP id
- 5b1f17b1804b1-4327b7019e9mr147152425e9.19.1730754407636; 
- Mon, 04 Nov 2024 13:06:47 -0800 (PST)
+ bh=HT4p44lGhUJLiZNcVVDhq7UK1RgS21i7OPit+tLHM+w=;
+ b=Zc9/DL3Fb9qkQVj3pfw4ul1XlvXrFAnDnrrWl6z/zqm8X1xcq+xLSsljmMq6nmObjT
+ zdqTKlId7KsQFU/UU+7JIutzQ2E9WgB22aVDy4J5dZXJQnvjiY2eevssbM5JZCkbliLZ
+ ghKz3/RB4NZs+CVEXeUVKOwsXs5umIEnfI8fZWa0H3ZweK0bOldMlSE2VQ0Mb9l78LET
+ /uVVXhzG7x3XjOtbtPRldCIKX4jGuMq4C8I/Hvfu24UT+jnbYYvI17X4cVYUT8jxTV6f
+ kiXJwZZwsw07jJIy3IGXh7zRjOSe4OvX1VkSXcLHpgHssb/JTUiQzJLArDJorbnul/FZ
+ yjXg==
+X-Gm-Message-State: AOJu0YwksL13n7t3Svd1fI0MZ3G2OF62iwz8rL7eL5f0se79MWEjOvBC
+ 0IuwcNl2reZsNOQiFQ3hijrsp8uF2TMyJGJUFiuN/nTQJl6BKdR0Y1B9ynjwgwdfTrsdCcpblQa
+ 4pvyvI9aTO+gUeablFv81wp6sDUdf8OuLo3eUdEiAP+WFQpZ1lWuNvYTe6PVdcHq1yEzMPLoBBx
+ CbMHtuAzDgqCf+oqXZedhAOcuNM9DmfQ==
+X-Received: by 2002:a05:600c:3d8a:b0:431:7ccd:ff8a with SMTP id
+ 5b1f17b1804b1-4327dac773dmr132311235e9.14.1730754392854; 
+ Mon, 04 Nov 2024 13:06:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHvvO5PPBjV10Kv8z7u+BWa79l2PlmKjn6ASM2It+p19Xst/nk1YGA/irgAlzXrlgakYDU82Q==
+X-Received: by 2002:a05:600c:3d8a:b0:431:7ccd:ff8a with SMTP id
+ 5b1f17b1804b1-4327dac773dmr132311055e9.14.1730754392354; 
+ Mon, 04 Nov 2024 13:06:32 -0800 (PST)
 Received: from redhat.com ([2.52.14.134]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4327d5ab2aasm164105045e9.6.2024.11.04.13.06.45
+ 5b1f17b1804b1-4327d5e8915sm164244265e9.27.2024.11.04.13.06.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 13:06:46 -0800 (PST)
-Date: Mon, 4 Nov 2024 16:06:43 -0500
+ Mon, 04 Nov 2024 13:06:31 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:06:28 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 19/65] hw/mem/cxl-type3: Add properties to control link speed
- and width
-Message-ID: <14bd0f3865489d537a93b7c80617622473f224e4.1730754238.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 15/65] hw/pci-bridge/cxl_root_port: Provide x-speed and
+ x-width properties.
+Message-ID: <1478b5609022ed4331bff83d06cefed983df82ac.1730754238.git.mst@redhat.com>
 References: <cover.1730754238.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -104,64 +105,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-To establish performance characteristics of a CXL device when used via a
-particular CXL topology (root ports, switches, end points) it is necessary
-to set the appropriate link speed and width in the PCI Express capability
-structure.  Provide x-speed and x-link properties for this.
+Approach copied from gen_pcie_root_port.c
+Previously the link defaulted to a maximum of 2.5GT/s and 1x.  Enable setting
+it's maximum values.  The actual value after 'training' will depend on the
+downstream device configuration.
 
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240916173518.1843023-6-Jonathan.Cameron@huawei.com>
+Message-Id: <20240916173518.1843023-2-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
 ---
- include/hw/cxl/cxl_device.h | 4 ++++
- hw/mem/cxl_type3.c          | 6 ++++++
- 2 files changed, 10 insertions(+)
+ hw/pci-bridge/cxl_root_port.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index fdd0f4e62b..e14e56ae4b 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -549,6 +549,10 @@ struct CXLType3Dev {
-     CXLCCI vdm_fm_owned_ld_mctp_cci;
-     CXLCCI ld0_cci;
- 
-+    /* PCIe link characteristics */
-+    PCIExpLinkSpeed speed;
-+    PCIExpLinkWidth width;
-+
-     /* DOE */
-     DOECap doe_cdat;
- 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 235ac40aeb..44d491d8f6 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -17,6 +17,7 @@
- #include "hw/mem/pc-dimm.h"
- #include "hw/pci/pci.h"
+diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
+index 2dd10239bd..5e2156d7ba 100644
+--- a/hw/pci-bridge/cxl_root_port.c
++++ b/hw/pci-bridge/cxl_root_port.c
+@@ -24,6 +24,7 @@
+ #include "hw/pci/pcie_port.h"
+ #include "hw/pci/msi.h"
  #include "hw/qdev-properties.h"
 +#include "hw/qdev-properties-system.h"
+ #include "hw/sysbus.h"
  #include "qapi/error.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-@@ -1200,6 +1201,7 @@ static void ct3d_reset(DeviceState *dev)
-     uint32_t *reg_state = ct3d->cxl_cstate.crb.cache_mem_registers;
-     uint32_t *write_msk = ct3d->cxl_cstate.crb.cache_mem_regs_write_mask;
- 
-+    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed);
-     cxl_component_register_init_common(reg_state, write_msk, CXL2_TYPE3_DEVICE);
-     cxl_device_register_init_t3(ct3d);
- 
-@@ -1229,6 +1231,10 @@ static Property ct3_props[] = {
-     DEFINE_PROP_UINT8("num-dc-regions", CXLType3Dev, dc.num_regions, 0),
-     DEFINE_PROP_LINK("volatile-dc-memdev", CXLType3Dev, dc.host_dc,
-                      TYPE_MEMORY_BACKEND, HostMemoryBackend *),
-+    DEFINE_PROP_PCIE_LINK_SPEED("x-speed", CXLType3Dev,
-+                                speed, PCIE_LINK_SPEED_32),
-+    DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLType3Dev,
-+                                width, PCIE_LINK_WIDTH_16),
-     DEFINE_PROP_END_OF_LIST(),
+ #include "hw/cxl/cxl.h"
+@@ -206,6 +207,10 @@ static Property gen_rp_props[] = {
+                      -1),
+     DEFINE_PROP_SIZE("pref64-reserve", CXLRootPort, res_reserve.mem_pref_64,
+                      -1),
++    DEFINE_PROP_PCIE_LINK_SPEED("x-speed", PCIESlot,
++                                speed, PCIE_LINK_SPEED_64),
++    DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
++                                width, PCIE_LINK_WIDTH_32),
+     DEFINE_PROP_END_OF_LIST()
  };
  
 -- 
