@@ -4,54 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91C1FD132B5
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 12:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA9D3D132B5
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 12:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7w3d-0007SW-Oc; Mon, 04 Nov 2024 07:19:45 -0500
+	id 1t7w7X-0000rf-Jj; Mon, 04 Nov 2024 07:23:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=br0a=R7=kaod.org=clg@ozlabs.org>)
- id 1t7w3c-0007SE-HD
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:19:44 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t7w7W-0000rK-1d
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:23:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=br0a=R7=kaod.org=clg@ozlabs.org>)
- id 1t7w3a-0007QH-5d
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:19:44 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XhrBD2qTzz4xCV;
- Mon,  4 Nov 2024 23:19:32 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XhrBB3rjQz4x8S;
- Mon,  4 Nov 2024 23:19:30 +1100 (AEDT)
-Message-ID: <c88e891e-153e-4fc3-bb10-6b9dff5e7789@kaod.org>
-Date: Mon, 4 Nov 2024 13:19:27 +0100
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t7w7T-00083v-Qh
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 07:23:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730723021;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=A+bRSgOp9ibYD55f28Gf+owCeO4wYGmYzCLyOiLBUYM=;
+ b=F+miqm09TzvA4B8sog5N9EfYL6ta536xM3oguF0SrQ7SZJz4XrI9SoH98IHNEez7HX1UQp
+ s2idlj9G7L/0vhRRK2PAcogf6HPLZUTDCv7YVnt3jaUKwhAcVj6RFA2fNDRBhi/eTc8DZ6
+ 1qUwedndOU9KwpT8aAF151JJyLzCvvA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-122--2Ol_TwKOtygj1X58lNz3w-1; Mon, 04 Nov 2024 07:23:40 -0500
+X-MC-Unique: -2Ol_TwKOtygj1X58lNz3w-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d458087c0so3058885f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 04:23:40 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730723019; x=1731327819;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=A+bRSgOp9ibYD55f28Gf+owCeO4wYGmYzCLyOiLBUYM=;
+ b=EynXRq5bPhK9Qrsoc+jLWkU3MG3apyxxTg8cLWabvlbze/R7/Lk2UVE8HqHFJG8evc
+ kwNPslonUFSc10o7+b9fFqHAv/3k8Js8xkoPsAxQYFoFxEe4olQyGrhhm1FrAjrSQ2X1
+ QRe5oOHS3Fz7bL5AI7KOINSpJubaxPmGtUDOlFobqR1R2VPdzRKbd0V0ixjgu01kRi2a
+ nUjGGkm9QNogFRXTPET4j+o7Yfe+eyk3mOFBNvZR2f9gSlDalp+ZJvparvnDkMdcPRKq
+ OZM7PDAcboAtkmbqPA1H2CkkZ6dqKS/AQoDHie6XqRomtVe7sMYZfWsPNhdC0vkIoI5w
+ AECA==
+X-Gm-Message-State: AOJu0YypArHQDzmPaFYjzDMY+U4vBpwFh8eQRyDv/Wt75LRUrCoQJTHv
+ XCWzvQaGC7KG3QQSDHc1Z/AqeZQDiKSz2g9b2UKVHyjdlex39vN/O/VUPh2V0uBT9cfP683v9ac
+ m7b9sdf0QfclOgSb3ASptoC8d4bZd/MOG8wh8yNhqL23tYRJoWge16SPm/LWiWwdWM8QGjbv97h
+ KjpWXwidN7xF/EO9Aa/CWxRbBUNZA=
+X-Received: by 2002:a05:600c:4301:b0:431:4e25:fe31 with SMTP id
+ 5b1f17b1804b1-4328308555cmr96478275e9.12.1730723019124; 
+ Mon, 04 Nov 2024 04:23:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE1gDqEIOtaTZYycKpgy6ss5FT9jzZFnmWzeqCNlpKYgnlNfxZMudepsKwcOCgHnkytB6jdmZR0jT18MSvgwGk=
+X-Received: by 2002:a05:600c:4301:b0:431:4e25:fe31 with SMTP id
+ 5b1f17b1804b1-4328308555cmr96478155e9.12.1730723018770; Mon, 04 Nov 2024
+ 04:23:38 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: check-function failing on func-arm-arm_aspeed
-To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- QEMU Developers <qemu-devel@nongnu.org>
-Cc: "Daniel P. Berrange" <berrange@redhat.com>
-References: <CAFEAcA_Z+o3HYfjapAeADAmjJqTYvswAfAbtj8i=3rSBDLwsyA@mail.gmail.com>
- <28eba1fd-f5d8-4755-b8bb-074d3c087a75@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <28eba1fd-f5d8-4755-b8bb-074d3c087a75@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=br0a=R7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241029150908.1136894-1-ppandit@redhat.com>
+ <20241029150908.1136894-4-ppandit@redhat.com>
+ <ZyTnWYyHlrJUYQRB@x1n>
+In-Reply-To: <ZyTnWYyHlrJUYQRB@x1n>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Mon, 4 Nov 2024 17:53:22 +0530
+Message-ID: <CAE8KmOzD3L2kO7AucYcyVEbjh-qc5H_1Xc9A2VPxT9mX_8nMGg@mail.gmail.com>
+Subject: Re: [PATCH 3/5] migration: remove multifd check with postcopy
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,98 +98,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/4/24 13:12, Thomas Huth wrote:
-> On 28/10/2024 18.14, Peter Maydell wrote:
->> Trying a "make check-functional" I find that the func-arm-arm_aspeed
->> test seems to hit a timeout:
->>
->> 18/18 qemu:func-thorough+func-arm-thorough+thorough /
->> func-arm-arm_aspeed              TIMEOUT        600.08s   killed by
->> signal 15 SIGTERM
->>
->> This is with commit cea8ac78545a.
-> 
-> Cédric, is it working reliable for you?
+On Fri, 1 Nov 2024 at 20:06, Peter Xu <peterx@redhat.com> wrote:
+> > -    return s->capabilities[MIGRATION_CAPABILITY_MULTIFD];
+> > +    return s->capabilities[MIGRATION_CAPABILITY_MULTIFD]
+> > +            && !migration_in_postcopy();
+> >  }
+>
+> We need to keep this as-is.. I'm afraid.
+> You can always do proper check with multifd & !postcopy in your use cases.
 
-I have never seen this issue on the systems I use. Let me try again.
+* Above change simplifies it a lot. Separate checks as
+migrate_multifd() && !migration_in_postcopy() make it more complicated
+to follow, because migrate_multifd() is often combined with other
+checks like migrate_multifd_flush, or migrate_mapped_ram etc. I was
+hoping to avoid adding one more check to those conditionals. Also,
+with the above change we don't have to explicitly check where to add
+!migration_in_postcopy() check.
 
+* Will try to separate them.
 
-Thanks,
-
-C.
-
-
-
-  
-
-> 
->> Does anybody else see this, or is it some oddity happening only
->> on my local dev machine?
->>
->> The "full log" in testlog-thorough.txt doesn't seem to be
->> very full. All it has for this test is:
->>
->> =================================== 18/18 ====================================
->> test:         qemu:func-thorough+func-arm-thorough+thorough /
->> func-arm-arm_aspeed
->> start time:   16:54:50
->> duration:     600.08s
->> result:       killed by signal 15 SIGTERM
->> command:      G_TEST_SLOW=1
->> PYTHONPATH=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/python:/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/functional
->> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
->> MALLOC_PERTURB_=238
->> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1
->> MESON_TEST_ITERATION=1
->> QEMU_TEST_QEMU_IMG=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/qemu-img
->> MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
->> QEMU_TEST_QEMU_BINARY=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/qemu-system-arm
->> QEMU_BUILD_ROOT=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang
->> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/pyvenv/bin/python3
->> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/functional/test_arm_aspeed.py
->> ----------------------------------- stdout -----------------------------------
->> TAP version 13
->> ok 1 test_arm_aspeed.AST1030Machine.test_ast1030_zephyros_1_04
->> ok 2 test_arm_aspeed.AST1030Machine.test_ast1030_zephyros_1_07
->> ok 3 test_arm_aspeed.AST2x00Machine.test_arm_ast2400_palmetto_openbmc_v2_9_0
->> ==============================================================================
->>
->> Is it possible to get the log to include a pointer to the
->> actual log for the test (including the guest console output)?
->> It's hard to debug tests if they don't report what they're doing.
-> 
-> I tried to add something to the log iff the test case failed (e.g. by
-> checking defaultTestResult().wasSuccessful() or something similar in the
-> tearDown() function of the test), but that does not seem to work ...
-> so all I can suggest right now is to print out the path to the test log
-> unconditionally, something like:
-> 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index aa0146265a..7436f37bc5 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -47,13 +47,14 @@ def setUp(self, bin_prefix):
->           self.logdir = self.workdir
->           self.log = logging.getLogger('qemu-test')
->           self.log.setLevel(logging.DEBUG)
-> -        self._log_fh = logging.FileHandler(os.path.join(self.logdir,
-> -                                                        'base.log'), mode='w')
-> +        log_file_name = os.path.join(self.logdir, 'base.log')
-> +        self._log_fh = logging.FileHandler(log_file_name, mode='w')
->           self._log_fh.setLevel(logging.DEBUG)
->           fileFormatter = logging.Formatter(
->               '%(asctime)s - %(levelname)s: %(message)s')
->           self._log_fh.setFormatter(fileFormatter)
->           self.log.addHandler(self._log_fh)
-> +        print(self.id() + ' log file: ' + log_file_name)
-> 
->       def tearDown(self):
->           self.log.removeHandler(self._log_fh)
-> 
-> Downside is that the message is also always printed if you e.g. run
-> "make check-functional V=1" ... does that still sound ok to you?
-> 
->   Thomas
-> 
+Thank you.
+---
+  - Prasad
 
 
