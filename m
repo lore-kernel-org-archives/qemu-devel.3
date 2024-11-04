@@ -4,96 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A205AD132DF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 15:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7DA0D111A1
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 15:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7zO9-0002hj-JL; Mon, 04 Nov 2024 10:53:09 -0500
+	id 1t7zSg-0003kL-7H; Mon, 04 Nov 2024 10:57:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1t7zO7-0002g5-7L
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:53:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Zhigang.Luo@amd.com>)
+ id 1t7zSe-0003jZ-Na
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:57:48 -0500
+Received: from mail-mw2nam10on2044.outbound.protection.outlook.com
+ ([40.107.94.44] helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1t7zO3-00065h-PK
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:53:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730735582;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7mUA65axYf94RHzQ+FsEaE5eP349wKq6vreKY/gkmjE=;
- b=X+Agbtwxe6HdQ8bJHrhPQNtQBmnyHpe39qSdwqZ1Hhv3yZOuVFGS5vj6WQgdl+MFLhWWI5
- y9qR61t91H47Mw2xU1kNEppUauWXpO504lT1LfRzh53WLdZRHAX72zpA7Zjolp7lpTBVSi
- YPMRlOaNiOwbZAGs/eGElcHB6Hcj8Yw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-287-ASk_Tt4GNlaiYJ9IN22ofw-1; Mon, 04 Nov 2024 10:52:59 -0500
-X-MC-Unique: ASk_Tt4GNlaiYJ9IN22ofw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-431673032e6so26534425e9.0
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 07:52:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730735578; x=1731340378;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7mUA65axYf94RHzQ+FsEaE5eP349wKq6vreKY/gkmjE=;
- b=kb7qe7RD9/xcvEkOUiLQwJk5JquS4mLwmUotFhxkPTvCFC6ciU1bKVLEmK19tydMnR
- QdCw1MF2H4xlZg6ZD8FoVsOAto2UkS8a7RN6bhGgerNhjZflaB+lmCbp4mqSeV4Kv2Sh
- e9xYy6avPeJBVwJvtrdQqhz/AlF3hregW/9F2pehVe034xCdvAoGxbHGKAmrT0mFWjT2
- zdNtFDP+CxdmZhe9Pi/EEPHLhz9hDnrBeHP0r774AuUrmazDTJqpYQavDwWxgsYOqgIe
- EFz58+5QZ31JJefkcT4jeT06KbmnveEF4uNDNBjFVYiQEeDph//RrxiEtF7mNWowE9eF
- F4Ow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvs/MH8O6jfHCNSauXloQik6p7tW4S1KJHt0y5JBeGdBJvqwTKLqzpdC+81+k0cGUPlWHgW84dsW+2@nongnu.org
-X-Gm-Message-State: AOJu0YwqqgW64U5i7sAM8V1/GNya3CxRLNTRH9ywq99BCDCne55HaDOG
- +F+pyZCsuRliIl/nPmELePM4OKTR+Aho3q5L7FvBHiAuPuncOS4Ed+wRb/3lPuyLenFYF/94UcC
- zQ6fPyyRAvsKXooqWcqJrqpN7PJJEoj4Xvr026S6PN7geVVI5fUF+
-X-Received: by 2002:a05:600c:a01:b0:42c:ba83:3f01 with SMTP id
- 5b1f17b1804b1-431bb984e8cmr179170755e9.8.1730735577940; 
- Mon, 04 Nov 2024 07:52:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHM/sgFkPsRHyrJgwZBk+yGqKXTJjw6x9koC6zrD0mNzXVobnNx8Sxn9ebXaRxRRr6GdAwKOw==
-X-Received: by 2002:a05:600c:a01:b0:42c:ba83:3f01 with SMTP id
- 5b1f17b1804b1-431bb984e8cmr179170445e9.8.1730735577520; 
- Mon, 04 Nov 2024 07:52:57 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4327d698144sm162050515e9.39.2024.11.04.07.52.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Nov 2024 07:52:56 -0800 (PST)
-Message-ID: <0007b45a-0278-4dad-8b8f-a65bd0506dc2@redhat.com>
-Date: Mon, 4 Nov 2024 16:52:53 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 00/21] kvm/arm: Introduce a customizable aarch64 KVM host
- model
+ (Exim 4.90_1) (envelope-from <Zhigang.Luo@amd.com>)
+ id 1t7zSc-0006WV-Kr
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 10:57:48 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=w4nGjkWE/FnnlCVsW49EW76qzdsuyEMqVOroYcAQkozJUa3+aY2yW6vL2pL+WMR/b+xzJjf/996Q1uejTlhiWDfvdrTbISaEpXFhNBzuHn/0AiloTavcKbOXsLHAArvNI3QBDOIxQVXAdSt2zAZvE2Yf+nzJWR3YBxfRtXHa7FjqoacjRFmyOkMUGXgMIX+qKJpLK1RYbICx1UwVvRWt+DlU+Gra1ejwn9+QHahkcOXQS1fEOM1b2PHV51r5zUUhB/wJfzkoup7oW4AwuAHBrDwK5csUZgHMc4fVfDtgDkUBwkSB/6IUrsFRt8TvMjbX/pMM2H4a69t0EPDnz3Xv5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+NGr2CwOADCEHDrY6KZUTW+REiBXcLzOyek7WAt1mtc=;
+ b=cY9G9/ow84+CdO8cbzSGVtTdn5jrzK5nXhsJtcYN2zpx8utAC/sthYyCbjGV4v8ASML8OoeDlnVm65tJOgKzyOACwXqQwvO7miiJQ7oJIy/foEctUvRU1FaHLwUNkH8WH7UVHqXBBVbPIStRkALyQUwmmd7u5HW1GWHvun0Xn24KWTMumE1UBG9e7kJxJJ+51vqNRu94CwEiotBOQxbIBeqCWWW2CEC9JXBiG/wmso4yKJ0V3f8HIXt6P7cSvEdxGMTDx/HYBoVikcp/OWg3MPY0lSrvIm4WWhtHSdky/92vA6W6klFy+q7NaP7pt+uGcOe5dMJqIjhkvm6YXhdIgw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+NGr2CwOADCEHDrY6KZUTW+REiBXcLzOyek7WAt1mtc=;
+ b=y4RjFvuQHiOSDyFoxUiTolv6W5aisRosL+tJktAi6sZznfdBuaegvPI8kMFwqEGRDBwNCLhk0uryYB/K7pngbmRVCv5DDDjckm7Whl5iOjonmFgRHYyDTAlRs2lGLfkjig9fIcBzuIGZHyj4ubSFmQ7qo++fq19p+rsvB9ZOBdA=
+Received: from BL1PR12MB5317.namprd12.prod.outlook.com (2603:10b6:208:31f::17)
+ by SN7PR12MB6838.namprd12.prod.outlook.com (2603:10b6:806:266::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.20; Mon, 4 Nov
+ 2024 15:52:36 +0000
+Received: from BL1PR12MB5317.namprd12.prod.outlook.com
+ ([fe80::bb8a:785:463:43ec]) by BL1PR12MB5317.namprd12.prod.outlook.com
+ ([fe80::bb8a:785:463:43ec%4]) with mapi id 15.20.8114.031; Mon, 4 Nov 2024
+ 15:52:36 +0000
+From: "Luo, Zhigang" <Zhigang.Luo@amd.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: RE: How to pass the EFI_MEMORY_SP type to VM in QEMU
+Thread-Topic: How to pass the EFI_MEMORY_SP type to VM in QEMU
+Thread-Index: AdssabKydgSiEnpeS2KT2d6BYKpm8ACNZOCAAAxwIvA=
+Date: Mon, 4 Nov 2024 15:52:36 +0000
+Message-ID: <BL1PR12MB531740B8CB83F8F345011B37F1512@BL1PR12MB5317.namprd12.prod.outlook.com>
+References: <BL1PR12MB5317899723624202EDF03FC8F1562@BL1PR12MB5317.namprd12.prod.outlook.com>
+ <ujqnswmursutk3l235jv7sn6xo32y2fh2cxdmcqttx4mgfoula@3setckow5or6>
+In-Reply-To: <ujqnswmursutk3l235jv7sn6xo32y2fh2cxdmcqttx4mgfoula@3setckow5or6>
+Accept-Language: en-US, en-CA
 Content-Language: en-US
-To: Kashyap Chamarthy <kchamart@redhat.com>
-Cc: eric.auger.pro@gmail.com, cohuck@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <ZxuwZw2plMI6dNyE@pinwheel>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <ZxuwZw2plMI6dNyE@pinwheel>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_ActionId=8babb93c-f729-49dd-bfe6-33607b939f44;
+ MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_ContentBits=0;
+ MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_Enabled=true;
+ MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_Method=Standard;
+ MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_Name=AMD
+ Internal Distribution Only;
+ MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_SetDate=2024-11-04T15:48:43Z;
+ MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_SiteId=3dd8961f-e488-4e60-8e11-a82d994e183d;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL1PR12MB5317:EE_|SN7PR12MB6838:EE_
+x-ms-office365-filtering-correlation-id: c09d7c9b-df3c-41ae-8382-08dcfce8b453
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?yRgenl9Txhm0iS62cMudchXDQodFv3nGTX7oLk3kwX4duNsmy+EvIdIe9/?=
+ =?iso-8859-1?Q?E9hEZDlufBAQtT429g/sWQZ2qtHL8Mybj9x7I8NUU6VHMQ8EVycjS23wvd?=
+ =?iso-8859-1?Q?H7Iot++tBuX7yMr3ArMOsFoOtcG915Y3M84A5BBppdqHSP6066OfhgG8SS?=
+ =?iso-8859-1?Q?DITVgq/n11buAYriWMoFcfgJySBbcsb6ESqZzjbGWE3cGgHLPqDxYILtIm?=
+ =?iso-8859-1?Q?nvMs4XiFY/Rts3PVir1jjjGOYQh6OXVxj2nMP9G1u1szt2JxHF6Sx/XcJf?=
+ =?iso-8859-1?Q?dFxLUdIQpZeqamm0m14VGh27KL3ZXMcS5ZPaBKvG0Iy4L27vAxOXWnSNOi?=
+ =?iso-8859-1?Q?SVPiW4rEZNxLFG7fuXRTugVn0k+1YocWgAQ5noeFlBiOsYoqEzOogTIVWw?=
+ =?iso-8859-1?Q?j3VQc2ylYdXVObVJxDiAidk4x3/bRjsf/6WAuMkX0nZaMCpEwoUQyaG5Iz?=
+ =?iso-8859-1?Q?H0G6i3gUwvWYepG3W/9PcwI9BP+aNNQLUaVU2HJSbWaTuDd2ugIp9FLCBc?=
+ =?iso-8859-1?Q?zxTKBCRhz1u8adOx2odRU1epOcZfldH+Jptst4cywDt4v0CYsYAWYO2Jt+?=
+ =?iso-8859-1?Q?Z4ft4Ni7JLU5AfPyMsdXqS3cBbSvIPmcnLwBvOzKpM3xzbnF2LPomLCavl?=
+ =?iso-8859-1?Q?c89FxG4/K0I6kNSc4vCpBTa5/0CWKLKROqsGb5FiiEtdnNwoOND2xbNVJF?=
+ =?iso-8859-1?Q?go4a1IWzHWvh3gn18rCkVSVV6cO4Q90txgrns9HfC3PrGUe4hf0MArSIXA?=
+ =?iso-8859-1?Q?M+guabIJZQ02JFKDhtsVgHtKP7pYQFsAW3pcDzilfMjjElwvcLMa6/t4qW?=
+ =?iso-8859-1?Q?DcjRBbuvXLtZ3KueGejKEdxjGYiHPpaYWcQQB8GBhHLyq3KjjM3S9pDO7P?=
+ =?iso-8859-1?Q?JB5jnS+uYSNJmA3ZQMJbei/IJFX1mKs5zRC4Rdcg2uFkRWXx+5DExNdut1?=
+ =?iso-8859-1?Q?YDEgBdvcB9OaAjUWmXnzgIL8a3EcmwDQZbOJCe0f/lmBwF0Naugj2+eVrY?=
+ =?iso-8859-1?Q?hcrnBGon3y6vcLKxSRVwaAqSEIPjYHTUBAwcYWp9Kksj8u2FzhU3O9iu5K?=
+ =?iso-8859-1?Q?3lyZQrOalaylESLhVA1pv5l/zPzBAyfJ/kTbMxgE9CNJSmpQ4mFupPOFOA?=
+ =?iso-8859-1?Q?1PiL1YiAlGfxduVQoXlVFdprbeLyXgBmhK1vMKE8cTGhzGsZ5aHhqnSoXt?=
+ =?iso-8859-1?Q?qmDwlqqXKuJe+zhZBDHV27K//5mWglCfozZYE9kaBEkk1JzTJ3h8re9vcB?=
+ =?iso-8859-1?Q?z5EXFyV7Ga4wzdQ23bzGFKTilY4sfKdo1nmwhQPfEYsQO+vwaJz7SsPajz?=
+ =?iso-8859-1?Q?fYa0xNT4xoeD/cFgGpB8lBjaJimNkK0m5sIcJhJIHXRxZaGWJj0wyhnVTI?=
+ =?iso-8859-1?Q?A7IZPyNFsg+EKT/I1INEEDkb1t2DXnEAWNeYZgk3K0D+weCQlwJws=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5317.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?0IlOMVOmBL9SqmV0NjJ7NrZI5lUhUnSJboizO4aZSS1TYdnpRQdvTs+Cie?=
+ =?iso-8859-1?Q?gnAMnNbpGtrsNdh69jgPQRBixidz68VQShiOloGpwyLb3RhZtWKHbi3R5s?=
+ =?iso-8859-1?Q?km61YmsgDYljSbe3sbssIe/BBTie0ThPgLCLsYqN5WszePq4Iue4IYq32C?=
+ =?iso-8859-1?Q?b1++8GzZq4e4kmAoMHwJSnVr7Ik05sMOyqEzube7VH28HpfbpS1FZYK+bm?=
+ =?iso-8859-1?Q?a/b0IqtcSfo15FYT5TPfV/1x6cDqOIqfx2/pdYw5kFeg8pCZAdfNB0ufpF?=
+ =?iso-8859-1?Q?bBlyoByVcvk7IavVGsmOnf+AJ/kNhr/RWH5QcQndjdF3w/Bm8Avw30Ll0a?=
+ =?iso-8859-1?Q?f5Y+pdJ1Lj+xUIUVjgEfv+8WAVaIVZuC8n1momFPmqhkWp7k5Dg5ZPHiz0?=
+ =?iso-8859-1?Q?nrlbtgC543Bwfqx8nXmphGsLGf6QAQcFABNEAwk6/le6ga9KjBf2zfXej+?=
+ =?iso-8859-1?Q?8NjcGDhtzycUeQ6YfUNJvGeD9mlig0hximJR1wAJkNS9hcSwUVG7inYhAr?=
+ =?iso-8859-1?Q?sEhfSvoO0GXySaU840TXkdjlklWT9/OrOZ/FcDF+/4JAb/vV3/YpfqThO9?=
+ =?iso-8859-1?Q?Okwv4RvuBqwxjI+00E9vVm3LaddlLJutPnA5tO5dcfDfLxb5HDXk6FSdlc?=
+ =?iso-8859-1?Q?OlLt3JpKOHk5dwHDOw1JK8t0fgY7V/nvH6SbYME/iDvErw6aQMclI9ahH6?=
+ =?iso-8859-1?Q?hXOHWbe08CxInI12KBPsnYBQ1PW1UaG6al7HicyznvYJj04pnfH+T7Hsqr?=
+ =?iso-8859-1?Q?kW4sF3EdpD4sdWkGqlQ7N4FSoI4PRPpIwAMDM/dklCMTIRG1AOPz5Dl5vr?=
+ =?iso-8859-1?Q?4Sn95iM9KiVCbmPEWt7auRyArqlst7kJx4NiQNedB3DFq3gUSPHL6fyN9+?=
+ =?iso-8859-1?Q?ZDixoLOYKVPcU1C288RTM9oDzaMf+2wnBolKtGwAAPywTBoUy5L/voTydZ?=
+ =?iso-8859-1?Q?WIG8tCpfo2WMItx1GoHya7yZR3z9rMBKjxcU4Rhypo8ZpHysA+fvi7kuOv?=
+ =?iso-8859-1?Q?ITsMNz3TbvcNE1AhKvtYBZg366gjmEhIsgbTIyDFWYCI0/EaSFuPLPILOx?=
+ =?iso-8859-1?Q?ll140sVITMeiRQR1EL/fNi1/B6Rvo8TTHzX6GYbDhG1dQIwowp2Dxl9H2g?=
+ =?iso-8859-1?Q?cY7gyQPcO3ztM1Z4lC2A8XKXMKjChyM0pKogpYmujZsiqKIiDrXE1TGHHM?=
+ =?iso-8859-1?Q?91annv5qc34HIoesl31iS660tQ8rWcinZC+ykCWJI0R+9bKrTc+o1qqCXN?=
+ =?iso-8859-1?Q?3kVjKjxCISt0lef1wO18UsCf4HArR2pt92VQhAXs5fb4u+xlAvSEEvHqKD?=
+ =?iso-8859-1?Q?1HGQR96yj3N1LGi9q5TjHNKCIQmuWwnoZ/xb8FLycsgTno7Et8sXAE9AcQ?=
+ =?iso-8859-1?Q?JKGOzd8Rk8Pz60v8/q0QdMDGp7bE9WICP/R7ab1HFpzuv3IZHzjTl2M2Qw?=
+ =?iso-8859-1?Q?99ZiNjLGKKF5tZvt8YsmTgv8+PKtXuZcSKcSam1Kr4eZ9kNrJomPp+Jich?=
+ =?iso-8859-1?Q?A6bEIAny+1yCBr8QA0wB8V+1mAaNAF6UAreFgEHgu/Wj+3IgjCxeGuMJYN?=
+ =?iso-8859-1?Q?anvMLfnW+oqoBU9TQIefkDhxE7eGXvQWiRKtTT6DFg7+jVFQRaE4Ps6Mb/?=
+ =?iso-8859-1?Q?rLQTvaVGoK7zA=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5317.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c09d7c9b-df3c-41ae-8382-08dcfce8b453
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Nov 2024 15:52:36.7669 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Ufq8H6vB0pwb986avGy9yvdQMj5lPCQWre8SaSexH8UMBxCpG6mOGcqym0i+sSas
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6838
+Received-SPF: permerror client-ip=40.107.94.44;
+ envelope-from=Zhigang.Luo@amd.com;
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -101,7 +155,7 @@ X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,102 +168,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kashyap,
-On 10/25/24 16:51, Kashyap Chamarthy wrote:
-> On Fri, Oct 25, 2024 at 12:17:19PM +0200, Eric Auger wrote:
->
-> Hi Eric,
->
-> I'm new to Arm, so please bear with my questions :)
->
->> This RFC series introduces a KVM host "custom" model.
-> (a) On terminology: as we know, in the x86 world, QEMU uses these
->     terms[1]:
->
->     - Host passthrough
->     - Named CPU models
->     - Then there's the libvirt abstraction, "host-model", that aims to
->       provide the best of 'host-passthrough' + named CPU models.
->
->     Now I see the term "host 'custom' model" here.  Most
->     management-layer tools and libvirt users are familiar with the
->     classic terms "host-model" or "custom".  If we now say "host
->     'custom' model", it can create confusion.  I hope we can settle on
->     one of the existing terms, or create a new term if need be.
->
->     (I'll share one more thought on how layers above libvirt tend to use
->     the term "custom", as a reply to patch 21/21, "arm/cpu-features:
->     Document custom vcpu model".)
-agreed, as replied earlier, custom terminology most probably will be
-dropped.
->
-> (b) The current CPU features doc[2] for Arm doesn't mention "host
->     passthrough" at all.  It is only implied by the last part of this
->     paragraph, from the section titled "A note about CPU models and
->     KVM"[3]:
->
->       "Named CPU models generally do not work with KVM. There are a few
->       cases that do work [...] but mostly if KVM is enabled the 'host'
->       CPU type must be used."
-indeed
->
->     Related: in your reply[4] to Dan in this series, you write: "Having
->     named models is the next thing".  So named CPU models will be a
->     thing in Arm, too?  Then the above statement in the Arm
->     'cpu-features' will need updating :-)
+[AMD Official Use Only - AMD Internal Distribution Only]
 
-Yes named models implementing a baseline are the end goal.
->
-> [...]
->
->> - the QEMU layer does not take care of IDREG field value consistency.
->>   The kernel neither. I imagine this could be the role of the upper
->>   layer to implement a vcpu profile that makes sure settings are
->>   consistent. Here we come to "named" models. What should they look
->>   like on ARM?
-> Are there reasons why they can't be similar to how x86 reports in
-> `qemu-system-x86 -cpu help`?  
->
-> E.g. If it's an NVIDIA "Grace A02" (Neoverse-V2) host, it can report:
->
->     [gracehopper] $> qemu-kvm -cpu help
->     Available CPUs:
->       gracehopper-neoverse-v2
->       cortex-a57 (deprecated)
->       host
->       max
->
-> Or whatever is the preferred nomenclature for ARM.  It also gives users
-> of both x86 and ARM deployments a consistent expectation.  
->
-> Currently on a "Grace A02" ("Neoverse-V2") machine, it reports:
->
->     [gracehopper] $> qemu-kvm -cpu help
->     Available CPUs:
->       cortex-a57 (deprecated)
->       host
->       max
->
-> I see it's because there are no named models yet on ARM :-)
-yes this is definitively because on ARM there is no such named KVM model
-besides cortex-a57 on aarch64.
-on x86 does it return the closest named model?
+Hi Gerd,
 
-Thanks
+Thanks for your response. So, on X86, I need to add a new type in qemu and =
+firmware. Is my understanding correct?
 
-Eric
+Regards,
+Zhigang
+
+-----Original Message-----
+From: Gerd Hoffmann <kraxel@redhat.com>
+Sent: Monday, November 4, 2024 4:53 AM
+To: Luo, Zhigang <Zhigang.Luo@amd.com>
+Cc: qemu-devel@nongnu.org; Philippe Mathieu-Daud=E9 <philmd@linaro.org>
+Subject: Re: How to pass the EFI_MEMORY_SP type to VM in QEMU
+
+On Fri, Nov 01, 2024 at 02:45:44PM +0000, Luo, Zhigang wrote:
+> Dear QEMU Community,
 >
-> [...]
+> I hope this message finds everyone well. My name is Zhigang, and I am cur=
+rently engaged in a project that requires virtualization capabilities provi=
+ded by QEMU. I am reaching out to the community for guidance on a specific =
+configuration that I need to implement.
 >
-> [1] https://www.qemu.org/docs/master/system/i386/cpu.html
-> [2] https://www.qemu.org/docs/master/system/arm/cpu-features.html
-> [3] https://www.qemu.org/docs/master/system/arm/cpu-features.html#a-note-about-cpu-models-and-kvm
-> [4] https://lists.nongnu.org/archive/html/qemu-arm/2024-10/msg00891.html
+> I am looking to pass the EFI_MEMORY_SP (Special Purpose Memory) type memo=
+ry from host to a virtual machine within QEMU. This memory needs to be EFI_=
+MEMORY_SP type in the virtual machine as well. This particular memory type =
+is essential for the functionality of my project, and I have been facing so=
+me difficulties in setting it up correctly.
 >
->
+> I have reviewed the available documentation and resources, but I have not=
+ yet found a clear method to achieve this. I would greatly appreciate it if=
+ anyone could provide insights, share their experiences, or direct me to re=
+levant documentation or examples that pertain to configuring EFI_MEMORY_SP =
+memory type for a VM in QEMU.
+
+The memory map is passed from qemu to firmware using the etc/e820 fw_cfg fi=
+le (on x86).  That would be the natural way to this, for example by taking =
+a approach simliar to the linux kernel and define a type for this (E820_TYP=
+E_SOFT_RESERVED).
+
+On arm / riscv etc. the memory map is passed via device tree from qemu to f=
+irmware, so on these platforms the device tree should be used for EFI_MEMOR=
+Y_SP too.
+
+take care,
+  Gerd
 
 
