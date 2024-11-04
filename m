@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87412D11198
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B1D6D11194
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Nov 2024 00:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t7kqQ-00036q-Pp; Sun, 03 Nov 2024 19:21:23 -0500
+	id 1t7kpP-0007pM-Or; Sun, 03 Nov 2024 19:20:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7kqO-0002uq-ES; Sun, 03 Nov 2024 19:21:20 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1t7kpN-0007ig-DK; Sun, 03 Nov 2024 19:20:17 -0500
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1t7kqM-0002gB-RV; Sun, 03 Nov 2024 19:21:20 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2113da91b53so4803485ad.3; 
- Sun, 03 Nov 2024 16:21:18 -0800 (PST)
+ id 1t7kpL-0002Zr-VL; Sun, 03 Nov 2024 19:20:17 -0500
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-3e600add5dcso1564002b6e.2; 
+ Sun, 03 Nov 2024 16:20:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730679677; x=1731284477; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730679614; x=1731284414; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3rCsO8FJ5YATj1kG2TPiwr4tqEmj8/JXNJYFHfroSY0=;
- b=CJaWLkB84OIize0kGnZuxh0zTZFbWV052eXP97Im0Y4NkNuDqC2sah6Oxe2lDaS6Lz
- mjHQzgm2u+Pv1PrVMDgBhIUbJHjctmYp3P0S9eqocARyWD0m/W9WKhnc0rfPDXkIKea0
- p2FH3fcG+TVzeXvzHkFRiH6LklgW9bDTMYJ5hE1eMaF0e/gTa/h13X2bBlY90VefdGux
- UV0DwkECqwUenrHttuV3lKJuTDsJqeYT8LuLsS7mvT7o5Y43rbcdcuKyGuqQcEhMeHgt
- IZ0iQg3PXAmDODCkSXUGH47Pqe8xZsBYWTQ07uL/HX2Xw2ZHK7MeLsbo2VGpFDZh7dV3
- Bg/Q==
+ bh=I5sPzbUGgSsU4x2ABl9K5sldSfgeOH1YuMonG4CNaHQ=;
+ b=DuJnHZK3JELeRsWnIFALa5Hd+g5mghPsf3HuXRdo7SLccx8mQLu+dhW0F+/Ux6bB0T
+ k/fd4GBQ0YHacz1qHplbqTD40EJaTUGncKP9faKjk5LoedffHIfWPhvr3UwqdexhFEV3
+ ZdUqE8yapoSn6I1wOlD08Ci6SxoJznHnmds6qb5kj7ZdDzudZYeJaUazWOPVhxNPH0HR
+ pliT/vVcEh3VCgQqYIHdpxGce804pRhn5crO+W4iDZ0W+6KakcPceJSAfdAPYQJoOeUL
+ wwx4aFmMY36xMGIXp071YYJ1W49jUjupiBRCHhYS/+XT+/ASTRAc9eZs5GHGk4nv1hwb
+ SMIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730679677; x=1731284477;
+ d=1e100.net; s=20230601; t=1730679614; x=1731284414;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3rCsO8FJ5YATj1kG2TPiwr4tqEmj8/JXNJYFHfroSY0=;
- b=rX4JMJUSHFRC8OexujBcYaGcatJMDtklCbK12Vw87RFwmUC1VdXdeeDOMRXGBvW9Mf
- sqLItnlNEWlbUI4VBz2y+y9f2T6B060N5GSjjHSgBaMN3OVeAU7ZRNcMpAZAK6zTLSyH
- 4z1Ixm71WyTLQeVs/NW8YQkFN/KP4Ld/r+ttlkg4qUxdZbfmSdaMmW4VtObkQuL9O5vH
- xtxIyh9ovnD2PMrNgsKR3xm+/3FCFCvnUlVgQisJncJnpGtpXAoaDvfiA0DUZWiIyHYX
- ZCK/4UQiWIOHOa1mXTEpzXtALubPEYYdnbPRkJd+/wCHWB65psYRTjPqNNgd6i/XZNQk
- aTkw==
+ bh=I5sPzbUGgSsU4x2ABl9K5sldSfgeOH1YuMonG4CNaHQ=;
+ b=Ck+iAzOOIU7c8D3vPAK5k4bGk9+TVI+YG6mpwQbifIAHotbaHch8OtBz3hACnesjxc
+ a6OPlD6Zp5yvfDTPd4cyrftdrT0Wv+BMgvT/GBWB6k07nEuGf+a8o74IIvb22Sl4faqF
+ SWnlZhv4yct4u1TtZWattmnYGwrCT3+xsN4sTDReFls4c7uF+GUXoHBLQOSPiEnFD4rx
+ vh12rXN6a9qrSHZ9ByKJ4D6+q/Uj9W/M94kHaTVdsWWAwf81Xuo4L/TaLDLjvUirzesg
+ xTMPiVYndiV3IB9bB7MD8GcIDXhH4ciLUzQoi2w/UUfz8/0SVtCmo4waMlWOxj1Wwr5N
+ HnMg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVjyZA9e11g+BzVoBqkobFSLutovwOxPSFxIEK5eIQvpxidhcoIyups2cezYjV3ipO64EssWP+c2A==@nongnu.org
-X-Gm-Message-State: AOJu0YzuJpi3gkM3jbIVFM4M+jJ6tc9I/Q/SLYNaU5ipkccxZfk/aTZL
- cvfbwlmLGxULmfHkeOESDULCYAjGt0Ny1Gn+xFqmD7REnV9ul9+1BJWYcA==
-X-Google-Smtp-Source: AGHT+IEZOEakw6vkbz2ZHuR1LmhNcrBL8rVIgn9ONia0MwvUirurq16xAeuBPvyhVqHQK2zLhBiJQg==
-X-Received: by 2002:a17:902:e851:b0:20c:94f6:3e03 with SMTP id
- d9443c01a7336-210c6c6a272mr410061685ad.47.1730679676894; 
- Sun, 03 Nov 2024 16:21:16 -0800 (PST)
+ AJvYcCV1FpfHs3gz2ft3FLBevamr+P9lQqWDoG3wi9vsfxN5jZs0G0XALfkWuE6LT1PSIBCnrz5jjLC+2g==@nongnu.org
+X-Gm-Message-State: AOJu0Yz59jigthWszd2PF+bkLuT8TThq6BSS3xMVLF2/3dc7d1wPFL13
+ kYoeDntAvO0nM15yhruspO0xCt3e0nEbL0d8ES1uwQpdSs2j5bEtWLf1gA==
+X-Google-Smtp-Source: AGHT+IH87p294n2CcfhzwQlusQ1FEG2uTgbaXNTUeEZXavl/i6ZNpysioGZhmsFqgSU7Ozel3yqTSQ==
+X-Received: by 2002:a05:6808:2e8b:b0:3e6:ccc:2d91 with SMTP id
+ 5614622812f47-3e758c9d90amr9372381b6e.29.1730679613649; 
+ Sun, 03 Nov 2024 16:20:13 -0800 (PST)
 Received: from wheely.local0.net (124-171-217-17.tpgi.com.au. [124.171.217.17])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.21.13
+ 41be03b00d2f7-7ee45a0081esm5900648a12.59.2024.11.03.16.20.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Nov 2024 16:21:16 -0800 (PST)
+ Sun, 03 Nov 2024 16:20:13 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Aditya Gupta <adityag@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>
-Subject: [PULL 34/67] ppc/pseries: Add Power11 cpu type
-Date: Mon,  4 Nov 2024 10:18:23 +1000
-Message-ID: <20241104001900.682660-35-npiggin@gmail.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 17/67] ppc/spapr: remove deprecated machine pseries-2.1
+Date: Mon,  4 Nov 2024 10:18:06 +1000
+Message-ID: <20241104001900.682660-18-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241104001900.682660-1-npiggin@gmail.com>
 References: <20241104001900.682660-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=npiggin@gmail.com; helo=mail-oi1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,59 +97,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Add sPAPR CPU Core definition for Power11
+Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
+deprecated with reasons mentioned in its commit log.
+Removing pseries-2.1 specific code with this patch for now.
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Suggested-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- docs/system/ppc/pseries.rst | 17 +++++++++++++----
- hw/ppc/spapr_cpu_core.c     |  1 +
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ hw/core/machine.c   | 11 -----------
+ hw/ppc/spapr.c      | 11 -----------
+ include/hw/boards.h |  3 ---
+ 3 files changed, 25 deletions(-)
 
-diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
-index a876d897b6..bbc51aa7fc 100644
---- a/docs/system/ppc/pseries.rst
-+++ b/docs/system/ppc/pseries.rst
-@@ -14,10 +14,19 @@ virtualization capabilities.
- Supported devices
- =================
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index adaba17eba..a41d1dbe26 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -297,17 +297,6 @@ const size_t hw_compat_2_3_len = G_N_ELEMENTS(hw_compat_2_3);
+ GlobalProperty hw_compat_2_2[] = {};
+ const size_t hw_compat_2_2_len = G_N_ELEMENTS(hw_compat_2_2);
  
-- * Multi processor support for many Power processors generations: POWER7,
--   POWER7+, POWER8, POWER8NVL, POWER9, and Power10. Support for POWER5+ exists,
--   but its state is unknown.
-- * Interrupt Controller, XICS (POWER8) and XIVE (POWER9 and Power10)
-+ * Multi processor support for many Power processors generations:
-+   - POWER7, POWER7+
-+   - POWER8, POWER8NVL
-+   - POWER9
-+   - Power10
-+   - Power11
-+   - Support for POWER5+ also exists, works with correct kernel/userspace
-+ * Interrupt Controller
-+    - XICS (POWER8)
-+    - XIVE (Supported by below:)
-+        - POWER9
-+        - Power10
-+        - Power11
-  * vPHB PCIe Host bridge.
-  * vscsi and vnet devices, compatible with the same devices available on a
-    PowerVM hypervisor with VIOS managing LPARs.
-diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-index 1a84345f36..ada439e831 100644
---- a/hw/ppc/spapr_cpu_core.c
-+++ b/hw/ppc/spapr_cpu_core.c
-@@ -405,6 +405,7 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
-     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
-+    DEFINE_SPAPR_CPU_CORE_TYPE("power11_v2.0"),
- #ifdef CONFIG_KVM
-     DEFINE_SPAPR_CPU_CORE_TYPE("host"),
+-GlobalProperty hw_compat_2_1[] = {
+-    { "intel-hda", "old_msi_addr", "on" },
+-    { "VGA", "qemu-extended-regs", "off" },
+-    { "secondary-vga", "qemu-extended-regs", "off" },
+-    { "virtio-scsi-pci", "any_layout", "off" },
+-    { "usb-mouse", "usb_version", "1" },
+-    { "usb-kbd", "usb_version", "1" },
+-    { "virtio-pci", "virtio-pci-bus-master-bug-migration", "on" },
+-};
+-const size_t hw_compat_2_1_len = G_N_ELEMENTS(hw_compat_2_1);
+-
+ MachineState *current_machine;
+ 
+ static char *machine_get_kernel(Object *obj, Error **errp)
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 2c10a70a48..e9518ff8b3 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -5381,17 +5381,6 @@ static void spapr_machine_2_2_class_options(MachineClass *mc)
+ }
+ DEFINE_SPAPR_MACHINE(2, 2);
+ 
+-/*
+- * pseries-2.1
+- */
+-
+-static void spapr_machine_2_1_class_options(MachineClass *mc)
+-{
+-    spapr_machine_2_2_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_1, hw_compat_2_1_len);
+-}
+-DEFINE_SPAPR_MACHINE(2, 1);
+-
+ static void spapr_machine_register_types(void)
+ {
+     type_register_static(&spapr_machine_info);
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 5966069baa..44d19e1ffc 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -828,7 +828,4 @@ extern const size_t hw_compat_2_3_len;
+ extern GlobalProperty hw_compat_2_2[];
+ extern const size_t hw_compat_2_2_len;
+ 
+-extern GlobalProperty hw_compat_2_1[];
+-extern const size_t hw_compat_2_1_len;
+-
  #endif
 -- 
 2.45.2
