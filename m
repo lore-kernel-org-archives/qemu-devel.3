@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A078BD1267D
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 10:46:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA9DD1267D
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 10:47:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8H4P-00077D-99; Tue, 05 Nov 2024 05:45:57 -0500
+	id 1t8H5O-0007gc-AN; Tue, 05 Nov 2024 05:46:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8H4M-000762-2q
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:45:54 -0500
+ id 1t8H5H-0007gB-3E
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:46:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8H4J-0003iR-66
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:45:52 -0500
+ id 1t8H5F-0003kI-B0
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:46:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730803550;
+ s=mimecast20190719; t=1730803607;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=a4sSjMu6dy5LcbB+3OMviQ9WUC614rkcnLLhl6yR5pw=;
- b=NN3q0GqZA700sUYfXxlqcnmYsy/2g9UtWho0Sw6ufaLqAFzV6qpKdPJ0PUHeg648pCoAvr
- gBR1GNokjXtW0Axj5cMuISAJZy40OFh2/kLP+22V664Exda8TCQwiS2T1DsiqmyC1EJrLg
- kdnd4KObtcQjOFNuIH/5RoQKv5IUOU8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=/WEwL9TkWSySnRfQq6doKrURf9dgdkbqXzEf7AEuYg4=;
+ b=LlrOv/TJCy/dy5I1iQNG+t5P7tQ4t5EaeJMunsvwS2qJg0fQs7TETDw8naz9Qi/Gwdikxc
+ 4uS6knddUwTzOCirWkSzv3/nTeMN9q0qZz5jZAhf3+tv0IU6rzxTu7K4QZUi4a75nBOAZA
+ ydyj38E5ed8jeYa4+osLeh+g7cG6LJk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-4i_KOLDhOV-B2tk-F2jYrQ-1; Tue,
- 05 Nov 2024 05:45:46 -0500
-X-MC-Unique: 4i_KOLDhOV-B2tk-F2jYrQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-367-54uIS3cwMyOIjc-eRyHuIQ-1; Tue,
+ 05 Nov 2024 05:46:46 -0500
+X-MC-Unique: 54uIS3cwMyOIjc-eRyHuIQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E8F61955EE8; Tue,  5 Nov 2024 10:45:44 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8D0861956048; Tue,  5 Nov 2024 10:46:44 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.52])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E1C53000198; Tue,  5 Nov 2024 10:45:38 +0000 (UTC)
-Date: Tue, 5 Nov 2024 10:45:34 +0000
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7633E19560A2; Tue,  5 Nov 2024 10:46:38 +0000 (UTC)
+Date: Tue, 5 Nov 2024 10:46:34 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
@@ -59,17 +59,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 23/60] headers: Add definitions from UEFI spec for
- volumes, resources, etc...
-Message-ID: <Zyn3TsMTINMpg5zF@redhat.com>
+Subject: Re: [PATCH v6 24/60] i386/tdx: Setup the TD HOB list
+Message-ID: <Zyn3irziLxvAzNCU@redhat.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-24-xiaoyao.li@intel.com>
+ <20241105062408.3533704-25-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241105062408.3533704-24-xiaoyao.li@intel.com>
+In-Reply-To: <20241105062408.3533704-25-xiaoyao.li@intel.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -96,34 +95,56 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 05, 2024 at 01:23:31AM -0500, Xiaoyao Li wrote:
-> Add UEFI definitions for literals, enums, structs, GUIDs, etc... that
-> will be used by TDX to build the UEFI Hand-Off Block (HOB) that is passed
-> to the Trusted Domain Virtual Firmware (TDVF).
+On Tue, Nov 05, 2024 at 01:23:32AM -0500, Xiaoyao Li wrote:
+> The TD HOB list is used to pass the information from VMM to TDVF. The TD
+> HOB must include PHIT HOB and Resource Descriptor HOB. More details can
+> be found in TDVF specification and PI specification.
 > 
-> All values come from the UEFI specification [1], PI spec [2] and TDVF
-> design guide[3].
+> Build the TD HOB in TDX's machine_init_done callback.
 > 
-> [1] UEFI Specification v2.1.0 https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_Aug29.pdf
-> [2] UEFI PI spec v1.8 https://uefi.org/sites/default/files/resources/UEFI_PI_Spec_1_8_March3.pdf
-> [3] https://software.intel.com/content/dam/develop/external/us/en/documents/tdx-virtual-firmware-design-guide-rev-1.pdf
-> 
+> Co-developed-by: Isaku Yamahata <isaku.yamahata@intel.com>
+> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+> Co-developed-by: Sean Christopherson <sean.j.christopherson@intel.com>
+> Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->  include/standard-headers/uefi/uefi.h | 198 +++++++++++++++++++++++++++
->  1 file changed, 198 insertions(+)
->  create mode 100644 include/standard-headers/uefi/uefi.h
 > 
-> diff --git a/include/standard-headers/uefi/uefi.h b/include/standard-headers/uefi/uefi.h
+> ---
+> Changes in v1:
+>   - drop the code of adding mmio resources since OVMF prepares all the
+>     MMIO hob itself.
+> ---
+>  hw/i386/meson.build   |   2 +-
+>  hw/i386/tdvf-hob.c    | 147 ++++++++++++++++++++++++++++++++++++++++++
+>  hw/i386/tdvf-hob.h    |  24 +++++++
+>  target/i386/kvm/tdx.c |  16 +++++
+>  4 files changed, 188 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/i386/tdvf-hob.c
+>  create mode 100644 hw/i386/tdvf-hob.h
+> 
+> diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+> index 3bc1da2b6eb4..7896f348cff8 100644
+> --- a/hw/i386/meson.build
+> +++ b/hw/i386/meson.build
+> @@ -32,7 +32,7 @@ i386_ss.add(when: 'CONFIG_PC', if_true: files(
+>    'port92.c'))
+>  i386_ss.add(when: 'CONFIG_X86_FW_OVMF', if_true: files('pc_sysfw_ovmf.c'),
+>                                          if_false: files('pc_sysfw_ovmf-stubs.c'))
+> -i386_ss.add(when: 'CONFIG_TDX', if_true: files('tdvf.c'))
+> +i386_ss.add(when: 'CONFIG_TDX', if_true: files('tdvf.c', 'tdvf-hob.c'))
+>  
+>  subdir('kvm')
+>  subdir('xen')
+> diff --git a/hw/i386/tdvf-hob.c b/hw/i386/tdvf-hob.c
 > new file mode 100644
-> index 000000000000..b15aba796156
+> index 000000000000..e00de256ea8c
 > --- /dev/null
-> +++ b/include/standard-headers/uefi/uefi.h
-> @@ -0,0 +1,198 @@
+> +++ b/hw/i386/tdvf-hob.c
+> @@ -0,0 +1,147 @@
 > +/*
-> + * Copyright (C) 2020 Intel Corporation
-> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> + * Copyright (c) 2020 Intel Corporation
 > + * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
 > + *                        <isaku.yamahata at intel.com>
 > + *
@@ -139,10 +160,21 @@ On Tue, Nov 05, 2024 at 01:23:31AM -0500, Xiaoyao Li wrote:
 > +
 > + * You should have received a copy of the GNU General Public License along
 > + * with this program; if not, see <http://www.gnu.org/licenses/>.
-> + *
 > + */
 
-Remove the boilerplate text in favour of adding a SPDX tag.
+Remove the boilerplate in favour of the SPDX tag.
+
+
+> diff --git a/hw/i386/tdvf-hob.h b/hw/i386/tdvf-hob.h
+> new file mode 100644
+> index 000000000000..1b737e946a8d
+> --- /dev/null
+> +++ b/hw/i386/tdvf-hob.h
+> @@ -0,0 +1,24 @@
+> +#ifndef HW_I386_TD_HOB_H
+> +#define HW_I386_TD_HOB_H
+
+Add the SPDX tag to this file
 
 
 With regards,
