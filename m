@@ -4,58 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E8D3D2B92F
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 14:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F4B8D2B92F
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 14:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8KPF-00030k-Sx; Tue, 05 Nov 2024 09:19:42 -0500
+	id 1t8KSE-0004Uh-Ow; Tue, 05 Nov 2024 09:22:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1t8KP8-0002wg-Sm; Tue, 05 Nov 2024 09:19:36 -0500
-Received: from rev.ng ([94.130.142.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1t8KP6-0004S1-Qh; Tue, 05 Nov 2024 09:19:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Sf2nRsa9R3FTfHINSwX9ba91xIokEkud4HD26k+2D6w=; b=ITjCPNtRY5fld6P
- SejlSXKieV1OUcc4iMHFQEBBfJsRMIZVRZKPKRaJ53J7gnlU0h+Prunyzg6PmGIJFjbZXEOZec+52
- 7C8ZYZ0NvvDbZ7P2hCniL/+edLN4VJbN87Cg8KF2RDX+CVEA6bBKH8MdAevxjE1hpcGhUULZ3HQve
- j0=;
-Date: Tue, 5 Nov 2024 15:22:14 +0100
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>, 
- Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, devel@lists.libvirt.org, 
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 02/19] hw/microblaze: Deprecate big-endian
- petalogix-ml605 & xlnx-zynqmp-pmu
-Message-ID: <q2ii7cmjqqxx2eudb7d3nkkx3oaxv7yfi2gnm75wmqk7s23zuf@7c32yuqtrh5r>
-References: <20241105130431.22564-1-philmd@linaro.org>
- <20241105130431.22564-3-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8KS9-0004U8-V7
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 09:22:42 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8KS8-0004qK-9n
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 09:22:41 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5cedea84d77so2288977a12.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 06:22:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730816558; x=1731421358; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=e+O8wEaYDT7N003T3XKKqDpUO0MnxeOW2tpsI0oa4x4=;
+ b=OlHnL0jy3z96pkl+o9gC5YN3gbQ/QcCPFBP/TlVkb24lxcfxRGqAw1pbwhxPYkgIYv
+ AeOUKZZfJoTp21PfyDJYZFLIzUrAYS4CC2P8Jw3ZwiOOx+jYb6YxBLM+Eg6b238DEA/j
+ Y32WrQ000dL8mec7z0iZS3vMlnmMi+Uqdwej6Gyqm4FGUDcSfgyuNo+A6pRKwaEA8HWp
+ O/JUvsucKGMeGl3Z14PjIdwER/nw1MklcACuqAA3r21rA0hsC4S4tcfWNIIQsbKYgQxq
+ jigvpoAYqP2gSx2hwtewFgO8WI0hXnFn7ncdSxF+DQTeZ2Fgr0W3Gz/lQS0KwwbThKXj
+ 7mnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730816558; x=1731421358;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=e+O8wEaYDT7N003T3XKKqDpUO0MnxeOW2tpsI0oa4x4=;
+ b=GoD1Xq+gLBnJMdyIX0WC3UsFE2IuMUeg5D2jFzCTV0v70GHngBUa5bjq0H9XnkmFfS
+ FtoLLIUoCIzoURx3lvY+ARVtRMMSzkeJWJuwa8AzUuj2D9ySw8feRn7+HFN9NeIMTQIS
+ rJgweMjxdFA2TWJfi9+TaqQZDDU32jFS9E0ot99wA9LqHFBKFZu1jr3+TA/sD71fnxoh
+ 0czuJkIgC2Z41u5iGHKTLqrL3QVepl7RluBUssYkZ2us+OKIHMFdtiG7j84bBU1JPB72
+ qghBrWRKEnAukklXEP6UGlptzpKt38b+V4n1nNqXjjtzytvrJhgSQbr5Q9z+kMM7XBzM
+ IHPA==
+X-Gm-Message-State: AOJu0YwWp/YUypij4idNnF0BEiqGeY1oNDF7YxDpAO2GBxnttqqSPrEf
+ EDWyjYfOPvyTOMxihZHTpPkQEi6bZqHjSiYk/9usWbaJX1cVro0z2e6A5JKSgp5Pmx6VX0rUQ5a
+ zDJQwkDY2LJbEe+CNYFOyxat6qMfZ2Te0OyRugQ==
+X-Google-Smtp-Source: AGHT+IHYqtk8V1auaFuZfpaBr3yYQeHDoyUnp5Y8WwPvA2OJ8OfNxdkO33/CatK5ZXXskVUXVIfJLToA+1x232LakVM=
+X-Received: by 2002:a05:6402:13d5:b0:5ce:cf30:6840 with SMTP id
+ 4fb4d7f45d1cf-5cecf306bc0mr9787275a12.14.1730816558419; Tue, 05 Nov 2024
+ 06:22:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241105130431.22564-3-philmd@linaro.org>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+References: <20241104001900.682660-1-npiggin@gmail.com>
+In-Reply-To: <20241104001900.682660-1-npiggin@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 Nov 2024 14:22:27 +0000
+Message-ID: <CAFEAcA9-211YehAQpD3jg7KEAUS3F+h4uKNVD1AH7zwsQPtYMQ@mail.gmail.com>
+Subject: Re: [PULL 00/67] ppc-for-9.2-1 queue
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,32 +84,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/11/24, Philippe Mathieu-Daudé wrote:
-> The petalogix-ml605 machine was explicitly added as little-endian only
-> machine in commit 00914b7d970 ("microblaze: Add PetaLogix ml605 MMU
-> little-endian ref design"). Mark the big-endian version as deprecated.
-> 
-> When the xlnx-zynqmp-pmu machine's CPU was added in commit 133d23b3ad1
-> ("xlnx-zynqmp-pmu: Add the CPU and memory"), its 'endianness' property
-> was set to %true, thus wired in little endianness.
-> 
-> Both machine are included in the big-endian system binary, while their
-> CPU is working in little-endian. Unlikely to work as it. Deprecate now
-> as broken config so we can remove soon.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  docs/about/deprecated.rst                        | 6 ++++++
->  configs/devices/microblaze-softmmu/default.mak   | 2 --
->  configs/devices/microblazeel-softmmu/default.mak | 5 ++++-
->  hw/microblaze/petalogix_ml605_mmu.c              | 7 ++++++-
->  hw/microblaze/xlnx-zynqmp-pmu.c                  | 8 ++++++--
->  5 files changed, 22 insertions(+), 6 deletions(-)
+On Mon, 4 Nov 2024 at 00:20, Nicholas Piggin <npiggin@gmail.com> wrote:
+>
+> The following changes since commit 92ec7805190313c9e628f8fc4eb4f932c15247bd:
+>
+>   Merge tag 'pull-riscv-to-apply-20241031-1' of https://github.com/alistair23/qemu into staging (2024-10-31 16:34:25 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.2-1-20241104
+>
+> for you to fetch changes up to bd4be4d9bd20a252e677239a18b6409ecee98f56:
+>
+>   MAINTAINERS: Remove myself as reviewer (2024-11-04 10:09:36 +1000)
+>
+> ----------------------------------------------------------------
+> * Various bug fixes
+> * Big cleanup of deprecated machines
+> * Power11 support for spapr
+> * XIVE improvements
+> * Goodbye Cedric and David as ppc reviewers, thank you both o7
+>
 
-Reviewed-by: Anton Johansson <anjo@rev.ng>
+
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
+
+-- PMM
 
