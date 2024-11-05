@@ -4,108 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3624D3177E
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 18:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56317D3177F
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 18:25:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Nzn-00053L-E7; Tue, 05 Nov 2024 13:09:39 -0500
+	id 1t8ODz-0002jG-Qb; Tue, 05 Nov 2024 13:24:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8Nzl-00050b-Og
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:09:37 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8Nzi-0004xE-8K
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:09:36 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1ED771F813;
- Tue,  5 Nov 2024 18:09:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730830173; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8ODr-0002il-N6
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:24:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8ODp-0006Ge-F8
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:24:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730831047;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=a2yFMWs3r215nc/lz7lV8nMLbQszUz7P7neQ2wje3q0=;
- b=Hp81aVPcMkE4eJePXBZrIUpWXZFoxifg/jEf+8WOBtp4zVPziili14y7BhPEteVpqtxz4E
- 8TfCM8yl0zYLusUfaofqKbCQHbL9WpE5Q+luFfSgQUbY/RtC/id32+k1Q8Cms2CTP3bxn4
- jGsq1gOuTsim+apD8pOef0zMZQmgAvQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730830173;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=a2yFMWs3r215nc/lz7lV8nMLbQszUz7P7neQ2wje3q0=;
- b=ITY7LGnHnf2WXYPk+LM+WEO6jy/tez+tclpg9+wIxcq1kbbIBQdmVplVxbk+YPvSpPj3dF
- Gx6thQS3fXrXRtDQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730830173; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=a2yFMWs3r215nc/lz7lV8nMLbQszUz7P7neQ2wje3q0=;
- b=Hp81aVPcMkE4eJePXBZrIUpWXZFoxifg/jEf+8WOBtp4zVPziili14y7BhPEteVpqtxz4E
- 8TfCM8yl0zYLusUfaofqKbCQHbL9WpE5Q+luFfSgQUbY/RtC/id32+k1Q8Cms2CTP3bxn4
- jGsq1gOuTsim+apD8pOef0zMZQmgAvQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730830173;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=a2yFMWs3r215nc/lz7lV8nMLbQszUz7P7neQ2wje3q0=;
- b=ITY7LGnHnf2WXYPk+LM+WEO6jy/tez+tclpg9+wIxcq1kbbIBQdmVplVxbk+YPvSpPj3dF
- Gx6thQS3fXrXRtDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 09AD31394A;
- Tue,  5 Nov 2024 18:09:30 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id mLdXMFpfKmeCZwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 05 Nov 2024 18:09:30 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 17/22] tests/qtest/migration: Split CPR tests
-Date: Tue,  5 Nov 2024 15:08:32 -0300
-Message-Id: <20241105180837.5990-18-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20241105180837.5990-1-farosas@suse.de>
-References: <20241105180837.5990-1-farosas@suse.de>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=nT6o0alT//o5rIREHqaPOaXSA4kw6GIk7ibzPprxVsI=;
+ b=fWEToQ+P2W+tDgChm7/J+b+ZV0pgIbnLgaluo6Ytt+bWkfV10ZNx2ONo9WkirG5s6dza86
+ Bj1YFzM+qLoGIcTq3NLo0Vxl9TuZRBu/3dWUV8mtt+K+KWtrlaBDD6RJDyNmY8QaoPug6j
+ tG8jTC5u52umhBM88HaR00Jge5j8vhg=
+Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
+ [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-zB2w61lkO-2wJbM6qdsavg-1; Tue, 05 Nov 2024 13:24:06 -0500
+X-MC-Unique: zB2w61lkO-2wJbM6qdsavg-1
+Received: by mail-oo1-f69.google.com with SMTP id
+ 006d021491bc7-5eb85572083so4428588eaf.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 10:24:06 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730831045; x=1731435845;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nT6o0alT//o5rIREHqaPOaXSA4kw6GIk7ibzPprxVsI=;
+ b=dEaKMvrdL1tYNcSkgSYucm4eFgLT6CRB/ZAWNN7JYzSwQRlT4eQ9pPn2mZVNfgqVW9
+ OfcJxSpVyoRmBuUCpO/aOgZeHLarN/KglfMGwHHH510DJYO8qg016+WPpdATn35R6yZB
+ 7KpNCY9bIKs6VJg5yO9MkNulg/++G5MrjL1BUs4ANlmtKYaYWuq07bACwx2o5ByHqrSs
+ rcz15IWmRMPcT8kh3ppfNRkCKn3ktTw04qmdMHI0RQdEahfkYUTPAifI1KiCmTBypBXF
+ 5VH0S2JL64uwqjAlTc2JsdLCWZP4G+Gc5ITaRR0VaAMWKHtKJ7RknXonsMN2MNN2pYE4
+ IJtw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEh0vejgSgL6tWDoljMFeS0HF8hDxU/iDJMOOrsHpfI1yso9XgXOjRzmokm0/b1FcKU2X7kdMH9zYT@nongnu.org
+X-Gm-Message-State: AOJu0YwSFYydgOtKO145tMUo18cdSCf5Y5y2k4Kl4BqkFdSTMKlD1bQO
+ eGNyy3McTa1qL5xlCprFijR30HbaMQvEmY3GaNzzbf9M9n4F4JoIJXnSs3nhmB5Xp6gEkIOhL94
+ tymIWxTD/aOo3DCPpBvN347ULvIm6Mhhb6JXhPwRUzNqrxTP0lahm
+X-Received: by 2002:a05:6820:1c93:b0:5e7:caf5:ae03 with SMTP id
+ 006d021491bc7-5ede631771amr11026167eaf.2.1730831045687; 
+ Tue, 05 Nov 2024 10:24:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFZZtiiLlt0oK0VXNjSKnmQ63m74Whk5LxYeGDlhfmpHWWXioBhgqqVsX5UrTW6af2IWWi9Nw==
+X-Received: by 2002:a05:6820:1c93:b0:5e7:caf5:ae03 with SMTP id
+ 006d021491bc7-5ede631771amr11026155eaf.2.1730831045381; 
+ Tue, 05 Nov 2024 10:24:05 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5ec706077b9sm2306506eaf.36.2024.11.05.10.24.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Nov 2024 10:24:05 -0800 (PST)
+Message-ID: <88b9cd13-a5e1-4924-a413-eedf92f7285a@redhat.com>
+Date: Tue, 5 Nov 2024 19:24:01 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests: refresh package lists with latest libvirt-ci
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20241105162002.359227-1-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241105162002.359227-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_SEVEN(0.00)[7];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,165 +149,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the mode/reboot test into a separate file to hold all the CPR
-tests. Currently there's just one test, but we're adding more CPR
-modes and the feature is different enough from live migration that
-it's worth it to have a separate file for it.
+On 05/11/2024 17.20, Daniel P. Berrangé wrote:
+> This updates the libvirt-ci  submodule to pull in various fixes,
+> the most notable reducing native package sets in cross builds.
+> Some packages were mistakenly marked as native, rather than
+> foreign, in libvirt-ci. Fixing this causes our dockerfiles to
+> pick up the cross arch package instead of native one, thus
+> improving our test coverage in a few areas.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   .gitlab-ci.d/cirrus/freebsd-14.vars                   | 2 +-
+>   tests/docker/dockerfiles/debian-amd64-cross.docker    | 8 ++++----
+>   tests/docker/dockerfiles/debian-arm64-cross.docker    | 8 ++++----
+>   tests/docker/dockerfiles/debian-armhf-cross.docker    | 8 ++++----
+>   tests/docker/dockerfiles/debian-i686-cross.docker     | 8 ++++----
+>   tests/docker/dockerfiles/debian-mips64el-cross.docker | 8 ++++----
+>   tests/docker/dockerfiles/debian-mipsel-cross.docker   | 8 ++++----
+>   tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 8 ++++----
+>   tests/docker/dockerfiles/debian-s390x-cross.docker    | 8 ++++----
+>   tests/docker/dockerfiles/fedora-win64-cross.docker    | 4 +---
+>   tests/lcitool/libvirt-ci                              | 2 +-
+>   tests/vm/generated/freebsd.json                       | 2 +-
+>   12 files changed, 36 insertions(+), 38 deletions(-)
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/meson.build                  |  1 +
- tests/qtest/migration-test.c             | 34 +-------------
- tests/qtest/migration/cpr-tests.c        | 57 ++++++++++++++++++++++++
- tests/qtest/migration/migration-common.h |  1 +
- 4 files changed, 60 insertions(+), 33 deletions(-)
- create mode 100644 tests/qtest/migration/cpr-tests.c
-
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index e4dc85208c..e3a7549fae 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -334,6 +334,7 @@ migration_files = [files(
-   'migration/migration-qmp.c',
-   'migration/migration-util.c',
-   'migration/compression-tests.c',
-+  'migration/cpr-tests.c',
-   'migration/file-tests.c',
-   'migration/precopy-tests.c',
-   'migration/postcopy-tests.c',
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 4abbb5b19d..8a8752ca83 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -144,31 +144,6 @@ static void test_ignore_shared(void)
- }
- #endif
- 
--static void *test_mode_reboot_start(QTestState *from, QTestState *to)
--{
--    migrate_set_parameter_str(from, "mode", "cpr-reboot");
--    migrate_set_parameter_str(to, "mode", "cpr-reboot");
--
--    migrate_set_capability(from, "x-ignore-shared", true);
--    migrate_set_capability(to, "x-ignore-shared", true);
--
--    return NULL;
--}
--
--static void test_mode_reboot(void)
--{
--    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
--                                           FILE_TEST_FILENAME);
--    MigrateCommon args = {
--        .start.use_shmem = true,
--        .connect_uri = uri,
--        .listen_uri = "defer",
--        .start_hook = test_mode_reboot_start
--    };
--
--    test_file_common(&args, true);
--}
--
- static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
- {
-     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-@@ -307,20 +282,13 @@ int main(int argc, char **argv)
-     migration_test_add_postcopy(env);
-     migration_test_add_file(env);
-     migration_test_add_precopy(env);
-+    migration_test_add_cpr(env);
- 
-     migration_test_add("/migration/bad_dest", test_baddest);
- #ifndef _WIN32
-     migration_test_add("/migration/analyze-script", test_analyze_script);
- #endif
- 
--    /*
--     * Our CI system has problems with shared memory.
--     * Don't run this test until we find a workaround.
--     */
--    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
--        migration_test_add("/migration/mode/reboot", test_mode_reboot);
--    }
--
-     /* migration_test_add("/migration/ignore_shared", test_ignore_shared); */
- 
-     migration_test_add("/migration/validate_uuid", test_validate_uuid);
-diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-new file mode 100644
-index 0000000000..a3b4e6dac1
---- /dev/null
-+++ b/tests/qtest/migration/cpr-tests.c
-@@ -0,0 +1,57 @@
-+/*
-+ * QTest testcases for CPR
-+ *
-+ * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
-+ *   based on the vhost-user-test.c that is:
-+ *      Copyright (c) 2014 Virtual Open Systems Sarl.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "migration/migration-common.h"
-+#include "migration/migration-util.h"
-+
-+
-+static char *tmpfs;
-+
-+static void *test_mode_reboot_start(QTestState *from, QTestState *to)
-+{
-+    migrate_set_parameter_str(from, "mode", "cpr-reboot");
-+    migrate_set_parameter_str(to, "mode", "cpr-reboot");
-+
-+    migrate_set_capability(from, "x-ignore-shared", true);
-+    migrate_set_capability(to, "x-ignore-shared", true);
-+
-+    return NULL;
-+}
-+
-+static void test_mode_reboot(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
-+                                           FILE_TEST_FILENAME);
-+    MigrateCommon args = {
-+        .start.use_shmem = true,
-+        .connect_uri = uri,
-+        .listen_uri = "defer",
-+        .start_hook = test_mode_reboot_start
-+    };
-+
-+    test_file_common(&args, true);
-+}
-+
-+void migration_test_add_cpr(MigrationTestEnv *env)
-+{
-+    tmpfs = env->tmpfs;
-+
-+    /*
-+     * Our CI system has problems with shared memory.
-+     * Don't run this test until we find a workaround.
-+     */
-+    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
-+        migration_test_add("/migration/mode/reboot", test_mode_reboot);
-+    }
-+}
-diff --git a/tests/qtest/migration/migration-common.h b/tests/qtest/migration/migration-common.h
-index 9632ac1b9e..8f6828beba 100644
---- a/tests/qtest/migration/migration-common.h
-+++ b/tests/qtest/migration/migration-common.h
-@@ -220,5 +220,6 @@ void migration_test_add_compression(MigrationTestEnv *env);
- void migration_test_add_postcopy(MigrationTestEnv *env);
- void migration_test_add_file(MigrationTestEnv *env);
- void migration_test_add_precopy(MigrationTestEnv *env);
-+void migration_test_add_cpr(MigrationTestEnv *env);
- 
- #endif /* MIGRATION_COMMON_H */
--- 
-2.35.3
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
