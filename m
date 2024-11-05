@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AD7DD40CEB
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:21:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7A7D40D08
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:30:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Sr4-0005lJ-TS; Tue, 05 Nov 2024 18:20:58 -0500
+	id 1t8Szm-0007Rx-QV; Tue, 05 Nov 2024 18:29:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1t8Sr1-0005l1-Jr; Tue, 05 Nov 2024 18:20:56 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8Szj-0007RQ-3Z
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:29:55 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1t8Squ-0003MS-6T; Tue, 05 Nov 2024 18:20:51 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-37ec4e349f4so3911056f8f.0; 
- Tue, 05 Nov 2024 15:20:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8Szh-0004pk-G3
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:29:54 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5ced377447bso3974557a12.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 15:29:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730848846; x=1731453646; darn=nongnu.org;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=lS2XWVOq/GALEsFQPIa0+c9zUN2kaXHgCAyIz5SbNiQ=;
- b=L/AzWI0IU54TBFrF5GIZ9P41gBlkXesF9wGWZOZjmGQ1ySpYXb8Zqr+0g8TPvO96qi
- qhQzRTB5mTx7L2nyt5TNSnjYmKSpc7a4+FnSZTnTVGH2l7i79oKGjpulGcQingQVZ6qR
- CoyQ7V5HNb01PRFp8iQOBeoYfHUx8ztzy9cK77/vPIYrCepcCT+94+ZSjQggB8rPRz6v
- k/xqvKY0YvXC7ZThbTn3yBAdY6JC6dVVBjdSBSRfE1sqWhVtCkAfURBmFAeXTkIv6I3D
- 50St+BPAiKNVgShdDFYlrbpMG9U/T+EJOSKb+HDcLLq9eZL3tQQosVPaRVKbOvboGUhA
- sUqg==
+ d=linaro.org; s=google; t=1730849391; x=1731454191; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tjJDJMeZWZ0bLi+K9wzyg8U5rQIR7V2vFJ/qP35A+wg=;
+ b=IJb3tk/vfH25ZZf/2dKe+p8RG6UVCd0bOSD6hd9h8TPb4HgTMV0952WqPdp98Q/dC5
+ icbRjqHlIMfYpLbuFluxZeA0j668WhKZUAlML2E287JzksrsAaStzjZpGYvyray+qoHt
+ TwQPpWlPtmDeR6eECY/f6CWhwNa0r8iOEZUUCJBQv5jpu6EmtQBRorAV8DBO+nOtsJj6
+ GkMKXKC92SlpK0qDSnuFcQkV6lwd3abxY82C0h71g9Uzg3NpTK1IzdSWokgozJIvfb9j
+ iIaz8yG72N17rS0U92N1w7+zJflfd3zP3bh3IYzf2LKvA83wRSZkLoSavYbskR4uUC/Z
+ QDfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730848846; x=1731453646;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lS2XWVOq/GALEsFQPIa0+c9zUN2kaXHgCAyIz5SbNiQ=;
- b=hGv+Jdj82vX+3t2jmgEr8TrOPfrjA0YKKIR9oDV1Uk9bepsj+QcfP3tt/fHgB+G4lk
- Uvmg2wgjoEdDwXY2dIEfJ2ps96LBemXrHxQKke/tQ9xkhanM0vWH4rL93670lX7XwGFG
- 8pxjZEoMSDxawu8lhWFbBhNyg1SN1kA/0rIVwGLo9wFGi6MPVZDlGtJ5iQe7dtcOVy0q
- B2lCZzZtd7V0KIAlf5PtAGdxsrFo49oUMMNFYX9p6yDBQ1ILCS18tjErFTwD+DD4aN0y
- DBZ3/93Rb74pVE+SEwGhxuODFsdm+ABg2SNcIzas5gmMUVK0mxwtrfw5p41tur7bdN/V
- CE0g==
+ d=1e100.net; s=20230601; t=1730849391; x=1731454191;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tjJDJMeZWZ0bLi+K9wzyg8U5rQIR7V2vFJ/qP35A+wg=;
+ b=UoiRlkOioHAbPH88TSwIPl7jk3AOrJydHtk8szXXQmqJvY3yCGYaHSrdNOak2jool7
+ pT7bzRfYMVgqZ7jUccjT9uHvnznhbaVhrmDX4cWztqPZ3p2YJg08kRGx/Pgtfqz/p8/G
+ MZTNd11SJw4eLOdiFm0sIbyfZOnsqP3MYqJNMu/HyLvhlT2wHHbO1w3IejAxc9OTX3B0
+ +1pA0tT4X0X14yXJNbQgNWfiClcAGAfuVrkMQoAkBBsAkjK5o40OElgUSoO99At/hV70
+ dm2XSMa04S8ThVeOQ2An5iVW3oxtUjinRlkAs9i0vxdAZ43t1zxiap9gWdFUdWZKkTyp
+ CGXQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXi7adxXODCJbAtZ8wcT2r7AfKJzgmaJSIxa2dinDD7gLgj8zVjk01HZomlyOk4Xa3logXmNWAClw==@nongnu.org
-X-Gm-Message-State: AOJu0YxzcWc5EK/fDIlUXmwYN3ojz6CigyWyblE3WymslwhQ0SjTOqOc
- krbSwYbOn44TX+WlOxQGo6QFY9QUQtvscncq5eQqTbfO+9VYiHsqmcohE2ja35E=
-X-Google-Smtp-Source: AGHT+IGIV43hCDzG62DoI7BM212nFNFXyC0I44oRMkXs77mCW8MKo2VcOdHIzEiSWyA7aytZ05UzWg==
-X-Received: by 2002:a5d:5f42:0:b0:378:89d8:8242 with SMTP id
- ffacd0b85a97d-381c7a6c5dbmr15382226f8f.26.1730848845702; 
- Tue, 05 Nov 2024 15:20:45 -0800 (PST)
-Received: from gmail.com ([89.101.60.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c116ac7dsm17419553f8f.105.2024.11.05.15.20.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 15:20:45 -0800 (PST)
-Date: Wed, 6 Nov 2024 00:20:44 +0100
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
- devel@lists.libvirt.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 01/19] target/microblaze: Rename CPU endianness property
- as 'little-endian'
-Message-ID: <ZyqoTD6v_ZJW2OKM@zapote>
-References: <20241105130431.22564-1-philmd@linaro.org>
- <20241105130431.22564-2-philmd@linaro.org>
- <ZyqiPrf2wjP1yAPz@zapote>
- <accdb8b5-a73e-45d0-8086-82d69c97b569@linaro.org>
- <3f61b85c-9382-4520-a1ce-5476eb16fb56@linaro.org>
+ AJvYcCWIcNMC7MYNqUpdRnQpw7bzGSL/k2AywJB0hQNeMf8JDlCQqSVEVApS1QJVOR3IWYwLjhRkWUFfyBcz@nongnu.org
+X-Gm-Message-State: AOJu0YxErVJfmy0yMOC/rkGkbHMJHU9E8w1sIRaWsDDloKq8P7LrWIYv
+ yj3UC7FpD+depgaB82AHpnW/PCtT2Zfxit4s5y5S1aYNRqL8YJi5NuH7rE/r3FU=
+X-Google-Smtp-Source: AGHT+IGKA49gXfCg5/zLHAh0UNiu/qW9tiWu4Zc04iX9YReY1Pu1+ABR0V0GFIQXzYzHmyTZiVsNGA==
+X-Received: by 2002:a05:6402:3482:b0:5ce:d378:b098 with SMTP id
+ 4fb4d7f45d1cf-5ced378b241mr10252507a12.5.1730849391289; 
+ Tue, 05 Nov 2024 15:29:51 -0800 (PST)
+Received: from [172.20.143.32] ([89.101.134.25])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5cee6a9a36dsm1924554a12.9.2024.11.05.15.29.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Nov 2024 15:29:50 -0800 (PST)
+Message-ID: <5434961f-93ec-4cda-a0be-3e35aaab5d7d@linaro.org>
+Date: Tue, 5 Nov 2024 23:29:48 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/19] hw/net/xilinx_ethlite: Only expect big-endian
+ accesses
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Anton Johansson <anjo@rev.ng>
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org, devel@lists.libvirt.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Jason Wang <jasowang@redhat.com>
+References: <20241105130431.22564-1-philmd@linaro.org>
+ <20241105130431.22564-13-philmd@linaro.org>
+ <eae65cf8-af71-4b6d-8bfb-b22224f8496b@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <eae65cf8-af71-4b6d-8bfb-b22224f8496b@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <3f61b85c-9382-4520-a1ce-5476eb16fb56@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,122 +105,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 05, 2024 at 11:18:31PM +0000, Philippe Mathieu-Daudé wrote:
-> On 5/11/24 23:01, Philippe Mathieu-Daudé wrote:
-> > Hi Edgar,
-> > 
-> > On 5/11/24 23:54, Edgar E. Iglesias wrote:
-> > > On Tue, Nov 05, 2024 at 02:04:13PM +0100, Philippe Mathieu-Daudé wrote:
-> > > > Rename the 'endian' property as 'little-endian' because the 'ENDI'
-> > > > bit is set when the endianness is in little order, and unset in
-> > > > big order.
-> > > 
-> > > Hi Phil,
-> > > 
-> > > Unfortunately, these properties are not only QEMU internal these got
-> > > named
-> > > from the bindings Xilinx choose way back in time.
-> > > 
-> > > This will likely break many of the Xilinx flows with automatic dts to
-> > > qemu property conversions so I don't think it's a good idea to rename it.
-> > > If you like to clarify things perhaps we could keep an alias for the old
-> > > one?
-> > 
-> > Adding an alias is the safest way, I'll respin this patch.
-> > 
-> > Note however I'm worried about this fragile disconnect between Xilinx
-> > dts conversion which isn't exercised on mainstream (in particular if
-> > you get busy and can't review).
-> > 
-> > > 
-> > > For example:
-> > > https://github.com/torvalds/linux/blob/master/arch/microblaze/boot/dts/system.dts#L73
-> > > 
-> > > Cheers,
-> > > Edgar
-> > > 
-> > > 
-> > > > 
-> > > > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > > > ---
-> > > >   hw/microblaze/petalogix_ml605_mmu.c | 2 +-
-> > > >   hw/microblaze/xlnx-zynqmp-pmu.c     | 2 +-
-> > > >   target/microblaze/cpu.c             | 2 +-
-> > > >   3 files changed, 3 insertions(+), 3 deletions(-)
+On 5/11/24 14:18, Paolo Bonzini wrote:
+> On 11/5/24 14:04, Philippe Mathieu-DaudÃ© wrote:
+>> The Xilinx 'ethlite' device was added in commit b43848a100
+>> ("xilinx: Add ethlite emulation"), being only built back
+>> then for a big-endian MicroBlaze target (see commit 72b675caac
+>> "microblaze: Hook into the build-system").
+>>
+>> I/O endianness access was then clarified in commit d48751ed4f
+>> ("xilinx-ethlite: Simplify byteswapping to/from brams"). Here
+>> the 'fix' was to use tswap32(). Since the machine was built as
+>> big-endian target, tswap32() use means the fix was for a little
+>> endian host. While the datasheet (reference added in file header)
+>> is not precise about it, we interpret such change as the device
+>> expects accesses in big-endian order. Besides, this is what other
+>> Xilinx/MicroBlaze devices use (see the 3 previous commits).
+>>
+>> Correct the MemoryRegionOps endianness. Add a 'access-little-endian'
+>> property, so if the bus access expect little-endian order we swap
+>> the values. Replace the tswap32() calls accordingly.
+>>
+>> Set the property on the single machine using this device.
 > 
+> I don't understand.Â  This machine type is little-endian only and 
+> expecting inverted accesses, isn't it?Â  Therefore, all that you need is
 > 
-> > > > diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-> > > > index 135947ee800..e9f98806274 100644
-> > > > --- a/target/microblaze/cpu.c
-> > > > +++ b/target/microblaze/cpu.c
-> > > > @@ -368,7 +368,7 @@ static Property mb_properties[] = {
-> > > >       DEFINE_PROP_UINT8("use-non-secure", MicroBlazeCPU,
-> > > > cfg.use_non_secure, 0),
-> > > >       DEFINE_PROP_BOOL("dcache-writeback", MicroBlazeCPU,
-> > > > cfg.dcache_writeback,
-> > > >                        false),
-> > > > -    DEFINE_PROP_BOOL("endianness", MicroBlazeCPU, cfg.endi, false),
-> > > > +    DEFINE_PROP_BOOL("little-endian", MicroBlazeCPU, cfg.endi, false),
-> > > >       /* Enables bus exceptions on failed data accesses
-> > > > (load/stores).  */
-> > > >       DEFINE_PROP_BOOL("dopb-bus-exception", MicroBlazeCPU,
-> > > >                        cfg.dopb_bus_exception, false),
-> > > > -- 
+>> -Â Â Â  .endianness = DEVICE_NATIVE_ENDIAN,
+>> +Â Â Â  .endianness = DEVICE_BIG_ENDIAN,
 > 
-> OK if I squash the following?
+> And removing the tswap altogether.Â  The big-endian petalogix board will 
+> start getting "correct" values (not swapped anymore).Â  That's a feature, 
+> not a bug.
 
+The feature is memory.c swapping MemoryRegionOps depending on the
+*qemu-system binary* target endianness.
 
-Looks good!
-Thanks!
+We assumed most guest vCPUs run with the same endianness of the binary.
 
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Now we want to swap wrt the vCPU, not the binary. So indeed this patch
+effectively undo the memory.c swapping (feature).
 
-
-
-
-> 
-> -- >8 --
-> diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-> index e9f98806274..b322f060777 100644
-> --- a/target/microblaze/cpu.c
-> +++ b/target/microblaze/cpu.c
-> @@ -328,9 +328,16 @@ static void mb_cpu_initfn(Object *obj)
->      qdev_init_gpio_in_named(DEVICE(cpu), mb_cpu_ns_axi_dc, "ns_axi_dc", 1);
->      qdev_init_gpio_in_named(DEVICE(cpu), mb_cpu_ns_axi_ic, "ns_axi_ic", 1);
->  #endif
-> +
-> +    /* Restricted 'endianness' property is equivalent of 'little-endian' */
-> +    object_property_add_alias(obj, "little-endian", obj, "endianness");
->  }
-> 
->  static Property mb_properties[] = {
-> +    /*
-> +     * Following properties are used by Xilinx DTS conversion tool
-> +     * do not rename them.
-> +     */
->      DEFINE_PROP_UINT32("base-vectors", MicroBlazeCPU, cfg.base_vectors, 0),
->      DEFINE_PROP_BOOL("use-stack-protection", MicroBlazeCPU, cfg.stackprot,
->                       false),
-> @@ -368,7 +375,7 @@ static Property mb_properties[] = {
->      DEFINE_PROP_UINT8("use-non-secure", MicroBlazeCPU, cfg.use_non_secure,
-> 0),
->      DEFINE_PROP_BOOL("dcache-writeback", MicroBlazeCPU,
-> cfg.dcache_writeback,
->                       false),
-> -    DEFINE_PROP_BOOL("little-endian", MicroBlazeCPU, cfg.endi, false),
-> +    DEFINE_PROP_BOOL("endianness", MicroBlazeCPU, cfg.endi, false),
->      /* Enables bus exceptions on failed data accesses (load/stores).  */
->      DEFINE_PROP_BOOL("dopb-bus-exception", MicroBlazeCPU,
->                       cfg.dopb_bus_exception, false),
-> @@ -387,6 +394,9 @@ static Property mb_properties[] = {
->      DEFINE_PROP_UINT8("pvr", MicroBlazeCPU, cfg.pvr, C_PVR_FULL),
->      DEFINE_PROP_UINT8("pvr-user1", MicroBlazeCPU, cfg.pvr_user1, 0),
->      DEFINE_PROP_UINT32("pvr-user2", MicroBlazeCPU, cfg.pvr_user2, 0),
-> +    /*
-> +     * End of properties reserved by Xilinx DTS conversion tool.
-> +     */
->      DEFINE_PROP_END_OF_LIST(),
->  };
-> 
-> ---
+I suppose the better way is to modify memory.c, possibly passing MemOp
+all over. For HW accel where vCPU endianness is forced to host one,
+this would become a no-op. Lot of rework in perspective.
 
