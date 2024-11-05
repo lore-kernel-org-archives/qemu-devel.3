@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A80D12662
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 07:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECCA0D12663
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 07:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8EQ8-0008KH-9F; Tue, 05 Nov 2024 02:56:12 -0500
+	id 1t8EQK-0008VL-U3; Tue, 05 Nov 2024 02:56:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t8EQ7-0008Js-70
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 02:56:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t8EQJ-0008Ut-3t
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 02:56:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t8EQ4-0002E5-E9
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 02:56:10 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t8EQH-0002Es-Nn
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 02:56:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730793365;
+ s=mimecast20190719; t=1730793381;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mGLL/IDq95/yp8Njjhb1SMOXjt7DWTLIZRIxsVbw+xc=;
- b=EWb6UFDs7kfInoo1uKZ+GrH1kApPNclwueetv34xRyJ9/OWUW5q9uEoW4KI6P8VK/Mttru
- EhHFKkeCQTUBGvbbfvtKsHCT1IC2NZaa4z29I+zFw5MwWdsgvkzqEZO75o2uiYO7jyBcKy
- pfCUfQ5c9NLnHfNNCUvxn44DgBNekhc=
-Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
- [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Vlyw3oCZgmu4AI82RP2fGRQ62GAllaPcotuaicIxR1g=;
+ b=VEfqhQWDhCWTM4d6KCu6TEUJ0JBFx78EARFvrqrTntO0yIWH71YKlz9MPNvVpDtITRizEI
+ VNRZfBKpZzkyWRXTqFGnIKiRkP3BXSP2GMuY4gfEFZK+fiDBPC7PkAczhHyfFp6vuJjTem
+ RjN8SRSrWmX1xu1w5guS3mh5WQ7S+Oo=
+Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
+ [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-YfSvAsZpM8ybGTtiR3b1KA-1; Tue, 05 Nov 2024 02:56:03 -0500
-X-MC-Unique: YfSvAsZpM8ybGTtiR3b1KA-1
-Received: by mail-oa1-f69.google.com with SMTP id
- 586e51a60fabf-2886446d741so5255133fac.1
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 23:56:03 -0800 (PST)
+ us-mta-411-3ChENB5CMiOyG_NeVX-ZKQ-1; Tue, 05 Nov 2024 02:56:18 -0500
+X-MC-Unique: 3ChENB5CMiOyG_NeVX-ZKQ-1
+Received: by mail-oo1-f69.google.com with SMTP id
+ 006d021491bc7-5ec11ea5490so3967458eaf.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 23:56:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730793363; x=1731398163;
+ d=1e100.net; s=20230601; t=1730793377; x=1731398177;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mGLL/IDq95/yp8Njjhb1SMOXjt7DWTLIZRIxsVbw+xc=;
- b=Vl/x0+UB5ZG4W7bMWvifLNNOPoS7ZHf/mjkLrA/TCFzSA31N5uZjs36p/gYZ0sb8NY
- +KQbd6krNgC/X2z5YEa0NrLbIFK0KycAfFY2ZVdX62p7tLOe6DYyL4GQEuYW+hUj49xt
- vOGzRQeesS2J4k3BWm2AbPow0kiupppJIs31SZ95+wgFTcpIc8EwIJ99D/PJkLsrUGq+
- UxXjM6SAi9Hmt/rL9E5G9GcIuIkhgtnDG0lOTL2wig811+mnvmgMMqN2a19rKlr6otQ0
- qVKvyJt9yFyS5fBuxR99yn531sPzlnzTZKtCP0cbi5FWE0AJjbZUj+aikC6W8plN3CeY
- 7ERQ==
+ bh=Vlyw3oCZgmu4AI82RP2fGRQ62GAllaPcotuaicIxR1g=;
+ b=ZTxIBHThzgbobDBF0ufNXpec9xOILMSqs85HwJ2wOmPDZ4DXXrrBpXNdoem4TiqOkr
+ 4qfloYlFwz+jjWcRp/Dsymb5cBSVdRCQ9gZfzCYkMbMX30yqrFXrVoZurYuB8wKuMz3s
+ 8WbkotPcjt1/JoU75jQ4LXH2WDHbJvqXSqN+fG16hcAZ0sy+zvRI9qOq6nvf1foNZsGT
+ 1rgeL07k2aIEfkwoKdHi0BJYvrXSclEO3Fl+cuHRX8bRD5Lb3EdvKVckRZ4xtVrlVUCL
+ fTp/8ubOqgQNnfy5n7sEJ2WNgt/5wth8u8bCJCUssP2+/buAwxdDtcWM+PHkX9oi9WZ0
+ SAUA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWdFfIhajBnhQH3SZdH5OP7WMb9rHoxxYt+SEUYPM6zPSdKijlHFJ9px+RXjxjxcHQ74AhjhMFjCwnk@nongnu.org
-X-Gm-Message-State: AOJu0Yzk3/9EjR4ZsxP2KDUcPMiFTTTRngDH1SQZtpkISwy7S75DLHEn
- G2s+QjwT65N2GL27GUNQ0gDxn6NOOR4lks9gQ0tZYVkNYNSCFQpXpVRaDZS8rGBQjiGeJHltMX7
- U9C+ZieR6AjsMZze1yjOh6CXjdQy7JEofUO7SD8sP1o1NMRC6P8vE
-X-Received: by 2002:a05:6870:781a:b0:265:b32b:c465 with SMTP id
- 586e51a60fabf-2949cff585cmr9408124fac.9.1730793362896; 
- Mon, 04 Nov 2024 23:56:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEPba59mSOZL4l0cThY0jFmbRnuc0zh010jclKP5s0n9ubuEUbWU+Eha/947VQY8UEc5Hy9tA==
-X-Received: by 2002:a05:6870:781a:b0:265:b32b:c465 with SMTP id
- 586e51a60fabf-2949cff585cmr9408114fac.9.1730793362596; 
- Mon, 04 Nov 2024 23:56:02 -0800 (PST)
+ AJvYcCXOgTeR2FnyHYEwrSJQ5Ettopoi7g8lau3j4dt+tz5avT5miVzB0jmcFvda5v6KZKRI4PDVBtv8UR4B@nongnu.org
+X-Gm-Message-State: AOJu0YwASkqmb77625PXxKWyYHxwU4tJAgJ6KlksU/M03Dmt/olVh6Zu
+ 5IGJgoJih70FMPwAT1AkmLO+pjgVyIHyBXS2RoUQy8D0W2WYT6atdlUqZLvbn32nlDN4X8KfbKX
+ iTy/oVymWUsMvmk8Ce2lVhnV6s2bzHseofqUqVCo98cPU+y7LuaJM
+X-Received: by 2002:a05:6820:1c9e:b0:5eb:c72e:e29f with SMTP id
+ 006d021491bc7-5ec6f80a297mr10259384eaf.1.1730793377521; 
+ Mon, 04 Nov 2024 23:56:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IECY1Eruamht070c7TQoKW75Qy5wvhyChFXAP9LieRTa9Fry/82bCTgeiEfxkOmjrcNnbNmKw==
+X-Received: by 2002:a05:6820:1c9e:b0:5eb:c72e:e29f with SMTP id
+ 006d021491bc7-5ec6f80a297mr10259369eaf.1.1730793377204; 
+ Mon, 04 Nov 2024 23:56:17 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:ecac:5b28:cd98:868a?
  ([2a01:e0a:280:24f0:ecac:5b28:cd98:868a])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29487717062sm3514994fac.42.2024.11.04.23.55.58
+ 006d021491bc7-5ec7064031dsm2140688eaf.40.2024.11.04.23.56.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Nov 2024 23:56:01 -0800 (PST)
-Message-ID: <9de8ac6e-588b-4789-a8f0-02bfc29d92c9@redhat.com>
-Date: Tue, 5 Nov 2024 08:55:57 +0100
+ Mon, 04 Nov 2024 23:56:16 -0800 (PST)
+Message-ID: <0aa77f89-fe28-47d1-8125-e98dff928e98@redhat.com>
+Date: Tue, 5 Nov 2024 08:56:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] vfio/migration: Add
- save_{iterate,complete_precopy}_start trace events
+Subject: Re: [PATCH v3 2/2] vfio/migration: Add
+ vfio_save_block_precopy_empty_hit trace event
 To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -81,7 +81,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1730750959.git.maciej.szmigiero@oracle.com>
- <31afb6bed49e8f59d38441135c92cf73bc7d7308.1730750959.git.maciej.szmigiero@oracle.com>
+ <44a769267d406e10fd122786f0153b5fa2697500.1730750959.git.maciej.szmigiero@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,17 +127,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <31afb6bed49e8f59d38441135c92cf73bc7d7308.1730750959.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <44a769267d406e10fd122786f0153b5fa2697500.1730750959.git.maciej.szmigiero@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -158,15 +158,15 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 11/4/24 22:29, Maciej S. Szmigiero wrote:
 > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> This way both the start and end points of migrating a particular VFIO
-> device are known.
+> This way it is clearly known when there's no more data to send for that
+> device.
 > 
 > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 > ---
->   hw/vfio/migration.c           | 9 +++++++++
->   hw/vfio/trace-events          | 2 ++
->   include/hw/vfio/vfio-common.h | 2 ++
->   3 files changed, 13 insertions(+)
+>   hw/vfio/migration.c           | 8 ++++++++
+>   hw/vfio/trace-events          | 1 +
+>   include/hw/vfio/vfio-common.h | 1 +
+>   3 files changed, 10 insertions(+)
 > 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
