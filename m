@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07E01D2B92B
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:46:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D13DD2B92D
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Jsr-0004VW-3q; Tue, 05 Nov 2024 08:46:13 -0500
+	id 1t8K2p-0006uI-WF; Tue, 05 Nov 2024 08:56:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8Jsp-0004VG-G4
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:46:11 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t8K2o-0006tu-AG
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:56:30 -0500
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8Jsn-0000pT-R2
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:46:11 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a9eb3794a04so120216566b.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:46:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t8K2m-0001us-If
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:56:29 -0500
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-84ff612ca93so1915444241.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:56:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730814368; x=1731419168; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=C01sQZepssAiHMS9P3hgHMNUhV2RhwiyEJQq/ppB3JA=;
- b=DQqw99VTmWG1VHZ6Sha6OhOmF+S/KXufqRKYG85bM8Mxh+FGIIS+qOanAXaF/W07VT
- 72MEkv/g7kuyBHFIKMCg6V5x6TNoCnbCsWSrq3tp7lF+wirqcWxphqX4fqMVxrtlmqjG
- AoxIBUbXen0QN0Zvdd6D/h1dMiFTV3CkQzVevjeWxrAicH0W/xO976a1JAuilT54lSZI
- PaUygdEzNVVwJ3pGtwt3soqt6RVlE7lkJJnS/gc5+0H9REjV94/DWgSUbcBOTmTWV9pS
- 8IdMvPlgdMk7+T0Ki1eyOEF9/QXgY35cpHkNfiVLX1AbJeVKoRoExaSe53cLkLghJo5s
- agcg==
+ d=gmail.com; s=20230601; t=1730814987; x=1731419787; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=A0UEtbiNCt5sUoKrucrFyIj83LWaMaz2oFlnYgkr3js=;
+ b=MIOGpoxaUL/Yhzex1ZMe/hmaS33RtgT4yqxYycZ/ehW0hF25M21m0eMus/uxCgVi93
+ FgrGsE1vOtFOyy+WfdqPZBpz/37ZxsAY8+ksbhvxT0jw+dw68QILJWxBzU0EOX215DGv
+ QSXOL6nqcd48GL/eAu/0aQH91VC4hsJggxvAtNqW+RyEYA/FlH4647pCqTZ6Bc6yusHr
+ IfTp4rtvsMUmKA469Blmftuj1o2qz6o18o1MId2T8jMyIc+VteZyYL1WDoyjUFTUO0OA
+ 5hqgymDMxTz8UYilIxvUtS462qKHSdN9/t1LDhRblJsP3j7x+G3GPiR0zI2Xa7tbC5if
+ 0qsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730814368; x=1731419168;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=C01sQZepssAiHMS9P3hgHMNUhV2RhwiyEJQq/ppB3JA=;
- b=Hpzjb+/ugSBWW3NFEvjA63tHVJwmgncXvza6uYNI+3OzOxhn9bD+J4uWUifffOtCVf
- iejnpJtjocqJE3HdppCFw+pSLU9YPc43Kx2Fe7HqS0UlBy0GjUgESrSrcMDE7P1bZ3Rz
- zb99ZHxD89INn0wsx7k3UhT3bi0YEPTjpWSoBKjympUHeqNMMxKv2Olcm3Ko3eVwuWyu
- m4pgZzPJcXwdOw6oSWbtT9I8jIJgx+eK7rxvROH9V7fvRtpULSGffaZkLT+fkoQG0QWD
- 3TJX44UpKxNV0iC31ThgtMQEY/NqUsDR74kiSyigC+borCsrEkDVvDq7CH5sR0irSzeX
- rUng==
+ d=1e100.net; s=20230601; t=1730814987; x=1731419787;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=A0UEtbiNCt5sUoKrucrFyIj83LWaMaz2oFlnYgkr3js=;
+ b=hxPpAsw9JplIANiM2FwyT6R7FyEgp8OcDtP3wUBuVhCdqBPLWsQGnuzp+yZUUWirwU
+ JFtgRe8qCCniu8O0nxB8TGCqSRkDKCVPLLJJ1S+2oDTncWvVgepdMIqyvmSS2cQMrnOM
+ FNZAcQCN96aSvNu/m829mUKcUic9hroNzRQdfPiX/+F6dFc1EwCRZZKlgD6WlW02tTGL
+ fMVJ+xibQKhWycexVrlHY9/xfMFXYO5+OQWxcPeQrpD/jN6+ahfpRoPgRuiRqyxE1wky
+ IWGbuBZK6IZDh05qmw8mReKBnso5w4abbxABs2EGGItG0l9af9cwDJe910JHvXAn4pnf
+ 8alw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjMbHJP+ramebDiIC/iuBRHSwT+TDRWShKG7bGXlQrWkeEFmETZyqyPtHXOj5Aftgrx5OWR2t54iS/@nongnu.org
-X-Gm-Message-State: AOJu0YwUxRT1hM/wiYV64anaZdWq2QWwHy3OgNEMnLzCKuGG1ZH8gqap
- fZwV6HPcrwf7KEx705vTAe5hEz+soEqiBvNebc/tJ5lpr6Kowe50KTamiSv01vc=
-X-Google-Smtp-Source: AGHT+IHzfkUB10svZFQ0cFyk66TqDQUxG//nT+4pxeYnl+GZgrX1CSMNOWWzqBpvB2y4iiOE6Gw4+Q==
-X-Received: by 2002:a17:907:72d5:b0:a9a:3d7f:a8de with SMTP id
- a640c23a62f3a-a9e3a61c5eamr2355344766b.27.1730814368158; 
- Tue, 05 Nov 2024 05:46:08 -0800 (PST)
-Received: from [192.168.21.227] ([89.101.134.25])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9eb17cf8eesm134490766b.92.2024.11.05.05.46.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Nov 2024 05:46:07 -0800 (PST)
-Message-ID: <28cdd5d2-4152-40a7-86e7-d6abae333209@linaro.org>
-Date: Tue, 5 Nov 2024 13:46:05 +0000
+ AJvYcCWX49SR8nJ6yrPhUG3SCePV2pbwRuUqn7SVBNBrbMAeW6aP0zGY0u9YIvYvHMpVgdmvnYvvETZj9YmF@nongnu.org
+X-Gm-Message-State: AOJu0YyJjF0u7CAfBB0AX6iUrhVWanhB0RkpKdetrNi3dusrKBlj2Ygj
+ rk93YkGMplbelLkP0S3XzbWl4W9vPQvJjshvg0x+4gHqB6dB9c294Rpba0ag+ImLqjhrQZGKvUb
+ 26i6zWlyAlQSfqbX2kBwcY36Q+d8=
+X-Google-Smtp-Source: AGHT+IFXJi6DeMGb+ZlS5MpyHO+PSh81vwIywqkEPbEW+pSz9GPobqMe//EqMbNBiSuel8U4za4JwkEf/V3nc1cebtQ=
+X-Received: by 2002:a05:6102:548e:b0:4a4:8e72:a2e2 with SMTP id
+ ada2fe7eead31-4a8cfd573b3mr34231902137.25.1730814986776; Tue, 05 Nov 2024
+ 05:56:26 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 19/19] tests/functional: Add microblaze cross-endianness
- tests
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, devel@lists.libvirt.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>
-References: <20241105130431.22564-1-philmd@linaro.org>
- <20241105130431.22564-20-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241105130431.22564-20-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20241031175214.214455-1-pbonzini@redhat.com>
+ <20241031175214.214455-24-pbonzini@redhat.com>
+ <CAFEAcA_mJtsuqSOnDfBLuX+cTuAmDHksRhGA3jq=5tUS5RKn4A@mail.gmail.com>
+ <CABgObfbYzNMQDmEwYpXBgsUJ2V+br5QMHh4B9vWSdFxxg6wvNA@mail.gmail.com>
+In-Reply-To: <CABgObfbYzNMQDmEwYpXBgsUJ2V+br5QMHh4B9vWSdFxxg6wvNA@mail.gmail.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Tue, 5 Nov 2024 19:56:28 +0600
+Message-ID: <CAFfO_h4kkpJXaM5if01jWPGXdmdveE9VPNhxU=j_OVF3bu_LhA@mail.gmail.com>
+Subject: Re: [PULL 23/49] hw/core: Add Enclave Image Format (EIF) related
+ helpers
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ Alexander Graf <graf@amazon.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-ua1-x92b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,23 +97,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/24 13:04, Philippe Mathieu-Daudé wrote:
-> Copy/paste the current tests, but call the opposite endianness
-> machines, testing:
-> - petalogix-s3adsp1800-le machine (little-endian CPU) on the
->    qemu-system-microblaze binary (big-endian)
-> - petalogix-s3adsp1800-be machine (big-endian CPU) on the
->    qemu-system-microblazeel binary (little-endian).
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
-> Clever refactor left for later
-> ---
->   .../functional/test_microblaze_s3adsp1800.py  | 21 +++++++++++++++++++
->   .../test_microblazeel_s3adsp1800.py           | 19 +++++++++++++++++
->   2 files changed, 40 insertions(+)
+On Tue, Nov 5, 2024 at 6:51=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
+>
+> On Tue, Nov 5, 2024 at 12:44=E2=80=AFPM Peter Maydell <peter.maydell@lina=
+ro.org> wrote:
+> > Hi; Coverity raises a couple of potential issues with the
+> > read_eif_file() function in this commit, which are both
+> > "Coverity assumes the file we're reading is untrusted and is
+> > unsure that we're correctly sanitizing data from it before use".
+> > Could somebody who understands the use case here check whether
+> > these need addressing?
+>
+> Both are reasonable to fix, even if the use case would not make them
+> security sensitive. I'll prepare and send a patch.
+>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Agree that it makes sense to fix. Thanks Paolo for looking into it. I
+can review when the patch is ready.
 
-r~
+BTW I see there is some formatting issue in the documentation of
+nitro-enclave in the QEMU website:
+https://www.qemu.org/docs/master/system/i386/nitro-enclave.html
+I think it's a simple fix where we need to put two colons (::) in a
+line before the QEMU commands lines. Maybe it would make sense to
+include it in the patches as well.
+
+Regards,
+Dorjoy
 
