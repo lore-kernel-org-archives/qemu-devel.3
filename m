@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFD61D2B92B
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07E01D2B92B
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Jrh-0003gW-5u; Tue, 05 Nov 2024 08:45:01 -0500
+	id 1t8Jsr-0004VW-3q; Tue, 05 Nov 2024 08:46:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8Jre-0003gB-Cj
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:44:59 -0500
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ id 1t8Jsp-0004VG-G4
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:46:11 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8Jrb-0000bG-Sx
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:44:57 -0500
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-53b13ea6b78so8601953e87.2
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:44:55 -0800 (PST)
+ id 1t8Jsn-0000pT-R2
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:46:11 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a9eb3794a04so120216566b.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:46:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730814294; x=1731419094; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730814368; x=1731419168; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=c3aoQgldD43PHs/6k8QsXfJTzVW7Rpwn6Nrt8InQfuk=;
- b=UYGr3PDx/B5kixCH3ZV3NfCjKMemMdbS1NBGoFlzUinNHEgnUN/F7TutYl5KcjlSGO
- krXW3gSpsEwdO7b2XjxKRejzPplFBkNeFbdDBUXHoY4wTZBUxZPHZsVRULAtgcgPQU1h
- +CMJVp2uLGRQtyqMP6AYN0ZNQ3Gm2axs8uuDxlrqCyQmimToW8YkQVJ/K7NgdPDwqRKY
- oFmOYpSI/KxGe08yXjmsPU2HcJK1gq6CCRHMHNW+ECepJO2c4oN0E+R479crPx3U0APJ
- TS0Fu2BEBzAJqbW6BkwmcBBwWlaxiYUyJI8s9HNDv3RuZJbWmpVXE+B1n0mxKyYtHi4+
- H9DA==
+ bh=C01sQZepssAiHMS9P3hgHMNUhV2RhwiyEJQq/ppB3JA=;
+ b=DQqw99VTmWG1VHZ6Sha6OhOmF+S/KXufqRKYG85bM8Mxh+FGIIS+qOanAXaF/W07VT
+ 72MEkv/g7kuyBHFIKMCg6V5x6TNoCnbCsWSrq3tp7lF+wirqcWxphqX4fqMVxrtlmqjG
+ AoxIBUbXen0QN0Zvdd6D/h1dMiFTV3CkQzVevjeWxrAicH0W/xO976a1JAuilT54lSZI
+ PaUygdEzNVVwJ3pGtwt3soqt6RVlE7lkJJnS/gc5+0H9REjV94/DWgSUbcBOTmTWV9pS
+ 8IdMvPlgdMk7+T0Ki1eyOEF9/QXgY35cpHkNfiVLX1AbJeVKoRoExaSe53cLkLghJo5s
+ agcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730814294; x=1731419094;
+ d=1e100.net; s=20230601; t=1730814368; x=1731419168;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c3aoQgldD43PHs/6k8QsXfJTzVW7Rpwn6Nrt8InQfuk=;
- b=PsrpbDQr337FuYdJyaGzYAD5vuAiWkYDP+v3mnJlOd24EOPFV/FsOdMaGv5U+migx7
- fwth3op8trDZh3f4bO/Ab0k4eLl25swCjGRYFY5JcNfJnL42dC1eQjEgHommcVvqyzbT
- tLP9deSkuj9pt+wWUo0LBL2xtfU2RprnyNMAZS82VIElziXmW5cecMH+uS3DmoJ6Nuvw
- /6Ngi4SCtKl+M4ugWI5leL535O/t1lUwEL3nl2TffDM1gORRKZ8lRfsbagwnIJTziweA
- 0zSLrKDDrSn1qBH9l4fHm8a/D7LeSev3xldh9yskubjF0+78FsnxL8NS5EmwtUbcSQqc
- 3swA==
+ bh=C01sQZepssAiHMS9P3hgHMNUhV2RhwiyEJQq/ppB3JA=;
+ b=Hpzjb+/ugSBWW3NFEvjA63tHVJwmgncXvza6uYNI+3OzOxhn9bD+J4uWUifffOtCVf
+ iejnpJtjocqJE3HdppCFw+pSLU9YPc43Kx2Fe7HqS0UlBy0GjUgESrSrcMDE7P1bZ3Rz
+ zb99ZHxD89INn0wsx7k3UhT3bi0YEPTjpWSoBKjympUHeqNMMxKv2Olcm3Ko3eVwuWyu
+ m4pgZzPJcXwdOw6oSWbtT9I8jIJgx+eK7rxvROH9V7fvRtpULSGffaZkLT+fkoQG0QWD
+ 3TJX44UpKxNV0iC31ThgtMQEY/NqUsDR74kiSyigC+borCsrEkDVvDq7CH5sR0irSzeX
+ rUng==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX6cqJho8YsnEuno/XBQ2wOcWrLR98Jsj2Zf0xFPdzAvw9GD5uQNq1kmGB2pRRd+yX4cNRpZSLRKOGn@nongnu.org
-X-Gm-Message-State: AOJu0YxvueIkJ1fcJOLggYVkMPfphy/FBXbpHbqplB2J5ePRNQ7Gc9Hf
- HDn5WE6nEfoJeAnWuCwmhTkOdotnjsTNPM8psviIOndRzK18ulUaOJk28XX/SS8=
-X-Google-Smtp-Source: AGHT+IHM4NWWfqfY43HQzkXjeVqtv3CyaFbOYDLg4SiX5ycF9OaOGwmw7VM1LveanVsmqZwQahspfw==
-X-Received: by 2002:a05:6512:398c:b0:533:4785:82ab with SMTP id
- 2adb3069b0e04-53d65dca853mr10449603e87.1.1730814293733; 
- Tue, 05 Nov 2024 05:44:53 -0800 (PST)
+ AJvYcCWjMbHJP+ramebDiIC/iuBRHSwT+TDRWShKG7bGXlQrWkeEFmETZyqyPtHXOj5Aftgrx5OWR2t54iS/@nongnu.org
+X-Gm-Message-State: AOJu0YwUxRT1hM/wiYV64anaZdWq2QWwHy3OgNEMnLzCKuGG1ZH8gqap
+ fZwV6HPcrwf7KEx705vTAe5hEz+soEqiBvNebc/tJ5lpr6Kowe50KTamiSv01vc=
+X-Google-Smtp-Source: AGHT+IHzfkUB10svZFQ0cFyk66TqDQUxG//nT+4pxeYnl+GZgrX1CSMNOWWzqBpvB2y4iiOE6Gw4+Q==
+X-Received: by 2002:a17:907:72d5:b0:a9a:3d7f:a8de with SMTP id
+ a640c23a62f3a-a9e3a61c5eamr2355344766b.27.1730814368158; 
+ Tue, 05 Nov 2024 05:46:08 -0800 (PST)
 Received: from [192.168.21.227] ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9eb1813841sm133549966b.178.2024.11.05.05.44.52
+ a640c23a62f3a-a9eb17cf8eesm134490766b.92.2024.11.05.05.46.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Nov 2024 05:44:53 -0800 (PST)
-Message-ID: <c27c6a0e-5f26-45b9-bdda-28e384809f9b@linaro.org>
-Date: Tue, 5 Nov 2024 13:44:50 +0000
+ Tue, 05 Nov 2024 05:46:07 -0800 (PST)
+Message-ID: <28cdd5d2-4152-40a7-86e7-d6abae333209@linaro.org>
+Date: Tue, 5 Nov 2024 13:46:05 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/19] tests/functional: Explicit endianness of microblaze
- assets
+Subject: Re: [PATCH 19/19] tests/functional: Add microblaze cross-endianness
+ tests
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -75,14 +75,14 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>
 References: <20241105130431.22564-1-philmd@linaro.org>
- <20241105130431.22564-19-philmd@linaro.org>
+ <20241105130431.22564-20-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241105130431.22564-19-philmd@linaro.org>
+In-Reply-To: <20241105130431.22564-20-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,21 +106,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/5/24 13:04, Philippe Mathieu-Daudé wrote:
-> The archive used in test_microblaze_s3adsp1800.py (testing a
-> big-endian target) contains a big-endian kernel. Rename using
-> the _BE suffix.
-> 
-> Similarly, the archive in test_microblazeel_s3adsp1800 (testing
-> a little-endian target) contains a little-endian kernel. Rename
-> using _LE suffix.
-> 
-> These changes will help when adding cross-endian kernel tests.
+> Copy/paste the current tests, but call the opposite endianness
+> machines, testing:
+> - petalogix-s3adsp1800-le machine (little-endian CPU) on the
+>    qemu-system-microblaze binary (big-endian)
+> - petalogix-s3adsp1800-be machine (big-endian CPU) on the
+>    qemu-system-microblazeel binary (little-endian).
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   tests/functional/test_microblaze_s3adsp1800.py   | 6 +++---
->   tests/functional/test_microblazeel_s3adsp1800.py | 6 +++---
->   2 files changed, 6 insertions(+), 6 deletions(-)
+> Clever refactor left for later
+> ---
+>   .../functional/test_microblaze_s3adsp1800.py  | 21 +++++++++++++++++++
+>   .../test_microblazeel_s3adsp1800.py           | 19 +++++++++++++++++
+>   2 files changed, 40 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
