@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4E9FD3E77C
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:52:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7790D3E77D
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SLL-00057r-Aj; Tue, 05 Nov 2024 17:48:11 -0500
+	id 1t8SNZ-0001TF-NF; Tue, 05 Nov 2024 17:50:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SLG-00055K-Oj
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:48:08 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SN2-00018a-Lj
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:50:01 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SLD-0004Ai-La
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:48:05 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43168d9c6c9so48965375e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:48:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMy-0004Tc-Ly
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:55 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4315e9e9642so51825585e9.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:49:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730846882; x=1731451682; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730846990; x=1731451790; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Xv7UbEhHdD/9fzj/drKVgHohG9+tJJcGKEeYob1sMW0=;
- b=C+hVrUh0F17sO3lbOnMkFMSe3kc1tuklb/InMNzNJpy1p+hOYtry1d791WDqqvgg3t
- a6d88mePcJHb9fxKvBcEk9YT0yn3fCFMypwSU5SZiu5A5shaUz2Ge9UaoYyM7R2tAthM
- sejerFNYrAMzZNAoXANiMJBR3kKrNIc6DDrzXkZYntmOwZmBipwm9jZELBYozHO0VfCu
- FBqXqmEqzhnlI+UpX6SY1keVsssczJ5jj0Ye7VJsz2jHUAo5qpauABClok56TbyHeT21
- yCpeJNudxQ3Gh6u1Dn+fi7GAzaGZA/YlgdR0RvgLxuUA9gSBvv8nHavT4CUtH5XIMpb1
- xBOQ==
+ bh=wSzSjRbSrc4AxjVgNC6KJMNU1HPmiTPaRC0XOlem+rM=;
+ b=M5buZuA0XdRM5wwoKyhzeLttcpx5XPOjPRLZNHK+lwdnLQVtqNkNttNF7iyXUECIRX
+ SPfrU/sgXKF+eUwOONEGu/vTi/kVqSqQOcySRB1T2soBPeVO7EEtY8PLCotiFerRF/o4
+ kHXJguVR8DA7lXFy8jU0pqcb7ob6IgWTXr3O9An4Yf7ibMvu8sMOhBEMB3AsfxG6nITV
+ drRbfmUJL/T2vBNP7y9ij848SoFxQWDoWeKxzb6V2SeAnmp7AZQBX7v/s23AYS2ojYDQ
+ aRcVRX0CSzPCtZb+vI4VQjEn6DArF5vXWNjT9W/rKzpYOcbxvEhC7+XXogogfuTV89DR
+ P2cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730846882; x=1731451682;
+ d=1e100.net; s=20230601; t=1730846990; x=1731451790;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Xv7UbEhHdD/9fzj/drKVgHohG9+tJJcGKEeYob1sMW0=;
- b=Nob3+D0wBbZkZbt6GvHPz5/cpuAN3B7Xp45Ve+6IbOp9xUqygd/Td1bZ/KHNDOvia7
- pLs/nAASgAsDB6RPxzWBeZ6Hzuyb5w7qwt1WZKx9XjOEmp88SAPovRA8Gq6J+rM9Snle
- p/OiIWU9jIMsVKTwalCBy+XuyB5xAokOoPVXslo4wllupuSKYbGEgRT1/bD8ZI7F74cO
- Amb3kRpajEVROwX0IwmqVy1UhZ+mMJwpE0c23VA7BZGpMi3wvyk20gRw854QPP2zj5x5
- PkqbhZNG4wYXX0YkTHJ0ben13cESV4ZQWF92DkQaen7dcfx/m7tHrTse5pmZ9zN9H/yL
- s1PA==
-X-Gm-Message-State: AOJu0Yz92QK3sX0ZvzvCq9XM5EW+2Rny+Gxc5Bkfy4wAqD1iyuccUW/E
- 6GKMnhDKQKrVv32Tj4ksZm49yMS4AKd6G9jZPll45Eg2ob3vT8J1rq8cFWEoAE79qv42kY9Xt9+
- PqBxLdg==
-X-Google-Smtp-Source: AGHT+IEQUMYkS473Oiq0qACceP3Aov8iMV/Et9VbqEr/ZGAadVQwdAgNaLGM06UTNSsVa926jEX2yA==
-X-Received: by 2002:a05:600c:3593:b0:430:54a4:5ad7 with SMTP id
- 5b1f17b1804b1-4319ac76449mr347199945e9.1.1730846881889; 
- Tue, 05 Nov 2024 14:48:01 -0800 (PST)
-Received: from localhost.localdomain ([154.14.63.34])
+ bh=wSzSjRbSrc4AxjVgNC6KJMNU1HPmiTPaRC0XOlem+rM=;
+ b=kePTx/19UQxvBUO3SdUsw6S35/GrDk2xL4URweG3zhcujGam6/ZYWJH5AyZGh7ch0j
+ cYPSUIKQ5fyjmTF9BxhymcWA6Pr/ma2/PXK3G9/rTYTD/FRbwVMWzv3sMNwLMUzvajAK
+ P05hZYr5XcajaA3LWMVGlRhMBTY2a8oeorRYkNONflT3RVJdnh4DbheQ6IzhF7JBgThX
+ PWcrivla9dHPqJbRL3Rpbq2CotEd+whhAY1/3Hq+P4u0cyB34HWQ1vPH7n/sZMoc1Vij
+ sxbsuNLNmFCpmSbdHNo4wMVkuDll25g8UZyUsJ4S0OCQqJQItJRGFd9CYRrrAitmwXPq
+ GM4Q==
+X-Gm-Message-State: AOJu0Yz+TzoBIfcvB5Tk8QCcC7+Gyk3Ay0flflxJPNl39cgg09ES0jE7
+ LPFpSbHQDrMoQGc8fto8J/VNkJT71Wxpcow2ZgkfKeVhyBnrIsY/HXI+xin7d1v/YDfcs6fpNVy
+ arXo2Ew==
+X-Google-Smtp-Source: AGHT+IEbdBeEOBalhredLU0mQN8CejK9bqxeLfb6mwEjTOrw5jfb7p7wjEPECjG4PFk9XrhIco663w==
+X-Received: by 2002:a05:600c:3591:b0:431:680e:95d9 with SMTP id
+ 5b1f17b1804b1-4327b7eac4emr184483205e9.22.1730846990329; 
+ Tue, 05 Nov 2024 14:49:50 -0800 (PST)
+Received: from localhost.localdomain ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa752d2fsm903505e9.44.2024.11.05.14.48.00
+ 5b1f17b1804b1-432aa6da939sm1053395e9.31.2024.11.05.14.49.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 14:48:01 -0800 (PST)
+ Tue, 05 Nov 2024 14:49:49 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 06/29] hw/core/machine: Add missing 'units.h' and
- 'error-report.h' headers
-Date: Tue,  5 Nov 2024 22:47:04 +0000
-Message-ID: <20241105224727.53059-7-philmd@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Corey Minyard <cminyard@mvista.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 26/29] hw/i2c/smbus_eeprom: Prefer DEFINE_TYPES() macro
+Date: Tue,  5 Nov 2024 22:47:24 +0000
+Message-ID: <20241105224727.53059-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241105224727.53059-1-philmd@linaro.org>
 References: <20241105224727.53059-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,49 +96,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Include the missing "qemu/units.h" to fix when refactoring code:
+From: Bernhard Beschow <shentey@gmail.com>
 
-  ../hw/core/machine.c:743:34: error: use of undeclared identifier 'MiB'
-  743 |     mc->default_ram_size = 128 * MiB;
-      |                                  ^
-  ../hw/core/machine.c:750:44: error: use of undeclared identifier 'TiB'
-  750 |     mc->smbios_memory_device_size = 2047 * TiB;
-      |                                            ^
-
-and "qemu/error-report.h" to fix:
-
-  ../hw/core/machine.c:1029:13: error: call to undeclared function 'error_report' [-Wimplicit-function-declaration]
- 1029 |             error_report("NUMA node %" PRIu16 " is missing, use "
-      |             ^
-  ../hw/core/machine.c:1240:9: error: call to undeclared function 'warn_report' [-Wimplicit-function-declaration]
- 1240 |         warn_report("CPU model %s is deprecated -- %s",
-      |         ^
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20240930221900.59525-2-philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Acked-by: Corey Minyard <cminyard@mvista.com>
+Message-ID: <20241103133412.73536-23-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/core/machine.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/i2c/smbus_eeprom.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 901c64b042d..fd3716b7dfd 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -11,10 +11,12 @@
-  */
+diff --git a/hw/i2c/smbus_eeprom.c b/hw/i2c/smbus_eeprom.c
+index 9e62c27a1a5..e3e96d4a2d6 100644
+--- a/hw/i2c/smbus_eeprom.c
++++ b/hw/i2c/smbus_eeprom.c
+@@ -151,19 +151,16 @@ static void smbus_eeprom_class_initfn(ObjectClass *klass, void *data)
+     dc->user_creatable = false;
+ }
  
- #include "qemu/osdep.h"
-+#include "qemu/units.h"
- #include "qemu/accel.h"
- #include "sysemu/replay.h"
- #include "hw/boards.h"
- #include "hw/loader.h"
-+#include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qapi/qapi-visit-machine.h"
- #include "qemu/madvise.h"
+-static const TypeInfo smbus_eeprom_info = {
+-    .name          = TYPE_SMBUS_EEPROM,
+-    .parent        = TYPE_SMBUS_DEVICE,
+-    .instance_size = sizeof(SMBusEEPROMDevice),
+-    .class_init    = smbus_eeprom_class_initfn,
++static const TypeInfo smbus_eeprom_types[] = {
++    {
++        .name          = TYPE_SMBUS_EEPROM,
++        .parent        = TYPE_SMBUS_DEVICE,
++        .instance_size = sizeof(SMBusEEPROMDevice),
++        .class_init    = smbus_eeprom_class_initfn,
++    },
+ };
+ 
+-static void smbus_eeprom_register_types(void)
+-{
+-    type_register_static(&smbus_eeprom_info);
+-}
+-
+-type_init(smbus_eeprom_register_types)
++DEFINE_TYPES(smbus_eeprom_types)
+ 
+ void smbus_eeprom_init_one(I2CBus *smbus, uint8_t address, uint8_t *eeprom_buf)
+ {
 -- 
 2.45.2
 
