@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2D67D40CE0
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938FCD40D08
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:44:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8T4v-0000JD-TP; Tue, 05 Nov 2024 18:35:17 -0500
+	id 1t8TCr-00021A-Ce; Tue, 05 Nov 2024 18:43:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8T4u-0000Ij-9d
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:35:16 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t8TCo-00020J-O4; Tue, 05 Nov 2024 18:43:26 -0500
+Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8T4s-0005vf-Gt
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:35:16 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a9a0c7abaa6so712600366b.2
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 15:35:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t8TCn-0008RC-3H; Tue, 05 Nov 2024 18:43:26 -0500
+Received: by mail-ua1-x930.google.com with SMTP id
+ a1e0cc1a2514c-84fcfe29e09so1956711241.2; 
+ Tue, 05 Nov 2024 15:43:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730849712; x=1731454512; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1730850203; x=1731455003; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qVMUnilpWTyAARMlNo8b1UDqRd7LQq70xLBCXbdhdhU=;
- b=ev4Td0lb81jqXoJ+C+JbCZ7j17r62ksleYXDUs0vtP2x61xIVMG/sj3ccN+4grZCkR
- 1vHAg91KDVEhYh8awX2NrayVqzpgU/8ED6W43nQW47NX1lRdD9SLK6GAGm+Qnj4CR0nj
- zBKZdPWcv1mGB9MBOARSrZpnJPFhxLc2AALidmtaJv2GP3xSqGpBIxKRxt9w4xtVE8Hz
- OuEEEv40lLp2Iap6i3MgUYzwBuKwiJBVsao/9Gw4WTf8JPazOY5UEXyvGwfU2m94lrtl
- 5IvRcqPkPi7Tist6swDThsZJb5t5qe2v7o1wRD2EtNM2FhR1rikIPmF8xwNbJZsumKBv
- S+rg==
+ bh=F8yyVV/dfE4RABPqWAkLeU7Bi+D46UsdSwNgyCe9Jy0=;
+ b=JPF6Vjqtwif8NCMWoUEhCVOVLbvEMIdfigG+DAp3DfsBYm1jfrWOnGiQLCYZTJy/2j
+ HGo8eOZw0JqacGwAfInlLOT9hecB9Ooap7GnySEH/pwLHn6lX3y3X5q1ehvBZj3/fH9M
+ 14tc1nJMAdYXJkS/r+tavRYQ+XWr2qHzjNNkRBZq3UEDtt4Xi0xTWDgmUYrUGPgV2sb+
+ f71l5sSslocjpDTx6kexiJk8Wk5ad4Fy1D9ReIPU6f1DKI5/TgF5lgOYA9NMC3YsWMLV
+ Dvx53GzktNNua49ksBuzxH8Pjvz76HAEn1L5oDC7jBokDVJfoYP9Jw3pCAhpR9IhoKt/
+ p1dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730849712; x=1731454512;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1730850203; x=1731455003;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qVMUnilpWTyAARMlNo8b1UDqRd7LQq70xLBCXbdhdhU=;
- b=kDrREiDo+X3u0Im62/nfAMJjL5U2RlwBwN4Hov9IxMZw4RdQoCzFfh+wnfdJMqnywc
- HkyhtpsI6ntPxtytkfe5VNyO/m29pEKGdoPCJmk30F02pqIs4G9JuFrI6cuP4134ITUx
- MLTFFue35fUE6T8Y6ZVIK91oShMKjc9ExBkQGwHNb+9k9TXsVPNestaQZ9DaZMfMIOdJ
- PxttlVd1PyP4ls/dyLFaimAvd0Mrsm0HZv89NJt3NPAly5PJQai0kr/ffKdpmFvnoiaW
- aBEUIW3kxh5T0VdaPf3EaOpHZTuQnaQQwLTe5GWzKpQR8tL8yCPI7P0l+n7IixRblxhC
- V6cw==
-X-Gm-Message-State: AOJu0Yw2y6hUU6aCW6QHTmXnog0iKUDSzizM5LUDGytAQPegxDk32bMO
- mXmIyqJzaxX5QRZW1wW4U05C89CnA2Pw3BFWYSSirYyVRvEw50oQRZSvhD37zh+pWC6EuKpp6gT
- AtoHHYg==
-X-Google-Smtp-Source: AGHT+IFW91c1MCfptxMbn0BJC3OPuKHxUdGyA9drzL+mXZn5J04Uy7qYmqDpHQhk+im0u//1O56ERw==
-X-Received: by 2002:a17:907:d23:b0:a99:f833:ca32 with SMTP id
- a640c23a62f3a-a9e6556fcd0mr1869938666b.18.1730849711773; 
- Tue, 05 Nov 2024 15:35:11 -0800 (PST)
-Received: from localhost.localdomain ([89.101.134.25])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9eb16a10c4sm193453866b.33.2024.11.05.15.35.09
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 15:35:10 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair.francis@wdc.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PULL v2 01/29] target/microblaze: Alias CPU endianness property as
- 'little-endian'
-Date: Tue,  5 Nov 2024 23:35:03 +0000
-Message-ID: <20241105233503.56812-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241105233503.56812-1-philmd@linaro.org>
-References: <20241105233503.56812-1-philmd@linaro.org>
+ bh=F8yyVV/dfE4RABPqWAkLeU7Bi+D46UsdSwNgyCe9Jy0=;
+ b=QSqYHWEChjFG9nvQ0XAx2HTT93Gfp5PG0i5NMITDDssp90/XkDW+bx3kXbNsZPUkOA
+ xJt1jwaCVyVTvSAZDj+QsmL12Fa2Y0btqXt1rVZL/Wq53OcPM+Jq0VcJO7C9jsP5V/Sg
+ 4wORYrdGNEzQmsP8ZsmOdXoXnshlEI1lVe2j+6/bJ39lNBjvy3gN6eN6WG7SRvWXgHfd
+ cA2Sz5/18jOKSbHKBOy64n1jwhLNHrYjWNKakl+VZus2e+YcpLKXoXg7RXrcR5eiM1pU
+ XKgKXzORSfIu7BwQYTGscPEBS3wkOfxH/kPk3nVEQnia0Hqb7zBF0vkssFeTMO47K7DS
+ DXhQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXA8jDARvzYKeFT4N30FEzqxwzFbtkSNIlVSgRFFQPjHmCITAhkGwwAx+yQVo6Ok36IFiWS5fMK+YXo@nongnu.org
+X-Gm-Message-State: AOJu0YzCQLi+77UmyrFJi2rgZlNfh+AhbRiW+vBF9OmkzDqVSq2bLdv/
+ g3J/4HcarVBBG0vkwcbj89GclYFyudCY0kUILBqVpNKiL+ha9f5e4SZQzATCzIyR/caGIDpuBZO
+ zANmEjNW9hibxBjU+UPA8gc66r8g=
+X-Google-Smtp-Source: AGHT+IFGIuDE6axKuYDqcAZbMGqDy+Rc5cyVsW4aa3GL6laNgKwG2vGDAo5mZDkk6Xe3t0ole8FDrQB2bu+Vqkhr+Jo=
+X-Received: by 2002:a05:6102:3595:b0:4a4:841f:bb98 with SMTP id
+ ada2fe7eead31-4a9543a418bmr20260890137.24.1730850203190; Tue, 05 Nov 2024
+ 15:43:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <cover.1727164986.git.zhouquan@iscas.ac.cn>
+ <ada40759a79c0728652ace59579aa843cb7bf53f.1727164986.git.zhouquan@iscas.ac.cn>
+In-Reply-To: <ada40759a79c0728652ace59579aa843cb7bf53f.1727164986.git.zhouquan@iscas.ac.cn>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 6 Nov 2024 09:42:57 +1000
+Message-ID: <CAKmqyKO2G-A-R+1UhL3Y4D-h-2sBziHiHp7xxoFUaymh3g0RRg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] target/riscv/kvm: Update kvm exts to Linux v6.11
+To: zhouquan@iscas.ac.cn
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com, dbarboza@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,80 +93,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alias the 'endian' property as 'little-endian' because the 'ENDI'
-bit is set when the endianness is in little order, and unset in
-big order.
+On Tue, Sep 24, 2024 at 10:57=E2=80=AFPM <zhouquan@iscas.ac.cn> wrote:
+>
+> From: Quan Zhou <zhouquan@iscas.ac.cn>
+>
+> Add support for a few Zc* extensions, Zimop, Zcmop and Zawrs.
+>
+> Signed-off-by: Quan Zhou <zhouquan@iscas.ac.cn>
 
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-Id: <20241105130431.22564-2-philmd@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-Id: <3f61b85c-9382-4520-a1ce-5476eb16fb56@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/microblaze/petalogix_ml605_mmu.c |  2 +-
- hw/microblaze/xlnx-zynqmp-pmu.c     |  2 +-
- target/microblaze/cpu.c             | 10 ++++++++++
- 3 files changed, 12 insertions(+), 2 deletions(-)
+Thanks!
 
-diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
-index b4183c5267d..df808ac323e 100644
---- a/hw/microblaze/petalogix_ml605_mmu.c
-+++ b/hw/microblaze/petalogix_ml605_mmu.c
-@@ -90,7 +90,7 @@ petalogix_ml605_init(MachineState *machine)
-     object_property_set_int(OBJECT(cpu), "use-fpu", 1, &error_abort);
-     object_property_set_bool(OBJECT(cpu), "dcache-writeback", true,
-                              &error_abort);
--    object_property_set_bool(OBJECT(cpu), "endianness", true, &error_abort);
-+    object_property_set_bool(OBJECT(cpu), "little-endian", true, &error_abort);
-     qdev_realize(DEVICE(cpu), NULL, &error_abort);
- 
-     /* Attach emulated BRAM through the LMB.  */
-diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
-index 1bfc9641d29..43608c2dca4 100644
---- a/hw/microblaze/xlnx-zynqmp-pmu.c
-+++ b/hw/microblaze/xlnx-zynqmp-pmu.c
-@@ -90,7 +90,7 @@ static void xlnx_zynqmp_pmu_soc_realize(DeviceState *dev, Error **errp)
-     object_property_set_bool(OBJECT(&s->cpu), "use-pcmp-instr", true,
-                              &error_abort);
-     object_property_set_bool(OBJECT(&s->cpu), "use-mmu", false, &error_abort);
--    object_property_set_bool(OBJECT(&s->cpu), "endianness", true,
-+    object_property_set_bool(OBJECT(&s->cpu), "little-endian", true,
-                              &error_abort);
-     object_property_set_str(OBJECT(&s->cpu), "version", "8.40.b",
-                             &error_abort);
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index 135947ee800..b322f060777 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -328,9 +328,16 @@ static void mb_cpu_initfn(Object *obj)
-     qdev_init_gpio_in_named(DEVICE(cpu), mb_cpu_ns_axi_dc, "ns_axi_dc", 1);
-     qdev_init_gpio_in_named(DEVICE(cpu), mb_cpu_ns_axi_ic, "ns_axi_ic", 1);
- #endif
-+
-+    /* Restricted 'endianness' property is equivalent of 'little-endian' */
-+    object_property_add_alias(obj, "little-endian", obj, "endianness");
- }
- 
- static Property mb_properties[] = {
-+    /*
-+     * Following properties are used by Xilinx DTS conversion tool
-+     * do not rename them.
-+     */
-     DEFINE_PROP_UINT32("base-vectors", MicroBlazeCPU, cfg.base_vectors, 0),
-     DEFINE_PROP_BOOL("use-stack-protection", MicroBlazeCPU, cfg.stackprot,
-                      false),
-@@ -387,6 +394,9 @@ static Property mb_properties[] = {
-     DEFINE_PROP_UINT8("pvr", MicroBlazeCPU, cfg.pvr, C_PVR_FULL),
-     DEFINE_PROP_UINT8("pvr-user1", MicroBlazeCPU, cfg.pvr_user1, 0),
-     DEFINE_PROP_UINT32("pvr-user2", MicroBlazeCPU, cfg.pvr_user2, 0),
-+    /*
-+     * End of properties reserved by Xilinx DTS conversion tool.
-+     */
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
--- 
-2.45.2
+Applied to riscv-to-apply.next
 
+Alistair
+
+> ---
+>  target/riscv/kvm/kvm-cpu.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index f6e3156b8d..428aaee552 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -281,7 +281,10 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] =3D {
+>      KVM_EXT_CFG("zihintntl", ext_zihintntl, KVM_RISCV_ISA_EXT_ZIHINTNTL)=
+,
+>      KVM_EXT_CFG("zihintpause", ext_zihintpause, KVM_RISCV_ISA_EXT_ZIHINT=
+PAUSE),
+>      KVM_EXT_CFG("zihpm", ext_zihpm, KVM_RISCV_ISA_EXT_ZIHPM),
+> +    KVM_EXT_CFG("zimop", ext_zimop, KVM_RISCV_ISA_EXT_ZIMOP),
+> +    KVM_EXT_CFG("zcmop", ext_zcmop, KVM_RISCV_ISA_EXT_ZCMOP),
+>      KVM_EXT_CFG("zacas", ext_zacas, KVM_RISCV_ISA_EXT_ZACAS),
+> +    KVM_EXT_CFG("zawrs", ext_zawrs, KVM_RISCV_ISA_EXT_ZAWRS),
+>      KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
+>      KVM_EXT_CFG("zfh", ext_zfh, KVM_RISCV_ISA_EXT_ZFH),
+>      KVM_EXT_CFG("zfhmin", ext_zfhmin, KVM_RISCV_ISA_EXT_ZFHMIN),
+> @@ -292,6 +295,10 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] =3D {
+>      KVM_EXT_CFG("zbkc", ext_zbkc, KVM_RISCV_ISA_EXT_ZBKC),
+>      KVM_EXT_CFG("zbkx", ext_zbkx, KVM_RISCV_ISA_EXT_ZBKX),
+>      KVM_EXT_CFG("zbs", ext_zbs, KVM_RISCV_ISA_EXT_ZBS),
+> +    KVM_EXT_CFG("zca", ext_zca, KVM_RISCV_ISA_EXT_ZCA),
+> +    KVM_EXT_CFG("zcb", ext_zcb, KVM_RISCV_ISA_EXT_ZCB),
+> +    KVM_EXT_CFG("zcd", ext_zcd, KVM_RISCV_ISA_EXT_ZCD),
+> +    KVM_EXT_CFG("zcf", ext_zcf, KVM_RISCV_ISA_EXT_ZCF),
+>      KVM_EXT_CFG("zknd", ext_zknd, KVM_RISCV_ISA_EXT_ZKND),
+>      KVM_EXT_CFG("zkne", ext_zkne, KVM_RISCV_ISA_EXT_ZKNE),
+>      KVM_EXT_CFG("zknh", ext_zknh, KVM_RISCV_ISA_EXT_ZKNH),
+> --
+> 2.34.1
+>
+>
 
