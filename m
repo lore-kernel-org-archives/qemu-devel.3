@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F83AD1CA38
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF390D1CA38
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:47:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DDd-0000ef-B8; Tue, 05 Nov 2024 01:39:16 -0500
+	id 1t8DD0-0007K5-Km; Tue, 05 Nov 2024 01:38:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DDB-0007uW-3w
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:51 -0500
+ id 1t8DCh-000763-66
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:19 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DD9-0001w0-2x
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:44 -0500
+ id 1t8DCe-0001vd-L9
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788723; x=1762324723;
+ t=1730788693; x=1762324693;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=6uInE5yDbMnbDX6d9fyJjDXgIoMCCobDyV6ItNz4Zao=;
- b=UuQFuDBQVGTCq7SLg8jQDgR1t1MOIpyj/GpmU4BGBrjoGH1mHnuz21jp
- Eq33agUO7xykpLbL5JqEzdX2BITv1J3vOWddwcJc4hxdSmU6MAfGubCwJ
- g7fTOzneckZNaaMB5v0raxhoKym0F64cqAprP2PgAOIrpVBUvkm6o+LdE
- ie0e3PmJm1MLMbQmTI7Vg7l86ozekrEddcrNJKhoYgLtnMAtt5uA75iUm
- XoWW8OsfXkmfOyKCRh5yzKVLZlYOXp5Ie6tqMPSr3aU9Bc2NlAwBYyq5i
- EGX9ax8IL/XEiBwODxGCi2VSopObfS9K5d0RJJXul2L5GZwL9E+uBEt1x Q==;
-X-CSE-ConnectionGUID: hycp3DhGQvCfF4VPkoNKvA==
-X-CSE-MsgGUID: fjoXKwBrSeSNtUGiaL/I0Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689652"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689652"
+ bh=pw70+E9f7yP0q/kg6tok3Z3RGqPvOBZoP8fDG+f0630=;
+ b=jJ4+g5e2hlFALtviDAmS5inKIcIxKig8h9+M3tLKIoeMXYtym4p1LGtl
+ uta/4EP4a6H/VSI7rRM+15jZjG1nlbwsL4YpwB9y5vQGa1BWakz4S9iep
+ F9Xaz8L4xj6EB6KPsHAVdwudtpFlDS+1vcbWx73ScXwD136xHnbKqDn6s
+ 2q9daN05PLOoNiHR+UYE4kZ+3hTLIohMRYv8DYdT8jEbXITvxz3IJQHlr
+ 7gNedSpgbz/nKn9epUDNHjGmCdcEecFQB7ABL0WlaiH2gH1jKdW7/NZO7
+ RyR2QosEwwUy7mXRySp8jutce8WBPCRC6bKBwPF2ggFd6n4OJ0CTJVjZ3 A==;
+X-CSE-ConnectionGUID: vkzRP36vT4KKAEMSzHbuCA==
+X-CSE-MsgGUID: PZ4q2RRNR9maEeE3TvkUpQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689552"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689552"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:38:32 -0800
-X-CSE-ConnectionGUID: svLfrtNRRe2nzq6dLY2BYA==
-X-CSE-MsgGUID: iUPoEBAiSDGKObyzPN4S6A==
+ 04 Nov 2024 22:38:02 -0800
+X-CSE-ConnectionGUID: RVGuAhgLRpqW3JT0yZtiFg==
+X-CSE-MsgGUID: vTO8ntceRhecz3VMf69SWw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989128"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989010"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:38:27 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:37:58 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -57,10 +57,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 30/60] i386/tdx: Wire TDX_REPORT_FATAL_ERROR with
- GuestPanic facility
-Date: Tue,  5 Nov 2024 01:23:38 -0500
-Message-Id: <20241105062408.3533704-31-xiaoyao.li@intel.com>
+Subject: [PATCH v6 23/60] headers: Add definitions from UEFI spec for volumes,
+ resources, etc...
+Date: Tue,  5 Nov 2024 01:23:31 -0500
+Message-Id: <20241105062408.3533704-24-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
@@ -91,220 +91,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Integrate TDX's TDX_REPORT_FATAL_ERROR into QEMU GuestPanic facility
+Add UEFI definitions for literals, enums, structs, GUIDs, etc... that
+will be used by TDX to build the UEFI Hand-Off Block (HOB) that is passed
+to the Trusted Domain Virtual Firmware (TDVF).
 
-Originated-from: Isaku Yamahata <isaku.yamahata@intel.com>
+All values come from the UEFI specification [1], PI spec [2] and TDVF
+design guide[3].
+
+[1] UEFI Specification v2.1.0 https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_Aug29.pdf
+[2] UEFI PI spec v1.8 https://uefi.org/sites/default/files/resources/UEFI_PI_Spec_1_8_March3.pdf
+[3] https://software.intel.com/content/dam/develop/external/us/en/documents/tdx-virtual-firmware-design-guide-rev-1.pdf
+
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
-Changes in v6:
-- change error_code of GuestPanicInformationTdx from uint64_t to
-  uint32_t, to only contains the bit 31:0 returned in r12.
+ include/standard-headers/uefi/uefi.h | 198 +++++++++++++++++++++++++++
+ 1 file changed, 198 insertions(+)
+ create mode 100644 include/standard-headers/uefi/uefi.h
 
-Changes in v5:
-- mention additional error information in gpa when it presents;
-- refine the documentation; (Markus)
-
-Changes in v4:
-- refine the documentation; (Markus)
-
-Changes in v3:
-- Add docmentation of new type and struct; (Daniel)
-- refine the error message handling; (Daniel)
----
- qapi/run-state.json   | 31 +++++++++++++++++++++--
- system/runstate.c     | 58 +++++++++++++++++++++++++++++++++++++++++++
- target/i386/kvm/tdx.c | 24 +++++++++++++++++-
- 3 files changed, 110 insertions(+), 3 deletions(-)
-
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index ce95cfa46b73..c5b0b747b30d 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -501,10 +501,12 @@
- #
- # @s390: s390 guest panic information type (Since: 2.12)
- #
-+# @tdx: tdx guest panic information type (Since: 9.0)
-+#
- # Since: 2.9
- ##
- { 'enum': 'GuestPanicInformationType',
--  'data': [ 'hyper-v', 's390' ] }
-+  'data': [ 'hyper-v', 's390', 'tdx' ] }
- 
- ##
- # @GuestPanicInformation:
-@@ -519,7 +521,8 @@
-  'base': {'type': 'GuestPanicInformationType'},
-  'discriminator': 'type',
-  'data': {'hyper-v': 'GuestPanicInformationHyperV',
--          's390': 'GuestPanicInformationS390'}}
-+          's390': 'GuestPanicInformationS390',
-+          'tdx' : 'GuestPanicInformationTdx'}}
- 
- ##
- # @GuestPanicInformationHyperV:
-@@ -598,6 +601,30 @@
-           'psw-addr': 'uint64',
-           'reason': 'S390CrashReason'}}
- 
-+##
-+# @GuestPanicInformationTdx:
-+#
-+# TDX Guest panic information specific to TDX, as specified in the
-+# "Guest-Hypervisor Communication Interface (GHCI) Specification",
-+# section TDG.VP.VMCALL<ReportFatalError>.
-+#
-+# @error-code: TD-specific error code
-+#
-+# @message: Human-readable error message provided by the guest. Not
-+#     to be trusted.
-+#
-+# @gpa: guest-physical address of a page that contains more verbose
-+#     error information, as zero-terminated string.  Present when the
-+#     "GPA valid" bit (bit 63) is set in @error-code.
-+#
-+#
-+# Since: 9.0
-+##
-+{'struct': 'GuestPanicInformationTdx',
-+ 'data': {'error-code': 'uint32',
-+          'message': 'str',
-+          '*gpa': 'uint64'}}
+diff --git a/include/standard-headers/uefi/uefi.h b/include/standard-headers/uefi/uefi.h
+new file mode 100644
+index 000000000000..b15aba796156
+--- /dev/null
++++ b/include/standard-headers/uefi/uefi.h
+@@ -0,0 +1,198 @@
++/*
++ * Copyright (C) 2020 Intel Corporation
++ *
++ * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
++ *                        <isaku.yamahata at intel.com>
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
 +
- ##
- # @MEMORY_FAILURE:
- #
-diff --git a/system/runstate.c b/system/runstate.c
-index c2c9afa905a6..9bb8162eb28f 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -565,6 +565,52 @@ static void qemu_system_wakeup(void)
-     }
- }
- 
-+static char *tdx_parse_panic_message(char *message)
-+{
-+    bool printable = false;
-+    char *buf = NULL;
-+    int len = 0, i;
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
 +
-+    /*
-+     * Although message is defined as a json string, we shouldn't
-+     * unconditionally treat it as is because the guest generated it and
-+     * it's not necessarily trustable.
-+     */
-+    if (message) {
-+        /* The caller guarantees the NUL-terminated string. */
-+        len = strlen(message);
++ * You should have received a copy of the GNU General Public License along
++ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ *
++ */
 +
-+        printable = len > 0;
-+        for (i = 0; i < len; i++) {
-+            if (!(0x20 <= message[i] && message[i] <= 0x7e)) {
-+                printable = false;
-+                break;
-+            }
-+        }
-+    }
++#ifndef HW_I386_UEFI_H
++#define HW_I386_UEFI_H
 +
-+    if (!printable && len) {
-+        /* 3 = length of "%02x " */
-+        buf = g_malloc(len * 3);
-+        for (i = 0; i < len; i++) {
-+            if (message[i] == '\0') {
-+                break;
-+            } else {
-+                sprintf(buf + 3 * i, "%02x ", message[i]);
-+            }
-+        }
-+        if (i > 0)
-+            /* replace the last ' '(space) to NUL */
-+            buf[i * 3 - 1] = '\0';
-+        else
-+            buf[0] = '\0';
++/***************************************************************************/
++/*
++ * basic EFI definitions
++ * supplemented with UEFI Specification Version 2.8 (Errata A)
++ * released February 2020
++ */
++/* UEFI integer is little endian */
 +
-+        return buf;
-+    }
++typedef struct {
++    uint32_t Data1;
++    uint16_t Data2;
++    uint16_t Data3;
++    uint8_t Data4[8];
++} EFI_GUID;
 +
-+    return message;
-+}
++typedef enum {
++    EfiReservedMemoryType,
++    EfiLoaderCode,
++    EfiLoaderData,
++    EfiBootServicesCode,
++    EfiBootServicesData,
++    EfiRuntimeServicesCode,
++    EfiRuntimeServicesData,
++    EfiConventionalMemory,
++    EfiUnusableMemory,
++    EfiACPIReclaimMemory,
++    EfiACPIMemoryNVS,
++    EfiMemoryMappedIO,
++    EfiMemoryMappedIOPortSpace,
++    EfiPalCode,
++    EfiPersistentMemory,
++    EfiUnacceptedMemoryType,
++    EfiMaxMemoryType
++} EFI_MEMORY_TYPE;
 +
- void qemu_system_guest_panicked(GuestPanicInformation *info)
- {
-     qemu_log_mask(LOG_GUEST_ERROR, "Guest crashed");
-@@ -606,7 +652,19 @@ void qemu_system_guest_panicked(GuestPanicInformation *info)
-                           S390CrashReason_str(info->u.s390.reason),
-                           info->u.s390.psw_mask,
-                           info->u.s390.psw_addr);
-+        } else if (info->type == GUEST_PANIC_INFORMATION_TYPE_TDX) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "\nTDX guest reports fatal error:"
-+                          " error code: 0x%" PRIx32 " error message:\"%s\"\n",
-+                          info->u.tdx.error_code,
-+                          tdx_parse_panic_message(info->u.tdx.message));
-+            if (info->u.tdx.gpa != -1ull) {
-+                qemu_log_mask(LOG_GUEST_ERROR, "Additional error information "
-+                              "can be found at gpa page: 0x%" PRIx64 "\n",
-+                              info->u.tdx.gpa);
-+            }
-         }
++#define EFI_HOB_HANDOFF_TABLE_VERSION 0x0009
 +
-         qapi_free_GuestPanicInformation(info);
-     }
- }
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 3f44dfbf6585..394f1d75dc0d 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -17,6 +17,7 @@
- #include "qemu/mmap-alloc.h"
- #include "qapi/error.h"
- #include "qom/object_interfaces.h"
-+#include "sysemu/runstate.h"
- #include "sysemu/sysemu.h"
- #include "exec/ramblock.h"
- 
-@@ -574,10 +575,25 @@ int tdx_parse_tdvf(void *flash_ptr, int size)
-     return tdvf_parse_metadata(&tdx_guest->tdvf, flash_ptr, size);
- }
- 
-+static void tdx_panicked_on_fatal_error(X86CPU *cpu, uint64_t error_code,
-+                                        char *message, uint64_t gpa)
-+{
-+    GuestPanicInformation *panic_info;
++#define EFI_HOB_TYPE_HANDOFF              0x0001
++#define EFI_HOB_TYPE_MEMORY_ALLOCATION    0x0002
++#define EFI_HOB_TYPE_RESOURCE_DESCRIPTOR  0x0003
++#define EFI_HOB_TYPE_GUID_EXTENSION       0x0004
++#define EFI_HOB_TYPE_FV                   0x0005
++#define EFI_HOB_TYPE_CPU                  0x0006
++#define EFI_HOB_TYPE_MEMORY_POOL          0x0007
++#define EFI_HOB_TYPE_FV2                  0x0009
++#define EFI_HOB_TYPE_LOAD_PEIM_UNUSED     0x000A
++#define EFI_HOB_TYPE_UEFI_CAPSULE         0x000B
++#define EFI_HOB_TYPE_FV3                  0x000C
++#define EFI_HOB_TYPE_UNUSED               0xFFFE
++#define EFI_HOB_TYPE_END_OF_HOB_LIST      0xFFFF
 +
-+    panic_info = g_new0(GuestPanicInformation, 1);
-+    panic_info->type = GUEST_PANIC_INFORMATION_TYPE_TDX;
-+    panic_info->u.tdx.error_code = (uint32_t) error_code;
-+    panic_info->u.tdx.message = message;
-+    panic_info->u.tdx.gpa = gpa;
++typedef struct {
++    uint16_t HobType;
++    uint16_t HobLength;
++    uint32_t Reserved;
++} EFI_HOB_GENERIC_HEADER;
 +
-+    qemu_system_guest_panicked(panic_info);
-+}
++typedef uint64_t EFI_PHYSICAL_ADDRESS;
++typedef uint32_t EFI_BOOT_MODE;
 +
- int tdx_handle_report_fatal_error(X86CPU *cpu, struct kvm_run *run)
- {
-     uint64_t error_code = run->system_event.data[0];
-     char *message = NULL;
-+    uint64_t gpa = -1ull;
- 
-     if (error_code & 0xffff) {
-         error_report("TDX: REPORT_FATAL_ERROR: invalid error code: 0x%lx",
-@@ -594,7 +610,13 @@ int tdx_handle_report_fatal_error(X86CPU *cpu, struct kvm_run *run)
-         message[TDX_FATAL_MESSAGE_MAX] = '\0';
-     }
- 
--    error_report("TD guest reports fatal error. %s", message ? : "");
-+#define TDX_REPORT_FATAL_ERROR_GPA_VALID    BIT_ULL(63)
-+    if (error_code & TDX_REPORT_FATAL_ERROR_GPA_VALID) {
-+        gpa = run->system_event.data[1];
-+    }
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    uint32_t Version;
++    EFI_BOOT_MODE BootMode;
++    EFI_PHYSICAL_ADDRESS EfiMemoryTop;
++    EFI_PHYSICAL_ADDRESS EfiMemoryBottom;
++    EFI_PHYSICAL_ADDRESS EfiFreeMemoryTop;
++    EFI_PHYSICAL_ADDRESS EfiFreeMemoryBottom;
++    EFI_PHYSICAL_ADDRESS EfiEndOfHobList;
++} EFI_HOB_HANDOFF_INFO_TABLE;
 +
-+    tdx_panicked_on_fatal_error(cpu, error_code, message, gpa);
++#define EFI_RESOURCE_SYSTEM_MEMORY          0x00000000
++#define EFI_RESOURCE_MEMORY_MAPPED_IO       0x00000001
++#define EFI_RESOURCE_IO                     0x00000002
++#define EFI_RESOURCE_FIRMWARE_DEVICE        0x00000003
++#define EFI_RESOURCE_MEMORY_MAPPED_IO_PORT  0x00000004
++#define EFI_RESOURCE_MEMORY_RESERVED        0x00000005
++#define EFI_RESOURCE_IO_RESERVED            0x00000006
++#define EFI_RESOURCE_MEMORY_UNACCEPTED      0x00000007
++#define EFI_RESOURCE_MAX_MEMORY_TYPE        0x00000008
 +
-     return -1;
- }
- 
++#define EFI_RESOURCE_ATTRIBUTE_PRESENT                  0x00000001
++#define EFI_RESOURCE_ATTRIBUTE_INITIALIZED              0x00000002
++#define EFI_RESOURCE_ATTRIBUTE_TESTED                   0x00000004
++#define EFI_RESOURCE_ATTRIBUTE_SINGLE_BIT_ECC           0x00000008
++#define EFI_RESOURCE_ATTRIBUTE_MULTIPLE_BIT_ECC         0x00000010
++#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_1           0x00000020
++#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_2           0x00000040
++#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTED           0x00000080
++#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED          0x00000100
++#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTED      0x00000200
++#define EFI_RESOURCE_ATTRIBUTE_UNCACHEABLE              0x00000400
++#define EFI_RESOURCE_ATTRIBUTE_WRITE_COMBINEABLE        0x00000800
++#define EFI_RESOURCE_ATTRIBUTE_WRITE_THROUGH_CACHEABLE  0x00001000
++#define EFI_RESOURCE_ATTRIBUTE_WRITE_BACK_CACHEABLE     0x00002000
++#define EFI_RESOURCE_ATTRIBUTE_16_BIT_IO                0x00004000
++#define EFI_RESOURCE_ATTRIBUTE_32_BIT_IO                0x00008000
++#define EFI_RESOURCE_ATTRIBUTE_64_BIT_IO                0x00010000
++#define EFI_RESOURCE_ATTRIBUTE_UNCACHED_EXPORTED        0x00020000
++#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED      0x00040000
++#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE    0x00080000
++#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTABLE         0x00100000
++#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTABLE        0x00200000
++#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTABLE    0x00400000
++#define EFI_RESOURCE_ATTRIBUTE_PERSISTENT               0x00800000
++#define EFI_RESOURCE_ATTRIBUTE_PERSISTABLE              0x01000000
++#define EFI_RESOURCE_ATTRIBUTE_MORE_RELIABLE            0x02000000
++
++typedef uint32_t EFI_RESOURCE_TYPE;
++typedef uint32_t EFI_RESOURCE_ATTRIBUTE_TYPE;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    EFI_GUID Owner;
++    EFI_RESOURCE_TYPE ResourceType;
++    EFI_RESOURCE_ATTRIBUTE_TYPE ResourceAttribute;
++    EFI_PHYSICAL_ADDRESS PhysicalStart;
++    uint64_t ResourceLength;
++} EFI_HOB_RESOURCE_DESCRIPTOR;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    EFI_GUID Name;
++
++    /* guid specific data follows */
++} EFI_HOB_GUID_TYPE;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    EFI_PHYSICAL_ADDRESS BaseAddress;
++    uint64_t Length;
++} EFI_HOB_FIRMWARE_VOLUME;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    EFI_PHYSICAL_ADDRESS BaseAddress;
++    uint64_t Length;
++    EFI_GUID FvName;
++    EFI_GUID FileName;
++} EFI_HOB_FIRMWARE_VOLUME2;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    EFI_PHYSICAL_ADDRESS BaseAddress;
++    uint64_t Length;
++    uint32_t AuthenticationStatus;
++    bool ExtractedFv;
++    EFI_GUID FvName;
++    EFI_GUID FileName;
++} EFI_HOB_FIRMWARE_VOLUME3;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    uint8_t SizeOfMemorySpace;
++    uint8_t SizeOfIoSpace;
++    uint8_t Reserved[6];
++} EFI_HOB_CPU;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++} EFI_HOB_MEMORY_POOL;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++
++    EFI_PHYSICAL_ADDRESS BaseAddress;
++    uint64_t Length;
++} EFI_HOB_UEFI_CAPSULE;
++
++#define EFI_HOB_OWNER_ZERO                                      \
++    ((EFI_GUID){ 0x00000000, 0x0000, 0x0000,                    \
++        { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } })
++
++#endif
 -- 
 2.34.1
 
