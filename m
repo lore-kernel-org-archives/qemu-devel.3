@@ -4,66 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4992ED36122
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 19:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 956EBD36136
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 20:13:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Pgu-0004Gx-5p; Tue, 05 Nov 2024 14:58:16 -0500
+	id 1t8PuR-0003iy-H0; Tue, 05 Nov 2024 15:12:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t8Pgs-0004GC-Qo
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 14:58:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t8PuP-0003iY-AF; Tue, 05 Nov 2024 15:12:13 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t8Pgq-0007OT-65
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 14:58:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730836690;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Y7dNNs+flz+uxOzowrcf4TMLvA9P3NrXcnnPK234DfQ=;
- b=CUI7Lyny1NBZEZyOO/4ADeUfV64js2dpfV2DnAlfkFeup9cV2bYM0TG5by2D/eO1NH/8k3
- Hq6OBVc7IL/Lb8yQQRVBn/nqoRk4XzKnNnDmfYNE4ZvJ6tVPJ6ajMvlJd9upCnNQW9pN2G
- pBiNo2ygL7runX3lEK3dGUOBXYOZOJA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-DXZ_Mgv8PEWkwHC9RbYMuQ-1; Tue,
- 05 Nov 2024 14:58:01 -0500
-X-MC-Unique: DXZ_Mgv8PEWkwHC9RbYMuQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C9C8195609D; Tue,  5 Nov 2024 19:58:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.194.127])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 35A2A1955F40; Tue,  5 Nov 2024 19:57:58 +0000 (UTC)
-Date: Tue, 5 Nov 2024 20:57:56 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH 05/27] qemu-img: create: refresh options/--help
-Message-ID: <Zyp4xJcwf-gwOacy@redhat.com>
-References: <20240927061121.573271-1-mjt@tls.msk.ru>
- <20240927061121.573271-6-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t8PuN-00008q-DJ; Tue, 05 Nov 2024 15:12:13 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5K9koW011254;
+ Tue, 5 Nov 2024 20:12:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=6MA16X
+ X6XU3OtjaydPQakNJtKjsrUu1XWRaI44weWzo=; b=oboUyLYIjDFj9ACI39MihT
+ emepyov+80th++z/JWQu4t2wQ78icRDXxPWr51ofrwEI65QB/eqt2IaSIlFjTm52
+ 4XWxXVidclPdjQZCSfsXuODmSVA/uvXt5uL0UjZ9Kvp9pZhBgF9PplmddK01uXrw
+ L8G9dhMyJDQPhec+92widRxZ26N5bFi8vqifr6BU5FBNG8fjdWoOjBqQ6j66CcB3
+ nZLXHVzKeL/u+4dBHWBIwmbaBBtEnnfqSE5nNd2xL3udTEXBT8FeR2fTAAMPPUGl
+ pqSAPCfYKUa9Mm6LntMFye3Od4E/OuleBVaz8j/eRJydmjiyUUPty5WCK/YLLBBw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42qt5gg0jq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Nov 2024 20:12:06 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5H58hJ024707;
+ Tue, 5 Nov 2024 20:12:05 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42nxds4ude-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Nov 2024 20:12:05 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A5KC5ai54198752
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 5 Nov 2024 20:12:05 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F26D258052;
+ Tue,  5 Nov 2024 20:12:04 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 88B3B58056;
+ Tue,  5 Nov 2024 20:12:04 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  5 Nov 2024 20:12:04 +0000 (GMT)
+Message-ID: <1a1d29b3-c14c-42a9-93ad-c773e3b265df@linux.ibm.com>
+Date: Tue, 5 Nov 2024 15:12:04 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240927061121.573271-6-mjt@tls.msk.ru>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 10/17] tests/functional: Convert most Aspeed machine tests
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>, lena.voytek@canonical.com
+References: <20241024063507.1585765-1-clg@redhat.com>
+ <20241024063507.1585765-11-clg@redhat.com>
+ <CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com>
+ <91c2ac92-66b2-45c8-b4fe-e8f8587b0e9c@linux.ibm.com>
+ <CAFEAcA84hhWu2ouirfDPbCpq_=QLQxAf3k47h0Pij8iEnOVj+A@mail.gmail.com>
+ <2491bc60-9a0b-486a-8f6d-2c4c94332756@linux.ibm.com>
+ <CAFEAcA85g2nX3MU5RzmBvAHT8Kis1JHhiEaBvnFFbEQkG+0OxQ@mail.gmail.com>
+ <e6c33df3-49e9-4b8a-b7cb-d38c2ebee3be@linux.ibm.com>
+ <CAFEAcA9La7y1Z2-nMnJDyC_p+z-3c0EnDzEE=w5LTYtRnXPT1g@mail.gmail.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <CAFEAcA9La7y1Z2-nMnJDyC_p+z-3c0EnDzEE=w5LTYtRnXPT1g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: e7Qcv_TnRnuXueEDDGJCRYmvGSsu7o67
+X-Proofpoint-GUID: e7Qcv_TnRnuXueEDDGJCRYmvGSsu7o67
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ lowpriorityscore=0 suspectscore=0 spamscore=0 adultscore=0 phishscore=0
+ impostorscore=0 bulkscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411050155
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -81,205 +118,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 27.09.2024 um 08:10 hat Michael Tokarev geschrieben:
-> Create helper function cmd_help() to display command-specific
-> help text, and use it to print --help for 'create' subcommand.
+
+
+On 11/5/24 2:54 PM, Peter Maydell wrote:
+> On Tue, 5 Nov 2024 at 18:36, Stefan Berger <stefanb@linux.ibm.com> wrote:
+>> On 11/5/24 1:12 PM, Peter Maydell wrote:
+>>> On Tue, 5 Nov 2024 at 18:02, Stefan Berger <stefanb@linux.ibm.com> wrote:
+>>>> On 11/5/24 12:13 PM, Peter Maydell wrote:
+>>> Is there no way to just have apparmor not apply at all
+>>> here? I can see why you might want it to apply for the
+>>
+>> If you are root you can change things. I have shown the options using
+>> aa-complain and aa-disable that you can revert once the test has
+>> finished: sudo aa-enforce /usr/bin/swtpm
+>>
+>> You could also copy swtpm into a user-owned directory but you will have
+>> to adapt the user's PATH. That's an easy option.
+>>
+>> The most compatible option is the 3rd option since I would expect that
+>> we will have this rule in a future version of the usr.bin.swtpm Ubuntu
+>> profile provided by the swtpm package:
+>>
+>> echo "include <abstractions/user-tmp>" >>
+>> /etc/apparmor.d/local/usr.bin.swtpm
+>> apparmor_parser -r /etc/apparmor.d/usr.bin.swtpm
+>>
+>>> case of "I'm using it as part of a sandboxed VM setup",
+>>> but in this scenario I am a local user running this binary
+>>> which is not setuid root and it is accessing a file in a
+>>> directory which my user owns and has permissions for.
+>>> This should not be being rejected: there is no security
+>>> boundary involved and swtpm is not doing anything
+>>> that I could not directly do myself anyway (as you
+>>> can tell from the fact that copying the swtpm binary
+>>> to a different location and running it works).
+>>
+>> I am not aware of how user/non-root-started programs can be generally
+>> made exempt from AppArmor.
+>>
+>> There may still be a security boundary if a user runs QEMU and swtpm was
+>> able to manipulate (with malicious input) the user's files in some
+>> undesirable way or copy the user's data elsewhere. In this case it may
+>> be desirable for the user that the profile be applied and the PATH he is
+>> using points to the standard swtpm.
 > 
-> Add missing long options (eg --format) in img_create().
+> But our test makefiles could equally well just run "cp" !
+> swtpm has no privilege here that we do not already have.
 > 
-> Remove usage of missing_argument()/unrecognized_option() in
-> img_create().
+> Anyway, the thing here is that we run swtpm like this:
 > 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->  qemu-img.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++-------
->  1 file changed, 61 insertions(+), 8 deletions(-)
+>   swtpm socket -d  --tpm2 --tpmstate dir=/path/to/somewhere --ctrl
+> type=unixio,path=/path/to/socket
 > 
-> diff --git a/qemu-img.c b/qemu-img.c
-> index e8234104e5..7ed5e6d1a8 100644
-> --- a/qemu-img.c
-> +++ b/qemu-img.c
-> @@ -132,6 +132,32 @@ void unrecognized_option(const char *option)
->      error_exit("qemu-img", "unrecognized option '%s'", option);
->  }
->  
-> +/*
-> + * Print --help output for a command and exit.
-> + * syntax and description are multi-line with trailing EOL
-> + * (to allow easy extending of the text)
-> + * syntax has each subsequent line indented by 8 chars.
-> + * desrciption is indented by 2 chars for argument on each own line,
+> where we use command line arguments to tell it where to
+> put the tpmstate and the socket.
+> 
+> Either:
+>   (1) there are places where it's not valid for us to tell swtpm to
+> put the tpmstate or to put the control socket
+>   (2) it's valid to put those anywhere we like
+> 
+> If (1), then swtpm should give a clear error message that we've
+> given it an invalid argument (and its manpage should say what
+> the restrictions are)
 
-s/desrciption/description/
+There are no restrictions on the swtpm level when it comes to paths.
 
-I would also suggest writing @syntax and @description as we do in other
-places to indicate that we're talking about parameter names here rather
-than normal English words.
+> If (2), then apparmor should not be rejecting this usage
 
-> + * and with 5 chars for argument description (like -h arg below).
-> + */
-> +static G_NORETURN
-> +void cmd_help(const img_cmd_t *ccmd,
-> +              const char *syntax, const char *arguments)
-> +{
-> +    printf(
-> +"Usage:\n"
-> +"\n"
-> +"  %s %s %s"
-> +"\n"
-> +"Arguments:\n"
-> +"  -h, --help\n"
-> +"     print this help and exit\n"
-> +"%s\n",
-> +           "qemu-img", ccmd->name,
-> +           syntax, arguments);
+AppArmor file restrictions are all path based. We have support for home 
+directory and /tmp, but were missing /var/tmp. So, please.
 
-The last two lines should easily fit on a single one.
+ > > One of swtpm or apparmor must be wrong here and I think it should
+> be fixed. In particular, having the failure mode be "something
 
-> +    exit(EXIT_SUCCESS);
-> +}
-> +
->  /* Please keep in synch with docs/tools/qemu-img.rst */
->  static G_NORETURN
->  void help(void)
-> @@ -530,23 +556,48 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
->      for(;;) {
->          static const struct option long_options[] = {
->              {"help", no_argument, 0, 'h'},
-> +            {"quiet", no_argument, 0, 'q'},
->              {"object", required_argument, 0, OPTION_OBJECT},
-> +            {"format", required_argument, 0, 'f'},
-> +            {"backing", required_argument, 0, 'b'},
-> +            {"backing-format", required_argument, 0, 'F'},
-> +            {"backing-unsafe", no_argument, 0, 'u'},
-> +            {"options", required_argument, 0, 'o'},
->              {0, 0, 0, 0}
->          };
-> -        c = getopt_long(argc, argv, ":F:b:f:ho:qu",
-> +        c = getopt_long(argc, argv, "F:b:f:ho:qu",
->                          long_options, NULL);
+As stated, we were going to fix the AppArmor path in the swtpm Ubuntu 
+package.
 
-Can we please keep the same order in long_options and in the options
-string?
+> goes wrong after swtpm has successfully started and only once
+> it gets sent the TPM_INIT command, and the information about it
+> only winds up in the syslog" is pretty awkward -- it would
+> be much nicer if it failed fast, as soon as you ran it, and
+> printed the error to stderr.
+> 
+> In the interim, since we'd like to be able to run the test suite
+> on Ubuntu, it sounds like we can work around this by putting
+> the tpmstate and socket in either /tmp/ or somewhere under
+> the user's home directory.
 
->          if (c == -1) {
->              break;
->          }
->          switch(c) {
-> -        case ':':
-> -            missing_argument(argv[optind - 1]);
-> -            break;
-> -        case '?':
-> -            unrecognized_option(argv[optind - 1]);
-> -            break;
->          case 'h':
-> -            help();
-> +            cmd_help(ccmd,
+Right, I gave several options.
 
-Is this new help text copied from somewhere or is it written from
-scratch? I couldn't find the source if it was copied, so I'll treat it
-as new and compare it only with the generic help text and the man page.
-
-> +"[-f FMT] [-o FMT_OPTS] [-b BACKING_FILENAME [-F BACKING_FMT]]\n"
-> +"        [--object OBJDEF] [-u] FILENAME [SIZE[bkKMGTPE]]\n"
-
-This is yet another order. It also seems to miss -q.
-
-The existing documentation has this:
-
-create [--object OBJECTDEF] [-q] [-f FMT] [-b BACKING_FILE [-F BACKING_FMT]] [-u] [-o OPTIONS] FILENAME [SIZE]
-
-Which is a fourth different order and description. It would probably be
-good to consolidate on a single option and way to name parameter
-placeholders.
-
-> +,
-> +"  -q, --quiet\n"
-> +"     quiet operations\n"
-> +"  -f, --format FMT\n"
-> +"     specifies format of the new image, default is raw\n"
-
-s/format/the format/
-
-I would suggest "(default: raw)" as the format to use for defaults. It's
-a bit easier to read when it's clearly not part of the sentence.
-
-> +"  -o, --options FMT_OPTS\n"
-> +"     format-specific options ('-o list' for list)\n"
-
-Do you mean '-o help'?
-
-> +"  -b, --backing BACKING_FILENAME\n"
-> +"     stack new image on top of BACKING_FILENAME\n"
-> +"     (for formats which support stacking)\n"
-
-"stacking" isn't terminology we use elsewhere. Maybe "create image as a
-copy-on-write overlay on top of BACKING_FILENAME (not supported by all
-formats)"?
-
-Not sure if it's worth having the parenthesis at all, many options of
-qemu-img will only work with some formats.
-
-> +"  -F, --backing-format BACKING_FMT\n"
-> +"     specify format of BACKING_FILENAME\n"
-
--f said "specifies" (which sounds a bit better to me), let's stay
-consistent. Same s/format/the format/, too.
-
-> +"  -u, --backing-unsafe\n"
-> +"     do not fail if BACKING_FMT can not be read\n"
-
-BACKING_FILENAME?
-
-Maybe "don't try to open BACKING_FILENAME for verification"?
-
-> +"  --object OBJDEF\n"
-> +"     QEMU user-creatable object (eg encryption key)\n"
-
-s/eg/e.g./
-
-Most other options start with a verb. Maybe "define a user-creatable
-object"?
-
-> +"  FILENAME\n"
-> +"     image file to create.  It will be overridden if exists\n"
-
-overwritten?
-
-If you have one full stop in it, I think we should have one at the end,
-too: "...if it exists.\n"
-
-> +"  SIZE\n"
-> +"     image size with optional suffix (multiplies in 1024)\n"
-
-Powers of 1024?
-
-The existing help is a bit more explicit about the supported suffixes:
-
-"  'size' is the disk image size in bytes. Optional suffixes\n"
-"    'k' or 'K' (kilobyte, 1024), 'M' (megabyte, 1024k), 'G' (gigabyte, 1024M),\n"
-"    'T' (terabyte, 1024G), 'P' (petabyte, 1024T) and 'E' (exabyte, 1024P)  are\n"
-"    supported. 'b' is ignored.\n"
-
-
-> +"     SIZE is required unless BACKING_IMG is specified,\n"
-> +"     in which case it will be the same as size of BACKING_IMG\n"
-
-"it will default to the same size as BACKING_IMG"?
-
-> +);
->              break;
->          case 'F':
->              base_fmt = optarg;
-> @@ -571,6 +622,8 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
->          case OPTION_OBJECT:
->              user_creatable_process_cmdline(optarg);
->              break;
-> +        default:
-> +            tryhelp(argv[0]);
->          }
->      }
-
-Kevin
+> 
+> thanks
+> -- PMM
+> 
 
 
