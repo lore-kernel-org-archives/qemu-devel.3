@@ -4,80 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48A32D2C139
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022CED2B941
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8LhK-0007OW-47; Tue, 05 Nov 2024 10:42:26 -0500
+	id 1t8Ll6-0001la-Q7; Tue, 05 Nov 2024 10:46:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t8LhI-0007NK-8x
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:42:24 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t8LhG-0005cv-HD
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:42:24 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2e3fca72a41so4614782a91.1
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 07:42:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1730821341; x=1731426141;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=W4+7XU8wUHXa59NQyNtcKqK64rxYzrc8qg1Q8pT9uII=;
- b=yBLQLRHEapabqfRCaRIhu/h7AJXUkjZjbmEHApBY3bsBE6VgyxypPy/xJ9bkgV0Hpl
- Q8PxPJQt0fy9AjKG3nmbPTWDFM2w/7iiwkHoiSBMkBrMO2X4RRvjpL9RL11/D+r/eF1a
- nb4bY83/fCsn17bQQiiIBAEHxC1YlQ39VfIDZCZnTH8CnNQ/R4y+rPF80vKpO/+ItA0d
- 8KJjG9icS3WTysNPLc1iibp80Q0UFLzulXl9rgMTpn1aHROa9+aKF5nZNsV3xkEMdnR0
- RsPcNJqcXs5lPY/g+8WuQRjxboFn1Hd3W8aUgONU9fCsZSxMCmhbwTx+bqUUsCI4eZ15
- UzOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730821341; x=1731426141;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W4+7XU8wUHXa59NQyNtcKqK64rxYzrc8qg1Q8pT9uII=;
- b=VX2utdfYRfyp/fMx8yimBJGHE+y8ENfE4tBICERc93hZp4bwKOuaMBWili15ypWh9h
- GhMPFnXi/HBnaWaAHbTrB+9fo8veAhPEOWqA2Z2BIP/rwAMX8EAc4RTsSXEJZj5hbfl3
- SdFL0dp4CFG44yfr2gn6oXFrizU7Mo21S/WwsvSOm+aem3Q5vukvCqoafYleUvQSG/ia
- cCMc7f9FLAqVEXYakbjRTUjT1B6orgnIbSGgAC4z7ZKfrVqq0iQ45yKkMCRK4Q50XKYs
- sIHN117eV9xDvHiR/F4iw4m5xGljaVZ69/TJQua9viPkiPmFFkpCTxrlRfyANrW361XH
- R1dA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhNAN0aWvAmWLFmgawbXfSIIKZmuHLAfcWM51vvDDNMjw2uKOxABAGKu3ExaVRf+EgevqEqEujCcP0@nongnu.org
-X-Gm-Message-State: AOJu0Ywudxb5fOcNM3RskhljDkPJ/U8Sv8Sw1UgXTdTcXPRasRvxvMEg
- 4wPJAIK3Xz/nT7DT3nQtxXIYvUvSvDQNPcfypVwe/AUk7pVWZQPUVQTa+6eiXF0CGkFn6Js8IiT
- dGzHWXGkJ+d8jw0YRWd7nPqUqJWqHQrKkg+FcP7O433vEdZa7eAs=
-X-Google-Smtp-Source: AGHT+IEMecD50gjFDJaxV5Q7nJn85AEmjHxjlbXBeUyvHsgVl7DzjIcq9uOQhEbtt6zwEImDIo44bqsDHIky2ZW5nEk=
-X-Received: by 2002:a17:90b:1c88:b0:2e2:bd10:599d with SMTP id
- 98e67ed59e1d1-2e93c18625cmr27325248a91.11.1730821340948; Tue, 05 Nov 2024
- 07:42:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>)
+ id 1t8Ll0-0001lF-Qe; Tue, 05 Nov 2024 10:46:14 -0500
+Received: from smtpout4.mo529.mail-out.ovh.net ([217.182.185.173])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>)
+ id 1t8Lkw-0005zj-Gl; Tue, 05 Nov 2024 10:46:13 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.108.17.92])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4XjXk40mwnz105G;
+ Tue,  5 Nov 2024 15:46:04 +0000 (UTC)
+Received: from kaod.org (37.59.142.110) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 5 Nov
+ 2024 16:46:03 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-110S0041ecec86e-c3b9-4250-a135-900b05e68133,
+ C95E100A97937737B80BEC9A66A832088BBE6DDA) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Tue, 5 Nov 2024 13:13:14 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+CC: <qemu-devel@nongnu.org>, Akihiro Suda <suda.kyoto@gmail.com>,
+ <jan.dubois@suse.com>, <anders.f.bjorklund@gmail.com>,
+ <qemu-stable@nongnu.org>, Balaji Vijayakumar <kuttibalaji.v6@gmail.com>
+Subject: Re: [PATCH] 9pfs: fix crash on 'Treaddir' request
+Message-ID: <20241105123803.0923c22e@bahia>
+In-Reply-To: <E1t8GnN-002RS8-E2@kylie.crudebyte.com>
+References: <E1t8GnN-002RS8-E2@kylie.crudebyte.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20241024200031.80327-1-iii@linux.ibm.com>
- <20241024200031.80327-6-iii@linux.ibm.com>
-In-Reply-To: <20241024200031.80327-6-iii@linux.ibm.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 5 Nov 2024 08:42:09 -0700
-Message-ID: <CANCZdfobgZhWMuFvY1YaeJJAzfgFFBG=TFD8-FHMMT1OLFegjg@mail.gmail.com>
-Subject: Re: [PATCH 5/8] osdep: Introduce qemu_kill_thread()
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000003289d106262c3fdf"
-Received-SPF: none client-ip=2607:f8b0:4864:20::102d;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.110]
+X-ClientProxiedBy: DAG2EX1.mxp5.local (172.16.2.11) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: 6dae6638-5ccc-4f49-b1ea-c4a3f97bec9b
+X-Ovh-Tracer-Id: 4448430533422258537
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrtddtgdehudcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegffevudduleetgeeftefhtddtkeeludeuudevtdeuhfdvffeggfevfeefkedtkeenucffohhmrghinhepughirhdrshhtrhgvrghmnecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrdduuddtpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeejpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehsuhgurgdrkhihohhtohesghhmrghilhdrtghomhdprhgtphhtthhopehjrghnrdguuhgsohhishesshhushgvrdgtohhmpdhrtghpthhtoheprghnuggvrhhsrdhfrdgsjhhorhhklhhunhgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepqhgvmhhuqd
+ hsthgrsghlvgesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhhuthhtihgsrghlrghjihdrvheisehgmhgrihhlrdgtohhmpdfovfetjfhoshhtpehmohehvdelmgdpmhhouggvpehsmhhtphhouhht
+DKIM-Signature: a=rsa-sha256; bh=Idlo+TpZqxumuwn40MHDGxg665Zn+q4F3p8uTXi/J3g=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1730821564; v=1;
+ b=gu7jEIrl2TPSaZ7tbrp3cMVfiKJtPkES/BFOvVuBIs+bSnMp//LZeh6AzwPFHxIHL9SZmY0G
+ sA8O6kt66Xph+9jVdQBnfIng2a+Dro6famlkr3WMxHmNqdajVnkbI0VvvM5LYJQAoNF4UI6a3ms
+ iCS2kHxujaDZgrLL5o/jtUXdI2i8CuxsirnUAv89qsEGszoTcZg5HHiLtzB1WPIOw749KeKO1qw
+ RwJnrqtq3N4KnwMyJ9LCZ8Tv/yXsjeGP3RtFupPi1EZ9yexeS8UrD5B6H02QTDnhPV+DjWupe0m
+ WY9bRWIAHY9mv2Pal/wkW85e20ldv4qFs0OLtSN6GJxOQ==
+Received-SPF: pass client-ip=217.182.185.173; envelope-from=groug@kaod.org;
+ helo=smtpout4.mo529.mail-out.ovh.net
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,156 +85,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003289d106262c3fdf
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, 5 Nov 2024 11:25:26 +0100
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 
-On Thu, Oct 24, 2024 at 2:00=E2=80=AFPM Ilya Leoshkevich <iii@linux.ibm.com=
-> wrote:
-
-> Add a function for sending signals to individual threads. It does not mak=
-e
-> sense on Windows, so do not provide an implementation, so that if someone
-> uses it by accident, they will get a linker error.
->
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> A bad (broken or malicious) 9p client (guest) could cause QEMU host to
+> crash by sending a 9p 'Treaddir' request with a numeric file ID (FID) that
+> was previously opened for a file instead of an expected directory:
+> 
+>   #0  0x0000762aff8f4919 in __GI___rewinddir (dirp=0xf) at
+>     ../sysdeps/unix/sysv/linux/rewinddir.c:29
+>   #1  0x0000557b7625fb40 in do_readdir_many (pdu=0x557bb67d2eb0,
+>     fidp=0x557bb67955b0, entries=0x762afe9fff58, offset=0, maxsize=131072,
+>     dostat=<optimized out>) at ../hw/9pfs/codir.c:101
+>   #2  v9fs_co_readdir_many (pdu=pdu@entry=0x557bb67d2eb0,
+>     fidp=fidp@entry=0x557bb67955b0, entries=entries@entry=0x762afe9fff58,
+>     offset=0, maxsize=131072, dostat=false) at ../hw/9pfs/codir.c:226
+>   #3  0x0000557b7625c1f9 in v9fs_do_readdir (pdu=0x557bb67d2eb0,
+>     fidp=0x557bb67955b0, offset=<optimized out>,
+>     max_count=<optimized out>) at ../hw/9pfs/9p.c:2488
+>   #4  v9fs_readdir (opaque=0x557bb67d2eb0) at ../hw/9pfs/9p.c:2602
+> 
+> That's because V9fsFidOpenState was declared as union type. So the
+> same memory region is used for either an open POSIX file handle (int),
+> or a POSIX DIR* pointer, etc., so 9p server incorrectly used the
+> previously opened (valid) POSIX file handle (0xf) as DIR* pointer,
+> eventually causing a crash in glibc's rewinddir() function.
+> 
+> Root cause was therefore a missing check in 9p server's 'Treaddir'
+> request handler, which must ensure that the client supplied FID was
+> really opened as directory stream before trying to access the
+> aforementioned union and its DIR* member.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: d62dbb51f7 ("virtio-9p: Add fidtype so that we can do type ...")
+> Reported-by: Akihiro Suda <suda.kyoto@gmail.com>
+> Tested-by: Akihiro Suda <suda.kyoto@gmail.com>
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 > ---
->  include/qemu/osdep.h |  9 +++++++++
->  util/oslib-posix.c   | 15 +++++++++++++++
->  2 files changed, 24 insertions(+)
->
+>  hw/9pfs/9p.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
 
-Reviewed-by: Warner Losh <imp@bsidmp.com>
+Wow ! And this is there since pretty much always... I'm amazed how
+it went unnoticed for so long :-)
+
+Reviewed-by: Greg Kurz <groug@kaod.org>
+
+> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> index af636cfb2d..9a291d1b51 100644
+> --- a/hw/9pfs/9p.c
+> +++ b/hw/9pfs/9p.c
+> @@ -2587,6 +2587,11 @@ static void coroutine_fn v9fs_readdir(void *opaque)
+>          retval = -EINVAL;
+>          goto out_nofid;
+>      }
+> +    if (fidp->fid_type != P9_FID_DIR) {
+> +        warn_report_once("9p: bad client: T_readdir on non-directory stream");
+> +        retval = -ENOTDIR;
+> +        goto out;
+> +    }
+>      if (!fidp->fs.dir.stream) {
+>          retval = -EINVAL;
+>          goto out;
 
 
-> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> index fe7c3c5f673..2350477787a 100644
-> --- a/include/qemu/osdep.h
-> +++ b/include/qemu/osdep.h
-> @@ -626,6 +626,15 @@ bool qemu_write_pidfile(const char *pidfile, Error
-> **errp);
->
->  int qemu_get_thread_id(void);
->
-> +/**
-> + * qemu_kill_thread:
-> + * @tid: thread id.
-> + * @sig: host signal.
-> + *
-> + * Send @sig to one of QEMU's own threads with identifier @tid.
-> + */
-> +int qemu_kill_thread(int tid, int sig);
-> +
->  #ifndef CONFIG_IOVEC
->  struct iovec {
->      void *iov_base;
-> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-> index 11b35e48fb8..32a41fa8640 100644
-> --- a/util/oslib-posix.c
-> +++ b/util/oslib-posix.c
-> @@ -111,6 +111,21 @@ int qemu_get_thread_id(void)
->  #endif
->  }
->
-> +int qemu_kill_thread(int tid, int sig)
-> +{
-> +#if defined(__linux__)
-> +    return syscall(__NR_tgkill, getpid(), tid, sig);
-> +#elif defined(__FreeBSD__)
-> +    return thr_kill2(getpid(), tid, sig);
-> +#elif defined(__NetBSD__)
-> +    return _lwp_kill(tid, sig);
-> +#elif defined(__OpenBSD__)
-> +    return thrkill(tid, sig, NULL);
-> +#else
-> +    return kill(tid, sig);
-> +#endif
-> +}
-> +
->  int qemu_daemon(int nochdir, int noclose)
->  {
->      return daemon(nochdir, noclose);
-> --
-> 2.47.0
->
->
 
---0000000000003289d106262c3fdf
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 24, 2024 at 2:00=E2=80=AF=
-PM Ilya Leoshkevich &lt;<a href=3D"mailto:iii@linux.ibm.com">iii@linux.ibm.=
-com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">Add a function for sending signals to individual threads. It does not ma=
-ke<br>
-sense on Windows, so do not provide an implementation, so that if someone<b=
-r>
-uses it by accident, they will get a linker error.<br>
-<br>
-Signed-off-by: Ilya Leoshkevich &lt;<a href=3D"mailto:iii@linux.ibm.com" ta=
-rget=3D"_blank">iii@linux.ibm.com</a>&gt;<br>
----<br>
-=C2=A0include/qemu/osdep.h |=C2=A0 9 +++++++++<br>
-=C2=A0util/oslib-posix.c=C2=A0 =C2=A0| 15 +++++++++++++++<br>
-=C2=A02 files changed, 24 insertions(+)<br></blockquote><div><br></div><div=
->Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsidmp.com">imp@bsidmp.=
-com</a>&gt;</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h<br>
-index fe7c3c5f673..2350477787a 100644<br>
---- a/include/qemu/osdep.h<br>
-+++ b/include/qemu/osdep.h<br>
-@@ -626,6 +626,15 @@ bool qemu_write_pidfile(const char *pidfile, Error **e=
-rrp);<br>
-<br>
-=C2=A0int qemu_get_thread_id(void);<br>
-<br>
-+/**<br>
-+ * qemu_kill_thread:<br>
-+ * @tid: thread id.<br>
-+ * @sig: host signal.<br>
-+ *<br>
-+ * Send @sig to one of QEMU&#39;s own threads with identifier @tid.<br>
-+ */<br>
-+int qemu_kill_thread(int tid, int sig);<br>
-+<br>
-=C2=A0#ifndef CONFIG_IOVEC<br>
-=C2=A0struct iovec {<br>
-=C2=A0 =C2=A0 =C2=A0void *iov_base;<br>
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c<br>
-index 11b35e48fb8..32a41fa8640 100644<br>
---- a/util/oslib-posix.c<br>
-+++ b/util/oslib-posix.c<br>
-@@ -111,6 +111,21 @@ int qemu_get_thread_id(void)<br>
-=C2=A0#endif<br>
-=C2=A0}<br>
-<br>
-+int qemu_kill_thread(int tid, int sig)<br>
-+{<br>
-+#if defined(__linux__)<br>
-+=C2=A0 =C2=A0 return syscall(__NR_tgkill, getpid(), tid, sig);<br>
-+#elif defined(__FreeBSD__)<br>
-+=C2=A0 =C2=A0 return thr_kill2(getpid(), tid, sig);<br>
-+#elif defined(__NetBSD__)<br>
-+=C2=A0 =C2=A0 return _lwp_kill(tid, sig);<br>
-+#elif defined(__OpenBSD__)<br>
-+=C2=A0 =C2=A0 return thrkill(tid, sig, NULL);<br>
-+#else<br>
-+=C2=A0 =C2=A0 return kill(tid, sig);<br>
-+#endif<br>
-+}<br>
-+<br>
-=C2=A0int qemu_daemon(int nochdir, int noclose)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0return daemon(nochdir, noclose);<br>
--- <br>
-2.47.0<br>
-<br>
-</blockquote></div></div>
-
---0000000000003289d106262c3fdf--
+-- 
+Greg
 
