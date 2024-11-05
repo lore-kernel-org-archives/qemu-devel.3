@@ -4,78 +4,215 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A627DD1CA3C
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C385DD1CA3D
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 07:26:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DFK-0003XW-KF; Tue, 05 Nov 2024 01:41:02 -0500
+	id 1t8Dwj-0007kS-97; Tue, 05 Nov 2024 02:25:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DDz-00014F-0a
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:37 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1t8Dwh-0007kJ-MK
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 02:25:47 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DDw-0001vd-IW
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:34 -0500
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1t8Dwe-00075O-S8
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 02:25:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788773; x=1762324773;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=8uEuNvmf9noH27+CtakzBXFvtETe/Vb0IM6iwSDYV+w=;
- b=O4EJ/IZilSSlzrHD5e4gYjArH1caaAJfyKRSVArbi9wAyjGSyrv5cMmn
- MjnwrfqFKjSb0niFSa9+4B2xmeM3YJPauuSrouMfaOzkgNx62y0HHgt5J
- zH0FdqVXDc4DONijarREUWzMjX1M+hk7UVZvas5o4UJRDHgnEG15VlZMF
- SunH5QWyR4CbwqlNhik9hnjlodY4f1wHLLGcEjLCcH0IaKS+c+XEJkmLz
- taoopcb/evfIBElpQXt6qlNqhIEBT10ytCE9Q2RMmDK5ch4sK9D1W8EGf
- mdeTND9w8vtk2Gd2r3FzljVd+QeEI7uqHWT6uv8w0ChN4UlGSAAFb4AtT A==;
-X-CSE-ConnectionGUID: a8Yz8QX5RleCkt4P9wY6Gg==
-X-CSE-MsgGUID: 3Cfeah4tQPWJ0aFuD0pKag==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689766"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689766"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:39:19 -0800
-X-CSE-ConnectionGUID: DcXkl4xzR2q/ZU3Wc71OxQ==
-X-CSE-MsgGUID: EsjtOYi6QOKwTZwDwlyv1g==
+ t=1730791544; x=1762327544;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=yvcJHGzuhHOBqX/FDpf473XPWMvgfQBPXf0psvVlRxY=;
+ b=RvJzfiEhA/ejaFMDcYx/37b9Kqet+kIL+PXk822EfAz/bUMq350E9QHy
+ rlRtipxZS/RSA5WA0O7AsmmYqLw9ESDK0bQE5iZ+UHJWHf/jRQNR4TUM7
+ zqmDJirIrwP3TefbxmHBYtCu0WR3AO7nZBegW7mCH5IMGZEtW35ka3T5z
+ YOgeOFHWEbcgIIvzyAETcRL+7gpiBkU/L2/6xgqlX04uiEngRHyAMxsAv
+ 6BwOMR2/WaDrYn0z8o+h528JXsst7ea246AUxHNJLeMcTI3FbGItFXBpk
+ uvd7rbpsXkL+c16e4wKyf1fLfyczBXCYrvCfBZMG0NnNhljHTl9hFXXOK A==;
+X-CSE-ConnectionGUID: /5s7/sCcQeKmmWAu9wWJmQ==
+X-CSE-MsgGUID: XSrnp7MlTrmhNT6hMdGPUA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11246"; a="30744861"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="30744861"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Nov 2024 23:25:42 -0800
+X-CSE-ConnectionGUID: EfsPEhl4RSCz2TBA5ko1Ig==
+X-CSE-MsgGUID: fa8CZfu0SLuJvJ3JV7jJYw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989595"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:39:14 -0800
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
- kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 41/60] hw/i386: add option to forcibly report edge trigger
- in acpi tables
-Date: Tue,  5 Nov 2024 01:23:49 -0500
-Message-Id: <20241105062408.3533704-42-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="84241473"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+ by fmviesa010.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 04 Nov 2024 23:25:42 -0800
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Mon, 4 Nov 2024 23:25:42 -0800
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Mon, 4 Nov 2024 23:25:42 -0800
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.42) by
+ edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 4 Nov 2024 23:25:41 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yBZbYmwdzlM4yn0/40LWjMCo8+0+mwQfvmllV8oUXzX7qWnsjkzZKFNVdFnrGdW5usD3EOrO6R2G+KWgXhyYaSZ7vuJtIf69d/KstXx5KlDAcGhpBIjRDR7dcLiPk6bTBSQHxIiZS2nb65O9YlPn13jlTUnLUxL6jOBLdhu7iW+MbvsUP65a4o0HPH5u8SvixzLYY1YK0BNzMfu4nzmNRYceSf7UsW7dQYX4q5xRr2uGPGJDxKpuoZXEHen4S33bsYIM/g4VV9GMexvyGN09ND1a49C2W3JrIYH/uUctrdOGX1EQb9WObS9OAGEQoTNlAwCfY4I8nxWEcMg9KDoTmA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yvcJHGzuhHOBqX/FDpf473XPWMvgfQBPXf0psvVlRxY=;
+ b=v6whcFpt/Mvb8JpLnUDWgoD9uvw48RnkrYxK5pngQvtn/rXDpPLVJDpn853bbdcvByLzCOa8E1mi564zL+a4aHqpdilEQOGSiiu00ryL0C8PTz+KOyEWj10/feb0PsqkNIfFihuFPkeVB2JNhWPT6A3i0NQw7XaSX1Fq65SkziVv56jJf5iiNQ8n87LejyvYMfbbyyvqyoRPR2tSRH5jcmXZY1eK+EfblzmDUBg774EqPLBL04dVMbJoLp19UL0ua10VJYNNNla8xiMCdsBVsQ1JAieQDl2pBHIy/Zz4LvWEKV3ASxQjRhKB8GSrn5tiH+speRLQahJj1R3rWAjpDQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by CO1PR11MB4948.namprd11.prod.outlook.com (2603:10b6:303:9b::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.30; Tue, 5 Nov
+ 2024 07:25:40 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%5]) with mapi id 15.20.8114.028; Tue, 5 Nov 2024
+ 07:25:39 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: "Liu, Yi L" <yi.l.liu@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: RE: [PATCH v4 13/17] intel_iommu: piotlb invalidation should notify
+ unmap
+Thread-Topic: [PATCH v4 13/17] intel_iommu: piotlb invalidation should notify
+ unmap
+Thread-Index: AQHbExt/KmB69XpnZUKNIck54DJye7KmpouAgABOO8CAAX0oAIAADIPg
+Date: Tue, 5 Nov 2024 07:25:39 +0000
+Message-ID: <SJ0PR11MB6744CD9B4B341B0F3787CD8992522@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20240930092631.2997543-1-zhenzhong.duan@intel.com>
+ <20240930092631.2997543-14-zhenzhong.duan@intel.com>
+ <2d2c2515-6a74-4e81-8ab5-0390aa59f6dd@intel.com>
+ <SJ0PR11MB6744E7B5833C645A0E17A3F692512@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <e74b140a-5030-4092-b83d-8e91756c2544@intel.com>
+In-Reply-To: <e74b140a-5030-4092-b83d-8e91756c2544@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|CO1PR11MB4948:EE_
+x-ms-office365-filtering-correlation-id: b21d3b9f-d769-490f-34cd-08dcfd6b0ccb
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|7416014|376014|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?TjFvZE95MFdBY3d3LzlhR1NDa3crSHI3clhPTCtTaGd3Y1V6SzlQYWRtTlVo?=
+ =?utf-8?B?ZkdwbEFCZExSVWk3ajFISFUxbWFQRGxtcS92aGlLQk8xSGt0cGpzM2FjK2Ri?=
+ =?utf-8?B?UDlHdVVGRmNFVlpOcTdqalV3cXNJMGFiWVZ0VVVTYU1UamJVVFBXT01Jd2xI?=
+ =?utf-8?B?UTh6SHhNeUw1Mk9zMEVwRDNTenFIMjZnTU9TNzV1cTZnZFU3T3NuRXlONE10?=
+ =?utf-8?B?YVo0TjRjQlo5eUt6aXFZSzJmS3JYZUR6VEg4ZGgvK2cvWkZlRzRaVmowT2JZ?=
+ =?utf-8?B?YTJDYkQzbVNtTVV3ZUhEMWRvNmtaNVVtdzB0WDJYNU1FaUt6bkROcmVSbWdL?=
+ =?utf-8?B?S1V1eVUxcG5FaHBqcGthZ3VOOWd6YnhWVUE2M0Z2RGdhcTdvc2F5VVZkbkY0?=
+ =?utf-8?B?a2tqMnhSMmd1RWZwc21IM0ZCVWxId0FkQjlNbTluaHlZZ05scjRPK3hzSklw?=
+ =?utf-8?B?NE12Q3g3aDRVUWFlc1YzK3RuNjJGL2JncWh6dWUzV045dTZUc1Y2TndWcmJB?=
+ =?utf-8?B?ZXE0RHBLOTJVSUhFcXI5dE5Ga1FSQlF3SDR6SW1NTDNPNlJHSDJKQkg1OVp0?=
+ =?utf-8?B?VFU4bk1TSDNtalBmTlh1a2VMZ2c4UkM0RURrVzVvZ3V4cjNXSmRaZ1RTaTBn?=
+ =?utf-8?B?Z2pqVHRLQXd3MUtIaWxvWGFyang3N2loRmtyaHV3R2tqamFPcDA5dmdZR2Zo?=
+ =?utf-8?B?aFJPMCtUM3lrOFMvMEQ4d2FFOVdwb3dZK1dQSzJONVZmZ0xnZllQbXRjck9W?=
+ =?utf-8?B?Y2FzU2hUMHIyeVZQc2dpUFdIUllFN1RReitZa2J2VktnOXc0MnVVVXdTTTZC?=
+ =?utf-8?B?dHFGVEV3SmJiZm9ZcXN6VW5taU51dXE1TVAxRWQrVHk3WERWbVBGckNTQ252?=
+ =?utf-8?B?QXduQjAwRmhwVFZ4eHlyazB5M0dMY01TWTdCWTFEOVVySEhxNGI3NGJseUxh?=
+ =?utf-8?B?MHVNLzIvbFE1aTZrbjBnQUl1a0pvTDU0SWVVRzdUdVUwemF1OFBCelRPVTM1?=
+ =?utf-8?B?QzFZR2ZtYnpQRytHZHMyMW1Oemtaa1J1QmVDNnVVWm9rdWZkQytRcmFsK1l2?=
+ =?utf-8?B?YzY4SXdTRVFnSkQrTjYvRmpjS0VZMVNMU1VKOXhQS1dWZEhnYUk4YUdhM2dW?=
+ =?utf-8?B?bjZGbm5rVkhVaEhVSmdra1VpS2NpWVNlcmxldnV3eWhOQjRQM2diNDdkOGZz?=
+ =?utf-8?B?RnQxc3RqbGNFNEVlSElVT2dMdXJlbnl1VW9YdlAzZlVleStyVnRoNERQaTNM?=
+ =?utf-8?B?YTkrSjNaK1hHcTNRSmF6bXMrcExtMitvcCs1QkhlNER5T0xEcXdoTFNJNlJ1?=
+ =?utf-8?B?OWx4VFFoZzFxWTFLbUxWRkNMSGRMU1kxQ0VVY3BiVXRXZ09hNmlBMGN3bmlX?=
+ =?utf-8?B?djVnTU9uUFEvU2JWRTM2VVpPd25UdUhheDBXL2xEcU5GN2RGckdtbE1BYlpD?=
+ =?utf-8?B?cDJPd1IyYVFnVkVCUStSMjBsYUo2Vit2c2l4WCtCVnkvbFBKRVhCMHdtUjFv?=
+ =?utf-8?B?S0R5cjlvTzlXd0tnYW1SelcweVJNQ21JaTk4WkgvMllYeW5xR0YrSjdiSkpO?=
+ =?utf-8?B?WkI2ZUIrSWhuVlgwRXYvSmptRlNaZWFJeFBqWTc2STFGaXBtUXRCU29xdHVy?=
+ =?utf-8?B?V3hQeXp2clhJaEpiVU96OFFRNGIxZE93aldZcHB5V0EyUXRKeDFsd2dpdUdI?=
+ =?utf-8?B?Tm50bTdrWjZvWTBrcFh4NFBLT2JhTkc4c0s2eEdVd01CNjkzOUxIaTlyOEgx?=
+ =?utf-8?B?M0h0VW5TYVVpeHJRZU56QmVvbFppOWl6dVoyV2pwbVpsNXpjajlBUlQzN21D?=
+ =?utf-8?Q?z2vNC6lIW9syZt6Bqvf38KlLhuDr5BkcMv04U=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(7416014)(376014)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?V2I3TXhBQXB5UGM4dGEwQ2RYcEIxQ0dZUmcvVHdpMlZFcVBqTTNJMkFQb1Nv?=
+ =?utf-8?B?Qk4zMlBqKyttdXlTb3UzektsVVQ5aE9LbUpzVk5oR2xoRmdMeG1iaVFGOUp4?=
+ =?utf-8?B?OUd0Nk4xSXV6bmFzNExCSWkyNE85d0M3SG9pMWtHTVQ4QisrejI0aU9qSDRD?=
+ =?utf-8?B?RGVDQml6dHMvYWZLandqUXZ2RjMzZ2gvTGRLaDZHY25YL0I0N1E5T3lrdThq?=
+ =?utf-8?B?SGdqRGN0Uy9HZnMyMlJzanV2ajc1NFRpVWZZeGVEYVRhTEJ4NGxsdU1RZ3Rn?=
+ =?utf-8?B?MSsvYjF5SkRnZldzNFFyTHduRk1kRlpNUHBRYTZEdlFYZ2RjeXFLZUxIRTB1?=
+ =?utf-8?B?YjM4aWw4MXlMTm1EdUpFdTYzRWxQQ0pvVTV5SVIzVm10Z1U1dTVNRzZRdlNi?=
+ =?utf-8?B?MlcvdmhZck5LVDZUbFJGVGI3Rll4SDY4b0Z5Wkg4U0hOaXBiSitwT250R0dY?=
+ =?utf-8?B?S2d0b1BaTnE3dm1pNlFpVlBwdGNIb2YxcTNQeE1VbzRhZ3NUdEtTRnI0ZE9Z?=
+ =?utf-8?B?THhBVWZBcjIzQUl4ZlVpQ1BqVHdZUU9aQnpQRGdHVnVCajBvS3ljYXpyZVp3?=
+ =?utf-8?B?azQvVjNtNmI4U0tsbHhQVGw4WnorOXhLK3dnOEF4VEljOFFQZXJEQVlvODlC?=
+ =?utf-8?B?TnppamxKajN0UmUvOUxXOUU4aDdsT3B1YTVBRnBES3FNQkJvaUxMQUFuYjYx?=
+ =?utf-8?B?aWFxb2VzV0Y0MUd4d3ZOcklvdEtaY0JKZ1NpYmJvVDFBbUF6WHdIanlzb0U2?=
+ =?utf-8?B?cCtnbGN4Qzg2KytxRE1vRnVldkFJaEhSK04wK05aSkphaitadHVMUEJZKytE?=
+ =?utf-8?B?M0FXUUoyQkkyUnpHcGYrL2E4NFFwV2djWTFoUE01bElRak50SXp4UXlmOTlx?=
+ =?utf-8?B?U2l4L05lc2hweXNtVnZpR3k2eldCZktLOGN4WVBUa3Z5eThTTTZWdU1DR2FC?=
+ =?utf-8?B?MlVPc1BXenNBc002bVpZZGFIa1VrTXJZcjdZcy8zSi9TUzFPOXNZdE9lNFJL?=
+ =?utf-8?B?Y3FmZ1BUOHlqNWF0NWlSV1FMNlFLbGx5bDlkMU5ReVRWbTlvTkZoYkR3VnRK?=
+ =?utf-8?B?bzBabyszRmJZaGdlRmpkNUFPUzdCT3RXVzZGNEVUV2lsY3JLM2M4M2g2ZDNS?=
+ =?utf-8?B?VUFicmNIVE1ocEtHOUhvYXNJYjZacVNYTmRIQ3pxMkFRU2t4bGZkdERWZVBi?=
+ =?utf-8?B?NWdzdlE5a2lNMVJUaWVxRmcxZzJIWGJiQVh2aG1wU1UyVmJRUVRLK3ZBMUIr?=
+ =?utf-8?B?SUNQUjVDRTZ6SnVKczRBcTlCT3VoTXFJL0xhcFNTUDFzVEZVRmtUN0d4QkR2?=
+ =?utf-8?B?RzZYQ1dnc2xnRjNGNHlDdUZCV2dRVW9TUWNkNkZGMy9QTUtreWpvS1lrWDBU?=
+ =?utf-8?B?M2pWQUl6N0k0YWgyb092enIyTDBOREE0RVFMQ3hqaVowS0hNUFJuaW1HZ3h1?=
+ =?utf-8?B?eGozYmtKdlJydUlPWG42L1V3eHlLZW1LQVI2NTFNWjhqeFVLRFFjVXFTTzR4?=
+ =?utf-8?B?MkpBaXgwbndvZnI2K0pHMXRKeEpBUTVkNnNIZkNGbWRPblBRVGdNRlFPSUV1?=
+ =?utf-8?B?VkNHeFdpSWJONUd3TGpXQ3liMHowNDAzMTVKcDlPMVlGbGl3d29Zb3IrZWU4?=
+ =?utf-8?B?c3h2c21DR2dVRlVDamxqM0w4bUpIa2hxcHZYZ3JCQWZ2ZUd6U0VSbUhnRlRo?=
+ =?utf-8?B?Z0M0eE90M082K3FQeERMaTdyR2NtQUlqMDNTUS9RUHlpdGZFQlNTTHA4RW0r?=
+ =?utf-8?B?VWpUZUNYTDZ3RlMwRWc1RTFyUU9ZTnhlcUNDOC9pTXdpbDJKT0pNbFNZcWNo?=
+ =?utf-8?B?eU1sZ0NiTnYzMEdueWwxL2djNnlZQk81S0w0NlRtdk04L3VEb09hbm1WWUwr?=
+ =?utf-8?B?dndpQnhscUFjdEtwMS9idERYVW9LazYrNmF5eVJMRHZlMU1ZNm5LREw2VzJS?=
+ =?utf-8?B?SkU1NUpURHVmZUtaOGlhbmpJaDFiNGFRUC9raXFzVTJlMGxScVhsS2p4bXds?=
+ =?utf-8?B?QTlzRWFES2FUZGp0R1lWQ0hVd3FYa3VuOGZRVS84N1RTZUl2dGlBZ0I4bVl0?=
+ =?utf-8?B?TEFVdWk2VER0cGYxQW9Da0I2UUlMUXBJUDYrdEsrQTVHRXdBelpjdUkwVWNG?=
+ =?utf-8?Q?FwKujTV8APJw5Od6Hz87wd444?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b21d3b9f-d769-490f-34cd-08dcfd6b0ccb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Nov 2024 07:25:39.7633 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: OaoOkOJkf/ef51X3HTi+yxLFlCaT3pHpSaIw1tg13X+aM41LSb8v1gIewkylyxXmlXm+OtrTCMx+74JinItgtokV5bkwlNDSa7iiFa0A28c=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB4948
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.14;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
 X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.781, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,289 +228,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Isaku Yamahata <isaku.yamahata@intel.com>
-
-When level trigger isn't supported on x86 platform,
-forcibly report edge trigger in acpi tables.
-
-Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
----
- hw/i386/acpi-build.c  | 99 ++++++++++++++++++++++++++++---------------
- hw/i386/acpi-common.c | 45 +++++++++++++++-----
- 2 files changed, 101 insertions(+), 43 deletions(-)
-
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 4967aa745902..d0a5bfc69e9a 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -888,7 +888,8 @@ static void build_dbg_aml(Aml *table)
-     aml_append(table, scope);
- }
- 
--static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
-+static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg,
-+                           bool level_trigger_unsupported)
- {
-     Aml *dev;
-     Aml *crs;
-@@ -900,7 +901,10 @@ static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
-     aml_append(dev, aml_name_decl("_UID", aml_int(uid)));
- 
-     crs = aml_resource_template();
--    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
-+    aml_append(crs, aml_interrupt(AML_CONSUMER,
-+                                  level_trigger_unsupported ?
-+                                  AML_EDGE : AML_LEVEL,
-+                                  AML_ACTIVE_HIGH,
-                                   AML_SHARED, irqs, ARRAY_SIZE(irqs)));
-     aml_append(dev, aml_name_decl("_PRS", crs));
- 
-@@ -924,7 +928,8 @@ static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
-     return dev;
-  }
- 
--static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
-+static Aml *build_gsi_link_dev(const char *name, uint8_t uid,
-+                               uint8_t gsi, bool level_trigger_unsupported)
- {
-     Aml *dev;
-     Aml *crs;
-@@ -937,7 +942,10 @@ static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
- 
-     crs = aml_resource_template();
-     irqs = gsi;
--    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
-+    aml_append(crs, aml_interrupt(AML_CONSUMER,
-+                                  level_trigger_unsupported ?
-+                                  AML_EDGE : AML_LEVEL,
-+                                  AML_ACTIVE_HIGH,
-                                   AML_SHARED, &irqs, 1));
-     aml_append(dev, aml_name_decl("_PRS", crs));
- 
-@@ -956,7 +964,7 @@ static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
- }
- 
- /* _CRS method - get current settings */
--static Aml *build_iqcr_method(bool is_piix4)
-+static Aml *build_iqcr_method(bool is_piix4, bool level_trigger_unsupported)
- {
-     Aml *if_ctx;
-     uint32_t irqs;
-@@ -964,7 +972,9 @@ static Aml *build_iqcr_method(bool is_piix4)
-     Aml *crs = aml_resource_template();
- 
-     irqs = 0;
--    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL,
-+    aml_append(crs, aml_interrupt(AML_CONSUMER,
-+                                  level_trigger_unsupported ?
-+                                  AML_EDGE : AML_LEVEL,
-                                   AML_ACTIVE_HIGH, AML_SHARED, &irqs, 1));
-     aml_append(method, aml_name_decl("PRR0", crs));
- 
-@@ -998,7 +1008,7 @@ static Aml *build_irq_status_method(void)
-     return method;
- }
- 
--static void build_piix4_pci0_int(Aml *table)
-+static void build_piix4_pci0_int(Aml *table, bool level_trigger_unsupported)
- {
-     Aml *dev;
-     Aml *crs;
-@@ -1011,12 +1021,16 @@ static void build_piix4_pci0_int(Aml *table)
-     aml_append(sb_scope, pci0_scope);
- 
-     aml_append(sb_scope, build_irq_status_method());
--    aml_append(sb_scope, build_iqcr_method(true));
-+    aml_append(sb_scope, build_iqcr_method(true, level_trigger_unsupported));
- 
--    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQ0")));
--    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQ1")));
--    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQ2")));
--    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQ3")));
-+    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQ0"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQ1"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQ2"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQ3"),
-+                                        level_trigger_unsupported));
- 
-     dev = aml_device("LNKS");
-     {
-@@ -1025,7 +1039,9 @@ static void build_piix4_pci0_int(Aml *table)
- 
-         crs = aml_resource_template();
-         irqs = 9;
--        aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL,
-+        aml_append(crs, aml_interrupt(AML_CONSUMER,
-+                                      level_trigger_unsupported ?
-+                                      AML_EDGE : AML_LEVEL,
-                                       AML_ACTIVE_HIGH, AML_SHARED,
-                                       &irqs, 1));
-         aml_append(dev, aml_name_decl("_PRS", crs));
-@@ -1111,7 +1127,7 @@ static Aml *build_q35_routing_table(const char *str)
-     return pkg;
- }
- 
--static void build_q35_pci0_int(Aml *table)
-+static void build_q35_pci0_int(Aml *table, bool level_trigger_unsupported)
- {
-     Aml *method;
-     Aml *sb_scope = aml_scope("_SB");
-@@ -1150,25 +1166,41 @@ static void build_q35_pci0_int(Aml *table)
-     aml_append(sb_scope, pci0_scope);
- 
-     aml_append(sb_scope, build_irq_status_method());
--    aml_append(sb_scope, build_iqcr_method(false));
-+    aml_append(sb_scope, build_iqcr_method(false, level_trigger_unsupported));
- 
--    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQA")));
--    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQB")));
--    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQC")));
--    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQD")));
--    aml_append(sb_scope, build_link_dev("LNKE", 4, aml_name("PRQE")));
--    aml_append(sb_scope, build_link_dev("LNKF", 5, aml_name("PRQF")));
--    aml_append(sb_scope, build_link_dev("LNKG", 6, aml_name("PRQG")));
--    aml_append(sb_scope, build_link_dev("LNKH", 7, aml_name("PRQH")));
-+    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQA"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQB"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQC"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQD"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKE", 4, aml_name("PRQE"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKF", 5, aml_name("PRQF"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKG", 6, aml_name("PRQG"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKH", 7, aml_name("PRQH"),
-+                                        level_trigger_unsupported));
- 
--    aml_append(sb_scope, build_gsi_link_dev("GSIA", 0x10, 0x10));
--    aml_append(sb_scope, build_gsi_link_dev("GSIB", 0x11, 0x11));
--    aml_append(sb_scope, build_gsi_link_dev("GSIC", 0x12, 0x12));
--    aml_append(sb_scope, build_gsi_link_dev("GSID", 0x13, 0x13));
--    aml_append(sb_scope, build_gsi_link_dev("GSIE", 0x14, 0x14));
--    aml_append(sb_scope, build_gsi_link_dev("GSIF", 0x15, 0x15));
--    aml_append(sb_scope, build_gsi_link_dev("GSIG", 0x16, 0x16));
--    aml_append(sb_scope, build_gsi_link_dev("GSIH", 0x17, 0x17));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIA", 0x10, 0x10,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIB", 0x11, 0x11,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIC", 0x12, 0x12,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSID", 0x13, 0x13,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIE", 0x14, 0x14,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIF", 0x15, 0x15,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIG", 0x16, 0x16,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIH", 0x17, 0x17,
-+                                            level_trigger_unsupported));
- 
-     aml_append(table, sb_scope);
- }
-@@ -1350,6 +1382,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-     PCMachineState *pcms = PC_MACHINE(machine);
-     PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(machine);
-     X86MachineState *x86ms = X86_MACHINE(machine);
-+    bool level_trigger_unsupported = x86ms->eoi_intercept_unsupported;
-     AcpiMcfgInfo mcfg;
-     bool mcfg_valid = !!acpi_get_mcfg(&mcfg);
-     uint32_t nr_mem = machine->ram_slots;
-@@ -1382,7 +1415,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-         if (pm->pcihp_bridge_en || pm->pcihp_root_en) {
-             build_x86_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
-         }
--        build_piix4_pci0_int(dsdt);
-+        build_piix4_pci0_int(dsdt, level_trigger_unsupported);
-     } else if (q35) {
-         sb_scope = aml_scope("_SB");
-         dev = aml_device("PCI0");
-@@ -1426,7 +1459,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-         if (pm->pcihp_bridge_en) {
-             build_x86_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
-         }
--        build_q35_pci0_int(dsdt);
-+        build_q35_pci0_int(dsdt, level_trigger_unsupported);
-     }
- 
-     if (misc->has_hpet) {
-diff --git a/hw/i386/acpi-common.c b/hw/i386/acpi-common.c
-index 0cc2919bb851..ad38a6b31162 100644
---- a/hw/i386/acpi-common.c
-+++ b/hw/i386/acpi-common.c
-@@ -103,6 +103,7 @@ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
-     const CPUArchIdList *apic_ids = mc->possible_cpu_arch_ids(MACHINE(x86ms));
-     AcpiTable table = { .sig = "APIC", .rev = 3, .oem_id = oem_id,
-                         .oem_table_id = oem_table_id };
-+    bool level_trigger_unsupported = x86ms->eoi_intercept_unsupported;
- 
-     acpi_table_begin(&table, table_data);
-     /* Local APIC Address */
-@@ -124,18 +125,42 @@ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
-                      IO_APIC_SECONDARY_ADDRESS, IO_APIC_SECONDARY_IRQBASE);
-     }
- 
--    if (x86mc->apic_xrupt_override) {
--        build_xrupt_override(table_data, 0, 2,
--            0 /* Flags: Conforms to the specifications of the bus */);
--    }
-+    if (level_trigger_unsupported) {
-+        /* Force edge trigger */
-+        if (x86mc->apic_xrupt_override) {
-+            build_xrupt_override(table_data, 0, 2,
-+                                 /* Flags: active high, edge triggered */
-+                                 1 | (1 << 2));
-+        }
-+
-+        for (i = x86mc->apic_xrupt_override ? 1 : 0; i < 16; i++) {
-+            build_xrupt_override(table_data, i, i,
-+                                 /* Flags: active high, edge triggered */
-+                                 1 | (1 << 2));
-+        }
-+
-+        if (x86ms->ioapic2) {
-+            for (i = 0; i < 16; i++) {
-+                build_xrupt_override(table_data, IO_APIC_SECONDARY_IRQBASE + i,
-+                                     IO_APIC_SECONDARY_IRQBASE + i,
-+                                     /* Flags: active high, edge triggered */
-+                                     1 | (1 << 2));
-+            }
-+        }
-+    } else {
-+        if (x86mc->apic_xrupt_override) {
-+            build_xrupt_override(table_data, 0, 2,
-+                    0 /* Flags: Conforms to the specifications of the bus */);
-+        }
- 
--    for (i = 1; i < 16; i++) {
--        if (!(x86ms->pci_irq_mask & (1 << i))) {
--            /* No need for a INT source override structure. */
--            continue;
-+        for (i = 1; i < 16; i++) {
-+            if (!(x86ms->pci_irq_mask & (1 << i))) {
-+                /* No need for a INT source override structure. */
-+                continue;
-+            }
-+            build_xrupt_override(table_data, i, i,
-+                0xd /* Flags: Active high, Level Triggered */);
-         }
--        build_xrupt_override(table_data, i, i,
--            0xd /* Flags: Active high, Level Triggered */);
-     }
- 
-     if (x2apic_mode) {
--- 
-2.34.1
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IExpdSwgWWkgTCA8eWkubC5s
+aXVAaW50ZWwuY29tPg0KPlNlbnQ6IFR1ZXNkYXksIE5vdmVtYmVyIDUsIDIwMjQgMjozMCBQTQ0K
+PlN1YmplY3Q6IFJlOiBbUEFUQ0ggdjQgMTMvMTddIGludGVsX2lvbW11OiBwaW90bGIgaW52YWxp
+ZGF0aW9uIHNob3VsZCBub3RpZnkNCj51bm1hcA0KPg0KPk9uIDIwMjQvMTEvNCAxNjoxNSwgRHVh
+biwgWmhlbnpob25nIHdyb3RlOg0KPj4NCj4+PiB2dGRfcGlvdGxiX3BhZ2VfaW52YWxpZGF0ZShJ
+bnRlbElPTU1VU3RhdGUgKnMsIHVpbnQxNl90IGRvbWFpbl9pZCwNCj4+Pj4gICAgICAgIGdfaGFz
+aF90YWJsZV9mb3JlYWNoX3JlbW92ZShzLT5pb3RsYiwNCj4+Pj4gICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICB2dGRfaGFzaF9yZW1vdmVfYnlfcGFnZV9waW90bGIsICZpbmZvKTsN
+Cj4+Pj4gICAgICAgIHZ0ZF9pb21tdV91bmxvY2socyk7DQo+Pj4+ICsNCj4+Pj4gKyAgICBRTElT
+VF9GT1JFQUNIKHZ0ZF9hcywgJnMtPnZ0ZF9hc193aXRoX25vdGlmaWVycywgbmV4dCkgew0KPj4+
+PiArICAgICAgICBpZiAoIXZ0ZF9kZXZfdG9fY29udGV4dF9lbnRyeShzLCBwY2lfYnVzX251bSh2
+dGRfYXMtPmJ1cyksDQo+Pj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+IHZ0ZF9hcy0+ZGV2Zm4sICZjZSkgJiYNCj4+Pj4gKyAgICAgICAgICAgIGRvbWFpbl9pZCA9PSB2
+dGRfZ2V0X2RvbWFpbl9pZChzLCAmY2UsIHZ0ZF9hcy0+cGFzaWQpKSB7DQo+Pj4+ICsgICAgICAg
+ICAgICB1aW50MzJfdCByaWQycGFzaWQgPSBWVERfQ0VfR0VUX1JJRDJQQVNJRCgmY2UpOw0KPj4+
+PiArICAgICAgICAgICAgSU9NTVVUTEJFdmVudCBldmVudDsNCj4+Pj4gKw0KPj4+PiArICAgICAg
+ICAgICAgaWYgKCh2dGRfYXMtPnBhc2lkICE9IFBDSV9OT19QQVNJRCB8fCBwYXNpZCAhPSByaWQy
+cGFzaWQpICYmDQo+Pj4+ICsgICAgICAgICAgICAgICAgdnRkX2FzLT5wYXNpZCAhPSBwYXNpZCkg
+ew0KPj4+PiArICAgICAgICAgICAgICAgIGNvbnRpbnVlOw0KPj4+DQo+Pj4gbm90IHF1aXRlIGdl
+dCB0aGUgbG9naWMgaGVyZS4gcGF0Y2ggNCBoYXMgYSBzaW1pbGFyIGxvZ2ljLg0KPj4NCj4+IFRo
+aXMgY29kZSBtZWFucyB3ZSBuZWVkIHRvIGludmFsaWRhdGUgZGV2aWNlIHRsYiBlaXRoZXIgd2hl
+biBwYXNpZCBtYXRjaGVzDQo+YWRkcmVzcyBzcGFjZSdzIHBhc2lkIG9yIHdoZW4gcGFzaWQgbWF0
+Y2hlcyByaWQycGFzaWQgaWYgdGhpcyBhZGRyZXNzIHNwYWNlIGhhcw0KPm5vIHBhc2lkLg0KPj4N
+Cj4+IFllcywgcGF0Y2g0IG9ubHkgZGVhbCB3aXRoIHN0YWdlLTIsIHdoaWxlIHRoaXMgcGF0Y2gg
+ZGVhbCB3aXRoIHN0YWdlLTEuDQo+DQo+dnRkX2lvdGxiX3BhZ2VfaW52YWxpZGF0ZV9ub3RpZnko
+KSBoYXMgYSBzaW1pbGFyIGNoZWNrIGFzIHdlbGwuIEJ1dA0KPml0IGNoZWNrcyBQQ0lfTk9fUEFT
+SUQgYWdhaW5zdCB0aGUgcGFzaWQgaW5zdGVhZCBvZiB2dGRfcGFzLT5wYXNpZC4NCj5TbyBpdCBs
+b29rcyBjb25mdXNpbmcgdG8gbWUuDQoNClllcywgaXQncyBhYm91dCBkaWZmZXJlbmNlIG9mIHBp
+b3RsYiBpbnZhbGlkYXRpb24gdnMuIGlvdGxiIGludmFsaWRhdGlvbi4NCg0KdnRkX3Bpb3RsYl9w
+YWdlX2ludmFsaWRhdGUoKSBoYXMgYSBwYXJhbWV0ZXIgcGFzaWQgd2hpY2ggY29tZSBmcm9tIHBp
+b3RsYg0KaW52YWxpZGF0aW9uIGRlc2NyaXB0b3IgYW5kIHNob3VsZCBuZXZlciBiZSBQQ0lfTk9f
+UEFTSUQoLTEpLg0KDQpGb3IgdnRkX2lvdGxiX3BhZ2VfaW52YWxpZGF0ZV9ub3RpZnkoKSwgcGFz
+aWQgcGFyYW0gaXMgYWx3YXlzIFBDSV9OT19QQVNJRA0KZm9yIGlvdGxiIEludmFsaWRhdGlvbiwg
+cmVhc29uIGlzIGlvdGxiIGludmFsaWRhdGlvbiBkb2Vzbid0IHN1cHBvcnQgcGFzaWQuDQoNCkkg
+aGFkIGV2ZXIgdGhvdWdodCBhYm91dCBleHBlbmRpbmcgYW5kIHJldXNpbmcgdnRkX2lvdGxiX3Bh
+Z2VfaW52YWxpZGF0ZV9ub3RpZnkoKSBmb3INCnBpb3RsYiBpbnZhbGlkYXRpb24sIGJ1dCBpdCdz
+IGNsZWFuZXIgdG8gaGF2ZSBhIHNlcGFyYXRlIGNvZGUgZm9yIHBpb3RsYiBpbnZhbGlkYXRpb24u
+DQoNClRoYW5rcw0KWmhlbnpob25nDQo=
 
