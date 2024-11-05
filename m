@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB4F8D1CA3A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D425D1CA3B
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:48:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DH4-0005qd-Bo; Tue, 05 Nov 2024 01:42:47 -0500
+	id 1t8DHE-0006X4-8M; Tue, 05 Nov 2024 01:42:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DF7-0003YJ-O8
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:40:50 -0500
+ id 1t8DF7-0003YW-Vc
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:40:51 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DF2-0001w0-LT
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:40:42 -0500
+ id 1t8DF3-0001vj-HP
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:40:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788841; x=1762324841;
+ t=1730788842; x=1762324842;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=N6wZGF3LbJuiZwh2h+P0qnuOeIsvhZtITe8MucmhR3Y=;
- b=nmGdyajjcbvXf2DHxxT5vhBvTC0dNIdQNyMfr+CGIfFrLVFqQuirYIpa
- dSb3YP6gnNHXrt0V9cs+TqIutSdyiiqiIv3yqGoSBYPogY0sTPvdwICE4
- F6ed5P6WCD6LgWxq2AL4xoLcWAJdPmCo2ZEvSwjGsdC//6Y0C88PUneGY
- +s21W+modJNnyvf2XVv3N51+9DzGurjjss+8o+KK2t2Um0QS45VJgqGn3
- WtfX0BnDaKymFySJYHyZhzPbKm4bnW4T4XN3z2SqLtJW6Ys0TaIa+Kfr/
- gKgbeGtTpPi776o2SfbHlPjRcdTgj/2S3BbRnQ5xUBb4zVnxN8flLFnaI w==;
-X-CSE-ConnectionGUID: OoOeTxGXSoufjx13YronRQ==
-X-CSE-MsgGUID: M/3V27CaSpGbME/RQYhsqw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689925"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689925"
+ bh=NKlDvzzDpP7N59sc27fzM1CZSPqI8zTcm+9UeKAwP8w=;
+ b=QHNbqLuucstjHcOy9UV3xOmCHuLTv2HR54BYmBJ15nyrFQGfxsmlTnKr
+ 0MdozpaIJFm3u8bmp094ac0ePm8eYXdsmjxNPpzz/yh2W8hZv4go3NvcT
+ YOMcpBIyB3qGH2W4e1DHbA78E9lU0uMTUr+CpNXXhjRRaOanVncsZUipd
+ ztk0gH+aldGW+0JRGif3VNEr+2C4qXIvnBBpono6zwCb9Q5o7dm/LPEmX
+ SBeBdvzWa1yWakWSbIdNBbO+hRmRoqBe+NKILxIgz8mqECcTYkFQxcrmU
+ 299jNcd/qXN9h1mjflFnTRV3REfLYkYfD/PQUDfZxY2W9CK16gzZd/3A1 Q==;
+X-CSE-ConnectionGUID: mIuGk7wWQPy6T81yX22kLQ==
+X-CSE-MsgGUID: 2eUyQLRiTmehAmyapHM+Pg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689936"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689936"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:40:22 -0800
-X-CSE-ConnectionGUID: cui/g9wYSTW/R2q/F+xxag==
-X-CSE-MsgGUID: BO/sHFRmRSK/ivSD8JW1yA==
+ 04 Nov 2024 22:40:26 -0800
+X-CSE-ConnectionGUID: fMooDLw8TVGkCNYMWGss5g==
+X-CSE-MsgGUID: Is1f+4fSQ9Kp08bHbbfQaw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83990064"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83990085"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:40:18 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:40:22 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -57,9 +57,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 56/60] i386/tdx: Don't treat SYSCALL as unavailable
-Date: Tue,  5 Nov 2024 01:24:04 -0500
-Message-Id: <20241105062408.3533704-57-xiaoyao.li@intel.com>
+Subject: [PATCH v6 57/60] i386/tdx: Make invtsc default on
+Date: Tue,  5 Nov 2024 01:24:05 -0500
+Message-Id: <20241105062408.3533704-58-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
@@ -90,29 +90,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Because it's fixed1 bit that enforced by TDX module.
+
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- target/i386/kvm/tdx.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ target/i386/kvm/tdx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 9cb099e160e4..05475edf72bd 100644
+index 05475edf72bd..4cb1f4ac3479 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -734,6 +734,13 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
+@@ -430,6 +430,9 @@ static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
  
-         requested = env->features[w];
-         unavailable = requested & ~actual;
-+        /*
-+         * Intel enumerates SYSCALL bit as 1 only when processor in 64-bit
-+         * mode and before vcpu running it's not in 64-bit mode.
-+         */
-+        if (w == FEAT_8000_0001_EDX && unavailable & CPUID_EXT2_SYSCALL) {
-+            unavailable &= ~CPUID_EXT2_SYSCALL;
-+        }
-         mark_unavailable_features(cpu, w, unavailable, unav_prefix);
-         if (unavailable) {
-             mismatch = true;
+     object_property_set_bool(OBJECT(cpu), "pmu", false, &error_abort);
+ 
++    /* invtsc is fixed1 for TD guest */
++    object_property_set_bool(OBJECT(cpu), "invtsc", true, &error_abort);
++
+     x86cpu->enable_cpuid_0x1f = true;
+ }
+ 
 -- 
 2.34.1
 
