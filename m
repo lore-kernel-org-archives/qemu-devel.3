@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9667D40CE0
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFCCCD40CE0
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SYA-0005EM-I7; Tue, 05 Nov 2024 18:01:26 -0500
+	id 1t8SZB-0006EU-IS; Tue, 05 Nov 2024 18:02:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SY8-00059Q-Fw
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:01:24 -0500
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1t8SZ8-0006E3-O4; Tue, 05 Nov 2024 18:02:26 -0500
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SY6-0007Ft-G1
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:01:24 -0500
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1t8SZ7-0007Od-1n; Tue, 05 Nov 2024 18:02:26 -0500
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43152b79d25so51818255e9.1
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 15:01:21 -0800 (PST)
+ 5b1f17b1804b1-43161c0068bso51067665e9.1; 
+ Tue, 05 Nov 2024 15:02:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730847681; x=1731452481; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EfOtEP1B9ME/jsHOqIbM51aqo6s6BqnmSrMtp7A5WuM=;
- b=nvwRmtLAprheq7fKTofG3mu8a84tbnSno/lmuYorEQVtlQ68H+sjjLC4O0vJiNQQXa
- j9pPiq1PVTMzzOHyK+TANeTz7Dy+9NpKX29YlDzuLi+mPQg2A6yzYUzBUIp1TW8l35Fc
- 62YDuI9fzpsbtR1rNZkrsmGn2ZmJLdQ1z/KU8MgppTFjma39IlVUvVxREF7Ex/MGTq0Y
- CvBT0TG+0xMGp1woYgcaNTmWCo6h/nVgAL85jxTZF2tUy3EaEuae9DbtaN/DxIHrp7TR
- qV1Zm2kEb3o/8+qRoiVYMiZuCdS+4ZTWw3Tf+KdJaFP/i+MIqMC67RXotSh83CCz+8j5
- 0A2A==
+ d=gmail.com; s=20230601; t=1730847743; x=1731452543; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:message-id:subject:cc
+ :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=+1zRsQOSlz5lLxWp81jnxAZHaOYR3Y4jOwTntP9DeL0=;
+ b=XNgCBFMscZCXE2rcZkMkgiOJAunrdmG6UI9IIQrgECbS4S3EphZIJ7/jkrU5xRfBvL
+ M3Jo6y7svc6n0T4gdYo7TEcLWZb2zkweX22hDUNMZsO5ESUF85Nzb2N2XAfBVYVJTNfz
+ PqcH2JsfUpKPayWEdxIDnIKKG910uH9RoVgzds2oBQUYlzoZPJnLc78InWylDfF8nt8C
+ ia0eWyOz+6q9DMNc8toFUIG8jNBJgbkReT/+UWURxKiH74RDiDX1MqK6Jqjh6BrVHZsZ
+ E1EfL20Sp5DrBIqR/Sxv8D2liq2w66Opyupt8vpBWHJgE05kPEwwqNV9nO3/52jr9YNZ
+ mPiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730847681; x=1731452481;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EfOtEP1B9ME/jsHOqIbM51aqo6s6BqnmSrMtp7A5WuM=;
- b=It4q7Zrhmt8TuMxLqHRGse8wOKIrNwMjhuWz6FdORQH2BJP5w5LElIDd4B+AdOl7CK
- 2StC2UBNZo4G7o1SguOsbExENyQywiZMYuba6839G7ZcB49KzyOnytMLq/Dwc8XnN0i0
- VHOEPqnaweMcS2oIx+5LunA69gaesFQobEqTsz3tVGP4J5gIB+eekgj8v0iL3SeKkAM3
- pMKcl2d09fMdvhausbtYJxaN/G1DzL+/5/GCbnXIJJRn1KK6z/k3h70TH2ZWpyC54wq3
- bbfNOnUkGJNm2pbUqJS3Rja5Gmje4EgXzhjQN2BYajKk4sewEfLEY+H0pK5QS1rgvL3p
- 3CBQ==
-X-Gm-Message-State: AOJu0Yw858kHoGK/P5kdXffimKcNpeDHZDCjb7xbk2JFKSMnjUizQVqm
- jRnflVX3TNWdQ/T+zGU11DtvdlT8rEa5BSFL30vP/X68k7Dbw87968vwslm+OwM=
-X-Google-Smtp-Source: AGHT+IHu9F8yqNTILe/h03L6+6VKtOwUGt75RWVtdNVohaBB1n5aeWqge1voj29OHY3vwnSVwAgipQ==
-X-Received: by 2002:a05:6000:1a8c:b0:37d:4ebe:1650 with SMTP id
- ffacd0b85a97d-381be907958mr17696292f8f.46.1730847680422; 
- Tue, 05 Nov 2024 15:01:20 -0800 (PST)
-Received: from [172.20.143.32] ([154.14.63.34])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c116ad3fsm17231228f8f.95.2024.11.05.15.01.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Nov 2024 15:01:19 -0800 (PST)
-Message-ID: <accdb8b5-a73e-45d0-8086-82d69c97b569@linaro.org>
-Date: Tue, 5 Nov 2024 23:01:18 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/19] target/microblaze: Rename CPU endianness property
- as 'little-endian'
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+ d=1e100.net; s=20230601; t=1730847743; x=1731452543;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:message-id:subject:cc
+ :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+1zRsQOSlz5lLxWp81jnxAZHaOYR3Y4jOwTntP9DeL0=;
+ b=OTWb4PFU6Iwm6xexw4G+x6K70OB/9BPTERr9fFyruEDLss0YgTmusevE7P7IdQSkCE
+ uctlDM8o0wwaP8kE0UoGVutiWZotmM7gbtiQMPu+FTaw1lpFU8amp5VsRbe+PtiLSmwv
+ +Y5Qj8lCHr+PfFkpRJ7X3ARgA72mxV4YgjhiilF5uXQknv+RNJGk0h8qBXXNUwOASI7i
+ nwp/2u7eL7q9TkJWucrFVTO45a3eYXX8Bj2xGcSalyIsj8qBHCCclG8i81/EHXAWWhhL
+ EkponmO8qWl64WxRJjJBkybuJNu5/4j0dTXjUnn32loS9EZIzqNPuq2VT3zDZV1qpanK
+ sjgg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVHQsOYOyM6FXVmKCuHHwIihBxaM7VGHTUDyU4WxRioeeVk2zRnsS/MPdO88B7LDpXOCLkZ53QHA==@nongnu.org
+X-Gm-Message-State: AOJu0YxuEOuH9oUKcRQaFW32Nu5CF+b3g2oZ1KI3RG/RfOwLeSF2S9F+
+ I3vMjqN2OixfokqflsQ7xI1oOohKhGhwVlEhELRXhgbeJKuwVf0u
+X-Google-Smtp-Source: AGHT+IGddxc8Qp1XCFCYSOw3TVflbqngeXcey5ZutrtvjPuV58f3+ZmFp6UfFWCS8MfxuIX663f3sQ==
+X-Received: by 2002:a05:600c:35cf:b0:431:3b53:105e with SMTP id
+ 5b1f17b1804b1-43283244e02mr157282855e9.9.1730847742928; 
+ Tue, 05 Nov 2024 15:02:22 -0800 (PST)
+Received: from gmail.com ([89.101.60.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c10e734csm17386214f8f.60.2024.11.05.15.02.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Nov 2024 15:02:22 -0800 (PST)
+Date: Wed, 6 Nov 2024 00:02:22 +0100
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, devel@lists.libvirt.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
+ devel@lists.libvirt.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 08/19] hw/microblaze: Propagate CPU endianness to
+ microblaze_load_kernel()
+Message-ID: <Zyqj_mB8pkuQ2rG4@zapote>
 References: <20241105130431.22564-1-philmd@linaro.org>
- <20241105130431.22564-2-philmd@linaro.org> <ZyqiPrf2wjP1yAPz@zapote>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZyqiPrf2wjP1yAPz@zapote>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <20241105130431.22564-9-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241105130431.22564-9-philmd@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,87 +104,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Edgar,
+On Tue, Nov 05, 2024 at 02:04:20PM +0100, Philippe Mathieu-Daudé wrote:
+> Pass vCPU endianness as argument so we can load kernels
+> with different endianness (different from the qemu-system-binary
+> builtin one).
 
-On 5/11/24 23:54, Edgar E. Iglesias wrote:
-> On Tue, Nov 05, 2024 at 02:04:13PM +0100, Philippe Mathieu-DaudÃ© wrote:
->> Rename the 'endian' property as 'little-endian' because the 'ENDI'
->> bit is set when the endianness is in little order, and unset in
->> big order.
-> 
-> Hi Phil,
-> 
-> Unfortunately, these properties are not only QEMU internal these got named
-> from the bindings Xilinx choose way back in time.
-> 
-> This will likely break many of the Xilinx flows with automatic dts to
-> qemu property conversions so I don't think it's a good idea to rename it.
-> If you like to clarify things perhaps we could keep an alias for the old
-> one?
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
-Adding an alias is the safest way, I'll respin this patch.
-
-Note however I'm worried about this fragile disconnect between Xilinx
-dts conversion which isn't exercised on mainstream (in particular if
-you get busy and can't review).
 
 > 
-> For example:
-> https://github.com/torvalds/linux/blob/master/arch/microblaze/boot/dts/system.dts#L73
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  hw/microblaze/boot.h                     | 4 ++--
+>  hw/microblaze/boot.c                     | 8 ++++----
+>  hw/microblaze/petalogix_ml605_mmu.c      | 2 +-
+>  hw/microblaze/petalogix_s3adsp1800_mmu.c | 2 +-
+>  hw/microblaze/xlnx-zynqmp-pmu.c          | 2 +-
+>  5 files changed, 9 insertions(+), 9 deletions(-)
 > 
-> Cheers,
-> Edgar
+> diff --git a/hw/microblaze/boot.h b/hw/microblaze/boot.h
+> index 5a8c2f79750..d179a551a69 100644
+> --- a/hw/microblaze/boot.h
+> +++ b/hw/microblaze/boot.h
+> @@ -2,8 +2,8 @@
+>  #define MICROBLAZE_BOOT_H
+>  
+>  
+> -void microblaze_load_kernel(MicroBlazeCPU *cpu, hwaddr ddr_base,
+> -                            uint32_t ramsize,
+> +void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
+> +                            hwaddr ddr_base, uint32_t ramsize,
+>                              const char *initrd_filename,
+>                              const char *dtb_filename,
+>                              void (*machine_cpu_reset)(MicroBlazeCPU *));
+> diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
+> index ed61e483ee8..3675489fa5b 100644
+> --- a/hw/microblaze/boot.c
+> +++ b/hw/microblaze/boot.c
+> @@ -114,8 +114,8 @@ static uint64_t translate_kernel_address(void *opaque, uint64_t addr)
+>      return addr - 0x30000000LL;
+>  }
+>  
+> -void microblaze_load_kernel(MicroBlazeCPU *cpu, hwaddr ddr_base,
+> -                            uint32_t ramsize,
+> +void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
+> +                            hwaddr ddr_base, uint32_t ramsize,
+>                              const char *initrd_filename,
+>                              const char *dtb_filename,
+>                              void (*machine_cpu_reset)(MicroBlazeCPU *))
+> @@ -144,13 +144,13 @@ void microblaze_load_kernel(MicroBlazeCPU *cpu, hwaddr ddr_base,
+>          /* Boots a kernel elf binary.  */
+>          kernel_size = load_elf(kernel_filename, NULL, NULL, NULL,
+>                                 &entry, NULL, &high, NULL,
+> -                               TARGET_BIG_ENDIAN, EM_MICROBLAZE, 0, 0);
+> +                               !is_little_endian, EM_MICROBLAZE, 0, 0);
+>          base32 = entry;
+>          if (base32 == 0xc0000000) {
+>              kernel_size = load_elf(kernel_filename, NULL,
+>                                     translate_kernel_address, NULL,
+>                                     &entry, NULL, NULL, NULL,
+> -                                   TARGET_BIG_ENDIAN, EM_MICROBLAZE, 0, 0);
+> +                                   !is_little_endian, EM_MICROBLAZE, 0, 0);
+>          }
+>          /* Always boot into physical ram.  */
+>          boot_info.bootstrap_pc = (uint32_t)entry;
+> diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+> index 61e47d83988..d2b2109065d 100644
+> --- a/hw/microblaze/petalogix_ml605_mmu.c
+> +++ b/hw/microblaze/petalogix_ml605_mmu.c
+> @@ -204,7 +204,7 @@ petalogix_ml605_init(MachineState *machine)
+>      cpu->cfg.pvr_regs[5] = 0xc56be000;
+>      cpu->cfg.pvr_regs[10] = 0x0e000000; /* virtex 6 */
+>  
+> -    microblaze_load_kernel(cpu, MEMORY_BASEADDR, ram_size,
+> +    microblaze_load_kernel(cpu, true, MEMORY_BASEADDR, ram_size,
+>                             machine->initrd_filename,
+>                             BINARY_DEVICE_TREE_FILE,
+>                             NULL);
+> diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+> index 6c0f5c6c651..8110be83715 100644
+> --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
+> +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+> @@ -129,7 +129,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>  
+>      create_unimplemented_device("xps_gpio", GPIO_BASEADDR, 0x10000);
+>  
+> -    microblaze_load_kernel(cpu, ddr_base, ram_size,
+> +    microblaze_load_kernel(cpu, !TARGET_BIG_ENDIAN, ddr_base, ram_size,
+>                             machine->initrd_filename,
+>                             BINARY_DEVICE_TREE_FILE,
+>                             NULL);
+> diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
+> index 567aad47bfc..bdbf7328bf4 100644
+> --- a/hw/microblaze/xlnx-zynqmp-pmu.c
+> +++ b/hw/microblaze/xlnx-zynqmp-pmu.c
+> @@ -172,7 +172,7 @@ static void xlnx_zynqmp_pmu_init(MachineState *machine)
+>      qdev_realize(DEVICE(pmu), NULL, &error_fatal);
+>  
+>      /* Load the kernel */
+> -    microblaze_load_kernel(&pmu->cpu, XLNX_ZYNQMP_PMU_RAM_ADDR,
+> +    microblaze_load_kernel(&pmu->cpu, true, XLNX_ZYNQMP_PMU_RAM_ADDR,
+>                             machine->ram_size,
+>                             machine->initrd_filename,
+>                             machine->dtb,
+> -- 
+> 2.45.2
 > 
-> 
->>
->> Signed-off-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
->> ---
->>   hw/microblaze/petalogix_ml605_mmu.c | 2 +-
->>   hw/microblaze/xlnx-zynqmp-pmu.c     | 2 +-
->>   target/microblaze/cpu.c             | 2 +-
->>   3 files changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
->> index b4183c5267d..df808ac323e 100644
->> --- a/hw/microblaze/petalogix_ml605_mmu.c
->> +++ b/hw/microblaze/petalogix_ml605_mmu.c
->> @@ -90,7 +90,7 @@ petalogix_ml605_init(MachineState *machine)
->>       object_property_set_int(OBJECT(cpu), "use-fpu", 1, &error_abort);
->>       object_property_set_bool(OBJECT(cpu), "dcache-writeback", true,
->>                                &error_abort);
->> -    object_property_set_bool(OBJECT(cpu), "endianness", true, &error_abort);
->> +    object_property_set_bool(OBJECT(cpu), "little-endian", true, &error_abort);
->>       qdev_realize(DEVICE(cpu), NULL, &error_abort);
->>   
->>       /* Attach emulated BRAM through the LMB.  */
->> diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
->> index 1bfc9641d29..43608c2dca4 100644
->> --- a/hw/microblaze/xlnx-zynqmp-pmu.c
->> +++ b/hw/microblaze/xlnx-zynqmp-pmu.c
->> @@ -90,7 +90,7 @@ static void xlnx_zynqmp_pmu_soc_realize(DeviceState *dev, Error **errp)
->>       object_property_set_bool(OBJECT(&s->cpu), "use-pcmp-instr", true,
->>                                &error_abort);
->>       object_property_set_bool(OBJECT(&s->cpu), "use-mmu", false, &error_abort);
->> -    object_property_set_bool(OBJECT(&s->cpu), "endianness", true,
->> +    object_property_set_bool(OBJECT(&s->cpu), "little-endian", true,
->>                                &error_abort);
->>       object_property_set_str(OBJECT(&s->cpu), "version", "8.40.b",
->>                               &error_abort);
->> diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
->> index 135947ee800..e9f98806274 100644
->> --- a/target/microblaze/cpu.c
->> +++ b/target/microblaze/cpu.c
->> @@ -368,7 +368,7 @@ static Property mb_properties[] = {
->>       DEFINE_PROP_UINT8("use-non-secure", MicroBlazeCPU, cfg.use_non_secure, 0),
->>       DEFINE_PROP_BOOL("dcache-writeback", MicroBlazeCPU, cfg.dcache_writeback,
->>                        false),
->> -    DEFINE_PROP_BOOL("endianness", MicroBlazeCPU, cfg.endi, false),
->> +    DEFINE_PROP_BOOL("little-endian", MicroBlazeCPU, cfg.endi, false),
->>       /* Enables bus exceptions on failed data accesses (load/stores).  */
->>       DEFINE_PROP_BOOL("dopb-bus-exception", MicroBlazeCPU,
->>                        cfg.dopb_bus_exception, false),
->> -- 
->> 2.45.2
->>
-
 
