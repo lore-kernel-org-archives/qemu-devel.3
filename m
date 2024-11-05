@@ -4,86 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA5CD2B931
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 14:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA664D2B92E
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 14:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8KWo-0000QE-Jf; Tue, 05 Nov 2024 09:27:30 -0500
+	id 1t8KYQ-0002Ds-Tj; Tue, 05 Nov 2024 09:29:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8KWm-0000Pg-Fw
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 09:27:28 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8KWk-0005Z8-Rs
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 09:27:28 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5c937b5169cso587027a12.1
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 06:27:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730816845; x=1731421645; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NxZGa884lP/VcAOdkDHINcbjywT8hKv8kHIayA2ySsA=;
- b=uAu7Dv80FXvxSlHsktW8Rpx1kojlAso8gLxDY75vEjBYNBss4E3WGA8l5o3K7IwLVT
- Y5c38QoIqWU+HP0IKlKlBGj7ErXuxpQIj9aB6ABXQFs+b+G2BY47bRh1PyX4N1rmhuB8
- n4N29OvQMnH7akpKwobr48YaDD40I1rdGrBAfyeBhR1dBNClOekxkVqgeZhtBWSwRnRc
- vGZqM4T1iSyAiLiPWNwyZheEFFrWjR9oUvKIvPxeYHJ9XioErmakkNLxW1bB/mEsrOXj
- CDR7fUSPmfEbXbI96UX1iUiR8hPSjAOXqW54X/QbJGJgmGk7Ze/UKkAiPwbqus+aVTg5
- 6h8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730816845; x=1731421645;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NxZGa884lP/VcAOdkDHINcbjywT8hKv8kHIayA2ySsA=;
- b=D2a//tK3/82qdUm1B6btb3AOgEtEXXocb3PNyu0pTIdDzlLQ9dvPQKP5+nk4fGoScB
- nsCYUG4CTg3CAFqz1DA88xgfcYP5NYO2WqRg4AAugR8N/RRv26iKqyRyGBNXSbEQUbxo
- E3/B5sPwTncjCyR97N3q53q7NQvRQswStm0qRvGveirV5X9DzaypAQoaYiLaN8i95AKc
- ZFzNRKOhpBgj+TlX7o3LaAHrkOoyqRiNpqUIfUZpT55WBD8lGtjaGRw2qI1SpFrXCcO0
- EI6P6u9ZuIUF6rxNBItZc5C2ch57wQfGxFONpfQoemXVh7cTNN4jevV0ezaaY7jagN67
- 0+wg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVvkP7hjprkVYbgTxGOMYbFmSrvxiU2dSLCxw7gjsL79bV3jaoKfx01tVvOrm7H5PQDoX8FOHvZbo+m@nongnu.org
-X-Gm-Message-State: AOJu0YxuPrcSG1/VWWVrPFmuWU2PqXS2nqICGRjvioTOy3oH+1LQPRfA
- XueQ5x+T1NccCsl8D/pLhh4KDnX1gZweliXAiZHD94yrrVIR27WNZTbNp5skbrQ=
-X-Google-Smtp-Source: AGHT+IHLt/7OyMIm7uybbqZ2vGxoOnNROSpLMwD2iFXvWf37TXnrvCQOGByq9yyjQRAJoUJ2E777GA==
-X-Received: by 2002:aa7:cd6c:0:b0:5ce:c7bf:3bd8 with SMTP id
- 4fb4d7f45d1cf-5cec7bf3cb9mr10526990a12.3.1730816844712; 
- Tue, 05 Nov 2024 06:27:24 -0800 (PST)
-Received: from [192.168.21.227] ([154.14.63.34])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cee6ac1f79sm1349797a12.43.2024.11.05.06.27.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Nov 2024 06:27:24 -0800 (PST)
-Message-ID: <23534a10-ea21-47ee-b31f-0ce9185e6545@linaro.org>
-Date: Tue, 5 Nov 2024 14:27:20 +0000
+ (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
+ id 1t8KYP-0002Cn-C3; Tue, 05 Nov 2024 09:29:09 -0500
+Received: from mta-03.yadro.com ([89.207.88.253])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
+ id 1t8KYN-0005gt-1v; Tue, 05 Nov 2024 09:29:09 -0500
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com 893C4E0002
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1730816940;
+ bh=zJ6hEnRimXrs6YKU6j4iTGPdFCy0Gv1EcNFRgo6eeCU=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=j8XXFDH5ntI0Z3D6DzTRPYVDifjsVCnUNdU69zMgU5j5xBKR75hgcfNixRyurA0nD
+ w1H5q5fJyyIL5YXG6CktD+eK1eje9Ck+lhTJWFfipPIj2wgZPFuzHsCHkNlB56p6nz
+ rGW8Th6/f6YueP96fN781EVk4Z27iJfNc4naWhXYrJwSqc/a2Z98uSWgzE1ZSGIKnB
+ 8fROirqvgCpMi7uvyAJQB1gHBAQNYDEFUNPx7etC3MiyE2F+iB76+nSyH0fLa9jMhh
+ JOcf/eehaNGt1HkTW8ti4XkqUmGSe6uaRGF/KWa7uLZKKw8to5rVZ72SsMZgyQIrSp
+ GPsqSvTw+2ZrA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1730816940;
+ bh=zJ6hEnRimXrs6YKU6j4iTGPdFCy0Gv1EcNFRgo6eeCU=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=LrvPyTiiFCG+2COhrid7AYEUTvkgYOVaKaNleameQRKk6I++UEUs5094U4pOLEUWZ
+ K8SkyK3bjnD2V44Zn1EufJ1/LEUCPQ11OGewY+gAl6xiIYyIxRgjyYCCWptYwuBMZU
+ Ou3sgIpzYPHYQ7qpX4twhF16WuXbinvtupQ5x9C49mQw58dCUXmFdA5fYcZnJNl5nN
+ 0pT3/PCohBN2v/1ejlEoHTYtE3GSSAzX/sq1P7sh1Kr0KY9q+eof42buH2GCHhhNog
+ CB1c2klsh9EoJkhCkTAzynPkK4oY7XBsixZydLaQ5xJ3uar2g0h7DnOpv40qcSIqIv
+ dkvEjdy+GIPGQ==
+From: Ivan Klokov <ivan.klokov@syntacore.com>
+To: <qemu-devel@nongnu.org>
+CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
+ <bmeng.cn@gmail.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>, 
+ <zhiwei_liu@linux.alibaba.com>, <farosas@redhat.com>, <lvivier@redhat.com>,
+ <pbonzini@redhat.com>, Ivan Klokov <ivan.klokov@syntacore.com>
+Subject: [RFC PATCH v5 0/2] Support RISC-V CSR read/write in Qtest environment
+Date: Tue, 5 Nov 2024 17:28:38 +0300
+Message-ID: <20241105142840.59617-1-ivan.klokov@syntacore.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] target/loongarch/tcg: Add hardware page table
- walker support
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, philmd@linaro.org
-References: <20241010063536.2276871-1-gaosong@loongson.cn>
- <20241010063536.2276871-6-gaosong@loongson.cn>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241010063536.2276871-6-gaosong@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52c.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: T-EXCH-10.corp.yadro.com (172.17.11.60) To
+ S-Exch-01.corp.yadro.com (10.78.5.241)
+Received-SPF: permerror client-ip=89.207.88.253;
+ envelope-from=ivan.klokov@syntacore.com; helo=mta-03.yadro.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,36 +78,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/24 07:35, Song Gao wrote:
-> +        base = get_pte_base(env, address);
-> +
-> +        /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
-> +        shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
-> +        shift = (shift + 1) * 3;
-> +        ptindex = (address >> ptbase) & ((1 << ptwidth) -1);
-> +        ptoffset = ptindex << shift;
-> +        tmp0 = base | ptoffset;
+These patches add functionality for unit testing RISC-V-specific registers.
+The first patch adds a Qtest backend, and the second implements a simple test.
 
-This is a guest virtual address.
+---
+v5:
+   - Move code from target/riscv to hw/riscv
+---
 
-> +      retry:
-> +        old_val = ldq_phys(cs->as, tmp0) & TARGET_PHYS_MASK;
+Ivan Klokov (2):
+  target/riscv: Add RISC-V CSR qtest support
+  tests/qtest: QTest example for RISC-V CSR register
 
-Fine.
+ hw/riscv/riscv_hart.c        | 65 ++++++++++++++++++++++++++++++++++++
+ tests/qtest/libqtest.c       | 27 +++++++++++++++
+ tests/qtest/libqtest.h       | 14 ++++++++
+ tests/qtest/meson.build      |  2 +-
+ tests/qtest/riscv-csr-test.c | 56 +++++++++++++++++++++++++++++++
+ 5 files changed, 163 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/riscv-csr-test.c
 
-> +        if (old_val != new_val) {
-> +            cur_val = qatomic_cmpxchg((uint64_t *)tmp0, old_val, new_val);
+-- 
+2.34.1
 
-This uses a host address.  The cast, and the resulting reference, are incorrect.
-
-This is why Arm and x86 structure things differently, using a different tlb index to 
-resolve the host address.  This allows the result to be cached like any other address 
-resolution.
-
-Riscv does something a bit simpler, using address_space_translate to resolve the host address.
-
-Most of the rest of this patch set is going to need review from loongson employees, since 
-I've not seen public documentation in english for this feature.
-
-r~
 
