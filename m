@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B42D40CE0
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4513CD40CE8
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:00:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SWJ-0002qz-GZ; Tue, 05 Nov 2024 17:59:31 -0500
+	id 1t8SWV-0002tN-RU; Tue, 05 Nov 2024 17:59:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1t8SWH-0002qm-Up; Tue, 05 Nov 2024 17:59:29 -0500
+ id 1t8SWT-0002sa-Bs; Tue, 05 Nov 2024 17:59:41 -0500
 Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1t8SWF-0006ld-B6; Tue, 05 Nov 2024 17:59:29 -0500
+ id 1t8SWR-0006o3-QE; Tue, 05 Nov 2024 17:59:41 -0500
 Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4314f38d274so70917435e9.1; 
- Tue, 05 Nov 2024 14:59:26 -0800 (PST)
+ 5b1f17b1804b1-43161c0068bso51044185e9.1; 
+ Tue, 05 Nov 2024 14:59:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730847566; x=1731452366; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730847578; x=1731452378; darn=nongnu.org;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=MFZyr2VRlQ1VNjSzl69Okeyb/RsPEOM4GrEdhgZ2hEQ=;
- b=eZB/lVLMdW1ZUhPGafe1jUowzfMH2c/CDVZ4muRwA9MueOWb7bzHKkB3td1YsR1/oS
- wDkC1gAewL8GxRUyU1FIXYEb/K28bf+udKPaAPSs/Xc+hs70nhqD9pVywLxAHUQfPdaj
- TZujof0S55onIC7d4EU6xQo+76vIHngcLxROzmFn2G/UQnzhxU8OzhiaTfSoIjtrf+0w
- 06+8LWil9bdPCccx6292oslHvePEOP3p7oXHpi3TdpYPDRICZ5PAXeW4aa5oqzdvi/B1
- m9JpW9uQZsWO3xh1mNYpUTuvVqVgjVXqKv+2d8/d5i1rJAvDTTZzQwMNYx/z/u/29VC6
- FPkQ==
+ bh=8uIkV3u6SmtEJg/8GH4X2spxKLpo4gSdS0bpKBursNg=;
+ b=IpW4Xm6jp5Ue0cp0DCAb/evfIBjrx5jqOmlWVbGlt5PpIn7X9JxH0x4G48YY9Rjl92
+ yHFW3onT+x7o38aWefb1noNlkrpl5T6pw1tEiafq3Y4nmcAHI4Vjkx3Jo7wPehRIZXkv
+ V2ln93PvUGLCKlE20AybD8W2ZyP3kia1oQnJvfnGfcU7ircnHZbRU6AxixXZQ6iCcjsQ
+ 5HQ30pxqEP+U41N0NTAvc3E0YF/TmamRP34lH/bSmdaDoAWXsIdelLg1KOd0HremUPSc
+ n2NxkPEHkTS9a6tVUYxkXiNzPS/8iprPQdqm7Ykz1dNazCSAy3aGrpwSfNfTX6NkigQe
+ /iZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730847566; x=1731452366;
+ d=1e100.net; s=20230601; t=1730847578; x=1731452378;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MFZyr2VRlQ1VNjSzl69Okeyb/RsPEOM4GrEdhgZ2hEQ=;
- b=D6AO7s4y+ToQR5VCw+9OPwbYhtsmrog1+Arrt1xT68ztfS9ZDWm5NAbbqER93R8lQG
- W4VNcyWo1ufDi8RInUHBBGHinWr7GJzK61gYBEZbf/2d7cUEAAeogWv9ymHMLvzw5GCQ
- lOTjVxDtwniNb8hOfHhh52NabWhOnjsfcCQWrt+rTZINhQrVzg5XvHB3H8sCEbCv9wkR
- /xsau5g5FJfW9GVzBZQEOaC0t7LYwRMnBvy8JLXP0PLECkEDY6noVcJ7frCJZY6CvAS6
- QBbhoAkK74mQZ6Y65jUkQG8BQiaAYJ8l+vFj4WrwVV6t61tc23pawuf3cm2R3iD5DUCj
- Fsng==
+ bh=8uIkV3u6SmtEJg/8GH4X2spxKLpo4gSdS0bpKBursNg=;
+ b=V1KSn6h3awXw2pCmpiMEZVX8/w2veSXnb+xsnay/l7wnBoIEjliHaUqPVRbCeR0kuc
+ mqRlTXpz3iX4jAB9vo41Gp35h1ksuEzhe2OjoKgHx9HZl/PCSuaXBTyps+yJRLQw4bcd
+ 29XF3ut+uM5F6Se6/Sj8WZ+Wn65efJuXVwi9/MghQomJLMl0IlT4WMlJbF/dvgMnDKqq
+ Bn5/tftuxLDws7S1GQBtvjhILCJZGAToPZlMNKtQYM3AKHhNgezxjY4shaaq7OkkNRD5
+ 6lSfA7BqAik6MpefoZ4aY+3teGXvtK5cnyLWvkDEdp94O65IxiNRoKdi2qbBX9LNzkjU
+ byZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW3RtCwIskMKeQArwjK2M09TW4dMDYd0crwA0Z6so4JSH5Z4vrA74zZ6yZJCuX7sl9sutthDloRhQ==@nongnu.org
-X-Gm-Message-State: AOJu0Yz6RtNdEEHAZGObSRKAJGQDCKyb9ncllhdQeH7BaQlgo5icfSQ8
- R6pEj1nEX8wljiaTMVNcW4WhlX9bZSvomtcajY0JuAav0jmVBZEf
-X-Google-Smtp-Source: AGHT+IH6AGqfu0xPZ0QMCm99pQ4kbrQxcFKA44c/HfiL7dRNBrRFAfzeobSuSvDJByCXFzIClUsoFg==
-X-Received: by 2002:a05:600c:4455:b0:42c:b508:750e with SMTP id
- 5b1f17b1804b1-4328324ae6cmr184100085e9.11.1730847565553; 
- Tue, 05 Nov 2024 14:59:25 -0800 (PST)
+ AJvYcCWv9k/ftt+Mfhf4VIEdelD5IMmOoP+/oPAkrmX9mX3oGO8QLfUCwUX0XdMRKhuroUCGY2DBk8QsvQ==@nongnu.org
+X-Gm-Message-State: AOJu0Yx2fIuLhM2C06W4SDpGX+tIs7DlkGQRJ0pe774VRdQKVjICS8w2
+ q0Ly7YRdGP8mtfB21eFcDbcDTQwQxFogH83Pl92TBZaQz5JUL5NILaC/u9xoSxc=
+X-Google-Smtp-Source: AGHT+IGdFSxT616ZnzVryWrUv5Ad4/inzte2KylzsV+VMPTKeQggWsUyQKK6vsCxrxa2FsgtwGE/7A==
+X-Received: by 2002:a05:600c:4f06:b0:431:5f1b:a7c6 with SMTP id
+ 5b1f17b1804b1-432832965d2mr151455145e9.30.1730847578104; 
+ Tue, 05 Nov 2024 14:59:38 -0800 (PST)
 Received: from gmail.com ([89.101.60.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa6b35c0sm1314005e9.16.2024.11.05.14.59.24
+ 5b1f17b1804b1-432aa74abb9sm1162795e9.42.2024.11.05.14.59.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 14:59:24 -0800 (PST)
-Date: Tue, 5 Nov 2024 23:59:24 +0100
+ Tue, 05 Nov 2024 14:59:37 -0800 (PST)
+Date: Tue, 5 Nov 2024 23:59:37 +0100
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>,
@@ -69,16 +69,16 @@ Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 04/19] hw/microblaze/s3adsp1800: Rename unimplemented
- MMIO region as xps_gpio
-Message-ID: <ZyqjTDvocg7fHdLb@zapote>
+Subject: Re: [PATCH 05/19] hw/microblaze/s3adsp1800: Declare machine type
+ using DEFINE_TYPES macro
+Message-ID: <ZyqjWWjYaNPdBTz4@zapote>
 References: <20241105130431.22564-1-philmd@linaro.org>
- <20241105130431.22564-5-philmd@linaro.org>
+ <20241105130431.22564-6-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241105130431.22564-5-philmd@linaro.org>
+In-Reply-To: <20241105130431.22564-6-philmd@linaro.org>
 User-Agent: Mutt/2.2.12 (2023-09-09)
 Received-SPF: pass client-ip=2a00:1450:4864:20::331;
  envelope-from=edgar.iglesias@gmail.com; helo=mail-wm1-x331.google.com
@@ -104,9 +104,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 05, 2024 at 02:04:16PM +0100, Philippe Mathieu-Daudé wrote:
-> The machine datasheet mentions the GPIO device as 'xps_gpio'.
-> Rename it accordingly to easily find its documentation.
+On Tue, Nov 05, 2024 at 02:04:17PM +0100, Philippe Mathieu-Daudé wrote:
+> Replace DEFINE_MACHINE() by DEFINE_TYPES(), converting the
+> class_init() handler.
 
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
@@ -114,22 +114,47 @@ Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/microblaze/petalogix_s3adsp1800_mmu.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  hw/microblaze/petalogix_s3adsp1800_mmu.c | 17 +++++++++++++++--
+>  1 file changed, 15 insertions(+), 2 deletions(-)
 > 
 > diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> index 37e9a05a62a..581b0411e29 100644
+> index 581b0411e29..6c0f5c6c651 100644
 > --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
 > +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> @@ -124,7 +124,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
->      sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, ETHLITE_BASEADDR);
->      sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[ETHLITE_IRQ]);
+> @@ -55,6 +55,9 @@
+>  #define ETHLITE_IRQ         1
+>  #define UARTLITE_IRQ        3
 >  
-> -    create_unimplemented_device("gpio", GPIO_BASEADDR, 0x10000);
-> +    create_unimplemented_device("xps_gpio", GPIO_BASEADDR, 0x10000);
+> +#define TYPE_PETALOGIX_S3ADSP1800_MACHINE \
+> +            MACHINE_TYPE_NAME("petalogix-s3adsp1800")
+> +
+>  static void
+>  petalogix_s3adsp1800_init(MachineState *machine)
+>  {
+> @@ -132,11 +135,21 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>                             NULL);
+>  }
 >  
->      microblaze_load_kernel(cpu, ddr_base, ram_size,
->                             machine->initrd_filename,
+> -static void petalogix_s3adsp1800_machine_init(MachineClass *mc)
+> +static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc, void *data)
+>  {
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +
+>      mc->desc = "PetaLogix linux refdesign for xilinx Spartan 3ADSP1800";
+>      mc->init = petalogix_s3adsp1800_init;
+>      mc->is_default = true;
+>  }
+>  
+> -DEFINE_MACHINE("petalogix-s3adsp1800", petalogix_s3adsp1800_machine_init)
+> +static const TypeInfo petalogix_s3adsp1800_machine_types[] = {
+> +    {
+> +        .name           = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
+> +        .parent         = TYPE_MACHINE,
+> +        .class_init     = petalogix_s3adsp1800_machine_class_init,
+> +    },
+> +};
+> +
+> +DEFINE_TYPES(petalogix_s3adsp1800_machine_types)
 > -- 
 > 2.45.2
 > 
