@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ADBBD2B941
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DB5D2B944
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:47:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Lm7-0002Vo-9W; Tue, 05 Nov 2024 10:47:23 -0500
+	id 1t8LmS-0002ze-LT; Tue, 05 Nov 2024 10:47:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8Lm6-0002VG-CB
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:47:22 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1t8LmP-0002tI-Pf
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:47:41 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8Lm4-00062g-SC
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:47:22 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5c9850ae22eso7037502a12.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 07:47:20 -0800 (PST)
+ id 1t8LmO-00063Y-5b
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:47:41 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5c937b5169cso767379a12.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 07:47:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730821639; x=1731426439; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=40hEXOu1jgX+WtWd1UaXrVQyCfHGofFRPEPHEqvdpas=;
- b=KndW0D0/4ZPLOEVJDCEOIDCcRuR419MKw8Q+XYYYes09CTHs421cRPGFKjn5maNX3+
- eym2vjyWHRrjfUTIqBnRgCrW/M5AksfaXFdNAUm0ukm8b5XtuAq0tnmdYcsDKE7rtBd2
- c+b13Uih+sILDBdMb/czsfb0q/94i0eP6TX5gXgQvXrVl2wELia6vqNky7e5cnwfgkto
- cXjDyvHi/ML4SI0ohQVMDrcP+r5XEZNfcfTQlxiGzpS/wyqn2InX0+r4dJ8GrMXO1kEQ
- iSxF8WZGjmqMqtQKlX97vBWhbW7Jl4Jbq6bVvRhCeukCZ5OpXXQWBsllqDVdTAVdKull
- xXRA==
+ d=linaro.org; s=google; t=1730821658; x=1731426458; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ik95ZXJC3ZL1WpqIauyqIHpPImrSIFUzk9xSRVgVePg=;
+ b=UI9b1S2Sih8TWQBmi7ZHfSZOWaQuRLzgo2+1wrdhFyMQW1vwDDaWeejO0inFGtHCYe
+ wDoAl9WS+gxGlbbDnClwsBD8Ca+45O/W2KH8hjP+po1p6G/RUXuu137yCEYeq1smS8V+
+ rvzf4ebg/AgGqqunSOKe2mXb/0PRS4G0DSe87nraRe09YukapHm3Ev4EvLDVf0s0fpw0
+ lgDoAtHCko6clSNChW5ZoZf45lcUChpmu2E5SvGAy/LSAPBo0dRkDzrPvFmOCaoST65t
+ OBymFB9KgLxV9A5ZStNeYsCV9QkBsRlNWOqZS4noPSPuhPGwSFmt1IiJ6kPKMLzYTkyq
+ D9Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730821639; x=1731426439;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=40hEXOu1jgX+WtWd1UaXrVQyCfHGofFRPEPHEqvdpas=;
- b=G7JOSPBiKozZmh8XrdMzaRkfcReub0J7CbApuGi5pN6/abMPty307ttBqMfJBwvNQX
- JHNiOqrvKrZPJwXI+JqGiN0upNwuG5tI+sZp9LpSC8TqT6GoONUDng7xerlvULQ3HdZZ
- W8QWBm/z/DXE9c69KmApCzL7GSycWGEnJhK/2O3CXKXtibMLv3Oo5NmvIVG+PKVfz9rJ
- hmNOpuxdk4uJpWDOArd72Q+HP1OtB621h82EYjKKegFKOEGETKeV415HmO4KnKL5LxMi
- kz5BAwrQoFYxS6jF6wbe6OAV/B4F5Y1pRYNbUJrHnEWbGfg3SfjglXafIML7RzEV3PVg
- VxbQ==
-X-Gm-Message-State: AOJu0Yyk6Bqrl+Zt7UOfzl+fWla/7zp3QIwhX8nkO/NVQ/pIGmPa5nUZ
- f+WP7wUEHHKTMB1W2L2EVjWyypVYY0mHqnPaMGNnR+CXOzMGP6H2QAuimxzls1rY+HiGhQt+4EF
- xs9u61leruL2wyf9z0R10dnEBpbPr2L9jy5V9oA==
-X-Google-Smtp-Source: AGHT+IGtxpjAf4xHCEVUZ28PAVwqc40FvxhmFkqdqYZx4zwNloXgfNrMa/IDe3q7RqPMBmGuQilG3GhLlgc2VlUfQJs=
-X-Received: by 2002:a05:6402:2753:b0:5c9:62c3:e7fd with SMTP id
- 4fb4d7f45d1cf-5cbbf8b1d2emr31053298a12.16.1730821639146; Tue, 05 Nov 2024
- 07:47:19 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730821658; x=1731426458;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ik95ZXJC3ZL1WpqIauyqIHpPImrSIFUzk9xSRVgVePg=;
+ b=wU6fHPu+IMOpmdp8Trgy65USj8eMzP1t4VJgxkIHBM+Y+rVq2q5QqJo/Up/yjzYOCf
+ aYa+NbNvkcYP/FoflyB2sgQ5brrhurF3o3+wyW15o4MKZntMqUd/7acFwP8WTsYSFUFl
+ 5q5Jbq4EDzBwxXwHXxj7YcTXS6P7Dv5AbYT3KNVHhjvsN1RB2dqkeVKWbUggFFok4SYX
+ gkJTLnxbXnndqMLkNS0yMvD+3z/f36nYZkOZ9bz90ibEcpOoZ0O2BOGthHmTKxtSVB9F
+ MMySUzAMuj50GVrxp19hls8jizTFEbn8uuC8vkghLjmJkd72dROtr9eeU0VOEObZeep4
+ l9sw==
+X-Gm-Message-State: AOJu0Ywx7tcknGi4ZM2SKPGh0qyvx2r3EEIVTeIoxVWGK1LkpKfuZWj4
+ WnU6cKGJTouuexTPbgDXk65Zvgz9YFrTfhVFT7Y1kp+tAG/cDFU5/RhFoj/uMJs/gLDnGzfTyR5
+ uSHDF2LgfzBBf68vcYZHZ+xvoSMWTgAG+ju4IoA==
+X-Google-Smtp-Source: AGHT+IGBUYU2FmZ8yhGB2SPnT1Sj5m9Zz8LVUfSAUNzpHijWLEyIX8vm03e8/p/uZWl2SAv97e8l0wpW75Eq2pP4Tl8=
+X-Received: by 2002:a05:6402:2811:b0:5c9:3f1:e5cd with SMTP id
+ 4fb4d7f45d1cf-5ceb8b49f3fmr15931686a12.0.1730821658406; Tue, 05 Nov 2024
+ 07:47:38 -0800 (PST)
 MIME-Version: 1.0
-References: <20241104134139.225514-1-kkostiuk@redhat.com>
-In-Reply-To: <20241104134139.225514-1-kkostiuk@redhat.com>
+References: <20241104105250.57818-1-philmd@linaro.org>
+In-Reply-To: <20241104105250.57818-1-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Nov 2024 15:47:08 +0000
-Message-ID: <CAFEAcA-Xwjup-R86qeLMjudx3Sxs65j2AA5fVhOEiaMqD=srvA@mail.gmail.com>
-Subject: Re: [PULL 0/3] Misc QEMU Guest Agent patches for 2024-11-04
-To: Konstantin Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
+Date: Tue, 5 Nov 2024 15:47:26 +0000
+Message-ID: <CAFEAcA9oXyqcpHxHHed4FTBWUKQx2YHa=Mp45TA=vqEdzfk=dQ@mail.gmail.com>
+Subject: Re: [PULL 00/14] MIPS patches for 2024-11-04
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,22 +89,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Nov 2024 at 13:41, Konstantin Kostiuk <kkostiuk@redhat.com> wrote:
+On Mon, 4 Nov 2024 at 10:53, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
 >
-> The following changes since commit c94bee4cd6693c1c65ba43bb8970cf909dec378b:
+> The following changes since commit 92ec7805190313c9e628f8fc4eb4f932c15247=
+bd:
 >
->   Merge tag 'for-upstream-i386' of https://gitlab.com/bonzini/qemu into staging (2024-11-02 16:21:38 +0000)
+>   Merge tag 'pull-riscv-to-apply-20241031-1' of https://github.com/alista=
+ir23/qemu into staging (2024-10-31 16:34:25 +0000)
 >
 > are available in the Git repository at:
 >
->   https://github.com/kostyanf14/qemu.git tags/qga-pull-2024-11-4
+>   https://github.com/philmd/qemu.git tags/mips-20241104
 >
-> for you to fetch changes up to 9cfe110d9fc0be88178770a85dc6170eecdf6be1:
+> for you to fetch changes up to a144a3baa61e3fca1a7946685128c349dd92c76f:
 >
->   qemu-ga: Fix a SIGSEGV in ga_run_command() helper (2024-11-04 14:16:47 +0200)
+>   target/mips: Remove unused CPUMIPSState::current_fpu field (2024-11-03 =
+05:52:49 -0300)
 >
 > ----------------------------------------------------------------
-> qga-pull-2024-11-4
+> MIPS patches queue
+>
+> - Migrate missing CP0 TLB MemoryMapID register (Yongbok)
+> - Enable MSA ASE for mips32r6-generic (Aleksandar)
+> - Convert Loongson LEXT opcodes to decodetree (Philippe)
+> - Introduce ase_3d_available and disas_mt_available helpers (Philippe)
 >
 
 
