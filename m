@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55083D3E779
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:50:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8126DD3E77C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:50:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SMm-0000Pb-2F; Tue, 05 Nov 2024 17:49:40 -0500
+	id 1t8SLE-0004y4-LV; Tue, 05 Nov 2024 17:48:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMi-0000BV-N2
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:36 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SL0-0004xU-DY
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:47:52 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMg-0004Qw-Rw
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:36 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-37d47b38336so4524215f8f.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:49:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SKy-00048S-Ps
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:47:50 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43155afca99so1430765e9.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:47:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730846973; x=1731451773; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730846867; x=1731451667; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RfsSAg28LXuScwoije6ppSHZyCgl4l8pk8ov2/9yx6A=;
- b=nkn/tfYcjUpPUAvSpGjMt9WRtLR0xRPd5eLYBukTeOf7uvhSHTybc3/LnV5iXnEE/S
- k4MIcrUHUXnCjaRByFxC36S6QM6zz+0/Zxk0H1ekXYbPfhOzNqBvJkR2Wc+PRL2AojRb
- dnJ5jgbGppIkmHMYuiYFQXmgJZlKd2te7lsmf5hBaMHPwNAtUB2s63X/Uuq69iuacEkq
- 3lh9n090tJlMs4uiQM/idH9QK6XIkxBjGcQFbKuACRNtzmkAaCoJvAEKkmX1NMg+3sAs
- 9l9X0LRh6aVS7cXF5x1up1IUwpV2MEYYjUnr3vHrChTWHM+vMrZm4c2gNOSVyIYyaTSg
- Cx+A==
+ bh=XJjfe10RbbrTnprCzmUrG8sh9BThAlZuJ9ZOYJUBh1Y=;
+ b=EPk5RF3H3XagipFCtIj2cs3zn4kQwhmSHpwc2UqVGZ68VEtqb0EqZP+5hAU/WIbXeS
+ Zm/VVYANp2tAk0MCKW9RVmB82Xe0h2dydCqfbzsmhzypi5lp6Sl87mdGbPh0I12jR8pj
+ 9Of9p14eEBpMqeHJpr6LxSZ4LJixFk3sVQFezULkJIHsm+EZpOvz0VCKOLw03+NCS6yl
+ AtZebjA4A56tIkBUJjozmdP6knDYZ2dZ9ZeFFtuVywjsgK4mp8FVHcr7TZOdruBIl1/0
+ zinxprZpJeJ0N1q6js7xqaYhh+zPNOCJbWr8Z1X0B3Za8+msmzL/mxqWwZ9G0Iq6t0GL
+ IuBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730846973; x=1731451773;
+ d=1e100.net; s=20230601; t=1730846867; x=1731451667;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RfsSAg28LXuScwoije6ppSHZyCgl4l8pk8ov2/9yx6A=;
- b=Mk/tydvfFy36iMqGivvzYDUe7khJ6RJ59Tc70gjNspf8ToPafeNmrd0512M6fbehOd
- aEP3DLHUOxKCCXIgfcSSFDrh06CerqqsPthosaGyWuiec9Zb/CMnK8ydcleARzwUDGYg
- gbDbo/GFmMuafnWGqF/PlxHZFYLfgDbHAA593PlYlRREocmIKB+0y552Zo6oicgxCqP9
- pPhkHsz8mRychc7PtQXOk7O24NRPnLlr0/K1lethSmzkMbb8IXCIOh+ruOH+r1OhbNom
- Rljg6NCQKxPMn0smiXV5pZ77W1PMZMDFEJRtOdokPseKyQaCcgjCQfSKCDKeOLz90hYh
- zhgw==
-X-Gm-Message-State: AOJu0Yyy/GpaTHz/j3Pzoqf03rNT2PCjiqWb308Y+Hlaiw7WEJhudZDL
- lht6GfpFprMyYHO1XZ2Mt9iXXcnYZvbRWAZjonmPmvaRA76T6qH/zJOJP62YlRMKh1whC03Imnq
- IEsQsrg==
-X-Google-Smtp-Source: AGHT+IHbJoMmP6OzSS4qr9eurp7Nh+8iqhBqSHp2oyV1qS7LPCwpLm8dwI+Owg/6azbc640Pe2j7Jg==
-X-Received: by 2002:a05:6000:e88:b0:37d:4f1b:359 with SMTP id
- ffacd0b85a97d-38061220a5emr29787052f8f.53.1730846973087; 
- Tue, 05 Nov 2024 14:49:33 -0800 (PST)
+ bh=XJjfe10RbbrTnprCzmUrG8sh9BThAlZuJ9ZOYJUBh1Y=;
+ b=epIMuJLyCJ7dXLHYYi0Laq8lZfuzClx0M+gA/8SekxZD4B6kyfwhezQDn5EGexyXm/
+ KenPQ+0dCO9tIMPXzg6LKgydfTYI6+B+VpUvQxFIqM7j8C2lUk8GlvB+S+yM/zywmBIx
+ CvRg86aYHWPYeWUu5u76877mqCWdLldpvdEC3M7zSKxRRZSsF5i/MvYia30Z2Qc+5yEx
+ j/MLQQi3J9uboyngXF8eJkg2TwoK/JQNqUJQtK0liNFn7HYe8NmTyfkh1yirY0RQ7pQu
+ Ut5KSdPrRgSiSzwkJzZewUFLYd9Ole1v4Req1G01t1Qq9Jjcqimb4XUfHBXdYO3pwmPm
+ 0r2Q==
+X-Gm-Message-State: AOJu0YyhHEmfWaHCNHQRISHvZVf7pViLvSqvJfLrf9JFiVl/118oEV8t
+ HOLQnm4ILIbzDj3UWY/SsnzeDigkPNnMqpK5Vm+xTaNDu2LJOEBmoQdv/wQfM3gaYmu2Y+gz6ip
+ 9Nr19yw==
+X-Google-Smtp-Source: AGHT+IGJivpiSWoUl7bN9neGOL6vZM8QQo5o+E7dXvTrURTUcEn4+UZcQOoP8vub7lB1GGuXUZA/mg==
+X-Received: by 2002:a05:600c:354f:b0:42c:b67b:816b with SMTP id
+ 5b1f17b1804b1-432a9a67904mr3179805e9.1.1730846866924; 
+ Tue, 05 Nov 2024 14:47:46 -0800 (PST)
 Received: from localhost.localdomain ([154.14.63.34])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10b7a86sm17294816f8f.22.2024.11.05.14.49.32
+ 5b1f17b1804b1-432aa6da94fsm1010815e9.29.2024.11.05.14.47.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 14:49:32 -0800 (PST)
+ Tue, 05 Nov 2024 14:47:45 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 23/29] hw/ppc/mpc8544_guts: Prefer DEFINE_TYPES() macro
-Date: Tue,  5 Nov 2024 22:47:21 +0000
-Message-ID: <20241105224727.53059-24-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 03/29] hw/microblaze/s3adsp1800: Explicit CPU endianness
+Date: Tue,  5 Nov 2024 22:47:01 +0000
+Message-ID: <20241105224727.53059-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241105224727.53059-1-philmd@linaro.org>
 References: <20241105224727.53059-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,53 +95,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+By default the machine's CPU endianness is 'big' order
+('little-endian' property set to %false).
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20241103133412.73536-19-shentey@gmail.com>
+This corresponds to the default when this machine was added;
+see commits 6a8b1ae2020 "microblaze: Add petalogix s3a1800dsp
+MMU linux ref-design." and 72b675caacf "microblaze: Hook into
+the build-system." which added:
+
+  [ "$target_cpu" = "microblaze" ] && target_bigendian=yes
+
+Later commit 877fdc12b1a ("microblaze: Allow targeting
+little-endian mb") added little-endian support, forgetting
+to set the CPU endianness to little-endian. Not an issue
+since this property was never used, but we will use it soon,
+so explicit the endianness to get the expected behavior.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-Id: <20241105130431.22564-4-philmd@linaro.org>
 ---
- hw/ppc/mpc8544_guts.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
-index c02b34ccded..e3c51458e69 100644
---- a/hw/ppc/mpc8544_guts.c
-+++ b/hw/ppc/mpc8544_guts.c
-@@ -18,7 +18,6 @@
-  */
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index dad46bd7f98..37e9a05a62a 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -71,6 +71,8 @@ petalogix_s3adsp1800_init(MachineState *machine)
  
- #include "qemu/osdep.h"
--#include "qemu/module.h"
- #include "qemu/log.h"
- #include "sysemu/runstate.h"
- #include "cpu.h"
-@@ -141,16 +140,13 @@ static void mpc8544_guts_initfn(Object *obj)
-     sysbus_init_mmio(d, &s->iomem);
- }
+     cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
+     object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
++    object_property_set_bool(OBJECT(cpu), "little-endian",
++                             !TARGET_BIG_ENDIAN, &error_abort);
+     qdev_realize(DEVICE(cpu), NULL, &error_abort);
  
--static const TypeInfo mpc8544_guts_info = {
--    .name          = TYPE_MPC8544_GUTS,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(GutsState),
--    .instance_init = mpc8544_guts_initfn,
-+static const TypeInfo mpc8544_guts_types[] = {
-+    {
-+        .name          = TYPE_MPC8544_GUTS,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(GutsState),
-+        .instance_init = mpc8544_guts_initfn,
-+    },
- };
- 
--static void mpc8544_guts_register_types(void)
--{
--    type_register_static(&mpc8544_guts_info);
--}
--
--type_init(mpc8544_guts_register_types)
-+DEFINE_TYPES(mpc8544_guts_types)
+     /* Attach emulated BRAM through the LMB.  */
 -- 
 2.45.2
 
