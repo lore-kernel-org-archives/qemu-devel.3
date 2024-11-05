@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB36D12689
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 532F0D1268A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:21:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Hb8-0004Qn-NF; Tue, 05 Nov 2024 06:19:46 -0500
+	id 1t8HbA-0004RJ-1t; Tue, 05 Nov 2024 06:19:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8Hb6-0004QI-K2
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:19:44 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1t8Hb7-0004QQ-JH
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:19:46 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8Hb3-00074s-I7
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:19:44 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43155abaf0bso47184625e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 03:19:39 -0800 (PST)
+ id 1t8Hb3-00074y-UK
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:19:45 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4315e62afe0so45657845e9.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 03:19:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730805577; x=1731410377; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=5+fr8xMcc/UTE8if4NaFHepUm0PBrgttT8j2+6FTnwA=;
- b=uSURsJpAtgqFrTaoZutJV43ABolQJOn5gSe9U+ugglgWLxSNFXiAhvr43J9fx7lGJ3
- 7C0fTwYNh02lx9rvRwH94MQ+yXPrn39d4NdxlqRqlds9mlkqvGVCZ1ouko9yWd3NDP1I
- +qlfhBLkQFewe3MpdMyM7Oq9ft8H8SQEDLMkOzSy8oHDRXBigZzT29FnDMFdltnhOq8a
- WyCq3LA6MtiyON85I1ba2z+L98CfK4xU1IKME+4nUXC8Ft30FrXM1uk2HOhnwfgpsuMf
- YtvlRBhkQI9bqsBmMB9lsPBxdRprhodBkSsVCw0YT/Tx6t5k6+UcwZAKLNw4I7bRsyoE
- iA9A==
+ d=linaro.org; s=google; t=1730805579; x=1731410379; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=PpqwR/1H2EcJ1oj53HzNbcXsnQdNGMTHaKQ/8EPL8YI=;
+ b=SYUVtkAFtVW4ohN/yw6g3Afya/m+D3uSFKpHRmrQH2MjALQgigYJKNHIHPd95i8WZC
+ yna82juLOWpWaGpRIC+vhYk+QjF8pY5cAYLmNbXnTi1KJe6+1ajBNEuUnUmLixxIyPGM
+ 3w8Me6wvnvIzC7MKjD3UqFcNH8tsTlboOq3lCPhCVO7jpTsmZpj3jRj1g3gUC9F6KVdI
+ X22OoGE/PbqW13yLO7srFP1hPDtgrPsQb5AidzBrYOQ4KoLTpw0LDRW47rQmeeoKePck
+ MFM17eVJ1ozKifQMr1wIqU9Eft3UsnftZQW/0ycbrmbyMsP1IY0rzw+8tlW/Z5xo8ydi
+ vi8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730805577; x=1731410377;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5+fr8xMcc/UTE8if4NaFHepUm0PBrgttT8j2+6FTnwA=;
- b=gFC7jklXHlkxphnT0cFQj1xukQ5uXu8ZHUETbc825PTaLHb8VbkB2h+CCZW4pB0W+s
- vFs4t7PupVZD9Uh7gVkEjoUOLZQZ2P31AFWA2c+FEeRcPZ31YSF0VNlcm3FSLqe67Vxq
- kRsd30wCy9fYUc5qYqFNojiQMR5cqcTi3JaYQRVEiTdVZLm/tKIoQ0oyF7rN2P8abu9k
- XGDGfPovDx4SNXRJBh6BBUwnRu5WEPu87MbektsHjpBJena0vOoKkAZo4RqrvJ2yCdmE
- q4YFkpdvA/PCBCNNuS7/Ern5BmSCj3sChu/obirfmB5KjZVtgBeZMPrlq8mMOjb/5/ti
- 5e8A==
-X-Gm-Message-State: AOJu0Yw99JedcrRbLczDospSIZaFKKmYz8ZtNjJkQwf5k8Gh06dOVP4k
- 8l0ZqIPtPLg24hX4ElHtMIoYw4tNwOc15ODbX5p4Qs/8Kj+HG8PXRTdd9YY85VFsV1bJlJ9KrA9
- f
-X-Google-Smtp-Source: AGHT+IFp5+DooIk5rDzauvBn6PhZuewV2nu1L+wxwtdY6dY1jF/yTwItahzEZ2WT8BaLsZYwVcUTVw==
-X-Received: by 2002:a05:6000:3cf:b0:37c:d54e:81fd with SMTP id
- ffacd0b85a97d-381c7ab3368mr12311321f8f.54.1730805577175; 
- Tue, 05 Nov 2024 03:19:37 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730805579; x=1731410379;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PpqwR/1H2EcJ1oj53HzNbcXsnQdNGMTHaKQ/8EPL8YI=;
+ b=bRVfAdXruOokAaSaFod1/X7PJg77IL0OObc8RNDJ04P5w+DkCUuvWjmLqj1Q5dcMiq
+ tx3DAw5zu5vL/8rnXH+SwViZQWS8c6L6fzE5I5HUdoWEMoGzsGgippcJ6emquytJ4hRm
+ yvnAf4cZqb7Xaw5PcgQRs1JlWNp+u5XV6OJ+DeC3DJ4AKCQGVuZiBnQEkmJnVVVOSSwm
+ /kX8GR3+87q9xWiQfW/WZwHnfhZv9z4lnat6QqY2mFs2HMCI5yQEoQXBtmG+vlLpDeIV
+ 3gdqLAE0mv6y3oPyJx1ILQjsdhRDEVnB2+X8fL/2oRKVT+xnqFI52Q5h5hFyTEreSRxd
+ BU/A==
+X-Gm-Message-State: AOJu0Ywc97dOjdpOOe1Qgye3SQZNGXDgPGDHK1Qk7X5ybmaJpPv9+MEx
+ 2x9ZlBnFSBKxpGQZ6ckcAkKnmBb36aXYCleATNEiJtWw3OMucy1QVE6fFZODVUNllHMOdpoHCS1
+ n
+X-Google-Smtp-Source: AGHT+IG77r+9OsiPmL+SCGyvG2HBEtkjdn69NvQKH7VazKuNR3TOgBwOpkWwQkVj3+NmywzThfpXvg==
+X-Received: by 2002:a05:600c:44c7:b0:432:7c30:abe6 with SMTP id
+ 5b1f17b1804b1-4327c30aceemr168130635e9.21.1730805578931; 
+ Tue, 05 Nov 2024 03:19:38 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432a3688813sm16354555e9.1.2024.11.05.03.19.36
+ 5b1f17b1804b1-432a3688813sm16354555e9.1.2024.11.05.03.19.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 03:19:36 -0800 (PST)
+ Tue, 05 Nov 2024 03:19:38 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/31] target-arm queue
-Date: Tue,  5 Nov 2024 11:19:04 +0000
-Message-Id: <20241105111935.2747034-1-peter.maydell@linaro.org>
+Subject: [PULL 02/31] tests/fp: Explicitly set 2-NaN propagation rule
+Date: Tue,  5 Nov 2024 11:19:06 +0000
+Message-Id: <20241105111935.2747034-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241105111935.2747034-1-peter.maydell@linaro.org>
+References: <20241105111935.2747034-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,129 +94,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 11b8920ed2093848f79f93d106afe8a69a61a523:
+Explicitly set a 2-NaN propagation rule in the softfloat tests.  In
+meson.build we put -DTARGET_ARM in fpcflags, and so we should select
+here the Arm propagation rule of float_2nan_prop_s_ab.
 
-  Merge tag 'pull-request-2024-11-04' of https://gitlab.com/thuth/qemu into staging (2024-11-04 17:37:59 +0000)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241025141254.2141506-3-peter.maydell@linaro.org
+---
+ tests/fp/fp-bench.c     | 2 ++
+ tests/fp/fp-test-log2.c | 1 +
+ tests/fp/fp-test.c      | 2 ++
+ 3 files changed, 5 insertions(+)
 
-are available in the Git repository at:
+diff --git a/tests/fp/fp-bench.c b/tests/fp/fp-bench.c
+index 8ce0ca1545d..75c07d5d1f1 100644
+--- a/tests/fp/fp-bench.c
++++ b/tests/fp/fp-bench.c
+@@ -488,6 +488,8 @@ static void run_bench(void)
+ {
+     bench_func_t f;
+ 
++    set_float_2nan_prop_rule(float_2nan_prop_s_ab, &soft_status);
++
+     f = bench_funcs[operation][precision];
+     g_assert(f);
+     f();
+diff --git a/tests/fp/fp-test-log2.c b/tests/fp/fp-test-log2.c
+index 4eae93eb7cc..de702c4c80d 100644
+--- a/tests/fp/fp-test-log2.c
++++ b/tests/fp/fp-test-log2.c
+@@ -70,6 +70,7 @@ int main(int ac, char **av)
+     float_status qsf = {0};
+     int i;
+ 
++    set_float_2nan_prop_rule(float_2nan_prop_s_ab, &qsf);
+     set_float_rounding_mode(float_round_nearest_even, &qsf);
+ 
+     test.d = 0.0;
+diff --git a/tests/fp/fp-test.c b/tests/fp/fp-test.c
+index 36b5712cda0..5f6f25c8821 100644
+--- a/tests/fp/fp-test.c
++++ b/tests/fp/fp-test.c
+@@ -935,6 +935,8 @@ void run_test(void)
+ {
+     unsigned int i;
+ 
++    set_float_2nan_prop_rule(float_2nan_prop_s_ab, &qsf);
++
+     genCases_setLevel(test_level);
+     verCases_maxErrorCount = n_max_errors;
+ 
+-- 
+2.34.1
 
-  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20241105
-
-for you to fetch changes up to 374cdc8efe4a039510cca47e8399d54a1aeb4f2d:
-
-  target/arm: Enable FEAT_CMOW for -cpu max (2024-11-05 10:10:00 +0000)
-
-----------------------------------------------------------------
-target-arm queue:
- * Fix MMU indexes for AArch32 Secure PL1&0 in a less complex and buggy way
- * Fix SVE SDOT/UDOT/USDOT (4-way, indexed)
- * softfloat: set 2-operand NaN propagation rule at runtime
- * disas: Fix build against Capstone v6 (again)
- * hw/rtc/ds1338: Trace send and receive operations
- * hw/timer/imx_gpt: Convert DPRINTF to trace events
- * hw/watchdog/wdt_imx2: Remove redundant assignment
- * hw/sensor/tmp105: Convert printf() to trace event, add tracing for read/write access
- * hw/net/npcm_gmac: Change error log to trace event
- * target/arm: Enable FEAT_CMOW for -cpu max
-
-----------------------------------------------------------------
-Bernhard Beschow (4):
-      hw/rtc/ds1338: Trace send and receive operations
-      hw/timer/imx_gpt: Convert DPRINTF to trace events
-      hw/watchdog/wdt_imx2: Remove redundant assignment
-      hw/sensor/tmp105: Convert printf() to trace event, add tracing for read/write access
-
-Gustavo Romero (1):
-      target/arm: Enable FEAT_CMOW for -cpu max
-
-Nabih Estefan (1):
-      hw/net/npcm_gmac: Change error log to trace event
-
-Peter Maydell (24):
-      softfloat: Allow 2-operand NaN propagation rule to be set at runtime
-      tests/fp: Explicitly set 2-NaN propagation rule
-      target/arm: Explicitly set 2-NaN propagation rule
-      target/mips: Explicitly set 2-NaN propagation rule
-      target/loongarch: Explicitly set 2-NaN propagation rule
-      target/hppa: Explicitly set 2-NaN propagation rule
-      target/s390x: Explicitly set 2-NaN propagation rule
-      target/ppc: Explicitly set 2-NaN propagation rule
-      target/m68k: Explicitly set 2-NaN propagation rule
-      target/m68k: Initialize float_status fields in gdb set/get functions
-      target/sparc: Move cpu_put_fsr(env, 0) call to reset
-      target/sparc: Explicitly set 2-NaN propagation rule
-      target/xtensa: Factor out calls to set_use_first_nan()
-      target/xtensa: Explicitly set 2-NaN propagation rule
-      target/i386: Set 2-NaN propagation rule explicitly
-      target/alpha: Explicitly set 2-NaN propagation rule
-      target/microblaze: Move setting of float rounding mode to reset
-      target/microblaze: Explicitly set 2-NaN propagation rule
-      target/openrisc: Explicitly set 2-NaN propagation rule
-      target/rx: Explicitly set 2-NaN propagation rule
-      softfloat: Remove fallback rule from pickNaN()
-      Revert "target/arm: Fix usage of MMU indexes when EL3 is AArch32"
-      target/arm: Add new MMU indexes for AArch32 Secure PL1&0
-      target/arm: Fix SVE SDOT/UDOT/USDOT (4-way, indexed)
-
-Richard Henderson (1):
-      disas: Fix build against Capstone v6 (again)
-
- docs/system/arm/emulation.rst     |   1 +
- meson.build                       |   1 +
- hw/sensor/trace.h                 |   1 +
- include/disas/capstone.h          |   1 +
- include/fpu/softfloat-helpers.h   |  11 +++
- include/fpu/softfloat-types.h     |  38 ++++++++++
- target/arm/cpu-features.h         |   5 ++
- target/arm/cpu.h                  |  49 ++++++------
- target/arm/internals.h            |  41 +++++-----
- target/arm/tcg/translate.h        |   2 -
- target/i386/cpu.h                 |   3 +
- target/mips/fpu_helper.h          |  22 ++++++
- target/xtensa/cpu.h               |   6 ++
- hw/net/npcm_gmac.c                |   5 +-
- hw/rtc/ds1338.c                   |   6 ++
- hw/sensor/tmp105.c                |   7 +-
- hw/timer/imx_gpt.c                |  18 ++---
- hw/watchdog/wdt_imx2.c            |   1 -
- linux-user/arm/nwfpe/fpa11.c      |  18 +++++
- target/alpha/cpu.c                |  11 +++
- target/arm/cpu.c                  |  25 ++++--
- target/arm/helper.c               |  73 ++++++++++++------
- target/arm/ptw.c                  |  10 +--
- target/arm/tcg/cpu64.c            |   1 +
- target/arm/tcg/hflags.c           |   4 -
- target/arm/tcg/op_helper.c        |  14 +++-
- target/arm/tcg/translate-a64.c    |   2 +-
- target/arm/tcg/translate.c        |  12 +--
- target/arm/tcg/vec_helper.c       |   9 ++-
- target/hppa/fpu_helper.c          |   6 ++
- target/i386/cpu.c                 |   4 +
- target/i386/tcg/fpu_helper.c      |  40 ++++++++++
- target/loongarch/tcg/fpu_helper.c |   1 +
- target/m68k/cpu.c                 |  16 ++++
- target/m68k/fpu_helper.c          |   1 +
- target/m68k/helper.c              |   4 +-
- target/microblaze/cpu.c           |  10 ++-
- target/mips/cpu.c                 |   2 +-
- target/mips/msa.c                 |  17 +++++
- target/openrisc/cpu.c             |   6 ++
- target/ppc/cpu_init.c             |   8 ++
- target/rx/cpu.c                   |   7 ++
- target/s390x/cpu.c                |   1 +
- target/sparc/cpu.c                |  10 ++-
- target/sparc/fop_helper.c         |  10 ++-
- target/xtensa/cpu.c               |   2 +-
- target/xtensa/fpu_helper.c        |  35 +++++----
- tests/fp/fp-bench.c               |   2 +
- tests/fp/fp-test-log2.c           |   1 +
- tests/fp/fp-test.c                |   2 +
- fpu/softfloat-specialize.c.inc    | 156 ++++++++++++++------------------------
- hw/net/trace-events               |   1 +
- hw/rtc/trace-events               |   4 +
- hw/sensor/trace-events            |   6 ++
- hw/timer/trace-events             |   6 ++
- 55 files changed, 516 insertions(+), 239 deletions(-)
- create mode 100644 hw/sensor/trace.h
- create mode 100644 hw/sensor/trace-events
 
