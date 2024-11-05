@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76F6AD2B921
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 12:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79866D2B920
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:01:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8J8R-0006tX-9z; Tue, 05 Nov 2024 07:58:15 -0500
+	id 1t8JAq-0007kj-BV; Tue, 05 Nov 2024 08:00:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=riH2=SA=kaod.org=clg@ozlabs.org>)
- id 1t8J8Q-0006tN-0Y
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 07:58:14 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t8JAe-0007je-4U
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:00:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=riH2=SA=kaod.org=clg@ozlabs.org>)
- id 1t8J8N-0001Ja-Ha
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 07:58:13 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XjT065F93z4x8d;
- Tue,  5 Nov 2024 23:57:58 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XjT044qYZz4x3J;
- Tue,  5 Nov 2024 23:57:56 +1100 (AEDT)
-Message-ID: <d8df7294-7a88-4fc8-9b14-73bbfdab1f7d@kaod.org>
-Date: Tue, 5 Nov 2024 13:57:53 +0100
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t8JAY-0001d5-3s
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:00:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730811623;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JFKaAT6Xo/YEl+wjdQgg6sD+lLMrpdFD9ysXdXjNAtc=;
+ b=YuhYuep795ZpoPJPXXEbPChTZVxqeQY0f5GC9FB4YrvrbfAMbsaRc0IPOoYvjPQ7WOR8I+
+ aV8rQfGk9xMSbLC0kPN3iaUB9GApbR8wBdVlE/uVzy3GQ0qd9RA1xaYgd/dGZN4C3NN5qG
+ /DV5C5REEVQhwCfMM/3nNfC1DYb7Ljc=
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
+ [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-621-k3Jl9sHaNH2YvbvVHgm42g-1; Tue, 05 Nov 2024 08:00:19 -0500
+X-MC-Unique: k3Jl9sHaNH2YvbvVHgm42g-1
+Received: by mail-oi1-f198.google.com with SMTP id
+ 5614622812f47-3e6587f103bso3404889b6e.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:00:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730811619; x=1731416419;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JFKaAT6Xo/YEl+wjdQgg6sD+lLMrpdFD9ysXdXjNAtc=;
+ b=bca+wNv5H2jzbH4vr+SbqRt7EGYhfgSuJxSe3SFxoP1QCEa6PWPVjwZ4HLBHeWs6UK
+ c0IooIN1QHrMzGubOf3mi+MHg1tUTZD0yMfAVzB13T1uMP3GySxYXeq3KPFKEpvzmWe/
+ NNVG4/F2cd+3JlEy84T1BVoJGC7bat9McnnVXq9bF5NDVR6J1Xik0ydMu1knWQWS/cxH
+ tRQWOf/1FaA+CjJWYcSHs9qgjVOUsaXpU3THlAmhFFaaBfCSw0E8G9U0WK4nrPRgB45C
+ a26gDeIO66d+OCe5OJ4txk3axiJbZua54GEy6y3R2j5tFdhyiPAMd3Liry97kfMdBRLO
+ I5Yg==
+X-Gm-Message-State: AOJu0Yya6HI/InYd3ptMZ/ZT2tGJ3+kY9GDIkzF6STeqp/+U+X+9OpEw
+ 5e5aW66HuiLUnMmGGdOoIRM3P6/oAT9tuofV2hoC2QFv6fTO1TpiWkgnb4/LP9ni5YPWm6dZRz7
+ D+21SNnu5mqy+KtjSBsDcXUc+6LwkeormbQy1/OzaXuWLOoU7Z9g7
+X-Received: by 2002:a05:6808:2223:b0:3e5:f06f:653d with SMTP id
+ 5614622812f47-3e758c32581mr13942783b6e.22.1730811619013; 
+ Tue, 05 Nov 2024 05:00:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG2oQtPat45Fk4yMvb9zi8OYmuYiHWfexPRdMtXxuRmrsHjA+6WPG5ELTmwmboy+Y8D500yEA==
+X-Received: by 2002:a05:6808:2223:b0:3e5:f06f:653d with SMTP id
+ 5614622812f47-3e758c32581mr13942737b6e.22.1730811618523; 
+ Tue, 05 Nov 2024 05:00:18 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3e6611a661dsm2485520b6e.14.2024.11.05.05.00.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Nov 2024 05:00:17 -0800 (PST)
+Date: Tue, 5 Nov 2024 08:00:14 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH 2/5] migration/postcopy: magic value for postcopy channel
+Message-ID: <ZyoW3ue3WTQ3Di1d@x1n>
+References: <20241029150908.1136894-1-ppandit@redhat.com>
+ <20241029150908.1136894-3-ppandit@redhat.com>
+ <ZyTnBwpOwXcHGGPJ@x1n>
+ <CAE8KmOyzWRqpGDOyAK7V2X8+SWVt_kR1897tiFm7vdBNRRE2QA@mail.gmail.com>
+ <ZykB3voFw_-ByWfh@x1n>
+ <CAE8KmOzuGxdU7zp+vsf1yY_FP8bf-KTv7UJ+8h6bfmkE=0H-bA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Provide the user with hints where to
- find more log files
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Daniel P . Berrange" <berrange@redhat.com>
-References: <20241105123849.359391-1-thuth@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20241105123849.359391-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=riH2=SA=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOzuGxdU7zp+vsf1yY_FP8bf-KTv7UJ+8h6bfmkE=0H-bA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,86 +104,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/24 13:38, Thomas Huth wrote:
-> Since the base.log and console.log files are not referenced from the
-> meson test logs yet, they might be hard to find for the casual users.
-> Thus let's print some hints in case a test case failed. For this we
-> have to run unittest.main() with exit=False to get the results of the
-> testing. Then we can iterate through the failed test cases to print
-> out the information accordingly.
+On Tue, Nov 05, 2024 at 04:49:23PM +0530, Prasad Pandit wrote:
+> On Mon, 4 Nov 2024 at 22:48, Peter Xu <peterx@redhat.com> wrote:
+> > Firstly, we'll need a way to tell mgmt that the new qemu binary supports
+> > enablement of both multifd + postcopy feature.  That can be done with a
+> >
+> >   "features": [ "postcopy-with-multifd-precopy" ]
+> >
+> > Flag attached to the QMP "migrate" command.
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> * IIUC, currently virsh(1)/libvirtd(8) sends the migration command to
+> the destination to inform it of the migration features to use, whether
+> to use multifd or postcopy or none etc. Based on that the destination
+> QEMU prepares to accept incoming VM. Not sure how/what above flag
+> shall benefit.
 
+See:
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+https://www.qemu.org/docs/master/devel/qapi-code-gen.html
 
-and
+        Sometimes, the behaviour of QEMU changes compatibly, but without a
+        change in the QMP syntax (usually by allowing values or operations
+        that previously resulted in an error). QMP clients may still need
+        to know whether the extension is available.
 
+        For this purpose, a list of features can be specified for
+        definitions, enumeration values, and struct members. Each feature
+        list member can either be { 'name': STRING, '*if': COND }, or
+        STRING, which is shorthand for { 'name': STRING }.
 
-Tested-by: Cédric Le Goater <clg@redhat.com>
+> 
+> > Then, I think we don't need a magic for preempt channel, because new qemu
+> > binaries (after 7.2) have no issue on out-of-order connections between main
+> > / preempt channel.  Preempt channel is always connected later than main.
+> >
+> > It means in the test logic of "which channel is which", it should be:
+> >
+> >   - If it's a multifd channel (check multifd header match), it's a multifd
+> >     channel, otherwise,
+> >
+> >     - if main channel is not present yet, it must be the main channel (and
+> >       we can double check the main channel magic), otherwise,
+> >
+> >     - it's the preempt channel
+> >
+> > With that, I think we can drop the new magic sent here.
+> 
+> * Sending magic value on the postcopy channel only makes it consistent
+> with other channels. There's no harm in sending it. Explicitly
+> defining/sending the magic value is better than leaving it for the
+> code/reader to figure it out. Is there a compelling reason to drop it?
+> IMO, we should either define/send the magic value for all channels or
+> none. Both ways are consistent. Defining it for few and not for others
+> does not seem right.
 
-   not ok 1 test_aarch64_aspeed.AST2x00MachineSDK.test_aarch64_ast2700_evb_sdk_v09_02
-   1..1
-   More information on test_aarch64_aspeed.AST2x00MachineSDK.test_aarch64_ast2700_evb_sdk_v09_02 could be found here:
-    /home/legoater/work/qemu/qemu-aspeed.git/build/tests/functional/aarch64/test_aarch64_aspeed.AST2x00MachineSDK.test_aarch64_ast2700_evb_sdk_v09_02/base.log
-    /home/legoater/work/qemu/qemu-aspeed.git/build/tests/functional/aarch64/test_aarch64_aspeed.AST2x00MachineSDK.test_aarch64_ast2700_evb_sdk_v09_02/console.log
+It's a legacy issue as not all features are developed together, and that
+was planned to be fixed together with handshake.  I think the handshake
+could introduce one header on top to pair channels.
 
+IMHO it is an overkill to add a feature now if it works even if tricky,
+because it's not the 1st day it was tricky. And we're going to have another
+header very soon..
 
 Thanks,
 
-C.
-
-  
-
-
-> ---
->   tests/functional/qemu_test/testcase.py | 18 +++++++++++++-----
->   1 file changed, 13 insertions(+), 5 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index aa0146265a..411978b5ef 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -45,10 +45,10 @@ def setUp(self, bin_prefix):
->           os.makedirs(self.workdir, exist_ok=True)
->   
->           self.logdir = self.workdir
-> +        self.log_filename = os.path.join(self.logdir, 'base.log')
->           self.log = logging.getLogger('qemu-test')
->           self.log.setLevel(logging.DEBUG)
-> -        self._log_fh = logging.FileHandler(os.path.join(self.logdir,
-> -                                                        'base.log'), mode='w')
-> +        self._log_fh = logging.FileHandler(self.log_filename, mode='w')
->           self._log_fh.setLevel(logging.DEBUG)
->           fileFormatter = logging.Formatter(
->               '%(asctime)s - %(levelname)s: %(message)s')
-> @@ -68,7 +68,14 @@ def main():
->   
->           tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
->                                      test_output_log = pycotap.LogMode.LogToError)
-> -        unittest.main(module = None, testRunner = tr, argv=["__dummy__", path])
-> +        res = unittest.main(module = None, testRunner = tr, exit = False,
-> +                            argv=["__dummy__", path])
-> +        for (test, message) in res.result.errors + res.result.failures:
-> +            print('More information on ' + test.id() + ' could be found here:'
-> +                  '\n %s' % test.log_filename, file=sys.stderr)
-> +            if hasattr(test, 'console_log_name'):
-> +                print(' %s' % test.console_log_name, file=sys.stderr)
-> +        sys.exit(not res.result.wasSuccessful())
->   
->   
->   class QemuUserTest(QemuBaseTest):
-> @@ -101,8 +108,9 @@ def setUp(self):
->   
->           console_log = logging.getLogger('console')
->           console_log.setLevel(logging.DEBUG)
-> -        self._console_log_fh = logging.FileHandler(os.path.join(self.workdir,
-> -                                                   'console.log'), mode='w')
-> +        self.console_log_name = os.path.join(self.workdir, 'console.log')
-> +        self._console_log_fh = logging.FileHandler(self.console_log_name,
-> +                                                   mode='w')
->           self._console_log_fh.setLevel(logging.DEBUG)
->           fileFormatter = logging.Formatter('%(asctime)s: %(message)s')
->           self._console_log_fh.setFormatter(fileFormatter)
+-- 
+Peter Xu
 
 
