@@ -4,82 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F8AD3E773
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 21:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B98B1D3E773
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 21:27:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Qyx-0000vp-HH; Tue, 05 Nov 2024 16:20:59 -0500
+	id 1t8R4T-0001r8-AJ; Tue, 05 Nov 2024 16:26:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1t8Qyw-0000vJ-08
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 16:20:58 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8R4Q-0001qj-S5
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 16:26:39 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1t8Qyu-0008NW-Ay
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 16:20:57 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-6e38ebcc0abso68045297b3.2
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 13:20:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8R4P-0000RA-4E
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 16:26:38 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9634c9160so6751606a12.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 13:26:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730841655; x=1731446455; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZPiMAN9QIzBPfA7lPqV6M+Nsp42HSnsGy+bCRhwQ8kw=;
- b=Y5su15eKLnZQHD59di8Mv5OWHmSIJ72fwtyRTV++va7c1c5AMOkAFzQnm+zABiwu7r
- 1mmU8qj/Wp7M3dSxHk0SqSouUKMDk16d5HICAZMi37KLqDpKLu3EUEECXrRulGHlAw1O
- FQa08c5fA1VZsnhuKCqtMPEKSwIsN1wLX+1sy8L5IdckLcRrhJgMXE4lOkcNQV13ue0k
- ot0aTdU0sResoAPjU99L79mK9nG8UXPcWC16ToEkrp9gABxBMBW3TVuGh4PuPSnkqnSE
- GmNGgTztSPUCLFB5afjfMLxe+dbqKgLv+dh8SmdBubJiVoAZkkN+MOGnqVPQj9TrYSpH
- 1Utg==
+ d=linaro.org; s=google; t=1730841994; x=1731446794; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=UdNLloDLb/Io6eaUpvjIqDGO3DcJ/wOSSM+0y5erWoM=;
+ b=ZV4O0moqFy9g9F2jL9IXe7IzeMTX5WU5k3HCjDaD/Xd1yMeocK6FSse9ltAYZp0eRU
+ O2K/JoNsVQg8wSKEEbjnQsaacU5G+7CtfCCRKWWGikwyosgl+5TNAbH/JYYGg8jXAumR
+ z19XKva2OvGdkr3t3V7U6xRVw4Fb0bZ3SLTfCy0XoLI3oXtz0pAWmkCPNUIYDKZALGZS
+ fOk2qAWOZdkwbkyKMObkWyi85NTMwOc7W2mq195npkQ+JlnmTOOvaeqEldCQv65fxrxO
+ jX4RMXb1icxex44p4kzUjZM7B+Y0uYMAq62nH8aXbsMKMYgiCOtTAn2FWuFDHXnLChas
+ ggNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730841655; x=1731446455;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZPiMAN9QIzBPfA7lPqV6M+Nsp42HSnsGy+bCRhwQ8kw=;
- b=DWTQ52k35Jnwy/jGWvz3D7Jt0el1jFbUwDNYYiB1gKBe13P1Xbc7Bwj/e/q5x12I/i
- ItuuZUKov9sb9qvdbSDMH48k0XrHk6H7jj8pGnmLrwLQk7ifQ1OcOqSpQeNFUJk9Zan8
- FLjcQmfnFFotVG5bUPUw0PPhV0HPoyspwBTqbeVpiuWLLNXgzRSExkroWJ+VyyUZ97TO
- vZln4SibDIxvoNhnf3/q3Ov80vP40x7J/ElDYZ8JOYGCcMMZ3W6iw+1FwbV5SMEJ3L2C
- hC3l5aYrgTJGRannh4QxRD0VIy+NGR8D2kgYtX8uLqeCqnq+CUcos/qTlgXA+ZYo4wA5
- IJCA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUBSL8TnG9YFI9ql3ec2U+jHrpfSS/1xRox9Q9pjI4+3PamF81KbkKTJYf6XeezJOTIZkPmuw0S10cz@nongnu.org
-X-Gm-Message-State: AOJu0YwgnYtT4EAjyK8hoe+HeXn1rHgVOU3obVBEKSqKUUkwTpKxKQJD
- xquBROywWw8v4j9ys2P0MJQOeYVNjX3JKsZgORdY1z8W/shq8NXmTRqYUw==
-X-Google-Smtp-Source: AGHT+IF6DQRuWsdCA1IjjAnvofSDQXE9T2x0H2s/5eic/WyeD6boHgJTjO69gjSlDgkmSIulgstCYQ==
-X-Received: by 2002:a05:690c:87:b0:6ea:3313:f98c with SMTP id
- 00721157ae682-6ea3313fa4emr280329027b3.32.1730841655012; 
- Tue, 05 Nov 2024 13:20:55 -0800 (PST)
-Received: from fan ([50.205.20.42]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-6ea55ac99a1sm24729247b3.2.2024.11.05.13.20.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 13:20:54 -0800 (PST)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Tue, 5 Nov 2024 13:20:52 -0800
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: linux-cxl@vger.kernel.org, mst@redhat.com, qemu-devel@nongnu.org,
- Esifiel <esifiel@gmail.com>, linuxarm@huawei.com
-Subject: Re: [PATCH qemu 07/10] hw/cxl: Ensuring enough data to read
- parameters in cmd_tunnel_management_cmd()
-Message-ID: <ZyqMNCvnXkiwqubp@fan>
-References: <20241101133917.27634-1-Jonathan.Cameron@huawei.com>
- <20241101133917.27634-8-Jonathan.Cameron@huawei.com>
+ d=1e100.net; s=20230601; t=1730841994; x=1731446794;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UdNLloDLb/Io6eaUpvjIqDGO3DcJ/wOSSM+0y5erWoM=;
+ b=cLZ0ern5/CLrW6m+SGRQMR3mSYX/BfqJOi27R1zKpZNhjPV/9tZ4e6F0VbSfI8nIuw
+ korG6NBmwyDRDayHaDTnHsVLAGSA0/TWS44Fwo/g5+YL++tnAWRjQje0rGKzwqL5oxkj
+ o7ME3kiDeA6GdWbOqUTOy6fY8Lhls3tJ0jD+i9haTaKGGVQz4jU4WYj0+jmLmIkHPJx9
+ Tgj93VkJTmaBhFtA0+pLLoQgWF0hM6WT/pTcO0doNzUsa8h9GB292EjUE8btnPdIMwth
+ z751Ijq/YFBMAxdTGbKBEH7XR4BbFGEaiv+U+FvS38HJQVCPo9TBTUKJiFjFEEFgNH1i
+ 2/Vw==
+X-Gm-Message-State: AOJu0YyX/NQxiuA/BBH8Q7XYyZGnyOiBm8X2hweKlJjVyOOb2VwMSXeX
+ veepO+4rRVyqr8i/O3IyCd6JEeqYdkPrSefUMVmvFo0h3GM7NOEhRUfv/wDX62Obz9DgBvy3QJ6
+ l0LjW4ler9VtsDbZaqMlLE/zZvaM7i3YCwl9ajIzT9piRkW6i
+X-Google-Smtp-Source: AGHT+IGa/cHSuMebJ4OKXgjqMET+NY/togWHY1R/nPodTr6SrNYSaiS6UlSmaeOTiRnBPzPtByGe5gfPlKSV2/iV/x0=
+X-Received: by 2002:a05:6402:3202:b0:5c4:14fe:971e with SMTP id
+ 4fb4d7f45d1cf-5cbbf920567mr26698322a12.23.1730841993931; Tue, 05 Nov 2024
+ 13:26:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241101133917.27634-8-Jonathan.Cameron@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=nifan.cxl@gmail.com; helo=mail-yw1-x1129.google.com
+References: <cover.1730754238.git.mst@redhat.com>
+In-Reply-To: <cover.1730754238.git.mst@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 Nov 2024 21:26:22 +0000
+Message-ID: <CAFEAcA8zg0fY3vJ5ee2oSuMLQ6AZwLHyfT7JXnKCDEg=Zhvf3A@mail.gmail.com>
+Subject: Re: [PULL 00/65] virtio,pc,pci: features, fixes, cleanups
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,37 +87,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 01, 2024 at 01:39:14PM +0000, Jonathan Cameron wrote:
-> If len_in is less than the minimum spec allowed value, then return
-> CXL_MBOX_INVALID_PAYLOAD_LENGTH
-> 
-> Reported-by: Esifiel <esifiel@gmail.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
->  hw/cxl/cxl-mailbox-utils.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
+On Mon, 4 Nov 2024 at 21:05, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> The following changes since commit 92ec7805190313c9e628f8fc4eb4f932c15247bd:
+>
+>   Merge tag 'pull-riscv-to-apply-20241031-1' of https://github.com/alistair23/qemu into staging (2024-10-31 16:34:25 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+>
+> for you to fetch changes up to 096d96e7be7071aa805c4e70ef51da0b99b6a8fc:
+>
+>   intel_iommu: Add missed reserved bit check for IEC descriptor (2024-11-04 16:03:25 -0500)
+>
+> ----------------------------------------------------------------
+> virtio,pc,pci: features, fixes, cleanups
+>
+> CXL now can use Generic Port Affinity Structures.
+> CXL now allows control of link speed and width
+> vhost-user-blk now supports live resize, by means of
+> a new device-sync-config command
+> amd iommu now supports interrupt remapping
+> pcie devices now report extended tag field support
+> intel_iommu dropped support for Transient Mapping, to match VTD spec
+> arch agnostic ACPI infrastructure for vCPU Hotplug
+>
+> Fixes, cleanups all over the place.
+>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 5e571955b6..a40d81219c 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -151,6 +151,9 @@ static CXLRetCode cmd_tunnel_management_cmd(const struct cxl_cmd *cmd,
->      in = (void *)payload_in;
->      out = (void *)payload_out;
->  
-> +    if (len_in < sizeof(*in)) {
-> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-> +    }
->      /* Enough room for minimum sized message - no payload */
->      if (in->size < sizeof(in->ccimessage)) {
->          return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-> -- 
-> 2.43.0
-> 
 
--- 
-Fan Ni
+Applied to target-arm.next, thanks.
+
+-- PMM
 
