@@ -4,97 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45376D31762
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 16:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B872D31762
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 16:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8MBy-0005r7-7d; Tue, 05 Nov 2024 11:14:06 -0500
+	id 1t8MD2-0006Yz-N3; Tue, 05 Nov 2024 11:15:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t8MBw-0005q6-2t; Tue, 05 Nov 2024 11:14:04 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t8MBt-0000XO-99; Tue, 05 Nov 2024 11:14:03 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 146BD9FEFE;
- Tue,  5 Nov 2024 19:13:08 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1BB8A164A53;
- Tue,  5 Nov 2024 19:13:57 +0300 (MSK)
-Message-ID: <d1d12a0a-ba78-48af-9116-328ffc5f63c9@tls.msk.ru>
-Date: Tue, 5 Nov 2024 19:13:56 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8MCw-0006PW-Sa
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 11:15:08 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8MCu-0000oY-QV
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 11:15:06 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9850ae22eso7086722a12.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 08:15:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730823303; x=1731428103; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3/F6khqFVm3o2NzLzzy4Lwer2MDCHx9zC71RAhU07XQ=;
+ b=dFIym84l8J+ksfKFfiBMECjpkg15jFFPx7iRG4xrEp15h0ZqPE0UYWu8f/O18W/vK7
+ 0W9blUkATUd+vPPcKRZfk83TP9C1KJGVvcdWW1nIs8XpNXZahD9CCxpCk3i3Ixzs43oa
+ rMeO7+VswqT/MBU4Sr2xzDD0E6sZ3XsFp+eJuAX2rkJrvv4IfEWZemCC3foQRElpITf4
+ NtGsVVkLl+/MQ9cJPtS/1I8RJGp2lGWjFEJdJI7uatdFYMVEdPkZ9sYCUlSFZoti0Qd5
+ xmY3FHBtQJ9NnzXGV6/jsv29dLBMvQBcAtJLayCHHjGqnSd4TzLaZw4ecdz/5+BMEfAQ
+ Y+Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730823303; x=1731428103;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3/F6khqFVm3o2NzLzzy4Lwer2MDCHx9zC71RAhU07XQ=;
+ b=mgsoLzOOCHqBtlu6OFTeiYKF5NgSfUkZShBBdAPMxKtMzYC6Lv/jHvgwK6jGGHByhx
+ ajkI8JocxAKEXwu3G8XkNL0YIXQw3cBeksrpVwIVCWHCy1SHPwQhcPSYSPANvSoVDvw5
+ hmdBPpAoRyPtvl8tFsY49uM0pYzloR25TcdeAhlUW8lFc8socMXBbKiKiylQfO3witrD
+ jV3jlALw75dCDzMlWY/7fcE8yYRZXaPHhPtAslYhaHU37/8Q3/WJ0PrTH9EqEc9kmmWe
+ 0uAhIMibkQ2w90929ojG+Z/IUrSaURApGgvL5BHb7V8zBgsZT/+Bhe96EzEdlovAeONX
+ JiDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWfA0Tzvwb1RU5Td/6m5dC1rjet0njDJDtTQRVbKX95nvMxbnEKAL5yhHJ/KSupNQvf4qD6G28K4iWg@nongnu.org
+X-Gm-Message-State: AOJu0YwbmXV5xx7sXglbQIkC+3T1ZV6xscggAzIvX7JymlsVvbSaQ9rB
+ +qrUMLpm5UeXAx96bLr9qqVHtqYF7DFVmJeX414TepP/zYM0dTf1KVaURgr3LoLrRCzBzxp6//a
+ EAqLEE1v1uWu9riJYcfTAUYy1Z8/t9si7bdYZ2g==
+X-Google-Smtp-Source: AGHT+IGU3lR2jeWr77cyb9AKZk47WvyE9QmUXwsJ4US0bjO0+VD71GVzHzn5czFp46TiypccMc66z/0MEZVgrZqJZ4M=
+X-Received: by 2002:a05:6402:234a:b0:5c9:625c:f82a with SMTP id
+ 4fb4d7f45d1cf-5cbbf8765c6mr28077757a12.1.1730823301094; Tue, 05 Nov 2024
+ 08:15:01 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/sd/sdcard: Fix calculation of size when using eMMC
- boot partitions
-To: Jan Luebbe <jlu@pengutronix.de>, qemu-devel@nongnu.org,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Guenter Roeck <linux@roeck-us.net>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org, qemu-block@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <1bce4c22-9281-44c5-8acb-860881dc271c@kaod.org>
- <20241028162308.2152712-1-jlu@pengutronix.de>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20241028162308.2152712-1-jlu@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241024063507.1585765-1-clg@redhat.com>
+ <20241024063507.1585765-11-clg@redhat.com>
+In-Reply-To: <20241024063507.1585765-11-clg@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 Nov 2024 16:14:49 +0000
+Message-ID: <CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com>
+Subject: Re: [PULL 10/17] tests/functional: Convert most Aspeed machine tests
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Stefan Berger <stefanb@linux.ibm.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,40 +94,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-28.10.2024 19:23, Jan Luebbe wrote:
-> The sd_bootpart_offset() function calculates the *runtime* offset which
-> changes as the guest switches between accessing the main user data area
-> and the boot partitions by writing to the EXT_CSD_PART_CONFIG_ACC_MASK
-> bits, so it shouldn't be used to calculate the main user data area size.
-> 
-> Instead, subtract the boot_part_size directly (twice, as there are two
-> identical boot partitions defined by the eMMC spec).
+On Thu, 24 Oct 2024 at 07:39, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+>
+> This is a simple conversion of the tests with some cleanups and
+> adjustments to match the new test framework. Replace the zephyr image
+> MD5 hashes with SHA256 hashes while at it.
 
-Should I pick this up for stable-9.1 branch?
+(ccing Stefan Berger for possible insight into swtpm)
 
-Thanks,
+Hi; I find that this swtpm-using test fails for me on my
+local system due to an apparmor/swtpm problem...
 
-/mjt
+> +    @skipUnless(*has_cmd('swtpm'))
+> +    def test_arm_ast2600_evb_buildroot_tpm(self):
+> +        self.set_machine('ast2600-evb')
+> +
+> +        image_path =3D self.ASSET_BR2_202302_AST2600_TPM_FLASH.fetch()
+> +
+> +        socket_dir =3D tempfile.TemporaryDirectory(prefix=3D"qemu_")
+> +        socket =3D os.path.join(socket_dir.name, 'swtpm-socket')
+> +
+> +        subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
+> +                        '--tpmstate', f'dir=3D{self.vm.temp_dir}',
+> +                        '--ctrl', f'type=3Dunixio,path=3D{socket}'])
+> +
+> +        self.vm.add_args('-chardev', f'socket,id=3Dchrtpm,path=3D{socket=
+}')
+> +        self.vm.add_args('-tpmdev', 'emulator,id=3Dtpm0,chardev=3Dchrtpm=
+')
+> +        self.vm.add_args('-device',
+> +                         'tpm-tis-i2c,tpmdev=3Dtpm0,bus=3Daspeed.i2c.bus=
+.12,address=3D0x2e')
+> +        self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00', 'As=
+peed AST2600 EVB')
+> +
+> +        exec_command_and_wait_for_pattern(self,
+> +            'echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_dev=
+ice',
+> +            'tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)');
+> +        exec_command_and_wait_for_pattern(self,
+> +            'cat /sys/class/tpm/tpm0/pcr-sha256/0',
+> +            'B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431=
+688E0');
+> +
+> +        self.do_test_arm_aspeed_buildroot_poweroff()
 
-> Suggested-by: Cédric Le Goater <clg@kaod.org>
-> Signed-off-by: Jan Luebbe <jlu@pengutronix.de>
-> ---
->   hw/sd/sd.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 2d3467c3d956..8430d5ae361c 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -826,7 +826,9 @@ static void sd_reset(DeviceState *dev)
->           sect = 0;
->       }
->       size = sect << HWBLOCK_SHIFT;
-> -    size -= sd_bootpart_offset(sd);
-> +    if (sd_is_emmc(sd)) {
-> +        size -= sd->boot_part_size * 2;
-> +    }
->   
->       sect = sd_addr_to_wpnum(size) + 1;
+The test fails like this:
 
+qemu-system-arm: tpm-emulator: TPM result for CMD_INIT: 0x9 operation faile=
+d
+
+Adding extra logging to swtpm (--log file=3D/tmp/swtpm.log,level=3D20)
+reveals:
+
+SWTPM_NVRAM_Lock_Lockfile: Could not open lockfile: Permission denied
+Error: Could not initialize libtpms.
+Error: Could not initialize the TPM
+
+Checking the system logs, this is because apparmor has denied it:
+
+Nov  5 16:01:14 e104462 kernel: [946406.489088] audit: type=3D1400
+audit(1730822474.384:446): apparmor=3D"DENIED" operation=3D"mknod"
+profile=3D"swtpm"
+name=3D"/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/tests/functional/a=
+rm/test_arm_aspeed.AST2x00Machine.test_arm_ast2600_evb_buildroot_tpm/qemu-m=
+achine-hhuvwytc/.lock"
+pid=3D2820156 comm=3D"swtpm" requested_mask=3D"c" denied_mask=3D"c" fsuid=
+=3D1000
+ouid=3D1000
+
+
+
+Q1: why is apparmor forbidding swtpm from doing something that
+it needs to do to work?
+
+Q2: is there a way to run swtpm such that it is not
+confined by apparmor, for purposes of running it in a test case?
+
+Q3: if not, is there a way to at least detect that swtpm is
+broken on this system so we can skip the test case?
+
+(I note that there is a thing in the apparmor config
+"owner @{HOME}/** rwk" which I think means you only run into
+this if you happen to be building/testing QEMU somewhere other
+than your own home directory -- but that's hardly an
+unreasonable configuration...)
+
+thanks
+-- PMM
 
