@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9AA7D3E77C
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C754D3E779
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:51:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SLw-0006FH-0x; Tue, 05 Nov 2024 17:48:49 -0500
+	id 1t8SNL-0001Dy-Jd; Tue, 05 Nov 2024 17:50:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SLg-00065Z-JK
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:48:32 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMo-0000pG-Ou
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:43 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SLe-0004Ez-TV
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:48:32 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4316a44d1bbso51641065e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:48:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMm-0004Rs-Uj
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:42 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43161c0068bso50977385e9.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:49:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730846909; x=1731451709; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730846978; x=1731451778; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1llUEnAFmS+LM423RX75Fj9kXPLYaB/D+OwWWf3php0=;
- b=em9sodtzn9o3idqVewD1ww5mxqBEkpkIR3uamyRLiE3PqffhLOqt4tOfac8xLiVYZ2
- EZeOM+buluDjzUa860KnKKBaVOqb8XVt9z7U5wppgczprKGKav/MFBDH/QzVupc7rX3G
- xGL0ZdR9xV+KE+7qVeh/wl3TqVJd9QyFB2DzbLHEVcK62gcFffY7QMh1950VuYyQnMoK
- FkCqD6syIJT7He4BV9eYnG7gcP+DWERVlEOh8ciyYd4zyY7zF++ePJ2e4eaFfOplAFHX
- 80WyLBzXjCFALDDv33aWe6AFgmc4Ui8c+iQMKudN3iVPdPcZwTXAaTB/lStm8zMVH8f4
- T5ig==
+ bh=POH9GGPh8eEOywwiqXrYQY7PtUqeDBAiKsSZ852ign4=;
+ b=mgeeHISbJftcn3a5xULqlnrGKJ9MaaWBKY4x6iSfskmIfuwh8MjTVXiq6d0zNDCA4m
+ B3Gr2Jb6cSJ06t+pM93JteSEQEDwIxq2J9v6wAoM+TL1rLE3KlY0QV2bMW8WgvVi8OUp
+ qIU398kgd+71RIK68Opc7OVI0ZWaSnMY/EMIUOdNuSFImfQgVopjDY+74e1TSpTzAD1H
+ OGQDz8PF5NsZuI+HWUR54AaHhC1OAdmXhvvkjPr2YL4oBis8wsEPD3xOPWjUBRO0lnaq
+ Npld8ZNItksaUYbdz09v7UHZPXr7VJ0zRObBL/jRva8lswjp4ZYPIWNhAnDrwTAbP/1J
+ fRzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730846909; x=1731451709;
+ d=1e100.net; s=20230601; t=1730846978; x=1731451778;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1llUEnAFmS+LM423RX75Fj9kXPLYaB/D+OwWWf3php0=;
- b=smRfgXer0xOyntZxXmCkwUyJUgkOOqwei89eSBl4N6Fnr79XsyQW2/14Itb2RcgT52
- mHZv32FyY+joJ4Lbjyuk5SmvOxhdGPGH1gZHzIYlq+rJlm/G/wQsZa7JzeTCaQkl+tIH
- 8gqhvf7JouSJeKH21JJCHIG5QvPcOlNLxId7wICH6yra1h7lUbhaMy6TPUtyhAvOzUXp
- PQhbI5DUJmM6upZgRipYOu7+Om0w3TJIuugfzmO4e3j+bTaKBLzUfeTF45nJ4Hr2aV6S
- /sBjuEFQhF/IZ91TsqpcZ5wCJ1uzVFUEHNo2G6iv+36/Gv4Zz4jDp6qu80lzhI2YIXJE
- KZDQ==
-X-Gm-Message-State: AOJu0YyQ1KPGazC9Q44YpIJWVhhAUsWI5vnnrbiQ08gPMgdnYAbvs0xL
- 3pcigXW2QTMyIMD2CX1tggoU2LBJDVgnArp9vWLqp+j7YtopNyDNetmJbWf4s4FTqeruSGQXsnP
- UCOHH8g==
-X-Google-Smtp-Source: AGHT+IEIItMusMbFr22ZVYU0W37YfzRmWtDrA606E4mKcg0tu6jKVZdG3x1cQOaGElq/QDgGCBgHIA==
-X-Received: by 2002:a05:6000:4711:b0:37c:cc67:8b1f with SMTP id
- ffacd0b85a97d-381bea0ee17mr15122426f8f.48.1730846908645; 
- Tue, 05 Nov 2024 14:48:28 -0800 (PST)
+ bh=POH9GGPh8eEOywwiqXrYQY7PtUqeDBAiKsSZ852ign4=;
+ b=CadkVaSAwKOFqfGo3s3p1TltQXQ5L8uI4rFn/mCDkFo8uND4v9gmpGXp+9/VPvvVPW
+ AifzDnxdVdm9ZK4w1RT17oXPh/Qg+n3oD1BvUb2X04OnHopxdwSupzXxrJe8uRf/NPU7
+ NOPu0Of2VPd0raZq8u34A/mHRyXBgxy1lzF9LK3vObx5vjM6nCA0aVZotex9RbkkTpcl
+ O6XtU0FmYCPCnUqsX7MKifD/6gRWE/wu5qzR7fNsHwXPWHVblvY45pzJl7Uy7yEWCxKE
+ m3o58+Xzu9GMoqx4kUSgNAP6wsFM1VBK4CiulpZtYxxNhxVzdoUJJ75dg2s/1/2lcgdI
+ jSNw==
+X-Gm-Message-State: AOJu0Ywxhl2BWc1WPlZrWWAW00QR8tPSw/6oZQjcyornOmVV/Gu+ws7V
+ rbtdKOBt6IS7yxweASSITZGsnexNKLCq9agMBLkY2d1vz16fc1MiYSEp8A/4dkTYWEQmppfStBH
+ w/rq3hQ==
+X-Google-Smtp-Source: AGHT+IFARDWuIlrD14VldL+JbiDkVHK27OWqNFtXwUVp/JfdO5Zgkq36a+dmvvR09GHJNS3aB2CJpA==
+X-Received: by 2002:adf:e198:0:b0:37d:51bc:3229 with SMTP id
+ ffacd0b85a97d-381c7ac7d79mr14398421f8f.51.1730846978069; 
+ Tue, 05 Nov 2024 14:49:38 -0800 (PST)
 Received: from localhost.localdomain ([154.14.63.34])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10e7392sm17312802f8f.55.2024.11.05.14.48.27
+ ffacd0b85a97d-381c10d40d5sm17255398f8f.25.2024.11.05.14.49.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 14:48:28 -0800 (PST)
+ Tue, 05 Nov 2024 14:49:37 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 11/29] hw/core: Add a helper to check the cache topology level
-Date: Tue,  5 Nov 2024 22:47:09 +0000
-Message-ID: <20241105224727.53059-12-philmd@linaro.org>
+Subject: [PULL 24/29] hw/sd/sdhci: Prefer DEFINE_TYPES() macro
+Date: Tue,  5 Nov 2024 22:47:22 +0000
+Message-ID: <20241105224727.53059-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241105224727.53059-1-philmd@linaro.org>
 References: <20241105224727.53059-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,98 +95,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Currently, we have no way to expose the arch-specific default cache
-model because the cache model is sometimes related to the CPU model
-(e.g., i386).
-
-Since the user might configure "default" level, any comparison with
-"default" is meaningless before the machine knows the specific level
-that "default" refers to.
-
-We can only check the correctness of the cache topology after the arch
-loads the user-configured cache model from MachineState.smp_cache and
-consumes the special "default" level by replacing it with the specific
-level.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-ID: <20241101083331.340178-6-zhao1.liu@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20241103133412.73536-21-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/boards.h   |  1 +
- hw/core/machine-smp.c | 48 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 49 insertions(+)
+ hw/sd/sdhci.c | 62 +++++++++++++++++++++------------------------------
+ 1 file changed, 26 insertions(+), 36 deletions(-)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index edf1a8ca1c4..36fbb9b59df 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -53,6 +53,7 @@ CpuTopologyLevel machine_get_cache_topo_level(const MachineState *ms,
-                                               CacheLevelAndType cache);
- void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
-                                   CpuTopologyLevel level);
-+bool machine_check_smp_cache(const MachineState *ms, Error **errp);
- void machine_memory_devices_init(MachineState *ms, hwaddr base, uint64_t size);
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index ed014993910..dbe5c2340c6 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -37,7 +37,6 @@
+ #include "migration/vmstate.h"
+ #include "sdhci-internal.h"
+ #include "qemu/log.h"
+-#include "qemu/module.h"
+ #include "trace.h"
+ #include "qom/object.h"
  
- /**
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index ebb7a134a7b..640b2114b42 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -348,3 +348,51 @@ void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
- {
-     ms->smp_cache.props[cache].topology = level;
+@@ -1598,15 +1597,6 @@ static void sdhci_sysbus_class_init(ObjectClass *klass, void *data)
+     sdhci_common_class_init(klass, data);
  }
-+
-+/*
-+ * When both cache1 and cache2 are configured with specific topology levels
-+ * (not default level), is cache1's topology level higher than cache2?
-+ */
-+static bool smp_cache_topo_cmp(const SmpCache *smp_cache,
-+                               CacheLevelAndType cache1,
-+                               CacheLevelAndType cache2)
-+{
-+    /*
-+     * Before comparing, the "default" topology level should be replaced
-+     * with the specific level.
-+     */
-+    assert(smp_cache->props[cache1].topology != CPU_TOPOLOGY_LEVEL_DEFAULT);
-+
-+    return smp_cache->props[cache1].topology > smp_cache->props[cache2].topology;
-+}
-+
-+/*
-+ * Currently, we have no way to expose the arch-specific default cache model
-+ * because the cache model is sometimes related to the CPU model (e.g., i386).
-+ *
-+ * We can only check the correctness of the cache topology after the arch loads
-+ * the user-configured cache model from MachineState and consumes the special
-+ * "default" level by replacing it with the specific level.
-+ */
-+bool machine_check_smp_cache(const MachineState *ms, Error **errp)
-+{
-+    if (smp_cache_topo_cmp(&ms->smp_cache, CACHE_LEVEL_AND_TYPE_L1D,
-+                           CACHE_LEVEL_AND_TYPE_L2) ||
-+        smp_cache_topo_cmp(&ms->smp_cache, CACHE_LEVEL_AND_TYPE_L1I,
-+                           CACHE_LEVEL_AND_TYPE_L2)) {
-+        error_setg(errp,
-+                   "Invalid smp cache topology. "
-+                   "L2 cache topology level shouldn't be lower than L1 cache");
-+        return false;
-+    }
-+
-+    if (smp_cache_topo_cmp(&ms->smp_cache, CACHE_LEVEL_AND_TYPE_L2,
-+                           CACHE_LEVEL_AND_TYPE_L3)) {
-+        error_setg(errp,
-+                   "Invalid smp cache topology. "
-+                   "L3 cache topology level shouldn't be lower than L2 cache");
-+        return false;
-+    }
-+
-+    return true;
-+}
+ 
+-static const TypeInfo sdhci_sysbus_info = {
+-    .name = TYPE_SYSBUS_SDHCI,
+-    .parent = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(SDHCIState),
+-    .instance_init = sdhci_sysbus_init,
+-    .instance_finalize = sdhci_sysbus_finalize,
+-    .class_init = sdhci_sysbus_class_init,
+-};
+-
+ /* --- qdev bus master --- */
+ 
+ static void sdhci_bus_class_init(ObjectClass *klass, void *data)
+@@ -1617,13 +1607,6 @@ static void sdhci_bus_class_init(ObjectClass *klass, void *data)
+     sbc->set_readonly = sdhci_set_readonly;
+ }
+ 
+-static const TypeInfo sdhci_bus_info = {
+-    .name = TYPE_SDHCI_BUS,
+-    .parent = TYPE_SD_BUS,
+-    .instance_size = sizeof(SDBus),
+-    .class_init = sdhci_bus_class_init,
+-};
+-
+ /* --- qdev i.MX eSDHC --- */
+ 
+ #define USDHC_MIX_CTRL                  0x48
+@@ -1882,12 +1865,6 @@ static void imx_usdhc_init(Object *obj)
+     s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
+ }
+ 
+-static const TypeInfo imx_usdhc_info = {
+-    .name = TYPE_IMX_USDHC,
+-    .parent = TYPE_SYSBUS_SDHCI,
+-    .instance_init = imx_usdhc_init,
+-};
+-
+ /* --- qdev Samsung s3c --- */
+ 
+ #define S3C_SDHCI_CONTROL2      0x80
+@@ -1946,18 +1923,31 @@ static void sdhci_s3c_init(Object *obj)
+     s->io_ops = &sdhci_s3c_mmio_ops;
+ }
+ 
+-static const TypeInfo sdhci_s3c_info = {
+-    .name = TYPE_S3C_SDHCI  ,
+-    .parent = TYPE_SYSBUS_SDHCI,
+-    .instance_init = sdhci_s3c_init,
++static const TypeInfo sdhci_types[] = {
++    {
++        .name = TYPE_SDHCI_BUS,
++        .parent = TYPE_SD_BUS,
++        .instance_size = sizeof(SDBus),
++        .class_init = sdhci_bus_class_init,
++    },
++    {
++        .name = TYPE_SYSBUS_SDHCI,
++        .parent = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(SDHCIState),
++        .instance_init = sdhci_sysbus_init,
++        .instance_finalize = sdhci_sysbus_finalize,
++        .class_init = sdhci_sysbus_class_init,
++    },
++    {
++        .name = TYPE_IMX_USDHC,
++        .parent = TYPE_SYSBUS_SDHCI,
++        .instance_init = imx_usdhc_init,
++    },
++    {
++        .name = TYPE_S3C_SDHCI,
++        .parent = TYPE_SYSBUS_SDHCI,
++        .instance_init = sdhci_s3c_init,
++    },
+ };
+ 
+-static void sdhci_register_types(void)
+-{
+-    type_register_static(&sdhci_sysbus_info);
+-    type_register_static(&sdhci_bus_info);
+-    type_register_static(&imx_usdhc_info);
+-    type_register_static(&sdhci_s3c_info);
+-}
+-
+-type_init(sdhci_register_types)
++DEFINE_TYPES(sdhci_types)
 -- 
 2.45.2
 
