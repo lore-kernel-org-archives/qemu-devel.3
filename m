@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B8C9D2B941
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D70BED2B944
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 16:00:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Lpp-00054M-3q; Tue, 05 Nov 2024 10:51:13 -0500
+	id 1t8Lxs-00060i-3W; Tue, 05 Nov 2024 10:59:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t8Lpn-000542-9L
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:51:11 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t8Lxq-00060a-LH
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:59:30 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t8Lpj-0006Ql-2i
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:51:10 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t8Lxo-00077y-Rr
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:59:30 -0500
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5FeJHp013605;
- Tue, 5 Nov 2024 15:50:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=/59eyO
- tyFXbHpV9ZldNtt72zzkOq6Weqg2L6GX+x8jY=; b=Yq/QemNMPtrFG2vySgU6pw
- NG2kAYWCFV33D2BPhhsPQoSBXPKOc89e+tAc+z5pjqADSORrlz9t7IF3JgorkgcT
- IKmAwq0RQus0D/zBfJ/lbOzawm5+LwQ9VfVrDrYjhsNCu4B94BhfupPhvvvHvt5k
- B8KbrRzNCj96/j6/sgPD3ZPFdCufehlAw4rzhoQ0msE++Vj6GySZo5X+xLt4WLrN
- nBbDInwcGXUfPCsBzskplJTTSi0+hvqfXEwN9RZy07RlgROM5Jj6nDGFMlaPC2E7
- VIV+Mt93n60rdh7ja7sg3NFvUDh3YSlfbBTaDBV5EaY2gt1G/qfUWth+iTqGs31g
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5FeIJD013536;
+ Tue, 5 Nov 2024 15:59:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Hsdld+
+ N9E6cabUvfrCv0TY4uyedfekpsm/YWCjyf0+M=; b=R7fO+COMc0waZPvQmTmd23
+ 47WLCrWf0uWEXXpq8Wz5/Lsxp/ZQ3UZ7sKaB/eg59yshrTZuXunVyAX0CXhFvyVt
+ T9SzfoOsqTKpZXCbJp9Q5MqMeXuyYLP/57UzWP/a10kUufHES1Gr5nDiJGA53vpC
+ wNHS0h4awWQivgFwivPj3n46msf6ygUs+7L221deVfjkaJ5bzKw51EH62cKQVrf7
+ +nsjnYZbB0msnvD4KuabsDJgjSk8aERur6gWAnZ53saLA6LIeMIcgHS3PcrN8P9e
+ JMs0VbJJ5hnZE9EZyd0tGVEVC46sMvJZWQw1KT+ld7C4025WR83O3cGMwpS1h5AQ
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42qp6x01bd-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42qp6x02h3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Nov 2024 15:50:54 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A56JvW0024243;
- Tue, 5 Nov 2024 15:50:53 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42nxds4gap-1
+ Tue, 05 Nov 2024 15:59:24 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A58NYTj012288;
+ Tue, 5 Nov 2024 15:59:23 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 42p140vbnv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Nov 2024 15:50:53 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A5Foq8E33817270
+ Tue, 05 Nov 2024 15:59:23 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A5FxLId21234036
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 Nov 2024 15:50:52 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A17F20043;
- Tue,  5 Nov 2024 15:50:52 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6549F20040;
- Tue,  5 Nov 2024 15:50:51 +0000 (GMT)
+ Tue, 5 Nov 2024 15:59:21 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B720120040;
+ Tue,  5 Nov 2024 15:59:21 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AD67D20049;
+ Tue,  5 Nov 2024 15:59:20 +0000 (GMT)
 Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 Nov 2024 15:50:51 +0000 (GMT)
-Message-ID: <74ef513603500e76330c2735803d5e1402406f4a.camel@linux.ibm.com>
-Subject: Re: [PATCH 4/8] user: Introduce host_interrupt_signal
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  5 Nov 2024 15:59:20 +0000 (GMT)
+Message-ID: <13e848ebce3d673ad48376a3ab14bbd25356549e.camel@linux.ibm.com>
+Subject: Re: [PATCH] linux-user: Fix setreuid and setregid to use direct
+ syscalls
 From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Warner Losh <imp@bsdimp.com>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Kyle Evans <kevans@freebsd.org>, Philippe
- =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, qemu-devel@nongnu.org
-Date: Tue, 05 Nov 2024 16:50:51 +0100
-In-Reply-To: <CANCZdfrhzc-HZabUjkAMTgcHR0+6OQPxNshkQfMYD4wbNcm=wQ@mail.gmail.com>
-References: <20241024200031.80327-1-iii@linux.ibm.com>
- <20241024200031.80327-5-iii@linux.ibm.com>
- <CANCZdfrhzc-HZabUjkAMTgcHR0+6OQPxNshkQfMYD4wbNcm=wQ@mail.gmail.com>
+To: Helge Deller <deller@kernel.org>, Laurent Vivier <laurent@vivier.eu>,
+ Peter Maydell <peter.maydell@linaro.org>, Riku Voipio
+ <riku.voipio@linaro.org>, qemu-devel@nongnu.org
+Date: Tue, 05 Nov 2024 16:59:20 +0100
+In-Reply-To: <Zyo2jMKqq8hG8Pkz@p100>
+References: <Zyo2jMKqq8hG8Pkz@p100>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
-MIME-Version: 1.0
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: zBI9jWlGR3L5fTC0Fdsa6Sd7cJWyRgak
-X-Proofpoint-GUID: zBI9jWlGR3L5fTC0Fdsa6Sd7cJWyRgak
+X-Proofpoint-ORIG-GUID: J9lYoR72SX7MuSEJurNm5gI-nG8StnG6
+X-Proofpoint-GUID: J9lYoR72SX7MuSEJurNm5gI-nG8StnG6
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015
+ clxscore=1011
  priorityscore=1501 suspectscore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 spamscore=0 bulkscore=0 phishscore=0 mlxlogscore=746
+ impostorscore=0 spamscore=0 bulkscore=0 phishscore=0 mlxlogscore=675
  mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2411050121
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
@@ -112,77 +110,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2024-11-05 at 08:39 -0700, Warner Losh wrote:
-> On Thu, Oct 24, 2024 at 2:00=E2=80=AFPM Ilya Leoshkevich <iii@linux.ibm.c=
-om>
-> wrote:
-> > Attaching to the gdbstub of a running process requires stopping its
-> > threads. For threads that run on a CPU, cpu_exit() is enough, but
-> > the
-> > only way to grab attention of a thread that is stuck in a long-
-> > running
-> > syscall is to interrupt it with a signal.
-> >=20
-> > Reserve a host realtime signal for this, just like it's already
-> > done
-> > for TARGET_SIGABRT on Linux. This may reduce the number of
-> > available
-> > guest realtime signals by one, but this is acceptable, since there
-> > are
-> > quite a lot of them, and it's unlikely that there are apps that
-> > need
-> > them all.
-> >=20
-> > Set signal_pending for the safe_sycall machinery to prevent
-> > invoking
-> > the syscall. This is a lie, since we don't queue a guest signal,
-> > but
-> > process_pending_signals() can handle the absence of pending
-> > signals.
-> > The syscall returns with QEMU_ERESTARTSYS errno, which arranges for
-> > the automatic restart. This is important, because it helps avoiding
-> > disturbing poorly written guests.
-> >=20
-> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> > ---
-> > =C2=A0bsd-user/signal.c=C2=A0 =C2=A0 =C2=A0| 12 ++++++++++++
-> > =C2=A0include/user/signal.h |=C2=A0 2 ++
-> > =C2=A0linux-user/signal.c=C2=A0 =C2=A0| 11 +++++++++++
-> > =C2=A03 files changed, 25 insertions(+)
-> >=20
-> > diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-> > index a2b11a97131..992736df5c5 100644
-> > --- a/bsd-user/signal.c
-> > +++ b/bsd-user/signal.c
-> > @@ -49,6 +49,8 @@ static inline int sas_ss_flags(TaskState *ts,
-> > unsigned long sp)
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0on_sig_stack(ts, sp) ? SS_ONSTACK : 0=
-;
-> > =C2=A0}
-> >=20
-> > +int host_interrupt_signal =3D SIGRTMAX;
-> > +
-> >=20
+On Tue, 2024-11-05 at 16:15 +0100, Helge Deller wrote:
+> The commit fd6f7798ac30 ("linux-user: Use direct syscalls for
+> setuid(),
+> etc") added direct syscall wrappers for setuid(), setgid(), etc since
+> the
+> system calls have different semantics than the libc functions.
 >=20
+> Add and use the corresponding wrappers for setreuid and setregid
+> which
+> were missed in that commit.
 >=20
-> I'd be tempted to use SIGRTMAX=C2=A0+ 1 or even TARGET_NSIG. 127 or 128
-> would
-> work and not overflow any arrays (or hit any bounds tests) I'd likely
-> use SIGRTMAX=C2=A0+ 1,
-> though, since it avoids any edge-cases from sig =3D=3D NSIG that might be
-> in the code
-> unnoticed.
+> This fixes the build of the debian package of the uid_wrapper library
+> (https://cwrap.org/uid_wrapper.html) when running linux-user.
 >=20
-> Now, having said that, I don't think that there's too many (any?)
-> programs we need
-> to run as bsd-user that have real-time signals, much less one that
-> uses SIGRTMAX,
-> but stranger things have happened. But it is a little wiggle room
-> just in case.
->=20
-> Other than that:
->=20
-> Reviewed-by: Warner Losh <imp@bsdimp.com>
+> Signed-off-by: Helge Deller <deller@gmx.de>
 
-Thanks for the suggestion, I'll use SIGRTMAX + 1 in v2.
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+
+I should've checked the other syscalls when fixing setgroups recently.
+Seems like with this patch, linux-user will no longer call glibc
+functions that use INLINE_SETXID_SYSCALL().
 
