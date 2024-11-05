@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A73BD2B921
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:07:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2366D2B921
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:07:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8JGl-00065y-M3; Tue, 05 Nov 2024 08:06:51 -0500
+	id 1t8JFz-0003Qs-Gp; Tue, 05 Nov 2024 08:06:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8JGa-0005fE-A6
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:06:42 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8JFx-0003Mc-LT
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:06:01 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8JGY-0002d2-A9
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:06:40 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4316a44d1bbso46496155e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:06:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8JFv-0002YQ-Tb
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:06:01 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43155afca99so39755345e9.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:05:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730811996; x=1731416796; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730811958; x=1731416758; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8o7w6mm+R/wQGpGGVYXrXktqPkxmlHPhQB9iwAgMFYc=;
- b=MxAp+1ehdfasvlGIbeGzzUdYsHvm29DUahviUlIv/AL3BUtqUlsUmQkGAAf/V9fbuV
- 2F/qKMIQ4qT692ob6zlwFdhBcc/9UwiBRbaThXMnmCQVZg9SFctb+ypUwdtpGKnn4/Bi
- CMajKhcPq8XV0PMZejRvmybMiyp0OH25G0449MeMaDzJPCiQzOBCBtGMTHwZ6D6j/2Nk
- wQiFMkS5JzFaLJDgQudsryJRV8iL/71BqLFAZtZlRVQLK+JV+CvKRiERpnDSrgNsl6JO
- HWKqUi3g1upvQj39rVv+Y4eB7NwsvjOD8zFREY1Mq9TdN4btNHQmWiO9Zv883IUJuV45
- 2J2A==
+ bh=owZyMcyuMkQxG2xNbQN7m9vwX8uFO4GAfwfRH2jZDis=;
+ b=tTxcnEmWdAewOUh5wvOKpkIMlfoSnSJv3+6oidwpJLIygkp9qeMQJ2zwtWOF2nrRRh
+ gdNpSKUdM+EveBZHpaJlnSrlIMn0eE5p4Z1sgo44VGZuaQYL/K/NeX0gC8uBjAUOM+Uk
+ thuaxsGGP0L/TkMAUsHrimZc6UBpLDc9WmYI8HX2C3Nk0FMMaxEDHjLfuJC5YpLTGvei
+ hNFKtJ8x93QUs9puGcGSWl9g1BnRjcFzvX46LIVwyB3GXJ8UuDx0rYNIjlvtg17B9zbt
+ Xa3cb2ei2gHzN6qk1fRkAliNINGvFhWtSTlGoo5+vBIGcledLcI7ArUIK03KceaecVK3
+ /rlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730811996; x=1731416796;
+ d=1e100.net; s=20230601; t=1730811958; x=1731416758;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8o7w6mm+R/wQGpGGVYXrXktqPkxmlHPhQB9iwAgMFYc=;
- b=krzmkqeHqOz3f6l/eD6xYFVjwqDPervCoYHdePLkkBr5N77zrdoWpAiaKfy68nXH58
- eiig2WtyzV8V/ZAn1GAw0dRzvYKTgkWHgm9TpT5otesNHCXM70CQZkIXNLT+a9Vu7f4k
- 77vzRsCE5NortigHrAkT1DmsFSA2dlzdDPkokHN812sX1OSqDMnd2Bsr76+QKavOzTIG
- VRgRChOpug2Pdj+xZ1+K/PWqUyRbskIlqSWR5LXl1eksxXGny4OmzO9Rs+ncenOiyb0h
- cKDPyUJDkEoxVCIZQLmAf4igkhxytvvkZuPncEyEYWz0mAllAIoVSwLX3lcV0mfi9V1J
- CQ9g==
-X-Gm-Message-State: AOJu0YyFFKVHPqAugrGm0HyMclj9tUeBoMz0F2jBoUEnkD66nltJcKVA
- pKqIyVYuVTh3Q4TiruPENO+6YZPyJqs20BgC/lRCmQJLumXHDcuOqkJT2E8jYPbn6oJuXnZNXJ5
- mtDk=
-X-Google-Smtp-Source: AGHT+IGJfMAsKECXVoK0zYacWad+CWee04MBRfDuL0IXDekiXipIffi1uncuWI4/YK351Ggybd4Lqg==
-X-Received: by 2002:a05:600c:3507:b0:431:4e3f:9dee with SMTP id
- 5b1f17b1804b1-4327b6f46d3mr165594015e9.4.1730811995992; 
- Tue, 05 Nov 2024 05:06:35 -0800 (PST)
+ bh=owZyMcyuMkQxG2xNbQN7m9vwX8uFO4GAfwfRH2jZDis=;
+ b=cBA3tyzB2NIocZhIaiq6agohc+uMi6nCcVqXFGcNLrx+TRntH7iJC0P2ohduATBZyb
+ oujnQCt6HLAqtASqdYiBRyeHJo7x5N/8a8FZnTlA7IqdmnMqnuN03Bd8f4yWdt5f2cl+
+ sjWtX55cS/ph5/BASrI/LPWTiSbE5E72vQ0iBPOvd+tJwsjOho+A8n6iDY8sU1Y+oQxX
+ JG9uGC2pMCCNUQveLqp5NP3EnTblWBmagRqFERxLSMMsV5YOu+S5Q9uSysnkZxRrxBsf
+ Kue0OWWQ+KoMjDEMMATVCYCpmUF6zFPl+9yJG34ve3KNcUmrTcAIpnuFPFec5BrDHqSW
+ 4Gnw==
+X-Gm-Message-State: AOJu0YwqkZHcsFXzNCBViAPi5fGnLsheK/Aw69W7eDXvfVpto+yMNdWm
+ XcRhlHO07lBBYUmzxo9/fnEii0zla7lCGzpfoWfny2SmzjzIopU673AwB1Uodw9mg6GwJ3zYZoZ
+ Ujxc=
+X-Google-Smtp-Source: AGHT+IFDsyI/h2Z9thZvULAcUPo5quUd3qcyvFOAaWGsITkd9/JwC0tT1aea1ulv+PoZJu95BU7vrw==
+X-Received: by 2002:a05:600c:35c5:b0:431:9340:77e0 with SMTP id
+ 5b1f17b1804b1-4327dab3f6cmr161052765e9.9.1730811957278; 
+ Tue, 05 Nov 2024 05:05:57 -0800 (PST)
 Received: from localhost.localdomain (86.red-88-29-160.dynamicip.rima-tde.net.
  [88.29.160.86]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4327d5c65absm185489175e9.16.2024.11.05.05.06.32
+ 5b1f17b1804b1-431bd8e853esm223671995e9.8.2024.11.05.05.05.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 05:06:35 -0800 (PST)
+ Tue, 05 Nov 2024 05:05:56 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Anton Johansson <anjo@rev.ng>
@@ -68,24 +68,25 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 12/19] hw/net/xilinx_ethlite: Only expect big-endian accesses
-Date: Tue,  5 Nov 2024 14:04:24 +0100
-Message-ID: <20241105130431.22564-13-philmd@linaro.org>
+Subject: [PATCH 08/19] hw/microblaze: Propagate CPU endianness to
+ microblaze_load_kernel()
+Date: Tue,  5 Nov 2024 14:04:20 +0100
+Message-ID: <20241105130431.22564-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241105130431.22564-1-philmd@linaro.org>
 References: <20241105130431.22564-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,126 +102,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Xilinx 'ethlite' device was added in commit b43848a100
-("xilinx: Add ethlite emulation"), being only built back
-then for a big-endian MicroBlaze target (see commit 72b675caac
-"microblaze: Hook into the build-system").
-
-I/O endianness access was then clarified in commit d48751ed4f
-("xilinx-ethlite: Simplify byteswapping to/from brams"). Here
-the 'fix' was to use tswap32(). Since the machine was built as
-big-endian target, tswap32() use means the fix was for a little
-endian host. While the datasheet (reference added in file header)
-is not precise about it, we interpret such change as the device
-expects accesses in big-endian order. Besides, this is what other
-Xilinx/MicroBlaze devices use (see the 3 previous commits).
-
-Correct the MemoryRegionOps endianness. Add a 'access-little-endian'
-property, so if the bus access expect little-endian order we swap
-the values. Replace the tswap32() calls accordingly.
-
-Set the property on the single machine using this device.
+Pass vCPU endianness as argument so we can load kernels
+with different endianness (different from the qemu-system-binary
+builtin one).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/microblaze/petalogix_s3adsp1800_mmu.c |  1 +
- hw/net/xilinx_ethlite.c                  | 20 ++++++++++++++++----
- 2 files changed, 17 insertions(+), 4 deletions(-)
+ hw/microblaze/boot.h                     | 4 ++--
+ hw/microblaze/boot.c                     | 8 ++++----
+ hw/microblaze/petalogix_ml605_mmu.c      | 2 +-
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 2 +-
+ hw/microblaze/xlnx-zynqmp-pmu.c          | 2 +-
+ 5 files changed, 9 insertions(+), 9 deletions(-)
 
+diff --git a/hw/microblaze/boot.h b/hw/microblaze/boot.h
+index 5a8c2f79750..d179a551a69 100644
+--- a/hw/microblaze/boot.h
++++ b/hw/microblaze/boot.h
+@@ -2,8 +2,8 @@
+ #define MICROBLAZE_BOOT_H
+ 
+ 
+-void microblaze_load_kernel(MicroBlazeCPU *cpu, hwaddr ddr_base,
+-                            uint32_t ramsize,
++void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
++                            hwaddr ddr_base, uint32_t ramsize,
+                             const char *initrd_filename,
+                             const char *dtb_filename,
+                             void (*machine_cpu_reset)(MicroBlazeCPU *));
+diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
+index ed61e483ee8..3675489fa5b 100644
+--- a/hw/microblaze/boot.c
++++ b/hw/microblaze/boot.c
+@@ -114,8 +114,8 @@ static uint64_t translate_kernel_address(void *opaque, uint64_t addr)
+     return addr - 0x30000000LL;
+ }
+ 
+-void microblaze_load_kernel(MicroBlazeCPU *cpu, hwaddr ddr_base,
+-                            uint32_t ramsize,
++void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
++                            hwaddr ddr_base, uint32_t ramsize,
+                             const char *initrd_filename,
+                             const char *dtb_filename,
+                             void (*machine_cpu_reset)(MicroBlazeCPU *))
+@@ -144,13 +144,13 @@ void microblaze_load_kernel(MicroBlazeCPU *cpu, hwaddr ddr_base,
+         /* Boots a kernel elf binary.  */
+         kernel_size = load_elf(kernel_filename, NULL, NULL, NULL,
+                                &entry, NULL, &high, NULL,
+-                               TARGET_BIG_ENDIAN, EM_MICROBLAZE, 0, 0);
++                               !is_little_endian, EM_MICROBLAZE, 0, 0);
+         base32 = entry;
+         if (base32 == 0xc0000000) {
+             kernel_size = load_elf(kernel_filename, NULL,
+                                    translate_kernel_address, NULL,
+                                    &entry, NULL, NULL, NULL,
+-                                   TARGET_BIG_ENDIAN, EM_MICROBLAZE, 0, 0);
++                                   !is_little_endian, EM_MICROBLAZE, 0, 0);
+         }
+         /* Always boot into physical ram.  */
+         boot_info.bootstrap_pc = (uint32_t)entry;
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index 61e47d83988..d2b2109065d 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -204,7 +204,7 @@ petalogix_ml605_init(MachineState *machine)
+     cpu->cfg.pvr_regs[5] = 0xc56be000;
+     cpu->cfg.pvr_regs[10] = 0x0e000000; /* virtex 6 */
+ 
+-    microblaze_load_kernel(cpu, MEMORY_BASEADDR, ram_size,
++    microblaze_load_kernel(cpu, true, MEMORY_BASEADDR, ram_size,
+                            machine->initrd_filename,
+                            BINARY_DEVICE_TREE_FILE,
+                            NULL);
 diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-index 8110be83715..8407dbee12a 100644
+index 6c0f5c6c651..8110be83715 100644
 --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
 +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-@@ -123,6 +123,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
-     qemu_configure_nic_device(dev, true, NULL);
-     qdev_prop_set_uint32(dev, "tx-ping-pong", 0);
-     qdev_prop_set_uint32(dev, "rx-ping-pong", 0);
-+    qdev_prop_set_bit(dev, "access-little-endian", !TARGET_BIG_ENDIAN);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, ETHLITE_BASEADDR);
-     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[ETHLITE_IRQ]);
-diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-index ede7c172748..44ef11ebf89 100644
---- a/hw/net/xilinx_ethlite.c
-+++ b/hw/net/xilinx_ethlite.c
-@@ -3,6 +3,9 @@
-  *
-  * Copyright (c) 2009 Edgar E. Iglesias.
-  *
-+ * DS580: https://docs.amd.com/v/u/en-US/xps_ethernetlite
-+ * LogiCORE IP XPS Ethernet Lite Media Access Controller
-+ *
-  * Permission is hereby granted, free of charge, to any person obtaining a copy
-  * of this software and associated documentation files (the "Software"), to deal
-  * in the Software without restriction, including without limitation the rights
-@@ -25,7 +28,6 @@
- #include "qemu/osdep.h"
- #include "qemu/module.h"
- #include "qom/object.h"
--#include "exec/tswap.h"
- #include "hw/sysbus.h"
- #include "hw/irq.h"
- #include "hw/qdev-properties.h"
-@@ -65,6 +67,7 @@ struct xlx_ethlite
-     NICState *nic;
-     NICConf conf;
+@@ -129,7 +129,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
  
-+    bool access_little_endian;
-     uint32_t c_tx_pingpong;
-     uint32_t c_rx_pingpong;
-     unsigned int txbuf;
-@@ -103,9 +106,12 @@ eth_read(void *opaque, hwaddr addr, unsigned int size)
-             break;
+     create_unimplemented_device("xps_gpio", GPIO_BASEADDR, 0x10000);
  
-         default:
--            r = tswap32(s->regs[addr]);
-+            r = s->regs[addr];
-             break;
-     }
-+    if (s->access_little_endian) {
-+        bswap32s(&r);
-+    }
-     return r;
- }
+-    microblaze_load_kernel(cpu, ddr_base, ram_size,
++    microblaze_load_kernel(cpu, !TARGET_BIG_ENDIAN, ddr_base, ram_size,
+                            machine->initrd_filename,
+                            BINARY_DEVICE_TREE_FILE,
+                            NULL);
+diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
+index 567aad47bfc..bdbf7328bf4 100644
+--- a/hw/microblaze/xlnx-zynqmp-pmu.c
++++ b/hw/microblaze/xlnx-zynqmp-pmu.c
+@@ -172,7 +172,7 @@ static void xlnx_zynqmp_pmu_init(MachineState *machine)
+     qdev_realize(DEVICE(pmu), NULL, &error_fatal);
  
-@@ -117,6 +123,10 @@ eth_write(void *opaque, hwaddr addr,
-     unsigned int base = 0;
-     uint32_t value = val64;
- 
-+    if (s->access_little_endian) {
-+        bswap32s(&value);
-+    }
-+
-     addr >>= 2;
-     switch (addr) 
-     {
-@@ -161,7 +171,7 @@ eth_write(void *opaque, hwaddr addr,
-             break;
- 
-         default:
--            s->regs[addr] = tswap32(value);
-+            s->regs[addr] = value;
-             break;
-     }
- }
-@@ -169,7 +179,7 @@ eth_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps eth_ops = {
-     .read = eth_read,
-     .write = eth_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .impl = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -256,6 +266,8 @@ static void xilinx_ethlite_init(Object *obj)
- }
- 
- static Property xilinx_ethlite_properties[] = {
-+    DEFINE_PROP_BOOL("access-little-endian", struct xlx_ethlite,
-+                     access_little_endian, false),
-     DEFINE_PROP_UINT32("tx-ping-pong", struct xlx_ethlite, c_tx_pingpong, 1),
-     DEFINE_PROP_UINT32("rx-ping-pong", struct xlx_ethlite, c_rx_pingpong, 1),
-     DEFINE_NIC_PROPERTIES(struct xlx_ethlite, conf),
+     /* Load the kernel */
+-    microblaze_load_kernel(&pmu->cpu, XLNX_ZYNQMP_PMU_RAM_ADDR,
++    microblaze_load_kernel(&pmu->cpu, true, XLNX_ZYNQMP_PMU_RAM_ADDR,
+                            machine->ram_size,
+                            machine->initrd_filename,
+                            machine->dtb,
 -- 
 2.45.2
 
