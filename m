@@ -4,90 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB47D12683
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 10:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C6CD12685
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8HGh-0004E1-GD; Tue, 05 Nov 2024 05:58:39 -0500
+	id 1t8HQ5-0006Xu-Jy; Tue, 05 Nov 2024 06:08:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8HGf-0004DV-A2
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:58:37 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8HGd-0004kO-9f
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:58:36 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5cec93719ccso3910219a12.2
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 02:58:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1t8HPw-0006XU-AG; Tue, 05 Nov 2024 06:08:13 -0500
+Received: from out30-132.freemail.mail.aliyun.com ([115.124.30.132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1t8HPt-0005mj-4B; Tue, 05 Nov 2024 06:08:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730804313; x=1731409113; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=J9GnUD19XuJDeQQIfLrDDAiu6StgkP/Y+HkPPKYKdjU=;
- b=GuEb6lXgvdZ1SMvoMVZOxCyWkGAPGb+65TeSWlCo9ydsvuHDPPkqq8B9ZAHyD6e7KT
- PYaIFSinOvazuuPTIMCXQc2Sx9ikTuKwOS0RMtck3Oh9PZxTUee/H9gVirnaqj6T7R5n
- MODw8SOHozevh7vHQb5garklFKL8kWOgXESeP4OumwKZ/3olAn2Seohnh9tmkObNtIka
- Gj9uYMorScQCBQY6qvMIX9nL0uROEhz7gvR8aOFzQyfDBo2Z+/vzV+8OYtJW/CrPDcms
- HHz/dReCVG/TB4DdFp/qeFLms497Nejuwyf9nF7i2MInIhgFQr+Avmi+OUGU+iKBkhBI
- 6H/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730804313; x=1731409113;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=J9GnUD19XuJDeQQIfLrDDAiu6StgkP/Y+HkPPKYKdjU=;
- b=rMlmfZM5cADf1yjQwMSFW9R/BWouM9gK2m+k19R8RohVqDymaww09ecqkPvnMFu5Hb
- UoZQd2z69FW3JDQgc2ucSysknxdEeojbnq0LHsJ7wq/boSAWK6DSYJWEtuSXtDoJpKaU
- AOtO42c9kYg1RFPMLbUaQ+zgZre5SPZ+HWNxJZ3gdo+o363sYzuEP2fGTonV17P2Jk/C
- nhGLu1JtooBNJwoJ4Tu7PBSzXfRVI1OWSuvxlXjfNzAUYM3LYly4P942xvHsXJTj9tYX
- vT/E96tJ+9mT34GELFMkBJaSZQOwQMd8VW0ae/5859TkACHik80Bw3QCzwsqM2sh4uIE
- 0D3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPKfB5/ogl9T+oHePZ9kL3zu43uqBD63sMtvnXPf5R85L87JAmGzwVBfi91Zswfn2wWEbrMbPwuwCu@nongnu.org
-X-Gm-Message-State: AOJu0YyJFIH1WR5xrhGpC/DwyMu+YSVrayTgxTINhtfqA8YrU0J6tYYW
- /tEUkYLK60LkgDVt7w4Sv8rMkyWe+G9ncyEjT25vDd6eCwaChsebrC69AIbcmVs=
-X-Google-Smtp-Source: AGHT+IG4u5jLuQo/JFxrOgpTL9mob9GX8RXpRItSc2yE90kzuCAzEUG6YxMsEH/uzuTDtVvBbVjsVQ==
-X-Received: by 2002:a17:906:6a12:b0:a99:f746:385 with SMTP id
- a640c23a62f3a-a9e3a573d11mr2472258666b.1.1730804313009; 
- Tue, 05 Nov 2024 02:58:33 -0800 (PST)
-Received: from [192.168.21.227] ([154.14.63.34])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9eb171550esm116909266b.88.2024.11.05.02.58.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Nov 2024 02:58:32 -0800 (PST)
-Message-ID: <12e5b415-a80a-49b3-b98a-33a398ebf56d@linaro.org>
-Date: Tue, 5 Nov 2024 10:58:30 +0000
+ d=linux.alibaba.com; s=default;
+ t=1730804876; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=Pz3NAVUK/wvPZ2kuGJPNNMnq5Rn/TFioD6g1p+hDDk8=;
+ b=da+kzeNum7Lrsh8pmL603FW9HSxhwBuz2duHQZVcVGs9IeCf2Nj7H6Q5VXJ5pI+OeqPlMhi7AAFmFREDX8C66QaoCxq0EHAQ4KBIfLQwnktih0+O+1Wu65Uv+NMAhXocx54F1tKiMH+8VTEnulLLnctRs4OaNWbsvDn0FdpDTeI=
+Received: from 30.166.64.101(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WImoshZ_1730804873 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 05 Nov 2024 19:07:54 +0800
+Message-ID: <3392e1eb-e8e7-48f2-ad25-ed384f13390b@linux.alibaba.com>
+Date: Tue, 5 Nov 2024 19:07:53 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/6] target/riscv: Add support for Control Transfer
- Records Ext.
-To: Rajnesh Kanwal <rkanwal@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- atishp@rivosinc.com, apatel@ventanamicro.com, beeman@rivosinc.com,
- tech-control-transfer-records@lists.riscv.org, jason.chien@sifive.com,
- frank.chang@sifive.com
-References: <20241104-b4-ctr_upstream_v3-v3-0-32fd3c48205f@rivosinc.com>
+Subject: Re: [PATCH] tests/functional: Convert the RV32-on-RV64 riscv test
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>
+Cc: qemu-riscv@nongnu.org, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+References: <20241105103519.341304-1-thuth@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241104-b4-ctr_upstream_v3-v3-0-32fd3c48205f@rivosinc.com>
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20241105103519.341304-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.132;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-132.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,25 +71,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/4/24 21:51, Rajnesh Kanwal wrote:
->   target/riscv/cpu.c                             |  26 ++-
->   target/riscv/cpu.h                             |  13 ++
->   target/riscv/cpu_bits.h                        |  94 ++++++++
->   target/riscv/cpu_cfg.h                         |   2 +
->   target/riscv/cpu_helper.c                      | 266 ++++++++++++++++++++++
->   target/riscv/csr.c                             | 294 ++++++++++++++++++++++++-
->   target/riscv/helper.h                          |   9 +-
->   target/riscv/insn32.decode                     |   2 +-
->   target/riscv/insn_trans/trans_privileged.c.inc |  22 +-
->   target/riscv/insn_trans/trans_rvi.c.inc        |  31 +++
->   target/riscv/insn_trans/trans_rvzce.c.inc      |  20 ++
->   target/riscv/op_helper.c                       | 155 ++++++++++++-
->   target/riscv/tcg/tcg-cpu.c                     |  11 +
->   target/riscv/translate.c                       |  10 +
->   14 files changed, 941 insertions(+), 14 deletions(-)
 
-You're missing code in machine.c to migrate the new state.
+On 2024/11/5 18:35, Thomas Huth wrote:
+> A straggler that has been added to the Avocado framework while the
+> conversion to the functional framework was already in progress...
+> Move it over now, too!
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/avocado/tuxrun_baselines.py       | 16 ----------------
+>   tests/functional/test_riscv64_tuxrun.py | 13 +++++++++++++
+>   2 files changed, 13 insertions(+), 16 deletions(-)
+>
+> diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
+> index 366c262e32..38064840da 100644
+> --- a/tests/avocado/tuxrun_baselines.py
+> +++ b/tests/avocado/tuxrun_baselines.py
+> @@ -222,19 +222,3 @@ def test_arm64be(self):
+>                    "rootfs.ext4.zst" :
+>                    "e6ffd8813c8a335bc15728f2835f90539c84be7f8f5f691a8b01451b47fb4bd7"}
+>           self.common_tuxrun(csums=sums)
+> -
+> -    def test_riscv64_rv32(self):
+> -        """
+> -        :avocado: tags=arch:riscv64
+> -        :avocado: tags=machine:virt
+> -        :avocado: tags=tuxboot:riscv32
+> -        :avocado: tags=cpu:rv32
+> -        """
+> -        sums = { "Image" :
+> -                 "89599407d7334de629a40e7ad6503c73670359eb5f5ae9d686353a3d6deccbd5",
+> -                 "fw_jump.elf" :
+> -                 "f2ef28a0b77826f79d085d3e4aa686f1159b315eff9099a37046b18936676985",
+> -                 "rootfs.ext4.zst" :
+> -                 "7168d296d0283238ea73cd5a775b3dd608e55e04c7b92b76ecce31bb13108cba" }
+> -
+> -        self.common_tuxrun(csums=sums)
+> diff --git a/tests/functional/test_riscv64_tuxrun.py b/tests/functional/test_riscv64_tuxrun.py
+> index 13501628f9..4e2449539c 100755
+> --- a/tests/functional/test_riscv64_tuxrun.py
+> +++ b/tests/functional/test_riscv64_tuxrun.py
+> @@ -23,6 +23,13 @@ class TuxRunRiscV64Test(TuxRunBaselineTest):
+>           'https://storage.tuxboot.com/20230331/riscv64/rootfs.ext4.zst',
+>           'b18e3a3bdf27be03da0b285e84cb71bf09eca071c3a087b42884b6982ed679eb')
+>   
+> +    ASSET_RISCV32_KERNEL = Asset(
+> +        'https://storage.tuxboot.com/20230331/riscv32/Image',
+> +        '89599407d7334de629a40e7ad6503c73670359eb5f5ae9d686353a3d6deccbd5')
+> +    ASSET_RISCV32_ROOTFS = Asset(
+> +        'https://storage.tuxboot.com/20230331/riscv32/rootfs.ext4.zst',
+> +        '7168d296d0283238ea73cd5a775b3dd608e55e04c7b92b76ecce31bb13108cba')
+> +
+>       def test_riscv64(self):
+>           self.set_machine('virt')
+>           self.common_tuxrun(kernel_asset=self.ASSET_RISCV64_KERNEL,
+> @@ -34,5 +41,11 @@ def test_riscv64_maxcpu(self):
+>           self.common_tuxrun(kernel_asset=self.ASSET_RISCV64_KERNEL,
+>                              rootfs_asset=self.ASSET_RISCV64_ROOTFS)
+>   
+> +    def test_riscv64_rv32(self):
+> +        self.set_machine('virt')
+> +        self.cpu='rv32'
+> +        self.common_tuxrun(kernel_asset=self.ASSET_RISCV32_KERNEL,
+> +                           rootfs_asset=self.ASSET_RISCV32_ROOTFS)
+> +
 
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-r~
+Zhiwei
+
+>   if __name__ == '__main__':
+>       TuxRunBaselineTest.main()
 
