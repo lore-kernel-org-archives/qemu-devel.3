@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D51D9D1CA38
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E51BCD1CA3B
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:37:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DB0-0004Oc-QY; Tue, 05 Nov 2024 01:36:30 -0500
+	id 1t8DCE-0005kl-V3; Tue, 05 Nov 2024 01:37:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DAy-0004O9-To
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:36:28 -0500
+ id 1t8DC9-0005Rl-4K
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:37:41 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DAx-0001nl-6J
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:36:28 -0500
+ id 1t8DC7-0001vJ-5L
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:37:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788587; x=1762324587;
+ t=1730788659; x=1762324659;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=g+h4bo1XqzDmMZ0LZa6Xv9bp3PCsN0+TI6VIrKIylhs=;
- b=KKDcGj22k2NUx0kQFfqCUrQiDrOFvg22DEVzDEMovgv7P0NIqxbh/oNg
- fC5E3NCBElKOVou5/3MXKcAm2HClJExOdLwKcEO/Y1ZxWtbR2T+dI1dDd
- wN+I+1ufbB9MJQcTYRfnvRaocdRxLt+gpkacj4//NKWzHH5zYWBKTKP1x
- ZxBXYhCAqHSOULfd1U6Z7OxaXseTQk2fWHO6Az5oGq6sBF95LHzfDkSXh
- p5cvn9objqh5WMf/c5dwVVRBOipTbu7GvIGrCEhQp84Nxkqp7du3dDgPa
- 8RFUjQiiZt94lMeEYDe9xL6FiFnjReVChGs+9L5ymSqWqLEYwy+C7bv5Y Q==;
-X-CSE-ConnectionGUID: /uCogON6SlWdl8Pcex5UaA==
-X-CSE-MsgGUID: ShDe38bUSfm5NDOhJNGRBQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689213"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689213"
+ bh=eviZxt2uHCaBFHxS9OQDjWkbBKzkgFdGvefQVCQtPgg=;
+ b=A1oG4MNKZRB6H0b7HYYv1iGqgeyi5f1ao5hDzCpt0itAXQ+5J/ctczL9
+ 3p1ZVsxsir33nUS8RsNNNwxXcZhULA6pW4hbA2kGc3/5pmGV1WuG3JSya
+ a/MtJPLXLTq8wzurnGlKgumWP68ZvRqLqexe3lDmfsyIAnyIvFSDMgvSZ
+ bIQ/k2SYw/VnwCn4ze1rcr2nwMGH2ql85qWqAlKzPRN+SjdQw1HZ8bdPr
+ v5nn6VGo4c9mPeBzMzO2gb5qzYSyt7npToK623GyzPaPtpIicP8YZ29nO
+ 9EGs9xVx8lf2wcgN/HEuyRCuSoL71Q2YtlpPYBJY0FYezAqo4pwVbNf3E A==;
+X-CSE-ConnectionGUID: 5ivbuK6pSZmxtT0EBpWxLQ==
+X-CSE-MsgGUID: p9BFSTonQR+cc9x1QMMNlw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689480"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689480"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:36:26 -0800
-X-CSE-ConnectionGUID: dzGKxjZRRju1K3R3NN9uKw==
-X-CSE-MsgGUID: B+woiuUfTM68IGRpM3+trQ==
+ 04 Nov 2024 22:37:38 -0800
+X-CSE-ConnectionGUID: h4M+rUgqSuWhYI8H31oyhw==
+X-CSE-MsgGUID: rtUp98ElRPurPn+fT+1nsg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83988551"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83988899"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:36:22 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:37:30 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -57,10 +57,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 01/60] *** HACK *** linux-headers: Update headers to pull
- in TDX API changes
-Date: Tue,  5 Nov 2024 01:23:09 -0500
-Message-Id: <20241105062408.3533704-2-xiaoyao.li@intel.com>
+Subject: [PATCH v6 17/60] i386/tdx: load TDVF for TD guest
+Date: Tue,  5 Nov 2024 01:23:25 -0500
+Message-Id: <20241105062408.3533704-18-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
@@ -91,112 +90,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pull in recent TDX updates, which are not backwards compatible.
+From: Chao Peng <chao.p.peng@linux.intel.com>
 
-It's just to make this series runnable. It will be updated by script
+TDVF(OVMF) needs to run at private memory for TD guest. TDX cannot
+support pflash device since it doesn't support read-only private memory.
+Thus load TDVF(OVMF) with -bios option for TDs.
 
-	scripts/update-linux-headers.sh
+Use memory_region_init_ram_guest_memfd() to allocate the MemoryRegion
+for TDVF because it needs to be located at private memory.
 
-once TDX support is upstreamed in linux kernel
+Also store the MemoryRegion pointer of TDVF since the shared ramblock of
+it can be discared after it gets copied to private ramblock.
 
+Signed-off-by: Chao Peng <chao.p.peng@linux.intel.com>
+Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- linux-headers/asm-x86/kvm.h | 70 +++++++++++++++++++++++++++++++++++++
- linux-headers/linux/kvm.h   |  1 +
- 2 files changed, 71 insertions(+)
+ hw/i386/x86-common.c  | 6 +++++-
+ target/i386/kvm/tdx.c | 6 ++++++
+ target/i386/kvm/tdx.h | 3 +++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
-index 4711ef2c3d01..719b9d121dbe 100644
---- a/linux-headers/asm-x86/kvm.h
-+++ b/linux-headers/asm-x86/kvm.h
-@@ -922,5 +922,75 @@ struct kvm_hyperv_eventfd {
- #define KVM_X86_SEV_VM		2
- #define KVM_X86_SEV_ES_VM	3
- #define KVM_X86_SNP_VM		4
-+#define KVM_X86_TDX_VM		5
-+
-+/* Trust Domain eXtension sub-ioctl() commands. */
-+enum kvm_tdx_cmd_id {
-+	KVM_TDX_CAPABILITIES = 0,
-+	KVM_TDX_INIT_VM,
-+	KVM_TDX_INIT_VCPU,
-+	KVM_TDX_INIT_MEM_REGION,
-+	KVM_TDX_FINALIZE_VM,
-+	KVM_TDX_GET_CPUID,
-+
-+	KVM_TDX_CMD_NR_MAX,
-+};
-+
-+struct kvm_tdx_cmd {
-+	/* enum kvm_tdx_cmd_id */
-+	__u32 id;
-+	/* flags for sub-commend. If sub-command doesn't use this, set zero. */
-+	__u32 flags;
-+	/*
-+	 * data for each sub-command. An immediate or a pointer to the actual
-+	 * data in process virtual address.  If sub-command doesn't use it,
-+	 * set zero.
-+	 */
-+	__u64 data;
-+	/*
-+	 * Auxiliary error code.  The sub-command may return TDX SEAMCALL
-+	 * status code in addition to -Exxx.
-+	 * Defined for consistency with struct kvm_sev_cmd.
-+	 */
-+	__u64 hw_error;
-+};
-+
-+struct kvm_tdx_capabilities {
-+	__u64 supported_attrs;
-+	__u64 supported_xfam;
-+	__u64 reserved[254];
-+	struct kvm_cpuid2 cpuid;
-+};
-+
-+struct kvm_tdx_init_vm {
-+	__u64 attributes;
-+	__u64 xfam;
-+	__u64 mrconfigid[6];	/* sha384 digest */
-+	__u64 mrowner[6];	/* sha384 digest */
-+	__u64 mrownerconfig[6];	/* sha384 digest */
-+
-+	/* The total space for TD_PARAMS before the CPUIDs is 256 bytes */
-+	__u64 reserved[12];
-+
-+	/*
-+	 * Call KVM_TDX_INIT_VM before vcpu creation, thus before
-+	 * KVM_SET_CPUID2.
-+	 * This configuration supersedes KVM_SET_CPUID2s for VCPUs because the
-+	 * TDX module directly virtualizes those CPUIDs without VMM.  The user
-+	 * space VMM, e.g. qemu, should make KVM_SET_CPUID2 consistent with
-+	 * those values.  If it doesn't, KVM may have wrong idea of vCPUIDs of
-+	 * the guest, and KVM may wrongly emulate CPUIDs or MSRs that the TDX
-+	 * module doesn't virtualize.
-+	 */
-+	struct kvm_cpuid2 cpuid;
-+};
-+
-+#define KVM_TDX_MEASURE_MEMORY_REGION   _BITULL(0)
-+
-+struct kvm_tdx_init_mem_region {
-+	__u64 source_addr;
-+	__u64 gpa;
-+	__u64 nr_pages;
-+};
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index b86c38212eab..1df496a15eff 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -44,6 +44,7 @@
+ #include "standard-headers/asm-x86/bootparam.h"
+ #include CONFIG_DEVICES
+ #include "kvm/kvm_i386.h"
++#include "kvm/tdx.h"
  
- #endif /* _ASM_X86_KVM_H */
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index 49dd1b30ce9e..ebad8e0d10c5 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -369,6 +369,7 @@ struct kvm_run {
- #define KVM_SYSTEM_EVENT_WAKEUP         4
- #define KVM_SYSTEM_EVENT_SUSPEND        5
- #define KVM_SYSTEM_EVENT_SEV_TERM       6
-+#define KVM_SYSTEM_EVENT_TDX_FATAL      7
- 			__u32 type;
- 			__u32 ndata;
- 			union {
+ #ifdef CONFIG_XEN_EMU
+ #include "hw/xen/xen.h"
+@@ -1007,11 +1008,14 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+     if (machine_require_guest_memfd(MACHINE(x86ms))) {
+         memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
+                                            bios_size, &error_fatal);
++        if (is_tdx_vm()) {
++            tdx_set_tdvf_region(&x86ms->bios);
++        }
+     } else {
+         memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
+                                bios_size, &error_fatal);
+     }
+-    if (sev_enabled()) {
++    if (sev_enabled() || is_tdx_vm()) {
+         /*
+          * The concept of a "reset" simply doesn't exist for
+          * confidential computing guests, we have to destroy and
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 4193211c3190..d5ebc2430fd1 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -120,6 +120,12 @@ static int get_tdx_capabilities(Error **errp)
+     return 0;
+ }
+ 
++void tdx_set_tdvf_region(MemoryRegion *tdvf_mr)
++{
++    assert(!tdx_guest->tdvf_mr);
++    tdx_guest->tdvf_mr = tdvf_mr;
++}
++
+ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+ {
+     TdxGuest *tdx = TDX_GUEST(cgs);
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index 0aebc7e3f6c9..e5d836805385 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -28,6 +28,8 @@ typedef struct TdxGuest {
+     char *mrconfigid;       /* base64 encoded sha348 digest */
+     char *mrowner;          /* base64 encoded sha348 digest */
+     char *mrownerconfig;    /* base64 encoded sha348 digest */
++
++    MemoryRegion *tdvf_mr;
+ } TdxGuest;
+ 
+ #ifdef CONFIG_TDX
+@@ -37,5 +39,6 @@ bool is_tdx_vm(void);
+ #endif /* CONFIG_TDX */
+ 
+ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp);
++void tdx_set_tdvf_region(MemoryRegion *tdvf_mr);
+ 
+ #endif /* QEMU_I386_TDX_H */
 -- 
 2.34.1
 
