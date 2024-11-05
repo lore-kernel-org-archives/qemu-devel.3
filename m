@@ -4,107 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551A9D3E775
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 21:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7048CD3E775
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8RRw-0002Ce-4L; Tue, 05 Nov 2024 16:50:56 -0500
+	id 1t8RoK-00088N-My; Tue, 05 Nov 2024 17:14:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t8RRr-0002C5-Jf; Tue, 05 Nov 2024 16:50:51 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t8RRp-0003ak-PK; Tue, 05 Nov 2024 16:50:51 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5Le0Av024574;
- Tue, 5 Nov 2024 21:50:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=SCRzrw
- oqB2kaM1wSKS8SxCklGv3d16pW68d1Gs0FUmY=; b=OQPQBUoTlI19LXRzseEJBR
- llZueAk7FonSd2GgAg5ApDzGQktAX+ccCxXgIte+Bbpwxs7bQ2P9gnXfsk4/Ds9p
- Hcc1uaggQHcC2MUKKaZO2pqsVsRslq1Vg1wJZ1ZAGr6qHyBQjCI9dgmoJHZ7It7A
- +NC7eueTJKzRREV8Y/BlcSRDnr9et7lgcujIXOyX5Zx5fkWHCX3vugwzRTnCXyKh
- iF3Q4FBtsiW0ATLHizasamCX0pHWh4a7CucdGEvENyrKou0g9b6JZ6SKAoR9NEyr
- AzFxcaXbsKx2YzSdA91rB/cewHQ0pOoj/F8V+Mefc17FMEgE+4PeC8hwcL3gc5RA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42qufn01bd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Nov 2024 21:50:44 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5K3LuA008470;
- Tue, 5 Nov 2024 21:50:43 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nywkmbkh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Nov 2024 21:50:43 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A5Logqq40960730
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 Nov 2024 21:50:43 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D78A358063;
- Tue,  5 Nov 2024 21:50:42 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 69FB458056;
- Tue,  5 Nov 2024 21:50:42 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 Nov 2024 21:50:42 +0000 (GMT)
-Message-ID: <60734922-c31d-4a24-865e-45d03ff53141@linux.ibm.com>
-Date: Tue, 5 Nov 2024 16:50:42 -0500
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t8RoI-00087j-Q1; Tue, 05 Nov 2024 17:14:02 -0500
+Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t8RoH-0006my-0N; Tue, 05 Nov 2024 17:14:02 -0500
+Received: by mail-vk1-xa31.google.com with SMTP id
+ 71dfb90a1353d-512259c860eso1792355e0c.2; 
+ Tue, 05 Nov 2024 14:14:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730844839; x=1731449639; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0AxF33yov5xMnc1Sy0Cc/fToN7BpkNuv1fqGM0EUXLw=;
+ b=I1jL5LeMpOmS+DA/WZkiYJ74aigfpZbXwnW+0ukd7IFlA+kX8Bn5/l4DXVXV6AwKPn
+ YwpErdK3WoQOkcqrMEdk0/zlUt8lalMgrYGEwbnhWP3LBUlLrj9TmxH+OobLBVj++QLr
+ 1YO+pwPl0mH5HdWKzTUVZpPs1M3e1ZkYO3xX8k9kIFIqyXtNl3UGPzPS8hpzm85tnYKP
+ AeXCJVrVwgzn4WTEZjjYyNDBrlQF3guVREYZpnmTpdhSY+YMiWecSEFZZDp0xRSl/+sm
+ GeTLsaOetwWUOqXd3MCOpjbcIq5GTb9/SwrgxBk7GGnZKEN1kE5EUC3dq2bh6QDMPtQB
+ mAYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730844839; x=1731449639;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0AxF33yov5xMnc1Sy0Cc/fToN7BpkNuv1fqGM0EUXLw=;
+ b=DWvjrUDiPmoYAlQ991p+In+O8Ic2qp0fXsvJosYkNUhwNoboshhUflIJ4AzPzXOl/T
+ 4ysDr1OM9G4udvQFmy7BnxPHBdq2y+/vUW/UxuPBi8rTfnTXYZddYv17yTeiJoT/L2hl
+ FWiSqGTOYLIzz01thpRX2n3cbLkIBmiN+d+bZeh53WH0XA4r8oVkr3pc0V2a9RbGwo6G
+ Nj7ZR9FEejy+CBhdl42C5jQ6A1Z2/f7n0uhedWQx2Y/old71LbCGLuZIE5R5zDq+8iaM
+ QaFUQk9sIYG1NrWEuw3YU9txrabXtoBSsLMEuCnk6zmGAikCA8uwGGgaEITkG8lo127q
+ VfRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVApSQQKt3M67C6jl9xR/M3KVSRwSEze1YVKJc1nWS6G/vWDZIdUEUtGrEU198OkkBpVyOqNrePgg==@nongnu.org
+X-Gm-Message-State: AOJu0YxZS+nn2bB4nnM3SU85qbrmWvCtNvuvygGldDr6Gh4qtcZziKo0
+ Tz0aiC3VFQkpUOsFPzo9ymvvCScapzWQlJWvoDE+2JmPfPNBOJuyeqKpbP3/e7EbE2vC9RmY6IU
+ ThKdxzLDFHHfNFXHO3bjA3rb9Dkw=
+X-Google-Smtp-Source: AGHT+IGwsyIUCmn8jYvjQqeMl/22EwWEGeO8qB4Po2CxRZLdoF92UsBHLDTvtSCDE3jjKH6zEsJPh2ykvzsonJPTstQ=
+X-Received: by 2002:a05:6122:1d4c:b0:50d:a31c:678c with SMTP id
+ 71dfb90a1353d-5106ae6d944mr21304116e0c.2.1730844839208; Tue, 05 Nov 2024
+ 14:13:59 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 10/17] tests/functional: Convert most Aspeed machine tests
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>, lena.voytek@canonical.com
-References: <20241024063507.1585765-1-clg@redhat.com>
- <20241024063507.1585765-11-clg@redhat.com>
- <CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com>
- <91c2ac92-66b2-45c8-b4fe-e8f8587b0e9c@linux.ibm.com>
- <CAFEAcA84hhWu2ouirfDPbCpq_=QLQxAf3k47h0Pij8iEnOVj+A@mail.gmail.com>
- <2491bc60-9a0b-486a-8f6d-2c4c94332756@linux.ibm.com>
- <CAFEAcA85g2nX3MU5RzmBvAHT8Kis1JHhiEaBvnFFbEQkG+0OxQ@mail.gmail.com>
- <e6c33df3-49e9-4b8a-b7cb-d38c2ebee3be@linux.ibm.com>
- <CAFEAcA9La7y1Z2-nMnJDyC_p+z-3c0EnDzEE=w5LTYtRnXPT1g@mail.gmail.com>
- <1a1d29b3-c14c-42a9-93ad-c773e3b265df@linux.ibm.com>
- <CAFEAcA_awJURkAhyhz88iEyfe7BU-ApeHB8XZ5EeThoKFh3p5w@mail.gmail.com>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <CAFEAcA_awJURkAhyhz88iEyfe7BU-ApeHB8XZ5EeThoKFh3p5w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: rXxAu0hM8-7JEzrCZZ0I1OLMo11gWmPs
-X-Proofpoint-GUID: rXxAu0hM8-7JEzrCZZ0I1OLMo11gWmPs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- bulkscore=0 suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0
- mlxscore=0 clxscore=1015 mlxlogscore=999 phishscore=0 spamscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411050167
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241105130431.22564-1-philmd@linaro.org>
+ <20241105130431.22564-9-philmd@linaro.org>
+In-Reply-To: <20241105130431.22564-9-philmd@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 6 Nov 2024 08:13:33 +1000
+Message-ID: <CAKmqyKP-hyLzhLV9hzVrtByxOd1Wtcvv14YNmdRDJcmX13fLXw@mail.gmail.com>
+Subject: Re: [PATCH 08/19] hw/microblaze: Propagate CPU endianness to
+ microblaze_load_kernel()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org, devel@lists.libvirt.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,90 +99,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Nov 5, 2024 at 11:06=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Pass vCPU endianness as argument so we can load kernels
+> with different endianness (different from the qemu-system-binary
+> builtin one).
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-On 11/5/24 4:34 PM, Peter Maydell wrote:
-> On Tue, 5 Nov 2024 at 20:12, Stefan Berger <stefanb@linux.ibm.com> wrote:
->> On 11/5/24 2:54 PM, Peter Maydell wrote:
->>> On Tue, 5 Nov 2024 at 18:36, Stefan Berger <stefanb@linux.ibm.com> wrote:
->>> Anyway, the thing here is that we run swtpm like this:
->>>
->>>    swtpm socket -d  --tpm2 --tpmstate dir=/path/to/somewhere --ctrl
->>> type=unixio,path=/path/to/socket
->>>
->>> where we use command line arguments to tell it where to
->>> put the tpmstate and the socket.
->>>
->>> Either:
->>>    (1) there are places where it's not valid for us to tell swtpm to
->>> put the tpmstate or to put the control socket
->>>    (2) it's valid to put those anywhere we like
->>>
->>> If (1), then swtpm should give a clear error message that we've
->>> given it an invalid argument (and its manpage should say what
->>> the restrictions are)
->>
->> There are no restrictions on the swtpm level when it comes to paths.
-> 
->>> If (2), then apparmor should not be rejecting this usage
->>
->> AppArmor file restrictions are all path based. We have support for home
->> directory and /tmp, but were missing /var/tmp. So, please.
->>
->>   > > One of swtpm or apparmor must be wrong here and I think it should
->>> be fixed. In particular, having the failure mode be "something
->>
->> As stated, we were going to fix the AppArmor path in the swtpm Ubuntu
->> package.
-> 
-> But AIUI the solution you've proposed is to add the user
-> temp directory -- abstractions/user-tmp looks like it
-> adds permissions for $HOME/tmp, /var/tmp and /tmp/. None
-> of those will fix the failure we ran into, because we're not
-> using any of those tmp directories. We use a directory
-> that's a subdirectory of wherever the user put the build
-> directory, which can be anywhere the user has permissions for.
+Alistair
 
-Yes, you are right. The same test failed for me locally due to the usage 
-of /var/tmp/ path but that's not what was originally reported.
-
-I am not aware that user-started programs can have an exception from 
-having their profiles applied, nor do I know whether rules exist that 
-allow a user to circumvent any rule. So my guess is we need rules like 
-either one of the following:
-
-owner /mnt/** rwkl
-
-or worse:
-
-owner /** rwkl
-
-I don't see another choice than adding one of these rules, maybe even 
-the 2nd. Lena?
-
-> 
-> That's why I'm confused -- as far as I can see the only
-> way to make swtpm work the way its documentation says it
-> should work is to for apparmor to permit anything
-> (or at least to permit anything that matches the file paths
-> the user handed swtmp, if it can do that).
-
-and from what I know we need explicit rules for allowing paths.
-
-> 
-> Or if you want to say "this has to be in one of these
-> handful of authorised /tmp/ directories", then it should
-> say that in the manpage and check that at init time, not fail
-> near-silently much later. At the moment the docs and the
-> distro-integration of swtmp disagree, and the effect for
-> somebody trying to use it is very confusing.
-
-We haven't run into this type of a problem with paths in a while. The 
-applications return 'permission denied' but to find the exact reason 
-(LSM) for it one may have to dig into the audit log.
-
-> 
-> thanks
-> -- PMM
-
+> ---
+>  hw/microblaze/boot.h                     | 4 ++--
+>  hw/microblaze/boot.c                     | 8 ++++----
+>  hw/microblaze/petalogix_ml605_mmu.c      | 2 +-
+>  hw/microblaze/petalogix_s3adsp1800_mmu.c | 2 +-
+>  hw/microblaze/xlnx-zynqmp-pmu.c          | 2 +-
+>  5 files changed, 9 insertions(+), 9 deletions(-)
+>
+> diff --git a/hw/microblaze/boot.h b/hw/microblaze/boot.h
+> index 5a8c2f79750..d179a551a69 100644
+> --- a/hw/microblaze/boot.h
+> +++ b/hw/microblaze/boot.h
+> @@ -2,8 +2,8 @@
+>  #define MICROBLAZE_BOOT_H
+>
+>
+> -void microblaze_load_kernel(MicroBlazeCPU *cpu, hwaddr ddr_base,
+> -                            uint32_t ramsize,
+> +void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
+> +                            hwaddr ddr_base, uint32_t ramsize,
+>                              const char *initrd_filename,
+>                              const char *dtb_filename,
+>                              void (*machine_cpu_reset)(MicroBlazeCPU *));
+> diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
+> index ed61e483ee8..3675489fa5b 100644
+> --- a/hw/microblaze/boot.c
+> +++ b/hw/microblaze/boot.c
+> @@ -114,8 +114,8 @@ static uint64_t translate_kernel_address(void *opaque=
+, uint64_t addr)
+>      return addr - 0x30000000LL;
+>  }
+>
+> -void microblaze_load_kernel(MicroBlazeCPU *cpu, hwaddr ddr_base,
+> -                            uint32_t ramsize,
+> +void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
+> +                            hwaddr ddr_base, uint32_t ramsize,
+>                              const char *initrd_filename,
+>                              const char *dtb_filename,
+>                              void (*machine_cpu_reset)(MicroBlazeCPU *))
+> @@ -144,13 +144,13 @@ void microblaze_load_kernel(MicroBlazeCPU *cpu, hwa=
+ddr ddr_base,
+>          /* Boots a kernel elf binary.  */
+>          kernel_size =3D load_elf(kernel_filename, NULL, NULL, NULL,
+>                                 &entry, NULL, &high, NULL,
+> -                               TARGET_BIG_ENDIAN, EM_MICROBLAZE, 0, 0);
+> +                               !is_little_endian, EM_MICROBLAZE, 0, 0);
+>          base32 =3D entry;
+>          if (base32 =3D=3D 0xc0000000) {
+>              kernel_size =3D load_elf(kernel_filename, NULL,
+>                                     translate_kernel_address, NULL,
+>                                     &entry, NULL, NULL, NULL,
+> -                                   TARGET_BIG_ENDIAN, EM_MICROBLAZE, 0, =
+0);
+> +                                   !is_little_endian, EM_MICROBLAZE, 0, =
+0);
+>          }
+>          /* Always boot into physical ram.  */
+>          boot_info.bootstrap_pc =3D (uint32_t)entry;
+> diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogi=
+x_ml605_mmu.c
+> index 61e47d83988..d2b2109065d 100644
+> --- a/hw/microblaze/petalogix_ml605_mmu.c
+> +++ b/hw/microblaze/petalogix_ml605_mmu.c
+> @@ -204,7 +204,7 @@ petalogix_ml605_init(MachineState *machine)
+>      cpu->cfg.pvr_regs[5] =3D 0xc56be000;
+>      cpu->cfg.pvr_regs[10] =3D 0x0e000000; /* virtex 6 */
+>
+> -    microblaze_load_kernel(cpu, MEMORY_BASEADDR, ram_size,
+> +    microblaze_load_kernel(cpu, true, MEMORY_BASEADDR, ram_size,
+>                             machine->initrd_filename,
+>                             BINARY_DEVICE_TREE_FILE,
+>                             NULL);
+> diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/pet=
+alogix_s3adsp1800_mmu.c
+> index 6c0f5c6c651..8110be83715 100644
+> --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
+> +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+> @@ -129,7 +129,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>
+>      create_unimplemented_device("xps_gpio", GPIO_BASEADDR, 0x10000);
+>
+> -    microblaze_load_kernel(cpu, ddr_base, ram_size,
+> +    microblaze_load_kernel(cpu, !TARGET_BIG_ENDIAN, ddr_base, ram_size,
+>                             machine->initrd_filename,
+>                             BINARY_DEVICE_TREE_FILE,
+>                             NULL);
+> diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-=
+pmu.c
+> index 567aad47bfc..bdbf7328bf4 100644
+> --- a/hw/microblaze/xlnx-zynqmp-pmu.c
+> +++ b/hw/microblaze/xlnx-zynqmp-pmu.c
+> @@ -172,7 +172,7 @@ static void xlnx_zynqmp_pmu_init(MachineState *machin=
+e)
+>      qdev_realize(DEVICE(pmu), NULL, &error_fatal);
+>
+>      /* Load the kernel */
+> -    microblaze_load_kernel(&pmu->cpu, XLNX_ZYNQMP_PMU_RAM_ADDR,
+> +    microblaze_load_kernel(&pmu->cpu, true, XLNX_ZYNQMP_PMU_RAM_ADDR,
+>                             machine->ram_size,
+>                             machine->initrd_filename,
+>                             machine->dtb,
+> --
+> 2.45.2
+>
+>
 
