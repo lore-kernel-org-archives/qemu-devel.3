@@ -4,76 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7047D12692
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 878ECD12698
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 12:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8I9a-0006j0-0V; Tue, 05 Nov 2024 06:55:22 -0500
+	id 1t8IOv-00054v-2l; Tue, 05 Nov 2024 07:11:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1t8I9X-0006bF-IR
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:55:19 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8IOl-00053z-Sn
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 07:11:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1t8I9V-0002El-Qw
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:55:19 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8IOh-0004Hx-VM
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 07:11:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730807716;
+ s=mimecast20190719; t=1730808657;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dto1+gW9spVc4gv3xZ+9ARIZVBH0ZC+z4twzEMn4FNg=;
- b=QfJdAqX0d192YT1WM1Y/zvVeHA/EEbmthPzCXaJVRcQR7tCtTxtWPOl9BIxT6QvQiehI0A
- f47KQXZUFW1aVgJ7ApoLboPZFLFA5SF4HbK3juiIvKod0jbOAVN9tc5SGZUJ1nIj7cA7V+
- 8PERGc0tlRlWUbblCD9+4H3EjOIWWD4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=WOIsmruMbP7ytOhlY3OAbBvWBZCGw0rx3GUtwvYfS24=;
+ b=SsgJTQFdlx9yz8XBecU5YApSB9X2jIzWDHHai0jScNWrFE5mUbogdUQizQaQ4m4z9lnSkF
+ LshjWWipwwVQS7hOtbYSfks+na/hxsYeYyFazL/Y18CYBkZj5pxsHwyb9BKmuzfNs68DIT
+ ttpPPouQHR21YMJbSalL0rfjI45Wx+A=
+Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
+ [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-169-9VkcflEPOxKi6DssKppDYA-1; Tue, 05 Nov 2024 06:55:14 -0500
-X-MC-Unique: 9VkcflEPOxKi6DssKppDYA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43159c07193so45705425e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 03:55:14 -0800 (PST)
+ us-mta-569-Rdyvdsz8PW-J3y_Q30FZQg-1; Tue, 05 Nov 2024 07:10:55 -0500
+X-MC-Unique: Rdyvdsz8PW-J3y_Q30FZQg-1
+Received: by mail-oo1-f69.google.com with SMTP id
+ 006d021491bc7-5eb64093590so4717739eaf.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 04:10:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730807713; x=1731412513;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1730808655; x=1731413455;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dto1+gW9spVc4gv3xZ+9ARIZVBH0ZC+z4twzEMn4FNg=;
- b=nwA1SDKdg5kcctof2UlttrygOJ7NfK543UuRzhwfDYfr6I5YoY9Gkv9a2r7h5VUE0J
- ZKEUXRbbuO8wOH2tJdPZss0dpGztFIyjCv1mOB/6LXo2feNCMrLIGDwlBzilT1fBLlaK
- Bn+d+v5iQMLPEjn6oR25K+apLeysw+2S+QM4tJI7CUXbz7lA7m6cjMywZ333qYrHQ+M5
- hpVD2Cv/8MGDdpmA9nemoMpTiMcwMN/1yISViFVrEg1bcoq7DvfEvqtQQ4ckeKjOTAYx
- AIJVfvsRfOz/Z+hIE2rnBdcp15yzwyadr98b7cuEBgmMUB+TyXO4KX/w1PhrFoP2TbB/
- CH1Q==
-X-Gm-Message-State: AOJu0Yx0wHDnZJSske2qL3rreDEp6Xjqu3aFzBUsRxK+0V5YPfthSYe4
- wzS3t3TnE5029jR55bdwQ2ogdpDSdH8N59di6q5xNmm/gWua7HJVVuUa8z6KlmTKobAI3v4o+V0
- jzFDnnbc/ltHANxh93VPgROICIXMwYIwDUqYzb1HNx4yC4KSKEAk8cMfQdFVD2CZ/PhNdgsaBTR
- o7kRgnx7w3HP7MnETQNlQ2Jn+otIg=
-X-Received: by 2002:a05:600c:3b22:b0:42c:a387:6a6f with SMTP id
- 5b1f17b1804b1-4328325638emr158089155e9.20.1730807712010; 
- Tue, 05 Nov 2024 03:55:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHQlNE25hee9ekdJATgfgcSId0kVgwS4bKMELJIxJU4/fz+up4jzfmDi8lntBc0K/DsuJ1LyrMX+dnBSzYCA3A=
-X-Received: by 2002:a05:600c:3b22:b0:42c:a387:6a6f with SMTP id
- 5b1f17b1804b1-4328325638emr158089005e9.20.1730807711663; Tue, 05 Nov 2024
- 03:55:11 -0800 (PST)
+ bh=WOIsmruMbP7ytOhlY3OAbBvWBZCGw0rx3GUtwvYfS24=;
+ b=ROjTXgIZuNtPltatXFC3a8fjeVXXTV+2EwHw/LKoWZEij9kZPVKfVQDRvk5OdwMpSJ
+ WBBhYvihwgPZFPXkmXDKi0pCge/pcMGtX4Khj8Df4xJrHrTr8XDt644mUF4HwMU9/VKP
+ OuCG3CbuWvSmKD3QSki173dlKl66HYcpHOL73Cl9rxT/8kAQ+OZqwD1GZFdFHJ/mlilG
+ FOiBcHvZefyYSjhL4fyXOMGlfObyiB1yA/x8NuT/QKOoYSP99lHUwE1KMx2ut0GTsuaS
+ y2ROknKcRrOhMIbZM7+qRIeOI+75RmFCZIvJCxL6n+6wnEMXtOqqc20xaQA/C183B3JR
+ g1fQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWns8qXZ75hqBv1ET2U2SLMQ217+hlKqd8IDlbZ1TnMSF28IDutSHXC1a9zBlek7iL7NdalF9YXHNlT@nongnu.org
+X-Gm-Message-State: AOJu0Yz/ZofrGNFVP1LeTrtIHI+yN3XgJB43oljXxpa7GNCF2DyVEDEy
+ tmSPTfH/I7eO5Ae0BuBVh7NmrHU0K9+V8JHODZjM/AKfGFotXBllS+1d5k0a2puKfr12VdX1Nzw
+ 1EJ2mwxUlhUChl9WStohGr/9uLG2t/Ga1GgiOFxQJsBq0dQBigyMH
+X-Received: by 2002:a4a:d750:0:b0:5eb:cff9:d208 with SMTP id
+ 006d021491bc7-5ede5acd87fmr8712040eaf.2.1730808655107; 
+ Tue, 05 Nov 2024 04:10:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHvTKer/xJ2ZWFt7psyyKRHdRlbWp7+Coofjm/0u0Op2yPa3MjqJIxtMFnKH8doQuhKcB/3aA==
+X-Received: by 2002:a4a:d750:0:b0:5eb:cff9:d208 with SMTP id
+ 006d021491bc7-5ede5acd87fmr8712026eaf.2.1730808654744; 
+ Tue, 05 Nov 2024 04:10:54 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5ec70532445sm2178450eaf.26.2024.11.05.04.10.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Nov 2024 04:10:54 -0800 (PST)
+Message-ID: <67c6ac43-6907-4f52-877e-14f1b409e148@redhat.com>
+Date: Tue, 5 Nov 2024 13:10:49 +0100
 MIME-Version: 1.0
-References: <20241029150908.1136894-1-ppandit@redhat.com>
- <20241029150908.1136894-6-ppandit@redhat.com>
- <ZykJBq7ME5jgSzCA@x1n>
-In-Reply-To: <ZykJBq7ME5jgSzCA@x1n>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 5 Nov 2024 17:24:55 +0530
-Message-ID: <CAE8KmOyz9gWfKZmVkXLvj-NMo_=QB42sZhTyVGLqkOjU1GCXfg@mail.gmail.com>
-Subject: Re: [PATCH 5/5] migration: enable multifd and postcopy together
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: check-function failing on func-arm-arm_aspeed
+From: Thomas Huth <thuth@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ "Daniel P. Berrange" <berrange@redhat.com>
+References: <CAFEAcA_Z+o3HYfjapAeADAmjJqTYvswAfAbtj8i=3rSBDLwsyA@mail.gmail.com>
+ <28eba1fd-f5d8-4755-b8bb-074d3c087a75@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <28eba1fd-f5d8-4755-b8bb-074d3c087a75@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -98,128 +149,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Nov 2024 at 23:19, Peter Xu <peterx@redhat.com> wrote:
-> Precopy keeps sending data even during postcopy, that's the background
-> stream (with/without preempt feature enabled).  May need some amendment
-> when repost here.
+On 04/11/2024 13.12, Thomas Huth wrote:
+> On 28/10/2024 18.14, Peter Maydell wrote:
+>> Trying a "make check-functional" I find that the func-arm-arm_aspeed
+>> test seems to hit a timeout:
+>>
+>> 18/18 qemu:func-thorough+func-arm-thorough+thorough /
+>> func-arm-arm_aspeed              TIMEOUT        600.08s   killed by
+>> signal 15 SIGTERM
+>>
+>> This is with commit cea8ac78545a.
+> 
+> Cédric, is it working reliable for you?
+> 
+>> Does anybody else see this, or is it some oddity happening only
+>> on my local dev machine?
+>>
+>> The "full log" in testlog-thorough.txt doesn't seem to be
+>> very full. All it has for this test is:
+>>
+>> =================================== 18/18 
+>> ====================================
+>> test:         qemu:func-thorough+func-arm-thorough+thorough /
+>> func-arm-arm_aspeed
+>> start time:   16:54:50
+>> duration:     600.08s
+>> result:       killed by signal 15 SIGTERM
+>> command:      G_TEST_SLOW=1
+>> PYTHONPATH=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/python:/mnt/ 
+>> nvmedisk/linaro/qemu-from-laptop/qemu/tests/functional
+>> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
+>> MALLOC_PERTURB_=238
+>> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1
+>> MESON_TEST_ITERATION=1
+>> QEMU_TEST_QEMU_IMG=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm- 
+>> clang/qemu-img
+>> MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
+>> QEMU_TEST_QEMU_BINARY=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/ 
+>> arm-clang/qemu-system-arm
+>> QEMU_BUILD_ROOT=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang
+>> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/pyvenv/bin/python3
+>> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/functional/ 
+>> test_arm_aspeed.py
+>> ----------------------------------- stdout 
+>> -----------------------------------
+>> TAP version 13
+>> ok 1 test_arm_aspeed.AST1030Machine.test_ast1030_zephyros_1_04
+>> ok 2 test_arm_aspeed.AST1030Machine.test_ast1030_zephyros_1_07
+>> ok 3 test_arm_aspeed.AST2x00Machine.test_arm_ast2400_palmetto_openbmc_v2_9_0
+>> ==============================================================================
+>>
+>> Is it possible to get the log to include a pointer to the
+>> actual log for the test (including the guest console output)?
+>> It's hard to debug tests if they don't report what they're doing.
+> 
+> I tried to add something to the log iff the test case failed (e.g. by
+> checking defaultTestResult().wasSuccessful() or something similar in the
+> tearDown() function of the test), but that does not seem to work ...
 
-* Okay.
+I think I likely finally found a way: Run unittest.main() with exit=False, 
+then I can iterate over the results in our main() function. I'll try to come 
+up with a patch...
 
-> > +    if (channel == CH_POSTCOPY) {
-> > +        return false;
-> > +    }
->
-> Please see my other reply, I think here it should never be POSTCOPY
-> channel, because postcopy (aka, preempt) channel is only created after the
-> main channel.. So I wonder whether this "if" will hit at all.
-
-* It does. migration_ioc_process_incoming() is called for each
-incoming connection. And every time it calls
-migration_should_start_incoming() to check if it should proceed with
-the migration or should wait for further connections, because multifd
-does not start until all its connections are established.
-
-* Similarly when the Postcopy channel is initiated towards the end of
-Precopy migration, migration_should_start_incoming() gets called, and
-returns 'false' because we don't want to start a new incoming
-migration at that time. Earlier it was receiving boolean value
-'default_channel' as parameter, which was set to false while accepting
-'postcopy' connection via => default_channel = !mis->from_src_file;
-
-> > +
-> >      /* Multifd doesn't start unless all channels are established */
-> >      if (migrate_multifd()) {
-> > -        return migration_has_all_channels();
-> > -    }
-> > -
-> > -    /* Preempt channel only starts when the main channel is created */
-> > -    if (migrate_postcopy_preempt()) {
-> > -        return main_channel;
-> > +        return multifd_recv_all_channels_created();
->
-> I think this is incorrect.. We should also need to check main channel is
-> established before start incoming.  The old code uses
-> migration_has_all_channels() which checks that.
-
-* Okay, will try to fix it better.  But calling
-migration_has_all_channels() after checking migrate_multifd() does not
-seem/read right.
-
-> I don't yet see how you manage the multifd threads, etc, on both sides.  Or
-> any logic to make sure multifd will properly flush the pages before
-> postcopy starts.  IOW, any guarantee that all the pages will only be
-> installed using UFFDIO_COPY as long as vcpu starts on dest.  Any comments?
-
-* There are no changes related to that. As this series only tries to
-enable the multifd and postcopy options together.
-
-> The most complicated part of this work would be testing, to make sure it
-> works in all previous cases, and that's majorly why we disabled it before:
-> it was because it randomly crashes, but not always; fundamentally it's
-> because when multifd was designed there wasn't enough consideration on
-> working together with postcopy.  We didn't clearly know what's missing at
-> that time.
-
-* Right. I have tested this series with the following migration
-commands to confirm that migration works as expected and there were no
-crash(es) observed.
-===
-[Precopy]
-# virsh migrate --verbose --live --auto-converge f39vm
-qemu+ssh://<destination-host-name>/system
-
-[Precopy + Multifd]
-# virsh migrate --verbose --live --auto-converge --parallel
---parallel-connections 02 \
-     f39vm  qemu+ssh://<destination-host-name>/system
-# virsh migrate --verbose --live --auto-converge --parallel
---parallel-connections 04 \
-     f39vm  qemu+ssh://<destination-host-name>/system
-# virsh migrate --verbose --live --auto-converge --parallel
---parallel-connections 08 \
-     f39vm  qemu+ssh://<destination-host-name>/system
-# virsh migrate --verbose --live --auto-converge --parallel
---parallel-connections 16 \
-     f39vm  qemu+ssh://<destination-host-name>/system
-
-[Postcopy]
-# virsh migrate --verbose --live --auto-converge \
-    --postcopy --postcopy-after-precopy f39vm
-qemu+ssh://<destination-host-name>/system
-
-[Postcopy + Multifd]
-# virsh migrate --verbose --live --auto-converge --parallel
---parallel-connections 02 \
-    --postcopy --postcopy-after-precopy f39vm
-qemu+ssh://<destination-host-name>/system
-# virsh migrate --verbose --live --auto-converge --parallel
---parallel-connections 04 \
-    --postcopy --postcopy-after-precopy f39vm
-qemu+ssh://<destination-host-name>/system
-# virsh migrate --verbose --live --auto-converge --parallel
---parallel-connections 08 \
-    --postcopy --postcopy-after-precopy f39vm
-qemu+ssh://<destination-host-name>/system
-# virsh migrate --verbose --live --auto-converge --parallel
---parallel-connections 16 \
-    --postcopy --postcopy-after-precopy f39vm
-qemu+ssh://<destination-host-name>/system
-===
-
-> So we would definitely need to add test cases, just like whoever adds new
-> features to migration, to make sure at least it works for existing multifd
-> / postcopy test cases, but when both features enabled.
-...
-> It will add quite a few tests to run here, but I don't see a good way
-> otherwise when we want to enable the two features, because it is indeed a
-> challenge to enable the two major features together here.
->
-
-* Thank you for the hints about the tests, will surely look into them
-and try to learn about how to add new test cases.
-
-Thank you.
----
-  - Prasad
+  Thomas
 
 
