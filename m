@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB9C9D3177E
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 18:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98CFD3177D
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 18:10:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8NzI-0004jU-3R; Tue, 05 Nov 2024 13:09:08 -0500
+	id 1t8NzU-0004sZ-H8; Tue, 05 Nov 2024 13:09:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8NzG-0004jJ-N3
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:09:06 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8NzS-0004s7-HG
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:09:18 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8NzE-0004tf-Mv
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:09:06 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8NzQ-0004vS-Ft
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:09:18 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 16A1F21E5F;
- Tue,  5 Nov 2024 18:09:02 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id EA4471F7FB;
+ Tue,  5 Nov 2024 18:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730830143; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1730830155; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KhekdkZhUHByuX/bAG5X14KofCT3sNGTNq5z6SJyTGs=;
- b=xSl2xmwmToW4A1ezjzycgEYrmUSGZg4JQTiFu/MsF4qjf75khRaPFS2RAelJlGC9Wn2kyF
- fhCj84gq7ij3YkXTgN7QpQ+wjAAYyz/rkOBCh0cup1wTDnHxFL6aUDMbcGFEyEI3FWqYkM
- ELGxs2v72qP2W7XK4Xj67hZvdz/QR/o=
+ bh=cc02J7Qi4YnmbfZy5IwLDyF4tH4FljYthlF9eUkNHaQ=;
+ b=uU3zRh5NzKmtPehvI/pLXEDHr6WQziRC7g+g8np9eWlJcDmpsEN7EtwjKV/+ZmsCyAzanV
+ QZC/WNpjuzrkfqVovZ4AoD9oGgXRSSCcDxGIXv8Xnglo5+/psGFuXTUx4mnMF/oPtxSVpA
+ r6tmnl8sCQdH+SgftlXDB3gao1QYjPI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730830143;
+ s=susede2_ed25519; t=1730830155;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KhekdkZhUHByuX/bAG5X14KofCT3sNGTNq5z6SJyTGs=;
- b=1t8mRKIZruZDF4EW6CuzCIBmDbAloybxID4ZXPgCnLnGRjF9eJEQ3tepJYJlHljt3oK5RE
- Z156ge579flr3PBA==
-Authentication-Results: smtp-out1.suse.de;
+ bh=cc02J7Qi4YnmbfZy5IwLDyF4tH4FljYthlF9eUkNHaQ=;
+ b=X7NhYoHh1yMhJieWFZ2IBWVa39ubL84dbxmmrUFxpXaGO65e0ErTGh90KPFpHaknd7w0KR
+ gJHeE2I5X7VXtCDQ==
+Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730830142; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1730830154; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KhekdkZhUHByuX/bAG5X14KofCT3sNGTNq5z6SJyTGs=;
- b=prmUf+2bHY6ljNyok/uUJeuqjQ42GznLi6HF8ukOzXLbAygmZSP2NKORfOjP0BlV6JPzUT
- WoA+ti0U4pfUiSiLCUerORC96qUiK0qf9MTGxsYKkTuqEBxt6YjYwc7HrlF2+RfraImcIj
- 1UOUDVd2Nul4yur8qX4SRA1anU7qDiQ=
+ bh=cc02J7Qi4YnmbfZy5IwLDyF4tH4FljYthlF9eUkNHaQ=;
+ b=F3kqLMmDr++20L0jx0R2kPu0t4dU3l66rFIGu1fMTddT6IIFykp5VUj8PbvF7KpCOD5jg3
+ J8tdIBMUMJ+0jG4Tz7VH5TLMDZd0jbsi770IoRa2WuOTbtMrEjbmQ2S577linUlj8iwUTu
+ K7oNAzvng6ASY8IYzl3wOxBvZMne8WE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730830142;
+ s=susede2_ed25519; t=1730830154;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KhekdkZhUHByuX/bAG5X14KofCT3sNGTNq5z6SJyTGs=;
- b=wpL1N88pYvoYD5OrBaP5fES/W70NTT/Zt8xqYehFyWUf6EHiEOAIqFu1quLOUPM1CVcALX
- I5QHG9LB0Tt+ptDA==
+ bh=cc02J7Qi4YnmbfZy5IwLDyF4tH4FljYthlF9eUkNHaQ=;
+ b=hcetf/Fdrfk6iHhPhS1yV/Lkp+nsSVcCHLaLqRiNitksV/XHoFhSf46Qg2n1jVEQty2EX4
+ 6+l1jA0jpe8IiLCQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 064AA1394A;
- Tue,  5 Nov 2024 18:08:59 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D84871394A;
+ Tue,  5 Nov 2024 18:09:12 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id IECJLztfKmeCZwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 05 Nov 2024 18:08:59 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iIBmJ0hfKmeCZwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 05 Nov 2024 18:09:12 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 05/22] tests/qtest/migration: Move bootfile code to its own
- file
-Date: Tue,  5 Nov 2024 15:08:20 -0300
-Message-Id: <20241105180837.5990-6-farosas@suse.de>
+Subject: [PATCH 10/22] tests/qtest/migration: Isolate test initialization
+Date: Tue,  5 Nov 2024 15:08:25 -0300
+Message-Id: <20241105180837.5990-11-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20241105180837.5990-1-farosas@suse.de>
 References: <20241105180837.5990-1-farosas@suse.de>
@@ -89,17 +88,17 @@ Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_SEVEN(0.00)[7];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -123,259 +122,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the code that creates the guest binary out of migration-test and
-into the qtest/migration/ directory, along with the rest of the
-a-b-kernel code.
+We currently have some environment validation to perform and flags to
+set during the initialization of the tests. To be able to add more
+migration test binaries, we'll need these tasks to be in their own
+function so they can be called from more than one place.
 
-That code is part of the basic infrastructure of migration tests, it
-shouldn't be among the tests themselves.
+Move the initialization code to a function and introduce the
+MigrationTestEnv structure to hold the flags that are accessed during
+test registration.
 
-Also take the chance and rename migration-test.h, which is too generic
-a name for this header which contains only values related to guest
-memory offsets.
+Make the env object static to avoid have to change all the code to
+pass it around. Similarly with the tmpfs variable, which is used
+extensively.
+
+Note: I'm keeping the new functions in migration-test.c because they
+are going to be moved in the next patch to the correct place.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/meson.build                       |  8 ++-
- tests/qtest/migration-helpers.c               |  1 +
- tests/qtest/migration-test.c                  | 58 +--------------
- tests/qtest/migration/bootfile.c              | 70 +++++++++++++++++++
- .../{migration-test.h => bootfile.h}          |  9 ++-
- 5 files changed, 86 insertions(+), 60 deletions(-)
- create mode 100644 tests/qtest/migration/bootfile.c
- rename tests/qtest/migration/{migration-test.h => bootfile.h} (85%)
+ tests/qtest/migration-test.c           | 103 ++++++++++++++++---------
+ tests/qtest/migration/migration-util.c |   1 -
+ tests/qtest/migration/migration-util.h |   4 +-
+ 3 files changed, 69 insertions(+), 39 deletions(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 8ea126c2d8..f6001a0b0f 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -328,7 +328,11 @@ endif
- 
- tpmemu_files = ['tpm-emu.c', 'tpm-util.c', 'tpm-tests.c']
- 
--migration_files = [files('migration-helpers.c')]
-+migration_files = [files(
-+  'migration-helpers.c',
-+  'migration/bootfile.c',
-+)]
-+
- if gnutls.found()
-   migration_files += [files('../unit/crypto-tls-psk-helpers.c'), gnutls]
- 
-@@ -353,7 +357,7 @@ qtests = {
-   'tpm-tis-i2c-test': [io, tpmemu_files, 'qtest_aspeed.c'],
-   'tpm-tis-device-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
-   'tpm-tis-device-test': [io, tpmemu_files, 'tpm-tis-util.c'],
--  'virtio-net-failover': files('migration-helpers.c'),
-+  'virtio-net-failover': migration_files,
-   'vmgenid-test': files('boot-sector.c', 'acpi-utils.c'),
-   'netdev-socket': files('netdev-socket.c', '../unit/socket-helpers.c'),
- }
-diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-index 3f8ba7fa8e..2786f9c860 100644
---- a/tests/qtest/migration-helpers.c
-+++ b/tests/qtest/migration-helpers.c
-@@ -21,6 +21,7 @@
- #include "qemu/memalign.h"
- 
- #include "migration-helpers.h"
-+#include "migration/bootfile.h"
- 
- /*
-  * Number of seconds we wait when looking for migration
 diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 61c8cf043f..599adc422c 100644
+index 30b833e082..e482758ffc 100644
 --- a/tests/qtest/migration-test.c
 +++ b/tests/qtest/migration-test.c
-@@ -24,7 +24,7 @@
- #include "ppc-util.h"
+@@ -33,7 +33,6 @@
  
- #include "migration-helpers.h"
--#include "migration/migration-test.h"
-+#include "migration/bootfile.h"
- #ifdef CONFIG_GNUTLS
- # include "tests/unit/crypto-tls-psk-helpers.h"
- # ifdef CONFIG_TASN1
-@@ -135,58 +135,6 @@ static bool ufd_version_check(void)
+ unsigned start_address;
+ unsigned end_address;
+-static bool uffd_feature_thread_id;
+ static QTestMigrationState src_state;
+ static QTestMigrationState dst_state;
+ 
+@@ -85,6 +84,8 @@ typedef enum PostcopyRecoveryFailStage {
  static char *tmpfs;
  static char *bootpath;
  
--/* The boot file modifies memory area in [start_address, end_address)
-- * repeatedly. It outputs a 'B' at a fixed rate while it's still running.
-- */
--#include "migration/i386/a-b-bootblock.h"
--#include "migration/aarch64/a-b-kernel.h"
--#include "migration/ppc64/a-b-kernel.h"
--#include "migration/s390x/a-b-bios.h"
--
--static void bootfile_delete(void)
--{
--    if (!bootpath) {
--        return;
--    }
--    unlink(bootpath);
--    g_free(bootpath);
--    bootpath = NULL;
--}
--
--static void bootfile_create(char *dir, bool suspend_me)
--{
--    const char *arch = qtest_get_arch();
--    unsigned char *content;
--    size_t len;
--
--    bootfile_delete();
--    bootpath = g_strdup_printf("%s/bootsect", dir);
--    if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
--        /* the assembled x86 boot sector should be exactly one sector large */
--        g_assert(sizeof(x86_bootsect) == 512);
--        x86_bootsect[SYM_suspend_me - SYM_start] = suspend_me;
--        content = x86_bootsect;
--        len = sizeof(x86_bootsect);
--    } else if (g_str_equal(arch, "s390x")) {
--        content = s390x_elf;
--        len = sizeof(s390x_elf);
--    } else if (strcmp(arch, "ppc64") == 0) {
--        content = ppc64_kernel;
--        len = sizeof(ppc64_kernel);
--    } else if (strcmp(arch, "aarch64") == 0) {
--        content = aarch64_kernel;
--        len = sizeof(aarch64_kernel);
--        g_assert(sizeof(aarch64_kernel) <= ARM_TEST_MAX_KERNEL_SIZE);
--    } else {
--        g_assert_not_reached();
--    }
--
--    FILE *bootfile = fopen(bootpath, "wb");
--
--    g_assert_cmpint(fwrite(content, len, 1, bootfile), ==, 1);
--    fclose(bootfile);
--}
--
++MigrationTestEnv *migration_get_env(void);
++
  /*
   * Wait for some output in the serial output file,
   * we get an 'A' followed by an endless string of 'B's
-@@ -737,7 +685,7 @@ static int migrate_start(QTestState **from, QTestState **to,
+@@ -971,6 +972,8 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+ static void migrate_postcopy_complete(QTestState *from, QTestState *to,
+                                       MigrateCommon *args)
+ {
++    MigrationTestEnv *env = migration_get_env();
++
+     wait_for_migration_complete(from);
  
-     dst_state = (QTestMigrationState) { };
-     src_state = (QTestMigrationState) { };
--    bootfile_create(tmpfs, args->suspend_me);
-+    bootpath = bootfile_create(arch, tmpfs, args->suspend_me);
-     src_state.suspend_me = args->suspend_me;
+     if (args->start.suspend_me) {
+@@ -981,7 +984,7 @@ static void migrate_postcopy_complete(QTestState *from, QTestState *to,
+     /* Make sure we get at least one "B" on destination */
+     wait_for_serial("dest_serial");
  
-     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-@@ -3482,7 +3430,7 @@ static QTestState *dirtylimit_start_vm(void)
-     QTestState *vm = NULL;
-     g_autofree gchar *cmd = NULL;
+-    if (uffd_feature_thread_id) {
++    if (env->uffd_feature_thread_id) {
+         read_blocktime(to);
+     }
  
--    bootfile_create(tmpfs, false);
-+    bootpath = bootfile_create(qtest_get_arch(), tmpfs, false);
-     cmd = g_strdup_printf("-accel kvm,dirty-ring-size=4096 "
-                           "-name dirtylimit-test,debug-threads=on "
-                           "-m 150M -smp 1 "
-diff --git a/tests/qtest/migration/bootfile.c b/tests/qtest/migration/bootfile.c
-new file mode 100644
-index 0000000000..8f75f64093
---- /dev/null
-+++ b/tests/qtest/migration/bootfile.c
-@@ -0,0 +1,70 @@
-+/*
-+ * Guest code setup for migration tests
-+ *
-+ * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
-+ *   based on the vhost-user-test.c that is:
-+ *      Copyright (c) 2014 Virtual Open Systems Sarl.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+/*
-+ * The boot file modifies memory area in [start_address, end_address)
-+ * repeatedly. It outputs a 'B' at a fixed rate while it's still running.
-+ */
-+#include "bootfile.h"
-+#include "i386/a-b-bootblock.h"
-+#include "aarch64/a-b-kernel.h"
-+#include "ppc64/a-b-kernel.h"
-+#include "s390x/a-b-bios.h"
-+
-+static char *bootpath;
-+
-+void bootfile_delete(void)
-+{
-+    if (!bootpath) {
-+        return;
-+    }
-+    unlink(bootpath);
-+    g_free(bootpath);
-+    bootpath = NULL;
-+}
-+
-+char *bootfile_create(const char *arch, char *dir, bool suspend_me)
-+{
-+    unsigned char *content;
-+    size_t len;
-+
-+    bootfile_delete();
-+    bootpath = g_strdup_printf("%s/bootsect", dir);
-+    if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-+        /* the assembled x86 boot sector should be exactly one sector large */
-+        g_assert(sizeof(x86_bootsect) == 512);
-+        x86_bootsect[SYM_suspend_me - SYM_start] = suspend_me;
-+        content = x86_bootsect;
-+        len = sizeof(x86_bootsect);
-+    } else if (g_str_equal(arch, "s390x")) {
-+        content = s390x_elf;
-+        len = sizeof(s390x_elf);
-+    } else if (strcmp(arch, "ppc64") == 0) {
-+        content = ppc64_kernel;
-+        len = sizeof(ppc64_kernel);
-+    } else if (strcmp(arch, "aarch64") == 0) {
-+        content = aarch64_kernel;
-+        len = sizeof(aarch64_kernel);
-+        g_assert(sizeof(aarch64_kernel) <= ARM_TEST_MAX_KERNEL_SIZE);
-+    } else {
-+        g_assert_not_reached();
+@@ -3419,63 +3422,97 @@ static void test_dirty_limit(void)
+     migrate_end(from, to, true);
+ }
+ 
+-int main(int argc, char **argv)
++MigrationTestEnv *migration_get_env(void)
+ {
+-    bool has_kvm, has_tcg;
+-    bool has_uffd, is_x86;
+-    const char *arch;
++    static MigrationTestEnv *env;
+     g_autoptr(GError) err = NULL;
+-    const char *qemu_src = getenv(QEMU_ENV_SRC);
+-    const char *qemu_dst = getenv(QEMU_ENV_DST);
+-    int ret;
+ 
+-    g_test_init(&argc, &argv, NULL);
++    if (env) {
++        return env;
 +    }
 +
-+    FILE *bootfile = fopen(bootpath, "wb");
-+
-+    g_assert_cmpint(fwrite(content, len, 1, bootfile), ==, 1);
-+    fclose(bootfile);
-+
-+    return bootpath;
++    env = g_new0(MigrationTestEnv, 1);
++    env->qemu_src = getenv(QEMU_ENV_SRC);
++    env->qemu_dst = getenv(QEMU_ENV_DST);
+ 
+     /*
+      * The default QTEST_QEMU_BINARY must always be provided because
+      * that is what helpers use to query the accel type and
+      * architecture.
+      */
+-    if (qemu_src && qemu_dst) {
++    if (env->qemu_src && env->qemu_dst) {
+         g_test_message("Only one of %s, %s is allowed",
+                        QEMU_ENV_SRC, QEMU_ENV_DST);
+         exit(1);
+     }
+ 
+-    has_kvm = qtest_has_accel("kvm");
+-    has_tcg = qtest_has_accel("tcg");
++    env->has_kvm = qtest_has_accel("kvm");
++    env->has_tcg = qtest_has_accel("tcg");
+ 
+-    if (!has_tcg && !has_kvm) {
++    if (!env->has_tcg && !env->has_kvm) {
+         g_test_skip("No KVM or TCG accelerator available");
+-        return 0;
++        return env;
+     }
+ 
+-    has_uffd = ufd_version_check(&uffd_feature_thread_id);
+-    arch = qtest_get_arch();
+-    is_x86 = !strcmp(arch, "i386") || !strcmp(arch, "x86_64");
++    env->has_dirty_ring = kvm_dirty_ring_supported();
++    env->has_uffd = ufd_version_check(&env->uffd_feature_thread_id);
++    env->arch = qtest_get_arch();
++    env->is_x86 = !strcmp(env->arch, "i386") || !strcmp(env->arch, "x86_64");
+ 
+-    tmpfs = g_dir_make_tmp("migration-test-XXXXXX", &err);
+-    if (!tmpfs) {
++    env->tmpfs = g_dir_make_tmp("migration-test-XXXXXX", &err);
++    if (!env->tmpfs) {
+         g_test_message("Can't create temporary directory in %s: %s",
+                        g_get_tmp_dir(), err->message);
+     }
+-    g_assert(tmpfs);
++    g_assert(env->tmpfs);
+ 
++    return env;
 +}
-diff --git a/tests/qtest/migration/migration-test.h b/tests/qtest/migration/bootfile.h
-similarity index 85%
-rename from tests/qtest/migration/migration-test.h
-rename to tests/qtest/migration/bootfile.h
-index 194df7df6f..4f5099d765 100644
---- a/tests/qtest/migration/migration-test.h
-+++ b/tests/qtest/migration/bootfile.h
-@@ -5,8 +5,8 @@
-  * See the COPYING file in the top-level directory.
-  */
- 
--#ifndef MIGRATION_TEST_H
--#define MIGRATION_TEST_H
-+#ifndef BOOTFILE_H
-+#define BOOTFILE_H
- 
- /* Common */
- #define TEST_MEM_PAGE_SIZE 4096
-@@ -33,4 +33,7 @@
-  */
- #define ARM_TEST_MAX_KERNEL_SIZE (512 * 1024)
- 
--#endif /* MIGRATION_TEST_H */
-+void bootfile_delete(void);
-+char *bootfile_create(const char *arch, char *dir, bool suspend_me);
 +
-+#endif /* BOOTFILE_H */
++static int migration_env_clean(MigrationTestEnv *env)
++{
++    char *tmpfs;
++    int ret = 0;
++
++    if (!env) {
++        return ret;
++    }
++
++    tmpfs = env->tmpfs;
++    ret = rmdir(tmpfs);
++    if (ret != 0) {
++        g_test_message("unable to rmdir: path (%s): %s",
++                       tmpfs, strerror(errno));
++    }
++    g_free(tmpfs);
++
++    return ret;
++}
++
++int main(int argc, char **argv)
++{
++    MigrationTestEnv *env;
++    int ret;
++
++    g_test_init(&argc, &argv, NULL);
++    env = migration_get_env();
+     module_call_init(MODULE_INIT_QOM);
+ 
++    tmpfs = env->tmpfs;
++
+     migration_test_add("/migration/bad_dest", test_baddest);
+ #ifndef _WIN32
+     migration_test_add("/migration/analyze-script", test_analyze_script);
+ #endif
+ 
+-    if (is_x86) {
++    if (env->is_x86) {
+         migration_test_add("/migration/precopy/unix/suspend/live",
+                            test_precopy_unix_suspend_live);
+         migration_test_add("/migration/precopy/unix/suspend/notlive",
+                            test_precopy_unix_suspend_notlive);
+     }
+ 
+-    if (has_uffd) {
++    if (env->has_uffd) {
+         migration_test_add("/migration/postcopy/plain", test_postcopy);
+         migration_test_add("/migration/postcopy/recovery/plain",
+                            test_postcopy_recovery);
+@@ -3487,7 +3524,7 @@ int main(int argc, char **argv)
+                            test_postcopy_recovery_fail_handshake);
+         migration_test_add("/migration/postcopy/recovery/double-failures/reconnect",
+                            test_postcopy_recovery_fail_reconnect);
+-        if (is_x86) {
++        if (env->is_x86) {
+             migration_test_add("/migration/postcopy/suspend",
+                                test_postcopy_suspend);
+         }
+@@ -3542,7 +3579,7 @@ int main(int argc, char **argv)
+     migration_test_add("/migration/precopy/unix/tls/psk",
+                        test_precopy_unix_tls_psk);
+ 
+-    if (has_uffd) {
++    if (env->has_uffd) {
+         /*
+          * NOTE: psk test is enough for postcopy, as other types of TLS
+          * channels are tested under precopy.  Here what we want to test is the
+@@ -3617,9 +3654,9 @@ int main(int argc, char **argv)
+     if (g_test_slow()) {
+         migration_test_add("/migration/auto_converge",
+                            test_auto_converge);
+-        if (g_str_equal(arch, "x86_64") &&
+-            has_kvm && kvm_dirty_ring_supported()) {
+-            migration_test_add("/migration/dirty_limit",
++        if (g_str_equal(env->arch, "x86_64") &&
++            env->has_kvm && env->has_dirty_ring) {
++            migration_test_add("/dirty_limit",
+                                test_dirty_limit);
+         }
+     }
+@@ -3670,7 +3707,7 @@ int main(int argc, char **argv)
+ #endif /* CONFIG_TASN1 */
+ #endif /* CONFIG_GNUTLS */
+ 
+-    if (g_str_equal(arch, "x86_64") && has_kvm && kvm_dirty_ring_supported()) {
++    if (g_str_equal(env->arch, "x86_64") && env->has_kvm && env->has_dirty_ring) {
+         migration_test_add("/migration/dirty_ring",
+                            test_precopy_unix_dirty_ring);
+         if (qtest_has_machine("pc") && g_test_slow()) {
+@@ -3684,12 +3721,8 @@ int main(int argc, char **argv)
+     g_assert_cmpint(ret, ==, 0);
+ 
+     bootfile_delete();
+-    ret = rmdir(tmpfs);
+-    if (ret != 0) {
+-        g_test_message("unable to rmdir: path (%s): %s",
+-                       tmpfs, strerror(errno));
+-    }
+-    g_free(tmpfs);
++    tmpfs = NULL;
++    ret = migration_env_clean(env);
+ 
+     return ret;
+ }
+diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
+index 858a6c9830..6874a7ad40 100644
+--- a/tests/qtest/migration/migration-util.c
++++ b/tests/qtest/migration/migration-util.c
+@@ -18,7 +18,6 @@
+ #include "qapi/qmp/qlist.h"
+ #include "qemu/cutils.h"
+ #include "qemu/memalign.h"
+-
+ #include "migration/bootfile.h"
+ #include "migration/migration-util.h"
+ 
+diff --git a/tests/qtest/migration/migration-util.h b/tests/qtest/migration/migration-util.h
+index ef94a6be02..e94d30a293 100644
+--- a/tests/qtest/migration/migration-util.h
++++ b/tests/qtest/migration/migration-util.h
+@@ -29,6 +29,7 @@ typedef struct MigrationTestEnv {
+     bool has_kvm;
+     bool has_tcg;
+     bool has_uffd;
++    bool uffd_feature_thread_id;
+     bool has_dirty_ring;
+     bool is_x86;
+     const char *arch;
+@@ -39,9 +40,6 @@ typedef struct MigrationTestEnv {
+ 
+ /* migration-util.c */
+ 
+-void migration_env_init(MigrationTestEnv *env);
+-int migration_env_clean(MigrationTestEnv *env);
+-
+ bool migrate_watch_for_events(QTestState *who, const char *name,
+                               QDict *event, void *opaque);
+ 
 -- 
 2.35.3
 
