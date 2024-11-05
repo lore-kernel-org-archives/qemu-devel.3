@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEBF6D3E77D
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C8FD3E77D
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SLL-00058k-NQ; Tue, 05 Nov 2024 17:48:11 -0500
+	id 1t8SNf-0001ql-2r; Tue, 05 Nov 2024 17:50:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SL5-0004xu-OJ
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:47:57 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SNC-0001GM-2d
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:50:11 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SL3-00048y-UE
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:47:55 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-431616c23b5so1584535e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:47:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SNA-0004Vf-5k
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:50:05 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43159c9f617so47277835e9.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:50:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730846872; x=1731451672; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730847001; x=1731451801; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cshkwIBAh9vxV4PdRAMkkgYPz+e65EDoyTAngUcARl0=;
- b=xPrAu3u+rZFv2LkM6PjsP0pLGN8BTZk8Gib9w5sGUphXOUijpi8tcph1ghcAZus9zO
- u4P1vpPMNS02A+0dmY6YJuvKzXZZizbAxKWo0W7jwd4jebSTa1cwLCxT16v1D+IsW9Uh
- 9YDseIpiE4OF/jRC3AHe/7EUpV+ihlCnIqgoMimwfbMJSUmdKg3apiXi920w4DTaOvD1
- M1gwCyUFy+4vSlWdy/k0yvyJK3luDcfG990yutdR1xfiB/uBe14zdYQrzFHU4HNntY7p
- lntL48348+8UCiL+foRW/RLyvzRLn9elhDKMfqrVr5Cl8Hm3ilUF93fJmkmU/nx93MfD
- MokA==
+ bh=FZBNgReI8SUv50NFFndKDx8AuBJGKT1IeMS1OHe8BPE=;
+ b=qYuKo+8VQDMN4lRAVZAnDH+U6yf3Frod8t5C9Bj4n0rHRhD38FKev/CKE9eEnGQBNO
+ wqF65WXc+CZAmgUPHEFTFwL5bI91AqnDyLxAMYt69VQmBW53M6dlYXoD5DzaDk9jJ94n
+ lcRt7q78Ayb6kYjbJrmlK0BXmZmOtdAdSkPrqvBRzsmdY4zUCpTyAQJy22pY/o/UizCa
+ e1gCZuOxR2XCKa4RMLWSZfZEFFykuhpMjr9rAN9FrfeBKO8kfxZ1sV39XcSX2odVDxZ1
+ uYqmJLq1Oi2hQHQQA+abLi2/B8yUpjqB5SA2vhKdk4o4aPkJEjhqKMT1EO4R84U42onX
+ 902Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730846872; x=1731451672;
+ d=1e100.net; s=20230601; t=1730847001; x=1731451801;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cshkwIBAh9vxV4PdRAMkkgYPz+e65EDoyTAngUcARl0=;
- b=MBKz8LbZ51jRRddV+q/SZhAH2aXuukWeqEZDgV/9WHlKjXFtV4RvVIksDjK5ZjFGwN
- KSd2tap65Btp/iEFvDZDAUAENiD5NxHuURvI+Y69BR5lRRAL9YJENYxhnu9erG6/RkWu
- amh5obCBexnHAJZPJtA9/bvoqloQn0LcWfGvuQYWrAlhTBPgHKGIjVEBs574nBMvEdC6
- kyoVfqNVrmk7CIAXqs10JqfdG+I/mKPGHzqQW8l8HgIRbSPY4kBDDhppOvQOx/PecY6k
- 7GboMwwu18Ssk8omouCff/Y2sUKjJiZLIBk4+UgB/TdWw9T8J/WK8vVGKMVbWaT07S7U
- T2lA==
-X-Gm-Message-State: AOJu0YyADvdagXO+hA8d8DF1ude63DK+i9T0AbLovlqTjVX0J5sP50fe
- 1bbOsb6d037YNlh8NdKOewIl+A8gBvGMDaC+sUhUh07ys5B3J2soSD/KiETqO9rYnzFy4wR1fam
- RMq7kRw==
-X-Google-Smtp-Source: AGHT+IGi6bc6ki4aEg7ax3doaY5+nj6C9Zbe93AYubOp+76oypBycycSXq2O6Xhxv1T2m+JvBhRsxQ==
-X-Received: by 2002:a05:600c:35c4:b0:42c:b54c:a6d7 with SMTP id
- 5b1f17b1804b1-432a9ae746fmr2836965e9.14.1730846871895; 
- Tue, 05 Nov 2024 14:47:51 -0800 (PST)
+ bh=FZBNgReI8SUv50NFFndKDx8AuBJGKT1IeMS1OHe8BPE=;
+ b=sUEhlrT5lg/nmlTZNC2Pc29eqbf9NvJl3W7/MFDoVYTg8Y0s0HuaQ5DHhv9lrntab8
+ jlwtRyyQOieGzCZFCGR96f6smk9a+Z2pO5xrl/RRsKr2u9JrKKUAhRZy+TJ0HeRak/Cp
+ o50fJ/C1S14aZb16PFSZAkm1s6sG2BudeqE0YlhzoJF4roo3mHiGN+1LebIK1sdQQ0On
+ wLELugS7Mq+EruAC+b38k43YYwIYYlpf57AYQl9OPh6xC2ObBYe1WffgQk2eyS861WL6
+ i4SsgOdHBThZNATY5O4lyQHjspewrdBCLRA+uGi8+5Fnm2twEUHSUjEW+40PQVkAx63Y
+ 40vw==
+X-Gm-Message-State: AOJu0YzqbmfAaxDQHXhxW7d0MfkMI2bYqCB2/yVUu+GWOBUprGn1ZbGh
+ vAgITCrWaYsBIGMQDAWLUKPr5igCOG5YFpOzKTAMcvxnU/+21rPaERRQdXEEC8OAeVBIPcccfK0
+ X9FqlRQ==
+X-Google-Smtp-Source: AGHT+IHG+aGkTksvzwhpNcCEZ2DioZMrm8mtadoSVauStNEXoQM/F7FVnFcbHTKaaaUkZY4ZP4acBA==
+X-Received: by 2002:a5d:4bc4:0:b0:37d:528d:b8ad with SMTP id
+ ffacd0b85a97d-380610f830cmr27452621f8f.6.1730847001241; 
+ Tue, 05 Nov 2024 14:50:01 -0800 (PST)
 Received: from localhost.localdomain ([154.14.63.34])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c116ac7dsm17369292f8f.105.2024.11.05.14.47.51
+ ffacd0b85a97d-381c113e5cbsm17470035f8f.80.2024.11.05.14.49.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 14:47:51 -0800 (PST)
+ Tue, 05 Nov 2024 14:50:00 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 04/29] hw/microblaze/s3adsp1800: Rename unimplemented MMIO
- region as xps_gpio
-Date: Tue,  5 Nov 2024 22:47:02 +0000
-Message-ID: <20241105224727.53059-5-philmd@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 28/29] hw/usb/hcd-ehci-sysbus: Prefer DEFINE_TYPES() macro
+Date: Tue,  5 Nov 2024 22:47:26 +0000
+Message-ID: <20241105224727.53059-29-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241105224727.53059-1-philmd@linaro.org>
 References: <20241105224727.53059-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,30 +95,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The machine datasheet mentions the GPIO device as 'xps_gpio'.
-Rename it accordingly to easily find its documentation.
+From: Bernhard Beschow <shentey@gmail.com>
 
+The naming of the TypeInfo array is inspired by hcd-ohci-sysbus.
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20241103133412.73536-25-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-Id: <20241105130431.22564-5-philmd@linaro.org>
 ---
- hw/microblaze/petalogix_s3adsp1800_mmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/usb/hcd-ehci-sysbus.c | 118 +++++++++++++++++----------------------
+ 1 file changed, 50 insertions(+), 68 deletions(-)
 
-diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-index 37e9a05a62a..581b0411e29 100644
---- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-+++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-@@ -124,7 +124,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, ETHLITE_BASEADDR);
-     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[ETHLITE_IRQ]);
+diff --git a/hw/usb/hcd-ehci-sysbus.c b/hw/usb/hcd-ehci-sysbus.c
+index 2b1652f7a8b..eb7df93ac2d 100644
+--- a/hw/usb/hcd-ehci-sysbus.c
++++ b/hw/usb/hcd-ehci-sysbus.c
+@@ -19,7 +19,6 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/usb/hcd-ehci.h"
+ #include "migration/vmstate.h"
+-#include "qemu/module.h"
  
--    create_unimplemented_device("gpio", GPIO_BASEADDR, 0x10000);
-+    create_unimplemented_device("xps_gpio", GPIO_BASEADDR, 0x10000);
+ static const VMStateDescription vmstate_ehci_sysbus = {
+     .name        = "ehci-sysbus",
+@@ -97,17 +96,6 @@ static void ehci_sysbus_class_init(ObjectClass *klass, void *data)
+     set_bit(DEVICE_CATEGORY_USB, dc->categories);
+ }
  
-     microblaze_load_kernel(cpu, ddr_base, ram_size,
-                            machine->initrd_filename,
+-static const TypeInfo ehci_type_info = {
+-    .name          = TYPE_SYS_BUS_EHCI,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(EHCISysBusState),
+-    .instance_init = ehci_sysbus_init,
+-    .instance_finalize = ehci_sysbus_finalize,
+-    .abstract      = true,
+-    .class_init    = ehci_sysbus_class_init,
+-    .class_size    = sizeof(SysBusEHCIClass),
+-};
+-
+ static void ehci_platform_class_init(ObjectClass *oc, void *data)
+ {
+     SysBusEHCIClass *sec = SYS_BUS_EHCI_CLASS(oc);
+@@ -118,12 +106,6 @@ static void ehci_platform_class_init(ObjectClass *oc, void *data)
+     set_bit(DEVICE_CATEGORY_USB, dc->categories);
+ }
+ 
+-static const TypeInfo ehci_platform_type_info = {
+-    .name          = TYPE_PLATFORM_EHCI,
+-    .parent        = TYPE_SYS_BUS_EHCI,
+-    .class_init    = ehci_platform_class_init,
+-};
+-
+ static void ehci_exynos4210_class_init(ObjectClass *oc, void *data)
+ {
+     SysBusEHCIClass *sec = SYS_BUS_EHCI_CLASS(oc);
+@@ -134,12 +116,6 @@ static void ehci_exynos4210_class_init(ObjectClass *oc, void *data)
+     set_bit(DEVICE_CATEGORY_USB, dc->categories);
+ }
+ 
+-static const TypeInfo ehci_exynos4210_type_info = {
+-    .name          = TYPE_EXYNOS4210_EHCI,
+-    .parent        = TYPE_SYS_BUS_EHCI,
+-    .class_init    = ehci_exynos4210_class_init,
+-};
+-
+ static void ehci_aw_h3_class_init(ObjectClass *oc, void *data)
+ {
+     SysBusEHCIClass *sec = SYS_BUS_EHCI_CLASS(oc);
+@@ -150,12 +126,6 @@ static void ehci_aw_h3_class_init(ObjectClass *oc, void *data)
+     set_bit(DEVICE_CATEGORY_USB, dc->categories);
+ }
+ 
+-static const TypeInfo ehci_aw_h3_type_info = {
+-    .name          = TYPE_AW_H3_EHCI,
+-    .parent        = TYPE_SYS_BUS_EHCI,
+-    .class_init    = ehci_aw_h3_class_init,
+-};
+-
+ static void ehci_npcm7xx_class_init(ObjectClass *oc, void *data)
+ {
+     SysBusEHCIClass *sec = SYS_BUS_EHCI_CLASS(oc);
+@@ -168,12 +138,6 @@ static void ehci_npcm7xx_class_init(ObjectClass *oc, void *data)
+     set_bit(DEVICE_CATEGORY_USB, dc->categories);
+ }
+ 
+-static const TypeInfo ehci_npcm7xx_type_info = {
+-    .name          = TYPE_NPCM7XX_EHCI,
+-    .parent        = TYPE_SYS_BUS_EHCI,
+-    .class_init    = ehci_npcm7xx_class_init,
+-};
+-
+ static void ehci_tegra2_class_init(ObjectClass *oc, void *data)
+ {
+     SysBusEHCIClass *sec = SYS_BUS_EHCI_CLASS(oc);
+@@ -184,12 +148,6 @@ static void ehci_tegra2_class_init(ObjectClass *oc, void *data)
+     set_bit(DEVICE_CATEGORY_USB, dc->categories);
+ }
+ 
+-static const TypeInfo ehci_tegra2_type_info = {
+-    .name          = TYPE_TEGRA2_EHCI,
+-    .parent        = TYPE_SYS_BUS_EHCI,
+-    .class_init    = ehci_tegra2_class_init,
+-};
+-
+ static void ehci_ppc4xx_init(Object *o)
+ {
+     EHCISysBusState *s = SYS_BUS_EHCI(o);
+@@ -207,13 +165,6 @@ static void ehci_ppc4xx_class_init(ObjectClass *oc, void *data)
+     set_bit(DEVICE_CATEGORY_USB, dc->categories);
+ }
+ 
+-static const TypeInfo ehci_ppc4xx_type_info = {
+-    .name          = TYPE_PPC4xx_EHCI,
+-    .parent        = TYPE_SYS_BUS_EHCI,
+-    .class_init    = ehci_ppc4xx_class_init,
+-    .instance_init = ehci_ppc4xx_init,
+-};
+-
+ /*
+  * Faraday FUSBH200 USB 2.0 EHCI
+  */
+@@ -282,24 +233,55 @@ static void fusbh200_ehci_class_init(ObjectClass *oc, void *data)
+     set_bit(DEVICE_CATEGORY_USB, dc->categories);
+ }
+ 
+-static const TypeInfo ehci_fusbh200_type_info = {
+-    .name          = TYPE_FUSBH200_EHCI,
+-    .parent        = TYPE_SYS_BUS_EHCI,
+-    .instance_size = sizeof(FUSBH200EHCIState),
+-    .instance_init = fusbh200_ehci_init,
+-    .class_init    = fusbh200_ehci_class_init,
++static const TypeInfo ehci_sysbus_types[] = {
++    {
++        .name          = TYPE_SYS_BUS_EHCI,
++        .parent        = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(EHCISysBusState),
++        .instance_init = ehci_sysbus_init,
++        .instance_finalize = ehci_sysbus_finalize,
++        .abstract      = true,
++        .class_init    = ehci_sysbus_class_init,
++        .class_size    = sizeof(SysBusEHCIClass),
++    },
++    {
++        .name          = TYPE_PLATFORM_EHCI,
++        .parent        = TYPE_SYS_BUS_EHCI,
++        .class_init    = ehci_platform_class_init,
++    },
++    {
++        .name          = TYPE_EXYNOS4210_EHCI,
++        .parent        = TYPE_SYS_BUS_EHCI,
++        .class_init    = ehci_exynos4210_class_init,
++    },
++    {
++        .name          = TYPE_AW_H3_EHCI,
++        .parent        = TYPE_SYS_BUS_EHCI,
++        .class_init    = ehci_aw_h3_class_init,
++    },
++    {
++        .name          = TYPE_NPCM7XX_EHCI,
++        .parent        = TYPE_SYS_BUS_EHCI,
++        .class_init    = ehci_npcm7xx_class_init,
++    },
++    {
++        .name          = TYPE_TEGRA2_EHCI,
++        .parent        = TYPE_SYS_BUS_EHCI,
++        .class_init    = ehci_tegra2_class_init,
++    },
++    {
++        .name          = TYPE_PPC4xx_EHCI,
++        .parent        = TYPE_SYS_BUS_EHCI,
++        .class_init    = ehci_ppc4xx_class_init,
++        .instance_init = ehci_ppc4xx_init,
++    },
++    {
++        .name          = TYPE_FUSBH200_EHCI,
++        .parent        = TYPE_SYS_BUS_EHCI,
++        .instance_size = sizeof(FUSBH200EHCIState),
++        .instance_init = fusbh200_ehci_init,
++        .class_init    = fusbh200_ehci_class_init,
++    },
+ };
+ 
+-static void ehci_sysbus_register_types(void)
+-{
+-    type_register_static(&ehci_type_info);
+-    type_register_static(&ehci_platform_type_info);
+-    type_register_static(&ehci_exynos4210_type_info);
+-    type_register_static(&ehci_aw_h3_type_info);
+-    type_register_static(&ehci_npcm7xx_type_info);
+-    type_register_static(&ehci_tegra2_type_info);
+-    type_register_static(&ehci_ppc4xx_type_info);
+-    type_register_static(&ehci_fusbh200_type_info);
+-}
+-
+-type_init(ehci_sysbus_register_types)
++DEFINE_TYPES(ehci_sysbus_types)
 -- 
 2.45.2
 
