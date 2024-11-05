@@ -4,100 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 522C1D36137
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 20:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4258AD35E3D
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 20:45:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Q4w-0005Qu-GJ; Tue, 05 Nov 2024 15:23:06 -0500
+	id 1t8QPC-0001UH-HL; Tue, 05 Nov 2024 15:44:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1t8Q4s-0005Q9-T1; Tue, 05 Nov 2024 15:23:03 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1t8Q4k-000103-Gl; Tue, 05 Nov 2024 15:23:02 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5JeTQB026507;
- Tue, 5 Nov 2024 20:22:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=6L7chL
- wQJEWYHaadkUwZQaQp1d+2KlgXljtSnPv8hFY=; b=MoXcSaqz7kuBOjv1pQojwW
- SYltpcFlIvIMWRky1yMVaRekJPfJNZBe+B2OrdwjMhnSMaFXHGp6iOmvQHd/zkCM
- hZBsso0yrMP2RYKCKb+96vMOqK2eWhJQN8Wx2XPkqJ2ZxFQOo+c6QsklHCczpP9C
- fJrE6q3CakRF/F4t6IS+/2opEsaoE/lzYd+i/qhF35Ktv7UBmYWWx3C7/dbZFzyk
- O7tnilUbZrB8pdrP9I0YaJUdyX9mOkwpnHXtDocz7CGgcXeyDD7KVFQPxAN4FEgD
- 2TxIq2cPjIi/hsjgHHeL9+vBLVI6aRCfsLHQXvG7RlJ1W91p3v/GmuW9NyarPo3Q
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42qsqg85fd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Nov 2024 20:22:45 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5Hhg14032050;
- Tue, 5 Nov 2024 20:22:45 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nydmmse4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Nov 2024 20:22:45 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A5KMiCP9306766
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 Nov 2024 20:22:44 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AA30058053;
- Tue,  5 Nov 2024 20:22:44 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F367258043;
- Tue,  5 Nov 2024 20:22:43 +0000 (GMT)
-Received: from [9.61.16.77] (unknown [9.61.16.77])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Tue,  5 Nov 2024 20:22:43 +0000 (GMT)
-Message-ID: <8b6d8bf1-d116-4a1f-ba89-e8b0faa5ff2b@linux.ibm.com>
-Date: Tue, 5 Nov 2024 15:22:42 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1t8QP4-0001Ti-HL; Tue, 05 Nov 2024 15:43:54 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1t8QP0-0003cU-LN; Tue, 05 Nov 2024 15:43:52 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 05FCB21E5F;
+ Tue,  5 Nov 2024 20:43:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1730839428; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=C9fLECKiSedarvOIO5ZAVVkrgdR/GUIR6ESjw0qifQ8=;
+ b=0CzAynwkNOQkk85+d0RJ+yMisBTHw4+Gqf8suCoiJHLnBmXGXRNBdQLuz1obLAJUXMiILq
+ 9EmeNR1mPqdVQsJWnTAGRa5rYXC4umOQ+hmMxQd97DUv4aYouOiymwNr6H30o94WbgkfY9
+ BREaaCX6x+iPboDT6HOKSwIJNsfmiEY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1730839428;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=C9fLECKiSedarvOIO5ZAVVkrgdR/GUIR6ESjw0qifQ8=;
+ b=xIORfUGY4bAL0HmwSmJehHFTrd1xp4meXxCg6qTVqxOp9pMJUSFowIJmSYfExAqKfpxBus
+ fF/AYAILFF6N4+BA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=I6upXl6Q;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=PveMPvSI
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1730839426; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=C9fLECKiSedarvOIO5ZAVVkrgdR/GUIR6ESjw0qifQ8=;
+ b=I6upXl6Q+n/gimgqaez3qXaCWv2LVQc2CgVUCTkazVWTc4mzDIcHA2AyJGV3d0KwJR2xeZ
+ iu0kdtYdXegpPg+bKfYpCxa5QG5rKT4deM3xMe545VwksLbqqJQXMkazeaYalWUpnr4Gre
+ 91b7NS7JZvNcvl4efhI4eHbMq6xbP/g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1730839426;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=C9fLECKiSedarvOIO5ZAVVkrgdR/GUIR6ESjw0qifQ8=;
+ b=PveMPvSI2oV4yO/uN7BzE2bWiv5LNUAdY7O3XR3s8INlYhmKxlgKHOkrHHDdmHFybYX12g
+ 4wQTHvjyZCA3TXDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7942E1394A;
+ Tue,  5 Nov 2024 20:43:45 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id G5IIEIGDKmcmEAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 05 Nov 2024 20:43:45 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Ivan Klokov <ivan.klokov@syntacore.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, farosas@redhat.com, lvivier@redhat.com,
+ pbonzini@redhat.com, Ivan Klokov <ivan.klokov@syntacore.com>
+Subject: Re: [RFC PATCH v5 1/2] target/riscv: Add RISC-V CSR qtest support
+In-Reply-To: <20241105142840.59617-2-ivan.klokov@syntacore.com>
+References: <20241105142840.59617-1-ivan.klokov@syntacore.com>
+ <20241105142840.59617-2-ivan.klokov@syntacore.com>
+Date: Tue, 05 Nov 2024 17:43:42 -0300
+Message-ID: <87zfmdwgw1.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 14/19] s390x: Add individual loadparm assignment to CCW
- device
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: frankja@linux.ibm.com, Sebastian Mitterle <smitterl@redhat.com>,
- Boqiao Fu <bfu@redhat.com>
-References: <20241020012953.1380075-1-jrossi@linux.ibm.com>
- <20241020012953.1380075-15-jrossi@linux.ibm.com>
- <fc4fc429-6084-4b6d-aeb7-2948aa9df3b6@redhat.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <fc4fc429-6084-4b6d-aeb7-2948aa9df3b6@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: rrhGOPGjpEv4StlXjOKK6eCIWWRZQGXc
-X-Proofpoint-ORIG-GUID: rrhGOPGjpEv4StlXjOKK6eCIWWRZQGXc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
- clxscore=1011 spamscore=0 mlxlogscore=900 mlxscore=0 impostorscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411050155
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 05FCB21E5F
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[13];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ FREEMAIL_CC(0.00)[nongnu.org,dabbelt.com,wdc.com,gmail.com,ventanamicro.com,linux.alibaba.com,redhat.com,syntacore.com];
+ RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ MID_RHS_MATCH_FROM(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim, syntacore.com:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,174 +131,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Ivan Klokov <ivan.klokov@syntacore.com> writes:
 
-
-On 10/31/24 4:45 AM, Thomas Huth wrote:
-> On 20/10/2024 03.29, jrossi@linux.ibm.com wrote:
->> From: Jared Rossi <jrossi@linux.ibm.com>
->>
->> Add a loadparm property to the VirtioCcwDevice object so that different
->> loadparms can be defined on a per-device basis for CCW boot devices.
->>
->> The machine/global loadparm is still supported. If both a global and 
->> per-device
->> loadparm are defined, the per-device value will override the global 
->> value for
->> that device, but any other devices that do not specify a per-device 
->> loadparm
->> will still use the global loadparm.
->>
->> It is invalid to assign a loadparm to a non-boot device.
->>
->> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
->> ---
->>   hw/s390x/ccw-device.h       |  2 ++
->>   hw/s390x/ipl.h              |  3 +-
->>   include/hw/s390x/ipl/qipl.h |  1 +
->>   hw/s390x/ccw-device.c       | 46 +++++++++++++++++++++++++
->>   hw/s390x/ipl.c              | 68 ++++++++++++++++++++++---------------
->>   hw/s390x/s390-virtio-ccw.c  | 18 +---------
->>   hw/s390x/sclp.c             |  9 ++---
->>   pc-bios/s390-ccw/main.c     | 10 ++++--
->>   8 files changed, 102 insertions(+), 55 deletions(-)
->>
->> diff --git a/hw/s390x/ccw-device.h b/hw/s390x/ccw-device.h
->> index 5feeb0ee7a..1e1737c0f3 100644
->> --- a/hw/s390x/ccw-device.h
->> +++ b/hw/s390x/ccw-device.h
->> @@ -26,6 +26,8 @@ struct CcwDevice {
->>       CssDevId dev_id;
->>       /* The actual busid of the virtual subchannel. */
->>       CssDevId subch_id;
->> +    /* If set, use this loadparm value when device is boot target */
->> +    uint8_t loadparm[8];
->>   };
->>   typedef struct CcwDevice CcwDevice;
->>   diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
->> index fa394c339d..b670bad551 100644
->> --- a/hw/s390x/ipl.h
->> +++ b/hw/s390x/ipl.h
->> @@ -21,7 +21,8 @@
->>     #define DIAG308_FLAGS_LP_VALID 0x80
->>   -int s390_ipl_set_loadparm(uint8_t *loadparm);
->> +void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp);
->> +void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp);
->>   void s390_ipl_update_diag308(IplParameterBlock *iplb);
->>   int s390_ipl_prepare_pv_header(Error **errp);
->>   int s390_ipl_pv_unpack(void);
->> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
->> index 0ef04af027..b67d2ae061 100644
->> --- a/include/hw/s390x/ipl/qipl.h
->> +++ b/include/hw/s390x/ipl/qipl.h
->> @@ -18,6 +18,7 @@
->>     #define QIPL_ADDRESS  0xcc
->>   #define LOADPARM_LEN    8
->> +#define NO_LOADPARM "\0\0\0\0\0\0\0\0"
->>     /*
->>    * The QEMU IPL Parameters will be stored at absolute address
->> diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
->> index 14c24e3890..230cc09e03 100644
->> --- a/hw/s390x/ccw-device.c
->> +++ b/hw/s390x/ccw-device.c
->> @@ -13,6 +13,10 @@
->>   #include "ccw-device.h"
->>   #include "hw/qdev-properties.h"
->>   #include "qemu/module.h"
->> +#include "ipl.h"
->> +#include "qapi/visitor.h"
->> +#include "qemu/ctype.h"
->> +#include "qapi/error.h"
->>     static void ccw_device_refill_ids(CcwDevice *dev)
->>   {
->> @@ -37,10 +41,52 @@ static bool ccw_device_realize(CcwDevice *dev, 
->> Error **errp)
->>       return true;
->>   }
->>   +static void ccw_device_get_loadparm(Object *obj, Visitor *v,
->> +                                 const char *name, void *opaque,
->> +                                 Error **errp)
->> +{
->> +    CcwDevice *dev = CCW_DEVICE(obj);
->> +    char *str = g_strndup((char *) dev->loadparm, 
->> sizeof(dev->loadparm));
->> +
->> +    visit_type_str(v, name, &str, errp);
->> +    g_free(str);
->> +}
->> +
->> +static void ccw_device_set_loadparm(Object *obj, Visitor *v,
->> +                                 const char *name, void *opaque,
->> +                                 Error **errp)
->> +{
->> +    CcwDevice *dev = CCW_DEVICE(obj);
->> +    char *val;
->> +    int index;
->> +
->> +    index = object_property_get_int(obj, "bootindex", NULL);
->> +
->> +    if (index < 0) {
->> +        error_setg(errp, "LOADPARM is only valid for boot devices!");
->> +    }
->> +
->> +    if (!visit_type_str(v, name, &val, errp)) {
->> +        return;
->> +    }
->> +
->> +    s390_ipl_fmt_loadparm(dev->loadparm, val, errp);
->> +}
->> +
->> +static const PropertyInfo ccw_loadparm = {
->> +    .name  = "ccw_loadparm",
->> +    .description = "Up to 8 chars in set of [A-Za-z0-9. ] to pass"
->> +            " to the guest loader/kernel",
->> +    .get = ccw_device_get_loadparm,
->> +    .set = ccw_device_set_loadparm,
->> +};
->> +
->>   static Property ccw_device_properties[] = {
->>       DEFINE_PROP_CSS_DEV_ID("devno", CcwDevice, devno),
->>       DEFINE_PROP_CSS_DEV_ID_RO("dev_id", CcwDevice, dev_id),
->>       DEFINE_PROP_CSS_DEV_ID_RO("subch_id", CcwDevice, subch_id),
->> +    DEFINE_PROP("loadparm", CcwDevice, loadparm, ccw_loadparm,
->> +            typeof(uint8_t[8])),
->>       DEFINE_PROP_END_OF_LIST(),
->>   };
+> The RISC-V architecture supports the creation of custom
+> CSR-mapped devices. It would be convenient to test them in the same way
+> as MMIO-mapped devices. To do this, a new call has been added
+> to read/write CSR registers.
 >
->  Hi Jared,
+> Signed-off-by: Ivan Klokov <ivan.klokov@syntacore.com>
+> ---
+>  hw/riscv/riscv_hart.c  | 65 ++++++++++++++++++++++++++++++++++++++++++
+>  tests/qtest/libqtest.c | 27 ++++++++++++++++++
+>  tests/qtest/libqtest.h | 14 +++++++++
+>  3 files changed, 106 insertions(+)
 >
-> while doing more tests with these new boot order patches, I realized 
-> that really *all* virtio-ccw devices now have a "loadparm" property, 
-> also devices like virtio-gpu and virtio-tablet, where it does not make 
-> sense at all.
->
-> Wouldn't it be better to add this property only to the virtio-ccw-blk 
-> device?
->
-> Also, is there a way to specify the "loadparm" property for 
-> virtio-scsi devices? It does not seem to be available for "scsi-hd" ?
->
->   Thomas
->
+> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+> index 613ea2aaa0..e65a1a28a1 100644
+> --- a/hw/riscv/riscv_hart.c
+> +++ b/hw/riscv/riscv_hart.c
+> @@ -21,6 +21,8 @@
+>  #include "qemu/osdep.h"
+>  #include "qapi/error.h"
+>  #include "qemu/module.h"
+> +#include "qemu/cutils.h"
+> +#include "sysemu/qtest.h"
+>  #include "sysemu/reset.h"
+>  #include "hw/sysbus.h"
+>  #include "target/riscv/cpu.h"
+> @@ -42,6 +44,66 @@ static void riscv_harts_cpu_reset(void *opaque)
+>      cpu_reset(CPU(cpu));
+>  }
+>  
+> +#ifndef CONFIG_USER_ONLY
+> +static uint64_t csr_call(char *cmd, uint64_t cpu_num, int csrno,
+> +                                uint64_t *val)
 
-Hi Thomas,
+Bad indentation here^
 
-Yes, the loadparm applies to all CCW devices.  I tried to point this out 
-in the
-cover letter of V2, but I guess it wasn’t clear what I meant, so I apologize
-for not bringing more attention to it.  But also yes, as a result of this,
-non-CCW type devices do not have the loadparm attribute, which is why
-scsi-hd is not included.
+> +{
+> +    RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(cpu_num));
+> +    CPURISCVState *env = &cpu->env;
+> +
+> +    int ret = RISCV_EXCP_NONE;
+> +    if (strcmp(cmd, "get_csr") == 0) {
+> +        ret = riscv_csrr(env, csrno, (target_ulong *)val);
+> +    } else if (strcmp(cmd, "set_csr") == 0) {
+> +        ret = riscv_csrrw(env, csrno, NULL, *(target_ulong *)val, MAKE_64BIT_MASK(0, TARGET_LONG_BITS));
 
-The attribute could be implemented on a device-type basis, but it would 
-not be
-*only* virtio-blk-ccw.  Any device that can generate an IPLB could set the
-loadparm.  I agree, though, that it doesn’t really make sense for some 
-device
-types like virtio-gpu since they cannot have the prerequisite bootindex.
+Please run scripts/checkpatch.pl before submitting:
 
-I’ll try to quickly put together a more efficient implementation of the
-loadparm that isn't too disruptive.
+$ ./scripts/checkpatch.pl build/0001-target-riscv-Add-RISC-V-CSR-qtest-support.patch
+ERROR: line over 90 characters
+#46: FILE: hw/riscv/riscv_hart.c:58:
++        ret = riscv_csrrw(env, csrno, NULL, *(target_ulong *)val, MAKE_64BIT_MASK(0, TARGET_LONG_BITS));
 
-Regards,
-  Jared Rossi
+> +    }
+> +
+> +    if (ret == RISCV_EXCP_NONE) {
+> +        ret = 0;
+> +    } else {
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+> +static bool csr_qtest_callback(CharBackend *chr, gchar **words)
+> +{
+> +    if (strcmp(words[0], "csr") == 0) {
+> +
+> +        uint64_t res, cpu;
+> +
+> +        uint64_t val;
+> +        int rc, csr;
+> +
+> +        rc = qemu_strtou64(words[2], NULL, 0, &cpu);
+> +        g_assert(rc == 0);
+> +        rc = qemu_strtoi(words[3], NULL, 0, &csr);
+> +        g_assert(rc == 0);
+> +        rc = qemu_strtou64(words[4], NULL, 0, &val);
+> +        g_assert(rc == 0);
+> +        res = csr_call(words[1], cpu, csr, &val);
+> +
+> +        qtest_send_prefix(chr);
+> +        qtest_sendf(chr, "OK %"PRIx64" "TARGET_FMT_lx"\n", res, (target_ulong)val);
+
+You could omit 'res', as it will always be 0, otherwise csr_call() will
+have aborted already.
+
+> +
+> +        return true;
+> +    }
+> +
+> +    return false;
+> +}
+> +
+> +static void riscv_cpu_register_csr_qtest_callback(void)
+> +{
+> +    static gsize reinit_done;
+> +    if (g_once_init_enter(&reinit_done)) {
+> +        qtest_set_command_cb(csr_qtest_callback);
+> +
+> +        g_once_init_leave(&reinit_done, 1);
+> +    }
+
+This seems to be the same as the simpler:
+
+    static GOnce once;
+    g_once(&once, (GThreadFunc)qtest_set_command_cb, csr_qtest_callback);
+
+> +}
+> +#endif
+> +
+>  static bool riscv_hart_realize(RISCVHartArrayState *s, int idx,
+>                                 char *cpu_type, Error **errp)
+>  {
+> @@ -49,6 +111,9 @@ static bool riscv_hart_realize(RISCVHartArrayState *s, int idx,
+>      qdev_prop_set_uint64(DEVICE(&s->harts[idx]), "resetvec", s->resetvec);
+>      s->harts[idx].env.mhartid = s->hartid_base + idx;
+>      qemu_register_reset(riscv_harts_cpu_reset, &s->harts[idx]);
+> +#ifndef CONFIG_USER_ONLY
+> +    riscv_cpu_register_csr_qtest_callback();
+> +#endif
+
+This could be one level up at riscv_harts_realize().
+
+>      return qdev_realize(DEVICE(&s->harts[idx]), NULL, errp);
+>  }
+>  
+> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+> index 9d07de1fbd..661f7f0e84 100644
+> --- a/tests/qtest/libqtest.c
+> +++ b/tests/qtest/libqtest.c
+> @@ -1202,6 +1202,33 @@ uint64_t qtest_rtas_call(QTestState *s, const char *name,
+>      return 0;
+>  }
+>  
+> +static void qtest_rsp_csr(QTestState *s, uint64_t *val)
+> +{
+> +    gchar **args;
+> +    uint64_t ret;
+> +    int rc;
+> +
+> +    args = qtest_rsp_args(s, 3);
+> +
+> +    rc = qemu_strtou64(args[1], NULL, 16, &ret);
+> +    g_assert(rc == 0);
+> +    rc = qemu_strtou64(args[2], NULL, 16, val);
+> +    g_assert(rc == 0);
+> +
+> +    g_strfreev(args);
+> +}
+> +
+> +uint64_t qtest_csr_call(QTestState *s, const char *name,
+> +                         uint64_t cpu, int csr,
+> +                         uint64_t *val)
+> +{
+> +    qtest_sendf(s, "csr %s 0x%"PRIx64" %d 0x%"PRIx64"\n",
+> +                    name, cpu, csr, *val);
+> +
+> +    qtest_rsp_csr(s, val);
+> +    return 0;
+> +}
+> +
+>  void qtest_add_func(const char *str, void (*fn)(void))
+>  {
+>      gchar *path = g_strdup_printf("/%s/%s", qtest_get_arch(), str);
+> diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+> index beb96b18eb..b516a16bd4 100644
+> --- a/tests/qtest/libqtest.h
+> +++ b/tests/qtest/libqtest.h
+> @@ -575,6 +575,20 @@ uint64_t qtest_rtas_call(QTestState *s, const char *name,
+>                           uint32_t nargs, uint64_t args,
+>                           uint32_t nret, uint64_t ret);
+>  
+> +/**
+> + * qtest_csr_call:
+> + * @s: #QTestState instance to operate on.
+> + * @name: name of the command to call.
+> + * @cpu: hart number.
+> + * @csr: CSR number.
+> + * @val: Value for reading/writing.
+> + *
+> + * Call an RISC-V CSR read/write function
+> + */
+> +uint64_t qtest_csr_call(QTestState *s, const char *name,
+> +                         uint64_t cpu, int csr,
+> +                         unsigned long *val);
+> +
+>  /**
+>   * qtest_bufread:
+>   * @s: #QTestState instance to operate on.
 
