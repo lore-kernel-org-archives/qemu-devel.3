@@ -4,84 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84287D3E77A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:41:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC2DD3E77C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SEG-0003qk-AG; Tue, 05 Nov 2024 17:40:52 -0500
+	id 1t8SKn-0004vt-40; Tue, 05 Nov 2024 17:47:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8SEB-0003qW-T8; Tue, 05 Nov 2024 17:40:48 -0500
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SKl-0004vf-J7
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:47:35 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8SEA-0003AX-C4; Tue, 05 Nov 2024 17:40:47 -0500
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-84fe1bc5284so2283279241.0; 
- Tue, 05 Nov 2024 14:40:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SKj-00045X-Ph
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:47:35 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-37d3e8d923fso4041738f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:47:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730846444; x=1731451244; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wigJ1UnWmMX0x09YnYXSSLLIJ50XleHXgHbUUqXrP9U=;
- b=Kto49BUSCUQVy01xIELF8ZIrkSnx7cGRvSyHPSCQNxtg4MQbbdrDZWOQnKrgd8AmFq
- yBoF5KTjzkxQn1VeMBvy94FJaAHANfMkSFxeAMTzKnMO3xMujr6Vq0XgdUEPamVSY3oc
- GYiTSd1Ft0D+i45PsdcuadtZsS0xuhN9qPuhiTK9w9U/T9xRnm8BPiSo+pOCccs2DDvn
- rB15yFjgMm8wKZDBjDIcGSvCQ1BPDeq95Fte8YSEe2TbJy9j3ihg6KXz1KqI9thXWjkw
- olt/dn13KC92ovwIjaIlrADf4ChtRDnH1qZyye7bVxZd3gmjjjPpzyphJYXNCXjfIxWb
- iecA==
+ d=linaro.org; s=google; t=1730846851; x=1731451651; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Xr6rUvd0S2qYFXciRZZ0R0I5akd+1oUBmW5fE2xCu5Q=;
+ b=El48us06ZbFTrTmcG1NqUK1QU5EZBuwLSbZBVzNmfBKLnJI2116E1o4Q+aauBJs04l
+ eZuzSWMvGBQK1X5TZQ2rys0XMx354HsqX/mdp/UG0/7CxyF8yrmcVBmWP4UMIZIYQBvu
+ JXFWCNPaeJwHEN5KCt+/AtTAN0r0hpZibklz3ZzYfaiRkupDlIzNl5RPl8aI3LtJj34D
+ rZ5SEmFmcZGkSDPYXzEjM9BXkWpdrn5m3crTezER/BEOKVYU8iRZVkKSx5vlqftWen7a
+ niFtCOmXWO58ZZUdqFFZJBJtM2u2E2UGEig0MwgPVnTupH1+EK9xpgcspYm/9F433tAT
+ xD1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730846444; x=1731451244;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wigJ1UnWmMX0x09YnYXSSLLIJ50XleHXgHbUUqXrP9U=;
- b=GSqnmErHDwA8UrYPfpZWxIbpNNcGRrLKeoQIgNyEC8+Ymhwpl9Na23/zZCveMVvo/2
- FDV7/hAWRQe3e8Hit8zbgTohXODhTaEwq5Q9HxobjOTpD9HdhKH67yOrtK8/K4/eZMvD
- R771valLDO4GtP8APJVSf3NYQlS5JkacvZBQb7CEQuThh8BhgF1u3ODQlVmN9P51wUge
- OSq7/gmWF4V7NF6zlTbtfbD1WPqLWGbPWPRsmI9LhMBfE1luHipST5ZWxLhjIiEqrxfc
- TG20Iq7HssUhgBVqFy0RAklfKSj3GwxRdGk4BjMQwV4JLBw3JLB2TOttFnfqguHTqiYB
- GLIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU8Kmr3Rr1YmHUgfs+amcLOhja3FxwGiZlfgUC1afmtDbNcvH+Ub3MXe3Xv6wA9NlzDNFRf7CnO3g==@nongnu.org
-X-Gm-Message-State: AOJu0YwXYyJXJEa8yKpbUUxix+wUh/fP4OWyEZbyRAlzUzDkcIlQJb9d
- YfSGyIrb8WIobAhcvUEq8aK1bsUGG4EmW+RDKXL3u27HKG7zMV8/c9ofbGQD4+yemOM1F61fNwF
- 5JKtZtsJaLAas75tdBU/uqXE+7Hc=
-X-Google-Smtp-Source: AGHT+IH90+EsbQnMLWrsYvFkFvSzT6IFJX6YnzslVUlSpnRnQ9EF0eECM8l6z/5hUMkymcevgAPqdKMZu9ikxjVLcR0=
-X-Received: by 2002:a05:6102:3909:b0:4a5:c74b:66a7 with SMTP id
- ada2fe7eead31-4a962f3bd39mr16793151137.19.1730846442842; Tue, 05 Nov 2024
- 14:40:42 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730846851; x=1731451651;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Xr6rUvd0S2qYFXciRZZ0R0I5akd+1oUBmW5fE2xCu5Q=;
+ b=t2E4aSVvyX0gUUVTHQnWNfXjL50bqNBjSu3oWrT9QZzPNsPha0IcorKsmf160hZpXx
+ gQIehvt1bq43jz+gUn4lwNe9EsNED+FHNogjtgAW5wWqS7To0Hj/6FDYW7TwlbdHjbp9
+ mU1AZ6/eXGkBpNDkDbXGUUM7WTD54GsJC512NmrP5/rW7gfP8dlBKf5iR3pihLAHlr66
+ +3z2aLOwhqsQlDUII65yyIZqef7zaXkn67mfCSGCLeTRxegNwD5y2sEIP9FvwGYkuBa1
+ qZVGLDuDFPIt+0J9Trh5YTO7U3aDDSNAiGyGHtKNOAkyjxdxX7beHUWGCX5dTQiCGf6l
+ MvHA==
+X-Gm-Message-State: AOJu0Yy0d6rkyd+PCwOC6QaVY9NMF7EC8Lp+7gvVt6guXnVvBBK+tY3M
+ 4ttXBKkrm9ehbyLbK+Q1/jElrxwwkG/mBkK02NkQ02YhoRvytpOICVtePCQJjvSV/ahSGYacwRH
+ APmm8Rw==
+X-Google-Smtp-Source: AGHT+IH7LVKy2lFV+z1k7QN+EdHPdSLSYfMM0OyN6GJdxGQoBVEot2/ICTh1ijaOUGLXtxFESaAh/w==
+X-Received: by 2002:adf:e992:0:b0:37d:4a82:6412 with SMTP id
+ ffacd0b85a97d-380611e4ea6mr25613551f8f.46.1730846851019; 
+ Tue, 05 Nov 2024 14:47:31 -0800 (PST)
+Received: from localhost.localdomain ([89.101.241.141])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c10d4d82sm17392950f8f.45.2024.11.05.14.47.28
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 05 Nov 2024 14:47:29 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/29] Misc HW patches for 2024-11-05
+Date: Tue,  5 Nov 2024 22:46:58 +0000
+Message-ID: <20241105224727.53059-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-References: <20241105130431.22564-1-philmd@linaro.org>
- <20241105130431.22564-6-philmd@linaro.org>
-In-Reply-To: <20241105130431.22564-6-philmd@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 6 Nov 2024 08:40:16 +1000
-Message-ID: <CAKmqyKNHA7CR70HrvB2Ao4Yr=H3fziMO8pZkVZiQ-YrXuAmCLw@mail.gmail.com>
-Subject: Re: [PATCH 05/19] hw/microblaze/s3adsp1800: Declare machine type
- using DEFINE_TYPES macro
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, devel@lists.libvirt.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,66 +90,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 5, 2024 at 11:05=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Replace DEFINE_MACHINE() by DEFINE_TYPES(), converting the
-> class_init() handler.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+The following changes since commit 44a9394b1d272b53306d097d4bc20ff7ad14b159:
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+  Merge tag 'pull-nvme-20241104' of https://gitlab.com/birkelund/qemu into staging (2024-11-05 14:23:22 +0000)
 
-Alistair
+are available in the Git repository at:
 
-> ---
->  hw/microblaze/petalogix_s3adsp1800_mmu.c | 17 +++++++++++++++--
->  1 file changed, 15 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/pet=
-alogix_s3adsp1800_mmu.c
-> index 581b0411e29..6c0f5c6c651 100644
-> --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> @@ -55,6 +55,9 @@
->  #define ETHLITE_IRQ         1
->  #define UARTLITE_IRQ        3
->
-> +#define TYPE_PETALOGIX_S3ADSP1800_MACHINE \
-> +            MACHINE_TYPE_NAME("petalogix-s3adsp1800")
-> +
->  static void
->  petalogix_s3adsp1800_init(MachineState *machine)
->  {
-> @@ -132,11 +135,21 @@ petalogix_s3adsp1800_init(MachineState *machine)
->                             NULL);
->  }
->
-> -static void petalogix_s3adsp1800_machine_init(MachineClass *mc)
-> +static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc, voi=
-d *data)
->  {
-> +    MachineClass *mc =3D MACHINE_CLASS(oc);
-> +
->      mc->desc =3D "PetaLogix linux refdesign for xilinx Spartan 3ADSP1800=
-";
->      mc->init =3D petalogix_s3adsp1800_init;
->      mc->is_default =3D true;
->  }
->
-> -DEFINE_MACHINE("petalogix-s3adsp1800", petalogix_s3adsp1800_machine_init=
-)
-> +static const TypeInfo petalogix_s3adsp1800_machine_types[] =3D {
-> +    {
-> +        .name           =3D TYPE_PETALOGIX_S3ADSP1800_MACHINE,
-> +        .parent         =3D TYPE_MACHINE,
-> +        .class_init     =3D petalogix_s3adsp1800_machine_class_init,
-> +    },
-> +};
-> +
-> +DEFINE_TYPES(petalogix_s3adsp1800_machine_types)
-> --
-> 2.45.2
->
->
+  https://github.com/philmd/qemu.git tags/hw-misc-20241105
+
+for you to fetch changes up to ddbb025aa942a5f4db66c6b09c2c69035e51a0d2:
+
+  hw/riscv/iommu: fix build error with clang (2024-11-05 22:46:39 +0000)
+
+----------------------------------------------------------------
+Misc HW patch queue
+
+- Deprecate a pair of untested microblaze big-endian machines (Philippe)
+- Arch-agnostic CPU topology checks at machine level (Zhao)
+- Cleanups on PPC E500 (Bernhard)
+- Various conversions to DEFINE_TYPES() macro (Bernhard)
+- Fix RISC-V _pext_u64() name clashing (Pierrick)
+
+----------------------------------------------------------------
+
+Bernhard Beschow (17):
+  hw/ppc/e500: Prefer QOM cast
+  hw/ppc/e500: Remove unused "irqs" parameter
+  hw/ppc/e500: Add missing device tree properties to i2c controller node
+  hw/ppc/mpc8544_guts: Populate POR PLL ratio status register
+  hw/i2c/mpc_i2c: Convert DPRINTF to trace events for register access
+  hw/i2c/mpc_i2c: Prefer DEFINE_TYPES() macro
+  hw/pci-host/ppce500: Reuse TYPE_PPC_E500_PCI_BRIDGE define
+  hw/pci-host/ppce500: Prefer DEFINE_TYPES() macro
+  hw/net/fsl_etsec/miim: Reuse MII constants
+  hw/net/fsl_etsec/etsec: Prefer DEFINE_TYPES() macro
+  hw/gpio/mpc8xxx: Prefer DEFINE_TYPES() macro
+  hw/ppc/mpc8544_guts: Prefer DEFINE_TYPES() macro
+  hw/sd/sdhci: Prefer DEFINE_TYPES() macro
+  hw/block/pflash_cfi01: Prefer DEFINE_TYPES() macro
+  hw/i2c/smbus_eeprom: Prefer DEFINE_TYPES() macro
+  hw/rtc/ds1338: Prefer DEFINE_TYPES() macro
+  hw/usb/hcd-ehci-sysbus: Prefer DEFINE_TYPES() macro
+
+Philippe Mathieu-Daudé (6):
+  target/microblaze: Rename CPU endianness property as 'little-endian'
+  hw/microblaze: Deprecate big-endian petalogix-ml605 & xlnx-zynqmp-pmu
+  hw/microblaze/s3adsp1800: Explicit CPU endianness
+  hw/microblaze/s3adsp1800: Rename unimplemented MMIO region as xps_gpio
+  hw/microblaze/s3adsp1800: Declare machine type using DEFINE_TYPES
+    macro
+  hw/core/machine: Add missing 'units.h' and 'error-report.h' headers
+
+Pierrick Bouvier (1):
+  hw/riscv/iommu: fix build error with clang
+
+Zhao Liu (5):
+  i386/cpu: Don't enumerate the "invalid" CPU topology level
+  hw/core: Make CPU topology enumeration arch-agnostic
+  qapi/qom: Define cache enumeration and properties for machine
+  hw/core: Check smp cache topology support for machine
+  hw/core: Add a helper to check the cache topology level
+
+ docs/about/deprecated.rst                     |   6 +
+ .../devices/microblaze-softmmu/default.mak    |   2 -
+ .../devices/microblazeel-softmmu/default.mak  |   5 +-
+ qapi/machine-common.json                      |  94 ++++++++++-
+ include/hw/boards.h                           |  16 ++
+ include/hw/i386/topology.h                    |  22 +--
+ target/i386/cpu.h                             |   4 +-
+ hw/block/pflash_cfi01.c                       |  21 +--
+ hw/core/machine-smp.c                         | 126 +++++++++++++++
+ hw/core/machine.c                             |  46 ++++++
+ hw/gpio/mpc8xxx.c                             |  22 ++-
+ hw/i2c/mpc_i2c.c                              |  29 ++--
+ hw/i2c/smbus_eeprom.c                         |  19 +--
+ hw/i386/x86-common.c                          |   4 +-
+ hw/microblaze/petalogix_ml605_mmu.c           |   9 +-
+ hw/microblaze/petalogix_s3adsp1800_mmu.c      |  21 ++-
+ hw/microblaze/xlnx-zynqmp-pmu.c               |  10 +-
+ hw/net/fsl_etsec/etsec.c                      |  22 ++-
+ hw/net/fsl_etsec/miim.c                       |  19 +--
+ hw/pci-host/ppce500.c                         |  44 +++--
+ hw/ppc/e500.c                                 |  10 +-
+ hw/ppc/mpc8544_guts.c                         |  32 ++--
+ hw/riscv/riscv-iommu.c                        |  23 ++-
+ hw/rtc/ds1338.c                               |  20 +--
+ hw/sd/sdhci.c                                 |  62 +++----
+ hw/usb/hcd-ehci-sysbus.c                      | 118 ++++++--------
+ target/i386/cpu.c                             | 151 +++++++++---------
+ target/microblaze/cpu.c                       |   2 +-
+ hw/i2c/trace-events                           |   5 +
+ 29 files changed, 616 insertions(+), 348 deletions(-)
+
+-- 
+2.45.2
+
 
