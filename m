@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE03CD1CA3A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A342D1CA3B
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DH4-0005lK-B9; Tue, 05 Nov 2024 01:42:47 -0500
+	id 1t8DCT-0006In-C5; Tue, 05 Nov 2024 01:38:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DEh-0003Ul-F3
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:40:28 -0500
+ id 1t8DCQ-00066H-VS
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:37:59 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DEa-0001w0-9p
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:40:13 -0500
+ id 1t8DCO-0001vj-CP
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:37:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788812; x=1762324812;
+ t=1730788676; x=1762324676;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=+RyN2ozpNF9/qWmSSJyynxhc2IsEJ+Gu8thAMTAlGko=;
- b=bpMcBrIaEuS8eG15sHJprjKq2P/bCUlxHliBH1377vHEKWzclQGFzWG9
- 7Ho8OFrRnFFRiiBCIfwe3U0yNXFvizn3yb9m2WViIzN8op0T5DsWs+BV6
- mlvWTBOsdFHRn3hiMk+z7H3ArsxWUBBVBZZAizMWrb1ghYKI3kGjU6P1Y
- dPcb+PjEBM++Aqhv3hk8n93NbJstzuccIrs9GjK7U1YoWThq0trdyT+VL
- US1muR3I2LtqWNFMrk/M1G0I79eAu1PiAKlDFsSA7tZitLKWey9kVqRUy
- VqkdKRyTFKirWAKP/7Xqo26QlGFOY/QYGzR4f29DZmnmhWQLBJREDqrTJ Q==;
-X-CSE-ConnectionGUID: DIy7Jf1WQEmj/lS1URSlxg==
-X-CSE-MsgGUID: +y/VQ/3PQ62KA4QHNm9KtQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689872"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689872"
+ bh=Uv4z8mL1bvbBNMAeIE2zAJ1MiSnqSKEkHnSLrWnImks=;
+ b=bwOx2qc2iq7Xfw37v+gjCKnrEQKGMkf+fTIYYVb8eGW/7Py43z04rZTm
+ 8Ra0YmQx12qEhHMlt3GFMhUh0RkHjolUkSyXaseHF0pvF6jY5QWNGjR+G
+ DtpkB9tAyFVvoilPPPruJQiLVbvO1oJOH0Nt/sZvMPyrWl83GUTMfuZGb
+ NF0ekyPqJXfUQ+3M8gA9Kz+8lfuM1AYjGhpCYtRjvwZlSjw13lWhrqkT0
+ UZub8Dm8KCcvcKfy+EvZaNDrEDwNMPng5JktleXSts6SWNNjawEhzM7/P
+ 9hScXbPelvEeNvOdrs80UTSaQNCHYW95Zm1UJfjNDn9RBgYGIU4qRv9sc w==;
+X-CSE-ConnectionGUID: u+vxIyeBTGyKMlO9dFyIww==
+X-CSE-MsgGUID: 5EVdNcIcS8S8PF35UaHLSg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689497"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689497"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:40:01 -0800
-X-CSE-ConnectionGUID: 5jqpsLxmSO+hY5dQHtlrcg==
-X-CSE-MsgGUID: fhbU8dw3QlKkdGhUX6WkBg==
+ 04 Nov 2024 22:37:44 -0800
+X-CSE-ConnectionGUID: uLi/5UJcRZuoX2fSx3LoXg==
+X-CSE-MsgGUID: uLUYXO3NRLOALI68fRxdFg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989877"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83988934"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:39:57 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:37:40 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -57,9 +57,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 51/60] i386/tdx: Mask off CPUID bits by unsupported XFAM
-Date: Tue,  5 Nov 2024 01:23:59 -0500
-Message-Id: <20241105062408.3533704-52-xiaoyao.li@intel.com>
+Subject: [PATCH v6 19/60] i386/tdx: Parse TDVF metadata for TDX VM
+Date: Tue,  5 Nov 2024 01:23:27 -0500
+Message-Id: <20241105062408.3533704-20-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
@@ -90,78 +90,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mask off the CPUID bits as unsupported if its matched XFAM bit is
-not supported. Otherwise, it might fail the check in setup_td_xfam() as
-unsupported XFAM being requested.
+After TDVF is loaded to bios MemoryRegion, it needs parse TDVF metadata.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/tdx.c | 38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ hw/i386/pc_sysfw.c         | 7 +++++++
+ target/i386/kvm/tdx-stub.c | 5 +++++
+ target/i386/kvm/tdx.c      | 5 +++++
+ target/i386/kvm/tdx.h      | 3 +++
+ 4 files changed, 20 insertions(+)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 5ac5f93907ca..e7e0f073dfc9 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -24,6 +24,7 @@
- #include <linux/kvm_para.h>
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index ef80281d28bb..5a373bf129a1 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -37,6 +37,7 @@
+ #include "hw/block/flash.h"
+ #include "sysemu/kvm.h"
+ #include "sev.h"
++#include "kvm/tdx.h"
  
- #include "cpu.h"
-+#include "cpu-internal.h"
- #include "host-cpu.h"
- #include "hw/i386/e820_memory_layout.h"
- #include "hw/i386/x86.h"
-@@ -585,6 +586,42 @@ static void tdx_mask_cpuid_by_attrs(uint32_t feature, uint32_t index,
+ #define FLASH_SECTOR_SIZE 4096
+ 
+@@ -280,5 +281,11 @@ void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
+         }
+ 
+         sev_encrypt_flash(gpa, ptr, size, &error_fatal);
++    } else if (is_tdx_vm()) {
++        ret = tdx_parse_tdvf(ptr, size);
++        if (ret) {
++            error_report("failed to parse TDVF for TDX VM");
++            exit(1);
++        }
      }
  }
- 
-+static void tdx_mask_cpuid_by_xfam(uint32_t feature, uint32_t index,
-+                                          int reg, uint32_t *value)
+diff --git a/target/i386/kvm/tdx-stub.c b/target/i386/kvm/tdx-stub.c
+index b614b46d3f4a..a064d583d393 100644
+--- a/target/i386/kvm/tdx-stub.c
++++ b/target/i386/kvm/tdx-stub.c
+@@ -6,3 +6,8 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+ {
+     return -EINVAL;
+ }
++
++int tdx_parse_tdvf(void *flash_ptr, int size)
 +{
-+    const FeatureWordInfo *f;
-+    const ExtSaveArea *esa;
-+    uint64_t unavail = 0;
-+    int i;
-+
-+    assert(tdx_caps);
-+
-+    for (i = 0; i < ARRAY_SIZE(x86_ext_save_areas); i++) {
-+        if ((1ULL << i) & tdx_caps->supported_xfam) {
-+            continue;
-+        }
-+
-+        if (!((1ULL << i) & CPUID_XSTATE_MASK)) {
-+            continue;
-+        }
-+
-+        esa = &x86_ext_save_areas[i];
-+        f = &feature_word_info[esa->feature];
-+        assert(f->type == CPUID_FEATURE_WORD);
-+        if (f->cpuid.eax != feature ||
-+            (f->cpuid.needs_ecx && f->cpuid.ecx != index) ||
-+            f->cpuid.reg != reg) {
-+            continue;
-+        }
-+
-+        unavail |= esa->bits;
-+    }
-+
-+    if (unavail) {
-+        *value &= ~unavail;
-+    }
++    return -EINVAL;
++}
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index d5ebc2430fd1..334dbe95cc77 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -338,6 +338,11 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+     return 0;
+ }
+ 
++int tdx_parse_tdvf(void *flash_ptr, int size)
++{
++    return tdvf_parse_metadata(&tdx_guest->tdvf, flash_ptr, size);
 +}
 +
- static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
-                                           uint32_t feature, uint32_t index,
-                                           int reg, uint32_t value)
-@@ -619,6 +656,7 @@ static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
-     }
+ static bool tdx_guest_get_sept_ve_disable(Object *obj, Error **errp)
+ {
+     TdxGuest *tdx = TDX_GUEST(obj);
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index e5d836805385..6b7926be3efe 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -6,6 +6,7 @@
+ #endif
  
-     tdx_mask_cpuid_by_attrs(feature, index, reg, &value);
-+    tdx_mask_cpuid_by_xfam(feature, index, reg, &value);
+ #include "confidential-guest.h"
++#include "hw/i386/tdvf.h"
  
-     e = cpuid_find_entry(&tdx_fixed0_bits.cpuid, feature, index);
-     if (e) {
+ #define TYPE_TDX_GUEST "tdx-guest"
+ #define TDX_GUEST(obj)  OBJECT_CHECK(TdxGuest, (obj), TYPE_TDX_GUEST)
+@@ -30,6 +31,7 @@ typedef struct TdxGuest {
+     char *mrownerconfig;    /* base64 encoded sha348 digest */
+ 
+     MemoryRegion *tdvf_mr;
++    TdxFirmware tdvf;
+ } TdxGuest;
+ 
+ #ifdef CONFIG_TDX
+@@ -40,5 +42,6 @@ bool is_tdx_vm(void);
+ 
+ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp);
+ void tdx_set_tdvf_region(MemoryRegion *tdvf_mr);
++int tdx_parse_tdvf(void *flash_ptr, int size);
+ 
+ #endif /* QEMU_I386_TDX_H */
 -- 
 2.34.1
 
