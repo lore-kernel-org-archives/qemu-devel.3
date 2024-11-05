@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F63FD2C11E
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:05:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C73D2C11E
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:05:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8L6O-0000re-KP; Tue, 05 Nov 2024 10:04:16 -0500
+	id 1t8L7K-0001iy-TC; Tue, 05 Nov 2024 10:05:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8L67-0000qP-No
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:04:01 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t8L7G-0001gv-RB
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:05:11 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8L65-0000sY-Ut
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:03:59 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43193678216so47929655e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 07:03:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t8L7D-00016W-Jr
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:05:10 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-7e6cbf6cd1dso3735989a12.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 07:05:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730819036; x=1731423836; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SQYS0DlDBWW5TkKFH2M/YnaXSSYT19q0Qc+ybblli20=;
- b=pmlHLf8gJChHXGGiHXvQtUF0FHiLMxXQnaHMt6t09DqRKiQF+bEVuKsjrhJuC0OQpa
- RuIP8YtvlADxs1FIbLGVciTYkxtD0qK8tDGjmqQ36RucYb06NDfa9XruwuhoxNQg4+PI
- V2uhwmjMvUdUnAdrE5G10+BnArJgpTs07sPgq4wW3baAvVjzGlmjXzJ66I0NgfezAs+c
- N2X2R2Z0JForzZXW7VllmhQhIQ6wvDwKsXa28X2Ag0CowGeljIF9Ze9BiF+leIlO0jXi
- KS2FZLCpXg7UzEbe3cztmRvwzdXG02od5l9h4NFdBxFQPqc5hbmvBveSruYzoUoNtUYY
- qK3Q==
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1730819105; x=1731423905;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=hZr7eV+xSvIa7Y8YpNFYfVPiKccOIrTfuXW0NMjtw+U=;
+ b=b3rSZat3IjM7TEmTgfcLBFSQ/tbj9db8Ta7iMVy/s8ql0FqpUKK0TBiMsNNYlGujP0
+ AFKD4RD2yRnV+MnvuA3o2JNTGkI4B4NkRUIo6LKNWEo7+fqo/PnaWAARS9PeXAupcX20
+ IUtOiqGOHwZCORfc8oyrmbcFyjTCDBn9h1UACxS7BjXxp5TKMwRctDv3v1aH3bT5+1ko
+ Ylqyk/RAH6t7FXRR1BnWlB5hM2BYCHd3Roqvk3cEbNwPpcQNaptp8j6uEAkO/id9720D
+ dMCmTTv9clqUUJwOKjztnCT/YF6Rn1vf2Ww10GhbjH6NG0MIKIHLnlnlnbZalKhq6tHC
+ XzpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730819036; x=1731423836;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SQYS0DlDBWW5TkKFH2M/YnaXSSYT19q0Qc+ybblli20=;
- b=fZY+HyKplZkNEht7GIfVYyzv9Pg1BzYftL/Rs9pAn2hDA7Up5OMmCDvASb1im9XmuG
- NamkM2hUFMv+sSXrsLLFUf92npwCfSEusWAVxXHes11x4PTwaUd7nAHvDShdBLS6ZsFj
- W7cGi0zpBMRT/E9EoqRgsp56LqqkKKoZXvaFd9Du+PcRDrhAq4XtTHQvVUv2UsBSISxk
- 2wT4HmdaCKs9BRLepGPQjMduhOV8Vl7maiTvLO1oT2PD8KC1V2aKOm/HGkHI/4JURlS5
- YEvqHBkPgeLwUvjgr+t2i4VNX3AbwsDegDoE8SQOFiioqLOIyjZiF+8QACjIzJDen1i0
- 0Pkw==
-X-Gm-Message-State: AOJu0YxaKu/8O6FLLwqJA8zmf4iWWpTRuEAqLd2dyvNNxGbJQsP4nFeV
- oPskPRM0/Km4SEXHzRUdcihbwc5KghECZlAiMQxW5bTty739IxMimS37kpuuLkGt9jJq7/fmNOw
- oy+s=
-X-Google-Smtp-Source: AGHT+IHfs0QLAR/HgRKbdDddYcw1+vZL+Io3azI+3PGkpBJGEPgyiHIpc47AqMmCQ54YV1/HlZhQNw==
-X-Received: by 2002:a05:600c:458e:b0:42c:baf9:bee7 with SMTP id
- 5b1f17b1804b1-4328250f211mr168768985e9.12.1730819035876; 
- Tue, 05 Nov 2024 07:03:55 -0800 (PST)
-Received: from stoup.. ([154.14.63.34]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bd9ca6f8sm221301855e9.39.2024.11.05.07.03.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 07:03:55 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PULL 4/4] tests/tcg: Add SIGRTMIN/SIGRTMAX test
-Date: Tue,  5 Nov 2024 15:03:48 +0000
-Message-ID: <20241105150348.446982-5-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241105150348.446982-1-richard.henderson@linaro.org>
-References: <20241105150348.446982-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1730819105; x=1731423905;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hZr7eV+xSvIa7Y8YpNFYfVPiKccOIrTfuXW0NMjtw+U=;
+ b=f9cNNGQ0y+HMYr9urXzr6BD3ddEp9Ksy1x+g2RYudWbGHLzVGtVzMogsIUaoovMbOC
+ r9boaXmTCea1DNXYGwIXJsNettv6WEscQ/bPEdkiCUkb2bpdqt0d9NlHcEQ9OuXvioRI
+ S47O+Nzr6gtY4uoRDsLukizP54w+lPxj1TWZSeB8kBcSHqU4wRgRC5PRyFQ23rp1pqaE
+ v2BLvlY1OJ7fHX2Kkxiy9AKC2UZcwQsCYkoL8L3zvYrnA2BOAdhUieWpLNmKkm74jZS5
+ OCA3R5477pEdiczmyOmOXvp6a6auSN8ZtEv+ADfPzZW58nQCWazoLRpIg5wwZ9DL0tjT
+ ZdAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVgXLW/4l25t1ew171twJY7Ave38rGjweX9+in/mbNS6UL+U2yOI5lEXrV68a52ovVcE2AcYOMpMOxA@nongnu.org
+X-Gm-Message-State: AOJu0YzW9HyhRJmhRtKzjhS53nudZgReRMmsQ8Cp3TUnAqU9t8Yx167z
+ CTikEqg/r8z7Uq5Z5UVSQCHW4hTtsiowX+Y0GJJ6/gGIBtzAmGDL1L3YRy1Neiw3MRSm2b+mG+i
+ pCkjydCWOILxKfAH3ALYOZ7xg6mn+Zm2qMwx/9A==
+X-Google-Smtp-Source: AGHT+IEkvFkI4XbADFaLvwJBXeOA2n5ywJhANJfpBFi+9ZiDPx407ciRE/9O33PENMg9saGeuCepvI+jJfNJD72fi64=
+X-Received: by 2002:a17:90b:4a07:b0:2e2:92dc:6fd4 with SMTP id
+ 98e67ed59e1d1-2e92ce74663mr27786193a91.23.1730819105370; Tue, 05 Nov 2024
+ 07:05:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241024200031.80327-1-iii@linux.ibm.com>
+ <20241024200031.80327-2-iii@linux.ibm.com>
+ <b8080e98-c292-4760-abd8-822a1aafc932@linaro.org>
+In-Reply-To: <b8080e98-c292-4760-abd8-822a1aafc932@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Tue, 5 Nov 2024 08:04:54 -0700
+Message-ID: <CANCZdfq77uHf83QeoJ5QbGn5oj9pMTOHO-wiO6huCRXoCTLS0Q@mail.gmail.com>
+Subject: Re: [PATCH 1/8] gdbstub: Allow the %d placeholder in the socket path
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>, Riku Voipio <riku.voipio@iki.fi>, 
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Kyle Evans <kevans@freebsd.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000f25bab06262bb9f9"
+Received-SPF: none client-ip=2607:f8b0:4864:20::530;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,121 +93,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+--000000000000f25bab06262bb9f9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Test the lowest and the highest real-time signals. This requires
-configuring the real-time signal mapping, and therefore some knowledge
-about the host. To this end, pass the emulator path in the QEMU
-environment variable to all tests (this should not disturb the existing
-ones), and assume that all hosts have signals 36-39 available.
+On Tue, Nov 5, 2024 at 7:41=E2=80=AFAM Richard Henderson <
+richard.henderson@linaro.org> wrote:
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20241029232211.206766-3-iii@linux.ibm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tests/tcg/multiarch/linux/linux-sigrtminmax.c | 74 +++++++++++++++++++
- tests/tcg/Makefile.target                     |  4 +-
- 2 files changed, 76 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/multiarch/linux/linux-sigrtminmax.c
+> On 10/24/24 20:59, Ilya Leoshkevich wrote:
+> > Just like for QEMU_LOG_FILENAME, replace %d with PID in the GDB socket
+> > path. This allows running multi-process applications with, e.g.,
+> > export QEMU_GDB=3D/tmp/qemu-%d.sock. Currently this is not possible,
+> > since the first process will cause the subsequent ones to fail due to
+> > not being able to bind() the GDB socket.
+> >
+> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> > ---
+> >   gdbstub/user.c | 10 ++++++++++
+> >   1 file changed, 10 insertions(+)
+> >
+> > diff --git a/gdbstub/user.c b/gdbstub/user.c
+> > index 0b4bfa9c488..cdf5affae15 100644
+> > --- a/gdbstub/user.c
+> > +++ b/gdbstub/user.c
+> > @@ -316,9 +316,19 @@ static bool gdb_accept_socket(int gdb_fd)
+> >
+> >   static int gdbserver_open_socket(const char *path)
+> >   {
+> > +    g_autoptr(GString) buf =3D g_string_new("");
+> >       struct sockaddr_un sockaddr =3D {};
+> > +    char *pid_placeholder;
+> >       int fd, ret;
+> >
+> > +    pid_placeholder =3D strstr(path, "%d");
+> > +    if (pid_placeholder !=3D NULL) {
+> > +        g_string_append_len(buf, path, pid_placeholder - path);
+> > +        g_string_append_printf(buf, "%d", getpid());
+>
+> qemu_get_thread_id().
+>
+> Otherwise,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>
 
-diff --git a/tests/tcg/multiarch/linux/linux-sigrtminmax.c b/tests/tcg/multiarch/linux/linux-sigrtminmax.c
-new file mode 100644
-index 0000000000..a7059aacd9
---- /dev/null
-+++ b/tests/tcg/multiarch/linux/linux-sigrtminmax.c
-@@ -0,0 +1,74 @@
-+/*
-+ * Test the lowest and the highest real-time signals.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdbool.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <unistd.h>
-+
-+/* For hexagon and microblaze. */
-+#ifndef __SIGRTMIN
-+#define __SIGRTMIN 32
-+#endif
-+
-+extern char **environ;
-+
-+static bool seen_sigrtmin, seen_sigrtmax;
-+
-+static void handle_signal(int sig)
-+{
-+    if (sig == SIGRTMIN) {
-+        seen_sigrtmin = true;
-+    } else if (sig == SIGRTMAX) {
-+        seen_sigrtmax = true;
-+    } else {
-+        _exit(1);
-+    }
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    char *qemu = getenv("QEMU");
-+    struct sigaction act;
-+
-+    assert(qemu);
-+
-+    if (!getenv("QEMU_RTSIG_MAP")) {
-+        char **new_argv = malloc((argc + 2) + sizeof(char *));
-+        int tsig1, hsig1, count1, tsig2, hsig2, count2;
-+        char rt_sigmap[64];
-+
-+        /* Re-exec with a mapping that includes SIGRTMIN and SIGRTMAX. */
-+        new_argv[0] = qemu;
-+        memcpy(&new_argv[1], argv, (argc + 1) * sizeof(char *));
-+        tsig1 = __SIGRTMIN;
-+        /* The host must have a few signals starting from this one. */
-+        hsig1 = 36;
-+        count1 = SIGRTMIN - __SIGRTMIN + 1;
-+        tsig2 = SIGRTMAX;
-+        hsig2 = hsig1 + count1;
-+        count2 = 1;
-+        snprintf(rt_sigmap, sizeof(rt_sigmap), "%d %d %d,%d %d %d",
-+                 tsig1, hsig1, count1, tsig2, hsig2, count2);
-+        setenv("QEMU_RTSIG_MAP", rt_sigmap, 0);
-+        assert(execve(new_argv[0], new_argv, environ) == 0);
-+        return EXIT_FAILURE;
-+    }
-+
-+    memset(&act, 0, sizeof(act));
-+    act.sa_handler = handle_signal;
-+    assert(sigaction(SIGRTMIN, &act, NULL) == 0);
-+    assert(sigaction(SIGRTMAX, &act, NULL) == 0);
-+
-+    assert(kill(getpid(), SIGRTMIN) == 0);
-+    assert(seen_sigrtmin);
-+    assert(kill(getpid(), SIGRTMAX) == 0);
-+    assert(seen_sigrtmax);
-+
-+    return EXIT_SUCCESS;
-+}
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-index 9722145b97..95ff76ea44 100644
---- a/tests/tcg/Makefile.target
-+++ b/tests/tcg/Makefile.target
-@@ -179,10 +179,10 @@ run-plugin-%-with-libmem.so: PLUGIN_ARGS=$(COMMA)inline=true
- 
- ifeq ($(filter %-softmmu, $(TARGET)),)
- run-%: %
--	$(call run-test, $<, $(QEMU) $(QEMU_OPTS) $<)
-+	$(call run-test, $<, env QEMU=$(QEMU) $(QEMU) $(QEMU_OPTS) $<)
- 
- run-plugin-%:
--	$(call run-test, $@, $(QEMU) $(QEMU_OPTS) \
-+	$(call run-test, $@, env QEMU=$(QEMU) $(QEMU) $(QEMU_OPTS) \
- 		-plugin $(PLUGIN_LIB)/$(call extract-plugin,$@)$(PLUGIN_ARGS) \
- 		-d plugin -D $*.pout \
- 		 $(call strip-plugin,$<))
--- 
-2.43.0
+Same.
 
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+
+--000000000000f25bab06262bb9f9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Nov 5, 2024 at 7:41=E2=80=AFA=
+M Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org">ric=
+hard.henderson@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">On 10/24/24 20:59, Ilya Leoshkevich wrote:<br>
+&gt; Just like for QEMU_LOG_FILENAME, replace %d with PID in the GDB socket=
+<br>
+&gt; path. This allows running multi-process applications with, e.g.,<br>
+&gt; export QEMU_GDB=3D/tmp/qemu-%d.sock. Currently this is not possible,<b=
+r>
+&gt; since the first process will cause the subsequent ones to fail due to<=
+br>
+&gt; not being able to bind() the GDB socket.<br>
+&gt; <br>
+&gt; Signed-off-by: Ilya Leoshkevich &lt;<a href=3D"mailto:iii@linux.ibm.co=
+m" target=3D"_blank">iii@linux.ibm.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0gdbstub/user.c | 10 ++++++++++<br>
+&gt;=C2=A0 =C2=A01 file changed, 10 insertions(+)<br>
+&gt; <br>
+&gt; diff --git a/gdbstub/user.c b/gdbstub/user.c<br>
+&gt; index 0b4bfa9c488..cdf5affae15 100644<br>
+&gt; --- a/gdbstub/user.c<br>
+&gt; +++ b/gdbstub/user.c<br>
+&gt; @@ -316,9 +316,19 @@ static bool gdb_accept_socket(int gdb_fd)<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0static int gdbserver_open_socket(const char *path)<br>
+&gt;=C2=A0 =C2=A0{<br>
+&gt; +=C2=A0 =C2=A0 g_autoptr(GString) buf =3D g_string_new(&quot;&quot;);<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0struct sockaddr_un sockaddr =3D {};<br>
+&gt; +=C2=A0 =C2=A0 char *pid_placeholder;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int fd, ret;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; +=C2=A0 =C2=A0 pid_placeholder =3D strstr(path, &quot;%d&quot;);<br>
+&gt; +=C2=A0 =C2=A0 if (pid_placeholder !=3D NULL) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_string_append_len(buf, path, pid_placeh=
+older - path);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_string_append_printf(buf, &quot;%d&quot=
+;, getpid());<br>
+<br>
+qemu_get_thread_id().<br>
+<br>
+Otherwise,<br>
+Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
+ro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br></blockqu=
+ote><div><br></div><div>Same.</div><div><br></div><div>Reviewed-by: Warner =
+Losh &lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;</div><div=
+>=C2=A0</div></div></div>
+
+--000000000000f25bab06262bb9f9--
 
