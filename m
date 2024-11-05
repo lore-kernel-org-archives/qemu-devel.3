@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF7BAD1CA3B
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B4BAD1CA3A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:53:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DED-0001XX-UE; Tue, 05 Nov 2024 01:39:50 -0500
+	id 1t8DHK-0006hx-TG; Tue, 05 Nov 2024 01:43:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DDn-00012V-Ep
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:32 -0500
+ id 1t8DEy-0003X1-Mc
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:40:45 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DDl-0001w0-Rk
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:23 -0500
+ id 1t8DEl-0001vd-3i
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:40:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788762; x=1762324762;
+ t=1730788823; x=1762324823;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ETTKI5+hacWoJJE2C+uh6AGfusJHWOqz7xoddYnIUoE=;
- b=FKDKrUoBUtKQuf/WXMH2bC+ksZYMtbrdC30yFkl0xtUQFRhDR3IbFJm5
- FoddTEQPgN9Bc9j7kK1LVBrnkABFHuiSNMgUYbSrNj/151dZc85nrGB+1
- YKl1NKy33Zx7kdqypQr5Pfw+/oWHrkyM4nAhVNwfUsXo0wOYntoQ0khGy
- rz25+N5uGQ12rUjKtU5JFRckVc1SJjGoQQWfk4+HsY3nxccs8zi/Qicu3
- mxh1Bq3NrcOXrA9ieOIa6A12zUxYDoX05QAVTOC+ad/qR5Zwqr3cl64dX
- +lxrnk5w68NpIXW9+rs4VzkvTqOA0YP83GhpEHOa8I6Eq9k3zxABtxdsL w==;
-X-CSE-ConnectionGUID: Tb+CEjsuSLuHaNr01hrT0w==
-X-CSE-MsgGUID: Z9xIKhy5TSuowgHZ3cUevA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689748"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689748"
+ bh=Cd6UQJeNLnYBe3u2FXzM6iswu2YcXGcY/0+XpTAWb5M=;
+ b=HwK/YqSHttvDofiENIUswqt8RkZ09teQZ8gKtTDYCeuGvpreozuesbwG
+ SW0MpAUA/s1ow5fRmCW5DvzLLOIIZp8v6xZ8H/Bo0OpHeJRMA4mrANKtc
+ 9o3JFdJHy3c+W147Vvaa1DY2VHVDX3xUPswoyhBwbHoxv/+u4HQJnjXiD
+ 4tShvjRpPppNzU1pXf9EHn7HZcCMp1PrLvfSiNFRDHmZ++HiW1gbyBvug
+ C5IUOzoKdDPTK/H6SpP809EVC91e3xoKOGnACPuT20TH4uS3GPR16d9k/
+ Nj8EeOikz0D6KXRBrgGSbN9QQVuUXWnV+2BCXlepdBlo7bSdDMV8Bv3et g==;
+X-CSE-ConnectionGUID: yYQP5rIGRaeiwIxJjkonCA==
+X-CSE-MsgGUID: OwR2/IsQTGyR6dX3SV6i0w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689896"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689896"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:39:10 -0800
-X-CSE-ConnectionGUID: aHXP1H8NQpSpWutRAMliPQ==
-X-CSE-MsgGUID: 8S17/192T7WLzQnztIR5qQ==
+ 04 Nov 2024 22:40:09 -0800
+X-CSE-ConnectionGUID: rHLLn7tpR9W0Ru67Q1UL8w==
+X-CSE-MsgGUID: ttu57Bs2RkOUlOsMPVmdKQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989534"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989941"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:39:06 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:40:05 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -57,9 +57,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 39/60] i386/tdx: Disable PIC for TDX VMs
-Date: Tue,  5 Nov 2024 01:23:47 -0500
-Message-Id: <20241105062408.3533704-40-xiaoyao.li@intel.com>
+Subject: [PATCH v6 53/60] i386/cpu: introduce mark_forced_on_features()
+Date: Tue,  5 Nov 2024 01:24:01 -0500
+Message-Id: <20241105062408.3533704-54-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
@@ -90,37 +90,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Legacy PIC (8259) cannot be supported for TDX VMs since TDX module
-doesn't allow directly interrupt injection.  Using posted interrupts
-for the PIC is not a viable option as the guest BIOS/kernel will not
-do EOI for PIC IRQs, i.e. will leave the vIRR bit set.
-
-Hence disable PIC for TDX VMs and error out if user wants PIC.
-
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/tdx.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ target/i386/cpu.c | 29 +++++++++++++++++++++++++++++
+ target/i386/cpu.h |  5 +++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 68d90a180db7..9ab4e911f78a 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -369,6 +369,13 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         return -EINVAL;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index e728fb6b9f10..472ab206d8fe 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -5507,6 +5507,35 @@ void mark_unavailable_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
      }
+ }
  
-+    if (x86ms->pic == ON_OFF_AUTO_AUTO) {
-+        x86ms->pic = ON_OFF_AUTO_OFF;
-+    } else if (x86ms->pic == ON_OFF_AUTO_ON) {
-+        error_setg(errp, "TDX VM doesn't support PIC");
-+        return -EINVAL;
++void mark_forced_on_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
++                             const char *verbose_prefix)
++{
++    CPUX86State *env = &cpu->env;
++    FeatureWordInfo *f = &feature_word_info[w];
++    int i;
++
++    if (!cpu->force_features) {
++        env->features[w] |= mask;
 +    }
 +
-     if (!tdx_caps) {
-         r = get_tdx_capabilities(errp);
-         if (r) {
++    cpu->forced_on_features[w] |= mask;
++
++    if (!verbose_prefix) {
++        return;
++    }
++
++    for (i = 0; i < 64; ++i) {
++        if ((1ULL << i) & mask) {
++            g_autofree char *feat_word_str = feature_word_description(f, i);
++            warn_report("%s: %s%s%s [bit %d]",
++                        verbose_prefix,
++                        feat_word_str,
++                        f->feat_names[i] ? "." : "",
++                        f->feat_names[i] ? f->feat_names[i] : "", i);
++        }
++    }
++}
++
+ static void x86_cpuid_version_get_family(Object *obj, Visitor *v,
+                                          const char *name, void *opaque,
+                                          Error **errp)
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index e70e7f5ced4b..b5b1c3917427 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2135,6 +2135,9 @@ struct ArchCPU {
+     /* Features that were filtered out because of missing host capabilities */
+     FeatureWordArray filtered_features;
+ 
++    /* Features that are forced enabled by underlying hypervisor, e.g., TDX */
++    FeatureWordArray forced_on_features;
++
+     /* Enable PMU CPUID bits. This can't be enabled by default yet because
+      * it doesn't have ABI stability guarantees, as it passes all PMU CPUID
+      * bits returned by GET_SUPPORTED_CPUID (that depend on host CPU and kernel
+@@ -2446,6 +2449,8 @@ void host_cpuid(uint32_t function, uint32_t count,
+ bool cpu_has_x2apic_feature(CPUX86State *env);
+ void mark_unavailable_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
+                                const char *verbose_prefix);
++void mark_forced_on_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
++                             const char *verbose_prefix);
+ 
+ static inline bool x86_has_cpuid_0x1f(X86CPU *cpu)
+ {
 -- 
 2.34.1
 
