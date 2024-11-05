@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15E96D40D0D
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ACBDD40D0D
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8TMm-0007tY-CZ; Tue, 05 Nov 2024 18:53:44 -0500
+	id 1t8TNp-0000Tx-0Y; Tue, 05 Nov 2024 18:54:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t8TMk-0007t5-6u
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:53:42 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
+ id 1t8TNn-0000RZ-FB
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:54:47 -0500
+Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t8TMh-0001Cb-Ph
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:53:41 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-723db2798caso2780046b3a.0
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 15:53:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
+ id 1t8TNl-0001HF-CU
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:54:46 -0500
+Received: by mail-oo1-xc35.google.com with SMTP id
+ 006d021491bc7-5ebc0c05e25so3182357eaf.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 15:54:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1730850817; x=1731455617;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=UQVgbsUtxLiQKI1uE3WLCiVYvtOBpf7Btl2AaQyf7aY=;
- b=IzfEcHR+tuOrZkRNfPhpeOJoy8i36X7j9z3qj1xk02Fj0V5/khrIfn9EF4SiNO90hK
- G1wpPUu9so9eUPBgv436g6tn8iXajqn2RLyS4QO8wL5qI9Hvcfwd5gmCUJu7noCsst5d
- v0L1W/bTJf/oiF5Tbjye+B7nKonDyDx3tdSp/r0BTXZOIam7D7q477/ApNUnJHuC+aic
- 6vLlCbjbYfIU9RccniaCaW8BG/w+qLTSKLOWGd0lETv35/SKdZXN+/+O2AeEbdyhDMW0
- L2FkK6BJ+yfp23vNy4EYOOb6NWiGqCIZ+gFF5Ph3B+RnQBVy8EbTBQv6lxz+rB/5AT34
- G+DA==
+ d=gmail.com; s=20230601; t=1730850883; x=1731455683; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZlApHbkUoNyMyZ2Me0BBxP+jQnIJuGsjNHi1hN76nd0=;
+ b=W6g5cJHZAf6WhV+r6gAE1Q6xhgv2nYESoWXczl2wBoZAYfb1fkrXDpqjcITHsosAfJ
+ 8HO+RiKz4iMRPikhRE6Kl92NNxqSUHniOiO9gubPeXsdGCymoMlzlvnycZHwY6/D74yr
+ PAs3J7+IHYMSFK0KSi3FzlRlsSWM5kXtrG9NyDDnVTSNqzg8lq9Ue4m0ZZ0PeTAi7oM8
+ jN/rZKT51/oZr94e/8lIak6FuMuM30AAro0d7SPWnviEeiO67yH4W5l7Ynr3RrCcdLpJ
+ qKRdQsDvWZtDmxTv2UnzOpKhoUW3COGlzxygdZjvpoNPgW4PDDq4tpM5zfBwA/Xtbq09
+ PIFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730850817; x=1731455617;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UQVgbsUtxLiQKI1uE3WLCiVYvtOBpf7Btl2AaQyf7aY=;
- b=QLWV5FjKoeTO1fcY0O/rW6JiMru85jaTw0ESzdGf/6SGfEbLXee9UxCeZCNPw3MMJA
- esQ8bnbCykLb9aHmO63FfU+CAmlgaq3K6GA00oDNml2/aCb5n6LRGlzqTCPHxUE/+S2I
- FUSO6bOOjibbUc9oJoatjJ9SLYGWLIEdQBb+BiSj94nhxQV37VKUYmY0avzfUz5flV5V
- CGMVQ2Jfyr2lvvn6l9d6XjFl5MIL70cEvnCsoa3tkeXMFMRGiv8+e5m6wF6pn4OVKRDG
- weAYiK2LQ/zscPYI0faIz1Wl5CILOIpKVvopXDHiYoaG6jLtLKc1DkeeN6D7KnEU2QF7
- xNzw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVNK4XfoQL6xLvlqqwOzBT/pqwHvGd+AnZ3xGuUA8mp0oFFpIaPGOQXVVkDwcBPfv11aM1vhdlpi5I0@nongnu.org
-X-Gm-Message-State: AOJu0Yw3yEUSgUpBdTcwrztpgHk38gBz0zUhNjQCsypG/nBTt3ayRhC2
- UNigvuFHCk+7VxGMZHbI4dINVMfYG2MxGlWr9yUZyl/tx1clDcaZ+ieQ4tUaljFtHIEZFnVNagU
- secsaquor26TW+palof8JKV9aq2DziGGZExuJTmrpVLfJsoxNLcE=
-X-Google-Smtp-Source: AGHT+IG98sZb9huyh8iYQU4t+gmD7VYlhoHe4U1k0NNUX8ojV91w5etLJMqhBrY9isRMUFwjJUKXHv4bMv2N5Pd2Tc4=
-X-Received: by 2002:a05:6a21:339b:b0:1db:d7c3:475a with SMTP id
- adf61e73a8af0-1dbd7c34771mr11849905637.4.1730850817576; Tue, 05 Nov 2024
- 15:53:37 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730850883; x=1731455683;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZlApHbkUoNyMyZ2Me0BBxP+jQnIJuGsjNHi1hN76nd0=;
+ b=NOnLjJgPuJJJEOlXQKXo85X5sx7+34yrJILpAbuB6Jxt57nyOzUDrAlomGKMuDxbDn
+ uraBIKPfb0nqBS+lJcGAGXCONAOWu00rkjxz01yTns7NfMD5gQ9pOn+UelaJ+r+J8WUF
+ SSGYYnbECkTguMqrFTWzbHG6x0sf7/LGvWEeAMidXTrgjwKUy4RXi46Xo+44yVLQhHn2
+ n4XvFixqc1/HdOiWNTYStxTtjq9UO8ynAL6Oxcwz+xP0M7mJpk6S5i0Fk8dlr1AoABwB
+ KJYdJnj5Ymr21l6IAn6nsSN/OGsJ4bMrkZv3kq7VpEtVf28VvEfKhpNytr5EgpL4ijxx
+ IiTQ==
+X-Gm-Message-State: AOJu0YzqYt4sTB7yyXyAtp3nXdpK0uaF4e4B3PymefbpSefspiF7GdEr
+ JK38rPS0FYxN7fkg2IH3vsYM9uraH+ulf/eOTG6PR5s8sJIqHsdaYkYlAlJf4aJsLkmmygb/q6Z
+ k431wj2lRiWerslJn6eN5I76ES40=
+X-Google-Smtp-Source: AGHT+IGKaYxF2/tdT6vxk6I0eR+DrOoBwLwL9kIFzEYayaCYt9PvYhcjBe8Py+J0lymYsYc3i9YStm0fL5+Xabuz9IA=
+X-Received: by 2002:a05:6820:16a5:b0:5eb:b292:bb85 with SMTP id
+ 006d021491bc7-5ec23a890a8mr25557888eaf.6.1730850883634; Tue, 05 Nov 2024
+ 15:54:43 -0800 (PST)
 MIME-Version: 1.0
-References: <20241024200031.80327-1-iii@linux.ibm.com>
- <20241024200031.80327-5-iii@linux.ibm.com>
- <CANCZdfrhzc-HZabUjkAMTgcHR0+6OQPxNshkQfMYD4wbNcm=wQ@mail.gmail.com>
- <74ef513603500e76330c2735803d5e1402406f4a.camel@linux.ibm.com>
- <10571acb-fb5a-4288-8236-4a95b4247829@linaro.org>
- <9a11ba28e4979c10152d3d696ab31b23e8bbf27a.camel@linux.ibm.com>
-In-Reply-To: <9a11ba28e4979c10152d3d696ab31b23e8bbf27a.camel@linux.ibm.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 5 Nov 2024 16:53:25 -0700
-Message-ID: <CANCZdfrTQ7tnqiDTBsvbexg180H6u71Ec67JQobYyATpSD4_3A@mail.gmail.com>
-Subject: Re: [PATCH 4/8] user: Introduce host_interrupt_signal
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>, 
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- Kyle Evans <kevans@freebsd.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000024323a0626331cb0"
-Received-SPF: none client-ip=2607:f8b0:4864:20::432;
- envelope-from=wlosh@bsdimp.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
+ <20241030141037.375897-1-goldstein.w.n@gmail.com>
+ <000c9ef8-c610-4f2a-b191-04b84455d89c@linaro.org>
+ <CAFUsyfKkmSid=LVTbG+WHZA_=MAGdf+TU5vGtNE1GGx8WDheOQ@mail.gmail.com>
+In-Reply-To: <CAFUsyfKkmSid=LVTbG+WHZA_=MAGdf+TU5vGtNE1GGx8WDheOQ@mail.gmail.com>
+From: Noah Goldstein <goldstein.w.n@gmail.com>
+Date: Tue, 5 Nov 2024 17:54:31 -0600
+Message-ID: <CAFUsyfKfM-X_qGN4Dy8DhES7zRi66s6yVZ3+_KmNM4f2GhBG+Q@mail.gmail.com>
+Subject: Re: linux-user: Add option to run `execve`d programs through QEMU
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, iii@linux.ibm.com, laurent@vivier.eu
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
+ envelope-from=goldstein.w.n@gmail.com; helo=mail-oo1-xc35.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,289 +92,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000024323a0626331cb0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Nov 5, 2024 at 3:49=E2=80=AFPM Ilya Leoshkevich <iii@linux.ibm.com>=
- wrote:
-
-> On Tue, 2024-11-05 at 22:30 +0000, Richard Henderson wrote:
-> > On 11/5/24 15:50, Ilya Leoshkevich wrote:
-> > > On Tue, 2024-11-05 at 08:39 -0700, Warner Losh wrote:
-> > > > On Thu, Oct 24, 2024 at 2:00=E2=80=AFPM Ilya Leoshkevich
-> > > > <iii@linux.ibm.com>
-> > > > wrote:
-> > > > > Attaching to the gdbstub of a running process requires stopping
-> > > > > its
-> > > > > threads. For threads that run on a CPU, cpu_exit() is enough,
-> > > > > but
-> > > > > the
-> > > > > only way to grab attention of a thread that is stuck in a long-
-> > > > > running
-> > > > > syscall is to interrupt it with a signal.
-> > > > >
-> > > > > Reserve a host realtime signal for this, just like it's already
-> > > > > done
-> > > > > for TARGET_SIGABRT on Linux. This may reduce the number of
-> > > > > available
-> > > > > guest realtime signals by one, but this is acceptable, since
-> > > > > there
-> > > > > are
-> > > > > quite a lot of them, and it's unlikely that there are apps that
-> > > > > need
-> > > > > them all.
-> > > > >
-> > > > > Set signal_pending for the safe_sycall machinery to prevent
-> > > > > invoking
-> > > > > the syscall. This is a lie, since we don't queue a guest
-> > > > > signal,
-> > > > > but
-> > > > > process_pending_signals() can handle the absence of pending
-> > > > > signals.
-> > > > > The syscall returns with QEMU_ERESTARTSYS errno, which arranges
-> > > > > for
-> > > > > the automatic restart. This is important, because it helps
-> > > > > avoiding
-> > > > > disturbing poorly written guests.
-> > > > >
-> > > > > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> > > > > ---
-> > > > >   bsd-user/signal.c     | 12 ++++++++++++
-> > > > >   include/user/signal.h |  2 ++
-> > > > >   linux-user/signal.c   | 11 +++++++++++
-> > > > >   3 files changed, 25 insertions(+)
-> > > > >
-> > > > > diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-> > > > > index a2b11a97131..992736df5c5 100644
-> > > > > --- a/bsd-user/signal.c
-> > > > > +++ b/bsd-user/signal.c
-> > > > > @@ -49,6 +49,8 @@ static inline int sas_ss_flags(TaskState *ts,
-> > > > > unsigned long sp)
-> > > > >           on_sig_stack(ts, sp) ? SS_ONSTACK : 0;
-> > > > >   }
-> > > > >
-> > > > > +int host_interrupt_signal =3D SIGRTMAX;
-> > > > > +
-> > > > >
-> > > >
-> > > >
-> > > > I'd be tempted to use SIGRTMAX + 1 or even TARGET_NSIG. 127 or
-> > > > 128
-> > > > would
-> > > > work and not overflow any arrays (or hit any bounds tests) I'd
-> > > > likely
-> > > > use SIGRTMAX + 1,
-> > > > though, since it avoids any edge-cases from sig =3D=3D NSIG that
-> > > > might be
-> > > > in the code
-> > > > unnoticed.
-> > > >
-> > > > Now, having said that, I don't think that there's too many (any?)
-> > > > programs we need
-> > > > to run as bsd-user that have real-time signals, much less one
-> > > > that
-> > > > uses SIGRTMAX,
-> > > > but stranger things have happened. But it is a little wiggle room
-> > > > just in case.
-> > > >
-> > > > Other than that:
-> > > >
-> > > > Reviewed-by: Warner Losh <imp@bsdimp.com>
+On Tue, Nov 5, 2024 at 5:48=E2=80=AFPM Noah Goldstein <goldstein.w.n@gmail.=
+com> wrote:
+>
+> On Tue, Nov 5, 2024 at 5:37=E2=80=AFAM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+> >
+> > On 10/30/24 14:10, Noah Goldstein wrote:
+> > > The new option '-qemu-children' makes it so that on `execve` the chil=
+d
+> > > process will be launch by the same `qemu` executable that is currentl=
+y
+> > > running along with its current commandline arguments.
 > > >
-> > > Thanks for the suggestion, I'll use SIGRTMAX + 1 in v2.
+> > > The motivation for the change is to make it so that plugins running
+> > > through `qemu` can continue to run on children.  Why not just
+> > > `binfmt`?: Plugins can be desirable regardless of system/architecture
+> > > emulation, and can sometimes be useful for elf files that can run
+> > > natively. Enabling `binfmt` for all natively runnable elf files may
+> > > not be desirable.
+> > >
+> > > Signed-off-by: Noah Goldstein <goldstein.w.n@gmail.com>
+> > > ---
+> > >   linux-user/main.c                             | 21 ++++++
+> > >   linux-user/syscall.c                          | 21 ++++--
+> > >   linux-user/user-internals.h                   |  4 ++
+> > >   tests/tcg/multiarch/Makefile.target           |  8 +++
+> > >   .../linux/linux-execve-qemu-children.c        | 68 ++++++++++++++++=
++++
+> > >   5 files changed, 117 insertions(+), 5 deletions(-)
+> > >   create mode 100644 tests/tcg/multiarch/linux/linux-execve-qemu-chil=
+dren.c
+> > >
+> > > diff --git a/linux-user/main.c b/linux-user/main.c
+> > > index 8143a0d4b0..5e3d41dc2b 100644
+> > > --- a/linux-user/main.c
+> > > +++ b/linux-user/main.c
+> > > @@ -81,6 +81,10 @@ unsigned long mmap_min_addr;
+> > >   uintptr_t guest_base;
+> > >   bool have_guest_base;
+> > >
+> > > +bool qemu_dup_for_children;
+> > > +int qemu_argc;
+> > > +char **qemu_argv;
+> > > +
+> > >   /*
+> > >    * Used to implement backwards-compatibility for the `-strace`, and
+> > >    * QEMU_STRACE options. Without this, the QEMU_LOG can be overwritt=
+en by
+> > > @@ -451,6 +455,11 @@ static void handle_arg_jitdump(const char *arg)
+> > >       perf_enable_jitdump();
+> > >   }
+> > >
+> > > +static void handle_arg_qemu_children(const char *arg)
+> > > +{
+> > > +    qemu_dup_for_children =3D true;
+> > > +}
+> > > +
+> > >   static QemuPluginList plugins =3D QTAILQ_HEAD_INITIALIZER(plugins);
+> > >
+> > >   #ifdef CONFIG_PLUGIN
+> > > @@ -526,6 +535,10 @@ static const struct qemu_argument arg_table[] =
+=3D {
+> > >        "",           "Generate a /tmp/perf-${pid}.map file for perf"}=
+,
+> > >       {"jitdump",    "QEMU_JITDUMP",     false, handle_arg_jitdump,
+> > >        "",           "Generate a jit-${pid}.dump file for perf"},
+> > > +    {"qemu-children",
+> > > +                   "QEMU_CHILDREN",    false, handle_arg_qemu_childr=
+en,
+> > > +     "",           "Run child processes (created with execve) with q=
+emu "
+> > > +                   "(as instantiated for the parent)"},
+> > >       {NULL, NULL, false, NULL, NULL, NULL}
+> > >   };
+> > >
+> > > @@ -729,6 +742,14 @@ int main(int argc, char **argv, char **envp)
+> > >
+> > >       optind =3D parse_args(argc, argv);
+> > >
+> > > +    if (qemu_dup_for_children) {
+> > > +        qemu_argc =3D optind;
+> > > +        qemu_argv =3D g_new0(char *, qemu_argc);
+> > > +        for (i =3D 0; i < optind; ++i) {
+> > > +            qemu_argv[i] =3D strdup(argv[i]);
 > >
+> > g_strdup.
+> ack
 > >
-> > That can't be right -- SIGRTMAX+1 is not a valid signal.
+> > > +    bool through_qemu =3D dirfd =3D=3D AT_FDCWD && qemu_dup_for_chil=
+dren;
+> >
+> > Why is this limited to AT_FDCWD?  Why not for execvat too?
+> >
+>
+> We could, initially it was because AFAICT qemu doesn't support executing =
+a
+> program relative to another dir, but it would be simple enough to just jo=
+in
+> the relative program path and path dirfd points to.
+>
+> Want me to add support?
+> > > @@ -8628,9 +8631,16 @@ static int do_execv(CPUArchState *cpu_env, int=
+ dirfd,
+> > >       }
+> > >
+> > >       const char *exe =3D p;
+> > > -    if (is_proc_myself(p, "exe")) {
+> > > +    if (through_qemu) {
+> > > +        int i;
+> > > +        for (i =3D 0; i < argp_offset; ++i) {
+> > > +            argp[i] =3D qemu_argv[i];
+> > > +        }
+> > > +        exe =3D qemu_argv[0];
+> > > +    } else if (is_proc_myself(p, "exe")) {
+> > >           exe =3D exec_path;
+> > >       }
+> > > +
+> >
+> > You still need to handle is_proc_myself, for the guest binary.
+
+Would this by handled by basically do:
+
+```
+if (is_proc_myself(p, "exe")) {
+        exe =3D exec_path;
+        if (through_qemu)
+            argp[argp_offset] =3D exec_path;
+}
+```
+Or am I missing something?
+
+> >
+> > I wonder if those two cases are related.  Do we need to also add an arg=
+ument so that we
+> > can pass the executable to the next qemu via file descriptor?  I.e. exe=
+cvat becomes
+> >
+> >      f =3D openat()
+> >      execv(qemu, "-execfd", f)
+> >
+> > and is_proc_myself uses execfd, which we already have open.
+
+How does passing a fd from one process to another work?
+
 > >
 > >
 > > r~
->
-> I have to admit I didn't look into this too deeply, but I ran the
-> following experiment on a FreeBSD 14.1 box:
->
->     /usr/include $ grep -R SIGRTMAX .
->     ./sys/signal.h:#define  SIGRTMAX        126
->
->     $ sleep 100 &
->     $ kill -126 %1
->     [1]   Unknown signal: 126     sleep 100
->
->     $ sleep 100 &
->     $ kill -127 %1
->     [1] + Unknown signal: 0       sleep 100
->
-> Clearly, something is wrong - at least with the shell - but at the
-> same time the signal delivery seems to have occurred.
->
-> Warner, does the above look normal to you?
->
-
-Oh! I understand.... I thought there was a gap above SIGRTMAX. It
-sure looks like there is. However, 0177 (127) is used to signal that
-the process is STOPPED, so can't be used. This is why SIGRTMAX
-is 126 and not 127. There's room in sigset_t, but that's not sufficient.
-And it has to be an actual signal we send, not just a flag.
-
-So forget I said anything. This was a silly idea. If we find any real thing
-that's using SIGRTMAX, we'll cope.
-
-Warner
-
---00000000000024323a0626331cb0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Nov 5, 2024 at 3:49=E2=80=AFP=
-M Ilya Leoshkevich &lt;<a href=3D"mailto:iii@linux.ibm.com">iii@linux.ibm.c=
-om</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margi=
-n:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex=
-">On Tue, 2024-11-05 at 22:30 +0000, Richard Henderson wrote:<br>
-&gt; On 11/5/24 15:50, Ilya Leoshkevich wrote:<br>
-&gt; &gt; On Tue, 2024-11-05 at 08:39 -0700, Warner Losh wrote:<br>
-&gt; &gt; &gt; On Thu, Oct 24, 2024 at 2:00=E2=80=AFPM Ilya Leoshkevich<br>
-&gt; &gt; &gt; &lt;<a href=3D"mailto:iii@linux.ibm.com" target=3D"_blank">i=
-ii@linux.ibm.com</a>&gt;<br>
-&gt; &gt; &gt; wrote:<br>
-&gt; &gt; &gt; &gt; Attaching to the gdbstub of a running process requires =
-stopping<br>
-&gt; &gt; &gt; &gt; its<br>
-&gt; &gt; &gt; &gt; threads. For threads that run on a CPU, cpu_exit() is e=
-nough,<br>
-&gt; &gt; &gt; &gt; but<br>
-&gt; &gt; &gt; &gt; the<br>
-&gt; &gt; &gt; &gt; only way to grab attention of a thread that is stuck in=
- a long-<br>
-&gt; &gt; &gt; &gt; running<br>
-&gt; &gt; &gt; &gt; syscall is to interrupt it with a signal.<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; Reserve a host realtime signal for this, just like it&#=
-39;s already<br>
-&gt; &gt; &gt; &gt; done<br>
-&gt; &gt; &gt; &gt; for TARGET_SIGABRT on Linux. This may reduce the number=
- of<br>
-&gt; &gt; &gt; &gt; available<br>
-&gt; &gt; &gt; &gt; guest realtime signals by one, but this is acceptable, =
-since<br>
-&gt; &gt; &gt; &gt; there<br>
-&gt; &gt; &gt; &gt; are<br>
-&gt; &gt; &gt; &gt; quite a lot of them, and it&#39;s unlikely that there a=
-re apps that<br>
-&gt; &gt; &gt; &gt; need<br>
-&gt; &gt; &gt; &gt; them all.<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; Set signal_pending for the safe_sycall machinery to pre=
-vent<br>
-&gt; &gt; &gt; &gt; invoking<br>
-&gt; &gt; &gt; &gt; the syscall. This is a lie, since we don&#39;t queue a =
-guest<br>
-&gt; &gt; &gt; &gt; signal,<br>
-&gt; &gt; &gt; &gt; but<br>
-&gt; &gt; &gt; &gt; process_pending_signals() can handle the absence of pen=
-ding<br>
-&gt; &gt; &gt; &gt; signals.<br>
-&gt; &gt; &gt; &gt; The syscall returns with QEMU_ERESTARTSYS errno, which =
-arranges<br>
-&gt; &gt; &gt; &gt; for<br>
-&gt; &gt; &gt; &gt; the automatic restart. This is important, because it he=
-lps<br>
-&gt; &gt; &gt; &gt; avoiding<br>
-&gt; &gt; &gt; &gt; disturbing poorly written guests.<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; Signed-off-by: Ilya Leoshkevich &lt;<a href=3D"mailto:i=
-ii@linux.ibm.com" target=3D"_blank">iii@linux.ibm.com</a>&gt;<br>
-&gt; &gt; &gt; &gt; ---<br>
-&gt; &gt; &gt; &gt; =C2=A0=C2=A0bsd-user/signal.c=C2=A0 =C2=A0 =C2=A0| 12 +=
-+++++++++++<br>
-&gt; &gt; &gt; &gt; =C2=A0=C2=A0include/user/signal.h |=C2=A0 2 ++<br>
-&gt; &gt; &gt; &gt; =C2=A0=C2=A0linux-user/signal.c=C2=A0 =C2=A0| 11 ++++++=
-+++++<br>
-&gt; &gt; &gt; &gt; =C2=A0=C2=A03 files changed, 25 insertions(+)<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; diff --git a/bsd-user/signal.c b/bsd-user/signal.c<br>
-&gt; &gt; &gt; &gt; index a2b11a97131..992736df5c5 100644<br>
-&gt; &gt; &gt; &gt; --- a/bsd-user/signal.c<br>
-&gt; &gt; &gt; &gt; +++ b/bsd-user/signal.c<br>
-&gt; &gt; &gt; &gt; @@ -49,6 +49,8 @@ static inline int sas_ss_flags(TaskSt=
-ate *ts,<br>
-&gt; &gt; &gt; &gt; unsigned long sp)<br>
-&gt; &gt; &gt; &gt; =C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0on_sig_stack(ts=
-, sp) ? SS_ONSTACK : 0;<br>
-&gt; &gt; &gt; &gt; =C2=A0=C2=A0}<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; +int host_interrupt_signal =3D SIGRTMAX;<br>
-&gt; &gt; &gt; &gt; +<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt; I&#39;d be tempted to use SIGRTMAX=C2=A0+ 1 or even TARGET_N=
-SIG. 127 or<br>
-&gt; &gt; &gt; 128<br>
-&gt; &gt; &gt; would<br>
-&gt; &gt; &gt; work and not overflow any arrays (or hit any bounds tests) I=
-&#39;d<br>
-&gt; &gt; &gt; likely<br>
-&gt; &gt; &gt; use SIGRTMAX=C2=A0+ 1,<br>
-&gt; &gt; &gt; though, since it avoids any edge-cases from sig =3D=3D NSIG =
-that<br>
-&gt; &gt; &gt; might be<br>
-&gt; &gt; &gt; in the code<br>
-&gt; &gt; &gt; unnoticed.<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt; Now, having said that, I don&#39;t think that there&#39;s to=
-o many (any?)<br>
-&gt; &gt; &gt; programs we need<br>
-&gt; &gt; &gt; to run as bsd-user that have real-time signals, much less on=
-e<br>
-&gt; &gt; &gt; that<br>
-&gt; &gt; &gt; uses SIGRTMAX,<br>
-&gt; &gt; &gt; but stranger things have happened. But it is a little wiggle=
- room<br>
-&gt; &gt; &gt; just in case.<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt; Other than that:<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt; Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.co=
-m" target=3D"_blank">imp@bsdimp.com</a>&gt;<br>
-&gt; &gt; <br>
-&gt; &gt; Thanks for the suggestion, I&#39;ll use SIGRTMAX + 1 in v2.<br>
-&gt; <br>
-&gt; <br>
-&gt; That can&#39;t be right -- SIGRTMAX+1 is not a valid signal.<br>
-&gt; <br>
-&gt; <br>
-&gt; r~<br>
-<br>
-I have to admit I didn&#39;t look into this too deeply, but I ran the<br>
-following experiment on a FreeBSD 14.1 box:<br>
-<br>
-=C2=A0 =C2=A0 /usr/include $ grep -R SIGRTMAX .<br>
-=C2=A0 =C2=A0 ./sys/signal.h:#define=C2=A0 SIGRTMAX=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 126<br>
-<br>
-=C2=A0 =C2=A0 $ sleep 100 &amp;<br>
-=C2=A0 =C2=A0 $ kill -126 %1<br>
-=C2=A0 =C2=A0 [1]=C2=A0 =C2=A0Unknown signal: 126=C2=A0 =C2=A0 =C2=A0sleep =
-100<br>
-<br>
-=C2=A0 =C2=A0 $ sleep 100 &amp;<br>
-=C2=A0 =C2=A0 $ kill -127 %1<br>
-=C2=A0 =C2=A0 [1] + Unknown signal: 0=C2=A0 =C2=A0 =C2=A0 =C2=A0sleep 100<b=
-r>
-<br>
-Clearly, something is wrong - at least with the shell - but at the<br>
-same time the signal delivery seems to have occurred.<br>
-<br>
-Warner, does the above look normal to you?<br></blockquote><div><br></div><=
-div>Oh! I understand.... I thought there was a gap above SIGRTMAX. It</div>=
-<div>sure looks like there is. However, 0177 (127) is used to signal that</=
-div><div>the process is STOPPED, so can&#39;t be used. This is why SIGRTMAX=
-</div><div>is 126 and not 127. There&#39;s room in sigset_t, but that&#39;s=
- not sufficient.</div><div>And it has to be an actual signal we send, not j=
-ust a flag.<br></div><div><br></div><div>So forget I said anything. This wa=
-s a silly idea. If we find any real thing</div><div>that&#39;s using SIGRTM=
-AX, we&#39;ll cope.</div><div><br></div><div>Warner</div></div></div>
-
---00000000000024323a0626331cb0--
 
