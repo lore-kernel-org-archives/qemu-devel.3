@@ -4,82 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B35D12691
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B813D12691
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:44:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Hxh-0001oP-W4; Tue, 05 Nov 2024 06:43:06 -0500
+	id 1t8Hyk-0002Xy-N3; Tue, 05 Nov 2024 06:44:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8Hxf-0001jM-Nz
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:43:03 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8Hxd-00018K-2L
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:43:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730806981; x=1762342981;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=IuMwbEqHYzNU4b0tImQbyd+xY4ayicHaMmQyrbno1BM=;
- b=fYMasCVndkSLiA2XUxNMQzUXy75z//ziXoaZTSnFSe13/VNdywzbamU6
- t3VTxHpEX8oLXmOQu3FDlZtM87b+n6Q3rkzU+YTjeRKa742n628G0QMCB
- MWsMyF0vXQwGoNkMBc42qcIJCumt8uLSoM9QtfWz7wkMe3oNK2O61dYvv
- XhuHqAmq7Lj5z7AAIEBLZRMFGbZ/vzMNQ488YL8Voz0yhwOC/ZnVDcOJ1
- G4eYCgJtyIo1JBnp6sghwctDkALjhTzsnSnnyBjiRqF052xcd/1QUA/cr
- TXJu2CYxKeERKW/3Xyi6bsw+gIoI7PUgzXE7OPXmonaLHyZN2XgVUxHau w==;
-X-CSE-ConnectionGUID: JfXkk1yxQyuoaDPDLQT8yQ==
-X-CSE-MsgGUID: l1yl6q0xRBao3wrH9UHF9A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11246"; a="48056449"
-X-IronPort-AV: E=Sophos;i="6.11,260,1725346800"; d="scan'208";a="48056449"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2024 03:42:59 -0800
-X-CSE-ConnectionGUID: DUnSpACTR1ikFABROsCcJQ==
-X-CSE-MsgGUID: SDYmxzbvR3m6ghio/+GE4w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,260,1725346800"; d="scan'208";a="83505350"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2024 03:42:55 -0800
-Message-ID: <dae753b1-513b-40d8-8393-5c62d1e81f56@intel.com>
-Date: Tue, 5 Nov 2024 19:42:50 +0800
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8Hyh-0002XX-7M
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:44:07 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8Hyd-0001EZ-Jo
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:44:06 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5cacb76e924so7171758a12.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 03:44:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730807042; x=1731411842; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=prC59/RjYTQR+Kq4azERnJZuSIqib3TR6CNw4N6mc9Y=;
+ b=nylyRQ8BzGJkj1SOBUzGtqaAnqA7NTaSpDVh8whF2UyNIBW39izVYM7jDpB/B8BiOq
+ DEGvxLRvMHWZMsoSvSqljqIOpwByXQI0gzHFKeu3NV/DEU+YeG2wiE4gw3isj+rW8/+G
+ dm6j4+ywbwW6o71JOKIEIt2AMze7Pcwrtb8UC3nerR65iY8Nen32rDvEEAHhYwAC3CRI
+ Y3lL8vGLuYhj8Z6Ey2xUEBhcbGNGrPhEoMS6q6yNQSCZuPiLha0VZtGheYHgJg30z9nL
+ pxq0wE1kY7Kjy/PiQFAiHPno454dD8B0eHK4zAqx/Pbe/ML5QWUpW4s72qTXp+n6jxR4
+ uthg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730807042; x=1731411842;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=prC59/RjYTQR+Kq4azERnJZuSIqib3TR6CNw4N6mc9Y=;
+ b=GmwQhh1gL3K8+4Y2A/jmC5NbSyxmkzRg2JHEbpQIVkKpWxWccOIR/SSTnf+E8P3ISJ
+ gTm692vD0gTnMstiRkGgSEom16UuoMsw5E2EoxWUWsnqg0uAZm6CRLzx1RbOq+Xi09fh
+ QUF5Ekxcp7HqKY2NgkI+zMJ2C13LvKSazegdro/FHwU1NuWC9/6zv5P2N6XnEnDwRROD
+ L/dm9RihnGgzicWvsr0G6r6XbDQJLjP993JyU8+Y1lh7NZQplVlfGIDF3m5Hj4mQmfZI
+ c+fYaIRwpb9Hi+7Zf3DeCpRHiEBVHCjhFrpbtDh21b7RyclZFuOdCX1AFTXlWEPZ8e1u
+ XtBA==
+X-Gm-Message-State: AOJu0YwLQ4ONuWAxO4BGoF60BbgVNXBHw2Mx/vNNW6uL9L+q7bRly/yk
+ sEnktjWJpXZuOUvPydCBDjYSkt7zFD8oA+2YgIvdrqHz0bkSatWeKh9vYiQLWtt+JgFg+LPbxBC
+ Pri1tCjDRPuxOSgfd2vlGpnQNxTzW+MRx3+yYOfEyRPPxEHl7
+X-Google-Smtp-Source: AGHT+IHFdTNvCp/erv412sj7oUnJRmKMLe1GIme/d+vTRZa53+G2O5+tEJTlzWXdFJOf/mzhCwKljUdBM4EV3rvwCjc=
+X-Received: by 2002:a05:6402:35c6:b0:5ce:d2ed:7a45 with SMTP id
+ 4fb4d7f45d1cf-5ced2ed7b20mr6659389a12.0.1730807041658; Tue, 05 Nov 2024
+ 03:44:01 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/60] i386: Introduce tdx-guest object
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-3-xiaoyao.li@intel.com> <ZynxD6crcL5Qouhe@redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <ZynxD6crcL5Qouhe@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.781, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20241031175214.214455-1-pbonzini@redhat.com>
+ <20241031175214.214455-24-pbonzini@redhat.com>
+In-Reply-To: <20241031175214.214455-24-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 Nov 2024 11:43:50 +0000
+Message-ID: <CAFEAcA_mJtsuqSOnDfBLuX+cTuAmDHksRhGA3jq=5tUS5RKn4A@mail.gmail.com>
+Subject: Re: [PULL 23/49] hw/core: Add Enclave Image Format (EIF) related
+ helpers
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Dorjoy Chowdhury <dorjoychy111@gmail.com>, 
+ Alexander Graf <graf@amazon.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,235 +90,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/2024 6:18 PM, Daniel P. Berrangé wrote:
-> On Tue, Nov 05, 2024 at 01:23:10AM -0500, Xiaoyao Li wrote:
->> Introduce tdx-guest object which inherits X86_CONFIDENTIAL_GUEST,
->> and will be used to create TDX VMs (TDs) by
->>
->>    qemu -machine ...,confidential-guest-support=tdx0	\
->>         -object tdx-guest,id=tdx0
->>
->> It has one QAPI member 'attributes' defined, which allows user to set
->> TD's attributes directly.
->>
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
->> Acked-by: Markus Armbruster <armbru@redhat.com>
->> ---
->> Chanegs in v6:
->>   - Make tdx-guest inherits X86_CONFIDENTIAL_GUEST;
->>   - set cgs->require_guest_memfd;
->>   - allow attributes settable via QAPI;
->>   - update QAPI version to since 9.2;
->>
->> Changes in v4:
->>   - update the new qapi `since` filed from 8.2 to 9.0
->>
->> Changes in v1
->>   - make @attributes not user-settable
->> ---
->>   configs/devices/i386-softmmu/default.mak |  1 +
->>   hw/i386/Kconfig                          |  5 +++
->>   qapi/qom.json                            | 15 ++++++++
->>   target/i386/kvm/meson.build              |  2 ++
->>   target/i386/kvm/tdx.c                    | 45 ++++++++++++++++++++++++
->>   target/i386/kvm/tdx.h                    | 19 ++++++++++
->>   6 files changed, 87 insertions(+)
->>   create mode 100644 target/i386/kvm/tdx.c
->>   create mode 100644 target/i386/kvm/tdx.h
->>
->> diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/i386-softmmu/default.mak
->> index 4faf2f0315e2..bc0479a7e0a3 100644
->> --- a/configs/devices/i386-softmmu/default.mak
->> +++ b/configs/devices/i386-softmmu/default.mak
->> @@ -18,6 +18,7 @@
->>   #CONFIG_QXL=n
->>   #CONFIG_SEV=n
->>   #CONFIG_SGA=n
->> +#CONFIG_TDX=n
->>   #CONFIG_TEST_DEVICES=n
->>   #CONFIG_TPM_CRB=n
->>   #CONFIG_TPM_TIS_ISA=n
->> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
->> index 32818480d263..86bc10377c4f 100644
->> --- a/hw/i386/Kconfig
->> +++ b/hw/i386/Kconfig
->> @@ -10,6 +10,10 @@ config SGX
->>       bool
->>       depends on KVM
->>   
->> +config TDX
->> +    bool
->> +    depends on KVM
->> +
->>   config PC
->>       bool
->>       imply APPLESMC
->> @@ -26,6 +30,7 @@ config PC
->>       imply QXL
->>       imply SEV
->>       imply SGX
->> +    imply TDX
->>       imply TEST_DEVICES
->>       imply TPM_CRB
->>       imply TPM_TIS_ISA
->> diff --git a/qapi/qom.json b/qapi/qom.json
->> index 321ccd708ad1..129b25edf495 100644
->> --- a/qapi/qom.json
->> +++ b/qapi/qom.json
->> @@ -1008,6 +1008,19 @@
->>               '*host-data': 'str',
->>               '*vcek-disabled': 'bool' } }
->>   
->> +##
->> +# @TdxGuestProperties:
->> +#
->> +# Properties for tdx-guest objects.
->> +#
->> +# @attributes: The 'attributes' of a TD guest that is passed to
->> +#     KVM_TDX_INIT_VM
->> +#
->> +# Since: 9.2
->> +##
-> 
-> Since QEMU soft-freeze for 9.2 is today, you've missed the
-> boat for that. Please update any version tags in this series
-> to 10.0, which is the first release of next year.
+On Thu, 31 Oct 2024 at 17:54, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+>
+> An EIF (Enclave Image Format)[1] file is used to boot an AWS nitro
+> enclave[2] virtual machine. The EIF file contains the necessary kernel,
+> cmdline, ramdisk(s) sections to boot.
+>
+> Some helper functions have been introduced for extracting the necessary
+> sections from an EIF file and then writing them to temporary files as
+> well as computing SHA384 hashes from the section data. These will be
+> used in the following commit to add support for nitro-enclave machine
+> type in QEMU.
+>
+> The files added in this commit are not compiled yet but will be added
+> to the hw/core/meson.build file in the following commit where
+> CONFIG_NITRO_ENCLAVE will be introduced.
+>
+> [1] https://github.com/aws/aws-nitro-enclaves-image-format
+> [2] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
+>
+> Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> Reviewed-by: Alexander Graf <graf@amazon.com>
+> Link: https://lore.kernel.org/r/20241008211727.49088-4-dorjoychy111@gmail.com
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Noted.
+Hi; Coverity raises a couple of potential issues with the
+read_eif_file() function in this commit, which are both
+"Coverity assumes the file we're reading is untrusted and is
+unsure that we're correctly sanitizing data from it before use".
+Could somebody who understands the use case here check whether
+these need addressing?
 
-Hope KVM part can get merged not too late. Otherwise, QEMU support will 
-land in 10.1, 10.2, or even 11.0.
+CID 1564855 "overflowed integer argument" --
+basically eif_header.section_offsets[i] is from the data
+file and is a uint64_t, but we pass it to fseek() in
+read_eif_file. fseek() takes a signed offset, so if the
+section_offset in the file header is very large it will
+be unexpectedly treated as a negative number.
 
->> +{ 'struct': 'TdxGuestProperties',
->> +  'data': { '*attributes': 'uint64' } }
->> +
->>   ##
->>   # @ThreadContextProperties:
->>   #
->> @@ -1092,6 +1105,7 @@
->>       'sev-snp-guest',
->>       'thread-context',
->>       's390-pv-guest',
->> +    'tdx-guest',
->>       'throttle-group',
->>       'tls-creds-anon',
->>       'tls-creds-psk',
->> @@ -1163,6 +1177,7 @@
->>                                         'if': 'CONFIG_SECRET_KEYRING' },
->>         'sev-guest':                  'SevGuestProperties',
->>         'sev-snp-guest':              'SevSnpGuestProperties',
->> +      'tdx-guest':                  'TdxGuestProperties',
->>         'thread-context':             'ThreadContextProperties',
->>         'throttle-group':             'ThrottleGroupProperties',
->>         'tls-creds-anon':             'TlsCredsAnonProperties',
->> diff --git a/target/i386/kvm/meson.build b/target/i386/kvm/meson.build
->> index 3996cafaf29f..466bccb9cb17 100644
->> --- a/target/i386/kvm/meson.build
->> +++ b/target/i386/kvm/meson.build
->> @@ -8,6 +8,8 @@ i386_kvm_ss.add(files(
->>   
->>   i386_kvm_ss.add(when: 'CONFIG_XEN_EMU', if_true: files('xen-emu.c'))
->>   
->> +i386_kvm_ss.add(when: 'CONFIG_TDX', if_true: files('tdx.c'))
->> +
->>   i386_system_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'), if_false: files('hyperv-stub.c'))
->>   
->>   i386_system_ss.add_all(when: 'CONFIG_KVM', if_true: i386_kvm_ss)
->> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
->> new file mode 100644
->> index 000000000000..166f53d2b9e3
->> --- /dev/null
->> +++ b/target/i386/kvm/tdx.c
->> @@ -0,0 +1,45 @@
->> +/*
->> + * QEMU TDX support
->> + *
->> + * Copyright Intel
->> + *
->> + * Author:
->> + *      Xiaoyao Li <xiaoyao.li@intel.com>
->> + *
->> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
->> + * See the COPYING file in the top-level directory
-> 
-> FYI, since KVM Forum we decided that we would prefer newly
-> created files to just use SPDX tags for license info.
+CID 1564859 "untrusted value as argument" --
+in the "default" case for handling a section type
+we call g_malloc() with the uint64_t size from the header.
+If the file data is bogus we might try to allocate a
+huge amount of memory, which will cause g_malloc() to
+kill QEMU.
 
-Thanks for the info. Will update it.
-
->> + *
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "qom/object_interfaces.h"
->> +
->> +#include "tdx.h"
->> +
->> +/* tdx guest */
->> +OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
->> +                                   tdx_guest,
->> +                                   TDX_GUEST,
->> +                                   X86_CONFIDENTIAL_GUEST,
->> +                                   { TYPE_USER_CREATABLE },
->> +                                   { NULL })
->> +
->> +static void tdx_guest_init(Object *obj)
->> +{
->> +    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
->> +    TdxGuest *tdx = TDX_GUEST(obj);
->> +
->> +    cgs->require_guest_memfd = true;
->> +    tdx->attributes = 0;
->> +
->> +    object_property_add_uint64_ptr(obj, "attributes", &tdx->attributes,
->> +                                   OBJ_PROP_FLAG_READWRITE);
->> +}
->> +
->> +static void tdx_guest_finalize(Object *obj)
->> +{
->> +}
->> +
->> +static void tdx_guest_class_init(ObjectClass *oc, void *data)
->> +{
->> +}
->> diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
->> new file mode 100644
->> index 000000000000..de687457cae6
->> --- /dev/null
->> +++ b/target/i386/kvm/tdx.h
->> @@ -0,0 +1,19 @@
->> +#ifndef QEMU_I386_TDX_H
->> +#define QEMU_I386_TDX_H
-> 
-> Missing license info.
-
-Will add it.
-
-thanks!
-
->> +
->> +#include "confidential-guest.h"
->> +
->> +#define TYPE_TDX_GUEST "tdx-guest"
->> +#define TDX_GUEST(obj)  OBJECT_CHECK(TdxGuest, (obj), TYPE_TDX_GUEST)
->> +
->> +typedef struct TdxGuestClass {
->> +    X86ConfidentialGuestClass parent_class;
->> +} TdxGuestClass;
->> +
->> +typedef struct TdxGuest {
->> +    X86ConfidentialGuest parent_obj;
->> +
->> +    uint64_t attributes;    /* TD attributes */
->> +} TdxGuest;
->> +
->> +#endif /* QEMU_I386_TDX_H */
->> -- 
->> 2.34.1
->>
-> 
-> With regards,
-> Daniel
-
+thanks
+-- PMM
 
