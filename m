@@ -4,91 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F497D2B925
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2011BD2B926
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8JXJ-0007PU-5J; Tue, 05 Nov 2024 08:23:57 -0500
+	id 1t8JXG-0007Ox-9N; Tue, 05 Nov 2024 08:23:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8JXH-0007PA-49
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:23:55 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8JXF-0006O7-9F
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:23:54 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-37d70df0b1aso3508203f8f.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:23:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730813031; x=1731417831; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gEVOSGyr4CEMfq10EsfxiyK7DzRDk4E6HJn04Ru9LMg=;
- b=ajSTERh15Lr0JpNZ4bIygWuCMzIhHeyoHou0ny627YpkztlBO2aRk4O/xUD8YDbUsq
- 401pKEAna2EY2zEYsesNWbUamBNzJZvBmpiNeqBzlYBzh0BHBoO6pvq2EqOmOg/RmSkb
- 80MjHBJZ54bR1nEAIsrB9YHP5uZmypPl+AN1huCuyP5y6ba+I7+0CjtOMLTCR9STu3wt
- hOI/Hyiztwmjh8lmCiABXu16528O/5GMr8jr0HqLsau4I+XP+2IESzh+jF8Apvf9NWJI
- jhAvRVPamBBbTxS+ol3lu19Cpm5rUzuqOy5toI2YcEBPSrbFYw0BvMGapI7YcFmFa1+K
- 6ijw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730813031; x=1731417831;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gEVOSGyr4CEMfq10EsfxiyK7DzRDk4E6HJn04Ru9LMg=;
- b=PO/yUGz414ZDK1zhwnvJQ2uxolEp8EYcJUuW97sfQ76b9qBdjafl5dIzvMFwasmSvI
- UHx/+JdiRdJXmVmI692lo51XlOIdlWkWEP1addalNv2ntHsWy9htCgfxMgkz+VodxRUB
- s3lgbcJLWWHG+1lusjb4YorWU3+qfiN6/rxPGdaTea/AyNOz3HevZVSBwVK7ub+AwG/M
- XpsjICfrrWv10d6mkDoPCucEUM00b9SKf7O34DRDCDZCXHiru0H/ACKkvw2Wv0xwK/mk
- hSRLcx2VHJ/1j6T3CQmhktWDX98tn+v+G2s2WRlo3mhGbOZIyH53QiHg9yBem6MtKRYJ
- 6sbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVryGqVkFE9M5fouO6BDgxg6ufxtWZgA9AjVjuyBhxwVj+Bxh9iBooe7OfB8hTb8GsLqXqU+Zerdljf@nongnu.org
-X-Gm-Message-State: AOJu0YyrWRgqUvf82m5FUlL08cZDAH/iKXJxkkLIcYPxBvm4HlIxg1t+
- Agj3yd0fAeDeKaqzHRhBa13G67AEj71LEeDUfHFx5bzAtGcUQZ6M0CO5gR1VNsc=
-X-Google-Smtp-Source: AGHT+IExwQrkauGoN8kMhTolO+XD04hN9lvxNbHXHlvCKPIRwhf6E0NXVfp0221lLUMo45gpe6TXvQ==
-X-Received: by 2002:adf:a450:0:b0:37d:4ebe:1644 with SMTP id
- ffacd0b85a97d-380611e34b4mr23919641f8f.43.1730813031571; 
- Tue, 05 Nov 2024 05:23:51 -0800 (PST)
-Received: from [192.168.21.227] ([89.101.134.25])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10b7b8csm16371166f8f.5.2024.11.05.05.23.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Nov 2024 05:23:51 -0800 (PST)
-Message-ID: <64a0969a-453e-402c-9677-3309d8fd1b74@linaro.org>
-Date: Tue, 5 Nov 2024 13:23:49 +0000
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t8JXE-0007Nx-94
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:23:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t8JXC-0006Np-3H
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:23:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730813028;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ios6x5tnOOGj2t02xnaZSqCmCpchd2sAQn64oRlRm0g=;
+ b=SK8W98DWPbr+fDY6W6hUnGzxCUV1ODpYh2H5fNGSpgqnOoc6jvHEE/WZ0Rw29Q8dymxQCC
+ +8Ga9DKb0jvid2VJ6xynpYzV1fcvUaUkAPjv8vyE8BBpiyHumskuvo4MzF0PB3S9utC0vO
+ xmvklkFtyOk4Cx1HGRQ0Nsx78NnIzek=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-375-BxCfx_ZcOrmVCWu7w6mpBg-1; Tue,
+ 05 Nov 2024 08:23:45 -0500
+X-MC-Unique: BxCfx_ZcOrmVCWu7w6mpBg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7A6FA19560A3; Tue,  5 Nov 2024 13:23:44 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.193.244])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BA9151956052; Tue,  5 Nov 2024 13:23:41 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] test/functional: Fix Aspeed buildroot tests
+Date: Tue,  5 Nov 2024 14:23:39 +0100
+Message-ID: <20241105132339.2967202-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/19] hw/microblaze: Fix MemoryRegionOps coding style
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, devel@lists.libvirt.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>
-References: <20241105130431.22564-1-philmd@linaro.org>
- <20241105130431.22564-7-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241105130431.22564-7-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,19 +81,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/24 13:04, Philippe Mathieu-Daudé wrote:
-> Fix few MemoryRegionOps style before adding new fields
-> in the following commits.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   hw/char/xilinx_uartlite.c | 4 ++--
->   hw/intc/xilinx_intc.c     | 4 ++--
->   hw/net/xilinx_ethlite.c   | 4 ++--
->   hw/timer/xilinx_timer.c   | 4 ++--
->   4 files changed, 8 insertions(+), 8 deletions(-)
+Since commit 786bc2255256, cached asset files are read-only. Adjust
+the QEMU command line for buildroot tests to reflect the new
+constraint on the flash drive.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: f04cb2d00d5c ("tests/functional: Convert most Aspeed machine tests")
+Suggested-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ tests/functional/test_arm_aspeed.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-r~
+diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
+index 9761fc06a454..19853161b267 100644
+--- a/tests/functional/test_arm_aspeed.py
++++ b/tests/functional/test_arm_aspeed.py
+@@ -125,7 +125,7 @@ def test_arm_ast2500_romulus_openbmc_v2_9_0(self):
+     def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'):
+         self.require_netdev('user')
+         self.vm.set_console()
+-        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
++        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw,read-only=true',
+                          '-net', 'nic', '-net', 'user')
+         self.vm.launch()
+ 
+-- 
+2.47.0
+
 
