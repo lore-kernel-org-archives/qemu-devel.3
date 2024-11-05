@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 266B8D31768
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 17:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E967D31769
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 17:19:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8N7U-0000hK-4s; Tue, 05 Nov 2024 12:13:32 -0500
+	id 1t8NC8-0001hi-Fg; Tue, 05 Nov 2024 12:18:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8N7Q-0000gu-Ki
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 12:13:28 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1t8NC7-0001hE-4H
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 12:18:19 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8N7P-0007J8-2P
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 12:13:28 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5c9850ae22eso7190243a12.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 09:13:26 -0800 (PST)
+ id 1t8NC5-0007qy-Cu
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 12:18:18 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-431695fa98bso45153525e9.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 09:18:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730826805; x=1731431605; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=no9Y8erOq0EIaiTxgO0OXZAI9WlZQZuBOlovtynxEjU=;
- b=BuDJ1qQDL248KuncL/6DtNrNA86euM3eyvsy6kNhaCPpO4H1pVbJ0mF946dVlsR9e0
- AEdzabzIVPw+b9uID/j8QkD5PlKT9/USCXRibq2dYHJbW1eEH086JKrxwwuX9pXA3dHj
- iW6k/M6ZcF7FJmR4eGLa8Tx5JyO9fNbwQfhap/rzhiwE7AR45dtNsoDMREgzEFGcy+If
- tpWzarICVX1TEJQQ1U4qNm2E1UwHcmFzlY80iTHX4+3HXd1FS6j0aGEvK03x/TNKJyRP
- jOeLJqffnlOJd0gpFI0qmdX1+0IMEoNDFnFottcceeqn24ReVRLlH+ngAsG0UIMtm3C4
- C43g==
+ d=linaro.org; s=google; t=1730827095; x=1731431895; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=si1GAzVFo9p7658TUKQsKQkHM9JnDZDIhZcoRXj69KM=;
+ b=d6+s1AYuc/EjF0UFVJ3RhNSaj/DNdNjpcMnHakCLB9PXUDsm2134MmQd27obv017LF
+ Z68J9A6TH2xBNtPF6IEbSHEqXAAIJKs8vYNVwPFCc4h/Iq6fOAsPXSH3ye/FU8ZfHAoo
+ 3DPlIx4qOJHKCryj0ivDEcjIfV/pIiPeYacppR/eGnD7umBo4lodCNLb8PgpylVMiqzf
+ X2gSxfagk5beLowjm8TKNmaLFEyS9w02PRm4GIDZ2aIsqkskXn1fJDeHHumDlx7Blvuj
+ tJcKIGt044/bYPGSXCGlZUb0wptk94kHpUnGH0XF2LNUG+riJnZjl76iO5trevS21PEX
+ uR7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730826805; x=1731431605;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1730827095; x=1731431895;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=no9Y8erOq0EIaiTxgO0OXZAI9WlZQZuBOlovtynxEjU=;
- b=ihqjs7S98WtGhGuvBV+nkPWzWYphXSFFSY1QmzLunKZdyj63vXs2o1q7ew1ZJjiyFj
- tUjiP6ojvC2f+PeeBdN/s7ZldcsICkeygRhMGsbqdEVL/4jS7FpEUshG5+x0AM6P2Cgp
- tO7thIOVtTLIdHUGQVLhOjZCK127r3p2aCNhFd7Jf3iQQpgNZAAYDTQUQLbWCxxox2FD
- y4qV2EcWihJYxa20n3w1xIMB+5AT48HElaAB24q4xSISiim0jFX7UHaBcZ8TWo6SBenK
- zFFn83XHno8sr0Sm1Xg9gAIqbdcMlkBT6zoL8gyMn3CXQqszAPO+Bd6YZTRfNAqfDq8w
- Sp8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPCD4hTIW6VROiQXL0yfcMyjbkfiB0NNdhchRRBH/83JYLZ9ezxOTCa4q9EGs7xcPkRfCXVzxhWvaO@nongnu.org
-X-Gm-Message-State: AOJu0YxS5H/fP5qvKr4hJnSnIWg06f1V1Dq+IhrAdBe/OSduySsOVIDL
- 3cPxSpMmF0Z85z1pDnCBQWoI7uBWYk0y6ufQJbXwR95yK0Nb1No9KRfrgIvUBacm6eU/b/3b0X2
- VPDush5JqKpiMKU6qB6Gmk4euRS8/vvwh1c94MA==
-X-Google-Smtp-Source: AGHT+IF0PRx6WQFOC56PE96wH0H1RyLvoeihi15aiRTx4pVm3/Z54VD5U3H8XM3AOzi8m023Aqeqjs+X/FKbQ+FwO/4=
-X-Received: by 2002:a05:6402:90c:b0:5c7:2122:6ad with SMTP id
- 4fb4d7f45d1cf-5cbbf89a142mr30683017a12.14.1730826804974; Tue, 05 Nov 2024
- 09:13:24 -0800 (PST)
-MIME-Version: 1.0
-References: <20241024063507.1585765-1-clg@redhat.com>
- <20241024063507.1585765-11-clg@redhat.com>
- <CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com>
- <91c2ac92-66b2-45c8-b4fe-e8f8587b0e9c@linux.ibm.com>
-In-Reply-To: <91c2ac92-66b2-45c8-b4fe-e8f8587b0e9c@linux.ibm.com>
+ bh=si1GAzVFo9p7658TUKQsKQkHM9JnDZDIhZcoRXj69KM=;
+ b=TEntwREauOjPTy1smLiUGzKhKxMdhwCFzZsKkPdB//RyTt7EzpKQkSJ50YOZ1ZuTsE
+ sz9jV9codC2LJUipEOvby1lUeFvNGQd1CAhzaikEqpQyUXcUxTetoUbVIK8y8+RRz/zs
+ yzEqW/oNZVHkE0X8vvGoIm87lJUzrWVEEibnzFX3mPfz6ZUzycagmpp88BlMYeQe5KFx
+ ZOhoZGeUD1yqO94Jj+g8ubtQj5/Atrz1uoQXKXczI7IZsZe76goGnOTfcPIq6jOviOTc
+ OKPAQuReZu3To6fqMfSrdiZLbpd6w+6jWIN/wElBr4ojpWjbfG4P96SAUW5m8ER9Oyap
+ GrWw==
+X-Gm-Message-State: AOJu0YyKg4CTnvWCdc8qcbtKtMCXbOVyOLc/9wDDCT8YMXnoyvJ6vOBt
+ DIZnF6ICNK63508efKHT1PvEozcP61fgiGU2msxFxzG291l5IBGrDXylRbqV/1DClS+Wn/bl4Oz
+ V
+X-Google-Smtp-Source: AGHT+IFGSmz/Jy6/gaONdVJhHsv0rJnsI+bn/BrmkZNERox6s7mnYokPZp6uBuDqTgUhviOWbfuWWw==
+X-Received: by 2002:a05:600c:1d1d:b0:42f:4f6:f8f3 with SMTP id
+ 5b1f17b1804b1-4319ac6fbf7mr323454725e9.7.1730827095190; 
+ Tue, 05 Nov 2024 09:18:15 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-431bd947c0esm235361215e9.24.2024.11.05.09.18.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Nov 2024 09:18:14 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Nov 2024 17:13:13 +0000
-Message-ID: <CAFEAcA84hhWu2ouirfDPbCpq_=QLQxAf3k47h0Pij8iEnOVj+A@mail.gmail.com>
-Subject: Re: [PULL 10/17] tests/functional: Convert most Aspeed machine tests
-To: Stefan Berger <stefanb@linux.ibm.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Woodhouse <dwmw@amazon.co.uk>
+Subject: [PATCH] hw/i386/pc: Don't try to init PCI NICs if there is no PCI bus
+Date: Tue,  5 Nov 2024 17:18:13 +0000
+Message-Id: <20241105171813.3031969-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,42 +93,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Nov 2024 at 17:02, Stefan Berger <stefanb@linux.ibm.com> wrote:
-> On 11/5/24 11:14 AM, Peter Maydell wrote:
-> > Q1: why is apparmor forbidding swtpm from doing something that
-> > it needs to do to work?
->
-> What distro and version is this?
->
-> The profile may be too strict and not reflecting all the paths needed
-> for running the test cases. Ubuntu for example would have to update
-> their profile in such a case.
+The 'isapc' machine type has no PCI bus, but pc_nic_init() still
+calls pci_init_nic_devices() passing it a NULL bus pointer.  This
+causes the clang sanitizer to complain:
 
-This is Ubuntu 22.04 "jammy" (with swtpm 0.6.3-0ubuntu3.3).
+$ ./build/clang/qemu-system-i386 -M isapc
+../../hw/pci/pci.c:1866:39: runtime error: member access within null pointer of type 'PCIBus' (aka 'struct PCIBus')
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/pci/pci.c:1866:39 in
 
-> > Q2: is there a way to run swtpm such that it is not
-> > confined by apparmor, for purposes of running it in a test case?
->
-> Try either one:
-> - sudo aa-complain /usr/bin/swtpm
-> - sudo aa-disable /usr/bin/swtpm
+This is because pci_init_nic_devices() does
+ &bus->qbus
+which is undefined behaviour on a NULL pointer even though we're not
+actually dereferencing the pointer. (We don't actually crash as
+a result, so if you aren't running a sanitizer build then there
+are no user-visible effects.)
 
-We don't have root access from QEMU's 'make check',
-though (and shouldn't be globally disabling apparmor
-even if we could). I had in mind more a way that an
-individual user can say "run this swtpm process but don't
-apply the apparmor profile to it".
+Make pc_nic_init() avoid trying to initialize PCI NICs on a non-PCI
+system.
 
-> > Q3: if not, is there a way to at least detect that swtpm is
-> > broken on this system so we can skip the test case?
->
-> It's not swtpm that is broken but the AppArmor profile is too strict.
-> Above command lines should work.
+Cc: qemu-stable@nongnu.org
+Fixes: 8d39f9ba14d64 ("hw/i386/pc: use qemu_get_nic_info() and pci_init_nic_devices()")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+This shows up if you run "make check" on a ubsan build.
+---
+ hw/i386/pc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-But this is a widely deployed distro in its default
-configuration. We have to either work with it or detect
-that it's broken so we can skip the test.
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2047633e4cf..1af1a1a1823 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1251,7 +1251,9 @@ void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
+     }
+ 
+     /* Anything remaining should be a PCI NIC */
+-    pci_init_nic_devices(pci_bus, mc->default_nic);
++    if (pci_bus) {
++        pci_init_nic_devices(pci_bus, mc->default_nic);
++    }
+ 
+     rom_reset_order_override();
+ }
+-- 
+2.34.1
 
-thanks
--- PMM
 
