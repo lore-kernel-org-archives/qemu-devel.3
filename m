@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A175D12671
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 09:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6971DD12671
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 10:00:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8GIM-0006r5-Hv; Tue, 05 Nov 2024 04:56:18 -0500
+	id 1t8GLl-0007ZG-W8; Tue, 05 Nov 2024 04:59:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8GIJ-0006qv-Pm
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:56:16 -0500
+ id 1t8GLj-0007Yf-Td
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:59:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8GIH-0007St-HZ
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:56:15 -0500
+ id 1t8GLi-0007cN-9v
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:59:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730800572;
+ s=mimecast20190719; t=1730800785;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UMnqGPsLhzGV3tgVD4vrw9ZCnrqJY7nkw/coAWDxYBU=;
- b=KbIbqcUzEpl70RLNKJeFZva+/nkiaght0VgkKp75yOlZE0Eohe8x+eIlnA/CQ1ShEBz43d
- ptoC3WLkhgdVn/cppf5O1PuQvzjuEdhLWdriAqNS4ZHfr1erRwMsvmGKl1whwSlsDuK0fR
- Hzm8vtSxGxrMj/mU1gPvQ5W0crgyp2g=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QInjCe2HZxMiS9t3tTItXMpvJOBheXFw8ILfgZfDc04=;
+ b=QEaLEvGLpIzWMJAo42yG7fWD+H+opeOskGQuBgolEn9/EOZJhuzDxh/fOMww5R29vKZgjK
+ i3zdmybxDnd9wT5zKBU7K7RUEIaW5poKTnKanL+kInCczqzW2UP0Ev/pjlc/Ud7QSo6Gro
+ MKoCu6lekb+pNKsRUiKX+eePFVFJHTA=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-5gprth9YORKLmlPqlOWarg-1; Tue, 05 Nov 2024 04:55:04 -0500
-X-MC-Unique: 5gprth9YORKLmlPqlOWarg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43157cff1d1so38764155e9.2
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 01:55:04 -0800 (PST)
+ us-mta-569-CxvBg5YBN1-QRwfHWmlgPw-1; Tue, 05 Nov 2024 04:59:43 -0500
+X-MC-Unique: CxvBg5YBN1-QRwfHWmlgPw-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-539f067414fso3113226e87.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 01:59:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730800504; x=1731405304;
+ d=1e100.net; s=20230601; t=1730800782; x=1731405582;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=UMnqGPsLhzGV3tgVD4vrw9ZCnrqJY7nkw/coAWDxYBU=;
- b=QumRv90aCaDMDuOwgpFu8ckXHTo09Oph0137/RGnxYT+puoAT4uz8SOxYK2Is6gmPC
- mxjoJz/+kUMPrqhsqjlWK7+whqP3SPNMPUOFQC9niabw1qa6Llcak4C1140+pWqlKF/s
- TWs3nJ0r6QJF7F3tYXRhnVyYmSoo1BEx/Gy8Q8qnQkUnP0MXfTvmY6WbO1YZXEi01vjI
- 6hCphqRBGDZUu87eh9BifigWVu/7voByvg5AXwloMeitnCVRrAWRcR3Uqraf1R/N44ka
- WTpwLmzlT/RU61SGqvxR3kBD7MiIE/HHmy0G/0DjeKd5DQhQ1pOPB6EwON6oD+tgrQPK
- ExnQ==
+ bh=QInjCe2HZxMiS9t3tTItXMpvJOBheXFw8ILfgZfDc04=;
+ b=Dz55h4Kw1oGW87qL+Kx23htFwpovARwbu0NYYt8k/2K4KfNJM10GUkWV+X5PNnavLV
+ Ji7CVyXwcMwWmdfeecGZfXV0msfrIi2dNwfO83Gw2DBfYsbiP6vg5PPoXCz/FH9QqGb6
+ xe3WTatvk9qQQkfkFJ9bIofQdP0tbFvjD4aPP4FZEMGfMCYr75On546XyebkDbHCbENW
+ XHnYbenOnLGzGnOPBU2tQH2w1TcSXrPtTchBclqLgKPXWP09jbr43oFP24jHue5TIwHc
+ uUoVf7Y15BByLbe4f3ItXZAItd1Hgg6xIOYKjjjrWkunUjix3qmjwVaB+fOT2RjnZUnk
+ E2fQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjApjA82Ym27lVv8To0t4Ya9tifwhvkHd9umX06L2lzdNwmHSR42xAXtY9BS8qHg+6rImjgXjlt4w3@nongnu.org
-X-Gm-Message-State: AOJu0Yzc+USPQOVv0xsNPMYSUnsXUMts4Bx4cxGLBVij4JGNY6Sr9Sy0
- aom/Xe4RmocJ9oTIQnWxyRRstwCta4JF3AgaiwawBRFs96PLKXNxUe3dG1biIH4CTZLDAV+Efqu
- +E+CCXInRzKHmx/6TvzHdDwFKsBacGfE60ETxssDn3UafSS/MEVrM
-X-Received: by 2002:a05:600c:45d1:b0:42c:b220:4778 with SMTP id
- 5b1f17b1804b1-4327b821a22mr158161365e9.33.1730800503766; 
- Tue, 05 Nov 2024 01:55:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFgqZFAj5cEWzunmN2i2lkUEud/B8H9xs4ZPFK/2z7oRNWRWjBDLSYk9rN11tAiGxKN6zWUOw==
-X-Received: by 2002:a05:600c:45d1:b0:42c:b220:4778 with SMTP id
- 5b1f17b1804b1-4327b821a22mr158161165e9.33.1730800503384; 
- Tue, 05 Nov 2024 01:55:03 -0800 (PST)
+ AJvYcCXfyvmVeJ6QZ8d6TFQIsqAZ0vhmuulI3eWZjntKH+hAfRNzlHpcMCnGoGAqmRqavFzsQi40xXwVNkPK@nongnu.org
+X-Gm-Message-State: AOJu0YwQom9mWT48h8h8kEikQm5VKAqgMD/K81ogHMlhCo3gnNiZJzIX
+ l/sCOaMtjm4SjYyhuWWWuNC+xuP1nn0c0rkdQMMVWqgkRmQKXdrxegewsmDs+1GzeRzoM9FNqWl
+ oIHfkIR2s1hTaaNMP0RAXAG1WPwImAFrp+fteIpSxExLiJg2UDg0h
+X-Received: by 2002:a05:6512:3091:b0:539:ea7a:7688 with SMTP id
+ 2adb3069b0e04-53b348b9130mr16974772e87.1.1730800782274; 
+ Tue, 05 Nov 2024 01:59:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEzMuWVU/ndch0oUzHzWK5tBEpoZHJkJ1/PzWbUd+f2Le81X2BJN/p+vKXeYJ1oT0Rc+ksAww==
+X-Received: by 2002:a05:6512:3091:b0:539:ea7a:7688 with SMTP id
+ 2adb3069b0e04-53b348b9130mr16974745e87.1.1730800781730; 
+ Tue, 05 Nov 2024 01:59:41 -0800 (PST)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-431bd947c0esm220011165e9.24.2024.11.05.01.55.01
+ 5b1f17b1804b1-431bd947c0esm220305265e9.24.2024.11.05.01.59.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Nov 2024 01:55:02 -0800 (PST)
-Message-ID: <8cd78103-5f49-4cbd-814d-a03a82a59231@redhat.com>
-Date: Tue, 5 Nov 2024 10:55:00 +0100
+ Tue, 05 Nov 2024 01:59:41 -0800 (PST)
+Message-ID: <f1c7bba2-7b21-4e10-a245-36673e93f8b7@redhat.com>
+Date: Tue, 5 Nov 2024 10:59:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 45/60] i386/tdx: Don't get/put guest state for TDX VMs
+Subject: Re: [PATCH v6 56/60] i386/tdx: Don't treat SYSCALL as unavailable
 To: Xiaoyao Li <xiaoyao.li@intel.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -85,7 +85,7 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-46-xiaoyao.li@intel.com>
+ <20241105062408.3533704-57-xiaoyao.li@intel.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -123,7 +123,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20241105062408.3533704-46-xiaoyao.li@intel.com>
+In-Reply-To: <20241105062408.3533704-57-xiaoyao.li@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -151,56 +151,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/24 07:23, Xiaoyao Li wrote:
-> From: Sean Christopherson <sean.j.christopherson@intel.com>
-> 
-> Don't get/put state of TDX VMs since accessing/mutating guest state of
-> production TDs is not supported.
-> 
-> Note, it will be allowed for a debug TD. Corresponding support will be
-> introduced when debug TD support is implemented in the future.
-> 
-> Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
+On 11/5/24 07:24, Xiaoyao Li wrote:
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>   target/i386/kvm/tdx.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index 9cb099e160e4..05475edf72bd 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
+> @@ -734,6 +734,13 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
+>   
+>           requested = env->features[w];
+>           unavailable = requested & ~actual;
+> +        /*
+> +         * Intel enumerates SYSCALL bit as 1 only when processor in 64-bit
+> +         * mode and before vcpu running it's not in 64-bit mode.
+> +         */
+> +        if (w == FEAT_8000_0001_EDX && unavailable & CPUID_EXT2_SYSCALL) {
+> +            unavailable &= ~CPUID_EXT2_SYSCALL;
+> +        }
+>           mark_unavailable_features(cpu, w, unavailable, unav_prefix);
+>           if (unavailable) {
+>               mismatch = true;
 
-This should be unnecessary now that QEMU has 
-kvm_mark_guest_state_protected().
+This seems like a TDX module bug?  It's the kind of thing that I guess 
+could be worked around in KVM.
+
+If we do it in QEMU, I'd rather see it as
+
+             actual = cpuid_entry_get_reg(entry, wi->cpuid.reg);
+             switch (w) {
+             case FEAT_8000_0001_EDX:
+                 actual |= CPUID_EXT2_SYSCALL;
+                 break;
+             }
+             break;
 
 Paolo
-
-> ---
->   target/i386/kvm/kvm.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
-> 
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index c39e879a77e9..e47aa32233e6 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -5254,6 +5254,11 @@ int kvm_arch_put_registers(CPUState *cpu, int level, Error **errp)
->   
->       assert(cpu_is_stopped(cpu) || qemu_cpu_is_self(cpu));
->   
-> +    /* TODO: Allow accessing guest state for debug TDs. */
-> +    if (is_tdx_vm()) {
-> +        return 0;
-> +    }
-> +
->       /*
->        * Put MSR_IA32_FEATURE_CONTROL first, this ensures the VM gets out of VMX
->        * root operation upon vCPU reset. kvm_put_msr_feature_control() should also
-> @@ -5368,6 +5373,12 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
->           error_setg_errno(errp, -ret, "Failed to get MP state");
->           goto out;
->       }
-> +
-> +    /* TODO: Allow accessing guest state for debug TDs. */
-> +    if (is_tdx_vm()) {
-> +        return 0;
-> +    }
-> +
->       ret = kvm_getput_regs(cpu, 0);
->       if (ret < 0) {
->           error_setg_errno(errp, -ret, "Failed to get general purpose registers");
 
 
