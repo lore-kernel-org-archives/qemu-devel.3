@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43FC8D1CA3D
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC2E1D1CA38
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:47:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DHb-00074z-TH; Tue, 05 Nov 2024 01:43:20 -0500
+	id 1t8DDZ-0000XA-Bf; Tue, 05 Nov 2024 01:39:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DFp-0003v2-U2
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:41:30 -0500
+ id 1t8DDN-000896-I8
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:57 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DFF-0001w0-SW
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:41:04 -0500
+ id 1t8DDL-0001w0-F3
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788854; x=1762324854;
+ t=1730788735; x=1762324735;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=oRT7vJ7+68FbrD5uefrUrGWOgNBDYndBP8Hc2+4+qeY=;
- b=NjvEAs3z5z2fc8EH6OyXRJXmX16kUQ/95AxdBxzAWzcX3GnK1rGXETvL
- Uv8rd1iLYU8xjntdBBoG+WrmaUZ6jpCShF9PjtxkVMGQt7TRwUpfe/uAp
- fFAHgpCgZUw4/6SQwF+ErFK5I7igXEH0uuIdX1XbN+Ohw4UjRrrP6QPEy
- pnasymMO33gxBPETh2HebwK6jgT1B8b7DvyMJTkWomBt3r2IXY1pm7ps8
- ZjUUR8SrOYPY5teP3B56XiqTyd8zIGtx9GjBc5lsCwJnnahpjmMjJnlLb
- 9kbQJdnuz05qevxLspmwh4VsbullYwECrgclMoSNswAJqcLl/fxV5X/VW A==;
-X-CSE-ConnectionGUID: DuXghf5NRx29dZRSz3N2Fg==
-X-CSE-MsgGUID: C/i+O22ySwKhY7CqBhTzcA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689962"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689962"
+ bh=63P5g04tq2r6PcAIPsWb8iPHQuE0MH+gEuTLFzYddZI=;
+ b=cTAdsF7XPNnZHGt8qt1fk7zeI73w44GZJvRyatd3UqHVVBoSaSsinAw8
+ zsDW5NcoaRE06Pt3KDq+0f6aMRlgj8Z0avJrd8Xqh9uAGJIgYhog9pNoP
+ Y4rnf1brIjgpu1TEjML7oeU6Yq1GDSaCWMC/CxJoDv/V98ehtixH/jnnP
+ 6ibx3Q7ZLwqdAmGv7OmQFF1yVnhc+ylQzMgZDex8BoPdOGtN7bS+cOnGB
+ N5A7lrHKcFYfXspX38laWDnty9IN7Ai534fAMTVutlmQB4HdxGs09GBs7
+ cHDJu04sRUPu4KRkz9xm9I3c7mU8ca3oo69W52a/hs9jrgvoBIH0t8ogH A==;
+X-CSE-ConnectionGUID: CGoGwe+YT8SOJE1XHz5Wzg==
+X-CSE-MsgGUID: 8MqhssINTvuUjlr46ub66g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689689"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689689"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:40:35 -0800
-X-CSE-ConnectionGUID: LzAzyvrmS+yTZ8bmyu8w1Q==
-X-CSE-MsgGUID: 2ERfMEY6TBCvNuxBGJjdvw==
+ 04 Nov 2024 22:38:45 -0800
+X-CSE-ConnectionGUID: MdCsSwMrQqKD4Co1gmDzvA==
+X-CSE-MsgGUID: KOGn8PVPRDGFMXhDPQsGvQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83990148"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989240"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:40:31 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:38:40 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -57,10 +57,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 59/60] i386/cpu: Set up CPUID_HT in x86_cpu_realizefn()
- instead of cpu_x86_cpuid()
-Date: Tue,  5 Nov 2024 01:24:07 -0500
-Message-Id: <20241105062408.3533704-60-xiaoyao.li@intel.com>
+Subject: [PATCH v6 33/60] i386/cpu: introduce
+ x86_confidenetial_guest_cpu_realizefn()
+Date: Tue,  5 Nov 2024 01:23:41 -0500
+Message-Id: <20241105062408.3533704-34-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
@@ -91,54 +91,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Otherwise, it gets warnings like below when number of vcpus > 1:
-
-  warning: TDX enforces set the feature: CPUID.01H:EDX.ht [bit 28]
-
-This is because x86_confidential_guest_check_features() checks
-env->features[] instead of the cpuid date set up by cpu_x86_cpuid()
+To execute confidential guest specific cpu realize operations.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- target/i386/cpu.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+changes in v6:
+ - new patch;
+---
+ target/i386/confidential-guest.h | 12 ++++++++++++
+ target/i386/cpu.c                | 13 ++++++++++++-
+ 2 files changed, 24 insertions(+), 1 deletion(-)
 
+diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+index 38169ed68e06..4b7ea91023dc 100644
+--- a/target/i386/confidential-guest.h
++++ b/target/i386/confidential-guest.h
+@@ -40,6 +40,7 @@ struct X86ConfidentialGuestClass {
+     /* <public> */
+     int (*kvm_type)(X86ConfidentialGuest *cg);
+     void (*cpu_instance_init)(X86ConfidentialGuest *cg, CPUState *cpu);
++    void (*cpu_realizefn)(X86ConfidentialGuest *cg, CPUState *cpu, Error **errp);
+     uint32_t (*mask_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
+                                     int reg, uint32_t value);
+ };
+@@ -70,6 +71,17 @@ static inline void x86_confidential_guest_cpu_instance_init(X86ConfidentialGuest
+     }
+ }
+ 
++static inline void x86_confidenetial_guest_cpu_realizefn(X86ConfidentialGuest *cg,
++                                                         CPUState *cpu,
++                                                         Error **errp)
++{
++    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
++
++    if (klass->cpu_realizefn) {
++        klass->cpu_realizefn(cg, cpu, errp);
++    }
++}
++
+ /**
+  * x86_confidential_guest_mask_cpuid_features:
+  *
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 472ab206d8fe..214a1b00a815 100644
+index c7d65bbeab9b..1ffbafef03e7 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -6571,7 +6571,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         *edx = env->features[FEAT_1_EDX];
-         if (threads_per_pkg > 1) {
-             *ebx |= threads_per_pkg << 16;
--            *edx |= CPUID_HT;
-         }
-         if (!cpu->enable_pmu) {
-             *ecx &= ~CPUID_EXT_PDCM;
-@@ -7784,6 +7783,8 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-     Error *local_err = NULL;
-     unsigned requested_lbr_fmt;
- 
-+    qemu_early_init_vcpu(cs);
-+
- #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-     /* Use pc-relative instructions in system-mode */
-     tcg_cflags_set(cs, CF_PCREL);
-@@ -7851,6 +7852,14 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-         }
+@@ -7848,6 +7848,18 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+         return;
      }
  
-+    /*
-+     * It needs to called after feature filter because KVM doesn't report HT
-+     * as supported
-+     */
-+    if (cs->nr_cores * cs->nr_threads > 1) {
-+        env->features[FEAT_1_EDX] |= CPUID_HT;
-+    }
++#ifndef CONFIG_USER_ONLY
++    MachineState *ms = MACHINE(qdev_get_machine());
 +
-     /* On AMD CPUs, some CPUID[8000_0001].EDX bits must match the bits on
-      * CPUID[1].EDX.
-      */
++    if (ms->cgs) {
++        x86_confidenetial_guest_cpu_realizefn(X86_CONFIDENTIAL_GUEST(ms->cgs),
++                                              cs, &local_err);
++        if (local_err != NULL) {
++            goto out;
++        }
++    }
++#endif
++
+     if (xcc->host_cpuid_required && !accel_uses_host_cpuid()) {
+         g_autofree char *name = x86_cpu_class_get_model_name(xcc);
+         error_setg(&local_err, "CPU model '%s' requires KVM or HVF", name);
+@@ -7972,7 +7984,6 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+     }
+ 
+ #ifndef CONFIG_USER_ONLY
+-    MachineState *ms = MACHINE(qdev_get_machine());
+     qemu_register_reset(x86_cpu_machine_reset_cb, cpu);
+ 
+     if (cpu->env.features[FEAT_1_EDX] & CPUID_APIC || ms->smp.cpus > 1) {
 -- 
 2.34.1
 
