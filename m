@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 974D9D3E77C
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50AE6D3E77C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:53:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SNc-0001Vs-HV; Tue, 05 Nov 2024 17:50:32 -0500
+	id 1t8SMY-0007R0-Ai; Tue, 05 Nov 2024 17:49:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMu-000154-R8
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:50 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMG-0006yf-Jz
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:12 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMs-0004Sp-Me
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:48 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4315eac969aso1513495e9.1
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:49:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMF-0004LM-39
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:08 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-431688d5127so47412615e9.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:49:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730846984; x=1731451784; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730846945; x=1731451745; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i3NX0+cSAzGYRrfL4oLem/VlulSkEhLXyoePR+dn9LQ=;
- b=iCSFID4kc0TpR5ePsB+O6Qk6RoNauEWfnYaLYjqiO6s64u/YDYqJQIT7/F+cQa4URO
- KLl+wu1Ylkgx+YveDAsl0dj+fgEM/nyxdcxeO0FXzFh1XywYLoDnFAsXMYLbTKznWqyN
- sTFN7uc3pspl+fje0z6cL4dVK7S+dO316hJETgwYbuMrr5sVwq/wp5mBcfdNdjceZ1il
- ukdTVrE/vy6QkUtbqD14ESdBqBpck8ABDkbEWlZp/6RotWQx9DnCmp9cSm6BbMJKC8vV
- 8XXCLmWCOK2WMxN5/ZQSpr/3kHOPfx6k5TPoDgvJB0VIHZU5oD6kOnTYdnyRGDXKX+rw
- hMEw==
+ bh=JGtCoSE8gk09HIhJA89V3965nEV5mYL3yVeFFS+1W7c=;
+ b=UJyDDGkAUQp4Y5YlGH8mcjCxcJvwcHDLRMYfWVZ8RIa9JUlqRwzh87Y8ScoD23GvTb
+ DOtO3Zf962dtcr+mMbPC4Hd3usb+hko2ZYvUNp6kuvT5XqDJ0jpL7B8LWkcDqFElakgn
+ pM7prKSuEfuqj4CJmm39vpE15O7Zt+HPZxpCQlG/bIvtRzRG8qtAN1y3qDjyrYtcuRwj
+ A1Ba6+e18zsElO/u+QOBxSa599xX7npAMmYqL5kFqm0r7+1YYO96xu5yoXZ0VpggsD+z
+ ydrQNVMfgX5AWtIwRyO4gfRzEXsw/o0kyPt+XH3veMB+gVpiy/WXQgffelCo57FXw2RG
+ bkpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730846984; x=1731451784;
+ d=1e100.net; s=20230601; t=1730846945; x=1731451745;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i3NX0+cSAzGYRrfL4oLem/VlulSkEhLXyoePR+dn9LQ=;
- b=NNblvdSIsscIyN/e9ww67FSGAoRTGLJzxHhgagKapazykwgPAd0O0UssuzbEXJoMST
- 2vOW3JtYuDJWMxUvao+8fEnU+ZYRgCUgnpysl+Gbydv4q/3ckqga0RFIWxymuAuKbcSS
- DuF+1qmAq5/1woRXnn7xoZhitrQzhQOt3x+o0sOcRo6/nQqwHPSFYdTXT0K7z1wTBY3l
- U58FmYmBEaK1qWyiV2QHEAiYD0RYf9jHxLjmcMRGF8cXGz/fs9BfkcuUrePoZOxdSEbn
- HSwQ5hT+2nsoqCM3FOBEZ76ZFKL3R3+vhqEZIAonTX2mpCcmZOg8DpJiDoEM/f9Fc1BX
- /oGg==
-X-Gm-Message-State: AOJu0YxNpZ4hx9g1vqSGsvIkij3RBlYN0yo1U9AJkmRYUX5aThnQrarX
- cFmV9WMjJfk464BxsrN71Pa6jjJs5IxanSYPMUzVIsW3yIRxwtp711KFLTqcYJqf7abAGJFEJEq
- n2pwyIQ==
-X-Google-Smtp-Source: AGHT+IGdpEbm7TpMArpemwMROqUAziy3iEBBEVtr6QW8X6RH2WK/5bTQJjlsNVPGoA6HLjlTtQqHnA==
-X-Received: by 2002:a05:600c:1f17:b0:42c:b8c9:16c8 with SMTP id
- 5b1f17b1804b1-432a9aaa8d5mr3137565e9.10.1730846984188; 
- Tue, 05 Nov 2024 14:49:44 -0800 (PST)
+ bh=JGtCoSE8gk09HIhJA89V3965nEV5mYL3yVeFFS+1W7c=;
+ b=iYIUYyVLsfvVhZ1AkNzgIDBlQgcSoxsLfENOzNutwwxlSeHQLMuL60SqNiWXXMqUeN
+ hqx8t2P1Aw2JP4U1tI7j38E096NDuoddvYA+mrxOPe3iawOFy/NOkRk9zsDcL3UoODMP
+ 3XBxe8Bu1LJ6LxFLIblJqaRoAx2p1IIAeTxrkQp9gCv7CACvAvfp3ShKYBTv+mUO2s4n
+ u4GLP6Dampnd3CBWICYke6iEiGLhgaziLUMWQEYpaAcsFg9KXf5bQ4Oo050uJdrbijzI
+ K0pLXJpSkS4ChOrGODLSSJPIIjUvp87PNaXWEJdo5bzKZFjfnVwU3CNtzTw0Y1l191WM
+ 1LvQ==
+X-Gm-Message-State: AOJu0Yx6xIDvBTX4zG4kZJwJ8iquMeROaILioo7XTOi04NgFcuKY2Zc+
+ yUXu2CUKwIzToMaaNpwZBdJxlmPgHrDOfk4UTbcOEKAN0xljVz9ptCkKHiBZJPggRZEx90W+FGV
+ FrpmWFQ==
+X-Google-Smtp-Source: AGHT+IFcZTRlovfpZppdSOpL8u6FlAwRr9eGJSYfhLGjYo3MhlqHsBhaViJRFu0W9M9lCxYUyL2mvA==
+X-Received: by 2002:a05:600c:1c11:b0:428:ec2a:8c94 with SMTP id
+ 5b1f17b1804b1-4319ac9a725mr338327265e9.10.1730846945105; 
+ Tue, 05 Nov 2024 14:49:05 -0800 (PST)
 Received: from localhost.localdomain ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10e7365sm17187368f8f.54.2024.11.05.14.49.41
+ 5b1f17b1804b1-432aa5b5b2dsm1120385e9.1.2024.11.05.14.49.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 14:49:43 -0800 (PST)
+ Tue, 05 Nov 2024 14:49:04 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>,
+Cc: Bernhard Beschow <shentey@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 25/29] hw/block/pflash_cfi01: Prefer DEFINE_TYPES() macro
-Date: Tue,  5 Nov 2024 22:47:23 +0000
-Message-ID: <20241105224727.53059-26-philmd@linaro.org>
+Subject: [PULL 18/29] hw/pci-host/ppce500: Reuse TYPE_PPC_E500_PCI_BRIDGE
+ define
+Date: Tue,  5 Nov 2024 22:47:16 +0000
+Message-ID: <20241105224727.53059-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241105224727.53059-1-philmd@linaro.org>
 References: <20241105224727.53059-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,56 +97,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Prefer a macro rather than a string literal when instantiaging device models.
+
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20241103133412.73536-22-shentey@gmail.com>
+Message-ID: <20241103133412.73536-14-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/block/pflash_cfi01.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ hw/pci-host/ppce500.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-index 7b6ec644426..21a81b44f03 100644
---- a/hw/block/pflash_cfi01.c
-+++ b/hw/block/pflash_cfi01.c
-@@ -47,7 +47,6 @@
- #include "qemu/bitops.h"
- #include "qemu/host-utils.h"
- #include "qemu/log.h"
--#include "qemu/module.h"
- #include "qemu/option.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
-@@ -947,20 +946,16 @@ static void pflash_cfi01_class_init(ObjectClass *klass, void *data)
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
- }
+diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
+index 95b983b2b3c..5a4a924a2f0 100644
+--- a/hw/pci-host/ppce500.c
++++ b/hw/pci-host/ppce500.c
+@@ -475,7 +475,7 @@ static void e500_pcihost_realize(DeviceState *dev, Error **errp)
+     address_space_init(&s->bm_as, &s->bm, "pci-bm");
+     pci_setup_iommu(b, &ppce500_iommu_ops, s);
  
--
--static const TypeInfo pflash_cfi01_info = {
--    .name           = TYPE_PFLASH_CFI01,
--    .parent         = TYPE_SYS_BUS_DEVICE,
--    .instance_size  = sizeof(PFlashCFI01),
--    .class_init     = pflash_cfi01_class_init,
-+static const TypeInfo pflash_cfi01_types[] = {
-+    {
-+        .name           = TYPE_PFLASH_CFI01,
-+        .parent         = TYPE_SYS_BUS_DEVICE,
-+        .instance_size  = sizeof(PFlashCFI01),
-+        .class_init     = pflash_cfi01_class_init,
-+    },
- };
+-    pci_create_simple(b, 0, "e500-host-bridge");
++    pci_create_simple(b, 0, TYPE_PPC_E500_PCI_BRIDGE);
  
--static void pflash_cfi01_register_types(void)
--{
--    type_register_static(&pflash_cfi01_info);
--}
--
--type_init(pflash_cfi01_register_types)
-+DEFINE_TYPES(pflash_cfi01_types)
- 
- PFlashCFI01 *pflash_cfi01_register(hwaddr base,
-                                    const char *name,
+     memory_region_init(&s->container, OBJECT(h), "pci-container", PCIE500_ALL_SIZE);
+     memory_region_init_io(&h->conf_mem, OBJECT(h), &pci_host_conf_be_ops, h,
 -- 
 2.45.2
 
