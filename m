@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E1ED1CA39
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D51D9D1CA38
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:37:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DBP-0004T6-HM; Tue, 05 Nov 2024 01:36:55 -0500
+	id 1t8DB0-0004Oc-QY; Tue, 05 Nov 2024 01:36:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DBO-0004Sk-5i
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:36:54 -0500
+ id 1t8DAy-0004O9-To
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:36:28 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DBM-0001qk-Jf
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:36:53 -0500
+ id 1t8DAx-0001nl-6J
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:36:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788613; x=1762324613;
+ t=1730788587; x=1762324587;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=A6C88ZryYnZ5BmBKN8njc0C6s0vxQGqEOftEOyDrLG0=;
- b=eM5fV5Resi++m5THlBN8K+yJH3DJIR8AY9CanMVhpG4g9wO3BE7kfhT3
- IIAX33PaQJqknisSmTonM4KuqzzL50T9maFPkOO4NvXoZ6gkYZQbegV92
- ilm6WbLY2jGrO2zMAK86k4H9d6wi87n/B4915nuHFHb/Ax5D2ReQ/bOyV
- stAi84Yp0UHIPEIY6YBA8KNgzYbAgbScuDWr2MtKOiVdYVQzWcTfUqd9r
- j8k4ousGLO4GzdzKW99Yxhqv65I0S2gG0MCnXtcNNnvWxAjaa2zJA4zt7
- g2jMI1HaBnnou2OD8fn90IHVWIC7nE2HFqGSZAOOgBdZVIoxjXINs2j+D g==;
-X-CSE-ConnectionGUID: 8gBahJBdQP6rKQEd0veI3w==
-X-CSE-MsgGUID: ny2wMlY1Q3W1fKAnrKF0bA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689318"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689318"
+ bh=g+h4bo1XqzDmMZ0LZa6Xv9bp3PCsN0+TI6VIrKIylhs=;
+ b=KKDcGj22k2NUx0kQFfqCUrQiDrOFvg22DEVzDEMovgv7P0NIqxbh/oNg
+ fC5E3NCBElKOVou5/3MXKcAm2HClJExOdLwKcEO/Y1ZxWtbR2T+dI1dDd
+ wN+I+1ufbB9MJQcTYRfnvRaocdRxLt+gpkacj4//NKWzHH5zYWBKTKP1x
+ ZxBXYhCAqHSOULfd1U6Z7OxaXseTQk2fWHO6Az5oGq6sBF95LHzfDkSXh
+ p5cvn9objqh5WMf/c5dwVVRBOipTbu7GvIGrCEhQp84Nxkqp7du3dDgPa
+ 8RFUjQiiZt94lMeEYDe9xL6FiFnjReVChGs+9L5ymSqWqLEYwy+C7bv5Y Q==;
+X-CSE-ConnectionGUID: /uCogON6SlWdl8Pcex5UaA==
+X-CSE-MsgGUID: ShDe38bUSfm5NDOhJNGRBQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689213"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689213"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:36:51 -0800
-X-CSE-ConnectionGUID: W+heuwoAQZOjmJ+rdV79Pw==
-X-CSE-MsgGUID: sN9Xd87dRTyBfJlJhz4auA==
+ 04 Nov 2024 22:36:26 -0800
+X-CSE-ConnectionGUID: dzGKxjZRRju1K3R3NN9uKw==
+X-CSE-MsgGUID: B+woiuUfTM68IGRpM3+trQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83988636"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83988551"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:36:47 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:36:22 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -57,9 +57,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 07/60] kvm: Introduce kvm_arch_pre_create_vcpu()
-Date: Tue,  5 Nov 2024 01:23:15 -0500
-Message-Id: <20241105062408.3533704-8-xiaoyao.li@intel.com>
+Subject: [PATCH v6 01/60] *** HACK *** linux-headers: Update headers to pull
+ in TDX API changes
+Date: Tue,  5 Nov 2024 01:23:09 -0500
+Message-Id: <20241105062408.3533704-2-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
@@ -90,60 +91,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce kvm_arch_pre_create_vcpu(), to perform arch-dependent
-work prior to create any vcpu. This is for i386 TDX because it needs
-call TDX_INIT_VM before creating any vcpu.
+Pull in recent TDX updates, which are not backwards compatible.
+
+It's just to make this series runnable. It will be updated by script
+
+	scripts/update-linux-headers.sh
+
+once TDX support is upstreamed in linux kernel
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
-Changes in v3:
-- pass @errp to kvm_arch_pre_create_vcpu(); (Per Daniel)
----
- accel/kvm/kvm-all.c  | 10 ++++++++++
- include/sysemu/kvm.h |  1 +
- 2 files changed, 11 insertions(+)
+ linux-headers/asm-x86/kvm.h | 70 +++++++++++++++++++++++++++++++++++++
+ linux-headers/linux/kvm.h   |  1 +
+ 2 files changed, 71 insertions(+)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 930a5bfed58f..1732fa1adecd 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -523,6 +523,11 @@ void kvm_destroy_vcpu(CPUState *cpu)
-     }
- }
- 
-+int __attribute__ ((weak)) kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
+diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
+index 4711ef2c3d01..719b9d121dbe 100644
+--- a/linux-headers/asm-x86/kvm.h
++++ b/linux-headers/asm-x86/kvm.h
+@@ -922,5 +922,75 @@ struct kvm_hyperv_eventfd {
+ #define KVM_X86_SEV_VM		2
+ #define KVM_X86_SEV_ES_VM	3
+ #define KVM_X86_SNP_VM		4
++#define KVM_X86_TDX_VM		5
 +
- int kvm_init_vcpu(CPUState *cpu, Error **errp)
- {
-     KVMState *s = kvm_state;
-@@ -531,6 +536,11 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
- 
-     trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
- 
-+    ret = kvm_arch_pre_create_vcpu(cpu, errp);
-+    if (ret < 0) {
-+        goto err;
-+    }
++/* Trust Domain eXtension sub-ioctl() commands. */
++enum kvm_tdx_cmd_id {
++	KVM_TDX_CAPABILITIES = 0,
++	KVM_TDX_INIT_VM,
++	KVM_TDX_INIT_VCPU,
++	KVM_TDX_INIT_MEM_REGION,
++	KVM_TDX_FINALIZE_VM,
++	KVM_TDX_GET_CPUID,
 +
-     ret = kvm_create_vcpu(cpu);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret,
-diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-index c3a60b28909a..643ca4950543 100644
---- a/include/sysemu/kvm.h
-+++ b/include/sysemu/kvm.h
-@@ -374,6 +374,7 @@ int kvm_arch_get_default_type(MachineState *ms);
++	KVM_TDX_CMD_NR_MAX,
++};
++
++struct kvm_tdx_cmd {
++	/* enum kvm_tdx_cmd_id */
++	__u32 id;
++	/* flags for sub-commend. If sub-command doesn't use this, set zero. */
++	__u32 flags;
++	/*
++	 * data for each sub-command. An immediate or a pointer to the actual
++	 * data in process virtual address.  If sub-command doesn't use it,
++	 * set zero.
++	 */
++	__u64 data;
++	/*
++	 * Auxiliary error code.  The sub-command may return TDX SEAMCALL
++	 * status code in addition to -Exxx.
++	 * Defined for consistency with struct kvm_sev_cmd.
++	 */
++	__u64 hw_error;
++};
++
++struct kvm_tdx_capabilities {
++	__u64 supported_attrs;
++	__u64 supported_xfam;
++	__u64 reserved[254];
++	struct kvm_cpuid2 cpuid;
++};
++
++struct kvm_tdx_init_vm {
++	__u64 attributes;
++	__u64 xfam;
++	__u64 mrconfigid[6];	/* sha384 digest */
++	__u64 mrowner[6];	/* sha384 digest */
++	__u64 mrownerconfig[6];	/* sha384 digest */
++
++	/* The total space for TD_PARAMS before the CPUIDs is 256 bytes */
++	__u64 reserved[12];
++
++	/*
++	 * Call KVM_TDX_INIT_VM before vcpu creation, thus before
++	 * KVM_SET_CPUID2.
++	 * This configuration supersedes KVM_SET_CPUID2s for VCPUs because the
++	 * TDX module directly virtualizes those CPUIDs without VMM.  The user
++	 * space VMM, e.g. qemu, should make KVM_SET_CPUID2 consistent with
++	 * those values.  If it doesn't, KVM may have wrong idea of vCPUIDs of
++	 * the guest, and KVM may wrongly emulate CPUIDs or MSRs that the TDX
++	 * module doesn't virtualize.
++	 */
++	struct kvm_cpuid2 cpuid;
++};
++
++#define KVM_TDX_MEASURE_MEMORY_REGION   _BITULL(0)
++
++struct kvm_tdx_init_mem_region {
++	__u64 source_addr;
++	__u64 gpa;
++	__u64 nr_pages;
++};
  
- int kvm_arch_init(MachineState *ms, KVMState *s);
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp);
- int kvm_arch_init_vcpu(CPUState *cpu);
- int kvm_arch_destroy_vcpu(CPUState *cpu);
- 
+ #endif /* _ASM_X86_KVM_H */
+diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+index 49dd1b30ce9e..ebad8e0d10c5 100644
+--- a/linux-headers/linux/kvm.h
++++ b/linux-headers/linux/kvm.h
+@@ -369,6 +369,7 @@ struct kvm_run {
+ #define KVM_SYSTEM_EVENT_WAKEUP         4
+ #define KVM_SYSTEM_EVENT_SUSPEND        5
+ #define KVM_SYSTEM_EVENT_SEV_TERM       6
++#define KVM_SYSTEM_EVENT_TDX_FATAL      7
+ 			__u32 type;
+ 			__u32 ndata;
+ 			union {
 -- 
 2.34.1
 
