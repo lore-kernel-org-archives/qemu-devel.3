@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB3E6D1267E
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 10:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C6ECD1267E
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 10:44:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8H1k-0002d6-1J; Tue, 05 Nov 2024 05:43:12 -0500
+	id 1t8H2G-00032P-Pu; Tue, 05 Nov 2024 05:43:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8H1i-0002cs-0x
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:43:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8H1f-0003PE-QT
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:43:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730803387;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=fjQMb444NpSo3Nqa82o/omKxuraxwlFuyfDE/0Lkv3c=;
- b=B4Kcs5z57U836rqjtEEp43lW03gVd/aCHiizLM2JyKkBgEUcB2PsOA1lzccv134tM0GWpq
- 3P3PBfahLJKe9tOCJw4sGTadaHlai3fPaIqBaZn43KjQ+6CvunqfG/nnxj3wnvhJOcEeB8
- KSXcxdlwhDz2F7xn4Rg1i6bkfgl2vFk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-RY5z4U_cNgG8cD171WNHxg-1; Tue,
- 05 Nov 2024 05:43:00 -0500
-X-MC-Unique: RY5z4U_cNgG8cD171WNHxg-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F08251956089; Tue,  5 Nov 2024 10:42:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.52])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D7BE6300018D; Tue,  5 Nov 2024 10:42:51 +0000 (UTC)
-Date: Tue, 5 Nov 2024 10:42:47 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 18/60] i386/tdvf: Introduce function to parse TDVF
- metadata
-Message-ID: <Zyn2p9wD2SnisXhT@redhat.com>
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-19-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t8H2A-0002xS-GT
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:43:40 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t8H28-0003Qf-Tb
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:43:38 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9388a00cfso6183206a12.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 02:43:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730803415; x=1731408215; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PNuzYa5+nZdqvnGVKWFxmNuP1iytRrvncpaN0YbpD8M=;
+ b=mTRCD0vSx0l/sTOp/Zq43dapnB4SdZ9JBwyT9BFf3nmP+/3QuLMGfY17USqQxKcnrI
+ 1E5nHJw9v8u7nsh8oxRVZjJCK9VHN9Nxnd2K1bJeVqQPB2j2zRiTaBdKdMT2lldrkv4h
+ 9EmfNJ78YpqY9xpEu/QaeayFJBwaHFCPy6fIt8q+j/Hl0HBxNzM98UjZgTlQztWQX2z3
+ iHUOqpktx0kZjPEN9Kz09Jxddadt+GvXib5eyx8jXRLSQWyG7S4OEShtg3+N1r8Xp/AT
+ O3lLqrs5gO0okwHMua3RvwjqVnAQwJwOpNGyJ175zW513541YAxFKo3LTmfxgcTVYWiS
+ e5BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730803415; x=1731408215;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PNuzYa5+nZdqvnGVKWFxmNuP1iytRrvncpaN0YbpD8M=;
+ b=MLT1F5UQibr2KoOMeX49YvhHJWsR/0DKtWm6s0MXcE6Qd8fAQHtCHw3nos+teIYWhM
+ Jt9W8A7BEqLe1Tq/mmmzzom3sVwnnt61RF4vyi+2dqArQpcSPc8vjObLfal/aIqAlEii
+ oG47H5AEjp425T+fSIjubO3pel912NiNmbiIRes06/gia9URWK1bfB8+yfxc/gOnG0xr
+ iKJPsV1UFAbUdUOM6H63hV9NZ0JkRNaK19CG9L3MgxHF1tyV7Xa2CoKmPUe0evNG60jp
+ ZV4VgWjUK4hAVbfpfwsF1ko/gnflYXThrJVXXSCivO91H6dxO9jswPgZIi9cotXVjalM
+ l+Mg==
+X-Gm-Message-State: AOJu0YwuFPg8k9WhhOVm6urpoyXbDzCacrOnBh33invdZkFvQH1uRBvM
+ 0lyh3A++b1q/edQHcKfYivMpHKfZ4xxyjYKavOqAfwpvRkId2NoDmCQF3GL1oF4=
+X-Google-Smtp-Source: AGHT+IGNtRr5h7FKCZw+7WnVCzvyL5E5fYqa/ZQ8UV8o0477NgO5qn1rkowwsD4MxI7t1K6Q/j5oew==
+X-Received: by 2002:a05:6402:1ed2:b0:5ce:cfc4:1f90 with SMTP id
+ 4fb4d7f45d1cf-5cecfc42115mr6374979a12.1.1730803415135; 
+ Tue, 05 Nov 2024 02:43:35 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5cee6ab05casm1121106a12.26.2024.11.05.02.43.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Nov 2024 02:43:34 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id BA52F5F89E;
+ Tue,  5 Nov 2024 10:43:33 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PULL 1/3] contrib/plugins/cflow: fix warning
+Date: Tue,  5 Nov 2024 10:43:31 +0000
+Message-Id: <20241105104333.2534823-2-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241105104333.2534823-1-alex.bennee@linaro.org>
+References: <20241105104333.2534823-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241105062408.3533704-19-xiaoyao.li@intel.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,202 +96,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 05, 2024 at 01:23:26AM -0500, Xiaoyao Li wrote:
-> From: Isaku Yamahata <isaku.yamahata@intel.com>
-> 
-> TDX VM needs to boot with its specialized firmware, Trusted Domain
-> Virtual Firmware (TDVF). QEMU needs to parse TDVF and map it in TD
-> guest memory prior to running the TDX VM.
-> 
-> A TDVF Metadata in TDVF image describes the structure of firmware.
-> QEMU refers to it to setup memory for TDVF. Introduce function
-> tdvf_parse_metadata() to parse the metadata from TDVF image and store
-> the info of each TDVF section.
-> 
-> TDX metadata is located by a TDX metadata offset block, which is a
-> GUID-ed structure. The data portion of the GUID structure contains
-> only an 4-byte field that is the offset of TDX metadata to the end
-> of firmware file.
-> 
-> Select X86_FW_OVMF when TDX is enable to leverage existing functions
-> to parse and search OVMF's GUID-ed structures.
-> 
-> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
-> Changes in v6:
->  - Drop the the data endianness change for metadata->Length;
-> 
-> Changes in v1:
->  - rename tdvf_parse_section_entry() to
->    tdvf_parse_and_check_section_entry()
-> 
-> Changes in RFC v4:
->  - rename TDX_METADATA_GUID to TDX_METADATA_OFFSET_GUID
-> ---
->  hw/i386/Kconfig        |   1 +
->  hw/i386/meson.build    |   1 +
->  hw/i386/tdvf.c         | 200 +++++++++++++++++++++++++++++++++++++++++
->  include/hw/i386/tdvf.h |  51 +++++++++++
->  4 files changed, 253 insertions(+)
->  create mode 100644 hw/i386/tdvf.c
->  create mode 100644 include/hw/i386/tdvf.h
-> 
-> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-> index 86bc10377c4f..555a000037bc 100644
-> --- a/hw/i386/Kconfig
-> +++ b/hw/i386/Kconfig
-> @@ -12,6 +12,7 @@ config SGX
->  
->  config TDX
->      bool
-> +    select X86_FW_OVMF
->      depends on KVM
->  
->  config PC
-> diff --git a/hw/i386/meson.build b/hw/i386/meson.build
-> index 10bdfde27c69..3bc1da2b6eb4 100644
-> --- a/hw/i386/meson.build
-> +++ b/hw/i386/meson.build
-> @@ -32,6 +32,7 @@ i386_ss.add(when: 'CONFIG_PC', if_true: files(
->    'port92.c'))
->  i386_ss.add(when: 'CONFIG_X86_FW_OVMF', if_true: files('pc_sysfw_ovmf.c'),
->                                          if_false: files('pc_sysfw_ovmf-stubs.c'))
-> +i386_ss.add(when: 'CONFIG_TDX', if_true: files('tdvf.c'))
->  
->  subdir('kvm')
->  subdir('xen')
-> diff --git a/hw/i386/tdvf.c b/hw/i386/tdvf.c
-> new file mode 100644
-> index 000000000000..4afa636bfa0e
-> --- /dev/null
-> +++ b/hw/i386/tdvf.c
-> @@ -0,0 +1,200 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Since you have this SPDX tag....
+contrib/plugins/cflow.c: In function ‘plugin_exit’:
+contrib/plugins/cflow.c:167:19: error: declaration of ‘n’ shadows a previous local [-Werror=shadow=local]
+  167 |         NodeData *n = l->data;
+      |                   ^
+contrib/plugins/cflow.c:139:9: note: shadowed declaration is here
+  139 |     int n = 0;
+      |         ^
 
-> +
-> + * Copyright (c) 2020 Intel Corporation
-> + * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
-> + *                        <isaku.yamahata at intel.com>
-> + *
-> + * This program is free software; you can redistribute it and/or modify
-> + * it under the terms of the GNU General Public License as published by
-> + * the Free Software Foundation; either version 2 of the License, or
-> + * (at your option) any later version.
-> +
-> + * This program is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> + * GNU General Public License for more details.
-> +
-> + * You should have received a copy of the GNU General Public License along
-> + * with this program; if not, see <http://www.gnu.org/licenses/>.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20241023212812.1376972-2-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-...you should omit the GPL boilerplate text here, as the new
-QEMU standard is to use only SPDX for new files.
-
-
-> +
-> +int tdvf_parse_metadata(TdxFirmware *fw, void *flash_ptr, int size)
-> +{
-> +    TdvfSectionEntry *sections;
-
-g_autofree TdvfSectionEntry *sections = NULL;
-
-will avoid the duplicated 'g_free' calls later
-
-> +    TdvfMetadata *metadata;
-> +    ssize_t entries_size;
-> +    int i;
-> +
-> +    metadata = tdvf_get_metadata(flash_ptr, size);
-> +    if (!metadata) {
-> +        return -EINVAL;
-> +    }
-> +
-> +    /* load and parse metadata entries */
-> +    fw->nr_entries = le32_to_cpu(metadata->NumberOfSectionEntries);
-> +    if (fw->nr_entries < 2) {
-> +        error_report("Invalid number of fw entries (%u) in TDVF Metadata",
-> +                     fw->nr_entries);
-> +        return -EINVAL;
-> +    }
-> +
-> +    entries_size = fw->nr_entries * sizeof(TdvfSectionEntry);
-> +    if (metadata->Length != sizeof(*metadata) + entries_size) {
-> +        error_report("TDVF metadata len (0x%x) mismatch, expected (0x%x)",
-> +                     metadata->Length,
-> +                     (uint32_t)(sizeof(*metadata) + entries_size));
-> +        return -EINVAL;
-> +    }
-> +
-> +    fw->entries = g_new(TdxFirmwareEntry, fw->nr_entries);
-> +    sections = g_new(TdvfSectionEntry, fw->nr_entries);
-> +
-> +    if (!memcpy(sections, (void *)metadata + sizeof(*metadata), entries_size)) {
-> +        error_report("Failed to read TDVF section entries");
-> +        goto err;
-> +    }
-> +
-> +    for (i = 0; i < fw->nr_entries; i++) {
-> +        if (tdvf_parse_and_check_section_entry(&sections[i], &fw->entries[i])) {
-> +            goto err;
-> +        }
-> +    }
-> +    g_free(sections);
-> +
-> +    return 0;
-> +
-> +err:
-> +    g_free(sections);
-> +    fw->entries = 0;
-> +    g_free(fw->entries);
-> +    return -EINVAL;
-> +}
-> diff --git a/include/hw/i386/tdvf.h b/include/hw/i386/tdvf.h
-> new file mode 100644
-> index 000000000000..593341eb2e93
-> --- /dev/null
-> +++ b/include/hw/i386/tdvf.h
-> @@ -0,0 +1,51 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> + * Copyright (c) 2020 Intel Corporation
-> + * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
-> + *                        <isaku.yamahata at intel.com>
-> + *
-> + * This program is free software; you can redistribute it and/or modify
-> + * it under the terms of the GNU General Public License as published by
-> + * the Free Software Foundation; either version 2 of the License, or
-> + * (at your option) any later version.
-> +
-> + * This program is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> + * GNU General Public License for more details.
-> +
-> + * You should have received a copy of the GNU General Public License along
-> + * with this program; if not, see <http://www.gnu.org/licenses/>.
-> + */
-
-Same note about only using SPDX.
-
-
-With regards,
-Daniel
+diff --git a/contrib/plugins/cflow.c b/contrib/plugins/cflow.c
+index 6faa55d10d..b39974d1cf 100644
+--- a/contrib/plugins/cflow.c
++++ b/contrib/plugins/cflow.c
+@@ -136,7 +136,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+     g_autoptr(GString) result = g_string_new("collected ");
+     GList *data;
+     GCompareFunc sort = &hottest;
+-    int n = 0;
++    int i = 0;
+ 
+     g_mutex_lock(&node_lock);
+     g_string_append_printf(result, "%d control flow nodes in the hash table\n",
+@@ -162,8 +162,8 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+     data = g_list_sort(data, sort);
+ 
+     for (GList *l = data;
+-         l != NULL && n < topn;
+-         l = l->next, n++) {
++         l != NULL && i < topn;
++         l = l->next, i++) {
+         NodeData *n = l->data;
+         const char *type = n->mid_count ? "sync fault" : "branch";
+         g_string_append_printf(result, "  addr: 0x%"PRIx64 " %s: %s (%s)\n",
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.39.5
 
 
