@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44715D3E772
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 21:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F8AD3E773
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 21:21:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Qwt-00009x-Oi; Tue, 05 Nov 2024 16:18:51 -0500
+	id 1t8Qyx-0000vp-HH; Tue, 05 Nov 2024 16:20:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1t8Qwp-00009L-AL
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 16:18:49 -0500
-Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
+ id 1t8Qyw-0000vJ-08
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 16:20:58 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1t8Qwn-000873-PR
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 16:18:47 -0500
-Received: by mail-yb1-xb29.google.com with SMTP id
- 3f1490d57ef6-e29267b4dc4so4953273276.0
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 13:18:45 -0800 (PST)
+ id 1t8Qyu-0008NW-Ay
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 16:20:57 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-6e38ebcc0abso68045297b3.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 13:20:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730841524; x=1731446324; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730841655; x=1731446455; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=tEdrMlvscGRAELTFBlq9FDu6pV5+7du0Bd+t/STrdCg=;
- b=mZHPfsr6e80afAjD7Mx5p22SmAapdRpf5hjdRNw82Ki79QfH3RhmW7/DTZe00B+tsj
- jVs7inz9dDXDQMGkIIq5jYwuIALil85nUDYzDl03rxcrFTpfNHi2AjmqDZ+2+g+AwyJa
- Y16Rh8NLYdSPKO5ZQehZcam29XkEaS7qRSNdThnnOXlkHBCjudkoBFiW6wR+EiDbDTY1
- LadunyC5uZGo21K8/hd57iBiHh5jqBhtY2Wz1IKmIFbp8jEcc2YFBvXHtJaLBC0FPPks
- OXNDHKJ4bKeQQubyBcGxYbrUaCsjhUB+nL2/UdP+i/8LOOP4Ev4ra/WKZmKBujSy2bHw
- Au2w==
+ bh=ZPiMAN9QIzBPfA7lPqV6M+Nsp42HSnsGy+bCRhwQ8kw=;
+ b=Y5su15eKLnZQHD59di8Mv5OWHmSIJ72fwtyRTV++va7c1c5AMOkAFzQnm+zABiwu7r
+ 1mmU8qj/Wp7M3dSxHk0SqSouUKMDk16d5HICAZMi37KLqDpKLu3EUEECXrRulGHlAw1O
+ FQa08c5fA1VZsnhuKCqtMPEKSwIsN1wLX+1sy8L5IdckLcRrhJgMXE4lOkcNQV13ue0k
+ ot0aTdU0sResoAPjU99L79mK9nG8UXPcWC16ToEkrp9gABxBMBW3TVuGh4PuPSnkqnSE
+ GmNGgTztSPUCLFB5afjfMLxe+dbqKgLv+dh8SmdBubJiVoAZkkN+MOGnqVPQj9TrYSpH
+ 1Utg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730841524; x=1731446324;
+ d=1e100.net; s=20230601; t=1730841655; x=1731446455;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tEdrMlvscGRAELTFBlq9FDu6pV5+7du0Bd+t/STrdCg=;
- b=qaVQhEmuqFVkFFxt2BtGFNhYIyWkPvR6Q/93Q5WWvsOAB8+20verGb8Kzq2Z242+wR
- +xlNtiwRCJO4cieQ3fzQURJKkgosJB9noVDo0QTvuyE3jnlVTqkqSwZ6vqUvNlLFjhPy
- Hs8xZrAZe9rWdG5hQwr//D7wwAWwWSs+C4R1UrZMfzmDpeCxfB+M8KJHF3L2hHijlJ+P
- rkFrsrMDOtZe7G9ejYS3eqJrXBLjeuSZv/JT5q8LJGzIg/3H0Fot+PTLQAvb+VOvYJNJ
- 87TsV+nWGsVdHs/uuRD2MjSsgbDUN+35SIU5RqykfjkUYErA7wK3cN49GwGsuZDkiP1y
- lm6A==
+ bh=ZPiMAN9QIzBPfA7lPqV6M+Nsp42HSnsGy+bCRhwQ8kw=;
+ b=DWTQ52k35Jnwy/jGWvz3D7Jt0el1jFbUwDNYYiB1gKBe13P1Xbc7Bwj/e/q5x12I/i
+ ItuuZUKov9sb9qvdbSDMH48k0XrHk6H7jj8pGnmLrwLQk7ifQ1OcOqSpQeNFUJk9Zan8
+ FLjcQmfnFFotVG5bUPUw0PPhV0HPoyspwBTqbeVpiuWLLNXgzRSExkroWJ+VyyUZ97TO
+ vZln4SibDIxvoNhnf3/q3Ov80vP40x7J/ElDYZ8JOYGCcMMZ3W6iw+1FwbV5SMEJ3L2C
+ hC3l5aYrgTJGRannh4QxRD0VIy+NGR8D2kgYtX8uLqeCqnq+CUcos/qTlgXA+ZYo4wA5
+ IJCA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFqun5RUnPtp4adfmXkRnBnK8DrLY+DQ1GhSeSFis03Vvw+KNuTxbixSSTbNxyFNz/MgDjzrTYLVal@nongnu.org
-X-Gm-Message-State: AOJu0YzRkvPeW8utHcPGzAHRA1PVP45JQOFOmv9D6Qkv8jr0lJzKaU0z
- wtdDRXr/Dn6bH+fu0HocTXrqQMJP4rz45dvlnrs4E7+HibPUoT78
-X-Google-Smtp-Source: AGHT+IHfZcpEmqQofUMS9b6VJaypOwQchI4XxAVqs2DUyEbtqcHs7YBBVy7fOL7cI65GETtJFgk0LA==
-X-Received: by 2002:a05:6902:2509:b0:e30:e6cb:26a1 with SMTP id
- 3f1490d57ef6-e3302568b80mr14357745276.16.1730841524222; 
- Tue, 05 Nov 2024 13:18:44 -0800 (PST)
+ AJvYcCUBSL8TnG9YFI9ql3ec2U+jHrpfSS/1xRox9Q9pjI4+3PamF81KbkKTJYf6XeezJOTIZkPmuw0S10cz@nongnu.org
+X-Gm-Message-State: AOJu0YwgnYtT4EAjyK8hoe+HeXn1rHgVOU3obVBEKSqKUUkwTpKxKQJD
+ xquBROywWw8v4j9ys2P0MJQOeYVNjX3JKsZgORdY1z8W/shq8NXmTRqYUw==
+X-Google-Smtp-Source: AGHT+IF6DQRuWsdCA1IjjAnvofSDQXE9T2x0H2s/5eic/WyeD6boHgJTjO69gjSlDgkmSIulgstCYQ==
+X-Received: by 2002:a05:690c:87:b0:6ea:3313:f98c with SMTP id
+ 00721157ae682-6ea3313fa4emr280329027b3.32.1730841655012; 
+ Tue, 05 Nov 2024 13:20:55 -0800 (PST)
 Received: from fan ([50.205.20.42]) by smtp.gmail.com with ESMTPSA id
- 3f1490d57ef6-e30e8acda8fsm2717068276.46.2024.11.05.13.18.43
+ 00721157ae682-6ea55ac99a1sm24729247b3.2.2024.11.05.13.20.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 13:18:43 -0800 (PST)
+ Tue, 05 Nov 2024 13:20:54 -0800 (PST)
 From: Fan Ni <nifan.cxl@gmail.com>
 X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Tue, 5 Nov 2024 13:18:42 -0800
+Date: Tue, 5 Nov 2024 13:20:52 -0800
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: linux-cxl@vger.kernel.org, mst@redhat.com, qemu-devel@nongnu.org,
  Esifiel <esifiel@gmail.com>, linuxarm@huawei.com
-Subject: Re: [PATCH qemu 06/10] hw/cxl: Avoid accesses beyond the end of
- cel_log.
-Message-ID: <ZyqLsvEhS80kQabs@fan>
+Subject: Re: [PATCH qemu 07/10] hw/cxl: Ensuring enough data to read
+ parameters in cmd_tunnel_management_cmd()
+Message-ID: <ZyqMNCvnXkiwqubp@fan>
 References: <20241101133917.27634-1-Jonathan.Cameron@huawei.com>
- <20241101133917.27634-7-Jonathan.Cameron@huawei.com>
+ <20241101133917.27634-8-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241101133917.27634-7-Jonathan.Cameron@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
- envelope-from=nifan.cxl@gmail.com; helo=mail-yb1-xb29.google.com
+In-Reply-To: <20241101133917.27634-8-Jonathan.Cameron@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,70 +97,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 01, 2024 at 01:39:13PM +0000, Jonathan Cameron wrote:
-> Add a check that the requested offset + length does not go beyond the end
-> of the cel_log.
-> 
-> Whilst the cci->cel_log is large enough to include all possible CEL
-> entries, the guest might still ask for entries beyond the end of it.
-> Move the comment to this new check rather than before the check on the
-> type of log requested.
+On Fri, Nov 01, 2024 at 01:39:14PM +0000, Jonathan Cameron wrote:
+> If len_in is less than the minimum spec allowed value, then return
+> CXL_MBOX_INVALID_PAYLOAD_LENGTH
 > 
 > Reported-by: Esifiel <esifiel@gmail.com>
 > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > ---
->  hw/cxl/cxl-mailbox-utils.c | 22 +++++++++++++---------
->  1 file changed, 13 insertions(+), 9 deletions(-)
+>  hw/cxl/cxl-mailbox-utils.c | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 2aa7ffed84..5e571955b6 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -937,24 +937,28 @@ static CXLRetCode cmd_logs_get_log(const struct cxl_cmd *cmd,
->  
->      get_log = (void *)payload_in;
->  
-> +    if (get_log->length > cci->payload_max) {
-> +        return CXL_MBOX_INVALID_INPUT;
-> +    }
-> +
-> +    if (!qemu_uuid_is_equal(&get_log->uuid, &cel_uuid)) {
-> +        return CXL_MBOX_INVALID_LOG;
-> +    }
-> +
->      /*
->       * CXL r3.1 Section 8.2.9.5.2: Get Log (Opcode 0401h)
->       *   The device shall return Invalid Input if the Offset or Length
->       *   fields attempt to access beyond the size of the log as reported by Get
-> -     *   Supported Logs.
-> +     *   Supported Log.
->       *
-> -     * The CEL buffer is large enough to fit all commands in the emulation, so
-> -     * the only possible failure would be if the mailbox itself isn't big
-> -     * enough.
-> +     * Only valid for there to be one entry per opcode, but the length + offset
-> +     * may still be greater than that if the inputs are not valid and so access
-> +     * beyond the end of cci->cel_log.
->       */
-> -    if (get_log->length > cci->payload_max) {
-> +    if ((uint64_t)get_log->offset + get_log->length >= sizeof(cci->cel_log)) {
->          return CXL_MBOX_INVALID_INPUT;
-
-Oh. This patch actually addresses my concern in the previous patch.
-Maybe we can combine the changes in this patch and the previous one
-together. Other than that 
 
 Reviewed-by: Fan Ni <fan.ni@samsung.com>
 
->      }
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 5e571955b6..a40d81219c 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -151,6 +151,9 @@ static CXLRetCode cmd_tunnel_management_cmd(const struct cxl_cmd *cmd,
+>      in = (void *)payload_in;
+>      out = (void *)payload_out;
 >  
-> -    if (!qemu_uuid_is_equal(&get_log->uuid, &cel_uuid)) {
-> -        return CXL_MBOX_INVALID_LOG;
-> -    }
-> -
->      /* Store off everything to local variables so we can wipe out the payload */
->      *len_out = get_log->length;
->  
+> +    if (len_in < sizeof(*in)) {
+> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> +    }
+>      /* Enough room for minimum sized message - no payload */
+>      if (in->size < sizeof(in->ccimessage)) {
+>          return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
 > -- 
 > 2.43.0
 > 
