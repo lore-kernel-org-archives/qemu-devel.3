@@ -4,92 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D971D3E77E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 954F0D3E77C
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:55:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SSY-0004SL-Jf; Tue, 05 Nov 2024 17:55:39 -0500
+	id 1t8SSa-0004n4-C0; Tue, 05 Nov 2024 17:55:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t8SSA-00046F-AW
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:55:17 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t8SS7-00067e-SP
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:55:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=jxLKK1uuAOV2nzNtzzSG6I3MhJcU3L2MdPz4hfmB14g=; b=OapPC6DMaj6vMsmUFfqiAl+FmJ
- nqoE035tq40tl3YlvZ8naPrNfJ9QRPAIR3mAtXsC396kKz7WvSAI7l7fiBy/phCmwgOWI3inT2BEv
- F1Uj838LVehOJFzF7QSUK/BghwfOCWvPOmCdEYDU47KslpRolPqyynSqNlXs7DQWiq9JlQiRn0qzc
- ZWxfaDW59ehpv+dEBLpxJ8aY2CvXrVx1mS6Sz4y1b0ot8+P5Jy0GYBX0gxRkXbWcTGYMSvxqwCea6
- htsOOOqX6HIrRqRz3RcaNxVONTRCPiTFN9/jPh7X5QXgrp930E4xmCa0UMRhr23q8NiLPzqAHvhxJ
- 4vY2Y1dS01tal9NUJNx+6ECE91bdzuT4NpGcx4EHeqBo8M4ftMlG5Dco9y3VK6MJ3dkls/7/AC3A8
- 9pv0EZ99Mr//Kc9hDJ03djAIePGMJJovwMFmMGXpt2JtNAPZNIv414PnIgNkhqVhld/tzhaOJkhdb
- obRK3bKPwvsJZ/y0oGAhrr517mx2/72cuVlIOJOUsxrR9X9uqc7pPj1bT9mzIyh11OXevwQaDTWje
- eit4y4bva+ZsGpDoi0A+uUhWrlAt6UJKYK05uemPtulp74ztW6si0qK0YALOH6Yr486xEJAFT7dVK
- tkHXuNuBg/MTVIFI64tySrJqYMoLwtkCo6wKHCvK4=;
-Received: from [2a00:23c4:8bb8:f600:73fa:5593:d3ba:8410]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t8SRe-0003qk-L2; Tue, 05 Nov 2024 22:54:46 +0000
-Message-ID: <cc832858-9161-466e-ab52-9909f120fb12@ilande.co.uk>
-Date: Tue, 5 Nov 2024 22:54:58 +0000
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SSO-0004DP-OI
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:55:32 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SSN-0006Ai-39
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:55:28 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3807dd08cfcso5054850f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:55:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730847325; x=1731452125; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sfoyir+mNAEXf0MJKCr64L0tHPI8qAfQVkVEimKnDg0=;
+ b=GUMhX7sppCFfS8yZmKVq+TxOJ/cTdFBt5DtzMqihLwNe0i1kgx2wkkrv+F34+eAM41
+ yQYQDYHHKUTM3bnL/c6jZiYEQN4rACJGArd2G/mhFGzsw0PwwlnZJjQ/HcRI6qXmQ70K
+ f3qp/62sSCWZbBWO2Xs8MJqX3Lv44AbrETLC9w4uBta3vEVrJdlFblGBThSz0mEYLkUY
+ 3QQU82UTP39f/Z6kA03QaAwLcwc55ao7Bb7DlZ/jqFaC+dhy12CDJixzmUta3SCDEr+k
+ upJ/hjHX39RvBNvwG1msdcwM5/eK8WZOEiZ0zwgR17TgOC3w2qJyq/wSMV9IIzHaRcXT
+ wzvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730847325; x=1731452125;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sfoyir+mNAEXf0MJKCr64L0tHPI8qAfQVkVEimKnDg0=;
+ b=jVtk83bX5m2fo/1l/HOtEawKTZY5qh6sEmZb9NDQjKZc3wM15R3ZrMQbfdIAE2vbRK
+ YqCXAq0fYCWi4rGkQFLTOD1t3BUtpxftXMnxPYqhctioSZjTX3JTXdK+qB9rJZM39lyp
+ jKOUkr1RZ8qCPWiritYL7ZaBrFJcZioE+U77IWZKhh7kAZFK+OkxzTeflKE+vBjGBCIL
+ l0f1QOgrzEOga1cuyH+wg++CR1QghUU9qDH/WeFePqhmjPsTcap5P7H8/7wUcdcZAt+/
+ HNwG4Wfv3TxGbkO1qyjO4nhIcg5QgLwoUQ4gL4C+lPWEm0jXtZxiS7EMQS7RCB+1E0CD
+ XJlw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUpGUspmYs+fa3CKRMJiDKhTxaJISoy5ZMwjtjwj/REInhgk/PzHavvJZX8+/UPz//hTeTiStRnA2tq@nongnu.org
+X-Gm-Message-State: AOJu0Yz1ZIonONHQK2eDQ/vcjYMBYtVg6CNh/VJJLkLeNsrfj2cR+uim
+ tl4WPL0YAXpJvAHiz9CrcUvNBowU0oaIRVOMk55Zjppo5Lz2Xd2fUETHE6JC+Qc=
+X-Google-Smtp-Source: AGHT+IF30Avi0YXv5dsyrLwu0HFkyhQakQVUQHVdS2d4bGipuoNeohtI+EdnJLqjuOCQ9S10dSsaIg==
+X-Received: by 2002:a5d:64cb:0:b0:37d:51b7:5e08 with SMTP id
+ ffacd0b85a97d-381c7a5ce0bmr16175511f8f.18.1730847323912; 
+ Tue, 05 Nov 2024 14:55:23 -0800 (PST)
+Received: from [172.20.143.32] ([89.101.134.25])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c10b7d2bsm17362898f8f.16.2024.11.05.14.55.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Nov 2024 14:55:22 -0800 (PST)
+Message-ID: <b28ffff6-7b7f-47cb-b39c-8b132e353a2b@linaro.org>
+Date: Tue, 5 Nov 2024 22:55:20 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Jan Kiszka <jan.kiszka@siemens.com>,
- Eduard Vlad <evlad@amazon.de>
-References: <20240921085712.28902-1-graf@amazon.com>
+Subject: Re: [PATCH v4 00/26] E500 Cleanup
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Corey Minyard <cminyard@mvista.com>,
+ Kevin Wolf <kwolf@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+References: <20241103133412.73536-1-shentey@gmail.com>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240921085712.28902-1-graf@amazon.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241103133412.73536-1-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:73fa:5593:d3ba:8410
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3] target-i386: Walk NPT in guest real mode
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,108 +101,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/09/2024 09:57, Alexander Graf wrote:
+Hi Bernhard,
 
-> When translating virtual to physical address with a guest CPU that
-> supports nested paging (NPT), we need to perform every page table walk
-> access indirectly through the NPT, which we correctly do.
+On 3/11/24 14:33, Bernhard Beschow wrote:
+> This series is part of a bigger series exploring data-driven machine creation
+> using device tree blobs on top of the e500 machines [1]. It contains patches to
+> make this exploration easier which are also expected to provide value in
+> themselves.
 > 
-> However, we treat real mode (no page table walk) special: In that case,
-> we currently just skip any walks and translate VA -> PA. With NPT
-> enabled, we also need to then perform NPT walk to do GVA -> GPA -> HPA
-> which we fail to do so far.
+> The cleanup starts with the e500 machine class itself, then proceeds with
+> machine-specific device models and concludes with more or less loosely related
+> devices. Device cleanup mostly consists of using the DEFINE_TYPES() macro.
 > 
-> The net result of that is that TCG VMs with NPT enabled that execute
-> real mode code (like SeaBIOS) end up with GPA==HPA mappings which means
-> the guest accesses host code and data. This typically shows as failure
-> to boot guests.
-> 
-> This patch changes the page walk logic for NPT enabled guests so that we
-> always perform a GVA -> GPA translation and then skip any logic that
-> requires an actual PTE.
-> 
-> That way, all remaining logic to walk the NPT stays and we successfully
-> walk the NPT in real mode.
-> 
-> Fixes: fe441054bb3f0 ("target-i386: Add NPT support")
-> 
-> Signed-off-by: Alexander Graf <graf@amazon.com>
-> Reported-by: Eduard Vlad <evlad@amazon.de>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> ---
-> 
-> v1 -> v2:
-> 
->    - Remove hack where we fake a PTE and instead just set the
->      corresponding resolved variables and jump straight to the
->      stage2 code.
-> 
-> v2 -> v3:
-> 
->    - Fix comment
-> ---
->   target/i386/tcg/sysemu/excp_helper.c | 14 ++++++++++++--
->   1 file changed, 12 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-> index 8fb05b1f53..24dd6935f9 100644
-> --- a/target/i386/tcg/sysemu/excp_helper.c
-> +++ b/target/i386/tcg/sysemu/excp_helper.c
-> @@ -298,7 +298,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
->           /* combine pde and pte nx, user and rw protections */
->           ptep &= pte ^ PG_NX_MASK;
->           page_size = 4096;
-> -    } else {
-> +    } else if (pg_mode) {
->           /*
->            * Page table level 2
->            */
-> @@ -343,6 +343,15 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
->           ptep &= pte | PG_NX_MASK;
->           page_size = 4096;
->           rsvd_mask = 0;
-> +    } else {
-> +        /*
-> +         * No paging (real mode), let's tentatively resolve the address as 1:1
-> +         * here, but conditionally still perform an NPT walk on it later.
-> +         */
-> +        page_size = 0x40000000;
-> +        paddr = in->addr;
-> +        prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-> +        goto stage2;
->       }
->   
->   do_check_protect:
-> @@ -420,6 +429,7 @@ do_check_protect_pse36:
->   
->       /* merge offset within page */
->       paddr = (pte & PG_ADDRESS_MASK & ~(page_size - 1)) | (addr & (page_size - 1));
-> +stage2:
->   
->       /*
->        * Note that NPT is walked (for both paging structures and final guest
-> @@ -562,7 +572,7 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
->               addr = (uint32_t)addr;
->           }
->   
-> -        if (likely(env->cr[0] & CR0_PG_MASK)) {
-> +        if (likely(env->cr[0] & CR0_PG_MASK || use_stage2)) {
->               in.cr3 = env->cr[3];
->               in.mmu_idx = mmu_idx;
->               in.ptw_idx = use_stage2 ? MMU_NESTED_IDX : MMU_PHYS_IDX;
+> Patches still missing R-b tags: 1,2,6,8,9,15,23,26
 
-Hi Alex,
+I queued most of the reviewed patches.
 
-This commit appears to break my WinXP boot test: with this patch applied, attempting 
-to boot WinXP from CDROM fails with SeaBIOS getting stuck early in a boot loop. It is 
-possible to reproduce the issue easily with:
-
-   ./build/qemu-system-x86_64 -cdrom winxp.iso -boot d
-
-
-ATB,
-
-Mark.
+> Bernhard Beschow (26):
+>    hw/ppc/e500: Do not leak struct boot_info
+>    hw/ppc/e500: Remove firstenv variable
+>    hw/ppc/e500: Prefer QOM cast
+>    hw/ppc/e500: Remove unused "irqs" parameter
+>    hw/ppc/e500: Add missing device tree properties to i2c controller node
+>    hw/ppc/e500: Reuse TYPE_GPIO_PWR
+>    hw/ppc/e500: Use SysBusDevice API to access TYPE_CCSR's internal
+>      resources
+>    hw/ppc/e500: Extract ppce500_ccsr.c
+>    hw/ppc/ppce500_ccsr: Trace access to CCSR region
+>    hw/ppc/mpc8544_guts: Populate POR PLL ratio status register
+>    hw/i2c/mpc_i2c: Convert DPRINTF to trace events for register access
+>    hw/i2c/mpc_i2c: Prefer DEFINE_TYPES() macro
+>    hw/pci-host/ppce500: Reuse TYPE_PPC_E500_PCI_BRIDGE define
+>    hw/pci-host/ppce500: Prefer DEFINE_TYPES() macro
+>    hw/net/fsl_etsec/miim: Reuse MII constants
+>    hw/net/fsl_etsec/etsec: Prefer DEFINE_TYPES() macro
+>    hw/gpio/mpc8xxx: Prefer DEFINE_TYPES() macro
+>    hw/ppc/mpc8544_guts: Prefer DEFINE_TYPES() macro
+>    hw/intc: Guard openpic_kvm.c by dedicated OPENPIC_KVM Kconfig switch
+>    hw/sd/sdhci: Prefer DEFINE_TYPES() macro
+>    hw/block/pflash_cfi01: Prefer DEFINE_TYPES() macro
+>    hw/i2c/smbus_eeprom: Prefer DEFINE_TYPES() macro
+>    hw/rtc/ds1338: Prefer DEFINE_TYPES() macro
+>    hw/usb/hcd-ehci-sysbus: Prefer DEFINE_TYPES() macro
+>    hw/vfio/platform: Let vfio_start_eventfd_injection() take
+>      VFIOPlatformDevice pointer
+>    MAINTAINERS: Add hw/gpio/gpio_pwr.c
 
 
