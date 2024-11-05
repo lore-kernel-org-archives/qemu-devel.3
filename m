@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3592D1CA19
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 03:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63CDD1CA1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 03:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8AOj-0001BR-89; Mon, 04 Nov 2024 22:38:29 -0500
+	id 1t8ARy-0001yr-O1; Mon, 04 Nov 2024 22:41:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8AOh-0001Ay-VL; Mon, 04 Nov 2024 22:38:28 -0500
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8ARx-0001yd-60
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:41:49 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8AOg-0000Ut-DF; Mon, 04 Nov 2024 22:38:27 -0500
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-50d32d82bd8so1543891e0c.1; 
- Mon, 04 Nov 2024 19:38:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8ARv-0000xU-GB
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:41:48 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-20c805a0753so46177615ad.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 19:41:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730777905; x=1731382705; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1730778106; x=1731382906; darn=nongnu.org;
+ h=content-transfer-encoding:to:subject:from:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PZSgRnzBOZa/Qscj4ZeSqmsdXbQm+WfJ6DPvRjrBho4=;
- b=TSbzQOG80rxBrmqmS+OkaJUvNZGVsgNNNtOTQylp9ij6IfSbGW+oq+cG/bB3FxsDnl
- wvuWzY+cvKWS5Qq3GV2NaySI28Elhup6LNCVvfk44NS+Q5asRyN4G+QffZ4R8TojDkjL
- Nswe70NUC8QC+Yj+spJ3u+upxEi3bI9nxkssRZ+LGS9XsJc3aSA2KCOugREs6TqH2fgo
- fUpF0stZFTqlsfjx2FZnHFLbVjFYd46Cn5snTTgMJPKAkhwXnuQjKgn7cRmh/ZhTfcFt
- W0TRkT0sAooGNJ69VN73KUir23Nze0d53LI7dsjQ+Z0rK7DaEMXLfvTlAlSVxVtmLXfO
- idOg==
+ bh=G29ji3B3dcfxxHIOyZgoKioTbNqXy2uHPZonI74Y7Bo=;
+ b=IJNPR8/+qKpROp+veOyY8gKeuSUgmsE8J5mouRtASFlyF7GfKSXu2uKY3D68A9WzF2
+ a9Rl0nUuEbS2GO2emKPltjFM0SLMyggHXLgn1KgfQtmenTbB2pxdQb/qVKxna/E0j0sP
+ iaGd76SZY+CULad2AuDX4+kJIo/RJUKArh+KbnhNjNul5fFsL/JUCR3UPurtvZbltzhQ
+ Y0JxcOgr/tc+bLiX/q4dzpC9k/f6lahHaUKKYTX45wZGMDqK0+Cer3/tDzEKM22WnzFb
+ HdVJ41/hwhJHIB/U0aWCPD8QRWBuBZPWqS/7adHp2MBpZejQJR72FjPqzcZGvwoKFbro
+ ZFKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730777905; x=1731382705;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PZSgRnzBOZa/Qscj4ZeSqmsdXbQm+WfJ6DPvRjrBho4=;
- b=u4JfkVAZExwaBbuHNYrXsJ3f2G1mWjqdxMJRj58U7ve6WluzVXSxubCpA8OXSatSeT
- sbzc72+MXVR9+HpfAxJl7zvQ5nQDN9WM+6OXByNitkvsJbqQriQ9Nxvi9gk3vSvG91hG
- 7XzOjqJDR46NF5sklmLoHx+MwDQiKId3zdDZjEyw+kmSFaKOFy/OixkfO2Dgs5IO5otJ
- dRi7bJFZtONI4+bQPkff7louInzJNtfeN3jGvwPXBKc9iRTD4u0dIhWBX7/gzbXFZ91x
- dKDnYj+Rov9Wn8lL1TFcKEhiI88VFmTLKODJ8iSqHz9M3op10Jwk5ppxzDBPb1U/yMfa
- solw==
+ d=1e100.net; s=20230601; t=1730778106; x=1731382906;
+ h=content-transfer-encoding:to:subject:from:content-language
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=G29ji3B3dcfxxHIOyZgoKioTbNqXy2uHPZonI74Y7Bo=;
+ b=l65JmpfU9Js1CqAIzlbpeh0nZp3NwkVQikA/R6MflZpibSjd3ZRbeGU5J81IY9TJMJ
+ XpNlO7LrT8FA6Or5aEMFIRPpWRPQ0XOd5+Y/ZVuca/ruNWIOlhIMR+VBsklVa/fZWP9O
+ eTY/WL3JOXz+mRQ2K3pixCPSJCMAvIfTidq+a+LG9mLjSpKMdH9Ecd0niBMn0p4UZTE7
+ ZvsR9z6tBL78swcQLAQ59VSg7a8k39F3EY/kG+WFxM+SqlOuQruDTPQ/CSayrdicINh/
+ KoXfiArjNraKcRO71g2aA8/2rdTv/WqWE1KJvMjh1MNLxuZBB8Om5J5pVKx+2+NkEyGx
+ bZjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUoVzP0dJTRNGY4fdsDl1rrzyOViyBut1JRjTXTw1Sx5KpOK2zTKeqbHnqULCWWFpNAxvp6e/QWxcWP@nongnu.org
-X-Gm-Message-State: AOJu0YzSu3JA9lgj33ZETcR95jeB/MliaZVyXJDqDc/xk92Xv3iyV2R4
- 5zz07HAWo1VQ/9j+XtIPmBo6eXrCT5Vv4xgGJfbxMqe5PeXF3M+KdUW6q4/DYLrI6CISnZNYhGm
- /zsuOdovGxtqorykIqvK108YW/Z8=
-X-Google-Smtp-Source: AGHT+IGgIcMLF/qjTuCKISpFFleDGiCMEy/TyP1D4SE0rUWfeBRx07/SLEgkvspsz60dY6eTNa1UmvqAU/fmyqBLJ0Y=
-X-Received: by 2002:a05:6122:1d4c:b0:50d:a31c:678c with SMTP id
- 71dfb90a1353d-5106ae6d944mr17639708e0c.2.1730777904530; Mon, 04 Nov 2024
- 19:38:24 -0800 (PST)
+ AJvYcCVCuj7BKYEN6rhogAEWXs9wbHaOTs0uP02I20OlCAoJjstPx+00FEMvGuVWv7wR2S1TdntNaZ35SlQ6@nongnu.org
+X-Gm-Message-State: AOJu0YzaDCaSYYmnt2rgoPmwvsf1PR7eK80H8qis66ZE6DF14dDNCByr
+ Uqw/1K7YlXYCIEUjEg5cJcUuFE/0mPHcyYppZnl8ZV2BRSCZsp6kfBtrBTV2aDA=
+X-Google-Smtp-Source: AGHT+IEl2kcFbWsgM8BlMlnTd3+Ke8jfOTpfU0OSAWU4q3BWUSmMclGuTsLYzLq7Rrc+acPiFhbunw==
+X-Received: by 2002:a17:902:f60a:b0:20c:dbff:b9d8 with SMTP id
+ d9443c01a7336-210c6c3f27emr435490475ad.37.1730778105741; 
+ Mon, 04 Nov 2024 19:41:45 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-211057d43fasm69150305ad.265.2024.11.04.19.41.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Nov 2024 19:41:45 -0800 (PST)
+Message-ID: <b8806360-a2b6-4608-83a3-db67e264c733@linaro.org>
+Date: Mon, 4 Nov 2024 19:41:44 -0800
 MIME-Version: 1.0
-References: <20240918171412.150107-1-max.chou@sifive.com>
-In-Reply-To: <20240918171412.150107-1-max.chou@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 5 Nov 2024 13:37:58 +1000
-Message-ID: <CAKmqyKML3BnmcNXNRmxAbwFzbTeC+4x+kwqtOhQCzVRcnDqytw@mail.gmail.com>
-Subject: Re: [PATCH v6 0/7] Improve the performance of RISC-V vector
- unit-stride/whole register ld/st instructions
-To: Max Chou <max.chou@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- richard.henderson@linaro.org, negge@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: test regression - qemu:block-slow+slow / io-raw-055
+To: peterx@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,109 +95,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 19, 2024 at 3:15=E2=80=AFAM Max Chou <max.chou@sifive.com> wrot=
-e:
->
-> Hi,
->
-> This version fixes several issues in v5
-> - The cross page bound checking issue
-> - The mismatch vl comparison in the early exit checking of vext_ldst_us
-> - The endian issue when host is big endian
->
-> Thank for Richard Henderson's suggestions that this version unrolled the
-> loop in helper functions of unmasked vector unit-stride load/store
-> instructions, etc.
->
-> And this version also extends the optimizations to the unmasked vector
-> fault-only-first load instruction.
->
-> Some performance result of this version
-> 1. Test case provided in
->     https://gitlab.com/qemu-project/qemu/-/issues/2137#note_1757501369
->     - QEMU user mode (vlen=3D128):
->         - Original:   ~11.8 sec
->         - v5:          ~1.3 sec
->         - v6:          ~1.2 sec
->     - QEMU system mode (vlen=3D128):
->         - Original:   ~29.4 sec
->         - v5:          ~1.6 sec
->         - v6:          ~1.6 sec
-> 2. SPEC CPU2006 INT (test input)
->     - QEMU user mode (vlen=3D128)
->         - Original:  ~459.1 sec
->         - v5:        ~300.0 sec
->         - v6:        ~280.6 sec
-> 3. SPEC CPU2017 intspeed (test input)
->     - QEMU user mode (vlen=3D128)
->         - Original: ~2475.9 sec
->         - v5:       ~1702.6 sec
->         - v6:       ~1663.4 sec
->
->
-> This version is based on the riscv-to-apply.next branch(commit 90d5d3c).
->
-> Changes from v5:
-> - patch 2
->     - Replace the VSTART_CHECK_EARLY_EXIT function by checking the
->       correct evl in vext_ldst_us.
-> - patch 3
->     - Unroll the memory load/store loop
->     - Fix the bound checking issue in cross page elements
->     - Fix the endian issue in GEN_VEXT_LD_ELEM/GEN_VEXT_ST_ELEM
->     - Pass in mmu_index for vext_page_ldst_us
->     - Reduce the flag & host checking
-> - patch 4
->     - Unroll the memory load/store loop
->     - Fix the bound checking issue in cross page elements
-> - patch 5
->     - Extend optimizations to unmasked vector fault-only-first load
->       instruction
-> - patch 6
->     - Switch to memcpy only when doing byte load/store
-> - patch 7
->     - Inline the vext_page_ldst_us function
->
-> Previous versions:
-> - v1: https://lore.kernel.org/all/20240215192823.729209-1-max.chou@sifive=
-.com/
-> - v2: https://lore.kernel.org/all/20240531174504.281461-1-max.chou@sifive=
-.com/
-> - v3: https://lore.kernel.org/all/20240613141906.1276105-1-max.chou@sifiv=
-e.com/
-> - v4: https://lore.kernel.org/all/20240613175122.1299212-1-max.chou@sifiv=
-e.com/
-> - v5: https://lore.kernel.org/all/20240717133936.713642-1-max.chou@sifive=
-.com/
->
-> Max Chou (7):
->   target/riscv: Set vdata.vm field for vector load/store whole register
->     instructions
->   target/riscv: rvv: Replace VSTART_CHECK_EARLY_EXIT in vext_ldst_us
->   target/riscv: rvv: Provide a fast path using direct access to host ram
->     for unmasked unit-stride load/store
->   target/riscv: rvv: Provide a fast path using direct access to host ram
->     for unit-stride whole register load/store
->   target/riscv: rvv: Provide a fast path using direct access to host ram
->     for unit-stride load-only-first load instructions
->   target/riscv: rvv: Provide group continuous ld/st flow for unit-stride
->     ld/st instructions
->   target/riscv: Inline unit-stride ld/st and corresponding functions for
->     performance
-
-Thanks!
-
-Applied to riscv-to-apply.next
-
-Alistair
-
->
->  target/riscv/insn_trans/trans_rvv.c.inc |   3 +
->  target/riscv/vector_helper.c            | 598 ++++++++++++++++--------
->  2 files changed, 400 insertions(+), 201 deletions(-)
->
-> --
-> 2.34.1
->
->
+SGksDQoNCnRoaXMgdGVzdCB3YXMgcmVjZW50bHkgYnJva2VuIGJ5IDM0YTg4OSAobWlncmF0
+aW9uOiBEcm9wIA0KbWlncmF0aW9uX2lzX2lkbGUoKSkuDQoNClJlcHJvZHVjZSB3aXRoOg0K
+bWVzb24gdGVzdCAtQyBidWlsZCAtdCAxIC0tc2V0dXAgc2xvdyAgLS1udW0tcHJvY2Vzc2Vz
+IDEgDQotLXByaW50LWVycm9ybG9ncyBpby1yYXctMDU1IC0tdmVyYm9zZQ0KDQoxLzEgcWVt
+dTpibG9jay1zbG93K3Nsb3cgLyBpby1yYXctMDU1ICAgICAgICBSVU5OSU5HDQogPj4+IEFT
+QU5fT1BUSU9OUz1oYWx0X29uX2Vycm9yPTE6YWJvcnRfb25fZXJyb3I9MTpwcmludF9zdW1t
+YXJ5PTEgDQpVQlNBTl9PUFRJT05TPWhhbHRfb25fZXJyb3I9MTphYm9ydF9vbl9lcnJvcj0x
+OnByaW50X3N1bW1hcnk9MTpwcmludF9zdGFja3RyYWNlPTEgDQpNQUxMT0NfUEVSVFVSQl89
+MjkgTUVTT05fVEVTVF9JVEVSQVRJT049MSANClBZVEhPTj0vaG9tZS91c2VyLy53b3JrL3Fl
+bXUvYnVpbGQvcHl2ZW52L2Jpbi9weXRob24zIEdfVEVTVF9TTE9XPTEgDQpTUEVFRD1zbG93
+IA0KTVNBTl9PUFRJT05TPWhhbHRfb25fZXJyb3I9MTphYm9ydF9vbl9lcnJvcj0xOnByaW50
+X3N1bW1hcnk9MTpwcmludF9zdGFja3RyYWNlPTEgDQovaG9tZS91c2VyLy53b3JrL3FlbXUv
+YnVpbGQvcHl2ZW52L2Jpbi9weXRob24zIA0KL2hvbWUvdXNlci8ud29yay9xZW11L2J1aWxk
+Ly4uL3Rlc3RzL3FlbXUtaW90ZXN0cy9jaGVjayAtdGFwIC1yYXcgMDU1IA0KLS1zb3VyY2Ut
+ZGlyIC9ob21lL3VzZXIvLndvcmsvcWVtdS90ZXN0cy9xZW11LWlvdGVzdHMgLS1idWlsZC1k
+aXIgDQovaG9tZS91c2VyLy53b3JrL3FlbXUvYnVpbGQvdGVzdHMvcWVtdS1pb3Rlc3RzDQri
+lrYgMS8xIHJhdyAwNTUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEZBSUwNCjEv
+MSBxZW11OmJsb2NrLXNsb3crc2xvdyAvIGlvLXJhdy0wNTUgICAgICAgIEVSUk9SICAgICAg
+ICAgICAxMS4wNnMgDQpleGl0IHN0YXR1cyAxDQrigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJXigJXigJUgDQrinIAgDQrigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
+gJXigJXigJUNCnN0ZGVycjoNCi0tLSAvaG9tZS91c2VyLy53b3JrL3FlbXUvdGVzdHMvcWVt
+dS1pb3Rlc3RzLzA1NS5vdXQNCisrKyAvaG9tZS91c2VyLy53b3JrL3FlbXUvYnVpbGQvc2Ny
+YXRjaC9yYXctZmlsZS0wNTUvMDU1Lm91dC5iYWQNCkBAIC0xLDUgKzEsMjE1IEBADQotLi4u
+Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLg0KKy4uLi4uLkVSUk9SOnFl
+bXUucW1wLnFtcF9jbGllbnQucWVtdS0xODU2Mzg4OkZhaWxlZCB0byByZWNlaXZlIA0KR3Jl
+ZXRpbmc6IEVPRkVycm9yDQorRVJST1I6cWVtdS5xbXAucW1wX2NsaWVudC5xZW11LTE4NTYz
+ODg6RmFpbGVkIHRvIGVzdGFibGlzaCBzZXNzaW9uOiANCkVPRkVycm9yDQoNCi0tLQ0KDQpS
+ZWdhcmRzLA0KUGllcnJpY2sNCg==
 
