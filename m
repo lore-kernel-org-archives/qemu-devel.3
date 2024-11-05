@@ -4,88 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1416CD3177E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E31D31780
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 18:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8OPb-0006CV-B6; Tue, 05 Nov 2024 13:36:19 -0500
+	id 1t8OPU-00069f-15; Tue, 05 Nov 2024 13:36:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t8OPZ-0006CD-SD
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:36:17 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t8OPX-0007et-Tu
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:36:17 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-71e4e481692so5691593b3a.1
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 10:36:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1730831773; x=1731436573; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WbgSdr35ADj8CVZXVtT+W19ekxubMbsFsAss1WedoK8=;
- b=bXaKPdWmn3AO6Fdaakynt8vwPuBDMRT0SIAOoATmQZYL3t7k3O8BiY+9XuibmI5weg
- yy+X+s5JOi45qGTQmIdzU6KgWF22bik2W44GESVm1HOGX1cL9imkPNTN4lboUeJuf9Dw
- RFPIqeu+8HsxcT/AZRQzWBQEtCMtbswn+Boe65rtg/RW7Bn5OPT7Q+PVXtVgJ+etsxYM
- tQq0kXRIKlzxsDpsg6amQ7F5pgOtRAAd6bSCHUVK9hl1pDQ2+KMW32GekVgEur+f+E7Q
- fEijqT9Ns3LZcdOZsIY2pW2Ds5Ukn7TjfBt4703FUOlgMAe0z9FS+SEggrXGmINvN4FP
- MQLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730831773; x=1731436573;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WbgSdr35ADj8CVZXVtT+W19ekxubMbsFsAss1WedoK8=;
- b=KiolRvetLS/EHre/OKjGKwLHlWJyzvl7/A3p0BGP41OYRXZMvHqyccFT3m2WpkK4/1
- U3hRT5yGwujQrsOlMAOEno3qLz/lFB/TGpUxNg5sfhd9IknnXbIvFYbwFuTujFa3Dqgj
- dfCbfm7siOp3m21LJj0nrS38eeBcpGRDf+83LmrenLdOcTWRO+9tT72uIgdCsxxtHbl2
- SZ0++ELMzmB8FEKbUc14eTwspoE15DH+ycvojgYttIL/weyp33WeULYBNL6eHrApz5Ts
- 8ShFHeYt4+64NapdBZFaLvnZjNmNLGEvlMzvFRRXBaSAA21o684NRoQxdsIG+x8zy+lq
- cpwQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV2hkn1ZbaxqRE47hRadK69qMGc6vSJmmOdPFw0D7desk56quGYZGjCsb7K7uk+cFVRI44B76dGH7pc@nongnu.org
-X-Gm-Message-State: AOJu0YyRlOUScmKgwZ61F+ZaAjouFvfDTSmtPuMnrNBu5nRNpmZxKUqF
- riJwa4PjMfX6gJfbkRxwasubSvKQvTaV6FNVPCsvZ7lVuqKfV1KDoQ8gPxlXpWwo8wP4RroWCGH
- q
-X-Google-Smtp-Source: AGHT+IHf8vxRxu/1MpfS3l0wQPybzUzNUdBgblOcOQ1/bxlYWPEOrKUkuXTNAzetE1ACZivX0vqjkw==
-X-Received: by 2002:a05:6a21:3947:b0:1d9:c615:944f with SMTP id
- adf61e73a8af0-1dba52a44afmr25788669637.11.1730831773195; 
- Tue, 05 Nov 2024 10:36:13 -0800 (PST)
-Received: from [192.168.68.110] ([189.79.22.174])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-720bc1b8ccfsm10084654b3a.23.2024.11.05.10.36.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Nov 2024 10:36:12 -0800 (PST)
-Message-ID: <b8e239d2-e0d5-4cac-a074-cb1ed277a08a@ventanamicro.com>
-Date: Tue, 5 Nov 2024 15:36:07 -0300
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t8OPQ-00068s-Ln; Tue, 05 Nov 2024 13:36:08 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t8OPN-0007e0-NO; Tue, 05 Nov 2024 13:36:08 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5HeAdX022178;
+ Tue, 5 Nov 2024 18:36:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=wc7f2H
+ rr1rAEYSxyfo0HmCBarTs+hABQdxgNXKiFOt8=; b=DQM4IimoXgbMzlUwM8eGTh
+ foETMWKg/r1YjxfdwpTULaVwMtzVo9+WgHDFL5fdrE3eDxQl4KHE5YTxe3YaGd7P
+ 1crxHUVAkaMubYaX3hD/2BSqCaGyoQP6JeptVx1k24U10JT56P99R15fVYsm+3MJ
+ 64YpynhsLh9hVvCQkdAIr6IA1HTRA22wJ7wrN9T7FNqQeOi545E7EJSfeSlZtG78
+ wFILAIAva99AvU5WutNxV4R6auGy+rud9dXiS/YTshfVBcEZYpkEbkwFLhTHqaGU
+ WHsQkpvU7oAFhe0PI7ktH/JXm+I/l/jDbDXOpY6lDzWRhSlrcBVX70JG4trBSZ0A
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42qqy5r8xf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Nov 2024 18:36:00 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5HhPqL019414;
+ Tue, 5 Nov 2024 18:36:00 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 42p0mj4jd5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Nov 2024 18:36:00 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A5IZxew57737584
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 5 Nov 2024 18:35:59 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B349158056;
+ Tue,  5 Nov 2024 18:35:59 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 527C258052;
+ Tue,  5 Nov 2024 18:35:59 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  5 Nov 2024 18:35:59 +0000 (GMT)
+Message-ID: <e6c33df3-49e9-4b8a-b7cb-d38c2ebee3be@linux.ibm.com>
+Date: Tue, 5 Nov 2024 13:35:58 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/8] Support RISC-V IOPMP
-To: Ethan Chen <ethan84@andestech.com>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, pbonzini@redhat.com, peterx@redhat.com,
- david@redhat.com, philmd@linaro.org, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
-References: <20240715095702.1222213-1-ethan84@andestech.com>
+Subject: Re: [PULL 10/17] tests/functional: Convert most Aspeed machine tests
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>, lena.voytek@canonical.com
+References: <20241024063507.1585765-1-clg@redhat.com>
+ <20241024063507.1585765-11-clg@redhat.com>
+ <CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com>
+ <91c2ac92-66b2-45c8-b4fe-e8f8587b0e9c@linux.ibm.com>
+ <CAFEAcA84hhWu2ouirfDPbCpq_=QLQxAf3k47h0Pij8iEnOVj+A@mail.gmail.com>
+ <2491bc60-9a0b-486a-8f6d-2c4c94332756@linux.ibm.com>
+ <CAFEAcA85g2nX3MU5RzmBvAHT8Kis1JHhiEaBvnFFbEQkG+0OxQ@mail.gmail.com>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240715095702.1222213-1-ethan84@andestech.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <CAFEAcA85g2nX3MU5RzmBvAHT8Kis1JHhiEaBvnFFbEQkG+0OxQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: JNkWtJIMtNaM7AU7DsAWOG8nwzTg7wE4
+X-Proofpoint-GUID: JNkWtJIMtNaM7AU7DsAWOG8nwzTg7wE4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ bulkscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
+ mlxlogscore=999 mlxscore=0 phishscore=0 adultscore=0 malwarescore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411050143
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,83 +116,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ethan,
 
 
-Do you plan to send a new version of this work? It seems to me that we're
-a couple of reviews away from getting it merged.
+On 11/5/24 1:12 PM, Peter Maydell wrote:
+> On Tue, 5 Nov 2024 at 18:02, Stefan Berger <stefanb@linux.ibm.com> wrote:
+>>
+>>
+>>
+>> On 11/5/24 12:13 PM, Peter Maydell wrote:
+>>> On Tue, 5 Nov 2024 at 17:02, Stefan Berger <stefanb@linux.ibm.com> wrote:
+>>>> On 11/5/24 11:14 AM, Peter Maydell wrote:
+>>>>> Q1: why is apparmor forbidding swtpm from doing something that
+>>>>> it needs to do to work?
+>>>>
+>>>> What distro and version is this?
+>>>>
+>>>> The profile may be too strict and not reflecting all the paths needed
+>>>> for running the test cases. Ubuntu for example would have to update
+>>>> their profile in such a case.
+>>>
+>>> This is Ubuntu 22.04 "jammy" (with swtpm 0.6.3-0ubuntu3.3).
+>>>
+>>>>> Q2: is there a way to run swtpm such that it is not
+>>>>> confined by apparmor, for purposes of running it in a test case?
+>>>>
+>>>> Try either one:
+>>>> - sudo aa-complain /usr/bin/swtpm
+>>>> - sudo aa-disable /usr/bin/swtpm
+>>>
+>>> We don't have root access from QEMU's 'make check',
+>>> though (and shouldn't be globally disabling apparmor
+>>> even if we could). I had in mind more a way that an
+>>> individual user can say "run this swtpm process but don't
+>>> apply the apparmor profile to it".
+>>
+>> So the problem is that the avocado tests are using /var/tmp but we only
+>> have AppArmor rules for /tmp/
+> 
+> The file AppArmor gives the error for is not in /var/tmp:
+> it's in a local directory inside QEMU's build dir:
+> 
+> Nov  5 16:01:14 e104462 kernel: [946406.489088] audit: type=1400
+> audit(1730822474.384:446): apparmor="DENIED" operation="mknod"
+> profile="swtpm"
+> name="/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/tests/functional/arm/test_arm_aspeed.AST2x00Machine.test_arm_ast2600_evb_buildroot_tpm/qemu-machine-hhuvwytc/.lock"
+> pid=2820156 comm="swtpm" requested_mask="c" denied_mask="c" fsuid=1000
+> ouid=1000
+>> The following solutions should work:
+>> - do not install swtpm at all
+>> - sudo cp /usr/bin/swtpm  /usr/local/bin/swtpm
+>> - as root: echo "include <abstractions/user-tmp>" >>
+>> /etc/apparmor.d/local/usr.bin.swtpm && apparmor_parser -r
+>> /etc/apparmor.d/usr.bin.swtpm
+> 
+> Is there no way to just have apparmor not apply at all
+> here? I can see why you might want it to apply for the
 
+If you are root you can change things. I have shown the options using 
+aa-complain and aa-disable that you can revert once the test has 
+finished: sudo aa-enforce /usr/bin/swtpm
 
-Thanks,
+You could also copy swtpm into a user-owned directory but you will have 
+to adapt the user's PATH. That's an easy option.
 
-Daniel
+The most compatible option is the 3rd option since I would expect that 
+we will have this rule in a future version of the usr.bin.swtpm Ubuntu 
+profile provided by the swtpm package:
 
-On 7/15/24 6:56 AM, Ethan Chen wrote:
-> This series implements basic functions of IOPMP specification v0.9.1 rapid-k
-> model.
-> The specification url:
-> https://github.com/riscv-non-isa/iopmp-spec/releases/tag/v0.9.1
+echo "include <abstractions/user-tmp>" >> 
+/etc/apparmor.d/local/usr.bin.swtpm
+apparmor_parser -r /etc/apparmor.d/usr.bin.swtpm
+
+> case of "I'm using it as part of a sandboxed VM setup",
+> but in this scenario I am a local user running this binary
+> which is not setuid root and it is accessing a file in a
+> directory which my user owns and has permissions for.
+> This should not be being rejected: there is no security
+> boundary involved and swtpm is not doing anything
+> that I could not directly do myself anyway (as you
+> can tell from the fact that copying the swtpm binary
+> to a different location and running it works).
+
+I am not aware of how user/non-root-started programs can be generally 
+made exempt from AppArmor.
+
+There may still be a security boundary if a user runs QEMU and swtpm was 
+able to manipulate (with malicious input) the user's files in some 
+undesirable way or copy the user's data elsewhere. In this case it may 
+be desirable for the user that the profile be applied and the PATH he is 
+using points to the standard swtpm.
+
 > 
-> When IOPMP is enabled, memory access to system memory from devices and
-> the CPU will be checked by the IOPMP.
+> thanks
+> -- PMM
 > 
-> The issue of CPU access to non-CPU address space via IOMMU was previously
-> mentioned by Jim Shu, who provided a patch[1] to fix it. IOPMP also requires
-> this patch.
-> 
-> [1] accel/tcg: Store section pointer in CPUTLBEntryFull
->      https://patchew.org/QEMU/20240612081416.29704-1-jim.shu@sifive.com/20240612081416.29704-2-jim.shu@sifive.com/
-> 
-> 
-> Changes for v8:
-> 
->    - Support transactions from CPU
->    - Add an API to set up IOPMP protection for system memory
->    - Add an API to configure the RISCV CPU to support IOPMP and specify the
->      CPU's RRID
->    - Add an API for DMA operation with IOPMP support
->    - Add SPDX license identifiers to new files (Stefan W.)
->    - Remove IOPMP PCI interface(pci_setup_iommu) (Zhiwei)
-> 
-> Changes for v7:
-> 
->    - Change the specification version to v0.9.1
->    - Remove the sps extension
->    - Remove stall support, transaction information which need requestor device
->      support.
->    - Remove iopmp_cascade option for virt machine
->    - Refine 'addr' range checks switch case (Daniel)
-> 
-> Ethan Chen (8):
->    memory: Introduce memory region fetch operation
->    system/physmem: Support IOMMU granularity smaller than TARGET_PAGE
->      size
->    target/riscv: Add support for IOPMP
->    hw/misc/riscv_iopmp: Add RISC-V IOPMP device
->    hw/misc/riscv_iopmp: Add API to set up IOPMP protection for system
->      memory
->    hw/misc/riscv_iopmp: Add API to configure RISCV CPU IOPMP support
->    hw/misc/riscv_iopmp:  Add DMA operation with IOPMP support API
->    hw/riscv/virt: Add IOPMP support
-> 
->   accel/tcg/cputlb.c            |   29 +-
->   docs/system/riscv/virt.rst    |    5 +
->   hw/misc/Kconfig               |    3 +
->   hw/misc/meson.build           |    1 +
->   hw/misc/riscv_iopmp.c         | 1289 +++++++++++++++++++++++++++++++++
->   hw/misc/trace-events          |    3 +
->   hw/riscv/Kconfig              |    1 +
->   hw/riscv/virt.c               |   63 ++
->   include/exec/memory.h         |   30 +
->   include/hw/misc/riscv_iopmp.h |  173 +++++
->   include/hw/riscv/virt.h       |    5 +-
->   system/memory.c               |  104 +++
->   system/physmem.c              |    4 +
->   system/trace-events           |    2 +
->   target/riscv/cpu_cfg.h        |    2 +
->   target/riscv/cpu_helper.c     |   18 +-
->   16 files changed, 1722 insertions(+), 10 deletions(-)
->   create mode 100644 hw/misc/riscv_iopmp.c
->   create mode 100644 include/hw/misc/riscv_iopmp.h
-> 
+
 
