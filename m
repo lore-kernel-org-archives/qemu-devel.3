@@ -4,212 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE009D3E761
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 20:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE8ED3E762
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 21:00:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Qde-0006S8-Ag; Tue, 05 Nov 2024 15:58:58 -0500
+	id 1t8QeM-0006sL-2G; Tue, 05 Nov 2024 15:59:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rick.p.edgecombe@intel.com>)
- id 1t8Qdd-0006Rz-69
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 15:58:57 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rick.p.edgecombe@intel.com>)
- id 1t8Qdb-0004o0-CQ
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 15:58:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730840336; x=1762376336;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=QxMlwVrgCzqTQcQUqxDRTToM51trSrtmbYrtRi19na4=;
- b=ksaAX9QgjnXYzD32sJoUxLsgYUzQSNSl+RiIR2N3FmTnbFbL4JFUbUsM
- HaRMZdKBUUUhSUqA+cLvBtclk8JtJGaG8/TDPJHgTTH8dGvf7nFHyoInJ
- 9csVLPw36SDalD4KfdHMZHsS9iOq+W4ArrXAoLhTBPNcAon8lJ1JNkMl9
- ikYVFgOVBn60GtqcygyX984WSyD3PILXXnIYFNJ14TlDvURLuUqeGTPui
- aOz/9ZQ2IzCWD3w2hOD2URwLGAOs4otemoS/RCqcelrV16QupH+K1WvhO
- Nnaft9xfWyNfYowTt0ROsCjDgc23m5psILgcBaBH3PSEVI0AlGbm8dp0X Q==;
-X-CSE-ConnectionGUID: bNbqBeXVTmWvF9OoHRFGSw==
-X-CSE-MsgGUID: 8AzvH2p7RB6ArZgxUdhLmQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30568834"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30568834"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2024 12:58:54 -0800
-X-CSE-ConnectionGUID: Vvmki/ZzTpqIjB4QFuGA1Q==
-X-CSE-MsgGUID: MkVjADhURVi352s36ztYVg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,261,1725346800"; d="scan'208";a="88737584"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by fmviesa004.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 05 Nov 2024 12:56:03 -0800
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Tue, 5 Nov 2024 12:56:03 -0800
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Tue, 5 Nov 2024 12:56:03 -0800
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.170)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 5 Nov 2024 12:56:02 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uRxJPO+kIeqvfIMmnHFgKp386DI1lKqZlfTiQTAg01eWZuh9GWo9qFg2N78UjDZYXuwCO/Qn2Z9DKJoSxNwyDGvCLSbMBcPE0WNzGhstsT3tX2ZH5I2ifCjZ9NsiyxvmFXext4FTZ7yro31U5qK74pOHVeKCANWtDo9CimVMdM9GEwG0Wt2DfHV8/wti4mbp4hykikn0/jCGM7LTAPIeLwCX7H7q5FWuYyHm0BrC/Cd15NF63CZ5i14XvC4inCU0S5Hc706CvOeHFTyyFLS6Jvi3hrereBVYrYx+4B3d9Vy/rAVT2gRVH/nPWH6vE2CBM+TfZABO2BHtM46ruXFWMw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QxMlwVrgCzqTQcQUqxDRTToM51trSrtmbYrtRi19na4=;
- b=n+fYuW4PuS2jB9rWloHmyTesOwk2R7sZxa/3SK/tfVfmgm3dlfOPmL6HXoypJLh4nzyERhDlkXiJ/FQfxBIA2TY89Shf3kmcehYsjsucb1bA8CNyvhZCEpCNxXG/VVVfHhIRqnIjJTkgrGyxUhG/K/QmuDWCR2CahGhNVgsjmO4ueaSgMe1+OgrEXUqLR60iLKbIGgea4umUOV49UPjLneHRKtPnIR+8Kh1aXgP58zApxGUvCaf1mHINQIjtT8Rzthvn/zXqVTjUL2LuhjUGxb3GaJC0f7lYOCi8nYWuPSJGbj2Fce7+Z7slZqjrTLz/evzrxkc6lK+/LGOrr7oyGA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from MN0PR11MB5963.namprd11.prod.outlook.com (2603:10b6:208:372::10)
- by DM4PR11MB5971.namprd11.prod.outlook.com (2603:10b6:8:5e::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8114.31; Tue, 5 Nov 2024 20:55:59 +0000
-Received: from MN0PR11MB5963.namprd11.prod.outlook.com
- ([fe80::edb2:a242:e0b8:5ac9]) by MN0PR11MB5963.namprd11.prod.outlook.com
- ([fe80::edb2:a242:e0b8:5ac9%5]) with mapi id 15.20.8114.028; Tue, 5 Nov 2024
- 20:55:59 +0000
-From: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-To: "riku.voipio@iki.fi" <riku.voipio@iki.fi>, "imammedo@redhat.com"
- <imammedo@redhat.com>, "Liu, Zhao1" <zhao1.liu@intel.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "anisinha@redhat.com" <anisinha@redhat.com>, "Li, Xiaoyao"
- <xiaoyao.li@intel.com>, "Wu, Binbin" <binbin.wu@intel.com>, "mst@redhat.com"
- <mst@redhat.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>
-CC: "armbru@redhat.com" <armbru@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>, "cohuck@redhat.com" <cohuck@redhat.com>,
- "mtosatti@redhat.com" <mtosatti@redhat.com>, "eblake@redhat.com"
- <eblake@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "wangyanan55@huawei.com"
- <wangyanan55@huawei.com>, "berrange@redhat.com" <berrange@redhat.com>
-Subject: Re: [PATCH v6 29/60] i386/tdx: Handle KVM_SYSTEM_EVENT_TDX_FATAL
-Thread-Topic: [PATCH v6 29/60] i386/tdx: Handle KVM_SYSTEM_EVENT_TDX_FATAL
-Thread-Index: AQHbL01XLgLDrqTpCUqGEGAQLvHO3bKpK58A
-Date: Tue, 5 Nov 2024 20:55:59 +0000
-Message-ID: <b2893e19e2bac78ec5d7c33e797bb52bcb7a7041.camel@intel.com>
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-30-xiaoyao.li@intel.com>
-In-Reply-To: <20241105062408.3533704-30-xiaoyao.li@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.44.4-0ubuntu2 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MN0PR11MB5963:EE_|DM4PR11MB5971:EE_
-x-ms-office365-filtering-correlation-id: 28cc94c6-a8f3-4bd5-4179-08dcfddc4021
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|1800799024|921020|38070700018; 
-x-microsoft-antispam-message-info: =?utf-8?B?empNRlprSExvVDdNN2M4VTJVb2xBOTE0NjR3TGEvUnpidDM5c0M4T3h3UkpR?=
- =?utf-8?B?dllxMjhGU0k1Sml5bUlETXhHWUtJR21YTytKblVqektrYklGOFUwTHRRSHlW?=
- =?utf-8?B?Uk82MGI3Y2YzbVF3MlBVSE9oa3lPYUNTRDV3RHVZTDFJZ2lzV09GbFdnc0w5?=
- =?utf-8?B?TUwxNFpiYkFkcjE3ZzJxckt0Y2k0U3hnTGh0UnRlM1lCYXdtNkowTmZ3Rzdm?=
- =?utf-8?B?c05yR0RaV2c5NjJvZzJsTjVyRTJFdHM2NUoraWcwWWM3TGUvY0RuenJaU09a?=
- =?utf-8?B?dWVOUXdLR2w2N0tqZmpXTlRXRXdqMEh2NjdXL0x4aTUvTjBYMzVZd0VEWVla?=
- =?utf-8?B?dEh0TW9EeStwdGU1Z3hUTDIxYkpyQ3ZzRTB4N3N4MVR3aGJrSGUzRTduamJC?=
- =?utf-8?B?b2YzNUZYVWx3Z0tkN1grZUFEWVZLNVRheEZpc3V3MFZOVlRCOE9jeFpiVUkz?=
- =?utf-8?B?Zjg1TkJEbjlVelBkYjJ5ZkdnaTVnNjdQS1BlOURHS0REZnRON2dZRTFvdXVx?=
- =?utf-8?B?ejFQdXNxL1lzRFBYY25VT3IvUHh5ZUMxeVdLY1V5dWJ1MFBRZG9hZkVGVlZO?=
- =?utf-8?B?NEF1KzI0b1JDdUE2MTBSZENtUng3dWgwTmVqdnpZcmlZRHdxZk5KUGRnQUls?=
- =?utf-8?B?WStTS0ZMdEorS3BrNWQrb2ZlV21TMHlYSUVBSUxvYlZpeG1IS0xqNVAvcU02?=
- =?utf-8?B?R3VuUXJJNThnUVNBVVoxVE9jUU8zWTVFU0Y2UnFMd0NSYVlNMnEwMUxuSzVu?=
- =?utf-8?B?QjByVExJc1dsVStuUVRiK04rRml5QXpyaG1jVTkwckFkdHdqaVV6VjFBVnFB?=
- =?utf-8?B?T2JLQ2R0UXAxNUFwWXo5V3lYaVBtODF5T3JEdlJoRmN6di9lVWdmaFQwYUlk?=
- =?utf-8?B?NDFXWUthY0lkOUY5a2hPLy8xaFAyWkJzVEUwbVVWL0JhYkVXWEtHQndFTHFF?=
- =?utf-8?B?TDJQanFrbUJ6b2RWTlVCQWxFcjdmNHN6SWhnZHZpVUM0aFZveXpHSU5xaDQ4?=
- =?utf-8?B?amRuc0IxVVFXTlA3QzB0ZlFkYVhIeHdLYzAxSWlYMnl0c2p4SG03RWg3K204?=
- =?utf-8?B?T0hLc3N5U04xWGhtY2IwaFk2bjNRWm9CQnEvcFBodUdnTExRMXV6QzlNYVZw?=
- =?utf-8?B?eTBkejFZWERYaSsyNHZxRTZleXVzaHAyOHpaY1VweFBaUm5XTXJDQ3VsUnB0?=
- =?utf-8?B?czVTR1B5bnJDL2U5VDRKSFBJYVByT3dwTXhJV3NXUi9LcG1Wejc5RHMxc0Ur?=
- =?utf-8?B?MWlJTDFVNTd3UmJiQm12Y3YvcXp2T3BVT0NSQzA4bk5nWmRNN3VhQ2ZLdG83?=
- =?utf-8?B?dHVQTEh1TXBsbjl1dUJXNGxYczlDamhCMlZXM0dsM2RxOHFxLzFtZWNLSWhh?=
- =?utf-8?B?NHZTV1N4cS9TKzZ4TjFiL2dSTDZnOCtldTA3SDF0WlpJVUlySnNjTmprbmg2?=
- =?utf-8?B?blZoaFIwNFpmcFlZaEU5K1BtYWVoQkNNTTVmckoyZDYzdjI1VHZEeWtFZFpP?=
- =?utf-8?B?NEtQY2JqbjJ3RGlXeDFRdDRzTm5qSUpwcTlnQXpIZU16Wjkwbk0yOEVXZ0gy?=
- =?utf-8?B?ajJKRXpVSUUzbnZXRXg1SUwva0hyUStDSXNtQmxoVHhnMnF1c2lNN2F3amhX?=
- =?utf-8?B?SVV6cHRDdGpodnMySExVUnNLM3ZGQ2YwcWo4V09jNTlGNlhKYXRmOWF5L1ZX?=
- =?utf-8?B?aTdJTU9XN0FIclhnK0FrdnZ1RWF1L1l2bTl6bGpRRUdCU250bTdlUjlBTnAy?=
- =?utf-8?B?U0hZaFlhOXdKWnVwSXRweW1ZZUh1eFk3RkR3R3RPeldXNmdKeElYUjFiV1Nv?=
- =?utf-8?B?a2t2VFJFdzR5a2praHY5UHNkRGJGZDhuaWwvbkxDUVR5dFF2Q3d4ZUJBVzlF?=
- =?utf-8?Q?X3jwOTQBsiZje?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MN0PR11MB5963.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(1800799024)(921020)(38070700018);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dnNoSDhwclBRdlZvVjBhT0VCWkQweWoxY0tJekZhVEFBdEozVjR4WXZEOXk3?=
- =?utf-8?B?THIvNlVXalI3ajJZcjFSS01sbnVZbk5tMDYyVThzZllsamRxczBKZnFOZWhB?=
- =?utf-8?B?RDdmd3JOeCtmcjdCRWNtWmFsTnZLZTVtamh3blM0M1pmajcybUpKQVFNZTht?=
- =?utf-8?B?T1cwR3Z0dWtleWdWY0FEZ1hoSzcvRk1sbmxIRTlzYm5jVlByc21UU3BTNmth?=
- =?utf-8?B?cTFHZW5QdkhSSGtyQjVNMXhkZUZZVERBaS90aEFEd3ZHcWtqQm9DVTVSUFUr?=
- =?utf-8?B?QjBpZ0Jhek9pY3RoQ2xUTUxqRXJqRDNvWHJHdFdrV2owZGs2Q0JUOXYvWEEw?=
- =?utf-8?B?UHFYYTF3RytPTjZYMENjeHRNYlFnejBsdmF3ZlBySHhFbEcwRTRySjJpZS9R?=
- =?utf-8?B?QjhPYTN1K0paZlQ0SU8rYjJoT1BFTkM0R0J2VFNoZlg4bHZHV0plOVRTeWpH?=
- =?utf-8?B?VkR1ZHZ6UW1QWVRUZ1VPclZlSjFEMEhjTU93aUhqZFhqSXJKNHZsTDBCQ2Nx?=
- =?utf-8?B?akdqcW9QdzR0M0Nqd1luVHV0SEJ1SytaMEx5TXB3bjB6SVVMUzY0Q3RON1Rn?=
- =?utf-8?B?SnpXcXE5SG51R3Rkejd5ZjhxZUtQMVF2eWR2blZmYVk0eFlUWitpWkJwZG4z?=
- =?utf-8?B?aWlvU0h4NVlzTEIzdDlIR1hoNWdtZ28yRGRyeG10TFNHb2R0NkhKKy94OGxS?=
- =?utf-8?B?TEJ3UkVLNTRiY3pzTGJKVmFYejZDU2FVL0IzUStFYTNLSEVGa0tnNjdZVzNJ?=
- =?utf-8?B?bys4NXU3Q2dVc2JvZlBQc1JVaG9XL1pVQmpONjVOQ2N4bVViZ2wycnJyZVNi?=
- =?utf-8?B?aWt4cUlYNkNJWTdJY3Mra0NFUHhOa0hGU05DMjgyenVsRUtwTGsrS0NXWVR6?=
- =?utf-8?B?d1hoYzlXS25xR01ybitvYWNTUlhjK3FHUXhmby9hd1BQZ3BUOFdrNlBQNnlk?=
- =?utf-8?B?V0ZGRWxzcXBwS0NMSXdRTjBvU0gyeUxXRVBsUk9VV1Z0aERlc0xUdkt3UHBL?=
- =?utf-8?B?TFRXRjhJTFVHY3NzVVZOOFc5Z2M3MXRqcllKazlldFdBcjBRaHpZUzhMcFJz?=
- =?utf-8?B?SDBkS3dKcys3VTYxRVFOT2RScjFVOTlLaHFQOGJ1MXVUTGEyb3dkcVJFby9l?=
- =?utf-8?B?SjRIRHdsUTB6am0wem9JdVdpaENNZmkrYVpGMlJmS3BTdWFVVTZHSTlBMUsy?=
- =?utf-8?B?L01VYktrWStoNHpNeDFVTkhOWitYbmRhUGdUcGNqNFJ5UXZLN0RWZ1hDTWND?=
- =?utf-8?B?bm4vb201NXRKb3liZ3NWYUYyajZBQ0k2TmRHcURNWHIyS2xsWFZBL2tiT1M2?=
- =?utf-8?B?b25KakhzVWJnTjhFdDQ5MDdsK2IyK0FWK3lETnJQcmppaTMybnpnMkdkTjhH?=
- =?utf-8?B?Nm5BQ011bkxxdFIzMTFwdDk5dGdXVCtKWjBTQU1nVzl6RkpZR093NWQvR2hS?=
- =?utf-8?B?REZqcjQrSGwwcUViVEhSQ0puM05sV3hKQ0dyeGVTN25OQXJtZkhyZW1rUVJ0?=
- =?utf-8?B?RlVNczNMNVZuK0Z6R24ydytmVFVVYnhsazlJcm9mWUNjZGV3VE5ybklwa1pl?=
- =?utf-8?B?ZmVFNDJqNCtkZHltVTBnaW1mQUdneTczQUdreTFzY1ZaVm1xVDhDUUp2WkNa?=
- =?utf-8?B?dkt4QWxpUjdsM1E1UzBPWlQzdzI3ZnZRMVJQcHBFaDc2RFJHbFFuN3Zab0RS?=
- =?utf-8?B?Rm5UbUN6U05WekExY3RNWU5TMkQ3dGY0b2RTNTF6Zm9HUVhvTWVjcW15SWtj?=
- =?utf-8?B?N3EyQ1BWajgzRDc3QTZBV1RNRHk4UDY4YUFESDFxdnpDSnl1SDN2WnZLaUdn?=
- =?utf-8?B?aTBvTWFSR2MvT2lrcEEwTFhEMnprOEh3L0VuRG05QVFhVCttUDFhUDZsWFFD?=
- =?utf-8?B?TWdTQ01hSzNDVG1yVnlBQ3luRTRCQTd1Q3VmUEw1YkpRR2Q5VTd1R2VYOUVh?=
- =?utf-8?B?QWF1Zks0VXRxUkZJeENDU21JV3BPODRuMlpBTG5CRGEya01lVEhhWlZyZEtF?=
- =?utf-8?B?MFhwdW5wQ1hmOURwUEpBeEpOMFlOTW1ZTFd5UVg2Y1JlYnNiTDVnS1pQMkpi?=
- =?utf-8?B?UHFlSTAvVFZuTlNnbHlqVzkwYW4ycVg1d21nUW5GMmVuRHVvRzl0VkwzNGdn?=
- =?utf-8?B?ZHJWNnY1NElKWmUwUjBVekd2ODY3L285bnlFTDlBMWxZZGs2alp5ZHRZOFlr?=
- =?utf-8?B?NVE9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <534B781B59BA0746A65FE90139E076A6@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1t8QeK-0006mL-3D
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 15:59:40 -0500
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1t8QeI-0004qy-Me
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 15:59:39 -0500
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-e291cbbf05bso5810045276.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 12:59:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730840377; x=1731445177; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=nP21VhhtAN4bMtCwZaYVPKl9ELon3gECWfWvivPbdhc=;
+ b=QWsgKXdWRBGs274RUBIHKiy8IX0XJFpWaqSFLxIQFMnEC2sQk6N83iFwDTlHrW2cIV
+ 0PBIJM0FHOtZdPASUokFKEnaTXfp0RF76oxeG0i5j0hux3Pp0e3nD5gvrlW5WHjP6VUk
+ ccVA8v8wSEZxxBu2g8p/xzaOsprp8PHWU8SVNr3wAKuGsmNmV2ljWfi9oQC5yx2a4HPq
+ jrXGqQlamhR+IoaTW6b/rGRUvgvofQQF+dhYegWvNahqCpYvLxSe7DC4JIR3gg4q0ECW
+ b6fJTcDP+OMJ7yimS04plciSWPtyYuDLG5jOB4gj65zN2Jj7fiy64ci0QgjQOUcYG0+/
+ NF8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730840377; x=1731445177;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nP21VhhtAN4bMtCwZaYVPKl9ELon3gECWfWvivPbdhc=;
+ b=uQspyz962UKFd7BhVsusJkENmSQ07Giu7awp9yUDDyLPld++7Wp3YAEiY/kv2lYfd+
+ Jptb7YWOqleywMVOfhTYrCLQYh7nifvC0APMOzcU+rtlbVBA6LVcFTieKGWrmKJtf4Ae
+ 9djfoyWEycGA0dKng/4NjPXKeMJi8Blzejb/R9chjJTqemcdmHZ6B1gVQEHEB/9/q/m0
+ U7QOT0PQlUlwtVFwlMjsI+aFZWPN1Xt935m/hHJkBqu1i5KHqqpXuU3BkmJhdAYijOdH
+ UO5zAEofwsnU0SU2iUYTU0SPTQc1KsQAP+QXeeZdDQ3/JRFofYvuBPIA/DLIxhO100OR
+ UOuw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQcTHPCTWGMQoVEmkzDro31u6Z3vhbCzk9gnQLvm2KkGttyWh3dVsZO6iep90bVyAC4wqch5O9n3SX@nongnu.org
+X-Gm-Message-State: AOJu0YyvAnlmyqpnbFCTbfz1ieOf+6LcWRJoNZTldfsE52TwszJfQLIb
+ sXoo96/mSH1WNDVh2L7stWV5Iv2VfMYG2GV6d6ME5ubhrGB/Sge/
+X-Google-Smtp-Source: AGHT+IH6cu6bhcBmJTsqaVBEUTndllLxTwmnlDRoWST3Nr9aoAJUHpBX+kdr0XyR56Ec6zLatQmubw==
+X-Received: by 2002:a05:690c:6289:b0:6ea:7afd:d8f2 with SMTP id
+ 00721157ae682-6ea7afddd75mr128765917b3.15.1730840377364; 
+ Tue, 05 Nov 2024 12:59:37 -0800 (PST)
+Received: from fan ([50.205.20.42]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-6ea7c26d7dcsm17123617b3.54.2024.11.05.12.59.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Nov 2024 12:59:36 -0800 (PST)
+From: Fan Ni <nifan.cxl@gmail.com>
+X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
+Date: Tue, 5 Nov 2024 12:59:35 -0800
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: linux-cxl@vger.kernel.org, mst@redhat.com, qemu-devel@nongnu.org,
+ Esifiel <esifiel@gmail.com>, linuxarm@huawei.com
+Subject: Re: [PATCH qemu 02/10] hw/cxl: Check input includes at least the
+ header in cmd_features_set_feature()
+Message-ID: <ZyqHN42zJeg6inGr@fan>
+References: <20241101133917.27634-1-Jonathan.Cameron@huawei.com>
+ <20241101133917.27634-3-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MN0PR11MB5963.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 28cc94c6-a8f3-4bd5-4179-08dcfddc4021
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Nov 2024 20:55:59.0279 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: xQ1vdIbbs9PEBu5EZK19fB+5q7iIXvgi58yuQa2789OoVwi8B0Keup2p6PsaqoqldUXw0H5z11VRsa4TM1GQAMfW9zvgFS2GjesDuXwC6Lc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB5971
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.21;
- envelope-from=rick.p.edgecombe@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241101133917.27634-3-Jonathan.Cameron@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-yb1-xb2f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -226,20 +97,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-K0JpbmJpbg0KDQpPbiBUdWUsIDIwMjQtMTEtMDUgYXQgMDE6MjMgLTA1MDAsIFhpYW95YW8gTGkg
-d3JvdGU6DQo+IFREIGd1ZXN0IGNhbiB1c2UgVERHLlZQLlZNQ0FMTDxSRVBPUlRfRkFUQUxfRVJS
-T1I+IHRvIHJlcXVlc3QNCj4gdGVybWluYXRpb24uIEtWTSB0cmFuc2xhdGVzIHN1Y2ggcmVxdWVz
-dCBpbnRvIEtWTV9FWElUX1NZU1RFTV9FVkVOVCB3aXRoDQo+IHR5cGUgb2YgS1ZNX1NZU1RFTV9F
-VkVOVF9URFhfRkFUQUwuDQo+IA0KPiBBZGQgaGFubGRlciBmb3Igc3VjaCBleGl0LiBQYXJzZSBh
-bmQgcHJpbnQgdGhlIGVycm9yIG1lc3NhZ2UsIGFuZA0KPiB0ZXJtaW5hdGUgdGhlIFREIGd1ZXN0
-IGluIHRoZSBoYW5kbGVyLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogWGlhb3lhbyBMaSA8eGlhb3lh
-by5saUBpbnRlbC5jb20+DQo+IC0tLQ0KDQpCaW5iaW4gd2FzIGxvb2tpbmcgYXQgcmUtYXJyYW5n
-aW5nIHRoZSBURFggZGV2IGJyYW5jaCB0byB0cnkgdG8gbW92ZSB0aGVzZQ0KcGF0Y2hlcyBlYXJs
-aWVyIGluIHRoZSBzZXJpZXMgc28gd2UgY291bGQgZ2V0IHRoZW0gZmluYWxpemVkIGZvciB0aGUg
-cHVycG9zZSBvZg0KZnVsbHkgc2V0dGxpbmcgdGhlIHVBUEkgZm9yIFFFTVUuDQoNCkkgd29uZGVy
-IGlmIHdlIHNob3VsZCBqdXN0IHBvc3QgYSB2ZXJ5IHNtYWxsIHNlcmllcyB3aXRoIHRoZSBLVk0g
-aW1wbGVtZW50YXRpb25zDQpmb3IgTWFwR1BBIGFuZCBSZXBvcnRGYXRhbEVycm9yIGFuZCB3ZSBj
-b3VsZCB0cnkgdG8gZ2V0IHNvbWUgc3RhYmlsaXR5DQplc3RhYmxpc2hlZC4gTWF5YmUgdGhhdCB3
-b3VsZCBiZSBlbm91Z2g/DQoNClBhb2xvLCBhbnkgdGhvdWdodHMgb24gdGhlIG1lcml0cyBvZiB0
-cnlpbmcgdG8gZ2V0IHRvIHRoYXQgcGFydCBlYXJsaWVyPw0K
+On Fri, Nov 01, 2024 at 01:39:09PM +0000, Jonathan Cameron wrote:
+> A buggy guest might write an insufficiently large message.
+> Check the header is present. Whilst zero data after the header is very
+> odd it will just result in failure to copy any data.
+> 
+> Reported-by: Esifiel <esifiel@gmail.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
+
+>  hw/cxl/cxl-mailbox-utils.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 17924410dd..e63140aefe 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -1238,6 +1238,9 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+>      CXLType3Dev *ct3d;
+>      uint16_t count;
+>  
+> +    if (len_in < sizeof(*hdr)) {
+> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> +    }
+>  
+>      if (!object_dynamic_cast(OBJECT(cci->d), TYPE_CXL_TYPE3)) {
+>          return CXL_MBOX_UNSUPPORTED;
+> -- 
+> 2.43.0
+> 
+
+-- 
+Fan Ni
 
