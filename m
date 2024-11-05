@@ -4,76 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BDED3E77D
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F0FD3E77D
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SMX-0007NU-P4; Tue, 05 Nov 2024 17:49:25 -0500
+	id 1t8SRF-0002Gf-HT; Tue, 05 Nov 2024 17:54:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMB-0006st-Eb
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:03 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SRD-00025l-Bz
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:54:15 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SM9-0004KA-NM
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:03 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4315baec69eso53093965e9.2
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:49:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SRB-0005kB-C7
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:54:15 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4315abed18aso50946635e9.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:54:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730846940; x=1731451740; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WiFCK6mS6/8rd1MrkryQ84V1Hk6dwbxGPMWFO5fXrcw=;
- b=OhCL+EoImfbNDCjfMue4sC8gaBBfRYzi/6KCLIv2jv+VQOPfWVTj6Mjy/9z75hW5sW
- Eh9p1KIUYgoyscKt65KmjVzOFCamx9yprHm5Lx4sugs54NsNSsQ2DzEFjh+nuQC83CPR
- FluXEPbLW3eP3VxhtybS4LS4k5L1T+MSaQfoQy5Egm49RZANyrAuuqc+3CdJQ48NHtQB
- +nNhocPJ/S60tXBp/g2xJt0774CBiESTcRZ2lpt/uBoqdB+zAKp8P/yjJbN239qRrSOy
- qPnMI9CCOedGJ3dm4EexOAM3J7rezdPv/CGdu9DuscCkGtDJZCY5uEqKfHC6lvFYvDqH
- 9WLw==
+ d=linaro.org; s=google; t=1730847251; x=1731452051; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cv0HzH1vNyWkqVfadbqu8tw5+s9qR0g25g6EENHzeSY=;
+ b=FubKX9VdCfeDPvEiPUhbhVtvp9ReMdbwhmRlRk/7wnsTIojMfaAHB+8PS7M7Tf5ypa
+ xNhuj83bLrgsTXtO0XihoMeTQyxkUH0ILWbvGNTXPvX9RUYZf+ksn0uetzEvCkhzenUh
+ byXv6gr+hon2eeSkd3CBqIzJyJEoZqge3efBxEvScfBuQjQAn48gPKgKjtH9WLnutqsO
+ A/NQNmhvORYqFS/SlYq9+6g1yVykWOBKRDZc4JFALfI//zo+F6e1GOyM2TV2HEkFlqU8
+ +L0CbfKjYs46n/zsDhCTL7Po43payJiH+51SUAfJnP7tYY1L4OQuZWkcXV2SYLrC4Y+W
+ /fgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730846940; x=1731451740;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WiFCK6mS6/8rd1MrkryQ84V1Hk6dwbxGPMWFO5fXrcw=;
- b=leGxU9yYLZQgZuBLslvayQkjZo7UMZ5ZnuPcv96TiseT0GY2JGSGZ0izs/5SBU+Xl4
- mqBS7nQFOi6EV6tAW3TUJVuf4sLqWngnjUkLzlCiIdWM8ye1iVZWddJMggCqfvISOjjr
- tNW5WfjWETaDshFquTfKK2NmPOtyrue3clzAasJcimhNyw0A40EcPSZFQilgQmpWPWne
- UidseQP1G3qXYvuAXLGv9CkbLvZn7JzkBCV9bjdDL47cT2y7bfVIXQvcUM1bBElZ3udH
- 9cnHLcm/oLoI/p0TZrFLpY01GviGzQlgLtFMhpTnv6KxK4xMuavjGZ5QFwUfbTTHD6Mk
- 0sFA==
-X-Gm-Message-State: AOJu0YxC6UHYTeuBg6BEYWheWkQoJiNwWbzxNNYmFt9gS45DUvoxFp3p
- aRjA2V890EWIzeDS+qKVALS8MX77ZyhiXVVtxZCI46mpxc46tPB8nzb+IJu9KRvo9CquDgDieRJ
- aFpYUjg==
-X-Google-Smtp-Source: AGHT+IEMR6UCCaCBihJ5GbwlZbpTSMJmfUDu+znkKP5fGC6UBSrONbxQzjj5WJ/mp3QMHiisK3kmGQ==
-X-Received: by 2002:a05:600c:19d3:b0:431:54d9:da57 with SMTP id
- 5b1f17b1804b1-43283297d9fmr139729375e9.30.1730846939867; 
- Tue, 05 Nov 2024 14:48:59 -0800 (PST)
-Received: from localhost.localdomain ([89.101.134.25])
+ d=1e100.net; s=20230601; t=1730847251; x=1731452051;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cv0HzH1vNyWkqVfadbqu8tw5+s9qR0g25g6EENHzeSY=;
+ b=AHXKwyU/A8pILWwEkSmulNAT2EGz9fH6JF/9j79FUEL3a+uvFKuKuRfbLk2irlC83/
+ 3oQ834aZS+FEFn+QcN+DR7gd8DgIhvHvVwUVX5zCC9CekTC9mkoXH71R0a8jk75Hal7u
+ ooedgnYxgzSvia73UxqQi+ltHoivMr8b6tD23WHJ9crPwRbdtwThyN/AySys32lPU9JP
+ OwtWosTY2e+bus60Of0L2dmpMtCvNXo2AdVl2c48XWXgWvFchLhky5WCNJj+7MfxU5fb
+ aHhAc9YgDb+7/s5IPhr5sgkadRIvXhSoKKwczBCPBVpvZ5aSLQPYzUTLCTFsk6I/SOfa
+ 8cmw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIMww7XLro0WzKwkmy6tXZOU2gnXkyM/2e0V1Cv6VfX0gQqX1iwBigT+03FuTT3T0/ozy7AHLgeyCt@nongnu.org
+X-Gm-Message-State: AOJu0YzVkrEj8/0DCYpXKfrYpjow5xcoAqvwovtM6W3hJLtmg+2SYukb
+ Yl11+ybojd6ARcPaflOXLVmICtTO9toAQ0lzRC9qlzRYGPqagYqE5wYnQYjdthI=
+X-Google-Smtp-Source: AGHT+IF7iWF2Ipw7+lGag7OS11tcIrj2DAa31GxxvDSSvIYwYLI0vYgG53ofk53jzA+KHiLDuooz8A==
+X-Received: by 2002:a05:6000:1868:b0:37d:4846:3d29 with SMTP id
+ ffacd0b85a97d-381c7a6cbf7mr11956058f8f.28.1730847250917; 
+ Tue, 05 Nov 2024 14:54:10 -0800 (PST)
+Received: from [172.20.143.32] ([154.14.63.34])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432a267dfadsm33828605e9.0.2024.11.05.14.48.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 14:48:59 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Corey Minyard <cminyard@mvista.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 17/29] hw/i2c/mpc_i2c: Prefer DEFINE_TYPES() macro
-Date: Tue,  5 Nov 2024 22:47:15 +0000
-Message-ID: <20241105224727.53059-18-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241105224727.53059-1-philmd@linaro.org>
-References: <20241105224727.53059-1-philmd@linaro.org>
+ ffacd0b85a97d-381c10d4392sm17395628f8f.36.2024.11.05.14.54.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Nov 2024 14:54:10 -0800 (PST)
+Message-ID: <1b00ec74-4dda-48d4-b74f-9ce45cf1a429@linaro.org>
+Date: Tue, 5 Nov 2024 22:54:07 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/9] Introduce SMP Cache Topology
+To: Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>
+References: <20241101083331.340178-1-zhao1.liu@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241101083331.340178-1-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,55 +108,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+Hi Zhao,
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Acked-by: Corey Minyard <cminyard@mvista.com>
-Message-ID: <20241103133412.73536-13-shentey@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/i2c/mpc_i2c.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+On 1/11/24 09:33, Zhao Liu wrote:
+> Hi Paolo,
+> 
+> This is my v5, if you think it's okay, could this feature get the final
+> merge? (Before the 9.2 cycle ends) :-)
 
-diff --git a/hw/i2c/mpc_i2c.c b/hw/i2c/mpc_i2c.c
-index 3d79c156531..913d044ac1b 100644
---- a/hw/i2c/mpc_i2c.c
-+++ b/hw/i2c/mpc_i2c.c
-@@ -20,7 +20,6 @@
- #include "qemu/osdep.h"
- #include "hw/i2c/i2c.h"
- #include "hw/irq.h"
--#include "qemu/module.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
- #include "qom/object.h"
-@@ -345,16 +344,13 @@ static void mpc_i2c_class_init(ObjectClass *klass, void *data)
-     dc->desc = "MPC I2C Controller";
- }
- 
--static const TypeInfo mpc_i2c_type_info = {
--    .name          = TYPE_MPC_I2C,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(MPCI2CState),
--    .class_init    = mpc_i2c_class_init,
-+static const TypeInfo mpc_i2c_types[] = {
-+    {
-+        .name          = TYPE_MPC_I2C,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(MPCI2CState),
-+        .class_init    = mpc_i2c_class_init,
-+    },
- };
- 
--static void mpc_i2c_register_types(void)
--{
--    type_register_static(&mpc_i2c_type_info);
--}
--
--type_init(mpc_i2c_register_types)
-+DEFINE_TYPES(mpc_i2c_types)
--- 
-2.45.2
+
+> ---
+> Zhao Liu (8):
+>    i386/cpu: Don't enumerate the "invalid" CPU topology level
+>    hw/core: Make CPU topology enumeration arch-agnostic
+>    qapi/qom: Define cache enumeration and properties for machine
+>    hw/core: Check smp cache topology support for machine
+>    hw/core: Add a helper to check the cache topology level
+
+Since the first patches aim to be generic I took the liberty to
+queue them via the hw-misc tree. The rest really belongs to the
+x86 tree.
+
+>    i386/cpu: Support thread and module level cache topology
+>    i386/cpu: Update cache topology with machine's configuration
+>    i386/pc: Support cache topology in -machine for PC machine
+ > Alireza Sanaee (1):
+ >    i386/cpu: add has_caches flag to check smp_cache configuration
+ >
 
 
