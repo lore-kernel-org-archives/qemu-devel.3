@@ -4,91 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF96D2B921
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4FB7D2B921
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:05:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8JBz-0008PP-62; Tue, 05 Nov 2024 08:01:56 -0500
+	id 1t8JEl-00014J-Kx; Tue, 05 Nov 2024 08:04:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t8JBi-0008IA-B1
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:01:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t8JBf-0001iq-OO
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:01:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730811693;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/dZFqy+Y3imw7XwX2olT4bGQnqMk3urIEBUKM7NhlOc=;
- b=ABDiOpi4aq0QpTPgzP6PM8ULsMHFlIuzY4hF8dWRlp8Q0LcHmiA83BNjyDzxJLDtXNIvuM
- 8aevKWAj43uopG/QvIh+CjdFmiA5LOM/HxivqEWdqR4qPVe/5gesZ1eYZbXvIyH/JNTNSp
- RmzgGq0EYMLgp8S3SCRGzdCIeQ8Mek4=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-191--J9p2gJcMa-eLh5pMrtprw-1; Tue, 05 Nov 2024 08:01:30 -0500
-X-MC-Unique: -J9p2gJcMa-eLh5pMrtprw-1
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-5ec5e0abff0so4905184eaf.1
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:01:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8JEj-000148-Bd
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:04:45 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8JEf-00029g-Iz
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:04:45 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43161c0068bso46028975e9.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:04:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730811879; x=1731416679; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0d0MdOdBk05YfkTKMh9QebQk9C1dE5Lu0NYo5nI56TA=;
+ b=jr9NeVr3Png5Fo9XrNwrhUrLfYWuvpRAQ8dglGrLXPQ36CyU3l/X1eHvIfE9eRp5E6
+ 512NPsphIiSvwfnO3BBTc+Kc9LcThRBM/I02ZfbTvg6TSOkZzWwyYsjMwHyCcYqw+qYO
+ C05CXrxBFMGcCBPBGJFsWQYr39GDwHoRG8QTREIgX9IJiYzc08TegNGcRi5m1H0W9fKf
+ k/kQl6Xt1ItTMe8P6M0RIHe+ncMboNCP52/rgaS0xi5ynL/ps37wFY5BjWwLvYD5TgMg
+ NbgUHz/A4EUxrkX1rsA7S0FXSfboBQf0A671+m5Ja3rPTiEb/NEAdCnW01HVoKKI3BsM
+ gzRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730811689; x=1731416489;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/dZFqy+Y3imw7XwX2olT4bGQnqMk3urIEBUKM7NhlOc=;
- b=l9fbYNBdAeokyS46mN86cvKjOFOYHvkQ//63LgQP6GUEz6rqQtSrVgtpZtXfHF8Kxs
- eJUJ6h7kM1OhX/VEEu7LKaW91fVySbpae1Uy1bQujGpdac4hZtR6ZaFxDcQbGH1oLt4v
- RN+ZKUkvD6PrKZUvCJB5d+fYAeR/TEyhHRSgGU89rjA59ek+rShs6wSKZd14eyx2suJg
- lCuONqGLckwDpZGITH+T8NPJE1uqKohSqEmGn1UoJTsJrNo2WIHHjO93wEMhmBpTVfvR
- GFeLK+qJEbM7AGU7+jZHGQuJAQTQ7D9XxoCV04/PXM2Q8qDN0uRky9kf6C9Hsjc8Avwy
- 9bKA==
-X-Gm-Message-State: AOJu0YyzcdJX38gRwy473aPSEEoaK8jmUNiLZeW1wYYSMLDhU55ezCMA
- ase6oO3KurpHi9MKu208ZrXuCI9OhuYkdYmV+h0LQSyaJ7zK9MvcBTt6vgU3RP67AlTqDZcM1UZ
- ksOz4RyZUKLILRdPGU7dEeVfVb0L8EcrtkTFQaL0EKTqilRhM/rafTeLZrOI9
-X-Received: by 2002:a05:6870:5489:b0:294:8712:9d70 with SMTP id
- 586e51a60fabf-2948882a1a7mr10887347fac.17.1730811689496; 
- Tue, 05 Nov 2024 05:01:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEwysLC8MJ6WmlsvBjp7n5Yaongq+Eo9oe6EGpOzshJSUuXk283if4XCV5aIWGSJx3fA8MY+Q==
-X-Received: by 2002:a05:6870:5489:b0:294:8712:9d70 with SMTP id
- 586e51a60fabf-2948882a1a7mr10887320fac.17.1730811688992; 
- Tue, 05 Nov 2024 05:01:28 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2948771a4fesm3603559fac.37.2024.11.05.05.01.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 05:01:28 -0800 (PST)
-Date: Tue, 5 Nov 2024 08:01:25 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH 4/5] migration: refactor ram_save_target_page functions
-Message-ID: <ZyoXJRzg3N1ca16N@x1n>
-References: <20241029150908.1136894-1-ppandit@redhat.com>
- <20241029150908.1136894-5-ppandit@redhat.com>
- <ZyToBbvfWkIZ_40W@x1n>
- <CAE8KmOyi+_U2H1r=MyQmppNj6v3mMqpjMyMo=q9zm0=-49+B3g@mail.gmail.com>
- <Zyj9rz6eD-gAm4fa@x1n>
- <CAE8KmOy-up_gi8t0qGwtM04QmFvaEK7VmL=1JxEFR-ksHLiQ1w@mail.gmail.com>
+ d=1e100.net; s=20230601; t=1730811879; x=1731416679;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0d0MdOdBk05YfkTKMh9QebQk9C1dE5Lu0NYo5nI56TA=;
+ b=WhijZa3rmXK9GfDfMWfbPZUR9dTUxYfai0z+wnkGrlGdHJIVYhNCAYyjp2xy9HdsPg
+ w4McsKGbBuGfzz6W/1HpgeXlzRWIPghXUlzrf24TRzx8ojAXlLuLge/Ji0P5mh0vZOgA
+ rZijbzmX3y7FwUTAI+4CQpmN3+gaSoubgNRE5XjFKUvSxzCSZ1mKoBg8GYBZ0mv48DQf
+ H+NAerw0Nd8a5m2X0NSWBhZRb5hqbz83Rg7clzTin/estJiozQIsJ5EA9wRGCY9EJcna
+ WbEBG/1/XvaN3/mH8I73kj2ChFpzMxwTTtLmB9k1aQeRjd8AGkxvjPohtOu3PN74udpc
+ EVjQ==
+X-Gm-Message-State: AOJu0YxriLYPygwBtsEQaaOiWMxyycnSv+zyYxuYWh9+9UGQIIkgLHTE
+ B3wt5t1GuD15D17dR1in5w76TqywsX1hlMEYvHHNYT34nIC9bkrZ+XsuxKjU3+9aXPq/AF2nObr
+ u5To=
+X-Google-Smtp-Source: AGHT+IH3aiRfPBaI7M5oKHPBcUXl3T5JanQZ78E2jyPLCYqwkN0cYdROZT3AAJxDGXS/gaHC/ce9uw==
+X-Received: by 2002:a05:600c:5492:b0:431:251a:9dc9 with SMTP id
+ 5b1f17b1804b1-4328328481dmr143793185e9.25.1730811879052; 
+ Tue, 05 Nov 2024 05:04:39 -0800 (PST)
+Received: from localhost.localdomain (86.red-88-29-160.dynamicip.rima-tde.net.
+ [88.29.160.86]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4327d6983b7sm186005865e9.43.2024.11.05.05.04.35
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 05 Nov 2024 05:04:38 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Anton Johansson <anjo@rev.ng>
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org, devel@lists.libvirt.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 00/19] hw/microblaze: Allow running cross-endian vCPUs
+Date: Tue,  5 Nov 2024 14:04:12 +0100
+Message-ID: <20241105130431.22564-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAE8KmOy-up_gi8t0qGwtM04QmFvaEK7VmL=1JxEFR-ksHLiQ1w@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,21 +98,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 05, 2024 at 03:31:19PM +0530, Prasad Pandit wrote:
-> On Mon, 4 Nov 2024 at 22:30, Peter Xu <peterx@redhat.com> wrote:
-> > Yes, IMHO it's better when merged.
-> >
-> > One more note here, that even with ZERO_PAGE_DETECTION_MULTIFD, qemu will
-> > fallback to use LEGACY in reality when !multifd before.  We need to keep
-> > that behavior.
-> 
-> * Where does this fallback happen? in ram_save_target_page()?
+Make machines endianness-agnostic, allowing to run a big-endian vCPU
+on the little-endian 'qemu-system-microblazeel' binary, and a little
+endian one on the big-endian 'qemu-system-microblaze' binary.
 
-When ZERO_PAGE_DETECTION_MULTIFD is used but when !multifd cap, it'll use
-legacy even if it's MULTIFD.  We don't yet change the value, the fallback
-will still happen.
+Tests added, following combinations covered:
+- little-endian vCPU using little-endian binary (in-tree)
+- little-endian vCPU using big-endian binary (new)
+- big-endian vCPU using little-endian binary (new)
+- big-endian vCPU using big-endian binary (in-tree)
+
+Deprecate untested big-endian machines, likely build on the big
+endian binary by mistake:
+- petalogix-ml605
+- xlnx-zynqmp-pmu
+
+To make a target endian-agnostic we need to remove the MO_TE uses.
+In order to do that, we propagate the MemOp from earlier in the
+call stack, or we extract it from the vCPU env (on MicroBlaze the
+CPU endianness is exposed by the 'ENDI' bit).
+
+Note, since vCPU can run in any endianness, the
+MemoryRegionOps::endianness should not be DEVICE_NATIVE_ENDIAN
+anymore, because this definition expand to the binary endianness,
+swapping data regardless how the vcpu access it.
+See adjust_endianness() -> devend_memop(). Something to keep in
+mind, possibly requiring further work and optimizations (avoid
+double-swap).
+
+Next step: Look at unifying binaries.
+
+Please review,
+
+Phil.
+
+Philippe Mathieu-Daudé (19):
+  target/microblaze: Rename CPU endianness property as 'little-endian'
+  hw/microblaze: Deprecate big-endian petalogix-ml605 & xlnx-zynqmp-pmu
+  hw/microblaze/s3adsp1800: Explicit CPU endianness
+  hw/microblaze/s3adsp1800: Rename unimplemented MMIO region as xps_gpio
+  hw/microblaze/s3adsp1800: Declare machine type using DEFINE_TYPES
+    macro
+  hw/microblaze: Fix MemoryRegionOps coding style
+  hw/microblaze: Restrict MemoryRegionOps are implemented as 32-bit
+  hw/microblaze: Propagate CPU endianness to microblaze_load_kernel()
+  hw/intc/xilinx_intc: Only expect big-endian accesses
+  hw/timer/xilinx_timer: Only expect big-endian accesses
+  hw/timer/xilinx_timer: Allow down to 8-bit memory access
+  hw/net/xilinx_ethlite: Only expect big-endian accesses
+  target/microblaze: Explode MO_TExx -> MO_TE | MO_xx
+  target/microblaze: Set MO_TE once in do_load() / do_store()
+  target/microblaze: Introduce mo_endian() helper
+  target/microblaze: Consider endianness while translating code
+  hw/microblaze: Support various endianness for s3adsp1800 machines
+  tests/functional: Explicit endianness of microblaze assets
+  tests/functional: Add microblaze cross-endianness tests
+
+ docs/about/deprecated.rst                     |  6 ++
+ .../devices/microblaze-softmmu/default.mak    |  2 -
+ .../devices/microblazeel-softmmu/default.mak  |  5 +-
+ hw/microblaze/boot.h                          |  4 +-
+ target/microblaze/cpu.h                       |  7 ++
+ hw/char/xilinx_uartlite.c                     |  8 ++-
+ hw/intc/xilinx_intc.c                         | 23 +++++--
+ hw/microblaze/boot.c                          |  8 +--
+ hw/microblaze/petalogix_ml605_mmu.c           | 11 ++-
+ hw/microblaze/petalogix_s3adsp1800_mmu.c      | 67 +++++++++++++++++--
+ hw/microblaze/xlnx-zynqmp-pmu.c               | 12 ++--
+ hw/net/xilinx_ethlite.c                       | 28 ++++++--
+ hw/timer/xilinx_timer.c                       | 15 +++--
+ target/microblaze/cpu.c                       |  2 +-
+ target/microblaze/translate.c                 | 49 ++++++++------
+ .../functional/test_microblaze_s3adsp1800.py  | 27 +++++++-
+ .../test_microblazeel_s3adsp1800.py           | 25 ++++++-
+ 17 files changed, 236 insertions(+), 63 deletions(-)
 
 -- 
-Peter Xu
+2.45.2
 
 
