@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3EFD3E779
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84287D3E77A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SCQ-0002fU-Bx; Tue, 05 Nov 2024 17:38:58 -0500
+	id 1t8SEG-0003qk-AG; Tue, 05 Nov 2024 17:40:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8SCP-0002fI-8r; Tue, 05 Nov 2024 17:38:57 -0500
+ id 1t8SEB-0003qW-T8; Tue, 05 Nov 2024 17:40:48 -0500
 Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8SCN-0002S9-ME; Tue, 05 Nov 2024 17:38:57 -0500
+ id 1t8SEA-0003AX-C4; Tue, 05 Nov 2024 17:40:47 -0500
 Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-851d6c397bbso1943842241.2; 
- Tue, 05 Nov 2024 14:38:55 -0800 (PST)
+ a1e0cc1a2514c-84fe1bc5284so2283279241.0; 
+ Tue, 05 Nov 2024 14:40:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730846334; x=1731451134; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730846444; x=1731451244; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ShFGJTpVKFc9QmQlqenOsyPYzBf+Ir7f6DuZ968ajtE=;
- b=SNLOUcARxc85DmXVH80uZeQDeb5IgXsmLwqZBTCmnlwb6DgjFihEfT+l73iQxGWe7C
- VKwzegIlfyumYru/sHjDcOaknmpxy4NQCQe1IM8X7GWUJ6DORtL+sKWP9rmINdNmjnBp
- IZrrWdC7FO+KeQP1bYU65CHOaeCQ3glwsTKUEYOQQomb+w6+co/oINjbpWNESuFcb+Mf
- zFWFyrcAhazzIHAo8rHocqakc8tmvxdY1TB6a6Nswz2jITy/Dmu2Xap6kfcN1rd9jo2S
- 4l5UnGFqOjNScXNiZpsAWG7MOUCZESPX5nYF/V2IwNtILsoh+cTF31hst4tkYEN6Fbfn
- URYA==
+ bh=wigJ1UnWmMX0x09YnYXSSLLIJ50XleHXgHbUUqXrP9U=;
+ b=Kto49BUSCUQVy01xIELF8ZIrkSnx7cGRvSyHPSCQNxtg4MQbbdrDZWOQnKrgd8AmFq
+ yBoF5KTjzkxQn1VeMBvy94FJaAHANfMkSFxeAMTzKnMO3xMujr6Vq0XgdUEPamVSY3oc
+ GYiTSd1Ft0D+i45PsdcuadtZsS0xuhN9qPuhiTK9w9U/T9xRnm8BPiSo+pOCccs2DDvn
+ rB15yFjgMm8wKZDBjDIcGSvCQ1BPDeq95Fte8YSEe2TbJy9j3ihg6KXz1KqI9thXWjkw
+ olt/dn13KC92ovwIjaIlrADf4ChtRDnH1qZyye7bVxZd3gmjjjPpzyphJYXNCXjfIxWb
+ iecA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730846334; x=1731451134;
+ d=1e100.net; s=20230601; t=1730846444; x=1731451244;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ShFGJTpVKFc9QmQlqenOsyPYzBf+Ir7f6DuZ968ajtE=;
- b=jfclHzVLEXo+HyIo4SB3W3xwrn5IYSQfMLjRmVZ9GVIvrljCEk+yWWCrhsJQcQ07Hp
- 3ykyGRa8URThdLdxpbHLQGf0tWYHnZoCYyErSwe9aTbYNSH2XKFvYBjxtYxQgEBaSBut
- NOVt7aisL6z8JgUBDXSith4THct4cnl8TuJiPr76OfMdk2sh5KrAPqxlom0z+qyAv4Mp
- 2CMSNcBatrTv9chr/lXpDT5d1tbYSgIdB0IDtD779x9taXXMAwgvgq/rt9b77xwHkZYs
- KhNw8c2XeAlfjX+jz+okPJJ9EbqqAf6/MV7ZRQiyiqieNm+Q+6WbyQvPaHV6BlHNBu89
- wpGQ==
+ bh=wigJ1UnWmMX0x09YnYXSSLLIJ50XleHXgHbUUqXrP9U=;
+ b=GSqnmErHDwA8UrYPfpZWxIbpNNcGRrLKeoQIgNyEC8+Ymhwpl9Na23/zZCveMVvo/2
+ FDV7/hAWRQe3e8Hit8zbgTohXODhTaEwq5Q9HxobjOTpD9HdhKH67yOrtK8/K4/eZMvD
+ R771valLDO4GtP8APJVSf3NYQlS5JkacvZBQb7CEQuThh8BhgF1u3ODQlVmN9P51wUge
+ OSq7/gmWF4V7NF6zlTbtfbD1WPqLWGbPWPRsmI9LhMBfE1luHipST5ZWxLhjIiEqrxfc
+ TG20Iq7HssUhgBVqFy0RAklfKSj3GwxRdGk4BjMQwV4JLBw3JLB2TOttFnfqguHTqiYB
+ GLIg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUM2UzosK8fhYUEG97UK4DoFrEwVvnf+jFAAQe7rlupG6Za8kD9EbWpjrRprWw8AWfBtgEDVYDZdw==@nongnu.org
-X-Gm-Message-State: AOJu0YwE81od6f/GGlDGwsN9Rwnpds+6nnfTBE3/vMcAMxk3burCpgFu
- Dh+OAdTL46NOzEaQgmaN9SANxONadPPvzg7YNGJOUW0D/EDgs1Lp+bEMJ8Uw6SQaoshEC6t24Go
- HdyCj+9HyvnmITXZ1WjLsNWxi88g=
-X-Google-Smtp-Source: AGHT+IGcwijgiRe68qjANus4ylg5oxWU0NQ/SEtlq+irkXpj53n/LErJL74Q5mcNhPgirUrzEJeO0Fc5BkGwwoUms58=
-X-Received: by 2002:a05:6102:6cc:b0:4a5:6f41:211e with SMTP id
- ada2fe7eead31-4a8cfd598demr33376274137.24.1730846334280; Tue, 05 Nov 2024
- 14:38:54 -0800 (PST)
+ AJvYcCU8Kmr3Rr1YmHUgfs+amcLOhja3FxwGiZlfgUC1afmtDbNcvH+Ub3MXe3Xv6wA9NlzDNFRf7CnO3g==@nongnu.org
+X-Gm-Message-State: AOJu0YwXYyJXJEa8yKpbUUxix+wUh/fP4OWyEZbyRAlzUzDkcIlQJb9d
+ YfSGyIrb8WIobAhcvUEq8aK1bsUGG4EmW+RDKXL3u27HKG7zMV8/c9ofbGQD4+yemOM1F61fNwF
+ 5JKtZtsJaLAas75tdBU/uqXE+7Hc=
+X-Google-Smtp-Source: AGHT+IH90+EsbQnMLWrsYvFkFvSzT6IFJX6YnzslVUlSpnRnQ9EF0eECM8l6z/5hUMkymcevgAPqdKMZu9ikxjVLcR0=
+X-Received: by 2002:a05:6102:3909:b0:4a5:c74b:66a7 with SMTP id
+ ada2fe7eead31-4a962f3bd39mr16793151137.19.1730846442842; Tue, 05 Nov 2024
+ 14:40:42 -0800 (PST)
 MIME-Version: 1.0
 References: <20241105130431.22564-1-philmd@linaro.org>
- <20241105130431.22564-7-philmd@linaro.org>
-In-Reply-To: <20241105130431.22564-7-philmd@linaro.org>
+ <20241105130431.22564-6-philmd@linaro.org>
+In-Reply-To: <20241105130431.22564-6-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 6 Nov 2024 08:38:28 +1000
-Message-ID: <CAKmqyKMBaGoH_iXiQqX3TBuAJteGRA6UcXsFDuRqBSU-yLytaw@mail.gmail.com>
-Subject: Re: [PATCH 06/19] hw/microblaze: Fix MemoryRegionOps coding style
+Date: Wed, 6 Nov 2024 08:40:16 +1000
+Message-ID: <CAKmqyKNHA7CR70HrvB2Ao4Yr=H3fziMO8pZkVZiQ-YrXuAmCLw@mail.gmail.com>
+Subject: Re: [PATCH 05/19] hw/microblaze/s3adsp1800: Declare machine type
+ using DEFINE_TYPES macro
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>, 
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -98,11 +99,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 5, 2024 at 11:07=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+On Tue, Nov 5, 2024 at 11:05=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> Fix few MemoryRegionOps style before adding new fields
-> in the following commits.
+> Replace DEFINE_MACHINE() by DEFINE_TYPES(), converting the
+> class_init() handler.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
@@ -111,72 +112,51 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/char/xilinx_uartlite.c | 4 ++--
->  hw/intc/xilinx_intc.c     | 4 ++--
->  hw/net/xilinx_ethlite.c   | 4 ++--
->  hw/timer/xilinx_timer.c   | 4 ++--
->  4 files changed, 8 insertions(+), 8 deletions(-)
+>  hw/microblaze/petalogix_s3adsp1800_mmu.c | 17 +++++++++++++++--
+>  1 file changed, 15 insertions(+), 2 deletions(-)
 >
-> diff --git a/hw/char/xilinx_uartlite.c b/hw/char/xilinx_uartlite.c
-> index f325084f8b9..a69ad769cc4 100644
-> --- a/hw/char/xilinx_uartlite.c
-> +++ b/hw/char/xilinx_uartlite.c
-> @@ -172,8 +172,8 @@ static const MemoryRegionOps uart_ops =3D {
->      .endianness =3D DEVICE_NATIVE_ENDIAN,
->      .valid =3D {
->          .min_access_size =3D 1,
-> -        .max_access_size =3D 4
-> -    }
-> +        .max_access_size =3D 4,
+> diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/pet=
+alogix_s3adsp1800_mmu.c
+> index 581b0411e29..6c0f5c6c651 100644
+> --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
+> +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+> @@ -55,6 +55,9 @@
+>  #define ETHLITE_IRQ         1
+>  #define UARTLITE_IRQ        3
+>
+> +#define TYPE_PETALOGIX_S3ADSP1800_MACHINE \
+> +            MACHINE_TYPE_NAME("petalogix-s3adsp1800")
+> +
+>  static void
+>  petalogix_s3adsp1800_init(MachineState *machine)
+>  {
+> @@ -132,11 +135,21 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>                             NULL);
+>  }
+>
+> -static void petalogix_s3adsp1800_machine_init(MachineClass *mc)
+> +static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc, voi=
+d *data)
+>  {
+> +    MachineClass *mc =3D MACHINE_CLASS(oc);
+> +
+>      mc->desc =3D "PetaLogix linux refdesign for xilinx Spartan 3ADSP1800=
+";
+>      mc->init =3D petalogix_s3adsp1800_init;
+>      mc->is_default =3D true;
+>  }
+>
+> -DEFINE_MACHINE("petalogix-s3adsp1800", petalogix_s3adsp1800_machine_init=
+)
+> +static const TypeInfo petalogix_s3adsp1800_machine_types[] =3D {
+> +    {
+> +        .name           =3D TYPE_PETALOGIX_S3ADSP1800_MACHINE,
+> +        .parent         =3D TYPE_MACHINE,
+> +        .class_init     =3D petalogix_s3adsp1800_machine_class_init,
 > +    },
->  };
->
->  static Property xilinx_uartlite_properties[] =3D {
-> diff --git a/hw/intc/xilinx_intc.c b/hw/intc/xilinx_intc.c
-> index 6e5012e66eb..2b8246f6206 100644
-> --- a/hw/intc/xilinx_intc.c
-> +++ b/hw/intc/xilinx_intc.c
-> @@ -146,8 +146,8 @@ static const MemoryRegionOps pic_ops =3D {
->      .endianness =3D DEVICE_NATIVE_ENDIAN,
->      .valid =3D {
->          .min_access_size =3D 4,
-> -        .max_access_size =3D 4
-> -    }
-> +        .max_access_size =3D 4,
-> +    },
->  };
->
->  static void irq_handler(void *opaque, int irq, int level)
-> diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-> index bd812908085..11eb53c4d60 100644
-> --- a/hw/net/xilinx_ethlite.c
-> +++ b/hw/net/xilinx_ethlite.c
-> @@ -172,8 +172,8 @@ static const MemoryRegionOps eth_ops =3D {
->      .endianness =3D DEVICE_NATIVE_ENDIAN,
->      .valid =3D {
->          .min_access_size =3D 4,
-> -        .max_access_size =3D 4
-> -    }
-> +        .max_access_size =3D 4,
-> +    },
->  };
->
->  static bool eth_can_rx(NetClientState *nc)
-> diff --git a/hw/timer/xilinx_timer.c b/hw/timer/xilinx_timer.c
-> index 32a9df69e0b..0822345779c 100644
-> --- a/hw/timer/xilinx_timer.c
-> +++ b/hw/timer/xilinx_timer.c
-> @@ -195,8 +195,8 @@ static const MemoryRegionOps timer_ops =3D {
->      .endianness =3D DEVICE_NATIVE_ENDIAN,
->      .valid =3D {
->          .min_access_size =3D 4,
-> -        .max_access_size =3D 4
-> -    }
-> +        .max_access_size =3D 4,
-> +    },
->  };
->
->  static void timer_hit(void *opaque)
+> +};
+> +
+> +DEFINE_TYPES(petalogix_s3adsp1800_machine_types)
 > --
 > 2.45.2
 >
