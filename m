@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAC2D2B928
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECE33D2B925
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:32:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Jeg-0001gI-9k; Tue, 05 Nov 2024 08:31:36 -0500
+	id 1t8Jfh-0003LC-Lt; Tue, 05 Nov 2024 08:32:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8JeH-0001XJ-65
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:31:09 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1t8JfW-0003Az-QO
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:32:28 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8JeF-0007Ip-3h
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:31:08 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4315eac969aso34017355e9.1
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:31:06 -0800 (PST)
+ id 1t8JfT-0007Rx-Nu
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:32:26 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-37d538fe5f2so3672302f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:32:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730813465; x=1731418265; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730813542; x=1731418342; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=HNI3Qh5aNI25n6R83vyAaIQ79DEw1hHSlCehSa4dQ80=;
- b=oEVxMqcW4sMIe+psywmuTN2hmmOWJm/MCx2AtAAkgKGXR8ExkeznkXDcNZmdeh1UMz
- Nb8A5QIvHz70oYerOS+oSGiaxVa2K+GRi/094IaRdVAr1vph6QZ2olxGkNE/B+zUrEYS
- irTX+dMkx+xgp7lt0KgFyS/mO4BbhtvZVZz/E6pT/35Q09wFkn2l7M5tWJyjQxuplqal
- 4O2ucxUaL2EKSG7vQZ2Xw7vwSAI6S/tKQQ2VUHl/MYePrTgkU3wsV2r26S42pv+ai+vL
- V+hBzMM876QCPIIVRa5GVjtGNwRfEVkKRSSP51L5qSyHH4sh+Bqa/x3UNjHgCdAQ1PUh
- lIzg==
+ bh=sL/q0ySFiqdKdwWl7IvNX/vct6C8s8NYR7Y2ZsZELkg=;
+ b=IyMdzcGwW0BshrVFVaQ0cs72L8rpBKz/oKzGU1CXVt60Lem94ozeoxp0RS7koVoa7/
+ YxbV9jNE39WPEj1OOfB0UZ3Dt9NombNdbTNbF+VM1SXfM545yWrdAUIbT7sfhmWL2GS7
+ 4iNTsIMfBbFznvaTgI033iKN6JHtAC3EpL4Dzow5FfRgp5o3APvCno7PW/rRMP8zeoV5
+ xcZaqt5oJpI5j1JjZ5M5DwboW6GK2tk4SDqQ/6BIVnktTMRvU348hatI8pOFuPIQ3bVD
+ ssL0444Gv18VW9z5fycawQor2CQAB8UtXzrTNClTaf7IIsddNSVScdDdUMyilLLxMT0i
+ eQHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730813465; x=1731418265;
+ d=1e100.net; s=20230601; t=1730813542; x=1731418342;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HNI3Qh5aNI25n6R83vyAaIQ79DEw1hHSlCehSa4dQ80=;
- b=CZdhiVoOrOY9oXKRaNBeAmw861zpC0OhmaisMrMAZAWiJozmktUdhlTiXKa19tIeRF
- SFw/SZdoWkqMg/d820884lBfbMk+eBEupWl2oKl6wzI+b65ImsbwV5d6727g1akSdUzi
- LhLM+rN+t3x2Tjz7o0t61LHWwOpyEi+9mdazCuZKzztQCUtvr+lTijSfBtn0DZYjFnJ0
- e/EsJV70j791tH6hgfT91boBCLUiztc9n39y778oRbgtEQzt/X577eP+I1Z6v42FLlKc
- WGsupwHhZV7FoORFTMkz50GXb/0vrbF1qJIxcENp61UdpmK+XT0IBGEWRVWyIJa5EMLV
- lAQw==
+ bh=sL/q0ySFiqdKdwWl7IvNX/vct6C8s8NYR7Y2ZsZELkg=;
+ b=RRe3oweAapC+KGQb0CdVY9g1mEQ/bJxKZa+oru07kUmxhzc0F0EaMIex9IYaFrd9hn
+ +TDNLhubAbbp1gQfrNMaZqovqeCsGMUnf63tGEaPKaOsci/w/JcMfQpeG/tM4pgrFnz0
+ IwKqLi8o8IA54AhUTNiOtFRJMW5ge67KnRoRzIB80xmnnlnbFHBZdBioHKG7ifh4XGGi
+ 25oUch2r/CWxZQheLky/KU3+iuoE6hlF0NlZRwJUMVwJRn9LBTaxYtCHshDRuH8jOKpW
+ nsOhtwrZZiJMKOvD4mezuQ+M68QxAX8vIDNmaSvCpqJzsokP/D+4IXMlVx6O3/BNOYNd
+ 7l5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVot4upBoMrG6EoUm4MWGH/tbh6x2G4WMIMuxhdbD2qu7mJFE+WwLS+BcRvlj/+Bl+urbGWGpE5j8pD@nongnu.org
-X-Gm-Message-State: AOJu0Yzm8U08gScibXvMIkSKN3z8+olf9YPBJAxaPXUWnpSHMzSpsOxi
- aUbzdhYI97NbNfhjDI2DcVGQCiPH6ZkII8SNdBxZ6oRoyy1EEA+nCRDPn1SSPrE=
-X-Google-Smtp-Source: AGHT+IHVsw2tJMYjlcTETpKmWLghinjpmGElb5PLOleRYLsnTLYFFvgO6o1/iRif038giWgDWaqtOA==
-X-Received: by 2002:a05:600c:4e94:b0:431:52da:9d89 with SMTP id
- 5b1f17b1804b1-4327da720bfmr155605225e9.1.1730813465024; 
- Tue, 05 Nov 2024 05:31:05 -0800 (PST)
+ AJvYcCXE7noPvDEdit3hnZXQxn5ttlt8oxMQQXfLfWZIzi3tUTKtOpzarF0Iw+MSYLLY4oR8odm2Q8nc7OaZ@nongnu.org
+X-Gm-Message-State: AOJu0YxracskV7V7D65g1T69EttEvNsbpLV+1WsdtSctrhzy0MFViwae
+ O3uzj2mMWTmAiu4AlyKD7vyOvRjswTldtj+N33Q35aRH4svclP/yMYpFgmG2fdo=
+X-Google-Smtp-Source: AGHT+IFRWGaK6omOGEuzLTxgV04kVOb1xiYgyf8hdNpYh/U69iPgRjWlhvd6NzSpQurjHlCPwswF4A==
+X-Received: by 2002:a5d:6d84:0:b0:37d:5129:f45e with SMTP id
+ ffacd0b85a97d-381be7c8137mr17810500f8f.20.1730813542076; 
+ Tue, 05 Nov 2024 05:32:22 -0800 (PST)
 Received: from [192.168.21.227] ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4327d5e7c9asm195326765e9.21.2024.11.05.05.31.03
+ ffacd0b85a97d-381c10e7387sm16135325f8f.51.2024.11.05.05.32.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Nov 2024 05:31:04 -0800 (PST)
-Message-ID: <f15f4d4a-9166-4cc4-b1b9-f888be911a75@linaro.org>
-Date: Tue, 5 Nov 2024 13:31:02 +0000
+ Tue, 05 Nov 2024 05:32:21 -0800 (PST)
+Message-ID: <a9c34a40-3f51-4496-95f1-d5d5237317c4@linaro.org>
+Date: Tue, 5 Nov 2024 13:32:19 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/19] target/microblaze: Explode MO_TExx -> MO_TE | MO_xx
+Subject: Re: [PATCH 14/19] target/microblaze: Set MO_TE once in do_load() /
+ do_store()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -74,14 +75,14 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>
 References: <20241105130431.22564-1-philmd@linaro.org>
- <20241105130431.22564-14-philmd@linaro.org>
+ <20241105130431.22564-15-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241105130431.22564-14-philmd@linaro.org>
+In-Reply-To: <20241105130431.22564-15-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,20 +106,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/5/24 13:04, Philippe Mathieu-Daudé wrote:
-> Extract the implicit MO_TE definition in order to replace
-> it by runtime variable in the next commit.
-> 
-> Mechanical change using:
-> 
->    $ for n in UW UL UQ UO SW SL SQ; do \
->        sed -i -e "s/MO_TE$n/MO_TE | MO_$n/" \
->             $(git grep -l MO_TE$n target/microblaze); \
->      done
+> All callers of do_load() / do_store() set MO_TE flag.
+> Set it once in the callees.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/microblaze/translate.c | 36 +++++++++++++++++------------------
->   1 file changed, 18 insertions(+), 18 deletions(-)
+>   target/microblaze/translate.c | 36 +++++++++++++++++++----------------
+>   1 file changed, 20 insertions(+), 16 deletions(-)
+
+I think you could have squashed this with the previous,
+but either way,
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
