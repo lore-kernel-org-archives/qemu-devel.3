@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938FCD40D08
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDCBBD40D08
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:45:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8TCr-00021A-Ce; Tue, 05 Nov 2024 18:43:29 -0500
+	id 1t8TEb-0002xW-SF; Tue, 05 Nov 2024 18:45:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8TCo-00020J-O4; Tue, 05 Nov 2024 18:43:26 -0500
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ id 1t8TEZ-0002xF-1k
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:45:15 -0500
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8TCn-0008RC-3H; Tue, 05 Nov 2024 18:43:26 -0500
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-84fcfe29e09so1956711241.2; 
- Tue, 05 Nov 2024 15:43:24 -0800 (PST)
+ id 1t8TEX-0000Iq-F8
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:45:14 -0500
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-851f5d3001fso2260370241.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 15:45:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730850203; x=1731455003; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730850312; x=1731455112; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F8yyVV/dfE4RABPqWAkLeU7Bi+D46UsdSwNgyCe9Jy0=;
- b=JPF6Vjqtwif8NCMWoUEhCVOVLbvEMIdfigG+DAp3DfsBYm1jfrWOnGiQLCYZTJy/2j
- HGo8eOZw0JqacGwAfInlLOT9hecB9Ooap7GnySEH/pwLHn6lX3y3X5q1ehvBZj3/fH9M
- 14tc1nJMAdYXJkS/r+tavRYQ+XWr2qHzjNNkRBZq3UEDtt4Xi0xTWDgmUYrUGPgV2sb+
- f71l5sSslocjpDTx6kexiJk8Wk5ad4Fy1D9ReIPU6f1DKI5/TgF5lgOYA9NMC3YsWMLV
- Dvx53GzktNNua49ksBuzxH8Pjvz76HAEn1L5oDC7jBokDVJfoYP9Jw3pCAhpR9IhoKt/
- p1dw==
+ bh=a/COjlK4C5NcmORPwqDy3zA62UO/EyTEZApeGrPdzXc=;
+ b=cYDUAVOc0RyyqBnp4PLayOnKwYbH8RDgBeiMrSkTz8DX9voG94J9FPbTzT0nB7isB1
+ /TPmUfcPdo6SlKsWdK/HDwI+eB07I1KLM8ej2M4+8pDMqGs4QPBghyo5O7a1JSs6Al4D
+ XxKvvQGitHEw+P1IOLYFtMEcDbjj+FnqhpMPRpkGrb34yWf7ze/63EM2mwRqPX2KU9F3
+ 7hnHe0IqyylbCWnWgR9eXcXo44wDPqblM4pqjUFPsS4wrGiIh9FIO8Pxepdx/DX6652C
+ Szg+473i8i/0l9wvDnDLp82luUmLERpVySw9soQKQpE9Tdk8HmWTG+zZOSkYuX8Bv88I
+ QlzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730850203; x=1731455003;
+ d=1e100.net; s=20230601; t=1730850312; x=1731455112;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=F8yyVV/dfE4RABPqWAkLeU7Bi+D46UsdSwNgyCe9Jy0=;
- b=QSqYHWEChjFG9nvQ0XAx2HTT93Gfp5PG0i5NMITDDssp90/XkDW+bx3kXbNsZPUkOA
- xJt1jwaCVyVTvSAZDj+QsmL12Fa2Y0btqXt1rVZL/Wq53OcPM+Jq0VcJO7C9jsP5V/Sg
- 4wORYrdGNEzQmsP8ZsmOdXoXnshlEI1lVe2j+6/bJ39lNBjvy3gN6eN6WG7SRvWXgHfd
- cA2Sz5/18jOKSbHKBOy64n1jwhLNHrYjWNKakl+VZus2e+YcpLKXoXg7RXrcR5eiM1pU
- XKgKXzORSfIu7BwQYTGscPEBS3wkOfxH/kPk3nVEQnia0Hqb7zBF0vkssFeTMO47K7DS
- DXhQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXA8jDARvzYKeFT4N30FEzqxwzFbtkSNIlVSgRFFQPjHmCITAhkGwwAx+yQVo6Ok36IFiWS5fMK+YXo@nongnu.org
-X-Gm-Message-State: AOJu0YzCQLi+77UmyrFJi2rgZlNfh+AhbRiW+vBF9OmkzDqVSq2bLdv/
- g3J/4HcarVBBG0vkwcbj89GclYFyudCY0kUILBqVpNKiL+ha9f5e4SZQzATCzIyR/caGIDpuBZO
- zANmEjNW9hibxBjU+UPA8gc66r8g=
-X-Google-Smtp-Source: AGHT+IFGIuDE6axKuYDqcAZbMGqDy+Rc5cyVsW4aa3GL6laNgKwG2vGDAo5mZDkk6Xe3t0ole8FDrQB2bu+Vqkhr+Jo=
-X-Received: by 2002:a05:6102:3595:b0:4a4:841f:bb98 with SMTP id
- ada2fe7eead31-4a9543a418bmr20260890137.24.1730850203190; Tue, 05 Nov 2024
- 15:43:23 -0800 (PST)
+ bh=a/COjlK4C5NcmORPwqDy3zA62UO/EyTEZApeGrPdzXc=;
+ b=Npo4yjNAIjLvDPzTreSFgHJgrSFJHhdPqupG4jve0dr2T0vhZgLN0/VMDfpOEK2zN/
+ Zu0YOjqAYb3LSPuI2PtZZutgkgP6Crt3ur0U/BM2lYKOLe7p8VXvDIisvKkFIriUWX3d
+ eV0EdO8p9TbjPC44YHkJFwgR4XxS5OyrJ8Y7/cBqaYfyFwOHM7G/OYSt0/t7oElpE1aP
+ +YAaS7R41zi5nvNwXNM4C+ipMKn9ePITjCvPR9xmam9OKuHNCbfeH/VsXQWBhVkEDrHt
+ ReqUDBx5vIxb9KIwZ2C1dA0p7BbS/fDtMD3nM4pVyjYrIzbEBJ7h5c0Ia9h1Bk+hPd1n
+ iccQ==
+X-Gm-Message-State: AOJu0YxPAhA9yO9wI1UsW2esqWnCDgxs1a8IImnqh11mncY4mNKcIRbo
+ b/A/TocvK9ytEdWsCE/gyanbGkFJ0op6VzpQybLkNFxV5EbiXIu79sUe89Vz2DpJVEGBRVSDni0
+ wIZuus94uIs0qURNbu1c2ZbVDYiY=
+X-Google-Smtp-Source: AGHT+IGK9P7qO0xSb45tmhwAQXFJEIUIRhjClsz38nocHgIULgx4DJSitXp0BzRFZi6klAL/X1SvFBhZ+6SeLc2KuWk=
+X-Received: by 2002:a05:6102:510d:b0:4a5:bff5:4ee0 with SMTP id
+ ada2fe7eead31-4a900e4263emr25609401137.7.1730850312111; Tue, 05 Nov 2024
+ 15:45:12 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1727164986.git.zhouquan@iscas.ac.cn>
- <ada40759a79c0728652ace59579aa843cb7bf53f.1727164986.git.zhouquan@iscas.ac.cn>
-In-Reply-To: <ada40759a79c0728652ace59579aa843cb7bf53f.1727164986.git.zhouquan@iscas.ac.cn>
+References: <20241031035319.731906-1-alistair.francis@wdc.com>
+ <20241031035319.731906-5-alistair.francis@wdc.com>
+ <a0b8d4f8-7d99-409f-b673-89c92ba62e48@tls.msk.ru>
+In-Reply-To: <a0b8d4f8-7d99-409f-b673-89c92ba62e48@tls.msk.ru>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 6 Nov 2024 09:42:57 +1000
-Message-ID: <CAKmqyKO2G-A-R+1UhL3Y4D-h-2sBziHiHp7xxoFUaymh3g0RRg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] target/riscv/kvm: Update kvm exts to Linux v6.11
-To: zhouquan@iscas.ac.cn
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com, dbarboza@ventanamicro.com
+Date: Wed, 6 Nov 2024 09:44:46 +1000
+Message-ID: <CAKmqyKNSx1Ku_axahXyGUUn1aYEBsaypy4KpN9us+qWbG2rL-g@mail.gmail.com>
+Subject: Re: [PULL 04/50] target/riscv: Correct SXL return value for RV32 in
+ RV64 QEMU
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -93,54 +95,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 24, 2024 at 10:57=E2=80=AFPM <zhouquan@iscas.ac.cn> wrote:
+On Tue, Nov 5, 2024 at 5:27=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wro=
+te:
 >
-> From: Quan Zhou <zhouquan@iscas.ac.cn>
+> 31.10.2024 06:52, Alistair Francis wrote:
+> > From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> ...
+> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> > index 1619c3acb6..a63a29744c 100644
+> > --- a/target/riscv/cpu.h
+> > +++ b/target/riscv/cpu.h
+> > @@ -709,8 +709,11 @@ static inline RISCVMXL riscv_cpu_sxl(CPURISCVState=
+ *env)
+> >   #ifdef CONFIG_USER_ONLY
+> >       return env->misa_mxl;
+> >   #else
+> > -    return get_field(env->mstatus, MSTATUS64_SXL);
+> > +    if (env->misa_mxl !=3D MXL_RV32) {
+> > +        return get_field(env->mstatus, MSTATUS64_SXL);
+> > +    }
+> >   #endif
+> > +    return MXL_RV32;
+> >   }
 >
-> Add support for a few Zc* extensions, Zimop, Zcmop and Zawrs.
->
-> Signed-off-by: Quan Zhou <zhouquan@iscas.ac.cn>
+> Shouldn't this last new 'return' be within the #else..#endif block?
 
-Thanks!
+It's currently functionally correct, but I see your point.
 
-Applied to riscv-to-apply.next
+> The way it is now, the whole thing is quite confusing due to the
+> other return in the #ifdef..#else block :)
+>
+> I'll send a trivial patch "fixing" this confusion if no one objects,
+> or anyone else can do that.
+
+No objections here :)
 
 Alistair
 
-> ---
->  target/riscv/kvm/kvm-cpu.c | 7 +++++++
->  1 file changed, 7 insertions(+)
 >
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index f6e3156b8d..428aaee552 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -281,7 +281,10 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] =3D {
->      KVM_EXT_CFG("zihintntl", ext_zihintntl, KVM_RISCV_ISA_EXT_ZIHINTNTL)=
-,
->      KVM_EXT_CFG("zihintpause", ext_zihintpause, KVM_RISCV_ISA_EXT_ZIHINT=
-PAUSE),
->      KVM_EXT_CFG("zihpm", ext_zihpm, KVM_RISCV_ISA_EXT_ZIHPM),
-> +    KVM_EXT_CFG("zimop", ext_zimop, KVM_RISCV_ISA_EXT_ZIMOP),
-> +    KVM_EXT_CFG("zcmop", ext_zcmop, KVM_RISCV_ISA_EXT_ZCMOP),
->      KVM_EXT_CFG("zacas", ext_zacas, KVM_RISCV_ISA_EXT_ZACAS),
-> +    KVM_EXT_CFG("zawrs", ext_zawrs, KVM_RISCV_ISA_EXT_ZAWRS),
->      KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
->      KVM_EXT_CFG("zfh", ext_zfh, KVM_RISCV_ISA_EXT_ZFH),
->      KVM_EXT_CFG("zfhmin", ext_zfhmin, KVM_RISCV_ISA_EXT_ZFHMIN),
-> @@ -292,6 +295,10 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] =3D {
->      KVM_EXT_CFG("zbkc", ext_zbkc, KVM_RISCV_ISA_EXT_ZBKC),
->      KVM_EXT_CFG("zbkx", ext_zbkx, KVM_RISCV_ISA_EXT_ZBKX),
->      KVM_EXT_CFG("zbs", ext_zbs, KVM_RISCV_ISA_EXT_ZBS),
-> +    KVM_EXT_CFG("zca", ext_zca, KVM_RISCV_ISA_EXT_ZCA),
-> +    KVM_EXT_CFG("zcb", ext_zcb, KVM_RISCV_ISA_EXT_ZCB),
-> +    KVM_EXT_CFG("zcd", ext_zcd, KVM_RISCV_ISA_EXT_ZCD),
-> +    KVM_EXT_CFG("zcf", ext_zcf, KVM_RISCV_ISA_EXT_ZCF),
->      KVM_EXT_CFG("zknd", ext_zknd, KVM_RISCV_ISA_EXT_ZKND),
->      KVM_EXT_CFG("zkne", ext_zkne, KVM_RISCV_ISA_EXT_ZKNE),
->      KVM_EXT_CFG("zknh", ext_zknh, KVM_RISCV_ISA_EXT_ZKNH),
-> --
-> 2.34.1
+> Thanks,
 >
->
+> /mjt
 
