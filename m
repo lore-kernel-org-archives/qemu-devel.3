@@ -4,31 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEB88D2E006
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 07:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C0B4D12662
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 07:56:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8EGo-0005wY-L5; Tue, 05 Nov 2024 02:46:35 -0500
+	id 1t8EPh-0008Hw-Mw; Tue, 05 Nov 2024 02:55:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t8EGI-0005op-VQ
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 02:46:04 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t8EPd-0008Hc-5N
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 02:55:41 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t8EGF-00016U-J9
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 02:46:02 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t8EPa-0002D8-RK
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 02:55:40 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 522629FB41;
- Tue,  5 Nov 2024 10:45:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 334FD9FB57;
+ Tue,  5 Nov 2024 10:54:47 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EC0631642F6;
- Tue,  5 Nov 2024 10:45:54 +0300 (MSK)
-Message-ID: <19ff8e5f-077c-4487-b9c8-52abe92840ba@tls.msk.ru>
-Date: Tue, 5 Nov 2024 10:45:54 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id D2268164306;
+ Tue,  5 Nov 2024 10:55:35 +0300 (MSK)
+Message-ID: <d8c83027-b116-4cb6-8f4f-cc21c90ac677@tls.msk.ru>
+Date: Tue, 5 Nov 2024 10:55:35 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 00/50] riscv-to-apply queue
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: Alistair Francis <alistair23@gmail.com>
 Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
  Deepak Gupta <debug@rivosinc.com>,
@@ -39,8 +40,8 @@ Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
 References: <20241031035319.731906-1-alistair.francis@wdc.com>
  <a6fdfd2c-c8e5-4594-88ac-1976cf39537d@tls.msk.ru>
  <CAKmqyKO58CqEqcFH61Tq=wW3xU0wLsyZmG68RRHfbCOLLPqMYg@mail.gmail.com>
+ <19ff8e5f-077c-4487-b9c8-52abe92840ba@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -84,7 +85,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <CAKmqyKO58CqEqcFH61Tq=wW3xU0wLsyZmG68RRHfbCOLLPqMYg@mail.gmail.com>
+In-Reply-To: <19ff8e5f-077c-4487-b9c8-52abe92840ba@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -110,60 +111,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-05.11.2024 01:57, Alistair Francis wrote:
+05.11.2024 10:45, Michael Tokarev wrote:
 
->>> RISC-V PR for 9.2
->>>
->>> * Fix an access to VXSAT
->>> * Expose RV32 cpu to RV64 QEMU
->>> * Don't clear PLIC pending bits on IRQ lowering
->>> * Make PLIC zeroth priority register read-only
->>> * Set vtype.vill on CPU reset
->>> * Check and update APLIC pending when write sourcecfg
->>> * Avoid dropping charecters with HTIF
->>> * Apply FIFO backpressure to guests using SiFive UART
->>> * Support for control flow integrity extensions
->>> * Support for the IOMMU with the virt machine
->>> * set 'aia_mode' to default in error path
->>> * clarify how 'riscv-aia' default works
->>
->> Is there anything in there which is worth picking up for qemu-stable?
+>> target/riscv/csr.c: Fix an access to VXSAT
+>> hw/intc: Don't clear pending bits on IRQ lowering
+>> target/riscv: Set vtype.vill on CPU reset
+>> hw/intc/riscv_aplic: Check and update pending when write sourcecfg
+>> target/riscv/kvm: set 'aia_mode' to default in error path
+>> target/riscv/kvm: clarify how 'riscv-aia' default works
+>> target/riscv: Fix vcompress with rvv_ta_all_1s
 > 
-> Sorry, I forgot to CC the patches
+> So I picked up all the above for 9.1.x & 9.0.x.
 > 
-> I think these are all worth backporting, but aren't critical fixes so
-> if there are any issues applying them just skip them:
+> For 2ae6cca1d33898 "hw/intc/riscv_aplic: Check and update pending when
+> write sourcecfg", for 8.2.x and 7.2.x, an additional patch were needed,
+> 0678e9f29c2301 "hw/intc/riscv_aplic: Fix in_clrip[x] read emulation"
+> (both applies cleanly) - hopefully this one is also okay, though it is
+> a bit old(ish) already.
 > 
-> target/riscv/csr.c: Fix an access to VXSAT
-> hw/intc: Don't clear pending bits on IRQ lowering
-> target/riscv: Set vtype.vill on CPU reset
-> hw/intc/riscv_aplic: Check and update pending when write sourcecfg
-> target/riscv/kvm: set 'aia_mode' to default in error path
-> target/riscv/kvm: clarify how 'riscv-aia' default works
-> target/riscv: Fix vcompress with rvv_ta_all_1s
+> And the aia changes are not relevant for 7.2.x.
+> 
+> I'm now running tests, but it looks like the whole thing is quite good
+> now.
+> 
+> Does it look ok?
+> 
+> I pushed current staging-7.2, staging-8.2, staging-9.0 and staging-9.1
+> branches to https://gitlab.com/mjt0k/qemu.git/
 
-So I picked up all the above for 9.1.x & 9.0.x.
+To clarify.
 
-For 2ae6cca1d33898 "hw/intc/riscv_aplic: Check and update pending when
-write sourcecfg", for 8.2.x and 7.2.x, an additional patch were needed,
-0678e9f29c2301 "hw/intc/riscv_aplic: Fix in_clrip[x] read emulation"
-(both applies cleanly) - hopefully this one is also okay, though it is
-a bit old(ish) already.
+7.2 is current debian stable (bookworm).
+8.2 is current ubuntu LTS (noble) - hopefully anyway, - they promised me
+     to pick things up from the upstream stable-8.2 branch
 
-And the aia changes are not relevant for 7.2.x.
+So 7.2.x and 8.2.x might be with us for quite some time, with users
+actually using them, also in various data centers, hostings etc.
 
-I'm now running tests, but it looks like the whole thing is quite good
-now.
+next 9.0 will be the last release in 9.0.x series
+9.1 is the current qemu stable (latest qemu release).
 
-Does it look ok?
-
-I pushed current staging-7.2, staging-8.2, staging-9.0 and staging-9.1
-branches to https://gitlab.com/mjt0k/qemu.git/
-
-Thank you for the comments!
-
-BTW, tangtiancheng.ttc@alibaba-inc.com bounces: host mx1.alibaba-inc.com[47.246.137.48]
-     said: 553 "RCPT TO" mailbox unavailable (in reply to RCPT TO command)
+Thanks,
 
 /mjt
 
