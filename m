@@ -4,105 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7244BD1269A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 12:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63E40D1269A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 12:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8IX6-0006wE-TY; Tue, 05 Nov 2024 07:19:40 -0500
+	id 1t8IXp-00077F-47; Tue, 05 Nov 2024 07:20:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1t8IX4-0006w3-O0
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 07:19:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1t8IXj-00076q-QN
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 07:20:20 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1t8IX2-0005Nw-EI
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 07:19:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730809173;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=azyYN7kkDYPZzIqtpPmghBjzTaRLP+tKBIT/rp86ZIM=;
- b=h/SKsPl/VXiq+UZH20Frf6tj4ajXVDaidPvuFT0YtRd/Q8fDY95Dvn39nwK+eTxlX55N0i
- fdSOfMEt/6ERQD6U6sGndYF6SmjQE/GYVmKx9um3HN5NuC/rFg5jVqBybe9WZuEdqPu10I
- UxgKupp/9dFqUJFYp+2K4l91vxcPkDU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-636-sMTGmjBeN3-gNT6w1aWpDw-1; Tue, 05 Nov 2024 07:19:32 -0500
-X-MC-Unique: sMTGmjBeN3-gNT6w1aWpDw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-431518e6d8fso35643945e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 04:19:32 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730809171; x=1731413971;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=azyYN7kkDYPZzIqtpPmghBjzTaRLP+tKBIT/rp86ZIM=;
- b=tWxAWoB8qbjPYX6LoPZRcOQ9++GfDj40RYi/TDdqsb4J4GiP3Mh/SCr2KNt0CS2UxA
- xl+mSaBki6gAJM2FifM9vITwpaIVp+vtqASQttcthSX/Y0Yx6pK/pGO7/XZjEZiESoju
- n4y6toKDxB0J4wWBMcGBStzNmesqxJ3ax9bRbX3NyJGDPZ0D9+IB9LllCc5Zt+pyXarT
- widZ79ew80Nk3fiPMbrzdpmP8AOGoxc9xfvGUuns8x94F69Cem//M27UKWY5UXu6I+lL
- HqalFPKrriL3rKmnOjRmrTVuHN8gCRfkhImZcpsnYLyQiAXW+3vqeb/7dVak8wuAMdGb
- VYqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXeV+XiD/tcl0P61ourY+l2tauP+6Qf6P06s4bKNOmjb/Oc4MjwElQuicgcXuFvV0PnxXd7vi9hp5/u@nongnu.org
-X-Gm-Message-State: AOJu0Yw1wwn0cupNtE/fwzoPFnNnG10td+M3xmnrsl1QhBykR+XKoqHf
- lhXUJcp6pi+qVE6hI6sLw0bbrNHxbKEps2e9q1cMc0UUfslkrs8oqTdNc2G4cgEWz/OB3pbcFuS
- gMvuwO1RDfm408CMDX9ggcDuWo1T9Xjvlw0Tmu/aeng1caxCVYyJK
-X-Received: by 2002:a05:600c:1c15:b0:42f:8fcd:486c with SMTP id
- 5b1f17b1804b1-43283297a37mr130630125e9.33.1730809171559; 
- Tue, 05 Nov 2024 04:19:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHYjtAV2jDHqbMTJZejPdqpSe42VDGak2/VnFboiMDumTGTba5G9t6EUwi8Y/0lyuhpWLmI8w==
-X-Received: by 2002:a05:600c:1c15:b0:42f:8fcd:486c with SMTP id
- 5b1f17b1804b1-43283297a37mr130629795e9.33.1730809171146; 
- Tue, 05 Nov 2024 04:19:31 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c116abf3sm16027241f8f.101.2024.11.05.04.19.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 04:19:29 -0800 (PST)
-Date: Tue, 5 Nov 2024 13:19:27 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Christian Horn <chorn@fluxcoil.net>
-Cc: chorn@redhat.com, Anthony Harivel <aharivel@redhat.com>, "Daniel P.
- =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, pbonzini@redhat.com,
- mtosatti@redhat.com, qemu-devel@nongnu.org, vchundur@redhat.com,
- rjarry@redhat.com, nathans@redhat.com, kenj@kenj.id.au,
- sunyanan.choochotkaew1@ibm.com, vibhu.sharma2929@gmail.com
-Subject: Re: [PATCH v6 0/3] Add support for the RAPL MSRs series
-Message-ID: <20241105131927.5a038d3f@imammedo.users.ipa.redhat.com>
-In-Reply-To: <ZynFEr2vSeApNGG-@fluxcoil.net>
-References: <20241016135259.49021bca@imammedo.users.ipa.redhat.com>
- <D4X8WRR5F2GP.2MCBI9HDM3UHM@redhat.com>
- <20241018142526.34a2de0a@imammedo.users.ipa.redhat.com>
- <ZxJbtkMO1QcoiqVn@redhat.com>
- <20241022144615.203cf0da@imammedo.users.ipa.redhat.com>
- <ZxelgDeuZaia-Vqf@redhat.com>
- <D52ED9BSZU9P.32LYD3328YTTN@redhat.com>
- <20241101160934.42d46c9f@imammedo.users.ipa.redhat.com>
- <D5BL7KCTSON6.36X2ZEWWQUIQ1@redhat.com>
- <20241104104900.1a2a0193@imammedo.users.ipa.redhat.com>
- <ZynFEr2vSeApNGG-@fluxcoil.net>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1t8IXe-0005cP-I8
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 07:20:19 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1t8IXW-00000001Pr8-1l85; Tue, 05 Nov 2024 13:20:06 +0100
+Message-ID: <4a4c2bc2-693a-4379-a444-2cb8fdf1f6b5@maciej.szmigiero.name>
+Date: Tue, 5 Nov 2024 13:20:01 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] vfio/migration: Add
+ vfio_save_block_precopy_empty_hit trace event
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1730750959.git.maciej.szmigiero@oracle.com>
+ <44a769267d406e10fd122786f0153b5fa2697500.1730750959.git.maciej.szmigiero@oracle.com>
+ <0aa77f89-fe28-47d1-8125-e98dff928e98@redhat.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <0aa77f89-fe28-47d1-8125-e98dff928e98@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,77 +111,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Nov 2024 08:11:14 +0100
-Christian Horn <chorn@fluxcoil.net> wrote:
-
-> Hi all,
+On 5.11.2024 08:56, Cédric Le Goater wrote:
+> On 11/4/24 22:29, Maciej S. Szmigiero wrote:
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>
+>> This way it is clearly known when there's no more data to send for that
+>> device.
+>>
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>   hw/vfio/migration.c           | 8 ++++++++
+>>   hw/vfio/trace-events          | 1 +
+>>   include/hw/vfio/vfio-common.h | 1 +
+>>   3 files changed, 10 insertions(+)
+>>
 > 
-> some thoughts:
-> 
-> - I vote for making the metrics as much as possible in the guest available
->   as on the host.  Allows cascading, and having in-guest-monitoring working
->   like on bare metal.
-> - As result, really just plain vCPU consumption would be made available
->   in the guest as rapl-core.  If the host can at some point understand
->   guests GPU, or I/O consumption, better hand that in separately.
-> - Having in mind that we will also need this for other architectures, 
->   at least aarch64.  RAPL comes from x86, rather than extending that
->   to also do I/O or such, we might aim at an interface which will also
->   work for aarch64.
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-+1 to both points
+Thanks, will you pick up these two patches or
+is Peter supposed to do it?
 
-> - Bigger scope will be to look at the consumption of multiple systems, for
->   that we will need to move the metrics to network eventually, changing
->   from MSR or such mechanisms.
+> Thanks,
+> C.
 
-That's aren't VM scope though, which this topic is about.
-But yes, the same tools as on baremetal can collect data and send/aggregate
-them elsewhere. The main point from VM perspective is act just like baremetal
-systems so the same monitoring tools could be reused. 
-
-> - For reading the metrics in the guest, I was tempted to suggest PCP with
->   pmda-denki to cover RAPL, but it's right now just reading /sysfs, not
->   MSR's.  pmda-lmsensors for further sensors offered on various systems,
-For NVF usecase, I also was eyeing pmda-denki.
-
-How hard it would be to add MSR based sampling to denki?
-Can we borrow Anthony's MSR sampling from
-qemu-vmsr-helper, to reduce amount of work needed.
-
-Also, for guest per vCPU accounting, we would need per thread
-accounting (which I haven't noticed from a quick look at denki).
-So some effort would be needed to add it there.  
-
-I didn't know about pmda-lmsensors, I guess we should be able to use
-it out of box with 'acpi power meter' sensor, if QEMU were to provide such.
-I've also seen denki supporting battery power sensor, we can abuse that
-and make QEMU provide that, but I'd rather add 'acpi power meter' sensor
-to denki (which to some degree intersects with battery power sensor
-functionality).
-
-PS:
-In this series Anthony uses custom protocol to get data from
-privileged MSR helper to QEMU. Would it be acceptable?
-Or is there a preferred way for PCP to do inter-process comms?
-
->   and pmda-openmetrics for covering anything appearing somewhere on
->   /sysfs as a number.
-
->  
-> 
-> > > Not that I disagree with all you said, to the contrary, but the amount 
-> > > of change is quite significant and it would be very annoying if results 
-> > > of this work doesn't make upstream because of Y & X.  
-> > 
-> > split frontend/backend design is established pattern in QEMU, so I'm not
-> > suggesting anything revolutionary (probability that anyone would object
-> > to it is very low).
-> > 
-> > sending an RFC can serve as a starting point for discussion.    
-> 
-> +1,
-> Christian
-> 
+Thanks,
+Maciej
 
 
