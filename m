@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB5C1D1266F
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 09:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD22D12672
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 09:37:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Fwa-0001PD-Bq; Tue, 05 Nov 2024 04:33:48 -0500
+	id 1t8FzW-0002Kz-3K; Tue, 05 Nov 2024 04:36:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8FwW-0001Ol-A7
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:33:44 -0500
-Received: from mgamail.intel.com ([192.198.163.18])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1t8FzV-0002Kq-2i
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:36:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8FwU-00056d-AL
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:33:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730799222; x=1762335222;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=w64hPHh98IYSd/WCdWEVevsIAclFSM5mXCV/+w34kIQ=;
- b=gd3WrvbPgRPaTvDMpcdL7VkISlmAI+UWS8p8cNh8e+5nMPH+9c5WnHRH
- krHmqk4Egpbn2rfjANs2ZhKgdeGLRRsT533HJCVg7QKGB45niWof+jw1e
- smJ7qU/WAYBP65Jlo5nRiB7fL5NKkM9DeQpFTQKrHZw9k97IJpvJunQkw
- nkJ8pR5c1SIjFZZLX4Q/el7wFbKv2o05iMpL1E5ANo3a0BcDmxaydStGq
- yEvbmNr/aZnRopkZAJwcPjSWFhpXXCqYG3cw6noTvubAIqY6pvJa08HpQ
- 1vwDJ5Pbjfz6/Gt8t3svfiPtzHQJOxUsi5Sp+0mvZ9oCE5iGWT92L9XYH A==;
-X-CSE-ConnectionGUID: ou2xSJI+SYehz6kIMT6CKA==
-X-CSE-MsgGUID: gIc7c/Y8R4+/9MlufCctrA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11246"; a="29956339"
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="29956339"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2024 01:33:38 -0800
-X-CSE-ConnectionGUID: qG0qnis7R5qNFTMbQjiHsQ==
-X-CSE-MsgGUID: GaN+Cy+ZQxmtfI+cSd+6kw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="89083274"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2024 01:33:33 -0800
-Message-ID: <08939cf7-f27b-44c2-93cf-d0951d2d2141@intel.com>
-Date: Tue, 5 Nov 2024 17:33:30 +0800
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1t8FzS-0005VR-Cw
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:36:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730799403;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=826wfRf0fGXQIuaE6MUbmYoSpGGnd7MAEOwmMM4tm20=;
+ b=dful5sdjoOcIQ9rr+zPWHzaUI9e0ERLEUgBP8KpZ5C3nF2TpOHbbBAXwV+9eXI8Bm+x1bN
+ 7QMJxD/Aagm0zLx38eOAlyyE3czbZR5RVgVuIzGf99umjPi2Z4if7bdA5/Z2hq8BX5r2Tr
+ w+76AlPskUEwO8kwhStUK4TF5wGvXpU=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-116-Wbsii0y3NcS_LeXxxSg6Aw-1; Tue, 05 Nov 2024 04:36:40 -0500
+X-MC-Unique: Wbsii0y3NcS_LeXxxSg6Aw-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6cbf039dccfso92124836d6.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 01:36:40 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730799400; x=1731404200;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=826wfRf0fGXQIuaE6MUbmYoSpGGnd7MAEOwmMM4tm20=;
+ b=CI92PErPGybDGbd5UNfqisI3ty9mlNP32sQSCSyfBsO9A9o2KDetB2cSNXzYFshwNX
+ rXpLpUVm8/o+bykCt2g79wJY3zsUmi5c8eiCOe4sW0NADXnlOjvIpPMfWtKNJlH8Nlsx
+ ZOTWlmcjzpAqHBCvBYieugSwAM0IYHh+Tp025r8ft8pLfz+HlTD6a1+9AuUjeiXjqnkq
+ fn9neliveMMQHp0FjIEC45gtb7PsLcpSQY5D7Q2UOC3PICmnBaGXchkNJuGxUcbcccB9
+ pk0pX6shfQVqSASXktEao/UzZ4N2B9lFXVGGQbMSkyMVCKfr2ztQr6CrziqACXFD6ePR
+ MYdw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXYFUWxtNMNfI2VujmqWC3zlXeiS6utHRbF9A2RuAVSXI94G2Ye+z4NZO4lw03siCj9gQJHphkC3fVX@nongnu.org
+X-Gm-Message-State: AOJu0YygHEIALuT3NllIO38/iRFofblONMPDCimTlYvOnt4SneJNgj/q
+ Nm9LicnZBVhwAzB/9XoUDuGYJ0a4ojhTp1/UPyGm6K5of66c8Fy3ksaNNq6LSEI7B+RBdxUfcO3
+ g1vZFWdU6i/aGH4m2Uix1sF43HOy5ABHFJt/4+bg5SuQjXap1xmx6
+X-Received: by 2002:a05:6214:3bc7:b0:6d3:710c:bc16 with SMTP id
+ 6a1803df08f44-6d3710cbcd9mr126475006d6.15.1730799399724; 
+ Tue, 05 Nov 2024 01:36:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFQxdllkkwmZ8rBgKAAxJaRWfC4SHMoPmtyBJ+qu/20ggocPATDw3K7Cbvg0BHnDYc7oPnEjg==
+X-Received: by 2002:a05:6214:3bc7:b0:6d3:710c:bc16 with SMTP id
+ 6a1803df08f44-6d3710cbcd9mr126474836d6.15.1730799399301; 
+ Tue, 05 Nov 2024 01:36:39 -0800 (PST)
+Received: from sgarzare-redhat ([134.0.5.207])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d353f9e7adsm58043296d6.2.2024.11.05.01.36.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Nov 2024 01:36:38 -0800 (PST)
+Date: Tue, 5 Nov 2024 10:36:32 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Sahil Siddiq <icegambit91@gmail.com>
+Cc: eperezma@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
+ Sahil Siddiq <sahilcdq@proton.me>
+Subject: Re: [PATCH] vdpa: Support setting vring_base for packed svq
+Message-ID: <k2suxbt2qy7ewjrlozlkzrhsa7bbf7xrze33outna65dejuus2@eamj5pdkvpkw>
+References: <20241104162124.49867-1-sahilcdq@proton.me>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 59/60] i386/cpu: Set up CPUID_HT in x86_cpu_realizefn()
- instead of cpu_x86_cpuid()
-To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-60-xiaoyao.li@intel.com>
- <9601f5a1-f1f1-47ab-a240-30331946b584@redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <9601f5a1-f1f1-47ab-a240-30331946b584@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20241104162124.49867-1-sahilcdq@proton.me>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.781, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,76 +103,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/2024 5:12 PM, Paolo Bonzini wrote:
-> On 11/5/24 07:24, Xiaoyao Li wrote:
->> Otherwise, it gets warnings like below when number of vcpus > 1:
->>
->>    warning: TDX enforces set the feature: CPUID.01H:EDX.ht [bit 28]
->>
->> This is because x86_confidential_guest_check_features() checks
->> env->features[] instead of the cpuid date set up by cpu_x86_cpuid()
->>
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> ---
->>   target/i386/cpu.c | 11 ++++++++++-
->>   1 file changed, 10 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->> index 472ab206d8fe..214a1b00a815 100644
->> --- a/target/i386/cpu.c
->> +++ b/target/i386/cpu.c
->> @@ -6571,7 +6571,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t 
->> index, uint32_t count,
->>           *edx = env->features[FEAT_1_EDX];
->>           if (threads_per_pkg > 1) {
->>               *ebx |= threads_per_pkg << 16;
->> -            *edx |= CPUID_HT;
->>           }
->>           if (!cpu->enable_pmu) {
->>               *ecx &= ~CPUID_EXT_PDCM;
->> @@ -7784,6 +7783,8 @@ static void x86_cpu_realizefn(DeviceState *dev, 
->> Error **errp)
->>       Error *local_err = NULL;
->>       unsigned requested_lbr_fmt;
->> +    qemu_early_init_vcpu(cs);
->> +
->>   #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
->>       /* Use pc-relative instructions in system-mode */
->>       tcg_cflags_set(cs, CF_PCREL);
->> @@ -7851,6 +7852,14 @@ static void x86_cpu_realizefn(DeviceState *dev, 
->> Error **errp)
->>           }
->>       }
->> +    /*
->> +     * It needs to called after feature filter because KVM doesn't 
->> report HT
->> +     * as supported
-> 
-> Does it, since kvm_arch_get_supported_cpuid() has the following line?
-> 
->      if (function == 1 && reg == R_EDX) {
->          ...
->          /* KVM never reports CPUID_HT but QEMU can support when vcpus > 
-> 1 */
->          ret |= CPUID_HT;
-> 
-> ?
+On Mon, Nov 04, 2024 at 09:51:24PM +0530, Sahil Siddiq wrote:
+>Linux commit v5.14-rc1~30^2~8 enabled the vp_vdpa driver to set the
 
-It seems I mixed it up with no_autoenable_flags. /faceplam
+To refer to a commit, please use the SHA-1 id or even better the form
+suggested in
+https://www.kernel.org/doc/html/latest/process/submitting-patches.html#describe-your-changes
 
-CPUID_HT doesn't get enabled by x86_cpu_expand_features() for "-cpu 
-host/max". It won't be filtered by x86_cpu_filter_features() either 
-because QEMU sets it in kvm_arch_get_supported_cpuid().
+So in this case I'd use:
+Linux commit 1225c216d954 ("vp_vdpa: allow set vq state to initial state
+after reset")
 
-yes, the comment is wrong and comment needs to be dropped. The code can 
-be move up to just below x86_cpu_expand_features() or inside it?
+>vq state to the device's initial state. This works differently for
+>split and packed vqs.
+>
+>With shadow virtqueues enabled, vhost-vdpa sets the vring base using
+>the VHOST_SET_VRING_BASE ioctl. The payload (vhost_vring_state)
+>differs for split and packed vqs. The implementation in QEMU currently
+>uses the payload required for split vqs (i.e., the num field of
+>vhost_vring_state is set to 0). The kernel throws EOPNOTSUPP when this
+>payload is used with packed vqs.
+>
+>This patch sets the num field in the payload appropriately so vhost-vdpa
 
-> Paolo
-> 
->> +     */
->> +    if (cs->nr_cores * cs->nr_threads > 1) {
->> +        env->features[FEAT_1_EDX] |= CPUID_HT;
->> +    }
-> 
+I'm not very familiar with shadow virtqueue, so can you elaborate what
+"appropriately" means here?
+
+>(with the vp_vdpa driver) can use packed svqs.
+>
+>Link: https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05106.html
+>Link: https://lore.kernel.org/r/20210602021536.39525-4-jasowang@redhat.com
+>Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+>---
+>QEMU currently does not support packed vhost shadow virtqueues. I am
+>working on adding support for packed svqs [1]. The test environment
+>that I am using [2] requires vhost-vdpa to use the relevant payload
+>when setting vring base.
+>
+>[1] https://wiki.qemu.org/Internships/ProjectIdeas/PackedShadowVirtqueue
+>[2] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-aint-got-hardware-part-2
+>
+> hw/virtio/vhost-vdpa.c | 4 ++++
+> 1 file changed, 4 insertions(+)
+>
+>diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+>index 3cdaa12ed5..5f81945109 100644
+>--- a/hw/virtio/vhost-vdpa.c
+>+++ b/hw/virtio/vhost-vdpa.c
+>@@ -1230,6 +1230,10 @@ static bool vhost_vdpa_svq_setup(struct vhost_dev *dev,
+>     };
+>     int r;
+>
+>+    if (virtio_vdev_has_feature(dev->vdev, VIRTIO_F_RING_PACKED)) {
+>+        s.num = 0x80008000;
+
+Why this magic value?
+
+Looking at the kernel code it looks like we are assgining 0x8000 for
+both last_avail_idx and last_used_idx, but why 0x8000?
+
+Thanks,
+Stefano
+
+>+    }
+>+
+>     r = vhost_vdpa_set_dev_vring_base(dev, &s);
+>     if (unlikely(r)) {
+>         error_setg_errno(errp, -r, "Cannot set vring base");
+>-- 
+>2.47.0
+>
 
 
