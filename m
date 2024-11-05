@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE16D1CA19
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 03:43:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66C11D1CA19
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 03:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8ATV-0002at-Ml; Mon, 04 Nov 2024 22:43:25 -0500
+	id 1t8ATZ-0002c5-Co; Mon, 04 Nov 2024 22:43:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1t8ATT-0002ae-UF
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:43:24 -0500
-Received: from mail-io1-xd43.google.com ([2607:f8b0:4864:20::d43])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1t8ATY-0002bh-8y
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:43:28 -0500
+Received: from mail-il1-x144.google.com ([2607:f8b0:4864:20::144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1t8ATS-0000zu-0O
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:43:23 -0500
-Received: by mail-io1-xd43.google.com with SMTP id
- ca18e2360f4ac-83abc039b25so197422539f.0
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 19:43:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1t8ATW-00010N-Ry
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:43:28 -0500
+Received: by mail-il1-x144.google.com with SMTP id
+ e9e14a558f8ab-3a4c303206eso17309735ab.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 19:43:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1730778200; x=1731383000;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1730778205; x=1731383005;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=eYDuXKXX17/hYaQjSmGzkWh5AA9mf4cKGn+ZKOMQRSQ=;
- b=VCpy1MmhB4HCuwrVUFKU0ukhco/Sq/2uhbnpN+6W3eF9nF55Swq3N6Rq9ZzT6p4ywJ
- OWlVF3TWR6IZQ/pO+bScUeiBpeWyPkwwthYGf99Uq/kC8OGXaUEw46s+dEQoc/qhDnIL
- sS+/JNeodnoJu06XJHD3H172oSmjCzdcqgwVAZ/wd2Ccz9JZ9PXYkUXwtBJ+NRWrJVfT
- GATDLjn6j6XmLXgUU7SShjXSLF8wE4uj2ndn0YooFIZZeXAEnVVWOFlq6PRd9chDCaqJ
- RYl0TEkGaorsRSzp988cCDypCHE9D6jFJeYN9/dxXKnEJp/fLtoiQErGsH2RiuIYpBQf
- i/cA==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Jo91p9Lq7o7wujm4a8/ClY5doXjvtmdnC3dXQPZG4wk=;
+ b=NgAdW4S9TFqQISfYEStbo2jLLXNrGWPbdTTJ8RmKHObx4H/Am3ZUb+zCkmeVi5CO6h
+ KZRSp5PJrQ21WJUOW/4oG2qME1jFT0pE+6HAmZLVacP/d5PrR/SQXzY+fsvSBYhZl+uY
+ EZQyOJg4jUDT64WgET+5ShBoclFS5MXZy2qZIDKhPeWll/+9e8l92j1l5H+qc7BhEJM9
+ QN60Ukylrl+x/jDHvSB5Vdkg+MjiAvqe4gei8eh14OQJg0UfaiAIAsMuW3137cUdGbPO
+ EJe25hs9U8GIesneRfEiQmfXRQmoGH+2mqbmEvfp0KOF7IsDsbN2vVyk3eZd3iD05SHP
+ zDQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730778200; x=1731383000;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eYDuXKXX17/hYaQjSmGzkWh5AA9mf4cKGn+ZKOMQRSQ=;
- b=UPtX3tS0VWmbCKmG49/RV106pKgXs0CuM89UG/ZC7XUSb4fWqyKxrmZrDIUdp32rvb
- H39oYIkrg4eF2krTjaylplHuVM/Iy0/X1oMqJQUWfOuHYo6Vuile739AL8ZxzdHCs5UK
- Lw6j/+DOfem5iUXHRsl/ZEcBoOjUtv22R2FDkCx//Inial9w1rkwL9phWTHKCeFNAGd9
- CQa6sXQisdA25dJ0m2Ep3a2Gq+YQpB2/peaD78YakJ3NiwxEbbvzAj3l9BJvtESzhNZU
- C6NI+mDjSGR4sEXhoRmuypqGd8kf0t3t1e5kx1weXHpaMwjGjSTtSEmsPzfV0SpMoAPZ
- zsaw==
-X-Gm-Message-State: AOJu0YyJ5ejM+Ny+OfbAoq7tLgo1Y4zuDTfWDPq2t7t5cddEp1yNk5pb
- yk0l282Ms7xYuC+ZlAPE53KoJDLg6Ja5qrfrcfHC1syQAyYn4O9A55W5aV83q8Cp2WQjSQtHh73
- BFUce2cZZ
-X-Google-Smtp-Source: AGHT+IFtJtc0IqYeVYm6maUbYp/PtH8vxi6yZN+wetJ8jhZ6vN9nqT7t+amMDNpSiTC8c04fJ9MGaA==
-X-Received: by 2002:a05:6e02:1707:b0:3a4:da7a:15a2 with SMTP id
- e9e14a558f8ab-3a6b0219e07mr127702355ab.5.1730778199763; 
- Mon, 04 Nov 2024 19:43:19 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730778205; x=1731383005;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Jo91p9Lq7o7wujm4a8/ClY5doXjvtmdnC3dXQPZG4wk=;
+ b=fXU1oL0jekUhED3+OJKx4bObAAXnkcQ/f8KhPmHuvuQwzYEGt7/GNgB7AXAKeCIBA7
+ lD7HayYPAUiypnSGXCJYw0p+DWGHtkR6do7B4gJmfk3t8w1eMmex03ghwG6VM9wSjTXU
+ BpEk0BCOe45+7Y6tjKIavkfIEh2KLZFu+mtiyOL88HVhlExsFcQpo1Ft41aFFOoEe4H8
+ NKuLk/lXKtDCBvRZ3YVFTDYO0AyrOkOqKPOPhclGfG1IdZyB7dBBgCp/RylWoVVeZoM/
+ rt6QoEsryPZMhjAQkkumh5FokV1EVZEGL7pkSYR0yf8aEUkne6PjWysciA7jZ6uD+AKP
+ zG4w==
+X-Gm-Message-State: AOJu0Yw3o22N2E/p3f/i4MD0twPJIQfBRUisq5ln/w9Qji2lm7tPiSKA
+ Gmz++Lt+1MTToSNdhidJpoCiypDlJ3l7L5kHM+M+qku7UkvHTdLCqAqfWGEFoljbYkmVnD4Auv3
+ dQba/I0YK
+X-Google-Smtp-Source: AGHT+IET7Xn/m7FvBXt6a8PFNDoASQW8hDS/v2cpCtnpgPT4iOV1MwTFG6MSVMpTgQc6TL0zEm9Ipg==
+X-Received: by 2002:a05:6e02:1c82:b0:3a0:9c99:32d6 with SMTP id
+ e9e14a558f8ab-3a6b03cce83mr165094575ab.24.1730778205548; 
+ Mon, 04 Nov 2024 19:43:25 -0800 (PST)
 Received: from dune.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3a6bddcdcd8sm17162665ab.37.2024.11.04.19.43.18
+ e9e14a558f8ab-3a6bddcdcd8sm17162665ab.37.2024.11.04.19.43.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 19:43:18 -0800 (PST)
+ Mon, 04 Nov 2024 19:43:24 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Jessica Clarke <jrtc27@jrtc27.com>,
  Kyle Evans <kevans@freebsd.org>
-Subject: [PULL 0/3] Bsd user 2024q4 patches
-Date: Mon,  4 Nov 2024 20:40:36 -0700
-Message-ID: <20241105034039.31143-1-imp@bsdimp.com>
+Subject: [PULL 3/3] bsd-user: Set TaskState ts_tid for initial threads
+Date: Mon,  4 Nov 2024 20:40:39 -0700
+Message-ID: <20241105034039.31143-4-imp@bsdimp.com>
 X-Mailer: git-send-email 2.46.1
+In-Reply-To: <20241105034039.31143-1-imp@bsdimp.com>
+References: <20241105034039.31143-1-imp@bsdimp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::d43;
- envelope-from=imp@bsdimp.com; helo=mail-io1-xd43.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::144;
+ envelope-from=imp@bsdimp.com; helo=mail-il1-x144.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -91,59 +93,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit daaf51001a13da007d7dde72e1ed3b06bc490791:
+From: Jessica Clarke <jrtc27@jrtc27.com>
 
-  Merge tag 'seabios-hppa-v17-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2024-11-04 16:01:23 +0000)
+Currently we only set it on fork.
 
-are available in the Git repository at:
+Note: Upstream (blitz) commit also did new threads, but that code isn't
+in qemu project repo yet.
 
-  git@gitlab.com:bsdimp/qemu.git tags/bsd-user-2024q4-pull-request
+Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+Pull-Request: https://github.com/qemu-bsd-user/qemu-bsd-user/pull/52
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+---
+ bsd-user/main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-for you to fetch changes up to 52a523af71448f62e8523ed002447c95170381e9:
-
-  bsd-user: Set TaskState ts_tid for initial threads (2024-11-04 20:26:40 -0700)
-
-----------------------------------------------------------------
-bsd-user: Minor fixes
-
-These patches have been in my queue pending too long (I have a bunch of others
-that haven't been reviewd, but those will be done clsoe to the end of the
-release to not get in the way of the release).
-
-The patches align the stack properly on x86_64, implements setting the tb-size
-and properly setting the ts_tid for initial threads. They have all been
-reviewed.
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQIzBAABCgAdFiEEIDX4lLAKo898zeG3bBzRKH2wEQAFAmcpkl0ACgkQbBzRKH2w
-EQADmRAAl301TtPNsGmrjq74qHgFWPNHc4SSQlK8oIIBgM2Mco/sva5N8ZsCIo4K
-G6uHRbDn3AXUzi7N72ZRKFxQMDQfthtQDskGvsg3zD96pYXkWF6dB3FwSs0Kg0QW
-ow3jj7qiP8NWlbAnMq4fXdtkLGD7S1Og606BYUvk13ILHLY6kwvSWJv53Cq+lDXg
-IQkHGWckG5Xvn/OY3KoLbw77APBCn/fbH6e2yAnBgS8STzEPf2I8xWEiwP6gMpc/
-/BdWkEmqJn5hM//Nf+Yz0uTVMh7egwP8+NjTqYMzWCU3kV0Gtk1cTvpJX3wyzZvZ
-exLOMjL4C+BClA7EJtBvsRrnvv+8ytxn7F3VCeqFR5nAZiU4L3+WfpSjVe8oYCAw
-DL8LYKQA0Abwt6F8EPHwxPxO7HWAKJ4Wxrwlz66juA8gOyuRp+ueVH11ztds6yeh
-rWEgwdXMBOuBcNCGgkuTOajFTRK8hmQNcf/okwODMa5Gj2ayyNmFTnD/bFPe7CbA
-GzJERU+Xtz1wFg+c5LRqqrOnDqD3wDXDrcOuHRhdRWbAl0rLCdH1CLORXZ3XTuF4
-m9JxmaRiCs++a5XswRrSzxb6BM6hKmKX3baGZUeVW6lKyGyyqvY+uUVKkv4U8KqP
-jLPPHE4dicl0/1QbGHZY52gkLYRFXdKa/xKhc8NHXtaWSFACzmo=
-=8H2C
------END PGP SIGNATURE-----
-
-----------------------------------------------------------------
-
-Ilya Leoshkevich (2):
-  bsd-user/x86_64/target_arch_thread.h: Align stack
-  bsd-user/main: Allow setting tb-size
-
-Jessica Clarke (1):
-  bsd-user: Set TaskState ts_tid for initial threads
-
- bsd-user/main.c                      | 10 ++++++++++
- bsd-user/x86_64/target_arch_thread.h |  2 +-
- 2 files changed, 11 insertions(+), 1 deletion(-)
-
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 7c230b0c7a5..61ca73c4781 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -610,6 +610,7 @@ int main(int argc, char **argv)
+     init_task_state(ts);
+     ts->info = info;
+     ts->bprm = &bprm;
++    ts->ts_tid = qemu_get_thread_id();
+     cpu->opaque = ts;
+ 
+     target_set_brk(info->brk);
 -- 
 2.46.1
 
