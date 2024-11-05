@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDCBBD40D08
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CCCD40D0D
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 23:48:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8TEb-0002xW-SF; Tue, 05 Nov 2024 18:45:17 -0500
+	id 1t8THf-00046Z-Uw; Tue, 05 Nov 2024 18:48:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8TEZ-0002xF-1k
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:45:15 -0500
-Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
+ (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
+ id 1t8THe-00046E-E8
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:48:26 -0500
+Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8TEX-0000Iq-F8
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:45:14 -0500
-Received: by mail-ua1-x92b.google.com with SMTP id
- a1e0cc1a2514c-851f5d3001fso2260370241.1
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 15:45:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
+ id 1t8THY-0000Ww-6s
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 18:48:26 -0500
+Received: by mail-oo1-xc36.google.com with SMTP id
+ 006d021491bc7-5ebbed44918so3564980eaf.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 15:48:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730850312; x=1731455112; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730850498; x=1731455298; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a/COjlK4C5NcmORPwqDy3zA62UO/EyTEZApeGrPdzXc=;
- b=cYDUAVOc0RyyqBnp4PLayOnKwYbH8RDgBeiMrSkTz8DX9voG94J9FPbTzT0nB7isB1
- /TPmUfcPdo6SlKsWdK/HDwI+eB07I1KLM8ej2M4+8pDMqGs4QPBghyo5O7a1JSs6Al4D
- XxKvvQGitHEw+P1IOLYFtMEcDbjj+FnqhpMPRpkGrb34yWf7ze/63EM2mwRqPX2KU9F3
- 7hnHe0IqyylbCWnWgR9eXcXo44wDPqblM4pqjUFPsS4wrGiIh9FIO8Pxepdx/DX6652C
- Szg+473i8i/0l9wvDnDLp82luUmLERpVySw9soQKQpE9Tdk8HmWTG+zZOSkYuX8Bv88I
- QlzA==
+ bh=2zrihGIBxoAgDApMMSoW1g27Sc9UciTYxjqef5X71Nc=;
+ b=kHs6xP6TcYPR35ZPEU9894c4vWP7dryWhOh9rUQ9ms+QU/NeBTjOdv+OB29azbaxbe
+ /MBspfd5zgVw+6k+nKkJhQjMJPNLtTO7n4dS3fjaL1zIrReNlvUv8dwKRQuamQCNuW09
+ qG2xRqUu8yVLGKNaSYUFW2U5eN/m7d+QoZhxqykkmyKZ/W7spat6NGJmHLkghHPfJvH9
+ exKG0EHollCZl1xqiuAM/KLYOWN6YLXMxHG/kIcf99kAPhaMh0B6iRC39lZfJ2zEhhLB
+ qCeEXGBtYBBU/udk/4qS79OaDfiKZIks4/9revLyLsg0ULEeWyGKG6y2RZ9CRLW7Hv28
+ Wpjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730850312; x=1731455112;
+ d=1e100.net; s=20230601; t=1730850498; x=1731455298;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=a/COjlK4C5NcmORPwqDy3zA62UO/EyTEZApeGrPdzXc=;
- b=Npo4yjNAIjLvDPzTreSFgHJgrSFJHhdPqupG4jve0dr2T0vhZgLN0/VMDfpOEK2zN/
- Zu0YOjqAYb3LSPuI2PtZZutgkgP6Crt3ur0U/BM2lYKOLe7p8VXvDIisvKkFIriUWX3d
- eV0EdO8p9TbjPC44YHkJFwgR4XxS5OyrJ8Y7/cBqaYfyFwOHM7G/OYSt0/t7oElpE1aP
- +YAaS7R41zi5nvNwXNM4C+ipMKn9ePITjCvPR9xmam9OKuHNCbfeH/VsXQWBhVkEDrHt
- ReqUDBx5vIxb9KIwZ2C1dA0p7BbS/fDtMD3nM4pVyjYrIzbEBJ7h5c0Ia9h1Bk+hPd1n
- iccQ==
-X-Gm-Message-State: AOJu0YxPAhA9yO9wI1UsW2esqWnCDgxs1a8IImnqh11mncY4mNKcIRbo
- b/A/TocvK9ytEdWsCE/gyanbGkFJ0op6VzpQybLkNFxV5EbiXIu79sUe89Vz2DpJVEGBRVSDni0
- wIZuus94uIs0qURNbu1c2ZbVDYiY=
-X-Google-Smtp-Source: AGHT+IGK9P7qO0xSb45tmhwAQXFJEIUIRhjClsz38nocHgIULgx4DJSitXp0BzRFZi6klAL/X1SvFBhZ+6SeLc2KuWk=
-X-Received: by 2002:a05:6102:510d:b0:4a5:bff5:4ee0 with SMTP id
- ada2fe7eead31-4a900e4263emr25609401137.7.1730850312111; Tue, 05 Nov 2024
- 15:45:12 -0800 (PST)
+ bh=2zrihGIBxoAgDApMMSoW1g27Sc9UciTYxjqef5X71Nc=;
+ b=r94IAuMHiFgy1D+yZPrcx8xVaTDbXR+vWt4aB9SSH53ilvrHGU7AMOXoWO+uFyNcDB
+ 6MkC/nW5og5cnAYe+kBjuaAeSrBDzujjIq32DUytONd338AHLP9ziK3SQxmzXZ+sJASu
+ QLw1jx3/cWUxVOluKBUipzxDikNGAjjTXtMwcW+pImRj385Py6pJlb5r0a93FkStgyuK
+ 0tyEgasV00KNOxi/ITwMjphUrwZKhdUieRddHPPx16omiHY6xaMIgQ3ujpuM/ay9UdZg
+ MWAl9UrtuJHZasMomgiAuTWYynHawY0db4uAMVOn/ZPBSsdcsnrls6+jaqkNYUMxwXQD
+ 5oXw==
+X-Gm-Message-State: AOJu0Yze7qbBs7xRjI0G2gjKSNAXCD/sNN9nFrxFwuUvGVfft8yWzqP1
+ TDPO1E3NrWZNfeU5paufzt6HVDxFJNJPiAQQjwawHzgachfMjMRbTJ9q0h4/SSOR1GmE/eZSgYO
+ vC5u7RtCqD5N7tN3K/g4H/uxcO0E=
+X-Google-Smtp-Source: AGHT+IFtFtc34WKlYfD4/Usd7XiMtCHg75TA6kTw5INHnQn0lCVie1wmk+BEVI79OMUk0olobzhdtOyhS7Z1omFhXtw=
+X-Received: by 2002:a05:6820:541:b0:5e1:cd24:c19c with SMTP id
+ 006d021491bc7-5ec5e9adae1mr17616840eaf.0.1730850497802; Tue, 05 Nov 2024
+ 15:48:17 -0800 (PST)
 MIME-Version: 1.0
-References: <20241031035319.731906-1-alistair.francis@wdc.com>
- <20241031035319.731906-5-alistair.francis@wdc.com>
- <a0b8d4f8-7d99-409f-b673-89c92ba62e48@tls.msk.ru>
-In-Reply-To: <a0b8d4f8-7d99-409f-b673-89c92ba62e48@tls.msk.ru>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 6 Nov 2024 09:44:46 +1000
-Message-ID: <CAKmqyKNSx1Ku_axahXyGUUn1aYEBsaypy4KpN9us+qWbG2rL-g@mail.gmail.com>
-Subject: Re: [PULL 04/50] target/riscv: Correct SXL return value for RV32 in
- RV64 QEMU
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>
+References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
+ <20241030141037.375897-1-goldstein.w.n@gmail.com>
+ <000c9ef8-c610-4f2a-b191-04b84455d89c@linaro.org>
+In-Reply-To: <000c9ef8-c610-4f2a-b191-04b84455d89c@linaro.org>
+From: Noah Goldstein <goldstein.w.n@gmail.com>
+Date: Tue, 5 Nov 2024 17:48:06 -0600
+Message-ID: <CAFUsyfKkmSid=LVTbG+WHZA_=MAGdf+TU5vGtNE1GGx8WDheOQ@mail.gmail.com>
+Subject: Re: linux-user: Add option to run `execve`d programs through QEMU
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, iii@linux.ibm.com, laurent@vivier.eu
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
+ envelope-from=goldstein.w.n@gmail.com; helo=mail-oo1-xc36.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,45 +91,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 5, 2024 at 5:27=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wro=
-te:
+On Tue, Nov 5, 2024 at 5:37=E2=80=AFAM Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> 31.10.2024 06:52, Alistair Francis wrote:
-> > From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-> ...
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index 1619c3acb6..a63a29744c 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -709,8 +709,11 @@ static inline RISCVMXL riscv_cpu_sxl(CPURISCVState=
- *env)
-> >   #ifdef CONFIG_USER_ONLY
-> >       return env->misa_mxl;
-> >   #else
-> > -    return get_field(env->mstatus, MSTATUS64_SXL);
-> > +    if (env->misa_mxl !=3D MXL_RV32) {
-> > +        return get_field(env->mstatus, MSTATUS64_SXL);
-> > +    }
-> >   #endif
-> > +    return MXL_RV32;
+> On 10/30/24 14:10, Noah Goldstein wrote:
+> > The new option '-qemu-children' makes it so that on `execve` the child
+> > process will be launch by the same `qemu` executable that is currently
+> > running along with its current commandline arguments.
+> >
+> > The motivation for the change is to make it so that plugins running
+> > through `qemu` can continue to run on children.  Why not just
+> > `binfmt`?: Plugins can be desirable regardless of system/architecture
+> > emulation, and can sometimes be useful for elf files that can run
+> > natively. Enabling `binfmt` for all natively runnable elf files may
+> > not be desirable.
+> >
+> > Signed-off-by: Noah Goldstein <goldstein.w.n@gmail.com>
+> > ---
+> >   linux-user/main.c                             | 21 ++++++
+> >   linux-user/syscall.c                          | 21 ++++--
+> >   linux-user/user-internals.h                   |  4 ++
+> >   tests/tcg/multiarch/Makefile.target           |  8 +++
+> >   .../linux/linux-execve-qemu-children.c        | 68 ++++++++++++++++++=
++
+> >   5 files changed, 117 insertions(+), 5 deletions(-)
+> >   create mode 100644 tests/tcg/multiarch/linux/linux-execve-qemu-childr=
+en.c
+> >
+> > diff --git a/linux-user/main.c b/linux-user/main.c
+> > index 8143a0d4b0..5e3d41dc2b 100644
+> > --- a/linux-user/main.c
+> > +++ b/linux-user/main.c
+> > @@ -81,6 +81,10 @@ unsigned long mmap_min_addr;
+> >   uintptr_t guest_base;
+> >   bool have_guest_base;
+> >
+> > +bool qemu_dup_for_children;
+> > +int qemu_argc;
+> > +char **qemu_argv;
+> > +
+> >   /*
+> >    * Used to implement backwards-compatibility for the `-strace`, and
+> >    * QEMU_STRACE options. Without this, the QEMU_LOG can be overwritten=
+ by
+> > @@ -451,6 +455,11 @@ static void handle_arg_jitdump(const char *arg)
+> >       perf_enable_jitdump();
 > >   }
+> >
+> > +static void handle_arg_qemu_children(const char *arg)
+> > +{
+> > +    qemu_dup_for_children =3D true;
+> > +}
+> > +
+> >   static QemuPluginList plugins =3D QTAILQ_HEAD_INITIALIZER(plugins);
+> >
+> >   #ifdef CONFIG_PLUGIN
+> > @@ -526,6 +535,10 @@ static const struct qemu_argument arg_table[] =3D =
+{
+> >        "",           "Generate a /tmp/perf-${pid}.map file for perf"},
+> >       {"jitdump",    "QEMU_JITDUMP",     false, handle_arg_jitdump,
+> >        "",           "Generate a jit-${pid}.dump file for perf"},
+> > +    {"qemu-children",
+> > +                   "QEMU_CHILDREN",    false, handle_arg_qemu_children=
+,
+> > +     "",           "Run child processes (created with execve) with qem=
+u "
+> > +                   "(as instantiated for the parent)"},
+> >       {NULL, NULL, false, NULL, NULL, NULL}
+> >   };
+> >
+> > @@ -729,6 +742,14 @@ int main(int argc, char **argv, char **envp)
+> >
+> >       optind =3D parse_args(argc, argv);
+> >
+> > +    if (qemu_dup_for_children) {
+> > +        qemu_argc =3D optind;
+> > +        qemu_argv =3D g_new0(char *, qemu_argc);
+> > +        for (i =3D 0; i < optind; ++i) {
+> > +            qemu_argv[i] =3D strdup(argv[i]);
 >
-> Shouldn't this last new 'return' be within the #else..#endif block?
-
-It's currently functionally correct, but I see your point.
-
-> The way it is now, the whole thing is quite confusing due to the
-> other return in the #ifdef..#else block :)
+> g_strdup.
+ack
 >
-> I'll send a trivial patch "fixing" this confusion if no one objects,
-> or anyone else can do that.
-
-No objections here :)
-
-Alistair
-
+> > +    bool through_qemu =3D dirfd =3D=3D AT_FDCWD && qemu_dup_for_childr=
+en;
 >
-> Thanks,
+> Why is this limited to AT_FDCWD?  Why not for execvat too?
 >
-> /mjt
+
+We could, initially it was because AFAICT qemu doesn't support executing a
+program relative to another dir, but it would be simple enough to just join
+the relative program path and path dirfd points to.
+
+Want me to add support?
+> > @@ -8628,9 +8631,16 @@ static int do_execv(CPUArchState *cpu_env, int d=
+irfd,
+> >       }
+> >
+> >       const char *exe =3D p;
+> > -    if (is_proc_myself(p, "exe")) {
+> > +    if (through_qemu) {
+> > +        int i;
+> > +        for (i =3D 0; i < argp_offset; ++i) {
+> > +            argp[i] =3D qemu_argv[i];
+> > +        }
+> > +        exe =3D qemu_argv[0];
+> > +    } else if (is_proc_myself(p, "exe")) {
+> >           exe =3D exec_path;
+> >       }
+> > +
+>
+> You still need to handle is_proc_myself, for the guest binary.
+>
+> I wonder if those two cases are related.  Do we need to also add an argum=
+ent so that we
+> can pass the executable to the next qemu via file descriptor?  I.e. execv=
+at becomes
+>
+>      f =3D openat()
+>      execv(qemu, "-execfd", f)
+>
+> and is_proc_myself uses execfd, which we already have open.
+>
+>
+> r~
 
