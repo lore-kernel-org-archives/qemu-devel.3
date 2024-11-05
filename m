@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48660D1CA3B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4862CD1CA38
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DEE-0001ZT-QO; Tue, 05 Nov 2024 01:39:51 -0500
+	id 1t8DGJ-0003wC-FS; Tue, 05 Nov 2024 01:41:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DDJ-0007yX-LL
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:55 -0500
+ id 1t8DEZ-0003Jp-H3
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:40:12 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DDG-0001vd-LK
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:52 -0500
+ id 1t8DEX-0001vj-Lv
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:40:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788731; x=1762324731;
+ t=1730788810; x=1762324810;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=IFyldM/wkLLjkzgvXirqmq3JCBeSDG+HIbY0Aejj2GY=;
- b=jY5Xol2L2k9Yl/rytxWsgRZPJMHRIXRyWdaDkRFfDvIFukH2usdmTy5j
- xo1NPXyvdodpUe6MiJMplqBJUaORso2qx1ELZmbGQMillglOD8PHeIgt+
- SyC/njbY+tIx7go2Xk0hlYOFLajCE84e4dd1rqv4LqEH0h1ihwKkvPPac
- jAlJO/7AXEYXSUdRnbKZYcmzxOWqihzaf3Icqp0gAPDjCaDZF/VKBRBW1
- f9Iz9zwEuHyE0fkq/PEpcXS5sO0tS38csgqQOOomoy9MBYv+DeloNwkb+
- C2L6OA93U2vHTDlUrNg7mNx8xw846NZYx62wkr4e4PnUC7/00mVAfiphM w==;
-X-CSE-ConnectionGUID: vLbXF8/ASZWx0BbpdUDSXQ==
-X-CSE-MsgGUID: OYsubaVMT2WkfyZmkPCg+A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689680"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689680"
+ bh=st5/vyvnaPY+w7rPqzvPYRhQDfLRvMD4QU7tirPy57w=;
+ b=iJxjlLww7BNiFkAYoXyPBWZwzy30x0TtsrRp1/OJhGG9LIHGDrUPlLOT
+ iUdtWB4gbE4AEq1gPMg5Fr70k/zn/oUjQ4P2abYCuNM+geefvBRmpX1Wc
+ e2u5jvd/t6TA7sxoqJwu7N0PJbmeNmGKW8in8f7ELf7LRPq3DFTto/MTa
+ owdOORmaDYERJFwJU+/ACgWcer5On+pIDByUmsKlGcx1RSyE4nEWiTCZy
+ j7bdBHhXqaEndwPGp79lC2B+ON3aoIZlhflzm58UV6tx8rN5bs+/XW+Jo
+ RHR3cfK6TqKJYs9qDMtgn7UepIcKlVWakUDv9WN34y0lMZHFMPgFqDlsE g==;
+X-CSE-ConnectionGUID: LieXTUHJTECa6eTN059MJg==
+X-CSE-MsgGUID: s561OErZQsq58I0Zx7SzDQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689854"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689854"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:38:40 -0800
-X-CSE-ConnectionGUID: iuT24egDTnOHJU8nk9k9hQ==
-X-CSE-MsgGUID: 35Pm2IzXRcuowvndLGKt2A==
+ 04 Nov 2024 22:39:53 -0800
+X-CSE-ConnectionGUID: 5WJ5xED5SVGuZQVUr6MnSA==
+X-CSE-MsgGUID: 5It1nMLzSeKHTxiykp0Vsg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989208"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989825"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:38:36 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:39:48 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -57,9 +57,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 32/60] i386/tdx: implement tdx_cpu_instance_init()
-Date: Tue,  5 Nov 2024 01:23:40 -0500
-Message-Id: <20241105062408.3533704-33-xiaoyao.li@intel.com>
+Subject: [PATCH v6 49/60] i386/tdx: Mask off CPUID bits by unsupported TD
+ Attributes
+Date: Tue,  5 Nov 2024 01:23:57 -0500
+Message-Id: <20241105062408.3533704-50-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
@@ -90,38 +91,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, pmu is not supported for TDX by KVM.
+For TDX, some CPUID feature bit is configured via TD attributes. Adjust
+the supported CPUID to mask off the bit if its matched attribute is
+unsupported.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
-chanegs in v6:
- - new patch;
----
- target/i386/kvm/tdx.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ target/i386/cpu.h     |  4 ++++
+ target/i386/kvm/tdx.c | 54 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+)
 
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 8118356af4fc..e02e23d972a0 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -903,6 +903,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_0_ECX_LA57              (1U << 16)
+ /* Read Processor ID */
+ #define CPUID_7_0_ECX_RDPID             (1U << 22)
++/* KeyLocker */
++#define CPUID_7_0_ECX_KeyLocker         (1U << 23)
+ /* Bus Lock Debug Exception */
+ #define CPUID_7_0_ECX_BUS_LOCK_DETECT   (1U << 24)
+ /* Cache Line Demote Instruction */
+@@ -955,6 +957,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_1_EAX_AVX_VNNI          (1U << 4)
+ /* AVX512 BFloat16 Instruction */
+ #define CPUID_7_1_EAX_AVX512_BF16       (1U << 5)
++/* Linear address space separation */
++#define CPUID_7_1_EAX_LASS              (1U << 6)
+ /* CMPCCXADD Instructions */
+ #define CPUID_7_1_EAX_CMPCCXADD         (1U << 7)
+ /* Fast Zero REP MOVS */
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 394f1d75dc0d..61fb1f184149 100644
+index bc1581d1e43b..5ac5f93907ca 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -384,6 +384,11 @@ static int tdx_kvm_type(X86ConfidentialGuest *cg)
-     return KVM_X86_TDX_VM;
- }
+@@ -533,6 +533,58 @@ KvmCpuidInfo tdx_fixed1_bits = {
+     },
+ };
  
-+static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
++typedef struct TdxAttrsMap {
++    uint32_t attr_index;
++    uint32_t cpuid_leaf;
++    uint32_t cpuid_subleaf;
++    int cpuid_reg;
++    uint32_t feat_mask;
++} TdxAttrsMap;
++
++static TdxAttrsMap tdx_attrs_maps[] = {
++    {.attr_index = 27,
++     .cpuid_leaf = 7,
++     .cpuid_subleaf = 1,
++     .cpuid_reg = R_EAX,
++     .feat_mask = CPUID_7_1_EAX_LASS},
++    {.attr_index = 30,
++     .cpuid_leaf = 7,
++     .cpuid_subleaf = 0,
++     .cpuid_reg = R_ECX,
++     .feat_mask = CPUID_7_0_ECX_PKS,},
++    {.attr_index = 31,
++     .cpuid_leaf = 7,
++     .cpuid_subleaf = 0,
++     .cpuid_reg = R_ECX,
++     .feat_mask = CPUID_7_0_ECX_KeyLocker,
++    },
++};
++
++static void tdx_mask_cpuid_by_attrs(uint32_t feature, uint32_t index,
++                                    int reg, uint32_t *value)
 +{
-+    object_property_set_bool(OBJECT(cpu), "pmu", false, &error_abort);
++    TdxAttrsMap *map;
++    uint64_t unavail = 0;
++    int i;
++
++    for (i = 0; i < ARRAY_SIZE(tdx_attrs_maps); i++) {
++        map = &tdx_attrs_maps[i];
++
++        if (feature != map->cpuid_leaf || index != map->cpuid_subleaf ||
++            reg != map->cpuid_reg) {
++            continue;
++        }
++
++        if (!((1ULL << map->attr_index) & tdx_caps->supported_attrs)) {
++            unavail |= map->feat_mask;
++        }
++    }
++
++    if (unavail) {
++        *value &= ~unavail;
++    }
 +}
 +
- static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
- {
-     if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
-@@ -727,4 +732,5 @@ static void tdx_guest_class_init(ObjectClass *oc, void *data)
+ static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
+                                           uint32_t feature, uint32_t index,
+                                           int reg, uint32_t value)
+@@ -566,6 +618,8 @@ static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
+         break;
+     }
  
-     klass->kvm_init = tdx_kvm_init;
-     x86_klass->kvm_type = tdx_kvm_type;
-+    x86_klass->cpu_instance_init = tdx_cpu_instance_init;
- }
++    tdx_mask_cpuid_by_attrs(feature, index, reg, &value);
++
+     e = cpuid_find_entry(&tdx_fixed0_bits.cpuid, feature, index);
+     if (e) {
+         fixed0 = cpuid_entry_get_reg(e, reg);
 -- 
 2.34.1
 
