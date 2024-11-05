@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E78F5D3E779
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B086D3E779
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:52:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SNz-0002mK-MB; Tue, 05 Nov 2024 17:50:57 -0500
+	id 1t8SMT-00073U-0k; Tue, 05 Nov 2024 17:49:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SNF-0001Nh-Up
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:50:15 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SM1-0006SG-PN
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:48:53 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SNE-0004hv-3X
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:50:09 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4314b316495so51667775e9.2
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:50:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SM0-0004IY-6t
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:48:53 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-37d462c91a9so3532446f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:48:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730847006; x=1731451806; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730846930; x=1731451730; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TbSSd/840jPsVgWX0pStPW0nEJn+X/GCmpvm44win24=;
- b=EECfkcwkAxNCMR/MiHY3N0aJlXQsRYlUAph1wFlbcDVKJRmZ3cg53oOVen73UOk6I9
- uTetepSB2EbH/voDpoyoV4RQR9EzUifcNo9gTX8EmghoBBIFYegLamLiQ0gyauvDzpJv
- Z6/YfwKPWStxeXBBXKcIYJCGRZ3saroxIKZxbQdI9e4uLDw7ALKn1hz5J6eQJvR5kH10
- 8FvGd34kBk5Hw/ZKORpQlkILuHgk0/LslFMuYG2Iw1kOrO8Dor9GOTGTyPOrWST+KLVz
- grYFc9ZCth6JqXeiLrh63JDdzrS82HUi3pN0tixefiqI9h01rCfv5V2y+hCtVqy2agNM
- nDYg==
+ bh=91J1Pmqo5K4jBxzGOzPgUYEJwXRFG7jqGcshP1OZFFs=;
+ b=GmHZ3gN2plB58Y59W26nKsE5LnzvE6AsLtRpn5t2H+0iPnY2FMxzZ6aTUP9PZwivnq
+ obuMDDTNyTgN7YaiZGCCGSoC+3c2q45U7KsIWVOmXZiYqp1yswpMa3mxpEJshsRRr4EY
+ jEmKSypHeNsM2TAclAYoVqeafdQd409zdsS2x8x3dtZ3kVwjoSogpDqKX8f58ZJQs0Ey
+ cTpa0WVh2ItagUbCEa2f2RcuRvq9CkAP3np6anYTpR/SuU6cab/6TFfqx5/4+mcrG64c
+ LgWC7UGD3Yy79FrSa+7JWb/tjlCKnvH+eoJKnfbP6FGUUvIOB8MVItLmbHo/Jw6GcbHP
+ KUwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730847006; x=1731451806;
+ d=1e100.net; s=20230601; t=1730846930; x=1731451730;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TbSSd/840jPsVgWX0pStPW0nEJn+X/GCmpvm44win24=;
- b=ap1SOo0EkHAXdUdNs55HMG0HIwvCEJhxcWzVjuiyxv8yz9jyPtlFeYvhJsCBVAhQor
- qEg4pERot+TBQUQXnyqjuQPEjPU+fKDQdNiUM4U6fLKC6r4AEVrrRk57fo6V5zm6NYvo
- E/tln6u0ytt4k2S5iNqO9MvR00kVDxF+7YCx88NVslK9XNkf6n4IYBO36XAA2idj9nfy
- yKvU2ymNXEYH8/bVSfDXmKP9ZVb4UaeJAi5algAFUH9DlfUdctdqSqxS8OTLFtw7XcIg
- vNN4T3q9BzlRJFzNv9l3XOeGqErsNBBPTFcfuIy7hE5KpuFiVQIhEzMi27t1AdyesopM
- S7zw==
-X-Gm-Message-State: AOJu0YyMTm6lZeyoEk4xsTo/RrN4ovTTv5wcpxlSbmzmFQbhVAp4JOLY
- Mw75yvARYbkb1ynC6lOzfbgPGAVhk247oWUSkdESP31PZB5Sw/SByqJtuWnCkNLujUzmH6Pcuch
- omgE+dw==
-X-Google-Smtp-Source: AGHT+IE0QnRg8tJh19IChvu2LEOfF69pmeuNDGgYY85CMiegX36PG+Ty5YBayIz6STykUCqThONM6g==
-X-Received: by 2002:a05:600c:548d:b0:431:60ac:9b0c with SMTP id
- 5b1f17b1804b1-4327b6fd376mr175516275e9.20.1730847005796; 
- Tue, 05 Nov 2024 14:50:05 -0800 (PST)
+ bh=91J1Pmqo5K4jBxzGOzPgUYEJwXRFG7jqGcshP1OZFFs=;
+ b=Ep+u7dTkYRUuyOQZLZTAFHUYWGUZiPRgXOLZSmfrQikfoCJlfLFDNECVajjNUExTK4
+ zJ5KuECFwGA/1RYzkpCKhL9aECcWuqjsnO2Y7I1w9RNYHmmZ1I/z5RIiMa44GU1MBOVi
+ of2ARNI8IfORNbrb1ntmMT09EvmKvQJ5Mrp0NW8DqIbYcUXlOVvrJFlTDY6xELdYhtQa
+ F8zdysC1oDx+qvNJA8pJC6O92aHHvQIwHkvOLE0xNmgIqPv981+qyymjxEyOtTkw/AgC
+ UzigKddMo06MO+07uBG4ZLsaPGeYwqFUvQ+SQevce0YTAnc3+F2XLQcTBvP4/GY1jUBw
+ QYTA==
+X-Gm-Message-State: AOJu0YzhN8WcbKBRy35WywSpQeR6uQrG5s4zSncoCBExs6fhDT5n2DDJ
+ onQGhFzaYzEjvTJK/JpaYgJXNAeqaoS8QHozfV0CKwgtnAz8sWBRBZVtHze8WVqDkvaXV+9rCcc
+ 2VlqJoA==
+X-Google-Smtp-Source: AGHT+IFIkHO6lS6kvacPLcUi7hzihPQdYqDYKH7CI/SZn04GHJixikybpfASfCmXK7jsFe7YQToxXw==
+X-Received: by 2002:a5d:4d82:0:b0:371:8319:4dcc with SMTP id
+ ffacd0b85a97d-381b705764fmr19431851f8f.2.1730846930202; 
+ Tue, 05 Nov 2024 14:48:50 -0800 (PST)
 Received: from localhost.localdomain ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10b7e2dsm17338602f8f.11.2024.11.05.14.50.05
+ ffacd0b85a97d-381c10b7b97sm17588206f8f.2.2024.11.05.14.48.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 14:50:05 -0800 (PST)
+ Tue, 05 Nov 2024 14:48:49 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: Bernhard Beschow <shentey@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 29/29] hw/riscv/iommu: fix build error with clang
-Date: Tue,  5 Nov 2024 22:47:27 +0000
-Message-ID: <20241105224727.53059-30-philmd@linaro.org>
+Subject: [PULL 15/29] hw/ppc/mpc8544_guts: Populate POR PLL ratio status
+ register
+Date: Tue,  5 Nov 2024 22:47:13 +0000
+Message-ID: <20241105224727.53059-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241105224727.53059-1-philmd@linaro.org>
 References: <20241105224727.53059-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,75 +95,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Introduced in 0c54acb8243, "hw/riscv: add RISC-V IOMMU base emulation".
+Populate this read-only register with some arbitrary values which avoids
+U-Boot's get_clocks() to hang().
 
-../hw/riscv/riscv-iommu.c:187:17: error: redefinition of '_pext_u64'
-
-  187 | static uint64_t _pext_u64(uint64_t val, uint64_t ext)
-
-      |                 ^
-
-D:/a/_temp/msys64/clang64/lib/clang/18/include/bmi2intrin.h:217:1: note: previous definition is here
-
-  217 | _pext_u64(unsigned long long __X, unsigned long long __Y)
-
-      | ^
-
-After a conversation on the mailing list, it was decided to rename and
-add a comment for this function.
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241104222225.1523751-1-pierrick.bouvier@linaro.org>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20241103133412.73536-11-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/riscv/riscv-iommu.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ hw/ppc/mpc8544_guts.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index feb650549ac..12f01a75f5d 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -183,8 +183,25 @@ static void riscv_iommu_pri(RISCVIOMMUState *s,
-     }
- }
+diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
+index e3540b02816..c02b34ccded 100644
+--- a/hw/ppc/mpc8544_guts.c
++++ b/hw/ppc/mpc8544_guts.c
+@@ -29,6 +29,12 @@
+ #define MPC8544_GUTS_RSTCR_RESET      0x02
  
--/* Portable implementation of pext_u64, bit-mask extraction. */
--static uint64_t _pext_u64(uint64_t val, uint64_t ext)
-+/*
-+ * Discards all bits from 'val' whose matching bits in the same
-+ * positions in the mask 'ext' are zeros, and packs the remaining
-+ * bits from 'val' contiguously at the least-significant end of the
-+ * result, keeping the same bit order as 'val' and filling any
-+ * other bits at the most-significant end of the result with zeros.
-+ *
-+ * For example, for the following 'val' and 'ext', the return 'ret'
-+ * will be:
-+ *
-+ * val = a b c d e f g h
-+ * ext = 1 0 1 0 0 1 1 0
-+ * ret = 0 0 0 0 a c f g
-+ *
-+ * This function, taken from the riscv-iommu 1.0 spec, section 2.3.3
-+ * "Process to translate addresses of MSIs", is similar to bit manip
-+ * function PEXT (Parallel bits extract) from x86.
-+ */
-+static uint64_t riscv_iommu_pext_u64(uint64_t val, uint64_t ext)
- {
-     uint64_t ret = 0;
-     uint64_t rot = 1;
-@@ -528,7 +545,7 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
-     int cause;
+ #define MPC8544_GUTS_ADDR_PORPLLSR    0x00
++REG32(GUTS_PORPLLSR, 0x00)
++    FIELD(GUTS_PORPLLSR, E500_1_RATIO, 24, 6)
++    FIELD(GUTS_PORPLLSR, E500_0_RATIO, 16, 6)
++    FIELD(GUTS_PORPLLSR, DDR_RATIO, 9, 5)
++    FIELD(GUTS_PORPLLSR, PLAT_RATIO, 1, 5)
++
+ #define MPC8544_GUTS_ADDR_PORBMSR     0x04
+ #define MPC8544_GUTS_ADDR_PORIMPSCR   0x08
+ #define MPC8544_GUTS_ADDR_PORDEVSR    0x0C
+@@ -75,6 +81,12 @@ static uint64_t mpc8544_guts_read(void *opaque, hwaddr addr,
  
-     /* Interrupt File Number */
--    intn = _pext_u64(PPN_DOWN(gpa), ctx->msi_addr_mask);
-+    intn = riscv_iommu_pext_u64(PPN_DOWN(gpa), ctx->msi_addr_mask);
-     if (intn >= 256) {
-         /* Interrupt file number out of range */
-         res = MEMTX_ACCESS_ERROR;
+     addr &= MPC8544_GUTS_MMIO_SIZE - 1;
+     switch (addr) {
++    case MPC8544_GUTS_ADDR_PORPLLSR:
++        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_1_RATIO, 6); /* 3:1 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_0_RATIO, 6); /* 3:1 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, DDR_RATIO, 12); /* 12:1 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, PLAT_RATIO, 6); /* 6:1 */
++        break;
+     case MPC8544_GUTS_ADDR_PVR:
+         value = env->spr[SPR_PVR];
+         break;
 -- 
 2.45.2
 
