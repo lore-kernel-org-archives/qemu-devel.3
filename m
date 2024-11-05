@@ -4,90 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA2DD2B941
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B8C9D2B941
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Lp0-0004NY-06; Tue, 05 Nov 2024 10:50:22 -0500
+	id 1t8Lpp-00054M-3q; Tue, 05 Nov 2024 10:51:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t8Low-0004Ma-Ki; Tue, 05 Nov 2024 10:50:18 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t8Lpn-000542-9L
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:51:11 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t8Lou-0006Ng-4g; Tue, 05 Nov 2024 10:50:17 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5BE939FEE4;
- Tue,  5 Nov 2024 18:49:24 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 59015164A39;
- Tue,  5 Nov 2024 18:50:13 +0300 (MSK)
-Message-ID: <eaa0f5d9-caf2-48bc-84f9-f5c1a2f38a33@tls.msk.ru>
-Date: Tue, 5 Nov 2024 18:50:12 +0300
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t8Lpj-0006Ql-2i
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:51:10 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5FeJHp013605;
+ Tue, 5 Nov 2024 15:50:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=/59eyO
+ tyFXbHpV9ZldNtt72zzkOq6Weqg2L6GX+x8jY=; b=Yq/QemNMPtrFG2vySgU6pw
+ NG2kAYWCFV33D2BPhhsPQoSBXPKOc89e+tAc+z5pjqADSORrlz9t7IF3JgorkgcT
+ IKmAwq0RQus0D/zBfJ/lbOzawm5+LwQ9VfVrDrYjhsNCu4B94BhfupPhvvvHvt5k
+ B8KbrRzNCj96/j6/sgPD3ZPFdCufehlAw4rzhoQ0msE++Vj6GySZo5X+xLt4WLrN
+ nBbDInwcGXUfPCsBzskplJTTSi0+hvqfXEwN9RZy07RlgROM5Jj6nDGFMlaPC2E7
+ VIV+Mt93n60rdh7ja7sg3NFvUDh3YSlfbBTaDBV5EaY2gt1G/qfUWth+iTqGs31g
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42qp6x01bd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Nov 2024 15:50:54 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A56JvW0024243;
+ Tue, 5 Nov 2024 15:50:53 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42nxds4gap-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Nov 2024 15:50:53 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A5Foq8E33817270
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 5 Nov 2024 15:50:52 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2A17F20043;
+ Tue,  5 Nov 2024 15:50:52 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6549F20040;
+ Tue,  5 Nov 2024 15:50:51 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  5 Nov 2024 15:50:51 +0000 (GMT)
+Message-ID: <74ef513603500e76330c2735803d5e1402406f4a.camel@linux.ibm.com>
+Subject: Re: [PATCH 4/8] user: Introduce host_interrupt_signal
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Warner Losh <imp@bsdimp.com>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Kyle Evans <kevans@freebsd.org>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, qemu-devel@nongnu.org
+Date: Tue, 05 Nov 2024 16:50:51 +0100
+In-Reply-To: <CANCZdfrhzc-HZabUjkAMTgcHR0+6OQPxNshkQfMYD4wbNcm=wQ@mail.gmail.com>
+References: <20241024200031.80327-1-iii@linux.ibm.com>
+ <20241024200031.80327-5-iii@linux.ibm.com>
+ <CANCZdfrhzc-HZabUjkAMTgcHR0+6OQPxNshkQfMYD4wbNcm=wQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 08/67] target/ppc: Fix HFSCR facility checks
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-stable@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20241104001900.682660-1-npiggin@gmail.com>
- <20241104001900.682660-9-npiggin@gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20241104001900.682660-9-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: zBI9jWlGR3L5fTC0Fdsa6Sd7cJWyRgak
+X-Proofpoint-GUID: zBI9jWlGR3L5fTC0Fdsa6Sd7cJWyRgak
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015
+ priorityscore=1501 suspectscore=0 adultscore=0 lowpriorityscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 phishscore=0 mlxlogscore=746
+ mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411050121
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,40 +112,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-04.11.2024 03:17, Nicholas Piggin wrote:
-> The HFSCR defines were being encoded as bit masks, but the users
-> expect (and analogous FSCR defines are) bit numbers.
-> 
-> Cc: qemu-stable@nongnu.org
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   target/ppc/cpu.h | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index bd32a1a5f8..f7a2da2bbe 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -635,8 +635,8 @@ FIELD(MSR, LE, MSR_LE, 1)
->   #define PSSCR_EC          PPC_BIT(43) /* Exit Criterion */
->   
->   /* HFSCR bits */
-> -#define HFSCR_MSGP     PPC_BIT(53) /* Privileged Message Send Facilities */
-> -#define HFSCR_BHRB     PPC_BIT(59) /* BHRB Instructions */
-> +#define HFSCR_MSGP     PPC_BIT_NR(53) /* Privileged Message Send Facilities */
-> +#define HFSCR_BHRB     PPC_BIT_NR(59) /* BHRB Instructions */
+On Tue, 2024-11-05 at 08:39 -0700, Warner Losh wrote:
+> On Thu, Oct 24, 2024 at 2:00=E2=80=AFPM Ilya Leoshkevich <iii@linux.ibm.c=
+om>
+> wrote:
+> > Attaching to the gdbstub of a running process requires stopping its
+> > threads. For threads that run on a CPU, cpu_exit() is enough, but
+> > the
+> > only way to grab attention of a thread that is stuck in a long-
+> > running
+> > syscall is to interrupt it with a signal.
+> >=20
+> > Reserve a host realtime signal for this, just like it's already
+> > done
+> > for TARGET_SIGABRT on Linux. This may reduce the number of
+> > available
+> > guest realtime signals by one, but this is acceptable, since there
+> > are
+> > quite a lot of them, and it's unlikely that there are apps that
+> > need
+> > them all.
+> >=20
+> > Set signal_pending for the safe_sycall machinery to prevent
+> > invoking
+> > the syscall. This is a lie, since we don't queue a guest signal,
+> > but
+> > process_pending_signals() can handle the absence of pending
+> > signals.
+> > The syscall returns with QEMU_ERESTARTSYS errno, which arranges for
+> > the automatic restart. This is important, because it helps avoiding
+> > disturbing poorly written guests.
+> >=20
+> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> > ---
+> > =C2=A0bsd-user/signal.c=C2=A0 =C2=A0 =C2=A0| 12 ++++++++++++
+> > =C2=A0include/user/signal.h |=C2=A0 2 ++
+> > =C2=A0linux-user/signal.c=C2=A0 =C2=A0| 11 +++++++++++
+> > =C2=A03 files changed, 25 insertions(+)
+> >=20
+> > diff --git a/bsd-user/signal.c b/bsd-user/signal.c
+> > index a2b11a97131..992736df5c5 100644
+> > --- a/bsd-user/signal.c
+> > +++ b/bsd-user/signal.c
+> > @@ -49,6 +49,8 @@ static inline int sas_ss_flags(TaskState *ts,
+> > unsigned long sp)
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0on_sig_stack(ts, sp) ? SS_ONSTACK : 0=
+;
+> > =C2=A0}
+> >=20
+> > +int host_interrupt_signal =3D SIGRTMAX;
+> > +
+> >=20
+>=20
+>=20
+> I'd be tempted to use SIGRTMAX=C2=A0+ 1 or even TARGET_NSIG. 127 or 128
+> would
+> work and not overflow any arrays (or hit any bounds tests) I'd likely
+> use SIGRTMAX=C2=A0+ 1,
+> though, since it avoids any edge-cases from sig =3D=3D NSIG that might be
+> in the code
+> unnoticed.
+>=20
+> Now, having said that, I don't think that there's too many (any?)
+> programs we need
+> to run as bsd-user that have real-time signals, much less one that
+> uses SIGRTMAX,
+> but stranger things have happened. But it is a little wiggle room
+> just in case.
+>=20
+> Other than that:
+>=20
+> Reviewed-by: Warner Losh <imp@bsdimp.com>
 
-v9.0.0-892-g6bfcf1dc23 "target/ppc: Add clrbhrb and mfbhrbe instructions"
-(ie v9.1.0 release) added the HFSCR_BHRB definition here.  While HFSCR_MSGP
-has been there for a very long time, since v4.2.0-1172-g493028d8d7 (2020).
-Does it make sense to pick this change to older stable series (9.0 and before)
-keeping just the HFSCR_MSGP fix?
-
-How happened this hasn't been noticed for so long time?  Is it enough
-reason to not bother with older releases?
-
-Thanks,
-
-/mjt
+Thanks for the suggestion, I'll use SIGRTMAX + 1 in v2.
 
