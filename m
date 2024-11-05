@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E04D1268A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:21:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB36D12689
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Hbc-0004iS-Go; Tue, 05 Nov 2024 06:20:16 -0500
+	id 1t8Hb8-0004Qn-NF; Tue, 05 Nov 2024 06:19:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8HbX-0004dP-Il
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:20:11 -0500
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ id 1t8Hb6-0004QI-K2
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:19:44 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8HbJ-00078t-W4
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:20:11 -0500
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-539e8607c2aso5782586e87.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 03:19:56 -0800 (PST)
+ id 1t8Hb3-00074s-I7
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:19:44 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43155abaf0bso47184625e9.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 03:19:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730805595; x=1731410395; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+LP6S0HiqT0UnMi7xLzb+PtlWN4r3AjuiB9iv2CEHDk=;
- b=d8VbeaQ4MT9hGxedcDzrl/vAGU4hHDVtQkPT7x0ifi16jeAKYhxZdt3C+h2ppUTGy0
- gldSknjfMETiiglrsPap/js07emz7xg4ZzqC5LYguGBzKvVxrj5Gjlftf8+fZ3Q24/LM
- Lvm6DaDtEy2zxWd0rH7Dm9fAJzj6WVz+wdklSdtWiuvJ9scPmVL+3lXjouOK5zkVH/AO
- PRVoqK4JndasdHvI/iTJWXRM5ifpmsFmxnLORMhT1rc1vZ5bQSTBDVHv8qOk34koMXmW
- PjrwPu4tWHMF9H512XyPsUHA9LAoX4ZBcT67cBjne1To/k00oVJRFjl/bjG8qHsE6Ku5
- U2Ag==
+ d=linaro.org; s=google; t=1730805577; x=1731410377; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5+fr8xMcc/UTE8if4NaFHepUm0PBrgttT8j2+6FTnwA=;
+ b=uSURsJpAtgqFrTaoZutJV43ABolQJOn5gSe9U+ugglgWLxSNFXiAhvr43J9fx7lGJ3
+ 7C0fTwYNh02lx9rvRwH94MQ+yXPrn39d4NdxlqRqlds9mlkqvGVCZ1ouko9yWd3NDP1I
+ +qlfhBLkQFewe3MpdMyM7Oq9ft8H8SQEDLMkOzSy8oHDRXBigZzT29FnDMFdltnhOq8a
+ WyCq3LA6MtiyON85I1ba2z+L98CfK4xU1IKME+4nUXC8Ft30FrXM1uk2HOhnwfgpsuMf
+ YtvlRBhkQI9bqsBmMB9lsPBxdRprhodBkSsVCw0YT/Tx6t5k6+UcwZAKLNw4I7bRsyoE
+ iA9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730805595; x=1731410395;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+LP6S0HiqT0UnMi7xLzb+PtlWN4r3AjuiB9iv2CEHDk=;
- b=iwKeDJ+CJttPBTfnGqGFUVOagNcFJQi5UROtLg2NB1g22VDRHYeqhJpGmmbsOOlGjF
- PEMtDfU4i9qB2Dfp86c+TR1+l7LQdrI99OfSL/tsJAX9q/ehpqIWzWG9ObWhBhlGxxNr
- M/7VrmU+nP+ngvn/DKm160zWQI6FfXF42RKeM+GRI8MLKKEIlBrMliSNpKeiRsTcp7f4
- dJGc9jjeZcg0DF1Xop68I6NC3YUhU/RBc9dr7jxFHz/WrhfXE6H8xtfpHxFxSsMxZ/hZ
- gsmXf02UBuWINEeSO4f2pK4YPSa5mebsnODDQW3MwnZ4OV99Iuwrfz8UkrLEalR300OG
- BJIg==
-X-Gm-Message-State: AOJu0YzfNKkHcFsxjPtUCin/8LZWgUAzm1FLinehMx1Fq7WnXI6KY1cX
- sjT83s+OcBIQI/cZO2QnRE7wdRwrqzVeIiTmySUPHQpZtpmc/sT8YeipzXbSYN+8PAuDc8GyLG6
- C
-X-Google-Smtp-Source: AGHT+IH+jt9pf6glwrjI/CSmL/UEVVRPPBvrv69vQpRcyYmmm3sZz0u52YpddYr4YWl9AC6Sm6bCfQ==
-X-Received: by 2002:ac2:4e06:0:b0:52c:fd46:bf07 with SMTP id
- 2adb3069b0e04-53b34a2e4d0mr15730991e87.49.1730805594825; 
- Tue, 05 Nov 2024 03:19:54 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730805577; x=1731410377;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5+fr8xMcc/UTE8if4NaFHepUm0PBrgttT8j2+6FTnwA=;
+ b=gFC7jklXHlkxphnT0cFQj1xukQ5uXu8ZHUETbc825PTaLHb8VbkB2h+CCZW4pB0W+s
+ vFs4t7PupVZD9Uh7gVkEjoUOLZQZ2P31AFWA2c+FEeRcPZ31YSF0VNlcm3FSLqe67Vxq
+ kRsd30wCy9fYUc5qYqFNojiQMR5cqcTi3JaYQRVEiTdVZLm/tKIoQ0oyF7rN2P8abu9k
+ XGDGfPovDx4SNXRJBh6BBUwnRu5WEPu87MbektsHjpBJena0vOoKkAZo4RqrvJ2yCdmE
+ q4YFkpdvA/PCBCNNuS7/Ern5BmSCj3sChu/obirfmB5KjZVtgBeZMPrlq8mMOjb/5/ti
+ 5e8A==
+X-Gm-Message-State: AOJu0Yw99JedcrRbLczDospSIZaFKKmYz8ZtNjJkQwf5k8Gh06dOVP4k
+ 8l0ZqIPtPLg24hX4ElHtMIoYw4tNwOc15ODbX5p4Qs/8Kj+HG8PXRTdd9YY85VFsV1bJlJ9KrA9
+ f
+X-Google-Smtp-Source: AGHT+IFp5+DooIk5rDzauvBn6PhZuewV2nu1L+wxwtdY6dY1jF/yTwItahzEZ2WT8BaLsZYwVcUTVw==
+X-Received: by 2002:a05:6000:3cf:b0:37c:d54e:81fd with SMTP id
+ ffacd0b85a97d-381c7ab3368mr12311321f8f.54.1730805577175; 
+ Tue, 05 Nov 2024 03:19:37 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432a3688813sm16354555e9.1.2024.11.05.03.19.54
+ 5b1f17b1804b1-432a3688813sm16354555e9.1.2024.11.05.03.19.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 03:19:54 -0800 (PST)
+ Tue, 05 Nov 2024 03:19:36 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 30/31] hw/net/npcm_gmac: Change error log to trace event
-Date: Tue,  5 Nov 2024 11:19:34 +0000
-Message-Id: <20241105111935.2747034-31-peter.maydell@linaro.org>
+Subject: [PULL 00/31] target-arm queue
+Date: Tue,  5 Nov 2024 11:19:04 +0000
+Message-Id: <20241105111935.2747034-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241105111935.2747034-1-peter.maydell@linaro.org>
-References: <20241105111935.2747034-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,53 +91,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nabih Estefan <nabihestefan@google.com>
+The following changes since commit 11b8920ed2093848f79f93d106afe8a69a61a523:
 
-Convert the LOG_GUEST_ERROR for the "tx descriptor is owned
-by software" to a trace message. This condition is normal
-when there is there is nothing to transmit, and we would
-otherwise spam the logs with it in that situation.
+  Merge tag 'pull-request-2024-11-04' of https://gitlab.com/thuth/qemu into staging (2024-11-04 17:37:59 +0000)
 
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20241014184847.1594056-1-roqueh@google.com
-[PMM: tweaked commit message]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/net/npcm_gmac.c  | 5 ++---
- hw/net/trace-events | 1 +
- 2 files changed, 3 insertions(+), 3 deletions(-)
+are available in the Git repository at:
 
-diff --git a/hw/net/npcm_gmac.c b/hw/net/npcm_gmac.c
-index 6fa6bece61f..685905f9e27 100644
---- a/hw/net/npcm_gmac.c
-+++ b/hw/net/npcm_gmac.c
-@@ -546,9 +546,8 @@ static void gmac_try_send_next_packet(NPCMGMACState *gmac)
- 
-         /* 1 = DMA Owned, 0 = Software Owned */
-         if (!(tx_desc.tdes0 & TX_DESC_TDES0_OWN)) {
--            qemu_log_mask(LOG_GUEST_ERROR,
--                          "TX Descriptor @ 0x%x is owned by software\n",
--                          desc_addr);
-+            trace_npcm_gmac_tx_desc_owner(DEVICE(gmac)->canonical_path,
-+                                          desc_addr);
-             gmac->regs[R_NPCM_DMA_STATUS] |= NPCM_DMA_STATUS_TU;
-             gmac_dma_set_state(gmac, NPCM_DMA_STATUS_TX_PROCESS_STATE_SHIFT,
-                 NPCM_DMA_STATUS_TX_SUSPENDED_STATE);
-diff --git a/hw/net/trace-events b/hw/net/trace-events
-index 91a3d0c0548..d0f1d8c0fbe 100644
---- a/hw/net/trace-events
-+++ b/hw/net/trace-events
-@@ -478,6 +478,7 @@ npcm_gmac_packet_received(const char* name, uint32_t len) "%s: Reception finishe
- npcm_gmac_packet_sent(const char* name, uint16_t len) "%s: TX packet sent!, length: 0x%04" PRIX16
- npcm_gmac_debug_desc_data(const char* name, void* addr, uint32_t des0, uint32_t des1, uint32_t des2, uint32_t des3)"%s: Address: %p Descriptor 0: 0x%04" PRIX32 " Descriptor 1: 0x%04" PRIX32 "Descriptor 2: 0x%04" PRIX32 " Descriptor 3: 0x%04" PRIX32
- npcm_gmac_packet_tx_desc_data(const char* name, uint32_t tdes0, uint32_t tdes1) "%s: Tdes0: 0x%04" PRIX32 " Tdes1: 0x%04" PRIX32
-+npcm_gmac_tx_desc_owner(const char* name, uint32_t desc_addr) "%s: TX Descriptor @0x%04" PRIX32 " is owned by software"
- 
- # npcm_pcs.c
- npcm_pcs_reg_read(const char *name, uint16_t indirect_access_baes, uint64_t offset, uint16_t value) "%s: IND: 0x%02" PRIx16 " offset: 0x%04" PRIx64 " value: 0x%04" PRIx16
--- 
-2.34.1
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20241105
 
+for you to fetch changes up to 374cdc8efe4a039510cca47e8399d54a1aeb4f2d:
+
+  target/arm: Enable FEAT_CMOW for -cpu max (2024-11-05 10:10:00 +0000)
+
+----------------------------------------------------------------
+target-arm queue:
+ * Fix MMU indexes for AArch32 Secure PL1&0 in a less complex and buggy way
+ * Fix SVE SDOT/UDOT/USDOT (4-way, indexed)
+ * softfloat: set 2-operand NaN propagation rule at runtime
+ * disas: Fix build against Capstone v6 (again)
+ * hw/rtc/ds1338: Trace send and receive operations
+ * hw/timer/imx_gpt: Convert DPRINTF to trace events
+ * hw/watchdog/wdt_imx2: Remove redundant assignment
+ * hw/sensor/tmp105: Convert printf() to trace event, add tracing for read/write access
+ * hw/net/npcm_gmac: Change error log to trace event
+ * target/arm: Enable FEAT_CMOW for -cpu max
+
+----------------------------------------------------------------
+Bernhard Beschow (4):
+      hw/rtc/ds1338: Trace send and receive operations
+      hw/timer/imx_gpt: Convert DPRINTF to trace events
+      hw/watchdog/wdt_imx2: Remove redundant assignment
+      hw/sensor/tmp105: Convert printf() to trace event, add tracing for read/write access
+
+Gustavo Romero (1):
+      target/arm: Enable FEAT_CMOW for -cpu max
+
+Nabih Estefan (1):
+      hw/net/npcm_gmac: Change error log to trace event
+
+Peter Maydell (24):
+      softfloat: Allow 2-operand NaN propagation rule to be set at runtime
+      tests/fp: Explicitly set 2-NaN propagation rule
+      target/arm: Explicitly set 2-NaN propagation rule
+      target/mips: Explicitly set 2-NaN propagation rule
+      target/loongarch: Explicitly set 2-NaN propagation rule
+      target/hppa: Explicitly set 2-NaN propagation rule
+      target/s390x: Explicitly set 2-NaN propagation rule
+      target/ppc: Explicitly set 2-NaN propagation rule
+      target/m68k: Explicitly set 2-NaN propagation rule
+      target/m68k: Initialize float_status fields in gdb set/get functions
+      target/sparc: Move cpu_put_fsr(env, 0) call to reset
+      target/sparc: Explicitly set 2-NaN propagation rule
+      target/xtensa: Factor out calls to set_use_first_nan()
+      target/xtensa: Explicitly set 2-NaN propagation rule
+      target/i386: Set 2-NaN propagation rule explicitly
+      target/alpha: Explicitly set 2-NaN propagation rule
+      target/microblaze: Move setting of float rounding mode to reset
+      target/microblaze: Explicitly set 2-NaN propagation rule
+      target/openrisc: Explicitly set 2-NaN propagation rule
+      target/rx: Explicitly set 2-NaN propagation rule
+      softfloat: Remove fallback rule from pickNaN()
+      Revert "target/arm: Fix usage of MMU indexes when EL3 is AArch32"
+      target/arm: Add new MMU indexes for AArch32 Secure PL1&0
+      target/arm: Fix SVE SDOT/UDOT/USDOT (4-way, indexed)
+
+Richard Henderson (1):
+      disas: Fix build against Capstone v6 (again)
+
+ docs/system/arm/emulation.rst     |   1 +
+ meson.build                       |   1 +
+ hw/sensor/trace.h                 |   1 +
+ include/disas/capstone.h          |   1 +
+ include/fpu/softfloat-helpers.h   |  11 +++
+ include/fpu/softfloat-types.h     |  38 ++++++++++
+ target/arm/cpu-features.h         |   5 ++
+ target/arm/cpu.h                  |  49 ++++++------
+ target/arm/internals.h            |  41 +++++-----
+ target/arm/tcg/translate.h        |   2 -
+ target/i386/cpu.h                 |   3 +
+ target/mips/fpu_helper.h          |  22 ++++++
+ target/xtensa/cpu.h               |   6 ++
+ hw/net/npcm_gmac.c                |   5 +-
+ hw/rtc/ds1338.c                   |   6 ++
+ hw/sensor/tmp105.c                |   7 +-
+ hw/timer/imx_gpt.c                |  18 ++---
+ hw/watchdog/wdt_imx2.c            |   1 -
+ linux-user/arm/nwfpe/fpa11.c      |  18 +++++
+ target/alpha/cpu.c                |  11 +++
+ target/arm/cpu.c                  |  25 ++++--
+ target/arm/helper.c               |  73 ++++++++++++------
+ target/arm/ptw.c                  |  10 +--
+ target/arm/tcg/cpu64.c            |   1 +
+ target/arm/tcg/hflags.c           |   4 -
+ target/arm/tcg/op_helper.c        |  14 +++-
+ target/arm/tcg/translate-a64.c    |   2 +-
+ target/arm/tcg/translate.c        |  12 +--
+ target/arm/tcg/vec_helper.c       |   9 ++-
+ target/hppa/fpu_helper.c          |   6 ++
+ target/i386/cpu.c                 |   4 +
+ target/i386/tcg/fpu_helper.c      |  40 ++++++++++
+ target/loongarch/tcg/fpu_helper.c |   1 +
+ target/m68k/cpu.c                 |  16 ++++
+ target/m68k/fpu_helper.c          |   1 +
+ target/m68k/helper.c              |   4 +-
+ target/microblaze/cpu.c           |  10 ++-
+ target/mips/cpu.c                 |   2 +-
+ target/mips/msa.c                 |  17 +++++
+ target/openrisc/cpu.c             |   6 ++
+ target/ppc/cpu_init.c             |   8 ++
+ target/rx/cpu.c                   |   7 ++
+ target/s390x/cpu.c                |   1 +
+ target/sparc/cpu.c                |  10 ++-
+ target/sparc/fop_helper.c         |  10 ++-
+ target/xtensa/cpu.c               |   2 +-
+ target/xtensa/fpu_helper.c        |  35 +++++----
+ tests/fp/fp-bench.c               |   2 +
+ tests/fp/fp-test-log2.c           |   1 +
+ tests/fp/fp-test.c                |   2 +
+ fpu/softfloat-specialize.c.inc    | 156 ++++++++++++++------------------------
+ hw/net/trace-events               |   1 +
+ hw/rtc/trace-events               |   4 +
+ hw/sensor/trace-events            |   6 ++
+ hw/timer/trace-events             |   6 ++
+ 55 files changed, 516 insertions(+), 239 deletions(-)
+ create mode 100644 hw/sensor/trace.h
+ create mode 100644 hw/sensor/trace-events
 
