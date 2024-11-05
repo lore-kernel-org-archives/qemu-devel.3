@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8C82D12689
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A493D12689
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8HbY-0004fF-OP; Tue, 05 Nov 2024 06:20:12 -0500
+	id 1t8HgF-0002U8-Su; Tue, 05 Nov 2024 06:25:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8HbX-0004dC-64
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:20:11 -0500
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ id 1t8Hfe-00025t-KR
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:24:30 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8HbJ-000784-40
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:20:10 -0500
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-539e3f35268so6499189e87.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 03:19:55 -0800 (PST)
+ id 1t8Hfa-0007Y6-UY
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:24:24 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a99fa009adcso342823966b.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 03:24:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730805591; x=1731410391; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=FBJ7C4+ClTBlCUSOBe+gLo7sz1EnjPStvDm17hGVx2c=;
- b=izdKyItZepj/PE6PIHB6b5aO6fCmI8Smaa1yxLF2ous9gzF8zWIflmYUmywi/32tW5
- 0HtU1SCAsNNgoHch39zRquHNdha2Q+ZUdxXKSKSqa44zWqs++7voyQmBXn2MTTjOj9xU
- U1nHdaZMoZyXE6OgCAN4An2nschVXgjb+DVf/Xb/M0fnszIrKdM4S6xY4N8lGbrIJh0Q
- viE9OlCw8pQXbB1ifIRx6f4qhEdXA1H5krqsMe0s7gc/ehOPuq2k55llKDbh0FAJQC1J
- zWE8NMhjkLc/Nvle+WF2QUrLn+Lj6PwTbJ+uumKjTu3MQgetEkvxpsS7DS/+RA/uAM3H
- LmEA==
+ d=linaro.org; s=google; t=1730805861; x=1731410661; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=MCROoq1589SjqNt5Av7Z/cCUzbMf65DfGC3yHMtUPR0=;
+ b=M8bEWfScOqguxqmsEDYQq6ptSXFr5HTfvIeXEo8PmGrWqdJ4FjAv385+7agseLx8Zr
+ UdeAUy9s4F9o76E1sGAUIABmF6ySKOCgh9IHgDRg6zg22edAkMuM9XECsrsrpFfpzOsF
+ egOb0YmwOwdQMWwyVIbrHahJkphL7YeVAn/2syWTf7ao+amaqOZBdcLF0/3VilUeCMzY
+ 3W4w7xS861arzir1+vqoR+WP0HifITARcvA931YJs2jfRTFyiRw/sjVnvSI6SS8iElC/
+ SwtlhgDICPl45Z8XQ2BoWNb+pDy/D7/9Hvjpm6Mx2LXLanvF3PaYywnb+SUeutH65skC
+ M2uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730805591; x=1731410391;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FBJ7C4+ClTBlCUSOBe+gLo7sz1EnjPStvDm17hGVx2c=;
- b=ocEq19ErcDRTCn6vHLfgFmO+Sv9zWSCBRw0cxpr9qQRDAbebVG3D+u00YQ9xWtfuzI
- HmAc+HV/QWeRI4jsNyePaAKgZWsJ8DVfwbzlSBwmnWzQ6E54db9HD6ioNP0jZU8k9WuH
- M/jYddYzX7ss1Fa2+3Rlr3ZNv3drQsQtmDYR+En7noAHDb9RD29Rae08i5s0/P4d2ini
- DRer2dPa26/XUqzeFAN/otFX8FjYPEjPx5+jMHxdNWvr+YDsTpxEZl4l9HtRd7FqBBBk
- 4KcHkyNcivfoySbSMOsGTusfWoUZEo4ju0sm6mEJc1X7y+J7w3/nSaARDbeNHutW6ty3
- Wx5A==
-X-Gm-Message-State: AOJu0YzUWCZZc1tvXMHwDhbQ86EM+kuUph6waQdFllkWIHmeEZaXjTRv
- HVrqp+S5Qy/iDNj61AzjximQ43fqELy4KE2Yp+M2mm0ekE4LM+Hhhq6zPCSuBLVNqZF6JZLPA4p
- a
-X-Google-Smtp-Source: AGHT+IFhXyu+hyXj6A5Fxf5mjkvhfCpgRVojTyQ10HTgI6jCTXxofr97SSuvS18BsOUgHRMxVhgKuQ==
-X-Received: by 2002:a05:6512:1193:b0:539:e436:f1cc with SMTP id
- 2adb3069b0e04-53d65e264e8mr7159660e87.52.1730805591459; 
- Tue, 05 Nov 2024 03:19:51 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432a3688813sm16354555e9.1.2024.11.05.03.19.51
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 03:19:51 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 24/31] target/arm: Fix SVE SDOT/UDOT/USDOT (4-way, indexed)
-Date: Tue,  5 Nov 2024 11:19:28 +0000
-Message-Id: <20241105111935.2747034-25-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241105111935.2747034-1-peter.maydell@linaro.org>
-References: <20241105111935.2747034-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1730805861; x=1731410661;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MCROoq1589SjqNt5Av7Z/cCUzbMf65DfGC3yHMtUPR0=;
+ b=Gjva2IDaa42wTGmc6OvRBfLotSRhSc9RLSoQNeNORhUadTUbeFSMWGs2VWlnSEYW67
+ g+9JSg/3z0yJGl38Olg0i4exrbFbUy/Acp276qw2SLNpwL1c/Kd+n7z5UiQMdatP57QK
+ yrLn2ac+bqEY/bQuMW9w+TuzkxSxyimf2AqRANmiUiU0NfE+oNL/ONv6+oTro52g4tT0
+ okXwuiMYh2Am7JR/S+4ILjJiXXYECH3esjCAtQYO0lFWkenEzcpzbsmXYdI4NL+bEIDH
+ ad38VVBde4szaZjlrVPh9oVdMknvAoHVuaFINFDrENkff38xVxks0Dc1KpPCBu+e4a8k
+ rk8w==
+X-Gm-Message-State: AOJu0YzzO8FU9A2zoA93NfgDwFf+REuHhm+MKKyP1UZEWsdk0CelX1IQ
+ 5TjO+IyHuUyq2KrcKnB1vvEjJy/vblPSlxTxejLw687d7SRkrAl7uPFYp3pCbpvOg3r/++ulFTe
+ kwgdXdfWetHkpFYkHTHGTR9BivC3oOGbPUeNmBw==
+X-Google-Smtp-Source: AGHT+IFwUa7dkdStqALDTBnnkLGdxgQjMNEV5hs8YJ+89MKYIARdHdFkJ9VsdVApdvYDmw1IIqk1NKYc6bHPop4yEL0=
+X-Received: by 2002:a05:6402:280a:b0:5c9:45b5:6077 with SMTP id
+ 4fb4d7f45d1cf-5ceb935bc94mr15646578a12.23.1730805860961; Tue, 05 Nov 2024
+ 03:24:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
+References: <20241104123839.533442-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20241104123839.533442-1-dbarboza@ventanamicro.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 Nov 2024 11:24:08 +0000
+Message-ID: <CAFEAcA_=VSVZP5p5zeJpP6K8ucJgsEdbUWc5P6KPO6FtSaE_5Q@mail.gmail.com>
+Subject: Re: [PATCH 0/2] hw/riscv/riscv-iommu: Coverity fixes
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,69 +89,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Our implementation of the indexed version of SVE SDOT/UDOT/USDOT got
-the calculation of the inner loop terminator wrong.  Although we
-correctly account for the element size when we calculate the
-terminator for the first iteration:
-   intptr_t segend = MIN(16 / sizeof(TYPED), opr_sz_n);
-we don't do that when we move it forward after the first inner loop
-completes.  The intention is that we process the vector in 128-bit
-segments, which for a 64-bit element size should mean (1, 2), (3, 4),
-(5, 6), etc.  This bug meant that we would iterate (1, 2), (3, 4, 5,
-6), (7, 8, 9, 10) etc and apply the wrong indexed element to some of
-the operations, and also index off the end of the vector.
+On Mon, 4 Nov 2024 at 12:38, Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> Hi,
+>
+> This series fixes two issues detected by Coverity in the riscv-iommu
+> code that just went upstream.
+>
+> Peter,
+>
+> I'm fixing only 2 CIDs because the third one is a false positive:
+>
+> *** CID 1564781:  Integer handling issues  (INTEGER_OVERFLOW)
+> /builds/qemu-project/qemu/hw/riscv/riscv-iommu-pci.c: 97 in riscv_iommu_pci_realize()
+> 91
+> 92         /* Set device id for trace / debug */
+> 93         DEVICE(iommu)->id = g_strdup_printf("%02x:%02x.%01x",
+> 94             pci_dev_bus_num(dev), PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn));
+> 95         qdev_realize(DEVICE(iommu), NULL, errp);
+> 96
+> >>>     CID 1564781:  Integer handling issues  (INTEGER_OVERFLOW)
+> >>>     Expression "memory_region_size(&iommu->regs_mr) + 4096UL", which is equal to 4095, where "memory_region_size(&iommu->regs_mr)" is known to be equal to 18446744073709551615, overflows the type that receives it, an unsigned integer 64 bits wide.
+> 97         memory_region_init(&s->bar0, OBJECT(s), "riscv-iommu-bar0",
+> 98             QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr), TARGET_PAGE_SIZE));
+> 99         memory_region_add_subregion(&s->bar0, 0, &iommu->regs_mr);
+> 100
+> 101         pcie_endpoint_cap_init(dev, 0);
+> 102
+> ----------
+>
+> The reason is that is that iommu->regs_mr is being initialized in riscv_iommu_realize()
+> with 'RISCV_IOMMU_REG_SIZE':
+>
+>     memory_region_init_io(&s->regs_mr, OBJECT(dev), &riscv_iommu_mmio_ops, s,
+>         "riscv-iommu-regs", RISCV_IOMMU_REG_SIZE);
+>
+> And we're doing "qdev_realize(DEVICE(iommu), NULL, errp);" right before
+> the snippet Coverity found as problematic so it's guaranteed to be
+> initialized. I ran it with a debugger and verified that
+> QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr), TARGET_PAGE_SIZE) is
+> in fact equal to 'RISCV_IOMMU_REG_SIZE' at that point, as intended.
+>
+> I was going to set it as false positive in Coverity but decided to
+> verify with you first. If you agree I'll update the ticket.
 
-You don't see this bug if the vector length is small enough that we
-don't need to iterate the outer loop, i.e.  if it is only 128 bits,
-or if it is the 64-bit special case from AA32/AA64 AdvSIMD.  If the
-vector length is 256 bits then we calculate the right results for the
-elements in the vector but do index off the end of the vector. Vector
-lengths greater than 256 bits see wrong answers. The instructions
-that produce 32-bit results behave correctly.
+Yes, this is a false positive. Coverity has a habit of
+assuming that because in some cases a function can return
+a particular constant value that it's therefore possible
+at any callsite. I just marked this false-positive in the UI.
 
-Fix the recalculation of 'segend' for subsequent iterations, and
-restore a version of the comment that was lost in the refactor of
-commit 7020ffd656a5 that explains why we only need to clamp segend to
-opr_sz_n for the first iteration, not the later ones.
+Thanks for the prompt fixes for the other two!
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2595
-Fixes: 7020ffd656a5 ("target/arm: Macroize helper_gvec_{s,u}dot_idx_{b,h}")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241101185544.2130972-1-peter.maydell@linaro.org
----
- target/arm/tcg/vec_helper.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index 22ddb968817..e825d501a22 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -836,6 +836,13 @@ void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
- {                                                                         \
-     intptr_t i = 0, opr_sz = simd_oprsz(desc);                            \
-     intptr_t opr_sz_n = opr_sz / sizeof(TYPED);                           \
-+    /*                                                                    \
-+     * Special case: opr_sz == 8 from AA64/AA32 advsimd means the         \
-+     * first iteration might not be a full 16 byte segment. But           \
-+     * for vector lengths beyond that this must be SVE and we know        \
-+     * opr_sz is a multiple of 16, so we need not clamp segend            \
-+     * to opr_sz_n when we advance it at the end of the loop.             \
-+     */                                                                   \
-     intptr_t segend = MIN(16 / sizeof(TYPED), opr_sz_n);                  \
-     intptr_t index = simd_data(desc);                                     \
-     TYPED *d = vd, *a = va;                                               \
-@@ -853,7 +860,7 @@ void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
-                     n[i * 4 + 2] * m2 +                                   \
-                     n[i * 4 + 3] * m3);                                   \
-         } while (++i < segend);                                           \
--        segend = i + 4;                                                   \
-+        segend = i + (16 / sizeof(TYPED));                                \
-     } while (i < opr_sz_n);                                               \
-     clear_tail(d, opr_sz, simd_maxsz(desc));                              \
- }
--- 
-2.34.1
-
+-- PMM
 
