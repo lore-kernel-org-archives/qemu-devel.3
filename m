@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AEBD1CA39
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19AA6D1CA39
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DEN-0002cl-Tf; Tue, 05 Nov 2024 01:40:00 -0500
+	id 1t8DEB-0001Hc-PJ; Tue, 05 Nov 2024 01:39:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DDk-0000wX-3h
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:29 -0500
+ id 1t8DDm-00012U-64
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:31 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DDd-0001vj-LT
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:16 -0500
+ id 1t8DDh-0001vd-P5
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788754; x=1762324754;
+ t=1730788758; x=1762324758;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=mgYnaE32reSGuV7hHoP0EJIpwxMG8v5/dHOATY3+4xU=;
- b=aUKJ5sDpMJcr5OnUGGYvuO0sOToLAj9HKZ20Yw8seCHNdOAvqsGj8R8N
- zNYJjeoXPP/Dm5XzzmEcfaeKyoKGnmNpK3kqtXyCkrMfPzrM2AZL7Meei
- nVV5wLwRiHesPMdmtvJvVW1Gi0Nz5IgPRlyPG1XZqnGAdHdM3scq34Wuq
- EG9ZZ7VIKydzRu1M7wknhrEVLsO7Zv13n29MlLHrNoGXt7WC3m95BZTSZ
- j9TPFhiynFyoRa+SgteEjWUg+7BiRR8f+/I+D8l/Q9bgUwJZuCWJzR3pI
- oBMmQal+W7ez4ZGrYkPC1Yzx0zCm7nx7xWPuhg1D0NVeFAUeSGcEC07bG Q==;
-X-CSE-ConnectionGUID: v91pdsrZTy+Eihch/3pinQ==
-X-CSE-MsgGUID: Z5E84DaIQ0WyN2AStAto8Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689725"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689725"
+ bh=oaeUYxWxoTsbbEf4Af9Nw3NbJLsiof0AXokRyvVuUyo=;
+ b=MrUB6rrVvf7+ZuHrHc4sSHEomrE8MB4PmFC4rMYdLxXecVs0zqUVTDv7
+ +DF1yLaFq+u9hkPRMV/kABXdnQbwbLmOwOtKfd9ZYSGg6U3amnLDbtMb/
+ +VvgegmJLwujJMz7BpBg9R60ipdTplCg90l/0ekKnfxPoVBg5WCgUWU60
+ cQLHZQK+bNySnPqML7/kp1ydKwiDtS7DlZXagRpZgJl2XAl6hbp0vfnFG
+ TAsG6NyNmLt5wqQn+SXeNXvHx4pPloUV4Prx+nn4tIBQERTn/18lsrt2E
+ PiVXH8KUQgxPq0Tm3rU0PvOIs+E5ZYuTyYv/FNR2fU9r7lPjv+Geg0hgT A==;
+X-CSE-ConnectionGUID: i7acg9kFQzqJQ0uakwJ5yg==
+X-CSE-MsgGUID: ZNhI++QeRAae7yA+RincxA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689733"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689733"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:39:01 -0800
-X-CSE-ConnectionGUID: OxDsKalzR/SUCZQoWpLyNQ==
-X-CSE-MsgGUID: PurmE+u2Sx2SqBVZbB/RpQ==
+ 04 Nov 2024 22:39:06 -0800
+X-CSE-ConnectionGUID: EI5xNTcOT4uw11Kv11bggg==
+X-CSE-MsgGUID: 2ryCymgaT3yCWbd2Jfig5A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989457"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989510"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:38:57 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:39:01 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -57,10 +57,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 37/60] i386/tdx: Set kvm_readonly_mem_enabled to false for
- TDX VM
-Date: Tue,  5 Nov 2024 01:23:45 -0500
-Message-Id: <20241105062408.3533704-38-xiaoyao.li@intel.com>
+Subject: [PATCH v6 38/60] i386/tdx: Disable SMM for TDX VMs
+Date: Tue,  5 Nov 2024 01:23:46 -0500
+Message-Id: <20241105062408.3533704-39-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
@@ -91,11 +90,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TDX only supports readonly for shared memory but not for private memory.
+TDX doesn't support SMM and VMM cannot emulate SMM for TDX VMs because
+VMM cannot manipulate TDX VM's memory.
 
-In the view of QEMU, it has no idea whether a memslot is used as shared
-memory of private. Thus just mark kvm_readonly_mem_enabled to false to
-TDX VM for simplicity.
+Disable SMM for TDX VMs and error out if user requests to enable SMM.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Acked-by: Gerd Hoffmann <kraxel@redhat.com>
@@ -104,25 +102,30 @@ Acked-by: Gerd Hoffmann <kraxel@redhat.com>
  1 file changed, 9 insertions(+)
 
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 19ce90df4143..00faffa891e4 100644
+index 00faffa891e4..68d90a180db7 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -372,6 +372,15 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         return -EOPNOTSUPP;
-     }
+@@ -355,11 +355,20 @@ static Notifier tdx_machine_done_notify = {
  
-+    /*
-+     * Set kvm_readonly_mem_allowed to false, because TDX only supports readonly
-+     * memory for shared memory but not for private memory. Besides, whether a
-+     * memslot is private or shared is not determined by QEMU.
-+     *
-+     * Thus, just mark readonly memory not supported for simplicity.
-+     */
-+    kvm_readonly_mem_allowed = false;
+ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+ {
++    MachineState *ms = MACHINE(qdev_get_machine());
++    X86MachineState *x86ms = X86_MACHINE(ms);
+     TdxGuest *tdx = TDX_GUEST(cgs);
+     int r = 0;
+ 
+     kvm_mark_guest_state_protected();
+ 
++    if (x86ms->smm == ON_OFF_AUTO_AUTO) {
++        x86ms->smm = ON_OFF_AUTO_OFF;
++    } else if (x86ms->smm == ON_OFF_AUTO_ON) {
++        error_setg(errp, "TDX VM doesn't support SMM");
++        return -EINVAL;
++    }
 +
-     qemu_add_machine_init_done_notifier(&tdx_machine_done_notify);
- 
-     tdx_guest = tdx;
+     if (!tdx_caps) {
+         r = get_tdx_capabilities(errp);
+         if (r) {
 -- 
 2.34.1
 
