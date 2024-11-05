@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E883CD3E779
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55083D3E779
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SMj-0000Ay-2T; Tue, 05 Nov 2024 17:49:37 -0500
+	id 1t8SMm-0000Pb-2F; Tue, 05 Nov 2024 17:49:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMd-0007ye-D4
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:31 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMi-0000BV-N2
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:36 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMb-0004Pu-Qm
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:31 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-431695fa98bso47258595e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:49:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SMg-0004Qw-Rw
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:49:36 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-37d47b38336so4524215f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:49:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730846968; x=1731451768; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730846973; x=1731451773; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=14SbIx3o26YQ4yyKbflKXIgXTVgVzW1mc5iHdybl3Tg=;
- b=DXtdmUIiC+O0+3wktHSyAFZj19s1Uw5X292qQw/4bQ094OLpnvSBEyj4ex/73TbpDE
- +A3OZhQTu8DHy3vgXbPL2rAZppxycuoiezSdEqCiybiuGJTxfsCVhiPXJtsOE50lCAEB
- uGD1Yqn+T94xI4BzIITBZLIhbZLE6VeWfAhEKBF7yRbQc3xCrLFHRuRCuKXWPXHDueQU
- LPgeuyKuclaacu3PJH35hR6xUeo9hEU0t3LGK8MPaJ6lUhZIUzpwMLrMVDOOKm04NF91
- HiwqwTPJG9HRXvKDQ0n/nDmIoYz9Hb4voWpgRkRLzjZhi6XFa8XPqAD10pMWdEWidtj9
- GCIA==
+ bh=RfsSAg28LXuScwoije6ppSHZyCgl4l8pk8ov2/9yx6A=;
+ b=nkn/tfYcjUpPUAvSpGjMt9WRtLR0xRPd5eLYBukTeOf7uvhSHTybc3/LnV5iXnEE/S
+ k4MIcrUHUXnCjaRByFxC36S6QM6zz+0/Zxk0H1ekXYbPfhOzNqBvJkR2Wc+PRL2AojRb
+ dnJ5jgbGppIkmHMYuiYFQXmgJZlKd2te7lsmf5hBaMHPwNAtUB2s63X/Uuq69iuacEkq
+ 3lh9n090tJlMs4uiQM/idH9QK6XIkxBjGcQFbKuACRNtzmkAaCoJvAEKkmX1NMg+3sAs
+ 9l9X0LRh6aVS7cXF5x1up1IUwpV2MEYYjUnr3vHrChTWHM+vMrZm4c2gNOSVyIYyaTSg
+ Cx+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730846968; x=1731451768;
+ d=1e100.net; s=20230601; t=1730846973; x=1731451773;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=14SbIx3o26YQ4yyKbflKXIgXTVgVzW1mc5iHdybl3Tg=;
- b=Xb1iVeW8nW5R89v7Ut5+NmtoctOcxO53fwRZA6mqZGPwuwOFB6vUk8rpLqXqzxZ2Fs
- Jt1lN6vpkzCRHYhW8fjOyCvUiPNl1M7n8FXTgqGtVDf9WUm8/2QtzLkmsXru4E0OTHb7
- C3dKrzzKaGwxyZVCY+TyU14ZwLN15mKGoWVnCrGokpG6VB7fvauRbZcHHK1+jLeV0wcv
- Kd3Z4dmWbx7cZrVoo1G4rpCx8lpni78iO0Oa6/calh292gxXB+ifzl+jHHkHHYTuD9bu
- wNNScLpbcK4wX8+M8OKxnDHRwUBCKNtlSsm2u3DzG8j0yLeAsdKiQgwRhSiS22gxXS9T
- 3juw==
-X-Gm-Message-State: AOJu0Yx988bzl4GGLEBKezQem7GX9mg5s5PykSjp0bT+fJIOizdaYDxj
- poidlQ7FqJ1RrPIQMQdOGwMONsX38Oo1hXnyUVOsIxVmshVwi83B5W5f1wUNYtoqdvh2QqHyNKK
- rcmiOUg==
-X-Google-Smtp-Source: AGHT+IH9ulny6mFUU+mR96Tgwa3r6i5UsRpzFDx6QwS/OdH7cjueFk41++dH2s6XDT8OlaowHLmF3w==
-X-Received: by 2002:a05:600c:511c:b0:42c:a580:71cf with SMTP id
- 5b1f17b1804b1-4319ad24423mr331876465e9.30.1730846968140; 
- Tue, 05 Nov 2024 14:49:28 -0800 (PST)
+ bh=RfsSAg28LXuScwoije6ppSHZyCgl4l8pk8ov2/9yx6A=;
+ b=Mk/tydvfFy36iMqGivvzYDUe7khJ6RJ59Tc70gjNspf8ToPafeNmrd0512M6fbehOd
+ aEP3DLHUOxKCCXIgfcSSFDrh06CerqqsPthosaGyWuiec9Zb/CMnK8ydcleARzwUDGYg
+ gbDbo/GFmMuafnWGqF/PlxHZFYLfgDbHAA593PlYlRREocmIKB+0y552Zo6oicgxCqP9
+ pPhkHsz8mRychc7PtQXOk7O24NRPnLlr0/K1lethSmzkMbb8IXCIOh+ruOH+r1OhbNom
+ Rljg6NCQKxPMn0smiXV5pZ77W1PMZMDFEJRtOdokPseKyQaCcgjCQfSKCDKeOLz90hYh
+ zhgw==
+X-Gm-Message-State: AOJu0Yyy/GpaTHz/j3Pzoqf03rNT2PCjiqWb308Y+Hlaiw7WEJhudZDL
+ lht6GfpFprMyYHO1XZ2Mt9iXXcnYZvbRWAZjonmPmvaRA76T6qH/zJOJP62YlRMKh1whC03Imnq
+ IEsQsrg==
+X-Google-Smtp-Source: AGHT+IHbJoMmP6OzSS4qr9eurp7Nh+8iqhBqSHp2oyV1qS7LPCwpLm8dwI+Owg/6azbc640Pe2j7Jg==
+X-Received: by 2002:a05:6000:e88:b0:37d:4f1b:359 with SMTP id
+ ffacd0b85a97d-38061220a5emr29787052f8f.53.1730846973087; 
+ Tue, 05 Nov 2024 14:49:33 -0800 (PST)
 Received: from localhost.localdomain ([154.14.63.34])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa6b3505sm1098555e9.15.2024.11.05.14.49.26
+ ffacd0b85a97d-381c10b7a86sm17294816f8f.22.2024.11.05.14.49.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 14:49:27 -0800 (PST)
+ Tue, 05 Nov 2024 14:49:32 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 22/29] hw/gpio/mpc8xxx: Prefer DEFINE_TYPES() macro
-Date: Tue,  5 Nov 2024 22:47:20 +0000
-Message-ID: <20241105224727.53059-23-philmd@linaro.org>
+Subject: [PULL 23/29] hw/ppc/mpc8544_guts: Prefer DEFINE_TYPES() macro
+Date: Tue,  5 Nov 2024 22:47:21 +0000
+Message-ID: <20241105224727.53059-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241105224727.53059-1-philmd@linaro.org>
 References: <20241105224727.53059-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,51 +99,49 @@ From: Bernhard Beschow <shentey@gmail.com>
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20241103133412.73536-18-shentey@gmail.com>
+Message-ID: <20241103133412.73536-19-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/gpio/mpc8xxx.c | 22 +++++++++-------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+ hw/ppc/mpc8544_guts.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/hw/gpio/mpc8xxx.c b/hw/gpio/mpc8xxx.c
-index 63b7a5c881d..a3c1d2fbf4c 100644
---- a/hw/gpio/mpc8xxx.c
-+++ b/hw/gpio/mpc8xxx.c
-@@ -23,7 +23,6 @@
- #include "hw/irq.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "qemu/module.h"
- #include "qom/object.h"
+diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
+index c02b34ccded..e3c51458e69 100644
+--- a/hw/ppc/mpc8544_guts.c
++++ b/hw/ppc/mpc8544_guts.c
+@@ -18,7 +18,6 @@
+  */
  
- #define TYPE_MPC8XXX_GPIO "mpc8xxx_gpio"
-@@ -208,17 +207,14 @@ static void mpc8xxx_gpio_class_init(ObjectClass *klass, void *data)
-     device_class_set_legacy_reset(dc, mpc8xxx_gpio_reset);
+ #include "qemu/osdep.h"
+-#include "qemu/module.h"
+ #include "qemu/log.h"
+ #include "sysemu/runstate.h"
+ #include "cpu.h"
+@@ -141,16 +140,13 @@ static void mpc8544_guts_initfn(Object *obj)
+     sysbus_init_mmio(d, &s->iomem);
  }
  
--static const TypeInfo mpc8xxx_gpio_info = {
--    .name          = TYPE_MPC8XXX_GPIO,
+-static const TypeInfo mpc8544_guts_info = {
+-    .name          = TYPE_MPC8544_GUTS,
 -    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(MPC8XXXGPIOState),
--    .instance_init = mpc8xxx_gpio_initfn,
--    .class_init    = mpc8xxx_gpio_class_init,
-+static const TypeInfo mpc8xxx_gpio_types[] = {
+-    .instance_size = sizeof(GutsState),
+-    .instance_init = mpc8544_guts_initfn,
++static const TypeInfo mpc8544_guts_types[] = {
 +    {
-+        .name          = TYPE_MPC8XXX_GPIO,
++        .name          = TYPE_MPC8544_GUTS,
 +        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(MPC8XXXGPIOState),
-+        .instance_init = mpc8xxx_gpio_initfn,
-+        .class_init    = mpc8xxx_gpio_class_init,
++        .instance_size = sizeof(GutsState),
++        .instance_init = mpc8544_guts_initfn,
 +    },
  };
  
--static void mpc8xxx_gpio_register_types(void)
+-static void mpc8544_guts_register_types(void)
 -{
--    type_register_static(&mpc8xxx_gpio_info);
+-    type_register_static(&mpc8544_guts_info);
 -}
 -
--type_init(mpc8xxx_gpio_register_types)
-+DEFINE_TYPES(mpc8xxx_gpio_types)
+-type_init(mpc8544_guts_register_types)
++DEFINE_TYPES(mpc8544_guts_types)
 -- 
 2.45.2
 
