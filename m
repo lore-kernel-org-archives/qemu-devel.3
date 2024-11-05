@@ -4,70 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC2DD3E77C
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E15D3E779
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 22:48:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8SKn-0004vt-40; Tue, 05 Nov 2024 17:47:37 -0500
+	id 1t8SKq-0004wU-Ld; Tue, 05 Nov 2024 17:47:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SKl-0004vf-J7
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:47:35 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SKp-0004wG-31
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:47:39 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SKj-00045X-Ph
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:47:35 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-37d3e8d923fso4041738f8f.0
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:47:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8SKn-00046H-Er
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 17:47:38 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4315baa51d8so53681885e9.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 14:47:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730846851; x=1731451651; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Xr6rUvd0S2qYFXciRZZ0R0I5akd+1oUBmW5fE2xCu5Q=;
- b=El48us06ZbFTrTmcG1NqUK1QU5EZBuwLSbZBVzNmfBKLnJI2116E1o4Q+aauBJs04l
- eZuzSWMvGBQK1X5TZQ2rys0XMx354HsqX/mdp/UG0/7CxyF8yrmcVBmWP4UMIZIYQBvu
- JXFWCNPaeJwHEN5KCt+/AtTAN0r0hpZibklz3ZzYfaiRkupDlIzNl5RPl8aI3LtJj34D
- rZ5SEmFmcZGkSDPYXzEjM9BXkWpdrn5m3crTezER/BEOKVYU8iRZVkKSx5vlqftWen7a
- niFtCOmXWO58ZZUdqFFZJBJtM2u2E2UGEig0MwgPVnTupH1+EK9xpgcspYm/9F433tAT
- xD1A==
+ d=linaro.org; s=google; t=1730846855; x=1731451655; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JMgnD1f2TMybfS2TXqKpX7ke8go0TcVe3Ve35OZXk9k=;
+ b=Ds84GUvwts10o2mNvL+CeMM8QoOpb5wYssZRV4NtGUb3kwLFDK5c3sneVaRWANQnWY
+ iat7qK9JToP7J4En1fHrjWCO30eFIoJnAEcWym1fH9JmON8ueXhZLJceSQanfiV0IYJ2
+ MA7Xb7kvTSply7F8vEXZoDS/eV0M34Yh7NKO+fb1HpNxXm0rbjUKf2pDqvbM464q2jqW
+ HJItC/LEH3qQjula//xUBw0oILXhxCLF3UkiHmoVJJkAZ5QqdMhyAZ8CEB/wsFPhsA5L
+ zUVpUJDHgGkM1/cEahZaKwgFQiSLGgIoaQc7BcaDDutIEEiXeDJMy5mhdxQdOssE9HMs
+ 6qbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730846851; x=1731451651;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Xr6rUvd0S2qYFXciRZZ0R0I5akd+1oUBmW5fE2xCu5Q=;
- b=t2E4aSVvyX0gUUVTHQnWNfXjL50bqNBjSu3oWrT9QZzPNsPha0IcorKsmf160hZpXx
- gQIehvt1bq43jz+gUn4lwNe9EsNED+FHNogjtgAW5wWqS7To0Hj/6FDYW7TwlbdHjbp9
- mU1AZ6/eXGkBpNDkDbXGUUM7WTD54GsJC512NmrP5/rW7gfP8dlBKf5iR3pihLAHlr66
- +3z2aLOwhqsQlDUII65yyIZqef7zaXkn67mfCSGCLeTRxegNwD5y2sEIP9FvwGYkuBa1
- qZVGLDuDFPIt+0J9Trh5YTO7U3aDDSNAiGyGHtKNOAkyjxdxX7beHUWGCX5dTQiCGf6l
- MvHA==
-X-Gm-Message-State: AOJu0Yy0d6rkyd+PCwOC6QaVY9NMF7EC8Lp+7gvVt6guXnVvBBK+tY3M
- 4ttXBKkrm9ehbyLbK+Q1/jElrxwwkG/mBkK02NkQ02YhoRvytpOICVtePCQJjvSV/ahSGYacwRH
- APmm8Rw==
-X-Google-Smtp-Source: AGHT+IH7LVKy2lFV+z1k7QN+EdHPdSLSYfMM0OyN6GJdxGQoBVEot2/ICTh1ijaOUGLXtxFESaAh/w==
-X-Received: by 2002:adf:e992:0:b0:37d:4a82:6412 with SMTP id
- ffacd0b85a97d-380611e4ea6mr25613551f8f.46.1730846851019; 
- Tue, 05 Nov 2024 14:47:31 -0800 (PST)
-Received: from localhost.localdomain ([89.101.241.141])
+ d=1e100.net; s=20230601; t=1730846855; x=1731451655;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JMgnD1f2TMybfS2TXqKpX7ke8go0TcVe3Ve35OZXk9k=;
+ b=gOiVPC+NYFCtxdyz/6atLDHZiGalnd85o4wuNMln4CbD2i/NHpmx0p6fWEDh/3KcZU
+ 0SekpYThnY7L1TxL/yVcraFWFAp7wgjb+Ed23sXSc2ahSWYM0HBT4n3HUKSY1hJ4Q1Tp
+ wM3wH09MWN3QnNVmmr7UMUYclxOuSCvg4mHOudb5mVN6VircgneNH9+JnrtV3x7LLTLS
+ L/o9hQ4zjrdmp+l5V0J7X7mI3gmIxguGhtqVhE1nSwjfuIleG4idUIrhfZIVxnOYtIZ1
+ X1yk3bQPZ3r7OoFdHORUHVSVepNPTAd6iuEKWFgCtFtG5n8/jtxxXO3Dm55giDhA5DcH
+ tE7w==
+X-Gm-Message-State: AOJu0Yy1MQ1xfs0Mf4Hy/J4lsaQ2XlGlx7KQzEOCsjNas32Xjm9A0jy9
+ mmhs+fdfC51J4yk6nAzAuKcP/Q2Rmec7bWaFUPU0uWS/IJh7diTyZb+b97tNmYftBWA/odb6quN
+ pp+YVYg==
+X-Google-Smtp-Source: AGHT+IFB0T2oS+pmpfxlL+x03jz4LtkYGhwsIF08MW9v7wMT4D8yHhfwJkL85lbn+948MNAJQ3lBGg==
+X-Received: by 2002:a05:600c:4e8b:b0:426:61e8:fb3b with SMTP id
+ 5b1f17b1804b1-4327b80d1cemr176713695e9.27.1730846855567; 
+ Tue, 05 Nov 2024 14:47:35 -0800 (PST)
+Received: from localhost.localdomain ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10d4d82sm17392950f8f.45.2024.11.05.14.47.28
+ ffacd0b85a97d-381c116a7a6sm17354385f8f.92.2024.11.05.14.47.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 14:47:29 -0800 (PST)
+ Tue, 05 Nov 2024 14:47:35 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/29] Misc HW patches for 2024-11-05
-Date: Tue,  5 Nov 2024 22:46:58 +0000
-Message-ID: <20241105224727.53059-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 01/29] target/microblaze: Rename CPU endianness property as
+ 'little-endian'
+Date: Tue,  5 Nov 2024 22:46:59 +0000
+Message-ID: <20241105224727.53059-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241105224727.53059-1-philmd@linaro.org>
+References: <20241105224727.53059-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,98 +95,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 44a9394b1d272b53306d097d4bc20ff7ad14b159:
+Rename the 'endian' property as 'little-endian' because the 'ENDI'
+bit is set when the endianness is in little order, and unset in
+big order.
 
-  Merge tag 'pull-nvme-20241104' of https://gitlab.com/birkelund/qemu into staging (2024-11-05 14:23:22 +0000)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-Id: <20241105130431.22564-2-philmd@linaro.org>
+---
+ hw/microblaze/petalogix_ml605_mmu.c | 2 +-
+ hw/microblaze/xlnx-zynqmp-pmu.c     | 2 +-
+ target/microblaze/cpu.c             | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/hw-misc-20241105
-
-for you to fetch changes up to ddbb025aa942a5f4db66c6b09c2c69035e51a0d2:
-
-  hw/riscv/iommu: fix build error with clang (2024-11-05 22:46:39 +0000)
-
-----------------------------------------------------------------
-Misc HW patch queue
-
-- Deprecate a pair of untested microblaze big-endian machines (Philippe)
-- Arch-agnostic CPU topology checks at machine level (Zhao)
-- Cleanups on PPC E500 (Bernhard)
-- Various conversions to DEFINE_TYPES() macro (Bernhard)
-- Fix RISC-V _pext_u64() name clashing (Pierrick)
-
-----------------------------------------------------------------
-
-Bernhard Beschow (17):
-  hw/ppc/e500: Prefer QOM cast
-  hw/ppc/e500: Remove unused "irqs" parameter
-  hw/ppc/e500: Add missing device tree properties to i2c controller node
-  hw/ppc/mpc8544_guts: Populate POR PLL ratio status register
-  hw/i2c/mpc_i2c: Convert DPRINTF to trace events for register access
-  hw/i2c/mpc_i2c: Prefer DEFINE_TYPES() macro
-  hw/pci-host/ppce500: Reuse TYPE_PPC_E500_PCI_BRIDGE define
-  hw/pci-host/ppce500: Prefer DEFINE_TYPES() macro
-  hw/net/fsl_etsec/miim: Reuse MII constants
-  hw/net/fsl_etsec/etsec: Prefer DEFINE_TYPES() macro
-  hw/gpio/mpc8xxx: Prefer DEFINE_TYPES() macro
-  hw/ppc/mpc8544_guts: Prefer DEFINE_TYPES() macro
-  hw/sd/sdhci: Prefer DEFINE_TYPES() macro
-  hw/block/pflash_cfi01: Prefer DEFINE_TYPES() macro
-  hw/i2c/smbus_eeprom: Prefer DEFINE_TYPES() macro
-  hw/rtc/ds1338: Prefer DEFINE_TYPES() macro
-  hw/usb/hcd-ehci-sysbus: Prefer DEFINE_TYPES() macro
-
-Philippe Mathieu-Daudé (6):
-  target/microblaze: Rename CPU endianness property as 'little-endian'
-  hw/microblaze: Deprecate big-endian petalogix-ml605 & xlnx-zynqmp-pmu
-  hw/microblaze/s3adsp1800: Explicit CPU endianness
-  hw/microblaze/s3adsp1800: Rename unimplemented MMIO region as xps_gpio
-  hw/microblaze/s3adsp1800: Declare machine type using DEFINE_TYPES
-    macro
-  hw/core/machine: Add missing 'units.h' and 'error-report.h' headers
-
-Pierrick Bouvier (1):
-  hw/riscv/iommu: fix build error with clang
-
-Zhao Liu (5):
-  i386/cpu: Don't enumerate the "invalid" CPU topology level
-  hw/core: Make CPU topology enumeration arch-agnostic
-  qapi/qom: Define cache enumeration and properties for machine
-  hw/core: Check smp cache topology support for machine
-  hw/core: Add a helper to check the cache topology level
-
- docs/about/deprecated.rst                     |   6 +
- .../devices/microblaze-softmmu/default.mak    |   2 -
- .../devices/microblazeel-softmmu/default.mak  |   5 +-
- qapi/machine-common.json                      |  94 ++++++++++-
- include/hw/boards.h                           |  16 ++
- include/hw/i386/topology.h                    |  22 +--
- target/i386/cpu.h                             |   4 +-
- hw/block/pflash_cfi01.c                       |  21 +--
- hw/core/machine-smp.c                         | 126 +++++++++++++++
- hw/core/machine.c                             |  46 ++++++
- hw/gpio/mpc8xxx.c                             |  22 ++-
- hw/i2c/mpc_i2c.c                              |  29 ++--
- hw/i2c/smbus_eeprom.c                         |  19 +--
- hw/i386/x86-common.c                          |   4 +-
- hw/microblaze/petalogix_ml605_mmu.c           |   9 +-
- hw/microblaze/petalogix_s3adsp1800_mmu.c      |  21 ++-
- hw/microblaze/xlnx-zynqmp-pmu.c               |  10 +-
- hw/net/fsl_etsec/etsec.c                      |  22 ++-
- hw/net/fsl_etsec/miim.c                       |  19 +--
- hw/pci-host/ppce500.c                         |  44 +++--
- hw/ppc/e500.c                                 |  10 +-
- hw/ppc/mpc8544_guts.c                         |  32 ++--
- hw/riscv/riscv-iommu.c                        |  23 ++-
- hw/rtc/ds1338.c                               |  20 +--
- hw/sd/sdhci.c                                 |  62 +++----
- hw/usb/hcd-ehci-sysbus.c                      | 118 ++++++--------
- target/i386/cpu.c                             | 151 +++++++++---------
- target/microblaze/cpu.c                       |   2 +-
- hw/i2c/trace-events                           |   5 +
- 29 files changed, 616 insertions(+), 348 deletions(-)
-
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index b4183c5267d..df808ac323e 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -90,7 +90,7 @@ petalogix_ml605_init(MachineState *machine)
+     object_property_set_int(OBJECT(cpu), "use-fpu", 1, &error_abort);
+     object_property_set_bool(OBJECT(cpu), "dcache-writeback", true,
+                              &error_abort);
+-    object_property_set_bool(OBJECT(cpu), "endianness", true, &error_abort);
++    object_property_set_bool(OBJECT(cpu), "little-endian", true, &error_abort);
+     qdev_realize(DEVICE(cpu), NULL, &error_abort);
+ 
+     /* Attach emulated BRAM through the LMB.  */
+diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
+index 1bfc9641d29..43608c2dca4 100644
+--- a/hw/microblaze/xlnx-zynqmp-pmu.c
++++ b/hw/microblaze/xlnx-zynqmp-pmu.c
+@@ -90,7 +90,7 @@ static void xlnx_zynqmp_pmu_soc_realize(DeviceState *dev, Error **errp)
+     object_property_set_bool(OBJECT(&s->cpu), "use-pcmp-instr", true,
+                              &error_abort);
+     object_property_set_bool(OBJECT(&s->cpu), "use-mmu", false, &error_abort);
+-    object_property_set_bool(OBJECT(&s->cpu), "endianness", true,
++    object_property_set_bool(OBJECT(&s->cpu), "little-endian", true,
+                              &error_abort);
+     object_property_set_str(OBJECT(&s->cpu), "version", "8.40.b",
+                             &error_abort);
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index 135947ee800..e9f98806274 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -368,7 +368,7 @@ static Property mb_properties[] = {
+     DEFINE_PROP_UINT8("use-non-secure", MicroBlazeCPU, cfg.use_non_secure, 0),
+     DEFINE_PROP_BOOL("dcache-writeback", MicroBlazeCPU, cfg.dcache_writeback,
+                      false),
+-    DEFINE_PROP_BOOL("endianness", MicroBlazeCPU, cfg.endi, false),
++    DEFINE_PROP_BOOL("little-endian", MicroBlazeCPU, cfg.endi, false),
+     /* Enables bus exceptions on failed data accesses (load/stores).  */
+     DEFINE_PROP_BOOL("dopb-bus-exception", MicroBlazeCPU,
+                      cfg.dopb_bus_exception, false),
 -- 
 2.45.2
 
