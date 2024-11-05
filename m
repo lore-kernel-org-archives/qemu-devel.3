@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A69BD12686
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:14:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEDAAD1268A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:20:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8HW0-0002x2-Ch; Tue, 05 Nov 2024 06:14:28 -0500
+	id 1t8HbK-0004Vn-On; Tue, 05 Nov 2024 06:19:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8HVx-0002wn-Ux
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:14:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8HVt-0006cX-N7
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:14:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730805258;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=3FG8T0t0tfqrLp1wc3X1sk+VoTwvl6f29BL4XZWT+3M=;
- b=OxK+EoZ//OQhaUXl+H5/wa4mA1FI4b2m5STvSAHmHliZrE1QnT19D2OgYCLI9kuFKEXs4j
- og4DZ0xmOfQSWQv7b0tH9AiBKtlA0gqf/1gGeTZhp5v6H4VvId5YstDwyIQtNqwKKtN061
- 1ohjteLtSY7Y1zQWlcr3aLMxPTVFFr8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-453-eTruY0xTNCeV66htOz5sfw-1; Tue,
- 05 Nov 2024 06:14:15 -0500
-X-MC-Unique: eTruY0xTNCeV66htOz5sfw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 61CD219560B5; Tue,  5 Nov 2024 11:14:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.52])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0AE4D19560AD; Tue,  5 Nov 2024 11:14:06 +0000 (UTC)
-Date: Tue, 5 Nov 2024 11:14:03 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 60/60] docs: Add TDX documentation
-Message-ID: <Zyn9-1N0XyOwjmf1@redhat.com>
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-61-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8HbI-0004UL-30
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:19:56 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8HbB-00076o-Nb
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:19:55 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-431616c23b5so33181505e9.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 03:19:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730805587; x=1731410387; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=QD6Lc/I6xdPJ52+g1i8fO338zKT4nqacusp7y0oQIcc=;
+ b=sicNZKRHrhkfNYHpLjBwqB9ZQjhKlcUGzHxhNqUKAtsbbYWNa9b3WeApzqjknbGVXG
+ llqjMzkC2VVvcyRivAwaotIp64S9mVbnGXLhTsvSHGWM+ALei0I/XaBlWBDdtdEUtz11
+ FmJYmGSeZDwKLou1t8Vz4gxMshewtF5VkQz7i5DzPSQ1AJNTJbbsXeEZydKS6uPDS4to
+ HS6ghoeOqfQFR2w7KeiA/1qzJvrpSGVmHoAbMLmc9f3mKbVJyiUs7CbBRVBe5CIDZUIl
+ bgdB72lggi8/0MK/cnTQkGo8gH+LulsUF6LxKq8vrEQdXUqsN8kvZmXK0UXqY07pwdOS
+ blGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730805587; x=1731410387;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QD6Lc/I6xdPJ52+g1i8fO338zKT4nqacusp7y0oQIcc=;
+ b=V8uKON2o7jA6FgbQzYjDe8XoWm5qsTmljTmSDpAAMk80ScCh1C8F8qg4dgchCiOc/c
+ 7cko+PvWIw5NjMyeD7NYf1eAL7/v9Djp6tkXCXmKiGihIoscbbNanvrCQtuk/uZWmls3
+ 3Tk7hFW3rPuNdvkH0ulkTgp1GwDCWdZlmBEYBY9bUpNX2M0+Sy+jwDVLwijY9IFkWQ1E
+ pQ3NWmvdll9EoUbhrtrfurdpvX37QESkMFhnqsZ8jWAVRjxcJ2iv4bTmhCv4v0Wbs1u7
+ /QGC4wl8iTAm0ytwWFgBSNlIacP/DBh7vPVix05E1CmwN7gNDBkznY7+HJDBuW4Ah1lo
+ nfJA==
+X-Gm-Message-State: AOJu0Yx9yIYDLSJPZF0sxwjRa6sIGNDUgMMZVA6A96d8DGKbHVoX7JZ/
+ EBoAeVWq7/02qRl5w3fBDgifTlLmwEGnfJ737zEeP5QnM8t48xSIzKK100Nb8iNUrIc/yVaGvyu
+ O
+X-Google-Smtp-Source: AGHT+IH0FgwKmDhBx+H+hKWmuPuZ6OakkHkQfyaB+B7+3daicMuI3K4jRHZd9d/xh6lWJFyor7dccw==
+X-Received: by 2002:a05:600c:a02:b0:431:15f1:421d with SMTP id
+ 5b1f17b1804b1-432830a14b7mr129407135e9.16.1730805586993; 
+ Tue, 05 Nov 2024 03:19:46 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432a3688813sm16354555e9.1.2024.11.05.03.19.46
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Nov 2024 03:19:46 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 17/31] target/microblaze: Move setting of float rounding mode
+ to reset
+Date: Tue,  5 Nov 2024 11:19:21 +0000
+Message-Id: <20241105111935.2747034-18-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241105111935.2747034-1-peter.maydell@linaro.org>
+References: <20241105111935.2747034-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241105062408.3533704-61-xiaoyao.li@intel.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,99 +91,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 05, 2024 at 01:24:08AM -0500, Xiaoyao Li wrote:
-> Add docs/system/i386/tdx.rst for TDX support, and add tdx in
-> confidential-guest-support.rst
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> ---
-> Changes in v6:
->  - Add more information of "Feature configuration"
->  - Mark TD Attestation as future work because KVM now drops the support
->    of it.
-> 
-> Changes in v5:
->  - Add TD attestation section and update the QEMU parameter;
-> 
-> Changes since v1:
->  - Add prerequisite of private gmem;
->  - update example command to launch TD;
-> 
-> Changes since RFC v4:
->  - add the restriction that kernel-irqchip must be split
-> ---
->  docs/system/confidential-guest-support.rst |   1 +
->  docs/system/i386/tdx.rst                   | 155 +++++++++++++++++++++
->  docs/system/target-i386.rst                |   1 +
->  3 files changed, 157 insertions(+)
->  create mode 100644 docs/system/i386/tdx.rst
-> 
-> diff --git a/docs/system/confidential-guest-support.rst b/docs/system/confidential-guest-support.rst
-> index 0c490dbda2b7..66129fbab64c 100644
-> --- a/docs/system/confidential-guest-support.rst
-> +++ b/docs/system/confidential-guest-support.rst
-> @@ -38,6 +38,7 @@ Supported mechanisms
->  Currently supported confidential guest mechanisms are:
->  
->  * AMD Secure Encrypted Virtualization (SEV) (see :doc:`i386/amd-memory-encryption`)
-> +* Intel Trust Domain Extension (TDX) (see :doc:`i386/tdx`)
->  * POWER Protected Execution Facility (PEF) (see :ref:`power-papr-protected-execution-facility-pef`)
->  * s390x Protected Virtualization (PV) (see :doc:`s390x/protvirt`)
->  
-> diff --git a/docs/system/i386/tdx.rst b/docs/system/i386/tdx.rst
-> new file mode 100644
-> index 000000000000..60106b29bf72
-> --- /dev/null
-> +++ b/docs/system/i386/tdx.rst
+Although the floating point rounding mode for Microblaze is always
+nearest-even, we cannot set it just once in the CPU initfn.  This is
+because env->fp_status is in the part of the CPU state struct that is
+zeroed on reset.
 
-> +Feature check
-> +~~~~~~~~~~~~~
-> +
-> +QEMU checks if the final (CPU) features, determined by given cpu model and
-> +explicit feature adjustment of "+featureA/-featureB", can be supported or not.
-> +It can produce feature not supported warnning like
+Move the call to set_float_rounding_mode() into the reset fn.
 
-Typo in 'warnning' - repeated 'n'
+(This had no guest-visible effects because it happens that the
+float_round_nearest_even enum value is 0, so when the struct was
+zeroed it didn't corrupt the setting.)
 
-> +
-> +  "warning: host doesn't support requested feature: CPUID.07H:EBX.intel-pt [bit 25]"
-> +
-> +It will also procude warning like
-> +
-> +  "warning: TDX forcibly sets the feature: CPUID.80000007H:EDX.invtsc [bit 8]"
-> +
-> +if the fixed-1 feature is requested to be disabled explicitly. This is newly
-> +added to QEMU for TDX because TDX has fixed-1 features that are enfored enabled
-> +by TDX module and VMM cannot disable them.
-> +
-> +Launching a TD (TDX VM)
-> +-----------------------
-> +
-> +To launch a TDX guest, below are new added and required:
-> +
-> +.. parsed-literal::
-> +
-> +    |qemu_system_x86| \\
-> +        -object tdx-guest,id=tdx0 \\
-> +        -machine ...,kernel-irqchip=split,confidential-guest-support=tdx0 \\
-> +        -bios OVMF.fd \\
-> +
-> +restrictions
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241025141254.2141506-18-peter.maydell@linaro.org
+---
+ target/microblaze/cpu.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Capitalize initial "R"
-
-> +------------
-
-
-With regards,
-Daniel
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index 135947ee800..6329a774331 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -201,6 +201,8 @@ static void mb_cpu_reset_hold(Object *obj, ResetType type)
+ 
+     env->pc = cpu->cfg.base_vectors;
+ 
++    set_float_rounding_mode(float_round_nearest_even, &env->fp_status);
++
+ #if defined(CONFIG_USER_ONLY)
+     /* start in user mode with interrupts enabled.  */
+     mb_cpu_write_msr(env, MSR_EE | MSR_IE | MSR_VM | MSR_UM);
+@@ -311,15 +313,12 @@ static void mb_cpu_realizefn(DeviceState *dev, Error **errp)
+ static void mb_cpu_initfn(Object *obj)
+ {
+     MicroBlazeCPU *cpu = MICROBLAZE_CPU(obj);
+-    CPUMBState *env = &cpu->env;
+ 
+     gdb_register_coprocessor(CPU(cpu), mb_cpu_gdb_read_stack_protect,
+                              mb_cpu_gdb_write_stack_protect,
+                              gdb_find_static_feature("microblaze-stack-protect.xml"),
+                              0);
+ 
+-    set_float_rounding_mode(float_round_nearest_even, &env->fp_status);
+-
+ #ifndef CONFIG_USER_ONLY
+     /* Inbound IRQ and FIR lines */
+     qdev_init_gpio_in(DEVICE(cpu), microblaze_cpu_set_irq, 2);
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.34.1
 
 
