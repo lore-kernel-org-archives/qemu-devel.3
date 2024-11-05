@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E2DD31768
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 16:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C6E8D31768
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 17:03:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8MtK-0007mY-TW; Tue, 05 Nov 2024 11:58:54 -0500
+	id 1t8Mwz-0001ni-2x; Tue, 05 Nov 2024 12:02:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t8MtI-0007lv-R2
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 11:58:52 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t8Mww-0001f3-CS
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 12:02:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t8MtH-0005Rr-A6
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 11:58:52 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t8Mwt-0005si-0j
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 12:02:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730825929;
+ s=mimecast20190719; t=1730826153;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZfcMQy9UqXEevUjanhabMm9WwGID4mhs+ajxATJcGU0=;
- b=FVIMYokUqOyl/pcDJwew96p1W1oIJT9xlxN/58stcd4gOUkRRjLcIiczsBgsZ6KY9EYE6Z
- gLefmkmX3ZkjF4eZ4q3psXySwo4ty0OXP4ustDSbApNmi5DcoGuHxKYlqAOJmTAUfqNy2X
- xK5ZiZ4NwREonelNJwbVsx4DV2x/CT8=
+ bh=pcSD8D0A1jUOrgR7TmdU9oL1/rBS5lIAGlGLO3nzwnc=;
+ b=KOBL3agWZuBCnOISfX779uCbzxmmBe+jXftJcNKw+8XiWxQKF7cCCD3ZylK1jMxKKUWDfF
+ GF2MhDc1CQ5CWbCDOaEIlT0CGvWLo6z/kCJaoo1nSCDnqU+2GzAIXBlHsx2MOiVP78Ivuu
+ RgjQXCSEedShDSnQ9oW9+83sqaKLwAk=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-536-iDryoA-APdO9OLf3tFCY0w-1; Tue,
- 05 Nov 2024 11:58:48 -0500
-X-MC-Unique: iDryoA-APdO9OLf3tFCY0w-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-580-qZJRSIKdOXCMCvc0M_hl3A-1; Tue,
+ 05 Nov 2024 11:58:49 -0500
+X-MC-Unique: qZJRSIKdOXCMCvc0M_hl3A-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3729619560A7; Tue,  5 Nov 2024 16:58:47 +0000 (UTC)
+ id CDA6A1955EE8; Tue,  5 Nov 2024 16:58:48 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.193.244])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D8D7B3000198; Tue,  5 Nov 2024 16:58:45 +0000 (UTC)
+ id 9FBC9300018D; Tue,  5 Nov 2024 16:58:47 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-Subject: [PULL 1/2] vfio/migration: Add save_{iterate,
- complete_precopy}_start trace events
-Date: Tue,  5 Nov 2024 17:58:40 +0100
-Message-ID: <20241105165841.3086136-2-clg@redhat.com>
+Subject: [PULL 2/2] vfio/migration: Add vfio_save_block_precopy_empty_hit
+ trace event
+Date: Tue,  5 Nov 2024 17:58:41 +0100
+Message-ID: <20241105165841.3086136-3-clg@redhat.com>
 In-Reply-To: <20241105165841.3086136-1-clg@redhat.com>
 References: <20241105165841.3086136-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,78 +84,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-This way both the start and end points of migrating a particular VFIO
-device are known.
+This way it is clearly known when there's no more data to send for that
+device.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- include/hw/vfio/vfio-common.h | 2 ++
- hw/vfio/migration.c           | 9 +++++++++
- hw/vfio/trace-events          | 2 ++
- 3 files changed, 13 insertions(+)
+ include/hw/vfio/vfio-common.h | 1 +
+ hw/vfio/migration.c           | 8 ++++++++
+ hw/vfio/trace-events          | 1 +
+ 3 files changed, 10 insertions(+)
 
 diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index fed499b199f09bbd8da90e3df7eb6c904c11a466..282eadf4ebf5a27a3f7168868fbc2a20d94252c0 100644
+index 282eadf4ebf5a27a3f7168868fbc2a20d94252c0..e0ce6ec3a9b3245e36811a3383f1d642c5536f3d 100644
 --- a/include/hw/vfio/vfio-common.h
 +++ b/include/hw/vfio/vfio-common.h
-@@ -73,6 +73,8 @@ typedef struct VFIOMigration {
-     uint64_t precopy_init_size;
-     uint64_t precopy_dirty_size;
+@@ -75,6 +75,7 @@ typedef struct VFIOMigration {
      bool initial_data_sent;
-+
-+    bool event_save_iterate_started;
+ 
+     bool event_save_iterate_started;
++    bool event_precopy_empty_hit;
  } VFIOMigration;
  
  struct VFIOGroup;
 diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 992dc3b1025729877d9fbe6ce9a4dbaf4dbd8a07..87ddc210578f4ecbaf30fa5d8816ce182cbcbcb0 100644
+index 87ddc210578f4ecbaf30fa5d8816ce182cbcbcb0..01aa11013e42b06696e6af28068f8048d5bfe29a 100644
 --- a/hw/vfio/migration.c
 +++ b/hw/vfio/migration.c
-@@ -472,6 +472,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
-         return -ENOMEM;
+@@ -370,6 +370,10 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
+          * please refer to the Linux kernel VFIO uAPI.
+          */
+         if (errno == ENOMSG) {
++            if (!migration->event_precopy_empty_hit) {
++                trace_vfio_save_block_precopy_empty_hit(migration->vbasedev->name);
++                migration->event_precopy_empty_hit = true;
++            }
+             return 0;
+         }
+ 
+@@ -379,6 +383,9 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
+         return 0;
      }
  
-+    migration->event_save_iterate_started = false;
++    /* Non-empty read: re-arm the trace event */
++    migration->event_precopy_empty_hit = false;
 +
+     qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE);
+     qemu_put_be64(f, data_size);
+     qemu_put_buffer(f, migration->data_buffer, data_size);
+@@ -473,6 +480,7 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+     }
+ 
+     migration->event_save_iterate_started = false;
++    migration->event_precopy_empty_hit = false;
+ 
      if (vfio_precopy_supported(vbasedev)) {
          switch (migration->device_state) {
-         case VFIO_DEVICE_STATE_RUNNING:
-@@ -602,6 +604,11 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
-     VFIOMigration *migration = vbasedev->migration;
-     ssize_t data_size;
- 
-+    if (!migration->event_save_iterate_started) {
-+        trace_vfio_save_iterate_start(vbasedev->name);
-+        migration->event_save_iterate_started = true;
-+    }
-+
-     data_size = vfio_save_block(f, migration);
-     if (data_size < 0) {
-         return data_size;
-@@ -630,6 +637,8 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
-     int ret;
-     Error *local_err = NULL;
- 
-+    trace_vfio_save_complete_precopy_start(vbasedev->name);
-+
-     /* We reach here with device state STOP or STOP_COPY only */
-     ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
-                                    VFIO_DEVICE_STATE_STOP, &local_err);
 diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 29789e8d276dcd39270edb3636d7f329452e9186..032a51a10592fdab3dd9b2be6506d034275678e7 100644
+index 032a51a10592fdab3dd9b2be6506d034275678e7..cab1cf1de0a2955efbcf4390d6881fa628eb3f14 100644
 --- a/hw/vfio/trace-events
 +++ b/hw/vfio/trace-events
-@@ -159,8 +159,10 @@ vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
+@@ -157,6 +157,7 @@ vfio_migration_set_device_state(const char *name, const char *state) " (%s) stat
+ vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
+ vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
  vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
++vfio_save_block_precopy_empty_hit(const char *name) " (%s)"
  vfio_save_cleanup(const char *name) " (%s)"
  vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
-+vfio_save_complete_precopy_start(const char *name) " (%s)"
- vfio_save_device_config_state(const char *name) " (%s)"
- vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
-+vfio_save_iterate_start(const char *name) " (%s)"
- vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
- vfio_state_pending_estimate(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
- vfio_state_pending_exact(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+ vfio_save_complete_precopy_start(const char *name) " (%s)"
 -- 
 2.47.0
 
