@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83614D2B921
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5EACD2B922
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 13:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8JFf-0002Kd-Bc; Tue, 05 Nov 2024 08:05:43 -0500
+	id 1t8JF0-00017L-2M; Tue, 05 Nov 2024 08:05:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8JFc-0002Go-AZ
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:05:40 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8JEy-000171-SU
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:05:01 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8JFa-0002Vc-NR
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:05:40 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-539e5c15fd3so5282848e87.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:05:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8JEx-0002Bs-4w
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 08:05:00 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4315eac969aso33815775e9.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 05:04:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730811937; x=1731416737; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730811897; x=1731416697; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qAZ8YzntwrQh/mqW41UtJKIzn7e3ZbFGPYghnfpczwc=;
- b=e3/WIxrZmVbUjv7muhynuJUt9uheb1R5hxiRw53dJTuxYDvNuM5yc/apqsTqJ8uLlw
- V1NfO9zkQY6J15j4X7Xhdjfn9ezJ7vz6sleW7dSAk4igWd085sD3fg7lCHgDyi8X1Dy4
- H1pUMwNcGa9B88AR6vBZKLaEoQKaSuyBD1Xxn6DaQ+yGxHdAcSL2ywX++7adcpqKM/mK
- HVnQ2w6zKL64UKNknbYB65PBMR2v2IlEuOLkirM5X+fHHBY11p++wkswXaTa82d//E1b
- gI+ZWXZt3Y6GcmNA7vzQOPAlqsWQ46hVLjLQa2TPBYBl1iN5ugNoyTJsS9wuvTl40lf3
- dYXw==
+ bh=LoKTIjDa3J8vyZOU7wutUHSCN+Guhec+PI65dsartdI=;
+ b=vX1D/h4lsgokf2/4ecfj9Qd/Rirc+GF3gGBUvNr8rVpGGpUGq1lcauJ+e3kXm48WJ0
+ f47rziE0K4bakHKtFWj2x+vOddgiDUdCbtxz7hfs5Vp8Ro+gTCKr0WAlwbGY8BxXphA6
+ oTu1yioWtB9BPOpgZvCxOioEEO1vaaCr3nBE+pegmBK/a/Msd8wtosJcp9vGkDXeIoTB
+ Q7IbapxgBCb9ITMD7TdiB35BSjd3jnM+hSYXGFay9WKbPRnQX6i0a8kOTmZWAnBftew4
+ 148uGW0iCXJr1xp3vRcd4r+Ur5DPT1wUZWVZRV+eJMmyCmFBQykzIpTeayJwEI2XIPYl
+ U/JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730811937; x=1731416737;
+ d=1e100.net; s=20230601; t=1730811897; x=1731416697;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qAZ8YzntwrQh/mqW41UtJKIzn7e3ZbFGPYghnfpczwc=;
- b=G8ZAZCxP6y2akV5AgutY5nkXQ0blLVNVdHzLiNEytB+AIeh5J7AqOTQfeJb3yDpWvh
- B4sYWkUjzkflTMpWnTeZfULihcqa7TlHV7J/wjdF5UWfG29FRMVuFI9hhT+qoJ0FaFz1
- 4BEBBXU+aLLVzb6cAaIKOcIMTPUndh7Xy2bvcwdM+ZMb/GKYKs5UWuV/snXlqMEJQ6A3
- EdnPLmSjxA0HMH1pAU7vIMdzOtcwYsQ+8KPZm1yr2ZKWbMBkdvR7mM0tx0Mqo2Tt0yG1
- S2IKZnWNE3LpuEIH0vzdc7aFZllTDUBDce8e9ogJdjZosLK65LeAbjdfT2unymfBUFDK
- 1IoQ==
-X-Gm-Message-State: AOJu0YywvUwndLxL4axGH7irtdF1AiwuiBlvSz3c2IFbqspkywpnWbfj
- glrR+l+SZCGEbqJ1FMNV6oBKqjGoEI1e0JlboYWARJVnAHqCcU0ouqrpAyXi4LtKF5ESqiK6yFB
- SUQw=
-X-Google-Smtp-Source: AGHT+IFlV6iijvNoZg6eJKoOYnS/KaIw6uMQMysAPmvPv1rKCzVbG+2oPzYa5o4BiaDO5X+KwVqftg==
-X-Received: by 2002:a05:6512:33d3:b0:539:e7b9:df03 with SMTP id
- 2adb3069b0e04-53b348c3954mr18508026e87.1.1730811936350; 
- Tue, 05 Nov 2024 05:05:36 -0800 (PST)
+ bh=LoKTIjDa3J8vyZOU7wutUHSCN+Guhec+PI65dsartdI=;
+ b=nXYwUWghP/O+sNYSJ7w58JbN0BUL3kObBrK18/y+gwPhdTbwh+VElHynRzofLnuZuk
+ XrvaPqxaQbPU4XiX1/MLnbkb//FpX+DSuTORcucfgONibDybHmFI5Q5PM6+vsk9ybZzW
+ HD7TB1LgbXlxWXr0qESDmFGD6Ak5i5ItPA15CG7CIbYlNInv6aT7fd+bIlDM3nykJRZj
+ KAjzjFwphD/y8nEfX9jfa1rmHHCiuZmzwDuMkqj9Ot2msoHT6QL7FQPBqgdHRJBnOT9x
+ NRiBfvoZyQxQ/k4hzRYKx+MawKhx7UYvOeRlxnk4izecjF3soce3+BfkbzUL1gIVnCP9
+ OPfw==
+X-Gm-Message-State: AOJu0YxLHTymyr4cf7cz9wdRQwQ3cUHeZS3vW0VuErCWG1R6lfCDgGgv
+ Y9Ag4jIlr8HUUZKJUUQbrRDQxQNstOZ0bKWUhuc/CTOQb+Mh9YzLR4cRwXNAxnP4lu/9Tbzbr1Y
+ 5jDc=
+X-Google-Smtp-Source: AGHT+IHMG75IgJ3W30Wrb+bRlTmmQ3nd9qq/2bzCUnlhNdzY1PB5IZLXC2a/K1d9WiUKPd3QEhHqcw==
+X-Received: by 2002:a05:600c:460f:b0:426:5e32:4857 with SMTP id
+ 5b1f17b1804b1-4327d840fdemr148920265e9.0.1730811897231; 
+ Tue, 05 Nov 2024 05:04:57 -0800 (PST)
 Received: from localhost.localdomain (86.red-88-29-160.dynamicip.rima-tde.net.
  [88.29.160.86]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431bd8e848csm222180125e9.3.2024.11.05.05.05.32
+ ffacd0b85a97d-381c10e725dsm16182932f8f.56.2024.11.05.05.04.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Nov 2024 05:05:35 -0800 (PST)
+ Tue, 05 Nov 2024 05:04:56 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Anton Johansson <anjo@rev.ng>
@@ -68,17 +68,18 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 06/19] hw/microblaze: Fix MemoryRegionOps coding style
-Date: Tue,  5 Nov 2024 14:04:18 +0100
-Message-ID: <20241105130431.22564-7-philmd@linaro.org>
+Subject: [PATCH 02/19] hw/microblaze: Deprecate big-endian petalogix-ml605 &
+ xlnx-zynqmp-pmu
+Date: Tue,  5 Nov 2024 14:04:14 +0100
+Message-ID: <20241105130431.22564-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241105130431.22564-1-philmd@linaro.org>
 References: <20241105130431.22564-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,77 +102,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix few MemoryRegionOps style before adding new fields
-in the following commits.
+The petalogix-ml605 machine was explicitly added as little-endian only
+machine in commit 00914b7d970 ("microblaze: Add PetaLogix ml605 MMU
+little-endian ref design"). Mark the big-endian version as deprecated.
+
+When the xlnx-zynqmp-pmu machine's CPU was added in commit 133d23b3ad1
+("xlnx-zynqmp-pmu: Add the CPU and memory"), its 'endianness' property
+was set to %true, thus wired in little endianness.
+
+Both machine are included in the big-endian system binary, while their
+CPU is working in little-endian. Unlikely to work as it. Deprecate now
+as broken config so we can remove soon.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/char/xilinx_uartlite.c | 4 ++--
- hw/intc/xilinx_intc.c     | 4 ++--
- hw/net/xilinx_ethlite.c   | 4 ++--
- hw/timer/xilinx_timer.c   | 4 ++--
- 4 files changed, 8 insertions(+), 8 deletions(-)
+ docs/about/deprecated.rst                        | 6 ++++++
+ configs/devices/microblaze-softmmu/default.mak   | 2 --
+ configs/devices/microblazeel-softmmu/default.mak | 5 ++++-
+ hw/microblaze/petalogix_ml605_mmu.c              | 7 ++++++-
+ hw/microblaze/xlnx-zynqmp-pmu.c                  | 8 ++++++--
+ 5 files changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/hw/char/xilinx_uartlite.c b/hw/char/xilinx_uartlite.c
-index f325084f8b9..a69ad769cc4 100644
---- a/hw/char/xilinx_uartlite.c
-+++ b/hw/char/xilinx_uartlite.c
-@@ -172,8 +172,8 @@ static const MemoryRegionOps uart_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
-     .valid = {
-         .min_access_size = 1,
--        .max_access_size = 4
--    }
-+        .max_access_size = 4,
-+    },
- };
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index ff404d44f85..e1c8829e1a4 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -279,6 +279,12 @@ BMC and a witherspoon like OpenPOWER system. It was used for bring up
+ of the AST2600 SoC in labs.  It can be easily replaced by the
+ ``rainier-bmc`` machine which is a real product.
  
- static Property xilinx_uartlite_properties[] = {
-diff --git a/hw/intc/xilinx_intc.c b/hw/intc/xilinx_intc.c
-index 6e5012e66eb..2b8246f6206 100644
---- a/hw/intc/xilinx_intc.c
-+++ b/hw/intc/xilinx_intc.c
-@@ -146,8 +146,8 @@ static const MemoryRegionOps pic_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
--        .max_access_size = 4
--    }
-+        .max_access_size = 4,
-+    },
- };
++Big-Endian variants of MicroBlaze ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` machines (since 9.2)
++''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++Both ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` were added for little endian
++CPUs. Big endian support is not tested.
++
+ Backend options
+ ---------------
  
- static void irq_handler(void *opaque, int irq, int level)
-diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-index bd812908085..11eb53c4d60 100644
---- a/hw/net/xilinx_ethlite.c
-+++ b/hw/net/xilinx_ethlite.c
-@@ -172,8 +172,8 @@ static const MemoryRegionOps eth_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
--        .max_access_size = 4
--    }
-+        .max_access_size = 4,
-+    },
- };
+diff --git a/configs/devices/microblaze-softmmu/default.mak b/configs/devices/microblaze-softmmu/default.mak
+index 583e3959bb7..78941064655 100644
+--- a/configs/devices/microblaze-softmmu/default.mak
++++ b/configs/devices/microblaze-softmmu/default.mak
+@@ -2,5 +2,3 @@
  
- static bool eth_can_rx(NetClientState *nc)
-diff --git a/hw/timer/xilinx_timer.c b/hw/timer/xilinx_timer.c
-index 32a9df69e0b..0822345779c 100644
---- a/hw/timer/xilinx_timer.c
-+++ b/hw/timer/xilinx_timer.c
-@@ -195,8 +195,8 @@ static const MemoryRegionOps timer_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
--        .max_access_size = 4
--    }
-+        .max_access_size = 4,
-+    },
- };
+ # Boards are selected by default, uncomment to keep out of the build.
+ # CONFIG_PETALOGIX_S3ADSP1800=n
+-# CONFIG_PETALOGIX_ML605=n
+-# CONFIG_XLNX_ZYNQMP_PMU=n
+diff --git a/configs/devices/microblazeel-softmmu/default.mak b/configs/devices/microblazeel-softmmu/default.mak
+index 29f7f13816c..4c1086435bf 100644
+--- a/configs/devices/microblazeel-softmmu/default.mak
++++ b/configs/devices/microblazeel-softmmu/default.mak
+@@ -1,3 +1,6 @@
+ # Default configuration for microblazeel-softmmu
  
- static void timer_hit(void *opaque)
+-include ../microblaze-softmmu/default.mak
++# Boards are selected by default, uncomment to keep out of the build.
++# CONFIG_PETALOGIX_S3ADSP1800=n
++# CONFIG_PETALOGIX_ML605=n
++# CONFIG_XLNX_ZYNQMP_PMU=n
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index df808ac323e..61e47d83988 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -213,7 +213,12 @@ petalogix_ml605_init(MachineState *machine)
+ 
+ static void petalogix_ml605_machine_init(MachineClass *mc)
+ {
+-    mc->desc = "PetaLogix linux refdesign for xilinx ml605 little endian";
++#if TARGET_BIG_ENDIAN
++    mc->desc = "PetaLogix linux refdesign for xilinx ml605 (big endian)";
++    mc->deprecation_reason = "big endian support is not tested";
++#else
++    mc->desc = "PetaLogix linux refdesign for xilinx ml605 (little endian)";
++#endif
+     mc->init = petalogix_ml605_init;
+ }
+ 
+diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
+index 43608c2dca4..567aad47bfc 100644
+--- a/hw/microblaze/xlnx-zynqmp-pmu.c
++++ b/hw/microblaze/xlnx-zynqmp-pmu.c
+@@ -181,9 +181,13 @@ static void xlnx_zynqmp_pmu_init(MachineState *machine)
+ 
+ static void xlnx_zynqmp_pmu_machine_init(MachineClass *mc)
+ {
+-    mc->desc = "Xilinx ZynqMP PMU machine";
++#if TARGET_BIG_ENDIAN
++    mc->desc = "Xilinx ZynqMP PMU machine (big endian)";
++    mc->deprecation_reason = "big endian support is not tested";
++#else
++    mc->desc = "Xilinx ZynqMP PMU machine (little endian)";
++#endif
+     mc->init = xlnx_zynqmp_pmu_init;
+ }
+ 
+ DEFINE_MACHINE("xlnx-zynqmp-pmu", xlnx_zynqmp_pmu_machine_init)
+-
 -- 
 2.45.2
 
