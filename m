@@ -4,97 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 956EBD36136
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 20:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 522C1D36137
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 20:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8PuR-0003iy-H0; Tue, 05 Nov 2024 15:12:15 -0500
+	id 1t8Q4w-0005Qu-GJ; Tue, 05 Nov 2024 15:23:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t8PuP-0003iY-AF; Tue, 05 Nov 2024 15:12:13 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1t8Q4s-0005Q9-T1; Tue, 05 Nov 2024 15:23:03 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t8PuN-00008q-DJ; Tue, 05 Nov 2024 15:12:13 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5K9koW011254;
- Tue, 5 Nov 2024 20:12:06 GMT
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1t8Q4k-000103-Gl; Tue, 05 Nov 2024 15:23:02 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5JeTQB026507;
+ Tue, 5 Nov 2024 20:22:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=6MA16X
- X6XU3OtjaydPQakNJtKjsrUu1XWRaI44weWzo=; b=oboUyLYIjDFj9ACI39MihT
- emepyov+80th++z/JWQu4t2wQ78icRDXxPWr51ofrwEI65QB/eqt2IaSIlFjTm52
- 4XWxXVidclPdjQZCSfsXuODmSVA/uvXt5uL0UjZ9Kvp9pZhBgF9PplmddK01uXrw
- L8G9dhMyJDQPhec+92widRxZ26N5bFi8vqifr6BU5FBNG8fjdWoOjBqQ6j66CcB3
- nZLXHVzKeL/u+4dBHWBIwmbaBBtEnnfqSE5nNd2xL3udTEXBT8FeR2fTAAMPPUGl
- pqSAPCfYKUa9Mm6LntMFye3Od4E/OuleBVaz8j/eRJydmjiyUUPty5WCK/YLLBBw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=6L7chL
+ wQJEWYHaadkUwZQaQp1d+2KlgXljtSnPv8hFY=; b=MoXcSaqz7kuBOjv1pQojwW
+ SYltpcFlIvIMWRky1yMVaRekJPfJNZBe+B2OrdwjMhnSMaFXHGp6iOmvQHd/zkCM
+ hZBsso0yrMP2RYKCKb+96vMOqK2eWhJQN8Wx2XPkqJ2ZxFQOo+c6QsklHCczpP9C
+ fJrE6q3CakRF/F4t6IS+/2opEsaoE/lzYd+i/qhF35Ktv7UBmYWWx3C7/dbZFzyk
+ O7tnilUbZrB8pdrP9I0YaJUdyX9mOkwpnHXtDocz7CGgcXeyDD7KVFQPxAN4FEgD
+ 2TxIq2cPjIi/hsjgHHeL9+vBLVI6aRCfsLHQXvG7RlJ1W91p3v/GmuW9NyarPo3Q
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42qt5gg0jq-1
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42qsqg85fd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Nov 2024 20:12:06 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5H58hJ024707;
- Tue, 5 Nov 2024 20:12:05 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42nxds4ude-1
+ Tue, 05 Nov 2024 20:22:45 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5Hhg14032050;
+ Tue, 5 Nov 2024 20:22:45 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nydmmse4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Nov 2024 20:12:05 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A5KC5ai54198752
+ Tue, 05 Nov 2024 20:22:45 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A5KMiCP9306766
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 Nov 2024 20:12:05 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F26D258052;
- Tue,  5 Nov 2024 20:12:04 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 88B3B58056;
- Tue,  5 Nov 2024 20:12:04 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 Nov 2024 20:12:04 +0000 (GMT)
-Message-ID: <1a1d29b3-c14c-42a9-93ad-c773e3b265df@linux.ibm.com>
-Date: Tue, 5 Nov 2024 15:12:04 -0500
+ Tue, 5 Nov 2024 20:22:44 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AA30058053;
+ Tue,  5 Nov 2024 20:22:44 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F367258043;
+ Tue,  5 Nov 2024 20:22:43 +0000 (GMT)
+Received: from [9.61.16.77] (unknown [9.61.16.77])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue,  5 Nov 2024 20:22:43 +0000 (GMT)
+Message-ID: <8b6d8bf1-d116-4a1f-ba89-e8b0faa5ff2b@linux.ibm.com>
+Date: Tue, 5 Nov 2024 15:22:42 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 10/17] tests/functional: Convert most Aspeed machine tests
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>, lena.voytek@canonical.com
-References: <20241024063507.1585765-1-clg@redhat.com>
- <20241024063507.1585765-11-clg@redhat.com>
- <CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com>
- <91c2ac92-66b2-45c8-b4fe-e8f8587b0e9c@linux.ibm.com>
- <CAFEAcA84hhWu2ouirfDPbCpq_=QLQxAf3k47h0Pij8iEnOVj+A@mail.gmail.com>
- <2491bc60-9a0b-486a-8f6d-2c4c94332756@linux.ibm.com>
- <CAFEAcA85g2nX3MU5RzmBvAHT8Kis1JHhiEaBvnFFbEQkG+0OxQ@mail.gmail.com>
- <e6c33df3-49e9-4b8a-b7cb-d38c2ebee3be@linux.ibm.com>
- <CAFEAcA9La7y1Z2-nMnJDyC_p+z-3c0EnDzEE=w5LTYtRnXPT1g@mail.gmail.com>
+Subject: Re: [PATCH v5 14/19] s390x: Add individual loadparm assignment to CCW
+ device
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com, Sebastian Mitterle <smitterl@redhat.com>,
+ Boqiao Fu <bfu@redhat.com>
+References: <20241020012953.1380075-1-jrossi@linux.ibm.com>
+ <20241020012953.1380075-15-jrossi@linux.ibm.com>
+ <fc4fc429-6084-4b6d-aeb7-2948aa9df3b6@redhat.com>
 Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <CAFEAcA9La7y1Z2-nMnJDyC_p+z-3c0EnDzEE=w5LTYtRnXPT1g@mail.gmail.com>
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <fc4fc429-6084-4b6d-aeb7-2948aa9df3b6@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: e7Qcv_TnRnuXueEDDGJCRYmvGSsu7o67
-X-Proofpoint-GUID: e7Qcv_TnRnuXueEDDGJCRYmvGSsu7o67
+X-Proofpoint-GUID: rrhGOPGjpEv4StlXjOKK6eCIWWRZQGXc
+X-Proofpoint-ORIG-GUID: rrhGOPGjpEv4StlXjOKK6eCIWWRZQGXc
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- lowpriorityscore=0 suspectscore=0 spamscore=0 adultscore=0 phishscore=0
- impostorscore=0 bulkscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ bulkscore=0 phishscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
+ clxscore=1011 spamscore=0 mlxlogscore=900 mlxscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2411050155
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -120,97 +115,172 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 11/5/24 2:54 PM, Peter Maydell wrote:
-> On Tue, 5 Nov 2024 at 18:36, Stefan Berger <stefanb@linux.ibm.com> wrote:
->> On 11/5/24 1:12 PM, Peter Maydell wrote:
->>> On Tue, 5 Nov 2024 at 18:02, Stefan Berger <stefanb@linux.ibm.com> wrote:
->>>> On 11/5/24 12:13 PM, Peter Maydell wrote:
->>> Is there no way to just have apparmor not apply at all
->>> here? I can see why you might want it to apply for the
+On 10/31/24 4:45 AM, Thomas Huth wrote:
+> On 20/10/2024 03.29, jrossi@linux.ibm.com wrote:
+>> From: Jared Rossi <jrossi@linux.ibm.com>
 >>
->> If you are root you can change things. I have shown the options using
->> aa-complain and aa-disable that you can revert once the test has
->> finished: sudo aa-enforce /usr/bin/swtpm
+>> Add a loadparm property to the VirtioCcwDevice object so that different
+>> loadparms can be defined on a per-device basis for CCW boot devices.
 >>
->> You could also copy swtpm into a user-owned directory but you will have
->> to adapt the user's PATH. That's an easy option.
+>> The machine/global loadparm is still supported. If both a global and 
+>> per-device
+>> loadparm are defined, the per-device value will override the global 
+>> value for
+>> that device, but any other devices that do not specify a per-device 
+>> loadparm
+>> will still use the global loadparm.
 >>
->> The most compatible option is the 3rd option since I would expect that
->> we will have this rule in a future version of the usr.bin.swtpm Ubuntu
->> profile provided by the swtpm package:
+>> It is invalid to assign a loadparm to a non-boot device.
 >>
->> echo "include <abstractions/user-tmp>" >>
->> /etc/apparmor.d/local/usr.bin.swtpm
->> apparmor_parser -r /etc/apparmor.d/usr.bin.swtpm
+>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>> ---
+>>   hw/s390x/ccw-device.h       |  2 ++
+>>   hw/s390x/ipl.h              |  3 +-
+>>   include/hw/s390x/ipl/qipl.h |  1 +
+>>   hw/s390x/ccw-device.c       | 46 +++++++++++++++++++++++++
+>>   hw/s390x/ipl.c              | 68 ++++++++++++++++++++++---------------
+>>   hw/s390x/s390-virtio-ccw.c  | 18 +---------
+>>   hw/s390x/sclp.c             |  9 ++---
+>>   pc-bios/s390-ccw/main.c     | 10 ++++--
+>>   8 files changed, 102 insertions(+), 55 deletions(-)
 >>
->>> case of "I'm using it as part of a sandboxed VM setup",
->>> but in this scenario I am a local user running this binary
->>> which is not setuid root and it is accessing a file in a
->>> directory which my user owns and has permissions for.
->>> This should not be being rejected: there is no security
->>> boundary involved and swtpm is not doing anything
->>> that I could not directly do myself anyway (as you
->>> can tell from the fact that copying the swtpm binary
->>> to a different location and running it works).
->>
->> I am not aware of how user/non-root-started programs can be generally
->> made exempt from AppArmor.
->>
->> There may still be a security boundary if a user runs QEMU and swtpm was
->> able to manipulate (with malicious input) the user's files in some
->> undesirable way or copy the user's data elsewhere. In this case it may
->> be desirable for the user that the profile be applied and the PATH he is
->> using points to the standard swtpm.
-> 
-> But our test makefiles could equally well just run "cp" !
-> swtpm has no privilege here that we do not already have.
-> 
-> Anyway, the thing here is that we run swtpm like this:
-> 
->   swtpm socket -d  --tpm2 --tpmstate dir=/path/to/somewhere --ctrl
-> type=unixio,path=/path/to/socket
-> 
-> where we use command line arguments to tell it where to
-> put the tpmstate and the socket.
-> 
-> Either:
->   (1) there are places where it's not valid for us to tell swtpm to
-> put the tpmstate or to put the control socket
->   (2) it's valid to put those anywhere we like
-> 
-> If (1), then swtpm should give a clear error message that we've
-> given it an invalid argument (and its manpage should say what
-> the restrictions are)
+>> diff --git a/hw/s390x/ccw-device.h b/hw/s390x/ccw-device.h
+>> index 5feeb0ee7a..1e1737c0f3 100644
+>> --- a/hw/s390x/ccw-device.h
+>> +++ b/hw/s390x/ccw-device.h
+>> @@ -26,6 +26,8 @@ struct CcwDevice {
+>>       CssDevId dev_id;
+>>       /* The actual busid of the virtual subchannel. */
+>>       CssDevId subch_id;
+>> +    /* If set, use this loadparm value when device is boot target */
+>> +    uint8_t loadparm[8];
+>>   };
+>>   typedef struct CcwDevice CcwDevice;
+>>   diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+>> index fa394c339d..b670bad551 100644
+>> --- a/hw/s390x/ipl.h
+>> +++ b/hw/s390x/ipl.h
+>> @@ -21,7 +21,8 @@
+>>     #define DIAG308_FLAGS_LP_VALID 0x80
+>>   -int s390_ipl_set_loadparm(uint8_t *loadparm);
+>> +void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp);
+>> +void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp);
+>>   void s390_ipl_update_diag308(IplParameterBlock *iplb);
+>>   int s390_ipl_prepare_pv_header(Error **errp);
+>>   int s390_ipl_pv_unpack(void);
+>> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+>> index 0ef04af027..b67d2ae061 100644
+>> --- a/include/hw/s390x/ipl/qipl.h
+>> +++ b/include/hw/s390x/ipl/qipl.h
+>> @@ -18,6 +18,7 @@
+>>     #define QIPL_ADDRESS  0xcc
+>>   #define LOADPARM_LEN    8
+>> +#define NO_LOADPARM "\0\0\0\0\0\0\0\0"
+>>     /*
+>>    * The QEMU IPL Parameters will be stored at absolute address
+>> diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
+>> index 14c24e3890..230cc09e03 100644
+>> --- a/hw/s390x/ccw-device.c
+>> +++ b/hw/s390x/ccw-device.c
+>> @@ -13,6 +13,10 @@
+>>   #include "ccw-device.h"
+>>   #include "hw/qdev-properties.h"
+>>   #include "qemu/module.h"
+>> +#include "ipl.h"
+>> +#include "qapi/visitor.h"
+>> +#include "qemu/ctype.h"
+>> +#include "qapi/error.h"
+>>     static void ccw_device_refill_ids(CcwDevice *dev)
+>>   {
+>> @@ -37,10 +41,52 @@ static bool ccw_device_realize(CcwDevice *dev, 
+>> Error **errp)
+>>       return true;
+>>   }
+>>   +static void ccw_device_get_loadparm(Object *obj, Visitor *v,
+>> +                                 const char *name, void *opaque,
+>> +                                 Error **errp)
+>> +{
+>> +    CcwDevice *dev = CCW_DEVICE(obj);
+>> +    char *str = g_strndup((char *) dev->loadparm, 
+>> sizeof(dev->loadparm));
+>> +
+>> +    visit_type_str(v, name, &str, errp);
+>> +    g_free(str);
+>> +}
+>> +
+>> +static void ccw_device_set_loadparm(Object *obj, Visitor *v,
+>> +                                 const char *name, void *opaque,
+>> +                                 Error **errp)
+>> +{
+>> +    CcwDevice *dev = CCW_DEVICE(obj);
+>> +    char *val;
+>> +    int index;
+>> +
+>> +    index = object_property_get_int(obj, "bootindex", NULL);
+>> +
+>> +    if (index < 0) {
+>> +        error_setg(errp, "LOADPARM is only valid for boot devices!");
+>> +    }
+>> +
+>> +    if (!visit_type_str(v, name, &val, errp)) {
+>> +        return;
+>> +    }
+>> +
+>> +    s390_ipl_fmt_loadparm(dev->loadparm, val, errp);
+>> +}
+>> +
+>> +static const PropertyInfo ccw_loadparm = {
+>> +    .name  = "ccw_loadparm",
+>> +    .description = "Up to 8 chars in set of [A-Za-z0-9. ] to pass"
+>> +            " to the guest loader/kernel",
+>> +    .get = ccw_device_get_loadparm,
+>> +    .set = ccw_device_set_loadparm,
+>> +};
+>> +
+>>   static Property ccw_device_properties[] = {
+>>       DEFINE_PROP_CSS_DEV_ID("devno", CcwDevice, devno),
+>>       DEFINE_PROP_CSS_DEV_ID_RO("dev_id", CcwDevice, dev_id),
+>>       DEFINE_PROP_CSS_DEV_ID_RO("subch_id", CcwDevice, subch_id),
+>> +    DEFINE_PROP("loadparm", CcwDevice, loadparm, ccw_loadparm,
+>> +            typeof(uint8_t[8])),
+>>       DEFINE_PROP_END_OF_LIST(),
+>>   };
+>
+>  Hi Jared,
+>
+> while doing more tests with these new boot order patches, I realized 
+> that really *all* virtio-ccw devices now have a "loadparm" property, 
+> also devices like virtio-gpu and virtio-tablet, where it does not make 
+> sense at all.
+>
+> Wouldn't it be better to add this property only to the virtio-ccw-blk 
+> device?
+>
+> Also, is there a way to specify the "loadparm" property for 
+> virtio-scsi devices? It does not seem to be available for "scsi-hd" ?
+>
+>   Thomas
+>
 
-There are no restrictions on the swtpm level when it comes to paths.
+Hi Thomas,
 
-> If (2), then apparmor should not be rejecting this usage
+Yes, the loadparm applies to all CCW devices.  I tried to point this out 
+in the
+cover letter of V2, but I guess it wasn’t clear what I meant, so I apologize
+for not bringing more attention to it.  But also yes, as a result of this,
+non-CCW type devices do not have the loadparm attribute, which is why
+scsi-hd is not included.
 
-AppArmor file restrictions are all path based. We have support for home 
-directory and /tmp, but were missing /var/tmp. So, please.
+The attribute could be implemented on a device-type basis, but it would 
+not be
+*only* virtio-blk-ccw.  Any device that can generate an IPLB could set the
+loadparm.  I agree, though, that it doesn’t really make sense for some 
+device
+types like virtio-gpu since they cannot have the prerequisite bootindex.
 
- > > One of swtpm or apparmor must be wrong here and I think it should
-> be fixed. In particular, having the failure mode be "something
+I’ll try to quickly put together a more efficient implementation of the
+loadparm that isn't too disruptive.
 
-As stated, we were going to fix the AppArmor path in the swtpm Ubuntu 
-package.
-
-> goes wrong after swtpm has successfully started and only once
-> it gets sent the TPM_INIT command, and the information about it
-> only winds up in the syslog" is pretty awkward -- it would
-> be much nicer if it failed fast, as soon as you ran it, and
-> printed the error to stderr.
-> 
-> In the interim, since we'd like to be able to run the test suite
-> on Ubuntu, it sounds like we can work around this by putting
-> the tpmstate and socket in either /tmp/ or somewhere under
-> the user's home directory.
-
-Right, I gave several options.
-
-> 
-> thanks
-> -- PMM
-> 
-
+Regards,
+  Jared Rossi
 
