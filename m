@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022CED2B941
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:46:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FBEBD2C13E
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Ll6-0001la-Q7; Tue, 05 Nov 2024 10:46:21 -0500
+	id 1t8Llp-0002HD-PX; Tue, 05 Nov 2024 10:47:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>)
- id 1t8Ll0-0001lF-Qe; Tue, 05 Nov 2024 10:46:14 -0500
-Received: from smtpout4.mo529.mail-out.ovh.net ([217.182.185.173])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>)
- id 1t8Lkw-0005zj-Gl; Tue, 05 Nov 2024 10:46:13 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.108.17.92])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4XjXk40mwnz105G;
- Tue,  5 Nov 2024 15:46:04 +0000 (UTC)
-Received: from kaod.org (37.59.142.110) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 5 Nov
- 2024 16:46:03 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-110S0041ecec86e-c3b9-4250-a135-900b05e68133,
- C95E100A97937737B80BEC9A66A832088BBE6DDA) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Tue, 5 Nov 2024 13:13:14 +0100
-From: Greg Kurz <groug@kaod.org>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-CC: <qemu-devel@nongnu.org>, Akihiro Suda <suda.kyoto@gmail.com>,
- <jan.dubois@suse.com>, <anders.f.bjorklund@gmail.com>,
- <qemu-stable@nongnu.org>, Balaji Vijayakumar <kuttibalaji.v6@gmail.com>
-Subject: Re: [PATCH] 9pfs: fix crash on 'Treaddir' request
-Message-ID: <20241105123803.0923c22e@bahia>
-In-Reply-To: <E1t8GnN-002RS8-E2@kylie.crudebyte.com>
-References: <E1t8GnN-002RS8-E2@kylie.crudebyte.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8Lln-0002Gl-J0
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:47:03 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8Lll-00061z-T1
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:47:03 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5cec8c4e2f6so4001253a12.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 07:47:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730821620; x=1731426420; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=sh7qoYQW0zvLjiM8L2zCtFYW5WaOEkW5SLyx6GEvz44=;
+ b=GsyESCUfMtXqqqW+EITL2w+fsuA2jszMari4hn6avFebOt750R2BsF8tuAGfYytrog
+ zYiNjAiCWCw1p+FTRrFvDXdT4GfwGrM94L+GsdtxPb4Beov3Pe76o/v4h8rxMFWQwxVE
+ cngelR9Wh9hTo6V50MHcOZu0HWpsoSrQt1kA9QWEwaiKjOWJAqpDfWMtxVgK5EKZSxpV
+ rxUR/fTMox6dPXpQRFC84ZDrL4uSiDGAtud+tv0Tp3rQVGexKWqaq+LsvVlK+iJavmr6
+ VUWIzXzKdsu32LXm1xKfteaLtbqp/NUV2/vL+Xa7B4vIvd7IyXxM4sat+4nVz9TuD0nr
+ gN+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730821620; x=1731426420;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sh7qoYQW0zvLjiM8L2zCtFYW5WaOEkW5SLyx6GEvz44=;
+ b=srb+ndYtwXb2nmUgt+krjrxEyYClW8EQB5PLmObtFXJHTfoShPmKzZwfD4QSX2ojmO
+ X5Wywm2iN73TKgyq7ACN8PVHjGZoRe/gk/KTt0sVMM0iXAdpHecOXP4/bNn4x8cLVq85
+ jmR6RhMSAJG6eXiHYva8EGMQZJ8lCJwk+nVm2FohFdzKeYMMt8D+eq2jTcNUxNMly1ww
+ 4AQ0U6xxDIM4Y8Qyc2aJ+tGpHf/uMqRMxkf1jwCCCu0GWPmxvyiQg0XywUhQCMq/nwnh
+ HmrZyDnrL3O6Rcw6YgTSPZ3a82MqfAy/9DLkRq6esk7D6Ufysw6Oxi+fprLrkVdK68V8
+ U6xA==
+X-Gm-Message-State: AOJu0YylAyHZR2gTYEeJxHnxssvrx3yjLXLkCZR+/WOanPtRLJaPOLSi
+ WFpOaNTGFOL8+WDWNIMFqkOk0BvQLgN5sa44LdhOw2J0GZevqAUD6HmYOso3tT2u+u8h82hZY9f
+ +zKpVOktJBb4QfuEdQ4r945QpofU0Hxx6iHqn2Q==
+X-Google-Smtp-Source: AGHT+IFHoJobG4KxZIfUolkRDMGSDbPWMTNvevnYWQfVrdRqw3KhAs00BZNBJy8ymDkt2MSJkzBFwbv43I3Ey4WgMlg=
+X-Received: by 2002:a05:6402:2548:b0:5c7:2209:e937 with SMTP id
+ 4fb4d7f45d1cf-5ceb92649b2mr12329156a12.12.1730821619912; Tue, 05 Nov 2024
+ 07:46:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.110]
-X-ClientProxiedBy: DAG2EX1.mxp5.local (172.16.2.11) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: 6dae6638-5ccc-4f49-b1ea-c4a3f97bec9b
-X-Ovh-Tracer-Id: 4448430533422258537
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrtddtgdehudcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegffevudduleetgeeftefhtddtkeeludeuudevtdeuhfdvffeggfevfeefkedtkeenucffohhmrghinhepughirhdrshhtrhgvrghmnecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrdduuddtpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeejpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehsuhgurgdrkhihohhtohesghhmrghilhdrtghomhdprhgtphhtthhopehjrghnrdguuhgsohhishesshhushgvrdgtohhmpdhrtghpthhtoheprghnuggvrhhsrdhfrdgsjhhorhhklhhunhgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepqhgvmhhuqd
- hsthgrsghlvgesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhhuthhtihgsrghlrghjihdrvheisehgmhgrihhlrdgtohhmpdfovfetjfhoshhtpehmohehvdelmgdpmhhouggvpehsmhhtphhouhht
-DKIM-Signature: a=rsa-sha256; bh=Idlo+TpZqxumuwn40MHDGxg665Zn+q4F3p8uTXi/J3g=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1730821564; v=1;
- b=gu7jEIrl2TPSaZ7tbrp3cMVfiKJtPkES/BFOvVuBIs+bSnMp//LZeh6AzwPFHxIHL9SZmY0G
- sA8O6kt66Xph+9jVdQBnfIng2a+Dro6famlkr3WMxHmNqdajVnkbI0VvvM5LYJQAoNF4UI6a3ms
- iCS2kHxujaDZgrLL5o/jtUXdI2i8CuxsirnUAv89qsEGszoTcZg5HHiLtzB1WPIOw749KeKO1qw
- RwJnrqtq3N4KnwMyJ9LCZ8Tv/yXsjeGP3RtFupPi1EZ9yexeS8UrD5B6H02QTDnhPV+DjWupe0m
- WY9bRWIAHY9mv2Pal/wkW85e20ldv4qFs0OLtSN6GJxOQ==
-Received-SPF: pass client-ip=217.182.185.173; envelope-from=groug@kaod.org;
- helo=smtpout4.mo529.mail-out.ovh.net
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20241104181306.2329-1-its@irrelevant.dk>
+In-Reply-To: <20241104181306.2329-1-its@irrelevant.dk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 Nov 2024 15:46:48 +0000
+Message-ID: <CAFEAcA9P3JTzjLJE8taeA5UXezRaA0iYEthMbyDoDgD-n94Kqg@mail.gmail.com>
+Subject: Re: [PULL 0/3] nvme queue
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, Klaus Jensen <k.jensen@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,71 +87,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Nov 2024 11:25:26 +0100
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
-
-> A bad (broken or malicious) 9p client (guest) could cause QEMU host to
-> crash by sending a 9p 'Treaddir' request with a numeric file ID (FID) that
-> was previously opened for a file instead of an expected directory:
-> 
->   #0  0x0000762aff8f4919 in __GI___rewinddir (dirp=0xf) at
->     ../sysdeps/unix/sysv/linux/rewinddir.c:29
->   #1  0x0000557b7625fb40 in do_readdir_many (pdu=0x557bb67d2eb0,
->     fidp=0x557bb67955b0, entries=0x762afe9fff58, offset=0, maxsize=131072,
->     dostat=<optimized out>) at ../hw/9pfs/codir.c:101
->   #2  v9fs_co_readdir_many (pdu=pdu@entry=0x557bb67d2eb0,
->     fidp=fidp@entry=0x557bb67955b0, entries=entries@entry=0x762afe9fff58,
->     offset=0, maxsize=131072, dostat=false) at ../hw/9pfs/codir.c:226
->   #3  0x0000557b7625c1f9 in v9fs_do_readdir (pdu=0x557bb67d2eb0,
->     fidp=0x557bb67955b0, offset=<optimized out>,
->     max_count=<optimized out>) at ../hw/9pfs/9p.c:2488
->   #4  v9fs_readdir (opaque=0x557bb67d2eb0) at ../hw/9pfs/9p.c:2602
-> 
-> That's because V9fsFidOpenState was declared as union type. So the
-> same memory region is used for either an open POSIX file handle (int),
-> or a POSIX DIR* pointer, etc., so 9p server incorrectly used the
-> previously opened (valid) POSIX file handle (0xf) as DIR* pointer,
-> eventually causing a crash in glibc's rewinddir() function.
-> 
-> Root cause was therefore a missing check in 9p server's 'Treaddir'
-> request handler, which must ensure that the client supplied FID was
-> really opened as directory stream before trying to access the
-> aforementioned union and its DIR* member.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: d62dbb51f7 ("virtio-9p: Add fidtype so that we can do type ...")
-> Reported-by: Akihiro Suda <suda.kyoto@gmail.com>
-> Tested-by: Akihiro Suda <suda.kyoto@gmail.com>
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> ---
->  hw/9pfs/9p.c | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-
-Wow ! And this is there since pretty much always... I'm amazed how
-it went unnoticed for so long :-)
-
-Reviewed-by: Greg Kurz <groug@kaod.org>
-
-> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> index af636cfb2d..9a291d1b51 100644
-> --- a/hw/9pfs/9p.c
-> +++ b/hw/9pfs/9p.c
-> @@ -2587,6 +2587,11 @@ static void coroutine_fn v9fs_readdir(void *opaque)
->          retval = -EINVAL;
->          goto out_nofid;
->      }
-> +    if (fidp->fid_type != P9_FID_DIR) {
-> +        warn_report_once("9p: bad client: T_readdir on non-directory stream");
-> +        retval = -ENOTDIR;
-> +        goto out;
-> +    }
->      if (!fidp->fs.dir.stream) {
->          retval = -EINVAL;
->          goto out;
+On Mon, 4 Nov 2024 at 18:13, Klaus Jensen <its@irrelevant.dk> wrote:
+>
+> From: Klaus Jensen <k.jensen@samsung.com>
+>
+> Hi,
+>
+> The following changes since commit daaf51001a13da007d7dde72e1ed3b06bc490791:
+>
+>   Merge tag 'seabios-hppa-v17-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2024-11-04 16:01:23 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20241104
+>
+> for you to fetch changes up to 8f472a0e7a3c86a890e12e883a69abc65945419e:
+>
+>   hw/nvme: remove dead code (2024-11-04 19:09:45 +0100)
+>
+> ----------------------------------------------------------------
+> nvme queue
+>
+> ----------------------------------------------------------------
 
 
+Applied, thanks.
 
--- 
-Greg
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
+
+-- PMM
 
