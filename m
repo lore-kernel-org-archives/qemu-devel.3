@@ -4,83 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 897CFD31769
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 17:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA5F1D3176C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 17:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8NT0-00052k-J2; Tue, 05 Nov 2024 12:35:46 -0500
+	id 1t8Nfl-0008Sr-35; Tue, 05 Nov 2024 12:48:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8NSu-00052K-1q
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 12:35:41 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <payton@privy.io>) id 1t8NPB-0004iu-Rp
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 12:31:49 -0500
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8NSq-0001SF-Vb
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 12:35:39 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5c937b5169cso40999a12.1
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 09:35:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <payton@privy.io>) id 1t8NP9-0000y4-Ol
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 12:31:49 -0500
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-539f53973fdso13705e87.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 09:31:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730828133; x=1731432933; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lBkNgXMGLims9qs0/w9lPjJDn3qEGKCxXwy34dsDzT0=;
- b=T/nfdoR1Q2JKZR60Rp2jYDVIJeEwbnoaKaHIUDfVnHL8HykKmrCZEwQgE+4Ld7LoXg
- uyf40WBpujcPgxqnbkCNVkNzDaJoiWVC+2jwRvZQdPmpSl0CoJhziqR9HFyBvbqfSW+v
- hHjZXJ0LanfyYAkjzw7TBCDgktFp71gedsRZ2y5WFzo7EoZLOjxXVR4Rkr5dWB2dPSEl
- 2eCbR9HsWX1XuHzdyCy1QDXn6wVR7wtpI3IdCDuUh9zvmoEqmscT4nyY0TVP05Ecn+BR
- HrAwGJipOOPU6U6N4zk+aVVeVapchdhkF4WVTqkMAGbVQ5ao+K1hKj1jRjgAa2qiuIsG
- RRag==
+ d=privy.io; s=google; t=1730827904; x=1731432704; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=YIqUIpuVpT0RSKhVs3pELyL47iWrVPf3o4E2AOLkMNE=;
+ b=BcIelbd4S3nF/j98LEFX32cOElWeftYMfFB57ih/BWCYuRvOPnaFOxWfH8wSqCIAo8
+ 3Jz2OPyBeqn1/TL/x/XPLu4xTaPu+auWkgodPGjSV8uMx1gtueoTgGnoq5sN5hO9fpX5
+ fgI3+chdFv5pIP4DkddERR4RNadmzmM6sp3xSR3AUm7R63yhu4cqcZOjPGFxYm3Cb8I9
+ gFbNaUbk2hKXUx/7YW6WnIUw9St+IvcQBci1/aybaKFSdnx+kqNcWxHMhokFa0IS/Z8H
+ pAzEibJ1KBsSVTd96YBysVU6+Y+v5BS0apXHqrj8nmVjfi8Um7BoTM43lYVtHkQ/la20
+ ZRFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730828133; x=1731432933;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lBkNgXMGLims9qs0/w9lPjJDn3qEGKCxXwy34dsDzT0=;
- b=QLAR+G2v+Vj0FZlk65FLweNDBIBVZSJbdcMpEyasMB/JnFQmwYsXT65wRgyi7EtpU9
- GDFyZxWhsq4HPiCn6sDgCxXJqlHGu1MTY/v7vh7yGdqbRsaVIUC1J3JfoyQiGvxZad5D
- SeVwKnBF9FxU6PSOMo8yu1yjTrFbinAqhOfCakEeB1B4l9dOEQAAbvqbQkT/Tz6JCnV3
- +UbnfkSX09YJUMaW2weeNT8+vwjv05+mbuCz9TDDlT/q8usZoBvqT/473kfjcI2g35rA
- 9dphGq48RY0OiLWr0HDvEPxR9nnDBUbk4uoAQjql64L8FY/XgpDCVzbLgFH3coEMcmxT
- rxwg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAoyw4oAjXMmLM/I508mt0Ym6djIBd1kkPrLa7KHSvcrhcdq6kt68VJZgx5cZbv08xotkk/IY14v4z@nongnu.org
-X-Gm-Message-State: AOJu0YzIrYBlR1UMhlqqhytV9yE+O29rGSRrmhJPXWttFpBSyjpBgLkN
- GIrXXuRKS69RgJfCQhlctilmOTO8Kh/4/TYvdG/izDql7H2EBDHr5+TVb5lDQ0I1qM/SDEPk432
- oMtDjIz7k0LY5x7DIlinJGGdtBwwjTUppEtL4Gw==
-X-Google-Smtp-Source: AGHT+IGL5htrgsFTmBx2FQl6EmfNpCafkcpNFITq6qvXy7lby4rrtCkls29ahdLJnXfq0VDlaSlKkc40FczoaYkvqnk=
-X-Received: by 2002:a05:6402:d4c:b0:5cb:881e:6d3c with SMTP id
- 4fb4d7f45d1cf-5ceabf26e83mr16627763a12.8.1730828133335; Tue, 05 Nov 2024
- 09:35:33 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730827904; x=1731432704;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YIqUIpuVpT0RSKhVs3pELyL47iWrVPf3o4E2AOLkMNE=;
+ b=tydeKeUufMToPj+LaJ/HmVBd3iDLvkPGemF1xZ/sh34dhbC7/nTgByHzDC2UNDh9Fz
+ WlOHsQamDpHDq7XG7LKLCz0h6bAOwu79k4T4bOkBogdWWkN623ab+GewP1nYpoCF+86/
+ uUIpnql67ime4JAc5/Va+7OBtl3GamWa8kHYtaShz4w6JAgGsb0gv1AZOktJFzwYYd5u
+ 2NP9vZaLvU5LIWGmheztRrT9GIhdtJ+8/AUqDfdyJPTP0EsAUwdpoZFqnanlPo3OVyvs
+ g0RtrH0VqvtD30IqwO+GOUrw64CYiO2VP7tGz4Z+RnSY1lR/k/ZsJNudJsuLejf4WnUG
+ xSKg==
+X-Gm-Message-State: AOJu0YyU3vu9asBcF763sSAigKK3raPbg8jSuS84TBtAH6W5QJK/nVcQ
+ EDe+hG/kJLi6JWRSMX1NGomEmGzlAX1Vvdo8timvXG2xHvdouDcTN/U0D+pVGJjpm9unBvh67M4
+ ygyVx/WXFHpRv+Lg1j8ipQ5tZTe2hPi2G6hQEEUdCqNCXdQdgtSg=
+X-Google-Smtp-Source: AGHT+IGvUFGjNWBQkQ0p0bmDCYtIEJr25E50sLdCBeRK217x2gx59jhyQw6hxBH6ufY0SJxtfjH3ZYE/1texyNqQL/c=
+X-Received: by 2002:a19:6902:0:b0:53b:205c:e9ac with SMTP id
+ 2adb3069b0e04-53c7bc08ae4mr5815764e87.20.1730827904050; Tue, 05 Nov 2024
+ 09:31:44 -0800 (PST)
 MIME-Version: 1.0
-References: <20240725235410.451624-1-npiggin@gmail.com>
- <20240725235410.451624-16-npiggin@gmail.com>
- <49b1d57d-e0bf-4b64-b6ef-3cb4e1da5d65@kaod.org>
-In-Reply-To: <49b1d57d-e0bf-4b64-b6ef-3cb4e1da5d65@kaod.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Nov 2024 17:35:21 +0000
-Message-ID: <CAFEAcA869xMGhB+K1x722CL0bD0a55+oWofpsW610HSycz_Yag@mail.gmail.com>
-Subject: Re: [PULL 15/96] ppc/pnv: Implement POWER9 LPC PSI serirq outputs and
- auto-clear function
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+From: Payton Garland <payton@privy.io>
+Date: Tue, 5 Nov 2024 12:31:32 -0500
+Message-ID: <CADVAEoB-UoTtdFDfbBAeRGB0TKTw51G59-EpZ7un4vjET4329Q@mail.gmail.com>
+Subject: QEMU Nitro Enclave Emulation on macOS
+To: qemu-devel@nongnu.org
+Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>, graf@amazon.com, 
+ "pbonzini@redhat.com" <pbonzini@redhat.com>
+Content-Type: multipart/alternative; boundary="00000000000063856c06262dc672"
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=payton@privy.io; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 05 Nov 2024 12:48:50 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,89 +84,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jul 2024 at 11:11, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
->
-> On 7/26/24 01:52, Nicholas Piggin wrote:
-> > The POWER8 LPC ISA device irqs all get combined and reported to the lin=
-e
-> > connected the PSI LPCHC irq. POWER9 changed this so only internal LPC
-> > host controller irqs use that line, and the device irqs get routed to
-> > 4 new lines connected to PSI SERIRQ0-3.
+--00000000000063856c06262dc672
+Content-Type: text/plain; charset="UTF-8"
 
-Ping! It looks like these issues are still floating around...
+Hello all,
 
-> > -static void pnv_lpc_eval_irqs(PnvLpcController *lpc)
-> > +/* Program the POWER9 LPC irq to PSI serirq routing table */
-> > +static void pnv_lpc_eval_serirq_routes(PnvLpcController *lpc)
-> >   {
-> > -    bool lpc_to_opb_irq =3D false;
-> > +    int irq;
-> >
-> > -    /* Update LPC controller to OPB line */
-> > -    if (lpc->lpc_hc_irqser_ctrl & LPC_HC_IRQSER_EN) {
-> > -        uint32_t irqs;
-> > +    if (!lpc->psi_has_serirq) {
-> > +        if ((lpc->opb_irq_route0 & PPC_BITMASK(8, 13)) ||
-> > +            (lpc->opb_irq_route1 & PPC_BITMASK(4, 31))) {
->
->
-> Coverity reports an issue :
->
->      CID 1558829:  Integer handling issues  (CONSTANT_EXPRESSION_RESULT)
->      "lpc->opb_irq_route0 & (70931694131085312ULL /* (0x8000000000000000U=
-LL >> 8) - (0x8000000000000000ULL >> 13) | (0x8000000000000000ULL >> 8) */)=
-" is always 0 regardless of the values of its operands. This occurs as the =
-logical first operand of "||".
->
-> Should the above if use PPC_BITMASK32 instead ?
+I have been watching the Nitro Enclave Emulation patch
+<https://patchwork.kernel.org/project/qemu-devel/cover/20241008211727.49088-1-dorjoychy111@gmail.com/>.
+This would be a huge win for developer experience in Nitro Enclave
+development.
 
-Seems likely to me.
+I ran into some hardware issues and am curious if there are any known
+workarounds. I was messaging with @Dorjoy Chowdhury <dorjoychy111@gmail.com> on
+this issue and they suggested this group may have some ideas / definitive
+answers.
 
-> > +            qemu_log_mask(LOG_GUEST_ERROR,
-> > +                "OPB: setting serirq routing on POWER8 system, ignorin=
-g.\n");
-> > +        }
-> > +        return;
-> > +    }
-> >
-> > -        irqs =3D lpc->lpc_hc_irqstat & lpc->lpc_hc_irqmask;
-> > -        lpc_to_opb_irq =3D (irqs !=3D 0);
-> > +    for (irq =3D 0; irq <=3D 13; irq++) {
-> > +        int serirq =3D (lpc->opb_irq_route1 >> (31 - 5 - (irq * 2))) &=
- 0x3;
-> > +        lpc->irq_to_serirq_route[irq] =3D serirq;
-> >       }
-> >
-> > -    /* We don't honor the polarity register, it's pointless and unused
-> > -     * anyway
-> > -     */
-> > -    if (lpc_to_opb_irq) {
-> > -        lpc->opb_irq_input |=3D OPB_MASTER_IRQ_LPC;
-> > -    } else {
-> > -        lpc->opb_irq_input &=3D ~OPB_MASTER_IRQ_LPC;
-> > +    for (irq =3D 14; irq < ISA_NUM_IRQS; irq++) {
-> > +        int serirq =3D (lpc->opb_irq_route0 >> (31 - 9 - (irq * 2))) &=
- 0x3;
->
->
-> Coverity reports an issue :
->
->      CID 1558828:    (BAD_SHIFT)
->      In expression "lpc->opb_irq_route0 >> 22 - irq * 2", shifting by a n=
-egative amount has undefined behavior.  The shift amount, "22 - irq * 2", i=
-s -8.
->
-> The shift value (irq * 2) seems incorrect. should it be ((irq - 14) * 2) =
-?
+*Goal*:
+*emulate AWS Nitro Enclaves locally running on macOS with Apple silicon*
 
-You can also detect this one by doing a clang undefined-sanitizer
-build: we try to do a negative shift on startup:
+*Attempt*: *built vhost-device-vsock
+<https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock> and
+qemu
+<https://gitlab.com/dorjoy03/qemu/-/commit/fe4ddb4e5b99136c948e687b8b18a505decc57bf>
+(on *@Dorjoy Chowdhury <dorjoychy111@gmail.com>* 's branch) in an alpine
+Docker image and attempted to run both with this script
+<https://gist.github.com/payton/4ec0a08e618888adafb4b9a888513d91>*
 
-$ ./build/clang/qemu-system-ppc64 -M powernv9
-../../hw/ppc/pnv_lpc.c:444:43: runtime error: shift exponent -6 is negative
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
-../../hw/ppc/pnv_lpc.c:444:43 in
+*Problem*: *enclave emulation requires KVM support per the latest
+documentation
+<https://gitlab.com/dorjoy03/qemu/-/commit/fe4ddb4e5b99136c948e687b8b18a505decc57bf>,
+which is specific to Linux, so even running Docker with privileged access
+does not help because there is no KVM on macOS*
 
-thanks
--- PMM
+*Question:** is there a known way to get Nitro Enclave emulation working on
+macOS with Apple silicon? One option that comes to mind is Apple's
+hypervisor framework, but it's unclear to me if that can be a viable
+replacement for enclave emulation.*
+
+Thank you all for the support.
+
+Best,
+Payton
+
+--00000000000063856c06262dc672
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hello all,<div><br></div><div>I have been watching the <a =
+href=3D"https://patchwork.kernel.org/project/qemu-devel/cover/2024100821172=
+7.49088-1-dorjoychy111@gmail.com/">Nitro Enclave Emulation patch</a>. This =
+would be a huge win for developer experience in Nitro Enclave development.<=
+/div><div><br></div><div>I ran into some hardware issues and am curious if =
+there are any known workarounds. I was messaging with=C2=A0<a class=3D"gmai=
+l_plusreply" id=3D"plusReplyChip-0" href=3D"mailto:dorjoychy111@gmail.com" =
+tabindex=3D"-1">@Dorjoy Chowdhury</a>=C2=A0on this issue and they suggested=
+ this group may have some ideas / definitive answers.</div><div><br></div><=
+div><b>Goal</b>: <i>emulate AWS Nitro Enclaves locally running on macOS wit=
+h Apple silicon<br></i></div><div><br></div><div><b>Attempt</b>: <i>built <=
+a href=3D"https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-v=
+sock">vhost-device-vsock</a> and <a href=3D"https://gitlab.com/dorjoy03/qem=
+u/-/commit/fe4ddb4e5b99136c948e687b8b18a505decc57bf">qemu</a> (on=C2=A0</i>=
+<a class=3D"gmail_plusreply" id=3D"plusReplyChip-1" href=3D"mailto:dorjoych=
+y111@gmail.com" tabindex=3D"-1" style=3D"">@Dorjoy Chowdhury</a><i>=C2=A0&#=
+39;s branch) in an alpine Docker image and attempted to run both <a href=3D=
+"https://gist.github.com/payton/4ec0a08e618888adafb4b9a888513d91">with this=
+ script</a></i></div><div><br></div><div><div><b>Problem</b>: <i>enclave em=
+ulation requires KVM support <a href=3D"https://gitlab.com/dorjoy03/qemu/-/=
+commit/fe4ddb4e5b99136c948e687b8b18a505decc57bf">per the latest documentati=
+on</a>, which is specific to Linux, so even running Docker with privileged =
+access does not help because there is no KVM on macOS</i></div><div><i><br>=
+</i></div><div><b>Question:</b><i> is there a known way to get Nitro Enclav=
+e emulation working on macOS with Apple silicon? One option that comes to m=
+ind is Apple&#39;s hypervisor framework, but it&#39;s unclear to me if that=
+ can be a viable replacement=C2=A0for enclave emulation.</i></div><div><br>=
+</div><div>Thank you all for the support.</div><div><br></div><div>Best,</d=
+iv><div>Payton</div><br></div></div>
+
+--00000000000063856c06262dc672--
 
