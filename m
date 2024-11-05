@@ -4,58 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 241FED1267E
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 10:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A078BD1267D
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 10:46:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8H3L-0005FP-Tk; Tue, 05 Nov 2024 05:44:51 -0500
+	id 1t8H4P-00077D-99; Tue, 05 Nov 2024 05:45:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1t8H31-0004sy-Hp; Tue, 05 Nov 2024 05:44:36 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1t8H2z-0003Tc-5a; Tue, 05 Nov 2024 05:44:31 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwA3l_D29iln3PM3AA--.5413S2;
- Tue, 05 Nov 2024 18:44:06 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwD3SXb09ilnmo9HAA--.23086S3;
- Tue, 05 Nov 2024 18:44:05 +0800 (CST)
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-To: Jonathan.Cameron@Huawei.com, marcin.juszkiewicz@linaro.org,
- ardb+tianocore@kernel.org, quic_llindhol@quicinc.com,
- peter.maydell@linaro.org
-Cc: chenbaozi@phytium.com.cn, devel@edk2.groups.io, linux-cxl@vger.kernel.org,
- asa-dev@op-lists.linaro.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>
-Subject: [RFC PATCH v2 0/1] Sbsa-ref CXL Enablement
-Date: Tue,  5 Nov 2024 18:43:45 +0800
-Message-Id: <20241105104346.417102-1-wangyuquan1236@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t8H4M-000762-2q
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:45:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t8H4J-0003iR-66
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:45:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730803550;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=a4sSjMu6dy5LcbB+3OMviQ9WUC614rkcnLLhl6yR5pw=;
+ b=NN3q0GqZA700sUYfXxlqcnmYsy/2g9UtWho0Sw6ufaLqAFzV6qpKdPJ0PUHeg648pCoAvr
+ gBR1GNokjXtW0Axj5cMuISAJZy40OFh2/kLP+22V664Exda8TCQwiS2T1DsiqmyC1EJrLg
+ kdnd4KObtcQjOFNuIH/5RoQKv5IUOU8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-4i_KOLDhOV-B2tk-F2jYrQ-1; Tue,
+ 05 Nov 2024 05:45:46 -0500
+X-MC-Unique: 4i_KOLDhOV-B2tk-F2jYrQ-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6E8F61955EE8; Tue,  5 Nov 2024 10:45:44 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.52])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6E1C53000198; Tue,  5 Nov 2024 10:45:38 +0000 (UTC)
+Date: Tue, 5 Nov 2024 10:45:34 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 23/60] headers: Add definitions from UEFI spec for
+ volumes, resources, etc...
+Message-ID: <Zyn3TsMTINMpg5zF@redhat.com>
+References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+ <20241105062408.3533704-24-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwD3SXb09ilnmo9HAA--.23086S3
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAAAWcpJZAFkgAIsk
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxZFW7GrWxZw1DJw17tFy7Jrb_yoWrWrWfpF
- s0kr43CF48Gw1akws3Z3W8Xr1rCwn5uayUCrn7Cryvkay5GrnYvrZ7Ka1Y9a47JryxGFy3
- AF1qywn5u3W5Z3DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241105062408.3533704-24-xiaoyao.li@intel.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,101 +92,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1 -> v2:
-- provide CXL exclusive MMIO32 & MMIO64 space
-- hard coded two cxl root ports
+On Tue, Nov 05, 2024 at 01:23:31AM -0500, Xiaoyao Li wrote:
+> Add UEFI definitions for literals, enums, structs, GUIDs, etc... that
+> will be used by TDX to build the UEFI Hand-Off Block (HOB) that is passed
+> to the Trusted Domain Virtual Firmware (TDVF).
+> 
+> All values come from the UEFI specification [1], PI spec [2] and TDVF
+> design guide[3].
+> 
+> [1] UEFI Specification v2.1.0 https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_Aug29.pdf
+> [2] UEFI PI spec v1.8 https://uefi.org/sites/default/files/resources/UEFI_PI_Spec_1_8_March3.pdf
+> [3] https://software.intel.com/content/dam/develop/external/us/en/documents/tdx-virtual-firmware-design-guide-rev-1.pdf
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  include/standard-headers/uefi/uefi.h | 198 +++++++++++++++++++++++++++
+>  1 file changed, 198 insertions(+)
+>  create mode 100644 include/standard-headers/uefi/uefi.h
+> 
+> diff --git a/include/standard-headers/uefi/uefi.h b/include/standard-headers/uefi/uefi.h
+> new file mode 100644
+> index 000000000000..b15aba796156
+> --- /dev/null
+> +++ b/include/standard-headers/uefi/uefi.h
+> @@ -0,0 +1,198 @@
+> +/*
+> + * Copyright (C) 2020 Intel Corporation
+> + *
+> + * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
+> + *                        <isaku.yamahata at intel.com>
+> + *
+> + * This program is free software; you can redistribute it and/or modify
+> + * it under the terms of the GNU General Public License as published by
+> + * the Free Software Foundation; either version 2 of the License, or
+> + * (at your option) any later version.
+> +
+> + * This program is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> + * GNU General Public License for more details.
+> +
+> + * You should have received a copy of the GNU General Public License along
+> + * with this program; if not, see <http://www.gnu.org/licenses/>.
+> + *
+> + */
 
-RFC because
-- Many contents are ported from Jonathan' patch on qemu virt design
+Remove the boilerplate text in favour of adding a SPDX tag.
 
-- Less experience and not particularly confident in sbsa-ref address space design
-  so this might be stupidly broken in a way I've not considered.
 
-Currently the base CXL support for arm platforms is only on Jonathan's patches[1]
-which have not yet merged into upstream. SBSA-REF can be more like a real machine,
-thus the support of cxl could be meaningful.
-
-This series leverages Jonathan's patches[1] to design [SBSA_CXL_HOST] and
-[SBSA_CXL_FIXED_WINDOW] spaces for sbsa-ref layout. 
-
-For [SBSA_CXL_HOST], since this creates a default pxb-cxl (bus_nr=0xc0) bridge
-with two cxl root ports on sbsa-ref, the new memory layout places 64K space for
-one hard coded cxl host bridge register regions in the sbsa-ref memmap. 
-
-According to above design, for now only two cxl type3 devices could be added on
-the cxl host. 
-
-With the 'create_pxb_cxl', users don't need to input '-device pxb-cxl' and 
-'-device cxl-rp' parameters.
-
-In addition, this support indepentent mmio32(32M) & mmio64(1M) space which are
-enough for cxl components, because in this way the previous pcie mmio32/64 space
-would not be divided and affected. 
-
-However, with the pxb-cxl-host, any cxl root ports and cxl endpoint devices would
-occupy the BDF number of the original pcie domain. Hence, the max available pcie
-devices on sbsa-ref would decrease, which seems to bring a series of trouble. 
-I'm looking for some comments on the problems and suggestions on if there are better
-ways to do it.
-
-For [SBSA_CXL_FIXED_WINDOW], in order to provide CFMWs on sbsa-ref, this extends 1TB
-space from the hole above RAM Memory [SBSA_MEM] for CXL Fixed Memory Window. 
-0xA0000000000 is chosen as the base address of this space because of 3 reasons:
-
-1) It is more suitable to choose a static address instead of that
-implementation in virt, since a dynamic address space layout of
-sbsa-ref is not appropriate for its original purpose as a reference
-platform.
-
-2) The Hotplug Memory address range should in the range of maximum
-addressable range of sbsa-ref platform(0x10000000000-0x80ffffffffff).
-It is satisfied the requirements of memory hotplug in linux kernel.
-
-3) The start pfn of CFMW should exceed the reserved_pfn_range for
-onlined numa node.
-
-Based on 'cxl_fmws_link_targets', this adds a new function
-'sbsa_cxl_fmws_link_targets' for binding cfmws.target with the default
-pxb-cxl-bus on sbsa-ref.
-
-In addition, this also adds 'create_cxl_fixed_window_region' to support 
-creating a static cfmw region on sbsa-ref, so users don't need to input
-'-M cxl-fmw' parameter.
-
-Thus, to run sbsa-ref with a cxl device could use:
-qemu-system-aarch64 \
--object memory-backend-file,id=mem2,mem-path=/tmp/mem2,size=256M,share=true \
--device cxl-type3,bus=cxl.0,volatile-memdev=mem2,id=cxl-mem1 \
-
-By the way, since the matched firmware correspond to this patch would allocate
-pcie bus 0xc0 ~ 0xff to pxb-cxl-host, we should add "bus=pcie.0" when we want 
-to plug some devices on the original pcie bus, for example:
--device qemu-xhci,bus=pcie.0 \
-or
--device nvme,serial=deadbeef,bus=pcie.0,drive=hdd \
--drive file=../disk/hdd.qcow2,format=qcow2,id=hdd,if=none \
-
-This series patches are here to hopefully some comments to guide me!
-
-Link:
-[1]: https://lore.kernel.org/linux-cxl/20220616141950.23374-1-Jonathan.Cameron@huawei.com/
-[2]: https://edk2.groups.io/g/devel/topic/rfc_edk2_patch_v3_0_1/109403423#
-[3]: https://edk2.groups.io/g/devel/topic/rfc_patch_edk2_platforms_v2/109403456
-
-Yuquan Wang (1):
-  hw/arm/sbsa-ref: Support CXL Host Bridge & CFMW
-
- docs/system/arm/sbsa.rst  |   4 ++
- hw/arm/sbsa-ref.c         | 122 +++++++++++++++++++++++++++++++++++++-
- hw/cxl/cxl-host-stubs.c   |   2 +
- hw/cxl/cxl-host.c         |   2 +-
- include/hw/cxl/cxl_host.h |   2 +
- 5 files changed, 130 insertions(+), 2 deletions(-)
-
+With regards,
+Daniel
 -- 
-2.34.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
