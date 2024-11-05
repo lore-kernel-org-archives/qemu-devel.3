@@ -4,133 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C179DD1CA19
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0AA1D1CA1A
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 03:32:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8AHy-0007FW-56; Mon, 04 Nov 2024 22:31:30 -0500
+	id 1t8AIL-0007HN-B1; Mon, 04 Nov 2024 22:31:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demin.han@starfivetech.com>)
- id 1t8AHu-0007FL-Si
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:31:26 -0500
-Received: from mail-bjschn02on20716.outbound.protection.partner.outlook.cn
- ([2406:e500:4440:2::716]
- helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1t8AIJ-0007H5-NL
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:31:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demin.han@starfivetech.com>)
- id 1t8AHr-000096-1N
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:31:26 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=huSKz1ZADUlDLKttVn0EgMacArYkDdjTG8d/izDlm5UqLGZWcyraVe+aeeeUQcx90tosJktd/8CDxap3BSH/4Q+85soY4JgNkdWQ77T8EXudWPWCyIF85+hcPdiF5fRESnk8lnUpz9t/JZY47pnMGRBqvKsHtBUKtGizeMhGo7pYT1sAAuXLR5wgfMHsQZqzLyQVYEUyhskLuI9Lul07qbJuzP9vvXprkyap9wLX/Q9vynuMKK4HELd/v5YBA18lhTi1SQm68WZSHyBV/R0FAw4BrcbEW+QGvGQuMVRBwuvaHjT7YIj32Lif2/kAOq/y0M7SlJljmPm0S0IGi4vtZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CL2ZTo6vWndBq/MqeNFJR5tDk0DraI6D0E+7swH05TA=;
- b=OpJEpvtWD2EHUREE/8TsK8ksy4dDH0a5Wc2+H0hWI90CG6JltskhVJBRhvoIuKb16AwRrcyB8j7aF1cP44r+EaNz9x+LmdeM6LlYWcUjsOtVxEkiAcGRShc8dWoQAF6LSgyg6QL+7TgncXlTm7+ZU9CyTkmTmuWgTEqvzkcLuPeuow2ZUILergEv7VT2x25uQkavcAv/yEPkrHpJpOrtPASdaREQ5TwUp/PmAV126UTrQI0gHaqfon89fzkmQut6gwr2b7asOlCLS5wptrPHWdoLGTdK4x3peXKSKIj+W0s2iX8+Rq20+ykinqdfgQl9nGesH08y/JmAlTAboLtMaw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=starfivetech.com; dmarc=pass action=none
- header.from=starfivetech.com; dkim=pass header.d=starfivetech.com; arc=none
-Received: from ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c550:d::13) by ZQ0PR01MB1286.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c550:1b::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.31; Tue, 5 Nov
- 2024 03:31:20 +0000
-Received: from ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
- ([fe80::7c03:71ed:a774:fa31]) by
- ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn ([fe80::7c03:71ed:a774:fa31%6])
- with mapi id 15.20.8114.023; Tue, 5 Nov 2024 03:31:20 +0000
-From: Demin Han <demin.han@starfivetech.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "erdnaxe@crans.org"
- <erdnaxe@crans.org>, "ma.mandourr@gmail.com" <ma.mandourr@gmail.com>
-Subject: RE: [PATCH] plugins: add plugin API to get args passed to binary
-Thread-Topic: [PATCH] plugins: add plugin API to get args passed to binary
-Thread-Index: AQHbLDyPsgVEn9ocvUKmJf5ZUtvEebKivGIAgACzPfKABDb8gIAATDEQgAAPgoCAAATocA==
-Date: Tue, 5 Nov 2024 03:31:20 +0000
-Message-ID: <ZQ0PR01MB10634725F7B08B6684EEB36685522@ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn>
-References: <ZQZPR01MB1057EB3713C55BC9F53ADE5785572@ZQZPR01MB1057.CHNPR01.prod.partner.outlook.cn>
- <ec546d66-0ecb-4294-b8c6-a7f2c2a6e534@linaro.org>
- <ZQ0PR01MB106322463E0A1A23E750901285522@ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn>
- <5fe9698a-33e2-467a-a1e3-111946dbe960@linaro.org>
-In-Reply-To: <5fe9698a-33e2-467a-a1e3-111946dbe960@linaro.org>
-Accept-Language: zh-CN, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=starfivetech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: ZQ0PR01MB1063:EE_|ZQ0PR01MB1286:EE_
-x-ms-office365-filtering-correlation-id: 24dbc821-2fa4-4604-ecba-08dcfd4a50e9
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|41320700013|366016|38070700018; 
-x-microsoft-antispam-message-info: d8h+FVHEWRzLpuPDsinkSEXGpCKp7toUV6L9wRXmLjEx3g0ge43OmdH1gCysNEBEf0S0AKl6E6O3+ncgl1AApr5m4Gb4ESkcAFOolUCqufkyWTwmvEQcdO7wvuscF9E1nuZ4+lEx3gcR80fhBXOv+twHAoeTTFdDbudBsG1k57sTzEA056NM/tf5exWKlVZDmGC1qO0MRZNHz24s8Wh2QIYyxOcT0A/S9G8/+LyBVxc9EVz4YPAGQ60EFhOJvCe7cKudmZ/96Z/jPhWoy1jiS+Y5+F4q15X8vth9iHDHOniPJZrKDVPFSU1efmdfP90E7PTp83cXsmGEK6CR1eEFocN0upTY/7n/9XYZB8sArxpcR+RdeUUb1oqPazHcd8fUcV+CwO5TkJ+P0sdHNdMafV5Am8n47xox9qZgVFWCOSSU1K+kKFVaZY9iICxxLBUUa7KYMDHOQnW0pJA0HwLis3gs7m1RfB5nrwIVgY01936D1mmF5gXB5AD16y5AEyvWM29ZVkOKL/ZMTJFD+Ws4KRRnBIwo/mwJ+VxviqJ1oAeKxuLf48m8KuDtGgTESt96bCNgE5/heiMZTL8DkBy5ZC1SNcpsxEDRMmtmIbgY17jKuuGOdtH8gqczRqpaXyJ5
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn; PTR:;
- CAT:NONE; SFS:(13230040)(1800799024)(41320700013)(366016)(38070700018);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ZFQyZ3RBTUlzQmt0SVFmQi9WaGJNUHUvaER4TU5wOHczMEx0eVl0c1FtaHBY?=
- =?utf-8?B?L2s2TlprcXpSbTVFVVE4Y0M2Z2RkUHdRZDcvVHJhVjYwOHN1TjdjQ2JZNUw1?=
- =?utf-8?B?UDdZREFvS3FEQ1dsMlZieVpjdFFtY21WQlF5aVJoZDEzZzF0d0VOckM5emVF?=
- =?utf-8?B?MzlTdmpZK2lmSko2Q2JqNW1EQncyN2t3cWo2NmNmSkxDL2xrWlBOdzJ3YU96?=
- =?utf-8?B?TG5tVTJIclhyWDY2eFlEcEsyVFhtMVNzZUVjNDd3bjlURmZaN3VDalBRQTlX?=
- =?utf-8?B?RmVNVG5MaHZMZ2dmMSs3endNSEZhNk96QlRhVThORU91ZVdobzZ3ZllQckNs?=
- =?utf-8?B?SXZ0aUVONVVYZGpodkxhZ3hhdVlFSzA4Mm95Q0NaLzBOaE1VNHhRa2xIRGdF?=
- =?utf-8?B?elNKaHJMMUE5NUE2bHRDR0NoMFpkdmpEVHFSWC9Wd2lPWkNEZndVSXgrYjdj?=
- =?utf-8?B?MVdOaVRFUFg5SEhvWW56TTg0UG9TSm1TdE95Uko5MkJXOXZ2Q2J3a0Fwc2U2?=
- =?utf-8?B?dkJaSmR6WVhOZUJqcmFJM3Znem5JZnRrd0c3a2theGllVVdCaHZ3R0F0MG12?=
- =?utf-8?B?SEZzWjUwVFVTYlhEQ1V1QmZFRXU2MTNPcEpndVVxQ3UxUDVLM3ZESnF1REhw?=
- =?utf-8?B?d3RnQ1JWKzV6R1NOOU1YZnVSMys1cjRZWVh0bkdNVkdZZmFodzBJaEx5cnlF?=
- =?utf-8?B?cDdMQm9nYzNrb1ZEa3ZUQWVBN3l2OHJHOGlJMVV4YXBoa1YvTDc5V2p5VmpX?=
- =?utf-8?B?UVJ1L3g0bzZzNjRMNHRsbXpBRWdkSFBZUlVZTWZ4djJ2alc4YkNVbm5FV2dm?=
- =?utf-8?B?Vm84WklWZXczK2hBWDU1b0FIQS9XMVF4N1paeW9QclU5OTdMWC9xQ0t3anE4?=
- =?utf-8?B?azlMdHhTN1ZGUnVHYXVpZUd0TlRMSVlZeEgyOVB2TUM3dUJMZ1lPME5TdThu?=
- =?utf-8?B?N29UYWpQaWh2ZnNTUnhPRDJUS0N4R05tNmlmSVhWdGVRb0lQVUFuUHMwdFV0?=
- =?utf-8?B?N3dja0ZZUXA3c0d5MkhtdDQwQ1E5OFVwR2lyYTRRVXhEK0FjUDI2Q3R2OGJR?=
- =?utf-8?B?Ryt6cFlaWTd5Y0hpUS9DaWlXdlRjQTZ5UHh6QmgyR2laMER6S2dLQTZUbVVV?=
- =?utf-8?B?ZGNVeVJiamRPM1d0d2x0MkRsTUszVnZReDMzbXBuMnV6ZVAvTkVUUlhXNmUw?=
- =?utf-8?B?b0ljbys1MUdHSjEzVk9LckJnUFY0eERNV3VTV1hyYkg3RlJZRi8vL016UWpM?=
- =?utf-8?B?cFpod3R6L3dYZ09kZ25XMVY3QjM1RlZ5azJDbmMvd3dEcG4wWklnS3pZaGx1?=
- =?utf-8?B?QWJMMHdaeXY0MklnOVJNanVRcG9LZGtmRmpFa1FPb2FIaEthWkpWdmJMY3JY?=
- =?utf-8?B?Tndtd1l2bTRjTFY1bUpDZ3hqc0ZxNDNqY1BaMVNNdE1NSXpnU2dUbk4rbVRo?=
- =?utf-8?B?VnBVOVNwRmptd0daOExFUzE0UjNqcHgvcy81RXVzTWdTbFA4TElEbXQxUEpx?=
- =?utf-8?B?Sk12YWJzQzZ1UjNpVjdWYWM5VHRQSkwvbW5PRjlneU5iZVZmMVhicDVKMVNk?=
- =?utf-8?B?RGoyVnplblZ6YTlLQ1hjOG05UUtic0JManpEQUtJejZIcktSbjFDdzN3VjEw?=
- =?utf-8?B?VjhxVEh1dGllUnZEMTVuNlFyNk1SUkl2SU1yR0pYSmNLRGNlY1RaRTdMNVRl?=
- =?utf-8?B?OStndkM1R0R1Z282NVd6eDJTaG5tVXhkQjIzMS9HcllUWDJ3OEdlZ1B1SjdZ?=
- =?utf-8?B?bXAyN2pMTW9XREVTNGZDeVppRCt2QWVFSytuL0tydUgvQnZLSmJsdXBGUkI2?=
- =?utf-8?B?ZzAyQWRHNis0bDJwSjNwcENUajNuc2h0UFkwL2htRnAwb21KR2F0WkQrdjFi?=
- =?utf-8?B?ek1zaVAyK3hNNnNmOVFld2JBTlpVS3JpVVhJMlpRcW9lUzN6YTJwTEJrVEZN?=
- =?utf-8?B?T3dYS1UvNlBRbWttY3VxZ1dsNGg3Y3crUlM4KzJLS0V0eURya3kvLzVZUElr?=
- =?utf-8?B?cFJzMWsxbG9VYkl5MW94czdXZjNEOURHVDhFamtvV05CbW9JOXd6b2dpQllh?=
- =?utf-8?B?c3JXRG5FMUluL1NiR0RvMzVGKzA0V1pEUVFiVFROVmMrRUFDYStRVVI5UXZz?=
- =?utf-8?Q?CL9jDDCwJ4n7NHUOYya6PTuhy?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1t8AIG-00009n-V9
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:31:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730777507;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Z4du7xPxKh9C6nfsFSpKflyJX39GLtxgu0BvYU9+NQU=;
+ b=CozR4OhJVvyulgf/DdDKZLs8MnFNb102wjLM4ACkuz2hF8I4cir+wry4ZrPKPpqL2vXnwL
+ z8fxkgRbbHzO4zFoqeFDHc14eV1VN2/WsCyCJMgjEnN0dt2DsxddSZzihr0I3dYLGD7wVK
+ tt4BMozK245sWbXjHXS1UEGjoo+PO5g=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-139-E29oo7VsPPGHlBZ0U26qNA-1; Mon, 04 Nov 2024 22:31:46 -0500
+X-MC-Unique: E29oo7VsPPGHlBZ0U26qNA-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-7e6cc094c2fso4499458a12.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 19:31:45 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730777505; x=1731382305;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Z4du7xPxKh9C6nfsFSpKflyJX39GLtxgu0BvYU9+NQU=;
+ b=s5zjTcJbeNt4GcEV/1ec1Z+130Td5YDIULq/iS4Vi4XaC3+bQKv68DV51xNB1jtbXf
+ kjmAE6bOGBeHNdO8XTAcMhCc1FUSKmQLPw/GjSS5DRDgD2o1S0hKGtYhJ7IMjmQt7diA
+ wsnQ3/uiYdHEk91OlZZwo4YmgJPvsHsdqf+yOMjP+3kFWZ9SGZ1McPh2vxi6ap5QLkop
+ 42BFXtqepGGao3EycXsxXvCODfh+iYDDkKm94ceLkQ9klxSNCUvX5hxiE4SSdiawrpWl
+ HyiUgHWNAKTYzwhtqLTnfBuRWVnuEA9/8ye27ana4z6Yxv5Ru0Qz9XBheOC5aFimRTKv
+ BScw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUntOxJYiKSKBn23tCWV+nkmP2h6AhOyeRRfr9hGsJhlauJX/7k3XVD9rHWeyRTY7OUbbq2Slqm7opQ@nongnu.org
+X-Gm-Message-State: AOJu0Yzi14mpECocppYqMTuIMiEOGxG0QmAeDh4OJhlo+QjlXATzwE93
+ BgL7LGfrG53xazJih6fLCpJZ5fCk2C6Z+KSA26k+iF1pMoTcAefkcu35BADD07roWdzY4vlUDbd
+ mVXFDE8g5dgbPjizESeND5/M5wgNVjXATfdp2K6YMv47NLoTEHFUM
+X-Received: by 2002:a05:6a20:4a07:b0:1d9:dc8:b80d with SMTP id
+ adf61e73a8af0-1db95047b9dmr21237350637.20.1730777504501; 
+ Mon, 04 Nov 2024 19:31:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGdo7PaxL7l7hezg9/us3onCf/O6YapZMNLkm9/o4iAF1b+tGJ0PIRdHqtAFC2YINFeZrUONQ==
+X-Received: by 2002:a05:6a20:4a07:b0:1d9:dc8:b80d with SMTP id
+ adf61e73a8af0-1db95047b9dmr21237306637.20.1730777503904; 
+ Mon, 04 Nov 2024 19:31:43 -0800 (PST)
+Received: from [192.168.68.55] ([180.233.125.129])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-720bc314670sm8462000b3a.191.2024.11.04.19.31.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Nov 2024 19:31:43 -0800 (PST)
+Message-ID: <171f7b8a-0c3a-4f9e-b3e0-94ffbd279d19@redhat.com>
+Date: Tue, 5 Nov 2024 13:31:28 +1000
 MIME-Version: 1.0
-X-OriginatorOrg: starfivetech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
-X-MS-Exchange-CrossTenant-Network-Message-Id: 24dbc821-2fa4-4604-ecba-08dcfd4a50e9
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Nov 2024 03:31:20.6193 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 06fe3fa3-1221-43d3-861b-5a4ee687a85c
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: NAQ/dO/lNIWcbPcp3P/0wyAQog+qyz4iKpZ5DX3BgLJz2KP1rOpD+N8m4oyJSFt0xqVGWOSgAj/QKB29pzf2wdkZvT0xVoXT2I/rtByJsEY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZQ0PR01MB1286
-Received-SPF: pass client-ip=2406:e500:4440:2::716;
- envelope-from=demin.han@starfivetech.com;
- helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/intc/arm-gicv3*: Refactor GICv3 CPU reginfo to have
+ common invocation
+To: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, mst@redhat.com, richard.henderson@linaro.org,
+ peter.maydell@linaro.org
+Cc: jonathan.cameron@huawei.com, alex.bennee@linaro.org, imammedo@redhat.com, 
+ pbonzini@redhat.com, maz@kernel.org, will@kernel.org,
+ oliver.upton@linux.dev, jean-philippe@linaro.org, lpieralisi@kernel.org,
+ david@redhat.com, philmd@linaro.org, andrew.jones@linux.dev,
+ eric.auger@redhat.com, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linux@armlinux.org.uk, darren@os.amperecomputing.com,
+ ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
+ karl.heubaum@oracle.com, miguel.luis@oracle.com, salil.mehta@opnsrc.net,
+ zhukeqian1@huawei.com, wangxiongfeng2@huawei.com, wangyanan55@huawei.com,
+ jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+ shahuang@redhat.com, zhao1.liu@intel.com, linuxarm@huawei.com,
+ gustavo.romero@linaro.org
+References: <20241103152639.202480-1-salil.mehta@huawei.com>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20241103152639.202480-1-salil.mehta@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,148 +117,427 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUGllcnJpY2sgQm91dmll
-ciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPiBTZW50OiAyMDI05bm0MTHmnIg15pel
-IDEwOjUwDQo+IFRvOiBEZW1pbiBIYW4gPGRlbWluLmhhbkBzdGFyZml2ZXRlY2guY29tPjsgcWVt
-dS1kZXZlbEBub25nbnUub3JnDQo+IENjOiBhbGV4LmJlbm5lZUBsaW5hcm8ub3JnOyBlcmRuYXhl
-QGNyYW5zLm9yZzsgbWEubWFuZG91cnJAZ21haWwuY29tDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0hd
-IHBsdWdpbnM6IGFkZCBwbHVnaW4gQVBJIHRvIGdldCBhcmdzIHBhc3NlZCB0byBiaW5hcnkNCj4g
-DQo+IE9uIDExLzQvMjQgMTg6MjksIERlbWluIEhhbiB3cm90ZToNCj4gPg0KPiA+PiAtLS0tLU9y
-aWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiA+PiBGcm9tOiBQaWVycmljayBCb3V2aWVyIDxwaWVycmlj
-ay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+ID4+IFNlbnQ6IDIwMjTlubQxMeaciDXml6UgNToyMg0K
-PiA+PiBUbzogRGVtaW4gSGFuIDxkZW1pbi5oYW5Ac3RhcmZpdmV0ZWNoLmNvbT47IHFlbXUtZGV2
-ZWxAbm9uZ251Lm9yZw0KPiA+PiBDYzogYWxleC5iZW5uZWVAbGluYXJvLm9yZzsgZXJkbmF4ZUBj
-cmFucy5vcmc7DQo+IG1hLm1hbmRvdXJyQGdtYWlsLmNvbQ0KPiA+PiBTdWJqZWN0OiBSZTogW1BB
-VENIXSBwbHVnaW5zOiBhZGQgcGx1Z2luIEFQSSB0byBnZXQgYXJncyBwYXNzZWQgdG8NCj4gPj4g
-YmluYXJ5DQo+ID4+DQo+ID4+IE9uIDExLzEvMjQgMjI6MTAsIERlbWluIEhhbiB3cm90ZToNCj4g
-Pj4+IEhpLA0KPiA+Pj4NCj4gPj4+IE1hbnkgYmVuY2htYXJrcyBoYXZlIHRoZWlyIG93biBidWls
-ZCBhbmQgcnVuIHN5c3RlbSwgc3VjaCBhcw0KPiA+Pj4gc3BlY2ludCwgd2UgZG9u4oCZdCB3YW50
-IHRvIGNoYW5nZSB0aGVpciBjb2RlLg0KPiA+Pj4NCj4gPj4NCj4gPj4gSSBkb24ndCB0aGluayB0
-aG9zZSBiZW5jaG1hcmtzIChzdWNoIGFzIHNwZWNpbnQpIGludGVncmF0ZSBjYWxsaW5nDQo+ID4+
-IHFlbXUgd2l0aCBhIHNwZWNpZmljIHBsdWdpbiBvbiBjb21tYW5kIGxpbmUsIHNvIEkgZ3Vlc3Mg
-eW91IGhhdmUgYQ0KPiA+PiB3cmFwcGVyIG9yIHNvbWV0aGluZyB3aGVyZSB5b3UgY291bGQgcGFz
-cyBuZWNlc3NhcnkgaW5mb3JtYXRpb24sIG9yDQo+ID4+IHR3ZWFrIG91dHB1dCBmaWxlLCB3aXRo
-b3V0IGNoYW5naW5nIHRoZSBiZW5jaG1hcmsgaXRzZWxmLiBJbiBjYXNlIEknbQ0KPiB3cm9uZywg
-ZmVlbCBmcmVlIHRvIGNvcnJlY3QgbWUuDQo+ID4NCj4gPiBJIGhhdmUgdHdvIG1ldGhvZHMgd2l0
-aG91dCBjaGFuZ2UgdGVzdCBjb2RlLCBidXQgdGhleSBjYW4ndCBnZXQgYXJncw0KPiBwYXNzZWQg
-dG8gYmluYXJ5Og0KPiA+IDEuIGZvciB0aG9zZSB3aXRob3V0IGhvb2ssIHN1Y2ggYXMgc3BlY2lu
-dCwgd2UgY2FuIHV0aWxpemUgYmluZm10X21pc2MuDQo+ID4gICAgV2UgbWF5IG5lZWQgYSBzaW1w
-bGUgd3JhcHBlciBqdXN0IHRvIGxvYWQgcGx1Z2luIG9yIHNldCBzb21lIGNvbW1vbg0KPiA+IG9w
-dGlvbnMgYW5kIHJlZ2lzdGVyIHRoaXMgd3JhcHBlciB0byBiaW5mbXRfbWlzYyAyLiBmb3IgdGhv
-c2Ugd2l0aA0KPiA+IGhvb2ssIHN1Y2ggYXMgbGx2bS10ZXN0LXN1aXRlLCB3ZSBjYW4gc2V0IFRF
-U1RfU1VJVEVfUlVOX1VOREVSIG9yDQo+ID4gdXRpbGl6ZSBiaW5mbXRfbWlzYw0KPiA+DQo+ID4g
-SSBoYXZlIG5vIGlkZWEgdG8gd3JpdGUgYSB3cmFwcGVyIHdoaWNoIGNhbiBnZXQgYXJncyBwYXNz
-ZWQgdG8gYmluYXJ5DQo+IHdpdGhvdXQgY2hhbmdlIGNvZGUuDQo+ID4gSWYgaGF2ZSwgcGxlYXNl
-IGdpdmUgYSBleGFtcGxlIG9yIHNvbWUgaGludC4NCj4gPg0KPiANCj4gSWYgeW91IHVzZSBiaW5m
-bXRfbWlzYywgaG93IGFyZSB5b3UgcGFzc2luZyB0aGUgYXJndW1lbnQgdG8gdXNlIGEgcGx1Z2lu
-Pw0KIHFlbXUtcmlzY3Y2NC5jb25mOg0KCTpxZW11LXJpc2N2NjQ6TTo6XHg3ZkVMRlx4MDJceDAx
-XHgwMVx4MDBceDAwXHgwMFx4MDBceDAwXHgwMFx4MDBceDAwXHgwMFx4MDJceDAwXHhmM1x4MDA6
-XHhmZlx4ZmZceGZmXHhmZlx4ZmZceGZmXHhmZlx4MDBceGZmXHhmZlx4ZmZceGZmXHhmZlx4ZmZc
-eGZmXHhmZlx4ZmVceGZmXHhmZlx4ZmY6L29wdC9iaW4vcWVtdS1yaXNjdjY0LnNoOg0KIHFlbXUt
-cmlzY3Y2NC5zaDoNCgkjIS9iaW4vYmFzaA0KICAgIC9vcHQvYmluL3FlbXUtcmlzY3Y2NCAtLXBs
-dWdpbiAvb3B0L2Jpbi9saWJ4eHguc28gLUwgeHh4ICRADQogDQogV2UgaGF2ZSBubyBpbmZvcm1h
-dGlvbiBhYm91dCBiaW5hcnkgdG8gcGFzcy4NCg0KPiBJbiB0aGUgY2FzZSBvZiBsbHZtLXRlc3Qt
-c3VpdGUsIHlvdSBjYW4gc2V0IFRFU1RfU1VJVEVfUlVOX1VOREVSIHRvIGENCj4gd3JhcHBlciBh
-ZGRpbmcgYSBzcGVjaWZpYyBwbHVnaW4sIGl0cyBvcHRpb25zLCBhbmQgZ2VuZXJhdGluZyB0aGUg
-bG9nIGZpbGVuYW1lDQo+IGFzIGV4cGVjdGVkLg0KDQpXZSBjYW50IHNldCBURVNUX1NVSVRFX1JV
-Tl9VTkRFUj0icWVtdS1yaXNjdjY0IC0tcGx1Z2luIC94eHgvbGlieHh4LnNvIC1MIHh4eCIuDQpX
-ZSBoYXZlIG5vIGFueSBpbmZvcm1hdGlvbiBhYm91dCBiaW5hcnkgdW5kZXIgdGVzdCBldmVuIGJp
-bmFyeSBuYW1lLg0KV2UgY2FuIGdldCBiaW5hcnkgbmFtZSBpbiBwbHVnaW4gdXNpbmcgcWVtdV9w
-bHVnaW5fcGF0aF90b19iaW5hcnksIGJ1dCBjYW4ndCBzb2x2ZSB0aGUgaXNzdWUgbWVudGlvbmVk
-IGluIGNvbW1pdCBtc2cuDQoNCg0KPiA+Pj4gQWN0dWFsbHkgdGhlIGxvZyBtYXliZSBzdHJ1Y3R1
-cmFsIGRhdGEgc3VjaCBhcyBpbiBqc29uIGZvcm1hdCBhbmQNCj4gPj4+IG1heSBiZSBvdXRwdXQg
-bXVsdGlwbGUgbG9nIGZpbGVzIHdpdGggZGlmZmVyZW50IHN0YXRpc3RpY3MgZGltZW50aW9uIGZv
-ciBvbmUNCj4gcnVuLg0KPiA+Pj4NCj4gPj4+IC1EIGNhbuKAmXQgc2F0aXNmeSB0aGlzLg0KPiA+
-Pg0KPiA+PiBJbmRlZWQsIGl0IGNhbiBvdXRwdXQgb25seSBhIHNpbmdsZSBmaWxlLiBJZiB5b3Vy
-IHBsdWdpbiBuZWVkcw0KPiA+PiBzb21ldGhpbmcgbW9yZSBhZHZhbmNlZCwgeW91IGNhbiB0cnkg
-dG8gb3V0cHV0IHNvbWV0aGluZyB5b3Vyc2VsZi4NCj4gPj4gSG93ZXZlciwgYSBiZXR0ZXIgYW5k
-IHNpbXBsZXIgd2F5IHdvdWxkIGJlIHRvIHByZWZpeCBsaW5lcyBvdXRwdXQNCj4gPj4gd2l0aCBh
-IHNwZWNpZmljIG1hcmtlciwgYW5kIHBvc3QgcHJvY2VzcyB5b3VyIHBsdWdpbiB0cmFjZSB3aXRo
-IGEgY3VzdG9tDQo+IHNjcmlwdC4NCj4gPj4NCj4gPj4gQWRkaW5nIGNvbW1hbmQgbGluZSBhY2Nl
-c3MgdG8gcGx1Z2lucyBkb2VzIG5vdCBzb2x2ZSBhbnkgb2YgdGhvc2UNCj4gcHJvYmxlbXMuDQo+
-ID4+DQo+ID4+IEkgc2VlIHZhbHVlIGluIHdoYXQgdGhpcyBzZXJpZXMgb2ZmZXIsIGJ1dCBJIGRv
-bid0IHNlZSBob3cgaXQncw0KPiA+PiByZWxhdGVkIHRvIHRoZSBjdXJyZW50IG5lZWQgeW91IGV4
-cHJlc3MuDQo+ID4NCj4gPiBZZXMsIHRoaXMgaXMgbm90IGltcG9ydGFudCBhbmQgbm90IG1vc3Qg
-Y29uY2VybmVkLg0KPiA+IEJ1dCBpZiB3ZSBjYW4gZGlyZWN0bHkgb3V0cHV0IGpzb24gb3IgeWFt
-bCwgaXQgd291bGQgYmUgY29udmVuaWVudCBmb3INCj4gcG9zdC1wcm9jZXNzaW5nLg0KPiA+IFRo
-aXMgaXMgYSBib251cyBmb3IgdGhpcyBhZGRlZCBhcGkuDQo+ID4NCj4gDQo+IEl0J3Mgc29tZXRo
-aW5nIHlvdSBjYW4gZG8gZGlyZWN0bHkgaW4gdGhlIHBsdWdpbiwgYnkgb3V0cHV0aW5nIGpzb24v
-eWFtbCwgb3IgYW55DQo+IGZvcm1hdCB3YW50ZWQuIEl0J3MgcHJvYmFibHkgbm90IGEgZmVhdHVy
-ZSB3ZSdsbCBwcm92aWRlIGluIHRoZSBwdWJsaWMgQVBJIGFzDQo+IGl0J3MgYSB2ZXJ5IHNwZWNp
-ZmljIG5lZWQuDQo+IA0KPiA+IFJlZ2FyZHMsDQo+ID4gRGVtaW4NCj4gPg0KPiA+PiBSZWdhcmRz
-LA0KPiA+PiBQaWVycmljaw0KPiA+Pg0KPiA+Pj4NCj4gPj4+IFJlZ2FyZCwNCj4gPj4+IERlbmlu
-DQo+ID4+Pg0KPiA+Pj4g6I635Y+WIE91dGxvb2sgZm9yIGlPUyA8aHR0cHM6Ly9ha2EubXMvbzB1
-a2VmPg0KPiA+Pj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCj4gPj4+IC0tDQo+ID4+PiAtLQ0KPiA+Pj4gKuWPkeS7
-tuS6ujoqIFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4g
-Pj4+ICrlj5HpgIHml7bpl7Q6KiBTYXR1cmRheSwgTm92ZW1iZXIgMiwgMjAyNCAyOjE4OjIwIEFN
-DQo+ID4+PiAq5pS25Lu25Lq6OiogRGVtaW4gSGFuIDxkZW1pbi5oYW5Ac3RhcmZpdmV0ZWNoLmNv
-bT47DQo+ID4+IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZw0KPiA+Pj4gPHFlbXUtZGV2ZWxAbm9uZ251
-Lm9yZz4NCj4gPj4+ICrmioTpgIE6KiBhbGV4LmJlbm5lZUBsaW5hcm8ub3JnIDxhbGV4LmJlbm5l
-ZUBsaW5hcm8ub3JnPjsNCj4gPj4+IGVyZG5heGVAY3JhbnMub3JnIDxlcmRuYXhlQGNyYW5zLm9y
-Zz47IG1hLm1hbmRvdXJyQGdtYWlsLmNvbQ0KPiA+Pj4gPG1hLm1hbmRvdXJyQGdtYWlsLmNvbT4N
-Cj4gPj4+ICrkuLvpopg6KiBSZTogW1BBVENIXSBwbHVnaW5zOiBhZGQgcGx1Z2luIEFQSSB0byBn
-ZXQgYXJncyBwYXNzZWQgdG8NCj4gPj4+IGJpbmFyeSBIaSBEZW1pbiwNCj4gPj4+DQo+ID4+PiB0
-aGFua3MgZm9yIHlvdXIgY29udHJpYnV0aW9uLg0KPiA+Pj4NCj4gPj4+IE9uIDExLzEvMjQgMDI6
-MDAsIGRlbWluLmhhbiB3cm90ZToNCj4gPj4+PiBXaHkgd2UgbmVlZCBhcmdzPw0KPiA+Pj4+IFdo
-ZW4gcGx1Z2luIG91dHB1dHMgbG9nIGZpbGVzLCBvbmx5IGJpbmFyeSBwYXRoIGNhbid0IGRpc3Rp
-bmd1aXNoDQo+ID4+Pj4gbXVsdGlwbGUgcnVucyBpZiB0aGUgYmluYXJ5IHBhc3NlZCB3aXRoIGRp
-ZmZlcmVudCBhcmdzLg0KPiA+Pj4+IFRoaXMgaXMgYmFkIGZvciBDSSB1c2luZyBwbHVnaW4uDQo+
-ID4+Pj4NCj4gPj4+DQo+ID4+PiBDYW4gaXQgYmUgc29sdmVkIHNpbXBseSBieSBlbmNvZGluZyB0
-aGlzIGluIG5hbWUgb2YgbG9nIGZpbGUgZnJvbQ0KPiA+Pj4gdGhlIENJIHJ1biBzY3JpcHQ/DQo+
-ID4+PiAkIGNtZD0iL3Vzci9iaW4vZWNobyBIZWxsbyB3b3JsZCINCj4gPj4+ICQgb3V0X2ZpbGU9
-IiQoZWNobyAiJGNtZCIgfCBzZWQgLWUgJ3MvXHMvXy8nKS5sb2ciDQo+ID4+PiAkIHFlbXUgLXBs
-dWdpbi4uLiAtZCBwbHVnaW4gLUQgIiRvdXRfZmlsZSIgJGNtZA0KPiA+Pj4NCj4gPj4+IEkgY2Fu
-IHNlZSBzb21lIGdvb2QgcG9pbnRzIHRvIGFkZCB0aGlzIG5ldyBBUEksIGJ1dCBmb3IgdGhlIHVz
-ZSBjYXNlDQo+ID4+PiBwcmVzZW50ZWQgaW4gY29tbWl0IG1lc3NhZ2UsIEknbSBub3Qgc3VyZSB0
-byBzZWUgd2hhdCBpdCBzb2x2ZXMuDQo+ID4+Pg0KPiA+Pj4+IFNpZ25lZC1vZmYtYnk6IGRlbWlu
-LmhhbiA8ZGVtaW4uaGFuQHN0YXJmaXZldGVjaC5jb20+DQo+ID4+Pj4gLS0tDQo+ID4+Pj4gIMKg
-wqAgaW5jbHVkZS9xZW11L3FlbXUtcGx1Z2luLmjCoMKgIHwgMTEgKysrKysrKysrKysNCj4gPj4+
-PiAgwqDCoCBwbHVnaW5zL2FwaS5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgMTYg
-KysrKysrKysrKysrKysrKw0KPiA+Pj4+ICDCoMKgIHBsdWdpbnMvcWVtdS1wbHVnaW5zLnN5bWJv
-bHMgfMKgIDEgKw0KPiA+Pj4+ICDCoMKgIDMgZmlsZXMgY2hhbmdlZCwgMjggaW5zZXJ0aW9ucygr
-KQ0KPiA+Pj4+DQo+ID4+Pj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvcWVtdS9xZW11LXBsdWdpbi5o
-DQo+ID4+Pj4gYi9pbmNsdWRlL3FlbXUvcWVtdS1wbHVnaW4uaCBpbmRleCA2MjJjOWEwMjMyLi5k
-YWY3NWM5ZjVhIDEwMDY0NA0KPiA+Pj4+IC0tLSBhL2luY2x1ZGUvcWVtdS9xZW11LXBsdWdpbi5o
-DQo+ID4+Pj4gKysrIGIvaW5jbHVkZS9xZW11L3FlbXUtcGx1Z2luLmgNCj4gPj4+PiBAQCAtODM3
-LDYgKzgzNywxNyBAQCBib29sIHFlbXVfcGx1Z2luX2Jvb2xfcGFyc2UoY29uc3QgY2hhcg0KPiAq
-bmFtZSwNCj4gPj4+PiBjb25zdCBjaGFyICp2YWwsIGJvb2wgKnJldCk7DQo+ID4+Pj4gIMKgwqAg
-UUVNVV9QTFVHSU5fQVBJDQo+ID4+Pj4gIMKgwqAgY29uc3QgY2hhciAqcWVtdV9wbHVnaW5fcGF0
-aF90b19iaW5hcnkodm9pZCk7DQo+ID4+Pj4NCj4gPj4+PiArLyoqDQo+ID4+Pj4gKyAqIHFlbXVf
-cGx1Z2luX2FyZ3ZfdG9fYmluYXJ5KCkgLSBhcmd2IHRvIGJpbmFyeSBmaWxlIGJlaW5nDQo+ID4+
-Pj4gK2V4ZWN1dGVkDQo+ID4+Pj4gKyAqDQo+ID4+Pj4gKyAqIFJldHVybiBhIHN0cmluZyBhcnJh
-eSByZXByZXNlbnRpbmcgdGhlIGFyZ3YgdG8gdGhlIGJpbmFyeS4gRm9yDQo+ID4+Pj4gK3VzZXIt
-bW9kZQ0KPiA+Pj4+ICsgKiB0aGlzIGlzIHRoZSBtYWluIGV4ZWN1dGFibGUncyBhcmd2LiBGb3Ig
-c3lzdGVtIGVtdWxhdGlvbiB3ZQ0KPiA+Pj4+ICtjdXJyZW50bHkNCj4gPj4+PiArICogcmV0dXJu
-IE5VTEwuIFRoZSB1c2VyIHNob3VsZCBnX2ZyZWUoKSB0aGUgc3RyaW5nIGFycmF5IG9uY2Ugbm8N
-Cj4gPj4+PiArbG9uZ2VyDQo+ID4+Pj4gKyAqIG5lZWRlZC4NCj4gPj4+PiArICovDQo+ID4+Pj4g
-K1FFTVVfUExVR0lOX0FQSQ0KPiA+Pj4+ICtjb25zdCBjaGFyICoqcWVtdV9wbHVnaW5fYXJndl90
-b19iaW5hcnkodm9pZCk7DQo+ID4+Pj4gKw0KPiA+Pj4+ICDCoMKgIC8qKg0KPiA+Pj4+ICDCoMKg
-wqAgKiBxZW11X3BsdWdpbl9zdGFydF9jb2RlKCkgLSByZXR1cm5zIHN0YXJ0IG9mIHRleHQgc2Vn
-bWVudA0KPiA+Pj4+ICDCoMKgwqAgKg0KPiA+Pj4+IGRpZmYgLS1naXQgYS9wbHVnaW5zL2FwaS5j
-IGIvcGx1Z2lucy9hcGkuYyAgaW5kZXgNCj4gPj4+PiAyNGVhNjRlMmRlLi5mYTI3MzVkYjAzIDEw
-MDY0NA0KPiA+Pj4+IC0tLSBhL3BsdWdpbnMvYXBpLmMNCj4gPj4+PiArKysgYi9wbHVnaW5zL2Fw
-aS5jDQo+ID4+Pj4gQEAgLTQ4NSw2ICs0ODUsMjIgQEAgY29uc3QgY2hhcg0KPiAqcWVtdV9wbHVn
-aW5fcGF0aF90b19iaW5hcnkodm9pZCkNCj4gPj4+PiAgwqDCoMKgwqDCoMKgIHJldHVybiBwYXRo
-Ow0KPiA+Pj4+ICDCoMKgIH0NCj4gPj4+Pg0KPiA+Pj4+ICtjb25zdCBjaGFyICoqcWVtdV9wbHVn
-aW5fYXJndl90b19iaW5hcnkodm9pZCkNCj4gPj4+PiArew0KPiA+Pj4+ICvCoMKgwqAgY29uc3Qg
-Y2hhciAqKmFyZ3YgPSBOVUxMOw0KPiA+Pj4+ICsjaWZkZWYgQ09ORklHX1VTRVJfT05MWQ0KPiA+
-Pj4+ICvCoMKgwqAgaW50IGksIGFyZ2M7DQo+ID4+Pj4gK8KgwqDCoCBUYXNrU3RhdGUgKnRzID0g
-Z2V0X3Rhc2tfc3RhdGUoY3VycmVudF9jcHUpOw0KPiA+Pj4+ICvCoMKgwqAgYXJnYyA9IHRzLT5i
-cHJtLT5hcmdjOw0KPiA+Pj4+ICvCoMKgwqAgYXJndiA9IGdfbWFsbG9jKHNpemVvZihjaGFyICop
-ICogKGFyZ2MgKyAxKSk7DQo+ID4+Pj4gK8KgwqDCoCBmb3IgKGkgPSAwOyBpIDwgYXJnYzsgKytp
-KSB7DQo+ID4+Pj4gK8KgwqDCoMKgwqDCoMKgIGFyZ3ZbaV0gPSBnX3N0cmR1cCh0cy0+YnBybS0+
-YXJndltpXSk7DQo+ID4+Pj4gK8KgwqDCoCB9DQo+ID4+Pj4gK8KgwqDCoCBhcmd2W2FyZ2NdID0g
-TlVMTDsNCj4gPj4+PiArI2VuZGlmDQo+ID4+Pj4gK8KgwqDCoCByZXR1cm4gYXJndjsNCj4gPj4+
-PiArfQ0KPiA+Pj4+ICsNCj4gPj4+PiAgwqDCoCB1aW50NjRfdCBxZW11X3BsdWdpbl9zdGFydF9j
-b2RlKHZvaWQpDQo+ID4+Pj4gIMKgwqAgew0KPiA+Pj4+ICDCoMKgwqDCoMKgwqAgdWludDY0X3Qg
-c3RhcnQgPSAwOw0KPiA+Pj4+IGRpZmYgLS1naXQgYS9wbHVnaW5zL3FlbXUtcGx1Z2lucy5zeW1i
-b2xzDQo+ID4+Pj4gYi9wbHVnaW5zL3FlbXUtcGx1Z2lucy5zeW1ib2xzICBpbmRleCAwMzI2NjFm
-OWVhLi41MzI1ODJlZmZlDQo+IDEwMDY0NA0KPiA+Pj4+IC0tLSBhL3BsdWdpbnMvcWVtdS1wbHVn
-aW5zLnN5bWJvbHMNCj4gPj4+PiArKysgYi9wbHVnaW5zL3FlbXUtcGx1Z2lucy5zeW1ib2xzDQo+
-ID4+Pj4gQEAgLTEsNCArMSw1IEBADQo+ID4+Pj4gIMKgwqAgew0KPiA+Pj4+ICvCoCBxZW11X3Bs
-dWdpbl9hcmd2X3RvX2JpbmFyeTsNCj4gPj4+PiAgwqDCoMKgwqAgcWVtdV9wbHVnaW5fYm9vbF9w
-YXJzZTsNCj4gPj4+PiAgwqDCoMKgwqAgcWVtdV9wbHVnaW5fZW5kX2NvZGU7DQo+ID4+Pj4gIMKg
-wqDCoMKgIHFlbXVfcGx1Z2luX2VudHJ5X2NvZGU7DQo+ID4+Pg0KPiA+Pj4gUmVnYXJkcywNCj4g
-Pj4+IFBpZXJyaWNrDQo=
+On 11/4/24 1:26 AM, Salil Mehta wrote:
+> Refactor GICv3 code for TCG and KVM to initialize the GIC CPU interface
+> register information by introducing a new common hook
+> `ARMGICv3CommonClass::init_cpu_reginfo`. This hook can be assigned to
+> the respective TCG or KVM variants during the GICv3 initialization
+> phase and invoked during the GICv3 realization phase. The primary goals
+> of this refactor include:
+> 
+> 1. Enhancing code modularity and reusability in future patch-sets.
+> 2. Providing a common invocation function for TCG and KVM during GICv3
+>     realization.
+> 3. Improving code readability.
+> 
+> Note: This is a non-intrusive patch with *no* functional changes
+>        intended. Code has been tested to confirm correct initialization
+>        sequences across relevant scenarios.
+> 
+> Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
+> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> ---
+>   hw/intc/arm_gicv3.c                |   1 +
+>   hw/intc/arm_gicv3_cpuif.c          | 245 ++++++++++++++---------------
+>   hw/intc/arm_gicv3_cpuif_common.c   |  10 ++
+>   hw/intc/arm_gicv3_kvm.c            |  12 +-
+>   hw/intc/gicv3_internal.h           |   1 +
+>   include/hw/intc/arm_gicv3_common.h |   1 +
+>   6 files changed, 140 insertions(+), 130 deletions(-)
+> 
+
+With the following nitpicks addressed:
+
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+
+> diff --git a/hw/intc/arm_gicv3.c b/hw/intc/arm_gicv3.c
+> index 58e18fff54..2a30625916 100644
+> --- a/hw/intc/arm_gicv3.c
+> +++ b/hw/intc/arm_gicv3.c
+> @@ -459,6 +459,7 @@ static void arm_gicv3_class_init(ObjectClass *klass, void *data)
+>       ARMGICv3Class *agc = ARM_GICV3_CLASS(klass);
+>   
+>       agcc->post_load = arm_gicv3_post_load;
+> +    agcc->init_cpu_reginfo = gicv3_init_cpu_reginfo;
+>       device_class_set_parent_realize(dc, arm_gic_realize, &agc->parent_realize);
+>   }
+>   
+> diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+> index ea1d1b3455..75a06d6f28 100644
+> --- a/hw/intc/arm_gicv3_cpuif.c
+> +++ b/hw/intc/arm_gicv3_cpuif.c
+> @@ -3025,143 +3025,138 @@ static void gicv3_cpuif_el_change_hook(ARMCPU *cpu, void *opaque)
+>       gicv3_cpuif_virt_irq_fiq_update(cs);
+>   }
+>   
+> -void gicv3_init_cpuif(GICv3State *s)
+> +void gicv3_init_cpu_reginfo(CPUState *cs)
+>   {
+
+Ideally, this function together with the dependent register information and
+definitions can be moved to arm_gicv3.c where is the only place this function
+is referred and used. In this way, gicv3_init_cpu_reginfo() becomes a static
+function and needn't to be exported in gicv3_internal.h.
+
+> -    /* Called from the GICv3 realize function; register our system
+> -     * registers with the CPU
+> -     */
+> -    int i;
+> +    ARMCPU *cpu = ARM_CPU(cs);
+> +    GICv3CPUState *gcs = icc_cs_from_env(&cpu->env);
+>   
+> -    for (i = 0; i < s->num_cpu; i++) {
+> -        ARMCPU *cpu = ARM_CPU(qemu_get_cpu(i));
+> -        GICv3CPUState *cs = &s->cpu[i];
+> +    /*
+> +     * If the CPU doesn't define a GICv3 configuration, probably because
+> +     * in real hardware it doesn't have one, then we use default values
+> +     * matching the one used by most Arm CPUs. This applies to:
+> +     *  cpu->gic_num_lrs
+> +     *  cpu->gic_vpribits
+> +     *  cpu->gic_vprebits
+> +     *  cpu->gic_pribits
+> +     */
+>   
+> -        /*
+> -         * If the CPU doesn't define a GICv3 configuration, probably because
+> -         * in real hardware it doesn't have one, then we use default values
+> -         * matching the one used by most Arm CPUs. This applies to:
+> -         *  cpu->gic_num_lrs
+> -         *  cpu->gic_vpribits
+> -         *  cpu->gic_vprebits
+> -         *  cpu->gic_pribits
+> -         */
+> +    /*
+> +     * Note that we can't just use the GICv3CPUState as an opaque pointer
+> +     * in define_arm_cp_regs_with_opaque(), because when we're called back
+> +     * it might be with code translated by CPU 0 but run by CPU 1, in
+> +     * which case we'd get the wrong value.
+> +     * So instead we define the regs with no ri->opaque info, and
+> +     * get back to the GICv3CPUState from the CPUARMState.
+> +     *
+> +     * These CP regs callbacks can be called from either TCG or HVF code.
+> +     */
+> +    define_arm_cp_regs(cpu, gicv3_cpuif_reginfo);
+>   
+> -        /* Note that we can't just use the GICv3CPUState as an opaque pointer
+> -         * in define_arm_cp_regs_with_opaque(), because when we're called back
+> -         * it might be with code translated by CPU 0 but run by CPU 1, in
+> -         * which case we'd get the wrong value.
+> -         * So instead we define the regs with no ri->opaque info, and
+> -         * get back to the GICv3CPUState from the CPUARMState.
+> -         *
+> -         * These CP regs callbacks can be called from either TCG or HVF code.
+> -         */
+> -        define_arm_cp_regs(cpu, gicv3_cpuif_reginfo);
+> +    /*
+> +     * If the CPU implements FEAT_NMI and FEAT_GICv3 it must also
+> +     * implement FEAT_GICv3_NMI, which is the CPU interface part
+> +     * of NMI support. This is distinct from whether the GIC proper
+> +     * (redistributors and distributor) have NMI support. In QEMU
+> +     * that is a property of the GIC device in s->nmi_support;
+> +     * cs->nmi_support indicates the CPU interface's support.
+> +     */
+> +    if (cpu_isar_feature(aa64_nmi, cpu)) {
+> +        gcs->nmi_support = true;
+> +        define_arm_cp_regs(cpu, gicv3_cpuif_gicv3_nmi_reginfo);
+> +    }
+>   
+> -        /*
+> -         * If the CPU implements FEAT_NMI and FEAT_GICv3 it must also
+> -         * implement FEAT_GICv3_NMI, which is the CPU interface part
+> -         * of NMI support. This is distinct from whether the GIC proper
+> -         * (redistributors and distributor) have NMI support. In QEMU
+> -         * that is a property of the GIC device in s->nmi_support;
+> -         * cs->nmi_support indicates the CPU interface's support.
+> -         */
+> -        if (cpu_isar_feature(aa64_nmi, cpu)) {
+> -            cs->nmi_support = true;
+> -            define_arm_cp_regs(cpu, gicv3_cpuif_gicv3_nmi_reginfo);
+> -        }
+> +    /*
+> +     * The CPU implementation specifies the number of supported
+> +     * bits of physical priority. For backwards compatibility
+> +     * of migration, we have a compat property that forces use
+> +     * of 8 priority bits regardless of what the CPU really has.
+> +     */
+> +    if (gcs->gic->force_8bit_prio) {
+> +        gcs->pribits = 8;
+> +    } else {
+> +        gcs->pribits = cpu->gic_pribits ?: 5;
+> +    }
+>   
+> -        /*
+> -         * The CPU implementation specifies the number of supported
+> -         * bits of physical priority. For backwards compatibility
+> -         * of migration, we have a compat property that forces use
+> -         * of 8 priority bits regardless of what the CPU really has.
+> -         */
+> -        if (s->force_8bit_prio) {
+> -            cs->pribits = 8;
+> -        } else {
+> -            cs->pribits = cpu->gic_pribits ?: 5;
+> -        }
+> +    /*
+> +     * The GICv3 has separate ID register fields for virtual priority
+> +     * and preemption bit values, but only a single ID register field
+> +     * for the physical priority bits. The preemption bit count is
+> +     * always the same as the priority bit count, except that 8 bits
+> +     * of priority means 7 preemption bits. We precalculate the
+> +     * preemption bits because it simplifies the code and makes the
+> +     * parallels between the virtual and physical bits of the GIC
+> +     * a bit clearer.
+> +     */
+> +    gcs->prebits = gcs->pribits;
+> +    if (gcs->prebits == 8) {
+> +        gcs->prebits--;
+> +    }
+> +    /*
+> +     * Check that CPU code defining pribits didn't violate
+> +     * architectural constraints our implementation relies on.
+> +     */
+> +    g_assert(gcs->pribits >= 4 && gcs->pribits <= 8);
+>   
+> -        /*
+> -         * The GICv3 has separate ID register fields for virtual priority
+> -         * and preemption bit values, but only a single ID register field
+> -         * for the physical priority bits. The preemption bit count is
+> -         * always the same as the priority bit count, except that 8 bits
+> -         * of priority means 7 preemption bits. We precalculate the
+> -         * preemption bits because it simplifies the code and makes the
+> -         * parallels between the virtual and physical bits of the GIC
+> -         * a bit clearer.
+> -         */
+> -        cs->prebits = cs->pribits;
+> -        if (cs->prebits == 8) {
+> -            cs->prebits--;
+> -        }
+> -        /*
+> -         * Check that CPU code defining pribits didn't violate
+> -         * architectural constraints our implementation relies on.
+> -         */
+> -        g_assert(cs->pribits >= 4 && cs->pribits <= 8);
+> +    /*
+> +     * gicv3_cpuif_reginfo[] defines ICC_AP*R0_EL1; add definitions
+> +     * for ICC_AP*R{1,2,3}_EL1 if the prebits value requires them.
+> +     */
+> +    if (gcs->prebits >= 6) {
+> +        define_arm_cp_regs(cpu, gicv3_cpuif_icc_apxr1_reginfo);
+> +    }
+> +    if (gcs->prebits == 7) {
+> +        define_arm_cp_regs(cpu, gicv3_cpuif_icc_apxr23_reginfo);
+> +    }
+>   
+> -        /*
+> -         * gicv3_cpuif_reginfo[] defines ICC_AP*R0_EL1; add definitions
+> -         * for ICC_AP*R{1,2,3}_EL1 if the prebits value requires them.
+> -         */
+> -        if (cs->prebits >= 6) {
+> -            define_arm_cp_regs(cpu, gicv3_cpuif_icc_apxr1_reginfo);
+> -        }
+> -        if (cs->prebits == 7) {
+> -            define_arm_cp_regs(cpu, gicv3_cpuif_icc_apxr23_reginfo);
+> -        }
+> +    if (arm_feature(&cpu->env, ARM_FEATURE_EL2)) {
+> +        int j;
+>   
+> -        if (arm_feature(&cpu->env, ARM_FEATURE_EL2)) {
+> -            int j;
+> +        gcs->num_list_regs = cpu->gic_num_lrs ?: 4;
+> +        gcs->vpribits = cpu->gic_vpribits ?: 5;
+> +        gcs->vprebits = cpu->gic_vprebits ?: 5;
+>   
+> -            cs->num_list_regs = cpu->gic_num_lrs ?: 4;
+> -            cs->vpribits = cpu->gic_vpribits ?: 5;
+> -            cs->vprebits = cpu->gic_vprebits ?: 5;
+>   
+> -            /* Check against architectural constraints: getting these
+> -             * wrong would be a bug in the CPU code defining these,
+> -             * and the implementation relies on them holding.
+> -             */
+> -            g_assert(cs->vprebits <= cs->vpribits);
+> -            g_assert(cs->vprebits >= 5 && cs->vprebits <= 7);
+> -            g_assert(cs->vpribits >= 5 && cs->vpribits <= 8);
+> +        /* Check against architectural constraints: getting these
+> +         * wrong would be a bug in the CPU code defining these,
+> +         * and the implementation relies on them holding.
+> +         */
+> +        g_assert(gcs->vprebits <= gcs->vpribits);
+> +        g_assert(gcs->vprebits >= 5 && gcs->vprebits <= 7);
+> +        g_assert(gcs->vpribits >= 5 && gcs->vpribits <= 8);
+>   
+
+[gshan@gshan q]$ ./scripts/checkpatch.pl --codespell patch/check/0003*
+WARNING: Block comments use a leading /* on a separate line
+#240: FILE: hw/intc/arm_gicv3_cpuif.c:3119:
++        /* Check against architectural constraints: getting these
+
+> -            define_arm_cp_regs(cpu, gicv3_cpuif_hcr_reginfo);
+> +        define_arm_cp_regs(cpu, gicv3_cpuif_hcr_reginfo);
+>   
+> -            for (j = 0; j < cs->num_list_regs; j++) {
+> -                /* Note that the AArch64 LRs are 64-bit; the AArch32 LRs
+> -                 * are split into two cp15 regs, LR (the low part, with the
+> -                 * same encoding as the AArch64 LR) and LRC (the high part).
+> -                 */
+> -                ARMCPRegInfo lr_regset[] = {
+> -                    { .name = "ICH_LRn_EL2", .state = ARM_CP_STATE_BOTH,
+> -                      .opc0 = 3, .opc1 = 4, .crn = 12,
+> -                      .crm = 12 + (j >> 3), .opc2 = j & 7,
+> -                      .type = ARM_CP_IO | ARM_CP_NO_RAW,
+> -                      .nv2_redirect_offset = 0x400 + 8 * j,
+> -                      .access = PL2_RW,
+> -                      .readfn = ich_lr_read,
+> -                      .writefn = ich_lr_write,
+> -                    },
+> -                    { .name = "ICH_LRCn_EL2", .state = ARM_CP_STATE_AA32,
+> -                      .cp = 15, .opc1 = 4, .crn = 12,
+> -                      .crm = 14 + (j >> 3), .opc2 = j & 7,
+> -                      .type = ARM_CP_IO | ARM_CP_NO_RAW,
+> -                      .access = PL2_RW,
+> -                      .readfn = ich_lr_read,
+> -                      .writefn = ich_lr_write,
+> -                    },
+> -                };
+> -                define_arm_cp_regs(cpu, lr_regset);
+> -            }
+> -            if (cs->vprebits >= 6) {
+> -                define_arm_cp_regs(cpu, gicv3_cpuif_ich_apxr1_reginfo);
+> -            }
+> -            if (cs->vprebits == 7) {
+> -                define_arm_cp_regs(cpu, gicv3_cpuif_ich_apxr23_reginfo);
+> -            }
+> +        for (j = 0; j < gcs->num_list_regs; j++) {
+> +            /* Note that the AArch64 LRs are 64-bit; the AArch32 LRs
+> +             * are split into two cp15 regs, LR (the low part, with the
+> +             * same encoding as the AArch64 LR) and LRC (the high part).
+> +             */
+> +            ARMCPRegInfo lr_regset[] = {
+> +                { .name = "ICH_LRn_EL2", .state = ARM_CP_STATE_BOTH,
+> +                  .opc0 = 3, .opc1 = 4, .crn = 12,
+> +                  .crm = 12 + (j >> 3), .opc2 = j & 7,
+> +                  .type = ARM_CP_IO | ARM_CP_NO_RAW,
+> +                  .nv2_redirect_offset = 0x400 + 8 * j,
+> +                  .access = PL2_RW,
+> +                  .readfn = ich_lr_read,
+> +                  .writefn = ich_lr_write,
+> +                },
+> +                { .name = "ICH_LRCn_EL2", .state = ARM_CP_STATE_AA32,
+> +                  .cp = 15, .opc1 = 4, .crn = 12,
+> +                  .crm = 14 + (j >> 3), .opc2 = j & 7,
+> +                  .type = ARM_CP_IO | ARM_CP_NO_RAW,
+> +                  .access = PL2_RW,
+> +                  .readfn = ich_lr_read,
+> +                  .writefn = ich_lr_write,
+> +                },
+> +            };
+> +            define_arm_cp_regs(cpu, lr_regset);
+> +        }
+
+[gshan@gshan q]$ ./scripts/checkpatch.pl --codespell patch/check/0003*
+WARNING: Block comments use a leading /* on a separate line
+#284: FILE: hw/intc/arm_gicv3_cpuif.c:3130:
++            /* Note that the AArch64 LRs are 64-bit; the AArch32 LRs
+
+> +        if (gcs->vprebits >= 6) {
+> +            define_arm_cp_regs(cpu, gicv3_cpuif_ich_apxr1_reginfo);
+> +        }
+> +        if (gcs->vprebits == 7) {
+> +            define_arm_cp_regs(cpu, gicv3_cpuif_ich_apxr23_reginfo);
+>           }
+>           if (tcg_enabled() || qtest_enabled()) {
+>               /*
+> @@ -3169,7 +3164,7 @@ void gicv3_init_cpuif(GICv3State *s)
+>                * state only changes on EL changes involving EL2 or EL3, so for
+>                * the non-TCG case this is OK, as EL2 and EL3 can't exist.
+>                */
+> -            arm_register_el_change_hook(cpu, gicv3_cpuif_el_change_hook, cs);
+> +            arm_register_el_change_hook(cpu, gicv3_cpuif_el_change_hook, gcs);
+>           } else {
+>               assert(!arm_feature(&cpu->env, ARM_FEATURE_EL2));
+>               assert(!arm_feature(&cpu->env, ARM_FEATURE_EL3));
+> diff --git a/hw/intc/arm_gicv3_cpuif_common.c b/hw/intc/arm_gicv3_cpuif_common.c
+> index ff1239f65d..f4d5ca447b 100644
+> --- a/hw/intc/arm_gicv3_cpuif_common.c
+> +++ b/hw/intc/arm_gicv3_cpuif_common.c
+> @@ -20,3 +20,13 @@ void gicv3_set_gicv3state(CPUState *cpu, GICv3CPUState *s)
+>   
+>       env->gicv3state = (void *)s;
+>   };
+> +
+> +void gicv3_init_cpuif(GICv3State *s)
+> +{
+> +    ARMGICv3CommonClass *agcc = ARM_GICV3_COMMON_GET_CLASS(s);
+> +
+> +    /* define and register `system registers` with the vCPU  */
+> +    for (int i = 0; i < s->num_cpu; i++) {
+> +        agcc->init_cpu_reginfo(s->cpu[i].cpu);
+> +    }
+> +}
+> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+> index 9ea6b8e218..b4128786ca 100644
+> --- a/hw/intc/arm_gicv3_kvm.c
+> +++ b/hw/intc/arm_gicv3_kvm.c
+> @@ -777,6 +777,10 @@ static void vm_change_state_handler(void *opaque, bool running,
+>       }
+>   }
+>   
+> +static void kvm_gicv3_init_cpu_reginfo(CPUState *cs)
+> +{
+> +    define_arm_cp_regs(ARM_CPU(cs), gicv3_cpuif_reginfo);
+> +}
+>   
+>   static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+>   {
+> @@ -812,11 +816,8 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+>   
+>       gicv3_init_irqs_and_mmio(s, kvm_arm_gicv3_set_irq, NULL);
+>   
+> -    for (i = 0; i < s->num_cpu; i++) {
+> -        ARMCPU *cpu = ARM_CPU(qemu_get_cpu(i));
+> -
+> -        define_arm_cp_regs(cpu, gicv3_cpuif_reginfo);
+> -    }
+> +    /* Initialize vCPU interface */
+> +    gicv3_init_cpuif(s);
+>   
+>       /* Try to create the device via the device control API */
+>       s->dev_fd = kvm_create_device(kvm_state, KVM_DEV_TYPE_ARM_VGIC_V3, false);
+> @@ -902,6 +903,7 @@ static void kvm_arm_gicv3_class_init(ObjectClass *klass, void *data)
+>   
+>       agcc->pre_save = kvm_arm_gicv3_get;
+>       agcc->post_load = kvm_arm_gicv3_put;
+> +    agcc->init_cpu_reginfo = kvm_gicv3_init_cpu_reginfo;
+>       device_class_set_parent_realize(dc, kvm_arm_gicv3_realize,
+>                                       &kgc->parent_realize);
+>       resettable_class_set_parent_phases(rc, NULL, kvm_arm_gicv3_reset_hold, NULL,
+> diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
+> index bc9f518fe8..cc8edc499b 100644
+> --- a/hw/intc/gicv3_internal.h
+> +++ b/hw/intc/gicv3_internal.h
+> @@ -722,6 +722,7 @@ void gicv3_redist_vinvall(GICv3CPUState *cs, uint64_t vptaddr);
+>   
+>   void gicv3_redist_send_sgi(GICv3CPUState *cs, int grp, int irq, bool ns);
+>   void gicv3_init_cpuif(GICv3State *s);
+> +void gicv3_init_cpu_reginfo(CPUState *cs);
+>   
+>   /**
+>    * gicv3_cpuif_update:
+> diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+> index cd09bee3bc..7171f770e4 100644
+> --- a/include/hw/intc/arm_gicv3_common.h
+> +++ b/include/hw/intc/arm_gicv3_common.h
+> @@ -338,6 +338,7 @@ struct ARMGICv3CommonClass {
+>   
+>       void (*pre_save)(GICv3State *s);
+>       void (*post_load)(GICv3State *s);
+> +    void (*init_cpu_reginfo)(CPUState *cs);
+>   };
+>   
+>   void gicv3_init_irqs_and_mmio(GICv3State *s, qemu_irq_handler handler,
+
+Thanks,
+Gavin
+
 
