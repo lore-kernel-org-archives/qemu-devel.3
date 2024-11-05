@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A743D1CA38
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C3DDD1CA3A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:43:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DEM-0002IO-25; Tue, 05 Nov 2024 01:39:58 -0500
+	id 1t8DDO-0008DX-EX; Tue, 05 Nov 2024 01:38:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DED-0001V2-7j
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:49 -0500
+ id 1t8DD3-0007U7-NE
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:38 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DEB-0001w0-CD
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:48 -0500
+ id 1t8DD1-0001vj-Bi
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788787; x=1762324787;
+ t=1730788715; x=1762324715;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=C2RlAuENX7AQKgB6fkf8PxOsDfhUa1Oh2lPmCd3nnHY=;
- b=gOqr5VF2w5XABWJ/DvoH/Ih+u7hgppt+TtQxFjfQy0lfHGHJT5rFqPRC
- GsxYZY6sKTGeB+4bAj8O4J+Vu9k1v8+A0cgrcVVlcrx5jBe8WyZKrw6Et
- /OQRucOTMmWUxu4Ksdn4jeLejvhqXhRVBK3kdX55njmBr5/qhDGQDslpR
- EgXEI6dD9uk2NSi+9gnvVBCcmonFLCDXX0RnFyCuIBSyx8Eab9BBeTGB6
- 5DVqda1OhunysKXglp6SWTg4Bi9MLNKykOol/c3MY5acU9s7ybyXZbjbM
- VOZERSGWZOafI13i7pmOOyWiQL8x3fg0EtQJq2ceQsxFZQJHAU27MloKQ g==;
-X-CSE-ConnectionGUID: YVOZJdZIR1KMYYQazAA28w==
-X-CSE-MsgGUID: a+C4OmGKSHKaRDq91qW4tQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689810"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689810"
+ bh=yTZNX+NQ5Q3yptqAX7/efQmRoNrRURBtZaK/2Teq53U=;
+ b=QHB5L4XmfGlnU0sRpXAKdEb2awJCbNqlMkrALPT6EvFjhnNCISjEwFLS
+ WX4emvncX7I/lKsOGgdV3iDy4YdOB3abuP9J1osHIvuH1OX0TNzaQPvlg
+ +4ifuFm17tk8XxelbgKcxm5DgHHhsjWVm8HcwjQ4wJlNZYzubWdmgKHio
+ j9swXG0CBShSq5uGuWeSdIxycPSVHcF9tUGn6cVBQFs9yJmIZSn4/MGFb
+ tSZ2Pb6zXya+29NWzbBhHI860v7/VTxsp7/1eok0DX5V7dsLQP2f/7qSG
+ /V490gypBxk9oD9oKyHcaLBOYKbpUrIsuWb9LN8+gqeayx/r/bikaKuBP A==;
+X-CSE-ConnectionGUID: 0ydHHBfaRw6qKh13/+JG4Q==
+X-CSE-MsgGUID: Je4kr+MxSsmSe4nL4UQ50A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689613"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689613"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:39:35 -0800
-X-CSE-ConnectionGUID: nQHxqnLjRaOvI8sC+/HFoA==
-X-CSE-MsgGUID: w5YMLsrFQWCEEsV4cIXAAw==
+ 04 Nov 2024 22:38:23 -0800
+X-CSE-ConnectionGUID: BJdYU1grQeKHRWNJj1QRwA==
+X-CSE-MsgGUID: M0YwmNanRkGKH2IyrQ+pEw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989690"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989093"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:39:31 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:38:19 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -57,9 +57,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 45/60] i386/tdx: Don't get/put guest state for TDX VMs
-Date: Tue,  5 Nov 2024 01:23:53 -0500
-Message-Id: <20241105062408.3533704-46-xiaoyao.li@intel.com>
+Subject: [PATCH v6 28/60] i386/tdx: Enable user exit on KVM_HC_MAP_GPA_RANGE
+Date: Tue,  5 Nov 2024 01:23:36 -0500
+Message-Id: <20241105062408.3533704-29-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
@@ -90,50 +90,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sean Christopherson <sean.j.christopherson@intel.com>
+KVM translates TDG.VP.VMCALL<MapGPA> to KVM_HC_MAP_GPA_RANGE, and QEMU
+needs to enable user exit on KVM_HC_MAP_GPA_RANGE in order to handle the
+memory conversion requested by TD guest.
 
-Don't get/put state of TDX VMs since accessing/mutating guest state of
-production TDs is not supported.
-
-Note, it will be allowed for a debug TD. Corresponding support will be
-introduced when debug TD support is implemented in the future.
-
-Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/kvm.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+changes in v6:
+ - new patch;
+---
+ target/i386/kvm/tdx.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index c39e879a77e9..e47aa32233e6 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5254,6 +5254,11 @@ int kvm_arch_put_registers(CPUState *cpu, int level, Error **errp)
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 33d7ed039051..b34707e93f4d 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -20,6 +20,8 @@
+ #include "sysemu/sysemu.h"
+ #include "exec/ramblock.h"
  
-     assert(cpu_is_stopped(cpu) || qemu_cpu_is_self(cpu));
- 
-+    /* TODO: Allow accessing guest state for debug TDs. */
-+    if (is_tdx_vm()) {
-+        return 0;
-+    }
++#include <linux/kvm_para.h>
 +
-     /*
-      * Put MSR_IA32_FEATURE_CONTROL first, this ensures the VM gets out of VMX
-      * root operation upon vCPU reset. kvm_put_msr_feature_control() should also
-@@ -5368,6 +5373,12 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
-         error_setg_errno(errp, -ret, "Failed to get MP state");
-         goto out;
+ #include "hw/i386/e820_memory_layout.h"
+ #include "hw/i386/x86.h"
+ #include "hw/i386/tdvf.h"
+@@ -362,6 +364,11 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+         }
      }
-+
-+    /* TODO: Allow accessing guest state for debug TDs. */
-+    if (is_tdx_vm()) {
-+        return 0;
+ 
++    /* TDX relies on KVM_HC_MAP_GPA_RANGE to handle TDG.VP.VMCALL<MapGPA> */
++    if (!kvm_enable_hypercall(BIT_ULL(KVM_HC_MAP_GPA_RANGE))) {
++        return -EOPNOTSUPP;
 +    }
 +
-     ret = kvm_getput_regs(cpu, 0);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "Failed to get general purpose registers");
+     qemu_add_machine_init_done_notifier(&tdx_machine_done_notify);
+ 
+     tdx_guest = tdx;
 -- 
 2.34.1
 
