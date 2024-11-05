@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19AA6D1CA39
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20B9CD1CA38
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 06:41:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8DEB-0001Hc-PJ; Tue, 05 Nov 2024 01:39:47 -0500
+	id 1t8DEB-0001Cl-2x; Tue, 05 Nov 2024 01:39:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DDm-00012U-64
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:31 -0500
+ id 1t8DDG-0007xo-UT
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:53 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8DDh-0001vd-P5
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:39:21 -0500
+ id 1t8DDF-0001vj-9n
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 01:38:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730788758; x=1762324758;
+ t=1730788729; x=1762324729;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=oaeUYxWxoTsbbEf4Af9Nw3NbJLsiof0AXokRyvVuUyo=;
- b=MrUB6rrVvf7+ZuHrHc4sSHEomrE8MB4PmFC4rMYdLxXecVs0zqUVTDv7
- +DF1yLaFq+u9hkPRMV/kABXdnQbwbLmOwOtKfd9ZYSGg6U3amnLDbtMb/
- +VvgegmJLwujJMz7BpBg9R60ipdTplCg90l/0ekKnfxPoVBg5WCgUWU60
- cQLHZQK+bNySnPqML7/kp1ydKwiDtS7DlZXagRpZgJl2XAl6hbp0vfnFG
- TAsG6NyNmLt5wqQn+SXeNXvHx4pPloUV4Prx+nn4tIBQERTn/18lsrt2E
- PiVXH8KUQgxPq0Tm3rU0PvOIs+E5ZYuTyYv/FNR2fU9r7lPjv+Geg0hgT A==;
-X-CSE-ConnectionGUID: i7acg9kFQzqJQ0uakwJ5yg==
-X-CSE-MsgGUID: ZNhI++QeRAae7yA+RincxA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689733"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689733"
+ bh=PjQf7e/17C3WWdlE56nodz232TMn447UvRVBPAlFKX4=;
+ b=nAg6lAzF8wis5CFbO1FR1Gcr5K/dF7EwQdAu18/4WXYuEeEs+c3wtqgK
+ /zjMDjF7gFE+r00eTQa3OFfIIg0HGugZp0CZChvM6IVd46OfRU2ZtypM8
+ s1YX901uB9IKT7u4nY354K009mi0hK5vYPzyYN4QoifM9l26V/sGy30ZP
+ lY8Lds474OcE2qqOcoZ7cI91QDkCLHqJPO5N92/VOfr6wf8Yyr3cw4OxX
+ YFrfJg9FctDEtB6mTpnvu2PiTY9EhpMHlVvXSYdsoApJ7POeSjcuyMkMJ
+ JjM9+8JP5e9V775NHOMcCh0NTXoYdC1xjF7wXBd9I+JfcnC7fJs1hXEgO g==;
+X-CSE-ConnectionGUID: I2M16RwaSU64L2Js+ffg0Q==
+X-CSE-MsgGUID: rz6ubgvoTI+JYiU3KKg5zw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30689667"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30689667"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2024 22:39:06 -0800
-X-CSE-ConnectionGUID: EI5xNTcOT4uw11Kv11bggg==
-X-CSE-MsgGUID: 2ryCymgaT3yCWbd2Jfig5A==
+ 04 Nov 2024 22:38:36 -0800
+X-CSE-ConnectionGUID: HBu2ooFlQVmCgAlxAclJfw==
+X-CSE-MsgGUID: YoO5oAvySVuB4CPn/mfq7w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989510"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; d="scan'208";a="83989162"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:39:01 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2024 22:38:32 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -57,9 +57,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: [PATCH v6 38/60] i386/tdx: Disable SMM for TDX VMs
-Date: Tue,  5 Nov 2024 01:23:46 -0500
-Message-Id: <20241105062408.3533704-39-xiaoyao.li@intel.com>
+Subject: [PATCH v6 31/60] i386/cpu: introduce
+ x86_confidential_guest_cpu_instance_init()
+Date: Tue,  5 Nov 2024 01:23:39 -0500
+Message-Id: <20241105062408.3533704-32-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241105062408.3533704-1-xiaoyao.li@intel.com>
 References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
@@ -90,42 +91,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TDX doesn't support SMM and VMM cannot emulate SMM for TDX VMs because
-VMM cannot manipulate TDX VM's memory.
-
-Disable SMM for TDX VMs and error out if user requests to enable SMM.
+To allow execute confidential guest specific cpu init operations.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/tdx.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Changes in v6:
+ - new patch;
+---
+ target/i386/confidential-guest.h | 11 +++++++++++
+ target/i386/cpu.c                | 10 ++++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 00faffa891e4..68d90a180db7 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -355,11 +355,20 @@ static Notifier tdx_machine_done_notify = {
+diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+index 7342d2843aa5..38169ed68e06 100644
+--- a/target/i386/confidential-guest.h
++++ b/target/i386/confidential-guest.h
+@@ -39,6 +39,7 @@ struct X86ConfidentialGuestClass {
  
- static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- {
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    X86MachineState *x86ms = X86_MACHINE(ms);
-     TdxGuest *tdx = TDX_GUEST(cgs);
-     int r = 0;
+     /* <public> */
+     int (*kvm_type)(X86ConfidentialGuest *cg);
++    void (*cpu_instance_init)(X86ConfidentialGuest *cg, CPUState *cpu);
+     uint32_t (*mask_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
+                                     int reg, uint32_t value);
+ };
+@@ -59,6 +60,16 @@ static inline int x86_confidential_guest_kvm_type(X86ConfidentialGuest *cg)
+     }
+ }
  
-     kvm_mark_guest_state_protected();
- 
-+    if (x86ms->smm == ON_OFF_AUTO_AUTO) {
-+        x86ms->smm = ON_OFF_AUTO_OFF;
-+    } else if (x86ms->smm == ON_OFF_AUTO_ON) {
-+        error_setg(errp, "TDX VM doesn't support SMM");
-+        return -EINVAL;
-+    }
++static inline void x86_confidential_guest_cpu_instance_init(X86ConfidentialGuest *cg,
++                                                            CPUState *cpu)
++{
++    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
 +
-     if (!tdx_caps) {
-         r = get_tdx_capabilities(errp);
-         if (r) {
++    if (klass->cpu_instance_init) {
++        klass->cpu_instance_init(cg, cpu);
++    }
++}
++
+ /**
+  * x86_confidential_guest_mask_cpuid_features:
+  *
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 3baa95481fbc..c7d65bbeab9b 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -35,6 +35,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/i386/topology.h"
+ #ifndef CONFIG_USER_ONLY
++#include "confidential-guest.h"
+ #include "sysemu/reset.h"
+ #include "qapi/qapi-commands-machine-target.h"
+ #include "exec/address-spaces.h"
+@@ -8157,6 +8158,15 @@ static void x86_cpu_post_initfn(Object *obj)
+     }
+ 
+     accel_cpu_instance_init(CPU(obj));
++
++#ifndef CONFIG_USER_ONLY
++    MachineState *ms = MACHINE(object_dynamic_cast(qdev_get_machine(),
++                                                   TYPE_MACHINE));
++    if (ms && ms->cgs) {
++        x86_confidential_guest_cpu_instance_init(X86_CONFIDENTIAL_GUEST(ms->cgs),
++                                                 (CPU(obj)));
++    }
++#endif
+ }
+ 
+ static void x86_cpu_init_default_topo(X86CPU *cpu)
 -- 
 2.34.1
 
