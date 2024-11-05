@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD22D12672
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 09:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85FB6D12674
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 09:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8FzW-0002Kz-3K; Tue, 05 Nov 2024 04:36:50 -0500
+	id 1t8GDa-0005JW-9b; Tue, 05 Nov 2024 04:51:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1t8FzV-0002Kq-2i
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:36:49 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t8GDY-0005JJ-NV
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:51:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1t8FzS-0005VR-Cw
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:36:48 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t8GDX-00072h-26
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 04:51:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730799403;
+ s=mimecast20190719; t=1730800277;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=826wfRf0fGXQIuaE6MUbmYoSpGGnd7MAEOwmMM4tm20=;
- b=dful5sdjoOcIQ9rr+zPWHzaUI9e0ERLEUgBP8KpZ5C3nF2TpOHbbBAXwV+9eXI8Bm+x1bN
- 7QMJxD/Aagm0zLx38eOAlyyE3czbZR5RVgVuIzGf99umjPi2Z4if7bdA5/Z2hq8BX5r2Tr
- w+76AlPskUEwO8kwhStUK4TF5wGvXpU=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4j+gfizJjFo7h8dw5lIT/tbppopu2Z2VbLhi5swEhws=;
+ b=fGNUYVwiTK99fjNoNRh1CQlDn3aa5cvOx8bMUiRfIDU/A7uCEtlXU5SgK02W1n+6uNccwu
+ a9mmi8qrX5aMGNhlv6Jl/C70O/vRYmaVAPC+99ej+iy/64bkpHOWWGvnIP91dE18EEq2j3
+ tkmDW7NWq3VxhY2SSvf61PDLSrgox4s=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-116-Wbsii0y3NcS_LeXxxSg6Aw-1; Tue, 05 Nov 2024 04:36:40 -0500
-X-MC-Unique: Wbsii0y3NcS_LeXxxSg6Aw-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6cbf039dccfso92124836d6.0
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 01:36:40 -0800 (PST)
+ us-mta-76-NoM3_DJ3MP-b2NwWJt_VZA-1; Tue, 05 Nov 2024 04:51:15 -0500
+X-MC-Unique: NoM3_DJ3MP-b2NwWJt_VZA-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4314a22ed8bso37105645e9.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 01:51:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730799400; x=1731404200;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=826wfRf0fGXQIuaE6MUbmYoSpGGnd7MAEOwmMM4tm20=;
- b=CI92PErPGybDGbd5UNfqisI3ty9mlNP32sQSCSyfBsO9A9o2KDetB2cSNXzYFshwNX
- rXpLpUVm8/o+bykCt2g79wJY3zsUmi5c8eiCOe4sW0NADXnlOjvIpPMfWtKNJlH8Nlsx
- ZOTWlmcjzpAqHBCvBYieugSwAM0IYHh+Tp025r8ft8pLfz+HlTD6a1+9AuUjeiXjqnkq
- fn9neliveMMQHp0FjIEC45gtb7PsLcpSQY5D7Q2UOC3PICmnBaGXchkNJuGxUcbcccB9
- pk0pX6shfQVqSASXktEao/UzZ4N2B9lFXVGGQbMSkyMVCKfr2ztQr6CrziqACXFD6ePR
- MYdw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXYFUWxtNMNfI2VujmqWC3zlXeiS6utHRbF9A2RuAVSXI94G2Ye+z4NZO4lw03siCj9gQJHphkC3fVX@nongnu.org
-X-Gm-Message-State: AOJu0YygHEIALuT3NllIO38/iRFofblONMPDCimTlYvOnt4SneJNgj/q
- Nm9LicnZBVhwAzB/9XoUDuGYJ0a4ojhTp1/UPyGm6K5of66c8Fy3ksaNNq6LSEI7B+RBdxUfcO3
- g1vZFWdU6i/aGH4m2Uix1sF43HOy5ABHFJt/4+bg5SuQjXap1xmx6
-X-Received: by 2002:a05:6214:3bc7:b0:6d3:710c:bc16 with SMTP id
- 6a1803df08f44-6d3710cbcd9mr126475006d6.15.1730799399724; 
- Tue, 05 Nov 2024 01:36:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFQxdllkkwmZ8rBgKAAxJaRWfC4SHMoPmtyBJ+qu/20ggocPATDw3K7Cbvg0BHnDYc7oPnEjg==
-X-Received: by 2002:a05:6214:3bc7:b0:6d3:710c:bc16 with SMTP id
- 6a1803df08f44-6d3710cbcd9mr126474836d6.15.1730799399301; 
- Tue, 05 Nov 2024 01:36:39 -0800 (PST)
-Received: from sgarzare-redhat ([134.0.5.207])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d353f9e7adsm58043296d6.2.2024.11.05.01.36.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 01:36:38 -0800 (PST)
-Date: Tue, 5 Nov 2024 10:36:32 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Sahil Siddiq <icegambit91@gmail.com>
-Cc: eperezma@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
- Sahil Siddiq <sahilcdq@proton.me>
-Subject: Re: [PATCH] vdpa: Support setting vring_base for packed svq
-Message-ID: <k2suxbt2qy7ewjrlozlkzrhsa7bbf7xrze33outna65dejuus2@eamj5pdkvpkw>
-References: <20241104162124.49867-1-sahilcdq@proton.me>
+ d=1e100.net; s=20230601; t=1730800274; x=1731405074;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4j+gfizJjFo7h8dw5lIT/tbppopu2Z2VbLhi5swEhws=;
+ b=BG3/2Xc4oZVxZs3Nrh+wujNNErL7xJkV9AkvhSj7+AmF23Kaev5fKLxUrhI8SihMpq
+ tml7//Sunks7FQ6cBSDJ4ghcYUFfRTcPsr8sBjZgBuN3PstZh4ooZIKbpp4cJWKLK3C7
+ lf/RRbgYlop8bJ+RAdSatLfUQqXrj4CtfT/35y/TiacQOXjtwqG/P5Z3rEJggeo2SFem
+ fjgDyJcLKznslbFrXwERPmHPzY6FMT+AJmoX5r0binb9bdQAr4iHcZGt+y84MrINvGED
+ ChK91sMBTd4sQukWxhSr3Rpg5TMdI2pApMl8pmKobAIRV4WO/TGsFMb+VrLusGjl2Dyp
+ tAng==
+X-Gm-Message-State: AOJu0Yw6jDLlZc+Y2Z/hKxet2m8JD90BBlI3dNjG5TAl4R7sVSkhZYqJ
+ /WX3AT6PlrWnUxUeIX2v8Iilhou8J0qy1GjJhQ88IK6gvVnFmwBZAYu/OpIPKujwNivGfr+6BTg
+ SBpru0tCR5j2MTiodotCJqk3Xf7VGSG80dBBFZvzlAhs3c0TWb3pQb9arsyfyiv3/UI0kNEIVus
+ omo6n129hRyFq6deCnHqtx8OlpGys=
+X-Received: by 2002:a05:600c:4511:b0:42c:bd4d:e8ba with SMTP id
+ 5b1f17b1804b1-4327b6f953dmr162014335e9.8.1730800273898; 
+ Tue, 05 Nov 2024 01:51:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHDHka4/05/zFkRe3vLPFOGvTuXVUOxDeO0HtsVPmn1sZfwp01MkK/lnysgx8yDmdAJGNBAbiV9kLz2zJfj4lI=
+X-Received: by 2002:a05:600c:4511:b0:42c:bd4d:e8ba with SMTP id
+ 5b1f17b1804b1-4327b6f953dmr162014185e9.8.1730800273614; Tue, 05 Nov 2024
+ 01:51:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20241104162124.49867-1-sahilcdq@proton.me>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+References: <20241029150908.1136894-1-ppandit@redhat.com>
+ <20241029150908.1136894-4-ppandit@redhat.com>
+ <ZyTnWYyHlrJUYQRB@x1n>
+ <CAE8KmOzD3L2kO7AucYcyVEbjh-qc5H_1Xc9A2VPxT9mX_8nMGg@mail.gmail.com>
+ <Zyj76Olcwtfs4ndt@x1n>
+In-Reply-To: <Zyj76Olcwtfs4ndt@x1n>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 5 Nov 2024 15:20:57 +0530
+Message-ID: <CAE8KmOxiPRWGHyGBgjjg1==BuPQBRm9vbttDPoAAFsmZGhUobw@mail.gmail.com>
+Subject: Re: [PATCH 3/5] migration: remove multifd check with postcopy
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -103,75 +100,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 04, 2024 at 09:51:24PM +0530, Sahil Siddiq wrote:
->Linux commit v5.14-rc1~30^2~8 enabled the vp_vdpa driver to set the
-
-To refer to a commit, please use the SHA-1 id or even better the form
-suggested in
-https://www.kernel.org/doc/html/latest/process/submitting-patches.html#describe-your-changes
-
-So in this case I'd use:
-Linux commit 1225c216d954 ("vp_vdpa: allow set vq state to initial state
-after reset")
-
->vq state to the device's initial state. This works differently for
->split and packed vqs.
+On Mon, 4 Nov 2024 at 22:23, Peter Xu <peterx@redhat.com> wrote:
+> We definitely need a helper like this to simply detect what the user chose
+> on the feature.
 >
->With shadow virtqueues enabled, vhost-vdpa sets the vring base using
->the VHOST_SET_VRING_BASE ioctl. The payload (vhost_vring_state)
->differs for split and packed vqs. The implementation in QEMU currently
->uses the payload required for split vqs (i.e., the num field of
->vhost_vring_state is set to 0). The kernel throws EOPNOTSUPP when this
->payload is used with packed vqs.
->
->This patch sets the num field in the payload appropriately so vhost-vdpa
+> You can still introduce a new helper, e.g. migrate_multifd_precopy(), if
+> that simplifies the code.
 
-I'm not very familiar with shadow virtqueue, so can you elaborate what
-"appropriately" means here?
-
->(with the vp_vdpa driver) can use packed svqs.
->
->Link: https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05106.html
->Link: https://lore.kernel.org/r/20210602021536.39525-4-jasowang@redhat.com
->Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
->---
->QEMU currently does not support packed vhost shadow virtqueues. I am
->working on adding support for packed svqs [1]. The test environment
->that I am using [2] requires vhost-vdpa to use the relevant payload
->when setting vring base.
->
->[1] https://wiki.qemu.org/Internships/ProjectIdeas/PackedShadowVirtqueue
->[2] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-aint-got-hardware-part-2
->
-> hw/virtio/vhost-vdpa.c | 4 ++++
-> 1 file changed, 4 insertions(+)
->
->diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
->index 3cdaa12ed5..5f81945109 100644
->--- a/hw/virtio/vhost-vdpa.c
->+++ b/hw/virtio/vhost-vdpa.c
->@@ -1230,6 +1230,10 @@ static bool vhost_vdpa_svq_setup(struct vhost_dev *dev,
->     };
->     int r;
->
->+    if (virtio_vdev_has_feature(dev->vdev, VIRTIO_F_RING_PACKED)) {
->+        s.num = 0x80008000;
-
-Why this magic value?
-
-Looking at the kernel code it looks like we are assgining 0x8000 for
-both last_avail_idx and last_used_idx, but why 0x8000?
-
-Thanks,
-Stefano
-
->+    }
->+
->     r = vhost_vdpa_set_dev_vring_base(dev, &s);
->     if (unlikely(r)) {
->         error_setg_errno(errp, -r, "Cannot set vring base");
->-- 
->2.47.0
->
+Okay. Thank you.
+---
+  - Prasad
 
 
