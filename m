@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103D4D31769
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 16:56:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E86D31765
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 16:57:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Mqf-00040S-1U; Tue, 05 Nov 2024 11:56:09 -0500
+	id 1t8Mrt-0005uz-Kz; Tue, 05 Nov 2024 11:57:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1t8MqV-0003sE-Pf; Tue, 05 Nov 2024 11:56:00 -0500
+ id 1t8Mrr-0005tz-NV; Tue, 05 Nov 2024 11:57:23 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1t8MqU-0005Hm-6o; Tue, 05 Nov 2024 11:55:59 -0500
+ id 1t8Mrq-0005N9-7g; Tue, 05 Nov 2024 11:57:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=7CKjqAyN4II26sBBzl0STl1rV2DP/sxxmN7LCkahJfY=; b=FZY5gwTwy3aeyqJ
- 7BdapXVubL4unqbwWnj9r39Os5fGAiw54+I7fN7bioOyCw5/g6WJU/o/mICXE2eY7vejS8irfG7tn
- kmSsm5ZU+N2Ew2X/dmRk1SD3M/rcIi+diVBns+egIc87sacrHs0BQ9sbqLLP3RP7RTeZad6Bl/vDP
- Gg=;
-Date: Tue, 5 Nov 2024 17:58:42 +0100
+ List-Help; bh=2Or6mVQUag9RKBTXaoInMsIH3fxHtaw2o9kq593LvyI=; b=VTDYqOljhtT+zUb
+ mZ7gjhml3y8vrfjpzwUCgVoPSZKnUAgYBU9Be0UnMmjOtvTOpISUH4NH7jfhC539QWPXxz/s1DIzD
+ 9aDhxqvblR+9qnobDWQSSpvPy2yIu8jxdKR5XQo1pWyrQvFbHVSFwQZbzVLYIKZbt5/OWoutFi75f
+ t4=;
+Date: Tue, 5 Nov 2024 18:00:04 +0100
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
  Peter Maydell <peter.maydell@linaro.org>,
@@ -37,16 +37,16 @@ Cc: qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 10/19] hw/timer/xilinx_timer: Only expect big-endian
- accesses
-Message-ID: <3o2ikzpqgx6m3tdpyx6pz46dddzq3xw75ptpickzrmo6qbnwgv@m6mcmtg457tg>
+Subject: Re: [PATCH 11/19] hw/timer/xilinx_timer: Allow down to 8-bit memory
+ access
+Message-ID: <i27nrzceydgkzobfv3godvxfovjptmkqxq7zxucwe5adwvgegq@bii3lat4bt5d>
 References: <20241105130431.22564-1-philmd@linaro.org>
- <20241105130431.22564-11-philmd@linaro.org>
+ <20241105130431.22564-12-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241105130431.22564-11-philmd@linaro.org>
+In-Reply-To: <20241105130431.22564-12-philmd@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -74,15 +74,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 05/11/24, Philippe Mathieu-Daudé wrote:
-> Per the datasheet (reference added in file header, p.10):
-> 'Register Data Types and Organization':
+> Allow down to 8-bit access, per the datasheet (reference added
+> in previous commit):
 > 
->   "The XPS Timer/Counter registers are organized as big-endian data."
+>  "Timer Counter registers are accessed as one of the following types:
+>   • Byte (8 bits)
+>   • Half word (2 bytes)
+>   • Word (4 bytes)"
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/timer/xilinx_timer.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>  hw/timer/xilinx_timer.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
