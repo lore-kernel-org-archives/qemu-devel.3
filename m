@@ -4,69 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1C8CD2C114
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 14:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76AD3D2C115
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 14:41:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8KhU-0001cY-Of; Tue, 05 Nov 2024 09:38:32 -0500
+	id 1t8KkS-00030T-Dr; Tue, 05 Nov 2024 09:41:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8KhS-0001YG-R1
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 09:38:30 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t8KkR-0002zy-2C
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 09:41:35 -0500
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8KhR-0006hF-4b
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 09:38:30 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5c9850ae22eso6915190a12.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 06:38:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t8KkP-0007D5-FS
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 09:41:34 -0500
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-539e59dadebso6837369e87.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 06:41:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730817507; x=1731422307; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KwKE1gM/FxM2KY8MQQzWbUzus/O47sxJIGMJvhcb5kg=;
- b=qh2bZvS+xCNjus0npYVyKrFA7/I++3A635ybsQBnPejOcDWAErEP0aiHgQYttgVdOZ
- rODoQcFLoJeF4xfSHDQjlKlMeKGN+wiMIrC/mbM2SbpDVfWbnzHi84hh7cQY3CU7UOsk
- TsfDR3y+OAoXi/+EatS7sulQ01kovhD3PzQUdYK9xfyEYH/RsNJKG+W6goOlYNx3IXng
- HWgfoddOTPfAiMns4+d4d0Hmd2XYLwaEW2ZMKIdvAol9Ze+fmw+2A1Tf4cn+9lgr37PG
- NRqnzJDzI9pnmb6j941fP6DF3krwxOOxWpNOig0uIx0gGAZlFvxLwMqOynZ91BqhLyHe
- KZ+A==
+ d=linaro.org; s=google; t=1730817691; x=1731422491; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qi0zRjNY65VjFcqxfQxEh4pqL00MyEwpfvs76EiAyOs=;
+ b=lXqOQav4j83Q90LdZYsOdUHNl96zT+9zeoWJV8r3MYOX78cYYRk3vcn9DSlu7ErEeP
+ mRPZQElmQBrzH5ioQy6YaasPTlaQWD5F3obPY4zgrDNyj4+aMXO/N3yQjizMx6CLplsS
+ 2d2Ohrz4BX9lpASj8RVXkgzKVP3h4nv1TIOkUym7UZnppeduSCTud5lhPsEkNErLR6qu
+ wpeOIB4czI4eGMPtlbqo7u69Y6y0m3/f/H8KK8aiqYhN1anoTY/LvlV98+RAgoXUJlg6
+ /Ao/27wo1wMixDXqcvqT68R0OYwEeKUr3YqaNwfx2DsNHC3Vde4Cfo0PbcG/KpgfGdmJ
+ NVzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730817507; x=1731422307;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KwKE1gM/FxM2KY8MQQzWbUzus/O47sxJIGMJvhcb5kg=;
- b=X7W4KKqyPRbCd8z2cpklRofoldxqaGB8LCXCjcJOC1/6+7GblnkLoOGkC9eI8e+KvS
- vTOx21e8FgVIXSKOgKkl98y5SrMhHrA4AT4jstJQafT6bCg7BXiJKWltjTyYo+Gcn5KT
- lKkEIc3IcbDKVoJqUlyK+tIRYFtgGNzJHLoxWnsJoaLFrEFdO2bQjeTUKUVM+7ReKyZ0
- YFYDpCizY5mKM6VFQ0Dv2TP12q8DYqmJJ0YmfWbClVZOzawSDjywpw4dWZt7OBx5NYiJ
- on+3EaQacGp/wca3Sdq+CVc2fc0K5pEjgNttYlW3gvNZZ4dv3PQNRNpiZ4BVfBzZd1++
- mDRQ==
-X-Gm-Message-State: AOJu0YyzCADQFzEQvdPYDoQMgFkzX/arPZ1G8iDRjtizrdb1Hy0jDwpF
- Ejp3Rm6Fzl4OUK10nGgLHYlemg3FlFkF+B6MG3OK8DVtoSe3B7lPy328XnO6Ab8GfvTktYfBi6p
- YrO4moJMUvddeG6q0bfk77MWm++bOFV86eZJ67Q==
-X-Google-Smtp-Source: AGHT+IFOyG0n3FYNTQRVQReg1OfkOurbRz/WvBAjm1/YdeULyLe9DyzfNsqFWTuMsbfTXWdgaorDXYe9XAqaRyqS4V8=
-X-Received: by 2002:a05:6402:2790:b0:5ce:d4ff:606 with SMTP id
- 4fb4d7f45d1cf-5ced4ff0642mr6568182a12.34.1730817507204; Tue, 05 Nov 2024
- 06:38:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730817691; x=1731422491;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qi0zRjNY65VjFcqxfQxEh4pqL00MyEwpfvs76EiAyOs=;
+ b=gEzBcR9aFkPqDGIuuT/YKhBL67mKbxpsMvr6eDSohSjPB/TndVZnq7TfdHrjZInaEW
+ 5crGk4NP9X1gsWbwFFCn5DLYiwsyGfCdqS6bn0i7y0J0Jbkjlw3rfq9Cyhs5jh86CYd1
+ 6rW/emw0penuqTeGOBeXL3t6DXdYHbKuyKx5DU4oKk7/AH2hLp33cieDA2DhFKv9a5P2
+ E1OP43ZSbRsH+YQ2lG3X+nV9DjCZ4Egyz6bhGU2zo/5AMWVn4GSrqzwO+1qYmH8e8pCl
+ W6mP9V0osVP2ZnQEvIfBJ8c+Vq27VHrreRG7H/qtnJuVXWTb9X+AsaVdyhljb/7lYGFl
+ H3pA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUopZKdbTvgnKkAJ83sc3Nhqr1RlGYeLcUoOweg9Zv6OUE3TyhFKjSS8diy3cepaF8Ln5zarDvPOzhZ@nongnu.org
+X-Gm-Message-State: AOJu0Yx7gXdcrGyUKpYFS6XEcuypf3+2FM39zT+ueSvQb0K5xbF8BtRn
+ Lekn/JxEDm4/N+hK/FulWUEvNCvBT6cUv0AU8XA4i1hhND9pjJhgMw1WbgnKHGA=
+X-Google-Smtp-Source: AGHT+IHg09U8PWC3f5HRNRFVQWATqRqSFyLKBCgv2TctUswBbVP/U/W+VjNkYUk2lnzPtO2ZduatqQ==
+X-Received: by 2002:a05:6512:3d05:b0:539:df2f:e115 with SMTP id
+ 2adb3069b0e04-53b34909ffamr18939703e87.23.1730817691495; 
+ Tue, 05 Nov 2024 06:41:31 -0800 (PST)
+Received: from [192.168.21.227] ([154.14.63.34])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c10e565csm16356048f8f.48.2024.11.05.06.41.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Nov 2024 06:41:31 -0800 (PST)
+Message-ID: <b8080e98-c292-4760-abd8-822a1aafc932@linaro.org>
+Date: Tue, 5 Nov 2024 14:41:28 +0000
 MIME-Version: 1.0
-References: <20241105132339.2967202-1-clg@redhat.com>
-In-Reply-To: <20241105132339.2967202-1-clg@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Nov 2024 14:38:15 +0000
-Message-ID: <CAFEAcA9yP3=C5=wuXbBDQ0bSGonjGAyJ387=KsAcPS09Kn4pHg@mail.gmail.com>
-Subject: Re: [PATCH] test/functional: Fix Aspeed buildroot tests
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] gdbstub: Allow the %d placeholder in the socket path
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Warner Losh <imp@bsdimp.com>,
+ Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20241024200031.80327-1-iii@linux.ibm.com>
+ <20241024200031.80327-2-iii@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241024200031.80327-2-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,40 +102,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Nov 2024 at 13:23, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
->
-> Since commit 786bc2255256, cached asset files are read-only. Adjust
-> the QEMU command line for buildroot tests to reflect the new
-> constraint on the flash drive.
->
-> Fixes: f04cb2d00d5c ("tests/functional: Convert most Aspeed machine tests=
-")
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+On 10/24/24 20:59, Ilya Leoshkevich wrote:
+> Just like for QEMU_LOG_FILENAME, replace %d with PID in the GDB socket
+> path. This allows running multi-process applications with, e.g.,
+> export QEMU_GDB=/tmp/qemu-%d.sock. Currently this is not possible,
+> since the first process will cause the subsequent ones to fail due to
+> not being able to bind() the GDB socket.
+> 
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 > ---
->  tests/functional/test_arm_aspeed.py | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_=
-arm_aspeed.py
-> index 9761fc06a454..19853161b267 100644
-> --- a/tests/functional/test_arm_aspeed.py
-> +++ b/tests/functional/test_arm_aspeed.py
-> @@ -125,7 +125,7 @@ def test_arm_ast2500_romulus_openbmc_v2_9_0(self):
->      def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern=
-=3D'Aspeed EVB'):
->          self.require_netdev('user')
->          self.vm.set_console()
-> -        self.vm.add_args('-drive', 'file=3D' + image + ',if=3Dmtd,format=
-=3Draw',
-> +        self.vm.add_args('-drive', 'file=3D' + image + ',if=3Dmtd,format=
-=3Draw,read-only=3Dtrue',
->                           '-net', 'nic', '-net', 'user')
+>   gdbstub/user.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+> 
+> diff --git a/gdbstub/user.c b/gdbstub/user.c
+> index 0b4bfa9c488..cdf5affae15 100644
+> --- a/gdbstub/user.c
+> +++ b/gdbstub/user.c
+> @@ -316,9 +316,19 @@ static bool gdb_accept_socket(int gdb_fd)
+>   
+>   static int gdbserver_open_socket(const char *path)
+>   {
+> +    g_autoptr(GString) buf = g_string_new("");
+>       struct sockaddr_un sockaddr = {};
+> +    char *pid_placeholder;
+>       int fd, ret;
+>   
+> +    pid_placeholder = strstr(path, "%d");
+> +    if (pid_placeholder != NULL) {
+> +        g_string_append_len(buf, path, pid_placeholder - path);
+> +        g_string_append_printf(buf, "%d", getpid());
 
-There are a couple of other places in this file where we add
-a '-drive' option pointing to a file -- do they also need
-read-only=3Dtrue adding ?
+qemu_get_thread_id().
 
-thanks
--- PMM
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
