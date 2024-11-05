@@ -4,87 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2920D12676
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 10:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9759ED12676
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 10:06:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8GNe-00006o-Bm; Tue, 05 Nov 2024 05:01:48 -0500
+	id 1t8GRa-0000wR-Tb; Tue, 05 Nov 2024 05:05:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1t8GNZ-00006D-Vg
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:01:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1t8GNY-0007wV-G5
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:01:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730800899;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uKQT+r4BKL3A33JSY+MXptz+0BNeaIcvY+Zwk3cVGT8=;
- b=RYI+NaCExx7UWHIQAyBx5qs0YhRrIkMNr/rXdRqI3szAa5W4qn7J39bFUe/uU+nqgAqa1c
- BTTQIN5INdfZhm8Hd+DNy8wwDfxH9Ust26PnYAi8T8HD3BvJVCQsw3LOMjJPTSyFsEiZ71
- fXx0VJDkgaP09wvo2h4M/V3UZ0ooZgE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-455-khHqtfxcOrat-tm5nV_cMw-1; Tue, 05 Nov 2024 05:01:37 -0500
-X-MC-Unique: khHqtfxcOrat-tm5nV_cMw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4315af466d9so35595105e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 02:01:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8GRZ-0000w4-B4
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:05:49 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8GRX-0008Qi-Fq
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 05:05:49 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5c94a7239cfso3150105a12.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 02:05:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730801145; x=1731405945; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=uoV6v6ucXhK+ykSict7926T3V2nZnHEAGLSDp+cl46w=;
+ b=GuPTuBMPPsKzMWF9DLb8scnVDriMYZ2+SE6G41mWiNdDBWlJXICI+ETRUmMGYO5SVo
+ qjIiC5Tgc0wuw89Uil5nm0F1e2IV49JK/ilOpwER0Zvog/VlEiH/mfPWwgEc6sHGakNk
+ hIZBcuGBHa1ksib1neISuw9aMf8a5aL1XGbsW/Yy12kJxDCMJmnQzNumwVXaVYcSplI4
+ FucrFlfrFmRSfgU8yx/UMHYlk8+MivTMax1RX9WpJdd7S0oqqJoJwaR1ejAgs/hO6qjY
+ St6tsmlZEfAaEKfMGGjb9GWWmAxZnkU5ZdCtOj7OdK5klndPvUncB5sYJJ8dtiDKOT9t
+ wTyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730800896; x=1731405696;
+ d=1e100.net; s=20230601; t=1730801145; x=1731405945;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uKQT+r4BKL3A33JSY+MXptz+0BNeaIcvY+Zwk3cVGT8=;
- b=rtMihc9oEtzXoyammO5AXWPCvU5EBLi7yH8GVTauQhKuAaM1tskRTdCpb++fesb2NR
- FofgXyRqvr5x65ftIPegAt0aEHHXJQib4172XFeTQ3T2udhLKSoRvqPVMJArkzgQN42f
- go6KthENUIJfvlXitov5z2V5JRob5jk1H0kbNn4UKnalVM0QTEy0ul7J7GLJi7aAW/EF
- TyPTDYRZvc7UVLeIgjgPFTbTjZnYUQgBB8B/mYkiakBkSOvqmGsvkZZQHCqmJrFraPd9
- WXMhFhZaYLZbPZnitTisxs0IwoGgDsqKVlb5f5wekcqalckmV8N1ehcDLTslbbj8dyT7
- 8liw==
-X-Gm-Message-State: AOJu0Yx1JavCYp7KXzWroDFBFmC499Sekn7B4JxWzGYLY4ZxZDSaGOWP
- SMFrkMnG2k++msKf+wdAKcFG757pKLez890MQUV1cLR5fImlHYY/8u4L2U+slwFUFKADBZxOYP4
- 6kZxEzHiopAZyv+USPKaag0SWuXY9AWM/kbB23TD8c/EBmQ2El3KeSlVqMun72DZjvE/BK6Xj+4
- ooqIWqdJlG1a1izMEfH92OomuuNSJ+4e6rjcU=
-X-Received: by 2002:a05:600c:1ca9:b0:42e:8d0d:bca5 with SMTP id
- 5b1f17b1804b1-43283242bafmr117522865e9.2.1730800896138; 
- Tue, 05 Nov 2024 02:01:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHrpo9emjt8xWnMDLxIK9ZAQPExSg9MFGGZEHCRxYOkN+h6S9VNBnyC9QKLPq094b/WL0nSc3Smbn/15mqt8BY=
-X-Received: by 2002:a05:600c:1ca9:b0:42e:8d0d:bca5 with SMTP id
- 5b1f17b1804b1-43283242bafmr117522595e9.2.1730800895759; Tue, 05 Nov 2024
- 02:01:35 -0800 (PST)
+ bh=uoV6v6ucXhK+ykSict7926T3V2nZnHEAGLSDp+cl46w=;
+ b=M7+pEjj44vT2BrdghPOQ9KdVx8rUgg3a24+IdN8ZnIfg8OVNzmGOlSB+7gn06b8E57
+ a7CCPq8Zv73FjYqT57tYw8H8ilKaGInqoHP8+9BXSPcU9iKYNuoc0JwhNiukWvfRI2IO
+ P/iZjJInTTq/gj7VTDmqLY88e973iLWTygI6qbHbIpl0onsFFeZaUwzw+kDvMONppn4Q
+ ByxhLn2WiIT+E+FQyp7lA4i/LqpHE+QeFqnscioDSXyIxfzhg/Rsjvfi/jdMfGr6w+Ar
+ 65L9NfJvtASkB3JBMfoJ0dhtUZ+/FOFmCCEyxVNtLP09Wmi0woSBgOK5R9QAXNYNRxsX
+ 2WPQ==
+X-Gm-Message-State: AOJu0YxuclkbLb+jeTjoz7qYl4ac0cVcXMZO8a5tJSSOwEioRubrDJvK
+ nCXzUUpX1EN7RsbeLA1Eyh6jXoeCw0mjFbUAsi1l6cS5kXhEcGF5GORH7RVBB1KNA5xBnCR/W3L
+ 8MYKnKXmD8RZaMP7X8uIsDxnW0mY+vpB8rZbr6ASrsA37X4Gh
+X-Google-Smtp-Source: AGHT+IHeBdxKdFZUuumClqe/H4AgOczMfS1Gl//1V8GXiflrYIiORDnkXmytR7U7NVlrr/2FlH9IbBHne0/6ewG8Ups=
+X-Received: by 2002:a05:6402:42d1:b0:5c9:59e6:e929 with SMTP id
+ 4fb4d7f45d1cf-5ceb912714fmr18143631a12.0.1730801145366; Tue, 05 Nov 2024
+ 02:05:45 -0800 (PST)
 MIME-Version: 1.0
-References: <20241029150908.1136894-1-ppandit@redhat.com>
- <20241029150908.1136894-5-ppandit@redhat.com>
- <ZyToBbvfWkIZ_40W@x1n>
- <CAE8KmOyi+_U2H1r=MyQmppNj6v3mMqpjMyMo=q9zm0=-49+B3g@mail.gmail.com>
- <Zyj9rz6eD-gAm4fa@x1n>
-In-Reply-To: <Zyj9rz6eD-gAm4fa@x1n>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 5 Nov 2024 15:31:19 +0530
-Message-ID: <CAE8KmOy-up_gi8t0qGwtM04QmFvaEK7VmL=1JxEFR-ksHLiQ1w@mail.gmail.com>
-Subject: Re: [PATCH 4/5] migration: refactor ram_save_target_page functions
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Prasad Pandit <pjp@fedoraproject.org>
+References: <20241104132425.284772-1-thuth@redhat.com>
+In-Reply-To: <20241104132425.284772-1-thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 Nov 2024 10:05:34 +0000
+Message-ID: <CAFEAcA-SKuZrgH0C_3mGVGhyPa2ET-rF5wad3UiLROmm_+ciOA@mail.gmail.com>
+Subject: Re: [PULL v2 00/13] Misc patches (functional tests, next-cube
+ machine, ...)
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,22 +88,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Nov 2024 at 22:30, Peter Xu <peterx@redhat.com> wrote:
-> Yes, IMHO it's better when merged.
+On Mon, 4 Nov 2024 at 13:24, Thomas Huth <thuth@redhat.com> wrote:
 >
-> One more note here, that even with ZERO_PAGE_DETECTION_MULTIFD, qemu will
-> fallback to use LEGACY in reality when !multifd before.  We need to keep
-> that behavior.
-
-* Where does this fallback happen? in ram_save_target_page()?
-
-> > * Ie. drop the 'migration_ops' object altogether? And call
-> > ram_save_target_page() as it used to be before multifd mode?
+> The following changes since commit c94bee4cd6693c1c65ba43bb8970cf909dec378b:
 >
-> Yes.
+>   Merge tag 'for-upstream-i386' of https://gitlab.com/bonzini/qemu into staging (2024-11-02 16:21:38 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-11-04
+>
+> for you to fetch changes up to 380f7268b7ba4a6db73bfcde53082b70add45caa:
+>
+>   tests/functional: Convert the OrangePi tests to the functional framework (2024-11-04 14:16:12 +0100)
+>
+> ----------------------------------------------------------------
+> * Remove the redundant macOS-15 CI job
+> * Various fixes, improvements and additions for the functional test suite
+> * Restore the sh4eb target
+> * Fix the OpenBSD VM test
+> * Re-enable the pci-bridge device on s390x
+> * Minor clean-ups / fixes for the next-cube machine
+>
+> v2: Dropped the problematic "Convert the riscv_opensbi avocado test" patch
+>
 
-Okay, thank you.
----
-  - Prasad
 
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
+
+-- PMM
 
