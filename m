@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23944D2C139
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:40:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48A32D2C139
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 15:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8Lf3-0005qf-UH; Tue, 05 Nov 2024 10:40:05 -0500
+	id 1t8LhK-0007OW-47; Tue, 05 Nov 2024 10:42:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t8Ley-0005mT-UX
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:40:01 -0500
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t8LhI-0007NK-8x
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:42:24 -0500
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t8Leu-0005C6-VE
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:39:59 -0500
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2e5a0177531so4294152a91.2
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 07:39:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t8LhG-0005cv-HD
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 10:42:24 -0500
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2e3fca72a41so4614782a91.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 07:42:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1730821195; x=1731425995;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1730821341; x=1731426141;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LczKHoa9mpjalqfPke8igIps+7h+8PqShfDcNsj7l30=;
- b=p8qdiC6KzTE8JFYt1cbW84Q56OIGjGSAGHprR1M+iOOLHUvQRSGyGXYlkg3tRnjNT3
- 0Vp/GKFMfs62aKQf8BFNkVFWpmXqlpN3J7uYtAdlnaqkMfOIry1AU2IzIlslIPtjlts9
- 80XoxxF8292CfThy/5yF0iuRh/GuAW7gBy3GdsRldXtC4Ccu+vuxKxyTyST5+eQwMeDq
- 8SO627j9a2/DDn8okXIEnEohYjkekX77eTQshpu0uDem1edh55mD6fu8VMlkJu4l1oWG
- gt27hed8x9fA5dq3EWjz7wFPiMi2HOHQz8ghDnYHNURsiwNsn7T2nbzKcpsUBk9CI6UL
- 9Oig==
+ bh=W4+7XU8wUHXa59NQyNtcKqK64rxYzrc8qg1Q8pT9uII=;
+ b=yBLQLRHEapabqfRCaRIhu/h7AJXUkjZjbmEHApBY3bsBE6VgyxypPy/xJ9bkgV0Hpl
+ Q8PxPJQt0fy9AjKG3nmbPTWDFM2w/7iiwkHoiSBMkBrMO2X4RRvjpL9RL11/D+r/eF1a
+ nb4bY83/fCsn17bQQiiIBAEHxC1YlQ39VfIDZCZnTH8CnNQ/R4y+rPF80vKpO/+ItA0d
+ 8KJjG9icS3WTysNPLc1iibp80Q0UFLzulXl9rgMTpn1aHROa9+aKF5nZNsV3xkEMdnR0
+ RsPcNJqcXs5lPY/g+8WuQRjxboFn1Hd3W8aUgONU9fCsZSxMCmhbwTx+bqUUsCI4eZ15
+ UzOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730821195; x=1731425995;
+ d=1e100.net; s=20230601; t=1730821341; x=1731426141;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LczKHoa9mpjalqfPke8igIps+7h+8PqShfDcNsj7l30=;
- b=e6b4ZyS1pQeJ4zeIqvX7XNcD18ZJy83tQX1SsH/DTcZUYO7Fey+H5lIHaZkf/3TsUB
- 5JjhkpM2s5OtlUsCT/Qll4ypwJeFQUtKVquAZCO8EXXsix9+6yNBGJW9Rx2IUoH+N5bD
- Tr7GFABHpkM0Q/FKmPBqKCJWPs+GyCn6tNbGh7YA79QNuepbJ+CEqSpNc/4aw70nGgO0
- Ixe4B5aklwH0Ly5gVFzOT5n/pZpu/KEY25WAO5HosZVmSJjFROkxVota94C43pZKzLTD
- PJm0HFjRxhxnukVWtrqlMXku8gPuJuqniN87GYunTulYaOTQOvLh6iy/zC2spXAJM8Q3
- 4gtw==
+ bh=W4+7XU8wUHXa59NQyNtcKqK64rxYzrc8qg1Q8pT9uII=;
+ b=VX2utdfYRfyp/fMx8yimBJGHE+y8ENfE4tBICERc93hZp4bwKOuaMBWili15ypWh9h
+ GhMPFnXi/HBnaWaAHbTrB+9fo8veAhPEOWqA2Z2BIP/rwAMX8EAc4RTsSXEJZj5hbfl3
+ SdFL0dp4CFG44yfr2gn6oXFrizU7Mo21S/WwsvSOm+aem3Q5vukvCqoafYleUvQSG/ia
+ cCMc7f9FLAqVEXYakbjRTUjT1B6orgnIbSGgAC4z7ZKfrVqq0iQ45yKkMCRK4Q50XKYs
+ sIHN117eV9xDvHiR/F4iw4m5xGljaVZ69/TJQua9viPkiPmFFkpCTxrlRfyANrW361XH
+ R1dA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdj+NY127qrhp8qZag7bP1qHIJHVaIY+fTEfAaVkyx2G8KaoiemDD9cT4ZJ9yeF4Vo7U0N90mQ+SMl@nongnu.org
-X-Gm-Message-State: AOJu0Yw1txhrd1evKQ+pgfCOoQ90kqc93ZCTNgbTEd1Iqbrl0p7Yd005
- tt+uWKkHxTfi2MDPFH+x5z6PLBRB6NPfPp9LhqE+rEPq87aQWbmabTfJzyMVD1+IDrjhe7AVO9R
- PX+Ccci9k87mLn2vJRxN8QWwgxxBfSmZQoH3rCg==
-X-Google-Smtp-Source: AGHT+IFhqD2XtJ/Jz9QQjMPAHfpdLxfS84PSWFM9h5H2vbA2Q+lrQyj7Gq+dnIOnmi0yKbumSjyjjtRVMHKSkRBD+es=
-X-Received: by 2002:a17:90b:3b89:b0:2e2:d197:40f3 with SMTP id
- 98e67ed59e1d1-2e8f11de644mr36694541a91.35.1730821194704; Tue, 05 Nov 2024
- 07:39:54 -0800 (PST)
+ AJvYcCXhNAN0aWvAmWLFmgawbXfSIIKZmuHLAfcWM51vvDDNMjw2uKOxABAGKu3ExaVRf+EgevqEqEujCcP0@nongnu.org
+X-Gm-Message-State: AOJu0Ywudxb5fOcNM3RskhljDkPJ/U8Sv8Sw1UgXTdTcXPRasRvxvMEg
+ 4wPJAIK3Xz/nT7DT3nQtxXIYvUvSvDQNPcfypVwe/AUk7pVWZQPUVQTa+6eiXF0CGkFn6Js8IiT
+ dGzHWXGkJ+d8jw0YRWd7nPqUqJWqHQrKkg+FcP7O433vEdZa7eAs=
+X-Google-Smtp-Source: AGHT+IEMecD50gjFDJaxV5Q7nJn85AEmjHxjlbXBeUyvHsgVl7DzjIcq9uOQhEbtt6zwEImDIo44bqsDHIky2ZW5nEk=
+X-Received: by 2002:a17:90b:1c88:b0:2e2:bd10:599d with SMTP id
+ 98e67ed59e1d1-2e93c18625cmr27325248a91.11.1730821340948; Tue, 05 Nov 2024
+ 07:42:20 -0800 (PST)
 MIME-Version: 1.0
 References: <20241024200031.80327-1-iii@linux.ibm.com>
- <20241024200031.80327-5-iii@linux.ibm.com>
-In-Reply-To: <20241024200031.80327-5-iii@linux.ibm.com>
+ <20241024200031.80327-6-iii@linux.ibm.com>
+In-Reply-To: <20241024200031.80327-6-iii@linux.ibm.com>
 From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 5 Nov 2024 08:39:43 -0700
-Message-ID: <CANCZdfrhzc-HZabUjkAMTgcHR0+6OQPxNshkQfMYD4wbNcm=wQ@mail.gmail.com>
-Subject: Re: [PATCH 4/8] user: Introduce host_interrupt_signal
+Date: Tue, 5 Nov 2024 08:42:09 -0700
+Message-ID: <CANCZdfobgZhWMuFvY1YaeJJAzfgFFBG=TFD8-FHMMT1OLFegjg@mail.gmail.com>
+Subject: Re: [PATCH 5/8] osdep: Introduce qemu_kill_thread()
 To: Ilya Leoshkevich <iii@linux.ibm.com>
 Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>, 
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -69,9 +69,9 @@ Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
  Kyle Evans <kevans@freebsd.org>,
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000007b1fb206262c3683"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1030;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1030.google.com
+Content-Type: multipart/alternative; boundary="0000000000003289d106262c3fdf"
+Received-SPF: none client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -93,170 +93,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007b1fb206262c3683
+--0000000000003289d106262c3fdf
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Thu, Oct 24, 2024 at 2:00=E2=80=AFPM Ilya Leoshkevich <iii@linux.ibm.com=
 > wrote:
 
-> Attaching to the gdbstub of a running process requires stopping its
-> threads. For threads that run on a CPU, cpu_exit() is enough, but the
-> only way to grab attention of a thread that is stuck in a long-running
-> syscall is to interrupt it with a signal.
->
-> Reserve a host realtime signal for this, just like it's already done
-> for TARGET_SIGABRT on Linux. This may reduce the number of available
-> guest realtime signals by one, but this is acceptable, since there are
-> quite a lot of them, and it's unlikely that there are apps that need
-> them all.
->
-> Set signal_pending for the safe_sycall machinery to prevent invoking
-> the syscall. This is a lie, since we don't queue a guest signal, but
-> process_pending_signals() can handle the absence of pending signals.
-> The syscall returns with QEMU_ERESTARTSYS errno, which arranges for
-> the automatic restart. This is important, because it helps avoiding
-> disturbing poorly written guests.
+> Add a function for sending signals to individual threads. It does not mak=
+e
+> sense on Windows, so do not provide an implementation, so that if someone
+> uses it by accident, they will get a linker error.
 >
 > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 > ---
->  bsd-user/signal.c     | 12 ++++++++++++
->  include/user/signal.h |  2 ++
->  linux-user/signal.c   | 11 +++++++++++
->  3 files changed, 25 insertions(+)
+>  include/qemu/osdep.h |  9 +++++++++
+>  util/oslib-posix.c   | 15 +++++++++++++++
+>  2 files changed, 24 insertions(+)
 >
-> diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-> index a2b11a97131..992736df5c5 100644
-> --- a/bsd-user/signal.c
-> +++ b/bsd-user/signal.c
-> @@ -49,6 +49,8 @@ static inline int sas_ss_flags(TaskState *ts, unsigned
-> long sp)
->          on_sig_stack(ts, sp) ? SS_ONSTACK : 0;
->  }
+
+Reviewed-by: Warner Losh <imp@bsidmp.com>
+
+
+> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+> index fe7c3c5f673..2350477787a 100644
+> --- a/include/qemu/osdep.h
+> +++ b/include/qemu/osdep.h
+> @@ -626,6 +626,15 @@ bool qemu_write_pidfile(const char *pidfile, Error
+> **errp);
 >
-> +int host_interrupt_signal =3D SIGRTMAX;
+>  int qemu_get_thread_id(void);
+>
+> +/**
+> + * qemu_kill_thread:
+> + * @tid: thread id.
+> + * @sig: host signal.
+> + *
+> + * Send @sig to one of QEMU's own threads with identifier @tid.
+> + */
+> +int qemu_kill_thread(int tid, int sig);
 > +
->
-
-I'd be tempted to use SIGRTMAX + 1 or even TARGET_NSIG. 127 or 128 would
-work and not overflow any arrays (or hit any bounds tests) I'd likely use
-SIGRTMAX + 1,
-though, since it avoids any edge-cases from sig =3D=3D NSIG that might be i=
-n
-the code
-unnoticed.
-
-Now, having said that, I don't think that there's too many (any?) programs
-we need
-to run as bsd-user that have real-time signals, much less one that uses
-SIGRTMAX,
-but stranger things have happened. But it is a little wiggle room just in
-case.
-
-Other than that:
-
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-
-
-
->  /*
->   * The BSD ABIs use the same signal numbers across all the CPU
-> architectures, so
->   * (unlike Linux) these functions are just the identity mapping. This
-> might not
-> @@ -489,6 +491,12 @@ static void host_signal_handler(int host_sig,
-> siginfo_t *info, void *puc)
->      uintptr_t pc =3D 0;
->      bool sync_sig =3D false;
->
-> +    if (host_sig =3D=3D host_interrupt_signal) {
-> +        ts->signal_pending =3D 1;
-> +        cpu_exit(thread_cpu);
-> +        return;
-> +    }
-> +
->      /*
->       * Non-spoofed SIGSEGV and SIGBUS are synchronous, and need special
->       * handling wrt signal blocking and unwinding.
-> @@ -852,6 +860,9 @@ void signal_init(void)
->
->      for (i =3D 1; i <=3D TARGET_NSIG; i++) {
->          host_sig =3D target_to_host_signal(i);
-> +        if (host_sig =3D=3D host_interrupt_signal) {
-> +            continue;
-> +        }
->          sigaction(host_sig, NULL, &oact);
->          if (oact.sa_sigaction =3D=3D (void *)SIG_IGN) {
->              sigact_table[i - 1]._sa_handler =3D TARGET_SIG_IGN;
-> @@ -870,6 +881,7 @@ void signal_init(void)
->              sigaction(host_sig, &act, NULL);
->          }
->      }
-> +    sigaction(host_interrupt_signal, &act, NULL);
->  }
->
->  static void handle_pending_signal(CPUArchState *env, int sig,
-> diff --git a/include/user/signal.h b/include/user/signal.h
-> index 19b6b9e5ddc..7fa33b05d91 100644
-> --- a/include/user/signal.h
-> +++ b/include/user/signal.h
-> @@ -20,4 +20,6 @@
->   */
->  int target_to_host_signal(int sig);
->
-> +extern int host_interrupt_signal;
-> +
+>  #ifndef CONFIG_IOVEC
+>  struct iovec {
+>      void *iov_base;
+> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+> index 11b35e48fb8..32a41fa8640 100644
+> --- a/util/oslib-posix.c
+> +++ b/util/oslib-posix.c
+> @@ -111,6 +111,21 @@ int qemu_get_thread_id(void)
 >  #endif
-> diff --git a/linux-user/signal.c b/linux-user/signal.c
-> index 84bb8a34808..f0bcbd367d5 100644
-> --- a/linux-user/signal.c
-> +++ b/linux-user/signal.c
-> @@ -514,6 +514,8 @@ static int core_dump_signal(int sig)
->      }
 >  }
 >
-> +int host_interrupt_signal;
+> +int qemu_kill_thread(int tid, int sig)
+> +{
+> +#if defined(__linux__)
+> +    return syscall(__NR_tgkill, getpid(), tid, sig);
+> +#elif defined(__FreeBSD__)
+> +    return thr_kill2(getpid(), tid, sig);
+> +#elif defined(__NetBSD__)
+> +    return _lwp_kill(tid, sig);
+> +#elif defined(__OpenBSD__)
+> +    return thrkill(tid, sig, NULL);
+> +#else
+> +    return kill(tid, sig);
+> +#endif
+> +}
 > +
->  static void signal_table_init(void)
+>  int qemu_daemon(int nochdir, int noclose)
 >  {
->      int hsig, tsig, count;
-> @@ -540,6 +542,7 @@ static void signal_table_init(void)
->      hsig =3D SIGRTMIN;
->      host_to_target_signal_table[SIGABRT] =3D 0;
->      host_to_target_signal_table[hsig++] =3D TARGET_SIGABRT;
-> +    host_interrupt_signal =3D hsig++;
->
->      for (tsig =3D TARGET_SIGRTMIN;
->           hsig <=3D SIGRTMAX && tsig <=3D TARGET_NSIG;
-> @@ -619,6 +622,8 @@ void signal_init(void)
->          }
->          sigact_table[tsig - 1]._sa_handler =3D thand;
->      }
-> +
-> +    sigaction(host_interrupt_signal, &act, NULL);
->  }
->
->  /* Force a synchronously taken signal. The kernel force_sig() function
-> @@ -966,6 +971,12 @@ static void host_signal_handler(int host_sig,
-> siginfo_t *info, void *puc)
->      bool sync_sig =3D false;
->      void *sigmask;
->
-> +    if (host_sig =3D=3D host_interrupt_signal) {
-> +        ts->signal_pending =3D 1;
-> +        cpu_exit(thread_cpu);
-> +        return;
-> +    }
-> +
->      /*
->       * Non-spoofed SIGSEGV and SIGBUS are synchronous, and need special
->       * handling wrt signal blocking and unwinding.  Non-spoofed SIGILL,
+>      return daemon(nochdir, noclose);
 > --
 > 2.47.0
 >
 >
 
---0000000000007b1fb206262c3683
+--0000000000003289d106262c3fdf
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -265,167 +176,73 @@ Content-Transfer-Encoding: quoted-printable
 PM Ilya Leoshkevich &lt;<a href=3D"mailto:iii@linux.ibm.com">iii@linux.ibm.=
 com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"marg=
 in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">Attaching to the gdbstub of a running process requires stopping its<br>
-threads. For threads that run on a CPU, cpu_exit() is enough, but the<br>
-only way to grab attention of a thread that is stuck in a long-running<br>
-syscall is to interrupt it with a signal.<br>
-<br>
-Reserve a host realtime signal for this, just like it&#39;s already done<br=
->
-for TARGET_SIGABRT on Linux. This may reduce the number of available<br>
-guest realtime signals by one, but this is acceptable, since there are<br>
-quite a lot of them, and it&#39;s unlikely that there are apps that need<br=
->
-them all.<br>
-<br>
-Set signal_pending for the safe_sycall machinery to prevent invoking<br>
-the syscall. This is a lie, since we don&#39;t queue a guest signal, but<br=
->
-process_pending_signals() can handle the absence of pending signals.<br>
-The syscall returns with QEMU_ERESTARTSYS errno, which arranges for<br>
-the automatic restart. This is important, because it helps avoiding<br>
-disturbing poorly written guests.<br>
+x">Add a function for sending signals to individual threads. It does not ma=
+ke<br>
+sense on Windows, so do not provide an implementation, so that if someone<b=
+r>
+uses it by accident, they will get a linker error.<br>
 <br>
 Signed-off-by: Ilya Leoshkevich &lt;<a href=3D"mailto:iii@linux.ibm.com" ta=
 rget=3D"_blank">iii@linux.ibm.com</a>&gt;<br>
 ---<br>
-=C2=A0bsd-user/signal.c=C2=A0 =C2=A0 =C2=A0| 12 ++++++++++++<br>
-=C2=A0include/user/signal.h |=C2=A0 2 ++<br>
-=C2=A0linux-user/signal.c=C2=A0 =C2=A0| 11 +++++++++++<br>
-=C2=A03 files changed, 25 insertions(+)<br>
+=C2=A0include/qemu/osdep.h |=C2=A0 9 +++++++++<br>
+=C2=A0util/oslib-posix.c=C2=A0 =C2=A0| 15 +++++++++++++++<br>
+=C2=A02 files changed, 24 insertions(+)<br></blockquote><div><br></div><div=
+>Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsidmp.com">imp@bsidmp.=
+com</a>&gt;</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h<br>
+index fe7c3c5f673..2350477787a 100644<br>
+--- a/include/qemu/osdep.h<br>
++++ b/include/qemu/osdep.h<br>
+@@ -626,6 +626,15 @@ bool qemu_write_pidfile(const char *pidfile, Error **e=
+rrp);<br>
 <br>
-diff --git a/bsd-user/signal.c b/bsd-user/signal.c<br>
-index a2b11a97131..992736df5c5 100644<br>
---- a/bsd-user/signal.c<br>
-+++ b/bsd-user/signal.c<br>
-@@ -49,6 +49,8 @@ static inline int sas_ss_flags(TaskState *ts, unsigned lo=
-ng sp)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0on_sig_stack(ts, sp) ? SS_ONSTACK : 0;<br=
->
-=C2=A0}<br>
+=C2=A0int qemu_get_thread_id(void);<br>
 <br>
-+int host_interrupt_signal =3D SIGRTMAX;<br>
-+<br></blockquote><div><br></div><div>I&#39;d be tempted to use SIGRTMAX=C2=
-=A0+ 1 or even TARGET_NSIG. 127 or 128 would</div><div>work and not overflo=
-w any arrays (or hit any bounds tests) I&#39;d likely use SIGRTMAX=C2=A0+ 1=
-,</div><div>though, since it avoids any edge-cases from sig =3D=3D NSIG tha=
-t might be in the code</div><div>unnoticed.</div><div><br></div><div>Now, h=
-aving said that, I don&#39;t think that there&#39;s too many (any?) program=
-s we need</div><div>to run as bsd-user that have real-time signals, much le=
-ss one that uses SIGRTMAX,</div><div>but stranger things have happened. But=
- it is a little wiggle room just in case.</div><div><br></div><div>Other th=
-an that:</div><div><br></div><div>Reviewed-by: Warner Losh &lt;<a href=3D"m=
-ailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;</div><div><br></div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-=C2=A0/*<br>
-=C2=A0 * The BSD ABIs use the same signal numbers across all the CPU archit=
-ectures, so<br>
-=C2=A0 * (unlike Linux) these functions are just the identity mapping. This=
- might not<br>
-@@ -489,6 +491,12 @@ static void host_signal_handler(int host_sig, siginfo_=
-t *info, void *puc)<br>
-=C2=A0 =C2=A0 =C2=A0uintptr_t pc =3D 0;<br>
-=C2=A0 =C2=A0 =C2=A0bool sync_sig =3D false;<br>
-<br>
-+=C2=A0 =C2=A0 if (host_sig =3D=3D host_interrupt_signal) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ts-&gt;signal_pending =3D 1;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_exit(thread_cpu);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 }<br>
++/**<br>
++ * qemu_kill_thread:<br>
++ * @tid: thread id.<br>
++ * @sig: host signal.<br>
++ *<br>
++ * Send @sig to one of QEMU&#39;s own threads with identifier @tid.<br>
++ */<br>
++int qemu_kill_thread(int tid, int sig);<br>
 +<br>
-=C2=A0 =C2=A0 =C2=A0/*<br>
-=C2=A0 =C2=A0 =C2=A0 * Non-spoofed SIGSEGV and SIGBUS are synchronous, and =
-need special<br>
-=C2=A0 =C2=A0 =C2=A0 * handling wrt signal blocking and unwinding.<br>
-@@ -852,6 +860,9 @@ void signal_init(void)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0for (i =3D 1; i &lt;=3D TARGET_NSIG; i++) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0host_sig =3D target_to_host_signal(i);<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (host_sig =3D=3D host_interrupt_signal) {<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sigaction(host_sig, NULL, &amp;oact);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (oact.sa_sigaction =3D=3D (void *)SIG_=
-IGN) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sigact_table[i - 1]._sa_han=
-dler =3D TARGET_SIG_IGN;<br>
-@@ -870,6 +881,7 @@ void signal_init(void)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sigaction(host_sig, &amp;ac=
-t, NULL);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-+=C2=A0 =C2=A0 sigaction(host_interrupt_signal, &amp;act, NULL);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static void handle_pending_signal(CPUArchState *env, int sig,<br>
-diff --git a/include/user/signal.h b/include/user/signal.h<br>
-index 19b6b9e5ddc..7fa33b05d91 100644<br>
---- a/include/user/signal.h<br>
-+++ b/include/user/signal.h<br>
-@@ -20,4 +20,6 @@<br>
-=C2=A0 */<br>
-=C2=A0int target_to_host_signal(int sig);<br>
-<br>
-+extern int host_interrupt_signal;<br>
-+<br>
+=C2=A0#ifndef CONFIG_IOVEC<br>
+=C2=A0struct iovec {<br>
+=C2=A0 =C2=A0 =C2=A0void *iov_base;<br>
+diff --git a/util/oslib-posix.c b/util/oslib-posix.c<br>
+index 11b35e48fb8..32a41fa8640 100644<br>
+--- a/util/oslib-posix.c<br>
++++ b/util/oslib-posix.c<br>
+@@ -111,6 +111,21 @@ int qemu_get_thread_id(void)<br>
 =C2=A0#endif<br>
-diff --git a/linux-user/signal.c b/linux-user/signal.c<br>
-index 84bb8a34808..f0bcbd367d5 100644<br>
---- a/linux-user/signal.c<br>
-+++ b/linux-user/signal.c<br>
-@@ -514,6 +514,8 @@ static int core_dump_signal(int sig)<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
 =C2=A0}<br>
 <br>
-+int host_interrupt_signal;<br>
++int qemu_kill_thread(int tid, int sig)<br>
++{<br>
++#if defined(__linux__)<br>
++=C2=A0 =C2=A0 return syscall(__NR_tgkill, getpid(), tid, sig);<br>
++#elif defined(__FreeBSD__)<br>
++=C2=A0 =C2=A0 return thr_kill2(getpid(), tid, sig);<br>
++#elif defined(__NetBSD__)<br>
++=C2=A0 =C2=A0 return _lwp_kill(tid, sig);<br>
++#elif defined(__OpenBSD__)<br>
++=C2=A0 =C2=A0 return thrkill(tid, sig, NULL);<br>
++#else<br>
++=C2=A0 =C2=A0 return kill(tid, sig);<br>
++#endif<br>
++}<br>
 +<br>
-=C2=A0static void signal_table_init(void)<br>
+=C2=A0int qemu_daemon(int nochdir, int noclose)<br>
 =C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0int hsig, tsig, count;<br>
-@@ -540,6 +542,7 @@ static void signal_table_init(void)<br>
-=C2=A0 =C2=A0 =C2=A0hsig =3D SIGRTMIN;<br>
-=C2=A0 =C2=A0 =C2=A0host_to_target_signal_table[SIGABRT] =3D 0;<br>
-=C2=A0 =C2=A0 =C2=A0host_to_target_signal_table[hsig++] =3D TARGET_SIGABRT;=
-<br>
-+=C2=A0 =C2=A0 host_interrupt_signal =3D hsig++;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0for (tsig =3D TARGET_SIGRTMIN;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hsig &lt;=3D SIGRTMAX &amp;&amp; tsig &l=
-t;=3D TARGET_NSIG;<br>
-@@ -619,6 +622,8 @@ void signal_init(void)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sigact_table[tsig - 1]._sa_handler =3D th=
-and;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-+<br>
-+=C2=A0 =C2=A0 sigaction(host_interrupt_signal, &amp;act, NULL);<br>
-=C2=A0}<br>
-<br>
-=C2=A0/* Force a synchronously taken signal. The kernel force_sig() functio=
-n<br>
-@@ -966,6 +971,12 @@ static void host_signal_handler(int host_sig, siginfo_=
-t *info, void *puc)<br>
-=C2=A0 =C2=A0 =C2=A0bool sync_sig =3D false;<br>
-=C2=A0 =C2=A0 =C2=A0void *sigmask;<br>
-<br>
-+=C2=A0 =C2=A0 if (host_sig =3D=3D host_interrupt_signal) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ts-&gt;signal_pending =3D 1;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_exit(thread_cpu);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0/*<br>
-=C2=A0 =C2=A0 =C2=A0 * Non-spoofed SIGSEGV and SIGBUS are synchronous, and =
-need special<br>
-=C2=A0 =C2=A0 =C2=A0 * handling wrt signal blocking and unwinding.=C2=A0 No=
-n-spoofed SIGILL,<br>
+=C2=A0 =C2=A0 =C2=A0return daemon(nochdir, noclose);<br>
 -- <br>
 2.47.0<br>
 <br>
 </blockquote></div></div>
 
---0000000000007b1fb206262c3683--
+--0000000000003289d106262c3fdf--
 
