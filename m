@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 039ECD1CA15
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 03:44:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB63BD1CA19
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 03:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8ATX-0002bg-VW; Mon, 04 Nov 2024 22:43:27 -0500
+	id 1t8ATX-0002be-FQ; Mon, 04 Nov 2024 22:43:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1t8ATW-0002bI-Mk
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:43:26 -0500
-Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1t8ATV-0002au-I1
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:43:25 -0500
+Received: from mail-il1-x136.google.com ([2607:f8b0:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1t8ATV-00010A-8r
- for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:43:26 -0500
-Received: by mail-il1-x130.google.com with SMTP id
- e9e14a558f8ab-3a6bf539cabso9139155ab.3
- for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 19:43:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1t8ATT-0000zz-PX
+ for qemu-devel@nongnu.org; Mon, 04 Nov 2024 22:43:25 -0500
+Received: by mail-il1-x136.google.com with SMTP id
+ e9e14a558f8ab-3a6ad7c5827so15387255ab.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Nov 2024 19:43:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1730778204; x=1731383004;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1730778202; x=1731383002;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=85Mpl5vChgiCfZpQSnWPYrEeOfjpu0W0D/cphYsgEtE=;
- b=RC1LNlnEy65ZwJF5ks7bVFH0TMutXhfH5dJ28pv19CcL4a1izHPO5gpH2ybSQBdj8v
- RYCNDwbeENZSLuRyBIuCqzrb+ulSQabYh5+IHS7gG+mpjHsvnuwZIRaKasZbS/krKhGj
- BrcKOLicyDg29v68oE5h/2jDEfhUzxSi4zARs64UE71OotMbcV88kkMychJsFkUO2p8L
- cqhXAog4oEUD4Z4chjIR0UMFkYnrTqZFe5KZSP9o7i08NQ3sIXzTY73u0+POJFFdOmas
- w6g5V7011/kJqY90gU+KXhJYac3TFzedqvQNWPHEyxx0rBl4O3mWIGgB3wB5IyIaewtj
- LDag==
+ bh=rxupo8oFWODoy3tJk0gzDbcDaAczcX8zGzXaJjAP0cI=;
+ b=UDa/0pnwXA3cMOQhz7N1A7goXY6J6jE5YcK7PRvmvY69/inAlLVXTbofTTygfRABYx
+ gaRCP9rrYNWCXBwHhFgWsntG2oSg6x8gA1OvD77IrpEQlNArY1rS4HVIVrpJXVDupdS7
+ IXf1y7LKsNMxpfuQV7opQtR3jDcms7u6ujx+/miw2+Gy7QcftVKK8fx6MMRk/h84pEef
+ eDR3BKRH0YVYvE/pwMA7e8pPw0Z/V5u4vpj0zpzT1VsTuTrEYuWGk0Mka8qDygMq5Fbi
+ yzGvlBXSQ/sAksQO4DLFObTbHfMO3Z0Ci4G07IqMDgtnaJfTlJCDCzJPABzb+lbIFMlT
+ YtUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730778204; x=1731383004;
+ d=1e100.net; s=20230601; t=1730778202; x=1731383002;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=85Mpl5vChgiCfZpQSnWPYrEeOfjpu0W0D/cphYsgEtE=;
- b=K1gDwOGsDq+BoWOyhX+I876fC3jQr2OXN75QVol98SdfO57jj+6DxofZzNkCR0c+Qt
- sZwsKCRo3UjDnYVBzBtKspaSo034nm8ZjdSTNXbZUx71dDBM0+un52kE0V0tDzLP+E5q
- y2Cx9aaZnxgP/jFZQT1dftgu/q5gXF8OnTsv/1WRVX5Ac5jln7RHBrwO13Ct5kvNya6t
- Eiia8NBKo+sITD1PzjcNjiwqIlTjCiKPiF6tt7hv84o5z8R9CJ1GNiIaxKP0zpCDQRxe
- gOrcC8QssHaBHbvJ8MRx22K2zovHp/AVa3bFJfUCK+0eaHev6ufFQ7Yaq+PNtAo6wJQA
- kugA==
-X-Gm-Message-State: AOJu0YyQ1eUYFYbdH9//OTpLmLkgJ/b60cK3YBOwCoNiwYCF49u/WzgO
- pZv8q4ZHVwaE3V1O/vDatg62Ye/UnD6v+gutzTQL+xrFtqLXF1sj4f6benYv61H3Vxv/9/9voKB
- wFzLuqA==
-X-Google-Smtp-Source: AGHT+IGLEv1S6KBPJDUvQ2bEhJlknm2hKBR91N/2En/MYuUg6fGK5Ci30K+P8j/S009XEXj+N5URzQ==
-X-Received: by 2002:a05:6e02:1c07:b0:3a6:cac0:1299 with SMTP id
- e9e14a558f8ab-3a6cac01324mr63912075ab.14.1730778203892; 
- Mon, 04 Nov 2024 19:43:23 -0800 (PST)
+ bh=rxupo8oFWODoy3tJk0gzDbcDaAczcX8zGzXaJjAP0cI=;
+ b=fMG+ti+tIOcEIS2PrTweE7OPxwbnEWhZQGuiCnD1Rdm2llC1z7zdRjfHyy2hSnU7z3
+ MeWvOkjScCpGEMYJyhHeU+pQ+GKZR2m9hFavgGHWJUSFP1pCOnRQyxWr+/iqukkNSJw+
+ sAB1NWQaOgLdq9eEeR3ejatPLExpjigey7Din5z1JRnJr8LkFH6uZarafu4BU3YGsVEL
+ 4qfA+WL6xPArW6w4Uuol4rCusSihCzh0Y1yibLE4aW/LmuulGrz7XwvQLp7jSK2oFzV1
+ zFZ59rtTmdhe178XW3lAs5TVX7BXBVKOElwTm6+/YrnN/H6fqfqXIpNS1o/SWlSgcUxS
+ MRTA==
+X-Gm-Message-State: AOJu0YzdmPbz/AQVXKIgEd+Fqfm1uE1Cov/JNQecaGPsLWRy9qD6h4qs
+ O/5wZjNBbUGFCoZb6SfpeOJLBizGhhil84agQ0MJ5smb9G1RSiybvAKjL3/gYV/WtBCnPl81Vba
+ 6yi0jHQ==
+X-Google-Smtp-Source: AGHT+IG4IVy0HfrBY+gYmPrRTeKxg/rQWyud+UCaPvy/I2jdAEnPWhDH9NmtkGB6vS6iUjnjisYEDA==
+X-Received: by 2002:a05:6e02:12ce:b0:3a4:ec4b:92f0 with SMTP id
+ e9e14a558f8ab-3a6b031c94cmr156516725ab.19.1730778201964; 
+ Mon, 04 Nov 2024 19:43:21 -0800 (PST)
 Received: from dune.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3a6bddcdcd8sm17162665ab.37.2024.11.04.19.43.22
+ e9e14a558f8ab-3a6bddcdcd8sm17162665ab.37.2024.11.04.19.43.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Nov 2024 19:43:22 -0800 (PST)
+ Mon, 04 Nov 2024 19:43:20 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Jessica Clarke <jrtc27@jrtc27.com>,
  Kyle Evans <kevans@freebsd.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 2/3] bsd-user/main: Allow setting tb-size
-Date: Mon,  4 Nov 2024 20:40:38 -0700
-Message-ID: <20241105034039.31143-3-imp@bsdimp.com>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 1/3] bsd-user/x86_64/target_arch_thread.h: Align stack
+Date: Mon,  4 Nov 2024 20:40:37 -0700
+Message-ID: <20241105034039.31143-2-imp@bsdimp.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20241105034039.31143-1-imp@bsdimp.com>
 References: <20241105034039.31143-1-imp@bsdimp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::130;
- envelope-from=imp@bsdimp.com; helo=mail-il1-x130.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::136;
+ envelope-from=imp@bsdimp.com; helo=mail-il1-x136.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,60 +96,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-While qemu-system can set tb-size using -accel tcg,tb-size=n, there
-is no similar knob for qemu-bsd-user. Add one in a way similar to how
-one-insn-per-tb is already handled.
+bsd-user qemu-x86_64 almost immediately dies with:
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+    qemu: 0x4002201a68: unhandled CPU exception 0xd - aborting
+
+on FreeBSD 14.1-RELEASE. This is an instruction that requires
+alignment:
+
+    (gdb) x/i 0x4002201a68
+       0x4002201a68:        movaps %xmm0,-0x40(%rbp)
+
+and the argument is not aligned:
+
+    (gdb) p/x env->regs[5]
+    $1 = 0x822443b58
+
+A quick experiment shows that the userspace entry point expects
+misaligned rsp:
+
+    (gdb) starti
+    (gdb) p/x $rsp
+    $1 = 0x7fffffffeaa8
+
+Emulate this behavior in bsd-user.
+
+[[ applied Richard's suggestion ]]
+
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/main.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ bsd-user/x86_64/target_arch_thread.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index cc980e6f401..7c230b0c7a5 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -60,6 +60,7 @@ uintptr_t qemu_host_page_size;
- intptr_t qemu_host_page_mask;
- 
- static bool opt_one_insn_per_tb;
-+static unsigned long opt_tb_size;
- uintptr_t guest_base;
- bool have_guest_base;
- /*
-@@ -169,6 +170,7 @@ static void usage(void)
-            "                  (use '-d help' for a list of log items)\n"
-            "-D logfile        write logs to 'logfile' (default stderr)\n"
-            "-one-insn-per-tb  run with one guest instruction per emulated TB\n"
-+           "-tb-size size     TCG translation block cache size\n"
-            "-strace           log system calls\n"
-            "-trace            [[enable=]<pattern>][,events=<file>][,file=<file>]\n"
-            "                  specify tracing options\n"
-@@ -387,6 +389,11 @@ int main(int argc, char **argv)
-             seed_optarg = optarg;
-         } else if (!strcmp(r, "one-insn-per-tb")) {
-             opt_one_insn_per_tb = true;
-+        } else if (!strcmp(r, "tb-size")) {
-+            r = argv[optind++];
-+            if (qemu_strtoul(r, NULL, 0, &opt_tb_size)) {
-+                usage();
-+            }
-         } else if (!strcmp(r, "strace")) {
-             do_strace = 1;
-         } else if (!strcmp(r, "trace")) {
-@@ -452,6 +459,8 @@ int main(int argc, char **argv)
-         accel_init_interfaces(ac);
-         object_property_set_bool(OBJECT(accel), "one-insn-per-tb",
-                                  opt_one_insn_per_tb, &error_abort);
-+        object_property_set_int(OBJECT(accel), "tb-size",
-+                                opt_tb_size, &error_abort);
-         ac->init_machine(NULL);
-     }
- 
+diff --git a/bsd-user/x86_64/target_arch_thread.h b/bsd-user/x86_64/target_arch_thread.h
+index 52c28906d6d..7739bb2154b 100644
+--- a/bsd-user/x86_64/target_arch_thread.h
++++ b/bsd-user/x86_64/target_arch_thread.h
+@@ -31,7 +31,7 @@ static inline void target_thread_init(struct target_pt_regs *regs,
+     struct image_info *infop)
+ {
+     regs->rax = 0;
+-    regs->rsp = infop->start_stack;
++    regs->rsp = ((infop->start_stack - 8) & ~0xfUL) + 8;
+     regs->rip = infop->entry;
+     regs->rdi = infop->start_stack;
+ }
 -- 
 2.46.1
 
