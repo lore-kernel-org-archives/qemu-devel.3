@@ -4,101 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E31D31780
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 18:36:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2125D33A21
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 18:42:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8OPU-00069f-15; Tue, 05 Nov 2024 13:36:12 -0500
+	id 1t8OUm-0001Xu-QT; Tue, 05 Nov 2024 13:41:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t8OPQ-00068s-Ln; Tue, 05 Nov 2024 13:36:08 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t8OUa-0001Ur-Qi
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:41:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t8OPN-0007e0-NO; Tue, 05 Nov 2024 13:36:08 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5HeAdX022178;
- Tue, 5 Nov 2024 18:36:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=wc7f2H
- rr1rAEYSxyfo0HmCBarTs+hABQdxgNXKiFOt8=; b=DQM4IimoXgbMzlUwM8eGTh
- foETMWKg/r1YjxfdwpTULaVwMtzVo9+WgHDFL5fdrE3eDxQl4KHE5YTxe3YaGd7P
- 1crxHUVAkaMubYaX3hD/2BSqCaGyoQP6JeptVx1k24U10JT56P99R15fVYsm+3MJ
- 64YpynhsLh9hVvCQkdAIr6IA1HTRA22wJ7wrN9T7FNqQeOi545E7EJSfeSlZtG78
- wFILAIAva99AvU5WutNxV4R6auGy+rud9dXiS/YTshfVBcEZYpkEbkwFLhTHqaGU
- WHsQkpvU7oAFhe0PI7ktH/JXm+I/l/jDbDXOpY6lDzWRhSlrcBVX70JG4trBSZ0A
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42qqy5r8xf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Nov 2024 18:36:00 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5HhPqL019414;
- Tue, 5 Nov 2024 18:36:00 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 42p0mj4jd5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Nov 2024 18:36:00 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A5IZxew57737584
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 Nov 2024 18:35:59 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B349158056;
- Tue,  5 Nov 2024 18:35:59 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 527C258052;
- Tue,  5 Nov 2024 18:35:59 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 Nov 2024 18:35:59 +0000 (GMT)
-Message-ID: <e6c33df3-49e9-4b8a-b7cb-d38c2ebee3be@linux.ibm.com>
-Date: Tue, 5 Nov 2024 13:35:58 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t8OUX-0008GI-Sf
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 13:41:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730832085;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=o/LngSMQlJeEYpc3eJyLSfuVRMc1wQAlW1XQw4yN1t0=;
+ b=glUdU5K7542pRsypS9hB9OW/VlAPENSyGdUL57j1ERwkNDC32sSbB8/S/e9l9Kxd6Lsa9y
+ LQI2ebfc6YpzvSiv/DIvLjlRF02COjCdcZT91JUTF2goo6Wr+7yAfXAGDbTASLJaKV1ivP
+ 2MLu/B/o70AZzaTAa2h0K59i/gRApe8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-414-mUbLf23NNPOft8AIPj_kWg-1; Tue,
+ 05 Nov 2024 13:41:23 -0500
+X-MC-Unique: mUbLf23NNPOft8AIPj_kWg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7313D1955D45; Tue,  5 Nov 2024 18:41:22 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.52])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3DC6619560A7; Tue,  5 Nov 2024 18:41:19 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 1/4] crypto: purge 'loaded' property that was not fully removed
+Date: Tue,  5 Nov 2024 18:41:12 +0000
+Message-ID: <20241105184115.381511-2-berrange@redhat.com>
+In-Reply-To: <20241105184115.381511-1-berrange@redhat.com>
+References: <20241105184115.381511-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 10/17] tests/functional: Convert most Aspeed machine tests
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>, lena.voytek@canonical.com
-References: <20241024063507.1585765-1-clg@redhat.com>
- <20241024063507.1585765-11-clg@redhat.com>
- <CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com>
- <91c2ac92-66b2-45c8-b4fe-e8f8587b0e9c@linux.ibm.com>
- <CAFEAcA84hhWu2ouirfDPbCpq_=QLQxAf3k47h0Pij8iEnOVj+A@mail.gmail.com>
- <2491bc60-9a0b-486a-8f6d-2c4c94332756@linux.ibm.com>
- <CAFEAcA85g2nX3MU5RzmBvAHT8Kis1JHhiEaBvnFFbEQkG+0OxQ@mail.gmail.com>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <CAFEAcA85g2nX3MU5RzmBvAHT8Kis1JHhiEaBvnFFbEQkG+0OxQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: JNkWtJIMtNaM7AU7DsAWOG8nwzTg7wE4
-X-Proofpoint-GUID: JNkWtJIMtNaM7AU7DsAWOG8nwzTg7wE4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- bulkscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
- mlxlogscore=999 mlxscore=0 phishscore=0 adultscore=0 malwarescore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411050143
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -116,99 +87,343 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The 'loaded' property on TLS creds and secret objects was marked as
+deprecated in 6.0.0. In 7.1.0 the deprecation info was moved into
+the 'removed-features.rst' file, but the property was not actually
+removed, just made read-only. This was a highly unusual practice,
+so finish the long overdue removal job.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ crypto/secret_common.c          | 12 --------
+ crypto/tlscredsanon.c           | 35 ----------------------
+ crypto/tlscredspsk.c            | 34 ----------------------
+ crypto/tlscredsx509.c           | 30 -------------------
+ docs/about/removed-features.rst |  6 ++--
+ qapi/crypto.json                | 51 +++------------------------------
+ 6 files changed, 7 insertions(+), 161 deletions(-)
 
-On 11/5/24 1:12 PM, Peter Maydell wrote:
-> On Tue, 5 Nov 2024 at 18:02, Stefan Berger <stefanb@linux.ibm.com> wrote:
->>
->>
->>
->> On 11/5/24 12:13 PM, Peter Maydell wrote:
->>> On Tue, 5 Nov 2024 at 17:02, Stefan Berger <stefanb@linux.ibm.com> wrote:
->>>> On 11/5/24 11:14 AM, Peter Maydell wrote:
->>>>> Q1: why is apparmor forbidding swtpm from doing something that
->>>>> it needs to do to work?
->>>>
->>>> What distro and version is this?
->>>>
->>>> The profile may be too strict and not reflecting all the paths needed
->>>> for running the test cases. Ubuntu for example would have to update
->>>> their profile in such a case.
->>>
->>> This is Ubuntu 22.04 "jammy" (with swtpm 0.6.3-0ubuntu3.3).
->>>
->>>>> Q2: is there a way to run swtpm such that it is not
->>>>> confined by apparmor, for purposes of running it in a test case?
->>>>
->>>> Try either one:
->>>> - sudo aa-complain /usr/bin/swtpm
->>>> - sudo aa-disable /usr/bin/swtpm
->>>
->>> We don't have root access from QEMU's 'make check',
->>> though (and shouldn't be globally disabling apparmor
->>> even if we could). I had in mind more a way that an
->>> individual user can say "run this swtpm process but don't
->>> apply the apparmor profile to it".
->>
->> So the problem is that the avocado tests are using /var/tmp but we only
->> have AppArmor rules for /tmp/
-> 
-> The file AppArmor gives the error for is not in /var/tmp:
-> it's in a local directory inside QEMU's build dir:
-> 
-> Nov  5 16:01:14 e104462 kernel: [946406.489088] audit: type=1400
-> audit(1730822474.384:446): apparmor="DENIED" operation="mknod"
-> profile="swtpm"
-> name="/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/tests/functional/arm/test_arm_aspeed.AST2x00Machine.test_arm_ast2600_evb_buildroot_tpm/qemu-machine-hhuvwytc/.lock"
-> pid=2820156 comm="swtpm" requested_mask="c" denied_mask="c" fsuid=1000
-> ouid=1000
->> The following solutions should work:
->> - do not install swtpm at all
->> - sudo cp /usr/bin/swtpm  /usr/local/bin/swtpm
->> - as root: echo "include <abstractions/user-tmp>" >>
->> /etc/apparmor.d/local/usr.bin.swtpm && apparmor_parser -r
->> /etc/apparmor.d/usr.bin.swtpm
-> 
-> Is there no way to just have apparmor not apply at all
-> here? I can see why you might want it to apply for the
-
-If you are root you can change things. I have shown the options using 
-aa-complain and aa-disable that you can revert once the test has 
-finished: sudo aa-enforce /usr/bin/swtpm
-
-You could also copy swtpm into a user-owned directory but you will have 
-to adapt the user's PATH. That's an easy option.
-
-The most compatible option is the 3rd option since I would expect that 
-we will have this rule in a future version of the usr.bin.swtpm Ubuntu 
-profile provided by the swtpm package:
-
-echo "include <abstractions/user-tmp>" >> 
-/etc/apparmor.d/local/usr.bin.swtpm
-apparmor_parser -r /etc/apparmor.d/usr.bin.swtpm
-
-> case of "I'm using it as part of a sandboxed VM setup",
-> but in this scenario I am a local user running this binary
-> which is not setuid root and it is accessing a file in a
-> directory which my user owns and has permissions for.
-> This should not be being rejected: there is no security
-> boundary involved and swtpm is not doing anything
-> that I could not directly do myself anyway (as you
-> can tell from the fact that copying the swtpm binary
-> to a different location and running it works).
-
-I am not aware of how user/non-root-started programs can be generally 
-made exempt from AppArmor.
-
-There may still be a security boundary if a user runs QEMU and swtpm was 
-able to manipulate (with malicious input) the user's files in some 
-undesirable way or copy the user's data elsewhere. In this case it may 
-be desirable for the user that the profile be applied and the PATH he is 
-using points to the standard swtpm.
-
-> 
-> thanks
-> -- PMM
-> 
+diff --git a/crypto/secret_common.c b/crypto/secret_common.c
+index 2c141107a5..dbda998940 100644
+--- a/crypto/secret_common.c
++++ b/crypto/secret_common.c
+@@ -191,15 +191,6 @@ qcrypto_secret_complete(UserCreatable *uc, Error **errp)
+ }
+ 
+ 
+-static bool
+-qcrypto_secret_prop_get_loaded(Object *obj,
+-                               Error **errp G_GNUC_UNUSED)
+-{
+-    QCryptoSecretCommon *secret = QCRYPTO_SECRET_COMMON(obj);
+-    return secret->rawdata != NULL;
+-}
+-
+-
+ static void
+ qcrypto_secret_prop_set_format(Object *obj,
+                                int value,
+@@ -278,9 +269,6 @@ qcrypto_secret_class_init(ObjectClass *oc, void *data)
+ 
+     ucc->complete = qcrypto_secret_complete;
+ 
+-    object_class_property_add_bool(oc, "loaded",
+-                                   qcrypto_secret_prop_get_loaded,
+-                                   NULL);
+     object_class_property_add_enum(oc, "format",
+                                    "QCryptoSecretFormat",
+                                    &QCryptoSecretFormat_lookup,
+diff --git a/crypto/tlscredsanon.c b/crypto/tlscredsanon.c
+index c0d23a0ef3..476cf89c96 100644
+--- a/crypto/tlscredsanon.c
++++ b/crypto/tlscredsanon.c
+@@ -127,37 +127,6 @@ qcrypto_tls_creds_anon_complete(UserCreatable *uc, Error **errp)
+ }
+ 
+ 
+-#ifdef CONFIG_GNUTLS
+-
+-
+-static bool
+-qcrypto_tls_creds_anon_prop_get_loaded(Object *obj,
+-                                       Error **errp G_GNUC_UNUSED)
+-{
+-    QCryptoTLSCredsAnon *creds = QCRYPTO_TLS_CREDS_ANON(obj);
+-
+-    if (creds->parent_obj.endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER) {
+-        return creds->data.server != NULL;
+-    } else {
+-        return creds->data.client != NULL;
+-    }
+-}
+-
+-
+-#else /* ! CONFIG_GNUTLS */
+-
+-
+-static bool
+-qcrypto_tls_creds_anon_prop_get_loaded(Object *obj G_GNUC_UNUSED,
+-                                       Error **errp G_GNUC_UNUSED)
+-{
+-    return false;
+-}
+-
+-
+-#endif /* ! CONFIG_GNUTLS */
+-
+-
+ static void
+ qcrypto_tls_creds_anon_finalize(Object *obj)
+ {
+@@ -173,10 +142,6 @@ qcrypto_tls_creds_anon_class_init(ObjectClass *oc, void *data)
+     UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
+ 
+     ucc->complete = qcrypto_tls_creds_anon_complete;
+-
+-    object_class_property_add_bool(oc, "loaded",
+-                                   qcrypto_tls_creds_anon_prop_get_loaded,
+-                                   NULL);
+ }
+ 
+ 
+diff --git a/crypto/tlscredspsk.c b/crypto/tlscredspsk.c
+index 0d6b71a37c..aa270d7988 100644
+--- a/crypto/tlscredspsk.c
++++ b/crypto/tlscredspsk.c
+@@ -206,37 +206,6 @@ qcrypto_tls_creds_psk_complete(UserCreatable *uc, Error **errp)
+ }
+ 
+ 
+-#ifdef CONFIG_GNUTLS
+-
+-
+-static bool
+-qcrypto_tls_creds_psk_prop_get_loaded(Object *obj,
+-                                      Error **errp G_GNUC_UNUSED)
+-{
+-    QCryptoTLSCredsPSK *creds = QCRYPTO_TLS_CREDS_PSK(obj);
+-
+-    if (creds->parent_obj.endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER) {
+-        return creds->data.server != NULL;
+-    } else {
+-        return creds->data.client != NULL;
+-    }
+-}
+-
+-
+-#else /* ! CONFIG_GNUTLS */
+-
+-
+-static bool
+-qcrypto_tls_creds_psk_prop_get_loaded(Object *obj G_GNUC_UNUSED,
+-                                      Error **errp G_GNUC_UNUSED)
+-{
+-    return false;
+-}
+-
+-
+-#endif /* ! CONFIG_GNUTLS */
+-
+-
+ static void
+ qcrypto_tls_creds_psk_finalize(Object *obj)
+ {
+@@ -273,9 +242,6 @@ qcrypto_tls_creds_psk_class_init(ObjectClass *oc, void *data)
+ 
+     ucc->complete = qcrypto_tls_creds_psk_complete;
+ 
+-    object_class_property_add_bool(oc, "loaded",
+-                                   qcrypto_tls_creds_psk_prop_get_loaded,
+-                                   NULL);
+     object_class_property_add_str(oc, "username",
+                                   qcrypto_tls_creds_psk_prop_get_username,
+                                   qcrypto_tls_creds_psk_prop_set_username);
+diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
+index d14313925d..24ec584922 100644
+--- a/crypto/tlscredsx509.c
++++ b/crypto/tlscredsx509.c
+@@ -695,33 +695,6 @@ qcrypto_tls_creds_x509_complete(UserCreatable *uc, Error **errp)
+ }
+ 
+ 
+-#ifdef CONFIG_GNUTLS
+-
+-
+-static bool
+-qcrypto_tls_creds_x509_prop_get_loaded(Object *obj,
+-                                       Error **errp G_GNUC_UNUSED)
+-{
+-    QCryptoTLSCredsX509 *creds = QCRYPTO_TLS_CREDS_X509(obj);
+-
+-    return creds->data != NULL;
+-}
+-
+-
+-#else /* ! CONFIG_GNUTLS */
+-
+-
+-static bool
+-qcrypto_tls_creds_x509_prop_get_loaded(Object *obj G_GNUC_UNUSED,
+-                                       Error **errp G_GNUC_UNUSED)
+-{
+-    return false;
+-}
+-
+-
+-#endif /* ! CONFIG_GNUTLS */
+-
+-
+ static void
+ qcrypto_tls_creds_x509_prop_set_sanity(Object *obj,
+                                        bool value,
+@@ -838,9 +811,6 @@ qcrypto_tls_creds_x509_class_init(ObjectClass *oc, void *data)
+ 
+     ucc->complete = qcrypto_tls_creds_x509_complete;
+ 
+-    object_class_property_add_bool(oc, "loaded",
+-                                   qcrypto_tls_creds_x509_prop_get_loaded,
+-                                   NULL);
+     object_class_property_add_bool(oc, "sanity-check",
+                                    qcrypto_tls_creds_x509_prop_get_sanity,
+                                    qcrypto_tls_creds_x509_prop_set_sanity);
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 912e0a1fcf..ee6455aeee 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -355,13 +355,13 @@ The ``-writeconfig`` option was not able to serialize the entire contents
+ of the QEMU command line.  It is thus considered a failed experiment
+ and removed without a replacement.
+ 
+-``loaded`` property of ``secret`` and ``secret_keyring`` objects (removed in 7.1)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++``loaded`` property of secret and TLS credential objects (removed in 9.2)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ The ``loaded=on`` option in the command line or QMP ``object-add`` either had
+ no effect (if ``loaded`` was the last option) or caused options to be
+ effectively ignored as if they were not given.  The property is therefore
+-useless and should simply be removed.
++useless and has been removed.
+ 
+ ``opened`` property of ``rng-*`` objects (removed in 7.1)
+ '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+diff --git a/qapi/crypto.json b/qapi/crypto.json
+index 9431522768..7c30df9e31 100644
+--- a/qapi/crypto.json
++++ b/qapi/crypto.json
+@@ -419,11 +419,6 @@
+ #
+ # Properties for objects of classes derived from secret-common.
+ #
+-# @loaded: if true, the secret is loaded immediately when applying
+-#     this option and will probably fail when processing the next
+-#     option.  Don't use; only provided for compatibility.
+-#     (default: false)
+-#
+ # @format: the data format that the secret is provided in
+ #     (default: raw)
+ #
+@@ -436,16 +431,10 @@
+ #     16-byte IV.  Mandatory if @keyid is given.  Ignored if @keyid is
+ #     absent.
+ #
+-# Features:
+-#
+-# @deprecated: Member @loaded is deprecated.  Setting true doesn't
+-#     make sense, and false is already the default.
+-#
+ # Since: 2.6
+ ##
+ { 'struct': 'SecretCommonProperties',
+-  'data': { '*loaded': { 'type': 'bool', 'features': ['deprecated'] },
+-            '*format': 'QCryptoSecretFormat',
++  'data': { '*format': 'QCryptoSecretFormat',
+             '*keyid': 'str',
+             '*iv': 'str' } }
+ 
+@@ -512,58 +501,32 @@
+ #
+ # Properties for tls-creds-anon objects.
+ #
+-# @loaded: if true, the credentials are loaded immediately when
+-#     applying this option and will ignore options that are processed
+-#     later.  Don't use; only provided for compatibility.
+-#     (default: false)
+-#
+-# Features:
+-#
+-# @deprecated: Member @loaded is deprecated.  Setting true doesn't
+-#     make sense, and false is already the default.
+-#
+ # Since: 2.5
+ ##
+ { 'struct': 'TlsCredsAnonProperties',
+   'base': 'TlsCredsProperties',
+-  'data': { '*loaded': { 'type': 'bool', 'features': ['deprecated'] } } }
++  'data': { } }
+ 
+ ##
+ # @TlsCredsPskProperties:
+ #
+ # Properties for tls-creds-psk objects.
+ #
+-# @loaded: if true, the credentials are loaded immediately when
+-#     applying this option and will ignore options that are processed
+-#     later.  Don't use; only provided for compatibility.
+-#     (default: false)
+-#
+ # @username: the username which will be sent to the server.  For
+ #     clients only.  If absent, "qemu" is sent and the property will
+ #     read back as an empty string.
+ #
+-# Features:
+-#
+-# @deprecated: Member @loaded is deprecated.  Setting true doesn't
+-#     make sense, and false is already the default.
+-#
+ # Since: 3.0
+ ##
+ { 'struct': 'TlsCredsPskProperties',
+   'base': 'TlsCredsProperties',
+-  'data': { '*loaded': { 'type': 'bool', 'features': ['deprecated'] },
+-            '*username': 'str' } }
++  'data': { '*username': 'str' } }
+ 
+ ##
+ # @TlsCredsX509Properties:
+ #
+ # Properties for tls-creds-x509 objects.
+ #
+-# @loaded: if true, the credentials are loaded immediately when
+-#     applying this option and will ignore options that are processed
+-#     later.  Don't use; only provided for compatibility.
+-#     (default: false)
+-#
+ # @sanity-check: if true, perform some sanity checks before using the
+ #     credentials (default: true)
+ #
+@@ -573,17 +536,11 @@
+ #     provides the ID of a previously created secret object containing
+ #     the password for decryption.
+ #
+-# Features:
+-#
+-# @deprecated: Member @loaded is deprecated.  Setting true doesn't
+-#     make sense, and false is already the default.
+-#
+ # Since: 2.5
+ ##
+ { 'struct': 'TlsCredsX509Properties',
+   'base': 'TlsCredsProperties',
+-  'data': { '*loaded': { 'type': 'bool', 'features': ['deprecated'] },
+-            '*sanity-check': 'bool',
++  'data': { '*sanity-check': 'bool',
+             '*passwordid': 'str' } }
+ ##
+ # @QCryptoAkCipherAlgo:
+-- 
+2.46.0
 
 
