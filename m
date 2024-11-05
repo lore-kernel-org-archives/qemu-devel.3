@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0595D1268A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EFEBD1268B
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Nov 2024 11:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8HbU-0004b3-Gk; Tue, 05 Nov 2024 06:20:08 -0500
+	id 1t8HbM-0004X9-BY; Tue, 05 Nov 2024 06:20:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8HbT-0004aU-6A
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:20:07 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8HbF-00077g-Ar
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:20:06 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-431688d5127so42184175e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 03:19:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730805590; x=1731410390; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VjaWzrmGlTbLwLkZAx+1n0T7g0x94qIv6F1YDtyxP20=;
- b=g+Vi5TkdpU7lSWl5BobzYgA25Cn0Uq+Fde9dgzjpYBf0Mo39a45xmw20Bzk/blfGCx
- O+xPKonpZb6DCC4TSevGanwR5N2oWiUk84rOUR3o/HD2svqEiUJOt7l7nE0zhWtW8127
- 3VemmnF5cvStCWowuOLp+N/w0/Tj8hOkxdA+M3Ppir85azuLzIjLxQbR9wZYxMnIJaRI
- z/iIBBMUyVY587Q1vz2YhtEkAEd/UPJ2NMeKMKRd2aSRiVG5kAUNHwGKR49x2dFhcbQA
- eZ7I736ZNDLX1apXMH+PEtxa/ZTKNv0HJsnR68C+wk1XiZ1Hceg5jUgcVY1hX2Q3KN2g
- leFg==
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t8HbJ-0004VK-GL
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:19:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t8HbC-00076z-CG
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 06:19:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730805588;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gGZzqk9PebDSovSkijiespfOsuVvaBw8WYB4xrFjFNI=;
+ b=EdYGjTewUX56gWJ9/QqslVKgWYP/KonjR51waF/+uxHO0bEYlis+A+JmnJd3gqZzWqX7/3
+ nXBjEYGdRJoZ1eq6B4OPvJYiIOg0eF+8kzIknS/ILqUiKsSx3puM7SH2Q2/Jils4CpbvJu
+ +oF6EAgF7B+FnKb1JZFFoCs8pz1WK/U=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-502-Dih-djIhNkCOMQ5wI9ETmA-1; Tue, 05 Nov 2024 06:19:46 -0500
+X-MC-Unique: Dih-djIhNkCOMQ5wI9ETmA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d49887a2cso2867440f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 03:19:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730805590; x=1731410390;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VjaWzrmGlTbLwLkZAx+1n0T7g0x94qIv6F1YDtyxP20=;
- b=PMzdskG+ZJ4T6vLOP4YARhf11QiGHHrHyzo6sGOAVMjYR22F0GmLWQKpK/4kV9q9Tc
- xCyNzoG8gckV6xLfvX/YIusUSg6tjfxkMtdURaAHGdPYlLy7/d/6HhJ9IQnRsGIBFYwC
- F3/Fugoaibj+UF3IADPbPhfIrQP4zLzjZTyQ0juiJ+z1NTgfuCVX7ov+MleaxapIQb2c
- EAriUkRom76ZtFn9LDJ11XDVupLgMPdCs4Uzn/zJlmZxDwNRII25nW6OV+qay4o/+6v2
- hBDwCDZpMucUeGXJ6GSWogux8Dpo5oojQsiepIwooSO5+gOlDM7/XJQFJ1GxRjdfxrGK
- M9Lg==
-X-Gm-Message-State: AOJu0YzXM4/kqM4jG8LqwJoddIOXd6vohcSv+k8epnIDcuRQxOcYTHUP
- phe5Axlzt9/mLEWTgclTIKABlNzTLVnwqPIlGk6iWAKAT3SM0vTO13HxwrjMCQ0H1HxwgosTNNl
- n
-X-Google-Smtp-Source: AGHT+IF9pV49wW6QO9Ld+SMMV/+npmzf/vJg1jVemN1jVmjzTXHaLzQ54LeCg4ajYn7sZfrLlVtEQw==
-X-Received: by 2002:a05:600c:4eca:b0:431:5c1c:71b6 with SMTP id
- 5b1f17b1804b1-4319acad842mr370546495e9.17.1730805590206; 
- Tue, 05 Nov 2024 03:19:50 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432a3688813sm16354555e9.1.2024.11.05.03.19.49
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 03:19:49 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 22/31] Revert "target/arm: Fix usage of MMU indexes when EL3 is
- AArch32"
-Date: Tue,  5 Nov 2024 11:19:26 +0000
-Message-Id: <20241105111935.2747034-23-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241105111935.2747034-1-peter.maydell@linaro.org>
-References: <20241105111935.2747034-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1730805584; x=1731410384;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gGZzqk9PebDSovSkijiespfOsuVvaBw8WYB4xrFjFNI=;
+ b=Dkn9BZU5jzR6ndWY4S/QLbqjkuPheu5blTU2UMJkDz5KTQrrm2ovtGbnY8NjPI8REc
+ 3OfXW9W7fPNBmQcf8dHwl0O4LgaRsrtBkkTBP/OnJ2VB1u4ZdOSYUzyFTI/KFSdunc/M
+ c29IjjDFJ14DKeaftSZjYgMp4KbLoJ7E0BVKWq9YSqeTHiBmjs+Zafrh93uGw5NQjs/P
+ mRowsvEMprCBv7RzrbucwfMtdBuiGpMkt1/+BoJ6V2Ft07Ztbkfo/Oa9jjQHRL5q9O6w
+ 0wgwiLxaRRXrw02OgQLhg2VVeOo3CBnSH2ebTZCFfkhnbfPffRno+faYkcA6GdgF9Fbo
+ iyyQ==
+X-Gm-Message-State: AOJu0YwwtlERZ9EslYOpuafUD1+AI9mDniZy71NfdVqO4uKRGFRmYbN7
+ DstOmnoYdi/dd8jcIGquupKHEbnNSKrB6Va7dcj7ouLz1pvMKJPWKUQ4pIAYa3B5hoeRzmXnJRC
+ xUePTn1EjsUx5SbYRrWrX5p7gcvlZZImn6EqQYM6YCWlH5bIga7pFwUaisutBdM46glGOOrjQhG
+ gBMM9KC1/7zRw0992ShZlm+sWFjqwtM2m8M0U=
+X-Received: by 2002:a5d:6d0e:0:b0:379:5c8:33fa with SMTP id
+ ffacd0b85a97d-381c7866580mr13622626f8f.0.1730805581191; 
+ Tue, 05 Nov 2024 03:19:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFgp4I6nxfY6FvtXDHYpjjSXUdcoxlFzAVPbyv2yNttU5oSa5wehT7tWI8O/O5aP/qTe3TSk6CNFlK3pvhFHXE=
+X-Received: by 2002:a5d:6d0e:0:b0:379:5c8:33fa with SMTP id
+ ffacd0b85a97d-381c7866580mr13622553f8f.0.1730805579858; Tue, 05 Nov 2024
+ 03:19:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20241029150908.1136894-1-ppandit@redhat.com>
+ <20241029150908.1136894-3-ppandit@redhat.com>
+ <ZyTnBwpOwXcHGGPJ@x1n>
+ <CAE8KmOyzWRqpGDOyAK7V2X8+SWVt_kR1897tiFm7vdBNRRE2QA@mail.gmail.com>
+ <ZykB3voFw_-ByWfh@x1n>
+In-Reply-To: <ZykB3voFw_-ByWfh@x1n>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 5 Nov 2024 16:49:23 +0530
+Message-ID: <CAE8KmOzuGxdU7zp+vsf1yY_FP8bf-KTv7UJ+8h6bfmkE=0H-bA@mail.gmail.com>
+Subject: Re: [PATCH 2/5] migration/postcopy: magic value for postcopy channel
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,372 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 4c2c0474693229c1f533239bb983495c5427784d.
+On Mon, 4 Nov 2024 at 22:48, Peter Xu <peterx@redhat.com> wrote:
+> Firstly, we'll need a way to tell mgmt that the new qemu binary supports
+> enablement of both multifd + postcopy feature.  That can be done with a
+>
+>   "features": [ "postcopy-with-multifd-precopy" ]
+>
+> Flag attached to the QMP "migrate" command.
 
-This commit tried to fix a problem with our usage of MMU indexes when
-EL3 is AArch32, using what it described as a "more complicated
-approach" where we share the same MMU index values for Secure PL1&0
-and NonSecure PL1&0. In theory this should work, but the change
-didn't account for (at least) two things:
+* IIUC, currently virsh(1)/libvirtd(8) sends the migration command to
+the destination to inform it of the migration features to use, whether
+to use multifd or postcopy or none etc. Based on that the destination
+QEMU prepares to accept incoming VM. Not sure how/what above flag
+shall benefit.
 
-(1) The design change means we need to flush the TLBs at any point
-where the CPU state flips from one to the other.  We already flush
-the TLB when SCR.NS is changed, but we don't flush the TLB when we
-take an exception from NS PL1&0 into Mon or when we return from Mon
-to NS PL1&0, and the commit didn't add any code to do that.
+> Then, I think we don't need a magic for preempt channel, because new qemu
+> binaries (after 7.2) have no issue on out-of-order connections between main
+> / preempt channel.  Preempt channel is always connected later than main.
+>
+> It means in the test logic of "which channel is which", it should be:
+>
+>   - If it's a multifd channel (check multifd header match), it's a multifd
+>     channel, otherwise,
+>
+>     - if main channel is not present yet, it must be the main channel (and
+>       we can double check the main channel magic), otherwise,
+>
+>     - it's the preempt channel
+>
+> With that, I think we can drop the new magic sent here.
 
-(2) The ATS12NS* address translate instructions allow Mon code (which
-is Secure) to do a stage 1+2 page table walk for NS.  I thought this
-was OK because do_ats_write() does a page table walk which doesn't
-use the TLBs, so because it can pass both the MMU index and also an
-ARMSecuritySpace argument we can tell the table walk that we want NS
-stage1+2, not S.  But that means that all the code within the ptw
-that needs to find e.g.  the regime EL cannot do so only with an
-mmu_idx -- all these functions like regime_sctlr(), regime_el(), etc
-would need to pass both an mmu_idx and the security_space, so they
-can tell whether this is a translation regime controlled by EL1 or
-EL3 (and so whether to look at SCTLR.S or SCTLR.NS, etc).
+* Sending magic value on the postcopy channel only makes it consistent
+with other channels. There's no harm in sending it. Explicitly
+defining/sending the magic value is better than leaving it for the
+code/reader to figure it out. Is there a compelling reason to drop it?
+IMO, we should either define/send the magic value for all channels or
+none. Both ways are consistent. Defining it for few and not for others
+does not seem right.
 
-In particular, because regime_el() wasn't updated to look at the
-ARMSecuritySpace it would return 1 even when the CPU was in Monitor
-mode (and the controlling EL is 3).  This meant that page table walks
-in Monitor mode would look at the wrong SCTLR, TCR, etc and would
-generally fault when they should not.
-
-Rather than trying to make the complicated changes needed to rescue
-the design of 4c2c04746932, we revert it in order to instead take the
-route that that commit describes as "the most straightforward" fix,
-where we add new MMU indexes EL30_0, EL30_3, EL30_3_PAN to correspond
-to "Secure PL1&0 at PL0", "Secure PL1&0 at PL1", and "Secure PL1&0 at
-PL1 with PAN".
-
-This revert will re-expose the "spurious alignment faults in
-Secure PL0" issue #2326; we'll fix it again in the next commit.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Message-id: 20241101142845.1712482-2-peter.maydell@linaro.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Thank you.
 ---
- target/arm/cpu.h               | 31 +++++++++++++------------------
- target/arm/internals.h         | 27 ++++-----------------------
- target/arm/tcg/translate.h     |  2 --
- target/arm/helper.c            | 34 +++++++++++-----------------------
- target/arm/ptw.c               |  6 +-----
- target/arm/tcg/hflags.c        |  4 ----
- target/arm/tcg/translate-a64.c |  2 +-
- target/arm/tcg/translate.c     |  9 ++++-----
- 8 files changed, 34 insertions(+), 81 deletions(-)
-
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 8fc8b6398f7..133a87e39a8 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2787,7 +2787,8 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
-  *  + NonSecure PL1 & 0 stage 1
-  *  + NonSecure PL1 & 0 stage 2
-  *  + NonSecure PL2
-- *  + Secure PL1 & 0
-+ *  + Secure PL0
-+ *  + Secure PL1
-  * (reminder: for 32 bit EL3, Secure PL1 is *EL3*, not EL1.)
-  *
-  * For QEMU, an mmu_idx is not quite the same as a translation regime because:
-@@ -2805,39 +2806,37 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
-  *     The only use of stage 2 translations is either as part of an s1+2
-  *     lookup or when loading the descriptors during a stage 1 page table walk,
-  *     and in both those cases we don't use the TLB.
-- *  4. we want to be able to use the TLB for accesses done as part of a
-+ *  4. we can also safely fold together the "32 bit EL3" and "64 bit EL3"
-+ *     translation regimes, because they map reasonably well to each other
-+ *     and they can't both be active at the same time.
-+ *  5. we want to be able to use the TLB for accesses done as part of a
-  *     stage1 page table walk, rather than having to walk the stage2 page
-  *     table over and over.
-- *  5. we need separate EL1/EL2 mmu_idx for handling the Privileged Access
-+ *  6. we need separate EL1/EL2 mmu_idx for handling the Privileged Access
-  *     Never (PAN) bit within PSTATE.
-- *  6. we fold together most secure and non-secure regimes for A-profile,
-+ *  7. we fold together most secure and non-secure regimes for A-profile,
-  *     because there are no banked system registers for aarch64, so the
-  *     process of switching between secure and non-secure is
-  *     already heavyweight.
-- *  7. we cannot fold together Stage 2 Secure and Stage 2 NonSecure,
-+ *  8. we cannot fold together Stage 2 Secure and Stage 2 NonSecure,
-  *     because both are in use simultaneously for Secure EL2.
-  *
-  * This gives us the following list of cases:
-  *
-- * EL0 EL1&0 stage 1+2 (or AArch32 PL0 PL1&0 stage 1+2)
-- * EL1 EL1&0 stage 1+2 (or AArch32 PL1 PL1&0 stage 1+2)
-- * EL1 EL1&0 stage 1+2 +PAN (or AArch32 PL1 PL1&0 stage 1+2 +PAN)
-+ * EL0 EL1&0 stage 1+2 (aka NS PL0)
-+ * EL1 EL1&0 stage 1+2 (aka NS PL1)
-+ * EL1 EL1&0 stage 1+2 +PAN
-  * EL0 EL2&0
-  * EL2 EL2&0
-  * EL2 EL2&0 +PAN
-  * EL2 (aka NS PL2)
-- * EL3 (not used when EL3 is AArch32)
-+ * EL3 (aka S PL1)
-  * Stage2 Secure
-  * Stage2 NonSecure
-  * plus one TLB per Physical address space: S, NS, Realm, Root
-  *
-  * for a total of 14 different mmu_idx.
-  *
-- * Note that when EL3 is AArch32, the usage is potentially confusing
-- * because the MMU indexes are named for their AArch64 use, so code
-- * using the ARMMMUIdx_E10_1 might be at EL3, not EL1. This is because
-- * Secure PL1 is always at EL3.
-- *
-  * R profile CPUs have an MPU, but can use the same set of MMU indexes
-  * as A profile. They only need to distinguish EL0 and EL1 (and
-  * EL2 for cores like the Cortex-R52).
-@@ -3130,10 +3129,6 @@ FIELD(TBFLAG_A32, NS, 10, 1)
-  * This requires an SME trap from AArch32 mode when using NEON.
-  */
- FIELD(TBFLAG_A32, SME_TRAP_NONSTREAMING, 11, 1)
--/*
-- * Indicates whether we are in the Secure PL1&0 translation regime
-- */
--FIELD(TBFLAG_A32, S_PL1_0, 12, 1)
- 
- /*
-  * Bit usage when in AArch32 state, for M-profile only.
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index fd8f7c82aa3..f43d97c59a9 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -275,20 +275,6 @@ FIELD(CNTHCTL, CNTPMASK, 19, 1)
- #define M_FAKE_FSR_NSC_EXEC 0xf /* NS executing in S&NSC memory */
- #define M_FAKE_FSR_SFAULT 0xe /* SecureFault INVTRAN, INVEP or AUVIOL */
- 
--/**
-- * arm_aa32_secure_pl1_0(): Return true if in Secure PL1&0 regime
-- *
-- * Return true if the CPU is in the Secure PL1&0 translation regime.
-- * This requires that EL3 exists and is AArch32 and we are currently
-- * Secure. If this is the case then the ARMMMUIdx_E10* apply and
-- * mean we are in EL3, not EL1.
-- */
--static inline bool arm_aa32_secure_pl1_0(CPUARMState *env)
--{
--    return arm_feature(env, ARM_FEATURE_EL3) &&
--        !arm_el_is_aa64(env, 3) && arm_is_secure(env);
--}
--
- /**
-  * raise_exception: Raise the specified exception.
-  * Raise a guest exception with the specified value, syndrome register
-@@ -841,12 +827,7 @@ static inline ARMMMUIdx core_to_aa64_mmu_idx(int mmu_idx)
-     return mmu_idx | ARM_MMU_IDX_A;
- }
- 
--/**
-- * Return the exception level we're running at if our current MMU index
-- * is @mmu_idx. @s_pl1_0 should be true if this is the AArch32
-- * Secure PL1&0 translation regime.
-- */
--int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx, bool s_pl1_0);
-+int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx);
- 
- /* Return the MMU index for a v7M CPU in the specified security state */
- ARMMMUIdx arm_v7m_mmu_idx_for_secstate(CPUARMState *env, bool secstate);
-@@ -941,11 +922,11 @@ static inline uint32_t regime_el(CPUARMState *env, ARMMMUIdx mmu_idx)
-         return 3;
-     case ARMMMUIdx_E10_0:
-     case ARMMMUIdx_Stage1_E0:
--    case ARMMMUIdx_E10_1:
--    case ARMMMUIdx_E10_1_PAN:
-+        return arm_el_is_aa64(env, 3) || !arm_is_secure_below_el3(env) ? 1 : 3;
-     case ARMMMUIdx_Stage1_E1:
-     case ARMMMUIdx_Stage1_E1_PAN:
--        return arm_el_is_aa64(env, 3) || !arm_is_secure_below_el3(env) ? 1 : 3;
-+    case ARMMMUIdx_E10_1:
-+    case ARMMMUIdx_E10_1_PAN:
-     case ARMMMUIdx_MPrivNegPri:
-     case ARMMMUIdx_MUserNegPri:
-     case ARMMMUIdx_MPriv:
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 5a2e10d64d5..20cd0e851c4 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -165,8 +165,6 @@ typedef struct DisasContext {
-     uint8_t gm_blocksize;
-     /* True if the current insn_start has been updated. */
-     bool insn_start_updated;
--    /* True if this is the AArch32 Secure PL1&0 translation regime */
--    bool s_pl1_0;
-     /* Bottom two bits of XScale c15_cpar coprocessor access control reg */
-     int c15_cpar;
-     /* Offset from VNCR_EL2 when FEAT_NV2 redirects this reg to memory */
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 0a731a38e8f..0900034d42a 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -3701,7 +3701,7 @@ static uint64_t do_ats_write(CPUARMState *env, uint64_t value,
-          */
-         format64 = arm_s1_regime_using_lpae_format(env, mmu_idx);
- 
--        if (arm_feature(env, ARM_FEATURE_EL2) && !arm_aa32_secure_pl1_0(env)) {
-+        if (arm_feature(env, ARM_FEATURE_EL2)) {
-             if (mmu_idx == ARMMMUIdx_E10_0 ||
-                 mmu_idx == ARMMMUIdx_E10_1 ||
-                 mmu_idx == ARMMMUIdx_E10_1_PAN) {
-@@ -3775,11 +3775,13 @@ static void ats_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-     case 0:
-         /* stage 1 current state PL1: ATS1CPR, ATS1CPW, ATS1CPRP, ATS1CPWP */
-         switch (el) {
-+        case 3:
-+            mmu_idx = ARMMMUIdx_E3;
-+            break;
-         case 2:
-             g_assert(ss != ARMSS_Secure);  /* ARMv8.4-SecEL2 is 64-bit only */
-             /* fall through */
-         case 1:
--        case 3:
-             if (ri->crm == 9 && arm_pan_enabled(env)) {
-                 mmu_idx = ARMMMUIdx_Stage1_E1_PAN;
-             } else {
-@@ -11860,11 +11862,8 @@ void arm_cpu_do_interrupt(CPUState *cs)
- 
- uint64_t arm_sctlr(CPUARMState *env, int el)
- {
--    if (arm_aa32_secure_pl1_0(env)) {
--        /* In Secure PL1&0 SCTLR_S is always controlling */
--        el = 3;
--    } else if (el == 0) {
--        /* Only EL0 needs to be adjusted for EL1&0 or EL2&0. */
-+    /* Only EL0 needs to be adjusted for EL1&0 or EL2&0. */
-+    if (el == 0) {
-         ARMMMUIdx mmu_idx = arm_mmu_idx_el(env, 0);
-         el = mmu_idx == ARMMMUIdx_E20_0 ? 2 : 1;
-     }
-@@ -12524,12 +12523,8 @@ int fp_exception_el(CPUARMState *env, int cur_el)
-     return 0;
- }
- 
--/*
-- * Return the exception level we're running at if this is our mmu_idx.
-- * s_pl1_0 should be true if this is the AArch32 Secure PL1&0 translation
-- * regime.
-- */
--int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx, bool s_pl1_0)
-+/* Return the exception level we're running at if this is our mmu_idx */
-+int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx)
- {
-     if (mmu_idx & ARM_MMU_IDX_M) {
-         return mmu_idx & ARM_MMU_IDX_M_PRIV;
-@@ -12541,7 +12536,7 @@ int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx, bool s_pl1_0)
-         return 0;
-     case ARMMMUIdx_E10_1:
-     case ARMMMUIdx_E10_1_PAN:
--        return s_pl1_0 ? 3 : 1;
-+        return 1;
-     case ARMMMUIdx_E2:
-     case ARMMMUIdx_E20_2:
-     case ARMMMUIdx_E20_2_PAN:
-@@ -12579,15 +12574,6 @@ ARMMMUIdx arm_mmu_idx_el(CPUARMState *env, int el)
-             idx = ARMMMUIdx_E10_0;
-         }
-         break;
--    case 3:
--        /*
--         * AArch64 EL3 has its own translation regime; AArch32 EL3
--         * uses the Secure PL1&0 translation regime.
--         */
--        if (arm_el_is_aa64(env, 3)) {
--            return ARMMMUIdx_E3;
--        }
--        /* fall through */
-     case 1:
-         if (arm_pan_enabled(env)) {
-             idx = ARMMMUIdx_E10_1_PAN;
-@@ -12607,6 +12593,8 @@ ARMMMUIdx arm_mmu_idx_el(CPUARMState *env, int el)
-             idx = ARMMMUIdx_E2;
-         }
-         break;
-+    case 3:
-+        return ARMMMUIdx_E3;
-     default:
-         g_assert_not_reached();
-     }
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index dd402683973..ba3dd38a729 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3607,11 +3607,7 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
-     case ARMMMUIdx_Stage1_E1:
-     case ARMMMUIdx_Stage1_E1_PAN:
-     case ARMMMUIdx_E2:
--        if (arm_aa32_secure_pl1_0(env)) {
--            ss = ARMSS_Secure;
--        } else {
--            ss = arm_security_space_below_el3(env);
--        }
-+        ss = arm_security_space_below_el3(env);
-         break;
-     case ARMMMUIdx_Stage2:
-         /*
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index bab7822ef66..f03977b4b00 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -198,10 +198,6 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
-         DP_TBFLAG_A32(flags, SME_TRAP_NONSTREAMING, 1);
-     }
- 
--    if (arm_aa32_secure_pl1_0(env)) {
--        DP_TBFLAG_A32(flags, S_PL1_0, 1);
--    }
--
-     return rebuild_hflags_common_32(env, fp_el, mmu_idx, flags);
- }
- 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index ec0b1ee2523..b2851ea5032 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -11690,7 +11690,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
-     dc->tbii = EX_TBFLAG_A64(tb_flags, TBII);
-     dc->tbid = EX_TBFLAG_A64(tb_flags, TBID);
-     dc->tcma = EX_TBFLAG_A64(tb_flags, TCMA);
--    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx, false);
-+    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx);
- #if !defined(CONFIG_USER_ONLY)
-     dc->user = (dc->current_el == 0);
- #endif
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index e2748ff2bb8..c5bc691d92b 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -7546,6 +7546,10 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
- 
-     core_mmu_idx = EX_TBFLAG_ANY(tb_flags, MMUIDX);
-     dc->mmu_idx = core_to_arm_mmu_idx(env, core_mmu_idx);
-+    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx);
-+#if !defined(CONFIG_USER_ONLY)
-+    dc->user = (dc->current_el == 0);
-+#endif
-     dc->fp_excp_el = EX_TBFLAG_ANY(tb_flags, FPEXC_EL);
-     dc->align_mem = EX_TBFLAG_ANY(tb_flags, ALIGN_MEM);
-     dc->pstate_il = EX_TBFLAG_ANY(tb_flags, PSTATE__IL);
-@@ -7576,12 +7580,7 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-         }
-         dc->sme_trap_nonstreaming =
-             EX_TBFLAG_A32(tb_flags, SME_TRAP_NONSTREAMING);
--        dc->s_pl1_0 = EX_TBFLAG_A32(tb_flags, S_PL1_0);
-     }
--    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx, dc->s_pl1_0);
--#if !defined(CONFIG_USER_ONLY)
--    dc->user = (dc->current_el == 0);
--#endif
-     dc->lse2 = false; /* applies only to aarch64 */
-     dc->cp_regs = cpu->cp_regs;
-     dc->features = env->features;
--- 
-2.34.1
+  - Prasad
 
 
