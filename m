@@ -4,111 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41CBFD44D57
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 12:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B0D8D44D57
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 12:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8euC-0001DA-IT; Wed, 06 Nov 2024 07:13:00 -0500
+	id 1t8evG-00028q-4o; Wed, 06 Nov 2024 07:14:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8euB-0001Cy-Ms
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:12:59 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8evB-00027b-Kn
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:14:02 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8euA-0008Ha-0E
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:12:59 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8ev9-0008RE-6f
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:14:01 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 3726F1FB4E;
- Wed,  6 Nov 2024 12:12:56 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 046C221D0E;
+ Wed,  6 Nov 2024 12:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730895176; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1730895237; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LJHHhjvJ0OHmwr7R29JLx9sqHm3dyeRsNIgmYquj+Xs=;
- b=AiKVmExlBdr+2MtFib2P5zNRnWl/ZMGlotNEkpd7Nf8N1XVLRiQ9JH8B3wRKsUJKLkXnS2
- pN2kiRLsDbxA4Np1f5eTGLHZP74bq20iIkh45ssJiMeqEWKv00wjPCIaZDlb2l/y2jXEVB
- BaWALgrElhgQn+uP9IOvxp8kxDDeP/4=
+ bh=XWJQjAI8/sQKP+uUMU0nFiF+1C3bcU/+vFmqm6kz9WI=;
+ b=lcFvwSSfEdcfMX+hGoMTREnjaauq/JO//QNANIFEfUlMtl5iDEwPKTgasxqH1+GzLKuoDO
+ 44RbNTBHgzvfmAvZXOzu2/GIYj9BdMIDce/Etk1QZgJQYQq7DVb4f795Ohk8Wv7Mb7TRiF
+ +rI2hU5yygxcLubyBJag1IqD2woyfTY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730895176;
+ s=susede2_ed25519; t=1730895237;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LJHHhjvJ0OHmwr7R29JLx9sqHm3dyeRsNIgmYquj+Xs=;
- b=IewFlZBGudAgsRMU3t4ULb6ocnfaAt1AIhViQBVRqdsW5N/XrV69GbmhaWxSW2iPHzsVPi
- v141XtwsgQV3goAQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=AiKVmExl;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=IewFlZBG
+ bh=XWJQjAI8/sQKP+uUMU0nFiF+1C3bcU/+vFmqm6kz9WI=;
+ b=f1vCPg9/N5GxP+sI8z3hT6gr6FI4lGCYcUR18Kocu+cSHHFOu/K55Z9rYwJAzqnm+LSknz
+ quBt9ZvXQhu6omCw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lcFvwSSf;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="f1vCPg9/"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730895176; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1730895237; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LJHHhjvJ0OHmwr7R29JLx9sqHm3dyeRsNIgmYquj+Xs=;
- b=AiKVmExlBdr+2MtFib2P5zNRnWl/ZMGlotNEkpd7Nf8N1XVLRiQ9JH8B3wRKsUJKLkXnS2
- pN2kiRLsDbxA4Np1f5eTGLHZP74bq20iIkh45ssJiMeqEWKv00wjPCIaZDlb2l/y2jXEVB
- BaWALgrElhgQn+uP9IOvxp8kxDDeP/4=
+ bh=XWJQjAI8/sQKP+uUMU0nFiF+1C3bcU/+vFmqm6kz9WI=;
+ b=lcFvwSSfEdcfMX+hGoMTREnjaauq/JO//QNANIFEfUlMtl5iDEwPKTgasxqH1+GzLKuoDO
+ 44RbNTBHgzvfmAvZXOzu2/GIYj9BdMIDce/Etk1QZgJQYQq7DVb4f795Ohk8Wv7Mb7TRiF
+ +rI2hU5yygxcLubyBJag1IqD2woyfTY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730895176;
+ s=susede2_ed25519; t=1730895237;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LJHHhjvJ0OHmwr7R29JLx9sqHm3dyeRsNIgmYquj+Xs=;
- b=IewFlZBGudAgsRMU3t4ULb6ocnfaAt1AIhViQBVRqdsW5N/XrV69GbmhaWxSW2iPHzsVPi
- v141XtwsgQV3goAQ==
+ bh=XWJQjAI8/sQKP+uUMU0nFiF+1C3bcU/+vFmqm6kz9WI=;
+ b=f1vCPg9/N5GxP+sI8z3hT6gr6FI4lGCYcUR18Kocu+cSHHFOu/K55Z9rYwJAzqnm+LSknz
+ quBt9ZvXQhu6omCw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B1C87137C4;
- Wed,  6 Nov 2024 12:12:55 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 842EC137C4;
+ Wed,  6 Nov 2024 12:13:56 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id bEHOHUddK2f/CQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 06 Nov 2024 12:12:55 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id VPWvEoRdK2dbCgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 06 Nov 2024 12:13:56 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Subject: Re: [PATCH 03/22] tests/qtest/migration: Stop calling everything
- "test"
-In-Reply-To: <Zys3F6326kF5W2Br@redhat.com>
+ <alex.bennee@linaro.org>, Laurent
+ Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 06/22] tests/qtest/migration: Move qmp helpers to a
+ separate file
+In-Reply-To: <ZytKfYirP-R1mRNV@redhat.com>
 References: <20241105180837.5990-1-farosas@suse.de>
- <20241105180837.5990-4-farosas@suse.de> <Zys3F6326kF5W2Br@redhat.com>
-Date: Wed, 06 Nov 2024 09:12:53 -0300
-Message-ID: <87zfmc1ry2.fsf@suse.de>
+ <20241105180837.5990-7-farosas@suse.de> <ZytKfYirP-R1mRNV@redhat.com>
+Date: Wed, 06 Nov 2024 09:13:54 -0300
+Message-ID: <87wmhg1rwd.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 3726F1FB4E
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Rspamd-Queue-Id: 046C221D0E
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MX_GOOD(-0.01)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_FIVE(0.00)[5];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
  TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -134,69 +136,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> On Tue, Nov 05, 2024 at 03:08:18PM -0300, Fabiano Rosas wrote:
->> Test frameworks usually prefix "test_" to the entry point of the test
->> code. Having every function prefixed with test_ makes it hard to
->> understand the code and to grep for the actual tests.
+> On Tue, Nov 05, 2024 at 03:08:21PM -0300, Fabiano Rosas wrote:
+>> We current have a bunch of non-test functions in migration-test.c and
+>> some others in migration-helpers.c. In order to split migration-test.c
+>> into separate test binaries, these helpers need to go somewhere
+>> else.
 >>=20
->> Remove the "test" prefix from everything that is not a test.
+>> To avoid making migration-helpers even larger, move all QMP-related
+>> functions into a new migration-qmp.c file and put it under the
+>> qtest/migration/ directory.
 >>=20
->> In order to still keep some namespacing, stick to the "migrate_"
->> prefix, which is the most used currently.
+>> The new file holds everything that has as its main responsibility to
+>> call into QMP.
 >>=20
 >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 >> ---
->> note: I would prefer the prefix "mig_" to avoid using "migrate_" which
->> is a verb, but several functions such as migrate_qmp() would have to
->> be given an entirely new name to keep expressiveness and I want to
->> keep this a mechanical change.
->> ---
->>  tests/qtest/migration-test.c | 410 +++++++++++++++++------------------
->>  1 file changed, 205 insertions(+), 205 deletions(-)
->>=20
->> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
->> index 04890e0479..a40451df1e 100644
->> --- a/tests/qtest/migration-test.c
->> +++ b/tests/qtest/migration-test.c
+>>  tests/qtest/meson.build                |   1 +
+>>  tests/qtest/migration-helpers.c        | 250 +------------
+>>  tests/qtest/migration-helpers.h        |  18 +-
+>>  tests/qtest/migration-test.c           | 237 +-----------
+>>  tests/qtest/migration/migration-qmp.c  | 485 +++++++++++++++++++++++++
+>>  tests/qtest/migration/migration-util.h |  45 +++
 >
->> @@ -919,9 +919,9 @@ struct TestMigrateTLSPSKData {
->>  };
->>=20=20
->>  static void *
->> -test_migrate_tls_psk_start_common(QTestState *from,
->> -                                  QTestState *to,
->> -                                  bool mismatch)
->> +migrate_tls_psk_start_common(QTestState *from,
->> +                             QTestState *to,
->> +                             bool mismatch)
->>  {
->>      struct TestMigrateTLSPSKData *data =3D
->>          g_new0(struct TestMigrateTLSPSKData, 1);
->> @@ -964,23 +964,23 @@ test_migrate_tls_psk_start_common(QTestState *from,
->>  }
->>=20=20
->>  static void *
->> -test_migrate_tls_psk_match_start(QTestState *from,
->> -                                 QTestState *to)
->> +migrate_tls_psk_match_start(QTestState *from,
->> +                            QTestState *to)
->
-> My inclination is usually to go from most general, to
-> most specific, left-to-right. I think it is also worth
-> distinguishing these functions as hooks, which would
-> suggest:
->
->   migrate_hook_start_psk_match
->
-> That makes it easy to identify all hooks by grepping
-> for 'migrate_hook', or identify all start hooks by
-> grepping 'migrate_hook_start', or all PSK start
-> hooks with 'migrate_hook_star_psk'.
+> I would have expected the header to be named 'migration-qmp.h' to match
+> the source file naming, and not merge all of migration-helpers.h into
+> it in the next patch which seems to partially defeat the point of splitti=
+ng
+> up the files.
 >
 
-Sure, I don't have a preference, as long as it's consistent.
-
->
-> With regards,
-> Daniel
+Ok, I can change that.
 
