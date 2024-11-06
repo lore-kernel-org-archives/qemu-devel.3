@@ -4,143 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F8ED59F53
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17B08D59F52
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8jWD-0004NX-Sr; Wed, 06 Nov 2024 12:08:34 -0500
+	id 1t8jXM-0004kV-Ky; Wed, 06 Nov 2024 12:09:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8jW9-0004N9-P8
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:08:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8jW7-0004Ud-Iu
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:08:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730912905;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9SnXJEUqjhd2sk8dQqacGSR71fczahbE7jhMuVyslZY=;
- b=ipIvEx7OmO1mrmh82Fp0IIOsNTDHl1jgg0WcC8Qn2oPHx/01LSH/JjEc5ZRgSNLiLgGdvM
- Ti6BLPAYGMrIIkldaZmYjfNSgpOU1ZiZ15rpGu3Jaq/TPkGBj1inKM17Z3YxEFBFyfhi3y
- DRwYjkvfbBStjkTIK4RXu5RHBbojl/A=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-eC6arVoNOU6nGWLNb8Y4yA-1; Wed, 06 Nov 2024 12:08:24 -0500
-X-MC-Unique: eC6arVoNOU6nGWLNb8Y4yA-1
-X-Mimecast-MFC-AGG-ID: eC6arVoNOU6nGWLNb8Y4yA
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4315f48bd70so195005e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:08:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8jXL-0004fM-2b
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:09:43 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8jXJ-0004Z4-9n
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:09:42 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43168d9c6c9so213725e9.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:09:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730912978; x=1731517778; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rxvyr7YLNSV95iSHc4+IrcMEjKmsBzFU/HpuuURz0hM=;
+ b=tf4Eum9npmRKXNV1i9KyayxKg9LU9YEqAlMl1TjsFi8ph6OIrTIpjARJI8XrTPrLy0
+ 0mbTRNWoRT4qY9ex7LvJjgsFs9bjaGOgNkVra7alDD7vPGdPwLgSFNoTyAFXXGsD/usB
+ XmAqqFnG5cydMUZHifByzYYrJ2sk6QFLbKDghBkO9uLUFgF7+AtSWsJtL0Q76L0fUmFn
+ 365euUsE25oeLJPVTCWO3xMg+9+HwuTYoMH0Z/u1WYNJMrHGyiFfXAYPccYK5wn/zz/H
+ LYvMNFsM12PjZItZ234aZHy+WtTX9iHwIKPjaPtomxrgtCOHg0HsX7vlCp+0NhUl+MlP
+ Xg/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730912903; x=1731517703;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1730912978; x=1731517778;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9SnXJEUqjhd2sk8dQqacGSR71fczahbE7jhMuVyslZY=;
- b=u1ng5QhCKBshffLN+xlDKbofYVQMAiP9asuoA9spxIi7ucve0AzXLygTOACLb9JPFb
- V55hZR1tDVuUVq1Id6M/Dbsk4BVMeAAiMQ3+svis/OcaNJH25EihT7NywdyYQRN0rlZv
- R8Quw/9B0dVrJGCvyWdTCdbRBU0pDID+HOCDFO77xGceTLRtTAJvn2HYL79DG0AoEgHf
- lwFfDOZrESXUKppGPJQIrEC4eugJCtxI6DcwjXoaztJP932KxTod56lYVoHrZgrKhXab
- df6HKDBPyHugyaPoYLz5F9sbzuDgLvMIF7nrztUMfrZyfB8sJsTExvMomK0PwSmGWvJa
- l3Eg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUOaTHmAZGSQlYUDyuQlnI5G85mlCfVniT5p9oUgO1UK3u6/cqRydVqRPUNn/3ezJ9d/W0btjT9zBAp@nongnu.org
-X-Gm-Message-State: AOJu0YwDmuUiWK2OlS55w1OjVIHg2wvEnupq+OXaJwthG42h25MvQtLX
- i4bc3tO/HbRKukMFQMWXhLnUAXq0umlZHSYSYohlrbad3zHIBFimw+ZFJHu1hecRcIup5r54bkU
- 7Zmx9o1Z+Xr1IZcip9MwIY9CDdhTWoJ+rmqww5RKBKkrm50adwNnD
-X-Received: by 2002:a05:600c:4511:b0:42c:bd4d:e8ba with SMTP id
- 5b1f17b1804b1-4327b6f953dmr212351255e9.8.1730912903230; 
- Wed, 06 Nov 2024 09:08:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFfdRD5BDQv+BchFpGD0AMM1v41hHBsv5872fLqNzSUoW9ZOzA6cesegO43vO+bN5ghqwx9OQ==
-X-Received: by 2002:a05:600c:4511:b0:42c:bd4d:e8ba with SMTP id
- 5b1f17b1804b1-4327b6f953dmr212350985e9.8.1730912902842; 
- Wed, 06 Nov 2024 09:08:22 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c113e068sm19639405f8f.71.2024.11.06.09.08.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Nov 2024 09:08:22 -0800 (PST)
-Message-ID: <e41ee3ff-8b7a-43b3-8795-52dcc094ca79@redhat.com>
-Date: Wed, 6 Nov 2024 18:08:20 +0100
+ bh=rxvyr7YLNSV95iSHc4+IrcMEjKmsBzFU/HpuuURz0hM=;
+ b=kSDMICixRzB8mU9DIHU4688xsV0lFNp1keGVrN7ljAL+pEyhM1B7gtMaMO8PABoZMz
+ PnsBtwE9zZ9quhdDs7UTmqtasusKEusmpmkIL502Ij/xxCMv/1IWnTlr02R5LVEZWpd6
+ qn/nfIQxqg0ywgpcyhFMJ0KYFoGolFB+UDO7JtmZhIRG/ejldbsXB3JhzuMhQxmHqRAl
+ YuW3gO+gcSHbm+I3R0Gyekg6b4bPp+ZPxR0ZoW7gByhYKowLlhPkYfYUMRqduKOuAxkz
+ mL9hEk4qLZlchHOq3bcVWViY6057oBeQhZyjfh/nUgw+ljNMD62YSdGgkTq/0WDcL1oc
+ GjBQ==
+X-Gm-Message-State: AOJu0YyyDI21/YjzRtaTjPPuguYO3LBup6+ysHiyrcXbePoHPlv+ooFs
+ 6ECX/Kg8wXWMrWwtYkYitCFXoXNOKpw7OQIon/BI6DrGpSpSZb3J7I6kWRJ2LN1z45yG/gK8/Py
+ L+oUCPM8r
+X-Google-Smtp-Source: AGHT+IG5PK9opnjQgBCyzEBd10z5fzem05OmDIRLqYOAzP6c2WwzcX7khyvhLs9WSxFQsAX76TncIQ==
+X-Received: by 2002:a05:600c:1390:b0:431:5d4f:73a3 with SMTP id
+ 5b1f17b1804b1-4319acb226amr355344995e9.18.1730912978534; 
+ Wed, 06 Nov 2024 09:09:38 -0800 (PST)
+Received: from linaro.. ([193.32.126.165]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432aa6b2d13sm28918935e9.12.2024.11.06.09.09.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Nov 2024 09:09:38 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH v3 0/3] plugins: generate list of symbols automatically
+Date: Wed,  6 Nov 2024 09:09:20 -0800
+Message-Id: <20241106170923.2976750-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/14] s390x: introduce s390_get_memory_limit()
-To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Heiko Carstens <hca@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
-References: <20241008105455.2302628-1-david@redhat.com>
- <20241008105455.2302628-7-david@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241008105455.2302628-7-david@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,18 +95,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/10/2024 12.54, David Hildenbrand wrote:
-> Let's add s390_get_memory_limit(), to query what has been successfully
-> set via s390_set_memory_limit(). Allow setting the limit only once.
-> 
-> We'll remember the limit in the machine state. Move
-> s390_set_memory_limit() to machine code, merging it into
-> set_memory_limit(), because this really is a machine property.
-> 
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> Signed-off-by: David Hildenbrand <david@redhat.com>
-> ---
+Now that meson build for plugins was merged, we can cleanup another part with
+the symbols file.
+It has to be kept in sync between the header (qemu-plugin.h) and the symbols
+file. This has proved to be error prone and tedious.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+We solve this by generating this list from header directly using a python
+script. Dependencies are triggered correctly, and the file is regenerated if the
+header is modified, as expected.
+
+Pierrick Bouvier (3):
+  plugins: add missing export for qemu_plugin_num_vcpus
+  plugins: detect qemu plugin API symbols from header
+  plugins: eradicate qemu-plugins.symbols static file
+
+ MAINTAINERS                    |  1 +
+ include/qemu/qemu-plugin.h     |  1 +
+ plugins/meson.build            | 12 +++++--
+ plugins/qemu-plugins.symbols   | 59 ----------------------------------
+ scripts/qemu-plugin-symbols.py | 45 ++++++++++++++++++++++++++
+ 5 files changed, 56 insertions(+), 62 deletions(-)
+ delete mode 100644 plugins/qemu-plugins.symbols
+ create mode 100755 scripts/qemu-plugin-symbols.py
+
+-- 
+2.39.5
 
 
