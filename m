@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219D5D29FAF
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 07:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6082D29FAF
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 07:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8aLB-0007VH-NO; Wed, 06 Nov 2024 02:20:33 -0500
+	id 1t8aMZ-0000T0-C7; Wed, 06 Nov 2024 02:21:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t8aLA-0007Sp-4t
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 02:20:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t8aL6-0007dc-D3
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 02:20:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730877624;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yWFwvOlyH6K6JITpy++vRurgHpvJM/Pup3QsymDL3AU=;
- b=dKNvejdib7XLnaRuj1A2g52xk5+Ayh/14g3iuNNd9opODFCZELNL9rJiLhdRLQXHg0f/ET
- rMjxaJVhMIqJMUcxmP0gPyM7iScUTCIlwBERgzUut6aKWWkePqutZt8Wz6ZMHZo/1kUKpW
- 2oZuQEcoP14dg5iTAx0liWvxlT7MW8g=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-613-GYRQ0wZzMo2PFOBAXBDR7w-1; Wed, 06 Nov 2024 02:20:23 -0500
-X-MC-Unique: GYRQ0wZzMo2PFOBAXBDR7w-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-539f5f33333so4538136e87.1
- for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 23:20:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t8aMU-0000RF-OP
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 02:21:55 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t8aMR-0007wa-47
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 02:21:54 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-720b2d8bcd3so5156843b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Nov 2024 23:21:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1730877709; x=1731482509;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XKmKFYGHD7xst0xrSosJ/33bAIzSCk8OdDBP1dPm7nE=;
+ b=b8eGYmKJ7vy2/8usX7iZ0W6SYL19O2AMZq7+U8cY4nfUnz0QFG8udv2eYT1w5zbJrl
+ Q0W3hCl9ghjpAj3DIu4qixiiXsC2jj/lN0m/ch8u40PpNvhN9x3qhFix9Ggpgeke6vX/
+ fBX2zVtRaw0IZFRKoKdqS7Zz5gImRAgE9Bzvxloj4G74344glMsv3+UczBK5p3Mpv98E
+ QwWyyPyMDwmP62zxjFth8U9QziTsxIISGU3ny7mhTt1sl9Ex1i1AAniwvVUk0zwB5w3v
+ e39+f3npmAg5+fUJqUoIfWY6/5tgFRBz1G5rmC48XX+FV+g5DKsUtWlmrGC3qhJXs3YF
+ vszw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730877622; x=1731482422;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1730877709; x=1731482509;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yWFwvOlyH6K6JITpy++vRurgHpvJM/Pup3QsymDL3AU=;
- b=H6liI37Y1YMgW32GEhnYdYoTBi/nxVzLzUxsoK8rCnDl9wMXf+GRvEQUeyLoTpyKt4
- IYZ3BLE5LkmXYbs+Vh+QunbvEZieQXx3dChIgCCQ34RCh2xn+MvANOyRRnvx86sLy77r
- VUjM3mV7mCZsmkDw6ykT/BjiXKVn2gq1NDChKaRalmQ/b1v06UBZxAuP+LcluYW266VL
- pOoaSlubgXXBo8rJusZUSiqIejBBLxNzvxvsn1X7lEpxR/gYDsJ01TA6A4Vz5FpPgfpn
- loCbMVHkCzlSm8OJVPViK5HVLDW28pk0iVIt2w84dV1v15jlyJPmAxhTz4dfPiX9kBuV
- +zcw==
-X-Gm-Message-State: AOJu0Ywu6wF6kHruy0Ll1efkl4A6I76JXfCNbNTsaDuVCZL5DKZS7Q7J
- d5vXANnPVuZvzMOuBa1QZN3FdFPxVyvMbSaRLa2YFwx80EXLeQSKKYVXXkeMV/CB3iYkgFktG2j
- 4GedZy8AiFeXq22lE+z+KtuhMmGP9yKphFernH88ek5t/1bFQsulR
-X-Received: by 2002:a05:6512:31c3:b0:53b:1526:3a63 with SMTP id
- 2adb3069b0e04-53d65e26c49mr8624666e87.56.1730877621798; 
- Tue, 05 Nov 2024 23:20:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEsFzgTxJFTfNPDMPd4UL/zUCtIKejgaet2qZXx0LtH1Sd6WUTTLE1S3m3SVgM/n+jEvyfdAQ==
-X-Received: by 2002:a05:6512:31c3:b0:53b:1526:3a63 with SMTP id
- 2adb3069b0e04-53d65e26c49mr8624639e87.56.1730877621307; 
- Tue, 05 Nov 2024 23:20:21 -0800 (PST)
-Received: from redhat.com ([2a02:14f:178:e74:5fcf:8a69:659d:f2b2])
+ bh=XKmKFYGHD7xst0xrSosJ/33bAIzSCk8OdDBP1dPm7nE=;
+ b=S6uG745PRE+LzwnTDMWmGyw6hUUwt9AV73SlMAtm+H69pR0bWeucL8bErGo+Fxr86P
+ OkLmWcb8fLvRvEsyAmMQaVPnxmrVCozfIUSr9VzDVF1Nzoq2PWVe8IoXQ2YMutwXfIH8
+ TMxDefvn5eE60GNLYm5qrV1OONCr++Ea989dv5PCXxs51jkWVN5OQwwk/ztA97CokeJH
+ 0uPmkp+MCnF6OXb0vjiWvf5Mofp2ZukZ6w4M4neWACRydnRBDNCr0kfGnE1x7I8OS4oq
+ DlZODKo5LAzvAwCyGjptaVujYwK9iss2H/gdgkPOZJDkgUF8KkQb5Iuh5QMcEyVIRv58
+ 3nFg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX/Oiem4npdlNpwpBV4/C/aRLh/GKfBS6579EPvEMp5E/2RgByeSkBUHR13gSYawReo4CrCJwdoR4my@nongnu.org
+X-Gm-Message-State: AOJu0Yz6ZYz0S/Emv7ibyP3F9Itt06ZJMwzlFrYPlhen+fJnwpBFcSoO
+ dvJKr5ytJo8+kYpSQMDfGkyUfgIiqtmCQtaY+Mjm9U4OaSiYCILQA2+TnILWOPI=
+X-Google-Smtp-Source: AGHT+IGYX1fF7WQDFjuBprfS3j5ChoLJ45ZE3+LJaCNeKQFfbXPM7mdW1P/jM3QBBNqMexc6TTuo4Q==
+X-Received: by 2002:a05:6a00:3993:b0:71e:7cb2:57e7 with SMTP id
+ d2e1a72fcca58-72062fb83f2mr53620094b3a.10.1730877709052; 
+ Tue, 05 Nov 2024 23:21:49 -0800 (PST)
+Received: from [157.82.207.107] ([157.82.207.107])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c116ad6fsm18139872f8f.98.2024.11.05.23.20.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Nov 2024 23:20:20 -0800 (PST)
-Date: Wed, 6 Nov 2024 02:20:14 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Huang, Ying" <ying.huang@intel.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Eric Blake <eblake@redhat.com>, qemu-arm@nongnu.org
-Subject: Re: [PULL 12/65] hw/acpi: Generic Port Affinity Structure support
-Message-ID: <20241106022000-mutt-send-email-mst@kernel.org>
-References: <cover.1730754238.git.mst@redhat.com>
- <a82fe82916432091ca6fcbd7f357cccf35f6e80d.1730754238.git.mst@redhat.com>
- <ZyngEiwmYeZ-DvCy@redhat.com>
+ d2e1a72fcca58-720bc1b8941sm11038697b3a.41.2024.11.05.23.21.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Nov 2024 23:21:48 -0800 (PST)
+Message-ID: <ee16cbd4-6bcc-4dce-b3b4-a3c5bda2b8cd@daynix.com>
+Date: Wed, 6 Nov 2024 16:21:42 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 10/15] hw/vmapple/aes: Introduce aes engine
+To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
+ rad@semihalf.com, quic_llindhol@quicinc.com, stefanha@redhat.com,
+ mst@redhat.com, slp@redhat.com, richard.henderson@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, gaosong@loongson.cn,
+ jiaxun.yang@flygoat.com, chenhuacai@kernel.org, kwolf@redhat.com,
+ hreitz@redhat.com, philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
+ marcandre.lureau@redhat.com, berrange@redhat.com, qemu-arm@nongnu.org,
+ qemu-block@nongnu.org, qemu-riscv@nongnu.org,
+ Alexander Graf <graf@amazon.com>
+References: <20241105153022.91101-1-phil@philjordan.eu>
+ <20241105153022.91101-11-phil@philjordan.eu>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20241105153022.91101-11-phil@philjordan.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZyngEiwmYeZ-DvCy@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::432;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,93 +108,751 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 05, 2024 at 09:06:26AM +0000, Daniel P. Berrang� wrote:
-> On Mon, Nov 04, 2024 at 04:06:16PM -0500, Michael S. Tsirkin wrote:
-> > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > 
-> > These are very similar to the recently added Generic Initiators
-> > but instead of representing an initiator of memory traffic they
-> > represent an edge point beyond which may lie either targets or
-> > initiators.  Here we add these ports such that they may
-> > be targets of hmat_lb records to describe the latency and
-> > bandwidth from host side initiators to the port.  A discoverable
-> > mechanism such as UEFI CDAT read from CXL devices and switches
-> > is used to discover the remainder of the path, and the OS can build
-> > up full latency and bandwidth numbers as need for work and data
-> > placement decisions.
-> > 
-> > Acked-by: Markus Armbruster <armbru@redhat.com>
-> > Tested-by: "Huang, Ying" <ying.huang@intel.com>
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > Message-Id: <20240916174122.1843197-1-Jonathan.Cameron@huawei.com>
-> > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > ---
-> >  qapi/qom.json                       |  41 ++++++++++
-> >  include/hw/acpi/aml-build.h         |   3 +
-> >  include/hw/acpi/pci.h               |   2 +-
-> >  include/hw/pci/pci_bridge.h         |   1 +
-> >  hw/acpi/aml-build.c                 |  39 ++++++++++
-> >  hw/acpi/pci.c                       | 116 +++++++++++++++++++++++++++-
-> >  hw/arm/virt-acpi-build.c            |   2 +-
-> >  hw/i386/acpi-build.c                |   2 +-
-> >  hw/pci-bridge/pci_expander_bridge.c |   1 -
-> >  9 files changed, 202 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/qapi/qom.json b/qapi/qom.json
-> > index 321ccd708a..a8beeabf1f 100644
-> > --- a/qapi/qom.json
-> > +++ b/qapi/qom.json
-> > @@ -844,6 +844,45 @@
-> >    'data': { 'pci-dev': 'str',
-> >              'node': 'uint32' } }
-> >  
-> > +##
-> > +# @AcpiGenericPortProperties:
-> > +#
-> > +# Properties for acpi-generic-port objects.
-> > +#
-> > +# @pci-bus: QOM path of the PCI bus of the hostbridge associated with
-> > +#     this SRAT Generic Port Affinity Structure.  This is the same as
-> > +#     the bus parameter for the root ports attached to this host
-> > +#     bridge.  The resulting SRAT Generic Port Affinity Structure will
-> > +#     refer to the ACPI object in DSDT that represents the host bridge
-> > +#     (e.g.  ACPI0016 for CXL host bridges).  See ACPI 6.5 Section
-> > +#     5.2.16.7 for more information.
-> > +#
-> > +# @node: Similar to a NUMA node ID, but instead of providing a
-> > +#     reference point used for defining NUMA distances and access
-> > +#     characteristics to memory or from an initiator (e.g. CPU), this
-> > +#     node defines the boundary point between non-discoverable system
-> > +#     buses which must be described by firmware, and a discoverable
-> > +#     bus.  NUMA distances and access characteristics are defined to
-> > +#     and from that point.  For system software to establish full
-> > +#     initiator to target characteristics this information must be
-> > +#     combined with information retrieved from the discoverable part
-> > +#     of the path.  An example would use CDAT (see UEFI.org)
-> > +#     information read from devices and switches in conjunction with
-> > +#     link characteristics read from PCIe Configuration space.
-> > +#     To get the full path latency from CPU to CXL attached DRAM
-> > +#     CXL device:  Add the latency from CPU to Generic Port (from
-> > +#     HMAT indexed via the the node ID in this SRAT structure) to
-> > +#     that for CXL bus links, the latency across intermediate switches
-> > +#     and from the EP port to the actual memory.  Bandwidth is more
-> > +#     complex as there may be interleaving across multiple devices
-> > +#     and shared links in the path.
-> > +#
-> > +# Since: 9.1
+On 2024/11/06 0:30, Phil Dennis-Jordan wrote:
+> From: Alexander Graf <graf@amazon.com>
 > 
-> This is outdated, we're in the 9.2 dev cycle currently.
-
-
-Jonathan can you fix this up pls?
-
+> VMApple contains an "aes" engine device that it uses to encrypt and
+> decrypt its nvram. It has trivial hard coded keys it uses for that
+> purpose.
 > 
-> With regards,
-> Daniel
-> -- 
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> Add device emulation for this device model.
+> 
+> Signed-off-by: Alexander Graf <graf@amazon.com>
+> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> ---
+> 
+> v3:
+> 
+>   * Rebased on latest upstream and fixed minor breakages.
+>   * Replaced legacy device reset method with Resettable method
+> 
+> v4:
+> 
+>   * Improved logging of unimplemented functions and guest errors.
+>   * Better adherence to naming and coding conventions.
+>   * Cleaner error handling and recovery, including using g_autoptr
+> 
+> v5:
+> 
+>   * More logging improvements
+>   * Use xxx64_overflow() functions for hexdump buffer size calculations.
+> 
+> v7:
+> 
+>   * Coding style tweaks.
+> 
+>   hw/vmapple/Kconfig           |   2 +
+>   hw/vmapple/aes.c             | 578 +++++++++++++++++++++++++++++++++++
+>   hw/vmapple/meson.build       |   1 +
+>   hw/vmapple/trace-events      |  14 +
+>   include/hw/vmapple/vmapple.h |  17 ++
+>   include/qemu/cutils.h        |  15 +
+>   util/hexdump.c               |  18 ++
+>   7 files changed, 645 insertions(+)
+>   create mode 100644 hw/vmapple/aes.c
+>   create mode 100644 include/hw/vmapple/vmapple.h
+> 
+> diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
+> index 8b137891791..a73504d5999 100644
+> --- a/hw/vmapple/Kconfig
+> +++ b/hw/vmapple/Kconfig
+> @@ -1 +1,3 @@
+> +config VMAPPLE_AES
+> +    bool
+>   
+> diff --git a/hw/vmapple/aes.c b/hw/vmapple/aes.c
+> new file mode 100644
+> index 00000000000..38a6a2092ec
+> --- /dev/null
+> +++ b/hw/vmapple/aes.c
+> @@ -0,0 +1,578 @@
+> +/*
+> + * QEMU Apple AES device emulation
+> + *
+> + * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "trace.h"
+> +#include "crypto/hash.h"
+> +#include "crypto/aes.h"
+> +#include "crypto/cipher.h"
+> +#include "hw/irq.h"
+> +#include "hw/sysbus.h"
+> +#include "hw/vmapple/vmapple.h"
+> +#include "migration/vmstate.h"
+> +#include "qemu/cutils.h"
+> +#include "qemu/log.h"
+> +#include "qemu/module.h"
+> +#include "sysemu/dma.h"
+> +
+> +OBJECT_DECLARE_SIMPLE_TYPE(AESState, APPLE_AES)
+> +
+> +#define MAX_FIFO_SIZE     9
+> +
+> +#define CMD_KEY           0x1
+> +#define CMD_KEY_CONTEXT_SHIFT    27
+> +#define CMD_KEY_CONTEXT_MASK     (0x1 << CMD_KEY_CONTEXT_SHIFT)
+> +#define CMD_KEY_SELECT_MAX_IDX   0x7
+> +#define CMD_KEY_SELECT_SHIFT     24
+> +#define CMD_KEY_SELECT_MASK      (CMD_KEY_SELECT_MAX_IDX << CMD_KEY_SELECT_SHIFT)
+> +#define CMD_KEY_KEY_LEN_NUM      4u
+> +#define CMD_KEY_KEY_LEN_SHIFT    22
+> +#define CMD_KEY_KEY_LEN_MASK     ((CMD_KEY_KEY_LEN_NUM - 1u) << CMD_KEY_KEY_LEN_SHIFT)
+> +#define CMD_KEY_ENCRYPT_SHIFT    20
+> +#define CMD_KEY_ENCRYPT_MASK     (0x1 << CMD_KEY_ENCRYPT_SHIFT)
+> +#define CMD_KEY_BLOCK_MODE_SHIFT 16
+> +#define CMD_KEY_BLOCK_MODE_MASK  (0x3 << CMD_KEY_BLOCK_MODE_SHIFT)
+> +#define CMD_IV            0x2
+> +#define CMD_IV_CONTEXT_SHIFT     26
+> +#define CMD_IV_CONTEXT_MASK      (0x3 << CMD_KEY_CONTEXT_SHIFT)
+> +#define CMD_DSB           0x3
+> +#define CMD_SKG           0x4
+> +#define CMD_DATA          0x5
+> +#define CMD_DATA_KEY_CTX_SHIFT   27
+> +#define CMD_DATA_KEY_CTX_MASK    (0x1 << CMD_DATA_KEY_CTX_SHIFT)
+> +#define CMD_DATA_IV_CTX_SHIFT    25
+> +#define CMD_DATA_IV_CTX_MASK     (0x3 << CMD_DATA_IV_CTX_SHIFT)
+> +#define CMD_DATA_LEN_MASK        0xffffff
+> +#define CMD_STORE_IV      0x6
+> +#define CMD_STORE_IV_ADDR_MASK   0xffffff
+> +#define CMD_WRITE_REG     0x7
+> +#define CMD_FLAG          0x8
+> +#define CMD_FLAG_STOP_MASK       BIT(26)
+> +#define CMD_FLAG_RAISE_IRQ_MASK  BIT(27)
+> +#define CMD_FLAG_INFO_MASK       0xff
+> +#define CMD_MAX           0x10
+> +
+> +#define CMD_SHIFT         28
+> +
+> +#define REG_STATUS            0xc
+> +#define REG_STATUS_DMA_READ_RUNNING     BIT(0)
+> +#define REG_STATUS_DMA_READ_PENDING     BIT(1)
+> +#define REG_STATUS_DMA_WRITE_RUNNING    BIT(2)
+> +#define REG_STATUS_DMA_WRITE_PENDING    BIT(3)
+> +#define REG_STATUS_BUSY                 BIT(4)
+> +#define REG_STATUS_EXECUTING            BIT(5)
+> +#define REG_STATUS_READY                BIT(6)
+> +#define REG_STATUS_TEXT_DPA_SEEDED      BIT(7)
+> +#define REG_STATUS_UNWRAP_DPA_SEEDED    BIT(8)
+> +
+> +#define REG_IRQ_STATUS        0x18
+> +#define REG_IRQ_STATUS_INVALID_CMD      BIT(2)
+> +#define REG_IRQ_STATUS_FLAG             BIT(5)
+> +#define REG_IRQ_ENABLE        0x1c
+> +#define REG_WATERMARK         0x20
+> +#define REG_Q_STATUS          0x24
+> +#define REG_FLAG_INFO         0x30
+> +#define REG_FIFO              0x200
+> +
+> +static const uint32_t key_lens[CMD_KEY_KEY_LEN_NUM] = {
+> +    [0] = 16,
+> +    [1] = 24,
+> +    [2] = 32,
+> +    [3] = 64,
+> +};
+> +
+> +typedef struct Key {
+> +    uint32_t key_len;
+> +    uint8_t key[32];
+> +} Key;
+> +
+> +typedef struct IV {
+> +    uint32_t iv[4];
+> +} IV;
+> +
+> +static Key builtin_keys[CMD_KEY_SELECT_MAX_IDX + 1] = {
+> +    [1] = {
+> +        .key_len = 32,
+> +        .key = { 0x1 },
+> +    },
+> +    [2] = {
+> +        .key_len = 32,
+> +        .key = { 0x2 },
+> +    },
+> +    [3] = {
+> +        .key_len = 32,
+> +        .key = { 0x3 },
+> +    }
+> +};
+> +
+> +struct AESState {
+> +    SysBusDevice parent_obj;
+> +
+> +    qemu_irq irq;
+> +    MemoryRegion iomem1;
+> +    MemoryRegion iomem2;
+> +    AddressSpace *as;
+> +
+> +    uint32_t status;
+> +    uint32_t q_status;
+> +    uint32_t irq_status;
+> +    uint32_t irq_enable;
+> +    uint32_t watermark;
+> +    uint32_t flag_info;
+> +    uint32_t fifo[MAX_FIFO_SIZE];
+> +    uint32_t fifo_idx;
+> +    Key key[2];
+> +    IV iv[4];
+> +    bool is_encrypt;
+> +    QCryptoCipherMode block_mode;
+> +};
+> +
+> +static void aes_update_irq(AESState *s)
+> +{
+> +    qemu_set_irq(s->irq, !!(s->irq_status & s->irq_enable));
+> +}
+> +
+> +static uint64_t aes1_read(void *opaque, hwaddr offset, unsigned size)
+> +{
+> +    AESState *s = opaque;
+> +    uint64_t res = 0;
+> +
+> +    switch (offset) {
+> +    case REG_STATUS:
+> +        res = s->status;
+> +        break;
+> +    case REG_IRQ_STATUS:
+> +        res = s->irq_status;
+> +        break;
+> +    case REG_IRQ_ENABLE:
+> +        res = s->irq_enable;
+> +        break;
+> +    case REG_WATERMARK:
+> +        res = s->watermark;
+> +        break;
+> +    case REG_Q_STATUS:
+> +        res = s->q_status;
+> +        break;
+> +    case REG_FLAG_INFO:
+> +        res = s->flag_info;
+> +        break;
+> +
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP, "%s: Unknown AES MMIO offset %" PRIx64 "\n",
+> +                      __func__, offset);
+> +        break;
+> +    }
+> +
+> +    trace_aes_read(offset, res);
+> +
+> +    return res;
+> +}
+> +
+> +static void fifo_append(AESState *s, uint64_t val)
+> +{
+> +    if (s->fifo_idx == MAX_FIFO_SIZE) {
+> +        /* Exceeded the FIFO. Bail out */
+> +        return;
+> +    }
+> +
+> +    s->fifo[s->fifo_idx++] = val;
+> +}
+> +
+> +static bool has_payload(AESState *s, uint32_t elems)
+> +{
+> +    return s->fifo_idx >= (elems + 1);
+> +}
+> +
+> +static bool cmd_key(AESState *s)
+> +{
+> +    uint32_t cmd = s->fifo[0];
+> +    uint32_t key_select = (cmd & CMD_KEY_SELECT_MASK) >> CMD_KEY_SELECT_SHIFT;
+> +    uint32_t ctxt = (cmd & CMD_KEY_CONTEXT_MASK) >> CMD_KEY_CONTEXT_SHIFT;
+> +    uint32_t key_len;
+> +
+> +    switch ((cmd & CMD_KEY_BLOCK_MODE_MASK) >> CMD_KEY_BLOCK_MODE_SHIFT) {
+> +    case 0:
+> +        s->block_mode = QCRYPTO_CIPHER_MODE_ECB;
+> +        break;
+> +    case 1:
+> +        s->block_mode = QCRYPTO_CIPHER_MODE_CBC;
+> +        break;
+> +    default:
+> +        return false;
+> +    }
+> +
+> +    s->is_encrypt = cmd & CMD_KEY_ENCRYPT_MASK;
+> +    key_len = key_lens[(cmd & CMD_KEY_KEY_LEN_MASK) >> CMD_KEY_KEY_LEN_SHIFT];
+> +
+> +    if (key_select) {
+> +        trace_aes_cmd_key_select_builtin(ctxt, key_select,
+> +                                         s->is_encrypt ? "en" : "de",
+> +                                         QCryptoCipherMode_str(s->block_mode));
+> +        s->key[ctxt] = builtin_keys[key_select];
+> +    } else {
+> +        trace_aes_cmd_key_select_new(ctxt, key_len,
+> +                                     s->is_encrypt ? "en" : "de",
+> +                                     QCryptoCipherMode_str(s->block_mode));
+> +        if (key_len > sizeof(s->key[ctxt].key)) {
+> +            return false;
+> +        }
+> +        if (!has_payload(s, key_len / sizeof(uint32_t))) {
+> +            /* wait for payload */
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: No payload\n", __func__);
+> +            return false;
+> +        }
+> +        memcpy(&s->key[ctxt].key, &s->fifo[1], key_len);
+> +        s->key[ctxt].key_len = key_len;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +static bool cmd_iv(AESState *s)
+> +{
+> +    uint32_t cmd = s->fifo[0];
+> +    uint32_t ctxt = (cmd & CMD_IV_CONTEXT_MASK) >> CMD_IV_CONTEXT_SHIFT;
+> +
+> +    if (!has_payload(s, 4)) {
+> +        /* wait for payload */
+> +        return false;
+> +    }
+> +    memcpy(&s->iv[ctxt].iv, &s->fifo[1], sizeof(s->iv[ctxt].iv));
+> +    trace_aes_cmd_iv(ctxt, s->fifo[1], s->fifo[2], s->fifo[3], s->fifo[4]);
+> +
+> +    return true;
+> +}
+> +
+> +static void dump_data(const char *desc, const void *p, size_t len)
+> +{
+> +    static const size_t MAX_LEN = 0x1000;
+> +    char hex[MAX_LEN * 2 + 1] = "";
+> +
+> +    if (len > MAX_LEN) {
+> +        return;
+> +    }
+> +
+> +    qemu_hexdump_to_buffer(hex, sizeof(hex), p, len);
+> +    trace_aes_dump_data(desc, hex);
+> +}
+> +
+> +static bool cmd_data(AESState *s)
+> +{
+> +    uint32_t cmd = s->fifo[0];
+> +    uint32_t ctxt_iv = 0;
+> +    uint32_t ctxt_key = (cmd & CMD_DATA_KEY_CTX_MASK) >> CMD_DATA_KEY_CTX_SHIFT;
+> +    uint32_t len = cmd & CMD_DATA_LEN_MASK;
+> +    uint64_t src_addr = s->fifo[2];
+> +    uint64_t dst_addr = s->fifo[3];
+> +    QCryptoCipherAlgo alg;
+> +    g_autoptr(QCryptoCipher) cipher = NULL;
+> +    g_autoptr(GByteArray) src = NULL;
+> +    g_autoptr(GByteArray) dst = NULL;
+> +    MemTxResult r;
+> +
+> +    src_addr |= ((uint64_t)s->fifo[1] << 16) & 0xffff00000000ULL;
+> +    dst_addr |= ((uint64_t)s->fifo[1] << 32) & 0xffff00000000ULL;
+> +
+> +    trace_aes_cmd_data(ctxt_key, ctxt_iv, src_addr, dst_addr, len);
+> +
+> +    if (!has_payload(s, 3)) {
+> +        /* wait for payload */
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: No payload\n", __func__);
+> +        return false;
+> +    }
+> +
+> +    if (ctxt_key >= ARRAY_SIZE(s->key) ||
+> +        ctxt_iv >= ARRAY_SIZE(s->iv)) {
+> +        /* Invalid input */
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid key or iv\n", __func__);
+> +        return false;
+> +    }
+> +
+> +    src = g_byte_array_sized_new(len);
+> +    g_byte_array_set_size(src, len);
+> +    dst = g_byte_array_sized_new(len);
+> +    g_byte_array_set_size(dst, len);
+> +
+> +    r = dma_memory_read(s->as, src_addr, src->data, len, MEMTXATTRS_UNSPECIFIED);
+> +    if (r != MEMTX_OK) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: DMA read of %"PRIu32" bytes "
+> +                      "from 0x%"PRIx64" failed. (r=%d)\n",
+> +                      __func__, len, src_addr, r);
+> +        return false;
+> +    }
+> +
+> +    dump_data("cmd_data(): src_data=", src->data, len);
+> +
+> +    switch (s->key[ctxt_key].key_len) {
+> +    case 128 / 8:
+> +        alg = QCRYPTO_CIPHER_ALGO_AES_128;
+> +        break;
+> +    case 192 / 8:
+> +        alg = QCRYPTO_CIPHER_ALGO_AES_192;
+> +        break;
+> +    case 256 / 8:
+> +        alg = QCRYPTO_CIPHER_ALGO_AES_256;
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid key length\n", __func__);
+> +        return false;
+> +    }
+> +    cipher = qcrypto_cipher_new(alg, s->block_mode,
+> +                                s->key[ctxt_key].key,
+> +                                s->key[ctxt_key].key_len, NULL);
+> +    if (!cipher) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Failed to create cipher object\n",
+> +                      __func__);
+> +        return false;
+> +    }
+> +    if (s->block_mode != QCRYPTO_CIPHER_MODE_ECB) {
+> +        if (qcrypto_cipher_setiv(cipher, (void *)s->iv[ctxt_iv].iv,
+> +                                 sizeof(s->iv[ctxt_iv].iv), NULL) != 0) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Failed to set IV\n", __func__);
+> +            return false;
+> +        }
+> +    }
+> +    if (s->is_encrypt) {
+> +        if (qcrypto_cipher_encrypt(cipher, src->data, dst->data, len, NULL) != 0) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Encryption failed\n", __func__);
+> +            return false;
+> +        }
+> +    } else {
+> +        if (qcrypto_cipher_decrypt(cipher, src->data, dst->data, len, NULL) != 0) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Decryption failed\n", __func__);
+> +            return false;
+> +        }
+> +    }
+> +
+> +    dump_data("cmd_data(): dst_data=", dst->data, len);
+> +    r = dma_memory_write(s->as, dst_addr, dst->data, len, MEMTXATTRS_UNSPECIFIED);
+> +    if (r != MEMTX_OK) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: DMA write of %"PRIu32" bytes "
+> +                      "to 0x%"PRIx64" failed. (r=%d)\n",
+> +                      __func__, len, src_addr, r);
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +static bool cmd_store_iv(AESState *s)
+> +{
+> +    uint32_t cmd = s->fifo[0];
+> +    uint32_t ctxt = (cmd & CMD_IV_CONTEXT_MASK) >> CMD_IV_CONTEXT_SHIFT;
+> +    uint64_t addr = s->fifo[1];
+> +
+> +    if (!has_payload(s, 1)) {
+> +        /* wait for payload */
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: No payload\n", __func__);
+> +        return false;
+> +    }
+> +
+> +    if (ctxt >= ARRAY_SIZE(s->iv)) {
+> +        /* Invalid context selected */
+
+Let's convert this comment into LOG_GUEST_ERROR.
+
+> +        return false;
+> +    }
+> +
+> +    addr |= ((uint64_t)cmd << 32) & 0xff00000000ULL;
+> +    cpu_physical_memory_write(addr, &s->iv[ctxt].iv, sizeof(s->iv[ctxt].iv));
+> +
+> +    trace_aes_cmd_store_iv(ctxt, addr, s->iv[ctxt].iv[0], s->iv[ctxt].iv[1],
+> +                           s->iv[ctxt].iv[2], s->iv[ctxt].iv[3]);
+> +
+> +    return true;
+> +}
+> +
+> +static bool cmd_flag(AESState *s)
+> +{
+> +    uint32_t cmd = s->fifo[0];
+> +    uint32_t raise_irq = cmd & CMD_FLAG_RAISE_IRQ_MASK;
+> +
+> +    /* We always process data when it's coming in, so fire an IRQ immediately */
+> +    if (raise_irq) {
+> +        s->irq_status |= REG_IRQ_STATUS_FLAG;
+> +    }
+> +
+> +    s->flag_info = cmd & CMD_FLAG_INFO_MASK;
+> +
+> +    trace_aes_cmd_flag(!!raise_irq, s->flag_info);
+> +
+> +    return true;
+> +}
+> +
+> +static void fifo_process(AESState *s)
+> +{
+> +    uint32_t cmd = s->fifo[0] >> CMD_SHIFT;
+> +    bool success = false;
+> +
+> +    if (!s->fifo_idx) {
+> +        return;
+> +    }
+> +
+> +    switch (cmd) {
+> +    case CMD_KEY:
+> +        success = cmd_key(s);
+> +        break;
+> +    case CMD_IV:
+> +        success = cmd_iv(s);
+> +        break;
+> +    case CMD_DATA:
+> +        success = cmd_data(s);
+> +        break;
+> +    case CMD_STORE_IV:
+> +        success = cmd_store_iv(s);
+> +        break;
+> +    case CMD_FLAG:
+> +        success = cmd_flag(s);
+> +        break;
+> +    default:
+> +        s->irq_status |= REG_IRQ_STATUS_INVALID_CMD;
+> +        break;
+> +    }
+> +
+> +    if (success) {
+> +        s->fifo_idx = 0;
+> +    }
+> +
+> +    trace_aes_fifo_process(cmd, success ? 1 : 0);
+> +}
+> +
+> +static void aes1_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+> +{
+> +    AESState *s = opaque;
+> +
+> +    trace_aes_write(offset, val);
+> +
+> +    switch (offset) {
+> +    case REG_IRQ_STATUS:
+> +        s->irq_status &= ~val;
+> +        break;
+> +    case REG_IRQ_ENABLE:
+> +        s->irq_enable = val;
+> +        break;
+> +    case REG_FIFO:
+> +        fifo_append(s, val);
+> +        fifo_process(s);
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "%s: Unknown AES MMIO offset %"PRIx64", data %"PRIx64"\n",
+> +                      __func__, offset, val);
+> +        return;
+> +    }
+> +
+> +    aes_update_irq(s);
+> +}
+> +
+> +static const MemoryRegionOps aes1_ops = {
+> +    .read = aes1_read,
+> +    .write = aes1_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 8,
+> +    },
+> +    .impl = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 4,
+> +    },
+> +};
+> +
+> +static uint64_t aes2_read(void *opaque, hwaddr offset, unsigned size)
+> +{
+> +    uint64_t res = 0;
+> +
+> +    switch (offset) {
+> +    case 0:
+> +        res = 0;
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "%s: Unknown AES MMIO 2 offset %"PRIx64"\n",
+> +                      __func__, offset);
+> +        break;
+> +    }
+> +
+> +    trace_aes_2_read(offset, res);
+> +
+> +    return res;
+> +}
+> +
+> +static void aes2_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+> +{
+> +    trace_aes_2_write(offset, val);
+> +
+> +    switch (offset) {
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "%s: Unknown AES MMIO 2 offset %"PRIx64", data %"PRIx64"\n",
+> +                      __func__, offset, val);
+> +        return;
+> +    }
+> +}
+> +
+> +static const MemoryRegionOps aes2_ops = {
+> +    .read = aes2_read,
+> +    .write = aes2_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 8,
+> +    },
+> +    .impl = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 4,
+> +    },
+> +};
+> +
+> +static void aes_reset(Object *obj, ResetType type)
+> +{
+> +    AESState *s = APPLE_AES(obj);
+> +
+> +    s->status = 0x3f80;
+> +    s->q_status = 2;
+> +    s->irq_status = 0;
+> +    s->irq_enable = 0;
+> +    s->watermark = 0;
+> +}
+> +
+> +static void aes_init(Object *obj)
+> +{
+> +    AESState *s = APPLE_AES(obj);
+> +
+> +    memory_region_init_io(&s->iomem1, obj, &aes1_ops, s, TYPE_APPLE_AES, 0x4000);
+> +    memory_region_init_io(&s->iomem2, obj, &aes2_ops, s, TYPE_APPLE_AES, 0x4000);
+> +    sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->iomem1);
+> +    sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->iomem2);
+> +    sysbus_init_irq(SYS_BUS_DEVICE(s), &s->irq);
+> +    s->as = &address_space_memory;
+> +}
+> +
+> +static void aes_class_init(ObjectClass *klass, void *data)
+> +{
+> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
+> +
+> +    rc->phases.hold = aes_reset;
+> +}
+> +
+> +static const TypeInfo aes_info = {
+> +    .name          = TYPE_APPLE_AES,
+> +    .parent        = TYPE_SYS_BUS_DEVICE,
+> +    .instance_size = sizeof(AESState),
+> +    .class_init    = aes_class_init,
+> +    .instance_init = aes_init,
+> +};
+> +
+> +static void aes_register_types(void)
+> +{
+> +    type_register_static(&aes_info);
+> +}
+> +
+> +type_init(aes_register_types)
+> diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
+> index e69de29bb2d..bcd4dcb28d2 100644
+> --- a/hw/vmapple/meson.build
+> +++ b/hw/vmapple/meson.build
+> @@ -0,0 +1 @@
+> +system_ss.add(when: 'CONFIG_VMAPPLE_AES',  if_true: files('aes.c'))
+> diff --git a/hw/vmapple/trace-events b/hw/vmapple/trace-events
+> index 9ccc5790487..fbbef40eac0 100644
+> --- a/hw/vmapple/trace-events
+> +++ b/hw/vmapple/trace-events
+> @@ -1,2 +1,16 @@
+>   # See docs/devel/tracing.rst for syntax documentation.
+>   
+> +# aes.c
+> +aes_read(uint64_t offset, uint64_t res) "offset=0x%"PRIx64" res=0x%"PRIx64
+> +aes_cmd_key_select_builtin(uint32_t ctx, uint32_t key_id, const char *direction, const char *cipher) "[%d] Selecting builtin key %d to %scrypt with %s"
+> +aes_cmd_key_select_new(uint32_t ctx, uint32_t key_len, const char *direction, const char *cipher) "[%d] Selecting new key size=%d to %scrypt with %s"
+> +aes_cmd_iv(uint32_t ctx, uint32_t iv0, uint32_t iv1, uint32_t iv2, uint32_t iv3) "[%d] 0x%08x 0x%08x 0x%08x 0x%08x"
+> +aes_cmd_data(uint32_t key, uint32_t iv, uint64_t src, uint64_t dst, uint32_t len) "[key=%d iv=%d] src=0x%"PRIx64" dst=0x%"PRIx64" len=0x%x"
+> +aes_cmd_store_iv(uint32_t ctx, uint64_t addr, uint32_t iv0, uint32_t iv1, uint32_t iv2, uint32_t iv3) "[%d] addr=0x%"PRIx64"x -> 0x%08x 0x%08x 0x%08x 0x%08x"
+> +aes_cmd_flag(uint32_t raise, uint32_t flag_info) "raise=%d flag_info=0x%x"
+> +aes_fifo_process(uint32_t cmd, uint32_t success) "cmd=%d success=%d"
+> +aes_write(uint64_t offset, uint64_t val) "offset=0x%"PRIx64" val=0x%"PRIx64
+> +aes_2_read(uint64_t offset, uint64_t res) "offset=0x%"PRIx64" res=0x%"PRIx64
+> +aes_2_write(uint64_t offset, uint64_t val) "offset=0x%"PRIx64" val=0x%"PRIx64
+> +aes_dump_data(const char *desc, const char *hex) "%s%s"
+> +
+> diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
+> new file mode 100644
+> index 00000000000..6762b6c869f
+> --- /dev/null
+> +++ b/include/hw/vmapple/vmapple.h
+> @@ -0,0 +1,17 @@
+> +/*
+> + * Devices specific to the VMApple machine type
+> + *
+> + * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_VMAPPLE_VMAPPLE_H
+> +#define HW_VMAPPLE_VMAPPLE_H
+> +
+> +#define TYPE_APPLE_AES "apple-aes"
+> +
+> +#endif /* HW_VMAPPLE_VMAPPLE_H */
+> diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
+> index 34a9b9b2204..36c68ce86c5 100644
+> --- a/include/qemu/cutils.h
+> +++ b/include/qemu/cutils.h
+> @@ -302,4 +302,19 @@ GString *qemu_hexdump_line(GString *str, const void *buf, size_t len,
+>   void qemu_hexdump(FILE *fp, const char *prefix,
+>                     const void *bufptr, size_t size);
+>   
+> +/**
+> + * qemu_hexdump_to_buffer:
+> + * @buffer: output string buffer
+> + * @buffer_size: amount of available space in buffer. Must be at least
+> + *               data_size*2+1.
+> + * @data: input bytes
+> + * @data_size: number of bytes in data
+> + *
+> + * Converts the @data_size bytes in @data into hex digit pairs, writing them to
+> + * @buffer. Finally, a nul terminating character is written; @buffer therefore
+> + * needs space for (data_size*2+1) chars.
+> + */
+> +void qemu_hexdump_to_buffer(char *restrict buffer, size_t buffer_size,
+> +                            const uint8_t *restrict data, size_t data_size);
+> +
+>   #endif
+> diff --git a/util/hexdump.c b/util/hexdump.c
+> index ae0d4992dcf..f29ffceb746 100644
+> --- a/util/hexdump.c
+> +++ b/util/hexdump.c
+> @@ -15,6 +15,7 @@
+>   
+>   #include "qemu/osdep.h"
+>   #include "qemu/cutils.h"
+> +#include "qemu/host-utils.h"
+>   
+>   static inline char hexdump_nibble(unsigned x)
+>   {
+> @@ -97,3 +98,20 @@ void qemu_hexdump(FILE *fp, const char *prefix,
+>       }
+>   
+>   }
+> +
+> +void qemu_hexdump_to_buffer(char *restrict buffer, size_t buffer_size,
+> +                            const uint8_t *restrict data, size_t data_size)
+> +{
+> +    size_t i;
+> +    uint64_t required_buffer_size;
+> +    bool overflow = umul64_overflow(data_size, 2, &required_buffer_size);
+> +    overflow |= uadd64_overflow(required_buffer_size, 1, &required_buffer_size);
+> +    assert(!overflow && buffer_size >= required_buffer_size);
+> +
+> +    for (i = 0; i < data_size; i++) {
+> +        uint8_t val = data[i];
+> +        *(buffer++) = hexdump_nibble(val >> 4);
+> +        *(buffer++) = hexdump_nibble(val & 0xf);
+> +    }
+> +    *buffer = '\0';
+> +}
 
 
