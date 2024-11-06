@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EC24D44D4F
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 11:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65651D44D4C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 11:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8e4A-0002gi-0N; Wed, 06 Nov 2024 06:19:14 -0500
+	id 1t8e4A-0002h9-LA; Wed, 06 Nov 2024 06:19:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1t8e46-0002em-LX; Wed, 06 Nov 2024 06:19:10 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ id 1t8e46-0002eq-M3; Wed, 06 Nov 2024 06:19:10 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1t8e43-0008FD-97; Wed, 06 Nov 2024 06:19:10 -0500
+ id 1t8e42-0008FW-TN; Wed, 06 Nov 2024 06:19:10 -0500
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:94a7:0:640:198e:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 275DB60CA0;
- Wed,  6 Nov 2024 14:19:00 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 0DAAC60B25;
+ Wed,  6 Nov 2024 14:19:01 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b49f::1:6])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id dIfYi50AYGk0-akOMQYq6; Wed, 06 Nov 2024 14:18:59 +0300
+ ESMTPSA id dIfYi50AYGk0-bpCY0Iee; Wed, 06 Nov 2024 14:19:00 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1730891939;
- bh=ebWlvUPvola7RjQFgMDCOYyzuGWnR2oAgbNYXv0Di1g=;
+ s=default; t=1730891940;
+ bh=IEOiRJGJYlcr4g0r9xJip2sYo3/kprjCQRJKg3vrrEg=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=E85lG0Rsah1BsCuT5JU/sMmciC/5LiTY9S0R90uaOBK6ziw4wt5KIJj1evH+v5vOv
- MgNhT9NgQTX3DqjRlaqWC93wGIYzzc12bV9MLR9zLtGShf5uAZR7uJYc+22PvmUrx8
- o5W3NqXpDpuJU7wXndm0IbysJgtbVkr4t1nMN5BI=
+ b=P7LBlfC4n+WavmuPTiG9ffnqidyueBYcWsn8WWK7qVlskrcFES4713lWkciG5/DzF
+ GidLSiSmNzja6UOQSp6kxZ7/jYQyBPcJpKs2W7FhqYbxoP66Up7+R/0YpaZnicGTR5
+ NKIAe2WJlYFmry18wUWyt4fcFvBCyAVn4lOEVNjw=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,17 +44,16 @@ Cc: sgarzare@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
  pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
  eblake@redhat.com, armbru@redhat.com, qemu-devel@nongnu.org,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v7 1/3] qdev-monitor: add option to report GenericError from
- find_device_state
-Date: Wed,  6 Nov 2024 14:18:35 +0300
-Message-Id: <20241106111837.115820-2-vsementsov@yandex-team.ru>
+Subject: [PATCH v7 2/3] vhost-user-blk: split vhost_user_blk_sync_config()
+Date: Wed,  6 Nov 2024 14:18:36 +0300
+Message-Id: <20241106111837.115820-3-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241106111837.115820-1-vsementsov@yandex-team.ru>
 References: <20241106111837.115820-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -78,69 +77,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Here we just prepare for the following patch, making possible to report
-GenericError as recommended.
-
-This patch doesn't aim to prevent further use of DeviceNotFound by
-future interfaces:
-
- - find_device_state() is used in blk_by_qdev_id() and qmp_get_blk()
-   functions, which may lead to spread of DeviceNotFound anyway
- - also, nothing prevent simply copy-pasting find_device_state() calls
-   with false argument
+Split vhost_user_blk_sync_config() out from
+vhost_user_blk_handle_config_change(), to be reused in the following
+commit.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Acked-by: Raphael Norwitz <raphael@enfabrica.net>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- system/qdev-monitor.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ hw/block/vhost-user-blk.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 320c47b72d..2c76cef4d8 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -885,13 +885,20 @@ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
-     object_unref(OBJECT(dev));
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 5b7f46bbb0..48b3dabb8d 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -90,27 +90,39 @@ static void vhost_user_blk_set_config(VirtIODevice *vdev, const uint8_t *config)
+     s->blkcfg.wce = blkcfg->wce;
  }
  
--static DeviceState *find_device_state(const char *id, Error **errp)
-+/*
-+ * Note that creating new APIs using error classes other than GenericError is
-+ * not recommended. Set use_generic_error=true for new interfaces.
-+ */
-+static DeviceState *find_device_state(const char *id, bool use_generic_error,
-+                                      Error **errp)
++static int vhost_user_blk_sync_config(DeviceState *dev, Error **errp)
++{
++    int ret;
++    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++    VHostUserBlk *s = VHOST_USER_BLK(vdev);
++
++    ret = vhost_dev_get_config(&s->dev, (uint8_t *)&s->blkcfg,
++                               vdev->config_len, errp);
++    if (ret < 0) {
++        return ret;
++    }
++
++    memcpy(vdev->config, &s->blkcfg, vdev->config_len);
++    virtio_notify_config(vdev);
++
++    return 0;
++}
++
+ static int vhost_user_blk_handle_config_change(struct vhost_dev *dev)
  {
-     Object *obj = object_resolve_path_at(qdev_get_peripheral(), id);
-     DeviceState *dev;
+     int ret;
+-    VirtIODevice *vdev = dev->vdev;
+-    VHostUserBlk *s = VHOST_USER_BLK(dev->vdev);
+     Error *local_err = NULL;
  
-     if (!obj) {
--        error_set(errp, ERROR_CLASS_DEVICE_NOT_FOUND,
-+        error_set(errp,
-+                  (use_generic_error ?
-+                   ERROR_CLASS_GENERIC_ERROR : ERROR_CLASS_DEVICE_NOT_FOUND),
-                   "Device '%s' not found", id);
-         return NULL;
+     if (!dev->started) {
+         return 0;
      }
-@@ -956,7 +963,7 @@ void qdev_unplug(DeviceState *dev, Error **errp)
  
- void qmp_device_del(const char *id, Error **errp)
- {
--    DeviceState *dev = find_device_state(id, errp);
-+    DeviceState *dev = find_device_state(id, false, errp);
-     if (dev != NULL) {
-         if (dev->pending_deleted_event &&
-             (dev->pending_deleted_expires_ms == 0 ||
-@@ -1076,7 +1083,7 @@ BlockBackend *blk_by_qdev_id(const char *id, Error **errp)
- 
-     GLOBAL_STATE_CODE();
- 
--    dev = find_device_state(id, errp);
-+    dev = find_device_state(id, false, errp);
-     if (dev == NULL) {
-         return NULL;
+-    ret = vhost_dev_get_config(dev, (uint8_t *)&s->blkcfg,
+-                               vdev->config_len, &local_err);
++    ret = vhost_user_blk_sync_config(DEVICE(dev->vdev), &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
+         return ret;
      }
+ 
+-    memcpy(dev->vdev->config, &s->blkcfg, vdev->config_len);
+-    virtio_notify_config(dev->vdev);
+-
+     return 0;
+ }
+ 
 -- 
 2.34.1
 
