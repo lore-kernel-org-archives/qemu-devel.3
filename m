@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA45BD44D53
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 11:45:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E89D44D57
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 11:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8eT6-0000qA-5m; Wed, 06 Nov 2024 06:45:00 -0500
+	id 1t8efo-0002Vi-1X; Wed, 06 Nov 2024 06:58:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1t8eSy-0000pO-7A
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 06:44:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t8efm-0002VZ-VF
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 06:58:06 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1t8eSv-0007f8-0Z
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 06:44:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730893485;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M0X7swszX/w9slhUhXplUUT7/P37Crj342idQArutwc=;
- b=QssBLftL1XcoCvGI1gWAvIFLJzA8FUiWEHTas50xzyPcMEh+qMfvJCGzU52x8x1ZG9wbly
- ARiLA3iU8MGUZ8izpMH2ZaxGHrmJrWOw8tLBsEfJT9qCZCmboFJrYELQPIBe3+lPxu0lNO
- r6g1KMP/upU2Nf0exj/KtQ0ekQhsq44=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-lKHYOgxbO-ClgmwkQElYVg-1; Wed, 06 Nov 2024 06:44:42 -0500
-X-MC-Unique: lKHYOgxbO-ClgmwkQElYVg-1
-X-Mimecast-MFC-AGG-ID: lKHYOgxbO-ClgmwkQElYVg
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4316e350d6aso43687185e9.3
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 03:44:42 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730893481; x=1731498281;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=M0X7swszX/w9slhUhXplUUT7/P37Crj342idQArutwc=;
- b=qo6Y8bq10spo2AH3IoWcxPm1ANs5IRJsdyj703/79GUhaWXMqEFmwFithN/KrWkwhk
- iWDg8JH9V8W/28RcqXhdIKoNarVjKRU6v1UKVgoG/+DSnCGdZlJvjXkC5d0Wr/wef4cm
- yvrC6SXazXG9VBKSod/B7P2qAN8pzHhh6sMc/etxCVpjipZuAVEryZ73cnQsp0R4fLJt
- P7OUiTWYxnivsxF1gNWNVqjBayDpVzgp8HqffQURbanFo9kiMT5QE2V1JcNSUIy8USYW
- 4I5w7QBBWIzTHD91OTkwamKP4lMkk4cybKHBtY93N71hXaGPKIEz2aNUNc27Yx8hqc7S
- sbFw==
-X-Gm-Message-State: AOJu0Yzy+IemZGcZaA5Y5YDOoj+N13jcZoX1bYSlQ6BhMhywEhqZVYIy
- 30pWwWzZoB2pMaVozkPt0OYVEyyRSvwdtWvT+1hRdxA8RGHxUirr+WD1cnrRD/0BgjmJQaN35Y7
- HPgKjV5SDIDXlrDa6x/Nxs8pJEvTOSQJvIMr4AOfmJsisk3O3FO27RUcGQh4PXqZ6HLFldguwWX
- MUCDqPchyFBVz3HTCNjFNzB4Vtp3s=
-X-Received: by 2002:a05:600c:1ca9:b0:431:50cb:2398 with SMTP id
- 5b1f17b1804b1-4328323f576mr165154265e9.2.1730893481206; 
- Wed, 06 Nov 2024 03:44:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFCKotslR6IIo1D6DNh1eCY9u1COQOHyx2Vrhw7VHB1sxQNL2qsFctqIk1X6tzkXwTd+wCjkiwgXUFJ+VZDGTc=
-X-Received: by 2002:a05:600c:1ca9:b0:431:50cb:2398 with SMTP id
- 5b1f17b1804b1-4328323f576mr165154105e9.2.1730893480895; Wed, 06 Nov 2024
- 03:44:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t8efl-0003rQ-7g
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 06:58:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=NrbAYUvFaz6ziaQvB5Q+ADf9wdcc6sEOPxr1GlMCtuk=; b=v5pKny1Mu4mcyR5hd0Xx7NYb4d
+ mc7Vj8PKQMyA534NT3mDQ76IGoPks/6NIh+lZReo57mU92HF7obo9HP1OzGMpyXySf1Z77+KeJJ7i
+ uW1EjWWLlpvKOPeedLIxw7dr6JU6P2vVtmAdef5Tm/Fa9g0OZtKE7wJGQ3lRGwDVj+XnWbPL7AHmz
+ Vy8KsucqKo4WOCXJT3ks0KATt7YHveKRELlA/5LxyeRlWlS/hlk1wxl1qsOq9aZz8gi/TsEPbj/+I
+ hI3nHggscdR1AMj9Ji1onALRcITRuY1vRY3QPWrY8k/4pXFZgfgdDagceq3TBA3FbdCoASTEyic6b
+ jssDzlaaCmtUerY9NGMemTHaHq36P5J2iZT534sp/d+tVkTjbOwhZeRO6CdyadPJwYaj5EsNU9QZm
+ wJnzH+1awVaPZ6vZg08VgJc81bSho6y6tUf9V5MN1hGWmZS1lPj4q4xc5I053+/KOZ3n2uG56Taa6
+ zOf9VSRyDxVG8jG9epPXXrpev48nGl0iHd+LHThr3xOLKkayVuWeETXsnK+B+IJYDnx8XOTG/KQWb
+ 73Fgk+8zZ4YL2AiP0cnT0pYSkhGPkt9yx88+7idYgavT1nnvBzJTlwIrVeZbOlJf2Djg+6nv/FKxw
+ d39OvsSpENwkWzdFpgGRnpym307zIcQddOaivCwHE=;
+Received: from [2a00:23c4:8bb8:f600:73fa:5593:d3ba:8410]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t8efL-0008mg-0N; Wed, 06 Nov 2024 11:57:43 +0000
+Message-ID: <dae49b9c-0d47-4811-bd48-fdd401594609@ilande.co.uk>
+Date: Wed, 6 Nov 2024 11:57:57 +0000
 MIME-Version: 1.0
-References: <20241105060053.61973-1-ppandit@redhat.com>
- <a664pk3wefui7tyvs6rjln2tm2fxwir6yvshffwkjypksechjj@3amhddyqxwiz>
- <CAE8KmOxHTx=ZxTWype-YVizogDEVVXVg=jRdYU8eRtHP7ngr9w@mail.gmail.com>
- <kxiffscfbs4njd6cfuebstpm5yrp7jdkgulcwbsmsyyxfowixw@yrhyrmhaj7da>
- <CAE8KmOwWDw7fxbLcVLo1BwkLYfi4X_9mKP73MaZz177LNgaaJg@mail.gmail.com>
- <ez2fb2yg7zha6ccdey47zxhaxcgwim7f6p4zzj4ucrgjnbavyk@mrnhs47uyx5e>
-In-Reply-To: <ez2fb2yg7zha6ccdey47zxhaxcgwim7f6p4zzj4ucrgjnbavyk@mrnhs47uyx5e>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Wed, 6 Nov 2024 17:14:24 +0530
-Message-ID: <CAE8KmOy48HPqW4VLJmf+ofZq+K1nM3tza3Sp4nX6sAreV0bxOg@mail.gmail.com>
-Subject: Re: [PATCH] vhost: fail device start if iotlb update fails
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>, 
- Prasad Pandit <pjp@fedoraproject.org>, Jason Wang <jasowang@redhat.com>, 
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20241105180205.3074071-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20241105180205.3074071-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:73fa:5593:d3ba:8410
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] hw/intc/openpic: Avoid taking address of out-of-bounds
+ array index
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,37 +103,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 6 Nov 2024 at 16:05, Stefano Garzarella <sgarzare@redhat.com> wrote:
-> >+fail_iotlb:
-> >+    hdev->vhost_ops->vhost_set_iotlb_callback(hdev, false);
-> > fail_start:
-> >+    hdev->vhost_ops->vhost_dev_start(hdev, false);
->
-> This should go before the fail_start label, since it should not be
-> called when vhost_dev_start() fails.
+On 05/11/2024 18:02, Peter Maydell wrote:
 
-* I see, okay.
+> The clang sanitizer complains about the code in the EOI handling
+> of openpic_cpu_write_internal():
+> 
+> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1 ./build/clang/qemu-system-ppc -M mac99,graphics=off -display none -kernel day15/invaders.elf
+> ../../hw/intc/openpic.c:1034:16: runtime error: index -1 out of bounds for type 'IRQSource[264]' (aka 'struct IRQSource[264]')
+> SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/intc/openpic.c:1034:16 in
+> 
+> This is because we do
+>    src = &opp->src[n_IRQ];$
 
-> Also we need to check if that callback is defined.
+Extra $ symbol at the end of the line here?
 
-* That check is already done while reaching the 'goto fail_iotlb;'
-statement, no? OR maybe we only check for:
-hdev->vhost_ops->vhost_dev_start() function?
+> when n_IRQ may be -1.  This is in practice harmless because if n_IRQ
+> is -1 then we don't do anything with the src pointer, but it is
+> undefined behaviour. (This has been present since this device
+> was first added to QEMU.)
+> 
+> Rearrange the code so we only do the array index when n_IRQ is not -1.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: e9df014c0b ("Implement embedded IRQ controller for PowerPC 6xx/740 & 75")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> Arguable whether it's worth the stable backport or not...
+> ---
+>   hw/intc/openpic.c | 15 ++++++++-------
+>   1 file changed, 8 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
+> index cd3d87768e0..2ead4b9ba00 100644
+> --- a/hw/intc/openpic.c
+> +++ b/hw/intc/openpic.c
+> @@ -1031,13 +1031,14 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
+>           s_IRQ = IRQ_get_next(opp, &dst->servicing);
+>           /* Check queued interrupts. */
+>           n_IRQ = IRQ_get_next(opp, &dst->raised);
+> -        src = &opp->src[n_IRQ];
+> -        if (n_IRQ != -1 &&
+> -            (s_IRQ == -1 ||
+> -             IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
+> -            DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
+> -                    idx, n_IRQ);
+> -            qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
+> +        if (n_IRQ != -1) {
+> +            src = &opp->src[n_IRQ];
+> +            if (s_IRQ == -1 ||
+> +                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
+> +                DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
+> +                        idx, n_IRQ);
+> +                qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
+> +            }
+>           }
+>           break;
+>       default:
 
-> >* Looking at the vhost_vdpa_dev_start(), when it is called with
-> >'started=false' parameter, it calls the vdpa_suspend, vdpa_stop etc.
-> >functions. ie. probably other ->vhost_dev_start() and
-> >->vhost_set_iotlb_callback() functions need to take appropriate action
-> >when called with 'started/enabled=false' parameter.
->
-> We already call them in vhost_dev_stop(), so I guess we are fine.
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-* I meant vhost device functions like vhost_user_dev_start() and
-vhost_user_set_iotlb_callback() need to take action when called with a
-'false' parameter.
 
-Thank you.
----
-  - Prasad
+ATB,
+
+Mark.
 
 
