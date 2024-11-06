@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC3E1D44D57
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 14:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E1ED44D75
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 14:47:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8h6I-0000kz-Hi; Wed, 06 Nov 2024 09:33:38 -0500
+	id 1t8hIU-0005RC-0t; Wed, 06 Nov 2024 09:46:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1t8h6H-0000ko-7p
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 09:33:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1t8hID-0005Pt-SC; Wed, 06 Nov 2024 09:46:03 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1t8h6C-0003RR-9P
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 09:33:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730903610;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nYVz4WHzKuIDywknJPbvynxHfIQPuvY/No+LgULDrBs=;
- b=dphtqaLI9kbZLwNlm0NcW1/jWn0vefsYdsMOsyMFCINsSEtggxDntozyT9w//0B5xO2PrN
- I/1ZP6onduz5eWIixRFmLXfbMAOhz6epijDVy/h6nAv9H+eGguzK3kzS+7QaiXCcv5h5CU
- Z2cgkdT15EYQuxq3GrSrEfqB6Hsyunc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-hSJ3Lg9bOUKF25M5YKumQw-1; Wed, 06 Nov 2024 09:33:29 -0500
-X-MC-Unique: hSJ3Lg9bOUKF25M5YKumQw-1
-X-Mimecast-MFC-AGG-ID: hSJ3Lg9bOUKF25M5YKumQw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4315afcae6cso5972335e9.0
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 06:33:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730903608; x=1731508408;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nYVz4WHzKuIDywknJPbvynxHfIQPuvY/No+LgULDrBs=;
- b=ElsFA8qjbV9OwKAB53ziDTqAwCcGyTk1Bgp+6D4QEoIO9dgG5zh+kBoPi0QkODOjXb
- m7Xvs0jV+cYPm07nStTuuMTh/OcILP5oF6CNQzWFvCpCberzwp25FOmTis9n8DWy/hFR
- 5O/uKIEoEnv2acUaglwvSlVF6ijwdbU7EQma0S6jnwvbRKxEqWAYpgIoe5nF5NFmZ2Ay
- faVA1qqiWZ4ym0IauktMrP2zEcMnbun7E3YRh1YUt5UiKZITNm4kyl1/s/+TlkSrdoxZ
- RpPHJpyYpLdJ56pwR0NRfMls56rCVNno0jh0rsQMdVowgjF9Ulbm2c4S4MgEWzEUjI5L
- m55Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX0bWkIDI0Ehb7W25lMMQaxW2kQi8vFWNHONe9WM22C8FRAG/Z3NbRPyXYeb5cQ51ScjxjOKiXtEJQK@nongnu.org
-X-Gm-Message-State: AOJu0Yx/U7qGPMH7F0m7gR+tkHTjl3zyOzo57dVePbNKJF7ryoxHCIJa
- LKb/eikIrzvjb38ABhpiV3nZyaWQw3vWySaxPJy5AET/vDmI2Vukd/5GE6abfUZTJFdBKkufBMA
- +glwNeKDabZTtfkSfIOHhtqYZjEl2NJjzK6PNpL8G4GqORBrBKB8T
-X-Received: by 2002:a05:600c:3c96:b0:431:57cf:f13d with SMTP id
- 5b1f17b1804b1-432a9a7567fmr25056325e9.3.1730903607817; 
- Wed, 06 Nov 2024 06:33:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEFFLYwnBy+09SPcf1izsuc6zu2Aw0zP23BQR41THYsrnSLwNoQfAL8s9Hq9AnmqOYST9V3JA==
-X-Received: by 2002:a05:600c:3c96:b0:431:57cf:f13d with SMTP id
- 5b1f17b1804b1-432a9a7567fmr25056015e9.3.1730903607176; 
- Wed, 06 Nov 2024 06:33:27 -0800 (PST)
-Received: from sgarzare-redhat ([5.77.86.226])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa5b5b7fsm25334485e9.4.2024.11.06.06.33.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2024 06:33:26 -0800 (PST)
-Date: Wed, 6 Nov 2024 15:33:21 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Sahil Siddiq <icegambit91@gmail.com>
-Cc: eperezma@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
- Sahil Siddiq <sahilcdq@proton.me>
-Subject: Re: [PATCH] vdpa: Support setting vring_base for packed svq
-Message-ID: <pu5razer3dkaltyuwiav236sepob44mj6cmigskdcet7davn4t@6orjjrzeqtau>
-References: <20241104162124.49867-1-sahilcdq@proton.me>
- <k2suxbt2qy7ewjrlozlkzrhsa7bbf7xrze33outna65dejuus2@eamj5pdkvpkw>
- <77bc1be1-e4b3-46a0-a263-cc8f7d6e28fe@gmail.com>
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1t8hI5-00060N-73; Wed, 06 Nov 2024 09:45:56 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xk7Gm55Vfz6J6sP;
+ Wed,  6 Nov 2024 22:42:56 +0800 (CST)
+Received: from frapeml500006.china.huawei.com (unknown [7.182.85.219])
+ by mail.maildlp.com (Postfix) with ESMTPS id 36396140B2F;
+ Wed,  6 Nov 2024 22:45:44 +0800 (CST)
+Received: from frapeml500007.china.huawei.com (7.182.85.172) by
+ frapeml500006.china.huawei.com (7.182.85.219) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 6 Nov 2024 15:45:42 +0100
+Received: from frapeml500007.china.huawei.com ([7.182.85.172]) by
+ frapeml500007.china.huawei.com ([7.182.85.172]) with mapi id 15.01.2507.039;
+ Wed, 6 Nov 2024 15:45:42 +0100
+To: Igor Mammedov <imammedo@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "mst@redhat.com" <mst@redhat.com>, Jonathan Cameron
+ <jonathan.cameron@huawei.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "anisinha@redhat.com" <anisinha@redhat.com>,
+ "eduardo@habkost.net" <eduardo@habkost.net>, "marcel.apfelbaum@gmail.com"
+ <marcel.apfelbaum@gmail.com>, "david@redhat.com" <david@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "peterx@redhat.com"
+ <peterx@redhat.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "gshan@redhat.com" <gshan@redhat.com>, "borntraeger@linux.ibm.com"
+ <borntraeger@linux.ibm.com>, "alex.bennee@linaro.org"
+ <alex.bennee@linaro.org>, "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
+ "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
+ "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
+ "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
+ "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
+ <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
+ zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
+ <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
+ "zhao1.liu@intel.com" <zhao1.liu@intel.com>, Linuxarm <linuxarm@huawei.com>,
+ "gustavo.romero@linaro.org" <gustavo.romero@linaro.org>
+Subject: RE: [PATCH 2/3] Fix: Reverse CPUs presence check logic for x86
+ backward compatability
+Thread-Topic: [PATCH 2/3] Fix: Reverse CPUs presence check logic for x86
+ backward compatability
+Thread-Index: AQHbMExwRTIJtUKJlEic/SrRi9Z39bKqNgWAgAAbf+A=
+Date: Wed, 6 Nov 2024 14:45:42 +0000
+Message-ID: <28a19ad7554e4b70819e1435669eeba3@huawei.com>
+References: <20241106130331.205020-1-salil.mehta@huawei.com>
+ <20241106130331.205020-3-salil.mehta@huawei.com>
+ <20241106145635.77332d7c@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20241106145635.77332d7c@imammedo.users.ipa.redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.126.170.112]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <77bc1be1-e4b3-46a0-a263-cc8f7d6e28fe@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,158 +93,136 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 05, 2024 at 08:24:17PM +0530, Sahil Siddiq wrote:
->Hi,
->
->Thank you for the review.
->
->On 11/5/24 3:06 PM, Stefano Garzarella wrote:
->>On Mon, Nov 04, 2024 at 09:51:24PM +0530, Sahil Siddiq wrote:
->>>Linux commit v5.14-rc1~30^2~8 enabled the vp_vdpa driver to set the
->>
->>To refer to a commit, please use the SHA-1 id or even better the form
->>suggested in
->>https://www.kernel.org/doc/html/latest/process/submitting-patches.html#describe-your-changes
->>
->>So in this case I'd use:
->>Linux commit 1225c216d954 ("vp_vdpa: allow set vq state to initial state
->>after reset")
->
->Understood, I'll change this in v2.
->
->>>vq state to the device's initial state. This works differently for
->>>split and packed vqs.
->>>
->>>With shadow virtqueues enabled, vhost-vdpa sets the vring base using
->>>the VHOST_SET_VRING_BASE ioctl. The payload (vhost_vring_state)
->>>differs for split and packed vqs. The implementation in QEMU currently
->>>uses the payload required for split vqs (i.e., the num field of
->>>vhost_vring_state is set to 0). The kernel throws EOPNOTSUPP when this
->>>payload is used with packed vqs.
->>>
->>>This patch sets the num field in the payload appropriately so vhost-vdpa
->>
->>I'm not very familiar with shadow virtqueue, so can you elaborate what
->>"appropriately" means here?
->
->My understanding is that the ioctl and the payload themselves are not
->directly related to shadow virtqueues [1]. They concern virtqueues in general.
->
->In QEMU's implementation, hw/virtio/vhost-vdpa.c:vhost_vdpa_svq_setup [2]
->is called from hw/virtio/vhost-vdpa.c:vhost_vdpa_svqs_start [3] only when
->shadow virtqueues are enabled.
->
->QEMU's vhost-user doc [1] states that the payload for the VHOST_SET_VRING_BASE
->ioctl is different for split and packed vqs. The struct is the same:
->
->struct vhost_vring_state {
->	unsigned int index;
->	unsigned int num;
->};
->
->The num field takes a different value depending on the virtqueue's format
->(split vs packed). The explanation below throws more light on this.
->
->>>(with the vp_vdpa driver) can use packed svqs.
->>>
->>>Link: https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05106.html
->>>Link: https://lore.kernel.org/r/20210602021536.39525-4-jasowang@redhat.com
->>>Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
->>>---
->>>QEMU currently does not support packed vhost shadow virtqueues. I am
->>>working on adding support for packed svqs [1]. The test environment
->>>that I am using [2] requires vhost-vdpa to use the relevant payload
->>>when setting vring base.
->>>
->>>[1] https://wiki.qemu.org/Internships/ProjectIdeas/PackedShadowVirtqueue
->>>[2] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-aint-got-hardware-part-2
->>>
->>>hw/virtio/vhost-vdpa.c | 4 ++++
->>>1 file changed, 4 insertions(+)
->>>
->>>diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
->>>index 3cdaa12ed5..5f81945109 100644
->>>--- a/hw/virtio/vhost-vdpa.c
->>>+++ b/hw/virtio/vhost-vdpa.c
->>>@@ -1230,6 +1230,10 @@ static bool vhost_vdpa_svq_setup(struct vhost_dev *dev,
->>>    };
->>>    int r;
->>>
->>>+    if (virtio_vdev_has_feature(dev->vdev, VIRTIO_F_RING_PACKED)) {
->>>+        s.num = 0x80008000;
->>
->>Why this magic value?
->>
->>Looking at the kernel code it looks like we are assgining 0x8000 for
->>both last_avail_idx and last_used_idx, but why 0x8000?
->>
->>Thanks,
->>Stefano
->>
->
->When I boot a VM with packed=on and x-svq=true, QEMU sets the vring base
->using VHOST_SET_VRING_BASE. I used ftrace to trace the functions in the
->linux kernel and got the following trace:
->
->[...]
->qemu-system-x86-1737    [001] ...1.  3613.371358: vhost_vdpa_unlocked_ioctl <-__x64_sys_ioctl
->qemu-system-x86-1737    [001] ...1.  3613.371358: vhost_vring_ioctl <-vhost_vdpa_unlocked_ioctl
->qemu-system-x86-1737    [001] ...1.  3613.371362: vp_vdpa_set_vq_state <-vhost_vdpa_unlocked_ioctl
->[...]
->
->In the kernel, drivers/vhost/vhost.c:vhost_vring_ioctl [4] uses
->the vhost_vring_state payload to set the last_avail_idx. For
->packed vqs, it also sets last_used_idx.
->
->    vq->last_avail_idx = s.num & 0xffff;
->    vq->last_used_idx = (s.num >> 16) & 0xffff;
->
->These values are used to populate a new struct vdpa_vq_state in
->drivers/vhost/vdpa.c:vhost_vdpa_vring_ioctl [5].
->
->    vq_state.packed.last_avail_idx = vq->last_avail_idx & 0x7fff;
->    vq_state.packed.last_avail_counter = !!(vq->last_avail_idx & 0x8000);
->    vq_state.packed.last_used_idx = vq->last_used_idx & 0x7fff;
->    vq_state.packed.last_used_counter = !!(vq->last_used_idx & 0x8000);
->
->The following check is then made in drivers/vdpa/virtio_pci/vp_vdpa.c:
->vp_vdpa_set_vq_state_packed [6]:
->
->    if (packed->last_avail_counter == 1 &&
->        packed->last_avail_idx == 0 &&
->        packed->last_used_counter == 1 &&
->        packed->last_used_idx == 0)
->        return 0;
->    return -EOPNOTSUPP;
->
->The most significant bit in 0x8000 is used to set the wrap counters.
->All the other bits are 0 and so the avail and used idx are also set
->to 0.
+Hi Igor,
 
-Thanks for these great details!
-
-Okay, so IIUC the only configuration that vp_vdpa supports when 
-VHOST_SET_VRING_BASE is called is idx == 0 and wrap_couter = true for 
-both avail and used.
-
-Is this okay with QEMU shadow vq? (More a question for Eugenio).
+>  From: qemu-arm-bounces+salil.mehta=3Dhuawei.com@nongnu.org <qemu-
+>  arm-bounces+salil.mehta=3Dhuawei.com@nongnu.org> On Behalf Of Igor
+>  Mammedov
+>  Sent: Wednesday, November 6, 2024 1:57 PM
+>  To: Salil Mehta <salil.mehta@huawei.com>
+> =20
+>  On Wed, 6 Nov 2024 13:03:30 +0000
+>  Salil Mehta <salil.mehta@huawei.com> wrote:
+> =20
+>  > Checking `is_present` first can break x86 migration from new Qemu
+>  > version to old Qemu. This is because CPRS Bit is not defined in the
+>  > older Qemu register block and will always be 0 resulting in check
+>  > always failing. Reversing the logic to first check `is_enabled` can
+>  > alleviate below problem:
+>  >
+>  > -                If ((\_SB.PCI0.PRES.CPEN =3D=3D One))
+>  > -                {
+>  > -                    Local0 =3D 0x0F
+>  > +                If ((\_SB.PCI0.PRES.CPRS =3D=3D One))
+>  > +                {
+>  > +                    If ((\_SB.PCI0.PRES.CPEN =3D=3D One))
+>  > +                    {
+>  > +                        Local0 =3D 0x0F
+>  > +                    }
+>  > +                    Else
+>  > +                    {
+>  > +                        Local0 =3D 0x0D
+>  > +                    }
+>  >                  }
+>  >
+>  > Suggested-by: Igor Mammedov <imammedo@redhat.com>
+>  'Reported-by' maybe, but certainly not suggested.
 
 
-About the magic value, IMHO we should explain it in the code adding a 
-comment, and maybe use VRING_PACKED_EVENT_F_WRAP_CTR, something like we 
-do in virtqueue_init() in drivers/virtio/virtio_ring.c in Linux:
+No issues. I can change.
 
-     uint32_t last_used_idx = 0 | (1 << VRING_PACKED_EVENT_F_WRAP_CTR);
-     uint32_t last_avail_idx = 0 | (1 << VRING_PACKED_EVENT_F_WRAP_CTR);
 
-     s.num = (last_used_idx << 16) | last_avail_idx;
+> =20
+>  After more thinking and given presence is system wide that doesn't chang=
+e
+>  at runtime, I don't see any reason for introducing presence bit as ABI (=
+and
+>  undocumented on top of that).
 
-WDYT?
 
-Thanks,
-Stefano
+This is a wrong assumption. Presence bit can change in future. We have take=
+n
+into account this aspect by design in the kernel code as well. Both virtual
+and physical CPU hot plug can co-exists or entirely as sole features.  This=
+ is
+a requirement.
+
+
+> =20
+>  Instead changing AML code to account for it would be better, something l=
+ike
+>  this:
+> =20
+>  diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h index
+>  32654dc274..4a3e591120 100644
+>  --- a/include/hw/acpi/cpu.h
+>  +++ b/include/hw/acpi/cpu.h
+>  @@ -55,6 +55,7 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object
+>  *owner,  typedef struct CPUHotplugFeatures {
+>       bool acpi_1_compatible;
+>       bool has_legacy_cphp;
+>  +    bool always_present_cpus;
+
+
+This has to be fetched from architecture code. Please see other changes in =
+the V3
+patch-set.
+
+
+>       bool fw_unplugs_cpu;
+>       const char *smi_path;
+>   } CPUHotplugFeatures;
+>  diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c index 5cb60ca8bc..2bcce2b31c
+>  100644
+>  --- a/hw/acpi/cpu.c
+>  +++ b/hw/acpi/cpu.c
+>  @@ -452,15 +452,16 @@ void build_cpus_aml(Aml *table, MachineState
+>  *machine, CPUHotplugFeatures opts,
+> =20
+>           method =3D aml_method(CPU_STS_METHOD, 1, AML_SERIALIZED);
+>           {
+>  +            uint8_t default_sta =3D opts.always_present_cpus?0xd:0;
+>               Aml *idx =3D aml_arg(0);
+>  -            Aml *sta =3D aml_local(0);
+>  +            Aml *sta =3D aml_local(default_sta);
+> =20
+>               aml_append(method, aml_acquire(ctrl_lock, 0xFFFF));
+>               aml_append(method, aml_store(idx, cpu_selector));
+>               aml_append(method, aml_store(zero, sta));
+>               ifctx =3D aml_if(aml_equal(is_enabled, one));
+>               {
+>  -                aml_append(ifctx, aml_store(aml_int(0xF), sta));
+>  +                aml_append(ifctx, aml_or(aml_int(0xF), sta, sta));
+>               }
+>               aml_append(method, ifctx);
+>               aml_append(method, aml_release(ctrl_lock))
+> =20
+>  then for ARM set
+>   CPUHotplugFeatures::always_present_cpus =3D true to get present flag
+>  always enabled
+
+
+We MUST fetch this from architecture code as this can dynamically change in
+future and hence, we need to keep that flexibility
+
+> =20
+>  After that revert _all_ other presence bit related changes that were jus=
+t
+>  merged.
+>  (I did ask to get rid of that in previous reviews but it came back again=
+ for no
+>  good reason).
+
+
+The CPUs AML in the V2 patch-set would have broken the x86 functionality.
+
+
+Thanks
+Salil.
 
 
