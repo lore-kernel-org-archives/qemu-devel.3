@@ -4,78 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F97D59F56
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 18:08:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14195D59F56
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 18:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8kRj-0003Uj-Fk; Wed, 06 Nov 2024 13:07:59 -0500
+	id 1t8kRh-0003Qh-Gj; Wed, 06 Nov 2024 13:07:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8kRc-0003J2-Dz
+ id 1t8kRc-0003Il-3u
  for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:07:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8kRZ-0005jL-Uz
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:07:52 -0500
+ id 1t8kRY-0005if-3e
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:07:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730916469;
+ s=mimecast20190719; t=1730916467;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eQzwz0VQqbTllaUoC2jABc9VHmk6FSE8vpq4QKQeiLc=;
- b=Pn5mixXtSRG+hivlFzfQ7xpZtST2Z3CYykuchFuuWo9QJr2qHNVMNAXZYRwooWqC4C9qTM
- NVXuVCBuwRDbqq1AyH3GyS+M8kftmK5D8CzBuV70/STSnozCc8yyA1zGIbXyKacmCiPQS5
- Mh8ZuOFla4DIDVDfE3fIJFYrcmBo8+Q=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=EDKLBsEuARCAFbhkOtFxiV1kVOGf101ikyFON57bIhk=;
+ b=MwkZ3RDbnseQ+5GhEvEFZCyS3hCdtXMV6b49KI4Cw7+2oh27CdrqowOTXDlTRRS9b4mSfO
+ H7/do2BdPhH3jxy1WQ7GnM4sPICNK7zsYoCspO9FUmMmDYV/2T2xmEH4xYB6OjJbOiLR5d
+ JXaH+up7S2UDgQk5Fi8SmLQ51+8Ee70=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-BmM5agsmP1uN2_6x3JlyMw-1; Wed, 06 Nov 2024 13:07:47 -0500
-X-MC-Unique: BmM5agsmP1uN2_6x3JlyMw-1
-X-Mimecast-MFC-AGG-ID: BmM5agsmP1uN2_6x3JlyMw
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4314c6ca114so643015e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 10:07:47 -0800 (PST)
+ us-mta-563-o4yUJNOaPiSZi_osBU_HNg-1; Wed, 06 Nov 2024 13:07:46 -0500
+X-MC-Unique: o4yUJNOaPiSZi_osBU_HNg-1
+X-Mimecast-MFC-AGG-ID: o4yUJNOaPiSZi_osBU_HNg
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37d4a211177so17137f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 10:07:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730916466; x=1731521266;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=eQzwz0VQqbTllaUoC2jABc9VHmk6FSE8vpq4QKQeiLc=;
- b=g1GHEZjIz67pOdBEiafDqrsayF4VQ187XtNJ+0kObmlmgnt2UtCHFZWRY1OkXO7Gy0
- 091I9uwoI6s8T3LjjKoU46WpkhgmVe70V0N/yZJr/z0GxX1WjxjwLWKPaSlCmiYic31f
- rj0Jw69d7PyznAdzmHy/Gpdkk1WJE+6LvCTyX72n7hijF+5XFp+NIHcNI03cKPt1SKX1
- m9aYb5ctQWTlWFhSwtR5xZit1MPRwOC+FaTYMeBAuHPg7r55hyNQl6ajrTkkPLOCmnA5
- dOAdVGKbVMEDIzlgHk/h3JMQXFJR68Opw5G7snAoqXQBA3sOWA5e/TEUo1fmH2O4jZzV
- csww==
-X-Gm-Message-State: AOJu0YzlRcp7cpSCZlr34zqmRCAF5zTeF0onL/3Sqkwu6b36bxiQiYmj
- MdTIcfKsYeG7yLuSV7HzWVSxhaCNqM7GP04xAqzI/Gn1uqMnLcWhVWAe+DgeS9gO+om/4DV202C
- 8Gdhf50732gCpKYYlSaUcLPMPMHRAcyIPpTSMEfLrxYw7ky244bz/oHJgimAJKSzERanGBIG8Rr
- ZVrRW8oQHJacspjIZ6sJGallz4od85b86Nd+kBqFU=
-X-Received: by 2002:a05:600c:3ca8:b0:431:52b7:a499 with SMTP id
- 5b1f17b1804b1-4327b7019ddmr199419425e9.20.1730916466238; 
- Wed, 06 Nov 2024 10:07:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHkuz/C6McPxVJo64sr3lxncd4/S7mSKL7dCmK53LYNFTfTAYDx3Cq4S9EA5nF8PNTRM+5eKw==
-X-Received: by 2002:a05:600c:3ca8:b0:431:52b7:a499 with SMTP id
- 5b1f17b1804b1-4327b7019ddmr199419195e9.20.1730916465723; 
- Wed, 06 Nov 2024 10:07:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730916464; x=1731521264;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EDKLBsEuARCAFbhkOtFxiV1kVOGf101ikyFON57bIhk=;
+ b=MMcHaNeeQwcEznNCUFo5mthJ7gf7WFYSEmfs056qsKEoXUI3pRgMKhe51QYSXezCSK
+ HkD9MQcKTrO4G6XkioKpdCfPuFEjy8dYFd8wgnK4qoKACWxj443O2ij4/D9i8EaUoboT
+ K8qVv5uqytn3f1/HP5g+WAlRC22LupYv0lzM/EEj/d2eWv5XqbNnY608bl96S7zOTjpl
+ 707UtGrGGxLGc4HQDZXY3hUP3efGUrpAy+Sf3a9MNnIkjgZMqnXM9ediOUkuzj57ddmZ
+ 46o0HGm60xRptWVldzuccZNvGHsNSzUhYz6BPAgrL5XUJkqKMsNVx+i6H48u41OOUqh8
+ mkCg==
+X-Gm-Message-State: AOJu0YwGFr4onAQTiFM9Qclij24fYrfnFUkxBbEvQ87VnUfdsTp7sFq6
+ 8udcHrIxM7H7o8/REzu9PDTdWBF9jWkCn0tWGQRDPpbXPM4y2FTo+aKswZcbeu9+CANf02Xux/a
+ ZypEaXpAT2SfQlDWUcVP4tchpSPrBC54GWvSmKAjh1lDXOiwLziwGgNv4lo6pJYWUYt4csrjGsL
+ N2jBHiQr/HislXGgC4D8EnKCOFdawV2y2KqA1VZhc=
+X-Received: by 2002:adf:e28a:0:b0:37d:45f0:dd0a with SMTP id
+ ffacd0b85a97d-380610f2a9emr28692770f8f.1.1730916464412; 
+ Wed, 06 Nov 2024 10:07:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGzCxKl50YNI6CqZ0lfZqBH3IbtZjQ7zxOsRoPBSQxsqCdAB51iGplv/5tInWN8JGkYNHtmZA==
+X-Received: by 2002:adf:e28a:0:b0:37d:45f0:dd0a with SMTP id
+ ffacd0b85a97d-380610f2a9emr28692745f8f.1.1730916463860; 
+ Wed, 06 Nov 2024 10:07:43 -0800 (PST)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa6c1205sm33933515e9.26.2024.11.06.10.07.44
+ ffacd0b85a97d-381c10d4991sm19997244f8f.29.2024.11.06.10.07.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2024 10:07:45 -0800 (PST)
+ Wed, 06 Nov 2024 10:07:43 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL v3 37/39] rust: allow older version of bindgen
-Date: Wed,  6 Nov 2024 19:07:42 +0100
-Message-ID: <20241106180742.567076-2-pbonzini@redhat.com>
+Subject: [PULL v3 00/39] Rust changes for QEMU 9.2 soft freeze
+Date: Wed,  6 Nov 2024 19:07:41 +0100
+Message-ID: <20241106180742.567076-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241106180742.567076-1-pbonzini@redhat.com>
-References: <20241106180742.567076-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -103,123 +99,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cope with the old version that is provided in Debian 12.
+The following changes since commit 11b8920ed2093848f79f93d106afe8a69a61a523:
 
---size_t-is-usize is needed on bindgen <0.61.0, and it was removed in
-bindgen 0.65.0, so check for it in meson.build.
+  Merge tag 'pull-request-2024-11-04' of https://gitlab.com/thuth/qemu into staging (2024-11-04 17:37:59 +0000)
 
---merge-extern-blocks was added in 0.61.0.
+are available in the Git repository at:
 
---formatter rustfmt was added in 0.65.0 and is the default, so remove it.
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream-rust
 
-Apart from Debian 12 and Ubuntu 22.04, all other supported distros have
-version 0.66.x of bindgen or newer (or do not have bindgen at all).
+for you to fetch changes up to 951f71ad67bd474aba6925529daf45b747aac86e:
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- docs/about/build-platforms.rst | 12 ++++++++++++
- meson.build                    | 31 +++++++++++++++++++++++++++----
- 2 files changed, 39 insertions(+), 4 deletions(-)
+  dockerfiles: install bindgen from cargo on Ubuntu 22.04 (2024-11-06 17:12:17 +0100)
 
-diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index b779eb54934..6102f00aec0 100644
---- a/docs/about/build-platforms.rst
-+++ b/docs/about/build-platforms.rst
-@@ -107,6 +107,18 @@ Python build dependencies
-   required, it may be necessary to fetch python modules from the Python
-   Package Index (PyPI) via ``pip``, in order to build QEMU.
- 
-+Rust build dependencies
-+  QEMU is generally conservative in adding new Rust dependencies, and all
-+  of them are included in the distributed tarballs.  One exception is the
-+  bindgen tool, which is too big to package and distribute.  The minimum
-+  supported version of bindgen is 0.60.x.  For distributions that do not
-+  include bindgen or have an older version, it is recommended to install
-+  a newer version using ``cargo install bindgen-cli``.
-+
-+  Developers may want to use Cargo-based tools in the QEMU source tree;
-+  this requires Cargo 1.74.0.  Note that Cargo is not required in order
-+  to build QEMU.
-+
- Optional build dependencies
-   Build components whose absence does not affect the ability to build
-   QEMU may not be available in distros, or may be too old for QEMU's
-diff --git a/meson.build b/meson.build
-index 5b85d4275bb..11958c67b5f 100644
---- a/meson.build
-+++ b/meson.build
-@@ -100,6 +100,23 @@ if have_rust
-   endif
- endif
- 
-+if have_rust
-+  bindgen = find_program('bindgen', required: get_option('rust'))
-+  if not bindgen.found() or bindgen.version().version_compare('<0.60.0')
-+    if get_option('rust').enabled()
-+      error('bindgen version ' + bindgen.version() + ' is unsupported. You can install a new version with "cargo install bindgen-cli"')
-+    else
-+      if bindgen.found()
-+        warning('bindgen version ' + bindgen.version() + ' is unsupported, disabling Rust compilation.')
-+      else
-+        warning('bindgen not found, disabling Rust compilation.')
-+      endif
-+      message('To use Rust you can install a new version with "cargo install bindgen-cli"')
-+      have_rust = false
-+    endif
-+  endif
-+endif
-+
- dtrace = not_found
- stap = not_found
- if 'dtrace' in get_option('trace_backends')
-@@ -3963,15 +3980,13 @@ common_all = static_library('common',
- if have_rust
-   # We would like to use --generate-cstr, but it is only available
-   # starting with bindgen 0.66.0.  The oldest supported versions
--  # are in Ubuntu 22.04 (0.59.1) and Debian 12 (0.60.1).
-+  # is 0.60.x (Debian 12 has 0.60.1) which introduces --allowlist-file.
-   bindgen_args = [
-     '--disable-header-comment',
-     '--raw-line', '// @generated',
-     '--ctypes-prefix', 'std::os::raw',
--    '--formatter', 'rustfmt',
-     '--generate-block',
-     '--impl-debug',
--    '--merge-extern-blocks',
-     '--no-doc-comments',
-     '--with-derive-default',
-     '--no-layout-tests',
-@@ -3980,6 +3995,12 @@ if have_rust
-     '--allowlist-file', meson.project_source_root() + '/.*',
-     '--allowlist-file', meson.project_build_root() + '/.*'
-     ]
-+  if bindgen.version().version_compare('<0.61.0')
-+    # default in 0.61+
-+    bindgen_args += ['--size_t-is-usize']
-+  else
-+    bindgen_args += ['--merge-extern-blocks']
-+  endif
-   c_enums = [
-     'DeviceCategory',
-     'GpioPolarity',
-@@ -4015,7 +4036,7 @@ if have_rust
-     dependencies: common_ss.all_dependencies(),
-     output: 'bindings.rs',
-     include_directories: include_directories('.', 'include'),
--    bindgen_version: ['>=0.69.4'],
-+    bindgen_version: ['>=0.60.0'],
-     args: bindgen_args,
-     )
-   subdir('rust')
-@@ -4481,6 +4502,8 @@ if have_rust
-   summary_info += {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
-   summary_info += {'rustc':           ' '.join(rustc.cmd_array())}
-   summary_info += {'rustc version':   rustc.version()}
-+  summary_info += {'bindgen':         bindgen.full_path()}
-+  summary_info += {'bindgen version': bindgen.version()}
- endif
- option_cflags = (get_option('debug') ? ['-g'] : [])
- if get_option('optimization') != 'plain'
+----------------------------------------------------------------
+* rust: cleanups
+* rust: integration tests
+* rust/pl011: add support for migration
+* rust/pl011: add TYPE_PL011_LUMINARY device
+* rust: add support for older compilers and bindgen
+----------------------------------------------------------------
+v1->v2: wrap bindgen check with "if have_rust"
+	drop ci enablement
+
+v2->v3: fix formatting of pull request
+
+Junjie Mao (1):
+      rust: introduce alternative implementation of offset_of!
+
+Manos Pitsidianakis (9):
+      rust/wrapper.h: define memory_order enum
+      Revert "rust: add PL011 device model"
+      rust: add PL011 device model
+      rust: add definitions for vmstate
+      rust/pl011: add support for migration
+      rust/pl011: move CLK_NAME static to function scope
+      rust/pl011: add TYPE_PL011_LUMINARY device
+      rust/pl011: remove commented out C code
+      rust/pl011: Use correct masks for IBRD and FBRD
+
+Paolo Bonzini (29):
+      qdev: make properties array "const"
+      meson: import rust module into a global variable
+      meson: remove repeated search for rust_root_crate.sh
+      meson: pass rustc_args when building all crates
+      rust: do not always select X_PL011_RUST
+      rust: do not use --no-size_t-is-usize
+      rust: remove uses of #[no_mangle]
+      rust: modernize link_section usage for ELF platforms
+      rust: build integration test for the qemu_api crate
+      rust: cleanup module_init!, use it from #[derive(Object)]
+      rust: clean up define_property macro
+      rust: make properties array immutable
+      rust: provide safe wrapper for MaybeUninit::zeroed()
+      rust: do not use TYPE_CHARDEV unnecessarily
+      rust/pl011: fix default value for migrate-clock
+      rust: patch bilge-impl to allow compilation with 1.63.0
+      rust: fix cfgs of proc-macro2 for 1.63.0
+      rust: use std::os::raw instead of core::ffi
+      rust: introduce a c_str macro
+      rust: silence unknown warnings for the sake of old compilers
+      rust: synchronize dependencies between subprojects and Cargo.lock
+      rust: create a cargo workspace
+      rust: do not use MaybeUninit::zeroed()
+      rust: clean up detection of the language
+      rust: allow version 1.63.0 of rustc
+      rust: do not use --generate-cstr
+      rust: allow older version of bindgen
+      rust: make rustfmt optional
+      dockerfiles: install bindgen from cargo on Ubuntu 22.04
+
+ docs/about/build-platforms.rst                     |  12 +
+ meson.build                                        | 137 +++++---
+ include/hw/qdev-core.h                             |   4 +-
+ include/hw/qdev-properties.h                       |   4 +-
+ rust/wrapper.h                                     |  17 +
+ hw/core/qdev-properties.c                          |  26 +-
+ system/qdev-monitor.c                              |   2 +-
+ .gitattributes                                     |   2 +
+ .gitlab-ci.d/buildtest.yml                         |   2 +-
+ meson_options.txt                                  |   2 +
+ rust/{hw/char/pl011 => }/Cargo.lock                |   4 +
+ rust/Cargo.toml                                    |   7 +
+ rust/hw/char/Kconfig                               |   1 -
+ rust/hw/char/pl011/Cargo.toml                      |   3 -
+ rust/hw/char/pl011/src/device.rs                   | 162 +++++++---
+ rust/hw/char/pl011/src/device_class.rs             |  80 ++++-
+ rust/hw/char/pl011/src/lib.rs                      |   6 +-
+ rust/hw/char/pl011/src/memory_ops.rs               |  24 +-
+ rust/qemu-api-macros/Cargo.lock                    |  47 ---
+ rust/qemu-api-macros/Cargo.toml                    |   5 +-
+ rust/qemu-api-macros/meson.build                   |   2 +-
+ rust/qemu-api-macros/src/lib.rs                    | 103 ++++--
+ rust/qemu-api/Cargo.lock                           |   7 -
+ rust/qemu-api/Cargo.toml                           |  10 +-
+ rust/qemu-api/build.rs                             |   9 +
+ rust/qemu-api/meson.build                          |  44 ++-
+ rust/qemu-api/src/c_str.rs                         |  53 +++
+ rust/qemu-api/src/definitions.rs                   |  68 ++--
+ rust/qemu-api/src/device_class.rs                  | 114 ++-----
+ rust/qemu-api/src/lib.rs                           |  23 +-
+ rust/qemu-api/src/offset_of.rs                     | 161 +++++++++
+ rust/qemu-api/src/tests.rs                         |  49 ---
+ rust/qemu-api/src/vmstate.rs                       | 360 +++++++++++++++++++++
+ rust/qemu-api/src/zeroable.rs                      |  86 +++++
+ rust/qemu-api/tests/tests.rs                       |  79 +++++
+ scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml   |   1 -
+ scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml     |   1 -
+ scripts/meson-buildoptions.sh                      |   4 +
+ subprojects/bilge-impl-0.2-rs.wrap                 |   1 +
+ subprojects/packagefiles/bilge-impl-1.63.0.patch   |  45 +++
+ .../packagefiles/proc-macro2-1-rs/meson.build      |   4 +-
+ subprojects/packagefiles/syn-2-rs/meson.build      |   1 +
+ tests/docker/dockerfiles/ubuntu2204.docker         |   6 +-
+ tests/lcitool/mappings.yml                         |   4 +
+ tests/lcitool/refresh                              |  11 +-
+ 45 files changed, 1379 insertions(+), 414 deletions(-)
+ rename rust/{hw/char/pl011 => }/Cargo.lock (98%)
+ create mode 100644 rust/Cargo.toml
+ delete mode 100644 rust/qemu-api-macros/Cargo.lock
+ delete mode 100644 rust/qemu-api/Cargo.lock
+ create mode 100644 rust/qemu-api/src/c_str.rs
+ create mode 100644 rust/qemu-api/src/offset_of.rs
+ delete mode 100644 rust/qemu-api/src/tests.rs
+ create mode 100644 rust/qemu-api/src/vmstate.rs
+ create mode 100644 rust/qemu-api/src/zeroable.rs
+ create mode 100644 rust/qemu-api/tests/tests.rs
+ create mode 100644 subprojects/packagefiles/bilge-impl-1.63.0.patch
 -- 
 2.47.0
 
