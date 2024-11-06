@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9CDDD59F5A
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B06A5D59F56
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:55:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8kDV-00040v-ND; Wed, 06 Nov 2024 12:53:17 -0500
+	id 1t8kEo-0004gs-Tc; Wed, 06 Nov 2024 12:54:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
- id 1t8kDU-0003yr-2u
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:53:16 -0500
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8kEk-0004f4-KZ
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:54:36 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
- id 1t8kDS-0002cL-LM
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:53:15 -0500
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-5edfe8c17c4so24702eaf.2
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:53:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8kEi-0002lY-1l
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:54:34 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4314fa33a35so718845e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:54:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730915593; x=1731520393; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6PiCNtf8A5FwHORTBrgGd0kboaXapNH3Eh5+IkThw3k=;
- b=f+hqkB7niJWiuJX9+t5g6rMNqxyZ18iCvvzK4dEu3cjgeNbWx/7kIrE7p2CixwseSF
- 63U232V3pCHbBXpMXs3ZAa+ZaRRDrriZVJBtlQfRklNXNwX5hSlnqay2t7kGA15+6f1U
- 2ID1OR+ATVpGrh49NrWhPjv4b7sCxHDdJkLu9KMUoyG/5y4SM5NbSAZvLjUIlmiNHvWJ
- G+figkx45X9gQv+eTujN1z9p8s53lWjeVJRwwSLtvv/rz8z2K/D4i/ElN6TAKCTuL0SD
- Ia7W1uSyHFnWI3ck95H8DA0A5PfrorWnoeeP5eQc6KRhAnqHlL7QEY9Tob3Tj0HcNLxi
- YgIA==
+ d=linaro.org; s=google; t=1730915669; x=1731520469; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=g5XP5mrLVcr+Vsc94v5s87FsZ6XnuyY7ClVqmiHfKmY=;
+ b=nsqYB0E/CbAp644R6wMzsXmoXnZh0pyqVrKF18DeDJNRrfYftZ6YGceCzp+EsfPsfI
+ OcC7+5iRz5Utv9TlVO4gk9eIoYS1dFBMbtDhXZCe2rpMzHSMD/MkGhoZJpZ4S69wbI1K
+ iv/JbYW0xYvezi0FZvkueUDmDcCEkhrI0BaqEO0q+sLk/V+LlJj8HlmTKonaNPCWp/4w
+ rgt1AVidY0/PwPprVJPUayqosKROGISTtyjqkP856xnl0pwJ9ELxCoTt/vik2OUqUaX6
+ pwoiM8oC7AbOly8n6GSXOdwvEvAuuroUugZI63X6Zr7XmaBlaUUdExtBZeuoFcBj3rPK
+ 2htg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730915593; x=1731520393;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6PiCNtf8A5FwHORTBrgGd0kboaXapNH3Eh5+IkThw3k=;
- b=hQU5+lwVmg2Hs5O937/lRWUMQDN/j7JebdudN+IU1h7BpsQnexmMwxJ9UYmPtfJqbb
- U8tZSVy2MnfzL1bhX1J/rA9Mrod7/N2a35KOczxTaKzJzpPg8TA2nTvwXqXzmInq0DRz
- DZ97zmhvxO9d+VrH61oHb7oIbl1r87xGtoTKR5WTEwNJXrivMtLyyCu+PfxlUY7JRpCU
- ME3d11WTcCQQl5CqNVcNMbbjxkKmR09xpYT9kaO5yUZeITB220dj5XR8yXG3qWigFh/0
- /qHFI/+AzKLv2MubIJPvJTJcWEboTIDCZ3ds0jz05WIVLAMiutR3RRY8paUevPMM9/6l
- dMmw==
-X-Gm-Message-State: AOJu0Yz+PXj8Goy5QD5eFoIRPwCfcoNZVikbIboIKFPMB5GK9moeqPP2
- PxSP7eOv+8HmlgG6I2waPtGY7atSWMg+WYtD3Hbcmy7jmEbwsIIJdLbBUbCc/1xPkCzA7VNQNlw
- 7iwPy5v8uClgQKSGjig9JvLFFAv8=
-X-Google-Smtp-Source: AGHT+IGjhK15rC3Xpv80r2kF31tBP+R/WWzohfNl5LO+7DUqzSuQJmz3AqkdQWf5Zs42R8/+N0Pk3yy1ZZDdLWzsZWo=
-X-Received: by 2002:a05:6820:1c93:b0:5e7:caf5:ae03 with SMTP id
- 006d021491bc7-5ede631771amr14160593eaf.2.1730915593447; Wed, 06 Nov 2024
- 09:53:13 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730915669; x=1731520469;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=g5XP5mrLVcr+Vsc94v5s87FsZ6XnuyY7ClVqmiHfKmY=;
+ b=cbxFyyZXNG84ZBllYEQ9bqsXTye/9E/JYMnqGCeHee+BuZ0saLWDka8cb9wRDGuWIq
+ kYXLlk5GqUX7XS4T7VIV+dZRou5IXoMOPv1mlMvwgVCJFPyff+Ss9UO+BFs0btaNXppY
+ Kvv+nkOBEwHzbFMzxA16KCDg1tZLamdinsbA+zrPWCnApyUBhj3tu3y673SNPDXP1fPk
+ DuvNEvydxxLGt6Kbz8qrwclwNncn9K5wgVuvbh4sDsLRiU38nBnu38acCv62E6joVQPk
+ +ys423yAl/gYWfkVNfN37h/OvMB9F0FJ3c7W28GTO8d0vhBoonDPrlm81WpbtBEDekuz
+ obkg==
+X-Gm-Message-State: AOJu0Yxale1e1xCrhT+ciUGzi4rkzhyg0ii/LhbRUABEi8Xb8SRc8PAZ
+ OrzxYKhiVxvNYZc3223Yc947ZyphiXURrx3Ax+u/4ikD6hBhSIvD21tOlE6RN08=
+X-Google-Smtp-Source: AGHT+IHAaWmRFvD5xas81lf2T8lvkB1+5z+h+H0XvG0dXn9BAGO+UI0hf+G+m9/H99BrX6dJ25OWFQ==
+X-Received: by 2002:adf:ec8f:0:b0:374:b35e:ea6c with SMTP id
+ ffacd0b85a97d-381b70ed1c3mr18165409f8f.40.1730915669155; 
+ Wed, 06 Nov 2024 09:54:29 -0800 (PST)
+Received: from [10.134.195.192] ([193.32.126.165])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c10e61f9sm19791158f8f.58.2024.11.06.09.54.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Nov 2024 09:54:28 -0800 (PST)
+Message-ID: <b463bc8a-4625-43e6-a9da-4df526aa89a3@linaro.org>
+Date: Wed, 6 Nov 2024 09:54:26 -0800
 MIME-Version: 1.0
-References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
- <20241030141037.375897-1-goldstein.w.n@gmail.com>
- <000c9ef8-c610-4f2a-b191-04b84455d89c@linaro.org>
- <CAFUsyfKkmSid=LVTbG+WHZA_=MAGdf+TU5vGtNE1GGx8WDheOQ@mail.gmail.com>
- <CAFUsyfKfM-X_qGN4Dy8DhES7zRi66s6yVZ3+_KmNM4f2GhBG+Q@mail.gmail.com>
- <f21fe153-6239-4c93-bf60-994976a9dbea@linaro.org>
- <CAFUsyfLhPkSMrm50RAAvir2-WoRS4_jbtZf1WWR_WZvm=BOr6g@mail.gmail.com>
- <e63cd5f6-8387-4c39-98e4-5e1c180934bc@linaro.org>
-In-Reply-To: <e63cd5f6-8387-4c39-98e4-5e1c180934bc@linaro.org>
-From: Noah Goldstein <goldstein.w.n@gmail.com>
-Date: Wed, 6 Nov 2024 11:53:01 -0600
-Message-ID: <CAFUsyf+8sJLX+qqzPEj1E1QPQpoP4n56uU5U9aksq8JEx_52gA@mail.gmail.com>
-Subject: Re: linux-user: Add option to run `execve`d programs through QEMU
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, iii@linux.ibm.com, laurent@vivier.eu
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=goldstein.w.n@gmail.com; helo=mail-oo1-xc2a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] eif: cope with huge section offsets
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, dorjoychy111@gmail.com
+References: <20241106174241.556373-1-pbonzini@redhat.com>
+ <04fd0b86-4371-494e-a331-3d5d735f0d77@linaro.org>
+ <CABgObfajkp+5vFnQuV+V6Mp+LuP_Yo-=JtZtGUcYB_GDDbWoJQ@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CABgObfajkp+5vFnQuV+V6Mp+LuP_Yo-=JtZtGUcYB_GDDbWoJQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,73 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 6, 2024 at 11:26=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 11/6/24 17:03, Noah Goldstein wrote:
-> > On Wed, Nov 6, 2024 at 3:38=E2=80=AFAM Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> >>
-> >> On 11/5/24 23:54, Noah Goldstein wrote:
-> >>>>> You still need to handle is_proc_myself, for the guest binary.
-> >>>
-> >>> Would this by handled by basically do:
-> >>>
-> >>> ```
-> >>> if (is_proc_myself(p, "exe")) {
-> >>>           exe =3D exec_path;
-> >>>           if (through_qemu)
-> >>>               argp[argp_offset] =3D exec_path;
-> >>> }
-> >>> ```
-> >>> Or am I missing something?
-> >>
-> >> Something like that, yes.
-> >>
-> >>>>> I wonder if those two cases are related.  Do we need to also add an=
- argument so that we
-> >>>>> can pass the executable to the next qemu via file descriptor?  I.e.=
- execvat becomes
-> >>>>>
-> >>>>>        f =3D openat()
-> >>>>>        execv(qemu, "-execfd", f)
-> >>>>>
-> >>>>> and is_proc_myself uses execfd, which we already have open.
-> >>>
-> >>> How does passing a fd from one process to another work?
-> >> As long as the fd is not marked O_CLOEXEC, it stays open in the new pr=
-ocess.  Providing
-> >> the number via command-line, or whatever, is sufficient for the new pr=
-ocess to know what
-> >> is going on.
-> >
-> > Err I guess I was thinking its a bit weird having an option that is
-> > only really applicable
-> > if qemu is a child process. I.e the `-execfd` argument is not usable
-> > from commandline.
->
-> qemu-foo -execfd 3 3< /some/file
->
-> Or perhaps opened via other tooling.
->
-> >> I now realize this is necessary for the AT_EMPTY_PATH flag, where we o=
-nly have the file
-> >> descriptor.
-> >
-> > We could also do something along the lines of:
-> >
-> > ```
-> > fd =3D openat(dirfd, exe);
-> > char new_exe[PATH_MAX];
-> > char fd_path[PATH_MAX];
-> > sprintf(fd_path, "/proc/self/fd/%d", fd);
-> > readlink(fd_path, new_exe, PATH_MAX);
->
-> Reading the link doesn't always work.
-> Reading or passing the link means AT_SYMLINK_NOFOLLOW isn't honored.
-
-Okay, fair enough, I will get started on adding `-execfd`
->
->
-> r~
+T24gMTEvNi8yNCAwOTo0OSwgUGFvbG8gQm9uemluaSB3cm90ZToNCj4gT24gV2VkLCBOb3Yg
+NiwgMjAyNCBhdCA2OjQ34oCvUE0gUGllcnJpY2sgQm91dmllcg0KPiA8cGllcnJpY2suYm91
+dmllckBsaW5hcm8ub3JnPiB3cm90ZToNCj4gDQo+Pj4gICAgICAgIGZvciAoaW50IGkgPSAw
+OyBpIDwgTUFYX1NFQ1RJT05TOyArK2kpIHsNCj4+PiAgICAgICAgICAgIGhlYWRlci0+c2Vj
+dGlvbl9vZmZzZXRzW2ldID0gYmU2NF90b19jcHUoaGVhZGVyLT5zZWN0aW9uX29mZnNldHNb
+aV0pOw0KPj4+ICsgICAgICAgIGlmIChoZWFkZXItPnNlY3Rpb25fb2Zmc2V0c1tpXSA+IE9G
+Rl9NQVgpIHsNCj4+DQo+PiBNYXliZSB3ZSBjb3VsZCBhZGQgYSBjb21tZW50IHRoYXQgc2Vj
+dGlvbnNfb2Zmc2V0cyBpcyB1bnNpZ25lZCwgYXMgaXQNCj4+IGNhbiBiZSBjb25mdXNpbmcg
+dG8gcmVhZCB2YWx1ZSA+IElOVF9NQVggd2l0aG91dCBtb3JlIGNvbnRleHQuDQo+IA0KPiBJ
+dCBkb2VzIHNvdW5kIGxpa2UgT0ZGX01BWCBpcyByZWxhdGVkIHRvIHNlY3Rpb25fb2Zmc2V0
+c1tdLCBidXQgaXQncw0KPiBhY3R1YWxseSByZWxhdGVkIHRvIG9mZl90LiAgU28gdGhlIGNv
+bXBhcmlzb24gaXMgd2l0aCB0aGUgbWF4aW11bQ0KPiB2YWx1ZSBvZiBvZmZfdCwgd2hpY2gg
+aXMgc2lnbmVkLg0KPiANCj4gVGhlIHByb2JsZW0gd291bGQgaGFwcGVuIGV2ZW4gaWYgc2Vj
+dGlvbl9vZmZzZXRzW10gd2FzIHNpZ25lZCAoZm9yDQo+IGV4YW1wbGUgb2ZmX3QgY291bGQg
+YmUgMzItYml0KS4NCj4gDQoNCkknbSBhIGJpdCBjb25mdXNlZC4NCkl0IHdvcmtzIGJlY2F1
+c2Ugc2VjdGlvbl9vZmZzZXRzW2ldIGlzIHVuc2lnbmVkLiBJZiBpdCB3YXMgc2lnbmVkLCBh
+bmQgDQpzaXplb2Yob2ZmX3QpIGlzIDgsIHdlIGNhbiBuZXZlciBzYXRpc2Z5ICIoaW50NjQp
+ID4gSU5UNjRfTUFYIi4NCg0KPiBQYW9sbw0KPiANCj4+PiArICAgICAgICAgICAgZXJyb3Jf
+c2V0ZyhlcnJwLCAiSW52YWxpZCBFSUYgaW1hZ2UuIFNlY3Rpb24gb2Zmc2V0IG91dCBvZiBi
+b3VuZHMiKTsNCj4+PiArICAgICAgICAgICAgcmV0dXJuIGZhbHNlOw0KPj4+ICsgICAgICAg
+IH0NCj4+PiAgICAgICAgfQ0KPj4+DQo+Pj4gICAgICAgIGZvciAoaW50IGkgPSAwOyBpIDwg
+TUFYX1NFQ1RJT05TOyArK2kpIHsNCj4+DQo+PiBFbHNlLA0KPj4gUmV2aWV3ZWQtYnk6IFBp
+ZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4+DQo+IA0K
+DQo=
 
