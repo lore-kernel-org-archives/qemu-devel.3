@@ -4,85 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9721D44D6F
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 13:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 733EED44D70
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 14:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8gXi-00073l-Ud; Wed, 06 Nov 2024 08:57:54 -0500
+	id 1t8gbl-0000J5-Lx; Wed, 06 Nov 2024 09:02:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8gXb-0006zs-IS
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:57:48 -0500
-Received: from mgamail.intel.com ([198.175.65.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t8gXZ-0000tS-8l
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:57:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730901466; x=1762437466;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=zwAC45OJhmnmO548e21DRwBu5ZsdXTpXh46ezboPAA0=;
- b=WGnAtiKB9WjTcdNOZ7J3Nuq1wHCQ4lr6FixZYJnLi3x/NqR7MGFidc8K
- DayyAOYc8jV/Sv638UgprN42uZVJbKhsxMrAkY0o9nrhGckMjxTB41aj0
- zp5Aov7wYKRyZVoD2nhDz1LhcTH5t0XMF30d6tixxfxEflN57BAP5cpNu
- Zys08seJ9nOmBDWK7Q1lMJjUK87jJL52KyN/h72RQMaBHmhryU5q4dYNj
- QZuI6x1aLQCHEmJL9AdGmLxxDSmaFfHEx+DQfr5YkN8DOuqHZUF2uXwb6
- cnO4PEjqe22HLMI3YzGMApCpkqGcHPLGbkAqTWufAyQ/eE7ac6dLuanam g==;
-X-CSE-ConnectionGUID: FBfBtSV6T5S72SAj5EUrjg==
-X-CSE-MsgGUID: Gf5163wSQWiN7fpV3gebXw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11248"; a="30812702"
-X-IronPort-AV: E=Sophos;i="6.11,262,1725346800"; d="scan'208";a="30812702"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Nov 2024 05:57:41 -0800
-X-CSE-ConnectionGUID: 9/wVuzWVSm+bO4Sl9QL7Gw==
-X-CSE-MsgGUID: o/0fKsyyQkKtzT+HyjzVuA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,262,1725346800"; d="scan'208";a="84680014"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Nov 2024 05:57:35 -0800
-Message-ID: <35233d1f-eb6c-4882-abd6-884c1f559e12@intel.com>
-Date: Wed, 6 Nov 2024 21:57:29 +0800
+ (Exim 4.90_1) (envelope-from <roman@roolebo.dev>) id 1t8gbb-0000H7-4g
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 09:01:55 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <roman@roolebo.dev>) id 1t8gbW-0001mw-Ph
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 09:01:54 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-72088a79f57so926191b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 06:01:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=roolebo.dev; s=mail; t=1730901709; x=1731506509; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=DfylZ2u7CLTrzYQk3nxIxDwvn7QFmpP3h99Mk7jB3l4=;
+ b=hJYczFCbB3pmP/lg0fdwHHdYjBdM35e2clrYhNDMgLLGen4c2hBYcK3w1MQCpitJcc
+ llDo0Uvh+gl8VWzFtwAYQrlyPk+YLhsKYJlciH7hKYFsybWiKjoIh8XvfZcN4tmq6uih
+ HIzGLViTUSU+Qw7it3gZFg9U5zCvlyuKqDH1ZO6djXoeUG/XTtX7kgP093eX47FcIRRR
+ i96pCU6IzQhm/0EihlD7w0WPjN76UWSr5vGd62u3IoFJRXBMytMs8p6RC7Qk8WRvQgs9
+ am+WwOjGr6vMtci6zsxdF+CMqJ4df3yt3KEykbRr6MJYg5HTxdmd1cDr6tg9z3x1y+p+
+ UKew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730901709; x=1731506509;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DfylZ2u7CLTrzYQk3nxIxDwvn7QFmpP3h99Mk7jB3l4=;
+ b=ulOkFh2/laUIj6QOTM1mBfgpkoko/u9aVEW88BSHh+SQlielVjuzlfI2LK5K7mwBJE
+ caetRrygBkVzG4amskiLkO2iTY3c+pxQmwH1hCEziinIdYB8Tng2RI44ALP4+NXXiViJ
+ 7g54PWliUWEd5lQrWQ+5HkWr8TYxIgmXlC6QMdLs54Pbe3QDpMY4E6HY46aQ/LJra99j
+ KtR0VtYtcXqy5Bdg/6ivWZPycwmj22flynQd0m9CjpeW8ig96z6AbYp4zCu0ROmbutym
+ xSMCn0Vr8/ruB4GtYukhUeCQVYb07Y4bxpiI6ZABrPfSEDRGxF8kZJHUA6bLVNYco6ih
+ bFGQ==
+X-Gm-Message-State: AOJu0Yxa9XVoKm7G0xdlY/eG+SPa7ym1z/EPEAxbSB66qKrEFXKR4ylO
+ 3MwbOxp5IX/SnsM/SZasgsb5tzksmRLnbWG0aSkfR566rt2ANcz5ABz8imgTN+/1E3qi/mTBdLV
+ w
+X-Google-Smtp-Source: AGHT+IHDALv+f9lS4DHgYh4599fYyLDrOdLjGriCzyJJSS5s/SjOPTgWWbCNl/iNAvPS85qizRiojA==
+X-Received: by 2002:a05:6a21:33a4:b0:1cf:4bd8:3a02 with SMTP id
+ adf61e73a8af0-1d9a83a63d1mr27338445637.3.1730901708479; 
+ Wed, 06 Nov 2024 06:01:48 -0800 (PST)
+Received: from localhost ([2405:9800:b660:1d69:184b:7485:e878:79c4])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-720bc1ba033sm11621749b3a.34.2024.11.06.06.01.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Nov 2024 06:01:47 -0800 (PST)
+Date: Wed, 6 Nov 2024 21:01:45 +0700
+From: Roman Bolshakov <roman@roolebo.dev>
+To: Phil Dennis-Jordan <phil@philjordan.eu>
+Cc: qemu-devel@nongnu.org, dirty@apple.com, rbolshakov@ddn.com,
+ pbonzini@redhat.com
+Subject: Re: [PATCH 2/5] i386/hvf: Fix for UB in handling CPUID function 0xD
+Message-ID: <Zyt2yWzbJirnxPOb@roolebo.dev>
+References: <20241105155800.5461-1-phil@philjordan.eu>
+ <20241105155800.5461-3-phil@philjordan.eu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 45/60] i386/tdx: Don't get/put guest state for TDX VMs
-To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-46-xiaoyao.li@intel.com>
- <8cd78103-5f49-4cbd-814d-a03a82a59231@redhat.com>
- <e5d02d7f-a989-4484-b0c1-3d7ac804ec73@intel.com>
- <a90e29a6-0e07-46a3-8dfc-658e02af9856@redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <a90e29a6-0e07-46a3-8dfc-658e02af9856@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.781, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241105155800.5461-3-phil@philjordan.eu>
+Received-SPF: none client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=roman@roolebo.dev; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,62 +93,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/2024 10:23 PM, Paolo Bonzini wrote:
-> On 11/5/24 12:25, Xiaoyao Li wrote:
->> On 11/5/2024 5:55 PM, Paolo Bonzini wrote:
->>> On 11/5/24 07:23, Xiaoyao Li wrote:
->>>> From: Sean Christopherson <sean.j.christopherson@intel.com>
->>>>
->>>> Don't get/put state of TDX VMs since accessing/mutating guest state of
->>>> production TDs is not supported.
->>>>
->>>> Note, it will be allowed for a debug TD. Corresponding support will be
->>>> introduced when debug TD support is implemented in the future.
->>>>
->>>> Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
->>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>>> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
->>>
->>> This should be unnecessary now that QEMU has 
->>> kvm_mark_guest_state_protected().
->>
->> Reverting this patch, we get:
->>
->> tdx: tdx: error: failed to set MSR 0x174 to 0x0
->> tdx: ../../../go/src/tdx/tdx-qemu/target/i386/kvm/kvm.c:3859: 
->> kvm_buf_set_msrs: Assertion `ret == cpu->kvm_msr_buf->nmsrs' failed.
->> error: failed to set MSR 0x174 to 0x0
->> tdx: ../../../go/src/tdx/tdx-qemu/target/i386/kvm/kvm.c:3859: 
->> kvm_buf_set_msrs: Assertion `ret == cpu->kvm_msr_buf->nmsrs' failed.
-> Difficult to "debug" without even a backtrace, but you might be calling 
-> kvm_mark_guest_state_protected() too late.  For SNP, the entry values of 
-> the registers are customizable, for TDX they're not.  So for TDX I think 
-> it should be called even before realize completes, whereas SNP only 
-> calls it on the first transition to RUNNING.
-
-TDX calls kvm_mark_guest_state_protected() very early in
-   kvm_arch_init() -> tdx_kvm_init()
-
-I find the call site. It's caused by kvm_arch_put_register() called in 
-kvm_cpu_exec() because cpu->vcpu_dirty is set to true in kvm_create_vcpu().
-
-Maybe we can do something like below?
-
-8<<<<<<<<<<<<<<<<<<<<<<<<<<<<
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -457,7 +457,9 @@ int kvm_create_vcpu(CPUState *cpu)
-
-      cpu->kvm_fd = kvm_fd;
-      cpu->kvm_state = s;
--    cpu->vcpu_dirty = true;
-+    if (!s->guest_state_protected) {
-+        cpu->vcpu_dirty = true;
-+    }
-      cpu->dirty_pages = 0;
-      cpu->throttle_us_per_full = 0;
-
-> Paolo
+On Tue, Nov 05, 2024 at 04:57:57PM +0100, Phil Dennis-Jordan wrote:
+> The handling for CPUID function 0xD (supported XSAVE features) was
+> improved in a recent patch. Unfortunately, this appears to have
+> introduced undefined behaviour for cases where ecx > 30, as the result
+> of (1 << idx) is undefined if idx > 30.
+> 
+> Per Intel SDM section 13.2, the behaviour for ecx values up to and
+> including 62 are specified. This change therefore specifically sets
+> all registers returned by the CPUID instruction to 0 for 63 and higher.
+> Furthermore, the bit shift uses uint64_t, where behaviour for the entire
+> range of 2..62 is safe and correct.
 > 
 
+Thanks for correcting the regression.
+
+Reviewed-by: Roman Bolshakov <rbolshakov@ddn.com>
 
