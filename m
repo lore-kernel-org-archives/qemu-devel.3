@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8661D59F56
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4902D59F5A
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:49:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8k85-00089A-2W; Wed, 06 Nov 2024 12:47:41 -0500
+	id 1t8k9h-0000SX-JB; Wed, 06 Nov 2024 12:49:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t8k83-00088b-FK
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:47:39 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1t8k9g-0000S2-JB
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:49:20 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t8k81-00071v-Pe
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:47:39 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4315df7b43fso757205e9.0
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:47:36 -0800 (PST)
+ id 1t8k9e-0007X2-QZ
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:49:20 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43162cf1eaaso1077155e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:49:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730915256; x=1731520056; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730915357; x=1731520157; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YZ93fIKCMP7JhbMe+xz5YU8zRYunWzufrvuaSjfxrbU=;
- b=wT7azKmuxvV3vnDLLipY9O1N2c2a7jnRIiAT+50NNGwIfN6E7Tv2u2H7ckQJmL8Gd2
- vJLSIzKnXirDt5Vpkly6eLTvz/szLRoXMzc2a1CcQUcAHVjgxRPf/C8zp8ErDU0pOkkx
- jirfrQMLWWZDa4L4xO0zmXKx9W9ukjS4tRGQIt5DsFOKflCBbfgwR/o1ziJEhM6XI/cO
- sXBNBrpOO8QWQ4SPN52SgMhk2MFWC17Ex2TqjBv2rW8HuPwAt7lDO5M5NGElMIDZv1YL
- 6+7Givzvya7lTka7jOM9NTAXzDUXYeRpgtH56q7NsWA89QCbCHb06cUlRFSJVJofe08H
- Yugw==
+ bh=vU0yxeUeeQjYu+6+Ks5E67A+GOiWsnQ4QMaXjXo138M=;
+ b=Y+CJeJJmA3Pg2jDGrsA1GEwsx+pNVFmcNEwtLOJuRWUkdBFmvSG1Ehn/feX30qhEZW
+ XhpV6+joTE9s/gjB/OGk3VjzmuMzPI8rwmOo9c7gPF6EFw1RbQxp+oUtRRIVLPcPtHmO
+ 2CaIE5tUf1Dp+GobIERo1QhOk2FlBs6LP6y8I4UqQm8rn0GigZgOZlI/msR/H7KyiODO
+ QcjTv1DS2zHkiQ13vs8aR2g1rUcZkUuZA9/ACEYODWjkzd+KyVlP/gbJcymX+ctBv3dr
+ OuO9o1FW8uJKsXqOOo6p5xGmYmOsXbjkyPg+yDU3fuPgXTCH4HKHp646Gr4Jw+A/+++6
+ HPVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730915256; x=1731520056;
+ d=1e100.net; s=20230601; t=1730915357; x=1731520157;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YZ93fIKCMP7JhbMe+xz5YU8zRYunWzufrvuaSjfxrbU=;
- b=C/kq/OsZV/TPdfiPsysE7NLP3FhGa2nOSH95Ta6BfICcrRqefwWO8J/ogyxdxMo/cH
- RUQZgHAc67Mqbt9mBveFaishCFUcCmBVrBgp7ujcjQx/IFBYJmpCAt7L1BBY5gwTAb9J
- cN8vBN6F+uIpkCqQNnNmxrC1HwWWcvmyVfTplaYlaSr8YmzDjpuMIyl3uHVrvOc/yQjW
- jdYMggB3TIvU6ROVhNAya0BZXK6x9gYlXpZ5qHiscgg0oD7Rne5muGrJgE1k7VoldOkq
- YWNM7iPjGxGSjQS3yGk+oRbtcZ5fM544YjvqRX5q2KcSt8s5JJuvISL8padruKNBUvJx
- pq9A==
+ bh=vU0yxeUeeQjYu+6+Ks5E67A+GOiWsnQ4QMaXjXo138M=;
+ b=B6X6EI6w7/r/GrVSBfCQFV9iyPpWAsOdwPtaSiynUn6/ZzhcMrbxC+rYlcpKAceWBg
+ bNP8zpzpUnBZW99y9TQIb9K9dCZqIoIjRMYH1BFM3CAXtPmefiivM7ddVQFRzZnaVuWr
+ lI/dujtVwbN1eT58FrsHibZ3WgGtuXDixCuq4FMmLqYkTsLMaMajn1gLYYLcndIfAm7J
+ 2C2sfJpyicw4t7RwH1Aymk1hMza+6uFmWZwTBfgSzcezATmljMfArsTQ+nHU+oXt6l7c
+ CEiMPe0tIS5giwdtbcgrEzSG0z1/5gXYX1nXxGYZ2breUiuLs3GHwhByFmrNX2vRh5Lb
+ 90+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVxB32QBcFmdmzPQXK58pgiW3UGrW8Dk2Ne29saPMiymzH092DYt03bEFHrsPpDmwj9z1w+YuAUt9bB@nongnu.org
-X-Gm-Message-State: AOJu0YzXXz6QaacOplTpjGho8sUCDCGLhvIIP4O560lE/9b78qHopLFa
- vzYbKWyzrdGs04wk1rLXbYgUDQF0OftC/Bpfb8p5sD/v3zgzlSmphpolOnX7WaM=
-X-Google-Smtp-Source: AGHT+IHMfGixK6oBYA2sqyaV/ISNA0x2tF39s25xLltAzRjipGQIlSXRMsR5LTQNlu0dWbKYkSLErA==
-X-Received: by 2002:adf:fbd2:0:b0:37d:5299:c406 with SMTP id
- ffacd0b85a97d-380611e4b44mr26394339f8f.38.1730915255620; 
- Wed, 06 Nov 2024 09:47:35 -0800 (PST)
+ AJvYcCW0A0NPCvvQyxhjzaclRdWgVZii86pbsaYRCjQzdoutgSikyXwyysRm4EoQcA0W9FJol+g+b20gASrX@nongnu.org
+X-Gm-Message-State: AOJu0Yz9zQkTo10uoaW5X7NxtVQpTk/VqK8aZtN5Qy6VcR1kCNCVAJAK
+ hY25rSI3seQT54M1ycVTOwuJ47BNsIO9sl0hsyt0Iqiew0MAh2+rqZxWCH4bYI8whOJsR9DyW7y
+ w1Zw3Ax6r
+X-Google-Smtp-Source: AGHT+IE/AKTbFhyTqedqbK09JxZklNLz3ZJYMb/JPSuNQWvbVO/GP/yitct6kBe3veftRCJ5oa9XZw==
+X-Received: by 2002:a05:600c:4ec6:b0:431:542d:2599 with SMTP id
+ 5b1f17b1804b1-4328327c4d7mr218939805e9.22.1730915356943; 
+ Wed, 06 Nov 2024 09:49:16 -0800 (PST)
 Received: from [10.134.195.192] ([193.32.126.165])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10b7b32sm19873482f8f.18.2024.11.06.09.47.34
+ 5b1f17b1804b1-432aa6c0414sm30869915e9.23.2024.11.06.09.49.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Nov 2024 09:47:35 -0800 (PST)
-Message-ID: <04fd0b86-4371-494e-a331-3d5d735f0d77@linaro.org>
-Date: Wed, 6 Nov 2024 09:47:33 -0800
+ Wed, 06 Nov 2024 09:49:16 -0800 (PST)
+Message-ID: <511e6589-1a99-4665-9a08-d9cea1f7bee9@linaro.org>
+Date: Wed, 6 Nov 2024 09:49:14 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] eif: cope with huge section offsets
+Subject: Re: [PATCH] eif: cope with huge section sizes
 Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: dorjoychy111@gmail.com
-References: <20241106174241.556373-1-pbonzini@redhat.com>
+References: <20241106174443.557557-1-pbonzini@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241106174241.556373-1-pbonzini@redhat.com>
+In-Reply-To: <20241106174443.557557-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,52 +98,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/6/24 09:42, Paolo Bonzini wrote:
-> Check for overflow to avoid that fseek() receives a sign-extended value.
+On 11/6/24 09:44, Paolo Bonzini wrote:
+> Check for overflow as well as allocation failure.  Resolves Coverity CID 1564859.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   include/qemu/osdep.h | 4 ++++
->   hw/core/eif.c        | 4 ++++
->   2 files changed, 8 insertions(+)
+>   hw/core/eif.c | 48 +++++++++++++++++++++++++++++++++++++++++-------
+>   1 file changed, 41 insertions(+), 7 deletions(-)
 > 
-> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> index fe7c3c5f673..fdff07fd992 100644
-> --- a/include/qemu/osdep.h
-> +++ b/include/qemu/osdep.h
-> @@ -297,6 +297,10 @@ void QEMU_ERROR("code path is reachable")
->   #error building with G_DISABLE_ASSERT is not supported
->   #endif
->   
-> +#ifndef OFF_MAX
-> +#define OFF_MAX (sizeof (off_t) == 8 ? INT64_MAX : INT32_MAX)
-> +#endif
-> +
->   #ifndef O_LARGEFILE
->   #define O_LARGEFILE 0
->   #endif
 > diff --git a/hw/core/eif.c b/hw/core/eif.c
-> index 7f3b2edc9a7..cbcd80de58b 100644
+> index cbcd80de58b..25f2aedf3fa 100644
 > --- a/hw/core/eif.c
 > +++ b/hw/core/eif.c
-> @@ -115,6 +115,10 @@ static bool read_eif_header(FILE *f, EifHeader *header, uint32_t *crc,
+> @@ -123,6 +123,10 @@ static bool read_eif_header(FILE *f, EifHeader *header, uint32_t *crc,
 >   
 >       for (int i = 0; i < MAX_SECTIONS; ++i) {
->           header->section_offsets[i] = be64_to_cpu(header->section_offsets[i]);
-> +        if (header->section_offsets[i] > OFF_MAX) {
-
-Maybe we could add a comment that sections_offsets is unsigned, as it 
-can be confusing to read value > INT_MAX without more context.
-
-> +            error_setg(errp, "Invalid EIF image. Section offset out of bounds");
+>           header->section_sizes[i] = be64_to_cpu(header->section_sizes[i]);
+> +        if (header->section_sizes[i] > SSIZE_MAX) {
+> +            error_setg(errp, "Invalid EIF image. Section size out of bounds");
 > +            return false;
 > +        }
 >       }
 >   
->       for (int i = 0; i < MAX_SECTIONS; ++i) {
+>       header->unused = be32_to_cpu(header->unused);
+> @@ -282,7 +286,12 @@ static bool get_signature_fingerprint_sha384(FILE *eif, uint64_t size,
+>       struct cbor_load_result result;
+>       bool ret = false;
+>   
+> -    sig = g_malloc(size);
+> +    sig = g_try_malloc(size);
+> +    if (!sig) {
+> +        error_setg(errp, "Out of memory reading signature section");
+> +        goto cleanup;
+> +    }
+> +
+>       got = fread(sig, 1, size, eif);
+>       if ((uint64_t) got != size) {
+>           error_setg(errp, "Failed to read EIF signature section data");
+> @@ -324,7 +333,12 @@ static bool get_signature_fingerprint_sha384(FILE *eif, uint64_t size,
+>           error_setg(errp, "Invalid signature CBOR");
+>           goto cleanup;
+>       }
+> -    cert = g_malloc(len);
+> +    cert = g_try_malloc(len);
+> +    if (!cert) {
+> +        error_setg(errp, "Out of memory reading signature section");
+> +        goto cleanup;
+> +    }
+> +
+>       for (int i = 0; i < len; ++i) {
+>           cbor_item_t *tmp = cbor_array_get(pair->value, i);
+>           if (!tmp) {
+> @@ -503,7 +517,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+>                   goto cleanup;
+>               }
+>   
+> -            ptr = g_malloc(hdr.section_size);
+> +            ptr = g_try_malloc(hdr.section_size);
+> +            if (!ptr) {
+> +                error_setg(errp, "Out of memory reading kernel section");
+> +                goto cleanup;
+> +            }
+>   
+>               iov_ptr = g_malloc(sizeof(struct iovec));
+>               iov_ptr->iov_base = ptr;
+> @@ -528,7 +546,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+>                   goto cleanup;
+>               }
+>               size = hdr.section_size;
+> -            *cmdline = g_malloc(size + 1);
+> +            *cmdline = g_try_malloc(size + 1);
+> +            if (!cmdline) {
+> +                error_setg(errp, "Out of memory reading command line section");
+> +                goto cleanup;
+> +            }
+>               if (!read_eif_cmdline(f, size, *cmdline, &crc, errp)) {
+>                   goto cleanup;
+>               }
+> @@ -567,7 +589,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+>                   }
+>               }
+>   
+> -            ptr = g_malloc(hdr.section_size);
+> +            ptr = g_try_malloc(hdr.section_size);
+> +            if (!ptr) {
+> +                error_setg(errp, "Out of memory reading initrd section");
+> +                goto cleanup;
+> +            }
+>   
+>               iov_ptr = g_malloc(sizeof(struct iovec));
+>               iov_ptr->iov_base = ptr;
+> @@ -606,7 +632,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+>               uint8_t *buf;
+>               size_t got;
+>               uint64_t size = hdr.section_size;
+> -            buf = g_malloc(size);
+> +            buf = g_try_malloc(size);
+> +            if (!buf) {
+> +                error_setg(errp, "Out of memory reading unknown section");
+> +                goto cleanup;
+> +            }
+>               got = fread(buf, 1, size, f);
+>               if ((uint64_t) got != size) {
+>                   g_free(buf);
+> @@ -662,7 +692,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+>               goto cleanup;
+>           }
+>   
+> -        ptr = g_malloc(machine_initrd_size);
+> +        ptr = g_try_malloc(machine_initrd_size);
+> +        if (!ptr) {
+> +            error_setg(errp, "Out of memory reading initrd file");
+> +            goto cleanup;
+> +        }
+>   
+>           iov_ptr = g_malloc(sizeof(struct iovec));
+>           iov_ptr->iov_base = ptr;
 
-Else,
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
 
