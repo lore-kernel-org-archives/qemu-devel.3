@@ -4,83 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6249ED59F7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 22:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A08CD59F75
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 22:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8oww-0007aw-Mt; Wed, 06 Nov 2024 17:56:30 -0500
+	id 1t8ox8-0007uk-JZ; Wed, 06 Nov 2024 17:56:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8owu-0007aa-7x
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 17:56:28 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8ows-0002ZR-M0
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 17:56:28 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43167ff0f91so3215435e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 14:56:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730933785; x=1731538585; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4XSkS0nndTi7QVOx8hXqnft7dLkjB0YNG0pZTjCZTKA=;
- b=iRXhuyytv5d521Rmei7j6TjJ/Mc7yg5SQ/nPw6HaE8t5h/VeiyQi4r0L+g1bQUcGYT
- 1EtljAdbZSPQda4bbLFi5Ytisj5LxSwZPiruwsWax6OORD3h2FX+bRQGUCm9HU3vBocj
- BNSuno/CJU6WUkH0rBIjffDfeWHdlz92f9A7pSORBhpNcGCi1Sa4JTy2zSY9I4915mri
- Sc+jR35LEOo4DJbsyPkC38XedIHiOvHS50IX6/xlM1GztqziR2fJ7rdTm2gUKJ0ZWB/C
- MVCsRAQ3zr64g473LmAU5552hJiwj73WmVFbUA1Gbzz6nwE3wUQLFnwwuRzMvE+tU78l
- mD9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730933785; x=1731538585;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4XSkS0nndTi7QVOx8hXqnft7dLkjB0YNG0pZTjCZTKA=;
- b=ike8lJ2VXLpVCxAAh7uSEGxkkNZsveD/JS8dqW5tJhu2kPYEFwyl3yzVTPE0ATZ8WE
- 2IkAuYgQUOP7RUp/eNQ0yqRxH8xFlegBmg0qVbFq6zo/xNhc9RtEvv8laylvrsWCfgTQ
- yOOIr1RNJedM1Vyxopt3hyDO3DNJR8gY3Rok8xC54DdF2co7Ro8goPfG+FpzHw87tzaR
- kLbb7GVTbKrxPcXYPj4g5oC6CNtg/3/b4aXm2hQCTeUu8ylWJSFgsUDQL7uHJECs5/MM
- +omoCUJF9/HjM3E4n/OOb7wNEP7eI0+sh2WRBd9AnnZ3myRaVifnF0bW7Tg8QLGIcNkM
- Flqw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXql8N+/f6A2vnWlCX66Toyc+xO5m+epBIZRiyDt/pLbHCs6YufXi1H8kudahmlGrp4p28e8voVAly8@nongnu.org
-X-Gm-Message-State: AOJu0YzxVnF9rXqGU4D8F2Aq7+7XGLMpFQRj7AUbTZi1D1zfI94c+R9p
- ZWA74tU9lnKemoyhwJoa0hfIoaF9/9j6Uh2jtM87KorP0UAZuIE6V7qrJdHOC2af6V8Pz5PAkQl
- Y
-X-Google-Smtp-Source: AGHT+IEErNUel2DeKMw7DY/DK8YdOa2C06oluKwWlVeNuZow4A+tcoFpkznF/guj3h9be2KKZp1QWA==
-X-Received: by 2002:a5d:64c8:0:b0:37c:cc96:d1ce with SMTP id
- ffacd0b85a97d-381be7c863amr22189528f8f.24.1730933784756; 
- Wed, 06 Nov 2024 14:56:24 -0800 (PST)
-Received: from [172.20.143.32] ([89.101.241.141])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed97d658sm24131f8f.39.2024.11.06.14.56.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Nov 2024 14:56:24 -0800 (PST)
-Message-ID: <2ee0bab1-1baa-4b52-9856-4c1fa4c9ef0e@linaro.org>
-Date: Wed, 6 Nov 2024 22:56:23 +0000
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t8ox6-0007k5-Br
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 17:56:40 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t8ox4-0002aN-RQ
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 17:56:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=vPYua6EHEWEq/K0JkQ0LEICGjtmS8znNO+vD/x/Hz6M=; b=yi3a4QFJbaHjJMAE1MMOtblf/B
+ jBBQW5JztSPJo8FiHX2FETYDSdv11VTzfszZoHFXbwuZZRROlVbdFnLZ685oW3kS0fjy1G/6I3KDl
+ Mn3Br/PA51aCDXvbk3ys1SUKG9/bL332iOKhgI2RNbQPuvxeEIcFdggDUur96WcWkNlEzj31a+/2I
+ S76L5YDZPRXhtYe8+fWlXdeaPcF6NQryMrk+eDmgg/zj4dKUb3aDA5zYp93ugcZk7W+qrFVZWZWHd
+ Lh6JvfDbz1zVCtVdajaMNXuUF+rzGkbu+cSNjQMvhrOcQeS3DMdhA8U6p42MX+FbedI5z8AcwVmO0
+ 98Iq27ZhwmE9jJ7A3uWHTpT59cffbshRY9r6TOfoNL+pkADvb9MuU8NuPx9Ki+5HGkGTbjoUZqDML
+ DZ/27gAVeUgRbUJBsZBzGFZKOZPUkWA3IoI4/GBfh6g1M12gNLo6Z2WlJUxBK2tKv2OynVFeItbon
+ Ek5Dy52QdURAhixRShSQbYFK1rISHm2tXNyi9waAvsWkYx5P0OyvI0PSunMxIzF75/MJcMfUBqZWj
+ tXPK7qYlV2l1yPMmsILBEgHJoNXrdzuXWAojEJSL2Wyht/SVgJ7bzA16YAWy4USrldY6C5p0wdmI3
+ mWTS5vGl63k5/Yj/SvY2FSBHxGGgcgRtjrbfyXxQI=;
+Received: from [2a00:23c4:8bb8:f600:5c84:8fbb:e5d9:991a]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1t8owe-0005r0-2z; Wed, 06 Nov 2024 22:56:16 +0000
+Message-ID: <3b172279-ee99-4a04-bf6e-fdf6511215d4@ilande.co.uk>
+Date: Wed, 6 Nov 2024 22:56:30 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rust: pl011: fix device id matching
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20241106185136.582198-1-pbonzini@redhat.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ xen-devel@lists.xenproject.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <huth@tuxfamily.org>,
+ Jia Liu <proljc@gmail.com>, Stafford Horne <shorne@gmail.com>,
+ Paul Durrant <paul@xen.org>, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20241106184612.71897-1-philmd@linaro.org>
+ <20241106184612.71897-6-philmd@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241106185136.582198-1-pbonzini@redhat.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20241106184612.71897-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:5c84:8fbb:e5d9:991a
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 5/5] hw/sparc: Mark devices as big-endian
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,17 +115,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/11/24 18:51, Paolo Bonzini wrote:
-> The offset that is compared against 0x3f8..0x400 is not shifted right.
-> Adjust the pattern matching.
-> 
-> Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   rust/hw/char/pl011/src/device.rs | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+On 06/11/2024 18:46, Philippe Mathieu-Daudé wrote:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> These devices are only used by the SPARC targets, which are
+> only built as big-endian. Therefore the DEVICE_NATIVE_ENDIAN
+> definition expand to DEVICE_BIG_ENDIAN (besides, the
+> DEVICE_LITTLE_ENDIAN case isn't tested). Simplify directly
+> using DEVICE_BIG_ENDIAN.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/sparc/sun4m_iommu.c | 2 +-
+>   hw/sparc64/sun4u.c     | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/sparc/sun4m_iommu.c b/hw/sparc/sun4m_iommu.c
+> index 6f765e97e4..4486508e3b 100644
+> --- a/hw/sparc/sun4m_iommu.c
+> +++ b/hw/sparc/sun4m_iommu.c
+> @@ -238,7 +238,7 @@ static void iommu_mem_write(void *opaque, hwaddr addr,
+>   static const MemoryRegionOps iommu_mem_ops = {
+>       .read = iommu_mem_read,
+>       .write = iommu_mem_write,
+> -    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .endianness = DEVICE_BIG_ENDIAN,
+>       .valid = {
+>           .min_access_size = 4,
+>           .max_access_size = 4,
+> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+> index 541c7f74fa..9d7aebf632 100644
+> --- a/hw/sparc64/sun4u.c
+> +++ b/hw/sparc64/sun4u.c
+> @@ -254,7 +254,7 @@ static void power_mem_write(void *opaque, hwaddr addr,
+>   static const MemoryRegionOps power_mem_ops = {
+>       .read = power_mem_read,
+>       .write = power_mem_write,
+> -    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .endianness = DEVICE_BIG_ENDIAN,
+>       .valid = {
+>           .min_access_size = 4,
+>           .max_access_size = 4,
+
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+
+
+ATB,
+
+Mark.
 
 
