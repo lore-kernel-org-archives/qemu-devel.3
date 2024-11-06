@@ -4,100 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E78D29FB1
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 07:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32FDFD29FB1
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 07:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8aes-0000nE-1u; Wed, 06 Nov 2024 02:40:54 -0500
+	id 1t8aen-0000mY-Lk; Wed, 06 Nov 2024 02:40:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aik@ozlabs.ru>)
- id 1t8Y9Q-0007Zj-HV; Wed, 06 Nov 2024 00:00:18 -0500
-Received: from fhigh-b2-smtp.messagingengine.com ([202.12.124.153])
+ (Exim 4.90_1) (envelope-from <chorn@redhat.com>) id 1t8WWB-000125-KY
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 22:15:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aik@ozlabs.ru>)
- id 1t8Y9N-00027b-4S; Wed, 06 Nov 2024 00:00:16 -0500
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal
- [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id A926825400EE;
- Wed,  6 Nov 2024 00:00:10 -0500 (EST)
-Received: from phl-imap-13 ([10.202.2.103])
- by phl-compute-06.internal (MEProxy); Wed, 06 Nov 2024 00:00:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ozlabs.ru; h=cc
- :cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1730869210;
- x=1730955610; bh=BHfOnqcqoXy7rsqCUxwdB7yylXgSLGh4bZMHyx+iXvE=; b=
- bh1rKjdnq8oePnDl5Ec7tXR4EhakNxUpaIYDf3Ni7i22jrlx8IHh/O+JtREm1t+X
- qTJJNGr5dmc8tcarGtiFikvkuA1pbBqnVWaKOkhykXxW43Uj1Pp29905lyzp0mhB
- 4N3hoeJNoJZ4jg21yGHxsOspSB2AggEcHNW2oC2w2Nxt5YHLY0AFAo0nB08CYFjR
- X7OJ0H9a789w5EhSqTIpX3+W+UnTES9g10hPUtf0f67UWWni8OXu/k63rilNAjrD
- U11GoVCEiAYzYs3K3ILafufnbIQXoUmCcuBfSJv8VPOh6DPjvmO2sanQPpq34bg8
- pq/4B0d2a7RiSLaao/wfaA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1730869210; x=
- 1730955610; bh=BHfOnqcqoXy7rsqCUxwdB7yylXgSLGh4bZMHyx+iXvE=; b=V
- jXPDfnHqXJquxQg/UaIGWkW5glycmRTg8q/Qr0ZsvRa43YM7uOBG1I4OkpacCTY4
- f2GTKY//4H5LwgH0OAZDIF1UI64eVgyYWjwMREiDIeV0Tf3/XwWwOWNHxVg6hEbS
- ZowQUkHjjCYibMYMPzO5kbFUYA56k9W76LSJVCgo+26pakplstXygI7LnzRtnaeo
- j0fprsvPeh01LqDr9GUMhOa+58gx7oU7NzUduUJY/sRWcLPVHALBxMtStxiXBr5K
- zOejQLLLqqxAGDJli726psm14Ynbk5Cj907HyFYsbDWUPZAjVchU8flSzdtYNplV
- wgrra9ysG6cHdi6DiZVsQ==
-X-ME-Sender: <xms:2fcqZ9DWU0BkFwVRbweZ2rLRXSO_Kz7_2g7bN3_ap0Uc19QIV988EQ>
- <xme:2fcqZ7hyZ2btTEoFqCTDn77xVyufxfmaTthX_MRmAaDYYOw4H3z0XfAqorT2trdG7
- -3PSKFu6Gm9EQi97Wg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddugdejkecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
- tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
- hsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredttden
- ucfhrhhomhepfdetlhgvgigvhicumfgrrhgurghshhgvvhhskhhihidfuceorghikhesoh
- iilhgrsghsrdhruheqnecuggftrfgrthhtvghrnhepuefgueehieefvdejueetveffhfev
- tdfgkedttdeifefhieegjedtfffgudektdehnecuffhomhgrihhnpehgihhtlhgrsgdrtg
- homhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegr
- ihhksehoiihlrggsshdrrhhupdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpoh
- huthdprhgtphhtthhopehnphhighhgihhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
- tghlgheskhgrohgurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhngh
- hnuhdrohhrghdprhgtphhtthhopehqvghmuhdqphhptgesnhhonhhgnhhurdhorhhgpdhr
- tghpthhtohepthhhuhhthhesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:2fcqZ4mAHdRaViFPzlWq6ajXdksAHbRvwldw2dsYhSDsLEjtLkuTRg>
- <xmx:2fcqZ3w8OmMCEJVVg1LtswrtYdppmqOIDb_z66Zl2KJE0h7lTVynSA>
- <xmx:2fcqZyTtthiGD4dQ2L5I3AvikqKbwk9waOZZ8jZc-C5YSFvnreFIhA>
- <xmx:2fcqZ6bsBzUhZN-r814a8m6GVtJdl828QYdFj-CI9jZJht8Q4dxSTQ>
- <xmx:2vcqZxGQpP4iXX4e-yRegM8piodepjqLthBJGIAcpfoAnqiofvAT4rc->
-Feedback-ID: i6e394913:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id BB5C31F00072; Wed,  6 Nov 2024 00:00:09 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <chorn@redhat.com>) id 1t8WW8-0001UW-Bu
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 22:15:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730862934;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=n/KipcbBRT4XOBxzAS4ftSgnTLWDa+d9I1ht3Jhr9NY=;
+ b=ZoVwKLr/ecmysQXx8jGLbnHxPiVG0/RVrqTvAJwlrTMpcwspfqUZxBjaHTFHYiibd0lNGh
+ 2c0cU4DFufLwGcsAnD59ltPxzSK4fg7qKMFhDm+vV8jgjkXFH12dO8n86brkXgE7ro3jjZ
+ 2laT1EWabg/1hP4UEKbA5Fz/78URsLA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-492-uGHUeRyhMniJbzfGqJgG_w-1; Tue,
+ 05 Nov 2024 22:14:20 -0500
+X-MC-Unique: uGHUeRyhMniJbzfGqJgG_w-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 351081956046; Wed,  6 Nov 2024 03:14:19 +0000 (UTC)
+Received: from localhost (unknown [10.64.240.58])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DFF19300018D; Wed,  6 Nov 2024 03:14:16 +0000 (UTC)
+Date: Wed, 6 Nov 2024 12:14:14 +0900
+From: Christian Horn <chorn@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Anthony Harivel <aharivel@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ pbonzini@redhat.com, mtosatti@redhat.com, qemu-devel@nongnu.org,
+ vchundur@redhat.com, rjarry@redhat.com, nathans@redhat.com,
+ kenj@kenj.id.au, sunyanan.choochotkaew1@ibm.com, vibhu.sharma2929@gmail.com
+Subject: Re: [PATCH v6 0/3] Add support for the RAPL MSRs series
+Message-ID: <ZyrfBnnFpTbKTubw@asahi.local>
+References: <20241018142526.34a2de0a@imammedo.users.ipa.redhat.com>
+ <ZxJbtkMO1QcoiqVn@redhat.com>
+ <20241022144615.203cf0da@imammedo.users.ipa.redhat.com>
+ <ZxelgDeuZaia-Vqf@redhat.com>
+ <D52ED9BSZU9P.32LYD3328YTTN@redhat.com>
+ <20241101160934.42d46c9f@imammedo.users.ipa.redhat.com>
+ <D5BL7KCTSON6.36X2ZEWWQUIQ1@redhat.com>
+ <20241104104900.1a2a0193@imammedo.users.ipa.redhat.com>
+ <ZynFEr2vSeApNGG-@fluxcoil.net>
+ <20241105131927.5a038d3f@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
-Date: Wed, 06 Nov 2024 15:59:48 +1100
-From: "Alexey Kardashevskiy" <aik@ozlabs.ru>
-To: "Nicholas Piggin" <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- "Thomas Huth" <thuth@redhat.com>
-Message-Id: <a68316c9-475a-4549-a56e-930b94cde052@app.fastmail.com>
-In-Reply-To: <20241106045720.599720-1-aik@ozlabs.ru>
-References: <20241106045720.599720-1-aik@ozlabs.ru>
-Subject: Re: [PULL SUBSYSTEM qemu-pseries] pseries: Update SLOF firmware image
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=202.12.124.153; envelope-from=aik@ozlabs.ru;
- helo=fhigh-b2-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20241105131927.5a038d3f@imammedo.users.ipa.redhat.com>
+X-Organization: Red Hat K.K.
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=chorn@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 06 Nov 2024 02:40:50 -0500
+X-Mailman-Approved-At: Wed, 06 Nov 2024 02:40:42 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -112,41 +98,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Of course, I meant Nick :-) Sorry for the noise.
+* Igor Mammedov =E3=81=95=E3=82=93=E3=81=8C=E6=9B=B8=E3=81=8D=E3=81=BE=E3=
+=81=97=E3=81=9F:
+> On Tue, 5 Nov 2024 08:11:14 +0100
+> Christian Horn <chorn@fluxcoil.net> wrote:
+>=20
+> > - For reading the metrics in the guest, I was tempted to suggest PCP wi=
+th
+> >   pmda-denki to cover RAPL, but it's right now just reading /sysfs, not
+> >   MSR's.  pmda-lmsensors for further sensors offered on various systems,
+> For NVF usecase, I also was eyeing pmda-denki.
+>=20
+> How hard it would be to add MSR based sampling to denki?
+> Can we borrow Anthony's MSR sampling from
+> qemu-vmsr-helper, to reduce amount of work needed.
 
-On Wed, 6 Nov 2024, at 15:57, Alexey Kardashevskiy wrote:
-> The following changes since commit bd4be4d9bd20a252e677239a18b6409ecee98f56:
-> 
->   MAINTAINERS: Remove myself as reviewer (2024-11-04 10:09:36 +1000)
-> 
-> are available in the Git repository at:
-> 
->   git@github.com:aik/qemu.git tags/qemu-slof-20241106
-> 
-> for you to fetch changes up to 3866b650d567f79e78d6bd35cb9b7143258da052:
-> 
->   pseries: Update SLOF firmware image (2024-11-06 15:40:53 +1100)
-> 
-> ----------------------------------------------------------------
-> Alexey Kardashevskiy (1):
->       pseries: Update SLOF firmware image
-> 
-> pc-bios/README   |   4 ++--
-> pc-bios/slof.bin | Bin 995000 -> 996184 bytes
-> roms/SLOF        |   2 +-
-> 3 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> 
-> *** Note: this is not for master, this is for pseries
-> 
-> This adds TPM pass through API.
-> Also, moves SLOF from github to gitlab: the idea is to make SLOF
-> a proper QEMU subproject but I am not quite sure what this means.
-> 
-> Do I push changes to https://gitlab.com/qemu-project/SLOF.git [1] ?
-> Or I push to https://gitlab.com/slof/slof [2] and someone then
-> configures that sync script to pull [2] and push to [1]?
-> Or something else entirely? Thanks,
-> 
-> 
+Should be possible.  Also for /sysfs we do a detection of domains, and
+based on that register metrics and instances with pmcd.  For rapl-msr,
+that could be done in a similiar way, i.e. as denki.rapl-msr,
+or separating into denki.rapl.sysfs and denki.rapl.msr .
+
+As for the actual doing, I'm not part of the engineering org but
+support, so it's a spare time activity, when I get to it.  PCP
+engineering has people on the project, a Jira would be a first step.
+Direct pull requests to upstream are also a good start of course.  When
+developing that, one would in cycles modify src/pmdas/denki/denki.c,
+compile it, get pmcd to use the modified pmda-denki, look at debug
+output and metrics.
+
+
+> Also, for guest per vCPU accounting, we would need per thread
+> accounting (which I haven't noticed from a quick look at denki).
+> So some effort would be needed to add it there. =20
+
+I think we have these metrics in pmcd already from pmda-linux, i.e. we
+can see them with this:
+# pmrep -1gU -t 5 -J 3 proc.hog.cpu [..]
+[ 1] - proc.hog.cpu["083377 /usr/lib64/firefox/firefox"]
+[ 2] - proc.hog.cpu["084634 /usr/lib64/firefox/firefox"]
+[ 3] - proc.hog.cpu["085225 md5sum"]
+         1         2         3
+     0.001     0.003    16.304
+=3D> Top 3 consumers, process 3 is heaviest.
+This uses derived metrics, computes from others, defined here:
+$ cat /etc/pcp/derived/proc.conf
+[..]
+proc.hog.cpu =3D 100 * (rate(proc.psinfo.utime) + rate(proc.psinfo.stime)) =
+/ (kernel.all.uptime - proc.psinfo.start_time)
+proc.hog.cpu(oneline) =3D average percentage CPU utilization of each process
+[..]
+
+I was brainstorming with Nathan about this in the past, but we did
+not quickly get to something and lost track. =20
+Following the PCP approach, a client would query the required metrics
+=66rom pmcd (i.e. "process md5sum is right now using most cpu cycles"),
+and together with "the overall VM or bare-metal-system consumes right
+now 100W", one could attribute.  We might get away with derived=20
+metrics as per above.  If the computation is not doable with that, we
+might also use own client code (i.e. C, or python) which gets the
+metrics and computes the accounting per thread.
+Last resort would be to collect the required process metrics in=20
+pmda-denki for computation there.
+
+We might want to take this one out and discuss on PCP upstream,
+i.e. pcp@groups.io .
+
+
+> I didn't know about pmda-lmsensors, I guess we should be able to use
+> it out of box with 'acpi power meter' sensor, if QEMU were to provide suc=
+h.
+> I've also seen denki supporting battery power sensor, we can abuse that
+> and make QEMU provide that, but I'd rather add 'acpi power meter' sensor
+> to denki (which to some degree intersects with battery power sensor
+> functionality).
+
+On this aarch64/Asahi macbook here, recent kernels made=20
+/sys/class/hwmon/hwmon1 available, and 'sensors' offers:
+[chris@asahi sensors]$ sensors
+[..]
+Total System Power:       7.71 W
+AC Input Power:           9.99 W
+3.8 V Rail Power:         0.00 W
+Heatpipe Power:           2.46 W
+[..]
+
+I'm still wondering how these fit into a picture like this one:
+https://htmlpreview.github.io/?https://github.com/christianhorn/smallhelper=
+s/blob/main/pmda-denki-handbook/denki.html#_hardware_requirements_new_versi=
+on
+So with these also overall system consumption is available while AC
+powered - of course, just that hardware right now.
+
+> PS:
+> In this series Anthony uses custom protocol to get data from
+> privileged MSR helper to QEMU. Would it be acceptable?
+
+The only request would be that implementing that is "an optional ontop
+source", so not preventing MSR access from bare metal hosts not having
+it.  I guess that's given.  So then it's an abstracted channel we
+provide into the guest.
+
+> Or is there a preferred way for PCP to do inter-process comms?
+
+Hm.. I thought this was here used to communicate between host and guest?
+
+On the good side, if we get the per-thread-attribution done, we can
+illustrate attribution up into guests with what mermaid calls sankey:
+https://mermaid.js.org/syntax/sankey.html  :)
+
+cheers,
+--=20
+Christian Horn
+AMC Technical Account Manager, Red Hat K.K.
+pgp fprint ADA6 C79C AF2E 973E 3F70  73C5 9373 49E7 347B 904F
+
 
