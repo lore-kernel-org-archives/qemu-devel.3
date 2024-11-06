@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A64D5D44D41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 10:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11FC7D44D42
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 10:28:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8d1l-00055w-2r; Wed, 06 Nov 2024 05:12:41 -0500
+	id 1t8dG1-0008MC-NS; Wed, 06 Nov 2024 05:27:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8d1i-0004xC-LT
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 05:12:38 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t8dFz-0008LP-Lj
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 05:27:24 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8d1f-0004Bf-Ss
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 05:12:37 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4316a44d1bbso55922715e9.3
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 02:12:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t8dFx-000071-0j
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 05:27:22 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5c984352742so7952461a12.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 02:27:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730887954; x=1731492754; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3qE8rQuao7lnhN+cRNtlux0D4PWyrNP+SuujFo3WvSE=;
- b=XTUbtO8Cqwus2ufOK8B2Y9ydJP8YshBPKar3elD4CQGB81PT5vQjnRtXYd3m9FkhLu
- AXbQ+/1Sq1GWKtFL3FfsQM4/9xcOysVVA2d2M9WMSMqCcNF/GAHexNSOgk91Nr/UO28o
- cFe3urqO2alPiB2nCtjP1i0rcvEK/94+DP2ivtfORWwyZVS+2w9xu5YP0p6cvlx56NQI
- qnFgDH+32SdlFQB5koCNr40DnVuGxeEwwWrE2HsaGlGmzpYO1lWuqR5zU29W76wbMG9x
- qCVPUulffZX/oaVFabaN7rApC0YOyyF6X4JT46Cetw0uhWxZ8ipF6ZzUl/ehncRKb3yk
- RKzg==
+ d=linaro.org; s=google; t=1730888834; x=1731493634; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UnTHeVDTU+WUKoHgKPgKiaAKXCx5otbVlpqljeqLliQ=;
+ b=PbdmqboOggrPMZBS+tnWhVpkkqQyXhuoqHoHO4o01j/8Vmnx8jEbpnMRdqSq8gRBes
+ WKr7ROgMBkiFec16uAcKUq5jiQxvTOD3elOLVUUVhxD7LetkZoOTSToXW8RV9AuwPceB
+ Lq3MmlGCGIzNGjC4YudI5muB3K33VZP+9d+uCGNLs+WNID+6n/v7KSaNJ5nmv/5Y7/8J
+ Bd2qDBQ8/nN2t2PfF/xkJCxy6T1jiiJ+Cb/J31oGyzacKRYsAcXdsW8I8XugmLj8UegY
+ EkFbYi/zuGUgoQP5tC7Fxa5b5GtTpIw4XJDQ4tfeODbng5kRxMtveqOn3dT/ZLvS0Tz/
+ CEfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730887954; x=1731492754;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3qE8rQuao7lnhN+cRNtlux0D4PWyrNP+SuujFo3WvSE=;
- b=BXZuXaQLDHgP8nxR1npA2zZmkFxy/EDfHY2mOEpXhqq/rBV1kzpnd/LDlgLPaxxzX7
- 226t9GL+U800lAXPGxs2+GgALzeJZb4JrNxnfyiLcS4aRgUb5Vi124Ypc4HqoDqI9Fse
- ctZ7NIqDZkY37aehT1Sc6GC7KAnj8VD0oeVndZ7jSOt9uIcz5wifzST82hHxVzfAVRpk
- kO0MV8vc7hY8BRIgDHmxXKGreR7KkviOPOV3qBYoSIJZ0K0wBxJnfokjzn3DQUdBZcGR
- iac/bkMg6MSZ0JaU2R2am5MTpJHXdbQRRcuqOWAUfPoWqNTCxp4xe/gu3Has8L6FPLbS
- hatg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEwXlU/9ajMBQz6K8d5tblwGdW+L1YpKY/aEFHaSXKFWuZGetcLk1TnU251y/TXR1ur/t6p0Fi0tzg@nongnu.org
-X-Gm-Message-State: AOJu0Yze5aWisQBPaIl1i06PagewnTLQlHfeQG8y7bApcA57u/5Mq1i3
- Qykx8YgIOxH+bqkZ4MwrjkWeEGohEyPGn9VZ/I9NstjAF0aPqxm15xXpz9Qyrf48K7EOYaQbyU3
- eRRM=
-X-Google-Smtp-Source: AGHT+IFZN5MrmIAVYEparsyYacIO83E/VYEVShcXoPAmwEbtatg+OWmnIbV0kUaMX9OyQZncRSM7Iw==
-X-Received: by 2002:a05:600c:3b0e:b0:431:5f9e:3f76 with SMTP id
- 5b1f17b1804b1-4327b6fd2b0mr191971725e9.16.1730887952047; 
- Wed, 06 Nov 2024 02:12:32 -0800 (PST)
-Received: from [172.16.23.118] ([89.101.241.141])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa6e70cesm16718075e9.35.2024.11.06.02.12.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Nov 2024 02:12:31 -0800 (PST)
-Message-ID: <287d45b1-ce3c-4840-a685-ada84f57d32c@linaro.org>
-Date: Wed, 6 Nov 2024 10:12:29 +0000
+ d=1e100.net; s=20230601; t=1730888834; x=1731493634;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UnTHeVDTU+WUKoHgKPgKiaAKXCx5otbVlpqljeqLliQ=;
+ b=taQfdcbHBvSRAR5CIz3hVFdMUtlgiG0B9bMTzmHE9Rl5YXAlHlz/BqPuqlVz3qGs1M
+ 2nxFMMwKL2TBaXkjd5yf3+JufbH56vYry6uYZ1MAqFOzMBmj4Eu24CVo4FHya4yPJhVL
+ zB9CkcEGCGo6xZWi/8yNq+IFiTE/FZ7lREYIS3iPwYCDLRd5oc/TEkkDcGszFcnE3J81
+ Sm3W4IB9bOmcY2H3iWkarOB4dGTQ7TwgEGDzzBu4Go+ul+efviIOk5N29xI9dxUSS7IT
+ PgyMm/0g1/BHojmjOuSWps4nxVIYHokmrD23rpxegv5GbpuIjsQzitqQ1UZt8ZWozxjt
+ LtwQ==
+X-Gm-Message-State: AOJu0Yzp99i2ARs5UU4nQtmg1Hd7ChIwzJr04b6Xa4zMHpI5M4+QuiZ4
+ +joypNCmBX9TQ904IITWsHm29oqtY+UcPIpSsPb4dnshDtvKSA8+6Aua6zkHV/E=
+X-Google-Smtp-Source: AGHT+IHhxdPqS9iAtR/FkIxOgArMfEBnViUGJ45oR5Uf3MQhchVJW4K7Krn9Zd58Opr7qggQ4GqCKw==
+X-Received: by 2002:a05:6402:849:b0:5ca:e5d:f187 with SMTP id
+ 4fb4d7f45d1cf-5cbbf8b4f45mr33498331a12.17.1730888834291; 
+ Wed, 06 Nov 2024 02:27:14 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5cee6afe425sm2533035a12.59.2024.11.06.02.27.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Nov 2024 02:27:13 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6D77A5F8E0;
+ Wed,  6 Nov 2024 10:27:11 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Wainer dos
+ Santos Moschetta <wainersm@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2] tests: refresh package lists with latest libvirt-ci
+In-Reply-To: <20241105162002.359227-1-berrange@redhat.com> ("Daniel P.
+ =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 5 Nov 2024 16:20:02 +0000")
+References: <20241105162002.359227-1-berrange@redhat.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Wed, 06 Nov 2024 10:27:11 +0000
+Message-ID: <877c9gejy8.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Fix setreuid and setregid to use direct
- syscalls
-To: Helge Deller <deller@kernel.org>, Laurent Vivier <laurent@vivier.eu>,
- Peter Maydell <peter.maydell@linaro.org>,
- Riku Voipio <riku.voipio@linaro.org>, qemu-devel@nongnu.org
-References: <Zyo2jMKqq8hG8Pkz@p100>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <Zyo2jMKqq8hG8Pkz@p100>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,78 +99,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/24 15:15, Helge Deller wrote:
-> The commit fd6f7798ac30 ("linux-user: Use direct syscalls for setuid(),
-> etc") added direct syscall wrappers for setuid(), setgid(), etc since the
-> system calls have different semantics than the libc functions.
-> 
-> Add and use the corresponding wrappers for setreuid and setregid which
-> were missed in that commit.
-> 
-> This fixes the build of the debian package of the uid_wrapper library
-> (https://cwrap.org/uid_wrapper.html) when running linux-user.
-> 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> 
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index 59b2080b98..0279f23576 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -7233,12 +7233,24 @@ static inline int tswapid(int id)
->   #else
->   #define __NR_sys_setgroups __NR_setgroups
->   #endif
-> +#ifdef __NR_sys_setreuid32
-> +#define __NR_sys_setreuid __NR_setreuid32
-> +#else
-> +#define __NR_sys_setreuid __NR_setreuid
-> +#endif
-> +#ifdef __NR_sys_setregid32
-> +#define __NR_sys_setregid __NR_setregid32
-> +#else
-> +#define __NR_sys_setregid __NR_setregid
-> +#endif
->   
->   _syscall1(int, sys_setuid, uid_t, uid)
->   _syscall1(int, sys_setgid, gid_t, gid)
->   _syscall3(int, sys_setresuid, uid_t, ruid, uid_t, euid, uid_t, suid)
->   _syscall3(int, sys_setresgid, gid_t, rgid, gid_t, egid, gid_t, sgid)
->   _syscall2(int, sys_setgroups, int, size, gid_t *, grouplist)
-> +_syscall2(int, sys_setreuid, uid_t, ruid, uid_t, euid);
-> +_syscall2(int, sys_setregid, gid_t, rgid, gid_t, egid);
->   
->   void syscall_init(void)
->   {
-> @@ -11932,9 +11944,9 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
->           return get_errno(high2lowgid(getegid()));
->   #endif
->       case TARGET_NR_setreuid:
-> -        return get_errno(setreuid(low2highuid(arg1), low2highuid(arg2)));
-> +        return get_errno(sys_setreuid(low2highuid(arg1), low2highuid(arg2)));
->       case TARGET_NR_setregid:
-> -        return get_errno(setregid(low2highgid(arg1), low2highgid(arg2)));
-> +        return get_errno(sys_setregid(low2highgid(arg1), low2highgid(arg2)));
->       case TARGET_NR_getgroups:
->           { /* the same code as for TARGET_NR_getgroups32 */
->               int gidsetsize = arg1;
-> @@ -12264,11 +12276,11 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
->   #endif
->   #ifdef TARGET_NR_setreuid32
->       case TARGET_NR_setreuid32:
-> -        return get_errno(setreuid(arg1, arg2));
-> +        return get_errno(sys_setreuid(arg1, arg2));
->   #endif
->   #ifdef TARGET_NR_setregid32
->       case TARGET_NR_setregid32:
-> -        return get_errno(setregid(arg1, arg2));
-> +        return get_errno(sys_setregid(arg1, arg2));
->   #endif
->   #ifdef TARGET_NR_getgroups32
->       case TARGET_NR_getgroups32:
-> 
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Queued, thanks.
+> This updates the libvirt-ci  submodule to pull in various fixes,
+> the most notable reducing native package sets in cross builds.
+> Some packages were mistakenly marked as native, rather than
+> foreign, in libvirt-ci. Fixing this causes our dockerfiles to
+> pick up the cross arch package instead of native one, thus
+> improving our test coverage in a few areas.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-r~
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
