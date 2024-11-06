@@ -4,98 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE79D44D57
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 12:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1C8D44D54
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 12:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8eyX-0003X4-IR; Wed, 06 Nov 2024 07:17:29 -0500
+	id 1t8f0q-0004G9-RM; Wed, 06 Nov 2024 07:19:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t8eyU-0003Wp-Rx; Wed, 06 Nov 2024 07:17:26 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t8f0o-0004Fm-2T
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:19:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t8eyS-0000q4-Tt; Wed, 06 Nov 2024 07:17:26 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 86642A0407;
- Wed,  6 Nov 2024 15:16:30 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D24851658A3;
- Wed,  6 Nov 2024 15:17:20 +0300 (MSK)
-Message-ID: <88755100-7629-4207-80d7-6a7f8f7f0403@tls.msk.ru>
-Date: Wed, 6 Nov 2024 15:17:20 +0300
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t8f0k-0002jQ-TZ
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:19:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730895584;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0WnDAuoVKdl5A0sKOcF5BPeamPx1yBcPuUCKFshk8m0=;
+ b=cketFJWuo6aKrEBhA6eSM03M4vp9gVgfQUdJB1v6mS06o+GDLDWJjB71WnAWJIc+9nIEgQ
+ naI8Jl8kfaafoIMoLUvoGLDI3/4jDlLgZZgPFneHpk2atmjGqxBRgkWIDkbUwneVNHLgnU
+ l3GFA+NLj54LABpnsmWAOtFFGc3xlgI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-578-auvWp_dgMeWt8GEL0rSPag-1; Wed, 06 Nov 2024 07:19:42 -0500
+X-MC-Unique: auvWp_dgMeWt8GEL0rSPag-1
+X-Mimecast-MFC-AGG-ID: auvWp_dgMeWt8GEL0rSPag
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4315544642eso48534455e9.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 04:19:42 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730895580; x=1731500380;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0WnDAuoVKdl5A0sKOcF5BPeamPx1yBcPuUCKFshk8m0=;
+ b=XjZT1ls+h9bLDY2AvEMQ4RhZv2Q1g4GyjmnkMp16tj6jqN8ObPGibZxC5hOZM6Zplb
+ N9qrJomS5eA+2wF4jU7XaL7/wVUUIaeTvSAE3tqReGkK1Yo9cwZp/BbomuwGdHod9eCt
+ zPbvafY82HHUzSM+msb893PoiXIwiiT2Xbnvq5jr+lGSfyRz+znx2pOXOVQa8vph1cZd
+ BZvjnfX9lA4oB0ViVvZq2HJeelDJD/nbxNx/sQMIZ0Eglsi2TDZIJLWVq7msEvzvS8Da
+ VwFvGhIVHcTGNeYOyWgC+61ukeUKJDKlZRuqkegiB5spL9Ps11JoZTsvCZT6/sUj9wJ8
+ 6HmA==
+X-Gm-Message-State: AOJu0YwH+fLsJD5ec/VeRVHM40RXkn/rOvRGJNtOEyDWjMgh7RTLGdVA
+ Ge4Sp842O6G6YG57kb/e9BB78WSXw0D/HDd4l/hDW3eyaFnbePSQxRHE3n4zGYebrI63rqwlsDF
+ /WzWRi8StbydZDT2qoDKtB1i49MXb0astYyVF+s2EO0/qT2H83/8dssLKLULmp4dtzK0HWpw9vX
+ tDNOBjN/50APItGmmnKS44/UM2RZ5vEDauwRylng==
+X-Received: by 2002:a05:600c:1c26:b0:432:9fdb:1490 with SMTP id
+ 5b1f17b1804b1-4329fdb1571mr69212395e9.7.1730895580555; 
+ Wed, 06 Nov 2024 04:19:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEoTynCq0eN5ZQ0TXfDVllycHlTP/KRdar0eeuMRVltVSwTcE1ZfRVJ+2cIakDY5/EsP5BOgDAec/xR3ubzxdc=
+X-Received: by 2002:a05:600c:1c26:b0:432:9fdb:1490 with SMTP id
+ 5b1f17b1804b1-4329fdb1571mr69212195e9.7.1730895580187; Wed, 06 Nov 2024
+ 04:19:40 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/15] hw/acpi: Fix ordering of BDF in Generic
- Initiator PCI Device Handle.
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, imammedo@redhat.com,
- mst@redhat.com, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org, ankita@nvidia.com
-Cc: linuxarm@huawei.com, linux-cxl@vger.kernel.org,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Dave Jiang <dave.jiang@intel.com>, Huang Ying <ying.huang@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, eduardo@habkost.net,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20240916171017.1841767-1-Jonathan.Cameron@huawei.com>
- <20240916171017.1841767-2-Jonathan.Cameron@huawei.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20240916171017.1841767-2-Jonathan.Cameron@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+References: <20241029150908.1136894-1-ppandit@redhat.com>
+ <20241029150908.1136894-3-ppandit@redhat.com>
+ <ZyTnBwpOwXcHGGPJ@x1n>
+ <CAE8KmOyzWRqpGDOyAK7V2X8+SWVt_kR1897tiFm7vdBNRRE2QA@mail.gmail.com>
+ <ZykB3voFw_-ByWfh@x1n>
+ <CAE8KmOzuGxdU7zp+vsf1yY_FP8bf-KTv7UJ+8h6bfmkE=0H-bA@mail.gmail.com>
+ <ZyoW3ue3WTQ3Di1d@x1n>
+In-Reply-To: <ZyoW3ue3WTQ3Di1d@x1n>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Wed, 6 Nov 2024 17:49:23 +0530
+Message-ID: <CAE8KmOxW8K-YoCUbK5XOLeUQk8WCPB4UxbaQuUONhzsanvrLMw@mail.gmail.com>
+Subject: Re: [PATCH 2/5] migration/postcopy: magic value for postcopy channel
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,47 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-16.09.2024 20:10, Jonathan Cameron via wrote:
-> The ordering in ACPI specification [1] has bus number in the lowest byte.
-> As ACPI tables are little endian this is the reverse of the ordering
-> used by PCI_BUILD_BDF().  As a minimal fix split the QEMU BDF up
-> into bus and devfn and write them as single bytes in the correct
-> order.
-> 
-> [1] ACPI Spec 6.3, Table 5.80
-> 
-> Fixes: 0a5b5acdf2d8 ("hw/acpi: Implement the SRAT GI affinity structure")
-> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-> Tested-by: "Huang, Ying" <ying.huang@intel.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+On Tue, 5 Nov 2024 at 18:30, Peter Xu <peterx@redhat.com> wrote:
+> https://www.qemu.org/docs/master/devel/qapi-code-gen.html
+>
+>         Sometimes, the behaviour of QEMU changes compatibly, but without a
+>         change in the QMP syntax (usually by allowing values or operations
+>         that previously resulted in an error). QMP clients may still need
+>         to know whether the extension is available.
+>
+>         For this purpose, a list of features can be specified for
+>         definitions, enumeration values, and struct members. Each feature
+>         list member can either be { 'name': STRING, '*if': COND }, or
+>         STRING, which is shorthand for { 'name': STRING }.
 
-I'm picking this up for stable-9.0 and stable-9.1 series.
-Please let me know if I shouldn't.
+* I see, okay.
 
-Please don't forget to Cc: qemu-stable@ for other changes which
-are relevant for qemu stable series - this is what happens them
-possible.
+> It's a legacy issue as not all features are developed together, and that
+> was planned to be fixed together with handshake.  I think the handshake
+> could introduce one header on top to pair channels.
+>
+> IMHO it is an overkill to add a feature now if it works even if tricky,
+> because it's not the 1st day it was tricky. And we're going to have another
+> header very soon..
 
-Thanks,
+* See, current (this series)  'if'  conditional in the
+migration_ioc_process_incoming() function is simple as:
 
-/mjt
+    if (qio_channel_has_feature(ioc,
+QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) { peek_magic_bytes() ... }
 
->   hw/acpi/acpi_generic_initiator.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-> index 17b9a052f5..3d2b567999 100644
-> --- a/hw/acpi/acpi_generic_initiator.c
-> +++ b/hw/acpi/acpi_generic_initiator.c
-> @@ -92,7 +92,8 @@ build_srat_generic_pci_initiator_affinity(GArray *table_data, int node,
->   
->       /* Device Handle - PCI */
->       build_append_int_noprefix(table_data, handle->segment, 2);
-> -    build_append_int_noprefix(table_data, handle->bdf, 2);
-> +    build_append_int_noprefix(table_data, PCI_BUS_NUM(handle->bdf), 1);
-> +    build_append_int_noprefix(table_data, PCI_BDF_TO_DEVFN(handle->bdf), 1);
->       for (index = 0; index < 12; index++) {
->           build_append_int_noprefix(table_data, 0, 1);
->       }
+If we don't send magic value for the postcopy channel, then we avoid
+peeking into magic bytes when postcopy is enabled, because otherwise
+thread will block peeking into the magic bytes, so the 'if'
+conditional becomes:
+
+    if (migrate_multifd() && !migrate_postcopy() &&
+qio_channel_has_feature (...) ) {
+        peek_magic_bytes()
+        ...
+    } else {
+       When migrate_postcopy() is true
+       It'll reach here not only for the 'Postcopy' channel, but even
+for the 'default' and 'multifd' channels which send the magic bytes.
+Then here again we'll need to identify different channels, right?
+    }
+
+* Let's not make it so complex. Let's send the magic value for the
+postcopy channel and simplify it. If 'handshake' feature is going to
+redo it, so be it, what's the difference? OR maybe we can align it
+with the 'handshake' feature or as part of it or something like that.
+
+@Fabiano Rosas : may I know more about the 'handshake' feature? What
+it'll do and not do?
+
+Thank you.
+---
+  - Prasad
 
 
