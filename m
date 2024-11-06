@@ -4,77 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B593D59F53
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9ABD59F53
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8jXR-0004r5-8o; Wed, 06 Nov 2024 12:09:49 -0500
+	id 1t8jbL-0008Cp-Sz; Wed, 06 Nov 2024 12:13:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t8jXO-0004oF-J5
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:09:46 -0500
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ id 1t8jbJ-0008Ce-Ln
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:13:49 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t8jXM-0004ZZ-Mn
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:09:46 -0500
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-539f84907caso7687279e87.3
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:09:44 -0800 (PST)
+ id 1t8jbH-0006Xm-Mm
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:13:49 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4314c4cb752so322485e9.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:13:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730912983; x=1731517783; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZPA8Cc1mdZFWuTHCl3i+/VHbdFpR2xccyaZdsIZIIaM=;
- b=WzFGC/bB5DdPciU2yk986DGoqqvUV7+/CFU1rgjRvcj1wmS/XQP2B4eVyK+00N16ti
- W5yQYADOQOtTMRWiXd7rc+uEmyyVyaZ2YCZYPOEfPJpqA0ZCvaPQSE4hO5FaS1LzPT58
- GvnUoZ+REwSvflaxp5FxqgGpkzbEYSg3+eydkJylx6aH0b0uNldJEdtYVZxM5V6m+FZk
- 8g7RKu+hKYKEzeGpKNL0E9n25vRfjkTOJstwt4jhHvgCHmvQLM2FR3vmOigx9L3wzm9f
- OtPWH3sUXVwL9/zqHwYnwXeihAPviojvjH0CK8R+RtzIZi7xsLbmRxGZE4o5FNc/hU/E
- vKXA==
+ d=linaro.org; s=google; t=1730913226; x=1731518026; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lf/fduOrI62mj3L6jsDXUi1wvVXBCifqB8irtE1aL4A=;
+ b=EixIhfO2AqMfvcFeZqRiA9E2mkX+G7y7YpQwYKStJKZv7IQRR2FZsjac9beCKbf0Fj
+ mFb+w3UNgdZwEnq7HCL9TxvXNzheefQ/QfzCRFxlv0ezOuAli4uwVNEMulLUZONJZw53
+ dzkQh3Gw95HvSytXBBhfCUITS9d1mKj29uMW9w430Eye1ue/yd9KjjTP8Ra9Ooh6qKV5
+ MGgyg/K1Z/uC0Klt97rGFFsRjib7xrdNC9j0y7m9sP3mBib19xwvFkHTR5nBpDOFjVPA
+ U54MiOLrL04A73eR5MfPGl9XqYd0P5lgpWAkT/xGvn2Mh/zxdXh0Jg+R4hVTJ847mHuY
+ TZGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730912983; x=1731517783;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZPA8Cc1mdZFWuTHCl3i+/VHbdFpR2xccyaZdsIZIIaM=;
- b=vyRc4Zx1C7CNQNcxqqc7WBfabIwAvMtk6w2EAu0saUJsY8BV5ailqGiP9z7qA6d1GV
- hIryKcoidFmC7qHX/EskkEiwwnJTya94xe62TdncYqWU8K7u+tMoN0/2v5xDRHsy+IkS
- fA6AFOvz9DEii56JncYDLIycwOQLlVknS1AEuKhFEfl+08kRQnMqaJiuOtrlnaen2kYN
- +6VlvBRSnCJLEHkNPT8p1zHO63uqxStfAsFBXyv+Xhha2BdouSUvpNlkigfu9hggCpR4
- t2vkCo+/iypvuOE+2DCwEKvNerVu8uBm/XYy9Nc4iW4zqaj0ZDmuv5RBiPlSXneW4K8G
- hPRA==
-X-Gm-Message-State: AOJu0YxAEo3Ok2sfK5j5g0wWQmGUjFN+QP19U2vGC3nYcwoWLGceqYuC
- nv1iROXm5y7KUTXPszJ89LZDTL2KELrsiTMgm0zxXPUymkR8p2sjawVVAfZmVngk8Rhp0/OCJa+
- B7gYtTfgo
-X-Google-Smtp-Source: AGHT+IEXPLKjeYiRUIuihCfqZe7rkM/WO+E4IDstpWtT9SuoQrgZOm9yRk16B6FcIzRhEkTbEzen0Q==
-X-Received: by 2002:a05:6512:b82:b0:539:e4b5:10e5 with SMTP id
- 2adb3069b0e04-53b348ec004mr21536432e87.9.1730912982670; 
- Wed, 06 Nov 2024 09:09:42 -0800 (PST)
-Received: from linaro.. ([193.32.126.165]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa6b2d13sm28918935e9.12.2024.11.06.09.09.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2024 09:09:42 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 2/3] plugins: detect qemu plugin API symbols from header
-Date: Wed,  6 Nov 2024 09:09:22 -0800
-Message-Id: <20241106170923.2976750-3-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241106170923.2976750-1-pierrick.bouvier@linaro.org>
-References: <20241106170923.2976750-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1730913226; x=1731518026;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lf/fduOrI62mj3L6jsDXUi1wvVXBCifqB8irtE1aL4A=;
+ b=M5bQNQo/Ij+xhv7qa5/vvZqJesox/xxBgHwlUYJsKzVcn1uNfwOicowc2MaS1TmhDq
+ 0Fps5pvqm8JIYE51D8i+X4TwgTk9GRBCOTNCeb8CCG07fAmz2w2hISJeJMwcO4EKohNO
+ Us1OW4JXJTrmIr8dBhdxD2jpk+hsaEH9m/TAeivtz1jZU+/yZl7nMuBAvZcZfDTeRlC1
+ v7K8xmXkO7zduXe9r15DSJjtcpJomwEWDGLeBdlP63LVLVJy2jI6LaqYTzymdVoqzFqH
+ 3hB0pkJ8k8D2wL1/zQMiTXE81sx94Lj6sqWxpi+o2dCkIoyyX+1m/bdPj7hkUM5y0gbj
+ ZocA==
+X-Gm-Message-State: AOJu0Yx7VXZ68b5ZT5P73CAXzfEvukB3Gxf8JsoyWzgIwV/XUX6RTSAn
+ G8daA4qhPIDIu0Yhf/rFG5y9SyXrniHbh3Gk3+hrV48QC+EMsLvAa4ugHx1RuDUgOzJzS5575yT
+ WYd8SRJ8w
+X-Google-Smtp-Source: AGHT+IE91/VzmzzIL6WFQ19nHML1GUvucmzybaek4uYROeBqU2BaZsst/heSSbh20Sqh2TQ995L/7A==
+X-Received: by 2002:a05:600c:4f85:b0:430:5887:c238 with SMTP id
+ 5b1f17b1804b1-4327b6fd60dmr205327165e9.11.1730913225657; 
+ Wed, 06 Nov 2024 09:13:45 -0800 (PST)
+Received: from [10.134.195.192] ([193.32.126.165])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432aa6ce192sm30432705e9.26.2024.11.06.09.13.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Nov 2024 09:13:45 -0800 (PST)
+Message-ID: <c240de83-a429-4e52-beca-97ec0a1488c8@linaro.org>
+Date: Wed, 6 Nov 2024 09:13:41 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-lf1-x12f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/12] Enable building plugins on Windows with Clang
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20241031040426.772604-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,125 +106,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of using a static file (error prone and hard to keep in sync),
-we generate it using a script.
+On 10/30/24 21:04, Pierrick Bouvier wrote:
+> For now, it was only possible to build plugins using GCC on Windows. However,
+> windows-aarch64 only supports Clang.
+> 
+> The first patches (already posted and normally pulled) are fixes and
+> prerequisite to build plugins with meson. They are integrated here because it's
+> not possible to have two based-on in the cover letter.
+> 
+> Then, we fix compilation warnings on Windows.
+> After that, we can enable linking with Clang on Windows.
+> 
+> Finally, we enhanced the plugin symbols export list (automatically generated,
+> and not a static file), and we report some of the information we discovered on
+> the path in the documentation.
+> 
+> Built and tested on Windows (all msys env)/Linux/MacOS for x86_64 and aarch64
+> hosts.
+> 
+> Pierrick Bouvier (12):
+>    scripts: remove erroneous file that breaks git clone on Windows
+>    contrib/plugins/cflow: fix warning
+>    meson: build contrib/plugins with meson
+>    contrib/plugins: remove Makefile for contrib/plugins
+>    qga: fix -Wsometimes-uninitialized windows warning
+>    qga: fix missing static and prototypes windows warnings
+>    win32: use compiler option instead of attribute gcc_struct
+>    plugins: enable linking with clang/lld
+>    plugins: add missing export for qemu_plugin_num_vcpus
+>    plugins: detect qemu plugin API symbols from header
+>    plugins: eradicate qemu-plugins.symbols static file
+>    docs: add information on how to setup build environments
+> 
+>   MAINTAINERS                               |   1 +
+>   docs/about/build-platforms.rst            |   4 +-
+>   docs/devel/build-system.rst               | 100 ++++++++++++++++++++++
+>   configure                                 |  18 ----
+>   Makefile                                  |  10 ---
+>   meson.build                               |  14 ++-
+>   include/qemu/compiler.h                   |   7 +-
+>   include/qemu/qemu-plugin.h                |   1 +
+>   subprojects/libvhost-user/libvhost-user.h |   6 +-
+>   contrib/plugins/cflow.c                   |   6 +-
+>   qga/commands-windows-ssh.c                |   2 +-
+>   contrib/plugins/Makefile                  |  87 -------------------
+>   contrib/plugins/meson.build               |  28 ++++++
+>   plugins/meson.build                       |  36 ++++++--
+>   plugins/qemu-plugins.symbols              |  59 -------------
+>   qga/vss-win32/install.cpp                 |   6 +-
+>   qga/vss-win32/provider.cpp                |   5 +-
+>   qga/vss-win32/requester.cpp               |   8 +-
+>   scripts/meson-buildoptions.               |   0
+>   scripts/qemu-plugin-symbols.py            |  45 ++++++++++
+>   tests/tcg/plugins/meson.build             |   3 +-
+>   21 files changed, 238 insertions(+), 208 deletions(-)
+>   delete mode 100644 contrib/plugins/Makefile
+>   create mode 100644 contrib/plugins/meson.build
+>   delete mode 100644 plugins/qemu-plugins.symbols
+>   delete mode 100644 scripts/meson-buildoptions.
+>   create mode 100755 scripts/qemu-plugin-symbols.py
+> 
 
-Note: if a symbol is not exported, we'll now notice it when linking for
-Windows/MacOS platforms.
+I won't make a v2 of this series, as the build with clang is currently 
+impossible, due to use of gcc_struct attribute. Maintainers have a 
+strong preference to wait for official support in clang.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- MAINTAINERS                    |  1 +
- plugins/meson.build            | 12 ++++++---
- scripts/qemu-plugin-symbols.py | 45 ++++++++++++++++++++++++++++++++++
- 3 files changed, 55 insertions(+), 3 deletions(-)
- create mode 100755 scripts/qemu-plugin-symbols.py
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0844f5da196..022e9f0f57f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3746,6 +3746,7 @@ F: plugins/
- F: tests/tcg/plugins/
- F: tests/functional/test_aarch64_tcg_plugins.py
- F: contrib/plugins/
-+F: scripts/qemu-plugin-symbols.py
- 
- AArch64 TCG target
- M: Richard Henderson <richard.henderson@linaro.org>
-diff --git a/plugins/meson.build b/plugins/meson.build
-index 51297582f93..d60be2a4d6d 100644
---- a/plugins/meson.build
-+++ b/plugins/meson.build
-@@ -2,11 +2,17 @@ if not get_option('plugins')
-   subdir_done()
- endif
- 
-+qemu_plugin_symbols = configure_file(
-+  input: files('../include/qemu/qemu-plugin.h'),
-+  output: 'qemu-plugin.symbols',
-+  capture: true,
-+  command: [files('../scripts/qemu-plugin-symbols.py'), '@INPUT@'])
-+
- # Modules need more symbols than just those in plugins/qemu-plugins.symbols
- if not enable_modules
-   if host_os == 'darwin'
-     configure_file(
--      input: files('qemu-plugins.symbols'),
-+      input: qemu_plugin_symbols,
-       output: 'qemu-plugins-ld64.symbols',
-       capture: true,
-       command: ['sed', '-ne', 's/^[[:space:]]*\\(qemu_.*\\);/_\\1/p', '@INPUT@'])
-@@ -15,7 +21,7 @@ if not enable_modules
-     # LLVM/lld does not support exporting specific symbols. However, it works
-     # out of the box with dllexport/dllimport attribute we set in the code.
-   else
--    emulator_link_args += ['-Xlinker', '--dynamic-list=' + (meson.project_source_root() / 'plugins/qemu-plugins.symbols')]
-+    emulator_link_args += ['-Xlinker', '--dynamic-list=' + qemu_plugin_symbols.full_path()]
-   endif
- endif
- 
-@@ -24,7 +30,7 @@ if host_os == 'windows'
-   # First, create a .def file listing all the symbols a plugin should expect to have
-   # available in qemu
-   win32_plugin_def = configure_file(
--    input: files('qemu-plugins.symbols'),
-+    input: qemu_plugin_symbols,
-     output: 'qemu_plugin_api.def',
-     capture: true,
-     command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
-diff --git a/scripts/qemu-plugin-symbols.py b/scripts/qemu-plugin-symbols.py
-new file mode 100755
-index 00000000000..e285ebb8f9e
---- /dev/null
-+++ b/scripts/qemu-plugin-symbols.py
-@@ -0,0 +1,45 @@
-+#!/usr/bin/env python3
-+# -*- coding: utf-8 -*-
-+#
-+# Extract QEMU Plugin API symbols from a header file
-+#
-+# Copyright 2024 Linaro Ltd
-+#
-+# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or later.
-+# See the COPYING file in the top-level directory.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import argparse
-+import re
-+
-+def extract_symbols(plugin_header):
-+    with open(plugin_header) as file:
-+        content = file.read()
-+    # Remove QEMU_PLUGIN_API macro definition.
-+    content = content.replace('#define QEMU_PLUGIN_API', '')
-+    expected = content.count('QEMU_PLUGIN_API')
-+    # Find last word between QEMU_PLUGIN_API and (, matching on several lines.
-+    # We use *? non-greedy quantifier.
-+    syms = re.findall(r'QEMU_PLUGIN_API.*?(\w+)\s*\(', content, re.DOTALL)
-+    syms.sort()
-+    # Ensure we found as many symbols as API markers.
-+    assert len(syms) == expected
-+    return syms
-+
-+def main() -> None:
-+    parser = argparse.ArgumentParser(description='Extract QEMU plugin symbols')
-+    parser.add_argument('plugin_header', help='Path to QEMU plugin header.')
-+    args = parser.parse_args()
-+
-+    syms = extract_symbols(args.plugin_header)
-+
-+    print('{')
-+    for s in syms:
-+        print("  {};".format(s))
-+    print('};')
-+
-+if __name__ == '__main__':
-+    main()
--- 
-2.39.5
-
+Most of the interesting patches (build system, warning fix) have been 
+pulled or will be though.
 
