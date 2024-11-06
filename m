@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F9D6D59F56
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A78EAD59F56
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:42:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8k1H-0002Sd-8U; Wed, 06 Nov 2024 12:40:39 -0500
+	id 1t8k30-00034y-UU; Wed, 06 Nov 2024 12:42:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8k1E-0002SI-Gj
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:40:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8k2y-00034c-PY
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:42:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8k1C-0005ZU-Ny
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:40:36 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8k2u-0006NO-8H
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:42:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730914832;
+ s=mimecast20190719; t=1730914939;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=P2UyyHm/Gf8fwA53vejNDe/AXdMPWuBO33mVDR7EgzY=;
- b=LeHENthSrpoJ5fuzZUZKX6mJJHApl1h9RqqkV3ZHfPcti9tk40eorMiS+gMf2d8fhgxjfM
- SdidIcs5anclo+Dy4Jf5P88DGMBrz6Gbzk/hnnk1YWfTqU1c8tnYxSJCW/0RsGp+vba0UX
- mIMYZshyyVLbnol1fGATaMFDUTPsnWU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VC0KA1L6gW/coM94+TCoh6YwAENj0oBb5DLh+rx9Vn0=;
+ b=cu6mQ5NAfgOJEB1lZnvzvMvZbFSZm3AYjIhmkFLFOch0XySS0R6SPWj2/5yvGf/NKld1MC
+ iVxSqPZKHDkBXwHP6H7TQtSoumLsm3wBi65KO5TtfStFyOiMnPl9MfcnH5+ZfhbMDzNvSG
+ YOeHYg8/cmqm5Wg5z+9saWUkoVKv/+o=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-GWN4ikRuOqe_mpKlmMmdaQ-1; Wed, 06 Nov 2024 12:40:31 -0500
-X-MC-Unique: GWN4ikRuOqe_mpKlmMmdaQ-1
-X-Mimecast-MFC-AGG-ID: GWN4ikRuOqe_mpKlmMmdaQ
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4314f1e0f2bso426825e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:40:31 -0800 (PST)
+ us-mta-240-WefniVVmNZ6-zUbhRJB4qA-1; Wed, 06 Nov 2024 12:42:16 -0500
+X-MC-Unique: WefniVVmNZ6-zUbhRJB4qA-1
+X-Mimecast-MFC-AGG-ID: WefniVVmNZ6-zUbhRJB4qA
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43152cd2843so330645e9.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:42:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730914830; x=1731519630;
+ d=1e100.net; s=20230601; t=1730914935; x=1731519735;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=P2UyyHm/Gf8fwA53vejNDe/AXdMPWuBO33mVDR7EgzY=;
- b=Qh69dCzBKQ0fU5T8A7jD+yp6S4OeoQZIA9wm4xG1mu9zH1lFFy7RTwqWOUkuROyIsy
- Wn3FwdDxp/A9nSypq8AnTrJNfV9XNrULg354BvJDlqr8eTcZJopBEqQvVpcGpe86w/OX
- VrZAPAAscaJ0yi6o767J84S0JGpzfjpJ/i7UUwwAkPZuIEefevUsxzOWMtaPHS/S9kpT
- s1Ch4wQBSoiOfoaLNZHFcJMYYYFreXN2982pgIiA1IwrObXYMEXwBiRoqoifZCQYFHoU
- BIX2jB68Hxja3keg6c+oZCRY1M/wgkCwaMl5uQDRZVhg81oqn10WzH9B6bkEw5/dl8nP
- NkEg==
-X-Gm-Message-State: AOJu0YzZ9g7dXR2KhPMZqZgIVK+V15SA2GXflS8rkrxAYwK48YpeQWzz
- 6MHUFlW8Pv8E0ggGgcRbxnLTOcq/vgv2T7YIv4+k6AMrH0xUf3ijolAavRLs4fdG+aF6aHZhsUO
- aFCagdvtqofpnQ/xxhYsxrEiOeoHbc2min57TEj2YjbNePfsSuTHv
-X-Received: by 2002:a05:600c:35cf:b0:431:3b53:105e with SMTP id
- 5b1f17b1804b1-43283244e02mr185307455e9.9.1730914830350; 
- Wed, 06 Nov 2024 09:40:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHTcksxe1+KTqJHE+HzwHho3ZxG6gMNLEtH9XzUbLoN/ZSKYEOgSeXKnQwLKFHB2mcguFvwYA==
-X-Received: by 2002:a05:600c:35cf:b0:431:3b53:105e with SMTP id
- 5b1f17b1804b1-43283244e02mr185307235e9.9.1730914830009; 
- Wed, 06 Nov 2024 09:40:30 -0800 (PST)
+ bh=VC0KA1L6gW/coM94+TCoh6YwAENj0oBb5DLh+rx9Vn0=;
+ b=HGttRGI3j97tOAGxd0Ecf53ABmr6QsC89I0+xUKg+Pcp4lhMlKMRlO/lB186Ach7Rh
+ yl74qot/VT9fm8ke0kzN8OflSrJWC9Y9JTdO1+hkXq5HjHxVYyYDmccx1FW3+gSnfla+
+ OggLhKkzWLy/aV+UnF8oMlULOdp4G34abp9mbAPcOJIMgLTC3XjUXoXoWAE6nANq5VfR
+ ScTsADttkoqUyScYTnWZQmqzNFc9I8MJk1q+ebytmgdup3AntOyuc1OYAeSPUmglDlgg
+ mBqlERQYqtBBotJEK8D2I/MKrmdkPsy4LgdNOn3cD/kpzIUGu5YeVDDG1WN4ZLYWW10Z
+ WXFQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXxwTtxDjiX8uDISLeSXZ87j5jGhZP9EW+4168+nKMFhczYogxsVl72WQl1rxTi8GbK80x8Qy8cmv/N@nongnu.org
+X-Gm-Message-State: AOJu0YxAgQkR6VjWAqK3Ceg0+Wzh253N/DsrLpnc9Fsu+sPyjKNHJ1XL
+ Bva83IfKV8HrHEkO9efv3zNS0EFfwAgWySCYOyjFm3UKI1ZfL5AbA7w5s/3Ln60uc9TKKBJwe3I
+ CArhKp3WIt5dp6iZbbM0qi80QxN32yaYq0JuI7RdzsgFMv81o3Lwy
+X-Received: by 2002:a05:600c:1c9d:b0:431:5187:28dd with SMTP id
+ 5b1f17b1804b1-431bb9d1675mr232097045e9.28.1730914935596; 
+ Wed, 06 Nov 2024 09:42:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEOmWy4tnOooDoCh17Fz893tNsnZqf3DYtLKTYs2Jk7sfC+GuNzJUXbMoWK+Dz/vfCUTn4VqA==
+X-Received: by 2002:a05:600c:1c9d:b0:431:5187:28dd with SMTP id
+ 5b1f17b1804b1-431bb9d1675mr232096785e9.28.1730914935200; 
+ Wed, 06 Nov 2024 09:42:15 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10d414csm19597355f8f.26.2024.11.06.09.40.28
+ 5b1f17b1804b1-432aa6e16a4sm32044295e9.33.2024.11.06.09.42.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Nov 2024 09:40:29 -0800 (PST)
-Message-ID: <f1e324ed-e086-4f8b-8027-be2323383665@redhat.com>
-Date: Wed, 6 Nov 2024 18:40:27 +0100
+ Wed, 06 Nov 2024 09:42:14 -0800 (PST)
+Message-ID: <96306732-dd5f-40a8-85d6-fbe52b855a3c@redhat.com>
+Date: Wed, 6 Nov 2024 18:42:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Bump timeouts of functional tests
+Subject: Re: [PATCH] migration: Check current_migration in
+ migration_is_running()
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
-References: <20241106170946.990731-1-thuth@redhat.com>
- <c233a6b5-bfea-4d5e-9b1f-5bc3a467e17d@linaro.org>
- <CAFEAcA-MVg2EU2cKJz+drZp3=GBCPJXqbP7iNimg8fs0NYfhOQ@mail.gmail.com>
- <235c9cc1-aba0-4612-ba19-32885cb4b138@linaro.org>
+ Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ Qemu-block <qemu-block@nongnu.org>
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>
+References: <20241105182725.2393425-1-peterx@redhat.com>
+ <f11c663c-49c4-439a-a20d-baccbc1e0756@redhat.com>
+ <1e5d970f-cab9-46ae-b295-8e91dff9b762@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -123,19 +124,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <235c9cc1-aba0-4612-ba19-32885cb4b138@linaro.org>
+In-Reply-To: <1e5d970f-cab9-46ae-b295-8e91dff9b762@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,38 +152,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/11/2024 18.30, Pierrick Bouvier wrote:
-> On 11/6/24 09:26, Peter Maydell wrote:
->> On Wed, 6 Nov 2024 at 17:21, Pierrick Bouvier
->> <pierrick.bouvier@linaro.org> wrote:
->>> I noticed by --enable-debug in configure is a combination of enabling
->>> checks (enable-debug-tcg + graph + mutex), and deactivating optimizations.
+On 06/11/2024 18.18, Pierrick Bouvier wrote:
+> On 11/6/24 01:43, Thomas Huth wrote:
+>> On 05/11/2024 19.27, Peter Xu wrote:
+>>> Report shows that commit 34a8892dec broke iotest 055:
 >>>
->>> Would it be worth keeping the optimizations and runtime checks instead?
->>> This way, there would be no more "timeout" issue.
->>>
->>> I'm not sure which added value we get from O0, except for debugging
->>> locally QEMU.
+>>> https://lore.kernel.org/r/b8806360-a2b6-4608-83a3-db67e264c733@linaro.org
 >>
->> "Debugging locally QEMU" is exactly what --enable-debug is intended for...
+>> FWIW, this patch also fixes a lot of other broken iotests (vmdk and vpc)
+>> that occur when running "make check SPEED=thorough".
+>>
+>> Tested-by: Thomas Huth <thuth@redhat.com>
+>>
+>>
 >>
 > 
-> Yes...
-> but it seems like we take it for "enable debug checks" in CI as well and it 
-> impacts runtime, because optimizations are deactivated. I think I've not 
-> been the only one confused about this.
+> Good news!
 > 
-> So my point is that we should maybe differentiate the two use cases at 
-> configure level.
-> 
-> --enable-debug and
-> --enable-runtime-checks (or something more explicit)
+> I'm a bit confused by your message. I thought SPEED=slow was the most 
+> complete test setup, but is it SPEED=thorough instead?
 
-Would that really help? I guess people still want to be able to run "make 
-check" when they compiled with --enable-debug, so we still need to be 
-prepared to run the checks with a slow QEMU.
-
-But I wonder whether we could maybe use -Og instead of -O0 nowadays?
+It depends... for the qtests, "slow" and "thorough" is the same, but for the 
+iotests, we enable even more additional formats with "thorough".
 
   Thomas
 
