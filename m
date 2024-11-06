@@ -4,108 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A954D44D78
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 15:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA96D44D7F
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 15:27:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8hqb-0002r4-BU; Wed, 06 Nov 2024 10:21:29 -0500
+	id 1t8hvg-0003t1-71; Wed, 06 Nov 2024 10:26:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t8hqZ-0002qo-Fi; Wed, 06 Nov 2024 10:21:27 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t8hqX-00073w-Jv; Wed, 06 Nov 2024 10:21:27 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A6F8ESX007256;
- Wed, 6 Nov 2024 15:21:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=4bFpLa
- ltumf2qLsclcMeWZujkgU4sJrxb2XK7RLIDjE=; b=VXZM58jjxxeoVafZPcd/qs
- 14PTTMj+UVu2BxFjCpdtSndfrSibXO466gh37ner5MYr/h/xmC9CclWI8kzKgPGs
- 3qDQZZBSgAwZFyojYrjV1EUGuK0FR5wZsyeGAO90WoaXVuZFz+ZHSJw/6xtHrpYZ
- ADrXHfunfzrfCvqHNRVHKOdJHH62RnehXdxvyJsGPOQHJh+NESCankb+4t3kIU6q
- cLIEqiuRORmeh5Y6d897tAa4BY3u3wIGyiWRXp0+Xdydg/VaismQXe8ewauphIuo
- oPrwUFApeJ00VS7JullBpgmqSuBWtQ5HXnekM4yXkhbK1lXWUPJssPp58K8/YqMg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42radvg81f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 06 Nov 2024 15:21:20 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A6EMV5C024200;
- Wed, 6 Nov 2024 15:21:19 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42nxds6fyy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 06 Nov 2024 15:21:19 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A6FLIU934537976
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 6 Nov 2024 15:21:18 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7AD1858056;
- Wed,  6 Nov 2024 15:21:18 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C35858052;
- Wed,  6 Nov 2024 15:21:18 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  6 Nov 2024 15:21:17 +0000 (GMT)
-Message-ID: <08fd5270-8223-419e-b5ec-075b14c42c09@linux.ibm.com>
-Date: Wed, 6 Nov 2024 10:21:17 -0500
+ (Exim 4.90_1) (envelope-from <roman@roolebo.dev>) id 1t8hve-0003sq-7M
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 10:26:42 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <roman@roolebo.dev>) id 1t8hvc-0001Eh-IZ
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 10:26:41 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-20cd73feaabso3548625ad.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 07:26:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=roolebo.dev; s=mail; t=1730906799; x=1731511599; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=i4UPt885InRzUgsXiJkm2P2mE2G4C3jnFvzBGXCsTpE=;
+ b=D0i+pdNzF/4P8rwncYDLfH/NwdhF2vkYQP/TK1zxOnlvl7ro8wFWaw3MWpWlOOaEhw
+ iubfkMFSTotqJjH54yXrDOlzCzg8rGuK69GNIn+U4hxVf5qH+K+qKVnkYDeIcZ4b5XHu
+ FDfDlflZZa7+URIRpmmYhsfdCWgCwP/IGQbe2d9U/cevXLJs6baKv7lbWvdYKIcp0rKl
+ 52rAYGnZ/l719jGYMsH9hJ1ca7oUIy+FXcfbd39bR3nah0Nw8lb6L4E66W6EbRDLlv1L
+ 4hATsenLLS0xgi2GYuX+ZM++pi33wTe32Zkt07mT+I/htBMdEcz3JZXiUUzIaY7NI2KW
+ sCAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730906799; x=1731511599;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i4UPt885InRzUgsXiJkm2P2mE2G4C3jnFvzBGXCsTpE=;
+ b=BosaXclZKNZDImrw2NSCSi29nK9tLxlaEigGe9i9O2A1kEVtqfZT2hNpCyMBL84ObC
+ nBjmh8DfIMCjxfEEkPFJnPbw9R4uxLvGlCi0OxO31D7pVJZWjr/M6gH/SRFKycWHOLTS
+ 1GLgpT574/X/XNkLqJhqrBXkk/SIcHCFatpuzyMPPOBmy3MVmvPxbYMu+fTTRyYcjZ0H
+ kZX6DYxuahY3yRJqe0xGotlVQ8PsZjwYtjF3TrX+7V45BUOoFYBKk6tCQajlmmzOt8NJ
+ aYuNtGFtgo7pYllhwnGAk2Okf+D6R58IdkJuOZXSQiXvRef2kLCWEUroTkD6G6KjLuk4
+ x12g==
+X-Gm-Message-State: AOJu0YyMEkiu0M6HynHu+rX5oAuSa2f4cGcpx/XT1EBdJtlgJxRGuP4+
+ OJncwkEGFQgNTPmuMEWKrOp1zCJZ34xb6nD7MkA9v86ccIEmldXcjOaL6JcOknw=
+X-Google-Smtp-Source: AGHT+IFvrDMB9ZGtv9yO+8b2syKVgd9a+y/O+3NJPxZcSNoIDU5SfYuJ8Pii1DUPIJ8gTKE6rGCrqA==
+X-Received: by 2002:a17:902:ce81:b0:20c:6f7e:2cb1 with SMTP id
+ d9443c01a7336-210c68db903mr239001765ad.2.1730906798927; 
+ Wed, 06 Nov 2024 07:26:38 -0800 (PST)
+Received: from localhost ([2405:9800:b660:1d69:184b:7485:e878:79c4])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-211056ee3d8sm96766185ad.20.2024.11.06.07.26.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Nov 2024 07:26:38 -0800 (PST)
+Date: Wed, 6 Nov 2024 22:26:35 +0700
+From: Roman Bolshakov <roman@roolebo.dev>
+To: Phil Dennis-Jordan <phil@philjordan.eu>
+Cc: qemu-devel@nongnu.org, dirty@apple.com, rbolshakov@ddn.com,
+ pbonzini@redhat.com
+Subject: Re: [PATCH 0/5] i386/hvf: x2apic support and some small fixes
+Message-ID: <ZyuKq75sryZo8U7z@roolebo.dev>
+References: <20241105155800.5461-1-phil@philjordan.eu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 10/17] tests/functional: Convert most Aspeed machine tests
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>, lena.voytek@canonical.com
-References: <20241024063507.1585765-1-clg@redhat.com>
- <20241024063507.1585765-11-clg@redhat.com>
- <CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com>
- <91c2ac92-66b2-45c8-b4fe-e8f8587b0e9c@linux.ibm.com>
- <CAFEAcA84hhWu2ouirfDPbCpq_=QLQxAf3k47h0Pij8iEnOVj+A@mail.gmail.com>
- <2491bc60-9a0b-486a-8f6d-2c4c94332756@linux.ibm.com>
- <CAFEAcA85g2nX3MU5RzmBvAHT8Kis1JHhiEaBvnFFbEQkG+0OxQ@mail.gmail.com>
- <e6c33df3-49e9-4b8a-b7cb-d38c2ebee3be@linux.ibm.com>
- <CAFEAcA9La7y1Z2-nMnJDyC_p+z-3c0EnDzEE=w5LTYtRnXPT1g@mail.gmail.com>
- <1a1d29b3-c14c-42a9-93ad-c773e3b265df@linux.ibm.com>
- <CAFEAcA_awJURkAhyhz88iEyfe7BU-ApeHB8XZ5EeThoKFh3p5w@mail.gmail.com>
- <60734922-c31d-4a24-865e-45d03ff53141@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <60734922-c31d-4a24-865e-45d03ff53141@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ppOVMKymP4RT8U8y9u1nX49u0-uGOVbu
-X-Proofpoint-ORIG-GUID: ppOVMKymP4RT8U8y9u1nX49u0-uGOVbu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0
- mlxscore=0 adultscore=0 impostorscore=0 phishscore=0 malwarescore=0
- bulkscore=0 suspectscore=0 lowpriorityscore=0 mlxlogscore=609
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411060118
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241105155800.5461-1-phil@philjordan.eu>
+Received-SPF: none client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=roman@roolebo.dev; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,55 +91,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/5/24 4:50 PM, Stefan Berger wrote:
+On Tue, Nov 05, 2024 at 04:57:55PM +0100, Phil Dennis-Jordan wrote:
+> This is a loose collection of patches against the x86 hvf accel. They
+> can be applied/pulled independently from one another.
 > 
+> Patch 1 is a repost of a patch I've submitted a bunch of times already.
+> It wires up and enables x2APIC mode in conjunction with HVF - the
+> software APIC implementation in QEMU gained the feature earlier this
+> year but hvf wasn't included.
+> The change typically improves performance with modern SMP guest OSes by
+> a 2-digit percentage. (Exact values depend on workload.)
+> 
+> Patch 2 fixes cases of undefined behaviour recently introduced by commit
+> 7cac7aa which made changes to HVF CPUID XSAVE functionality.
+> 
+> Patch 3 fixes a minor one-off memory leak during hvf startup.
+> 
+> Patch 4 ever so slightly improves APIC correctness under hvf: when
+> setting the APICBASE MSR, if the APIC deems the new value invalid,
+> we raise an exception (as per spec) rather than silently doing
+> nothing. This fixes a failing kvm-unit-tests test case.
+> 
+> Patch 5 removes some unnecessary duplication and type-rechecking in
+> HVF's inner loop. (No need to cast the cpu state pointer to X86CPU
+> within, the hvf_vcp_exec function already does that once at the top.)
+> 
+> Some of this work has been sponsored by Sauce Labs Inc.
+> 
+> Phil Dennis-Jordan (5):
+>   i386/hvf: Integrates x2APIC support with hvf accel
+>   i386/hvf: Fix for UB in handling CPUID function 0xD
+>   i386/hvf: Fixes startup memory leak (vmcs caps)
+>   i386/hvf: Raise exception on error setting APICBASE
+>   i386/hvf: Removes duplicate/shadowed variables in hvf_vcpu_exec
 > 
 
->>>
->>>   > > One of swtpm or apparmor must be wrong here and I think it should
->>>> be fixed. In particular, having the failure mode be "something
->>>
->>> As stated, we were going to fix the AppArmor path in the swtpm Ubuntu
->>> package.
->>
->> But AIUI the solution you've proposed is to add the user
->> temp directory -- abstractions/user-tmp looks like it
->> adds permissions for $HOME/tmp, /var/tmp and /tmp/. None
->> of those will fix the failure we ran into, because we're not
->> using any of those tmp directories. We use a directory
->> that's a subdirectory of wherever the user put the build
->> directory, which can be anywhere the user has permissions for.
-> 
-> Yes, you are right. The same test failed for me locally due to the usage 
-> of /var/tmp/ path but that's not what was originally reported.
-> 
-> I am not aware that user-started programs can have an exception from 
-> having their profiles applied, nor do I know whether rules exist that 
-> allow a user to circumvent any rule. So my guess is we need rules like 
-> either one of the following:
-> 
-> owner /mnt/** rwkl
-> 
-> or worse:
-> 
-> owner /** rwkl
-> 
-> I don't see another choice than adding one of these rules, maybe even 
-> the 2nd. Lena?
+To the series,
+Reviewed-by: Roman Bolshakov <rbolshakov@ddn.com>
+Tested-by: Roman Bolshakov <rbolshakov@ddn.com>
 
-If there was value in the path-confinement of swtpm (for a few years) do 
-we really want to loose it now because of a test case? We could either
+I figured the issue with 24.04 guests, it was an issue on my side (too
+little memory provided to the guest).
 
-- adjust the test case to have swtpm use a directory under one of the 
-accepted paths, e.g., /tmp or /var/tmp
-- or add /mnt as a newly supported path to the AppArmor profile
+Paolo, please apply this if you have no objections.
 
-The latter works for the setup that Peter has but a new user creating 
-paths under /mymnt would cause the same discussion again.
-
-
-    Stefan
-
+Regards,
+Roman
 
