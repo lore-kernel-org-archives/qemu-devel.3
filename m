@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4340DD29FB3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 08:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86372D29FB8
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 08:39:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8b49-0000DP-EQ; Wed, 06 Nov 2024 03:07:01 -0500
+	id 1t8bYu-0003yW-3V; Wed, 06 Nov 2024 03:38:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1t8b46-0000DG-Hl
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 03:06:58 -0500
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1t8bYn-0003y8-BC
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 03:38:42 -0500
 Received: from mx.swemel.ru ([95.143.211.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1t8b44-0003i3-F1
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 03:06:58 -0500
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1t8bYl-0005ya-8L
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 03:38:41 -0500
 From: Dmitry Frolov <frolov@swemel.ru>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swemel.ru; s=mail;
- t=1730880409;
+ t=1730882314;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=+BpYk0/f9xRXQ5ni3JK4b/TZPN7+UGhRZg9BcBe59dk=;
- b=sOTSnKU6poAUWwKwlAfNIIczagdsJK2hdYiDnUBcM7iKfuUWnwbVX9suxl3qCp30L2wsws
- 6gJt1xWACtQ1dHM56gx+b/wawKpWfa9sF7t7Wuyw8VqY4qwgbEXzYa8rPah2ssfzoRgcOd
- +P13UzLbX50wtFehV0dCHbcNPO30nOY=
-To: stefanha@redhat.com,
-	den@openvz.org
+ bh=QRlqq8gCfrYmq/1HymWMdqBXT9eh491T9x3yzteXYdg=;
+ b=kSRpaaVhQ8x1PBrBE4QdwidMAQAuKbIZGzZalmdd8Y4Pb1IyXVZjLgQQ1FdEEXU7k6jMLN
+ bXE8zYKrKIb0Ug+B+yxGF/wxJyM3efOMz6FQ9PUk0dbKnDv1EO750EBTZz/+uVHWVFIbi6
+ pAsScxKDEhmrobIwlRimwqRxBISvNkU=
+To: i.mitsyanko@gmail.com,
+	peter.maydell@linaro.org
 Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org,
  Dmitry Frolov <frolov@swemel.ru>
-Subject: [PATCH] block: fix possible int overflow
-Date: Wed,  6 Nov 2024 11:04:36 +0300
-Message-ID: <20241106080521.219255-2-frolov@swemel.ru>
+Subject: [PATCH] hw/timer: fix possible int overflow
+Date: Wed,  6 Nov 2024 11:37:54 +0300
+Message-ID: <20241106083801.219578-2-frolov@swemel.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=95.143.211.150; envelope-from=frolov@swemel.ru;
@@ -61,33 +61,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The sum "cluster_index + count" may overflow uint32_t.
+The product "icnto * s->tcntb" may overflow uint32_t.
 
 Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
 Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
 ---
- block/parallels.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/timer/exynos4210_mct.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/parallels.c b/block/parallels.c
-index 9205a0864f..071b6dcaf8 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -184,11 +184,11 @@ static int mark_used(BlockDriverState *bs, unsigned long *bitmap,
-     BDRVParallelsState *s = bs->opaque;
-     uint32_t cluster_index = host_cluster_index(s, off);
-     unsigned long next_used;
--    if (cluster_index + count > bitmap_size) {
-+    if ((uint64_t)cluster_index + count > bitmap_size) {
-         return -E2BIG;
-     }
-     next_used = find_next_bit(bitmap, bitmap_size, cluster_index);
--    if (next_used < cluster_index + count) {
-+    if (next_used < (uint64_t)cluster_index + count) {
-         return -EBUSY;
-     }
-     bitmap_set(bitmap, cluster_index, count);
+diff --git a/hw/timer/exynos4210_mct.c b/hw/timer/exynos4210_mct.c
+index e807fe2de9..5c6e139b20 100644
+--- a/hw/timer/exynos4210_mct.c
++++ b/hw/timer/exynos4210_mct.c
+@@ -815,7 +815,7 @@ static uint32_t exynos4210_ltick_cnt_get_cnto(struct tick_timer *s)
+         /* Both are counting */
+         icnto = remain / s->tcntb;
+         if (icnto) {
+-            tcnto = remain % (icnto * s->tcntb);
++            tcnto = remain % ((uint64_t)icnto * s->tcntb);
+         } else {
+             tcnto = remain % s->tcntb;
+         }
 -- 
 2.43.0
 
