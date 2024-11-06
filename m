@@ -4,68 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2534D59F56
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:28:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E998D59F55
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8jp4-0006Lm-Q3; Wed, 06 Nov 2024 12:28:02 -0500
+	id 1t8jrN-0008H3-V1; Wed, 06 Nov 2024 12:30:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8jp2-0006LP-QO
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:28:00 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8jrM-0008Gq-FE
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:30:24 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t8jp0-0003Vk-St
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:28:00 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5c95a962c2bso9373982a12.2
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:27:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8jrK-0003xR-QV
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:30:24 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43167ff0f91so574985e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:30:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730914077; x=1731518877; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=KUkdAC62SORZw27ZiY6noJmbb1tHsidkViPofEPWYPg=;
- b=c3JgCIAG50wv5nrfGb7MsGBKL20p8EKJvzDliymENd/nJ6WQmmBRF1TC+cXzIQ/ilo
- YGKmzUWEYuHO3bBTq92tw6WC3aIHLlCnuIJX6r+Q1Omutu0vcg01bOUOUimeZK3X/vgR
- t9wSeXshN/lrbusrPovEpbjqD2f3ziBssaH9+gN/HRB2uEEtcrE2bHepz88mbrok7PLD
- rgNWNPQ3G7+HWX5A7U721r77Hi4WztnPNctNeQFd88fbVG6khknLrIGUcgDLczUEcW5M
- 39E0oVNx2sigkabn6qiMdnt3gIfkoEpBpuxLiK7rC5916eGfWeqJIRp5bYxBPVczr5BN
- AhVA==
+ d=linaro.org; s=google; t=1730914221; x=1731519021; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Tf718EOL74g/6nEJvDHdEh+2XawNqVleAO0KvRS5KgM=;
+ b=JPO7q7aRM1F2wNiXTWDC1ZgettceNp73YSGA0exzgfS3VYiI+3PyHk8PolmxweylE1
+ qvK1S0gxKZffb5tgEWqmXQKWUgks6crCaqL0XdvQkkq/cl5qjihPb45syXEkC0rN3Aaj
+ sLzWrkVwD4HF5LOlQuejIeX6c2l8loN6jBkHReAhdeBsfDsLNQgNvuAMkZX22rMfUTH3
+ t2Z8y39cOyRVDXmwdGFGjmOWB1hekQfkwYEXBZotEhcu2EKF39D6XvVz88qhm/t3NKEp
+ sk/47lfpKZel9CYbILBGEd22OU71z489GGXVnq0xnMwnjSpRWZ9/pz3F85QR+GGLIgup
+ GH8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730914077; x=1731518877;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KUkdAC62SORZw27ZiY6noJmbb1tHsidkViPofEPWYPg=;
- b=UTmz3wo+id2Oumb5iTKAfcjVtBctYCkx2LaDtgRx9+qMhI/KMXeFb9ZXSTxXeRqsrr
- 1sbq4/Al0xClODJvV2k3AdEsGGoZ0Bcg4wfJ+Zevm50V6LKbxokrttzaveWWskhelL5n
- vN9f4O5hA6c/VRopGOAOY7dOpLzE1RiMevA/6DfBke3UzXChlNzAdDKKDKfxIPuLMfal
- 7GD/M8hEhyTdB5S3gqn2aLb2S0XwHdjpeCHHbh8rkFJxqaxdTnOh0ixju6FC+8oBfKH2
- YYPPfzvTJ+01Ryxte3aKlIAErytOW3WV8z3dl0MXRvYBxnQa1+xoVwZpOU7x2JqGo3OX
- w3Sg==
-X-Gm-Message-State: AOJu0Yzz2PJbafB307cki1a5HSjhDIegBxbbg2upPXUeHwQBwRluesJZ
- aK5fAnHVm9HwaWmGDTXNUszNDOTpEM40tssi2B831Zi/oKYMzkFVlStB5hHNpb9DQfR9BRzjb6b
- fNWrIIPrw2qYYYk3BWmnx6XxQbXV12Ah6ZjQobEVqfoKKBB89
-X-Google-Smtp-Source: AGHT+IGGw6h/DFVGwk0SAHE+54VZNqhcTKNfAkz9RhZLNA9qoFfaocX+xBRjoCfg72clssSWon2q1Pw2CYcmapqjKEQ=
-X-Received: by 2002:a50:cc0d:0:b0:5c9:5665:8df5 with SMTP id
- 4fb4d7f45d1cf-5cea9755e56mr14694577a12.34.1730914076910; Wed, 06 Nov 2024
- 09:27:56 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730914221; x=1731519021;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Tf718EOL74g/6nEJvDHdEh+2XawNqVleAO0KvRS5KgM=;
+ b=Z/Ck15bCg4b3f99xmu8mXA2V0qmuKIUBg1nvqaz61XNtHVxVTePd8qPmEj4flIEEhH
+ ZCd5gAJtWPsVygstn2hGOUb56FlZqTf9ppdcPeZ9oZm10VblVRRtfNvKdTZIWXg5LFoH
+ Th/4MDO+YbgwkSJ4TTiaOWdgUhrsErW2Oyfkm4s/oDoPkt/CESEyACqBYW3TdU9gYQiL
+ i+SK7ZcYIzTpQtWiQShiojj5PXWh2UcH+UxXFsooqWXu5YE/WrBbXrfiFySodhxMVWyl
+ tITStbqppA2HXQgrcfCpHUrrpZPIIYgArBKsa3S/6tX+6LRISwMrFlpSAjErA9s8tlp0
+ JLPg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVKIz75iq3a4Q+dZXtrrXM7dIWr21os9LGhAx2YFM3kODXsK09O8pHam3CMwS5xt/Ee2RyBaWGcMHQJ@nongnu.org
+X-Gm-Message-State: AOJu0YxUyRxQRSswG7STIZvO/T7G0nQYlKAJx09RCiS+Y3TQ2ElBwLJo
+ Rn/z5GtzXz+bhaN+BbBQ00LKKesVZbRShZwfBJm61VFx3R6YdiSCZRq5/lNrPGA=
+X-Google-Smtp-Source: AGHT+IE410QssLHloXHAJy1g+UkoTtAtCwm0vSvBfEejZ5GtpsLU7NHzlTN5p7mlNK6HNceNuQPzbg==
+X-Received: by 2002:a05:6000:18a5:b0:369:9358:4634 with SMTP id
+ ffacd0b85a97d-381be7c80a7mr23462057f8f.19.1730914220994; 
+ Wed, 06 Nov 2024 09:30:20 -0800 (PST)
+Received: from [10.134.195.192] ([193.32.126.165])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c113e885sm19889621f8f.89.2024.11.06.09.30.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Nov 2024 09:30:20 -0800 (PST)
+Message-ID: <235c9cc1-aba0-4612-ba19-32885cb4b138@linaro.org>
+Date: Wed, 6 Nov 2024 09:30:18 -0800
 MIME-Version: 1.0
-References: <20241105034039.31143-1-imp@bsdimp.com>
-In-Reply-To: <20241105034039.31143-1-imp@bsdimp.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 6 Nov 2024 17:27:45 +0000
-Message-ID: <CAFEAcA89OHYY5MPfB5cKM=vPV8_OQLBYZhpvKRNRzHqX_WERHg@mail.gmail.com>
-Subject: Re: [PULL 0/3] Bsd user 2024q4 patches
-To: Warner Losh <imp@bsdimp.com>
-Cc: qemu-devel@nongnu.org, Jessica Clarke <jrtc27@jrtc27.com>, 
- Kyle Evans <kevans@freebsd.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional: Bump timeouts of functional tests
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20241106170946.990731-1-thuth@redhat.com>
+ <c233a6b5-bfea-4d5e-9b1f-5bc3a467e17d@linaro.org>
+ <CAFEAcA-MVg2EU2cKJz+drZp3=GBCPJXqbP7iNimg8fs0NYfhOQ@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAFEAcA-MVg2EU2cKJz+drZp3=GBCPJXqbP7iNimg8fs0NYfhOQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,36 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Nov 2024 at 03:43, Warner Losh <imp@bsdimp.com> wrote:
->
-> The following changes since commit daaf51001a13da007d7dde72e1ed3b06bc490791:
->
->   Merge tag 'seabios-hppa-v17-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2024-11-04 16:01:23 +0000)
->
-> are available in the Git repository at:
->
->   git@gitlab.com:bsdimp/qemu.git tags/bsd-user-2024q4-pull-request
->
-> for you to fetch changes up to 52a523af71448f62e8523ed002447c95170381e9:
->
->   bsd-user: Set TaskState ts_tid for initial threads (2024-11-04 20:26:40 -0700)
->
-> ----------------------------------------------------------------
-> bsd-user: Minor fixes
->
-> These patches have been in my queue pending too long (I have a bunch of others
-> that haven't been reviewd, but those will be done clsoe to the end of the
-> release to not get in the way of the release).
->
-> The patches align the stack properly on x86_64, implements setting the tb-size
-> and properly setting the ts_tid for initial threads. They have all been
-> reviewed.
+On 11/6/24 09:26, Peter Maydell wrote:
+> On Wed, 6 Nov 2024 at 17:21, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>> I noticed by --enable-debug in configure is a combination of enabling
+>> checks (enable-debug-tcg + graph + mutex), and deactivating optimizations.
+>>
+>> Would it be worth keeping the optimizations and runtime checks instead?
+>> This way, there would be no more "timeout" issue.
+>>
+>> I'm not sure which added value we get from O0, except for debugging
+>> locally QEMU.
+> 
+> "Debugging locally QEMU" is exactly what --enable-debug is intended for...
+> 
 
+Yes...
+but it seems like we take it for "enable debug checks" in CI as well and 
+it impacts runtime, because optimizations are deactivated. I think I've 
+not been the only one confused about this.
 
-Applied, thanks.
+So my point is that we should maybe differentiate the two use cases at 
+configure level.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+--enable-debug and
+--enable-runtime-checks (or something more explicit)
 
--- PMM
+> thanks
+> -- PMM
+
 
