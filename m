@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB28D35E5D
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 02:50:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2A1BD3E787
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 02:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8W7l-0007B7-TP; Tue, 05 Nov 2024 21:50:25 -0500
+	id 1t8W7d-00076T-C7; Tue, 05 Nov 2024 21:50:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t8W7k-0007Ap-RQ
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:24 -0500
+ id 1t8W7T-00071K-8L
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:11 -0500
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t8W7i-0003cN-BN
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:24 -0500
+ id 1t8W7R-0003OA-Hk
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730861422; x=1762397422;
+ t=1730861406; x=1762397406;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=cDyoHsWzKph1fodDMEJqXgXb9rXZ334jDEhsYTPjqKQ=;
- b=AE9fowAwJ7HZZLLPR0T/w4DMePJzsvHIP9A0M0pk27UX95jvmSJ/xKxt
- BFn+ZcfoH0b7AwbkGEJ7YB9BcC0Mf2jtD5cSKSgPn4zfLfQEPlrImgZQJ
- xQJSXTwqRcKpsKW41XvzItCnY+gixb63jA93SZPiltWuhbv7RyU6wz4+T
- VG8c/T5oh1oJWIqrLjYHpHeYjzmuIWXe2rrWXyhHalI3iObWwBGwOyhxc
- Sn0LFVg/S5jjZSxCM3z0wCzTvvRXiYm/wQKvavcN9WbNvqiqPivCpg2ig
- oS+eSQ5CnJbycMAwHKxeC8HyCDpXJJTS7rFclc3dXPdyOEyo1xbs64RBq w==;
-X-CSE-ConnectionGUID: JA/98ZacSPKlO7RvjIIW+A==
-X-CSE-MsgGUID: lmAPGaOKSr2SlFCF0FEwuA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30492322"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30492322"
+ bh=JcVwYkgHmlLrfByBJgICNQrNbswie+WUwEU7n23xvn8=;
+ b=e4vprRTVDRh1eGfGCpsGg51FxVivho78uArRoghZYd6HbyfM1LT5gFyR
+ 38GwwRmww/uNZe/1R91pi6pGJNromznYeZqrDTuJvJZSD7j0h2a0HDfkw
+ nhCVTPkdskC4mv1Z6w3nMhC2ZbTr7y3ioySQzVd1RyXn070C5dBQNF46c
+ +D99O6rc4w/pG8c0j46ZglW715Hu7zl6LsJ+MartGGacGhYMTdk4T1R7d
+ KDg8WNsNWu3P7p/1/2DJdeSU/R3SU0zK6YizqLipoL2CeanM/9Yigj9zU
+ 48uajstJEzb1/Y446b1epRFNEqGWYJnoctgb3Digk2lN1IzFTottPdOqS A==;
+X-CSE-ConnectionGUID: t2q2nvOISXaTSIBS114ovw==
+X-CSE-MsgGUID: R0K1VOrvRKqP6Zqb3kaIKw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30492271"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30492271"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2024 18:50:21 -0800
-X-CSE-ConnectionGUID: BgQ7aLUUSJ+cgTv2Y4xQFA==
-X-CSE-MsgGUID: OQfoaMsiS52eotCldTU9ww==
+ 05 Nov 2024 18:50:05 -0800
+X-CSE-ConnectionGUID: T5TLU2G+Su6PkrVLoalTGw==
+X-CSE-MsgGUID: YSLwJp0WSqyljdTgl/zOVA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,261,1725346800"; d="scan'208";a="115078033"
+X-IronPort-AV: E=Sophos;i="6.11,261,1725346800"; d="scan'208";a="115077998"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 05 Nov 2024 18:50:17 -0800
+ by fmviesa001.fm.intel.com with ESMTP; 05 Nov 2024 18:50:02 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -55,10 +55,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 10/11] target/i386/kvm: Clean up error handling in
- kvm_arch_init()
-Date: Wed,  6 Nov 2024 11:07:27 +0800
-Message-Id: <20241106030728.553238-11-zhao1.liu@intel.com>
+Subject: [PATCH v5 05/11] target/i386/kvm: Save/load MSRs of kvmclock2
+ (KVM_FEATURE_CLOCKSOURCE2)
+Date: Wed,  6 Nov 2024 11:07:22 +0800
+Message-Id: <20241106030728.553238-6-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241106030728.553238-1-zhao1.liu@intel.com>
 References: <20241106030728.553238-1-zhao1.liu@intel.com>
@@ -89,115 +89,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, there're following incorrect error handling cases in
-kvm_arch_init():
-* Missed to handle failure of kvm_get_supported_feature_msrs().
-* Missed to return when kvm_vm_enable_disable_exits() fails.
-* MSR filter related cases called exit() directly instead of returning
-  to kvm_init(). (The caller of kvm_arch_init() - kvm_init() - needs to
-  know if kvm_arch_init() fails in order to perform cleanup).
+MSR_KVM_SYSTEM_TIME_NEW and MSR_KVM_WALL_CLOCK_NEW are bound to
+kvmclock2 (KVM_FEATURE_CLOCKSOURCE2).
 
-Fix the above cases.
+Add the save/load support for these 2 MSRs just like kvmclock MSRs.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Zide Chen <zide.chen@intel.com>
 ---
-v5: cleaned up kvm_vm_enable_energy_msrs().
-v3: new commit.
----
- target/i386/kvm/kvm.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ target/i386/cpu.h     |  2 ++
+ target/i386/kvm/kvm.c | 16 ++++++++++++++++
+ 2 files changed, 18 insertions(+)
 
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index c4ec64e0078f..79c28a48eb70 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1886,6 +1886,8 @@ typedef struct CPUArchState {
+ 
+     uint64_t system_time_msr;
+     uint64_t wall_clock_msr;
++    uint64_t system_time_new_msr;
++    uint64_t wall_clock_new_msr;
+     uint64_t steal_time_msr;
+     uint64_t async_pf_en_msr;
+     uint64_t async_pf_int_msr;
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 69825b53b6da..013c0359acbe 100644
+index 4aba034865bb..b175cd4a4bcb 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -3147,7 +3147,7 @@ static int kvm_vm_enable_userspace_msr(KVMState *s)
-     return 0;
- }
- 
--static void kvm_vm_enable_energy_msrs(KVMState *s)
-+static int kvm_vm_enable_energy_msrs(KVMState *s)
- {
-     int ret;
- 
-@@ -3157,7 +3157,7 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
-         if (ret < 0) {
-             error_report("Could not install MSR_RAPL_POWER_UNIT handler: %s",
-                          strerror(-ret));
--            exit(1);
-+            return ret;
+@@ -3962,6 +3962,12 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+             kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, env->system_time_msr);
+             kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, env->wall_clock_msr);
          }
- 
-         ret = kvm_filter_msr(s, MSR_PKG_POWER_LIMIT,
-@@ -3165,7 +3165,7 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
-         if (ret < 0) {
-             error_report("Could not install MSR_PKG_POWER_LIMIT handler: %s",
-                          strerror(-ret));
--            exit(1);
-+            return ret;
++        if (env->features[FEAT_KVM] & CPUID_KVM_CLOCK2) {
++            kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME_NEW,
++                              env->system_time_new_msr);
++            kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK_NEW,
++                              env->wall_clock_new_msr);
++        }
+         if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
+             kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, env->async_pf_int_msr);
          }
- 
-         ret = kvm_filter_msr(s, MSR_PKG_POWER_INFO,
-@@ -3173,17 +3173,17 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
-         if (ret < 0) {
-             error_report("Could not install MSR_PKG_POWER_INFO handler: %s",
-                          strerror(-ret));
--            exit(1);
-+            return ret;
-         }
-         ret = kvm_filter_msr(s, MSR_PKG_ENERGY_STATUS,
-                              kvm_rdmsr_pkg_energy_status, NULL);
-         if (ret < 0) {
-             error_report("Could not install MSR_PKG_ENERGY_STATUS handler: %s",
-                          strerror(-ret));
--            exit(1);
-+            return ret;
-         }
+@@ -4442,6 +4448,10 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
+         kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, 0);
      }
--    return;
-+    return 0;
- }
- 
- int kvm_arch_init(MachineState *ms, KVMState *s)
-@@ -3250,7 +3250,10 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         return ret;
-     }
- 
--    kvm_get_supported_feature_msrs(s);
-+    ret = kvm_get_supported_feature_msrs(s);
-+    if (ret < 0) {
-+        return ret;
++    if (env->features[FEAT_KVM] & CPUID_KVM_CLOCK2) {
++        kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME_NEW, 0);
++        kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK_NEW, 0);
 +    }
- 
-     uname(&utsname);
-     lm_capable_kernel = strcmp(utsname.machine, "x86_64") == 0;
-@@ -3286,6 +3289,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         if (ret < 0) {
-             error_report("kvm: guest stopping CPU not supported: %s",
-                          strerror(-ret));
-+            return ret;
-         }
+     if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
+         kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, 0);
      }
- 
-@@ -3317,12 +3321,15 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         }
- 
-         if (s->msr_energy.enable == true) {
--            kvm_vm_enable_energy_msrs(s);
-+            ret = kvm_vm_enable_energy_msrs(s);
-+            if (ret < 0) {
-+                return ret;
-+            }
- 
-             ret = kvm_msr_energy_thread_init(s, ms);
-             if (ret < 0) {
-                 error_report("kvm : error RAPL feature requirement not met");
--                exit(1);
-+                return ret;
-             }
-         }
-     }
+@@ -4708,6 +4718,12 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_KVM_WALL_CLOCK:
+             env->wall_clock_msr = msrs[i].data;
+             break;
++        case MSR_KVM_SYSTEM_TIME_NEW:
++            env->system_time_new_msr = msrs[i].data;
++            break;
++        case MSR_KVM_WALL_CLOCK_NEW:
++            env->wall_clock_new_msr = msrs[i].data;
++            break;
+         case MSR_MCG_STATUS:
+             env->mcg_status = msrs[i].data;
+             break;
 -- 
 2.34.1
 
