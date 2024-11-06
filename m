@@ -4,64 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B24FBD44D4C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 11:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA45BD44D53
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 11:45:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8e4A-0002h7-Jp; Wed, 06 Nov 2024 06:19:14 -0500
+	id 1t8eT6-0000qA-5m; Wed, 06 Nov 2024 06:45:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1t8e46-0002eo-Li; Wed, 06 Nov 2024 06:19:10 -0500
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t8eSy-0000pO-7A
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 06:44:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1t8e42-0008FO-PD; Wed, 06 Nov 2024 06:19:10 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:94a7:0:640:198e:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 0F5B760A8E;
- Wed,  6 Nov 2024 14:19:02 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b49f::1:6])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id dIfYi50AYGk0-aHSW0wzo; Wed, 06 Nov 2024 14:19:01 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1730891941;
- bh=kPJONOBuupK35ix70ujuH2B0YF+8dGxRVC385QmotRc=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=LOt2M6bdOSW4ixqALugOxgVJoCWlgbaS9wPlyrCnJVIAg8bo+borDg00puzT6YG9r
- dwZlv7AnvQLMkOYxk028vvxVvGEskQXahhbkNOGLW1fIBRq+yFQmo3uUdKzy3iWOkA
- jppfAi23c0CGQxK6AtsiuND61a8QY1GSFavrHITg=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-block@nongnu.org,
-	raphael@enfabrica.net,
-	mst@redhat.com
-Cc: sgarzare@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- eblake@redhat.com, armbru@redhat.com, qemu-devel@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v7 3/3] qapi: introduce device-sync-config
-Date: Wed,  6 Nov 2024 14:18:37 +0300
-Message-Id: <20241106111837.115820-4-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241106111837.115820-1-vsementsov@yandex-team.ru>
-References: <20241106111837.115820-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1t8eSv-0007f8-0Z
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 06:44:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730893485;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=M0X7swszX/w9slhUhXplUUT7/P37Crj342idQArutwc=;
+ b=QssBLftL1XcoCvGI1gWAvIFLJzA8FUiWEHTas50xzyPcMEh+qMfvJCGzU52x8x1ZG9wbly
+ ARiLA3iU8MGUZ8izpMH2ZaxGHrmJrWOw8tLBsEfJT9qCZCmboFJrYELQPIBe3+lPxu0lNO
+ r6g1KMP/upU2Nf0exj/KtQ0ekQhsq44=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-682-lKHYOgxbO-ClgmwkQElYVg-1; Wed, 06 Nov 2024 06:44:42 -0500
+X-MC-Unique: lKHYOgxbO-ClgmwkQElYVg-1
+X-Mimecast-MFC-AGG-ID: lKHYOgxbO-ClgmwkQElYVg
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4316e350d6aso43687185e9.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 03:44:42 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730893481; x=1731498281;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=M0X7swszX/w9slhUhXplUUT7/P37Crj342idQArutwc=;
+ b=qo6Y8bq10spo2AH3IoWcxPm1ANs5IRJsdyj703/79GUhaWXMqEFmwFithN/KrWkwhk
+ iWDg8JH9V8W/28RcqXhdIKoNarVjKRU6v1UKVgoG/+DSnCGdZlJvjXkC5d0Wr/wef4cm
+ yvrC6SXazXG9VBKSod/B7P2qAN8pzHhh6sMc/etxCVpjipZuAVEryZ73cnQsp0R4fLJt
+ P7OUiTWYxnivsxF1gNWNVqjBayDpVzgp8HqffQURbanFo9kiMT5QE2V1JcNSUIy8USYW
+ 4I5w7QBBWIzTHD91OTkwamKP4lMkk4cybKHBtY93N71hXaGPKIEz2aNUNc27Yx8hqc7S
+ sbFw==
+X-Gm-Message-State: AOJu0Yzy+IemZGcZaA5Y5YDOoj+N13jcZoX1bYSlQ6BhMhywEhqZVYIy
+ 30pWwWzZoB2pMaVozkPt0OYVEyyRSvwdtWvT+1hRdxA8RGHxUirr+WD1cnrRD/0BgjmJQaN35Y7
+ HPgKjV5SDIDXlrDa6x/Nxs8pJEvTOSQJvIMr4AOfmJsisk3O3FO27RUcGQh4PXqZ6HLFldguwWX
+ MUCDqPchyFBVz3HTCNjFNzB4Vtp3s=
+X-Received: by 2002:a05:600c:1ca9:b0:431:50cb:2398 with SMTP id
+ 5b1f17b1804b1-4328323f576mr165154265e9.2.1730893481206; 
+ Wed, 06 Nov 2024 03:44:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFCKotslR6IIo1D6DNh1eCY9u1COQOHyx2Vrhw7VHB1sxQNL2qsFctqIk1X6tzkXwTd+wCjkiwgXUFJ+VZDGTc=
+X-Received: by 2002:a05:600c:1ca9:b0:431:50cb:2398 with SMTP id
+ 5b1f17b1804b1-4328323f576mr165154105e9.2.1730893480895; Wed, 06 Nov 2024
+ 03:44:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20241105060053.61973-1-ppandit@redhat.com>
+ <a664pk3wefui7tyvs6rjln2tm2fxwir6yvshffwkjypksechjj@3amhddyqxwiz>
+ <CAE8KmOxHTx=ZxTWype-YVizogDEVVXVg=jRdYU8eRtHP7ngr9w@mail.gmail.com>
+ <kxiffscfbs4njd6cfuebstpm5yrp7jdkgulcwbsmsyyxfowixw@yrhyrmhaj7da>
+ <CAE8KmOwWDw7fxbLcVLo1BwkLYfi4X_9mKP73MaZz177LNgaaJg@mail.gmail.com>
+ <ez2fb2yg7zha6ccdey47zxhaxcgwim7f6p4zzj4ucrgjnbavyk@mrnhs47uyx5e>
+In-Reply-To: <ez2fb2yg7zha6ccdey47zxhaxcgwim7f6p4zzj4ucrgjnbavyk@mrnhs47uyx5e>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Wed, 6 Nov 2024 17:14:24 +0530
+Message-ID: <CAE8KmOy48HPqW4VLJmf+ofZq+K1nM3tza3Sp4nX6sAreV0bxOg@mail.gmail.com>
+Subject: Re: [PATCH] vhost: fail device start if iotlb update fails
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Prasad Pandit <pjp@fedoraproject.org>, Jason Wang <jasowang@redhat.com>, 
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,191 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add command to sync config from vhost-user backend to the device. It
-may be helpful when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG failed or not
-triggered interrupt to the guest or just not available (not supported
-by vhost-user server).
+On Wed, 6 Nov 2024 at 16:05, Stefano Garzarella <sgarzare@redhat.com> wrote:
+> >+fail_iotlb:
+> >+    hdev->vhost_ops->vhost_set_iotlb_callback(hdev, false);
+> > fail_start:
+> >+    hdev->vhost_ops->vhost_dev_start(hdev, false);
+>
+> This should go before the fail_start label, since it should not be
+> called when vhost_dev_start() fails.
 
-Command result is racy if allow it during migration. Let's not allow
-that.
+* I see, okay.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Acked-by: Raphael Norwitz <raphael@enfabrica.net>
+> Also we need to check if that callback is defined.
+
+* That check is already done while reaching the 'goto fail_iotlb;'
+statement, no? OR maybe we only check for:
+hdev->vhost_ops->vhost_dev_start() function?
+
+> >* Looking at the vhost_vdpa_dev_start(), when it is called with
+> >'started=false' parameter, it calls the vdpa_suspend, vdpa_stop etc.
+> >functions. ie. probably other ->vhost_dev_start() and
+> >->vhost_set_iotlb_callback() functions need to take appropriate action
+> >when called with 'started/enabled=false' parameter.
+>
+> We already call them in vhost_dev_stop(), so I guess we are fine.
+
+* I meant vhost device functions like vhost_user_dev_start() and
+vhost_user_set_iotlb_callback() need to take action when called with a
+'false' parameter.
+
+Thank you.
 ---
- hw/block/vhost-user-blk.c |  1 +
- hw/virtio/virtio-pci.c    |  9 +++++++++
- include/hw/qdev-core.h    |  6 ++++++
- qapi/qdev.json            | 24 ++++++++++++++++++++++++
- system/qdev-monitor.c     | 38 ++++++++++++++++++++++++++++++++++++++
- 5 files changed, 78 insertions(+)
-
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 48b3dabb8d..7996e49821 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -591,6 +591,7 @@ static void vhost_user_blk_class_init(ObjectClass *klass, void *data)
- 
-     device_class_set_props(dc, vhost_user_blk_properties);
-     dc->vmsd = &vmstate_vhost_user_blk;
-+    dc->sync_config = vhost_user_blk_sync_config;
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-     vdc->realize = vhost_user_blk_device_realize;
-     vdc->unrealize = vhost_user_blk_device_unrealize;
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 4d832fe845..c5a809b956 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2385,6 +2385,14 @@ static void virtio_pci_dc_realize(DeviceState *qdev, Error **errp)
-     vpciklass->parent_dc_realize(qdev, errp);
- }
- 
-+static int virtio_pci_sync_config(DeviceState *dev, Error **errp)
-+{
-+    VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
-+    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-+
-+    return qdev_sync_config(DEVICE(vdev), errp);
-+}
-+
- static void virtio_pci_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -2401,6 +2409,7 @@ static void virtio_pci_class_init(ObjectClass *klass, void *data)
-     device_class_set_parent_realize(dc, virtio_pci_dc_realize,
-                                     &vpciklass->parent_dc_realize);
-     rc->phases.hold = virtio_pci_bus_reset_hold;
-+    dc->sync_config = virtio_pci_sync_config;
- }
- 
- static const TypeInfo virtio_pci_info = {
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index aa97c34a4b..94914858d8 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -95,6 +95,7 @@ typedef void (*DeviceUnrealize)(DeviceState *dev);
- typedef void (*DeviceReset)(DeviceState *dev);
- typedef void (*BusRealize)(BusState *bus, Error **errp);
- typedef void (*BusUnrealize)(BusState *bus);
-+typedef int (*DeviceSyncConfig)(DeviceState *dev, Error **errp);
- 
- /**
-  * struct DeviceClass - The base class for all devices.
-@@ -103,6 +104,9 @@ typedef void (*BusUnrealize)(BusState *bus);
-  * property is changed to %true.
-  * @unrealize: Callback function invoked when the #DeviceState:realized
-  * property is changed to %false.
-+ * @sync_config: Callback function invoked when QMP command device-sync-config
-+ * is called. Should synchronize device configuration from host to guest part
-+ * and notify the guest about the change.
-  * @hotpluggable: indicates if #DeviceClass is hotpluggable, available
-  * as readonly "hotpluggable" property of #DeviceState instance
-  *
-@@ -162,6 +166,7 @@ struct DeviceClass {
-     DeviceReset legacy_reset;
-     DeviceRealize realize;
-     DeviceUnrealize unrealize;
-+    DeviceSyncConfig sync_config;
- 
-     /**
-      * @vmsd: device state serialisation description for
-@@ -547,6 +552,7 @@ bool qdev_hotplug_allowed(DeviceState *dev, Error **errp);
-  */
- HotplugHandler *qdev_get_hotplug_handler(DeviceState *dev);
- void qdev_unplug(DeviceState *dev, Error **errp);
-+int qdev_sync_config(DeviceState *dev, Error **errp);
- void qdev_simple_device_unplug_cb(HotplugHandler *hotplug_dev,
-                                   DeviceState *dev, Error **errp);
- void qdev_machine_creation_done(void);
-diff --git a/qapi/qdev.json b/qapi/qdev.json
-index 53d147c7b4..25cbcf977b 100644
---- a/qapi/qdev.json
-+++ b/qapi/qdev.json
-@@ -163,3 +163,27 @@
- ##
- { 'event': 'DEVICE_UNPLUG_GUEST_ERROR',
-   'data': { '*device': 'str', 'path': 'str' } }
-+
-+##
-+# @device-sync-config:
-+#
-+# Synchronize device configuration from host to guest part.  First,
-+# copy the configuration from the host part (backend) to the guest
-+# part (frontend).  Then notify guest software that device
-+# configuration changed.
-+#
-+# The command may be used to notify the guest about block device
-+# capcity change.  Currently only vhost-user-blk device supports
-+# this.
-+#
-+# @id: the device's ID or QOM path
-+#
-+# Features:
-+#
-+# @unstable: The command is experimental.
-+#
-+# Since: 9.2
-+##
-+{ 'command': 'device-sync-config',
-+  'features': [ 'unstable' ],
-+  'data': {'id': 'str'} }
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 2c76cef4d8..d25325c4e3 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -23,6 +23,7 @@
- #include "monitor/monitor.h"
- #include "monitor/qdev.h"
- #include "sysemu/arch_init.h"
-+#include "sysemu/runstate.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-qdev.h"
- #include "qapi/qmp/dispatch.h"
-@@ -977,6 +978,43 @@ void qmp_device_del(const char *id, Error **errp)
-     }
- }
- 
-+int qdev_sync_config(DeviceState *dev, Error **errp)
-+{
-+    DeviceClass *dc = DEVICE_GET_CLASS(dev);
-+
-+    if (!dc->sync_config) {
-+        error_setg(errp, "device-sync-config is not supported for '%s'",
-+                   object_get_typename(OBJECT(dev)));
-+        return -ENOTSUP;
-+    }
-+
-+    return dc->sync_config(dev, errp);
-+}
-+
-+void qmp_device_sync_config(const char *id, Error **errp)
-+{
-+    DeviceState *dev;
-+
-+    /*
-+     * During migration there is a race between syncing`configuration
-+     * and migrating it (if migrate first, that target would get
-+     * outdated version), so let's just not allow it.
-+     */
-+
-+    if (migration_is_running()) {
-+        error_setg(errp, "Config synchronization is not allowed "
-+                   "during migration");
-+        return;
-+    }
-+
-+    dev = find_device_state(id, true, errp);
-+    if (!dev) {
-+        return;
-+    }
-+
-+    qdev_sync_config(dev, errp);
-+}
-+
- void hmp_device_add(Monitor *mon, const QDict *qdict)
- {
-     Error *err = NULL;
--- 
-2.34.1
+  - Prasad
 
 
