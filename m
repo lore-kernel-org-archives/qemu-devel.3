@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81791D44D64
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 13:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82398D44D62
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 13:38:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8gDN-0005CR-C0; Wed, 06 Nov 2024 08:36:56 -0500
+	id 1t8gB7-0001gl-IB; Wed, 06 Nov 2024 08:34:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8gD4-0004vP-2z
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:36:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8gD2-0001wv-GS
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:36:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730900191;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eqQ6qew3aYnmLjGNs75LevqgkhSi0/5xM5L9xd/D6H8=;
- b=JWAFwY29nSlrbyR6CKRsJV6D94/HGaYENYg1jTA6VR6++2YaKZEopOezPlahFrWk8q96ly
- O+LfayFlZLTZhthS0DsGsrRtvr+FarX26WlWK9/rV0KRvzjE7eBtD9dSwfBu5yE47uKAg0
- p9AE2H4XPDaiokAaLT6+VvhVmkx1iUE=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-422-0Fr5aIgcOTiPCq7rLwBCkw-1; Wed,
- 06 Nov 2024 08:36:30 -0500
-X-MC-Unique: 0Fr5aIgcOTiPCq7rLwBCkw-1
-X-Mimecast-MFC-AGG-ID: 0Fr5aIgcOTiPCq7rLwBCkw
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 12C111954B1C; Wed,  6 Nov 2024 13:36:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.180])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0E2E1195607C; Wed,  6 Nov 2024 13:36:25 +0000 (UTC)
-Date: Wed, 6 Nov 2024 13:36:22 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Dehan Meng <demeng@redhat.com>
-Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com, michael.roth@amd.com,
- peter.maydell@linaro.org
-Subject: Re: [PATCH v5 2/3] qemu-ga: Optimize var declaration and definition
-Message-ID: <Zytw1kwZhKb_zX5S@redhat.com>
-References: <20241106084134.1133061-1-demeng@redhat.com>
- <20241106084134.1133061-3-demeng@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1t8gB5-0001gD-6J
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:34:31 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1t8gB3-0001aV-Ki
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:34:30 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-71e5a62031aso5457187b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 05:34:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1730900067; x=1731504867; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pf2EjqyLwqwTOez3ga3+F5Pahm+OzloPlTLYuNjieFM=;
+ b=ZzxWhADqt7ZVVuHWP7my0eBftigVZoPjKpq0XWRYPchYxpD3j2774Fj7JoX9ws+Abe
+ QEazPbp6qu1veiRF0YImYjXVGGsRlWQ1EnenWQuJSl7qFZoouEvSgVbcOfo0/83JwtS+
+ HOZ/zeCLc7myR6FHsbeHUv7XmwGFcI/2ei8OjF0WkLJK4SbntXzMlp4Q7vij0YwX73th
+ IX3BpbhPfIGCSNLuyJpfNKpGe0seossnuk04LoDSXQq5MN0jJPwGZ0xHGw/vsDePzs3s
+ VkC/nAZm/sfhBuTU0gUKsECSMl/1A/o7YlKuBTvHfhNzimC3xlQiEvoZJ70/2ZRboGC8
+ IaEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730900067; x=1731504867;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pf2EjqyLwqwTOez3ga3+F5Pahm+OzloPlTLYuNjieFM=;
+ b=bGsUFrqgA+F+TAD4Sk8fFPrhnya7IJDmPvziFMLHf7fVDkViAhpVpgZKnm3P4qbOIW
+ s8PMQ0LiYzrNgaRQWTzZO+UWU4ZvgHSOHt08gjNRhmYIApC4krga0TjZxMLCTwXuqqyf
+ 86qxsHp4rFSeDlS9UVn896OgA+AJreybLGh2oNfSC77405vq8b/2Ztvs+T5gtFIjPt7l
+ gq5t6SbRmYhXi3/+1TiVx0n9QtuyOBd4utmXyDS34pKh+5PCUUSXit1Nb2f0W8p61TZ/
+ 81boyoTTAWSdJyH8ul8cD12qgY+Ju8KGuAWupQAzvh0Eda45UGlKdQT/Hm6mm+Coy2nq
+ DZag==
+X-Gm-Message-State: AOJu0YxpIFKf2fXtfahG0DBiPcJfRxIgm0glnVBayQFotezmdKfWGiFZ
+ BpvVOQg7gUZNyiY+nLwpHE7WJPKRewTkVtMkeBVUwS/YJB2enfo9OkPmS8KgDReiUvIgxIL0IC2
+ R
+X-Google-Smtp-Source: AGHT+IGvpBZeKDdfyohdAZ7akkklUaDWZfMd8PB+00HtZySuwPdgiYSsgPz9HPvZkS42TRtsUnptOw==
+X-Received: by 2002:a05:6a00:1708:b0:71d:f423:e6cc with SMTP id
+ d2e1a72fcca58-720c98d5c3dmr28187651b3a.8.1730900067539; 
+ Wed, 06 Nov 2024 05:34:27 -0800 (PST)
+Received: from grind.. ([189.79.22.174]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-720bc2eb64esm11749765b3a.168.2024.11.06.05.34.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Nov 2024 05:34:27 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH for-10.0 2/7] hw/riscv/riscv-iommu: parametrize CAP.IGS
+Date: Wed,  6 Nov 2024 10:34:02 -0300
+Message-ID: <20241106133407.604587-3-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241106133407.604587-1-dbarboza@ventanamicro.com>
+References: <20241106133407.604587-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241106084134.1133061-3-demeng@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,28 +92,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 06, 2024 at 04:41:33PM +0800, Dehan Meng wrote:
-> Variable declarations moved to the beginning of blocks
-> Followed the coding style of using snake_case for variable names.
-> Proper initialization of param 'size_t n' to '0' for
-> 
-> Signed-off-by: Dehan Meng <demeng@redhat.com>
-> ---
->  qga/commands-linux.c | 43 +++++++++++++++++++------------------------
->  1 file changed, 19 insertions(+), 24 deletions(-)
+Interrupt Generation Support (IGS) is a capability that is tied to the
+interrupt deliver mechanism, not with the core IOMMU emulation. We
+should allow device implementations to set IGS as they wish.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+A new helper is added to make it easier for device impls to set IGS. Use
+it in our existing IOMMU device (riscv-iommu-pci) to set
+RISCV_IOMMU_CAPS_IGS_MSI.
 
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ hw/riscv/riscv-iommu-bits.h | 6 ++++++
+ hw/riscv/riscv-iommu-pci.c  | 1 +
+ hw/riscv/riscv-iommu.c      | 5 +++++
+ hw/riscv/riscv-iommu.h      | 4 ++++
+ 4 files changed, 16 insertions(+)
 
-With regards,
-Daniel
+diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
+index 6359ae0353..485f36b9c9 100644
+--- a/hw/riscv/riscv-iommu-bits.h
++++ b/hw/riscv/riscv-iommu-bits.h
+@@ -88,6 +88,12 @@ struct riscv_iommu_pq_record {
+ #define RISCV_IOMMU_CAP_PD17            BIT_ULL(39)
+ #define RISCV_IOMMU_CAP_PD20            BIT_ULL(40)
+ 
++enum riscv_iommu_igs_modes {
++    RISCV_IOMMU_CAP_IGS_MSI = 0,
++    RISCV_IOMMU_CAP_IGS_WSI,
++    RISCV_IOMMU_CAP_IGS_BOTH
++};
++
+ /* 5.4 Features control register (32bits) */
+ #define RISCV_IOMMU_REG_FCTL            0x0008
+ #define RISCV_IOMMU_FCTL_BE             BIT(0)
+diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+index a42242532d..4ce9bf6b78 100644
+--- a/hw/riscv/riscv-iommu-pci.c
++++ b/hw/riscv/riscv-iommu-pci.c
+@@ -155,6 +155,7 @@ static void riscv_iommu_pci_init(Object *obj)
+     qdev_alias_all_properties(DEVICE(iommu), obj);
+ 
+     iommu->icvec_avail_vectors = RISCV_IOMMU_PCI_ICVEC_VECTORS;
++    riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_MSI);
+ }
+ 
+ static Property riscv_iommu_pci_properties[] = {
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 1893584028..d95b4b95d8 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2096,6 +2096,11 @@ static const MemoryRegionOps riscv_iommu_trap_ops = {
+     }
+ };
+ 
++void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mode)
++{
++    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_IGS, mode);
++}
++
+ static void riscv_iommu_instance_init(Object *obj)
+ {
+     RISCVIOMMUState *s = RISCV_IOMMU(obj);
+diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+index da3f03440c..f9f2827808 100644
+--- a/hw/riscv/riscv-iommu.h
++++ b/hw/riscv/riscv-iommu.h
+@@ -21,6 +21,9 @@
+ 
+ #include "qom/object.h"
+ #include "hw/riscv/iommu.h"
++#include "hw/riscv/riscv-iommu-bits.h"
++
++typedef enum riscv_iommu_igs_modes riscv_iommu_igs_mode;
+ 
+ struct RISCVIOMMUState {
+     /*< private >*/
+@@ -85,6 +88,7 @@ struct RISCVIOMMUState {
+ 
+ void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
+          Error **errp);
++void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mode);
+ 
+ /* private helpers */
+ 
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.45.2
 
 
