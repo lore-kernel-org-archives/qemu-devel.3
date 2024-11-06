@@ -4,75 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D407D59F56
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E204D59F5A
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8kGs-0005sT-8R; Wed, 06 Nov 2024 12:56:46 -0500
+	id 1t8kIR-0006Uz-BD; Wed, 06 Nov 2024 12:58:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1t8kGr-0005sD-Bd
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:56:45 -0500
-Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1t8kIP-0006UJ-52
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:58:21 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1t8kGq-0003HJ-0O
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:56:45 -0500
-Received: by mail-ua1-x934.google.com with SMTP id
- a1e0cc1a2514c-84fb1225a89so2444276241.2
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:56:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1t8kIN-0003V1-Fa
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:58:20 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-431548bd1b4so669365e9.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:58:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730915795; x=1731520595; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=72mDxKkkjH8Dy9E7zBtoQvU29JmOXSweqzZRhLMuM/g=;
- b=Uvn/MH/gKqJwsizg6D6+ZtN1Ih3CM2y5N7ejfo5ZpCPfJpjupllSNa42LhoUS7vN++
- Y49Iv5VlqgR8o80zs6k+l4ZeFiG48iDGUuSuishgsUW03ixtwQHdQdnMeeyV941FtrjL
- +VejloYvjzNTEj2TmEqE08W7i5LlzE1O8l8ZjjO+g9inF9HJKNXELtyGrW7xsdlScYN6
- 5P2s2sDPs9x6tww2YsuzaYgsf4BUCeqz/qdqx3XN+wHzqWcUjiD3z++NASDYnpH56l9C
- SV1oynth6tEIwBPUSo83wJeEenENayCqHNSbMWLmNaybTtqPrRneyKPl2k/UgVam+oDm
- ADjA==
+ d=ventanamicro.com; s=google; t=1730915897; x=1731520697; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=WAA4yL7DFxjSOgzfU7Ib8/m40rXSxLAhO7gNKSuiIV0=;
+ b=HEQO4zjaa6ngNNYLPk7FBuEy8f/FIn17Ivyik7/t9hjX0P8juDrJ1zjFF2pQW+LNnt
+ HEQWkchmM3Z2ZotxB/hK6sUlIdT3C+NhMPiLBLg8x7sG3S0UiofC/T/R+6LLc3tZ93+L
+ qUecZsZQdqGq9WuruAAJV5W32TrdPxEeUUQldY+litBbdcPFV8a7W8rnLB5qS4b9XE5c
+ /b5rbjlhfNImxb0EyBWmXQH/jELCsem1HciEkNM1GkzYFirnZczsmPY+r7XyGdK8fq4p
+ uPJPBSogleXGdAh/J/MWCM93oo7QCTSu4aKyr8CZYWph/vI6fJWwV31Hx3YDvuQLE4bW
+ qr9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730915795; x=1731520595;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=72mDxKkkjH8Dy9E7zBtoQvU29JmOXSweqzZRhLMuM/g=;
- b=GtqJbBGwGs6mE2bM/NZvK+2SCpdVhXz3xzwYwu3WBbU9mZivjVoepryGAyLXkb71d7
- 7YDGma6zpj5XAq9NeT8WIoeJwmcuDM30fPSSL2kM4CrjnrVRWsvcV0QM6BvPav9/xg8F
- 5mpxtHrp0vW1HZnP7gsIOEMDsU8JVPiWNx3o9aKq4yHsrN/55cpBJ7lbvy/+mjnHHWzv
- 2nwS/mftpvRhXJluZhZb96g3H3ld01TJerRcOVdgNz0oPfwMTHP/hdWuer/8yg+fVgAk
- YFqL1ixzXBYwe+hLdvSWOgTzbLd1e0vNAyHQAbJ+AAwFdmV7KXlBkDD63h1sMg+IH0Il
- 6nmg==
-X-Gm-Message-State: AOJu0YzgMC/ChQs9bibPaqwzL59AHZthPx6B9HpTtEb6UUHyOstXZQyj
- dBoLE2c64r964KVnJVrqg1lSETFF+BNPtcIGZLheVhnly6TiKLadX1hj4dXdZd8vg2/0RDwcngl
- blHT2ofEJSWJoe5jNsZxww1gnuC8=
-X-Google-Smtp-Source: AGHT+IEO3tsWNWrWEd4VwUH8DwCxrzxXL1fO4YPIQzWwjZ/R3fI8YGBDW0py7OJBQ5bKk12JIlkR1ffWpRtZO7UqGr0=
-X-Received: by 2002:a05:6102:41a2:b0:4a4:97bc:c0d7 with SMTP id
- ada2fe7eead31-4a8cfb4bd93mr42928451137.8.1730915795612; Wed, 06 Nov 2024
- 09:56:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730915897; x=1731520697;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WAA4yL7DFxjSOgzfU7Ib8/m40rXSxLAhO7gNKSuiIV0=;
+ b=hpN1CfwZd9C9StdXBXcxxYRJLC8qF1tdzPJ1EKQkcvZudmvazkeKSRYCxrHS8k6vBG
+ a4wSZ0/IUX3Ni8dJO3Mtfq0r6ELGUiDQ/6iXLexXU1mehM0ry62s+sXKx5M76zziPJ4s
+ E350baAYaj2d9Pk9u8eMzcR3PtbUt2nVisYlv/BRAKF71uts/QuYha8DfQtKMygfZO5Z
+ 9B5v5zkJLG6hch7WTvN2hFbOveiZT6c6OED6SPHj24wpAQOEXglkawzb17NQz3CQMe57
+ 7sID9gJj0QsA0PwwkihMObfqA5PbUNLEflIgFfve6fkp2qunYYLepXgkG41FQo+RKyi2
+ dwSw==
+X-Gm-Message-State: AOJu0YyXaEtOOJf8k3OAm3fJjcP/ZHuJJsuAHBX+TqjX6U3jRrRBPBzK
+ cEl70IOTQAFybhKscYqGibIBJ1jO/U1ffWmVNF9nScSG6lja1dpBF97xU2KO/26wKGjAghRukSt
+ A
+X-Google-Smtp-Source: AGHT+IEHLoWcR/ylhRv5o308ocQAYTCN5fnh1qdDtM+DfvHpXyDDILKiSooeqUM6++8/+JhzSk6Efw==
+X-Received: by 2002:a05:600c:1c14:b0:431:57e5:b245 with SMTP id
+ 5b1f17b1804b1-4328328492amr166288255e9.23.1730915897522; 
+ Wed, 06 Nov 2024 09:58:17 -0800 (PST)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432aa6c62b3sm33750445e9.20.2024.11.06.09.58.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Nov 2024 09:58:16 -0800 (PST)
+Date: Wed, 6 Nov 2024 18:58:15 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Subject: Re: [PATCH for-10.0 0/7] hw/riscv: riscv-iommu-sys device
+Message-ID: <20241106-45c7291760031b7896f9f668@orel>
+References: <20241106133407.604587-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-References: <20241106174443.557557-1-pbonzini@redhat.com>
-In-Reply-To: <20241106174443.557557-1-pbonzini@redhat.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Wed, 6 Nov 2024 23:56:37 +0600
-Message-ID: <CAFfO_h7h-E-DxJxZDp3hGBEdQjC8x1A2rvLqHrx0n-G0uobUtQ@mail.gmail.com>
-Subject: Re: [PATCH] eif: cope with huge section sizes
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
- envelope-from=dorjoychy111@gmail.com; helo=mail-ua1-x934.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241106133407.604587-1-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,22 +96,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 6, 2024 at 11:44=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> Check for overflow as well as allocation failure.  Resolves Coverity CID =
-1564859.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  hw/core/eif.c | 48 +++++++++++++++++++++++++++++++++++++++++-------
->  1 file changed, 41 insertions(+), 7 deletions(-)
->
+On Wed, Nov 06, 2024 at 10:34:00AM -0300, Daniel Henrique Barboza wrote:
+> Hi,
+> 
+> Now that we have merged the base IOMMU support we can re-introduce
+> the riscv-iommu-sys platform device that was taken away from the initial
+> posting.
+> 
+> Aside from adding support for the device in the 'virt' machine we're
+> also adding MSI support for it, something that we weren't doing before.
+> The Linux driver is then free to choose either MSI or WSI to use the
+> device.
 
-Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+The driver (still only in linux-next) only knows how to use WSI, but with
+a series I just posted[1] MSI is also possible.
 
-Thanks for fixing!
+[1] https://lore.kernel.org/all/20241106175102.219923-4-ajones@ventanamicro.com/
 
-Regards,
-Dorjoy
+Thanks,
+drew
+
+> 
+> Patches based on master.
+> 
+> Daniel Henrique Barboza (5):
+>   hw/riscv/riscv-iommu.c: add riscv_iommu_instance_init()
+>   hw/riscv/riscv-iommu: parametrize CAP.IGS
+>   hw/riscv/virt.c, riscv-iommu-sys.c: add MSIx support
+>   hw/riscv/riscv-iommu: implement reset protocol
+>   docs/specs: add riscv-iommu-sys information
+> 
+> Sunil V L (1):
+>   hw/riscv/virt: Add IOMMU as platform device if the option is set
+> 
+> Tomasz Jeznach (1):
+>   hw/riscv: add riscv-iommu-sys platform device
+> 
+>  docs/specs/riscv-iommu.rst  |  30 ++++-
+>  docs/system/riscv/virt.rst  |  10 ++
+>  hw/riscv/meson.build        |   2 +-
+>  hw/riscv/riscv-iommu-bits.h |   6 +
+>  hw/riscv/riscv-iommu-pci.c  |  21 +++
+>  hw/riscv/riscv-iommu-sys.c  | 256 ++++++++++++++++++++++++++++++++++++
+>  hw/riscv/riscv-iommu.c      | 114 +++++++++++-----
+>  hw/riscv/riscv-iommu.h      |   5 +
+>  hw/riscv/trace-events       |   4 +
+>  hw/riscv/virt.c             | 108 ++++++++++++++-
+>  include/hw/riscv/iommu.h    |  10 +-
+>  include/hw/riscv/virt.h     |   6 +-
+>  12 files changed, 530 insertions(+), 42 deletions(-)
+>  create mode 100644 hw/riscv/riscv-iommu-sys.c
+> 
+> -- 
+> 2.45.2
+> 
+> 
 
