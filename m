@@ -4,86 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFBD6D59F67
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 21:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13913D59F7E
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 22:37:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8nbv-000343-BL; Wed, 06 Nov 2024 16:30:43 -0500
+	id 1t8oeE-0005My-PB; Wed, 06 Nov 2024 17:37:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
- id 1t8nbt-00033r-TX
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 16:30:42 -0500
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
- id 1t8nbs-0004bf-5R
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 16:30:41 -0500
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-3e601b6a33aso222825b6e.0
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 13:30:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730928638; x=1731533438; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JqXsIZtuGIOuW5Gn43DKmDnsK7qTSNWkCXc4v8P485Y=;
- b=OVijuyvsD5hu/A88fbR9fRQzeiQLFNj2CQY9GOxV6u3CuEEK3v8fMLIjWfbt2BFs2c
- YfzVMgs9qVdcxUQ9WwyDE1VxPX1DY8vJwCqj7l5ORDrxHdaXXzEXhfMbeDlf+mnM3Mhz
- +VCQFdl92YpQtpQdAoD5mw/2g+DCdEjVBVD8EnK5ee2SYhiMNiZB69NikVtnut36sQAL
- /rsdNg4KVASEVJDbMuX5UfyaFFstZlh4PawHVVp1CPhbOIcOFTnbkRndflvWkM1m62JV
- D9/sILer0Z+nvYR+PsslPpi+Zb7Fs0aGQWNqc0bEK7R7RZ3FixLmdiH1i7Lkuk2A8fjW
- llbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730928638; x=1731533438;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JqXsIZtuGIOuW5Gn43DKmDnsK7qTSNWkCXc4v8P485Y=;
- b=P43qcdoOVZjp2H/ZacW/TKVwrNH5RF/fLalrwEkReQP6Rf7E3IyzTq5cP1OJO6PVUi
- 2RYupR/GvhBEb1Jkr80qwHf6n2bRVT/O5At3D1iftRW0AsME6hfBXtQT5cO3CHwzAeib
- CvxSfmom6eEwMuxupgNLF9ftL6jzSvc6engbtyzidu+wjH01JsTKoJLAC9VMfuYeOURh
- pCizpJZwfgh+b1jb6511bbYgaP4tKEjyBxE0KnvfR/8frkjP4gQmieVr4aGkr1lh1YbO
- 6su4eXCXwWdahRrbBlTK9Nmc9bwWZgclLWQa04kzyCxgCJmbd6f3580W2YpO92kJuSwS
- vU5A==
-X-Gm-Message-State: AOJu0YzARQzD644xr/d4ZUFNshqfvLCdqxd8TdoouixpnkzbddP0owjG
- W3XsWtb9fOP9+A50DI9NQeTPsGuqrp+iaDaTOhi+NRov9ApOsATZZqpHS/V3B+Zk2TyVrggx9GZ
- N/Tb5rcna+RCvP24amfLou3az2So=
-X-Google-Smtp-Source: AGHT+IEz7T94iHR/Q7B1nR0yV1pX9EXa1wdQaXsM80l9RYv9581ebtVRAUh5CpIqa6iQEeCeFSyspGL+iDubWi4iLXQ=
-X-Received: by 2002:a05:6808:15a5:b0:3e6:4f27:5c7e with SMTP id
- 5614622812f47-3e6608d66f9mr23239248b6e.21.1730928638637; Wed, 06 Nov 2024
- 13:30:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t8oeA-0005MQ-4p
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 17:37:06 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t8oe8-0005Oh-5z
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 17:37:05 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A6MA6d8022158;
+ Wed, 6 Nov 2024 22:36:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=TXEDPvrPW+KpzpgVg
+ WZBv+7ZlGIxTLrvq9RB5xDFys4=; b=MHE/0xWtq7y2pmDNlBJnQGexQ+by42xvD
+ jqp61CaKsXk7Hw4EuVos25xZL9Lw4nMt0oPp+IBsipnEnCJIe+wzTuppflgfHYWD
+ DsBZGEmC0NJmRKeRGpfbo4m6UDdQpauPqo7z5A5+/aBHtyC2+wbUf9ht+PFw6tCm
+ oS2S8kopM/fi+8bctlYrNF9TiFuX0LjUCNpe8TB5uZ9SqDNf4G8L1rIu/mx6ZwLU
+ H5xgWbRv4lHafXYiyhZ2jfZyCby2hkFZybksDRFFps42nZvXZjBhil9TmSjs9EV8
+ +jnH2Gz51U85e5K+Icd0rCAurBjOOr/fjLNF67Lss+GL+wO7WtZmg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42rh0rg3bc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 Nov 2024 22:36:36 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A6GhLkA012249;
+ Wed, 6 Nov 2024 22:36:36 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 42p140y16r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 Nov 2024 22:36:35 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A6MaYRm29557232
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 6 Nov 2024 22:36:34 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 31FFA20043;
+ Wed,  6 Nov 2024 22:36:34 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8D61C20040;
+ Wed,  6 Nov 2024 22:36:33 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.88.240])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  6 Nov 2024 22:36:33 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v2 4/8] user: Introduce host_interrupt_signal
+Date: Wed,  6 Nov 2024 23:31:03 +0100
+Message-ID: <20241106223629.2608-5-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241106223629.2608-1-iii@linux.ibm.com>
+References: <20241106223629.2608-1-iii@linux.ibm.com>
 MIME-Version: 1.0
-References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
- <20241030141037.375897-1-goldstein.w.n@gmail.com>
- <000c9ef8-c610-4f2a-b191-04b84455d89c@linaro.org>
- <CAFUsyfKkmSid=LVTbG+WHZA_=MAGdf+TU5vGtNE1GGx8WDheOQ@mail.gmail.com>
- <CAFUsyfKfM-X_qGN4Dy8DhES7zRi66s6yVZ3+_KmNM4f2GhBG+Q@mail.gmail.com>
- <f21fe153-6239-4c93-bf60-994976a9dbea@linaro.org>
- <CAFUsyfLhPkSMrm50RAAvir2-WoRS4_jbtZf1WWR_WZvm=BOr6g@mail.gmail.com>
- <e63cd5f6-8387-4c39-98e4-5e1c180934bc@linaro.org>
- <CAFUsyf+8sJLX+qqzPEj1E1QPQpoP4n56uU5U9aksq8JEx_52gA@mail.gmail.com>
- <CAFUsyf+xVXamR+5gtu62vFXjYScrJu0Arvhk62QXYa359UCHsg@mail.gmail.com>
- <d23ea679-9c21-44da-86cf-ae97d0214b86@linaro.org>
-In-Reply-To: <d23ea679-9c21-44da-86cf-ae97d0214b86@linaro.org>
-From: Noah Goldstein <goldstein.w.n@gmail.com>
-Date: Wed, 6 Nov 2024 15:30:27 -0600
-Message-ID: <CAFUsyfL=QfvtMb6TiWVa2cEyeYQobh_3zfYpnPEb7bq6FH1k1A@mail.gmail.com>
-Subject: Re: linux-user: Add option to run `execve`d programs through QEMU
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, iii@linux.ibm.com, laurent@vivier.eu
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
- envelope-from=goldstein.w.n@gmail.com; helo=mail-oi1-x22a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 7MRRCHTA6vOfuEN8L9QWIqcr_R4d1G2f
+X-Proofpoint-GUID: 7MRRCHTA6vOfuEN8L9QWIqcr_R4d1G2f
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0
+ spamscore=0 impostorscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 mlxscore=0 mlxlogscore=983
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411060174
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,36 +109,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 6, 2024 at 3:10=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 11/6/24 18:13, Noah Goldstein wrote:
-> > Question about impl regarding handling of `-execfd` with/without a prog=
-ram name.
-> >
-> > 1) `-execfd` + program name ie: `qemu -execfd <some_fd> ls -a`.
-> > 2) `-execfd` without program name i.e: `qemu -execfd <some_fd> -a`.
-> >
-> > Do you want to allow both of these? If you want to allow (1), what shou=
-ld
-> > we use for `argv[0]`/`exec_path`. The program pass ("ls") or
-> > `readlink(<some_fd>)`?
->
-> The canonical response is, examine the kernel source.
-> We're not implementing this in a vacuum, you're replicating execveat(2).
->
-> I suspect the answer is (1), to be compared with
->
->      syscall(__NR_execveat, some_fd, "", &["ls", "-a"], env, AT_EMPTY_PAT=
-H);
+Attaching to the gdbstub of a running process requires stopping its
+threads. For threads that run on a CPU, cpu_exit() is enough, but the
+only way to grab attention of a thread that is stuck in a long-running
+syscall is to interrupt it with a signal.
 
-Err, I think the reference for '-execfd' is `fexecve`:
-https://man7.org/linux/man-pages/man3/fexecve.3.html
+Reserve a host realtime signal for this, just like it's already done
+for TARGET_SIGABRT on Linux. This may reduce the number of available
+guest realtime signals by one, but this is acceptable, since there are
+quite a lot of them, and it's unlikely that there are apps that need
+them all.
 
-Which doesn't take a path. So I guess we just interpret the "ls" as
-argv[0] but not
-as "exec_path".
->
->
-> r~
+Set signal_pending for the safe_sycall machinery to prevent invoking
+the syscall. This is a lie, since we don't queue a guest signal, but
+process_pending_signals() can handle the absence of pending signals.
+The syscall returns with QEMU_ERESTARTSYS errno, which arranges for
+the automatic restart. This is important, because it helps avoiding
+disturbing poorly written guests.
+
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ bsd-user/signal.c     | 12 ++++++++++++
+ include/user/signal.h |  2 ++
+ linux-user/signal.c   | 25 ++++++++++++++++++++-----
+ 3 files changed, 34 insertions(+), 5 deletions(-)
+
+diff --git a/bsd-user/signal.c b/bsd-user/signal.c
+index a2b11a97131..992736df5c5 100644
+--- a/bsd-user/signal.c
++++ b/bsd-user/signal.c
+@@ -49,6 +49,8 @@ static inline int sas_ss_flags(TaskState *ts, unsigned long sp)
+         on_sig_stack(ts, sp) ? SS_ONSTACK : 0;
+ }
+ 
++int host_interrupt_signal = SIGRTMAX;
++
+ /*
+  * The BSD ABIs use the same signal numbers across all the CPU architectures, so
+  * (unlike Linux) these functions are just the identity mapping. This might not
+@@ -489,6 +491,12 @@ static void host_signal_handler(int host_sig, siginfo_t *info, void *puc)
+     uintptr_t pc = 0;
+     bool sync_sig = false;
+ 
++    if (host_sig == host_interrupt_signal) {
++        ts->signal_pending = 1;
++        cpu_exit(thread_cpu);
++        return;
++    }
++
+     /*
+      * Non-spoofed SIGSEGV and SIGBUS are synchronous, and need special
+      * handling wrt signal blocking and unwinding.
+@@ -852,6 +860,9 @@ void signal_init(void)
+ 
+     for (i = 1; i <= TARGET_NSIG; i++) {
+         host_sig = target_to_host_signal(i);
++        if (host_sig == host_interrupt_signal) {
++            continue;
++        }
+         sigaction(host_sig, NULL, &oact);
+         if (oact.sa_sigaction == (void *)SIG_IGN) {
+             sigact_table[i - 1]._sa_handler = TARGET_SIG_IGN;
+@@ -870,6 +881,7 @@ void signal_init(void)
+             sigaction(host_sig, &act, NULL);
+         }
+     }
++    sigaction(host_interrupt_signal, &act, NULL);
+ }
+ 
+ static void handle_pending_signal(CPUArchState *env, int sig,
+diff --git a/include/user/signal.h b/include/user/signal.h
+index 19b6b9e5ddc..7fa33b05d91 100644
+--- a/include/user/signal.h
++++ b/include/user/signal.h
+@@ -20,4 +20,6 @@
+  */
+ int target_to_host_signal(int sig);
+ 
++extern int host_interrupt_signal;
++
+ #endif
+diff --git a/linux-user/signal.c b/linux-user/signal.c
+index b1c468cf5c3..551c6bb1448 100644
+--- a/linux-user/signal.c
++++ b/linux-user/signal.c
+@@ -515,6 +515,8 @@ static int core_dump_signal(int sig)
+     }
+ }
+ 
++int host_interrupt_signal;
++
+ static void signal_table_init(const char *rtsig_map)
+ {
+     int hsig, tsig, count;
+@@ -578,10 +580,10 @@ static void signal_table_init(const char *rtsig_map)
+          * Attempts for configure "missing" signals via sigaction will be
+          * silently ignored.
+          *
+-         * Reserve one signal for internal usage (see below).
++         * Reserve two signals for internal usage (see below).
+          */
+ 
+-        hsig = SIGRTMIN + 1;
++        hsig = SIGRTMIN + 2;
+         for (tsig = TARGET_SIGRTMIN;
+              hsig <= SIGRTMAX && tsig <= TARGET_NSIG;
+              hsig++, tsig++) {
+@@ -602,12 +604,17 @@ static void signal_table_init(const char *rtsig_map)
+     host_to_target_signal_table[SIGABRT] = 0;
+     for (hsig = SIGRTMIN; hsig <= SIGRTMAX; hsig++) {
+         if (!host_to_target_signal_table[hsig]) {
+-            host_to_target_signal_table[hsig] = TARGET_SIGABRT;
+-            break;
++            if (host_interrupt_signal) {
++                host_to_target_signal_table[hsig] = TARGET_SIGABRT;
++                break;
++            } else {
++                host_interrupt_signal = hsig;
++            }
+         }
+     }
+     if (hsig > SIGRTMAX) {
+-        fprintf(stderr, "No rt signals left for SIGABRT mapping\n");
++        fprintf(stderr,
++                "No rt signals left for interrupt and SIGABRT mapping\n");
+         exit(EXIT_FAILURE);
+     }
+ 
+@@ -687,6 +694,8 @@ void signal_init(const char *rtsig_map)
+         }
+         sigact_table[tsig - 1]._sa_handler = thand;
+     }
++
++    sigaction(host_interrupt_signal, &act, NULL);
+ }
+ 
+ /* Force a synchronously taken signal. The kernel force_sig() function
+@@ -1034,6 +1043,12 @@ static void host_signal_handler(int host_sig, siginfo_t *info, void *puc)
+     bool sync_sig = false;
+     void *sigmask;
+ 
++    if (host_sig == host_interrupt_signal) {
++        ts->signal_pending = 1;
++        cpu_exit(thread_cpu);
++        return;
++    }
++
+     /*
+      * Non-spoofed SIGSEGV and SIGBUS are synchronous, and need special
+      * handling wrt signal blocking and unwinding.  Non-spoofed SIGILL,
+-- 
+2.47.0
+
 
