@@ -4,87 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24CBBD59F5B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 18:12:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C88C1D59F5C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 18:13:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8kVw-0006Jb-N1; Wed, 06 Nov 2024 13:12:20 -0500
+	id 1t8kXM-0006uO-8s; Wed, 06 Nov 2024 13:13:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8kVv-0006JN-Q3
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:12:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1t8kXK-0006uF-D4
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:13:46 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8kVu-00085A-2E
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:12:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730916736;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=OOuaO0FdvnRx8m0yCTGELCVtD8jtIom4riAwRaaG5gI=;
- b=V3NbT9b2GsF9tW0HSPYGu++7ndmnRcjhRIB1uEyU7fQtELAyfL6ux6PvQoeLFQLC4QxaD3
- m2ffEx69TN7dSmxZV6/BqVXDmBqiFuotpoSwC0hg4K96YJZ2xkPeps7VjmWPHpl8G1X27o
- 4Ts4Q99jXYelX4HMx9E/QKTJhStUjNk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-445-lX7jz8IpOqG-jhs4Zodc1w-1; Wed, 06 Nov 2024 13:12:15 -0500
-X-MC-Unique: lX7jz8IpOqG-jhs4Zodc1w-1
-X-Mimecast-MFC-AGG-ID: lX7jz8IpOqG-jhs4Zodc1w
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4315cefda02so760095e9.0
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 10:12:15 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730916734; x=1731521534;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=OOuaO0FdvnRx8m0yCTGELCVtD8jtIom4riAwRaaG5gI=;
- b=ODVPWmMCwi2IrgCzS9FYNP42OI0qjNHcjCSL7C6obTFqcsgHEzrrwGnPKA1XjFgMQb
- 19J4D9Maz7lTfeV7j+cQRGWSsKQJf+cfwV0WO9C326L0/NStHj5h3wbYniiIu1wFuUCD
- sZ61wAE0fS9VvJDsGhIr5wxAufeD8KlPhGVAMxlUMjpFXlnZcu5OUshId1nnMh3FWYRT
- pWnTKcsaxqfUNPtap/pX5zImHanx88j4Euy7yNZdQ0Fk52mwllakiegxh/fJe1Y3R1/q
- lYnAzSShUl9p7YjgXHUOBXWPXCT93waOV/iBE5RfgH8ufF4pMvN/mNnVsgJz+/yAPFJg
- jk1A==
-X-Gm-Message-State: AOJu0Ywm/uMxpEW8Q6xdA2ycDv4yHlHhd0HQcYIqaZvyYSbFQwAL8c/L
- f9NL3pFsy8m8hoaqyL76JUIuV0XO9Mk+vKmJbxkEYG8TcDJ7h8rIof4WmFSUmgIugsIPg8UkH8o
- ebUqG+rfrO4f5jESODuUCwtxYPs7GC68S6k6lFv/0rm0521xCyuZMmJJfollKr3twcsDiWnOLtl
- YGPzNvUg2l5KDnzW0g7r4Cz5qetszcf+9TGEx8QXg=
-X-Received: by 2002:a05:600c:4f04:b0:42c:acb0:dda5 with SMTP id
- 5b1f17b1804b1-4327b6f9574mr211921275e9.1.1730916734011; 
- Wed, 06 Nov 2024 10:12:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGIb6ja5Lux+H7hHmYiaXag3lSFCwvfBe/dXrcv5/+egTyfvEQ9Jmxp2XIBCPZGoBp76QcHzA==
-X-Received: by 2002:a05:600c:4f04:b0:42c:acb0:dda5 with SMTP id
- 5b1f17b1804b1-4327b6f9574mr211921015e9.1.1730916733551; 
- Wed, 06 Nov 2024 10:12:13 -0800 (PST)
-Received: from [192.168.10.3] ([151.49.226.83])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa6bee9asm34130755e9.19.2024.11.06.10.12.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2024 10:12:13 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Subject: [PATCH v2] eif: cope with huge section offsets
-Date: Wed,  6 Nov 2024 19:12:11 +0100
-Message-ID: <20241106181211.568775-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1t8kXI-0008GQ-9K
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:13:46 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XkCth6k3fz6K7CK;
+ Thu,  7 Nov 2024 02:10:52 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id DF968140A77;
+ Thu,  7 Nov 2024 02:13:40 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 6 Nov
+ 2024 19:13:40 +0100
+Date: Wed, 6 Nov 2024 18:13:38 +0000
+To: <imammedo@redhat.com>, <mst@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, <qemu-devel@nongnu.org>, <ankita@nvidia.com>,
+ <linuxarm@huawei.com>
+CC: <linux-cxl@vger.kernel.org>, <marcel.apfelbaum@gmail.com>,
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>, "Dave
+ Jiang" <dave.jiang@intel.com>, Huang Ying <ying.huang@intel.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, <eduardo@habkost.net>, Michael Roth
+ <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v6 10/15] hw/acpi: Generic Port Affinity Structure support
+Message-ID: <20241106181338.00003c37@Huawei.com>
+In-Reply-To: <20240916174122.1843197-1-Jonathan.Cameron@huawei.com>
+References: <20240916171017.1841767-1-Jonathan.Cameron@huawei.com>
+ <20240916174122.1843197-1-Jonathan.Cameron@huawei.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,49 +73,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check for overflow to avoid that fseek() receives a sign-extended value.
 
-Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/qemu/osdep.h | 4 ++++
- hw/core/eif.c        | 4 ++++
- 2 files changed, 8 insertions(+)
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index 968b654e58..4aa4debf44 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -1955,6 +1955,19 @@ static void build_append_srat_pci_device_handle(GArray *table_data,
+>      build_append_int_noprefix(table_data, 0, 12);
+>  }
+>  
+> +static void build_append_srat_acpi_device_handle(GArray *table_data,
+> +                                                 const char *hid,
+> +                                                 uint32_t uid)
+> +{
+> +    assert(strlen(hid) == 8);
+> +    /* Device Handle - ACPI */
+> +    for (int i = 0; i < sizeof(hid); i++) {
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index fe7c3c5f673..fdff07fd992 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -297,6 +297,10 @@ void QEMU_ERROR("code path is reachable")
- #error building with G_DISABLE_ASSERT is not supported
- #endif
- 
-+#ifndef OFF_MAX
-+#define OFF_MAX (sizeof (off_t) == 8 ? INT64_MAX : INT32_MAX)
-+#endif
-+
- #ifndef O_LARGEFILE
- #define O_LARGEFILE 0
- #endif
-diff --git a/hw/core/eif.c b/hw/core/eif.c
-index 7f3b2edc9a7..61329aacfe1 100644
---- a/hw/core/eif.c
-+++ b/hw/core/eif.c
-@@ -466,6 +466,10 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
-         EifSectionHeader hdr;
-         uint16_t section_type;
- 
-+        if (eif_header.section_offsets[i] > OFF_MAX) {
-+            error_setg(errp, "Invalid EIF image. Section offset out of bounds");
-+            goto cleanup;
-+        }
-         if (fseek(f, eif_header.section_offsets[i], SEEK_SET) != 0) {
-             error_setg_errno(errp, errno, "Failed to offset to %" PRIu64 " in EIF file",
-                              eif_header.section_offsets[i]);
--- 
-2.47.0
+Here is the bug that is tripping the test on a 32 bit host.
+That sizeof(hid) is garbage (I'm guessing a result of messed up
+factoring out of this code from where it was an array of
+characters).
 
+Should just be 8. 
+
+I'll run tests and send out fix by end of week.
+
+Jonathan
+
+
+
+> +        build_append_int_noprefix(table_data, hid[i], 1);
+> +    }
+> +    build_append_int_noprefix(table_data, uid, 4);
+> +    build_append_int_noprefix(table_data, 0, 4);
+> +}
 
