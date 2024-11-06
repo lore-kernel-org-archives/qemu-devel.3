@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E5EBD44D58
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 13:04:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46D2ED44D58
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 13:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8fi9-0005ZA-UI; Wed, 06 Nov 2024 08:04:37 -0500
+	id 1t8fiI-0005vu-Io; Wed, 06 Nov 2024 08:04:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t8fi7-0005W6-1l; Wed, 06 Nov 2024 08:04:35 -0500
+ id 1t8fiG-0005qt-Ho; Wed, 06 Nov 2024 08:04:44 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t8fi5-0000Ul-Ck; Wed, 06 Nov 2024 08:04:34 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xk51t4r2qz6K6vm;
- Wed,  6 Nov 2024 21:01:38 +0800 (CST)
+ id 1t8fiE-0000Wr-S4; Wed, 06 Nov 2024 08:04:44 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xk5293Kzxz6K7Hj;
+ Wed,  6 Nov 2024 21:01:53 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id EAB23140B33;
- Wed,  6 Nov 2024 21:04:25 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id B738D14011D;
+ Wed,  6 Nov 2024 21:04:40 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.126.170.112) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 6 Nov 2024 14:04:11 +0100
+ 15.1.2507.39; Wed, 6 Nov 2024 14:04:26 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>,
  <imammedo@redhat.com>
 CC: <salil.mehta@huawei.com>, <jonathan.cameron@huawei.com>,
@@ -41,9 +41,10 @@ CC: <salil.mehta@huawei.com>, <jonathan.cameron@huawei.com>,
  <miguel.luis@oracle.com>, <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
  <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>, <zhao1.liu@intel.com>, 
  <linuxarm@huawei.com>, <gustavo.romero@linaro.org>
-Subject: [PATCH 1/3] qtest: allow ACPI DSDT Table changes
-Date: Wed, 6 Nov 2024 13:03:29 +0000
-Message-ID: <20241106130331.205020-2-salil.mehta@huawei.com>
+Subject: [PATCH 2/3] Fix: Reverse CPUs presence check logic for x86 backward
+ compatability
+Date: Wed, 6 Nov 2024 13:03:30 +0000
+Message-ID: <20241106130331.205020-3-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241106130331.205020-1-salil.mehta@huawei.com>
 References: <20241106130331.205020-1-salil.mehta@huawei.com>
@@ -79,62 +80,72 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-list changed files in tests/qtest/bios-tables-test-allowed-diff.h
+Checking `is_present` first can break x86 migration from new Qemu
+version to old Qemu. This is because CPRS Bit is not defined in the
+older Qemu register block and will always be 0 resulting in check always
+failing. Reversing the logic to first check `is_enabled` can alleviate
+below problem:
+
+-                If ((\_SB.PCI0.PRES.CPEN == One))
+-                {
+-                    Local0 = 0x0F
++                If ((\_SB.PCI0.PRES.CPRS == One))
++                {
++                    If ((\_SB.PCI0.PRES.CPEN == One))
++                    {
++                        Local0 = 0x0F
++                    }
++                    Else
++                    {
++                        Local0 = 0x0D
++                    }
+                 }
 
 Suggested-by: Igor Mammedov <imammedo@redhat.com>
 Message-ID: <20241106100047.18901c9d@imammedo.users.ipa.redhat.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 41 +++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ hw/acpi/cpu.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..512d40665d 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,42 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/x86/pc/DSDT",
-+"tests/data/acpi/x86/pc/DSDT.acpierst",
-+"tests/data/acpi/x86/pc/DSDT.acpihmat",
-+"tests/data/acpi/x86/pc/DSDT.bridge",
-+"tests/data/acpi/x86/pc/DSDT.cphp",
-+"tests/data/acpi/x86/pc/DSDT.dimmpxm",
-+"tests/data/acpi/x86/pc/DSDT.hpbridge",
-+"tests/data/acpi/x86/pc/DSDT.hpbrroot",
-+"tests/data/acpi/x86/pc/DSDT.ipmikcs",
-+"tests/data/acpi/x86/pc/DSDT.memhp",
-+"tests/data/acpi/x86/pc/DSDT.nohpet",
-+"tests/data/acpi/x86/pc/DSDT.numamem",
-+"tests/data/acpi/x86/pc/DSDT.roothp",
-+"tests/data/acpi/x86/q35/DSDT",
-+"tests/data/acpi/x86/q35/DSDT.acpierst",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
-+"tests/data/acpi/x86/q35/DSDT.applesmc",
-+"tests/data/acpi/x86/q35/DSDT.bridge",
-+"tests/data/acpi/x86/q35/DSDT.core-count",
-+"tests/data/acpi/x86/q35/DSDT.core-count2",
-+"tests/data/acpi/x86/q35/DSDT.cphp",
-+"tests/data/acpi/x86/q35/DSDT.cxl",
-+"tests/data/acpi/x86/q35/DSDT.dimmpxm",
-+"tests/data/acpi/x86/q35/DSDT.ipmibt",
-+"tests/data/acpi/x86/q35/DSDT.ipmismbus",
-+"tests/data/acpi/x86/q35/DSDT.ivrs",
-+"tests/data/acpi/x86/q35/DSDT.memhp",
-+"tests/data/acpi/x86/q35/DSDT.mmio64",
-+"tests/data/acpi/x86/q35/DSDT.multi-bridge",
-+"tests/data/acpi/x86/q35/DSDT.noacpihp",
-+"tests/data/acpi/x86/q35/DSDT.nohpet",
-+"tests/data/acpi/x86/q35/DSDT.numamem",
-+"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
-+"tests/data/acpi/x86/q35/DSDT.thread-count",
-+"tests/data/acpi/x86/q35/DSDT.thread-count2",
-+"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
-+"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
-+"tests/data/acpi/x86/q35/DSDT.type4-count",
-+"tests/data/acpi/x86/q35/DSDT.viot",
-+"tests/data/acpi/x86/q35/DSDT.xapic",
+diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
+index 23443f09a5..b2f7a2b27e 100644
+--- a/hw/acpi/cpu.c
++++ b/hw/acpi/cpu.c
+@@ -490,22 +490,22 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
+             aml_append(method, aml_acquire(ctrl_lock, 0xFFFF));
+             aml_append(method, aml_store(idx, cpu_selector));
+             aml_append(method, aml_store(zero, sta));
+-            ifctx = aml_if(aml_equal(is_present, one));
++            ifctx = aml_if(aml_equal(is_enabled, one));
+             {
+-                ifctx2 = aml_if(aml_equal(is_enabled, one));
+-                {
+-                    /* cpu is present and enabled */
+-                    aml_append(ifctx2, aml_store(aml_int(0xF), sta));
+-                }
+-                aml_append(ifctx, ifctx2);
+-                else_ctx = aml_else();
++                /* cpu is present and enabled */
++                aml_append(ifctx, aml_store(aml_int(0xF), sta));
++            }
++            aml_append(method, ifctx);
++            else_ctx = aml_else();
++            {
++                ifctx2 = aml_if(aml_equal(is_present, one));
+                 {
+                     /* cpu is present but disabled */
+-                    aml_append(else_ctx, aml_store(aml_int(0xD), sta));
++                    aml_append(ifctx2, aml_store(aml_int(0xD), sta));
+                 }
+-                aml_append(ifctx, else_ctx);
++                aml_append(else_ctx, ifctx2);
+             }
+-            aml_append(method, ifctx);
++            aml_append(method, else_ctx);
+             aml_append(method, aml_release(ctrl_lock));
+             aml_append(method, aml_return(sta));
+         }
 -- 
 2.34.1
 
