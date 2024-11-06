@@ -4,69 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E58F5D3E798
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 09:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0D74D3E78C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 09:59:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8cnG-00061d-FW; Wed, 06 Nov 2024 04:57:42 -0500
+	id 1t8coP-00070Y-3r; Wed, 06 Nov 2024 04:58:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t8cn9-0005zx-3T
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 04:57:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t8cn7-0008Mm-Mo
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 04:57:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730887052;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nKQxESljdwH6a3Blz2n8LtQLdvO0QdYBh7jzlJAdIFM=;
- b=JrAhLplStKogFVfogjyckYk42L/uGhJWcgMnOBOgUhnBkdUIf6UB7eCcPoRyw9GBGD2+dt
- Asx7bdsUmQUZN/IF+PhoMX6Hi9HwG567oSEXDhU/Nsr4bJItIeVSjLy4Iizdth0MXqxix8
- e3k/rtlnaQqF2wDtAPDiZ9xR9WjHUlY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-oCtMCOCXPaeGhHV95pSZAg-1; Wed,
- 06 Nov 2024 04:57:29 -0500
-X-MC-Unique: oCtMCOCXPaeGhHV95pSZAg-1
-X-Mimecast-MFC-AGG-ID: oCtMCOCXPaeGhHV95pSZAg
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 179CB1955EEA; Wed,  6 Nov 2024 09:57:28 +0000 (UTC)
-Received: from redhat.com (dhcp-192-228.str.redhat.com [10.33.192.228])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A4F1419541A5; Wed,  6 Nov 2024 09:57:25 +0000 (UTC)
-Date: Wed, 6 Nov 2024 10:57:23 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Cleber Rosa <crosa@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH 0/4] python: update linting for new mypy/pylint releases
-Message-ID: <Zys9g8akOqlpuMQx@redhat.com>
-References: <20241101173700.965776-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t8coJ-0006xe-Gt
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 04:58:49 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t8coH-0008Qz-9F
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 04:58:46 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4314c4cb752so57699005e9.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 01:58:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730887121; x=1731491921; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mecn889zDVoUW+q4R0eX3ElbkcxS7OT0MnSuiI5fVAY=;
+ b=SWdJ2oGjADZN5hMJpxcq6YLJSnNEKkTSyAcAtUOtjwx2qoJ3zI6yy7euIqqpBJNIzY
+ ko82/6qgkeDrRZIydQw3Hf8iInBw5Z1fKIgZCNPCgKo7bATfs3S7PDK/n0P+jp+dRUnY
+ PRyPUWw58yA3J1sK60O7pfd0SDdZAqBBBqBCZCe2cr8SBJY9hV58Un37NyGoxPLs0jZ4
+ T/oZ/yGRSMmJresbBiqwpSboUzWWzBdT8BSpQfqqLc0G8g+BN6iRv/ZwYA7uVNfFeS+n
+ U1Expy8LS7TheFqRjpgND5aiyQvKWGjsGDzbtAG+O8/qIx2W4dxq/r1eY/jE3q3XxkXu
+ rBGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730887121; x=1731491921;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mecn889zDVoUW+q4R0eX3ElbkcxS7OT0MnSuiI5fVAY=;
+ b=fQXyAr3Ef16gmCAAxrfGOf8PHm/qMNsxQyztYHFr821GNM4aNE2d4GPIKutG6f8kbp
+ DEm5mC9zbtaQBmrHUnLDEYeaznYEX/k08LCxW21qbUmVZTqxdOtjKmtoBg9zkt9ran2d
+ 9cyy+cMK/YTSxUt2jlqFIsnf9oZKsqsD8BetAW4PhxXUFAy2J6O3n98Lm5EDbkdQUVcJ
+ q0k0hy3D2BuKFWI0CUJZxn31MjCihBpxtSTxm/B/fQPtVc+wKKBf/9ONR3ZHB35gZAhq
+ wVa0CmNVkU/uoCbSC6a0JnPLwXpRykmDCibNCgYrPckzgKRy+CSw0jXVgnwOJ+aWhuTi
+ 35hw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUH6FQnonqRES7R6UGB1K8sGqIM8y4owydDmzc4cttSOTuAfpp+zeDodwqcjRYjfEy/pJi479xYYFsu@nongnu.org
+X-Gm-Message-State: AOJu0YyLPVlP85+mNNUuv5eqw5C8Rqhaajy2T0aUftDPYH674q3AaXH1
+ H6Z0n0tU4mcxjiZSXJ+tgYMtLA1v5J8hu7EIxDzP2zB8GIgPEZXaauObeAZLPp8=
+X-Google-Smtp-Source: AGHT+IH5irNII5xH1WmUTtbfmd4ee9RpJQ9ph12xhOudVK3B2Jgo64X6iNgTCJSAejsOQ45VpYRHIg==
+X-Received: by 2002:a05:600c:1c9e:b0:431:5632:448b with SMTP id
+ 5b1f17b1804b1-4327b80d3c5mr210706445e9.25.1730887121180; 
+ Wed, 06 Nov 2024 01:58:41 -0800 (PST)
+Received: from [172.16.23.118] ([89.101.241.141])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432aa6c6569sm16146695e9.21.2024.11.06.01.58.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Nov 2024 01:58:40 -0800 (PST)
+Message-ID: <358104cb-e221-4c14-9ed5-3b165235a917@linaro.org>
+Date: Wed, 6 Nov 2024 09:58:38 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241101173700.965776-1-jsnow@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user: Fix setreuid and setregid to use direct
+ syscalls
+To: Helge Deller <deller@kernel.org>, Laurent Vivier <laurent@vivier.eu>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Riku Voipio <riku.voipio@linaro.org>, qemu-devel@nongnu.org
+References: <Zyo2jMKqq8hG8Pkz@p100>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <Zyo2jMKqq8hG8Pkz@p100>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,38 +99,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 01.11.2024 um 18:36 hat John Snow geschrieben:
-> Various python tests in the "check-python-tox" test case on GitLab have
-> begun failing due to newer package versions. This patch set corrects
-> those issues and also improves the reliability of local developer tests
-> which may be using these tooling versions outside of GitLab pinned
-> version tests.
+On 11/5/24 15:15, Helge Deller wrote:
+> The commit fd6f7798ac30 ("linux-user: Use direct syscalls for setuid(),
+> etc") added direct syscall wrappers for setuid(), setgid(), etc since the
+> system calls have different semantics than the libc functions.
 > 
-> There are remaining issues with the "check-dev" test I have yet to
-> rectify, but appear unrelated to linter versions specifically and will
-> be handled separately.
+> Add and use the corresponding wrappers for setreuid and setregid which
+> were missed in that commit.
 > 
-> As a result of this patch, the optionally-run and may-fail
-> "check-python-tox" test case on GitLab will become green again, and
-> local invocations of "make check-tox" in the python subdirectory will
-> also pass again. "check-python-minreqs" on GitLab and "make
-> check-minreqs" in the local developer environment were/are
-> unaffected. local iotest invocations for test case #297 ought to now
-> begin passing on developer workstations with bleeding-edge python
-> packages.
+> This fixes the build of the debian package of the uid_wrapper library
+> (https://cwrap.org/uid_wrapper.html) when running linux-user.
 > 
-> John Snow (4):
->   iotests: reflow ReproducibleTestRunner arguments
->   iotests: correct resultclass type in ReproducibleTestRunner
->   python: disable too-many-positional-arguments warning
->   python: silence pylint raising-non-exception error
+> Signed-off-by: Helge Deller <deller@gmx.de>
 
-Thanks, applied to the block branch.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-(Yes, of course I had to wait until I ran into the problem patch 2 fixes
-myself, and after figuring out the fix from the incomprehensible error
-message, I found that this series already contains it.)
-
-Kevin
-
+r~
 
