@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F2DD59F53
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8113D59F56
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:26:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8jit-0003KT-IB; Wed, 06 Nov 2024 12:21:41 -0500
+	id 1t8jnH-0005Cs-RH; Wed, 06 Nov 2024 12:26:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t8jim-0003JO-T5
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:21:34 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t8jnG-0005Cj-8H
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:26:10 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t8jij-0001rC-8A
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:21:31 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4314f38d274so607075e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:21:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t8jnA-0002O0-TP
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:26:09 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43163667f0eso595675e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:26:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730913687; x=1731518487; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1730913962; x=1731518762; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=juxsBPEVQ7aJzVU1ViBW3YUAQIK381nlBN01eCGHgHI=;
- b=xMidAm2fEdccZd7hNfMNAaPsk4fA8Ptt9dL+Vj0Rfq0S7ORtEeOB+X0uTN7zS0j28N
- coelC3lu0tg7pOh1ar/8fH9XrhSm4gNAJoJdGjY98gP82EUFZ1wJuHavc9Bz1Nt42GOP
- jingVo1fOpjKkto9MKDYzkNMiFdcHXdYKrbO2hh53qKbqcZDDNB0YlBikaLDm/Ku4hXP
- IkT4GWusSU5ifnGGBOfIYHdVrboeGq4C1tKV6JGcIHnKzh2BZzOL75nZoKztRgpfYWwC
- i/GUrxCJxmSeDyVcBNkLw7UI1zKtJhjh+Un0mRxoI33VPoSN1ltexFN7bavbLG7Qjd8U
- r+tQ==
+ bh=FeMphd33oUeVS3In4aDd1Vm7ZvrzrZ4BXrvYHWn65zk=;
+ b=pRoOdA8aKhRbRZAcEMmlp4v2w43BC9aMx+Lqw6sU3Mm9w9CxDt1XqIZAQUuHYYxqjF
+ bLtBTY5qpXCLbtQd9q5bSCTiH3vJo2QdzjaRDN0T10re20LY9goSxU6TzbjE86hDkCd5
+ 4g+UPgJ2dP0csEYukMOiaPM77CcGR1+D9E/AdGaZxF6J58kpHtYqquJXUddx0uTkOdNr
+ 4cmQYckzh+BgUJc9aaN7dTFJr1lJMeZooPdz4JCOQQ10YawlMOt3H7AUUZawzFREKcRR
+ 1M4TqKMw5SYydHvW9pHIZ7SboGYo4WckOQsOSAzElvnf2sXUmndrWBPwSz4Rsgnir7ft
+ znxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730913687; x=1731518487;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1730913962; x=1731518762;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=juxsBPEVQ7aJzVU1ViBW3YUAQIK381nlBN01eCGHgHI=;
- b=qpYpIjteL/VnwWF9+C2TTOdvqJa0bhXLUCTyb4sZrtk0y9BKL0Za0uIOIltZWFBKk8
- BJ+n/gUMbE8YN7rCqyO13fjIQIeUM2AowdGnIOT+wqWtMlKFMf0nvDb+w8i9t4gfpQvt
- CCj8ZPT9uqnmIyXW/v2RW8MJbQQcF+PpiizIUQQ8Cw2hh5PMfKHkh/i2GQOYhCtQHQyg
- r+L3noB1CT2qN+P6T64fIqfAFvEkGMyvs1Tth9KFjMzjrpVbrkonPi44qtRoYx/xn9mG
- 42oscmyLmlNq932R44DI2UnRvZSIW/iom5EzDXEHt89+uI5Q1Sa+Oeek2oG7XS4akCTT
- lbdQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4km77U+U7AkfAFMkGqNqqDlb3YUWiO61mh3vtpNURyItrawVRVqnvD4QY5nSogZZN4AjeiylRLD+v@nongnu.org
-X-Gm-Message-State: AOJu0YzR8HpHynZkwdevhk/S8yqbo/GvzgqsV/dNfkCSlw8yzZmwvODP
- Sua+3sOm57h1cnQPnNYLsZh5mKUJM+DxfKr2KwuBRMrO5zOmFxCCYc9cYa/T4ZM=
-X-Google-Smtp-Source: AGHT+IERYbDP5tsuTCHF49iiVNQyH0DoPmXKOJU4VrJp5X+x+IKa1j5PtgMtOiP1DDK3/IjC/vLm1w==
-X-Received: by 2002:a05:6000:1867:b0:37d:5318:bf0a with SMTP id
- ffacd0b85a97d-381c7a46489mr22480173f8f.1.1730913687058; 
- Wed, 06 Nov 2024 09:21:27 -0800 (PST)
-Received: from [10.134.195.192] ([193.32.126.165])
+ bh=FeMphd33oUeVS3In4aDd1Vm7ZvrzrZ4BXrvYHWn65zk=;
+ b=gBCLvrmrkuioWo+gIrUP8VZSTwYWhgxjCXA8XmTxfBTKmEOw+Z5EqBl9/tVCbfJbYj
+ tsEqqNa/T6HUu1045Dxs+MEs0jXscwhWoP/sAR+YQqmGoQOf0nPLnYevAB93uV5C0i24
+ tyh0JGcAvO+1Wzf8A9HVFc4lgWStM08T9mPiMkMl7nNagSYViaq2beANAsCAR0lhnPOb
+ hmCxO/gpjEvxchMyUIt3E75u4JPpjCTYviz/OO8FWvQUVblnPxBilVobL7hv1hiIMT2i
+ FTTTlq8QuUpYsXCGTPBP5mR+/2olMog+YUHlnCWa+t0dtNDNhkvz+zG7n13ICt/0Fu2d
+ TnDQ==
+X-Gm-Message-State: AOJu0YzfvJ2x2/2kAPsZOd6PsoIhMbXmyylBMGV6e44dH+9LNw8ex7Dr
+ ul59sO2r1Kl8QSvWIdgDiY+YMUiVYDUAyR5H5qNuSwspn9igqB5BbtiALHX7NtY=
+X-Google-Smtp-Source: AGHT+IF4flYdJlirNIY9JNHhMbQGThX1SSlsF/RtS+8qhkuQd1RtaZAuMBmcwXFTEH5rywhTJz9ocQ==
+X-Received: by 2002:a5d:6c68:0:b0:374:af19:7992 with SMTP id
+ ffacd0b85a97d-381c7a47487mr14708256f8f.7.1730913962407; 
+ Wed, 06 Nov 2024 09:26:02 -0800 (PST)
+Received: from [172.16.23.118] ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c116c13asm19577647f8f.109.2024.11.06.09.21.25
+ 5b1f17b1804b1-432aa6ae5dasm31606935e9.4.2024.11.06.09.26.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Nov 2024 09:21:26 -0800 (PST)
-Message-ID: <c233a6b5-bfea-4d5e-9b1f-5bc3a467e17d@linaro.org>
-Date: Wed, 6 Nov 2024 09:21:24 -0800
+ Wed, 06 Nov 2024 09:26:01 -0800 (PST)
+Message-ID: <e63cd5f6-8387-4c39-98e4-5e1c180934bc@linaro.org>
+Date: Wed, 6 Nov 2024 17:25:59 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Bump timeouts of functional tests
+Subject: Re: linux-user: Add option to run `execve`d programs through QEMU
+To: Noah Goldstein <goldstein.w.n@gmail.com>
+Cc: qemu-devel@nongnu.org, iii@linux.ibm.com, laurent@vivier.eu
+References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
+ <20241030141037.375897-1-goldstein.w.n@gmail.com>
+ <000c9ef8-c610-4f2a-b191-04b84455d89c@linaro.org>
+ <CAFUsyfKkmSid=LVTbG+WHZA_=MAGdf+TU5vGtNE1GGx8WDheOQ@mail.gmail.com>
+ <CAFUsyfKfM-X_qGN4Dy8DhES7zRi66s6yVZ3+_KmNM4f2GhBG+Q@mail.gmail.com>
+ <f21fe153-6239-4c93-bf60-994976a9dbea@linaro.org>
+ <CAFUsyfLhPkSMrm50RAAvir2-WoRS4_jbtZf1WWR_WZvm=BOr6g@mail.gmail.com>
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20241106170946.990731-1-thuth@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241106170946.990731-1-thuth@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFUsyfLhPkSMrm50RAAvir2-WoRS4_jbtZf1WWR_WZvm=BOr6g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x334.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,76 +101,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/24 09:09, Thomas Huth wrote:
-> When building QEMU with "--enable-debug" and running the tests
-> in parallel with "make -j$(nproc) check-functional", many tests are
-> still timing out due to our conservative timeout settings. Bump
-> the timeouts of the problematic tests and also increase the default
-> timeout to 90 seconds (from 60 seconds) to be on the safe side.
+On 11/6/24 17:03, Noah Goldstein wrote:
+> On Wed, Nov 6, 2024 at 3:38 AM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> On 11/5/24 23:54, Noah Goldstein wrote:
+>>>>> You still need to handle is_proc_myself, for the guest binary.
+>>>
+>>> Would this by handled by basically do:
+>>>
+>>> ```
+>>> if (is_proc_myself(p, "exe")) {
+>>>           exe = exec_path;
+>>>           if (through_qemu)
+>>>               argp[argp_offset] = exec_path;
+>>> }
+>>> ```
+>>> Or am I missing something?
+>>
+>> Something like that, yes.
+>>
+>>>>> I wonder if those two cases are related.  Do we need to also add an argument so that we
+>>>>> can pass the executable to the next qemu via file descriptor?  I.e. execvat becomes
+>>>>>
+>>>>>        f = openat()
+>>>>>        execv(qemu, "-execfd", f)
+>>>>>
+>>>>> and is_proc_myself uses execfd, which we already have open.
+>>>
+>>> How does passing a fd from one process to another work?
+>> As long as the fd is not marked O_CLOEXEC, it stays open in the new process.  Providing
+>> the number via command-line, or whatever, is sufficient for the new process to know what
+>> is going on.
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/functional/meson.build | 24 +++++++++++++-----------
->   1 file changed, 13 insertions(+), 11 deletions(-)
+> Err I guess I was thinking its a bit weird having an option that is
+> only really applicable
+> if qemu is a child process. I.e the `-execfd` argument is not usable
+> from commandline.
+
+qemu-foo -execfd 3 3< /some/file
+
+Or perhaps opened via other tooling.
+
+>> I now realize this is necessary for the AT_EMPTY_PATH flag, where we only have the file
+>> descriptor.
 > 
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index d5296bff8b..3561f987a6 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -11,24 +11,26 @@ endif
->   
->   # Timeouts for individual tests that can be slow e.g. with debugging enabled
->   test_timeouts = {
-> -  'aarch64_raspi4' : 120,
-> +  'aarch64_raspi4' : 480,
->     'aarch64_sbsaref' : 600,
-> -  'aarch64_virt' : 360,
-> -  'acpi_bits' : 240,
-> +  'aarch64_virt' : 720,
-> +  'acpi_bits' : 420,
->     'arm_aspeed' : 600,
-> -  'arm_bpim2u' : 360,
-> +  'arm_bpim2u' : 500,
-> +  'arm_collie' : 180,
->     'arm_orangepi' : 540,
->     'arm_raspi2' : 120,
-> -  'arm_tuxrun' : 120,
-> +  'arm_tuxrun' : 240,
->     'arm_sx1' : 360,
->     'mips_malta' : 120,
->     'netdev_ethtool' : 180,
->     'ppc_40p' : 240,
->     'ppc64_hv' : 1000,
-> -  'ppc64_powernv' : 240,
-> -  'ppc64_pseries' : 240,
-> -  'ppc64_tuxrun' : 240,
-> -  's390x_ccw_virtio' : 240,
-> +  'ppc64_powernv' : 480,
-> +  'ppc64_pseries' : 480,
-> +  'ppc64_tuxrun' : 420,
-> +  'riscv64_tuxrun' : 120,
-> +  's390x_ccw_virtio' : 420,
->   }
->   
->   tests_generic_system = [
-> @@ -273,8 +275,8 @@ foreach speed : ['quick', 'thorough']
->              env: test_env,
->              args: [testpath],
->              protocol: 'tap',
-> -           timeout: test_timeouts.get(test, 60),
-> -           priority: test_timeouts.get(test, 60),
-> +           timeout: test_timeouts.get(test, 90),
-> +           priority: test_timeouts.get(test, 90),
->              suite: suites)
->       endforeach
->     endforeach
+> We could also do something along the lines of:
+> 
+> ```
+> fd = openat(dirfd, exe);
+> char new_exe[PATH_MAX];
+> char fd_path[PATH_MAX];
+> sprintf(fd_path, "/proc/self/fd/%d", fd);
+> readlink(fd_path, new_exe, PATH_MAX);
 
-I noticed by --enable-debug in configure is a combination of enabling 
-checks (enable-debug-tcg + graph + mutex), and deactivating optimizations.
+Reading the link doesn't always work.
+Reading or passing the link means AT_SYMLINK_NOFOLLOW isn't honored.
 
-Would it be worth keeping the optimizations and runtime checks instead? 
-This way, there would be no more "timeout" issue.
 
-I'm not sure which added value we get from O0, except for debugging 
-locally QEMU.
+r~
 
