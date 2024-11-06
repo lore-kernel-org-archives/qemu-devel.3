@@ -4,89 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF6D2D44D78
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 15:01:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A954D44D78
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 15:22:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8hWk-0007CT-Th; Wed, 06 Nov 2024 10:00:58 -0500
+	id 1t8hqb-0002r4-BU; Wed, 06 Nov 2024 10:21:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1t8hWg-0007BN-Kj
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 10:00:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t8hqZ-0002qo-Fi; Wed, 06 Nov 2024 10:21:27 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1t8hWb-0002aq-By
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 10:00:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730905243;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=el/nBzJVZRpWnu2L2U66k728SyuxmsHzzoWcU0Uy5/A=;
- b=GpiWaEK6RlIOXGAZP0HtvBbirdY12RkmkGNJ0CxUYtfuAx/C1vSmrjwcjSOIGwoAa6u+4o
- 4PHZt3LfMza+OD0DJ9C9ThxRHw65PJ162kap+FBb9Kg7QEHiLo5uQbcBcbj18zz/wPGnWG
- P1ZFGZuzijTDVGGjiVr+IiOcz60NZXI=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-498-KgXh1_BJNY6x2NXwq7Ep2Q-1; Wed, 06 Nov 2024 10:00:40 -0500
-X-MC-Unique: KgXh1_BJNY6x2NXwq7Ep2Q-1
-X-Mimecast-MFC-AGG-ID: KgXh1_BJNY6x2NXwq7Ep2Q
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-6ea863ecfe9so83552677b3.3
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 07:00:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730905240; x=1731510040;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=el/nBzJVZRpWnu2L2U66k728SyuxmsHzzoWcU0Uy5/A=;
- b=ojUs02fisnK134JecRB2/CCV0aJ5dHkfxftireHSq1DINEQ+bkRPhObZ8jbxtqEcrf
- qZ7n2TlU1MxVSG9yq/aAzCssqZplDrACVC7sbvHSKjOBvLQgaP5Yc2lDEF3hzvM/SoaX
- HMZyvXNSza+Q/HhX5eHLuj1RcLFYu5dAPrZpze4EmX9BQuWw4g67B/SlWcBavynWVp5W
- 5F+TH/xSmOf+JGUGtcFhBOgzbf+5QAZXe9F65QJjhYQdudea+um6ohkh41X5c29fF/x2
- BjUNHAm6iWkakhS/N9kU7BXnH6K5dtbFmc/Db23q7noMfDz7aA74og5NB34z1X0nV9o0
- iVtw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXllIon7vjRpQ1doUdOJ/GbY9EZJw5tIOhlin9miywgh7Mf7uF1lQH5YZErNSmPM1tjZj8ju8wLT869@nongnu.org
-X-Gm-Message-State: AOJu0Ywo8EQ3ZSfcQ7eY3FrEJ3OSzw8uJ6rci1hl7oZ8qOA9A9NPvSk9
- MMUK27cQ0q0bpUaniXQU7Ro87aReqD0ikDJ+eNcDIcNuuF+ap6ltirY+OSK6YANZXeh9P543Nxz
- nW3iiuRm7Qqd/nGNucE8zETbe11+nsQAxLeGw+7s96A8b4sCrTqHmAejWbI+t4ag9lJG2wKy+un
- oo3xdhpVRtUO08TZwbGAlz8coBzQ8=
-X-Received: by 2002:a05:690c:7207:b0:6ea:90b6:ab49 with SMTP id
- 00721157ae682-6ea90b6b037mr121030317b3.5.1730905239916; 
- Wed, 06 Nov 2024 07:00:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGI38Y7LjF1UqwMCvuz/ndiOIJYjQlEX6SMv0if/xBM9J0JPdI1w9rG4Na8EtcaOQlPPQAqSTJR6kZkmiGnhyw=
-X-Received: by 2002:a05:690c:7207:b0:6ea:90b6:ab49 with SMTP id
- 00721157ae682-6ea90b6b037mr121029717b3.5.1730905239282; Wed, 06 Nov 2024
- 07:00:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t8hqX-00073w-Jv; Wed, 06 Nov 2024 10:21:27 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A6F8ESX007256;
+ Wed, 6 Nov 2024 15:21:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=4bFpLa
+ ltumf2qLsclcMeWZujkgU4sJrxb2XK7RLIDjE=; b=VXZM58jjxxeoVafZPcd/qs
+ 14PTTMj+UVu2BxFjCpdtSndfrSibXO466gh37ner5MYr/h/xmC9CclWI8kzKgPGs
+ 3qDQZZBSgAwZFyojYrjV1EUGuK0FR5wZsyeGAO90WoaXVuZFz+ZHSJw/6xtHrpYZ
+ ADrXHfunfzrfCvqHNRVHKOdJHH62RnehXdxvyJsGPOQHJh+NESCankb+4t3kIU6q
+ cLIEqiuRORmeh5Y6d897tAa4BY3u3wIGyiWRXp0+Xdydg/VaismQXe8ewauphIuo
+ oPrwUFApeJ00VS7JullBpgmqSuBWtQ5HXnekM4yXkhbK1lXWUPJssPp58K8/YqMg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42radvg81f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 Nov 2024 15:21:20 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A6EMV5C024200;
+ Wed, 6 Nov 2024 15:21:19 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42nxds6fyy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 Nov 2024 15:21:19 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A6FLIU934537976
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 6 Nov 2024 15:21:18 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7AD1858056;
+ Wed,  6 Nov 2024 15:21:18 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1C35858052;
+ Wed,  6 Nov 2024 15:21:18 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  6 Nov 2024 15:21:17 +0000 (GMT)
+Message-ID: <08fd5270-8223-419e-b5ec-075b14c42c09@linux.ibm.com>
+Date: Wed, 6 Nov 2024 10:21:17 -0500
 MIME-Version: 1.0
-References: <20241104162124.49867-1-sahilcdq@proton.me>
- <k2suxbt2qy7ewjrlozlkzrhsa7bbf7xrze33outna65dejuus2@eamj5pdkvpkw>
- <77bc1be1-e4b3-46a0-a263-cc8f7d6e28fe@gmail.com>
- <pu5razer3dkaltyuwiav236sepob44mj6cmigskdcet7davn4t@6orjjrzeqtau>
-In-Reply-To: <pu5razer3dkaltyuwiav236sepob44mj6cmigskdcet7davn4t@6orjjrzeqtau>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 6 Nov 2024 16:00:03 +0100
-Message-ID: <CAJaqyWd6+F7PO6tjq5QtjrRkoZNQZiqEPOsrjEN9Zp3S2t7SUA@mail.gmail.com>
-Subject: Re: [PATCH] vdpa: Support setting vring_base for packed svq
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Sahil Siddiq <icegambit91@gmail.com>, mst@redhat.com, qemu-devel@nongnu.org,
- Sahil Siddiq <sahilcdq@proton.me>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 10/17] tests/functional: Convert most Aspeed machine tests
+From: Stefan Berger <stefanb@linux.ibm.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>, lena.voytek@canonical.com
+References: <20241024063507.1585765-1-clg@redhat.com>
+ <20241024063507.1585765-11-clg@redhat.com>
+ <CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com>
+ <91c2ac92-66b2-45c8-b4fe-e8f8587b0e9c@linux.ibm.com>
+ <CAFEAcA84hhWu2ouirfDPbCpq_=QLQxAf3k47h0Pij8iEnOVj+A@mail.gmail.com>
+ <2491bc60-9a0b-486a-8f6d-2c4c94332756@linux.ibm.com>
+ <CAFEAcA85g2nX3MU5RzmBvAHT8Kis1JHhiEaBvnFFbEQkG+0OxQ@mail.gmail.com>
+ <e6c33df3-49e9-4b8a-b7cb-d38c2ebee3be@linux.ibm.com>
+ <CAFEAcA9La7y1Z2-nMnJDyC_p+z-3c0EnDzEE=w5LTYtRnXPT1g@mail.gmail.com>
+ <1a1d29b3-c14c-42a9-93ad-c773e3b265df@linux.ibm.com>
+ <CAFEAcA_awJURkAhyhz88iEyfe7BU-ApeHB8XZ5EeThoKFh3p5w@mail.gmail.com>
+ <60734922-c31d-4a24-865e-45d03ff53141@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <60734922-c31d-4a24-865e-45d03ff53141@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: ppOVMKymP4RT8U8y9u1nX49u0-uGOVbu
+X-Proofpoint-ORIG-GUID: ppOVMKymP4RT8U8y9u1nX49u0-uGOVbu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0
+ mlxscore=0 adultscore=0 impostorscore=0 phishscore=0 malwarescore=0
+ bulkscore=0 suspectscore=0 lowpriorityscore=0 mlxlogscore=609
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411060118
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,195 +121,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 6, 2024 at 3:33=E2=80=AFPM Stefano Garzarella <sgarzare@redhat.=
-com> wrote:
->
-> On Tue, Nov 05, 2024 at 08:24:17PM +0530, Sahil Siddiq wrote:
-> >Hi,
-> >
-> >Thank you for the review.
-> >
-> >On 11/5/24 3:06 PM, Stefano Garzarella wrote:
-> >>On Mon, Nov 04, 2024 at 09:51:24PM +0530, Sahil Siddiq wrote:
-> >>>Linux commit v5.14-rc1~30^2~8 enabled the vp_vdpa driver to set the
-> >>
-> >>To refer to a commit, please use the SHA-1 id or even better the form
-> >>suggested in
-> >>https://www.kernel.org/doc/html/latest/process/submitting-patches.html#=
-describe-your-changes
-> >>
-> >>So in this case I'd use:
-> >>Linux commit 1225c216d954 ("vp_vdpa: allow set vq state to initial stat=
-e
-> >>after reset")
-> >
-> >Understood, I'll change this in v2.
-> >
-> >>>vq state to the device's initial state. This works differently for
-> >>>split and packed vqs.
-> >>>
-> >>>With shadow virtqueues enabled, vhost-vdpa sets the vring base using
-> >>>the VHOST_SET_VRING_BASE ioctl. The payload (vhost_vring_state)
-> >>>differs for split and packed vqs. The implementation in QEMU currently
-> >>>uses the payload required for split vqs (i.e., the num field of
-> >>>vhost_vring_state is set to 0). The kernel throws EOPNOTSUPP when this
-> >>>payload is used with packed vqs.
-> >>>
-> >>>This patch sets the num field in the payload appropriately so vhost-vd=
-pa
-> >>
-> >>I'm not very familiar with shadow virtqueue, so can you elaborate what
-> >>"appropriately" means here?
-> >
-> >My understanding is that the ioctl and the payload themselves are not
-> >directly related to shadow virtqueues [1]. They concern virtqueues in ge=
-neral.
-> >
-> >In QEMU's implementation, hw/virtio/vhost-vdpa.c:vhost_vdpa_svq_setup [2=
-]
-> >is called from hw/virtio/vhost-vdpa.c:vhost_vdpa_svqs_start [3] only whe=
-n
-> >shadow virtqueues are enabled.
-> >
-> >QEMU's vhost-user doc [1] states that the payload for the VHOST_SET_VRIN=
-G_BASE
-> >ioctl is different for split and packed vqs. The struct is the same:
-> >
-> >struct vhost_vring_state {
-> >       unsigned int index;
-> >       unsigned int num;
-> >};
-> >
-> >The num field takes a different value depending on the virtqueue's forma=
-t
-> >(split vs packed). The explanation below throws more light on this.
-> >
-> >>>(with the vp_vdpa driver) can use packed svqs.
-> >>>
-> >>>Link: https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg0510=
-6.html
-> >>>Link: https://lore.kernel.org/r/20210602021536.39525-4-jasowang@redhat=
-.com
-> >>>Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
-> >>>---
-> >>>QEMU currently does not support packed vhost shadow virtqueues. I am
-> >>>working on adding support for packed svqs [1]. The test environment
-> >>>that I am using [2] requires vhost-vdpa to use the relevant payload
-> >>>when setting vring base.
-> >>>
-> >>>[1] https://wiki.qemu.org/Internships/ProjectIdeas/PackedShadowVirtque=
-ue
-> >>>[2] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-=
-aint-got-hardware-part-2
-> >>>
-> >>>hw/virtio/vhost-vdpa.c | 4 ++++
-> >>>1 file changed, 4 insertions(+)
-> >>>
-> >>>diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-> >>>index 3cdaa12ed5..5f81945109 100644
-> >>>--- a/hw/virtio/vhost-vdpa.c
-> >>>+++ b/hw/virtio/vhost-vdpa.c
-> >>>@@ -1230,6 +1230,10 @@ static bool vhost_vdpa_svq_setup(struct vhost_d=
-ev *dev,
-> >>>    };
-> >>>    int r;
-> >>>
-> >>>+    if (virtio_vdev_has_feature(dev->vdev, VIRTIO_F_RING_PACKED)) {
-> >>>+        s.num =3D 0x80008000;
-> >>
-> >>Why this magic value?
-> >>
-> >>Looking at the kernel code it looks like we are assgining 0x8000 for
-> >>both last_avail_idx and last_used_idx, but why 0x8000?
-> >>
-> >>Thanks,
-> >>Stefano
-> >>
-> >
-> >When I boot a VM with packed=3Don and x-svq=3Dtrue, QEMU sets the vring =
-base
-> >using VHOST_SET_VRING_BASE. I used ftrace to trace the functions in the
-> >linux kernel and got the following trace:
-> >
-> >[...]
-> >qemu-system-x86-1737    [001] ...1.  3613.371358: vhost_vdpa_unlocked_io=
-ctl <-__x64_sys_ioctl
-> >qemu-system-x86-1737    [001] ...1.  3613.371358: vhost_vring_ioctl <-vh=
-ost_vdpa_unlocked_ioctl
-> >qemu-system-x86-1737    [001] ...1.  3613.371362: vp_vdpa_set_vq_state <=
--vhost_vdpa_unlocked_ioctl
-> >[...]
-> >
-> >In the kernel, drivers/vhost/vhost.c:vhost_vring_ioctl [4] uses
-> >the vhost_vring_state payload to set the last_avail_idx. For
-> >packed vqs, it also sets last_used_idx.
-> >
-> >    vq->last_avail_idx =3D s.num & 0xffff;
-> >    vq->last_used_idx =3D (s.num >> 16) & 0xffff;
-> >
-> >These values are used to populate a new struct vdpa_vq_state in
-> >drivers/vhost/vdpa.c:vhost_vdpa_vring_ioctl [5].
-> >
-> >    vq_state.packed.last_avail_idx =3D vq->last_avail_idx & 0x7fff;
-> >    vq_state.packed.last_avail_counter =3D !!(vq->last_avail_idx & 0x800=
-0);
-> >    vq_state.packed.last_used_idx =3D vq->last_used_idx & 0x7fff;
-> >    vq_state.packed.last_used_counter =3D !!(vq->last_used_idx & 0x8000)=
-;
-> >
-> >The following check is then made in drivers/vdpa/virtio_pci/vp_vdpa.c:
-> >vp_vdpa_set_vq_state_packed [6]:
-> >
-> >    if (packed->last_avail_counter =3D=3D 1 &&
-> >        packed->last_avail_idx =3D=3D 0 &&
-> >        packed->last_used_counter =3D=3D 1 &&
-> >        packed->last_used_idx =3D=3D 0)
-> >        return 0;
-> >    return -EOPNOTSUPP;
-> >
-> >The most significant bit in 0x8000 is used to set the wrap counters.
-> >All the other bits are 0 and so the avail and used idx are also set
-> >to 0.
->
-> Thanks for these great details!
->
-> Okay, so IIUC the only configuration that vp_vdpa supports when
-> VHOST_SET_VRING_BASE is called is idx =3D=3D 0 and wrap_couter =3D true f=
-or
-> both avail and used.
->
 
-Right, it cannot set any other value as there is no standardized way
-in virtio. But vp_vdpa allows the default one, as QEMU always sends
-it.
 
-> Is this okay with QEMU shadow vq? (More a question for Eugenio).
->
+On 11/5/24 4:50 PM, Stefan Berger wrote:
+> 
+> 
 
-Yes, it is a required step to support packed vq.
+>>>
+>>>   > > One of swtpm or apparmor must be wrong here and I think it should
+>>>> be fixed. In particular, having the failure mode be "something
+>>>
+>>> As stated, we were going to fix the AppArmor path in the swtpm Ubuntu
+>>> package.
+>>
+>> But AIUI the solution you've proposed is to add the user
+>> temp directory -- abstractions/user-tmp looks like it
+>> adds permissions for $HOME/tmp, /var/tmp and /tmp/. None
+>> of those will fix the failure we ran into, because we're not
+>> using any of those tmp directories. We use a directory
+>> that's a subdirectory of wherever the user put the build
+>> directory, which can be anywhere the user has permissions for.
+> 
+> Yes, you are right. The same test failed for me locally due to the usage 
+> of /var/tmp/ path but that's not what was originally reported.
+> 
+> I am not aware that user-started programs can have an exception from 
+> having their profiles applied, nor do I know whether rules exist that 
+> allow a user to circumvent any rule. So my guess is we need rules like 
+> either one of the following:
+> 
+> owner /mnt/** rwkl
+> 
+> or worse:
+> 
+> owner /** rwkl
+> 
+> I don't see another choice than adding one of these rules, maybe even 
+> the 2nd. Lena?
 
-I misunderstood the previous thread and I thought the problem was
-somewhere else. It is hard to justify introducing this change in QEMU
-by itself, as the code is not reachable. However, when you post the
-whole series, you can make the two changes requested here (commit id,
-no magic number) and add my acked-by directly :):
+If there was value in the path-confinement of swtpm (for a few years) do 
+we really want to loose it now because of a test case? We could either
 
-Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+- adjust the test case to have swtpm use a directory under one of the 
+accepted paths, e.g., /tmp or /var/tmp
+- or add /mnt as a newly supported path to the AppArmor profile
 
->
-> About the magic value, IMHO we should explain it in the code adding a
-> comment, and maybe use VRING_PACKED_EVENT_F_WRAP_CTR, something like we
-> do in virtqueue_init() in drivers/virtio/virtio_ring.c in Linux:
->
->      uint32_t last_used_idx =3D 0 | (1 << VRING_PACKED_EVENT_F_WRAP_CTR);
->      uint32_t last_avail_idx =3D 0 | (1 << VRING_PACKED_EVENT_F_WRAP_CTR)=
-;
->
->      s.num =3D (last_used_idx << 16) | last_avail_idx;
+The latter works for the setup that Peter has but a new user creating 
+paths under /mymnt would cause the same discussion again.
 
-I agree, we can avoid the magic constant and the kernel's code is a
-good source to follow when developing these changes.
 
-Thanks!
+    Stefan
 
 
