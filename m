@@ -4,92 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 993DFD29FB3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 08:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 318A9D29FB3
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 08:42:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8bZG-00041M-I3; Wed, 06 Nov 2024 03:39:10 -0500
+	id 1t8bc9-0005WD-N5; Wed, 06 Nov 2024 03:42:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t8bZD-00040f-TR
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 03:39:08 -0500
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t8bZB-00061A-Hi
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 03:39:07 -0500
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-7ede6803585so482676a12.0
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 00:39:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1730882344; x=1731487144; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9iQwRWQz3sbPdtuIOsuxjy5ZLO5E38CiwHVxyC/5QA8=;
- b=iYF12NGH4F4RxptZq5JttFWHMQOwWSsNXulaWYjDo0cY3FPJXWEB1sdt4zDn7ou7lY
- CHPaTR977hyZ0guc7tK0MS61gD3x8EZjeueISXkVK+JZHyYULqzZSuAZmcNX1Cq2o246
- 8+EkASlM+T8Qo6UT732Gf9Oe80FWlrBTNmvpnzqmDde2+FxE/SbewDkx5S6MdFK0iPdV
- 9PHG4uAI43r531X4VfMWJgVSkp18MblxBTs0Yv+/UPRKb7hXzTzMVuK8qjLKLBsewXXX
- rHRGCH6k7VMBircgjsh+V6yVf3omhGWz2Ni1jnEcvDXfp45EXPWBPyVXMnv0OjtXQ60s
- PeFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730882344; x=1731487144;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9iQwRWQz3sbPdtuIOsuxjy5ZLO5E38CiwHVxyC/5QA8=;
- b=YYVYYJtVjXLYhpRmQCAFuSkhJcKM18w7YXKIqe2LWTgKPS4SfQVrD1iYigDnI6Q/OG
- e9V0wlqPNkqMxqikF0XI+HUww7MqviBGYj1frcwfio55eu/iEopwKwQoXcEZFs2/48wH
- FhCiqOnPqRbGaVQQWxfX00hrSyO5WDmYZmh8+lEK6eSE5JAmRRniaokDztUYleE0TVL/
- LRHMJNI8H1dW57M6swHoUnjHkYj5akQTMvxwBXJmUyYu4uy0HvNZUOT4koVXdT00bn6b
- L7ap+18SLrKSzND0A3S8O8bIz3151H3BNUo5MAL7vYp1InWTcqSZTWj7gCE6zXnHdSA0
- ddTA==
-X-Gm-Message-State: AOJu0YwPpdcUN9yvhbLwYmpNnm11OotmwJzqqeir63anMq9ZKUx8kafi
- jT8lF4WdPGAI8YfdSnUgw4abi77xkIb8Hx5ysQNEto/UplXxV48oH6mBlPjFYrw=
-X-Google-Smtp-Source: AGHT+IE5qNex3nAU1KXW3Pi2fD8QAtSoakel3K9q+isu8f/DGh3d6nw+AybAmKBp1v2+U+SJIN09Gw==
-X-Received: by 2002:a17:90b:4f90:b0:2e2:b94c:d6a2 with SMTP id
- 98e67ed59e1d1-2e99956d0bemr2928933a91.0.1730882343842; 
- Wed, 06 Nov 2024 00:39:03 -0800 (PST)
-Received: from [192.168.68.110] ([189.79.22.174])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e99a62bf50sm905084a91.51.2024.11.06.00.38.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Nov 2024 00:39:03 -0800 (PST)
-Message-ID: <4bb3fbf2-7f0b-48fa-9b9c-39108e261d31@ventanamicro.com>
-Date: Wed, 6 Nov 2024 05:38:56 -0300
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1t8bc7-0005VM-9S
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 03:42:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1t8bc5-0007Uj-LF
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 03:42:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730882524;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DuKheEd+RIhCNNVlsfYRfvUtD5CnI0aqPx70+3FcBsM=;
+ b=gweZJbfjhh8tu35cPXxzdsmreO46nyS7mXaLWtYW2AoRQ4UFZLQF4IeCtT8p9Bso7aBmYD
+ 8hkB576bLyZBHXeeFij6iroswgFl7Qc6j43KXsS+lUttbNLvEP94Psi5n+6s4K7+y7ZODL
+ A/EVf7GQjJ6rb/0zRFcygKy56J22Qqw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-eDi7X9LaOWWCVs0cCHKRgQ-1; Wed,
+ 06 Nov 2024 03:41:59 -0500
+X-MC-Unique: eDi7X9LaOWWCVs0cCHKRgQ-1
+X-Mimecast-MFC-AGG-ID: eDi7X9LaOWWCVs0cCHKRgQ
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 76AC71955F3E; Wed,  6 Nov 2024 08:41:58 +0000 (UTC)
+Received: from fedora.nay.redhat.com (unknown [10.66.57.68])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C9861955F40; Wed,  6 Nov 2024 08:41:54 +0000 (UTC)
+From: Dehan Meng <demeng@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: demeng@redhat.com, kkostiuk@redhat.com, michael.roth@amd.com,
+ peter.maydell@linaro.org, berrange@redhat.com
+Subject: [PATCH v5 3/3] qemu-ga: Avoiding freeing line prematurely
+Date: Wed,  6 Nov 2024 16:41:34 +0800
+Message-Id: <20241106084134.1133061-4-demeng@redhat.com>
+In-Reply-To: <20241106084134.1133061-1-demeng@redhat.com>
+References: <20241106084134.1133061-1-demeng@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/riscv: fix build error with clang
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
- Bin Meng <bmeng.cn@gmail.com>, tjeznach@rivosinc.com, qemu-riscv@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, pbonzini@redhat.com,
- peter.maydell@linaro.org, Cameron Esfahani <dirty@apple.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20241104222225.1523751-1-pierrick.bouvier@linaro.org>
- <CAKmqyKN+mYMRqA7=Tb+-qNr_b7TQ8rapaB_YDPqjgKWAggeygA@mail.gmail.com>
- <a9c03f45-13d5-49ef-9c26-f3ab81c5932f@linaro.org>
- <edcb0654-bb2d-4b39-9a7d-8c4d5f384618@linaro.org>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <edcb0654-bb2d-4b39-9a7d-8c4d5f384618@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=demeng@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,48 +82,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+It's now only freed at the end of the function.
 
+Signed-off-by: Dehan Meng <demeng@redhat.com>
+---
+ qga/commands-linux.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-On 11/5/24 7:55 PM, Philippe Mathieu-Daudé wrote:
-> On 5/11/24 05:29, Pierrick Bouvier wrote:
->> Thanks for the review.
->> Feel free to pull the patch in your next PR, so it can be available for release 9.2.
->>
->> Regards,
->> Pierrick
->>
->> On 11/4/24 18:37, Alistair Francis wrote:
->>> On Tue, Nov 5, 2024 at 8:23 AM Pierrick Bouvier
->>> <pierrick.bouvier@linaro.org> wrote:
->>>>
->>>> Introduced in 0c54ac, "hw/riscv: add RISC-V IOMMU base emulation"
->>>>
->>>> ../hw/riscv/riscv-iommu.c:187:17: error: redefinition of '_pext_u64'
->>>>
->>>>    187 | static uint64_t _pext_u64(uint64_t val, uint64_t ext)
->>>>
->>>>        |                 ^
->>>>
->>>> D:/a/_temp/msys64/clang64/lib/clang/18/include/bmi2intrin.h:217:1: note: previous definition is here
->>>>
->>>>    217 | _pext_u64(unsigned long long __X, unsigned long long __Y)
->>>>
->>>>        | ^
->>>>
->>>> After a conversation on the mailing list, it was decided to rename and
->>>> add a comment for this function.
->>>>
->>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>
->>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> 
-> Fix queued via hw-misc tree.
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 55c35bfc8f..70020621bf 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -2138,8 +2138,7 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
+         is_ipv6 = (i == 1);
+         fp = fopen(routeFiles[i], "r");
+         if (fp == NULL) {
+-            error_setg_errno(errp, errno, "open(\"%s\")", routeFiles[i]);
+-            free(line);
++            error_setg_errno(errp, errno, "open(\"%s\")", route_files[i]);
+             continue;
+         }
+ 
+@@ -2148,7 +2147,6 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
+                 firstLine = 0;
+                 continue;
+             }
+-            
+             if (is_ipv6) {
+                 char destination[33], source[33], next_hop[33];
+                 int des_prefixlen, src_prefixlen, metric, refcnt, use, flags;
+@@ -2215,9 +2213,8 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
+             QAPI_LIST_APPEND(tail, route);
+         }
+ 
+-        free(line);
+         fclose(fp);
+     }
+-
++    free(line);
+     return head;
+ }
+-- 
+2.40.1
 
-Do you fancy taking the riscv-iommu Coverity fixes as well? They're somewhat trivial and it'll
-spare Alistair from making a PR with just a handful of patches.
-
-
-Thanks,
-
-Daniel
 
