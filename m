@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7594D59F6E
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 19:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70FBED59F6C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 20:00:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8m9x-0000wX-0G; Wed, 06 Nov 2024 14:57:45 -0500
+	id 1t8mC9-0001eh-LU; Wed, 06 Nov 2024 15:00:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t8m9u-0000uO-JJ
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 14:57:43 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1t8mC4-0001dJ-Cb; Wed, 06 Nov 2024 14:59:57 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t8m9s-0004Kb-B4
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 14:57:42 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1t8mC2-0004Z9-Id; Wed, 06 Nov 2024 14:59:56 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 88779A063A;
- Wed,  6 Nov 2024 22:56:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 23280A063E;
+ Wed,  6 Nov 2024 22:59:02 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5B6E5165E73;
- Wed,  6 Nov 2024 22:57:25 +0300 (MSK)
-Message-ID: <722b0825-abe3-436a-ab6c-625e1b4a6ce6@tls.msk.ru>
-Date: Wed, 6 Nov 2024 22:57:25 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id F1942165E74;
+ Wed,  6 Nov 2024 22:59:52 +0300 (MSK)
+Message-ID: <111709e4-eeea-479d-9cd0-6fc912dca14a@tls.msk.ru>
+Date: Wed, 6 Nov 2024 22:59:52 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] hw/cxl: Round up of fixes.
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, mst@redhat.com,
- qemu-devel@nongnu.org
-Cc: Dmitry Frolov <frolov@swemel.ru>, Ajay Joshi <ajay.opensrc@micron.com>,
- Yao Xingtao <yaoxt.fnst@fujitsu.com>, Fan Ni <fan.ni@samsung.com>,
- Shiju Jose <shiju.jose@huawei.com>, linux-cxl@vger.kernel.org,
- linuxarm@huawei.com
-References: <20241014121902.2146424-1-Jonathan.Cameron@huawei.com>
+Subject: Re: [PATCH v2] vhost-user: fix shared object return values
+To: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, berrange@redhat.com,
+ Stefano Garzarella <sgarzare@redhat.com>, dbassey@redhat.com,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20241022124615.585596-1-aesteve@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -81,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20241014121902.2146424-1-Jonathan.Cameron@huawei.com>
+In-Reply-To: <20241022124615.585596-1-aesteve@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -107,49 +105,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-14.10.2024 15:18, Jonathan Cameron via wrote:
-> A mixed bag of fixes that have all been on the list already with the
-> exception of:
-> "hw/pci-bridge: Make pxb_dev_realize_common() return if it succeeded"
-> (so that's the one that needs more eyes).
+22.10.2024 15:46, Albert Esteve wrote:
+> VHOST_USER_BACKEND_SHARED_OBJECT_ADD and
+> VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE state
+> in the spec that they return 0 for successful
+> operations, non-zero otherwise. However,
+> implementation relies on the return types
+> of the virtio-dmabuf library, with opposite
+> semantics (true if everything is correct,
+> false otherwise). Therefore, current
+> implementation violates the specification.
 > 
-> I've tweaked the others to fix typos and correct Fixes tags (adding
-> them where missing and fixing formatting), but they are fundamentally
-> the same that has been reviewed on list.
+> Revert the logic so that the implementation
+> of the vhost-user handling methods matches
+> the specification.
 > 
-> Ajay Joshi (1):
->    hw/cxl: Fix background completion percentage calculation
-> 
-> Dmitry Frolov (1):
->    hw/cxl: Fix uint32 overflow cxl-mailbox-utils.c
-> 
-> Fan Ni (1):
->    hw/mem/cxl_type3: Fix More flag setting for dynamic capacity event
->      records
-> 
-> Jonathan Cameron (2):
->    hw/cxl: Fix indent of structure member
->    hw/pci-bridge: Make pxb_dev_realize_common() return if it succeeded
-> 
-> Shiju Jose (1):
->    hw/cxl/cxl-mailbox-utils: Fix for device DDR5 ECS control feature
->      tables
-> 
-> Yao Xingtao (1):
->    mem/cxl_type3: Fix overlapping region validation error
+> Fixes: 043e127a126bb3ceb5fc753deee27d261fd0c5ce
+> Fixes: 160947666276c5b7f6bca4d746bcac2966635d79
+> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+> Signed-off-by: Albert Esteve <aesteve@redhat.com>
 
-Is anything in there for qemu-stable?
+Is this worth the effort to pick up for stable
+series?
 
-Thanks,
-
-/mjt
-
->   include/hw/cxl/cxl_device.h         | 36 ++++++++++++++++++-----------
->   hw/cxl/cxl-mailbox-utils.c          | 31 +++++++++++--------------
->   hw/mem/cxl_type3.c                  | 15 +++++-------
->   hw/pci-bridge/pci_expander_bridge.c | 13 +++++++----
->   4 files changed, 49 insertions(+), 46 deletions(-)
+>   hw/virtio/vhost-user.c | 13 +++++++++----
+>   1 file changed, 9 insertions(+), 4 deletions(-)
 > 
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index 00561daa06..96c5e6b95f 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -1607,9 +1607,14 @@ vhost_user_backend_handle_shared_object_add(struct vhost_dev *dev,
+>       QemuUUID uuid;
+>   
+>       memcpy(uuid.data, object->uuid, sizeof(object->uuid));
+> -    return virtio_add_vhost_device(&uuid, dev);
+> +    return !virtio_add_vhost_device(&uuid, dev);
+>   }
+>   
+> +/*
+> + * Handle VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE backend requests.
+> + *
+> + * Return: 0 on success, 1 on error.
+> + */
+>   static int
+>   vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,
+>                                                  VhostUserShared *object)
+> @@ -1623,16 +1628,16 @@ vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,
+>           struct vhost_dev *owner = virtio_lookup_vhost_device(&uuid);
+>           if (dev != owner) {
+>               /* Not allowed to remove non-owned entries */
+> -            return 0;
+> +            return 1;
+>           }
+>           break;
+>       }
+>       default:
+>           /* Not allowed to remove non-owned entries */
+> -        return 0;
+> +        return 1;
+>       }
+>   
+> -    return virtio_remove_resource(&uuid);
+> +    return !virtio_remove_resource(&uuid);
+>   }
+>   
+>   static bool vhost_user_send_resp(QIOChannel *ioc, VhostUserHeader *hdr,
 
 -- 
 GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
