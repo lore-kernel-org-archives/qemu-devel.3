@@ -4,78 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91CFCD44D54
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 13:14:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8790D44D58
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 13:14:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8fqy-0003pu-O2; Wed, 06 Nov 2024 08:13:44 -0500
+	id 1t8frz-0004RJ-0g; Wed, 06 Nov 2024 08:14:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8fqv-0003pF-7Z
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:13:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t8fro-0004Od-KT
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:14:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8fqs-0002Ap-Iq
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:13:40 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t8frm-0002yy-UR
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:14:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730898815;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1730898871;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JHPH1oO1dvZD15EvAjYIpIBO9VyCcTJnxIoZDiGtuPc=;
- b=BHWr8XUW7S0IExeXDdAImE58P8hjq2fsy2GUlyd1L0XOsyuL8GB07OemptRvxk76g57pHM
- 6A1hrNvfoRK5wX7UM1vVkuHGXEZmyrsUQMWDXDrc4OEA3+4dYh3byDx1tdPpg2ObvK7iwL
- yntp5szVnzzm9BcykqmJb4NLUrf1yRU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-rnghzKPcOPeFcpGheKv0Qw-1; Wed,
- 06 Nov 2024 08:13:30 -0500
-X-MC-Unique: rnghzKPcOPeFcpGheKv0Qw-1
-X-Mimecast-MFC-AGG-ID: rnghzKPcOPeFcpGheKv0Qw
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DEB2C1977021; Wed,  6 Nov 2024 13:13:28 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.180])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DAC930001A6; Wed,  6 Nov 2024 13:13:24 +0000 (UTC)
-Date: Wed, 6 Nov 2024 13:13:20 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 12/22] tests/qtest/migration: Split TLS tests from
- migration-test.c
-Message-ID: <ZytrcD51sLUD1Afh@redhat.com>
-References: <20241105180837.5990-1-farosas@suse.de>
- <20241105180837.5990-13-farosas@suse.de>
- <ZytP7hMbUkkDS1MX@redhat.com> <87o72s1phk.fsf@suse.de>
+ bh=wJcgLcC8epk+kqVVRp8yVllIHQMhNmVq2Pwyc1nOvm0=;
+ b=jN92Vcp54uyRAYvZnUGPBE/CcW3wOplN8ZDASFx7/zHqLXco0Ak94Pfk+nrJXexU9fZjZv
+ WwdLqJrsM6L4oUATOJctWq/cqQN6GoZgUu6M5+L//HjvkUnCBHE0PdPy4ukN8lIwgEbX10
+ CFwrEepGuU/++Jug7h7t4nZsBZ/iaik=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-457-kHpNQDjUP46CKbb_8bg0Vg-1; Wed, 06 Nov 2024 08:14:30 -0500
+X-MC-Unique: kHpNQDjUP46CKbb_8bg0Vg-1
+X-Mimecast-MFC-AGG-ID: kHpNQDjUP46CKbb_8bg0Vg
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37d45de8bbfso4625780f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 05:14:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730898869; x=1731503669;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wJcgLcC8epk+kqVVRp8yVllIHQMhNmVq2Pwyc1nOvm0=;
+ b=elmTIpzms7jV2nxjlewsS7s0Edio6clWGN3Zr7SEo1bG/hWNlUYWI9g+2xl18srEPQ
+ FFjBd9Vt1EZJKnAMQlxN/g8Ly463zodRJZkYAEBfjJtQiZG1H5xUbS5o5u3+Jc/7a0ep
+ zZLbWtsVFrlEurSm6DruXRWE+5cCEm86RUiNvJVlWeiL2JnywOURNG6dYK+PY3deeDyM
+ V63PdZOIMFtFzoNrZQ30ELrCdoo0LqypO6iF7K1mk3DgXSqUv76aVa0GcWC95VUib+mx
+ YufZA71mJB2oagxAgsZUJQE+7847euQQz0rUVXvTLlmzcAXczAOMPGdzrtIn91oqkJlh
+ bGGw==
+X-Gm-Message-State: AOJu0Yz/pc2F0z3ewW36xJnIoFhn4jLq6nboisCFlsl42xGnAvbQHCXu
+ wVpv/tF3MAUDNSJ6CU3lZcReEHbWshHm1A3V1fefp/OT/lDpYoLQ0GI5x3xYJ9OQPTpAbXWOKtr
+ f2x4UoIjMFjH+aXEjTBg3Np77bQvlhZx3Yy7bOtCiyycFL0aX/Ef1F4QlVu7EwS/Hm6uZhqrQEC
+ ZKR0qjaI1vH6pQfJ+Tw2yWEylUqX8=
+X-Received: by 2002:a05:6000:1aca:b0:37d:511b:aec1 with SMTP id
+ ffacd0b85a97d-381c7ac4208mr18619793f8f.45.1730898869131; 
+ Wed, 06 Nov 2024 05:14:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHf3om8iC6Jc4KGMwS5CzjDApJgrM3eGMwWq3cV7uztcTRvr+jTwCz4/GK5mO4IcKY87HQXjiGazwa3RR3NJW4=
+X-Received: by 2002:a05:6000:1aca:b0:37d:511b:aec1 with SMTP id
+ ffacd0b85a97d-381c7ac4208mr18619778f8f.45.1730898868786; Wed, 06 Nov 2024
+ 05:14:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87o72s1phk.fsf@suse.de>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+References: <20241104172721.180255-1-pbonzini@redhat.com>
+ <CAFEAcA8JoYxokZxcf66ivkCAMXuVFvDdrC7tCguNvQ43aAr_kg@mail.gmail.com>
+In-Reply-To: <CAFEAcA8JoYxokZxcf66ivkCAMXuVFvDdrC7tCguNvQ43aAr_kg@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 6 Nov 2024 14:14:16 +0100
+Message-ID: <CABgObfbzpioAQ7czF1TfPnEApykth1gJm67WZveVY9bo_FYs-A@mail.gmail.com>
+Subject: Re: [PULL 00/40] Rust changes for QEMU 9.2 soft freeze
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Junjie Mao <junjie.mao@hotmail.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Zhao Liu <zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,114 +100,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 06, 2024 at 10:05:59AM -0300, Fabiano Rosas wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > On Tue, Nov 05, 2024 at 03:08:27PM -0300, Fabiano Rosas wrote:
-> >> The migration-test.c file has become unwieldy large. It's quite
-> >> confusing to navigate with all the test definitions mixed with hook
-> >> definitions. The TLS tests make this worse with ifdef'ery.
-> >> 
-> >> Since we're planning on having a smaller set of tests to run as smoke
-> >> testing on all architectures, I'm taking the time to split some tests
-> >> into their own file.
-> >> 
-> >> Move the TLS tests into a file of their own.
-> >> 
-> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> >> ---
-> >>  tests/qtest/meson.build                  |   8 +-
-> >>  tests/qtest/migration-test.c             | 788 +---------------------
-> >>  tests/qtest/migration/migration-common.h |   6 +
-> >>  tests/qtest/migration/tls-tests.c        | 790 +++++++++++++++++++++++
-> >>  4 files changed, 803 insertions(+), 789 deletions(-)
-> >>  create mode 100644 tests/qtest/migration/tls-tests.c
+On Wed, Nov 6, 2024 at 2:10=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
+>
+> On Mon, 4 Nov 2024 at 17:35, Paolo Bonzini <pbonzini@redhat.com> wrote:
 > >
+> > The following changes since commit 15195de6a93438be99fdf9a90992c4228527=
+130d:
 > >
-> >> diff --git a/tests/qtest/migration/migration-common.h b/tests/qtest/migration/migration-common.h
-> >> index 8d0081c698..c546e92259 100644
-> >> --- a/tests/qtest/migration/tls-tests.c
-> >> +++ b/tests/qtest/migration/tls-tests.c
+> >   ci: enable rust in the Fedora system build job (2024-10-30 16:30:56 +=
+0100)
 > >
+> > are available in the Git repository at:
 > >
-> >> +
-> >> +void migration_test_add_tls(MigrationTestEnv *env)
-> >> +{
-> >> +    tmpfs = env->tmpfs;
-> >> +
-> >> +    migration_test_add("/migration/precopy/unix/tls/psk",
-> >> +                       test_precopy_unix_tls_psk);
-> >> +
+> >   https://gitlab.com/bonzini/qemu.git tags/for-upstream-rust
 > >
-> > ...snip...
+> > for you to fetch changes up to d20feaa9a5af597bd20630d041e5dc7808612be1=
+:
 > >
-> >> +}
+> >   ci: enable rust in the Debian and Ubuntu system build job (2024-10-31=
+ 18:39:52 +0100)
 > >
-> > Looking at this, and considering the later patch which introduces
-> > 'make qtest-<subsystem>' support, I wonder if we actually need to
-> > have a single 'migration-test' binary. Why not just add a main()
-> > method to this  test-tests.c, and have a 'migration-test-tls'
-> > binary ?
-> 
-> I did that initially, but then I realised it duplicates the -qmp, -util
-> and -common helpers into every new test binary. With the current split,
-> that would be 7x.
-> 
-> Another point is that we can't then implement the smoke tests like in
-> this series, we'd have to make every migration-foo-test.c choose between
-> smoke or full tests individually. Which is doable, but it seemed against
-> your and Alex's suggestions of having 2 separate binaries.
-> 
-> If we're fine with the duplication in the build, I could go back to that
-> approach. Each main() function would need to look like this:
->       
->     if (g_test_thorough() || env->has_kvm) {
->         /* add all tests */
->         migration_test_add();
->         migration_test_add();
->         ...
->     } else {
->         /* only the smoke suite */
->         migration_test_add_smoke();
->     }
-> 
+> > ----------------------------------------------------------------
+> > * rust: cleanups
+> > * rust: integration tests
+> > * rust/pl011: add support for migration
+> > * rust/pl011: add TYPE_PL011_LUMINARY device
+> > * rust: add support for older compilers and bindgen
+> > * rust: enable rust in the Debian, Fedora and Ubuntu system build job
 > >
-> > "make qtest-migration" would provoide a way to run the same level
-> > of functionality seen when everything was in one 'migration-test'
-> > binary.
-> 
-> Yes... but not quite, because running all tests with gdb or valgrind
-> attached is something that I do frequently, e.g.:
-> 
-> PYTHON=$(which python3.11) \
-> QTEST_QEMU_BINARY_SRC=\'valgrind -q --leak-check=full --show-leak-kinds=definite,indirect \
-> --sim-hints=lax-ioctls --suppressions=${BASEDIR}/valgrind-suppressions ./qemu-system-${ARCH}\' \
-> QTEST_QEMU_BINARY=./qemu-system-${ARCH} ./tests/qtest/migration-test -r /${ARCH}/migration || exit 1
-> 
-> QTEST_QEMU_BINARY=./qemu-system-x86_64 QTEST_QEMU_BINARY_SRC='gdb -q
-> --ex "set pagination off" --ex "set print thread-events off" --ex
-> "handle SIGUSR1 noprint" --ex "handle SIGPIPE noprint" --ex "run" --ex
-> "quit \$_exitcode" --args ./qemu-system-x86_64'
-> ./tests/qtest/migration-test
-> 
-> This could probably be done with meson directly, if that happens to fit
-> their opinionated view of the world, but I'd rather not delve into that.
-> On the other hand, maybe it's not a big deal and I can live with only
-> running a group of tests with the -r or -p flag instead of all of them.
+> > ----------------------------------------------------------------
+>
+> This probably isn't something worth not merging this for, but I
+> noticed while testing (via vm-build-openbsd) that Meson complains:
+>
+> Compiler for language rust for the host machine not found.
+> Program bindgen skipped: feature rust disabled
+> ../meson.build:111: WARNING: bindgen not found, disabling Rust compilatio=
+n.
+> Message: To use Rust you can install a new version with "cargo install
+> bindgen-cli"
+>
+> Rust is still disabled-by-default, so why is meson probing for bindgen?
 
-Ok, what you have proposed here is a clear improvement of the status
-quo, and doesn't block any of the suggestions I made. So lets just
-not complicate this patch series further.
+It's not probing it ("Program bindgen skipped"), but I was a bit too
+happy about printing warnings. This line:
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+   if not bindgen.found() or bindgen.version().version_compare('<0.60.0')
+
+should simply have had an "if not have_rust", or something like that.
+
+If you want I can resend. I know that Linaro people are in Dublin, so
+whatever is easiest for you.
+
+Paolo
 
 
