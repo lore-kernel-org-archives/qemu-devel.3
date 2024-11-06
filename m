@@ -4,85 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0D74D3E78C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 09:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5965ED3E799
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 09:59:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8coP-00070Y-3r; Wed, 06 Nov 2024 04:58:53 -0500
+	id 1t8com-0007Yx-FS; Wed, 06 Nov 2024 04:59:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8coJ-0006xe-Gt
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 04:58:49 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8coH-0008Qz-9F
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 04:58:46 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4314c4cb752so57699005e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 01:58:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730887121; x=1731491921; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=mecn889zDVoUW+q4R0eX3ElbkcxS7OT0MnSuiI5fVAY=;
- b=SWdJ2oGjADZN5hMJpxcq6YLJSnNEKkTSyAcAtUOtjwx2qoJ3zI6yy7euIqqpBJNIzY
- ko82/6qgkeDrRZIydQw3Hf8iInBw5Z1fKIgZCNPCgKo7bATfs3S7PDK/n0P+jp+dRUnY
- PRyPUWw58yA3J1sK60O7pfd0SDdZAqBBBqBCZCe2cr8SBJY9hV58Un37NyGoxPLs0jZ4
- T/oZ/yGRSMmJresbBiqwpSboUzWWzBdT8BSpQfqqLc0G8g+BN6iRv/ZwYA7uVNfFeS+n
- U1Expy8LS7TheFqRjpgND5aiyQvKWGjsGDzbtAG+O8/qIx2W4dxq/r1eY/jE3q3XxkXu
- rBGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730887121; x=1731491921;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mecn889zDVoUW+q4R0eX3ElbkcxS7OT0MnSuiI5fVAY=;
- b=fQXyAr3Ef16gmCAAxrfGOf8PHm/qMNsxQyztYHFr821GNM4aNE2d4GPIKutG6f8kbp
- DEm5mC9zbtaQBmrHUnLDEYeaznYEX/k08LCxW21qbUmVZTqxdOtjKmtoBg9zkt9ran2d
- 9cyy+cMK/YTSxUt2jlqFIsnf9oZKsqsD8BetAW4PhxXUFAy2J6O3n98Lm5EDbkdQUVcJ
- q0k0hy3D2BuKFWI0CUJZxn31MjCihBpxtSTxm/B/fQPtVc+wKKBf/9ONR3ZHB35gZAhq
- wVa0CmNVkU/uoCbSC6a0JnPLwXpRykmDCibNCgYrPckzgKRy+CSw0jXVgnwOJ+aWhuTi
- 35hw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUH6FQnonqRES7R6UGB1K8sGqIM8y4owydDmzc4cttSOTuAfpp+zeDodwqcjRYjfEy/pJi479xYYFsu@nongnu.org
-X-Gm-Message-State: AOJu0YyLPVlP85+mNNUuv5eqw5C8Rqhaajy2T0aUftDPYH674q3AaXH1
- H6Z0n0tU4mcxjiZSXJ+tgYMtLA1v5J8hu7EIxDzP2zB8GIgPEZXaauObeAZLPp8=
-X-Google-Smtp-Source: AGHT+IH5irNII5xH1WmUTtbfmd4ee9RpJQ9ph12xhOudVK3B2Jgo64X6iNgTCJSAejsOQ45VpYRHIg==
-X-Received: by 2002:a05:600c:1c9e:b0:431:5632:448b with SMTP id
- 5b1f17b1804b1-4327b80d3c5mr210706445e9.25.1730887121180; 
- Wed, 06 Nov 2024 01:58:41 -0800 (PST)
-Received: from [172.16.23.118] ([89.101.241.141])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa6c6569sm16146695e9.21.2024.11.06.01.58.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Nov 2024 01:58:40 -0800 (PST)
-Message-ID: <358104cb-e221-4c14-9ed5-3b165235a917@linaro.org>
-Date: Wed, 6 Nov 2024 09:58:38 +0000
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1t8coj-0007PG-0P; Wed, 06 Nov 2024 04:59:13 -0500
+Received: from fout-b2-smtp.messagingengine.com ([202.12.124.145])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1t8cog-0008TH-Nx; Wed, 06 Nov 2024 04:59:12 -0500
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal
+ [10.202.2.43])
+ by mailfout.stl.internal (Postfix) with ESMTP id B9185114012E;
+ Wed,  6 Nov 2024 04:59:06 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-03.internal (MEProxy); Wed, 06 Nov 2024 04:59:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1730887146; x=
+ 1730973546; bh=u7TCj7/wVKBpCpyRtt7WWZEkZk80JCt2OqxBBMyXKo4=; b=i
+ DJQfoqWPpuOgjDiFtMM9pk079i6ApJHHlcNYtrgERMScV31t84NJHViGW55uYyXI
+ 1XUQnGSSu41YmqyRJNUc0TgDyB2MndvPIpRZ/RgZsTLiTNo45MUSf7ooZUwhLouR
+ AK9+p5UnBhpRji5sDmCulY9IUfNU+NxXyeiduG2jVmiigpTrjwQOEawiLCqc4QZW
+ 003jW2SXxLSpEbSWKJcvS0QDmdCuUa1y96wcO00kZ5atyOQaDPpAGxxtJTjDanpO
+ 1mhIFo/W7GVy4OQXp+4eVeZyaNFYUygt5yz4zffO0KhrwX5RGC9y4zsEqek/Yzif
+ AMVZ6IkCaJ6bNvJ9z7PFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1730887146; x=1730973546; bh=u7TCj7/wVKBpCpyRtt7WWZEkZk80JCt2Oqx
+ BBMyXKo4=; b=jmWnz5aXC26tsDfzx8xmdeVPsKonoke69szDlaVy6mXDwqs1cPj
+ NpUe9Tni6fxpx/719jtfCVQHj2TUWa+uOdaldZeFAec8yqDQa6ktxT01+SFaYm0Q
+ qbw6oZpqxypw8qIiqZv76m3IYbzFArEwws6wyMTeLtd8vnP3YhOPk+SSgfyxZ0qx
+ fdog3Kl1yjtpI2KIHGW+G+K42Pd7/omgJHvwFXYIJTDgsJfodq5kgF1O5J2/Jnwn
+ hsq63Zpwdl6KbqG7NuGgGGR7bhvefhjvOjaBp3ecN48zn2XJIgLWe9HKDutG/N10
+ 1hRdeYgC1lo6u1yLoDpO9tVMfKW4rGTyapA==
+X-ME-Sender: <xms:6T0rZw7Y5jtaE4Um45SHJFLhW7ICMVPc2iF8pUXg_hb1pByJc1jn4g>
+ <xme:6T0rZx6uRIBsx6C5h0ZkIAKQ9mU2gRJ1NAVRFHDLidWqQuILBljotmsLXZ3aGkyNd
+ du139UFiMWVX8uC_uo>
+X-ME-Received: <xmr:6T0rZ_dutdCnH8EiYnHyU6ucof7WmXJuw8YrT_dYMUDzGp0MHaNrIXSJwI8yFw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddvgddtkecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+ tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+ hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecu
+ hfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrug
+ hkqeenucggtffrrghtthgvrhhnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeev
+ tdduudegieegteffffejveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+ grihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthho
+ peekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjfihkohiirggtiihukhesgh
+ hmrghilhdrtghomhdprhgtphhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhr
+ tghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepqhgvmhhuqd
+ gslhhotghksehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhes
+ nhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrd
+ gtohhmpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdhorhhgpdhr
+ tghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:6T0rZ1KViaHV9VzKoaZxAOp2EFo97r8gFvi9RuJEeDS6Hre9k3kKkg>
+ <xmx:6T0rZ0IEmGPgXkXseYRBCTXL-3lmxovngHu9ExC0Xc_E9nQraPyqsg>
+ <xmx:6T0rZ2y4S6XtG5APAfVNszTtK9yJvNe4Hgg-AGZ9hPJ53VnLKqtLRw>
+ <xmx:6T0rZ4IfHIeffHCwv3YNR6RRRjqCGiKb2mJTDvXHl2tp894fBoSekQ>
+ <xmx:6j0rZz8Dioj_DbgPQcnxyTvAgg4YEu7iaT3eNUgqjwHXj1HDC479REN_>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 6 Nov 2024 04:59:05 -0500 (EST)
+Date: Wed, 6 Nov 2024 10:59:04 +0100
+From: Klaus Jensen <its@irrelevant.dk>
+To: Waldek Kozaczuk <jwkozaczuk@gmail.com>
+Cc: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org
+Subject: Re: [PATCH v2] hw/nvme: fix handling of over-committed queues
+Message-ID: <Zys96GfvomKJ7qv3@AALNPWKJENSEN.aal.scsc.local>
+References: <20241029-issue-2388-v2-1-e335658104cf@samsung.com>
+ <ZykZHvL_PtMMttqX@kbusch-mbp.dhcp.thefacebook.com>
+ <CAL9cFfMgQQ3ETjGWzW7_K+MNOKUa4rsf8s3X49vmm4862n5VHg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Fix setreuid and setregid to use direct
- syscalls
-To: Helge Deller <deller@kernel.org>, Laurent Vivier <laurent@vivier.eu>,
- Peter Maydell <peter.maydell@linaro.org>,
- Riku Voipio <riku.voipio@linaro.org>, qemu-devel@nongnu.org
-References: <Zyo2jMKqq8hG8Pkz@p100>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <Zyo2jMKqq8hG8Pkz@p100>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="HfDDUBbnUC9gvtod"
+Content-Disposition: inline
+In-Reply-To: <CAL9cFfMgQQ3ETjGWzW7_K+MNOKUa4rsf8s3X49vmm4862n5VHg@mail.gmail.com>
+Received-SPF: pass client-ip=202.12.124.145; envelope-from=its@irrelevant.dk;
+ helo=fout-b2-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,20 +115,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/24 15:15, Helge Deller wrote:
-> The commit fd6f7798ac30 ("linux-user: Use direct syscalls for setuid(),
-> etc") added direct syscall wrappers for setuid(), setgid(), etc since the
-> system calls have different semantics than the libc functions.
-> 
-> Add and use the corresponding wrappers for setreuid and setregid which
-> were missed in that commit.
-> 
-> This fixes the build of the debian package of the uid_wrapper library
-> (https://cwrap.org/uid_wrapper.html) when running linux-user.
-> 
-> Signed-off-by: Helge Deller <deller@gmx.de>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+--HfDDUBbnUC9gvtod
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-r~
+On Nov  4 17:32, Waldek Kozaczuk wrote:
+> I have run my tests on the OSv side with small queue sizes like 3,4,5 and=
+ I
+> could NOT replicate the issue. So it looks like the V2 version of this
+> patch fixes the problem.
+>=20
+
+Thanks for testing Waldek!
+
+May I add a Tested-by tag to the commit for you?
+
+--HfDDUBbnUC9gvtod
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmcrPeUACgkQTeGvMW1P
+DelxSgf/W4TEgmM5+dUEyq731QG5J7pNwcSMPSeigoDZ/OV7bm2kQUxz0azVMjyW
+jGwPnLL8MmivrpD3+JBiVqmlGHK8vO60qymU5qg00NP41YVXdl3UnYkqr2frvsub
+TqrdKGtUhYypu3N3NUi847zlc3SMC4bYJtzAwwHwCcyfGUMZbQOGViC1jur8aqZF
+jnCVoG2SLP42y3VIyQnVApSqow2Re194wAn+qd/oEM+kVQTbHSAttx+d3qOK4mX5
+6K57deVYE8Hg/t1JDtk45lFHGWPL76EDDpE8i2QEJR5CB0UjIIi+5yh7/F6+CS8p
+8oIgREBwNK9XynOyWPwtfKlHjewnlw==
+=f1Gn
+-----END PGP SIGNATURE-----
+
+--HfDDUBbnUC9gvtod--
 
