@@ -4,76 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B2CAD44D54
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 12:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B8D6D44D57
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 12:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8f2v-0005T6-Gv; Wed, 06 Nov 2024 07:22:01 -0500
+	id 1t8f7K-0006Zd-46; Wed, 06 Nov 2024 07:26:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8f2t-0005R8-Ix
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:21:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8f2r-0003K8-Io
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:21:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730895716;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8f7H-0006ZE-NX
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:26:31 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8f7F-0004dK-2H
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:26:30 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 8111521B5A;
+ Wed,  6 Nov 2024 12:26:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1730895987; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Gja9X/aqKb7Y+3MxcZxlN1QmIpRSSv3aZQ2s856alv4=;
- b=Ag2cj2Mlv+gZIkxlGW0W0fjmJiV6HCmMF9qHueIFkba7wIjOYHkUkD1FzuWAkA1yigM/Zo
- bbWOmijn3MxdpTO6syTOgVc84m5HP4elQVoUNb3g31XPHfYi6lvf/gkR8h3xJxCg1qUQ9W
- 9Qau8z9S9/ZRXSdWKCtcsiNTL6unR14=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-iea2pinHNfmg-oMjjMjOTQ-1; Wed,
- 06 Nov 2024 07:21:53 -0500
-X-MC-Unique: iea2pinHNfmg-oMjjMjOTQ-1
-X-Mimecast-MFC-AGG-ID: iea2pinHNfmg-oMjjMjOTQ
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ bh=SO/NQmfXrbSFdFIGg74In/vjx/28U2h7dmVirLIwqjQ=;
+ b=UfHSvWXwc5eqQuyghyL/KwlwRhnYeLWlDs34MKoVDQ16fdsUn1Ly3PxsPYpEXrdflgMhcC
+ 9fVSkWBqmTkbcXM7RMFgzSxw8wnmZ8rovvxYkFp6PA9Vi4fE3KF2ZvqvA4CWcJceYMFDDT
+ TMZ25JoDwcjAMNIogUttrcfX9CMxFv4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1730895987;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SO/NQmfXrbSFdFIGg74In/vjx/28U2h7dmVirLIwqjQ=;
+ b=1csRu/SY/v4MjTlP3ZDMsufxSn/ZpYwWoJw3EtrJNRwlykiae5rniU9XnvO3vIn68433P3
+ Zdr23ApXVSWWFVAA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=UfHSvWXw;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="1csRu/SY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1730895987; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SO/NQmfXrbSFdFIGg74In/vjx/28U2h7dmVirLIwqjQ=;
+ b=UfHSvWXwc5eqQuyghyL/KwlwRhnYeLWlDs34MKoVDQ16fdsUn1Ly3PxsPYpEXrdflgMhcC
+ 9fVSkWBqmTkbcXM7RMFgzSxw8wnmZ8rovvxYkFp6PA9Vi4fE3KF2ZvqvA4CWcJceYMFDDT
+ TMZ25JoDwcjAMNIogUttrcfX9CMxFv4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1730895987;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SO/NQmfXrbSFdFIGg74In/vjx/28U2h7dmVirLIwqjQ=;
+ b=1csRu/SY/v4MjTlP3ZDMsufxSn/ZpYwWoJw3EtrJNRwlykiae5rniU9XnvO3vIn68433P3
+ Zdr23ApXVSWWFVAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 041B01955E80; Wed,  6 Nov 2024 12:21:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.180])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 19E8C1956088; Wed,  6 Nov 2024 12:21:49 +0000 (UTC)
-Date: Wed, 6 Nov 2024 12:21:46 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: peter.maydell@linaro.org, huth@tuxfamily.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 1/2] next-kbd: convert to use
- qemu_input_handler_register()
-Message-ID: <ZytfWozdf4GjOemA@redhat.com>
-References: <20241106120928.242443-1-mark.cave-ayland@ilande.co.uk>
- <20241106120928.242443-2-mark.cave-ayland@ilande.co.uk>
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0AB2D137C4;
+ Wed,  6 Nov 2024 12:26:26 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id lr/aMHJgK2e6DgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 06 Nov 2024 12:26:26 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Laurent
+ Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 11/22] tests/qtest/migration: Move common test code
+In-Reply-To: <ZytNb_nTrePsYabA@redhat.com>
+References: <20241105180837.5990-1-farosas@suse.de>
+ <20241105180837.5990-12-farosas@suse.de> <ZytNb_nTrePsYabA@redhat.com>
+Date: Wed, 06 Nov 2024 09:26:24 -0300
+Message-ID: <87ttck1rbj.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241106120928.242443-2-mark.cave-ayland@ilande.co.uk>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 8111521B5A
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ MISSING_XM_UA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,28 +130,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 06, 2024 at 12:09:27PM +0000, Mark Cave-Ayland wrote:
-> Convert the next-kbd device from the legacy UI qemu_add_kbd_event_handler()
-> function to use qemu_input_handler_register().
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-> ---
->  hw/m68k/next-kbd.c | 163 ++++++++++++++++++++++++++++++---------------
->  1 file changed, 108 insertions(+), 55 deletions(-)
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> On Tue, Nov 05, 2024 at 03:08:26PM -0300, Fabiano Rosas wrote:
+>> Put the common test code in a separate file. Leave only individual
+>> test functions and their static helpers in migration-test.c.
+>>=20
+>> This moves the shared:
+>>=20
+>>  test_postcopy_common
+>>  test_postcopy_recovery_common
+>>  test_precopy_common
+>>  test_file_common
+>>  migrate_precopy_tcp_multifd_start_common
+>>  migrate_start
+>>  migrate_end
+>>  migration_get_env
+>>  migration_env_clean
+>>=20
+>> and some of their static helpers to migrate-common.c.
+>>=20
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  tests/qtest/meson.build                  |    1 +
+>>  tests/qtest/migration-test.c             | 1124 +---------------------
+>>  tests/qtest/migration/bootfile.c         |    2 +-
+>>  tests/qtest/migration/bootfile.h         |    2 +-
+>>  tests/qtest/migration/migration-common.c |  963 ++++++++++++++++++
+>>  tests/qtest/migration/migration-common.h |  214 ++++
+>>  tests/qtest/migration/migration-util.h   |   13 -
+>
+> Looking at these I guess I'd ask the question of what is the rule for
+> deciding whether to put something in -common vs in -util ?
+>
+> Both names sounds like being a general "bag of bits", so it isn't
+> obvious to me what their distinct roles are.
+>
 
+The idea was to make -util the general bag of bits just like
+migration-helpers is currently.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+-common should be the more "important" migration-specific functions,
+code that we spend more time reading and that are actually responsible
+for the results of the tests. Consider:
 
+static void test_multifd_file_mapped_ram_fdset_dio(void)
+{
+    ...
+    if (!probe_o_direct_support(tmpfs)) {          <--- just a helper
+        g_test_skip("Filesystem does not support O_DIRECT");
+        return;
+    }
+
+    test_file_common(&args, true);  <--- actually doing the heavy-lifting
+}
+
+We could to some renaming and restructuring, but I think the distinction
+is important. We already have it today, what is -common is all stuffed
+into migration-test.c and the rest is in migration-helpers.c.
+
+>>  7 files changed, 1193 insertions(+), 1126 deletions(-)
+>>  create mode 100644 tests/qtest/migration/migration-common.c
+>>  create mode 100644 tests/qtest/migration/migration-common.h
+>>=20
+>
+> With regards,
+> Daniel
 
