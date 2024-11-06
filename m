@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA12D3E783
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 02:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E78D3E787
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 02:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8W7L-0006vr-A3; Tue, 05 Nov 2024 21:49:59 -0500
+	id 1t8W7i-00079i-CF; Tue, 05 Nov 2024 21:50:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t8W7K-0006vX-5w
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:49:58 -0500
+ id 1t8W7g-00078Q-B0
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:20 -0500
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t8W7G-0003MT-HT
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:49:57 -0500
+ id 1t8W7e-0003cN-Kd
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730861395; x=1762397395;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=7mHTbnUklJ/WxI1mhOHUVBJLHOP4R6PTTfU5+MgjIaU=;
- b=jG98tZ3ZpDSgSOG/r2MJUe8GwC9sNn3ndyIw/WCayJhox+8/v6oQs1d4
- y02bxnYTrGIhUpT5hisH+6yi7iO0ZbT7wZtEJuOezVAciPW3Eq0AEK9lb
- J4AWA7MGf+sK1sLrEbIhrBUMRBsCU0jbkahVFsOVosUjCqLDmCr/TMUiT
- FfkyorJlCgIgCu0/odDCisxNKPz6csM92UxS/V10k/v1Ul1ISC4JwJshX
- nmDbKoh95mbRP2fL+wLGe31uY71QHZJM5sDidB6fZBaYf8eOBCqAKRL0n
- 8tIDER3kLVe+AJ02v+ZqCPBEDNIunpELmEVB2pqGTYGOjco15pHz/CV3P w==;
-X-CSE-ConnectionGUID: t56yfEKrQ8m42BBvp+ql9g==
-X-CSE-MsgGUID: OpCKjGDvQA+GW1zeNmRqxg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30492194"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30492194"
+ t=1730861419; x=1762397419;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=W73DxTAKGKDwOxIP+UEa3mm04Ri1kkHN13Gfy8Im22A=;
+ b=EKm3CdB6YGkg/3fIyvwg9wDE7j8ZUj5vqTzA/z9SA8y3/t2hsniixpRf
+ pVE9ejeXngKQQzSOstkblvW5eXE20vLeZgKU9wNjCaJ1apHe6Zb5h0DoT
+ t2Lp8ZO1dqFWHA3Y2l0HHfIdsDSbK9V1Cpibz0LL7p3fdeUkyTfzBep98
+ uYFrYVxgeapFNEePGWZSOtm8MpeLz+96OQ9fvqv7E17DVS3JGRfrRJijm
+ +IQndhNNgYTaZ572zAm14uIg2/Z51AOKBCOqApyT6rCvFGFMjuIpd8P9e
+ nKp/NWmghk76MAMi2VJUBDitcRoP/2ZRgYrAggoV0Uoc3Wkz14s0HKKpV w==;
+X-CSE-ConnectionGUID: Yr4Qp6ctTfCzL9AirMb+vg==
+X-CSE-MsgGUID: 0yhaZxALQ5aoJxzCkBO/2w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30492312"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30492312"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2024 18:49:50 -0800
-X-CSE-ConnectionGUID: K2/Uw2lRQueNgRX4yeYC/g==
-X-CSE-MsgGUID: 4P0vK2jrQ3Or/fH5RjinCA==
+ 05 Nov 2024 18:50:17 -0800
+X-CSE-ConnectionGUID: u6UjNTUoTaahh0D0ORPZLQ==
+X-CSE-MsgGUID: u1ZDVdxyTCW2KTSVmr2mUw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,261,1725346800"; d="scan'208";a="115077968"
+X-IronPort-AV: E=Sophos;i="6.11,261,1725346800"; d="scan'208";a="115078027"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 05 Nov 2024 18:49:46 -0800
+ by fmviesa001.fm.intel.com with ESMTP; 05 Nov 2024 18:50:14 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -55,10 +55,13 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 00/11] i386: miscellaneous cleanup
-Date: Wed,  6 Nov 2024 11:07:17 +0800
-Message-Id: <20241106030728.553238-1-zhao1.liu@intel.com>
+Subject: [PATCH v5 09/11] target/i386/kvm: Return -1 when
+ kvm_msr_energy_thread_init() fails
+Date: Wed,  6 Nov 2024 11:07:26 +0800
+Message-Id: <20241106030728.553238-10-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241106030728.553238-1-zhao1.liu@intel.com>
+References: <20241106030728.553238-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
@@ -86,63 +89,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo and all,
+It is common practice to return a negative value (like -1) to indicate
+an error, and other functions in kvm_arch_init() follow this style.
 
-Is it necessary to include the first patch (AVX10 cleanup/fix) in v9.2?
+To avoid confusion (sometimes returned -1 indicates failure, and
+sometimes -1, in a same function), return -1 when
+kvm_msr_energy_thread_init() fails.
 
-Others are for v10.0.
-
-Compared with v4 [1],
- * patch 1 (AVX10 fix) and patch 9 (RAPL cleanup) are newly added.
- * rebased on commit 9a7b0a8618b1 ("Merge tag 'pull-aspeed-20241104' of
-   https://github.com/legoater/qemu into staging").
-
-
-Background and Introduction
-===========================
-
-This series picks cleanup from my previous kvmclock [2] (as other
-renaming attempts were temporarily put on hold).
-
-In addition, this series also include the cleanup on a historically
-workaround, recent comment of coco interface [3] and error handling
-corner cases in kvm_arch_init().
-
-Avoiding the fragmentation of these misc cleanups, I consolidated them
-all in one series and was able to tackle them in one go!
-
-[1]: https://lore.kernel.org/qemu-devel/20240716161015.263031-1-zhao1.liu@intel.com/
-[2]: https://lore.kernel.org/qemu-devel/20240329101954.3954987-1-zhao1.liu@linux.intel.com/
-[3]: https://lore.kernel.org/qemu-devel/2815f0f1-9e20-4985-849c-d74c6cdc94ae@intel.com/
-
-Thanks and Best Regards,
-Zhao
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Zhao Liu (11):
-  i386/cpu: Mark avx10_version filtered when prefix is NULL
-  target/i386/kvm: Add feature bit definitions for KVM CPUID
-  target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
-    MSR_KVM_SYSTEM_TIME definitions
-  target/i386/kvm: Only save/load kvmclock MSRs when kvmclock enabled
-  target/i386/kvm: Save/load MSRs of kvmclock2
-    (KVM_FEATURE_CLOCKSOURCE2)
-  target/i386/kvm: Drop workaround for KVM_X86_DISABLE_EXITS_HTL typo
-  target/i386/confidential-guest: Fix comment of
-    x86_confidential_guest_kvm_type()
-  target/i386/kvm: Clean up return values of MSR filter related
-    functions
-  target/i386/kvm: Return -1 when kvm_msr_energy_thread_init() fails
-  target/i386/kvm: Clean up error handling in kvm_arch_init()
-  target/i386/kvm: Replace ARRAY_SIZE(msr_handlers) with
-    KVM_MSR_FILTER_MAX_RANGES
+v5: new commit.
+---
+ target/i386/kvm/kvm.c | 29 +++++++++++------------------
+ 1 file changed, 11 insertions(+), 18 deletions(-)
 
- hw/i386/kvm/clock.c              |   5 +-
- target/i386/confidential-guest.h |   2 +-
- target/i386/cpu.c                |   6 +-
- target/i386/cpu.h                |  25 ++++
- target/i386/kvm/kvm.c            | 211 +++++++++++++++++--------------
- 5 files changed, 145 insertions(+), 104 deletions(-)
-
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 9993382fb40e..69825b53b6da 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2921,7 +2921,6 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
+     struct KVMMsrEnergy *r = &s->msr_energy;
+-    int ret = 0;
+ 
+     /*
+      * Sanity check
+@@ -2931,13 +2930,11 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+     if (!is_host_cpu_intel()) {
+         error_report("The RAPL feature can only be enabled on hosts "
+                      "with Intel CPU models");
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
+ 
+     if (!is_rapl_enabled()) {
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
+ 
+     /* Retrieve the virtual topology */
+@@ -2959,16 +2956,14 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+     r->host_topo.maxcpus = vmsr_get_maxcpus();
+     if (r->host_topo.maxcpus == 0) {
+         error_report("host max cpus = 0");
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
+ 
+     /* Max number of packages on the host */
+     r->host_topo.maxpkgs = vmsr_get_max_physical_package(r->host_topo.maxcpus);
+     if (r->host_topo.maxpkgs == 0) {
+         error_report("host max pkgs = 0");
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
+ 
+     /* Allocate memory for each package on the host */
+@@ -2980,8 +2975,7 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+     for (int i = 0; i < r->host_topo.maxpkgs; i++) {
+         if (r->host_topo.pkg_cpu_count[i] == 0) {
+             error_report("cpu per packages = 0 on package_%d", i);
+-            ret = 1;
+-            goto out;
++            return -1;
+         }
+     }
+ 
+@@ -2998,8 +2992,7 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+ 
+     if (s->msr_energy.sioc == NULL) {
+         error_report("vmsr socket opening failed");
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
+ 
+     /* Those MSR values should not change */
+@@ -3011,15 +3004,13 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+                                     s->msr_energy.sioc);
+     if (r->msr_unit == 0 || r->msr_limit == 0 || r->msr_info == 0) {
+         error_report("can't read any virtual msr");
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
+ 
+     qemu_thread_create(&r->msr_thr, "kvm-msr",
+                        kvm_msr_energy_thread,
+                        s, QEMU_THREAD_JOINABLE);
+-out:
+-    return ret;
++    return 0;
+ }
+ 
+ int kvm_arch_get_default_type(MachineState *ms)
+@@ -3327,7 +3318,9 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+ 
+         if (s->msr_energy.enable == true) {
+             kvm_vm_enable_energy_msrs(s);
+-            if (kvm_msr_energy_thread_init(s, ms)) {
++
++            ret = kvm_msr_energy_thread_init(s, ms);
++            if (ret < 0) {
+                 error_report("kvm : error RAPL feature requirement not met");
+                 exit(1);
+             }
 -- 
 2.34.1
 
