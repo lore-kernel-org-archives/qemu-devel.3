@@ -4,101 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BFE2D59F5C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 18:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24CBBD59F5B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 18:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8kRw-0003sl-EX; Wed, 06 Nov 2024 13:08:12 -0500
+	id 1t8kVw-0006Jb-N1; Wed, 06 Nov 2024 13:12:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.vnet.ibm.com>)
- id 1t8kRv-0003rV-1i
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:08:11 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t8kVv-0006JN-Q3
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:12:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.vnet.ibm.com>)
- id 1t8kRt-0005mI-8G
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:08:10 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A6HA9hZ013161;
- Wed, 6 Nov 2024 18:08:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=JFWnUsYDG6ff4mPzZQxPOJnYWH2mF3xog+FuGn1rF
- QM=; b=kzV98o5BUaOds8rvuD7eRF4JwQ9oApeE/jT6nsKCoMCOXG9bmww9ioT+Z
- lXI4N3vcmevxMnF93Jg3gftLxDG56qvfWupoHvCYQtwpeFhD7CBVW+awjSwJPn6I
- CcU3Cs47ruNSdrMh1wnVWLVyZElx2CB7AA2PwqLTahIW0DaBnv+qLD6pCdsEHFCU
- Vdd1fasIRG5mjlKQ2Prx91tKA8waGskCZs9+bbe/p0S3tPMFMoBqexgf5JSM4USi
- NEgVo7tsZnVJTl8EnIys9YPE9TON6IZo6MtNdp7oHw48lYEA7cOeIPsNfE6pwsmn
- i9pmogcKiSHCERqITEiPhUZThkA7g==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42rcm3gb6c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 06 Nov 2024 18:08:03 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4A6I82gS001218;
- Wed, 6 Nov 2024 18:08:03 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42rcm3gb67-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 06 Nov 2024 18:08:02 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A6GB6sL019503;
- Wed, 6 Nov 2024 18:08:02 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 42p0mj6mek-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 06 Nov 2024 18:08:02 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A6I81CJ18678442
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 6 Nov 2024 18:08:01 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3EA3D58063;
- Wed,  6 Nov 2024 18:08:01 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 95D1D58055;
- Wed,  6 Nov 2024 18:08:00 +0000 (GMT)
-Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  6 Nov 2024 18:08:00 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.vnet.ibm.com>
-To: peter.maydell@linaro.org, qemu-devel@nongnu.org
-Cc: marcandre.lureau@gmail.com, clg@redhat.com, lena.voytek@canonical.com,
- Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH] tests: Adjust path for swtpm state to use path under /var/tmp/
-Date: Wed,  6 Nov 2024 13:07:51 -0500
-Message-ID: <20241106180751.6859-1-stefanb@linux.vnet.ibm.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t8kVu-00085A-2E
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:12:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730916736;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OOuaO0FdvnRx8m0yCTGELCVtD8jtIom4riAwRaaG5gI=;
+ b=V3NbT9b2GsF9tW0HSPYGu++7ndmnRcjhRIB1uEyU7fQtELAyfL6ux6PvQoeLFQLC4QxaD3
+ m2ffEx69TN7dSmxZV6/BqVXDmBqiFuotpoSwC0hg4K96YJZ2xkPeps7VjmWPHpl8G1X27o
+ 4Ts4Q99jXYelX4HMx9E/QKTJhStUjNk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-445-lX7jz8IpOqG-jhs4Zodc1w-1; Wed, 06 Nov 2024 13:12:15 -0500
+X-MC-Unique: lX7jz8IpOqG-jhs4Zodc1w-1
+X-Mimecast-MFC-AGG-ID: lX7jz8IpOqG-jhs4Zodc1w
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4315cefda02so760095e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 10:12:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730916734; x=1731521534;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OOuaO0FdvnRx8m0yCTGELCVtD8jtIom4riAwRaaG5gI=;
+ b=ODVPWmMCwi2IrgCzS9FYNP42OI0qjNHcjCSL7C6obTFqcsgHEzrrwGnPKA1XjFgMQb
+ 19J4D9Maz7lTfeV7j+cQRGWSsKQJf+cfwV0WO9C326L0/NStHj5h3wbYniiIu1wFuUCD
+ sZ61wAE0fS9VvJDsGhIr5wxAufeD8KlPhGVAMxlUMjpFXlnZcu5OUshId1nnMh3FWYRT
+ pWnTKcsaxqfUNPtap/pX5zImHanx88j4Euy7yNZdQ0Fk52mwllakiegxh/fJe1Y3R1/q
+ lYnAzSShUl9p7YjgXHUOBXWPXCT93waOV/iBE5RfgH8ufF4pMvN/mNnVsgJz+/yAPFJg
+ jk1A==
+X-Gm-Message-State: AOJu0Ywm/uMxpEW8Q6xdA2ycDv4yHlHhd0HQcYIqaZvyYSbFQwAL8c/L
+ f9NL3pFsy8m8hoaqyL76JUIuV0XO9Mk+vKmJbxkEYG8TcDJ7h8rIof4WmFSUmgIugsIPg8UkH8o
+ ebUqG+rfrO4f5jESODuUCwtxYPs7GC68S6k6lFv/0rm0521xCyuZMmJJfollKr3twcsDiWnOLtl
+ YGPzNvUg2l5KDnzW0g7r4Cz5qetszcf+9TGEx8QXg=
+X-Received: by 2002:a05:600c:4f04:b0:42c:acb0:dda5 with SMTP id
+ 5b1f17b1804b1-4327b6f9574mr211921275e9.1.1730916734011; 
+ Wed, 06 Nov 2024 10:12:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGIb6ja5Lux+H7hHmYiaXag3lSFCwvfBe/dXrcv5/+egTyfvEQ9Jmxp2XIBCPZGoBp76QcHzA==
+X-Received: by 2002:a05:600c:4f04:b0:42c:acb0:dda5 with SMTP id
+ 5b1f17b1804b1-4327b6f9574mr211921015e9.1.1730916733551; 
+ Wed, 06 Nov 2024 10:12:13 -0800 (PST)
+Received: from [192.168.10.3] ([151.49.226.83])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432aa6bee9asm34130755e9.19.2024.11.06.10.12.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Nov 2024 10:12:13 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Subject: [PATCH v2] eif: cope with huge section offsets
+Date: Wed,  6 Nov 2024 19:12:11 +0100
+Message-ID: <20241106181211.568775-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: jQY8kr9-L3a--Ft4HpIau6cZby3TRSjl
-X-Proofpoint-ORIG-GUID: mijDPM4hfiXsLZy04kVjHHhv1za7mCLJ
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1011
- adultscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0
- mlxlogscore=839 spamscore=0 bulkscore=0 priorityscore=1501 phishscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411060141
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=stefanb@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,42 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Berger <stefanb@linux.ibm.com>
+Check for overflow to avoid that fseek() receives a sign-extended value.
 
-To avoid AppArmor-related test failures when functional test are run from
-somewhere under /mnt, adjust the path to swtpm's state to use an AppArmor-
-supported path, such as /var/tmp, which is provided by the python function
-tempfile.TemporaryDirectory().
-
-An update to swtpm's AppArmor profile is also being done to support /var/tmp.
-
-Link: https://lore.kernel.org/qemu-devel/CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com/
-Link: https://github.com/stefanberger/swtpm/pull/944
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- tests/functional/test_arm_aspeed.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/qemu/osdep.h | 4 ++++
+ hw/core/eif.c        | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
-index 9761fc06a4..a574b1e521 100644
---- a/tests/functional/test_arm_aspeed.py
-+++ b/tests/functional/test_arm_aspeed.py
-@@ -227,11 +227,11 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index fe7c3c5f673..fdff07fd992 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -297,6 +297,10 @@ void QEMU_ERROR("code path is reachable")
+ #error building with G_DISABLE_ASSERT is not supported
+ #endif
  
-         image_path = self.ASSET_BR2_202302_AST2600_TPM_FLASH.fetch()
++#ifndef OFF_MAX
++#define OFF_MAX (sizeof (off_t) == 8 ? INT64_MAX : INT32_MAX)
++#endif
++
+ #ifndef O_LARGEFILE
+ #define O_LARGEFILE 0
+ #endif
+diff --git a/hw/core/eif.c b/hw/core/eif.c
+index 7f3b2edc9a7..61329aacfe1 100644
+--- a/hw/core/eif.c
++++ b/hw/core/eif.c
+@@ -466,6 +466,10 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+         EifSectionHeader hdr;
+         uint16_t section_type;
  
--        socket_dir = tempfile.TemporaryDirectory(prefix="qemu_")
--        socket = os.path.join(socket_dir.name, 'swtpm-socket')
-+        tpmstate_dir = tempfile.TemporaryDirectory(prefix="qemu_")
-+        socket = os.path.join(tpmstate_dir.name, 'swtpm-socket')
- 
-         subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
--                        '--tpmstate', f'dir={self.vm.temp_dir}',
-+                        '--tpmstate', f'dir={tpmstate_dir.name}',
-                         '--ctrl', f'type=unixio,path={socket}'])
- 
-         self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
++        if (eif_header.section_offsets[i] > OFF_MAX) {
++            error_setg(errp, "Invalid EIF image. Section offset out of bounds");
++            goto cleanup;
++        }
+         if (fseek(f, eif_header.section_offsets[i], SEEK_SET) != 0) {
+             error_setg_errno(errp, errno, "Failed to offset to %" PRIu64 " in EIF file",
+                              eif_header.section_offsets[i]);
 -- 
-2.34.1
+2.47.0
 
 
