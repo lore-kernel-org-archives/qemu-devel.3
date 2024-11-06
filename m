@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20977D35E5D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C09D3E783
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 02:51:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8W7h-00079M-3U; Tue, 05 Nov 2024 21:50:21 -0500
+	id 1t8W7c-00075p-Pj; Tue, 05 Nov 2024 21:50:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t8W7c-00075s-MU
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:16 -0500
+ id 1t8W7M-0006w6-Bj
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:00 -0500
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t8W7a-0003OA-Sr
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:16 -0500
+ id 1t8W7K-0003Mt-AH
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:49:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730861415; x=1762397415;
+ t=1730861398; x=1762397398;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=jFWGnz+suDCZpSQMmtwVwuQ2yns3DjY1J2pGL1AK0/Y=;
- b=OVha51k+VVAIDX6ZS1nXqRo9MEi6bvtGSgSZNCbrFRb4D1Z4Stl9NN65
- jLjg6l12MvKhP2Cu8apkM+iO3mEZz40VKBtgdAifaTA3N4dHJAJVxkRsc
- UGNNtVKb2ZcnTil/0Fx3UK8jljIjz/ceyu5x2BeFNCWF8GrHhbPXP4zn8
- 6PGCj7jU0Ybq5uPdgAasiEnrnH3LhJjyy0/7VXtwzNt4MZwhMNo19TSq5
- OI5VY946AQ/zWeyYw4ycR2qBisHIQ6ZP63Ee6JwAVD4w9Hurm4tMtRdgi
- 8ruCTlv8Ww89tl/xZN4J144k8T8MADdSBslvmt3P289Sxrhajj7m7eqPU Q==;
-X-CSE-ConnectionGUID: vf63t9kdRBC9sNDKganeBw==
-X-CSE-MsgGUID: dNWXsMa+RwCibbBiwsbb3g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30492302"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30492302"
+ bh=8vl5rexe63k4nr+JznMOIYOBxZwKEHBFQriO22wJpks=;
+ b=ddA4NK5iMonIr84FhxVgtMkyWYr53HJpCkjDHCII8tf1LqtyqOyZoaSg
+ l7qYhcYAEQXtcImZIC1u5Mwj3/gjPCEEJbhVAvcgQDE+WJbgfF9/PoXda
+ 5SMKz7y7syv7dd+32MezZ/8uPWZmrkxfI50hQxwb+coBAAD9Y2kjKb79i
+ cia1TcWk8X5m8MBKTRl1ugefizZMN283WProFYCvaBOJksG7nN4gKxm30
+ yn13d6osFqcL7ZWivupnMaaITrIfYnKllmcZkcHLskAAiVAGQi5NJYLHM
+ MU91Tb8Sl7CDdP0bcyVOduqc9Z8IJ+pLVLEuBTdCVblp8OSI1xDIIE/ou g==;
+X-CSE-ConnectionGUID: zhq6vOzyT3mNcKpEnLwhuQ==
+X-CSE-MsgGUID: H32QrRBKTpCNQseA00liqg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30492212"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30492212"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2024 18:50:14 -0800
-X-CSE-ConnectionGUID: BHcOIsNZSFyg2LleDmVUXA==
-X-CSE-MsgGUID: 0Rm8CO5uTTevGQiWAwOa4w==
+ 05 Nov 2024 18:49:56 -0800
+X-CSE-ConnectionGUID: as78JoftRCmoSA3eagVTXw==
+X-CSE-MsgGUID: kVYjVzZ9QLe7VZLDMlfAxg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,261,1725346800"; d="scan'208";a="115078022"
+X-IronPort-AV: E=Sophos;i="6.11,261,1725346800"; d="scan'208";a="115077979"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 05 Nov 2024 18:50:11 -0800
+ by fmviesa001.fm.intel.com with ESMTP; 05 Nov 2024 18:49:52 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -55,10 +55,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 08/11] target/i386/kvm: Clean up return values of MSR
- filter related functions
-Date: Wed,  6 Nov 2024 11:07:25 +0800
-Message-Id: <20241106030728.553238-9-zhao1.liu@intel.com>
+Subject: [PATCH v5 02/11] target/i386/kvm: Add feature bit definitions for KVM
+ CPUID
+Date: Wed,  6 Nov 2024 11:07:19 +0800
+Message-Id: <20241106030728.553238-3-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241106030728.553238-1-zhao1.liu@intel.com>
 References: <20241106030728.553238-1-zhao1.liu@intel.com>
@@ -89,192 +89,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before commit 0cc42e63bb54 ("kvm/i386: refactor kvm_arch_init and split
-it into smaller functions"), error_report() attempts to print the error
-code from kvm_filter_msr(). However, printing error code does not work
-due to kvm_filter_msr() returns bool instead int.
-
-0cc42e63bb54 fixed the error by removing error code printing, but this
-lost useful error messages. Bring it back by making kvm_filter_msr()
-return int.
-
-This also makes the function call chain processing clearer, allowing for
-better handling of error result propagation from kvm_filter_msr() to
-kvm_arch_init(), preparing for the subsequent cleanup work of error
-handling in kvm_arch_init().
+Add feature definitions for KVM_CPUID_FEATURES in CPUID (
+CPUID[4000_0001].EAX and CPUID[4000_0001].EDX), to get rid of lots of
+offset calculations.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Zide Chen <zide.chen@intel.com>
 ---
-v5: Rebased and cleaned up kvm_vm_enable_energy_msrs() as well.
-v4: Returned kvm_vm_ioctl() directly. (Zide)
-v3: new commit.
+v3: Resolved a rebasing conflict.
+v2: Changed the prefix from CPUID_FEAT_KVM_* to CPUID_KVM_*. (Xiaoyao)
 ---
- target/i386/kvm/kvm.c | 87 ++++++++++++++++++++++---------------------
- 1 file changed, 44 insertions(+), 43 deletions(-)
+ hw/i386/kvm/clock.c   |  5 ++---
+ target/i386/cpu.h     | 23 +++++++++++++++++++++++
+ target/i386/kvm/kvm.c | 28 ++++++++++++++--------------
+ 3 files changed, 39 insertions(+), 17 deletions(-)
 
+diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
+index 40aa9a32c32c..ce416c05a3d0 100644
+--- a/hw/i386/kvm/clock.c
++++ b/hw/i386/kvm/clock.c
+@@ -27,7 +27,6 @@
+ #include "qapi/error.h"
+ 
+ #include <linux/kvm.h>
+-#include "standard-headers/asm-x86/kvm_para.h"
+ #include "qom/object.h"
+ 
+ #define TYPE_KVM_CLOCK "kvmclock"
+@@ -334,8 +333,8 @@ void kvmclock_create(bool create_always)
+ 
+     assert(kvm_enabled());
+     if (create_always ||
+-        cpu->env.features[FEAT_KVM] & ((1ULL << KVM_FEATURE_CLOCKSOURCE) |
+-                                       (1ULL << KVM_FEATURE_CLOCKSOURCE2))) {
++        cpu->env.features[FEAT_KVM] & (CPUID_KVM_CLOCK |
++                                       CPUID_KVM_CLOCK2)) {
+         sysbus_create_simple(TYPE_KVM_CLOCK, -1, NULL);
+     }
+ }
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 59959b8b7a4d..c4ec64e0078f 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -29,6 +29,7 @@
+ #include "qapi/qapi-types-common.h"
+ #include "qemu/cpu-float.h"
+ #include "qemu/timer.h"
++#include "standard-headers/asm-x86/kvm_para.h"
+ 
+ #define XEN_NR_VIRQS 24
+ 
+@@ -1009,6 +1010,28 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_8000_0007_EBX_OVERFLOW_RECOV    (1U << 0)
+ #define CPUID_8000_0007_EBX_SUCCOR      (1U << 1)
+ 
++/* (Old) KVM paravirtualized clocksource */
++#define CPUID_KVM_CLOCK            (1U << KVM_FEATURE_CLOCKSOURCE)
++/* (New) KVM specific paravirtualized clocksource */
++#define CPUID_KVM_CLOCK2           (1U << KVM_FEATURE_CLOCKSOURCE2)
++/* KVM asynchronous page fault */
++#define CPUID_KVM_ASYNCPF          (1U << KVM_FEATURE_ASYNC_PF)
++/* KVM stolen (when guest vCPU is not running) time accounting */
++#define CPUID_KVM_STEAL_TIME       (1U << KVM_FEATURE_STEAL_TIME)
++/* KVM paravirtualized end-of-interrupt signaling */
++#define CPUID_KVM_PV_EOI           (1U << KVM_FEATURE_PV_EOI)
++/* KVM paravirtualized spinlocks support */
++#define CPUID_KVM_PV_UNHALT        (1U << KVM_FEATURE_PV_UNHALT)
++/* KVM host-side polling on HLT control from the guest */
++#define CPUID_KVM_POLL_CONTROL     (1U << KVM_FEATURE_POLL_CONTROL)
++/* KVM interrupt based asynchronous page fault*/
++#define CPUID_KVM_ASYNCPF_INT      (1U << KVM_FEATURE_ASYNC_PF_INT)
++/* KVM 'Extended Destination ID' support for external interrupts */
++#define CPUID_KVM_MSI_EXT_DEST_ID  (1U << KVM_FEATURE_MSI_EXT_DEST_ID)
++
++/* Hint to KVM that vCPUs expect never preempted for an unlimited time */
++#define CPUID_KVM_HINTS_REALTIME    (1U << KVM_HINTS_REALTIME)
++
+ /* CLZERO instruction */
+ #define CPUID_8000_0008_EBX_CLZERO      (1U << 0)
+ /* Always save/restore FP error pointers */
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 1fb4bd19fcf7..9993382fb40e 100644
+index 8e17942c3ba1..4fb822511a12 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -108,8 +108,8 @@ typedef struct {
- } KVMMSRHandlers;
- 
- static void kvm_init_msrs(X86CPU *cpu);
--static bool kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
--                           QEMUWRMSRHandler *wrmsr);
-+static int kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
-+                          QEMUWRMSRHandler *wrmsr);
- 
- const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_INFO(SET_TSS_ADDR),
-@@ -3135,17 +3135,21 @@ static int kvm_vm_enable_notify_vmexit(KVMState *s)
- 
- static int kvm_vm_enable_userspace_msr(KVMState *s)
- {
--    int ret = kvm_vm_enable_cap(s, KVM_CAP_X86_USER_SPACE_MSR, 0,
--                                KVM_MSR_EXIT_REASON_FILTER);
-+    int ret;
-+
-+    ret = kvm_vm_enable_cap(s, KVM_CAP_X86_USER_SPACE_MSR, 0,
-+                            KVM_MSR_EXIT_REASON_FILTER);
-     if (ret < 0) {
-         error_report("Could not enable user space MSRs: %s",
-                      strerror(-ret));
-         exit(1);
+@@ -564,13 +564,13 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
+          * be enabled without the in-kernel irqchip
+          */
+         if (!kvm_irqchip_in_kernel()) {
+-            ret &= ~(1U << KVM_FEATURE_PV_UNHALT);
++            ret &= ~CPUID_KVM_PV_UNHALT;
+         }
+         if (kvm_irqchip_is_split()) {
+-            ret |= 1U << KVM_FEATURE_MSI_EXT_DEST_ID;
++            ret |= CPUID_KVM_MSI_EXT_DEST_ID;
+         }
+     } else if (function == KVM_CPUID_FEATURES && reg == R_EDX) {
+-        ret |= 1U << KVM_HINTS_REALTIME;
++        ret |= CPUID_KVM_HINTS_REALTIME;
      }
  
--    if (!kvm_filter_msr(s, MSR_CORE_THREAD_COUNT,
--                        kvm_rdmsr_core_thread_count, NULL)) {
--        error_report("Could not install MSR_CORE_THREAD_COUNT handler!");
-+    ret = kvm_filter_msr(s, MSR_CORE_THREAD_COUNT,
-+                         kvm_rdmsr_core_thread_count, NULL);
-+    if (ret < 0) {
-+        error_report("Could not install MSR_CORE_THREAD_COUNT handler: %s",
-+                     strerror(-ret));
-         exit(1);
+     if (current_machine->cgs) {
+@@ -3963,20 +3963,20 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+         kvm_msr_entry_add(cpu, MSR_IA32_TSC, env->tsc);
+         kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, env->system_time_msr);
+         kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, env->wall_clock_msr);
+-        if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_ASYNC_PF_INT)) {
++        if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
+             kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, env->async_pf_int_msr);
+         }
+-        if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_ASYNC_PF)) {
++        if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF) {
+             kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_EN, env->async_pf_en_msr);
+         }
+-        if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_PV_EOI)) {
++        if (env->features[FEAT_KVM] & CPUID_KVM_PV_EOI) {
+             kvm_msr_entry_add(cpu, MSR_KVM_PV_EOI_EN, env->pv_eoi_en_msr);
+         }
+-        if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_STEAL_TIME)) {
++        if (env->features[FEAT_KVM] & CPUID_KVM_STEAL_TIME) {
+             kvm_msr_entry_add(cpu, MSR_KVM_STEAL_TIME, env->steal_time_msr);
+         }
+ 
+-        if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_POLL_CONTROL)) {
++        if (env->features[FEAT_KVM] & CPUID_KVM_POLL_CONTROL) {
+             kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, env->poll_control_msr);
+         }
+ 
+@@ -4441,19 +4441,19 @@ static int kvm_get_msrs(X86CPU *cpu)
+ #endif
+     kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
+     kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, 0);
+-    if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_ASYNC_PF_INT)) {
++    if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
+         kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, 0);
+     }
+-    if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_ASYNC_PF)) {
++    if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF) {
+         kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_EN, 0);
+     }
+-    if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_PV_EOI)) {
++    if (env->features[FEAT_KVM] & CPUID_KVM_PV_EOI) {
+         kvm_msr_entry_add(cpu, MSR_KVM_PV_EOI_EN, 0);
+     }
+-    if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_STEAL_TIME)) {
++    if (env->features[FEAT_KVM] & CPUID_KVM_STEAL_TIME) {
+         kvm_msr_entry_add(cpu, MSR_KVM_STEAL_TIME, 0);
+     }
+-    if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_POLL_CONTROL)) {
++    if (env->features[FEAT_KVM] & CPUID_KVM_POLL_CONTROL) {
+         kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
+     }
+     if (has_architectural_pmu_version > 0) {
+@@ -6180,7 +6180,7 @@ uint64_t kvm_swizzle_msi_ext_dest_id(uint64_t address)
+         return address;
+     }
+     env = &X86_CPU(first_cpu)->env;
+-    if (!(env->features[FEAT_KVM] & (1 << KVM_FEATURE_MSI_EXT_DEST_ID))) {
++    if (!(env->features[FEAT_KVM] & CPUID_KVM_MSI_EXT_DEST_ID)) {
+         return address;
      }
  
-@@ -3154,36 +3158,37 @@ static int kvm_vm_enable_userspace_msr(KVMState *s)
- 
- static void kvm_vm_enable_energy_msrs(KVMState *s)
- {
--    bool r;
-+    int ret;
-+
-     if (s->msr_energy.enable == true) {
--        r = kvm_filter_msr(s, MSR_RAPL_POWER_UNIT,
--                           kvm_rdmsr_rapl_power_unit, NULL);
--        if (!r) {
--            error_report("Could not install MSR_RAPL_POWER_UNIT \
--                                handler");
-+        ret = kvm_filter_msr(s, MSR_RAPL_POWER_UNIT,
-+                             kvm_rdmsr_rapl_power_unit, NULL);
-+        if (ret < 0) {
-+            error_report("Could not install MSR_RAPL_POWER_UNIT handler: %s",
-+                         strerror(-ret));
-             exit(1);
-         }
- 
--        r = kvm_filter_msr(s, MSR_PKG_POWER_LIMIT,
--                           kvm_rdmsr_pkg_power_limit, NULL);
--        if (!r) {
--            error_report("Could not install MSR_PKG_POWER_LIMIT \
--                                handler");
-+        ret = kvm_filter_msr(s, MSR_PKG_POWER_LIMIT,
-+                             kvm_rdmsr_pkg_power_limit, NULL);
-+        if (ret < 0) {
-+            error_report("Could not install MSR_PKG_POWER_LIMIT handler: %s",
-+                         strerror(-ret));
-             exit(1);
-         }
- 
--        r = kvm_filter_msr(s, MSR_PKG_POWER_INFO,
--                           kvm_rdmsr_pkg_power_info, NULL);
--        if (!r) {
--            error_report("Could not install MSR_PKG_POWER_INFO \
--                                handler");
-+        ret = kvm_filter_msr(s, MSR_PKG_POWER_INFO,
-+                             kvm_rdmsr_pkg_power_info, NULL);
-+        if (ret < 0) {
-+            error_report("Could not install MSR_PKG_POWER_INFO handler: %s",
-+                         strerror(-ret));
-             exit(1);
-         }
--        r = kvm_filter_msr(s, MSR_PKG_ENERGY_STATUS,
--                           kvm_rdmsr_pkg_energy_status, NULL);
--        if (!r) {
--            error_report("Could not install MSR_PKG_ENERGY_STATUS \
--                                handler");
-+        ret = kvm_filter_msr(s, MSR_PKG_ENERGY_STATUS,
-+                             kvm_rdmsr_pkg_energy_status, NULL);
-+        if (ret < 0) {
-+            error_report("Could not install MSR_PKG_ENERGY_STATUS handler: %s",
-+                         strerror(-ret));
-             exit(1);
-         }
-     }
-@@ -5842,13 +5847,13 @@ void kvm_arch_update_guest_debug(CPUState *cpu, struct kvm_guest_debug *dbg)
-     }
- }
- 
--static bool kvm_install_msr_filters(KVMState *s)
-+static int kvm_install_msr_filters(KVMState *s)
- {
-     uint64_t zero = 0;
-     struct kvm_msr_filter filter = {
-         .flags = KVM_MSR_FILTER_DEFAULT_ALLOW,
-     };
--    int r, i, j = 0;
-+    int i, j = 0;
- 
-     for (i = 0; i < KVM_MSR_FILTER_MAX_RANGES; i++) {
-         KVMMSRHandlers *handler = &msr_handlers[i];
-@@ -5872,18 +5877,13 @@ static bool kvm_install_msr_filters(KVMState *s)
-         }
-     }
- 
--    r = kvm_vm_ioctl(s, KVM_X86_SET_MSR_FILTER, &filter);
--    if (r) {
--        return false;
--    }
--
--    return true;
-+    return kvm_vm_ioctl(s, KVM_X86_SET_MSR_FILTER, &filter);
- }
- 
--static bool kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
--                    QEMUWRMSRHandler *wrmsr)
-+static int kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
-+                          QEMUWRMSRHandler *wrmsr)
- {
--    int i;
-+    int i, ret;
- 
-     for (i = 0; i < ARRAY_SIZE(msr_handlers); i++) {
-         if (!msr_handlers[i].msr) {
-@@ -5893,16 +5893,17 @@ static bool kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
-                 .wrmsr = wrmsr,
-             };
- 
--            if (!kvm_install_msr_filters(s)) {
-+            ret = kvm_install_msr_filters(s);
-+            if (ret) {
-                 msr_handlers[i] = (KVMMSRHandlers) { };
--                return false;
-+                return ret;
-             }
- 
--            return true;
-+            return 0;
-         }
-     }
- 
--    return false;
-+    return -EINVAL;
- }
- 
- static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
 -- 
 2.34.1
 
