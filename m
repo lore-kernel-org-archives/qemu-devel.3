@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 685DCD59F56
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 273D0D59F5A
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 18:02:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8kIg-0006WO-7n; Wed, 06 Nov 2024 12:58:38 -0500
+	id 1t8kLa-0008U7-Me; Wed, 06 Nov 2024 13:01:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8kIf-0006WE-92
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:58:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8kId-0003XJ-8C
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:58:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730915912;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=O67FXmxmYH+UCcWmps1ObhDEsB+dHhJvPy6m3Oo8GvA=;
- b=TOQldtbeK5bzGlEwq0cL2+WSiPMsk0rCN72Z3ZsrRzzjjVUxMqrkmO6caR0k4QFzgIYcRS
- WLdwWx4RKVfYDEmzd+s/f9Jd0DgE/RTimeV+KKqB7o+QfP6P+kd4ZTq2JbVKkZ4aIj7qtf
- xBLpPg20CVSvQB+/sDEB1ZShhDrgbBk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-75-TO5t2_CnOTShgRMlIwoaIA-1; Wed, 06 Nov 2024 12:58:31 -0500
-X-MC-Unique: TO5t2_CnOTShgRMlIwoaIA-1
-X-Mimecast-MFC-AGG-ID: TO5t2_CnOTShgRMlIwoaIA
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4315a0f25afso437195e9.3
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:58:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8kLX-0008Te-Db
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:01:35 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8kLV-0004Cl-Ji
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:01:35 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-37d4c1b1455so8709f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 10:01:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730916091; x=1731520891; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=y8C08c0CPdhXWq3j6o58B0Sg8LTBvoeIkrJl1JpkVyQ=;
+ b=aYz+h5yoJXJmUIsrB6Z0CjdXcDPsmufCvyME6E6LD4do2QFowqRtslg1osV7VDtNyV
+ +kzmop/tqvB/Cf7cl46JavoZfyhCOFuezkVwZk5wnjy1KKhznldFZOrofMMBTOgrawOq
+ pBeLGm4cH8oEb55w43QQmspA1bvvRa3FYGTt62J8Kg4ffAEjwuYdefw/p05h8j8hgDDg
+ pf2k8V6Eg7Ymyaiq8KaJHOjzCTAX3xq6gSAFq6/xnB00/Qb6bvgIpAfpA40Drk7NlGXv
+ ofMglYhqudqA9dZnrsB5MYopvI7jCC6x0xXZCSikTSFtnBauu55s580DEuqsPR11MeEn
+ o2pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730915909; x=1731520709;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=O67FXmxmYH+UCcWmps1ObhDEsB+dHhJvPy6m3Oo8GvA=;
- b=F3yQEo/EUDLa4LfowkOsPICNcnhJggLjvZbF2a+6iiwq+pbb1nqNu8AHwEREgQFtT1
- 5nkxfwupf4qQZvQUPwdYGRpAU8mNlWTFiBEA/E0bZImnSQ/ZBRYjHdDV1kMCVew2GABU
- 3E4ry/oLdV+/ZNYjTr0LH5TprN7BjiN9Xg0lKO2OH0QoXPUd2j4UCzxS9STIJPVvnBSs
- wQ0+XDo+EfS5ETbp/Y8mPPvXZ3VHHHy0v1IwqzAXXlxrutuncsSVkLbBRjVX16n1pzDR
- cfY6jOVxsF7lB4Lv0BBS8rSg2FSI6hiwW9LCdEjSjllG8PnC1bxajUplTMOddtP7EFCA
- t5QQ==
-X-Gm-Message-State: AOJu0Yy6PvnYU49dujmJB6AcSqLqf3ZNxoh6KmDT49AenxNDs+ECLoH9
- vCqeG4cJB0nI+w6BSGshESbJhAb4QixeFEc+fSLsQ7BjffLp6zYPtsR3jOGr+NUb7HKw6hx0jbJ
- dF3IB/VoG0oq/RZMwvEbd+9CpgIlTBkQb1KOKdd8BABo9UE1d5NhvFAb+lxqEq3aEsFzoCgl4Ji
- 0mwIIBCGXea1FO7649BO6HRyziDhpSrJRrn8kpEVCx
-X-Received: by 2002:adf:ff86:0:b0:37d:4818:f8b1 with SMTP id
- ffacd0b85a97d-380611e493bmr27425319f8f.39.1730915909180; 
- Wed, 06 Nov 2024 09:58:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFTx0drl99yuPDyS20oiP0UywQNudwq3js/omdcjnX27MdWBz8P08yPrI9gdiRGDeN8J4SoMprnpB1M2yTFm3A=
-X-Received: by 2002:adf:ff86:0:b0:37d:4818:f8b1 with SMTP id
- ffacd0b85a97d-380611e493bmr27425305f8f.39.1730915908809; Wed, 06 Nov 2024
- 09:58:28 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730916091; x=1731520891;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=y8C08c0CPdhXWq3j6o58B0Sg8LTBvoeIkrJl1JpkVyQ=;
+ b=b8j9fWbeTwLSaEfu/d0TmKgm44aTVs7/zhGbqFq6icHpa9gMPLInnVhSTfDfuU+143
+ JI+jXh+mIe68GAUIn0fYNKC1fV98U//fSeoHkXtRcZU2Uh4OYPUEHQRoPKDbpI1Q5WTL
+ Dn0CMQyWnhn5WMPn5ooLvQtjDxITHi48x04U9rg+/M8PXqt0xFFQnaaelg2pUtHfTNLK
+ ai7cJ9qGiSvfP7eWn9OaZ1PAe485MUQfhm23GFCLI8APy4hVU3yum6BUabPmpsDyqA8n
+ tjIZc+3gPJ6o/A92waDC2x/0fDN0nt/0e4bKWHrlBsEG+Lj1sKhrQgQS810LjoubEPdw
+ pIWw==
+X-Gm-Message-State: AOJu0YwBoBGoLeGmb740Ch0Yte0BBNZW42V0lcY/oKqaT42qwqcbBr6Z
+ ytFCw6+UPENMX1FnxnqSE4IgOW40ce+S/VQPs7HB6aTXDPnaysMIvdLc82xysBw=
+X-Google-Smtp-Source: AGHT+IFVnuWqv8qdKmqSJtMrsurVAAW8yDIqZSTrl+PCVh+/5bwf9A5pZ6VTb+I/gg8maMBSBAElPQ==
+X-Received: by 2002:adf:f6d1:0:b0:37d:4332:e91d with SMTP id
+ ffacd0b85a97d-381b710f7f1mr21038163f8f.52.1730916091239; 
+ Wed, 06 Nov 2024 10:01:31 -0800 (PST)
+Received: from [10.134.195.192] ([193.32.126.165])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c113e687sm20043607f8f.84.2024.11.06.10.01.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Nov 2024 10:01:30 -0800 (PST)
+Message-ID: <0c612f91-3699-48b4-bbe9-eea2298ff3fe@linaro.org>
+Date: Wed, 6 Nov 2024 10:01:27 -0800
 MIME-Version: 1.0
-References: <20241106174241.556373-1-pbonzini@redhat.com>
- <04fd0b86-4371-494e-a331-3d5d735f0d77@linaro.org>
- <CABgObfajkp+5vFnQuV+V6Mp+LuP_Yo-=JtZtGUcYB_GDDbWoJQ@mail.gmail.com>
- <b463bc8a-4625-43e6-a9da-4df526aa89a3@linaro.org>
-In-Reply-To: <b463bc8a-4625-43e6-a9da-4df526aa89a3@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 6 Nov 2024 18:58:16 +0100
-Message-ID: <CABgObfZvO3txRMAwjMny73k3pyfNy_SZ=oeoAwM1hm6b9zot8Q@mail.gmail.com>
-Subject: Re: [PATCH] eif: cope with huge section offsets
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, dorjoychy111@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional: Bump timeouts of functional tests
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
+References: <20241106170946.990731-1-thuth@redhat.com>
+ <c233a6b5-bfea-4d5e-9b1f-5bc3a467e17d@linaro.org>
+ <CAFEAcA-MVg2EU2cKJz+drZp3=GBCPJXqbP7iNimg8fs0NYfhOQ@mail.gmail.com>
+ <235c9cc1-aba0-4612-ba19-32885cb4b138@linaro.org>
+ <f1e324ed-e086-4f8b-8027-be2323383665@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <f1e324ed-e086-4f8b-8027-be2323383665@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,39 +101,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 6, 2024 at 6:54=E2=80=AFPM Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> On 11/6/24 09:49, Paolo Bonzini wrote:
-> > On Wed, Nov 6, 2024 at 6:47=E2=80=AFPM Pierrick Bouvier
-> > <pierrick.bouvier@linaro.org> wrote:
-> >
-> >>>        for (int i =3D 0; i < MAX_SECTIONS; ++i) {
-> >>>            header->section_offsets[i] =3D be64_to_cpu(header->section=
-_offsets[i]);
-> >>> +        if (header->section_offsets[i] > OFF_MAX) {
-> >>
-> >> Maybe we could add a comment that sections_offsets is unsigned, as it
-> >> can be confusing to read value > INT_MAX without more context.
-> >
-> > It does sound like OFF_MAX is related to section_offsets[], but it's
-> > actually related to off_t.  So the comparison is with the maximum
-> > value of off_t, which is signed.
-> >
-> > The problem would happen even if section_offsets[] was signed (for
-> > example off_t could be 32-bit).
->
-> I'm a bit confused.
-> It works because section_offsets[i] is unsigned. If it was signed, and
-> sizeof(off_t) is 8, we can never satisfy "(int64) > INT64_MAX".
+On 11/6/24 09:40, Thomas Huth wrote:
+> On 06/11/2024 18.30, Pierrick Bouvier wrote:
+>> On 11/6/24 09:26, Peter Maydell wrote:
+>>> On Wed, 6 Nov 2024 at 17:21, Pierrick Bouvier
+>>> <pierrick.bouvier@linaro.org> wrote:
+>>>> I noticed by --enable-debug in configure is a combination of enabling
+>>>> checks (enable-debug-tcg + graph + mutex), and deactivating optimizations.
+>>>>
+>>>> Would it be worth keeping the optimizations and runtime checks instead?
+>>>> This way, there would be no more "timeout" issue.
+>>>>
+>>>> I'm not sure which added value we get from O0, except for debugging
+>>>> locally QEMU.
+>>>
+>>> "Debugging locally QEMU" is exactly what --enable-debug is intended for...
+>>>
+>>
+>> Yes...
+>> but it seems like we take it for "enable debug checks" in CI as well and it
+>> impacts runtime, because optimizations are deactivated. I think I've not
+>> been the only one confused about this.
+>>
+>> So my point is that we should maybe differentiate the two use cases at
+>> configure level.
+>>
+>> --enable-debug and
+>> --enable-runtime-checks (or something more explicit)
+> 
+> Would that really help? I guess people still want to be able to run "make
+> check" when they compiled with --enable-debug, so we still need to be
+> prepared to run the checks with a slow QEMU.
+> 
 
-The fact that you cannot satisfy "int64 > INT64_MAX" just means that
-on this system that erroneous condition is unreachable, but it could
-be reachable on others. (Actually the fact that section_offsets[] is
-unsigned does matter, because otherwise you'd nede a check against 0
-as well. But it doesn't matter for the correctness of *this* check
-against OFF_MAX).
+Makes sense, even though it seems to indicate we have a wrong default 
+semantic here.
 
-Paolo
+> But I wonder whether we could maybe use -Og instead of -O0 nowadays?
+> 
+
+It would not hurt, but I'm not sure it's enough to avoid hitting those 
+timeout/perf difference issues.
+
+>    Thomas
+> 
 
 
