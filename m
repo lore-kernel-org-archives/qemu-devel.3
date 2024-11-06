@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4902D59F5A
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:49:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8F80D59F56
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:49:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8k9h-0000SX-JB; Wed, 06 Nov 2024 12:49:21 -0500
+	id 1t8k9t-0000VR-Dk; Wed, 06 Nov 2024 12:49:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t8k9g-0000S2-JB
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:49:20 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1t8k9r-0000UV-QX
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:49:31 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t8k9e-0007X2-QZ
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:49:20 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43162cf1eaaso1077155e9.0
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:49:18 -0800 (PST)
+ id 1t8k9q-0007xy-0g
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:49:31 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-37d41894a32so70009f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:49:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730915357; x=1731520157; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1730915368; x=1731520168; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=vU0yxeUeeQjYu+6+Ks5E67A+GOiWsnQ4QMaXjXo138M=;
- b=Y+CJeJJmA3Pg2jDGrsA1GEwsx+pNVFmcNEwtLOJuRWUkdBFmvSG1Ehn/feX30qhEZW
- XhpV6+joTE9s/gjB/OGk3VjzmuMzPI8rwmOo9c7gPF6EFw1RbQxp+oUtRRIVLPcPtHmO
- 2CaIE5tUf1Dp+GobIERo1QhOk2FlBs6LP6y8I4UqQm8rn0GigZgOZlI/msR/H7KyiODO
- QcjTv1DS2zHkiQ13vs8aR2g1rUcZkUuZA9/ACEYODWjkzd+KyVlP/gbJcymX+ctBv3dr
- OuO9o1FW8uJKsXqOOo6p5xGmYmOsXbjkyPg+yDU3fuPgXTCH4HKHp646Gr4Jw+A/+++6
- HPVQ==
+ bh=Z3zZTuAWMPqZtLStShkxuibSjf2uSZo4ezuSk39jN+A=;
+ b=T9ZT4CmOwiZ5AfvftTh86CYmr6hHpDGulZv0q3Zhv92lnPwB74YoQIIel6nQ/ttpVI
+ U73aHSWY0BefTxfc9pDZEg/2Rstd71d4YmGL9/O3TqzsZZIrb0L5/MIOAZ/qoV4WfJYy
+ 3jCkvxNSAGbFNlRUjIrNxooK8g8LFWL9d4CW8TE9X6cjT+kCu4n7YbgRGeMUQJxbbQlE
+ Wy9ne78dX6G/SaiMqvIbpPl7tW5nhNSi98mHV/Bj+v25KC22Nv9qNHf5t3f/pq232+aM
+ ZL2ZZrUN9qOBYuAtbQ2QNEM5rfLmEoNvAXmjFg0/V3rCi32lynyjXeGoRjPvVx6YvEVX
+ aISw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730915357; x=1731520157;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1730915368; x=1731520168;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vU0yxeUeeQjYu+6+Ks5E67A+GOiWsnQ4QMaXjXo138M=;
- b=B6X6EI6w7/r/GrVSBfCQFV9iyPpWAsOdwPtaSiynUn6/ZzhcMrbxC+rYlcpKAceWBg
- bNP8zpzpUnBZW99y9TQIb9K9dCZqIoIjRMYH1BFM3CAXtPmefiivM7ddVQFRzZnaVuWr
- lI/dujtVwbN1eT58FrsHibZ3WgGtuXDixCuq4FMmLqYkTsLMaMajn1gLYYLcndIfAm7J
- 2C2sfJpyicw4t7RwH1Aymk1hMza+6uFmWZwTBfgSzcezATmljMfArsTQ+nHU+oXt6l7c
- CEiMPe0tIS5giwdtbcgrEzSG0z1/5gXYX1nXxGYZ2breUiuLs3GHwhByFmrNX2vRh5Lb
- 90+g==
+ bh=Z3zZTuAWMPqZtLStShkxuibSjf2uSZo4ezuSk39jN+A=;
+ b=hFuddUj7wp9QXsaoSLf+vPiQBqHFQYHrXNfzY08xqKbHX6HUZz9xb23CQLAOCfA8J2
+ KQXnGLrKDFjZUU0HeaN8dEBMey1Et1XM3ez79scmmuAPhrUjRATtGydWItDagRTHjwpr
+ KzYw5Lijyuaup7Fh4mku8TUvHgvaO0udME0Kd75VaAzfesbdEZCxDxijzhZqu3G6FPjf
+ KqzCuRnGqWjID6orhE/dvGAQj1dmnh0ABoN9TN45mI2KF08EovbTsuMFSW1xKsiMfJqB
+ h7q26e60Glm8zkUxHVro5rNmLr8QzgsH7lb+inx0hmRz6iIn5rY+i+uPIEuQvsUTLVxI
+ mG2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0A0NPCvvQyxhjzaclRdWgVZii86pbsaYRCjQzdoutgSikyXwyysRm4EoQcA0W9FJol+g+b20gASrX@nongnu.org
-X-Gm-Message-State: AOJu0Yz9zQkTo10uoaW5X7NxtVQpTk/VqK8aZtN5Qy6VcR1kCNCVAJAK
- hY25rSI3seQT54M1ycVTOwuJ47BNsIO9sl0hsyt0Iqiew0MAh2+rqZxWCH4bYI8whOJsR9DyW7y
- w1Zw3Ax6r
-X-Google-Smtp-Source: AGHT+IE/AKTbFhyTqedqbK09JxZklNLz3ZJYMb/JPSuNQWvbVO/GP/yitct6kBe3veftRCJ5oa9XZw==
-X-Received: by 2002:a05:600c:4ec6:b0:431:542d:2599 with SMTP id
- 5b1f17b1804b1-4328327c4d7mr218939805e9.22.1730915356943; 
- Wed, 06 Nov 2024 09:49:16 -0800 (PST)
+ AJvYcCW7u13qkPvpBzwcnt0pX1NZ2f92StCNO8u2HugMDSBUuzjjdeQJkx74Wab6l20FECJ3f2UgKIwvuij0@nongnu.org
+X-Gm-Message-State: AOJu0YwUhv5jNRo/10loUfVRjQoLED+UPQnfDe6fDCugm+HmcNDX8OnR
+ ZI7t6s9B8ukXicONQtBAnNypUtS33kBKw4a7NFOa9nL6VLxbW0Y4PTSl/dhynFo=
+X-Google-Smtp-Source: AGHT+IHI9Do4cUezWn1dmEIX8tOY51ymGD3kIOVIbMfEe/idaUC9m6KlKjtbl0nwzYu70lL4N3wKUA==
+X-Received: by 2002:a5d:59a2:0:b0:37d:3780:31d2 with SMTP id
+ ffacd0b85a97d-381ec5e266fmr100253f8f.15.1730915368446; 
+ Wed, 06 Nov 2024 09:49:28 -0800 (PST)
 Received: from [10.134.195.192] ([193.32.126.165])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa6c0414sm30869915e9.23.2024.11.06.09.49.15
+ 5b1f17b1804b1-432aa5b5e3dsm31385925e9.9.2024.11.06.09.49.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Nov 2024 09:49:16 -0800 (PST)
-Message-ID: <511e6589-1a99-4665-9a08-d9cea1f7bee9@linaro.org>
-Date: Wed, 6 Nov 2024 09:49:14 -0800
+ Wed, 06 Nov 2024 09:49:28 -0800 (PST)
+Message-ID: <c13cff41-d413-4977-ba2d-2be20de33aba@linaro.org>
+Date: Wed, 6 Nov 2024 09:49:26 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] eif: cope with huge section sizes
+Subject: Re: [PATCH] rust: add meson_version to all subprojects
 Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: dorjoychy111@gmail.com
-References: <20241106174443.557557-1-pbonzini@redhat.com>
+References: <20241106174531.558197-1-pbonzini@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241106174443.557557-1-pbonzini@redhat.com>
+In-Reply-To: <20241106174531.558197-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,122 +96,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/24 09:44, Paolo Bonzini wrote:
-> Check for overflow as well as allocation failure.  Resolves Coverity CID 1564859.
+On 11/6/24 09:45, Paolo Bonzini wrote:
+> Otherwise, newer releases of meson complain.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/core/eif.c | 48 +++++++++++++++++++++++++++++++++++++++++-------
->   1 file changed, 41 insertions(+), 7 deletions(-)
+>   subprojects/packagefiles/arbitrary-int-1-rs/meson.build         | 1 +
+>   subprojects/packagefiles/bilge-0.2-rs/meson.build               | 1 +
+>   subprojects/packagefiles/bilge-impl-0.2-rs/meson.build          | 1 +
+>   subprojects/packagefiles/either-1-rs/meson.build                | 1 +
+>   subprojects/packagefiles/itertools-0.11-rs/meson.build          | 1 +
+>   subprojects/packagefiles/proc-macro-error-1-rs/meson.build      | 1 +
+>   subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build | 1 +
+>   subprojects/packagefiles/proc-macro2-1-rs/meson.build           | 1 +
+>   subprojects/packagefiles/quote-1-rs/meson.build                 | 1 +
+>   subprojects/packagefiles/syn-2-rs/meson.build                   | 1 +
+>   subprojects/packagefiles/unicode-ident-1-rs/meson.build         | 1 +
+>   11 files changed, 11 insertions(+)
 > 
-> diff --git a/hw/core/eif.c b/hw/core/eif.c
-> index cbcd80de58b..25f2aedf3fa 100644
-> --- a/hw/core/eif.c
-> +++ b/hw/core/eif.c
-> @@ -123,6 +123,10 @@ static bool read_eif_header(FILE *f, EifHeader *header, uint32_t *crc,
->   
->       for (int i = 0; i < MAX_SECTIONS; ++i) {
->           header->section_sizes[i] = be64_to_cpu(header->section_sizes[i]);
-> +        if (header->section_sizes[i] > SSIZE_MAX) {
-> +            error_setg(errp, "Invalid EIF image. Section size out of bounds");
-> +            return false;
-> +        }
->       }
->   
->       header->unused = be32_to_cpu(header->unused);
-> @@ -282,7 +286,12 @@ static bool get_signature_fingerprint_sha384(FILE *eif, uint64_t size,
->       struct cbor_load_result result;
->       bool ret = false;
->   
-> -    sig = g_malloc(size);
-> +    sig = g_try_malloc(size);
-> +    if (!sig) {
-> +        error_setg(errp, "Out of memory reading signature section");
-> +        goto cleanup;
-> +    }
-> +
->       got = fread(sig, 1, size, eif);
->       if ((uint64_t) got != size) {
->           error_setg(errp, "Failed to read EIF signature section data");
-> @@ -324,7 +333,12 @@ static bool get_signature_fingerprint_sha384(FILE *eif, uint64_t size,
->           error_setg(errp, "Invalid signature CBOR");
->           goto cleanup;
->       }
-> -    cert = g_malloc(len);
-> +    cert = g_try_malloc(len);
-> +    if (!cert) {
-> +        error_setg(errp, "Out of memory reading signature section");
-> +        goto cleanup;
-> +    }
-> +
->       for (int i = 0; i < len; ++i) {
->           cbor_item_t *tmp = cbor_array_get(pair->value, i);
->           if (!tmp) {
-> @@ -503,7 +517,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
->                   goto cleanup;
->               }
->   
-> -            ptr = g_malloc(hdr.section_size);
-> +            ptr = g_try_malloc(hdr.section_size);
-> +            if (!ptr) {
-> +                error_setg(errp, "Out of memory reading kernel section");
-> +                goto cleanup;
-> +            }
->   
->               iov_ptr = g_malloc(sizeof(struct iovec));
->               iov_ptr->iov_base = ptr;
-> @@ -528,7 +546,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
->                   goto cleanup;
->               }
->               size = hdr.section_size;
-> -            *cmdline = g_malloc(size + 1);
-> +            *cmdline = g_try_malloc(size + 1);
-> +            if (!cmdline) {
-> +                error_setg(errp, "Out of memory reading command line section");
-> +                goto cleanup;
-> +            }
->               if (!read_eif_cmdline(f, size, *cmdline, &crc, errp)) {
->                   goto cleanup;
->               }
-> @@ -567,7 +589,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
->                   }
->               }
->   
-> -            ptr = g_malloc(hdr.section_size);
-> +            ptr = g_try_malloc(hdr.section_size);
-> +            if (!ptr) {
-> +                error_setg(errp, "Out of memory reading initrd section");
-> +                goto cleanup;
-> +            }
->   
->               iov_ptr = g_malloc(sizeof(struct iovec));
->               iov_ptr->iov_base = ptr;
-> @@ -606,7 +632,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
->               uint8_t *buf;
->               size_t got;
->               uint64_t size = hdr.section_size;
-> -            buf = g_malloc(size);
-> +            buf = g_try_malloc(size);
-> +            if (!buf) {
-> +                error_setg(errp, "Out of memory reading unknown section");
-> +                goto cleanup;
-> +            }
->               got = fread(buf, 1, size, f);
->               if ((uint64_t) got != size) {
->                   g_free(buf);
-> @@ -662,7 +692,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
->               goto cleanup;
->           }
->   
-> -        ptr = g_malloc(machine_initrd_size);
-> +        ptr = g_try_malloc(machine_initrd_size);
-> +        if (!ptr) {
-> +            error_setg(errp, "Out of memory reading initrd file");
-> +            goto cleanup;
-> +        }
->   
->           iov_ptr = g_malloc(sizeof(struct iovec));
->           iov_ptr->iov_base = ptr;
+> diff --git a/subprojects/packagefiles/arbitrary-int-1-rs/meson.build b/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
+> index 34a189cbaec..cff3f62ce74 100644
+> --- a/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
+> +++ b/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
+> @@ -1,4 +1,5 @@
+>   project('arbitrary-int-1-rs', 'rust',
+> +  meson_version: '>=1.5.0',
+>     version: '1.2.7',
+>     license: 'MIT',
+>     default_options: [])
+> diff --git a/subprojects/packagefiles/bilge-0.2-rs/meson.build b/subprojects/packagefiles/bilge-0.2-rs/meson.build
+> index a6ed4a8f0cd..e69bac91b40 100644
+> --- a/subprojects/packagefiles/bilge-0.2-rs/meson.build
+> +++ b/subprojects/packagefiles/bilge-0.2-rs/meson.build
+> @@ -1,6 +1,7 @@
+>   project(
+>     'bilge-0.2-rs',
+>     'rust',
+> +  meson_version: '>=1.5.0',
+>     version : '0.2.0',
+>     license : 'MIT or Apache-2.0',
+>   )
+> diff --git a/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build b/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
+> index 80243c7024d..f8f3486fc08 100644
+> --- a/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
+> +++ b/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
+> @@ -1,4 +1,5 @@
+>   project('bilge-impl-0.2-rs', 'rust',
+> +  meson_version: '>=1.5.0',
+>     version: '0.2.0',
+>     license: 'MIT OR Apache-2.0',
+>     default_options: [])
+> diff --git a/subprojects/packagefiles/either-1-rs/meson.build b/subprojects/packagefiles/either-1-rs/meson.build
+> index a5842eb3a6a..608e64e31fc 100644
+> --- a/subprojects/packagefiles/either-1-rs/meson.build
+> +++ b/subprojects/packagefiles/either-1-rs/meson.build
+> @@ -1,4 +1,5 @@
+>   project('either-1-rs', 'rust',
+> +  meson_version: '>=1.5.0',
+>     version: '1.12.0',
+>     license: 'MIT OR Apache-2.0',
+>     default_options: [])
+> diff --git a/subprojects/packagefiles/itertools-0.11-rs/meson.build b/subprojects/packagefiles/itertools-0.11-rs/meson.build
+> index 13d2d27019d..30982a4ee76 100644
+> --- a/subprojects/packagefiles/itertools-0.11-rs/meson.build
+> +++ b/subprojects/packagefiles/itertools-0.11-rs/meson.build
+> @@ -1,4 +1,5 @@
+>   project('itertools-0.11-rs', 'rust',
+> +  meson_version: '>=1.5.0',
+>     version: '0.11.0',
+>     license: 'MIT OR Apache-2.0',
+>     default_options: [])
+> diff --git a/subprojects/packagefiles/proc-macro-error-1-rs/meson.build b/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
+> index 38ea7b89d39..ae27a696862 100644
+> --- a/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
+> +++ b/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
+> @@ -1,4 +1,5 @@
+>   project('proc-macro-error-1-rs', 'rust',
+> +  meson_version: '>=1.5.0',
+>     version: '1.0.4',
+>     license: 'MIT OR Apache-2.0',
+>     default_options: [])
+> diff --git a/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build b/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
+> index d900c54cfd1..3281b264333 100644
+> --- a/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
+> +++ b/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
+> @@ -1,4 +1,5 @@
+>   project('proc-macro-error-attr-1-rs', 'rust',
+> +  meson_version: '>=1.5.0',
+>     version: '1.12.0',
+>     license: 'MIT OR Apache-2.0',
+>     default_options: [])
+> diff --git a/subprojects/packagefiles/proc-macro2-1-rs/meson.build b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
+> index 818ec59336b..288323eaba8 100644
+> --- a/subprojects/packagefiles/proc-macro2-1-rs/meson.build
+> +++ b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
+> @@ -1,4 +1,5 @@
+>   project('proc-macro2-1-rs', 'rust',
+> +  meson_version: '>=1.5.0',
+>     version: '1.0.84',
+>     license: 'MIT OR Apache-2.0',
+>     default_options: [])
+> diff --git a/subprojects/packagefiles/quote-1-rs/meson.build b/subprojects/packagefiles/quote-1-rs/meson.build
+> index d36609bd3c8..7f7792569b9 100644
+> --- a/subprojects/packagefiles/quote-1-rs/meson.build
+> +++ b/subprojects/packagefiles/quote-1-rs/meson.build
+> @@ -1,4 +1,5 @@
+>   project('quote-1-rs', 'rust',
+> +  meson_version: '>=1.5.0',
+>     version: '1.12.0',
+>     license: 'MIT OR Apache-2.0',
+>     default_options: [])
+> diff --git a/subprojects/packagefiles/syn-2-rs/meson.build b/subprojects/packagefiles/syn-2-rs/meson.build
+> index a53335f3092..bb3c15539be 100644
+> --- a/subprojects/packagefiles/syn-2-rs/meson.build
+> +++ b/subprojects/packagefiles/syn-2-rs/meson.build
+> @@ -1,4 +1,5 @@
+>   project('syn-2-rs', 'rust',
+> +  meson_version: '>=1.5.0',
+>     version: '2.0.66',
+>     license: 'MIT OR Apache-2.0',
+>     default_options: [])
+> diff --git a/subprojects/packagefiles/unicode-ident-1-rs/meson.build b/subprojects/packagefiles/unicode-ident-1-rs/meson.build
+> index 54f23768545..9d76ebbd1ad 100644
+> --- a/subprojects/packagefiles/unicode-ident-1-rs/meson.build
+> +++ b/subprojects/packagefiles/unicode-ident-1-rs/meson.build
+> @@ -1,4 +1,5 @@
+>   project('unicode-ident-1-rs', 'rust',
+> +  meson_version: '>=1.5.0',
+>     version: '1.0.12',
+>     license: '(MIT OR Apache-2.0) AND Unicode-DFS-2016',
+>     default_options: [])
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
