@@ -4,109 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20F6D44D54
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 12:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7160D44D54
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 12:42:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8fLs-0004lS-7j; Wed, 06 Nov 2024 07:41:36 -0500
+	id 1t8fMs-0005KW-Bj; Wed, 06 Nov 2024 07:42:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8fKn-0004HY-Pn
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:40:32 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t8fKl-00029I-Tu
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:40:29 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t8fMo-0005HQ-Qn
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:42:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t8fMk-0002f2-VN
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 07:42:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730896949;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wf+at1j/9hoESX6cYWJ+T8//wb21r6QBuS1vGJBwp1g=;
+ b=A6B1ayYFahJJOlF8BJlBV+R4zaaSyw9PbjDgB9vKRQq3rlkxftl01cESMJZqXuikMd7LAd
+ ZPAXnF0sG1UrZ0giI9IuTUXQX8gcCFuGXadkw17jL3lRFE68c0DNNzlGJ9LmgLPFEBz7Pn
+ ewkhBfPgDTctEn3wI39OKT7WyVVd27c=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-204-wGIewnNcMBuqZSZueThGfQ-1; Wed,
+ 06 Nov 2024 07:42:27 -0500
+X-MC-Unique: wGIewnNcMBuqZSZueThGfQ-1
+X-Mimecast-MFC-AGG-ID: wGIewnNcMBuqZSZueThGfQ
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9F2FA21E2F;
- Wed,  6 Nov 2024 12:40:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730896824; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N4RWr4Odl7bg1gJEqzLshTfhuBFzjmPIqC6ginQ1GCE=;
- b=epMjRJYwFVMmawAu3OH2EhQ+ax1Oin2q021FJA1F9fcREHc+uf6RBmALuQ0aNgSqQyTNv/
- GYp8OOjI4VrSdH9aYjjwJa4GXolebLzyqZzStpWDgJTGochjFoG19OHJRUq1FKuCm1ZvCB
- lkkVlBgC0zTe4PskQvji7jNzDPuaCTY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730896824;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N4RWr4Odl7bg1gJEqzLshTfhuBFzjmPIqC6ginQ1GCE=;
- b=v11F2t6vOf+ty8bJvk3wWPWd7FvEQGZhdTEz9zIMjBImVuYdn6/EEVA1SK87J0XeQYRcaa
- J/mhmwXhTpn7qDDw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730896824; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N4RWr4Odl7bg1gJEqzLshTfhuBFzjmPIqC6ginQ1GCE=;
- b=epMjRJYwFVMmawAu3OH2EhQ+ax1Oin2q021FJA1F9fcREHc+uf6RBmALuQ0aNgSqQyTNv/
- GYp8OOjI4VrSdH9aYjjwJa4GXolebLzyqZzStpWDgJTGochjFoG19OHJRUq1FKuCm1ZvCB
- lkkVlBgC0zTe4PskQvji7jNzDPuaCTY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730896824;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N4RWr4Odl7bg1gJEqzLshTfhuBFzjmPIqC6ginQ1GCE=;
- b=v11F2t6vOf+ty8bJvk3wWPWd7FvEQGZhdTEz9zIMjBImVuYdn6/EEVA1SK87J0XeQYRcaa
- J/mhmwXhTpn7qDDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 29A3713736;
- Wed,  6 Nov 2024 12:40:23 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id gq0BOLdjK2e2EwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 06 Nov 2024 12:40:23 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Laurent
- Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5452919560A6; Wed,  6 Nov 2024 12:42:26 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.180])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 918D71955F40; Wed,  6 Nov 2024 12:42:23 +0000 (UTC)
+Date: Wed, 6 Nov 2024 12:42:19 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 Subject: Re: [PATCH 21/22] tests/qtest: Add support for check-qtest-<subsystem>
-In-Reply-To: <ZytO8SLDAT2VRjly@redhat.com>
+Message-ID: <ZytkK6p3gff8bCVY@redhat.com>
 References: <20241105180837.5990-1-farosas@suse.de>
- <20241105180837.5990-22-farosas@suse.de> <ZytO8SLDAT2VRjly@redhat.com>
-Date: Wed, 06 Nov 2024 09:40:21 -0300
-Message-ID: <87pln81qoa.fsf@suse.de>
+ <20241105180837.5990-22-farosas@suse.de>
+ <ZytO8SLDAT2VRjly@redhat.com> <87pln81qoa.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87pln81qoa.fsf@suse.de>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,49 +89,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Wed, Nov 06, 2024 at 09:40:21AM -0300, Fabiano Rosas wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > On Tue, Nov 05, 2024 at 03:08:36PM -0300, Fabiano Rosas wrote:
+> >> Allow qtests to be ran by subsystem. Some subsystems, such as
+> >> migration, have a large number of tests and we could benefit from
+> >> being able to access them from make check without having to run the
+> >> full set of qtests.
+> >> 
+> >> This adds the following make check targets:
+> >> 
+> >> make check-qtest-migration
+> >> 
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >> ---
+> >> I did not include check-qtest-<arch>-<subsys> because meson generates a
+> >> long line that affects readability.
+> >
+> > Can you give an example of that ?  I'm wondering how much of a
+> > problem it actually is ? Personally when I'm running a subset
+> > of tests, I almost always want to limit to just one arch target.
+> >
+> 
+> Ok, you have a different use case, mine is just "run migration tests for
+> all archs, without bringing all the rest of qtest along". When I want to
+> limit to one arch, I use the 'QTEST_QEMU_BINARY=qemu-system-<arch>
+> migration-test' syntax.
+> 
+> The issue is that meson always shows all suites in which a test is
+> present (quite uselessly IMO):
 
-> On Tue, Nov 05, 2024 at 03:08:36PM -0300, Fabiano Rosas wrote:
->> Allow qtests to be ran by subsystem. Some subsystems, such as
->> migration, have a large number of tests and we could benefit from
->> being able to access them from make check without having to run the
->> full set of qtests.
->>=20
->> This adds the following make check targets:
->>=20
->> make check-qtest-migration
->>=20
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->> I did not include check-qtest-<arch>-<subsys> because meson generates a
->> long line that affects readability.
->
-> Can you give an example of that ?  I'm wondering how much of a
-> problem it actually is ? Personally when I'm running a subset
-> of tests, I almost always want to limit to just one arch target.
->
+Ewwww, yes, that's pretty horrific :-( Very annoying behaviour, as it
+actively discourages people from adding more suites :-( I agree with
+your decision.
 
-Ok, you have a different use case, mine is just "run migration tests for
-all archs, without bringing all the rest of qtest along". When I want to
-limit to one arch, I use the 'QTEST_QEMU_BINARY=3Dqemu-system-<arch>
-migration-test' syntax.
+> 
+> [1-8/8] 🌑 qemu:qtest+qtest-s390x+qtest-migration+qtest-s390x-migration / qtest-s390x/migration-test                              0/480
+> 1/8 qemu:qtest+qtest-x86_64+qtest-migration+qtest-x86_64-migration / qtest-x86_64/migration-test-smoke           SKIP             0.02s
+> 
+> vs:
+> 
+> 1/8 qemu:qtest+qtest-x86_64+qtest-migration / qtest-x86_64/migration-test-smoke          SKIP             0.02s
+> 2/8 qemu:qtest+qtest-ppc64+qtest-migration / qtest-ppc64/migration-test                  SKIP             0.02s
+> 
 
-The issue is that meson always shows all suites in which a test is
-present (quite uselessly IMO):
-
-[1-8/8] =F0=9F=8C=91 qemu:qtest+qtest-s390x+qtest-migration+qtest-s390x-mig=
-ration / qtest-s390x/migration-test                              0/480
-1/8 qemu:qtest+qtest-x86_64+qtest-migration+qtest-x86_64-migration / qtest-=
-x86_64/migration-test-smoke           SKIP             0.02s
-
-vs:
-
-1/8 qemu:qtest+qtest-x86_64+qtest-migration / qtest-x86_64/migration-test-s=
-moke          SKIP             0.02s
-2/8 qemu:qtest+qtest-ppc64+qtest-migration / qtest-ppc64/migration-test    =
-              SKIP             0.02s
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
