@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F73D59F56
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBECD59F56
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8k5O-00063i-80; Wed, 06 Nov 2024 12:44:54 -0500
+	id 1t8k69-0006qm-6E; Wed, 06 Nov 2024 12:45:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8k5N-00063Y-5T
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:44:53 -0500
+ id 1t8k68-0006qT-63
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:45:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8k5L-0006Zu-71
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:44:52 -0500
+ id 1t8k66-0006o1-Ho
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:45:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730915088;
+ s=mimecast20190719; t=1730915137;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=39444N7AmsbquVXwjsvn5uyPIbnntcIOfcpvI/XvMRo=;
- b=WpTPqXEpFhooxD0sCigPzKo2AE4UOCuhfmi/34P5kY+EMOoqgLjhOO5abBGmDubHor3dQS
- rLhmRdcOdREi+xUy9VuEhSDt6g1uglO25UZ8l52lqAKLuemZEcYSFaMoCRAoG3onMU+Hqo
- jG0Tatcxjg31jbe1GtfpH/2Ze6OGwk4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rlUeG+QWms4BLnJx0BEuLrNSeba/8KNkIA72Ae2aYDA=;
+ b=XnipdLXU0SQwdC4PUULy5IKZMjPACGPuqzgVm+k8o6pviaEtcF5JYzLIZ+uJwLBnBN96FS
+ edPdpTziqjEZci9bMMHVUKpTBXWOX6zFvh96+eyUtCGeX03//WM1VNzl62/Wk0MIjAeN4Z
+ Bc7+F9IzNLac5MIZ6RIm05qJkzJDdJc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-597-RWZl2iJtOEemgU6rS1EJiw-1; Wed, 06 Nov 2024 12:44:47 -0500
-X-MC-Unique: RWZl2iJtOEemgU6rS1EJiw-1
-X-Mimecast-MFC-AGG-ID: RWZl2iJtOEemgU6rS1EJiw
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43164f21063so356885e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:44:47 -0800 (PST)
+ us-mta-509-la_HeON8OBynPzz1TuowCw-1; Wed, 06 Nov 2024 12:45:36 -0500
+X-MC-Unique: la_HeON8OBynPzz1TuowCw-1
+X-Mimecast-MFC-AGG-ID: la_HeON8OBynPzz1TuowCw
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37d95264eb4so631f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:45:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730915086; x=1731519886;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=39444N7AmsbquVXwjsvn5uyPIbnntcIOfcpvI/XvMRo=;
- b=Ai2okeiVgdvvepLM/0nAx/i1TeWw/3B8SVYTBx99VcsxmsJdGD1l7ngKJUZMjzJsnR
- vTuazsE6C+Qe9IdiWWe/zBG0lLN0qw1holwENCPG41RN6ex01FKvsLFDigZmGnKfiKNp
- ZWbg5D/cDA3lpAsyQRtCh2sHo1t/ZdCS6HV4dd6veJVSwNdbZiNtgDZKFeHyHQtmOj8g
- pmOZdLRgQ464fkDiIj3P0R1Mj0XTHBlGiSNFxj3rNmcS3jQyWWhdpHcjwYJAUQ999QIg
- ndsEsqt+diG9Rn853hrMjXKcj7xTpypNibALxXcvuB8f0MbwA7d3eJ0vrvdy/BITfbiZ
- zuUQ==
-X-Gm-Message-State: AOJu0Yzy+TGql7FwarYIzEIq86uZZevYv8kLGdMQRoPAClfE+oTll/u1
- zjL/KGj2YSflJ6ArHSS8TiXBcvGCLgpEj2AgEmizE9eWSTkFfhY8D5TgPbBHD3YGNjQ7LPqGAXl
- amPHkxccAIHurDvqFcCGaYe3jH0pgoO9yAUFhJOvbQ2v4oDA43jaDVtzZzyosXgsqz1RBnteqey
- uip/TXkVUtJ3hVTlAKMJILku8A3F5emQt7qFebiWc=
-X-Received: by 2002:a05:600c:4215:b0:431:55af:a230 with SMTP id
- 5b1f17b1804b1-431bb9e6031mr247314545e9.33.1730915085690; 
- Wed, 06 Nov 2024 09:44:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGtoW7iq/+qgVJK26E79LHRiw1Aq1k5YVB3HyMbDh097FGaMnxaDv6YIIS2MvgwvEzBjwxbVw==
-X-Received: by 2002:a05:600c:4215:b0:431:55af:a230 with SMTP id
- 5b1f17b1804b1-431bb9e6031mr247314375e9.33.1730915085231; 
- Wed, 06 Nov 2024 09:44:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730915134; x=1731519934;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rlUeG+QWms4BLnJx0BEuLrNSeba/8KNkIA72Ae2aYDA=;
+ b=bueGM7R8bmw7luq0ssC8NItLPB+EPq6lz3tpiTiN6PvuavP671intVEEB1doJcxK1w
+ m89keR8c+N6ho8xJJR4P2FBdoaH0F7MLak0n/0blK/Elt+sMJ9Pwx4I6CqCuBq5dA3ib
+ iZzxPKqU5lqejGg43c81BF8xN/osCiEPWCTz/IrVnSuft/C1LG6+Lwv40aX4/kkrwiIA
+ vgg1yYw8Ow1jpDM+oGLpcozrIvpeNsl4Gbl4Q9i+bgfnfWBCgjOqAzHan/edhm93X8aX
+ kax3Fe02OSGsmul5+Popjm2XIrYIGb3YriGzeuv7MNXaS1CHP3slWScO02LjzAD2wX3i
+ hmsA==
+X-Gm-Message-State: AOJu0Yx5kiDhpZdf3os44Zuvw+azzqG8ANKRT0rvdzUMcVchTgWwVb4d
+ iiMJMvEb6hqQX3Tvi8M36wYBefuhPQBV5gmcds184WMlp3Q6i9mMamqbLTfHcXdx2F4YTyV5xjt
+ k4yFu+7+6ZUfoZVMdLKrUXsBC9W8EShFPoJv5hyEuon7gzTwgRu0e7jqgTsyg+KgsgorNdPu1Am
+ HtatqPeS0wWmCN2SntkXBUlE2k5VY0Jrk/dF7Mtfk=
+X-Received: by 2002:a05:6000:2c5:b0:37e:c4e3:f130 with SMTP id
+ ffacd0b85a97d-381be907327mr22058101f8f.41.1730915134526; 
+ Wed, 06 Nov 2024 09:45:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG/p7enbh7p/H6xprYB5SZHdGYEnnmVg2PBozvtCEouPd/XVo56g7EbSX1MJU9t7RJWT3Fskg==
+X-Received: by 2002:a05:6000:2c5:b0:37e:c4e3:f130 with SMTP id
+ ffacd0b85a97d-381be907327mr22058029f8f.41.1730915133065; 
+ Wed, 06 Nov 2024 09:45:33 -0800 (PST)
 Received: from [192.168.10.3] ([151.49.226.83])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381c10b7f80sm19805881f8f.20.2024.11.06.09.44.44
+ 5b1f17b1804b1-432aa6b35c0sm32970935e9.16.2024.11.06.09.45.32
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2024 09:44:44 -0800 (PST)
+ Wed, 06 Nov 2024 09:45:32 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: dorjoychy111@gmail.com
-Subject: [PATCH] eif: cope with huge section sizes
-Date: Wed,  6 Nov 2024 18:44:43 +0100
-Message-ID: <20241106174443.557557-1-pbonzini@redhat.com>
+Subject: [PATCH] rust: add meson_version to all subprojects
+Date: Wed,  6 Nov 2024 18:45:31 +0100
+Message-ID: <20241106174531.558197-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -100,121 +99,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check for overflow as well as allocation failure.  Resolves Coverity CID 1564859.
+Otherwise, newer releases of meson complain.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/core/eif.c | 48 +++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 41 insertions(+), 7 deletions(-)
+ subprojects/packagefiles/arbitrary-int-1-rs/meson.build         | 1 +
+ subprojects/packagefiles/bilge-0.2-rs/meson.build               | 1 +
+ subprojects/packagefiles/bilge-impl-0.2-rs/meson.build          | 1 +
+ subprojects/packagefiles/either-1-rs/meson.build                | 1 +
+ subprojects/packagefiles/itertools-0.11-rs/meson.build          | 1 +
+ subprojects/packagefiles/proc-macro-error-1-rs/meson.build      | 1 +
+ subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build | 1 +
+ subprojects/packagefiles/proc-macro2-1-rs/meson.build           | 1 +
+ subprojects/packagefiles/quote-1-rs/meson.build                 | 1 +
+ subprojects/packagefiles/syn-2-rs/meson.build                   | 1 +
+ subprojects/packagefiles/unicode-ident-1-rs/meson.build         | 1 +
+ 11 files changed, 11 insertions(+)
 
-diff --git a/hw/core/eif.c b/hw/core/eif.c
-index cbcd80de58b..25f2aedf3fa 100644
---- a/hw/core/eif.c
-+++ b/hw/core/eif.c
-@@ -123,6 +123,10 @@ static bool read_eif_header(FILE *f, EifHeader *header, uint32_t *crc,
- 
-     for (int i = 0; i < MAX_SECTIONS; ++i) {
-         header->section_sizes[i] = be64_to_cpu(header->section_sizes[i]);
-+        if (header->section_sizes[i] > SSIZE_MAX) {
-+            error_setg(errp, "Invalid EIF image. Section size out of bounds");
-+            return false;
-+        }
-     }
- 
-     header->unused = be32_to_cpu(header->unused);
-@@ -282,7 +286,12 @@ static bool get_signature_fingerprint_sha384(FILE *eif, uint64_t size,
-     struct cbor_load_result result;
-     bool ret = false;
- 
--    sig = g_malloc(size);
-+    sig = g_try_malloc(size);
-+    if (!sig) {
-+        error_setg(errp, "Out of memory reading signature section");
-+        goto cleanup;
-+    }
-+
-     got = fread(sig, 1, size, eif);
-     if ((uint64_t) got != size) {
-         error_setg(errp, "Failed to read EIF signature section data");
-@@ -324,7 +333,12 @@ static bool get_signature_fingerprint_sha384(FILE *eif, uint64_t size,
-         error_setg(errp, "Invalid signature CBOR");
-         goto cleanup;
-     }
--    cert = g_malloc(len);
-+    cert = g_try_malloc(len);
-+    if (!cert) {
-+        error_setg(errp, "Out of memory reading signature section");
-+        goto cleanup;
-+    }
-+
-     for (int i = 0; i < len; ++i) {
-         cbor_item_t *tmp = cbor_array_get(pair->value, i);
-         if (!tmp) {
-@@ -503,7 +517,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
-                 goto cleanup;
-             }
- 
--            ptr = g_malloc(hdr.section_size);
-+            ptr = g_try_malloc(hdr.section_size);
-+            if (!ptr) {
-+                error_setg(errp, "Out of memory reading kernel section");
-+                goto cleanup;
-+            }
- 
-             iov_ptr = g_malloc(sizeof(struct iovec));
-             iov_ptr->iov_base = ptr;
-@@ -528,7 +546,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
-                 goto cleanup;
-             }
-             size = hdr.section_size;
--            *cmdline = g_malloc(size + 1);
-+            *cmdline = g_try_malloc(size + 1);
-+            if (!cmdline) {
-+                error_setg(errp, "Out of memory reading command line section");
-+                goto cleanup;
-+            }
-             if (!read_eif_cmdline(f, size, *cmdline, &crc, errp)) {
-                 goto cleanup;
-             }
-@@ -567,7 +589,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
-                 }
-             }
- 
--            ptr = g_malloc(hdr.section_size);
-+            ptr = g_try_malloc(hdr.section_size);
-+            if (!ptr) {
-+                error_setg(errp, "Out of memory reading initrd section");
-+                goto cleanup;
-+            }
- 
-             iov_ptr = g_malloc(sizeof(struct iovec));
-             iov_ptr->iov_base = ptr;
-@@ -606,7 +632,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
-             uint8_t *buf;
-             size_t got;
-             uint64_t size = hdr.section_size;
--            buf = g_malloc(size);
-+            buf = g_try_malloc(size);
-+            if (!buf) {
-+                error_setg(errp, "Out of memory reading unknown section");
-+                goto cleanup;
-+            }
-             got = fread(buf, 1, size, f);
-             if ((uint64_t) got != size) {
-                 g_free(buf);
-@@ -662,7 +692,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
-             goto cleanup;
-         }
- 
--        ptr = g_malloc(machine_initrd_size);
-+        ptr = g_try_malloc(machine_initrd_size);
-+        if (!ptr) {
-+            error_setg(errp, "Out of memory reading initrd file");
-+            goto cleanup;
-+        }
- 
-         iov_ptr = g_malloc(sizeof(struct iovec));
-         iov_ptr->iov_base = ptr;
+diff --git a/subprojects/packagefiles/arbitrary-int-1-rs/meson.build b/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
+index 34a189cbaec..cff3f62ce74 100644
+--- a/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
++++ b/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
+@@ -1,4 +1,5 @@
+ project('arbitrary-int-1-rs', 'rust',
++  meson_version: '>=1.5.0',
+   version: '1.2.7',
+   license: 'MIT',
+   default_options: [])
+diff --git a/subprojects/packagefiles/bilge-0.2-rs/meson.build b/subprojects/packagefiles/bilge-0.2-rs/meson.build
+index a6ed4a8f0cd..e69bac91b40 100644
+--- a/subprojects/packagefiles/bilge-0.2-rs/meson.build
++++ b/subprojects/packagefiles/bilge-0.2-rs/meson.build
+@@ -1,6 +1,7 @@
+ project(
+   'bilge-0.2-rs',
+   'rust',
++  meson_version: '>=1.5.0',
+   version : '0.2.0',
+   license : 'MIT or Apache-2.0',
+ )
+diff --git a/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build b/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
+index 80243c7024d..f8f3486fc08 100644
+--- a/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
++++ b/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
+@@ -1,4 +1,5 @@
+ project('bilge-impl-0.2-rs', 'rust',
++  meson_version: '>=1.5.0',
+   version: '0.2.0',
+   license: 'MIT OR Apache-2.0',
+   default_options: [])
+diff --git a/subprojects/packagefiles/either-1-rs/meson.build b/subprojects/packagefiles/either-1-rs/meson.build
+index a5842eb3a6a..608e64e31fc 100644
+--- a/subprojects/packagefiles/either-1-rs/meson.build
++++ b/subprojects/packagefiles/either-1-rs/meson.build
+@@ -1,4 +1,5 @@
+ project('either-1-rs', 'rust',
++  meson_version: '>=1.5.0',
+   version: '1.12.0',
+   license: 'MIT OR Apache-2.0',
+   default_options: [])
+diff --git a/subprojects/packagefiles/itertools-0.11-rs/meson.build b/subprojects/packagefiles/itertools-0.11-rs/meson.build
+index 13d2d27019d..30982a4ee76 100644
+--- a/subprojects/packagefiles/itertools-0.11-rs/meson.build
++++ b/subprojects/packagefiles/itertools-0.11-rs/meson.build
+@@ -1,4 +1,5 @@
+ project('itertools-0.11-rs', 'rust',
++  meson_version: '>=1.5.0',
+   version: '0.11.0',
+   license: 'MIT OR Apache-2.0',
+   default_options: [])
+diff --git a/subprojects/packagefiles/proc-macro-error-1-rs/meson.build b/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
+index 38ea7b89d39..ae27a696862 100644
+--- a/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
++++ b/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
+@@ -1,4 +1,5 @@
+ project('proc-macro-error-1-rs', 'rust',
++  meson_version: '>=1.5.0',
+   version: '1.0.4',
+   license: 'MIT OR Apache-2.0',
+   default_options: [])
+diff --git a/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build b/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
+index d900c54cfd1..3281b264333 100644
+--- a/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
++++ b/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
+@@ -1,4 +1,5 @@
+ project('proc-macro-error-attr-1-rs', 'rust',
++  meson_version: '>=1.5.0',
+   version: '1.12.0',
+   license: 'MIT OR Apache-2.0',
+   default_options: [])
+diff --git a/subprojects/packagefiles/proc-macro2-1-rs/meson.build b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
+index 818ec59336b..288323eaba8 100644
+--- a/subprojects/packagefiles/proc-macro2-1-rs/meson.build
++++ b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
+@@ -1,4 +1,5 @@
+ project('proc-macro2-1-rs', 'rust',
++  meson_version: '>=1.5.0',
+   version: '1.0.84',
+   license: 'MIT OR Apache-2.0',
+   default_options: [])
+diff --git a/subprojects/packagefiles/quote-1-rs/meson.build b/subprojects/packagefiles/quote-1-rs/meson.build
+index d36609bd3c8..7f7792569b9 100644
+--- a/subprojects/packagefiles/quote-1-rs/meson.build
++++ b/subprojects/packagefiles/quote-1-rs/meson.build
+@@ -1,4 +1,5 @@
+ project('quote-1-rs', 'rust',
++  meson_version: '>=1.5.0',
+   version: '1.12.0',
+   license: 'MIT OR Apache-2.0',
+   default_options: [])
+diff --git a/subprojects/packagefiles/syn-2-rs/meson.build b/subprojects/packagefiles/syn-2-rs/meson.build
+index a53335f3092..bb3c15539be 100644
+--- a/subprojects/packagefiles/syn-2-rs/meson.build
++++ b/subprojects/packagefiles/syn-2-rs/meson.build
+@@ -1,4 +1,5 @@
+ project('syn-2-rs', 'rust',
++  meson_version: '>=1.5.0',
+   version: '2.0.66',
+   license: 'MIT OR Apache-2.0',
+   default_options: [])
+diff --git a/subprojects/packagefiles/unicode-ident-1-rs/meson.build b/subprojects/packagefiles/unicode-ident-1-rs/meson.build
+index 54f23768545..9d76ebbd1ad 100644
+--- a/subprojects/packagefiles/unicode-ident-1-rs/meson.build
++++ b/subprojects/packagefiles/unicode-ident-1-rs/meson.build
+@@ -1,4 +1,5 @@
+ project('unicode-ident-1-rs', 'rust',
++  meson_version: '>=1.5.0',
+   version: '1.0.12',
+   license: '(MIT OR Apache-2.0) AND Unicode-DFS-2016',
+   default_options: [])
 -- 
 2.47.0
 
