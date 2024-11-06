@@ -4,53 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C1ADD44D58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F01B2D44D59
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 13:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8fg1-0003Xk-H5; Wed, 06 Nov 2024 08:02:26 -0500
+	id 1t8fgH-0003bO-1o; Wed, 06 Nov 2024 08:02:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t8feT-0003KY-Qz
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:00:50 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t8feR-0008JV-B2
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:00:49 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6758A4E600F;
- Wed, 06 Nov 2024 14:00:33 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id aHu1Vqh8pPec; Wed,  6 Nov 2024 14:00:31 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6E9424E6004; Wed, 06 Nov 2024 14:00:31 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6C8E7757B1C;
- Wed, 06 Nov 2024 14:00:31 +0100 (CET)
-Date: Wed, 6 Nov 2024 14:00:31 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-cc: peter.maydell@linaro.org, huth@tuxfamily.org, berrange@redhat.com, 
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 1/2] next-kbd: convert to use
- qemu_input_handler_register()
-In-Reply-To: <20241106120928.242443-2-mark.cave-ayland@ilande.co.uk>
-Message-ID: <4c127d3c-3610-e6b7-9358-3d88d28477a0@eik.bme.hu>
-References: <20241106120928.242443-1-mark.cave-ayland@ilande.co.uk>
- <20241106120928.242443-2-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8fev-0003OL-G5
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:01:35 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t8fei-0008LX-RF
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 08:01:10 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a9e8522c10bso138570566b.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 05:00:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730898055; x=1731502855; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jhFk8sXF0+0vMDlC/wtmfmSOJXSyyl3ZNW10dFJvH8s=;
+ b=smMpfaLT3X+xZtJp4dba41BDLRVtuTXbjRRdIYT7G4kXNCT4n4IPnAwsb78Q9aEyIb
+ WpK37+1hneSMJZl4AylYqkGkaHM+LwJMEcQ3rowZFIAUux9H07i0t2SlhZSl9uwNI0v5
+ JifMAULGwJv//3NQat8VUxAw4lDfpHxMnvj+lLSRaBxfah7IYbAmrPCqYzVxub1+0rNK
+ 8JoDp1yonKToSwR1a8/YOPsb+HHE4CInH6eh5Y7zqgO9weWdohuH3hskp+RWvrhDsPGP
+ do66hiPEl+LOGiVPLzzC8n8ucXUw0bkbUrTXjN4YTy0VgwgTVhxqWfGrMsrjessMRBgI
+ 4njw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730898055; x=1731502855;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jhFk8sXF0+0vMDlC/wtmfmSOJXSyyl3ZNW10dFJvH8s=;
+ b=lBCAm7YP0NepWEG2NbtIfDNaZ2otqESwZFCYTnwLlSc6qtJqLEXwZp+VmGlYCPW1/o
+ V8YHSooPoJA5EkDPFTJEfk0tYvZrJPv617mBijTN6mgQH/6mGYW5HpQt5cXiTkkpJaf7
+ y8WnWo38Dy3wR3gX81MmlWXECNDmjko8Nb110nH+2SbVN7k+VUUXyTSXhglngfYwY4wE
+ Ke8O5m3zrsF0LJTyAz/MuTjInsa+rqt6F4fmUQuRgSNIiLbHF2/MA6F3ebzY9kfh/D4O
+ YJ6/O8vN4hcvLfgROEMp+eG/mz7Odnb3MsIUoYZT5WAqxKb1g3LvKyo2Wk7L5q2rKGYM
+ o3ZQ==
+X-Gm-Message-State: AOJu0Yy8zfeoEjE1yZYwygEnrdTF/wz/NjqFj5dyLWWyX9/2qSReFoFz
+ 3un0Yhi20ux5im4RYCVval2wIrpB+pS5aN4a47Air8F/dV0wz6sqMxasUJZ7R646EFWEmSoIgqO
+ kEGICqc3/7F7pZCJ1Wj6o4K576MWy7ZnV0WvjPg==
+X-Google-Smtp-Source: AGHT+IEIbv26AHpMeik7ogNJXmmv7jlx0fvLwc8iofMhChEjjQZWYkmy4g3sNHHoo06SCHcsU5ueSbiN9951z8EOu/s=
+X-Received: by 2002:a17:907:9805:b0:a9d:e1cf:b9d3 with SMTP id
+ a640c23a62f3a-a9ec66049bfmr283588166b.12.1730898054735; Wed, 06 Nov 2024
+ 05:00:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <20241103152455.202462-1-salil.mehta@huawei.com>
+ <CAFEAcA91DoU4dAHYy6OOeMjEQ+0LGZX8KM-rKsCh89UnFS4yTQ@mail.gmail.com>
+ <7d27ceab963441dc8355d06e6bc4b88d@huawei.com>
+In-Reply-To: <7d27ceab963441dc8355d06e6bc4b88d@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 6 Nov 2024 13:00:43 +0000
+Message-ID: <CAFEAcA9Jhz9a-X0B_bW++3kUePzTENJfq520A0CEst1o+QES4Q@mail.gmail.com>
+Subject: Re: [PATCH] arm/virt: Extract common code to wire GICC<->vCPU IRQs
+ for reuse
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
+ "mst@redhat.com" <mst@redhat.com>, 
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>, 
+ Jonathan Cameron <jonathan.cameron@huawei.com>, 
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
+ "imammedo@redhat.com" <imammedo@redhat.com>, 
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "gshan@redhat.com" <gshan@redhat.com>, 
+ "maz@kernel.org" <maz@kernel.org>, "will@kernel.org" <will@kernel.org>, 
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>, 
+ "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ "lpieralisi@kernel.org" <lpieralisi@kernel.org>, 
+ "david@redhat.com" <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "andrew.jones@linux.dev" <andrew.jones@linux.dev>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, 
+ "npiggin@gmail.com" <npiggin@gmail.com>,
+ "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>, 
+ "linux@armlinux.org.uk" <linux@armlinux.org.uk>, 
+ "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>, 
+ "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>, 
+ "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>, 
+ "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>,
+ "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
+ "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
+ zhukeqian <zhukeqian1@huawei.com>, 
+ "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
+ "wangyanan (Y)" <wangyanan55@huawei.com>, 
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>,
+ "maobibo@loongson.cn" <maobibo@loongson.cn>, 
+ "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ "shahuang@redhat.com" <shahuang@redhat.com>, 
+ "zhao1.liu@intel.com" <zhao1.liu@intel.com>, Linuxarm <linuxarm@huawei.com>, 
+ "gustavo.romero@linaro.org" <gustavo.romero@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,226 +123,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 6 Nov 2024, Mark Cave-Ayland wrote:
-> Convert the next-kbd device from the legacy UI qemu_add_kbd_event_handler()
-> function to use qemu_input_handler_register().
+On Tue, 5 Nov 2024 at 22:20, Salil Mehta <salil.mehta@huawei.com> wrote:
 >
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-> ---
-> hw/m68k/next-kbd.c | 163 ++++++++++++++++++++++++++++++---------------
-> 1 file changed, 108 insertions(+), 55 deletions(-)
+> HI Peter,
 >
-> diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
-> index bc67810f31..377917c1ec 100644
-> --- a/hw/m68k/next-kbd.c
-> +++ b/hw/m68k/next-kbd.c
-> @@ -68,7 +68,6 @@ struct NextKBDState {
->     uint16_t shift;
-> };
+> >  From: Peter Maydell <peter.maydell@linaro.org>
+> >  Sent: Monday, November 4, 2024 1:27 PM
+> >  To: Salil Mehta <salil.mehta@huawei.com>
+> >
+> >  On Sun, 3 Nov 2024 at 15:25, Salil Mehta <salil.mehta@huawei.com> wrote:
+> >  >
+> >  > Extract common GIC and CPU interrupt wiring code to improve code
+> >  > readability and modularity, supporting reuse in future patch sets.
+> >  > This refactor is benign and introduces *no* functional changes.
+> >  >
+> >  > Note: This patch has been isolated from a larger patch set to
+> >  > facilitate early merging and reduce the complexity of the original
+> >  > set, as it operates independently. All original tags and author
+> >  > contributions are retained.
+> >
+> >  I would prefer to see refactoring patches in the context of the series that
+> >  makes them necessary. As it stands, there doesn't really seem to be much
+> >  benefit to this change.
 >
-> -static void queue_code(void *opaque, int code);
 >
-> /* lots of magic numbers here */
-> static uint32_t kbd_read_byte(void *opaque, hwaddr addr)
-> @@ -166,68 +165,75 @@ static const MemoryRegionOps kbd_ops = {
->     .endianness = DEVICE_NATIVE_ENDIAN,
-> };
->
-> -static void nextkbd_event(void *opaque, int ch)
-> -{
-> -    /*
-> -     * Will want to set vars for caps/num lock
-> -     * if (ch & 0x80) -> key release
-> -     * there's also e0 escaped scancodes that might need to be handled
-> -     */
-> -    queue_code(opaque, ch);
-> -}
-> -
-> -static const unsigned char next_keycodes[128] = {
-> -    0x00, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x50, 0x4F,
-> -    0x4E, 0x1E, 0x1F, 0x20, 0x1D, 0x1C, 0x1B, 0x00,
-> -    0x42, 0x43, 0x44, 0x45, 0x48, 0x47, 0x46, 0x06,
-> -    0x07, 0x08, 0x00, 0x00, 0x2A, 0x00, 0x39, 0x3A,
-> -    0x3B, 0x3C, 0x3D, 0x40, 0x3F, 0x3E, 0x2D, 0x2C,
-> -    0x2B, 0x26, 0x00, 0x00, 0x31, 0x32, 0x33, 0x34,
-> -    0x35, 0x37, 0x36, 0x2e, 0x2f, 0x30, 0x00, 0x00,
-> -    0x00, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-> +#define NEXTKBD_NO_KEY 0xff
+> Ok no issues. Just to confirm, your above comment is just specific to this patch
+> or all the 3 individual patches I had sent for review?
 
-Now you don't need this 0xff define any more because you can use 0 as no 
-key value then the [0 ... Q_KEY_CODE__MAX] init below can also be dropped 
-because static variables are 0 init automatically.
+It applies to all of them (and as a general principle).
 
-Regards,
-BALATON Zoltan
-
-> +static const int qcode_to_nextkbd_keycode[] = {
-> +    /* Make sure future additions are automatically set to NEXTKBD_NO_KEY */
-> +    [0 ... Q_KEY_CODE__MAX]    = NEXTKBD_NO_KEY,
-> +
-> +    [Q_KEY_CODE_ESC]           = 0x49,
-> +    [Q_KEY_CODE_1]             = 0x4a,
-> +    [Q_KEY_CODE_2]             = 0x4b,
-> +    [Q_KEY_CODE_3]             = 0x4c,
-> +    [Q_KEY_CODE_4]             = 0x4d,
-> +    [Q_KEY_CODE_5]             = 0x50,
-> +    [Q_KEY_CODE_6]             = 0x4f,
-> +    [Q_KEY_CODE_7]             = 0x4e,
-> +    [Q_KEY_CODE_8]             = 0x1e,
-> +    [Q_KEY_CODE_9]             = 0x1f,
-> +    [Q_KEY_CODE_0]             = 0x20,
-> +    [Q_KEY_CODE_MINUS]         = 0x1d,
-> +    [Q_KEY_CODE_EQUAL]         = 0x1c,
-> +    [Q_KEY_CODE_BACKSPACE]     = 0x1b,
-> +
-> +    [Q_KEY_CODE_Q]             = 0x42,
-> +    [Q_KEY_CODE_W]             = 0x43,
-> +    [Q_KEY_CODE_E]             = 0x44,
-> +    [Q_KEY_CODE_R]             = 0x45,
-> +    [Q_KEY_CODE_T]             = 0x48,
-> +    [Q_KEY_CODE_Y]             = 0x47,
-> +    [Q_KEY_CODE_U]             = 0x46,
-> +    [Q_KEY_CODE_I]             = 0x06,
-> +    [Q_KEY_CODE_O]             = 0x07,
-> +    [Q_KEY_CODE_P]             = 0x08,
-> +    [Q_KEY_CODE_RET]           = 0x2a,
-> +    [Q_KEY_CODE_A]             = 0x39,
-> +    [Q_KEY_CODE_S]             = 0x3a,
-> +
-> +    [Q_KEY_CODE_D]             = 0x3b,
-> +    [Q_KEY_CODE_F]             = 0x3c,
-> +    [Q_KEY_CODE_G]             = 0x3d,
-> +    [Q_KEY_CODE_H]             = 0x40,
-> +    [Q_KEY_CODE_J]             = 0x3f,
-> +    [Q_KEY_CODE_K]             = 0x3e,
-> +    [Q_KEY_CODE_L]             = 0x2d,
-> +    [Q_KEY_CODE_SEMICOLON]     = 0x2c,
-> +    [Q_KEY_CODE_APOSTROPHE]    = 0x2b,
-> +    [Q_KEY_CODE_GRAVE_ACCENT]  = 0x26,
-> +    [Q_KEY_CODE_Z]             = 0x31,
-> +    [Q_KEY_CODE_X]             = 0x32,
-> +    [Q_KEY_CODE_C]             = 0x33,
-> +    [Q_KEY_CODE_V]             = 0x34,
-> +
-> +    [Q_KEY_CODE_B]             = 0x35,
-> +    [Q_KEY_CODE_N]             = 0x37,
-> +    [Q_KEY_CODE_M]             = 0x36,
-> +    [Q_KEY_CODE_COMMA]         = 0x2e,
-> +    [Q_KEY_CODE_DOT]           = 0x2f,
-> +    [Q_KEY_CODE_SLASH]         = 0x30,
-> +
-> +    [Q_KEY_CODE_SPC]           = 0x38,
-> };
->
-> -static void queue_code(void *opaque, int code)
-> +static void nextkbd_put_keycode(NextKBDState *s, int keycode)
-> {
-> -    NextKBDState *s = NEXTKBD(opaque);
->     KBDQueue *q = &s->queue;
-> -    int key = code & KD_KEYMASK;
-> -    int release = code & 0x80;
-> -    static int ext;
-> -
-> -    if (code == 0xE0) {
-> -        ext = 1;
-> -    }
-> -
-> -    if (code == 0x2A || code == 0x1D || code == 0x36) {
-> -        if (code == 0x2A) {
-> -            s->shift = KD_LSHIFT;
-> -        } else if (code == 0x36) {
-> -            s->shift = KD_RSHIFT;
-> -            ext = 0;
-> -        } else if (code == 0x1D && !ext) {
-> -            s->shift = KD_LCOMM;
-> -        } else if (code == 0x1D && ext) {
-> -            ext = 0;
-> -            s->shift = KD_RCOMM;
-> -        }
-> -        return;
-> -    } else if (code == (0x2A | 0x80) || code == (0x1D | 0x80) ||
-> -               code == (0x36 | 0x80)) {
-> -        s->shift = 0;
-> -        return;
-> -    }
->
->     if (q->count >= KBD_QUEUE_SIZE) {
->         return;
->     }
->
-> -    q->data[q->wptr] = next_keycodes[key] | release;
-> -
-> +    q->data[q->wptr] = keycode;
->     if (++q->wptr == KBD_QUEUE_SIZE) {
->         q->wptr = 0;
->     }
-> @@ -241,6 +247,53 @@ static void queue_code(void *opaque, int code)
->     /* s->update_irq(s->update_arg, 1); */
-> }
->
-> +static void nextkbd_event(DeviceState *dev, QemuConsole *src, InputEvent *evt)
-> +{
-> +    NextKBDState *s = NEXTKBD(dev);
-> +    int qcode, keycode;
-> +    bool key_down = evt->u.key.data->down;
-> +
-> +    qcode = qemu_input_key_value_to_qcode(evt->u.key.data->key);
-> +    if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
-> +        return;
-> +    }
-> +
-> +    /* Shift key currently has no keycode, so handle separately */
-> +    if (qcode == Q_KEY_CODE_SHIFT) {
-> +        if (key_down) {
-> +            s->shift |= KD_LSHIFT;
-> +        } else {
-> +            s->shift &= ~KD_LSHIFT;
-> +        }
-> +    }
-> +
-> +    if (qcode == Q_KEY_CODE_SHIFT_R) {
-> +        if (key_down) {
-> +            s->shift |= KD_RSHIFT;
-> +        } else {
-> +            s->shift &= ~KD_RSHIFT;
-> +        }
-> +    }
-> +
-> +    keycode = qcode_to_nextkbd_keycode[qcode];
-> +    if (keycode == NEXTKBD_NO_KEY) {
-> +        return;
-> +    }
-> +
-> +    /* If key release event, create keyboard break code */
-> +    if (!key_down) {
-> +        keycode |= 0x80;
-> +    }
-> +
-> +    nextkbd_put_keycode(s, keycode);
-> +}
-> +
-> +static const QemuInputHandler nextkbd_handler = {
-> +    .name  = "QEMU NeXT Keyboard",
-> +    .mask  = INPUT_EVENT_MASK_KEY,
-> +    .event = nextkbd_event,
-> +};
-> +
-> static void nextkbd_reset(DeviceState *dev)
-> {
->     NextKBDState *nks = NEXTKBD(dev);
-> @@ -256,7 +309,7 @@ static void nextkbd_realize(DeviceState *dev, Error **errp)
->     memory_region_init_io(&s->mr, OBJECT(dev), &kbd_ops, s, "next.kbd", 0x1000);
->     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
->
-> -    qemu_add_kbd_event_handler(nextkbd_event, s);
-> +    qemu_input_handler_register(dev, &nextkbd_handler);
-> }
->
-> static const VMStateDescription nextkbd_vmstate = {
->
+thanks
+-- PMM
 
