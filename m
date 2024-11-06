@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47FCED59F5A
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:46:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8661D59F56
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8k6Z-00071z-GU; Wed, 06 Nov 2024 12:46:07 -0500
+	id 1t8k85-00089A-2W; Wed, 06 Nov 2024 12:47:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8k6O-0006vT-Nb
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:45:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8k6H-0006ol-V4
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:45:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730915148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=SiBrVwamQ1vQgryWgCM1luhKwjYI+AijZ8lrSn/wlvcMqHMLHLNx4o7izIJ1eZ7KAagual
- 4NjryRxL/auCWUkuOur09l0JBATNKHuY+btQgdOgDDmrMjguBoabcaVyoKILpOPmGQb2Xt
- b/8WgYh7v8SnHviWqHyRziB8YlJ5vTw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-tyFP3ySUN7u2PoNvz4QNLg-1; Wed, 06 Nov 2024 12:45:45 -0500
-X-MC-Unique: tyFP3ySUN7u2PoNvz4QNLg-1
-X-Mimecast-MFC-AGG-ID: tyFP3ySUN7u2PoNvz4QNLg
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4315b7b0c16so432335e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:45:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8k83-00088b-FK
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:47:39 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8k81-00071v-Pe
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:47:39 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4315df7b43fso757205e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:47:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730915256; x=1731520056; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YZ93fIKCMP7JhbMe+xz5YU8zRYunWzufrvuaSjfxrbU=;
+ b=wT7azKmuxvV3vnDLLipY9O1N2c2a7jnRIiAT+50NNGwIfN6E7Tv2u2H7ckQJmL8Gd2
+ vJLSIzKnXirDt5Vpkly6eLTvz/szLRoXMzc2a1CcQUcAHVjgxRPf/C8zp8ErDU0pOkkx
+ jirfrQMLWWZDa4L4xO0zmXKx9W9ukjS4tRGQIt5DsFOKflCBbfgwR/o1ziJEhM6XI/cO
+ sXBNBrpOO8QWQ4SPN52SgMhk2MFWC17Ex2TqjBv2rW8HuPwAt7lDO5M5NGElMIDZv1YL
+ 6+7Givzvya7lTka7jOM9NTAXzDUXYeRpgtH56q7NsWA89QCbCHb06cUlRFSJVJofe08H
+ Yugw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730915144; x=1731519944;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=GTGcMAoNdkH6Ji+71gxXh1yfweLILpE5jb3OE+hV3hysXCop1kduM7hMf3dFwYVc8d
- TW9ve3SZM4GenthSV+NwSAkhijSn/tCvIPOqsITNU6tcPIrkj3kx5/Pjw2kcoGfyNXDe
- 7T6ac77y72s1koTwLkLez/1qN+GtfD/MJc2nPQJ90Z3YNiBmT5wMAmyJyQMtD0/ICnAJ
- ROCbhRFewhH0rWZGLG6D5T5ZXXVz33t1YBhiXNmeiK1v6D1fGMZOreWyzdHjE4vXLlXF
- Msb61vYLpnWGnZ5V7g4b+9cEmfwr/0BaMSIZ60gIo773pnV3oey2dSTrswGDBA1tuO0P
- vUjQ==
-X-Gm-Message-State: AOJu0Yy73ZY9n3VsbEdTsI5xUduQA6GnHeMh1zuZhuBNAR7HlAn7rH6f
- 9McwVIXsEhChZ8ibVNeZrceoXQEX9s+IgBpBwyfO/TVPOX8rRtv+zsi+iJv3X7j9TquBkL4upIA
- T2GkdomLNLVw3j9Wf9bq96LxTSJaCxwF8A6nUCi1j/JF6GHPoxknz
-X-Received: by 2002:a05:600c:5118:b0:42c:b995:2100 with SMTP id
- 5b1f17b1804b1-4319ac75a0amr328756735e9.6.1730915143994; 
- Wed, 06 Nov 2024 09:45:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHYM7HDT1TIperVpiPQ+D0igS4VxYsmwopSoaPsbMaYQJgZQENePHKwarpaZM1+oJtl0vswTw==
-X-Received: by 2002:a05:600c:5118:b0:42c:b995:2100 with SMTP id
- 5b1f17b1804b1-4319ac75a0amr328756635e9.6.1730915143663; 
- Wed, 06 Nov 2024 09:45:43 -0800 (PST)
-Received: from [192.168.10.3] ([151.49.226.83])
+ d=1e100.net; s=20230601; t=1730915256; x=1731520056;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YZ93fIKCMP7JhbMe+xz5YU8zRYunWzufrvuaSjfxrbU=;
+ b=C/kq/OsZV/TPdfiPsysE7NLP3FhGa2nOSH95Ta6BfICcrRqefwWO8J/ogyxdxMo/cH
+ RUQZgHAc67Mqbt9mBveFaishCFUcCmBVrBgp7ujcjQx/IFBYJmpCAt7L1BBY5gwTAb9J
+ cN8vBN6F+uIpkCqQNnNmxrC1HwWWcvmyVfTplaYlaSr8YmzDjpuMIyl3uHVrvOc/yQjW
+ jdYMggB3TIvU6ROVhNAya0BZXK6x9gYlXpZ5qHiscgg0oD7Rne5muGrJgE1k7VoldOkq
+ YWNM7iPjGxGSjQS3yGk+oRbtcZ5fM544YjvqRX5q2KcSt8s5JJuvISL8padruKNBUvJx
+ pq9A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVxB32QBcFmdmzPQXK58pgiW3UGrW8Dk2Ne29saPMiymzH092DYt03bEFHrsPpDmwj9z1w+YuAUt9bB@nongnu.org
+X-Gm-Message-State: AOJu0YzXXz6QaacOplTpjGho8sUCDCGLhvIIP4O560lE/9b78qHopLFa
+ vzYbKWyzrdGs04wk1rLXbYgUDQF0OftC/Bpfb8p5sD/v3zgzlSmphpolOnX7WaM=
+X-Google-Smtp-Source: AGHT+IHMfGixK6oBYA2sqyaV/ISNA0x2tF39s25xLltAzRjipGQIlSXRMsR5LTQNlu0dWbKYkSLErA==
+X-Received: by 2002:adf:fbd2:0:b0:37d:5299:c406 with SMTP id
+ ffacd0b85a97d-380611e4b44mr26394339f8f.38.1730915255620; 
+ Wed, 06 Nov 2024 09:47:35 -0800 (PST)
+Received: from [10.134.195.192] ([193.32.126.165])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa709ec7sm32399065e9.35.2024.11.06.09.45.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2024 09:45:43 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Alexander Graf <graf@amazon.com>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, qemu-stable@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: Re: [PATCH] target/i386: Fix legacy page table walk
-Date: Wed,  6 Nov 2024 18:45:39 +0100
-Message-ID: <20241106174540.558375-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241106154329.67218-1-graf@amazon.com>
-References: 
+ ffacd0b85a97d-381c10b7b32sm19873482f8f.18.2024.11.06.09.47.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Nov 2024 09:47:35 -0800 (PST)
+Message-ID: <04fd0b86-4371-494e-a331-3d5d735f0d77@linaro.org>
+Date: Wed, 6 Nov 2024 09:47:33 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] eif: cope with huge section offsets
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: dorjoychy111@gmail.com
+References: <20241106174241.556373-1-pbonzini@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20241106174241.556373-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,8 +97,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
 
-Paolo
 
+On 11/6/24 09:42, Paolo Bonzini wrote:
+> Check for overflow to avoid that fseek() receives a sign-extended value.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   include/qemu/osdep.h | 4 ++++
+>   hw/core/eif.c        | 4 ++++
+>   2 files changed, 8 insertions(+)
+> 
+> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+> index fe7c3c5f673..fdff07fd992 100644
+> --- a/include/qemu/osdep.h
+> +++ b/include/qemu/osdep.h
+> @@ -297,6 +297,10 @@ void QEMU_ERROR("code path is reachable")
+>   #error building with G_DISABLE_ASSERT is not supported
+>   #endif
+>   
+> +#ifndef OFF_MAX
+> +#define OFF_MAX (sizeof (off_t) == 8 ? INT64_MAX : INT32_MAX)
+> +#endif
+> +
+>   #ifndef O_LARGEFILE
+>   #define O_LARGEFILE 0
+>   #endif
+> diff --git a/hw/core/eif.c b/hw/core/eif.c
+> index 7f3b2edc9a7..cbcd80de58b 100644
+> --- a/hw/core/eif.c
+> +++ b/hw/core/eif.c
+> @@ -115,6 +115,10 @@ static bool read_eif_header(FILE *f, EifHeader *header, uint32_t *crc,
+>   
+>       for (int i = 0; i < MAX_SECTIONS; ++i) {
+>           header->section_offsets[i] = be64_to_cpu(header->section_offsets[i]);
+> +        if (header->section_offsets[i] > OFF_MAX) {
+
+Maybe we could add a comment that sections_offsets is unsigned, as it 
+can be confusing to read value > INT_MAX without more context.
+
+> +            error_setg(errp, "Invalid EIF image. Section offset out of bounds");
+> +            return false;
+> +        }
+>       }
+>   
+>       for (int i = 0; i < MAX_SECTIONS; ++i) {
+
+Else,
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
