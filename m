@@ -4,90 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6AF8D59F7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 22:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6249ED59F7F
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 22:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8ow1-0007Go-Mg; Wed, 06 Nov 2024 17:55:33 -0500
+	id 1t8oww-0007aw-Mt; Wed, 06 Nov 2024 17:56:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t8ow0-0007G3-BK; Wed, 06 Nov 2024 17:55:32 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t8ovy-0002UW-Nt; Wed, 06 Nov 2024 17:55:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=7zmiKWqxLhVTrE310twB6jPlyzzM5mQySRnKBJKboww=; b=nOR0vakk0J4hiHltHCNYYxeX9J
- fL4Y5ASNNkCJQgHrTTlYHIyxb4ANFvqF7CmIT1sKJMIAcMOnTTEg6zBcNNrXhcWABTRJJeSq0Leno
- zAlns5oVSYUzDEvA53/Q/I6E6ltyfIWdLJx1o6PI1XkMFqNCsuHSPW+tFoQaQndEva3eSz85QsWOI
- zbxusZk2uauEV4/lIO6zIVtOfsQqY4Ckm8vZrFIFaa9I3ShWMXCK7eTjyTx8aHwyFv2C65LfVDRXy
- cpqB0J9YWMj8QJwveMwmH8WdY3wqpS6YtbFHzB7nnZ9A1joKhc4gzC19QgcYA/ZJP68TsYAAGaTbs
- HmCpF4ZEe8wscldFtPZtvTYUZlmc8o8MxtinaFFFV1k1pyeHwVAdiJGi0AhG8/h0f2wJE5/UX5ax9
- AWnwgYOjE18P2EUUxI6vEWz2qJ8OTZvfxeKeu9QrIM1TQRuR/ry4Q35rN168Of6GCr84w5lhnkCsV
- YVxKj5WVG/1yCUFHGlfXNWvS5cVht8bB1WGgHZmu2gUqNAms8D2AW0kuAwrKiyl+n98A/wjl/3avk
- gs8b+MHyGEYEBXkMfl9Yj0/o36yd3aT6GujPE+5l6UWVUAVKVTHl8aTk43Erp6/R2UlljsKNcNpb9
- jBHb/K1NLGohqCWFiE3Yez6SQ9SkIV8pBa3uiOmV4=;
-Received: from [2a00:23c4:8bb8:f600:5c84:8fbb:e5d9:991a]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t8ovR-0005po-6K; Wed, 06 Nov 2024 22:55:01 +0000
-Message-ID: <d577b608-9494-4041-84a0-a59ae5ba9702@ilande.co.uk>
-Date: Wed, 6 Nov 2024 22:55:13 +0000
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8owu-0007aa-7x
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 17:56:28 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t8ows-0002ZR-M0
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 17:56:28 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43167ff0f91so3215435e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 14:56:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730933785; x=1731538585; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4XSkS0nndTi7QVOx8hXqnft7dLkjB0YNG0pZTjCZTKA=;
+ b=iRXhuyytv5d521Rmei7j6TjJ/Mc7yg5SQ/nPw6HaE8t5h/VeiyQi4r0L+g1bQUcGYT
+ 1EtljAdbZSPQda4bbLFi5Ytisj5LxSwZPiruwsWax6OORD3h2FX+bRQGUCm9HU3vBocj
+ BNSuno/CJU6WUkH0rBIjffDfeWHdlz92f9A7pSORBhpNcGCi1Sa4JTy2zSY9I4915mri
+ Sc+jR35LEOo4DJbsyPkC38XedIHiOvHS50IX6/xlM1GztqziR2fJ7rdTm2gUKJ0ZWB/C
+ MVCsRAQ3zr64g473LmAU5552hJiwj73WmVFbUA1Gbzz6nwE3wUQLFnwwuRzMvE+tU78l
+ mD9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730933785; x=1731538585;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4XSkS0nndTi7QVOx8hXqnft7dLkjB0YNG0pZTjCZTKA=;
+ b=ike8lJ2VXLpVCxAAh7uSEGxkkNZsveD/JS8dqW5tJhu2kPYEFwyl3yzVTPE0ATZ8WE
+ 2IkAuYgQUOP7RUp/eNQ0yqRxH8xFlegBmg0qVbFq6zo/xNhc9RtEvv8laylvrsWCfgTQ
+ yOOIr1RNJedM1Vyxopt3hyDO3DNJR8gY3Rok8xC54DdF2co7Ro8goPfG+FpzHw87tzaR
+ kLbb7GVTbKrxPcXYPj4g5oC6CNtg/3/b4aXm2hQCTeUu8ylWJSFgsUDQL7uHJECs5/MM
+ +omoCUJF9/HjM3E4n/OOb7wNEP7eI0+sh2WRBd9AnnZ3myRaVifnF0bW7Tg8QLGIcNkM
+ Flqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXql8N+/f6A2vnWlCX66Toyc+xO5m+epBIZRiyDt/pLbHCs6YufXi1H8kudahmlGrp4p28e8voVAly8@nongnu.org
+X-Gm-Message-State: AOJu0YzxVnF9rXqGU4D8F2Aq7+7XGLMpFQRj7AUbTZi1D1zfI94c+R9p
+ ZWA74tU9lnKemoyhwJoa0hfIoaF9/9j6Uh2jtM87KorP0UAZuIE6V7qrJdHOC2af6V8Pz5PAkQl
+ Y
+X-Google-Smtp-Source: AGHT+IEErNUel2DeKMw7DY/DK8YdOa2C06oluKwWlVeNuZow4A+tcoFpkznF/guj3h9be2KKZp1QWA==
+X-Received: by 2002:a5d:64c8:0:b0:37c:cc96:d1ce with SMTP id
+ ffacd0b85a97d-381be7c863amr22189528f8f.24.1730933784756; 
+ Wed, 06 Nov 2024 14:56:24 -0800 (PST)
+Received: from [172.20.143.32] ([89.101.241.141])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381ed97d658sm24131f8f.39.2024.11.06.14.56.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Nov 2024 14:56:24 -0800 (PST)
+Message-ID: <2ee0bab1-1baa-4b52-9856-4c1fa4c9ef0e@linaro.org>
+Date: Wed, 6 Nov 2024 22:56:23 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-stable@nongnu.org
-References: <20241106154329.67218-1-graf@amazon.com>
+Subject: Re: [PATCH] rust: pl011: fix device id matching
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20241106185136.582198-1-pbonzini@redhat.com>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20241106154329.67218-1-graf@amazon.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241106185136.582198-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:5c84:8fbb:e5d9:991a
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] target/i386: Fix legacy page table walk
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,82 +97,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/11/2024 15:43, Alexander Graf wrote:
-
-> Commit b56617bbcb4 ("target/i386: Walk NPT in guest real mode") added
-> logic to run the page table walker even in real mode if we are in NPT
-> mode.  That function then determined whether real mode or paging is
-> active based on whether the pg_mode variable was 0.
+On 6/11/24 18:51, Paolo Bonzini wrote:
+> The offset that is compared against 0x3f8..0x400 is not shifted right.
+> Adjust the pattern matching.
 > 
-> Unfortunately pg_mode is 0 in two situations:
-> 
->    1) Paging is disabled (real mode)
->    2) Paging is in 2-level paging mode (32bit without PAE)
-> 
-> That means the walker now assumed that 2-level paging mode was real
-> mode, breaking NetBSD as well as Windows XP.
-> 
-> To fix that, this patch adds a new PG flag to pg_mode which indicates
-> whether paging is active at all and uses that to determine whether we
-> are in real mode or not.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2654
-> Fixes: b56617bbcb4 ("target/i386: Walk NPT in guest real mode")
-> Signed-off-by: Alexander Graf <graf@amazon.com>
-> Reported-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   target/i386/cpu.h                    | 1 +
->   target/i386/tcg/seg_helper.c         | 2 +-
->   target/i386/tcg/sysemu/excp_helper.c | 2 +-
->   3 files changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index c24d81bf31..99d4805ac1 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -346,6 +346,7 @@ typedef enum X86Seg {
->   #define PG_MODE_PKE      (1 << 17)
->   #define PG_MODE_PKS      (1 << 18)
->   #define PG_MODE_SMEP     (1 << 19)
-> +#define PG_MODE_PG       (1 << 20)
->   
->   #define MCG_CTL_P       (1ULL<<8)   /* MCG_CAP register available */
->   #define MCG_SER_P       (1ULL<<24) /* MCA recovery/new status bits */
-> diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-> index 02ae6a0d1f..71962113fb 100644
-> --- a/target/i386/tcg/seg_helper.c
-> +++ b/target/i386/tcg/seg_helper.c
-> @@ -94,7 +94,7 @@ static uint32_t popl(StackAccess *sa)
->   
->   int get_pg_mode(CPUX86State *env)
->   {
-> -    int pg_mode = 0;
-> +    int pg_mode = PG_MODE_PG;
->       if (!(env->cr[0] & CR0_PG_MASK)) {
->           return 0;
->       }
-> diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-> index da187c8792..02d3486421 100644
-> --- a/target/i386/tcg/sysemu/excp_helper.c
-> +++ b/target/i386/tcg/sysemu/excp_helper.c
-> @@ -298,7 +298,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
->           /* combine pde and pte nx, user and rw protections */
->           ptep &= pte ^ PG_NX_MASK;
->           page_size = 4096;
-> -    } else if (pg_mode) {
-> +    } else if (pg_mode & PG_MODE_PG) {
->           /*
->            * Page table level 2
->            */
+>   rust/hw/char/pl011/src/device.rs | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks Alex! This patch fixes the issue for me, so:
-
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-
-
-ATB,
-
-Mark.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
