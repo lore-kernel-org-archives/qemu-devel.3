@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D265D59F59
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E0E8D59F59
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:37:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8jxN-0000tU-Py; Wed, 06 Nov 2024 12:36:38 -0500
+	id 1t8jy2-00015w-BV; Wed, 06 Nov 2024 12:37:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t8jxL-0000tA-1s
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:36:35 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8jy0-000146-IO
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:37:16 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t8jxI-0004eY-I2
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:36:34 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a93c1cc74fdso1093959666b.3
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:36:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t8jxy-0004ha-Jl
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:37:16 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4316cce103dso643915e9.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:37:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730914590; x=1731519390; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AXmEy9nUKcTxCQ4WXN6atvN/FiwXR0BLi75eSZ9zduo=;
- b=wBE0bZv1EZwLUzY/AVy8MewawGjXZhK9QL90fZcC+Yg9YeDY8RI7gLrgn4scmYx4WT
- GNeKGPyAvDfG78M5U55mYsjSJYyb/vAXtDJwLKSXtOxfVPzNYoe6JB9a3X2GlAtqJlHQ
- oZE7zqRgmJ3tsEK8doLjlkVAaPORICr+t+a32eb78egj4dj56o4qCymqSlIbFyC4Zsvg
- QLq63CknqSQEgI+bMtB688NwND88Jpb7t6Eu7kqfp1jA2c0LS0qSU/mLGs2NIlJj0aSf
- Hk6WGQbTb+L6veoOeeeT4efO1YR2t5DoRd51Wk2Uc0MN78Drq6t6khDFG5ZXFOkOKRie
- POyA==
+ d=linaro.org; s=google; t=1730914632; x=1731519432; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bbNwb/eSDAbfgrKD9f2e8ZtlheGa1CD2fgCLWI8MlQ8=;
+ b=hVaI7pIHmzPT96XQikZoCJS6I2Tvc2OYajW0xyPCBhYgyLj4L1PnpclLJM1X8g77Bg
+ l/bi1Z7tqhX3+D97POOcVVkoAmpnJJRmfgOSgXVbP9H5ca+HA0fovQWFfGZiQJ4aeQSl
+ HPWqUuQAqO02LtLvPIUVXkwkXDvTOXBzYj0Fws+HCGlqpCyQS46iTRC5vVJnf1RnNmxd
+ 2V1uhz6SLROvgQVatTMnnDOr6Vt7VfPAUTxYK/Puv+BLyX4oOxRYHY7pCtl9luQmJgDs
+ QSTxOiiYhhhBT/Bi9qnI6GfIl5Np+teauY5X+NyWWrG+0dLSM2Hp1z4fL2tUSQS7LIJ9
+ 5cKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730914590; x=1731519390;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=AXmEy9nUKcTxCQ4WXN6atvN/FiwXR0BLi75eSZ9zduo=;
- b=WnUaC+wVl6ypJ/rqgebtyMjj2/rGm3k3c7WsMUta/xx6qe9Vq2ExMCj4y34gHWXs83
- gRXOVuZrDFwtzS8EIZb7U1nHLZo8AFiEMj5USBDz1nLuGS8RkzFiIxlOnRtK75Z51R3d
- iyD9Brxh4kwjbT9We7h8mzND6r4t1aOVc9y53OgScEDPjRSOAL7twoj3vrQM+OQSd1T/
- Uf48QCi6HBIT2PYF5P2EsL07DkMhN+tLRUX3gyw8395A2hLslOuRS8xIqr3QHC0FbDu6
- nJUfkneK20hbYmiOHHFnC614D9l9xcqBq76ib+JKUCil+Ao0jPPPP50MB+7f66ulvev2
- 50XQ==
-X-Gm-Message-State: AOJu0YyoP4YB/UOzxaIkBtHt9lcsU1eJV0Lprn9EK67K8cV7XY8kNkOA
- Sb0Uu2PrfXz+ldeOOve3VUFEIAg4Hr/Jc629Li7lhGM03YMEKimABW3iHAtLtRI=
-X-Google-Smtp-Source: AGHT+IF2SeF3i+uTBFdzjuILbceC2C9F5E3Xo+OBtW+8iy5se1taBADoMCVLVlQYo95gU6aN8ahRWQ==
-X-Received: by 2002:a17:906:6a1e:b0:a99:87ea:de57 with SMTP id
- a640c23a62f3a-a9e6553bc7amr2004510366b.2.1730914589333; 
- Wed, 06 Nov 2024 09:36:29 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9eb16dae5csm309989466b.79.2024.11.06.09.36.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2024 09:36:28 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AF6C15F769;
- Wed,  6 Nov 2024 17:36:27 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: qemu-devel@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH 1/2] hw/display: factor out the scanout blob to fb
- conversion
-In-Reply-To: <21888d29-b9ee-4c1c-99b3-09f980d7cfd0@collabora.com> (Dmitry
- Osipenko's message of "Wed, 6 Nov 2024 03:33:23 +0300")
-References: <20241104165348.2361299-1-alex.bennee@linaro.org>
- <20241104165348.2361299-2-alex.bennee@linaro.org>
- <21888d29-b9ee-4c1c-99b3-09f980d7cfd0@collabora.com>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Wed, 06 Nov 2024 17:36:27 +0000
-Message-ID: <87v7x0clic.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1730914632; x=1731519432;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bbNwb/eSDAbfgrKD9f2e8ZtlheGa1CD2fgCLWI8MlQ8=;
+ b=j7B09Rtib6fofh4KFTC1oRwxd2S5aP8qMmw41/4xQv+tc0OFqUw2OTZxM9Puyxadno
+ zskSY/ScwckCX5OzU97GFwOn6Phwu2KupmHVpePjFjoCab/htIKVaBY+M1xRJyxgklFs
+ XSnLVaqEWxoQCz2IFndQb1s4m0ZVbWTzFDUBs2BuRLS1fOxSPIZAPXZ4cQvGplKlAblw
+ GNThW6Q0UNmW/PYA+5UqYONmMYeimU9Mog1/NqRvW9rIwSNGkYaOQ88DzwLhiQv64a9f
+ yMUL/PblfB4ujlnoNFUL1gTh+XDD9eiOw3B3TdHo94IVFkXNSFFZP7xB7RvXFl3jk3Cf
+ KEeg==
+X-Gm-Message-State: AOJu0YzlM3qtg3ez634t+b4NZBbGzU755ehTSU3GzchU1v3cHZCsOjlR
+ 2AQBTyHagGFlaXL3oXHbWWllpo2MCSQipjeqUaTlQoiCvF8ij+8quh/l6d+1EnGHNf6Hb92Y63j
+ QmG0Q/vth
+X-Google-Smtp-Source: AGHT+IGHiU5Chxfxo31KjQmyjpRsFD47fx/DnOCotUUBLuvlWdF4ENE5RJ/icRYytvuVlzUG+8EDlw==
+X-Received: by 2002:a05:600c:22d3:b0:431:b264:bad9 with SMTP id
+ 5b1f17b1804b1-432849fa045mr224600185e9.14.1730914632138; 
+ Wed, 06 Nov 2024 09:37:12 -0800 (PST)
+Received: from [10.134.195.192] ([193.32.126.165])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c113e885sm19913029f8f.89.2024.11.06.09.37.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Nov 2024 09:37:11 -0800 (PST)
+Message-ID: <fd5826c3-6067-47d3-a315-495f1da7250f@linaro.org>
+Date: Wed, 6 Nov 2024 09:37:09 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] plugins: add missing export for
+ qemu_plugin_num_vcpus
+Content-Language: en-US
+To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Cleber Rosa <crosa@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20241106170923.2976750-1-pierrick.bouvier@linaro.org>
+ <20241106170923.2976750-2-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20241106170923.2976750-2-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,157 +101,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
-
-> On 11/4/24 19:53, Alex Benn=C3=A9e wrote:
->> There are two identical sequences of a code doing the same thing that
->> raise warnings with Coverity. Before fixing those issues lets factor
->> out the common code into a helper function we can share.
->>=20
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->> ---
->>  include/hw/virtio/virtio-gpu.h | 15 +++++++++
->>  hw/display/virtio-gpu-virgl.c  | 21 +-----------
->>  hw/display/virtio-gpu.c        | 60 +++++++++++++++++++++-------------
->>  3 files changed, 53 insertions(+), 43 deletions(-)
->>=20
->> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-g=
-pu.h
->> index 553799b8cc..90e4abe788 100644
->> --- a/include/hw/virtio/virtio-gpu.h
->> +++ b/include/hw/virtio/virtio-gpu.h
->> @@ -333,6 +333,21 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
->>                                     struct virtio_gpu_scanout *s,
->>                                     uint32_t resource_id);
->>=20=20
->> +/**
->> + * virtio_gpu_scanout_blob_to_fb() - fill out fb based on scanout data
->> + * fb: the frame-buffer descriptor to fill out
->> + * ss: the scanout blob data
->> + * blob_size: the maximum size the blob can accommodate
->
-> Nit: 'maximum size the blob can accommodate' makes it sound to me like
-> data will be copied into the blob. What about 'size of scanout blob data'.
->
->> + *
->> + * This will check we have enough space for the frame taking into
->> + * account that stride for all but the last line.
->> + *
->> + * Returns true on success, otherwise logs guest error and returns false
->> + */
->> +bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
->> +                                   struct virtio_gpu_set_scanout_blob *=
-ss,
->> +                                   uint64_t blob_size);
->> +
->>  /* virtio-gpu-udmabuf.c */
->>  bool virtio_gpu_have_udmabuf(void);
->>  void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res);
->> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl=
-.c
->> index eedae7357f..35599cddab 100644
->> --- a/hw/display/virtio-gpu-virgl.c
->> +++ b/hw/display/virtio-gpu-virgl.c
->> @@ -852,26 +852,7 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
->>          return;
->>      }
->>=20=20
->> -    fb.format =3D virtio_gpu_get_pixman_format(ss.format);
->> -    if (!fb.format) {
->> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: pixel format not supported =
-%d\n",
->> -                      __func__, ss.format);
->> -        cmd->error =3D VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
->> -        return;
->> -    }
->> -
->> -    fb.bytes_pp =3D DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb.format), 8);
->> -    fb.width =3D ss.width;
->> -    fb.height =3D ss.height;
->> -    fb.stride =3D ss.strides[0];
->> -    fb.offset =3D ss.offsets[0] + ss.r.x * fb.bytes_pp + ss.r.y * fb.st=
-ride;
->> -
->> -    fbend =3D fb.offset;
->> -    fbend +=3D fb.stride * (ss.r.height - 1);
->> -    fbend +=3D fb.bytes_pp * ss.r.width;
->> -    if (fbend > res->base.blob_size) {
->> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: fb end out of range\n",
->> -                      __func__);
->> +    if (!virtio_gpu_scanout_blob_to_fb(&fb, &ss, res->blob_size)) {
->
-> This fails to compile, needs s/res->blob_size/res->base.blob_size/
->
-> ../hw/display/virtio-gpu-virgl.c:855:53: error: 'struct
-> virtio_gpu_virgl_resource' has no member named 'blob_size'
->   855 |     if (!virtio_gpu_scanout_blob_to_fb(&fb, &ss, res->blob_size))=
- {
->       |                                                     ^~
-> ../hw/display/virtio-gpu-virgl.c:808:14: error: unused variable 'fbend'
-> [-Werror=3Dunused-variable]
->   808 |     uint64_t fbend;
->       |              ^~~~~
-> cc1: all warnings being treated as errors
->
-> Please correct in v2.
-
-Doh - I failed to compile that in my extra.libs config. Will fix.
-
->
->>          cmd->error =3D VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
->>          return;
->>      }
->> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
->> index c0570ef856..e7ca8fd1cf 100644
->> --- a/hw/display/virtio-gpu.c
->> +++ b/hw/display/virtio-gpu.c
->> @@ -721,13 +721,48 @@ static void virtio_gpu_set_scanout(VirtIOGPU *g,
->>                                &fb, res, &ss.r, &cmd->error);
->>  }
->>=20=20
->> +bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
->> +                                   struct virtio_gpu_set_scanout_blob *=
-ss,
->> +                                   uint64_t blob_size)
->> +{
->> +    uint64_t fbend;
->> +
->> +    fb->format =3D virtio_gpu_get_pixman_format(ss->format);
->> +    if (!fb->format) {
->> +        qemu_log_mask(LOG_GUEST_ERROR,
->> +                      "%s: host couldn't handle guest format %d\n",
->> +                      __func__, ss->format);
->> +        return false;
->> +    }
->> +
->> +    fb->bytes_pp =3D DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb->format), 8);
->> +    fb->width =3D ss->width;
->> +    fb->height =3D ss->height;
->> +    fb->stride =3D ss->strides[0];
->> +    fb->offset =3D ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * =
-fb->stride;
->> +
->> +    fbend =3D fb->offset;
->> +    fbend +=3D fb->stride * (ss->r.height - 1);
->> +    fbend +=3D fb->bytes_pp * ss->r.width;
->> +
->> +    if (fbend > blob_size) {
->> +        qemu_log_mask(LOG_GUEST_ERROR,
->> +                      "%s: fb end out of range\n",
->> +                      __func__);
->> +        return false;
->> +    }
->> +
->> +    return true;
->> +}
->> +
->> +
->> +
->
-> Nit: extra newlines
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+T24gMTEvNi8yNCAwOTowOSwgUGllcnJpY2sgQm91dmllciB3cm90ZToNCj4gRml4ZXM6IDRh
+NDQ4YjE0OGNhICgicGx1Z2luczogYWRkIHFlbXVfcGx1Z2luX251bV92Y3B1cyBmdW5jdGlv
+biIpDQo+IFJldmlld2VkLWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxp
+bmFyby5vcmc+DQo+IFNpZ25lZC1vZmYtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNr
+LmJvdXZpZXJAbGluYXJvLm9yZz4NCj4gLS0tDQo+ICAgaW5jbHVkZS9xZW11L3FlbXUtcGx1
+Z2luLmggfCAxICsNCj4gICAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKykNCj4gDQo+
+IGRpZmYgLS1naXQgYS9pbmNsdWRlL3FlbXUvcWVtdS1wbHVnaW4uaCBiL2luY2x1ZGUvcWVt
+dS9xZW11LXBsdWdpbi5oDQo+IGluZGV4IDYyMmM5YTAyMzI3Li4wZmJhMzZhZTAyOCAxMDA2
+NDQNCj4gLS0tIGEvaW5jbHVkZS9xZW11L3FlbXUtcGx1Z2luLmgNCj4gKysrIGIvaW5jbHVk
+ZS9xZW11L3FlbXUtcGx1Z2luLmgNCj4gQEAgLTgwMyw2ICs4MDMsNyBAQCB2b2lkIHFlbXVf
+cGx1Z2luX3JlZ2lzdGVyX2F0ZXhpdF9jYihxZW11X3BsdWdpbl9pZF90IGlkLA0KPiAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHFlbXVfcGx1Z2luX3VkYXRhX2Ni
+X3QgY2IsIHZvaWQgKnVzZXJkYXRhKTsNCj4gICANCj4gICAvKiByZXR1cm5zIGhvdyBtYW55
+IHZjcHVzIHdlcmUgc3RhcnRlZCBhdCB0aGlzIHBvaW50ICovDQo+ICtRRU1VX1BMVUdJTl9B
+UEkNCj4gICBpbnQgcWVtdV9wbHVnaW5fbnVtX3ZjcHVzKHZvaWQpOw0KPiAgIA0KPiAgIC8q
+Kg0KDQpUaGlzIHBhdGNoIGNhbiBiZSBhcHBsaWVkIHRvIHFlbXUtc3RhYmxlLCBhcyBpdCdz
+IGEgc2ltcGxlIGJ1ZyBmaXguDQo=
 
