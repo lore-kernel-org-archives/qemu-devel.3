@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E78D3E787
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 02:50:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB28D35E5D
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 02:50:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8W7i-00079i-CF; Tue, 05 Nov 2024 21:50:22 -0500
+	id 1t8W7l-0007B7-TP; Tue, 05 Nov 2024 21:50:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t8W7g-00078Q-B0
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:20 -0500
+ id 1t8W7k-0007Ap-RQ
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:24 -0500
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t8W7e-0003cN-Kd
- for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:20 -0500
+ id 1t8W7i-0003cN-BN
+ for qemu-devel@nongnu.org; Tue, 05 Nov 2024 21:50:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1730861419; x=1762397419;
+ t=1730861422; x=1762397422;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=W73DxTAKGKDwOxIP+UEa3mm04Ri1kkHN13Gfy8Im22A=;
- b=EKm3CdB6YGkg/3fIyvwg9wDE7j8ZUj5vqTzA/z9SA8y3/t2hsniixpRf
- pVE9ejeXngKQQzSOstkblvW5eXE20vLeZgKU9wNjCaJ1apHe6Zb5h0DoT
- t2Lp8ZO1dqFWHA3Y2l0HHfIdsDSbK9V1Cpibz0LL7p3fdeUkyTfzBep98
- uYFrYVxgeapFNEePGWZSOtm8MpeLz+96OQ9fvqv7E17DVS3JGRfrRJijm
- +IQndhNNgYTaZ572zAm14uIg2/Z51AOKBCOqApyT6rCvFGFMjuIpd8P9e
- nKp/NWmghk76MAMi2VJUBDitcRoP/2ZRgYrAggoV0Uoc3Wkz14s0HKKpV w==;
-X-CSE-ConnectionGUID: Yr4Qp6ctTfCzL9AirMb+vg==
-X-CSE-MsgGUID: 0yhaZxALQ5aoJxzCkBO/2w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30492312"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30492312"
+ bh=cDyoHsWzKph1fodDMEJqXgXb9rXZ334jDEhsYTPjqKQ=;
+ b=AE9fowAwJ7HZZLLPR0T/w4DMePJzsvHIP9A0M0pk27UX95jvmSJ/xKxt
+ BFn+ZcfoH0b7AwbkGEJ7YB9BcC0Mf2jtD5cSKSgPn4zfLfQEPlrImgZQJ
+ xQJSXTwqRcKpsKW41XvzItCnY+gixb63jA93SZPiltWuhbv7RyU6wz4+T
+ VG8c/T5oh1oJWIqrLjYHpHeYjzmuIWXe2rrWXyhHalI3iObWwBGwOyhxc
+ Sn0LFVg/S5jjZSxCM3z0wCzTvvRXiYm/wQKvavcN9WbNvqiqPivCpg2ig
+ oS+eSQ5CnJbycMAwHKxeC8HyCDpXJJTS7rFclc3dXPdyOEyo1xbs64RBq w==;
+X-CSE-ConnectionGUID: JA/98ZacSPKlO7RvjIIW+A==
+X-CSE-MsgGUID: lmAPGaOKSr2SlFCF0FEwuA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="30492322"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="30492322"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2024 18:50:17 -0800
-X-CSE-ConnectionGUID: u6UjNTUoTaahh0D0ORPZLQ==
-X-CSE-MsgGUID: u1ZDVdxyTCW2KTSVmr2mUw==
+ 05 Nov 2024 18:50:21 -0800
+X-CSE-ConnectionGUID: BgQ7aLUUSJ+cgTv2Y4xQFA==
+X-CSE-MsgGUID: OQfoaMsiS52eotCldTU9ww==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,261,1725346800"; d="scan'208";a="115078027"
+X-IronPort-AV: E=Sophos;i="6.11,261,1725346800"; d="scan'208";a="115078033"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 05 Nov 2024 18:50:14 -0800
+ by fmviesa001.fm.intel.com with ESMTP; 05 Nov 2024 18:50:17 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -55,10 +55,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 09/11] target/i386/kvm: Return -1 when
- kvm_msr_energy_thread_init() fails
-Date: Wed,  6 Nov 2024 11:07:26 +0800
-Message-Id: <20241106030728.553238-10-zhao1.liu@intel.com>
+Subject: [PATCH v5 10/11] target/i386/kvm: Clean up error handling in
+ kvm_arch_init()
+Date: Wed,  6 Nov 2024 11:07:27 +0800
+Message-Id: <20241106030728.553238-11-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241106030728.553238-1-zhao1.liu@intel.com>
 References: <20241106030728.553238-1-zhao1.liu@intel.com>
@@ -89,116 +89,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is common practice to return a negative value (like -1) to indicate
-an error, and other functions in kvm_arch_init() follow this style.
+Currently, there're following incorrect error handling cases in
+kvm_arch_init():
+* Missed to handle failure of kvm_get_supported_feature_msrs().
+* Missed to return when kvm_vm_enable_disable_exits() fails.
+* MSR filter related cases called exit() directly instead of returning
+  to kvm_init(). (The caller of kvm_arch_init() - kvm_init() - needs to
+  know if kvm_arch_init() fails in order to perform cleanup).
 
-To avoid confusion (sometimes returned -1 indicates failure, and
-sometimes -1, in a same function), return -1 when
-kvm_msr_energy_thread_init() fails.
+Fix the above cases.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Zide Chen <zide.chen@intel.com>
 ---
-v5: new commit.
+v5: cleaned up kvm_vm_enable_energy_msrs().
+v3: new commit.
 ---
- target/i386/kvm/kvm.c | 29 +++++++++++------------------
- 1 file changed, 11 insertions(+), 18 deletions(-)
+ target/i386/kvm/kvm.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 9993382fb40e..69825b53b6da 100644
+index 69825b53b6da..013c0359acbe 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -2921,7 +2921,6 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+@@ -3147,7 +3147,7 @@ static int kvm_vm_enable_userspace_msr(KVMState *s)
+     return 0;
+ }
+ 
+-static void kvm_vm_enable_energy_msrs(KVMState *s)
++static int kvm_vm_enable_energy_msrs(KVMState *s)
  {
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-     struct KVMMsrEnergy *r = &s->msr_energy;
--    int ret = 0;
+     int ret;
  
-     /*
-      * Sanity check
-@@ -2931,13 +2930,11 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
-     if (!is_host_cpu_intel()) {
-         error_report("The RAPL feature can only be enabled on hosts "
-                      "with Intel CPU models");
--        ret = 1;
--        goto out;
-+        return -1;
-     }
+@@ -3157,7 +3157,7 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
+         if (ret < 0) {
+             error_report("Could not install MSR_RAPL_POWER_UNIT handler: %s",
+                          strerror(-ret));
+-            exit(1);
++            return ret;
+         }
  
-     if (!is_rapl_enabled()) {
--        ret = 1;
--        goto out;
-+        return -1;
-     }
+         ret = kvm_filter_msr(s, MSR_PKG_POWER_LIMIT,
+@@ -3165,7 +3165,7 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
+         if (ret < 0) {
+             error_report("Could not install MSR_PKG_POWER_LIMIT handler: %s",
+                          strerror(-ret));
+-            exit(1);
++            return ret;
+         }
  
-     /* Retrieve the virtual topology */
-@@ -2959,16 +2956,14 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
-     r->host_topo.maxcpus = vmsr_get_maxcpus();
-     if (r->host_topo.maxcpus == 0) {
-         error_report("host max cpus = 0");
--        ret = 1;
--        goto out;
-+        return -1;
-     }
- 
-     /* Max number of packages on the host */
-     r->host_topo.maxpkgs = vmsr_get_max_physical_package(r->host_topo.maxcpus);
-     if (r->host_topo.maxpkgs == 0) {
-         error_report("host max pkgs = 0");
--        ret = 1;
--        goto out;
-+        return -1;
-     }
- 
-     /* Allocate memory for each package on the host */
-@@ -2980,8 +2975,7 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
-     for (int i = 0; i < r->host_topo.maxpkgs; i++) {
-         if (r->host_topo.pkg_cpu_count[i] == 0) {
-             error_report("cpu per packages = 0 on package_%d", i);
--            ret = 1;
--            goto out;
-+            return -1;
+         ret = kvm_filter_msr(s, MSR_PKG_POWER_INFO,
+@@ -3173,17 +3173,17 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
+         if (ret < 0) {
+             error_report("Could not install MSR_PKG_POWER_INFO handler: %s",
+                          strerror(-ret));
+-            exit(1);
++            return ret;
+         }
+         ret = kvm_filter_msr(s, MSR_PKG_ENERGY_STATUS,
+                              kvm_rdmsr_pkg_energy_status, NULL);
+         if (ret < 0) {
+             error_report("Could not install MSR_PKG_ENERGY_STATUS handler: %s",
+                          strerror(-ret));
+-            exit(1);
++            return ret;
          }
      }
- 
-@@ -2998,8 +2992,7 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
- 
-     if (s->msr_energy.sioc == NULL) {
-         error_report("vmsr socket opening failed");
--        ret = 1;
--        goto out;
-+        return -1;
-     }
- 
-     /* Those MSR values should not change */
-@@ -3011,15 +3004,13 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
-                                     s->msr_energy.sioc);
-     if (r->msr_unit == 0 || r->msr_limit == 0 || r->msr_info == 0) {
-         error_report("can't read any virtual msr");
--        ret = 1;
--        goto out;
-+        return -1;
-     }
- 
-     qemu_thread_create(&r->msr_thr, "kvm-msr",
-                        kvm_msr_energy_thread,
-                        s, QEMU_THREAD_JOINABLE);
--out:
--    return ret;
+-    return;
 +    return 0;
  }
  
- int kvm_arch_get_default_type(MachineState *ms)
-@@ -3327,7 +3318,9 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+ int kvm_arch_init(MachineState *ms, KVMState *s)
+@@ -3250,7 +3250,10 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         return ret;
+     }
+ 
+-    kvm_get_supported_feature_msrs(s);
++    ret = kvm_get_supported_feature_msrs(s);
++    if (ret < 0) {
++        return ret;
++    }
+ 
+     uname(&utsname);
+     lm_capable_kernel = strcmp(utsname.machine, "x86_64") == 0;
+@@ -3286,6 +3289,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         if (ret < 0) {
+             error_report("kvm: guest stopping CPU not supported: %s",
+                          strerror(-ret));
++            return ret;
+         }
+     }
+ 
+@@ -3317,12 +3321,15 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         }
  
          if (s->msr_energy.enable == true) {
-             kvm_vm_enable_energy_msrs(s);
--            if (kvm_msr_energy_thread_init(s, ms)) {
-+
-+            ret = kvm_msr_energy_thread_init(s, ms);
+-            kvm_vm_enable_energy_msrs(s);
++            ret = kvm_vm_enable_energy_msrs(s);
 +            if (ret < 0) {
++                return ret;
++            }
+ 
+             ret = kvm_msr_energy_thread_init(s, ms);
+             if (ret < 0) {
                  error_report("kvm : error RAPL feature requirement not met");
-                 exit(1);
+-                exit(1);
++                return ret;
              }
+         }
+     }
 -- 
 2.34.1
 
