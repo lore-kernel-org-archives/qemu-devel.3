@@ -4,81 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8258DD59F52
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F8ED59F53
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 17:09:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8jRo-0003IR-ID; Wed, 06 Nov 2024 12:04:00 -0500
+	id 1t8jWD-0004NX-Sr; Wed, 06 Nov 2024 12:08:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
- id 1t8jRl-0003I4-Qo
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:03:58 -0500
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
- id 1t8jRj-0003iK-F6
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:03:56 -0500
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-5ebbed44918so7366eaf.0
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:03:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730912634; x=1731517434; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SrlTSMIZ2qz0+SnMFh6332aJUF2orVgNPQ4/3nRHnKQ=;
- b=eNb4VDarqddzPYPLh56KqUhai2FY6/sRID524v9tLX08DvLHCyk5hYP895vlZCjwZa
- R9m80mp5nEKCKNefmemyOXEcEY3qPmmJS+L2Tu9laWh1tH5B2hkz+YRYyobpB2c6YgIL
- GypMzf0+cZUTkoHGUb7fTwz2BHAT6IB+vfvWB20Op0kJsaLJe3d2Bdm+dEZSjnaZ831F
- n/qD4nKMoSKtJRrqiushZPRlmZdTE8NHpQlZcYSUtNaoQJ2klR8wMJokm+9Hpnh54WD5
- VHZfCzYkbcz1Nm81JydX7CwS/Nv861/h4JZL7o2zmsYwzxQe2M+wrtVjR4sJYrB4Bv35
- VGbQ==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8jW9-0004N9-P8
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:08:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t8jW7-0004Ud-Iu
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 12:08:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730912905;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9SnXJEUqjhd2sk8dQqacGSR71fczahbE7jhMuVyslZY=;
+ b=ipIvEx7OmO1mrmh82Fp0IIOsNTDHl1jgg0WcC8Qn2oPHx/01LSH/JjEc5ZRgSNLiLgGdvM
+ Ti6BLPAYGMrIIkldaZmYjfNSgpOU1ZiZ15rpGu3Jaq/TPkGBj1inKM17Z3YxEFBFyfhi3y
+ DRwYjkvfbBStjkTIK4RXu5RHBbojl/A=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-622-eC6arVoNOU6nGWLNb8Y4yA-1; Wed, 06 Nov 2024 12:08:24 -0500
+X-MC-Unique: eC6arVoNOU6nGWLNb8Y4yA-1
+X-Mimecast-MFC-AGG-ID: eC6arVoNOU6nGWLNb8Y4yA
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4315f48bd70so195005e9.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 09:08:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730912634; x=1731517434;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SrlTSMIZ2qz0+SnMFh6332aJUF2orVgNPQ4/3nRHnKQ=;
- b=OLfvjnsG9LquJfauuwdka7VIKjWXzczM/V23vlSFN8Um/dHQ3O4CzsKzVWB7mFvAly
- 71Elpxju8Bzs5mqHS69fYfHt5dvkDB0t4nfzG0oowDugswOG6zHMoQksLvQMe2in7NhY
- f2cctTxz/CX76nAU1Lvn8UDaVc9rSWiXZGhCQntlXcLRbS5cNf84+olY4FBOPCXRtqPP
- R0N2blqC08SykZxOIc6cYVCz5mos/7E2cUnIQzM0zR5hX3gO+4UTejkpBDnk3KxUf0nR
- fkAQjVo/rnPO1F5sWgfunsc1TXUFhm570/cCBj9ntduza3xCBhFLwkBrQZh8RPZvLXxt
- hxFw==
-X-Gm-Message-State: AOJu0Yyp+JcYJNoDjmjiXvJNee7u13mVEiI6qXvdKMiu6pILpLrWPKbt
- Kn/sMwECF2H74nmKxTi8u0DKNNNx6u2tPN2JcPd03pcy4cqhqkvFRFrcVG004fOKIsLmtKpdYFE
- EJdDajYI4veuBfRuhlyXPIp4GjOI=
-X-Google-Smtp-Source: AGHT+IF4ULyp79vHVKCnErKv56EEY5QVIufh8Ke1sg0D3rMX8CtOxwRhNA+gmwstqP74U8S1qR63Ecd80bsVQnOgObs=
-X-Received: by 2002:a05:6820:541:b0:5e1:cd24:c19c with SMTP id
- 006d021491bc7-5ec5e9adae1mr19801452eaf.0.1730912633794; Wed, 06 Nov 2024
- 09:03:53 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730912903; x=1731517703;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9SnXJEUqjhd2sk8dQqacGSR71fczahbE7jhMuVyslZY=;
+ b=u1ng5QhCKBshffLN+xlDKbofYVQMAiP9asuoA9spxIi7ucve0AzXLygTOACLb9JPFb
+ V55hZR1tDVuUVq1Id6M/Dbsk4BVMeAAiMQ3+svis/OcaNJH25EihT7NywdyYQRN0rlZv
+ R8Quw/9B0dVrJGCvyWdTCdbRBU0pDID+HOCDFO77xGceTLRtTAJvn2HYL79DG0AoEgHf
+ lwFfDOZrESXUKppGPJQIrEC4eugJCtxI6DcwjXoaztJP932KxTod56lYVoHrZgrKhXab
+ df6HKDBPyHugyaPoYLz5F9sbzuDgLvMIF7nrztUMfrZyfB8sJsTExvMomK0PwSmGWvJa
+ l3Eg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUOaTHmAZGSQlYUDyuQlnI5G85mlCfVniT5p9oUgO1UK3u6/cqRydVqRPUNn/3ezJ9d/W0btjT9zBAp@nongnu.org
+X-Gm-Message-State: AOJu0YwDmuUiWK2OlS55w1OjVIHg2wvEnupq+OXaJwthG42h25MvQtLX
+ i4bc3tO/HbRKukMFQMWXhLnUAXq0umlZHSYSYohlrbad3zHIBFimw+ZFJHu1hecRcIup5r54bkU
+ 7Zmx9o1Z+Xr1IZcip9MwIY9CDdhTWoJ+rmqww5RKBKkrm50adwNnD
+X-Received: by 2002:a05:600c:4511:b0:42c:bd4d:e8ba with SMTP id
+ 5b1f17b1804b1-4327b6f953dmr212351255e9.8.1730912903230; 
+ Wed, 06 Nov 2024 09:08:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFfdRD5BDQv+BchFpGD0AMM1v41hHBsv5872fLqNzSUoW9ZOzA6cesegO43vO+bN5ghqwx9OQ==
+X-Received: by 2002:a05:600c:4511:b0:42c:bd4d:e8ba with SMTP id
+ 5b1f17b1804b1-4327b6f953dmr212350985e9.8.1730912902842; 
+ Wed, 06 Nov 2024 09:08:22 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381c113e068sm19639405f8f.71.2024.11.06.09.08.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Nov 2024 09:08:22 -0800 (PST)
+Message-ID: <e41ee3ff-8b7a-43b3-8795-52dcc094ca79@redhat.com>
+Date: Wed, 6 Nov 2024 18:08:20 +0100
 MIME-Version: 1.0
-References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
- <20241030141037.375897-1-goldstein.w.n@gmail.com>
- <000c9ef8-c610-4f2a-b191-04b84455d89c@linaro.org>
- <CAFUsyfKkmSid=LVTbG+WHZA_=MAGdf+TU5vGtNE1GGx8WDheOQ@mail.gmail.com>
- <CAFUsyfKfM-X_qGN4Dy8DhES7zRi66s6yVZ3+_KmNM4f2GhBG+Q@mail.gmail.com>
- <f21fe153-6239-4c93-bf60-994976a9dbea@linaro.org>
-In-Reply-To: <f21fe153-6239-4c93-bf60-994976a9dbea@linaro.org>
-From: Noah Goldstein <goldstein.w.n@gmail.com>
-Date: Wed, 6 Nov 2024 11:03:41 -0600
-Message-ID: <CAFUsyfLhPkSMrm50RAAvir2-WoRS4_jbtZf1WWR_WZvm=BOr6g@mail.gmail.com>
-Subject: Re: linux-user: Add option to run `execve`d programs through QEMU
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, iii@linux.ibm.com, laurent@vivier.eu
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=goldstein.w.n@gmail.com; helo=mail-oo1-xc2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/14] s390x: introduce s390_get_memory_limit()
+To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Heiko Carstens <hca@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+References: <20241008105455.2302628-1-david@redhat.com>
+ <20241008105455.2302628-7-david@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241008105455.2302628-7-david@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,63 +156,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 6, 2024 at 3:38=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 11/5/24 23:54, Noah Goldstein wrote:
-> >>> You still need to handle is_proc_myself, for the guest binary.
-> >
-> > Would this by handled by basically do:
-> >
-> > ```
-> > if (is_proc_myself(p, "exe")) {
-> >          exe =3D exec_path;
-> >          if (through_qemu)
-> >              argp[argp_offset] =3D exec_path;
-> > }
-> > ```
-> > Or am I missing something?
->
-> Something like that, yes.
->
-> >>> I wonder if those two cases are related.  Do we need to also add an a=
-rgument so that we
-> >>> can pass the executable to the next qemu via file descriptor?  I.e. e=
-xecvat becomes
-> >>>
-> >>>       f =3D openat()
-> >>>       execv(qemu, "-execfd", f)
-> >>>
-> >>> and is_proc_myself uses execfd, which we already have open.
-> >
-> > How does passing a fd from one process to another work?
-> As long as the fd is not marked O_CLOEXEC, it stays open in the new proce=
-ss.  Providing
-> the number via command-line, or whatever, is sufficient for the new proce=
-ss to know what
-> is going on.
+On 08/10/2024 12.54, David Hildenbrand wrote:
+> Let's add s390_get_memory_limit(), to query what has been successfully
+> set via s390_set_memory_limit(). Allow setting the limit only once.
+> 
+> We'll remember the limit in the machine state. Move
+> s390_set_memory_limit() to machine code, merging it into
+> set_memory_limit(), because this really is a machine property.
+> 
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
 
-Err I guess I was thinking its a bit weird having an option that is
-only really applicable
-if qemu is a child process. I.e the `-execfd` argument is not usable
-from commandline.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
->
-> I now realize this is necessary for the AT_EMPTY_PATH flag, where we only=
- have the file
-> descriptor.
-
-We could also do something along the lines of:
-
-```
-fd =3D openat(dirfd, exe);
-char new_exe[PATH_MAX];
-char fd_path[PATH_MAX];
-sprintf(fd_path, "/proc/self/fd/%d", fd);
-readlink(fd_path, new_exe, PATH_MAX);
-exe =3D new_exe;
-```
->
->
-> r~
 
