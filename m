@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29800D59F56
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 18:07:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F97D59F56
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Nov 2024 18:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8kRQ-0003HA-D6; Wed, 06 Nov 2024 13:07:40 -0500
+	id 1t8kRj-0003Uj-Fk; Wed, 06 Nov 2024 13:07:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1t8kRN-0003GQ-8P
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:07:37 -0500
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1t8kRA-0005cs-EG
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:07:36 -0500
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-7180c7a4e02so91017a34.0
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 10:07:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730916440; x=1731521240; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N01JVIVKV9ZJW63R9kbErdGeR/4d3O+Ot3H3QsLOb9k=;
- b=nkOseVWxoZwHgXLiZ+CbFejhI3ik5vDSRHk3jzuzbvx6eV38ANj8qz63uKuVj3GjfE
- ALJuAxds7xoffP+vaR7kjtoznlU+HgAAx25s6AVyzRX1TtDypCKi9OBgZI93HPigaslK
- j8cMjCdV8TbRLxZc7yCRtBh5SZ3M5QonGmzedqZby+Of51tNiUi9cBdnb5L5DALtvr4Z
- ryXQH4xelC2DNf5D2GrTFEJ01mj8s7ZDMqSaYzvC7Y2aVTy1l6gYYK9FB2+/Jd6zwA7o
- fwBsDrjbw163+PUXZXmCTUUMgHc7cDnLprsgH9CYkVPfDLLkw++HXStxs1OTRrwAw8XR
- iPxw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t8kRc-0003J2-Dz
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:07:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t8kRZ-0005jL-Uz
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 13:07:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730916469;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eQzwz0VQqbTllaUoC2jABc9VHmk6FSE8vpq4QKQeiLc=;
+ b=Pn5mixXtSRG+hivlFzfQ7xpZtST2Z3CYykuchFuuWo9QJr2qHNVMNAXZYRwooWqC4C9qTM
+ NVXuVCBuwRDbqq1AyH3GyS+M8kftmK5D8CzBuV70/STSnozCc8yyA1zGIbXyKacmCiPQS5
+ Mh8ZuOFla4DIDVDfE3fIJFYrcmBo8+Q=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-651-BmM5agsmP1uN2_6x3JlyMw-1; Wed, 06 Nov 2024 13:07:47 -0500
+X-MC-Unique: BmM5agsmP1uN2_6x3JlyMw-1
+X-Mimecast-MFC-AGG-ID: BmM5agsmP1uN2_6x3JlyMw
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4314c6ca114so643015e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 10:07:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730916440; x=1731521240;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1730916466; x=1731521266;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=N01JVIVKV9ZJW63R9kbErdGeR/4d3O+Ot3H3QsLOb9k=;
- b=La51R1FwI81J5U8goRisxrapDii+C8R4Vl0C1hpFjKpfyqcU9eQtG5NjJJhm48ejAw
- nT+Z21Lc2m/bjrJjyVPlXzEp4jLmaWKvdNR4yH4+bUR/hu/xH4vXl8sj6a7UobrttzAj
- 2vDGyd/FucrJvw5+NLMtseQfhLJhDB6m/Kmmx1f0Fn+4djO3SOpiw0ksgueNJljMbq9V
- uJqh0uQcHdggnshsYRSCrxXxMEphdw5662RyNF1NogfnsT4oNZGlxp/hS255RYSG0gWg
- YMdKDPABQEozb5T4YkTgmBPB/M9JE8ggX8Eg7FLW9tl0fRexHirNkM1BQpOt8+KfBR/t
- ZRhw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVmIPPbAqHe+5+I3a+grcSF5caiWZj/+OP72tflnH0rwwVtcQOGWvwKFmpWKi7DtGwhxy+8qVwj85mO@nongnu.org
-X-Gm-Message-State: AOJu0YwL4BpabYMT88WGxJ8xlTArskTlCLjBXqmDdtPPbOVHREIEudUy
- 4Hp7eBefdXGJ7K1UW+JSXpa/QOgVQum0g1Ps9t6nVrGZx1x7o38jdMyXsl7n+JTlLy+ds6h2Ze+
- JA02XBsi+YBL8BzI4uS/9GeizqBM=
-X-Google-Smtp-Source: AGHT+IGIYRnSiDDaD2GsgOOHeiau4oOezud89QOFNxePUwjNln6/8qHPNfjrHpMCX1eo+K05D4Pg6pnxVDBzuZolWTs=
-X-Received: by 2002:a05:6358:e4a7:b0:1c3:94:8ff9 with SMTP id
- e5c5f4694b2df-1c3f9e064edmr2047726255d.9.1730916439886; Wed, 06 Nov 2024
- 10:07:19 -0800 (PST)
+ bh=eQzwz0VQqbTllaUoC2jABc9VHmk6FSE8vpq4QKQeiLc=;
+ b=g1GHEZjIz67pOdBEiafDqrsayF4VQ187XtNJ+0kObmlmgnt2UtCHFZWRY1OkXO7Gy0
+ 091I9uwoI6s8T3LjjKoU46WpkhgmVe70V0N/yZJr/z0GxX1WjxjwLWKPaSlCmiYic31f
+ rj0Jw69d7PyznAdzmHy/Gpdkk1WJE+6LvCTyX72n7hijF+5XFp+NIHcNI03cKPt1SKX1
+ m9aYb5ctQWTlWFhSwtR5xZit1MPRwOC+FaTYMeBAuHPg7r55hyNQl6ajrTkkPLOCmnA5
+ dOAdVGKbVMEDIzlgHk/h3JMQXFJR68Opw5G7snAoqXQBA3sOWA5e/TEUo1fmH2O4jZzV
+ csww==
+X-Gm-Message-State: AOJu0YzlRcp7cpSCZlr34zqmRCAF5zTeF0onL/3Sqkwu6b36bxiQiYmj
+ MdTIcfKsYeG7yLuSV7HzWVSxhaCNqM7GP04xAqzI/Gn1uqMnLcWhVWAe+DgeS9gO+om/4DV202C
+ 8Gdhf50732gCpKYYlSaUcLPMPMHRAcyIPpTSMEfLrxYw7ky244bz/oHJgimAJKSzERanGBIG8Rr
+ ZVrRW8oQHJacspjIZ6sJGallz4od85b86Nd+kBqFU=
+X-Received: by 2002:a05:600c:3ca8:b0:431:52b7:a499 with SMTP id
+ 5b1f17b1804b1-4327b7019ddmr199419425e9.20.1730916466238; 
+ Wed, 06 Nov 2024 10:07:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHkuz/C6McPxVJo64sr3lxncd4/S7mSKL7dCmK53LYNFTfTAYDx3Cq4S9EA5nF8PNTRM+5eKw==
+X-Received: by 2002:a05:600c:3ca8:b0:431:52b7:a499 with SMTP id
+ 5b1f17b1804b1-4327b7019ddmr199419195e9.20.1730916465723; 
+ Wed, 06 Nov 2024 10:07:45 -0800 (PST)
+Received: from [192.168.10.3] ([151.49.226.83])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432aa6c1205sm33933515e9.26.2024.11.06.10.07.44
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Nov 2024 10:07:45 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL v3 37/39] rust: allow older version of bindgen
+Date: Wed,  6 Nov 2024 19:07:42 +0100
+Message-ID: <20241106180742.567076-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241106180742.567076-1-pbonzini@redhat.com>
+References: <20241106180742.567076-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20241106174241.556373-1-pbonzini@redhat.com>
- <04fd0b86-4371-494e-a331-3d5d735f0d77@linaro.org>
- <CABgObfajkp+5vFnQuV+V6Mp+LuP_Yo-=JtZtGUcYB_GDDbWoJQ@mail.gmail.com>
- <b463bc8a-4625-43e6-a9da-4df526aa89a3@linaro.org>
- <CABgObfZvO3txRMAwjMny73k3pyfNy_SZ=oeoAwM1hm6b9zot8Q@mail.gmail.com>
-In-Reply-To: <CABgObfZvO3txRMAwjMny73k3pyfNy_SZ=oeoAwM1hm6b9zot8Q@mail.gmail.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Thu, 7 Nov 2024 00:07:21 +0600
-Message-ID: <CAFfO_h6aAKcXX4JYJ7cTgKXz0rJ4+2ULSB+CJssL1-hAiHfadg@mail.gmail.com>
-Subject: Re: [PATCH] eif: cope with huge section offsets
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
- envelope-from=dorjoychy111@gmail.com; helo=mail-ot1-x335.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,49 +103,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 6, 2024 at 11:58=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> On Wed, Nov 6, 2024 at 6:54=E2=80=AFPM Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
-> >
-> > On 11/6/24 09:49, Paolo Bonzini wrote:
-> > > On Wed, Nov 6, 2024 at 6:47=E2=80=AFPM Pierrick Bouvier
-> > > <pierrick.bouvier@linaro.org> wrote:
-> > >
-> > >>>        for (int i =3D 0; i < MAX_SECTIONS; ++i) {
-> > >>>            header->section_offsets[i] =3D be64_to_cpu(header->secti=
-on_offsets[i]);
-> > >>> +        if (header->section_offsets[i] > OFF_MAX) {
-> > >>
-> > >> Maybe we could add a comment that sections_offsets is unsigned, as i=
-t
-> > >> can be confusing to read value > INT_MAX without more context.
-> > >
-> > > It does sound like OFF_MAX is related to section_offsets[], but it's
-> > > actually related to off_t.  So the comparison is with the maximum
-> > > value of off_t, which is signed.
-> > >
-> > > The problem would happen even if section_offsets[] was signed (for
-> > > example off_t could be 32-bit).
-> >
-> > I'm a bit confused.
-> > It works because section_offsets[i] is unsigned. If it was signed, and
-> > sizeof(off_t) is 8, we can never satisfy "(int64) > INT64_MAX".
->
-> The fact that you cannot satisfy "int64 > INT64_MAX" just means that
-> on this system that erroneous condition is unreachable, but it could
-> be reachable on others. (Actually the fact that section_offsets[] is
-> unsigned does matter, because otherwise you'd nede a check against 0
-> as well. But it doesn't matter for the correctness of *this* check
-> against OFF_MAX).
->
+Cope with the old version that is provided in Debian 12.
 
-I think instead of putting the check for > OFF_MAX inside
-read_eif_header, it would make more sense to put the check in the
-read_eif_file function before the fseek line where we are actually
-doing the seeking, no? What do you think?
+--size_t-is-usize is needed on bindgen <0.61.0, and it was removed in
+bindgen 0.65.0, so check for it in meson.build.
 
-Regards,
-Dorjoy
+--merge-extern-blocks was added in 0.61.0.
+
+--formatter rustfmt was added in 0.65.0 and is the default, so remove it.
+
+Apart from Debian 12 and Ubuntu 22.04, all other supported distros have
+version 0.66.x of bindgen or newer (or do not have bindgen at all).
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ docs/about/build-platforms.rst | 12 ++++++++++++
+ meson.build                    | 31 +++++++++++++++++++++++++++----
+ 2 files changed, 39 insertions(+), 4 deletions(-)
+
+diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+index b779eb54934..6102f00aec0 100644
+--- a/docs/about/build-platforms.rst
++++ b/docs/about/build-platforms.rst
+@@ -107,6 +107,18 @@ Python build dependencies
+   required, it may be necessary to fetch python modules from the Python
+   Package Index (PyPI) via ``pip``, in order to build QEMU.
+ 
++Rust build dependencies
++  QEMU is generally conservative in adding new Rust dependencies, and all
++  of them are included in the distributed tarballs.  One exception is the
++  bindgen tool, which is too big to package and distribute.  The minimum
++  supported version of bindgen is 0.60.x.  For distributions that do not
++  include bindgen or have an older version, it is recommended to install
++  a newer version using ``cargo install bindgen-cli``.
++
++  Developers may want to use Cargo-based tools in the QEMU source tree;
++  this requires Cargo 1.74.0.  Note that Cargo is not required in order
++  to build QEMU.
++
+ Optional build dependencies
+   Build components whose absence does not affect the ability to build
+   QEMU may not be available in distros, or may be too old for QEMU's
+diff --git a/meson.build b/meson.build
+index 5b85d4275bb..11958c67b5f 100644
+--- a/meson.build
++++ b/meson.build
+@@ -100,6 +100,23 @@ if have_rust
+   endif
+ endif
+ 
++if have_rust
++  bindgen = find_program('bindgen', required: get_option('rust'))
++  if not bindgen.found() or bindgen.version().version_compare('<0.60.0')
++    if get_option('rust').enabled()
++      error('bindgen version ' + bindgen.version() + ' is unsupported. You can install a new version with "cargo install bindgen-cli"')
++    else
++      if bindgen.found()
++        warning('bindgen version ' + bindgen.version() + ' is unsupported, disabling Rust compilation.')
++      else
++        warning('bindgen not found, disabling Rust compilation.')
++      endif
++      message('To use Rust you can install a new version with "cargo install bindgen-cli"')
++      have_rust = false
++    endif
++  endif
++endif
++
+ dtrace = not_found
+ stap = not_found
+ if 'dtrace' in get_option('trace_backends')
+@@ -3963,15 +3980,13 @@ common_all = static_library('common',
+ if have_rust
+   # We would like to use --generate-cstr, but it is only available
+   # starting with bindgen 0.66.0.  The oldest supported versions
+-  # are in Ubuntu 22.04 (0.59.1) and Debian 12 (0.60.1).
++  # is 0.60.x (Debian 12 has 0.60.1) which introduces --allowlist-file.
+   bindgen_args = [
+     '--disable-header-comment',
+     '--raw-line', '// @generated',
+     '--ctypes-prefix', 'std::os::raw',
+-    '--formatter', 'rustfmt',
+     '--generate-block',
+     '--impl-debug',
+-    '--merge-extern-blocks',
+     '--no-doc-comments',
+     '--with-derive-default',
+     '--no-layout-tests',
+@@ -3980,6 +3995,12 @@ if have_rust
+     '--allowlist-file', meson.project_source_root() + '/.*',
+     '--allowlist-file', meson.project_build_root() + '/.*'
+     ]
++  if bindgen.version().version_compare('<0.61.0')
++    # default in 0.61+
++    bindgen_args += ['--size_t-is-usize']
++  else
++    bindgen_args += ['--merge-extern-blocks']
++  endif
+   c_enums = [
+     'DeviceCategory',
+     'GpioPolarity',
+@@ -4015,7 +4036,7 @@ if have_rust
+     dependencies: common_ss.all_dependencies(),
+     output: 'bindings.rs',
+     include_directories: include_directories('.', 'include'),
+-    bindgen_version: ['>=0.69.4'],
++    bindgen_version: ['>=0.60.0'],
+     args: bindgen_args,
+     )
+   subdir('rust')
+@@ -4481,6 +4502,8 @@ if have_rust
+   summary_info += {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
+   summary_info += {'rustc':           ' '.join(rustc.cmd_array())}
+   summary_info += {'rustc version':   rustc.version()}
++  summary_info += {'bindgen':         bindgen.full_path()}
++  summary_info += {'bindgen version': bindgen.version()}
+ endif
+ option_cflags = (get_option('debug') ? ['-g'] : [])
+ if get_option('optimization') != 'plain'
+-- 
+2.47.0
+
 
