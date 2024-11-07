@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0296D5AE6C
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 06:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E4BD5AE67
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 06:33:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8w3V-0005L0-7h; Thu, 07 Nov 2024 01:31:45 -0500
+	id 1t8w3l-0005NW-2r; Thu, 07 Nov 2024 01:32:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1t8w3T-0005Kk-US
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 01:31:43 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1t8w3a-0005Mb-SB
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 01:31:52 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1t8w3S-0007pn-H2
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 01:31:43 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-210e5369b7dso6131915ad.3
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 22:31:42 -0800 (PST)
+ id 1t8w3Y-0007uz-LG
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 01:31:49 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20caccadbeeso6385155ad.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 22:31:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1730961100; x=1731565900; darn=nongnu.org;
- h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HTsAYnFy6pdUdwnERiX/Gcs6mqcGLATmNajTR2VB5Pw=;
- b=XSPL+YXUuXrFjnqTfaDAnJfTNRR+tn++s07APKD0tyKppOAyI3skCortT1GPtz7rJS
- cOyCAo/DRQnbIBLMA4oweavRx0Ini42LiwPWQdOKd7sanEZIXb+BKkwmFL3uS1OKJh2U
- BTg3XciuRJsMb2O7LtwgRSFwSneKDhJt7zfe5Yxy6VJzc17rsBsfS8pO2Ht0wJa/xMAo
- zFZvABAAdFyuL0FItc/dYlTHQz4MAeQyT/hQ/Bcl+M4vks/lXdjw9zJn8Yj7LkmKMgJ+
- gp4Xxw4fsppSPMNa+TbsY3Y0uwM8w4UzvrijJrvvsn3cKJdyVXAwVWw6KgBtNYTNvjyX
- an1Q==
+ d=sifive.com; s=google; t=1730961106; x=1731565906; darn=nongnu.org;
+ h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=TfKLwFIwOJ8McnAVkO7CKA9p3IkEodbwexFiFB6Ay14=;
+ b=EBN1EKJbbHwkoHz7EWmUU3FgTlTS81Tr3+onzlEzwEIKr6Jr9auBBWK1G2ZcyVBjhb
+ /lRcV4VcYnZHCnZxdQrU5xfsIWgpVaU9l+ll+jfhq7lq5FbHLd/WtVnQY9Eza3AcjdkF
+ wiM/GqKeFvOZ5cn/VSVBTjwGBWXOyhXLJz4vSWG/Hd0Ozza9krhdyiG25s2g+OuVLoQS
+ gbxfOlOSlHzx3FUXTx28k7R/qf70TgBEnYktzbi1EDD86IetKxELIDn3iW85mX8xQGJn
+ UgeO24/W7UsCqVVHnd0oFtUkXGXsDwyUxJqBbr7nLKNFoKrH2WKfRAnN7lqyWHylUdRt
+ BuUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730961100; x=1731565900;
- h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HTsAYnFy6pdUdwnERiX/Gcs6mqcGLATmNajTR2VB5Pw=;
- b=A4kmZrnHcF+kx9BSxhihO34fAv6jhL9LHQ7PBz+iGBwQOKFbdnYVpYWKuFeqDs9DBG
- DQK9aquh/GRyInBp4Z7izlySVNFBKS1jCm6ZCPeIfRdAQt6BrzQcYEQx3icU+ViZlUhh
- wi44LfuvSeoLa+PeplE/P+NJn5X67k77lQWe4jrf7GSuj30VczV2BwwMlpiddmEqdDdt
- ZSGyK+3hkgaCNJZXly7yD0YsXws4yL771uPDC/H7w7pVYVgPdd4FoF9tjYm9zSKSIYCU
- PwEkuEkZZNzt/Qakb6S7RoafH1Mb57/ihiK7SmGhtYIWoTDZHatV7yL7bp3SUCqQ2714
- Mgaw==
-X-Gm-Message-State: AOJu0YzBxys1JKqJghAnIOzfA2Vr7RHrAO7EyWK2zNbz3vKxxU0vPQq7
- ftVrH5sTgnPWQyDqLtPTZU5XkMIiSjZy+TWVU0uL+lHE96YvG8zwaW7pkA2aEirUhlyUHVSitr8
- 1T93/NP9IQHSA72e6W6ZJnHjpxLajB0bJvb3HkFTyKSxDmWTMnH4XCCYfDlOC1f79AkzLQVVSMm
- bYRw8Uqo5kcC54iD1A2iSdqN6MkAnDJ3Cpiw==
-X-Google-Smtp-Source: AGHT+IHO7IqndfpqC08LSGz9HoCJTN1FKKBDE5N6SUUl/RBPQFjlBhNZilHCSlPEE++zwt8XGfdwMw==
-X-Received: by 2002:a17:902:d50f:b0:20c:f9ec:cd7f with SMTP id
- d9443c01a7336-2111af17e0emr309324865ad.4.1730961099756; 
- Wed, 06 Nov 2024 22:31:39 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730961106; x=1731565906;
+ h=references:in-reply-to:message-id:date:subject:cc:to:from
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TfKLwFIwOJ8McnAVkO7CKA9p3IkEodbwexFiFB6Ay14=;
+ b=wDsTdIyU4cReB4HpMAew1dYIOyI2Am1DRWmYCkFmN9wtIMql3bQJotJeAgeyW7j976
+ PnFPUIWNJmVd8TEPr1bbciwZalLpdpAIZz7L3K6+bB7oe0SQW1rV9kbfNvpIEmSk1eG2
+ qRlbL6t+R1XEz1qcl3nteXuPyH5d1lfMrt2adDZvXZ09TPyUzS3hDE7cfHzbKcK/btHI
+ nwMBWp4VTY9I/OYLtw8lKUT4xgNdqivFV7XiZVSUG/z/FpuVumzRyLypny1mLsYjeTg6
+ fQuGhj7XEXSt9qr153vbNwVpINoK9BM/pjARp7WKGowaLTt/Sc5ohoZrq/ra2RK/I1zg
+ EbeQ==
+X-Gm-Message-State: AOJu0YwMasNIg2YEyCab/D6G+2CGA15yy+zMfOZpOZ385bj2+v9N4Dy4
+ S+60DIaxudU6/7kM+O7ovs0OvfJM1IZ4cGCkyO4INwhIEyi64ecFmmCr0Y0MPnI26RQzCU/rxZP
+ +sAz8br+f56jM1zSVyvaMsC+JsDjXAtHl0tSMBQAC+R5hdFeg7scfeAgwZWGD/IELsPSonXJp3s
+ 0BQJ9cDP1k0N/SdPe1T3+XE95jOaxLfvZFbQ==
+X-Google-Smtp-Source: AGHT+IH6iPHq+kcTTrzMlYWb3QKRlcgpB3Eq5EefjcQvjScLuLpOEdyf8LfQ9y2UVGvGcbApbnM4LQ==
+X-Received: by 2002:a17:902:dac4:b0:20c:805a:524 with SMTP id
+ d9443c01a7336-211786800a5mr9104555ad.39.1730961106398; 
+ Wed, 06 Nov 2024 22:31:46 -0800 (PST)
 Received: from hsinchu26.internal.sifive.com
  (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21177dc7cf8sm4995665ad.34.2024.11.06.22.31.37
+ d9443c01a7336-21177dc7cf8sm4995665ad.34.2024.11.06.22.31.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2024 22:31:39 -0800 (PST)
+ Wed, 06 Nov 2024 22:31:45 -0800 (PST)
 From: Jim Shu <jim.shu@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -67,12 +67,15 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v2 0/3] Support 64-bit address of initrd
-Date: Thu,  7 Nov 2024 14:31:30 +0800
-Message-Id: <20241107063133.28339-1-jim.shu@sifive.com>
+Subject: [PATCH v2 3/3] hw/riscv: Add the checking if DTB overlaps to kernel
+ or initrd
+Date: Thu,  7 Nov 2024 14:31:33 +0800
+Message-Id: <20241107063133.28339-4-jim.shu@sifive.com>
 X-Mailer: git-send-email 2.17.1
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=jim.shu@sifive.com; helo=mail-pl1-x631.google.com
+In-Reply-To: <20241107063133.28339-1-jim.shu@sifive.com>
+References: <20241107063133.28339-1-jim.shu@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=jim.shu@sifive.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,38 +98,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support to load DTB after 3GB on RV64 system, so that larger initrd
-doesn't be overlapped to DTB. DTB loading now will check if overlapping
-to kernel/initrd and report this error.
+DTB is placed to the end of memory, so we will check if the start
+address of DTB overlaps to the address of kernel/initrd.
 
-Verify the patch via running 4GB initramfs on the virt machine.
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+---
+ hw/riscv/boot.c         | 24 +++++++++++++++++++++++-
+ include/hw/riscv/boot.h |  3 +++
+ 2 files changed, 26 insertions(+), 1 deletion(-)
 
-Changes for v2:
-
-  - Add DTB overlapping checking and struct RISCVBootInfo
-  - Remove the commit to change #address-cell of 'initrd-[start|end]'
-
-Jim Shu (3):
-  hw/riscv: Support to load DTB after 3GB memory on 64-bit system.
-  hw/riscv: Add a new struct RISCVBootInfo
-  hw/riscv: Add the checking if DTB overlaps to kernel or initrd
-
- hw/riscv/boot.c                    | 94 +++++++++++++++++++++---------
- hw/riscv/microchip_pfsoc.c         | 13 +++--
- hw/riscv/opentitan.c               |  4 +-
- hw/riscv/sifive_e.c                |  4 +-
- hw/riscv/sifive_u.c                | 14 ++---
- hw/riscv/spike.c                   | 14 ++---
- hw/riscv/virt.c                    | 13 +++--
- include/hw/riscv/boot.h            | 28 ++++++---
- include/hw/riscv/microchip_pfsoc.h |  2 +
- include/hw/riscv/opentitan.h       |  2 +
- include/hw/riscv/sifive_e.h        |  2 +
- include/hw/riscv/sifive_u.h        |  2 +
- include/hw/riscv/spike.h           |  2 +
- include/hw/riscv/virt.h            |  2 +
- 14 files changed, 130 insertions(+), 66 deletions(-)
-
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index e5bd54bd73..d22d240854 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -214,6 +214,9 @@ static void riscv_load_initrd(MachineState *machine, RISCVBootInfo *info)
+         }
+     }
+ 
++    info->initrd_start = start;
++    info->initrd_size = size;
++
+     /* Some RISC-V machines (e.g. opentitan) don't have a fdt. */
+     if (fdt) {
+         end = start + size;
+@@ -310,6 +313,7 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+     int ret = fdt_pack(ms->fdt);
+     hwaddr dram_end, temp;
+     int fdtsize;
++    uint64_t dtb_start, dtb_start_limit;
+ 
+     /* Should only fail if we've built a corrupted tree */
+     g_assert(ret == 0);
+@@ -320,6 +324,17 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+         exit(1);
+     }
+ 
++    if (info->initrd_size) {
++        /* If initrd is successfully loaded, place DTB after it. */
++        dtb_start_limit = info->initrd_start + info->initrd_size;
++    } else if (info->kernel_size) {
++        /* If only kernel is successfully loaded, place DTB after it. */
++        dtb_start_limit = info->image_high_addr;
++    } else {
++        /* Otherwise, do not check DTB overlapping */
++        dtb_start_limit = 0;
++    }
++
+     /*
+      * A dram_size == 0, usually from a MemMapEntry[].size element,
+      * means that the DRAM block goes all the way to ms->ram_size.
+@@ -339,7 +354,14 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+         temp = (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : dram_end;
+     }
+ 
+-    return QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
++    dtb_start = QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
++
++    if (dtb_start_limit && (dtb_start < dtb_start_limit)) {
++        error_report("No enough memory to place DTB after kernel/initrd");
++        exit(1);
++    }
++
++    return dtb_start;
+ }
+ 
+ /*
+diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+index 719ee1fe5f..e309cc1a7f 100644
+--- a/include/hw/riscv/boot.h
++++ b/include/hw/riscv/boot.h
+@@ -32,6 +32,9 @@ typedef struct RISCVBootInfo {
+     uint64_t image_low_addr;
+     uint64_t image_high_addr;
+ 
++    hwaddr initrd_start;
++    ssize_t initrd_size;
++
+     bool is_32bit;
+ } RISCVBootInfo;
+ 
 -- 
 2.17.1
 
