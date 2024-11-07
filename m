@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A01AAD43341
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 11:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2160D43341
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 11:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t90WC-0008KQ-QF; Thu, 07 Nov 2024 06:17:41 -0500
+	id 1t90ZP-0000xN-5K; Thu, 07 Nov 2024 06:20:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t90W4-0008K0-Rs
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:17:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t90W2-0004Hb-S2
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:17:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730978248;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zqtP3PbVxgiCGatbh2Gh3VIBlykuo2jURlxbRlGYmlc=;
- b=Vsw8o9LjhGgP+cSJgyNKPMyBMdc5pFn2yFiXVULGMYp9usrcUt5ngOtH14M+JjzYu6yLhg
- LBB79r11/2JfK0b/l+NF1hG56I6vwIV9kr9+UlUWlNjCa24BeTwelkB4hyEzgfH55XZmJe
- 6RsTkG5vKzjNwygEEDkKndXdoPIDtm4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-498-_n_hPHSmNqWyNf0S1oLs7Q-1; Thu,
- 07 Nov 2024 06:17:27 -0500
-X-MC-Unique: _n_hPHSmNqWyNf0S1oLs7Q-1
-X-Mimecast-MFC-AGG-ID: _n_hPHSmNqWyNf0S1oLs7Q
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 87B901956080
- for <qemu-devel@nongnu.org>; Thu,  7 Nov 2024 11:17:25 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.150])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 49215196BC05
- for <qemu-devel@nongnu.org>; Thu,  7 Nov 2024 11:17:24 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6C36621E6A28; Thu,  7 Nov 2024 12:17:21 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Paolo
- Bonzini <pbonzini@redhat.com>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH] crypto: purge 'loaded' property that was documented as
- already removed
-In-Reply-To: <Zyo0n0pJY1BI4-TT@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Tue, 5 Nov 2024 15:07:11 +0000")
-References: <20241030084718.2980247-1-berrange@redhat.com>
- <874j4nzagr.fsf@pond.sub.org> <Zyo0n0pJY1BI4-TT@redhat.com>
-Date: Thu, 07 Nov 2024 12:17:21 +0100
-Message-ID: <8734k3l2da.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t90ZN-0000x4-Tz
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:20:57 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t90ZG-0004gM-0o
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:20:57 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9c28c1e63so970326a12.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 03:20:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730978447; x=1731583247; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=T8cxeuFF/AL0mAa6xYsoq7y+uetrAc/tdhCwjx2rYFM=;
+ b=BLGVGJZJTqQoGXIZjTzslCSFULV57xvjlmKs4YN7mo2V7HUyHJKXgPrBc+8Rv5qA6W
+ /RWlAO+9Cmuj61Uwe496CyTZ2v6aQ6eVMXNGxQhQ+EM1CTBygxnQK3uEnnzqC8dFhUgq
+ 2djkHooP4FUzMAeqfNSLK/vs4uXLcZXBD9sOLZO75XmV3bkmmlLTUDLTLUbRJLt3QNZX
+ p4ANqO3Xc5p/E3T017RZksBNrsL5cUj6q/pN4ZX+yQo8BzDx+S2K7+NlhJoWskYmLz40
+ ZlxO/Q4e4rf8o2H+GLKXbsaJYNGnPmLmATh2KGCNRPmwvJYSLUal0/OgDdZLXtGVq5x8
+ aW8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730978447; x=1731583247;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=T8cxeuFF/AL0mAa6xYsoq7y+uetrAc/tdhCwjx2rYFM=;
+ b=U+ZNaKwf1Zlx1vCay6z5NPX3qSddnjns73lSPX/b5n7KcQtTRrVsJvUs915lOl0WMP
+ V1afbUp4Jt8/eVUyNMHBjVWxwcz2EZhB268iEE+CEo4jFV9UWBvvgd4jFd5S1Hle4HO1
+ bmjnYtaWPxxLVLkljcir+rFYQjBgaX3bww9+P9HqsEmjHRsfoUwJFRWsxj5d9V+SSWhr
+ OVqTHynxgW65qNWKb2T+ygrBWkUi3O34bk6F+iioafu6DalXaPQPu+QgUwnAvwaXZ65/
+ MNmBoZAQXR5x2NxehZgRFP15x4510ojg3GhdeF9bLHItJ07rkF2yd0amj5szMn6oi65L
+ TVEQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVYqQz2JeRx2yegfU9+vcGw4+PM9hZJHE+WxF9stUm1QaF/H91RE4bGspG6d08vfjOKxv9159Rz0Xe7@nongnu.org
+X-Gm-Message-State: AOJu0Ywz+xghODk8WBEMhRpPBOKTl+gA7zqiWB6Iuih1cYi2bEUQoEkq
+ zEYRIlRP4qwi0YbXUi3zOpH9FKu9GSbNSrf1jhTkvAVDki6ZdKT7SfzuYIhIv8o2BAp73OoxdVw
+ UdVSkEwxDKShHECehrpnb3sY4vTeS5zUrVPNF5A==
+X-Google-Smtp-Source: AGHT+IH51c5v2Lqf+yfHLPHUrD+cJgquHVLmTQcKEzMHtOZG/PxcGNKHzf7oklLBzSZb5YSCTyFhV1TSwq4diO3d548=
+X-Received: by 2002:a05:6402:26d1:b0:5ca:1598:195b with SMTP id
+ 4fb4d7f45d1cf-5cf05a1f8f7mr953990a12.28.1730978446825; Thu, 07 Nov 2024
+ 03:20:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <ZylIIkk7k69QIBmn@p100>
+In-Reply-To: <ZylIIkk7k69QIBmn@p100>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 7 Nov 2024 11:20:35 +0000
+Message-ID: <CAFEAcA8qdUPBcHz+h+CBGFO1LP07BuKV6XiJuvJUQZuPfg0=YQ@mail.gmail.com>
+Subject: Re: [PATCH v2] target/hppa: Add CPU reset method
+To: Helge Deller <deller@kernel.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,42 +88,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> On Mon, Nov 04, 2024 at 09:09:40AM +0100, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > The 'loaded' property on TLS creds and secret objects was marked as
->> > deprected in 6.0.0 and then marked as removed in 7.1.0.
->>=20
->> deprecated
->>=20
->> Regarding "marked as removed": not quite.  Its entry was moved from
->> docs/about/deprecated.rst to docs/about/removed-features.rst, but the
->> text there is "should simply be removed."
->>=20
->> >
->> > Except it wasn't actually removed, it was just made read-only, while
->> > claiming it was removed. Finish the long overdue removal job.
->> >
->> > Fixes: 0310641c06dd5f7ea031b2b6170cb2edc63e4cea
->>=20
->> I'm not sure it fixes something that was broken.  Commit 0310641c06d
->> (crypto: make loaded property read-only) did what it said on the tin.
->> What it did was unusual, and maybe a bad idea.
+On Mon, 4 Nov 2024 at 22:18, Helge Deller <deller@kernel.org> wrote:
 >
-> I'm re-wording the commit message to:
+> Add the CPU reset method, which resets all CPU registers and the TLB to
+> zero. Then the CPU will switch to 32-bit mode (PSW_W bit is not set) and
+> start execution at address 0xf0000004.
+> Although we currently want to zero out all values in the CPUHPPAState
+> struct, add the end_reset_fields marker in case the state structs gets
+> extended with other variables later on which should not be reset.
 >
->   The 'loaded' property on TLS creds and secret objects was marked as
->   deprecated in 6.0.0. In 7.1.0 the deprecation info was moved into
->   the 'removed-features.rst' file, but the property was not actually
->   removed, just made read-only. This was a highly unusual practice,
->   so finish the long overdue removal job.
+> Signed-off-by: Helge Deller <deller@gmx.de>
 >
-> and removing the "Fixes" tag
+> V2: (based on feedback by Peter Maydell)
+> - Add end_reset_fields marker
+> - call reset function in hppa_cpu_initfn()
+>
+> diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+> index c38439c180..d12bf65021 100644
+> --- a/target/hppa/cpu.c
+> +++ b/target/hppa/cpu.c
+> @@ -194,13 +194,8 @@ static void hppa_cpu_realizefn(DeviceState *dev, Error **errp)
+>
+>  static void hppa_cpu_initfn(Object *obj)
+>  {
+> -    CPUState *cs = CPU(obj);
+> -    HPPACPU *cpu = HPPA_CPU(obj);
+> -    CPUHPPAState *env = &cpu->env;
+> -
+> -    cs->exception_index = -1;
+> -    cpu_hppa_loaded_fr0(env);
+> -    cpu_hppa_put_psw(env, PSW_W);
+> +    /* inital values loaded via reset in hppa_cpu_reset_hold() */
+> +    resettable_reset(obj, RESET_TYPE_COLD);
 
-Thanks!
+You can't call reset from the CPU initfn (among other
+things, the CPU object isn't fully constructed until
+its realize method has been called).
 
-[...]
+CPU reset is rather awkward at the moment because it
+doesn't happen automatically (because CPUs are not
+subtypes of Device). So generally the way it works at
+the moment is that the machine model code arranges to
+reset the CPU object "manually". For Arm we do this
+as part of setting up the CPU for however we're booting
+the kernel in hw/arm/boot.c. It looks to me like for
+HPPA the best place would be to call cpu_reset() in
+hppa_machine_reset(), in the loop just before doing
+the other CPU setup like calling cpu_set_pc().
 
+>  }
+
+
+Otherwise this looks good.
+
+thanks
+-- PMM
 
