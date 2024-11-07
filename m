@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9F0D5D687
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 19:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A37D5D687
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 19:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t98av-0001TX-Ds; Thu, 07 Nov 2024 14:55:05 -0500
+	id 1t98b3-0001cJ-VA; Thu, 07 Nov 2024 14:55:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3ERstZwYKCjwrgrsqpemmejc.amkocks-bctcjlmlels.mpe@flex--titusr.bounces.google.com>)
- id 1t98at-0001Qt-5h
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 14:55:03 -0500
+ <3FBstZwYKCj8ujuvtshpphmf.dpnrfnv-efwfmopohov.psh@flex--titusr.bounces.google.com>)
+ id 1t98ax-0001VD-18
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 14:55:07 -0500
 Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3ERstZwYKCjwrgrsqpemmejc.amkocks-bctcjlmlels.mpe@flex--titusr.bounces.google.com>)
- id 1t98aq-0003K0-A2
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 14:55:01 -0500
+ <3FBstZwYKCj8ujuvtshpphmf.dpnrfnv-efwfmopohov.psh@flex--titusr.bounces.google.com>)
+ id 1t98at-0003Kg-RC
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 14:55:06 -0500
 Received: by mail-yb1-xb4a.google.com with SMTP id
- 3f1490d57ef6-e30ceaa5feeso2484651276.2
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 11:54:58 -0800 (PST)
+ 3f1490d57ef6-e29205f6063so2268550276.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 11:55:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1731009297; x=1731614097; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Jzv6DPkMq+AatJ9bE5NP8pF1sQdsh9cAVnptctptWRA=;
- b=h1QWR4dmkZbMAaofqSXG9Y/s3OBcZ10KT4BSI62Vtoihrws1tiNiGfmui22DtlBq54
- eWeISE2e8HQgPh/sB7UzpeaalnCuOtxSQkorabzb6a4hbnBAjNeLR6ejwU6r4Q1rO9L5
- LpnUyDh6HlbCpGMEWKpdvJ+8cQNh2xE9XvUHEwo/sjwLYELg4/H73kYOtuCJJGUGw9xj
- ZG//Mo4sw22ravpGTZk1M1WlYTYVAat5VOqNp+agprDsYCPUMhFFZ9PfZJS0M9tp7ES3
- mAXwPok+WmuyHkl4lAqxRE67Hm8NsZrVkN4179bm389ElCjGGxwe5tRxA4SQZaw66+46
- 4z/Q==
+ d=google.com; s=20230601; t=1731009301; x=1731614101; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=sxbPXV2KES210ccGj2mQ/00ciXsa28hw8J0Q0KYSQDc=;
+ b=T3NR1zQWeSRQFYRTQ1lEpwHC9/9dEwXDc1eZ2z1VeB0tCL+w0qLQgPFV6wSYmQXsZU
+ bmhjT8IhxROI6YcLhGFcFtH1qGiStaD0OWANYIu7zoLI+4w08oAi2kdhI8UEexfAvkl/
+ nPeNDoRycOyiu3G+Gm400WyoiG1hW8OXxOiIu2HycUmCae3YmbYSdllsyFz7FXzjvLGF
+ 1SYXLmRIaIR4xiyF0xQ4O7xUGY2UPCndkyH3pkGHmV50rgQonAMaP2jJnq60l+CdNcm+
+ rIq1N50WHCe2MhMD/WLxK/0T8ciBHBe8dErm8WKgC8TmTr+wVTTHErIAvApRXxLDILXk
+ jvUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731009297; x=1731614097;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Jzv6DPkMq+AatJ9bE5NP8pF1sQdsh9cAVnptctptWRA=;
- b=aYjrwCm2ZRhGiCGpCO4gTQVbn2aXiIZIfJhFP7M/XWiif1FrhFW5ddvpKGYZwgAdmw
- iKSUNKpsUiMZdOCdR/avQdM5hBUmqRHfUaV45kmYYw/wFdmWEgO9vvD0hkcJHfdzXJEB
- I/IsWO4YCFSG/waN2KnwahOzbCLIpfHjG1b2w/w7OD6ldAFCYMd9YTsO/e5p2A3paXu+
- SZ8oxTK9x4Rc0ANqsPP9zfypRQjpv6qJwc5a+qPEDYyIrPeVjU4zshxDBpk+Vkhr/89x
- seqMnIqe/AtLzAY7D6STn86SykH3oj1KXNKu1vkJuJGEs/hspIw1xRKNKplw6B+kRO0N
- +4PQ==
+ d=1e100.net; s=20230601; t=1731009301; x=1731614101;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=sxbPXV2KES210ccGj2mQ/00ciXsa28hw8J0Q0KYSQDc=;
+ b=BWtyApSHWh98lXLvyJez/LFZf46iJWr6u6SAlV8ZwhIE8PaYF2kqnlWelMiXR8UqS2
+ 4tDGxsPk+C/oqypqL8xQYHxcypPCQQhGzFzmGUTVK5YhgboWUXhU2Zq9SVHQCpPEZ0EJ
+ 6sSDxHS+Z9YYpJsmAKHatvpdSneRW3z5PE8b3GRRR7aU23JltlQAf8DREn3FzKkt7ZtB
+ jW0BqO7ua/3bfChKFPk9KbQ0mq3cu1srK1EhQKWgen4PMrakdKPyGZuMSdRGdxoHU4SY
+ /rGFLUHruFJIz+YSyQHGy9L1U64L2ommYAMD2k90C38D6dlAq81wl/PGW6qzsSFA+V2o
+ 4A+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUkjLiA6ZTpv9etcH6ntaXYzSTvY3hgI9uW0Yuig8LPh/bAJS+P8X0ILCzt4dahgExia6cojt/hUHkJ@nongnu.org
-X-Gm-Message-State: AOJu0YwiPYzVjTJsrw/Uce3mOagGfSnNk1MhOpUAwPbK3DAOtN+cbC5J
- eIs/9oO8dgXpmkrC9D0BG33p41VSXJzAtAsUZgjdk8LBFIS9NveXKccx9MQLuO/cNmEUedDiCX1
- TCQ==
-X-Google-Smtp-Source: AGHT+IGiyA+yueDTMpEZ1QZ1cl7ZuslQI8OOpAYHv7YNk2TU8FvE5FXXjRKoEjfYhIf8p3t3LOTc6G/UDRY=
+ AJvYcCXdf0mmoNl+CFiTrnbNzDBInvAO5pykv4wyJg81ivo/la8jvZHKoRaY9vnb/ae/3ZDxiCj3oI06mPla@nongnu.org
+X-Gm-Message-State: AOJu0YxIVddHZw/Q8uhmzOpFtBjdoPsMi8iF1j+TMzz01+ANIE1LH/tj
+ p+xqKBuKJOQv+N71kjQ2/RIGX1NRyVm7mr3JYBbH+aRAhvCX5IHzQf+R0y73KISkMDKskZobYk6
+ ZPw==
+X-Google-Smtp-Source: AGHT+IE0q0PWUlih+47eGnqEzahF8cZwQc7/3aNVVz9lbHyqNxLtk29OTlyDgxo8JxJapjnvXSbpbZulJAY=
 X-Received: from titusr.c.googlers.com ([fda3:e722:ac3:cc00:dc:567e:c0a8:e14])
- (user=titusr job=sendgmr) by 2002:a25:2d10:0:b0:e33:4850:b1bd with
+ (user=titusr job=sendgmr) by 2002:a25:acd3:0:b0:e30:da65:7240 with
  SMTP id
- 3f1490d57ef6-e337f843c12mr621276.1.1731009297594; Thu, 07 Nov 2024 11:54:57
+ 3f1490d57ef6-e337f85bbf5mr577276.3.1731009300823; Thu, 07 Nov 2024 11:55:00
  -0800 (PST)
-Date: Thu,  7 Nov 2024 19:54:47 +0000
+Date: Thu,  7 Nov 2024 19:54:50 +0000
+In-Reply-To: <20241107195453.2684138-1-titusr@google.com>
 Mime-Version: 1.0
+References: <20241107195453.2684138-1-titusr@google.com>
 X-Mailer: git-send-email 2.47.0.277.g8800431eea-goog
-Message-ID: <20241107195453.2684138-1-titusr@google.com>
-Subject: [PATCH 0/6] Add Quanta GSZ BMC machine and PCA I2C GPIO expanders
+Message-ID: <20241107195453.2684138-4-titusr@google.com>
+Subject: [PATCH 3/6] hw/gpio: add PCA9536 i2c gpio expander
 From: Titus Rwantare <titusr@google.com>
 To: peter.maydell@linaro.org, minyard@acm.org, clg@redhat.com
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, philmd@linaro.org, 
  venture@google.com, wuhaotsh@google.com, milesg@linux.vnet.ibm.com, 
  Titus Rwantare <titusr@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
- envelope-from=3ERstZwYKCjwrgrsqpemmejc.amkocks-bctcjlmlels.mpe@flex--titusr.bounces.google.com;
+ envelope-from=3FBstZwYKCj8ujuvtshpphmf.dpnrfnv-efwfmopohov.psh@flex--titusr.bounces.google.com;
  helo=mail-yb1-xb4a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
@@ -78,7 +82,7 @@ X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,46 +98,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series bundles the GPIO sensors previously sent for review:
-https://lore.kernel.org/all/20230206194936.168843-1-titusr@google.com
+This device has the same register layout as the pca9538, but 4 fewer
+gpio pins. This commit lowers the number of pins initialised, and reuses
+the pca9538 logic.
 
-and the GSZ board commit sent here:
-https://lore.kernel.org/all/20241007171700.1594342-1-titusr@google.com/
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+Reviewed-by: Hao Wu <wuhaotsh@google.com>
+Signed-off-by: Titus Rwantare <titusr@google.com>
+---
+ hw/gpio/pca_i2c_gpio.c         | 18 ++++++++++++++++++
+ include/hw/gpio/pca_i2c_gpio.h |  2 ++
+ 2 files changed, 20 insertions(+)
 
-The Quanta GSZ a current Google machine of the day. This machine will be used as a platform to enable features such as the PECI bmc interface, and Intel eSPI virtual wire interface in QEMU.
-
-This patch series also contains a set of i2c GPIO expanders, with support for 4, 8, and 16 GPIO connections.
-
-The devices are configured as GPIO inputs by default, but can have pins configured to be inputs with qmp commands.
-
-These sensors and machine are maintained and used in CI daily within Google.
-
-Titus Rwantare (6):
-  bitops.h: add deposit16 function
-  hw/gpio: add PCA953x i2c GPIO expanders
-  hw/gpio: add PCA9536 i2c gpio expander
-  hw/i2c: add canonical path to i2c event traces
-  hw/arm: imply I2C_DEVICES on NPCM7xx
-  hw/arm: add Quanta GSZ bmc machine
-
- hw/arm/Kconfig                  |   1 +
- hw/arm/npcm7xx_boards.c         | 160 +++++++++++++
- hw/gpio/Kconfig                 |   5 +
- hw/gpio/meson.build             |   1 +
- hw/gpio/pca_i2c_gpio.c          | 409 ++++++++++++++++++++++++++++++++
- hw/gpio/trace-events            |   5 +
- hw/i2c/core.c                   |   8 +-
- hw/i2c/trace-events             |   2 +-
- include/hw/gpio/pca_i2c_gpio.h  |  70 ++++++
- include/qemu/bitops.h           |  26 ++
- tests/qtest/meson.build         |   1 +
- tests/qtest/pca_i2c_gpio-test.c | 188 +++++++++++++++
- 12 files changed, 872 insertions(+), 4 deletions(-)
- create mode 100644 hw/gpio/pca_i2c_gpio.c
- create mode 100644 include/hw/gpio/pca_i2c_gpio.h
- create mode 100644 tests/qtest/pca_i2c_gpio-test.c
-
--- 
+diff --git a/hw/gpio/pca_i2c_gpio.c b/hw/gpio/pca_i2c_gpio.c
+index 2486c620e3..b911187e34 100644
+--- a/hw/gpio/pca_i2c_gpio.c
++++ b/hw/gpio/pca_i2c_gpio.c
+@@ -336,6 +336,19 @@ static void pca9538_gpio_class_init(ObjectClass *klass=
+, void *data)
+     k->send =3D pca953x_send;
+ }
+=20
++static void pca9536_gpio_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc =3D DEVICE_CLASS(klass);
++    I2CSlaveClass *k =3D I2C_SLAVE_CLASS(klass);
++    PCAGPIOClass *pc =3D PCA_I2C_GPIO_CLASS(klass);
++
++    dc->desc =3D "PCA9536 4-bit I/O expander";
++    pc->num_pins =3D PCA9536_NUM_PINS;
++
++    k->recv =3D pca953x_recv;
++    k->send =3D pca953x_send;
++}
++
+ static void pca_i2c_gpio_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc =3D DEVICE_CLASS(klass);
+@@ -386,6 +399,11 @@ static const TypeInfo pca_gpio_types[] =3D {
+     .parent =3D TYPE_PCA_I2C_GPIO,
+     .class_init =3D pca9538_gpio_class_init,
+     },
++    {
++        .name =3D TYPE_PCA9536_GPIO,
++        .parent =3D TYPE_PCA_I2C_GPIO,
++        .class_init =3D pca9536_gpio_class_init,
++    },
+ };
+=20
+ DEFINE_TYPES(pca_gpio_types);
+diff --git a/include/hw/gpio/pca_i2c_gpio.h b/include/hw/gpio/pca_i2c_gpio.=
+h
+index 61e5853c24..f325563dc7 100644
+--- a/include/hw/gpio/pca_i2c_gpio.h
++++ b/include/hw/gpio/pca_i2c_gpio.h
+@@ -21,6 +21,7 @@
+ #define PCA_I2C_MAX_PINS                     16
+ #define PCA6416_NUM_PINS                     16
+ #define PCA9538_NUM_PINS                     8
++#define PCA9536_NUM_PINS                     4
+=20
+ typedef struct PCAGPIOClass {
+     I2CSlaveClass parent;
+@@ -64,5 +65,6 @@ OBJECT_DECLARE_TYPE(PCAGPIOState, PCAGPIOClass, PCA_I2C_G=
+PIO)
+=20
+ #define TYPE_PCA6416_GPIO "pca6416"
+ #define TYPE_PCA9538_GPIO "pca9538"
++#define TYPE_PCA9536_GPIO "pca9536"
+=20
+ #endif
+--=20
 2.47.0.277.g8800431eea-goog
 
 
