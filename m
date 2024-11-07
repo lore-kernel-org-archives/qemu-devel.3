@@ -4,89 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC65ED5AE60
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 05:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6702AD5AE67
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 06:19:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8uco-0000VT-Mw; Thu, 07 Nov 2024 00:00:06 -0500
+	id 1t8vrC-00030a-5I; Thu, 07 Nov 2024 01:19:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t8ucn-0000U9-4k
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 00:00:05 -0500
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t8uck-0006Ec-Gl
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 00:00:04 -0500
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-7181b86a749so299287a34.3
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 21:00:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1730955600; x=1731560400;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CR9dQFSd9mLM/+/pqi5uPtiGA6rgSVROGDApZjnCZdc=;
- b=wZgmxPLSKJ4o8JaEip+j61D64lqmxnD3xrdSNjh2rIH51egAg79crOAL+0fP4qiJwU
- 02iONGB9IjKUdeOJcRKv7ZO4MwL330P0OLz4MCrrAvT5bLYSufZfvmWwwK/dTXzgXLwp
- CwtUH3j5wdfQeEkK76KPgq7AppA2EMElKRbBEh2S+0pjnAiVV/xOKG0xVKxf4ryy1Hgk
- ZGf9+Q2x7bbV8g43lrMJE6k+808LW9C8GkbaHxAnr55vLI3zhij2XhTrocgLmwYpwdUv
- Z/781YQ/4d3ZfBHZ/WolkZAhaypwyU4eEZ7iUP1zOP/bX8QFxiQXCYM5wWFhZ2V7erv9
- DlJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730955600; x=1731560400;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CR9dQFSd9mLM/+/pqi5uPtiGA6rgSVROGDApZjnCZdc=;
- b=XjeLMHHLD1tnE2y0BTwbgZFB+EHRS8+jberDV+9tC9mccERIrfvI4aSnMQstdQVmqV
- O8WLtgdATRnl2SYMRmJmF8JQfjZTOdIsEps7jHbhNPyvWIAilso8Zw0NOCFrGJaMyeB0
- hUfBQuxt4d/rCvZZTcHx0pGk2j3R3Zbp9UNfW41Dl7DrFkzKwGHbxfhLo4ayYFUjS2YI
- 5d+wLtb8rDNOuYhFjl0A6Z09hGw4Zo/bdgZfUJU/U6TxsRPmlqV8slbI1vZ8QjEQpQHz
- hWoKuccMDuH8gp/P04zDz5NswzCvSI3JO7Ti497o7XMd+brdoUm0jWq44E20/y+I/ERl
- cmTw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYWKQx6CJQP4t2qd3//dAl45sCXA0M4fYfa4CsMtxQhMt7/DuOkDQucGkHA/DJo+NeTZ2eXxCgWZ16@nongnu.org
-X-Gm-Message-State: AOJu0YyZq9uj1Qv3xGVhRhaUFJkesUUqYptUE66jsqQdSTL1sT1cg/4J
- HqqRLEOnhftWk5/MeZXh4X2WKLfiV1KwCZHYu73Q/MNtFPHdM+mF0CPFB2TakpA=
-X-Google-Smtp-Source: AGHT+IEItlXl6V+5IEBTXWxLsGHSJ/dkZMK6og2lOpA9dFYVAMK1sXzcRFXZxAzodQczXRkzX04Blw==
-X-Received: by 2002:a05:6830:44a5:b0:718:9d91:6a17 with SMTP id
- 46e09a7af769-719ca192061mr23540011a34.11.1730955600345; 
- Wed, 06 Nov 2024 21:00:00 -0800 (PST)
-Received: from [157.82.207.107] ([157.82.207.107])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7f41f65d758sm426039a12.69.2024.11.06.20.59.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Nov 2024 20:59:59 -0800 (PST)
-Message-ID: <77a7268f-06c7-4e2f-ace2-14290f16f2b6@daynix.com>
-Date: Thu, 7 Nov 2024 13:59:56 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 RFT] cocoa: Remove deprecated
- CVDisplayLinkCreateWithCGDisplay() calls
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20241106175051.561352-2-pbonzini@redhat.com>
- <c78fe9ea-11e6-4f3f-858b-7fe5f6331c58@linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <c78fe9ea-11e6-4f3f-858b-7fe5f6331c58@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1t8vr4-00030G-NV
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 01:18:54 -0500
+Received: from mail-me3aus01olkn2055.outbound.protection.outlook.com
+ ([40.92.63.55] helo=AUS01-ME3-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1t8vr3-0005pQ-3v
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 01:18:54 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rI3hIXeuZJ1uHoNe1wKqqKTx920Ru5CNgpf3ztvzbf29Vdh7Gc5DvAtJWowp6eIRJ39ZhLGgDFbfKXLavWItGMuqMNC9kBZG0IoqG/NFIAyBFDcFeeV0xAiuoaiZ2QESs//fvEfG1bZXXi2nT6xf7Vc7/fXg3fV8RgL4rAIRNCyUajiev8QoB6asF96Xetb/QCvqB4TeJM7EJcNC9nlHEypD1TZBG3tMxHrkZQpbwNe+QcOm4AogRY+LZynSz9QT3VQJdV7NXBui+m4YR5v0syO2vzjojfx8WVS6gPNSekCC0+nLxBMxSgs53lkQuBlSaN6GvQDaoqbgg1VvgP9noQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jZW6/8nAN+mVmljO7sMbKac8QVuSaZP+8nzheJNdr8A=;
+ b=tE7edk7AHLC04E8XG1oJmfyIk7Z1orD2eEZNdtowOsz0x1jBFWpjcNEah0FK3BfNkcGUt5I4QOk1A1kraxwLR4hWIzdAtu0U+R/WlxcE2r/59Y9vLTgGtVqeH5uY31u1yfYnEcAU6lWN/UYSMNT51GY12CvESOQ7c41LqUh0eBGPsvbQdR4mVylwZj4QSZBOoqSVSaOwglnHwZ7nci+eK3EoE9rxZTfOqWQ4HGO5mklY2pE6FIz1iALIq1SbQw7E9MecxUFyHDa5JUN5ZDY0Z9R5LF7ensGWEWPYdomCmV4sBgDSrHIOq4RH2LSluMwEGDCCaKAtuJWWkkfhjWiKzA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jZW6/8nAN+mVmljO7sMbKac8QVuSaZP+8nzheJNdr8A=;
+ b=KWTV47EaqwrRggqmtaWly65XBfKKHK/R3+6GjDgFTJjRJCCniTydFRzbm2V+BVJu6PuHpolrR7U6sO9az/WtcA4Pu92EBXUQ4fVTczBddHes4Zz9D5+WVEHojISWbH3VWRJj6crsGlLNo6l1NK+hQb621FYe/zs7xpJkieRsnbwfDCA4OCnVUt61o/4Uc8idIYNWUrqLjui1fBGZvGG2uJ5FOqnC7l7KSOk2TgmjFBH74zLMhtXtOpq2iw6p54VC3sCwBPWg3iV83viCnp0kW1D6Ob80Akll6ldKDtHw13pFBfMyKxOJgpkY7F0zGUi3D4Y/uYCZ9ttD07nWik0hkw==
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
+ by SY8P300MB0308.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:260::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.19; Thu, 7 Nov
+ 2024 06:13:41 +0000
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8137.019; Thu, 7 Nov 2024
+ 06:13:40 +0000
+From: Junjie Mao <junjie.mao@hotmail.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Junjie Mao <junjie.mao@hotmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] rust/pl011: Fix range checks for device ID accesses
+Date: Thu,  7 Nov 2024 14:13:07 +0800
+Message-ID: <SY0P300MB102644C4AC34A3AAD75DC4D5955C2@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+X-Mailer: git-send-email 2.34.1
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::332;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x332.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-ClientProxiedBy: SI1PR02CA0010.apcprd02.prod.outlook.com
+ (2603:1096:4:1f7::17) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:282::22)
+X-Microsoft-Original-Message-ID: <20241107061307.13276-1-junjie.mao@hotmail.com>
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY8P300MB0308:EE_
+X-MS-Office365-Filtering-Correlation-Id: b64e253b-9851-4874-6fbe-08dcfef352ef
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|7092599003|8060799006|461199028|5062599005|5072599009|19110799003|15080799006|440099028|3412199025|1710799026;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?UHEC4N6FcSkwZM+L00i503ypPugZmjOs7u/0mRS9SQD2M6y1bTveqddSZuql?=
+ =?us-ascii?Q?5fg58R3gYwRdn2zR000kCwZj5zCWSEW/29eJy9sWrCIi0lWtFTJdxbZHQ8Kk?=
+ =?us-ascii?Q?lM0vn8nA0kDoA9UxqrTmc7XCvXZX6XJsCCWhyk6+OPs90iMEF/7OR3LoLh+p?=
+ =?us-ascii?Q?eAW5p/GkXAp/pGak4T2hMaYmfrDzWBTLYBzazbZ0XQdUdMS8NeE2Q1xjLMlB?=
+ =?us-ascii?Q?rZPbjgR+Mot/NysCOGWFmPc4Q4F8LWMihLN7Xwcp6aJano36lS2hsCOw7KJ1?=
+ =?us-ascii?Q?/V7ZVBvUTtEi39WSQKTW+lJq8NN1YqxzUy1veDCGEmY4j5tAy6/1dsk7iQSB?=
+ =?us-ascii?Q?n/TZJV1dh9Zkx5ADjl5f6fP3oFgm6XeySknmxyWKRZs459+WM/wzKYGOAYNz?=
+ =?us-ascii?Q?C6+KewJpFteR8WC2r14vAOX+5i/cZi5AGB57U127ul10ft1Jma1FDv5TE4/V?=
+ =?us-ascii?Q?6iKLAheOISOFa0dLFm21bOL4yLXE3eXTCOgtHou3C+kgNU9smshyVsiYGZsQ?=
+ =?us-ascii?Q?LRl4Kh8CYaBdOEVk52YAL2wW9grsxMNmO4aFWnsRKr5ZCDm4wADHjnV9A5VY?=
+ =?us-ascii?Q?Q0hcRycRR+eGFyP0HnEyps17bgDc3SIldmcRlfrh6k8tmmnp2ZeY2vwMPUPy?=
+ =?us-ascii?Q?pv6F6sEy0QKIBO2DtouBG3/w3Y86/8xIVpYpDAO2KQLUDEU+s62xrXrE3XLY?=
+ =?us-ascii?Q?Qkz2PSE9Zlta9K2pGfrYHm0/CsQFxxF+yKAY7624tGUCPi3A031c84y1w1pw?=
+ =?us-ascii?Q?SHyH6kOk7gVL0/SjlfvL3/LlapuN/BY3MMUnT3jKOF0/NDU4t/5zm7eoJ7Rr?=
+ =?us-ascii?Q?waFt2pDyA1PZ1OIb/jjwdgfIGHCN0k57wWYh9HqA8uQwVO/BDXPvlOg8noeT?=
+ =?us-ascii?Q?EFQ95oN8eKVUxl2+DAJsYctDSjeS4m/b4q6o6AnqzofxfoyVs2H8sn16e6gm?=
+ =?us-ascii?Q?JA6t1RNA5hjeuBkhWRX/JOBTkG9GnE7DdMJGzO7xtnwbKlkIqZyJhgGN4KJu?=
+ =?us-ascii?Q?eR+ew8IYvodIuRWe0YBO2wjYa1Q1K7U2S95IoEOU88b6Rbc6lzy5ir7W3ZP7?=
+ =?us-ascii?Q?Rth48gZnIVMVcJfRATl7KE6xl/QGFrQVr+yqWJKy1tUpSxVNEFI=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?S2LmWA7ZzFXADv1HrwLIofOyHT2FDsELoY2jiQmExwqPTqV2aXuJUpcXluaf?=
+ =?us-ascii?Q?CCoThyBsBsksVKDPmpEd6t1ObQGA4++LXGQzakO3fidxIR69y4/Ol4lHFWRo?=
+ =?us-ascii?Q?PpMPalB3BBaWg4QQhSimZFrLwZwrtrxGcXq3ZpCt3IMQTvTL31t5eXxwSvrs?=
+ =?us-ascii?Q?1CQcpWDtzRratfhrkTMA+dPMIV5R40AD7RNuYAaE4PFnGZH13YDnbENO5bzX?=
+ =?us-ascii?Q?P40Az1ixHYJkSOIEULGCKXgForLr0SAGkdRiwbRoHseVKlgiQz/hpx5SqkLO?=
+ =?us-ascii?Q?tDgnMYDHMIKRvRuSeqEEvvgjFgGJL0ukCMHcOYbCLTSWG8UHZVoQukD86Hqa?=
+ =?us-ascii?Q?BI9iJZwfpKGEHwx7gv8DaabSJrm6R/YOm2OAlW0H3LBWkZSDBXiXAHhefAvN?=
+ =?us-ascii?Q?e5LfEd519R7W5p73HQYja4momJDpaQRRskLRYAvBLQK5VdtGS26elWxxX/Ds?=
+ =?us-ascii?Q?zanIWL+uquBC+WT/l12HfUD0zuIJhk7T9/ID4Hiw1yNBtgkUQrWZy0njRw7Y?=
+ =?us-ascii?Q?J8mA+HhbuLm+Yst5M615mYBkOVqH+H9IUEgid9e+nILSqYt9iydBKSC88opF?=
+ =?us-ascii?Q?LDZ3umrkmFYp02ee0CmmRY1HHnbRMp62BFYm4vkIJljhn+N+/UZ1Goobl2nQ?=
+ =?us-ascii?Q?N7lcAp/AdNRtxDzpTI/0C8tT0+H5JmTM7fyYl6HTrPnZOyfilAQulTmBUtFg?=
+ =?us-ascii?Q?ikZhbEqBHluhClVqFh8+9i5k6pYKdKmFf6c4RHJzlhc4YYmlWrcXvYD8045O?=
+ =?us-ascii?Q?y0E2sApdmSX4F6NtDs7/W4DlGmJWDrGBdWPCMpMu1hRYux66jF/E7IX7yOpZ?=
+ =?us-ascii?Q?1LdxIcaLM+yXFo7ChlrW3s/lGVTCvYLGP4cZzWD0w63DSPKXaJere9mVMrR1?=
+ =?us-ascii?Q?i5yQBdvP3VabxM63DabCeLR1qN6hDNt1eTU5Lnj5dvDEwLTbBehjpZPOZRlj?=
+ =?us-ascii?Q?mJhEwRnWC0uM7524l4vRCrYwNgJDsGDHulOcmA/gx+DmGKuivCjMA4z0vfvh?=
+ =?us-ascii?Q?2UxiAzHChTTBmrsNKaJAEBGZ1Uw60BKSO5tJyWxKVgnPSmiV+B5vOjEpqXMM?=
+ =?us-ascii?Q?k3+ivB0eF5Xg6dCtfIA2S5ZWKuUMoDv7w09yFf9jwmH2TZDdLALaiDRKr+f4?=
+ =?us-ascii?Q?NJ4eHIs2jVf1bGwDDY4QC0iHCoTxXjx6o+2XSJr91+5sjShJfz/muvu4Vkig?=
+ =?us-ascii?Q?/B+705eDTciPUKMhXv+QgKyLI+2lPgpzGLe4uFbX6nTmG3vg0sGD2+eXVww?=
+ =?us-ascii?Q?=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: b64e253b-9851-4874-6fbe-08dcfef352ef
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2024 06:13:40.4255 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0308
+Received-SPF: pass client-ip=40.92.63.55; envelope-from=junjie.mao@hotmail.com;
+ helo=AUS01-ME3-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,181 +141,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/11/07 7:59, Philippe Mathieu-Daudé wrote:
-> +Phil & Akihiko
-> 
-> On 6/11/24 17:50, Paolo Bonzini wrote:
->> When building on macOS 15 we get:
->>
->> ../../ui/cocoa.m:662:14: error: 'CVDisplayLinkCreateWithCGDisplay' is 
->> deprecated:
->>      first deprecated in macOS 15.0
->>      - use NSView.displayLink(target:selector:), 
->> NSWindow.displayLink(target:selector:),
->>        or NSScreen.displayLink(target:selector:)
->>      [-Werror,-Wdeprecated-declarations]
->>    662 |         if (!CVDisplayLinkCreateWithCGDisplay(display, 
->> &displayLink)) {
->>        |              ^
->>
->> Instead get the refresh rate from either CGDisplayModeGetRefreshRate 
->> or IOKit,
->> following the model of https://github.com/gwm17/glfw/commit/4ec7daf3e92.
+The peripheral and PrimeCell identification registers of pl011 are located at
+offset 0xFE0 - 0xFFC. To check if a read falls to such registers, the C
+implementation checks if the offset-shifted-by-2 (not the offset itself) is in
+the range 0x3F8 - 0x3FF.
 
-It looks complicated. We can use [-NSScreen maximumFramesPerSecond] and 
-[-NSScreen minimumRefreshInterval] instead as they are available since 
-macOS 12.0 and cover all versions we support.
+Use the same check in the Rust implementation.
 
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2575
->> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->> v1->v2: use kIOMainPortDefault
->>
->>   meson.build |  2 +-
->>   ui/cocoa.m  | 90 ++++++++++++++++++++++++++++++++++++++++++++++-------
->>   2 files changed, 79 insertions(+), 13 deletions(-)
->>
->> diff --git a/meson.build b/meson.build
->> index c386593c527..b12ccc12223 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -1135,7 +1135,7 @@ if get_option('attr').allowed()
->>   endif
->>   cocoa = dependency('appleframeworks',
->> -                   modules: ['Cocoa', 'CoreVideo', 'QuartzCore'],
->> +                   modules: ['Cocoa', 'IOKit', 'QuartzCore'],
->>                      required: get_option('cocoa'))
->>   vmnet = dependency('appleframeworks', modules: 'vmnet', required: 
->> get_option('vmnet'))
->> diff --git a/ui/cocoa.m b/ui/cocoa.m
->> index 4c2dd335323..c3fa55477fd 100644
->> --- a/ui/cocoa.m
->> +++ b/ui/cocoa.m
->> @@ -25,6 +25,7 @@
->>   #include "qemu/osdep.h"
->>   #import <Cocoa/Cocoa.h>
->> +#import <IOKit/IOKitLib.h>
->>   #import <QuartzCore/QuartzCore.h>
->>   #include <crt_externs.h>
->> @@ -292,6 +293,75 @@ static void handleAnyDeviceErrors(Error * err)
->>       }
->>   }
->> +static bool get_fallback_refresh_rate(CGDirectDisplayID displayID, 
->> double *p_rate)
->> +{
->> +    bool found = false;
->> +    io_iterator_t it;
->> +    io_service_t service;
->> +    CFNumberRef indexRef, clockRef, countRef;
->> +    uint32_t clock, count;
->> +
->> +    if (IOServiceGetMatchingServices(kIOMainPortDefault,
->> +                                     IOServiceMatching("IOFramebuffer"),
->> +                                     &it) != 0) {
->> +        return false;
->> +    }
->> +    while ((service = IOIteratorNext(it)) != 0) {
->> +        uint32_t index;
->> +        bool found_display_id;
->> +        indexRef = IORegistryEntryCreateCFProperty(service,
->> +                                                   
->> CFSTR("IOFramebufferOpenGLIndex"),
->> +                                                   kCFAllocatorDefault,
->> +                                                   kNilOptions);
->> +        if (!indexRef) {
->> +            continue;
->> +        }
->> +        found_display_id =
->> +            CFNumberGetValue(indexRef, kCFNumberIntType, &index) &&
->> +            CGOpenGLDisplayMaskToDisplayID(1 << index) == displayID;
->> +        CFRelease(indexRef);
->> +        if (found_display_id) {
->> +            break;
->> +        }
->> +    }
->> +    if (!service) {
->> +        goto out;
->> +    }
->> +
->> +    clockRef = IORegistryEntryCreateCFProperty(service,
->> +                                               
->> CFSTR("IOFBCurrentPixelClock"),
->> +                                               kCFAllocatorDefault,
->> +                                               kNilOptions);
->> +    if (!clockRef) {
->> +        goto out;
->> +    }
->> +    if (!CFNumberGetValue(clockRef, kCFNumberIntType, &clock) || ! 
->> clock) {
->> +        goto out_clock_ref;
->> +    }
->> +
->> +    countRef = IORegistryEntryCreateCFProperty(service,
->> +                                               
->> CFSTR("IOFBCurrentPixelCount"),
->> +                                               kCFAllocatorDefault,
->> +                                               kNilOptions);
->> +    if (!countRef) {
->> +        goto out_clock_ref;
->> +    }
->> +    if (!CFNumberGetValue(countRef, kCFNumberIntType, &count) || ! 
->> count) {
->> +        goto out_count_ref;
->> +    }
->> +
->> +    *p_rate = clock / (double) count;
->> +    found = true;
->> +
->> +out_count_ref:
->> +    CFRelease(countRef);
->> +out_clock_ref:
->> +    CFRelease(clockRef);
->> +out:
->> +    IOObjectRelease(it);
->> +    return found;
->> +}
->> +
->>   /*
->>    ------------------------------------------------------
->>       QemuCocoaView
->> @@ -655,20 +725,16 @@ - (void) updateUIInfoLocked
->>           NSSize screenSize = [[[self window] screen] frame].size;
->>           CGSize screenPhysicalSize = CGDisplayScreenSize(display);
->>           bool isFullscreen = ([[self window] styleMask] & 
->> NSWindowStyleMaskFullScreen) != 0;
->> -        CVDisplayLinkRef displayLink;
->> +        CGDisplayModeRef mode = CGDisplayCopyDisplayMode(display);
->> +        double rate = CGDisplayModeGetRefreshRate(mode);
->> +
->> +        if (rate != 0.0 || get_fallback_refresh_rate(display, &rate)) {
->> +            update_displaychangelistener(&dcl, 1000 / rate);
->> +            info.refresh_rate = (int64_t)1000 * rate;
->> +        }
->> +        CGDisplayModeRelease(mode);
->>           frameSize = isFullscreen ? [self screenSafeAreaSize] : [self 
->> frame].size;
->> -
->> -        if (!CVDisplayLinkCreateWithCGDisplay(display, &displayLink)) {
->> -            CVTime period = 
->> CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
->> -            CVDisplayLinkRelease(displayLink);
->> -            if (!(period.flags & kCVTimeIsIndefinite)) {
->> -                update_displaychangelistener(&dcl,
->> -                                             1000 * 
->> period.timeValue / period.timeScale);
->> -                info.refresh_rate = (int64_t)1000 * 
->> period.timeScale / period.timeValue;
->> -            }
->> -        }
->> -
->>           info.width_mm = frameSize.width / screenSize.width * 
->> screenPhysicalSize.width;
->>           info.height_mm = frameSize.height / screenSize.height * 
->> screenPhysicalSize.height;
->>       } else {
-> 
+This fixes the timeout of the following avocado tests:
+
+  * tests/avocado/boot_linux_console.py:BootLinuxConsole.test_arm_virt
+  * tests/avocado/replay_kernel.py:ReplayKernelNormal.test_arm_virt
+  * tests/avocado/replay_kernel.py:ReplayKernelNormal.test_arm_vexpressa9
+
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Junjie Mao <junjie.mao@hotmail.com>
+---
+ rust/hw/char/pl011/src/device.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 2a85960b81..476cacc844 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -182,7 +182,7 @@ pub fn read(&mut self, offset: hwaddr, _size: c_uint) -> std::ops::ControlFlow<u
+         use RegisterOffset::*;
+ 
+         std::ops::ControlFlow::Break(match RegisterOffset::try_from(offset) {
+-            Err(v) if (0x3f8..0x400).contains(&v) => {
++            Err(v) if (0x3f8..0x400).contains(&(v >> 2)) => {
+                 u64::from(self.device_id[(offset - 0xfe0) >> 2])
+             }
+             Err(_) => {
+-- 
+2.34.1
 
 
