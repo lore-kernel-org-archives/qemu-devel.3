@@ -4,70 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBF4CD43358
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C70D43359
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:34:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t91da-0001rd-Vx; Thu, 07 Nov 2024 07:29:23 -0500
+	id 1t91hh-0002bT-5a; Thu, 07 Nov 2024 07:33:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1t91dS-0001rB-GT
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:29:15 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1t91dP-0000O4-99
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:29:13 -0500
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8CxC+KTsixnfFw3AA--.43765S3;
- Thu, 07 Nov 2024 20:29:07 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMBxP+GSsixnZQtKAA--.44374S3;
- Thu, 07 Nov 2024 20:29:06 +0800 (CST)
-Subject: Re: [PATCH v2] hw/intc/loongarch_ipi: Add safer check about cpu
-To: Bibo Mao <maobibo@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20241028125747.2094026-1-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <51f100ad-8eb0-5444-f980-042c2906dce2@loongson.cn>
-Date: Thu, 7 Nov 2024 20:30:11 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t91hd-0002ay-9W
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:33:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t91ha-0001Ag-QG
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:33:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730982808;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=zqFfAMccHgASW4767qRDXMZNEZcjQNrz3CCv1lfsJXo=;
+ b=gT6Q9gHPwhfHjX7A59voCSf7MIfmcGRWtC4TEz5S8OafQvOHyf35zOru8ANLZv5SuOCjt6
+ vEn1MgFUz6qcixbXKbSEUiqgyPCIXipr3ewL3R5sisbN5ZIzRBOaIe84oWFle1FdkNi18h
+ GiEJTk01UlSr78CGJdXzqV6ZseFajbM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-209-fUef2s7bPpGck87CdOusxg-1; Thu,
+ 07 Nov 2024 07:33:24 -0500
+X-MC-Unique: fUef2s7bPpGck87CdOusxg-1
+X-Mimecast-MFC-AGG-ID: fUef2s7bPpGck87CdOusxg
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AC2891955F10; Thu,  7 Nov 2024 12:33:23 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.55])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 905391953880; Thu,  7 Nov 2024 12:33:21 +0000 (UTC)
+Date: Thu, 7 Nov 2024 12:33:17 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ qemu-devel@nongnu.org, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH 2/5] migration/postcopy: magic value for postcopy channel
+Message-ID: <ZyyzjWY-1nPpPgSW@redhat.com>
+References: <20241029150908.1136894-1-ppandit@redhat.com>
+ <20241029150908.1136894-3-ppandit@redhat.com>
+ <ZyTnBwpOwXcHGGPJ@x1n>
+ <CAE8KmOyzWRqpGDOyAK7V2X8+SWVt_kR1897tiFm7vdBNRRE2QA@mail.gmail.com>
+ <ZykB3voFw_-ByWfh@x1n>
+ <CAE8KmOzuGxdU7zp+vsf1yY_FP8bf-KTv7UJ+8h6bfmkE=0H-bA@mail.gmail.com>
+ <ZyoW3ue3WTQ3Di1d@x1n>
+ <CAE8KmOxW8K-YoCUbK5XOLeUQk8WCPB4UxbaQuUONhzsanvrLMw@mail.gmail.com>
+ <87ldxw1p8k.fsf@suse.de>
+ <CAE8KmOwM2wjkyUZL5v=3gjkUNa8VhA6oick35KMX-FO2-BidaQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20241028125747.2094026-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowMBxP+GSsixnZQtKAA--.44374S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJr4xuFyDXr13ZFy3Jr1UArc_yoW8CFykpr
- yxu3Z8Kr48JryDAa95Was0gF1DXrs7Ww129an3Gr97Crs8Jryvqr48tw4qqFWDA345WrW0
- q3WSyFyDXay2qrbCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8P5
- r7UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOwM2wjkyUZL5v=3gjkUNa8VhA6oick35KMX-FO2-BidaQ@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-2.588, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,62 +91,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2024/10/28 ÏÂÎç8:57, Bibo Mao Ð´µÀ:
-> If cpu hotplug is enabled, all possible_cpus is initialized with
-> arch_id set. For ipi interrupt controller, cpu is searched from
-> possible_cpus with specified arch_id. However it is possible that
-> cpu object is not created for offlined cpu.
->
-> Here safer check is added. If cpu object is not created, archid->cpu
-> will be NULL.
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
-> v1 ... v2:
->    1. since physical cpuid is the same with cpu_index when cpu_index
->       is set again as index of possible_cpus. Remove phy_id set about
->       CSR_CPUID in function loongarch_cpu_reset_hold()
-> ---
->   hw/intc/loongarch_ipi.c           | 3 ++-
->   target/loongarch/tcg/csr_helper.c | 4 ----
->   2 files changed, 2 insertions(+), 5 deletions(-)
-Acked-by: Song Gao <gaosong@loongson.cn>
+On Thu, Nov 07, 2024 at 05:35:06PM +0530, Prasad Pandit wrote:
+> On Wed, 6 Nov 2024 at 18:41, Fabiano Rosas <farosas@suse.de> wrote:
+> > What we're thinking is having an initial exchange of information between
+> > src & dst as soon as migration starts and that would sync the
+> > capabilities and parameters between both sides. Which would then be
+> > followed by a channel establishment phase that would open each necessary
+> > channel (according to caps) in order, removing the current ambiguity.
+> >
+> 
+> * Isn't that how it works? IIUC, libvirtd(8) sends migration command
+> options to the destination and based on that the destination prepares
+> for the multifd and/or postcopy migration. In case of 'Postcopy' the
+> source sends 'postcopy advise' to the destination to indicate that
+> postcopy might follow at the end of precopy. Also, in the discussion
+> above Peter mentioned that libvirtd(8) may exchange list of features
+> between source and destination to facilitate QMP clients.
+> 
+> * What is the handshake doing differently? (just trying to understand)
 
-Thanks.
-Song Gao
-> diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-> index 2ae1a42c46..78b6fce81b 100644
-> --- a/hw/intc/loongarch_ipi.c
-> +++ b/hw/intc/loongarch_ipi.c
-> @@ -42,7 +42,8 @@ static CPUState *loongarch_cpu_by_arch_id(int64_t arch_id)
->       CPUArchId *archid;
->   
->       archid = find_cpu_by_archid(machine, arch_id);
-> -    if (archid) {
-> +    /* For offlined cpus, archid->cpu may be NULL */
-> +    if (archid && archid->cpu) {
->           return CPU(archid->cpu);
->       }
->   
-> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-> index 15f94caefa..2aeca2343d 100644
-> --- a/target/loongarch/tcg/csr_helper.c
-> +++ b/target/loongarch/tcg/csr_helper.c
-> @@ -37,10 +37,6 @@ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
->   
->   target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
->   {
-> -    LoongArchCPU *lac = env_archcpu(env);
-> -
-> -    env->CSR_CPUID = CPU(lac)->cpu_index;
-> -
->       return env->CSR_CPUID;
->   }
->   
->
-> base-commit: cea8ac78545a83e1f01c94d89d6f5a3f6b5c05d2
+Libvirt does what it does because it has had no other choice,
+not because it was good or desirable.
+
+This kind of handshake really does not belong in libvirt. A number
+of exposed migration protocol feature knobs should be considered
+private to QEMU only.
+
+It has the very negative consequence that every time QEMU wants to
+provide a new feature in migration, it needs to be plumbed up through
+libvirt, and often applications above, and those 3rd party projects
+need to be told when & where to use the new features. The 3rd party
+developers have their own project dev priorities so may not get
+around to enable the new migration features for years, if ever,
+undermining the work of QEMU's migration maintainers.
+
+As examples...
+
+If we had QEMU self-negotiation of features 10 years ago, everywhere
+would already be using multifd out of the box. QEMU would have been
+able to self-negotiate use of the new "multifd" protocol, and QEMU
+would be well on its way to being able to delete the old single-
+threaded migration code.
+
+Similarly post-copy would have been way easier for apps, QEMU would
+auto-negotiate a channel for the post-copy async page fetching. All
+migrations would be running with the post-copy feature available.
+All that libvirt & apps would have needed was a API to initiate the
+switch to post-copy mode.
+
+Or the hacks QEMU has put in place where we peek at incoming data
+on some channels  to identify the channel type would not exist.
+
+
+TL;DR: once QEMU can self-negotiate features for migration itself,
+the implementation burden for libvirt & applications is greatly
+reduced. QEMU migration maintainers will control their own destiny,
+able to deliver improvements to users much more quickly, be able
+to delete obsolete features more quickly, and be able to make
+migration *automatically* enable new features & pick the optimal
+defaults on their own expert knowledge, not waitnig for 3rd parties
+to pay attention years later.
+
+Some things will still need work & decisions in libvirt & apps,
+but this burden should be reduced compared over the long term.
+Ultimately everyone will win.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
