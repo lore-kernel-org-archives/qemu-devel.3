@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 972D7D5AE75
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 09:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B65ED5AE75
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 09:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8ymg-0007v8-Ig; Thu, 07 Nov 2024 04:26:34 -0500
+	id 1t8ypT-0000iM-LC; Thu, 07 Nov 2024 04:29:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8yme-0007um-BA
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 04:26:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t8ymc-00008s-FG
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 04:26:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730971588;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=gloDiZsev+qeLiAcYf877fjEGq6AiDQGQT3TP28xZ1c=;
- b=NoMkqTs56BdelTNxfuhSThM++6Z7d9ws7ePw+bLjXnNLGP3iRpAGqOy7E6dNpHJW5pYTHV
- f8YJZCCbjaHRf67spawU5nOCpSyIdBjYsr/QsGbjYFunMTZOA5fxPb3Wsd5XFiS3OcPB7t
- wuSHyBPacAiAsI/jgwb/OtJhpPCxbNU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-t3RXetkYNmWUtvS9sCRlAA-1; Thu, 07 Nov 2024 04:26:26 -0500
-X-MC-Unique: t3RXetkYNmWUtvS9sCRlAA-1
-X-Mimecast-MFC-AGG-ID: t3RXetkYNmWUtvS9sCRlAA
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43159603c92so5054085e9.2
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 01:26:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t8ypR-0000hn-GZ
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 04:29:25 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t8ypP-0000T4-Pl
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 04:29:25 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43161c0068bso6386405e9.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 01:29:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730971759; x=1731576559; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HQsppEOwcAXIELgXkg7wouYMnqnAPS7rl3YfFuwv3gM=;
+ b=TfviJWGjvVZEe0397IX61JNFVGFUDxoZi6WBtUeqkv4SdibGzxpM27TKtK6AOq0I95
+ bAnU8E9WcX9OciCF/GhHrd1qCqCWxuFfu07psv+q/lskUiA6k+LtBiP8u+/kenFrMjes
+ z8o/tz+p7YmMrDNqVd1rfyZGPBKBDuN8mY3C1MKhXOrGczW1nuRVBqtlR449ap3EkXgq
+ GPlbOuuoJPbSMQff/+ZbwQKQ/UkLcndJGpQRXpgi+vXH9UVkafL3M+MbACwe7fIi+XHQ
+ zBdxhqAljl1VG31oPSAYHTZvM8Gzv3EaTn1ODSRrLcnUDqp/Hu/tBz9qhOwCWZdypCBv
+ rkJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730971585; x=1731576385;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gloDiZsev+qeLiAcYf877fjEGq6AiDQGQT3TP28xZ1c=;
- b=i7olIlCo5oUyw/CivpCjvYkKcKT1MJfhhyjcaX4/iNMv9qQWI9hIKcFFm1Dsu5oBy3
- hV3PhujYAS1FiqTaxEDXplMWmE/f1HW1ud4H6+rTXqneb08zz8vCJ0tG24DT6cMbSzMc
- pvyBHyGf/MwdAHnvthoibLDDqRY4LFRwLvCRjy2+7UU2ZTcqx8g7Zt5J8e53p7s4Hx9v
- FRp/wkxnz+D0LHEvAfct7rAdAhwiWzdufUb9KTB+7Gai8db+OqvulDD2U46Qo1lT4T/S
- c7EtffbjUobP7jrUJ5FCudNZaf2SFxzJZvSiPdM7jXhsMIboGnTtQX2jKSYx8rMJMkBP
- o5TA==
-X-Gm-Message-State: AOJu0YzSUrpAqM+c1jBpF9LI9Lo1bTDZfw1DCvJvyGsZXlG8nm88ftiV
- GW3/JLNxx51FQcu3xzkfRoeI4tQfo54L4hALS8yyMk3AhG3MwShQisKQaKyy7S9hUEORtkSWt0a
- 66MK2sLX/bVLZI1DtJZm+AV7TGnHPmdETUrsVlLm0+A5ZejjrzNYw+FNa8Op3JDH6datHaYUoe5
- vQPBnRZe5UUX08mjC/jV3uX9QIIBphC2bKgtPzEk0=
-X-Received: by 2002:a05:600c:5493:b0:431:5533:8f0c with SMTP id
- 5b1f17b1804b1-43285649fe6mr182706375e9.29.1730971584879; 
- Thu, 07 Nov 2024 01:26:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHJ6tk8YbV61GCHYtUaBVReRcDW0Vj9Q7U+PENXRHKjUL9exVYz/9oUuqqOzvR5riOuXT7Dtw==
-X-Received: by 2002:a05:600c:5493:b0:431:5533:8f0c with SMTP id
- 5b1f17b1804b1-43285649fe6mr182706175e9.29.1730971584365; 
- Thu, 07 Nov 2024 01:26:24 -0800 (PST)
-Received: from [192.168.10.47] ([151.49.84.243])
+ d=1e100.net; s=20230601; t=1730971759; x=1731576559;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HQsppEOwcAXIELgXkg7wouYMnqnAPS7rl3YfFuwv3gM=;
+ b=ejiwA/p34fbjPG9ss2BfwfGs+V1MVxNDBpmRnGj6q6UqK+pnpFvhWjwMTS4sk3RjKK
+ GV407TzEAv+psZhoCrQidRb5hZV0T3f0yKrstxklsXGfo2a5sZ/ZYJAEDvjMcZ1Syu9L
+ oS8Uz1bYy4YtxfHo5GTTWiY2QkUQifI2O4Wzk71k0qyKVQOAs0wRt7Bts3Ag7MAB3yoG
+ W44i8DGiZGz99Fynaa15mkcttqpzif8SoZCwsvL/F8PbRDw9Reloj/iU+Jy8OKLNtU7+
+ bwr7eR4Vz1qBUlvByojkTX3s/2Qj7fL6JECltV59+1vkQvjRC7giyqSYzISD2gcllMU+
+ eu3g==
+X-Gm-Message-State: AOJu0Yw28W3UwglUGqU8j//S7kvIMdEy8yaMuTvybBhRMPqpCz9OPGst
+ KXdQHpUGFWBTaKfCxaX1/+LRKf5qGiFL3mM+fBRdZnkW/8HXsPkLp5w22iDO8Xw=
+X-Google-Smtp-Source: AGHT+IG2puM7TkZ1q+DCfHgFHdeIkE8xzR8Xd2Kp6gsiUKJH33GIr1T3c4P3lh/bjiL2KbHpdZ+r5A==
+X-Received: by 2002:a05:6000:2c8:b0:37c:d1bc:2666 with SMTP id
+ ffacd0b85a97d-381c7a472f7mr21554261f8f.4.1730971759496; 
+ Thu, 07 Nov 2024 01:29:19 -0800 (PST)
+Received: from [172.16.23.118] ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432b04753d5sm17430075e9.0.2024.11.07.01.26.23
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Nov 2024 01:26:23 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] rust: qemu-api-macros: always process subprojects before
- dependencies
-Date: Thu,  7 Nov 2024 10:26:22 +0100
-Message-ID: <20241107092622.616487-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
+ ffacd0b85a97d-381eda03e42sm1200606f8f.89.2024.11.07.01.29.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 Nov 2024 01:29:18 -0800 (PST)
+Message-ID: <87228a75-eeea-496c-a414-03eed9b4fc94@linaro.org>
+Date: Thu, 7 Nov 2024 09:29:16 +0000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: linux-user: Add option to run `execve`d programs through QEMU
+To: Noah Goldstein <goldstein.w.n@gmail.com>
+Cc: qemu-devel@nongnu.org, iii@linux.ibm.com, laurent@vivier.eu
+References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
+ <20241030141037.375897-1-goldstein.w.n@gmail.com>
+ <000c9ef8-c610-4f2a-b191-04b84455d89c@linaro.org>
+ <CAFUsyfKkmSid=LVTbG+WHZA_=MAGdf+TU5vGtNE1GGx8WDheOQ@mail.gmail.com>
+ <CAFUsyfKfM-X_qGN4Dy8DhES7zRi66s6yVZ3+_KmNM4f2GhBG+Q@mail.gmail.com>
+ <f21fe153-6239-4c93-bf60-994976a9dbea@linaro.org>
+ <CAFUsyfLhPkSMrm50RAAvir2-WoRS4_jbtZf1WWR_WZvm=BOr6g@mail.gmail.com>
+ <e63cd5f6-8387-4c39-98e4-5e1c180934bc@linaro.org>
+ <CAFUsyf+8sJLX+qqzPEj1E1QPQpoP4n56uU5U9aksq8JEx_52gA@mail.gmail.com>
+ <CAFUsyf+xVXamR+5gtu62vFXjYScrJu0Arvhk62QXYa359UCHsg@mail.gmail.com>
+ <d23ea679-9c21-44da-86cf-ae97d0214b86@linaro.org>
+ <CAFUsyfL=QfvtMb6TiWVa2cEyeYQobh_3zfYpnPEb7bq6FH1k1A@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFUsyfL=QfvtMb6TiWVa2cEyeYQobh_3zfYpnPEb7bq6FH1k1A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,26 +106,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid looking for Rust dependencies via cmake.
+On 11/6/24 21:30, Noah Goldstein wrote:
+> On Wed, Nov 6, 2024 at 3:10 PM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> On 11/6/24 18:13, Noah Goldstein wrote:
+>>> Question about impl regarding handling of `-execfd` with/without a program name.
+>>>
+>>> 1) `-execfd` + program name ie: `qemu -execfd <some_fd> ls -a`.
+>>> 2) `-execfd` without program name i.e: `qemu -execfd <some_fd> -a`.
+>>>
+>>> Do you want to allow both of these? If you want to allow (1), what should
+>>> we use for `argv[0]`/`exec_path`. The program pass ("ls") or
+>>> `readlink(<some_fd>)`?
+>>
+>> The canonical response is, examine the kernel source.
+>> We're not implementing this in a vacuum, you're replicating execveat(2).
+>>
+>> I suspect the answer is (1), to be compared with
+>>
+>>       syscall(__NR_execveat, some_fd, "", &["ls", "-a"], env, AT_EMPTY_PATH);
+> 
+> Err, I think the reference for '-execfd' is `fexecve`:
+> https://man7.org/linux/man-pages/man3/fexecve.3.html
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/qemu-api-macros/meson.build | 4 ++++
- 1 file changed, 4 insertions(+)
+No, fexecve(3) is a glibc function which (nowadays) uses the execveat(2) syscall that we 
+want to emulate.
 
-diff --git a/rust/qemu-api-macros/meson.build b/rust/qemu-api-macros/meson.build
-index 24325dea5c2..6f94a4bb3c2 100644
---- a/rust/qemu-api-macros/meson.build
-+++ b/rust/qemu-api-macros/meson.build
-@@ -1,3 +1,7 @@
-+subproject('proc-macro2-1-rs', required: true)
-+subproject('quote-1-rs', required: true)
-+subproject('syn-2-rs', required: true)
-+
- quote_dep = dependency('quote-1-rs', native: true)
- syn_dep = dependency('syn-2-rs', native: true)
- proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
--- 
-2.47.0
+> Which doesn't take a path...
 
+... corresponding to the "" and AT_EMPTY_PATH above.
+
+> So I guess we just interpret the "ls" as argv[0] but not as "exec_path".
+
+But your conclusion is correct.
+
+
+r~
 
