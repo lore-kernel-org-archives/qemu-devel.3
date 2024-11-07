@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF2D9D43370
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 15:06:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E5C3D4336D
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 15:30:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t944y-0005Gl-4t; Thu, 07 Nov 2024 10:05:48 -0500
+	id 1t94SJ-0000mU-8C; Thu, 07 Nov 2024 10:29:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t944w-0005Fb-GI
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 10:05:46 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t94SF-0000mD-6m
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 10:29:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t944u-00067r-QM
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 10:05:46 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A7EeB2V027536;
- Thu, 7 Nov 2024 15:05:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=4VQhFF
- 7b4AH7bbtERoec1XebOebZuW7wSAubis4ydC4=; b=D7mSTSCSonaABTPZDX8BcZ
- vLV1a27aHUJEzkNIzgiVU6DQWuBjMGU9gfPY99y4zZhajDRiUb/t80hild5PPDBu
- wXOHWa5c6keCiafsH6cOD8DwV7OF3IphJxbXN8Sapk4b7moMyit/4vyQdGIokgQE
- 2Ll9orXS1bCumFmaQevkYJ/ZnAAZ5j+rhAxwJhKSvBgiyQqEoWsn5QpOFRtq1V01
- JaZqTMwJ9+DzwcVawMmfMr3OYzeXEyVgv4alOrvDm9CqiM8Oy8TLlNfNGKbRluRc
- CYt011TElG4YxcPwH1C6r8Mk3RXOmUJX+c9XXxc0JZRIdH3408Dip2GVaoMG951A
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42rygs84am-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Nov 2024 15:05:41 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A7CfhPD019606;
- Thu, 7 Nov 2024 15:05:41 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42nxds8epe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Nov 2024 15:05:41 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A7F5exC13566494
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 7 Nov 2024 15:05:40 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 532EB5804E;
- Thu,  7 Nov 2024 15:05:40 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D8E295803F;
- Thu,  7 Nov 2024 15:05:39 +0000 (GMT)
-Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  7 Nov 2024 15:05:39 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL v2 1/1] tests: Adjust path for swtpm state to use path under
- /var/tmp/
-Date: Thu,  7 Nov 2024 10:05:34 -0500
-Message-ID: <20241107150534.38651-2-stefanb@linux.ibm.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241107150534.38651-1-stefanb@linux.ibm.com>
-References: <20241107150534.38651-1-stefanb@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: njJ6fTdU7a8XN1kB58cVxfylHf4Etgps
-X-Proofpoint-GUID: njJ6fTdU7a8XN1kB58cVxfylHf4Etgps
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t94SB-0001P8-Qa
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 10:29:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730993385;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=l1r0Z81EjXEulL94PUtsqjIl9X/kH9C/l95EnoWjmaI=;
+ b=JSso7/vwl4fSs6IVy02y9Hvs27qUvcBdAuwy0AGsym47wqdBawTrzAsTyx40dAyi/TtFjK
+ IUABipI1ewGcdoTdEWpRMqNcCPvxW42QWCPBmxB+DGJVU0VyfEb0Q+LyZjGT4kJxEgP1NY
+ gnEoqikcPt8/gQgDz8EU0daJAou6suo=
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-249-AbE7Q25TMcqnOHV-iew_pA-1; Thu, 07 Nov 2024 10:29:43 -0500
+X-MC-Unique: AbE7Q25TMcqnOHV-iew_pA-1
+X-Mimecast-MFC-AGG-ID: AbE7Q25TMcqnOHV-iew_pA
+Received: by mail-ot1-f72.google.com with SMTP id
+ 46e09a7af769-7180cb79f3cso1160733a34.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 07:29:43 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730993382; x=1731598182;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=l1r0Z81EjXEulL94PUtsqjIl9X/kH9C/l95EnoWjmaI=;
+ b=rstHsuXn8EtRr0/XycK3UjBUrfUZiMx/WxLUsVPpR7VqAICfiAc+ndvrPvNOYwKUU8
+ SmfEVkKkjOfMdARTiHpMIylP0llfNhHnm+CMWgYZ/UXSdMlFhg7eAECcrFx4I2OqEBgE
+ xcApMSmmM2x+vx/GLVhotspzN7PVlfIKxGlWg5ctHoKNevEEQodsDswKVfeYJE+8Z6G5
+ ms4oR3CjNS2kSrD2F4M5vaUuJEK7G1tSMXlt2e9Wy/lLOZc90qWrfxgj6AJBsRHMXX52
+ wp2qKBF2VGeW4Hy21yPPi85r90SlmHDVWpg/idRony+JDQBEbdYXagiH/jBJPa30ElNY
+ m4sQ==
+X-Gm-Message-State: AOJu0YwCCz/d/SPvxCcaybabqG0//GHCvOyTKYaRWAEJasfMkGDYbowD
+ xn6ovDlf+xoZ4E818S3UXHDkXUPvFmd0oMy5UDfqrYjDmX/U13p6hD/dKjmVIIQ3amLNKQGC+0y
+ GMkyqaHMDR2o+ZnPSGhjkawH+NXvpJ05snONMk2MkFQtmMF/4XDez
+X-Received: by 2002:a05:6830:7001:b0:718:9f3e:6bcb with SMTP id
+ 46e09a7af769-719ca190145mr25465065a34.10.1730993382429; 
+ Thu, 07 Nov 2024 07:29:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHucaHE1U9NjquVEAcqo4VbtWCOI7fk42gnhBItvUw8M82Mep/lQJDjRlX2QBbOiHUPZ2Ph2Q==
+X-Received: by 2002:a05:6830:7001:b0:718:9f3e:6bcb with SMTP id
+ 46e09a7af769-719ca190145mr25465025a34.10.1730993382048; 
+ Thu, 07 Nov 2024 07:29:42 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b32acae4e1sm72987485a.74.2024.11.07.07.29.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 Nov 2024 07:29:41 -0800 (PST)
+Date: Thu, 7 Nov 2024 10:29:38 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Igor Mammedov <imammedo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 2/4] x86/iommu: Make x86-iommu a singleton object
+Message-ID: <Zyzc4kSQ6zuRePsF@x1n>
+References: <20241024165627.1372621-1-peterx@redhat.com>
+ <20241024165627.1372621-3-peterx@redhat.com>
+ <87jzdwlekc.fsf@pond.sub.org> <ZxwT79JG0NzsDmPn@x1n>
+ <ZxwYBeLGDLkTL0PJ@x1n> <87jzdfl2lx.fsf@pond.sub.org>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- suspectscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- lowpriorityscore=0 clxscore=1015 mlxscore=0 spamscore=0 bulkscore=0
- mlxlogscore=999 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411070114
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87jzdfl2lx.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,46 +111,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To avoid AppArmor-related test failures when functional test are run from
-somewhere under /mnt, adjust the path to swtpm's state to use an AppArmor-
-supported path, such as /var/tmp, which is provided by the python function
-tempfile.TemporaryDirectory().
+On Thu, Nov 07, 2024 at 12:12:10PM +0100, Markus Armbruster wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Fri, Oct 25, 2024 at 05:55:59PM -0400, Peter Xu wrote:
+> >> On Fri, Oct 25, 2024 at 11:25:23AM +0200, Markus Armbruster wrote:
+> >> > Peter Xu <peterx@redhat.com> writes:
+> >> > 
+> >> > > X86 IOMMUs cannot be created more than one on a system yet.  Make it a
+> >> > > singleton so it guards the system from accidentally create yet another
+> >> > > IOMMU object when one already presents.
+> >> > >
+> >> > > Now if someone tries to create more than one, e.g., via:
+> >> > >
+> >> > >   ./qemu -M q35 -device intel-iommu -device intel-iommu
+> >> > >
+> >> > > The error will change from:
+> >> > >
+> >> > >   qemu-system-x86_64: -device intel-iommu: QEMU does not support multiple vIOMMUs for x86 yet.
+> >> > >
+> >> > > To:
+> >> > >
+> >> > >   qemu-system-x86_64: -device intel-iommu: Class 'intel-iommu' only supports one instance
+> >> > >
+> >> > > Unfortunately, yet we can't remove the singleton check in the machine
+> >> > > hook (pc_machine_device_pre_plug_cb), because there can also be
+> >> > > virtio-iommu involved, which doesn't share a common parent class yet.
+> >> > >
+> >> > > But with this, it should be closer to reach that goal to check singleton by
+> >> > > QOM one day.
+> >> > >
+> >> > > Signed-off-by: Peter Xu <peterx@redhat.com>
+> >> > 
+> >> > $ qemu-system-x86_64 -device amd-iommu,help
+> >> > /work/armbru/qemu/include/hw/boards.h:24:MACHINE: Object 0x56473906f960 is not an instance of type machine
+> >> > Aborted (core dumped)
+> 
+> [...]
+> 
+> >> Thanks for the report!
+> >> 
+> >> It turns out that qdev_get_machine() cannot be invoked too early, and the
+> >> singleton code can make it earlier..
+> >> 
+> >> We may want a pre-requisite patch to allow qdev_get_machine() to be invoked
+> >> anytime, like:
+> >> 
+> >> ===8<===
+> >> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+> >> index db36f54d91..7ceae47139 100644
+> >> --- a/hw/core/qdev.c
+> >> +++ b/hw/core/qdev.c
+> >> @@ -831,6 +831,16 @@ Object *qdev_get_machine(void)
+> >>  {
+> >>      static Object *dev;
+> >>  
+> >> +    if (!phase_check(PHASE_MACHINE_CREATED)) {
+> >> +        /*
+> >> +         * When the machine is not created, below can wrongly create
+> >> +         * /machine to be a container.. this enables qdev_get_machine() to
+> >> +         * be used at any time and return NULL properly when machine is not
+> >> +         * created.
+> >> +         */
+> >> +        return NULL;
+> >> +    }
+> >> +
+> >>      if (dev == NULL) {
+> >>          dev = container_get(object_get_root(), "/machine");
+> >>      }
+> >> ===8<===
+> >> 
+> >> I hope it makes sense on its own.
+> >
+> > My apologies, spoke too soon here.  This helper is used too after machine
+> > is created, but right before switching to PHASE_MACHINE_CREATE stage..
+> 
+> container_get() is a trap.
 
-An update to swtpm's AppArmor profile is also being done to support /var/tmp.
+I had the same feeling..  Though I'd confess I'm not familiar enough with
+this part of code.
 
-Link: https://lore.kernel.org/qemu-devel/CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com/
-Link: https://github.com/stefanberger/swtpm/pull/944
-Tested-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: f04cb2d00d5c ("tests/functional: Convert most Aspeed machine tests")
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
----
- tests/functional/test_arm_aspeed.py | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+> 
+> When the object to be gotten is always "container", it merely
+> complicates container creation: it's implicitly created on first get.
+> Which of the calls creates may be less than obvious.
+> 
+> When the object to be gotten is something else, such as a machine,
+> container_get() before creation is *wrong*, and will lead to trouble
+> later.
+> 
+> In my opinion:
+> 
+> * Hiding creation in getters is a bad idea unless creation has no
+>   material side effects.
+> 
+> * Getting anything but a container with container_get() is in bad taste.
 
-diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
-index 9761fc06a4..274eb20e81 100644
---- a/tests/functional/test_arm_aspeed.py
-+++ b/tests/functional/test_arm_aspeed.py
-@@ -227,11 +227,14 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
- 
-         image_path = self.ASSET_BR2_202302_AST2600_TPM_FLASH.fetch()
- 
--        socket_dir = tempfile.TemporaryDirectory(prefix="qemu_")
--        socket = os.path.join(socket_dir.name, 'swtpm-socket')
-+        tpmstate_dir = tempfile.TemporaryDirectory(prefix="qemu_")
-+        socket = os.path.join(tpmstate_dir.name, 'swtpm-socket')
- 
-+        # We must put the TPM state dir in /tmp/, not the build dir,
-+        # because some distros use AppArmor to lock down swtpm and
-+        # restrict the set of locations it can access files in.
-         subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
--                        '--tpmstate', f'dir={self.vm.temp_dir}',
-+                        '--tpmstate', f'dir={tpmstate_dir.name}',
-                         '--ctrl', f'type=unixio,path={socket}'])
- 
-         self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
+Agreed.
+
+IMHO container_get() interface might still be ok to implicitly create
+containers, but only if it will: (1) always make sure what it walks is a
+container along the way, and (2) never return any non-container.
+
+> 
+> 
+> > So we need another way, like:
+> >
+> > ===8<===
+> >
+> > diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+> > index db36f54d91..36a9fdb428 100644
+> > --- a/hw/core/qdev.c
+> > +++ b/hw/core/qdev.c
+> > @@ -832,7 +832,13 @@ Object *qdev_get_machine(void)
+> >      static Object *dev;
+> >  
+> >      if (dev == NULL) {
+> > -        dev = container_get(object_get_root(), "/machine");
+> > +        /*
+> > +         * NOTE: dev can keep being NULL if machine is not yet created!
+> > +         * In which case the function will properly return NULL.
+> > +         *
+> > +         * Whenever machine object is created and found once, we cache it.
+> > +         */
+> > +        dev = object_resolve_path_component(object_get_root(), "machine");
+> >      }
+> >  
+> >      return dev;
+> 
+> Now returns null instead of a bogus container when called before machine
+> creation.  Improvement of sorts.  But none of the callers expect null...
+> shouldn't we assert(dev) here?
+> 
+> Hmm, below you add a caller that checks for null.
+> 
+> Another nice mess.
+
+I plan to put aside the application of singletons to x86-iommu as of now,
+due to the fact that qdev complexity may better be done separately.
+
+IOW, before that, I wonder whether we should clean up the container_get()
+as you discussed: it doesn't sound like a good interface to return
+non-container objects.
+
+I had a quick look, I only see two outliers of such, and besides the
+"abuse" in qdev_get_machine(), the only other one is
+e500_pcihost_bridge_realize():
+
+*** hw/core/qdev.c:
+qdev_get_machine[820]          dev = container_get(object_get_root(), "/machine");
+
+*** hw/pci-host/ppce500.c:
+e500_pcihost_bridge_realize[422] PPCE500CCSRState *ccsr = CCSR(container_get(qdev_get_machine(),
+
+If any of us thinks this is the right way to go, I can try to clean it up
+(for 10.0).  qdev_get_machine() may still need to be able to return NULL
+when singleton applies to IOMMUs, but that can be for later.  Before that,
+we can still assert(qdev), I think.
+
+Just to mention I've posted rfcv2 for this series, again feel free to
+ignore patch 3-5 as of now:
+
+[PATCH RFC v2 0/7] QOM: Singleton interface
+https://lore.kernel.org/r/20241029211607.2114845-1-peterx@redhat.com
+
+I think the plan is Dan may keep collecting feedbacks on his other rfc:
+
+[RFC 0/5] RFC: require error handling for dynamically created objects
+https://lore.kernel.org/r/20241031155350.3240361-1-berrange@redhat.com
+
+Then after Dan's lands, I'll rebase my rfcv2 on top of his, dropping
+iommu/qdev changes.
+
+Thanks,
+
 -- 
-2.47.0
+Peter Xu
 
 
