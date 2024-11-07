@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C6DDD43377
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 16:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53021D43379
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 16:27:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t95LS-0005kl-L1; Thu, 07 Nov 2024 11:26:54 -0500
+	id 1t95Lc-0005lr-GZ; Thu, 07 Nov 2024 11:27:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t95LP-0005kK-Qn
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 11:26:51 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t95La-0005lR-Dy
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 11:27:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t95LL-0002y4-VQ
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 11:26:51 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t95LY-0002z7-2x
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 11:27:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730996806;
+ s=mimecast20190719; t=1730996818;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4e+jxXaKsJPYJHOaJWxYkm8rncB4VAlG+zmxncfugMg=;
- b=ilpZbcZMBz2sZNDwHx8oylUZeJ4Y7z8YiTYpsEq/aWtQY+CfoYDOa5CuHU9NzzQ+VbAnVL
- M1EyRCjyIQNMG+n49+OLkGaVgJjcCEuy3apVqsZdnPlITUKgKhi2Q1rxugY5DVKXhNIyO/
- 0ZPTBX7GfCdYInkPSFlVi7lOZQZKc84=
+ bh=u53bY3U/68eLN1526XkzkzM5sR31Pc0hpesglfIM5uk=;
+ b=e32n9s3UQJyrq347brlz5jJ/LNyvLP125r7lqlXk8CUBwQn9y5g/a8I5y1D7SsDCHKKgi+
+ qc9haGT+2miy9r9Ibh1oD8QOiRwNtd4R0uqqWtFcPKY6LLe3H9vPekzJ9jI4l788jFzZ0g
+ qvoLhqxwXT0UimgQ/OzlPytse+hEQrY=
 Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
  [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-97-jF9oxlYvMbGS4W9j--AaNg-1; Thu, 07 Nov 2024 11:26:45 -0500
-X-MC-Unique: jF9oxlYvMbGS4W9j--AaNg-1
-X-Mimecast-MFC-AGG-ID: jF9oxlYvMbGS4W9j--AaNg
+ us-mta-669-lI1djnCLNoGet5_9Sr6-CQ-1; Thu, 07 Nov 2024 11:26:57 -0500
+X-MC-Unique: lI1djnCLNoGet5_9Sr6-CQ-1
+X-Mimecast-MFC-AGG-ID: lI1djnCLNoGet5_9Sr6-CQ
 Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a99efe7369dso117544566b.0
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 08:26:45 -0800 (PST)
+ a640c23a62f3a-a9a22a62e80so84723666b.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 08:26:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730996804; x=1731601604;
+ d=1e100.net; s=20230601; t=1730996816; x=1731601616;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=4e+jxXaKsJPYJHOaJWxYkm8rncB4VAlG+zmxncfugMg=;
- b=mmKhsyQC15Mc2CsMnWpVR1s+u5Q52lswr+L09f7hz6BgdBO3cju84kvUuyZy9HkRIS
- FZ1uY35eBlUcfUWm9ySJBGkFbRcqvvimWQB0iWRRT9FTjYJHoHVL8kQrr58bGp3Tr4NO
- wQq3xNsxGC9fY2T7fHl51rzANbJ+4hVUqWZTTP7x5mJesXEfGLS2G3GcjZTGcUVwJKCf
- 8mUGhHLq3ht21glsnLW5mtUsWIyrU3/1pB/1dqNeKVVsyY4TqYqDgX1UY5NXrMdpkbXS
- cvoM44p5/QgEbUSRujcCzdvFyFM+Fw+1/0R4Oq1lBm/RRpsXjLCytQRdF1RalWN+90ss
- yvzg==
+ bh=u53bY3U/68eLN1526XkzkzM5sR31Pc0hpesglfIM5uk=;
+ b=ONWUIS5HLTb4e0KkQ797H5JIOjJCrincaHbawdl8g1sVBUweI696w/k1J/+snM8DLf
+ 7BkQBEA7/ziZqGYNZzXsouH9pTV2/+QeUznV98P1I82+e+yGjYdZhvL8Ka61c0akwpG0
+ fEy9NJ/6OLx2Xe8d66wfKdGe8okNA2c0s9LdjjbCiV0ZG66IYMIh+GrP+Pjl6IEPY1an
+ 9OjTubXg2r9spIp7JWWhk+ByFWHx9jDJK9GAD0JAIWuQHMTml0t5bnA2cSTBh8LkSKJ8
+ cKAfopqf5ly4H9cPkxXDZSMTmJntlLlQS/x6+3o0sagqrKq+W+//HXRBcRzuEk2W0vgP
+ W6JQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVuNMVj4x2XZJykEHCob06jy54bKjAOpkMOtsj6cvbjQfv4pVS9+IfgM5R5SpekHSD4pM8F3c6V2Ts@nongnu.org
-X-Gm-Message-State: AOJu0Yywn1tzcg4CPBe8sZ25xyGhCQrwVrj6oP9hpge4FtOrEDQlcr3N
- ro6abvENE+tuki4VtRqlmxD5QUSODSxL5sXA4PoDr6sPzhfbAojTHd7vI00pBOTGL08WTf5ucME
- HTtk33utubGTdiq8N3EjMw2Sme57MGzFSWlH779DaQ+/aKqN0HV+V
-X-Received: by 2002:a17:907:1c84:b0:a9a:139:c3de with SMTP id
- a640c23a62f3a-a9eecabaeb9mr11733566b.29.1730996804066; 
- Thu, 07 Nov 2024 08:26:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF5iXsROEME12ZwNmPlJf0FC0cHC0ZTqRnDj6JfUJNLPOjamtjuVwmWDdXExJ7FcC4eNuJFvg==
-X-Received: by 2002:a17:907:1c84:b0:a9a:139:c3de with SMTP id
- a640c23a62f3a-a9eecabaeb9mr11730866b.29.1730996803639; 
- Thu, 07 Nov 2024 08:26:43 -0800 (PST)
+ AJvYcCX+9A9th5UyTt2MfsUQvaWvEq+XxW5QTy/RDlQuLi05JzZttXOqKzHy0kAwuZJkvJAino7PUpuItxIH@nongnu.org
+X-Gm-Message-State: AOJu0Ywaenr7MCKZO8UnzvESqQXXZd3OXJb8qkvWSEgFg6fnvYz4vmKS
+ 0iEO9wPmx29VdlhfD0AlGs7jrZ6IKkPxobMz4wnmgjl3B7tcOh74Tu3m1zdvD5S+54FR26JxyQs
+ 9PKwxgm1d8muUmECnasdt2juWPJPvv2litUU85xJSjyUqamLT3jRy
+X-Received: by 2002:a05:600c:3c8c:b0:426:60b8:d8ba with SMTP id
+ 5b1f17b1804b1-4319ad04990mr369757595e9.28.1730996360668; 
+ Thu, 07 Nov 2024 08:19:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG04/BHiy4OoHmdPMZWBhxmIgCNNvgMzc3SOmazZnUpIhhIGhL6VBIfY2xRa8DWHXHryNBM8w==
+X-Received: by 2002:a05:600c:3c8c:b0:426:60b8:d8ba with SMTP id
+ 5b1f17b1804b1-4319ad04990mr369757335e9.28.1730996360146; 
+ Thu, 07 Nov 2024 08:19:20 -0800 (PST)
 Received: from ?IPV6:2003:cb:c708:7900:b88e:c72a:abbd:d3d9?
  (p200300cbc7087900b88ec72aabbdd3d9.dip0.t-ipconnect.de.
  [2003:cb:c708:7900:b88e:c72a:abbd:d3d9])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0dc533bsm112421066b.114.2024.11.07.08.26.41
+ 5b1f17b1804b1-432b05c1f56sm29429455e9.34.2024.11.07.08.19.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Nov 2024 08:26:42 -0800 (PST)
-Message-ID: <5b192b5e-943c-4b2f-ab40-ef54ea578363@redhat.com>
-Date: Thu, 7 Nov 2024 17:26:41 +0100
+ Thu, 07 Nov 2024 08:19:19 -0800 (PST)
+Message-ID: <715ddc40-dbce-434d-ab2c-4d4424561f37@redhat.com>
+Date: Thu, 7 Nov 2024 17:19:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH V3 01/16] machine: anon-alloc option
@@ -90,9 +90,10 @@ References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
  <c2ca740b-0178-463b-8262-b149841b8def@redhat.com>
  <bcc4cd7e-3532-475a-8989-211e80bf3eab@oracle.com>
  <09701693-436c-4e1a-8206-03eb26cacab5@redhat.com>
- <66c05a06-dbb7-49ec-b58e-ccd917d098ea@oracle.com>
- <053dd9b6-e4f7-41c8-abe9-ed02214f0639@redhat.com>
- <cce158c4-3bb1-4771-b2c5-f3ae8a2285d5@oracle.com>
+ <66c05a06-dbb7-49ec-b58e-ccd917d098ea@oracle.com> <ZyvUg3CP30f3DZYY@x1n>
+ <d78a806f-4c15-4a1c-a9a4-8fb9f215a2a6@oracle.com>
+ <7fb32744-0512-46e2-b58d-2990f742b897@redhat.com>
+ <bb324f6d-8c8b-4f92-9c0f-12278e3c926c@oracle.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -140,7 +141,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <cce158c4-3bb1-4771-b2c5-f3ae8a2285d5@oracle.com>
+In-Reply-To: <bb324f6d-8c8b-4f92-9c0f-12278e3c926c@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -168,198 +169,376 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07.11.24 17:02, Steven Sistare wrote:
-> On 11/7/2024 8:23 AM, David Hildenbrand wrote:
->> On 06.11.24 21:12, Steven Sistare wrote:
->>> On 11/4/2024 4:36 PM, David Hildenbrand wrote:
->>>> On 04.11.24 21:56, Steven Sistare wrote:
->>>>> On 11/4/2024 3:15 PM, David Hildenbrand wrote:
->>>>>> On 04.11.24 20:51, David Hildenbrand wrote:
->>>>>>> On 04.11.24 18:38, Steven Sistare wrote:
->>>>>>>> On 11/4/2024 5:39 AM, David Hildenbrand wrote:
->>>>>>>>> On 01.11.24 14:47, Steve Sistare wrote:
->>>>>>>>>> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
->>>>>>>>>> on the value of the anon-alloc machine property.  This option applies to
->>>>>>>>>> memory allocated as a side effect of creating various devices. It does
->>>>>>>>>> not apply to memory-backend-objects, whether explicitly specified on
->>>>>>>>>> the command line, or implicitly created by the -m command line option.
+On 07.11.24 15:04, Steven Sistare wrote:
+> On 11/7/2024 8:05 AM, David Hildenbrand wrote:
+>> On 06.11.24 21:59, Steven Sistare wrote:
+>>> On 11/6/2024 3:41 PM, Peter Xu wrote:
+>>>> On Wed, Nov 06, 2024 at 03:12:20PM -0500, Steven Sistare wrote:
+>>>>> On 11/4/2024 4:36 PM, David Hildenbrand wrote:
+>>>>>> On 04.11.24 21:56, Steven Sistare wrote:
+>>>>>>> On 11/4/2024 3:15 PM, David Hildenbrand wrote:
+>>>>>>>> On 04.11.24 20:51, David Hildenbrand wrote:
+>>>>>>>>> On 04.11.24 18:38, Steven Sistare wrote:
+>>>>>>>>>> On 11/4/2024 5:39 AM, David Hildenbrand wrote:
+>>>>>>>>>>> On 01.11.24 14:47, Steve Sistare wrote:
+>>>>>>>>>>>> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
+>>>>>>>>>>>> on the value of the anon-alloc machine property.  This option applies to
+>>>>>>>>>>>> memory allocated as a side effect of creating various devices. It does
+>>>>>>>>>>>> not apply to memory-backend-objects, whether explicitly specified on
+>>>>>>>>>>>> the command line, or implicitly created by the -m command line option.
+>>>>>>>>>>>>
+>>>>>>>>>>>> The memfd option is intended to support new migration modes, in which the
+>>>>>>>>>>>> memory region can be transferred in place to a new QEMU process, by sending
+>>>>>>>>>>>> the memfd file descriptor to the process.  Memory contents are preserved,
+>>>>>>>>>>>> and if the mode also transfers device descriptors, then pages that are
+>>>>>>>>>>>> locked in memory for DMA remain locked.  This behavior is a pre-requisite
+>>>>>>>>>>>> for supporting vfio, vdpa, and iommufd devices with the new modes.
+>>>>>>>>>>>
+>>>>>>>>>>> A more portable, non-Linux specific variant of this will be using shm,
+>>>>>>>>>>> similar to backends/hostmem-shm.c.
+>>>>>>>>>>>
+>>>>>>>>>>> Likely we should be using that instead of memfd, or try hiding the
+>>>>>>>>>>> details. See below.
 >>>>>>>>>>
->>>>>>>>>> The memfd option is intended to support new migration modes, in which the
->>>>>>>>>> memory region can be transferred in place to a new QEMU process, by sending
->>>>>>>>>> the memfd file descriptor to the process.  Memory contents are preserved,
->>>>>>>>>> and if the mode also transfers device descriptors, then pages that are
->>>>>>>>>> locked in memory for DMA remain locked.  This behavior is a pre-requisite
->>>>>>>>>> for supporting vfio, vdpa, and iommufd devices with the new modes.
+>>>>>>>>>> For this series I would prefer to use memfd and hide the details.  It's a
+>>>>>>>>>> concise (and well tested) solution albeit linux only.  The code you supply
+>>>>>>>>>> for posix shm would be a good follow on patch to support other unices.
 >>>>>>>>>
->>>>>>>>> A more portable, non-Linux specific variant of this will be using shm,
->>>>>>>>> similar to backends/hostmem-shm.c.
+>>>>>>>>> Unless there is reason to use memfd we should start with the more
+>>>>>>>>> generic POSIX variant that is available even on systems without memfd.
+>>>>>>>>> Factoring stuff out as I drafted does look quite compelling.
 >>>>>>>>>
->>>>>>>>> Likely we should be using that instead of memfd, or try hiding the
->>>>>>>>> details. See below.
+>>>>>>>>> I can help with the rework, and send it out separately, so you can focus
+>>>>>>>>> on the "machine toggle" as part of this series.
+>>>>>>>>>
+>>>>>>>>> Of course, if we find out we need the memfd internally instead under
+>>>>>>>>> Linux for whatever reason later, we can use that instead.
+>>>>>>>>>
+>>>>>>>>> But IIUC, the main selling point for memfd are additional features
+>>>>>>>>> (hugetlb, memory sealing) that you aren't even using.
 >>>>>>>>
->>>>>>>> For this series I would prefer to use memfd and hide the details.  It's a
->>>>>>>> concise (and well tested) solution albeit linux only.  The code you supply
->>>>>>>> for posix shm would be a good follow on patch to support other unices.
+>>>>>>>> FWIW, I'm looking into some details, and one difference is that shmem_open() under Linux (glibc) seems to go to /dev/shmem and memfd/SYSV go to the internal tmpfs mount. There is not a big difference, but there can be some difference (e.g., sizing of the /dev/shm mount).
 >>>>>>>
->>>>>>> Unless there is reason to use memfd we should start with the more
->>>>>>> generic POSIX variant that is available even on systems without memfd.
->>>>>>> Factoring stuff out as I drafted does look quite compelling.
+>>>>>>> Sizing is a non-trivial difference.  One can by default allocate all memory using memfd_create.
+>>>>>>> To do so using shm_open requires configuration on the mount.  One step harder to use.
+>>>>>>
+>>>>>> Yes.
+>>>>>>
 >>>>>>>
->>>>>>> I can help with the rework, and send it out separately, so you can focus
->>>>>>> on the "machine toggle" as part of this series.
+>>>>>>> This is a real issue for memory-backend-ram, and becomes an issue for the internal RAM
+>>>>>>> if memory-backend-ram has hogged all the memory.
 >>>>>>>
->>>>>>> Of course, if we find out we need the memfd internally instead under
->>>>>>> Linux for whatever reason later, we can use that instead.
+>>>>>>>> Regarding memory-backend-ram,share=on, I assume we can use memfd if available, but then fallback to shm_open().
 >>>>>>>
->>>>>>> But IIUC, the main selling point for memfd are additional features
->>>>>>> (hugetlb, memory sealing) that you aren't even using.
+>>>>>>> Yes, and if that is a good idea, then the same should be done for internal RAM
+>>>>>>> -- memfd if available and fallback to shm_open.
 >>>>>>
->>>>>> FWIW, I'm looking into some details, and one difference is that shmem_open() under Linux (glibc) seems to go to /dev/shmem and memfd/SYSV go to the internal tmpfs mount. There is not a big difference, but there can be some difference (e.g., sizing of the /dev/shm mount).
->>>>>
->>>>> Sizing is a non-trivial difference.  One can by default allocate all memory using memfd_create.
->>>>> To do so using shm_open requires configuration on the mount.  One step harder to use.
->>>>
->>>> Yes.
->>>>
->>>>>
->>>>> This is a real issue for memory-backend-ram, and becomes an issue for the internal RAM
->>>>> if memory-backend-ram has hogged all the memory.
->>>>>
->>>>>> Regarding memory-backend-ram,share=on, I assume we can use memfd if available, but then fallback to shm_open().
->>>>>
->>>>> Yes, and if that is a good idea, then the same should be done for internal RAM
->>>>> -- memfd if available and fallback to shm_open.
->>>>
->>>> Yes.
->>>>
->>>>>
->>>>>> I'm hoping we can find a way where it just all is rather intuitive, like
+>>>>>> Yes.
 >>>>>>
->>>>>> "default-ram-share=on": behave for internal RAM just like "memory-backend-ram,share=on"
+>>>>>>>
+>>>>>>>> I'm hoping we can find a way where it just all is rather intuitive, like
+>>>>>>>>
+>>>>>>>> "default-ram-share=on": behave for internal RAM just like "memory-backend-ram,share=on"
+>>>>>>>>
+>>>>>>>> "memory-backend-ram,share=on": use whatever mechanism we have to give us "anonymous" memory that can be shared using an fd with another process.
+>>>>>>>>
+>>>>>>>> Thoughts?
+>>>>>>>
+>>>>>>> Agreed, though I thought I had already landed at the intuitive specification in my patch.
+>>>>>>> The user must explicitly configure memory-backend-* to be usable with CPR, and anon-alloc
+>>>>>>> controls everything else.  Now we're just riffing on the details: memfd vs shm_open, spelling
+>>>>>>> of options and words to describe them.
 >>>>>>
->>>>>> "memory-backend-ram,share=on": use whatever mechanism we have to give us "anonymous" memory that can be shared using an fd with another process.
->>>>>>
->>>>>> Thoughts?
+>>>>>> Well, yes, and making it all a bit more consistent and the "machine option" behave just like "memory-backend-ram,share=on".
 >>>>>
->>>>> Agreed, though I thought I had already landed at the intuitive specification in my patch.
->>>>> The user must explicitly configure memory-backend-* to be usable with CPR, and anon-alloc
->>>>> controls everything else.  Now we're just riffing on the details: memfd vs shm_open, spelling
->>>>> of options and words to describe them.
+>>>>> Hi David and Peter,
+>>>>>
+>>>>> I have implemented and tested the following, for both qemu_memfd_create
+>>>>> and qemu_shm_alloc.  This is pseudo-code, with error conditions omitted
+>>>>> for simplicity.
 >>>>
->>>> Well, yes, and making it all a bit more consistent and the "machine option" behave just like "memory-backend-ram,share=on".
+>>>> I'm ok with either shm or memfd, as this feature only applies to Linux
+>>>> anyway.  I'll leave that part to you and David to decide.
+>>>>
+>>>>>
+>>>>> Any comments before I submit a complete patch?
+>>>>>
+>>>>> ----
+>>>>> qemu-options.hx:
+>>>>>        ``aux-ram-share=on|off``
+>>>>>            Allocate auxiliary guest RAM as an anonymous file that is
+>>>>>            shareable with an external process.  This option applies to
+>>>>>            memory allocated as a side effect of creating various devices.
+>>>>>            It does not apply to memory-backend-objects, whether explicitly
+>>>>>            specified on the command line, or implicitly created by the -m
+>>>>>            command line option.
+>>>>>
+>>>>>            Some migration modes require aux-ram-share=on.
+>>>>>
+>>>>> qapi/migration.json:
+>>>>>        @cpr-transfer:
+>>>>>             ...
+>>>>>             Memory-backend objects must have the share=on attribute, but
+>>>>>             memory-backend-epc is not supported.  The VM must be started
+>>>>>             with the '-machine aux-ram-share=on' option.
+>>>>>
+>>>>> Define RAM_PRIVATE
+>>>>>
+>>>>> Define qemu_shm_alloc(), from David's tmp patch
+>>>>>
+>>>>> ram_backend_memory_alloc()
+>>>>>        ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
+>>>>>        memory_region_init_ram_flags_nomigrate(ram_flags)
+>>>>
+>>>> Looks all good until here.
+>>>>
+>>>>>
+>>>>> qemu_ram_alloc_internal()
+>>>>>        ...
+>>>>>        if (!host && !(ram_flags & RAM_PRIVATE) && current_machine->aux_ram_share)
+>>>>
+>>>> Nitpick: could rely on flags-only, rather than testing "!host", AFAICT
+>>>> that's equal to RAM_PREALLOC.
 >>>
->>> Hi David and Peter,
+>>> IMO testing host is clearer and more future proof, regardless of how flags
+>>> are currently used.  If the caller passes host, then we should not allocate
+>>> memory here, full stop.
 >>>
->>> I have implemented and tested the following, for both qemu_memfd_create
->>> and qemu_shm_alloc.  This is pseudo-code, with error conditions omitted
->>> for simplicity.
+>>>> Meanwhile I slightly prefer we don't touch
+>>>> anything if SHARED|PRIVATE is set.
 >>>
->>> Any comments before I submit a complete patch?
->>>
->>> ----
->>> qemu-options.hx:
->>>        ``aux-ram-share=on|off``
->>>            Allocate auxiliary guest RAM as an anonymous file that is
->>>            shareable with an external process.  This option applies to
->>>            memory allocated as a side effect of creating various devices.
->>>            It does not apply to memory-backend-objects, whether explicitly
->>>            specified on the command line, or implicitly created by the -m
->>>            command line option.
->>>
->>>            Some migration modes require aux-ram-share=on.
->>>
->>> qapi/migration.json:
->>>        @cpr-transfer:
->>>             ...
->>>             Memory-backend objects must have the share=on attribute, but
->>>             memory-backend-epc is not supported.  The VM must be started
->>>             with the '-machine aux-ram-share=on' option.
->>>
->>> Define RAM_PRIVATE
->>>
->>> Define qemu_shm_alloc(), from David's tmp patch
->>>
->>> ram_backend_memory_alloc()
->>>        ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
->>>        memory_region_init_ram_flags_nomigrate(ram_flags)
->>>
->>> qemu_ram_alloc_internal()
->>>        ...
->>>        if (!host && !(ram_flags & RAM_PRIVATE) && current_machine->aux_ram_share)
->>>            new_block->flags |= RAM_SHARED;
->>>
->>>        if (!host && (new_block->flags & RAM_SHARED)) {
->>>            qemu_ram_alloc_shared(new_block);
->>>        } else
->>>            new_block->fd = -1;
->>>            new_block->host = host;
->>>        }
->>>        ram_block_add(new_block);
->>>
->>> qemu_ram_alloc_shared()
->>>        if qemu_memfd_check()
->>>            new_block->fd = qemu_memfd_create()
->>>        else
->>>            new_block->fd = qemu_shm_alloc()
+>>> OK, if SHARED is already set I will not set it again.
 >>
->> Yes, that way "memory-backend-ram,share=on" will just mean "give me the best shared memory for RAM to be shared with other processes, I don't care about the details", and it will work on Linux kernels even before we had memfds.
+>> We only have to make sure that stuff like qemu_ram_is_shared() will continue working as expected.
 >>
->> memory-backend-ram should be available on all architectures, and under Windows. qemu_anon_ram_alloc() under Linux just does nothing special, not even bail out.
+>> What I think we should do:
 >>
->> MAP_SHARED|MAP_ANON was always weird, because it meant "give me memory I can share only with subprocesses", but then, *there are not subprocesses for QEMU*. I recall there was a trick to obtain the fd under Linux for these regions using /proc/self/fd/, but it's very Linux specific ...
+>> We should probably assert that nobody passes in SHARED|PRIVATE. And we can use PRIVATE only as a parameter to the function, but never actually set it on the ramblock.
 >>
->> So nobody would *actually* use that shared memory and it was only a hack for RDMA. Now we can do better.
+>> If someone passes in PRIVATE, we don't include it in block->flags. (RMA_SHARED remains cleared)
 >>
+>> If someone passes in SHARED, we do set it in block->flags.
+>> If someone passes PRIVATE|SHARED, we assert.
 >>
->> We'll have to decide if we simply fallback to qemu_anon_ram_alloc() if no shared memory can be created (unavailable), like we do on Windows.
+>> If someone passes in nothing: we set block->flags to SHARED with aux_ram_share=on. Otherwise, we do nothing (RAM_SHARED remains cleared)
 >>
->> So maybe something like
->>
->> qemu_ram_alloc_shared()
->>       fd = -1;
->>
->>       if (qemu_memfd_avilable()) {
->>           fd = qemu_memfd_create();
->>           if (fd < 0)
->>               ... error
->>       } else if (qemu_shm_available())
->>           fd = qemu_shm_alloc();
->>           if (fd < 0)
->>               ... error
->>       } else {
->>           /*
->>            * Old behavior: try fd-less shared memory. We might
->>            * just end up with non-shared memory on Windows, but
->>            * nobody can make sure of this shared memory either way
->>            * ... should we just use non-shared memory? Or should
->>            * we simply bail out? But then, if there is no shared
->>            * memory nobody could possible use it.
->>            */
->>           qemu_anon_ram_alloc(share=true)
->>       }
+>> If that's also what you had in mind, great.
 > 
-> Good catch.  We need that fallback for backwards compatibility.  Even with
-> no use case for memory-backend-ram,share=on since the demise of rdma, users
-> may specify it on windows, for no particular reason, but it works, and should
-> continue to work after this series.  CPR would be blocked.
+> Yes, my patch does that, but it also sets RAM_PRIVATE on the ramblock.
+> I will undo the latter.
+> 
+> Do you plan to submit the part of your "tmp" patch that refactors
+> shm_backend_memory_alloc and defines qemu_shm_alloc?  If you want,
+> I could include it in my series, with your Signed-off-by.
 
-Yes, we should keep Windows working in the weird way it is working right 
-now.
+My patch went a bit too far I think. And would not work on win32 :)
 
- > > More generally for backwards compatibility for share=on for no 
-particular reason,
-> should we fallback if qemu_shm_alloc fails?  If /dev/shm is mounted with default
-> options and more than half of ram is requested, it will fail, whereas current qemu
-> succeeds using MAP_SHARED|MAP_ANON.
+We should probably start with this:
 
-Only on Linux without memfd, of course. Maybe we should just warn when 
-qemu_shm_alloc() fails (and comment that we continue for compat reasons 
-only) and fallback to the stupid qemu_anon_ram_alloc(share=true). We 
-could implement a fallback to shmget() but ... let's not go down that path.
 
-But we should not fallback to qemu_shm_alloc()/MAP_SHARED|MAP_ANON if 
-memfd is available and that allocating the memfd failed. Failing to 
-allocate a memfd might highlight a bigger problem.
+ From 124920aeda2756faa104bfa6e934c7c20b1fbbe9 Mon Sep 17 00:00:00 2001
+From: David Hildenbrand <david@redhat.com>
+Date: Mon, 4 Nov 2024 11:29:22 +0100
+Subject: [PATCH] backends/hostmem-shm: factor out allocation of "anonymous
+  shared memory with an fd"
+
+Let's factor it out so we can reuse it.
+
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+  backends/hostmem-shm.c | 45 ++++-------------------------------
+  include/qemu/osdep.h   |  1 +
+  system/physmem.c       |  2 +-
+  util/oslib-posix.c     | 53 ++++++++++++++++++++++++++++++++++++++++++
+  util/oslib-win32.c     |  6 +++++
+  5 files changed, 65 insertions(+), 42 deletions(-)
+
+diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
+index 374edc3db8..837b9f1dd4 100644
+--- a/backends/hostmem-shm.c
++++ b/backends/hostmem-shm.c
+@@ -25,11 +25,9 @@ struct HostMemoryBackendShm {
+  static bool
+  shm_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+  {
+-    g_autoptr(GString) shm_name = g_string_new(NULL);
+      g_autofree char *backend_name = NULL;
+      uint32_t ram_flags;
+-    int fd, oflag;
+-    mode_t mode;
++    int fd;
+  
+      if (!backend->size) {
+          error_setg(errp, "can't create shm backend with size 0");
+@@ -41,48 +39,13 @@ shm_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+          return false;
+      }
+  
+-    /*
+-     * Let's use `mode = 0` because we don't want other processes to open our
+-     * memory unless we share the file descriptor with them.
+-     */
+-    mode = 0;
+-    oflag = O_RDWR | O_CREAT | O_EXCL;
+-    backend_name = host_memory_backend_get_name(backend);
+-
+-    /*
+-     * Some operating systems allow creating anonymous POSIX shared memory
+-     * objects (e.g. FreeBSD provides the SHM_ANON constant), but this is not
+-     * defined by POSIX, so let's create a unique name.
+-     *
+-     * From Linux's shm_open(3) man-page:
+-     *   For  portable  use,  a shared  memory  object should be identified
+-     *   by a name of the form /somename;"
+-     */
+-    g_string_printf(shm_name, "/qemu-" FMT_pid "-shm-%s", getpid(),
+-                    backend_name);
+-
+-    fd = shm_open(shm_name->str, oflag, mode);
++    fd = qemu_shm_alloc(backend->size, errp);
+      if (fd < 0) {
+-        error_setg_errno(errp, errno,
+-                         "failed to create POSIX shared memory");
+-        return false;
+-    }
+-
+-    /*
+-     * We have the file descriptor, so we no longer need to expose the
+-     * POSIX shared memory object. However it will remain allocated as long as
+-     * there are file descriptors pointing to it.
+-     */
+-    shm_unlink(shm_name->str);
+-
+-    if (ftruncate(fd, backend->size) == -1) {
+-        error_setg_errno(errp, errno,
+-                         "failed to resize POSIX shared memory to %" PRIu64,
+-                         backend->size);
+-        close(fd);
+          return false;
+      }
+  
++    /* Let's do the same as memory-backend-ram,share=on would do. */
++    backend_name = host_memory_backend_get_name(backend);
+      ram_flags = RAM_SHARED;
+      ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
+  
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index fe7c3c5f67..4a24f11174 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -505,6 +505,7 @@ int qemu_daemon(int nochdir, int noclose);
+  void *qemu_anon_ram_alloc(size_t size, uint64_t *align, bool shared,
+                            bool noreserve);
+  void qemu_anon_ram_free(void *ptr, size_t size);
++int qemu_shm_alloc(size_t size, Error **errp);
+  
+  #ifdef _WIN32
+  #define HAVE_CHARDEV_SERIAL 1
+diff --git a/system/physmem.c b/system/physmem.c
+index dc1db3a384..1b477fec44 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2089,7 +2089,7 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+      new_block->page_size = qemu_real_host_page_size();
+      new_block->host = host;
+      new_block->flags = ram_flags;
+-    ram_block_add(new_block, &local_err);
++
+      if (local_err) {
+          g_free(new_block);
+          error_propagate(errp, local_err);
+diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+index 11b35e48fb..bc5c28b162 100644
+--- a/util/oslib-posix.c
++++ b/util/oslib-posix.c
+@@ -931,3 +931,56 @@ void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
+          qemu_close_all_open_fd_fallback(skip, nskip, open_max);
+      }
+  }
++
++int qemu_shm_alloc(size_t size, Error **errp)
++{
++    g_autoptr(GString) shm_name = g_string_new(NULL);
++    int fd, oflag, cur_sequence;
++    static int sequence;
++    mode_t mode;
++
++    cur_sequence = qatomic_fetch_inc(&sequence);
++
++    /*
++     * Let's use `mode = 0` because we don't want other processes to open our
++     * memory unless we share the file descriptor with them.
++     */
++    mode = 0;
++    oflag = O_RDWR | O_CREAT | O_EXCL;
++
++    /*
++     * Some operating systems allow creating anonymous POSIX shared memory
++     * objects (e.g. FreeBSD provides the SHM_ANON constant), but this is not
++     * defined by POSIX, so let's create a unique name.
++     *
++     * From Linux's shm_open(3) man-page:
++     *   For  portable  use,  a shared  memory  object should be identified
++     *   by a name of the form /somename;"
++     */
++    g_string_printf(shm_name, "/qemu-" FMT_pid "-shm-%d", getpid(),
++                    cur_sequence);
++
++    fd = shm_open(shm_name->str, oflag, mode);
++    if (fd < 0) {
++        error_setg_errno(errp, errno,
++                         "failed to create POSIX shared memory");
++        return -1;
++    }
++
++    /*
++     * We have the file descriptor, so we no longer need to expose the
++     * POSIX shared memory object. However it will remain allocated as long as
++     * there are file descriptors pointing to it.
++     */
++    shm_unlink(shm_name->str);
++
++    if (ftruncate(fd, size) == -1) {
++        error_setg_errno(errp, errno,
++                         "failed to resize POSIX shared memory to %" PRIu64,
++                         size);
++        close(fd);
++        return -1;
++    }
++
++    return fd;
++}
+diff --git a/util/oslib-win32.c b/util/oslib-win32.c
+index b623830d62..f79a190b78 100644
+--- a/util/oslib-win32.c
++++ b/util/oslib-win32.c
+@@ -877,3 +877,9 @@ void qemu_win32_map_free(void *ptr, HANDLE h, Error **errp)
+      }
+      CloseHandle(h);
+  }
++
++int qemu_shm_alloc(size_t size, Error **errp)
++{
++    error_setg("Shared memory is not supported.");
++    return -1;
++}
+-- 
+2.47.0
+
+
+So we can reuse it for the !host && RAM_SHARED case.
+
+
+> 
+> Do you have any comments on my proposed name aux-ram-share, or my proposed text
+
+aux-ram-share works for me, I prefer "aux" over the "default" I had in mind.
+
+> for qemu-options.hx and migration.json?  Speaking now would prevent more version
+> churn later.
+
+Both sounds good to me after a quick scan.
+
 
 -- 
 Cheers,
