@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16760D5AE6F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 07:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E207D5AE6F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 07:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8x55-0005IF-CM; Thu, 07 Nov 2024 02:37:27 -0500
+	id 1t8x7K-0006RM-5Y; Thu, 07 Nov 2024 02:39:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t8x53-0005Hs-JQ
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 02:37:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t8x7E-0006R3-HW
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 02:39:41 -0500
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t8x51-00053Z-Qd
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 02:37:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730965042;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=orQx0P5TQQjk91+GJi9h721lKcAJTd5bqWn0IxJNUP0=;
- b=ah5lEZllk2BOgsAHdefItkyPyuL8P/99wcLS/M/QbaqXWOKLanz5WVqe9sZz/dU5qbGdy4
- jpZT1DXNZRQ2uS/y+jQUj0MbovrUhjse1thaM2hXEq/6VnBBzwedfU/bmLwZlp9WHVgOmN
- V6NTjpTlOpTu0mzFd+GWDGdLxhxC/1k=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-456-fO-pWrxWN_-XPFlQoPYgdw-1; Thu,
- 07 Nov 2024 02:37:17 -0500
-X-MC-Unique: fO-pWrxWN_-XPFlQoPYgdw-1
-X-Mimecast-MFC-AGG-ID: fO-pWrxWN_-XPFlQoPYgdw
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1AB4F1955F34; Thu,  7 Nov 2024 07:37:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.150])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 563381955F3C; Thu,  7 Nov 2024 07:37:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 36FAF21E6A28; Thu,  7 Nov 2024 08:37:13 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org,  qemu-devel@nongnu.org,  eblake@redhat.com,
- devel@lists.libvirt.org,  hreitz@redhat.com,  kwolf@redhat.com,
- jsnow@redhat.com,  pkrempa@redhat.com
-Subject: Re: [PATCH v3 6/7] qapi/block-core: deprecate block-job-change
-In-Reply-To: <20241002140616.561652-7-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Wed, 2 Oct 2024 17:06:15 +0300")
-References: <20241002140616.561652-1-vsementsov@yandex-team.ru>
- <20241002140616.561652-7-vsementsov@yandex-team.ru>
-Date: Thu, 07 Nov 2024 08:37:13 +0100
-Message-ID: <87cyj7mr4m.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t8x7C-0005Rw-OU
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 02:39:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1730965179; x=1762501179;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=o3PUuxafAuNLu0KCEN1nvG6vAa6h5dDNS9Y7mqKnbo8=;
+ b=Y+HrKRzn5UP62EFE3iyTrAsAB9yrhxyf2QjbAB/HP3UUHnbTKutT5Hrr
+ tspYHagnr7Kk8of3vvsF/9avfq4lpq7LtonDruxLG+okvvoBGUslrBAMB
+ gMl/HxifAOO0OVONLWrh/pFZWOxoWSWCSn32DxjXVd3GxzWsA0/Aw5649
+ YS0oZ0DYu7lP5IBDmGsLDt88n7/n/EAeKiu+9bHDX0k9HD5JuuzVM4MHZ
+ /5ZnXjMe90+3Z6vbwm/rJovBStu81DXRhz73DRuKbL/yZ+IeRYwyXXENX
+ 6gN7GqunRhUlqPnMJL0LTroou90WvrfQC+q4vqEgEBBPvnoDucU443ibA w==;
+X-CSE-ConnectionGUID: 0ciswIqiTPurBNlogKdR8A==
+X-CSE-MsgGUID: 0rHIdBaCRNKBwsrkP5VVVA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11248"; a="48312058"
+X-IronPort-AV: E=Sophos;i="6.11,265,1725346800"; d="scan'208";a="48312058"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Nov 2024 23:39:36 -0800
+X-CSE-ConnectionGUID: xnS3xB5oS92ZYXiVssGaAw==
+X-CSE-MsgGUID: KgYwXGwqQXaz1JOmikcEDw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,265,1725346800"; d="scan'208";a="85762334"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa008.jf.intel.com with ESMTP; 06 Nov 2024 23:39:33 -0800
+Date: Thu, 7 Nov 2024 15:57:28 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: dongli.zhang@oracle.com
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
+ likexu@tencent.com, like.xu.linux@gmail.com,
+ zhenyuw@linux.intel.com, groug@kaod.org, lyan@digitalocean.com,
+ khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, joe.jin@oracle.com, davydov-max@yandex-team.ru
+Subject: Re: [PATCH 1/7] target/i386: disable PerfMonV2 when PERFCORE
+ unavailable
+Message-ID: <Zyxy6IL5oOP1NFrn@intel.com>
+References: <20241104094119.4131-1-dongli.zhang@oracle.com>
+ <20241104094119.4131-2-dongli.zhang@oracle.com>
+ <ZyroXEOsRPonKD7x@intel.com>
+ <7497ade9-de05-49a9-9419-83e015646ebd@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7497ade9-de05-49a9-9419-83e015646ebd@oracle.com>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,26 +91,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> Thank you very much for the suggestion.
+> 
+> Yes, this works. The PERFCORE is a prerequisite of PERFMON_V2 (according to
+> Linux kernel source code).
+> 
+> 1403 static int __init amd_core_pmu_init(void)
+> 1404 {
+> 1405         union cpuid_0x80000022_ebx ebx;
+> 1406         u64 even_ctr_mask = 0ULL;
+> 1407         int i;
+> 1408
+> 1409         if (!boot_cpu_has(X86_FEATURE_PERFCTR_CORE))
+> 1410                 return 0;
+> 
+> 
+> If you don't mind, I will send the v2 with your Suggested-by.
+> 
+> Thank you very much!
 
-> That's a first step to move on newer job-* APIs.
->
-> The difference between block-job-change and job-change is in
-> find_block_job_locked() vs find_job_locked() functions. What's
-> different?
->
-> 1. find_block_job_locked() finds only block jobs, whereas
->    find_job_locked() finds any kind of job.  job-change is a
->    compatible extension of block-job-change.
->
-> 2. find_block_job_locked() reports DeviceNotActive on failure, when
->    find_job_locked() reports GenericError.  Since the kind of error
->    reported isn't documented for either command, and clients
->    shouldn't rely on undocumented error details, job-change is a
->    compatible replacement for block-job-change.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Sure, welcome! :)
 
-Acked-by: Markus Armbruster <armbru@redhat.com>
+-Zhao
 
+> Dongli Zhang
 
