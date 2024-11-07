@@ -4,83 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CFAED43360
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 13:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8610D4335D
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 14:00:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t92rR-0003R6-4N; Thu, 07 Nov 2024 08:47:45 -0500
+	id 1t932Y-0005h1-M7; Thu, 07 Nov 2024 08:59:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1t92rP-0003Qw-O0
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:47:43 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t932X-0005gi-5w
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:59:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1t92rN-0007fE-Ii
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:47:43 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t932V-00016v-GA
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:59:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730987259;
+ s=mimecast20190719; t=1730987948;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7bpuD4VXkRzZcC/uI2Sky0yj4/IHhJSciFTJcd/wXic=;
- b=e5rQY2cM7+nmoJZYytHxScaYa2nWnzZ0A4dS7J0sXlz3KusmbMrvO3+TeeK2j0UuExkPJY
- CDn7EGx+lWPxhOtiSEYSJgbSlT26N4b484cIi4z2xM2JkdUbJNjOrkDpeValSEf4SFSxBS
- eCtbvjTmg7hxbajQjHmZfOS5rT8nxLQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=NJIdqWT1TRc4smUFVOW7RDOn8PHyyCAPIQfMk7tsoNg=;
+ b=WOZMGiGYusIIDJI90uFc9x/gBoVuj9FqThYZMc6aLILdwGAPg8zIdHjhm6AY/JAer9cVE+
+ mMuhI828tqJisDJtw8qV1ymNHD/SgE1BahH2CMIx2Qq5Y8lohTn43PLvtcvZC0zIsqlgVK
+ F5KGdHeYmuCPAOtVzVFaUqfFCrKwi58=
+Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
+ [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-EzhBn071OtebnwSGZFwHog-1; Thu, 07 Nov 2024 08:47:36 -0500
-X-MC-Unique: EzhBn071OtebnwSGZFwHog-1
-X-Mimecast-MFC-AGG-ID: EzhBn071OtebnwSGZFwHog
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43152cd2843so6262935e9.3
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 05:47:36 -0800 (PST)
+ us-mta-582-2Sv0NprLOe6qy_usPma9hQ-1; Thu, 07 Nov 2024 08:59:07 -0500
+X-MC-Unique: 2Sv0NprLOe6qy_usPma9hQ-1
+X-Mimecast-MFC-AGG-ID: 2Sv0NprLOe6qy_usPma9hQ
+Received: by mail-oa1-f70.google.com with SMTP id
+ 586e51a60fabf-28cc1cea79cso843665fac.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 05:59:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730987255; x=1731592055;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7bpuD4VXkRzZcC/uI2Sky0yj4/IHhJSciFTJcd/wXic=;
- b=foMyeP+2tihAQhPA/+PnAwoLaMdcpc1ll+WlMtHeLKB9o7K9lRecqttDCwEvWt0Ku8
- JzdTj6G749epPACcFH5FIjz4pKE6OowNiPgyRV2eMBhKM3eC0qeYgwiH7s/Z4JFEtfq+
- XTwLbbmBj2mHc2QjG45ZSY3tU6KS5+pGlC3A2w3E3Gb1nIda0q687lhpWauZNXUwOtTS
- kRMr7XZ12Sj4mQgDF6IrhdzxeUFIyUltExHus2IWUODI57W2ULI8fBX+aTV77y45rXtu
- KtgRRf/pBmC/tch3L5qx2JszIzw1uYBT2AI4z8ohvEyIXz9sfwlb4m/+vpWjAmAxlog+
- o3jw==
-X-Gm-Message-State: AOJu0YwiA2LDidwKRNF20MgcyGeNKCZPwJPjI3GvCaO+mVJU60iTQzoi
- ctnqU1RCMYEyRYrZYj43fVZupc1Y56W0BR0a9flO52L3xRT671N5i42hlPAmMYhVdJv2+T4OZYd
- /QReNQF8nZvwO1sKJ+uG4haHWqrWraX6gGsFLCi4Yb2aIZ2570IFt
-X-Received: by 2002:a05:600c:1c8f:b0:431:5e53:2dc4 with SMTP id
- 5b1f17b1804b1-432b5f93d9bmr256385e9.6.1730987255216; 
- Thu, 07 Nov 2024 05:47:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH3/Btq0ZegC5t9NN+8ihRYRTa48qraBwmfQZUyttvfUUd7bKcd7QBCY2EhF3soQJVrqSvj0g==
-X-Received: by 2002:a05:600c:1c8f:b0:431:5e53:2dc4 with SMTP id
- 5b1f17b1804b1-432b5f93d9bmr256065e9.6.1730987254486; 
- Thu, 07 Nov 2024 05:47:34 -0800 (PST)
-Received: from sgarzare-redhat ([5.77.70.124])
+ d=1e100.net; s=20230601; t=1730987947; x=1731592747;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NJIdqWT1TRc4smUFVOW7RDOn8PHyyCAPIQfMk7tsoNg=;
+ b=GP+T8hLdhdLV6AYtQLRivHmvARCqXm0Sl617Zm8nqu+75B7lAJscmYR/DjucWEnCAk
+ OmTpb5Ecl9eZl5Ws/QWO+hnaGlMf3KUeNGVJiC/Jl+jhvlDFM7U4/80FGQrCf6wLrJ5L
+ QQZT/Mxb+hx5SlUzt05BI6hG/01jqT1yX1EfhgjJlLKBN2eP4XX+6wohan1kk1WoNRqv
+ GvXT+G7q+B5lJ1+jC+F5GDbX7KKB7NJlQ7L4CtSObnd15TWzPm48EJCQVrwl9p+OSYBK
+ bBOUl+z9GvsmromHe3A0lSq0Y2liIVj/WZ7d9fTKnsxx97Sh+EJBI8WbXGUVLWmeWp4I
+ d0LA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWYgWppxHlf9U6Ug13f/Qe39z9Oh1vBOdiKKQZ4J5c3zxIzfeHwZ4U0Vp933zCBJxuk03N3WpA6kyNK@nongnu.org
+X-Gm-Message-State: AOJu0YxV/RVblbVToAIC7eqfq9mFBD2jGohwmq6Jszu2MRD8q4sxrPwQ
+ dIzzw+T7P24/SNhuMEdn+UoP2JZSnxFBbFQkOPw287q583da05vW94x6XipFCiO99dzH0NP7YsC
+ tr9EMjrhcq0YpqKOMQZegh4ZJ7aMSJ76XPyVXbsW1k93yna/5cdSD
+X-Received: by 2002:a05:6870:3907:b0:288:e7f2:e9db with SMTP id
+ 586e51a60fabf-29559d76306mr68880fac.41.1730987946937; 
+ Thu, 07 Nov 2024 05:59:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IESNPOjx/vF53aCQ8WOp467IuM8yubXSjZjyYs0es/tksAgHjpKgWr4nAdh2Kf0zHPT+7VKaw==
+X-Received: by 2002:a05:6870:3907:b0:288:e7f2:e9db with SMTP id
+ 586e51a60fabf-29559d76306mr68849fac.41.1730987946576; 
+ Thu, 07 Nov 2024 05:59:06 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa74abb9sm62382075e9.42.2024.11.07.05.47.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Nov 2024 05:47:33 -0800 (PST)
-Date: Thu, 7 Nov 2024 14:47:29 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Dorinda Bassey <dbassey@redhat.com>
-Cc: qemu-devel@nongnu.org, aesteve@redhat.com, marcandre.lureau@redhat.com
-Subject: Re: [PATCH] virtio-dmabuf: Ensure UUID persistence for hash table
- insertion
-Message-ID: <CAGxU2F5L5GBpk19aPDazYRFCDupa6+4FKk7Vjq9QNsFp0tu_kg@mail.gmail.com>
-References: <20241107125201.1640759-1-dbassey@redhat.com>
- <2lsvukkntdselhhjw726kmnixmp7yue5sojhosyaqre5mwrlyq@7x4vwbniwulv>
+ 586e51a60fabf-29546c932afsm345650fac.19.2024.11.07.05.59.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 Nov 2024 05:59:06 -0800 (PST)
+Message-ID: <2bca571b-4af9-4ee5-9fdd-15983e2f56d1@redhat.com>
+Date: Thu, 7 Nov 2024 14:59:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2lsvukkntdselhhjw726kmnixmp7yue5sojhosyaqre5mwrlyq@7x4vwbniwulv>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/14] s390x/s390-stattrib-kvm: prepare for memory
+ devices and sparse memory layouts
+To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Heiko Carstens <hca@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+References: <20241008105455.2302628-1-david@redhat.com>
+ <20241008105455.2302628-9-david@redhat.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241008105455.2302628-9-david@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -105,70 +157,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 7, 2024 at 2:43 PM Stefano Garzarella <sgarzare@redhat.com> wrote:
->
-> On Thu, Nov 07, 2024 at 01:52:01PM +0100, Dorinda Bassey wrote:
-> >In `virtio_add_resource` function, the UUID used as a key for
-> >`g_hash_table_insert` was temporary, which could lead to
-> >invalid lookups when accessed later. This patch ensures that
-> >the UUID remains valid by duplicating it into a newly allocated
-> >memory space (persistent_uuid). The value is then inserted into
-> >the hash table with this persistent UUID key to ensure that the
-> >key stored in the hash table remains valid as long as the hash
-> >table entry exists.
->
-> It's a fix right, so maybe better to add a Fixes tag:
->
-> Fixes: faefdba847 ("hw/display: introduce virtio-dmabuf")
->
-> >
-> >Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
-> >---
-> > hw/display/virtio-dmabuf.c | 7 ++++++-
-> > 1 file changed, 6 insertions(+), 1 deletion(-)
-> >
-> >diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
-> >index 3dba4577ca7..4353970bc87 100644
-> >--- a/hw/display/virtio-dmabuf.c
-> >+++ b/hw/display/virtio-dmabuf.c
-> >@@ -39,7 +39,12 @@ static bool virtio_add_resource(QemuUUID *uuid, VirtioSharedObject *value)
-> >                                                g_free);
-> >     }
-> >     if (g_hash_table_lookup(resource_uuids, uuid) == NULL) {
-> >-        g_hash_table_insert(resource_uuids, uuid, value);
-> >+        QemuUUID *persistent_uuid = g_memdup2(uuid, sizeof(QemuUUID));
->
-> Since now we allocate memory for the key, we should provide the
-> `key_destroy_func` when calling g_hash_table_new_full(), otherwise
-> this new memory will not be de-allocated.
->
-> >+        if (persistent_uuid == NULL) {
->
-> IIUC it can be null, only if `uuid` was null since glib memory
-> API usually terminates the application if memory allocation fails,
-> see https://docs.gtk.org/glib/memory.html
->
-> So maybe we can just do:
->            g_hash_table_insert(resource_uuids, g_memdup2(uuid, sizeof(QemuUUID)),
->                                value);
+On 08/10/2024 12.54, David Hildenbrand wrote:
+> With memory devices, we will have storage attributes for memory that
+> exceeds the initial ram size. Further, we can easily have memory holes,
+> for which there (currently) are no storage attributes.
+> 
+> In particular, with memory holes, KVM_S390_SET_CMMA_BITS will fail to set
+> some storage attributes.
+> 
+> So let's do it like we handle storage keys migration, relying on
+> guest_phys_blocks_append(). However, in contrast to storage key
+> migration, we will handle it on the migration destination.
+> 
+> This is a preparation for virtio-mem support. Note that ever since the
+> "early migration" feature was added (x-early-migration), the state
+> of device blocks (plugged/unplugged) is migrated early such that
+> guest_phys_blocks_append() will properly consider all currently plugged
+> memory blocks and skip any unplugged ones.
+> 
+> In the future, we should try getting rid of the large temporary buffer
+> and also not send any attributes for any memory holes, just so they
+> get ignored on the destination.
+> 
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
+>   hw/s390x/s390-stattrib-kvm.c | 67 +++++++++++++++++++++++-------------
+>   1 file changed, 43 insertions(+), 24 deletions(-)
 
-Or even better:
-             g_hash_table_insert(resource_uuids, g_memdup2(uuid, sizeof(*uuid)),
-                                 value);
-
-Thanks,
-Stefano
-
->
-> >+            result = false;
-> >+        } else {
-> >+            g_hash_table_insert(resource_uuids, persistent_uuid, value);
-> >+        }
-> >     } else {
-> >         result = false;
-> >     }
-> >--
-> >2.47.0
-> >
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
