@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77E5FD4336C
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 14:45:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCA74D43369
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 14:51:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t93kY-0000Ul-1z; Thu, 07 Nov 2024 09:44:42 -0500
+	id 1t93qM-0002Q7-Eh; Thu, 07 Nov 2024 09:50:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t93kO-0000QC-VN
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 09:44:33 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1t93qI-0002Pr-FY
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 09:50:38 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t93kN-0001DW-CL
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 09:44:32 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5cacb76e924so1572934a12.0
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 06:44:30 -0800 (PST)
+ id 1t93qF-0002jw-En
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 09:50:37 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5cefa22e9d5so1165214a12.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 06:50:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730990669; x=1731595469; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=wg8nqUZhe64wtOWxXUT35Ox2BRHSm40+I++Jf+fewPo=;
- b=kIYitdWjv2rgpbbl/UUVf6x/6t2Q/I/oUUW9ecFFIH8uR5at6tluWw531Orst+gysc
- bIKp1GMnjnSJBGlEFf3M0g0OATMC+VlUTiunVZXvqqzaqtFtZ4HNaHw4XU4Vq3YDDZM7
- Xk8REFZ4TrV5BgxC+b6ue+XB8Ow+CGbo1CqEKhZV7kA9mwNSBx7VDvzAysgr/dLS+2wg
- 6uab7aN3WdAn37YDEbhYhDBweUZcNSGsj3X0UQMG/8CTD1qkRZX6rzcenqgUbiIKxseW
- +a4AvnXH6Rj47vBdAspBZ1DlgL0tfYD2t1JR5enasHKkTzQghByYMnfVuBJG6L3CGytx
- ivzQ==
+ d=linaro.org; s=google; t=1730991033; x=1731595833; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QxBVUPRIWmpnko/WFHt7sCbYR+ol2XFY2KXE7qsP5Ak=;
+ b=VDoMkSZZzFuI9UiMif59VxJ3WXXB+UdWD9UPFR4opLMWD50bC7tUqgtMwRop3AiV6s
+ vSDZ34VhXP+p9uh1nsIH14OCPJhZo6usCdTQh59HzvFKXc9+OKOZ8ligJMX5WcFW18PC
+ nnz2GzQh5iLBDTNi+cFV2NbilrbceBuaCEp9JttzrZ5InOzxayWeFhea0tZS2FpE1FjQ
+ OqYqKykPxJSnA1qg7SNqVUzxUBpGkX5cYUrVporx/A/RdPsD1rWKw/YmjUOorduHxo0K
+ lLjvFDl3/2PsyjafQrts4AT4V3v3nwtRo4yb2GbP0qNGmQ7+N3ObSZwhNlCqVKg1yDYj
+ rWGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730990669; x=1731595469;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wg8nqUZhe64wtOWxXUT35Ox2BRHSm40+I++Jf+fewPo=;
- b=SSpcAI2AJNS0co1v6OPghzP4J55JF7cVTjnsf/DFetXZ1aqzoiJ/mERooLXGn35wRq
- R8e90Xr91bSnU4Nvl62QXpluKQH1thLJOYmeRWeh/w/nAtjYyR+PN80h3eAg58p5qcSc
- lVWF3boTcr91T5Dh1dHM/bzejCsnUwcxJgGSuVncnLWW+JLTX757bOHYqdlhJu9qfl1m
- hSBmPd+ddEjAyQ9YcWqLu2TYFY4eooDVXre+wazHJxiBSvJ4pu/VM+isghaqpMNcexjq
- CMRHdrTv34F4xeM2PgQAcIOLFwhBbt+HI3q0rcFdTwSofOECVVeMz2UdXbzrlNrD/Zip
- WYrw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWxx9INTUoHYMq6aeUk/tkwDliUwrOnhDG1+EGHuO1FV/nufQ+n1WuYat+DaVlQXYZocaBTtcfuJrl@nongnu.org
-X-Gm-Message-State: AOJu0YxY1YM+N8zbz6w7Rkltltrc/M6aNqQ0hINsPLRXAeD7bYy2rvnZ
- Ox4YvSNb3sHse+E9bEM2hKmOjvgl8/ozltHVNA7xKwTBgdR8MZNPfv6w95ErROouJNiHw/Ef1Tq
- UnDKwgWbAnY1mQvXdlBTPtGorHbr+dZsKrB9slQ==
-X-Google-Smtp-Source: AGHT+IGbKRfmyx52wx4skkde/b88dJD//nEP9/EUICAe7qh3BVT1iv/i6vFtN7XuTfmOpe/ajFLjiSH9NnCCZWiHmIk=
-X-Received: by 2002:a05:6402:2548:b0:5c7:2209:e937 with SMTP id
- 4fb4d7f45d1cf-5ceb92649b2mr18087645a12.12.1730990669376; Thu, 07 Nov 2024
- 06:44:29 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730991033; x=1731595833;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QxBVUPRIWmpnko/WFHt7sCbYR+ol2XFY2KXE7qsP5Ak=;
+ b=H1MLW1DzZunkiMIepMKTtEy1zaZiGVYyo97611bic4HlX1Luage9gvKIpbv+yrOWPR
+ lgAp73O72hwIS+E6JH+E+srjR6tTOV3dD06QyFID71wngOj9sy8Ah+W5GykhNhkQsTU/
+ s23ACthoFSM4YOfEGbRFY9ud/66xx+UKdxf0i33fNOzW0340WxCDboNlckMTGx8KG3Xv
+ zWx6WFFmZzpuKTOa23RZsU+YtRsJ4ps/MTYOjB09Qgl3ibChhk1dX5Bpp520jchDGW50
+ N82g+RcuqGVPP32oixMV04O8Ko5e0j49QV98Hxx3nuOPqBw99buIbtRbHYNcMkYUnnjm
+ GT5w==
+X-Gm-Message-State: AOJu0YyUPgmDCocNBcT0NBg8/YUafI2DOA//P7lkUgadprayrHP/5U8t
+ x/EexrcKrwrus8r8O69OaguEzlCqKOdre1mKOjjLzeqL3ToZGUdfn+Ko78wz/kW+fwccO03ouAf
+ qL2fQo9wvaGU1fW72oj1AJhe1rbn5KT/W2LnRUQ==
+X-Google-Smtp-Source: AGHT+IFPzKMoOsNRXdCEYwYqdMQl6kuCYb6kt1qDMKPCofbqaNW9xgRE19gjhetlhkOxpovqgmaCxezehLGl4eYpUII=
+X-Received: by 2002:a05:6402:4309:b0:5cf:8ea:32f1 with SMTP id
+ 4fb4d7f45d1cf-5cf08ea33d9mr119725a12.8.1730991033332; Thu, 07 Nov 2024
+ 06:50:33 -0800 (PST)
 MIME-Version: 1.0
-References: <20241106180751.6859-1-stefanb@linux.vnet.ibm.com>
- <CAFEAcA8P-a5XyACAovFLwCSPT-s0CX74aMKoPtHku0G89cYgkA@mail.gmail.com>
- <cd0732c9-e5ae-4dd8-b48a-4ac769cece05@linux.ibm.com>
-In-Reply-To: <cd0732c9-e5ae-4dd8-b48a-4ac769cece05@linux.ibm.com>
+References: <20241107131539.36843-1-stefanb@linux.ibm.com>
+ <20241107131539.36843-2-stefanb@linux.ibm.com>
+In-Reply-To: <20241107131539.36843-2-stefanb@linux.ibm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 Nov 2024 14:44:18 +0000
-Message-ID: <CAFEAcA9W1xOLz2QCNzhH4VXHVzJLegqAdyLCYgrj2mujHuXmvQ@mail.gmail.com>
-Subject: Re: [PATCH] tests: Adjust path for swtpm state to use path under
- /var/tmp/
+Date: Thu, 7 Nov 2024 14:50:22 +0000
+Message-ID: <CAFEAcA8+w0jRJYkPSxz7p9qDi6Em4kR0Y9ShNVq1bRsBjzMC1Q@mail.gmail.com>
+Subject: Re: [PULL v1 1/1] tests: Adjust path for swtpm state to use path
+ under /var/tmp/
 To: Stefan Berger <stefanb@linux.ibm.com>
-Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>, qemu-devel@nongnu.org, 
- marcandre.lureau@gmail.com, clg@redhat.com, lena.voytek@canonical.com
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,38 +91,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 7 Nov 2024 at 11:58, Stefan Berger <stefanb@linux.ibm.com> wrote:
+On Thu, 7 Nov 2024 at 13:15, Stefan Berger <stefanb@linux.ibm.com> wrote:
 >
+> To avoid AppArmor-related test failures when functional test are run from
+> somewhere under /mnt, adjust the path to swtpm's state to use an AppArmor=
+-
+> supported path, such as /var/tmp, which is provided by the python functio=
+n
+> tempfile.TemporaryDirectory().
 >
+> An update to swtpm's AppArmor profile is also being done to support /var/=
+tmp.
 >
-> On 11/7/24 6:09 AM, Peter Maydell wrote:
-> > On Wed, 6 Nov 2024 at 18:08, Stefan Berger <stefanb@linux.vnet.ibm.com> wrote:
-> >>
-> >> From: Stefan Berger <stefanb@linux.ibm.com>
-> >>
-> >> To avoid AppArmor-related test failures when functional test are run from
-> >> somewhere under /mnt, adjust the path to swtpm's state to use an AppArmor-
-> >> supported path, such as /var/tmp, which is provided by the python function
-> >> tempfile.TemporaryDirectory().
-> >>
-> >> An update to swtpm's AppArmor profile is also being done to support /var/tmp.
-> >>
-> >> Link: https://lore.kernel.org/qemu-devel/CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com/
-> >> Link: https://github.com/stefanberger/swtpm/pull/944
-> >> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-> >
-> > Thanks for writing this patch. I can confirm that the test now
-> > runs OK on my Ubuntu setup, so
+> Link: https://lore.kernel.org/qemu-devel/CAFEAcA8A=3DkWLtTZ+nua-MpzqkaEjW=
+5srOYZruZnE2tB6vmoMig@mail.gmail.com/
+> Link: https://github.com/stefanberger/swtpm/pull/944
+> Tested-by: Peter Maydell <peter.maydell@linaro.org>
+> Fixes: f04cb2d00d5c ("tests/functional: Convert most Aspeed machine tests=
+")
+> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+> ---
+>  tests/functional/test_arm_aspeed.py | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> That's good to hear. However, it surprises me because the tests probably
-> use /var/tmp/ as temp dir and that's no supported in the AppArmor
-> profile yet.
+> diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_=
+arm_aspeed.py
+> index 9761fc06a4..a574b1e521 100644
+> --- a/tests/functional/test_arm_aspeed.py
+> +++ b/tests/functional/test_arm_aspeed.py
+> @@ -227,11 +227,11 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
+>
+>          image_path =3D self.ASSET_BR2_202302_AST2600_TPM_FLASH.fetch()
+>
+> -        socket_dir =3D tempfile.TemporaryDirectory(prefix=3D"qemu_")
+> -        socket =3D os.path.join(socket_dir.name, 'swtpm-socket')
+> +        tpmstate_dir =3D tempfile.TemporaryDirectory(prefix=3D"qemu_")
+> +        socket =3D os.path.join(tpmstate_dir.name, 'swtpm-socket')
 
-On my machine the temporary directory that tempfile.TemporaryDirectory()
-creates is under /tmp/. This matches what the Python docs say:
- https://docs.python.org/3/library/tempfile.html#tempfile.gettempdir
-where if you haven't set TMPDIR, TEMP or TMP then you get /tmp/
-(assuming it exists; you get /var/tmp if it doesn't).
+This is missing the comment that I suggested adding in code review.
 
 thanks
 -- PMM
