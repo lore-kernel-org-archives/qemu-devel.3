@@ -4,97 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03A14D43352
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 13:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96384D4335D
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 13:20:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t92NO-0000o1-L6; Thu, 07 Nov 2024 08:16:42 -0500
+	id 1t92QU-0002LK-TL; Thu, 07 Nov 2024 08:19:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t92MU-0000iP-Jr
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:15:57 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1t92QT-0002Ku-D9
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:19:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t92MS-0001LT-4l
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:15:46 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A7CAjZ9020734;
- Thu, 7 Nov 2024 13:15:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ADmM5b
- 36tXZ8wDHgqEXXWxzF+02noDPcq7QtUv1YeHU=; b=tVMifxhKr+mi1nkuB3gfIk
- wEZ/E2h1iFtW+tEMUSTy9kb7PoTD7oLrQvxBR6YrP4PLUBLfGwyoNzmaW8TXABcc
- G1d2K8j02Xulc+aPdL9l9/SXir/Hl2cqxbfewViS2fZgLSMxhvHPF+Gev5DbXeVF
- cE9aHRriUa6YCdatZ0cJ0+yomrzBUig9yoPJnKcgNrrL3fe9BSqfOjdIlwA3td0O
- MtQUPriIF0bfCHJS0fCPtF4h1jNqMkewlorZgA1B+AZlOSotOxJk5EpBuAoPGmqk
- Vz0w6buhUruGKKHgvkKiiGxtZm7cfZ9GD2Obgfw8jP+o6LHBbOeTTgteEWZeq+DQ
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42rwag8954-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Nov 2024 13:15:42 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A7BbMxq031854;
- Thu, 7 Nov 2024 13:15:41 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nydmr8qq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Nov 2024 13:15:41 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A7DFfCw47841762
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 7 Nov 2024 13:15:41 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E90D05805D;
- Thu,  7 Nov 2024 13:15:40 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A400358057;
- Thu,  7 Nov 2024 13:15:40 +0000 (GMT)
-Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  7 Nov 2024 13:15:40 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL v1 1/1] tests: Adjust path for swtpm state to use path under
- /var/tmp/
-Date: Thu,  7 Nov 2024 08:15:39 -0500
-Message-ID: <20241107131539.36843-2-stefanb@linux.ibm.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241107131539.36843-1-stefanb@linux.ibm.com>
-References: <20241107131539.36843-1-stefanb@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: bsE_Na0b8tP6nUQhxZmsy1FKhWwnFt5E
-X-Proofpoint-ORIG-GUID: bsE_Na0b8tP6nUQhxZmsy1FKhWwnFt5E
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1t92QQ-0001pD-Mu
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:19:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730985588;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kPjm09A6VYt3abIPkEfD2GHBoQhl8yI2rup48YCcxZc=;
+ b=iM0eZDs4GKJ9wADKm6EsjX2vHt3zGEL/OI9AV85eIpS86NlgsV37nWcJhEn8fGBlKfRysK
+ WlKnT2KzKpRyqghLYL1MSrXhdpuHxC3l+fRQgjyR7SyG3gIqhV4mIbhQVLpTPvp5dFKfdN
+ 3cKpPceAvVDvNMXt70lsEpIVTlF/J44=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-61-tosVm9ytPYO9R0krepUB9A-1; Thu, 07 Nov 2024 08:19:47 -0500
+X-MC-Unique: tosVm9ytPYO9R0krepUB9A-1
+X-Mimecast-MFC-AGG-ID: tosVm9ytPYO9R0krepUB9A
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37d5116f0a6so544725f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 05:19:47 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730985586; x=1731590386;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kPjm09A6VYt3abIPkEfD2GHBoQhl8yI2rup48YCcxZc=;
+ b=k9e9CCiNb/uZ4TPUcvM2N1yo/lJLtmn/xoI/2JjyMeJbWOY8RyI44JvEvanQYkFsNO
+ 1I2Kl75KMVQ/mtHoQz3sQV2wCJDhtn/wMwGuEihR3tvBWPbriAFfnp1euGUK6eK6VX5j
+ RjnUUTjdinGmKFKrkPFGXrXKLpHdn2rsrXkxSa8yrMozDMrnTYgnaD0gRYqg6BGydRYX
+ jDcO+mEiY36hSrC8i7sq+TfjSaE1lReff6KJOJ3CC+jQEETEjtCNafXqH4dUevDczcsz
+ 0fi/kZEiTEPrIoePmDAkiQb0kNql1ak01O9cL7h1OFrn9eZqdwq3fHBBsJ+4faGe+zHL
+ DrgA==
+X-Gm-Message-State: AOJu0YzHB5B8IlA7v6v++RDGjGWau+VznvbzNA0XVEKsZqLv3jJw7TC3
+ ptNNfBQ/m9qIvn+UL+ZxNsjbYTVuZVSqaEGPtEz+DNuDlj7nZKcArG42YghVmMSbFJSsToXIN3N
+ FJZdS1TUPX+324apWUJq7xyfPnphxINQAmxpWuJOSo1Z7LeBFcZvn
+X-Received: by 2002:a5d:64ad:0:b0:37c:d569:97b with SMTP id
+ ffacd0b85a97d-381c7a5dbfbmr20334455f8f.19.1730985586237; 
+ Thu, 07 Nov 2024 05:19:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEgP0nP7is9SaY3KmhspPJd8bHqfuvjjf5UqMWHn+n61h/cjaYhuUBOcMlcpMdxb0/FSTpBUA==
+X-Received: by 2002:a5d:64ad:0:b0:37c:d569:97b with SMTP id
+ ffacd0b85a97d-381c7a5dbfbmr20334424f8f.19.1730985585572; 
+ Thu, 07 Nov 2024 05:19:45 -0800 (PST)
+Received: from sgarzare-redhat ([5.77.70.124])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381ed970d4fsm1754469f8f.5.2024.11.07.05.19.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 Nov 2024 05:19:45 -0800 (PST)
+Date: Thu, 7 Nov 2024 14:19:40 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, jasowang@redhat.com, eperezma@redhat.com, 
+ mst@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v1] vhost: fail device start if iotlb update fails
+Message-ID: <swjwrfk6c3oz6fooobif6oxze4wyavfilfquzhmitltxbvg5sk@cwocepj5fwz7>
+References: <20241107113247.46532-1-ppandit@redhat.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 spamscore=0 mlxlogscore=879
- priorityscore=1501 malwarescore=0 mlxscore=0 bulkscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411070102
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20241107113247.46532-1-ppandit@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,43 +102,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To avoid AppArmor-related test failures when functional test are run from
-somewhere under /mnt, adjust the path to swtpm's state to use an AppArmor-
-supported path, such as /var/tmp, which is provided by the python function
-tempfile.TemporaryDirectory().
+On Thu, Nov 07, 2024 at 05:02:47PM +0530, Prasad Pandit wrote:
+>From: Prasad Pandit <pjp@fedoraproject.org>
+>
+>While starting a vhost device, updating iotlb entries
+>via 'vhost_device_iotlb_miss' may return an error.
+>
+>  qemu-kvm: vhost_device_iotlb_miss:
+>    700871,700871: Fail to update device iotlb
+>
+>Fail device start when such an error occurs.
+>
+>Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+>---
+> hw/virtio/vhost.c | 13 ++++++++++++-
+> 1 file changed, 12 insertions(+), 1 deletion(-)
+>
+>v1:
+> - Remove VHOST_OPS_DEBUG call.
+> - Call vhost_set_iotlb_callback and vhost_dev_start with 'false' argument.
 
-An update to swtpm's AppArmor profile is also being done to support /var/tmp.
+LGTM!
 
-Link: https://lore.kernel.org/qemu-devel/CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com/
-Link: https://github.com/stefanberger/swtpm/pull/944
-Tested-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: f04cb2d00d5c ("tests/functional: Convert most Aspeed machine tests")
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
----
- tests/functional/test_arm_aspeed.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 
-diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
-index 9761fc06a4..a574b1e521 100644
---- a/tests/functional/test_arm_aspeed.py
-+++ b/tests/functional/test_arm_aspeed.py
-@@ -227,11 +227,11 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
- 
-         image_path = self.ASSET_BR2_202302_AST2600_TPM_FLASH.fetch()
- 
--        socket_dir = tempfile.TemporaryDirectory(prefix="qemu_")
--        socket = os.path.join(socket_dir.name, 'swtpm-socket')
-+        tpmstate_dir = tempfile.TemporaryDirectory(prefix="qemu_")
-+        socket = os.path.join(tpmstate_dir.name, 'swtpm-socket')
- 
-         subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
--                        '--tpmstate', f'dir={self.vm.temp_dir}',
-+                        '--tpmstate', f'dir={tpmstate_dir.name}',
-                         '--ctrl', f'type=unixio,path={socket}'])
- 
-         self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
--- 
-2.47.0
+>
+>v0:
+> - https://lore.kernel.org/qemu-devel/20241105060053.61973-1-ppandit@redhat.com/
+>
+>diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>index 76f9b2aaad..c40f48ac4d 100644
+>--- a/hw/virtio/vhost.c
+>+++ b/hw/virtio/vhost.c
+>@@ -2095,11 +2095,22 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+>          * vhost-kernel code requires for this.*/
+>         for (i = 0; i < hdev->nvqs; ++i) {
+>             struct vhost_virtqueue *vq = hdev->vqs + i;
+>-            vhost_device_iotlb_miss(hdev, vq->used_phys, true);
+>+            r = vhost_device_iotlb_miss(hdev, vq->used_phys, true);
+>+            if (r) {
+>+                goto fail_iotlb;
+>+            }
+>         }
+>     }
+>     vhost_start_config_intr(hdev);
+>     return 0;
+>+fail_iotlb:
+>+    if (vhost_dev_has_iommu(hdev) &&
+>+        hdev->vhost_ops->vhost_set_iotlb_callback) {
+>+        hdev->vhost_ops->vhost_set_iotlb_callback(hdev, false);
+>+    }
+>+    if (hdev->vhost_ops->vhost_dev_start) {
+>+        hdev->vhost_ops->vhost_dev_start(hdev, false);
+>+    }
+> fail_start:
+>     if (vrings) {
+>         vhost_dev_set_vring_enable(hdev, false);
+>--
+>2.47.0
+>
 
 
