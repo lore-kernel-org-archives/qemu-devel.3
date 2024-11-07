@@ -4,109 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD25BD43352
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 11:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2A22D43352
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t919g-0003RC-6n; Thu, 07 Nov 2024 06:58:28 -0500
+	id 1t91GL-0004yN-42; Thu, 07 Nov 2024 07:05:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t919e-0003QS-8S
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:58:26 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1t91GE-0004uD-Aj; Thu, 07 Nov 2024 07:05:14 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t919c-0002PT-6m
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:58:25 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A7BeBVb021218;
- Thu, 7 Nov 2024 11:58:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=c/QwVk
- lal6MHkWodk/BJL5hd4p3nz9uhWuI15+giT1g=; b=ZuyYpjQJn9FOjq5LD17Q+R
- CuHSKrWMA5CGZcXVSa6FgmNcf81EQu6jkmbhJ1zXWnC7jcwHCDG9fTuQ/Uyd8YIT
- e5Nk3zQqTsJXVr5hw6xD4zt8jEqir4HZ3DQzcPzdsXbI0BeUXZbKR8QBc13oyE2s
- B9MMZShQCeRzDRtTC7XdXF17h3XYbuDRHdLPeJhPWV+6nAYkBRdWzzEyccA/AQMK
- qrqtXKyX+c6hU5FTVrI/K2W+xy/Q1f00aGdz1fAY3br9X5NB03NkGrMjH/7ZYY2N
- lx7XJhEtPn0xEDlLGKdYn+5YOax5ANU2gD6YEyJr/26fiSJBXmIDPpnuWhZC765A
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42rvvjg1kt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Nov 2024 11:58:21 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4A7BwKRE026559;
- Thu, 7 Nov 2024 11:58:20 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42rvvjg1kr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Nov 2024 11:58:20 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A7BtwdR008433;
- Thu, 7 Nov 2024 11:58:20 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nywm5u0a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Nov 2024 11:58:20 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A7BwJJY48824608
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 7 Nov 2024 11:58:19 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9D2DA58059;
- Thu,  7 Nov 2024 11:58:19 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 69D245805B;
- Thu,  7 Nov 2024 11:58:18 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  7 Nov 2024 11:58:18 +0000 (GMT)
-Message-ID: <cd0732c9-e5ae-4dd8-b48a-4ac769cece05@linux.ibm.com>
-Date: Thu, 7 Nov 2024 06:58:17 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests: Adjust path for swtpm state to use path under
- /var/tmp/
-To: Peter Maydell <peter.maydell@linaro.org>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@gmail.com, clg@redhat.com,
- lena.voytek@canonical.com
-References: <20241106180751.6859-1-stefanb@linux.vnet.ibm.com>
- <CAFEAcA8P-a5XyACAovFLwCSPT-s0CX74aMKoPtHku0G89cYgkA@mail.gmail.com>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <CAFEAcA8P-a5XyACAovFLwCSPT-s0CX74aMKoPtHku0G89cYgkA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: doI3Gf5mC_K6Ll4rSa0cF_6Lpa1EPcjt
-X-Proofpoint-ORIG-GUID: eF3ktXyxZU7i-CPaiHGFMSiMSKGT6zVr
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1t91GA-00041j-Js; Thu, 07 Nov 2024 07:05:13 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xkgk43q4hz6LD90;
+ Thu,  7 Nov 2024 20:05:00 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 6FC4B140CB9;
+ Thu,  7 Nov 2024 20:05:04 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 7 Nov
+ 2024 13:04:58 +0100
+Date: Thu, 7 Nov 2024 12:04:57 +0000
+To: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+CC: <devel@edk2.groups.io>, <marcin.juszkiewicz@linaro.org>,
+ <ardb+tianocore@kernel.org>, <quic_llindhol@quicinc.com>,
+ <peter.maydell@linaro.org>, <chenbaozi@phytium.com.cn>,
+ <linux-cxl@vger.kernel.org>, <asa-dev@op-lists.linaro.org>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+Subject: Re: [edk2-devel] [RFC PATCH v2 1/1] hw/arm/sbsa-ref: Support CXL
+ Host Bridge & CFMW
+Message-ID: <20241107120457.00006024@Huawei.com>
+In-Reply-To: <20241105104346.417102-2-wangyuquan1236@phytium.com.cn>
+References: <20241105104346.417102-1-wangyuquan1236@phytium.com.cn>
+ <20241105104346.417102-2-wangyuquan1236@phytium.com.cn>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015
- priorityscore=1501 mlxlogscore=999 spamscore=0 impostorscore=0
- lowpriorityscore=0 phishscore=0 mlxscore=0 malwarescore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411070090
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,75 +70,264 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue,  5 Nov 2024 18:43:46 +0800
+"Yuquan Wang" <wangyuquan1236@phytium.com.cn> wrote:
 
-
-On 11/7/24 6:09 AM, Peter Maydell wrote:
-> On Wed, 6 Nov 2024 at 18:08, Stefan Berger <stefanb@linux.vnet.ibm.com> wrote:
->>
->> From: Stefan Berger <stefanb@linux.ibm.com>
->>
->> To avoid AppArmor-related test failures when functional test are run from
->> somewhere under /mnt, adjust the path to swtpm's state to use an AppArmor-
->> supported path, such as /var/tmp, which is provided by the python function
->> tempfile.TemporaryDirectory().
->>
->> An update to swtpm's AppArmor profile is also being done to support /var/tmp.
->>
->> Link: https://lore.kernel.org/qemu-devel/CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com/
->> Link: https://github.com/stefanberger/swtpm/pull/944
->> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+> This creates a default pxb-cxl (bus_nr=0xc0) bridge with two
+> cxl root ports on sbsa-ref. And the memory layout places 64K
+> space for the cxl host bridge register regions(CHBCR) in the
+> sbsa-ref memmap.
 > 
-> Thanks for writing this patch. I can confirm that the test now
-> runs OK on my Ubuntu setup, so
+> In addition, this support indepentent mmio32(32M) & mmio64(1M)
+> space for cxl components.
 
-That's good to hear. However, it surprises me because the tests probably 
-use /var/tmp/ as temp dir and that's no supported in the AppArmor 
-profile yet.
+Those are too small.  Might work today but not sustainable.
+
+I'm a bit surprised it was this simple to move the MMIO Space away
+from what is normally done for PXBs.
+I think it might work because the GPEX memory windows are effectively
+unlimited in size but I'd like some more eyes on this from people
+familiar with how all that works and whether there might be some
+corner cases that you haven't seen yet.
+
+Otherwise this looks ok to me.
 
 > 
-> Tested-by: Peter Maydell <peter.maydell@linaro.org>
+> To provide CFMWs on sbsa-ref, this extends 1TB space from the
+> hole above RAM Memory [SBSA_MEM] for CXL Fixed Memory Window.
 > 
->> ---
->>   tests/functional/test_arm_aspeed.py | 6 +++---
->>   1 file changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
->> index 9761fc06a4..a574b1e521 100644
->> --- a/tests/functional/test_arm_aspeed.py
->> +++ b/tests/functional/test_arm_aspeed.py
->> @@ -227,11 +227,11 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
->>
->>           image_path = self.ASSET_BR2_202302_AST2600_TPM_FLASH.fetch()
->>
->> -        socket_dir = tempfile.TemporaryDirectory(prefix="qemu_")
->> -        socket = os.path.join(socket_dir.name, 'swtpm-socket')
+> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+> ---
+>  docs/system/arm/sbsa.rst  |   4 ++
+>  hw/arm/sbsa-ref.c         | 122 +++++++++++++++++++++++++++++++++++++-
+>  hw/cxl/cxl-host-stubs.c   |   2 +
+>  hw/cxl/cxl-host.c         |   2 +-
+>  include/hw/cxl/cxl_host.h |   2 +
+>  5 files changed, 130 insertions(+), 2 deletions(-)
 > 
-> I think it would be helpful to add a brief comment here:
->             # We must put the TPM state dir in /tmp/, not the build dir,
->             # because some distros use AppArmor to lock down swtpm and
->             # restrict the set of locations it can write to.
-> 
-> just as a guard against somebody in future coming along and
-> trying to clean up/rationalize where tests are creating their
-> temporary files.
-> 
->> +        tpmstate_dir = tempfile.TemporaryDirectory(prefix="qemu_")
->> +        socket = os.path.join(tpmstate_dir.name, 'swtpm-socket')
->>
->>           subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
->> -                        '--tpmstate', f'dir={self.vm.temp_dir}',
->> +                        '--tpmstate', f'dir={tpmstate_dir.name}',
->>                           '--ctrl', f'type=unixio,path={socket}'])
->>
->>           self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
->> --
->> 2.34.1
-> 
-> thanks
-> -- PMM
-> 
+> diff --git a/docs/system/arm/sbsa.rst b/docs/system/arm/sbsa.rst
+> index 2bf3fc8d59..21b88e88e7 100644
+> --- a/docs/system/arm/sbsa.rst
+> +++ b/docs/system/arm/sbsa.rst
+> @@ -28,6 +28,7 @@ The ``sbsa-ref`` board supports:
+>    - E1000E ethernet card on PCIe bus
+>    - Bochs display adapter on PCIe bus
+>    - A generic SBSA watchdog device
+> +  - CXL host bridge and CXL fixed memory window
+>  
+>  
+>  Board to firmware interface
+> @@ -92,3 +93,6 @@ Platform version changes:
+>  
+>  0.4
+>    CPU topology information is present in devicetree.
+> +
+> +0.5
+> +  CXL host bridge and CXL fixed memory window are supported.
+> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+> index e3195d5449..655dc82863 100644
+> --- a/hw/arm/sbsa-ref.c
+> +++ b/hw/arm/sbsa-ref.c
+> @@ -36,12 +36,18 @@
+>  #include "hw/arm/smmuv3.h"
+>  #include "hw/block/flash.h"
+>  #include "hw/boards.h"
+> +#include "hw/cxl/cxl.h"
+> +#include "hw/cxl/cxl_host.h"
+>  #include "hw/ide/ide-bus.h"
+>  #include "hw/ide/ahci-sysbus.h"
+>  #include "hw/intc/arm_gicv3_common.h"
+>  #include "hw/intc/arm_gicv3_its_common.h"
+>  #include "hw/loader.h"
+> +#include "hw/pci/pci_bridge.h"
+> +#include "hw/pci/pci_bus.h"
+> +#include "hw/pci/pcie_port.h"
+>  #include "hw/pci-host/gpex.h"
+> +#include "hw/pci-bridge/pci_expander_bridge.h"
+>  #include "hw/qdev-properties.h"
+>  #include "hw/usb.h"
+>  #include "hw/usb/xhci.h"
+> @@ -94,6 +100,10 @@ enum {
+>      SBSA_SECURE_MEM,
+>      SBSA_AHCI,
+>      SBSA_XHCI,
+> +    SBSA_CXL_HOST,
+> +    SBSA_CXL_MMIO,
+> +    SBSA_CXL_MMIO_HIGH,
+> +    SBSA_CXL_FIXED_WINDOW,
+>  };
+>  
+>  struct SBSAMachineState {
+> @@ -105,6 +115,8 @@ struct SBSAMachineState {
+>      int psci_conduit;
+>      DeviceState *gic;
+>      PFlashCFI01 *flash[2];
+> +    CXLState cxl_devices_state;
+> +    PCIBus *cxlbus;
+>  };
+>  
+>  #define TYPE_SBSA_MACHINE   MACHINE_TYPE_NAME("sbsa-ref")
+> @@ -132,6 +144,10 @@ static const MemMapEntry sbsa_ref_memmap[] = {
+>      /* Space here reserved for more SMMUs */
+>      [SBSA_AHCI] =               { 0x60100000, 0x00010000 },
+>      [SBSA_XHCI] =               { 0x60110000, 0x00010000 },
+> +    /* 64KiB CXL Host Bridge Registers space */
+> +    [SBSA_CXL_HOST] =           { 0x60120000, 0x00010000 },
+
+> +    /* 32M CXL 32-bit MMIO space */
+> +    [SBSA_CXL_MMIO] =           { 0x60130000, 0x02000000 },
+>      /* Space here reserved for other devices */
+>      [SBSA_PCIE_PIO] =           { 0x7fff0000, 0x00010000 },
+>      /* 32-bit address PCIE MMIO space */
+> @@ -141,6 +157,10 @@ static const MemMapEntry sbsa_ref_memmap[] = {
+>      /* ~1TB PCIE MMIO space (4GB to 1024GB boundary) */
+>      [SBSA_PCIE_MMIO_HIGH] =     { 0x100000000ULL, 0xFF00000000ULL },
+>      [SBSA_MEM] =                { 0x10000000000ULL, RAMLIMIT_BYTES },
+> +    /* 1M CXL 64-bit MMIO space */
+> +    [SBSA_CXL_MMIO_HIGH] =           { 0x90000000000ULL, 0x00100000 },
+
+As above, make this bigger.  CXL devices can have substantial BARs.
+
+> +    /* 1TB CXL FIXED WINDOW space */
+> +    [SBSA_CXL_FIXED_WINDOW] =   { 0xA0000000000ULL, 0x10000000000ULL },
+>  };
+>  
+>  static const int sbsa_ref_irqmap[] = {
+> @@ -216,7 +236,7 @@ static void create_fdt(SBSAMachineState *sms)
+>       *                        fw compatibility.
+>       */
+>      qemu_fdt_setprop_cell(fdt, "/", "machine-version-major", 0);
+> -    qemu_fdt_setprop_cell(fdt, "/", "machine-version-minor", 4);
+> +    qemu_fdt_setprop_cell(fdt, "/", "machine-version-minor", 5);
+>  
+>      if (ms->numa_state->have_numa_distance) {
+>          int size = nb_numa_nodes * nb_numa_nodes * 3 * sizeof(uint32_t);
+> @@ -629,6 +649,35 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
+>      }
+>  }
+>  
+> +static void create_pxb_cxl(SBSAMachineState *sms, PCIBus *bus)
+> +{
+> +    DeviceState *qdev = qdev_new(TYPE_PXB_CXL_DEV);
+> +    PCIDevice *dev = PCI_DEVICE(qdev);
+> +    CXLHost *host;
+> +    PCIHostState *cxl;
+> +    PCIDevice *cxlrp;
+> +    PCIEPort *p;
+> +    PCIESlot *s;
+> +    int i;
+> +
+> +    sms->cxl_devices_state.is_enabled = true;
+> +    qdev_prop_set_uint32(qdev, "bus_nr", 0xc0);
+> +    pci_realize_and_unref(dev, bus, &error_fatal);
+> +
+> +    host = PXB_CXL_DEV(dev)->cxl_host_bridge;
+> +    cxl = PCI_HOST_BRIDGE(host);
+> +    sms->cxlbus = cxl->bus;
+> +
+> +    for (i = 0; i < 2; i++) {
+> +        cxlrp = pci_new(-1, "cxl-rp");
+> +        p = PCIE_PORT(cxlrp);
+> +        s = PCIE_SLOT(cxlrp);
+> +        p->port = i;
+> +        s->slot = i;
+> +        pci_realize_and_unref(cxlrp, sms->cxlbus, &error_fatal);
+> +    }
+> +}
+> +
+>  static void create_pcie(SBSAMachineState *sms)
+>  {
+>      hwaddr base_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
+> @@ -638,6 +687,10 @@ static void create_pcie(SBSAMachineState *sms)
+>      hwaddr base_mmio_high = sbsa_ref_memmap[SBSA_PCIE_MMIO_HIGH].base;
+>      hwaddr size_mmio_high = sbsa_ref_memmap[SBSA_PCIE_MMIO_HIGH].size;
+>      hwaddr base_pio = sbsa_ref_memmap[SBSA_PCIE_PIO].base;
+> +    hwaddr cxl_base_mmio = sbsa_ref_memmap[SBSA_CXL_MMIO].base;
+> +    hwaddr cxl_size_mmio = sbsa_ref_memmap[SBSA_CXL_MMIO].size;
+> +    hwaddr cxl_base_mmio_high = sbsa_ref_memmap[SBSA_CXL_MMIO_HIGH].base;
+> +    hwaddr cxl_size_mmio_high = sbsa_ref_memmap[SBSA_CXL_MMIO_HIGH].size;
+>      int irq = sbsa_ref_irqmap[SBSA_PCIE];
+>      MachineClass *mc = MACHINE_GET_CLASS(sms);
+>      MemoryRegion *mmio_alias, *mmio_alias_high, *mmio_reg;
+> @@ -686,6 +739,67 @@ static void create_pcie(SBSAMachineState *sms)
+>      pci_create_simple(pci->bus, -1, "bochs-display");
+>  
+>      create_smmu(sms, pci->bus);
+> +
+> +    /* Map CXL MMIO space */
+> +    mmio_alias = g_new0(MemoryRegion, 1);
+> +    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
+> +    memory_region_init_alias(mmio_alias, OBJECT(dev), "cxl-mmio",
+> +                             mmio_reg, cxl_base_mmio, cxl_size_mmio);
+> +    memory_region_add_subregion(get_system_memory(), cxl_base_mmio, mmio_alias);
+> +
+> +    /* Map CXL MMIO_HIGH space */
+> +    mmio_alias_high = g_new0(MemoryRegion, 1);
+> +    memory_region_init_alias(mmio_alias_high, OBJECT(dev), "cxl-mmio-high",
+> +                             mmio_reg, cxl_base_mmio_high, cxl_size_mmio_high);
+> +    memory_region_add_subregion(get_system_memory(), cxl_base_mmio_high,
+> +                                mmio_alias_high);
+> +
+> +    create_pxb_cxl(sms, pci->bus);
+> +}
+
+>  
+>  static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int *fdt_size)
+> @@ -821,6 +935,12 @@ static void sbsa_ref_init(MachineState *machine)
+>  
+>      create_pcie(sms);
+>  
+> +    create_cxl_host_reg_region(sms);
+> +    create_cxl_fixed_window_region(sms, sysmem);
+> +    pxb_cxl_hook_up_registers(&sms->cxl_devices_state, sms->cxlbus,
+> +                              &error_fatal);
+> +    sbsa_cxl_fmws_link_targets(sms, &error_fatal);
+> +
+>      create_secure_ec(secure_sysmem);
+>  
+>      sms->bootinfo.ram_size = machine->ram_size;
+> diff --git a/hw/cxl/cxl-host-stubs.c b/hw/cxl/cxl-host-stubs.c
+> index cae4afcdde..aea94933ba 100644
+> --- a/hw/cxl/cxl-host-stubs.c
+> +++ b/hw/cxl/cxl-host-stubs.c
+> @@ -11,5 +11,7 @@
+>  void cxl_fmws_link_targets(CXLState *stat, Error **errp) {};
+>  void cxl_machine_init(Object *obj, CXLState *state) {};
+>  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp) {};
+> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
+> +                        CXLFixedMemoryWindowOptions *object, Error **errp) {};
+>  
+>  const MemoryRegionOps cfmws_ops;
+> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> index e9f2543c43..d408c7db15 100644
+> --- a/hw/cxl/cxl-host.c
+> +++ b/hw/cxl/cxl-host.c
+> @@ -22,7 +22,7 @@
+>  #include "hw/pci/pcie_port.h"
+>  #include "hw/pci-bridge/pci_expander_bridge.h"
+>  
+> -static void cxl_fixed_memory_window_config(CXLState *cxl_state,
+> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
+>                                             CXLFixedMemoryWindowOptions *object,
+>                                             Error **errp)
+>  {
+> diff --git a/include/hw/cxl/cxl_host.h b/include/hw/cxl/cxl_host.h
+> index c9bc9c7c50..f3184733aa 100644
+> --- a/include/hw/cxl/cxl_host.h
+> +++ b/include/hw/cxl/cxl_host.h
+> @@ -16,6 +16,8 @@
+>  void cxl_machine_init(Object *obj, CXLState *state);
+>  void cxl_fmws_link_targets(CXLState *stat, Error **errp);
+>  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp);
+> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
+> +                        CXLFixedMemoryWindowOptions *object, Error **errp);
+>  
+>  extern const MemoryRegionOps cfmws_ops;
+>  
 
 
