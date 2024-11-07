@@ -4,67 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC4ADD5D688
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 20:46:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 273C1D5D689
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 20:48:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t99NX-0005fY-PV; Thu, 07 Nov 2024 15:45:19 -0500
+	id 1t99QJ-0006zn-1x; Thu, 07 Nov 2024 15:48:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t99NQ-0005ef-DY
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 15:45:12 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1t99QH-0006zP-DX
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 15:48:09 -0500
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t99NO-0001My-P4
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 15:45:12 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5cece886771so2465652a12.0
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 12:45:10 -0800 (PST)
+ id 1t99QF-0001Zo-L5
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 15:48:09 -0500
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2fb3debdc09so12194301fa.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 12:48:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731012309; x=1731617109; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731012484; x=1731617284; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=I8vlh4q9tNEgYb8TbmTj3pjSSGsAzW8x6Ca114qSpg8=;
- b=pG/Jf/Q20YCh+93fGMVqm6tCUGytew5nEo7A1Wlp5UHpM7wC0Uv7LQVaJ9fsoECNt7
- rOwB5O0PzXkZ8b5+s9cslry+axXfFQq0mlMLhgFAcdYgMX/kzkQGwRslW4usbxviV+iL
- mxK06hwnqMZUSFKwtNWA4BxUedblDI6JIYBbavJQLwlBJn/SZNp9O5d0WAtZD6psOdne
- IQ0pG1o14vX9FV3xIL4WYVTLvyNTLs0gqZarF4qOpQK9/+K6eiLlkvZUMF0tdsbn/Wp4
- zHsSuRo2JW6ZV34YdxXVY/cwXwZzEYFePrZgG0/Tw6IxCmgjjpgHabgAn8r5RdsYL1an
- Amqg==
+ bh=+tfd37kIrjmQ3TrvX3Z6juOv88Erq1VFjITX8+GNTdw=;
+ b=uzaVSQUOSJfKWetHlKvi1wbRak0CmppaDsciNdf7yq34iWfbuVGxCAK7tu0w/MGUSM
+ PxDDP2VAWPeeg/R3Cm9X9IcA6SfPuPPpHMFmwfk6Tcn4Nx9x3caKmDjJojfkstIn/t4l
+ Ej4/2VkaRTICLSyk4i1fA2Nwhq35WhCnGuXMahHNwbl3avqGT/97JUsB2mobpxLJ6Rki
+ NFgXLlR+fhvkdd+15fcVSNmHAtnjP8OQPC1IGc90vt6VWFEAtez2iu5nrhwecqgeDM5B
+ JKhFsEFYaZHnpp7RtYGXF64xrNDIVkE8l9DSFrNRsM+KomYpBG/EYHLmmabDwyK8zuzY
+ Ucuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731012309; x=1731617109;
+ d=1e100.net; s=20230601; t=1731012484; x=1731617284;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=I8vlh4q9tNEgYb8TbmTj3pjSSGsAzW8x6Ca114qSpg8=;
- b=SVYHeVnilgt5csWV5RjvCa1I1iZW0whfuh4O6wTBIUXajiK48R4gi+mJq1lwROBDc0
- OGImBOIcitDFWjWsa9gxwDO65wbraUw/WiDTycskLuoAa2gKklUaNoIELRsE5kC4oEY7
- Q6IxB7jveNb+rMXQe+cCrVr0n58Xucyvou44R57BRe5elxsJnoNKBT9tos0aojvu2oJ3
- gdRmZmVz5ZW1PzKmXP6vwa0TbH2uR2i79w0ydsLkaKngBvw82v00sRUzdWLBEijsrrmr
- OuSSiDLLVGl4aP+/JDN0Oc8UyE+xrMI9Q0HrtgR4ducFIglobHRxvJ6J42AGRR+uIf5N
- 1uaA==
-X-Gm-Message-State: AOJu0YyL4QVhymxmf6F5GphocYzYdl5wgSnyBqJodXASVg6VPzCqDeIA
- 8OBw7fPEGRbApZ77uN+zuA+pMJsVCP7J+xSx5JLE3HSgUbIxU4VV5L0Kw+NBvtP0TyglgXW3+XS
- jAbHyIxdrFHYVcas0CuGQ2olV+iRG0hB2OfiNSA==
-X-Google-Smtp-Source: AGHT+IFSpFdH2DTB80m1B94jK+N4nI1lBzn6GQcafhVc/uDIUBNrnO3K+OuFeABDUu2CxT/UHCvoxBPPFx3MAeM5Tco=
-X-Received: by 2002:a05:6402:40cb:b0:5cf:265:cda5 with SMTP id
- 4fb4d7f45d1cf-5cf096f591emr1027521a12.5.1731012308976; Thu, 07 Nov 2024
- 12:45:08 -0800 (PST)
+ bh=+tfd37kIrjmQ3TrvX3Z6juOv88Erq1VFjITX8+GNTdw=;
+ b=xGFmCcu2/ccn2qmBRBRJzCsZtxhVcEPWHhrtwOdfx7m1H8L1N8f+VMbCOKp46Ox8PK
+ Inopdyr4iB8kyPCS7pSUzR/04ufSfaZhe2JN5+Kg0ty5dLvRwlxd2VkKKiJqdg58K4d+
+ Aj2+JhA3o1AU0RCyoASIEM9j/xM8ARu49Qn2eZKI6Lxq/iCOnu4xf8Ji1EaPX4vQYZ2T
+ kmzUq40uaM5tvfAjY4EMO4oP4tZ8Y+gQYxDQkDWBfjtYv+enRXauWTRLIHfEQLt5JpRy
+ flJYUs1E/AGXewtt8vXbx0wSmHlwac9ZdA+RSLkiE12hC3wnvgvi23e3WXV1aoC6O+ZA
+ I0cg==
+X-Gm-Message-State: AOJu0YwVmdsTsfqJG7HLsw2Bz9DMbBn3i2m1vKjtFLutLk4aiCoQIQW5
+ lPPFpHRWu3J5vfoacDMF2tsOuNCTAyRl8GF5IW/XN5g5OxB3Jgv1105Vx8CXtJX250n9kjTbeMa
+ a71Pp1IOUd4Sr6nb7JV4aSBBnP/yuaCMH/4JDgqTGQ7qJ9asT
+X-Google-Smtp-Source: AGHT+IGSgeV9sWI4Wh7+Jk9epYf7AKgk8mvtCIeR4Vk3NaShNAKVHX5kLiA2vVofIZM6NomGuEmQw0w1CyZS4cWRQHc=
+X-Received: by 2002:a2e:ab05:0:b0:2fb:5b23:edba with SMTP id
+ 38308e7fff4ca-2ff201b271bmr2000921fa.23.1731012483797; Thu, 07 Nov 2024
+ 12:48:03 -0800 (PST)
 MIME-Version: 1.0
-References: <20241107041016.40800-1-alistair.francis@wdc.com>
-In-Reply-To: <20241107041016.40800-1-alistair.francis@wdc.com>
+References: <20241107163210.3620697-1-peter.maydell@linaro.org>
+ <20241107163210.3620697-2-peter.maydell@linaro.org>
+In-Reply-To: <20241107163210.3620697-2-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 Nov 2024 20:44:58 +0000
-Message-ID: <CAFEAcA8h530-M8f0GOOJ3=TQPB7Ae0O65P=k2sZZXUx562D4MQ@mail.gmail.com>
-Subject: Re: [PULL 00/12] riscv-to-apply queue
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Date: Thu, 7 Nov 2024 20:47:53 +0000
+Message-ID: <CAFEAcA8mu0fbOtmqCm6pV_pBvAzW4UCe_1xg7P7RpL3NQY4ohw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] hw/net/virtio-net.c: Don't assume IP length field is
+ aligned
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,35 +91,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 7 Nov 2024 at 04:11, Alistair Francis <alistair23@gmail.com> wrote:
+On Thu, 7 Nov 2024 at 16:32, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> The following changes since commit 63dc36944383f70f1c7a20f6104966d8560300fa:
+> In virtio-net.c we assume that the IP length field in the packet is
+> aligned, and we copy its address into a uint16_t* in the
+> VirtioNetRscUnit struct which we then dereference later.  This isn't
+> a safe assumption; it will also result in compilation failures if we
+> mark the ip_header struct as QEMU_PACKED because the compiler will
+> not let you take the address of an unaligned struct field.
 >
->   Merge tag 'hw-misc-20241105' of https://github.com/philmd/qemu into staging (2024-11-06 17:28:45 +0000)
+> Make the ip_plen field in VirtioNetRscUnit a void*, and make all the
+> places where we read or write through that pointer instead use some
+> new accessor functions read_unit_ip_len() and write_unit_ip_len()
+> which account for the pointer being potentially unaligned and also do
+> the network-byte-order conversion we were previously using htons() to
+> perform.
 >
-> are available in the Git repository at:
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  include/hw/virtio/virtio-net.h |  2 +-
+>  hw/net/virtio-net.c            | 23 +++++++++++++++++++----
+>  2 files changed, 20 insertions(+), 5 deletions(-)
 >
->   https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20241107
+> diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+> index 060c23c04d2..b9ea9e824e3 100644
+> --- a/include/hw/virtio/virtio-net.h
+> +++ b/include/hw/virtio/virtio-net.h
+> @@ -102,7 +102,7 @@ typedef struct VirtioNetRscStat {
+>  /* Rsc unit general info used to checking if can coalescing */
+>  typedef struct VirtioNetRscUnit {
+>      void *ip;   /* ip header */
+> -    uint16_t *ip_plen;      /* data len pointer in ip header field */
+> +    void *ip_plen; /* pointer to unaligned uint16_t data len in ip header */
+>      struct tcp_header *tcp; /* tcp header */
+>      uint16_t tcp_hdrlen;    /* tcp header len */
+>      uint16_t payload;       /* pure payload without virtio/eth/ip/tcp */
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index f2104ed364a..11cf462180d 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -2049,6 +2049,21 @@ static ssize_t virtio_net_do_receive(NetClientState *nc, const uint8_t *buf,
+>      return virtio_net_receive_rcu(nc, buf, size, false);
+>  }
 >
-> for you to fetch changes up to 27652f9ca9d831c67dd447346c6ee953669255f0:
->
->   tests/functional: Convert the RV32-on-RV64 riscv test (2024-11-07 13:12:58 +1000)
->
-> ----------------------------------------------------------------
-> RISC-V PR for 9.2
->
-> * Fix broken SiFive UART on big endian hosts
-> * Fix IOMMU Coverity issues
-> * Improve the performance of vector unit-stride/whole register ld/st instructions
-> * Update kvm exts to Linux v6.11
-> * Convert the RV32-on-RV64 riscv test
->
+> +/*
+> + * Accessors to read and write the IP packet data length field. This
+> + * is a potentially unaligned network-byte-order 16 bit unsigned integer
+> + * pointed to by unit->ip_len.
+> + */
+> +static uint16_t read_unit_ip_len(VirtioNetRscUnit *unit)
+> +{
+> +    return ldl_be_p(unit->ip_plen);
+> +}
+> +
+> +static void write_unit_ip_len(VirtioNetRscUnit *unit, uint16_t l)
+> +{
+> +    stl_be_p(unit->ip_plen, l);
+> +}
 
+These should of course be lduw_be_p() and stw_be_p(), since
+it's a 16 bit field.
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+Interestingly nothing fails in "make check" or "make check-functional"
+if this breaks, suggesting we aren't exercising virtio-net very hard.
 
 -- PMM
 
