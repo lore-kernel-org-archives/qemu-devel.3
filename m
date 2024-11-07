@@ -4,72 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65FD7D4335A
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1962ED4335A
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:47:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t91ob-00019s-Pn; Thu, 07 Nov 2024 07:40:45 -0500
+	id 1t91ux-0002HM-Iu; Thu, 07 Nov 2024 07:47:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1t91oY-00019b-0T
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:40:42 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1t91oV-0002hA-6l
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:40:41 -0500
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8CxyuFCtSxnFGE3AA--.45694S3;
- Thu, 07 Nov 2024 20:40:35 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMBxnkdAtSxnEhNKAA--.1019S3;
- Thu, 07 Nov 2024 20:40:34 +0800 (CST)
-Subject: Re: [PATCH v2 5/5] target/loongarch/tcg: Add hardware page table
- walker support
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- wangliupu@loongson.cn, yijun@loongson.cn
-Cc: maobibo@loongson.cn, philmd@linaro.org
-References: <20241010063536.2276871-1-gaosong@loongson.cn>
- <20241010063536.2276871-6-gaosong@loongson.cn>
- <23534a10-ea21-47ee-b31f-0ce9185e6545@linaro.org>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <42da240c-f78e-774c-73ad-37e7b2e05726@loongson.cn>
-Date: Thu, 7 Nov 2024 20:41:37 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1t91uw-0002HB-Jd
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:47:18 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1t91uu-0004L2-Sh
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:47:18 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-37d518f9abcso557629f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 04:47:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730983634; x=1731588434; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=36ocz2UGSGLp/P4/X2OErcbO6/Tu/TZX+h/RDgbuMis=;
+ b=od0F2DjDDWEWPjjZo4Qp8dbgpSnTkHViyEBM0byDBIwjK95Pu0OR6aBhwW/hUlTQu5
+ BAUo9LVzcIM78GdCVXyYcY8D/R6rQGZ4BMhxFKIW2kD4LlQMcZ3IpdaUd8DNCRmRrq6W
+ lBs2GZSiBA363oMQ8H23BHQb2T1O6uaSiBW9P5NSXMpXLa9x7tHISw5/nZb5jVxgsMDJ
+ 0qlgXrZ+j9ejXsTNVpcU/okGoRvf20969Jub24jNdggb4o2y9T24KHedrJQWog6I4C4l
+ XXlD8RHMiFl9OWZ+8q0XWiKJuVIn63CIfoKhAnXzArgfKeOIHWv7wj/wcixJiApiHvji
+ O4ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730983634; x=1731588434;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=36ocz2UGSGLp/P4/X2OErcbO6/Tu/TZX+h/RDgbuMis=;
+ b=UmdWCcd5cCRhbYhsCAdgphU4JrCIz7uk81DLxZHRxexvtX7bOHT+l5XNsyE582WDgp
+ oyH2DfIlBvExwUqHKAv+ZnrBTXKGqtXh45+Nn+32DAfC2AtPtHLxYNVzRprl4AwKLUxF
+ 5Tgu+06/LWt/FvyqvH0UJP51+4+/FRa9WZTeGjln4TH6jwzWOkCjFqUEfE3qZ8Mw93XO
+ oXx34HLquhM1I3+Kvvqteq6BNrLCT7CfS/0RNDqoA8BuJTPTWLAU5Jz2rxBnbiGoaCZg
+ RonM1RETP0ujbGRtg7gJg+3tDIH1l0KjCosRkXjdB+vj0YhRAg+ihXyICRUE+TxMfM92
+ WB8w==
+X-Gm-Message-State: AOJu0YztP95AuS+eBg3pTneai9H7i9qVnvlK3eu2KYdZAg1HyA2KvUzS
+ BQT9i+JgKD5xxdQrbtQUH/iXPABSLdOWv3ZlhM5fsC1H8zcF4w4bHjiCbQ2Y1rE=
+X-Google-Smtp-Source: AGHT+IFE1gV7SfYPpb006wJKmTzuP+KCP/foOY1s9KBP/kBuUnGiUtxYEflVmBY5phSBOL0ofhByqw==
+X-Received: by 2002:a5d:42cb:0:b0:37d:4d3f:51e6 with SMTP id
+ ffacd0b85a97d-38061128d8dmr30612039f8f.14.1730983634143; 
+ Thu, 07 Nov 2024 04:47:14 -0800 (PST)
+Received: from meli-email.org ([154.14.63.34])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381ed9707d3sm1630744f8f.19.2024.11.07.04.47.13
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 07 Nov 2024 04:47:13 -0800 (PST)
+Date: Thu, 07 Nov 2024 12:44:04 +0000
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PULL 32/40] rust: introduce alternative implementation of
+ offset_of!
+User-Agent: meli 0.8.7
+References: <20241104172721.180255-1-pbonzini@redhat.com>
+ <20241104172721.180255-33-pbonzini@redhat.com> <mkvxc.kptyckk1ksc@linaro.org>
+ <CABgObfbdGz7gqbej1J0iN2GDgbHf9WhmvnfwfSik60AUJcyXRg@mail.gmail.com>
+In-Reply-To: <CABgObfbdGz7gqbej1J0iN2GDgbHf9WhmvnfwfSik60AUJcyXRg@mail.gmail.com>
+Message-ID: <mkzin.ykt05oslddrq@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <23534a10-ea21-47ee-b31f-0ce9185e6545@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowMBxnkdAtSxnEhNKAA--.1019S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7uryfAF43tr18Cr17XFWfCrX_yoW8Xryrpr
- 95Gr47JryUJr1rtrsrWr1UZFyjya47A3Z8JrnYqF1FyFsxAry2gr4DWw1q9F1UJr48JF1U
- XF1UXrZ7Zr15J3cCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j1
- q2_UUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.588,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,51 +99,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2024/11/5 下午10:27, Richard Henderson 写道:
-> On 10/10/24 07:35, Song Gao wrote:
->> +        base = get_pte_base(env, address);
->> +
->> +        /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
->> +        shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
->> +        shift = (shift + 1) * 3;
->> +        ptindex = (address >> ptbase) & ((1 << ptwidth) -1);
->> +        ptoffset = ptindex << shift;
->> +        tmp0 = base | ptoffset;
+On Thu, 07 Nov 2024 11:31, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>> Compilation fails for me, on macos / rustc 1.80.1
+>>
+>>   error[E0369]: binary operation `==` cannot be applied to type
+>>     `&Attribute`
+>>     --> ../rust/qemu-api-macros/src/lib.rs:25:43
+>>      |
+>>   25 |     if input.attrs.iter().any(|attr| attr == &expected) {
+>>      |                                      ---- ^^ --------- &_
+>>      |                                      |
+>>      |                                      &Attribute
+>>
+>>   error: aborting due to 1 previous error
 >
-> This is a guest virtual address.
+>You need "meson subprojects update --reset" as mentioned in
+>the cover letter.
 >
->> +      retry:
->> +        old_val = ldq_phys(cs->as, tmp0) & TARGET_PHYS_MASK;
+>Paolo
 >
-> Fine.
->
->> +        if (old_val != new_val) {
->> +            cur_val = qatomic_cmpxchg((uint64_t *)tmp0, old_val, 
->> new_val);
->
-> This uses a host address.  The cast, and the resulting reference, are 
-> incorrect.
->
-> This is why Arm and x86 structure things differently, using a 
-> different tlb index to resolve the host address.  This allows the 
-> result to be cached like any other address resolution.
->
-> Riscv does something a bit simpler, using address_space_translate to 
-> resolve the host address.
->
-> Most of the rest of this patch set is going to need review from 
-> loongson employees, since I've not seen public documentation in 
-> english for this feature.
->
-> r~
 
-Hi, Yijun and Wangliupu
-
-Could you guys help review this patch and provide some documentation 
-about it?
-
-Thanks.
-Song Gao
-
-
+I did already, also purged the build dir. I had to delete the cached syn 
+subproject (`rm -rf subprojects/syn-2.0.66`) to make it work FYI
 
