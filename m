@@ -4,116 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DD1ED43356
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BCC5D43352
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:21:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t91MG-00077R-EK; Thu, 07 Nov 2024 07:11:28 -0500
+	id 1t91V0-0008TM-GX; Thu, 07 Nov 2024 07:20:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t91MB-000777-55
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:11:23 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t91M8-0005A9-Vr
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:11:22 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id DFFBA1F8CC;
- Thu,  7 Nov 2024 12:11:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730981478; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0a/PVwf8mT84SctdYRE/NRCSd06QWazrC3sTRrW+jbA=;
- b=knPidv8CB7xzol53dOZS0QOwM8beFUOQJWz2WHWAF09XN7t+V3ylBDm/k0vDp22kDwym1f
- 63CBQxrVmEOuIfoS1wwIYo6h1e1tewvr6hPuHVGPy6WctBvUG62U9PxkVIvLMDUqR7rjGr
- HLLmkfn25w7IrJGUAowaJBF2MG6mPjQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730981478;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0a/PVwf8mT84SctdYRE/NRCSd06QWazrC3sTRrW+jbA=;
- b=6uURWQ+QX1ABE/wyBjHF45qftZvoB8OYLkotBWxM7CQ1TejYo2phWuXJOVfmaDl0I6DuBF
- QReVDWI9fpmjR0Cg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=nzb6om7V;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=m+kfWf8F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1730981477; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0a/PVwf8mT84SctdYRE/NRCSd06QWazrC3sTRrW+jbA=;
- b=nzb6om7VbZh0q+K1QKuChsoPTAQbomEJMC2Xg+KHFApDWrTG0xdhxczsgsSZhzk1b/cChB
- vzOLX2npKzsFgM6wL3LjshqxHv+WTZYinEv1Valeb1eWWoTlmIBvDxsSk12XIsDVTKpANc
- C0RANztwrzVFI8JQPrm618JLiNd51oY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1730981477;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0a/PVwf8mT84SctdYRE/NRCSd06QWazrC3sTRrW+jbA=;
- b=m+kfWf8Fmc+F9I6ZvhT8hEmAXGV/5oocj1zoFoWvITNSKQ6s0sGpPa5pBSFpc8SC/Yr5NK
- kTma2a6r/9gZNiDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6072E1394A;
- Thu,  7 Nov 2024 12:11:17 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id twQHCmWuLGdiLAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 07 Nov 2024 12:11:17 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, Prasad Pandit
- <pjp@fedoraproject.org>
-Subject: Re: [PATCH 2/5] migration/postcopy: magic value for postcopy channel
-In-Reply-To: <CAE8KmOwM2wjkyUZL5v=3gjkUNa8VhA6oick35KMX-FO2-BidaQ@mail.gmail.com>
-References: <20241029150908.1136894-1-ppandit@redhat.com>
- <20241029150908.1136894-3-ppandit@redhat.com> <ZyTnBwpOwXcHGGPJ@x1n>
- <CAE8KmOyzWRqpGDOyAK7V2X8+SWVt_kR1897tiFm7vdBNRRE2QA@mail.gmail.com>
- <ZykB3voFw_-ByWfh@x1n>
- <CAE8KmOzuGxdU7zp+vsf1yY_FP8bf-KTv7UJ+8h6bfmkE=0H-bA@mail.gmail.com>
- <ZyoW3ue3WTQ3Di1d@x1n>
- <CAE8KmOxW8K-YoCUbK5XOLeUQk8WCPB4UxbaQuUONhzsanvrLMw@mail.gmail.com>
- <87ldxw1p8k.fsf@suse.de>
- <CAE8KmOwM2wjkyUZL5v=3gjkUNa8VhA6oick35KMX-FO2-BidaQ@mail.gmail.com>
-Date: Thu, 07 Nov 2024 09:11:14 -0300
-Message-ID: <87ttcj2qhp.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1t91Uv-0008Sx-L8
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:20:26 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1t91Ut-0007jP-BI
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:20:25 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxuuCBsCxnH1k3AA--.44975S3;
+ Thu, 07 Nov 2024 20:20:17 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowMAx18B_sCxn5gVKAA--.2025S3;
+ Thu, 07 Nov 2024 20:20:17 +0800 (CST)
+Subject: Re: [PATCH 00/10] hw/intc/loongarch_extioi: Split into extioi common
+ and extioi
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20240920090507.2692125-1-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <bc2885d5-5ab4-d24a-62f4-9c4d7c7421cf@loongson.cn>
+Date: Thu, 7 Nov 2024 20:21:20 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: DFFBA1F8CC
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+In-Reply-To: <20240920090507.2692125-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowMAx18B_sCxn5gVKAA--.2025S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7ury5WFyUZF48GFW3Aw15WrX_yoW8AFW5pF
+ 17Cry3ur48JwnrX3s3K3WUXF98Jrsagry2qF1akryfWrnxCry09348XryfXFyxG3s5t34q
+ vw1rWw15WF1DArXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8cz
+ VUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-2.588, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -131,31 +83,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prasad Pandit <ppandit@redhat.com> writes:
-
-> On Wed, 6 Nov 2024 at 18:41, Fabiano Rosas <farosas@suse.de> wrote:
->> What we're thinking is having an initial exchange of information between
->> src & dst as soon as migration starts and that would sync the
->> capabilities and parameters between both sides. Which would then be
->> followed by a channel establishment phase that would open each necessary
->> channel (according to caps) in order, removing the current ambiguity.
->>
+ÔÚ 2024/9/20 ÏÂÎç5:04, Bibo Mao Ð´µÀ:
+> In order to support irqchip_in_kenrel method, split loongarch extioi
+> emulation driver into two parts, extioi common and extioi TCG driver.
+> LoongArch extioi common driver includes vmstate and property interface,
+> also vmstate load and store interface is defined in extioi common driver.
 >
-> * Isn't that how it works? IIUC, libvirtd(8) sends migration command
-> options to the destination and based on that the destination prepares
-> for the multifd and/or postcopy migration. In case of 'Postcopy' the
-> source sends 'postcopy advise' to the destination to indicate that
-> postcopy might follow at the end of precopy. Also, in the discussion
-> above Peter mentioned that libvirtd(8) may exchange list of features
-> between source and destination to facilitate QMP clients.
+> In future LoongArch extioi kvm driver can inherit from extioi common
+> driver.
 >
-> * What is the handshake doing differently? (just trying to understand)
-
-The handshake will be a QEMU-only feature. Libvirt will then only start
-the migration on src and QEMU will do the capabilities handling.
-
+> Bibo Mao (10):
+>    include: Add loongarch_extioi_common header file
+>    include: Move struct LoongArchExtIOI to header file
+>      loongarch_extioi_common
+>    include: Rename LoongArchExtIOI with LoongArchExtIOICommonState
+>    hw/intc/loongarch_extioi: Rename LoongArchExtIOI with
+>      LoongArchExtIOICommonState
+>    hw/intc/loongarch_extioi: Add common realize interface
+>    hw/intc/loongarch_extioi: Add unrealize interface
+>    hw/intc/loongarch_extioi: Add common file loongarch_extioi_common
+>    hw/intc/loongarch_extioi: Inherit from loongarch_extioi_common
+>    hw/intc/loongarch_extioi: Add pre_save interface
+>    hw/intc/loongarch_extioi: Code cleanup about loongarch_extioi
 >
-> Thank you.
-> ---
->   - Prasad
+>   hw/intc/loongarch_extioi.c                | 110 +++++++--------------
+>   hw/intc/loongarch_extioi_common.c         | 113 ++++++++++++++++++++++
+>   hw/intc/meson.build                       |   2 +-
+>   include/hw/intc/loongarch_extioi.h        |  84 +++-------------
+>   include/hw/intc/loongarch_extioi_common.h |  99 +++++++++++++++++++
+>   5 files changed, 259 insertions(+), 149 deletions(-)
+>   create mode 100644 hw/intc/loongarch_extioi_common.c
+>   create mode 100644 include/hw/intc/loongarch_extioi_common.h
+>
+>
+> base-commit: 01dc65a3bc262ab1bec8fe89775e9bbfa627becb
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+
+Thanks.
+Song Gao
+
 
