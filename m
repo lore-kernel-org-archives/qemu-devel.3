@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C4B2D43352
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73064D43352
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:36:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t91k7-0004dt-TO; Thu, 07 Nov 2024 07:36:07 -0500
+	id 1t91kZ-0005Pt-2z; Thu, 07 Nov 2024 07:36:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t91js-0004QE-48
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:35:53 -0500
+ id 1t91kO-0005DW-HI
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:36:24 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t91jq-0001ah-Fk
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:35:51 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XkhPY1HD8z6LDBD;
- Thu,  7 Nov 2024 20:35:45 +0800 (CST)
+ id 1t91kM-0001fB-SY
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:36:24 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XkhQ81kvBz6LDCQ;
+ Thu,  7 Nov 2024 20:36:16 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 17AE61403A2;
- Thu,  7 Nov 2024 20:35:49 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 3180D140CB9;
+ Thu,  7 Nov 2024 20:36:20 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 7 Nov 2024 13:35:48 +0100
+ 15.1.2507.39; Thu, 7 Nov 2024 13:36:19 +0100
 To: "Michael S . Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  <qemu-devel@nongnu.org>
 CC: <linuxarm@huawei.com>
-Subject: [PATCH 2/5] qapi/qom: Change Since entry for
- AcpiGenericPortProperties to 9.2
-Date: Thu, 7 Nov 2024 12:34:43 +0000
-Message-ID: <20241107123446.902801-3-Jonathan.Cameron@huawei.com>
+Subject: [PATCH 3/5] bios-tables-test: Allow for new acpihmat-generic-x test
+ data.
+Date: Thu, 7 Nov 2024 12:34:44 +0000
+Message-ID: <20241107123446.902801-4-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241107123446.902801-1-Jonathan.Cameron@huawei.com>
 References: <20241107123446.902801-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.122.19.247]
 X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
  frapeml500008.china.huawei.com (7.182.85.71)
@@ -73,29 +73,45 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This feature was only applied during the 9.2 cycle, so reflect
-that rather than 9.1.
+The test to be added exercises many corner cases of the SRAT and HMAT table
+generation.
 
-Reported-by: Daniel P. Berrangé <berrange@redhat.com>
-Closes: https://lore.kernel.org/qemu-devel/ZyngEiwmYeZ-DvCy@redhat.com/
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- qapi/qom.json | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qtest/bios-tables-test-allowed-diff.h     | 5 +++++
+ tests/data/acpi/x86/q35/APIC.acpihmat-generic-x | 0
+ tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x | 0
+ tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x | 0
+ tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x | 0
+ tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x | 0
+ 6 files changed, 5 insertions(+)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index a8beeabf1f..28ce24cd8d 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -877,7 +877,7 @@
- #     complex as there may be interleaving across multiple devices
- #     and shared links in the path.
- #
--# Since: 9.1
-+# Since: 9.2
- ##
- { 'struct': 'AcpiGenericPortProperties',
-   'data': { 'pci-bus': 'str',
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..3c0967078f 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,6 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/x86/q35/APIC.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x",
+diff --git a/tests/data/acpi/x86/q35/APIC.acpihmat-generic-x b/tests/data/acpi/x86/q35/APIC.acpihmat-generic-x
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x b/tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x b/tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x b/tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x b/tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x
+new file mode 100644
+index 0000000000..e69de29bb2
 -- 
 2.43.0
 
