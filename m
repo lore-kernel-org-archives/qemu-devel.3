@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF532D5AE7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 10:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 823D7D5AE7D
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 10:01:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8zIz-0000ZG-Al; Thu, 07 Nov 2024 04:59:57 -0500
+	id 1t8zKA-0001Fx-KN; Thu, 07 Nov 2024 05:01:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8zIx-0000Z0-Ph
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 04:59:55 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1t8zK6-0001Fd-SM
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 05:01:09 -0500
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8zIw-0005NM-5O
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 04:59:55 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a9ed7d8d4e0so102904766b.1
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 01:59:53 -0800 (PST)
+ id 1t8zK5-0005fS-1Q
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 05:01:06 -0500
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-539fb49c64aso998341e87.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 02:01:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730973592; x=1731578392; darn=nongnu.org;
+ d=linaro.org; s=google; t=1730973663; x=1731578463; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jTMMTkC4Z4K/M0+uXpDCfhKM5aOC9BIavkRvvTWTvf4=;
- b=aoIg1jJjCkproJy+LjKrug0AKGZz3SXC/JqOdQhQUp2ETFdePAsbL5wcc4ZGQ93znD
- Ok+HYRqhJJEHPO4u/P2cZmIGGDCHASyOFL002L6EicpDsyuKEj7wrr6Yhnrc1KStVic2
- CXkji+IBot3eXnrHxmfrvDGtueelQ3QrsEyMVhkSkBaYUJbwgkFeuOO/2tcmRpZ+3WHv
- 2E/wEkVi0bXS1g8wTV55U8JeiKNg6e5W0Sds33jymfn6jKZ7t2kWvSqlwzVYDAML00Tu
- 5VJV9minapbN/frCc/VSOiMHVA6/A71p6yB6X9jhXqrGDvEAYCPI/ZnSGwitlIIC5f7E
- AAhA==
+ bh=QNJkyOXb5iDFAHDhDSDsBeeTjcy8mpwh+NVrU5tBQj0=;
+ b=RdsbNaax3E8BGIRIQ3ogOuCYOnDpHb1QeKtrJhWtpFHehyBtTd2QmAqWDhWAc/oqke
+ TV54qpcWpJHCPc472vmdwV8dFcWJNwDKicqMIXPOONsjsag7iTs9ejc0NsW/CiD/j9XN
+ INVHquMgOriDSa56EtunBQOZS1al4FeWtR5purh9S9986BXFwCPfy9vQ2MCguihHVqXH
+ srR4zSY6qP/x9onYtgZWVFn61kdx+tGXjel5oT04247hy4BsUrFfMbm900oAXCHF29TK
+ nolDhC+I+Mjnm51KFyBoqs49UPvPY+d1T2CsJiiLsl3S53fufCEsn6eNjlrjA0wuu+eP
+ FHBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730973592; x=1731578392;
+ d=1e100.net; s=20230601; t=1730973663; x=1731578463;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jTMMTkC4Z4K/M0+uXpDCfhKM5aOC9BIavkRvvTWTvf4=;
- b=SJ4oNWMfohex/1Dmqs0bE0u37T5iekIpGvlGJ6ijn1LqBgfyk532XHa4BbprHg3pT+
- o5xJEBJ38IZAKn3bIRbuUViBQqqgPfULFppsS+33qVKTxGWpInKHrv7OaUrD5fte53MH
- yX5VPonspH2tWBjqM4toDqo+v7rIOQZ15jMqAgnRsc3+So4IqQmo86MRyxyAeRVPq1NI
- O2s8VUaL7XObjwbIN+whRf8fJJpP8ff+XnCJ+pBD6VXH7kpEadHfwm23lyfBKRS1GcXL
- Xn452pmgU7BjNwZEV5RhQXLyfH3UHI8gQWMa2zsMZXO1mpLrcZ4WerPURCw8oSF1iQE/
- DR2Q==
+ bh=QNJkyOXb5iDFAHDhDSDsBeeTjcy8mpwh+NVrU5tBQj0=;
+ b=W25xJtcbXIrhExr0zQKJDcspHVbp/7WAWqx+BdFBnJikjrv/vJTaJmNZkioiOIse1N
+ Baet0Ns1+J6xlMK77KgbFl7bm1lSvmmYfoPAoBENY4il3Uk6o+dZQ4ZPW8RblM5A0zkK
+ zvQakJhZa16isSEEXLiOLtqUFHUjCREalRr4NoGKfDiu87WaGs2/jByXhJhpEDddxjSr
+ 00Uex1Za6VzswXO2bdc/lVHUQVv+c6IWkbfjeBsy5tYl9fQ3K+Rygi0T6WP5DP/dZV0S
+ 8Ak2B3Khz3jypyawsH6c8cRosIHbIuxdEr0Y99P/1kxwJerEiXb9Ir8WmowAZbHjHP4U
+ hDLA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUp5PDIjU2Tnwfts0ioaQz4I0EW/vJ5jXUo+3J8m0u1Kxn0OM+fWQ+wsoXeDoZHMYgwMOJKcHRhFBVD@nongnu.org
-X-Gm-Message-State: AOJu0Yyzk5YugP1x/eDvzRrJFt3v9Vz5W4b4lMi674RUyUQva9BxQlqI
- 2biCqB5zmZmmzvE3Rys/NifTyf3VfFXEvI1I6SEwcPjZD+yJQAhvVJPz8Pj1+Yk=
-X-Google-Smtp-Source: AGHT+IE0oWPO959yDh26k9QovRiKxj/4L9ukAlXgD/8OLJqiWGLan6dZ+pfvZz/TTcEKWYnkyIxxtg==
-X-Received: by 2002:a17:907:9727:b0:a99:762f:b298 with SMTP id
- a640c23a62f3a-a9e655b92f9mr2212973366b.41.1730973592386; 
- Thu, 07 Nov 2024 01:59:52 -0800 (PST)
-Received: from [172.16.23.118] ([89.101.134.25])
+ AJvYcCXJbNGutuhkw//P6YoW14jxgJgpJru9KeC1KkMrwE7botxhc4Z/TLNXQUoVRj2JFt5RuhtXehBXIErq@nongnu.org
+X-Gm-Message-State: AOJu0YzlXeDnKaHbXqCEULY2Qzzu68pTLJZ+S6ZMh321qyAur81fk0Z8
+ 49L8EAdp9N0TDZAOmhau+wunMzk/ha5lC8/eGL5J1vO3f7OEzZejea6CIKtzRLYDLrNChUUQlha
+ AIFc=
+X-Google-Smtp-Source: AGHT+IHubmpLDIZycSh0AyVO74QgMrJBILiHFGsPWQR4d6y+wlc6ltAAlyo+HeEZ96Cc1cCoMapbDQ==
+X-Received: by 2002:a05:6512:124c:b0:539:9ee4:baab with SMTP id
+ 2adb3069b0e04-53d65df2701mr18264993e87.30.1730973662792; 
+ Thu, 07 Nov 2024 02:01:02 -0800 (PST)
+Received: from [172.16.23.118] ([154.14.63.34])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0a4b5f1sm72897266b.60.2024.11.07.01.59.51
+ a640c23a62f3a-a9ee0defbdcsm70614666b.159.2024.11.07.02.01.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Nov 2024 01:59:51 -0800 (PST)
-Message-ID: <7ccd9857-31ec-4a68-8634-e0d8b79be345@linaro.org>
-Date: Thu, 7 Nov 2024 09:59:50 +0000
+ Thu, 07 Nov 2024 02:01:02 -0800 (PST)
+Message-ID: <d4f84208-efcd-4568-8f1c-3d76c32d9600@linaro.org>
+Date: Thu, 7 Nov 2024 10:01:00 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] hw/i386: Mark devices as little-endian
+Subject: Re: [PATCH 2/5] hw/tricore: Mark devices as little-endian
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20241106184612.71897-1-philmd@linaro.org>
- <20241106184612.71897-2-philmd@linaro.org>
+ <20241106184612.71897-3-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241106184612.71897-2-philmd@linaro.org>
+In-Reply-To: <20241106184612.71897-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,20 +100,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/6/24 18:46, Philippe Mathieu-Daudé wrote:
-> These devices are only used by the X86 targets, which are only
-> built as little-endian. Therefore the DEVICE_NATIVE_ENDIAN
+> These devices are only used by the TriCore target, which is
+> only built as little-endian. Therefore the DEVICE_NATIVE_ENDIAN
 > definition expand to DEVICE_LITTLE_ENDIAN (besides, the
 > DEVICE_BIG_ENDIAN case isn't tested). Simplify directly using
 > DEVICE_LITTLE_ENDIAN.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   hw/i386/kvm/apic.c         | 2 +-
->   hw/i386/pc.c               | 4 ++--
->   hw/i386/vapic.c            | 2 +-
->   hw/i386/xen/xen_apic.c     | 2 +-
->   hw/i386/xen/xen_platform.c | 2 +-
->   5 files changed, 6 insertions(+), 6 deletions(-)
+>   hw/tricore/tricore_testdevice.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
