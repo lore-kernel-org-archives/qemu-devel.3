@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6F89D5D688
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B44CFD5D687
 	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 19:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t98ax-0001Vs-Sg; Thu, 07 Nov 2024 14:55:07 -0500
+	id 1t98b2-0001ao-0x; Thu, 07 Nov 2024 14:55:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3EhstZwYKCj0shstrqfnnfkd.bnlpdlt-cdudkmnmfmt.nqf@flex--titusr.bounces.google.com>)
- id 1t98av-0001Tk-F6
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 14:55:05 -0500
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+ <3FhstZwYKCkEwlwxvujrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--titusr.bounces.google.com>)
+ id 1t98ax-0001VI-8j
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 14:55:07 -0500
+Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3EhstZwYKCj0shstrqfnnfkd.bnlpdlt-cdudkmnmfmt.nqf@flex--titusr.bounces.google.com>)
- id 1t98as-0003KH-TQ
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 14:55:05 -0500
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-6ea258fe4b6so25991107b3.1
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 11:54:59 -0800 (PST)
+ <3FhstZwYKCkEwlwxvujrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--titusr.bounces.google.com>)
+ id 1t98at-0003L7-RH
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 14:55:06 -0500
+Received: by mail-yb1-xb4a.google.com with SMTP id
+ 3f1490d57ef6-e02fff66a83so2308645276.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 11:55:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1731009299; x=1731614099; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=3Z/XclSmqT8Xhgqma+tYcLYhVDFwTbVxhxPc4Sd2yjI=;
- b=ipc96J9GZq6QWQsckbNsetr6naEEjQigxVOuz7XCBliSo/UT9yHMg/k+oSmB9R2JEf
- 3QmUSn8bgMw/k2UiZQbbO55srT2vMWfpJLYnK0//mR/raGdyx908XIXi0hrNqttvxHwc
- KheWPVoRS/sKdjXxb3hwj3K5UQjCBrJ4gTINDcCuoreqz/nTBJfUNTlGEzpsm7+DpBC4
- bA+ttdBe2bMU/HRmgNgciroWrBzdlhAOvHJSgMQS1YHwujW5JZKWLlPcocto4t3JSWNm
- Ikl/sWa2LXVYbW33RMU3+r5j85OHB/Gdix9SXStLw7dF+dWaYVlsgcdrrxRopou48k3r
- 40Sg==
+ d=google.com; s=20230601; t=1731009302; x=1731614102; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=Dhx3Bv91IwsNiKrqW6EopdF6ygF7pLBG+NH0I9FnnMU=;
+ b=HJOq6v5rhqbMrcftI+/LxDpc/WkswW27a69yG2M7nZz6OT0iG2Fcghlv3gPFVjQr3z
+ 1HNV4wvzOms03U5fvZ/i6GQlAL/Pn7sUjpEGvhtXfQxErjHXZD7s4/IxUE3VdJNG+8+J
+ gttdY/1hSxQlIr4objVtIODodZSwZn6NPCgUoncVn6KcfZiKtNazC1MC/47wjDUWwhW1
+ eJCoUwVuPv4ehiBASv2PC3i4AK1hhMCYlKbsc0Q/ixvjFhn2t3j4EWfh8r2Oah9mZIDK
+ 6dFsO0p7LyBqYwmV+ESDnNGEMdRZAeoiR5JSB94Eta9OaNjqLjz4tOMHr0HS2tjlAZ/z
+ fcAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731009299; x=1731614099;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3Z/XclSmqT8Xhgqma+tYcLYhVDFwTbVxhxPc4Sd2yjI=;
- b=flQKYCuuWh2r6twVBFs8mbl01EbLt8sUy/SxgVmajqFAGqWuPO7BA0bcuQUj0qvyNZ
- 23nzOInty8hQr25Apb65sfQ/XCWZv0Eark/vLdwODlMu1VtK3boxlL7xXqU5Rj5eSZT7
- cbOK8fD/VZxWVLCSR7PIIoWtRXCeGNbim/eWnfQAMEsFrwNWNcXauqJuzQP/20F8sXNm
- WvQQ9MOPuY0y6NORKnqPeWmnotreHTaD2aASjOCtVUFBMIjqUEA3IHpadGRNcSTgKavb
- UohuMIPfyZGkFqYq5lMwiPQdl37D2DoqeYXoj6KDQmV51zdXNRVNnOYXbN9jmB3TAJnC
- 17bw==
+ d=1e100.net; s=20230601; t=1731009302; x=1731614102;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Dhx3Bv91IwsNiKrqW6EopdF6ygF7pLBG+NH0I9FnnMU=;
+ b=uxaC8iDK7cy7y5PUpdOQChqBVxAXJjor2EGRrvCpOh5PKP5oMjcsjzO/fd9zIGp48Q
+ GEugi6So/q4sjcbtfaRNSxxpyGHWjCET06lsy+m8Tlu0HuhjLHTGMSZZ1fSdduDRopQf
+ fdFTIG9jefhjSvIHcdMrLFLtovQ8tuDpvw3WH/EPadSbdvUCVyM7qawxW12TscwYevxo
+ XIGaxSsz5KvB3nwbLOK5JIejlxB8SgEJud3Hz8cikMIONGUwUD+KbxGkWhIj5qlbJt/c
+ fYbYmnMicDAxsjqAfgwrSa0Ha/ZPJI8qbhM3qQOlf0GAQxgX+34efAE+9pdVOECDQwmJ
+ LjfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWw6lAy4Pq0ix2k/9w5AYdO0uiNu2Eg5HrXNPrFEUjrKDr9X0fkAhSTNuF9aogVjydIpbisYiDSvy/I@nongnu.org
-X-Gm-Message-State: AOJu0YybEafvi/XtvZbU386hO53wT0bZs7WU3UlxTjxZ+pdFockg48iT
- QajXrv5+Y8+rVwm/pSQmZz+4u8zUDLIFKmgcJtO1IX+8lMTEA6sjl9qkc/zza3RO558T2wTwwOz
- 0mg==
-X-Google-Smtp-Source: AGHT+IEoKLOtlze2ZJ2kJ2E+JQup5sz1gQfCuIsdgKc4JKTWxtcEwo2hpMqv8+7yB3w6Ijy1AVirAR//sig=
+ AJvYcCVmf+exFdEpBwqFP72sHnizfMGPlMWxmgqjLksdpLOHLOMymJ1El/fNDISMe7prmyAGDtcoxvw/djax@nongnu.org
+X-Gm-Message-State: AOJu0YwVbuV4ydTXrs/tiC3Kx4cbewTGpcicWuYrH/7A+8z2yY49bLku
+ iRfgePd24h2kT7cw2IllybQ2ihgwrEE21TD7clN9cQqvy2pg+cIWydp5JPbnjmJdarxS8qSEbIK
+ gTg==
+X-Google-Smtp-Source: AGHT+IEmlFuTkhdwv2WvBWxO94zsQ4xYCaZCgfhNKEGamC4qH1sUe3agkHFV+x8p66IVVRphgRWtEAm1cNo=
 X-Received: from titusr.c.googlers.com ([fda3:e722:ac3:cc00:dc:567e:c0a8:e14])
- (user=titusr job=sendgmr) by 2002:a05:690c:887:b0:6b2:6cd4:7f9a
- with SMTP id
- 00721157ae682-6eaddff31bcmr1577b3.8.1731009298680; Thu, 07 Nov 2024 11:54:58
+ (user=titusr job=sendgmr) by 2002:a25:aac4:0:b0:e2b:da82:f695 with
+ SMTP id
+ 3f1490d57ef6-e337f8c1754mr158276.6.1731009302052; Thu, 07 Nov 2024 11:55:02
  -0800 (PST)
-Date: Thu,  7 Nov 2024 19:54:48 +0000
+Date: Thu,  7 Nov 2024 19:54:51 +0000
 In-Reply-To: <20241107195453.2684138-1-titusr@google.com>
 Mime-Version: 1.0
 References: <20241107195453.2684138-1-titusr@google.com>
 X-Mailer: git-send-email 2.47.0.277.g8800431eea-goog
-Message-ID: <20241107195453.2684138-2-titusr@google.com>
-Subject: [PATCH 1/6] bitops.h: add deposit16 function
+Message-ID: <20241107195453.2684138-5-titusr@google.com>
+Subject: [PATCH 4/6] hw/i2c: add canonical path to i2c event traces
 From: Titus Rwantare <titusr@google.com>
 To: peter.maydell@linaro.org, minyard@acm.org, clg@redhat.com
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, philmd@linaro.org, 
  venture@google.com, wuhaotsh@google.com, milesg@linux.vnet.ibm.com, 
  Titus Rwantare <titusr@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3EhstZwYKCj0shstrqfnnfkd.bnlpdlt-cdudkmnmfmt.nqf@flex--titusr.bounces.google.com;
- helo=mail-yw1-x114a.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
+ envelope-from=3FhstZwYKCkEwlwxvujrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--titusr.bounces.google.com;
+ helo=mail-yb1-xb4a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,51 +98,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Makes it more explicit that 16 bit values are being used
-
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 Signed-off-by: Titus Rwantare <titusr@google.com>
 ---
- include/qemu/bitops.h | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ hw/i2c/core.c       | 8 +++++---
+ hw/i2c/trace-events | 2 +-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/include/qemu/bitops.h b/include/qemu/bitops.h
-index 2c0a2fe751..05179e3ded 100644
---- a/include/qemu/bitops.h
-+++ b/include/qemu/bitops.h
-@@ -459,6 +459,32 @@ static inline int64_t sextract64(uint64_t value, int start, int length)
-     return ((int64_t)(value << (64 - length - start))) >> (64 - length);
- }
- 
-+/**
-+ * deposit16:
-+ * @value: initial value to insert bit field into
-+ * @start: the lowest bit in the bit field (numbered from 0)
-+ * @length: the length of the bit field
-+ * @fieldval: the value to insert into the bit field
-+ *
-+ * Deposit @fieldval into the 16 bit @value at the bit field specified
-+ * by the @start and @length parameters, and return the modified
-+ * @value. Bits of @value outside the bit field are not modified.
-+ * Bits of @fieldval above the least significant @length bits are
-+ * ignored. The bit field must lie entirely within the 16 bit word.
-+ * It is valid to request that all 16 bits are modified (ie @length
-+ * 16 and @start 0).
-+ *
-+ * Returns: the modified @value.
-+ */
-+static inline uint16_t deposit16(uint16_t value, int start, int length,
-+                                 uint16_t fieldval)
-+{
-+    uint16_t mask;
-+    assert(start >= 0 && length > 0 && length <= 16 - start);
-+    mask = (~0U >> (16 - length)) << start;
-+    return (value & ~mask) | ((fieldval << start) & mask);
-+}
-+
- /**
-  * deposit32:
-  * @value: initial value to insert bit field into
--- 
+diff --git a/hw/i2c/core.c b/hw/i2c/core.c
+index 4cf30b2c86..d238311776 100644
+--- a/hw/i2c/core.c
++++ b/hw/i2c/core.c
+@@ -161,7 +161,8 @@ static int i2c_do_start_transfer(I2CBus *bus, uint8_t a=
+ddress,
+            start condition.  */
+=20
+         if (sc->event) {
+-            trace_i2c_event(event =3D=3D I2C_START_SEND ? "start" : "start=
+_async",
++            trace_i2c_event(DEVICE(s)->canonical_path,
++                            event =3D=3D I2C_START_SEND ? "start" : "start=
+_async",
+                             s->address);
+             rv =3D sc->event(s, event);
+             if (rv && !bus->broadcast) {
+@@ -244,7 +245,7 @@ void i2c_end_transfer(I2CBus *bus)
+         I2CSlave *s =3D node->elt;
+         sc =3D I2C_SLAVE_GET_CLASS(s);
+         if (sc->event) {
+-            trace_i2c_event("finish", s->address);
++            trace_i2c_event(DEVICE(s)->canonical_path, "finish", s->addres=
+s);
+             sc->event(s, I2C_FINISH);
+         }
+         QLIST_REMOVE(node, next);
+@@ -321,7 +322,8 @@ void i2c_nack(I2CBus *bus)
+     QLIST_FOREACH(node, &bus->current_devs, next) {
+         sc =3D I2C_SLAVE_GET_CLASS(node->elt);
+         if (sc->event) {
+-            trace_i2c_event("nack", node->elt->address);
++            trace_i2c_event(DEVICE(node->elt)->canonical_path,
++                            "nack", node->elt->address);
+             sc->event(node->elt, I2C_NACK);
+         }
+     }
+diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
+index f708a7ace1..e5f2dc643e 100644
+--- a/hw/i2c/trace-events
++++ b/hw/i2c/trace-events
+@@ -9,7 +9,7 @@ bitbang_i2c_data(unsigned clk, unsigned dat, unsigned old_o=
+ut, unsigned new_out)
+=20
+ # core.c
+=20
+-i2c_event(const char *event, uint8_t address) "%s(addr:0x%02x)"
++i2c_event(const char *id, const char *event, uint8_t address) "%s: %s(addr=
+:0x%02x)"
+ i2c_send(uint8_t address, uint8_t data) "send(addr:0x%02x) data:0x%02x"
+ i2c_send_async(uint8_t address, uint8_t data) "send_async(addr:0x%02x) dat=
+a:0x%02x"
+ i2c_recv(uint8_t address, uint8_t data) "recv(addr:0x%02x) data:0x%02x"
+--=20
 2.47.0.277.g8800431eea-goog
 
 
