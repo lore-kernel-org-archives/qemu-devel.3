@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C30BD5AE5F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 04:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FBABD5AE5A
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 04:11:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8tr5-0006E2-97; Wed, 06 Nov 2024 23:10:47 -0500
+	id 1t8tr6-0006E6-Kl; Wed, 06 Nov 2024 23:10:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8tr2-0006DJ-1k
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:10:44 -0500
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1t8tr0-0006DA-ON
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:10:43 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8tr0-0004zA-No
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:10:43 -0500
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-7ede6803585so1248949a12.0
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 20:10:42 -0800 (PST)
+ id 1t8tqx-0004yc-No
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:10:42 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-20c7ee8fe6bso5530305ad.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 20:10:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730952641; x=1731557441; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730952638; x=1731557438; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RAj+A4mnSUh5INZ2zk/jr1EQV8+iiISuFmUPqvB9PIw=;
- b=FW4OGtpxc9B8gYhZaG5uLTA1QKu9RU2JSWi0s9bdDzl85+hteZkAtJCE9Hz/yd7gQp
- 936iizymzTIPlls5pZOD7ZuLs4B63OhJwki+Hq2ITYWGuAyRl6Yx/XgwJVR5JvKcT/+m
- UDg5QvAeXTVA7FmkfT6VdBq/B7BurMNCpUcMT3zeq/OqYQmMskMe0SukzUjTpF3HA9Nj
- KiRPStzLOrHFdugD9Yl34lzXSOfWf4aqb+KzMBvQ/uFa0Ptvn/36Z4cFYFRvwvGKdDIK
- f4KsnCp1wEJlPhmokQNoWDF7pUvJ5V0pw1hpU42CHSaTWE29zD+QyH0n1dcdjJ833o+Z
- A3fQ==
+ bh=6OVUWWYTa0NKHAvdg4I8AkMOGiy68upct5dHn8LNb0Q=;
+ b=Lpq+dFqJMPWySeR1ubhymx/Pdrf06BmsI2jUbTqYjswVO2aeSIJBjL9iqYv0WnHJf3
+ 64/oX2oBLiBRLhkTWuWkNsn0FgAwDNmMjJTDSgEw4LCb7HBcwsnaev3Yg7mpBlz3UzcK
+ +mmwGHvTZeWMjqjuVuEh60VZW66mRTyCEyRgnmGCD1rREmb7fZ7sN21m0Dm+0zbNVtIj
+ O99RvTA1BrcFAKOlqsQ+Qo/hjWXl5q8xk1YmIvMTpOXT3hfhg2yz6uO6yUAl5dR4VH8J
+ CpoGWzBdwcKRBRrSFPwEtVcAyoev+M88cw/VnVoJQCutSKZ1vwxuP+alNYF12Y0fXWAW
+ NKyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730952641; x=1731557441;
+ d=1e100.net; s=20230601; t=1730952638; x=1731557438;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RAj+A4mnSUh5INZ2zk/jr1EQV8+iiISuFmUPqvB9PIw=;
- b=s4OJKHB3pkb4OES7i3hjR6JPbaAWf92AsIrMzOgmhr384scrM2sET+JBcnzFyziAzP
- TkVCZVJ5swrmWSi3sdyJORdyv4iY8hLGElwuV2O9pPLbQYQnj1/zETBAGSH1/x+piTgQ
- turYTvEkNS5uoyFT+wnmoqujqdkpzxbi0/15mbENjSR5s1sYsKfhxM0DPzAo4eRc4mvC
- kaXXzdPKbD1Cq+5pM6k6+383RDHguCEtkTrj2JiRC3MfDEPPaJ9SEpwcGacRmYohR51R
- Op6Vto3WLAVL119v51N8CFK5YzqXsRg9VV5zdVLXWmxiUux5Naa9jtTMGBIu9XOmtSpJ
- BmYA==
-X-Gm-Message-State: AOJu0YxIzbWwk2rsAlM2j5/CW1HmyB8NdxadXaKHuc2KCr4/1/g8HqqO
- d1rHeHakYaO/s48A98kIBnqPIg4YlqLW+UfNcZ0xhMBsniCKiq3coJcOLg==
-X-Google-Smtp-Source: AGHT+IFlKeKd1OeBdUvNC8sbFtZY/lIkxtlCOraDWKhvEYYPmvNkZvf1QgXEdSI5Dmh+gwj26f20yQ==
-X-Received: by 2002:a17:902:f70b:b0:20c:7661:dc9a with SMTP id
- d9443c01a7336-21175c13accmr32834095ad.3.1730952641096; 
- Wed, 06 Nov 2024 20:10:41 -0800 (PST)
+ bh=6OVUWWYTa0NKHAvdg4I8AkMOGiy68upct5dHn8LNb0Q=;
+ b=UIN8ngnmHmPAjMq+B8XnvZo/LuP75j77OJwUXNz1hDrrrkQ8YtVW12snJh+YpFRgCn
+ R5Y/eaewudhnx2PiFDm7UiPS9yivOfZ33UMXke/wRS2adGRKgvMkrpZlv+sa349aEQzm
+ e8krFZkVLKLSDlObGb48khIekcfxxiK5bpNo7bXQGwlAtHO3XhoEWiX1x+0unr5sFwip
+ ru2+93Y528GGdLmf9tceTtwWO1CNjKSaJKmq9puGJ5h7qT4/9kcrwYMVmt9nkuh0ZEmr
+ ccIygL7MauP6rhdAWtfiqossEVFAPoRR+fUFXCM/AXLGI7q2AqKRYc6iPXR742moVcw8
+ De6Q==
+X-Gm-Message-State: AOJu0YzGMfqbMvQAdibpFNAQUapMO+CrDFn4FiaF+E/Fv/J50vl6d+dB
+ Q/Ad6L95SLMLG2ORZK1Hrqc+K5bWdnyHZjO/SyVaZGEIzwrkj27eqA/31A==
+X-Google-Smtp-Source: AGHT+IESrTLBjfjlsmwT5Mwqxsai/EgRym8tMyNUxLgASNvGqtewLyKbdTSokNldcGxMTJyoyuwXrQ==
+X-Received: by 2002:a17:902:d2c1:b0:211:6b37:7e66 with SMTP id
+ d9443c01a7336-2116b37879amr70392065ad.17.1730952638110; 
+ Wed, 06 Nov 2024 20:10:38 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21177dc3f12sm2789105ad.9.2024.11.06.20.10.38
+ d9443c01a7336-21177dc3f12sm2789105ad.9.2024.11.06.20.10.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2024 20:10:40 -0800 (PST)
+ Wed, 06 Nov 2024 20:10:37 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 05/12] target/riscv: rvv: Replace VSTART_CHECK_EARLY_EXIT in
- vext_ldst_us
-Date: Thu,  7 Nov 2024 14:10:09 +1000
-Message-ID: <20241107041016.40800-6-alistair.francis@wdc.com>
+Subject: [PULL 04/12] target/riscv: Set vdata.vm field for vector load/store
+ whole register instructions
+Date: Thu,  7 Nov 2024 14:10:08 +1000
+Message-ID: <20241107041016.40800-5-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241107041016.40800-1-alistair.francis@wdc.com>
 References: <20241107041016.40800-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,34 +102,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Max Chou <max.chou@sifive.com>
 
-Because the real vl (evl) of vext_ldst_us may be different (e.g.
-vlm.v/vsm.v/etc.), so the VSTART_CHECK_EARLY_EXIT checking function
-should be replaced by checking evl in vext_ldst_us.
+The vm field of the vector load/store whole register instruction's
+encoding is 1.
+The helper function of the vector load/store whole register instructions
+may need the vdata.vm field to do some optimizations.
 
 Signed-off-by: Max Chou <max.chou@sifive.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20240918171412.150107-3-max.chou@sifive.com>
+Message-ID: <20240918171412.150107-2-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/vector_helper.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ target/riscv/insn_trans/trans_rvv.c.inc | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index ccb32e6122..93cac23a13 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -277,7 +277,10 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
-     uint32_t max_elems = vext_max_elems(desc, log2_esz);
-     uint32_t esz = 1 << log2_esz;
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index f8928c44a8..b9883a5d32 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -770,6 +770,7 @@ static bool ld_us_mask_op(DisasContext *s, arg_vlm_v *a, uint8_t eew)
+     /* Mask destination register are always tail-agnostic */
+     data = FIELD_DP32(data, VDATA, VTA, s->cfg_vta_all_1s);
+     data = FIELD_DP32(data, VDATA, VMA, s->vma);
++    data = FIELD_DP32(data, VDATA, VM, 1);
+     return ldst_us_trans(a->rd, a->rs1, data, fn, s, false);
+ }
  
--    VSTART_CHECK_EARLY_EXIT(env);
-+    if (env->vstart >= evl) {
-+        env->vstart = 0;
-+        return;
-+    }
+@@ -787,6 +788,7 @@ static bool st_us_mask_op(DisasContext *s, arg_vsm_v *a, uint8_t eew)
+     /* EMUL = 1, NFIELDS = 1 */
+     data = FIELD_DP32(data, VDATA, LMUL, 0);
+     data = FIELD_DP32(data, VDATA, NF, 1);
++    data = FIELD_DP32(data, VDATA, VM, 1);
+     return ldst_us_trans(a->rd, a->rs1, data, fn, s, true);
+ }
  
-     /* load bytes from guest memory */
-     for (i = env->vstart; i < evl; env->vstart = ++i) {
+@@ -1106,6 +1108,7 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+     TCGv_i32 desc;
+ 
+     uint32_t data = FIELD_DP32(0, VDATA, NF, nf);
++    data = FIELD_DP32(data, VDATA, VM, 1);
+     dest = tcg_temp_new_ptr();
+     desc = tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,
+                                       s->cfg_ptr->vlenb, data));
 -- 
 2.47.0
 
