@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CBC8D5D67D
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 17:46:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC592D5D674
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 17:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t96Zy-0008J6-Sx; Thu, 07 Nov 2024 12:45:58 -0500
+	id 1t96cq-0000YJ-9M; Thu, 07 Nov 2024 12:48:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t96Zx-0008Ia-Ej
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 12:45:57 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t96co-0000Y8-9X
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 12:48:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t96Zv-00006R-Hk
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 12:45:57 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t96cm-0000W2-Lq
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 12:48:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731001554;
+ s=mimecast20190719; t=1731001731;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rT1XxZue/k2VuOLH/6JIGBrqUjtBbxDQ+He2Lct//54=;
- b=jRLp73WkTIEq4zosg6o9UC37csXnFXH5dxD65mhbPRiYZbovw4xis2HhxsAWE8efCKvcOh
- 2ptkjUYU7GsSVDyBp0N8zPjPe+jWJtUldSVvfOa0ByzD9/PB8I+cX3qOA21A3RF2Dq3zxk
- m0O67Fuuy80DKQ76Muc1PjMboluLArM=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=R3Dtbj/Pdv+/aqhBNadhGaq0Rc9Mc6c2BCVdkN56TDU=;
+ b=ivJgMMtq0H0Hm/ktAiYOYPfcXDUOXH1t3SC7FgUdX6Ydra14LO7Yc5rlCM1ltHQRSGOykw
+ JeyQcjDY/6VbH4nOoKvfYwGGuE3iBu21XlYaXDiX6ZSzVt/3u6Nwp3hZ3m2GSRxGRZQQA1
+ DBAjwFP/jAnZSif8aceac+SOhY0Bi20=
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-9-ocbEKk9zMUausxJ3sT2SoA-1; Thu, 07 Nov 2024 12:45:52 -0500
-X-MC-Unique: ocbEKk9zMUausxJ3sT2SoA-1
-X-Mimecast-MFC-AGG-ID: ocbEKk9zMUausxJ3sT2SoA
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6d35a060aa5so16212676d6.1
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 09:45:51 -0800 (PST)
+ us-mta-629-v6cYBZf5OMa9Cdh-nOnjNw-1; Thu, 07 Nov 2024 12:48:50 -0500
+X-MC-Unique: v6cYBZf5OMa9Cdh-nOnjNw-1
+X-Mimecast-MFC-AGG-ID: v6cYBZf5OMa9Cdh-nOnjNw
+Received: by mail-ot1-f72.google.com with SMTP id
+ 46e09a7af769-71816436594so929776a34.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 09:48:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731001551; x=1731606351;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rT1XxZue/k2VuOLH/6JIGBrqUjtBbxDQ+He2Lct//54=;
- b=tPAowi/AMhD+5QndOOSnn1DgEda2qtaMZC/aPCNNmDhV+LBzN3G+v7VJQIdIm12M4k
- xA+663P/AbsXDN2HwxW7Jc/nlWLmHRX11ymIDnpeOMvvi5pztzkcH4y/iCo34VsgLawz
- braubcpwymAARY3VpMMEytwq7e6/a3PRPaEsImp1TYkCVgr7EJ92A8LA0zZVQusbMo+u
- ydFu+eS+PiNFWjQ+dAsATSBkaW7UNQE42BOsU54icRgPeoDlXqQO1Z+8tr3/gH7s+4Ug
- NZlNEp1LYufM9YIjkE+6XuungROynoHSJoc7sHTLfjginrv6MmN8TdW2G09QKxoBZIgc
- Tw6g==
+ d=1e100.net; s=20230601; t=1731001730; x=1731606530;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R3Dtbj/Pdv+/aqhBNadhGaq0Rc9Mc6c2BCVdkN56TDU=;
+ b=NCXiiUi0MOB6p3SMZG6mQM25+9YF7Lz+myRIVssWFnVFiQCcTbj+JOUf9q/cfsexmS
+ MF9RjfjeN1O4d/mY6riLqirHwdDVbOTJKtBHxhxz5vtOeI62FkoVeb9OwoRsxZJUkM6v
+ nsNHXDyqmSSwKG1AdkRvcGTNDHhr9PMvy1aoeCVyIXTiso8L7uV2mRagVPK4zxhr31Yx
+ DFT/AXYW78hu8u4tgBxRc0mOojTbQUUI4StZTN1BPTevKIjGW5A6g5djfokFR1oGTSZh
+ O1bhzK72npYiJviN3o4NrbewJSWAFHlmuGhJ1TQLBnGmcsmCD4pdPIPWeJjnybwk72CD
+ VF+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX93VE3FTdCNeC5caQ9gt90iV7eUcAMEsOnl1ELlE7y/Dud3hbHCJBBPMy8X49DfDFcP72VN+Z6mzWB@nongnu.org
-X-Gm-Message-State: AOJu0Yy7E5ywSaJyE1tuyk78+73CB2Xn2x9Hbwbr12D7X1SwOvjWZG57
- OtO4D30lkO7NlPbdnw9CTT3h57Ua0bSyxpcvJyCJkvPWVBt9CZNXRiGZlt7xtTSo3psAyaxRzmG
- KrTCclPumyb6Z3w7z/7SosWSBcu7SSfjUEO4QHNEC/F+fYmQyFTiF
-X-Received: by 2002:a05:6214:490a:b0:6cb:e90c:7c72 with SMTP id
- 6a1803df08f44-6d39cf17dc6mr10070666d6.21.1731001551239; 
- Thu, 07 Nov 2024 09:45:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHGvByVA4cDWyScr+iGYnVnMfOy0s8DPeS5b7U4VxiHdhkB3DYY7ygGFVnx9p9Fqprnr8D6tg==
-X-Received: by 2002:a05:6214:490a:b0:6cb:e90c:7c72 with SMTP id
- 6a1803df08f44-6d39cf17dc6mr10070486d6.21.1731001550928; 
- Thu, 07 Nov 2024 09:45:50 -0800 (PST)
+ AJvYcCVO1k/0o3RByErtrMTjxnmC4RoTRUQ2AChvdWzbULwiTK1ID6fHXC4hN9I2UTTivhuSvKgchTu3U5tH@nongnu.org
+X-Gm-Message-State: AOJu0YwJHePmEO/ElFlukcP7KscdC4WAuKEZZnqsd5TJwr1dwQR2z8Lg
+ Ne719JeI1ZXBNmDF2VDiGep3mPCuc8TeLckkPxCjs3zf1QzNFAdCzIUMkASr4JGtazjdmC+E602
+ nddDu++1nRw0fJ4IPRZI78OqRwOoKUo3Yc1pdBTi25XV8+K9Ikx4m
+X-Received: by 2002:a05:6830:3917:b0:709:41c4:6a5 with SMTP id
+ 46e09a7af769-71a1b0196c3mr301571a34.3.1731001730082; 
+ Thu, 07 Nov 2024 09:48:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFrh4MYjB/LbDVhhQaWtwd76kU6W33REjpkdVZs7MU6Lq6AD/DBloOz7f0qsMmNzvAoyigbqQ==
+X-Received: by 2002:a05:6830:3917:b0:709:41c4:6a5 with SMTP id
+ 46e09a7af769-71a1b0196c3mr301558a34.3.1731001729837; 
+ Thu, 07 Nov 2024 09:48:49 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d39643c6a3sm9808216d6.81.2024.11.07.09.45.40
+ 46e09a7af769-71a10836317sm355726a34.35.2024.11.07.09.48.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Nov 2024 09:45:41 -0800 (PST)
-Date: Thu, 7 Nov 2024 12:45:38 -0500
+ Thu, 07 Nov 2024 09:48:48 -0800 (PST)
+Date: Thu, 7 Nov 2024 12:48:46 -0500
 From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org, Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH 2/5] migration/postcopy: magic value for postcopy channel
-Message-ID: <Zyz8wnTkooE4V4UQ@x1n>
-References: <CAE8KmOyzWRqpGDOyAK7V2X8+SWVt_kR1897tiFm7vdBNRRE2QA@mail.gmail.com>
- <ZykB3voFw_-ByWfh@x1n>
- <CAE8KmOzuGxdU7zp+vsf1yY_FP8bf-KTv7UJ+8h6bfmkE=0H-bA@mail.gmail.com>
- <ZyoW3ue3WTQ3Di1d@x1n>
- <CAE8KmOxW8K-YoCUbK5XOLeUQk8WCPB4UxbaQuUONhzsanvrLMw@mail.gmail.com>
- <87ldxw1p8k.fsf@suse.de>
- <CAE8KmOwM2wjkyUZL5v=3gjkUNa8VhA6oick35KMX-FO2-BidaQ@mail.gmail.com>
- <ZyyzjWY-1nPpPgSW@redhat.com> <ZyzoGvOaybHs4uMl@x1n>
- <Zyzxihj37-pfTQWx@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Steven Sistare <steven.sistare@oracle.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH V3 01/16] machine: anon-alloc option
+Message-ID: <Zyz9fj3fUnP_Ni5f@x1n>
+References: <c2ca740b-0178-463b-8262-b149841b8def@redhat.com>
+ <bcc4cd7e-3532-475a-8989-211e80bf3eab@oracle.com>
+ <09701693-436c-4e1a-8206-03eb26cacab5@redhat.com>
+ <66c05a06-dbb7-49ec-b58e-ccd917d098ea@oracle.com>
+ <ZyvUg3CP30f3DZYY@x1n>
+ <d78a806f-4c15-4a1c-a9a4-8fb9f215a2a6@oracle.com>
+ <7fb32744-0512-46e2-b58d-2990f742b897@redhat.com>
+ <bb324f6d-8c8b-4f92-9c0f-12278e3c926c@oracle.com>
+ <ZyzrqnqoK81QfT_c@x1n>
+ <db8fe7a8-9592-42b4-a7e2-df9575408c71@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zyzxihj37-pfTQWx@redhat.com>
+In-Reply-To: <db8fe7a8-9592-42b4-a7e2-df9575408c71@redhat.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -112,43 +117,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 07, 2024 at 04:57:46PM +0000, Daniel P. Berrangé wrote:
-> On Thu, Nov 07, 2024 at 11:17:30AM -0500, Peter Xu wrote:
-> > On Thu, Nov 07, 2024 at 12:33:17PM +0000, Daniel P. Berrangé wrote:
-> > I'll comment on a few examples above, which I think some of them, even if
-> > handshake is ready, may still need mgmt layers to involve..
+On Thu, Nov 07, 2024 at 05:38:26PM +0100, David Hildenbrand wrote:
+> > David: why do we need to drop PRIVATE in ramblock flags?  I thought it was
+> > pretty harmless.  I suppose things like qemu_ram_is_shared() will even keep
+> > working as before?
 > > 
-> > Multifd and postcopy are the two major features, and they, IMHO, all better
-> > need user involvements..
-> > 
-> > Multifd needs it because it relies on the channel being able to provide >1
-> > channels.  It means "| nc XXX > file" can stop working if we turn it on by
-> > default silently.
+> > It looks ok to remove it too, but it adds logics that doesn't seem
+> > necessary to me, so just to double check if I missed something..
 > 
-> NB, my point was referring to a hypothetical alternative history,
-> where we had the handshake at the QEMU level from day 1. That
-> would neccessarily imply a bi-directional channel, so the 'nc'
-> use case would already have been  out of scope. That said, QEMU
-> could identify whether the channel it was told to use was
-> bi-directional or not, and thus not try to do multifd over
-> a non-socket transport.
-
-Ah, that's true.
-
+> A finished ramblock is only boolean "shared" vs. "not shared/private". A
+> single flag (RAM_SHARED) can express that clearly.
 > 
-> So the general point still holds - if QEMU had this protocol
-> negotiation phase built-in, there would be more flexiblity in
-> introducing new features without layers above needing changes,
-> for every single one, just a subset.
+> Consequently there is less to get wrong when using RAM_PRIVATE only as a
+> flag to the creation function (and documenting that!).
+> 
+> To make RAM_PRIVATE consistent we might have to tweak all other RAMBlock
+> creation functions to set RAM_PRIVATE in the !RAM_SHARED case, and I don't
+> think that is wroth the trouble.
 
-Yes.
+Yeah, I actually prefer PRIVATE to be applied everywhere, and assert that
+either SHARED|PRIVATE be set in all ramblocks.
 
-Just to mention, we can already do that now without handshake, as long as
-the feature has zero side effect, and as long as we don't expose it as a
-migration capability (which by default all off).  In that case, we can make
-the property to "on", and add "off" in machine compat properties.  IOW,
-machine compat property can play part of the role as handshake, based on
-the machine type must be the same when initiating QEMU on both hosts.
+But no strong opinions, if both of you like it only applied optionally, I
+already lost the vote.  But yes, please in that case extremely carefully
+document PRIVATE as it can be very tricky now.
+
+PS: when I think about how to document that, I really, really hoped we
+simply apply it to all..
 
 Thanks,
 
