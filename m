@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 273C1D5D689
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 20:48:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1198ED5D688
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 21:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t99QJ-0006zn-1x; Thu, 07 Nov 2024 15:48:11 -0500
+	id 1t99ck-0000CR-HE; Thu, 07 Nov 2024 16:01:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t99QH-0006zP-DX
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 15:48:09 -0500
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t99QF-0001Zo-L5
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 15:48:09 -0500
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2fb3debdc09so12194301fa.3
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 12:48:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731012484; x=1731617284; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+tfd37kIrjmQ3TrvX3Z6juOv88Erq1VFjITX8+GNTdw=;
- b=uzaVSQUOSJfKWetHlKvi1wbRak0CmppaDsciNdf7yq34iWfbuVGxCAK7tu0w/MGUSM
- PxDDP2VAWPeeg/R3Cm9X9IcA6SfPuPPpHMFmwfk6Tcn4Nx9x3caKmDjJojfkstIn/t4l
- Ej4/2VkaRTICLSyk4i1fA2Nwhq35WhCnGuXMahHNwbl3avqGT/97JUsB2mobpxLJ6Rki
- NFgXLlR+fhvkdd+15fcVSNmHAtnjP8OQPC1IGc90vt6VWFEAtez2iu5nrhwecqgeDM5B
- JKhFsEFYaZHnpp7RtYGXF64xrNDIVkE8l9DSFrNRsM+KomYpBG/EYHLmmabDwyK8zuzY
- Ucuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731012484; x=1731617284;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+tfd37kIrjmQ3TrvX3Z6juOv88Erq1VFjITX8+GNTdw=;
- b=xGFmCcu2/ccn2qmBRBRJzCsZtxhVcEPWHhrtwOdfx7m1H8L1N8f+VMbCOKp46Ox8PK
- Inopdyr4iB8kyPCS7pSUzR/04ufSfaZhe2JN5+Kg0ty5dLvRwlxd2VkKKiJqdg58K4d+
- Aj2+JhA3o1AU0RCyoASIEM9j/xM8ARu49Qn2eZKI6Lxq/iCOnu4xf8Ji1EaPX4vQYZ2T
- kmzUq40uaM5tvfAjY4EMO4oP4tZ8Y+gQYxDQkDWBfjtYv+enRXauWTRLIHfEQLt5JpRy
- flJYUs1E/AGXewtt8vXbx0wSmHlwac9ZdA+RSLkiE12hC3wnvgvi23e3WXV1aoC6O+ZA
- I0cg==
-X-Gm-Message-State: AOJu0YwVmdsTsfqJG7HLsw2Bz9DMbBn3i2m1vKjtFLutLk4aiCoQIQW5
- lPPFpHRWu3J5vfoacDMF2tsOuNCTAyRl8GF5IW/XN5g5OxB3Jgv1105Vx8CXtJX250n9kjTbeMa
- a71Pp1IOUd4Sr6nb7JV4aSBBnP/yuaCMH/4JDgqTGQ7qJ9asT
-X-Google-Smtp-Source: AGHT+IGSgeV9sWI4Wh7+Jk9epYf7AKgk8mvtCIeR4Vk3NaShNAKVHX5kLiA2vVofIZM6NomGuEmQw0w1CyZS4cWRQHc=
-X-Received: by 2002:a2e:ab05:0:b0:2fb:5b23:edba with SMTP id
- 38308e7fff4ca-2ff201b271bmr2000921fa.23.1731012483797; Thu, 07 Nov 2024
- 12:48:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
+ id 1t99cW-0000BI-0d
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 16:00:50 -0500
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
+ id 1t99cR-0003LZ-Bv
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 16:00:47 -0500
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:b1cb:0:640:2a1e:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 2AD6960A55;
+ Fri,  8 Nov 2024 00:00:34 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:a507::1:28] (unknown
+ [2a02:6b8:b081:a507::1:28])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id T0q7j21BR8c0-YG5zpvlF; Fri, 08 Nov 2024 00:00:33 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1731013233;
+ bh=Dp6A0mIoBNs+G/dTAJYWiWkc14VowCV14QzHck7kYiU=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=nJvMBmhJHSZ0l3MCm5R0ne45ejLwNTFpZMXA1wBcp9Gg0j0Kj/XEwbibPmWbRUCHZ
+ 0CPbq3/6il6XEhpvkzQWToINE/OqwKPdiqT0MMFD9A5HY79ilHXPuA+4WSKxMsEI63
+ Eacw0y3lzF2saeARIH4kF3AC7nT2lw++8nePCoLs=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <a7f9c3c9-09af-4941-b137-2cb83ef8ceb3@yandex-team.ru>
+Date: Fri, 8 Nov 2024 00:00:29 +0300
 MIME-Version: 1.0
-References: <20241107163210.3620697-1-peter.maydell@linaro.org>
- <20241107163210.3620697-2-peter.maydell@linaro.org>
-In-Reply-To: <20241107163210.3620697-2-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 Nov 2024 20:47:53 +0000
-Message-ID: <CAFEAcA8mu0fbOtmqCm6pV_pBvAzW4UCe_1xg7P7RpL3NQY4ohw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] hw/net/virtio-net.c: Don't assume IP length field is
- aligned
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/7] target/i386/kvm: reset AMD PMU registers during VM
+ reset
+To: Dongli Zhang <dongli.zhang@oracle.com>
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, sandipan.das@amd.com,
+ babu.moger@amd.com, zhao1.liu@intel.com, likexu@tencent.com,
+ like.xu.linux@gmail.com, zhenyuw@linux.intel.com, groug@kaod.org,
+ lyan@digitalocean.com, khorenko@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, den@virtuozzo.com, joe.jin@oracle.com,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20241104094119.4131-1-dongli.zhang@oracle.com>
+ <20241104094119.4131-6-dongli.zhang@oracle.com>
+Content-Language: en-US
+From: Maksim Davydov <davydov-max@yandex-team.ru>
+In-Reply-To: <20241104094119.4131-6-dongli.zhang@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=davydov-max@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,69 +84,304 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 7 Nov 2024 at 16:32, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> In virtio-net.c we assume that the IP length field in the packet is
-> aligned, and we copy its address into a uint16_t* in the
-> VirtioNetRscUnit struct which we then dereference later.  This isn't
-> a safe assumption; it will also result in compilation failures if we
-> mark the ip_header struct as QEMU_PACKED because the compiler will
-> not let you take the address of an unaligned struct field.
->
-> Make the ip_plen field in VirtioNetRscUnit a void*, and make all the
-> places where we read or write through that pointer instead use some
-> new accessor functions read_unit_ip_len() and write_unit_ip_len()
-> which account for the pointer being potentially unaligned and also do
-> the network-byte-order conversion we were previously using htons() to
-> perform.
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+
+
+On 11/4/24 12:40, Dongli Zhang wrote:
+> QEMU uses the kvm_get_msrs() function to save Intel PMU registers from KVM
+> and kvm_put_msrs() to restore them to KVM. However, there is no support for
+> AMD PMU registers. Currently, has_pmu_version and num_pmu_gp_counters are
+> initialized based on cpuid(0xa), which does not apply to AMD processors.
+> For AMD CPUs, prior to PerfMonV2, the number of general-purpose registers
+> is determined based on the CPU version.
+> 
+> To address this issue, we need to add support for AMD PMU registers.
+> Without this support, the following problems can arise:
+> 
+> 1. If the VM is reset (e.g., via QEMU system_reset or VM kdump/kexec) while
+> running "perf top", the PMU registers are not disabled properly.
+> 
+> 2. Despite x86_cpu_reset() resetting many registers to zero, kvm_put_msrs()
+> does not handle AMD PMU registers, causing some PMU events to remain
+> enabled in KVM.
+> 
+> 3. The KVM kvm_pmc_speculative_in_use() function consistently returns true,
+> preventing the reclamation of these events. Consequently, the
+> kvm_pmc->perf_event remains active.
+> 
+> 4. After a reboot, the VM kernel may report the following error:
+> 
+> [    0.092011] Performance Events: Fam17h+ core perfctr, Broken BIOS detected, complain to your hardware vendor.
+> [    0.092023] [Firmware Bug]: the BIOS has corrupted hw-PMU resources (MSR c0010200 is 530076)
+> 
+> 5. In the worst case, the active kvm_pmc->perf_event may inject unknown
+> NMIs randomly into the VM kernel:
+> 
+> [...] Uhhuh. NMI received for unknown reason 30 on CPU 0.
+> 
+> To resolve these issues, we propose resetting AMD PMU registers during the
+> VM reset process.
+> 
+> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 > ---
->  include/hw/virtio/virtio-net.h |  2 +-
->  hw/net/virtio-net.c            | 23 +++++++++++++++++++----
->  2 files changed, 20 insertions(+), 5 deletions(-)
->
-> diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-> index 060c23c04d2..b9ea9e824e3 100644
-> --- a/include/hw/virtio/virtio-net.h
-> +++ b/include/hw/virtio/virtio-net.h
-> @@ -102,7 +102,7 @@ typedef struct VirtioNetRscStat {
->  /* Rsc unit general info used to checking if can coalescing */
->  typedef struct VirtioNetRscUnit {
->      void *ip;   /* ip header */
-> -    uint16_t *ip_plen;      /* data len pointer in ip header field */
-> +    void *ip_plen; /* pointer to unaligned uint16_t data len in ip header */
->      struct tcp_header *tcp; /* tcp header */
->      uint16_t tcp_hdrlen;    /* tcp header len */
->      uint16_t payload;       /* pure payload without virtio/eth/ip/tcp */
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index f2104ed364a..11cf462180d 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -2049,6 +2049,21 @@ static ssize_t virtio_net_do_receive(NetClientState *nc, const uint8_t *buf,
->      return virtio_net_receive_rcu(nc, buf, size, false);
->  }
->
-> +/*
-> + * Accessors to read and write the IP packet data length field. This
-> + * is a potentially unaligned network-byte-order 16 bit unsigned integer
-> + * pointed to by unit->ip_len.
-> + */
-> +static uint16_t read_unit_ip_len(VirtioNetRscUnit *unit)
+>   target/i386/cpu.h     |   8 +++
+>   target/i386/kvm/kvm.c | 156 +++++++++++++++++++++++++++++++++++++++++-
+>   2 files changed, 161 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 59959b8b7a..0505eb3b08 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -488,6 +488,14 @@ typedef enum X86Seg {
+>   #define MSR_CORE_PERF_GLOBAL_CTRL       0x38f
+>   #define MSR_CORE_PERF_GLOBAL_OVF_CTRL   0x390
+>   
+> +#define MSR_K7_EVNTSEL0                 0xc0010000
+> +#define MSR_K7_PERFCTR0                 0xc0010004
+> +#define MSR_F15H_PERF_CTL0              0xc0010200
+> +#define MSR_F15H_PERF_CTR0              0xc0010201
+> +
+> +#define AMD64_NUM_COUNTERS              4
+> +#define AMD64_NUM_COUNTERS_CORE         6
+> +
+>   #define MSR_MC0_CTL                     0x400
+>   #define MSR_MC0_STATUS                  0x401
+>   #define MSR_MC0_ADDR                    0x402
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index ca2b644e2c..83ec85a9b9 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -2035,7 +2035,7 @@ full:
+>       abort();
+>   }
+>   
+> -static void kvm_init_pmu_info(CPUX86State *env)
+> +static void kvm_init_pmu_info_intel(CPUX86State *env)
+>   {
+>       uint32_t eax, edx;
+>       uint32_t unused;
+> @@ -2072,6 +2072,80 @@ static void kvm_init_pmu_info(CPUX86State *env)
+>       }
+>   }
+>   
+> +static void kvm_init_pmu_info_amd(CPUX86State *env)
 > +{
-> +    return ldl_be_p(unit->ip_plen);
+> +    int64_t family;
+> +
+> +    has_pmu_version = 0;
+> +
+> +    /*
+> +     * To determine the CPU family, the following code is derived from
+> +     * x86_cpuid_version_get_family().
+> +     */
+> +    family = (env->cpuid_version >> 8) & 0xf;
+> +    if (family == 0xf) {
+> +        family += (env->cpuid_version >> 20) & 0xff;
+> +    }
+> +
+> +    /*
+> +     * Performance-monitoring supported from K7 and later.
+> +     */
+> +    if (family < 6) {
+> +        return;
+> +    }
+> +
+> +    has_pmu_version = 1;
+> +
+> +    if (!(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_PERFCORE)) {
+> +        num_pmu_gp_counters = AMD64_NUM_COUNTERS;
+> +        return;
+> +    }
+> +
+> +    num_pmu_gp_counters = AMD64_NUM_COUNTERS_CORE;
+> +}
+
+It seems that AMD implementation has one issue.
+KVM has parameter `enable_pmu`. So vPMU can be disabled in another way, 
+not only via KVM_PMU_CAP_DISABLE. For Intel it's not a problem, because 
+the vPMU initialization uses info from KVM_GET_SUPPORTED_CPUID. The 
+enable_pmu state is reflected in KVM_GET_SUPPORTED_CPUID.  Thus no PMU 
+MSRs in kvm_put_msrs/kvm_get_msrs will be used.
+
+But on AMD we don't use information from KVM_GET_SUPPORTED_CPUID to set 
+an appropriate number of PMU registers. So, if vPMU is disabled by KVM 
+parameter `enable_pmu` and pmu-cap-disable=false, then has_pmu_version 
+will be 1 after kvm_init_pmu_info_amd execution. It means that in 
+kvm_put_msrs/kvm_get_msrs 4 PMU counters will be processed, but the 
+correct behavior in that situation is to skip all PMU registers.
+I think we should get info from KVM to fix that.
+
+I tested this series on Zen2 and found that PMU MSRs were still 
+processed during initialization even with enable_pmu=N. But it doesn't 
+lead to any errors in QEMU
+
+> +
+> +static bool is_same_vendor(CPUX86State *env)
+> +{
+> +    static uint32_t host_cpuid_vendor1;
+> +    static uint32_t host_cpuid_vendor2;
+> +    static uint32_t host_cpuid_vendor3;
+> +
+> +    host_cpuid(0x0, 0, NULL, &host_cpuid_vendor1, &host_cpuid_vendor3,
+> +               &host_cpuid_vendor2);
+> +
+> +    return env->cpuid_vendor1 == host_cpuid_vendor1 &&
+> +           env->cpuid_vendor2 == host_cpuid_vendor2 &&
+> +           env->cpuid_vendor3 == host_cpuid_vendor3;
 > +}
 > +
-> +static void write_unit_ip_len(VirtioNetRscUnit *unit, uint16_t l)
+> +static void kvm_init_pmu_info(CPUX86State *env)
 > +{
-> +    stl_be_p(unit->ip_plen, l);
+> +    /*
+> +     * It is not supported to virtualize AMD PMU registers on Intel
+> +     * processors, nor to virtualize Intel PMU registers on AMD processors.
+> +     */
+> +    if (!is_same_vendor(env)) {
+> +        return;
+> +    }
+> +
+> +    /*
+> +     * If KVM_CAP_PMU_CAPABILITY is not supported, there is no way to
+> +     * disable the AMD pmu virtualization.
+> +     *
+> +     * If KVM_CAP_PMU_CAPABILITY is supported, kvm_state->pmu_cap_disabled
+> +     * indicates the KVM has already disabled the pmu virtualization.
+> +     */
+> +    if (kvm_state->pmu_cap_disabled) {
+> +        return;
+> +    }
+> +
+
+It seems that after these changes the issue concerning using
+pmu-cap-disable=true with +pmu on Intel platform (that Zhao Liu has 
+mentioned before) is fixed
+
+> +    if (IS_INTEL_CPU(env)) {
+> +        kvm_init_pmu_info_intel(env);
+> +    } else if (IS_AMD_CPU(env)) {
+> +        kvm_init_pmu_info_amd(env);
+> +    }
 > +}
+> +
+>   int kvm_arch_init_vcpu(CPUState *cs)
+>   {
+>       struct {
+> @@ -4027,7 +4101,7 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+>               kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, env->poll_control_msr);
+>           }
+>   
+> -        if (has_pmu_version > 0) {
+> +        if (IS_INTEL_CPU(env) && has_pmu_version > 0) {
+>               if (has_pmu_version > 1) {
+>                   /* Stop the counter.  */
+>                   kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+> @@ -4058,6 +4132,38 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+>                                     env->msr_global_ctrl);
+>               }
+>           }
+> +
+> +        if (IS_AMD_CPU(env) && has_pmu_version > 0) {
+> +            uint32_t sel_base = MSR_K7_EVNTSEL0;
+> +            uint32_t ctr_base = MSR_K7_PERFCTR0;
+> +            /*
+> +             * The address of the next selector or counter register is
+> +             * obtained by incrementing the address of the current selector
+> +             * or counter register by one.
+> +             */
+> +            uint32_t step = 1;
+> +
+> +            /*
+> +             * When PERFCORE is enabled, AMD PMU uses a separate set of
+> +             * addresses for the selector and counter registers.
+> +             * Additionally, the address of the next selector or counter
+> +             * register is determined by incrementing the address of the
+> +             * current register by two.
+> +             */
+> +            if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE) {
+> +                sel_base = MSR_F15H_PERF_CTL0;
+> +                ctr_base = MSR_F15H_PERF_CTR0;
+> +                step = 2;
+> +            }
+> +
+> +            for (i = 0; i < num_pmu_gp_counters; i++) {
+> +                kvm_msr_entry_add(cpu, ctr_base + i * step,
+> +                                  env->msr_gp_counters[i]);
+> +                kvm_msr_entry_add(cpu, sel_base + i * step,
+> +                                  env->msr_gp_evtsel[i]);
+> +            }
+> +        }
+> +
+>           /*
+>            * Hyper-V partition-wide MSRs: to avoid clearing them on cpu hot-add,
+>            * only sync them to KVM on the first cpu
+> @@ -4503,7 +4609,8 @@ static int kvm_get_msrs(X86CPU *cpu)
+>       if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_POLL_CONTROL)) {
+>           kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
+>       }
+> -    if (has_pmu_version > 0) {
+> +
+> +    if (IS_INTEL_CPU(env) && has_pmu_version > 0) {
+>           if (has_pmu_version > 1) {
+>               kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+>               kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
+> @@ -4519,6 +4626,35 @@ static int kvm_get_msrs(X86CPU *cpu)
+>           }
+>       }
+>   
+> +    if (IS_AMD_CPU(env) && has_pmu_version > 0) {
+> +        uint32_t sel_base = MSR_K7_EVNTSEL0;
+> +        uint32_t ctr_base = MSR_K7_PERFCTR0;
+> +        /*
+> +         * The address of the next selector or counter register is
+> +         * obtained by incrementing the address of the current selector
+> +         * or counter register by one.
+> +         */
+> +        uint32_t step = 1;
+> +
+> +        /*
+> +         * When PERFCORE is enabled, AMD PMU uses a separate set of
+> +         * addresses for the selector and counter registers.
+> +         * Additionally, the address of the next selector or counter
+> +         * register is determined by incrementing the address of the
+> +         * current register by two.
+> +         */
+> +        if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE) {
+> +            sel_base = MSR_F15H_PERF_CTL0;
+> +            ctr_base = MSR_F15H_PERF_CTR0;
+> +            step = 2;
+> +        }
+> +
+> +        for (i = 0; i < num_pmu_gp_counters; i++) {
+> +            kvm_msr_entry_add(cpu, ctr_base + i * step, 0);
+> +            kvm_msr_entry_add(cpu, sel_base + i * step, 0);
+> +        }
+> +    }
+> +
+>       if (env->mcg_cap) {
+>           kvm_msr_entry_add(cpu, MSR_MCG_STATUS, 0);
+>           kvm_msr_entry_add(cpu, MSR_MCG_CTL, 0);
+> @@ -4830,6 +4966,20 @@ static int kvm_get_msrs(X86CPU *cpu)
+>           case MSR_P6_EVNTSEL0 ... MSR_P6_EVNTSEL0 + MAX_GP_COUNTERS - 1:
+>               env->msr_gp_evtsel[index - MSR_P6_EVNTSEL0] = msrs[i].data;
+>               break;
+> +        case MSR_K7_EVNTSEL0 ... MSR_K7_EVNTSEL0 + 3:
+> +            env->msr_gp_evtsel[index - MSR_K7_EVNTSEL0] = msrs[i].data;
+> +            break;
+> +        case MSR_K7_PERFCTR0 ... MSR_K7_PERFCTR0 + 3:
+> +            env->msr_gp_counters[index - MSR_K7_PERFCTR0] = msrs[i].data;
+> +            break;
+> +        case MSR_F15H_PERF_CTL0 ... MSR_F15H_PERF_CTL0 + 0xb:
+> +            index = index - MSR_F15H_PERF_CTL0;
+> +            if (index & 0x1) {
+> +                env->msr_gp_counters[index] = msrs[i].data;
+> +            } else {
+> +                env->msr_gp_evtsel[index] = msrs[i].data;
+> +            }
+> +            break;
+>           case HV_X64_MSR_HYPERCALL:
+>               env->msr_hv_hypercall = msrs[i].data;
+>               break;
 
-These should of course be lduw_be_p() and stw_be_p(), since
-it's a 16 bit field.
-
-Interestingly nothing fails in "make check" or "make check-functional"
-if this breaks, suggesting we aren't exercising virtio-net very hard.
-
--- PMM
+-- 
+Best regards,
+Maksim Davydov
 
