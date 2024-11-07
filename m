@@ -4,73 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4499D29FBC
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 02:18:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B8BED5AE5A
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 03:47:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8s6Z-0006LV-3s; Wed, 06 Nov 2024 21:18:39 -0500
+	id 1t8tTw-00009I-6n; Wed, 06 Nov 2024 22:46:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1t8s6W-0006L8-OA
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 21:18:36 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1t8s6U-0006tj-G6
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 21:18:36 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxaeF3IyxnTy82AA--.41895S3;
- Thu, 07 Nov 2024 10:18:31 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMCxdcB1IyxnF3JIAA--.63775S3;
- Thu, 07 Nov 2024 10:18:30 +0800 (CST)
-Subject: Re: [PATCH v2 2/4] hw/loongarch/virt: Implement cpu plug interface
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Song Gao <gaosong@loongson.cn>,
- Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>
-References: <20241029095335.2219343-1-maobibo@loongson.cn>
- <20241029095335.2219343-3-maobibo@loongson.cn> <ZyDlDjkO8ewhiE/m@intel.com>
- <6e53ba79-041a-3294-3656-9f5d5c41ad19@loongson.cn>
- <20241106115644.3c7458b9@imammedo.users.ipa.redhat.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <ea9bc4e3-ab57-bade-cd8e-8a5b23832616@loongson.cn>
-Date: Thu, 7 Nov 2024 10:18:03 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <20241106115644.3c7458b9@imammedo.users.ipa.redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
+ id 1t8tTr-000085-5j
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 22:46:47 -0500
+Received: from mail-bn8nam12on2080.outbound.protection.outlook.com
+ ([40.107.237.80] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
+ id 1t8tTo-00079G-0S
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 22:46:46 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CNgE/7Q0EyWcKAu73Sai2xgchnzKsKwrufOT9Ywq+jW7kz6mdEe+gHSPmlTX4hHwF6WM0DD1XMsBUzVDwE8nNgkoYr53x0tsNR1KfUppiZpFZW7MD4VHZ1c5jMG9ivV8Vo0QQKwfAobpOYvUfUbBrE5D1Ll4jYQRq77IXqvJ7W8temyImmurQOs48y/GjbcAphs6KUhgquDH9DRXD40kymwYN4aTFy07z2Ma/oRQUKbgj8Z5jGqklbv0fNdX6R6hfLhB/amjfSlV7A+nyjGRCt5sFqrjc+x+7Qj4r2iBsk7q+02bp9lsrNdTGEJhY846PeDt+QolTl8FT/V2SDmv2Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3rS/MHskpIUPVqYQsAtKUAFv7nVDcS+rek8gL2g6lzg=;
+ b=zFHdgj+OOdF90QCxcwujIP4+HQQTOGi8a9c2W3njU2UoSb7SgvHpx9rRozZuEDGKAHM7XA1m2pRtjaMxhbMNSgP5hFzkGmJwDVyvTbAamyAe+kp78WME7WJoInZuS+fn8u09IwRYBw0EDWCuQys/I8bK0GzbQxauCD5DgYNyZOODeTW50IwTWbcPyNOo3XXJDkIdpj9HuwmyLUvs+cjuM0a/PWOzqrgEopnURxJOn2iklLS7nLLjoWqq8AlOOHDkH5HmutoNJBzY+E0eDMxLVwH+ZmPNh1GyXHzS6/BWjPGPdHjdvj6+AcB1iFqn0gmXpNpVE804JgLGU3TvVQ2ydg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3rS/MHskpIUPVqYQsAtKUAFv7nVDcS+rek8gL2g6lzg=;
+ b=EGQnxcSqVDhelP9vPXjiJArgqnG2Svbl5Gl7bBWZ99SCu4Yj/ZOQyP49yypgb/FrGWOxx11Shnv9LRVv7gc56V2zF0HSXghCK9fFX+Vh0qylTEt3U1qO4lHp/+obTkbfJ42mxfEfDQ5xH6aVqMawHc57IxBWIi1tbVAy4p+FxhM=
+Received: from DS7PR12MB5741.namprd12.prod.outlook.com (2603:10b6:8:70::7) by
+ SA3PR12MB8437.namprd12.prod.outlook.com (2603:10b6:806:2f5::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.30; Thu, 7 Nov
+ 2024 03:41:36 +0000
+Received: from DS7PR12MB5741.namprd12.prod.outlook.com
+ ([fe80::4a06:1053:ead5:ef39]) by DS7PR12MB5741.namprd12.prod.outlook.com
+ ([fe80::4a06:1053:ead5:ef39%7]) with mapi id 15.20.8137.018; Thu, 7 Nov 2024
+ 03:41:35 +0000
+From: "Boddu, Sai Pavan" <sai.pavan.boddu@amd.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "Iglesias, Francisco" <francisco.iglesias@amd.com>
+Subject: OOO for first half
+Thread-Topic: OOO for first half
+Thread-Index: Adswxs2cMFT857SoTlSPVU3F2QImqA==
+Date: Thu, 7 Nov 2024 03:41:35 +0000
+Message-ID: <DS7PR12MB57412DA29A4AE1BDF73EE7BEB65C2@DS7PR12MB5741.namprd12.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxdcB1IyxnF3JIAA--.63775S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxArW3ArWDJr1xWryrKFy3Awc_yoW5tF1kpF
- WxKF4jyryUXrn7Aw4Sq3WUWF92gw1DJ3W7Xwn8JF15Awn8trnrJF1UKw4Y9F1rC348tFy0
- va15Ca9ruFyY93gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU82g43UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.588,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DS7PR12MB5741:EE_|SA3PR12MB8437:EE_
+x-ms-office365-filtering-correlation-id: 8e63ffbb-02eb-42d3-80cf-08dcfede146a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?5oGrYsPqi++urDPFLtmDYIgvIhuGYUeC5N71DqjyW6c0F4QXSEahxtGlagm+?=
+ =?us-ascii?Q?MY9VBloa0ANbs66SJrrY0IIRZY+6IK48YnRanOewxIcV2mSXHu5olBrEWAGP?=
+ =?us-ascii?Q?fy28GRPCnIjlmknWclv59Q5KqhvP9VK+Dn0UTTX76VNAvKalLq6d3k/vcpjF?=
+ =?us-ascii?Q?m9vvdGjxJqJoUSSRFf0cwG2AwZB//zddS4HA7wf3j4MJixQOHDBxngHjjKDf?=
+ =?us-ascii?Q?LMHKvB9U0Uwdiv5SD6zEPNhKTPMfsvzG+fPsvY1nMmBJIcJZevkdwfTQwk3W?=
+ =?us-ascii?Q?ON/Y43cA75se8HFXryAwQc+fJnyTwz53Z7t5pDkCAZ3ZffTN1gx5DvYwDZ6J?=
+ =?us-ascii?Q?WbbBZMyM4oaCggQErJvrG0pT4+YoYigd217Pj2OtV1xqhn3FYX9Zizbc1jId?=
+ =?us-ascii?Q?I9uAjCo5TSPo7INetsQB6tCaE8uYQ3KBQpSweMC7t0sNgURoVVLL1kxiygSQ?=
+ =?us-ascii?Q?DIuzUkx8cNc08mZt8T8GkCCTGAcx3k9rb1VU5U3nhO0AspNXftHlGNvpECbL?=
+ =?us-ascii?Q?yEZuXIdpJpzrS+Rbu0yAKSh7pE0FjW0K+jvdbkV7xxq72f8N3rRa7jwM/vwR?=
+ =?us-ascii?Q?eYdM4dqj1Rx20gcMzmBOsR82uzXxS+bYzUI3UcjLc0CXVK2YXh/gOUEuQD3W?=
+ =?us-ascii?Q?14C096AbRoY+q1KSOMgkeiMd6LeLOtxP6VBBFWyScadObkO7CAK159mrF0Uz?=
+ =?us-ascii?Q?Avxkb1D9V6lZsRSx65OGYejC8djhUeu2umeDt4boniRw4eQNxtFrAgAsAvUu?=
+ =?us-ascii?Q?QlIRjdRs/KOrHAthRTG31EG0TzMtcBD1Ut6vvRtXDsNGTBcvkdAuYz/dxOkv?=
+ =?us-ascii?Q?tGn0a/OurEQHyJiHBw16tVJNNkmNcKzH+ThJ6sosvURHl7udjAuWeJe3XNZm?=
+ =?us-ascii?Q?A54BnU+Q5OGKb59B/ggFmye26LGsHKAAu4cTHw9AEVG5mFlscgIWirTx+q4f?=
+ =?us-ascii?Q?7KE/ue1zWcX4y538jgqP9xOT8ZWSZPHgdpsQQKO2ubEY07ZA3sWi3ODFIDOi?=
+ =?us-ascii?Q?IT1Dns1wz+CmFBZtVFTHOgMFUq9GyqJ/NNEGn92RV0amZ04eGJA/Sq/WHBld?=
+ =?us-ascii?Q?m3PVZJMeybTHNPlmL4H6bUUOzUtlMVk/z7TaYUr1aYIMr23kHV9SNbqIrzVF?=
+ =?us-ascii?Q?o+aS6f2H4oHch7cIJshl8na18w7hN0euz1q5MvyLs3f8bc/pN/DGXzzGn30B?=
+ =?us-ascii?Q?7kVsl2YpY62zGZ1dcIKmWDkg4AoAobcgXUFWZOrSRPmZh6Gg4+hjgd20suPa?=
+ =?us-ascii?Q?8rEMh2AsdbY8Eg1IluACu4UNvvMmkGFEtc9wZA7brtutRDd6es7jmxk6TAc2?=
+ =?us-ascii?Q?o0M5ACDhsqPx4iFeCAvHyRYUCrEBUC4F9afPi028Yafe0HyvCkHLc36cKtfY?=
+ =?us-ascii?Q?piaiImw=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS7PR12MB5741.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?2guWgFA751qyfXKEB/lpMprz1CU0BnCcRDqV0A4hD31fvGwwFSLISJMwm+5E?=
+ =?us-ascii?Q?EHhJO9Al3OO7Iie8CJp8txInoeMQ8PuKW569VwrCdhGJFT2JVBYPAztb6vIc?=
+ =?us-ascii?Q?oXyac7xtI+WfQYLlbErTf61HJtAansMjNIgYxARFJOqAE1GR7eLZOC3VYYtn?=
+ =?us-ascii?Q?dTSp/+8wwxvGp/VNTGWlnCDf4jz3iRZRK5WnJZmVOotpJmz27FYXV/0Iz06I?=
+ =?us-ascii?Q?gDfR6AB0HuGICTJAOKZ2VAScw/Jh6Jjg4U9dRr0TDAiGRezYDZRqEPPanQ+r?=
+ =?us-ascii?Q?3umDUBYj0YTbtABR4q/RsnETVpOXLacnQrnsIRQxdZgVCzF9ezQHu7yAa5fy?=
+ =?us-ascii?Q?ecFW5gSJq+ifF+s+YTD651bgY3j2mdHhN43PgPZuN33jCJPGeUzAPxGWDvBi?=
+ =?us-ascii?Q?s4Qw4jX6LIuSUrbtDjMEoZ0BosW3YOOHiXSKP7QFrS+CzQ25SP8buH2NW7aJ?=
+ =?us-ascii?Q?IrIOxpkfE+DQ8G69xDJHcWxF/Q4n5yAG/+Hrl6Zne3Zwd/fOqvo8nT+zqsDW?=
+ =?us-ascii?Q?x/Wj9e/fndfio+bpHYCB6Ghh5ES1uQiWik4MTaAuYJtphRQl8pwZ5nOWHv0L?=
+ =?us-ascii?Q?b7rTSNCk1QdSpKwhcjFnGuF1Hp3sHzmU+Ydcb15+mZfW2uNwqXyktv2KsZS8?=
+ =?us-ascii?Q?W7jI6+W9WmclrzmKuoVaIL5tf++Z+QkwNDhh5JJNbEjjj+LbAOSvxgQyQuam?=
+ =?us-ascii?Q?lF5qimkBuFC88pRTYWo5PKpvt2LPSERApNiqOPa7WwQV72VfcMqZobFFq0E6?=
+ =?us-ascii?Q?traJFyzzyrei1v2utbPOY340+X9uf2gIuGNpS8s0fVD7uxphUJZzVdAukbVf?=
+ =?us-ascii?Q?YTSInNSzsxhk1Rm7+FyDwVNwzzHsCE+4QQ9Itfgi8CuxW7iUnDAGKFwkpN0s?=
+ =?us-ascii?Q?grvWxAQOAQmgEHUMQ//Uo8EIYF6Z8plx7ePzJG+EENHu3gZKPFuSoyulmtc8?=
+ =?us-ascii?Q?puhvTCngQJE1VJfo4Nh/mJ2SP75RvcIOGpWzZGTzSKjAjbZl+QbKemR1CnVK?=
+ =?us-ascii?Q?u61LvLulG5yEfowV5spw2Diia85By1zjRb+CjztF08QCW0/Q+IixQ/gOzFcT?=
+ =?us-ascii?Q?yN3kcPt0nLvMxGzlGQ16w40aL9APfi72a0y5THPg1mbMMJ6heqoaCZm/eBdL?=
+ =?us-ascii?Q?Xgyx2J3FwLozcjV+7IRDduB/FvWAtkfcDyUsZrSUQ1VMcSCve0kFyQjxjwdq?=
+ =?us-ascii?Q?jq8T2wVojAbP+7fdvWyCf1bi6ZzTKkdAKWrIY0BweYOu0isiRzPEsN0LDlwz?=
+ =?us-ascii?Q?jq9MOfElVDNvh2dGq2WnHfeiGF3EvjlFGpgbZcL03a0zvjQIi0w9sqnDhpig?=
+ =?us-ascii?Q?ust60mFTsLii4+0BHzy8ZsPVGiNqYf8MVyBHlJ3fAJHEj0UDt8/58tQfLTX7?=
+ =?us-ascii?Q?jsHZsmdQXWvSS8yDGfm4PSUPOt8QGzHEkPRse14lKHuLYGZLZ3MTLoFCpUbm?=
+ =?us-ascii?Q?aO1IEnVGnEjDWxcMG0pNm0l4agV37kS31WSmEApDOPcfwgbSdgC1llknZyxk?=
+ =?us-ascii?Q?dHUc+X2XlVsj7z73S9CoGsbEsYQYPoHiJN0FZkr2E8eCod+8Q1iOvqLPgzWz?=
+ =?us-ascii?Q?WnC4UvRDM0Xl20C6kwg=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB5741.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e63ffbb-02eb-42d3-80cf-08dcfede146a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Nov 2024 03:41:35.8042 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: NxmO+xrkcqXiWLDBVUwfJjtMRwZxqvA05H1XhqfUCIGN5lYqTlfPPZEd1EMcOnJY
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB8437
+Received-SPF: permerror client-ip=40.107.237.80;
+ envelope-from=sai.pavan.boddu@amd.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,113 +158,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
 
+I would be out of office first half, will connect online post lunch.
 
-On 2024/11/6 下午6:56, Igor Mammedov wrote:
-> On Wed, 30 Oct 2024 09:50:56 +0800
-> maobibo <maobibo@loongson.cn> wrote:
-> 
->> Hi Zhao,
->>
->> On 2024/10/29 下午9:37, Zhao Liu wrote:
->>> (CC Igor since I want to refer his comment on hotplug design.)
->>>
->>> Hi Bibo,
->>>
->>> I have some comments about your hotplug design.
->>>
->>> [snip]
->>>    
->>>> +static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
->>>> +                              DeviceState *dev, Error **errp)
->>>> +{
->>>> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
->>>> +    MachineState *ms = MACHINE(OBJECT(hotplug_dev));
->>>> +    LoongArchCPU *cpu = LOONGARCH_CPU(dev);
->>>> +    CPUState *cs = CPU(dev);
->>>> +    CPUArchId *cpu_slot;
->>>> +    Error *local_err = NULL;
->>>> +    LoongArchCPUTopo topo;
->>>> +    int arch_id, index = 0;
->>>
->>> [snip]
->>>    
->>>> +    if (cpu->phy_id == UNSET_PHY_ID) {
->>>> +        error_setg(&local_err, "CPU hotplug not supported");
->>>> +        goto out;
->>>> +    } else {
->>>> +        /*
->>>> +         * For non hot-add cpu, topo property is not set. And only physical id
->>>> +         * property is set, setup topo information from physical id.
->>>> +         *
->>>> +         * Supposing arch_id is equal to cpu slot index
->>>> +         */
->>>> +        arch_id = cpu->phy_id;
->>>> +        virt_get_topo_from_index(ms, &topo, arch_id);
->>>> +        cpu->socket_id = topo.socket_id;
->>>> +        cpu->core_id   = topo.core_id;
->>>> +        cpu->thread_id = topo.thread_id;
->>>> +        cpu_slot = virt_find_cpu_slot(ms, arch_id, &index);
->>>> +    }
->>>
->>> It seems you want to use "phy_id" (instead of topology IDs as for now)
->>> as the parameter to plug CPU. And IIUC in previous patch, "phy_id" is
->>> essentially the CPU index.
->>>
->>> Igor has previously commented [1] on ARM's hotplug design that the
->>> current QEMU should use the topology-id (socket-id/core-id/thread-id) as
->>> the parameters, not the CPU index or the x86-like apic id.
->>>
->>> So I think his comment can apply on loongarch, too.
->> Yes, I agree. This piece of code is for cold-plug CPUs which is added
->> during VM power-on stage, not hot-plugged cpu. For hot-plugged cpu,
->> value of cpu->phy_id is UNSET_PHY_ID.
->>
->> Topology-id (socket-id/core-id/thread-id) is not set for cold-plug CPUs.
->> For cold-plug CPUs topology-id is calculated from archid.
-> 
-> that's basically copying what x86 does.
-yes, the idea comes from x86.
-
-> 
-> When possible_cpus are initialized, it has all topo info.
-> So instead of copying bad example of acpid_id, I'd suggest
-> in a loop that creates cold-plugged cpus, fetch topo ids
-> from possible_cpus[] and set them instead of phy_id.
-Sure, will set topo property in the loop that creates cold-plugged cpus.
-
-Regards
-Bibo Mao
-> 
->>
->> Regards
->> Bibo
->>
->>>
->>>   From my own understanding, the CPU index lacks topological intuition,
->>> and the APIC ID for x86 is even worse, as its sometimes even
->>> discontinuous. Requiring the user to specify topology ids would allow
->>> for clearer localization to CPU slots.
->>>
->>> [1]: https://lore.kernel.org/qemu-devel/20240812101556.1a395712@imammedo.users.ipa.redhat.com/
->>>    
->>>> +    /*
->>>> +     * update cpu_index calculation method since it is easily used as index
->>>> +     * with possible_cpus array by function virt_cpu_index_to_props
->>>> +     */
->>>> +    cs->cpu_index = index;
->>>> +    numa_cpu_pre_plug(cpu_slot, dev, &local_err);
->>>> +    return ;
->>>> +
->>>> +out:
->>>> +    error_propagate(errp, local_err);
->>>> +}
->>>> +
->>>
->>> Thanks,
->>> Zhao
->>>    
->>
-> 
+Regards,
+Sai Pavan
 
 
