@@ -4,84 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86BF2D43379
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 16:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17121D4337C
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 16:39:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t95Qj-0007z1-Ff; Thu, 07 Nov 2024 11:32:21 -0500
+	id 1t95Wo-0002Nd-O8; Thu, 07 Nov 2024 11:38:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t95Qf-0007xg-UQ
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 11:32:17 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t95Qc-00049A-9w
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 11:32:17 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4315df7b43fso9905195e9.0
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 08:32:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730997132; x=1731601932; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1WMn0gaL6wgiSUyaLJnx1vDmLwUkpAicF45c17E4Yr8=;
- b=OPQLQaPE6OvhLw/xhCv8puflQ5mxywR1+3LnApsO6r3duRmoh6MNmSN7GdSLhwbZUQ
- wiBUHMEIbkjPFzl2aC2nGOZKGJeF8/UQUm/fU59Wx4SRrJkIOhguOdNjEkCE6FrIRuPE
- rqDrA0GpBtXR1DnZZbTW6etCWbBOuB+zkFDHBo2at6309bJVqpwIn7xine1wdklccNs6
- F2i3iFG/56oDeCOptGxQtFFAf05mNWP58uUlHxmfKtiRcNKGLBijrREX5/JowwN2ZS4q
- BGxkKuIkWOXSiv3DUn7lF050GHEPYSubdozs4DKoVObcd1aKY+ETZmD/IyTHgw1femV6
- BIMg==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t95Wm-0002NP-NL
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 11:38:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t95Wk-0005HI-8G
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 11:38:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730997512;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=MgEr04ZzObBev1LR5h745g3uC+nEnce1viMRCu6X6/w=;
+ b=KUj8Q2li3lcuO7DswN0e8IeYV2KGOx/vPPAMLO3SYbdV9zun/46quiXP0EzL1kcAnnXXGk
+ tOtfomBhW0tl6TwaNEfBAegN5kxCdGbbGGGqHfMcD7vOhREnzcrsbfnwISZyZQWO8fxtAM
+ SSqFfFjm0uCJpYJKBwikiJL331YA+qQ=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-656-2CpT6F6YNj6qveIgYdz5GQ-1; Thu, 07 Nov 2024 11:38:30 -0500
+X-MC-Unique: 2CpT6F6YNj6qveIgYdz5GQ-1
+X-Mimecast-MFC-AGG-ID: 2CpT6F6YNj6qveIgYdz5GQ
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-539e4b7c8f4so820027e87.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 08:38:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730997132; x=1731601932;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1WMn0gaL6wgiSUyaLJnx1vDmLwUkpAicF45c17E4Yr8=;
- b=Q8GzOZydVGI4qntVDe1yrrO62Rp4UtXq5N+oHvSbn3h/FvCt40rymrKUZZdfmkLSdI
- OopKpqDIF0YxOOa6Q07tTooipu+HRi0fXZCbketu5XZg13bHnKdRbjuSVwHGaBqPbN1j
- cAm9tGfSXQoTOjJtRJl1taKcEKh/dAwB1+MqLpLW0s3jiSmi+224Ckjv0HdFYeZsPGX9
- KqA+CIRoL76EPh4uLZw2xp6A43cf/5jrN6ch6IVvgM1utlCe45fR0B+EMJ94qVpjkdFr
- +eMz8QI63DenSdZQES/gMCWvBtF/DB8yOHrLPYB3XADNYTtuvUwLQHqDSI06inrAZWRB
- xP5Q==
-X-Gm-Message-State: AOJu0Yw15HKzquGj8RjztOswt9U5m37m5IhwN3prtf840DeC6aV8VHH4
- lcHA4wkEtLoOUmgcHkFmw2MMUNeI4VDtA+nnP2EigwBfgkZ26tJVLjiRpBUd7PLea6Q2kATFwgg
- r
-X-Google-Smtp-Source: AGHT+IH4oIePH81+EzzXucdNZidk5sBsfDPXspJVpqIOwT0Apq6CtsLWJd49iLNraCW0Xng6Q6ZTew==
-X-Received: by 2002:a05:600c:281:b0:431:3933:1d30 with SMTP id
- 5b1f17b1804b1-431a0c3b8f4mr374746315e9.5.1730997132619; 
- Thu, 07 Nov 2024 08:32:12 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ d=1e100.net; s=20230601; t=1730997508; x=1731602308;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=MgEr04ZzObBev1LR5h745g3uC+nEnce1viMRCu6X6/w=;
+ b=IIDkoAOTp/1BM8h5zOedGkianEzDmHnUEpDdZ5dgErZQqJmbomHP1WC0LMsbaR1u8l
+ jofWSatDM3DNL6jj0Gs85zVCWUKSzFnRtTCVGsz48rj49PfvsmmVU/SFw6ckpnf4/6nF
+ 6Vu/CvGVBT0VznYQ98ZW91YhqhFfe9+6s/Wr9I7mRtIVAYO5gZaLogmqZlSM3Tx8KUkL
+ 4rtBHI6LxqOTM6we7jum4Gm6ZAces3wcCTEhpbWOuvian9cFtMQoY26DFg9Qs7hoLMwC
+ nZqvgGGZ94rKoTKTQ3AtclStfWzpgK09oug//sd00vaSTQJiBLhtWRMokoMLmReHE7OU
+ WjPQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUkVquSi/oyX/fo+WgfV+Zw6nhJWEoLgYeG2diKAdGrCT3eSOiVqdwF8UWAM7bj8yiISYjUpPcRyvu0@nongnu.org
+X-Gm-Message-State: AOJu0YzWBpu2s6FIDS3IW2U4Y6xogjbfIdcOdv5m2/vdvv8FrKI+w9g6
+ rwWTRVYUrbz8KPFATTCNVsa8ugw+gDPf6/UW6k8DdydNiH+DHVEgLNAn7ppVRiO9oB0K1F+AXMF
+ nMvfxU42cGFJDeXOybxvmTAEh+W7aq+AIWjJqy8x7iSyNNuNyQJxJ
+X-Received: by 2002:a05:6512:3d26:b0:539:f4a6:ef4b with SMTP id
+ 2adb3069b0e04-53b34c8db59mr23437562e87.55.1730997508383; 
+ Thu, 07 Nov 2024 08:38:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFWRF0+b1gMRsFW1OAOJkk2RPeC5kqAuPq1MMdv4i2Imh52cJMcClAdq7n8w1ks8+ey1r+oyA==
+X-Received: by 2002:a05:6512:3d26:b0:539:f4a6:ef4b with SMTP id
+ 2adb3069b0e04-53b34c8db59mr23437544e87.55.1730997507847; 
+ Thu, 07 Nov 2024 08:38:27 -0800 (PST)
+Received: from ?IPV6:2003:cb:c708:7900:b88e:c72a:abbd:d3d9?
+ (p200300cbc7087900b88ec72aabbdd3d9.dip0.t-ipconnect.de.
+ [2003:cb:c708:7900:b88e:c72a:abbd:d3d9])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed9ea587sm2185161f8f.78.2024.11.07.08.32.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Nov 2024 08:32:12 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH 1/2] hw/net/virtio-net.c: Don't assume IP length field is
- aligned
-Date: Thu,  7 Nov 2024 16:32:09 +0000
-Message-Id: <20241107163210.3620697-2-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241107163210.3620697-1-peter.maydell@linaro.org>
-References: <20241107163210.3620697-1-peter.maydell@linaro.org>
+ 5b1f17b1804b1-432aa6bee9asm69671895e9.19.2024.11.07.08.38.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 Nov 2024 08:38:27 -0800 (PST)
+Message-ID: <db8fe7a8-9592-42b4-a7e2-df9575408c71@redhat.com>
+Date: Thu, 7 Nov 2024 17:38:26 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 01/16] machine: anon-alloc option
+To: Peter Xu <peterx@redhat.com>, Steven Sistare <steven.sistare@oracle.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-devel@nongnu.org
+References: <45ea8a8a-928d-4703-b698-d5f910e6a224@oracle.com>
+ <1f1a2742-0429-47d5-958f-b37575c1e4ba@redhat.com>
+ <c2ca740b-0178-463b-8262-b149841b8def@redhat.com>
+ <bcc4cd7e-3532-475a-8989-211e80bf3eab@oracle.com>
+ <09701693-436c-4e1a-8206-03eb26cacab5@redhat.com>
+ <66c05a06-dbb7-49ec-b58e-ccd917d098ea@oracle.com> <ZyvUg3CP30f3DZYY@x1n>
+ <d78a806f-4c15-4a1c-a9a4-8fb9f215a2a6@oracle.com>
+ <7fb32744-0512-46e2-b58d-2990f742b897@redhat.com>
+ <bb324f6d-8c8b-4f92-9c0f-12278e3c926c@oracle.com> <ZyzrqnqoK81QfT_c@x1n>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <ZyzrqnqoK81QfT_c@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,102 +166,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In virtio-net.c we assume that the IP length field in the packet is
-aligned, and we copy its address into a uint16_t* in the
-VirtioNetRscUnit struct which we then dereference later.  This isn't
-a safe assumption; it will also result in compilation failures if we
-mark the ip_header struct as QEMU_PACKED because the compiler will
-not let you take the address of an unaligned struct field.
+On 07.11.24 17:32, Peter Xu wrote:
+> On Thu, Nov 07, 2024 at 09:04:02AM -0500, Steven Sistare wrote:
+>> On 11/7/2024 8:05 AM, David Hildenbrand wrote:
+>>> On 06.11.24 21:59, Steven Sistare wrote:
+>>>> On 11/6/2024 3:41 PM, Peter Xu wrote:
+>>>>> On Wed, Nov 06, 2024 at 03:12:20PM -0500, Steven Sistare wrote:
+>>>>>> On 11/4/2024 4:36 PM, David Hildenbrand wrote:
+>>>>>>> On 04.11.24 21:56, Steven Sistare wrote:
+>>>>>>>> On 11/4/2024 3:15 PM, David Hildenbrand wrote:
+>>>>>>>>> On 04.11.24 20:51, David Hildenbrand wrote:
+>>>>>>>>>> On 04.11.24 18:38, Steven Sistare wrote:
+>>>>>>>>>>> On 11/4/2024 5:39 AM, David Hildenbrand wrote:
+>>>>>>>>>>>> On 01.11.24 14:47, Steve Sistare wrote:
+>>>>>>>>>>>>> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
+>>>>>>>>>>>>> on the value of the anon-alloc machine property.  This option applies to
+>>>>>>>>>>>>> memory allocated as a side effect of creating various devices. It does
+>>>>>>>>>>>>> not apply to memory-backend-objects, whether explicitly specified on
+>>>>>>>>>>>>> the command line, or implicitly created by the -m command line option.
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> The memfd option is intended to support new migration modes, in which the
+>>>>>>>>>>>>> memory region can be transferred in place to a new QEMU process, by sending
+>>>>>>>>>>>>> the memfd file descriptor to the process.  Memory contents are preserved,
+>>>>>>>>>>>>> and if the mode also transfers device descriptors, then pages that are
+>>>>>>>>>>>>> locked in memory for DMA remain locked.  This behavior is a pre-requisite
+>>>>>>>>>>>>> for supporting vfio, vdpa, and iommufd devices with the new modes.
+>>>>>>>>>>>>
+>>>>>>>>>>>> A more portable, non-Linux specific variant of this will be using shm,
+>>>>>>>>>>>> similar to backends/hostmem-shm.c.
+>>>>>>>>>>>>
+>>>>>>>>>>>> Likely we should be using that instead of memfd, or try hiding the
+>>>>>>>>>>>> details. See below.
+>>>>>>>>>>>
+>>>>>>>>>>> For this series I would prefer to use memfd and hide the details.  It's a
+>>>>>>>>>>> concise (and well tested) solution albeit linux only.  The code you supply
+>>>>>>>>>>> for posix shm would be a good follow on patch to support other unices.
+>>>>>>>>>>
+>>>>>>>>>> Unless there is reason to use memfd we should start with the more
+>>>>>>>>>> generic POSIX variant that is available even on systems without memfd.
+>>>>>>>>>> Factoring stuff out as I drafted does look quite compelling.
+>>>>>>>>>>
+>>>>>>>>>> I can help with the rework, and send it out separately, so you can focus
+>>>>>>>>>> on the "machine toggle" as part of this series.
+>>>>>>>>>>
+>>>>>>>>>> Of course, if we find out we need the memfd internally instead under
+>>>>>>>>>> Linux for whatever reason later, we can use that instead.
+>>>>>>>>>>
+>>>>>>>>>> But IIUC, the main selling point for memfd are additional features
+>>>>>>>>>> (hugetlb, memory sealing) that you aren't even using.
+>>>>>>>>>
+>>>>>>>>> FWIW, I'm looking into some details, and one difference is that shmem_open() under Linux (glibc) seems to go to /dev/shmem and memfd/SYSV go to the internal tmpfs mount. There is not a big difference, but there can be some difference (e.g., sizing of the /dev/shm mount).
+>>>>>>>>
+>>>>>>>> Sizing is a non-trivial difference.  One can by default allocate all memory using memfd_create.
+>>>>>>>> To do so using shm_open requires configuration on the mount.  One step harder to use.
+>>>>>>>
+>>>>>>> Yes.
+>>>>>>>
+>>>>>>>>
+>>>>>>>> This is a real issue for memory-backend-ram, and becomes an issue for the internal RAM
+>>>>>>>> if memory-backend-ram has hogged all the memory.
+>>>>>>>>
+>>>>>>>>> Regarding memory-backend-ram,share=on, I assume we can use memfd if available, but then fallback to shm_open().
+>>>>>>>>
+>>>>>>>> Yes, and if that is a good idea, then the same should be done for internal RAM
+>>>>>>>> -- memfd if available and fallback to shm_open.
+>>>>>>>
+>>>>>>> Yes.
+>>>>>>>
+>>>>>>>>
+>>>>>>>>> I'm hoping we can find a way where it just all is rather intuitive, like
+>>>>>>>>>
+>>>>>>>>> "default-ram-share=on": behave for internal RAM just like "memory-backend-ram,share=on"
+>>>>>>>>>
+>>>>>>>>> "memory-backend-ram,share=on": use whatever mechanism we have to give us "anonymous" memory that can be shared using an fd with another process.
+>>>>>>>>>
+>>>>>>>>> Thoughts?
+>>>>>>>>
+>>>>>>>> Agreed, though I thought I had already landed at the intuitive specification in my patch.
+>>>>>>>> The user must explicitly configure memory-backend-* to be usable with CPR, and anon-alloc
+>>>>>>>> controls everything else.  Now we're just riffing on the details: memfd vs shm_open, spelling
+>>>>>>>> of options and words to describe them.
+>>>>>>>
+>>>>>>> Well, yes, and making it all a bit more consistent and the "machine option" behave just like "memory-backend-ram,share=on".
+>>>>>>
+>>>>>> Hi David and Peter,
+>>>>>>
+>>>>>> I have implemented and tested the following, for both qemu_memfd_create
+>>>>>> and qemu_shm_alloc.  This is pseudo-code, with error conditions omitted
+>>>>>> for simplicity.
+>>>>>
+>>>>> I'm ok with either shm or memfd, as this feature only applies to Linux
+>>>>> anyway.  I'll leave that part to you and David to decide.
+>>>>>
+>>>>>>
+>>>>>> Any comments before I submit a complete patch?
+>>>>>>
+>>>>>> ----
+>>>>>> qemu-options.hx:
+>>>>>>        ``aux-ram-share=on|off``
+>>>>>>            Allocate auxiliary guest RAM as an anonymous file that is
+>>>>>>            shareable with an external process.  This option applies to
+>>>>>>            memory allocated as a side effect of creating various devices.
+>>>>>>            It does not apply to memory-backend-objects, whether explicitly
+>>>>>>            specified on the command line, or implicitly created by the -m
+>>>>>>            command line option.
+>>>>>>
+>>>>>>            Some migration modes require aux-ram-share=on.
+>>>>>>
+>>>>>> qapi/migration.json:
+>>>>>>        @cpr-transfer:
+>>>>>>             ...
+>>>>>>             Memory-backend objects must have the share=on attribute, but
+>>>>>>             memory-backend-epc is not supported.  The VM must be started
+>>>>>>             with the '-machine aux-ram-share=on' option.
+>>>>>>
+>>>>>> Define RAM_PRIVATE
+>>>>>>
+>>>>>> Define qemu_shm_alloc(), from David's tmp patch
+>>>>>>
+>>>>>> ram_backend_memory_alloc()
+>>>>>>        ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
+>>>>>>        memory_region_init_ram_flags_nomigrate(ram_flags)
+>>>>>
+>>>>> Looks all good until here.
+>>>>>
+>>>>>>
+>>>>>> qemu_ram_alloc_internal()
+>>>>>>        ...
+>>>>>>        if (!host && !(ram_flags & RAM_PRIVATE) && current_machine->aux_ram_share)
+>>>>>
+>>>>> Nitpick: could rely on flags-only, rather than testing "!host", AFAICT
+>>>>> that's equal to RAM_PREALLOC.
+>>>>
+>>>> IMO testing host is clearer and more future proof, regardless of how flags
+>>>> are currently used.  If the caller passes host, then we should not allocate
+>>>> memory here, full stop.
+>>>>
+>>>>> Meanwhile I slightly prefer we don't touch
+>>>>> anything if SHARED|PRIVATE is set.
+>>>>
+>>>> OK, if SHARED is already set I will not set it again.
+>>>
+>>> We only have to make sure that stuff like qemu_ram_is_shared() will continue working as expected.
+>>>
+>>> What I think we should do:
+>>>
+>>> We should probably assert that nobody passes in SHARED|PRIVATE. And we can use PRIVATE only as a parameter to the function, but never actually set it on the ramblock.
+>>>
+>>> If someone passes in PRIVATE, we don't include it in block->flags. (RMA_SHARED remains cleared)
+>>>
+>>> If someone passes in SHARED, we do set it in block->flags.
+>>> If someone passes PRIVATE|SHARED, we assert.
+>>>
+>>> If someone passes in nothing: we set block->flags to SHARED with aux_ram_share=on. Otherwise, we do nothing (RAM_SHARED remains cleared)
+>>>
+>>> If that's also what you had in mind, great.
+>>
+>> Yes, my patch does that, but it also sets RAM_PRIVATE on the ramblock.
+>> I will undo the latter.
+> 
+> David: why do we need to drop PRIVATE in ramblock flags?  I thought it was
+> pretty harmless.  I suppose things like qemu_ram_is_shared() will even keep
+> working as before?
+> 
+> It looks ok to remove it too, but it adds logics that doesn't seem
+> necessary to me, so just to double check if I missed something..
 
-Make the ip_plen field in VirtioNetRscUnit a void*, and make all the
-places where we read or write through that pointer instead use some
-new accessor functions read_unit_ip_len() and write_unit_ip_len()
-which account for the pointer being potentially unaligned and also do
-the network-byte-order conversion we were previously using htons() to
-perform.
+A finished ramblock is only boolean "shared" vs. "not shared/private". A 
+single flag (RAM_SHARED) can express that clearly.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- include/hw/virtio/virtio-net.h |  2 +-
- hw/net/virtio-net.c            | 23 +++++++++++++++++++----
- 2 files changed, 20 insertions(+), 5 deletions(-)
+Consequently there is less to get wrong when using RAM_PRIVATE only as a 
+flag to the creation function (and documenting that!).
 
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 060c23c04d2..b9ea9e824e3 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -102,7 +102,7 @@ typedef struct VirtioNetRscStat {
- /* Rsc unit general info used to checking if can coalescing */
- typedef struct VirtioNetRscUnit {
-     void *ip;   /* ip header */
--    uint16_t *ip_plen;      /* data len pointer in ip header field */
-+    void *ip_plen; /* pointer to unaligned uint16_t data len in ip header */
-     struct tcp_header *tcp; /* tcp header */
-     uint16_t tcp_hdrlen;    /* tcp header len */
-     uint16_t payload;       /* pure payload without virtio/eth/ip/tcp */
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index f2104ed364a..11cf462180d 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2049,6 +2049,21 @@ static ssize_t virtio_net_do_receive(NetClientState *nc, const uint8_t *buf,
-     return virtio_net_receive_rcu(nc, buf, size, false);
- }
- 
-+/*
-+ * Accessors to read and write the IP packet data length field. This
-+ * is a potentially unaligned network-byte-order 16 bit unsigned integer
-+ * pointed to by unit->ip_len.
-+ */
-+static uint16_t read_unit_ip_len(VirtioNetRscUnit *unit)
-+{
-+    return ldl_be_p(unit->ip_plen);
-+}
-+
-+static void write_unit_ip_len(VirtioNetRscUnit *unit, uint16_t l)
-+{
-+    stl_be_p(unit->ip_plen, l);
-+}
-+
- static void virtio_net_rsc_extract_unit4(VirtioNetRscChain *chain,
-                                          const uint8_t *buf,
-                                          VirtioNetRscUnit *unit)
-@@ -2063,7 +2078,7 @@ static void virtio_net_rsc_extract_unit4(VirtioNetRscChain *chain,
-     unit->ip_plen = &ip->ip_len;
-     unit->tcp = (struct tcp_header *)(((uint8_t *)unit->ip) + ip_hdrlen);
-     unit->tcp_hdrlen = (htons(unit->tcp->th_offset_flags) & 0xF000) >> 10;
--    unit->payload = htons(*unit->ip_plen) - ip_hdrlen - unit->tcp_hdrlen;
-+    unit->payload = read_unit_ip_len(unit) - ip_hdrlen - unit->tcp_hdrlen;
- }
- 
- static void virtio_net_rsc_extract_unit6(VirtioNetRscChain *chain,
-@@ -2082,7 +2097,7 @@ static void virtio_net_rsc_extract_unit6(VirtioNetRscChain *chain,
- 
-     /* There is a difference between payload length in ipv4 and v6,
-        ip header is excluded in ipv6 */
--    unit->payload = htons(*unit->ip_plen) - unit->tcp_hdrlen;
-+    unit->payload = read_unit_ip_len(unit) - unit->tcp_hdrlen;
- }
- 
- static size_t virtio_net_rsc_drain_seg(VirtioNetRscChain *chain,
-@@ -2231,7 +2246,7 @@ static int32_t virtio_net_rsc_coalesce_data(VirtioNetRscChain *chain,
-     VirtioNetRscUnit *o_unit;
- 
-     o_unit = &seg->unit;
--    o_ip_len = htons(*o_unit->ip_plen);
-+    o_ip_len = read_unit_ip_len(o_unit);
-     nseq = htonl(n_unit->tcp->th_seq);
-     oseq = htonl(o_unit->tcp->th_seq);
- 
-@@ -2267,7 +2282,7 @@ coalesce:
-         o_unit->payload += n_unit->payload; /* update new data len */
- 
-         /* update field in ip header */
--        *o_unit->ip_plen = htons(o_ip_len + n_unit->payload);
-+        write_unit_ip_len(o_unit, o_ip_len + n_unit->payload);
- 
-         /* Bring 'PUSH' big, the whql test guide says 'PUSH' can be coalesced
-            for windows guest, while this may change the behavior for linux
+To make RAM_PRIVATE consistent we might have to tweak all other RAMBlock 
+creation functions to set RAM_PRIVATE in the !RAM_SHARED case, and I 
+don't think that is wroth the trouble.
+
 -- 
-2.34.1
+Cheers,
+
+David / dhildenb
 
 
