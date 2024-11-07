@@ -4,81 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C03ED4335D
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 13:34:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE0FD4335D
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 13:36:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t92dp-00062T-EP; Thu, 07 Nov 2024 08:33:41 -0500
+	id 1t92g6-0007Ch-CP; Thu, 07 Nov 2024 08:36:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t92dn-00062I-W7
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:33:40 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t92g2-0007CL-OM
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:35:59 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t92dm-0004j8-8L
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:33:39 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t92g0-0005Am-Uh
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:35:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730986416;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1730986556;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=54MT5qQtoBUiV5LPScA31jOb1d/rjVxMcCNfKrHwVQw=;
- b=ZvYN5P2AisrfhagihiAYJICdxByyvCsfx28lJq5kZ/uvkyX9gwcG7CO5txAThyv/Ftaqk/
- o0udHHgyE35su3t7Ov1lDgYegCmHWj3zLb+4fgvvKp5jRZpGMMmRj7qiHSUITfePT273aM
- W3msw0/a9bK4LhSpSan4kbbXvggPCfw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-103-WIfyQMHPN4WYOwj9z17H_g-1; Thu, 07 Nov 2024 08:33:34 -0500
-X-MC-Unique: WIfyQMHPN4WYOwj9z17H_g-1
-X-Mimecast-MFC-AGG-ID: WIfyQMHPN4WYOwj9z17H_g
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4315a0f25afso6667865e9.3
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 05:33:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730986414; x=1731591214;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=54MT5qQtoBUiV5LPScA31jOb1d/rjVxMcCNfKrHwVQw=;
- b=POVmPJuOrZi18UM6tIxmnep8Lw9KmfEKl3P1LhpwLMExBW8JMzV17qTrZAlQJDUE+Y
- SdgjwrXkuGip1Qd2nf1FPd/MwZ+S42+/KTA6i6wxzZxXjHuNCuKaZnkLtiTqEezYXC2B
- 0PetxBxq6wqdB9CMg6cH4obXb3o3t35FsYvRhAvnNoZ5fXswI+N5S39khV6QCbH1hToh
- +UDEr7IRNyWIGsNgOPPQvOb7nULAs6Dgj8AU3b3qBI7HH/6etn5tGwikkt/BBytUeJ0J
- TVDBEjSZHCpp/9fHhVqfKNluiXC1jdTKSxt/Z36XoPr2TRfwq3QB43JwyMiWu+DyaE8V
- N/wA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWpE4a5XQFZW+09g9T3lAIHh8fBjKsdUJKRRuVyLQ/CWoE10z0S74tp8oG8jgRKUo0dCKwvm2YMqz0a@nongnu.org
-X-Gm-Message-State: AOJu0YyOo0lonD/e9ZujBi2NiPDj9EDIoUgsFHbdAADMruijF3hx5zJW
- I/4opRzzd06K/ZjVXw051AGGPzFVy6hJ2YgQn1eo1j8BZlnGd5VnNHgzf+VpiS0mCS1sH3/pRgy
- GwAyhRy2JaQ8VtOJiE+bbrZq2dPfMR9+lv1eNH3Kgd0R4wYN5K+xt2muKYRM4fVEeQ3+d1BCRIz
- 94+mybrfqekWrdViUTrxFLauEpyB8=
-X-Received: by 2002:a5d:5224:0:b0:37d:53dd:4dec with SMTP id
- ffacd0b85a97d-38061137a3emr29226611f8f.15.1730986413710; 
- Thu, 07 Nov 2024 05:33:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFT5fn4q0EHF2q9paLWvZvgYtyA9yiMA7tf79qL/MyttDv0QTucxQCj2AmT3wfAKP8aNpHXOcX2cTuXvnN6P1s=
-X-Received: by 2002:a5d:5224:0:b0:37d:53dd:4dec with SMTP id
- ffacd0b85a97d-38061137a3emr29226597f8f.15.1730986413374; Thu, 07 Nov 2024
- 05:33:33 -0800 (PST)
+ bh=6/aR6y2tjJL6IXlIhnTJKHhulJoqcqRwdo+yRMUw40I=;
+ b=iIFsxPQQmIkqk2GV2PpjR/RHk6g3Lwyf2iB/p1toECKORJbK4Zylq4qbGKsHpX9oxz/G3U
+ fAcDdJ+UBlOnH9rLIyHLs/+jKUMZQZNeLsplm0WVNhW8LZ6iOoTN2vdGXs/XavbzYD3ttZ
+ 4BUZfxrvQWgyv8aZnVgSy85fdJGRCh4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-WRFoXci-MvKwtuQG-dhHOA-1; Thu,
+ 07 Nov 2024 08:35:53 -0500
+X-MC-Unique: WRFoXci-MvKwtuQG-dhHOA-1
+X-Mimecast-MFC-AGG-ID: WRFoXci-MvKwtuQG-dhHOA
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5966619776D2
+ for <qemu-devel@nongnu.org>; Thu,  7 Nov 2024 13:35:52 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.55])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 53D4C196BC17; Thu,  7 Nov 2024 13:35:49 +0000 (UTC)
+Date: Thu, 7 Nov 2024 13:35:45 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>,
+ Victor Toso <victortoso@redhat.com>, qemu-devel@nongnu.org,
+ Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>,
+ Andrea Bolognani <abologna@redhat.com>
+Subject: Re: [RFC PATCH v2 0/8] qapi: add generator for Golang interface
+Message-ID: <ZyzCMVYHM2F72oMa@redhat.com>
+References: <20220617121932.249381-1-victortoso@redhat.com>
+ <ZyyZugciNAYmVjeP@redhat.com> <87r07njk4e.fsf@pond.sub.org>
+ <Zyy7XGTRuCS0yGgI@redhat.com>
 MIME-Version: 1.0
-References: <20241106185136.582198-1-pbonzini@redhat.com>
- <2ee0bab1-1baa-4b52-9856-4c1fa4c9ef0e@linaro.org>
- <ml0lj.kelxgd4xtqc7@linaro.org>
-In-Reply-To: <ml0lj.kelxgd4xtqc7@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 7 Nov 2024 14:33:21 +0100
-Message-ID: <CABgObfbFGJgExMvVsR6TUrv1Q1VULk6-K1rjgp_w1qH3PWjtQQ@mail.gmail.com>
-Subject: Re: [PATCH] rust: pl011: fix device id matching
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zyy7XGTRuCS0yGgI@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -100,31 +89,91 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 7, 2024 at 2:10=E2=80=AFPM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
-> On Wed, 06 Nov 2024 22:56, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
-> >On 6/11/24 18:51, Paolo Bonzini wrote:
-> >> The offset that is compared against 0x3f8..0x400 is not shifted right.
-> >> Adjust the pattern matching.
-> >>
-> >> Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> >> Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> >> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> >> ---
-> >>   rust/hw/char/pl011/src/device.rs | 2 +-
-> >>   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> >Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-> The device id reporting is still buggy even with this patch. I will send
-> a proper fix within the day.
+On Thu, Nov 07, 2024 at 01:06:36PM +0000, Daniel P. Berrangé wrote:
+> On Thu, Nov 07, 2024 at 01:36:49PM +0100, Markus Armbruster wrote:
+> > Daniel P. Berrangé <berrange@redhat.com> writes:
+> > 
+> > > Bringing this thread back from the dead, since I had an in-person
+> > > discussion on a key question below at KVM Forum this year and want
+> > > to record it here.
+> > 
+> > [...]
+> > 
+> > > To recap the situation
+> > >
+> > >  * The license of the code generator itself does not determine the
+> > >    license of the output generated code
+> > 
+> > For instance, GNU Bison is GPLv3+, but the parts the generator emits
+> > (the parser skeleton) come with a special exception.
+> > 
+> > Such exceptions need to be granted by the copyright holder.  As long as
+> > the code generating Go is not a derived work, the copyright holder
+> > situation should be simple enough to make this practical.
+> > 
+> > >  * The license of the inputs to the code generator, may or may
+> > >    not, determine the license of the output generated code depending
+> > >    on use context
+> > >
+> > > The primary input to the code generator is the QAPI schema, which is part
+> > > of QEMU and thus licensed GPL-2.0-or-later.
+> > >
+> > > The QAPI schema includes both the API definitions AND the API documentation
+> > > text.
+> > >
+> > > We can make the case that as the QEMU public interface, consuming the
+> > > API definitions in the QAPI schema for the purpose of generating code
+> > > is "fair use", and thus the output generated code does NOT need to
+> > > match the GPL-2.0-or-later license of the QAPI schema. We can choose
+> > > the code license, and a maximally permissive license looks appropriate.
+> > 
+> > Having this argument confirmed by an actual expert seems advisable.
+> 
+> IANAL, but .... :-)
 
-Sure, but can you expand on what's the breakage?
+> My proposition is that, in most cases, comments are not used by
+> the "compilation", or "code generation" phase. They are seen by
+> the "parsing" phase only and thus dont contribute to the contents
+> of the output binary code.
 
-Paolo
+
+> None the less, we have raised this position/viewpoint with experts
+> for a second opinion.
+
+Another thought or two...
+
+From a QEMU community POV we have no license problem no matter what,
+so from a legal POV this risk free for us.
+
+The licensing question is purely one for application developers consuming
+our work who want to avoid GPL for some reason.
+
+Lets say my interpretation is wrong, or even that it is right, but the
+app developers disagree, or are none the less unhappy in some way. What
+impact would this have for QEMU ?
+
+Code generation is practically free once the generator is written, so we
+just run it twice, storing the output in git on different branches with
+parallel tags, once with comments and once without. eg
+
+The "main" branch (and associated versioned vX.Y.Z tags) in qemu-go-qapi.git
+provide the full QAPI go source + copied QAPI comments under MIT-0 AND
+GPL-2.0-or-later
+
+The "minimal" branch (and associated vX.Y.Z-minimal tags) in qemu-go-qapi.git
+provide only the  QAPI go source, without any comments under MIT-0 only.
+
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
