@@ -4,84 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 751DDD5D674
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 17:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CBC8D5D67D
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 17:46:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t96S7-0006cG-Fj; Thu, 07 Nov 2024 12:37:51 -0500
+	id 1t96Zy-0008J6-Sx; Thu, 07 Nov 2024 12:45:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1t96S5-0006bn-Hs
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 12:37:49 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t96Zx-0008Ia-Ej
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 12:45:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1t96S2-0007AU-CA
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 12:37:49 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t96Zv-00006R-Hk
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 12:45:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731001064;
+ s=mimecast20190719; t=1731001554;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jSfupj5ZIvmaNgj31SQca3O9ts8+C7CzwiLfj5o55TM=;
- b=T3IMGMm5cRdSQ/lv8UKJG3k46iLRfutasvSqSgyLz3RfXndnIKmjWpssDFYNUK4r4iBOAR
- ueLJMv5NdfXpZFPJcOdneRQH0ah5urML9itWqoBQQ4oFYpK5Rk0R3cfPyYQUUaD+/CIRyk
- Fcgu8TBd7a+ONWEJJM0vVhoEMzzdFSM=
-Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
- [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rT1XxZue/k2VuOLH/6JIGBrqUjtBbxDQ+He2Lct//54=;
+ b=jRLp73WkTIEq4zosg6o9UC37csXnFXH5dxD65mhbPRiYZbovw4xis2HhxsAWE8efCKvcOh
+ 2ptkjUYU7GsSVDyBp0N8zPjPe+jWJtUldSVvfOa0ByzD9/PB8I+cX3qOA21A3RF2Dq3zxk
+ m0O67Fuuy80DKQ76Muc1PjMboluLArM=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-sPCIEPdFOf6RwX7xhgIcgA-1; Thu, 07 Nov 2024 12:37:42 -0500
-X-MC-Unique: sPCIEPdFOf6RwX7xhgIcgA-1
-X-Mimecast-MFC-AGG-ID: sPCIEPdFOf6RwX7xhgIcgA
-Received: by mail-il1-f199.google.com with SMTP id
- e9e14a558f8ab-3a6bf539ceaso20414995ab.1
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 09:37:42 -0800 (PST)
+ us-mta-9-ocbEKk9zMUausxJ3sT2SoA-1; Thu, 07 Nov 2024 12:45:52 -0500
+X-MC-Unique: ocbEKk9zMUausxJ3sT2SoA-1
+X-Mimecast-MFC-AGG-ID: ocbEKk9zMUausxJ3sT2SoA
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6d35a060aa5so16212676d6.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 09:45:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731001061; x=1731605861;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jSfupj5ZIvmaNgj31SQca3O9ts8+C7CzwiLfj5o55TM=;
- b=BS+u9EjhZtmA+zTWQSgpX48SIyK0wh1qnHEDTzzBVqnAyvcyYpFdMnDiNgyUSegnEI
- QNThbjysmeXKLYOGpGB2USOZXR1edTiP01RneBdDGRFQP9drzpCz1w/fSsn02GZtMK8p
- cZKdAqVVxxK6p3b4MGnOj3HGXZOfgi/Bhd904HvG6+XwXvZz5yr3Rk+6wI4At0w7ey2A
- Fgj99Konjfrsx7q2/y+I5bD3p8reyobZYCJkmWOzKFd3W/NvOrBjp3CJt/wes2pwlhMx
- Wv7EdDBurwCgvsDN55Iv9AdYvhRrmrTING6zqu8gSqsEFI2oIKQYCli28Z2HbwQckfiE
- 7kdg==
-X-Gm-Message-State: AOJu0Yz6syUD5qZeQ5UBR2PnTEDkMatqSjiaireFZh4V/e+S55XB9n2S
- lTqofqpbqG7DG8SYKufjVBzU4C0f62maJCOKEZFLigK9cZ533DPJGxCWnJ1oZ3FuHoNyo3i9xFh
- d3qbLdJOSQqOzLekhqpeAfzFLNILL7/fnR5HmHujVJNqhTECuo6wBC9s3ptEdKG5xoWpv9T7+j8
- vRI0MoFsG9ajgfOeicNPc5rgeoPGw=
-X-Received: by 2002:a05:6e02:1708:b0:3a6:c9b4:e2e7 with SMTP id
- e9e14a558f8ab-3a6f115a03cmr3991575ab.3.1731001061415; 
- Thu, 07 Nov 2024 09:37:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGMOjz75r68Mt9BSI9n74nYKeGTHSELSu951HB4BvsEqo1Ld43RRqjuiwqdNGz02yn+ZeHPn38tbu5kg4Z+5cI=
-X-Received: by 2002:a05:6e02:1708:b0:3a6:c9b4:e2e7 with SMTP id
- e9e14a558f8ab-3a6f115a03cmr3991435ab.3.1731001061089; Thu, 07 Nov 2024
- 09:37:41 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731001551; x=1731606351;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rT1XxZue/k2VuOLH/6JIGBrqUjtBbxDQ+He2Lct//54=;
+ b=tPAowi/AMhD+5QndOOSnn1DgEda2qtaMZC/aPCNNmDhV+LBzN3G+v7VJQIdIm12M4k
+ xA+663P/AbsXDN2HwxW7Jc/nlWLmHRX11ymIDnpeOMvvi5pztzkcH4y/iCo34VsgLawz
+ braubcpwymAARY3VpMMEytwq7e6/a3PRPaEsImp1TYkCVgr7EJ92A8LA0zZVQusbMo+u
+ ydFu+eS+PiNFWjQ+dAsATSBkaW7UNQE42BOsU54icRgPeoDlXqQO1Z+8tr3/gH7s+4Ug
+ NZlNEp1LYufM9YIjkE+6XuungROynoHSJoc7sHTLfjginrv6MmN8TdW2G09QKxoBZIgc
+ Tw6g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX93VE3FTdCNeC5caQ9gt90iV7eUcAMEsOnl1ELlE7y/Dud3hbHCJBBPMy8X49DfDFcP72VN+Z6mzWB@nongnu.org
+X-Gm-Message-State: AOJu0Yy7E5ywSaJyE1tuyk78+73CB2Xn2x9Hbwbr12D7X1SwOvjWZG57
+ OtO4D30lkO7NlPbdnw9CTT3h57Ua0bSyxpcvJyCJkvPWVBt9CZNXRiGZlt7xtTSo3psAyaxRzmG
+ KrTCclPumyb6Z3w7z/7SosWSBcu7SSfjUEO4QHNEC/F+fYmQyFTiF
+X-Received: by 2002:a05:6214:490a:b0:6cb:e90c:7c72 with SMTP id
+ 6a1803df08f44-6d39cf17dc6mr10070666d6.21.1731001551239; 
+ Thu, 07 Nov 2024 09:45:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHGvByVA4cDWyScr+iGYnVnMfOy0s8DPeS5b7U4VxiHdhkB3DYY7ygGFVnx9p9Fqprnr8D6tg==
+X-Received: by 2002:a05:6214:490a:b0:6cb:e90c:7c72 with SMTP id
+ 6a1803df08f44-6d39cf17dc6mr10070486d6.21.1731001550928; 
+ Thu, 07 Nov 2024 09:45:50 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d39643c6a3sm9808216d6.81.2024.11.07.09.45.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 Nov 2024 09:45:41 -0800 (PST)
+Date: Thu, 7 Nov 2024 12:45:38 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH 2/5] migration/postcopy: magic value for postcopy channel
+Message-ID: <Zyz8wnTkooE4V4UQ@x1n>
+References: <CAE8KmOyzWRqpGDOyAK7V2X8+SWVt_kR1897tiFm7vdBNRRE2QA@mail.gmail.com>
+ <ZykB3voFw_-ByWfh@x1n>
+ <CAE8KmOzuGxdU7zp+vsf1yY_FP8bf-KTv7UJ+8h6bfmkE=0H-bA@mail.gmail.com>
+ <ZyoW3ue3WTQ3Di1d@x1n>
+ <CAE8KmOxW8K-YoCUbK5XOLeUQk8WCPB4UxbaQuUONhzsanvrLMw@mail.gmail.com>
+ <87ldxw1p8k.fsf@suse.de>
+ <CAE8KmOwM2wjkyUZL5v=3gjkUNa8VhA6oick35KMX-FO2-BidaQ@mail.gmail.com>
+ <ZyyzjWY-1nPpPgSW@redhat.com> <ZyzoGvOaybHs4uMl@x1n>
+ <Zyzxihj37-pfTQWx@redhat.com>
 MIME-Version: 1.0
-References: <20241107125201.1640759-1-dbassey@redhat.com>
- <2lsvukkntdselhhjw726kmnixmp7yue5sojhosyaqre5mwrlyq@7x4vwbniwulv>
- <CAGxU2F5L5GBpk19aPDazYRFCDupa6+4FKk7Vjq9QNsFp0tu_kg@mail.gmail.com>
-In-Reply-To: <CAGxU2F5L5GBpk19aPDazYRFCDupa6+4FKk7Vjq9QNsFp0tu_kg@mail.gmail.com>
-From: Dorinda Bassey <dbassey@redhat.com>
-Date: Thu, 7 Nov 2024 18:37:30 +0100
-Message-ID: <CACzuRywxUYpqZL6G6o11z_Qb_iDYQ29do1CPsuktH27+zGYzZw@mail.gmail.com>
-Subject: Re: [PATCH] virtio-dmabuf: Ensure UUID persistence for hash table
- insertion
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, aesteve@redhat.com, marcandre.lureau@redhat.com
-Content-Type: multipart/alternative; boundary="0000000000005a3c5b06265617a1"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=dbassey@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zyzxihj37-pfTQWx@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,240 +112,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005a3c5b06265617a1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, Nov 07, 2024 at 04:57:46PM +0000, Daniel P. Berrangé wrote:
+> On Thu, Nov 07, 2024 at 11:17:30AM -0500, Peter Xu wrote:
+> > On Thu, Nov 07, 2024 at 12:33:17PM +0000, Daniel P. Berrangé wrote:
+> > I'll comment on a few examples above, which I think some of them, even if
+> > handshake is ready, may still need mgmt layers to involve..
+> > 
+> > Multifd and postcopy are the two major features, and they, IMHO, all better
+> > need user involvements..
+> > 
+> > Multifd needs it because it relies on the channel being able to provide >1
+> > channels.  It means "| nc XXX > file" can stop working if we turn it on by
+> > default silently.
+> 
+> NB, my point was referring to a hypothetical alternative history,
+> where we had the handshake at the QEMU level from day 1. That
+> would neccessarily imply a bi-directional channel, so the 'nc'
+> use case would already have been  out of scope. That said, QEMU
+> could identify whether the channel it was told to use was
+> bi-directional or not, and thus not try to do multifd over
+> a non-socket transport.
 
-Hi,
+Ah, that's true.
 
-Since now we allocate memory for the key, we should provide the
-> `key_destroy_func` when calling g_hash_table_new_full(), otherwise
-> this new memory will not be de-allocated.
->
+> 
+> So the general point still holds - if QEMU had this protocol
+> negotiation phase built-in, there would be more flexiblity in
+> introducing new features without layers above needing changes,
+> for every single one, just a subset.
 
-Ack
+Yes.
 
-IIUC it can be null, only if `uuid` was null since glib memory
-> API usually terminates the application if memory allocation fails,
-> see https://docs.gtk.org/glib/memory.html
-
-
-Ok, but the documentation doesn't explicitly state what `g_memdup2` returns
-on failure, I checked it manually and it terminates the application on
-failure. So indeed this check is not necessary.
-
-I think it may be worth clarifying that it can also return false if
-> the resource failed
-> to be added.
-
-
-Hence, I think this is not needed since `g_memdup2` will terminate the
-application if memory allocation fails and no return value is provided then=
-.
+Just to mention, we can already do that now without handshake, as long as
+the feature has zero side effect, and as long as we don't expose it as a
+migration capability (which by default all off).  In that case, we can make
+the property to "on", and add "off" in machine compat properties.  IOW,
+machine compat property can play part of the role as handshake, based on
+the machine type must be the same when initiating QEMU on both hosts.
 
 Thanks,
-Dorinda.
 
-On Thu, Nov 7, 2024 at 2:47=E2=80=AFPM Stefano Garzarella <sgarzare@redhat.=
-com>
-wrote:
-
-> On Thu, Nov 7, 2024 at 2:43=E2=80=AFPM Stefano Garzarella <sgarzare@redha=
-t.com>
-> wrote:
-> >
-> > On Thu, Nov 07, 2024 at 01:52:01PM +0100, Dorinda Bassey wrote:
-> > >In `virtio_add_resource` function, the UUID used as a key for
-> > >`g_hash_table_insert` was temporary, which could lead to
-> > >invalid lookups when accessed later. This patch ensures that
-> > >the UUID remains valid by duplicating it into a newly allocated
-> > >memory space (persistent_uuid). The value is then inserted into
-> > >the hash table with this persistent UUID key to ensure that the
-> > >key stored in the hash table remains valid as long as the hash
-> > >table entry exists.
-> >
-> > It's a fix right, so maybe better to add a Fixes tag:
-> >
-> > Fixes: faefdba847 ("hw/display: introduce virtio-dmabuf")
-> >
-> > >
-> > >Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
-> > >---
-> > > hw/display/virtio-dmabuf.c | 7 ++++++-
-> > > 1 file changed, 6 insertions(+), 1 deletion(-)
-> > >
-> > >diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
-> > >index 3dba4577ca7..4353970bc87 100644
-> > >--- a/hw/display/virtio-dmabuf.c
-> > >+++ b/hw/display/virtio-dmabuf.c
-> > >@@ -39,7 +39,12 @@ static bool virtio_add_resource(QemuUUID *uuid,
-> VirtioSharedObject *value)
-> > >                                                g_free);
-> > >     }
-> > >     if (g_hash_table_lookup(resource_uuids, uuid) =3D=3D NULL) {
-> > >-        g_hash_table_insert(resource_uuids, uuid, value);
-> > >+        QemuUUID *persistent_uuid =3D g_memdup2(uuid, sizeof(QemuUUID=
-));
-> >
-> > Since now we allocate memory for the key, we should provide the
-> > `key_destroy_func` when calling g_hash_table_new_full(), otherwise
-> > this new memory will not be de-allocated.
-> >
-> > >+        if (persistent_uuid =3D=3D NULL) {
-> >
-> > IIUC it can be null, only if `uuid` was null since glib memory
-> > API usually terminates the application if memory allocation fails,
-> > see https://docs.gtk.org/glib/memory.html
-> >
-> > So maybe we can just do:
-> >            g_hash_table_insert(resource_uuids, g_memdup2(uuid,
-> sizeof(QemuUUID)),
-> >                                value);
->
-> Or even better:
->              g_hash_table_insert(resource_uuids, g_memdup2(uuid,
-> sizeof(*uuid)),
->                                  value);
->
-> Thanks,
-> Stefano
->
-> >
-> > >+            result =3D false;
-> > >+        } else {
-> > >+            g_hash_table_insert(resource_uuids, persistent_uuid,
-> value);
-> > >+        }
-> > >     } else {
-> > >         result =3D false;
-> > >     }
-> > >--
-> > >2.47.0
-> > >
->
->
-
---0000000000005a3c5b06265617a1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi,<br></div><div><br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">Since now we allocate memory for the key, we shoul=
-d provide the<br>
-`key_destroy_func` when calling g_hash_table_new_full(), otherwise<br>
-this new memory will not be de-allocated.<span class=3D"gmail-im"><br></spa=
-n></blockquote><div><br></div><div>Ack</div><div><br></div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex">IIUC it can be null, only if `uuid` was n=
-ull since glib memory<br>
-API usually terminates the application if memory allocation fails,<br>
-see <a href=3D"https://docs.gtk.org/glib/memory.html" rel=3D"noreferrer" ta=
-rget=3D"_blank">https://docs.gtk.org/glib/memory.html</a></blockquote><div>=
-<br></div><div>Ok, but the documentation doesn&#39;t=C2=A0explicitly state =
-what `g_memdup2` returns on failure, I checked it manually and it terminate=
-s the application on failure. So indeed this check is not necessary.</div><=
-div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
- 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">I think it =
-may be worth clarifying that it can also return false if<br>
-the resource failed<br>
-to be added.</blockquote><div><br></div><div>Hence, I think this is not nee=
-ded since `g_memdup2` will terminate the application if memory allocation f=
-ails and no return value is provided then.</div><div><br></div><div>Thanks,=
-</div><div>Dorinda.<br></div></div><br><div class=3D"gmail_quote"><div dir=
-=3D"ltr" class=3D"gmail_attr">On Thu, Nov 7, 2024 at 2:47=E2=80=AFPM Stefan=
-o Garzarella &lt;<a href=3D"mailto:sgarzare@redhat.com">sgarzare@redhat.com=
-</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-On Thu, Nov 7, 2024 at 2:43=E2=80=AFPM Stefano Garzarella &lt;<a href=3D"ma=
-ilto:sgarzare@redhat.com" target=3D"_blank">sgarzare@redhat.com</a>&gt; wro=
-te:<br>
-&gt;<br>
-&gt; On Thu, Nov 07, 2024 at 01:52:01PM +0100, Dorinda Bassey wrote:<br>
-&gt; &gt;In `virtio_add_resource` function, the UUID used as a key for<br>
-&gt; &gt;`g_hash_table_insert` was temporary, which could lead to<br>
-&gt; &gt;invalid lookups when accessed later. This patch ensures that<br>
-&gt; &gt;the UUID remains valid by duplicating it into a newly allocated<br=
->
-&gt; &gt;memory space (persistent_uuid). The value is then inserted into<br=
->
-&gt; &gt;the hash table with this persistent UUID key to ensure that the<br=
->
-&gt; &gt;key stored in the hash table remains valid as long as the hash<br>
-&gt; &gt;table entry exists.<br>
-&gt;<br>
-&gt; It&#39;s a fix right, so maybe better to add a Fixes tag:<br>
-&gt;<br>
-&gt; Fixes: faefdba847 (&quot;hw/display: introduce virtio-dmabuf&quot;)<br=
->
-&gt;<br>
-&gt; &gt;<br>
-&gt; &gt;Signed-off-by: Dorinda Bassey &lt;<a href=3D"mailto:dbassey@redhat=
-.com" target=3D"_blank">dbassey@redhat.com</a>&gt;<br>
-&gt; &gt;---<br>
-&gt; &gt; hw/display/virtio-dmabuf.c | 7 ++++++-<br>
-&gt; &gt; 1 file changed, 6 insertions(+), 1 deletion(-)<br>
-&gt; &gt;<br>
-&gt; &gt;diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf=
-.c<br>
-&gt; &gt;index 3dba4577ca7..4353970bc87 100644<br>
-&gt; &gt;--- a/hw/display/virtio-dmabuf.c<br>
-&gt; &gt;+++ b/hw/display/virtio-dmabuf.c<br>
-&gt; &gt;@@ -39,7 +39,12 @@ static bool virtio_add_resource(QemuUUID *uuid,=
- VirtioSharedObject *value)<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free);<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0}<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0if (g_hash_table_lookup(resource_uuids, uuid) =
-=3D=3D NULL) {<br>
-&gt; &gt;-=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_hash_table_insert(resource_uuids, u=
-uid, value);<br>
-&gt; &gt;+=C2=A0 =C2=A0 =C2=A0 =C2=A0 QemuUUID *persistent_uuid =3D g_memdu=
-p2(uuid, sizeof(QemuUUID));<br>
-&gt;<br>
-&gt; Since now we allocate memory for the key, we should provide the<br>
-&gt; `key_destroy_func` when calling g_hash_table_new_full(), otherwise<br>
-&gt; this new memory will not be de-allocated.<br>
-&gt;<br>
-&gt; &gt;+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (persistent_uuid =3D=3D NULL) {<br=
->
-&gt;<br>
-&gt; IIUC it can be null, only if `uuid` was null since glib memory<br>
-&gt; API usually terminates the application if memory allocation fails,<br>
-&gt; see <a href=3D"https://docs.gtk.org/glib/memory.html" rel=3D"noreferre=
-r" target=3D"_blank">https://docs.gtk.org/glib/memory.html</a><br>
-&gt;<br>
-&gt; So maybe we can just do:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_hash_table_insert(resource_=
-uuids, g_memdup2(uuid, sizeof(QemuUUID)),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 value);<br>
-<br>
-Or even better:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g_hash_table_insert(resourc=
-e_uuids, g_memdup2(uuid, sizeof(*uuid)),<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0value);<br>
-<br>
-Thanks,<br>
-Stefano<br>
-<br>
-&gt;<br>
-&gt; &gt;+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result =3D false;<br>
-&gt; &gt;+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; &gt;+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_hash_table_insert(res=
-ource_uuids, persistent_uuid, value);<br>
-&gt; &gt;+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0} else {<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0result =3D false;<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0}<br>
-&gt; &gt;--<br>
-&gt; &gt;2.47.0<br>
-&gt; &gt;<br>
-<br>
-</blockquote></div>
-
---0000000000005a3c5b06265617a1--
+-- 
+Peter Xu
 
 
