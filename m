@@ -4,76 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E3FD43349
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 11:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3363BD43341
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 11:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t90OC-0004JB-J2; Thu, 07 Nov 2024 06:09:24 -0500
+	id 1t90Q9-00067t-Kc; Thu, 07 Nov 2024 06:11:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t90OA-0004Dm-AH
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:09:22 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t90O8-0002QE-Ho
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:09:22 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c96b2a10e1so1095946a12.2
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 03:09:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730977758; x=1731582558; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GalgV6GSghPHiaAAPPVK1Ya0Hq9G3gyMbmRR5kUgZhY=;
- b=PTL6hx7UrbfM0rXeft9HVjD63nZ0wQ6f9hPY0WNbVUXfC50AVyeGsuS7KOGOxOM8Tx
- ET5njuHV20voiXrXHNJg/cESrWlYrDCkfMx8o35uRyb1L88lvM3uS9V+YlwZamEQKOH6
- 060XWpcSVjwjElZ9z2B9KPv3dSBAPulUobITCjeG5A3YqzNZ+uG7QzTY5au3Q56toE2G
- rmMHm2igM9l4t8BuUCL97cGO56UT6tb3ds53Q34xTlI/SAgstTlzKazTBi+EDCtNausg
- 5p8LwZTr5eFWoObk//ONTnCS2BSXPIXzBi8L/6CcgsvElE6CK1d76XmAnAVl9MXrSZdA
- F+MQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1t90Q5-00067c-If
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:11:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1t90Q1-0002te-Qu
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:11:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730977874;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zLPbw+LOCiW49xri+PS81nXTSXc9M95CdG7b2wuAfuY=;
+ b=MzS0W8dDplR27hBvZT/mzNcxJycaVWidi1yTD7YYMDEMnmCzseEXgj8oCArfWYlce7OZpo
+ EUQQkNASGZWvrpaR/9vO3uYGRDgN5sL+GqQb6KNPkuqOsyGjZSX94IaSMhzxynPh/hnCju
+ y7pNEu5P35LR7ARj4xnn944OltQ8AM0=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-304-K840HQXmORqDwui_Ddwc5w-1; Thu, 07 Nov 2024 06:11:11 -0500
+X-MC-Unique: K840HQXmORqDwui_Ddwc5w-1
+X-Mimecast-MFC-AGG-ID: K840HQXmORqDwui_Ddwc5w
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2fcda6c1906so5353811fa.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 03:11:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730977758; x=1731582558;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1730977870; x=1731582670;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GalgV6GSghPHiaAAPPVK1Ya0Hq9G3gyMbmRR5kUgZhY=;
- b=ihpvw426rxzoYf/5Yc1F+Kpzbs1vPNFuh3wX+1tPjjI+7Tx764sOPAGmKAHkHqvpuq
- 2GgzoEMi2jIAYjNyIojFvproF4E7A7rAVAFqzddbxMx5PzaB2LoYsORvEHhWFCd6uMKP
- rr4rEOGsLcIND14kDNCWbowBV1EU20EXapoknKGWSHdJl0qepCXRw7bij95UH/koocXK
- F13RUnvkniM2gozAqFjsdaCzfr4ajw58C1MoVU8jUT+wir3n1QZfjto55jbbFalH+qI1
- g7uOzHKq83pBwAaFF/YDEOz1B20Mjdrs1JKF7F1pOnay6ZWfgs9uNDYgHilP4J80SXOu
- EGtQ==
-X-Gm-Message-State: AOJu0YxCvE2Mmdne1M/wc8hMgJ7+tyuBv58irx+Xvqlupv44xJ0z83NY
- Q7sM3g+sF89Vwfe1zCBRF2q8N2mN4YnvNo9k3Pym5K/UhSLyV0I5QZNLETOfiwI2tuFYp3X7iiw
- 3La+Dt+hOWakWgY0Mwyf7kT/VSW+S7vojMjvIHA==
-X-Google-Smtp-Source: AGHT+IGJtgJS3KvdD5o8OFsDiwCdCiwWpYCG++XkwgN14IvWvJ1341ynBBm0gLkQG32zE1sjCf6mCsKGjGZt6cBaG2E=
-X-Received: by 2002:a05:6402:42ce:b0:5c8:9f81:43e4 with SMTP id
- 4fb4d7f45d1cf-5cbbf8891b1mr32120742a12.7.1730977758143; Thu, 07 Nov 2024
- 03:09:18 -0800 (PST)
+ bh=zLPbw+LOCiW49xri+PS81nXTSXc9M95CdG7b2wuAfuY=;
+ b=SwZ+NTKGe0AjKt1smMWkViafMYhxBMI9SSxnawvqKW2K+M/jvsbgLcihEP3W28vp3s
+ OBL0JhkR81Pr5DrQDO5YdFfnT7pWryLitv55MW3hXyAm6N6yOh63F1ewT9mCenkpUXBU
+ UIRQJakV5rB7Q2BiXu5uILxYKEOtFPfPqPvQ+1QFdzvO1qV3E4lYzPAk7x8xOYsrzRq3
+ flKrkxnlwC7jk4sj0l2zNbFln7klvju/RBmGuujXxKtTZzo/46Q79rVa+hw1yOrfBCGi
+ 4azMkJdS/EX/k72vICEvJGaur7HAuHofHdwtVRlPkoIlkKFPkXPrzqwVQmAQNW3RRUNO
+ SvYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVg21npmfsTxG4dq6VTxEi0VOthKn/adfXbMbHdW944X96horpGxQS0/x64ec4qGM1h6kf6LMuGnqgD@nongnu.org
+X-Gm-Message-State: AOJu0Yye1yokdp9Gac1Da+925BLHfr5rVUNbnno4VyUTrWqmekRrK7Zx
+ mmI0dTwGFqJAWbZ1bhNPxsAg7ng77dtLUgQzNk3MiSsoxE5kWU8ld9Iw4KtwIM8pmsWxbMtDkn6
+ 4rRylE/NWuS9KMUGrTScRLuQYwdwRkoDN1uq/UW7REvyjSVDggfL8
+X-Received: by 2002:a05:651c:1592:b0:2f6:62a1:25fe with SMTP id
+ 38308e7fff4ca-2ff1a92f814mr6669661fa.23.1730977870023; 
+ Thu, 07 Nov 2024 03:11:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGIPBbQxkeix4PVn8LfvmiNWyHV1QTCdoUFBF4I4XKrD1oyov1PkQ0nnEaFsNEBvErNvkXj0g==
+X-Received: by 2002:a05:651c:1592:b0:2f6:62a1:25fe with SMTP id
+ 38308e7fff4ca-2ff1a92f814mr6668871fa.23.1730977869059; 
+ Thu, 07 Nov 2024 03:11:09 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432b053ff08sm20437535e9.10.2024.11.07.03.11.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 Nov 2024 03:11:07 -0800 (PST)
+Message-ID: <1845a6b8-5214-4379-85f4-3d36b61059dd@redhat.com>
+Date: Thu, 7 Nov 2024 12:11:05 +0100
 MIME-Version: 1.0
-References: <20241106180751.6859-1-stefanb@linux.vnet.ibm.com>
-In-Reply-To: <20241106180751.6859-1-stefanb@linux.vnet.ibm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 Nov 2024 11:09:07 +0000
-Message-ID: <CAFEAcA8P-a5XyACAovFLwCSPT-s0CX74aMKoPtHku0G89cYgkA@mail.gmail.com>
-Subject: Re: [PATCH] tests: Adjust path for swtpm state to use path under
- /var/tmp/
-To: Stefan Berger <stefanb@linux.vnet.ibm.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@gmail.com, clg@redhat.com, 
- lena.voytek@canonical.com, Stefan Berger <stefanb@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: nested-smmuv3 topic for QEMU/libvirt, Nov 2024
+Content-Language: en-US
+To: Nicolin Chen <nicolinc@nvidia.com>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Cc: Mostafa Saleh <smostafa@google.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Gunthorpe <jgg@nvidia.com>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Moritz Fischer <mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
+ Andrea Bolognani <abologna@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Zhangfei Gao <zhangfei.gao@linaro.org>, nathanc@nvidia.com,
+ arighi@nvidia.com, ianm@nvidia.com, jan@nvidia.com, mochs@nvidia.com,
+ Don Dutile <ddutile@redhat.com>
+References: <ZyRUcGKKS6NbIV5O@Asurada-Nvidia>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <ZyRUcGKKS6NbIV5O@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,65 +117,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 6 Nov 2024 at 18:08, Stefan Berger <stefanb@linux.vnet.ibm.com> wrote:
->
-> From: Stefan Berger <stefanb@linux.ibm.com>
->
-> To avoid AppArmor-related test failures when functional test are run from
-> somewhere under /mnt, adjust the path to swtpm's state to use an AppArmor-
-> supported path, such as /var/tmp, which is provided by the python function
-> tempfile.TemporaryDirectory().
->
-> An update to swtpm's AppArmor profile is also being done to support /var/tmp.
->
-> Link: https://lore.kernel.org/qemu-devel/CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com/
-> Link: https://github.com/stefanberger/swtpm/pull/944
-> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Hi Nicolin,
 
-Thanks for writing this patch. I can confirm that the test now
-runs OK on my Ubuntu setup, so
-
-Tested-by: Peter Maydell <peter.maydell@linaro.org>
-
-> ---
->  tests/functional/test_arm_aspeed.py | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+On 11/1/24 05:09, Nicolin Chen wrote:
+> Hi,
 >
-> diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
-> index 9761fc06a4..a574b1e521 100644
-> --- a/tests/functional/test_arm_aspeed.py
-> +++ b/tests/functional/test_arm_aspeed.py
-> @@ -227,11 +227,11 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
+> This is a continued discussion following previous month's:
+> https://lore.kernel.org/qemu-devel/Zvr%2Fbf7KgLN1cjOl@Asurada-Nvidia/
 >
->          image_path = self.ASSET_BR2_202302_AST2600_TPM_FLASH.fetch()
+> Kernel changes are getting closer to merge, as Jason's planning to
+> take vIOMMU series and smmuv3_nesting series into the iommufd tree:
+> https://lore.kernel.org/all/cover.1730313494.git.nicolinc@nvidia.com/
+> https://lore.kernel.org/all/cover.1730313494.git.nicolinc@nvidia.com/
+> https://lore.kernel.org/all/0-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com/
 >
-> -        socket_dir = tempfile.TemporaryDirectory(prefix="qemu_")
-> -        socket = os.path.join(socket_dir.name, 'swtpm-socket')
-
-I think it would be helpful to add a brief comment here:
-           # We must put the TPM state dir in /tmp/, not the build dir,
-           # because some distros use AppArmor to lock down swtpm and
-           # restrict the set of locations it can write to.
-
-just as a guard against somebody in future coming along and
-trying to clean up/rationalize where tests are creating their
-temporary files.
-
-> +        tpmstate_dir = tempfile.TemporaryDirectory(prefix="qemu_")
-> +        socket = os.path.join(tpmstate_dir.name, 'swtpm-socket')
+> So, I think it's probably a good time to align with each others and
+> talk about kicking off some QEMU upstream work in the month ahead.
 >
->          subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
-> -                        '--tpmstate', f'dir={self.vm.temp_dir}',
-> +                        '--tpmstate', f'dir={tpmstate_dir.name}',
->                          '--ctrl', f'type=unixio,path={socket}'])
+> @Shameer,
+> Do you have some update on the pluggable smmuv3 module?
 >
->          self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
-> --
-> 2.34.1
+> Updates on my side:
+> 1) I have kept uAPI updated to the latest version and verified too.
+>    There should be some polishing changes depending on how the basic
+>    nesting infrastructure would look like from Intel/Duan's work.
+> 2) I got some help from NVIDIA folks for the libvirt task. And they
+>    have done some drafting and are now verifying the PCI topology
+>    with "iommu=none".
+>
+> Once the pluggable smmuv3 module is ready to test, we will make some
+> change to libvirt for that and drop the auto-assigning patches from
+> the VIRT code, so as to converge for a libvirt+QEMU test.
+>
+> FWIW, Robin requested a different solution for MSI mapping [1], v.s.
+> the RMR one that we have been using since Eric's work. I drafted a
+> few VFIO/IOMMUFD patches for that, yet paused for getting the vIOMMU
+> series merged to this kernel cycle. I plan to continue in Nov/Dec.
+> So, for the near term we will continue with the RMR solution, until
+> we have something solid later.
+>
+> [1] https://lore.kernel.org/linux-iommu/ZrVN05VylFq8lK4q@Asurada-Nvidia/
 
-thanks
--- PMM
+At Red Hat we may find some cycles to resume working on the QEMU
+integration. Please can you sketch some tasks we could carry out in
+coordination with you and Shameer? Adding Don in the loop.
+
+Thank you in advance
+
+Eric
+>
+> Thanks
+> Nicolin
+>
+
 
