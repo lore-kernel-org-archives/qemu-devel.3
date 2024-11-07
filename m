@@ -4,94 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5917D5AE79
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 09:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B15D5AE7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 09:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8z27-0003Hi-2z; Thu, 07 Nov 2024 04:42:31 -0500
+	id 1t8z8G-0005Fs-Tn; Thu, 07 Nov 2024 04:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8z25-0003HZ-My
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 04:42:30 -0500
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t8z8F-0005Fc-0W
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 04:48:51 -0500
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t8z23-0002Q9-VS
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 04:42:29 -0500
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-539f0f9ee49so669723e87.1
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 01:42:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t8z8D-0003un-7f
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 04:48:50 -0500
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3e602a73ba1so488278b6e.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 01:48:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730972545; x=1731577345; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ThMRTQ/XPqy+vSyXSmpkie3xVOcQ6Acy87XnLwDvPFQ=;
- b=uRqYhWEjaza0bm8iWRmnm1vtTuQisnxza6kah91SERkklPGq1wHI9yfKfiJ7t+xeC1
- xwhBLplnwYd8dP0QlU/RiTpcyHdahrTID0hgn3tW2H0r5LFdMmU4N53xk7GiPMiHXuZM
- 6aGXX68e3hidMa1aCe8BqIaoluvAMMDKHHF1EtzbgEdw2lHmBJnsZYfJj9nb0GtMzqwU
- QHSTD6YAGeQPx55EMr+ZsRBvg8ACyRKxCqoObwi3Ofv4s6kuFBXynzadWDgeUh5ygC8E
- l3S2bvoAI0mrI0X8CBOwXxpA5Z3AVv7+I/SrkRVgvXdEvKLpPcPYLqiegS84Errxb4Ne
- hwDw==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1730972927; x=1731577727;
+ darn=nongnu.org; 
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=k8+sL3/NnUjknDx8O8NturBZXTqKMlru/+CvoMSlw0o=;
+ b=a0efUspesCV6MCC1scTY1U0MrDDtfJQX4mVryiG83Cl4JbUEKqBVDei04GkwL8tj/M
+ oi4Pmz/cWj8EtZyZIFwm5ArnhiYxWrojk1XG4TENZ4uMuhor5VstCaYmPpWGy9YOID2M
+ Pvx3Aa339KrKZN13mha+KysIjrXIfS5gohPD6mVd1otO55ImsZQjysI/LVtFnLAwEsns
+ cxKjdgZ8I3AWmdt8hFHMsrq30X9X0e656DBrTevpoUu96BBhuSqZ+DoW9QykZKvXIVDX
+ BqXxTXv8l5aHhwFZ4CyL+c+PcvCY7b0ZJshFynqW+Ec9i/DdZHC6dsG8Ty9BI5aSFCMb
+ 0DAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730972545; x=1731577345;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ThMRTQ/XPqy+vSyXSmpkie3xVOcQ6Acy87XnLwDvPFQ=;
- b=CnaMkDnwyx3DULVWzmZQVqB1CkX1xJS7g3chyfBepPbZF5Eb0Y1lNUtz4Uan26zxEK
- HXAZv3xJLoAPtUpgISmPRTmcQ6zaxyuHavxN0/HCQManJ1OSvTQW7gkJIOVtsa9zoiv3
- FuWaWD50w+PCHqe8GxePnkMcXWJLt1Q1XATvTi3bL/XFJasIF74yeF7jJUBZM6HGS2N1
- TJnq7C3j4rBwJCnGAvnQSWMIBVbQL6KevPRVq4D5R6dv6hzQIwDH0TnrsiCKUErUN9kk
- bCS8ut+bpmwV/qAzxYKzScnxDTpuSK2EDYeCQie+RRI29nSlnyzF/JJzcM8lXJFcmSzH
- HO6g==
-X-Gm-Message-State: AOJu0YyqRRXLYx2xAfMtKOEz5kJFCiGMb52bVqKr+bsnzibiTCBejS9D
- P8IJ84hCGPRse2OCSWmGI2dpZM3Soyuye51IsMghZBLd6rYrN/MdLxTieaYziEo=
-X-Google-Smtp-Source: AGHT+IFM6E5E0Hy9mDc4SQFlg52LztduH7+Xo4eTJbH+ezrX6g0rGTZfw5JIJnRaufV1Y0OsSVntvQ==
-X-Received: by 2002:a05:6512:2311:b0:539:edbe:ac86 with SMTP id
- 2adb3069b0e04-53b348b7e1dmr23000230e87.10.1730972545347; 
- Thu, 07 Nov 2024 01:42:25 -0800 (PST)
-Received: from [172.16.23.118] ([89.101.134.25])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432b05305a4sm17254015e9.5.2024.11.07.01.42.24
+ d=1e100.net; s=20230601; t=1730972927; x=1731577727;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=k8+sL3/NnUjknDx8O8NturBZXTqKMlru/+CvoMSlw0o=;
+ b=YmQ7/Muh6nn1K9rGW/uO36yJQVBHNzKvCmZm4IAqn1fS1cXMWMj3a4q+Ifd3xnnBLE
+ pTMLOqzko0KzgBtRpeJXbt6dnhf4fZ7B8Mjlect8Oo2ImPkw32Q5JP89JaKE2RbxkcCo
+ 0Oq/f26mORMs4DRBuNrddGlQlaLBDbV8hV+oV4CYPXfcbLN4+82oKTbBql/xQF90s5Nf
+ 0R9GXBaLE0qsQNrAI/Z2WHYUGuryi2c1+g+l2G8QfXTcz86BFQCXBpCQEr89H8W7bsk4
+ hO1vJ0uQbrWhoq1EDNIbYXtMoipf3KwJwLV2QGhmUil/fzHP9xkp0o81ggykEzNjm23f
+ nRow==
+X-Gm-Message-State: AOJu0YxeMtRNKMsXYLwPPO7ybb24QvaAuzM9OodxuoT+ELbZ0BUKzb0h
+ m51HM31E0Z68qBjsVZ3d7N8DhrYSJcdm02pUINjWN+zlihn+41iNaPvK6MbVK6w=
+X-Google-Smtp-Source: AGHT+IERVcXKFct4rwP6ZJ5IRaqE/4n/2Eug+/Zn685tGZHc6GvH2pWHbH/4DQVcN+zK4FOKpXSoqQ==
+X-Received: by 2002:a05:6808:e88:b0:3e5:cf3b:4fc5 with SMTP id
+ 5614622812f47-3e78fcb7b36mr546436b6e.15.1730972927082; 
+ Thu, 07 Nov 2024 01:48:47 -0800 (PST)
+Received: from localhost ([157.82.207.107])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 41be03b00d2f7-7f41f5bcaadsm980699a12.24.2024.11.07.01.48.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Nov 2024 01:42:24 -0800 (PST)
-Message-ID: <5d8ecf29-aed5-4e3e-9b4c-f3b5e5bcdef8@linaro.org>
-Date: Thu, 7 Nov 2024 09:42:22 +0000
+ Thu, 07 Nov 2024 01:48:46 -0800 (PST)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Thu, 07 Nov 2024 18:48:44 +0900
+Subject: [PATCH] tap-win32: Ignore keys too long
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: linux-user: Add option to run `execve`d programs through QEMU
-To: Noah Goldstein <goldstein.w.n@gmail.com>
-Cc: qemu-devel@nongnu.org, iii@linux.ibm.com, laurent@vivier.eu
-References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
- <20241030141037.375897-1-goldstein.w.n@gmail.com>
- <000c9ef8-c610-4f2a-b191-04b84455d89c@linaro.org>
- <CAFUsyfKkmSid=LVTbG+WHZA_=MAGdf+TU5vGtNE1GGx8WDheOQ@mail.gmail.com>
- <CAFUsyfKfM-X_qGN4Dy8DhES7zRi66s6yVZ3+_KmNM4f2GhBG+Q@mail.gmail.com>
- <f21fe153-6239-4c93-bf60-994976a9dbea@linaro.org>
- <CAFUsyfLhPkSMrm50RAAvir2-WoRS4_jbtZf1WWR_WZvm=BOr6g@mail.gmail.com>
- <e63cd5f6-8387-4c39-98e4-5e1c180934bc@linaro.org>
- <CAFUsyf+8sJLX+qqzPEj1E1QPQpoP4n56uU5U9aksq8JEx_52gA@mail.gmail.com>
- <CAFUsyf+xVXamR+5gtu62vFXjYScrJu0Arvhk62QXYa359UCHsg@mail.gmail.com>
- <d23ea679-9c21-44da-86cf-ae97d0214b86@linaro.org>
- <CAFUsyfL=QfvtMb6TiWVa2cEyeYQobh_3zfYpnPEb7bq6FH1k1A@mail.gmail.com>
- <CAFUsyf+OjfFVJ80ZwL8SovH80nTA4qpNyr2Nh7uUW90jZifSGQ@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAFUsyf+OjfFVJ80ZwL8SovH80nTA4qpNyr2Nh7uUW90jZifSGQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241107-win32-v1-1-952d508e2546@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAPuMLGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDQwNz3fLMPGMj3SSLNIMUQ9NkS0MjIyWg2oKi1LTMCrA50bG1tQACaFM
+ dVwAAAA==
+To: Jason Wang <jasowang@redhat.com>, Stefan Weil <sw@weilnetz.de>
+Cc: qemu-devel@nongnu.org, devel@daynix.com, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x22f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,60 +95,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/24 23:49, Noah Goldstein wrote:
-> On Wed, Nov 6, 2024 at 3:30 PM Noah Goldstein <goldstein.w.n@gmail.com> wrote:
->>
->> On Wed, Nov 6, 2024 at 3:10 PM Richard Henderson
->> <richard.henderson@linaro.org> wrote:
->>>
->>> On 11/6/24 18:13, Noah Goldstein wrote:
->>>> Question about impl regarding handling of `-execfd` with/without a program name.
->>>>
->>>> 1) `-execfd` + program name ie: `qemu -execfd <some_fd> ls -a`.
->>>> 2) `-execfd` without program name i.e: `qemu -execfd <some_fd> -a`.
->>>>
->>>> Do you want to allow both of these? If you want to allow (1), what should
->>>> we use for `argv[0]`/`exec_path`. The program pass ("ls") or
->>>> `readlink(<some_fd>)`?
->>>
->>> The canonical response is, examine the kernel source.
->>> We're not implementing this in a vacuum, you're replicating execveat(2).
->>>
->>> I suspect the answer is (1), to be compared with
->>>
->>>       syscall(__NR_execveat, some_fd, "", &["ls", "-a"], env, AT_EMPTY_PATH);
->>
->> Err, I think the reference for '-execfd' is `fexecve`:
->> https://man7.org/linux/man-pages/man3/fexecve.3.html
->>
->> Which doesn't take a path. So I guess we just interpret the "ls" as
->> argv[0] but not
->> as "exec_path".
-> 
-> One more point, what should the behavior be if we have
-> AT_EXECFD from binfmt-misc?
+Registry keys get truncated and trigger -Wformat-truncation. Ignore
+such truncated keys as they are invalid.
 
-You mean precedence of AT_EXECFD vs the command-line option?
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ net/tap-win32.c | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
-Arbitrary, since it would be a usage error to have both.  You'd have to do something silly 
-with the binfmt-misc rule for that to happen.
-
-Perhaps
-
-static int execfd = -1;
-// option processing
-// main
-
-     if (execfd < 0) {
-         errno = 0;
-         execfd = qemu_getauxval(AT_EXECFD);
-         if (errno != 0) {
-             execfd = open(...);
+diff --git a/net/tap-win32.c b/net/tap-win32.c
+index 7edbd7163370..4081ba87991f 100644
+--- a/net/tap-win32.c
++++ b/net/tap-win32.c
+@@ -239,8 +239,12 @@ static int is_tap_win32_dev(const char *guid)
+             return FALSE;
          }
-     }
+ 
+-        snprintf (unit_string, sizeof(unit_string), "%s\\%s",
+-                  ADAPTER_KEY, enum_name);
++        len = snprintf(unit_string, sizeof(unit_string), "%s\\%s",
++                       ADAPTER_KEY, enum_name);
++        if (len >= sizeof(unit_string)) {
++            ++i;
++            continue;
++        }
+ 
+         status = RegOpenKeyEx(
+             HKEY_LOCAL_MACHINE,
+@@ -338,10 +342,13 @@ static int get_device_guid(
+             return -1;
+         }
+ 
+-        snprintf(connection_string,
+-             sizeof(connection_string),
+-             "%s\\%s\\Connection",
+-             NETWORK_CONNECTIONS_KEY, enum_name);
++        len = snprintf(connection_string, sizeof(connection_string),
++                       "%s\\%s\\Connection",
++                       NETWORK_CONNECTIONS_KEY, enum_name);
++        if (len >= sizeof(connection_string)) {
++            ++i;
++            continue;
++        }
+ 
+         status = RegOpenKeyEx(
+             HKEY_LOCAL_MACHINE,
+@@ -617,10 +624,11 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+     if (rc)
+         return -1;
+ 
+-    snprintf (device_path, sizeof(device_path), "%s%s%s",
+-              USERMODEDEVICEDIR,
+-              device_guid,
+-              TAPSUFFIX);
++    rc = snprintf(device_path, sizeof(device_path), "%s%s%s",
++                  USERMODEDEVICEDIR, device_guid, TAPSUFFIX);
++    if (rc >= sizeof(device_path)) {
++        return -1;
++    }
+ 
+     handle = CreateFile (
+         device_path,
 
-just because that's a simple change to what's currently present.
+---
+base-commit: 7e3b6d8063f245d27eecce5aabe624b5785f2a77
+change-id: 20241107-win32-b8f0d15c9122
 
+Best regards,
+-- 
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
-r~
 
