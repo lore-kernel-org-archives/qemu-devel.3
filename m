@@ -4,57 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D637D43352
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77200D4335C
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:37:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t91l0-00069e-TE; Thu, 07 Nov 2024 07:37:02 -0500
+	id 1t91l1-0006Ax-4W; Thu, 07 Nov 2024 07:37:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t91kx-000622-JS
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t91kx-00061r-6G
  for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:37:00 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t91kv-0001ki-MX
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:36:59 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XkhMd5Cpxz6J6kW;
- Thu,  7 Nov 2024 20:34:05 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 24029140CF4;
- Thu,  7 Nov 2024 20:36:56 +0800 (CST)
-Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 7 Nov 2024 13:36:50 +0100
-To: "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- <qemu-devel@nongnu.org>
-CC: <linuxarm@huawei.com>
-Subject: [PATCH 4/5] bios-tables-test: Add complex SRAT / HMAT test for GI GP
-Date: Thu, 7 Nov 2024 12:34:45 +0000
-Message-ID: <20241107123446.902801-5-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241107123446.902801-1-Jonathan.Cameron@huawei.com>
-References: <20241107123446.902801-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t91ku-0001kS-Lg
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:36:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1730983015;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iMxqqp7EnppVyfiBTucn0ySbvrcSYkJ5TO0+EMwOTIY=;
+ b=HXTk4i3kCdRSxFxDtFt6MqpBcINy/QIfF9hRI/dDzbFPk8yMGsUVFffgbQnAvjNQ8Z3q6B
+ 699sfk2jRpgDJEks5JK9XP2nKvHPHYwkW8lOGCV3WLoK5YJZ6ksdkGd4Zcl+CwgTorYCFi
+ kgdckQ4Taa6y5fWlRyRX6BNVVH0pDlI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-61-p-kK28SzPT2po74POn_M3Q-1; Thu,
+ 07 Nov 2024 07:36:53 -0500
+X-MC-Unique: p-kK28SzPT2po74POn_M3Q-1
+X-Mimecast-MFC-AGG-ID: p-kK28SzPT2po74POn_M3Q
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFEFA19560B0
+ for <qemu-devel@nongnu.org>; Thu,  7 Nov 2024 12:36:52 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.150])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2EF681956054
+ for <qemu-devel@nongnu.org>; Thu,  7 Nov 2024 12:36:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C80B321E6A28; Thu,  7 Nov 2024 13:36:49 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Victor Toso <victortoso@redhat.com>,  qemu-devel@nongnu.org,  Eric Blake
+ <eblake@redhat.com>,  John Snow <jsnow@redhat.com>,  Andrea Bolognani
+ <abologna@redhat.com>
+Subject: Re: [RFC PATCH v2 0/8] qapi: add generator for Golang interface
+In-Reply-To: <ZyyZugciNAYmVjeP@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Thu, 7 Nov 2024 10:43:06 +0000")
+References: <20220617121932.249381-1-victortoso@redhat.com>
+ <ZyyZugciNAYmVjeP@redhat.com>
+Date: Thu, 07 Nov 2024 13:36:49 +0100
+Message-ID: <87r07njk4e.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,137 +89,120 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a test with 6 nodes to exercise most interesting corner cases of SRAT
-and HMAT generation including the new Generic Initiator and Generic Port
-Affinity structures.  More details of the set up in the following patch
-adding the table data.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- tests/qtest/bios-tables-test.c | 97 ++++++++++++++++++++++++++++++++++
- 1 file changed, 97 insertions(+)
+> Bringing this thread back from the dead, since I had an in-person
+> discussion on a key question below at KVM Forum this year and want
+> to record it here.
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index e79f3a03df..16d0ffbdf6 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -1936,6 +1936,101 @@ static void test_acpi_q35_tcg_acpi_hmat_noinitiator(void)
-     free_test_data(&data);
- }
- 
-+/* Test intended to hit corner cases of SRAT and HMAT */
-+static void test_acpi_q35_tcg_acpi_hmat_generic_x(void)
-+{
-+    test_data data = {};
-+
-+    data.machine = MACHINE_Q35;
-+    data.arch    = "x86";
-+    data.variant = ".acpihmat-generic-x";
-+    test_acpi_one(" -machine hmat=on,cxl=on"
-+                  " -smp 3,sockets=3"
-+                  " -m 128M,maxmem=384M,slots=2"
-+                  " -device pcie-root-port,chassis=1,id=pci.1"
-+                  " -device pci-testdev,bus=pci.1,"
-+                  "multifunction=on,addr=00.0"
-+                  " -device pci-testdev,bus=pci.1,addr=00.1"
-+                  " -device pci-testdev,bus=pci.1,id=gidev,addr=00.2"
-+                  " -device pxb-cxl,bus_nr=64,bus=pcie.0,id=cxl.1"
-+                  " -object memory-backend-ram,size=64M,id=ram0"
-+                  " -object memory-backend-ram,size=64M,id=ram1"
-+                  " -numa node,nodeid=0,cpus=0,memdev=ram0"
-+                  " -numa node,nodeid=1"
-+                  " -object acpi-generic-initiator,id=gi0,pci-dev=gidev,node=1"
-+                  " -numa node,nodeid=2"
-+                  " -object acpi-generic-port,id=gp0,pci-bus=cxl.1,node=2"
-+                  " -numa node,nodeid=3,cpus=1"
-+                  " -numa node,nodeid=4,memdev=ram1"
-+                  " -numa node,nodeid=5,cpus=2"
-+                  " -numa hmat-lb,initiator=0,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=10"
-+                  " -numa hmat-lb,initiator=0,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=800M"
-+                  " -numa hmat-lb,initiator=0,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=100"
-+                  " -numa hmat-lb,initiator=0,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=0,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=100"
-+                  " -numa hmat-lb,initiator=0,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=0,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=200"
-+                  " -numa hmat-lb,initiator=0,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=1,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=500"
-+                  " -numa hmat-lb,initiator=1,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=100M"
-+                  " -numa hmat-lb,initiator=1,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=50"
-+                  " -numa hmat-lb,initiator=1,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=1,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=50"
-+                  " -numa hmat-lb,initiator=1,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=800M"
-+                  " -numa hmat-lb,initiator=1,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=500"
-+                  " -numa hmat-lb,initiator=1,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=100M"
-+                  " -numa hmat-lb,initiator=3,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=20"
-+                  " -numa hmat-lb,initiator=3,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=3,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=3,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=3,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=3,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=3,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=20"
-+                  " -numa hmat-lb,initiator=3,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=5,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=20"
-+                  " -numa hmat-lb,initiator=5,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=5,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=5,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=5,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=5,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=5,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=10"
-+                  " -numa hmat-lb,initiator=5,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=800M",
-+                  &data);
-+    free_test_data(&data);
-+}
-+
- #ifdef CONFIG_POSIX
- static void test_acpi_erst(const char *machine, const char *arch)
- {
-@@ -2414,6 +2509,8 @@ int main(int argc, char *argv[])
-             qtest_add_func("acpi/q35/nohpet", test_acpi_q35_tcg_nohpet);
-             qtest_add_func("acpi/q35/acpihmat-noinitiator",
-                            test_acpi_q35_tcg_acpi_hmat_noinitiator);
-+            qtest_add_func("acpi/q35/acpihmat-genericx",
-+                           test_acpi_q35_tcg_acpi_hmat_generic_x);
- 
-             /* i386 does not support memory hotplug */
-             if (strcmp(arch, "i386")) {
--- 
-2.43.0
+[...]
+
+> To recap the situation
+>
+>  * The license of the code generator itself does not determine the
+>    license of the output generated code
+
+For instance, GNU Bison is GPLv3+, but the parts the generator emits
+(the parser skeleton) come with a special exception.
+
+Such exceptions need to be granted by the copyright holder.  As long as
+the code generating Go is not a derived work, the copyright holder
+situation should be simple enough to make this practical.
+
+>  * The license of the inputs to the code generator, may or may
+>    not, determine the license of the output generated code depending
+>    on use context
+>
+> The primary input to the code generator is the QAPI schema, which is part
+> of QEMU and thus licensed GPL-2.0-or-later.
+>
+> The QAPI schema includes both the API definitions AND the API documentati=
+on
+> text.
+>
+> We can make the case that as the QEMU public interface, consuming the
+> API definitions in the QAPI schema for the purpose of generating code
+> is "fair use", and thus the output generated code does NOT need to
+> match the GPL-2.0-or-later license of the QAPI schema. We can choose
+> the code license, and a maximally permissive license looks appropriate.
+
+Having this argument confirmed by an actual expert seems advisable.
+
+> We want to have API documentation for the Golang bindings and the obvious
+> way to achieve this is to copy the API docs from the QAPI schema into the
+> Golang code. It is NOT reasonable to class such *direct copying* of docs
+> "fair use".  IOW, copied docs will be under GPL-2.0-or-later.
+>
+> Thus if we pick MIT-0 for the Golang code, and copy across the QAPI docs,
+> the resulting  Golang QAPI project code would be under a compound license
+> term "MIT-0 AND GPL-2.0-or-later".
+>
+> The concern was that this will limit the ability of downstream
+> applications to consume the Golang bindings, if they don't want their
+> combined work to contain GPL-2.0-or-later.
+>
+> Ignoring whether this fear of GPL-2.0-or-later is sane or not,
+> in retrospect I believe that this concern in fact has no legal
+> basis.
+>
+> The license of a compiled application binary is the union of all
+> the object files linked into it.
+>
+> Notice I said "Object file" there, **NOT** "Source file".
+>
+> This is the crucial distinction that makes the presense of
+> GPL-2.0-or-later docs a non-issue from a licensing POV.
+>
+>
+> When the compiler takes the "MIT-0 and GPL-2.0-or-later" license
+> .go source file, and builds an object file, it will be discarding
+> all the API documentation comments. IOW, all the parts that were
+> under GPL-2.0-or-later are discarded. The only parts of the source
+> file that get "compiled" are the Go language constructs which were
+> MIT-0 licensed [1].
+>
+> IOW, we have a "MIT-0 and GPL-2.0-or-later" .go source file,
+> and an "MIT-0" object file.
+>
+> Thus while there may be a human perception problem with the Golang
+> bindings being "MIT-0 and GPL-2.0-or-later", there are no legal
+> licensing limitations, as the combined work for a library or
+> application linking the bindings will only contain the MIT-0 part.
+>
+> The GPL-2.0-or-later docs won't influence the license of the
+> combined work.
+>
+> Note, this interpretation applies only to languages which are
+> compiled, not interpreted.
+>
+> If we are generating python code for example, the there is
+> no "source file" vs "object file" distinction for licensing.
+> The combined work in a python app is under the union of all
+> the source file licenses.
+>
+>
+> TL;DR: I think you can re-add the documentation comments to
+> the Golang code generator, declare the resulting code as being
+> "MIT-0 AND GPL-2.0-or-later".
+>
+> In the README.md file we need todo two important things:
+>
+>  * Document our interpretation of the "combined work" license
+>    situation for applications consuming the project.
+>  * Declare that *ALL* manually written code contributions
+>    are exclusively MIT-0.
+
+What code do you have in mind?  Can you provide an example?
+
+> With regards,
+> Daniel
+>
+> [1] NB, there are languages where some code comments can have semantic
+>     impacts on the compiled out. I don't believe that to be the case for
+>     any human targetted API docs that we would be copying over from the
+>     QAPI schema though in the Golang case.
 
 
