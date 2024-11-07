@@ -4,95 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC592D5D674
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 17:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29BC8D5D67D
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 18:04:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t96cq-0000YJ-9M; Thu, 07 Nov 2024 12:48:56 -0500
+	id 1t96r0-0003D6-8K; Thu, 07 Nov 2024 13:03:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t96co-0000Y8-9X
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 12:48:54 -0500
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1t96qy-0003Ce-9O
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 13:03:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t96cm-0000W2-Lq
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 12:48:54 -0500
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1t96qv-0003Uf-KY
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 13:03:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731001731;
+ s=mimecast20190719; t=1731002607;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=R3Dtbj/Pdv+/aqhBNadhGaq0Rc9Mc6c2BCVdkN56TDU=;
- b=ivJgMMtq0H0Hm/ktAiYOYPfcXDUOXH1t3SC7FgUdX6Ydra14LO7Yc5rlCM1ltHQRSGOykw
- JeyQcjDY/6VbH4nOoKvfYwGGuE3iBu21XlYaXDiX6ZSzVt/3u6Nwp3hZ3m2GSRxGRZQQA1
- DBAjwFP/jAnZSif8aceac+SOhY0Bi20=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-v6cYBZf5OMa9Cdh-nOnjNw-1; Thu, 07 Nov 2024 12:48:50 -0500
-X-MC-Unique: v6cYBZf5OMa9Cdh-nOnjNw-1
-X-Mimecast-MFC-AGG-ID: v6cYBZf5OMa9Cdh-nOnjNw
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-71816436594so929776a34.1
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 09:48:50 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731001730; x=1731606530;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R3Dtbj/Pdv+/aqhBNadhGaq0Rc9Mc6c2BCVdkN56TDU=;
- b=NCXiiUi0MOB6p3SMZG6mQM25+9YF7Lz+myRIVssWFnVFiQCcTbj+JOUf9q/cfsexmS
- MF9RjfjeN1O4d/mY6riLqirHwdDVbOTJKtBHxhxz5vtOeI62FkoVeb9OwoRsxZJUkM6v
- nsNHXDyqmSSwKG1AdkRvcGTNDHhr9PMvy1aoeCVyIXTiso8L7uV2mRagVPK4zxhr31Yx
- DFT/AXYW78hu8u4tgBxRc0mOojTbQUUI4StZTN1BPTevKIjGW5A6g5djfokFR1oGTSZh
- O1bhzK72npYiJviN3o4NrbewJSWAFHlmuGhJ1TQLBnGmcsmCD4pdPIPWeJjnybwk72CD
- VF+w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVO1k/0o3RByErtrMTjxnmC4RoTRUQ2AChvdWzbULwiTK1ID6fHXC4hN9I2UTTivhuSvKgchTu3U5tH@nongnu.org
-X-Gm-Message-State: AOJu0YwJHePmEO/ElFlukcP7KscdC4WAuKEZZnqsd5TJwr1dwQR2z8Lg
- Ne719JeI1ZXBNmDF2VDiGep3mPCuc8TeLckkPxCjs3zf1QzNFAdCzIUMkASr4JGtazjdmC+E602
- nddDu++1nRw0fJ4IPRZI78OqRwOoKUo3Yc1pdBTi25XV8+K9Ikx4m
-X-Received: by 2002:a05:6830:3917:b0:709:41c4:6a5 with SMTP id
- 46e09a7af769-71a1b0196c3mr301571a34.3.1731001730082; 
- Thu, 07 Nov 2024 09:48:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFrh4MYjB/LbDVhhQaWtwd76kU6W33REjpkdVZs7MU6Lq6AD/DBloOz7f0qsMmNzvAoyigbqQ==
-X-Received: by 2002:a05:6830:3917:b0:709:41c4:6a5 with SMTP id
- 46e09a7af769-71a1b0196c3mr301558a34.3.1731001729837; 
- Thu, 07 Nov 2024 09:48:49 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71a10836317sm355726a34.35.2024.11.07.09.48.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Nov 2024 09:48:48 -0800 (PST)
-Date: Thu, 7 Nov 2024 12:48:46 -0500
-From: Peter Xu <peterx@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>,
- Fabiano Rosas <farosas@suse.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH V3 01/16] machine: anon-alloc option
-Message-ID: <Zyz9fj3fUnP_Ni5f@x1n>
-References: <c2ca740b-0178-463b-8262-b149841b8def@redhat.com>
- <bcc4cd7e-3532-475a-8989-211e80bf3eab@oracle.com>
- <09701693-436c-4e1a-8206-03eb26cacab5@redhat.com>
- <66c05a06-dbb7-49ec-b58e-ccd917d098ea@oracle.com>
- <ZyvUg3CP30f3DZYY@x1n>
- <d78a806f-4c15-4a1c-a9a4-8fb9f215a2a6@oracle.com>
- <7fb32744-0512-46e2-b58d-2990f742b897@redhat.com>
- <bb324f6d-8c8b-4f92-9c0f-12278e3c926c@oracle.com>
- <ZyzrqnqoK81QfT_c@x1n>
- <db8fe7a8-9592-42b4-a7e2-df9575408c71@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=wp6P7rUNGA5bgLWyuR/b23ag0Pts4kImB1lsYsdSjfA=;
+ b=DsNdl13nfRR2IIRums0VHUuFNF7LVL5d17VPRPqFnw5TqzY0gJ0J7YWl5Z6jAfuvDTyI1M
+ s3M6Uu8VcX/J4A6hjYVQHFKQGDUCwBapr+4VuEl4QznWXPrfQpPuuKGCCshFwTOw4RU+Ao
+ iSy9CERKRj3Krhlh+2t3ouMc7IaNHJs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-b0ldBbmDNVOfc99NG9nf_Q-1; Thu,
+ 07 Nov 2024 13:03:24 -0500
+X-MC-Unique: b0ldBbmDNVOfc99NG9nf_Q-1
+X-Mimecast-MFC-AGG-ID: b0ldBbmDNVOfc99NG9nf_Q
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A87DA1954B10
+ for <qemu-devel@nongnu.org>; Thu,  7 Nov 2024 18:03:18 +0000 (UTC)
+Received: from corp.redhat.com (unknown [10.39.192.96])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4D712195607C; Thu,  7 Nov 2024 18:03:15 +0000 (UTC)
+From: Dorinda Bassey <dbassey@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: aesteve@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com,
+ Dorinda Bassey <dbassey@redhat.com>
+Subject: [PATCH v2] virtio-dmabuf: Ensure UUID persistence for hash table
+ insertion
+Date: Thu,  7 Nov 2024 19:00:31 +0100
+Message-ID: <20241107180309.1713601-1-dbassey@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <db8fe7a8-9592-42b4-a7e2-df9575408c71@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=dbassey@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -117,37 +83,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 07, 2024 at 05:38:26PM +0100, David Hildenbrand wrote:
-> > David: why do we need to drop PRIVATE in ramblock flags?  I thought it was
-> > pretty harmless.  I suppose things like qemu_ram_is_shared() will even keep
-> > working as before?
-> > 
-> > It looks ok to remove it too, but it adds logics that doesn't seem
-> > necessary to me, so just to double check if I missed something..
-> 
-> A finished ramblock is only boolean "shared" vs. "not shared/private". A
-> single flag (RAM_SHARED) can express that clearly.
-> 
-> Consequently there is less to get wrong when using RAM_PRIVATE only as a
-> flag to the creation function (and documenting that!).
-> 
-> To make RAM_PRIVATE consistent we might have to tweak all other RAMBlock
-> creation functions to set RAM_PRIVATE in the !RAM_SHARED case, and I don't
-> think that is wroth the trouble.
+In `virtio_add_resource` function, the UUID used as a key for
+`g_hash_table_insert` was temporary, which could lead to
+invalid lookups when accessed later. This patch ensures that
+the UUID remains valid by duplicating it into a newly allocated
+memory space. The value is then inserted into the hash table
+with this persistent UUID key to ensure that the key stored in
+the hash table remains valid as long as the hash table entry
+exists.
 
-Yeah, I actually prefer PRIVATE to be applied everywhere, and assert that
-either SHARED|PRIVATE be set in all ramblocks.
+Fixes: faefdba847 ("hw/display: introduce virtio-dmabuf")
 
-But no strong opinions, if both of you like it only applied optionally, I
-already lost the vote.  But yes, please in that case extremely carefully
-document PRIVATE as it can be very tricky now.
+Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+---
+ hw/display/virtio-dmabuf.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-PS: when I think about how to document that, I really, really hoped we
-simply apply it to all..
-
-Thanks,
-
+diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
+index 3dba4577ca7..5e0395be77c 100644
+--- a/hw/display/virtio-dmabuf.c
++++ b/hw/display/virtio-dmabuf.c
+@@ -35,11 +35,13 @@ static bool virtio_add_resource(QemuUUID *uuid, VirtioSharedObject *value)
+     if (resource_uuids == NULL) {
+         resource_uuids = g_hash_table_new_full(qemu_uuid_hash,
+                                                uuid_equal_func,
+-                                               NULL,
++                                               g_free,
+                                                g_free);
+     }
+     if (g_hash_table_lookup(resource_uuids, uuid) == NULL) {
+-        g_hash_table_insert(resource_uuids, uuid, value);
++        g_hash_table_insert(resource_uuids,
++                            g_memdup2(uuid, sizeof(*uuid)),
++                            value);
+     } else {
+         result = false;
+     }
 -- 
-Peter Xu
+2.47.0
 
 
