@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC815D43352
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 13:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A20D43352
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 13:10:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t92Dq-00065q-Py; Thu, 07 Nov 2024 08:06:50 -0500
+	id 1t92Ge-0007FH-22; Thu, 07 Nov 2024 08:09:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t92Do-00062g-FY
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:06:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t92Dm-0007vH-JB
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:06:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730984805;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OdaYfeHvCkmRCffrX/lTddtR0O+Jh7IKlMyJUIDbvaU=;
- b=AOr0143WRu55//N6+oIgQqXYgCpDf/swKkvrvVvZydV3mQoDNO+9g7Rbb5iz17kdx8X4bF
- 6tXAd1KUV1I2TcEZE6MvPPchzI6YSplffxLA4nHQjG9tVhqOZpT4A+2pRja6ZvP+9rfn6t
- bpe3OPibMu5N535ZFokrCTBg29Pc0Dw=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-nn109mGXP2G4nQKtwbMIVQ-1; Thu,
- 07 Nov 2024 08:06:44 -0500
-X-MC-Unique: nn109mGXP2G4nQKtwbMIVQ-1
-X-Mimecast-MFC-AGG-ID: nn109mGXP2G4nQKtwbMIVQ
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 511D519560B4
- for <qemu-devel@nongnu.org>; Thu,  7 Nov 2024 13:06:43 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.55])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F72E1956054; Thu,  7 Nov 2024 13:06:39 +0000 (UTC)
-Date: Thu, 7 Nov 2024 13:06:36 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Victor Toso <victortoso@redhat.com>, qemu-devel@nongnu.org,
- Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>,
- Andrea Bolognani <abologna@redhat.com>
-Subject: Re: [RFC PATCH v2 0/8] qapi: add generator for Golang interface
-Message-ID: <Zyy7XGTRuCS0yGgI@redhat.com>
-References: <20220617121932.249381-1-victortoso@redhat.com>
- <ZyyZugciNAYmVjeP@redhat.com> <87r07njk4e.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1t92Gc-0007Eh-T3
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:09:42 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1t92Gb-0008Mj-2v
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 08:09:42 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-6e9ed5e57a7so7459017b3.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 05:09:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1730984979; x=1731589779; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=FPc/MAs6E/bZJz9LcygnOiZXSNgBI032PG+AUE6p8TE=;
+ b=CW42y3D3tPqOw9Sxo7Z4c0QOkBXqdyQi8ayCmdAOMkvsKt4fhhW8zO95WVdxZF149l
+ DGcmeUjgMGIjk1nLorSLjnVJwKSqKzz0b7+0Ekut1b5A4bpdDBdloUBW5X1nYjYCkciO
+ U8Vo69spHfy2MBxQggrVPyHlV+1xH9nZwjHywBzAxQbev8HS7Uk5/AOxwSAI8ehng11p
+ 1UXf0PoY/X9eukF+U1ur4HOOMpMhk5q69MBl9+dnobllFTXUwxaal5hdEnR7xZHTx2rV
+ 38s74AprZJqsKJLvGkYw+tiIR0wU1KTUX1IGSjHCvs+veDgC8JnmT8EzauBTBZNgK76k
+ Zz1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730984979; x=1731589779;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FPc/MAs6E/bZJz9LcygnOiZXSNgBI032PG+AUE6p8TE=;
+ b=wiRE4CTS2/XbTF+E083RgLTDxwZCwsYNpESe/xBfaGn6y50jPp5EwsrYoJPdkYmEjx
+ gwcgEuEGtih2GV7mpGxi7SezLliGtRL9vfz3K/9MdsofesLAidXL2jVztBTknb12YBIR
+ CAVDqVYbxbX2nnB/YzEjFP9/JwvDk9goW6qVW1VuA8GiaxY1AlYF5D4nU2MpTO52QCbf
+ wN8zXEPE7he4WApTLHN3AhxTD1Q9ya3Lkso9gAIYwQk7odcZ3m+taneqhYF4zT9ClzDk
+ 0o4SsECANs/16eFU0A+8qQX0U7+bIVC50qdI8CGQBbczOYCNKDzs71rr2AiWHWbgqN3w
+ AEGg==
+X-Gm-Message-State: AOJu0YwphnEBzorpKDf3fa+Krytp91yBkPlf02RGSwGJ1imqV2anMSTx
+ WyH5di52/W8BF7yFoPesed28MAQA9mVjBlUoP/Kt620CpO+WIPLZ9bH2sbiYvClic+ZzfQu37La
+ wb1TQQ+B/1W41SrMZfEq+oK1m4/Y=
+X-Google-Smtp-Source: AGHT+IHMxVEdSfDrb6vjJvT4WfDo7UDBEpAOCnFHHcX8Us5DogoUnwWL8VwqBJ4UZbLJRKwnTt+Ww10O99UyxiM3e/8=
+X-Received: by 2002:a05:690c:648a:b0:6e2:2600:ed50 with SMTP id
+ 00721157ae682-6ead5fc3f5bmr12739387b3.21.1730984979601; Thu, 07 Nov 2024
+ 05:09:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87r07njk4e.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20241007070013.3350752-1-dbassey@redhat.com>
+In-Reply-To: <20241007070013.3350752-1-dbassey@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Thu, 7 Nov 2024 17:09:28 +0400
+Message-ID: <CAJ+F1C+xoof_ZWkyi1Qrx4=9NsAq_v8tLrV0PHpwWapprkA2ng@mail.gmail.com>
+Subject: Re: [PATCH v2] virtio-gpu: Add definition for resource_uuid feature
+To: Dorinda Bassey <dbassey@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, mhrica@redhat.com
+Content-Type: multipart/alternative; boundary="000000000000d2225b06265258ad"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,165 +85,189 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 07, 2024 at 01:36:49PM +0100, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > Bringing this thread back from the dead, since I had an in-person
-> > discussion on a key question below at KVM Forum this year and want
-> > to record it here.
-> 
-> [...]
-> 
-> > To recap the situation
-> >
-> >  * The license of the code generator itself does not determine the
-> >    license of the output generated code
-> 
-> For instance, GNU Bison is GPLv3+, but the parts the generator emits
-> (the parser skeleton) come with a special exception.
-> 
-> Such exceptions need to be granted by the copyright holder.  As long as
-> the code generating Go is not a derived work, the copyright holder
-> situation should be simple enough to make this practical.
-> 
-> >  * The license of the inputs to the code generator, may or may
-> >    not, determine the license of the output generated code depending
-> >    on use context
-> >
-> > The primary input to the code generator is the QAPI schema, which is part
-> > of QEMU and thus licensed GPL-2.0-or-later.
-> >
-> > The QAPI schema includes both the API definitions AND the API documentation
-> > text.
-> >
-> > We can make the case that as the QEMU public interface, consuming the
-> > API definitions in the QAPI schema for the purpose of generating code
-> > is "fair use", and thus the output generated code does NOT need to
-> > match the GPL-2.0-or-later license of the QAPI schema. We can choose
-> > the code license, and a maximally permissive license looks appropriate.
-> 
-> Having this argument confirmed by an actual expert seems advisable.
+--000000000000d2225b06265258ad
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-IANAL, but .... :-)
+Hi Michael, Alex,
 
-The distinction of "source code" license vs "combined work" license,
-is a quite normal concept. As an example, it is something that is
-applied in Fedora RPM packaging when deciding the RPM spec "License:"
-tag. The latter is considered to refer to the licenses on the subset
-of source is said to be part of the distributed binaries, so we can
-exclude licenses of any part of the source that is not compiled, and
-of supporting code - eg license of makefiles, meson file, autoconf,
-code is excluded from the RPM license tag.
+Any of you could take this in the next virtio-related PR?
 
+thanks
 
-The difference is that in most cases, the excluded part of the source
-is in separate files, or less frequently could be in #ifdef sections,
-whereas in this case we have two differently licensed parts of work
-in the same file.
+On Mon, Oct 7, 2024 at 11:01=E2=80=AFAM Dorinda Bassey <dbassey@redhat.com>=
+ wrote:
 
-The question is thus what can you say is "compiled".
+> Add the VIRTIO_GPU_F_RESOURCE_UUID feature to enable the assignment
+> of resources UUIDs for export to other virtio devices.
+>
+> Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+> ---
+>  hw/display/vhost-user-gpu.c    | 4 ++++
+>  hw/display/virtio-gpu-base.c   | 3 +++
+>  include/hw/virtio/virtio-gpu.h | 3 +++
+>  3 files changed, 10 insertions(+)
+>
+> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+> index 14548f1a57..aa6c6416fa 100644
+> --- a/hw/display/vhost-user-gpu.c
+> +++ b/hw/display/vhost-user-gpu.c
+> @@ -631,6 +631,10 @@ vhost_user_gpu_device_realize(DeviceState *qdev,
+> Error **errp)
+>          error_report("EDID requested but the backend doesn't support
+> it.");
+>          g->parent_obj.conf.flags &=3D ~(1 << VIRTIO_GPU_FLAG_EDID_ENABLE=
+D);
+>      }
+> +    if (virtio_has_feature(g->vhost->dev.features,
+> +        VIRTIO_GPU_F_RESOURCE_UUID)) {
+> +        g->parent_obj.conf.flags |=3D 1 <<
+> VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;
+> +    }
+>
+>      if (!virtio_gpu_base_device_realize(qdev, NULL, NULL, errp)) {
+>          return;
+> diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+> index 4fc7ef8896..7827536ac4 100644
+> --- a/hw/display/virtio-gpu-base.c
+> +++ b/hw/display/virtio-gpu-base.c
+> @@ -235,6 +235,9 @@ virtio_gpu_base_get_features(VirtIODevice *vdev,
+> uint64_t features,
+>      if (virtio_gpu_context_init_enabled(g->conf)) {
+>          features |=3D (1 << VIRTIO_GPU_F_CONTEXT_INIT);
+>      }
+> +    if (virtio_gpu_resource_uuid_enabled(g->conf)) {
+> +        features |=3D (1 << VIRTIO_GPU_F_RESOURCE_UUID);
+> +    }
+>
+>      return features;
+>  }
+> diff --git a/include/hw/virtio/virtio-gpu.h
+> b/include/hw/virtio/virtio-gpu.h
+> index 7a59379f5a..f12869376c 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -99,6 +99,7 @@ enum virtio_gpu_base_conf_flags {
+>      VIRTIO_GPU_FLAG_BLOB_ENABLED,
+>      VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED,
+>      VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,
+> +    VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED,
+>  };
+>
+>  #define virtio_gpu_virgl_enabled(_cfg) \
+> @@ -115,6 +116,8 @@ enum virtio_gpu_base_conf_flags {
+>      (_cfg.flags & (1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED))
+>  #define virtio_gpu_rutabaga_enabled(_cfg) \
+>      (_cfg.flags & (1 << VIRTIO_GPU_FLAG_RUTABAGA_ENABLED))
+> +#define virtio_gpu_resource_uuid_enabled(_cfg) \
+> +    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED))
+>  #define virtio_gpu_hostmem_enabled(_cfg) \
+>      (_cfg.hostmem > 0)
+>
+> --
+> 2.46.1
+>
+>
+>
 
-Is the whole file "compiled", or are only the souce code constructs
-"compiled".
+--=20
+Marc-Andr=C3=A9 Lureau
 
-My proposition is that, in most cases, comments are not used by
-the "compilation", or "code generation" phase. They are seen by
-the "parsing" phase only and thus dont contribute to the contents
-of the output binary code.
+--000000000000d2225b06265258ad
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-With C code this is easy to illustrate. Run 'gcc -save-temps' and
-look at the '.i' file which is what the compiler uses as input
-for code generation after cpp has run. The '.i' file is devoid of
-all code comments.
+<div dir=3D"ltr"><div>Hi Michael, Alex,</div><div><br></div><div>Any of you=
+ could take this in the next virtio-related PR?</div><div><br></div><div>th=
+anks<br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Mon, Oct 7, 2024 at 11:01=E2=80=AFAM Dorinda Bassey &lt;=
+<a href=3D"mailto:dbassey@redhat.com">dbassey@redhat.com</a>&gt; wrote:<br>=
+</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex">Add the VIRTIO_GPU_=
+F_RESOURCE_UUID feature to enable the assignment<br>
+of resources UUIDs for export to other virtio devices.<br>
+<br>
+Signed-off-by: Dorinda Bassey &lt;<a href=3D"mailto:dbassey@redhat.com" tar=
+get=3D"_blank">dbassey@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0hw/display/vhost-user-gpu.c=C2=A0 =C2=A0 | 4 ++++<br>
+=C2=A0hw/display/virtio-gpu-base.c=C2=A0 =C2=A0| 3 +++<br>
+=C2=A0include/hw/virtio/virtio-gpu.h | 3 +++<br>
+=C2=A03 files changed, 10 insertions(+)<br>
+<br>
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c<br>
+index 14548f1a57..aa6c6416fa 100644<br>
+--- a/hw/display/vhost-user-gpu.c<br>
++++ b/hw/display/vhost-user-gpu.c<br>
+@@ -631,6 +631,10 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error=
+ **errp)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0error_report(&quot;EDID requested but the=
+ backend doesn&#39;t support it.&quot;);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g-&gt;parent_obj.conf.flags &amp;=3D ~(1 =
+&lt;&lt; VIRTIO_GPU_FLAG_EDID_ENABLED);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
++=C2=A0 =C2=A0 if (virtio_has_feature(g-&gt;vhost-&gt;dev.features,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 VIRTIO_GPU_F_RESOURCE_UUID)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 g-&gt;parent_obj.conf.flags |=3D 1 &lt;&lt; VI=
+RTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;<br>
++=C2=A0 =C2=A0 }<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0if (!virtio_gpu_base_device_realize(qdev, NULL, NULL, e=
+rrp)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
+diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c<br=
+>
+index 4fc7ef8896..7827536ac4 100644<br>
+--- a/hw/display/virtio-gpu-base.c<br>
++++ b/hw/display/virtio-gpu-base.c<br>
+@@ -235,6 +235,9 @@ virtio_gpu_base_get_features(VirtIODevice *vdev, uint64=
+_t features,<br>
+=C2=A0 =C2=A0 =C2=A0if (virtio_gpu_context_init_enabled(g-&gt;conf)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0features |=3D (1 &lt;&lt; VIRTIO_GPU_F_CO=
+NTEXT_INIT);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
++=C2=A0 =C2=A0 if (virtio_gpu_resource_uuid_enabled(g-&gt;conf)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 features |=3D (1 &lt;&lt; VIRTIO_GPU_F_RESOURC=
+E_UUID);<br>
++=C2=A0 =C2=A0 }<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0return features;<br>
+=C2=A0}<br>
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.=
+h<br>
+index 7a59379f5a..f12869376c 100644<br>
+--- a/include/hw/virtio/virtio-gpu.h<br>
++++ b/include/hw/virtio/virtio-gpu.h<br>
+@@ -99,6 +99,7 @@ enum virtio_gpu_base_conf_flags {<br>
+=C2=A0 =C2=A0 =C2=A0VIRTIO_GPU_FLAG_BLOB_ENABLED,<br>
+=C2=A0 =C2=A0 =C2=A0VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED,<br>
+=C2=A0 =C2=A0 =C2=A0VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,<br>
++=C2=A0 =C2=A0 VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED,<br>
+=C2=A0};<br>
+<br>
+=C2=A0#define virtio_gpu_virgl_enabled(_cfg) \<br>
+@@ -115,6 +116,8 @@ enum virtio_gpu_base_conf_flags {<br>
+=C2=A0 =C2=A0 =C2=A0(_cfg.flags &amp; (1 &lt;&lt; VIRTIO_GPU_FLAG_CONTEXT_I=
+NIT_ENABLED))<br>
+=C2=A0#define virtio_gpu_rutabaga_enabled(_cfg) \<br>
+=C2=A0 =C2=A0 =C2=A0(_cfg.flags &amp; (1 &lt;&lt; VIRTIO_GPU_FLAG_RUTABAGA_=
+ENABLED))<br>
++#define virtio_gpu_resource_uuid_enabled(_cfg) \<br>
++=C2=A0 =C2=A0 (_cfg.flags &amp; (1 &lt;&lt; VIRTIO_GPU_FLAG_RESOURCE_UUID_=
+ENABLED))<br>
+=C2=A0#define virtio_gpu_hostmem_enabled(_cfg) \<br>
+=C2=A0 =C2=A0 =C2=A0(_cfg.hostmem &gt; 0)<br>
+<br>
+-- <br>
+2.46.1<br>
+<br>
+<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
+=A9 Lureau<br></div>
 
-I've not proved the same for golang compilers yet, but my argument
-hinges on that being the true.
-
-None the less, we have raised this position/viewpoint with experts
-for a second opinion.
-
-> > We want to have API documentation for the Golang bindings and the obvious
-> > way to achieve this is to copy the API docs from the QAPI schema into the
-> > Golang code. It is NOT reasonable to class such *direct copying* of docs
-> > "fair use".  IOW, copied docs will be under GPL-2.0-or-later.
-> >
-> > Thus if we pick MIT-0 for the Golang code, and copy across the QAPI docs,
-> > the resulting  Golang QAPI project code would be under a compound license
-> > term "MIT-0 AND GPL-2.0-or-later".
-> >
-> > The concern was that this will limit the ability of downstream
-> > applications to consume the Golang bindings, if they don't want their
-> > combined work to contain GPL-2.0-or-later.
-> >
-> > Ignoring whether this fear of GPL-2.0-or-later is sane or not,
-> > in retrospect I believe that this concern in fact has no legal
-> > basis.
-> >
-> > The license of a compiled application binary is the union of all
-> > the object files linked into it.
-> >
-> > Notice I said "Object file" there, **NOT** "Source file".
-> >
-> > This is the crucial distinction that makes the presense of
-> > GPL-2.0-or-later docs a non-issue from a licensing POV.
-> >
-> >
-> > When the compiler takes the "MIT-0 and GPL-2.0-or-later" license
-> > .go source file, and builds an object file, it will be discarding
-> > all the API documentation comments. IOW, all the parts that were
-> > under GPL-2.0-or-later are discarded. The only parts of the source
-> > file that get "compiled" are the Go language constructs which were
-> > MIT-0 licensed [1].
-> >
-> > IOW, we have a "MIT-0 and GPL-2.0-or-later" .go source file,
-> > and an "MIT-0" object file.
-> >
-> > Thus while there may be a human perception problem with the Golang
-> > bindings being "MIT-0 and GPL-2.0-or-later", there are no legal
-> > licensing limitations, as the combined work for a library or
-> > application linking the bindings will only contain the MIT-0 part.
-> >
-> > The GPL-2.0-or-later docs won't influence the license of the
-> > combined work.
-> >
-> > Note, this interpretation applies only to languages which are
-> > compiled, not interpreted.
-> >
-> > If we are generating python code for example, the there is
-> > no "source file" vs "object file" distinction for licensing.
-> > The combined work in a python app is under the union of all
-> > the source file licenses.
-> >
-> >
-> > TL;DR: I think you can re-add the documentation comments to
-> > the Golang code generator, declare the resulting code as being
-> > "MIT-0 AND GPL-2.0-or-later".
-> >
-> > In the README.md file we need todo two important things:
-> >
-> >  * Document our interpretation of the "combined work" license
-> >    situation for applications consuming the project.
-> >  * Declare that *ALL* manually written code contributions
-> >    are exclusively MIT-0.
-> 
-> What code do you have in mind?  Can you provide an example?
-
-I don't have any particular examples. Perhaps 100% of the .go code
-in the repo in question will be auto-generated. I can't predict the
-future, so there's a decent chance we might end up with some basic
-scaffolding and/or layered framework code that is manually written.
-If such a situation arises, it is important to have anticipated this,
-to make clear it is intended to be under a specific license.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--000000000000d2225b06265258ad--
 
