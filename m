@@ -4,75 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D226AD4335A
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65FD7D4335A
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t91m4-0007ly-GC; Thu, 07 Nov 2024 07:38:08 -0500
+	id 1t91ob-00019s-Pn; Thu, 07 Nov 2024 07:40:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t91ld-0007WF-Kp
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:37:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t91lc-0001ng-2J
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:37:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730983058;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RSUHPbcKUVNJvL6t6Q5hRuzA9DbD8Fvq1Po2mmk/RrA=;
- b=d7jarlaN0ynSDAVH1QaONtjL9DcI+ku7biZklFTa6C3DNapkZcwso5POvXsKVdhZM1Udqe
- 2F4maj2IzzZ6CzZtFM6IyzZY07cl72JpG69rzy1VkAUQyOPcQoEsZwV57hMW5w0o7CWy+t
- Vo8GoI253funq7SeyAdVlcCDu1fpyOQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-wRO2nGO7OhOLWt0oQI0UTQ-1; Thu,
- 07 Nov 2024 07:37:37 -0500
-X-MC-Unique: wRO2nGO7OhOLWt0oQI0UTQ-1
-X-Mimecast-MFC-AGG-ID: wRO2nGO7OhOLWt0oQI0UTQ
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF2DF1955BC9; Thu,  7 Nov 2024 12:37:35 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.55])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D50BE3003B78; Thu,  7 Nov 2024 12:37:33 +0000 (UTC)
-Date: Thu, 7 Nov 2024 12:37:30 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- linuxarm@huawei.com
-Subject: Re: [PATCH 1/5] hw/acpi: Fix size of HID in
- build_append_srat_acpi_device_handle()
-Message-ID: <Zyy0iqyMMPhjUwgh@redhat.com>
-References: <20241107123446.902801-1-Jonathan.Cameron@huawei.com>
- <20241107123446.902801-2-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1t91oY-00019b-0T
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:40:42 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1t91oV-0002hA-6l
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:40:41 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8CxyuFCtSxnFGE3AA--.45694S3;
+ Thu, 07 Nov 2024 20:40:35 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowMBxnkdAtSxnEhNKAA--.1019S3;
+ Thu, 07 Nov 2024 20:40:34 +0800 (CST)
+Subject: Re: [PATCH v2 5/5] target/loongarch/tcg: Add hardware page table
+ walker support
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ wangliupu@loongson.cn, yijun@loongson.cn
+Cc: maobibo@loongson.cn, philmd@linaro.org
+References: <20241010063536.2276871-1-gaosong@loongson.cn>
+ <20241010063536.2276871-6-gaosong@loongson.cn>
+ <23534a10-ea21-47ee-b31f-0ce9185e6545@linaro.org>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <42da240c-f78e-774c-73ad-37e7b2e05726@loongson.cn>
+Date: Thu, 7 Nov 2024 20:41:37 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <23534a10-ea21-47ee-b31f-0ce9185e6545@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241107123446.902801-2-Jonathan.Cameron@huawei.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Language: en-US
+X-CM-TRANSID: qMiowMBxnkdAtSxnEhNKAA--.1019S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7uryfAF43tr18Cr17XFWfCrX_yoW8Xryrpr
+ 95Gr47JryUJr1rtrsrWr1UZFyjya47A3Z8JrnYqF1FyFsxAry2gr4DWw1q9F1UJr48JF1U
+ XF1UXrZ7Zr15J3cCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j1
+ q2_UUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.588,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,30 +82,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 07, 2024 at 12:34:42PM +0000, Jonathan Cameron wrote:
-> The size should always be 8 so hard code that. By coincidience the
-> incorrect use of sizeof(char *) is 8 on 64 bit hosts, but was caught
-> by CI testing with i686 as the host.
-> 
-> Reported-by: Michael S. Tsirkin <mst@redhat.com>
-> Closes: https://lore.kernel.org/qemu-devel/20241104110025-mutt-send-email-mst@kernel.org/
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
->  hw/acpi/aml-build.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+在 2024/11/5 下午10:27, Richard Henderson 写道:
+> On 10/10/24 07:35, Song Gao wrote:
+>> +        base = get_pte_base(env, address);
+>> +
+>> +        /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
+>> +        shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
+>> +        shift = (shift + 1) * 3;
+>> +        ptindex = (address >> ptbase) & ((1 << ptwidth) -1);
+>> +        ptoffset = ptindex << shift;
+>> +        tmp0 = base | ptoffset;
+>
+> This is a guest virtual address.
+>
+>> +      retry:
+>> +        old_val = ldq_phys(cs->as, tmp0) & TARGET_PHYS_MASK;
+>
+> Fine.
+>
+>> +        if (old_val != new_val) {
+>> +            cur_val = qatomic_cmpxchg((uint64_t *)tmp0, old_val, 
+>> new_val);
+>
+> This uses a host address.  The cast, and the resulting reference, are 
+> incorrect.
+>
+> This is why Arm and x86 structure things differently, using a 
+> different tlb index to resolve the host address.  This allows the 
+> result to be cached like any other address resolution.
+>
+> Riscv does something a bit simpler, using address_space_translate to 
+> resolve the host address.
+>
+> Most of the rest of this patch set is going to need review from 
+> loongson employees, since I've not seen public documentation in 
+> english for this feature.
+>
+> r~
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Hi, Yijun and Wangliupu
 
+Could you guys help review this patch and provide some documentation 
+about it?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Thanks.
+Song Gao
+
 
 
