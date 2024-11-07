@@ -4,68 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A651D43350
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 11:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD25BD43352
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 11:58:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t916Z-0002cX-4Z; Thu, 07 Nov 2024 06:55:15 -0500
+	id 1t919g-0003RC-6n; Thu, 07 Nov 2024 06:58:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1t916Y-0002cG-4X
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:55:14 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1t916U-0001zY-4k
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:55:13 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Ax6+GYqixnJk83AA--.43567S3;
- Thu, 07 Nov 2024 19:55:04 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMDxTMKWqixntPZJAA--.27829S3;
- Thu, 07 Nov 2024 19:55:04 +0800 (CST)
-Subject: Re: [PATCH] hw/loongarch/virt: Add reset interface for virt-machine
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org
-References: <20241031065418.3111892-1-maobibo@loongson.cn>
- <CAFEAcA_4PabxEui-wbztw+nDpHsoAJNi-HWJU4opax54HgAo5w@mail.gmail.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <c6a29d72-763b-69b6-c5e2-3f5c3828f6ea@loongson.cn>
-Date: Thu, 7 Nov 2024 19:54:36 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <CAFEAcA_4PabxEui-wbztw+nDpHsoAJNi-HWJU4opax54HgAo5w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t919e-0003QS-8S
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:58:26 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t919c-0002PT-6m
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:58:25 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A7BeBVb021218;
+ Thu, 7 Nov 2024 11:58:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=c/QwVk
+ lal6MHkWodk/BJL5hd4p3nz9uhWuI15+giT1g=; b=ZuyYpjQJn9FOjq5LD17Q+R
+ CuHSKrWMA5CGZcXVSa6FgmNcf81EQu6jkmbhJ1zXWnC7jcwHCDG9fTuQ/Uyd8YIT
+ e5Nk3zQqTsJXVr5hw6xD4zt8jEqir4HZ3DQzcPzdsXbI0BeUXZbKR8QBc13oyE2s
+ B9MMZShQCeRzDRtTC7XdXF17h3XYbuDRHdLPeJhPWV+6nAYkBRdWzzEyccA/AQMK
+ qrqtXKyX+c6hU5FTVrI/K2W+xy/Q1f00aGdz1fAY3br9X5NB03NkGrMjH/7ZYY2N
+ lx7XJhEtPn0xEDlLGKdYn+5YOax5ANU2gD6YEyJr/26fiSJBXmIDPpnuWhZC765A
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42rvvjg1kt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 07 Nov 2024 11:58:21 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4A7BwKRE026559;
+ Thu, 7 Nov 2024 11:58:20 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42rvvjg1kr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 07 Nov 2024 11:58:20 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A7BtwdR008433;
+ Thu, 7 Nov 2024 11:58:20 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nywm5u0a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 07 Nov 2024 11:58:20 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A7BwJJY48824608
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 7 Nov 2024 11:58:19 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9D2DA58059;
+ Thu,  7 Nov 2024 11:58:19 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 69D245805B;
+ Thu,  7 Nov 2024 11:58:18 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  7 Nov 2024 11:58:18 +0000 (GMT)
+Message-ID: <cd0732c9-e5ae-4dd8-b48a-4ac769cece05@linux.ibm.com>
+Date: Thu, 7 Nov 2024 06:58:17 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests: Adjust path for swtpm state to use path under
+ /var/tmp/
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@gmail.com, clg@redhat.com,
+ lena.voytek@canonical.com
+References: <20241106180751.6859-1-stefanb@linux.vnet.ibm.com>
+ <CAFEAcA8P-a5XyACAovFLwCSPT-s0CX74aMKoPtHku0G89cYgkA@mail.gmail.com>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxTMKWqixntPZJAA--.27829S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3ArWxKrWUur48Gr43ZrWfXrc_yoW7Ww43pF
- ZruF15Aw4kJr17Z39xXas8uF1DZr1Ikr4a9F1xKr1SkF4qgry5Xr10y3sI9F4UA395WF1F
- vrn7Cw1ava10q3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVWUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
- daVFxhVjvjDU0xZFpf9x07jnUUUUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.588,
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <CAFEAcA8P-a5XyACAovFLwCSPT-s0CX74aMKoPtHku0G89cYgkA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: doI3Gf5mC_K6Ll4rSa0cF_6Lpa1EPcjt
+X-Proofpoint-ORIG-GUID: eF3ktXyxZU7i-CPaiHGFMSiMSKGT6zVr
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015
+ priorityscore=1501 mlxlogscore=999 spamscore=0 impostorscore=0
+ lowpriorityscore=0 phishscore=0 mlxscore=0 malwarescore=0 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411070090
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,144 +124,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2024/11/7 下午7:28, Peter Maydell wrote:
-> On Thu, 31 Oct 2024 at 06:55, Bibo Mao <maobibo@loongson.cn> wrote:
+On 11/7/24 6:09 AM, Peter Maydell wrote:
+> On Wed, 6 Nov 2024 at 18:08, Stefan Berger <stefanb@linux.vnet.ibm.com> wrote:
 >>
->> With generic cpu reset interface, pc register is entry of FLASH for
->> UEFI BIOS. However with direct kernel booting requirement, there is
->> little different, pc register of primary cpu is entry address of ELF
->> file.
+>> From: Stefan Berger <stefanb@linux.ibm.com>
 >>
->> At the same time with requirement of cpu hotplug, hot-added CPU should
->> register reset interface for this cpu object. Now reset callback is
->> not registered for hot-added CPU.
+>> To avoid AppArmor-related test failures when functional test are run from
+>> somewhere under /mnt, adjust the path to swtpm's state to use an AppArmor-
+>> supported path, such as /var/tmp, which is provided by the python function
+>> tempfile.TemporaryDirectory().
 >>
->> With this patch reset callback for CPU is register when CPU instance
->> is created, and reset interface is added for virt-machine board. In
->> reset interface of virt-machine, reset for direct kernel booting
->> requirement is called.
+>> An update to swtpm's AppArmor profile is also being done to support /var/tmp.
 >>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   hw/loongarch/boot.c         |  9 +--------
->>   hw/loongarch/virt.c         | 14 ++++++++++++++
->>   include/hw/loongarch/boot.h |  1 +
->>   target/loongarch/cpu.c      | 10 ++++++++++
->>   4 files changed, 26 insertions(+), 8 deletions(-)
->>
->> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
->> index cb668703bd..cbb4e3737d 100644
->> --- a/hw/loongarch/boot.c
->> +++ b/hw/loongarch/boot.c
->> @@ -216,12 +216,11 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
->>       return kernel_entry;
->>   }
->>
->> -static void reset_load_elf(void *opaque)
->> +void reset_load_elf(void *opaque)
->>   {
->>       LoongArchCPU *cpu = opaque;
->>       CPULoongArchState *env = &cpu->env;
->>
->> -    cpu_reset(CPU(cpu));
->>       if (env->load_elf) {
->>          if (cpu == LOONGARCH_CPU(first_cpu)) {
->>               env->gpr[4] = env->boot_info->a0;
->> @@ -320,12 +319,6 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
->>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
->>   {
->>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
->> -    int i;
->> -
->> -    /* register reset function */
->> -    for (i = 0; i < ms->smp.cpus; i++) {
->> -        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cpu(i)));
->> -    }
->>
->>       info->kernel_filename = ms->kernel_filename;
->>       info->kernel_cmdline = ms->kernel_cmdline;
->> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->> index 9a635d1d3d..80680d178c 100644
->> --- a/hw/loongarch/virt.c
->> +++ b/hw/loongarch/virt.c
->> @@ -1434,6 +1434,19 @@ static int64_t virt_get_default_cpu_node_id(const MachineState *ms, int idx)
->>       }
->>   }
->>
->> +static void virt_reset(MachineState *machine, ResetType type)
->> +{
->> +    CPUState *cs;
->> +
->> +    /* Reset all devices including CPU devices */
->> +    qemu_devices_reset(type);
->> +
->> +    /* Reset PC and register context for kernel direct booting method */
->> +    CPU_FOREACH(cs) {
->> +        reset_load_elf(LOONGARCH_CPU(cs));
->> +    }
->> +}
->> +
->>   static void virt_class_init(ObjectClass *oc, void *data)
->>   {
->>       MachineClass *mc = MACHINE_CLASS(oc);
->> @@ -1457,6 +1470,7 @@ static void virt_class_init(ObjectClass *oc, void *data)
->>       mc->auto_enable_numa_with_memdev = true;
->>       mc->get_hotplug_handler = virt_get_hotplug_handler;
->>       mc->default_nic = "virtio-net-pci";
->> +    mc->reset = virt_reset;
->>       hc->plug = virt_device_plug_cb;
->>       hc->pre_plug = virt_device_pre_plug;
->>       hc->unplug_request = virt_device_unplug_request;
->> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
->> index b3b870df1f..c7020ec9bb 100644
->> --- a/include/hw/loongarch/boot.h
->> +++ b/include/hw/loongarch/boot.h
->> @@ -115,5 +115,6 @@ struct memmap_entry {
->>   };
->>
->>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
->> +void reset_load_elf(void *opaque);
->>
->>   #endif /* HW_LOONGARCH_BOOT_H */
->> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->> index 7212fb5f8f..f7f8fcc024 100644
->> --- a/target/loongarch/cpu.c
->> +++ b/target/loongarch/cpu.c
->> @@ -592,6 +592,13 @@ static void loongarch_cpu_disas_set_info(CPUState *s, disassemble_info *info)
->>       info->print_insn = print_insn_loongarch;
->>   }
->>
->> +#ifndef CONFIG_USER_ONLY
->> +static void loongarch_cpu_reset_cb(void *opaque)
->> +{
->> +    cpu_reset((CPUState *) opaque);
->> +}
->> +#endif
->> +
->>   static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
->>   {
->>       CPUState *cs = CPU(dev);
->> @@ -607,6 +614,9 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
->>       loongarch_cpu_register_gdb_regs_for_features(cs);
->>
->>       cpu_reset(cs);
->> +#ifndef CONFIG_USER_ONLY
->> +    qemu_register_reset(loongarch_cpu_reset_cb, dev);
->> +#endif
+>> Link: https://lore.kernel.org/qemu-devel/CAFEAcA8A=kWLtTZ+nua-MpzqkaEjW5srOYZruZnE2tB6vmoMig@mail.gmail.com/
+>> Link: https://github.com/stefanberger/swtpm/pull/944
+>> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 > 
-> Please don't add new uses of qemu_register_reset().
-> I know that CPU reset is currently rather awkward (because
-> we don't automatically-reset CPU objects the way we do most
-> device objects), but generally what should happen is that
-> the machine model should arrange to reset the CPU objects
-> it creates. (Which is what it looks like the code you're
-> removing in this patch was doing already.)
-Currently the machine model does not register reset callback for 
-hot-added CPUs, so we put reset callback registration on CPU object 
-created stage, that works for hot-added CPUs.
+> Thanks for writing this patch. I can confirm that the test now
+> runs OK on my Ubuntu setup, so
 
-Regards
-Bibo Mao
+That's good to hear. However, it surprises me because the tests probably 
+use /var/tmp/ as temp dir and that's no supported in the AppArmor 
+profile yet.
+
+> 
+> Tested-by: Peter Maydell <peter.maydell@linaro.org>
+> 
+>> ---
+>>   tests/functional/test_arm_aspeed.py | 6 +++---
+>>   1 file changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
+>> index 9761fc06a4..a574b1e521 100644
+>> --- a/tests/functional/test_arm_aspeed.py
+>> +++ b/tests/functional/test_arm_aspeed.py
+>> @@ -227,11 +227,11 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
+>>
+>>           image_path = self.ASSET_BR2_202302_AST2600_TPM_FLASH.fetch()
+>>
+>> -        socket_dir = tempfile.TemporaryDirectory(prefix="qemu_")
+>> -        socket = os.path.join(socket_dir.name, 'swtpm-socket')
+> 
+> I think it would be helpful to add a brief comment here:
+>             # We must put the TPM state dir in /tmp/, not the build dir,
+>             # because some distros use AppArmor to lock down swtpm and
+>             # restrict the set of locations it can write to.
+> 
+> just as a guard against somebody in future coming along and
+> trying to clean up/rationalize where tests are creating their
+> temporary files.
+> 
+>> +        tpmstate_dir = tempfile.TemporaryDirectory(prefix="qemu_")
+>> +        socket = os.path.join(tpmstate_dir.name, 'swtpm-socket')
+>>
+>>           subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
+>> -                        '--tpmstate', f'dir={self.vm.temp_dir}',
+>> +                        '--tpmstate', f'dir={tpmstate_dir.name}',
+>>                           '--ctrl', f'type=unixio,path={socket}'])
+>>
+>>           self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
+>> --
+>> 2.34.1
 > 
 > thanks
 > -- PMM
