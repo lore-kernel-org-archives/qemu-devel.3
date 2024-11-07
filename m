@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 930BFD5AE61
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 04:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 545D6D5AE5A
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 04:11:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8trJ-0006H2-RK; Wed, 06 Nov 2024 23:11:01 -0500
+	id 1t8tr9-0006F1-QC; Wed, 06 Nov 2024 23:10:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8trH-0006Gr-Vb
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:10:59 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1t8tr8-0006Ea-GI
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:10:50 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8trG-00050o-DP
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:10:59 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-20c803787abso4930365ad.0
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 20:10:58 -0800 (PST)
+ id 1t8tr6-0004zi-N9
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:10:50 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-20cf6eea3c0so5803175ad.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 20:10:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730952657; x=1731557457; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730952647; x=1731557447; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lH5GO7G9PC7qoCbAKl94qNlYtwmp9Vy76+NSbGNno7g=;
- b=EqmSpeitiHO0FE655k85i8EoFjOrsl7b9lhlHSbfFUvvscFfcZe9yQQqnV3lZotueo
- i6Z/uQNiSOCpFG7MpBoBsUQZy4/5eYVKv0zOdCSc7nuuKDSgS417CygYSJj4/w2B0T4W
- Oveni/xn6lA+PfVFt/jYOt2IpF0SrxRmcEBTz+1dUpVw7uOUHbTPBHeZ/Hjw3QHN0xEk
- UfNOkCwBCeIa8Z88XULePijBJduiv++TNBO/UURVInZT2tw2I0L9zP+vvTSB+42RNulI
- QnmCYvf0vTCDRLkO46zr0X5fy16Y2WS3n3/BnwxUpIY9114RSg1OKVpfHsfHzJJ8xPLi
- NrrA==
+ bh=mbocWowHdZD+/vGvxVHayKk0TMNDIPZKeh2Ujop/xTc=;
+ b=YN2if7R2MVN0zjT2y+A9uKRJHC154XdNk2Ei4BgQbi0Tq/enr5Eo12q31Ft8v32LDF
+ 1p/L1cKECDexI4D8lr9pLTkK5+A9TLPcJ1tA3FBL9lrHpsEniTJCvjDATj709nNavmXa
+ T2knSMEXuIW5Yaes0KGC6lBSZ/I/u3BRmDYs4td4Y4z8KQLBai1rmo6UpzjdjvzU+TkC
+ XOg62t9Ny7K/b/G4nXGny4zkolQmfzhgBDajvQykugkhnYnfJDqgKTpbSHP+AmLj8eI/
+ Q7vizi45BODnQfVpaG1u4gFWfHvetkXqvyyW8qZ0psO4Sm0KG8l4yT0G36r5cTGMruNN
+ Ruxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730952657; x=1731557457;
+ d=1e100.net; s=20230601; t=1730952647; x=1731557447;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lH5GO7G9PC7qoCbAKl94qNlYtwmp9Vy76+NSbGNno7g=;
- b=B1MPDGRVgeHDnNG077AwpfFxlWW/Ts3w2IIMD1dbysYEW3zGhAlgRhxwLVbAQWVUIV
- u6r4Ou6oz3dMJ8ujQnIJJwTLB37wr6n4p15RPUAERe5xta1W38o4cuybaNffhQqqZadO
- cdgskNQHTunTVZM/XTF0N3hyngY1ZeQUzcfWL/fKQYQO6mLYpi6jWbZ0hd0z1sp6PJw6
- 5jAwbQfMjHpt+Nb4S4lKBFGPVBUo/DDkEX8JJjzwtUxPuxmXa/NhdV8fpp+DL9ow2p8E
- cQpAvhF4YaV7gZNIFsb1iSZwbiY2wFvG/LhVyvUR+g/0u3+NS5MbyjwshOSPW3fGmZf2
- LFGA==
-X-Gm-Message-State: AOJu0Yx0w4DFieyBzqF2Yy2+U2hGN2iluDRYiCCq/G8/LfMaQ2RvnIXW
- cdqdGZZH9WyvlG4Sx4AlvzoC9/HPyhUQg0PHogIeKtxUCSH7n1KhQRmlKw==
-X-Google-Smtp-Source: AGHT+IEak4JzKJKrOrwuHzo+IMDpbsYSUuFba/nuYTvv+vb1LQihVvRBbKI6NV8Z7iv7bWh/PU+big==
-X-Received: by 2002:a17:902:fb0b:b0:20c:d71d:69c5 with SMTP id
- d9443c01a7336-21175c13bd8mr25771775ad.4.1730952656655; 
- Wed, 06 Nov 2024 20:10:56 -0800 (PST)
+ bh=mbocWowHdZD+/vGvxVHayKk0TMNDIPZKeh2Ujop/xTc=;
+ b=BKCGzn+TZeR38djW9ROZHKa9LogkH0dwllTstVeksgqS/ZYm/dU+CiFdzpmu8zZ37+
+ mznOhAuWXMS8ZyGYvyiy338jWDB+QuMBdrNUNhO9OU3jslbkgYDUtA8vbPyzpHULGEQz
+ elUZ683XAVMypOXcS7+5ncdJ9UBf43KSGFfDdiKRpw+eNpQz4nH2jUDpqWWnZdb+By3F
+ Qy2f4nsRppFXcW6VKJaVvYS8CYJGRsoezzmqfuc0pSVjdfbs0B4NrMFPaJR8ZIPNIYb6
+ kWtardeJ/ReVDTqjLEhTPqgGIrYDsYgH+4h8gyZp2u2YuqJp7kZa0tpgR+bvOAI/sBte
+ hMcA==
+X-Gm-Message-State: AOJu0YyIF/ns7ID1AUSnQ3Rx0Z5WjRbnh4i+xVOLL2QkEUEHQ9ape4yb
+ ZxE6QCreGCPCt0igQEVOTMl9llIV8rvAapTxKp/7jUQYJA3uQeGSXO2avw==
+X-Google-Smtp-Source: AGHT+IGuC9abh/xyA9Cu+4aGpMLGLbLggJDFykMhyvXCUDXnJ54dVahwi86/BXex+F63pWMxmyJZVA==
+X-Received: by 2002:a17:903:41c4:b0:20c:6b11:deef with SMTP id
+ d9443c01a7336-210c6c3692dmr587997935ad.48.1730952647160; 
+ Wed, 06 Nov 2024 20:10:47 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21177dc3f12sm2789105ad.9.2024.11.06.20.10.53
+ d9443c01a7336-21177dc3f12sm2789105ad.9.2024.11.06.20.10.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2024 20:10:56 -0800 (PST)
+ Wed, 06 Nov 2024 20:10:46 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
- Richard Henderson <richard.henderson@linaro.org>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 10/12] target/riscv: Inline unit-stride ld/st and corresponding
- functions for performance
-Date: Thu,  7 Nov 2024 14:10:14 +1000
-Message-ID: <20241107041016.40800-11-alistair.francis@wdc.com>
+Subject: [PULL 07/12] target/riscv: rvv: Provide a fast path using direct
+ access to host ram for unit-stride whole register load/store
+Date: Thu,  7 Nov 2024 14:10:11 +1000
+Message-ID: <20241107041016.40800-8-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241107041016.40800-1-alistair.francis@wdc.com>
 References: <20241107041016.40800-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,89 +102,176 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Max Chou <max.chou@sifive.com>
 
-In the vector unit-stride load/store helper functions. the vext_ldst_us
-& vext_ldst_whole functions corresponding most of the execution time.
-Inline the functions can avoid the function call overhead to improve the
-helper function performance.
+The vector unit-stride whole register load/store instructions are
+similar to unmasked unit-stride load/store instructions that is suitable
+to be optimized by using a direct access to host ram fast path.
+
+Because the vector whole register load/store instructions do not need to
+handle the tail agnostic, so remove the vstart early exit checking.
 
 Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20240918171412.150107-8-max.chou@sifive.com>
+Message-ID: <20240918171412.150107-5-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/vector_helper.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ target/riscv/vector_helper.c | 129 +++++++++++++++++++----------------
+ 1 file changed, 70 insertions(+), 59 deletions(-)
 
 diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 3d10ff94cd..a85dd1d200 100644
+index 304e9951ed..ddcd1600e8 100644
 --- a/target/riscv/vector_helper.c
 +++ b/target/riscv/vector_helper.c
-@@ -153,14 +153,16 @@ typedef void vext_ldst_elem_fn_tlb(CPURISCVState *env, abi_ptr addr,
- typedef void vext_ldst_elem_fn_host(void *vd, uint32_t idx, void *host);
- 
- #define GEN_VEXT_LD_ELEM(NAME, ETYPE, H, LDSUF)             \
--static void NAME##_tlb(CPURISCVState *env, abi_ptr addr,    \
-+static inline QEMU_ALWAYS_INLINE                            \
-+void NAME##_tlb(CPURISCVState *env, abi_ptr addr,           \
-                 uint32_t idx, void *vd, uintptr_t retaddr)  \
- {                                                           \
-     ETYPE *cur = ((ETYPE *)vd + H(idx));                    \
-     *cur = cpu_##LDSUF##_data_ra(env, addr, retaddr);       \
- }                                                           \
-                                                             \
--static void NAME##_host(void *vd, uint32_t idx, void *host) \
-+static inline QEMU_ALWAYS_INLINE                            \
-+void NAME##_host(void *vd, uint32_t idx, void *host)        \
- {                                                           \
-     ETYPE *cur = ((ETYPE *)vd + H(idx));                    \
-     *cur = (ETYPE)LDSUF##_p(host);                          \
-@@ -172,14 +174,16 @@ GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl)
- GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq)
- 
- #define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)             \
--static void NAME##_tlb(CPURISCVState *env, abi_ptr addr,    \
-+static inline QEMU_ALWAYS_INLINE                            \
-+void NAME##_tlb(CPURISCVState *env, abi_ptr addr,           \
-                 uint32_t idx, void *vd, uintptr_t retaddr)  \
- {                                                           \
-     ETYPE data = *((ETYPE *)vd + H(idx));                   \
-     cpu_##STSUF##_data_ra(env, addr, data, retaddr);        \
- }                                                           \
-                                                             \
--static void NAME##_host(void *vd, uint32_t idx, void *host) \
-+static inline QEMU_ALWAYS_INLINE                            \
-+void NAME##_host(void *vd, uint32_t idx, void *host)        \
- {                                                           \
-     ETYPE data = *((ETYPE *)vd + H(idx));                   \
-     STSUF##_p(host, data);                                  \
-@@ -318,7 +322,7 @@ GEN_VEXT_ST_STRIDE(vsse64_v, int64_t, ste_d_tlb)
+@@ -666,80 +666,91 @@ GEN_VEXT_LDFF(vle64ff_v, int64_t, lde_d_tlb)
   */
+ static void
+ vext_ldst_whole(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+-                vext_ldst_elem_fn_tlb *ldst_elem, uint32_t log2_esz,
+-                uintptr_t ra)
++                vext_ldst_elem_fn_tlb *ldst_tlb,
++                vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz,
++                uintptr_t ra, bool is_load)
+ {
+-    uint32_t i, k, off, pos;
++    target_ulong page_split, elems, addr;
+     uint32_t nf = vext_nf(desc);
+     uint32_t vlenb = riscv_cpu_cfg(env)->vlenb;
+     uint32_t max_elems = vlenb >> log2_esz;
++    uint32_t evl = nf * max_elems;
++    uint32_t esz = 1 << log2_esz;
++    int mmu_index = riscv_env_mmu_index(env, false);
  
- /* unmasked unit-stride load and store operation */
--static void
-+static inline QEMU_ALWAYS_INLINE void
- vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-                   uint32_t elems, uint32_t nf, uint32_t max_elems,
-                   uint32_t log2_esz, bool is_load, int mmu_index,
-@@ -370,7 +374,7 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
+-    if (env->vstart >= ((vlenb * nf) >> log2_esz)) {
+-        env->vstart = 0;
+-        return;
++    /* Calculate the page range of first page */
++    addr = base + (env->vstart << log2_esz);
++    page_split = -(addr | TARGET_PAGE_MASK);
++    /* Get number of elements */
++    elems = page_split / esz;
++    if (unlikely(env->vstart + elems >= evl)) {
++        elems = evl - env->vstart;
      }
+ 
+-    k = env->vstart / max_elems;
+-    off = env->vstart % max_elems;
+-
+-    if (off) {
+-        /* load/store rest of elements of current segment pointed by vstart */
+-        for (pos = off; pos < max_elems; pos++, env->vstart++) {
+-            target_ulong addr = base + ((pos + k * max_elems) << log2_esz);
+-            ldst_elem(env, adjust_addr(env, addr), pos + k * max_elems, vd,
+-                      ra);
+-        }
+-        k++;
++    /* Load/store elements in the first page */
++    if (likely(elems)) {
++        vext_page_ldst_us(env, vd, addr, elems, 1, max_elems, log2_esz,
++                          is_load, mmu_index, ldst_tlb, ldst_host, ra);
+     }
+ 
+-    /* load/store elements for rest of segments */
+-    for (; k < nf; k++) {
+-        for (i = 0; i < max_elems; i++, env->vstart++) {
+-            target_ulong addr = base + ((i + k * max_elems) << log2_esz);
+-            ldst_elem(env, adjust_addr(env, addr), i + k * max_elems, vd, ra);
++    /* Load/store elements in the second page */
++    if (unlikely(env->vstart < evl)) {
++        /* Cross page element */
++        if (unlikely(page_split % esz)) {
++            addr = base + (env->vstart << log2_esz);
++            ldst_tlb(env, adjust_addr(env, addr), env->vstart, vd, ra);
++            env->vstart++;
+         }
++
++        addr = base + (env->vstart << log2_esz);
++        /* Get number of elements of second page */
++        elems = evl - env->vstart;
++
++        /* Load/store elements in the second page */
++        vext_page_ldst_us(env, vd, addr, elems, 1, max_elems, log2_esz,
++                          is_load, mmu_index, ldst_tlb, ldst_host, ra);
+     }
+ 
+     env->vstart = 0;
  }
  
--static void
-+static inline QEMU_ALWAYS_INLINE void
- vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
-              vext_ldst_elem_fn_tlb *ldst_tlb,
-              vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz,
-@@ -757,7 +761,7 @@ GEN_VEXT_LDFF(vle64ff_v, int64_t, lde_d_tlb, lde_d_host)
+-#define GEN_VEXT_LD_WHOLE(NAME, ETYPE, LOAD_FN)      \
+-void HELPER(NAME)(void *vd, target_ulong base,       \
+-                  CPURISCVState *env, uint32_t desc) \
+-{                                                    \
+-    vext_ldst_whole(vd, base, env, desc, LOAD_FN,    \
+-                    ctzl(sizeof(ETYPE)), GETPC());   \
+-}
+-
+-GEN_VEXT_LD_WHOLE(vl1re8_v,  int8_t,  lde_b_tlb)
+-GEN_VEXT_LD_WHOLE(vl1re16_v, int16_t, lde_h_tlb)
+-GEN_VEXT_LD_WHOLE(vl1re32_v, int32_t, lde_w_tlb)
+-GEN_VEXT_LD_WHOLE(vl1re64_v, int64_t, lde_d_tlb)
+-GEN_VEXT_LD_WHOLE(vl2re8_v,  int8_t,  lde_b_tlb)
+-GEN_VEXT_LD_WHOLE(vl2re16_v, int16_t, lde_h_tlb)
+-GEN_VEXT_LD_WHOLE(vl2re32_v, int32_t, lde_w_tlb)
+-GEN_VEXT_LD_WHOLE(vl2re64_v, int64_t, lde_d_tlb)
+-GEN_VEXT_LD_WHOLE(vl4re8_v,  int8_t,  lde_b_tlb)
+-GEN_VEXT_LD_WHOLE(vl4re16_v, int16_t, lde_h_tlb)
+-GEN_VEXT_LD_WHOLE(vl4re32_v, int32_t, lde_w_tlb)
+-GEN_VEXT_LD_WHOLE(vl4re64_v, int64_t, lde_d_tlb)
+-GEN_VEXT_LD_WHOLE(vl8re8_v,  int8_t,  lde_b_tlb)
+-GEN_VEXT_LD_WHOLE(vl8re16_v, int16_t, lde_h_tlb)
+-GEN_VEXT_LD_WHOLE(vl8re32_v, int32_t, lde_w_tlb)
+-GEN_VEXT_LD_WHOLE(vl8re64_v, int64_t, lde_d_tlb)
+-
+-#define GEN_VEXT_ST_WHOLE(NAME, ETYPE, STORE_FN)     \
+-void HELPER(NAME)(void *vd, target_ulong base,       \
+-                  CPURISCVState *env, uint32_t desc) \
+-{                                                    \
+-    vext_ldst_whole(vd, base, env, desc, STORE_FN,   \
+-                    ctzl(sizeof(ETYPE)), GETPC());   \
+-}
+-
+-GEN_VEXT_ST_WHOLE(vs1r_v, int8_t, ste_b_tlb)
+-GEN_VEXT_ST_WHOLE(vs2r_v, int8_t, ste_b_tlb)
+-GEN_VEXT_ST_WHOLE(vs4r_v, int8_t, ste_b_tlb)
+-GEN_VEXT_ST_WHOLE(vs8r_v, int8_t, ste_b_tlb)
++#define GEN_VEXT_LD_WHOLE(NAME, ETYPE, LOAD_FN_TLB, LOAD_FN_HOST)   \
++void HELPER(NAME)(void *vd, target_ulong base, CPURISCVState *env,  \
++                  uint32_t desc)                                    \
++{                                                                   \
++    vext_ldst_whole(vd, base, env, desc, LOAD_FN_TLB, LOAD_FN_HOST, \
++                    ctzl(sizeof(ETYPE)), GETPC(), true);            \
++}
++
++GEN_VEXT_LD_WHOLE(vl1re8_v,  int8_t,  lde_b_tlb, lde_b_host)
++GEN_VEXT_LD_WHOLE(vl1re16_v, int16_t, lde_h_tlb, lde_h_host)
++GEN_VEXT_LD_WHOLE(vl1re32_v, int32_t, lde_w_tlb, lde_w_host)
++GEN_VEXT_LD_WHOLE(vl1re64_v, int64_t, lde_d_tlb, lde_d_host)
++GEN_VEXT_LD_WHOLE(vl2re8_v,  int8_t,  lde_b_tlb, lde_b_host)
++GEN_VEXT_LD_WHOLE(vl2re16_v, int16_t, lde_h_tlb, lde_h_host)
++GEN_VEXT_LD_WHOLE(vl2re32_v, int32_t, lde_w_tlb, lde_w_host)
++GEN_VEXT_LD_WHOLE(vl2re64_v, int64_t, lde_d_tlb, lde_d_host)
++GEN_VEXT_LD_WHOLE(vl4re8_v,  int8_t,  lde_b_tlb, lde_b_host)
++GEN_VEXT_LD_WHOLE(vl4re16_v, int16_t, lde_h_tlb, lde_h_host)
++GEN_VEXT_LD_WHOLE(vl4re32_v, int32_t, lde_w_tlb, lde_w_host)
++GEN_VEXT_LD_WHOLE(vl4re64_v, int64_t, lde_d_tlb, lde_d_host)
++GEN_VEXT_LD_WHOLE(vl8re8_v,  int8_t,  lde_b_tlb, lde_b_host)
++GEN_VEXT_LD_WHOLE(vl8re16_v, int16_t, lde_h_tlb, lde_h_host)
++GEN_VEXT_LD_WHOLE(vl8re32_v, int32_t, lde_w_tlb, lde_w_host)
++GEN_VEXT_LD_WHOLE(vl8re64_v, int64_t, lde_d_tlb, lde_d_host)
++
++#define GEN_VEXT_ST_WHOLE(NAME, ETYPE, STORE_FN_TLB, STORE_FN_HOST)     \
++void HELPER(NAME)(void *vd, target_ulong base, CPURISCVState *env,      \
++                  uint32_t desc)                                        \
++{                                                                       \
++    vext_ldst_whole(vd, base, env, desc, STORE_FN_TLB, STORE_FN_HOST,   \
++                    ctzl(sizeof(ETYPE)), GETPC(), false);               \
++}
++
++GEN_VEXT_ST_WHOLE(vs1r_v, int8_t, ste_b_tlb, ste_b_host)
++GEN_VEXT_ST_WHOLE(vs2r_v, int8_t, ste_b_tlb, ste_b_host)
++GEN_VEXT_ST_WHOLE(vs4r_v, int8_t, ste_b_tlb, ste_b_host)
++GEN_VEXT_ST_WHOLE(vs8r_v, int8_t, ste_b_tlb, ste_b_host)
+ 
  /*
-  * load and store whole register instructions
-  */
--static void
-+static inline QEMU_ALWAYS_INLINE void
- vext_ldst_whole(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
-                 vext_ldst_elem_fn_tlb *ldst_tlb,
-                 vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz,
+  * Vector Integer Arithmetic Instructions
 -- 
 2.47.0
 
