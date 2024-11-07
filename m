@@ -4,74 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE8C0D35E5D
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 10:43:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7DD0D43346
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 11:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8zz1-0005uZ-BG; Thu, 07 Nov 2024 05:43:27 -0500
+	id 1t90H3-0001Ff-Lp; Thu, 07 Nov 2024 06:02:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8zyz-0005sG-4i
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 05:43:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t8zyw-0005kE-2J
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 05:43:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1730976195;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=K7mbdBuaYd0lwvTjgXqP8bJLTXseBXC5pZ1HrFpzrzw=;
- b=YAGl++7mdKk+xz7yu5+0JXNBkmrjf+FICE4Uccv1Q9VIxtETrCjE8Ojntki3wmM10DXw/H
- xePFZelu2nuXqlkuy5tNaqNw3GZw7QORdVcfg8tyVV0IubHMaVCPg1ZCV00WPRM7xJJnB6
- 9E7Bup1CMu7MWTIjW2wiow9NgpARERg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-HgK0xk6sNpGY0JgUIFukXQ-1; Thu,
- 07 Nov 2024 05:43:13 -0500
-X-MC-Unique: HgK0xk6sNpGY0JgUIFukXQ-1
-X-Mimecast-MFC-AGG-ID: HgK0xk6sNpGY0JgUIFukXQ
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0876D1955F10
- for <qemu-devel@nongnu.org>; Thu,  7 Nov 2024 10:43:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.55])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F2413003B71; Thu,  7 Nov 2024 10:43:09 +0000 (UTC)
-Date: Thu, 7 Nov 2024 10:43:06 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Victor Toso <victortoso@redhat.com>
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>,
- Andrea Bolognani <abologna@redhat.com>
-Subject: Re: [RFC PATCH v2 0/8] qapi: add generator for Golang interface
-Message-ID: <ZyyZugciNAYmVjeP@redhat.com>
-References: <20220617121932.249381-1-victortoso@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t90H2-0001FH-OU
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:02:00 -0500
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t90H1-0000mC-8n
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 06:02:00 -0500
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2fb3debdc09so6435581fa.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 03:01:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1730977317; x=1731582117; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DDq9D1U8taeFULz8W5ddU7nLUTOFAivkmxpUM45Z04A=;
+ b=v1/hS8NXkQTeRL2Q87/KFHBxShVEIrShLnQpMk6clc3ybcZXm81MKUXFvoxChlKSaf
+ WUCYm4kHltAWoQuC+v/TN/lvWUTgmsc0uAidlOKmaFzk/MTpdmbiznJ/T7gtBvNbGOhT
+ yguK6ttuBOC9stNMDGUbrGKS3V+f3/xpNc/D8G+tilT/CUZlBb7KaNBLnFf99ZITEpO9
+ uHKoiOUTZGeBTzOvmARJF5wcgWLWwvtQa8Wvkdumh9FlraYxBKMtlFgSYRKvrnxIwH/K
+ ZSIRhHiK9VM13l2VohpYFUs/9Urqk1Gbn/XpiHSuCim5jfawtJU5D5heSx4OuBcMzYoE
+ R6mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1730977317; x=1731582117;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DDq9D1U8taeFULz8W5ddU7nLUTOFAivkmxpUM45Z04A=;
+ b=TQ+Gi5NiqHBnjpJB/cKLEoB1fgHrHc2ub5EuJ7JARXrpfo3OIr4AEHDltMiHmVLGde
+ JwEHt+vfPjmam2n69QN4297qLAcPq8pKK7JWtpyFPrLnt6P2V3vCTUzcLYlkWERDA9+c
+ W/Hcnqf3rPlGcspL2QS1d8r9hZNMn7Mf9hyOzjkQqvMoNaNtSXk/qkc/6GU+EUncrioc
+ eaMCsQ7yAqgf0LaiqDV5BqjbboFXy883NupB1x90SE9BfrrJ5dau3YZOl3443X+imIGt
+ 7Ydfaifc3b2t2itghoiOG+Y3D2/UMd/P4bzdl7WV+VLV6qFTnZXy/EI/P6CuD5h/7zPn
+ zInA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWfjzu9PnIskYIdGLDvrk972E+XZ/xJlsxWg6K502+rXFtYXN6T/Ajr/rlPGbfDIeJtjmL898v+8eoI@nongnu.org
+X-Gm-Message-State: AOJu0Yxa+FBkoq/BD7OUvdvofUSqFVfG6ZJRneakY2CMLk80nROUHuPS
+ 9AKhJbrveaeWNj62fNVFntdecCtmaMqVD36y51dPtNnghYa/9uMhm/mSnnn9DBQ=
+X-Google-Smtp-Source: AGHT+IFYXdqzX49eSOPVm5WsTzx9Q+dNFuwIqNx1vgnoC1M9PHGbiOrfMOVmdtIOI842OG7Cvpxjdg==
+X-Received: by 2002:a05:651c:1b13:b0:2fa:d604:e525 with SMTP id
+ 38308e7fff4ca-2ff1aadd768mr6195211fa.28.1730977317218; 
+ Thu, 07 Nov 2024 03:01:57 -0800 (PST)
+Received: from [172.16.23.118] ([89.101.134.25])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432b054b34csm20140695e9.14.2024.11.07.03.01.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 Nov 2024 03:01:56 -0800 (PST)
+Message-ID: <4b678b54-0f1b-4b3e-8201-fb22c7cd7cd5@linaro.org>
+Date: Thu, 7 Nov 2024 11:01:53 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220617121932.249381-1-victortoso@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/16] hw/ssi/xilinx_spi: Make device endianness
+ configurable
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, devel@lists.libvirt.org,
+ qemu-ppc@nongnu.org, Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241107012223.94337-1-philmd@linaro.org>
+ <20241107012223.94337-9-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241107012223.94337-9-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,145 +102,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bringing this thread back from the dead, since I had an in-person
-discussion on a key question below at KVM Forum this year and want
-to record it here.
-
-On Fri, Jun 17, 2022 at 02:19:24PM +0200, Victor Toso wrote:
-> Hi,
+On 11/7/24 01:22, Philippe Mathieu-Daudé wrote:
+> Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair
+> of DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
+> Add the "little-endian" property to select the device
+> endianness, defaulting to little endian.
+> Set the proper endianness on the single machine using the
+> device.
 > 
-> This is the second iteration of RFC v1:
->   https://lists.gnu.org/archive/html/qemu-devel/2022-04/msg00226.html
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/arm/xlnx-zynqmp.c |  4 ++++
+>   hw/ssi/xilinx_spi.c  | 29 +++++++++++++++++++++--------
+>   2 files changed, 25 insertions(+), 8 deletions(-)
 > 
-> 
-> # What this is about?
-> 
-> To generate a simple Golang interface that could communicate with QEMU
-> over QMP. The Go code that is generated is meant to be used as the bare
-> bones to exchange QMP messages.
-> 
-> The goal is to have this as a Go module in QEMU gitlab namespace,
-> similar to what have been done to pyhon-qemu-qmp
->   https://gitlab.com/qemu-project/python-qemu-qmp
-> 
-> 
-> # Issues raised in RFC v1
-> 
->   The leading '*' for issues I addressed in this iteration
-> 
-> * 1) Documentation was removed to avoid License issues, by Daniel
->      Thread: https://lists.nongnu.org/archive/html/qemu-devel/2022-05/msg01889.html
-> 
->      It is important for the generated Go module to be compatible with
->      Licenses used by projects that would be using this. Copying the
->      documentation of the QAPI spec might conflict with GPLv2+.
-> 
->      I have not proposed another license in this iteration, but I'm
->      planning to go with MIT No Attribution, aka MIT-0 [0]. Does it make
->      sense to bind the generated code's license to MIT-0 already at
->      generator level?
-> 
->      [0] https://github.com/aws/mit-0/blob/master/MIT-0
+> diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
+> index ab2d50e31b..e735dbdf82 100644
+> --- a/hw/arm/xlnx-zynqmp.c
+> +++ b/hw/arm/xlnx-zynqmp.c
+> @@ -714,6 +714,10 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
+>       for (i = 0; i < XLNX_ZYNQMP_NUM_SPIS; i++) {
+>           gchar *bus_name;
+>   
+> +        if (!object_property_set_bool(OBJECT(&s->spi[i])), "little-endian",
+> +                                      true, errp)) {
+> +            return;
+> +        }
 
-To recap the situation
+How might this ever fail?
+Despite xlnx_zynqmp_realize having an errp argument, I'd be inclined to use error_abort.
 
- * The license of the code generator itself does not determine the
-   license of the output generated code
-
- * The license of the inputs to the code generator, may or may
-   not, determine the license of the output generated code depending
-   on use context
-
-The primary input to the code generator is the QAPI schema, which is part
-of QEMU and thus licensed GPL-2.0-or-later.
-
-The QAPI schema includes both the API definitions AND the API documentation
-text.
-
-We can make the case that as the QEMU public interface, consuming the
-API definitions in the QAPI schema for the purpose of generating code
-is "fair use", and thus the output generated code does NOT need to
-match the GPL-2.0-or-later license of the QAPI schema. We can choose
-the code license, and a maximally permissive license looks appropriate.
-
-We want to have API documentation for the Golang bindings and the obvious
-way to achieve this is to copy the API docs from the QAPI schema into the
-Golang code. It is NOT reasonable to class such *direct copying* of docs
-"fair use".  IOW, copied docs will be under GPL-2.0-or-later.
-
-Thus if we pick MIT-0 for the Golang code, and copy across the QAPI docs,
-the resulting  Golang QAPI project code would be under a compound license
-term "MIT-0 AND GPL-2.0-or-later".
-
-The concern was that this will limit the ability of downstream
-applications to consume the Golang bindings, if they don't want their
-combined work to contain GPL-2.0-or-later.
-
-Ignoring whether this fear of GPL-2.0-or-later is sane or not,
-in retrospect I believe that this concern in fact has no legal
-basis.
-
-The license of a compiled application binary is the union of all
-the object files linked into it.
-
-Notice I said "Object file" there, **NOT** "Source file".
-
-This is the crucial distinction that makes the presense of
-GPL-2.0-or-later docs a non-issue from a licensing POV.
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
-When the compiler takes the "MIT-0 and GPL-2.0-or-later" license
-.go source file, and builds an object file, it will be discarding
-all the API documentation comments. IOW, all the parts that were
-under GPL-2.0-or-later are discarded. The only parts of the source
-file that get "compiled" are the Go language constructs which were
-MIT-0 licensed [1].
-
-IOW, we have a "MIT-0 and GPL-2.0-or-later" .go source file,
-and an "MIT-0" object file.
-
-Thus while there may be a human perception problem with the Golang
-bindings being "MIT-0 and GPL-2.0-or-later", there are no legal
-licensing limitations, as the combined work for a library or
-application linking the bindings will only contain the MIT-0 part.
-
-The GPL-2.0-or-later docs won't influence the license of the
-combined work.
-
-Note, this interpretation applies only to languages which are
-compiled, not interpreted.
-
-If we are generating python code for example, the there is
-no "source file" vs "object file" distinction for licensing.
-The combined work in a python app is under the union of all
-the source file licenses.
-
-
-TL;DR: I think you can re-add the documentation comments to
-the Golang code generator, declare the resulting code as being
-"MIT-0 AND GPL-2.0-or-later".
-
-In the README.md file we need todo two important things:
-
- * Document our interpretation of the "combined work" license
-   situation for applications consuming the project.
- * Declare that *ALL* manually written code contributions
-   are exclusively MIT-0.
-
-With regards,
-Daniel
-
-[1] NB, there are languages where some code comments can have semantic
-    impacts on the compiled out. I don't believe that to be the case for
-    any human targetted API docs that we would be copying over from the
-    QAPI schema though in the Golang case.
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+r~
 
