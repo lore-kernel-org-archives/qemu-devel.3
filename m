@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F43D5AE5F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 04:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51EA1D5AE5F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 04:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t8trQ-0006Rq-60; Wed, 06 Nov 2024 23:11:08 -0500
+	id 1t8trG-0006GJ-4n; Wed, 06 Nov 2024 23:10:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8trO-0006Pv-F3
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:11:06 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1t8trE-0006G3-OO
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:10:56 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t8trM-00051b-Ma
- for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:11:06 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2e2ed59a35eso437536a91.0
- for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 20:11:04 -0800 (PST)
+ id 1t8trD-00050Y-0G
+ for qemu-devel@nongnu.org; Wed, 06 Nov 2024 23:10:56 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-20c8b557f91so5579045ad.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Nov 2024 20:10:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1730952663; x=1731557463; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1730952653; x=1731557453; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zJit+aB1hSEY7Z10W4rtdeM1AjZpq2DQ/M5egNktBGY=;
- b=d4wj0lB1icjmUm0xr//8jtTO0/1HoU3NlDYhBjSIAoD4mEyIRV+Xj9mFDqD6I3GA1E
- onzZjVqn298IPVHyMHeuf7+H97FUEUUU6zaxkKxey0nMoip5wSzt56P1kQWEJQi3LWLr
- IlM9UmbhxUd3kqO2niIFQYfQUarxPb5ivS9zih0/3u5qu+FPw3ErUh26/FSUFD4Xytdg
- kOGcMfqzOgf5CDU2+W+jsDFFjCN+yIAm51spYMiAYqzqfV/yrr3sNidI3/LY7TCA8J+p
- /x8z5sbDogO/1jNAo9xppLT2o8ufa27UOpP3JCB+WFZBWIHXclJTxv07kt8HvMG0PbRB
- Lvwg==
+ bh=1miqYX0xQo/7o/8q+JA+EDvRgf2MXw9rICv8IrHiWDQ=;
+ b=LIfoQQ45FZNaVboiNp5B0zXM5oci0TZbrRAQo/nZ1nOlEXIvpGKX3y6usXW+OqjQsz
+ eU+emWG2CQGaY7dvN/DNBLMry/tlaib5ziHjG08UN7CRKJ4AzgZP1HlLHyuvzZY4pzGO
+ gv9SrPWfSjVlHqgXOHqq2iLvKruEmmym//t9/LggZNtwQ2Yb3beKYV9LHiqykOcHR0qc
+ 0MbjBl0x0Bk0vmJ1VV6rf+8KQ0nMMoBoWJO2fYqBJAcAUqtwwbskSDDlQ7HFZ/YaFQm/
+ nq9RlqMVopJcZv2QyueH+AbJIO+l3h0KiYYwNz7lQ2h5Grh/zH2rcedno2Pipbvoboeo
+ ZprA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730952663; x=1731557463;
+ d=1e100.net; s=20230601; t=1730952653; x=1731557453;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zJit+aB1hSEY7Z10W4rtdeM1AjZpq2DQ/M5egNktBGY=;
- b=tyHctCgX17LYX5vmhS0vrDDXMRo8fUSO8AeEevTBp+1jgex0k0c2pBjxbBRyzaey1s
- N/zBFlOZJbx8RS8lXIHdh4IzC9VPHFnnuMbAbrzWIMti/0SBSn9qZa7ngi47ubARrwWZ
- wVVDCoh9E3dkGva7LFmr9ohEmV5lvmeYF7+q6DBj0sxH7LGtnGKKmo9ccQUWZu4bimVd
- QeFcdLaRz9c4ibDTh6ApX0stAs7//jEgsYq8Uy6Dc/7H4xryiyZWIyWyVZOUleWA5qQ4
- 9clEFle3HUGlfkvQqIk/uTEv58r6P/5Kinv4vaJ8csOfHT93ZV4no84xIRsBSbGS2Duu
- deTA==
-X-Gm-Message-State: AOJu0YxBoWtTBNEbVUmi/fUH4/JDTbr3fqSZvlnNF6M3HIoolVlhHHDZ
- jRyfkF9jWYIG721apk/DdUEBDYa0AlnmP6osZYUCToaAgDMUsT2UtQKv8w==
-X-Google-Smtp-Source: AGHT+IH/UQCq6y7TUDAwiEg6MJpScbUOExO/H+J9oKNDVL0DrEN7pB+pBbzpmtX3r+hHng+GENzv4w==
-X-Received: by 2002:a17:902:e890:b0:20c:8abc:733a with SMTP id
- d9443c01a7336-210c6ca8b77mr597730125ad.53.1730952662904; 
- Wed, 06 Nov 2024 20:11:02 -0800 (PST)
+ bh=1miqYX0xQo/7o/8q+JA+EDvRgf2MXw9rICv8IrHiWDQ=;
+ b=fcHglFf/94s1fkMBkr1RtY1jAmWydPDnMDbaQW5L7/xevlUlF+XyCyRVmjpCrAcyMB
+ 53/1VncIgKz94n33Ot+EK7FZ5HPb9gHj6lkJMH3hriZXZDaVOIuwXJW269JjrzMS+5ZP
+ twMw2pWkMqXH6qSV4Mu8CPGYn79pj2ynHt1wgfkdGmqnw8/EZksf4O2SP2NEGKlS86jv
+ 3r24KeVMM6hvH7v6FYqdfzKLQG5Bo8Z0fXKnCDksPwS3k9lJQkMj0MH4wO4nYUbw2ZHc
+ Trf1cbV4NAjwqM1Wua5U+zXUZCGIdEClakKtPSx9dJ+V/8y5dUyI2fGsqw/VTPcoLtUO
+ HVng==
+X-Gm-Message-State: AOJu0Yxp/arhy8wuyG0HlhxmFynULDtCi1oAQoWCpl+/8eB0JREFQdeP
+ v6ks9cxXBGzoe5PMWW4UuwLT8pMC1veoz6WY0M1xPiluR2txNYy+a+C+Rw==
+X-Google-Smtp-Source: AGHT+IHDMsDC5fhe/N7zHMbAe760SlKOpfirGBaN0Lq6v4MCBEBC2h33cV9Mo7Sv8Q8k1SY71gq96g==
+X-Received: by 2002:a17:902:db01:b0:20c:9983:27ae with SMTP id
+ d9443c01a7336-210c6c88004mr551524995ad.48.1730952653422; 
+ Wed, 06 Nov 2024 20:10:53 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21177dc3f12sm2789105ad.9.2024.11.06.20.11.00
+ d9443c01a7336-21177dc3f12sm2789105ad.9.2024.11.06.20.10.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2024 20:11:02 -0800 (PST)
+ Wed, 06 Nov 2024 20:10:52 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Thomas Huth <thuth@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PULL 12/12] tests/functional: Convert the RV32-on-RV64 riscv test
-Date: Thu,  7 Nov 2024 14:10:16 +1000
-Message-ID: <20241107041016.40800-13-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 09/12] target/riscv: rvv: Provide group continuous ld/st flow
+ for unit-stride ld/st instructions
+Date: Thu,  7 Nov 2024 14:10:13 +1000
+Message-ID: <20241107041016.40800-10-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241107041016.40800-1-alistair.francis@wdc.com>
 References: <20241107041016.40800-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,76 +100,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Max Chou <max.chou@sifive.com>
 
-A straggler that has been added to the Avocado framework while the
-conversion to the functional framework was already in progress...
-Move it over now, too!
+The vector unmasked unit-stride and whole register load/store
+instructions will load/store continuous memory. If the endian of both
+the host and guest architecture are the same, then we can group the
+element load/store to load/store more data at a time.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Message-ID: <20241105103519.341304-1-thuth@redhat.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20240918171412.150107-7-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- tests/avocado/tuxrun_baselines.py       | 16 ----------------
- tests/functional/test_riscv64_tuxrun.py | 13 +++++++++++++
- 2 files changed, 13 insertions(+), 16 deletions(-)
+ target/riscv/vector_helper.c | 77 +++++++++++++++++++++++++++++-------
+ 1 file changed, 63 insertions(+), 14 deletions(-)
 
-diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
-index 366c262e32..38064840da 100644
---- a/tests/avocado/tuxrun_baselines.py
-+++ b/tests/avocado/tuxrun_baselines.py
-@@ -222,19 +222,3 @@ def test_arm64be(self):
-                  "rootfs.ext4.zst" :
-                  "e6ffd8813c8a335bc15728f2835f90539c84be7f8f5f691a8b01451b47fb4bd7"}
-         self.common_tuxrun(csums=sums)
--
--    def test_riscv64_rv32(self):
--        """
--        :avocado: tags=arch:riscv64
--        :avocado: tags=machine:virt
--        :avocado: tags=tuxboot:riscv32
--        :avocado: tags=cpu:rv32
--        """
--        sums = { "Image" :
--                 "89599407d7334de629a40e7ad6503c73670359eb5f5ae9d686353a3d6deccbd5",
--                 "fw_jump.elf" :
--                 "f2ef28a0b77826f79d085d3e4aa686f1159b315eff9099a37046b18936676985",
--                 "rootfs.ext4.zst" :
--                 "7168d296d0283238ea73cd5a775b3dd608e55e04c7b92b76ecce31bb13108cba" }
--
--        self.common_tuxrun(csums=sums)
-diff --git a/tests/functional/test_riscv64_tuxrun.py b/tests/functional/test_riscv64_tuxrun.py
-index 13501628f9..4e2449539c 100755
---- a/tests/functional/test_riscv64_tuxrun.py
-+++ b/tests/functional/test_riscv64_tuxrun.py
-@@ -23,6 +23,13 @@ class TuxRunRiscV64Test(TuxRunBaselineTest):
-         'https://storage.tuxboot.com/20230331/riscv64/rootfs.ext4.zst',
-         'b18e3a3bdf27be03da0b285e84cb71bf09eca071c3a087b42884b6982ed679eb')
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index d8d476c3ea..3d10ff94cd 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -190,6 +190,45 @@ GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw)
+ GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl)
+ GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq)
  
-+    ASSET_RISCV32_KERNEL = Asset(
-+        'https://storage.tuxboot.com/20230331/riscv32/Image',
-+        '89599407d7334de629a40e7ad6503c73670359eb5f5ae9d686353a3d6deccbd5')
-+    ASSET_RISCV32_ROOTFS = Asset(
-+        'https://storage.tuxboot.com/20230331/riscv32/rootfs.ext4.zst',
-+        '7168d296d0283238ea73cd5a775b3dd608e55e04c7b92b76ecce31bb13108cba')
++static inline QEMU_ALWAYS_INLINE void
++vext_continus_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb *ldst_tlb,
++                       void *vd, uint32_t evl, target_ulong addr,
++                       uint32_t reg_start, uintptr_t ra, uint32_t esz,
++                       bool is_load)
++{
++    uint32_t i;
++    for (i = env->vstart; i < evl; env->vstart = ++i, addr += esz) {
++        ldst_tlb(env, adjust_addr(env, addr), i, vd, ra);
++    }
++}
 +
-     def test_riscv64(self):
-         self.set_machine('virt')
-         self.common_tuxrun(kernel_asset=self.ASSET_RISCV64_KERNEL,
-@@ -34,5 +41,11 @@ def test_riscv64_maxcpu(self):
-         self.common_tuxrun(kernel_asset=self.ASSET_RISCV64_KERNEL,
-                            rootfs_asset=self.ASSET_RISCV64_ROOTFS)
++static inline QEMU_ALWAYS_INLINE void
++vext_continus_ldst_host(CPURISCVState *env, vext_ldst_elem_fn_host *ldst_host,
++                        void *vd, uint32_t evl, uint32_t reg_start, void *host,
++                        uint32_t esz, bool is_load)
++{
++#if HOST_BIG_ENDIAN
++    for (; reg_start < evl; reg_start++, host += esz) {
++        ldst_host(vd, reg_start, host);
++    }
++#else
++    if (esz == 1) {
++        uint32_t byte_offset = reg_start * esz;
++        uint32_t size = (evl - reg_start) * esz;
++
++        if (is_load) {
++            memcpy(vd + byte_offset, host, size);
++        } else {
++            memcpy(host, vd + byte_offset, size);
++        }
++    } else {
++        for (; reg_start < evl; reg_start++, host += esz) {
++            ldst_host(vd, reg_start, host);
++        }
++    }
++#endif
++}
++
+ static void vext_set_tail_elems_1s(target_ulong vl, void *vd,
+                                    uint32_t desc, uint32_t nf,
+                                    uint32_t esz, uint32_t max_elems)
+@@ -298,24 +337,34 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
+                                mmu_index, true, &host, ra);
  
-+    def test_riscv64_rv32(self):
-+        self.set_machine('virt')
-+        self.cpu='rv32'
-+        self.common_tuxrun(kernel_asset=self.ASSET_RISCV32_KERNEL,
-+                           rootfs_asset=self.ASSET_RISCV32_ROOTFS)
-+
- if __name__ == '__main__':
-     TuxRunBaselineTest.main()
+     if (flags == 0) {
+-        for (i = env->vstart; i < evl; ++i) {
+-            k = 0;
+-            while (k < nf) {
+-                ldst_host(vd, i + k * max_elems, host);
+-                host += esz;
+-                k++;
++        if (nf == 1) {
++            vext_continus_ldst_host(env, ldst_host, vd, evl, env->vstart, host,
++                                    esz, is_load);
++        } else {
++            for (i = env->vstart; i < evl; ++i) {
++                k = 0;
++                while (k < nf) {
++                    ldst_host(vd, i + k * max_elems, host);
++                    host += esz;
++                    k++;
++                }
+             }
+         }
+         env->vstart += elems;
+     } else {
+-        /* load bytes from guest memory */
+-        for (i = env->vstart; i < evl; env->vstart = ++i) {
+-            k = 0;
+-            while (k < nf) {
+-                ldst_tlb(env, adjust_addr(env, addr), i + k * max_elems, vd,
+-                         ra);
+-                addr += esz;
+-                k++;
++        if (nf == 1) {
++            vext_continus_ldst_tlb(env, ldst_tlb, vd, evl, addr, env->vstart,
++                                   ra, esz, is_load);
++        } else {
++            /* load bytes from guest memory */
++            for (i = env->vstart; i < evl; env->vstart = ++i) {
++                k = 0;
++                while (k < nf) {
++                    ldst_tlb(env, adjust_addr(env, addr), i + k * max_elems,
++                             vd, ra);
++                    addr += esz;
++                    k++;
++                }
+             }
+         }
+     }
 -- 
 2.47.0
 
