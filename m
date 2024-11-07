@@ -4,99 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA21FD5D689
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 20:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC4ADD5D688
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 20:46:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t99Kj-0004FK-Gn; Thu, 07 Nov 2024 15:42:25 -0500
+	id 1t99NX-0005fY-PV; Thu, 07 Nov 2024 15:45:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1t99Ki-0004Er-2b; Thu, 07 Nov 2024 15:42:24 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1t99Kg-0000vE-8p; Thu, 07 Nov 2024 15:42:23 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A7KeCJ5032620;
- Thu, 7 Nov 2024 20:42:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Kk12Nh
- cYM+jn08x3N73UIbM3Eh4m9IExz9BzV/rR3OI=; b=afG3mvh6enKxk+pQBKg7gm
- oOpaCeKYZSmr94oOsgYCA1ttocDM5L0tGioJueegQNi+dQkPFfyDsS599pFSJYXo
- UdGvYKvaNnO5RsX30gCQgcFuSHwvvUQRg6MLEKpSygapOSHH4oYuwIn8UJR4GvIQ
- X65//Kz00bBX9o4WfkKusmYwgGjUdyG2jfdPDZ/DacrWADJccj6R/SFXYS3HZaNX
- Qj/tKNYc9Cr/wsGONVwYbFsv2JArW7FgQ0qqyrab7vlupf+D0+JbGqimq6SbgwA8
- 1o2k3TB05kzh825irp6ymYsCMqh/JBgKpmkkFxLOKW/xnhYE0PtX26UN15+Dyagw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42s4sng089-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Nov 2024 20:42:18 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A7JxsGc023916;
- Thu, 7 Nov 2024 20:42:18 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nxt02nc9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Nov 2024 20:42:18 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A7KgHC28389162
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 7 Nov 2024 20:42:18 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 949E858057;
- Thu,  7 Nov 2024 20:42:17 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 32F3558058;
- Thu,  7 Nov 2024 20:42:17 +0000 (GMT)
-Received: from [9.61.96.17] (unknown [9.61.96.17])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Thu,  7 Nov 2024 20:42:17 +0000 (GMT)
-Message-ID: <af01b629-7df1-4f55-9b18-3f3bc1d393c9@linux.ibm.com>
-Date: Thu, 7 Nov 2024 15:42:16 -0500
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t99NQ-0005ef-DY
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 15:45:12 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t99NO-0001My-P4
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 15:45:12 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5cece886771so2465652a12.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 12:45:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731012309; x=1731617109; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=I8vlh4q9tNEgYb8TbmTj3pjSSGsAzW8x6Ca114qSpg8=;
+ b=pG/Jf/Q20YCh+93fGMVqm6tCUGytew5nEo7A1Wlp5UHpM7wC0Uv7LQVaJ9fsoECNt7
+ rOwB5O0PzXkZ8b5+s9cslry+axXfFQq0mlMLhgFAcdYgMX/kzkQGwRslW4usbxviV+iL
+ mxK06hwnqMZUSFKwtNWA4BxUedblDI6JIYBbavJQLwlBJn/SZNp9O5d0WAtZD6psOdne
+ IQ0pG1o14vX9FV3xIL4WYVTLvyNTLs0gqZarF4qOpQK9/+K6eiLlkvZUMF0tdsbn/Wp4
+ zHsSuRo2JW6ZV34YdxXVY/cwXwZzEYFePrZgG0/Tw6IxCmgjjpgHabgAn8r5RdsYL1an
+ Amqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731012309; x=1731617109;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=I8vlh4q9tNEgYb8TbmTj3pjSSGsAzW8x6Ca114qSpg8=;
+ b=SVYHeVnilgt5csWV5RjvCa1I1iZW0whfuh4O6wTBIUXajiK48R4gi+mJq1lwROBDc0
+ OGImBOIcitDFWjWsa9gxwDO65wbraUw/WiDTycskLuoAa2gKklUaNoIELRsE5kC4oEY7
+ Q6IxB7jveNb+rMXQe+cCrVr0n58Xucyvou44R57BRe5elxsJnoNKBT9tos0aojvu2oJ3
+ gdRmZmVz5ZW1PzKmXP6vwa0TbH2uR2i79w0ydsLkaKngBvw82v00sRUzdWLBEijsrrmr
+ OuSSiDLLVGl4aP+/JDN0Oc8UyE+xrMI9Q0HrtgR4ducFIglobHRxvJ6J42AGRR+uIf5N
+ 1uaA==
+X-Gm-Message-State: AOJu0YyL4QVhymxmf6F5GphocYzYdl5wgSnyBqJodXASVg6VPzCqDeIA
+ 8OBw7fPEGRbApZ77uN+zuA+pMJsVCP7J+xSx5JLE3HSgUbIxU4VV5L0Kw+NBvtP0TyglgXW3+XS
+ jAbHyIxdrFHYVcas0CuGQ2olV+iRG0hB2OfiNSA==
+X-Google-Smtp-Source: AGHT+IFSpFdH2DTB80m1B94jK+N4nI1lBzn6GQcafhVc/uDIUBNrnO3K+OuFeABDUu2CxT/UHCvoxBPPFx3MAeM5Tco=
+X-Received: by 2002:a05:6402:40cb:b0:5cf:265:cda5 with SMTP id
+ 4fb4d7f45d1cf-5cf096f591emr1027521a12.5.1731012308976; Thu, 07 Nov 2024
+ 12:45:08 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/19] s390x: Add Full Boot Order Support
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org
-Cc: frankja@linux.ibm.com, Sebastian Mitterle <smitterl@redhat.com>,
- qemu-devel@nongnu.org
-References: <20241020012953.1380075-1-jrossi@linux.ibm.com>
- <7800f880-d362-40b6-aaef-2085dcb78ad0@redhat.com>
- <c5bff27a-0aae-4356-9403-89d126426610@linux.ibm.com>
- <6d6466b5-1d6c-49b3-abb0-f268aa617c6a@redhat.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <6d6466b5-1d6c-49b3-abb0-f268aa617c6a@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: tS3P9ZmWMRJ_n-CDUUOyWBaUrstu3CD6
-X-Proofpoint-ORIG-GUID: tS3P9ZmWMRJ_n-CDUUOyWBaUrstu3CD6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- lowpriorityscore=0 malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0
- phishscore=0 spamscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411070161
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20241107041016.40800-1-alistair.francis@wdc.com>
+In-Reply-To: <20241107041016.40800-1-alistair.francis@wdc.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 7 Nov 2024 20:44:58 +0000
+Message-ID: <CAFEAcA8h530-M8f0GOOJ3=TQPB7Ae0O65P=k2sZZXUx562D4MQ@mail.gmail.com>
+Subject: Re: [PULL 00/12] riscv-to-apply queue
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,82 +87,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/6/24 6:10 AM, Thomas Huth wrote:
-> On 05/11/2024 17.42, Jared Rossi wrote:
->> Hi Thomas, Sebastian,
->>
->> It looks like this is simply caused by the "is_cdrom" value only ever 
->> being set
->> to true.  I think it is a one-line fix that just makes sure to 
->> initialize the
->> value to false each time we try a new device:
->>
->> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
->> index a4d1c05aac..3fdba0bedc 100644
->> --- a/pc-bios/s390-ccw/main.c
->> +++ b/pc-bios/s390-ccw/main.c
->> @@ -214,6 +214,7 @@ static void boot_setup(void)
->>   static bool find_boot_device(void)
->>   {
->>       VDev *vdev = virtio_get_device();
->> +    vdev->is_cdrom = false;
->>       bool found = false;
->>
->>       switch (iplb.pbt) {
->>
->> I tested it with the two scenarios you mention and with the existing 
->> qtests,
->> and it seems to work correctly now.
+On Thu, 7 Nov 2024 at 04:11, Alistair Francis <alistair23@gmail.com> wrote:
 >
-> Agreed, this seems to fix the issue when all devices are properly 
-> marked with bootindex properties. But it still persists in case the 
-> BIOS has to scan for the boot device, e.g.:
+> The following changes since commit 63dc36944383f70f1c7a20f6104966d8560300fa:
 >
-> qemu-system-s390x -accel kvm -m 2G -nographic \
->  -drive if=none,id=d1,file=/tmp/bad.dat,format=raw,media=cdrom \
->  -device virtio-scsi -device scsi-cd,drive=d1 \
->  -drive if=none,id=d2,file=good.qcow2 -device virtio-blk,drive=d2
+>   Merge tag 'hw-misc-20241105' of https://github.com/philmd/qemu into staging (2024-11-06 17:28:45 +0000)
 >
-> Isn't there a better place to set the is_cdrom variable?
+> are available in the Git repository at:
 >
->  Thomas
+>   https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20241107
+>
+> for you to fetch changes up to 27652f9ca9d831c67dd447346c6ee953669255f0:
+>
+>   tests/functional: Convert the RV32-on-RV64 riscv test (2024-11-07 13:12:58 +1000)
+>
+> ----------------------------------------------------------------
+> RISC-V PR for 9.2
+>
+> * Fix broken SiFive UART on big endian hosts
+> * Fix IOMMU Coverity issues
+> * Improve the performance of vector unit-stride/whole register ld/st instructions
+> * Update kvm exts to Linux v6.11
+> * Convert the RV32-on-RV64 riscv test
 >
 
-Hi Thomas,
 
-What I found is that the original issue with clearing the "is_cdrom" 
-value is
-just as easily fixed for both indexed devices and probed devices by moving
-where "is_cdrom" is set to false:
+Applied, thanks.
 
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index a4d1c05aac..7509755e36 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -242,6 +242,7 @@ static bool find_boot_device(void)
-  static int virtio_setup(void)
-  {
-      VDev *vdev = virtio_get_device();
-+    vdev->is_cdrom = false;
-      int ret;
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
 
-      switch (vdev->senseid.cu_model) {
-
-Unfortunately when verifying the fix I found another unrelated issue with
-probing, which is that only the first device attached to the scsi controller
-will be found.  This is because virtio_scsi_setup() itself contains a 
-probing
-loop to find a LUN when none is specified, and, unsurprisingly, it returns
-the first thing it finds attached to the controller.  As a result, the main
-device probing loop will move on after trying only one LUN per controller.
-
-Fixing this won't be a simple one-liner because it will require 
-implementation
-of nested probing for scsi devices, such that all LUNS on the controller are
-probed before moving to the next device.
-
-Regards,
-  Jared Rossi
+-- PMM
 
