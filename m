@@ -4,83 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC8BD43367
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 14:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7923D43367
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 14:22:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t93Lu-00037I-5O; Thu, 07 Nov 2024 09:19:14 -0500
+	id 1t93OO-0004Tr-GX; Thu, 07 Nov 2024 09:21:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t93Lr-00036s-Pz
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 09:19:11 -0500
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ id 1t93ON-0004TZ-Eb
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 09:21:47 -0500
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t93Ln-0005B8-Ts
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 09:19:11 -0500
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-539e6c754bdso887816e87.2
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 06:19:06 -0800 (PST)
+ id 1t93OL-0005kH-S8
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 09:21:47 -0500
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2fb559b0b00so8703531fa.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 06:21:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1730989145; x=1731593945; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FrU7JtnQpJfpKvgjf8ImTJz+wPnBRZpkFW5d/kkrvwc=;
- b=MPgr6KC2vvhYByqtwQFaTlg0tf+/vWVJmvHnHSJswkrY81ExmIW6v0JapO/PYENa4C
- sQuM8mTMups73xDkw3JVCK+pH2l1uWSTZGqTeMake9+bAqEn70+iwPFd80sxmNvuLOfz
- fppcdtkNiYrz1LtD+yvfYXJFEqEpltNq6UdfUxbjG1VXCYadkAODEXAAgnyun29I9Cmu
- +Qs6hGPavbQey5qxe3ggOgLYGwQDwnYOVNCq4IaiAGdM1vQUeIgH1ypCcDfkt3z2LPS3
- QRDyFBY57DBrwPLI1F3jv4dWsMPHDuG1D+L7GNk8Tz9pYu/4HU0OAWPqHcgSb+CJ79t8
- 9t7g==
+ d=linaro.org; s=google; t=1730989304; x=1731594104; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZXZha86n3C8j/RPyzgmrpswP9sTnM3EtX4JaiPZDZG4=;
+ b=pMec3vqufWW/fNJKuTg+3o64wTneWt7bc4E+T7aNB8J1UiNoYyVzSNY4HxlcJ0LIJC
+ siI9dGyqir8hBVUXJKUhbZaIjKwy+DOpu+pGKoOoehDTeT4o0nphN5mRCUYaN5nvLUOK
+ rS6Sp32uMRlF2SVCO1SaY+csVl09yXwhz6rDlC+AvVx/CbCJ+43yPhMgGcNegogvE2a0
+ Tal3492aK3TuTe59wvGJ/vya6H3vu3usyPhV5UvkXkhzrBYkHcC1tD8Yed0wz3x9V2oO
+ DNSsTh+KrGXo4uRxCuTaH2Qzwe7WFiaQqghr0HX9D43zFIXrbZa5sarRFaUrnL1yEEUB
+ LNuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1730989145; x=1731593945;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FrU7JtnQpJfpKvgjf8ImTJz+wPnBRZpkFW5d/kkrvwc=;
- b=Im4lkJvt1RPkbYKxbA4PcQuCEqbKyTAqbPU8bnduEQo6eh5QERlUb5G5uaMb309gjo
- 3xoASob2cl6+Ik7ko5JmqkKAP7Ks6s0EnF/uJp/uwkJ/cHcDyt4xDpODC5GU6oMnNil+
- qL0qM5+9TrFp0jpM0rV/YDvp3M5aU9RHjsUUvEwg324jfMusleHCrzpTTjFZD+JHMfeb
- +gwZjs8tyT332NbT/DnkorGCJ32TUePLUB3mkD+EOpYbD0xEGF3lOkc9e3JdUmlJ6F6m
- vTKpM8TsW1qHod5ndE2Weeb6aS1ZM0qvg7105bTWuQdQkgsUgwmkXUiPqDu7D/S1Ck6O
- 503A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhzV4zvo8xSMHnzHO7m6BlGA6IQrcf9mYg7o7AXJsjboWPxInGO8/1QuLipTHvrRJdeWfamJEsAqNz@nongnu.org
-X-Gm-Message-State: AOJu0Yy/1J0QVoqLjcio4uXcbdgEyP7IqwDdNRM0H74z38umnSWXXqr2
- rEo2WyAI+GgsGUWix2Q+vK0oAN85vTPzu6JtbGc34WoeDAYAj9YDZ9eBmKMV1BALn6smg+gUDoX
- p5u1ixVItrtDsLTc4ICUuKHvhYx7Jf7lVvnS/uQ==
-X-Google-Smtp-Source: AGHT+IH0RJFjPb1JwCF8jir+KmP9wPddavTWFnNG+nSrRXy9mNG4SVtDYrPiF5IjsS+dd4TRAWLLg8ElLmTewPpvtB4=
-X-Received: by 2002:a05:651c:1602:b0:2fa:d354:1435 with SMTP id
- 38308e7fff4ca-2ff1e7c9011mr1630691fa.0.1730989144699; Thu, 07 Nov 2024
- 06:19:04 -0800 (PST)
+ d=1e100.net; s=20230601; t=1730989304; x=1731594104;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZXZha86n3C8j/RPyzgmrpswP9sTnM3EtX4JaiPZDZG4=;
+ b=O/za9w4GwBp3CmM7UOfFFCbhvMLWVOf0nE5D3Yq4H0N306WmgLW3njwohM1mVqIYjZ
+ CTtESmTxBHWDIOMCMEMKHHFcs+9TjkRAB83Ph5yzIizQQyMPbClVpp0yTlT9kAjjCeaT
+ MNe+MlfatY+r0CHivQOZKtnng6NUTw+wBkhDzCq+wPmis8yFgh30/i366oLAEWof2bag
+ dxj+VJsDkppRwJa7tyb4Ay5Fc3JV9gERyfmoVcfXuiVxp2e6Q8l5gJ01QbfIhnIslJkn
+ Qc5hQT9BU76cg2RiNX0TXGbMHFcegzHUhmtLWxqtD7swpL/JIk5mJEDJ5vcIww2SHflU
+ /Y4A==
+X-Gm-Message-State: AOJu0YwTSkAeu74AgUZ4hskEOdTjMbXE4n+WQisE29OFQWvdE5Ads7RW
+ 8qu15yuIYRu99KrUa957OCDB0dfj5himxNNFIzDrv3cHpkPlPEen+YksnWE1j2xw1FaVDEIsn2k
+ q4/0a7YcsUetzzub5I7djYr0Gb/RCjc9x6XDYu2Uq1X4NLP1c
+X-Google-Smtp-Source: AGHT+IEA6fnj9gBBNUUyyndzzFOgQAgFqCb3MQSFzMz16iW0IDz/pCJMKVBuJMWqjVMcmrQX4ZpTxU+v+jQ2TZRabi0=
+X-Received: by 2002:a2e:bc28:0:b0:2fa:d534:3ee7 with SMTP id
+ 38308e7fff4ca-2fedb8156admr119470801fa.35.1730989303864; Thu, 07 Nov 2024
+ 06:21:43 -0800 (PST)
 MIME-Version: 1.0
-References: <20240725235410.451624-1-npiggin@gmail.com>
- <20240725235410.451624-16-npiggin@gmail.com>
- <49b1d57d-e0bf-4b64-b6ef-3cb4e1da5d65@kaod.org>
- <CAFEAcA869xMGhB+K1x722CL0bD0a55+oWofpsW610HSycz_Yag@mail.gmail.com>
-In-Reply-To: <CAFEAcA869xMGhB+K1x722CL0bD0a55+oWofpsW610HSycz_Yag@mail.gmail.com>
+References: <20241106180742.567076-1-pbonzini@redhat.com>
+In-Reply-To: <20241106180742.567076-1-pbonzini@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 Nov 2024 14:18:53 +0000
-Message-ID: <CAFEAcA9pNo4Yyt42msbs4jqk6xACziUMSfeNnxPt-WWpRtn7BQ@mail.gmail.com>
-Subject: Re: [PULL 15/96] ppc/pnv: Implement POWER9 LPC PSI serirq outputs and
- auto-clear function
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.ibm.com>
+Date: Thu, 7 Nov 2024 14:21:32 +0000
+Message-ID: <CAFEAcA83ZezJPCuA6921-aV5GhffXA5s9DeS8CxzY5U8ZCE8xg@mail.gmail.com>
+Subject: Re: [PULL v3 00/39] Rust changes for QEMU 9.2 soft freeze
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,22 +87,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Nov 2024 at 17:35, Peter Maydell <peter.maydell@linaro.org> wrote=
-:
+On Wed, 6 Nov 2024 at 18:08, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> On Mon, 29 Jul 2024 at 11:11, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
-> >
-> > On 7/26/24 01:52, Nicholas Piggin wrote:
-> > > The POWER8 LPC ISA device irqs all get combined and reported to the l=
-ine
-> > > connected the PSI LPCHC irq. POWER9 changed this so only internal LPC
-> > > host controller irqs use that line, and the device irqs get routed to
-> > > 4 new lines connected to PSI SERIRQ0-3.
+> The following changes since commit 11b8920ed2093848f79f93d106afe8a69a61a523:
 >
-> Ping! It looks like these issues are still floating around...
+>   Merge tag 'pull-request-2024-11-04' of https://gitlab.com/thuth/qemu into staging (2024-11-04 17:37:59 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream-rust
+>
+> for you to fetch changes up to 951f71ad67bd474aba6925529daf45b747aac86e:
+>
+>   dockerfiles: install bindgen from cargo on Ubuntu 22.04 (2024-11-06 17:12:17 +0100)
+>
+> ----------------------------------------------------------------
+> * rust: cleanups
+> * rust: integration tests
+> * rust/pl011: add support for migration
+> * rust/pl011: add TYPE_PL011_LUMINARY device
+> * rust: add support for older compilers and bindgen
+> ----------------------------------------------------------------
+> v1->v2: wrap bindgen check with "if have_rust"
+>         drop ci enablement
+>
+> v2->v3: fix formatting of pull request
 
-I just noticed that they were fixed in the pullreq that just
-landed; sorry for the noise.
+The msys2-64bit job seems to be failing on the test-aio test:
+
+https://gitlab.com/qemu-project/qemu/-/jobs/8293985646
+https://gitlab.com/qemu-project/qemu/-/jobs/8289460211
+
+| 50/127 /aio/timer/schedule -
+ERROR:../tests/unit/test-aio.c:413:test_timer_schedule: assertion
+failed: (aio_poll(ctx, true)) FAIL
+
+but it passed on the third retry
+https://gitlab.com/qemu-project/qemu/-/jobs/8294803952
+
+Since it doesn't obviously look like there's anything
+in this pullreq that would have caused that I have
+assumed this to be a pre-existing intermittent.
+
+
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
 
 -- PMM
 
