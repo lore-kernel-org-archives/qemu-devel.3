@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 833AFD43352
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:35:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C4B2D43352
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Nov 2024 12:36:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t91j7-0003jt-NY; Thu, 07 Nov 2024 07:35:05 -0500
+	id 1t91k7-0004dt-TO; Thu, 07 Nov 2024 07:36:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t91j5-0003jj-NS
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:35:03 -0500
+ id 1t91js-0004QE-48
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:35:53 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t91j2-0001I7-E4
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:35:02 -0500
+ id 1t91jq-0001ah-Fk
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 07:35:51 -0500
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XkhLW1p9Kz6K5kJ;
- Thu,  7 Nov 2024 20:33:07 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XkhPY1HD8z6LDBD;
+ Thu,  7 Nov 2024 20:35:45 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 698AF1403A2;
- Thu,  7 Nov 2024 20:34:47 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 17AE61403A2;
+ Thu,  7 Nov 2024 20:35:49 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 7 Nov 2024 13:34:47 +0100
+ 15.1.2507.39; Thu, 7 Nov 2024 13:35:48 +0100
 To: "Michael S . Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  <qemu-devel@nongnu.org>
 CC: <linuxarm@huawei.com>
-Subject: [PATCH 0/5] hw/acpi: Fixes + tests for ACPI Generic Port Affinity
- Struturs
-Date: Thu, 7 Nov 2024 12:34:41 +0000
-Message-ID: <20241107123446.902801-1-Jonathan.Cameron@huawei.com>
+Subject: [PATCH 2/5] qapi/qom: Change Since entry for
+ AcpiGenericPortProperties to 9.2
+Date: Thu, 7 Nov 2024 12:34:43 +0000
+Message-ID: <20241107123446.902801-3-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241107123446.902801-1-Jonathan.Cameron@huawei.com>
+References: <20241107123446.902801-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
@@ -71,44 +73,29 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A couple of issues have been reported on this code that has been merged
-for 9.2.
+This feature was only applied during the 9.2 cycle, so reflect
+that rather than 9.1.
 
-A) Missed a version number update in the qapi/qom.json docs when rebasing
-   for 9.2.
-B) A test failure on i686 (32bit) bios tables test for x86_64.
+Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+Closes: https://lore.kernel.org/qemu-devel/ZyngEiwmYeZ-DvCy@redhat.com/
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+---
+ qapi/qom.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This second one was a refactoring mistake where visibility of the size
-of an array of 8 characters had been replaced with a pointer which on 64
-bit hosts is also 8 bytes, but not on 32 bits, leading to a miss-alignment
-of the final structure in the table and a test failure. Fix by hard coding
-the size as 8 given it is always this size for the relevant ACPI HIDs.
-
-For completeness the tests are also included. Some reference tables
-needed an update to incorporate other changes.
-
-Jonathan Cameron (5):
-  hw/acpi: Fix size of HID in build_append_srat_acpi_device_handle()
-  qapi/qom: Change Since entry for AcpiGenericPortProperties to 9.2
-  bios-tables-test: Allow for new acpihmat-generic-x test data.
-  bios-tables-test: Add complex SRAT / HMAT test for GI GP
-  bios-tables-test: Add data for complex numa test (GI, GP etc)
-
- qapi/qom.json                                 |   2 +-
- hw/acpi/aml-build.c                           |   2 +-
- tests/qtest/bios-tables-test.c                |  97 ++++++++++++++++++
- .../data/acpi/x86/q35/APIC.acpihmat-generic-x | Bin 0 -> 136 bytes
- .../data/acpi/x86/q35/CEDT.acpihmat-generic-x | Bin 0 -> 68 bytes
- .../data/acpi/x86/q35/DSDT.acpihmat-generic-x | Bin 0 -> 12599 bytes
- .../data/acpi/x86/q35/HMAT.acpihmat-generic-x | Bin 0 -> 360 bytes
- .../data/acpi/x86/q35/SRAT.acpihmat-generic-x | Bin 0 -> 520 bytes
- 8 files changed, 99 insertions(+), 2 deletions(-)
- create mode 100644 tests/data/acpi/x86/q35/APIC.acpihmat-generic-x
- create mode 100644 tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x
- create mode 100644 tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x
- create mode 100644 tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x
- create mode 100644 tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x
-
+diff --git a/qapi/qom.json b/qapi/qom.json
+index a8beeabf1f..28ce24cd8d 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -877,7 +877,7 @@
+ #     complex as there may be interleaving across multiple devices
+ #     and shared links in the path.
+ #
+-# Since: 9.1
++# Since: 9.2
+ ##
+ { 'struct': 'AcpiGenericPortProperties',
+   'data': { 'pci-bus': 'str',
 -- 
 2.43.0
 
