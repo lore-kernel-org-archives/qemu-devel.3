@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57AD7D64073
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 792AED64070
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9Swd-000404-CA; Fri, 08 Nov 2024 12:38:51 -0500
+	id 1t9Swi-00043a-OT; Fri, 08 Nov 2024 12:38:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t9Swb-0003xf-9k
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:49 -0500
+ id 1t9Swg-00042X-BV
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t9SwZ-0007b2-Fv
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:48 -0500
+ id 1t9Swe-0007e0-JB
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731087526;
+ s=mimecast20190719; t=1731087531;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9ZIMW9G3sjeI4/2YX7Y1lN1LwS43Mhgyg0W5crtvJQo=;
- b=BA4N/rm2u59ZDpEG+nGElgcciSk4dx7OTzga62NBk11TlWSA+z/fvXG7AErn0M6wnwzhyO
- on2V3mOY/gY8L37EKfrJEXVywuHibUS+4p1sHiDacMxQhUwafxDviMKSdAhr77bDluZfOP
- BuDYvecyhLqDmNuLtto2G5YcOrDnrcA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3GXeQjTNaAPfh0xkQIuz07mE5z10C7JXikWrLJP9TQA=;
+ b=Q/9p/L97xoFshEaCSrfO4ALKHkGgyeLcoiLoBMIUfPW6atlz/vb6Cz3Rq8lTFanVU0IEN3
+ u0ovhaJJb0iga8Z4f7JQpcFBUiL2vXfxou5EyhYO/1QOkISytoUvbm0OhVHY82Yy884lFK
+ TBSDPV5kBJZq+HNOOUyCsD61a3bNxKc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-GcLW3L9RNqi6rd0auE4awQ-1; Fri, 08 Nov 2024 12:38:45 -0500
-X-MC-Unique: GcLW3L9RNqi6rd0auE4awQ-1
-X-Mimecast-MFC-AGG-ID: GcLW3L9RNqi6rd0auE4awQ
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d4a211177so1164264f8f.0
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:38:45 -0800 (PST)
+ us-mta-669-zQWRrsupPve4QVJTf6FJFg-1; Fri, 08 Nov 2024 12:38:50 -0500
+X-MC-Unique: zQWRrsupPve4QVJTf6FJFg-1
+X-Mimecast-MFC-AGG-ID: zQWRrsupPve4QVJTf6FJFg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43163a40ee0so16536875e9.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:38:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731087524; x=1731692324;
+ d=1e100.net; s=20230601; t=1731087528; x=1731692328;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9ZIMW9G3sjeI4/2YX7Y1lN1LwS43Mhgyg0W5crtvJQo=;
- b=sx6N7Z5M+o2YlFPLypOKWrbkU6Hs3OGrCLo1di9cBvY2nagVUQWqz5L92a8Z7JlMSl
- 8KttYqo3WMPxiGUnfN+BLFmTztxE/4s2md9XRSE93D+HMCHEwKKQkbXZqqEVIpivgJwL
- TKHsAe/EWKnLWxSOqiLyompoN/uKbbWQnWB0adFsRHHzRScZHvDcrdCGCMlUM5tODf7U
- DyD6WEpH8TkQzQ2DZ8WvBNbSFQyxs08fEJ6XJP2o9bfRRasaoiYX1oRfJNz3ZCL5IpuC
- bMVAfDg6Z9M0ojjFz1dqZT1p5wtnJNKz3uEO/y4A1TOLJE1ib8f387Z6D/VkrM7fAL6K
- rUhg==
-X-Gm-Message-State: AOJu0YzwltGz6GngU69ulMvW2R2jTf1Z8M1H1a4a2RXaEtcv557Nn/vO
- +dDTy2UAWyLQkJXGRdxzsWFxazxGSvYhdwISMkiKpnpO4hraZddVR+W5jlvMf+0Mvj4uRRglvcU
- RFmv/Sl4qaq3Lv9eKT2+YI8ECbOnddZmbCXe8DswsRMJ00c/ABMJcxeCMKBMMDh+u14LLPv11nO
- BMCfKFi+SzW9m2IYJOOE1QQeMek2IUa4j/Uz7JNHQ=
-X-Received: by 2002:a05:6000:1569:b0:37c:d2f0:7331 with SMTP id
- ffacd0b85a97d-381f1839aa8mr3196963f8f.0.1731087524245; 
- Fri, 08 Nov 2024 09:38:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFhGJcSaRqciiaNVKMg0EQCNyW/DKTtyrS2OAyPHgzj1mb0XaZIKay8rbT8rIU5KibEQwAjMA==
-X-Received: by 2002:a05:6000:1569:b0:37c:d2f0:7331 with SMTP id
- ffacd0b85a97d-381f1839aa8mr3196935f8f.0.1731087523745; 
- Fri, 08 Nov 2024 09:38:43 -0800 (PST)
+ bh=3GXeQjTNaAPfh0xkQIuz07mE5z10C7JXikWrLJP9TQA=;
+ b=bNafdDMPXzm2LNjjiljRa+FrBBOOdqPNw0CYV8Tuwu8kMhuyvTeAPDBmSw+P1bmkIH
+ iLiymJCMCeODO4ZxRU2kZCtwTcG1J1OpN70jOJTKCE/aJD+38uHhS+Sc+lcbxyFH91wg
+ mc2DnLupiR1poRrr+ICd7P+RpyhvUQd419OCRIaSNY6giUgl3EtakD/6qzeP0SJGcZkh
+ 6e/Hvn2XC9xMK98w6LjYkY84+C2Cq6mRZNveaDycr3TaZloRwJy88lSvPuOBpW1OXpII
+ HS3WdrKF6TRc052NcMX9KdwnkK6BXG998yjseG+/jHKMUhq+8seSvqWU+wzmgeGnS00n
+ lgSQ==
+X-Gm-Message-State: AOJu0YzIHClrgQfRqSvaq5qdBNKRYClQrIpFIV/J4G0gh1I4hQ06RBrU
+ gv5gCiW2GRp/LOLWUIm5KuI8BlaQZA123esPD/2SyA0GoQsCu4c27lriIPwSGAYDEjzZ3kPYSk4
+ Fr27Hg7KUUFt89cxz+l+B32tT9roThGRSuX9AFaef/q2ReCHW3Yg/OakS61vdGaAov2/7Og4vpa
+ mFWEBpUJ5736ZcUsVA68+E7ANlb+s9+q9n8BvGP0c=
+X-Received: by 2002:a05:600c:5488:b0:431:9397:9ac9 with SMTP id
+ 5b1f17b1804b1-432b7507c16mr27491735e9.15.1731087528395; 
+ Fri, 08 Nov 2024 09:38:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHlkz4ZEgRzi4wK+Q6KLKZwoggSXe4KyLkGIoJFHOM0+9y3TVeg6ZrI/S7YZ15hK7ln/pjxVg==
+X-Received: by 2002:a05:600c:5488:b0:431:9397:9ac9 with SMTP id
+ 5b1f17b1804b1-432b7507c16mr27491535e9.15.1731087527956; 
+ Fri, 08 Nov 2024 09:38:47 -0800 (PST)
 Received: from [192.168.10.47] ([151.49.84.243])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed9ea6b5sm5578887f8f.84.2024.11.08.09.38.42
+ ffacd0b85a97d-381ed9707d3sm5468676f8f.19.2024.11.08.09.38.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 09:38:42 -0800 (PST)
+ Fri, 08 Nov 2024 09:38:46 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  Roman Bolshakov <r.bolshakov@yadro.com>
-Subject: [PULL 07/13] i386/hvf: Integrates x2APIC support with hvf accel
-Date: Fri,  8 Nov 2024 18:38:22 +0100
-Message-ID: <20241108173828.111454-8-pbonzini@redhat.com>
+Subject: [PULL 09/13] i386/hvf: Fixes startup memory leak (vmcs caps)
+Date: Fri,  8 Nov 2024 18:38:24 +0100
+Message-ID: <20241108173828.111454-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241108173828.111454-1-pbonzini@redhat.com>
 References: <20241108173828.111454-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -107,92 +106,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 
-Support for x2APIC mode was recently introduced in the software emulated
-APIC implementation for TCG. Enabling it when using macOS’s hvf
-accelerator is useful and significantly helps performance, as Qemu
-currently uses the emulated APIC when running on hvf as well.
-
-This change wires up the read & write operations for the MSR VM exits
-and allow-lists the CPUID flag in the x86 hvf runtime.
+The hvf_caps data structure only exists once as part of the hvf accelerator
+state, but it is initialised during vCPU initialisation. This change therefore
+adds a check to ensure memory for it is only allocated once.
 
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Link: https://lore.kernel.org/r/20241105155800.5461-2-phil@philjordan.eu
+Link: https://lore.kernel.org/r/20241105155800.5461-4-phil@philjordan.eu
 Reviewed-by: Roman Bolshakov <r.bolshakov@yadro.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/hvf/x86_cpuid.c |  2 +-
- target/i386/hvf/x86_emu.c   | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletion(-)
+ target/i386/hvf/hvf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/hvf/x86_cpuid.c b/target/i386/hvf/x86_cpuid.c
-index 492e8bfc809..3f16b0f363d 100644
---- a/target/i386/hvf/x86_cpuid.c
-+++ b/target/i386/hvf/x86_cpuid.c
-@@ -77,7 +77,7 @@ uint32_t hvf_get_supported_cpuid(uint32_t func, uint32_t idx,
-         ecx &= CPUID_EXT_SSE3 | CPUID_EXT_PCLMULQDQ | CPUID_EXT_SSSE3 |
-              CPUID_EXT_FMA | CPUID_EXT_CX16 | CPUID_EXT_PCID |
-              CPUID_EXT_SSE41 | CPUID_EXT_SSE42 | CPUID_EXT_MOVBE |
--             CPUID_EXT_POPCNT | CPUID_EXT_AES |
-+             CPUID_EXT_POPCNT | CPUID_EXT_AES | CPUID_EXT_X2APIC |
-              (supported_xcr0 ? CPUID_EXT_XSAVE : 0) |
-              CPUID_EXT_AVX | CPUID_EXT_F16C | CPUID_EXT_RDRAND;
-         ecx |= CPUID_EXT_HYPERVISOR;
-diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
-index 38c782b8e3b..be675bcfb71 100644
---- a/target/i386/hvf/x86_emu.c
-+++ b/target/i386/hvf/x86_emu.c
-@@ -663,6 +663,15 @@ static void exec_lods(CPUX86State *env, struct x86_decode *decode)
-     env->eip += decode->len;
- }
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 68dc5d9cf75..8527bce6eef 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -239,7 +239,9 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+     init_emu();
+     init_decoder();
  
-+static void raise_exception(CPUX86State *env, int exception_index,
-+                            int error_code)
-+{
-+    env->exception_nr = exception_index;
-+    env->error_code = error_code;
-+    env->has_error_code = true;
-+    env->exception_injected = 1;
-+}
-+
- void simulate_rdmsr(CPUX86State *env)
- {
-     X86CPU *cpu = env_archcpu(env);
-@@ -677,6 +686,17 @@ void simulate_rdmsr(CPUX86State *env)
-     case MSR_IA32_APICBASE:
-         val = cpu_get_apic_base(cpu->apic_state);
-         break;
-+    case MSR_APIC_START ... MSR_APIC_END: {
-+        int ret;
-+        int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
-+
-+        ret = apic_msr_read(index, &val);
-+        if (ret < 0) {
-+            raise_exception(env, EXCP0D_GPF, 0);
-+        }
-+
-+        break;
+-    hvf_state->hvf_caps = g_new0(struct hvf_vcpu_caps, 1);
++    if (hvf_state->hvf_caps == NULL) {
++        hvf_state->hvf_caps = g_new0(struct hvf_vcpu_caps, 1);
 +    }
-     case MSR_IA32_UCODE_REV:
-         val = cpu->ucode_rev;
-         break;
-@@ -777,6 +797,17 @@ void simulate_wrmsr(CPUX86State *env)
-     case MSR_IA32_APICBASE:
-         cpu_set_apic_base(cpu->apic_state, data);
-         break;
-+    case MSR_APIC_START ... MSR_APIC_END: {
-+        int ret;
-+        int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
-+
-+        ret = apic_msr_write(index, data);
-+        if (ret < 0) {
-+            raise_exception(env, EXCP0D_GPF, 0);
-+        }
-+
-+        break;
-+    }
-     case MSR_FSBASE:
-         wvmcs(cs->accel->fd, VMCS_GUEST_FS_BASE, data);
-         break;
+     env->hvf_mmio_buf = g_new(char, 4096);
+ 
+     if (x86cpu->vmware_cpuid_freq) {
 -- 
 2.47.0
 
