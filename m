@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4F53D5C0D3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 14:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E86FD5C0D4
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 14:54:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9QLz-0007Qb-KS; Fri, 08 Nov 2024 09:52:51 -0500
+	id 1t9QHr-0006Jf-Iq; Fri, 08 Nov 2024 09:48:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t9QLv-00079R-QZ
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:52:48 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t9QLu-00064E-4k
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:52:47 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A8EBCO6024977;
- Fri, 8 Nov 2024 14:52:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=PtopWrB95sEJJakqj
- ViYAB0+qRP5bfPxyQ/0IlUv5kw=; b=aHn9taudWKbo3XtosgfeIyPSnrWgAetKK
- jwTtWw5nQBD+aYBM6ybRiMoPDysPGYhzOd/IEKk84WjjScTNBQ9VVM6AWfTSukA5
- uTlBJSPyM5DAqHnGCb9o5pruc3l4SgXDI9wGaRWxXpMO6RMPRkAF56Q0pF12D2ix
- q1Wt+XZeU3rAPrR4xb5LnNYaswV8q7payzbKgbn1q8Vc2wpDuakjyCiygAcWuxOW
- rv/ILeNTEanr9i1hgo0a1YeiV19J80A/3Xv7upeXZd+NwuApRAZMKoThB+LutLIw
- VvF0M3qfqKHSvA1b9WOEu7PgIx8qFUaN0UI8X/ndFS8/XS2tetunQ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42sm5qr6qp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 Nov 2024 14:52:43 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A8Db4IL024174;
- Fri, 8 Nov 2024 14:52:42 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nxt0ax89-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 Nov 2024 14:52:42 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4A8EqePM51511806
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 8 Nov 2024 14:52:40 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7DE3520043;
- Fri,  8 Nov 2024 14:52:40 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 25A2620040;
- Fri,  8 Nov 2024 14:52:40 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.28.129])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  8 Nov 2024 14:52:40 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2 1/1] tests/tcg: Test that sigreturn() does not corrupt the
- signal mask
-Date: Fri,  8 Nov 2024 15:50:04 +0100
-Message-ID: <20241108145237.37377-2-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241108145237.37377-1-iii@linux.ibm.com>
-References: <20241108145237.37377-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1t9QH1-0004VK-RY
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:47:45 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1t9QGz-0005ML-2r
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:47:43 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a99eb8b607aso306210166b.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 06:47:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1731077259; x=1731682059;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=isnD7As7KB1rIe3OlHY/rnA8IDktAdqxEZvKqYInFYo=;
+ b=14XNWr+tY4wuWygN6xFBuTu9EMmUZvYt3LeGtRoM6tL24r3gQfORxzvTmTlZGBqGeh
+ ksR/TcKQbBb0tCxHJsgn7DfWnIf8hjf6If3g6BMHVstzqKx8QEwtAhWKZxcwdrj8iC3D
+ 3E41zL+4Yrpkk7x6yYaogh5krh88ZJt1UTJe0CJDMYHZ7X8K6N3OlgDqH2Mwjyr3eJl7
+ E2QkWIcauFxmdPvNTjinZcx2QkWLAQ0nGJZiX/nm25HoRlw2chg8V2o9c13LYwG6TmKt
+ mkoy0iac6vkoRCsOgB7ZdBqCgsCheaG3rCH16wZh+RcplkRblvBF5PQ0pXoSUd7QU4On
+ DSsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731077259; x=1731682059;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=isnD7As7KB1rIe3OlHY/rnA8IDktAdqxEZvKqYInFYo=;
+ b=bIup61JRXi1+mXa3WDp9My6plwWAua9Z1vEErwTZQd3dJJ8rAiPnl4Yi4M3BScjXKW
+ pq4vN4HYYRF6TwW5DH9LN+YGakz0noFZUJ54/fTWdg7G8Mn6Y9A+RlPPBhblxFAkHknz
+ LSurAWLPpAGFtRtf/InujcwYH0yhw2nK/IeTpNGv3oJ46ThKt3zF4zSfE0Ekmwqnu4UO
+ knTuAtGdUCu0yh+R9pYkHsU2iOBLkxzg6XmJMG+YAkflCA+u9dIFIvSk3wgQguK2dtWv
+ 4z1yQJFxryczVDVKq0jbHCATV5prG0WfM3acccubW9b+rG/l6U5Rwn9k8QOxDO+TNGQV
+ 4+Vg==
+X-Gm-Message-State: AOJu0YwCOsDIIGi3u6ok23bZ1sxWpA9GShxxxiycvXJhGZWlIwtkQHHX
+ atahBl4ApDAkmWklfu8F96kavHzesVKYIbyDFy2b1LhMbnH9+MJLEA1B2mR3RdvNt2segZn6ez5
+ 4VQ==
+X-Google-Smtp-Source: AGHT+IEx7OIJmylJp+l71gJFUD5S3/QFSHJcLWY1A/NuX11zHpUPTXHW3s64vqZwUgLUF1otE1kbZQ==
+X-Received: by 2002:a17:907:94c1:b0:a9a:6752:ba80 with SMTP id
+ a640c23a62f3a-a9eefebd152mr307480066b.5.1731077258785; 
+ Fri, 08 Nov 2024 06:47:38 -0800 (PST)
+Received: from localhost.localdomain (h082218084190.host.wavenet.at.
+ [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9ee0a4a9b1sm240534066b.52.2024.11.08.06.47.37
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 08 Nov 2024 06:47:38 -0800 (PST)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+To: qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
+ pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com,
+ stefanha@redhat.com, mst@redhat.com, slp@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com,
+ chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com,
+ philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
+ qemu-riscv@nongnu.org, Alexander Graf <graf@amazon.com>
+Subject: [PATCH v8 12/15] hw/vmapple/cfg: Introduce vmapple cfg region
+Date: Fri,  8 Nov 2024 15:47:06 +0100
+Message-Id: <20241108144709.95498-13-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.3 (Apple Git-145)
+In-Reply-To: <20241108144709.95498-1-phil@philjordan.eu>
+References: <20241108144709.95498-1-phil@philjordan.eu>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: htm-ASqO2WB_tHTEFhIvWOqUAa1vRHgU
-X-Proofpoint-GUID: htm-ASqO2WB_tHTEFhIvWOqUAa1vRHgU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015
- impostorscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 adultscore=0 phishscore=0 mlxlogscore=999 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411080122
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: neutral client-ip=2a00:1450:4864:20::62c;
+ envelope-from=phil@philjordan.eu; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,87 +106,283 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a small test to prevent regressions.
+From: Alexander Graf <graf@amazon.com>
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Instead of device tree or other more standardized means, VMApple passes
+platform configuration to the first stage boot loader in a binary encoded
+format that resides at a dedicated RAM region in physical address space.
+
+This patch models this configuration space as a qdev device which we can
+then map at the fixed location in the address space. That way, we can
+influence and annotate all configuration fields easily.
+
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- tests/tcg/multiarch/Makefile.target     |  3 ++
- tests/tcg/multiarch/sigreturn-sigmask.c | 51 +++++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
- create mode 100644 tests/tcg/multiarch/sigreturn-sigmask.c
 
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index 78b83d5575a..18d3cf4ae00 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -42,6 +42,9 @@ munmap-pthread: LDFLAGS+=-pthread
- vma-pthread: CFLAGS+=-pthread
- vma-pthread: LDFLAGS+=-pthread
+v3:
+
+ * Replaced legacy device reset method with Resettable method
+
+v4:
+
+ * Fixed initialisation of default values for properties
+ * Dropped superfluous endianness conversions
+ * Moved most header code to .c, device name #define goes in vmapple.h
+
+v5:
+
+ * Improved error reporting in case of string property buffer overflow.
+
+v7:
+
+ * Changed error messages for overrun of properties with
+   fixed-length strings to be more useful to users than developers.
+
+v8:
+
+ * Consistent parenthesising of macro arguments for better safety.
+
+ hw/vmapple/Kconfig           |   3 +
+ hw/vmapple/cfg.c             | 196 +++++++++++++++++++++++++++++++++++
+ hw/vmapple/meson.build       |   1 +
+ include/hw/vmapple/vmapple.h |   2 +
+ 4 files changed, 202 insertions(+)
+ create mode 100644 hw/vmapple/cfg.c
+
+diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
+index 68f88876eb9..8bbeb9a9237 100644
+--- a/hw/vmapple/Kconfig
++++ b/hw/vmapple/Kconfig
+@@ -4,3 +4,6 @@ config VMAPPLE_AES
+ config VMAPPLE_BDIF
+     bool
  
-+sigreturn-sigmask: CFLAGS+=-pthread
-+sigreturn-sigmask: LDFLAGS+=-pthread
++config VMAPPLE_CFG
++    bool
 +
- # The vma-pthread seems very sensitive on gitlab and we currently
- # don't know if its exposing a real bug or the test is flaky.
- ifneq ($(GITLAB_CI),)
-diff --git a/tests/tcg/multiarch/sigreturn-sigmask.c b/tests/tcg/multiarch/sigreturn-sigmask.c
+diff --git a/hw/vmapple/cfg.c b/hw/vmapple/cfg.c
 new file mode 100644
-index 00000000000..e6cc904898d
+index 00000000000..787e2505d57
 --- /dev/null
-+++ b/tests/tcg/multiarch/sigreturn-sigmask.c
-@@ -0,0 +1,51 @@
++++ b/hw/vmapple/cfg.c
+@@ -0,0 +1,196 @@
 +/*
-+ * Test that sigreturn() does not corrupt the signal mask.
-+ * Block SIGUSR2 and handle SIGUSR1.
-+ * Then sigwait() SIGUSR2, which relies on it remaining blocked.
++ * VMApple Configuration Region
++ *
++ * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
 + */
-+#include <assert.h>
-+#include <pthread.h>
-+#include <signal.h>
-+#include <stdlib.h>
-+#include <unistd.h>
 +
-+int seen_sig = -1;
++#include "qemu/osdep.h"
++#include "hw/vmapple/vmapple.h"
++#include "hw/sysbus.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qapi/error.h"
++#include "net/net.h"
 +
-+static void signal_func(int sig)
++OBJECT_DECLARE_SIMPLE_TYPE(VMAppleCfgState, VMAPPLE_CFG)
++
++#define VMAPPLE_CFG_SIZE 0x00010000
++
++typedef struct VMAppleCfg {
++    uint32_t version;         /* 0x000 */
++    uint32_t nr_cpus;         /* 0x004 */
++    uint32_t unk1;            /* 0x008 */
++    uint32_t unk2;            /* 0x00c */
++    uint32_t unk3;            /* 0x010 */
++    uint32_t unk4;            /* 0x014 */
++    uint64_t ecid;            /* 0x018 */
++    uint64_t ram_size;        /* 0x020 */
++    uint32_t run_installer1;  /* 0x028 */
++    uint32_t unk5;            /* 0x02c */
++    uint32_t unk6;            /* 0x030 */
++    uint32_t run_installer2;  /* 0x034 */
++    uint32_t rnd;             /* 0x038 */
++    uint32_t unk7;            /* 0x03c */
++    MACAddr mac_en0;          /* 0x040 */
++    uint8_t pad1[2];
++    MACAddr mac_en1;          /* 0x048 */
++    uint8_t pad2[2];
++    MACAddr mac_wifi0;        /* 0x050 */
++    uint8_t pad3[2];
++    MACAddr mac_bt0;          /* 0x058 */
++    uint8_t pad4[2];
++    uint8_t reserved[0xa0];   /* 0x060 */
++    uint32_t cpu_ids[0x80];   /* 0x100 */
++    uint8_t scratch[0x200];   /* 0x180 */
++    char serial[32];          /* 0x380 */
++    char unk8[32];            /* 0x3a0 */
++    char model[32];           /* 0x3c0 */
++    uint8_t unk9[32];         /* 0x3e0 */
++    uint32_t unk10;           /* 0x400 */
++    char soc_name[32];        /* 0x404 */
++} VMAppleCfg;
++
++struct VMAppleCfgState {
++    SysBusDevice parent_obj;
++    VMAppleCfg cfg;
++
++    MemoryRegion mem;
++    char *serial;
++    char *model;
++    char *soc_name;
++};
++
++static void vmapple_cfg_reset(Object *obj, ResetType type)
 +{
-+    seen_sig = sig;
++    VMAppleCfgState *s = VMAPPLE_CFG(obj);
++    VMAppleCfg *cfg;
++
++    cfg = memory_region_get_ram_ptr(&s->mem);
++    memset(cfg, 0, VMAPPLE_CFG_SIZE);
++    *cfg = s->cfg;
 +}
 +
-+static void *thread_func(void *arg)
++static bool set_fixlen_property_or_error(char *restrict dst,
++                                         const char *restrict src,
++                                         size_t dst_size, Error **errp,
++                                         const char *property_name)
 +{
-+    kill(getpid(), SIGUSR2);
-+    return NULL;
++    size_t len;
++
++    len = g_strlcpy(dst, src, dst_size);
++    if (len < dst_size) { /* len does not count nul terminator */
++        return true;
++    }
++
++    error_setg(errp,
++               "Failed to set property '%s' on VMApple 'cfg' device: length "
++               "(%zu) exceeds maximum of %zu",
++               property_name, len, dst_size - 1);
++    return false;
 +}
 +
-+int main(void)
++#define set_fixlen_property_or_return(dst_array, src, errp, property_name) \
++    do { \
++        if (!set_fixlen_property_or_error((dst_array), (src), \
++                                          ARRAY_SIZE(dst_array), \
++                                          (errp), (property_name))) { \
++            return; \
++        } \
++    } while (0)
++
++static void vmapple_cfg_realize(DeviceState *dev, Error **errp)
 +{
-+    struct sigaction act = {
-+        .sa_handler = signal_func,
-+    };
-+    pthread_t thread;
-+    sigset_t set;
-+    int sig;
++    VMAppleCfgState *s = VMAPPLE_CFG(dev);
++    uint32_t i;
 +
-+    assert(sigaction(SIGUSR1, &act, NULL) == 0);
++    if (!s->serial) {
++        s->serial = g_strdup("1234");
++    }
++    if (!s->model) {
++        s->model = g_strdup("VM0001");
++    }
++    if (!s->soc_name) {
++        s->soc_name = g_strdup("Apple M1 (Virtual)");
++    }
 +
-+    assert(sigemptyset(&set) == 0);
-+    assert(sigaddset(&set, SIGUSR2) == 0);
-+    assert(sigprocmask(SIG_BLOCK, &set, NULL) == 0);
++    set_fixlen_property_or_return(s->cfg.serial, s->serial, errp, "serial");
++    set_fixlen_property_or_return(s->cfg.model, s->model, errp, "model");
++    set_fixlen_property_or_return(s->cfg.soc_name, s->soc_name, errp, "soc_name");
++    set_fixlen_property_or_return(s->cfg.unk8, "D/A", errp, "unk8");
++    s->cfg.version = 2;
++    s->cfg.unk1 = 1;
++    s->cfg.unk2 = 1;
++    s->cfg.unk3 = 0x20;
++    s->cfg.unk4 = 0;
++    s->cfg.unk5 = 1;
++    s->cfg.unk6 = 1;
++    s->cfg.unk7 = 0;
++    s->cfg.unk10 = 1;
 +
-+    kill(getpid(), SIGUSR1);
-+    assert(seen_sig == SIGUSR1);
-+
-+    assert(pthread_create(&thread, NULL, thread_func, NULL) == 0);
-+    assert(sigwait(&set, &sig) == 0);
-+    assert(sig == SIGUSR2);
-+    assert(pthread_join(thread, NULL) == 0);
-+
-+    return EXIT_SUCCESS;
++    if (s->cfg.nr_cpus > ARRAY_SIZE(s->cfg.cpu_ids)) {
++        error_setg(errp,
++                   "Failed to create %u CPUs, vmapple machine supports %zu max",
++                   s->cfg.nr_cpus, ARRAY_SIZE(s->cfg.cpu_ids));
++        return;
++    }
++    for (i = 0; i < s->cfg.nr_cpus; i++) {
++        s->cfg.cpu_ids[i] = i;
++    }
 +}
++
++static void vmapple_cfg_init(Object *obj)
++{
++    VMAppleCfgState *s = VMAPPLE_CFG(obj);
++
++    memory_region_init_ram(&s->mem, obj, "VMApple Config", VMAPPLE_CFG_SIZE,
++                           &error_fatal);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mem);
++}
++
++static Property vmapple_cfg_properties[] = {
++    DEFINE_PROP_UINT32("nr-cpus", VMAppleCfgState, cfg.nr_cpus, 1),
++    DEFINE_PROP_UINT64("ecid", VMAppleCfgState, cfg.ecid, 0),
++    DEFINE_PROP_UINT64("ram-size", VMAppleCfgState, cfg.ram_size, 0),
++    DEFINE_PROP_UINT32("run_installer1", VMAppleCfgState, cfg.run_installer1, 0),
++    DEFINE_PROP_UINT32("run_installer2", VMAppleCfgState, cfg.run_installer2, 0),
++    DEFINE_PROP_UINT32("rnd", VMAppleCfgState, cfg.rnd, 0),
++    DEFINE_PROP_MACADDR("mac-en0", VMAppleCfgState, cfg.mac_en0),
++    DEFINE_PROP_MACADDR("mac-en1", VMAppleCfgState, cfg.mac_en1),
++    DEFINE_PROP_MACADDR("mac-wifi0", VMAppleCfgState, cfg.mac_wifi0),
++    DEFINE_PROP_MACADDR("mac-bt0", VMAppleCfgState, cfg.mac_bt0),
++    DEFINE_PROP_STRING("serial", VMAppleCfgState, serial),
++    DEFINE_PROP_STRING("model", VMAppleCfgState, model),
++    DEFINE_PROP_STRING("soc_name", VMAppleCfgState, soc_name),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void vmapple_cfg_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->realize = vmapple_cfg_realize;
++    dc->desc = "VMApple Configuration Region";
++    device_class_set_props(dc, vmapple_cfg_properties);
++    rc->phases.hold = vmapple_cfg_reset;
++}
++
++static const TypeInfo vmapple_cfg_info = {
++    .name          = TYPE_VMAPPLE_CFG,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(VMAppleCfgState),
++    .instance_init = vmapple_cfg_init,
++    .class_init    = vmapple_cfg_class_init,
++};
++
++static void vmapple_cfg_register_types(void)
++{
++    type_register_static(&vmapple_cfg_info);
++}
++
++type_init(vmapple_cfg_register_types)
+diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
+index d4624713deb..64b78693a31 100644
+--- a/hw/vmapple/meson.build
++++ b/hw/vmapple/meson.build
+@@ -1,2 +1,3 @@
+ system_ss.add(when: 'CONFIG_VMAPPLE_AES',  if_true: files('aes.c'))
+ system_ss.add(when: 'CONFIG_VMAPPLE_BDIF', if_true: files('bdif.c'))
++system_ss.add(when: 'CONFIG_VMAPPLE_CFG',  if_true: files('cfg.c'))
+diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
+index 9090e9c5ac8..3bba59f5ec7 100644
+--- a/include/hw/vmapple/vmapple.h
++++ b/include/hw/vmapple/vmapple.h
+@@ -16,4 +16,6 @@
+ 
+ #define TYPE_VMAPPLE_BDIF "vmapple-bdif"
+ 
++#define TYPE_VMAPPLE_CFG "vmapple-cfg"
++
+ #endif /* HW_VMAPPLE_VMAPPLE_H */
 -- 
-2.47.0
+2.39.3 (Apple Git-145)
 
 
