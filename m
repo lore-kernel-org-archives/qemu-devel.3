@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 965D2D64063
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 16:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE19DD6406B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:08:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9SIS-0001sB-0n; Fri, 08 Nov 2024 11:57:20 -0500
+	id 1t9SSp-0005GV-4G; Fri, 08 Nov 2024 12:08:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9SIL-0001lR-S8
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 11:57:15 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9SSn-0005GN-KR
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:08:01 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9SIH-0000Xl-HU
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 11:57:11 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-53a0c160b94so2999476e87.2
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 08:57:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9SSl-0002Un-Jx
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:08:01 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-37d47b38336so1790724f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:07:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731085027; x=1731689827; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LUK1qUg8JXmoiLhzbIkRd0D5z6DAijz143AgJszH3Qw=;
- b=h1CCfscOQ8NBu2Hri6xVG9+CnL5KcA3dy2fHIq+s5GpPiJC+gshT3v80PiUfHGZOjV
- 7SzPmBc5bz5d6rZp8tGocxZDxDeunsNTkG/yu3XR2Xm7mMVOvSU6tTkxdkF/2K6TT01G
- aM17nzLFs7F9UNlrUbuWtDEE9j4UwykguSyiwwuFdYwhzu45QUv6edLVRPwWvXdGnlWC
- FcpbDjalEIqATZi4yEXTDZdfSV+n9kEBWhjejrhYpFYkBhvVIqKsKl01Mm0zcl9Q/JF3
- kkta+anSOsgF7vIsMsIbx/sVpaUXWz+XRcXoXFfxSMtAvZeVTgNITskczZGTi7PSciaa
- uoyQ==
+ d=linaro.org; s=google; t=1731085677; x=1731690477; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=F/9gxUZzOb1MDGtv0PKtRpTtaKyI7tuJTWG+o38mKvA=;
+ b=ASZereomRSgTT8NUcZb48RygsIfaBcS34rYuuqeG/kz6fLHRGJ6gYYXeNUvlCOzwQX
+ RdV1qICLd+SRJXzPe4L+Kq+TTizTX4nEyXsxc1g2lSUQROUvopFI8R7ye36wZxmGraI5
+ Pnpr8CffCAF7+lfM307V2qrIqN0E4d612LHXfScNlXlMY7v77pE13L47wHbpSCeAN+Fj
+ p1ODgrr3ZkKyEF2mTna/GS+Shuv3FW0luML61UD7SHtDFdjSY+DN4F3ycEXKH2t2egVO
+ 4hVNmmIn+BGTAYM/NHtVz5OOhxVSvMcXbQQgigJWZ9/c86kueXdMZ3Z+fxzW8dlVYIp7
+ sE2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731085027; x=1731689827;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LUK1qUg8JXmoiLhzbIkRd0D5z6DAijz143AgJszH3Qw=;
- b=ABvg11GDOkMAXfQqhv9cQ2ugtZUTCvpTpmInf9DoM9fSuXNZFc3e1mfj369rhiNO3D
- tED7iWEQ3/PVd5Ef2uNpKSyeCnfQ1K18YBa9DMKWqiYBD67CEftVB4OZ4Xr46ZgMFlJN
- tsW4idfCZDUczAnNUw/EhOlwVyd/4ic4IXziZYg/j+tHujNWmsP6HNltgGuzgt3pJLea
- egpYJIoVW1sHEXJFUyJHJ9WNpTPf7xplLyu+5Igjnes2quHks/8a/0+w9rPJJLjP/NMg
- PdkDc5Gr9I8yqF5XKhV35stU6PlxkWpG5XEB7BDZAKau72+dh3KSJLy+f+QXyEPDZ9Vb
- g7Ow==
+ d=1e100.net; s=20230601; t=1731085677; x=1731690477;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=F/9gxUZzOb1MDGtv0PKtRpTtaKyI7tuJTWG+o38mKvA=;
+ b=mNTn5EI8mw5kc/pWEFztzqBOzXtCSOMbopX6oqfQ+7+dH5YET/yyQmeUXeo+i9wWuo
+ Bi2kPqB9ti7MSo5RBFUSe4JaMGWb4eLLvYoMSgIU3GnvifqZordRpgd9fejUIYvv5JqB
+ 1iCktXOmRAYBGx9MK3ViTotG96Ls4iUUH+eRNV7PSR6Oybl/tYfNKUjiHgJBDIGLyVAr
+ a180SVJ5tWxZ7zXIzy9c146V02akrOm6ZBDp/ycMDoMz8pLAR8GofDwAkxtYnRfGIPTO
+ lJ/57GK8nNTahkfSgUS9y7l/eKwiN6ksNRBE2xD11XItJ7ZqST8HW4IKb82iImzFZwIs
+ XIsQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWwmYenSJ7mu9FWF4dhp5j2pclqVwX5IBHVgTWMszzOM8/zF1EZDGuys7tFWSrwnDT9e9oGcnW5aVWn@nongnu.org
-X-Gm-Message-State: AOJu0YxQXkAZk8DzDejvcqjE5XGo3c2tqRvswItdKr2zXgasixB33xUa
- 9QKTr9ARRGg8paPryTl5vHQhOwskLMfdJ/t0xH8Wxz9QI+UhnlJSFZM4zhH02eFtZDwFlIJku7o
- cAZpC2M7G9d+Po5Fqq9d8XXdvcbrWfWlKzRJg3u9JoztnGGqn
-X-Google-Smtp-Source: AGHT+IGtmwi5SGZIgSL4Xo3avVR9F5r6OWHoA9f1LDLDNofP5MubAYzimjk+8kl3C9pUbrcBz0j3Nd13/Fhs4Ok5BKo=
-X-Received: by 2002:a05:6512:1295:b0:53c:7432:93a5 with SMTP id
- 2adb3069b0e04-53d862ebfa0mr2274146e87.53.1731085026654; Fri, 08 Nov 2024
- 08:57:06 -0800 (PST)
+ AJvYcCUr3WIEX9oU/Uf+KAuaTD7Qc1RB+Njt6dKxHYw/JgzdI1yHenXhKblUxcdlhffs8zQW+7af0C3fPARC@nongnu.org
+X-Gm-Message-State: AOJu0YwBgVUh/LidwBgspiS88eUi+knqrJKUbdJsA4jocz7ZeiVes8DL
+ E3tExSE5q7KWKqPva87+neHHMgSR4HBuaOSE6tDz8mqTxUAMENHhkLmjcCHemMo=
+X-Google-Smtp-Source: AGHT+IEbSHE/HKXSvFo/uH/lXRYDE+49hm8rXHRJXg2v8N364C8mGxL/RRMP25cVejRtIZEnG3bxaw==
+X-Received: by 2002:a5d:64e5:0:b0:37d:481e:fca with SMTP id
+ ffacd0b85a97d-381f186fa0bmr3680311f8f.27.1731085677362; 
+ Fri, 08 Nov 2024 09:07:57 -0800 (PST)
+Received: from [172.20.143.32] ([89.101.241.141])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381ed999e0csm5406545f8f.59.2024.11.08.09.07.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Nov 2024 09:07:56 -0800 (PST)
+Message-ID: <8e1f724c-17f7-4f9b-8e84-6a076149fce9@linaro.org>
+Date: Fri, 8 Nov 2024 17:07:55 +0000
 MIME-Version: 1.0
-References: <d9aaedd4-80a7-40d1-b5ab-c75afda794e3@eviden.com>
- <Zyjdm6TC7jfa-wlR@redhat.com>
- <CAFEAcA9BzpXdBpWcRbe42TSpUyg8KP+--mvTdqfM8t6Y+t5Knw@mail.gmail.com>
-In-Reply-To: <CAFEAcA9BzpXdBpWcRbe42TSpUyg8KP+--mvTdqfM8t6Y+t5Knw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 8 Nov 2024 16:56:55 +0000
-Message-ID: <CAFEAcA-8pfeuBcYgBUvTzafQuXd7VJBWQMCsCL3TQ-XPaNDcTQ@mail.gmail.com>
-Subject: Re: [QUESTION/ISSUE] edk2 missing dependency
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x131.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] target/arm/hvf: Add trace.h header
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>
+References: <20241108162909.4080314-1-peter.maydell@linaro.org>
+ <20241108162909.4080314-3-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241108162909.4080314-3-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,41 +96,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Nov 2024 at 16:48, Peter Maydell <peter.maydell@linaro.org> wrote=
-:
->
-> On Mon, 4 Nov 2024 at 14:43, Daniel P. Berrang=C3=A9 <berrange@redhat.com=
-> wrote:
-> >
-> > On Mon, Nov 04, 2024 at 02:32:53PM +0000, CLEMENT MATHIEU--DRIF wrote:
-> > > Hi everyone,
-> > >
-> > > It seems that https://github.com/Zeex/subhook (EDK2 submodule) is not
-> > > longer available on github (which makes recursive pull of submodules
-> > > fail for a lot of people).
-> > > Do you think we should do something on our side?
-> >
-> > Once EDK2 fix the problem, then QEMU can update its EDK2 submodule to
-> > get the fix.
->
-> Looks like the "EDK2 fix the problem" part has now happened:
->
-> https://github.com/tianocore/edk2/commit/95d8a1c255cfb8e063d679930d08ca64=
-26eb5701
+On 8/11/24 16:29, Peter Maydell wrote:
+> The documentation for trace events says that every subdirectory which
+> has trace events should have a trace.h header, whose only content is
+> an include of the trace/trace-<subdir>.h file.
+> 
+> When we added the trace events in target/arm/hvf/ we forgot to create
+> this file and instead hvf.c directly includes
+> trace/trace-target_arm_hvf.h.
+> 
+> Create the standard trace.h file to bring this into line with the
+> convention.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/arm/hvf/trace.h | 1 +
+>   target/arm/hvf/hvf.c   | 2 +-
+>   2 files changed, 2 insertions(+), 1 deletion(-)
+>   create mode 100644 target/arm/hvf/trace.h
 
-And I see also that there is now an EDK2 tag edk2-stable202408.01
-which is identical to the edk2-stable202408 tag we're currently
-using except for having the submodule reference fixed.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Gerd, could you roll a patch which updates our EDK2 to
-edk2-stable202408.01 , please?
-
-(This has now been raised as
-https://gitlab.com/qemu-project/qemu/-/issues/2660 --
-obviously at least a subset of our users are in the habit
-of pulling all submodules recursively, so it would be good
-to update our submodule to have the fix.)
-
-thanks
--- PMM
 
