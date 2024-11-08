@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37386D5E124
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 03:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A60D5E120
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 03:31:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9Fhc-0008Ue-R7; Thu, 07 Nov 2024 22:30:28 -0500
+	id 1t9Fhp-00005T-3B; Thu, 07 Nov 2024 22:30:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
- id 1t9Fha-0008U0-US
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 22:30:26 -0500
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ id 1t9Fhm-0008WH-PG
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 22:30:38 -0500
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
- id 1t9FhY-0001Hn-Vm
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 22:30:26 -0500
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-3e5fef69f2eso1056233b6e.3
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 19:30:24 -0800 (PST)
+ id 1t9Fhg-0001J6-Gz
+ for qemu-devel@nongnu.org; Thu, 07 Nov 2024 22:30:35 -0500
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-7180d9d0dcbso901713a34.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 19:30:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1731036624; x=1731641424;
+ d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1731036631; x=1731641431;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZEmXhN0e4yofB9St5S3+HcVTsbiOBljTRevzyH0DrDI=;
- b=ory0/elUCxf/vrmGSKz3hnclJvn+NPb/1/iI8JCJJebzR3on0zZvaFADOl9bXQeX2B
- sJOLjvlY3nT6+wWiUj/rM/A9GPH6kPNMRDHQ5dDd8ubKPsmeuXSaeALKHv03x676pUe0
- b5Znba2osYTzI/UWtRP1mWbVIxXIUUeIPWhkA1D1L7adXMj71PdT811qwYEdk3LnHljP
- fyQhpHiIsazzXGjEEMgFrol/Ukj7W90JNAA/ZQFo6E9/jJE7+hyOY/O7CpL4wzbKKGGb
- dXji5kAsVhP495/Ri8GHXlxuQTim22D25e2CnTALSmsm5Eg5il1CvuEZ1JTCo1djYG3H
- daJg==
+ bh=NW3qUuN/ZEbkTtnS3AnRT5VtM+vaDuzUn4gq1rgzlJE=;
+ b=rapyV/Ji03xM0sFVHtnwOwoQ8jtFzovDlG+65MIXXRm+YmPfKrPy/JK0onB56g1gvw
+ 18eZG6IrFP9cyZ0lTatzE5etBNVnheoCi3ydLMjzFCKjHW2sRKoWlKnxduT0/QS0XVjt
+ IqGvpxXgJZ0LHz8mpFLACfli6yyZNZuFsAwK/7J0GaTfZ51Sn5UBw4O+WO7SVA8/7wTw
+ UO8J1rIOFnVJNJqH4P1XSOYc/7g+MDH+Esy/x4Nbs0dyUHcx2Co30QAqwtNRvRlzELXv
+ Q7L8+Y+976lUpDCKOX2rWXzeVsTTB/UdBSPIt9hdUuqeOQ45s9piVYrQikYRWbzVgXan
+ uqCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731036624; x=1731641424;
+ d=1e100.net; s=20230601; t=1731036631; x=1731641431;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZEmXhN0e4yofB9St5S3+HcVTsbiOBljTRevzyH0DrDI=;
- b=tuPelUvjmIkOrX4aBSP9dy8f6ghGBHvv7GSBv1RkXmI0ORuny/MY4jfG53od/4zA52
- R4AsEuvCOrWfCcA9tlPC7iEJvsZZkQrhLgT6zwOekI2xm/o87hV62v/WkJYT6REffzW0
- VT3KuaWtRhnCDP5ImKR7nrLcZ6bqEkroV7y/BexiztYQ8wVx7zHPrBZj9m2ygguxAdA5
- f9apvOQrRF0iooZlyBsy/JE4g1mYJHtfsO4NXRxmpa2V12ZZ3XqreUqQFhI0zItQRgdk
- 7LkjL7al8h3n/vlF5CG2EK4Fpdx0uY0Lhf++YzYba85WTdm3RKqbVLfvXglhcXLLmIJa
- n3bw==
-X-Gm-Message-State: AOJu0Yy0r6cDtIr3pSo/1T88xWJqLEsyt1OEfzesdF5ywslPiwKAsAjQ
- F4HoNiW27/gHMtCECe5QS2Vmtz4yT1bK0/taor2+apidWYvU3FGMlu/9DkxT0ZIqbY3zk49iTo9
- kN7Q=
-X-Google-Smtp-Source: AGHT+IH8Cu8BmQ2H1pYCF1MhqZHlWXBnPlF4+KiVNOByoEJ9C4HHxEoU0/lhjDRoVgya92wPthhJcA==
-X-Received: by 2002:a05:6808:118c:b0:3e6:5f3:dadb with SMTP id
- 5614622812f47-3e794705982mr1776028b6e.39.1731036623668; 
- Thu, 07 Nov 2024 19:30:23 -0800 (PST)
+ bh=NW3qUuN/ZEbkTtnS3AnRT5VtM+vaDuzUn4gq1rgzlJE=;
+ b=OTRHgKZzXywxABhGeMwg/QDnEeCJ4Gb086NVeWxgcOrIMu9pFtcjiCW9Vkzhuy5Hj6
+ kiOApWuBYFmanqvdk/6NJmNW1R+CvxpYl0iT5VHWiBxP43n3DEsSUUcP1MFwKcN+d9YG
+ Kq3xONlRgWdvuG+kwJN/cDUi9FXDbIPVmMsZj57x6l1VF2JjRMvkoj+3aYzczDu/UqN3
+ 7bzqmc2dCla1xLujplWM8vPvjlQqBv7KTfCxiZ61hH3dt6WSy39ZfmYrMG2LM05aNtdN
+ cYCACHseBt/9RltxZ/I2tObb/W08fh19B2lnDQ6YqKDBNX7RYqz1axaUWVMVidCCtcrp
+ c7Pw==
+X-Gm-Message-State: AOJu0YyvU9wKX8wTbbSsrNLSYleMdSe48E7ZZLUbTZjZaT3E0dLeC6I5
+ ZJr2i16eCFnCAtrQxecDP9GORTN6zeqQqFh3GR1M9DdZuh2T7bSriF/+ZQR9XGK4ebFjFu7RDNI
+ d3Sw=
+X-Google-Smtp-Source: AGHT+IEEc1DUsp6lqRBelrJxhRCMbdHqGOx9W3J7PvOplJedSGPpJ9qQd7zNOJvm0F7JPC+bjxiUDg==
+X-Received: by 2002:a05:6871:6a6:b0:277:e1bc:7da7 with SMTP id
+ 586e51a60fabf-2956010ad93mr1330812fac.22.1731036631169; 
+ Thu, 07 Nov 2024 19:30:31 -0800 (PST)
 Received: from ThinkPad-T14-hirose.hq.igel.co.jp (napt.igel.co.jp.
  [219.106.231.132]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7f41f65d358sm2326435a12.84.2024.11.07.19.30.20
+ 41be03b00d2f7-7f41f65d358sm2326435a12.84.2024.11.07.19.30.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Nov 2024 19:30:23 -0800 (PST)
+ Thu, 07 Nov 2024 19:30:30 -0800 (PST)
 From: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
 To: qemu-devel@nongnu.org
 Cc: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 2/5] system/memory: support unaligned access
-Date: Fri,  8 Nov 2024 12:29:46 +0900
-Message-ID: <20241108032952.56692-3-tomoyuki.hirose@igel.co.jp>
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [RFC PATCH 4/5] tests/qtest: add test for memory region access
+Date: Fri,  8 Nov 2024 12:29:48 +0900
+Message-ID: <20241108032952.56692-5-tomoyuki.hirose@igel.co.jp>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241108032952.56692-1-tomoyuki.hirose@igel.co.jp>
 References: <20241108032952.56692-1-tomoyuki.hirose@igel.co.jp>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
- envelope-from=tomoyuki.hirose@igel.co.jp; helo=mail-oi1-x22a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
+ envelope-from=tomoyuki.hirose@igel.co.jp; helo=mail-ot1-x336.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,242 +96,693 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The previous code ignored 'impl.unaligned' and handled unaligned
-accesses as is. But this implementation could not emulate specific
-registers of some devices that allow unaligned access such as xHCI
-Host Controller Capability Registers.
-
-This commit emulates an unaligned access with multiple aligned
-accesses. Additionally, the overwriting of the max access size is
-removed to retrive the actual max access size.
+This commit adds a qtest for accessing various memory regions.  The
+qtest checks the correctness of handling the access to memory regions
+by using 'memaccess-testdev'.
 
 Signed-off-by: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
 ---
- system/memory.c  | 147 ++++++++++++++++++++++++++++++++++++++---------
- system/physmem.c |   8 ---
- 2 files changed, 119 insertions(+), 36 deletions(-)
+ tests/qtest/memaccess-test.c | 598 +++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build      |   9 +
+ 2 files changed, 607 insertions(+)
+ create mode 100644 tests/qtest/memaccess-test.c
 
-diff --git a/system/memory.c b/system/memory.c
-index 85f6834cb3..c2164e6478 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -518,27 +518,118 @@ static MemTxResult memory_region_write_with_attrs_accessor(MemoryRegion *mr,
-     return mr->ops->write_with_attrs(mr->opaque, addr, tmp, size, attrs);
- }
- 
-+typedef MemTxResult (*MemoryRegionAccessFn)(MemoryRegion *mr,
-+                                            hwaddr addr,
-+                                            uint64_t *value,
-+                                            unsigned size,
-+                                            signed shift,
-+                                            uint64_t mask,
-+                                            MemTxAttrs attrs);
+diff --git a/tests/qtest/memaccess-test.c b/tests/qtest/memaccess-test.c
+new file mode 100644
+index 0000000000..4a6d2089ad
+--- /dev/null
++++ b/tests/qtest/memaccess-test.c
+@@ -0,0 +1,598 @@
++/*
++ * QEMU memory region access test
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Copyright (c) 2024 IGEL Co., Ltd.
++ * Author: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
++ */
 +
-+static MemTxResult access_emulation(hwaddr addr,
-+                                    uint64_t *value,
-+                                    unsigned int size,
-+                                    unsigned int access_size_min,
-+                                    unsigned int access_size_max,
-+                                    MemoryRegion *mr,
-+                                    MemTxAttrs attrs,
-+                                    MemoryRegionAccessFn access_fn_read,
-+                                    MemoryRegionAccessFn access_fn_write,
-+                                    bool is_write)
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++#include "hw/misc/memaccess-testdev.h"
++
++static const char *arch = "";
++static const hwaddr base = 0x200000000;
++
++struct arch2cpu {
++    const char *arch;
++    const char *cpu_model;
++};
++
++static struct arch2cpu cpus_map[] = {
++    /* tested targets list */
++    { "arm", "cortex-a15" },
++    { "aarch64", "cortex-a57" },
++    { "avr", "avr6-avr-cpu" },
++    { "x86_64", "qemu64,apic-id=0" },
++    { "i386", "qemu32,apic-id=0" },
++    { "alpha", "ev67" },
++    { "cris", "crisv32" },
++    { "m68k", "m5206" },
++    { "microblaze", "any" },
++    { "microblazeel", "any" },
++    { "mips", "4Kc" },
++    { "mipsel", "I7200" },
++    { "mips64", "20Kc" },
++    { "mips64el", "I6500" },
++    { "or1k", "or1200" },
++    { "ppc", "604" },
++    { "ppc64", "power8e_v2.1" },
++    { "s390x", "qemu" },
++    { "sh4", "sh7750r" },
++    { "sh4eb", "sh7751r" },
++    { "sparc", "LEON2" },
++    { "sparc64", "Fujitsu Sparc64" },
++    { "tricore", "tc1796" },
++    { "xtensa", "dc233c" },
++    { "xtensaeb", "fsf" },
++    { "hppa", "hppa" },
++    { "riscv64", "rv64" },
++    { "riscv32", "rv32" },
++    { "rx", "rx62n" },
++    { "loongarch64", "la464" },
++};
++
++static const char *get_cpu_model_by_arch(const char *arch)
 +{
-+    hwaddr a;
-+    uint8_t *d;
-+    uint64_t v;
-+    MemTxResult r = MEMTX_OK;
-+    bool is_big_endian = memory_region_big_endian(mr);
-+    void (*store)(void *, int, uint64_t) = is_big_endian ? stn_be_p : stn_le_p;
-+    uint64_t (*load)(const void *, int) = is_big_endian ? ldn_be_p : ldn_le_p;
-+    size_t access_size = MAX(MIN(size, access_size_max), access_size_min);
-+    uint64_t access_mask = MAKE_64BIT_MASK(0, access_size * 8);
-+    hwaddr round_down = mr->ops->impl.unaligned && addr + size <= mr->size ?
-+        0 : addr % access_size;
-+    hwaddr start = addr - round_down;
-+    hwaddr tail = addr + size <= mr->size ? addr + size : mr->size;
-+    uint8_t data[16] = {0};
-+    g_assert(size <= 8);
-+
-+    for (a = start, d = data, v = 0; a < tail;
-+         a += access_size, d += access_size, v = 0) {
-+        r |= access_fn_read(mr, a, &v, access_size, 0, access_mask,
-+                            attrs);
-+        store(d, access_size, v);
-+    }
-+    if (is_write) {
-+        stn_he_p(&data[round_down], size, load(value, size));
-+        for (a = start, d = data; a < tail;
-+             a += access_size, d += access_size) {
-+            v = load(d, access_size);
-+            r |= access_fn_write(mr, a, &v, access_size, 0, access_mask,
-+                                 attrs);
++    for (int i = 0; i < ARRAY_SIZE(cpus_map); i++) {
++        if (!strcmp(arch, cpus_map[i].arch)) {
++            return cpus_map[i].cpu_model;
 +        }
++    }
++    return NULL;
++}
++
++static QTestState *create_memaccess_qtest(void)
++{
++    QTestState *qts;
++
++    qts = qtest_initf("-machine none -cpu \"%s\" "
++                      "-device memaccess-testdev,address=0x%" PRIx64,
++                      get_cpu_model_by_arch(arch), base);
++    return qts;
++}
++
++static void little_b_valid(QTestState *qts, uint64_t offset)
++{
++    qtest_writeb(qts, base + offset + 0, 0x00);
++    qtest_writeb(qts, base + offset + 1, 0x11);
++    qtest_writeb(qts, base + offset + 2, 0x22);
++    qtest_writeb(qts, base + offset + 3, 0x33);
++    qtest_writeb(qts, base + offset + 4, 0x44);
++    qtest_writeb(qts, base + offset + 5, 0x55);
++    qtest_writeb(qts, base + offset + 6, 0x66);
++    qtest_writeb(qts, base + offset + 7, 0x77);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 0), ==, 0x00);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 1), ==, 0x11);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 2), ==, 0x22);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 3), ==, 0x33);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 4), ==, 0x44);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 5), ==, 0x55);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 6), ==, 0x66);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 7), ==, 0x77);
++}
++
++static void little_b_invalid(QTestState *qts, uint64_t offset)
++{
++    qtest_writeb(qts, base + offset + 0, 0x00);
++    qtest_writeb(qts, base + offset + 1, 0x11);
++    qtest_writeb(qts, base + offset + 2, 0x22);
++    qtest_writeb(qts, base + offset + 3, 0x33);
++    qtest_writeb(qts, base + offset + 4, 0x44);
++    qtest_writeb(qts, base + offset + 5, 0x55);
++    qtest_writeb(qts, base + offset + 6, 0x66);
++    qtest_writeb(qts, base + offset + 7, 0x77);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 0), ==, 0x00);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 1), ==, 0x11);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 2), ==, 0x22);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 3), ==, 0x33);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 4), ==, 0x44);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 5), ==, 0x55);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 6), ==, 0x66);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 7), ==, 0x77);
++}
++
++static void little_w_valid(QTestState *qts, hwaddr offset)
++{
++    if (qtest_big_endian(qts)) {
++        qtest_writew(qts, base + offset + 0, 0x1100);
++        qtest_writew(qts, base + offset + 1, 0x3322);
++        qtest_writew(qts, base + offset + 2, 0x5544);
++        qtest_writew(qts, base + offset + 3, 0x7766);
++        qtest_writew(qts, base + offset + 4, 0x9988);
++        qtest_writew(qts, base + offset + 5, 0xbbaa);
++        qtest_writew(qts, base + offset + 6, 0xddcc);
++        qtest_writew(qts, base + offset + 7, 0xffee);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 0), ==, 0x1133);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 1), ==, 0x3355);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 2), ==, 0x5577);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 3), ==, 0x7799);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 4), ==, 0x99bb);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 5), ==, 0xbbdd);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 6), ==, 0xddff);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 7), ==, 0xffee);
 +    } else {
-+        store(value, size, ldn_he_p(&data[round_down], size));
++        qtest_writew(qts, base + offset + 0, 0x1100);
++        qtest_writew(qts, base + offset + 1, 0x3322);
++        qtest_writew(qts, base + offset + 2, 0x5544);
++        qtest_writew(qts, base + offset + 3, 0x7766);
++        qtest_writew(qts, base + offset + 4, 0x9988);
++        qtest_writew(qts, base + offset + 5, 0xbbaa);
++        qtest_writew(qts, base + offset + 6, 0xddcc);
++        qtest_writew(qts, base + offset + 7, 0xffee);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 0), ==, 0x2200);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 1), ==, 0x4422);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 2), ==, 0x6644);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 3), ==, 0x8866);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 4), ==, 0xaa88);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 5), ==, 0xccaa);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 6), ==, 0xeecc);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 7), ==, 0xffee);
 +    }
-+
-+    return r;
 +}
 +
-+static bool is_access_fastpath(hwaddr addr,
-+                               unsigned int size,
-+                               unsigned int access_size_min,
-+                               unsigned int access_size_max,
-+                               MemoryRegion *mr)
++static void little_w_invalid(QTestState *qts, hwaddr offset)
 +{
-+    size_t access_size = MAX(MIN(size, access_size_max), access_size_min);
-+    hwaddr round_down = mr->ops->impl.unaligned && addr + size <= mr->size ?
-+        0 : addr % access_size;
-+
-+    return round_down == 0 && access_size <= size;
-+}
-+
-+static MemTxResult access_fastpath(hwaddr addr,
-+                                   uint64_t *value,
-+                                   unsigned int size,
-+                                   unsigned int access_size_min,
-+                                   unsigned int access_size_max,
-+                                   MemoryRegion *mr,
-+                                   MemTxAttrs attrs,
-+                                   MemoryRegionAccessFn fastpath)
-+{
-+    MemTxResult r = MEMTX_OK;
-+    size_t access_size = MAX(MIN(size, access_size_max), access_size_min);
-+    uint64_t access_mask = MAKE_64BIT_MASK(0, access_size * 8);
-+
-+    if (memory_region_big_endian(mr)) {
-+        for (size_t i = 0; i < size; i += access_size) {
-+            r |= fastpath(mr, addr + i, value, access_size,
-+                          (size - access_size - i) * 8, access_mask, attrs);
-+        }
++    if (qtest_big_endian(qts)) {
++        qtest_writew(qts, base + offset + 0, 0x1100);
++        qtest_writew(qts, base + offset + 2, 0x3322);
++        qtest_writew(qts, base + offset + 4, 0x5544);
++        qtest_writew(qts, base + offset + 6, 0x7766);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 0), ==, 0x1100);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 2), ==, 0x3322);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 4), ==, 0x5544);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 6), ==, 0x7766);
 +    } else {
-+        for (size_t i = 0; i < size; i += access_size) {
-+            r |= fastpath(mr, addr + i, value, access_size,
-+                          i * 8, access_mask, attrs);
-+        }
++        qtest_writew(qts, base + offset + 0, 0x1100);
++        qtest_writew(qts, base + offset + 2, 0x3322);
++        qtest_writew(qts, base + offset + 4, 0x5544);
++        qtest_writew(qts, base + offset + 6, 0x7766);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 0), ==, 0x1100);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 2), ==, 0x3322);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 4), ==, 0x5544);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 6), ==, 0x7766);
 +    }
-+
-+    return r;
 +}
 +
- static MemTxResult access_with_adjusted_size(hwaddr addr,
-                                       uint64_t *value,
-                                       unsigned size,
-                                       unsigned access_size_min,
-                                       unsigned access_size_max,
--                                      MemTxResult (*access_fn)
--                                                  (MemoryRegion *mr,
--                                                   hwaddr addr,
--                                                   uint64_t *value,
--                                                   unsigned size,
--                                                   signed shift,
--                                                   uint64_t mask,
--                                                   MemTxAttrs attrs),
-+                                      MemoryRegionAccessFn access_fn_read,
-+                                      MemoryRegionAccessFn access_fn_write,
-+                                      bool is_write,
-                                       MemoryRegion *mr,
-                                       MemTxAttrs attrs)
- {
--    uint64_t access_mask;
--    unsigned access_size;
--    unsigned i;
-     MemTxResult r = MEMTX_OK;
-     bool reentrancy_guard_applied = false;
-+    MemoryRegionAccessFn access_fn_fastpath =
-+        is_write ? access_fn_write : access_fn_read;
- 
-     if (!access_size_min) {
-         access_size_min = 1;
-@@ -560,20 +651,16 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
-         reentrancy_guard_applied = true;
-     }
- 
--    /* FIXME: support unaligned access? */
--    access_size = MAX(MIN(size, access_size_max), access_size_min);
--    access_mask = MAKE_64BIT_MASK(0, access_size * 8);
--    if (memory_region_big_endian(mr)) {
--        for (i = 0; i < size; i += access_size) {
--            r |= access_fn(mr, addr + i, value, access_size,
--                        (size - access_size - i) * 8, access_mask, attrs);
--        }
-+    if (is_access_fastpath(addr, size, access_size_min, access_size_max, mr)) {
-+        r |= access_fastpath(addr, value, size,
-+                             access_size_min, access_size_max, mr, attrs,
-+                             access_fn_fastpath);
-     } else {
--        for (i = 0; i < size; i += access_size) {
--            r |= access_fn(mr, addr + i, value, access_size, i * 8,
--                        access_mask, attrs);
--        }
-+        r |= access_emulation(addr, value, size,
-+                              access_size_min, access_size_max, mr, attrs,
-+                              access_fn_read, access_fn_write, is_write);
-     }
++static void little_l_valid(QTestState *qts, hwaddr offset)
++{
++    if (qtest_big_endian(qts)) {
++        qtest_writel(qts, base + offset + 0, 0x33221100);
++        qtest_writel(qts, base + offset + 1, 0x77665544);
++        qtest_writel(qts, base + offset + 2, 0xbbaa9988);
++        qtest_writel(qts, base + offset + 3, 0xffeeddcc);
++        qtest_writel(qts, base + offset + 4, 0x01234567);
++        qtest_writel(qts, base + offset + 5, 0x89abcdef);
++        qtest_writel(qts, base + offset + 6, 0xfedcba98);
++        qtest_writel(qts, base + offset + 7, 0x76543210);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 0), ==, 0x3377bbff);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 1), ==, 0x77bbff01);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 2), ==, 0xbbff0189);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 3), ==, 0xff0189fe);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 4), ==, 0x0189fe76);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 5), ==, 0x89fe7654);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 6), ==, 0xfe765432);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 7), ==, 0x76543210);
++    } else {
++        qtest_writel(qts, base + offset + 0, 0x33221100);
++        qtest_writel(qts, base + offset + 1, 0x77665544);
++        qtest_writel(qts, base + offset + 2, 0xbbaa9988);
++        qtest_writel(qts, base + offset + 3, 0xffeeddcc);
++        qtest_writel(qts, base + offset + 4, 0x01234567);
++        qtest_writel(qts, base + offset + 5, 0x89abcdef);
++        qtest_writel(qts, base + offset + 6, 0xfedcba98);
++        qtest_writel(qts, base + offset + 7, 0x76543210);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 0), ==, 0xcc884400);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 1), ==, 0x67cc8844);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 2), ==, 0xef67cc88);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 3), ==, 0x98ef67cc);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 4), ==, 0x1098ef67);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 5), ==, 0x321098ef);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 6), ==, 0x54321098);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 7), ==, 0x76543210);
++    }
++}
 +
-     if (mr->dev && reentrancy_guard_applied) {
-         mr->dev->mem_reentrancy_guard.engaged_in_io = false;
-     }
-@@ -1459,13 +1546,15 @@ static MemTxResult memory_region_dispatch_read1(MemoryRegion *mr,
-                                          mr->ops->impl.min_access_size,
-                                          mr->ops->impl.max_access_size,
-                                          memory_region_read_accessor,
--                                         mr, attrs);
-+                                         memory_region_write_accessor,
-+                                         false, mr, attrs);
-     } else {
-         return access_with_adjusted_size(addr, pval, size,
-                                          mr->ops->impl.min_access_size,
-                                          mr->ops->impl.max_access_size,
-                                          memory_region_read_with_attrs_accessor,
--                                         mr, attrs);
-+                                         memory_region_write_with_attrs_accessor,
-+                                         false, mr, attrs);
-     }
- }
++static void little_l_invalid(QTestState *qts, hwaddr offset)
++{
++    if (qtest_big_endian(qts)) {
++        qtest_writel(qts, base + offset + 0, 0x33221100);
++        qtest_writel(qts, base + offset + 4, 0x77665544);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 0), ==, 0x33221100);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 4), ==, 0x77665544);
++    } else {
++        qtest_writel(qts, base + offset + 0, 0x33221100);
++        qtest_writel(qts, base + offset + 4, 0x77665544);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 0), ==, 0x33221100);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 4), ==, 0x77665544);
++    }
++}
++
++static void little_q_valid(QTestState *qts, hwaddr offset)
++{
++    if (qtest_big_endian(qts)) {
++        qtest_writeq(qts, base + offset + 0, 0x7766554433221100);
++        qtest_writeq(qts, base + offset + 1, 0xffeeddccbbaa9988);
++        qtest_writeq(qts, base + offset + 2, 0xfedcba9876543210);
++        qtest_writeq(qts, base + offset + 3, 0x0123456789abcdef);
++        qtest_writeq(qts, base + offset + 4, 0xdeadbeefdeadbeef);
++        qtest_writeq(qts, base + offset + 5, 0xcafebabecafebabe);
++        qtest_writeq(qts, base + offset + 6, 0xbeefcafebeefcafe);
++        qtest_writeq(qts, base + offset + 7, 0xfacefeedfacefeed);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 0), ==,
++                        0x77fffe01decabefa);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 1), ==,
++                        0xfffe01decabeface);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 2), ==,
++                        0xfe01decabefacefe);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 3), ==,
++                        0x01decabefacefeed);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 4), ==,
++                        0xdecabefacefeedfa);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 5), ==,
++                        0xcabefacefeedface);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 6), ==,
++                        0xbefacefeedfacefe);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 7), ==,
++                        0xfacefeedfacefeed);
++    } else {
++        qtest_writeq(qts, base + offset + 0, 0x7766554433221100);
++        qtest_writeq(qts, base + offset + 1, 0xffeeddccbbaa9988);
++        qtest_writeq(qts, base + offset + 2, 0xfedcba9876543210);
++        qtest_writeq(qts, base + offset + 3, 0x0123456789abcdef);
++        qtest_writeq(qts, base + offset + 4, 0xdeadbeefdeadbeef);
++        qtest_writeq(qts, base + offset + 5, 0xcafebabecafebabe);
++        qtest_writeq(qts, base + offset + 6, 0xbeefcafebeefcafe);
++        qtest_writeq(qts, base + offset + 7, 0xfacefeedfacefeed);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 0), ==,
++                        0xedfebeefef108800);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 1), ==,
++                        0xfeedfebeefef1088);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 2), ==,
++                        0xcefeedfebeefef10);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 3), ==,
++                        0xfacefeedfebeefef);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 4), ==,
++                        0xedfacefeedfebeef);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 5), ==,
++                        0xfeedfacefeedfebe);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 6), ==,
++                        0xcefeedfacefeedfe);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 7), ==,
++                        0xfacefeedfacefeed);
++    }
++}
++
++static void little_q_invalid(QTestState *qts, hwaddr offset)
++{
++    if (qtest_big_endian(qts)) {
++        qtest_writeq(qts, base + offset + 0, 0x7766554433221100);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 0), ==,
++                        0x7766554433221100);
++    } else {
++        qtest_writeq(qts, base + offset + 0, 0x7766554433221100);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 0), ==,
++                        0x7766554433221100);
++    }
++}
++
++static void big_b_valid(QTestState *qts, uint64_t offset)
++{
++    qtest_writeb(qts, base + offset + 0, 0x00);
++    qtest_writeb(qts, base + offset + 1, 0x11);
++    qtest_writeb(qts, base + offset + 2, 0x22);
++    qtest_writeb(qts, base + offset + 3, 0x33);
++    qtest_writeb(qts, base + offset + 4, 0x44);
++    qtest_writeb(qts, base + offset + 5, 0x55);
++    qtest_writeb(qts, base + offset + 6, 0x66);
++    qtest_writeb(qts, base + offset + 7, 0x77);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 0), ==, 0x00);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 1), ==, 0x11);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 2), ==, 0x22);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 3), ==, 0x33);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 4), ==, 0x44);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 5), ==, 0x55);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 6), ==, 0x66);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 7), ==, 0x77);
++}
++
++static void big_b_invalid(QTestState *qts, uint64_t offset)
++{
++    qtest_writeb(qts, base + offset + 0, 0x00);
++    qtest_writeb(qts, base + offset + 1, 0x11);
++    qtest_writeb(qts, base + offset + 2, 0x22);
++    qtest_writeb(qts, base + offset + 3, 0x33);
++    qtest_writeb(qts, base + offset + 4, 0x44);
++    qtest_writeb(qts, base + offset + 5, 0x55);
++    qtest_writeb(qts, base + offset + 6, 0x66);
++    qtest_writeb(qts, base + offset + 7, 0x77);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 0), ==, 0x00);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 1), ==, 0x11);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 2), ==, 0x22);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 3), ==, 0x33);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 4), ==, 0x44);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 5), ==, 0x55);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 6), ==, 0x66);
++    g_assert_cmphex(qtest_readb(qts, base + offset + 7), ==, 0x77);
++}
++
++static void big_w_valid(QTestState *qts, hwaddr offset)
++{
++    if (qtest_big_endian(qts)) {
++        qtest_writew(qts, base + offset + 0, 0x1100);
++        qtest_writew(qts, base + offset + 1, 0x3322);
++        qtest_writew(qts, base + offset + 2, 0x5544);
++        qtest_writew(qts, base + offset + 3, 0x7766);
++        qtest_writew(qts, base + offset + 4, 0x9988);
++        qtest_writew(qts, base + offset + 5, 0xbbaa);
++        qtest_writew(qts, base + offset + 6, 0xddcc);
++        qtest_writew(qts, base + offset + 7, 0xffee);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 0), ==, 0x1133);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 1), ==, 0x3355);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 2), ==, 0x5577);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 3), ==, 0x7799);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 4), ==, 0x99bb);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 5), ==, 0xbbdd);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 6), ==, 0xddff);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 7), ==, 0xffee);
++    } else {
++        qtest_writew(qts, base + offset + 0, 0x1100);
++        qtest_writew(qts, base + offset + 1, 0x3322);
++        qtest_writew(qts, base + offset + 2, 0x5544);
++        qtest_writew(qts, base + offset + 3, 0x7766);
++        qtest_writew(qts, base + offset + 4, 0x9988);
++        qtest_writew(qts, base + offset + 5, 0xbbaa);
++        qtest_writew(qts, base + offset + 6, 0xddcc);
++        qtest_writew(qts, base + offset + 7, 0xffee);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 0), ==, 0x2200);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 1), ==, 0x4422);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 2), ==, 0x6644);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 3), ==, 0x8866);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 4), ==, 0xaa88);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 5), ==, 0xccaa);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 6), ==, 0xeecc);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 7), ==, 0xffee);
++    }
++}
++
++static void big_w_invalid(QTestState *qts, hwaddr offset)
++{
++    if (qtest_big_endian(qts)) {
++        qtest_writew(qts, base + offset + 0, 0x1100);
++        qtest_writew(qts, base + offset + 2, 0x3322);
++        qtest_writew(qts, base + offset + 4, 0x5544);
++        qtest_writew(qts, base + offset + 6, 0x7766);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 0), ==, 0x1100);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 2), ==, 0x3322);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 4), ==, 0x5544);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 6), ==, 0x7766);
++    } else {
++        qtest_writew(qts, base + offset + 0, 0x1100);
++        qtest_writew(qts, base + offset + 2, 0x3322);
++        qtest_writew(qts, base + offset + 4, 0x5544);
++        qtest_writew(qts, base + offset + 6, 0x7766);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 0), ==, 0x1100);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 2), ==, 0x3322);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 4), ==, 0x5544);
++        g_assert_cmphex(qtest_readw(qts, base + offset + 6), ==, 0x7766);
++    }
++}
++
++static void big_l_valid(QTestState *qts, hwaddr offset)
++{
++    if (qtest_big_endian(qts)) {
++        qtest_writel(qts, base + offset + 0, 0x33221100);
++        qtest_writel(qts, base + offset + 1, 0x77665544);
++        qtest_writel(qts, base + offset + 2, 0xbbaa9988);
++        qtest_writel(qts, base + offset + 3, 0xffeeddcc);
++        qtest_writel(qts, base + offset + 4, 0x01234567);
++        qtest_writel(qts, base + offset + 5, 0x89abcdef);
++        qtest_writel(qts, base + offset + 6, 0xfedcba98);
++        qtest_writel(qts, base + offset + 7, 0x76543210);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 0), ==, 0x3377bbff);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 1), ==, 0x77bbff01);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 2), ==, 0xbbff0189);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 3), ==, 0xff0189fe);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 4), ==, 0x0189fe76);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 5), ==, 0x89fe7654);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 6), ==, 0xfe765432);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 7), ==, 0x76543210);
++    } else {
++        qtest_writel(qts, base + offset + 0, 0x33221100);
++        qtest_writel(qts, base + offset + 1, 0x77665544);
++        qtest_writel(qts, base + offset + 2, 0xbbaa9988);
++        qtest_writel(qts, base + offset + 3, 0xffeeddcc);
++        qtest_writel(qts, base + offset + 4, 0x01234567);
++        qtest_writel(qts, base + offset + 5, 0x89abcdef);
++        qtest_writel(qts, base + offset + 6, 0xfedcba98);
++        qtest_writel(qts, base + offset + 7, 0x76543210);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 0), ==, 0xcc884400);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 1), ==, 0x67cc8844);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 2), ==, 0xef67cc88);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 3), ==, 0x98ef67cc);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 4), ==, 0x1098ef67);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 5), ==, 0x321098ef);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 6), ==, 0x54321098);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 7), ==, 0x76543210);
++    }
++}
++
++static void big_l_invalid(QTestState *qts, hwaddr offset)
++{
++    if (qtest_big_endian(qts)) {
++        qtest_writel(qts, base + offset + 0, 0x33221100);
++        qtest_writel(qts, base + offset + 4, 0x77665544);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 0), ==, 0x33221100);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 4), ==, 0x77665544);
++    } else {
++        qtest_writel(qts, base + offset + 0, 0x33221100);
++        qtest_writel(qts, base + offset + 4, 0x77665544);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 0), ==, 0x33221100);
++        g_assert_cmphex(qtest_readl(qts, base + offset + 4), ==, 0x77665544);
++    }
++}
++
++static void big_q_valid(QTestState *qts, hwaddr offset)
++{
++    if (qtest_big_endian(qts)) {
++        qtest_writeq(qts, base + offset + 0, 0x7766554433221100);
++        qtest_writeq(qts, base + offset + 1, 0xffeeddccbbaa9988);
++        qtest_writeq(qts, base + offset + 2, 0xfedcba9876543210);
++        qtest_writeq(qts, base + offset + 3, 0x0123456789abcdef);
++        qtest_writeq(qts, base + offset + 4, 0xdeadbeefdeadbeef);
++        qtest_writeq(qts, base + offset + 5, 0xcafebabecafebabe);
++        qtest_writeq(qts, base + offset + 6, 0xbeefcafebeefcafe);
++        qtest_writeq(qts, base + offset + 7, 0xfacefeedfacefeed);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 0), ==,
++                        0x77fffe01decabefa);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 1), ==,
++                        0xfffe01decabeface);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 2), ==,
++                        0xfe01decabefacefe);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 3), ==,
++                        0x01decabefacefeed);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 4), ==,
++                        0xdecabefacefeedfa);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 5), ==,
++                        0xcabefacefeedface);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 6), ==,
++                        0xbefacefeedfacefe);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 7), ==,
++                        0xfacefeedfacefeed);
++    } else {
++        qtest_writeq(qts, base + offset + 0, 0x7766554433221100);
++        qtest_writeq(qts, base + offset + 1, 0xffeeddccbbaa9988);
++        qtest_writeq(qts, base + offset + 2, 0xfedcba9876543210);
++        qtest_writeq(qts, base + offset + 3, 0x0123456789abcdef);
++        qtest_writeq(qts, base + offset + 4, 0xdeadbeefdeadbeef);
++        qtest_writeq(qts, base + offset + 5, 0xcafebabecafebabe);
++        qtest_writeq(qts, base + offset + 6, 0xbeefcafebeefcafe);
++        qtest_writeq(qts, base + offset + 7, 0xfacefeedfacefeed);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 0), ==,
++                        0xedfebeefef108800);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 1), ==,
++                        0xfeedfebeefef1088);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 2), ==,
++                        0xcefeedfebeefef10);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 3), ==,
++                        0xfacefeedfebeefef);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 4), ==,
++                        0xedfacefeedfebeef);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 5), ==,
++                        0xfeedfacefeedfebe);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 6), ==,
++                        0xcefeedfacefeedfe);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 7), ==,
++                        0xfacefeedfacefeed);
++    }
++}
++
++static void big_q_invalid(QTestState *qts, hwaddr offset)
++{
++    if (qtest_big_endian(qts)) {
++        qtest_writeq(qts, base + offset + 0, 0x7766554433221100);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 0), ==,
++                        0x7766554433221100);
++    } else {
++        qtest_writeq(qts, base + offset + 0, 0x7766554433221100);
++        g_assert_cmphex(qtest_readq(qts, base + offset + 0), ==,
++                        0x7766554433221100);
++    }
++}
++
++#define DEFINE_test_memaccess(e, e_u, w, w_u, v, v_u)                   \
++    static void                                                         \
++    test_memaccess_##e##_##w##_##v(void)                                \
++    {                                                                   \
++        QTestState *qts;                                                \
++        qts = create_memaccess_qtest();                                 \
++        if (!qts) {                                                     \
++            return;                                                     \
++        }                                                               \
++                                                                        \
++        for (size_t i = OFF_IDX_OPS_LIST_##e_u##_##w_u##_##v_u;         \
++             i < OFF_IDX_OPS_LIST_##e_u##_##w_u##_##v_u +               \
++                 N_OPS_LIST_##e_u##_##w_u##_##v_u;                      \
++             i++) {                                                     \
++            e##_##w##_##v(qts, MEMACCESS_TESTDEV_REGION_SIZE * i);      \
++        }                                                               \
++                                                                        \
++        qtest_quit(qts);                                                \
++    }
++
++DEFINE_test_memaccess(little, LITTLE, b, B, valid, VALID)
++DEFINE_test_memaccess(little, LITTLE, w, W, valid, VALID)
++DEFINE_test_memaccess(little, LITTLE, l, L, valid, VALID)
++DEFINE_test_memaccess(little, LITTLE, q, Q, valid, VALID)
++DEFINE_test_memaccess(little, LITTLE, b, B, invalid, INVALID)
++DEFINE_test_memaccess(little, LITTLE, w, W, invalid, INVALID)
++DEFINE_test_memaccess(little, LITTLE, l, L, invalid, INVALID)
++DEFINE_test_memaccess(little, LITTLE, q, Q, invalid, INVALID)
++DEFINE_test_memaccess(big, BIG, b, B, valid, VALID)
++DEFINE_test_memaccess(big, BIG, w, W, valid, VALID)
++DEFINE_test_memaccess(big, BIG, l, L, valid, VALID)
++DEFINE_test_memaccess(big, BIG, q, Q, valid, VALID)
++DEFINE_test_memaccess(big, BIG, b, B, invalid, INVALID)
++DEFINE_test_memaccess(big, BIG, w, W, invalid, INVALID)
++DEFINE_test_memaccess(big, BIG, l, L, invalid, INVALID)
++DEFINE_test_memaccess(big, BIG, q, Q, invalid, INVALID)
++
++#undef DEFINE_test_memaccess
++
++static struct {
++    const char *name;
++    void (*test)(void);
++} tests[] = {
++    {"little_b_valid", test_memaccess_little_b_valid},
++    {"little_w_valid", test_memaccess_little_w_valid},
++    {"little_l_valid", test_memaccess_little_l_valid},
++    {"little_q_valid", test_memaccess_little_q_valid},
++    {"little_b_invalid", test_memaccess_little_b_invalid},
++    {"little_w_invalid", test_memaccess_little_w_invalid},
++    {"little_l_invalid", test_memaccess_little_l_invalid},
++    {"little_q_invalid", test_memaccess_little_q_invalid},
++    {"big_b_valid", test_memaccess_big_b_valid},
++    {"big_w_valid", test_memaccess_big_w_valid},
++    {"big_l_valid", test_memaccess_big_l_valid},
++    {"big_q_valid", test_memaccess_big_q_valid},
++    {"big_b_invalid", test_memaccess_big_b_invalid},
++    {"big_w_invalid", test_memaccess_big_w_invalid},
++    {"big_l_invalid", test_memaccess_big_l_invalid},
++    {"big_q_invalid", test_memaccess_big_q_invalid},
++};
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    arch = qtest_get_arch();
++
++    for (int i = 0; i < ARRAY_SIZE(tests); i++) {
++        g_autofree gchar *path = g_strdup_printf("memaccess/%s", tests[i].name);
++        qtest_add_func(path, tests[i].test);
++    }
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index aa93e98418..49271cbc3f 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -93,6 +93,7 @@ qtests_i386 = \
+   (config_all_devices.has_key('CONFIG_SB16') ? ['fuzz-sb16-test'] : []) +                   \
+   (config_all_devices.has_key('CONFIG_SDHCI_PCI') ? ['fuzz-sdcard-test'] : []) +            \
+   (config_all_devices.has_key('CONFIG_ESP_PCI') ? ['am53c974-test'] : []) +                 \
++  (config_all_devices.has_key('CONFIG_MEMACCESS_TESTDEV') ? ['memaccess-test'] : []) +      \
+   (host_os != 'windows' and                                                                \
+    config_all_devices.has_key('CONFIG_ACPI_ERST') ? ['erst-test'] : []) +                   \
+   (config_all_devices.has_key('CONFIG_PCIE_PORT') and                                       \
+@@ -136,6 +137,7 @@ qtests_x86_64 = qtests_i386
  
-@@ -1553,15 +1642,17 @@ MemTxResult memory_region_dispatch_write(MemoryRegion *mr,
-         return access_with_adjusted_size(addr, &data, size,
-                                          mr->ops->impl.min_access_size,
-                                          mr->ops->impl.max_access_size,
--                                         memory_region_write_accessor, mr,
--                                         attrs);
-+                                         memory_region_read_accessor,
-+                                         memory_region_write_accessor,
-+                                         true, mr, attrs);
-     } else {
-         return
-             access_with_adjusted_size(addr, &data, size,
-                                       mr->ops->impl.min_access_size,
-                                       mr->ops->impl.max_access_size,
-+                                      memory_region_read_with_attrs_accessor,
-                                       memory_region_write_with_attrs_accessor,
--                                      mr, attrs);
-+                                      true, mr, attrs);
-     }
- }
+ qtests_alpha = ['boot-serial-test'] + \
+   qtests_filter + \
++  (config_all_devices.has_key('CONFIG_MEMACCESS_TESTDEV') ? ['memaccess-test'] : []) +       \
+   (config_all_devices.has_key('CONFIG_VGA') ? ['display-vga-test'] : [])
  
-diff --git a/system/physmem.c b/system/physmem.c
-index dc1db3a384..ff444140a8 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2693,14 +2693,6 @@ int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr)
-         access_size_max = 4;
-     }
+ qtests_avr = [ 'boot-serial-test' ]
+@@ -158,6 +160,7 @@ qtests_microblazeel = qtests_microblaze
  
--    /* Bound the maximum access by the alignment of the address.  */
--    if (!mr->ops->impl.unaligned) {
--        unsigned align_size_max = addr & -addr;
--        if (align_size_max != 0 && align_size_max < access_size_max) {
--            access_size_max = align_size_max;
--        }
--    }
--
-     /* Don't attempt accesses larger than the maximum.  */
-     if (l > access_size_max) {
-         l = access_size_max;
+ qtests_mips = \
+   qtests_filter + \
++  (config_all_devices.has_key('CONFIG_MEMACCESS_TESTDEV') ? ['memaccess-test'] : []) +       \
+   (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : []) +            \
+   (config_all_devices.has_key('CONFIG_VGA') ? ['display-vga-test'] : [])
+ 
+@@ -169,6 +172,7 @@ qtests_ppc = \
+   qtests_filter + \
+   (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : []) +            \
+   (config_all_devices.has_key('CONFIG_M48T59') ? ['m48t59-test'] : []) +                     \
++  (config_all_devices.has_key('CONFIG_MEMACCESS_TESTDEV') ? ['memaccess-test'] : []) +       \
+   (config_all_accel.has_key('CONFIG_TCG') ? ['prom-env-test'] : []) +                              \
+   (config_all_accel.has_key('CONFIG_TCG') ? ['boot-serial-test'] : []) +                           \
+   ['boot-order-test']
+@@ -195,6 +199,7 @@ qtests_sparc = ['prom-env-test', 'm48t59-test', 'boot-serial-test'] + \
+ 
+ qtests_sparc64 = \
+   (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : []) +            \
++  (config_all_devices.has_key('CONFIG_MEMACCESS_TESTDEV') ? ['memaccess-test'] : []) +       \
+   qtests_filter + \
+   ['prom-env-test', 'boot-serial-test']
+ 
+@@ -240,6 +245,7 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_FSI_APB2OPB_ASPEED') ? ['aspeed_fsi-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
+    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_MEMACCESS_TESTDEV') ? ['memaccess-test'] : []) + \
+   ['arm-cpu-features',
+    'boot-serial-test']
+ 
+@@ -254,6 +260,7 @@ qtests_aarch64 = \
+   (config_all_accel.has_key('CONFIG_TCG') and                                            \
+    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
++  (config_all_devices.has_key('CONFIG_MEMACCESS_TESTDEV') ? ['memaccess-test'] : []) + \
+   ['arm-cpu-features',
+    'numa-test',
+    'boot-serial-test',
+@@ -269,9 +276,11 @@ qtests_s390x = \
+    'migration-test']
+ 
+ qtests_riscv32 = \
++  (config_all_devices.has_key('CONFIG_MEMACCESS_TESTDEV') ? ['memaccess-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
+ 
+ qtests_riscv64 = \
++  (config_all_devices.has_key('CONFIG_MEMACCESS_TESTDEV') ? ['memaccess-test'] : []) + \
+   (unpack_edk2_blobs ? ['bios-tables-test'] : [])
+ 
+ qos_test_ss = ss.source_set()
 -- 
 2.43.0
 
