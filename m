@@ -4,56 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3163D5E156
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 10:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786EFD5E158
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 10:43:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9MNC-0002Qm-UX; Fri, 08 Nov 2024 05:37:50 -0500
+	id 1t9MSl-00049x-FJ; Fri, 08 Nov 2024 05:43:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <042b4ebfd2298ae01553844124f27d651cdb1071@kylie.crudebyte.com>)
- id 1t9MNA-0002QE-Di; Fri, 08 Nov 2024 05:37:48 -0500
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t9MSj-00049a-7a
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:43:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <042b4ebfd2298ae01553844124f27d651cdb1071@kylie.crudebyte.com>)
- id 1t9MN7-0005bX-G5; Fri, 08 Nov 2024 05:37:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=3wiZXtK/ZFU3fzQgHyiPmVBJifvcCVuHJzV0dxB5Hl0=; b=Ibc1S
- /i4kL8zj/g1ZqY8NRkYJRR5DJjozk4qGWprEgele5oJsfo+3rw7Qaoj45BjmcXXMbQFQ76HEwf0ZM
- ltgXZYIAqN7PD9YIAUUdD2FCeyXj1Czt2YoH9dpsB+8p0Ddk956qGgrXvLnE1k6AZf+G1aBgYd5OZ
- 4O2yw7MdPZQGPaFTKAbUyYTd3dwIwoy2r7RH4NaWNS6Kb+Z8Fp2WkO+ezKcTi2WbPeB55VBIy2BlQ
- UWSNrmeZFQSKMYUe4Hr7AFagMQwyO/JdW0mL0TwGqn4/xbc1dU5yUY1QB9c4g6NNHjvyuuRSbkYLq
- 66EBb5iTgA9b7WtNhkaqNJWWOzvLO5b0RsudJKo9d6GXtzzylBfbVDu8kymfqvDOsx+VYIzwI4qjd
- FBQyva+1G8yWg0OUWr4FLwTIX2vNZxbTgbhuf19sAeaVBLWkiVOss/eVKrLn27KXEcIFY97H10pPh
- ZZwSV79z/56zSk+880iapb5jSLgvkzNFPQSRVvg42oOg7zZGBtUpJTmbUZowzK0rqZfaciZ8YX9Jg
- 1ePPIhAFepKwLqL7VdmrjUhF5XvY9FHzZr7cFK8OoUGpJUllCA7N+WWJFylZpiOjn1jYBKMO8TZDi
- U7ekopyeRf+x6AhC+CGS5rRazDOjHVDx4McXtncZbPnFaCaQBkV/WshIx9cOt0=;
-Message-Id: <042b4ebfd2298ae01553844124f27d651cdb1071.1731059803.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1731059803.git.qemu_oss@crudebyte.com>
-References: <cover.1731059803.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Fri, 08 Nov 2024 10:56:43 +0100
-Subject: [PULL for-9.2 1/1] 9pfs: fix crash on 'Treaddir' request
-To: qemu-devel@nongnu.org,
-    Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Akihiro Suda <suda.kyoto@gmail.com>, jan.dubois@suse.com,
- anders.f.bjorklund@gmail.com, Balaji Vijayakumar <kuttibalaji.v6@gmail.com>
-Received-SPF: none client-ip=5.189.157.229;
- envelope-from=042b4ebfd2298ae01553844124f27d651cdb1071@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t9MSh-00068s-DL
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:43:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731062609;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4Wn/SU29qjPGoDuvuKwnDYxy4am62rNvT1IhX7LQqR8=;
+ b=fS+SCv91mWi75mdCacfzlllRFPay5oe7HA7whrmb+2P5eqRT4LdSI90F1hcTuoQnGh6XN/
+ tXiMLqn5apxmkzYtCdjof6G/q7zoocyUpbsOPhywBHqNplPxtqvA8+nKbeuRsEFsSFe/nE
+ pjU9UrA201pj0pGZRnlxQE28Evt3Kyo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-34-Zi2L6gMfPJWDBALj4lv2ZQ-1; Fri,
+ 08 Nov 2024 05:43:24 -0500
+X-MC-Unique: Zi2L6gMfPJWDBALj4lv2ZQ-1
+X-Mimecast-MFC-AGG-ID: Zi2L6gMfPJWDBALj4lv2ZQ
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE61F1956048; Fri,  8 Nov 2024 10:43:18 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.118])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A489D1953880; Fri,  8 Nov 2024 10:43:16 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 00/10] Functional test fixes & next-cube cleanup
+Date: Fri,  8 Nov 2024 11:43:00 +0100
+Message-ID: <20241108104312.534448-1-thuth@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,62 +79,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A bad (broken or malicious) 9p client (guest) could cause QEMU host to
-crash by sending a 9p 'Treaddir' request with a numeric file ID (FID) that
-was previously opened for a file instead of an expected directory:
+ Hi Peter!
 
-  #0  0x0000762aff8f4919 in __GI___rewinddir (dirp=0xf) at
-    ../sysdeps/unix/sysv/linux/rewinddir.c:29
-  #1  0x0000557b7625fb40 in do_readdir_many (pdu=0x557bb67d2eb0,
-    fidp=0x557bb67955b0, entries=0x762afe9fff58, offset=0, maxsize=131072,
-    dostat=<optimized out>) at ../hw/9pfs/codir.c:101
-  #2  v9fs_co_readdir_many (pdu=pdu@entry=0x557bb67d2eb0,
-    fidp=fidp@entry=0x557bb67955b0, entries=entries@entry=0x762afe9fff58,
-    offset=0, maxsize=131072, dostat=false) at ../hw/9pfs/codir.c:226
-  #3  0x0000557b7625c1f9 in v9fs_do_readdir (pdu=0x557bb67d2eb0,
-    fidp=0x557bb67955b0, offset=<optimized out>,
-    max_count=<optimized out>) at ../hw/9pfs/9p.c:2488
-  #4  v9fs_readdir (opaque=0x557bb67d2eb0) at ../hw/9pfs/9p.c:2602
+The following changes since commit feef1866d1366d651e6a3cb8c9cf1a9aabb81395:
 
-That's because V9fsFidOpenState was declared as union type. So the
-same memory region is used for either an open POSIX file handle (int),
-or a POSIX DIR* pointer, etc., so 9p server incorrectly used the
-previously opened (valid) POSIX file handle (0xf) as DIR* pointer,
-eventually causing a crash in glibc's rewinddir() function.
+  Merge tag 'pull-riscv-to-apply-20241107' of https://github.com/alistair23/qemu into staging (2024-11-07 15:08:05 +0000)
 
-Root cause was therefore a missing check in 9p server's 'Treaddir'
-request handler, which must ensure that the client supplied FID was
-really opened as directory stream before trying to access the
-aforementioned union and its DIR* member.
+are available in the Git repository at:
 
-Cc: qemu-stable@nongnu.org
-Fixes: d62dbb51f7 ("virtio-9p: Add fidtype so that we can do type ...")
-Reported-by: Akihiro Suda <suda.kyoto@gmail.com>
-Tested-by: Akihiro Suda <suda.kyoto@gmail.com>
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <E1t8GnN-002RS8-E2@kylie.crudebyte.com>
----
- hw/9pfs/9p.c | 5 +++++
- 1 file changed, 5 insertions(+)
+  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-11-08
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index af636cfb2d..9a291d1b51 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -2587,6 +2587,11 @@ static void coroutine_fn v9fs_readdir(void *opaque)
-         retval = -EINVAL;
-         goto out_nofid;
-     }
-+    if (fidp->fid_type != P9_FID_DIR) {
-+        warn_report_once("9p: bad client: T_readdir on non-directory stream");
-+        retval = -ENOTDIR;
-+        goto out;
-+    }
-     if (!fidp->fs.dir.stream) {
-         retval = -EINVAL;
-         goto out;
--- 
-2.30.2
+for you to fetch changes up to e7e76150a2e9642adf6763bcd8ca9a2a5d3b74b3:
+
+  ui/input-legacy.c: remove unused legacy qemu_add_kbd_event_handler() function (2024-11-08 11:06:42 +0100)
+
+----------------------------------------------------------------
+* Various fixes and improvements for the functional tests
+* Refresh CI container files with the latest changes from libvirt-ci
+* Clean up keyboard code of the next-cube machine to get rid of a legacy API
+  (I know, the kbd patches are a little bit borderline for soft-freeze
+  already, but since the next-cube machine is experimental anyway, I
+  still opted for including them here)
+
+----------------------------------------------------------------
+Cédric Le Goater (1):
+      test/functional: Fix Aspeed buildroot tests
+
+Daniel P. Berrangé (1):
+      tests: refresh package lists with latest libvirt-ci
+
+Mark Cave-Ayland (2):
+      next-kbd: convert to use qemu_input_handler_register()
+      ui/input-legacy.c: remove unused legacy qemu_add_kbd_event_handler() function
+
+Phil Dennis-Jordan (1):
+      scripts/checkpatch.pl: Ignore ObjC #import lines for operator spacing
+
+Thomas Huth (5):
+      tests/functional: Convert the riscv_opensbi avocado test into a standalone test
+      tests/functional: Fix the ppc64_hv and the ppc_40p test for read-only assets
+      tests/functional: Provide the user with hints where to find more log files
+      tests/functional: Bump timeouts of functional tests
+      tests/functional: Split the test_aarch64_sbsaref test
+
+ MAINTAINERS                                        |   3 +-
+ include/ui/console.h                               |   2 -
+ hw/m68k/next-kbd.c                                 | 158 +++++++++++++-------
+ ui/input-legacy.c                                  |  37 -----
+ .gitlab-ci.d/cirrus/freebsd-14.vars                |   2 +-
+ scripts/checkpatch.pl                              |   2 +-
+ tests/avocado/riscv_opensbi.py                     |  63 --------
+ tests/docker/dockerfiles/debian-amd64-cross.docker |   8 +-
+ tests/docker/dockerfiles/debian-arm64-cross.docker |   8 +-
+ tests/docker/dockerfiles/debian-armhf-cross.docker |   8 +-
+ tests/docker/dockerfiles/debian-i686-cross.docker  |   8 +-
+ .../dockerfiles/debian-mips64el-cross.docker       |   7 +-
+ .../docker/dockerfiles/debian-mipsel-cross.docker  |   8 +-
+ .../docker/dockerfiles/debian-ppc64el-cross.docker |   8 +-
+ tests/docker/dockerfiles/debian-s390x-cross.docker |   8 +-
+ tests/docker/dockerfiles/fedora-win64-cross.docker |   4 +-
+ tests/functional/meson.build                       |  41 ++++--
+ tests/functional/qemu_test/testcase.py             |  18 ++-
+ tests/functional/test_aarch64_sbsaref.py           | 159 +++++----------------
+ tests/functional/test_aarch64_sbsaref_alpine.py    |  64 +++++++++
+ tests/functional/test_aarch64_sbsaref_freebsd.py   |  66 +++++++++
+ tests/functional/test_arm_aspeed.py                |   2 +-
+ tests/functional/test_ppc64_hv.py                  |   3 +-
+ tests/functional/test_ppc_40p.py                   |   3 +-
+ tests/functional/test_riscv_opensbi.py             |  36 +++++
+ tests/lcitool/libvirt-ci                           |   2 +-
+ tests/lcitool/mappings.yml                         |   3 +
+ tests/vm/generated/freebsd.json                    |   2 +-
+ 28 files changed, 392 insertions(+), 341 deletions(-)
+ delete mode 100644 tests/avocado/riscv_opensbi.py
+ create mode 100755 tests/functional/test_aarch64_sbsaref_alpine.py
+ create mode 100755 tests/functional/test_aarch64_sbsaref_freebsd.py
+ mode change 100644 => 100755 tests/functional/test_arm_aspeed.py
+ create mode 100755 tests/functional/test_riscv_opensbi.py
 
 
