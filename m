@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E30D5C0C3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 12:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A233FD5C0C3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 12:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9OXK-00054K-Ct; Fri, 08 Nov 2024 07:56:26 -0500
+	id 1t9OX4-000508-6N; Fri, 08 Nov 2024 07:56:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1t9OXI-00053s-Tt; Fri, 08 Nov 2024 07:56:24 -0500
+ id 1t9OWy-0004yD-0t; Fri, 08 Nov 2024 07:56:05 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1t9OXG-0006hf-Qf; Fri, 08 Nov 2024 07:56:24 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XlJlW3088z6J768;
- Fri,  8 Nov 2024 20:53:27 +0800 (CST)
+ id 1t9OWv-0006fg-FK; Fri, 08 Nov 2024 07:56:03 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XlJl32gKPz6J76j;
+ Fri,  8 Nov 2024 20:53:03 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 15B6D1400CA;
- Fri,  8 Nov 2024 20:56:21 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 0A519140133;
+ Fri,  8 Nov 2024 20:55:57 +0800 (CST)
 Received: from A2303104131.china.huawei.com (10.203.177.241) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 8 Nov 2024 13:56:15 +0100
+ 15.1.2507.39; Fri, 8 Nov 2024 13:55:50 +0100
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <nicolinc@nvidia.com>, <ddutile@redhat.com>, <linuxarm@huawei.com>,
  <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
  <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: [RFC PATCH 5/5] hw/arm/virt-acpi-build: Add IORT RMR regions to
- handle MSI nested binding
-Date: Fri, 8 Nov 2024 12:52:42 +0000
-Message-ID: <20241108125242.60136-6-shameerali.kolothum.thodi@huawei.com>
+Subject: [RFC PATCH 2/5] hw/arm/smmuv3: Add initial support for SMMUv3 Nested
+ device
+Date: Fri, 8 Nov 2024 12:52:39 +0000
+Message-ID: <20241108125242.60136-3-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
 References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
@@ -72,191 +72,231 @@ From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+Based on SMMUv3 as a parent device, add a user-creatable
+smmuv3-nested device. Subsequent patches will add support to
+specify a PCI bus for this device.
 
-To handle SMMUv3 nested stage support it is practical to
-expose the guest with reserved memory regions (RMRs)
-covering the IOVAs used by the host kernel to map
-physical MSI doorbells.
+Currently only supported for "virt", so hook up the sybus mem & irq
+for that  as well.
 
-Those IOVAs belong to [0x8000000, 0x8100000] matching
-MSI_IOVA_BASE and MSI_IOVA_LENGTH definitions in kernel
-arm-smmu-v3 driver. This is the window used to allocate
-IOVAs matching physical MSI doorbells.
+No FDT support is added for now.
 
-With those RMRs, the guest is forced to use a flat mapping
-for this range. Hence the assigned device is programmed
-with one IOVA from this range. Stage 1, owned by the guest
-has a flat mapping for this IOVA. Stage2, owned by the VMM
-then enforces a mapping from this IOVA to the physical
-MSI doorbell.
-
-The creation of those RMR nodes only is relevant if nested
-stage SMMU is in use, along with VFIO. As VFIO devices can be
-hotplugged, all RMRs need to be created in advance. Hence
-the patch introduces a new arm virt "nested-smmuv3" iommu type.
-
-ARM DEN 0049E.b IORT specification also mandates that when
-RMRs are present, the OS must preserve PCIe configuration
-performed by the boot FW. So along with the RMR IORT nodes,
-a _DSM function #5, as defined by PCI FIRMWARE SPECIFICATION
-EVISION 3.3, chapter 4.6.5 is added to PCIe host bridge
-and PCIe expander bridge objects.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Suggested-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
- hw/arm/virt-acpi-build.c | 77 +++++++++++++++++++++++++++++++++++-----
- 1 file changed, 68 insertions(+), 9 deletions(-)
+ hw/arm/smmuv3.c         | 34 ++++++++++++++++++++++++++++++++++
+ hw/arm/virt.c           | 31 +++++++++++++++++++++++++++++--
+ hw/core/sysbus-fdt.c    |  1 +
+ include/hw/arm/smmuv3.h | 15 +++++++++++++++
+ include/hw/arm/virt.h   |  6 ++++++
+ 5 files changed, 85 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index ec4cdfb2d7..f327ca59ec 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -132,6 +132,14 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
-         .bus    = vms->bus,
-     };
- 
-+    /*
-+     * Nested SMMU requires RMRs for MSI 1-1 mapping, which
-+     * require _DSM for PreservingPCI Boot Configurations
-+     */
-+    if (vms->iommu == VIRT_IOMMU_SMMUV3_NESTED) {
-+        cfg.preserve_config = true;
-+    }
-+
-     if (vms->highmem_mmio) {
-         cfg.mmio64 = memmap[VIRT_HIGH_PCIE_MMIO];
-     }
-@@ -216,16 +224,16 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
-  *
-  * Note that @id_count gets internally subtracted by one, following the spec.
-  */
--static void build_iort_id_mapping(GArray *table_data, uint32_t input_base,
--                                  uint32_t id_count, uint32_t out_ref)
-+static void
-+build_iort_id_mapping(GArray *table_data, uint32_t input_base,
-+                      uint32_t id_count, uint32_t out_ref, uint32_t flags)
- {
-     build_append_int_noprefix(table_data, input_base, 4); /* Input base */
-     /* Number of IDs - The number of IDs in the range minus one */
-     build_append_int_noprefix(table_data, id_count - 1, 4);
-     build_append_int_noprefix(table_data, input_base, 4); /* Output base */
-     build_append_int_noprefix(table_data, out_ref, 4); /* Output Reference */
--    /* Flags */
--    build_append_int_noprefix(table_data, 0 /* Single mapping (disabled) */, 4);
-+    build_append_int_noprefix(table_data, flags, 4); /* Flags */
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 2101031a8f..0033eb8125 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -2201,6 +2201,19 @@ static void smmu_realize(DeviceState *d, Error **errp)
+     smmu_init_irq(s, dev);
  }
  
- struct AcpiIortIdMapping {
-@@ -267,6 +275,50 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
-     return idmap_a->input_base - idmap_b->input_base;
- }
- 
-+static void
-+build_iort_rmr_nodes(GArray *table_data, GArray *smmu_idmaps,
-+                     size_t *smmu_offset, uint32_t *id)
++static void smmu_nested_realize(DeviceState *d, Error **errp)
 +{
-+    AcpiIortIdMapping *range;
-+    int i;
++    SMMUv3NestedState *s_nested = ARM_SMMUV3_NESTED(d);
++    SMMUv3NestedClass *c = ARM_SMMUV3_NESTED_GET_CLASS(s_nested);
++    Error *local_err = NULL;
 +
-+    for (i = 0; i < smmu_idmaps->len; i++) {
-+        range = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
-+        int bdf = range->input_base;
-+
-+        /* Table 18 Reserved Memory Range Node */
-+
-+        build_append_int_noprefix(table_data, 6 /* RMR */, 1); /* Type */
-+        /* Length */
-+        build_append_int_noprefix(table_data, 28 + ID_MAPPING_ENTRY_SIZE + 20, 2);
-+        build_append_int_noprefix(table_data, 3, 1); /* Revision */
-+        build_append_int_noprefix(table_data, *id, 4); /* Identifier */
-+        /* Number of ID mappings */
-+        build_append_int_noprefix(table_data, 1, 4);
-+        /* Reference to ID Array */
-+        build_append_int_noprefix(table_data, 28, 4);
-+
-+        /* RMR specific data */
-+
-+        /* Flags */
-+        build_append_int_noprefix(table_data, 0 /* Disallow remapping */, 4);
-+        /* Number of Memory Range Descriptors */
-+        build_append_int_noprefix(table_data, 1 , 4);
-+        /* Reference to Memory Range Descriptors */
-+        build_append_int_noprefix(table_data, 28 + ID_MAPPING_ENTRY_SIZE, 4);
-+        build_iort_id_mapping(table_data, bdf, range->id_count, smmu_offset[i], 1);
-+
-+        /* Table 19 Memory Range Descriptor */
-+
-+        /* Physical Range offset */
-+        build_append_int_noprefix(table_data, 0x8000000, 8);
-+        /* Physical Range length */
-+        build_append_int_noprefix(table_data, 0x100000, 8);
-+        build_append_int_noprefix(table_data, 0, 4); /* Reserved */
-+        *id += 1;
++    c->parent_realize(d, &local_err);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
 +    }
 +}
 +
- /*
-  * Input Output Remapping Table (IORT)
-  * Conforms to "IO Remapping Table System Software on ARM Platforms",
-@@ -284,7 +336,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     GArray *smmu_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
-     GArray *its_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
+ static const VMStateDescription vmstate_smmuv3_queue = {
+     .name = "smmuv3_queue",
+     .version_id = 1,
+@@ -2299,6 +2312,18 @@ static void smmuv3_class_init(ObjectClass *klass, void *data)
+     device_class_set_props(dc, smmuv3_properties);
+ }
  
--    AcpiTable table = { .sig = "IORT", .rev = 3, .oem_id = vms->oem_id,
-+    AcpiTable table = { .sig = "IORT", .rev = 5, .oem_id = vms->oem_id,
-                         .oem_table_id = vms->oem_table_id };
-     /* Table 2 The IORT */
-     acpi_table_begin(&table, table_data);
-@@ -325,6 +377,9 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-             }
++static void smmuv3_nested_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    SMMUv3NestedClass *c = ARM_SMMUV3_NESTED_CLASS(klass);
++
++    dc->vmsd = &vmstate_smmuv3;
++    device_class_set_parent_realize(dc, smmu_nested_realize,
++                                    &c->parent_realize);
++    dc->user_creatable = true;
++    dc->hotpluggable = false;
++}
++
+ static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
+                                       IOMMUNotifierFlag old,
+                                       IOMMUNotifierFlag new,
+@@ -2337,6 +2362,14 @@ static void smmuv3_iommu_memory_region_class_init(ObjectClass *klass,
+     imrc->notify_flag_changed = smmuv3_notify_flag_changed;
+ }
  
-             next_range.input_base = idmap->input_base + idmap->id_count;
-+            if (vms->iommu == VIRT_IOMMU_SMMUV3_NESTED) {
-+                nb_nodes++; /* RMR node per SMMU */
-+            }
-         }
++static const TypeInfo smmuv3_nested_type_info = {
++    .name          = TYPE_ARM_SMMUV3_NESTED,
++    .parent        = TYPE_ARM_SMMUV3,
++    .instance_size = sizeof(SMMUv3NestedState),
++    .class_size    = sizeof(SMMUv3NestedClass),
++    .class_init    = smmuv3_nested_class_init,
++};
++
+ static const TypeInfo smmuv3_type_info = {
+     .name          = TYPE_ARM_SMMUV3,
+     .parent        = TYPE_ARM_SMMU,
+@@ -2355,6 +2388,7 @@ static const TypeInfo smmuv3_iommu_memory_region_info = {
+ static void smmuv3_register_types(void)
+ {
+     type_register(&smmuv3_type_info);
++    type_register(&smmuv3_nested_type_info);
+     type_register(&smmuv3_iommu_memory_region_info);
+ }
  
-         /* Append the last RC -> ITS ID mapping */
-@@ -386,7 +441,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         build_append_int_noprefix(table_data, 0, 4);
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 780bcff77c..38075f9ab2 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -181,6 +181,7 @@ static const MemMapEntry base_memmap[] = {
+     [VIRT_PVTIME] =             { 0x090a0000, 0x00010000 },
+     [VIRT_SECURE_GPIO] =        { 0x090b0000, 0x00001000 },
+     [VIRT_MMIO] =               { 0x0a000000, 0x00000200 },
++    [VIRT_SMMU_NESTED] =        { 0x0b000000, 0x01000000 },
+     /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */
+     [VIRT_PLATFORM_BUS] =       { 0x0c000000, 0x02000000 },
+     [VIRT_SECURE_MEM] =         { 0x0e000000, 0x01000000 },
+@@ -226,6 +227,7 @@ static const int a15irqmap[] = {
+     [VIRT_GIC_V2M] = 48, /* ...to 48 + NUM_GICV2M_SPIS - 1 */
+     [VIRT_SMMU] = 74,    /* ...to 74 + NUM_SMMU_IRQS - 1 */
+     [VIRT_PLATFORM_BUS] = 112, /* ...to 112 + PLATFORM_BUS_NUM_IRQS -1 */
++    [VIRT_SMMU_NESTED] = 200,
+ };
  
-         /* output IORT node is the ITS group node (the first node) */
--        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
-+        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET, 0);
-     }
+ static void create_randomness(MachineState *ms, const char *node)
+@@ -2883,10 +2885,34 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+                                         DeviceState *dev, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
++    MachineClass *mc = MACHINE_GET_CLASS(vms);
  
-     /* Table 17 Root Complex Node */
-@@ -427,7 +482,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-             range = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
-             /* output IORT node is the smmuv3 node */
-             build_iort_id_mapping(table_data, range->input_base,
--                                  range->id_count, smmu_offset[i]);
-+                                  range->id_count, smmu_offset[i], 0);
-         }
+-    if (vms->platform_bus_dev) {
+-        MachineClass *mc = MACHINE_GET_CLASS(vms);
++    /* For smmuv3-nested devices we need to set the mem & irq */
++    if (device_is_dynamic_sysbus(mc, dev) &&
++        object_dynamic_cast(OBJECT(dev), TYPE_ARM_SMMUV3_NESTED)) {
++        hwaddr base = vms->memmap[VIRT_SMMU_NESTED].base;
++        int irq =  vms->irqmap[VIRT_SMMU_NESTED];
++
++        if (vms->smmu_nested_count >= MAX_SMMU_NESTED) {
++            error_setg(errp, "smmuv3-nested max count reached!");
++            return;
++        }
++
++        base += (vms->smmu_nested_count * SMMU_IO_LEN);
++        irq += (vms->smmu_nested_count * NUM_SMMU_IRQS);
  
-         /* bypassed RIDs connect to ITS group node directly: RC -> ITS */
-@@ -435,11 +490,15 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-             range = &g_array_index(its_idmaps, AcpiIortIdMapping, i);
-             /* output IORT node is the ITS group node (the first node) */
-             build_iort_id_mapping(table_data, range->input_base,
--                                  range->id_count, IORT_NODE_OFFSET);
-+                                  range->id_count, IORT_NODE_OFFSET, 0);
-         }
-     } else {
-         /* output IORT node is the ITS group node (the first node) */
--        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
-+        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET, 0);
++        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
++        for (int i = 0; i < 4; i++) {
++            sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
++                               qdev_get_gpio_in(vms->gic, irq + i));
++        }
++        if (vms->iommu != VIRT_IOMMU_SMMUV3_NESTED) {
++            vms->iommu = VIRT_IOMMU_SMMUV3_NESTED;
++        }
++        vms->smmu_nested_count++;
 +    }
 +
-+    if (vms->iommu == VIRT_IOMMU_SMMUV3_NESTED) {
-+        build_iort_rmr_nodes(table_data, smmu_idmaps, smmu_offset, &id);
-     }
++    if (vms->platform_bus_dev) {
+         if (device_is_dynamic_sysbus(mc, dev)) {
+             platform_bus_link_device(PLATFORM_BUS_DEVICE(vms->platform_bus_dev),
+                                      SYS_BUS_DEVICE(dev));
+@@ -3067,6 +3093,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_VFIO_AMD_XGBE);
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_VFIO_PLATFORM);
++    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_ARM_SMMUV3_NESTED);
+ #ifdef CONFIG_TPM
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
+ #endif
+diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
+index eebcd28f9a..0f0d0b3e58 100644
+--- a/hw/core/sysbus-fdt.c
++++ b/hw/core/sysbus-fdt.c
+@@ -489,6 +489,7 @@ static const BindingEntry bindings[] = {
+ #ifdef CONFIG_LINUX
+     TYPE_BINDING(TYPE_VFIO_CALXEDA_XGMAC, add_calxeda_midway_xgmac_fdt_node),
+     TYPE_BINDING(TYPE_VFIO_AMD_XGBE, add_amd_xgbe_fdt_node),
++    TYPE_BINDING("arm-smmuv3-nested", no_fdt_node),
+     VFIO_PLATFORM_BINDING("amd,xgbe-seattle-v1a", add_amd_xgbe_fdt_node),
+ #endif
+ #ifdef CONFIG_TPM
+diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+index d183a62766..87e628be7a 100644
+--- a/include/hw/arm/smmuv3.h
++++ b/include/hw/arm/smmuv3.h
+@@ -84,6 +84,21 @@ struct SMMUv3Class {
+ #define TYPE_ARM_SMMUV3   "arm-smmuv3"
+ OBJECT_DECLARE_TYPE(SMMUv3State, SMMUv3Class, ARM_SMMUV3)
  
-     acpi_table_end(linker, &table);
++#define TYPE_ARM_SMMUV3_NESTED   "arm-smmuv3-nested"
++OBJECT_DECLARE_TYPE(SMMUv3NestedState, SMMUv3NestedClass, ARM_SMMUV3_NESTED)
++
++struct SMMUv3NestedState {
++    SMMUv3State smmuv3_state;
++};
++
++struct SMMUv3NestedClass {
++    /*< private >*/
++    SMMUv3Class smmuv3_class;
++    /*< public >*/
++
++    DeviceRealize parent_realize;
++};
++
+ #define STAGE1_SUPPORTED(s)      FIELD_EX32(s->idr[0], IDR0, S1P)
+ #define STAGE2_SUPPORTED(s)      FIELD_EX32(s->idr[0], IDR0, S2P)
+ 
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 46f48fe561..50e47a4ef3 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -50,6 +50,9 @@
+ /* MMIO region size for SMMUv3 */
+ #define SMMU_IO_LEN 0x20000
+ 
++/* Max supported nested SMMUv3 */
++#define MAX_SMMU_NESTED 128
++
+ enum {
+     VIRT_FLASH,
+     VIRT_MEM,
+@@ -62,6 +65,7 @@ enum {
+     VIRT_GIC_ITS,
+     VIRT_GIC_REDIST,
+     VIRT_SMMU,
++    VIRT_SMMU_NESTED,
+     VIRT_UART0,
+     VIRT_MMIO,
+     VIRT_RTC,
+@@ -92,6 +96,7 @@ enum {
+ typedef enum VirtIOMMUType {
+     VIRT_IOMMU_NONE,
+     VIRT_IOMMU_SMMUV3,
++    VIRT_IOMMU_SMMUV3_NESTED,
+     VIRT_IOMMU_VIRTIO,
+ } VirtIOMMUType;
+ 
+@@ -155,6 +160,7 @@ struct VirtMachineState {
+     bool mte;
+     bool dtb_randomness;
+     bool second_ns_uart_present;
++    int smmu_nested_count;
+     OnOffAuto acpi;
+     VirtGICType gic_version;
+     VirtIOMMUType iommu;
 -- 
 2.34.1
 
