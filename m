@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36289D5C0C8
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 13:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5873DD5C0CA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 13:56:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9PSM-000758-36; Fri, 08 Nov 2024 08:55:22 -0500
+	id 1t9PSO-00076N-QE; Fri, 08 Nov 2024 08:55:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9PSL-00074P-4z
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 08:55:21 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1t9PSM-00075C-JM
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 08:55:22 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9PSI-0005am-9g
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 08:55:20 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4315eac969aso12935025e9.1
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 05:55:17 -0800 (PST)
+ id 1t9PSJ-0005b6-Uy
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 08:55:22 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-37d47eff9acso1330959f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 05:55:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731074117; x=1731678917; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731074118; x=1731678918; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8MLS0ts7CduEeJRIoLccc9jglcL03es1fitzm9sV2Cg=;
- b=m3VDiIBmh+kyU/Nl0rhr0YH0y8Fz9sWUI1W7JNt4AnsgKGO9A1yGyaTmsyu4/8AJkb
- JMi5n2+fjeUMiJrnpOVsQ0D19DUVtXBweq5aT0yUmxKRw0L25a5MKI+N02ED3xSZPwZu
- lt3M7+e9kSEK/Z1gf3bx1e2IiLRbQ38XXpcrWcTG6RrhjZ6qf9SKH0v3/jzjYOJQQY+8
- CK0hJURxN2pPS63mBZ3yaaPX8ZWvan+/De39JQ1mPdhlP8e/E4jvU3s84NVFSAz63A0k
- DJeWHDSfAs637XWzIDYRaD7KAIpFgvfid0M8jq9c2LOJ5LzInFEtQlo6MshIFdFIjj9c
- cvOA==
+ bh=8mUw/2j0GVZe2OEKmbmEYrGKzq5ifsNFVXkG4rgChXM=;
+ b=TgtuWIfJbN6f2ho9mcUnpMm5plv0m6bT0F74KnpTvWeiByjwDO/I6hk35LE4D3gK+g
+ 5/1UxSC/CzSPeRdE+JIDVv1n99ldaqog8BKfYG+MmKeISWSZExtpXCrlYy091HkyMiNC
+ QiuHLptPv0jn9D6zQ2nCYkOHU8acJQ6V8JK6TfBi02lxFNe6rlmrPJj9/Gy80DHaqQGx
+ ljvtPBSuGBCZb6TKNyB3VREtzeZ9W52p+DpiulHiDQqLEIIQbgbHGVjRxh483/DGHz1m
+ YHy3g8YbZkxOgnSZMCWnoVbcSYAYNZuZE7HYr+ul+scCh9lnUiFWrVIGL8K8WU21Os+J
+ 83ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731074117; x=1731678917;
+ d=1e100.net; s=20230601; t=1731074118; x=1731678918;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8MLS0ts7CduEeJRIoLccc9jglcL03es1fitzm9sV2Cg=;
- b=HUs9yDswtMg30EskwliZ6vxGcz87ObURjOku0cMyQOGzdh9VgmxmfVNnhN9o7CFHyJ
- 01OGdeWcKZyMZ1JL6BK7rj34V1vE8VbspVKEOdt3ZVRxS1MZKcafX9WCI3kpAdUCPtq2
- QFfGSoVjF65OHJ1rQmDnMhArqjF0EPTJ+q5a5gp4JcdxnFomoXF+rmUPg9V6BtBLn83m
- 1EI06OhZgCszeCI+ZGKToxeGjQZum3tUbaLya/5rFZT7vu+2AerrN8g9eihcYcE+oEKj
- 0oEo5wsEhuDoFZb9slGO9hvHQaKewCd2/wrYXSc+qcf0dWswPT5LWH2rEHFzy6hyBt/P
- JsUA==
-X-Gm-Message-State: AOJu0YyFoBY5oojK3LzVhXzgARpt044ZBmGaX9AuxWaplqv4tAOLM27m
- YpIO81cfZ0sJJd9S8XovN6foWrNUbGLnlxnRJ/X6tZFF4r9H7L/i7ux8ahdfIFDBGfH3a01KVHg
- 8
-X-Google-Smtp-Source: AGHT+IFhq6MgfbmBhRURYCi/2d8bIdb7KHayV0/NbRQ9JYMyBCvO2GU1pERV2Hd09Al5NADPUk8tng==
-X-Received: by 2002:a05:600c:3b9c:b0:431:52da:9d89 with SMTP id
- 5b1f17b1804b1-432b743575emr23486075e9.1.1731074116536; 
- Fri, 08 Nov 2024 05:55:16 -0800 (PST)
+ bh=8mUw/2j0GVZe2OEKmbmEYrGKzq5ifsNFVXkG4rgChXM=;
+ b=UcaLsea1ry/y4BFsRtBwXeRmr/omtLcxk9MzD303ERlvb5O/ppWooHFZ7pldDFZdTO
+ Md5kxO02EHP1CTa4q4E2aZRE6A/nfqJSmnD7Ek212H6FsHAmFlvQ/L+EGRkN6OTOWP1X
+ KiNiv+DZTnA1NY4U+4J07RwoIVQt3CBSc+ymKVTz1T4CX/fY/c+qoWMQRn6NH1R7ampU
+ R/I1hr/O4WQ7Qtw8sdgQfBFJGBwr5MyiZUN9OZHn3pb+XcaVQBIVTyxa1ohFQhjWt6uc
+ WdStOVwA6eb+c5iLLa2WBNdURubL4Bhbn+4c0+Tav0w/6eorJFsVdABtSD7cfezJgzz8
+ q0Rg==
+X-Gm-Message-State: AOJu0YxUJXMbYv2zUWffs5Xp9Ra92163aaXwJrtM9oSJVW5heuK573Al
+ Ex1HCJualA5RLj62I8SZA7hA8QfVbpgxumqCTqShGky/uHA0mLvy1SesKu7YVkbxzaZV/4ItF4q
+ c
+X-Google-Smtp-Source: AGHT+IH/dEDW/BnSvrqHRRh1OTyQfwW3/+O3HzMHmdTiFZBa118G1ZjiAXv/xRsJzhOXjWFvg3hHsA==
+X-Received: by 2002:a5d:648f:0:b0:37d:46fa:d1d3 with SMTP id
+ ffacd0b85a97d-381f186d11amr2571930f8f.34.1731074118140; 
+ Fri, 08 Nov 2024 05:55:18 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa70a2ccsm110082855e9.31.2024.11.08.05.55.15
+ 5b1f17b1804b1-432aa70a2ccsm110082855e9.31.2024.11.08.05.55.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 05:55:16 -0800 (PST)
+ Fri, 08 Nov 2024 05:55:17 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 1/3] bitops.h: Define bit operations on 'uint32_t' arrays
-Date: Fri,  8 Nov 2024 13:55:12 +0000
-Message-Id: <20241108135514.4006953-2-peter.maydell@linaro.org>
+Subject: [PATCH 3/3] hw/intc/loongarch_extioi: Use set_bit32() and
+ clear_bit32() for s->isr
+Date: Fri,  8 Nov 2024 13:55:14 +0000
+Message-Id: <20241108135514.4006953-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241108135514.4006953-1-peter.maydell@linaro.org>
 References: <20241108135514.4006953-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,252 +96,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently bitops.h defines a set of operations that work on
-arbitrary-length bit arrays.  However (largely because they
-originally came from the Linux kernel) the bit array storage is an
-array of 'unsigned long'.  This is OK for the kernel and even for
-parts of QEMU where we don't really care about the underlying storage
-format, but it is not good for devices, where we often want to expose
-the storage to the guest and so need a type that is not
-variably-sized between host OSes.
+In extioi_setirq() we try to operate on a bit array stored as an
+array of uint32_t using the set_bit() and clear_bit() functions
+by casting the pointer to 'unsigned long *'.
+This has two problems:
+ * the alignment of 'uint32_t' is less than that of 'unsigned long'
+   so we pass an insufficiently aligned pointer, which is
+   undefined behaviour
+ * on big-endian hosts the 64-bit 'unsigned long' will have
+   its two halves the wrong way around, and we will produce
+   incorrect results
 
-We already have a workaround for this in the GICv3 model:
-arm_gicv3_common.h defines equivalents of the bit operations that
-work on uint32_t.  It turns out that we should also be using
-something similar in hw/intc/loongarch_extioi.c, which currently
-casts a pointer to a uint32_t array to 'unsigned long *' in
-extio_setirq(), which is both undefined behaviour and not correct on
-a big-endian host.
+The undefined behaviour is shown by the clang undefined-behaviour
+sanitizer when running the loongarch64-virt functional test:
 
-Define equivalents of the set_bit() function family which work
-with a uint32_t array.
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/include/qemu/bitops.h:41:5: runtime error: store to misaligned address 0x555559745d9c for type 'unsigned long', which requires 8 byte alignment
+0x555559745d9c: note: pointer points here
+  ff ff ff ff 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+              ^
+    #0 0x555556fb81c4 in set_bit /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/include/qemu/bitops.h:41:9
+    #1 0x555556fb81c4 in extioi_setirq /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../hw/intc/loongarch_extioi.c:65:9
+    #2 0x555556fb6e90 in pch_pic_irq_handler /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../hw/intc/loongarch_pch_pic.c:75:5
+    #3 0x555556710265 in serial_ioport_write /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../hw/char/serial.c
 
-(Cc stable because we're about to provide a bugfix to
-loongarch_extioi which will depend on this commit.)
+Fix these problems by using set_bit32() and clear_bit32(),
+which work with bit arrays stored as an array of uint32_t.
 
 Cc: qemu-stable@nongnu.org
+Fixes: cbff2db1e92f8759 ("hw/intc: Add LoongArch extioi interrupt controller(EIOINTC)")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/qemu/bitmap.h |   8 ++
- include/qemu/bitops.h | 172 +++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 177 insertions(+), 3 deletions(-)
+ hw/intc/loongarch_extioi.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/include/qemu/bitmap.h b/include/qemu/bitmap.h
-index 1cf288445f3..14e51e50a9f 100644
---- a/include/qemu/bitmap.h
-+++ b/include/qemu/bitmap.h
-@@ -69,6 +69,14 @@
- #define DECLARE_BITMAP(name,bits)                  \
-         unsigned long name[BITS_TO_LONGS(bits)]
- 
-+/*
-+ * This is for use with the bit32 versions of set_bit() etc;
-+ * we don't currently support the full range of bitmap operations
-+ * on bitmaps backed by an array of uint32_t.
-+ */
-+#define DECLARE_BITMAP32(name,bits)             \
-+        uint32_t name[BITS_TO_U32S(bits)]
-+
- #define small_nbits(nbits)                      \
-         ((nbits) <= BITS_PER_LONG)
- 
-diff --git a/include/qemu/bitops.h b/include/qemu/bitops.h
-index 2c0a2fe7512..c7b838a6283 100644
---- a/include/qemu/bitops.h
-+++ b/include/qemu/bitops.h
-@@ -18,16 +18,47 @@
- 
- #define BITS_PER_BYTE           CHAR_BIT
- #define BITS_PER_LONG           (sizeof (unsigned long) * BITS_PER_BYTE)
-+#define BITS_TO_LONGS(nr)       DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(long))
-+#define BITS_TO_U32S(nr)        DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(uint32_t))
- 
- #define BIT(nr)                 (1UL << (nr))
- #define BIT_ULL(nr)             (1ULL << (nr))
--#define BIT_MASK(nr)            (1UL << ((nr) % BITS_PER_LONG))
--#define BIT_WORD(nr)            ((nr) / BITS_PER_LONG)
--#define BITS_TO_LONGS(nr)       DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(long))
- 
- #define MAKE_64BIT_MASK(shift, length) \
-     (((~0ULL) >> (64 - (length))) << (shift))
- 
-+/**
-+ * DOC: Functions operating on arrays of bits
-+ *
-+ * We provide a set of functions which work on arbitrary-length arrays of
-+ * bits. These come in several flavours which vary in what the type of the
-+ * underlying storage for the bits is:
-+ *
-+ * - Bits stored in an array of 'unsigned long': set_bit(), clear_bit(), etc
-+ * - Bits stored in an array of 'uint32_t': set_bit32(), clear_bit32(), etc
-+ *
-+ * Because the 'unsigned long' type has a size which varies between
-+ * host systems, the versions using 'uint32_t' are often preferable.
-+ * This is particularly the case in a device model where there may
-+ * be some guest-visible register view of the bit array.
-+ *
-+ * We do not currently implement uint32_t versions of find_last_bit(),
-+ * find_next_bit(), find_next_zero_bit(), find_first_bit() or
-+ * find_first_zero_bit(), because we haven't yet needed them. If you
-+ * need them you should implement them similarly to the 'unsigned long'
-+ * versions.
-+ *
-+ * You can declare a bitmap to be used with these functions via the
-+ * DECLARE_BITMAP and DECLARE_BITMAP32 macros in bitmap.h.
-+ */
-+
-+/**
-+ * DOC:  'unsigned long' bit array APIs
-+ */
-+
-+#define BIT_MASK(nr)            (1UL << ((nr) % BITS_PER_LONG))
-+#define BIT_WORD(nr)            ((nr) / BITS_PER_LONG)
-+
- /**
-  * set_bit - Set a bit in memory
-  * @nr: the bit to set
-@@ -224,6 +255,141 @@ static inline unsigned long find_first_zero_bit(const unsigned long *addr,
-     return find_next_zero_bit(addr, size, 0);
+diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
+index 02dc4e6db3b..97d1af5ccc2 100644
+--- a/hw/intc/loongarch_extioi.c
++++ b/hw/intc/loongarch_extioi.c
+@@ -57,14 +57,9 @@ static void extioi_setirq(void *opaque, int irq, int level)
+     LoongArchExtIOI *s = LOONGARCH_EXTIOI(opaque);
+     trace_loongarch_extioi_setirq(irq, level);
+     if (level) {
+-        /*
+-         * s->isr should be used in vmstate structure,
+-         * but it not support 'unsigned long',
+-         * so we have to switch it.
+-         */
+-        set_bit(irq, (unsigned long *)s->isr);
++        set_bit32(irq, s->isr);
+     } else {
+-        clear_bit(irq, (unsigned long *)s->isr);
++        clear_bit32(irq, s->isr);
+     }
+     extioi_update_irq(s, irq, level);
  }
+@@ -154,7 +149,7 @@ static inline void extioi_update_sw_coremap(LoongArchExtIOI *s, int irq,
+             continue;
+         }
  
-+/**
-+ * DOC:  'uint32_t' bit array APIs
-+ */
-+
-+#define BIT32_MASK(nr)            (1UL << ((nr) % 32))
-+#define BIT32_WORD(nr)            ((nr) / 32)
-+
-+/**
-+ * set_bit32 - Set a bit in memory
-+ * @nr: the bit to set
-+ * @addr: the address to start counting from
-+ */
-+static inline void set_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+
-+    *p  |= mask;
-+}
-+
-+/**
-+ * set_bit32_atomic - Set a bit in memory atomically
-+ * @nr: the bit to set
-+ * @addr: the address to start counting from
-+ */
-+static inline void set_bit32_atomic(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+
-+    qatomic_or(p, mask);
-+}
-+
-+/**
-+ * clear_bit32 - Clears a bit in memory
-+ * @nr: Bit to clear
-+ * @addr: Address to start counting from
-+ */
-+static inline void clear_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+
-+    *p &= ~mask;
-+}
-+
-+/**
-+ * clear_bit32_atomic - Clears a bit in memory atomically
-+ * @nr: Bit to clear
-+ * @addr: Address to start counting from
-+ */
-+static inline void clear_bit32_atomic(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+
-+    return qatomic_and(p, ~mask);
-+}
-+
-+/**
-+ * change_bit32 - Toggle a bit in memory
-+ * @nr: Bit to change
-+ * @addr: Address to start counting from
-+ */
-+static inline void change_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+
-+    *p ^= mask;
-+}
-+
-+/**
-+ * test_and_set_bit32 - Set a bit and return its old value
-+ * @nr: Bit to set
-+ * @addr: Address to count from
-+ */
-+static inline int test_and_set_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+    uint32_t old = *p;
-+
-+    *p = old | mask;
-+    return (old & mask) != 0;
-+}
-+
-+/**
-+ * test_and_clear_bit32 - Clear a bit and return its old value
-+ * @nr: Bit to clear
-+ * @addr: Address to count from
-+ */
-+static inline int test_and_clear_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+    uint32_t old = *p;
-+
-+    *p = old & ~mask;
-+    return (old & mask) != 0;
-+}
-+
-+/**
-+ * test_and_change_bit32 - Change a bit and return its old value
-+ * @nr: Bit to change
-+ * @addr: Address to count from
-+ */
-+static inline int test_and_change_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+    uint32_t old = *p;
-+
-+    *p = old ^ mask;
-+    return (old & mask) != 0;
-+}
-+
-+/**
-+ * test_bit32 - Determine whether a bit is set
-+ * @nr: bit number to test
-+ * @addr: Address to start counting from
-+ */
-+static inline int test_bit32(long nr, const uint32_t *addr)
-+{
-+    return 1U & (addr[BIT32_WORD(nr)] >> (nr & 31));
-+}
-+
-+/**
-+ * DOC: Miscellaneous bit operations on single values
-+ *
-+ * These functions are a collection of useful operations
-+ * (rotations, bit extract, bit deposit, etc) on single
-+ * integer values.
-+ */
-+
- /**
-  * rol8 - rotate an 8-bit value left
-  * @word: value to rotate
+-        if (notify && test_bit(irq + i, (unsigned long *)s->isr)) {
++        if (notify && test_bit32(irq + i, s->isr)) {
+             /*
+              * lower irq at old cpu and raise irq at new cpu
+              */
 -- 
 2.34.1
 
