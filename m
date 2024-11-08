@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 691EBD5C0C8
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 14:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4F53D5C0D3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 14:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9QGx-0004Mn-3G; Fri, 08 Nov 2024 09:47:39 -0500
+	id 1t9QLz-0007Qb-KS; Fri, 08 Nov 2024 09:52:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t9QGl-0004Cf-TD
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:47:29 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t9QGj-0005HN-WD
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:47:27 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a99e3b3a411so562299666b.0
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 06:47:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1731077244; x=1731682044;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dpaGWOL1qCixuwh7dSG/JDouTW8eM8K/0qL8NGiv7/w=;
- b=TIaAZcc4xjFOQpyqChUk0cAdzZNMm3MfUi63JftZQSrXWHMYa0CD42LyOJgUeaWVkx
- odfbW1VvCkp7wxHawNGNXSbyQJeVnQlTZTdPD9AZ6YbKZYzcUXyggGjltqhNZMyimKC6
- t7WIQn5Ckhhw4VNqKUgcuTB2ZRuNY+QwnhSglpJ4YWm5x5U86BCfdG6ITmTuPZOiBkAm
- 38h850/DR7ofJNUDru02wjo4mKztsdnQ2bKF9KCpZ9KGU/ySQ/yUxmGbIidux+Uw8hUg
- yJa8EP9WSwgAAVIbS9gFA50rZMz7iGyLz9r1w8KE0xYF57/lm4VbyvbjkCQBggnbFehr
- jAgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731077244; x=1731682044;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dpaGWOL1qCixuwh7dSG/JDouTW8eM8K/0qL8NGiv7/w=;
- b=QJTWqV9jtVZYEwN5Os8UPosBtQBIfptwOIlrFm7YBtDuWQyznOYUGGCVcFn7H8xa0+
- 7IUXeWSVTdY17APydigcAybpZJ+cH+yoJCRbhApL402b3qRB3NkKxdWO2GvO+jQ/KWoJ
- BSvoEaj9ml+dZSsLB1BlUf3r7e9Cq/aYO4JecSttpBUrtwh3WlAGgH6umrX3ek1O6g7r
- qiPR4tQC4oKkgYJgqv4KeiWbmzRqUn2G7a2pYB1tv85/Stf0YVLfMviirYuaXbErfAuz
- 3ToSC/MvxSnlu5fciDBUsVX9FSYQEYmMPGMZxfY6wQI5GFE9ZHuZ4JAFAzamaFsLAMv8
- Qg9g==
-X-Gm-Message-State: AOJu0YxEShzE4ydkRHkFvPZ0GHKt+o6YEQLPDbWdRx3f5li2uK/priMA
- rFOwO+beVe7x3LGbhJeyWdCyfncjY/HIG5TzrahGRFFdH/Xv11LE8+pnrNCNo7SYvShnYyhw4iQ
- zmw==
-X-Google-Smtp-Source: AGHT+IH/u+IHKjLSuv4D+AFrAyRbQrYspXAWYyLv6Q4INQ1hrHhDWbPmTCFuaHPWPdIg/f6sErf7ww==
-X-Received: by 2002:a17:906:f598:b0:a9e:b174:9cf7 with SMTP id
- a640c23a62f3a-a9eefeb4df1mr273562866b.13.1731077244225; 
- Fri, 08 Nov 2024 06:47:24 -0800 (PST)
-Received: from localhost.localdomain (h082218084190.host.wavenet.at.
- [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0a4a9b1sm240534066b.52.2024.11.08.06.47.22
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 08 Nov 2024 06:47:23 -0800 (PST)
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-To: qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
- pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com,
- stefanha@redhat.com, mst@redhat.com, slp@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com,
- chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com,
- philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
- qemu-riscv@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>
-Subject: [PATCH v8 05/15] MAINTAINERS: Add myself as maintainer for apple-gfx,
- reviewer for HVF
-Date: Fri,  8 Nov 2024 15:46:59 +0100
-Message-Id: <20241108144709.95498-6-phil@philjordan.eu>
-X-Mailer: git-send-email 2.39.3 (Apple Git-145)
-In-Reply-To: <20241108144709.95498-1-phil@philjordan.eu>
-References: <20241108144709.95498-1-phil@philjordan.eu>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t9QLv-00079R-QZ
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:52:48 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t9QLu-00064E-4k
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:52:47 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A8EBCO6024977;
+ Fri, 8 Nov 2024 14:52:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=PtopWrB95sEJJakqj
+ ViYAB0+qRP5bfPxyQ/0IlUv5kw=; b=aHn9taudWKbo3XtosgfeIyPSnrWgAetKK
+ jwTtWw5nQBD+aYBM6ybRiMoPDysPGYhzOd/IEKk84WjjScTNBQ9VVM6AWfTSukA5
+ uTlBJSPyM5DAqHnGCb9o5pruc3l4SgXDI9wGaRWxXpMO6RMPRkAF56Q0pF12D2ix
+ q1Wt+XZeU3rAPrR4xb5LnNYaswV8q7payzbKgbn1q8Vc2wpDuakjyCiygAcWuxOW
+ rv/ILeNTEanr9i1hgo0a1YeiV19J80A/3Xv7upeXZd+NwuApRAZMKoThB+LutLIw
+ VvF0M3qfqKHSvA1b9WOEu7PgIx8qFUaN0UI8X/ndFS8/XS2tetunQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42sm5qr6qp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Nov 2024 14:52:43 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A8Db4IL024174;
+ Fri, 8 Nov 2024 14:52:42 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nxt0ax89-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Nov 2024 14:52:42 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A8EqePM51511806
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 8 Nov 2024 14:52:40 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7DE3520043;
+ Fri,  8 Nov 2024 14:52:40 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 25A2620040;
+ Fri,  8 Nov 2024 14:52:40 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.28.129])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  8 Nov 2024 14:52:40 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v2 1/1] tests/tcg: Test that sigreturn() does not corrupt the
+ signal mask
+Date: Fri,  8 Nov 2024 15:50:04 +0100
+Message-ID: <20241108145237.37377-2-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241108145237.37377-1-iii@linux.ibm.com>
+References: <20241108145237.37377-1-iii@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::62a;
- envelope-from=phil@philjordan.eu; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: htm-ASqO2WB_tHTEFhIvWOqUAa1vRHgU
+X-Proofpoint-GUID: htm-ASqO2WB_tHTEFhIvWOqUAa1vRHgU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015
+ impostorscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 adultscore=0 phishscore=0 mlxlogscore=999 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411080122
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,57 +107,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm happy to take responsibility for the macOS PV graphics code. As
-HVF patches don't seem to get much attention at the moment, I'm also
-adding myself as designated reviewer for HVF and x86 HVF to try and
-improve that.
+Add a small test to prevent regressions.
 
-I anticipate that the resulting workload should be covered by the
-funding I'm receiving for improving Qemu in combination with macOS. As
-of right now this runs out at the end of 2024; I expect the workload on
-apple-gfx should be relatively minor and manageable in my spare time
-beyond that. I may have to remove myself from more general HVF duties
-once the contract runs out if it's more than I can manage.
-
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Reviewed-by: Roman Bolshakov <rbolshakov@ddn.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- MAINTAINERS | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tests/tcg/multiarch/Makefile.target     |  3 ++
+ tests/tcg/multiarch/sigreturn-sigmask.c | 51 +++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+)
+ create mode 100644 tests/tcg/multiarch/sigreturn-sigmask.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0844f5da196..c7964ab784b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -506,6 +506,7 @@ F: target/arm/hvf/
- X86 HVF CPUs
- M: Cameron Esfahani <dirty@apple.com>
- M: Roman Bolshakov <rbolshakov@ddn.com>
-+R: Phil Dennis-Jordan <phil@philjordan.eu>
- W: https://wiki.qemu.org/Features/HVF
- S: Maintained
- F: target/i386/hvf/
-@@ -513,6 +514,7 @@ F: target/i386/hvf/
- HVF
- M: Cameron Esfahani <dirty@apple.com>
- M: Roman Bolshakov <rbolshakov@ddn.com>
-+R: Phil Dennis-Jordan <phil@philjordan.eu>
- W: https://wiki.qemu.org/Features/HVF
- S: Maintained
- F: accel/hvf/
-@@ -2608,6 +2610,11 @@ F: hw/display/edid*
- F: include/hw/display/edid.h
- F: qemu-edid.c
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index 78b83d5575a..18d3cf4ae00 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -42,6 +42,9 @@ munmap-pthread: LDFLAGS+=-pthread
+ vma-pthread: CFLAGS+=-pthread
+ vma-pthread: LDFLAGS+=-pthread
  
-+macOS PV Graphics (apple-gfx)
-+M: Phil Dennis-Jordan <phil@philjordan.eu>
-+S: Maintained
-+F: hw/display/apple-gfx*
++sigreturn-sigmask: CFLAGS+=-pthread
++sigreturn-sigmask: LDFLAGS+=-pthread
 +
- PIIX4 South Bridge (i82371AB)
- M: Hervé Poussineau <hpoussin@reactos.org>
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ # The vma-pthread seems very sensitive on gitlab and we currently
+ # don't know if its exposing a real bug or the test is flaky.
+ ifneq ($(GITLAB_CI),)
+diff --git a/tests/tcg/multiarch/sigreturn-sigmask.c b/tests/tcg/multiarch/sigreturn-sigmask.c
+new file mode 100644
+index 00000000000..e6cc904898d
+--- /dev/null
++++ b/tests/tcg/multiarch/sigreturn-sigmask.c
+@@ -0,0 +1,51 @@
++/*
++ * Test that sigreturn() does not corrupt the signal mask.
++ * Block SIGUSR2 and handle SIGUSR1.
++ * Then sigwait() SIGUSR2, which relies on it remaining blocked.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <assert.h>
++#include <pthread.h>
++#include <signal.h>
++#include <stdlib.h>
++#include <unistd.h>
++
++int seen_sig = -1;
++
++static void signal_func(int sig)
++{
++    seen_sig = sig;
++}
++
++static void *thread_func(void *arg)
++{
++    kill(getpid(), SIGUSR2);
++    return NULL;
++}
++
++int main(void)
++{
++    struct sigaction act = {
++        .sa_handler = signal_func,
++    };
++    pthread_t thread;
++    sigset_t set;
++    int sig;
++
++    assert(sigaction(SIGUSR1, &act, NULL) == 0);
++
++    assert(sigemptyset(&set) == 0);
++    assert(sigaddset(&set, SIGUSR2) == 0);
++    assert(sigprocmask(SIG_BLOCK, &set, NULL) == 0);
++
++    kill(getpid(), SIGUSR1);
++    assert(seen_sig == SIGUSR1);
++
++    assert(pthread_create(&thread, NULL, thread_func, NULL) == 0);
++    assert(sigwait(&set, &sig) == 0);
++    assert(sig == SIGUSR2);
++    assert(pthread_join(thread, NULL) == 0);
++
++    return EXIT_SUCCESS;
++}
 -- 
-2.39.3 (Apple Git-145)
+2.47.0
 
 
