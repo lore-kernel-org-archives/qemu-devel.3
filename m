@@ -4,157 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EC39D5E15A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 11:32:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B01D5E15A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 11:34:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9NDY-0001fz-A4; Fri, 08 Nov 2024 06:31:56 -0500
+	id 1t9NF5-0002L3-EJ; Fri, 08 Nov 2024 06:33:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9NDX-0001fq-1R
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 06:31:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1t9NF1-0002Ke-2P; Fri, 08 Nov 2024 06:33:27 -0500
+Received: from mail-am0eur02on2072b.outbound.protection.outlook.com
+ ([2a01:111:f403:2606::72b]
+ helo=EUR02-AM0-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9NDT-0003NF-Ug
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 06:31:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731065510;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=j9XfF8KrOMr6yDNjBtG2IbQYGQKCTGE0oULveX80joI=;
- b=Z7oWFuh+58YjjTHeQBGj3Lexd2Lf/mw5311nRsqu17CQWb4UJUYNBGeXeD+Z1WJWb43B53
- hcbNwUcyKQgW2PszZcXs1ojSd9Ew5gFLVCPku5HiJqboWCulLrEuncakPYUE1e7yLKQgD6
- BuNpAMaNu3naDMmrZpCHdZiJaeKBFNo=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-394-Z03d_D1xN4yph0Qk0L6R5A-1; Fri, 08 Nov 2024 06:31:49 -0500
-X-MC-Unique: Z03d_D1xN4yph0Qk0L6R5A-1
-X-Mimecast-MFC-AGG-ID: Z03d_D1xN4yph0Qk0L6R5A
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43157cff1d1so14396925e9.2
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 03:31:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731065508; x=1731670308;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=j9XfF8KrOMr6yDNjBtG2IbQYGQKCTGE0oULveX80joI=;
- b=eaQhUHhHCadyHa8sGSaPU7+dpTDnBpKKuSxBsydEo0e6Z4nrCPi77mPbuvzoYbZc/E
- D8F8om74MbTnsWpaymBKMKrsJXljGyU3ZiYX9BYWFcMY9GTpXdrPbqbrtK0/jCDVfzN+
- zLBs+ge1Jq66d8jpgqdll9RcwGCWAWKLp5Q9RX+VyR0rRGEX1ZgUmXFq8P8VHT6NyebV
- UiT74JU0xPDbNApsnt0HoWQZlex0BcVyzP/vJPN9iNACMMryVVCOUMYNxZ6SM+ie4Pla
- STqfL+19yjFQ5me1BB5jx2PAH8oVgDYRxTM6pszwXHS26UFKmpu8TaIU1dAhoaQRv7l9
- CPIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9t+3Y+aH2CLPGRxjU2TDzC+1j0fUrWmX3m52n5gv6aNclPs5cRsyTl/nBae6UXxBCJi/RGNgtk34l@nongnu.org
-X-Gm-Message-State: AOJu0YyzORmT7rzHhbpnxOrj8unZH56otAZm95BWhH0RTQavkLs4Wh7I
- +hdi1GmzGOfmFZzy6DqZzxaoh7eg6Ug9s/bHK4JoLvBF9gBX3wOiWcmOmvpeAl7HYogeo3i9le1
- yRDHQ0I9QeelfUB408auLYeUnCEkP8gTCuGvsM880UiV1t/Gze6P3
-X-Received: by 2002:a05:6000:1445:b0:369:9358:4634 with SMTP id
- ffacd0b85a97d-381f1721585mr2159381f8f.19.1731065508256; 
- Fri, 08 Nov 2024 03:31:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH4a7RCv4jJ4/der86H+bStUKEbH5Qoji1v43jEog+cXw5qEy00FVnwIKDMt74f6ihcytMf2Q==
-X-Received: by 2002:a05:6000:1445:b0:369:9358:4634 with SMTP id
- ffacd0b85a97d-381f1721585mr2159357f8f.19.1731065507799; 
- Fri, 08 Nov 2024 03:31:47 -0800 (PST)
-Received: from ?IPV6:2003:cb:c70f:b600:4a55:861a:f768:72a8?
- (p200300cbc70fb6004a55861af76872a8.dip0.t-ipconnect.de.
- [2003:cb:c70f:b600:4a55:861a:f768:72a8])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed997320sm4385431f8f.47.2024.11.08.03.31.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Nov 2024 03:31:46 -0800 (PST)
-Message-ID: <d00ab1a4-2b72-4202-b810-adeb53a16f01@redhat.com>
-Date: Fri, 8 Nov 2024 12:31:45 +0100
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1t9NEz-0003QD-8a; Fri, 08 Nov 2024 06:33:26 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=P45yYpPT10tUZrT4pfdyjmviSjfjPMupsDOUazR+aRJBzjhkyatXZ/SVUL99jpX2NVvGYSg9P80ihwl/THW5x/eL4CXimwiSWA6jws6srp/Dx7eAAnZlddtKiZNrM7PElRZi8n2JBln8m6PerZXFwgltw5A+Zh4N50W9/Y4aPzN22IemP+630TUtFd6cOFfqVGCB2AH+IsjCcyvPY5tLN2epgAji/5p61kEI+HFiMTi70pp+flGmibyL6WbCs8fob5hDD1CjVBdZHKl7VjHQ8LxJSqjjlcTyEQfB/QLUbLfa9iWwpMJFW8oQUB53eEXAUYuz2tjZI3bxRb4z3G/IpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jv2ig7eCabgkIat2gl8LhXuZFYont2IlpJDEtsNmROU=;
+ b=TyNKK6D25W9q4yhOTqyQ6lyvg6KOs8qIgQZyfOoLhQK9U+WcUCJM9FT/6hnxbONNWLPBQhfTU0dNvkkOukrmS2IIT9MTVghKGnJQJUaQ3WUwgued4iOQDFGUi9e3t5405Dt46NGkFFUpoQ5SSzl79O2jaGHcRu7JqPdtT7GVg5yNMw2GnYtE21CtT5p73VMKEyh7ksc9ohFWdT1yRyhQe5q5Swyc5QgQC93HlfN3Mte5xHaEQOJq2Mq92k44H/wyxv7Bnu+hMr4wCfT7DBgjH/dFUffbU0uyojnppK6XXb//3ZwFAicLvp/U/yHKndOBVNpeam0sBBTVMv+wv+KB+w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jv2ig7eCabgkIat2gl8LhXuZFYont2IlpJDEtsNmROU=;
+ b=othKeqvT1xnCriXMrW9z2qFEk9ocfTah7fNuzAtd10zlLCYx5sIuUZTmFpVrUm7QrNMNljlrvpWJ9jeT5R7UjCwtxNEw10p1GjQnuf/apVMIc+LHIqTRoL+3NHaj6Ap3Jb4OHFFvFEJroqRoKAQ9G9wbR1Nppo/lLP0uCVm20ME3e1rhAkCLZGlfEyuKRQyhvxzvunQsnxzi2a65hd5+fPDRkDStiJ0xoB1+PVkXe63JEIIhISieyR2WhEEyG2ZVl+KK0IFIS0NDoaaqUMw1wtxDN8oWgCWnZxmJZhmnRxrGKXgSFFTZouv0oIo8yufYF+dkL7q7k8+JS0CEds4qFw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from PAXPR08MB6956.eurprd08.prod.outlook.com (2603:10a6:102:1db::9)
+ by PA4PR08MB6045.eurprd08.prod.outlook.com (2603:10a6:102:ef::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.21; Fri, 8 Nov
+ 2024 11:33:00 +0000
+Received: from PAXPR08MB6956.eurprd08.prod.outlook.com
+ ([fe80::59be:830c:8078:65d1]) by PAXPR08MB6956.eurprd08.prod.outlook.com
+ ([fe80::59be:830c:8078:65d1%7]) with mapi id 15.20.8137.019; Fri, 8 Nov 2024
+ 11:33:00 +0000
+Message-ID: <09d5aa99-8b5f-4c8e-b7bf-d9ef4d40bfa0@virtuozzo.com>
+Date: Fri, 8 Nov 2024 12:32:59 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 01/16] machine: anon-alloc option
-To: Steven Sistare <steven.sistare@oracle.com>, Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org
-References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
- <1730468875-249970-2-git-send-email-steven.sistare@oracle.com>
- <78fa25f1-03dc-400c-a604-998c53e4fbce@redhat.com>
- <45ea8a8a-928d-4703-b698-d5f910e6a224@oracle.com>
- <1f1a2742-0429-47d5-958f-b37575c1e4ba@redhat.com>
- <c2ca740b-0178-463b-8262-b149841b8def@redhat.com>
- <bcc4cd7e-3532-475a-8989-211e80bf3eab@oracle.com>
- <09701693-436c-4e1a-8206-03eb26cacab5@redhat.com>
- <66c05a06-dbb7-49ec-b58e-ccd917d098ea@oracle.com>
- <053dd9b6-e4f7-41c8-abe9-ed02214f0639@redhat.com>
- <cce158c4-3bb1-4771-b2c5-f3ae8a2285d5@oracle.com>
- <5b192b5e-943c-4b2f-ab40-ef54ea578363@redhat.com>
- <00261b15-3eef-439a-8501-574e3bb50d95@oracle.com>
-From: David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH] block: fix possible int overflow
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Dmitry Frolov <frolov@swemel.ru>, stefanha@redhat.com, den@openvz.org,
+ sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20241106080521.219255-2-frolov@swemel.ru>
+ <Zys8tLcKjADMtkqn@redhat.com>
+ <cbd949dd-673d-46cb-8cd7-9fc94515afc0@virtuozzo.com>
+ <ZyuSmIR0hL4pzieK@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <00261b15-3eef-439a-8501-574e3bb50d95@oracle.com>
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <ZyuSmIR0hL4pzieK@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VI1P190CA0049.EURP190.PROD.OUTLOOK.COM
+ (2603:10a6:800:1bb::7) To PAXPR08MB6956.eurprd08.prod.outlook.com
+ (2603:10a6:102:1db::9)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PAXPR08MB6956:EE_|PA4PR08MB6045:EE_
+X-MS-Office365-Filtering-Correlation-Id: b0680fe7-d1ad-472b-bdf9-08dcffe91991
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YVFpQ1VvY0NQTjRRbTc5Q3QxeHRDejBpR1VydFBEN0o1czBUeDVuaXNSNnZo?=
+ =?utf-8?B?dHZMd2QrbFhKeDBLOEhyOXF0ajNIWHlsVXRjVmF1eHZBRnc4eTk3MURDbW5W?=
+ =?utf-8?B?by9TeVpWS2I3aHlpRXdhb1NBaHp5SnZyenFoV0VpSW9VOEljeS9TZmUwdGQ1?=
+ =?utf-8?B?NnJyZmc3NC9kcW1sWlRTZGxWaDBkd1dHbnV6ZXJVSXRNcmttYWxBVFlQcDdU?=
+ =?utf-8?B?V21EOGMwbUVpeGJBTTZpZWNqdWdQa1F5ZGtpa1VLUWxKcDNBQnVvd1JBZlYr?=
+ =?utf-8?B?T1NPZmRlTHdEQ3pOK0tVdXBscVc0cFRGQ2NDYnJGNHNqUHc4cUVBSS9INncx?=
+ =?utf-8?B?Yk91NENLUHN6bFZOSFRoSlRub0tiMTdQNG8vMllBWjNYcnhubEJOS3MrR1Bl?=
+ =?utf-8?B?SGl1eEFNVCtwVXVyRXo1bzBkZHp2WVl6eVd5NGF5eDBEcTFwKzhoVHQvMTNi?=
+ =?utf-8?B?MnoxVzdNTFQ4UjNMN2NscFhvVElublJnL0FzZHVmRnpFUHUwZWFBMEtCR3pT?=
+ =?utf-8?B?QXRXdGFPL0VsU3pkdTVOSks0bTdoR0cxVWJ0UkVUMEx3QVY4QlpQdm14T2F5?=
+ =?utf-8?B?emx0OFlPMDlDR2VIMEMySTJDa1B5K3JUbHZVVmY2YXpvcDdGalBTOWhLMk5L?=
+ =?utf-8?B?cHZ4Vkk4MUkxTE9XcE5TQUlLQXlPc1hXbEo1TGJ4OXZidjJISWJaTHJLTDdQ?=
+ =?utf-8?B?d2I5OEZuTU1tUDZTd3RrVlFZekh0RjB1aUo2a3RycUpwalowUzhpeEdEbXNY?=
+ =?utf-8?B?RmsvaDE2RUdpNVRhNTVTTkhibEY3R1YxZ2lEMUpZMTlXWmorOG11NTh4TE4r?=
+ =?utf-8?B?NGhZdG1iZ3VSZGQ3bVFobXNwYVBWTy9hclFSZUtTV0lPT2t6TzZCUUQxSjNu?=
+ =?utf-8?B?R3dKcHVuNUg2OTRTMXpvK0pNOTZkWnNBM3N0eExoSlR5SFhnT3hMWmozZGZF?=
+ =?utf-8?B?R0RaS3hvSy9jUWdSaE4vWGcxWDRpK3ZDTXZveUVSc2RwR0dvS09UbzdFaHor?=
+ =?utf-8?B?SmVETzc5c1Fya0ZaK3hBbndWYUUzZTFlV3dLekR5R1B0SXZ3Ny9ManNOeXNI?=
+ =?utf-8?B?Y3NGdThZWmxXSEJCeFc0bWVUT3Q1SWgvcWNDdGpTTzNWNU9MVHAxbllSKzAv?=
+ =?utf-8?B?MFRSL1FRTVR5S0RKdlFvT1BaZjdDYUdLKzNNTW8zeXZreGZCRHJCd3Ezbkgv?=
+ =?utf-8?B?cTd4YS9JS1V6bzhVQ3NWRFc1am1sTDFIUmVyVTJUVURIYlRUSm5ISFlRY21C?=
+ =?utf-8?B?ZU1TeDc4SHRtZk5JZ28wM1J4LzVaaE8rSUROUU43TXJmOWsvWGtyV1BnTktF?=
+ =?utf-8?B?ZzlxUG05L0J4VHBpWGVhcUJRVmM4TnVlOGZsTTZiNjg1dDN1b2pRY3BkOTE3?=
+ =?utf-8?B?VkwvKzVNdkY0R3hGc25JaFEvblRXeDhIL0VUVCtPVCs1NDF4TDhaN0NEUGNa?=
+ =?utf-8?B?VVRLbTU3bFVkd3FhcUdPMEo1N1hlbURQcjRKc3RKb3M2MDBsU1BxeHhVdERX?=
+ =?utf-8?B?QUhnbHBhTTNuSXhHbUxob1A4NXZERGlpY2tXTHh0dE96OVVkS0VNNVJ5dEhs?=
+ =?utf-8?B?VHB3ZEpnOGFtdlNwbDR0Y1FJWVNkT09wYXNWaGdlc2twcyt4Q0FkWUovT2xL?=
+ =?utf-8?B?bUJYYzUrNFA2SHhvN2xhb0tod0p4SUlQUTZ5blNlKzFhQjJwL0JwQVlVMUo4?=
+ =?utf-8?B?bVdrNzhwQlNRVUR6clVlbnJTSVNNT2Y3dTJyYXozZjVHaDlnc3hNM3IyMGZq?=
+ =?utf-8?Q?WPl2d6LcASaTLQua7dzdW1dRYPzoNEf5972Sgrt?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PAXPR08MB6956.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZC9nUXcvdGdGMVNmOGZhZ3lYUS9RZytsMkFZMUlMQUMzcW03MTU2VlJ0Q1Mx?=
+ =?utf-8?B?dklxTHF6enZDNUdCS1RRdnJVZm83Zzhwb0ZGbFJzWDRzb0tPRVdERk8rclVQ?=
+ =?utf-8?B?YlVBVC9YaXBqa2tOaGZNTzJHazM3V0lPL3ZUWmFGc1EzNkN0VmwrQWx5Vit3?=
+ =?utf-8?B?TkVoZkFJRWVXNi90ZGk4eUdsUWxCTVU5WllPbnFYVXk3QVpJaGQ2ZFQrUzhq?=
+ =?utf-8?B?cmR2TnkxQmdPeVQwYjF3QTRlaU8vZEJKajBaVTUrRE5wRVVSc3gvM3g3Vkxu?=
+ =?utf-8?B?ZUhxRzA3UjhuQzloOW5nckc3dHo3d1hnamZVN2NNRWhJbWhxdVlabVBuZGVi?=
+ =?utf-8?B?ZXMzS2Z0Q1BiT1F3SlFnVG04V0VGZ2NIR3VxMExJQ1RaRk9LNFBXZER3aDBj?=
+ =?utf-8?B?NGFQN0R6MUxsMUpZcGd4Q2U1UWVGMUh3Ukp6YzVxYk9PK2Fmb1RUd2xWRTZD?=
+ =?utf-8?B?UmU2ZytTTmppQVhoS0U2VlhHU3A2NHNyL3FETUlzYlYzZk5yRTBlSVV3d0VD?=
+ =?utf-8?B?MzluVkUrTFRGSXRqSFV3TlNlNFpZbnpVOU1lU0dObDU0dGRqUmpGVnVJVWJ3?=
+ =?utf-8?B?R2k5TG1Jem5wRkJXUHhJV2wxdUV1ZlNZS2JYd0p4ZEtJZXRDb1VLaXZhQTZO?=
+ =?utf-8?B?OUpyOHZMclp1MFRsSXZTcy9WY1dTRlN1MU42STFjVTBjMlZiWHA4aTNkd2g2?=
+ =?utf-8?B?SGE5dWJpRnpQRzRtdEM4Ny9LTWp1TDBYUlR1VjFVQVZGU0lneDI3UGsxbUc3?=
+ =?utf-8?B?bDMwK1RNdmFnWldOUWp6Skh0SjI3VE9ObFZHa1hRWWdYNjhzblFXakNlbFhX?=
+ =?utf-8?B?WkNFTk9rTzU2ZmRaQ2ExbXhaY3NuZE4vZkNER1VyUEhZMEhEdEVUaWx1UUlB?=
+ =?utf-8?B?TXM4UmRmbXR3Y0tJbmVyWi9oNmtVanNNNWdoTzl5K21Sa3IvV2JndlVCZnVD?=
+ =?utf-8?B?dTRWZFZHOHJvSXhZRHVEY0dUaXR1bm42WW5DUERibG8rZEM0VHQzcHdZV25X?=
+ =?utf-8?B?SDVTc1pyRVQvakNtRmhMMWxtbHc4cUFabjdWRC9ZdjNOemhzTC8xOFRnbjgw?=
+ =?utf-8?B?SUh4TkVzcC9FbGwvRDVTQkFwU29kMW1FUlV5SS8rUFhHREozUUNMQXpSdlJX?=
+ =?utf-8?B?MDVLUlUyVElmelc1QkVaYlZWbnFLZEFkZVMyZmg4ZXNzUWV1ZmtCWUdsR0Nn?=
+ =?utf-8?B?Wkd1cU10MStndXhHbUNDblM3alIvSnJxeXBZaDBwMnJvdHBsOHJVaW9YdXY1?=
+ =?utf-8?B?VThzd3pKNGJ0K24wMisrUWdMY2xUclFXbHNUaElmWnRVenJ3MlFVYmJZK20w?=
+ =?utf-8?B?Z0Y1Y2ptdG1HM1lyK1AyVk5FWGV0czZNTzZodTBmdzFnditvVGdFdDNkZEtx?=
+ =?utf-8?B?TWEzbnBwQmErajBZNGF2Wm8vK0x5dFpNdWpQU1lpaFJXUzVHQ1hJWTlhWTZk?=
+ =?utf-8?B?R2hlWURQeWVXRG5ERGV1d2FHOVJCWlNPRXp0ZWs1M2V2RkUzbWJCR1VGUDFa?=
+ =?utf-8?B?QU1YQ1gvNnlsemN0RWhYRE94WHZmaFB0M216dDdxVXlZdkdLaXNqZG9Xb2NV?=
+ =?utf-8?B?ZGhmVm5ROTlhVnRSVGk5bG1lZVcra2JoeFgvYWZRWE9BeUJndWphZzNXNXRQ?=
+ =?utf-8?B?QUpLa0Q5d0R1Mmx1NU82Z0RIUkR0K2UwZlVyTllBd2dsT0VQUlJoOFZkbGpW?=
+ =?utf-8?B?akl3a0NpUjVXVFBUT0toc0dSZng0SUx1T3VmWGRtWXA3dmlFRzZ6alloT0R5?=
+ =?utf-8?B?VDNxRisvaGMvaDA4RFlUblQrN1o5WXY1c24ydENkWG5FOFlyVVkvZjFyc1o3?=
+ =?utf-8?B?d0Y1VThRYlZmdkc3ZitnUlpDTTQxMzlwZFVVTytEcUhINUxucGtBaWFMWis3?=
+ =?utf-8?B?bTg2VXFkd2ZhTFhkR05RbktTQmZCakZtMHFwNFRIQi8xdmdJUVU4VVRIa09i?=
+ =?utf-8?B?Ny92cWpIeHJxcUVCaEQ4Vm1idytFdURJM0R5UFR1NlJlNDl0RVNXRi93UUpW?=
+ =?utf-8?B?UXhFRTFCN2dMUXJKL29lNkphZW9DRzlzNUhRUFNaTFpPbGRsRWlVR3JwbnhC?=
+ =?utf-8?B?TThlVDdGK0JGbmNldGphUFJ6WFJJc2YxeDZtS3JpaFlIYjBrdU9kWVpFQVVk?=
+ =?utf-8?Q?8POUDa0KwygAMXUDgjI2lqDyX?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b0680fe7-d1ad-472b-bdf9-08dcffe91991
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR08MB6956.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2024 11:33:00.2838 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: NGl0W7KwLZSJmrdlhBqvNXL4PfqElemo7xduBoL6xUTOFpdtqLvvtrQgoVelDkbvi387BruekDmKD69Hv6595A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR08MB6045
+Received-SPF: pass client-ip=2a01:111:f403:2606::72b;
+ envelope-from=den@virtuozzo.com;
+ helo=EUR02-AM0-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,247 +177,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07.11.24 17:40, Steven Sistare wrote:
-> On 11/7/2024 11:26 AM, David Hildenbrand wrote:
->> On 07.11.24 17:02, Steven Sistare wrote:
->>> On 11/7/2024 8:23 AM, David Hildenbrand wrote:
->>>> On 06.11.24 21:12, Steven Sistare wrote:
->>>>> On 11/4/2024 4:36 PM, David Hildenbrand wrote:
->>>>>> On 04.11.24 21:56, Steven Sistare wrote:
->>>>>>> On 11/4/2024 3:15 PM, David Hildenbrand wrote:
->>>>>>>> On 04.11.24 20:51, David Hildenbrand wrote:
->>>>>>>>> On 04.11.24 18:38, Steven Sistare wrote:
->>>>>>>>>> On 11/4/2024 5:39 AM, David Hildenbrand wrote:
->>>>>>>>>>> On 01.11.24 14:47, Steve Sistare wrote:
->>>>>>>>>>>> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
->>>>>>>>>>>> on the value of the anon-alloc machine property.  This option applies to
->>>>>>>>>>>> memory allocated as a side effect of creating various devices. It does
->>>>>>>>>>>> not apply to memory-backend-objects, whether explicitly specified on
->>>>>>>>>>>> the command line, or implicitly created by the -m command line option.
->>>>>>>>>>>>
->>>>>>>>>>>> The memfd option is intended to support new migration modes, in which the
->>>>>>>>>>>> memory region can be transferred in place to a new QEMU process, by sending
->>>>>>>>>>>> the memfd file descriptor to the process.  Memory contents are preserved,
->>>>>>>>>>>> and if the mode also transfers device descriptors, then pages that are
->>>>>>>>>>>> locked in memory for DMA remain locked.  This behavior is a pre-requisite
->>>>>>>>>>>> for supporting vfio, vdpa, and iommufd devices with the new modes.
->>>>>>>>>>>
->>>>>>>>>>> A more portable, non-Linux specific variant of this will be using shm,
->>>>>>>>>>> similar to backends/hostmem-shm.c.
->>>>>>>>>>>
->>>>>>>>>>> Likely we should be using that instead of memfd, or try hiding the
->>>>>>>>>>> details. See below.
->>>>>>>>>>
->>>>>>>>>> For this series I would prefer to use memfd and hide the details.  It's a
->>>>>>>>>> concise (and well tested) solution albeit linux only.  The code you supply
->>>>>>>>>> for posix shm would be a good follow on patch to support other unices.
->>>>>>>>>
->>>>>>>>> Unless there is reason to use memfd we should start with the more
->>>>>>>>> generic POSIX variant that is available even on systems without memfd.
->>>>>>>>> Factoring stuff out as I drafted does look quite compelling.
->>>>>>>>>
->>>>>>>>> I can help with the rework, and send it out separately, so you can focus
->>>>>>>>> on the "machine toggle" as part of this series.
->>>>>>>>>
->>>>>>>>> Of course, if we find out we need the memfd internally instead under
->>>>>>>>> Linux for whatever reason later, we can use that instead.
->>>>>>>>>
->>>>>>>>> But IIUC, the main selling point for memfd are additional features
->>>>>>>>> (hugetlb, memory sealing) that you aren't even using.
->>>>>>>>
->>>>>>>> FWIW, I'm looking into some details, and one difference is that shmem_open() under Linux (glibc) seems to go to /dev/shmem and memfd/SYSV go to the internal tmpfs mount. There is not a big difference, but there can be some difference (e.g., sizing of the /dev/shm mount).
->>>>>>>
->>>>>>> Sizing is a non-trivial difference.  One can by default allocate all memory using memfd_create.
->>>>>>> To do so using shm_open requires configuration on the mount.  One step harder to use.
->>>>>>
->>>>>> Yes.
->>>>>>
->>>>>>>
->>>>>>> This is a real issue for memory-backend-ram, and becomes an issue for the internal RAM
->>>>>>> if memory-backend-ram has hogged all the memory.
->>>>>>>
->>>>>>>> Regarding memory-backend-ram,share=on, I assume we can use memfd if available, but then fallback to shm_open().
->>>>>>>
->>>>>>> Yes, and if that is a good idea, then the same should be done for internal RAM
->>>>>>> -- memfd if available and fallback to shm_open.
->>>>>>
->>>>>> Yes.
->>>>>>
->>>>>>>
->>>>>>>> I'm hoping we can find a way where it just all is rather intuitive, like
->>>>>>>>
->>>>>>>> "default-ram-share=on": behave for internal RAM just like "memory-backend-ram,share=on"
->>>>>>>>
->>>>>>>> "memory-backend-ram,share=on": use whatever mechanism we have to give us "anonymous" memory that can be shared using an fd with another process.
->>>>>>>>
->>>>>>>> Thoughts?
->>>>>>>
->>>>>>> Agreed, though I thought I had already landed at the intuitive specification in my patch.
->>>>>>> The user must explicitly configure memory-backend-* to be usable with CPR, and anon-alloc
->>>>>>> controls everything else.  Now we're just riffing on the details: memfd vs shm_open, spelling
->>>>>>> of options and words to describe them.
->>>>>>
->>>>>> Well, yes, and making it all a bit more consistent and the "machine option" behave just like "memory-backend-ram,share=on".
->>>>>
->>>>> Hi David and Peter,
->>>>>
->>>>> I have implemented and tested the following, for both qemu_memfd_create
->>>>> and qemu_shm_alloc.  This is pseudo-code, with error conditions omitted
->>>>> for simplicity.
->>>>>
->>>>> Any comments before I submit a complete patch?
->>>>>
->>>>> ----
->>>>> qemu-options.hx:
->>>>>         ``aux-ram-share=on|off``
->>>>>             Allocate auxiliary guest RAM as an anonymous file that is
->>>>>             shareable with an external process.  This option applies to
->>>>>             memory allocated as a side effect of creating various devices.
->>>>>             It does not apply to memory-backend-objects, whether explicitly
->>>>>             specified on the command line, or implicitly created by the -m
->>>>>             command line option.
->>>>>
->>>>>             Some migration modes require aux-ram-share=on.
->>>>>
->>>>> qapi/migration.json:
->>>>>         @cpr-transfer:
->>>>>              ...
->>>>>              Memory-backend objects must have the share=on attribute, but
->>>>>              memory-backend-epc is not supported.  The VM must be started
->>>>>              with the '-machine aux-ram-share=on' option.
->>>>>
->>>>> Define RAM_PRIVATE
->>>>>
->>>>> Define qemu_shm_alloc(), from David's tmp patch
->>>>>
->>>>> ram_backend_memory_alloc()
->>>>>         ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
->>>>>         memory_region_init_ram_flags_nomigrate(ram_flags)
->>>>>
->>>>> qemu_ram_alloc_internal()
->>>>>         ...
->>>>>         if (!host && !(ram_flags & RAM_PRIVATE) && current_machine->aux_ram_share)
->>>>>             new_block->flags |= RAM_SHARED;
->>>>>
->>>>>         if (!host && (new_block->flags & RAM_SHARED)) {
->>>>>             qemu_ram_alloc_shared(new_block);
->>>>>         } else
->>>>>             new_block->fd = -1;
->>>>>             new_block->host = host;
->>>>>         }
->>>>>         ram_block_add(new_block);
->>>>>
->>>>> qemu_ram_alloc_shared()
->>>>>         if qemu_memfd_check()
->>>>>             new_block->fd = qemu_memfd_create()
->>>>>         else
->>>>>             new_block->fd = qemu_shm_alloc()
->>>>
->>>> Yes, that way "memory-backend-ram,share=on" will just mean "give me the best shared memory for RAM to be shared with other processes, I don't care about the details", and it will work on Linux kernels even before we had memfds.
->>>>
->>>> memory-backend-ram should be available on all architectures, and under Windows. qemu_anon_ram_alloc() under Linux just does nothing special, not even bail out.
->>>>
->>>> MAP_SHARED|MAP_ANON was always weird, because it meant "give me memory I can share only with subprocesses", but then, *there are not subprocesses for QEMU*. I recall there was a trick to obtain the fd under Linux for these regions using /proc/self/fd/, but it's very Linux specific ...
->>>>
->>>> So nobody would *actually* use that shared memory and it was only a hack for RDMA. Now we can do better.
->>>>
->>>>
->>>> We'll have to decide if we simply fallback to qemu_anon_ram_alloc() if no shared memory can be created (unavailable), like we do on Windows.
->>>>
->>>> So maybe something like
->>>>
->>>> qemu_ram_alloc_shared()
->>>>        fd = -1;
->>>>
->>>>        if (qemu_memfd_avilable()) {
->>>>            fd = qemu_memfd_create();
->>>>            if (fd < 0)
->>>>                ... error
->>>>        } else if (qemu_shm_available())
->>>>            fd = qemu_shm_alloc();
->>>>            if (fd < 0)
->>>>                ... error
->>>>        } else {
->>>>            /*
->>>>             * Old behavior: try fd-less shared memory. We might
->>>>             * just end up with non-shared memory on Windows, but
->>>>             * nobody can make sure of this shared memory either way
->>>>             * ... should we just use non-shared memory? Or should
->>>>             * we simply bail out? But then, if there is no shared
->>>>             * memory nobody could possible use it.
->>>>             */
->>>>            qemu_anon_ram_alloc(share=true)
->>>>        }
+On 11/6/24 17:00, Kevin Wolf wrote:
+> Am 06.11.2024 um 16:45 hat Denis V. Lunev geschrieben:
+>> On 11/6/24 10:53, Kevin Wolf wrote:
+>>> [ Cc: qemu-block ]
 >>>
->>> Good catch.  We need that fallback for backwards compatibility.  Even with
->>> no use case for memory-backend-ram,share=on since the demise of rdma, users
->>> may specify it on windows, for no particular reason, but it works, and should
->>> continue to work after this series.  CPR would be blocked.
+>>> Am 06.11.2024 um 09:04 hat Dmitry Frolov geschrieben:
+>>>> The sum "cluster_index + count" may overflow uint32_t.
+>>>>
+>>>> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>>>>
+>>>> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+>>> Thanks, applied to the block branch.
+>>>
+>>> While trying to check if this can be triggered in practice, I found this
+>>> line in parallels_fill_used_bitmap():
+>>>
+>>>       s->used_bmap_size = DIV_ROUND_UP(payload_bytes, s->cluster_size);
+>>>
+>>> s->used_bmap_size is unsigned long, payload_bytes is the int64_t result
+>>> of bdrv_getlength() for the image file, which could certainly be made
+>>> more than 4 GB * cluster_size. I think we need an overflow check there,
+>>> too.
+>>>
+>>> When allocate_clusters() calculates new_usedsize, it doesn't seem to
+>>> consider the overflow case either.
+>>>
+>>> Denis, can you take a look?
+>>>
+>>> Kevin
+>>>
+>> Hi, Kevin, Dmitry!
 >>
->> Yes, we should keep Windows working in the weird way it is working right now.
+>> In general, the situation is the following.
 >>
->>   > > More generally for backwards compatibility for share=on for no particular reason,
->>> should we fallback if qemu_shm_alloc fails?  If /dev/shm is mounted with default
->>> options and more than half of ram is requested, it will fail, whereas current qemu
->>> succeeds using MAP_SHARED|MAP_ANON.
+>> On-disk format heavily uses offsets from the beginning of the disk
+>> denominated in clusters. These offsets are saved in uint32 on disk.
+>> This means that the image with 4T virtual size and 1M cluster size
+>> will use offsets from 0 to 4 * 2^10 in different tables on disk.
 >>
->> Only on Linux without memfd, of course. Maybe we should just warn when qemu_shm_alloc() fails (and comment that we continue for compat reasons only) and fallback to the stupid qemu_anon_ram_alloc(share=true). We could implement a fallback to shmget() but ... let's not go down that path.
+>> There is existing problem in the format specification that we
+>> can not easily apply limits to the virtual size of the disk as
+>> we also can have arbitrary size growing metadata like CBT, which
+>> is kept in the same address space (cluster offsets).
 >>
->> But we should not fallback to qemu_shm_alloc()/MAP_SHARED|MAP_ANON if memfd is available and that allocating the memfd failed. Failing to allocate a memfd might highlight a bigger problem.
-> 
-> Agreed on all.
-> 
-> One more opinion from you please, if you will.
-> 
-> RAM_PRIVATE is only checked in qemu_ram_alloc_internal, and only needs to be
-> set in
->     ram_backend_memory_alloc -> ... -> qemu_ram_alloc_internal
-> 
-> None of the other backends reach qemu_ram_alloc_internal.
-> 
-> To be future proof, do you prefer I also set MAP_PRIVATE in the other backends,
-> everywhere MAP_SHARED may be set, eg:
+>> Though in reality I have never seen images with non-1 Mb cluster
+>> size and in order to nearly overflow them we would need really
+>> allocated images of 4 PB.
+>>
+>> Theoretically the problem is possible but it looks impractical
+>> to me in the real life so far.
+> It probably won't happen with normal images, but we need to consider
+> malicious images, and I think they could be constructed in a way that
+> causes integer overflows here.
+>
+> At least the one that directly takes bdrv_getlength() should be trivial
+> to trigger, you just need to extend the file size enough outside of
+> QEMU.
+>
+> Kevin
+>
+yah. That is reasonable and has to be fixed. You are correct.
 
-Hm, I think then we should set RAM_PRIVATE really everywhere where we'd 
-want it and relied on !RAM_SHARED doing the right thing.
-
-Alternatively, we make our life easier and do something like
-
-/*
-  * This flag is only used while creating+allocating RAM, and
-  * prevents RAM_SHARED getting set for anonymous RAM automatically in
-  * some configurations.
-  *
-  * By default, not setting RAM_SHARED on anonymous RAM implies
-  * "private anonymous RAM"; however, in some configuration we want to
-  * have most of this RAM automatically be "sharable anonymous RAM",
-  * except for some cases that really want "private anonymous RAM".
-  *
-  * This anonymous RAM *must* be private. This flag only applies to
-  * "anonymous" RAM, not fd/file-backed/preallocated one.
-  */
-RAM_FORCE_ANON_PRIVATE	(1 << 13)
-
-
-BUT maybe an even better alternative now that we have the 
-"aux-ram-share" parameter, could we use
-
-/*
-  * Auxiliary RAM that was created automatically internally, instead of
-  * explicitly like using memory-backend-ram or some other device on the
-  * QEMU cmdline.
-  */
-RAM_AUX	(1 << 13)
-
-
-So it will be quite clear that "aux-ram-share" only applies to RAM_AUX 
-RAMBlocks.
-
-That actually looks quite compelling to me :)
-
--- 
-Cheers,
-
-David / dhildenb
-
+Den
 
