@@ -4,76 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938C5D64063
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 16:30:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96BFFD64063
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 16:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9Rre-00005M-A8; Fri, 08 Nov 2024 11:29:38 -0500
+	id 1t9S8n-0007lP-Hc; Fri, 08 Nov 2024 11:47:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9RrP-0008UI-VZ
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 11:29:24 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1t9S8j-0007kr-LV
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 11:47:18 -0500
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9RrH-0003qm-0c
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 11:29:18 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-431ac30d379so19781705e9.1
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 08:29:12 -0800 (PST)
+ id 1t9S8h-0007G6-Vj
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 11:47:17 -0500
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-539e13375d3so2931396e87.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 08:47:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731083352; x=1731688152; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IopW0NUe1TNdNcszGjYz9ml/HiprL+NUDAeJGglZdAY=;
- b=cPtNcb6hiLRgbzXGmjdMT3MbUAYMsf9ojgZvScpFZ0ust2u/S5Y9hLHfcGojZwRmSr
- Or2uhX+YZiJPRght8KV4jEXsy2c19nqiAz2H5VaaW06rcHEX9t450BrHjxgzsl32o35B
- G8OATadpRP/gutFkP7oq8nDzKHuY4kXu6G/oILutZYIX/qzNgGUI4HgWrPbVJPbqHjRg
- BJimX3sMdfh/5UawtkXr57/kr5poQt001yq3XF0akblTHxgQjnv8U8A1jLcigqLbYIMU
- 9kQZ0EwHpIhmHi4/r90yhaeztd9G82BWQ/11pI1jgcug/k2QIAWy55u/oBi6Kfxk53db
- 3epQ==
+ d=linaro.org; s=google; t=1731084433; x=1731689233; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=R8zGb2dhUd3CPvTZFvmjRInsJcZ7jyLj7QqnuR/5rPI=;
+ b=zeusT1/V2u41oukGYSfPERlax77H7YO5cP5ja+XkZGidjZfmwjqJwEtAgK5UuOTrin
+ c/zsVJOJaX0x4dUdlWqP/Hevn9h6OqBxvSS1OUnMGJmreIAJKCQDcvfmnlF6mXqNN1zT
+ xDKGgHZ2XBMtIw/3EnQKuRoWL9dUoMtcY/J/Ys/UOjr4qGQVl05qh49OHZzw1thlkI4s
+ 50kv8GFsNWhyfb2+1D606WlBt3lPHFETG1KMXkjQnw3IlDK4Fj2K0TtcWVdzZyD6oFCJ
+ Bf1Rn5tQblh8EOWvK7xjAzsBZ6V0tEEqE22v0ppjKTjMiqAx24fQ+wbunPs6rGzJ4f8N
+ Q0pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731083352; x=1731688152;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IopW0NUe1TNdNcszGjYz9ml/HiprL+NUDAeJGglZdAY=;
- b=N4HCK+YO10eREf6q9yA7B7NazDs4GbALC3h2AVv77ZE6H68IXEMJ+/jsZgRu1vurjZ
- 2cOeIF1VH6wZhLn+rVTtheUnMYhAOD3EpWlvr9vtKqEFWjhfK7uj1pcOuMAuy55ApSLB
- 6BGhgy2ahpf4cuV8d7EXDdwZ4kHFJU5OjwIckWkDCQ7IHPJ9LkicucYQCAmc6+vbjD4M
- n8tBv0B6+EI+G0+wKMEYpIlJGIWv2ihVA5vT+kqN9dH3ppdcvBRxZKDQ+KJYuiFAu7HD
- F76bmEmPRNnfWEgZYsfaQyolJ1uNB5gFDVHvb30lAFzLFhe/sPR6FJgLEhCeYWqPPFOh
- RWpg==
-X-Gm-Message-State: AOJu0YxDCywiS19GnYWVjgkJpsRD2USugYR8cwPBDiVd00d7YqS+f3o6
- 6Ilt6VwWDg23PlH6P/lxHWynK8Ss4faG4eyETc0x32UuGJ3amqQ4ZC2PT2RdgOZz2vP0BibY2E4
- B
-X-Google-Smtp-Source: AGHT+IHJfp7blm3cJ4xTkkEDsRmDuRRVkxkpFF8jX8vZN0Fj0nx2j9/jU4SvO2jYY2ygKQE6BeDjXQ==
-X-Received: by 2002:a05:600c:1391:b0:42c:b905:2bf9 with SMTP id
- 5b1f17b1804b1-432b7506634mr29347145e9.16.1731083351673; 
- Fri, 08 Nov 2024 08:29:11 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432b0530599sm78109135e9.1.2024.11.08.08.29.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 08:29:11 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
-	Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH 1/3] system/dma-helpers.c: Move trace events to
- system/trace-events
-Date: Fri,  8 Nov 2024 16:29:07 +0000
-Message-Id: <20241108162909.4080314-2-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241108162909.4080314-1-peter.maydell@linaro.org>
-References: <20241108162909.4080314-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1731084433; x=1731689233;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=R8zGb2dhUd3CPvTZFvmjRInsJcZ7jyLj7QqnuR/5rPI=;
+ b=X/WNNRykyEYomS8x0YnuBWDMiJbYrqJeeUhqtyNoFVSBr9BJmZjokDH4xsdN7noTLT
+ JHi5phnbU8AZlCP2qR5SSHcvCsrVmrDZ/4tsz//hDzRHkcIhcPLBHPkkI9NWpClFw53x
+ mu8HsJ7REz4t1OBdOPdRzAVj1+O/J+h3po7Toyngo0uXbEVtMsPVrG5aMDsR/FbNFIwj
+ YocUqcyUvsVHhgZ8sifOG5bHd2iz/XYsa//xsZ3/vNCPSmFEsAFfLKtrwWLmCzRTrnxr
+ /IFzbmtmd4ZzdCu6bFjI3sdbAj7woRKxDQFnaVhp7HFznva5MVRuNp+CQcJJwvLY6syj
+ uoMQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUkSc5+qxlorlaump0tzrsuYWv4s/3F5UUblI+UaoCoju5RA2yblxqqhbceAWLQF8psLY1vgX1Jrn9j@nongnu.org
+X-Gm-Message-State: AOJu0Yy+ZNjou8p+wWP2klPsckjMuc4R1NwuhLqXvOoyzToA5aZ42Bcw
+ 0V1relgv7Iut2AcNw1q9qUF4GSQKj7Hi8sUMOqC8K7R7/38y0meZVM9BaNvKb3n8XgnSZeFVLxG
+ a9kbVKTxPGQPh8b15Cqi45F82ysfaD6MAeMc/Lw==
+X-Google-Smtp-Source: AGHT+IEQ3IeQKRBoR4BldOHAat+zBcEbAV9rh0r1K6v71PYynqkWIMBRL387bJcTVCQbHjPV8g6zQX+vE8Y0rUjWEZc=
+X-Received: by 2002:a2e:be9b:0:b0:2fa:d604:e525 with SMTP id
+ 38308e7fff4ca-2ff20225bbdmr20236071fa.28.1731084433203; Fri, 08 Nov 2024
+ 08:47:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+References: <20241106083801.219578-2-frolov@swemel.ru>
+In-Reply-To: <20241106083801.219578-2-frolov@swemel.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 8 Nov 2024 16:47:02 +0000
+Message-ID: <CAFEAcA9joGGX46UnkVvapvhyFr7ryhMeczWdT7D+wJLfR4wyCA@mail.gmail.com>
+Subject: Re: [PATCH] hw/timer: fix possible int overflow
+To: Dmitry Frolov <frolov@swemel.ru>
+Cc: i.mitsyanko@gmail.com, sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,68 +89,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The dma-helpers.c file is in the system/ subdirectory, but it
-defines its trace events in the root trace-events file. Move
-them to the system/trace-events file where they more naturally
-belong.
+On Wed, 6 Nov 2024 at 08:38, Dmitry Frolov <frolov@swemel.ru> wrote:
+>
+> The product "icnto * s->tcntb" may overflow uint32_t.
+>
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>
+> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+> ---
+>  hw/timer/exynos4210_mct.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/timer/exynos4210_mct.c b/hw/timer/exynos4210_mct.c
+> index e807fe2de9..5c6e139b20 100644
+> --- a/hw/timer/exynos4210_mct.c
+> +++ b/hw/timer/exynos4210_mct.c
+> @@ -815,7 +815,7 @@ static uint32_t exynos4210_ltick_cnt_get_cnto(struct tick_timer *s)
+>          /* Both are counting */
+>          icnto = remain / s->tcntb;
+>          if (icnto) {
+> -            tcnto = remain % (icnto * s->tcntb);
+> +            tcnto = remain % ((uint64_t)icnto * s->tcntb);
+>          } else {
+>              tcnto = remain % s->tcntb;
+>          }
+> --
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- system/dma-helpers.c | 2 +-
- system/trace-events  | 7 +++++++
- trace-events         | 7 -------
- 3 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/system/dma-helpers.c b/system/dma-helpers.c
-index 74013308f52..cbcd89dfaaa 100644
---- a/system/dma-helpers.c
-+++ b/system/dma-helpers.c
-@@ -10,7 +10,7 @@
- #include "qemu/osdep.h"
- #include "sysemu/block-backend.h"
- #include "sysemu/dma.h"
--#include "trace/trace-root.h"
-+#include "trace.h"
- #include "qemu/thread.h"
- #include "qemu/main-loop.h"
- #include "sysemu/cpu-timers.h"
-diff --git a/system/trace-events b/system/trace-events
-index 2ed1d59b1fb..5bbc3fbffac 100644
---- a/system/trace-events
-+++ b/system/trace-events
-@@ -4,6 +4,13 @@
- # Since requests are raised via monitor, not many tracepoints are needed.
- balloon_event(void *opaque, unsigned long addr) "opaque %p addr %lu"
- 
-+# dma-helpers.c
-+dma_blk_io(void *dbs, void *bs, int64_t offset, bool to_dev) "dbs=%p bs=%p offset=%" PRId64 " to_dev=%d"
-+dma_aio_cancel(void *dbs) "dbs=%p"
-+dma_complete(void *dbs, int ret, void *cb) "dbs=%p ret=%d cb=%p"
-+dma_blk_cb(void *dbs, int ret) "dbs=%p ret=%d"
-+dma_map_wait(void *dbs) "dbs=%p"
-+
- # ioport.c
- cpu_in(unsigned int addr, char size, unsigned int val) "addr 0x%x(%c) value %u"
- cpu_out(unsigned int addr, char size, unsigned int val) "addr 0x%x(%c) value %u"
-diff --git a/trace-events b/trace-events
-index 9cb96f64c4a..3ec8a6c7202 100644
---- a/trace-events
-+++ b/trace-events
-@@ -30,13 +30,6 @@ breakpoint_insert(int cpu_index, uint64_t pc, int flags) "cpu=%d pc=0x%" PRIx64
- breakpoint_remove(int cpu_index, uint64_t pc, int flags) "cpu=%d pc=0x%" PRIx64 " flags=0x%x"
- breakpoint_singlestep(int cpu_index, int enabled) "cpu=%d enable=%d"
- 
--# dma-helpers.c
--dma_blk_io(void *dbs, void *bs, int64_t offset, bool to_dev) "dbs=%p bs=%p offset=%" PRId64 " to_dev=%d"
--dma_aio_cancel(void *dbs) "dbs=%p"
--dma_complete(void *dbs, int ret, void *cb) "dbs=%p ret=%d cb=%p"
--dma_blk_cb(void *dbs, int ret) "dbs=%p ret=%d"
--dma_map_wait(void *dbs) "dbs=%p"
--
- # job.c
- job_state_transition(void *job,  int ret, const char *legal, const char *s0, const char *s1) "job %p (ret: %d) attempting %s transition (%s-->%s)"
- job_apply_verb(void *job, const char *state, const char *verb, const char *legal) "job %p in state %s; applying verb %s (%s)"
--- 
-2.34.1
 
+Applied to target-arm.next, thanks.
+
+-- PMM
 
