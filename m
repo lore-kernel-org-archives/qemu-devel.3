@@ -4,66 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BE49D5E14D
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 10:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A018D5E152
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 10:23:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9Lrw-000503-SI; Fri, 08 Nov 2024 05:05:32 -0500
+	id 1t9M8g-0007ju-7s; Fri, 08 Nov 2024 05:22:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.de>) id 1t9Lru-0004zh-Qr
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:05:31 -0500
-Received: from mout01.posteo.de ([185.67.36.65])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.de>) id 1t9Lrr-0001Pd-Jb
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:05:29 -0500
-Received: from submission (posteo.de [185.67.36.169]) 
- by mout01.posteo.de (Postfix) with ESMTPS id 6C5F6240027
- for <qemu-devel@nongnu.org>; Fri,  8 Nov 2024 11:05:15 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
- t=1731060315; bh=AuTznBuOuHCLswdhe2i4l4j5yDgTmoMAF062digmYT0=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:Content-Type:
- Content-Transfer-Encoding:From;
- b=K5cMREMmMla58lDGydChlVvpVrE+4fe0zHBtIK9QeapdEuxESU2+1yLIdbEHlv47Z
- Wx3c+47vK22Sgkb2fcBtYGZH/biAV7ZlCYKskH3hRgMMrDy9SPZE4A3/hSqC3nlZjs
- 8ppAUJkrrmXxSDW+eHNzaZeWbJDnyzvzHJd+XYuO/2jXl+Dg7fnqojzx66/osvYhVj
- eU8PzC7h2Txxa4cNIDix8BGOUp3Ccm9rsf27XIUvirNR11fYLihvk2fGdBhIn3y2rX
- FH8x7P9syM3XsESkdiv1PMCBltKsxJymxmIIRV5m4o7w8NDqAxLEaY6aYCJF/M1jDK
- r14q66zk6Bzig==
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4XlF1P5ZPFz9rxB;
- Fri,  8 Nov 2024 11:05:13 +0100 (CET)
-Message-ID: <c3b996b4-d128-4830-94d4-5c9448ca003d@posteo.de>
-Date: Fri,  8 Nov 2024 10:05:13 +0000
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t9M8c-0007ig-8F
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:22:48 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t9M8a-0003Wl-Mp
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:22:46 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5cefa22e9d5so2179836a12.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 02:22:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731061362; x=1731666162; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=E50wz7jykj+ROZV5+dUA4vRjqLfB8DXoxy+H41uGIRI=;
+ b=yZnlzXtN5wxe6tX2l6BIa1R/xLeS4S0juKaOUCvbKt4ZfCCyoiNT8xiSr7QQ5W+yKf
+ 0HOHLQf7nz55tlGdNS78uzfM94YUWl5K5R931yr7KwF5ESEqs6c2+kEt5YRC2xkY/jwO
+ vNlMezpKZNf5/Al6mfy16dMCtPGZuUHfwiNVdX2bTmAnggnEgYkk/88vaezmZojSjedc
+ d6kD9+uHCaqa3qMNn4Qc3DeQJlmbjtC96jGV4auD3J6HDk4hhuetb6C6joIyyilAZ/d8
+ kW0ZZdJskYmHoeoQITAJV7kXiXD736W1UbC3wME4AGxSMxlB6H8vgP1zCFny/zzv3kym
+ M8Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731061362; x=1731666162;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=E50wz7jykj+ROZV5+dUA4vRjqLfB8DXoxy+H41uGIRI=;
+ b=E9aDiudSOJqxpvYZGibMXavr0fk4/0A3GYiiJ3GS8TJzbN1P0UqzpL31uthMQ5uGaf
+ U0X0sQt+YafSCXocTeM8LlwkNmGaPEaC0fwqFihQBhElLv//I9AF8/z2rzxag5eDkSHd
+ dj9o1AUosvRNjpVjUq5B9OSHzykVokiWx/T+czNoSRcrAnsDE/SkPQuNVTmtmcUIrBms
+ p7WQ+91I+WDWFmpcstIdnthq8p8eUhNbu7Tpw3UXA4hmVwgVxsTyr3MNa/IN5WzWTMkk
+ OSZWgLU8eyDkb5OhsNBfvBgFXIwGNMqu4hpHszu9zKJca+xDjksz+fVWtGfux9aBsehf
+ h2HQ==
+X-Gm-Message-State: AOJu0YyLhyTk9WtSdltrY+ZpuUzfLfOoRR/yHpyjMHh1Y5Q63tR5c3u1
+ 6UI1yYt9anUA9AkDj22rT2lgrqTjGEuBtXG3/ueXAmuMzOddMNBcm+0M7l49TotZRJ/FHm3yrTB
+ u0ZkqsIyxcov8MqK/elOqA98ELAKoMldonaH8FIRkQA2od6fz
+X-Google-Smtp-Source: AGHT+IFWSWWH8NfKVyFOAWuLMkK7bNYIVGzfZ86PY6PzPWXZCkpT+ZhUOisPcKTyX5p4p+TBNYpPSaS0n7A18J1uN2c=
+X-Received: by 2002:a05:6402:5213:b0:5ce:fc3c:3c3 with SMTP id
+ 4fb4d7f45d1cf-5cf0a45c690mr1747029a12.28.1731061362370; Fri, 08 Nov 2024
+ 02:22:42 -0800 (PST)
 MIME-Version: 1.0
-Subject: Re: [PATCH v4 1/2] next-kbd: convert to use
- qemu_input_handler_register()
-To: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- peter.maydell@linaro.org, huth@tuxfamily.org, berrange@redhat.com,
- qemu-devel@nongnu.org
-References: <20241106120928.242443-1-mark.cave-ayland@ilande.co.uk>
- <20241106120928.242443-2-mark.cave-ayland@ilande.co.uk>
- <4c127d3c-3610-e6b7-9358-3d88d28477a0@eik.bme.hu>
- <13995544-2d94-4b35-a7c2-f11e0599170f@linaro.org>
- <872fd077-b870-f910-88a5-a045787aa681@eik.bme.hu>
-From: Thomas Huth <th.huth@posteo.de>
-Content-Language: en-US
-In-Reply-To: <872fd077-b870-f910-88a5-a045787aa681@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.67.36.65; envelope-from=th.huth@posteo.de;
- helo=mout01.posteo.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20241107150534.38651-1-stefanb@linux.ibm.com>
+In-Reply-To: <20241107150534.38651-1-stefanb@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 8 Nov 2024 10:22:31 +0000
+Message-ID: <CAFEAcA8J-SrhhAVnwygrgvntf5KEWgpqm3M9MZ0jn5Z9qHdk2Q@mail.gmail.com>
+Subject: Re: [PULL v2 0/1] Merge Aspeed TPM test 2024/11/07 v2
+To: Stefan Berger <stefanb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,121 +87,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/11/2024 21.32, BALATON Zoltan wrote:
-> On Wed, 6 Nov 2024, Philippe Mathieu-Daudé wrote:
->> On 6/11/24 13:00, BALATON Zoltan wrote:
->>> On Wed, 6 Nov 2024, Mark Cave-Ayland wrote:
->>>> Convert the next-kbd device from the legacy UI qemu_add_kbd_event_handler()
->>>> function to use qemu_input_handler_register().
->>>>
->>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->>>> Reviewed-by: Thomas Huth <huth@tuxfamily.org>
->>>> ---
->>>> hw/m68k/next-kbd.c | 163 ++++++++++++++++++++++++++++++---------------
->>>> 1 file changed, 108 insertions(+), 55 deletions(-)
->>
->>
->>>> -static const unsigned char next_keycodes[128] = {
->>>> -    0x00, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x50, 0x4F,
->>>> -    0x4E, 0x1E, 0x1F, 0x20, 0x1D, 0x1C, 0x1B, 0x00,
->>>> -    0x42, 0x43, 0x44, 0x45, 0x48, 0x47, 0x46, 0x06,
->>>> -    0x07, 0x08, 0x00, 0x00, 0x2A, 0x00, 0x39, 0x3A,
->>>> -    0x3B, 0x3C, 0x3D, 0x40, 0x3F, 0x3E, 0x2D, 0x2C,
->>>> -    0x2B, 0x26, 0x00, 0x00, 0x31, 0x32, 0x33, 0x34,
->>>> -    0x35, 0x37, 0x36, 0x2e, 0x2f, 0x30, 0x00, 0x00,
->>>> -    0x00, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
->>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
->>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
->>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
->>>> +#define NEXTKBD_NO_KEY 0xff
->>>
->>> Now you don't need this 0xff define any more because you can use 0 as no 
->>> key value then the [0 ... Q_KEY_CODE__MAX] init below can also be dropped 
->>> because static variables are 0 init automatically.
->>
->> Whether 0 or 0xff is best for NO_KEY, I don't know.
->> However, definitions are useful when reviewing ...
->>
->>>
->>> Regards,
->>> BALATON Zoltan
->>>
->>>> +static const int qcode_to_nextkbd_keycode[] = {
->>>> +    /* Make sure future additions are automatically set to 
->>>> NEXTKBD_NO_KEY */
->>>> +    [0 ... Q_KEY_CODE__MAX]    = NEXTKBD_NO_KEY,
->>>> +
->>>> +    [Q_KEY_CODE_ESC]           = 0x49,
->>>> +    [Q_KEY_CODE_1]             = 0x4a,
->>>> +    [Q_KEY_CODE_2]             = 0x4b,
->>>> +    [Q_KEY_CODE_3]             = 0x4c,
->>>> +    [Q_KEY_CODE_4]             = 0x4d,
->> [...]
->>
->>>> +static void nextkbd_event(DeviceState *dev, QemuConsole *src, 
->>>> InputEvent *evt)
->>>> +{
->>>> +    NextKBDState *s = NEXTKBD(dev);
->>>> +    int qcode, keycode;
->>>> +    bool key_down = evt->u.key.data->down;
->>>> +
->>>> +    qcode = qemu_input_key_value_to_qcode(evt->u.key.data->key);
->>>> +    if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
->>>> +        return;
->>>> +    }
->>>> +
->>>> +    /* Shift key currently has no keycode, so handle separately */
->>>> +    if (qcode == Q_KEY_CODE_SHIFT) {
->>>> +        if (key_down) {
->>>> +            s->shift |= KD_LSHIFT;
->>>> +        } else {
->>>> +            s->shift &= ~KD_LSHIFT;
->>>> +        }
->>>> +    }
->>>> +
->>>> +    if (qcode == Q_KEY_CODE_SHIFT_R) {
->>>> +        if (key_down) {
->>>> +            s->shift |= KD_RSHIFT;
->>>> +        } else {
->>>> +            s->shift &= ~KD_RSHIFT;
->>>> +        }
->>>> +    }
->>>> +
->>>> +    keycode = qcode_to_nextkbd_keycode[qcode];
->>>> +    if (keycode == NEXTKBD_NO_KEY) {
->>
->> ... here ^
-> 
-> I this case !keycode is pretty self explanatory IMO.
+On Thu, 7 Nov 2024 at 15:05, Stefan Berger <stefanb@linux.ibm.com> wrote:
+>
+> Hello!
+>
+>  This PR fixes the path used by swtpm to store its state and now uses a
+> path under /var/tmp rather than a path local to the test. We ran into
+> issues on Ubuntu when that path was under /mnt and therefore not
+> supported by the AppArmor profile of swtpm.
+>
+>    Stefan
+>
+> The following changes since commit 63dc36944383f70f1c7a20f6104966d8560300fa:
+>
+>   Merge tag 'hw-misc-20241105' of https://github.com/philmd/qemu into staging (2024-11-06 17:28:45 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/stefanberger/qemu-tpm.git pull-tpm-2024-11-07-2
+>
+> for you to fetch changes up to e3edada526f3ac28f71dc8ae7a0acbc76f8e2050:
+>
+>   tests: Adjust path for swtpm state to use path under /var/tmp/ (2024-11-07 09:57:20 -0500)
+>
+> v2:
+>  - Added missing comment into test file; generalized it a bit from Peter's
+>    suggestion
+>
+> Stefan Berger (1):
+>   tests: Adjust path for swtpm state to use path under /var/tmp/
 
-Ok, I'll pick up the patch with this change added on top:
 
-diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
---- a/hw/m68k/next-kbd.c
-+++ b/hw/m68k/next-kbd.c
-@@ -165,12 +165,7 @@ static const MemoryRegionOps kbd_ops = {
-      .endianness = DEVICE_NATIVE_ENDIAN,
-  };
-  
--#define NEXTKBD_NO_KEY 0xff
--
-  static const int qcode_to_nextkbd_keycode[] = {
--    /* Make sure future additions are automatically set to NEXTKBD_NO_KEY */
--    [0 ... Q_KEY_CODE__MAX]    = NEXTKBD_NO_KEY,
--
-      [Q_KEY_CODE_ESC]           = 0x49,
-      [Q_KEY_CODE_1]             = 0x4a,
-      [Q_KEY_CODE_2]             = 0x4b,
-@@ -276,7 +271,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src, InputEvent *evt)
-      }
-  
-      keycode = qcode_to_nextkbd_keycode[qcode];
--    if (keycode == NEXTKBD_NO_KEY) {
-+    if (!keycode) {
-          return;
-      }
-  
-  Thomas
+Applied, thanks.
 
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
+
+-- PMM
 
