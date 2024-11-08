@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFFC8D5C0C8
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 13:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F37D5C0C8
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 13:55:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9PNV-0005PI-VI; Fri, 08 Nov 2024 08:50:21 -0500
+	id 1t9PSQ-00077M-LT; Fri, 08 Nov 2024 08:55:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t9PNU-0005P8-Nd
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 08:50:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t9PNS-0004t9-2W
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 08:50:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731073816;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N7IIHp2htkATktS74xh5+MpR42+z5btxMLC9PgzQKio=;
- b=S4hn9olmusbSNeUE0I+JtOTbtkF5BbGonDaWXrPqmwzPOU6HRk+LJDouigVkgZPwtbIqlJ
- lk+j0OWGibJg3PyxSAhvAMj7VBce+F3dcaSweKSl4Ud0NsC+6qexiHLhzH0Nwqv5dxGtHA
- UUu1UPVAUXJ/kRfy5CD3YbN6zJlu+Lg=
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
- [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-296-cpo4APmWOjuIk2q-nj-DrQ-1; Fri, 08 Nov 2024 08:50:15 -0500
-X-MC-Unique: cpo4APmWOjuIk2q-nj-DrQ-1
-X-Mimecast-MFC-AGG-ID: cpo4APmWOjuIk2q-nj-DrQ
-Received: by mail-oi1-f197.google.com with SMTP id
- 5614622812f47-3e60970ed1dso2481603b6e.0
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 05:50:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t9PSM-00075A-AP
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 08:55:22 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t9PSJ-0005aw-6m
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 08:55:22 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4315baa51d8so18945015e9.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 05:55:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731074117; x=1731678917; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W9HEmAt5PwpOdPxQx3Mt4EnQUNxTYqpsNGqlaKkatdo=;
+ b=gJ/ZFid3p9GBlG5b9ZsQA9mVoH5iCxSq5tkiOAgDRcpE5iILrWF7bVunLFMV6XatSj
+ JqmxGEbTMkTSztEvFlDKg6lOfyDCKaaSaoPzkJ/3Tt7Onnyla6URXK551IBx72YNns49
+ +9Q+Oi3sJHbgqvTAoz5kpNP31KBGgpcFj58qOfEkFYbvXWgjBZCFsMIm+1/34uF+7uGo
+ yvQVSfk/7RpvbUdD+L44ZvA7wC18+szJgX74eJe6Gte3p9tiLs5qloZpIXtKv+ubYHDU
+ OWwDf7oN89dhvtVK4SV0M884wksz1L2H2qHk9JYf+MaRpAaln9R969pczufHKUbQR/VI
+ FWQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731073814; x=1731678614;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N7IIHp2htkATktS74xh5+MpR42+z5btxMLC9PgzQKio=;
- b=fzkJPVKrC9lHxgerKKwfKuIPLoftEPvkZtNVEHM/83B2Fzd/3EEcpLCNrARdtmrm+k
- fSM4F3crLDGcUbxF/oCfcqtToSadoDmOwe6D+vWLlOfVbcH6kwYm7vbzTL/rTgIoGRoh
- 7KOy5r03cbOZJb35EFkTMXpRlzV8fWE6A3Zoyjzj5RkcO3C5la3xIQ+fg+z0ndaMGMb9
- RCBQoYuH1mp2umtG6JwDzFcvuPsJtD4d1ONYg1DhKbhwBVvzay2p7t+b+/U9zcUlOYaa
- 9TA77cd29tSqJInY5A0tBo6BHbPYjXuGxwm48M5Mfi3IDXR7qnBZRfsmiN1HSXTkbjdG
- r6XA==
-X-Gm-Message-State: AOJu0Yw/auXk6+2W/W67XpBshjEzqFRouDQIJ6k7B4Zlw6U3DwVx1izs
- /9Q3Y1ufsol6EFi48DxvUB1m8Dp6DWv06Z5m6REz0dQEavA25AN6OLk5skBPzvB2XjUgrD1fYTc
- wmQ4c7q+8TIIP0ArPmNMRbvfCv5uqkO2AfTQ4OYCoCoNHsqn/Gi9L
-X-Received: by 2002:a05:6808:21a7:b0:3db:1cd1:cadd with SMTP id
- 5614622812f47-3e79467a5d7mr3359863b6e.18.1731073814384; 
- Fri, 08 Nov 2024 05:50:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEBhCjEW6nL8iwDazYmZ/uBcmMGHAGJvlnMb8G4Focx5WTa9aH1KnoF1owLkHzr3CW3IYFgPQ==
-X-Received: by 2002:a05:6808:21a7:b0:3db:1cd1:cadd with SMTP id
- 5614622812f47-3e79467a5d7mr3359850b6e.18.1731073813971; 
- Fri, 08 Nov 2024 05:50:13 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3e78ccbdf63sm702000b6e.30.2024.11.08.05.50.12
+ d=1e100.net; s=20230601; t=1731074117; x=1731678917;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=W9HEmAt5PwpOdPxQx3Mt4EnQUNxTYqpsNGqlaKkatdo=;
+ b=f3CeECnSg/8druyEHFDNUlehtw8v3d5Jq981nIticVvwuOPg8jNpcnT4WMVFGyv9aH
+ BYgX6J5jjAjr9ajg/jt1PxLQROiX6g5d1TUpCMEo3KbAp0xbIgMGJ2mkoPmxClxsECO+
+ dvY12RoBgTHIXUnMfqYjpZf8uNgm/79MZBPV+nh01Gp3SPjYfteiPha5DmDiVKA+TVIy
+ UB4WM4F0R3EESwWWSQsAXVtPlTq1t0mK/S+ByFD15PiZql2dnSm2S+9D8iA5DQnEMT0W
+ IEspJNaFNUI5btO5V6+bCL8IwRfJ2dPLtv+odo3Kfh7+i/jyAU4DYFKQqOj+iI/ClD1A
+ CkzQ==
+X-Gm-Message-State: AOJu0Ywo1D/as2aOCCLFHggoAPvJ2f7b5yhkPQnIRASkrnPeGW7VVWt4
+ X8UWL1Xgq5b65UxVHZIr66fouGfuoNA2Qo1zSUS6nHVeyYglcrcBtaYBqpnij4+6agQX1hI/RT3
+ q
+X-Google-Smtp-Source: AGHT+IFx9amY3L1g31TYcovcX2/zmSMf7J09PjsD9fEqdcbWZyR6XR3rN0ulOxvQODBkLi1a0NP/WA==
+X-Received: by 2002:a05:6000:4027:b0:37d:4e59:549a with SMTP id
+ ffacd0b85a97d-381f17212c7mr2324020f8f.16.1731074117196; 
+ Fri, 08 Nov 2024 05:55:17 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432aa70a2ccsm110082855e9.31.2024.11.08.05.55.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 05:50:12 -0800 (PST)
-Date: Fri, 8 Nov 2024 08:50:10 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration: Do not perform RAMBlock dirty sync during the
- first iteration
-Message-ID: <Zy4XEjI2JIagxsyB@x1n>
-References: <ad543bac0eb9e7113eaec266add58c19f9f6eda0.1730973055.git.yong.huang@smartx.com>
- <ZyzqosT0uE6_G4as@x1n>
- <CAK9dgmZCZp3scJTAGJc=KF9dgaftxD=V3uUADeyyYqFc_yGhkA@mail.gmail.com>
+ Fri, 08 Nov 2024 05:55:16 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH 2/3] hw/intc/arm_gicv3: Use bitops.h uint32_t bit array
+ functions
+Date: Fri,  8 Nov 2024 13:55:13 +0000
+Message-Id: <20241108135514.4006953-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241108135514.4006953-1-peter.maydell@linaro.org>
+References: <20241108135514.4006953-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAK9dgmZCZp3scJTAGJc=KF9dgaftxD=V3uUADeyyYqFc_yGhkA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,135 +96,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 08, 2024 at 02:03:47PM +0800, Yong Huang wrote:
-> On Fri, Nov 8, 2024 at 12:28 AM Peter Xu <peterx@redhat.com> wrote:
-> 
-> > On Thu, Nov 07, 2024 at 05:56:50PM +0800, yong.huang@smartx.com wrote:
-> > > From: Hyman Huang <yong.huang@smartx.com>
-> > >
-> > > The first iteration's RAMBlock dirty sync can be omitted because QEMU
-> > > always initializes the RAMBlock's bmap to all 1s by default.
-> > >
-> > > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-> > > ---
-> > >  migration/cpu-throttle.c |  2 +-
-> > >  migration/ram.c          | 19 ++++++++++++++++---
-> > >  2 files changed, 17 insertions(+), 4 deletions(-)
-> > >
-> > > diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
-> > > index 5179019e33..674dc2004e 100644
-> > > --- a/migration/cpu-throttle.c
-> > > +++ b/migration/cpu-throttle.c
-> > > @@ -141,7 +141,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaque)
-> > >       * effect on guest performance, therefore omit it to avoid
-> > >       * paying extra for the sync penalty.
-> > >       */
-> > > -    if (sync_cnt <= 1) {
-> > > +    if (!sync_cnt) {
-> > >          goto end;
-> > >      }
-> > >
-> > > diff --git a/migration/ram.c b/migration/ram.c
-> > > index 05ff9eb328..a0123eb93e 100644
-> > > --- a/migration/ram.c
-> > > +++ b/migration/ram.c
-> > > @@ -2718,7 +2718,7 @@ static void ram_list_init_bitmaps(void)
-> > >  {
-> > >      MigrationState *ms = migrate_get_current();
-> > >      RAMBlock *block;
-> > > -    unsigned long pages;
-> > > +    unsigned long pages, clear_bmap_pages;
-> > >      uint8_t shift;
-> > >
-> > >      /* Skip setting bitmap if there is no RAM */
-> > > @@ -2736,6 +2736,7 @@ static void ram_list_init_bitmaps(void)
-> > >
-> > >          RAMBLOCK_FOREACH_NOT_IGNORED(block) {
-> > >              pages = block->max_length >> TARGET_PAGE_BITS;
-> > > +            clear_bmap_pages = clear_bmap_size(pages, shift);
-> > >              /*
-> > >               * The initial dirty bitmap for migration must be set with
-> > all
-> > >               * ones to make sure we'll migrate every guest RAM page to
-> > > @@ -2751,7 +2752,12 @@ static void ram_list_init_bitmaps(void)
-> > >                  block->file_bmap = bitmap_new(pages);
-> > >              }
-> > >              block->clear_bmap_shift = shift;
-> > > -            block->clear_bmap = bitmap_new(clear_bmap_size(pages,
-> > shift));
-> > > +            block->clear_bmap = bitmap_new(clear_bmap_pages);
-> > > +            /*
-> > > +             * Set clear_bmap to 1 unconditionally, as we always set
-> > bmap
-> > > +             * to all 1s by default.
-> > > +             */
-> > > +            bitmap_set(block->clear_bmap, 0, clear_bmap_pages);
-> > >          }
-> > >      }
-> > >  }
-> > > @@ -2771,6 +2777,7 @@ static void
-> > migration_bitmap_clear_discarded_pages(RAMState *rs)
-> > >
-> > >  static bool ram_init_bitmaps(RAMState *rs, Error **errp)
-> > >  {
-> > > +    Error *local_err = NULL;
-> > >      bool ret = true;
-> > >
-> > >      qemu_mutex_lock_ramlist();
-> > > @@ -2783,7 +2790,13 @@ static bool ram_init_bitmaps(RAMState *rs, Error
-> > **errp)
-> > >              if (!ret) {
-> > >                  goto out_unlock;
-> > >              }
-> > > -            migration_bitmap_sync_precopy(false);
-> > > +            /*
-> > > +             * Bypass the RAMBlock dirty sync and still publish the
-> > > +             * notification.
-> >
-> > Hmm.. Why should QEMU notify AFTER_BITMAP_SYNC if the sync didn't happen?
-> >
-> 
-> Indeed, logically, we should not make the notification.
-> 
-> Some features, like VIRTIO_BALLOON_F_FREE_PAGE_HINT, use this notification
-> to indirectly detect whether the RAMBlock's bmap has been updated. This
-> allows the
-> free page optimization to begin clearing parts of the bitmap that contain
-> free pages.
-> 
-> virtio_balloon_free_page_hint_notify
-> ......
->     switch (pnd->reason) {
->     case PRECOPY_NOTIFY_BEFORE_BITMAP_SYNC:
->         virtio_balloon_free_page_stop(dev);
->         break;
->     case PRECOPY_NOTIFY_AFTER_BITMAP_SYNC:
->         if (vdev->vm_running) {
->             virtio_balloon_free_page_start(dev);
->             break;
->         }
-> 
-> The free page optimization may miss the first time window to execute if we
-> don't
-> send out a notification after starting the migration and initializing the
-> bmap with all 1s.
-> 
-> May we change the old behavior of optimization?
+Now we have official uint32_t bit array functions in bitops.h, use
+them instead of the hand-rolled local versions.
 
-I see.
+We retain gic_bmp_replace_bit() because bitops doesn't provide that
+specific functionality.
 
-It looks like an abuse to me so far to use AFTER_BITMAP_SYNC as start of
-free page hinting.  There's no guarantee a sync is needed when start
-migration.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ include/hw/intc/arm_gicv3_common.h | 54 ++++++++----------------------
+ 1 file changed, 14 insertions(+), 40 deletions(-)
 
-I think we may want a pre-requisite patch to enable free page hinting
-during PRECOPY_NOTIFY_SETUP too, like PRECOPY_NOTIFY_AFTER_BITMAP_SYNC.
-That patch (if you agree) will need to copy David Hildenbrand and Wei Wang
-(original author).
-
-Thanks,
-
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index cd09bee3bc4..a3d6a0e5077 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -51,13 +51,13 @@
+ /* Maximum number of list registers (architectural limit) */
+ #define GICV3_LR_MAX 16
+ 
+-/* For some distributor fields we want to model the array of 32-bit
++/*
++ * For some distributor fields we want to model the array of 32-bit
+  * register values which hold various bitmaps corresponding to enabled,
+- * pending, etc bits. These macros and functions facilitate that; the
+- * APIs are generally modelled on the generic bitmap.h functions
+- * (which are unsuitable here because they use 'unsigned long' as the
+- * underlying storage type, which is very awkward when you need to
+- * access the data as 32-bit values.)
++ * pending, etc bits. We use the set_bit32() etc family of functions
++ * from bitops.h for this. For a few cases we need to implement some
++ * extra operations.
++ *
+  * Each bitmap contains a bit for each interrupt. Although there is
+  * space for the PPIs and SGIs, those bits (the first 32) are never
+  * used as that state lives in the redistributor. The unused bits are
+@@ -65,39 +65,13 @@
+  * avoids bugs where we forget to subtract GIC_INTERNAL from an
+  * interrupt number.
+  */
+-#define GICV3_BMP_SIZE DIV_ROUND_UP(GICV3_MAXIRQ, 32)
+-
+-#define GIC_DECLARE_BITMAP(name) \
+-    uint32_t name[GICV3_BMP_SIZE]
+-
+-#define GIC_BIT_MASK(nr) (1U << ((nr) % 32))
+-#define GIC_BIT_WORD(nr) ((nr) / 32)
+-
+-static inline void gic_bmp_set_bit(int nr, uint32_t *addr)
+-{
+-    uint32_t mask = GIC_BIT_MASK(nr);
+-    uint32_t *p = addr + GIC_BIT_WORD(nr);
+-
+-    *p |= mask;
+-}
+-
+-static inline void gic_bmp_clear_bit(int nr, uint32_t *addr)
+-{
+-    uint32_t mask = GIC_BIT_MASK(nr);
+-    uint32_t *p = addr + GIC_BIT_WORD(nr);
+-
+-    *p &= ~mask;
+-}
+-
+-static inline int gic_bmp_test_bit(int nr, const uint32_t *addr)
+-{
+-    return 1U & (addr[GIC_BIT_WORD(nr)] >> (nr & 31));
+-}
++#define GIC_DECLARE_BITMAP(name) DECLARE_BITMAP32(name, GICV3_MAXIRQ)
++#define GICV3_BMP_SIZE BITS_TO_U32S(GICV3_MAXIRQ)
+ 
+ static inline void gic_bmp_replace_bit(int nr, uint32_t *addr, int val)
+ {
+-    uint32_t mask = GIC_BIT_MASK(nr);
+-    uint32_t *p = addr + GIC_BIT_WORD(nr);
++    uint32_t mask = BIT32_MASK(nr);
++    uint32_t *p = addr + BIT32_WORD(nr);
+ 
+     *p &= ~mask;
+     *p |= (val & 1U) << (nr % 32);
+@@ -106,7 +80,7 @@ static inline void gic_bmp_replace_bit(int nr, uint32_t *addr, int val)
+ /* Return a pointer to the 32-bit word containing the specified bit. */
+ static inline uint32_t *gic_bmp_ptr32(uint32_t *addr, int nr)
+ {
+-    return addr + GIC_BIT_WORD(nr);
++    return addr + BIT32_WORD(nr);
+ }
+ 
+ typedef struct GICv3State GICv3State;
+@@ -301,15 +275,15 @@ struct GICv3State {
+ #define GICV3_BITMAP_ACCESSORS(BMP)                                     \
+     static inline void gicv3_gicd_##BMP##_set(GICv3State *s, int irq)   \
+     {                                                                   \
+-        gic_bmp_set_bit(irq, s->BMP);                                   \
++        set_bit32(irq, s->BMP);                                         \
+     }                                                                   \
+     static inline int gicv3_gicd_##BMP##_test(GICv3State *s, int irq)   \
+     {                                                                   \
+-        return gic_bmp_test_bit(irq, s->BMP);                           \
++        return test_bit32(irq, s->BMP);                                 \
+     }                                                                   \
+     static inline void gicv3_gicd_##BMP##_clear(GICv3State *s, int irq) \
+     {                                                                   \
+-        gic_bmp_clear_bit(irq, s->BMP);                                 \
++        clear_bit32(irq, s->BMP);                                       \
+     }                                                                   \
+     static inline void gicv3_gicd_##BMP##_replace(GICv3State *s,        \
+                                                   int irq, int value)   \
 -- 
-Peter Xu
+2.34.1
 
 
