@@ -4,101 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A6ACD5C0D8
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 14:54:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5EF9D5C0E1
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 14:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9QNb-00021e-Eh; Fri, 08 Nov 2024 09:54:31 -0500
+	id 1t9QQn-0005I0-4J; Fri, 08 Nov 2024 09:57:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9QNZ-0001xj-Am
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:54:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9QQh-0005Gd-H8
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:57:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9QNU-0006F3-VZ
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:54:28 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9QQf-0006qf-9y
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:57:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731077663;
+ s=mimecast20190719; t=1731077858;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mkmN+NvnggUIDfved+YDuCFZML94X/qYHsCuSxwH79s=;
- b=YW8K1HVwB5Mi7GqOmtKoDwa+30unzUxMAXj2yyKOZ5jkiZhqV7417JK/gbYBAKZVnUBdJQ
- ud+ZEqsO5/QMLH9heEonNH5XMhtwaZh79d5tpmx+E/LC66enXe9O3vysuUT38DoWdZC6Ut
- O+JtS+n2VNLBfYuAF+jqsCEtUasBzgE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GRPlznnubeR15irlmXdcFr8p9Fcm02Ip9Vx0uGC19lw=;
+ b=amPngT6kU0W7Allt7mO6lW2IYPqBMvFzfbvNyvqnSu0OIE76RPCr1TDrj7HJWBb9S+qAUB
+ bJ6KQ7QzpfWmUU5maeHnGP/2bpzNSLRA9DwA5RlYpnn5JgRaKICIJcxAbn/Lmov0Abn26R
+ UBFkLo9JVF89Ss/4y2kW76lpG9lACPY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-418-gSqd8lDIMRGVABULSuYLvw-1; Fri, 08 Nov 2024 09:54:18 -0500
-X-MC-Unique: gSqd8lDIMRGVABULSuYLvw-1
-X-Mimecast-MFC-AGG-ID: gSqd8lDIMRGVABULSuYLvw
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43159c07193so19724685e9.0
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 06:54:18 -0800 (PST)
+ us-mta-173-0AfquZJWOp6O4i_NEWAEIg-1; Fri, 08 Nov 2024 09:57:36 -0500
+X-MC-Unique: 0AfquZJWOp6O4i_NEWAEIg-1
+X-Mimecast-MFC-AGG-ID: 0AfquZJWOp6O4i_NEWAEIg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43159603c92so15293745e9.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 06:57:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731077657; x=1731682457;
+ d=1e100.net; s=20230601; t=1731077854; x=1731682654;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=mkmN+NvnggUIDfved+YDuCFZML94X/qYHsCuSxwH79s=;
- b=JZvJG90/rvkYj9wW7kR5xvgb/WiR/gwb0oHyJKSqcHz3CqrAE4fFqtfiyUSO4pALbM
- i/c//rm5+ZaE/lO9utvA4ALTWahkTeErTIIiCt6nMY8v7vwMlMsP+Ihx2FQfeoR6R6PU
- qwN3hm8E4lxwL8hEVg/JFIayEoVKAHeiF3iF6uOSLlBhzq/gXPC7AxBO1I0QW6CDrTxz
- BOVTttbwOSoUrXgxQ6KCdelKRYc8jmDXPRuWe0pp9NqSvaErem0LgM9oaoimFJgfFqok
- wBEC9HLB9u2o3EkRTzjF99WiO9f+Tin7jy1EJEwYvxmQvjiUlH4D6ZfX2Tak80o6/rc2
- BNXQ==
+ bh=GRPlznnubeR15irlmXdcFr8p9Fcm02Ip9Vx0uGC19lw=;
+ b=k57At/sWdqOTXqDcuVZtOaXsegbECUNhFmqY/AaOQgU7mFB4CtTD/XBgIUo68jr5PJ
+ SAsy3ecTuPBaYJplJwRnJk6LwAen8GfioYOokPXQD1KohvZ6vsYGKlmdum6pcMKjsZ97
+ jlk0gmVu+Az7KGRjSxH/h5RUTyHEZPXg4nC2VYZ1uUNWwI2/4OTWrfRSJNlJGjFKUmyB
+ L9wWwyto/7duodWjGzJB2Q9dGTX0AclFsuci0023vwOVyTgGih3UsnrOnK/bvVikykWW
+ sRfTwnKJc+kKnpToZFHsomv0uIwOxWfH9J4JI2K2DixrI+xKqVSBz3ZBdpzP+NAHZEuS
+ J1uw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULUgNl1cbUlQDZIj3uvQeWmR+Fr3dkXEOZiPGmR0FrtyYl9RqlPHPtcuca6jcd8o7fAyfPma/zpuMD@nongnu.org
-X-Gm-Message-State: AOJu0YzwFjoKuaVdmgzGJ1fxFz+6TD+lYeKHqY0VUxPmMQFy8k830xcx
- C4v8glC0dFaXjLCqkaXlm8g5GXp4+G4jfsukoCAHmch3kgcddLABo5wDg8emzsfQ32bW9pdiyoI
- jd4xonv602ENLTNqcvXC0/QL2mheIjRMYo5UmEIK0EU0ftYPDuILR
-X-Received: by 2002:a05:600c:458d:b0:428:d31:ef25 with SMTP id
- 5b1f17b1804b1-432b7505acemr32381105e9.12.1731077657252; 
- Fri, 08 Nov 2024 06:54:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFPxOtIZhNV6uMhXljBsUEQaqS9q72NjB16fbBL0t+sS8fBLMr0q4Zf3sRLWXOAPUOVjmpu1Q==
-X-Received: by 2002:a05:600c:458d:b0:428:d31:ef25 with SMTP id
- 5b1f17b1804b1-432b7505acemr32380715e9.12.1731077656734; 
- Fri, 08 Nov 2024 06:54:16 -0800 (PST)
+ AJvYcCVvR9xr5pCjiIfyX0RSiVwuCFB9WBfssRycbggsTbOL4BXOmI+Buq6/Wp6AhjQPhd9cSSWQKvVlmODE@nongnu.org
+X-Gm-Message-State: AOJu0YwDUVFnNUsWKhQ8G+XVFLxnujIEyHDm32ssOn0TSQoBDkR0Z49w
+ afKqvWVJH+7IOVMYZYGjDnug875YlB8NipRAbLFdTmggBgMoCabKI21X2/4mTb89ny/tNHFp2K/
+ 7/bUG9wYppMjiCuGvzgWwVq6zMcvg19ST+jmg0ke13m6I3VBrjmgwORfY/Vjh
+X-Received: by 2002:a05:600c:4f83:b0:42a:a6d2:3270 with SMTP id
+ 5b1f17b1804b1-432b7517aa4mr24537235e9.21.1731077854126; 
+ Fri, 08 Nov 2024 06:57:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGSG9W7J4LokiVVBJz973na8tNazwgMz236aVXrFR2NJWZZ/uehUVbOa6iepKzF6ap8X33QWg==
+X-Received: by 2002:a05:600c:4f83:b0:42a:a6d2:3270 with SMTP id
+ 5b1f17b1804b1-432b7517aa4mr24537025e9.21.1731077853738; 
+ Fri, 08 Nov 2024 06:57:33 -0800 (PST)
 Received: from ?IPV6:2003:d8:2f3a:cb00:3f4e:6894:3a3b:36b5?
  (p200300d82f3acb003f4e68943a3b36b5.dip0.t-ipconnect.de.
  [2003:d8:2f3a:cb00:3f4e:6894:3a3b:36b5])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa70a234sm110108465e9.34.2024.11.08.06.54.14
+ ffacd0b85a97d-381ed97ce27sm5140065f8f.29.2024.11.08.06.57.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Nov 2024 06:54:14 -0800 (PST)
-Message-ID: <115da88f-e3aa-4bfe-8842-530c06c39da2@redhat.com>
-Date: Fri, 8 Nov 2024 15:54:13 +0100
+ Fri, 08 Nov 2024 06:57:33 -0800 (PST)
+Message-ID: <23850861-3600-4bdc-aada-ff36e3152372@redhat.com>
+Date: Fri, 8 Nov 2024 15:57:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 01/16] machine: anon-alloc option
-To: Steven Sistare <steven.sistare@oracle.com>, Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
- <1730468875-249970-2-git-send-email-steven.sistare@oracle.com>
- <78fa25f1-03dc-400c-a604-998c53e4fbce@redhat.com>
- <45ea8a8a-928d-4703-b698-d5f910e6a224@oracle.com>
- <1f1a2742-0429-47d5-958f-b37575c1e4ba@redhat.com>
- <c2ca740b-0178-463b-8262-b149841b8def@redhat.com>
- <bcc4cd7e-3532-475a-8989-211e80bf3eab@oracle.com>
- <09701693-436c-4e1a-8206-03eb26cacab5@redhat.com>
- <66c05a06-dbb7-49ec-b58e-ccd917d098ea@oracle.com>
- <053dd9b6-e4f7-41c8-abe9-ed02214f0639@redhat.com>
- <cce158c4-3bb1-4771-b2c5-f3ae8a2285d5@oracle.com>
- <5b192b5e-943c-4b2f-ab40-ef54ea578363@redhat.com>
- <00261b15-3eef-439a-8501-574e3bb50d95@oracle.com>
- <d00ab1a4-2b72-4202-b810-adeb53a16f01@redhat.com>
- <44b15731-0ee8-4e24-b4f5-0614bca594cb@oracle.com>
- <99c6d0df-4ced-4fe5-bc87-2682d1ceaa5b@redhat.com>
- <29d21f54-38e7-43a9-86fa-586bd6f957be@oracle.com>
+Subject: Re: [PATCH v1] virtio-mem: unplug memory only during system resets,
+ not device resets
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Juraj Marcin <jmarcin@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241025104103.342188-1-david@redhat.com>
+ <9100ea2c-21e4-4f04-91fa-8b56986abcdf@linaro.org>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -146,17 +128,17 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <29d21f54-38e7-43a9-86fa-586bd6f957be@oracle.com>
+In-Reply-To: <9100ea2c-21e4-4f04-91fa-8b56986abcdf@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -174,314 +156,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.11.24 15:37, Steven Sistare wrote:
-> On 11/8/2024 9:20 AM, David Hildenbrand wrote:
->> On 08.11.24 14:56, Steven Sistare wrote:
->>> On 11/8/2024 6:31 AM, David Hildenbrand wrote:
->>>> On 07.11.24 17:40, Steven Sistare wrote:
->>>>> On 11/7/2024 11:26 AM, David Hildenbrand wrote:
->>>>>> On 07.11.24 17:02, Steven Sistare wrote:
->>>>>>> On 11/7/2024 8:23 AM, David Hildenbrand wrote:
->>>>>>>> On 06.11.24 21:12, Steven Sistare wrote:
->>>>>>>>> On 11/4/2024 4:36 PM, David Hildenbrand wrote:
->>>>>>>>>> On 04.11.24 21:56, Steven Sistare wrote:
->>>>>>>>>>> On 11/4/2024 3:15 PM, David Hildenbrand wrote:
->>>>>>>>>>>> On 04.11.24 20:51, David Hildenbrand wrote:
->>>>>>>>>>>>> On 04.11.24 18:38, Steven Sistare wrote:
->>>>>>>>>>>>>> On 11/4/2024 5:39 AM, David Hildenbrand wrote:
->>>>>>>>>>>>>>> On 01.11.24 14:47, Steve Sistare wrote:
->>>>>>>>>>>>>>>> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
->>>>>>>>>>>>>>>> on the value of the anon-alloc machine property.  This option applies to
->>>>>>>>>>>>>>>> memory allocated as a side effect of creating various devices. It does
->>>>>>>>>>>>>>>> not apply to memory-backend-objects, whether explicitly specified on
->>>>>>>>>>>>>>>> the command line, or implicitly created by the -m command line option.
->>>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>> The memfd option is intended to support new migration modes, in which the
->>>>>>>>>>>>>>>> memory region can be transferred in place to a new QEMU process, by sending
->>>>>>>>>>>>>>>> the memfd file descriptor to the process.  Memory contents are preserved,
->>>>>>>>>>>>>>>> and if the mode also transfers device descriptors, then pages that are
->>>>>>>>>>>>>>>> locked in memory for DMA remain locked.  This behavior is a pre-requisite
->>>>>>>>>>>>>>>> for supporting vfio, vdpa, and iommufd devices with the new modes.
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> A more portable, non-Linux specific variant of this will be using shm,
->>>>>>>>>>>>>>> similar to backends/hostmem-shm.c.
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> Likely we should be using that instead of memfd, or try hiding the
->>>>>>>>>>>>>>> details. See below.
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> For this series I would prefer to use memfd and hide the details.  It's a
->>>>>>>>>>>>>> concise (and well tested) solution albeit linux only.  The code you supply
->>>>>>>>>>>>>> for posix shm would be a good follow on patch to support other unices.
->>>>>>>>>>>>>
->>>>>>>>>>>>> Unless there is reason to use memfd we should start with the more
->>>>>>>>>>>>> generic POSIX variant that is available even on systems without memfd.
->>>>>>>>>>>>> Factoring stuff out as I drafted does look quite compelling.
->>>>>>>>>>>>>
->>>>>>>>>>>>> I can help with the rework, and send it out separately, so you can focus
->>>>>>>>>>>>> on the "machine toggle" as part of this series.
->>>>>>>>>>>>>
->>>>>>>>>>>>> Of course, if we find out we need the memfd internally instead under
->>>>>>>>>>>>> Linux for whatever reason later, we can use that instead.
->>>>>>>>>>>>>
->>>>>>>>>>>>> But IIUC, the main selling point for memfd are additional features
->>>>>>>>>>>>> (hugetlb, memory sealing) that you aren't even using.
->>>>>>>>>>>>
->>>>>>>>>>>> FWIW, I'm looking into some details, and one difference is that shmem_open() under Linux (glibc) seems to go to /dev/shmem and memfd/SYSV go to the internal tmpfs mount. There is not a big difference, but there can be some difference (e.g., sizing of the /dev/shm mount).
->>>>>>>>>>>
->>>>>>>>>>> Sizing is a non-trivial difference.  One can by default allocate all memory using memfd_create.
->>>>>>>>>>> To do so using shm_open requires configuration on the mount.  One step harder to use.
->>>>>>>>>>
->>>>>>>>>> Yes.
->>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> This is a real issue for memory-backend-ram, and becomes an issue for the internal RAM
->>>>>>>>>>> if memory-backend-ram has hogged all the memory.
->>>>>>>>>>>
->>>>>>>>>>>> Regarding memory-backend-ram,share=on, I assume we can use memfd if available, but then fallback to shm_open().
->>>>>>>>>>>
->>>>>>>>>>> Yes, and if that is a good idea, then the same should be done for internal RAM
->>>>>>>>>>> -- memfd if available and fallback to shm_open.
->>>>>>>>>>
->>>>>>>>>> Yes.
->>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>>> I'm hoping we can find a way where it just all is rather intuitive, like
->>>>>>>>>>>>
->>>>>>>>>>>> "default-ram-share=on": behave for internal RAM just like "memory-backend-ram,share=on"
->>>>>>>>>>>>
->>>>>>>>>>>> "memory-backend-ram,share=on": use whatever mechanism we have to give us "anonymous" memory that can be shared using an fd with another process.
->>>>>>>>>>>>
->>>>>>>>>>>> Thoughts?
->>>>>>>>>>>
->>>>>>>>>>> Agreed, though I thought I had already landed at the intuitive specification in my patch.
->>>>>>>>>>> The user must explicitly configure memory-backend-* to be usable with CPR, and anon-alloc
->>>>>>>>>>> controls everything else.  Now we're just riffing on the details: memfd vs shm_open, spelling
->>>>>>>>>>> of options and words to describe them.
->>>>>>>>>>
->>>>>>>>>> Well, yes, and making it all a bit more consistent and the "machine option" behave just like "memory-backend-ram,share=on".
->>>>>>>>>
->>>>>>>>> Hi David and Peter,
->>>>>>>>>
->>>>>>>>> I have implemented and tested the following, for both qemu_memfd_create
->>>>>>>>> and qemu_shm_alloc.  This is pseudo-code, with error conditions omitted
->>>>>>>>> for simplicity.
->>>>>>>>>
->>>>>>>>> Any comments before I submit a complete patch?
->>>>>>>>>
->>>>>>>>> ----
->>>>>>>>> qemu-options.hx:
->>>>>>>>>           ``aux-ram-share=on|off``
->>>>>>>>>               Allocate auxiliary guest RAM as an anonymous file that is
->>>>>>>>>               shareable with an external process.  This option applies to
->>>>>>>>>               memory allocated as a side effect of creating various devices.
->>>>>>>>>               It does not apply to memory-backend-objects, whether explicitly
->>>>>>>>>               specified on the command line, or implicitly created by the -m
->>>>>>>>>               command line option.
->>>>>>>>>
->>>>>>>>>               Some migration modes require aux-ram-share=on.
->>>>>>>>>
->>>>>>>>> qapi/migration.json:
->>>>>>>>>           @cpr-transfer:
->>>>>>>>>                ...
->>>>>>>>>                Memory-backend objects must have the share=on attribute, but
->>>>>>>>>                memory-backend-epc is not supported.  The VM must be started
->>>>>>>>>                with the '-machine aux-ram-share=on' option.
->>>>>>>>>
->>>>>>>>> Define RAM_PRIVATE
->>>>>>>>>
->>>>>>>>> Define qemu_shm_alloc(), from David's tmp patch
->>>>>>>>>
->>>>>>>>> ram_backend_memory_alloc()
->>>>>>>>>           ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
->>>>>>>>>           memory_region_init_ram_flags_nomigrate(ram_flags)
->>>>>>>>>
->>>>>>>>> qemu_ram_alloc_internal()
->>>>>>>>>           ...
->>>>>>>>>           if (!host && !(ram_flags & RAM_PRIVATE) && current_machine->aux_ram_share)
->>>>>>>>>               new_block->flags |= RAM_SHARED;
->>>>>>>>>
->>>>>>>>>           if (!host && (new_block->flags & RAM_SHARED)) {
->>>>>>>>>               qemu_ram_alloc_shared(new_block);
->>>>>>>>>           } else
->>>>>>>>>               new_block->fd = -1;
->>>>>>>>>               new_block->host = host;
->>>>>>>>>           }
->>>>>>>>>           ram_block_add(new_block);
->>>>>>>>>
->>>>>>>>> qemu_ram_alloc_shared()
->>>>>>>>>           if qemu_memfd_check()
->>>>>>>>>               new_block->fd = qemu_memfd_create()
->>>>>>>>>           else
->>>>>>>>>               new_block->fd = qemu_shm_alloc()
->>>>>>>>
->>>>>>>> Yes, that way "memory-backend-ram,share=on" will just mean "give me the best shared memory for RAM to be shared with other processes, I don't care about the details", and it will work on Linux kernels even before we had memfds.
->>>>>>>>
->>>>>>>> memory-backend-ram should be available on all architectures, and under Windows. qemu_anon_ram_alloc() under Linux just does nothing special, not even bail out.
->>>>>>>>
->>>>>>>> MAP_SHARED|MAP_ANON was always weird, because it meant "give me memory I can share only with subprocesses", but then, *there are not subprocesses for QEMU*. I recall there was a trick to obtain the fd under Linux for these regions using /proc/self/fd/, but it's very Linux specific ...
->>>>>>>>
->>>>>>>> So nobody would *actually* use that shared memory and it was only a hack for RDMA. Now we can do better.
->>>>>>>>
->>>>>>>>
->>>>>>>> We'll have to decide if we simply fallback to qemu_anon_ram_alloc() if no shared memory can be created (unavailable), like we do on Windows.
->>>>>>>>
->>>>>>>> So maybe something like
->>>>>>>>
->>>>>>>> qemu_ram_alloc_shared()
->>>>>>>>          fd = -1;
->>>>>>>>
->>>>>>>>          if (qemu_memfd_avilable()) {
->>>>>>>>              fd = qemu_memfd_create();
->>>>>>>>              if (fd < 0)
->>>>>>>>                  ... error
->>>>>>>>          } else if (qemu_shm_available())
->>>>>>>>              fd = qemu_shm_alloc();
->>>>>>>>              if (fd < 0)
->>>>>>>>                  ... error
->>>>>>>>          } else {
->>>>>>>>              /*
->>>>>>>>               * Old behavior: try fd-less shared memory. We might
->>>>>>>>               * just end up with non-shared memory on Windows, but
->>>>>>>>               * nobody can make sure of this shared memory either way
->>>>>>>>               * ... should we just use non-shared memory? Or should
->>>>>>>>               * we simply bail out? But then, if there is no shared
->>>>>>>>               * memory nobody could possible use it.
->>>>>>>>               */
->>>>>>>>              qemu_anon_ram_alloc(share=true)
->>>>>>>>          }
->>>>>>>
->>>>>>> Good catch.  We need that fallback for backwards compatibility.  Even with
->>>>>>> no use case for memory-backend-ram,share=on since the demise of rdma, users
->>>>>>> may specify it on windows, for no particular reason, but it works, and should
->>>>>>> continue to work after this series.  CPR would be blocked.
->>>>>>
->>>>>> Yes, we should keep Windows working in the weird way it is working right now.
->>>>>>
->>>>>>     > > More generally for backwards compatibility for share=on for no particular reason,
->>>>>>> should we fallback if qemu_shm_alloc fails?  If /dev/shm is mounted with default
->>>>>>> options and more than half of ram is requested, it will fail, whereas current qemu
->>>>>>> succeeds using MAP_SHARED|MAP_ANON.
->>>>>>
->>>>>> Only on Linux without memfd, of course. Maybe we should just warn when qemu_shm_alloc() fails (and comment that we continue for compat reasons only) and fallback to the stupid qemu_anon_ram_alloc(share=true). We could implement a fallback to shmget() but ... let's not go down that path.
->>>>>>
->>>>>> But we should not fallback to qemu_shm_alloc()/MAP_SHARED|MAP_ANON if memfd is available and that allocating the memfd failed. Failing to allocate a memfd might highlight a bigger problem.
->>>>>
->>>>> Agreed on all.
->>>>>
->>>>> One more opinion from you please, if you will.
->>>>>
->>>>> RAM_PRIVATE is only checked in qemu_ram_alloc_internal, and only needs to be
->>>>> set in
->>>>>       ram_backend_memory_alloc -> ... -> qemu_ram_alloc_internal
->>>>>
->>>>> None of the other backends reach qemu_ram_alloc_internal.
->>>>>
->>>>> To be future proof, do you prefer I also set MAP_PRIVATE in the other backends,
->>>>> everywhere MAP_SHARED may be set, eg:
->>>>
->>>> Hm, I think then we should set RAM_PRIVATE really everywhere where we'd want it and relied on !RAM_SHARED doing the right thing.
->>>>
->>>> Alternatively, we make our life easier and do something like
->>>>
->>>> /*
->>>>     * This flag is only used while creating+allocating RAM, and
->>>>     * prevents RAM_SHARED getting set for anonymous RAM automatically in
->>>>     * some configurations.
->>>>     *
->>>>     * By default, not setting RAM_SHARED on anonymous RAM implies
->>>>     * "private anonymous RAM"; however, in some configuration we want to
->>>>     * have most of this RAM automatically be "sharable anonymous RAM",
->>>>     * except for some cases that really want "private anonymous RAM".
->>>>     *
->>>>     * This anonymous RAM *must* be private. This flag only applies to
->>>>     * "anonymous" RAM, not fd/file-backed/preallocated one.
->>>>     */
->>>> RAM_FORCE_ANON_PRIVATE    (1 << 13)
->>>>
->>>>
->>>> BUT maybe an even better alternative now that we have the "aux-ram-share" parameter, could we use
->>>>
->>>> /*
->>>>     * Auxiliary RAM that was created automatically internally, instead of
->>>>     * explicitly like using memory-backend-ram or some other device on the
->>>>     * QEMU cmdline.
->>>>     */
->>>> RAM_AUX    (1 << 13)
->>>>
->>>>
->>>> So it will be quite clear that "aux-ram-share" only applies to RAM_AUX RAMBlocks.
->>>>
->>>> That actually looks quite compelling to me :)
->>>
->>> Agreed, RAM_AUX is a clear solution.  I would set it in these functions:
->>>      qemu_ram_alloc_resizeable
->>>      memory_region_init_ram_nomigrate
->>>      memory_region_init_rom_nomigrate
->>>      memory_region_init_rom_device_nomigrate
->>>
->>> and test it with aux_ram_share in qemu_ram_alloc_internal.
->>>      if RAM_AUX && aux_ram_share
->>>        flags |= RAM_SHARED
->>>
->>> However, we could just set RAM_SHARED at those same call sites:
->>>      flags = current_machine->aux_ram_shared ?  RAM_SHARED : 0;
->>> which is what I did in
->>>      [PATCH V2 01/11] machine: alloc-anon option
->>> and test RAM_SHARED in qemu_ram_alloc_internal.
->>> No need for RAM_PRIVATE.
->>>
->>> RAM_AUX is nice because it declares intent more specifically.
->>>
->>> Your preference?
->>
->> My preference is either using RAM_AUX to flag AUX RAM, or the inverse, RAM_NON_AUX to flag non-aux RAM, such as from memory backends and likely ivshmem.c
->>
->> Peter still seems to prefer RAM_PRIVATE. So I guess it's up to you to decide ;)
+On 08.11.24 15:37, Philippe Mathieu-Daudé wrote:
+> Hi David,
 > 
-> I like the inverse flag RAM_NON_AUX, better name TBD.
-> The call sites are well defined.
-> That is what my V3 hack was testing (modulo ivshmem).
->      object_dynamic_cast(new_block->mr->parent_obj.parent, TYPE_MEMORY_BACKEND
+> On 25/10/24 11:41, David Hildenbrand wrote:
+>> We recently converted from the LegacyReset to the new reset framework
+>> in commit c009a311e939 ("virtio-mem: Use new Resettable framework instead
+>> of LegacyReset") to be able to use the ResetType to filter out wakeup
+>> resets.
+>>
+>> However, this change had an undesired implications: as we override the
+>> Resettable interface methods in VirtIOMEMClass, the reset handler will
+>> not only get called during system resets (i.e., qemu_devices_reset())
+>> but also during any direct or indirect device rests (e.g.,
+>> device_cold_reset()).
+>>
+>> Further, we might now receive two reset callbacks during
+>> qemu_devices_reset(), first when reset by a parent and later when reset
+>> directly.
+>>
+>> The memory state of virtio-mem devices is rather special: it's supposed to
+>> be persistent/unchanged during most resets (similar to resetting a hard
+>> disk will not destroy the data), unless actually cold-resetting the whole
+>> system (different to a hard disk where a reboot will not destroy the data):
+>> ripping out system RAM is something guest OSes don't particularly enjoy,
+>> but we want to detect when rebooting to an OS that does not support
+>> virtio-mem and wouldn't be able to detect+use the memory -- and we want
+>> to force-defragment hotplugged memory to also shrink the usable device
+>> memory region. So we rally want to catch system resets to do that.
+>>
+>> On supported targets (e.g., x86), getting a cold reset on the
+>> device/parent triggers is not that easy (but looks like PCI code
+>> might trigger it), so this implication went unnoticed.
+>>
+>> However, with upcoming s390x support it is problematic: during
+>> kdump, s390x triggers a subsystem reset, ending up in
+>> s390_machine_reset() and calling only subsystem_reset() instead of
+>> qemu_devices_reset() -- because it's not a full system reset.
+>>
+>> In subsystem_reset(), s390x performs a device_cold_reset() of any
+>> TYPE_VIRTUAL_CSS_BRIDGE device, which ends up resetting all children,
+>> including the virtio-mem device. Consequently, we wrongly detect a system
+>> reset and unplug all device memory, resulting in hotplugged memory not
+>> getting included in the crash dump -- undesired.
+>>
+>> We really must not mess with hotplugged memory state during simple
+>> device resets. To fix, create+register a new reset object that will only
+>> get triggered during qemu_devices_reset() calls, but not during any other
+>> resets as it is logically not the child of any other object.
+>>
+>> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+>> Cc: Juraj Marcin <jmarcin@redhat.com>
+>> Cc: Peter Maydell <peter.maydell@linaro.org>
+>> Signed-off-by: David Hildenbrand <david@redhat.com>
+>> ---
+>>    hw/virtio/virtio-mem.c         | 103 +++++++++++++++++++++++----------
+>>    include/hw/virtio/virtio-mem.h |  12 +++-
+>>    2 files changed, 83 insertions(+), 32 deletions(-)
+> 
+> 
+>> +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(VirtioMemSystemReset, virtio_mem_system_reset, VIRTIO_MEM_SYSTEM_RESET, OBJECT, { TYPE_RESETTABLE_INTERFACE }, { })
+> 
+> Please fix style when applying :)
 
-Likely AUX is everything that is "neither explicitly specified by the user nor
-very special RAM"
+The long line? I used hw/core/reset.c and hw/core/resetcontainer.c as 
+inspiration -- they surely can't be wrong ;)
 
-So I think hw/misc/ivshmem.c would also not count as "aux", and similarly
-hw/remote/memory.c; both use memory_region_init_ram_from_fd(share=on).
+> 
+>> diff --git a/include/hw/virtio/virtio-mem.h b/include/hw/virtio/virtio-mem.h
+>> index a1af144c28..abde1c4101 100644
+>> --- a/include/hw/virtio/virtio-mem.h
+>> +++ b/include/hw/virtio/virtio-mem.h
+> 
+> 
+>> +struct VirtioMemSystemReset {
+>> +    Object parent;
+> 
+> And add a newline here, thanks!
 
-memory_region_init_ram_ptr/memory_region_init_ram_device_ptr are similarly
-special: we cannot possibly turn them SHARED. But that's also what your code
-already handled.
-
-So maybe, really everything is AUX ram, except
-* Using memory_region_init_ram_from_fd()/
-   memory_region_init_ram_from_file() users.
-* Using memory_region_init_ram_ptr / memory_region_init_ram_device_ptr
-* Created via memory backends
-
-
-Note that hw/m68k/next-cube.c is one odd RAM_SHARED user. I don't know why
-it uses RAM_SHARED to get anonymous shared RAM. Likely a mistake when that
-code was introduced.
-
-CCing Thomas.
-
-commit 956a78118bfc7fa512b03cbe8a77b9384c6d89f4
-Author: Thomas Huth <huth@tuxfamily.org>
-Date:   Sat Jun 30 08:45:25 2018 +0200
-
-     m68k: Add NeXTcube machine
-     
-     It is still quite incomplete (no SCSI, no floppy emulation, no network,
-     etc.), but the firmware already shows up the debug monitor prompt in the
-     framebuffer display, so at least the very basics are already working.
-     
-     This code has been taken from Bryce Lanham's GSoC 2011 NeXT branch at
-     
-      https://github.com/blanham/qemu-NeXT/blob/next-cube/hw/next-cube.c
-     
-     and altered quite a bit to fit the latest interface and coding conventions
-     of the current QEMU.
+Make sense, thanks!
 
 
 -- 
