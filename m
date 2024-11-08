@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FF8BD5C0F2
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CFACD5C0F1
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:49:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9R9R-0003TD-En; Fri, 08 Nov 2024 10:43:57 -0500
+	id 1t9R9U-0003nm-9F; Fri, 08 Nov 2024 10:44:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R91-0002ju-KZ
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:43:31 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R9Q-0003QH-KR
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:43:56 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R8y-0005Ou-Ax
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:43:30 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-37d4b0943c7so1298793f8f.1
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:43:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R9O-0005W4-Ac
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:43:55 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-37d41894a32so1409257f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:43:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731080605; x=1731685405; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731080629; x=1731685429; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eC842Nuh9R0vJWP6nw94dy+XXPWkmXcFTwUalIOdql8=;
- b=u/qYz+0b70/OpBOeLNZVtF5uu97AxZBPFbM0NBurBqEtH0mOLcSBSz3vaZQYPmRild
- 1lnCB931y1LjoQtAAufaREhw4nxf4zy42tB9cSGj58RpX9bBS6+xHj9GGIIJK2uh2T9O
- kZgJBN2AS1ZNOwvFzF1XNdLK52sNq1RfEgs+Q8Zc96WS8OfUj/di69fCGdL4grd3mA8b
- gC8jhPdvUjOrPHyZzguV1jBtLYd/lpYFIFtTfNfL0tXzCuURlrf+h8rwWZspvCa2azy/
- M8f1i6u+3v1/ZNCfB+vja38lWiLutGJsSleft5ClcpoSDpaYG6+McyCijPArTWkScw9f
- IgFQ==
+ bh=VTS56iSsTBU0rbweaIFAqMPbX9U8Q5qblgHU5lae1Ms=;
+ b=mKgdf1yBY/ZAaVDuHpvdp8I9ZO4dH2QOHYsdLwlUBqQnqj1haFnIIdZoJsRoa+JjGA
+ PTOwIEWWp0+3odLAjDAzMb3mY0gfy2A8l4fa8ZvVYfKAowYAA+EXsRDOvjbgucz5v/nx
+ xFtcpFUpwbpKYGW0gF6X6ejkr3zIn18vOdA7OP5ZZ8sYgfVWPrHKHMoDjQjLuXU7fnpj
+ WS7WrKKpr6RYmEUyaqhMTZvN9RHM1W2fKCba+Nv4XqOdM6xWh+gUHBewGPAFt55q+m5g
+ Ou71BmLqwqwPSlAbpFzFYAuCrdQKF1gZPcvIBe+VXCS7UBDGM/RGxCDnXDkVa/G45fFS
+ dOew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731080605; x=1731685405;
+ d=1e100.net; s=20230601; t=1731080629; x=1731685429;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eC842Nuh9R0vJWP6nw94dy+XXPWkmXcFTwUalIOdql8=;
- b=XCtv4lcNyHXIWXLK/C6B9Y990My1Cqx7v5Ykxr1v1ppVmBC0eviOU+xfRwjVGR/9Qb
- 9GrZ1yRaFy2Cx28S6OzibLTJdhtjzIyntpVvtSsTerH3U8tyjOc7p52chB8OENmSOU8F
- 4w/bJ5vnreYZL3XmwDhuwNHH/5mkspgsmHibI7ooyhIynF1FkAA/HZf0yFdsPRgMPYaS
- mOSl29/diiFFaLql3cy+crrZyIVOvY6eyYJFjcxl8eiZVKJwRXJJ508BJCaMobjm/tIy
- i2tOihCVa6xE21uLBn8Z0hcYNGve3BXdQ0yIjc2hhYIko3VtLS6okv7J2y3BqCX2CdYk
- ebWA==
-X-Gm-Message-State: AOJu0YxOa1yrHBff6iWczaBcdrZHSqAibUrlVNcRwlEKlkrqOQ5MIxiE
- NVjj545O2DEujZOySMcL6IBAY2wtOhU+4b/4+KOeUVoDppXR/2n3KopyQ5V1y0KueKfRGBd1l0s
- H
-X-Google-Smtp-Source: AGHT+IGAElG22aKzSYKrj+eNfrCLffdIe/pfQfqbUp0syVG5L6v9ESVGO9YfefTQCqI0i+XERYA+/A==
-X-Received: by 2002:a05:6000:2588:b0:381:c8fe:20b1 with SMTP id
- ffacd0b85a97d-381f18855b8mr2960779f8f.42.1731080605051; 
- Fri, 08 Nov 2024 07:43:25 -0800 (PST)
+ bh=VTS56iSsTBU0rbweaIFAqMPbX9U8Q5qblgHU5lae1Ms=;
+ b=NaxLRXMgemigLNSekK5Okvt3y54XKemj7YDnq5abbf7SPM+vCC2ITJXp8JuHzqXusL
+ klRue//pyU9jjTdu8H7Pq6fP+pi+fYZOr4ccIkKMfa/GzKrDK/yX19sMgjjlaqun1jpG
+ DC651GldXuJgRx+828VVZbKvFfRyjFvRvgHTSTQdMny9UjKjZTk+m/J27ahmduWdnv+L
+ 9CxHR7SFmY0II9UfIXapDvnIJiycGnoDt1z5aEAsjxFwVQmzV4OKIH/RE4x+uTviHDBv
+ rMNIzFDh1zXHFGR+Lcgf4sk0Sr5LFhA13qpYB61sV1CGds4BUhoxf94tbm+pJO9RuLxD
+ M46Q==
+X-Gm-Message-State: AOJu0YwtA3LNGKQ6SOhZe39y20h4NRQs9xGI++A0d5kv9tojPxc6dE6D
+ JC2QzQwPF7vxHztzR5vsIH238AQHYlZ8cDNYsJA7qDi68BYNWVJ8Ku0a/W1eth3LTHowWmcPBrz
+ F
+X-Google-Smtp-Source: AGHT+IFPEx/7bYWHyFTs8RQSuTAEd3NlwToJF/KnnNzaIbLjCLyJebV7qM+E91J85CG0vX7r+ralOA==
+X-Received: by 2002:a5d:59a7:0:b0:37d:2d6f:3284 with SMTP id
+ ffacd0b85a97d-381f1a6ca9bmr2972049f8f.9.1731080629309; 
+ Fri, 08 Nov 2024 07:43:49 -0800 (PST)
 Received: from localhost.localdomain ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381eda0411csm5170510f8f.95.2024.11.08.07.43.24
+ ffacd0b85a97d-381ed970d10sm5176298f8f.20.2024.11.08.07.43.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 08 Nov 2024 07:43:24 -0800 (PST)
+ Fri, 08 Nov 2024 07:43:48 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Anton Johansson <anjo@rev.ng>
@@ -68,18 +68,18 @@ Cc: Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair@alistair23.me>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 01/17] hw/microblaze: Restrict MemoryRegionOps are
- implemented as 32-bit
-Date: Fri,  8 Nov 2024 15:43:01 +0000
-Message-ID: <20241108154317.12129-2-philmd@linaro.org>
+Subject: [PATCH v3 06/17] hw/timer/xilinx_timer: Make device endianness
+ configurable
+Date: Fri,  8 Nov 2024 15:43:06 +0000
+Message-ID: <20241108154317.12129-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241108154317.12129-1-philmd@linaro.org>
 References: <20241108154317.12129-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,80 +102,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All these MemoryRegionOps read() and write() handlers are
-implemented expecting 32-bit accesses. Clarify that setting
-.impl.min/max_access_size fields.
+Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair
+of DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
+Add the "little-endian" property to select the device
+endianness, defaulting to little endian.
+Set the proper endianness for each machine using the device.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20241105130431.22564-8-philmd@linaro.org>
 ---
- hw/char/xilinx_uartlite.c | 4 ++++
- hw/intc/xilinx_intc.c     | 4 ++++
- hw/net/xilinx_ethlite.c   | 4 ++++
- hw/timer/xilinx_timer.c   | 4 ++++
- 4 files changed, 16 insertions(+)
+ hw/microblaze/petalogix_ml605_mmu.c      |  1 +
+ hw/microblaze/petalogix_s3adsp1800_mmu.c |  1 +
+ hw/ppc/virtex_ml507.c                    |  1 +
+ hw/timer/xilinx_timer.c                  | 35 +++++++++++++++---------
+ 4 files changed, 25 insertions(+), 13 deletions(-)
 
-diff --git a/hw/char/xilinx_uartlite.c b/hw/char/xilinx_uartlite.c
-index f325084f8b..3022b3d8ef 100644
---- a/hw/char/xilinx_uartlite.c
-+++ b/hw/char/xilinx_uartlite.c
-@@ -170,6 +170,10 @@ static const MemoryRegionOps uart_ops = {
-     .read = uart_read,
-     .write = uart_write,
-     .endianness = DEVICE_NATIVE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-     .valid = {
-         .min_access_size = 1,
-         .max_access_size = 4
-diff --git a/hw/intc/xilinx_intc.c b/hw/intc/xilinx_intc.c
-index 6e5012e66e..8fb6b4f1a5 100644
---- a/hw/intc/xilinx_intc.c
-+++ b/hw/intc/xilinx_intc.c
-@@ -144,6 +144,10 @@ static const MemoryRegionOps pic_ops = {
-     .read = pic_read,
-     .write = pic_write,
-     .endianness = DEVICE_NATIVE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4
-diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-index bd81290808..e84b4cdd35 100644
---- a/hw/net/xilinx_ethlite.c
-+++ b/hw/net/xilinx_ethlite.c
-@@ -170,6 +170,10 @@ static const MemoryRegionOps eth_ops = {
-     .read = eth_read,
-     .write = eth_write,
-     .endianness = DEVICE_NATIVE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index 64e8cadbee..f4ec983fee 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -127,6 +127,7 @@ petalogix_ml605_init(MachineState *machine)
+ 
+     /* 2 timers at irq 2 @ 100 Mhz.  */
+     dev = qdev_new("xlnx.xps-timer");
++    qdev_prop_set_bit(dev, "little-endian", true);
+     qdev_prop_set_uint32(dev, "one-timer-only", 0);
+     qdev_prop_set_uint32(dev, "clock-frequency", 100 * 1000000);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index f02d343e29..10d9713150 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -114,6 +114,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+ 
+     /* 2 timers at irq 2 @ 62 Mhz.  */
+     dev = qdev_new("xlnx.xps-timer");
++    qdev_prop_set_bit(dev, "little-endian", !TARGET_BIG_ENDIAN);
+     qdev_prop_set_uint32(dev, "one-timer-only", 0);
+     qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+index f378e5c4a9..ea0b3a56fe 100644
+--- a/hw/ppc/virtex_ml507.c
++++ b/hw/ppc/virtex_ml507.c
+@@ -230,6 +230,7 @@ static void virtex_init(MachineState *machine)
+ 
+     /* 2 timers at irq 2 @ 62 Mhz.  */
+     dev = qdev_new("xlnx.xps-timer");
++    qdev_prop_set_bit(dev, "little-endian", false);
+     qdev_prop_set_uint32(dev, "one-timer-only", 0);
+     qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 diff --git a/hw/timer/xilinx_timer.c b/hw/timer/xilinx_timer.c
-index 32a9df69e0..383fc8b3c8 100644
+index c117bff225..5bfb7e3929 100644
 --- a/hw/timer/xilinx_timer.c
 +++ b/hw/timer/xilinx_timer.c
-@@ -193,6 +193,10 @@ static const MemoryRegionOps timer_ops = {
-     .read = timer_read,
-     .write = timer_write,
-     .endianness = DEVICE_NATIVE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4
+@@ -3,6 +3,9 @@
+  *
+  * Copyright (c) 2009 Edgar E. Iglesias.
+  *
++ * DS573: https://docs.amd.com/v/u/en-US/xps_timer
++ * LogiCORE IP XPS Timer/Counter (v1.02a)
++ *
+  * Permission is hereby granted, free of charge, to any person obtaining a copy
+  * of this software and associated documentation files (the "Software"), to deal
+  * in the Software without restriction, including without limitation the rights
+@@ -69,6 +72,7 @@ struct XpsTimerState
+ {
+     SysBusDevice parent_obj;
+ 
++    bool little_endian_model;
+     MemoryRegion mmio;
+     qemu_irq irq;
+     uint8_t one_timer_only;
+@@ -189,18 +193,21 @@ timer_write(void *opaque, hwaddr addr,
+     timer_update_irq(t);
+ }
+ 
+-static const MemoryRegionOps timer_ops = {
+-    .read = timer_read,
+-    .write = timer_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-    .impl = {
+-        .min_access_size = 4,
+-        .max_access_size = 4,
++static const MemoryRegionOps timer_ops[2] = {
++    [0 ... 1] = {
++        .read = timer_read,
++        .write = timer_write,
++        .impl = {
++            .min_access_size = 4,
++            .max_access_size = 4,
++        },
++        .valid = {
++            .min_access_size = 1,
++            .max_access_size = 4,
++        },
+     },
+-    .valid = {
+-        .min_access_size = 1,
+-        .max_access_size = 4
+-    }
++    [0].endianness = DEVICE_BIG_ENDIAN,
++    [1].endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+ static void timer_hit(void *opaque)
+@@ -233,8 +240,9 @@ static void xilinx_timer_realize(DeviceState *dev, Error **errp)
+         ptimer_transaction_commit(xt->ptimer);
+     }
+ 
+-    memory_region_init_io(&t->mmio, OBJECT(t), &timer_ops, t, "xlnx.xps-timer",
+-                          R_MAX * 4 * num_timers(t));
++    memory_region_init_io(&t->mmio, OBJECT(t),
++                          &timer_ops[t->little_endian_model], t,
++                          "xlnx.xps-timer", R_MAX * 4 * num_timers(t));
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &t->mmio);
+ }
+ 
+@@ -247,6 +255,7 @@ static void xilinx_timer_init(Object *obj)
+ }
+ 
+ static Property xilinx_timer_properties[] = {
++    DEFINE_PROP_BOOL("little-endian", XpsTimerState, little_endian_model, true),
+     DEFINE_PROP_UINT32("clock-frequency", XpsTimerState, freq_hz, 62 * 1000000),
+     DEFINE_PROP_UINT8("one-timer-only", XpsTimerState, one_timer_only, 0),
+     DEFINE_PROP_END_OF_LIST(),
 -- 
 2.45.2
 
