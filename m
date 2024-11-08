@@ -4,128 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB168D64085
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 19:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44EEFD64084
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 19:58:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9V6U-0004hv-S1; Fri, 08 Nov 2024 14:57:10 -0500
+	id 1t9V7F-0004w4-27; Fri, 08 Nov 2024 14:57:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1t9V6T-0004ha-ES
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 14:57:09 -0500
-Received: from esa9.hc2706-39.iphmx.com ([216.71.140.197])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1t9V7D-0004rQ-4j
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 14:57:55 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1t9V6Q-0006no-A8
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 14:57:09 -0500
-X-CSE-ConnectionGUID: w8o5dGUjRVqKa+2hhrySWw==
-X-CSE-MsgGUID: 7nY2lTSfQtqAWIlzNtLraw==
-X-IronPort-RemoteIP: 209.85.219.197
-X-IronPort-MID: 1225091
-X-IronPort-Reputation: None
-X-IronPort-Listener: OutgoingMail
-X-IronPort-SenderGroup: RELAY_GSUITE
-X-IronPort-MailFlowPolicy: $RELAYED
-IronPort-Data: A9a23:4dtePa1MJyoLdfs6mfbD5Zpwkn2cJEfYwER7XKvMYLTBsI5bpzUGz
- GZNWzvSa63bYmqjeNx0Ydy/9EtQvJeBzNIwQAY4qSg9HnlHl5H5CIXCJC8cHc8zwu4v7q5Dx
- 59DAjUVBJlsFhcwnj/0b/686yA6jfzVLlbFILasEjhrQgN5QzsWhxtmmuoo6qZlmtH8CA6W0
- T/Ii5S31GSNhXgtaAr414rZ8Ekz5a2q6GtC1rADTasjUGH2xiF94K03ePnZw0vQGuF8AuO8T
- uDf+7C1lkux1wstEN6sjoHgeUQMRLPIVSDW4paBc/H/6vTqjnVaPpcTbZLwW28O49m6t4kZJ
- OF2iHCFYVxB0psgOQgqe0Iw/ylWZcWq8VJcSJS1mZX7I0buKhMAzxjyZa2f0EJxFutfWAlzG
- fIkxD8lcUCE2u6Z/bCBdPBPj4d5LMnxLbggpSQ1pd3ZJa5OrZHrRqzL4ZpJ1m51iJkfQrDRY
- M0WbTcpZxPFC/FNEg1PWdRuwaHy3yi5KmwHwL6WjfNfD2z7xQhh1rT3GNDIPNGGWK25m27B/
- DibpzWgav0cHIOZ+GCBzkmiv/PWtBzaXJA0CJmi/+E/1TV/wURWUnX6T2CTuPS8lwuyVsxSL
- 2QS/Swhq7V081akJuQRRDW9qX+A+w8WAp9eSrxlrg6KzaXQ7kCSAW1soiN9VeHKffQeHVQCv
- mJlVfuzbdCzmNV5kU6gy4o=
-IronPort-HdrOrdr: A9a23:M5jRUK7UU9/da3wVsAPXwB7XdLJyesId70hD6qm+c20zTiW9rb
- HSoB17726PtN91YhsdcL+7Scu9qB/nhPtICMwqTMuftWrdyRCVxeNZnPLfKlTbckWUh41gPO
- VbAtBD4bXLbWSS5vyKhjVQfexQpOWvweSDqd2b4U1QbTxHXYld0iYRMHflLqS0fmV77FgCea
- Z0KvAom9NoQxt3UviG
-X-Talos-CUID: 9a23:whcYCGO0xlNyy+5DR3lgqUI7J8IfTGT+xTSKI0+iGF1WV+jA
-X-Talos-MUID: =?us-ascii?q?9a23=3A8EhmbA3fx+1hK1sPuh9cBXOPWzUjvKKfUkQxqps?=
- =?us-ascii?q?/p9CtCg10KRGBqC6+Xdpy?=
-Received: from mail-yb1-f197.google.com ([209.85.219.197])
- by ob1.hc2706-39.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 08 Nov 2024 14:56:59 -0500
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-e292dbfd834so4325415276.3
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 11:56:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bu.edu; s=s1gsbu; t=1731095819; x=1731700619; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=0chQvMThWyaxeCith/prFLKev4AC3C8GIs9Ma8pG/UY=;
- b=eAnpHb14z6QUQHv7zKrKjvRnwU6hyPr9UR38dN12NXkwGNWtn4YhBXXysJNptXnp5R
- gTtTw3fpOrFl/uDAcyVu/Mb3yFC4BnDELd32J0OZLmJwJPgwAYbjgTXbMrHyt3kF0tr0
- w8GjpRwD8G147TVCRPLS54NVkXzZ+bRMPQOIiPf2JqBcb6GUT8eRUyVk6RCv6L6k5FUP
- rttbq7HuLb5iCvV8gvKgScKptCwr9Nvg9khLZfxUNPj38iUuAKK/3E671wSbvZU0c4up
- s0Wc9cpNB833FeHdKoMx2flh8JGFVsBvDm9A4KVbt3pLx3FgQUehOmDJJl0jRklaLUOB
- 0Zdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731095819; x=1731700619;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0chQvMThWyaxeCith/prFLKev4AC3C8GIs9Ma8pG/UY=;
- b=eb+prgKwXt3LP9KSIiKFbGZA4L7tYgjNCj0TaOhW6723C8t+hT5RkxcnYEaQDWOeRA
- UsjwkdzaM6jsY9g57Z6spds1obk9Je7q9gjYJnzLQJvcoRgRMg4/ZLTsIaPtxdIkkE8n
- cENcYCXOJvuTWh46goS1yn0t1qn6zNi675e37Wt3wOdYUy5ufHnFIvqPVxYREUXZj71J
- yPxIdG77qednwGc8bT+Qy4XQDo7t3RzZn7niq1daTRti7h8K+71dDWocxH8njKbJJuGv
- KZ5n8XYgOYZzP/qeiahCOueDhXywVTST24qCIPxnDT+0Eb4GzM7DqKASi2Xb5gDgsNi9
- KnRQ==
-X-Gm-Message-State: AOJu0Yy712gsjlEDvR2FSI3g2h6MhcslBU7Si4MFEtBaHPW8fFMS/lEW
- nGQhg3R20ZK0VXTulCiJt7qfohhKoaYhsZyKMiu/ea67vTb2VGRUbmmN4Arjh+0Ed89EsSlk8DD
- 5fKaX2YRudEsn4UcXsndh1wXyPScxREKIKqYYcXIF/rCW4DpHCDRr2Ov2MNqkIQC1kndBRMXyGQ
- lA
-X-Received: by 2002:a05:6902:150b:b0:e22:6a94:f22f with SMTP id
- 3f1490d57ef6-e337f8815bfmr5030151276.28.1731095819129; 
- Fri, 08 Nov 2024 11:56:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGCo+4zgW+ssKLTH38u75C9ow4lM6M0YBi83Dq6SpEtF5kWJwSSNcQEy9ZbytIPmjo0azAEMQ==
-X-Received: by 2002:a05:6902:150b:b0:e22:6a94:f22f with SMTP id
- 3f1490d57ef6-e337f8815bfmr5030128276.28.1731095818798; 
- Fri, 08 Nov 2024 11:56:58 -0800 (PST)
-Received: from bos-mail01.vrmnet (pool-173-48-150-109.bstnma.fios.verizon.net.
- [173.48.150.109]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-462ff3eca49sm23841961cf.6.2024.11.08.11.56.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 11:56:58 -0800 (PST)
-Date: Fri, 8 Nov 2024 14:56:53 -0500
-From: Alexander Bulekov <alxndr@bu.edu>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, 
- Philippe Mathieu-Daud?? <philmd@linaro.org>,
- Mauro Matteo Cascella <mcascell@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Bandan Das <bsd@redhat.com>, 
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Darren Kenny <darren.kenny@oracle.com>, 
- Bin Meng <bin.meng@windriver.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- "Daniel P . Berrang??" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Jon Maloy <jmaloy@redhat.com>, Siqi Chen <coc.cyqh@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>, Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH v10 0/8] memory: prevent dma-reentracy issues
-Message-ID: <jsmj5q7adyvvkuvspny4xxvfczdsrxfbjqt4irattz3gfrrhfh@bmpvza45wkze>
-References: <20230427211013.2994127-1-alxndr@bu.edu>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1t9V7A-0006py-FS
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 14:57:54 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 6C9A54E6013;
+ Fri, 08 Nov 2024 20:57:47 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id XoMPdrUEkpi0; Fri,  8 Nov 2024 20:57:45 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 72FCD4E6001; Fri, 08 Nov 2024 20:57:45 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 70E1D746F60;
+ Fri, 08 Nov 2024 20:57:45 +0100 (CET)
+Date: Fri, 8 Nov 2024 20:57:45 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Thomas Huth <th.huth@posteo.de>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, peter.maydell@linaro.org, 
+ huth@tuxfamily.org, berrange@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 1/2] next-kbd: convert to use
+ qemu_input_handler_register()
+In-Reply-To: <38fe1add-39d8-424d-b504-e6b5b11ef281@linaro.org>
+Message-ID: <5b599570-e1ac-ebb6-868e-2474f7534472@eik.bme.hu>
+References: <20241106120928.242443-1-mark.cave-ayland@ilande.co.uk>
+ <20241106120928.242443-2-mark.cave-ayland@ilande.co.uk>
+ <4c127d3c-3610-e6b7-9358-3d88d28477a0@eik.bme.hu>
+ <13995544-2d94-4b35-a7c2-f11e0599170f@linaro.org>
+ <872fd077-b870-f910-88a5-a045787aa681@eik.bme.hu>
+ <c3b996b4-d128-4830-94d4-5c9448ca003d@posteo.de>
+ <5c992398-718d-9445-7122-053c8169bb5b@eik.bme.hu>
+ <38fe1add-39d8-424d-b504-e6b5b11ef281@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230427211013.2994127-1-alxndr@bu.edu>
-X-CES-GSUITE_AUTH: bf3aNvsZpxl8
-Received-SPF: pass client-ip=216.71.140.197; envelope-from=alxndr@bu.edu;
- helo=esa9.hc2706-39.iphmx.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
+Content-Type: multipart/mixed;
+ boundary="3866299591-1771636295-1731095865=:2739"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.781,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,41 +75,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 230427 1710, Alexander Bulekov wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-<snip>
-> These patches aim to solve two types of DMA-reentrancy issues:
-> 
-> 1.) mmio -> dma -> mmio case
-> To solve this, we track whether the device is engaged in io by
-> checking/setting a reentrancy-guard within APIs used for MMIO access.
-> 
-> 2.) bh -> dma write -> mmio case
-> This case is trickier, since we dont have a generic way to associate a
-> bh with the underlying Device/DeviceState. Thus, this version allows a
-> device to associate a reentrancy-guard with a bh, when creating it.
-> (Instead of calling qemu_bh_new, you call qemu_bh_new_guarded)
-<snip>
+--3866299591-1771636295-1731095865=:2739
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Later on there was also a guard added by Akihiko Odaki for
-network-backends.
-7d0fefdf81f: net: Provide MemReentrancyGuard * to qemu_new_nic()
+On Fri, 8 Nov 2024, Philippe Mathieu-Daudé wrote:
+> On 8/11/24 13:13, BALATON Zoltan wrote:
+>> On Fri, 8 Nov 2024, Thomas Huth wrote:
+>>> On 06/11/2024 21.32, BALATON Zoltan wrote:
+>>>> On Wed, 6 Nov 2024, Philippe Mathieu-Daudé wrote:
+>>>>> On 6/11/24 13:00, BALATON Zoltan wrote:
+>>>>>> On Wed, 6 Nov 2024, Mark Cave-Ayland wrote:
+>>>>>>> Convert the next-kbd device from the legacy UI 
+>>>>>>> qemu_add_kbd_event_handler()
+>>>>>>> function to use qemu_input_handler_register().
+>>>>>>> 
+>>>>>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>>>>>> Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+>>>>>>> ---
+>>>>>>> hw/m68k/next-kbd.c | 163 ++++++++++++++++++++++++++++++---------------
+>>>>>>> 1 file changed, 108 insertions(+), 55 deletions(-)
+>>>>> 
+>>>>> 
+>>>>>>> -static const unsigned char next_keycodes[128] = {
+>>>>>>> -    0x00, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x50, 0x4F,
+>>>>>>> -    0x4E, 0x1E, 0x1F, 0x20, 0x1D, 0x1C, 0x1B, 0x00,
+>>>>>>> -    0x42, 0x43, 0x44, 0x45, 0x48, 0x47, 0x46, 0x06,
+>>>>>>> -    0x07, 0x08, 0x00, 0x00, 0x2A, 0x00, 0x39, 0x3A,
+>>>>>>> -    0x3B, 0x3C, 0x3D, 0x40, 0x3F, 0x3E, 0x2D, 0x2C,
+>>>>>>> -    0x2B, 0x26, 0x00, 0x00, 0x31, 0x32, 0x33, 0x34,
+>>>>>>> -    0x35, 0x37, 0x36, 0x2e, 0x2f, 0x30, 0x00, 0x00,
+>>>>>>> -    0x00, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+>>>>>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+>>>>>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+>>>>>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+>>>>>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+>>>>>>> +#define NEXTKBD_NO_KEY 0xff
+>>>>>> 
+>>>>>> Now you don't need this 0xff define any more because you can use 0 as 
+>>>>>> no key value then the [0 ... Q_KEY_CODE__MAX] init below can also be 
+>>>>>> dropped because static variables are 0 init automatically.
+>>>>> 
+>>>>> Whether 0 or 0xff is best for NO_KEY, I don't know.
+>>>>> However, definitions are useful when reviewing ...
+>>>>> 
+>>>>>> 
+>>>>>> Regards,
+>>>>>> BALATON Zoltan
+>>>>>> 
+>>>>>>> +static const int qcode_to_nextkbd_keycode[] = {
+>>>>>>> +    /* Make sure future additions are automatically set to 
+>>>>>>> NEXTKBD_NO_KEY */
+>>>>>>> +    [0 ... Q_KEY_CODE__MAX]    = NEXTKBD_NO_KEY,
+>>>>>>> +
+>>>>>>> +    [Q_KEY_CODE_ESC]           = 0x49,
+>>>>>>> +    [Q_KEY_CODE_1]             = 0x4a,
+>>>>>>> +    [Q_KEY_CODE_2]             = 0x4b,
+>>>>>>> +    [Q_KEY_CODE_3]             = 0x4c,
+>>>>>>> +    [Q_KEY_CODE_4]             = 0x4d,
+>>>>> [...]
+>>>>> 
+>>>>>>> +static void nextkbd_event(DeviceState *dev, QemuConsole *src, 
+>>>>>>> InputEvent *evt)
+>>>>>>> +{
+>>>>>>> +    NextKBDState *s = NEXTKBD(dev);
+>>>>>>> +    int qcode, keycode;
+>>>>>>> +    bool key_down = evt->u.key.data->down;
+>>>>>>> +
+>>>>>>> +    qcode = qemu_input_key_value_to_qcode(evt->u.key.data->key);
+>>>>>>> +    if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
+>>>>>>> +        return;
+>>>>>>> +    }
+>>>>>>> +
+>>>>>>> +    /* Shift key currently has no keycode, so handle separately */
+>>>>>>> +    if (qcode == Q_KEY_CODE_SHIFT) {
+>>>>>>> +        if (key_down) {
+>>>>>>> +            s->shift |= KD_LSHIFT;
+>>>>>>> +        } else {
+>>>>>>> +            s->shift &= ~KD_LSHIFT;
+>>>>>>> +        }
+>>>>>>> +    }
+>>>>>>> +
+>>>>>>> +    if (qcode == Q_KEY_CODE_SHIFT_R) {
+>>>>>>> +        if (key_down) {
+>>>>>>> +            s->shift |= KD_RSHIFT;
+>>>>>>> +        } else {
+>>>>>>> +            s->shift &= ~KD_RSHIFT;
+>>>>>>> +        }
+>>>>>>> +    }
+>>>>>>> +
+>>>>>>> +    keycode = qcode_to_nextkbd_keycode[qcode];
+>>>>>>> +    if (keycode == NEXTKBD_NO_KEY) {
+>>>>> 
+>>>>> ... here ^
+>>>> 
+>>>> I this case !keycode is pretty self explanatory IMO.
+>>> 
+>>> Ok, I'll pick up the patch with this change added on top:
+>>> 
+>>> diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
+>>> --- a/hw/m68k/next-kbd.c
+>>> +++ b/hw/m68k/next-kbd.c
+>>> @@ -165,12 +165,7 @@ static const MemoryRegionOps kbd_ops = {
+>>>     .endianness = DEVICE_NATIVE_ENDIAN,
+>>> };
+>>> -#define NEXTKBD_NO_KEY 0xff
+>>> -
+>>> static const int qcode_to_nextkbd_keycode[] = {
+>>> -    /* Make sure future additions are automatically set to NEXTKBD_NO_KEY 
+>>> */
+>>> -    [0 ... Q_KEY_CODE__MAX]    = NEXTKBD_NO_KEY,
+>> 
+>> Thinking about it more, removing this may make the array smaller so we'd 
+>> either need some max value define (or get it something like 
+>> qcode_to_nextkbd_keycode[ARRAY_SIZE(qcode_to_nextkbd_keycode) - 1] or so) 
+>> and check if qcode is not > than that or declare the array as 
+>> [Q_KEY_CODE__MAX] to make sure we're not trying to access values after the 
+>> end.  Maybe it's simplest to do qcode_to_nextkbd_keycode[Q_KEY_CODE__MAX] 
+>> as this is not much wasted space, unless this can't overflow for some other 
+>> reason I don't know about.
+>
+> Agreed, qcode_to_nextkbd_keycode[Q_KEY_CODE__MAX] is future-proof.
 
-Recently a talk came out about re-entrancy bugs in qemu
-(unfortuantely I could not find a non-video version of the slides):
-https://www.youtube.com/watch?v=wL3LK9Dp4os
+Actually there's already a check for array size where it's used but I've 
+only noticed that after writing this so it should be OK without enlarging 
+the array.
 
-The talk gives an overview of these bugs and also demonstrates how they
-can be used for VM escapes. It lists the following vectors:
- 1. MMIO
- 2. Bottom-Halves
- 3. Netqueues
- 4. IOEventfd
- 5. Timers
-
-The first three should be covered by the current defenses. However,
-afaik IOEventfds and Timers are still unprotected. The talk demonstates
-an attack via IOEventFd, but not one with timers. In any case, it might
-make sense to revist the guard to ensure that we are covering all types
-of code that perform DMA.
+Regards,
+BALATON Zoltan
+--3866299591-1771636295-1731095865=:2739--
 
