@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98307D64073
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:39:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4100D64072
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9SwZ-0003th-6D; Fri, 08 Nov 2024 12:38:47 -0500
+	id 1t9SwR-0003cb-KJ; Fri, 08 Nov 2024 12:38:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t9SwX-0003rL-MO
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:45 -0500
+ id 1t9SwP-0003az-25
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t9SwW-0007aS-6o
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:45 -0500
+ id 1t9SwM-0007ZL-Pu
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731087523;
+ s=mimecast20190719; t=1731087513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OOuaO0FdvnRx8m0yCTGELCVtD8jtIom4riAwRaaG5gI=;
- b=b0MQtUWJ/0ftQAFeou7C0wPU1GWoaNv+dAlE70JBuPKIqaQsvaAPvZqFccb6Qd3850mu67
- 3eXLCeK2/aqnrfLbl7aKxOlEo3kqZKk7juegqeWfVLfN8MxhTmH/BfRc0Cwiu5bmsXnlI9
- PIMWQQxZsb5775kAwzSwAX9KQYzsDk4=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=HRQlLEKuUjdRqZQeOMskkxAI/jdXKEPQv2oog1DAxk4=;
+ b=ZF2/UzcAw1uapfzkJKMhfQI730XZZrtE8GNFA6B72YoAm3sqL8hyH0N3sikI1i1U6Pjk9j
+ 3J7WZOyuTCjv3NNPBD6arbLr0QN+k4w+F2aXf2WH067aB0ooY9H0YOvRjoDCRYumdWZTZI
+ yNSM3G7R7lTYNzTSPgfcmdnwoPQEXp4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-127-oR9gy0dnMOyUxBW2a7O00w-1; Fri, 08 Nov 2024 12:38:42 -0500
-X-MC-Unique: oR9gy0dnMOyUxBW2a7O00w-1
-X-Mimecast-MFC-AGG-ID: oR9gy0dnMOyUxBW2a7O00w
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-539e13b8143so2979650e87.0
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:38:42 -0800 (PST)
+ us-mta-639-CoAulT4DOACgrYycv0arwA-1; Fri, 08 Nov 2024 12:38:31 -0500
+X-MC-Unique: CoAulT4DOACgrYycv0arwA-1
+X-Mimecast-MFC-AGG-ID: CoAulT4DOACgrYycv0arwA
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-431ad45828aso16426505e9.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:38:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731087520; x=1731692320;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OOuaO0FdvnRx8m0yCTGELCVtD8jtIom4riAwRaaG5gI=;
- b=gfWcpeSA9hOMJNplXUgjWuBSI4fm5hA3N9/7Noi8JdwIAe43OlyqQDlg+vzSYkzvci
- 6vbYVbwWzkZ/mryigJdJ0bbJ139dmVbfW6DN+Uum3ruRFGiaolJD1xFiMub9l4dEmg9/
- QdZaaBLwf2vNpGFoWM/k1x4q2xEzEPBvqdVHrgM5x3kVTIT07WcDfpLnbePiMMA6N7Ka
- 2//3yce4WWb046fU/s6pG60hDGSoxYGpbNiSz0J22y7GpkKILvpsMDPbleCKQ+6qd991
- ZipQyvOQ5KsICN8JrC2jA+5t10KpAq5eJ9bYZ/aJ8Gyp/zVwUqUD7SJDmoGjS2hzVKzu
- JkdQ==
-X-Gm-Message-State: AOJu0YwvXBzOzRoa9pHWAvdWIllTWtkQASBoN2Oe4uvRGmOiBZNZMvEK
- izMRJ1Vdflxjax6pmqveNFjZvOj2mRi+ZbUaZ0xdqtk2T5SxMAG18Z6PUAS+lepD3JUOMRFLszr
- AnHZ75CFSb+RmSzsD36Rc7nqFRCDSz5px/P9z5ZiUHWyAaeAY0sht27jMBml53/Pf0tunUl/bsD
- IqaJR3Mf5UiLMOWOhOErOqKZAo7pie6r9gFCXGY6c=
-X-Received: by 2002:a05:6512:3f11:b0:539:ec87:bc7f with SMTP id
- 2adb3069b0e04-53d86231c05mr2301740e87.19.1731087520101; 
- Fri, 08 Nov 2024 09:38:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEURCbPWZePcBUxBqf+BhJAXgcO4dIpMQe7YfMvJTTFIa9Fkc6VU4CzzjhFrfmbltHyPivQ2g==
-X-Received: by 2002:a05:6512:3f11:b0:539:ec87:bc7f with SMTP id
- 2adb3069b0e04-53d86231c05mr2301721e87.19.1731087519625; 
- Fri, 08 Nov 2024 09:38:39 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731087510; x=1731692310;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HRQlLEKuUjdRqZQeOMskkxAI/jdXKEPQv2oog1DAxk4=;
+ b=VrRkYaVJAaMV+w7fj1iPYZ+PlQCqqBVvEgRxXCDGw2Ff5o0xuUNYCZ0jsyPCmFWoSj
+ h0M31SRrNSNvXfw3IZ/Bk6k6qN7uV4fi/TWFid7RnGt9h6nCKBY7qkAAPchABf7H+Ht0
+ /8XIysMtjRR8Tb2R+8I5KXFwgGgpGSlJXOOj5aLrBGByMCSgeNZLEvKRJ4lxKBO720bS
+ 2TbucKBqFHoSJQ6naty33QtvJu7AqFU+kKR9RC20k8GJ4YRXrtX1CexIIfEPq33hhlKK
+ pxrCDuZNsJA69mqTt0Mkd+M9z3eEig6H23lAn6ri6wf1GJ2hAb9kEnOXNCW0/hlrvyw0
+ ocPQ==
+X-Gm-Message-State: AOJu0YySUoFN3IlDbDQdgf7jlwSY86ndYunJ1Bc3+WEICeogZkbuW055
+ E4+Hi45AnFcU0yAxqZ//DxzSQ8INyhapK3HEuK/9NobZDBF1wdax6oKI9x1ZaHySNSfWL0TjFn7
+ 2jKDMc6Zcy8oFEkis/q8N8RSFb9sT1yOuKc5RjHt7+IOZdodL4dww8v7F72GGk/d0fU3G4H1gXC
+ ce+ToSk5Zw6v8WL2gAny1vw2q1mK02lw313Z3BkOI=
+X-Received: by 2002:a05:600c:4e8b:b0:431:44f6:566f with SMTP id
+ 5b1f17b1804b1-432b7501d2bmr32193285e9.13.1731087510329; 
+ Fri, 08 Nov 2024 09:38:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGEVk8s8yAyZbaWLjWrX71eAYu/c7IcfPeUNALqEO+JpqvE8rTudrNifKVYSzA3muT+rr8ofg==
+X-Received: by 2002:a05:600c:4e8b:b0:431:44f6:566f with SMTP id
+ 5b1f17b1804b1-432b7501d2bmr32193045e9.13.1731087509724; 
+ Fri, 08 Nov 2024 09:38:29 -0800 (PST)
 Received: from [192.168.10.47] ([151.49.84.243])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432b05c1f56sm75960955e9.34.2024.11.08.09.38.38
+ 5b1f17b1804b1-432b053ff08sm79183555e9.10.2024.11.08.09.38.29
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 09:38:38 -0800 (PST)
+ Fri, 08 Nov 2024 09:38:29 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Subject: [PULL 05/13] eif: cope with huge section offsets
-Date: Fri,  8 Nov 2024 18:38:20 +0100
-Message-ID: <20241108173828.111454-6-pbonzini@redhat.com>
+Subject: [PULL 00/13] (Almost entirely) bugfix changes for QEMU 9.2 hard freeze
+Date: Fri,  8 Nov 2024 18:38:15 +0100
+Message-ID: <20241108173828.111454-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241108173828.111454-1-pbonzini@redhat.com>
-References: <20241108173828.111454-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,45 +100,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check for overflow to avoid that fseek() receives a sign-extended value.
+The following changes since commit a1dacb66915eb7d08a0596cc97068a37c39930d3:
 
-Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/qemu/osdep.h | 4 ++++
- hw/core/eif.c        | 4 ++++
- 2 files changed, 8 insertions(+)
+  Merge tag 'for-upstream-rust' of https://gitlab.com/bonzini/qemu into staging (2024-11-06 21:27:47 +0000)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index fe7c3c5f673..fdff07fd992 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -297,6 +297,10 @@ void QEMU_ERROR("code path is reachable")
- #error building with G_DISABLE_ASSERT is not supported
- #endif
- 
-+#ifndef OFF_MAX
-+#define OFF_MAX (sizeof (off_t) == 8 ? INT64_MAX : INT32_MAX)
-+#endif
-+
- #ifndef O_LARGEFILE
- #define O_LARGEFILE 0
- #endif
-diff --git a/hw/core/eif.c b/hw/core/eif.c
-index 7f3b2edc9a7..61329aacfe1 100644
---- a/hw/core/eif.c
-+++ b/hw/core/eif.c
-@@ -466,6 +466,10 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
-         EifSectionHeader hdr;
-         uint16_t section_type;
- 
-+        if (eif_header.section_offsets[i] > OFF_MAX) {
-+            error_setg(errp, "Invalid EIF image. Section offset out of bounds");
-+            goto cleanup;
-+        }
-         if (fseek(f, eif_header.section_offsets[i], SEEK_SET) != 0) {
-             error_setg_errno(errp, errno, "Failed to offset to %" PRIu64 " in EIF file",
-                              eif_header.section_offsets[i]);
+are available in the Git repository at:
+
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to 37d729ee75fd035b1a8995b51b4e0d182c909c0b:
+
+  hw/i386/pc: Don't try to init PCI NICs if there is no PCI bus (2024-11-08 09:24:52 +0100)
+
+----------------------------------------------------------------
+* i386: fix -M isapc with ubsan
+* i386: add sha512, sm3, sm4 feature bits
+* eif: fix Coverity issues
+* i386/hvf: x2APIC support
+* i386/hvf: fixes
+* i386/tcg: fix 2-stage page walk
+* eif: fix coverity issues
+* rust: fix subproject warnings with new rust, avoid useless cmake fallback
+----------------------------------------------------------------
+
+The x2APIC support is not a bugfix, but it's small and it was posted well in
+advance of soft freeze.
+
+Paolo
+
+Alexander Graf (1):
+      target/i386: Fix legacy page table walk
+
+Paolo Bonzini (5):
+      target/i386: add sha512, sm3, sm4 feature bits
+      rust: add meson_version to all subprojects
+      eif: cope with huge section offsets
+      eif: cope with huge section sizes
+      rust: qemu-api-macros: always process subprojects before dependencies
+
+Peter Maydell (1):
+      hw/i386/pc: Don't try to init PCI NICs if there is no PCI bus
+
+Phil Dennis-Jordan (5):
+      i386/hvf: Integrates x2APIC support with hvf accel
+      i386/hvf: Fix for UB in handling CPUID function 0xD
+      i386/hvf: Fixes startup memory leak (vmcs caps)
+      i386/hvf: Raise exception on error setting APICBASE
+      i386/hvf: Removes duplicate/shadowed variables in hvf_vcpu_exec
+
+Pierrick Bouvier (1):
+      target/i386/hvf: fix clang compilation warning
+
+ include/qemu/osdep.h                               |  4 ++
+ target/i386/cpu.h                                  |  1 +
+ hw/core/eif.c                                      | 52 +++++++++++++++++++---
+ hw/i386/pc.c                                       |  4 +-
+ target/i386/cpu.c                                  |  2 +-
+ target/i386/hvf/hvf.c                              |  7 ++-
+ target/i386/hvf/x86_cpuid.c                        |  8 ++--
+ target/i386/hvf/x86_emu.c                          | 42 ++++++++++++++++-
+ target/i386/tcg/seg_helper.c                       |  2 +-
+ target/i386/tcg/sysemu/excp_helper.c               |  2 +-
+ rust/qemu-api-macros/meson.build                   |  4 ++
+ .../packagefiles/arbitrary-int-1-rs/meson.build    |  1 +
+ subprojects/packagefiles/bilge-0.2-rs/meson.build  |  1 +
+ .../packagefiles/bilge-impl-0.2-rs/meson.build     |  1 +
+ subprojects/packagefiles/either-1-rs/meson.build   |  1 +
+ .../packagefiles/itertools-0.11-rs/meson.build     |  1 +
+ .../packagefiles/proc-macro-error-1-rs/meson.build |  1 +
+ .../proc-macro-error-attr-1-rs/meson.build         |  1 +
+ .../packagefiles/proc-macro2-1-rs/meson.build      |  1 +
+ subprojects/packagefiles/quote-1-rs/meson.build    |  1 +
+ subprojects/packagefiles/syn-2-rs/meson.build      |  1 +
+ .../packagefiles/unicode-ident-1-rs/meson.build    |  1 +
+ 22 files changed, 118 insertions(+), 21 deletions(-)
 -- 
 2.47.0
 
