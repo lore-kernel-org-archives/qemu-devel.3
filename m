@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 792AED64070
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D3AFD64073
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:40:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9Swi-00043a-OT; Fri, 08 Nov 2024 12:38:56 -0500
+	id 1t9Swe-00040C-4p; Fri, 08 Nov 2024 12:38:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t9Swg-00042X-BV
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:54 -0500
+ id 1t9Swc-0003zF-DM
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t9Swe-0007e0-JB
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:53 -0500
+ id 1t9Swa-0007au-K1
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731087531;
+ s=mimecast20190719; t=1731087525;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3GXeQjTNaAPfh0xkQIuz07mE5z10C7JXikWrLJP9TQA=;
- b=Q/9p/L97xoFshEaCSrfO4ALKHkGgyeLcoiLoBMIUfPW6atlz/vb6Cz3Rq8lTFanVU0IEN3
- u0ovhaJJb0iga8Z4f7JQpcFBUiL2vXfxou5EyhYO/1QOkISytoUvbm0OhVHY82Yy884lFK
- TBSDPV5kBJZq+HNOOUyCsD61a3bNxKc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lupvEcmnHg1GtHFHOuqV3Po9cXi+wkOo2DQJpTtu0xI=;
+ b=IYgH2R+07600fnauoVqoE6QP3bAJyhc+2qxuxCQQ2/yJuPjmmObHbRIgWjldthp41Y7dbQ
+ iky3x6Sz2D6BNzjr2lTbkUhkaUqjA16E5Dz94ucmdkOR3+TVfiBf8xtHehxgs6xl2WcEjc
+ 070UAsydb5LWhfd5lj3OBvrY7edQnpg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-zQWRrsupPve4QVJTf6FJFg-1; Fri, 08 Nov 2024 12:38:50 -0500
-X-MC-Unique: zQWRrsupPve4QVJTf6FJFg-1
-X-Mimecast-MFC-AGG-ID: zQWRrsupPve4QVJTf6FJFg
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43163a40ee0so16536875e9.0
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:38:50 -0800 (PST)
+ us-mta-279-8xmObHcCNx-OTh9CQhgHBg-1; Fri, 08 Nov 2024 12:38:44 -0500
+X-MC-Unique: 8xmObHcCNx-OTh9CQhgHBg-1
+X-Mimecast-MFC-AGG-ID: 8xmObHcCNx-OTh9CQhgHBg
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4316e350d6aso16728265e9.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:38:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731087528; x=1731692328;
+ d=1e100.net; s=20230601; t=1731087522; x=1731692322;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3GXeQjTNaAPfh0xkQIuz07mE5z10C7JXikWrLJP9TQA=;
- b=bNafdDMPXzm2LNjjiljRa+FrBBOOdqPNw0CYV8Tuwu8kMhuyvTeAPDBmSw+P1bmkIH
- iLiymJCMCeODO4ZxRU2kZCtwTcG1J1OpN70jOJTKCE/aJD+38uHhS+Sc+lcbxyFH91wg
- mc2DnLupiR1poRrr+ICd7P+RpyhvUQd419OCRIaSNY6giUgl3EtakD/6qzeP0SJGcZkh
- 6e/Hvn2XC9xMK98w6LjYkY84+C2Cq6mRZNveaDycr3TaZloRwJy88lSvPuOBpW1OXpII
- HS3WdrKF6TRc052NcMX9KdwnkK6BXG998yjseG+/jHKMUhq+8seSvqWU+wzmgeGnS00n
- lgSQ==
-X-Gm-Message-State: AOJu0YzIHClrgQfRqSvaq5qdBNKRYClQrIpFIV/J4G0gh1I4hQ06RBrU
- gv5gCiW2GRp/LOLWUIm5KuI8BlaQZA123esPD/2SyA0GoQsCu4c27lriIPwSGAYDEjzZ3kPYSk4
- Fr27Hg7KUUFt89cxz+l+B32tT9roThGRSuX9AFaef/q2ReCHW3Yg/OakS61vdGaAov2/7Og4vpa
- mFWEBpUJ5736ZcUsVA68+E7ANlb+s9+q9n8BvGP0c=
-X-Received: by 2002:a05:600c:5488:b0:431:9397:9ac9 with SMTP id
- 5b1f17b1804b1-432b7507c16mr27491735e9.15.1731087528395; 
- Fri, 08 Nov 2024 09:38:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHlkz4ZEgRzi4wK+Q6KLKZwoggSXe4KyLkGIoJFHOM0+9y3TVeg6ZrI/S7YZ15hK7ln/pjxVg==
-X-Received: by 2002:a05:600c:5488:b0:431:9397:9ac9 with SMTP id
- 5b1f17b1804b1-432b7507c16mr27491535e9.15.1731087527956; 
- Fri, 08 Nov 2024 09:38:47 -0800 (PST)
+ bh=lupvEcmnHg1GtHFHOuqV3Po9cXi+wkOo2DQJpTtu0xI=;
+ b=BWUnbansXL20mOh+/I5c4C/bY3YSfrUqbaxZ2yXALOvOPa4xsy3kH/AtZn+2js3HcX
+ jJrvbft5zXe/kWWnjW0yk+i1g7izCH1zmkEV9jzhGUYIo9URekaQszc3xu+61N/TzPyz
+ aeQnJT+QJVyqzOkjejgeyvFfBuAMBfeSvCvcaiKOfudnTerINOImbBdoVQSWb0KWJfFm
+ rmCzKCMn+Xr6b2ik1P5n2jAtio7PeJNrPeAR1tczYXNHGt4gZx5EECu9j2PrX09n+9bt
+ iwBuUyKElzhyP7jEHshImBgq3Blsy0bB5ofsa86js6hftH1Gvr0kCspyi3gWzUl8/Bhu
+ p/Ug==
+X-Gm-Message-State: AOJu0YxDMuhgV0wn6prE2OHkMvLjkugsyRoccFtDY73i5/W/5d5hsHwA
+ Gz4fOhK/8+cdcrypwP72AZFxk02hIFpDPfeq9pB2mGjifcbn8RsEkV0A4SL3z87N0zAMh1dr3Rh
+ tlo+UzJ4NAerXRC3wfzuwRHJljkAUxFufro97feULocYuJfble8pyoXHMmf9RTz8ujNnIUbHqpU
+ VFlYgqGa6IBgSqRT5NHRXhGWVUwx/MhO6SzSreiPc=
+X-Received: by 2002:a05:600c:4f12:b0:431:5503:43ca with SMTP id
+ 5b1f17b1804b1-432b751f53cmr28912525e9.28.1731087522190; 
+ Fri, 08 Nov 2024 09:38:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHjZBCpKV8EvP6UY4bia8y8dsG6cswhaoAsM7kqVutlF2kYfFPjAPlUoQXWfwKLsN9b107XgQ==
+X-Received: by 2002:a05:600c:4f12:b0:431:5503:43ca with SMTP id
+ 5b1f17b1804b1-432b751f53cmr28912315e9.28.1731087521791; 
+ Fri, 08 Nov 2024 09:38:41 -0800 (PST)
 Received: from [192.168.10.47] ([151.49.84.243])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed9707d3sm5468676f8f.19.2024.11.08.09.38.46
+ 5b1f17b1804b1-432aa73a2d8sm109798375e9.41.2024.11.08.09.38.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 09:38:46 -0800 (PST)
+ Fri, 08 Nov 2024 09:38:40 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <r.bolshakov@yadro.com>
-Subject: [PULL 09/13] i386/hvf: Fixes startup memory leak (vmcs caps)
-Date: Fri,  8 Nov 2024 18:38:24 +0100
-Message-ID: <20241108173828.111454-10-pbonzini@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Subject: [PULL 06/13] eif: cope with huge section sizes
+Date: Fri,  8 Nov 2024 18:38:21 +0100
+Message-ID: <20241108173828.111454-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241108173828.111454-1-pbonzini@redhat.com>
 References: <20241108173828.111454-1-pbonzini@redhat.com>
@@ -104,35 +104,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Phil Dennis-Jordan <phil@philjordan.eu>
+Check for overflow as well as allocation failure.  Resolves Coverity CID 1564859.
 
-The hvf_caps data structure only exists once as part of the hvf accelerator
-state, but it is initialised during vCPU initialisation. This change therefore
-adds a check to ensure memory for it is only allocated once.
-
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Link: https://lore.kernel.org/r/20241105155800.5461-4-phil@philjordan.eu
-Reviewed-by: Roman Bolshakov <r.bolshakov@yadro.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/hvf/hvf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/core/eif.c | 48 +++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 41 insertions(+), 7 deletions(-)
 
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 68dc5d9cf75..8527bce6eef 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -239,7 +239,9 @@ int hvf_arch_init_vcpu(CPUState *cpu)
-     init_emu();
-     init_decoder();
+diff --git a/hw/core/eif.c b/hw/core/eif.c
+index 61329aacfe1..7a8c657f23a 100644
+--- a/hw/core/eif.c
++++ b/hw/core/eif.c
+@@ -119,6 +119,10 @@ static bool read_eif_header(FILE *f, EifHeader *header, uint32_t *crc,
  
--    hvf_state->hvf_caps = g_new0(struct hvf_vcpu_caps, 1);
-+    if (hvf_state->hvf_caps == NULL) {
-+        hvf_state->hvf_caps = g_new0(struct hvf_vcpu_caps, 1);
+     for (int i = 0; i < MAX_SECTIONS; ++i) {
+         header->section_sizes[i] = be64_to_cpu(header->section_sizes[i]);
++        if (header->section_sizes[i] > SSIZE_MAX) {
++            error_setg(errp, "Invalid EIF image. Section size out of bounds");
++            return false;
++        }
+     }
+ 
+     header->unused = be32_to_cpu(header->unused);
+@@ -278,7 +282,12 @@ static bool get_signature_fingerprint_sha384(FILE *eif, uint64_t size,
+     struct cbor_load_result result;
+     bool ret = false;
+ 
+-    sig = g_malloc(size);
++    sig = g_try_malloc(size);
++    if (!sig) {
++        error_setg(errp, "Out of memory reading signature section");
++        goto cleanup;
 +    }
-     env->hvf_mmio_buf = g_new(char, 4096);
++
+     got = fread(sig, 1, size, eif);
+     if ((uint64_t) got != size) {
+         error_setg(errp, "Failed to read EIF signature section data");
+@@ -320,7 +329,12 @@ static bool get_signature_fingerprint_sha384(FILE *eif, uint64_t size,
+         error_setg(errp, "Invalid signature CBOR");
+         goto cleanup;
+     }
+-    cert = g_malloc(len);
++    cert = g_try_malloc(len);
++    if (!cert) {
++        error_setg(errp, "Out of memory reading signature section");
++        goto cleanup;
++    }
++
+     for (int i = 0; i < len; ++i) {
+         cbor_item_t *tmp = cbor_array_get(pair->value, i);
+         if (!tmp) {
+@@ -503,7 +517,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+                 goto cleanup;
+             }
  
-     if (x86cpu->vmware_cpuid_freq) {
+-            ptr = g_malloc(hdr.section_size);
++            ptr = g_try_malloc(hdr.section_size);
++            if (!ptr) {
++                error_setg(errp, "Out of memory reading kernel section");
++                goto cleanup;
++            }
+ 
+             iov_ptr = g_malloc(sizeof(struct iovec));
+             iov_ptr->iov_base = ptr;
+@@ -528,7 +546,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+                 goto cleanup;
+             }
+             size = hdr.section_size;
+-            *cmdline = g_malloc(size + 1);
++            *cmdline = g_try_malloc(size + 1);
++            if (!cmdline) {
++                error_setg(errp, "Out of memory reading command line section");
++                goto cleanup;
++            }
+             if (!read_eif_cmdline(f, size, *cmdline, &crc, errp)) {
+                 goto cleanup;
+             }
+@@ -567,7 +589,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+                 }
+             }
+ 
+-            ptr = g_malloc(hdr.section_size);
++            ptr = g_try_malloc(hdr.section_size);
++            if (!ptr) {
++                error_setg(errp, "Out of memory reading initrd section");
++                goto cleanup;
++            }
+ 
+             iov_ptr = g_malloc(sizeof(struct iovec));
+             iov_ptr->iov_base = ptr;
+@@ -606,7 +632,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+             uint8_t *buf;
+             size_t got;
+             uint64_t size = hdr.section_size;
+-            buf = g_malloc(size);
++            buf = g_try_malloc(size);
++            if (!buf) {
++                error_setg(errp, "Out of memory reading unknown section");
++                goto cleanup;
++            }
+             got = fread(buf, 1, size, f);
+             if ((uint64_t) got != size) {
+                 g_free(buf);
+@@ -662,7 +692,11 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+             goto cleanup;
+         }
+ 
+-        ptr = g_malloc(machine_initrd_size);
++        ptr = g_try_malloc(machine_initrd_size);
++        if (!ptr) {
++            error_setg(errp, "Out of memory reading initrd file");
++            goto cleanup;
++        }
+ 
+         iov_ptr = g_malloc(sizeof(struct iovec));
+         iov_ptr->iov_base = ptr;
 -- 
 2.47.0
 
