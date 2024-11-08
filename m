@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E14CD64078
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 19:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B60D3D6407A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 19:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9UNR-0000df-QZ; Fri, 08 Nov 2024 14:10:37 -0500
+	id 1t9UTj-00063t-8N; Fri, 08 Nov 2024 14:17:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3J2IuZwYKCuQXUWaKNMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--roqueh.bounces.google.com>)
- id 1t9UNQ-0000c5-6X
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 14:10:36 -0500
-Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t9UTh-00063k-8w
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 14:17:05 -0500
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3J2IuZwYKCuQXUWaKNMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--roqueh.bounces.google.com>)
- id 1t9UNO-0002RB-7x
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 14:10:35 -0500
-Received: by mail-yw1-x1149.google.com with SMTP id
- 00721157ae682-6e6101877abso51133657b3.0
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 11:10:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t9UTf-0002yF-GB
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 14:17:05 -0500
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2fb57f97d75so23032561fa.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 11:17:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1731093032; x=1731697832; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=At9m5rzWH99Iv6qvPLaYCajHW0bxi1ZNylBU9lm8qmU=;
- b=cm4DI3BSPT8ob8Hif/5+vNnI4hKgjosKe7RTA9X+OU/QXOMSNa9t5xnJwyYJvMUhUT
- d0IMkNcO340xRXqk8OXpaXUvG04fp5ku3eDdn1Wbd2o+tnCN89JJAPetzUnGOpSe2T1D
- V43eTsEeHw1Ei01FEES7+Lu69oiJuPDh4muFCx0fpiBkYm9vVjeVXZ8/da3aSjEjNFKp
- /pep3j3cU550HJaYar4R9/35dp8+RVmvEdmPEoMpCwyVidrZAgiz5ShFnoT75z9zf5ei
- dJEdiy5Z7WsxoDdMwCHQCk7uhP9Hledk89oECRRoNT3Qpm3Yn0ePy8SgB3H8QFaZhA4q
- BMjA==
+ d=linaro.org; s=google; t=1731093421; x=1731698221; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BLkvLi6d/hz4FITtyuiiowJydG/I4Z7ZrZc2CNtKris=;
+ b=X3AA3aVCG8sqhaXXjbUoE0ntSFLaKfC43GBMjqyqQA/kbXdLapcSC06o5daZsFukh+
+ oMl2NL7VcI2050l3vIzlt1NkiDR8DxpYWVGfHbsgf9jzSYpD+ILzc90EegRLOTaflGUA
+ d9+3N5nGHJLlyXLKpsLtlOWowHAgg+OZgrMpv0X5r1HTHWtJYVL0TT9QI7RFJ5/u5Yj7
+ UNbUW4VlEXW/lNW0HZvCc84nef5RDONSk+PVHZ7xYCdWIPwuW5XLlj3ohbbH6X58VBvu
+ vLsZ7veJTusUNT3bIRYMh0T5DSKcU+hCqPSicRffg3Y5BQMtEN0ipeFSpOJk10waS7Xd
+ zXEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731093032; x=1731697832;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=At9m5rzWH99Iv6qvPLaYCajHW0bxi1ZNylBU9lm8qmU=;
- b=lh+NtyK7FNJsvtPH2ML7A9VK+y4MtHljfRNvyn5sAFaUd2OlnjI9lOeGxUBGYWchws
- 3RzaixSD7n4D6KnSBBhBq7rDCW10iFiT3zIysmz99v+keCjx3UlJzP0cZLe3+Cp8wXId
- wDLvyJgyQ2nZcYym0ATR9hk+c2YF2ZBESD1gyUbevc6qQ/v1bAoKr0XzwBDLgVnlAP4/
- w2VkDXBRVyTsuz7JlGI90xVwD81DDurEATepeXogg2oK8P+Uth3uaPOR9CjSQB8Mtgwb
- 7OWutzzDc8IeZUnhliC41HbEIRjSiyaKoNEAlfDU/RSPt6uAYE4EqSg25g031/v3N4RA
- SqgA==
-X-Gm-Message-State: AOJu0YyhsHkUBCQwDJ/xpqIDeP3LbKyjzuDGc2z9wJsWIyBmNERmnKQP
- a+tCeW7xIkcBUY4faezOcvsqdFiyt9pKU/Arqo8r1C40JPmZ7qxaWtfeWx7ONYT6rcQvNHkKhuh
- oBQ==
-X-Google-Smtp-Source: AGHT+IHiW1xpr248nQRAqXJnmbDxidOfYoqjHicMICLwcI5KkohEaN8vgCzcF1xHpKjqLIMDLN4J93ddxs0=
-X-Received: from roqueh.c.googlers.com ([fda3:e722:ac3:cc00:4e:3bc9:ac1c:1ab])
- (user=roqueh job=sendgmr) by 2002:a81:a806:0:b0:6e2:b263:103f with
- SMTP id
- 00721157ae682-6eaddc25bb2mr451637b3.0.1731093031707; Fri, 08 Nov 2024
- 11:10:31 -0800 (PST)
-Date: Fri,  8 Nov 2024 19:10:22 +0000
-In-Reply-To: <20241108191024.2931097-1-roqueh@google.com>
-Mime-Version: 1.0
-References: <20241108191024.2931097-1-roqueh@google.com>
-X-Mailer: git-send-email 2.47.0.277.g8800431eea-goog
-Message-ID: <20241108191024.2931097-2-roqueh@google.com>
-Subject: [PATCH 1/3] hw/watchdog/cmsdk_apb_watchdog: Fix INTEN issues
-From: Roque Arcudia Hernandez <roqueh@google.com>
-To: peter.maydell@linaro.org, farosas@suse.de, lvivier@redhat.com, 
- slongfield@google.com, komlodi@google.com, pbonzini@redhat.com, 
- venture@google.com
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Roque Arcudia Hernandez <roqueh@google.com>
+ d=1e100.net; s=20230601; t=1731093421; x=1731698221;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BLkvLi6d/hz4FITtyuiiowJydG/I4Z7ZrZc2CNtKris=;
+ b=WZop5TsywOTPnjrFW2nNsKTWvawGN2Q6SBVAZKfhcctLQ4iGEfsDzBCKnWdy0r6bSI
+ 8QsW74oECc0IrG6aDNm7DhC1xoZxiNoNiZsFLmHSY/Z+SWNuuGliDZypUi+IdnTKaG5z
+ nDO47r9nZ04vycZ+Gg20voDJMhCYOvijTMBK8h0k56nCXqIsWPrTW4qftoKSoHEtMrSX
+ 4NuYQ8AwkYrbTYh/w0o+Kjovz2yz9yhfzHIJQvt6h6f3Y+EtI+8U6UUXKUyU4zpY26Jv
+ ClcNBpNaTIvF24W+n/k7B6OMVZf7EDobMAWChEdcE6mJ/SboPPJ9g9M6dCxvV8ylBuEW
+ JhzA==
+X-Gm-Message-State: AOJu0YySYiSe22APO//7u3R+aev/iiJr8v7kEAF+p1/WTs6PY1pW/ox9
+ IXpVAiFGmZS8Jqxms9UgCbHECSP0MLHl3Qa+VrpeEfJgUUGGH3tyycUr9BC8pU6PiLTKfSzz3Xt
+ KRLryG5Pq1cMV6iXYrFLfCBssh/AcEhTnvsjhIQ==
+X-Google-Smtp-Source: AGHT+IECrx16xd2YQa7y6IM1uItbaNKgcj/dplvq9tRh9ldwQsOu80L/qa9zd4NO6+KuXZH6NFqqHeIbanZfifIsnJ8=
+X-Received: by 2002:a2e:a541:0:b0:2fa:c8d1:224 with SMTP id
+ 38308e7fff4ca-2ff20152518mr23065761fa.2.1731093421108; Fri, 08 Nov 2024
+ 11:17:01 -0800 (PST)
+MIME-Version: 1.0
+References: <20241105224727.53059-1-philmd@linaro.org>
+ <20241105224727.53059-11-philmd@linaro.org>
+In-Reply-To: <20241105224727.53059-11-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 8 Nov 2024 19:16:50 +0000
+Message-ID: <CAFEAcA-6e-o480iPeesKPnvcBtjVwWsL=zYOuNNddPNZu7Uc6g@mail.gmail.com>
+Subject: Re: [PULL 10/29] hw/core: Check smp cache topology support for machine
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
+ Yongwei Ma <yongwei.ma@intel.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
- envelope-from=3J2IuZwYKCuQXUWaKNMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--roqueh.bounces.google.com;
- helo=mail-yw1-x1149.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,91 +92,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Current watchdog is free running out of reset, this combined with the
-fact that current implementation also ensures the counter is running
-when programing WDOGLOAD creates issues when the firmware defer the
-programing of WDOGCONTROL.INTEN much later after WDOGLOAD. Arm
-Programmer's Model documentation states that INTEN is also the
-counter enable:
-
-> INTEN
+On Tue, 5 Nov 2024 at 22:49, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
 >
-> Enable the interrupt event, WDOGINT. Set HIGH to enable the counter
-> and the interrupt, or LOW to disable the counter and interrupt.
-> Reloads the counter from the value in WDOGLOAD when the interrupt
-> is enabled, after previously being disabled.
+> From: Zhao Liu <zhao1.liu@intel.com>
+>
+> Add cache_supported flags in SMPCompatProps to allow machines to
+> configure various caches support.
+>
+> And check the compatibility of the cache properties with the
+> machine support in machine_parse_smp_cache().
 
-Source of the time of writing:
+Hi; Coverity points out an issue in this code (CID 1565391):
 
-https://developer.arm.com/documentation/ddi0479/d/apb-components/apb-watchdog/programmers-model
+>  bool machine_parse_smp_cache(MachineState *ms,
+>                               const SmpCachePropertiesList *caches,
+>                               Error **errp)
+>  {
+> +    MachineClass *mc =3D MACHINE_GET_CLASS(ms);
+>      const SmpCachePropertiesList *node;
+>      DECLARE_BITMAP(caches_bitmap, CACHE_LEVEL_AND_TYPE__MAX);
+>
+> @@ -283,6 +305,25 @@ bool machine_parse_smp_cache(MachineState *ms,
+>          set_bit(node->value->cache, caches_bitmap);
+>      }
+>
+> +    for (int i =3D 0; i < CACHE_LEVEL_AND_TYPE__MAX; i++) {
+> +        const SmpCacheProperties *props =3D &ms->smp_cache.props[i];
+> +
+> +        /*
+> +         * Reject non "default" topology level if the cache isn't
+> +         * supported by the machine.
+> +         */
+> +        if (props->topology !=3D CPU_TOPOLOGY_LEVEL_DEFAULT &&
+> +            !mc->smp_props.cache_supported[props->cache]) {
+> +            error_setg(errp,
+> +                       "%s cache topology not supported by this machine"=
+,
+> +                       CacheLevelAndType_str(node->value->cache));
 
-Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-Reviewed-by: Stephen Longfield <slongfield@google.com>
-Reviewed-by: Joe Komlodi <komlodi@google.com>
----
- hw/watchdog/cmsdk-apb-watchdog.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+This error message looks at "node", but "node" was the iteration
+variable in the first loop in this function, so generally at
+this point it will be NULL because that is the loop termination
+condition.
 
-diff --git a/hw/watchdog/cmsdk-apb-watchdog.c b/hw/watchdog/cmsdk-apb-watchdog.c
-index 7ad46f9410..e6ddc0a53b 100644
---- a/hw/watchdog/cmsdk-apb-watchdog.c
-+++ b/hw/watchdog/cmsdk-apb-watchdog.c
-@@ -202,10 +202,10 @@ static void cmsdk_apb_watchdog_write(void *opaque, hwaddr offset,
-          */
-         ptimer_transaction_begin(s->timer);
-         ptimer_set_limit(s->timer, value, 1);
--        ptimer_run(s->timer, 0);
-         ptimer_transaction_commit(s->timer);
-         break;
--    case A_WDOGCONTROL:
-+    case A_WDOGCONTROL: {
-+        uint32_t prev_control = s->control;
-         if (s->is_luminary && 0 != (R_WDOGCONTROL_INTEN_MASK & s->control)) {
-             /*
-              * The Luminary version of this device ignores writes to
-@@ -215,8 +215,25 @@ static void cmsdk_apb_watchdog_write(void *opaque, hwaddr offset,
-             break;
-         }
-         s->control = value & R_WDOGCONTROL_VALID_MASK;
-+        if (R_WDOGCONTROL_INTEN_MASK & (s->control ^ prev_control)) {
-+            ptimer_transaction_begin(s->timer);
-+            if (R_WDOGCONTROL_INTEN_MASK & s->control) {
-+                /*
-+                 * Set HIGH to enable the counter and the interrupt. Reloads
-+                 * the counter from the value in WDOGLOAD when the interrupt
-+                 * is enabled, after previously being disabled.
-+                 */
-+                ptimer_set_count(s->timer, ptimer_get_limit(s->timer));
-+                ptimer_run(s->timer, 0);
-+            } else {
-+                /* Or LOW to disable the counter and interrupt. */
-+                ptimer_stop(s->timer);
-+            }
-+            ptimer_transaction_commit(s->timer);
-+        }
-         cmsdk_apb_watchdog_update(s);
-         break;
-+    }
-     case A_WDOGINTCLR:
-         s->intstatus = 0;
-         ptimer_transaction_begin(s->timer);
-@@ -305,8 +322,14 @@ static void cmsdk_apb_watchdog_reset(DeviceState *dev)
-     s->resetstatus = 0;
-     /* Set the limit and the count */
-     ptimer_transaction_begin(s->timer);
-+    /*
-+     * We need to stop the ptimer before setting its limit reset value. If the
-+     * order is the opposite when the code executes the stop after setting a new
-+     * limit it may want to recalculate the count based on the current time (if
-+     * the timer was currently running) and it won't get the proper reset value.
-+     */
-+    ptimer_stop(s->timer);
-     ptimer_set_limit(s->timer, 0xffffffff, 1);
--    ptimer_run(s->timer, 0);
-     ptimer_transaction_commit(s->timer);
- }
- 
--- 
-2.47.0.277.g8800431eea-goog
+The code looks like it ought to be reporting an error relating
+to the 'props' variable, not 'node' ?
 
+> +            return false;
+> +        }
+> +
+> +        if (!machine_check_topo_support(ms, props->topology, errp)) {
+> +            return false;
+> +        }
+> +    }
+>      return true;
+>  }
+
+thanks
+-- PMM
 
