@@ -4,77 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 960A0D5E13F
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 06:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1CE5D5E140
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 07:00:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9I6e-000848-MV; Fri, 08 Nov 2024 01:04:30 -0500
+	id 1t9Iy5-0006da-Sr; Fri, 08 Nov 2024 01:59:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t9I6L-0007nB-Nq
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 01:04:13 -0500
-Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1t9Iy3-0006d5-LJ
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 01:59:39 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t9I6H-0008Gt-Lx
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 01:04:09 -0500
-Received: by mail-oo1-xc30.google.com with SMTP id
- 006d021491bc7-5ebc04d4777so951479eaf.2
- for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 22:04:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1t9Iy1-0005Fz-K4
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 01:59:39 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-71e3fce4a60so1427949b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Nov 2024 22:59:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1731045844; x=1731650644;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BMyM0hMWZCc1ait7PW8XxMUAlNesfct3gT/4DVGislE=;
- b=DFTUNgG5aa7/sNoe270putsifOu96OIE0E4Yi17xscsNJ9x7wstWCkl9UdgtFhbMzO
- Zg0zEYxVUHSXOJKDiu72ud3UhCAzXdkDa0Z4qnP1oCtNmsmrqwhw/um6WOc+ueH5sNxV
- FPdH2FUsxD3S1Mw1GTVvS74kcbThLxopFj8RfriIkC4mOf+rxXCHBKYoaeGEqUMeJELP
- wbJsokBrxP6Gt4gvEVa6HHreqmdjKrnResRzTq26k/mIScD4UWYz6cr203QuSZQAGkAy
- jBPye4eaKGH9mrD8pXNPqlqt+4yh0Rd6LpN6SvRVFp7OIxihxMx87qdziKclS8CSX59U
- 7Xew==
+ d=gmail.com; s=20230601; t=1731049176; x=1731653976; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=VEVbIXlHWYOISWkOGgOAlEiIsE/26zurVPP3wVIdNe4=;
+ b=dOKzWwlnt5oez7TzPVm1G3IeUc2nPgFQKcXm6nqdXI0YL6Vv14HIp7ID0ZUelcG44E
+ ShfKTIgiM3LvjCHQWKNLtRz8+G0QvpgYwM2GROC7UKx02Kc4lBkmiDXPkQVFjOasuQw4
+ N1de2hhsTuT5OzVdtQYRzGlh8yMwVjkAGbMQwp+6V6JeEUt44N5fNaUatNyj0/KXnil8
+ oRYdbcvlSqc4cHKao6MKHwELL7ihaUiAZ9vMG0FX1yq8D9BCYDbToJdArumsQEpF5HyP
+ jte6uz3LuYgERad3+LDVcqIqbiRO22/UAdZT6GDH1WR0O4CXS72hAs5O1U6Th2uAMmuk
+ UTaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731045844; x=1731650644;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BMyM0hMWZCc1ait7PW8XxMUAlNesfct3gT/4DVGislE=;
- b=ALRVrpyc5uT8yiFQKyDeG7l74dr0xORrlDH0nD3zqA9D5vG/CX1DtsQJ3auoH8GhZQ
- vxFF+YeLbdXUWlgvWkSrN/hlJu5b8toPyfiUqOr1wM9QeO1i3xgwhM8u3UvhjIKqMmRw
- Oy3h2Gjw78wVdH1SrpMpOvcLlEEH+lW8ScSS+J/BlCozkI8/JoEkyVWd2Y6KWQycKYoX
- 4g8kaHc+XGYAAcdZ5zyLvxNp9S9VWkkPLVgS8U4umKz652f2icku/XctOxSyWtOQoif2
- GEjFIkpSTkEela/QFU+5yya5kpRo41QOyji5y+DKRxFUCSlOhOfrVMk//YOI/GFzGZjs
- e/Fw==
-X-Gm-Message-State: AOJu0YzEp1+uhVCk02JVOPALXJONPdkWkqyCl1cTyBn2pze2jmK+keXX
- dKs+0HIA9BI4YEAZyEsOHqvgnByw8tShKD7TnUD07y7ET1I7UZLIXkp4JsrhVZt4TU+DYGwpiPy
- ClzWFSolMTp5WmWmHTeZjYp5BReoDLAi9bvicSA==
-X-Google-Smtp-Source: AGHT+IGsnZFD5vco9JcwHyQLVV646jruU5t8qBpWEUqsQ7NFK06B2rRKqkBL9gi1FBACbP5zsmvodkIHOjYfYJ57KDc=
-X-Received: by 2002:a05:6870:310f:b0:277:caf7:3631 with SMTP id
- 586e51a60fabf-29560032e88mr1516653fac.5.1731045843495; Thu, 07 Nov 2024
- 22:04:03 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731049176; x=1731653976;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VEVbIXlHWYOISWkOGgOAlEiIsE/26zurVPP3wVIdNe4=;
+ b=mkHDmd9AtCJdUF6e259HN2cmE/CavmL4KQgESl3IGIb2/kyCoxqSOndG5mjGtDEU9W
+ MFO1+VJWWxnkfPzUWCkJAC9ThRNFDbBNLNAyRHyA5s/DJIDrrsOUGpT6yzQnpNxRDZmA
+ IrWHuFYMr/CAJOcxrCaMzKH+2qxuPgUzr547IUTc6zXrOr89fnBuTDCIApCvfiHt3UhN
+ +NARXAKzYuYOO0dSrEluRyzL7/wzOkVMiCn39VX4eMF+IWo0wZFC3rCmE5iqVwfOEvC5
+ gwfdJPzf+45ucyIaF4yiXuUfJZNI4OvQ6hyhmwepXjc6y70jkR6Vl0MXHsVM+T0QxmAr
+ WM+Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXwfZdzlAJ+04m082F5TafB6I3smFghydHBbvsTI8xYPxgdiIbaGlkvVJyFuzn1jsuoaiBn83wv7FVJ@nongnu.org
+X-Gm-Message-State: AOJu0YxWErSHyjjFzBOFYRT0UyF35GgKB3F+XDNiBUucgPlUbnV66CFE
+ uc1sju5qPTqp/xbhHhFZj+drKvblfpAFtUorZJ+u8ol6vTZrbnO3
+X-Google-Smtp-Source: AGHT+IGQtK0Y1Mq0Zjpvu6RcEwkATWzk8mZ0rw5t0qaSdGfFabcf1LoRQHtzNTa0B9GjGE+XG6VyNg==
+X-Received: by 2002:a05:6a20:7fa1:b0:1d9:c64a:9f72 with SMTP id
+ adf61e73a8af0-1dc228b0208mr2130435637.2.1731049175585; 
+ Thu, 07 Nov 2024 22:59:35 -0800 (PST)
+Received: from [192.168.0.106] ([182.48.209.226])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7240799bb83sm2876335b3a.91.2024.11.07.22.59.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 Nov 2024 22:59:35 -0800 (PST)
+Message-ID: <8dd9684c-96a3-4dc8-909f-c7ca803aa2d4@gmail.com>
+Date: Fri, 8 Nov 2024 12:29:30 +0530
 MIME-Version: 1.0
-References: <ad543bac0eb9e7113eaec266add58c19f9f6eda0.1730973055.git.yong.huang@smartx.com>
- <ZyzqosT0uE6_G4as@x1n>
-In-Reply-To: <ZyzqosT0uE6_G4as@x1n>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Fri, 8 Nov 2024 14:03:47 +0800
-Message-ID: <CAK9dgmZCZp3scJTAGJc=KF9dgaftxD=V3uUADeyyYqFc_yGhkA@mail.gmail.com>
-Subject: Re: [PATCH] migration: Do not perform RAMBlock dirty sync during the
- first iteration
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Content-Type: multipart/alternative; boundary="0000000000009789d006266084e8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
- envelope-from=yong.huang@smartx.com; helo=mail-oo1-xc30.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vdpa: Support setting vring_base for packed svq
+To: Eugenio Perez Martin <eperezma@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org, Sahil Siddiq <sahilcdq@proton.me>
+References: <20241104162124.49867-1-sahilcdq@proton.me>
+ <k2suxbt2qy7ewjrlozlkzrhsa7bbf7xrze33outna65dejuus2@eamj5pdkvpkw>
+ <77bc1be1-e4b3-46a0-a263-cc8f7d6e28fe@gmail.com>
+ <pu5razer3dkaltyuwiav236sepob44mj6cmigskdcet7davn4t@6orjjrzeqtau>
+ <CAJaqyWd6+F7PO6tjq5QtjrRkoZNQZiqEPOsrjEN9Zp3S2t7SUA@mail.gmail.com>
+Content-Language: en-US
+From: Sahil Siddiq <icegambit91@gmail.com>
+Autocrypt: addr=icegambit91@gmail.com; keydata=
+ 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
+ rPgMe6IIvn24UuW2f6fIt0AaqOWq
+In-Reply-To: <CAJaqyWd6+F7PO6tjq5QtjrRkoZNQZiqEPOsrjEN9Zp3S2t7SUA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=icegambit91@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TRACKER_ID=0.1 autolearn=no autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,316 +138,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009789d006266084e8
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Fri, Nov 8, 2024 at 12:28=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
+On 11/6/24 8:30 PM, Eugenio Perez Martin wrote:
+> On Wed, Nov 6, 2024 at 3:33 PM Stefano Garzarella <sgarzare@redhat.com> wrote:
+>>
+>> On Tue, Nov 05, 2024 at 08:24:17PM +0530, Sahil Siddiq wrote:
+>>> Hi,
+>>>
+>>> Thank you for the review.
+>>>
+>>> On 11/5/24 3:06 PM, Stefano Garzarella wrote:
+>>>> On Mon, Nov 04, 2024 at 09:51:24PM +0530, Sahil Siddiq wrote:
+>>>>> Linux commit v5.14-rc1~30^2~8 enabled the vp_vdpa driver to set the
+>>>>
+>>>> To refer to a commit, please use the SHA-1 id or even better the form
+>>>> suggested in
+>>>> https://www.kernel.org/doc/html/latest/process/submitting-patches.html#describe-your-changes
+>>>>
+>>>> So in this case I'd use:
+>>>> Linux commit 1225c216d954 ("vp_vdpa: allow set vq state to initial state
+>>>> after reset")
+>>>
+>>> Understood, I'll change this in v2.
+>>>
+>>>>> vq state to the device's initial state. This works differently for
+>>>>> split and packed vqs.
+>>>>>
+>>>>> With shadow virtqueues enabled, vhost-vdpa sets the vring base using
+>>>>> the VHOST_SET_VRING_BASE ioctl. The payload (vhost_vring_state)
+>>>>> differs for split and packed vqs. The implementation in QEMU currently
+>>>>> uses the payload required for split vqs (i.e., the num field of
+>>>>> vhost_vring_state is set to 0). The kernel throws EOPNOTSUPP when this
+>>>>> payload is used with packed vqs.
+>>>>>
+>>>>> This patch sets the num field in the payload appropriately so vhost-vdpa
+>>>>
+>>>> I'm not very familiar with shadow virtqueue, so can you elaborate what
+>>>> "appropriately" means here?
+>>>
+>>> My understanding is that the ioctl and the payload themselves are not
+>>> directly related to shadow virtqueues [1]. They concern virtqueues in general.
+>>>
+>>> In QEMU's implementation, hw/virtio/vhost-vdpa.c:vhost_vdpa_svq_setup [2]
+>>> is called from hw/virtio/vhost-vdpa.c:vhost_vdpa_svqs_start [3] only when
+>>> shadow virtqueues are enabled.
+>>>
+>>> QEMU's vhost-user doc [1] states that the payload for the VHOST_SET_VRING_BASE
+>>> ioctl is different for split and packed vqs. The struct is the same:
+>>>
+>>> struct vhost_vring_state {
+>>>        unsigned int index;
+>>>        unsigned int num;
+>>> };
+>>>
+>>> The num field takes a different value depending on the virtqueue's format
+>>> (split vs packed). The explanation below throws more light on this.
+>>>
+>>>>> (with the vp_vdpa driver) can use packed svqs.
+>>>>>
+>>>>> Link: https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05106.html
+>>>>> Link: https://lore.kernel.org/r/20210602021536.39525-4-jasowang@redhat.com
+>>>>> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+>>>>> ---
+>>>>> QEMU currently does not support packed vhost shadow virtqueues. I am
+>>>>> working on adding support for packed svqs [1]. The test environment
+>>>>> that I am using [2] requires vhost-vdpa to use the relevant payload
+>>>>> when setting vring base.
+>>>>>
+>>>>> [1] https://wiki.qemu.org/Internships/ProjectIdeas/PackedShadowVirtqueue
+>>>>> [2] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-aint-got-hardware-part-2
+>>>>>
+>>>>> hw/virtio/vhost-vdpa.c | 4 ++++
+>>>>> 1 file changed, 4 insertions(+)
+>>>>>
+>>>>> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+>>>>> index 3cdaa12ed5..5f81945109 100644
+>>>>> --- a/hw/virtio/vhost-vdpa.c
+>>>>> +++ b/hw/virtio/vhost-vdpa.c
+>>>>> @@ -1230,6 +1230,10 @@ static bool vhost_vdpa_svq_setup(struct vhost_dev *dev,
+>>>>>     };
+>>>>>     int r;
+>>>>>
+>>>>> +    if (virtio_vdev_has_feature(dev->vdev, VIRTIO_F_RING_PACKED)) {
+>>>>> +        s.num = 0x80008000;
+>>>>
+>>>> Why this magic value?
+>>>>
+>>>> Looking at the kernel code it looks like we are assgining 0x8000 for
+>>>> both last_avail_idx and last_used_idx, but why 0x8000?
+>>>>
+>>>> Thanks,
+>>>> Stefano
+>>>>
+>>>
+>>> When I boot a VM with packed=on and x-svq=true, QEMU sets the vring base
+>>> using VHOST_SET_VRING_BASE. I used ftrace to trace the functions in the
+>>> linux kernel and got the following trace:
+>>>
+>>> [...]
+>>> qemu-system-x86-1737    [001] ...1.  3613.371358: vhost_vdpa_unlocked_ioctl <-__x64_sys_ioctl
+>>> qemu-system-x86-1737    [001] ...1.  3613.371358: vhost_vring_ioctl <-vhost_vdpa_unlocked_ioctl
+>>> qemu-system-x86-1737    [001] ...1.  3613.371362: vp_vdpa_set_vq_state <-vhost_vdpa_unlocked_ioctl
+>>> [...]
+>>>
+>>> In the kernel, drivers/vhost/vhost.c:vhost_vring_ioctl [4] uses
+>>> the vhost_vring_state payload to set the last_avail_idx. For
+>>> packed vqs, it also sets last_used_idx.
+>>>
+>>>     vq->last_avail_idx = s.num & 0xffff;
+>>>     vq->last_used_idx = (s.num >> 16) & 0xffff;
+>>>
+>>> These values are used to populate a new struct vdpa_vq_state in
+>>> drivers/vhost/vdpa.c:vhost_vdpa_vring_ioctl [5].
+>>>
+>>>     vq_state.packed.last_avail_idx = vq->last_avail_idx & 0x7fff;
+>>>     vq_state.packed.last_avail_counter = !!(vq->last_avail_idx & 0x8000);
+>>>     vq_state.packed.last_used_idx = vq->last_used_idx & 0x7fff;
+>>>     vq_state.packed.last_used_counter = !!(vq->last_used_idx & 0x8000);
+>>>
+>>> The following check is then made in drivers/vdpa/virtio_pci/vp_vdpa.c:
+>>> vp_vdpa_set_vq_state_packed [6]:
+>>>
+>>>     if (packed->last_avail_counter == 1 &&
+>>>         packed->last_avail_idx == 0 &&
+>>>         packed->last_used_counter == 1 &&
+>>>         packed->last_used_idx == 0)
+>>>         return 0;
+>>>     return -EOPNOTSUPP;
+>>>
+>>> The most significant bit in 0x8000 is used to set the wrap counters.
+>>> All the other bits are 0 and so the avail and used idx are also set
+>>> to 0.
+>>
+>> Thanks for these great details!
+>>
+>> Okay, so IIUC the only configuration that vp_vdpa supports when
+>> VHOST_SET_VRING_BASE is called is idx == 0 and wrap_couter = true for
+>> both avail and used.
+>>
+> 
+> Right, it cannot set any other value as there is no standardized way
+> in virtio. But vp_vdpa allows the default one, as QEMU always sends
+> it.
+> 
+>> Is this okay with QEMU shadow vq? (More a question for Eugenio).
+>>
+> 
+> Yes, it is a required step to support packed vq.
+> 
+> I misunderstood the previous thread and I thought the problem was
+> somewhere else. It is hard to justify introducing this change in QEMU
+> by itself, as the code is not reachable. However, when you post the
+> whole series, you can make the two changes requested here (commit id,
+> no magic number) and add my acked-by directly :):
+> 
+> Acked-by: Eugenio Pérez <eperezma@redhat.com>
 
-> On Thu, Nov 07, 2024 at 05:56:50PM +0800, yong.huang@smartx.com wrote:
-> > From: Hyman Huang <yong.huang@smartx.com>
-> >
-> > The first iteration's RAMBlock dirty sync can be omitted because QEMU
-> > always initializes the RAMBlock's bmap to all 1s by default.
-> >
-> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-> > ---
-> >  migration/cpu-throttle.c |  2 +-
-> >  migration/ram.c          | 19 ++++++++++++++++---
-> >  2 files changed, 17 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
-> > index 5179019e33..674dc2004e 100644
-> > --- a/migration/cpu-throttle.c
-> > +++ b/migration/cpu-throttle.c
-> > @@ -141,7 +141,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaqu=
-e)
-> >       * effect on guest performance, therefore omit it to avoid
-> >       * paying extra for the sync penalty.
-> >       */
-> > -    if (sync_cnt <=3D 1) {
-> > +    if (!sync_cnt) {
-> >          goto end;
-> >      }
-> >
-> > diff --git a/migration/ram.c b/migration/ram.c
-> > index 05ff9eb328..a0123eb93e 100644
-> > --- a/migration/ram.c
-> > +++ b/migration/ram.c
-> > @@ -2718,7 +2718,7 @@ static void ram_list_init_bitmaps(void)
-> >  {
-> >      MigrationState *ms =3D migrate_get_current();
-> >      RAMBlock *block;
-> > -    unsigned long pages;
-> > +    unsigned long pages, clear_bmap_pages;
-> >      uint8_t shift;
-> >
-> >      /* Skip setting bitmap if there is no RAM */
-> > @@ -2736,6 +2736,7 @@ static void ram_list_init_bitmaps(void)
-> >
-> >          RAMBLOCK_FOREACH_NOT_IGNORED(block) {
-> >              pages =3D block->max_length >> TARGET_PAGE_BITS;
-> > +            clear_bmap_pages =3D clear_bmap_size(pages, shift);
-> >              /*
-> >               * The initial dirty bitmap for migration must be set with
-> all
-> >               * ones to make sure we'll migrate every guest RAM page to
-> > @@ -2751,7 +2752,12 @@ static void ram_list_init_bitmaps(void)
-> >                  block->file_bmap =3D bitmap_new(pages);
-> >              }
-> >              block->clear_bmap_shift =3D shift;
-> > -            block->clear_bmap =3D bitmap_new(clear_bmap_size(pages,
-> shift));
-> > +            block->clear_bmap =3D bitmap_new(clear_bmap_pages);
-> > +            /*
-> > +             * Set clear_bmap to 1 unconditionally, as we always set
-> bmap
-> > +             * to all 1s by default.
-> > +             */
-> > +            bitmap_set(block->clear_bmap, 0, clear_bmap_pages);
-> >          }
-> >      }
-> >  }
-> > @@ -2771,6 +2777,7 @@ static void
-> migration_bitmap_clear_discarded_pages(RAMState *rs)
-> >
-> >  static bool ram_init_bitmaps(RAMState *rs, Error **errp)
-> >  {
-> > +    Error *local_err =3D NULL;
-> >      bool ret =3D true;
-> >
-> >      qemu_mutex_lock_ramlist();
-> > @@ -2783,7 +2790,13 @@ static bool ram_init_bitmaps(RAMState *rs, Error
-> **errp)
-> >              if (!ret) {
-> >                  goto out_unlock;
-> >              }
-> > -            migration_bitmap_sync_precopy(false);
-> > +            /*
-> > +             * Bypass the RAMBlock dirty sync and still publish the
-> > +             * notification.
->
-> Hmm.. Why should QEMU notify AFTER_BITMAP_SYNC if the sync didn't happen?
->
+Sure thing, this makes more sense. I'll do that.
 
-Indeed, logically, we should not make the notification.
-
-Some features, like VIRTIO_BALLOON_F_FREE_PAGE_HINT, use this notification
-to indirectly detect whether the RAMBlock's bmap has been updated. This
-allows the
-free page optimization to begin clearing parts of the bitmap that contain
-free pages.
-
-virtio_balloon_free_page_hint_notify
-......
-    switch (pnd->reason) {
-    case PRECOPY_NOTIFY_BEFORE_BITMAP_SYNC:
-        virtio_balloon_free_page_stop(dev);
-        break;
-    case PRECOPY_NOTIFY_AFTER_BITMAP_SYNC:
-        if (vdev->vm_running) {
-            virtio_balloon_free_page_start(dev);
-            break;
-        }
-
-The free page optimization may miss the first time window to execute if we
-don't
-send out a notification after starting the migration and initializing the
-bmap with all 1s.
-
-May we change the old behavior of optimization?
-
-
-> > +             */
-> > +            if (precopy_notify(PRECOPY_NOTIFY_AFTER_BITMAP_SYNC,
-> &local_err)) {
-> > +                error_report_err(local_err);
-> > +            }
-> >          }
-> >      }
-> >  out_unlock:
-> > --
-> > 2.27.0
-> >
->
-> --
-> Peter Xu
->
->
-
---=20
-Best regards
-
---0000000000009789d006266084e8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_defa=
-ult" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif"><br></div><=
-/div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">O=
-n Fri, Nov 8, 2024 at 12:28=E2=80=AFAM Peter Xu &lt;<a href=3D"mailto:peter=
-x@redhat.com" target=3D"_blank">peterx@redhat.com</a>&gt; wrote:<br></div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft-width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);pa=
-dding-left:1ex">On Thu, Nov 07, 2024 at 05:56:50PM +0800, <a href=3D"mailto=
-:yong.huang@smartx.com" target=3D"_blank">yong.huang@smartx.com</a> wrote:<=
-br>
-&gt; From: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=
-=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
-&gt; <br>
-&gt; The first iteration&#39;s RAMBlock dirty sync can be omitted because Q=
-EMU<br>
-&gt; always initializes the RAMBlock&#39;s bmap to all 1s by default.<br>
-&gt; <br>
-&gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com=
-" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 migration/cpu-throttle.c |=C2=A0 2 +-<br>
-&gt;=C2=A0 migration/ram.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 19 +++++++++=
-+++++++---<br>
-&gt;=C2=A0 2 files changed, 17 insertions(+), 4 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c<br>
-&gt; index 5179019e33..674dc2004e 100644<br>
-&gt; --- a/migration/cpu-throttle.c<br>
-&gt; +++ b/migration/cpu-throttle.c<br>
-&gt; @@ -141,7 +141,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaq=
-ue)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* effect on guest performance, therefore omi=
-t it to avoid<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* paying extra for the sync penalty.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; -=C2=A0 =C2=A0 if (sync_cnt &lt;=3D 1) {<br>
-&gt; +=C2=A0 =C2=A0 if (!sync_cnt) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto end;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 <br>
-&gt; diff --git a/migration/ram.c b/migration/ram.c<br>
-&gt; index 05ff9eb328..a0123eb93e 100644<br>
-&gt; --- a/migration/ram.c<br>
-&gt; +++ b/migration/ram.c<br>
-&gt; @@ -2718,7 +2718,7 @@ static void ram_list_init_bitmaps(void)<br>
-&gt;=C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 MigrationState *ms =3D migrate_get_current();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 RAMBlock *block;<br>
-&gt; -=C2=A0 =C2=A0 unsigned long pages;<br>
-&gt; +=C2=A0 =C2=A0 unsigned long pages, clear_bmap_pages;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 uint8_t shift;<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 /* Skip setting bitmap if there is no RAM */<br>
-&gt; @@ -2736,6 +2736,7 @@ static void ram_list_init_bitmaps(void)<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 RAMBLOCK_FOREACH_NOT_IGNORED(block) =
-{<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pages =3D block-&gt;ma=
-x_length &gt;&gt; TARGET_PAGE_BITS;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 clear_bmap_pages =3D clear_=
-bmap_size(pages, shift);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* The initial di=
-rty bitmap for migration must be set with all<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* ones to make s=
-ure we&#39;ll migrate every guest RAM page to<br>
-&gt; @@ -2751,7 +2752,12 @@ static void ram_list_init_bitmaps(void)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&g=
-t;file_bmap =3D bitmap_new(pages);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;clear_bmap_s=
-hift =3D shift;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;clear_bmap =3D bi=
-tmap_new(clear_bmap_size(pages, shift));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;clear_bmap =3D bi=
-tmap_new(clear_bmap_pages);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Set clear_bmap to 1=
- unconditionally, as we always set bmap<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* to all 1s by defaul=
-t.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bitmap_set(block-&gt;clear_=
-bmap, 0, clear_bmap_pages);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 }<br>
-&gt; @@ -2771,6 +2777,7 @@ static void migration_bitmap_clear_discarded_pag=
-es(RAMState *rs)<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 static bool ram_init_bitmaps(RAMState *rs, Error **errp)<br>
-&gt;=C2=A0 {<br>
-&gt; +=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 bool ret =3D true;<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 qemu_mutex_lock_ramlist();<br>
-&gt; @@ -2783,7 +2790,13 @@ static bool ram_init_bitmaps(RAMState *rs, Erro=
-r **errp)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!ret) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out=
-_unlock;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 migration_bitmap_sync_preco=
-py(false);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Bypass the RAMBlock=
- dirty sync and still publish the<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* notification.<br>
-<br>
-Hmm.. Why should QEMU notify AFTER_BITMAP_SYNC if the sync didn&#39;t happe=
-n?<br></blockquote><div><br></div><div style=3D"font-family:&quot;comic san=
-s ms&quot;,sans-serif" class=3D"gmail_default">Indeed, logically, we should=
- not make the notification.</div><div style=3D"font-family:&quot;comic sans=
- ms&quot;,sans-serif" class=3D"gmail_default"><br></div><div style=3D"font-=
-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">Some f=
-eatures, like VIRTIO_BALLOON_F_FREE_PAGE_HINT, use this notification</div><=
-div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gma=
-il_default">to indirectly detect whether the RAMBlock&#39;s bmap has been u=
-pdated. This allows the</div><div style=3D"font-family:&quot;comic sans ms&=
-quot;,sans-serif" class=3D"gmail_default">free page optimization to begin c=
-learing parts of the bitmap that contain free pages.<br></div><div style=3D=
-"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">=
-<br></div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" c=
-lass=3D"gmail_default">virtio_balloon_free_page_hint_notify<br></div><div s=
-tyle=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_de=
-fault">......</div><div style=3D"font-family:&quot;comic sans ms&quot;,sans=
--serif" class=3D"gmail_default">=C2=A0 =C2=A0 switch (pnd-&gt;reason) {<br>=
-=C2=A0 =C2=A0 case PRECOPY_NOTIFY_BEFORE_BITMAP_SYNC:<br>=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 virtio_balloon_free_page_stop(dev);<br>=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 break;<br>=C2=A0 =C2=A0 case PRECOPY_NOTIFY_AFTER_BITMAP_SYNC:<br>=C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 if (vdev-&gt;vm_running) {<br>=C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 virtio_balloon_free_page_start(dev);<br>=C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br><br=
-></div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" clas=
-s=3D"gmail_default">The free page optimization may miss the first time wind=
-ow to execute if we don&#39;t</div><div style=3D"font-family:&quot;comic sa=
-ns ms&quot;,sans-serif" class=3D"gmail_default">send out a notification aft=
-er starting the migration and initializing the bmap with all 1s.<br></div><=
-div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gma=
-il_default"><br></div><div style=3D"font-family:&quot;comic sans ms&quot;,s=
-ans-serif" class=3D"gmail_default">May we change the old behavior of optimi=
-zation?</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-l=
-eft-color:rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (precopy_notify(PRECOPY_=
-NOTIFY_AFTER_BITMAP_SYNC, &amp;local_err)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report_=
-err(local_err);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 out_unlock:<br>
-&gt; -- <br>
-&gt; 2.27.0<br>
-&gt; <br>
-<br>
--- <br>
-Peter Xu<br>
-<br>
-</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
-=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
-ignature"><div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best re=
-gards</font></div></div></div>
-</div>
-
---0000000000009789d006266084e8--
+Thanks,
+Sahil
 
