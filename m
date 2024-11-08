@@ -4,105 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 015CED5C0E5
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B76FED5C0E6
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:08:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9Qa2-0001eY-JY; Fri, 08 Nov 2024 10:07:22 -0500
+	id 1t9Qaj-0002Pt-8g; Fri, 08 Nov 2024 10:08:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t9QZz-0001WA-Tb
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:07:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t9QZx-0000Cn-JV
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:07:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731078435;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gUaivA+jjMn6RcuEoEagxvFQ3uj78ss8cuQKbgIXq7I=;
- b=GSh3yDrPBlzubQ4fFREyepIVzJiWljzaP+DRbdTFYm4CUZC1cQ2MR2NKizVsvMm7W3d4W7
- cDWSxbIVdm7RlWw0r3G80hT/El9PzrZEXNZJB5rldKxZ7TIIoEguMe/TzCQokvHg5pU6p8
- rBK17PH/UAC/0jYw7gnaBM34OsK5leA=
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-448-svj566LHPbaKhIcY4ivkXA-1; Fri, 08 Nov 2024 10:07:14 -0500
-X-MC-Unique: svj566LHPbaKhIcY4ivkXA-1
-X-Mimecast-MFC-AGG-ID: svj566LHPbaKhIcY4ivkXA
-Received: by mail-oa1-f70.google.com with SMTP id
- 586e51a60fabf-2885c5af51cso3815128fac.3
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:07:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9QaW-0002OH-F4
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:07:53 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9QaU-0000IV-TZ
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:07:52 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-37d50fad249so1584792f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:07:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731078469; x=1731683269; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MdVJK+skN3puiJ7nU645pMIhqPtlDTNMSBqXn2QS3MU=;
+ b=YHv4c1rtn9HGmPEibuDcsee7/anE7UGA6Yf+fIrkZfLz03tb4oTT57FNw+tTRDifrg
+ hBKlbateVkj1gDOZBDhI8ZSdD+3o+BsmbL29sFCwDX7GruR1oP9Xo5tnslfspNUks6NO
+ 0DrK5KDgIOQ/U76cEWonhbwJbUXPc6Mojn4H4V9P5E9AuohM05WhkoTwPj66kIEZmrsW
+ DEHKUQMpo/aFSawrVQ9ACTeDceCtBAHJJURQ5zNldRGtPvmhDL4/aQvPD1Cykhs6iAt0
+ 3PMZd/iFRE9/cB4tV2GDoIvDroRex7H7/vwcu0vofe+MTN1N5TZy9XU9AOSjaHXgX9O8
+ IbHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731078433; x=1731683233;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gUaivA+jjMn6RcuEoEagxvFQ3uj78ss8cuQKbgIXq7I=;
- b=p0BL8QGsk0is28qHMoik97IBtM9lVaXGw4903VYL0t3260BfntzWIMpLqCTSacYQxc
- UnK613OZA9diP11g6D8+owREzZBfwhizecU9rM6kdtF+hlrRfnkc5ULbCwfW8TPppOFb
- 3DgnHRP+5iBywI+6TN+Uo0Kccps5FWVdS2Tng7RZh56A/Y05OpFWF70sPYqiup0o5byy
- Qtiy65u4FjRMw87W9BVho2ukLIc8MqLgn25Mq+ng+kEnIaVOWNVCORQTetdsZ/F83Ypr
- NX4c9GTSuC6piAk7iajGeCf3dmjupdqNJS89vjqSZjlPZ3zd3/Uz6w3aY03pNBcOgyEA
- f5Qw==
+ d=1e100.net; s=20230601; t=1731078469; x=1731683269;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MdVJK+skN3puiJ7nU645pMIhqPtlDTNMSBqXn2QS3MU=;
+ b=ZQAF4lZG1qjLASPjhCPMTc0JCjA+g/tssmLhBt+uk9CT2y5At2ic9b9DfEKcNX6CnE
+ 7FEhIU7TCN7gr3G+wRf42q6Bjqs11LqxkfbVjXc/xHhWqUPNSvlJ2DF1vPBiC3uOEYvC
+ a0SdogzDIu0ZpyT5GjWk1lyvQUZcFxCHm7MKo8IPL5fjgk/uDbSHyw6skxff+7FqA4kA
+ aDA1xYNcahjXm4j8yGsBy4ajywFpPphKJ+En+0s6pn1v0A+h4e8NHyMf+6h101IohwIH
+ cbbSPNqu9tqvjZJoNIP14RtwT1fvhP/ZYghs45USJqATsSNODOs5eOthgqBD64bxiZ9k
+ nk/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUAOhrMq0zGbJVdFHgCbn+H/hN3DEy4dpTUd3GCmoveLBhVjx85aryt7gsdA6NBbAUTtP3nzMsRuMgo@nongnu.org
-X-Gm-Message-State: AOJu0Yzna0qIS/IW5dPQ5JRK7NGFydBqR8ZeUQm4f3NOi9MZuPRLQ2zG
- nHNxNw+DU1Q80ULXZXOe39vgCVfRl0QLUD1vyY5WlgICIlUA4+ARLs3mwEmbwoeIHBf7SVEuY2Q
- rM6GRsl3WjbD0Phls6eqdVFAEoXaH9zp42XgaUMCoDRfLFYtcXYfA
-X-Received: by 2002:a05:6870:e247:b0:261:f8e:a37a with SMTP id
- 586e51a60fabf-29560059ea4mr3433372fac.14.1731078432932; 
- Fri, 08 Nov 2024 07:07:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHFOu3mfTB1GbqGgrbjL+0MiaHHHy+OWftyRrVvvtTIz86xkWMKFcHozdakIA7hRSU3kzrUkw==
-X-Received: by 2002:a05:6870:e247:b0:261:f8e:a37a with SMTP id
- 586e51a60fabf-29560059ea4mr3433337fac.14.1731078432611; 
- Fri, 08 Nov 2024 07:07:12 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29546c8eb0fsm984117fac.14.2024.11.08.07.07.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 07:07:11 -0800 (PST)
-Date: Fri, 8 Nov 2024 10:07:08 -0500
-From: Peter Xu <peterx@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>,
- Fabiano Rosas <farosas@suse.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH V3 01/16] machine: anon-alloc option
-Message-ID: <Zy4pHEY8jBLfJmBO@x1n>
-References: <66c05a06-dbb7-49ec-b58e-ccd917d098ea@oracle.com>
- <053dd9b6-e4f7-41c8-abe9-ed02214f0639@redhat.com>
- <cce158c4-3bb1-4771-b2c5-f3ae8a2285d5@oracle.com>
- <5b192b5e-943c-4b2f-ab40-ef54ea578363@redhat.com>
- <00261b15-3eef-439a-8501-574e3bb50d95@oracle.com>
- <d00ab1a4-2b72-4202-b810-adeb53a16f01@redhat.com>
- <44b15731-0ee8-4e24-b4f5-0614bca594cb@oracle.com>
- <99c6d0df-4ced-4fe5-bc87-2682d1ceaa5b@redhat.com>
- <29d21f54-38e7-43a9-86fa-586bd6f957be@oracle.com>
- <115da88f-e3aa-4bfe-8842-530c06c39da2@redhat.com>
+ AJvYcCXodQ2NZcsG0QRjI+vSSi9ZEFU26Y0FgkQkFsb5Ns4fi0AK9ebmXBxbUrdIM0jIRJNIg9dvVgAz9G2R@nongnu.org
+X-Gm-Message-State: AOJu0YwIqRAQuDSrI/iT5YEH+JN70zGvF1ph2/SvNtX8XAfMU6naVkkO
+ q2YiNsGPQQHNPN7t0r8qoYPANv8AQJtG8byV7DeiX4WMa9MMnQS+HJfk6XUnZ+g=
+X-Google-Smtp-Source: AGHT+IF91Szv5OWZysZVLh16jVHqlhN66Pw77kjV+6r5uXdanVbMWkhKZapkBNTtH55u6fBZHXpazg==
+X-Received: by 2002:a05:6000:796:b0:37d:3a2d:8577 with SMTP id
+ ffacd0b85a97d-381f1872fd5mr2908690f8f.33.1731078468995; 
+ Fri, 08 Nov 2024 07:07:48 -0800 (PST)
+Received: from [172.16.22.241] ([89.101.241.141])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381ed970e23sm5126426f8f.18.2024.11.08.07.07.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Nov 2024 07:07:48 -0800 (PST)
+Message-ID: <5eae8356-ad71-4b6e-b3cc-025ec23a0846@linaro.org>
+Date: Fri, 8 Nov 2024 15:07:46 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <115da88f-e3aa-4bfe-8842-530c06c39da2@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/16] hw/ssi/xilinx_spi: Make device endianness
+ configurable
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, devel@lists.libvirt.org,
+ qemu-ppc@nongnu.org, Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241107012223.94337-1-philmd@linaro.org>
+ <20241107012223.94337-9-philmd@linaro.org>
+ <4b678b54-0f1b-4b3e-8201-fb22c7cd7cd5@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <4b678b54-0f1b-4b3e-8201-fb22c7cd7cd5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,53 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 08, 2024 at 03:54:13PM +0100, David Hildenbrand wrote:
-> Likely AUX is everything that is "neither explicitly specified by the user nor
-> very special RAM"
+On 7/11/24 11:01, Richard Henderson wrote:
+> On 11/7/24 01:22, Philippe Mathieu-Daudé wrote:
+>> Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair
+>> of DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
+>> Add the "little-endian" property to select the device
+>> endianness, defaulting to little endian.
+>> Set the proper endianness on the single machine using the
+>> device.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/arm/xlnx-zynqmp.c |  4 ++++
+>>   hw/ssi/xilinx_spi.c  | 29 +++++++++++++++++++++--------
+>>   2 files changed, 25 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
+>> index ab2d50e31b..e735dbdf82 100644
+>> --- a/hw/arm/xlnx-zynqmp.c
+>> +++ b/hw/arm/xlnx-zynqmp.c
+>> @@ -714,6 +714,10 @@ static void xlnx_zynqmp_realize(DeviceState *dev, 
+>> Error **errp)
+>>       for (i = 0; i < XLNX_ZYNQMP_NUM_SPIS; i++) {
+>>           gchar *bus_name;
+>> +        if (!object_property_set_bool(OBJECT(&s->spi[i])), 
+>> "little-endian",
+>> +                                      true, errp)) {
+>> +            return;
+>> +        }
 > 
-> So I think hw/misc/ivshmem.c would also not count as "aux", and similarly
-> hw/remote/memory.c; both use memory_region_init_ram_from_fd(share=on).
-> 
-> memory_region_init_ram_ptr/memory_region_init_ram_device_ptr are similarly
-> special: we cannot possibly turn them SHARED. But that's also what your code
-> already handled.
-> 
-> So maybe, really everything is AUX ram, except
-> * Using memory_region_init_ram_from_fd()/
->   memory_region_init_ram_from_file() users.
-> * Using memory_region_init_ram_ptr / memory_region_init_ram_device_ptr
-> * Created via memory backends
-> 
-> 
-> Note that hw/m68k/next-cube.c is one odd RAM_SHARED user. I don't know why
-> it uses RAM_SHARED to get anonymous shared RAM. Likely a mistake when that
-> code was introduced.
-> 
-> CCing Thomas.
-> 
-> commit 956a78118bfc7fa512b03cbe8a77b9384c6d89f4
-> Author: Thomas Huth <huth@tuxfamily.org>
-> Date:   Sat Jun 30 08:45:25 2018 +0200
-> 
->     m68k: Add NeXTcube machine
->     It is still quite incomplete (no SCSI, no floppy emulation, no network,
->     etc.), but the firmware already shows up the debug monitor prompt in the
->     framebuffer display, so at least the very basics are already working.
->     This code has been taken from Bryce Lanham's GSoC 2011 NeXT branch at
->      https://github.com/blanham/qemu-NeXT/blob/next-cube/hw/next-cube.c
->     and altered quite a bit to fit the latest interface and coding conventions
->     of the current QEMU.
+> How might this ever fail?
+> Despite xlnx_zynqmp_realize having an errp argument, I'd be inclined to 
+> use error_abort.
 
-This might also imply that our current RAM_SHARED is already not crystal
-clear on when to use, not to mention RAM_AUX if to be introduced..  Please
-see my other email, trying to define RAM_SHARED properly.
+Yeah I also noticed that, but this is the pattern this file uses, so
+I'd rather clean it up in a separate patch.
 
-IIUC after we can properly define RAM_SHARED, then we don't need AUX, and
-everything will be crystal clear.
+> Otherwise,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Thanks,
-
--- 
-Peter Xu
+Thanks!
 
 
