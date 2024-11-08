@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED02ED64065
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 659B5D64064
 	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 16:30:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9Rrc-0008Vx-G3; Fri, 08 Nov 2024 11:29:36 -0500
+	id 1t9Rrd-0008WE-QF; Fri, 08 Nov 2024 11:29:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9RrP-0008UH-Va
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 11:29:24 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1t9RrJ-0008U0-5k
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 11:29:22 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9RrG-0003rI-W4
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 11:29:17 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4315baec69eso21060545e9.2
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 08:29:13 -0800 (PST)
+ id 1t9RrG-0003qc-A3
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 11:29:16 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43155abaf0bso21274245e9.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 08:29:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731083353; x=1731688153; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TXACTNjW7XQDDQR5ql26mWd2hLljWGI/IOPLLCh6Itc=;
- b=mn8AZG7XUiSSj4cuE2KzxLf2ESUpsC3E0YnVxELYevxX/wZFPSeb3C0Ht5YkKj1iB0
- vvTOTIkvNqaE9nhruIbWMIZyOTM6i6BnsoSAhubPxENPKos62HhSB5SSqr40txOZdgb6
- oETKQ82khSWAz8mK6wdzfUf1tENRp2gm1UO69OWnt/6ln1lmyUb4IZA5epL9LElRegFh
- Z2wMBBwFpSaT/2appLQFvkNLsOgF2mXOcy0x9diTg0IFuw/SHqb3r4KgRnB9phxgbCxz
- 3a911xK/DwofiD74vkL+qk7RU/ibcwVvad9dNNa78vQn4ft4blbPz07lsc0XWgkZ4ugw
- KRGg==
+ d=linaro.org; s=google; t=1731083351; x=1731688151; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=j7j975pXlGw+vVjq9yeZZzQunJjncVGsi/tk3WFhJXY=;
+ b=IdKhdxdgtjSQtPMLve5FJI4Wc8ai1B/GbGz2XR6xg1lGOFcbxlv5uja3gYn43t1Rj4
+ kb+H9alZrmcDwuG0qeqPE1LJsbhiJg1Ml5Azp9uSNDNxS1sdplpGkSegNUiqFZRUvu8c
+ CK3Jm6ZrAWxAA44cN2BBsiyCyVXk8iy1MJo49o2qIQwTh5heXfxdkx3NLS09HehmzOZ5
+ zxAxxKZDzZC3g513jk61E77/fh5uLpl1qBZjhgMZsvCu2mDBXT/XsXCtSttba76z/a8z
+ OIKdXJaYwuUI14dNhuxLIRtjRjGuP9YXh1NylVcl4PkP/SVLAPGzoeQaOsDOLcvu7nK/
+ EnOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731083353; x=1731688153;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TXACTNjW7XQDDQR5ql26mWd2hLljWGI/IOPLLCh6Itc=;
- b=O9/4fu8HAyt1pXN3nVhWm/yzFp71zJ3dnk1YiLKuTrFDAmlQXK/Tv2WOS8nvdRkBRr
- fUqSXrk09XqZ/FDlX5ALbYXP2/ItaF4wGTTm92eNk8cSagfCJP7SmYQD/T/bKljwwK2O
- puyWnh5RBQW4ymlrmIGOkC+CHOqERMd3BNaLQR2t3mL8/755cFf5CzaQhsfDxyUzgF7i
- 08cYUwJqu3oV/2yXW4sgtzNIgLYoQf+HvzThCyIYol5MzGu4mzj7IKTAMrIr0ECPRDZ/
- xxYLYevwQLSVi2MQOEFDdtdpmjeTfpV0/gl3AsJmkM7CG4wlKFRytyumR58Pij+5QvzO
- JhGQ==
-X-Gm-Message-State: AOJu0YxpP1KPvumxBRUQCX5XaaYb1RGl5wtzBrtEz/NkrqTHnvSYC/gi
- FnT2KS9PmbtB+orIvG3V2YmJQjx2d18KkEXJ0AFOuU+7NrArQTnvviprt26MQAmhafWA36Afehe
- l
-X-Google-Smtp-Source: AGHT+IE2c8SbrKfSxULUWrKMTy4exzFPF89kpI6EOyOdxYLONu8pHg33po8YpJ6v5OpUfZnr+pTvrw==
-X-Received: by 2002:a5d:5f54:0:b0:37d:4cd5:ffec with SMTP id
- ffacd0b85a97d-381f18632f7mr2919213f8f.2.1731083352960; 
- Fri, 08 Nov 2024 08:29:12 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731083351; x=1731688151;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=j7j975pXlGw+vVjq9yeZZzQunJjncVGsi/tk3WFhJXY=;
+ b=I6aMqpy+hjIX5tZyNrsWGWGcz/pHFVSQXnRFwBKZmf+KuInfGZ/sfZqmm2+y2nDctn
+ kDI/AETC51rlXYjRG5spP/sevKucG6az5nsXCrYDf1dqRgCRZl0AbBFgkauWWq1SRrYO
+ 9R3bBrHxj5mlsexePwGjkYBWPybOsoxeu7/lnrDl7qLp27mKuzPEwtDBDmsLBoD9goJH
+ ZwPHRonrtsjpmpEw/jNsTHGofmkGu3t7bIXmHJ/Kbz5hdjCshKh5POWRP3/yq7If+lTg
+ IitfudcCCyPZHR6PfVHX0H+XXKul6jN645KI2r5nYQ9DKoUFzuyj62OZ1P1qyA6GXSL+
+ 9OeQ==
+X-Gm-Message-State: AOJu0YyD3GuFXlGPQZ5TFh3vQ7lwtL61kA1pN0AVV51i0vm1smC7qStI
+ QRSz0eNuZ2VT70wirHSMk8T1JndaGLksWMAUk8p33hBIyeCW3BadbYKiIJdFY73k+OTphdDRR7j
+ p
+X-Google-Smtp-Source: AGHT+IECIkpkm9BQAjVzp9e4ecQQR8FiQVyMAYRz1QJq48r/kwL1SNTb8O95OtI2H+M2cc/tJFEXIA==
+X-Received: by 2002:a05:6000:1ac9:b0:37d:461d:b1ea with SMTP id
+ ffacd0b85a97d-381f1885defmr3087250f8f.48.1731083351073; 
+ Fri, 08 Nov 2024 08:29:11 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432b0530599sm78109135e9.1.2024.11.08.08.29.12
+ 5b1f17b1804b1-432b0530599sm78109135e9.1.2024.11.08.08.29.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 08:29:12 -0800 (PST)
+ Fri, 08 Nov 2024 08:29:10 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
 	Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH 3/3] trace: Don't include trace-root.h in control.c or
- control-target.c
-Date: Fri,  8 Nov 2024 16:29:09 +0000
-Message-Id: <20241108162909.4080314-4-peter.maydell@linaro.org>
+Subject: [PATCH 0/3] trace: Minor cleanups to trace header includes
+Date: Fri,  8 Nov 2024 16:29:06 +0000
+Message-Id: <20241108162909.4080314-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241108162909.4080314-1-peter.maydell@linaro.org>
-References: <20241108162909.4080314-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,42 +92,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The trace-root.h file has the definitions of trace events for
-the top-level trace-events file (i.e. for those events which are
-used in source files in the root of the source tree). There's
-no particular need for trace/control.c or trace/control-target.c
-to include this.
+This series does some minor cleanups which deal with cases where some
+C file is including a "trace/trace-<subdir>.h" file directly. Our
+documentation in docs/devel/tracing.rst says that that should
+generally not be done; instead there is a trace.h file which indirects
+to the generated trace-<subdir>.h header.  The only exception is that
+source files in the root directory include trace/trace-root.h.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
+The three exceptions fixed here are:
+ * system/dma-helpers.c defined its trace events in the
+   root trace-events file, not the system/trace-events file
+ * we forgot to create the indirection trace.h for target/arm/hvf
+ * a couple of source files in trace/ include trace-root.h when
+   they don't use anything defined in it
+
+thanks
+-- PMM
+
+Peter Maydell (3):
+  system/dma-helpers.c: Move trace events to system/trace-events
+  target/arm/hvf: Add trace.h header
+  trace: Don't include trace-root.h in control.c or control-target.c
+
+ target/arm/hvf/trace.h | 1 +
+ system/dma-helpers.c   | 2 +-
+ target/arm/hvf/hvf.c   | 2 +-
  trace/control-target.c | 1 -
  trace/control.c        | 1 -
- 2 files changed, 2 deletions(-)
+ system/trace-events    | 7 +++++++
+ trace-events           | 7 -------
+ 7 files changed, 10 insertions(+), 11 deletions(-)
+ create mode 100644 target/arm/hvf/trace.h
 
-diff --git a/trace/control-target.c b/trace/control-target.c
-index 97f21e476d2..d58e84f6dd8 100644
---- a/trace/control-target.c
-+++ b/trace/control-target.c
-@@ -10,7 +10,6 @@
- #include "qemu/osdep.h"
- #include "qemu/lockable.h"
- #include "cpu.h"
--#include "trace/trace-root.h"
- #include "trace/control.h"
- 
- 
-diff --git a/trace/control.c b/trace/control.c
-index ef107829ac0..1c8c50064af 100644
---- a/trace/control.c
-+++ b/trace/control.c
-@@ -27,7 +27,6 @@
- #include "qemu/error-report.h"
- #include "qemu/config-file.h"
- #include "monitor/monitor.h"
--#include "trace/trace-root.h"
- 
- int trace_events_enabled_count;
- 
 -- 
 2.34.1
 
