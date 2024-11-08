@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF53DD5E154
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3163D5E156
 	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 10:38:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9MN9-0002Pa-PW; Fri, 08 Nov 2024 05:37:47 -0500
+	id 1t9MNC-0002Qm-UX; Fri, 08 Nov 2024 05:37:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <042b4ebfd2298ae01553844124f27d651cdb1071@kylie.crudebyte.com>)
- id 1t9MN5-0002PL-TJ; Fri, 08 Nov 2024 05:37:43 -0500
+ id 1t9MNA-0002QE-Di; Fri, 08 Nov 2024 05:37:48 -0500
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <042b4ebfd2298ae01553844124f27d651cdb1071@kylie.crudebyte.com>)
- id 1t9MN3-0005bF-NO; Fri, 08 Nov 2024 05:37:43 -0500
+ id 1t9MN7-0005bX-G5; Fri, 08 Nov 2024 05:37:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-Id:Content-Type:
- Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=Y2sYtKZduLLC2e1R1hX/xjMEglvdUjKcDnQtYov+6qA=; b=XktEs
- J8rM0zlzhNBBRVUXtTVVKCj1Ce8wuhA/peUgjMwkXmdDdwtlNqJi1q3unUR62jP9/Eik2qvOqc3bp
- EK+cAnkreTpGKpsktRC89GgvxTaspW3li3QnZpXd0fmi1leyFeFZzFz84AHKKHknrg64jOz5BvSUf
- 9tfTeyOhvaQ3vqIg56aCYs8GTelI0d0SW17WmhPH+QohxRwdT4Nn2M0y5ZgetvAwSmAVa2nSTIfYe
- XQN4hI6b7YuUXEG8QZCPmf/z6eDw1DyBCKlhV+fDk5qg7Oe2HZ3pds2EPpAl2fD2S22mgpQfYYIWv
- SFx3TgxADmjbverpu96TOg9gx56OMvhkrd9khItyZjdfjWU3kRx1IQ03AiMXFyMU0nO7E3bh7RZdh
- ePaWk3ju5XlvcoG24eJar1AG4FUydb1VGFCTG2q0slrOvEXZROmSP0E2bhI4do3OJx0fw9PUblaDa
- VD3i/7smlYmaqBDRTrv8tiNa+d89nPoyfJkQoL7l3tAWXr1omngzkbfnN1YRqgHNTWZo70m4EL5Pj
- PCQ9iStGv8gdGUnnAArMmuWqnwqEViZKxRq8IIzxjjKZeoC4+qhV0CUSPL2+Fjokc2NVesA3PTwc7
- RlYQlbl98nuPIR4KZQnZHzqPphfpKQPbP2fd++35KwaU/YXfn2ih8kiPPx267Y=;
-Message-Id: <cover.1731059803.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=3wiZXtK/ZFU3fzQgHyiPmVBJifvcCVuHJzV0dxB5Hl0=; b=Ibc1S
+ /i4kL8zj/g1ZqY8NRkYJRR5DJjozk4qGWprEgele5oJsfo+3rw7Qaoj45BjmcXXMbQFQ76HEwf0ZM
+ ltgXZYIAqN7PD9YIAUUdD2FCeyXj1Czt2YoH9dpsB+8p0Ddk956qGgrXvLnE1k6AZf+G1aBgYd5OZ
+ 4O2yw7MdPZQGPaFTKAbUyYTd3dwIwoy2r7RH4NaWNS6Kb+Z8Fp2WkO+ezKcTi2WbPeB55VBIy2BlQ
+ UWSNrmeZFQSKMYUe4Hr7AFagMQwyO/JdW0mL0TwGqn4/xbc1dU5yUY1QB9c4g6NNHjvyuuRSbkYLq
+ 66EBb5iTgA9b7WtNhkaqNJWWOzvLO5b0RsudJKo9d6GXtzzylBfbVDu8kymfqvDOsx+VYIzwI4qjd
+ FBQyva+1G8yWg0OUWr4FLwTIX2vNZxbTgbhuf19sAeaVBLWkiVOss/eVKrLn27KXEcIFY97H10pPh
+ ZZwSV79z/56zSk+880iapb5jSLgvkzNFPQSRVvg42oOg7zZGBtUpJTmbUZowzK0rqZfaciZ8YX9Jg
+ 1ePPIhAFepKwLqL7VdmrjUhF5XvY9FHzZr7cFK8OoUGpJUllCA7N+WWJFylZpiOjn1jYBKMO8TZDi
+ U7ekopyeRf+x6AhC+CGS5rRazDOjHVDx4McXtncZbPnFaCaQBkV/WshIx9cOt0=;
+Message-Id: <042b4ebfd2298ae01553844124f27d651cdb1071.1731059803.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1731059803.git.qemu_oss@crudebyte.com>
+References: <cover.1731059803.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Fri, 08 Nov 2024 10:56:43 +0100
-Subject: [PULL for-9.2 0/1] 9p queue 2024-11-08
+Subject: [PULL for-9.2 1/1] 9pfs: fix crash on 'Treaddir' request
 To: qemu-devel@nongnu.org,
     Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
@@ -67,25 +69,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit feef1866d1366d651e6a3cb8c9cf1a9aabb81395:
+A bad (broken or malicious) 9p client (guest) could cause QEMU host to
+crash by sending a 9p 'Treaddir' request with a numeric file ID (FID) that
+was previously opened for a file instead of an expected directory:
 
-  Merge tag 'pull-riscv-to-apply-20241107' of https://github.com/alistair23/qemu into staging (2024-11-07 15:08:05 +0000)
+  #0  0x0000762aff8f4919 in __GI___rewinddir (dirp=0xf) at
+    ../sysdeps/unix/sysv/linux/rewinddir.c:29
+  #1  0x0000557b7625fb40 in do_readdir_many (pdu=0x557bb67d2eb0,
+    fidp=0x557bb67955b0, entries=0x762afe9fff58, offset=0, maxsize=131072,
+    dostat=<optimized out>) at ../hw/9pfs/codir.c:101
+  #2  v9fs_co_readdir_many (pdu=pdu@entry=0x557bb67d2eb0,
+    fidp=fidp@entry=0x557bb67955b0, entries=entries@entry=0x762afe9fff58,
+    offset=0, maxsize=131072, dostat=false) at ../hw/9pfs/codir.c:226
+  #3  0x0000557b7625c1f9 in v9fs_do_readdir (pdu=0x557bb67d2eb0,
+    fidp=0x557bb67955b0, offset=<optimized out>,
+    max_count=<optimized out>) at ../hw/9pfs/9p.c:2488
+  #4  v9fs_readdir (opaque=0x557bb67d2eb0) at ../hw/9pfs/9p.c:2602
 
-are available in the Git repository at:
+That's because V9fsFidOpenState was declared as union type. So the
+same memory region is used for either an open POSIX file handle (int),
+or a POSIX DIR* pointer, etc., so 9p server incorrectly used the
+previously opened (valid) POSIX file handle (0xf) as DIR* pointer,
+eventually causing a crash in glibc's rewinddir() function.
 
-  https://github.com/cschoenebeck/qemu.git tags/pull-9p-20241108
+Root cause was therefore a missing check in 9p server's 'Treaddir'
+request handler, which must ensure that the client supplied FID was
+really opened as directory stream before trying to access the
+aforementioned union and its DIR* member.
 
-for you to fetch changes up to 042b4ebfd2298ae01553844124f27d651cdb1071:
-
-  9pfs: fix crash on 'Treaddir' request (2024-11-08 10:38:12 +0100)
-
-----------------------------------------------------------------
-* Fix crash with a bad 9p client.
-
-----------------------------------------------------------------
-Christian Schoenebeck (1):
-      9pfs: fix crash on 'Treaddir' request
-
+Cc: qemu-stable@nongnu.org
+Fixes: d62dbb51f7 ("virtio-9p: Add fidtype so that we can do type ...")
+Reported-by: Akihiro Suda <suda.kyoto@gmail.com>
+Tested-by: Akihiro Suda <suda.kyoto@gmail.com>
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Message-Id: <E1t8GnN-002RS8-E2@kylie.crudebyte.com>
+---
  hw/9pfs/9p.c | 5 +++++
  1 file changed, 5 insertions(+)
+
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index af636cfb2d..9a291d1b51 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -2587,6 +2587,11 @@ static void coroutine_fn v9fs_readdir(void *opaque)
+         retval = -EINVAL;
+         goto out_nofid;
+     }
++    if (fidp->fid_type != P9_FID_DIR) {
++        warn_report_once("9p: bad client: T_readdir on non-directory stream");
++        retval = -ENOTDIR;
++        goto out;
++    }
+     if (!fidp->fs.dir.stream) {
+         retval = -EINVAL;
+         goto out;
+-- 
+2.30.2
+
 
