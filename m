@@ -4,75 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF0BD5E153
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 10:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF53DD5E154
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 10:38:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9M8T-0007i2-0a; Fri, 08 Nov 2024 05:22:37 -0500
+	id 1t9MN9-0002Pa-PW; Fri, 08 Nov 2024 05:37:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9M8R-0007hp-0I
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:22:35 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9M8L-0003Vo-9H
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:22:30 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5cecbddb574so2263168a12.1
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 02:22:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731061347; x=1731666147; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4YAmeeupvZYIEJGhmNwVUcb0JmoK4fUxFtelacjRj+E=;
- b=MNAnuezOlE3xxZ4eebKC6svdy5U78hUZqyYZSyW3seXphoh6QmSXznG32wGwb864kT
- x2FAANuDkFGKkRSGmoHXlVaaJ0qk5x7p0c6Gl0eEAfYE6Bi8UBXyheDUAkur58u5rWoJ
- j0XHnp5tnmjef8hicmmy0V+ETuZIEN7k26hIET81YSlG5p/5gqanyp414fTS+txdnMCQ
- HN8BHznev14gmBT+p97TasAhWhiFNQKgrbnzHCk4OTEh6/2Wf8WiW/UzbpfQMpOi7KP2
- Zyb4alZkzv5VAOM1MwZPyfZ2rCaNuSF+x6HPg/1CgiOuKWsAyFOGSxL/hVPeKGvAt4Uk
- GqPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731061347; x=1731666147;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4YAmeeupvZYIEJGhmNwVUcb0JmoK4fUxFtelacjRj+E=;
- b=fKuU9nCTcmMfQpb1Qj6w0cwtCalCoYWt5ZlGNCQ/jUa9yY7xkgjRTiyLX8qhE6AqI3
- Oz9B9LlXmyw/86u5GAE4boyFg6KyqKo1FxR1skDB8tjNEESCD0438GBOTCMIvAgBWOOR
- Cc1pMH1wZ8PIOS8JcIn7bZXaVSpUyAfVrDoCezNix6j5kQzQyDO3eeEh8DMeT/JYlRSY
- K1v23LAJN6ygbGxTAAl8PSpc3hw2NwCBdI1df/vajcml7d/IKiVB6OQx9Z1nhf2ejUoV
- /FHIaLW38ZsV5I8woU+xoYgFMJyFkL31OXCPnxKGM0g2qgKYNe6mdX/ZSMBXeIEHhJDG
- 4Xkw==
-X-Gm-Message-State: AOJu0YychBggyXgp2gnIY1bpDeCaaFZtz6YfJPcxp3L8RKtDLsfAzcrE
- +VWYO6x0CsxfXRH2sV9vWrX35dGGAqLPbR9NasZHEkGur/+nIJnCZ8LVQhfF2lmn1+nslJxsEqt
- A63Q28aSdJeyE5Dsug97AQ18sHyVLvzPgk3jV1w==
-X-Google-Smtp-Source: AGHT+IGnIXUKAW59Xe/QzY0CuprpZrJin1DKrAQB9mhqDT0s0tuTIQt9kVdb5iYR7dDUyURy9fMHdoEpETPBxTVidjU=
-X-Received: by 2002:a05:6402:1ed4:b0:5ca:14f3:2883 with SMTP id
- 4fb4d7f45d1cf-5cf0a2faec8mr1762902a12.4.1731061347434; Fri, 08 Nov 2024
- 02:22:27 -0800 (PST)
-MIME-Version: 1.0
-References: <20241107104001.66039-1-kkostiuk@redhat.com>
-In-Reply-To: <20241107104001.66039-1-kkostiuk@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 8 Nov 2024 10:22:16 +0000
-Message-ID: <CAFEAcA-Pmf2H06q+mvb8bPA42DCQvBeCXsKcqqGcy-Bxf+3D2A@mail.gmail.com>
-Subject: Re: [PULL 0/3] QGA fixes for guest_network_get_route command for 9.2
-To: Konstantin Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+ (Exim 4.90_1)
+ (envelope-from <042b4ebfd2298ae01553844124f27d651cdb1071@kylie.crudebyte.com>)
+ id 1t9MN5-0002PL-TJ; Fri, 08 Nov 2024 05:37:43 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <042b4ebfd2298ae01553844124f27d651cdb1071@kylie.crudebyte.com>)
+ id 1t9MN3-0005bF-NO; Fri, 08 Nov 2024 05:37:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-Id:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=Y2sYtKZduLLC2e1R1hX/xjMEglvdUjKcDnQtYov+6qA=; b=XktEs
+ J8rM0zlzhNBBRVUXtTVVKCj1Ce8wuhA/peUgjMwkXmdDdwtlNqJi1q3unUR62jP9/Eik2qvOqc3bp
+ EK+cAnkreTpGKpsktRC89GgvxTaspW3li3QnZpXd0fmi1leyFeFZzFz84AHKKHknrg64jOz5BvSUf
+ 9tfTeyOhvaQ3vqIg56aCYs8GTelI0d0SW17WmhPH+QohxRwdT4Nn2M0y5ZgetvAwSmAVa2nSTIfYe
+ XQN4hI6b7YuUXEG8QZCPmf/z6eDw1DyBCKlhV+fDk5qg7Oe2HZ3pds2EPpAl2fD2S22mgpQfYYIWv
+ SFx3TgxADmjbverpu96TOg9gx56OMvhkrd9khItyZjdfjWU3kRx1IQ03AiMXFyMU0nO7E3bh7RZdh
+ ePaWk3ju5XlvcoG24eJar1AG4FUydb1VGFCTG2q0slrOvEXZROmSP0E2bhI4do3OJx0fw9PUblaDa
+ VD3i/7smlYmaqBDRTrv8tiNa+d89nPoyfJkQoL7l3tAWXr1omngzkbfnN1YRqgHNTWZo70m4EL5Pj
+ PCQ9iStGv8gdGUnnAArMmuWqnwqEViZKxRq8IIzxjjKZeoC4+qhV0CUSPL2+Fjokc2NVesA3PTwc7
+ RlYQlbl98nuPIR4KZQnZHzqPphfpKQPbP2fd++35KwaU/YXfn2ih8kiPPx267Y=;
+Message-Id: <cover.1731059803.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Fri, 08 Nov 2024 10:56:43 +0100
+Subject: [PULL for-9.2 0/1] 9p queue 2024-11-08
+To: qemu-devel@nongnu.org,
+    Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Akihiro Suda <suda.kyoto@gmail.com>, jan.dubois@suse.com,
+ anders.f.bjorklund@gmail.com, Balaji Vijayakumar <kuttibalaji.v6@gmail.com>
+Received-SPF: none client-ip=5.189.157.229;
+ envelope-from=042b4ebfd2298ae01553844124f27d651cdb1071@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,29 +67,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 7 Nov 2024 at 10:40, Konstantin Kostiuk <kkostiuk@redhat.com> wrote:
->
-> The following changes since commit f15f7273ea55472d5904c53566c82369d81214c1:
->
->   Merge tag 'pull-target-arm-20241105' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-11-05 21:27:18 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/kostyanf14/qemu.git tags/qga-pull-2024-11-07
->
-> for you to fetch changes up to 5ab1c032e6eea810142eb918c57222464482756f:
->
->   qemu-ga: Avoiding freeing line prematurely (2024-11-07 12:28:20 +0200)
->
-> ----------------------------------------------------------------
-> qga-pull-2024-11-07
->
+The following changes since commit feef1866d1366d651e6a3cb8c9cf1a9aabb81395:
 
+  Merge tag 'pull-riscv-to-apply-20241107' of https://github.com/alistair23/qemu into staging (2024-11-07 15:08:05 +0000)
 
-Applied, thanks.
+are available in the Git repository at:
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+  https://github.com/cschoenebeck/qemu.git tags/pull-9p-20241108
 
--- PMM
+for you to fetch changes up to 042b4ebfd2298ae01553844124f27d651cdb1071:
+
+  9pfs: fix crash on 'Treaddir' request (2024-11-08 10:38:12 +0100)
+
+----------------------------------------------------------------
+* Fix crash with a bad 9p client.
+
+----------------------------------------------------------------
+Christian Schoenebeck (1):
+      9pfs: fix crash on 'Treaddir' request
+
+ hw/9pfs/9p.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
