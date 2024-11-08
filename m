@@ -4,87 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86083D5E14C
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 09:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BE49D5E14D
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 10:06:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9LlG-0003Wl-Av; Fri, 08 Nov 2024 04:58:39 -0500
+	id 1t9Lrw-000503-SI; Fri, 08 Nov 2024 05:05:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1t9Ll3-0003VY-DH
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 04:58:26 -0500
-Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1t9Ll0-0000Ye-Hw
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 04:58:24 -0500
-Received: by mail-oi1-x234.google.com with SMTP id
- 5614622812f47-3e60fca5350so1168177b6e.2
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 01:58:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1731059897; x=1731664697; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0I8aoUlEkn+5l/C9mzxATF2jKl/Dppz12Ocsq4mXed8=;
- b=l78C+N9tmwxhHmR+duTtfRZnpcBUYm/VCYhH1m/FNKgfWzKXIPS5BNCW6o6bCeDrR7
- SK6NLsCdXeIfoZt52Epxp2ZwbmY6oKMSg/grXytN690lkId32dXmyPQDD5MFJQ6aMs8i
- kwCLlaqZpUnW6yp6xJaMosURGIQF1h47gYxlOOfysjiy5X3kNJIpxaq6rAsyW9zC18JG
- yDr4tK8mlmw7D+sCOvQwkPveuOuPF44vfS/fMNMCSdPPRq/6JdiHr74CYSB2j5r7Izmt
- 2ktCKXJljmajhubRKMTf0MsttRgSsDiy1rAScVlVSFxONUIjfWzxdZdzDGoACNg+hQEZ
- RqUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731059897; x=1731664697;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0I8aoUlEkn+5l/C9mzxATF2jKl/Dppz12Ocsq4mXed8=;
- b=lGtsWNz33A8DmlLurYEQE5QzlDzRzD+PdtRELCJHHM++44XC3WQlfP7RQkE7OlLbz9
- LLE/2n2H0sZYAmLitR2qFuOiTyhPHjnJsC0teZTpy+tqqRKkHwdKVa9vbOcC+B9mKGSO
- m5cX6rIi3X+kpjvsPIbCgEX+lYe3XV9oQdu5R71A8SJdyTK5op4gzckubd7QYGKMMgRq
- 67OLmTMd65kqcbTpr8NCFtUmAUTFgNRcczGZSl2jOjh1ZiwK5N2gqshOdZTQ+KK0CiHP
- 6uS7eeHsehbKtehe/KbwJT/KTYTkMLzt+GDSB2qx8tDXjsFLSNW3zexO0ABv+ms5qPRY
- i0QQ==
-X-Gm-Message-State: AOJu0Yw4J1qTxPi1sw30mG+6FhvvNgbYVobG1DZPAFo3dWcX3hjF2NBx
- p3KVFd16F5ti0/R3xa4kPXOtrUdRE08c84Ua7ryvr0wqoUgSYLyHSUk+9w8lsm0VGTErSX0sHjW
- GA0LcBIPpx4jrohdUr7s31v7LC5OmVP7aOM9B5sO92EK3vGl9nIKCInUJxJIwSU2JALG9talEJl
- hxkr3RMRYKmj9o0ApOVJoZgLi6cpAijFeA4Ry7bGs=
-X-Google-Smtp-Source: AGHT+IEMXftf5a3ldVzV0EMgSNrtvIIiTREVmf0fgdfdouQluiPW+3pjktiM4LlNZbwAdtwOCpz0Ug==
-X-Received: by 2002:a05:6808:2117:b0:3e7:644e:3ca2 with SMTP id
- 5614622812f47-3e794716b1amr2856614b6e.29.1731059897483; 
- Fri, 08 Nov 2024 01:58:17 -0800 (PST)
-Received: from hsinchu16.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7f41f4890d2sm3014723a12.14.2024.11.08.01.58.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 01:58:16 -0800 (PST)
-From: Jason Chien <jason.chien@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Jason Chien <jason.chien@sifive.com>
-Subject: [PATCH 1/1] hw/riscv/riscv-iommu.c: Correct the validness check of
- iova
-Date: Fri,  8 Nov 2024 17:57:53 +0800
-Message-ID: <20241108095753.12166-1-jason.chien@sifive.com>
-X-Mailer: git-send-email 2.43.2
+ (Exim 4.90_1) (envelope-from <th.huth@posteo.de>) id 1t9Lru-0004zh-Qr
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:05:31 -0500
+Received: from mout01.posteo.de ([185.67.36.65])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <th.huth@posteo.de>) id 1t9Lrr-0001Pd-Jb
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:05:29 -0500
+Received: from submission (posteo.de [185.67.36.169]) 
+ by mout01.posteo.de (Postfix) with ESMTPS id 6C5F6240027
+ for <qemu-devel@nongnu.org>; Fri,  8 Nov 2024 11:05:15 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
+ t=1731060315; bh=AuTznBuOuHCLswdhe2i4l4j5yDgTmoMAF062digmYT0=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:Content-Type:
+ Content-Transfer-Encoding:From;
+ b=K5cMREMmMla58lDGydChlVvpVrE+4fe0zHBtIK9QeapdEuxESU2+1yLIdbEHlv47Z
+ Wx3c+47vK22Sgkb2fcBtYGZH/biAV7ZlCYKskH3hRgMMrDy9SPZE4A3/hSqC3nlZjs
+ 8ppAUJkrrmXxSDW+eHNzaZeWbJDnyzvzHJd+XYuO/2jXl+Dg7fnqojzx66/osvYhVj
+ eU8PzC7h2Txxa4cNIDix8BGOUp3Ccm9rsf27XIUvirNR11fYLihvk2fGdBhIn3y2rX
+ FH8x7P9syM3XsESkdiv1PMCBltKsxJymxmIIRV5m4o7w8NDqAxLEaY6aYCJF/M1jDK
+ r14q66zk6Bzig==
+Received: from customer (localhost [127.0.0.1])
+ by submission (posteo.de) with ESMTPSA id 4XlF1P5ZPFz9rxB;
+ Fri,  8 Nov 2024 11:05:13 +0100 (CET)
+Message-ID: <c3b996b4-d128-4830-94d4-5c9448ca003d@posteo.de>
+Date: Fri,  8 Nov 2024 10:05:13 +0000
 MIME-Version: 1.0
+Subject: Re: [PATCH v4 1/2] next-kbd: convert to use
+ qemu_input_handler_register()
+To: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ peter.maydell@linaro.org, huth@tuxfamily.org, berrange@redhat.com,
+ qemu-devel@nongnu.org
+References: <20241106120928.242443-1-mark.cave-ayland@ilande.co.uk>
+ <20241106120928.242443-2-mark.cave-ayland@ilande.co.uk>
+ <4c127d3c-3610-e6b7-9358-3d88d28477a0@eik.bme.hu>
+ <13995544-2d94-4b35-a7c2-f11e0599170f@linaro.org>
+ <872fd077-b870-f910-88a5-a045787aa681@eik.bme.hu>
+From: Thomas Huth <th.huth@posteo.de>
+Content-Language: en-US
+In-Reply-To: <872fd077-b870-f910-88a5-a045787aa681@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
- envelope-from=jason.chien@sifive.com; helo=mail-oi1-x234.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=185.67.36.65; envelope-from=th.huth@posteo.de;
+ helo=mout01.posteo.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,70 +79,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From RISCV IOMMU spec section 2.1.3:
-When SXL is 1, the following rules apply:
-- If the first-stage is not Bare, then a page fault corresponding to the
-riginal access type occurs if the IOVA has bits beyond bit 31 set to 1.
-- If the second-stage is not Bare, then a guest page fault corresponding
-o the original access type occurs if the incoming GPA has bits beyond bit
-33 set to 1.
+On 06/11/2024 21.32, BALATON Zoltan wrote:
+> On Wed, 6 Nov 2024, Philippe Mathieu-Daudé wrote:
+>> On 6/11/24 13:00, BALATON Zoltan wrote:
+>>> On Wed, 6 Nov 2024, Mark Cave-Ayland wrote:
+>>>> Convert the next-kbd device from the legacy UI qemu_add_kbd_event_handler()
+>>>> function to use qemu_input_handler_register().
+>>>>
+>>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>>> Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+>>>> ---
+>>>> hw/m68k/next-kbd.c | 163 ++++++++++++++++++++++++++++++---------------
+>>>> 1 file changed, 108 insertions(+), 55 deletions(-)
+>>
+>>
+>>>> -static const unsigned char next_keycodes[128] = {
+>>>> -    0x00, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x50, 0x4F,
+>>>> -    0x4E, 0x1E, 0x1F, 0x20, 0x1D, 0x1C, 0x1B, 0x00,
+>>>> -    0x42, 0x43, 0x44, 0x45, 0x48, 0x47, 0x46, 0x06,
+>>>> -    0x07, 0x08, 0x00, 0x00, 0x2A, 0x00, 0x39, 0x3A,
+>>>> -    0x3B, 0x3C, 0x3D, 0x40, 0x3F, 0x3E, 0x2D, 0x2C,
+>>>> -    0x2B, 0x26, 0x00, 0x00, 0x31, 0x32, 0x33, 0x34,
+>>>> -    0x35, 0x37, 0x36, 0x2e, 0x2f, 0x30, 0x00, 0x00,
+>>>> -    0x00, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+>>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+>>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+>>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+>>>> -    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+>>>> +#define NEXTKBD_NO_KEY 0xff
+>>>
+>>> Now you don't need this 0xff define any more because you can use 0 as no 
+>>> key value then the [0 ... Q_KEY_CODE__MAX] init below can also be dropped 
+>>> because static variables are 0 init automatically.
+>>
+>> Whether 0 or 0xff is best for NO_KEY, I don't know.
+>> However, definitions are useful when reviewing ...
+>>
+>>>
+>>> Regards,
+>>> BALATON Zoltan
+>>>
+>>>> +static const int qcode_to_nextkbd_keycode[] = {
+>>>> +    /* Make sure future additions are automatically set to 
+>>>> NEXTKBD_NO_KEY */
+>>>> +    [0 ... Q_KEY_CODE__MAX]    = NEXTKBD_NO_KEY,
+>>>> +
+>>>> +    [Q_KEY_CODE_ESC]           = 0x49,
+>>>> +    [Q_KEY_CODE_1]             = 0x4a,
+>>>> +    [Q_KEY_CODE_2]             = 0x4b,
+>>>> +    [Q_KEY_CODE_3]             = 0x4c,
+>>>> +    [Q_KEY_CODE_4]             = 0x4d,
+>> [...]
+>>
+>>>> +static void nextkbd_event(DeviceState *dev, QemuConsole *src, 
+>>>> InputEvent *evt)
+>>>> +{
+>>>> +    NextKBDState *s = NEXTKBD(dev);
+>>>> +    int qcode, keycode;
+>>>> +    bool key_down = evt->u.key.data->down;
+>>>> +
+>>>> +    qcode = qemu_input_key_value_to_qcode(evt->u.key.data->key);
+>>>> +    if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>> +    /* Shift key currently has no keycode, so handle separately */
+>>>> +    if (qcode == Q_KEY_CODE_SHIFT) {
+>>>> +        if (key_down) {
+>>>> +            s->shift |= KD_LSHIFT;
+>>>> +        } else {
+>>>> +            s->shift &= ~KD_LSHIFT;
+>>>> +        }
+>>>> +    }
+>>>> +
+>>>> +    if (qcode == Q_KEY_CODE_SHIFT_R) {
+>>>> +        if (key_down) {
+>>>> +            s->shift |= KD_RSHIFT;
+>>>> +        } else {
+>>>> +            s->shift &= ~KD_RSHIFT;
+>>>> +        }
+>>>> +    }
+>>>> +
+>>>> +    keycode = qcode_to_nextkbd_keycode[qcode];
+>>>> +    if (keycode == NEXTKBD_NO_KEY) {
+>>
+>> ... here ^
+> 
+> I this case !keycode is pretty self explanatory IMO.
 
-From RISCV IOMMU spec section 2.3 step 17:
-Use the process specified in Section "Two-Stage Address Translation" of
-the RISC-V Privileged specification to determine the GPA accessed by the
-transaction.
+Ok, I'll pick up the patch with this change added on top:
 
-From RISCV IOMMU spec section 2.3 step 19:
-Use the second-stage address translation process specified in Section
-"Two-Stage Address Translation" of the RISC-V Privileged specification
-to translate the GPA A to determine the SPA accessed by the transaction.
-
-This commit adds the iova check with the following rules:
-- For Sv32, Sv32x4, Sv39x4, Sv48x4 and Sv57x4, the iova must be zero
-extended.
-- For Sv39, Sv48 and Sv57, the iova must be signed extended with most
-significant bit.
-
-Signed-off-by: Jason Chien <jason.chien@sifive.com>
----
- hw/riscv/riscv-iommu.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
-
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index bbc95425b3..ff9deefe37 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -392,9 +392,26 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
- 
-         /* Address range check before first level lookup */
-         if (!sc[pass].step) {
--            const uint64_t va_mask = (1ULL << (va_skip + va_bits)) - 1;
--            if ((addr & va_mask) != addr) {
--                return RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED;
-+            const uint64_t va_len = va_skip + va_bits;
-+            const uint64_t va_mask = (1ULL << va_len) - 1;
-+
-+            if (pass == S_STAGE && va_len > 32) {
-+                target_ulong mask, masked_msbs;
-+
-+                mask = (1L << (TARGET_LONG_BITS - (va_len - 1))) - 1;
-+                masked_msbs = (addr >> (va_len - 1)) & mask;
-+
-+                if (masked_msbs != 0 && masked_msbs != mask) {
-+                    return (iotlb->perm & IOMMU_WO) ?
-+                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S :
-+                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S;
-+                }
-+            } else {
-+                if ((addr & va_mask) != addr) {
-+                    return (iotlb->perm & IOMMU_WO) ?
-+                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
-+                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS;
-+                }
-             }
-         }
- 
--- 
-2.43.2
+diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
+--- a/hw/m68k/next-kbd.c
++++ b/hw/m68k/next-kbd.c
+@@ -165,12 +165,7 @@ static const MemoryRegionOps kbd_ops = {
+      .endianness = DEVICE_NATIVE_ENDIAN,
+  };
+  
+-#define NEXTKBD_NO_KEY 0xff
+-
+  static const int qcode_to_nextkbd_keycode[] = {
+-    /* Make sure future additions are automatically set to NEXTKBD_NO_KEY */
+-    [0 ... Q_KEY_CODE__MAX]    = NEXTKBD_NO_KEY,
+-
+      [Q_KEY_CODE_ESC]           = 0x49,
+      [Q_KEY_CODE_1]             = 0x4a,
+      [Q_KEY_CODE_2]             = 0x4b,
+@@ -276,7 +271,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src, InputEvent *evt)
+      }
+  
+      keycode = qcode_to_nextkbd_keycode[qcode];
+-    if (keycode == NEXTKBD_NO_KEY) {
++    if (!keycode) {
+          return;
+      }
+  
+  Thomas
 
 
