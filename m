@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75959D5C0ED
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C6ED5C0F0
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:44:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9R8Q-0002Fv-TF; Fri, 08 Nov 2024 10:42:54 -0500
+	id 1t9R9Q-0003NN-TN; Fri, 08 Nov 2024 10:43:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1t9R8P-0002Ck-Ds
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:42:53 -0500
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R96-0002pn-TR
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:43:37 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1t9R8N-0005Hd-Od
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:42:53 -0500
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-288d70788d6so1117975fac.1
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:42:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R91-0005Pu-To
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:43:34 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43161e7bb25so18749785e9.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:43:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731080570; x=1731685370; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731080610; x=1731685410; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WjZQkS7NlGSMkoZpKFfXMBWMv1VZGQCZ11MhEVoVebk=;
- b=eb4UyjGqktgHerF9D+cZPgXHodI13T+HXH0GtrZA8CYbL99eI0IMWwgYhjs+Pvy2Jh
- dJD8tE9C/zC1m5ZXG+mnwcKDYLnuGpdw4OkznK9461td8MMgtQrIZmKFt6XDgdxXOFmH
- S1dVszapsqA5xt1v6GpHZu3nqQmHuQt9dmVn21rpWTienNefw0QFk+X5rfH2B6X7i7BY
- wapqJ0ACzVPM64dL7qXhYe8huXi32tY/UIDk5L6WWauHaSW4+Xfj1X6aCicYjL48ja/I
- LPcUGcqgYyvOW1dJCAh1Tyn9Epd/O8sTYjEDmt5j5F4qPvmDslp7jrT1gHpfj/uE9U0o
- dF3Q==
+ bh=hWbuZBdiwta9OCqh2H6+dZmGxN8LycHZheUEly/zthI=;
+ b=Se+8/38jepgotJbNKAzI1x9T3tcHIlzmIkiHbzxfMtMmwX8wGwkbLZv4GXTgkCbmap
+ 6Md2/0FMwhZXQWwkro3uuBSsfGOYxNrzOSfClH90Mopv/CDtx3LGNoYw1UPx5YhMjWVO
+ jzqqKzGhJJMNWIjS8JM7TPreVawXgMhsPrCsPpilMZppR8TgMU1SVW59tnW/cZPC8Dhy
+ dC0OQH9+Gde1jHTaZ2BDp8qc00mTLO/INmLP2ZyoAaxJu+r9yiCFgZk76Dgsntg6upNN
+ 21Zmd9xzYdXGpfps1OmtaGwQ2ouirZGwFcZHjJrxsAPMIHw70ygM+HhrZ32SqSok+kU0
+ cj8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731080570; x=1731685370;
+ d=1e100.net; s=20230601; t=1731080610; x=1731685410;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WjZQkS7NlGSMkoZpKFfXMBWMv1VZGQCZ11MhEVoVebk=;
- b=DD23dJKlRRHJu+mqfBVSV4QxjbdVR0dwmCpJiWwGoNkS4bbECyT6Vg2e9fcAnZa5wI
- Hb8O1Ox85mn3dSVwnxU1qjumfMMQocZKPSRCAfWvzkosiVCINPAOqTjjcU9kSMkn7J2H
- 7075tjzmzpi/E2RK2SqawoxBDBkzB3/oq3/sJgYpMZICWBnO1XPiqZqssCjUftDCCab8
- Urziv+pG8hmy7uVKLnyv5AeigLnpwiP47lJ2Zm8SxczGbPnF7akQOeMJgq/9KRvZq+9G
- UOMLwJhz0wWfOCSZiCvl8Di/WgimLgVn6dGKGbBBN58pvdF5DINIT5TnV/PrbNRNE8qU
- neKg==
-X-Gm-Message-State: AOJu0Yz959kyIS7RzPINnp/BG2yoB0XwXxdPPgIDEY6f6vz0sEs/d4NT
- 7YAnN3ej8gH9QbKxe3PWkLqUQp8/IWi/OIE5acWF1Y+ku4tCWzfEzSU8JA==
-X-Google-Smtp-Source: AGHT+IEdWy59ywOfVbsBRmId44Ktn5Mjpu81dl5SV+t76TNTxXv4r4Rb3l019CY2HXaBlrI52Ejpng==
-X-Received: by 2002:a05:6870:e0d4:b0:260:f43e:7d89 with SMTP id
- 586e51a60fabf-2956000774dmr3598139fac.2.1731080569893; 
- Fri, 08 Nov 2024 07:42:49 -0800 (PST)
-Received: from wheely.local0.net (124-171-217-17.tpgi.com.au. [124.171.217.17])
+ bh=hWbuZBdiwta9OCqh2H6+dZmGxN8LycHZheUEly/zthI=;
+ b=velDqVa5Z1sTOaKLEUS3jTDaog5S/mvjYBKHKjFW07KXz/OjGIVR5rRASlicAybFUj
+ BPKasL/UK39O0v30Bm6G6gOgmX/c8Qd5GDPZsNWOQJIiLB1FW7K/YC6MZQu5XWOgcbOb
+ Pmzo4IflY1+4TfU/wW6s0xaBOiIkm0uPTphjOH3LazpzR0L5eTjG3vCBtF9i+dVuSAoL
+ IlJ6bKtGqAOmd+AkC00p/q8mUNHidofyin9q9p5z6RO/+gkSoOfgRKV1GnDO0LS+BQrg
+ h3AoZud7xNLh2jOl+t1IjIChNWr0cMlGVO6THFCFlJJBne8cT5sCPTcvOUWz9dRhSLyW
+ +EUg==
+X-Gm-Message-State: AOJu0YylLSWLjHa2fpQSOmlPoI94m3410owz6hBiMc+l2EOH5ymdRIws
+ BEl48a38QMojxy6ti3lPGxgvGMFTE09MObWtuaTrutMq5or07idi5Mj2Y+ADQnh4CJkAMFzrDxA
+ 8
+X-Google-Smtp-Source: AGHT+IEdrSsRdErytPC8DVn7is2xuHh0bQASnBkvct6Z5o8urKDsp6a8cZeqEPwxPKHpl5Suuqm9rw==
+X-Received: by 2002:a05:600c:46cc:b0:42c:ba83:3f01 with SMTP id
+ 5b1f17b1804b1-432b75017e5mr28030815e9.8.1731080609775; 
+ Fri, 08 Nov 2024 07:43:29 -0800 (PST)
+Received: from localhost.localdomain ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7f41f48d32bsm3110444a12.17.2024.11.08.07.42.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 07:42:49 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: [RFC PATCH 3/5] pci/msix: Implement PBA writes
-Date: Sat,  9 Nov 2024 01:42:26 +1000
-Message-ID: <20241108154229.263097-4-npiggin@gmail.com>
+ 5b1f17b1804b1-432aa70a234sm111997735e9.34.2024.11.08.07.43.28
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 08 Nov 2024 07:43:29 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Anton Johansson <anjo@rev.ng>
+Cc: Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+Subject: [PATCH v3 02/17] hw/microblaze: Propagate CPU endianness to
+ microblaze_load_kernel()
+Date: Fri,  8 Nov 2024 15:43:02 +0000
+Message-ID: <20241108154317.12129-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241108154229.263097-1-npiggin@gmail.com>
-References: <20241108154229.263097-1-npiggin@gmail.com>
+In-Reply-To: <20241108154317.12129-1-philmd@linaro.org>
+References: <20241108154317.12129-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=npiggin@gmail.com; helo=mail-oa1-x2a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,97 +104,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement PBA write 1 to trigger and 0 to clear. This is used by
-qtests which mask the MSI irq and so the bits remain pending and
-expect to be cleared with stores.
+Pass vCPU endianness as argument so we can load kernels
+with different endianness (different from the qemu-system-binary
+builtin one).
 
-Some devices like e1000e seem to have MSIX PBA pending tied to
-some device state level, as such they call msix_clr_pending()
-directly, and clearing pending via a store to PBA causes this
-to go out of synch. So the qpci_msix_pending() function is
-changed to avoid clearing, and a new test-and-clear function is
-added for tests that would like to clear.
-
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/qtest/libqos/pci.h |  1 +
- hw/pci/msix.c            | 16 ++++++++++++++++
- tests/qtest/libqos/pci.c | 21 ++++++++++++++++++---
- 3 files changed, 35 insertions(+), 3 deletions(-)
+ hw/microblaze/boot.h                     | 4 ++--
+ hw/microblaze/boot.c                     | 8 ++++----
+ hw/microblaze/petalogix_ml605_mmu.c      | 2 +-
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 2 +-
+ hw/microblaze/xlnx-zynqmp-pmu.c          | 2 +-
+ 5 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
-index 5a7b2454ad..de540f7803 100644
---- a/tests/qtest/libqos/pci.h
-+++ b/tests/qtest/libqos/pci.h
-@@ -94,6 +94,7 @@ uint8_t qpci_find_capability(QPCIDevice *dev, uint8_t id, uint8_t start_addr);
- void qpci_msix_enable(QPCIDevice *dev);
- void qpci_msix_disable(QPCIDevice *dev);
- bool qpci_msix_pending(QPCIDevice *dev, uint16_t entry);
-+bool qpci_msix_test_clear_pending(QPCIDevice *dev, uint16_t entry);
- bool qpci_msix_masked(QPCIDevice *dev, uint16_t entry);
- uint16_t qpci_msix_table_size(QPCIDevice *dev);
+diff --git a/hw/microblaze/boot.h b/hw/microblaze/boot.h
+index 5a8c2f7975..d179a551a6 100644
+--- a/hw/microblaze/boot.h
++++ b/hw/microblaze/boot.h
+@@ -2,8 +2,8 @@
+ #define MICROBLAZE_BOOT_H
  
-diff --git a/hw/pci/msix.c b/hw/pci/msix.c
-index 487e49834e..b16b03b888 100644
---- a/hw/pci/msix.c
-+++ b/hw/pci/msix.c
-@@ -260,6 +260,22 @@ static uint64_t msix_pba_mmio_read(void *opaque, hwaddr addr,
- static void msix_pba_mmio_write(void *opaque, hwaddr addr,
-                                 uint64_t val, unsigned size)
- {
-+    PCIDevice *dev = opaque;
-+    unsigned vector_start = addr * 8;
-+    unsigned vector_end = MIN(addr + size * 8, dev->msix_entries_nr);
-+    unsigned i;
-+
-+    for (i = vector_start; i < vector_end; i++) {
-+        if ((val >> i) & 1) {
-+            if (!msix_is_pending(dev, i)) {
-+                msix_notify(dev, i);
-+            }
-+        } else {
-+            if (msix_is_pending(dev, i)) {
-+                msix_clr_pending(dev, i);
-+            }
-+        }
-+    }
+ 
+-void microblaze_load_kernel(MicroBlazeCPU *cpu, hwaddr ddr_base,
+-                            uint32_t ramsize,
++void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
++                            hwaddr ddr_base, uint32_t ramsize,
+                             const char *initrd_filename,
+                             const char *dtb_filename,
+                             void (*machine_cpu_reset)(MicroBlazeCPU *));
+diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
+index ed61e483ee..3675489fa5 100644
+--- a/hw/microblaze/boot.c
++++ b/hw/microblaze/boot.c
+@@ -114,8 +114,8 @@ static uint64_t translate_kernel_address(void *opaque, uint64_t addr)
+     return addr - 0x30000000LL;
  }
  
- static const MemoryRegionOps msix_pba_mmio_ops = {
-diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-index 45199c7dc4..6726c401cc 100644
---- a/tests/qtest/libqos/pci.c
-+++ b/tests/qtest/libqos/pci.c
-@@ -343,11 +343,26 @@ bool qpci_msix_pending(QPCIDevice *dev, uint16_t entry)
+-void microblaze_load_kernel(MicroBlazeCPU *cpu, hwaddr ddr_base,
+-                            uint32_t ramsize,
++void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
++                            hwaddr ddr_base, uint32_t ramsize,
+                             const char *initrd_filename,
+                             const char *dtb_filename,
+                             void (*machine_cpu_reset)(MicroBlazeCPU *))
+@@ -144,13 +144,13 @@ void microblaze_load_kernel(MicroBlazeCPU *cpu, hwaddr ddr_base,
+         /* Boots a kernel elf binary.  */
+         kernel_size = load_elf(kernel_filename, NULL, NULL, NULL,
+                                &entry, NULL, &high, NULL,
+-                               TARGET_BIG_ENDIAN, EM_MICROBLAZE, 0, 0);
++                               !is_little_endian, EM_MICROBLAZE, 0, 0);
+         base32 = entry;
+         if (base32 == 0xc0000000) {
+             kernel_size = load_elf(kernel_filename, NULL,
+                                    translate_kernel_address, NULL,
+                                    &entry, NULL, NULL, NULL,
+-                                   TARGET_BIG_ENDIAN, EM_MICROBLAZE, 0, 0);
++                                   !is_little_endian, EM_MICROBLAZE, 0, 0);
+         }
+         /* Always boot into physical ram.  */
+         boot_info.bootstrap_pc = (uint32_t)entry;
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index 61e47d8398..d2b2109065 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -204,7 +204,7 @@ petalogix_ml605_init(MachineState *machine)
+     cpu->cfg.pvr_regs[5] = 0xc56be000;
+     cpu->cfg.pvr_regs[10] = 0x0e000000; /* virtex 6 */
  
-     g_assert(dev->msix_enabled);
-     pba_entry = qpci_io_readl(dev, dev->msix_pba_bar, dev->msix_pba_off + off);
--    qpci_io_writel(dev, dev->msix_pba_bar, dev->msix_pba_off + off,
--                   pba_entry & ~(1 << bit_n));
--    return (pba_entry & (1 << bit_n)) != 0;
-+    return (pba_entry & (1 << bit_n));
- }
+-    microblaze_load_kernel(cpu, MEMORY_BASEADDR, ram_size,
++    microblaze_load_kernel(cpu, true, MEMORY_BASEADDR, ram_size,
+                            machine->initrd_filename,
+                            BINARY_DEVICE_TREE_FILE,
+                            NULL);
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index 6c0f5c6c65..8110be8371 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -129,7 +129,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
  
-+bool qpci_msix_test_clear_pending(QPCIDevice *dev, uint16_t entry)
-+{
-+    uint32_t pba_entry;
-+    uint8_t bit_n = entry % 32;
-+    uint64_t  off = (entry / 32) * PCI_MSIX_ENTRY_SIZE / 4;
-+
-+    g_assert(dev->msix_enabled);
-+    pba_entry = qpci_io_readl(dev, dev->msix_pba_bar, dev->msix_pba_off + off);
-+    if (pba_entry & (1 << bit_n)) {
-+        qpci_io_writel(dev, dev->msix_pba_bar, dev->msix_pba_off + off,
-+                       pba_entry & ~(1 << bit_n));
-+        return true;
-+    }
-+    return false;
-+}
-+
-+
- bool qpci_msix_masked(QPCIDevice *dev, uint16_t entry)
- {
-     uint8_t addr;
+     create_unimplemented_device("xps_gpio", GPIO_BASEADDR, 0x10000);
+ 
+-    microblaze_load_kernel(cpu, ddr_base, ram_size,
++    microblaze_load_kernel(cpu, !TARGET_BIG_ENDIAN, ddr_base, ram_size,
+                            machine->initrd_filename,
+                            BINARY_DEVICE_TREE_FILE,
+                            NULL);
+diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
+index 567aad47bf..bdbf7328bf 100644
+--- a/hw/microblaze/xlnx-zynqmp-pmu.c
++++ b/hw/microblaze/xlnx-zynqmp-pmu.c
+@@ -172,7 +172,7 @@ static void xlnx_zynqmp_pmu_init(MachineState *machine)
+     qdev_realize(DEVICE(pmu), NULL, &error_fatal);
+ 
+     /* Load the kernel */
+-    microblaze_load_kernel(&pmu->cpu, XLNX_ZYNQMP_PMU_RAM_ADDR,
++    microblaze_load_kernel(&pmu->cpu, true, XLNX_ZYNQMP_PMU_RAM_ADDR,
+                            machine->ram_size,
+                            machine->initrd_filename,
+                            machine->dtb,
 -- 
 2.45.2
 
