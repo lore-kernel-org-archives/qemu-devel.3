@@ -4,78 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1018ED5C0EF
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57232D5C0F1
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9R8E-0002Az-In; Fri, 08 Nov 2024 10:42:42 -0500
+	id 1t9RA0-0005SR-Lu; Fri, 08 Nov 2024 10:44:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1t9R8D-0002Aq-HG
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:42:41 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R9l-0005C5-LH
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:44:17 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1t9R8C-0005DS-1D
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:42:41 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-720c286bcd6so2055077b3a.3
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:42:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R9j-0005cz-Km
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:44:17 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4315baec69eso20605965e9.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:44:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731080558; x=1731685358; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=biGDhBmGK55tF+cZ37cJs3bTmgP/oOfYxgwHavYr8PU=;
- b=LhLwkBqL1vSY16UFKJWVg1h5PyK6TmsRFFLJybhQ/axefMkzZsgmvZl5W7qV3Nwc4o
- /+LTzPzCGyFsQo+PpDhV/zTspTMruVBrZYTsmXyNkxsrzN+k+/EJWjYPje6cWpRwvRwm
- HlmLcvVgnXLDk6r7+lkf2PLZIl8MJll1lJ2Fs3rx7MhX/U89XNDZQsAw8PhhydAhNxVF
- qVJPv7fOcMStQHGsoLSlFaia6cWKmYTHVqYER3MNH8AhgT4+vUn/Xp0ladptEuK6JBKl
- Gy85uKSir1BKeVdQjnBiBbSZrnfIsB8IMBNigEDBrVilcE6uX0v+JNcmZwUbmDfcxckz
- wWSw==
+ d=linaro.org; s=google; t=1731080653; x=1731685453; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/NCcHJoi8uwPYYIKuKRo8/qY4WRUa7npw8othDKETY4=;
+ b=V/0yBgwP1eUSZ51xAAM31XjL9iRdCaOrWIwvbGI7ZO7agIzbN/C02J1bTB/IMYAm0q
+ KZm+K65wkBmjNyaN1TReTmWfGnDZq9F3qwrC5YUloeceOB2misXrtHCUDIyDL+WAMwV+
+ DWwHY2B6M41TKPEouRLergQtNVX2f4lQB6ZeLJIcIDzg3fF8m9pBo7dt0kvZod4EepUy
+ /ibeQkh7JqBd9GhnAynlXwryij83sgEv8DraIN6pZhSZZm24aTPWreRIiAcvEzH7gW/P
+ VZdRLApSEqlIfsnntLy1IQEJgV7OaCF+0xTivELjGz5Jjpu71r87D+jxtrftEbV3eUR2
+ KFJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731080558; x=1731685358;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=biGDhBmGK55tF+cZ37cJs3bTmgP/oOfYxgwHavYr8PU=;
- b=s5wZIzsx2tUvyI4kUeBGHYTIwX71Rcm/HMr3BxFdGzLEsjhHgOR7kU+TB+izKxgtY6
- VugOvfbiGB4aQxAZIY5shlnCI6ZPJ+/r5AefrnvZ/Sc/wPS7Acwu/qh4jYXkQliIBCcr
- g7gO30i6izcvXIiK/BJy76aVtOdRGc6ZYsagD77vUcm5V/3aPA5gOI0DuWMN3PsF+yX5
- T87VJKWj5u+wnQuLKK4LXtcoFuqOzyT9KRTZtP+vzvGjNrbgmfd3OzhMk1t8nqhYOJ+R
- gwz3lEgnr9+bL7Wyn9pdZ4h0ov9ydgZvp/RXD5N2mYAGZs/oHkUihCtguKgjsl/NGC5G
- 4drw==
-X-Gm-Message-State: AOJu0YytsNWXIss/dCzETfO876vVH6uSDnr4aw6KsSmdRHUW/aKffrIy
- i88wH8RQkaLiVzM/iWV7FjqFb3lf6C48Tgzqyy2+ZiFf72AyRaqIJgZ6uA==
-X-Google-Smtp-Source: AGHT+IEeh1bu33Xy31A9tSkHLufzU6fX0YCasVaNF48obNly1YIRKYfImjjSPxTle/N7qorQLrCTiw==
-X-Received: by 2002:a05:6a20:3943:b0:1db:eecb:f7a1 with SMTP id
- adf61e73a8af0-1dc229c96bcmr4130504637.17.1731080557836; 
- Fri, 08 Nov 2024 07:42:37 -0800 (PST)
-Received: from wheely.local0.net (124-171-217-17.tpgi.com.au. [124.171.217.17])
+ d=1e100.net; s=20230601; t=1731080653; x=1731685453;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/NCcHJoi8uwPYYIKuKRo8/qY4WRUa7npw8othDKETY4=;
+ b=qMauejoI93JQf6wzN2YqTc8/C8S32s2M597Fnqi5WmlNLQU6kj1CLKjyc2CFHjqdFM
+ vWwT8v2KHle0dtmCjHpqmGfzjJQTzBHsgT7BxambTNqJB7oISvtH+zHpfq5hqgPqwRe5
+ 2pwfozOyIzGEKtL9yC/oiIicQMiJh+P49h2L2SbcNaU+jHwlKqZHf9LCNQmXJS0BHlEw
+ V1jpQPStEdQylvhwYsGp/bGkKLpNo6CMwHdNzeX7Iyr+76C2Rhdhp3SJROTB7fiHqGNJ
+ LMHwWXGpDU9xXcYk6ZKxuWnSNHzT1suxv+BxIZsQTzq5MQfKmY0iEC/tUzPY2vv/trsD
+ 2MAA==
+X-Gm-Message-State: AOJu0YyJgf9KlAKCZ/cIMmxmX4YIOo5v+86aHw3RZNZZJrsek8Orvd7K
+ 8lo1D19XenSzpgkDAgJAsSdXhO1vUUq68mofNrBoeSpeA5WRRHwHchOtpc5vs8MakcF7yB7m2ap
+ E
+X-Google-Smtp-Source: AGHT+IEcF3wq0Z0DPiRXNzJ5j/MgTNflZ4H289/qkub73XhHeSxrNAWjhLum+B9/0+WlTS0CPG+xPg==
+X-Received: by 2002:a5d:6d06:0:b0:37d:45ad:8394 with SMTP id
+ ffacd0b85a97d-381f1866bb5mr2985528f8f.15.1731080653098; 
+ Fri, 08 Nov 2024 07:44:13 -0800 (PST)
+Received: from localhost.localdomain ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7f41f48d32bsm3110444a12.17.2024.11.08.07.42.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 07:42:37 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: [RFC PATCH 0/5] Add XHCI TR NOOP support, plus PCI, MSIX changes
-Date: Sat,  9 Nov 2024 01:42:23 +1000
-Message-ID: <20241108154229.263097-1-npiggin@gmail.com>
+ ffacd0b85a97d-381eda04ad0sm5236750f8f.100.2024.11.08.07.44.12
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 08 Nov 2024 07:44:12 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Anton Johansson <anjo@rev.ng>
+Cc: Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH v3 11/17] target/microblaze: Explode MO_TExx -> MO_TE | MO_xx
+Date: Fri,  8 Nov 2024 15:43:11 +0000
+Message-ID: <20241108154317.12129-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241108154317.12129-1-philmd@linaro.org>
+References: <20241108154317.12129-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,51 +102,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Extract the implicit MO_TE definition in order to replace
+it by runtime variable in the next commit.
 
-This RFC is wide-ranging for such a simple addition of XHCI TR NOOP
-command, because adding qtests for it caught up some PCI/MSIX issues.
+Mechanical change using:
 
-Firstly, the XHCI host shares a BAR between device registers and MSIX
-space, which is not handled by qtest/pci. Keeping track of BAR mappings
-in qtest and allowing MSIX to use an existing mapping seems to work.
+  $ for n in UW UL UQ UO SW SL SQ; do \
+      sed -i -e "s/MO_TE$n/MO_TE | MO_$n/" \
+           $(git grep -l MO_TE$n target/microblaze); \
+    done
 
-For XHCI qtest, I added a MSIX check to ensure interrupts are working
-correctly. As part of that I need to dequeue masked interrupts which
-seems to require PBA writes to clear them, but I could be way off
-base here. Adding that does cause e1000e qtest to break, because it
-doesn't like clear pending via PBA.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/microblaze/translate.c | 36 +++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-The XHCI model change gets AIX's XHCI driver working, so that's another
-data point beyond the simple qtest for it added here. Unfortunately it
-is not so easy to independently test.
-
-Any guidance or input would be welcome.
-
-Thanks,
-Nick
-
-Nicholas Piggin (5):
-  qtest/pci: Enforce balanced iomap/unmap
-  qtest/libqos/pci: Fix msix_enable sharing bar0
-  pci/msix: Implement PBA writes
-  qtest/xhci: Add controller and device setup and ring tests
-  hw/usb: Support XHCI TR NOOP commands
-
- tests/qtest/libqos/ahci.h       |   1 +
- tests/qtest/libqos/pci.h        |   4 +
- tests/qtest/libqos/virtio-pci.h |   1 +
- tests/qtest/usb-hcd-xhci-test.h | 232 ++++++++++++++
- hw/pci/msix.c                   |  16 +
- hw/usb/hcd-xhci.c               |  28 +-
- tests/qtest/ahci-test.c         |   2 +
- tests/qtest/libqos/ahci.c       |   6 +
- tests/qtest/libqos/pci.c        |  75 ++++-
- tests/qtest/libqos/virtio-pci.c |   6 +-
- tests/qtest/usb-hcd-xhci-test.c | 540 +++++++++++++++++++++++++++++++-
- 11 files changed, 893 insertions(+), 18 deletions(-)
- create mode 100644 tests/qtest/usb-hcd-xhci-test.h
-
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index 4beaf69e76..4c25b1e438 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -779,13 +779,13 @@ static bool trans_lbui(DisasContext *dc, arg_typeb *arg)
+ static bool trans_lhu(DisasContext *dc, arg_typea *arg)
+ {
+     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+-    return do_load(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
++    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
+ }
+ 
+ static bool trans_lhur(DisasContext *dc, arg_typea *arg)
+ {
+     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+-    return do_load(dc, arg->rd, addr, MO_TEUW, dc->mem_index, true);
++    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, true);
+ }
+ 
+ static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
+@@ -797,26 +797,26 @@ static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
+     return true;
+ #else
+     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
+-    return do_load(dc, arg->rd, addr, MO_TEUW, MMU_NOMMU_IDX, false);
++    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, MMU_NOMMU_IDX, false);
+ #endif
+ }
+ 
+ static bool trans_lhui(DisasContext *dc, arg_typeb *arg)
+ {
+     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+-    return do_load(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
++    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
+ }
+ 
+ static bool trans_lw(DisasContext *dc, arg_typea *arg)
+ {
+     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+-    return do_load(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
++    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
+ }
+ 
+ static bool trans_lwr(DisasContext *dc, arg_typea *arg)
+ {
+     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+-    return do_load(dc, arg->rd, addr, MO_TEUL, dc->mem_index, true);
++    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, true);
+ }
+ 
+ static bool trans_lwea(DisasContext *dc, arg_typea *arg)
+@@ -828,14 +828,14 @@ static bool trans_lwea(DisasContext *dc, arg_typea *arg)
+     return true;
+ #else
+     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
+-    return do_load(dc, arg->rd, addr, MO_TEUL, MMU_NOMMU_IDX, false);
++    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, MMU_NOMMU_IDX, false);
+ #endif
+ }
+ 
+ static bool trans_lwi(DisasContext *dc, arg_typeb *arg)
+ {
+     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+-    return do_load(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
++    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
+ }
+ 
+ static bool trans_lwx(DisasContext *dc, arg_typea *arg)
+@@ -845,7 +845,7 @@ static bool trans_lwx(DisasContext *dc, arg_typea *arg)
+     /* lwx does not throw unaligned access errors, so force alignment */
+     tcg_gen_andi_tl(addr, addr, ~3);
+ 
+-    tcg_gen_qemu_ld_i32(cpu_res_val, addr, dc->mem_index, MO_TEUL);
++    tcg_gen_qemu_ld_i32(cpu_res_val, addr, dc->mem_index, MO_TE | MO_UL);
+     tcg_gen_mov_tl(cpu_res_addr, addr);
+ 
+     if (arg->rd) {
+@@ -929,13 +929,13 @@ static bool trans_sbi(DisasContext *dc, arg_typeb *arg)
+ static bool trans_sh(DisasContext *dc, arg_typea *arg)
+ {
+     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+-    return do_store(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
++    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
+ }
+ 
+ static bool trans_shr(DisasContext *dc, arg_typea *arg)
+ {
+     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+-    return do_store(dc, arg->rd, addr, MO_TEUW, dc->mem_index, true);
++    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, true);
+ }
+ 
+ static bool trans_shea(DisasContext *dc, arg_typea *arg)
+@@ -947,26 +947,26 @@ static bool trans_shea(DisasContext *dc, arg_typea *arg)
+     return true;
+ #else
+     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
+-    return do_store(dc, arg->rd, addr, MO_TEUW, MMU_NOMMU_IDX, false);
++    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, MMU_NOMMU_IDX, false);
+ #endif
+ }
+ 
+ static bool trans_shi(DisasContext *dc, arg_typeb *arg)
+ {
+     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+-    return do_store(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
++    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
+ }
+ 
+ static bool trans_sw(DisasContext *dc, arg_typea *arg)
+ {
+     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+-    return do_store(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
++    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
+ }
+ 
+ static bool trans_swr(DisasContext *dc, arg_typea *arg)
+ {
+     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+-    return do_store(dc, arg->rd, addr, MO_TEUL, dc->mem_index, true);
++    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, true);
+ }
+ 
+ static bool trans_swea(DisasContext *dc, arg_typea *arg)
+@@ -978,14 +978,14 @@ static bool trans_swea(DisasContext *dc, arg_typea *arg)
+     return true;
+ #else
+     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
+-    return do_store(dc, arg->rd, addr, MO_TEUL, MMU_NOMMU_IDX, false);
++    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, MMU_NOMMU_IDX, false);
+ #endif
+ }
+ 
+ static bool trans_swi(DisasContext *dc, arg_typeb *arg)
+ {
+     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+-    return do_store(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
++    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
+ }
+ 
+ static bool trans_swx(DisasContext *dc, arg_typea *arg)
+@@ -1014,7 +1014,7 @@ static bool trans_swx(DisasContext *dc, arg_typea *arg)
+ 
+     tcg_gen_atomic_cmpxchg_i32(tval, cpu_res_addr, cpu_res_val,
+                                reg_for_write(dc, arg->rd),
+-                               dc->mem_index, MO_TEUL);
++                               dc->mem_index, MO_TE | MO_UL);
+ 
+     tcg_gen_brcond_i32(TCG_COND_NE, cpu_res_val, tval, swx_fail);
+ 
 -- 
 2.45.2
 
