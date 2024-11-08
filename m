@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C665D4335C
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 02:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 178FAD5D69F
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 02:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9EW9-0006sS-JK; Thu, 07 Nov 2024 21:14:34 -0500
+	id 1t9Ea6-0007jJ-R5; Thu, 07 Nov 2024 21:18:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t9EW5-0006sH-Hr
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 21:14:29 -0500
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t9EW3-0007Ll-1x
- for qemu-devel@nongnu.org; Thu, 07 Nov 2024 21:14:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1731032067; x=1762568067;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=wrPKQ+gKJ4UWg0JoASdk8oJV1qGe96BO6ocY9KOW9Ew=;
- b=fl8mi41PMuhN/nnmIkzqojkHWtmiZoM+iOASdjICfVtM/RpFL+wuFnxD
- ah+zONgE1qJwh9+M61KhR7GyIxVPM3dbUV8mAG8gay6BeuvxtJ8CooccZ
- tuBGpDMEGL4sey3XXKr0mXOEL6oFXQhFLz+C4JFQiIYVh6mueZ1O7Hjx5
- HJGJ8SDXNSA6G++EetDGsteORu7WdkJU7BcQKFYA6/3LhVxcShIeZi15y
- m78JxZ2oR4N865W+S/mNSC23zQQnB5y9U4U8s9kdZjyev6+k5GU4gqeBu
- BSlTYplD7FzCyuFRy9UmzSP7groCeGKlU4z5rBJvRy51b7LJllGw/Bz6n g==;
-X-CSE-ConnectionGUID: +oNI//ISRKmLdENuJJvpeA==
-X-CSE-MsgGUID: 9tU2zna4SZmJ4Suk19UYRA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11249"; a="18533088"
-X-IronPort-AV: E=Sophos;i="6.12,136,1728975600"; d="scan'208";a="18533088"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Nov 2024 18:14:24 -0800
-X-CSE-ConnectionGUID: HMIoyGIBTOGnYXw5b6XWLQ==
-X-CSE-MsgGUID: 6glL6PAMT46/P50Op3Uq+w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,136,1728975600"; d="scan'208";a="85324973"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa010.jf.intel.com with ESMTP; 07 Nov 2024 18:14:19 -0800
-Date: Fri, 8 Nov 2024 10:32:16 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: dongli.zhang@oracle.com
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
- likexu@tencent.com, like.xu.linux@gmail.com,
- zhenyuw@linux.intel.com, groug@kaod.org, lyan@digitalocean.com,
- khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
- den@virtuozzo.com, joe.jin@oracle.com, davydov-max@yandex-team.ru,
- dapeng1.mi@linux.intel.com, zide.chen@intel.com
-Subject: Re: [PATCH 2/7] target/i386/kvm: introduce 'pmu-cap-disabled' to set
- KVM_PMU_CAP_DISABLE
-Message-ID: <Zy14MDBuiFuyj0YS@intel.com>
-References: <20241104094119.4131-1-dongli.zhang@oracle.com>
- <20241104094119.4131-3-dongli.zhang@oracle.com>
- <ZyxxygVaufOntpZJ@intel.com>
- <57b4b74d-67d2-4fcf-aa59-c788afc93619@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <57b4b74d-67d2-4fcf-aa59-c788afc93619@oracle.com>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1t9Ea1-0007ig-CG; Thu, 07 Nov 2024 21:18:35 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1t9EZz-0007zX-HH; Thu, 07 Nov 2024 21:18:33 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-20cf3e36a76so17720085ad.0; 
+ Thu, 07 Nov 2024 18:18:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731032309; x=1731637109; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=p8cfJKZyJP6YPI9M5MDQrfybwmBfQihlukJvv1laA6Q=;
+ b=BTAReAAcizR3wpnscGgQotfTyTKPtEGdQ2pQEWheK3bmjD3LEjy6wQQecs07zQxLiT
+ vUjLYsD5zPOOFpM5UbZ5LThZORUnzkDCOmel8XohqMiPqYtfb4hBuHC8v/hiiv5I1oJx
+ qjzDXvIoCSArISvD1SZQBuayeDLji82qPFRYyA2QBoAJia+JFmjf+mw/7Pf9l4MG2FFj
+ 4VzWF5UtnBuKHxTg9Ip1mV5+MfUyLaZDjBOry0KQvb87O9mhqSKOIS+0uBkyocJbc57p
+ 1HrsLCAuuC9aGlhggaJ3B5bNfyCwwq7IfjislqCGm2jbr1z6mTB6Qp22AbjoVLbJIZaE
+ ohsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731032309; x=1731637109;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=p8cfJKZyJP6YPI9M5MDQrfybwmBfQihlukJvv1laA6Q=;
+ b=sCUHW/8ye1yEEZkQV0yPy2MhthBqOpCrByVLsnGDffdk40CM2VjIteETPMFjLzpkZC
+ /ZP2JbQqSAuVY+CWbFDYirpdKh+Ti9J8IfiwQiXvLXEd/VlnUj7dihcS0Xj0dZHd8hV+
+ B6SNOLLuAXChHuICJmoms8jikIsSBFLHGi1eiOIzhUmpVFo1I8atH2Ij/T0HwLX6QDkV
+ Xl+2Uy9mM0bZ3Pp7Y69Vx8rwaCnQAxX26QZA6uyt0lCPpwEy0/JNm8Tg4fQ2ipZz01/O
+ 4g97+F+krwcomBTbY1wUYv/9oGWkJ9NnTDL9RQdb+WkAW7FNmboHLNvgRr780udxetSj
+ af1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUxwTH1C4av6uxxe1GRsuk1tntd12bKspZUD4SC0cNi3YELW+TUPyoLj+FzjVNC9WKrYa7ifM8WPA==@nongnu.org
+X-Gm-Message-State: AOJu0YyPu1qykT33Q1yD8rBYmXAt5Seo6eg0XcMS2ZObN6E4Ya2z6pLY
+ V3sXLh0MDpIJWgDn3C+ozsyxKLlGOr14eEMAAgUcQnU41EQzxR00Fnfqwg==
+X-Google-Smtp-Source: AGHT+IG0EvQzMDfwy3BBw6DEZhOnfL71HOLQb16D4/bq8bhvXYkp+0lFd279gFcF3TgxMPlNP6Ja8w==
+X-Received: by 2002:a17:90b:4c48:b0:2e1:a81f:5520 with SMTP id
+ 98e67ed59e1d1-2e9b166bbaamr2193879a91.1.1731032309217; 
+ Thu, 07 Nov 2024 18:18:29 -0800 (PST)
+Received: from localhost (124-171-217-17.tpgi.com.au. [124.171.217.17])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e99a541d06sm4390031a91.14.2024.11.07.18.18.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 Nov 2024 18:18:28 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 08 Nov 2024 12:18:22 +1000
+Message-Id: <D5GFQLPB4Y4Y.1EQHGLP9COK6H@gmail.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Glenn Miles"
+ <milesg@linux.ibm.com>
+Subject: Re: [PULL 15/96] ppc/pnv: Implement POWER9 LPC PSI serirq outputs
+ and auto-clear function
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Peter Maydell" <peter.maydell@linaro.org>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+X-Mailer: aerc 0.18.2
+References: <20240725235410.451624-1-npiggin@gmail.com>
+ <20240725235410.451624-16-npiggin@gmail.com>
+ <49b1d57d-e0bf-4b64-b6ef-3cb4e1da5d65@kaod.org>
+ <CAFEAcA869xMGhB+K1x722CL0bD0a55+oWofpsW610HSycz_Yag@mail.gmail.com>
+ <CAFEAcA9pNo4Yyt42msbs4jqk6xACziUMSfeNnxPt-WWpRtn7BQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA9pNo4Yyt42msbs4jqk6xACziUMSfeNnxPt-WWpRtn7BQ@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,16 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> I will wait for a day or maybe the weekend. I am going to switch to the previous
-> solution in v2 if there isn't any further objection with a more valid reason.
-> 
-> Thank you very much for the feedback!
-> 
+On Fri Nov 8, 2024 at 12:18 AM AEST, Peter Maydell wrote:
+> On Tue, 5 Nov 2024 at 17:35, Peter Maydell <peter.maydell@linaro.org> wro=
+te:
+> >
+> > On Mon, 29 Jul 2024 at 11:11, C=C3=A9dric Le Goater <clg@kaod.org> wrot=
+e:
+> > >
+> > > On 7/26/24 01:52, Nicholas Piggin wrote:
+> > > > The POWER8 LPC ISA device irqs all get combined and reported to the=
+ line
+> > > > connected the PSI LPCHC irq. POWER9 changed this so only internal L=
+PC
+> > > > host controller irqs use that line, and the device irqs get routed =
+to
+> > > > 4 new lines connected to PSI SERIRQ0-3.
+> >
+> > Ping! It looks like these issues are still floating around...
+>
+> I just noticed that they were fixed in the pullreq that just
+> landed; sorry for the noise.
 
-Welcome. It's now v9.2 soft frozen. I'm also continuing to review your
-remaining patches.
+No problem, understandable sorry it took a while for me to merge.
 
-Regards,
-Zhao
-
+Thanks,
+Nick
 
