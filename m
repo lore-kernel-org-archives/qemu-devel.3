@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD55D5C0CF
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 14:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68807D5C0CF
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 14:30:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9PuF-0004IY-Bx; Fri, 08 Nov 2024 09:24:11 -0500
+	id 1t9Pzv-00062a-Hn; Fri, 08 Nov 2024 09:30:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1t9PuD-0004IC-Dg
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:24:09 -0500
-Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9Pzt-00061f-Ok
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:30:01 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1t9PuB-0001ty-N1
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:24:09 -0500
-Received: by mail-oa1-x36.google.com with SMTP id
- 586e51a60fabf-2887326be3dso1154328fac.1
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 06:24:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9Pzs-0002Yd-8I
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:30:01 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43167ff0f91so19131745e9.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 06:29:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1731075845; x=1731680645;
- darn=nongnu.org; 
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:reply-to:message-id:subject:cc:to:from:date
+ d=linaro.org; s=google; t=1731076198; x=1731680998; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+tUMkjdrwLZ0bqPC4ZvTSYSeqboyLwMPPT4K7e2QoAs=;
- b=wmvBFUh5sCrqYzs12XiLDXmEnvRUkmGrcz9xnWN60ICqcgoH+590NT0s9oS0qnyYLz
- s1kXtlDya/P+DJG01qEzrM48T1Iy6asT7toQbgWqWSYd4tHfi2l9QV6Pr2vTCs3KgCSt
- SBI7jyIi+OkvxyZVTpldPkCU+n74iK31CU2P3w1/ptLk1EDuhaXsnjwCpKRNXBMaY6BA
- Baozbnh2Z85HDhGOujBvxqJmnWJG8HBfbw/T2VDm7CnXlwjvsjR+EOzkHPVANpzBQ7HS
- qtJ+LblhKtXlXkVMCKWmvyWb0iPYmPhU9QOmSrU0Za69uzXUdv+r21xmG4xZrM2jK/eL
- KvlQ==
+ bh=JIyOpWsIdv8kFRBEg5bjtZkiQ9mzRA39tcgchUTXeJk=;
+ b=tayyO1/zy/mVeBbd6ZCfMeupCMEisUpcERba6WhNYf9oCOcgJNw0H7y7RlHJsCcxjZ
+ NSTM3RauSmS1WSs+IK2bbD3B52oDeVGKNrnxXNs+TrMbSONWQ+Jcx6ygr/j4WkGdDgkU
+ 6rg3/yqKoYKb36XywK/EU9SEc+5+kMzKYR8v26LFj0mCub7Ilw7DtARER9yn/OBd5Qov
+ kmzMi0laIa7zY4TgANgwkhJMOe4RISZbaAPIG87uonPUK+aj4CM6HxxtuTnaU4CnCoKW
+ A8NhS2lKjXvKALPXUxt1x0jd4/yND3d+RqM+o+cmHWo6ngX0k3U+2MC8RddkCWY25x2S
+ G2aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731075845; x=1731680645;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:reply-to:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1731076198; x=1731680998;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+tUMkjdrwLZ0bqPC4ZvTSYSeqboyLwMPPT4K7e2QoAs=;
- b=C0ZuZyVJ7312MUszVMpwmtjO3TDyXvNpjLxeMFheaCoj1ZDGrU34uyMt8eO8IDTnxr
- 2nu/b+g3QMrtTS+0ns2WERMJQITV2xJkRP7oXKDSAOw13H9LSelJ8qB0ZBtfJNYm1QYD
- ZDE1xIrYMVEYR3G89zBeJ/rLRLkS/VFGciCWaBIGBUepWw5YpSgzieqs+3VPMxbqVm5O
- 30BwQZURLZVV0+ymBq3/jxitB9mMYXBe5B2O4dTDy2U2fl8zjxW0GjmY/bpu0UFyiJ9f
- WbfSpykoBvWZeZ9xFbC9GobxFQEZH1hPGhMTBMuXj6eWBL9Ov2iy1WwW0HJ3/9kwThz8
- yNnw==
+ bh=JIyOpWsIdv8kFRBEg5bjtZkiQ9mzRA39tcgchUTXeJk=;
+ b=oEUyD7gF6XC/w9t8vH10efKWiVMjAM14gWGOGZNhzMiW24qDqCMBhDhJzqihrydwGD
+ AB/k7DnPHggTfRLFLhTKXwylA/fJLLLu/vltQtwz6JAf1mFrNV7FMV3H8uYDC77+WDtR
+ jTjz2VotkeezXwK8pXaANgIxhucic1Zwpo9+hpX2bHcwCdXr139T8K63HFR06wwmiITk
+ f2ArALPu45Dd6ay3l0BufWTOqWu3qyAd8VnM6ac+f8FSfxLKJkMfztbcYYuRHXX/VqS3
+ DWiDuKMuGYlC/xn1hxx+jEYrKbGRwUZQSWi1qMGipWf4+VsREQKB6QvWLTAPwmbGMunw
+ p0lA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXaX37wkkDcNmvIVjQ0XPhNYJYUAk+qBv/0gmJKpFmPOekSwhBMQ9JABP3upyaSyIcbcnR0Rv9quIn0@nongnu.org
-X-Gm-Message-State: AOJu0YyOTuSR/gcui2Ye6U1gHYXfhsgfOMzmzai2x+8tvtk9kOzaNCVt
- 1oMFyyKTwognvKaireyw/5vCT0gQ/AwHMIYvBXmfuMqX66BgREyaigXZe9SCu5I=
-X-Google-Smtp-Source: AGHT+IFaN5UiWktJPk9pTAun7xomriaMOM2YzPb0NVbOryD3luxnIA53nKbGunAlOy9eAAb1hmFO0A==
-X-Received: by 2002:a05:6870:56a0:b0:287:32f7:ef42 with SMTP id
- 586e51a60fabf-2956009917fmr3238060fac.16.1731075845319; 
- Fri, 08 Nov 2024 06:24:05 -0800 (PST)
-Received: from mail.minyard.net ([2001:470:b8f6:1b:44bd:cb9b:52b3:1883])
+ AJvYcCWxR0slWQIK4lrelJhwaXDLHIXaepHKiM0FI8lAENwIKu7Rbc5w90+PJoFouwG1jQ/+e8YiCwSWJ2WI@nongnu.org
+X-Gm-Message-State: AOJu0YxdRJMSoSxh2fC1NiLfiaytoJ7omMHJJusMWqxowETUiE5D63Dc
+ us1xoe9AXu9LbihhES+qhN/VujYCQBjoAVVEUN1jITxY29/og3nT8lLcwoOeRGI=
+X-Google-Smtp-Source: AGHT+IF4gXANmcTPwN4j+Zijqv8ia/5yLmkxOEPJ5HlLv82l70bdmq4oXEACik4A3nSFhG6veVwRXg==
+X-Received: by 2002:a5d:64c7:0:b0:381:d890:b4b6 with SMTP id
+ ffacd0b85a97d-381f1834e6fmr2485287f8f.48.1731076197664; 
+ Fri, 08 Nov 2024 06:29:57 -0800 (PST)
+Received: from [172.16.22.241] ([154.14.63.34])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29546f48400sm981515fac.48.2024.11.08.06.24.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 06:24:03 -0800 (PST)
-Date: Fri, 8 Nov 2024 08:23:58 -0600
-From: Corey Minyard <corey@minyard.net>
-To: Titus Rwantare <titusr@google.com>
-Cc: peter.maydell@linaro.org, minyard@acm.org, clg@redhat.com,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, philmd@linaro.org,
- venture@google.com, wuhaotsh@google.com, milesg@linux.vnet.ibm.com
-Subject: Re: [PATCH 4/6] hw/i2c: add canonical path to i2c event traces
-Message-ID: <Zy4e_glcDMZ1f7FJ@mail.minyard.net>
-References: <20241107195453.2684138-1-titusr@google.com>
- <20241107195453.2684138-5-titusr@google.com>
+ 5b1f17b1804b1-432a26a7508sm106380205e9.0.2024.11.08.06.29.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Nov 2024 06:29:57 -0800 (PST)
+Message-ID: <51f753df-3d7d-4f85-8a63-88714e9117b6@linaro.org>
+Date: Fri, 8 Nov 2024 14:29:55 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/misc/nrf51_rng: Don't use BIT_MASK() when we mean BIT()
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Joel Stanley <joel@jms.id.au>
+References: <20241108135644.4007151-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241108135644.4007151-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241107195453.2684138-5-titusr@google.com>
-Received-SPF: none client-ip=2001:4860:4864:20::36;
- envelope-from=corey@minyard.net; helo=mail-oa1-x36.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,68 +93,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: corey@minyard.net
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 07, 2024 at 07:54:51PM +0000, Titus Rwantare wrote:
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Titus Rwantare <titusr@google.com>
-
-Acked-by: Corey Minyard <cminyard@mvista.com>
-
+On 8/11/24 13:56, Peter Maydell wrote:
+> The BIT_MASK() macro from bitops.h provides the mask of a bit
+> within a particular word of a multi-word bit array; it is intended
+> to be used with its counterpart BIT_WORD() that gives the index
+> of the word in the array.
+> 
+> In nrf51_rng we are using it for cases where we have a bit number
+> that we know is the index of a bit within a single word (in fact, it
+> happens that all the bit numbers we pass to it are zero). This
+> happens to give the right answer, but the macro that actually
+> does the job we want here is BIT().
+> 
+> Use BIT() instead of BIT_MASK().
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  hw/i2c/core.c       | 8 +++++---
->  hw/i2c/trace-events | 2 +-
->  2 files changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/i2c/core.c b/hw/i2c/core.c
-> index 4cf30b2c86..d238311776 100644
-> --- a/hw/i2c/core.c
-> +++ b/hw/i2c/core.c
-> @@ -161,7 +161,8 @@ static int i2c_do_start_transfer(I2CBus *bus, uint8_t address,
->             start condition.  */
->  
->          if (sc->event) {
-> -            trace_i2c_event(event == I2C_START_SEND ? "start" : "start_async",
-> +            trace_i2c_event(DEVICE(s)->canonical_path,
-> +                            event == I2C_START_SEND ? "start" : "start_async",
->                              s->address);
->              rv = sc->event(s, event);
->              if (rv && !bus->broadcast) {
-> @@ -244,7 +245,7 @@ void i2c_end_transfer(I2CBus *bus)
->          I2CSlave *s = node->elt;
->          sc = I2C_SLAVE_GET_CLASS(s);
->          if (sc->event) {
-> -            trace_i2c_event("finish", s->address);
-> +            trace_i2c_event(DEVICE(s)->canonical_path, "finish", s->address);
->              sc->event(s, I2C_FINISH);
->          }
->          QLIST_REMOVE(node, next);
-> @@ -321,7 +322,8 @@ void i2c_nack(I2CBus *bus)
->      QLIST_FOREACH(node, &bus->current_devs, next) {
->          sc = I2C_SLAVE_GET_CLASS(node->elt);
->          if (sc->event) {
-> -            trace_i2c_event("nack", node->elt->address);
-> +            trace_i2c_event(DEVICE(node->elt)->canonical_path,
-> +                            "nack", node->elt->address);
->              sc->event(node->elt, I2C_NACK);
->          }
->      }
-> diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
-> index f708a7ace1..e5f2dc643e 100644
-> --- a/hw/i2c/trace-events
-> +++ b/hw/i2c/trace-events
-> @@ -9,7 +9,7 @@ bitbang_i2c_data(unsigned clk, unsigned dat, unsigned old_out, unsigned new_out)
->  
->  # core.c
->  
-> -i2c_event(const char *event, uint8_t address) "%s(addr:0x%02x)"
-> +i2c_event(const char *id, const char *event, uint8_t address) "%s: %s(addr:0x%02x)"
->  i2c_send(uint8_t address, uint8_t data) "send(addr:0x%02x) data:0x%02x"
->  i2c_send_async(uint8_t address, uint8_t data) "send_async(addr:0x%02x) data:0x%02x"
->  i2c_recv(uint8_t address, uint8_t data) "recv(addr:0x%02x) data:0x%02x"
-> -- 
-> 2.47.0.277.g8800431eea-goog
-> 
+>   hw/misc/nrf51_rng.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
