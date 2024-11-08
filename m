@@ -4,91 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D15FD64072
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0875BD64072
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:49:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9Swj-00043d-1f; Fri, 08 Nov 2024 12:38:57 -0500
+	id 1t9T6K-0006yP-5b; Fri, 08 Nov 2024 12:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t9Swi-00043R-4d
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t9Swg-0007eX-Pe
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731087534;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UFEKPmesayCxfe6FTizVM3fXCAtel5A94tDgNJwfRzw=;
- b=N5GPE6V7LYTkRs6yCun1jonWvFlBcaNWays4KERulmLrWIC/wvPpobWfAgRwrAN8vew6fv
- tcpOnc7Si5+nyhFjyjkZk2dW5W7WK2rwDFFw37RLLQhbPwe9112we7t++BpYl1/M5JTQka
- cYZHvDOfcROUegrUyh3TEozg8oir3iA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-121-ryy-rE_KNgq33oivD6XqFA-1; Fri, 08 Nov 2024 12:38:53 -0500
-X-MC-Unique: ryy-rE_KNgq33oivD6XqFA-1
-X-Mimecast-MFC-AGG-ID: ryy-rE_KNgq33oivD6XqFA
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37d47127e69so1110401f8f.1
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:38:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t9T6H-0006xJ-PX
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:48:49 -0500
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t9T6G-0000Ii-De
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:48:49 -0500
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-84fc0209e87so873990241.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:48:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731088127; x=1731692927; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/EexUenQHOA1OJGYb7/WbOletI9MGChC6quLK6xQWfU=;
+ b=iiMByLyyTwi8fuwF/SMN/1J/+Nu6J1T+zFjVo89aBeSj//SugxHj90fV8XMFl3ZET7
+ 4M7fhGmPShbN6zDip+x1mSkt+Vd0vu6k/ztEO4Zpdz/fRX6ZPZj1PVGfVbDtN5W73eBV
+ XXVeapsf/pQjJwGn+y1H0yCxI99N0HCAQc16+VvEfiStqWACu8DxgaEfZXoqGndVdW3f
+ B/jzPOvty0rjcUgif8cwZ6Rgk2Y0Ji1qqDPOnv1WRCjgYRe1aEk3JD46lnvmEvAJYHsL
+ sQPrQOi5R6wa63CH70IQoXLfGgcgaARBkAZlptSNlz4vkrzxgTmC5ZmEoXPCoMlcZNY4
+ is1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731087531; x=1731692331;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1731088127; x=1731692927;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UFEKPmesayCxfe6FTizVM3fXCAtel5A94tDgNJwfRzw=;
- b=oQTnxss57NNwEtYh2MgihsIbMjH8/onYf90AJwDaaiwhpY9A3dLUxl9fwSqyBLxcCl
- 5Xk63pGYg6g2XKr7TgurpcbTdH/37su0flK9ChHecB2zh6UtOht3KLmNEsvClBSqftl7
- qBnDkaE/RTGVzlu/Jc6G+PJjbApHQkc04HCPK+ztySYNte4BTpcSHDqg6d7hrNOz79GF
- di+C9tfltITR9ZnJP/AEQwoJFaDWaE68wuta5vtk2fKGalTfC5/cll40xDKF7+qlA6xa
- A3Fid7neoGGsoNGah4ex9H2W8CFcdb7at04Ypa6DUrBqrGpaa+fzxDtIuq1Gpp9LulId
- fvYw==
-X-Gm-Message-State: AOJu0YwwRoci5DWrfHY8izq5kBIfVAGrrqAcTS1sINWDNzC1ofzW0mXJ
- MfPTof71z8pkBsLk1+MF0PMMVJMyePJ7mm0vw2IsHeH0RMn0C6j0tiJ89lDxMwOkw6fPPTVwdH6
- ENs59vmwLPGvFLiOBXczriFsVs+i1SEv/syXoShXwQ3LJyiR5RCfkLJW1IawUfbw6LQ8DDVB9W6
- byfInvoWL1rRAZRabg9ZiohmtveREJRxPmBrOH+pQ=
-X-Received: by 2002:a5d:59a2:0:b0:37d:476e:f110 with SMTP id
- ffacd0b85a97d-381f186fbcbmr3232312f8f.34.1731087530904; 
- Fri, 08 Nov 2024 09:38:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHCHSNqig3kWTQkYyUnM2sVRWw8fwNDhjLUvgc75Rhf3wFD1dQR/5Jv5GSvWxVr0NIx9TPurA==
-X-Received: by 2002:a5d:59a2:0:b0:37d:476e:f110 with SMTP id
- ffacd0b85a97d-381f186fbcbmr3232281f8f.34.1731087530372; 
- Fri, 08 Nov 2024 09:38:50 -0800 (PST)
-Received: from [192.168.10.47] ([151.49.84.243])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed97f544sm5565167f8f.40.2024.11.08.09.38.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 09:38:48 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <r.bolshakov@yadro.com>
-Subject: [PULL 10/13] i386/hvf: Raise exception on error setting APICBASE
-Date: Fri,  8 Nov 2024 18:38:25 +0100
-Message-ID: <20241108173828.111454-11-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241108173828.111454-1-pbonzini@redhat.com>
-References: <20241108173828.111454-1-pbonzini@redhat.com>
+ bh=/EexUenQHOA1OJGYb7/WbOletI9MGChC6quLK6xQWfU=;
+ b=g8UF2qCl7qY+JXDmACx5XGGCPKqkZwOOwmZoEhv6gW2IjRHC01/f/ZmYwfgtwScK5k
+ v6Xoc2Ajw+A3wTT1jzJcC3WFS8XhkE4p6EMstn7MBnsWOk1sFQkj0fHDbzuQxsDC3ZB7
+ D/IXjKNRBdan6mrlTZmnptphmjyKUhSr8foiGfwwiCMyRTJZO3kkkCkHX9cTj1tWzDtX
+ d9sfC+/7Zu2ENaf2rkde5XCxr8deVW/ZymXDMVdRUcK4o2KHH0ybGcagW3Sd5G2AEA7i
+ i8qvvE6wvQ9akAdWRszI3MBQjeR6QaIqYK/vPXoZ67E2jrhxEjmKJeOeUOtrniXsIin2
+ j16w==
+X-Gm-Message-State: AOJu0Yx40Z1zc2JNwIx0C5QSaLs+HZFxNSJQaGHkDf7GwGx37KnbamYY
+ uOH1GrzSJXS1di+VLkCdSOLhgVkdD2U+yVTDV5NZPCH8ub3P/jHA1zVpEA8/4bBU/ikWkzfVXOV
+ F/a0jTGBTBBeOtYQEEWBxvaqJSbY=
+X-Google-Smtp-Source: AGHT+IGLt3vicU9c0CQ5BqAYIQIRvg+VJ8pfAzK1ybh/wCvd8w0PMTmvRM8Q5WsPOdvyQ+LRffK4g6DUKxREe3roJrU=
+X-Received: by 2002:a05:6102:5121:b0:4a4:79cf:be83 with SMTP id
+ ada2fe7eead31-4aae139186bmr4178415137.10.1731088127220; Fri, 08 Nov 2024
+ 09:48:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241108173828.111454-1-pbonzini@redhat.com>
+ <20241108173828.111454-7-pbonzini@redhat.com>
+In-Reply-To: <20241108173828.111454-7-pbonzini@redhat.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Fri, 8 Nov 2024 23:48:50 +0600
+Message-ID: <CAFfO_h7-1KMJoM46a=W8wv4-5VzKcYHEgTmT3GpFVg7E6tHyxg@mail.gmail.com>
+Subject: Re: [PULL 06/13] eif: cope with huge section sizes
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-ua1-x92b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,45 +91,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Phil Dennis-Jordan <phil@philjordan.eu>
+On Fri, Nov 8, 2024 at 11:38=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+>
+> Check for overflow as well as allocation failure.  Resolves Coverity CID =
+1564859.
+>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  hw/core/eif.c | 48 +++++++++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 41 insertions(+), 7 deletions(-)
+>
+> diff --git a/hw/core/eif.c b/hw/core/eif.c
+> index 61329aacfe1..7a8c657f23a 100644
+> --- a/hw/core/eif.c
+> +++ b/hw/core/eif.c
+> @@ -119,6 +119,10 @@ static bool read_eif_header(FILE *f, EifHeader *head=
+er, uint32_t *crc,
+>
+>      for (int i =3D 0; i < MAX_SECTIONS; ++i) {
+>          header->section_sizes[i] =3D be64_to_cpu(header->section_sizes[i=
+]);
+> +        if (header->section_sizes[i] > SSIZE_MAX) {
+> +            error_setg(errp, "Invalid EIF image. Section size out of bou=
+nds");
+> +            return false;
+> +        }
+>      }
+>
+>      header->unused =3D be32_to_cpu(header->unused);
+> @@ -278,7 +282,12 @@ static bool get_signature_fingerprint_sha384(FILE *e=
+if, uint64_t size,
+>      struct cbor_load_result result;
+>      bool ret =3D false;
+>
+> -    sig =3D g_malloc(size);
+> +    sig =3D g_try_malloc(size);
+> +    if (!sig) {
+> +        error_setg(errp, "Out of memory reading signature section");
+> +        goto cleanup;
+> +    }
+> +
+>      got =3D fread(sig, 1, size, eif);
+>      if ((uint64_t) got !=3D size) {
+>          error_setg(errp, "Failed to read EIF signature section data");
+> @@ -320,7 +329,12 @@ static bool get_signature_fingerprint_sha384(FILE *e=
+if, uint64_t size,
+>          error_setg(errp, "Invalid signature CBOR");
+>          goto cleanup;
+>      }
+> -    cert =3D g_malloc(len);
+> +    cert =3D g_try_malloc(len);
+> +    if (!cert) {
+> +        error_setg(errp, "Out of memory reading signature section");
+> +        goto cleanup;
+> +    }
+> +
+>      for (int i =3D 0; i < len; ++i) {
+>          cbor_item_t *tmp =3D cbor_array_get(pair->value, i);
+>          if (!tmp) {
+> @@ -503,7 +517,11 @@ bool read_eif_file(const char *eif_path, const char =
+*machine_initrd,
+>                  goto cleanup;
+>              }
+>
+> -            ptr =3D g_malloc(hdr.section_size);
+> +            ptr =3D g_try_malloc(hdr.section_size);
+> +            if (!ptr) {
+> +                error_setg(errp, "Out of memory reading kernel section")=
+;
+> +                goto cleanup;
+> +            }
+>
+>              iov_ptr =3D g_malloc(sizeof(struct iovec));
+>              iov_ptr->iov_base =3D ptr;
+> @@ -528,7 +546,11 @@ bool read_eif_file(const char *eif_path, const char =
+*machine_initrd,
+>                  goto cleanup;
+>              }
+>              size =3D hdr.section_size;
+> -            *cmdline =3D g_malloc(size + 1);
+> +            *cmdline =3D g_try_malloc(size + 1);
+> +            if (!cmdline) {
+> +                error_setg(errp, "Out of memory reading command line sec=
+tion");
+> +                goto cleanup;
+> +            }
 
-When setting the APICBASE MSR to an illegal value, the APIC
-implementation will return an error. This change forwards that report
-to the guest as an exception rather than ignoring it when using the hvf
-accelerator.
+I was looking into doing some changes on top of the original patch and
+this check above should be if (!(*cmdline)), right?
 
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Link: https://lore.kernel.org/r/20241105155800.5461-5-phil@philjordan.eu
-Reviewed-by: Roman Bolshakov <r.bolshakov@yadro.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/hvf/x86_emu.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
-index be675bcfb71..015f760acb3 100644
---- a/target/i386/hvf/x86_emu.c
-+++ b/target/i386/hvf/x86_emu.c
-@@ -794,9 +794,16 @@ void simulate_wrmsr(CPUX86State *env)
-     switch (msr) {
-     case MSR_IA32_TSC:
-         break;
--    case MSR_IA32_APICBASE:
--        cpu_set_apic_base(cpu->apic_state, data);
-+    case MSR_IA32_APICBASE: {
-+        int r;
-+
-+        r = cpu_set_apic_base(cpu->apic_state, data);
-+        if (r < 0) {
-+            raise_exception(env, EXCP0D_GPF, 0);
-+        }
-+
-         break;
-+    }
-     case MSR_APIC_START ... MSR_APIC_END: {
-         int ret;
-         int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
--- 
-2.47.0
-
+Regards,
+Dorjoy
 
