@@ -4,67 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 389D7D5E158
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 10:45:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5A11D5E159
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 10:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9MSy-0004GB-8s; Fri, 08 Nov 2024 05:43:48 -0500
+	id 1t9MVg-0001zW-9w; Fri, 08 Nov 2024 05:46:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t9MSw-0004CV-9G
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:43:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9MVc-0001yc-Uf
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:46:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t9MSt-0006A0-Mb
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:43:46 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9MVb-0006V5-5y
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 05:46:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731062622;
+ s=mimecast20190719; t=1731062790;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zyfds1+WL8bCspsWzu3QySzxF/2akcgIJKaghZSkMH8=;
- b=h0ZCyKCDgS7qD13vLpGjzsRz1ln8M9VFpgwuYIkqEQTKsotLAW37kybKsKPcFjMRCC32eN
- uTwRKIJ//r8YxSwf58fNUJRVA9G+AIK0LiagLEuQyk2C4l6E0iYW7td9YdRR26IEmLp9n5
- QJDtopTPd3ROSbAMwAjLCoPrSlLSY/M=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-aRvL2oBQNNmP6K8f_qX7TA-1; Fri,
- 08 Nov 2024 05:43:39 -0500
-X-MC-Unique: aRvL2oBQNNmP6K8f_qX7TA-1
-X-Mimecast-MFC-AGG-ID: aRvL2oBQNNmP6K8f_qX7TA
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3397419560AF; Fri,  8 Nov 2024 10:43:38 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.118])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 04E951953880; Fri,  8 Nov 2024 10:43:35 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 07/10] tests/functional: Split the test_aarch64_sbsaref test
-Date: Fri,  8 Nov 2024 11:43:07 +0100
-Message-ID: <20241108104312.534448-8-thuth@redhat.com>
-In-Reply-To: <20241108104312.534448-1-thuth@redhat.com>
-References: <20241108104312.534448-1-thuth@redhat.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qnxwZvxkA8DGXve9fKwYa3BT/n8jjMQMME9h8AbkUvc=;
+ b=PfA2S91qi5RnzZzN0BkOceoN2hFhUn3IYJAYlbdBB2t2FPSENpsfkp2KV0PAJqTV0+V8Nd
+ sbv0chX+9YBcvWdBCSZpbaISLhrYntTjEirZp393CmaZlaS4WBl7arJkDh4wXas9hcVdrZ
+ KAsHZhVCTW2PWb6lX3e3wFHJlOyqECI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-397-zuaGe4_4OfeLLkZjK3_kyQ-1; Fri, 08 Nov 2024 05:46:29 -0500
+X-MC-Unique: zuaGe4_4OfeLLkZjK3_kyQ-1
+X-Mimecast-MFC-AGG-ID: zuaGe4_4OfeLLkZjK3_kyQ
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d4a211177so970274f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 02:46:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731062788; x=1731667588;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=qnxwZvxkA8DGXve9fKwYa3BT/n8jjMQMME9h8AbkUvc=;
+ b=ecrU/zSHVIAePQbsGlTPrnNSR06g9k8MyCuki+eJXsmAL3m4KtvtoeAsyVL2G3DN+p
+ LWGdqeqTfR5apNUv0VjPV4koWPjCwK/6ByoeXmX6ATnxcJp/H5IGUZ75QI5twnD4suCm
+ zyfAblNwlSlO6+F0390s8brkLo93d5b+P2IiCqcuHWbVdOG2149huLx/LdBSPC0g5Qx1
+ cwMJYtPMrKAtpCEQBkrFowABoYovEdm7/h4jTGAlLDvY/TiVn1XSpruIFPMh8tRx6UbQ
+ LselI0JSEfyvOnaomQTMCW7kk+v3uVx8lcEj5P0qaQMF/NhmRC6d5KwCdKKtPR3tN89Q
+ dHYg==
+X-Gm-Message-State: AOJu0YwDay2Igz0UZTPKiI0RxFnQ4NbE+KEUabdaJmoWy/YSQIpvlLya
+ PX2jWmTrqxgAAY5krJ6LyMIAo2dJowF6nRbcNCK0w5klqtgdBpeKCid4lVYlw+YzocXXUzKbb64
+ OrIErs7LC3roDtnyCeLgSwK8SC71xQimSPbfetUj9TfjYkpwDVwfXXGH4JC7f7rOOoQllflFcse
+ dxDDYOJaEeFGL0AQOfLYlgYZfrRwMK+eqD
+X-Received: by 2002:a05:6000:1564:b0:37d:4d21:350c with SMTP id
+ ffacd0b85a97d-381f186cc7fmr1901824f8f.13.1731062788103; 
+ Fri, 08 Nov 2024 02:46:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG0lZUDSbIg+r9uYf9TqYgALSa2cKia8QDM+H81Cjwc6lY34z0jtAht/y3JN/Q/0B1syAIShg==
+X-Received: by 2002:a05:6000:1564:b0:37d:4d21:350c with SMTP id
+ ffacd0b85a97d-381f186cc7fmr1901808f8f.13.1731062787626; 
+ Fri, 08 Nov 2024 02:46:27 -0800 (PST)
+Received: from ?IPV6:2003:cb:c70f:b600:4a55:861a:f768:72a8?
+ (p200300cbc70fb6004a55861af76872a8.dip0.t-ipconnect.de.
+ [2003:cb:c70f:b600:4a55:861a:f768:72a8])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381eda03e42sm4286141f8f.89.2024.11.08.02.46.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Nov 2024 02:46:26 -0800 (PST)
+Message-ID: <0b5272b4-7c2a-487d-9028-9be4d242070b@redhat.com>
+Date: Fri, 8 Nov 2024 11:46:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] virtio-mem: unplug memory only during system resets,
+ not device resets
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Juraj Marcin <jmarcin@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241025104103.342188-1-david@redhat.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20241025104103.342188-1-david@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,397 +153,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test_aarch64_sbsaref test is the test with the longest runtime
-in our functional test suite. Split it into parts so that it can
-be run on multiple CPUs in parallel.
+On 25.10.24 12:41, David Hildenbrand wrote:
+> We recently converted from the LegacyReset to the new reset framework
+> in commit c009a311e939 ("virtio-mem: Use new Resettable framework instead
+> of LegacyReset") to be able to use the ResetType to filter out wakeup
+> resets.
+> 
+> However, this change had an undesired implications: as we override the
+> Resettable interface methods in VirtIOMEMClass, the reset handler will
+> not only get called during system resets (i.e., qemu_devices_reset())
+> but also during any direct or indirect device rests (e.g.,
+> device_cold_reset()).
+> 
+> Further, we might now receive two reset callbacks during
+> qemu_devices_reset(), first when reset by a parent and later when reset
+> directly.
+> 
+> The memory state of virtio-mem devices is rather special: it's supposed to
+> be persistent/unchanged during most resets (similar to resetting a hard
+> disk will not destroy the data), unless actually cold-resetting the whole
+> system (different to a hard disk where a reboot will not destroy the data):
+> ripping out system RAM is something guest OSes don't particularly enjoy,
+> but we want to detect when rebooting to an OS that does not support
+> virtio-mem and wouldn't be able to detect+use the memory -- and we want
+> to force-defragment hotplugged memory to also shrink the usable device
+> memory region. So we rally want to catch system resets to do that.
+> 
+> On supported targets (e.g., x86), getting a cold reset on the
+> device/parent triggers is not that easy (but looks like PCI code
+> might trigger it), so this implication went unnoticed.
+> 
+> However, with upcoming s390x support it is problematic: during
+> kdump, s390x triggers a subsystem reset, ending up in
+> s390_machine_reset() and calling only subsystem_reset() instead of
+> qemu_devices_reset() -- because it's not a full system reset.
+> 
+> In subsystem_reset(), s390x performs a device_cold_reset() of any
+> TYPE_VIRTUAL_CSS_BRIDGE device, which ends up resetting all children,
+> including the virtio-mem device. Consequently, we wrongly detect a system
+> reset and unplug all device memory, resulting in hotplugged memory not
+> getting included in the crash dump -- undesired.
+> 
+> We really must not mess with hotplugged memory state during simple
+> device resets. To fix, create+register a new reset object that will only
+> get triggered during qemu_devices_reset() calls, but not during any other
+> resets as it is logically not the child of any other object.
+> 
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Cc: Juraj Marcin <jmarcin@redhat.com>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
 
-For this we have to move the fetch_firmware() function out of the
-class definition to be able to reuse it easily from the other tests
-(deriving the Aarch64SbsarefAlpine and Aarch64SbsarefFreeBSD directly
-from Aarch64SbsarefMachine does not work, unfortunately, since we'd
-inherit the test_sbsaref_edk2_firmware() function that way, causing
-it to be run multiple times - and keeping the fetch_firmware() in
-a separate class without the test_sbsaref_edk2_firmware() function
-also does not work since the "make precache-functional" won't work
-in that case ==> turning fetch_firmware() into a static function is
-the best option).
 
-Message-ID: <20241106175029.1000589-1-thuth@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- MAINTAINERS                                   |   2 +-
- tests/functional/meson.build                  |   5 +-
- tests/functional/test_aarch64_sbsaref.py      | 159 ++++--------------
- .../functional/test_aarch64_sbsaref_alpine.py |  64 +++++++
- .../test_aarch64_sbsaref_freebsd.py           |  66 ++++++++
- 5 files changed, 172 insertions(+), 124 deletions(-)
- create mode 100755 tests/functional/test_aarch64_sbsaref_alpine.py
- create mode 100755 tests/functional/test_aarch64_sbsaref_freebsd.py
+If there are no further comments, I'll queue this as a preparation for 
+s390x virtio-mem support.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 844944fb39..095420f8b0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -924,7 +924,7 @@ F: hw/misc/sbsa_ec.c
- F: hw/watchdog/sbsa_gwdt.c
- F: include/hw/watchdog/sbsa_gwdt.h
- F: docs/system/arm/sbsa.rst
--F: tests/functional/test_aarch64_sbsaref.py
-+F: tests/functional/test_aarch64_sbsaref*.py
- 
- Sharp SL-5500 (Collie) PDA
- M: Peter Maydell <peter.maydell@linaro.org>
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 2f134f178c..758145d1e5 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -12,7 +12,8 @@ endif
- # Timeouts for individual tests that can be slow e.g. with debugging enabled
- test_timeouts = {
-   'aarch64_raspi4' : 480,
--  'aarch64_sbsaref' : 600,
-+  'aarch64_sbsaref_alpine' : 720,
-+  'aarch64_sbsaref_freebsd' : 720,
-   'aarch64_virt' : 720,
-   'acpi_bits' : 420,
-   'arm_aspeed' : 600,
-@@ -49,6 +50,8 @@ tests_aarch64_system_thorough = [
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-   'aarch64_sbsaref',
-+  'aarch64_sbsaref_alpine',
-+  'aarch64_sbsaref_freebsd',
-   'aarch64_virt',
-   'multiprocess',
- ]
-diff --git a/tests/functional/test_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
-index b50e1a5965..9fda396b3a 100755
---- a/tests/functional/test_aarch64_sbsaref.py
-+++ b/tests/functional/test_aarch64_sbsaref.py
-@@ -16,6 +16,42 @@
- from qemu_test.utils import lzma_uncompress
- from unittest import skipUnless
- 
-+def fetch_firmware(test):
-+    """
-+    Flash volumes generated using:
-+
-+    Toolchain from Debian:
-+    aarch64-linux-gnu-gcc (Debian 12.2.0-14) 12.2.0
-+
-+    Used components:
-+
-+    - Trusted Firmware         v2.11.0
-+    - Tianocore EDK2           4d4f569924
-+    - Tianocore EDK2-platforms 3f08401
-+
-+    """
-+
-+    # Secure BootRom (TF-A code)
-+    fs0_xz_path = Aarch64SbsarefMachine.ASSET_FLASH0.fetch()
-+    fs0_path = os.path.join(test.workdir, "SBSA_FLASH0.fd")
-+    lzma_uncompress(fs0_xz_path, fs0_path)
-+
-+    # Non-secure rom (UEFI and EFI variables)
-+    fs1_xz_path = Aarch64SbsarefMachine.ASSET_FLASH1.fetch()
-+    fs1_path = os.path.join(test.workdir, "SBSA_FLASH1.fd")
-+    lzma_uncompress(fs1_xz_path, fs1_path)
-+
-+    for path in [fs0_path, fs1_path]:
-+        with open(path, "ab+") as fd:
-+            fd.truncate(256 << 20)  # Expand volumes to 256MiB
-+
-+    test.set_machine('sbsa-ref')
-+    test.vm.set_console()
-+    test.vm.add_args(
-+        "-drive", f"if=pflash,file={fs0_path},format=raw",
-+        "-drive", f"if=pflash,file={fs1_path},format=raw",
-+    )
-+
- 
- class Aarch64SbsarefMachine(QemuSystemTest):
-     """
-@@ -35,45 +71,9 @@ class Aarch64SbsarefMachine(QemuSystemTest):
-          '20240619-148232/edk2/SBSA_FLASH1.fd.xz'),
-         'c6ec39374c4d79bb9e9cdeeb6db44732d90bb4a334cec92002b3f4b9cac4b5ee')
- 
--    def fetch_firmware(self):
--        """
--        Flash volumes generated using:
--
--        Toolchain from Debian:
--        aarch64-linux-gnu-gcc (Debian 12.2.0-14) 12.2.0
--
--        Used components:
--
--        - Trusted Firmware         v2.11.0
--        - Tianocore EDK2           4d4f569924
--        - Tianocore EDK2-platforms 3f08401
--
--        """
--
--        # Secure BootRom (TF-A code)
--        fs0_xz_path = self.ASSET_FLASH0.fetch()
--        fs0_path = os.path.join(self.workdir, "SBSA_FLASH0.fd")
--        lzma_uncompress(fs0_xz_path, fs0_path)
--
--        # Non-secure rom (UEFI and EFI variables)
--        fs1_xz_path = self.ASSET_FLASH1.fetch()
--        fs1_path = os.path.join(self.workdir, "SBSA_FLASH1.fd")
--        lzma_uncompress(fs1_xz_path, fs1_path)
--
--        for path in [fs0_path, fs1_path]:
--            with open(path, "ab+") as fd:
--                fd.truncate(256 << 20)  # Expand volumes to 256MiB
--
--        self.set_machine('sbsa-ref')
--        self.vm.set_console()
--        self.vm.add_args(
--            "-drive", f"if=pflash,file={fs0_path},format=raw",
--            "-drive", f"if=pflash,file={fs1_path},format=raw",
--        )
--
-     def test_sbsaref_edk2_firmware(self):
- 
--        self.fetch_firmware()
-+        fetch_firmware(self)
- 
-         self.vm.add_args('-cpu', 'cortex-a57')
-         self.vm.launch()
-@@ -101,90 +101,5 @@ def test_sbsaref_edk2_firmware(self):
-         wait_for_console_pattern(self, "UEFI firmware (version 1.0")
-         interrupt_interactive_console_until_pattern(self, "QEMU SBSA-REF Machine")
- 
--
--    ASSET_ALPINE_ISO = Asset(
--        ('https://dl-cdn.alpinelinux.org/'
--         'alpine/v3.17/releases/aarch64/alpine-standard-3.17.2-aarch64.iso'),
--        '5a36304ecf039292082d92b48152a9ec21009d3a62f459de623e19c4bd9dc027')
--
--    # This tests the whole boot chain from EFI to Userspace
--    # We only boot a whole OS for the current top level CPU and GIC
--    # Other test profiles should use more minimal boots
--    def boot_alpine_linux(self, cpu=None):
--        self.fetch_firmware()
--
--        iso_path = self.ASSET_ALPINE_ISO.fetch()
--
--        self.vm.set_console()
--        self.vm.add_args(
--            "-drive", f"file={iso_path},media=cdrom,format=raw",
--        )
--        if cpu:
--            self.vm.add_args("-cpu", cpu)
--
--        self.vm.launch()
--        wait_for_console_pattern(self, "Welcome to Alpine Linux 3.17")
--
--    def test_sbsaref_alpine_linux_cortex_a57(self):
--        self.boot_alpine_linux("cortex-a57")
--
--    def test_sbsaref_alpine_linux_default_cpu(self):
--        self.boot_alpine_linux()
--
--    def test_sbsaref_alpine_linux_max_pauth_off(self):
--        self.boot_alpine_linux("max,pauth=off")
--
--    def test_sbsaref_alpine_linux_max_pauth_impdef(self):
--        self.boot_alpine_linux("max,pauth-impdef=on")
--
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
--                'Test might timeout due to PAuth emulation')
--    def test_sbsaref_alpine_linux_max(self):
--        self.boot_alpine_linux("max")
--
--
--    ASSET_FREEBSD_ISO = Asset(
--        ('https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/'
--         '14.1/FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso'),
--        '44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461')
--
--    # This tests the whole boot chain from EFI to Userspace
--    # We only boot a whole OS for the current top level CPU and GIC
--    # Other test profiles should use more minimal boots
--    def boot_freebsd14(self, cpu=None):
--        self.fetch_firmware()
--
--        img_path = self.ASSET_FREEBSD_ISO.fetch()
--
--        self.vm.set_console()
--        self.vm.add_args(
--            "-drive", f"file={img_path},format=raw,snapshot=on",
--        )
--        if cpu:
--            self.vm.add_args("-cpu", cpu)
--
--        self.vm.launch()
--        wait_for_console_pattern(self, 'Welcome to FreeBSD!')
--
--    def test_sbsaref_freebsd14_cortex_a57(self):
--        self.boot_freebsd14("cortex-a57")
--
--    def test_sbsaref_freebsd14_default_cpu(self):
--        self.boot_freebsd14()
--
--    def test_sbsaref_freebsd14_max_pauth_off(self):
--        self.boot_freebsd14("max,pauth=off")
--
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
--                'Test might timeout due to PAuth emulation')
--    def test_sbsaref_freebsd14_max_pauth_impdef(self):
--        self.boot_freebsd14("max,pauth-impdef=on")
--
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
--                'Test might timeout due to PAuth emulation')
--    def test_sbsaref_freebsd14_max(self):
--        self.boot_freebsd14("max")
--
--
- if __name__ == '__main__':
-     QemuSystemTest.main()
-diff --git a/tests/functional/test_aarch64_sbsaref_alpine.py b/tests/functional/test_aarch64_sbsaref_alpine.py
-new file mode 100755
-index 0000000000..ebc29b2fb5
---- /dev/null
-+++ b/tests/functional/test_aarch64_sbsaref_alpine.py
-@@ -0,0 +1,64 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a kernel and checks the console
-+#
-+# SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
-+# SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
-+# SPDX-FileContributor: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import interrupt_interactive_console_until_pattern
-+from unittest import skipUnless
-+from test_aarch64_sbsaref import fetch_firmware
-+
-+
-+class Aarch64SbsarefAlpine(QemuSystemTest):
-+
-+    ASSET_ALPINE_ISO = Asset(
-+        ('https://dl-cdn.alpinelinux.org/'
-+         'alpine/v3.17/releases/aarch64/alpine-standard-3.17.2-aarch64.iso'),
-+        '5a36304ecf039292082d92b48152a9ec21009d3a62f459de623e19c4bd9dc027')
-+
-+    # This tests the whole boot chain from EFI to Userspace
-+    # We only boot a whole OS for the current top level CPU and GIC
-+    # Other test profiles should use more minimal boots
-+    def boot_alpine_linux(self, cpu=None):
-+        fetch_firmware(self)
-+
-+        iso_path = self.ASSET_ALPINE_ISO.fetch()
-+
-+        self.vm.set_console()
-+        self.vm.add_args(
-+            "-drive", f"file={iso_path},media=cdrom,format=raw",
-+        )
-+        if cpu:
-+            self.vm.add_args("-cpu", cpu)
-+
-+        self.vm.launch()
-+        wait_for_console_pattern(self, "Welcome to Alpine Linux 3.17")
-+
-+    def test_sbsaref_alpine_linux_cortex_a57(self):
-+        self.boot_alpine_linux("cortex-a57")
-+
-+    def test_sbsaref_alpine_linux_default_cpu(self):
-+        self.boot_alpine_linux()
-+
-+    def test_sbsaref_alpine_linux_max_pauth_off(self):
-+        self.boot_alpine_linux("max,pauth=off")
-+
-+    def test_sbsaref_alpine_linux_max_pauth_impdef(self):
-+        self.boot_alpine_linux("max,pauth-impdef=on")
-+
-+    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
-+                'Test might timeout due to PAuth emulation')
-+    def test_sbsaref_alpine_linux_max(self):
-+        self.boot_alpine_linux("max")
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/functional/test_aarch64_sbsaref_freebsd.py b/tests/functional/test_aarch64_sbsaref_freebsd.py
-new file mode 100755
-index 0000000000..80298dd190
---- /dev/null
-+++ b/tests/functional/test_aarch64_sbsaref_freebsd.py
-@@ -0,0 +1,66 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a kernel and checks the console
-+#
-+# SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
-+# SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
-+# SPDX-FileContributor: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import interrupt_interactive_console_until_pattern
-+from unittest import skipUnless
-+from test_aarch64_sbsaref import fetch_firmware
-+
-+
-+class Aarch64SbsarefFreeBSD(QemuSystemTest):
-+
-+    ASSET_FREEBSD_ISO = Asset(
-+        ('https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/'
-+         '14.1/FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso'),
-+        '44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461')
-+
-+    # This tests the whole boot chain from EFI to Userspace
-+    # We only boot a whole OS for the current top level CPU and GIC
-+    # Other test profiles should use more minimal boots
-+    def boot_freebsd14(self, cpu=None):
-+        fetch_firmware(self)
-+
-+        img_path = self.ASSET_FREEBSD_ISO.fetch()
-+
-+        self.vm.set_console()
-+        self.vm.add_args(
-+            "-drive", f"file={img_path},format=raw,snapshot=on",
-+        )
-+        if cpu:
-+            self.vm.add_args("-cpu", cpu)
-+
-+        self.vm.launch()
-+        wait_for_console_pattern(self, 'Welcome to FreeBSD!')
-+
-+    def test_sbsaref_freebsd14_cortex_a57(self):
-+        self.boot_freebsd14("cortex-a57")
-+
-+    def test_sbsaref_freebsd14_default_cpu(self):
-+        self.boot_freebsd14()
-+
-+    def test_sbsaref_freebsd14_max_pauth_off(self):
-+        self.boot_freebsd14("max,pauth=off")
-+
-+    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
-+                'Test might timeout due to PAuth emulation')
-+    def test_sbsaref_freebsd14_max_pauth_impdef(self):
-+        self.boot_freebsd14("max,pauth-impdef=on")
-+
-+    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
-+                'Test might timeout due to PAuth emulation')
-+    def test_sbsaref_freebsd14_max(self):
-+        self.boot_freebsd14("max")
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
 -- 
-2.47.0
+Cheers,
+
+David / dhildenb
 
 
