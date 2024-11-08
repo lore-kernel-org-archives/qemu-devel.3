@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C68DD64070
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:40:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A9ED64072
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:40:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9Swi-00043c-VJ; Fri, 08 Nov 2024 12:38:56 -0500
+	id 1t9SwY-0003sg-Ih; Fri, 08 Nov 2024 12:38:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t9Swh-00042w-EF
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1t9SwW-0003ow-TW
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t9Swb-0007cY-Mx
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:55 -0500
+ id 1t9SwV-0007aK-Bv
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:38:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731087528;
+ s=mimecast20190719; t=1731087522;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0PsIDDY16NboYx8h/JucmIPxHaWOUWJZI19U2mvWFn4=;
- b=FNW/EI2DpN7Q30c/glpGJZS2HIO6IiPmxjfo7dEPk6psI0iBl9hDvPT6Uhxaj+QAQFQNfl
- 0TX6NS/D+oGmT21Mw453i9lb0W4fU3XZJem2Cmo+SyeUrrmr141GdQvnDSvnW9+/9hmEMK
- ZSB/8kgNhSG/zkSz5f9//2TvY8PBqcM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xJEvnVPMWDdQ2tnHSvFER1PvS665SI7hrD6PrD0x/g4=;
+ b=OW7mvDH+s1XWrlQk8P5HyKSvAk3qF2PDcLZBvd2Ey2aPUvw+OsE82ybE5H7Ez/FablAZuJ
+ NR9t4zfKGfUdvOY2QtPoggVH6slFTAjh/PXKbVRDWmH/qHU69yv/DExInRfA9q4YUaYGhz
+ JnzuS5wJdlZBnYkXLVPeHr+Ot0PgdIw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-5-4ADrDa3nPCuGDPcqyc7auw-1; Fri, 08 Nov 2024 12:38:47 -0500
-X-MC-Unique: 4ADrDa3nPCuGDPcqyc7auw-1
-X-Mimecast-MFC-AGG-ID: 4ADrDa3nPCuGDPcqyc7auw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43163a40ee0so16536585e9.0
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:38:47 -0800 (PST)
+ us-mta-522-ji5ktCbnOMOO9C2GXKki0A-1; Fri, 08 Nov 2024 12:38:40 -0500
+X-MC-Unique: ji5ktCbnOMOO9C2GXKki0A-1
+X-Mimecast-MFC-AGG-ID: ji5ktCbnOMOO9C2GXKki0A
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d5016d21eso1254410f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:38:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731087526; x=1731692326;
+ d=1e100.net; s=20230601; t=1731087518; x=1731692318;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0PsIDDY16NboYx8h/JucmIPxHaWOUWJZI19U2mvWFn4=;
- b=hnySQg+ypiroTOgAkyea1SpaxkKxl4Mpr4j6v/KRwV8dFpOdB2ufEWdU+m92TnJmWz
- AQr1T/yStX5b+1VF3kXolc07xnKv5naJTF/o3aEhQZM2BBrRnzAZm5MOqsa/GlDE+sB2
- yk2MeiMZks+7KnKvZh6aRXUIFxvZ3Sf+MHKDEOiXGdgd/hJqHW9O35ijZ45eTSH/z8Q9
- CqpFtQLn6J7aV5sgXXKXTHJlz/m4lPcaJn98vIlKnHnn9Me3uVeIAmjDzUY3aYFGuDVI
- fmao29fMWZonQVOU3+AZvPTZ/dLVjoFzlcC+ly2fyZnTkio5EdwvoZF05AtVGcgpZwbn
- 3wUw==
-X-Gm-Message-State: AOJu0YyhKluWJ4+/J0U1egZCC3SJ9iWTnr2NLiRWfAZDDUIDUF42OtF9
- 8BHhLyiOEWfORVbCMq0rHhQa38tm3ehqFuBU0nb/jSyjK6qQEMNpBJago8jHYk/ZLE+gVtTMOzx
- jXkgje6NzYkyfJZExNn2nTz5At/V+rbJ4HmpEK03q51pELVvoXXsav7zTICVHcGGlVY0tp3SUgp
- VISFf92hrI9DMqJjNH6nL/Rn8PABwVI34dkbnMPU8=
-X-Received: by 2002:a05:600c:8715:b0:431:93d8:e1a1 with SMTP id
- 5b1f17b1804b1-432b751bcc2mr30817415e9.27.1731087525928; 
- Fri, 08 Nov 2024 09:38:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHRrXhlmPJ0n37QsRSInR5hhbtG4RSaFgNZqEa/TDwSmqv4aMq5b6+AU/3Qn/on13osz6JQaA==
-X-Received: by 2002:a05:600c:8715:b0:431:93d8:e1a1 with SMTP id
- 5b1f17b1804b1-432b751bcc2mr30817225e9.27.1731087525438; 
- Fri, 08 Nov 2024 09:38:45 -0800 (PST)
+ bh=xJEvnVPMWDdQ2tnHSvFER1PvS665SI7hrD6PrD0x/g4=;
+ b=OvbYDim5/xjKZoVNgSaTMOVDTaVerWsTJYQY7qI+m8oPl99rHs4xvvLH3uUZQu+rok
+ guEKnbfG55Q0yc3iYZTv6OXnvmq/huvv40OL4YgQnwGu4tXISO5gFeAgdofSPJRNFpZS
+ k75mpQsOBIRCCtisD3vfOWzD5fGx44hDeo8SBSCkyTqoURECY+5+Q2Prr3007y+UYzDy
+ 7AJddO9gsiRxJ4AXXeKY5zanM1MA/cksM6phQijxWX9FQg050V4+wBDZ+d+cI8cC4u5v
+ 0XH/WBP54pWeIPde6iPHwxYdKVkSmVzHpncWLso1FzKuORZjGoktyowhuF4Y5DRyNemx
+ bpvQ==
+X-Gm-Message-State: AOJu0Yx5zechyWokXBUTXLM82luKKL7ZdRbFOv6vL3sow4dGQRvJqPrL
+ OEfZg2WOxv0yqCt0g3X83Qr8PELIlro5A4DrhByDFsvgKUb2VLwkFcZrcQ6qQjxSYEPwcCUxVDD
+ uxgA+hEHcDRX4wt8xEPU4AWZsDWOBkj5DA5lEbqlQR5FefBWJQIDqE/6k2hgo192FXT2BuqEb1E
+ Ks4/IfnjEQavtVutOKSzD0xftJj88Mld8ePak6D/c=
+X-Received: by 2002:a05:6000:1f8f:b0:37d:52b5:451e with SMTP id
+ ffacd0b85a97d-381f186fc20mr3235568f8f.33.1731087518078; 
+ Fri, 08 Nov 2024 09:38:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGx4EmICFX4IVoHrpc8DtTR2DRB5m2xG4vVSTEW5EbhlHgcDwccJU8VogmTNekl8bW+xQW8iA==
+X-Received: by 2002:a05:6000:1f8f:b0:37d:52b5:451e with SMTP id
+ ffacd0b85a97d-381f186fc20mr3235540f8f.33.1731087517621; 
+ Fri, 08 Nov 2024 09:38:37 -0800 (PST)
 Received: from [192.168.10.47] ([151.49.84.243])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed9707bdsm5666540f8f.4.2024.11.08.09.38.44
+ 5b1f17b1804b1-432b05302e1sm75862525e9.9.2024.11.08.09.38.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 09:38:44 -0800 (PST)
+ Fri, 08 Nov 2024 09:38:36 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <r.bolshakov@yadro.com>
-Subject: [PULL 08/13] i386/hvf: Fix for UB in handling CPUID function 0xD
-Date: Fri,  8 Nov 2024 18:38:23 +0100
-Message-ID: <20241108173828.111454-9-pbonzini@redhat.com>
+Cc: Alexander Graf <graf@amazon.com>, qemu-stable@nongnu.org,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PULL 04/13] target/i386: Fix legacy page table walk
+Date: Fri,  8 Nov 2024 18:38:19 +0100
+Message-ID: <20241108173828.111454-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241108173828.111454-1-pbonzini@redhat.com>
 References: <20241108173828.111454-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,42 +104,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Phil Dennis-Jordan <phil@philjordan.eu>
+From: Alexander Graf <graf@amazon.com>
 
-The handling for CPUID function 0xD (supported XSAVE features) was
-improved in a recent patch. Unfortunately, this appears to have
-introduced undefined behaviour for cases where ecx > 30, as the result
-of (1 << idx) is undefined if idx > 30.
+Commit b56617bbcb4 ("target/i386: Walk NPT in guest real mode") added
+logic to run the page table walker even in real mode if we are in NPT
+mode.  That function then determined whether real mode or paging is
+active based on whether the pg_mode variable was 0.
 
-Per Intel SDM section 13.2, the behaviour for ecx values up to and
-including 62 are specified. This change therefore specifically sets
-all registers returned by the CPUID instruction to 0 for 63 and higher.
-Furthermore, the bit shift uses uint64_t, where behaviour for the entire
-range of 2..62 is safe and correct.
+Unfortunately pg_mode is 0 in two situations:
 
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Link: https://lore.kernel.org/r/20241105155800.5461-3-phil@philjordan.eu
-Reviewed-by: Roman Bolshakov <r.bolshakov@yadro.com>
+  1) Paging is disabled (real mode)
+  2) Paging is in 2-level paging mode (32bit without PAE)
+
+That means the walker now assumed that 2-level paging mode was real
+mode, breaking NetBSD as well as Windows XP.
+
+To fix that, this patch adds a new PG flag to pg_mode which indicates
+whether paging is active at all and uses that to determine whether we
+are in real mode or not.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2654
+Fixes: b56617bbcb4 ("target/i386: Walk NPT in guest real mode")
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Reported-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Link: https://lore.kernel.org/r/20241106154329.67218-1-graf@amazon.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/hvf/x86_cpuid.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/i386/cpu.h                    | 1 +
+ target/i386/tcg/seg_helper.c         | 2 +-
+ target/i386/tcg/sysemu/excp_helper.c | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/hvf/x86_cpuid.c b/target/i386/hvf/x86_cpuid.c
-index 3f16b0f363d..af9ee17a111 100644
---- a/target/i386/hvf/x86_cpuid.c
-+++ b/target/i386/hvf/x86_cpuid.c
-@@ -119,8 +119,8 @@ uint32_t hvf_get_supported_cpuid(uint32_t func, uint32_t idx,
-         eax = 0;
-         break;
-     case 0xD:
--        if (!supported_xcr0 ||
--            (idx > 1 && !(supported_xcr0 & (1 << idx)))) {
-+        if (!supported_xcr0 || idx >= 63 ||
-+            (idx > 1 && !(supported_xcr0 & (UINT64_C(1) << idx)))) {
-             eax = ebx = ecx = edx = 0;
-             break;
-         }
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index b65eedb6178..4c239a6970f 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -346,6 +346,7 @@ typedef enum X86Seg {
+ #define PG_MODE_PKE      (1 << 17)
+ #define PG_MODE_PKS      (1 << 18)
+ #define PG_MODE_SMEP     (1 << 19)
++#define PG_MODE_PG       (1 << 20)
+ 
+ #define MCG_CTL_P       (1ULL<<8)   /* MCG_CAP register available */
+ #define MCG_SER_P       (1ULL<<24) /* MCA recovery/new status bits */
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 02ae6a0d1fc..71962113fb8 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -94,7 +94,7 @@ static uint32_t popl(StackAccess *sa)
+ 
+ int get_pg_mode(CPUX86State *env)
+ {
+-    int pg_mode = 0;
++    int pg_mode = PG_MODE_PG;
+     if (!(env->cr[0] & CR0_PG_MASK)) {
+         return 0;
+     }
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index da187c8792a..02d34864211 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -298,7 +298,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+         /* combine pde and pte nx, user and rw protections */
+         ptep &= pte ^ PG_NX_MASK;
+         page_size = 4096;
+-    } else if (pg_mode) {
++    } else if (pg_mode & PG_MODE_PG) {
+         /*
+          * Page table level 2
+          */
 -- 
 2.47.0
 
