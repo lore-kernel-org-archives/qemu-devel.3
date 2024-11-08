@@ -4,162 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32C0D5E12F
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 11:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CEF4D5E15A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 11:53:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9NHu-0004Lt-Cl; Fri, 08 Nov 2024 06:36:26 -0500
+	id 1t9NXr-0000T9-RQ; Fri, 08 Nov 2024 06:52:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1t9NHs-0004LV-3x; Fri, 08 Nov 2024 06:36:24 -0500
-Received: from mail-db8eur05on2072d.outbound.protection.outlook.com
- ([2a01:111:f403:2614::72d]
- helo=EUR05-DB8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t9NXn-0000SY-Bj
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 06:52:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1t9NHq-0003q8-1u; Fri, 08 Nov 2024 06:36:23 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=f8AWzzVi6JMyK/8cQdRy74TUydqrj20m3nHra0/fVH53QhEUDHf+rAbZL7Ww6ed70mZg6sP2k9VnNrr6jl5OMLqsFfL2qQCuTm9QJmtEV26Zj/nh7bzxCZgzfj6PFsyd17Yx9xyZ8RBTN+g7gQLxMxiVaTPwl9nZmVPHIEyviPurt2RtD7fK3w5bJjjU86RXHjLvGt0EDmkM1/GfZxw4bEeCEUT5+OsJSXqBMQ9x4LDI5Wjbu/TYPDa/sI5Yl840wZbAlLKhr2jBviLqRudK7M70YcYKuLFUPkZ4u0DlodSvt78NI3Z6G/D/fyQ5sHTJi27dZad2Ki20uaY94HFybA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SI2/xStgOnHCn7iqdnDIqJTywuT9E6YNBAiLxTUaIPo=;
- b=OAU95Zr7eXpVMLtDeFKISs9q9Hg55MQdtfS76DTlIlVrDntaBBVFYJ0JhYUP5y9qi+j6i6JSF6wYs3ClnC1wzimIMBmTT2ij5e/p/kLVXBl7dKsxpNJ3ry31OhvkID5qscAalovpuMhpX3AVnVm6erNa2/P5sze48Wmj2CzGrXR37usfF4Bu210ukqhfxf1Gt5z1YmbG1pjmMPdtvuFD+xhON/1NOLUgP/R0xbDU9SO0XLSITiA87nSVlTMhzwDixu0e1I2qFYiGBKVi9Y4eV8pC7Zi+zPY5uBx9b84Lmzz9+SncWrrPJDLeVBWsMzLyHF+pbJsAUxIhPQogEiolbw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SI2/xStgOnHCn7iqdnDIqJTywuT9E6YNBAiLxTUaIPo=;
- b=vq8zgJd8+CNj50pn0gjkgw/+CsS6wkiU2SxQAa5YXYPcCwKzU5K0XD4zeDqgfnLym0Ytp1zsb7BH2WsNQA+/tHYsTuEQoP9wghjkZwMBlr01pFGM+xi0AOoc6+CQcb/yro+uOlsz1sy8hq9Ml/HhePIyQfcG5zPrTGHQ9QTezHtLdw7V/D9nXgmqp8DBV6Rg8buBoDaEkn1NeYnzYmwKKPufigOn2Qe41u3GXEC1i+HbeHxm4LUQbFxV1GB69fH/ZQFiI0Msy+/EFA6SMUIIen7kYBjaxZJfnEHMdP4n9zMDJFWlwuvKd2lWzPh94mqbrZJPMlD9dIiJPkXsQ9Vetw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from PAXPR08MB6956.eurprd08.prod.outlook.com (2603:10a6:102:1db::9)
- by DU0PR08MB9300.eurprd08.prod.outlook.com (2603:10a6:10:41f::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.34; Fri, 8 Nov
- 2024 11:36:16 +0000
-Received: from PAXPR08MB6956.eurprd08.prod.outlook.com
- ([fe80::59be:830c:8078:65d1]) by PAXPR08MB6956.eurprd08.prod.outlook.com
- ([fe80::59be:830c:8078:65d1%7]) with mapi id 15.20.8137.019; Fri, 8 Nov 2024
- 11:36:16 +0000
-Message-ID: <7894af7b-d0e4-41f4-8c6e-f4f6de5f25aa@virtuozzo.com>
-Date: Fri, 8 Nov 2024 12:36:15 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: fix possible int overflow
-To: Kevin Wolf <kwolf@redhat.com>, Dmitry Frolov <frolov@swemel.ru>
-Cc: stefanha@redhat.com, den@openvz.org, sdl.qemu@linuxtesting.org,
- qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20241106080521.219255-2-frolov@swemel.ru>
- <Zys8tLcKjADMtkqn@redhat.com>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <Zys8tLcKjADMtkqn@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VI1PR08CA0253.eurprd08.prod.outlook.com
- (2603:10a6:803:dc::26) To PAXPR08MB6956.eurprd08.prod.outlook.com
- (2603:10a6:102:1db::9)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t9NXl-0005fx-90
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 06:52:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731066768;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=imEXfuprMc4BWYTn1E/BBHxF2/SAjUSGCga7vVVEQNU=;
+ b=GrH5oRbanIn/jHWUR6dsapD3Dz6jRGNUke9tJrgku9eu0vhvMYRh+HkiGuOYPTz26UFCzO
+ 8VpyZithStNSyEjcxRxkj1Ka52eznirqGt8+D2UXj4dZrNm6PaFBDEl+BbZACH7BeLrqGY
+ I0QYtaNAS3vTGKLcdiR+gZHEKL07nwE=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-46-d50YirrHPCGo3h1aHHr-Kw-1; Fri, 08 Nov 2024 06:52:47 -0500
+X-MC-Unique: d50YirrHPCGo3h1aHHr-Kw-1
+X-Mimecast-MFC-AGG-ID: d50YirrHPCGo3h1aHHr-Kw
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a9a1b8d4563so69131866b.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 03:52:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731066766; x=1731671566;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=imEXfuprMc4BWYTn1E/BBHxF2/SAjUSGCga7vVVEQNU=;
+ b=lfIm6qcAJo6M0vamSmrnXJgZ+6B0XBNsliToeHqbZa2qN3lpUwj85cCRZy1fMNHohK
+ QdRVQakLXfTaWmbCp7QQHKjaps5eVPluvdCTVPG/HAr2DHXb4CfLNwnHhcuoX8irlNnl
+ q8oY/jfoCwb1MzECTV9XOiQHoVzoKL/hvNwg6S0OLENHGqqsK3M2VirQsVjHH8gYwQ39
+ u0Oue7w1IVtQXOChqjf/jc5JvL/znPd5fnXgUr1PUSZFaTq//BFwRT57g0sWSpis2/rI
+ eRIOfN8sX/wbp0GK3gr8EusO+a5Jw5gbeC8Sp/DAErk56TctbJdA2TCkFqBZZMP0i0mb
+ L1tA==
+X-Gm-Message-State: AOJu0YwzXkn6KTwl7dIctI5+VoKHRLXN6sa8J9NXpNq60Wz9OiWtTGqD
+ TD/MIxyHSBmkJvbecmdTTZpeXQ3oTkbsUA5bnkiItnOP9WiiLEtX/ztUQLeBYGbQAfjFt8ck8BN
+ XW8ITIKh9uS0JJjlKgJ6IcmJM9zcnweQsH51EZ/r6Svhl2Y0ly5CF
+X-Received: by 2002:a05:6402:354b:b0:5ca:8b9:6e06 with SMTP id
+ 4fb4d7f45d1cf-5cf0a311112mr2552523a12.12.1731066765686; 
+ Fri, 08 Nov 2024 03:52:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHc/PkE4mI7zm1Wj5zEnMJCfGa02eGdUfUBQP7p1vTgYuH32zx4uix6cYU48XbTyqW6WUHwkw==
+X-Received: by 2002:a05:6402:354b:b0:5ca:8b9:6e06 with SMTP id
+ 4fb4d7f45d1cf-5cf0a311112mr2552500a12.12.1731066765199; 
+ Fri, 08 Nov 2024 03:52:45 -0800 (PST)
+Received: from redhat.com ([2a02:14f:179:39a6:9751:f8aa:307a:2952])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5cf03bb85f5sm1852481a12.53.2024.11.08.03.52.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Nov 2024 03:52:43 -0800 (PST)
+Date: Fri, 8 Nov 2024 06:52:38 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v1] virtio-mem: unplug memory only during system resets,
+ not device resets
+Message-ID: <20241108065204-mutt-send-email-mst@kernel.org>
+References: <20241025104103.342188-1-david@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR08MB6956:EE_|DU0PR08MB9300:EE_
-X-MS-Office365-Filtering-Correlation-Id: ed829880-918d-4f05-865a-08dcffe98e8d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZHFtZ0puUnh5azRxYkxIek00M3JLMlFzcW1mOTUwckl6OHpuT3h5WmF0WTd3?=
- =?utf-8?B?aVdkdUhvZlY5b3RzOGFXcjVNSVBxSjFFQU5MamxHWmI2Ynp0WXJJK0xmeWE0?=
- =?utf-8?B?Smh2WkROa1piYXFadExvTDJwQXQ4Q04wenBHMG9CbWxZN09BR1BCVG9MamtH?=
- =?utf-8?B?OGxVR21QcUFqaHNHTytEeU9DVzNueG9EUWs0YnhNY0dYM010L0ZQZjd4S0NI?=
- =?utf-8?B?dHBscFJGeWdsVFpxbjVhc2oycENSVjgvTDJ3RXZYZ29YdjJwUU1RZ3FjN3ho?=
- =?utf-8?B?RTBwVWtsd09zNS9qQ0FPckVIaGpkNGt0REM0SFpabmlYQ2o1UmNjOTFIekJw?=
- =?utf-8?B?RllqMFBLdm9IU1EvYVhrbTg1UzJCTmlqNU0rdHVjSVJqMUg2Vlp1KzhSMlFS?=
- =?utf-8?B?OWtMUXU4dTJQVExIM1FpWHdHcWxmejlLV0dlT0w2UkZMd1NkVUsyaFY1OTI0?=
- =?utf-8?B?MzFTM0dJUDBQUjhOeWxHcnZWTmdrdERqUXQyVWNYK1QzTnBsRlYxMzZtSHhp?=
- =?utf-8?B?VG9rcUxFVitzUytibWozRVhrMGhNTmJ6SSttS3hWQUt0VTdXM1gweU5NcHE2?=
- =?utf-8?B?Y2tDRDA5TUFkMlpYb2VTZW5zU21wMUdyQ0RaQWVxMkt1MWVSQTBUSHBGclRr?=
- =?utf-8?B?a3gvMkZxNHlROVdla0dHMU5iVUJuSnh3L0xhTmdnYlcyMzRHdTJ6RFp1OEx3?=
- =?utf-8?B?ZHlEZDVnb3loY1VrbTFCWXVHK2RCbEV0cWRzTzMybFFTRmM2RmpSdmU2dTdh?=
- =?utf-8?B?UXkrdjZLbUdrYjBUVDZ3cDgrK1JHdU5zMlFRL3FLaHFJYVp4WEI0b2JQc1Jw?=
- =?utf-8?B?S3pDNEpHdDBVUmhxdjV5Y3cxOTFZSEZBbVVnMjM1d29jV3NEcUZ2RElFVERQ?=
- =?utf-8?B?aGVsZmxUeGVmUHdoS0twRnJIKzIrSnlZRUZHdGVFN2tudkFWZjFsNlg2RGFY?=
- =?utf-8?B?TURQSENaYjNLLzlTZFMwN3VGL0Vha1grQ2M2bVJyeVh4NTYyMGJLTDRhSk1l?=
- =?utf-8?B?aldCaHdKV0ZwNnZ6cHhRN2hGT3o4WDBUcG9vZ1Y2NDIrMWExM1VTcWVEem0y?=
- =?utf-8?B?UFVNQTI3ZkJjMHBxT0hrbXhKVTVqR05WRlhEVk5XSkx2WW54bWtIaEduMnp4?=
- =?utf-8?B?ZFk2aW1LYk9VSVBiU1JrcCtLRGlZVE5uYnkrVlpvTlpwVTdFY1hiWFBvSzd4?=
- =?utf-8?B?eVltVU9PU1F3TmF3blR6MVRLT3hpVlpFTEFzWnJjOXYxbFFLbkx5Ym9OQm1U?=
- =?utf-8?B?UFljM2dYWG95UUUrbFEyYU1CYmFaanN3SHQ4TVFuUzAwR0Z5bjBWWmZEUitO?=
- =?utf-8?B?THZWZWwxNWtDMThqTFdQNGxDOFhNdm5Udm5WSDF0NytBTkZpSDYyS1JhNCtB?=
- =?utf-8?B?TUpLWWw5a3NHQ3lXa2Fydm8vR0wrbnlSU2diZGJmM1MzWVcwalhVczA2dmU2?=
- =?utf-8?B?Nm56ZGxNOUJxWm5sc2ZtY3lDTWtvTk9DemowVnV2VlBXeXU1cHJuMXlpYWRi?=
- =?utf-8?B?QzFVVlJRN3huUjVOeG9MQms1a253VWRkbU5FQlVjd2pBRU1NT2xONXpGdXQ3?=
- =?utf-8?B?VGtVQ2RBWkZyWjdHdkRVeEpWalAyR09WbFBFQWhHUjRwSUZjS1NWYVR0bGlw?=
- =?utf-8?B?VWt2ZXN4eU9ld0ZENGgweG1Hek4vZFdOL2tXbXlvVDhzMFFSRy9TSXo1NHky?=
- =?utf-8?B?NklyRElFNXRkTEN5WlpZWm9mU0tzajZic3RxL0hIYUNZeWovamFpRUl0QWxJ?=
- =?utf-8?Q?JWyyNNRZvqG1T/xBW0=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PAXPR08MB6956.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a3ZDRGZ3aDZ5V255QW1XNHVXQjBsNW1MSXhNOGlFeWFKTmFNejY4KzRMbk1B?=
- =?utf-8?B?c3lPNGdNazlXL1p4ZDZIbGkvOFZSOTgvR2ZodjhlKy9VTnlseWRPSVlRWW8y?=
- =?utf-8?B?SXVTdW01MGNQVWFqNVg0Y29hb0xBbHlOTis2ZHJuM3VBL2J3bThqWVVwZ0RX?=
- =?utf-8?B?TXlVM1lEZDZwUlcxdFI0anQ3dzJTWmlUWDhPV3lsMGQzTVRhKzI4WG8zNytI?=
- =?utf-8?B?c2NxMnZQQXUzV0tvcnM2Mkc4R3NIZWpYWFVHSG9qcno3emtjWUVQaW1PL0Nn?=
- =?utf-8?B?anRLM1FEenlaMjJ6aWozNlg2YUh3MTVDNUZGTThPYmNOTXJRZ21MTlYrVFI0?=
- =?utf-8?B?TG14VXhWNWJQazY2MU0zM2dpWFJ2RGk5Nml0anc4WTB2M1N6NFRtRUFHZktr?=
- =?utf-8?B?UVdScEU3cTZxVXNCYWZUODBzb3ZpamxtMzNvMlJiSlpTQ0djTkZkbjRQeVN4?=
- =?utf-8?B?VHgzWklUZG95MTBLaXlvVXdaK3JWbUpRNENNYkZIM3FRc043dTBlKzNPb2Q4?=
- =?utf-8?B?WVNPVmozT1ZkMmF0WHRHMkUzMk9LdU5NcXJBUXUxTnNmUURNKzRpYWVzOG9W?=
- =?utf-8?B?d2syRGpWQnBrdGdYVENVY0RHYkwvVTFuQ0VZT3E3MGU4VmdiWTNTOGdkaUFJ?=
- =?utf-8?B?ZmNGMlN5aTE5ODFpb0Z0ck9SOUdmeGV5a2F3UzhpSkFqOXI0aW0zUk5ZYS9R?=
- =?utf-8?B?ekhDZEJaVkdHSlRkdk0rTmVzZFdXeUxraDlSeGgrM3ZzUXUwNHNzM0xvQkEr?=
- =?utf-8?B?dGp2MVV5V2orOTRmeXpYZ25QTXVHdXR6cTdXSXEyYlRnVkZEeGVrL2M2bWx5?=
- =?utf-8?B?Ui9iYUpua1N5U1VHMWdvakw4OHdvbHZKUDBRTlZVOTNjelFVQlF1Z2VkNmR5?=
- =?utf-8?B?V2JRZEh2cVppVWoyb1NzNWdSOEdwRXdXOUUwZzFCVkwrcEMzbk1OL290Vjlj?=
- =?utf-8?B?RjhFYTF1MXRGQTUySlNmQTBOdjdkR3VVNWR4eVVURTV0dG1GcHE3QXFtM2d2?=
- =?utf-8?B?NUdyUS9lK1k5U2ljNjRIQklxMDgzclppT3c1cHo5clZNYk1RVlZFeCtkTU5y?=
- =?utf-8?B?SXR4c2hpenNTSHlnS2JEeG5JOUhwRjUwS1JsZW4yalBHaERaTloydGNRaDB1?=
- =?utf-8?B?TUtrU0JsNHJLNmFiVkE2d0JxK2ptNFo5KzcyQldZRmdKUXo3WEdqTzdWS0tI?=
- =?utf-8?B?OENmZWppd2pMN0xLR2w3RFZFT3hqbk1saWkvNUlqeW1iRWVvbFlhMHlTZlVL?=
- =?utf-8?B?L1VaRWJYeHdMaEl2ZDZITHJrNzEyNk9MTCttUEhEcGJ2eUo2N2JSQlErNEY2?=
- =?utf-8?B?bTczVkk2SnVKU0FnRi9OaXFmdzZqcEVBZk9DSEZVbFJpbnlVYnhQamRLMkwv?=
- =?utf-8?B?SzdQSC9jblN6Y0VkQmt3L2xUeXY4K094RnpNcXZXRnArb0FWUEY0elJkMmFE?=
- =?utf-8?B?RFRTaW5qN1V6MkJqQ05MSE5sYTVEOWIzcFdBN0xSRW1Pc0hISXRRZytwVWZU?=
- =?utf-8?B?MXFEdE9Iend1VEhUazVHR1ZOeDJ1Tk12bGR2bVZOWGl5WGRLVnU5WWhJVUw4?=
- =?utf-8?B?dHIvU2czNFhsV3JZNnVtK2UrTE9ZK0FrcXp6dVRCSjZWcDhjTVNmWXBLTXhp?=
- =?utf-8?B?TEtyRUMzVW5RNUtEZ0F4NnM3azBpeWFtbi9UdGI1VUE5ZXBRbzErRDdUMUxD?=
- =?utf-8?B?NWhoTC9BdEozU0JVTW04bUdZbjBYa3VJSHVkczZva3ZIaXZCc1dPWk1tWGhJ?=
- =?utf-8?B?NjVrUWM3bFZJQVkrMUVQZlIxaTlMaGlxdXZtdVJnWWgxVjhRVWZuL0F4emRh?=
- =?utf-8?B?cmk3bHJhMHF3dzh4ZEtHUHBhcEtTZXdSZ0s0aUFTRFp3b0M0OHQyK0tPbGU3?=
- =?utf-8?B?a3V1SS85NE51N0ttaU9XakpQMXhLZnZkTmlXV3A3a3gzenh2anlUcllMOG1V?=
- =?utf-8?B?SGRFUCtXSE83SER1MUM1d2JVMDBnUG5IaWxlZ2ZNcVlkR0c2aUZyckh5L0d3?=
- =?utf-8?B?clA5cmI2Y01mMVU2SnNONWVCVnMrMnZCRjlLcEh2VjdGWUpBR0hnYnFRNGI2?=
- =?utf-8?B?b2JTWkJSdzdidU1xN0QxbFBOWDcwcFhPU2dRQnphL1ExWUdJRklsQW1kMkZ3?=
- =?utf-8?Q?5jheDyQjGxqlO8IlK851m8O2+?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ed829880-918d-4f05-865a-08dcffe98e8d
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR08MB6956.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2024 11:36:16.5305 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LecnfaZ8MQm5SNw6LSU3AADkD8qrL4FGSSAUVHYokffX2F1vaw077OeUk8l1rIfywyKqyLBQZqo8MtpkOus9Pg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR08MB9300
-Received-SPF: pass client-ip=2a01:111:f403:2614::72d;
- envelope-from=den@virtuozzo.com;
- helo=EUR05-DB8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241025104103.342188-1-david@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -175,39 +101,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/24 10:53, Kevin Wolf wrote:
-> [ Cc: qemu-block ]
->
-> Am 06.11.2024 um 09:04 hat Dmitry Frolov geschrieben:
->> The sum "cluster_index + count" may overflow uint32_t.
->>
->> Found by Linux Verification Center (linuxtesting.org) with SVACE.
->>
->> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
-> Thanks, applied to the block branch.
->
-> While trying to check if this can be triggered in practice, I found this
-> line in parallels_fill_used_bitmap():
->
->      s->used_bmap_size = DIV_ROUND_UP(payload_bytes, s->cluster_size);
->
-> s->used_bmap_size is unsigned long, payload_bytes is the int64_t result
-> of bdrv_getlength() for the image file, which could certainly be made
-> more than 4 GB * cluster_size. I think we need an overflow check there,
-> too.
->
-> When allocate_clusters() calculates new_usedsize, it doesn't seem to
-> consider the overflow case either.
->
-> Denis, can you take a look?
->
-> Kevin
->
-We definitely have more places inside the code and I'll take a look.
+On Fri, Oct 25, 2024 at 12:41:03PM +0200, David Hildenbrand wrote:
+> We recently converted from the LegacyReset to the new reset framework
+> in commit c009a311e939 ("virtio-mem: Use new Resettable framework instead
+> of LegacyReset") to be able to use the ResetType to filter out wakeup
+> resets.
+> 
+> However, this change had an undesired implications: as we override the
+> Resettable interface methods in VirtIOMEMClass, the reset handler will
+> not only get called during system resets (i.e., qemu_devices_reset())
+> but also during any direct or indirect device rests (e.g.,
+> device_cold_reset()).
+> 
+> Further, we might now receive two reset callbacks during
+> qemu_devices_reset(), first when reset by a parent and later when reset
+> directly.
+> 
+> The memory state of virtio-mem devices is rather special: it's supposed to
+> be persistent/unchanged during most resets (similar to resetting a hard
+> disk will not destroy the data), unless actually cold-resetting the whole
+> system (different to a hard disk where a reboot will not destroy the data):
+> ripping out system RAM is something guest OSes don't particularly enjoy,
+> but we want to detect when rebooting to an OS that does not support
+> virtio-mem and wouldn't be able to detect+use the memory -- and we want
+> to force-defragment hotplugged memory to also shrink the usable device
+> memory region. So we rally want to catch system resets to do that.
+> 
+> On supported targets (e.g., x86), getting a cold reset on the
+> device/parent triggers is not that easy (but looks like PCI code
+> might trigger it), so this implication went unnoticed.
+> 
+> However, with upcoming s390x support it is problematic: during
+> kdump, s390x triggers a subsystem reset, ending up in
+> s390_machine_reset() and calling only subsystem_reset() instead of
+> qemu_devices_reset() -- because it's not a full system reset.
+> 
+> In subsystem_reset(), s390x performs a device_cold_reset() of any
+> TYPE_VIRTUAL_CSS_BRIDGE device, which ends up resetting all children,
+> including the virtio-mem device. Consequently, we wrongly detect a system
+> reset and unplug all device memory, resulting in hotplugged memory not
+> getting included in the crash dump -- undesired.
+> 
+> We really must not mess with hotplugged memory state during simple
+> device resets. To fix, create+register a new reset object that will only
+> get triggered during qemu_devices_reset() calls, but not during any other
+> resets as it is logically not the child of any other object.
+> 
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Cc: Juraj Marcin <jmarcin@redhat.com>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
 
-Speaking about this particular change - this will not work. In general
-we should signal corruption when the cluster number is overflowed.
-This data would not be accessible due to format restrictions.
 
-Den
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+
+
+> ---
+>  hw/virtio/virtio-mem.c         | 103 +++++++++++++++++++++++----------
+>  include/hw/virtio/virtio-mem.h |  12 +++-
+>  2 files changed, 83 insertions(+), 32 deletions(-)
+> 
+> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> index ae1e81d7ba..08e0e9da1c 100644
+> --- a/hw/virtio/virtio-mem.c
+> +++ b/hw/virtio/virtio-mem.c
+> @@ -956,6 +956,7 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+>      VirtIOMEM *vmem = VIRTIO_MEM(dev);
+>      uint64_t page_size;
+>      RAMBlock *rb;
+> +    Object *obj;
+>      int ret;
+>  
+>      if (!vmem->memdev) {
+> @@ -1121,7 +1122,28 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+>          vmstate_register_any(VMSTATE_IF(vmem),
+>                               &vmstate_virtio_mem_device_early, vmem);
+>      }
+> -    qemu_register_resettable(OBJECT(vmem));
+> +
+> +    /*
+> +     * We only want to unplug all memory to start with a clean slate when
+> +     * it is safe for the guest -- during system resets that call
+> +     * qemu_devices_reset().
+> +     *
+> +     * We'll filter out selected qemu_devices_reset() calls used for other
+> +     * purposes, like resetting all devices during wakeup from suspend on
+> +     * x86 based on the reset type passed to qemu_devices_reset().
+> +     *
+> +     * Unplugging all memory during simple device resets can result in the VM
+> +     * unexpectedly losing RAM, corrupting VM state.
+> +     *
+> +     * Simple device resets (or resets triggered by getting a parent device
+> +     * reset) must not change the state of plugged memory blocks. Therefore,
+> +     * we need a dedicated reset object that only gets called during
+> +     * qemu_devices_reset().
+> +     */
+> +    obj = object_new(TYPE_VIRTIO_MEM_SYSTEM_RESET);
+> +    vmem->system_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
+> +    vmem->system_reset->vmem = vmem;
+> +    qemu_register_resettable(obj);
+>  
+>      /*
+>       * Set ourselves as RamDiscardManager before the plug handler maps the
+> @@ -1141,7 +1163,10 @@ static void virtio_mem_device_unrealize(DeviceState *dev)
+>       * found via an address space anymore. Unset ourselves.
+>       */
+>      memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
+> -    qemu_unregister_resettable(OBJECT(vmem));
+> +
+> +    qemu_unregister_resettable(OBJECT(vmem->system_reset));
+> +    object_unref(OBJECT(vmem->system_reset));
+> +
+>      if (vmem->early_migration) {
+>          vmstate_unregister(VMSTATE_IF(vmem), &vmstate_virtio_mem_device_early,
+>                             vmem);
+> @@ -1841,38 +1866,12 @@ static void virtio_mem_unplug_request_check(VirtIOMEM *vmem, Error **errp)
+>      }
+>  }
+>  
+> -static ResettableState *virtio_mem_get_reset_state(Object *obj)
+> -{
+> -    VirtIOMEM *vmem = VIRTIO_MEM(obj);
+> -    return &vmem->reset_state;
+> -}
+> -
+> -static void virtio_mem_system_reset_hold(Object *obj, ResetType type)
+> -{
+> -    VirtIOMEM *vmem = VIRTIO_MEM(obj);
+> -
+> -    /*
+> -     * When waking up from standby/suspend-to-ram, do not unplug any memory.
+> -     */
+> -    if (type == RESET_TYPE_WAKEUP) {
+> -        return;
+> -    }
+> -
+> -    /*
+> -     * During usual resets, we will unplug all memory and shrink the usable
+> -     * region size. This is, however, not possible in all scenarios. Then,
+> -     * the guest has to deal with this manually (VIRTIO_MEM_REQ_UNPLUG_ALL).
+> -     */
+> -    virtio_mem_unplug_all(vmem);
+> -}
+> -
+>  static void virtio_mem_class_init(ObjectClass *klass, void *data)
+>  {
+>      DeviceClass *dc = DEVICE_CLASS(klass);
+>      VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
+>      VirtIOMEMClass *vmc = VIRTIO_MEM_CLASS(klass);
+>      RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(klass);
+> -    ResettableClass *rc = RESETTABLE_CLASS(klass);
+>  
+>      device_class_set_props(dc, virtio_mem_properties);
+>      dc->vmsd = &vmstate_virtio_mem;
+> @@ -1899,9 +1898,6 @@ static void virtio_mem_class_init(ObjectClass *klass, void *data)
+>      rdmc->replay_discarded = virtio_mem_rdm_replay_discarded;
+>      rdmc->register_listener = virtio_mem_rdm_register_listener;
+>      rdmc->unregister_listener = virtio_mem_rdm_unregister_listener;
+> -
+> -    rc->get_state = virtio_mem_get_reset_state;
+> -    rc->phases.hold = virtio_mem_system_reset_hold;
+>  }
+>  
+>  static const TypeInfo virtio_mem_info = {
+> @@ -1924,3 +1920,48 @@ static void virtio_register_types(void)
+>  }
+>  
+>  type_init(virtio_register_types)
+> +
+> +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(VirtioMemSystemReset, virtio_mem_system_reset, VIRTIO_MEM_SYSTEM_RESET, OBJECT, { TYPE_RESETTABLE_INTERFACE }, { })
+> +
+> +static void virtio_mem_system_reset_init(Object *obj)
+> +{
+> +}
+> +
+> +static void virtio_mem_system_reset_finalize(Object *obj)
+> +{
+> +}
+> +
+> +static ResettableState *virtio_mem_system_reset_get_state(Object *obj)
+> +{
+> +    VirtioMemSystemReset *vmem_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
+> +
+> +    return &vmem_reset->reset_state;
+> +}
+> +
+> +static void virtio_mem_system_reset_hold(Object *obj, ResetType type)
+> +{
+> +    VirtioMemSystemReset *vmem_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
+> +    VirtIOMEM *vmem = vmem_reset->vmem;
+> +
+> +    /*
+> +     * When waking up from standby/suspend-to-ram, do not unplug any memory.
+> +     */
+> +    if (type == RESET_TYPE_WAKEUP) {
+> +        return;
+> +    }
+> +
+> +    /*
+> +     * During usual resets, we will unplug all memory and shrink the usable
+> +     * region size. This is, however, not possible in all scenarios. Then,
+> +     * the guest has to deal with this manually (VIRTIO_MEM_REQ_UNPLUG_ALL).
+> +     */
+> +    virtio_mem_unplug_all(vmem);
+> +}
+> +
+> +static void virtio_mem_system_reset_class_init(ObjectClass *klass, void *data)
+> +{
+> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
+> +
+> +    rc->get_state = virtio_mem_system_reset_get_state;
+> +    rc->phases.hold = virtio_mem_system_reset_hold;
+> +}
+> diff --git a/include/hw/virtio/virtio-mem.h b/include/hw/virtio/virtio-mem.h
+> index a1af144c28..abde1c4101 100644
+> --- a/include/hw/virtio/virtio-mem.h
+> +++ b/include/hw/virtio/virtio-mem.h
+> @@ -25,6 +25,10 @@
+>  OBJECT_DECLARE_TYPE(VirtIOMEM, VirtIOMEMClass,
+>                      VIRTIO_MEM)
+>  
+> +#define TYPE_VIRTIO_MEM_SYSTEM_RESET "virtio-mem-system-reset"
+> +
+> +OBJECT_DECLARE_SIMPLE_TYPE(VirtioMemSystemReset, VIRTIO_MEM_SYSTEM_RESET)
+> +
+>  #define VIRTIO_MEM_MEMDEV_PROP "memdev"
+>  #define VIRTIO_MEM_NODE_PROP "node"
+>  #define VIRTIO_MEM_SIZE_PROP "size"
+> @@ -117,8 +121,14 @@ struct VirtIOMEM {
+>      /* listeners to notify on plug/unplug activity. */
+>      QLIST_HEAD(, RamDiscardListener) rdl_list;
+>  
+> -    /* State of the resettable container */
+> +    /* Catch system resets -> qemu_devices_reset() only. */
+> +    VirtioMemSystemReset *system_reset;
+> +};
+> +
+> +struct VirtioMemSystemReset {
+> +    Object parent;
+>      ResettableState reset_state;
+> +    VirtIOMEM *vmem;
+>  };
+>  
+>  struct VirtIOMEMClass {
+> -- 
+> 2.46.1
+
 
