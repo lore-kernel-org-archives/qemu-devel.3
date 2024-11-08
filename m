@@ -4,51 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A9CD5E147
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 08:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CB95D5E147
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 08:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9KCV-0001BY-An; Fri, 08 Nov 2024 03:18:39 -0500
+	id 1t9KJ7-0000Aq-Gh; Fri, 08 Nov 2024 03:25:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1t9KBM-000060-Cw
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 03:17:29 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1t9KBH-0005gI-7k
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 03:17:27 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Axjq8LyS1noy85AA--.23525S3;
- Fri, 08 Nov 2024 16:17:15 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMDxxsAIyS1nea9MAA--.4604S6;
- Fri, 08 Nov 2024 16:17:15 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2 04/10] hw/intc/loongarch_extioi: Rename LoongArchExtIOI
- with LoongArchExtIOICommonState
-Date: Fri,  8 Nov 2024 16:17:06 +0800
-Message-Id: <20241108081712.632890-5-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20241108081712.632890-1-maobibo@loongson.cn>
-References: <20241108081712.632890-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t9KJ4-0000Ah-4Y
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 03:25:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t9KJ1-0006cZ-DI
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 03:25:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731054321;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=CVUCM2xbUnaVfwneuFZj0i2oTN1m/l/C8sTJi5Jalt8QqhO1wD6YA61PrZSgh4BkPXuKmN
+ OO8vMjYvXaMnB1NT6PdZ+7LkgrQ7TKrRoHX02vO+ZZ2KvHLs2ZzAOAiN61zAbbKtN+Zti6
+ tvuLlnihF0b50W0OIBN+oU94NqFyB7U=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-401-AYs2W2hgPIS6jEFjytNUZg-1; Fri, 08 Nov 2024 03:25:18 -0500
+X-MC-Unique: AYs2W2hgPIS6jEFjytNUZg-1
+X-Mimecast-MFC-AGG-ID: AYs2W2hgPIS6jEFjytNUZg
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-53a246ecb7bso1011941e87.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 00:25:18 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731054317; x=1731659117;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=JDZufmLn7R+eveIv5K5AZ7xk1jMzsHaJOaEAPqOAsOnN2nRNeSHAMNmOepQgiQZ+Of
+ YcliI189cyAWCBZVXbLz2iVKP6e51SXlWzHE0F6dmMtDK0tRJAbj+Ngn+l+QMB3U8UCK
+ A0oql4OlXOby70Ioj5tUqr9TKQ3TVfvy8ZjtYrgSZbOg8pScawlJPmuTvRKD+F8TGMUF
+ ht+KxA8E83/vm6XvUd+kewFwBN5gOKrkS4VKkpyDeZTATvQ2TxMt+R7pWgYnOfrMfogy
+ JsZyb2vqdUeyKNznPGSWgul0wNpXJrIqVAuCjJo2izN0PwC28SlDaKRH0bbFdS+wuf41
+ su2Q==
+X-Gm-Message-State: AOJu0YxXRGJLwrHc3BJEbrRdED+pDUDZoAIdZkFPJpuA1D/OHHyAEXC1
+ PJGRc//+vh8JnS2T1py/BWkBMg7fCNNsK17KsQCvE/3UwV4OEFSrjpOjeUFnc9Bo1PVSNrWE9XR
+ 8rxXGcCoaYKDyfFiczuaTnJ4BVlNnouSVIrbUipFRral5t22zB0An
+X-Received: by 2002:a05:6512:304e:b0:539:e2cc:d380 with SMTP id
+ 2adb3069b0e04-53d8623e163mr915326e87.27.1731054317229; 
+ Fri, 08 Nov 2024 00:25:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEkEIkkqdKrl+MKpIO76uIpzPayk4EwYtHyujME8ZgzhQNsEzI123hRVphqSvbooFf2GCkMcg==
+X-Received: by 2002:a05:6512:304e:b0:539:e2cc:d380 with SMTP id
+ 2adb3069b0e04-53d8623e163mr915307e87.27.1731054316712; 
+ Fri, 08 Nov 2024 00:25:16 -0800 (PST)
+Received: from [192.168.10.47] ([151.49.84.243])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432b053047dsm54154885e9.3.2024.11.08.00.25.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Nov 2024 00:25:16 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Woodhouse <dwmw@amazon.co.uk>
+Subject: Re: [PATCH] hw/i386/pc: Don't try to init PCI NICs if there is no PCI
+ bus
+Date: Fri,  8 Nov 2024 09:25:14 +0100
+Message-ID: <20241108082514.71664-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241105171813.3031969-1-peter.maydell@linaro.org>
+References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxxsAIyS1nea9MAA--.4604S6
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -66,84 +105,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With some structure such as vmstate and property, rename LoongArchExtIOI
-with LoongArchExtIOICommonState, these common structure will be moved
-to common file.
+Queued, thanks.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/intc/loongarch_extioi.c | 41 +++++++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
-
-diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
-index 02dc4e6db3..409d4a85da 100644
---- a/hw/intc/loongarch_extioi.c
-+++ b/hw/intc/loongarch_extioi.c
-@@ -396,6 +396,11 @@ static int vmstate_extioi_post_load(void *opaque, int version_id)
-     return 0;
- }
- 
-+static int loongarch_extioi_common_post_load(void *opaque, int version_id)
-+{
-+    return vmstate_extioi_post_load(opaque, version_id);
-+}
-+
- static const VMStateDescription vmstate_extioi_core = {
-     .name = "extioi-core",
-     .version_id = 1,
-@@ -407,31 +412,35 @@ static const VMStateDescription vmstate_extioi_core = {
- };
- 
- static const VMStateDescription vmstate_loongarch_extioi = {
--    .name = TYPE_LOONGARCH_EXTIOI,
-+    .name = "loongarch.extioi",
-     .version_id = 3,
-     .minimum_version_id = 3,
--    .post_load = vmstate_extioi_post_load,
-+    .post_load = loongarch_extioi_common_post_load,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINT32_ARRAY(bounce, LoongArchExtIOI, EXTIOI_IRQS_GROUP_COUNT),
--        VMSTATE_UINT32_ARRAY(nodetype, LoongArchExtIOI,
-+        VMSTATE_UINT32_ARRAY(bounce, LoongArchExtIOICommonState,
-+                             EXTIOI_IRQS_GROUP_COUNT),
-+        VMSTATE_UINT32_ARRAY(nodetype, LoongArchExtIOICommonState,
-                              EXTIOI_IRQS_NODETYPE_COUNT / 2),
--        VMSTATE_UINT32_ARRAY(enable, LoongArchExtIOI, EXTIOI_IRQS / 32),
--        VMSTATE_UINT32_ARRAY(isr, LoongArchExtIOI, EXTIOI_IRQS / 32),
--        VMSTATE_UINT32_ARRAY(ipmap, LoongArchExtIOI, EXTIOI_IRQS_IPMAP_SIZE / 4),
--        VMSTATE_UINT32_ARRAY(coremap, LoongArchExtIOI, EXTIOI_IRQS / 4),
--
--        VMSTATE_STRUCT_VARRAY_POINTER_UINT32(cpu, LoongArchExtIOI, num_cpu,
--                         vmstate_extioi_core, ExtIOICore),
--        VMSTATE_UINT32(features, LoongArchExtIOI),
--        VMSTATE_UINT32(status, LoongArchExtIOI),
-+        VMSTATE_UINT32_ARRAY(enable, LoongArchExtIOICommonState,
-+                             EXTIOI_IRQS / 32),
-+        VMSTATE_UINT32_ARRAY(isr, LoongArchExtIOICommonState,
-+                             EXTIOI_IRQS / 32),
-+        VMSTATE_UINT32_ARRAY(ipmap, LoongArchExtIOICommonState,
-+                             EXTIOI_IRQS_IPMAP_SIZE / 4),
-+        VMSTATE_UINT32_ARRAY(coremap, LoongArchExtIOICommonState,
-+                             EXTIOI_IRQS / 4),
-+        VMSTATE_STRUCT_VARRAY_POINTER_UINT32(cpu, LoongArchExtIOICommonState,
-+                             num_cpu, vmstate_extioi_core, ExtIOICore),
-+        VMSTATE_UINT32(features, LoongArchExtIOICommonState),
-+        VMSTATE_UINT32(status, LoongArchExtIOICommonState),
-         VMSTATE_END_OF_LIST()
-     }
- };
- 
- static Property extioi_properties[] = {
--    DEFINE_PROP_UINT32("num-cpu", LoongArchExtIOI, num_cpu, 1),
--    DEFINE_PROP_BIT("has-virtualization-extension", LoongArchExtIOI, features,
--                    EXTIOI_HAS_VIRT_EXTENSION, 0),
-+    DEFINE_PROP_UINT32("num-cpu", LoongArchExtIOICommonState, num_cpu, 1),
-+    DEFINE_PROP_BIT("has-virtualization-extension", LoongArchExtIOICommonState,
-+                    features, EXTIOI_HAS_VIRT_EXTENSION, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
--- 
-2.39.3
+Paolo
 
 
