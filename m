@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 613DFD5C0EF
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1018ED5C0EF
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:48:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9R9k-00054d-8n; Fri, 08 Nov 2024 10:44:16 -0500
+	id 1t9R8E-0002Az-In; Fri, 08 Nov 2024 10:42:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R9g-0004l6-Nk
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:44:12 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1t9R8D-0002Aq-HG
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:42:41 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R9e-0005aR-7S
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:44:12 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-431481433bdso19747435e9.3
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:44:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1t9R8C-0005DS-1D
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:42:41 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-720c286bcd6so2055077b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:42:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731080648; x=1731685448; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kyIsI+ayDhQ8JXAjdTootbFXVBl2F0/8o1ehUxEHo8k=;
- b=M4MY10mSmR22OwbVtzpR22WBpc/deiOcD2aWQveCDuHimyG1gnTQTiE9l2FllXtRAs
- whEUO6DMgvk8pocE7ReOixv1YZ1jAdXydSqywCYNz8hAj5ro5U+p9/RahJiVNcOk+SdS
- dPI2TQKxBBvMK/KG7eoOfEnc6ezS5BWuEm+R21gs4DpxbKWPVNS/WXwDyOv8SjAn5ert
- 56h/8f4Sm0+KoaumreRGijx8PpCQodkxQacuCpVu9KpiHTDzbUiqkkUVN7JhtFRm4hHj
- 9dCu9emX9Nu4/40SLaIFWnataIU7BYYON9LKFWDMOJ3kSr8ydk5IWWRZpDouVU+eLnN/
- e/Jw==
+ d=gmail.com; s=20230601; t=1731080558; x=1731685358; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=biGDhBmGK55tF+cZ37cJs3bTmgP/oOfYxgwHavYr8PU=;
+ b=LhLwkBqL1vSY16UFKJWVg1h5PyK6TmsRFFLJybhQ/axefMkzZsgmvZl5W7qV3Nwc4o
+ /+LTzPzCGyFsQo+PpDhV/zTspTMruVBrZYTsmXyNkxsrzN+k+/EJWjYPje6cWpRwvRwm
+ HlmLcvVgnXLDk6r7+lkf2PLZIl8MJll1lJ2Fs3rx7MhX/U89XNDZQsAw8PhhydAhNxVF
+ qVJPv7fOcMStQHGsoLSlFaia6cWKmYTHVqYER3MNH8AhgT4+vUn/Xp0ladptEuK6JBKl
+ Gy85uKSir1BKeVdQjnBiBbSZrnfIsB8IMBNigEDBrVilcE6uX0v+JNcmZwUbmDfcxckz
+ wWSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731080648; x=1731685448;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kyIsI+ayDhQ8JXAjdTootbFXVBl2F0/8o1ehUxEHo8k=;
- b=vpUj3Yi7HuUofTDHGkV0isdan9PbZG7kK0rmOZt2sSIgA81186gIYK03jt95nwnToR
- 9U3aO1JNzT2VCp7uPGDqiWzrV54jwyOCipQlJ4j/DqiRrf2RfYqSFbt3w1fqFvdaVSFr
- i+2+hRqWfzY2I+I2DDIUlrCbjt1H+gfoMMI5aMefVI2cmS7OrT9ovsZOpcEJrRb+zJRJ
- TF5SOqDZRwCgYltqUVFjuZZuIhGe7G29MSLCUov2AyIDxppwSPO4Oh/qnzvGHyzH67W0
- QiRzgddzZx2Kg5ScnO+QfB8mQqx0CwjTf2eorljbxe6egTIVNcUyC2xjWDYI5P56ac91
- np1Q==
-X-Gm-Message-State: AOJu0Yx2ndw6FQChKWN2e+g/QaK7tZCACMsS/7VA2k1Kh2rhInqX/FlH
- l/orMjuF/tPfYWGl3vUQUA5YB1LlMOYYPD3vPJ2bgrtjpR2NMFiFTtaLvJeJtJ6xA+2Ld9/ZTme
- l
-X-Google-Smtp-Source: AGHT+IHnDOj/I22QYjLcRlsAGlJFd7/6hutzW1rMRBeCtsnChx2ggyE2P+8OpB+2011eUevUZb2N5w==
-X-Received: by 2002:a05:600c:1d1b:b0:42c:a574:6360 with SMTP id
- 5b1f17b1804b1-432b7522b25mr27077685e9.29.1731080648330; 
- Fri, 08 Nov 2024 07:44:08 -0800 (PST)
-Received: from localhost.localdomain ([89.101.134.25])
+ d=1e100.net; s=20230601; t=1731080558; x=1731685358;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=biGDhBmGK55tF+cZ37cJs3bTmgP/oOfYxgwHavYr8PU=;
+ b=s5wZIzsx2tUvyI4kUeBGHYTIwX71Rcm/HMr3BxFdGzLEsjhHgOR7kU+TB+izKxgtY6
+ VugOvfbiGB4aQxAZIY5shlnCI6ZPJ+/r5AefrnvZ/Sc/wPS7Acwu/qh4jYXkQliIBCcr
+ g7gO30i6izcvXIiK/BJy76aVtOdRGc6ZYsagD77vUcm5V/3aPA5gOI0DuWMN3PsF+yX5
+ T87VJKWj5u+wnQuLKK4LXtcoFuqOzyT9KRTZtP+vzvGjNrbgmfd3OzhMk1t8nqhYOJ+R
+ gwz3lEgnr9+bL7Wyn9pdZ4h0ov9ydgZvp/RXD5N2mYAGZs/oHkUihCtguKgjsl/NGC5G
+ 4drw==
+X-Gm-Message-State: AOJu0YytsNWXIss/dCzETfO876vVH6uSDnr4aw6KsSmdRHUW/aKffrIy
+ i88wH8RQkaLiVzM/iWV7FjqFb3lf6C48Tgzqyy2+ZiFf72AyRaqIJgZ6uA==
+X-Google-Smtp-Source: AGHT+IEeh1bu33Xy31A9tSkHLufzU6fX0YCasVaNF48obNly1YIRKYfImjjSPxTle/N7qorQLrCTiw==
+X-Received: by 2002:a05:6a20:3943:b0:1db:eecb:f7a1 with SMTP id
+ adf61e73a8af0-1dc229c96bcmr4130504637.17.1731080557836; 
+ Fri, 08 Nov 2024 07:42:37 -0800 (PST)
+Received: from wheely.local0.net (124-171-217-17.tpgi.com.au. [124.171.217.17])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa6c0414sm106580855e9.23.2024.11.08.07.44.07
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 08 Nov 2024 07:44:07 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Anton Johansson <anjo@rev.ng>
-Cc: Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 10/17] hw/arm/xlnx-zynqmp: Use &error_abort for programming
- errors
-Date: Fri,  8 Nov 2024 15:43:10 +0000
-Message-ID: <20241108154317.12129-11-philmd@linaro.org>
+ 41be03b00d2f7-7f41f48d32bsm3110444a12.17.2024.11.08.07.42.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Nov 2024 07:42:37 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: [RFC PATCH 0/5] Add XHCI TR NOOP support, plus PCI, MSIX changes
+Date: Sat,  9 Nov 2024 01:42:23 +1000
+Message-ID: <20241108154229.263097-1-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241108154317.12129-1-philmd@linaro.org>
-References: <20241108154317.12129-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,99 +91,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a property value is static (not provided by QMP or CLI),
-error shouldn't happen, otherwise it is a programming error.
-Therefore simplify and use &error_abort as this can't fail.
+Hi,
 
-Reported-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/arm/xlnx-zynqmp.c | 44 ++++++++++++++------------------------------
- 1 file changed, 14 insertions(+), 30 deletions(-)
+This RFC is wide-ranging for such a simple addition of XHCI TR NOOP
+command, because adding qtests for it caught up some PCI/MSIX issues.
 
-diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
-index e735dbdf82..1770fb5402 100644
---- a/hw/arm/xlnx-zynqmp.c
-+++ b/hw/arm/xlnx-zynqmp.c
-@@ -689,16 +689,10 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-          * - SDIO Specification Version 3.0
-          * - eMMC Specification Version 4.51
-          */
--        if (!object_property_set_uint(sdhci, "sd-spec-version", 3, errp)) {
--            return;
--        }
--        if (!object_property_set_uint(sdhci, "capareg", SDHCI_CAPABILITIES,
--                                      errp)) {
--            return;
--        }
--        if (!object_property_set_uint(sdhci, "uhs", UHS_I, errp)) {
--            return;
--        }
-+        object_property_set_uint(sdhci, "sd-spec-version", 3, &error_abort);
-+        object_property_set_uint(sdhci, "capareg", SDHCI_CAPABILITIES,
-+                                 &error_abort);
-+        object_property_set_uint(sdhci, "uhs", UHS_I, &error_abort);
-         if (!sysbus_realize(SYS_BUS_DEVICE(sdhci), errp)) {
-             return;
-         }
-@@ -714,10 +708,8 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-     for (i = 0; i < XLNX_ZYNQMP_NUM_SPIS; i++) {
-         gchar *bus_name;
- 
--        if (!object_property_set_bool(OBJECT(&s->spi[i])), "little-endian",
--                                      true, errp)) {
--            return;
--        }
-+        object_property_set_bool(OBJECT(&s->spi[i]), "little-endian",
-+                                 true, &error_abort);
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), errp)) {
-             return;
-         }
-@@ -767,14 +759,10 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-     xlnx_zynqmp_create_unimp_mmio(s);
- 
-     for (i = 0; i < XLNX_ZYNQMP_NUM_GDMA_CH; i++) {
--        if (!object_property_set_uint(OBJECT(&s->gdma[i]), "bus-width", 128,
--                                      errp)) {
--            return;
--        }
--        if (!object_property_set_link(OBJECT(&s->gdma[i]), "dma",
--                                      OBJECT(system_memory), errp)) {
--            return;
--        }
-+        object_property_set_uint(OBJECT(&s->gdma[i]), "bus-width", 128,
-+                                 &error_abort);
-+        object_property_set_link(OBJECT(&s->gdma[i]), "dma",
-+                                 OBJECT(system_memory), &error_abort);
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->gdma[i]), errp)) {
-             return;
-         }
-@@ -815,10 +803,8 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->qspi_dma), 0,
-                        qdev_get_gpio_in(DEVICE(&s->qspi_irq_orgate), 0));
- 
--    if (!object_property_set_link(OBJECT(&s->qspi), "stream-connected-dma",
--                                  OBJECT(&s->qspi_dma), errp)) {
--         return;
--    }
-+    object_property_set_link(OBJECT(&s->qspi), "stream-connected-dma",
-+                             OBJECT(&s->qspi_dma), &error_abort);
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->qspi), errp)) {
-         return;
-     }
-@@ -837,10 +823,8 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-     }
- 
-     for (i = 0; i < XLNX_ZYNQMP_NUM_USB; i++) {
--        if (!object_property_set_link(OBJECT(&s->usb[i].sysbus_xhci), "dma",
--                                      OBJECT(system_memory), errp)) {
--            return;
--        }
-+        object_property_set_link(OBJECT(&s->usb[i].sysbus_xhci), "dma",
-+                                 OBJECT(system_memory), &error_abort);
- 
-         qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "intrs", 4);
-         qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "slots", 2);
+Firstly, the XHCI host shares a BAR between device registers and MSIX
+space, which is not handled by qtest/pci. Keeping track of BAR mappings
+in qtest and allowing MSIX to use an existing mapping seems to work.
+
+For XHCI qtest, I added a MSIX check to ensure interrupts are working
+correctly. As part of that I need to dequeue masked interrupts which
+seems to require PBA writes to clear them, but I could be way off
+base here. Adding that does cause e1000e qtest to break, because it
+doesn't like clear pending via PBA.
+
+The XHCI model change gets AIX's XHCI driver working, so that's another
+data point beyond the simple qtest for it added here. Unfortunately it
+is not so easy to independently test.
+
+Any guidance or input would be welcome.
+
+Thanks,
+Nick
+
+Nicholas Piggin (5):
+  qtest/pci: Enforce balanced iomap/unmap
+  qtest/libqos/pci: Fix msix_enable sharing bar0
+  pci/msix: Implement PBA writes
+  qtest/xhci: Add controller and device setup and ring tests
+  hw/usb: Support XHCI TR NOOP commands
+
+ tests/qtest/libqos/ahci.h       |   1 +
+ tests/qtest/libqos/pci.h        |   4 +
+ tests/qtest/libqos/virtio-pci.h |   1 +
+ tests/qtest/usb-hcd-xhci-test.h | 232 ++++++++++++++
+ hw/pci/msix.c                   |  16 +
+ hw/usb/hcd-xhci.c               |  28 +-
+ tests/qtest/ahci-test.c         |   2 +
+ tests/qtest/libqos/ahci.c       |   6 +
+ tests/qtest/libqos/pci.c        |  75 ++++-
+ tests/qtest/libqos/virtio-pci.c |   6 +-
+ tests/qtest/usb-hcd-xhci-test.c | 540 +++++++++++++++++++++++++++++++-
+ 11 files changed, 893 insertions(+), 18 deletions(-)
+ create mode 100644 tests/qtest/usb-hcd-xhci-test.h
+
 -- 
 2.45.2
 
