@@ -4,75 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF632D5E14A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 09:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86083D5E14C
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 09:59:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9LXT-0001kj-OS; Fri, 08 Nov 2024 04:44:23 -0500
+	id 1t9LlG-0003Wl-Av; Fri, 08 Nov 2024 04:58:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
- id 1t9LXS-0001kS-56
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 04:44:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
- id 1t9LXP-0007Sb-Kk
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 04:44:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731059058;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FxBvrZuXPh42wT+Bzr9dJgM32BZF/rojvOxtHzF5qkk=;
- b=aP/BlPXpFKXSD4AYp5NF0ceVcQ+POdc1ghXjj0Y21IpLpooMsfuLE2oH7XpbQjvWJBeGaS
- WzzH2iVD3ozhja7D+YxS+7vz6NWebSGlvtLHeibrLgJsXSBLexkVhj4Lh4asZr2JM57VLt
- eRO/yJHgojZwWvLaWRxXq+UuDOVjzjU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-OExn3HjxNFuE_oy21dUZBg-1; Fri,
- 08 Nov 2024 04:43:04 -0500
-X-MC-Unique: OExn3HjxNFuE_oy21dUZBg-1
-X-Mimecast-MFC-AGG-ID: OExn3HjxNFuE_oy21dUZBg
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75B7A1955E94
- for <qemu-devel@nongnu.org>; Fri,  8 Nov 2024 09:43:03 +0000 (UTC)
-Received: from localhost (unknown [10.45.225.114])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DE8A91956054; Fri,  8 Nov 2024 09:43:01 +0000 (UTC)
-Date: Fri, 8 Nov 2024 10:43:00 +0100
-From: Victor Toso <victortoso@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>, 
- Andrea Bolognani <abologna@redhat.com>
-Subject: Re: [RFC PATCH v2 0/8] qapi: add generator for Golang interface
-Message-ID: <yafcgwgvz7sugv7syjp5jp5nqnxhkr4xgdedtkxrz4hm5jegfu@uzlegmkc7cjs>
-References: <20220617121932.249381-1-victortoso@redhat.com>
- <ZyyZugciNAYmVjeP@redhat.com>
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1t9Ll3-0003VY-DH
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 04:58:26 -0500
+Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1t9Ll0-0000Ye-Hw
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 04:58:24 -0500
+Received: by mail-oi1-x234.google.com with SMTP id
+ 5614622812f47-3e60fca5350so1168177b6e.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 01:58:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1731059897; x=1731664697; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0I8aoUlEkn+5l/C9mzxATF2jKl/Dppz12Ocsq4mXed8=;
+ b=l78C+N9tmwxhHmR+duTtfRZnpcBUYm/VCYhH1m/FNKgfWzKXIPS5BNCW6o6bCeDrR7
+ SK6NLsCdXeIfoZt52Epxp2ZwbmY6oKMSg/grXytN690lkId32dXmyPQDD5MFJQ6aMs8i
+ kwCLlaqZpUnW6yp6xJaMosURGIQF1h47gYxlOOfysjiy5X3kNJIpxaq6rAsyW9zC18JG
+ yDr4tK8mlmw7D+sCOvQwkPveuOuPF44vfS/fMNMCSdPPRq/6JdiHr74CYSB2j5r7Izmt
+ 2ktCKXJljmajhubRKMTf0MsttRgSsDiy1rAScVlVSFxONUIjfWzxdZdzDGoACNg+hQEZ
+ RqUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731059897; x=1731664697;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0I8aoUlEkn+5l/C9mzxATF2jKl/Dppz12Ocsq4mXed8=;
+ b=lGtsWNz33A8DmlLurYEQE5QzlDzRzD+PdtRELCJHHM++44XC3WQlfP7RQkE7OlLbz9
+ LLE/2n2H0sZYAmLitR2qFuOiTyhPHjnJsC0teZTpy+tqqRKkHwdKVa9vbOcC+B9mKGSO
+ m5cX6rIi3X+kpjvsPIbCgEX+lYe3XV9oQdu5R71A8SJdyTK5op4gzckubd7QYGKMMgRq
+ 67OLmTMd65kqcbTpr8NCFtUmAUTFgNRcczGZSl2jOjh1ZiwK5N2gqshOdZTQ+KK0CiHP
+ 6uS7eeHsehbKtehe/KbwJT/KTYTkMLzt+GDSB2qx8tDXjsFLSNW3zexO0ABv+ms5qPRY
+ i0QQ==
+X-Gm-Message-State: AOJu0Yw4J1qTxPi1sw30mG+6FhvvNgbYVobG1DZPAFo3dWcX3hjF2NBx
+ p3KVFd16F5ti0/R3xa4kPXOtrUdRE08c84Ua7ryvr0wqoUgSYLyHSUk+9w8lsm0VGTErSX0sHjW
+ GA0LcBIPpx4jrohdUr7s31v7LC5OmVP7aOM9B5sO92EK3vGl9nIKCInUJxJIwSU2JALG9talEJl
+ hxkr3RMRYKmj9o0ApOVJoZgLi6cpAijFeA4Ry7bGs=
+X-Google-Smtp-Source: AGHT+IEMXftf5a3ldVzV0EMgSNrtvIIiTREVmf0fgdfdouQluiPW+3pjktiM4LlNZbwAdtwOCpz0Ug==
+X-Received: by 2002:a05:6808:2117:b0:3e7:644e:3ca2 with SMTP id
+ 5614622812f47-3e794716b1amr2856614b6e.29.1731059897483; 
+ Fri, 08 Nov 2024 01:58:17 -0800 (PST)
+Received: from hsinchu16.internal.sifive.com
+ (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7f41f4890d2sm3014723a12.14.2024.11.08.01.58.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Nov 2024 01:58:16 -0800 (PST)
+From: Jason Chien <jason.chien@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Jason Chien <jason.chien@sifive.com>
+Subject: [PATCH 1/1] hw/riscv/riscv-iommu.c: Correct the validness check of
+ iova
+Date: Fri,  8 Nov 2024 17:57:53 +0800
+Message-ID: <20241108095753.12166-1-jason.chien@sifive.com>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="mvtersjbptrnwigl"
-Content-Disposition: inline
-In-Reply-To: <ZyyZugciNAYmVjeP@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=victortoso@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
+ envelope-from=jason.chien@sifive.com; helo=mail-oi1-x234.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,180 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From RISCV IOMMU spec section 2.1.3:
+When SXL is 1, the following rules apply:
+- If the first-stage is not Bare, then a page fault corresponding to the
+riginal access type occurs if the IOVA has bits beyond bit 31 set to 1.
+- If the second-stage is not Bare, then a guest page fault corresponding
+o the original access type occurs if the incoming GPA has bits beyond bit
+33 set to 1.
 
---mvtersjbptrnwigl
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [RFC PATCH v2 0/8] qapi: add generator for Golang interface
-MIME-Version: 1.0
+From RISCV IOMMU spec section 2.3 step 17:
+Use the process specified in Section "Two-Stage Address Translation" of
+the RISC-V Privileged specification to determine the GPA accessed by the
+transaction.
 
-Hi,
+From RISCV IOMMU spec section 2.3 step 19:
+Use the second-stage address translation process specified in Section
+"Two-Stage Address Translation" of the RISC-V Privileged specification
+to translate the GPA A to determine the SPA accessed by the transaction.
 
-On Thu, Nov 07, 2024 at 10:43:06AM +0000, Daniel P. Berrang=E9 wrote:
-> Bringing this thread back from the dead, since I had an
-> in-person discussion on a key question below at KVM Forum this
-> year and want to record it here.
+This commit adds the iova check with the following rules:
+- For Sv32, Sv32x4, Sv39x4, Sv48x4 and Sv57x4, the iova must be zero
+extended.
+- For Sv39, Sv48 and Sv57, the iova must be signed extended with most
+significant bit.
 
-Thanks for that.
-=20
-> On Fri, Jun 17, 2022 at 02:19:24PM +0200, Victor Toso wrote:
-> > Hi,
-> >=20
-> > This is the second iteration of RFC v1:
-> >   https://lists.gnu.org/archive/html/qemu-devel/2022-04/msg00226.html
-> >=20
-> >=20
-> > # What this is about?
-> >=20
-> > To generate a simple Golang interface that could communicate with QEMU
-> > over QMP. The Go code that is generated is meant to be used as the bare
-> > bones to exchange QMP messages.
-> >=20
-> > The goal is to have this as a Go module in QEMU gitlab namespace,
-> > similar to what have been done to pyhon-qemu-qmp
-> >   https://gitlab.com/qemu-project/python-qemu-qmp
-> >=20
-> >=20
-> > # Issues raised in RFC v1
-> >=20
-> >   The leading '*' for issues I addressed in this iteration
-> >=20
-> > * 1) Documentation was removed to avoid License issues, by Daniel
-> >      Thread: https://lists.nongnu.org/archive/html/qemu-devel/2022-05/m=
-sg01889.html
-> >=20
-> >      It is important for the generated Go module to be compatible with
-> >      Licenses used by projects that would be using this. Copying the
-> >      documentation of the QAPI spec might conflict with GPLv2+.
-> >=20
-> >      I have not proposed another license in this iteration, but I'm
-> >      planning to go with MIT No Attribution, aka MIT-0 [0]. Does it make
-> >      sense to bind the generated code's license to MIT-0 already at
-> >      generator level?
-> >=20
-> >      [0] https://github.com/aws/mit-0/blob/master/MIT-0
->=20
-> To recap the situation
->=20
->  * The license of the code generator itself does not determine the
->    license of the output generated code
->=20
->  * The license of the inputs to the code generator, may or may
->    not, determine the license of the output generated code depending
->    on use context
->=20
-> The primary input to the code generator is the QAPI schema, which is part
-> of QEMU and thus licensed GPL-2.0-or-later.
->=20
-> The QAPI schema includes both the API definitions AND the API documentati=
-on
-> text.
->=20
-> We can make the case that as the QEMU public interface, consuming the
-> API definitions in the QAPI schema for the purpose of generating code
-> is "fair use", and thus the output generated code does NOT need to
-> match the GPL-2.0-or-later license of the QAPI schema. We can choose
-> the code license, and a maximally permissive license looks appropriate.
->=20
-> We want to have API documentation for the Golang bindings and the obvious
-> way to achieve this is to copy the API docs from the QAPI schema into the
-> Golang code. It is NOT reasonable to class such *direct copying* of docs
-> "fair use".  IOW, copied docs will be under GPL-2.0-or-later.
->=20
-> Thus if we pick MIT-0 for the Golang code, and copy across the QAPI docs,
-> the resulting  Golang QAPI project code would be under a compound license
-> term "MIT-0 AND GPL-2.0-or-later".
->=20
-> The concern was that this will limit the ability of downstream
-> applications to consume the Golang bindings, if they don't want their
-> combined work to contain GPL-2.0-or-later.
->=20
-> Ignoring whether this fear of GPL-2.0-or-later is sane or not,
-> in retrospect I believe that this concern in fact has no legal
-> basis.
->=20
-> The license of a compiled application binary is the union of all
-> the object files linked into it.
->=20
-> Notice I said "Object file" there, **NOT** "Source file".
->=20
-> This is the crucial distinction that makes the presense of
-> GPL-2.0-or-later docs a non-issue from a licensing POV.
->=20
->=20
-> When the compiler takes the "MIT-0 and GPL-2.0-or-later" license
-> .go source file, and builds an object file, it will be discarding
-> all the API documentation comments. IOW, all the parts that were
-> under GPL-2.0-or-later are discarded. The only parts of the source
-> file that get "compiled" are the Go language constructs which were
-> MIT-0 licensed [1].
->=20
-> IOW, we have a "MIT-0 and GPL-2.0-or-later" .go source file,
-> and an "MIT-0" object file.
->=20
-> Thus while there may be a human perception problem with the Golang
-> bindings being "MIT-0 and GPL-2.0-or-later", there are no legal
-> licensing limitations, as the combined work for a library or
-> application linking the bindings will only contain the MIT-0 part.
->=20
-> The GPL-2.0-or-later docs won't influence the license of the
-> combined work.
->=20
-> Note, this interpretation applies only to languages which are
-> compiled, not interpreted.
->=20
-> If we are generating python code for example, the there is
-> no "source file" vs "object file" distinction for licensing.
-> The combined work in a python app is under the union of all
-> the source file licenses.
->=20
->=20
-> TL;DR: I think you can re-add the documentation comments to
-> the Golang code generator, declare the resulting code as being
-> "MIT-0 AND GPL-2.0-or-later".
+Signed-off-by: Jason Chien <jason.chien@sifive.com>
+---
+ hw/riscv/riscv-iommu.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-Yes. I think so too. I plan to add it back and address Andrea's
-last review and submit it in the next week or so.
-
-> In the README.md file we need todo two important things:
->=20
->  * Document our interpretation of the "combined work" license
->    situation for applications consuming the project.
->  * Declare that *ALL* manually written code contributions
->    are exclusively MIT-0.
->=20
-> With regards,
-> Daniel
->=20
-> [1] NB, there are languages where some code comments can have semantic
->     impacts on the compiled out. I don't believe that to be the case for
->     any human targetted API docs that we would be copying over from the
->     QAPI schema though in the Golang case.
-
-Cheers,
-Victor
-
---mvtersjbptrnwigl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEIG07NS9WbzsOZXLpl9kSPeN6SE8FAmct3SQACgkQl9kSPeN6
-SE9DaRAAiCvKSUsfbe/Q6p0ykOFH9Y0nXTtHl7skYRx9LX0tgx7rFuk48Y8cDxFx
-ssFH3G/1UR5OVJEzZClrURb5kKOPdizZk6PGgFqsmg5x+UKessdX62qpqo5IvO8U
-VtXkseXvau5xeT60RIWD+rVrPSQVcoB5BuVnNpoX46y35nXN3lf20TqdmmH6b3vb
-7tF0NhpAfsnMhGRz/RYy9JH9+HYQ0JCcM4xklK5dV2WcUvhAmZ7ltQbtSpC5ho2s
-elHXtAb9fIlhvGHVjQhF3nZTDotAoDOTrICSAmH3UNfi7Zjcd/uPyp6KDzStEzOP
-RIzy/W3bU8ELEgpp5++zH8BJoSHgZIFnhHhTNYKB6+YZkmfECglHcB2/PvELgsi4
-iD4eydTBcOU6GQjEV70n+Tbhq8kvftC7c3rKYkW4elvGSH72sb2f5xgKVG4YTFUV
-GkV2yCqxHD0aAjc25RWPBk1otSFwByWWXoSdc84/CIlKrPQCU3HJX57oJ5qZu0zZ
-NMlFYp4w2kKVkkXsyH/1odYh89pxpAMbh31Kl7jjcX4bCJLeUfIZWyM1vhB3IwNc
-mdRley6w92ioPHACcxsknA1Vy4/4ZcP//ZchPQIs0mVXsCeqRe9OV4wW9hGSshqM
-ACULPjQ/qxGchsObs/YlNEgQpkaJGXWBnDHDqpK2MZMqAIF7CoY=
-=Tiyx
------END PGP SIGNATURE-----
-
---mvtersjbptrnwigl--
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index bbc95425b3..ff9deefe37 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -392,9 +392,26 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+ 
+         /* Address range check before first level lookup */
+         if (!sc[pass].step) {
+-            const uint64_t va_mask = (1ULL << (va_skip + va_bits)) - 1;
+-            if ((addr & va_mask) != addr) {
+-                return RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED;
++            const uint64_t va_len = va_skip + va_bits;
++            const uint64_t va_mask = (1ULL << va_len) - 1;
++
++            if (pass == S_STAGE && va_len > 32) {
++                target_ulong mask, masked_msbs;
++
++                mask = (1L << (TARGET_LONG_BITS - (va_len - 1))) - 1;
++                masked_msbs = (addr >> (va_len - 1)) & mask;
++
++                if (masked_msbs != 0 && masked_msbs != mask) {
++                    return (iotlb->perm & IOMMU_WO) ?
++                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S :
++                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S;
++                }
++            } else {
++                if ((addr & va_mask) != addr) {
++                    return (iotlb->perm & IOMMU_WO) ?
++                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
++                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS;
++                }
+             }
+         }
+ 
+-- 
+2.43.2
 
 
