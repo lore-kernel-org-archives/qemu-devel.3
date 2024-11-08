@@ -4,82 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A40D6406B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D32D6406B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 17:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9Sgq-00006u-6d; Fri, 08 Nov 2024 12:22:32 -0500
+	id 1t9Siv-0000oL-1o; Fri, 08 Nov 2024 12:24:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9Sgk-00006N-SW
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:22:27 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t9Sit-0000o5-0u
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:24:39 -0500
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9Sgj-0005TX-8d
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:22:26 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a9ed49ec0f1so402045566b.1
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:22:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t9Sir-0005ld-1z
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 12:24:38 -0500
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-5ee3e12b191so1062596eaf.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 09:24:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731086543; x=1731691343; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4+qhtb9s9ocFtFV1XMcVk3c+uFSHsXMugHfYW9GOxjU=;
- b=GOOVMccDDT3cIcTOMa1EvTYm8WG03sWwO8z3YskAjb5Jt0VU4Sza5vLN2eiHqj5y4S
- 6M7FqsEfomkS7vqTXHAUkZAtbpkUBRqCw5Yqa3gjXTCggw4y/g2gNi1AW4/+tnfDAeOD
- g1ryVSxs4Sr0MIq61WA0LhXVS786O9mmhxVnbxgWLGA1y6ag9jQuYHeNGVSQjwtjqtoP
- 8sHMJTyibCN+3mo8s5QvB5z8dulM8hhdWI/zkIzr5W5hYSflzRfRYfAEVEdCBwC1WjRY
- MXVRuDMyGFxhLmUuUNbzRkb+vLwg028eVLWtmcclYk1Y6sxqIdazYMGaZ9gs4ZAmNA+l
- akLw==
+ d=gmail.com; s=20230601; t=1731086675; x=1731691475; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vuc8Go6O6cgUUfDO/jgvBT2D0c3rxLhpYWq+3fQCZgY=;
+ b=EiNwBwI9v6lIQY1GXYt3lJ4OI4Tj3htguNY/bMySSJ5pfBvzbmtIaHibP0HK0UgHlc
+ xGc0rYhKijL5pnhDpOWlHNjW3SscPV8MelsDvzRYcRs2bmDaYdvE/IUYgKmf9F0ldrHC
+ eODYvSl03yhXf3NdvLfc3JP+2lg0eBZYli+L8a2NRDQiQKerNDcBwAzQVa9DN4GBmZXq
+ lSNjBgroO6P21yAN37eC1Zn8UEZ0izJYObkjj6VtR8oRncHMmaH55HPLmyAjqherULoN
+ 9IZt+q3iM0RVGbVrCeh6oBetHBTWvmuw+5/NwrFP5i7CUyuEw0qIrRYIDeFAi7FCbrzn
+ bjMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731086543; x=1731691343;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4+qhtb9s9ocFtFV1XMcVk3c+uFSHsXMugHfYW9GOxjU=;
- b=SZCI4x02BVgHu7Id4Zk/Jwi/qBSSjAumxxwpN+9j5tx+Shyjk+Rciu9ocjg0gLBGAz
- /HgoT/yg1f1acbwQf/z5DWlT2LdZ+cKPkLesdYpmLExdtMVE3xw0F70MmjVZJGGKSVNM
- fSyQprRDlmUWHeuixu8cGd7RQkuADqXeehmV3G5jFSEaXaw3uW0D190O0Zq6OfsjAL9Y
- UCKTSkJ1CToLqeg+g8G8IUy5VjjCxAbazfrfOopf1R04dNagV/7hgqIK+wKkIztHPK6g
- uRPyj6k1vIiMbqI0JffYrp4g27BWMB7bQFiIGhTFbNxxfuRYZcC7GxjIGf3Atrbw5yd7
- eVaA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUKeAShDv0ASmiTqKdA+Tqq+c0I9ST7jZ+F0whc7ayztrbqBD8VDoeb9nqMRKb40oF6sg51gSPONWCk@nongnu.org
-X-Gm-Message-State: AOJu0YwdN6iLU/FWKhNKVk3tLJYMHC3j1RoBF7AKW1I3n4JG213KCtfQ
- 0s8XPFI2xQBpfbVTdZQep/kX7FN9eG5YNhYZgLaiC5kB9INLKVQm5ioX9PZkH2Y=
-X-Google-Smtp-Source: AGHT+IH7MhPSqCtyG/1kgCdF8gneSpnQJhXLPqPb63ovhcxRY8mwuHqY2UN6HwNPQPtbdKSQHqYMhw==
-X-Received: by 2002:a17:907:6ea4:b0:a9e:c266:2e15 with SMTP id
- a640c23a62f3a-a9eeff3ebc6mr355696966b.27.1731086542679; 
- Fri, 08 Nov 2024 09:22:22 -0800 (PST)
-Received: from [172.20.143.32] ([89.101.134.25])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0abf305sm256134966b.86.2024.11.08.09.22.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Nov 2024 09:22:22 -0800 (PST)
-Message-ID: <a94d3c4b-374b-4266-85b6-cee44b54f03f@linaro.org>
-Date: Fri, 8 Nov 2024 17:22:20 +0000
+ d=1e100.net; s=20230601; t=1731086675; x=1731691475;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vuc8Go6O6cgUUfDO/jgvBT2D0c3rxLhpYWq+3fQCZgY=;
+ b=DLzHm3R0FDL83r+F+lSFDmWOyUPiVA+nih7FDi4FNq/nICqpgCb9F1th7C0OvErPLb
+ 4MvXrqvjkpZHAUOvUXsFeuhEbj796iooBVqzFhE9MBhImH43i1BUU2KNPYAQ7oE0bzsl
+ mQCTGnaE0kbKBYgfIqAeK/loiWQf4kenJfxqfO2Hfc2neJoyZV1NrbQuV6PD7W38iHXo
+ 8njeWwEtn8SAa6zYnwUl++hrjYRmHuAgL7hfJq6q8Excpv/VNXO3E7V7ikKlRlnUS0sx
+ C0o+lFR17Io+2LAaHCGhjs4stq98su6c9uGGL5nnc0LqWq+jjO7FT7/R/P9mhxps8uP5
+ nxag==
+X-Gm-Message-State: AOJu0Yyf4O1Hoz136iwvPAAun37/1yG9ZRSnQWk71WtybI5n3zZ6RWZm
+ wiSvA7uHGdHzppN4vbaZziKfyXmXDMMid+hs2LIUV3f2gKi8eCYU1aZsOA3+D3knSBogVFXhb+6
+ tQiAZFJSWB1E96bY7p5c6v2kAVEU=
+X-Google-Smtp-Source: AGHT+IEIPyk+Sbg58zyZwow9jV6c330NIVvw0HPgXKactC9KQknYMkbMj5Tl8zowyonvVc+vfdh5/AU7L0+/vCM4pDE=
+X-Received: by 2002:a05:6218:280a:b0:1c3:89d4:e888 with SMTP id
+ e5c5f4694b2df-1c641f40665mr304741855d.20.1731086674864; Fri, 08 Nov 2024
+ 09:24:34 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/timer: fix possible int overflow
-To: Peter Maydell <peter.maydell@linaro.org>, Dmitry Frolov
- <frolov@swemel.ru>, Evgeny Voevodin <evgenyvoevodin@gmail.com>
-Cc: i.mitsyanko@gmail.com, sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
-References: <20241106083801.219578-2-frolov@swemel.ru>
- <CAFEAcA9joGGX46UnkVvapvhyFr7ryhMeczWdT7D+wJLfR4wyCA@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA9joGGX46UnkVvapvhyFr7ryhMeczWdT7D+wJLfR4wyCA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20241106174443.557557-1-pbonzini@redhat.com>
+In-Reply-To: <20241106174443.557557-1-pbonzini@redhat.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Fri, 8 Nov 2024 23:24:37 +0600
+Message-ID: <CAFfO_h5R0_iLLk3N=VJfXKPpYzYEvg2swk49PzVo1yoR4Auc3Q@mail.gmail.com>
+Subject: Re: [PATCH] eif: cope with huge section sizes
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-oo1-xc2d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,98 +90,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Evgeny
+On Wed, Nov 6, 2024 at 11:44=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+>
+> Check for overflow as well as allocation failure.  Resolves Coverity CID =
+1564859.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  hw/core/eif.c | 48 +++++++++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 41 insertions(+), 7 deletions(-)
+>
+> diff --git a/hw/core/eif.c b/hw/core/eif.c
+> index cbcd80de58b..25f2aedf3fa 100644
+> --- a/hw/core/eif.c
+> +++ b/hw/core/eif.c
+> @@ -123,6 +123,10 @@ static bool read_eif_header(FILE *f, EifHeader *head=
+er, uint32_t *crc,
+>
+>      for (int i =3D 0; i < MAX_SECTIONS; ++i) {
+>          header->section_sizes[i] =3D be64_to_cpu(header->section_sizes[i=
+]);
+> +        if (header->section_sizes[i] > SSIZE_MAX) {
+> +            error_setg(errp, "Invalid EIF image. Section size out of bou=
+nds");
+> +            return false;
+> +        }
+>      }
+>
+>      header->unused =3D be32_to_cpu(header->unused);
+> @@ -282,7 +286,12 @@ static bool get_signature_fingerprint_sha384(FILE *e=
+if, uint64_t size,
+>      struct cbor_load_result result;
+>      bool ret =3D false;
+>
+> -    sig =3D g_malloc(size);
+> +    sig =3D g_try_malloc(size);
+> +    if (!sig) {
+> +        error_setg(errp, "Out of memory reading signature section");
+> +        goto cleanup;
+> +    }
+> +
+>      got =3D fread(sig, 1, size, eif);
+>      if ((uint64_t) got !=3D size) {
+>          error_setg(errp, "Failed to read EIF signature section data");
+> @@ -324,7 +333,12 @@ static bool get_signature_fingerprint_sha384(FILE *e=
+if, uint64_t size,
+>          error_setg(errp, "Invalid signature CBOR");
+>          goto cleanup;
+>      }
+> -    cert =3D g_malloc(len);
+> +    cert =3D g_try_malloc(len);
+> +    if (!cert) {
+> +        error_setg(errp, "Out of memory reading signature section");
+> +        goto cleanup;
+> +    }
+> +
+>      for (int i =3D 0; i < len; ++i) {
+>          cbor_item_t *tmp =3D cbor_array_get(pair->value, i);
+>          if (!tmp) {
+> @@ -503,7 +517,11 @@ bool read_eif_file(const char *eif_path, const char =
+*machine_initrd,
+>                  goto cleanup;
+>              }
+>
+> -            ptr =3D g_malloc(hdr.section_size);
+> +            ptr =3D g_try_malloc(hdr.section_size);
+> +            if (!ptr) {
+> +                error_setg(errp, "Out of memory reading kernel section")=
+;
+> +                goto cleanup;
+> +            }
+>
+>              iov_ptr =3D g_malloc(sizeof(struct iovec));
+>              iov_ptr->iov_base =3D ptr;
+> @@ -528,7 +546,11 @@ bool read_eif_file(const char *eif_path, const char =
+*machine_initrd,
+>                  goto cleanup;
+>              }
+>              size =3D hdr.section_size;
+> -            *cmdline =3D g_malloc(size + 1);
+> +            *cmdline =3D g_try_malloc(size + 1);
+> +            if (!cmdline) {
+> +                error_setg(errp, "Out of memory reading command line sec=
+tion");
+> +                goto cleanup;
+> +            }
 
-On 8/11/24 16:47, Peter Maydell wrote:
-> On Wed, 6 Nov 2024 at 08:38, Dmitry Frolov <frolov@swemel.ru> wrote:
->>
->> The product "icnto * s->tcntb" may overflow uint32_t.
->>
->> Found by Linux Verification Center (linuxtesting.org) with SVACE.
->>
->> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
->> ---
->>   hw/timer/exynos4210_mct.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/hw/timer/exynos4210_mct.c b/hw/timer/exynos4210_mct.c
->> index e807fe2de9..5c6e139b20 100644
->> --- a/hw/timer/exynos4210_mct.c
->> +++ b/hw/timer/exynos4210_mct.c
->> @@ -815,7 +815,7 @@ static uint32_t exynos4210_ltick_cnt_get_cnto(struct tick_timer *s)
->>           /* Both are counting */
->>           icnto = remain / s->tcntb;
->>           if (icnto) {
->> -            tcnto = remain % (icnto * s->tcntb);
->> +            tcnto = remain % ((uint64_t)icnto * s->tcntb);
->>           } else {
->>               tcnto = remain % s->tcntb;
->>           }
->> --
+I was looking into doing some changes on top of this patch and this
+check above should be if (!(*cmdline)), right?
 
-Alternatively we can declaring icnto as uint64_t locally:
-
--- >8 --
-diff --git a/hw/timer/exynos4210_mct.c b/hw/timer/exynos4210_mct.c
-index e807fe2de9..9fae2ceda9 100644
---- a/hw/timer/exynos4210_mct.c
-+++ b/hw/timer/exynos4210_mct.c
-@@ -787,7 +787,6 @@ static void exynos4210_ltick_tx_commit(struct 
-tick_timer *s)
-  static uint32_t exynos4210_ltick_cnt_get_cnto(struct tick_timer *s)
-  {
-      uint32_t tcnto;
--    uint32_t icnto;
-      uint64_t remain;
-      uint64_t counted;
-      uint64_t count;
-@@ -813,7 +812,7 @@ static uint32_t exynos4210_ltick_cnt_get_cnto(struct 
-tick_timer *s)
-          tcnto = remain % s->tcntb;
-      } else {
-          /* Both are counting */
--        icnto = remain / s->tcntb;
-+        uint64_t icnto = remain / s->tcntb;
-          if (icnto) {
-              tcnto = remain % (icnto * s->tcntb);
-          } else {
----
-
-But then isn't it equivalent to this? Dunno, I might be
-missing something...
-
--- >8 --
-diff --git a/hw/timer/exynos4210_mct.c b/hw/timer/exynos4210_mct.c
-index e807fe2de9..d8b2c72b73 100644
---- a/hw/timer/exynos4210_mct.c
-+++ b/hw/timer/exynos4210_mct.c
-@@ -787,7 +787,6 @@ static void exynos4210_ltick_tx_commit(struct 
-tick_timer *s)
-  static uint32_t exynos4210_ltick_cnt_get_cnto(struct tick_timer *s)
-  {
-      uint32_t tcnto;
--    uint32_t icnto;
-      uint64_t remain;
-      uint64_t counted;
-      uint64_t count;
-@@ -813,9 +812,8 @@ static uint32_t exynos4210_ltick_cnt_get_cnto(struct 
-tick_timer *s)
-          tcnto = remain % s->tcntb;
-      } else {
-          /* Both are counting */
--        icnto = remain / s->tcntb;
--        if (icnto) {
--            tcnto = remain % (icnto * s->tcntb);
-+        if (remain / s->tcntb) {
-+            tcnto = 0;
-          } else {
-              tcnto = remain % s->tcntb;
-          }
----
-
-> Applied to target-arm.next, thanks.
-> 
-> -- PMM
-> 
-
+Regards,
+Dorjoy
 
