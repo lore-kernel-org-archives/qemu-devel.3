@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 781A2D5C0C8
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 14:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BFA9D5C0C8
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 14:20:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9Poa-0002S3-O8; Fri, 08 Nov 2024 09:18:20 -0500
+	id 1t9PqY-0003Kx-Ht; Fri, 08 Nov 2024 09:20:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9PoZ-0002Rs-5q
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:18:19 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9PqS-0003Ka-B4
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:20:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9PoW-000193-F4
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:18:18 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t9PqQ-0001dS-1y
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 09:20:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731075493;
+ s=mimecast20190719; t=1731075612;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=uuDTiJ6sllHBWx6leQETORzasWkbR9Kx9/9yDHw6LEc=;
- b=Db+3Uo3vjKD/Xzk8NNrdewFhU8noOeUw+iTYxTKZ7oOZZ04h4QpXLRmoircFHbN0BY42r1
- t9m3DA91Afuq70eOQHzAq2Qo7hTls/F7ZbGUWmqFDJ8+j+lj9yJ3N5T3SM61L6hptpodpA
- 5FpSpqE1pAhG+Ucp5aLtfet6OJlNXq4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9MShAu4Wqp0HBVoEq32KIuB2UHVj9hMcPHMJnqUgW38=;
+ b=HQiYvPU/N/t6KoNcZayrh1OoNVrVy2fJcfMZrpGdmtCWB7Vmzb5dMdOd9hm6j3uZ/T/a1m
+ 3/xtOuoeQMUWNuude+1DAW9weQ+buQwMa1GfiOtFgP3DqjHkRyH3HrTtZVpY6PpYp2pncA
+ CFvAXgBYZHsXTsni9/J0sSYAE5iOsp0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-19-4imvG_U_OB-ThujNJpq17w-1; Fri, 08 Nov 2024 09:18:11 -0500
-X-MC-Unique: 4imvG_U_OB-ThujNJpq17w-1
-X-Mimecast-MFC-AGG-ID: 4imvG_U_OB-ThujNJpq17w
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43164f21063so14028325e9.2
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 06:18:11 -0800 (PST)
+ us-mta-227-T-sJQiDYNI-zvgwpCN6u3g-1; Fri, 08 Nov 2024 09:20:11 -0500
+X-MC-Unique: T-sJQiDYNI-zvgwpCN6u3g-1
+X-Mimecast-MFC-AGG-ID: T-sJQiDYNI-zvgwpCN6u3g
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d52ca258eso1101422f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 06:20:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731075490; x=1731680290;
+ d=1e100.net; s=20230601; t=1731075610; x=1731680410;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=uuDTiJ6sllHBWx6leQETORzasWkbR9Kx9/9yDHw6LEc=;
- b=hBgHRqh2zyZw0YHzYaY44fN1OllCFUzU3TR6oKnBmTO9WVNrdK5HK2tHKug5gmYg78
- AIjEBOWasD8ctDYgqtG615X0RYmQe40fZv6NAYc4oI1EufsshGqL0BbFRRTxdFa3Ge8K
- l82EfqobP2z5fUSQSFr62mPR0AtmljXhnjct+mBUsEI9wA6sWrEZMDllyueql3IvC95a
- jmfKOfJq5+6jZSMvSUWIZ+/dtrba8ZTU0UD+A6a9e2vHgnLRJoMaXKD8OLc98lG2xNxJ
- bZrLcApjfg63ljt72Ilgd7ZUsQTTWHlVg1otDuS7jyCNqpVD5XGdf0YueuFiGLXd7XxK
- 4ntA==
+ bh=9MShAu4Wqp0HBVoEq32KIuB2UHVj9hMcPHMJnqUgW38=;
+ b=eTOUo/1ivgaLAuyhlYkiq0AmWQI1TFObkQH6xy8iJtwkYP36bv3u/lLTbhwQdBvsUn
+ A22+BjOQaI7TI542CARlZD5zzh4a0lnIY+1dGnmsbutm37ryndFNl0oZwwA0DJsa3jMV
+ 8NLIZ/SHzXQ8K0B925EFiRvAGQ20JhTBMCvMrLG9frzVJ+Rk/IPQ4HBovrAfAX33XwHw
+ 6tAo7k7oQlz3WKfVPNpROSrHwu2aE1iWTm46yqRiAfpzvkWGHznuhVrHqYCXLiWFurtG
+ ZYaz3s6REHjb749A5fAAmt+e7ZaDbl+BqJ78xrwpGjvwyVpr/Ffkw5qdzfWEt0f/1wel
+ LgHQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpvaTk4eXfVv9vt94qoQWge9uMUbe3Qd2U8fJnKHiwYphYS3HjWyE93lcpBiibZlpqZfACvS+Hg/k6@nongnu.org
-X-Gm-Message-State: AOJu0YxgLenD5qV8UehpQuIGdqd5z3d+BxFm0hu6HjUi8k4ZDiKf6+5r
- mSwJzA2qQlc7eBBWu4hWLQa7Y1VMXKUs+MWq9+dn/Cio6BjdB0CMFQjgcbAmH/+q8I/1DRIfCxn
- 2phyOYvkV01ASYB42vvT0ipeJChkfRfS/ssFQgHfOMBWP/YhMoijr
-X-Received: by 2002:a05:600c:501e:b0:431:2b66:44f7 with SMTP id
- 5b1f17b1804b1-432b751c2b0mr24788715e9.31.1731075490504; 
- Fri, 08 Nov 2024 06:18:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFyGfJmTR0R0ODyPKJ7/sI9/CzigxYtff9UvqEAe0cJ/lFoLaEXpo5PnPRkVgGHLlsiVlRWCQ==
-X-Received: by 2002:a05:600c:501e:b0:431:2b66:44f7 with SMTP id
- 5b1f17b1804b1-432b751c2b0mr24788355e9.31.1731075490040; 
- Fri, 08 Nov 2024 06:18:10 -0800 (PST)
+ AJvYcCWldLcvefmcZdNJLSKtJbleZAG02E/U6XcuOqm8tvMzqzpcjXWS7pGqbXCYwvDnYflgqBQqibtN9BlF@nongnu.org
+X-Gm-Message-State: AOJu0YwHcdXlqhGJQ0QDF+Y81GjJtpcDXX97uoN14RCxriIY7gaIZb4+
+ LihCV332aKHX8kKxUVLL6FbBgk/u0NDEhCRijR8P3KoVjTaB8GJm8fGtwNfkisbo5fwIwvdZwBY
+ Z0UHXTNntgMHjqy4kfNsZjcC7c/wpFvDb9b2I/Qp+JjGJh4hz0uaX
+X-Received: by 2002:a05:6000:461e:b0:37c:cf3a:42dc with SMTP id
+ ffacd0b85a97d-381f184c64fmr2624082f8f.37.1731075610033; 
+ Fri, 08 Nov 2024 06:20:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHwnzuO9IO+OGbkOLWOygYf+2DXCPCb1ax95HuXOMbchMzfsJvsbyG1xWacOUnQInDOcMDSlw==
+X-Received: by 2002:a05:6000:461e:b0:37c:cf3a:42dc with SMTP id
+ ffacd0b85a97d-381f184c64fmr2624053f8f.37.1731075609531; 
+ Fri, 08 Nov 2024 06:20:09 -0800 (PST)
 Received: from ?IPV6:2003:d8:2f3a:cb00:3f4e:6894:3a3b:36b5?
  (p200300d82f3acb003f4e68943a3b36b5.dip0.t-ipconnect.de.
  [2003:d8:2f3a:cb00:3f4e:6894:3a3b:36b5])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed9f7c20sm4971774f8f.67.2024.11.08.06.18.08
+ ffacd0b85a97d-381ed97db25sm5069668f8f.41.2024.11.08.06.20.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Nov 2024 06:18:08 -0800 (PST)
-Message-ID: <4bfb997b-6abd-4349-9cf5-292fead25d0b@redhat.com>
-Date: Fri, 8 Nov 2024 15:18:07 +0100
+ Fri, 08 Nov 2024 06:20:08 -0800 (PST)
+Message-ID: <99c6d0df-4ced-4fe5-bc87-2682d1ceaa5b@redhat.com>
+Date: Fri, 8 Nov 2024 15:20:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH V3 01/16] machine: anon-alloc option
-To: Peter Xu <peterx@redhat.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>,
- Fabiano Rosas <farosas@suse.de>,
+To: Steven Sistare <steven.sistare@oracle.com>, Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Philippe Mathieu-Daude <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
  <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  qemu-devel@nongnu.org
-References: <1f1a2742-0429-47d5-958f-b37575c1e4ba@redhat.com>
+References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
+ <1730468875-249970-2-git-send-email-steven.sistare@oracle.com>
+ <78fa25f1-03dc-400c-a604-998c53e4fbce@redhat.com>
+ <45ea8a8a-928d-4703-b698-d5f910e6a224@oracle.com>
+ <1f1a2742-0429-47d5-958f-b37575c1e4ba@redhat.com>
  <c2ca740b-0178-463b-8262-b149841b8def@redhat.com>
  <bcc4cd7e-3532-475a-8989-211e80bf3eab@oracle.com>
  <09701693-436c-4e1a-8206-03eb26cacab5@redhat.com>
@@ -92,7 +95,8 @@ References: <1f1a2742-0429-47d5-958f-b37575c1e4ba@redhat.com>
  <cce158c4-3bb1-4771-b2c5-f3ae8a2285d5@oracle.com>
  <5b192b5e-943c-4b2f-ab40-ef54ea578363@redhat.com>
  <00261b15-3eef-439a-8501-574e3bb50d95@oracle.com>
- <d00ab1a4-2b72-4202-b810-adeb53a16f01@redhat.com> <Zy4VkScMEpYayGtM@x1n>
+ <d00ab1a4-2b72-4202-b810-adeb53a16f01@redhat.com>
+ <44b15731-0ee8-4e24-b4f5-0614bca594cb@oracle.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -140,7 +144,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <Zy4VkScMEpYayGtM@x1n>
+In-Reply-To: <44b15731-0ee8-4e24-b4f5-0614bca594cb@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -168,8 +172,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.11.24 14:43, Peter Xu wrote:
-> On Fri, Nov 08, 2024 at 12:31:45PM +0100, David Hildenbrand wrote:
+On 08.11.24 14:56, Steven Sistare wrote:
+> On 11/8/2024 6:31 AM, David Hildenbrand wrote:
 >> On 07.11.24 17:40, Steven Sistare wrote:
 >>> On 11/7/2024 11:26 AM, David Hildenbrand wrote:
 >>>> On 07.11.24 17:02, Steven Sistare wrote:
@@ -262,49 +266,49 @@ On 08.11.24 14:43, Peter Xu wrote:
 >>>>>>>
 >>>>>>> ----
 >>>>>>> qemu-options.hx:
->>>>>>>          ``aux-ram-share=on|off``
->>>>>>>              Allocate auxiliary guest RAM as an anonymous file that is
->>>>>>>              shareable with an external process.  This option applies to
->>>>>>>              memory allocated as a side effect of creating various devices.
->>>>>>>              It does not apply to memory-backend-objects, whether explicitly
->>>>>>>              specified on the command line, or implicitly created by the -m
->>>>>>>              command line option.
+>>>>>>>          ``aux-ram-share=on|off``
+>>>>>>>              Allocate auxiliary guest RAM as an anonymous file that is
+>>>>>>>              shareable with an external process.  This option applies to
+>>>>>>>              memory allocated as a side effect of creating various devices.
+>>>>>>>              It does not apply to memory-backend-objects, whether explicitly
+>>>>>>>              specified on the command line, or implicitly created by the -m
+>>>>>>>              command line option.
 >>>>>>>
->>>>>>>              Some migration modes require aux-ram-share=on.
+>>>>>>>              Some migration modes require aux-ram-share=on.
 >>>>>>>
 >>>>>>> qapi/migration.json:
->>>>>>>          @cpr-transfer:
->>>>>>>               ...
->>>>>>>               Memory-backend objects must have the share=on attribute, but
->>>>>>>               memory-backend-epc is not supported.  The VM must be started
->>>>>>>               with the '-machine aux-ram-share=on' option.
+>>>>>>>          @cpr-transfer:
+>>>>>>>               ...
+>>>>>>>               Memory-backend objects must have the share=on attribute, but
+>>>>>>>               memory-backend-epc is not supported.  The VM must be started
+>>>>>>>               with the '-machine aux-ram-share=on' option.
 >>>>>>>
 >>>>>>> Define RAM_PRIVATE
 >>>>>>>
 >>>>>>> Define qemu_shm_alloc(), from David's tmp patch
 >>>>>>>
 >>>>>>> ram_backend_memory_alloc()
->>>>>>>          ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
->>>>>>>          memory_region_init_ram_flags_nomigrate(ram_flags)
+>>>>>>>          ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
+>>>>>>>          memory_region_init_ram_flags_nomigrate(ram_flags)
 >>>>>>>
 >>>>>>> qemu_ram_alloc_internal()
->>>>>>>          ...
->>>>>>>          if (!host && !(ram_flags & RAM_PRIVATE) && current_machine->aux_ram_share)
->>>>>>>              new_block->flags |= RAM_SHARED;
+>>>>>>>          ...
+>>>>>>>          if (!host && !(ram_flags & RAM_PRIVATE) && current_machine->aux_ram_share)
+>>>>>>>              new_block->flags |= RAM_SHARED;
 >>>>>>>
->>>>>>>          if (!host && (new_block->flags & RAM_SHARED)) {
->>>>>>>              qemu_ram_alloc_shared(new_block);
->>>>>>>          } else
->>>>>>>              new_block->fd = -1;
->>>>>>>              new_block->host = host;
->>>>>>>          }
->>>>>>>          ram_block_add(new_block);
+>>>>>>>          if (!host && (new_block->flags & RAM_SHARED)) {
+>>>>>>>              qemu_ram_alloc_shared(new_block);
+>>>>>>>          } else
+>>>>>>>              new_block->fd = -1;
+>>>>>>>              new_block->host = host;
+>>>>>>>          }
+>>>>>>>          ram_block_add(new_block);
 >>>>>>>
 >>>>>>> qemu_ram_alloc_shared()
->>>>>>>          if qemu_memfd_check()
->>>>>>>              new_block->fd = qemu_memfd_create()
->>>>>>>          else
->>>>>>>              new_block->fd = qemu_shm_alloc()
+>>>>>>>          if qemu_memfd_check()
+>>>>>>>              new_block->fd = qemu_memfd_create()
+>>>>>>>          else
+>>>>>>>              new_block->fd = qemu_shm_alloc()
 >>>>>>
 >>>>>> Yes, that way "memory-backend-ram,share=on" will just mean "give me the best shared memory for RAM to be shared with other processes, I don't care about the details", and it will work on Linux kernels even before we had memfds.
 >>>>>>
@@ -320,27 +324,27 @@ On 08.11.24 14:43, Peter Xu wrote:
 >>>>>> So maybe something like
 >>>>>>
 >>>>>> qemu_ram_alloc_shared()
->>>>>>         fd = -1;
+>>>>>>         fd = -1;
 >>>>>>
->>>>>>         if (qemu_memfd_avilable()) {
->>>>>>             fd = qemu_memfd_create();
->>>>>>             if (fd < 0)
->>>>>>                 ... error
->>>>>>         } else if (qemu_shm_available())
->>>>>>             fd = qemu_shm_alloc();
->>>>>>             if (fd < 0)
->>>>>>                 ... error
->>>>>>         } else {
->>>>>>             /*
->>>>>>              * Old behavior: try fd-less shared memory. We might
->>>>>>              * just end up with non-shared memory on Windows, but
->>>>>>              * nobody can make sure of this shared memory either way
->>>>>>              * ... should we just use non-shared memory? Or should
->>>>>>              * we simply bail out? But then, if there is no shared
->>>>>>              * memory nobody could possible use it.
->>>>>>              */
->>>>>>             qemu_anon_ram_alloc(share=true)
->>>>>>         }
+>>>>>>         if (qemu_memfd_avilable()) {
+>>>>>>             fd = qemu_memfd_create();
+>>>>>>             if (fd < 0)
+>>>>>>                 ... error
+>>>>>>         } else if (qemu_shm_available())
+>>>>>>             fd = qemu_shm_alloc();
+>>>>>>             if (fd < 0)
+>>>>>>                 ... error
+>>>>>>         } else {
+>>>>>>             /*
+>>>>>>              * Old behavior: try fd-less shared memory. We might
+>>>>>>              * just end up with non-shared memory on Windows, but
+>>>>>>              * nobody can make sure of this shared memory either way
+>>>>>>              * ... should we just use non-shared memory? Or should
+>>>>>>              * we simply bail out? But then, if there is no shared
+>>>>>>              * memory nobody could possible use it.
+>>>>>>              */
+>>>>>>             qemu_anon_ram_alloc(share=true)
+>>>>>>         }
 >>>>>
 >>>>> Good catch.  We need that fallback for backwards compatibility.  Even with
 >>>>> no use case for memory-backend-ram,share=on since the demise of rdma, users
@@ -349,7 +353,7 @@ On 08.11.24 14:43, Peter Xu wrote:
 >>>>
 >>>> Yes, we should keep Windows working in the weird way it is working right now.
 >>>>
->>>>    > > More generally for backwards compatibility for share=on for no particular reason,
+>>>>    > > More generally for backwards compatibility for share=on for no particular reason,
 >>>>> should we fallback if qemu_shm_alloc fails?  If /dev/shm is mounted with default
 >>>>> options and more than half of ram is requested, it will fail, whereas current qemu
 >>>>> succeeds using MAP_SHARED|MAP_ANON.
@@ -364,63 +368,74 @@ On 08.11.24 14:43, Peter Xu wrote:
 >>>
 >>> RAM_PRIVATE is only checked in qemu_ram_alloc_internal, and only needs to be
 >>> set in
->>>      ram_backend_memory_alloc -> ... -> qemu_ram_alloc_internal
+>>>      ram_backend_memory_alloc -> ... -> qemu_ram_alloc_internal
 >>>
 >>> None of the other backends reach qemu_ram_alloc_internal.
 >>>
 >>> To be future proof, do you prefer I also set MAP_PRIVATE in the other backends,
 >>> everywhere MAP_SHARED may be set, eg:
 >>
->> Hm, I think then we should set RAM_PRIVATE really everywhere where we'd want
->> it and relied on !RAM_SHARED doing the right thing.
+>> Hm, I think then we should set RAM_PRIVATE really everywhere where we'd want it and relied on !RAM_SHARED doing the right thing.
 >>
 >> Alternatively, we make our life easier and do something like
 >>
 >> /*
->>   * This flag is only used while creating+allocating RAM, and
->>   * prevents RAM_SHARED getting set for anonymous RAM automatically in
->>   * some configurations.
->>   *
->>   * By default, not setting RAM_SHARED on anonymous RAM implies
->>   * "private anonymous RAM"; however, in some configuration we want to
->>   * have most of this RAM automatically be "sharable anonymous RAM",
->>   * except for some cases that really want "private anonymous RAM".
->>   *
->>   * This anonymous RAM *must* be private. This flag only applies to
->>   * "anonymous" RAM, not fd/file-backed/preallocated one.
->>   */
->> RAM_FORCE_ANON_PRIVATE	(1 << 13)
+>>    * This flag is only used while creating+allocating RAM, and
+>>    * prevents RAM_SHARED getting set for anonymous RAM automatically in
+>>    * some configurations.
+>>    *
+>>    * By default, not setting RAM_SHARED on anonymous RAM implies
+>>    * "private anonymous RAM"; however, in some configuration we want to
+>>    * have most of this RAM automatically be "sharable anonymous RAM",
+>>    * except for some cases that really want "private anonymous RAM".
+>>    *
+>>    * This anonymous RAM *must* be private. This flag only applies to
+>>    * "anonymous" RAM, not fd/file-backed/preallocated one.
+>>    */
+>> RAM_FORCE_ANON_PRIVATE    (1 << 13)
 >>
 >>
->> BUT maybe an even better alternative now that we have the "aux-ram-share"
->> parameter, could we use
+>> BUT maybe an even better alternative now that we have the "aux-ram-share" parameter, could we use
 >>
 >> /*
->>   * Auxiliary RAM that was created automatically internally, instead of
->>   * explicitly like using memory-backend-ram or some other device on the
->>   * QEMU cmdline.
->>   */
->> RAM_AUX	(1 << 13)
+>>    * Auxiliary RAM that was created automatically internally, instead of
+>>    * explicitly like using memory-backend-ram or some other device on the
+>>    * QEMU cmdline.
+>>    */
+>> RAM_AUX    (1 << 13)
 >>
 >>
->> So it will be quite clear that "aux-ram-share" only applies to RAM_AUX
->> RAMBlocks.
+>> So it will be quite clear that "aux-ram-share" only applies to RAM_AUX RAMBlocks.
 >>
 >> That actually looks quite compelling to me :)
 > 
-> Could anyone remind me why we can't simply set PRIVATE|SHARED all over the
-> place?
- > > IMHO RAM_AUX is too hard for any new callers to know how to set. 
-It's much
-> easier when we already have SHARED, adding PRIVATE could be mostly natural,
-> then we can already avoid AUX due to checking !SHARED & !PRIVATE.
+> Agreed, RAM_AUX is a clear solution.  I would set it in these functions:
+>     qemu_ram_alloc_resizeable
+>     memory_region_init_ram_nomigrate
+>     memory_region_init_rom_nomigrate
+>     memory_region_init_rom_device_nomigrate
+> 
+> and test it with aux_ram_share in qemu_ram_alloc_internal.
+>     if RAM_AUX && aux_ram_share
+>       flags |= RAM_SHARED
+> 
+> However, we could just set RAM_SHARED at those same call sites:
+>     flags = current_machine->aux_ram_shared ?  RAM_SHARED : 0;
+> which is what I did in
+>     [PATCH V2 01/11] machine: alloc-anon option
+> and test RAM_SHARED in qemu_ram_alloc_internal.
+> No need for RAM_PRIVATE.
+> 
+> RAM_AUX is nice because it declares intent more specifically.
+> 
+> Your preference?
 
-How is it clearer if you have to know whether you have to set 
-RAM_PRIVATE or not for some RAM? Because you *wouldn't* set it "all over 
-the place".
+My preference is either using RAM_AUX to flag AUX RAM, or the inverse, 
+RAM_NON_AUX to flag non-aux RAM, such as from memory backends and likely 
+ivshmem.c
 
-No strong opinion, but RAM_AUX aligns much better with what we actually 
-want to achieve: making aux RAM shared. Which implies, detecting aux RAM ...
+Peter still seems to prefer RAM_PRIVATE. So I guess it's up to you to 
+decide ;)
 
 -- 
 Cheers,
