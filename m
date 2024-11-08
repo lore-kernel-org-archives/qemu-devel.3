@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 196DCD5C0F3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EF34D5C0EF
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 15:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9R9h-0004kt-0n; Fri, 08 Nov 2024 10:44:13 -0500
+	id 1t9RAq-0007Ja-HB; Fri, 08 Nov 2024 10:45:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R9J-0003Aq-Eo
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:43:52 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9RAK-00064g-TX
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:44:54 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9R9G-0005Tm-OD
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:43:49 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-37d8901cb98so2046590f8f.0
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:43:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t9RAI-0005lN-Dk
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 10:44:51 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4315baec69eso20611365e9.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 07:44:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731080624; x=1731685424; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731080685; x=1731685485; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uljKpTWKHfIbJ0MtlmY9PWC2nyD8V11sN9kOWSbXIe4=;
- b=jNiSK+B+ol6C+dqCcQiyAoqgAqDGQHqvWlv+Zw1XMNegjM6DqodZxkKLzEVDwhJZ3f
- 2gfFdLMkMrvuyqemBqc/tWhPTd1p5W40X4y0BE+aj46kIlf/yktjEB/R2CsM/2WeFVCG
- cAM1DxizECc6Y6bWBvfa70Uy1pqdhIGRWLIEzaHDlkj7auj/JaWb8EZyeab9yF9Vc5oq
- 4zHghJBFcTJMgA0kv4g+UhaTKbGJV2PSvMyhIHAFI0wBtNxaPMK81BYZtSAckTw9hPFu
- wOMXhKzVUjWOlg3oh0/+Z+h55ZTACUtAP28kO36IZ/2afxLNea/NDn232ZwCBTDMqvq2
- 9U5Q==
+ bh=hbUeKq8wIPtd30sIyAicGmI1dVV7JgXeFSyihDqJX1Q=;
+ b=fMTFArCMC/c5BpX2L//HRC1RrQRnPoXekNRoil8CzrLBbXE4BFuueAmY7HO9wXcFes
+ 3QxmrefhOEHntpa12h5168hGLu4EyhMDzSoRU/PO65S6JPCGgRvEfpSZzErcMPevnT+J
+ Agbn4Ea2gC96SI2c5VcgHoVaqVhvqx3MSgfZ2nhRNTWDOm3HDiExth7pqd5ewhRHVpMn
+ T5XaSCTgf0aPTDfebHvXePSX7AD7O55JxdSq+oMdSEfuslfCSkVcdzYFWLdjVoLxBxEJ
+ N9cG8oCwKnaQN4FA0AAeeIH9qVCrEDd+KHaiIUCtOL68m1j1IfeO+YhQYt4rZxBpzwzS
+ F2HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731080624; x=1731685424;
+ d=1e100.net; s=20230601; t=1731080685; x=1731685485;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uljKpTWKHfIbJ0MtlmY9PWC2nyD8V11sN9kOWSbXIe4=;
- b=Dle9PzceZCa9DcZTJAvLyb4JbjvTN/NQ14SmU3UeqX3a8Lx/VdEkIEmpgL8J7ou0IG
- qvr2dPivNzLFFXn/mxLtHmuARdnEXDTNx4fe/m8eEwJOHE+m8uE+h4tFyKq/FzdUAWMB
- +Jspjuk2EnTSOBdtR0kPnESD44E5jG0380CLmUpjR0DnoxgOegWXuRetblZbYJJemhsH
- SOLXN4CpsHqVRBX0rf+OWPYn2W3wriYlxQ8UnYVB6gVJlcdDLmF552WwuR5sbnyAFpTg
- jHelpE+27zA+5RcAfVkTo+KFsWuWRiOlYLICC58MNDF2X4BKVbTkDVSL/ksvYrSYQtOL
- FIvA==
-X-Gm-Message-State: AOJu0YwZaWAgvjkA9ep9gkm/NJgcXXxPuDns3dd0Lx370/IuJQABYWDn
- iPMbXfIa1JboRTfM12qh3WcpIOW4e4qsNGeTY2Qvx3V3TMZrFZsaiu70L79JYeZ8TOQhAK+JjgV
- 8
-X-Google-Smtp-Source: AGHT+IGGEfF/rUyqe5DFJJORPox6p+y0DDitfZCJPKPsvIOyG37YnM05K5XRC0GsGdbfvvWeW/M6oQ==
-X-Received: by 2002:a5d:59a7:0:b0:37d:2d6f:3284 with SMTP id
- ffacd0b85a97d-381f1a6ca9bmr2971832f8f.9.1731080624624; 
- Fri, 08 Nov 2024 07:43:44 -0800 (PST)
+ bh=hbUeKq8wIPtd30sIyAicGmI1dVV7JgXeFSyihDqJX1Q=;
+ b=BMyEJXGnvbMP51dHXHrn49k1+st25rXqX5R5d3F8ioHSuPAOcj0rhr+C5zHwshmSJy
+ Tpni+CBOATYduuqJbt3kbRXqcavPU2meCgi2jN0fCGTe91OUIf9gDQ99Tr8rnmEq1Ozg
+ iB1wuGBsTR+hdKntiFaF5OffPlzP8N4WN0M/BIlRLlATVsnsYgaklzLLGVibEWor9Js5
+ erEozs8avAyReDiLXY0005G4NtIj0No7N1cGUFoNHZr/lpbcbVM57ThEi0FQ45APatnp
+ xMU5du8iruC950SFJNa1IxVuj/mxul1bgt1kz5TRoEZrVJ0FMZyZVd0SASi1r2fFp8PC
+ 6ZHQ==
+X-Gm-Message-State: AOJu0Yw2jTcxhHGxwoq1gcbkmLhiFcnRipewLXP4pjNWam3if0g+9mlx
+ PshFBAQjWp95LBodeDkzP2vxzrzHKp3Npq9IpRFZghziq0z4yTBjI74JAtMVGz2kb3RPG1q367B
+ +
+X-Google-Smtp-Source: AGHT+IEJzY/T+wCxqzs5cx4Z3nsnVYk8LN5PVrt4Yhd6YV+ij6ncY6fMSy/htMRM/yDwBaGpoKrIZQ==
+X-Received: by 2002:a05:600c:1c98:b0:426:6edf:6597 with SMTP id
+ 5b1f17b1804b1-432b750a358mr28190085e9.19.1731080684756; 
+ Fri, 08 Nov 2024 07:44:44 -0800 (PST)
 Received: from localhost.localdomain ([89.101.134.25])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381eda04ad0sm5235518f8f.100.2024.11.08.07.43.43
+ 5b1f17b1804b1-432b05c26e3sm75094025e9.33.2024.11.08.07.44.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 08 Nov 2024 07:43:44 -0800 (PST)
+ Fri, 08 Nov 2024 07:44:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Anton Johansson <anjo@rev.ng>
@@ -67,21 +67,19 @@ Cc: Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair@alistair23.me>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [RFC PATCH v3 05/17] hw/timer/xilinx_timer: Allow down to 8-bit
- memory access
-Date: Fri,  8 Nov 2024 15:43:05 +0000
-Message-ID: <20241108154317.12129-6-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 17/17] tests/functional: Add microblaze cross-endianness
+ tests
+Date: Fri,  8 Nov 2024 15:43:17 +0000
+Message-ID: <20241108154317.12129-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241108154317.12129-1-philmd@linaro.org>
 References: <20241108154317.12129-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,39 +102,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow down to 8-bit access, per the datasheet (reference added
-in previous commit):
-
- "Timer Counter registers are accessed as one of the following types:
-  • Byte (8 bits)
-  • Half word (2 bytes)
-  • Word (4 bytes)"
+Copy/paste the current tests, but call the opposite endianness
+machines, testing:
+- petalogix-s3adsp1800-le machine (little-endian CPU) on the
+  qemu-system-microblaze binary (big-endian)
+- petalogix-s3adsp1800-be machine (big-endian CPU) on the
+  qemu-system-microblazeel binary (little-endian).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-RFC: This breaks the UART qtest, instead of having TX register
-receiving 'T' = 0x54, it receives 0x54000000, converted to '\0'
-char. It works if we use SWI instead of SBI (storing 32-bit).
----
- hw/timer/xilinx_timer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../functional/test_microblaze_s3adsp1800.py  | 21 +++++++++++++++++++
+ .../test_microblazeel_s3adsp1800.py           | 19 +++++++++++++++++
+ 2 files changed, 40 insertions(+)
 
-diff --git a/hw/timer/xilinx_timer.c b/hw/timer/xilinx_timer.c
-index 383fc8b3c8..c117bff225 100644
---- a/hw/timer/xilinx_timer.c
-+++ b/hw/timer/xilinx_timer.c
-@@ -198,7 +198,7 @@ static const MemoryRegionOps timer_ops = {
-         .max_access_size = 4,
-     },
-     .valid = {
--        .min_access_size = 4,
-+        .min_access_size = 1,
-         .max_access_size = 4
-     }
- };
+diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/test_microblaze_s3adsp1800.py
+index 2b2f782270..7f5e8b6024 100755
+--- a/tests/functional/test_microblaze_s3adsp1800.py
++++ b/tests/functional/test_microblaze_s3adsp1800.py
+@@ -36,5 +36,26 @@ def test_microblaze_s3adsp1800_be(self):
+         # message, that's why we don't test for a later string here. This
+         # needs some investigation by a microblaze wizard one day...
+ 
++    ASSET_IMAGE_LE = Asset(
++        ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
++        'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
++
++    def test_microblaze_s3adsp1800_le(self):
++        self.require_netdev('user')
++        self.set_machine('petalogix-s3adsp1800-le')
++        file_path = self.ASSET_IMAGE_LE.fetch()
++        archive_extract(file_path, self.workdir)
++        self.vm.set_console()
++        self.vm.add_args('-kernel', self.workdir + '/day13/xmaton.bin')
++        self.vm.add_args('-nic', 'user,tftp=' + self.workdir + '/day13/')
++        self.vm.launch()
++        wait_for_console_pattern(self, 'QEMU Advent Calendar 2023')
++        time.sleep(0.1)
++        exec_command(self, 'root')
++        time.sleep(0.1)
++        exec_command_and_wait_for_pattern(self,
++                'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
++                '821cd3cab8efd16ad6ee5acc3642a8ea')
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
+diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
+index 1aee5149fb..60543009ba 100755
+--- a/tests/functional/test_microblazeel_s3adsp1800.py
++++ b/tests/functional/test_microblazeel_s3adsp1800.py
+@@ -38,5 +38,24 @@ def test_microblazeel_s3adsp1800_le(self):
+                 'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
+                 '821cd3cab8efd16ad6ee5acc3642a8ea')
+ 
++    ASSET_IMAGE_BE = Asset(
++        ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/'
++         'day17.tar.xz'),
++        '3ba7439dfbea7af4876662c97f8e1f0cdad9231fc166e4861d17042489270057')
++
++    def test_microblazeel_s3adsp1800_be(self):
++        self.set_machine('petalogix-s3adsp1800-be')
++        file_path = self.ASSET_IMAGE_BE.fetch()
++        archive_extract(file_path, self.workdir)
++        self.vm.set_console()
++        self.vm.add_args('-kernel', self.workdir + '/day17/ballerina.bin')
++        self.vm.launch()
++        wait_for_console_pattern(self, 'This architecture does not have '
++                                       'kernel memory protection')
++        # Note:
++        # The kernel sometimes gets stuck after the "This architecture ..."
++        # message, that's why we don't test for a later string here. This
++        # needs some investigation by a microblaze wizard one day...
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.45.2
 
