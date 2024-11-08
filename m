@@ -4,79 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B60D3D6407A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 19:17:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E40D6407B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 19:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9UTj-00063t-8N; Fri, 08 Nov 2024 14:17:07 -0500
+	id 1t9Url-0002WI-4h; Fri, 08 Nov 2024 14:41:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9UTh-00063k-8w
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 14:17:05 -0500
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t9UTf-0002yF-GB
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 14:17:05 -0500
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2fb57f97d75so23032561fa.2
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 11:17:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731093421; x=1731698221; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BLkvLi6d/hz4FITtyuiiowJydG/I4Z7ZrZc2CNtKris=;
- b=X3AA3aVCG8sqhaXXjbUoE0ntSFLaKfC43GBMjqyqQA/kbXdLapcSC06o5daZsFukh+
- oMl2NL7VcI2050l3vIzlt1NkiDR8DxpYWVGfHbsgf9jzSYpD+ILzc90EegRLOTaflGUA
- d9+3N5nGHJLlyXLKpsLtlOWowHAgg+OZgrMpv0X5r1HTHWtJYVL0TT9QI7RFJ5/u5Yj7
- UNbUW4VlEXW/lNW0HZvCc84nef5RDONSk+PVHZ7xYCdWIPwuW5XLlj3ohbbH6X58VBvu
- vLsZ7veJTusUNT3bIRYMh0T5DSKcU+hCqPSicRffg3Y5BQMtEN0ipeFSpOJk10waS7Xd
- zXEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731093421; x=1731698221;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BLkvLi6d/hz4FITtyuiiowJydG/I4Z7ZrZc2CNtKris=;
- b=WZop5TsywOTPnjrFW2nNsKTWvawGN2Q6SBVAZKfhcctLQ4iGEfsDzBCKnWdy0r6bSI
- 8QsW74oECc0IrG6aDNm7DhC1xoZxiNoNiZsFLmHSY/Z+SWNuuGliDZypUi+IdnTKaG5z
- nDO47r9nZ04vycZ+Gg20voDJMhCYOvijTMBK8h0k56nCXqIsWPrTW4qftoKSoHEtMrSX
- 4NuYQ8AwkYrbTYh/w0o+Kjovz2yz9yhfzHIJQvt6h6f3Y+EtI+8U6UUXKUyU4zpY26Jv
- ClcNBpNaTIvF24W+n/k7B6OMVZf7EDobMAWChEdcE6mJ/SboPPJ9g9M6dCxvV8ylBuEW
- JhzA==
-X-Gm-Message-State: AOJu0YySYiSe22APO//7u3R+aev/iiJr8v7kEAF+p1/WTs6PY1pW/ox9
- IXpVAiFGmZS8Jqxms9UgCbHECSP0MLHl3Qa+VrpeEfJgUUGGH3tyycUr9BC8pU6PiLTKfSzz3Xt
- KRLryG5Pq1cMV6iXYrFLfCBssh/AcEhTnvsjhIQ==
-X-Google-Smtp-Source: AGHT+IECrx16xd2YQa7y6IM1uItbaNKgcj/dplvq9tRh9ldwQsOu80L/qa9zd4NO6+KuXZH6NFqqHeIbanZfifIsnJ8=
-X-Received: by 2002:a2e:a541:0:b0:2fa:c8d1:224 with SMTP id
- 38308e7fff4ca-2ff20152518mr23065761fa.2.1731093421108; Fri, 08 Nov 2024
- 11:17:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1t9Urb-0002VP-MZ; Fri, 08 Nov 2024 14:41:49 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1t9UrZ-0005RS-I0; Fri, 08 Nov 2024 14:41:47 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A8IFKsT023047;
+ Fri, 8 Nov 2024 19:41:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=N3SiH94n92LLqVq15ssqz2u6SJ0BUnyN031vwbnmC
+ yk=; b=oEd9WuvsoCpyYsUJXZ16tn+pG88zMuLjXJamiZu3bQgWQwnoShPwUvjOh
+ Zd/o1FFexcvVC5m6DaAlOw0bz4yTm/5pepkPPaeAA+rDpzDQnBZ9Vp7RMOOj9gU4
+ n8KZlEPVFNQlAJpl8wOpIZZWXLSDwwgkfKQi5KnLLc2llG9K+UbYILQnPun5rzlT
+ xl/Lo5HFB5DFKVGRe93bhTyt6USPVyMU+1UvL1TGQij/KUKUhb5IHWFxclcKJlOa
+ 8o0w/Kl11N+hRiGiSnl6xeShIN4n0SI4yCBZxLGIhWPWiWqGBOuEtb/z/1chJ2VC
+ Il6vOSMMWnU/Nnnq6y4+YaPlwwH9g==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42sqrp0ed6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Nov 2024 19:41:42 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A8Fl33A013298;
+ Fri, 8 Nov 2024 19:41:41 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42nydmtx8f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Nov 2024 19:41:41 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4A8JfdhM36897082
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 8 Nov 2024 19:41:40 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BA8075805B;
+ Fri,  8 Nov 2024 19:41:39 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0F09258058;
+ Fri,  8 Nov 2024 19:41:39 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.61.96.17])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  8 Nov 2024 19:41:38 +0000 (GMT)
+From: jrossi@linux.ibm.com
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
+Subject: [PATCH 1/1] pc-bios/s390x: Initialize cdrom type to false for each
+ IPL device
+Date: Fri,  8 Nov 2024 14:41:36 -0500
+Message-ID: <20241108194136.2833932-1-jrossi@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-References: <20241105224727.53059-1-philmd@linaro.org>
- <20241105224727.53059-11-philmd@linaro.org>
-In-Reply-To: <20241105224727.53059-11-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 8 Nov 2024 19:16:50 +0000
-Message-ID: <CAFEAcA-6e-o480iPeesKPnvcBtjVwWsL=zYOuNNddPNZu7Uc6g@mail.gmail.com>
-Subject: Re: [PULL 10/29] hw/core: Check smp cache topology support for machine
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- Yongwei Ma <yongwei.ma@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 9P_lqmcyhkoZQnlfSoK1bH1s1gAQXGnm
+X-Proofpoint-ORIG-GUID: 9P_lqmcyhkoZQnlfSoK1bH1s1gAQXGnm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=692 clxscore=1015
+ impostorscore=0 mlxscore=0 phishscore=0 suspectscore=0 bulkscore=0
+ spamscore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411080161
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,63 +104,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Nov 2024 at 22:49, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> From: Zhao Liu <zhao1.liu@intel.com>
->
-> Add cache_supported flags in SMPCompatProps to allow machines to
-> configure various caches support.
->
-> And check the compatibility of the cache properties with the
-> machine support in machine_parse_smp_cache().
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-Hi; Coverity points out an issue in this code (CID 1565391):
+Clear information about cdrom type so that current IPL device isn't tainted
+by stale data from previous devices.
 
->  bool machine_parse_smp_cache(MachineState *ms,
->                               const SmpCachePropertiesList *caches,
->                               Error **errp)
->  {
-> +    MachineClass *mc =3D MACHINE_GET_CLASS(ms);
->      const SmpCachePropertiesList *node;
->      DECLARE_BITMAP(caches_bitmap, CACHE_LEVEL_AND_TYPE__MAX);
->
-> @@ -283,6 +305,25 @@ bool machine_parse_smp_cache(MachineState *ms,
->          set_bit(node->value->cache, caches_bitmap);
->      }
->
-> +    for (int i =3D 0; i < CACHE_LEVEL_AND_TYPE__MAX; i++) {
-> +        const SmpCacheProperties *props =3D &ms->smp_cache.props[i];
-> +
-> +        /*
-> +         * Reject non "default" topology level if the cache isn't
-> +         * supported by the machine.
-> +         */
-> +        if (props->topology !=3D CPU_TOPOLOGY_LEVEL_DEFAULT &&
-> +            !mc->smp_props.cache_supported[props->cache]) {
-> +            error_setg(errp,
-> +                       "%s cache topology not supported by this machine"=
-,
-> +                       CacheLevelAndType_str(node->value->cache));
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+---
+ pc-bios/s390-ccw/main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-This error message looks at "node", but "node" was the iteration
-variable in the first loop in this function, so generally at
-this point it will be NULL because that is the loop termination
-condition.
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index a4d1c05aac..7509755e36 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -242,6 +242,7 @@ static bool find_boot_device(void)
+ static int virtio_setup(void)
+ {
+     VDev *vdev = virtio_get_device();
++    vdev->is_cdrom = false;
+     int ret;
+ 
+     switch (vdev->senseid.cu_model) {
+-- 
+2.45.1
 
-The code looks like it ought to be reporting an error relating
-to the 'props' variable, not 'node' ?
-
-> +            return false;
-> +        }
-> +
-> +        if (!machine_check_topo_support(ms, props->topology, errp)) {
-> +            return false;
-> +        }
-> +    }
->      return true;
->  }
-
-thanks
--- PMM
 
