@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88365D5E144
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 07:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4B47D5E144
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Nov 2024 07:19:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9JGn-0006Sg-FA; Fri, 08 Nov 2024 02:19:02 -0500
+	id 1t9JGs-0006Uj-Qj; Fri, 08 Nov 2024 02:19:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t9JGX-0006MQ-VH
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 02:18:46 -0500
+ id 1t9JGb-0006Nr-9e
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 02:18:49 -0500
 Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1t9JGV-0007Po-U4
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 02:18:45 -0500
+ id 1t9JGZ-0007Po-L1
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 02:18:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1731050324; x=1762586324;
+ t=1731050327; x=1762586327;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=a6VnkIJWzXWOZ9b+43lACAM3/4OzVnDFwwVjAPUfL5U=;
- b=OE+y7bjlOmoCpX7gjii2AX+1H97Vsb4JMpSmlrqx+JOEpe/9ffsuiNkm
- n65U6WTpH5hoAt+nPzTdM2FijJESq6ZsKf/r+Okig399o9akFeU7l2uWB
- uE2iWVaXFwl4BE3N/0qc9/qvqwvIjlXkyFjS9b5dUCRDHeVtiyVbrmPQH
- 46B0ds4wVDz6lMCrYKBAOnEW8Ku9YQSlw0BgskmuFkFY5EbS8KqCpWY8B
- LH7rAofq0MyF0QsnsHkxnRvrP9TDD/p/NkwJYD3GZAj51AHCMrcnGaDh8
- d2mref5KSPQzZRKq6ZRBZLqs3CIrgFsKaWdJBQ64FZru89p1Olqd24G7h g==;
-X-CSE-ConnectionGUID: nIwW9Xr+R+m92JU1r/Pagw==
-X-CSE-MsgGUID: pI4+0M+TRla6525hadsfFg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="31082920"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="31082920"
+ bh=CIy5dPUvwqW57qY3sj4mBIedFmwRWWxMjES6nwTfxNM=;
+ b=NGhFH1aIkl7+adv3T6Qq8XxCJbMUaxxoY2RYU+HTik+Yr2pWS5kIeY7T
+ zgCYNBxVritW2ZuqTNuxSB41XCeWsw6HErJ5kciuFuc6DT+MaMg3+RoZT
+ WeOzw7XUP2ez+HmFQia2MssMze0fmfSj/h7Aq4xXOdQ9uaJUyfkm30Vwa
+ 0N1iyfH6KFjkIv/QrGtmQ7DxQwhRiddtfK7tDE4/pcq2XlCR/2pdT5nqB
+ e4/W/E9mV8MqlD0dHmB1jyKlPof5q8LR9gM7BB/NIiluxryA9ke/DZywR
+ HfNKAxpJthOY2eOwbVxHodfftvT4lmJO1BZCOxupMvYByMM+N2or7Bgc4 g==;
+X-CSE-ConnectionGUID: /nLoMfmPTCKB78ybi1O9UA==
+X-CSE-MsgGUID: uio5sAcDTLqgvCD/puXnCA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="31082935"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="31082935"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Nov 2024 23:18:42 -0800
-X-CSE-ConnectionGUID: TlXPCfgiRLWE96MY6ximKw==
-X-CSE-MsgGUID: WCA84hHqRCSnCnicoDPeFQ==
+ 07 Nov 2024 23:18:46 -0800
+X-CSE-ConnectionGUID: qzq3du5cTLyaZoAVCgcIIQ==
+X-CSE-MsgGUID: TK+F+UT4R9ikjroVBqr2og==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,137,1728975600"; d="scan'208";a="86240949"
+X-IronPort-AV: E=Sophos;i="6.12,137,1728975600"; d="scan'208";a="86240968"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa008.jf.intel.com with ESMTP; 07 Nov 2024 23:18:38 -0800
+ by orviesa008.jf.intel.com with ESMTP; 07 Nov 2024 23:18:43 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -59,10 +59,10 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
  Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org,
  xiaoyao.li@intel.com
-Subject: [PATCH v1 2/4] i386/cpu: Set up CPUID_HT in x86_cpu_expand_features()
- instead of cpu_x86_cpuid()
-Date: Fri,  8 Nov 2024 02:06:07 -0500
-Message-Id: <20241108070609.3653085-3-xiaoyao.li@intel.com>
+Subject: [PATCH v1 3/4] i386/cpu: Set and track CPUID_EXT3_CMP_LEG in
+ env->features[FEAT_8000_0001_ECX]
+Date: Fri,  8 Nov 2024 02:06:08 -0500
+Message-Id: <20241108070609.3653085-4-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241108070609.3653085-1-xiaoyao.li@intel.com>
 References: <20241108070609.3653085-1-xiaoyao.li@intel.com>
@@ -93,53 +93,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Track CPUID_HT in env->features[FEAT_1_EDX] instead of evaluating it
-each time in cpu_x86_cpuid(). env->features[] should be set up in cpu's
-realizefn() and cpu_x86_cpuid() should be the consumer of it.
-
-Beside, TDX support also depends on it because TDX is going to validate
-the feature configuration by comparing what TDX module reports with
-env->features[]. If not tracking CPUID_HT in env->features[], it gets
-warnings like below when number of vcpus > 1:
-
-  warning: TDX enforces set the feature: CPUID.01H:EDX.ht [bit 28]
+... instead of manually set it in cpu_x86_cpuid().
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- target/i386/cpu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ target/i386/cpu.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 1179b7a3ce62..e0c5a61ff615 100644
+index e0c5a61ff615..015e085fa66c 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -6544,7 +6544,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         *edx = env->features[FEAT_1_EDX];
-         if (threads_per_pkg > 1) {
-             *ebx |= threads_per_pkg << 16;
--            *edx |= CPUID_HT;
-         }
-         if (!cpu->enable_pmu) {
-             *ecx &= ~CPUID_EXT_PDCM;
-@@ -7490,6 +7489,7 @@ static void x86_cpu_enable_xsave_components(X86CPU *cpu)
- void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
- {
-     CPUX86State *env = &cpu->env;
-+    CPUState *cs = CPU(cpu);
-     FeatureWord w;
-     int i;
-     GList *l;
-@@ -7531,6 +7531,10 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-         }
+@@ -6959,17 +6959,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         *ecx = env->features[FEAT_8000_0001_ECX];
+         *edx = env->features[FEAT_8000_0001_EDX];
+ 
+-        /* The Linux kernel checks for the CMPLegacy bit and
+-         * discards multiple thread information if it is set.
+-         * So don't set it here for Intel to make Linux guests happy.
+-         */
+-        if (threads_per_pkg > 1) {
+-            if (env->cpuid_vendor1 != CPUID_VENDOR_INTEL_1 ||
+-                env->cpuid_vendor2 != CPUID_VENDOR_INTEL_2 ||
+-                env->cpuid_vendor3 != CPUID_VENDOR_INTEL_3) {
+-                *ecx |= 1 << 1;    /* CmpLegacy bit */
+-            }
+-        }
+         if (tcg_enabled() && env->cpuid_vendor1 == CPUID_VENDOR_INTEL_1 &&
+             !(env->hflags & HF_LMA_MASK)) {
+             *edx &= ~CPUID_EXT2_SYSCALL;
+@@ -7533,6 +7522,15 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+ 
+     if (cs->nr_cores * cs->nr_threads > 1) {
+         env->features[FEAT_1_EDX] |= CPUID_HT;
++
++        /*
++         * The Linux kernel checks for the CMPLegacy bit and
++         * discards multiple thread information if it is set.
++         * So don't set it here for Intel to make Linux guests happy.
++         */
++        if (!IS_INTEL_CPU(env)) {
++            env->features[FEAT_8000_0001_ECX] |= CPUID_EXT3_CMP_LEG;
++        }
      }
  
-+    if (cs->nr_cores * cs->nr_threads > 1) {
-+        env->features[FEAT_1_EDX] |= CPUID_HT;
-+    }
-+
      for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
-         FeatureDep *d = &feature_dependencies[i];
-         if (!(env->features[d->from.index] & d->from.mask)) {
 -- 
 2.34.1
 
