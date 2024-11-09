@@ -4,39 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74346D5E369
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA2DD5E36C
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:29:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kQd-0000wc-2o; Sat, 09 Nov 2024 07:18:59 -0500
+	id 1t9kTz-0005tO-2e; Sat, 09 Nov 2024 07:22:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kPg-0006bz-TM; Sat, 09 Nov 2024 07:18:01 -0500
+ id 1t9kRd-0002eU-I9; Sat, 09 Nov 2024 07:20:02 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kPf-0005HK-9G; Sat, 09 Nov 2024 07:18:00 -0500
+ id 1t9kRb-0005YP-Q0; Sat, 09 Nov 2024 07:20:01 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9D0D3A1649;
- Sat,  9 Nov 2024 15:08:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A96E4A1659;
+ Sat,  9 Nov 2024 15:08:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 64D4B167FCF;
- Sat,  9 Nov 2024 15:09:03 +0300 (MSK)
-Received: (nullmailer pid 3296222 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 6EC7C167FDF;
+ Sat,  9 Nov 2024 15:09:04 +0300 (MSK)
+Received: (nullmailer pid 3296273 invoked by uid 1000);
  Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Sergey Makarov <s.makarov@syntacore.com>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 31/58] hw/intc: Don't clear pending bits on IRQ lowering
-Date: Sat,  9 Nov 2024 15:08:32 +0300
-Message-Id: <20241109120901.3295995-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 47/58] tests/tcg: Replace -mpower8-vector with
+ -mcpu=power8
+Date: Sat,  9 Nov 2024 15:08:48 +0300
+Message-Id: <20241109120901.3295995-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,36 +65,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sergey Makarov <s.makarov@syntacore.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-According to PLIC specification (chapter 5), there
-is only one case, when interrupt is claimed. Fix
-PLIC controller to match this behavior.
+[1] deprecated -mpower8-vector, resulting in:
 
-Signed-off-by: Sergey Makarov <s.makarov@syntacore.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240918140229.124329-3-s.makarov@syntacore.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit a84be2baa9eca8bc500f866ad943b8f63dc99adf)
+    powerpc64-linux-gnu-gcc: warning: switch '-mpower8-vector' is no longer supported
+    qemu/tests/tcg/ppc64/vsx_f2i_nan.c:4:15: error: expected ';' before 'float'
+        4 | typedef vector float vsx_float32_vec_t;
+          |               ^~~~~~
+
+Use -mcpu=power8 instead. In order to properly verify that this works,
+one needs a big-endian (the minimum supported CPU for 64-bit
+little-endian is power8 anyway) GCC configured with --enable-checking
+(see GCC commit e154242724b0 ("[RS6000] Don't pass -many to the
+assembler").
+
+[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=109987
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+(cherry picked from commit ddf4dd46e5c31bd223f2e867f2cae43bfd41dfb9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
-index e559f11805..ca4c2de494 100644
---- a/hw/intc/sifive_plic.c
-+++ b/hw/intc/sifive_plic.c
-@@ -349,8 +349,10 @@ static void sifive_plic_irq_request(void *opaque, int irq, int level)
- {
-     SiFivePLICState *s = opaque;
+diff --git a/tests/tcg/ppc64/Makefile.target b/tests/tcg/ppc64/Makefile.target
+index 509a20be2b..102a2cefef 100644
+--- a/tests/tcg/ppc64/Makefile.target
++++ b/tests/tcg/ppc64/Makefile.target
+@@ -6,7 +6,7 @@ VPATH += $(SRC_PATH)/tests/tcg/ppc64
  
--    sifive_plic_set_pending(s, irq, level > 0);
--    sifive_plic_update(s);
-+    if (level > 0) {
-+        sifive_plic_set_pending(s, irq, true);
-+        sifive_plic_update(s);
-+    }
- }
+ config-cc.mak: Makefile
+ 	$(quiet-@)( \
+-	    $(call cc-option,-mpower8-vector,   CROSS_CC_HAS_POWER8_VECTOR); \
++	    $(call cc-option,-mcpu=power8,      CROSS_CC_HAS_CPU_POWER8); \
+ 	    $(call cc-option,-mpower10,         CROSS_CC_HAS_POWER10)) 3> config-cc.mak
  
- static void sifive_plic_realize(DeviceState *dev, Error **errp)
+ -include config-cc.mak
+@@ -23,15 +23,15 @@ run-threadcount: threadcount
+ run-plugin-threadcount-with-%:
+ 	$(call skip-test, $<, "BROKEN (flaky with clang) ")
+ 
+-ifneq ($(CROSS_CC_HAS_POWER8_VECTOR),)
++ifneq ($(CROSS_CC_HAS_CPU_POWER8),)
+ PPC64_TESTS=bcdsub non_signalling_xscv
+ endif
+-$(PPC64_TESTS): CFLAGS += -mpower8-vector
++$(PPC64_TESTS): CFLAGS += -mcpu=power8
+ 
+-ifneq ($(CROSS_CC_HAS_POWER8_VECTOR),)
++ifneq ($(CROSS_CC_HAS_CPU_POWER8),)
+ PPC64_TESTS += vsx_f2i_nan
+ endif
+-vsx_f2i_nan: CFLAGS += -mpower8-vector -I$(SRC_PATH)/include
++vsx_f2i_nan: CFLAGS += -mcpu=power8 -I$(SRC_PATH)/include
+ 
+ PPC64_TESTS += mtfsf
+ PPC64_TESTS += mffsce
 -- 
 2.39.5
 
