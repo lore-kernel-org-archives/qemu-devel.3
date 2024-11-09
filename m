@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE08D5E367
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1F72D5E366
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kGH-000860-D6; Sat, 09 Nov 2024 07:08:17 -0500
+	id 1t9kHf-0001xH-TE; Sat, 09 Nov 2024 07:09:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kGA-00083a-HW; Sat, 09 Nov 2024 07:08:10 -0500
+ id 1t9kHG-00017c-1Y; Sat, 09 Nov 2024 07:09:18 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kG6-0003aC-IZ; Sat, 09 Nov 2024 07:08:09 -0500
+ id 1t9kHE-0003vy-BM; Sat, 09 Nov 2024 07:09:17 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9B4D6A15E9;
- Sat,  9 Nov 2024 15:07:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9EE40A15F9;
+ Sat,  9 Nov 2024 15:07:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 60A0F167F77;
- Sat,  9 Nov 2024 15:08:01 +0300 (MSK)
-Received: (nullmailer pid 3295252 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 6689B167F87;
+ Sat,  9 Nov 2024 15:08:02 +0300 (MSK)
+Received: (nullmailer pid 3295301 invoked by uid 1000);
  Sat, 09 Nov 2024 12:08:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Fea.Wang" <fea.wang@sifive.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 01/57] softmmu/physmem.c: Keep transaction attribute in
- address_space_map()
-Date: Sat,  9 Nov 2024 15:07:03 +0300
-Message-Id: <20241109120801.3295120-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.4 17/57] hw/audio/hda: free timer on exit
+Date: Sat,  9 Nov 2024 15:07:19 +0300
+Message-Id: <20241109120801.3295120-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
@@ -64,37 +63,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Fea.Wang" <fea.wang@sifive.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The follow-up transactions may use the data in the attribution, so keep
-the value of attribution from the function parameter just as
-flatview_translate() above.
+Fixes: 280c1e1cd ("audio/hda: create millisecond timers that handle IO")
 
-Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-Cc: qemu-stable@nongnu.org
-Fixes: f26404fbee ("Make address_space_map() take a MemTxAttrs argument")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20240912070404.2993976-2-fea.wang@sifive.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit d8d5ca40048b04750de5a0ae0b2b9f153a391951)
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-ID: <20241008125028.1177932-2-marcandre.lureau@redhat.com>
+(cherry picked from commit f27206ceedbe2efae37c8d143c5eb2db05251508)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fix due to lack of
- v9.1.0-134-g637b0aa13956 "softmmu: Support concurrent bounce buffers"
- v9.0.0-564-g69e78f1b3484 "system/physmem: Per-AddressSpace bounce buffering")
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 78f7db1121..7890f2019d 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3177,7 +3177,7 @@ void *address_space_map(AddressSpace *as,
-         memory_region_ref(mr);
-         bounce.mr = mr;
-         if (!is_write) {
--            flatview_read(fv, addr, MEMTXATTRS_UNSPECIFIED,
-+            flatview_read(fv, addr, attrs,
-                                bounce.buffer, l);
+diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
+index b22e486fda..ee3d0a7dec 100644
+--- a/hw/audio/hda-codec.c
++++ b/hw/audio/hda-codec.c
+@@ -751,7 +751,7 @@ static void hda_audio_exit(HDACodecDevice *hda)
+             continue;
          }
- 
+         if (a->use_timer) {
+-            timer_del(st->buft);
++            timer_free(st->buft);
+         }
+         if (st->output) {
+             AUD_close_out(&a->card, st->voice.out);
 -- 
 2.39.5
 
