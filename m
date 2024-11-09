@@ -4,48 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A71A7D5C0FC
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C5BD5C0FC
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:54:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9f97-0004J9-B6; Sat, 09 Nov 2024 01:40:35 -0500
+	id 1t9fLd-0001Zw-0N; Sat, 09 Nov 2024 01:53:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f8K-0003AH-4j; Sat, 09 Nov 2024 01:39:44 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1t9fLQ-0001Zb-9g
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 01:53:17 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f8H-000253-St; Sat, 09 Nov 2024 01:39:43 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 21521A12F2;
- Sat,  9 Nov 2024 09:38:10 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8740D167DD6;
- Sat,  9 Nov 2024 09:39:04 +0300 (MSK)
-Received: (nullmailer pid 3272525 invoked by uid 1000);
- Sat, 09 Nov 2024 06:39:03 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, David Hildenbrand <david@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 11/33] KVM: Dynamic sized kvm memslots array
-Date: Sat,  9 Nov 2024 09:38:37 +0300
-Message-Id: <20241109063903.3272404-11-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
-References: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1t9fLO-0003YA-3d
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 01:53:15 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1731135174; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=cgEf2OyVpuBL3VFkwk7bXnHH1b/xEO2XC5X7ROULwB9Wgw76u+OwrzJo+5FZkq1xVVeoLpS3IAjI0Bod1uX69iKnShNNZMhkzsmUN4ShGt0SQV4Zjmc1SqaYoxlzmSUC5Q/F7yLA/adnWMb5JRqpBYCagbCchYKVToI0uGpD8YI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1731135174;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=Ik46TfqLlY+2EMLpjZRD6NwGxuu5mRhmC7XjRCMNOEw=; 
+ b=GJFzDqDSyNnjkMadkRoq6df5wAdlJdG4nF6C8ow0kQlB9YD+T92394fxIh2FjANQHA1kvGnnB2LYv1eAoL/octfcB/akr6wzjFtd3ITME8DdrTDJ+7avxf/7jMqWjt+hesQhUIunMIAFDVcIro1Ntpoo1EbqGmdP1+TBPSXrgcs=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1731135174; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=Ik46TfqLlY+2EMLpjZRD6NwGxuu5mRhmC7XjRCMNOEw=;
+ b=djx79HDK2Uv4gpSIQuzJmfQH3yDnHL1HmkREuY3DuRr45NSWACidBS2N8Sokv9lj
+ 1c0m7jCKOW3GkzIPjqEQ3ID7N8m4MDbbpadiBjbSJX4b2Vq2/+P6iODeLnQuRhqdhDO
+ jGmHscdcHBwdtl3ZTXWMRfyug+JqvC6se7Z0adnA=
+Received: by mx.zohomail.com with SMTPS id 1731135172288805.5880273171275;
+ Fri, 8 Nov 2024 22:52:52 -0800 (PST)
+Message-ID: <5494be03-9bdb-4ec4-8c45-2c92f7591ae1@collabora.com>
+Date: Sat, 9 Nov 2024 09:52:45 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/6] ui/sdl2: Implement dpy dmabuf functions
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20241024233355.136867-1-dmitry.osipenko@collabora.com>
+ <20241024233355.136867-3-dmitry.osipenko@collabora.com>
+ <d800f856-cdf4-4573-8fd6-6a8e1434090a@daynix.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <d800f856-cdf4-4573-8fd6-6a8e1434090a@daynix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -63,249 +97,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+Accidentally missed this email a week ago. Thanks again for all the reviews!
 
-Zhiyi reported an infinite loop issue in VFIO use case.  The cause of that
-was a separate discussion, however during that I found a regression of
-dirty sync slowness when profiling.
+On 10/31/24 10:32, Akihiko Odaki wrote:
+...
+>>   +# libx11 presents together with SDL or GTK libs on systems that
+>> support X11
+>> +xlib = dependency('x11', required: false)
+> 
+> There is a line saying:
+> x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
+> 
+> Please reuse it.
 
-Each KVMMemoryListerner maintains an array of kvm memslots.  Currently it's
-statically allocated to be the max supported by the kernel.  However after
-Linux commit 4fc096a99e ("KVM: Raise the maximum number of user memslots"),
-the max supported memslots reported now grows to some number large enough
-so that it may not be wise to always statically allocate with the max
-reported.
+I've seen this option and choose not to use it because despite the brief
+'X11' name, it's about X11 support specifically for GTK and not SDL.
 
-What's worse, QEMU kvm code still walks all the allocated memslots entries
-to do any form of lookups.  It can drastically slow down all memslot
-operations because each of such loop can run over 32K times on the new
-kernels.
+Though, we can use this GTK/X11 for now and improve Meson dependencies
+later on because in practice GTK is enabled for all distro-built QEMUs.
+Will switch to it in v3.
 
-Fix this issue by making the memslots to be allocated dynamically.
+...
+>> +void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
+>> +                            QemuDmaBuf *dmabuf)
+>> +{
+>> +    struct sdl2_console *scon = container_of(dcl, struct
+>> sdl2_console, dcl);
+>> +
+>> +    assert(scon->opengl);
+>> +    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+>> +
+>> +    egl_dmabuf_import_texture(dmabuf);
+>> +    if (!qemu_dmabuf_get_texture(dmabuf)) {
+>> +        error_report("%s: failed fd=%d", __func__,
+>> qemu_dmabuf_get_fd(dmabuf));
+> 
+> It still continues to call sdl2_gl_scanout_texture() and I doubt that's
+> what you meant.
 
-Here the initial size was set to 16 because it should cover the basic VM
-usages, so that the hope is the majority VM use case may not even need to
-grow at all (e.g. if one starts a VM with ./qemu-system-x86_64 by default
-it'll consume 9 memslots), however not too large to waste memory.
+Indeed, better to bail out early on a error.
 
-There can also be even better way to address this, but so far this is the
-simplest and should be already better even than before we grow the max
-supported memslots.  For example, in the case of above issue when VFIO was
-attached on a 32GB system, there are only ~10 memslots used.  So it could
-be good enough as of now.
+...
+>>   +static void sdl2_set_hint_x11_force_egl(void)
+>> +{
+>> +#if defined(SDL_HINT_VIDEO_X11_FORCE_EGL) && defined(CONFIG_OPENGL) && \
+>> +    defined(CONFIG_XLIB)
+>> +    Display *x_disp = XOpenDisplay(NULL);
+>> +    EGLDisplay egl_display;
+>> +
+>> +    if (!x_disp) {
+>> +        return;
+>> +    }
+>> +
+>> +    /* Prefer EGL over GLX to get dma-buf support. */
+>> +    egl_display = eglGetDisplay((EGLNativeDisplayType)x_disp);
+>> +
+>> +    if (egl_display != EGL_NO_DISPLAY) {
+>> +        /*
+>> +         * Setting X11_FORCE_EGL hint doesn't make SDL to prefer 11 over
+> 
+> s/prefer 11 over/prefer X11 over/
+> 
+> Personally, I'm more concerned whether setting that hint will make an
+> invalid argument error or something.
 
-In the above VFIO context, measurement shows that the precopy dirty sync
-shrinked from ~86ms to ~3ms after this patch applied.  It should also apply
-to any KVM enabled VM even without VFIO.
+There are no known side effects from setting that hint for QEMU and
+libsdl code looks sane. AFAICT, EGL is not enabled by default in SDL
+only because there are older SDL applications that use GLX features and
+they will be broken if SDL will switch to EGL by default.
 
-NOTE: we don't have a FIXES tag for this patch because there's no real
-commit that regressed this in QEMU. Such behavior existed for a long time,
-but only start to be a problem when the kernel reports very large
-nr_slots_max value.  However that's pretty common now (the kernel change
-was merged in 2021) so we attached cc:stable because we'll want this change
-to be backported to stable branches.
+Technically, should be possible to make SDL use EGL on demand, like only
+when QEMU runs with enabled native-context for example. But there is no
+point in doing that today since there are no known problems with the EGL
+hint, IMO. We will be able to address problems if somebody will report a
+bug.
 
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Reported-by: Zhiyi Guo <zhguo@redhat.com>
-Tested-by: Zhiyi Guo <zhguo@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240917163835.194664-2-peterx@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 5504a8126115d173687b37e657312a8ffe29fc0c)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fixup in accel/kvm/kvm-all.c and accel/kvm/trace-events;
- also remove now-unused local variable `KVMState *s` in kvm-all.c:kvm_log_sync_global() )
-
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 0a127ece11..370ecab785 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -77,6 +77,9 @@
-     do { } while (0)
- #endif
- 
-+/* Default num of memslots to be allocated when VM starts */
-+#define  KVM_MEMSLOTS_NR_ALLOC_DEFAULT                      16
-+
- struct KVMParkedVcpu {
-     unsigned long vcpu_id;
-     int kvm_fd;
-@@ -172,6 +175,57 @@ void kvm_resample_fd_notify(int gsi)
-     }
- }
- 
-+/**
-+ * kvm_slots_grow(): Grow the slots[] array in the KVMMemoryListener
-+ *
-+ * @kml: The KVMMemoryListener* to grow the slots[] array
-+ * @nr_slots_new: The new size of slots[] array
-+ *
-+ * Returns: True if the array grows larger, false otherwise.
-+ */
-+static bool kvm_slots_grow(KVMMemoryListener *kml, unsigned int nr_slots_new)
-+{
-+    unsigned int i, cur = kml->nr_slots_allocated;
-+    KVMSlot *slots;
-+
-+    if (nr_slots_new > kvm_state->nr_slots) {
-+        nr_slots_new = kvm_state->nr_slots;
-+    }
-+
-+    if (cur >= nr_slots_new) {
-+        /* Big enough, no need to grow, or we reached max */
-+        return false;
-+    }
-+
-+    if (cur == 0) {
-+        slots = g_new0(KVMSlot, nr_slots_new);
-+    } else {
-+        assert(kml->slots);
-+        slots = g_renew(KVMSlot, kml->slots, nr_slots_new);
-+        /*
-+         * g_renew() doesn't initialize extended buffers, however kvm
-+         * memslots require fields to be zero-initialized. E.g. pointers,
-+         * memory_size field, etc.
-+         */
-+        memset(&slots[cur], 0x0, sizeof(slots[0]) * (nr_slots_new - cur));
-+    }
-+
-+    for (i = cur; i < nr_slots_new; i++) {
-+        slots[i].slot = i;
-+    }
-+
-+    kml->slots = slots;
-+    kml->nr_slots_allocated = nr_slots_new;
-+    trace_kvm_slots_grow(cur, nr_slots_new);
-+
-+    return true;
-+}
-+
-+static bool kvm_slots_double(KVMMemoryListener *kml)
-+{
-+    return kvm_slots_grow(kml, kml->nr_slots_allocated * 2);
-+}
-+
- int kvm_get_max_memslots(void)
- {
-     KVMState *s = KVM_STATE(current_accel());
-@@ -182,15 +236,26 @@ int kvm_get_max_memslots(void)
- /* Called with KVMMemoryListener.slots_lock held */
- static KVMSlot *kvm_get_free_slot(KVMMemoryListener *kml)
- {
--    KVMState *s = kvm_state;
-+    unsigned int n;
-     int i;
- 
--    for (i = 0; i < s->nr_slots; i++) {
-+    for (i = 0; i < kml->nr_slots_allocated; i++) {
-         if (kml->slots[i].memory_size == 0) {
-             return &kml->slots[i];
-         }
-     }
- 
-+    /*
-+     * If no free slots, try to grow first by doubling.  Cache the old size
-+     * here to avoid another round of search: if the grow succeeded, it
-+     * means slots[] now must have the existing "n" slots occupied,
-+     * followed by one or more free slots starting from slots[n].
-+     */
-+    n = kml->nr_slots_allocated;
-+    if (kvm_slots_double(kml)) {
-+        return &kml->slots[n];
-+    }
-+
-     return NULL;
- }
- 
-@@ -224,10 +289,9 @@ static KVMSlot *kvm_lookup_matching_slot(KVMMemoryListener *kml,
-                                          hwaddr start_addr,
-                                          hwaddr size)
- {
--    KVMState *s = kvm_state;
-     int i;
- 
--    for (i = 0; i < s->nr_slots; i++) {
-+    for (i = 0; i < kml->nr_slots_allocated; i++) {
-         KVMSlot *mem = &kml->slots[i];
- 
-         if (start_addr == mem->start_addr && size == mem->memory_size) {
-@@ -269,7 +333,7 @@ int kvm_physical_memory_addr_from_host(KVMState *s, void *ram,
-     int i, ret = 0;
- 
-     kvm_slots_lock();
--    for (i = 0; i < s->nr_slots; i++) {
-+    for (i = 0; i < kml->nr_slots_allocated; i++) {
-         KVMSlot *mem = &kml->slots[i];
- 
-         if (ram >= mem->ram && ram < mem->ram + mem->memory_size) {
-@@ -991,7 +1055,7 @@ static int kvm_physical_log_clear(KVMMemoryListener *kml,
- 
-     kvm_slots_lock();
- 
--    for (i = 0; i < s->nr_slots; i++) {
-+    for (i = 0; i < kml->nr_slots_allocated; i++) {
-         mem = &kml->slots[i];
-         /* Discard slots that are empty or do not overlap the section */
-         if (!mem->memory_size ||
-@@ -1482,19 +1546,14 @@ static void kvm_log_sync(MemoryListener *listener,
- static void kvm_log_sync_global(MemoryListener *l)
- {
-     KVMMemoryListener *kml = container_of(l, KVMMemoryListener, listener);
--    KVMState *s = kvm_state;
-     KVMSlot *mem;
-     int i;
- 
-     /* Flush all kernel dirty addresses into KVMSlot dirty bitmap */
-     kvm_dirty_ring_flush();
- 
--    /*
--     * TODO: make this faster when nr_slots is big while there are
--     * only a few used slots (small VMs).
--     */
-     kvm_slots_lock();
--    for (i = 0; i < s->nr_slots; i++) {
-+    for (i = 0; i < kml->nr_slots_allocated; i++) {
-         mem = &kml->slots[i];
-         if (mem->memory_size && mem->flags & KVM_MEM_LOG_DIRTY_PAGES) {
-             kvm_slot_sync_dirty_pages(mem);
-@@ -1603,12 +1662,9 @@ void kvm_memory_listener_register(KVMState *s, KVMMemoryListener *kml,
- {
-     int i;
- 
--    kml->slots = g_new0(KVMSlot, s->nr_slots);
-     kml->as_id = as_id;
- 
--    for (i = 0; i < s->nr_slots; i++) {
--        kml->slots[i].slot = i;
--    }
-+    kvm_slots_grow(kml, KVM_MEMSLOTS_NR_ALLOC_DEFAULT);
- 
-     kml->listener.region_add = kvm_region_add;
-     kml->listener.region_del = kvm_region_del;
-diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
-index 399aaeb0ec..a1965a50c5 100644
---- a/accel/kvm/trace-events
-+++ b/accel/kvm/trace-events
-@@ -26,3 +26,4 @@ kvm_dirty_ring_reap(uint64_t count, int64_t t) "reaped %"PRIu64" pages (took %"P
- kvm_dirty_ring_reaper_kick(const char *reason) "%s"
- kvm_dirty_ring_flush(int finished) "%d"
- 
-+kvm_slots_grow(unsigned int old, unsigned int new) "%u -> %u"
-diff --git a/include/sysemu/kvm_int.h b/include/sysemu/kvm_int.h
-index 3b4adcdc10..269c925cb1 100644
---- a/include/sysemu/kvm_int.h
-+++ b/include/sysemu/kvm_int.h
-@@ -34,6 +34,7 @@ typedef struct KVMSlot
- typedef struct KVMMemoryListener {
-     MemoryListener listener;
-     KVMSlot *slots;
-+    unsigned int nr_slots_allocated;
-     int as_id;
- } KVMMemoryListener;
- 
 -- 
-2.39.5
-
+Best regards,
+Dmitry
 
