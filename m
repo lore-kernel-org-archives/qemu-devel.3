@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1460FD5E366
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AEE9D5E367
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:10:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kHk-0002Rn-T6; Sat, 09 Nov 2024 07:09:49 -0500
+	id 1t9kGV-0008L6-DW; Sat, 09 Nov 2024 07:08:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kHJ-0001Qq-2L; Sat, 09 Nov 2024 07:09:21 -0500
+ id 1t9kGP-0008E1-89; Sat, 09 Nov 2024 07:08:25 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kHH-0003xc-Ci; Sat, 09 Nov 2024 07:09:20 -0500
+ id 1t9kGN-0003iv-2h; Sat, 09 Nov 2024 07:08:24 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ACE06A15FA;
+ by isrv.corpit.ru (Postfix) with ESMTP id 20B42A15F0;
  Sat,  9 Nov 2024 15:07:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 746B1167F88;
- Sat,  9 Nov 2024 15:08:02 +0300 (MSK)
-Received: (nullmailer pid 3295304 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id DB21A167F7E;
+ Sat,  9 Nov 2024 15:08:01 +0300 (MSK)
+Received: (nullmailer pid 3295273 invoked by uid 1000);
  Sat, 09 Nov 2024 12:08:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 18/57] ui/dbus: fix leak on message filtering
-Date: Sat,  9 Nov 2024 15:07:20 +0300
-Message-Id: <20241109120801.3295120-18-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alexander Bulekov <alxndr@bu.edu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.4 08/57] fuzz: disable leak-detection for oss-fuzz builds
+Date: Sat,  9 Nov 2024 15:07:10 +0300
+Message-Id: <20241109120801.3295120-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
@@ -63,30 +63,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Alexander Bulekov <alxndr@bu.edu>
 
-A filter function that wants to drop a message should return NULL, in
-which case it must also unref the message itself.
+When we are building for OSS-Fuzz, we want to ensure that the fuzzer
+targets are actually created, regardless of leaks. Leaks will be
+detected by the subsequent tests of the individual fuzz-targets.
 
-Fixes: fa88b85de ("ui/dbus: filter out pending messages when scanout")
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-ID: <20241008125028.1177932-4-marcandre.lureau@redhat.com>
-(cherry picked from commit 244d52ff736fefc3dd364ed091720aa896af306d)
+Signed-off-by: Alexander Bulekov <alxndr@bu.edu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240527150001.325565-1-alxndr@bu.edu>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 3e964275d65b92075249201c49b39dfb06d08ad4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 4a0a5d78f9..83140f602d 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -996,6 +996,7 @@ dbus_filter(GDBusConnection *connection,
-     serial = g_dbus_message_get_serial(message);
-     if (serial <= ddl->out_serial_to_discard) {
-         trace_dbus_filter(serial, ddl->out_serial_to_discard);
-+        g_object_unref(message);
-         return NULL;
-     }
+diff --git a/scripts/oss-fuzz/build.sh b/scripts/oss-fuzz/build.sh
+index 5238f83343..7398298173 100755
+--- a/scripts/oss-fuzz/build.sh
++++ b/scripts/oss-fuzz/build.sh
+@@ -92,6 +92,7 @@ make install DESTDIR=$DEST_DIR/qemu-bundle
+ rm -rf $DEST_DIR/qemu-bundle/opt/qemu-oss-fuzz/bin
+ rm -rf $DEST_DIR/qemu-bundle/opt/qemu-oss-fuzz/libexec
+ 
++export ASAN_OPTIONS=detect_leaks=0
+ targets=$(./qemu-fuzz-i386 | grep generic-fuzz | awk '$1 ~ /\*/  {print $2}')
+ base_copy="$DEST_DIR/qemu-fuzz-i386-target-$(echo "$targets" | head -n 1)"
  
 -- 
 2.39.5
