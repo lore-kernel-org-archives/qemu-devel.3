@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB79D5E123
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 444DCD5E12E
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:46:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9fBX-0007wi-Ix; Sat, 09 Nov 2024 01:43:03 -0500
+	id 1t9fBd-0008TD-8L; Sat, 09 Nov 2024 01:43:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f9g-0005PJ-5a; Sat, 09 Nov 2024 01:41:09 -0500
+ id 1t9fA6-000678-Md; Sat, 09 Nov 2024 01:41:36 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f9d-0002aL-B6; Sat, 09 Nov 2024 01:41:07 -0500
+ id 1t9fA4-0002bQ-TE; Sat, 09 Nov 2024 01:41:34 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 01BB4A1300;
+ by isrv.corpit.ru (Postfix) with ESMTP id 486A7A1305;
  Sat,  9 Nov 2024 09:38:11 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 69F64167DE3;
+ by tsrv.corpit.ru (Postfix) with SMTP id A74BF167DE7;
  Sat,  9 Nov 2024 09:39:05 +0300 (MSK)
-Received: (nullmailer pid 3272565 invoked by uid 1000);
+Received: (nullmailer pid 3272578 invoked by uid 1000);
  Sat, 09 Nov 2024 06:39:03 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+Cc: qemu-stable@nongnu.org, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 24/33] target/riscv: Correct SXL return value for RV32
- in RV64 QEMU
-Date: Sat,  9 Nov 2024 09:38:50 +0300
-Message-Id: <20241109063903.3272404-24-mjt@tls.msk.ru>
+Subject: [Stable-7.2.15 28/33] hw/intc/riscv_aplic: Check and update pending
+ when write sourcecfg
+Date: Sat,  9 Nov 2024 09:38:54 +0300
+Message-Id: <20241109063903.3272404-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 References: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
@@ -63,37 +62,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-Ensure that riscv_cpu_sxl returns MXL_RV32 when runningRV32 in an
-RV64 QEMU.
+The section 4.5.2 of the RISC-V AIA specification says that any write
+to a sourcecfg register of an APLIC might (or might not) cause the
+corresponding interrupt-pending bit to be set to one if the rectified
+input value is high (= 1) under the new source mode.
 
-Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Fixes: 05e6ca5e156 ("target/riscv: Ignore reserved bits in PTE for RV64")
-Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240919055048.562-4-zhiwei_liu@linux.alibaba.com>
+If an interrupt is asserted before the driver configs its interrupt
+type to APLIC, it's pending bit will not be set except a relevant
+write to a setip or setipnum register. When we write the interrupt
+type to sourcecfg register, if the APLIC device doesn't check
+rectified input value and update the pending bit, this interrupt
+might never becomes pending.
+
+For APLIC.m, we can manully set pending by setip or setipnum
+registers in driver. But for APLIC.w, the pending status totally
+depends on the rectified input value, we can't control the pending
+status via mmio registers. In this case, hw should check and update
+pending status for us when writing sourcecfg registers.
+
+Update QEMU emulation to handle "pre-existing" interrupts.
+
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241004104649.13129-1-yongxuan.wang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 929e4277c128772bad41cc795995f754cb9991af)
+(cherry picked from commit 2ae6cca1d3389801ee72fc5e58c52573218f3514)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fixup in hw/intc/riscv_aplic.c)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 3a9e25053f..039f25dc6e 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -675,8 +675,11 @@ static inline RISCVMXL riscv_cpu_sxl(CPURISCVState *env)
- #ifdef CONFIG_USER_ONLY
-     return env->misa_mxl;
- #else
--    return get_field(env->mstatus, MSTATUS64_SXL);
-+    if (env->misa_mxl != MXL_RV32) {
-+        return get_field(env->mstatus, MSTATUS64_SXL);
-+    }
- #endif
-+    return MXL_RV32;
- }
- #endif
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index c95f822525..153827a056 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -148,31 +148,42 @@
  
+ #define APLIC_IDC_CLAIMI               0x1c
+ 
++static bool riscv_aplic_irq_rectified_val(RISCVAPLICState *aplic,
++                                          uint32_t irq)
++{
++    uint32_t sourcecfg, sm, raw_input, irq_inverted;
++
++    if (!irq || aplic->num_irqs <= irq) {
++        return false;
++    }
++
++    sourcecfg = aplic->sourcecfg[irq];
++    if (sourcecfg & APLIC_SOURCECFG_D) {
++        return false;
++    }
++
++    sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
++    if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
++        return false;
++    }
++
++    raw_input = (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
++    irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
++                    sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
++
++    return !!(raw_input ^ irq_inverted);
++}
++
+ static uint32_t riscv_aplic_read_input_word(RISCVAPLICState *aplic,
+                                             uint32_t word)
+ {
+-    uint32_t i, irq, sourcecfg, sm, raw_input, irq_inverted, ret = 0;
++    uint32_t i, irq, rectified_val, ret = 0;
+ 
+     for (i = 0; i < 32; i++) {
+         irq = word * 32 + i;
+-        if (!irq || aplic->num_irqs <= irq) {
+-            continue;
+-        }
+ 
+-        sourcecfg = aplic->sourcecfg[irq];
+-        if (sourcecfg & APLIC_SOURCECFG_D) {
+-            continue;
+-        }
+-
+-        sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
+-        if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
+-            continue;
+-        }
+-
+-        raw_input = (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
+-        irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
+-                        sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
+-        ret |= (raw_input ^ irq_inverted) << i;
++        rectified_val = riscv_aplic_irq_rectified_val(aplic, irq);
++        ret |= rectified_val << i;
+     }
+ 
+     return ret;
+@@ -678,6 +689,10 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
+             (aplic->sourcecfg[irq] == 0)) {
+             riscv_aplic_set_pending_raw(aplic, irq, false);
+             riscv_aplic_set_enabled_raw(aplic, irq, false);
++        } else {
++            if (riscv_aplic_irq_rectified_val(aplic, irq)) {
++                riscv_aplic_set_pending_raw(aplic, irq, true);
++            }
+         }
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_MMSICFGADDR)) {
 -- 
 2.39.5
 
