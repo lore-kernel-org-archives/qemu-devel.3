@@ -4,51 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17C36D5E36C
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C067D5E369
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:44:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kU5-00062K-5G; Sat, 09 Nov 2024 07:22:33 -0500
+	id 1t9kcA-0008Q7-26; Sat, 09 Nov 2024 07:30:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kRx-0003Ew-Jj; Sat, 09 Nov 2024 07:20:22 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kRu-0005oF-N9; Sat, 09 Nov 2024 07:20:21 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 06213A165E;
- Sat,  9 Nov 2024 15:08:10 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id BF932167FE4;
- Sat,  9 Nov 2024 15:09:04 +0300 (MSK)
-Received: (nullmailer pid 3296289 invoked by uid 1000);
- Sat, 09 Nov 2024 12:09:01 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t9kbz-0008Gj-H8
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 07:30:46 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t9kbx-000729-12
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 07:30:43 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-71e5a62031aso2545544b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Nov 2024 04:30:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731155439; x=1731760239; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=os4CGbEz6EmiRCGEOVCchR6kB/bcmjPHJBVNolbybUU=;
+ b=S/j4a33IJW8tpQxJ4rDPl1I2Zdwoe92MD9YQKyPH41F5xz22Cj0/pNjIh+9ICOjMaQ
+ idpFySFJZx4ekHF6ZHv0KWtEQdAlCPsIdCqxSolSQnT7oIqA8xiJxQyrVpSvng32EUXq
+ u7T6POktUHU51dIhJZNO/eUpXcWnZvnLWtGisu9J1VpQ9UssJYez2RsfoeXi8OnzO6Pn
+ nKTbqG50bntikp2/9i7z7BsvFOanKvOiOWRAChncrI2zEK6Uc2n5wW1KeT0bKT0pOw+5
+ TZGgsN9+al5ElFQcn5P+LAhM1zt0LUUiNMxWguI21DEyHo3vpfDS67Cqxe6VIBhXk4tt
+ NETQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731155439; x=1731760239;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=os4CGbEz6EmiRCGEOVCchR6kB/bcmjPHJBVNolbybUU=;
+ b=Rom1ZFZDEz61RPCCdBdkbRedG0ebfaxphWuytytjNV33y0Xl7hh61BKa84PfpHGxzk
+ 8G3A9bU3WpC1L5FeGIn9T7+vm5+Q8h5/7V90C5p5CvC0c+NmwDKa9yCmb1tstLifX1Qx
+ n56dZ5x/yo5DchT010KoGSPGwI4vMvHCT5lPPCyATG/IVe1X8oJZMNIhU3iDB/YZdYu0
+ 1UjQwtKtlmptkqhJmPQYVum6so4iC9ohS0M4zlN6MD8erATYbJGWAzf0SugqQ4cpIiXS
+ S3u6HwTbIF9Ys1EgVyc7wGMJRL2p9uqDXFQAsRCPaT+l+bOH6DpdKFHWS0uBPZhG5dBY
+ uvnw==
+X-Gm-Message-State: AOJu0YxhV7Aiibf1K+bWHyhe8+aCvaTdY5DuiSocEphOyOM3SepVRtTe
+ YjS8YHW6mW9xES9+LKLZO7RnhR8y7Tf+of9ESHxR3zCYaoqwgZgmIvXJeg==
+X-Google-Smtp-Source: AGHT+IGz8u5DShvwoz1DyqsTQrE/0w7Iut6Pp8zP3S3mjCsubNkX6pAo/+Ap0qc2ls3bJY+t7PZzhg==
+X-Received: by 2002:a05:6a00:14d3:b0:71d:ee1b:c854 with SMTP id
+ d2e1a72fcca58-724132a134dmr9096125b3a.9.1731155438945; 
+ Sat, 09 Nov 2024 04:30:38 -0800 (PST)
+Received: from localhost.localdomain ([103.103.35.149])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7240786281asm5471470b3a.12.2024.11.09.04.30.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 09 Nov 2024 04:30:38 -0800 (PST)
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 52/58] Revert "target/arm: Fix usage of MMU indexes
- when EL3 is AArch32"
-Date: Sat,  9 Nov 2024 15:08:53 +0300
-Message-Id: <20241109120901.3295995-52-mjt@tls.msk.ru>
+Cc: graf@amazon.com,
+	pbonzini@redhat.com,
+	berrange@redhat.com
+Subject: [PATCH] eif: Use stateful qcrypto apis
+Date: Sat,  9 Nov 2024 18:30:39 +0600
+Message-Id: <20241109123039.24180-1-dorjoychy111@gmail.com>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
-References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,365 +92,444 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+We were storing the pointers to buffers in a GList due to lack of
+stateful crypto apis and instead doing the final hash computation at
+the end after we had all the necessary buffers. Now that we have the
+stateful qcrypto apis available, we can instead update the hashes
+inline in the read_eif_* functions which makes the code much simpler.
 
-This reverts commit 4c2c0474693229c1f533239bb983495c5427784d.
+Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+---
+ hw/core/eif.c                   | 202 ++++++++++++--------------------
+ hw/i386/nitro_enclave.c         |  12 +-
+ include/hw/i386/nitro_enclave.h |  16 +--
+ 3 files changed, 91 insertions(+), 139 deletions(-)
 
-This commit tried to fix a problem with our usage of MMU indexes when
-EL3 is AArch32, using what it described as a "more complicated
-approach" where we share the same MMU index values for Secure PL1&0
-and NonSecure PL1&0. In theory this should work, but the change
-didn't account for (at least) two things:
-
-(1) The design change means we need to flush the TLBs at any point
-where the CPU state flips from one to the other.  We already flush
-the TLB when SCR.NS is changed, but we don't flush the TLB when we
-take an exception from NS PL1&0 into Mon or when we return from Mon
-to NS PL1&0, and the commit didn't add any code to do that.
-
-(2) The ATS12NS* address translate instructions allow Mon code (which
-is Secure) to do a stage 1+2 page table walk for NS.  I thought this
-was OK because do_ats_write() does a page table walk which doesn't
-use the TLBs, so because it can pass both the MMU index and also an
-ARMSecuritySpace argument we can tell the table walk that we want NS
-stage1+2, not S.  But that means that all the code within the ptw
-that needs to find e.g.  the regime EL cannot do so only with an
-mmu_idx -- all these functions like regime_sctlr(), regime_el(), etc
-would need to pass both an mmu_idx and the security_space, so they
-can tell whether this is a translation regime controlled by EL1 or
-EL3 (and so whether to look at SCTLR.S or SCTLR.NS, etc).
-
-In particular, because regime_el() wasn't updated to look at the
-ARMSecuritySpace it would return 1 even when the CPU was in Monitor
-mode (and the controlling EL is 3).  This meant that page table walks
-in Monitor mode would look at the wrong SCTLR, TCR, etc and would
-generally fault when they should not.
-
-Rather than trying to make the complicated changes needed to rescue
-the design of 4c2c04746932, we revert it in order to instead take the
-route that that commit describes as "the most straightforward" fix,
-where we add new MMU indexes EL30_0, EL30_3, EL30_3_PAN to correspond
-to "Secure PL1&0 at PL0", "Secure PL1&0 at PL1", and "Secure PL1&0 at
-PL1 with PAN".
-
-This revert will re-expose the "spurious alignment faults in
-Secure PL0" issue #2326; we'll fix it again in the next commit.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Message-id: 20241101142845.1712482-2-peter.maydell@linaro.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 056c5c90c171c4895b407af0cf3d198e1d44b40f)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 9a3fd59562..216774f5d3 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2784,7 +2784,8 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
-  *  + NonSecure PL1 & 0 stage 1
-  *  + NonSecure PL1 & 0 stage 2
-  *  + NonSecure PL2
-- *  + Secure PL1 & 0
-+ *  + Secure PL0
-+ *  + Secure PL1
-  * (reminder: for 32 bit EL3, Secure PL1 is *EL3*, not EL1.)
-  *
-  * For QEMU, an mmu_idx is not quite the same as a translation regime because:
-@@ -2802,39 +2803,37 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
-  *     The only use of stage 2 translations is either as part of an s1+2
-  *     lookup or when loading the descriptors during a stage 1 page table walk,
-  *     and in both those cases we don't use the TLB.
-- *  4. we want to be able to use the TLB for accesses done as part of a
-+ *  4. we can also safely fold together the "32 bit EL3" and "64 bit EL3"
-+ *     translation regimes, because they map reasonably well to each other
-+ *     and they can't both be active at the same time.
-+ *  5. we want to be able to use the TLB for accesses done as part of a
-  *     stage1 page table walk, rather than having to walk the stage2 page
-  *     table over and over.
-- *  5. we need separate EL1/EL2 mmu_idx for handling the Privileged Access
-+ *  6. we need separate EL1/EL2 mmu_idx for handling the Privileged Access
-  *     Never (PAN) bit within PSTATE.
-- *  6. we fold together most secure and non-secure regimes for A-profile,
-+ *  7. we fold together most secure and non-secure regimes for A-profile,
-  *     because there are no banked system registers for aarch64, so the
-  *     process of switching between secure and non-secure is
-  *     already heavyweight.
-- *  7. we cannot fold together Stage 2 Secure and Stage 2 NonSecure,
-+ *  8. we cannot fold together Stage 2 Secure and Stage 2 NonSecure,
-  *     because both are in use simultaneously for Secure EL2.
-  *
-  * This gives us the following list of cases:
-  *
-- * EL0 EL1&0 stage 1+2 (or AArch32 PL0 PL1&0 stage 1+2)
-- * EL1 EL1&0 stage 1+2 (or AArch32 PL1 PL1&0 stage 1+2)
-- * EL1 EL1&0 stage 1+2 +PAN (or AArch32 PL1 PL1&0 stage 1+2 +PAN)
-+ * EL0 EL1&0 stage 1+2 (aka NS PL0)
-+ * EL1 EL1&0 stage 1+2 (aka NS PL1)
-+ * EL1 EL1&0 stage 1+2 +PAN
-  * EL0 EL2&0
-  * EL2 EL2&0
-  * EL2 EL2&0 +PAN
-  * EL2 (aka NS PL2)
-- * EL3 (not used when EL3 is AArch32)
-+ * EL3 (aka S PL1)
-  * Stage2 Secure
-  * Stage2 NonSecure
-  * plus one TLB per Physical address space: S, NS, Realm, Root
-  *
-  * for a total of 14 different mmu_idx.
-  *
-- * Note that when EL3 is AArch32, the usage is potentially confusing
-- * because the MMU indexes are named for their AArch64 use, so code
-- * using the ARMMMUIdx_E10_1 might be at EL3, not EL1. This is because
-- * Secure PL1 is always at EL3.
-- *
-  * R profile CPUs have an MPU, but can use the same set of MMU indexes
-  * as A profile. They only need to distinguish EL0 and EL1 (and
-  * EL2 for cores like the Cortex-R52).
-@@ -3127,10 +3126,6 @@ FIELD(TBFLAG_A32, NS, 10, 1)
-  * This requires an SME trap from AArch32 mode when using NEON.
+diff --git a/hw/core/eif.c b/hw/core/eif.c
+index 97b8cd6edc..1cfa53fcaf 100644
+--- a/hw/core/eif.c
++++ b/hw/core/eif.c
+@@ -187,10 +187,16 @@ static void safe_unlink(char *f)
+  * Upon success, the caller is reponsible for unlinking and freeing *kernel_path
   */
- FIELD(TBFLAG_A32, SME_TRAP_NONSTREAMING, 11, 1)
--/*
-- * Indicates whether we are in the Secure PL1&0 translation regime
-- */
--FIELD(TBFLAG_A32, S_PL1_0, 12, 1)
- 
- /*
-  * Bit usage when in AArch32 state, for M-profile only.
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 0a582c1cd3..8fb4b474e8 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -3700,7 +3700,7 @@ static uint64_t do_ats_write(CPUARMState *env, uint64_t value,
-          */
-         format64 = arm_s1_regime_using_lpae_format(env, mmu_idx);
- 
--        if (arm_feature(env, ARM_FEATURE_EL2) && !arm_aa32_secure_pl1_0(env)) {
-+        if (arm_feature(env, ARM_FEATURE_EL2)) {
-             if (mmu_idx == ARMMMUIdx_E10_0 ||
-                 mmu_idx == ARMMMUIdx_E10_1 ||
-                 mmu_idx == ARMMMUIdx_E10_1_PAN) {
-@@ -3774,11 +3774,13 @@ static void ats_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-     case 0:
-         /* stage 1 current state PL1: ATS1CPR, ATS1CPW, ATS1CPRP, ATS1CPWP */
-         switch (el) {
-+        case 3:
-+            mmu_idx = ARMMMUIdx_E3;
-+            break;
-         case 2:
-             g_assert(ss != ARMSS_Secure);  /* ARMv8.4-SecEL2 is 64-bit only */
-             /* fall through */
-         case 1:
--        case 3:
-             if (ri->crm == 9 && arm_pan_enabled(env)) {
-                 mmu_idx = ARMMMUIdx_Stage1_E1_PAN;
-             } else {
-@@ -11859,11 +11861,8 @@ void arm_cpu_do_interrupt(CPUState *cs)
- 
- uint64_t arm_sctlr(CPUARMState *env, int el)
+ static bool read_eif_kernel(FILE *f, uint64_t size, char **kernel_path,
+-                            uint8_t *kernel, uint32_t *crc, Error **errp)
++                            QCryptoHash *hash0, QCryptoHash *hash1,
++                            uint32_t *crc, Error **errp)
  {
--    if (arm_aa32_secure_pl1_0(env)) {
--        /* In Secure PL1&0 SCTLR_S is always controlling */
--        el = 3;
--    } else if (el == 0) {
--        /* Only EL0 needs to be adjusted for EL1&0 or EL2&0. */
-+    /* Only EL0 needs to be adjusted for EL1&0 or EL2&0. */
-+    if (el == 0) {
-         ARMMMUIdx mmu_idx = arm_mmu_idx_el(env, 0);
-         el = mmu_idx == ARMMMUIdx_E20_0 ? 2 : 1;
+     size_t got;
+     FILE *tmp_file = NULL;
++    uint8_t *kernel = g_try_malloc(size);
++    if (!kernel) {
++        error_setg(errp, "Out of memory reading kernel section");
++        goto cleanup;
++    }
+ 
+     *kernel_path = NULL;
+     if (!get_tmp_file("eif-kernel-XXXXXX", kernel_path, errp)) {
+@@ -218,6 +224,11 @@ static bool read_eif_kernel(FILE *f, uint64_t size, char **kernel_path,
      }
-@@ -12523,12 +12522,8 @@ int fp_exception_el(CPUARMState *env, int cur_el)
-     return 0;
+ 
+     *crc = crc32(*crc, kernel, size);
++    if (qcrypto_hash_update(hash0, (char *)kernel, size, errp) != 0 ||
++        qcrypto_hash_update(hash1, (char *)kernel, size, errp) != 0) {
++        goto cleanup;
++    }
++    g_free(kernel);
+     fclose(tmp_file);
+ 
+     return true;
+@@ -229,10 +240,12 @@ static bool read_eif_kernel(FILE *f, uint64_t size, char **kernel_path,
+     g_free(*kernel_path);
+     *kernel_path = NULL;
+ 
++    g_free(kernel);
+     return false;
  }
  
--/*
-- * Return the exception level we're running at if this is our mmu_idx.
-- * s_pl1_0 should be true if this is the AArch32 Secure PL1&0 translation
-- * regime.
-- */
--int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx, bool s_pl1_0)
-+/* Return the exception level we're running at if this is our mmu_idx */
-+int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx)
+ static bool read_eif_cmdline(FILE *f, uint64_t size, char *cmdline,
++                             QCryptoHash *hash0, QCryptoHash *hash1,
+                              uint32_t *crc, Error **errp)
  {
-     if (mmu_idx & ARM_MMU_IDX_M) {
-         return mmu_idx & ARM_MMU_IDX_M_PRIV;
-@@ -12540,7 +12535,7 @@ int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx, bool s_pl1_0)
-         return 0;
-     case ARMMMUIdx_E10_1:
-     case ARMMMUIdx_E10_1_PAN:
--        return s_pl1_0 ? 3 : 1;
-+        return 1;
-     case ARMMMUIdx_E2:
-     case ARMMMUIdx_E20_2:
-     case ARMMMUIdx_E20_2_PAN:
-@@ -12578,15 +12573,6 @@ ARMMMUIdx arm_mmu_idx_el(CPUARMState *env, int el)
-             idx = ARMMMUIdx_E10_0;
-         }
-         break;
--    case 3:
--        /*
--         * AArch64 EL3 has its own translation regime; AArch32 EL3
--         * uses the Secure PL1&0 translation regime.
--         */
--        if (arm_el_is_aa64(env, 3)) {
--            return ARMMMUIdx_E3;
--        }
--        /* fall through */
-     case 1:
-         if (arm_pan_enabled(env)) {
-             idx = ARMMMUIdx_E10_1_PAN;
-@@ -12606,6 +12592,8 @@ ARMMMUIdx arm_mmu_idx_el(CPUARMState *env, int el)
-             idx = ARMMMUIdx_E2;
-         }
-         break;
-+    case 3:
-+        return ARMMMUIdx_E3;
-     default:
-         g_assert_not_reached();
+     size_t got = fread(cmdline, 1, size, f);
+@@ -242,28 +255,47 @@ static bool read_eif_cmdline(FILE *f, uint64_t size, char *cmdline,
      }
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index d4dc9ab731..1e9223715c 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -275,20 +275,6 @@ FIELD(CNTHCTL, CNTPMASK, 19, 1)
- #define M_FAKE_FSR_NSC_EXEC 0xf /* NS executing in S&NSC memory */
- #define M_FAKE_FSR_SFAULT 0xe /* SecureFault INVTRAN, INVEP or AUVIOL */
  
--/**
-- * arm_aa32_secure_pl1_0(): Return true if in Secure PL1&0 regime
-- *
-- * Return true if the CPU is in the Secure PL1&0 translation regime.
-- * This requires that EL3 exists and is AArch32 and we are currently
-- * Secure. If this is the case then the ARMMMUIdx_E10* apply and
-- * mean we are in EL3, not EL1.
-- */
--static inline bool arm_aa32_secure_pl1_0(CPUARMState *env)
--{
--    return arm_feature(env, ARM_FEATURE_EL3) &&
--        !arm_el_is_aa64(env, 3) && arm_is_secure(env);
--}
+     *crc = crc32(*crc, (uint8_t *)cmdline, size);
++    if (qcrypto_hash_update(hash0, cmdline, size, errp) != 0 ||
++        qcrypto_hash_update(hash1, cmdline, size, errp) != 0) {
++        return false;
++    }
+     return true;
+ }
+ 
+ static bool read_eif_ramdisk(FILE *eif, FILE *initrd, uint64_t size,
+-                             uint8_t *ramdisk, uint32_t *crc, Error **errp)
++                             QCryptoHash *hash0, QCryptoHash *h, uint32_t *crc,
++                             Error **errp)
+ {
+     size_t got;
++    bool ret = false;
++    uint8_t *ramdisk = g_try_malloc(size);
++    if (!ramdisk) {
++        error_setg(errp, "Out of memory reading initrd section");
++        goto cleanup;
++    }
+ 
+     got = fread(ramdisk, 1, size, eif);
+     if ((uint64_t) got != size) {
+         error_setg(errp, "Failed to read EIF ramdisk section data");
+-        return false;
++        goto cleanup;
+     }
+ 
+     got = fwrite(ramdisk, 1, size, initrd);
+     if ((uint64_t) got != size) {
+         error_setg(errp, "Failed to write EIF ramdisk data to temporary file");
+-        return false;
++        goto cleanup;
+     }
+ 
+     *crc = crc32(*crc, ramdisk, size);
+-    return true;
++    if (qcrypto_hash_update(hash0, (char *)ramdisk, size, errp) != 0 ||
++        qcrypto_hash_update(h, (char *)ramdisk, size, errp) != 0) {
++        goto cleanup;
++    }
++    ret = true;
++
++ cleanup:
++    g_free(ramdisk);
++    return ret;
+ }
+ 
+ static bool get_signature_fingerprint_sha384(FILE *eif, uint64_t size,
+@@ -391,34 +423,10 @@ static long get_file_size(FILE *f, Error **errp)
+     return size;
+ }
+ 
+-static bool get_SHA384_digest(GList *list, uint8_t *digest, Error **errp)
++static bool get_SHA384_hash(QCryptoHash *h, uint8_t *hash, Error **errp)
+ {
+-    size_t digest_len = QCRYPTO_HASH_DIGEST_LEN_SHA384;
+-    size_t list_len = g_list_length(list);
+-    struct iovec *iovec_list = g_new0(struct iovec, list_len);
+-    bool ret = true;
+-    GList *l;
+-    int i;
 -
- /**
-  * raise_exception: Raise the specified exception.
-  * Raise a guest exception with the specified value, syndrome register
-@@ -822,12 +808,7 @@ static inline ARMMMUIdx core_to_aa64_mmu_idx(int mmu_idx)
-     return mmu_idx | ARM_MMU_IDX_A;
- }
- 
--/**
-- * Return the exception level we're running at if our current MMU index
-- * is @mmu_idx. @s_pl1_0 should be true if this is the AArch32
-- * Secure PL1&0 translation regime.
-- */
--int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx, bool s_pl1_0);
-+int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx);
- 
- /* Return the MMU index for a v7M CPU in the specified security state */
- ARMMMUIdx arm_v7m_mmu_idx_for_secstate(CPUARMState *env, bool secstate);
-@@ -922,11 +903,11 @@ static inline uint32_t regime_el(CPUARMState *env, ARMMMUIdx mmu_idx)
-         return 3;
-     case ARMMMUIdx_E10_0:
-     case ARMMMUIdx_Stage1_E0:
--    case ARMMMUIdx_E10_1:
--    case ARMMMUIdx_E10_1_PAN:
-+        return arm_el_is_aa64(env, 3) || !arm_is_secure_below_el3(env) ? 1 : 3;
-     case ARMMMUIdx_Stage1_E1:
-     case ARMMMUIdx_Stage1_E1_PAN:
--        return arm_el_is_aa64(env, 3) || !arm_is_secure_below_el3(env) ? 1 : 3;
-+    case ARMMMUIdx_E10_1:
-+    case ARMMMUIdx_E10_1_PAN:
-     case ARMMMUIdx_MPrivNegPri:
-     case ARMMMUIdx_MUserNegPri:
-     case ARMMMUIdx_MPriv:
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 26e670290f..20ab736793 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3576,11 +3576,7 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
-     case ARMMMUIdx_Stage1_E1:
-     case ARMMMUIdx_Stage1_E1_PAN:
-     case ARMMMUIdx_E2:
--        if (arm_aa32_secure_pl1_0(env)) {
--            ss = ARMSS_Secure;
--        } else {
--            ss = arm_security_space_below_el3(env);
--        }
-+        ss = arm_security_space_below_el3(env);
-         break;
-     case ARMMMUIdx_Stage2:
-         /*
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index bab7822ef6..f03977b4b0 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -198,10 +198,6 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
-         DP_TBFLAG_A32(flags, SME_TRAP_NONSTREAMING, 1);
-     }
- 
--    if (arm_aa32_secure_pl1_0(env)) {
--        DP_TBFLAG_A32(flags, S_PL1_0, 1);
+-    for (i = 0, l = list; l != NULL; l = l->next, i++) {
+-        iovec_list[i] = *(struct iovec *) l->data;
 -    }
 -
-     return rebuild_hflags_common_32(env, fp_el, mmu_idx, flags);
+-    if (qcrypto_hash_bytesv(QCRYPTO_HASH_ALGO_SHA384, iovec_list, list_len,
+-                            &digest, &digest_len, errp) < 0) {
+-        ret = false;
+-    }
+-
+-    g_free(iovec_list);
+-    return ret;
+-}
+-
+-static void free_iovec(struct iovec *iov)
+-{
+-    if (iov) {
+-        g_free(iov->iov_base);
+-        g_free(iov);
+-    }
++    size_t hash_len = QCRYPTO_HASH_DIGEST_LEN_SHA384;
++    return qcrypto_hash_finalize_bytes(h, &hash, &hash_len, errp) == 0;
  }
  
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 4684e7eb6e..bc2d64e883 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -11979,7 +11979,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
-     dc->tbii = EX_TBFLAG_A64(tb_flags, TBII);
-     dc->tbid = EX_TBFLAG_A64(tb_flags, TBID);
-     dc->tcma = EX_TBFLAG_A64(tb_flags, TCMA);
--    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx, false);
-+    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx);
- #if !defined(CONFIG_USER_ONLY)
-     dc->user = (dc->current_el == 0);
- #endif
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index e2748ff2bb..c5bc691d92 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -7546,6 +7546,10 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ /*
+@@ -427,8 +435,8 @@ static void free_iovec(struct iovec *iov)
+  */
+ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+                    char **kernel_path, char **initrd_path, char **cmdline,
+-                   uint8_t *image_sha384, uint8_t *bootstrap_sha384,
+-                   uint8_t *app_sha384, uint8_t *fingerprint_sha384,
++                   uint8_t *image_hash, uint8_t *bootstrap_hash,
++                   uint8_t *app_hash, uint8_t *fingerprint_hash,
+                    bool *signature_found, Error **errp)
+ {
+     FILE *f = NULL;
+@@ -438,18 +446,29 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+     uint32_t crc = 0;
+     EifHeader eif_header;
+     bool seen_sections[EIF_SECTION_MAX] = {false};
+-    /* kernel + ramdisks + cmdline sha384 hash */
+-    GList *iov_PCR0 = NULL;
+-    /* kernel + boot ramdisk + cmdline sha384 hash */
+-    GList *iov_PCR1 = NULL;
+-    /* application ramdisk(s) hash */
+-    GList *iov_PCR2 = NULL;
+-    uint8_t *ptr = NULL;
+-    struct iovec *iov_ptr = NULL;
++    /* kernel + ramdisks + cmdline SHA384 hash */
++    g_autoptr(QCryptoHash) hash0 = NULL;
++    /* kernel + boot ramdisk + cmdline SHA384 hash */
++    g_autoptr(QCryptoHash) hash1 = NULL;
++    /* application ramdisk(s) SHA384 hash */
++    g_autoptr(QCryptoHash) hash2 = NULL;
  
-     core_mmu_idx = EX_TBFLAG_ANY(tb_flags, MMUIDX);
-     dc->mmu_idx = core_to_arm_mmu_idx(env, core_mmu_idx);
-+    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx);
-+#if !defined(CONFIG_USER_ONLY)
-+    dc->user = (dc->current_el == 0);
-+#endif
-     dc->fp_excp_el = EX_TBFLAG_ANY(tb_flags, FPEXC_EL);
-     dc->align_mem = EX_TBFLAG_ANY(tb_flags, ALIGN_MEM);
-     dc->pstate_il = EX_TBFLAG_ANY(tb_flags, PSTATE__IL);
-@@ -7576,12 +7580,7 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     *signature_found = false;
+     *kernel_path = *initrd_path = *cmdline = NULL;
+ 
++    hash0 = qcrypto_hash_new(QCRYPTO_HASH_ALGO_SHA384, errp);
++    if (!hash0) {
++        goto cleanup;
++    }
++    hash1 = qcrypto_hash_new(QCRYPTO_HASH_ALGO_SHA384, errp);
++    if (!hash1) {
++        goto cleanup;
++    }
++    hash2 = qcrypto_hash_new(QCRYPTO_HASH_ALGO_SHA384, errp);
++    if (!hash2) {
++        goto cleanup;
++    }
++
+     f = fopen(eif_path, "rb");
+     if (f == NULL) {
+         error_setg_errno(errp, errno, "Failed to open %s", eif_path);
+@@ -513,21 +532,8 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+                 goto cleanup;
+             }
+ 
+-            ptr = g_try_malloc(hdr.section_size);
+-            if (!ptr) {
+-                error_setg(errp, "Out of memory reading kernel section");
+-                goto cleanup;
+-            }
+-
+-            iov_ptr = g_malloc(sizeof(struct iovec));
+-            iov_ptr->iov_base = ptr;
+-            iov_ptr->iov_len = hdr.section_size;
+-
+-            iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
+-            iov_PCR1 = g_list_append(iov_PCR1, iov_ptr);
+-
+-            if (!read_eif_kernel(f, hdr.section_size, kernel_path, ptr, &crc,
+-                                 errp)) {
++            if (!read_eif_kernel(f, hdr.section_size, kernel_path, hash0,
++                                 hash1, &crc, errp)) {
+                 goto cleanup;
+             }
+ 
+@@ -535,7 +541,6 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+         case EIF_SECTION_CMDLINE:
+         {
+             uint64_t size;
+-            uint8_t *cmdline_copy;
+             if (seen_sections[EIF_SECTION_CMDLINE]) {
+                 error_setg(errp, "Invalid EIF image. More than 1 cmdline "
+                            "section");
+@@ -547,33 +552,26 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+                 error_setg(errp, "Out of memory reading command line section");
+                 goto cleanup;
+             }
+-            if (!read_eif_cmdline(f, size, *cmdline, &crc, errp)) {
++            if (!read_eif_cmdline(f, size, *cmdline, hash0, hash1, &crc,
++                                  errp)) {
+                 goto cleanup;
+             }
+             (*cmdline)[size] = '\0';
+ 
+-            /*
+-             * We make a copy of '*cmdline' for putting it in iovecs so that
+-             * we can easily free all the iovec entries later as we cannot
+-             * free '*cmdline' which is used by the caller.
+-             */
+-            cmdline_copy = g_memdup2(*cmdline, size);
+-
+-            iov_ptr = g_malloc(sizeof(struct iovec));
+-            iov_ptr->iov_base = cmdline_copy;
+-            iov_ptr->iov_len = size;
+-
+-            iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
+-            iov_PCR1 = g_list_append(iov_PCR1, iov_ptr);
+             break;
          }
-         dc->sme_trap_nonstreaming =
-             EX_TBFLAG_A32(tb_flags, SME_TRAP_NONSTREAMING);
--        dc->s_pl1_0 = EX_TBFLAG_A32(tb_flags, S_PL1_0);
+         case EIF_SECTION_RAMDISK:
+         {
++            QCryptoHash *h = hash2;
+             if (!seen_sections[EIF_SECTION_RAMDISK]) {
+                 /*
+                  * If this is the first time we are seeing a ramdisk section,
+-                 * we need to create the initrd temporary file.
++                 * we need to:
++                 * 1) hash it into bootstrap (hash1) instead of app (hash2)
++                 *    along with image (hash0)
++                 * 2) create the initrd temporary file.
+                  */
++                h = hash1;
+                 if (!get_tmp_file("eif-initrd-XXXXXX", initrd_path, errp)) {
+                     goto cleanup;
+                 }
+@@ -585,29 +583,7 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+                 }
+             }
+ 
+-            ptr = g_try_malloc(hdr.section_size);
+-            if (!ptr) {
+-                error_setg(errp, "Out of memory reading initrd section");
+-                goto cleanup;
+-            }
+-
+-            iov_ptr = g_malloc(sizeof(struct iovec));
+-            iov_ptr->iov_base = ptr;
+-            iov_ptr->iov_len = hdr.section_size;
+-
+-            iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
+-            /*
+-             * If it's the first ramdisk, we need to hash it into bootstrap
+-             * i.e., iov_PCR1, otherwise we need to hash it into app i.e.,
+-             * iov_PCR2.
+-             */
+-            if (!seen_sections[EIF_SECTION_RAMDISK]) {
+-                iov_PCR1 = g_list_append(iov_PCR1, iov_ptr);
+-            } else {
+-                iov_PCR2 = g_list_append(iov_PCR2, iov_ptr);
+-            }
+-
+-            if (!read_eif_ramdisk(f, initrd_path_f, hdr.section_size, ptr,
++            if (!read_eif_ramdisk(f, initrd_path_f, hdr.section_size, hash0, h,
+                                   &crc, errp)) {
+                 goto cleanup;
+             }
+@@ -617,7 +593,7 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+         case EIF_SECTION_SIGNATURE:
+             *signature_found = true;
+             if (!get_signature_fingerprint_sha384(f, hdr.section_size,
+-                                                  fingerprint_sha384, &crc,
++                                                  fingerprint_hash, &crc,
+                                                   errp)) {
+                 goto cleanup;
+             }
+@@ -688,52 +664,28 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+             goto cleanup;
+         }
+ 
+-        ptr = g_try_malloc(machine_initrd_size);
+-        if (!ptr) {
+-            error_setg(errp, "Out of memory reading initrd file");
+-            goto cleanup;
+-        }
+-
+-        iov_ptr = g_malloc(sizeof(struct iovec));
+-        iov_ptr->iov_base = ptr;
+-        iov_ptr->iov_len = machine_initrd_size;
+-
+-        iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
+-        iov_PCR2 = g_list_append(iov_PCR2, iov_ptr);
+-
+         if (!read_eif_ramdisk(machine_initrd_f, initrd_path_f,
+-                              machine_initrd_size, ptr, &crc, errp)) {
++                              machine_initrd_size, hash0, hash2, &crc, errp)) {
+             goto cleanup;
+         }
      }
--    dc->current_el = arm_mmu_idx_to_el(dc->mmu_idx, dc->s_pl1_0);
--#if !defined(CONFIG_USER_ONLY)
--    dc->user = (dc->current_el == 0);
--#endif
-     dc->lse2 = false; /* applies only to aarch64 */
-     dc->cp_regs = cpu->cp_regs;
-     dc->features = env->features;
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 3f0e9ceaa3..01c217f4a4 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -165,8 +165,6 @@ typedef struct DisasContext {
-     uint8_t gm_blocksize;
-     /* True if the current insn_start has been updated. */
-     bool insn_start_updated;
--    /* True if this is the AArch32 Secure PL1&0 translation regime */
--    bool s_pl1_0;
-     /* Bottom two bits of XScale c15_cpar coprocessor access control reg */
-     int c15_cpar;
-     /* Offset from VNCR_EL2 when FEAT_NV2 redirects this reg to memory */
+ 
+-    if (!get_SHA384_digest(iov_PCR0, image_sha384, errp)) {
++    if (!get_SHA384_hash(hash0, image_hash, errp)) {
+         goto cleanup;
+     }
+-    if (!get_SHA384_digest(iov_PCR1, bootstrap_sha384, errp)) {
++    if (!get_SHA384_hash(hash1, bootstrap_hash, errp)) {
+         goto cleanup;
+     }
+-    if (!get_SHA384_digest(iov_PCR2, app_sha384, errp)) {
++    if (!get_SHA384_hash(hash2, app_hash, errp)) {
+         goto cleanup;
+     }
+ 
+-    /*
+-     * We only need to free iov_PCR0 entries because iov_PCR1 and
+-     * iov_PCR2 iovec entries are subsets of iov_PCR0 iovec entries.
+-     */
+-    g_list_free_full(iov_PCR0, (GDestroyNotify) free_iovec);
+-    g_list_free(iov_PCR1);
+-    g_list_free(iov_PCR2);
+     fclose(f);
+     fclose(initrd_path_f);
+     safe_fclose(machine_initrd_f);
+     return true;
+ 
+  cleanup:
+-    g_list_free_full(iov_PCR0, (GDestroyNotify) free_iovec);
+-    g_list_free(iov_PCR1);
+-    g_list_free(iov_PCR2);
+-
+     safe_fclose(f);
+     safe_fclose(initrd_path_f);
+     safe_fclose(machine_initrd_f);
+diff --git a/hw/i386/nitro_enclave.c b/hw/i386/nitro_enclave.c
+index b6263ae127..acbbc06b71 100644
+--- a/hw/i386/nitro_enclave.c
++++ b/hw/i386/nitro_enclave.c
+@@ -117,13 +117,13 @@ static void nitro_enclave_machine_reset(MachineState *machine, ResetType type)
+     memset(ne_state->vnsm->pcrs, 0, sizeof(ne_state->vnsm->pcrs));
+ 
+     /* PCR0 */
+-    ne_state->vnsm->extend_pcr(ne_state->vnsm, 0, ne_state->image_sha384,
++    ne_state->vnsm->extend_pcr(ne_state->vnsm, 0, ne_state->image_hash,
+                                QCRYPTO_HASH_DIGEST_LEN_SHA384);
+     /* PCR1 */
+-    ne_state->vnsm->extend_pcr(ne_state->vnsm, 1, ne_state->bootstrap_sha384,
++    ne_state->vnsm->extend_pcr(ne_state->vnsm, 1, ne_state->bootstrap_hash,
+                                QCRYPTO_HASH_DIGEST_LEN_SHA384);
+     /* PCR2 */
+-    ne_state->vnsm->extend_pcr(ne_state->vnsm, 2, ne_state->app_sha384,
++    ne_state->vnsm->extend_pcr(ne_state->vnsm, 2, ne_state->app_hash,
+                                QCRYPTO_HASH_DIGEST_LEN_SHA384);
+     /* PCR3 */
+     if (ne_state->parent_role) {
+@@ -140,7 +140,7 @@ static void nitro_enclave_machine_reset(MachineState *machine, ResetType type)
+     /* PCR8 */
+     if (ne_state->signature_found) {
+         ne_state->vnsm->extend_pcr(ne_state->vnsm, 8,
+-                                   ne_state->fingerprint_sha384,
++                                   ne_state->fingerprint_hash,
+                                    QCRYPTO_HASH_DIGEST_LEN_SHA384);
+     }
+ 
+@@ -173,8 +173,8 @@ static void x86_load_eif(X86MachineState *x86ms, FWCfgState *fw_cfg,
+ 
+     if (!read_eif_file(machine->kernel_filename, machine->initrd_filename,
+                        &eif_kernel, &eif_initrd, &eif_cmdline,
+-                       nems->image_sha384, nems->bootstrap_sha384,
+-                       nems->app_sha384, nems->fingerprint_sha384,
++                       nems->image_hash, nems->bootstrap_hash,
++                       nems->app_hash, nems->fingerprint_hash,
+                        &(nems->signature_found), &err)) {
+         error_report_err(err);
+         exit(1);
+diff --git a/include/hw/i386/nitro_enclave.h b/include/hw/i386/nitro_enclave.h
+index b65875033c..885163ff64 100644
+--- a/include/hw/i386/nitro_enclave.h
++++ b/include/hw/i386/nitro_enclave.h
+@@ -44,14 +44,14 @@ struct NitroEnclaveMachineState {
+     /* Machine state */
+     VirtIONSM *vnsm;
+ 
+-    /* kernel + ramdisks + cmdline sha384 hash */
+-    uint8_t image_sha384[QCRYPTO_HASH_DIGEST_LEN_SHA384];
+-    /* kernel + boot ramdisk + cmdline sha384 hash */
+-    uint8_t bootstrap_sha384[QCRYPTO_HASH_DIGEST_LEN_SHA384];
+-    /* application ramdisk(s) hash */
+-    uint8_t app_sha384[QCRYPTO_HASH_DIGEST_LEN_SHA384];
+-    /* certificate fingerprint hash */
+-    uint8_t fingerprint_sha384[QCRYPTO_HASH_DIGEST_LEN_SHA384];
++    /* kernel + ramdisks + cmdline SHA384 hash */
++    uint8_t image_hash[QCRYPTO_HASH_DIGEST_LEN_SHA384];
++    /* kernel + boot ramdisk + cmdline SHA384 hash */
++    uint8_t bootstrap_hash[QCRYPTO_HASH_DIGEST_LEN_SHA384];
++    /* application ramdisk(s) SHA384 hash */
++    uint8_t app_hash[QCRYPTO_HASH_DIGEST_LEN_SHA384];
++    /* certificate fingerprint SHA384 hash */
++    uint8_t fingerprint_hash[QCRYPTO_HASH_DIGEST_LEN_SHA384];
+     bool signature_found;
+ };
+ 
 -- 
 2.39.5
 
