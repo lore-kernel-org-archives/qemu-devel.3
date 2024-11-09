@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6042CD5E367
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:15:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2772ED5E366
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:16:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kLf-0005VK-4y; Sat, 09 Nov 2024 07:13:51 -0500
+	id 1t9kKd-0001mY-3j; Sat, 09 Nov 2024 07:12:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kLE-0004ub-UU; Sat, 09 Nov 2024 07:13:25 -0500
+ id 1t9kKO-0000Qd-5X; Sat, 09 Nov 2024 07:12:32 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kLD-0004ep-5l; Sat, 09 Nov 2024 07:13:24 -0500
+ id 1t9kKM-0004aw-JJ; Sat, 09 Nov 2024 07:12:31 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8F791A1616;
- Sat,  9 Nov 2024 15:07:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E3159A160C;
+ Sat,  9 Nov 2024 15:07:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 56F85167FA4;
- Sat,  9 Nov 2024 15:08:04 +0300 (MSK)
-Received: (nullmailer pid 3295395 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id A91AA167F9A;
+ Sat,  9 Nov 2024 15:08:03 +0300 (MSK)
+Received: (nullmailer pid 3295363 invoked by uid 1000);
  Sat, 09 Nov 2024 12:08:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 46/57] target/riscv/kvm: clarify how 'riscv-aia'
- default works
-Date: Sat,  9 Nov 2024 15:07:48 +0300
-Message-Id: <20241109120801.3295120-46-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Weil <sw@weilnetz.de>,
+ Zhang Chen <chen.zhang@intel.com>, Jason Wang <jasowang@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.4 36/57] Fix calculation of minimum in colo_compare_tcp
+Date: Sat,  9 Nov 2024 15:07:38 +0300
+Message-Id: <20241109120801.3295120-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
@@ -62,66 +62,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Stefan Weil <sw@weilnetz.de>
 
-We do not have control in the default 'riscv-aia' default value. We can
-try to set it to a specific value, in this case 'auto', but there's no
-guarantee that the host will accept it.
+GitHub's CodeQL reports a critical error which is fixed by using the MIN macro:
 
-Couple with this we're always doing a 'qemu_log' to inform whether we're
-ended up using the host default or if we managed to set the AIA mode to
-the QEMU default we wanted to set.
+    Unsigned difference expression compared to zero
 
-Change the 'riscv-aia' description to better reflect how the option
-works, and remove the two informative 'qemu_log' that are now unneeded:
-if no message shows, riscv-aia was set to the default or uset-set value.
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241028182037.290171-3-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit fd16cfb2995e9196b579d8885145c4247dfa6058)
+Signed-off-by: Stefan Weil <sw@weilnetz.de>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Zhang Chen <chen.zhang@intel.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit e29bc931e1699a98959680f6776b48673825762b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 06a8b7a9e2..8117ecb782 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1548,9 +1548,9 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
-     object_class_property_add_str(oc, "riscv-aia", riscv_get_kvm_aia,
-                                   riscv_set_kvm_aia);
-     object_class_property_set_description(oc, "riscv-aia",
--                                          "Set KVM AIA mode. Valid values are "
--                                          "emul, hwaccel, and auto. Default "
--                                          "is auto.");
-+        "Set KVM AIA mode. Valid values are 'emul', 'hwaccel' and 'auto'. "
-+        "Changing KVM AIA modes relies on host support. Defaults to 'auto' "
-+        "if the host supports it");
-     object_property_set_default_str(object_class_property_find(oc, "riscv-aia"),
-                                     "auto");
- }
-@@ -1583,10 +1583,7 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-         exit(1);
-     }
+diff --git a/net/colo-compare.c b/net/colo-compare.c
+index c4ad0ab71f..39f90c4065 100644
+--- a/net/colo-compare.c
++++ b/net/colo-compare.c
+@@ -412,8 +412,7 @@ static void colo_compare_tcp(CompareState *s, Connection *conn)
+      * can ensure that the packet's payload is acknowledged by
+      * primary and secondary.
+     */
+-    uint32_t min_ack = conn->pack - conn->sack > 0 ?
+-                       conn->sack : conn->pack;
++    uint32_t min_ack = MIN(conn->pack, conn->sack);
  
--    if (default_aia_mode == aia_mode) {
--        qemu_log("KVM AIA: using default host mode '%s'\n",
--                  kvm_aia_mode_str(default_aia_mode));
--    } else {
-+    if (default_aia_mode != aia_mode) {
-         ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
-                                 KVM_DEV_RISCV_AIA_CONFIG_MODE,
-                                 &aia_mode, true, NULL);
-@@ -1598,9 +1595,6 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
- 
-             /* failed to change AIA mode, use default */
-             aia_mode = default_aia_mode;
--        } else {
--            qemu_log("KVM AIA: setting current mode to %s\n",
--                     kvm_aia_mode_str(aia_mode));
-         }
-     }
- 
+ pri:
+     if (g_queue_is_empty(&conn->primary_list)) {
 -- 
 2.39.5
 
