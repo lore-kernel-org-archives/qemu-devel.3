@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99AFDD5E362
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40FFAD5E362
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9iVh-0005QZ-4R; Sat, 09 Nov 2024 05:16:05 -0500
+	id 1t9iUl-00048p-4L; Sat, 09 Nov 2024 05:15:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iV8-0004dQ-2Q; Sat, 09 Nov 2024 05:15:32 -0500
+ id 1t9iUZ-0003tP-KL; Sat, 09 Nov 2024 05:14:58 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iV5-0007kI-Kh; Sat, 09 Nov 2024 05:15:29 -0500
+ id 1t9iUX-0007Wo-PQ; Sat, 09 Nov 2024 05:14:55 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AFD20A13F0;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5E322A13E9;
  Sat,  9 Nov 2024 13:13:49 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 541D7167EDC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0A111167ED5;
  Sat,  9 Nov 2024 13:14:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 12/49] tcg/ppc: Use TCG_REG_TMP2 for scratch index in
- prepare_host_addr
-Date: Sat,  9 Nov 2024 13:14:03 +0300
-Message-Id: <20241109101443.312701-12-mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 05/49] block/reqlist: allow adding overlapping requests
+Date: Sat,  9 Nov 2024 13:13:56 +0300
+Message-Id: <20241109101443.312701-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
@@ -60,35 +60,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-In tcg_out_qemu_ldst_i128, we need a non-zero index register,
-which we then use as a base register in several address modes.
-Since we always have TCG_REG_TMP2 available, use that.
+Allow overlapping request by removing the assert that made it
+impossible. There are only two callers:
+
+1. block_copy_task_create()
+
+It already asserts the very same condition before calling
+reqlist_init_req().
+
+2. cbw_snapshot_read_lock()
+
+There is no need to have read requests be non-overlapping in
+copy-before-write when used for snapshot-access. In fact, there was no
+protection against two callers of cbw_snapshot_read_lock() calling
+reqlist_init_req() with overlapping ranges and this could lead to an
+assertion failure [1].
+
+In particular, with the reproducer script below [0], two
+cbw_co_snapshot_block_status() callers could race, with the second
+calling reqlist_init_req() before the first one finishes and removes
+its conflicting request.
+
+[0]:
+
+> #!/bin/bash -e
+> dd if=/dev/urandom of=/tmp/disk.raw bs=1M count=1024
+> ./qemu-img create /tmp/fleecing.raw -f raw 1G
+> (
+> ./qemu-system-x86_64 --qmp stdio \
+> --blockdev raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw \
+> --blockdev raw,node-name=node1,file.driver=file,file.filename=/tmp/fleecing.raw \
+> <<EOF
+> {"execute": "qmp_capabilities"}
+> {"execute": "blockdev-add", "arguments": { "driver": "copy-before-write", "file": "node0", "target": "node1", "node-name": "node3" } }
+> {"execute": "blockdev-add", "arguments": { "driver": "snapshot-access", "file": "node3", "node-name": "snap0" } }
+> {"execute": "nbd-server-start", "arguments": {"addr": { "type": "unix", "data": { "path": "/tmp/nbd.socket" } } } }
+> {"execute": "block-export-add", "arguments": {"id": "exp0", "node-name": "snap0", "type": "nbd", "name": "exp0"}}
+> EOF
+> ) &
+> sleep 5
+> while true; do
+> ./qemu-nbd -d /dev/nbd0
+> ./qemu-nbd -c /dev/nbd0 nbd:unix:/tmp/nbd.socket:exportname=exp0 -f raw -r
+> nbdinfo --map 'nbd+unix:///exp0?socket=/tmp/nbd.socket'
+> done
+
+[1]:
+
+> #5  0x000071e5f0088eb2 in __GI___assert_fail (...) at ./assert/assert.c:101
+> #6  0x0000615285438017 in reqlist_init_req (...) at ../block/reqlist.c:23
+> #7  0x00006152853e2d98 in cbw_snapshot_read_lock (...) at ../block/copy-before-write.c:237
+> #8  0x00006152853e3068 in cbw_co_snapshot_block_status (...) at ../block/copy-before-write.c:304
+> #9  0x00006152853f4d22 in bdrv_co_snapshot_block_status (...) at ../block/io.c:3726
+> #10 0x000061528543a63e in snapshot_access_co_block_status (...) at ../block/snapshot-access.c:48
+> #11 0x00006152853f1a0a in bdrv_co_do_block_status (...) at ../block/io.c:2474
+> #12 0x00006152853f2016 in bdrv_co_common_block_status_above (...) at ../block/io.c:2652
+> #13 0x00006152853f22cf in bdrv_co_block_status_above (...) at ../block/io.c:2732
+> #14 0x00006152853d9a86 in blk_co_block_status_above (...) at ../block/block-backend.c:1473
+> #15 0x000061528538da6c in blockstatus_to_extents (...) at ../nbd/server.c:2374
+> #16 0x000061528538deb1 in nbd_co_send_block_status (...) at ../nbd/server.c:2481
+> #17 0x000061528538f424 in nbd_handle_request (...) at ../nbd/server.c:2978
+> #18 0x000061528538f906 in nbd_trip (...) at ../nbd/server.c:3121
+> #19 0x00006152855a7caf in coroutine_trampoline (...) at ../util/coroutine-ucontext.c:175
 
 Cc: qemu-stable@nongnu.org
-Fixes: 526cd4ec01f ("tcg/ppc: Support 128-bit load/store")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2597
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-By: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 3213da7b9539581c6df95f8ced5b09d0b02d425f)
+Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-Id: <20240712140716.517911-1-f.ebner@proxmox.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 6475155d519209c80fdda53e05130365aa769838)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-index 192bb2120f..01c45cd17f 100644
---- a/tcg/ppc/tcg-target.c.inc
-+++ b/tcg/ppc/tcg-target.c.inc
-@@ -2469,8 +2469,8 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+index 13972879b1..fd2f4c517e 100644
+--- a/block/copy-before-write.c
++++ b/block/copy-before-write.c
+@@ -65,7 +65,8 @@ typedef struct BDRVCopyBeforeWriteState {
  
-     if (TCG_TARGET_REG_BITS == 64 && addr_type == TCG_TYPE_I32) {
-         /* Zero-extend the guest address for use in the host address. */
--        tcg_out_ext32u(s, TCG_REG_R0, addrlo);
--        h->index = TCG_REG_R0;
-+        tcg_out_ext32u(s, TCG_REG_TMP2, addrlo);
-+        h->index = TCG_REG_TMP2;
-     } else {
-         h->index = addrlo;
-     }
+     /*
+      * @frozen_read_reqs: current read requests for fleecing user in bs->file
+-     * node. These areas must not be rewritten by guest.
++     * node. These areas must not be rewritten by guest. There can be multiple
++     * overlapping read requests.
+      */
+     BlockReqList frozen_read_reqs;
+ 
+diff --git a/block/reqlist.c b/block/reqlist.c
+index 08cb57cfa4..098e807378 100644
+--- a/block/reqlist.c
++++ b/block/reqlist.c
+@@ -20,8 +20,6 @@
+ void reqlist_init_req(BlockReqList *reqs, BlockReq *req, int64_t offset,
+                       int64_t bytes)
+ {
+-    assert(!reqlist_find_conflict(reqs, offset, bytes));
+-
+     *req = (BlockReq) {
+         .offset = offset,
+         .bytes = bytes,
 -- 
 2.39.5
 
