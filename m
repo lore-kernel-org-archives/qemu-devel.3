@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB29D5E368
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 956C4D5E369
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:32:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kKY-0001Sh-79; Sat, 09 Nov 2024 07:12:42 -0500
+	id 1t9kQR-0008GJ-Fl; Sat, 09 Nov 2024 07:18:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kKU-0001Ac-IT; Sat, 09 Nov 2024 07:12:38 -0500
+ id 1t9kOr-0005Pl-4N; Sat, 09 Nov 2024 07:17:09 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kKS-0004ba-Ma; Sat, 09 Nov 2024 07:12:38 -0500
+ id 1t9kOp-0005Dc-7d; Sat, 09 Nov 2024 07:17:08 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0EFE9A160E;
- Sat,  9 Nov 2024 15:07:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1A502A1641;
+ Sat,  9 Nov 2024 15:08:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C7CDA167F9C;
- Sat,  9 Nov 2024 15:08:03 +0300 (MSK)
-Received: (nullmailer pid 3295370 invoked by uid 1000);
- Sat, 09 Nov 2024 12:08:01 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id D3813167FC7;
+ Sat,  9 Nov 2024 15:09:02 +0300 (MSK)
+Received: (nullmailer pid 3296197 invoked by uid 1000);
+ Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Jason Wang <jasowang@redhat.com>
-Subject: [Stable-9.0.4 38/57] net/tap-win32: Fix gcc 14 format truncation
+Subject: [Stable-9.1.2 23/58] net/tap-win32: Fix gcc 14 format truncation
  errors
-Date: Sat,  9 Nov 2024 15:07:40 +0300
-Message-Id: <20241109120801.3295120-38-mjt@tls.msk.ru>
+Date: Sat,  9 Nov 2024 15:08:24 +0300
+Message-Id: <20241109120901.3295995-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
-References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
+References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
