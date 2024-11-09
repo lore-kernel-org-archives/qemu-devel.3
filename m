@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A97D5E123
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 07:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2854DD5E123
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 07:57:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9gJr-0007zq-Dd; Sat, 09 Nov 2024 02:55:43 -0500
+	id 1t9gLb-0000DE-He; Sat, 09 Nov 2024 02:57:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t9gJo-0007zU-0s
- for qemu-devel@nongnu.org; Sat, 09 Nov 2024 02:55:40 -0500
-Received: from mail-ej1-f51.google.com ([209.85.218.51])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t9gLO-0000CW-Kg
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 02:57:19 -0500
+Received: from mail-ej1-f43.google.com ([209.85.218.43])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t9gJm-00018r-KH
- for qemu-devel@nongnu.org; Sat, 09 Nov 2024 02:55:39 -0500
-Received: by mail-ej1-f51.google.com with SMTP id
- a640c23a62f3a-a9a0ec0a94fso456974866b.1
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 23:55:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t9gLM-0001C7-3w
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 02:57:17 -0500
+Received: by mail-ej1-f43.google.com with SMTP id
+ a640c23a62f3a-a9acafdb745so584503166b.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 23:57:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731138936; x=1731743736;
+ d=1e100.net; s=20230601; t=1731139034; x=1731743834;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qSqNzxRYdzO784o8DQtzALubth/P5Kt8AGLsTKOgWjY=;
- b=SKiy2g3fq+tWM3UA4nkO35PWND4mEQIi3qTy6jc34HfgeSSFohSrm6rpQFAgTbD/qa
- ufgJGwOVuvIxbnOeUI1v0AhV1qf/QuEq3n18m6KfdHxftttvG1hoU9w+PZDC5bV07gsY
- k5fn/bMI4mQv+hBX5BflOGTkFC93t7Qun95F4iRLSX0rOHi0/jj6UsnKUkWE8E0zy7Xj
- ExuWZxDwaxDPHPUj6FCkiS5/b6Ckc452gVb/ppkW3LGyH8X0zJb42w8CkAUTNibBvRSE
- kGUP+yLJGdtz5FQa9ITbSMqUoUpCYpr907v9FF+dP4lpuRLoFIITJbV7R5Z3QqSzz+FC
- 9BCQ==
-X-Gm-Message-State: AOJu0Yy53AJXStBfJ5RFDod2DbZ/urijkGLmt+k2E3PA+Jy3Y/T+4Hxr
- dXZ3tyd1usuyj42JDuAXqspmf+1kXlLXFYfYGtiJMHwJ6T3/emFcPcxEsezt
-X-Google-Smtp-Source: AGHT+IFsqsg5ciQJjKgybI/mrhf9oYFm757FQxEB3rusK5tuayE808yZQN4T4Hd6T4wnvoS+9Q2cuA==
-X-Received: by 2002:a17:907:3e9e:b0:a9a:8674:1739 with SMTP id
- a640c23a62f3a-a9ef0008cf0mr483868766b.53.1731138935677; 
- Fri, 08 Nov 2024 23:55:35 -0800 (PST)
+ bh=CAhYF+UHBr6UMJ2SBe7sTwY+17T8x3GjnqwJ7rB8OP4=;
+ b=wZwH39PWLu26Dptk3q8hdOAK6D7zHQkQKYii/l84Qk+E6/Oj0+knayDO7bRajcGVZW
+ 0E9KZc5I6qZkrIB4OgWMflUa6fqZI1GKVQhp5UglWZrzmtocw8YMnrJWexbrckXx8fJU
+ ZmIfV/nLYH/JdAGciKD2rwF8a1q9esuSXaoTl6ji0jDHRUjp0xSS9LA8OX+UAt9WEmHd
+ dAsP7iQ46Tq6p93eCQ8iYnzeq1/nFcT9+80KCJVg21W6B6/YLScMPBZqcWf0xvMZV+Nr
+ Cl+Muc1Vtjxd53HvCKdeWNEUq4jZzOBT/X7y+A4f6oVs8Jlxj4FuT3sSceaDURPRD45p
+ 74aQ==
+X-Gm-Message-State: AOJu0Yzz5dWaaMLY5fqpIhKQaEzN2IZWSOeOL68Wtg9f09LefkCLMRmT
+ vQ0bHUBqO5yNlw0EzQskRr24BFpmgiM0widleQm4UwaFQMU5f+JWaG6h8UUq
+X-Google-Smtp-Source: AGHT+IHf+OFnaGMMwOuxemwOX3NZvl4b9NrAtaJlyY6RXJPLGBKUronH93n4yOF+YFuZdAO71nY5cA==
+X-Received: by 2002:a17:907:7fa9:b0:a9a:130e:11fd with SMTP id
+ a640c23a62f3a-a9eec767f0cmr605681766b.5.1731139033929; 
+ Fri, 08 Nov 2024 23:57:13 -0800 (PST)
 Received: from tpx1 (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0a18854sm337800166b.29.2024.11.08.23.55.34
+ a640c23a62f3a-a9ee0dc580esm338354766b.106.2024.11.08.23.57.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 23:55:34 -0800 (PST)
-Date: Sat, 9 Nov 2024 08:55:33 +0100
+ Fri, 08 Nov 2024 23:57:13 -0800 (PST)
+Date: Sat, 9 Nov 2024 08:57:12 +0100
 From: Thomas Huth <huth@tuxfamily.org>
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 25/36] next-cube: use named gpio to read RTC data bit in
- scr2
-Message-ID: <20241109085533.258e4e25@tpx1>
-In-Reply-To: <20241023085852.1061031-26-mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH 26/36] next-cube: don't use rtc phase value of -1
+Message-ID: <20241109085712.0b062613@tpx1>
+In-Reply-To: <20241023085852.1061031-27-mark.cave-ayland@ilande.co.uk>
 References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-26-mark.cave-ayland@ilande.co.uk>
+ <20241023085852.1061031-27-mark.cave-ayland@ilande.co.uk>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.218.51; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f51.google.com
+Received-SPF: pass client-ip=209.85.218.43; envelope-from=th.huth@gmail.com;
+ helo=mail-ej1-f43.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
 X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
  FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
  HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,15 +83,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Wed, 23 Oct 2024 09:58:41 +0100
+Am Wed, 23 Oct 2024 09:58:42 +0100
 schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 
-> This is in preparation for moving NeXTRTC to its own separate device.
+> The rtc phase value of -1 is directly equivalent to using a phase value of 0 so
+> simplify the logic to use an initial rtc phase of 0.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > ---
->  hw/m68k/next-cube.c | 169 ++++++++++++++++++++++++--------------------
->  1 file changed, 92 insertions(+), 77 deletions(-)
+>  hw/m68k/next-cube.c | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
 
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 
