@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2455CD5E36C
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C57D5E369
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:30:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kLF-0004o2-3I; Sat, 09 Nov 2024 07:13:25 -0500
+	id 1t9kMy-0002kG-6Z; Sat, 09 Nov 2024 07:15:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kLB-0004RF-LG; Sat, 09 Nov 2024 07:13:21 -0500
+ id 1t9kMu-0002dw-MJ; Sat, 09 Nov 2024 07:15:08 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kL9-0004dz-CO; Sat, 09 Nov 2024 07:13:21 -0500
+ id 1t9kMs-0004xf-CE; Sat, 09 Nov 2024 07:15:08 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 81A70A1615;
- Sat,  9 Nov 2024 15:07:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E35F9A162E;
+ Sat,  9 Nov 2024 15:08:06 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 49476167FA3;
- Sat,  9 Nov 2024 15:08:04 +0300 (MSK)
-Received: (nullmailer pid 3295391 invoked by uid 1000);
- Sat, 09 Nov 2024 12:08:01 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id AB313167FB5;
+ Sat,  9 Nov 2024 15:09:01 +0300 (MSK)
+Received: (nullmailer pid 3296141 invoked by uid 1000);
+ Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 45/57] target/riscv/kvm: set 'aia_mode' to default in
- error path
-Date: Sat,  9 Nov 2024 15:07:47 +0300
-Message-Id: <20241109120801.3295120-45-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 05/58] target/i386: Use only 16 and 32-bit operands for
+ IN/OUT
+Date: Sat,  9 Nov 2024 15:08:06 +0300
+Message-Id: <20241109120901.3295995-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
-References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
+References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -62,73 +62,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-When failing to set the selected AIA mode, 'aia_mode' is left untouched.
-This means that 'aia_mode' will not reflect the actual AIA mode,
-retrieved in 'default_aia_mode',
+The REX.W prefix is ignored for these instructions.
+Mirror the solution already used for INS/OUTS: X86_SIZE_z.
 
-This is benign for now, but it will impact QMP query commands that will
-expose the 'aia_mode' value, retrieving the wrong value.
-
-Set 'aia_mode' to 'default_aia_mode' if we fail to change the AIA mode
-in KVM.
-
-While we're at it, rework the log/warning messages to be a bit less
-verbose. Instead of:
-
-KVM AIA: default mode is emul
-qemu-system-riscv64: warning: KVM AIA: failed to set KVM AIA mode
-
-We can use a single warning message:
-
-qemu-system-riscv64: warning: KVM AIA: failed to set KVM AIA mode 'auto', using default host mode 'emul'
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241028182037.290171-2-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit d201a127e164b1683df5e7c93c6d42a74122db99)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2581
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org
+Link: https://lore.kernel.org/r/20241015004144.2111817-1-richard.henderson@linaro.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 15d955975bd484c2c66af0d6daaa02a7d04d2256)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 94b0e393bf..06a8b7a9e2 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1582,18 +1582,26 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-         error_report("KVM AIA: failed to get current KVM AIA mode");
-         exit(1);
-     }
--    qemu_log("KVM AIA: default mode is %s\n",
--             kvm_aia_mode_str(default_aia_mode));
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 30be9237c3..429ed87bb6 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1627,9 +1627,9 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xE2] = X86_OP_ENTRYr(LOOP,   J,b), /* implicit: CX with aflag size */
+     [0xE3] = X86_OP_ENTRYr(JCXZ,   J,b), /* implicit: CX with aflag size */
+     [0xE4] = X86_OP_ENTRYwr(IN,    0,b, I_unsigned,b), /* AL */
+-    [0xE5] = X86_OP_ENTRYwr(IN,    0,v, I_unsigned,b), /* AX/EAX */
++    [0xE5] = X86_OP_ENTRYwr(IN,    0,z, I_unsigned,b), /* AX/EAX */
+     [0xE6] = X86_OP_ENTRYrr(OUT,   0,b, I_unsigned,b), /* AL */
+-    [0xE7] = X86_OP_ENTRYrr(OUT,   0,v, I_unsigned,b), /* AX/EAX */
++    [0xE7] = X86_OP_ENTRYrr(OUT,   0,z, I_unsigned,b), /* AX/EAX */
  
--    if (default_aia_mode != aia_mode) {
-+    if (default_aia_mode == aia_mode) {
-+        qemu_log("KVM AIA: using default host mode '%s'\n",
-+                  kvm_aia_mode_str(default_aia_mode));
-+    } else {
-         ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
-                                 KVM_DEV_RISCV_AIA_CONFIG_MODE,
-                                 &aia_mode, true, NULL);
--        if (ret < 0)
--            warn_report("KVM AIA: failed to set KVM AIA mode");
--        else
--            qemu_log("KVM AIA: set current mode to %s\n",
-+        if (ret < 0) {
-+            warn_report("KVM AIA: failed to set KVM AIA mode '%s', using "
-+                        "default host mode '%s'",
-+                        kvm_aia_mode_str(aia_mode),
-+                        kvm_aia_mode_str(default_aia_mode));
-+
-+            /* failed to change AIA mode, use default */
-+            aia_mode = default_aia_mode;
-+        } else {
-+            qemu_log("KVM AIA: setting current mode to %s\n",
-                      kvm_aia_mode_str(aia_mode));
-+        }
-     }
+     [0xF1] = X86_OP_ENTRY0(INT1,   svm(ICEBP)),
+     [0xF4] = X86_OP_ENTRY0(HLT,    chk(cpl0) svm(HLT)),
+@@ -1761,9 +1761,9 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xEA] = X86_OP_ENTRYrr(JMPF,  I_unsigned,p, I_unsigned,w, chk(i64)),
+     [0xEB] = X86_OP_ENTRYr(JMP,    J,b),
+     [0xEC] = X86_OP_ENTRYwr(IN,    0,b, 2,w), /* AL, DX */
+-    [0xED] = X86_OP_ENTRYwr(IN,    0,v, 2,w), /* AX/EAX, DX */
++    [0xED] = X86_OP_ENTRYwr(IN,    0,z, 2,w), /* AX/EAX, DX */
+     [0xEE] = X86_OP_ENTRYrr(OUT,   0,b, 2,w), /* DX, AL */
+-    [0xEF] = X86_OP_ENTRYrr(OUT,   0,v, 2,w), /* DX, AX/EAX */
++    [0xEF] = X86_OP_ENTRYrr(OUT,   0,z, 2,w), /* DX, AX/EAX */
  
-     ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+     [0xF8] = X86_OP_ENTRY0(CLC),
+     [0xF9] = X86_OP_ENTRY0(STC),
 -- 
 2.39.5
 
