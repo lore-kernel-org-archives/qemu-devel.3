@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3C8BD5E368
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C499BD5E369
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kJD-00054Z-ID; Sat, 09 Nov 2024 07:11:21 -0500
+	id 1t9kLZ-0005KK-Ez; Sat, 09 Nov 2024 07:13:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kI7-00035I-46; Sat, 09 Nov 2024 07:10:11 -0500
+ id 1t9kLI-0005HO-CQ; Sat, 09 Nov 2024 07:13:32 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kI5-00042w-7u; Sat, 09 Nov 2024 07:10:10 -0500
+ id 1t9kLG-0004f9-B9; Sat, 09 Nov 2024 07:13:28 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2DE2FA1601;
- Sat,  9 Nov 2024 15:07:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9EE5DA1617;
+ Sat,  9 Nov 2024 15:07:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E98E0167F8F;
- Sat,  9 Nov 2024 15:08:02 +0300 (MSK)
-Received: (nullmailer pid 3295328 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 650D9167FA5;
+ Sat,  9 Nov 2024 15:08:04 +0300 (MSK)
+Received: (nullmailer pid 3295398 invoked by uid 1000);
  Sat, 09 Nov 2024 12:08:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 25/57] tests/qemu-iotests/211.out: Update to expect
- MapEntry 'compressed' field
-Date: Sat,  9 Nov 2024 15:07:27 +0300
-Message-Id: <20241109120801.3295120-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Anton Blanchard <antonb@tenstorrent.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.4 47/57] target/riscv: Fix vcompress with rvv_ta_all_1s
+Date: Sat,  9 Nov 2024 15:07:49 +0300
+Message-Id: <20241109120801.3295120-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
@@ -62,59 +62,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-In commit 52b10c9c0c68e90f in 2023 the QAPI MapEntry struct was
-updated to add a 'compressed' field. That commit updated a number
-of iotest expected-output files, but missed 211, which is vdi
-specific. The result is that
- ./check -vdi
-and more specifically
- ./check -vdi 211
-fails because the expected and actual output don't match.
+vcompress packs vl or less fields into vd, so the tail starts after the
+last packed field. This could be more clearly expressed in the ISA,
+but for now this thread helps to explain it:
 
-Update the reference output.
+https://github.com/riscv/riscv-v-spec/issues/796
 
-Cc: qemu-stable@nongnu.org
-Fixes: 52b10c9c0c68e90f ("qemu-img: map: report compressed data blocks")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20241008164708.2966400-4-peter.maydell@linaro.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit d60bd080e783107cb876a6f16561fe03f9dcbca7)
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241030043538.939712-1-antonb@tenstorrent.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit c128d39edeff337220fc536a3e935bcba01ecb49)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/211.out b/tests/qemu-iotests/211.out
-index f02c75409c..ff9f9a6913 100644
---- a/tests/qemu-iotests/211.out
-+++ b/tests/qemu-iotests/211.out
-@@ -17,7 +17,7 @@ file format: IMGFMT
- virtual size: 128 MiB (134217728 bytes)
- cluster_size: 1048576
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index fa139040f8..1de0bdc87c 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -5126,7 +5126,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,               \
+     }                                                                     \
+     env->vstart = 0;                                                      \
+     /* set tail elements to 1s */                                         \
+-    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
++    vext_set_elems_1s(vd, vta, num * esz, total_elems * esz);             \
+ }
  
--[{"data": false, "depth": 0, "length": 134217728, "present": true, "start": 0, "zero": true}]
-+[{"compressed": false, "data": false, "depth": 0, "length": 134217728, "present": true, "start": 0, "zero": true}]
- === Successful image creation (explicit defaults) ===
- 
- {"execute": "blockdev-create", "arguments": {"job-id": "job0", "options": {"driver": "file", "filename": "TEST_DIR/PID-t.vdi", "size": 0}}}
-@@ -35,7 +35,7 @@ file format: IMGFMT
- virtual size: 64 MiB (67108864 bytes)
- cluster_size: 1048576
- 
--[{"data": false, "depth": 0, "length": 67108864, "present": true, "start": 0, "zero": true}]
-+[{"compressed": false, "data": false, "depth": 0, "length": 67108864, "present": true, "start": 0, "zero": true}]
- === Successful image creation (with non-default options) ===
- 
- {"execute": "blockdev-create", "arguments": {"job-id": "job0", "options": {"driver": "file", "filename": "TEST_DIR/PID-t.vdi", "size": 0}}}
-@@ -53,7 +53,7 @@ file format: IMGFMT
- virtual size: 32 MiB (33554432 bytes)
- cluster_size: 1048576
- 
--[{"data": true, "depth": 0, "length": 3072, "offset": 1024, "present": true, "start": 0, "zero": false}, {"data": true, "depth": 0, "length": 33551360, "offset": 4096, "present": true, "start": 3072, "zero": true}]
-+[{"compressed": false, "data": true, "depth": 0, "length": 3072, "offset": 1024, "present": true, "start": 0, "zero": false}, {"compressed": false, "data": true, "depth": 0, "length": 33551360, "offset": 4096, "present": true, "start": 3072, "zero": true}]
- === Invalid BlockdevRef ===
- 
- {"execute": "blockdev-create", "arguments": {"job-id": "job0", "options": {"driver": "vdi", "file": "this doesn't exist", "size": 33554432}}}
+ /* Compress into vd elements of vs2 where vs1 is enabled */
 -- 
 2.39.5
 
