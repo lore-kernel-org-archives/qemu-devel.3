@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2BC0D5E369
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37F11D5E368
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:37:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kTm-0005bn-Kp; Sat, 09 Nov 2024 07:22:14 -0500
+	id 1t9kQO-0008CF-Gk; Sat, 09 Nov 2024 07:18:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kR9-0001yG-Jh; Sat, 09 Nov 2024 07:19:31 -0500
+ id 1t9kPE-0006GV-8x; Sat, 09 Nov 2024 07:17:33 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kR5-0005WH-0v; Sat, 09 Nov 2024 07:19:28 -0500
+ id 1t9kPC-0005Dp-Gv; Sat, 09 Nov 2024 07:17:32 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7ACC8A1656;
- Sat,  9 Nov 2024 15:08:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2998CA1642;
+ Sat,  9 Nov 2024 15:08:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4039F167FDC;
- Sat,  9 Nov 2024 15:09:04 +0300 (MSK)
-Received: (nullmailer pid 3296263 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id E42AA167FC8;
+ Sat,  9 Nov 2024 15:09:02 +0300 (MSK)
+Received: (nullmailer pid 3296200 invoked by uid 1000);
  Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 44/58] hw/ssi/pnv_spi: Match _xfer_buffer_free() with
- _xfer_buffer_new()
-Date: Sat,  9 Nov 2024 15:08:45 +0300
-Message-Id: <20241109120901.3295995-44-mjt@tls.msk.ru>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 24/58] target/arm: Don't assert in regime_is_user() for
+ E10 mmuidx values
+Date: Sat,  9 Nov 2024 15:08:25 +0300
+Message-Id: <20241109120901.3295995-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
@@ -65,35 +65,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-pnv_spi_xfer_buffer_new() allocates %payload using g_malloc0(),
-and pnv_spi_xfer_buffer_write_ptr() allocates %payload->data
-using g_realloc(). Use the API equivalent g_free() to release
-the buffers.
+In regime_is_user() we assert if we're passed an ARMMMUIdx_E10_*
+mmuidx value. This used to make sense because we only used this
+function in ptw.c and would never use it on this kind of stage 1+2
+mmuidx, only for an individual stage 1 or stage 2 mmuidx.
+
+However, when we implemented FEAT_E0PD we added a callsite in
+aa64_va_parameters(), which means this can now be called for
+stage 1+2 mmuidx values if the guest sets the TCG_ELX.{E0PD0,E0PD1}
+bits to enable use of the feature. This will then result in
+an assertion failure later, for instance on a TLBI operation:
+
+#6  0x00007ffff6d0e70f in g_assertion_message_expr
+    (domain=0x0, file=0x55555676eeba "../../target/arm/internals.h", line=978, func=0x555556771d48 <__func__.5> "regime_is_user", expr=<optimised out>)
+    at ../../../glib/gtestutils.c:3279
+#7  0x0000555555f286d2 in regime_is_user (env=0x555557f2fe00, mmu_idx=ARMMMUIdx_E10_0) at ../../target/arm/internals.h:978
+#8  0x0000555555f3e31c in aa64_va_parameters (env=0x555557f2fe00, va=18446744073709551615, mmu_idx=ARMMMUIdx_E10_0, data=true, el1_is_aa32=false)
+    at ../../target/arm/helper.c:12048
+#9  0x0000555555f3163b in tlbi_aa64_get_range (env=0x555557f2fe00, mmuidx=ARMMMUIdx_E10_0, value=106721347371041) at ../../target/arm/helper.c:5214
+#10 0x0000555555f317e8 in do_rvae_write (env=0x555557f2fe00, value=106721347371041, idxmap=21, synced=true) at ../../target/arm/helper.c:5260
+#11 0x0000555555f31925 in tlbi_aa64_rvae1is_write (env=0x555557f2fe00, ri=0x555557fbeae0, value=106721347371041) at ../../target/arm/helper.c:5302
+#12 0x0000555556036f8f in helper_set_cp_reg64 (env=0x555557f2fe00, rip=0x555557fbeae0, value=106721347371041) at ../../target/arm/tcg/op_helper.c:965
+
+Since we do know whether these mmuidx values are for usermode
+or not, we can easily make regime_is_user() handle them:
+ARMMMUIdx_E10_0 is user, and the other two are not.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: e4c93e44ab103f ("target/arm: Implement FEAT_E0PD")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 65f53702d2e4bd045ce16ca874469cdd1e1ef4e4)
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20241017172331.822587-1-peter.maydell@linaro.org
+(cherry picked from commit 1505b651fdbd9af59a4a90876a62ae7ea2d4cd39)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-index c1297ab733..13a47f07e7 100644
---- a/hw/ssi/pnv_spi.c
-+++ b/hw/ssi/pnv_spi.c
-@@ -53,8 +53,8 @@ static PnvXferBuffer *pnv_spi_xfer_buffer_new(void)
- 
- static void pnv_spi_xfer_buffer_free(PnvXferBuffer *payload)
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 38545552d0..d4dc9ab731 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -944,6 +944,7 @@ static inline uint32_t regime_el(CPUARMState *env, ARMMMUIdx mmu_idx)
+ static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
  {
--    free(payload->data);
--    free(payload);
-+    g_free(payload->data);
-+    g_free(payload);
+     switch (mmu_idx) {
++    case ARMMMUIdx_E10_0:
+     case ARMMMUIdx_E20_0:
+     case ARMMMUIdx_Stage1_E0:
+     case ARMMMUIdx_MUser:
+@@ -953,10 +954,6 @@ static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
+         return true;
+     default:
+         return false;
+-    case ARMMMUIdx_E10_0:
+-    case ARMMMUIdx_E10_1:
+-    case ARMMMUIdx_E10_1_PAN:
+-        g_assert_not_reached();
+     }
  }
  
- static uint8_t *pnv_spi_xfer_buffer_write_ptr(PnvXferBuffer *payload,
 -- 
 2.39.5
 
