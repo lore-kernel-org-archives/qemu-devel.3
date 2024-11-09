@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3F01D5E362
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB73D5E362
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:26:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9icE-0007KC-Th; Sat, 09 Nov 2024 05:22:51 -0500
+	id 1t9idJ-0002TB-VA; Sat, 09 Nov 2024 05:23:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iXM-0007gf-B2; Sat, 09 Nov 2024 05:17:49 -0500
+ id 1t9iYK-00029P-N4; Sat, 09 Nov 2024 05:18:52 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iXK-000896-0p; Sat, 09 Nov 2024 05:17:48 -0500
+ id 1t9iYJ-0008Dq-6O; Sat, 09 Nov 2024 05:18:48 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2693AA1407;
+ by isrv.corpit.ru (Postfix) with ESMTP id C81B9A1412;
  Sat,  9 Nov 2024 13:13:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C6717167EF2;
- Sat,  9 Nov 2024 13:14:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 64F91167EFD;
+ Sat,  9 Nov 2024 13:14:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ido Plat <ido.plat1@ibm.com>,
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 34/49] target/arm: Fix arithmetic underflow in SETM
- instruction
-Date: Sat,  9 Nov 2024 13:14:25 +0300
-Message-Id: <20241109101443.312701-34-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 45/49] target/ppc: Fix mtDPDES targeting SMT siblings
+Date: Sat,  9 Nov 2024 13:14:36 +0300
+Message-Id: <20241109101443.312701-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,35 +62,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ido Plat <ido.plat1@ibm.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-Pass the stage size to step function callback, otherwise do_setm
-would hang when size is larger then page size because stage size
-would underflow.  This fix changes do_setm to be more inline with
-do_setp.
+A typo in the loop over SMT threads to set irq level for doorbells
+when storing to DPDES meant everything was aimed at the CPU executing
+the instruction.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 0e92818887dee ("target/arm: Implement the SET* instructions")
-Signed-off-by: Ido Plat <ido.plat1@ibm.com>
+Fixes: d24e80b2ae ("target/ppc: Add msgsnd/p and DPDES SMT support")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241025024909.799989-1-ido.plat1@ibm.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit bab209af35037b33f7eb1b8a3737085935bec3a3)
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+(cherry picked from commit 0324d236d2918c18a9ad4a1081b1083965a1433b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 8ad84623d3..8335505a06 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -1330,7 +1330,7 @@ static void do_setm(CPUARMState *env, uint32_t syndrome, uint32_t mtedesc,
-     /* Do the actual memset: we leave the last partial page to SETE */
-     stagesetsize = setsize & TARGET_PAGE_MASK;
-     while (stagesetsize > 0) {
--        step = stepfn(env, toaddr, setsize, data, memidx, &mtedesc, ra);
-+        step = stepfn(env, toaddr, stagesetsize, data, memidx, &mtedesc, ra);
-         toaddr += step;
-         setsize -= step;
-         stagesetsize -= step;
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index a05bdf78c9..a8d0501996 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -283,7 +283,7 @@ void helper_store_dpdes(CPUPPCState *env, target_ulong val)
+         PowerPCCPU *ccpu = POWERPC_CPU(ccs);
+         uint32_t thread_id = ppc_cpu_tir(ccpu);
+ 
+-        ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, val & (0x1 << thread_id));
++        ppc_set_irq(ccpu, PPC_INTERRUPT_DOORBELL, val & (0x1 << thread_id));
+     }
+     qemu_mutex_unlock_iothread();
+ }
 -- 
 2.39.5
 
