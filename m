@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C6C8D5E368
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1460FD5E366
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:10:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kGQ-0008Ez-US; Sat, 09 Nov 2024 07:08:27 -0500
+	id 1t9kHk-0002Rn-T6; Sat, 09 Nov 2024 07:09:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kGH-00087A-Io; Sat, 09 Nov 2024 07:08:17 -0500
+ id 1t9kHJ-0001Qq-2L; Sat, 09 Nov 2024 07:09:21 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kGE-0003dH-8B; Sat, 09 Nov 2024 07:08:17 -0500
+ id 1t9kHH-0003xc-Ci; Sat, 09 Nov 2024 07:09:20 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CB850A15EC;
- Sat,  9 Nov 2024 15:07:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id ACE06A15FA;
+ Sat,  9 Nov 2024 15:07:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 90912167F7A;
- Sat,  9 Nov 2024 15:08:01 +0300 (MSK)
-Received: (nullmailer pid 3295261 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 746B1167F88;
+ Sat,  9 Nov 2024 15:08:02 +0300 (MSK)
+Received: (nullmailer pid 3295304 invoked by uid 1000);
  Sat, 09 Nov 2024 12:08:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Claudio Fontana <cfontana@suse.de>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 04/57] target/ppc: Fix lxvx/stxvx facility check
-Date: Sat,  9 Nov 2024 15:07:06 +0300
-Message-Id: <20241109120801.3295120-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.4 18/57] ui/dbus: fix leak on message filtering
+Date: Sat,  9 Nov 2024 15:07:20 +0300
+Message-Id: <20241109120801.3295120-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
@@ -64,56 +63,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The XT check for the lxvx/stxvx instructions is currently
-inverted. This was introduced during the move to decodetree.
+A filter function that wants to drop a message should return NULL, in
+which case it must also unref the message itself.
 
->From the ISA:
-  Chapter 7. Vector-Scalar Extension Facility
-  Load VSX Vector Indexed X-form
+Fixes: fa88b85de ("ui/dbus: filter out pending messages when scanout")
 
-  lxvx XT,RA,RB
-  if TX=0 & MSR.VSX=0 then VSX_Unavailable()
-  if TX=1 & MSR.VEC=0 then Vector_Unavailable()
-  ...
-  Let XT be the value 32×TX + T.
-
-The code currently does the opposite:
-
-    if (paired || a->rt >= 32) {
-        REQUIRE_VSX(ctx);
-    } else {
-        REQUIRE_VECTOR(ctx);
-    }
-
-This was already fixed for lxv/stxv at commit "2cc0e449d1 (target/ppc:
-Fix lxv/stxv MSR facility check)", but the indexed forms were missed.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 70426b5bb7 ("target/ppc: moved stxvx and lxvx from legacy to decodtree")
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Claudio Fontana <cfontana@suse.de>
-Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Message-ID: <20240911141651.6914-1-farosas@suse.de>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 8bded2e73e80823a67f730140788a3c5e60bf4b5)
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-ID: <20241008125028.1177932-4-marcandre.lureau@redhat.com>
+(cherry picked from commit 244d52ff736fefc3dd364ed091720aa896af306d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
-index 0266f09119..986453d35f 100644
---- a/target/ppc/translate/vsx-impl.c.inc
-+++ b/target/ppc/translate/vsx-impl.c.inc
-@@ -2292,7 +2292,7 @@ static bool do_lstxv_PLS_D(DisasContext *ctx, arg_PLS_D *a,
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index 4a0a5d78f9..83140f602d 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -996,6 +996,7 @@ dbus_filter(GDBusConnection *connection,
+     serial = g_dbus_message_get_serial(message);
+     if (serial <= ddl->out_serial_to_discard) {
+         trace_dbus_filter(serial, ddl->out_serial_to_discard);
++        g_object_unref(message);
+         return NULL;
+     }
  
- static bool do_lstxv_X(DisasContext *ctx, arg_X *a, bool store, bool paired)
- {
--    if (paired || a->rt >= 32) {
-+    if (paired || a->rt < 32) {
-         REQUIRE_VSX(ctx);
-     } else {
-         REQUIRE_VECTOR(ctx);
 -- 
 2.39.5
 
