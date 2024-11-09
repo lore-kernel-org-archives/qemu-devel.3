@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB73D5E362
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2840D5E362
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:27:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9idJ-0002TB-VA; Sat, 09 Nov 2024 05:23:58 -0500
+	id 1t9iY4-0001m2-Dw; Sat, 09 Nov 2024 05:18:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iYK-00029P-N4; Sat, 09 Nov 2024 05:18:52 -0500
+ id 1t9iW3-00060P-7U; Sat, 09 Nov 2024 05:16:34 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iYJ-0008Dq-6O; Sat, 09 Nov 2024 05:18:48 -0500
+ id 1t9iW1-0007wH-Mx; Sat, 09 Nov 2024 05:16:26 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C81B9A1412;
- Sat,  9 Nov 2024 13:13:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F4F7A13FA;
+ Sat,  9 Nov 2024 13:13:50 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 64F91167EFD;
- Sat,  9 Nov 2024 13:14:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 07F50167EE6;
+ Sat,  9 Nov 2024 13:14:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 45/49] target/ppc: Fix mtDPDES targeting SMT siblings
-Date: Sat,  9 Nov 2024 13:14:36 +0300
-Message-Id: <20241109101443.312701-45-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 22/49] tcg: Reset data_gen_ptr correctly
+Date: Sat,  9 Nov 2024 13:14:13 +0300
+Message-Id: <20241109101443.312701-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,33 +61,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-A typo in the loop over SMT threads to set irq level for doorbells
-when storing to DPDES meant everything was aimed at the CPU executing
-the instruction.
+This pointer needs to be reset after overflow just like
+code_buf and code_ptr.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d24e80b2ae ("target/ppc: Add msgsnd/p and DPDES SMT support")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 0324d236d2918c18a9ad4a1081b1083965a1433b)
+Fixes: 57a269469db ("tcg: Infrastructure for managing constant pools")
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit a7cfd751fb269de4a93bf1658cb13911c7ac77cc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index a05bdf78c9..a8d0501996 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -283,7 +283,7 @@ void helper_store_dpdes(CPUPPCState *env, target_ulong val)
-         PowerPCCPU *ccpu = POWERPC_CPU(ccs);
-         uint32_t thread_id = ppc_cpu_tir(ccpu);
- 
--        ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, val & (0x1 << thread_id));
-+        ppc_set_irq(ccpu, PPC_INTERRUPT_DOORBELL, val & (0x1 << thread_id));
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index e2c38f6d11..7d07a1166b 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -1410,7 +1410,6 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
+         goto retry;
      }
-     qemu_mutex_unlock_iothread();
+     qatomic_set(&s->code_gen_ptr, next);
+-    s->data_gen_ptr = NULL;
+     return tb;
  }
+ 
+@@ -6114,6 +6113,7 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
+      */
+     s->code_buf = tcg_splitwx_to_rw(tb->tc.ptr);
+     s->code_ptr = s->code_buf;
++    s->data_gen_ptr = NULL;
+ 
+ #ifdef TCG_TARGET_NEED_LDST_LABELS
+     QSIMPLEQ_INIT(&s->ldst_labels);
 -- 
 2.39.5
 
