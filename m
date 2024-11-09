@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB29D5E368
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A27DD5E36C
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kMl-0001vq-CL; Sat, 09 Nov 2024 07:14:59 -0500
+	id 1t9kR9-0001ve-HW; Sat, 09 Nov 2024 07:19:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kMf-0001gD-Oq; Sat, 09 Nov 2024 07:14:53 -0500
+ id 1t9kQE-0007dJ-Py; Sat, 09 Nov 2024 07:18:35 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kMd-0004lR-JD; Sat, 09 Nov 2024 07:14:53 -0500
+ id 1t9kQA-0005LR-Iy; Sat, 09 Nov 2024 07:18:33 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A5147A1629;
- Sat,  9 Nov 2024 15:08:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D4BC7A164C;
+ Sat,  9 Nov 2024 15:08:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6C93F167FB1;
- Sat,  9 Nov 2024 15:09:01 +0300 (MSK)
-Received: (nullmailer pid 3296129 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 9C6D9167FD2;
+ Sat,  9 Nov 2024 15:09:03 +0300 (MSK)
+Received: (nullmailer pid 3296232 invoked by uid 1000);
  Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 01/58] tcg/s390x: fix constraint for 32-bit TSTEQ/TSTNE
-Date: Sat,  9 Nov 2024 15:08:02 +0300
-Message-Id: <20241109120901.3295995-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 34/58] target/riscv/kvm: set 'aia_mode' to default in
+ error path
+Date: Sat,  9 Nov 2024 15:08:35 +0300
+Message-Id: <20241109120901.3295995-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,76 +62,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-32-bit TSTEQ and TSTNE is subject to the same constraints as
-for 64-bit, but setcond_i32 and negsetcond_i32 were incorrectly
-using TCG_CT_CONST ("i") instead of TCG_CT_CONST_CMP ("C").
+When failing to set the selected AIA mode, 'aia_mode' is left untouched.
+This means that 'aia_mode' will not reflect the actual AIA mode,
+retrieved in 'default_aia_mode',
 
-Adjust the constraint and make tcg_target_const_match use the
-same sequence as tgen_cmp2: first check if the constant is a
-valid operand for TSTEQ/TSTNE, then accept everything for 32-bit
-non-test comparisons, finally check if the constant is a valid
-operand for 64-bit non-test comparisons.
+This is benign for now, but it will impact QMP query commands that will
+expose the 'aia_mode' value, retrieving the wrong value.
 
-Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: qemu-stable@nongnu.org
+Set 'aia_mode' to 'default_aia_mode' if we fail to change the AIA mode
+in KVM.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 615586cb356811e46c2e5f85c36db4b93f8381cd)
+While we're at it, rework the log/warning messages to be a bit less
+verbose. Instead of:
+
+KVM AIA: default mode is emul
+qemu-system-riscv64: warning: KVM AIA: failed to set KVM AIA mode
+
+We can use a single warning message:
+
+qemu-system-riscv64: warning: KVM AIA: failed to set KVM AIA mode 'auto', using default host mode 'emul'
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241028182037.290171-2-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit d201a127e164b1683df5e7c93c6d42a74122db99)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
-index ad587325fc..a27e346602 100644
---- a/tcg/s390x/tcg-target.c.inc
-+++ b/tcg/s390x/tcg-target.c.inc
-@@ -563,6 +563,20 @@ static bool tcg_target_const_match(int64_t val, int ct,
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index f6e3156b8d..b264760752 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1710,18 +1710,26 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+         error_report("KVM AIA: failed to get current KVM AIA mode");
+         exit(1);
+     }
+-    qemu_log("KVM AIA: default mode is %s\n",
+-             kvm_aia_mode_str(default_aia_mode));
+ 
+-    if (default_aia_mode != aia_mode) {
++    if (default_aia_mode == aia_mode) {
++        qemu_log("KVM AIA: using default host mode '%s'\n",
++                  kvm_aia_mode_str(default_aia_mode));
++    } else {
+         ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+                                 KVM_DEV_RISCV_AIA_CONFIG_MODE,
+                                 &aia_mode, true, NULL);
+-        if (ret < 0)
+-            warn_report("KVM AIA: failed to set KVM AIA mode");
+-        else
+-            qemu_log("KVM AIA: set current mode to %s\n",
++        if (ret < 0) {
++            warn_report("KVM AIA: failed to set KVM AIA mode '%s', using "
++                        "default host mode '%s'",
++                        kvm_aia_mode_str(aia_mode),
++                        kvm_aia_mode_str(default_aia_mode));
++
++            /* failed to change AIA mode, use default */
++            aia_mode = default_aia_mode;
++        } else {
++            qemu_log("KVM AIA: setting current mode to %s\n",
+                      kvm_aia_mode_str(aia_mode));
++        }
      }
  
-     if (ct & TCG_CT_CONST_CMP) {
-+        if (is_tst_cond(cond)) {
-+            if (is_const_p16(uval) >= 0) {
-+                return true;  /* TMxx */
-+            }
-+            if (risbg_mask(uval)) {
-+                return true;  /* RISBG */
-+            }
-+            return false;
-+        }
-+
-+        if (type == TCG_TYPE_I32) {
-+            return true;
-+        }
-+
-         switch (cond) {
-         case TCG_COND_EQ:
-         case TCG_COND_NE:
-@@ -582,13 +596,7 @@ static bool tcg_target_const_match(int64_t val, int ct,
-             break;
-         case TCG_COND_TSTNE:
-         case TCG_COND_TSTEQ:
--            if (is_const_p16(uval) >= 0) {
--                return true;  /* TMxx */
--            }
--            if (risbg_mask(uval)) {
--                return true;  /* RISBG */
--            }
--            break;
-+            /* checked above, fallthru */
-         default:
-             g_assert_not_reached();
-         }
-@@ -3221,9 +3229,9 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpcode op)
-     case INDEX_op_rotl_i64:
-     case INDEX_op_rotr_i32:
-     case INDEX_op_rotr_i64:
-+        return C_O1_I2(r, r, ri);
-     case INDEX_op_setcond_i32:
-     case INDEX_op_negsetcond_i32:
--        return C_O1_I2(r, r, ri);
-     case INDEX_op_setcond_i64:
-     case INDEX_op_negsetcond_i64:
-         return C_O1_I2(r, r, rC);
+     ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
 -- 
 2.39.5
 
