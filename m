@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5DE1D5E123
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C480CD5C0FC
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9fBk-0000jT-76; Sat, 09 Nov 2024 01:43:16 -0500
+	id 1t9fBz-0001VI-Rk; Sat, 09 Nov 2024 01:43:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f9b-0005LN-Vw; Sat, 09 Nov 2024 01:41:04 -0500
+ id 1t9fAX-0006aX-LW; Sat, 09 Nov 2024 01:42:08 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f9a-0002YU-Cj; Sat, 09 Nov 2024 01:41:03 -0500
+ id 1t9fAV-0002dR-8a; Sat, 09 Nov 2024 01:42:01 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D6D40A12FE;
- Sat,  9 Nov 2024 09:38:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9D2C6A1309;
+ Sat,  9 Nov 2024 09:38:11 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4AB46167DE1;
- Sat,  9 Nov 2024 09:39:05 +0300 (MSK)
-Received: (nullmailer pid 3272559 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 06F45167DEB;
+ Sat,  9 Nov 2024 09:39:06 +0300 (MSK)
+Received: (nullmailer pid 3272590 invoked by uid 1000);
  Sat, 09 Nov 2024 06:39:03 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Waldemar Kozaczuk <jwkozaczuk@gmail.com>, Keith Busch <kbusch@kernel.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 22/33] target/arm: Don't assert in regime_is_user()
- for E10 mmuidx values
-Date: Sat,  9 Nov 2024 09:38:48 +0300
-Message-Id: <20241109063903.3272404-22-mjt@tls.msk.ru>
+Subject: [Stable-7.2.15 32/33] hw/nvme: fix handling of over-committed queues
+Date: Sat,  9 Nov 2024 09:38:58 +0300
+Message-Id: <20241109063903.3272404-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 References: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,67 +62,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-In regime_is_user() we assert if we're passed an ARMMMUIdx_E10_*
-mmuidx value. This used to make sense because we only used this
-function in ptw.c and would never use it on this kind of stage 1+2
-mmuidx, only for an individual stage 1 or stage 2 mmuidx.
+If a host chooses to use the SQHD "hint" in the CQE to know if there is
+room in the submission queue for additional commands, it may result in a
+situation where there are not enough internal resources (struct
+NvmeRequest) available to process the command. For a lack of a better
+term, the host may "over-commit" the device (i.e., it may have more
+inflight commands than the queue size).
 
-However, when we implemented FEAT_E0PD we added a callsite in
-aa64_va_parameters(), which means this can now be called for
-stage 1+2 mmuidx values if the guest sets the TCG_ELX.{E0PD0,E0PD1}
-bits to enable use of the feature. This will then result in
-an assertion failure later, for instance on a TLBI operation:
+For example, assume a queue with N entries. The host submits N commands
+and all are picked up for processing, advancing the head and emptying
+the queue. Regardless of which of these N commands complete first, the
+SQHD field of that CQE will indicate to the host that the queue is
+empty, which allows the host to issue N commands again. However, if the
+device has not posted CQEs for all the previous commands yet, the device
+will have less than N resources available to process the commands, so
+queue processing is suspended.
 
-#6  0x00007ffff6d0e70f in g_assertion_message_expr
-    (domain=0x0, file=0x55555676eeba "../../target/arm/internals.h", line=978, func=0x555556771d48 <__func__.5> "regime_is_user", expr=<optimised out>)
-    at ../../../glib/gtestutils.c:3279
-#7  0x0000555555f286d2 in regime_is_user (env=0x555557f2fe00, mmu_idx=ARMMMUIdx_E10_0) at ../../target/arm/internals.h:978
-#8  0x0000555555f3e31c in aa64_va_parameters (env=0x555557f2fe00, va=18446744073709551615, mmu_idx=ARMMMUIdx_E10_0, data=true, el1_is_aa32=false)
-    at ../../target/arm/helper.c:12048
-#9  0x0000555555f3163b in tlbi_aa64_get_range (env=0x555557f2fe00, mmuidx=ARMMMUIdx_E10_0, value=106721347371041) at ../../target/arm/helper.c:5214
-#10 0x0000555555f317e8 in do_rvae_write (env=0x555557f2fe00, value=106721347371041, idxmap=21, synced=true) at ../../target/arm/helper.c:5260
-#11 0x0000555555f31925 in tlbi_aa64_rvae1is_write (env=0x555557f2fe00, ri=0x555557fbeae0, value=106721347371041) at ../../target/arm/helper.c:5302
-#12 0x0000555556036f8f in helper_set_cp_reg64 (env=0x555557f2fe00, rip=0x555557fbeae0, value=106721347371041) at ../../target/arm/tcg/op_helper.c:965
+And here lies an 11 year latent bug. In the absense of any additional
+tail updates on the submission queue, we never schedule the processing
+bottom-half again unless we observe a head update on an associated full
+completion queue. This has been sufficient to handle N-to-1 SQ/CQ setups
+(in the absense of over-commit of course). Incidentially, that "kick all
+associated SQs" mechanism can now be killed since we now just schedule
+queue processing when we return a processing resource to a non-empty
+submission queue, which happens to cover both edge cases. However, we
+must retain kicking the CQ if it was previously full.
 
-Since we do know whether these mmuidx values are for usermode
-or not, we can easily make regime_is_user() handle them:
-ARMMMUIdx_E10_0 is user, and the other two are not.
+So, apparently, no previous driver tested with hw/nvme has ever used
+SQHD (e.g., neither the Linux NVMe driver or SPDK uses it). But then OSv
+shows up with the driver that actually does. I salute you.
 
+Fixes: f3c507adcd7b ("NVMe: Initial commit for new storage interface")
 Cc: qemu-stable@nongnu.org
-Fixes: e4c93e44ab103f ("target/arm: Implement FEAT_E0PD")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20241017172331.822587-1-peter.maydell@linaro.org
-(cherry picked from commit 1505b651fdbd9af59a4a90876a62ae7ea2d4cd39)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2388
+Reported-by: Waldemar Kozaczuk <jwkozaczuk@gmail.com>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 9529aa6bb4d18763f5b4704cb4198bd25cbbee31)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 3c7ff51c99..bdd89ae21e 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -723,6 +723,7 @@ static inline uint32_t regime_el(CPUARMState *env, ARMMMUIdx mmu_idx)
- static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
- {
-     switch (mmu_idx) {
-+    case ARMMMUIdx_E10_0:
-     case ARMMMUIdx_E20_0:
-     case ARMMMUIdx_Stage1_E0:
-     case ARMMMUIdx_MUser:
-@@ -732,10 +733,6 @@ static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
-         return true;
-     default:
-         return false;
--    case ARMMMUIdx_E10_0:
--    case ARMMMUIdx_E10_1:
--    case ARMMMUIdx_E10_1_PAN:
--        g_assert_not_reached();
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index ed56ad40b3..5710392e30 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -1385,9 +1385,16 @@ static void nvme_post_cqes(void *opaque)
+             stl_le_p(&n->bar.csts, NVME_CSTS_FAILED);
+             break;
+         }
++
+         QTAILQ_REMOVE(&cq->req_list, req, entry);
++
+         nvme_inc_cq_tail(cq);
+         nvme_sg_unmap(&req->sg);
++
++        if (QTAILQ_EMPTY(&sq->req_list) && !nvme_sq_empty(sq)) {
++            qemu_bh_schedule(sq->bh);
++        }
++
+         QTAILQ_INSERT_TAIL(&sq->req_list, req, entry);
      }
- }
+     if (cq->tail != cq->head) {
+@@ -6792,7 +6799,6 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
+         /* Completion queue doorbell write */
  
+         uint16_t new_head = val & 0xffff;
+-        int start_sqs;
+         NvmeCQueue *cq;
+ 
+         qid = (addr - (0x1000 + (1 << 2))) >> 3;
+@@ -6843,19 +6849,16 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
+ 
+         trace_pci_nvme_mmio_doorbell_cq(cq->cqid, new_head);
+ 
+-        start_sqs = nvme_cq_full(cq) ? 1 : 0;
++        /* scheduled deferred cqe posting if queue was previously full */
++        if (nvme_cq_full(cq)) {
++            qemu_bh_schedule(cq->bh);
++        }
++
+         cq->head = new_head;
+         if (!qid && n->dbbuf_enabled) {
+             pci_dma_write(&n->parent_obj, cq->db_addr, &cq->head,
+                           sizeof(cq->head));
+         }
+-        if (start_sqs) {
+-            NvmeSQueue *sq;
+-            QTAILQ_FOREACH(sq, &cq->sq_list, entry) {
+-                qemu_bh_schedule(sq->bh);
+-            }
+-            qemu_bh_schedule(cq->bh);
+-        }
+ 
+         if (cq->tail == cq->head) {
+             if (cq->irq_enabled) {
 -- 
 2.39.5
 
