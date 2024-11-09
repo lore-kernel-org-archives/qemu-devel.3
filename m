@@ -4,38 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CBBED5E364
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24564D5E365
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9idK-0002X8-BT; Sat, 09 Nov 2024 05:23:58 -0500
+	id 1t9iby-0006SO-5d; Sat, 09 Nov 2024 05:22:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iYk-0002ft-Gn; Sat, 09 Nov 2024 05:19:15 -0500
+ id 1t9iWy-0007Kg-3c; Sat, 09 Nov 2024 05:17:25 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iYi-0008Eu-Eh; Sat, 09 Nov 2024 05:19:14 -0500
+ id 1t9iWw-00087Y-DP; Sat, 09 Nov 2024 05:17:23 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E388CA1415;
+ by isrv.corpit.ru (Postfix) with ESMTP id 091E6A1404;
  Sat,  9 Nov 2024 13:13:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8BF18167F00;
- Sat,  9 Nov 2024 13:14:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9DFB8167EEF;
+ Sat,  9 Nov 2024 13:14:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Waldemar Kozaczuk <jwkozaczuk@gmail.com>, Keith Busch <kbusch@kernel.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 48/49] hw/nvme: fix handling of over-committed queues
-Date: Sat,  9 Nov 2024 13:14:39 +0300
-Message-Id: <20241109101443.312701-48-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 31/49] net: fix build when libbpf is disabled,
+ but libxdp is enabled
+Date: Sat,  9 Nov 2024 13:14:22 +0300
+Message-Id: <20241109101443.312701-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,100 +62,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-If a host chooses to use the SQHD "hint" in the CQE to know if there is
-room in the submission queue for additional commands, it may result in a
-situation where there are not enough internal resources (struct
-NvmeRequest) available to process the command. For a lack of a better
-term, the host may "over-commit" the device (i.e., it may have more
-inflight commands than the queue size).
+The net/af-xdp.c code is enabled when the libxdp library is present,
+however, it also has direct API calls to bpf_xdp_query_id &
+bpf_xdp_detach which are provided by the libbpf library.
 
-For example, assume a queue with N entries. The host submits N commands
-and all are picked up for processing, advancing the head and emptying
-the queue. Regardless of which of these N commands complete first, the
-SQHD field of that CQE will indicate to the host that the queue is
-empty, which allows the host to issue N commands again. However, if the
-device has not posted CQEs for all the previous commands yet, the device
-will have less than N resources available to process the commands, so
-queue processing is suspended.
+As a result if building with --disable-libbpf, but libxdp gets
+auto-detected, we'll fail to link QEMU
 
-And here lies an 11 year latent bug. In the absense of any additional
-tail updates on the submission queue, we never schedule the processing
-bottom-half again unless we observe a head update on an associated full
-completion queue. This has been sufficient to handle N-to-1 SQ/CQ setups
-(in the absense of over-commit of course). Incidentially, that "kick all
-associated SQs" mechanism can now be killed since we now just schedule
-queue processing when we return a processing resource to a non-empty
-submission queue, which happens to cover both edge cases. However, we
-must retain kicking the CQ if it was previously full.
+  /usr/bin/ld: libcommon.a.p/net_af-xdp.c.o: undefined reference to symbol 'bpf_xdp_query_id@@LIBBPF_0.7.0'
 
-So, apparently, no previous driver tested with hw/nvme has ever used
-SQHD (e.g., neither the Linux NVMe driver or SPDK uses it). But then OSv
-shows up with the driver that actually does. I salute you.
+There are two bugs here
 
-Fixes: f3c507adcd7b ("NVMe: Initial commit for new storage interface")
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2388
-Reported-by: Waldemar Kozaczuk <jwkozaczuk@gmail.com>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 9529aa6bb4d18763f5b4704cb4198bd25cbbee31)
+ * Since we have direct libbpf API calls, when building
+   net/af-xdp.c, we must tell meson that libbpf is a
+   dependancy, so that we directly link to it, rather
+   than relying on indirect linkage.
+
+ * When must skip probing for libxdp at all, when libbpf
+   is not found, raising an error if --enable-libxdp was
+   given explicitly.
+
+Fixes: cb039ef3d9e3112da01e1ecd9b136ac9809ef733
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 1f37280b37dbf85f36748f359a9f8802c8fe7ccd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index ca54c250b2..359313dbcb 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -1516,9 +1516,16 @@ static void nvme_post_cqes(void *opaque)
-             stl_le_p(&n->bar.csts, NVME_CSTS_FAILED);
-             break;
-         }
-+
-         QTAILQ_REMOVE(&cq->req_list, req, entry);
-+
-         nvme_inc_cq_tail(cq);
-         nvme_sg_unmap(&req->sg);
-+
-+        if (QTAILQ_EMPTY(&sq->req_list) && !nvme_sq_empty(sq)) {
-+            qemu_bh_schedule(sq->bh);
-+        }
-+
-         QTAILQ_INSERT_TAIL(&sq->req_list, req, entry);
-     }
-     if (cq->tail != cq->head) {
-@@ -7575,7 +7582,6 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
-         /* Completion queue doorbell write */
+diff --git a/meson.build b/meson.build
+index 79de6f7fc8..048e07a648 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1909,8 +1909,14 @@ endif
+ # libxdp
+ libxdp = not_found
+ if not get_option('af_xdp').auto() or have_system
+-    libxdp = dependency('libxdp', required: get_option('af_xdp'),
+-                        version: '>=1.4.0', method: 'pkg-config')
++    if libbpf.found()
++        libxdp = dependency('libxdp', required: get_option('af_xdp'),
++                            version: '>=1.4.0', method: 'pkg-config')
++    else
++        if get_option('af_xdp').enabled()
++            error('libxdp requested, but libbpf is not available')
++        endif
++    endif
+ endif
  
-         uint16_t new_head = val & 0xffff;
--        int start_sqs;
-         NvmeCQueue *cq;
+ # libdw
+diff --git a/net/meson.build b/net/meson.build
+index ce99bd4447..7264479242 100644
+--- a/net/meson.build
++++ b/net/meson.build
+@@ -37,7 +37,7 @@ if have_netmap
+   system_ss.add(files('netmap.c'))
+ endif
  
-         qid = (addr - (0x1000 + (1 << 2))) >> 3;
-@@ -7626,18 +7632,15 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
+-system_ss.add(when: libxdp, if_true: files('af-xdp.c'))
++system_ss.add(when: [libxdp, libbpf], if_true: files('af-xdp.c'))
  
-         trace_pci_nvme_mmio_doorbell_cq(cq->cqid, new_head);
- 
--        start_sqs = nvme_cq_full(cq) ? 1 : 0;
-+        /* scheduled deferred cqe posting if queue was previously full */
-+        if (nvme_cq_full(cq)) {
-+            qemu_bh_schedule(cq->bh);
-+        }
-+
-         cq->head = new_head;
-         if (!qid && n->dbbuf_enabled) {
-             stl_le_pci_dma(pci, cq->db_addr, cq->head, MEMTXATTRS_UNSPECIFIED);
-         }
--        if (start_sqs) {
--            NvmeSQueue *sq;
--            QTAILQ_FOREACH(sq, &cq->sq_list, entry) {
--                qemu_bh_schedule(sq->bh);
--            }
--            qemu_bh_schedule(cq->bh);
--        }
- 
-         if (cq->tail == cq->head) {
-             if (cq->irq_enabled) {
+ if have_vhost_net_user
+   system_ss.add(when: 'CONFIG_VIRTIO_NET', if_true: files('vhost-user.c'), if_false: files('vhost-user-stub.c'))
 -- 
 2.39.5
 
