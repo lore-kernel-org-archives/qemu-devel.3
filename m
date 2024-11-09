@@ -4,39 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DECCD5E365
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B386D5E362
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:22:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9iXr-00018q-2j; Sat, 09 Nov 2024 05:18:19 -0500
+	id 1t9ibc-0005gI-O0; Sat, 09 Nov 2024 05:22:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iW6-00060e-Jo; Sat, 09 Nov 2024 05:16:34 -0500
+ id 1t9iWb-0006Tl-0K; Sat, 09 Nov 2024 05:17:01 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iW4-0007yi-0v; Sat, 09 Nov 2024 05:16:30 -0500
+ id 1t9iWY-000879-6w; Sat, 09 Nov 2024 05:17:00 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 80C0FA13FC;
+ by isrv.corpit.ru (Postfix) with ESMTP id CEEBBA1402;
  Sat,  9 Nov 2024 13:13:50 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2CAB4167EE7;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 79DC0167EED;
  Sat,  9 Nov 2024 13:14:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexander Graf <graf@amazon.com>,
- Eduard Vlad <evlad@amazon.de>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 23/49] target/i386: Walk NPT in guest real mode
-Date: Sat,  9 Nov 2024 13:14:14 +0300
-Message-Id: <20241109101443.312701-23-mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 29/49] dockerfiles: fix default targets for
+ debian-loongarch-cross
+Date: Sat,  9 Nov 2024 13:14:20 +0300
+Message-Id: <20241109101443.312701-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,102 +64,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Graf <graf@amazon.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-When translating virtual to physical address with a guest CPU that
-supports nested paging (NPT), we need to perform every page table walk
-access indirectly through the NPT, which we correctly do.
+fix system target name, and remove --disable-system (which deactivates
+system target).
 
-However, we treat real mode (no page table walk) special: In that case,
-we currently just skip any walks and translate VA -> PA. With NPT
-enabled, we also need to then perform NPT walk to do GVA -> GPA -> HPA
-which we fail to do so far.
+Found using: make docker-test-build@debian-loongarch-cross V=1
 
-The net result of that is that TCG VMs with NPT enabled that execute
-real mode code (like SeaBIOS) end up with GPA==HPA mappings which means
-the guest accesses host code and data. This typically shows as failure
-to boot guests.
-
-This patch changes the page walk logic for NPT enabled guests so that we
-always perform a GVA -> GPA translation and then skip any logic that
-requires an actual PTE.
-
-That way, all remaining logic to walk the NPT stays and we successfully
-walk the NPT in real mode.
-
-Cc: qemu-stable@nongnu.org
-Fixes: fe441054bb3f0 ("target-i386: Add NPT support")
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Reported-by: Eduard Vlad <evlad@amazon.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240921085712.28902-1-graf@amazon.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit b56617bbcb473c25815d1bf475e326f84563b1de)
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20241020213759.2168248-1-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20241023113406.1284676-10-alex.bennee@linaro.org>
+(cherry picked from commit 24be5341fbeea341cca38b59d4c0928a8cf5fac1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 7a57b7dd10..319b23762c 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -149,6 +149,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-     uint32_t pkr;
-     int page_size;
-     int error_code;
-+    int prot;
+diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+index 6a9197528b..576e35972f 100644
+--- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
++++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+@@ -42,8 +42,8 @@ RUN curl -#SL https://github.com/loongson/build-tools/releases/download/2023.08.
+ ENV PATH $PATH:/opt/cross-tools/bin
+ ENV LD_LIBRARY_PATH /opt/cross-tools/lib:/opt/cross-tools/loongarch64-unknown-linux-gnu/lib:$LD_LIBRARY_PATH
  
-  restart_all:
-     rsvd_mask = ~MAKE_64BIT_MASK(0, env_archcpu(env)->phys_bits);
-@@ -297,7 +298,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         /* combine pde and pte nx, user and rw protections */
-         ptep &= pte ^ PG_NX_MASK;
-         page_size = 4096;
--    } else {
-+    } else if (pg_mode) {
-         /*
-          * Page table level 2
-          */
-@@ -342,6 +343,15 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         ptep &= pte | PG_NX_MASK;
-         page_size = 4096;
-         rsvd_mask = 0;
-+    } else {
-+        /*
-+         * No paging (real mode), let's tentatively resolve the address as 1:1
-+         * here, but conditionally still perform an NPT walk on it later.
-+         */
-+        page_size = 0x40000000;
-+        paddr = in->addr;
-+        prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-+        goto stage2;
-     }
+-ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
+-ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch-softmmu
++ENV QEMU_CONFIGURE_OPTS --disable-docs --disable-tools
++ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch64-softmmu
+ ENV MAKE /usr/bin/make
  
- do_check_protect:
-@@ -357,7 +367,7 @@ do_check_protect_pse36:
-         goto do_fault_protect;
-     }
- 
--    int prot = 0;
-+    prot = 0;
-     if (!is_mmu_index_smap(in->mmu_idx) || !(ptep & PG_USER_MASK)) {
-         prot |= PAGE_READ;
-         if ((ptep & PG_RW_MASK) || !(is_user || (pg_mode & PG_MODE_WP))) {
-@@ -419,6 +429,7 @@ do_check_protect_pse36:
- 
-     /* merge offset within page */
-     paddr = (pte & PG_ADDRESS_MASK & ~(page_size - 1)) | (addr & (page_size - 1));
-+ stage2:
- 
-     /*
-      * Note that NPT is walked (for both paging structures and final guest
-@@ -561,7 +572,7 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
-             addr = (uint32_t)addr;
-         }
- 
--        if (likely(env->cr[0] & CR0_PG_MASK)) {
-+        if (likely(env->cr[0] & CR0_PG_MASK || use_stage2)) {
-             in.cr3 = env->cr[3];
-             in.mmu_idx = mmu_idx;
-             in.ptw_idx = use_stage2 ? MMU_NESTED_IDX : MMU_PHYS_IDX;
+ # As a final step configure the user (if env is defined)
 -- 
 2.39.5
 
