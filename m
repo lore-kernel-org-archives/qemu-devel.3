@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF8CED5E364
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB7B3D5E365
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:24:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9iZn-0003vL-JY; Sat, 09 Nov 2024 05:20:20 -0500
+	id 1t9icx-0000Dz-Ir; Sat, 09 Nov 2024 05:23:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iWv-0007Jg-CH; Sat, 09 Nov 2024 05:17:24 -0500
+ id 1t9iXV-0007pj-B4; Sat, 09 Nov 2024 05:17:58 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iWt-00087J-DU; Sat, 09 Nov 2024 05:17:21 -0500
+ id 1t9iXS-0008Av-TW; Sat, 09 Nov 2024 05:17:56 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E92E3A1403;
- Sat,  9 Nov 2024 13:13:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 78ABBA140B;
+ Sat,  9 Nov 2024 13:13:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 83C13167EEE;
- Sat,  9 Nov 2024 13:14:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1A96D167EF6;
+ Sat,  9 Nov 2024 13:14:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Weil <sw@weilnetz.de>,
- Zhang Chen <chen.zhang@intel.com>, Jason Wang <jasowang@redhat.com>,
+Cc: qemu-stable@nongnu.org, Rob Bradford <rbradford@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 30/49] Fix calculation of minimum in colo_compare_tcp
-Date: Sat,  9 Nov 2024 13:14:21 +0300
-Message-Id: <20241109101443.312701-30-mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 38/49] target/riscv: Set vtype.vill on CPU reset
+Date: Sat,  9 Nov 2024 13:14:29 +0300
+Message-Id: <20241109101443.312701-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
@@ -60,33 +61,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Weil <sw@weilnetz.de>
+From: Rob Bradford <rbradford@rivosinc.com>
 
-GitHub's CodeQL reports a critical error which is fixed by using the MIN macro:
+The RISC-V unprivileged specification "31.3.11. State of Vector
+Extension at Reset" has a note that recommends vtype.vill be set on
+reset as part of ensuring that the vector extension have a consistent
+state at reset.
 
-    Unsigned difference expression compared to zero
+This change now makes QEMU consistent with Spike which sets vtype.vill
+on reset.
 
-Signed-off-by: Stefan Weil <sw@weilnetz.de>
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Zhang Chen <chen.zhang@intel.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit e29bc931e1699a98959680f6776b48673825762b)
+Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20240930165258.72258-1-rbradford@rivosinc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit f8c1f36a2e3dab4935e7c5690e578ac71765766b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/net/colo-compare.c b/net/colo-compare.c
-index 7f9e6f89ce..d4e51cb306 100644
---- a/net/colo-compare.c
-+++ b/net/colo-compare.c
-@@ -413,8 +413,7 @@ static void colo_compare_tcp(CompareState *s, Connection *conn)
-      * can ensure that the packet's payload is acknowledged by
-      * primary and secondary.
-     */
--    uint32_t min_ack = conn->pack - conn->sack > 0 ?
--                       conn->sack : conn->pack;
-+    uint32_t min_ack = MIN(conn->pack, conn->sack);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 77cb59b8a1..eb0e856056 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -910,6 +910,7 @@ static void riscv_cpu_reset_hold(Object *obj)
+     cs->exception_index = RISCV_EXCP_NONE;
+     env->load_res = -1;
+     set_default_nan_mode(1, &env->fp_status);
++    env->vill = true;
  
- pri:
-     if (g_queue_is_empty(&conn->primary_list)) {
+ #ifndef CONFIG_USER_ONLY
+     if (cpu->cfg.debug) {
 -- 
 2.39.5
 
