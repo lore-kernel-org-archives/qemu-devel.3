@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24564D5E365
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6EFBD5E362
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9iby-0006SO-5d; Sat, 09 Nov 2024 05:22:34 -0500
+	id 1t9ib4-00053G-Lv; Sat, 09 Nov 2024 05:21:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iWy-0007Kg-3c; Sat, 09 Nov 2024 05:17:25 -0500
+ id 1t9iX1-0007O1-PK; Sat, 09 Nov 2024 05:17:31 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iWw-00087Y-DP; Sat, 09 Nov 2024 05:17:23 -0500
+ id 1t9iWz-00088y-P6; Sat, 09 Nov 2024 05:17:27 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 091E6A1404;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1C423A1406;
  Sat,  9 Nov 2024 13:13:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9DFB8167EEF;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BDCB6167EF1;
  Sat,  9 Nov 2024 13:14:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 31/49] net: fix build when libbpf is disabled,
- but libxdp is enabled
-Date: Sat,  9 Nov 2024 13:14:22 +0300
-Message-Id: <20241109101443.312701-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 33/49] target/arm: Don't assert in regime_is_user() for
+ E10 mmuidx values
+Date: Sat,  9 Nov 2024 13:14:24 +0300
+Message-Id: <20241109101443.312701-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
@@ -62,68 +63,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The net/af-xdp.c code is enabled when the libxdp library is present,
-however, it also has direct API calls to bpf_xdp_query_id &
-bpf_xdp_detach which are provided by the libbpf library.
+In regime_is_user() we assert if we're passed an ARMMMUIdx_E10_*
+mmuidx value. This used to make sense because we only used this
+function in ptw.c and would never use it on this kind of stage 1+2
+mmuidx, only for an individual stage 1 or stage 2 mmuidx.
 
-As a result if building with --disable-libbpf, but libxdp gets
-auto-detected, we'll fail to link QEMU
+However, when we implemented FEAT_E0PD we added a callsite in
+aa64_va_parameters(), which means this can now be called for
+stage 1+2 mmuidx values if the guest sets the TCG_ELX.{E0PD0,E0PD1}
+bits to enable use of the feature. This will then result in
+an assertion failure later, for instance on a TLBI operation:
 
-  /usr/bin/ld: libcommon.a.p/net_af-xdp.c.o: undefined reference to symbol 'bpf_xdp_query_id@@LIBBPF_0.7.0'
+#6  0x00007ffff6d0e70f in g_assertion_message_expr
+    (domain=0x0, file=0x55555676eeba "../../target/arm/internals.h", line=978, func=0x555556771d48 <__func__.5> "regime_is_user", expr=<optimised out>)
+    at ../../../glib/gtestutils.c:3279
+#7  0x0000555555f286d2 in regime_is_user (env=0x555557f2fe00, mmu_idx=ARMMMUIdx_E10_0) at ../../target/arm/internals.h:978
+#8  0x0000555555f3e31c in aa64_va_parameters (env=0x555557f2fe00, va=18446744073709551615, mmu_idx=ARMMMUIdx_E10_0, data=true, el1_is_aa32=false)
+    at ../../target/arm/helper.c:12048
+#9  0x0000555555f3163b in tlbi_aa64_get_range (env=0x555557f2fe00, mmuidx=ARMMMUIdx_E10_0, value=106721347371041) at ../../target/arm/helper.c:5214
+#10 0x0000555555f317e8 in do_rvae_write (env=0x555557f2fe00, value=106721347371041, idxmap=21, synced=true) at ../../target/arm/helper.c:5260
+#11 0x0000555555f31925 in tlbi_aa64_rvae1is_write (env=0x555557f2fe00, ri=0x555557fbeae0, value=106721347371041) at ../../target/arm/helper.c:5302
+#12 0x0000555556036f8f in helper_set_cp_reg64 (env=0x555557f2fe00, rip=0x555557fbeae0, value=106721347371041) at ../../target/arm/tcg/op_helper.c:965
 
-There are two bugs here
+Since we do know whether these mmuidx values are for usermode
+or not, we can easily make regime_is_user() handle them:
+ARMMMUIdx_E10_0 is user, and the other two are not.
 
- * Since we have direct libbpf API calls, when building
-   net/af-xdp.c, we must tell meson that libbpf is a
-   dependancy, so that we directly link to it, rather
-   than relying on indirect linkage.
-
- * When must skip probing for libxdp at all, when libbpf
-   is not found, raising an error if --enable-libxdp was
-   given explicitly.
-
-Fixes: cb039ef3d9e3112da01e1ecd9b136ac9809ef733
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit 1f37280b37dbf85f36748f359a9f8802c8fe7ccd)
+Cc: qemu-stable@nongnu.org
+Fixes: e4c93e44ab103f ("target/arm: Implement FEAT_E0PD")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20241017172331.822587-1-peter.maydell@linaro.org
+(cherry picked from commit 1505b651fdbd9af59a4a90876a62ae7ea2d4cd39)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/meson.build b/meson.build
-index 79de6f7fc8..048e07a648 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1909,8 +1909,14 @@ endif
- # libxdp
- libxdp = not_found
- if not get_option('af_xdp').auto() or have_system
--    libxdp = dependency('libxdp', required: get_option('af_xdp'),
--                        version: '>=1.4.0', method: 'pkg-config')
-+    if libbpf.found()
-+        libxdp = dependency('libxdp', required: get_option('af_xdp'),
-+                            version: '>=1.4.0', method: 'pkg-config')
-+    else
-+        if get_option('af_xdp').enabled()
-+            error('libxdp requested, but libbpf is not available')
-+        endif
-+    endif
- endif
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 0aa49a0b42..b93206f88f 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -752,6 +752,7 @@ static inline uint32_t regime_el(CPUARMState *env, ARMMMUIdx mmu_idx)
+ static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
+ {
+     switch (mmu_idx) {
++    case ARMMMUIdx_E10_0:
+     case ARMMMUIdx_E20_0:
+     case ARMMMUIdx_Stage1_E0:
+     case ARMMMUIdx_MUser:
+@@ -761,10 +762,6 @@ static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
+         return true;
+     default:
+         return false;
+-    case ARMMMUIdx_E10_0:
+-    case ARMMMUIdx_E10_1:
+-    case ARMMMUIdx_E10_1_PAN:
+-        g_assert_not_reached();
+     }
+ }
  
- # libdw
-diff --git a/net/meson.build b/net/meson.build
-index ce99bd4447..7264479242 100644
---- a/net/meson.build
-+++ b/net/meson.build
-@@ -37,7 +37,7 @@ if have_netmap
-   system_ss.add(files('netmap.c'))
- endif
- 
--system_ss.add(when: libxdp, if_true: files('af-xdp.c'))
-+system_ss.add(when: [libxdp, libbpf], if_true: files('af-xdp.c'))
- 
- if have_vhost_net_user
-   system_ss.add(when: 'CONFIG_VIRTIO_NET', if_true: files('vhost-user.c'), if_false: files('vhost-user-stub.c'))
 -- 
 2.39.5
 
