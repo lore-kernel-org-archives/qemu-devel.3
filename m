@@ -4,39 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF566D5E36C
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4666D5E36D
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:37:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kLv-0006ti-Cb; Sat, 09 Nov 2024 07:14:07 -0500
+	id 1t9kTv-0005nx-Qj; Sat, 09 Nov 2024 07:22:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kLl-0005xl-9O; Sat, 09 Nov 2024 07:13:57 -0500
+ id 1t9kRZ-0002bf-VB; Sat, 09 Nov 2024 07:19:59 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kLj-0004fm-Ip; Sat, 09 Nov 2024 07:13:56 -0500
+ id 1t9kRY-0005X4-CK; Sat, 09 Nov 2024 07:19:57 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CAF2DA161A;
- Sat,  9 Nov 2024 15:07:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 99603A1658;
+ Sat,  9 Nov 2024 15:08:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 93CAA167FA8;
- Sat,  9 Nov 2024 15:08:04 +0300 (MSK)
-Received: (nullmailer pid 3295407 invoked by uid 1000);
- Sat, 09 Nov 2024 12:08:01 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 5E5D4167FDE;
+ Sat,  9 Nov 2024 15:09:04 +0300 (MSK)
+Received: (nullmailer pid 3296269 invoked by uid 1000);
+ Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 50/57] ppc/xive: Fix ESB length overflow on 32-bit hosts
-Date: Sat,  9 Nov 2024 15:07:52 +0300
-Message-Id: <20241109120801.3295120-50-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Chalapathi V <chalapathi.v@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 46/58] hw/ssi/pnv_spi: Fixes Coverity CID 1558831
+Date: Sat,  9 Nov 2024 15:08:47 +0300
+Message-Id: <20241109120901.3295995-46-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
-References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
+References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,63 +64,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Chalapathi V <chalapathi.v@linux.ibm.com>
 
-The length of this region can be > 32-bits, which overflows size_t on
-32-bit hosts. Change to uint64_t.
+In this commit the following coverity scan defect has been fixed
+CID 1558831:  Resource leaks  (RESOURCE_LEAK)
+  Variable "rsp_payload" going out of scope leaks the storage it
+  points to.
 
+Cc: qemu-stable@nongnu.org
+Fixes: Coverity CID 1558831
+Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+Fixes: b4cb930e40 ("hw/ssi: Extend SPI model")
+[PMD: Rebased on previous commit (returning earlier)]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 07f2770503e24889720028ddf9ef54788ddf3b6d)
+(cherry picked from commit 031324472eee57bce9bd4a0231aa9b137494d8a1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/spapr_xive_kvm.c b/hw/intc/spapr_xive_kvm.c
-index 5789062379..7a86197fc9 100644
---- a/hw/intc/spapr_xive_kvm.c
-+++ b/hw/intc/spapr_xive_kvm.c
-@@ -720,7 +720,7 @@ int kvmppc_xive_connect(SpaprInterruptController *intc, uint32_t nr_servers,
- {
-     SpaprXive *xive = SPAPR_XIVE(intc);
-     XiveSource *xsrc = &xive->source;
--    size_t esb_len = xive_source_esb_len(xsrc);
-+    uint64_t esb_len = xive_source_esb_len(xsrc);
-     size_t tima_len = 4ull << TM_SHIFT;
-     CPUState *cs;
-     int fd;
-@@ -824,7 +824,7 @@ void kvmppc_xive_disconnect(SpaprInterruptController *intc)
- {
-     SpaprXive *xive = SPAPR_XIVE(intc);
-     XiveSource *xsrc;
--    size_t esb_len;
-+    uint64_t esb_len;
- 
-     assert(xive->fd != -1);
- 
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index 057b308ae9..38cb98b0f7 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -1238,7 +1238,7 @@ static void xive_source_reset(void *dev)
- static void xive_source_realize(DeviceState *dev, Error **errp)
- {
-     XiveSource *xsrc = XIVE_SOURCE(dev);
--    size_t esb_len = xive_source_esb_len(xsrc);
-+    uint64_t esb_len = xive_source_esb_len(xsrc);
- 
-     assert(xsrc->xive);
- 
-diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
-index f120874e0f..00023c0233 100644
---- a/include/hw/ppc/xive.h
-+++ b/include/hw/ppc/xive.h
-@@ -218,7 +218,7 @@ static inline bool xive_source_esb_has_2page(XiveSource *xsrc)
-         xsrc->esb_shift == XIVE_ESB_4K_2PAGE;
+diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
+index 05e6afc11e..eadc36fa86 100644
+--- a/hw/ssi/pnv_spi.c
++++ b/hw/ssi/pnv_spi.c
+@@ -239,6 +239,7 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payload)
+         }
+     }
+     spi_response(s, s->N1_bits, rsp_payload);
++    pnv_spi_xfer_buffer_free(rsp_payload);
  }
  
--static inline size_t xive_source_esb_len(XiveSource *xsrc)
-+static inline uint64_t xive_source_esb_len(XiveSource *xsrc)
- {
-     return (1ull << xsrc->esb_shift) * xsrc->nr_irqs;
- }
+ static inline uint8_t get_seq_index(PnvSpi *s)
 -- 
 2.39.5
 
