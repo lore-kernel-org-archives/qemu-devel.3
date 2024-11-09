@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E44D9D5E368
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B81C8D5E369
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:38:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kLn-000600-DR; Sat, 09 Nov 2024 07:13:59 -0500
+	id 1t9kQH-0007jm-H8; Sat, 09 Nov 2024 07:18:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kLL-0005HZ-AF; Sat, 09 Nov 2024 07:13:34 -0500
+ id 1t9kOa-0005DF-Jv; Sat, 09 Nov 2024 07:16:54 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kLJ-0004fM-NQ; Sat, 09 Nov 2024 07:13:31 -0500
+ id 1t9kOY-0005AX-Qa; Sat, 09 Nov 2024 07:16:52 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AF54FA1618;
- Sat,  9 Nov 2024 15:07:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C0111A163B;
+ Sat,  9 Nov 2024 15:08:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 7457C167FA6;
- Sat,  9 Nov 2024 15:08:04 +0300 (MSK)
-Received: (nullmailer pid 3295401 invoked by uid 1000);
- Sat, 09 Nov 2024 12:08:01 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 8567C167FC2;
+ Sat,  9 Nov 2024 15:09:02 +0300 (MSK)
+Received: (nullmailer pid 3296182 invoked by uid 1000);
+ Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 48/57] target/ppc: Set ctx->opcode for decode_insn32()
-Date: Sat,  9 Nov 2024 15:07:50 +0300
-Message-Id: <20241109120801.3295120-48-mjt@tls.msk.ru>
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 18/58] dockerfiles: fix default targets for
+ debian-loongarch-cross
+Date: Sat,  9 Nov 2024 15:08:19 +0300
+Message-Id: <20241109120901.3295995-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
-References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
+References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,50 +66,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-divdu (without a dot) sometimes updates cr0, even though it shouldn't.
-The reason is that gen_op_arith_divd() checks Rc(ctx->opcode), which is
-not initialized. This field is initialized only for instructions that
-go through decode_legacy(), and not decodetree.
+fix system target name, and remove --disable-system (which deactivates
+system target).
 
-There already was a similar issue fixed in commit 86e6202a57b1
-("target/ppc: Make divw[u] handler method decodetree compatible.").
+Found using: make docker-test-build@debian-loongarch-cross V=1
 
-It's not immediately clear what else may access the uninitialized
-ctx->opcode, so instead of playing whack-a-mole and changing the check
-to compute_rc0, simply initialize ctx->opcode.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 99082815f17f ("target/ppc: Add infrastructure for prefixed insns")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit c9b8a13a8841e0e23901e57e24ea98eeef16cf91)
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20241020213759.2168248-1-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20241023113406.1284676-10-alex.bennee@linaro.org>
+(cherry picked from commit 24be5341fbeea341cca38b59d4c0928a8cf5fac1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 93ffec787c..a7972a7e41 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -7170,8 +7170,6 @@ static bool decode_legacy(PowerPCCPU *cpu, DisasContext *ctx, uint32_t insn)
-     opc_handler_t **table, *handler;
-     uint32_t inval;
+diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+index 79eab5621e..538ab53490 100644
+--- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
++++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+@@ -43,8 +43,8 @@ RUN curl -#SL https://github.com/loongson/build-tools/releases/download/2023.08.
+ ENV PATH $PATH:/opt/cross-tools/bin
+ ENV LD_LIBRARY_PATH /opt/cross-tools/lib:/opt/cross-tools/loongarch64-unknown-linux-gnu/lib:$LD_LIBRARY_PATH
  
--    ctx->opcode = insn;
--
-     LOG_DISAS("translate opcode %08x (%02x %02x %02x %02x) (%s)\n",
-               insn, opc1(insn), opc2(insn), opc3(insn), opc4(insn),
-               ctx->le_mode ? "little" : "big");
-@@ -7302,6 +7300,7 @@ static void ppc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
-     ctx->base.pc_next = pc += 4;
+-ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
+-ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch-softmmu
++ENV QEMU_CONFIGURE_OPTS --disable-docs --disable-tools
++ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch64-softmmu
+ ENV MAKE /usr/bin/make
  
-     if (!is_prefix_insn(ctx, insn)) {
-+        ctx->opcode = insn;
-         ok = (decode_insn32(ctx, insn) ||
-               decode_legacy(cpu, ctx, insn));
-     } else if ((pc & 63) == 0) {
+ # As a final step configure the user (if env is defined)
 -- 
 2.39.5
 
