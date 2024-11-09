@@ -4,42 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F72D5E36C
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C525D5E368
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:34:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kS2-0003Kv-2O; Sat, 09 Nov 2024 07:20:26 -0500
+	id 1t9kUF-0006Ie-Ok; Sat, 09 Nov 2024 07:22:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kQw-0001nu-G9; Sat, 09 Nov 2024 07:19:20 -0500
+ id 1t9kSr-0004Qm-Ra; Sat, 09 Nov 2024 07:21:19 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kQu-0005V9-W4; Sat, 09 Nov 2024 07:19:18 -0500
+ id 1t9kSq-0005sa-1x; Sat, 09 Nov 2024 07:21:17 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4BDAFA1653;
- Sat,  9 Nov 2024 15:08:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 81193A1664;
+ Sat,  9 Nov 2024 15:08:10 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 12D1C167FD9;
- Sat,  9 Nov 2024 15:09:04 +0300 (MSK)
-Received: (nullmailer pid 3296254 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 4AEC1167FEA;
+ Sat,  9 Nov 2024 15:09:05 +0300 (MSK)
+Received: (nullmailer pid 3296308 invoked by uid 1000);
  Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 41/58] target/ppc: Fix mtDPDES targeting SMT siblings
-Date: Sat,  9 Nov 2024 15:08:42 +0300
-Message-Id: <20241109120901.3295995-41-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 58/58] Revert "hw/audio/hda: fix memory leak on audio
+ setup"
+Date: Sat,  9 Nov 2024 15:08:59 +0300
+Message-Id: <20241109120901.3295995-58-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,32 +61,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+This reverts commit 6d03242a7e47815ed56687ecd13f683d8da3f2fe.
 
-A typo in the loop over SMT threads to set irq level for doorbells
-when storing to DPDES meant everything was aimed at the CPU executing
-the instruction.
+Let's revert this one for now.  It is a revert of a commit picked
+to 9.1.x from master 6d6e23361fc732e4fe36a8bc5873b85f264ed53a,
+restoring the status quo with audio for now.
 
-Cc: qemu-stable@nongnu.org
-Fixes: d24e80b2ae ("target/ppc: Add msgsnd/p and DPDES SMT support")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 0324d236d2918c18a9ad4a1081b1083965a1433b)
+See https://gitlab.com/qemu-project/qemu/-/issues/2639 for details.
+
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index 1b83971375..f0ca80153b 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -288,7 +288,7 @@ void helper_store_dpdes(CPUPPCState *env, target_ulong val)
-         PowerPCCPU *ccpu = POWERPC_CPU(ccs);
-         uint32_t thread_id = ppc_cpu_tir(ccpu);
- 
--        ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, val & (0x1 << thread_id));
-+        ppc_set_irq(ccpu, PPC_INTERRUPT_DOORBELL, val & (0x1 << thread_id));
+diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
+index 4373565371..ee3d0a7dec 100644
+--- a/hw/audio/hda-codec.c
++++ b/hw/audio/hda-codec.c
+@@ -472,24 +472,6 @@ static void hda_audio_set_amp(HDAAudioStream *st)
      }
-     bql_unlock();
+ }
+ 
+-static void hda_close_stream(HDAAudioState *a, HDAAudioStream *st)
+-{
+-    if (st->node == NULL) {
+-        return;
+-    }
+-    if (a->use_timer) {
+-        timer_free(st->buft);
+-        st->buft = NULL;
+-    }
+-    if (st->output) {
+-        AUD_close_out(&a->card, st->voice.out);
+-        st->voice.out = NULL;
+-    } else {
+-        AUD_close_in(&a->card, st->voice.in);
+-        st->voice.in = NULL;
+-    }
+-}
+-
+ static void hda_audio_setup(HDAAudioStream *st)
+ {
+     bool use_timer = st->state->use_timer;
+@@ -502,7 +484,6 @@ static void hda_audio_setup(HDAAudioStream *st)
+     trace_hda_audio_format(st->node->name, st->as.nchannels,
+                            fmt2name[st->as.fmt], st->as.freq);
+ 
+-    hda_close_stream(st->state, st);
+     if (st->output) {
+         if (use_timer) {
+             cb = hda_audio_output_cb;
+@@ -760,11 +741,23 @@ static void hda_audio_init(HDACodecDevice *hda,
+ static void hda_audio_exit(HDACodecDevice *hda)
+ {
+     HDAAudioState *a = HDA_AUDIO(hda);
++    HDAAudioStream *st;
+     int i;
+ 
+     dprint(a, 1, "%s\n", __func__);
+     for (i = 0; i < ARRAY_SIZE(a->st); i++) {
+-        hda_close_stream(a, a->st + i);
++        st = a->st + i;
++        if (st->node == NULL) {
++            continue;
++        }
++        if (a->use_timer) {
++            timer_free(st->buft);
++        }
++        if (st->output) {
++            AUD_close_out(&a->card, st->voice.out);
++        } else {
++            AUD_close_in(&a->card, st->voice.in);
++        }
+     }
+     AUD_remove_card(&a->card);
  }
 -- 
 2.39.5
