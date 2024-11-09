@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F02AD5E369
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB29D5E368
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:34:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kTo-0005cv-08; Sat, 09 Nov 2024 07:22:16 -0500
+	id 1t9kMl-0001vq-CL; Sat, 09 Nov 2024 07:14:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kRC-0002DB-Ua; Sat, 09 Nov 2024 07:19:35 -0500
+ id 1t9kMf-0001gD-Oq; Sat, 09 Nov 2024 07:14:53 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kRB-0005Wk-1q; Sat, 09 Nov 2024 07:19:34 -0500
+ id 1t9kMd-0004lR-JD; Sat, 09 Nov 2024 07:14:53 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 88987A1657;
- Sat,  9 Nov 2024 15:08:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A5147A1629;
+ Sat,  9 Nov 2024 15:08:06 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5086C167FDD;
- Sat,  9 Nov 2024 15:09:04 +0300 (MSK)
-Received: (nullmailer pid 3296266 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 6C93F167FB1;
+ Sat,  9 Nov 2024 15:09:01 +0300 (MSK)
+Received: (nullmailer pid 3296129 invoked by uid 1000);
  Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 45/58] hw/ssi/pnv_spi: Return early in transfer()
-Date: Sat,  9 Nov 2024 15:08:46 +0300
-Message-Id: <20241109120901.3295995-45-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 01/58] tcg/s390x: fix constraint for 32-bit TSTEQ/TSTNE
+Date: Sat,  9 Nov 2024 15:08:02 +0300
+Message-Id: <20241109120901.3295995-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
@@ -63,42 +63,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Return early to simplify next commit.
-No logical change intended.
+32-bit TSTEQ and TSTNE is subject to the same constraints as
+for 64-bit, but setcond_i32 and negsetcond_i32 were incorrectly
+using TCG_CT_CONST ("i") instead of TCG_CT_CONST_CMP ("C").
 
+Adjust the constraint and make tcg_target_const_match use the
+same sequence as tgen_cmp2: first check if the constant is a
+valid operand for TSTEQ/TSTNE, then accept everything for 32-bit
+non-test comparisons, finally check if the constant is a valid
+operand for 64-bit non-test comparisons.
+
+Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 3feabc18ad4d4bdc178a205b986353a54dbfcf20)
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 615586cb356811e46c2e5f85c36db4b93f8381cd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-index 13a47f07e7..05e6afc11e 100644
---- a/hw/ssi/pnv_spi.c
-+++ b/hw/ssi/pnv_spi.c
-@@ -217,6 +217,9 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payload)
-     PnvXferBuffer *rsp_payload = NULL;
- 
-     rsp_payload = pnv_spi_xfer_buffer_new();
-+    if (!rsp_payload) {
-+        return;
-+    }
-     for (int offset = 0; offset < payload->len; offset += s->transfer_len) {
-         tx = 0;
-         for (int i = 0; i < s->transfer_len; i++) {
-@@ -235,9 +238,7 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payload)
-                     (rx >> (8 * (s->transfer_len - 1) - i * 8)) & 0xFF;
-         }
+diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
+index ad587325fc..a27e346602 100644
+--- a/tcg/s390x/tcg-target.c.inc
++++ b/tcg/s390x/tcg-target.c.inc
+@@ -563,6 +563,20 @@ static bool tcg_target_const_match(int64_t val, int ct,
      }
--    if (rsp_payload != NULL) {
--        spi_response(s, s->N1_bits, rsp_payload);
--    }
-+    spi_response(s, s->N1_bits, rsp_payload);
- }
  
- static inline uint8_t get_seq_index(PnvSpi *s)
+     if (ct & TCG_CT_CONST_CMP) {
++        if (is_tst_cond(cond)) {
++            if (is_const_p16(uval) >= 0) {
++                return true;  /* TMxx */
++            }
++            if (risbg_mask(uval)) {
++                return true;  /* RISBG */
++            }
++            return false;
++        }
++
++        if (type == TCG_TYPE_I32) {
++            return true;
++        }
++
+         switch (cond) {
+         case TCG_COND_EQ:
+         case TCG_COND_NE:
+@@ -582,13 +596,7 @@ static bool tcg_target_const_match(int64_t val, int ct,
+             break;
+         case TCG_COND_TSTNE:
+         case TCG_COND_TSTEQ:
+-            if (is_const_p16(uval) >= 0) {
+-                return true;  /* TMxx */
+-            }
+-            if (risbg_mask(uval)) {
+-                return true;  /* RISBG */
+-            }
+-            break;
++            /* checked above, fallthru */
+         default:
+             g_assert_not_reached();
+         }
+@@ -3221,9 +3229,9 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpcode op)
+     case INDEX_op_rotl_i64:
+     case INDEX_op_rotr_i32:
+     case INDEX_op_rotr_i64:
++        return C_O1_I2(r, r, ri);
+     case INDEX_op_setcond_i32:
+     case INDEX_op_negsetcond_i32:
+-        return C_O1_I2(r, r, ri);
+     case INDEX_op_setcond_i64:
+     case INDEX_op_negsetcond_i64:
+         return C_O1_I2(r, r, rC);
 -- 
 2.39.5
 
