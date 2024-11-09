@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EAF7D5E122
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:43:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5DE1D5E123
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9f9n-0005Ux-I7; Sat, 09 Nov 2024 01:41:18 -0500
+	id 1t9fBk-0000jT-76; Sat, 09 Nov 2024 01:43:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f8o-0003zX-4q; Sat, 09 Nov 2024 01:40:14 -0500
+ id 1t9f9b-0005LN-Vw; Sat, 09 Nov 2024 01:41:04 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f8k-0002RY-Rg; Sat, 09 Nov 2024 01:40:13 -0500
+ id 1t9f9a-0002YU-Cj; Sat, 09 Nov 2024 01:41:03 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6D8A0A12F7;
+ by isrv.corpit.ru (Postfix) with ESMTP id D6D40A12FE;
  Sat,  9 Nov 2024 09:38:10 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D7E0E167DDB;
- Sat,  9 Nov 2024 09:39:04 +0300 (MSK)
-Received: (nullmailer pid 3272540 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 4AB46167DE1;
+ Sat,  9 Nov 2024 09:39:05 +0300 (MSK)
+Received: (nullmailer pid 3272559 invoked by uid 1000);
  Sat, 09 Nov 2024 06:39:03 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 16/33] target/i386: Avoid unreachable variable
- declaration in mmu_translate()
-Date: Sat,  9 Nov 2024 09:38:42 +0300
-Message-Id: <20241109063903.3272404-16-mjt@tls.msk.ru>
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.15 22/33] target/arm: Don't assert in regime_is_user()
+ for E10 mmuidx values
+Date: Sat,  9 Nov 2024 09:38:48 +0300
+Message-Id: <20241109063903.3272404-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 References: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,47 +67,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-Coverity complains (CID 1507880) that the declaration "int error_code;"
-in mmu_translate() is unreachable code. Since this is only a declaration,
-this isn't actually a bug, but:
- * it's a bear-trap for future changes, because if it was changed to
-   include an initialization 'int error_code = foo;' then the
-   initialization wouldn't actually happen (being dead code)
- * it's against our coding style, which wants declarations to be
-   at the start of blocks
- * it means that anybody reading the code has to go and look up
-   exactly what the C rules are for skipping over variable declarations
-   using a goto
+In regime_is_user() we assert if we're passed an ARMMMUIdx_E10_*
+mmuidx value. This used to make sense because we only used this
+function in ptw.c and would never use it on this kind of stage 1+2
+mmuidx, only for an individual stage 1 or stage 2 mmuidx.
 
-Move the declaration to the top of the function.
+However, when we implemented FEAT_E0PD we added a callsite in
+aa64_va_parameters(), which means this can now be called for
+stage 1+2 mmuidx values if the guest sets the TCG_ELX.{E0PD0,E0PD1}
+bits to enable use of the feature. This will then result in
+an assertion failure later, for instance on a TLBI operation:
 
+#6  0x00007ffff6d0e70f in g_assertion_message_expr
+    (domain=0x0, file=0x55555676eeba "../../target/arm/internals.h", line=978, func=0x555556771d48 <__func__.5> "regime_is_user", expr=<optimised out>)
+    at ../../../glib/gtestutils.c:3279
+#7  0x0000555555f286d2 in regime_is_user (env=0x555557f2fe00, mmu_idx=ARMMMUIdx_E10_0) at ../../target/arm/internals.h:978
+#8  0x0000555555f3e31c in aa64_va_parameters (env=0x555557f2fe00, va=18446744073709551615, mmu_idx=ARMMMUIdx_E10_0, data=true, el1_is_aa32=false)
+    at ../../target/arm/helper.c:12048
+#9  0x0000555555f3163b in tlbi_aa64_get_range (env=0x555557f2fe00, mmuidx=ARMMMUIdx_E10_0, value=106721347371041) at ../../target/arm/helper.c:5214
+#10 0x0000555555f317e8 in do_rvae_write (env=0x555557f2fe00, value=106721347371041, idxmap=21, synced=true) at ../../target/arm/helper.c:5260
+#11 0x0000555555f31925 in tlbi_aa64_rvae1is_write (env=0x555557f2fe00, ri=0x555557fbeae0, value=106721347371041) at ../../target/arm/helper.c:5302
+#12 0x0000555556036f8f in helper_set_cp_reg64 (env=0x555557f2fe00, rip=0x555557fbeae0, value=106721347371041) at ../../target/arm/tcg/op_helper.c:965
+
+Since we do know whether these mmuidx values are for usermode
+or not, we can easily make regime_is_user() handle them:
+ARMMMUIdx_E10_0 is user, and the other two are not.
+
+Cc: qemu-stable@nongnu.org
+Fixes: e4c93e44ab103f ("target/arm: Implement FEAT_E0PD")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20230406155946.3362077-1-peter.maydell@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 987b63f24afe027a09b1c549c05a032a477f7e96)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20241017172331.822587-1-peter.maydell@linaro.org
+(cherry picked from commit 1505b651fdbd9af59a4a90876a62ae7ea2d4cd39)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: cherry-pick this for stable-7.2 so that the next patch applies cleanly)
 
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 5f13252d68..eb78fcba11 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -146,6 +146,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-     hwaddr pte_addr, paddr;
-     uint32_t pkr;
-     int page_size;
-+    int error_code;
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 3c7ff51c99..bdd89ae21e 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -723,6 +723,7 @@ static inline uint32_t regime_el(CPUARMState *env, ARMMMUIdx mmu_idx)
+ static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
+ {
+     switch (mmu_idx) {
++    case ARMMMUIdx_E10_0:
+     case ARMMMUIdx_E20_0:
+     case ARMMMUIdx_Stage1_E0:
+     case ARMMMUIdx_MUser:
+@@ -732,10 +733,6 @@ static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
+         return true;
+     default:
+         return false;
+-    case ARMMMUIdx_E10_0:
+-    case ARMMMUIdx_E10_1:
+-    case ARMMMUIdx_E10_1_PAN:
+-        g_assert_not_reached();
+     }
+ }
  
-  restart_all:
-     rsvd_mask = ~MAKE_64BIT_MASK(0, env_archcpu(env)->phys_bits);
-@@ -464,7 +465,6 @@ do_check_protect_pse36:
-     out->page_size = page_size;
-     return true;
- 
--    int error_code;
-  do_fault_rsvd:
-     error_code = PG_ERROR_RSVD_MASK;
-     goto do_fault_cont;
 -- 
 2.39.5
 
