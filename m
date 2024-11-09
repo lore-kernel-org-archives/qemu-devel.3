@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF9BD5E369
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03281D5E368
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:37:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kSO-0003oA-Mg; Sat, 09 Nov 2024 07:20:49 -0500
+	id 1t9kN3-00030D-74; Sat, 09 Nov 2024 07:15:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kR0-0001ow-Fn; Sat, 09 Nov 2024 07:19:23 -0500
+ id 1t9kMq-0002Pp-QQ; Sat, 09 Nov 2024 07:15:05 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kQx-0005VV-Q6; Sat, 09 Nov 2024 07:19:21 -0500
+ id 1t9kMo-0004mN-RN; Sat, 09 Nov 2024 07:15:04 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5EE84A1654;
- Sat,  9 Nov 2024 15:08:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D5B93A162C;
+ Sat,  9 Nov 2024 15:08:06 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 2453D167FDA;
- Sat,  9 Nov 2024 15:09:04 +0300 (MSK)
-Received: (nullmailer pid 3296257 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 9D5A7167FB4;
+ Sat,  9 Nov 2024 15:09:01 +0300 (MSK)
+Received: (nullmailer pid 3296138 invoked by uid 1000);
  Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 42/58] target/ppc: Fix HFSCR facility checks
-Date: Sat,  9 Nov 2024 15:08:43 +0300
-Message-Id: <20241109120901.3295995-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Tom Dohrmann <erbse.13@gmx.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 04/58] accel/kvm: check for KVM_CAP_READONLY_MEM on VM
+Date: Sat,  9 Nov 2024 15:08:05 +0300
+Message-Id: <20241109120901.3295995-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
@@ -62,32 +61,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Tom Dohrmann <erbse.13@gmx.de>
 
-The HFSCR defines were being encoded as bit masks, but the users
-expect (and analogous FSCR defines are) bit numbers.
+KVM_CAP_READONLY_MEM used to be a global capability, but with the
+introduction of AMD SEV-SNP confidential VMs, this extension is not
+always available on all VM types [1,2].
 
+Query the extension on the VM level instead of on the KVM level.
+
+[1] https://patchwork.kernel.org/project/kvm/patch/20240809190319.1710470-2-seanjc@google.com/
+[2] https://patchwork.kernel.org/project/kvm/patch/20240902144219.3716974-1-erbse.13@gmx.de/
+
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Tom Dohrmann <erbse.13@gmx.de>
+Link: https://lore.kernel.org/r/20240903062953.3926498-1-erbse.13@gmx.de
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 87de77f6aeba4e38d123f7541cfdae7b124f6a02)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 64e0e63ea16aa0122dc0c41a0679da0ae4616208)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index bd32a1a5f8..f7a2da2bbe 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -635,8 +635,8 @@ FIELD(MSR, LE, MSR_LE, 1)
- #define PSSCR_EC          PPC_BIT(43) /* Exit Criterion */
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 4db866f0ca..8c5e71f20c 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2660,7 +2660,7 @@ static int kvm_init(MachineState *ms)
+     }
  
- /* HFSCR bits */
--#define HFSCR_MSGP     PPC_BIT(53) /* Privileged Message Send Facilities */
--#define HFSCR_BHRB     PPC_BIT(59) /* BHRB Instructions */
-+#define HFSCR_MSGP     PPC_BIT_NR(53) /* Privileged Message Send Facilities */
-+#define HFSCR_BHRB     PPC_BIT_NR(59) /* BHRB Instructions */
- #define HFSCR_IC_MSGP  0xA
+     kvm_readonly_mem_allowed =
+-        (kvm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
++        (kvm_vm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
  
- #define DBCR0_ICMP (1 << 27)
+     kvm_resamplefds_allowed =
+         (kvm_check_extension(s, KVM_CAP_IRQFD_RESAMPLE) > 0);
 -- 
 2.39.5
 
