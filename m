@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C57D5E369
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 450C9D5E368
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:31:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kMy-0002kG-6Z; Sat, 09 Nov 2024 07:15:12 -0500
+	id 1t9kQZ-0000Ua-HL; Sat, 09 Nov 2024 07:18:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kMu-0002dw-MJ; Sat, 09 Nov 2024 07:15:08 -0500
+ id 1t9kPO-0006P1-6O; Sat, 09 Nov 2024 07:17:44 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kMs-0004xf-CE; Sat, 09 Nov 2024 07:15:08 -0500
+ id 1t9kPM-0005Fs-9y; Sat, 09 Nov 2024 07:17:41 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E35F9A162E;
- Sat,  9 Nov 2024 15:08:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6346FA1645;
+ Sat,  9 Nov 2024 15:08:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id AB313167FB5;
- Sat,  9 Nov 2024 15:09:01 +0300 (MSK)
-Received: (nullmailer pid 3296141 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 29E0C167FCB;
+ Sat,  9 Nov 2024 15:09:03 +0300 (MSK)
+Received: (nullmailer pid 3296210 invoked by uid 1000);
  Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 05/58] target/i386: Use only 16 and 32-bit operands for
- IN/OUT
-Date: Sat,  9 Nov 2024 15:08:06 +0300
-Message-Id: <20241109120901.3295995-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 27/58] target/arm: Store FPSR cumulative exception bits
+ in env->vfp.fpsr
+Date: Sat,  9 Nov 2024 15:08:28 +0300
+Message-Id: <20241109120901.3295995-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
@@ -62,47 +63,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The REX.W prefix is ignored for these instructions.
-Mirror the solution already used for INS/OUTS: X86_SIZE_z.
+Currently we store the FPSR cumulative exception bits in the
+float_status fields, and use env->vfp.fpsr only for the NZCV bits.
+(The QC bit is stored in env->vfp.qc[].)
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2581
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+This works for TCG, but if QEMU was built without CONFIG_TCG (i.e.
+with KVM support only) then we use the stub versions of
+vfp_get_fpsr_from_host() and vfp_set_fpsr_to_host() which do nothing,
+throwing away the cumulative exception bit state.  The effect is that
+if the FPSR state is round-tripped from KVM to QEMU then we lose the
+cumulative exception bits.  In particular, this will happen if the VM
+is migrated.  There is no user-visible bug when using KVM with a QEMU
+binary that was built with CONFIG_TCG.
+
+Fix this by always storing the cumulative exception bits in
+env->vfp.fpsr.  If we are using TCG then we may also keep pending
+cumulative exception information in the float_status fields, so we
+continue to fold that in on reads.
+
+This change will also be helpful for implementing FEAT_AFP later,
+because that includes a feature where in some situations we want to
+cause input denormals to be flushed to zero without affecting the
+existing state of the FPSR.IDC bit, so we need a place to store IDC
+which is distinct from the various float_status fields.
+
+(Note for stable backports: the bug goes back to 4a15527c9fee but
+this code was refactored in commits ea8618382aba..a8ab8706d4cc461, so
+fixing it in branches without those refactorings will mean either
+backporting the refactor or else implementing a conceptually similar
+fix for the old code.)
+
 Cc: qemu-stable@nongnu.org
-Link: https://lore.kernel.org/r/20241015004144.2111817-1-richard.henderson@linaro.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 15d955975bd484c2c66af0d6daaa02a7d04d2256)
+Fixes: 4a15527c9fee ("target/arm/vfp_helper: Restrict the SoftFloat use to TCG")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241011162401.3672735-1-peter.maydell@linaro.org
+(cherry picked from commit d9c7adb6019f2ac3d6a5a36c4121341f4b6424af)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 30be9237c3..429ed87bb6 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1627,9 +1627,9 @@ static const X86OpEntry opcodes_root[256] = {
-     [0xE2] = X86_OP_ENTRYr(LOOP,   J,b), /* implicit: CX with aflag size */
-     [0xE3] = X86_OP_ENTRYr(JCXZ,   J,b), /* implicit: CX with aflag size */
-     [0xE4] = X86_OP_ENTRYwr(IN,    0,b, I_unsigned,b), /* AL */
--    [0xE5] = X86_OP_ENTRYwr(IN,    0,v, I_unsigned,b), /* AX/EAX */
-+    [0xE5] = X86_OP_ENTRYwr(IN,    0,z, I_unsigned,b), /* AX/EAX */
-     [0xE6] = X86_OP_ENTRYrr(OUT,   0,b, I_unsigned,b), /* AL */
--    [0xE7] = X86_OP_ENTRYrr(OUT,   0,v, I_unsigned,b), /* AX/EAX */
-+    [0xE7] = X86_OP_ENTRYrr(OUT,   0,z, I_unsigned,b), /* AX/EAX */
+diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+index b3698da8ca..45ec71a8ad 100644
+--- a/target/arm/vfp_helper.c
++++ b/target/arm/vfp_helper.c
+@@ -59,32 +59,6 @@ static inline int vfp_exceptbits_from_host(int host_bits)
+     return target_bits;
+ }
  
-     [0xF1] = X86_OP_ENTRY0(INT1,   svm(ICEBP)),
-     [0xF4] = X86_OP_ENTRY0(HLT,    chk(cpl0) svm(HLT)),
-@@ -1761,9 +1761,9 @@ static const X86OpEntry opcodes_root[256] = {
-     [0xEA] = X86_OP_ENTRYrr(JMPF,  I_unsigned,p, I_unsigned,w, chk(i64)),
-     [0xEB] = X86_OP_ENTRYr(JMP,    J,b),
-     [0xEC] = X86_OP_ENTRYwr(IN,    0,b, 2,w), /* AL, DX */
--    [0xED] = X86_OP_ENTRYwr(IN,    0,v, 2,w), /* AX/EAX, DX */
-+    [0xED] = X86_OP_ENTRYwr(IN,    0,z, 2,w), /* AX/EAX, DX */
-     [0xEE] = X86_OP_ENTRYrr(OUT,   0,b, 2,w), /* DX, AL */
--    [0xEF] = X86_OP_ENTRYrr(OUT,   0,v, 2,w), /* DX, AX/EAX */
-+    [0xEF] = X86_OP_ENTRYrr(OUT,   0,z, 2,w), /* DX, AX/EAX */
+-/* Convert vfp exception flags to target form.  */
+-static inline int vfp_exceptbits_to_host(int target_bits)
+-{
+-    int host_bits = 0;
+-
+-    if (target_bits & 1) {
+-        host_bits |= float_flag_invalid;
+-    }
+-    if (target_bits & 2) {
+-        host_bits |= float_flag_divbyzero;
+-    }
+-    if (target_bits & 4) {
+-        host_bits |= float_flag_overflow;
+-    }
+-    if (target_bits & 8) {
+-        host_bits |= float_flag_underflow;
+-    }
+-    if (target_bits & 0x10) {
+-        host_bits |= float_flag_inexact;
+-    }
+-    if (target_bits & 0x80) {
+-        host_bits |= float_flag_input_denormal;
+-    }
+-    return host_bits;
+-}
+-
+ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
+ {
+     uint32_t i;
+@@ -99,15 +73,14 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
+     return vfp_exceptbits_from_host(i);
+ }
  
-     [0xF8] = X86_OP_ENTRY0(CLC),
-     [0xF9] = X86_OP_ENTRY0(STC),
+-static void vfp_set_fpsr_to_host(CPUARMState *env, uint32_t val)
++static void vfp_clear_float_status_exc_flags(CPUARMState *env)
+ {
+     /*
+-     * The exception flags are ORed together when we read fpscr so we
+-     * only need to preserve the current state in one of our
+-     * float_status values.
++     * Clear out all the exception-flag information in the float_status
++     * values. The caller should have arranged for env->vfp.fpsr to
++     * be the architecturally up-to-date exception flag information first.
+      */
+-    int i = vfp_exceptbits_to_host(val);
+-    set_float_exception_flags(i, &env->vfp.fp_status);
++    set_float_exception_flags(0, &env->vfp.fp_status);
+     set_float_exception_flags(0, &env->vfp.fp_status_f16);
+     set_float_exception_flags(0, &env->vfp.standard_fp_status);
+     set_float_exception_flags(0, &env->vfp.standard_fp_status_f16);
+@@ -164,7 +137,7 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
+     return 0;
+ }
+ 
+-static void vfp_set_fpsr_to_host(CPUARMState *env, uint32_t val)
++static void vfp_clear_float_status_exc_flags(CPUARMState *env)
+ {
+ }
+ 
+@@ -216,8 +189,6 @@ void vfp_set_fpsr(CPUARMState *env, uint32_t val)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+ 
+-    vfp_set_fpsr_to_host(env, val);
+-
+     if (arm_feature(env, ARM_FEATURE_NEON) ||
+         cpu_isar_feature(aa32_mve, cpu)) {
+         /*
+@@ -231,13 +202,18 @@ void vfp_set_fpsr(CPUARMState *env, uint32_t val)
+     }
+ 
+     /*
+-     * The only FPSR bits we keep in vfp.fpsr are NZCV:
+-     * the exception flags IOC|DZC|OFC|UFC|IXC|IDC are stored in
+-     * fp_status, and QC is in vfp.qc[]. Store the NZCV bits there,
+-     * and zero any of the other FPSR bits.
++     * NZCV lives only in env->vfp.fpsr. The cumulative exception flags
++     * IOC|DZC|OFC|UFC|IXC|IDC also live in env->vfp.fpsr, with possible
++     * extra pending exception information that hasn't yet been folded in
++     * living in the float_status values (for TCG).
++     * Since this FPSR write gives us the up to date values of the exception
++     * flags, we want to store into vfp.fpsr the NZCV and CEXC bits, zeroing
++     * anything else. We also need to clear out the float_status exception
++     * information so that the next vfp_get_fpsr does not fold in stale data.
+      */
+-    val &= FPSR_NZCV_MASK;
++    val &= FPSR_NZCV_MASK | FPSR_CEXC_MASK;
+     env->vfp.fpsr = val;
++    vfp_clear_float_status_exc_flags(env);
+ }
+ 
+ static void vfp_set_fpcr_masked(CPUARMState *env, uint32_t val, uint32_t mask)
 -- 
 2.39.5
 
