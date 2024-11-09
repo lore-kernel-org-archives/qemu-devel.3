@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ACA8D5E368
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:24:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8153D5E368
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kM0-0007Tc-Rm; Sat, 09 Nov 2024 07:14:12 -0500
+	id 1t9kQU-0008VP-7Q; Sat, 09 Nov 2024 07:18:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kLw-0007A5-Uu; Sat, 09 Nov 2024 07:14:09 -0500
+ id 1t9kPH-0006Hl-N2; Sat, 09 Nov 2024 07:17:36 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kLu-0004hb-3z; Sat, 09 Nov 2024 07:14:08 -0500
+ id 1t9kPF-0005Et-P8; Sat, 09 Nov 2024 07:17:35 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 08500A161D;
- Sat,  9 Nov 2024 15:07:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 44D69A1643;
+ Sat,  9 Nov 2024 15:08:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C1974167FAB;
- Sat,  9 Nov 2024 15:08:04 +0300 (MSK)
-Received: (nullmailer pid 3295416 invoked by uid 1000);
- Sat, 09 Nov 2024 12:08:01 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id F39ED167FC9;
+ Sat,  9 Nov 2024 15:09:02 +0300 (MSK)
+Received: (nullmailer pid 3296204 invoked by uid 1000);
+ Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+ Guenter Roeck <linux@roeck-us.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 53/57] target/arm: Add new MMU indexes for AArch32
- Secure PL1&0
-Date: Sat,  9 Nov 2024 15:07:55 +0300
-Message-Id: <20241109120801.3295120-53-mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 25/58] hw/sd/omap_mmc: Don't use sd_cmd_type_t
+Date: Sat,  9 Nov 2024 15:08:26 +0300
+Message-Id: <20241109120901.3295995-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
-References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
+References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -66,372 +66,125 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-Our current usage of MMU indexes when EL3 is AArch32 is confused.
-Architecturally, when EL3 is AArch32, all Secure code runs under the
-Secure PL1&0 translation regime:
- * code at EL3, which might be Mon, or SVC, or any of the
-   other privileged modes (PL1)
- * code at EL0 (Secure PL0)
+In commit 1ab08790bb75e4 we did some refactoring of the SD card
+implementation, which included a rearrangement of the sd_cmd_type_t
+enum values.  Unfortunately we didn't notice that this enum is not
+used solely inside the SD card model itself, but is also used by the
+OMAP MMC controller device.  In the OMAP MMC controller, it is used
+to implement the handling of the Type field of the MMC_CMD register,
+so changing the enum values so that they no longer lined up with the
+bit definitions for that register field broke the controller model.
+The effect is that Linux fails to boot from an SD card on the "sx1"
+machine.
 
-This is different from when EL3 is AArch64, in which case EL3 is its
-own translation regime, and EL1 and EL0 (whether AArch32 or AArch64)
-have their own regime.
-
-We claimed to be mapping Secure PL1 to our ARMMMUIdx_EL3, but didn't
-do anything special about Secure PL0, which meant it used the same
-ARMMMUIdx_EL10_0 that NonSecure PL0 does.  This resulted in a bug
-where arm_sctlr() incorrectly picked the NonSecure SCTLR as the
-controlling register when in Secure PL0, which meant we were
-spuriously generating alignment faults because we were looking at the
-wrong SCTLR control bits.
-
-The use of ARMMMUIdx_EL3 for Secure PL1 also resulted in the bug that
-we wouldn't honour the PAN bit for Secure PL1, because there's no
-equivalent _PAN mmu index for it.
-
-Fix this by adding two new MMU indexes:
- * ARMMMUIdx_E30_0 is for Secure PL0
- * ARMMMUIdx_E30_3_PAN is for Secure PL1 when PAN is enabled
-The existing ARMMMUIdx_E3 is used to mean "Secure PL1 without PAN"
-(and would be named ARMMMUIdx_E30_3 in an AArch32-centric scheme).
-
-These extra two indexes bring us up to the maximum of 16 that the
-core code can currently support.
-
-This commit:
- * adds the new MMU index handling to the various places
-   where we deal in MMU index values
- * adds assertions that we aren't AArch32 EL3 in a couple of
-   places that currently use the E10 indexes, to document why
-   they don't also need to handle the E30 indexes
- * documents in a comment why regime_has_2_ranges() doesn't need
-   updating
-
-Notes for backporting: this commit depends on the preceding revert of
-4c2c04746932; that revert and this commit should probably be
-backported to everywhere that we originally backported 4c2c04746932.
+Give omap-mmc its own enum which we can document as needing to match
+the encoding used in this device's register, so it isn't sharing
+sd_cmd_type_t with the SD card model any more.  We can then move
+sd_cmd_type_t's definition out of sd.h and into sd.c, which is the
+only place that uses it.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2326
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2588
+Fixes: 1ab08790bb75 ("hw/sd/sdcard: Store command type in SDProto")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241101142845.1712482-3-peter.maydell@linaro.org
-(cherry picked from commit efbe180ad2ed75d4cc64dfc6fb46a015eef713d1)
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20241017162755.710698-1-peter.maydell@linaro.org
+(cherry picked from commit 77dd098a5e790e3ede0dea5ddd5f690086fe608c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 7c721f22bd..7688ceaf8f 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2699,8 +2699,7 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
-  *  + NonSecure PL1 & 0 stage 1
-  *  + NonSecure PL1 & 0 stage 2
-  *  + NonSecure PL2
-- *  + Secure PL0
-- *  + Secure PL1
-+ *  + Secure PL1 & 0
-  * (reminder: for 32 bit EL3, Secure PL1 is *EL3*, not EL1.)
-  *
-  * For QEMU, an mmu_idx is not quite the same as a translation regime because:
-@@ -2735,19 +2734,21 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
-  *
-  * This gives us the following list of cases:
-  *
-- * EL0 EL1&0 stage 1+2 (aka NS PL0)
-- * EL1 EL1&0 stage 1+2 (aka NS PL1)
-- * EL1 EL1&0 stage 1+2 +PAN
-+ * EL0 EL1&0 stage 1+2 (aka NS PL0 PL1&0 stage 1+2)
-+ * EL1 EL1&0 stage 1+2 (aka NS PL1 PL1&0 stage 1+2)
-+ * EL1 EL1&0 stage 1+2 +PAN (aka NS PL1 P1&0 stage 1+2 +PAN)
-  * EL0 EL2&0
-  * EL2 EL2&0
-  * EL2 EL2&0 +PAN
-  * EL2 (aka NS PL2)
-- * EL3 (aka S PL1)
-+ * EL3 (aka AArch32 S PL1 PL1&0)
-+ * AArch32 S PL0 PL1&0 (we call this EL30_0)
-+ * AArch32 S PL1 PL1&0 +PAN (we call this EL30_3_PAN)
-  * Stage2 Secure
-  * Stage2 NonSecure
-  * plus one TLB per Physical address space: S, NS, Realm, Root
-  *
-- * for a total of 14 different mmu_idx.
-+ * for a total of 16 different mmu_idx.
-  *
-  * R profile CPUs have an MPU, but can use the same set of MMU indexes
-  * as A profile. They only need to distinguish EL0 and EL1 (and
-@@ -2811,6 +2812,8 @@ typedef enum ARMMMUIdx {
-     ARMMMUIdx_E20_2_PAN = 5 | ARM_MMU_IDX_A,
-     ARMMMUIdx_E2        = 6 | ARM_MMU_IDX_A,
-     ARMMMUIdx_E3        = 7 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E30_0     = 8 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E30_3_PAN = 9 | ARM_MMU_IDX_A,
- 
-     /*
-      * Used for second stage of an S12 page table walk, or for descriptor
-@@ -2818,14 +2821,14 @@ typedef enum ARMMMUIdx {
-      * are in use simultaneously for SecureEL2: the security state for
-      * the S2 ptw is selected by the NS bit from the S1 ptw.
-      */
--    ARMMMUIdx_Stage2_S  = 8 | ARM_MMU_IDX_A,
--    ARMMMUIdx_Stage2    = 9 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Stage2_S  = 10 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Stage2    = 11 | ARM_MMU_IDX_A,
- 
-     /* TLBs with 1-1 mapping to the physical address spaces. */
--    ARMMMUIdx_Phys_S     = 10 | ARM_MMU_IDX_A,
--    ARMMMUIdx_Phys_NS    = 11 | ARM_MMU_IDX_A,
--    ARMMMUIdx_Phys_Root  = 12 | ARM_MMU_IDX_A,
--    ARMMMUIdx_Phys_Realm = 13 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Phys_S     = 12 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Phys_NS    = 13 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Phys_Root  = 14 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Phys_Realm = 15 | ARM_MMU_IDX_A,
- 
-     /*
-      * These are not allocated TLBs and are used only for AT system
-@@ -2864,6 +2867,8 @@ typedef enum ARMMMUIdxBit {
-     TO_CORE_BIT(E20_2),
-     TO_CORE_BIT(E20_2_PAN),
-     TO_CORE_BIT(E3),
-+    TO_CORE_BIT(E30_0),
-+    TO_CORE_BIT(E30_3_PAN),
-     TO_CORE_BIT(Stage2),
-     TO_CORE_BIT(Stage2_S),
- 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 42044ae14b..a0b63a1bce 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -444,6 +444,9 @@ static int alle1_tlbmask(CPUARMState *env)
-      * Note that the 'ALL' scope must invalidate both stage 1 and
-      * stage 2 translations, whereas most other scopes only invalidate
-      * stage 1 translations.
-+     *
-+     * For AArch32 this is only used for TLBIALLNSNH and VTTBR
-+     * writes, so only needs to apply to NS PL1&0, not S PL1&0.
-      */
-     return (ARMMMUIdxBit_E10_1 |
-             ARMMMUIdxBit_E10_1_PAN |
-@@ -3762,7 +3765,11 @@ static void ats_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-         /* stage 1 current state PL1: ATS1CPR, ATS1CPW, ATS1CPRP, ATS1CPWP */
-         switch (el) {
-         case 3:
--            mmu_idx = ARMMMUIdx_E3;
-+            if (ri->crm == 9 && arm_pan_enabled(env)) {
-+                mmu_idx = ARMMMUIdx_E30_3_PAN;
-+            } else {
-+                mmu_idx = ARMMMUIdx_E3;
-+            }
-             break;
-         case 2:
-             g_assert(ss != ARMSS_Secure);  /* ARMv8.4-SecEL2 is 64-bit only */
-@@ -3782,7 +3789,7 @@ static void ats_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-         /* stage 1 current state PL0: ATS1CUR, ATS1CUW */
-         switch (el) {
-         case 3:
--            mmu_idx = ARMMMUIdx_E10_0;
-+            mmu_idx = ARMMMUIdx_E30_0;
-             break;
-         case 2:
-             g_assert(ss != ARMSS_Secure);  /* ARMv8.4-SecEL2 is 64-bit only */
-@@ -4892,11 +4899,14 @@ static int vae1_tlbmask(CPUARMState *env)
-     uint64_t hcr = arm_hcr_el2_eff(env);
-     uint16_t mask;
- 
-+    assert(arm_feature(env, ARM_FEATURE_AARCH64));
-+
-     if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
-         mask = ARMMMUIdxBit_E20_2 |
-                ARMMMUIdxBit_E20_2_PAN |
-                ARMMMUIdxBit_E20_0;
-     } else {
-+        /* This is AArch64 only, so we don't need to touch the EL30_x TLBs */
-         mask = ARMMMUIdxBit_E10_1 |
-                ARMMMUIdxBit_E10_1_PAN |
-                ARMMMUIdxBit_E10_0;
-@@ -4935,6 +4945,8 @@ static int vae1_tlbbits(CPUARMState *env, uint64_t addr)
-     uint64_t hcr = arm_hcr_el2_eff(env);
-     ARMMMUIdx mmu_idx;
- 
-+    assert(arm_feature(env, ARM_FEATURE_AARCH64));
-+
-     /* Only the regime of the mmu_idx below is significant. */
-     if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
-         mmu_idx = ARMMMUIdx_E20_0;
-@@ -11768,10 +11780,20 @@ void arm_cpu_do_interrupt(CPUState *cs)
- 
- uint64_t arm_sctlr(CPUARMState *env, int el)
- {
--    /* Only EL0 needs to be adjusted for EL1&0 or EL2&0. */
-+    /* Only EL0 needs to be adjusted for EL1&0 or EL2&0 or EL3&0 */
-     if (el == 0) {
-         ARMMMUIdx mmu_idx = arm_mmu_idx_el(env, 0);
--        el = mmu_idx == ARMMMUIdx_E20_0 ? 2 : 1;
-+        switch (mmu_idx) {
-+        case ARMMMUIdx_E20_0:
-+            el = 2;
-+            break;
-+        case ARMMMUIdx_E30_0:
-+            el = 3;
-+            break;
-+        default:
-+            el = 1;
-+            break;
-+        }
-     }
-     return env->cp15.sctlr_el[el];
- }
-@@ -12439,6 +12461,7 @@ int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx)
-     switch (mmu_idx) {
-     case ARMMMUIdx_E10_0:
-     case ARMMMUIdx_E20_0:
-+    case ARMMMUIdx_E30_0:
-         return 0;
-     case ARMMMUIdx_E10_1:
-     case ARMMMUIdx_E10_1_PAN:
-@@ -12448,6 +12471,7 @@ int arm_mmu_idx_to_el(ARMMMUIdx mmu_idx)
-     case ARMMMUIdx_E20_2_PAN:
-         return 2;
-     case ARMMMUIdx_E3:
-+    case ARMMMUIdx_E30_3_PAN:
-         return 3;
-     default:
-         g_assert_not_reached();
-@@ -12476,6 +12500,9 @@ ARMMMUIdx arm_mmu_idx_el(CPUARMState *env, int el)
-         hcr = arm_hcr_el2_eff(env);
-         if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
-             idx = ARMMMUIdx_E20_0;
-+        } else if (arm_is_secure_below_el3(env) &&
-+                   !arm_el_is_aa64(env, 3)) {
-+            idx = ARMMMUIdx_E30_0;
-         } else {
-             idx = ARMMMUIdx_E10_0;
-         }
-@@ -12500,6 +12527,9 @@ ARMMMUIdx arm_mmu_idx_el(CPUARMState *env, int el)
-         }
-         break;
-     case 3:
-+        if (!arm_el_is_aa64(env, 3) && arm_pan_enabled(env)) {
-+            return ARMMMUIdx_E30_3_PAN;
-+        }
-         return ARMMMUIdx_E3;
-     default:
-         g_assert_not_reached();
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index f078e5377e..7867778150 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -835,7 +835,16 @@ static inline void arm_call_el_change_hook(ARMCPU *cpu)
+diff --git a/hw/sd/omap_mmc.c b/hw/sd/omap_mmc.c
+index edd3cf2a1e..b20edac2ce 100644
+--- a/hw/sd/omap_mmc.c
++++ b/hw/sd/omap_mmc.c
+@@ -103,6 +103,7 @@ static void omap_mmc_fifolevel_update(struct omap_mmc_s *host)
      }
  }
  
--/* Return true if this address translation regime has two ranges.  */
-+/*
-+ * Return true if this address translation regime has two ranges.
-+ * Note that this will not return the correct answer for AArch32
-+ * Secure PL1&0 (i.e. mmu indexes E3, E30_0, E30_3_PAN), but it is
-+ * never called from a context where EL3 can be AArch32. (The
-+ * correct return value for ARMMMUIdx_E3 would be different for
-+ * that case, so we can't just make the function return the
-+ * correct value anyway; we would need an extra "bool e3_is_aarch32"
-+ * argument which all the current callsites would pass as 'false'.)
-+ */
- static inline bool regime_has_2_ranges(ARMMMUIdx mmu_idx)
- {
-     switch (mmu_idx) {
-@@ -860,6 +869,7 @@ static inline bool regime_is_pan(CPUARMState *env, ARMMMUIdx mmu_idx)
-     case ARMMMUIdx_Stage1_E1_PAN:
-     case ARMMMUIdx_E10_1_PAN:
-     case ARMMMUIdx_E20_2_PAN:
-+    case ARMMMUIdx_E30_3_PAN:
-         return true;
-     default:
-         return false;
-@@ -883,10 +893,11 @@ static inline uint32_t regime_el(CPUARMState *env, ARMMMUIdx mmu_idx)
-     case ARMMMUIdx_E2:
-         return 2;
-     case ARMMMUIdx_E3:
-+    case ARMMMUIdx_E30_0:
-+    case ARMMMUIdx_E30_3_PAN:
-         return 3;
-     case ARMMMUIdx_E10_0:
-     case ARMMMUIdx_Stage1_E0:
--        return arm_el_is_aa64(env, 3) || !arm_is_secure_below_el3(env) ? 1 : 3;
-     case ARMMMUIdx_Stage1_E1:
-     case ARMMMUIdx_Stage1_E1_PAN:
-     case ARMMMUIdx_E10_1:
-@@ -910,6 +921,7 @@ static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
-     switch (mmu_idx) {
-     case ARMMMUIdx_E10_0:
-     case ARMMMUIdx_E20_0:
-+    case ARMMMUIdx_E30_0:
-     case ARMMMUIdx_Stage1_E0:
-     case ARMMMUIdx_MUser:
-     case ARMMMUIdx_MSUser:
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index f2c9e5a422..a244db98ee 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -264,6 +264,8 @@ static bool regime_translation_disabled(CPUARMState *env, ARMMMUIdx mmu_idx,
-     case ARMMMUIdx_E20_2_PAN:
-     case ARMMMUIdx_E2:
-     case ARMMMUIdx_E3:
-+    case ARMMMUIdx_E30_0:
-+    case ARMMMUIdx_E30_3_PAN:
-         break;
++/* These must match the encoding of the MMC_CMD Response field */
+ typedef enum {
+     sd_nore = 0,	/* no response */
+     sd_r1,		/* normal response command */
+@@ -112,8 +113,17 @@ typedef enum {
+     sd_r1b = -1,
+ } sd_rsp_type_t;
  
-     case ARMMMUIdx_Phys_S:
-@@ -3603,6 +3605,8 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
-         ss = ARMSS_Secure;
-         break;
-     case ARMMMUIdx_E3:
-+    case ARMMMUIdx_E30_0:
-+    case ARMMMUIdx_E30_3_PAN:
-         if (arm_feature(env, ARM_FEATURE_AARCH64) &&
-             cpu_isar_feature(aa64_rme, env_archcpu(env))) {
-             ss = ARMSS_Root;
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index c199b69fbf..7d47afff6d 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -858,7 +858,19 @@ void HELPER(tidcp_el0)(CPUARMState *env, uint32_t syndrome)
- {
-     /* See arm_sctlr(), but we also need the sctlr el. */
-     ARMMMUIdx mmu_idx = arm_mmu_idx_el(env, 0);
--    int target_el = mmu_idx == ARMMMUIdx_E20_0 ? 2 : 1;
-+    int target_el;
++/* These must match the encoding of the MMC_CMD Type field */
++typedef enum {
++    SD_TYPE_BC = 0,     /* broadcast -- no response */
++    SD_TYPE_BCR = 1,    /* broadcast with response */
++    SD_TYPE_AC = 2,     /* addressed -- no data transfer */
++    SD_TYPE_ADTC = 3,   /* addressed with data transfer */
++} MMCCmdType;
 +
-+    switch (mmu_idx) {
-+    case ARMMMUIdx_E20_0:
-+        target_el = 2;
-+        break;
-+    case ARMMMUIdx_E30_0:
-+        target_el = 3;
-+        break;
-+    default:
-+        target_el = 1;
-+        break;
-+    }
+ static void omap_mmc_command(struct omap_mmc_s *host, int cmd, int dir,
+-                sd_cmd_type_t type, int busy, sd_rsp_type_t resptype, int init)
++                             MMCCmdType type, int busy,
++                             sd_rsp_type_t resptype, int init)
+ {
+     uint32_t rspstatus, mask;
+     int rsplen, timeout;
+@@ -128,7 +138,7 @@ static void omap_mmc_command(struct omap_mmc_s *host, int cmd, int dir,
+     if (resptype == sd_r1 && busy)
+         resptype = sd_r1b;
  
-     /*
-      * The bit is not valid unless the target el is aa64, but since the
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index dc49a8d806..9b0decd4e3 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -229,6 +229,9 @@ static inline int get_a32_user_mem_index(DisasContext *s)
-      */
-     switch (s->mmu_idx) {
-     case ARMMMUIdx_E3:
-+    case ARMMMUIdx_E30_0:
-+    case ARMMMUIdx_E30_3_PAN:
-+        return arm_to_core_mmu_idx(ARMMMUIdx_E30_0);
-     case ARMMMUIdx_E2:        /* this one is UNPREDICTABLE */
-     case ARMMMUIdx_E10_0:
-     case ARMMMUIdx_E10_1:
+-    if (type == sd_adtc) {
++    if (type == SD_TYPE_ADTC) {
+         host->fifo_start = 0;
+         host->fifo_len = 0;
+         host->transfer = 1;
+@@ -433,10 +443,10 @@ static void omap_mmc_write(void *opaque, hwaddr offset,
+         for (i = 0; i < 8; i ++)
+             s->rsp[i] = 0x0000;
+         omap_mmc_command(s, value & 63, (value >> 15) & 1,
+-                (sd_cmd_type_t) ((value >> 12) & 3),
+-                (value >> 11) & 1,
+-                (sd_rsp_type_t) ((value >> 8) & 7),
+-                (value >> 7) & 1);
++                         (MMCCmdType)((value >> 12) & 3),
++                         (value >> 11) & 1,
++                         (sd_rsp_type_t) ((value >> 8) & 7),
++                         (value >> 7) & 1);
+         omap_mmc_update(s);
+         break;
+ 
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 26d6eebe89..e96181385f 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -71,6 +71,14 @@ typedef enum {
+     sd_illegal = -2,
+ } sd_rsp_type_t;
+ 
++typedef enum {
++    sd_spi,
++    sd_bc,     /* broadcast -- no response */
++    sd_bcr,    /* broadcast with response */
++    sd_ac,     /* addressed -- no data transfer */
++    sd_adtc,   /* addressed with data transfer */
++} sd_cmd_type_t;
++
+ enum SDCardModes {
+     sd_inactive,
+     sd_card_identification_mode,
+diff --git a/include/hw/sd/sd.h b/include/hw/sd/sd.h
+index d35a839f5e..f2458f37b3 100644
+--- a/include/hw/sd/sd.h
++++ b/include/hw/sd/sd.h
+@@ -75,14 +75,6 @@ typedef enum  {
+     UHS_III             = 3,    /* currently not supported */
+ } sd_uhs_mode_t;
+ 
+-typedef enum {
+-    sd_spi,
+-    sd_bc,     /* broadcast -- no response */
+-    sd_bcr,    /* broadcast with response */
+-    sd_ac,     /* addressed -- no data transfer */
+-    sd_adtc,   /* addressed with data transfer */
+-} sd_cmd_type_t;
+-
+ typedef struct {
+     uint8_t cmd;
+     uint32_t arg;
 -- 
 2.39.5
 
