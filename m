@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1038D5E367
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:15:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6042CD5E367
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:15:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kGr-0000Pg-UF; Sat, 09 Nov 2024 07:08:54 -0500
+	id 1t9kLf-0005VK-4y; Sat, 09 Nov 2024 07:13:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kGp-0000LP-Pt; Sat, 09 Nov 2024 07:08:51 -0500
+ id 1t9kLE-0004ub-UU; Sat, 09 Nov 2024 07:13:25 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kGn-0003pL-R8; Sat, 09 Nov 2024 07:08:51 -0500
+ id 1t9kLD-0004ep-5l; Sat, 09 Nov 2024 07:13:24 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B41DA15F4;
- Sat,  9 Nov 2024 15:07:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8F791A1616;
+ Sat,  9 Nov 2024 15:07:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 22E12167F82;
- Sat,  9 Nov 2024 15:08:02 +0300 (MSK)
-Received: (nullmailer pid 3295286 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 56F85167FA4;
+ Sat,  9 Nov 2024 15:08:04 +0300 (MSK)
+Received: (nullmailer pid 3295395 invoked by uid 1000);
  Sat, 09 Nov 2024 12:08:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 12/57] linux-user: Fix parse_elf_properties GNU0_MAGIC
- check
-Date: Sat,  9 Nov 2024 15:07:14 +0300
-Message-Id: <20241109120801.3295120-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.4 46/57] target/riscv/kvm: clarify how 'riscv-aia'
+ default works
+Date: Sat,  9 Nov 2024 15:07:48 +0300
+Message-Id: <20241109120801.3295120-46-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,60 +62,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Comparing a string of 4 bytes only works in little-endian.
+We do not have control in the default 'riscv-aia' default value. We can
+try to set it to a specific value, in this case 'auto', but there's no
+guarantee that the host will accept it.
 
-Adjust bulk bswap to only apply to the note payload.
-Perform swapping of the note header manually; the magic
-is defined so that it does not need a runtime swap.
+Couple with this we're always doing a 'qemu_log' to inform whether we're
+ended up using the host default or if we managed to set the AIA mode to
+the QEMU default we wanted to set.
 
-Fixes: 83f990eb5adb ("linux-user/elfload: Parse NT_GNU_PROPERTY_TYPE_0 notes")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2596
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 2884596f5f385b5712c356310dd4125a089888a8)
+Change the 'riscv-aia' description to better reflect how the option
+works, and remove the two informative 'qemu_log' that are now unneeded:
+if no message shows, riscv-aia was set to the default or uset-set value.
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241028182037.290171-3-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit fd16cfb2995e9196b579d8885145c4247dfa6058)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 0e00683dd2..a343fb5ad0 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -3209,11 +3209,11 @@ static bool parse_elf_properties(const ImageSource *src,
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 06a8b7a9e2..8117ecb782 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1548,9 +1548,9 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
+     object_class_property_add_str(oc, "riscv-aia", riscv_get_kvm_aia,
+                                   riscv_set_kvm_aia);
+     object_class_property_set_description(oc, "riscv-aia",
+-                                          "Set KVM AIA mode. Valid values are "
+-                                          "emul, hwaccel, and auto. Default "
+-                                          "is auto.");
++        "Set KVM AIA mode. Valid values are 'emul', 'hwaccel' and 'auto'. "
++        "Changing KVM AIA modes relies on host support. Defaults to 'auto' "
++        "if the host supports it");
+     object_property_set_default_str(object_class_property_find(oc, "riscv-aia"),
+                                     "auto");
+ }
+@@ -1583,10 +1583,7 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+         exit(1);
      }
  
-     /*
--     * The contents of a valid PT_GNU_PROPERTY is a sequence
--     * of uint32_t -- swap them all now.
-+     * The contents of a valid PT_GNU_PROPERTY is a sequence of uint32_t.
-+     * Swap most of them now, beyond the header and namesz.
-      */
- #ifdef BSWAP_NEEDED
--    for (int i = 0; i < n / 4; i++) {
-+    for (int i = 4; i < n / 4; i++) {
-         bswap32s(note.data + i);
-     }
- #endif
-@@ -3223,15 +3223,15 @@ static bool parse_elf_properties(const ImageSource *src,
-      * immediately follows nhdr and is thus at the 4th word.  Further, all
-      * of the inputs to the kernel's round_up are multiples of 4.
-      */
--    if (note.nhdr.n_type != NT_GNU_PROPERTY_TYPE_0 ||
--        note.nhdr.n_namesz != NOTE_NAME_SZ ||
-+    if (tswap32(note.nhdr.n_type) != NT_GNU_PROPERTY_TYPE_0 ||
-+        tswap32(note.nhdr.n_namesz) != NOTE_NAME_SZ ||
-         note.data[3] != GNU0_MAGIC) {
-         error_setg(errp, "Invalid note in PT_GNU_PROPERTY");
-         return false;
-     }
-     off = sizeof(note.nhdr) + NOTE_NAME_SZ;
+-    if (default_aia_mode == aia_mode) {
+-        qemu_log("KVM AIA: using default host mode '%s'\n",
+-                  kvm_aia_mode_str(default_aia_mode));
+-    } else {
++    if (default_aia_mode != aia_mode) {
+         ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+                                 KVM_DEV_RISCV_AIA_CONFIG_MODE,
+                                 &aia_mode, true, NULL);
+@@ -1598,9 +1595,6 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
  
--    datasz = note.nhdr.n_descsz + off;
-+    datasz = tswap32(note.nhdr.n_descsz) + off;
-     if (datasz > n) {
-         error_setg(errp, "Invalid note size in PT_GNU_PROPERTY");
-         return false;
+             /* failed to change AIA mode, use default */
+             aia_mode = default_aia_mode;
+-        } else {
+-            qemu_log("KVM AIA: setting current mode to %s\n",
+-                     kvm_aia_mode_str(aia_mode));
+         }
+     }
+ 
 -- 
 2.39.5
 
