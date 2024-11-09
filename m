@@ -4,78 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 192F4D5C0C7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B86BD5C0FB
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 05:01:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9dZl-0006Nj-Ey; Fri, 08 Nov 2024 23:59:57 -0500
+	id 1t9dZk-0006NK-NM; Fri, 08 Nov 2024 23:59:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t9dZj-0006NB-It
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 23:59:55 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1t9dZi-0006N3-TR
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 23:59:54 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t9dZh-0000fL-W8
- for qemu-devel@nongnu.org; Fri, 08 Nov 2024 23:59:55 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-71e4244fdc6so2489947b3a.0
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 20:59:53 -0800 (PST)
+ id 1t9dZg-0000fC-9w
+ for qemu-devel@nongnu.org; Fri, 08 Nov 2024 23:59:54 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-71e49ad46b1so2514681b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 20:59:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1731128392; x=1731733192;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1731128389; x=1731733189;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pe8SBHoLAZphIXqOGJa/qUqOysZpgdOltfKYUVIh7vA=;
- b=mi4rh9b1A0EaYEidZw+/gVjtd8bCYvvBLngH1Z0ton6mUTDGKqreUqy2NFGI/NPpzd
- mausE8xtDvLS7I6pJe4afXS72Yz3cF4guia5CCmeolcZWOueY/mZM4MXFCvzJfVeFDa+
- cyoenFbaBrtTAYcK+ST6T/ecrWgmg1ImcrKQOKfsePXhf68QQGA5e4Firh6DNGTmkWV0
- h+ww4gTWXdzouJPgiJkUcad/fxcvUYWYwwB9LaUh4Gp0XHN1Mfr92wyTa23F5ODa+uIR
- RMN4Ax3mXQyvDWP0HY5x4nMpgNsm4/SaOh4WnkzJeT2zWibM34Mzc3DtqFqoCZkGatZS
- f8RA==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dRjhDPuuKRsrkljpAqH6ytUbaVBB6SVXyTI1N+QGL0U=;
+ b=P3rypPH/m8TZ8oqAeDDDUrQy1U2El67rHhra6/cNdl79AZKcz6v7zXj3hy/Ev4Dzz0
+ IHuym84DIK5G9YDctfbmsK4tk5Qn1eeQss3JXPbbm5tX9+w12B4b+vOVawomD1XO2yex
+ cAN7dTKz2G4lYww22ouvg05feME86JJXc907tKaqrnEOJY9kK27otuQ770IXCSZ7fUUy
+ PKgAvtUEWZvQ0BPpG4AKJgpzvoJjVkd4Rt3IbNaSPHR2smGjuvTO5/1wRyayfak2tGcz
+ /nv8r5gJmIfIkD45wHznUTbsn19bIfafsO5dfpWgheoOCH4LOzANTqlz1gqYoqLlfCml
+ mNng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731128392; x=1731733192;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pe8SBHoLAZphIXqOGJa/qUqOysZpgdOltfKYUVIh7vA=;
- b=F6zPqeG0ypk9YHq6HzZV+ZcUZiZ2bmlm3ErRdAVj+ZHqfMINrs/GBmGFFXI6XJK6U0
- q+mG3FG1lbfoD2h+vcJEZ2QRtliFk9DW/AccV9lMAABYBUzHGYv0Y51uL9suPK0EaLoB
- uarrOW8nIvJv4nlCFHleFvOCQxKiP25fFiOYxklkJOSGACjqEBtuFcYjxPQ60lDjec/d
- ssTgIFPOGPpKIFD2qlaqtwIwNpUDac5BoZpTKFZAUv2734zrVHBYET6HkS+cLoLw5+C2
- 13vRHKRrq69wuFPAwjjGWoreG3QcmscpSdeV7jiXUNFoV7yPqIdngDG3IpiVyd76h5rX
- qOCA==
-X-Gm-Message-State: AOJu0YwpQj6xVqloSImSRoRmv76KLBpRolOi5dgorRb+jGGZNBzXbB5o
- oRWi0z+hTERe1TKI/QnZhFkDP5qn2NTqPNRXgkW5ySk6ks6vg86AJIcfugFSKTPSBHk1i6OCoIw
- kiOhoUg==
-X-Google-Smtp-Source: AGHT+IH/ANoqO6TccTq1Rf0TFJt6/rfvYZpMFW6aa9hhhY1MLru+b8FZD280aWa38aayNYJz6tENzQ==
-X-Received: by 2002:a05:6a00:3c95:b0:71d:f15e:d023 with SMTP id
- d2e1a72fcca58-724132c7aeemr7007968b3a.11.1731128391786; 
- Fri, 08 Nov 2024 20:59:51 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731128389; x=1731733189;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dRjhDPuuKRsrkljpAqH6ytUbaVBB6SVXyTI1N+QGL0U=;
+ b=kORpEaZ7mqUO+UVRv6/Ke7Lo8hMHE+NdCDMjwsav4nvYUISEtvE4toYofCCAd4anN3
+ HZjR6vijlneDN3/LnfOGU8fTXNCudJyX7SmpiSnB3yuPw6kwgyq9Am9z6U6HHtHLz2+L
+ M1nw0pPO94899oRyNL2YHgFI3IXa8CCSpn4Bgf6LT1snXcp40cqGghgpjGJAX55h4uYT
+ 12S5zt1fQH43rY/ipFY+2KK7cV6y1D8plloo8oPd+/rRhDo57VzX6lEJ8vzQyKM/6vZb
+ IkDmKRnOWtsAwt7d0LV1w6zZ/IKkriFOPilJsBCzYV0xvZ8hka87d+KRkglHkh1MbvIZ
+ iN+Q==
+X-Gm-Message-State: AOJu0YxSPa7bA+dG3wXUojlXj45RHSrXg7NtbZT6sJyBwmzj2fwiVmwg
+ R4pscHIkXbyEY6uoeOLv4SIHYEfyTcJulSKuokJUjADvOtbo4mory4hsWDtmliY/QkKfVqJibQn
+ VkRLJ8w==
+X-Google-Smtp-Source: AGHT+IFnXaDxl3W6Cww/oTHYQJuVcnnSdsv9Pqb5LJSUdFBTOXDbGdtXcpjXdvPRfXGEkP57YntIGg==
+X-Received: by 2002:a05:6a00:3a14:b0:71e:6a13:9bac with SMTP id
+ d2e1a72fcca58-7241312915emr8135605b3a.0.1731128388925; 
+ Fri, 08 Nov 2024 20:59:48 -0800 (PST)
 Received: from localhost.localdomain ([118.114.63.54])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724078a9ac8sm4718365b3a.79.2024.11.08.20.59.49
+ d2e1a72fcca58-724078a9ac8sm4718365b3a.79.2024.11.08.20.59.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 20:59:51 -0800 (PST)
+ Fri, 08 Nov 2024 20:59:48 -0800 (PST)
 From: Hyman Huang <yong.huang@smartx.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Wei Wang <wei.w.wang@intel.com>, David Hildenbrand <david@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>, yong.huang@smartx.com
-Subject: [PATCH v1 1/2] virtio-balloon: Enable free page hinting during
- PRECOPY_NOTIFY_SETUP
-Date: Sat,  9 Nov 2024 12:59:41 +0800
-Message-Id: <c799b1f96e55c5eb9c07e5a70a51b8ba67e7bcc9.1731128180.git.yong.huang@smartx.com>
+Subject: [PATCH v1 0/2] migration: Skip the first dirty sync
+Date: Sat,  9 Nov 2024 12:59:40 +0800
+Message-Id: <cover.1731128180.git.yong.huang@smartx.com>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <cover.1731128180.git.yong.huang@smartx.com>
-References: <cover.1731128180.git.yong.huang@smartx.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=yong.huang@smartx.com; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=yong.huang@smartx.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,37 +93,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PRECOPY_NOTIFY_AFTER_BITMAP_SYNC was interpreted by free page hinting
-optimization as an indication to begin freeing pages. But there's no
-assurance that a sync is required when beginning a migration. Therefore,
-during PRECOPY_NOTIFY_SETUP, as well as PRECOPY_NOTIFY_AFTER_BITMAP_SYNC,
-enable free page hinting.
+The first iteration's RAMBlock dirty sync can be omitted because QEMU
+always initializes the RAMBlock's bmap to all 1s by default.
 
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
----
- hw/virtio/virtio-balloon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Prior to that, a pre-requisite patch was offered to maintain the free
+page optimizing behavior.
 
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index 609e39a821..2f1e086cd8 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -663,6 +663,7 @@ virtio_balloon_free_page_hint_notify(NotifierWithReturn *n, void *data,
-     case PRECOPY_NOTIFY_BEFORE_BITMAP_SYNC:
-         virtio_balloon_free_page_stop(dev);
-         break;
-+    case PRECOPY_NOTIFY_SETUP:
-     case PRECOPY_NOTIFY_AFTER_BITMAP_SYNC:
-         if (vdev->vm_running) {
-             virtio_balloon_free_page_start(dev);
-@@ -679,7 +680,6 @@ virtio_balloon_free_page_hint_notify(NotifierWithReturn *n, void *data,
-          */
-         virtio_balloon_free_page_done(dev);
-         break;
--    case PRECOPY_NOTIFY_SETUP:
-     case PRECOPY_NOTIFY_COMPLETE:
-         break;
-     default:
+For more details, please refers to:
+https://lore.kernel.org/qemu-devel/CAK9dgmZSmoydJkFQP5VXfN21etMZc_bNq51R+if08F+NTApN_A@mail.gmail.com/T/#t
+
+Please review, thanks
+
+Yong
+
+Hyman Huang (2):
+  virtio-balloon: Enable free page hinting during PRECOPY_NOTIFY_SETUP
+  migration: Do not perform RAMBlock dirty sync during the first
+    iteration
+
+ hw/virtio/virtio-balloon.c |  2 +-
+ migration/cpu-throttle.c   |  2 +-
+ migration/ram.c            | 11 ++++++++---
+ 3 files changed, 10 insertions(+), 5 deletions(-)
+
 -- 
 2.39.1
 
