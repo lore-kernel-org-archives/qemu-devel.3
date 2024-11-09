@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E5AD5E362
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADF42D5E362
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9icU-00085v-9Y; Sat, 09 Nov 2024 05:23:12 -0500
+	id 1t9icC-00071g-Qd; Sat, 09 Nov 2024 05:22:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iXS-0007o8-NS; Sat, 09 Nov 2024 05:17:57 -0500
+ id 1t9iXR-0007nF-Fk; Sat, 09 Nov 2024 05:17:55 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iXQ-0008Aj-QY; Sat, 09 Nov 2024 05:17:54 -0500
+ id 1t9iXP-00089O-QO; Sat, 09 Nov 2024 05:17:53 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 657ABA140A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3088AA1408;
  Sat,  9 Nov 2024 13:13:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EE2C0167EF5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id CFD86167EF3;
  Sat,  9 Nov 2024 13:14:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Sergey Makarov <s.makarov@syntacore.com>,
+Cc: qemu-stable@nongnu.org,
+ Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 37/49] hw/intc: Don't clear pending bits on IRQ lowering
-Date: Sat,  9 Nov 2024 13:14:28 +0300
-Message-Id: <20241109101443.312701-37-mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 35/49] target/riscv/csr.c: Fix an access to VXSAT
+Date: Sat,  9 Nov 2024 13:14:26 +0300
+Message-Id: <20241109101443.312701-35-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
@@ -60,36 +62,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sergey Makarov <s.makarov@syntacore.com>
+From: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
 
-According to PLIC specification (chapter 5), there
-is only one case, when interrupt is claimed. Fix
-PLIC controller to match this behavior.
+The register VXSAT should be RW only to the first bit.
+The remaining bits should be 0.
 
-Signed-off-by: Sergey Makarov <s.makarov@syntacore.com>
+The RISC-V Instruction Set Manual Volume I: Unprivileged Architecture
+
+The vxsat CSR has a single read-write least-significant bit (vxsat[0])
+that indicates if a fixed-point instruction has had to saturate an output
+value to fit into a destination format. Bits vxsat[XLEN-1:1]
+should be written as zeros.
+
+Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240918140229.124329-3-s.makarov@syntacore.com>
+Message-ID: <20241002084436.89347-1-evgenii.prokopiev@syntacore.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit a84be2baa9eca8bc500f866ad943b8f63dc99adf)
+(cherry picked from commit 5a60026cad4e9dba929cab4f63229e4b9110cf0a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
-index 5522ede2cf..e5de52bc44 100644
---- a/hw/intc/sifive_plic.c
-+++ b/hw/intc/sifive_plic.c
-@@ -349,8 +349,10 @@ static void sifive_plic_irq_request(void *opaque, int irq, int level)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index c50a33397c..3d9ea0c316 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -704,7 +704,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
+ static RISCVException read_vxsat(CPURISCVState *env, int csrno,
+                                  target_ulong *val)
  {
-     SiFivePLICState *s = opaque;
- 
--    sifive_plic_set_pending(s, irq, level > 0);
--    sifive_plic_update(s);
-+    if (level > 0) {
-+        sifive_plic_set_pending(s, irq, true);
-+        sifive_plic_update(s);
-+    }
+-    *val = env->vxsat;
++    *val = env->vxsat & BIT(0);
+     return RISCV_EXCP_NONE;
  }
  
- static void sifive_plic_realize(DeviceState *dev, Error **errp)
+@@ -714,7 +714,7 @@ static RISCVException write_vxsat(CPURISCVState *env, int csrno,
+ #if !defined(CONFIG_USER_ONLY)
+     env->mstatus |= MSTATUS_VS;
+ #endif
+-    env->vxsat = val;
++    env->vxsat = val & BIT(0);
+     return RISCV_EXCP_NONE;
+ }
+ 
 -- 
 2.39.5
 
