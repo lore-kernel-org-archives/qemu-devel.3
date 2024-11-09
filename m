@@ -4,35 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76F3BD5E365
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 387C4D5E364
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9idO-00032P-VE; Sat, 09 Nov 2024 05:24:03 -0500
+	id 1t9idg-0003a7-0O; Sat, 09 Nov 2024 05:24:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iYM-00029s-HG; Sat, 09 Nov 2024 05:18:52 -0500
+ id 1t9iYN-00029v-OV; Sat, 09 Nov 2024 05:18:53 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iYK-0008EW-Jf; Sat, 09 Nov 2024 05:18:50 -0500
+ id 1t9iYM-0008Ej-0d; Sat, 09 Nov 2024 05:18:51 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D0099A1413;
+ by isrv.corpit.ru (Postfix) with ESMTP id D6634A1414;
  Sat,  9 Nov 2024 13:13:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7CF79167EFE;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 84C32167EFF;
  Sat,  9 Nov 2024 13:14:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 46/49] target/arm: Fix SVE SDOT/UDOT/USDOT (4-way,
- indexed)
-Date: Sat,  9 Nov 2024 13:14:37 +0300
-Message-Id: <20241109101443.312701-46-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 47/49] migration: Ensure vmstate_save() sets errp
+Date: Sat,  9 Nov 2024 13:14:38 +0300
+Message-Id: <20241109101443.312701-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
@@ -61,69 +59,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-Our implementation of the indexed version of SVE SDOT/UDOT/USDOT got
-the calculation of the inner loop terminator wrong.  Although we
-correctly account for the element size when we calculate the
-terminator for the first iteration:
-   intptr_t segend = MIN(16 / sizeof(TYPED), opr_sz_n);
-we don't do that when we move it forward after the first inner loop
-completes.  The intention is that we process the vector in 128-bit
-segments, which for a 64-bit element size should mean (1, 2), (3, 4),
-(5, 6), etc.  This bug meant that we would iterate (1, 2), (3, 4, 5,
-6), (7, 8, 9, 10) etc and apply the wrong indexed element to some of
-the operations, and also index off the end of the vector.
+migration/savevm.c contains some calls to vmstate_save() that are
+followed by migrate_set_error() if the integer return value indicates an
+error.  migrate_set_error() requires that the `Error *` object passed to
+it is set.  Therefore, vmstate_save() is assumed to always set *errp on
+error.
 
-You don't see this bug if the vector length is small enough that we
-don't need to iterate the outer loop, i.e.  if it is only 128 bits,
-or if it is the 64-bit special case from AA32/AA64 AdvSIMD.  If the
-vector length is 256 bits then we calculate the right results for the
-elements in the vector but do index off the end of the vector. Vector
-lengths greater than 256 bits see wrong answers. The instructions
-that produce 32-bit results behave correctly.
+Right now, that assumption is not met: vmstate_save_state_v() (called
+internally by vmstate_save()) will not set *errp if
+vmstate_subsection_save() or vmsd->post_save() fail.  Fix that by adding
+an *errp parameter to vmstate_subsection_save(), and by generating a
+generic error in case post_save() fails (as is already done for
+pre_save()).
 
-Fix the recalculation of 'segend' for subsequent iterations, and
-restore a version of the comment that was lost in the refactor of
-commit 7020ffd656a5 that explains why we only need to clamp segend to
-opr_sz_n for the first iteration, not the later ones.
+Without this patch, qemu will crash after vmstate_subsection_save() or
+post_save() have failed inside of a vmstate_save() call (unless
+migrate_set_error() then happen to discard the new error because
+s->error is already set).  This happens e.g. when receiving the state
+from a virtio-fs back-end (virtiofsd) fails.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2595
-Fixes: 7020ffd656a5 ("target/arm: Macroize helper_gvec_{s,u}dot_idx_{b,h}")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241101185544.2130972-1-peter.maydell@linaro.org
-(cherry picked from commit e6b2fa1b81ac6b05c4397237c846a295a9857920)
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Link: https://lore.kernel.org/r/20241015170437.310358-1-hreitz@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 37dfcba1a04989830c706f9cbc00450e5d3a7447)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index cc7cab338c..83b49ef009 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -692,6 +692,13 @@ void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
- {                                                                         \
-     intptr_t i = 0, opr_sz = simd_oprsz(desc);                            \
-     intptr_t opr_sz_n = opr_sz / sizeof(TYPED);                           \
-+    /*                                                                    \
-+     * Special case: opr_sz == 8 from AA64/AA32 advsimd means the         \
-+     * first iteration might not be a full 16 byte segment. But           \
-+     * for vector lengths beyond that this must be SVE and we know        \
-+     * opr_sz is a multiple of 16, so we need not clamp segend            \
-+     * to opr_sz_n when we advance it at the end of the loop.             \
-+     */                                                                   \
-     intptr_t segend = MIN(16 / sizeof(TYPED), opr_sz_n);                  \
-     intptr_t index = simd_data(desc);                                     \
-     TYPED *d = vd, *a = va;                                               \
-@@ -709,7 +716,7 @@ void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
-                     n[i * 4 + 2] * m2 +                                   \
-                     n[i * 4 + 3] * m3);                                   \
-         } while (++i < segend);                                           \
--        segend = i + 4;                                                   \
-+        segend = i + (16 / sizeof(TYPED));                                \
-     } while (i < opr_sz_n);                                               \
-     clear_tail(d, opr_sz, simd_maxsz(desc));                              \
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index b7723a4187..bd08e390c5 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -22,7 +22,8 @@
+ #include "trace.h"
+ 
+ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, JSONWriter *vmdesc);
++                                   void *opaque, JSONWriter *vmdesc,
++                                   Error **errp);
+ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+                                    void *opaque);
+ 
+@@ -440,12 +441,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+         json_writer_end_array(vmdesc);
+     }
+ 
+-    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc);
++    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
+ 
+     if (vmsd->post_save) {
+         int ps_ret = vmsd->post_save(opaque);
+-        if (!ret) {
++        if (!ret && ps_ret) {
+             ret = ps_ret;
++            error_setg(errp, "post-save failed: %s", vmsd->name);
+         }
+     }
+     return ret;
+@@ -515,7 +517,8 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
  }
+ 
+ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, JSONWriter *vmdesc)
++                                   void *opaque, JSONWriter *vmdesc,
++                                   Error **errp)
+ {
+     const VMStateDescription **sub = vmsd->subsections;
+     bool vmdesc_has_subsections = false;
+@@ -543,7 +546,7 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+             qemu_put_byte(f, len);
+             qemu_put_buffer(f, (uint8_t *)vmsdsub->name, len);
+             qemu_put_be32(f, vmsdsub->version_id);
+-            ret = vmstate_save_state(f, vmsdsub, opaque, vmdesc);
++            ret = vmstate_save_state_with_err(f, vmsdsub, opaque, vmdesc, errp);
+             if (ret) {
+                 return ret;
+             }
 -- 
 2.39.5
 
