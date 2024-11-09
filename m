@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A075ED5C0FC
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 831A3D5C0FC
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:46:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9fC5-0002G0-Ic; Sat, 09 Nov 2024 01:43:37 -0500
+	id 1t9fC1-0001lF-Ai; Sat, 09 Nov 2024 01:43:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f9j-0005UZ-DB; Sat, 09 Nov 2024 01:41:12 -0500
+ id 1t9f9i-0005Tx-2x; Sat, 09 Nov 2024 01:41:11 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f9h-0002b2-Ig; Sat, 09 Nov 2024 01:41:10 -0500
+ id 1t9f9g-0002al-Ew; Sat, 09 Nov 2024 01:41:09 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1E5E0A1302;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0FA7CA1301;
  Sat,  9 Nov 2024 09:38:11 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 87E9F167DE5;
+ by tsrv.corpit.ru (Postfix) with SMTP id 7A103167DE4;
  Sat,  9 Nov 2024 09:39:05 +0300 (MSK)
-Received: (nullmailer pid 3272571 invoked by uid 1000);
+Received: (nullmailer pid 3272568 invoked by uid 1000);
  Sat, 09 Nov 2024 06:39:03 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Rob Bradford <rbradford@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: qemu-stable@nongnu.org, Sergey Makarov <s.makarov@syntacore.com>,
  Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 26/33] target/riscv: Set vtype.vill on CPU reset
-Date: Sat,  9 Nov 2024 09:38:52 +0300
-Message-Id: <20241109063903.3272404-26-mjt@tls.msk.ru>
+Subject: [Stable-7.2.15 25/33] hw/intc: Don't clear pending bits on IRQ
+ lowering
+Date: Sat,  9 Nov 2024 09:38:51 +0300
+Message-Id: <20241109063903.3272404-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 References: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
@@ -62,35 +62,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rob Bradford <rbradford@rivosinc.com>
+From: Sergey Makarov <s.makarov@syntacore.com>
 
-The RISC-V unprivileged specification "31.3.11. State of Vector
-Extension at Reset" has a note that recommends vtype.vill be set on
-reset as part of ensuring that the vector extension have a consistent
-state at reset.
+According to PLIC specification (chapter 5), there
+is only one case, when interrupt is claimed. Fix
+PLIC controller to match this behavior.
 
-This change now makes QEMU consistent with Spike which sets vtype.vill
-on reset.
-
-Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20240930165258.72258-1-rbradford@rivosinc.com>
+Signed-off-by: Sergey Makarov <s.makarov@syntacore.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240918140229.124329-3-s.makarov@syntacore.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit f8c1f36a2e3dab4935e7c5690e578ac71765766b)
+(cherry picked from commit a84be2baa9eca8bc500f866ad943b8f63dc99adf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index d14e95c9dc..0808cbdb19 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -581,6 +581,7 @@ static void riscv_cpu_reset(DeviceState *dev)
-     cs->exception_index = RISCV_EXCP_NONE;
-     env->load_res = -1;
-     set_default_nan_mode(1, &env->fp_status);
-+    env->vill = true;
+diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
+index c2dfacf028..7a42c4b792 100644
+--- a/hw/intc/sifive_plic.c
++++ b/hw/intc/sifive_plic.c
+@@ -331,8 +331,10 @@ static void sifive_plic_irq_request(void *opaque, int irq, int level)
+ {
+     SiFivePLICState *s = opaque;
  
- #ifndef CONFIG_USER_ONLY
-     if (riscv_feature(env, RISCV_FEATURE_DEBUG)) {
+-    sifive_plic_set_pending(s, irq, level > 0);
+-    sifive_plic_update(s);
++    if (level > 0) {
++        sifive_plic_set_pending(s, irq, true);
++        sifive_plic_update(s);
++    }
+ }
+ 
+ static void sifive_plic_realize(DeviceState *dev, Error **errp)
 -- 
 2.39.5
 
