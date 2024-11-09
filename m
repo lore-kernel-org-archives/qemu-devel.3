@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D993D5E122
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 792ACD5E122
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9f7v-0002ur-Ba; Sat, 09 Nov 2024 01:39:19 -0500
+	id 1t9f8J-0003AE-U4; Sat, 09 Nov 2024 01:39:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f7s-0002rg-91; Sat, 09 Nov 2024 01:39:16 -0500
+ id 1t9f7v-0002vg-O1; Sat, 09 Nov 2024 01:39:21 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f7q-0001vZ-1i; Sat, 09 Nov 2024 01:39:16 -0500
+ id 1t9f7t-0001xD-KZ; Sat, 09 Nov 2024 01:39:19 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 66671A12E8;
+ by isrv.corpit.ru (Postfix) with ESMTP id 76A8DA12E9;
  Sat,  9 Nov 2024 09:38:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id CF0A2167DCC;
+ by tsrv.corpit.ru (Postfix) with SMTP id DE940167DCD;
  Sat,  9 Nov 2024 09:39:03 +0300 (MSK)
-Received: (nullmailer pid 3272494 invoked by uid 1000);
+Received: (nullmailer pid 3272497 invoked by uid 1000);
  Sat, 09 Nov 2024 06:39:03 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Fea.Wang" <fea.wang@sifive.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 01/33] softmmu/physmem.c: Keep transaction attribute
- in address_space_map()
-Date: Sat,  9 Nov 2024 09:38:27 +0300
-Message-Id: <20241109063903.3272404-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Claudio Fontana <cfontana@suse.de>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.15 02/33] target/ppc: Fix lxvx/stxvx facility check
+Date: Sat,  9 Nov 2024 09:38:28 +0300
+Message-Id: <20241109063903.3272404-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 References: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
@@ -64,37 +64,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Fea.Wang" <fea.wang@sifive.com>
+From: Fabiano Rosas <farosas@suse.de>
 
-The follow-up transactions may use the data in the attribution, so keep
-the value of attribution from the function parameter just as
-flatview_translate() above.
+The XT check for the lxvx/stxvx instructions is currently
+inverted. This was introduced during the move to decodetree.
 
-Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+>From the ISA:
+  Chapter 7. Vector-Scalar Extension Facility
+  Load VSX Vector Indexed X-form
+
+  lxvx XT,RA,RB
+  if TX=0 & MSR.VSX=0 then VSX_Unavailable()
+  if TX=1 & MSR.VEC=0 then Vector_Unavailable()
+  ...
+  Let XT be the value 32×TX + T.
+
+The code currently does the opposite:
+
+    if (paired || a->rt >= 32) {
+        REQUIRE_VSX(ctx);
+    } else {
+        REQUIRE_VECTOR(ctx);
+    }
+
+This was already fixed for lxv/stxv at commit "2cc0e449d1 (target/ppc:
+Fix lxv/stxv MSR facility check)", but the indexed forms were missed.
+
 Cc: qemu-stable@nongnu.org
-Fixes: f26404fbee ("Make address_space_map() take a MemTxAttrs argument")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20240912070404.2993976-2-fea.wang@sifive.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit d8d5ca40048b04750de5a0ae0b2b9f153a391951)
+Fixes: 70426b5bb7 ("target/ppc: moved stxvx and lxvx from legacy to decodtree")
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Claudio Fontana <cfontana@suse.de>
+Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Message-ID: <20240911141651.6914-1-farosas@suse.de>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 8bded2e73e80823a67f730140788a3c5e60bf4b5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fix due to lack of
- v9.1.0-134-g637b0aa13956 "softmmu: Support concurrent bounce buffers"
- v9.0.0-564-g69e78f1b3484 "system/physmem: Per-AddressSpace bounce buffering")
 
-diff --git a/softmmu/physmem.c b/softmmu/physmem.c
-index 5b176581f6..b96534ea16 100644
---- a/softmmu/physmem.c
-+++ b/softmmu/physmem.c
-@@ -3245,7 +3245,7 @@ void *address_space_map(AddressSpace *as,
-         memory_region_ref(mr);
-         bounce.mr = mr;
-         if (!is_write) {
--            flatview_read(fv, addr, MEMTXATTRS_UNSPECIFIED,
-+            flatview_read(fv, addr, attrs,
-                                bounce.buffer, l);
-         }
+diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
+index de1709809d..9e10291010 100644
+--- a/target/ppc/translate/vsx-impl.c.inc
++++ b/target/ppc/translate/vsx-impl.c.inc
+@@ -2542,7 +2542,7 @@ static bool do_lstxv_PLS_D(DisasContext *ctx, arg_PLS_D *a,
  
+ static bool do_lstxv_X(DisasContext *ctx, arg_X *a, bool store, bool paired)
+ {
+-    if (paired || a->rt >= 32) {
++    if (paired || a->rt < 32) {
+         REQUIRE_VSX(ctx);
+     } else {
+         REQUIRE_VECTOR(ctx);
 -- 
 2.39.5
 
