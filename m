@@ -4,97 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 801D5D5E365
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD66D5E364
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:44:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9iun-0004RO-Ab; Sat, 09 Nov 2024 05:42:01 -0500
+	id 1t9iwz-0005Qr-Ud; Sat, 09 Nov 2024 05:44:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t9iuk-0004R1-VT
- for qemu-devel@nongnu.org; Sat, 09 Nov 2024 05:41:59 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1t9iwy-0005Qj-Ra
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 05:44:16 -0500
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t9iui-0002fb-Q2
- for qemu-devel@nongnu.org; Sat, 09 Nov 2024 05:41:58 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-20cf6eea3c0so32528145ad.0
- for <qemu-devel@nongnu.org>; Sat, 09 Nov 2024 02:41:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1t9iwx-0002oW-Dl
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 05:44:16 -0500
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-539d9fffea1so3024372e87.2
+ for <qemu-devel@nongnu.org>; Sat, 09 Nov 2024 02:44:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1731148915; x=1731753715;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=yKOAbEW6cY1alGmhwAhp1sWmPftiS+bR5h7hUFupp8Y=;
- b=N7vl84hJHYK1j8wy0yxEQE3fkGHA1bmG/Ez58Bvec2bROaEaxnxXYuQ6DwUGfplIXK
- Jvt98JF5Ya/IL5fXhIuKjwilxePEpVmks+TopqKWhocP17VFANwCDqfuZFcUwZjw7/Nr
- H9ysqIjr1lI6lzmmv6EKULoMrMjvZr+gepXwjMVRjBXC1wY8V7s/xsOktsaZj7S4JA/H
- tfzHORuhydLV3RkkKwlnk6BVNlMrolKJmllZqlgAUp9B+e9Yr5jYkICYoep5CWs2cMaI
- dWcsxDvm6Wc0QGlOi5wEh6xKqW3ao+q3vd4qQvUHe4b2WhTWkmT/OTgvr4Ct3657K8+h
- Cqtw==
+ d=gmail.com; s=20230601; t=1731149053; x=1731753853; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-disposition:mime-version:references
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JIpnBJHmzIVVhIAV3Ko11hk7TTFaNJl5v6XXwacvIis=;
+ b=I1395ShpWxfHkZ408u8SM2pyG2l9Fr7VbOVg4g3RaxRuCXkBmWXYkxppEY03V8bWr+
+ YqdEvsJ9+CLzHFFCoDsTJJFc1aUsGPGL5nPNUIAVV67b8e10d/1+EkgtDJI6MNWBH95A
+ LDr1cvVfLxgJ65xFYeLTmapSN05tJ+Rmn5h8unko2bA8Jiwc/EPspX6obKdnVbBh8hXv
+ UgKyJ8XN2k7pJVQzr7okAO6xNJ/KAHi1pEQKt0Zmt33h7fXw/SVT3Noml4GyEJ+Mobj4
+ 3uSxLQtBVoKYQWlSvhUBRcip5MpsPultkFKWziwB0kaMzUcI5EpBIMyi0vhuaoAdAbAy
+ S+ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731148915; x=1731753715;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yKOAbEW6cY1alGmhwAhp1sWmPftiS+bR5h7hUFupp8Y=;
- b=wzVUmwupQiq6HzbjTvSRJCcr0BzzU5r+pfJ5hpDvc8+ojhymNmZco6PkMlRVZuus18
- XSZLYicdoq5BHUNxLsnXE6s0v+LC+CKs/6v6e21tM0kMC5Tf0X5g7YHf6xO/Tt3i4gz9
- zZlKdgCjGf/lJzENfywhlrooud4/ZQOKGxgc4smHr5+s5E0HIdLTHWZzsqTfcx4LD35C
- L0SdLtv7CDpvrn91QUWA5H/dW52rHEwPUVZvvKmAev1v7XU/JLv5I1hqsFovyGsvTS8K
- vIHN2c4ghq9P+mIAWwMBncLG84eYYxqVEaxgoObSmDR3Whxvz/vaaIv7+ZaCpDfdMZDg
- 5FZQ==
+ d=1e100.net; s=20230601; t=1731149053; x=1731753853;
+ h=user-agent:in-reply-to:content-disposition:mime-version:references
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JIpnBJHmzIVVhIAV3Ko11hk7TTFaNJl5v6XXwacvIis=;
+ b=j2b8LrdBqXiJKTnrXlzp/NVHI4+ZsB+/OVgJVj8cws7PDjX4HULFFXmcsAEG2DQvw7
+ A+jl/HMGi0cyxzndmGFqsSlW6XLEV0KJiNBTuzZDfxMJJXdDip+1PmvPI2Sd8NiJZFrE
+ BTx90gGlg6jPGRXcF4QEQHI6bNX+XiFTxizusaJ5PQce0TgP1VueoHF4pZVo8m9r7nTh
+ YEQm9v6RUzzWnBP9NWhTSv1W2S6iEpdFqqi05xCSiIQNB32eeLtP8H/x3vCOUURfb/Ye
+ NJ/angYuUFWWzGEbhpcxr9eA1FCd8EmRLy75coFs06n3dJ+dcYpIry2pqh/NLnAi6rbn
+ RYyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUazk/5P9Zw4pV/76BIQpWf6iDlRHIcwOppmol8B/FlbeR4msQHO+C26neJKairunv9btEhP1v/Vdbx@nongnu.org
-X-Gm-Message-State: AOJu0YzXpYMX78jFHfogVkpUCkkdILsuMB43eGg9P4krnCaujV3R2mlc
- cL18LOMqtphJQkvVZgtjX774HgZ0FTimOVcb6ZFd8Db+hC/pSZcvzWTEHnjc/dA=
-X-Google-Smtp-Source: AGHT+IGm+ANEaQbzC7uUcOYsD2nQxxM0Qb//G6Fr82uAQCnCu3DBsH9hZfWTXQWBcL2SPMW656+EzA==
-X-Received: by 2002:a17:902:f70a:b0:20c:7509:d948 with SMTP id
- d9443c01a7336-21183517852mr79263655ad.17.1731148915010; 
- Sat, 09 Nov 2024 02:41:55 -0800 (PST)
-Received: from [157.82.207.107] ([157.82.207.107])
+ AJvYcCXwNBWFrJ5wEDXUtuAy0jkoX/oDCDIB6WPEL7kftFywLjcnW2KTXwn0UE5knkaI3O2RP4Yx0LU+xiO9@nongnu.org
+X-Gm-Message-State: AOJu0YyKxK5TaczpDiYimY1rOazGc4DzG/goce9A9qUgg4i4+WRpVgZm
+ 9YSMf68adpT/YeDaMXQOO+uSzPO4KjlpVCcfC3SeJWtPFR/Pcpnx5dmRPIMX
+X-Google-Smtp-Source: AGHT+IFGv48havwvIzHSLQUn1z+fnpKjWhHslbfxuSlwYETDUtdXbOIILYRWGCS+USzKe4nrEKPLrg==
+X-Received: by 2002:a05:6512:3084:b0:539:e110:4d72 with SMTP id
+ 2adb3069b0e04-53d862f381dmr2919926e87.56.1731149052832; 
+ Sat, 09 Nov 2024 02:44:12 -0800 (PST)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21177dc8c35sm44400845ad.56.2024.11.09.02.41.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Nov 2024 02:41:54 -0800 (PST)
-Message-ID: <d4f53c8b-4267-4386-bfa6-40ee2b1bbb49@daynix.com>
-Date: Sat, 9 Nov 2024 19:41:51 +0900
+ 2adb3069b0e04-53d82687db7sm902091e87.105.2024.11.09.02.44.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 09 Nov 2024 02:44:11 -0800 (PST)
+Date: Sat, 9 Nov 2024 11:44:10 +0100
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: "Ho, Nelson" <Nelson.Ho@windriver.com>
+Cc: "edgar.iglesias@amd.com" <edgar.iglesias@amd.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: xlnx-versal-virt smmu
+Message-ID: <Zy88-tnGVGj6elQV@zapote>
+References: <SJ0PR11MB66930672DEE042F6AE1E7421E75D2@SJ0PR11MB6693.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH v2 2/3] qdev-properties: Add
- DEFINE_PROP_ON_OFF_AUTO_BIT64()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
-References: <20241022-virtio-v2-0-b2394236e053@daynix.com>
- <20241022-virtio-v2-2-b2394236e053@daynix.com> <Zx_AuOl7l5b2UIjG@redhat.com>
- <fcff076c-5616-46f3-aaa1-45d3ad1bbb44@daynix.com>
- <ZyS_FHG1WDncSidt@redhat.com>
-Content-Language: en-US
-In-Reply-To: <ZyS_FHG1WDncSidt@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::631;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SJ0PR11MB66930672DEE042F6AE1E7421E75D2@SJ0PR11MB6693.namprd11.prod.outlook.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,53 +97,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/11/01 20:44, Daniel P. Berrangé wrote:
-> On Thu, Oct 31, 2024 at 04:21:53PM +0900, Akihiko Odaki wrote:
->> On 2024/10/29 1:50, Daniel P. Berrangé wrote:
->>> On Tue, Oct 22, 2024 at 01:50:39PM +0900, Akihiko Odaki wrote:
->>>> DEFINE_PROP_ON_OFF_AUTO_BIT64() corresponds to DEFINE_PROP_ON_OFF_AUTO()
->>>> as DEFINE_PROP_BIT64() corresponds to DEFINE_PROP_BOOL(). The difference
->>>> is that DEFINE_PROP_ON_OFF_AUTO_BIT64() exposes OnOffAuto instead of
->>>> bool.
->>>
->>> Again, same feedback as last time.
->>>
->>> With this design, existing users of DEFINE_PROP_BIT64 that
->>> get converted to DEFINE_PROP_ON_OFF_AUTO_BIT64, in addition
->>> to gaining the desired "auto" value, also gain redundant
->>> 'on' and 'off' values as side-effects.
->>>
->>> In the next patch, the stated problem is that virtio code
->>> needs to distinguish between bits that are user set, and
->>> bits that are set based on available host backend features.
->>>
->>> That doesn't seem to require us to accept any new values
->>> from the user. It should be sufficient to track user
->>> specified features, separately from user specified values.
->>> ie when parsing user input for bitfields, we need to parse
->>> into a pair of fields
->>>
->>>     uint64_t has_user_features;  /* which bits were specified */
->>>     uint64_t user_features;      /* values of specified bits*/
->>
->> Properties also have getters. We don't know what to return with them without
->> the new value.
+On Fri, Nov 08, 2024 at 04:26:20PM +0000, Ho, Nelson via wrote:
+> Hi Edgar,
 > 
-> The virtio changes in the next patch are just accessing the bitsets
-> directly. A getter could just be made to return false for unset
-> values, on the assumption that any caller should be checking the
-> has_user_features bits beforehand.
+> I am working on bringing up the Wind River Helix hypervisor on the xlnx-versal-virt machine, which expects to find MMU-500 SMMU where it lives on the Versal SoC. I understand the -virt machine is not intended to fully emulate Versal SoC.
+> 
+> I found an implementation of the MMU-500 on the Xilinx QEMU fork, and am curious why this was not upstreamed, and if you know what issues I might encounter if I try to integrate this MMU-500 implementation into the versal-virt machine?
+>
 
-It means this construct is specialized for the case when the getter will 
-never be called for the default value. I think it is difficult to 
-convince others to introduce such a new mechanism when we already have 
-OnOffAuto as a generic solution. There is even DEFINE_PROP_ON_OFF_AUTO() 
-for qdev properties.
+Hi Nelson,
 
-The question is: when we have BOOL, BIT64, and ON_OFF_AUTO, shouldn't we 
-have ON_OFF_AUTO_BIT64? Whether OnOffAuto is good or not is not a 
-problem here unless we are going to deprecate DEFINE_PROP_ON_OFF_AUTO().
+There's no particular reason other than lack of time.
 
-Regards,
-Akihiko Odaki
+The tricky parts will likely be to hook it up without the device-tree
+bindings that Xilinx uses to create machines. Perhaps also how
+we use Memory Regions to describe the DMA ports towards DMA masters
+and towards SMMU TBUs in a non-PCI specific manner.
+
+Cheers,
+Edgar
 
