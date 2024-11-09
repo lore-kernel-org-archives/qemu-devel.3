@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2357D5E123
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 08:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 508D5D5E123
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 08:26:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9gn6-0007vk-J5; Sat, 09 Nov 2024 03:25:56 -0500
+	id 1t9gnU-00007j-Ol; Sat, 09 Nov 2024 03:26:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t9gn4-0007uD-Lk
- for qemu-devel@nongnu.org; Sat, 09 Nov 2024 03:25:54 -0500
-Received: from mail-ed1-f46.google.com ([209.85.208.46])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t9gnT-00005z-AW
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 03:26:19 -0500
+Received: from mail-ej1-f43.google.com ([209.85.218.43])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t9gn3-0003z5-75
- for qemu-devel@nongnu.org; Sat, 09 Nov 2024 03:25:54 -0500
-Received: by mail-ed1-f46.google.com with SMTP id
- 4fb4d7f45d1cf-5c941623a5aso6964338a12.0
- for <qemu-devel@nongnu.org>; Sat, 09 Nov 2024 00:25:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t9gnR-00042A-Uq
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 03:26:19 -0500
+Received: by mail-ej1-f43.google.com with SMTP id
+ a640c23a62f3a-a9e44654ae3so401369266b.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Nov 2024 00:26:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731140751; x=1731745551;
+ d=1e100.net; s=20230601; t=1731140776; x=1731745576;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wLlu2fRFj6Xoz6V+VkJ6zam5L2rugl9ncgg/e+hQSL0=;
- b=khK8Wmtrn70tbIK9PHP4avMUoCvX2x6euadLkSJu+w//GGH5lEZ8ifMidPpvwrt2Np
- BkvmlhdUH8tR6C9OjPneZA18yj/JIMok4u+fftJZyLYWsOMPsqC5lg0ZXygAoSilsX5P
- Q/BwUvQ9L1OAwypOJGIATQRYKQuH2MlEwjoQgC3kGWA3IJ0eCJ4gfKdfh3EB89og7ZzR
- wuALYXcnRMvwpfTgKFh7dg3xqNXxyiRsrpEypWv6FMFrsQbgQE7ldg/GtoUrxdZXmEs2
- eg1cbhe13zEbgl26LwdR1pMgc8u7aVcXF5Vo+GRz330kN1D7DcIMjqq8Uu4JUzskvFTm
- tkrA==
-X-Gm-Message-State: AOJu0Ywc9y2ebrhGCzqapEMW7eeQGIBcw0kKc61SzuxntPAZARkNWJ0I
- tpGEy1eAWFWL0NrSYAYyFzRCsssHiSsiihLD7tbdggDZRK+aQ/5VZ9aSexsc
-X-Google-Smtp-Source: AGHT+IHmoAcGaqjD25bue16VMESFlsuCWNzI1OEyjyda91C0juSDNu08nV7ILh5IlcJCCsyKY12N5A==
-X-Received: by 2002:a17:907:7e83:b0:a9a:170d:67b2 with SMTP id
- a640c23a62f3a-a9eeffe72a4mr516207566b.29.1731140751360; 
- Sat, 09 Nov 2024 00:25:51 -0800 (PST)
+ bh=WFNzTgKc/6o/EDp+e84Dy+93gae7NcOF06Lucq26PKE=;
+ b=lbPl1KsSWxFNSEKcEcLQ6/NNorDCsC9yBa9d1kurMCCPM6Ku2n6CNE9bSPMh28YYuL
+ vT8Qqqy4yAFBu1JzKVkHh5HrFZmci+3r4txBLdXRElTfD+D6oo+76YCz5cjrS2BcCOqG
+ wzbzIQ/B5c1jOm9UOil1ehESAs9AYaNqiYdg6BmaP0JOr+dmD89o7aTJ37spq6xauEyM
+ DXl7takxrgroelr8zQkRGzcQU5agLmC3hPT/2y/06L3OjuSqNyXTuLA/y8T1cPYMjMLE
+ dug5Ld6eRmMw4xEG9/M61nMkGirrJ7JJN3vcpjnHTRczJbvJvH2CJbVAnBzeTvde1rWn
+ PrIA==
+X-Gm-Message-State: AOJu0YxIybY/JP3kExoWx6yKHQf+rzk7ziwyj6XZiUdeQh2VmygnsBZa
+ SO9vdIGq9IOAFGrpU5IbcjP6yzuOAAdTa0HPEzR+4/zZt8m/i7AA
+X-Google-Smtp-Source: AGHT+IF0+y5HpIP1zUj0C8ffloAXz8cV2MKf6IHsNoqmZaJk14qfNotyn5EJU8PUjO4wOdjXQPc+5g==
+X-Received: by 2002:a17:906:2b10:b0:a9f:4f7:f064 with SMTP id
+ a640c23a62f3a-a9f04f816a1mr87739966b.3.1731140776175; 
+ Sat, 09 Nov 2024 00:26:16 -0800 (PST)
 Received: from tpx1 (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0a18ca5sm336840366b.35.2024.11.09.00.25.49
+ a640c23a62f3a-a9ee0a46119sm334652166b.46.2024.11.09.00.26.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 Nov 2024 00:25:51 -0800 (PST)
-Date: Sat, 9 Nov 2024 09:25:48 +0100
+ Sat, 09 Nov 2024 00:26:15 -0800 (PST)
+Date: Sat, 9 Nov 2024 09:26:13 +0100
 From: Thomas Huth <huth@tuxfamily.org>
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 34/36] next-cube: rename old_scr2 and scr2_2 in
- next_scr2_rtc_update()
-Message-ID: <20241109092548.427fb94a@tpx1>
-In-Reply-To: <20241023085852.1061031-35-mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH 35/36] next-cube: add my copyright to the top of the file
+Message-ID: <20241109092613.743d3ca5@tpx1>
+In-Reply-To: <20241023085852.1061031-36-mark.cave-ayland@ilande.co.uk>
 References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-35-mark.cave-ayland@ilande.co.uk>
+ <20241023085852.1061031-36-mark.cave-ayland@ilande.co.uk>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.208.46; envelope-from=th.huth@gmail.com;
- helo=mail-ed1-f46.google.com
+Received-SPF: pass client-ip=209.85.218.43; envelope-from=th.huth@gmail.com;
+ helo=mail-ej1-f43.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -84,47 +83,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Wed, 23 Oct 2024 09:58:50 +0100
+Am Wed, 23 Oct 2024 09:58:51 +0100
 schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 
-> Rename them to old_scr2_rtc and scr2_rtc to reflect that they contain the previous
-> and current values of the SCR2 RTC bits.
+> This series has involved rewriting and/or updating a considerable part of the
+> next-cube emulation so update the copyright in next-cube.c to reflect this.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > ---
->  hw/m68k/next-cube.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
+>  hw/m68k/next-cube.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 > diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-> index 076c9d1f3a..ece63f20b1 100644
+> index ece63f20b1..eefb372dca 100644
 > --- a/hw/m68k/next-cube.c
 > +++ b/hw/m68k/next-cube.c
-> @@ -177,17 +177,17 @@ static void next_scr2_led_update(NeXTPC *s)
->  
->  static void next_scr2_rtc_update(NeXTPC *s)
->  {
-> -    uint8_t old_scr2, scr2_2;
-> +    uint8_t old_scr2_rtc, scr2_rtc;
->  
-> -    old_scr2 = extract32(s->old_scr2, 8, 8);
-> -    scr2_2 = extract32(s->scr2, 8, 8);
-> +    old_scr2_rtc = extract32(s->old_scr2, 8, 8);
-> +    scr2_rtc = extract32(s->scr2, 8, 8);
->  
-> -    if (scr2_2 & 0x1) {
-> +    if (scr2_rtc & 0x1) {
->          /* DPRINTF("RTC %x phase %i\n", scr2_2, rtc->phase); */
->          /* If we are in going down clock... do something */
-> -        if (((old_scr2 & SCR2_RTCLK) != (scr2_2 & SCR2_RTCLK)) &&
-> -                ((scr2_2 & SCR2_RTCLK) == 0)) {
-> -            if (scr2_2 & SCR2_RTDATA) {
-> +        if (((old_scr2_rtc & SCR2_RTCLK) != (scr2_rtc & SCR2_RTCLK)) &&
-> +                ((scr2_rtc & SCR2_RTCLK) == 0)) {
-> +            if (scr2_rtc & SCR2_RTDATA) {
->                  qemu_irq_raise(s->rtc_data_irq);
->              } else {
->                  qemu_irq_lower(s->rtc_data_irq);
+> @@ -2,6 +2,7 @@
+>   * NeXT Cube System Driver
+>   *
+>   * Copyright (c) 2011 Bryce Lanham
+> + * Copyright (c) 2024 Mark Cave-Ayland
+>   *
+>   * This code is free software; you can redistribute it and/or modify
+>   * it under the terms of the GNU General Public License as published
 
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-
 
