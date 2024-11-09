@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FFFCD5E36C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65110D5E36A
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kL9-00045h-SM; Sat, 09 Nov 2024 07:13:20 -0500
+	id 1t9kKy-0002vn-9c; Sat, 09 Nov 2024 07:13:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kKk-0002Uw-Eb; Sat, 09 Nov 2024 07:12:54 -0500
+ id 1t9kKY-0001T0-0I; Sat, 09 Nov 2024 07:12:42 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kKi-0004cx-RT; Sat, 09 Nov 2024 07:12:54 -0500
+ id 1t9kKW-0004bs-2H; Sat, 09 Nov 2024 07:12:41 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 59883A1613;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1E32EA160F;
  Sat,  9 Nov 2024 15:07:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 20038167FA1;
- Sat,  9 Nov 2024 15:08:04 +0300 (MSK)
-Received: (nullmailer pid 3295385 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id D8B55167F9D;
+ Sat,  9 Nov 2024 15:08:03 +0300 (MSK)
+Received: (nullmailer pid 3295373 invoked by uid 1000);
  Sat, 09 Nov 2024 12:08:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Rob Bradford <rbradford@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 43/57] target/riscv: Set vtype.vill on CPU reset
-Date: Sat,  9 Nov 2024 15:07:45 +0300
-Message-Id: <20241109120801.3295120-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.4 39/57] target/arm: Don't assert in regime_is_user() for
+ E10 mmuidx values
+Date: Sat,  9 Nov 2024 15:07:41 +0300
+Message-Id: <20241109120801.3295120-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,35 +65,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rob Bradford <rbradford@rivosinc.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The RISC-V unprivileged specification "31.3.11. State of Vector
-Extension at Reset" has a note that recommends vtype.vill be set on
-reset as part of ensuring that the vector extension have a consistent
-state at reset.
+In regime_is_user() we assert if we're passed an ARMMMUIdx_E10_*
+mmuidx value. This used to make sense because we only used this
+function in ptw.c and would never use it on this kind of stage 1+2
+mmuidx, only for an individual stage 1 or stage 2 mmuidx.
 
-This change now makes QEMU consistent with Spike which sets vtype.vill
-on reset.
+However, when we implemented FEAT_E0PD we added a callsite in
+aa64_va_parameters(), which means this can now be called for
+stage 1+2 mmuidx values if the guest sets the TCG_ELX.{E0PD0,E0PD1}
+bits to enable use of the feature. This will then result in
+an assertion failure later, for instance on a TLBI operation:
 
-Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20240930165258.72258-1-rbradford@rivosinc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit f8c1f36a2e3dab4935e7c5690e578ac71765766b)
+#6  0x00007ffff6d0e70f in g_assertion_message_expr
+    (domain=0x0, file=0x55555676eeba "../../target/arm/internals.h", line=978, func=0x555556771d48 <__func__.5> "regime_is_user", expr=<optimised out>)
+    at ../../../glib/gtestutils.c:3279
+#7  0x0000555555f286d2 in regime_is_user (env=0x555557f2fe00, mmu_idx=ARMMMUIdx_E10_0) at ../../target/arm/internals.h:978
+#8  0x0000555555f3e31c in aa64_va_parameters (env=0x555557f2fe00, va=18446744073709551615, mmu_idx=ARMMMUIdx_E10_0, data=true, el1_is_aa32=false)
+    at ../../target/arm/helper.c:12048
+#9  0x0000555555f3163b in tlbi_aa64_get_range (env=0x555557f2fe00, mmuidx=ARMMMUIdx_E10_0, value=106721347371041) at ../../target/arm/helper.c:5214
+#10 0x0000555555f317e8 in do_rvae_write (env=0x555557f2fe00, value=106721347371041, idxmap=21, synced=true) at ../../target/arm/helper.c:5260
+#11 0x0000555555f31925 in tlbi_aa64_rvae1is_write (env=0x555557f2fe00, ri=0x555557fbeae0, value=106721347371041) at ../../target/arm/helper.c:5302
+#12 0x0000555556036f8f in helper_set_cp_reg64 (env=0x555557f2fe00, rip=0x555557fbeae0, value=106721347371041) at ../../target/arm/tcg/op_helper.c:965
+
+Since we do know whether these mmuidx values are for usermode
+or not, we can easily make regime_is_user() handle them:
+ARMMMUIdx_E10_0 is user, and the other two are not.
+
+Cc: qemu-stable@nongnu.org
+Fixes: e4c93e44ab103f ("target/arm: Implement FEAT_E0PD")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20241017172331.822587-1-peter.maydell@linaro.org
+(cherry picked from commit 1505b651fdbd9af59a4a90876a62ae7ea2d4cd39)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 776f377849..a9483ced92 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1006,6 +1006,7 @@ static void riscv_cpu_reset_hold(Object *obj)
-     cs->exception_index = RISCV_EXCP_NONE;
-     env->load_res = -1;
-     set_default_nan_mode(1, &env->fp_status);
-+    env->vill = true;
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 315591ae79..389fbab3ed 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -927,6 +927,7 @@ static inline uint32_t regime_el(CPUARMState *env, ARMMMUIdx mmu_idx)
+ static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
+ {
+     switch (mmu_idx) {
++    case ARMMMUIdx_E10_0:
+     case ARMMMUIdx_E20_0:
+     case ARMMMUIdx_Stage1_E0:
+     case ARMMMUIdx_MUser:
+@@ -936,10 +937,6 @@ static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
+         return true;
+     default:
+         return false;
+-    case ARMMMUIdx_E10_0:
+-    case ARMMMUIdx_E10_1:
+-    case ARMMMUIdx_E10_1_PAN:
+-        g_assert_not_reached();
+     }
+ }
  
- #ifndef CONFIG_USER_ONLY
-     if (cpu->cfg.debug) {
 -- 
 2.39.5
 
