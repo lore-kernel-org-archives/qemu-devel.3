@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 206B1D5C0FC
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C2CD5E122
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:45:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9fC3-0001zh-Dp; Sat, 09 Nov 2024 01:43:36 -0500
+	id 1t9fBx-0001At-Gw; Sat, 09 Nov 2024 01:43:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9fAW-0006aV-7p; Sat, 09 Nov 2024 01:42:04 -0500
+ id 1t9f9e-0005PF-WD; Sat, 09 Nov 2024 01:41:09 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9fAU-0002dH-8t; Sat, 09 Nov 2024 01:41:59 -0500
+ id 1t9f9d-0002Z9-90; Sat, 09 Nov 2024 01:41:06 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 82D2DA1308;
- Sat,  9 Nov 2024 09:38:11 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E5C01A12FF;
+ Sat,  9 Nov 2024 09:38:10 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E1945167DEA;
+ by tsrv.corpit.ru (Postfix) with SMTP id 5AD1F167DE2;
  Sat,  9 Nov 2024 09:39:05 +0300 (MSK)
-Received: (nullmailer pid 3272587 invoked by uid 1000);
+Received: (nullmailer pid 3272562 invoked by uid 1000);
  Sat, 09 Nov 2024 06:39:03 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 31/33] target/arm: Fix SVE SDOT/UDOT/USDOT (4-way,
- indexed)
-Date: Sat,  9 Nov 2024 09:38:57 +0300
-Message-Id: <20241109063903.3272404-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.15 23/33] target/riscv/csr.c: Fix an access to VXSAT
+Date: Sat,  9 Nov 2024 09:38:49 +0300
+Message-Id: <20241109063903.3272404-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 References: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
@@ -63,69 +62,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
 
-Our implementation of the indexed version of SVE SDOT/UDOT/USDOT got
-the calculation of the inner loop terminator wrong.  Although we
-correctly account for the element size when we calculate the
-terminator for the first iteration:
-   intptr_t segend = MIN(16 / sizeof(TYPED), opr_sz_n);
-we don't do that when we move it forward after the first inner loop
-completes.  The intention is that we process the vector in 128-bit
-segments, which for a 64-bit element size should mean (1, 2), (3, 4),
-(5, 6), etc.  This bug meant that we would iterate (1, 2), (3, 4, 5,
-6), (7, 8, 9, 10) etc and apply the wrong indexed element to some of
-the operations, and also index off the end of the vector.
+The register VXSAT should be RW only to the first bit.
+The remaining bits should be 0.
 
-You don't see this bug if the vector length is small enough that we
-don't need to iterate the outer loop, i.e.  if it is only 128 bits,
-or if it is the 64-bit special case from AA32/AA64 AdvSIMD.  If the
-vector length is 256 bits then we calculate the right results for the
-elements in the vector but do index off the end of the vector. Vector
-lengths greater than 256 bits see wrong answers. The instructions
-that produce 32-bit results behave correctly.
+The RISC-V Instruction Set Manual Volume I: Unprivileged Architecture
 
-Fix the recalculation of 'segend' for subsequent iterations, and
-restore a version of the comment that was lost in the refactor of
-commit 7020ffd656a5 that explains why we only need to clamp segend to
-opr_sz_n for the first iteration, not the later ones.
+The vxsat CSR has a single read-write least-significant bit (vxsat[0])
+that indicates if a fixed-point instruction has had to saturate an output
+value to fit into a destination format. Bits vxsat[XLEN-1:1]
+should be written as zeros.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2595
-Fixes: 7020ffd656a5 ("target/arm: Macroize helper_gvec_{s,u}dot_idx_{b,h}")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241101185544.2130972-1-peter.maydell@linaro.org
-(cherry picked from commit e6b2fa1b81ac6b05c4397237c846a295a9857920)
+Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241002084436.89347-1-evgenii.prokopiev@syntacore.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 5a60026cad4e9dba929cab4f63229e4b9110cf0a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/vec_helper.c b/target/arm/vec_helper.c
-index 859366e264..77678aca78 100644
---- a/target/arm/vec_helper.c
-+++ b/target/arm/vec_helper.c
-@@ -691,6 +691,13 @@ void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
- {                                                                         \
-     intptr_t i = 0, opr_sz = simd_oprsz(desc);                            \
-     intptr_t opr_sz_n = opr_sz / sizeof(TYPED);                           \
-+    /*                                                                    \
-+     * Special case: opr_sz == 8 from AA64/AA32 advsimd means the         \
-+     * first iteration might not be a full 16 byte segment. But           \
-+     * for vector lengths beyond that this must be SVE and we know        \
-+     * opr_sz is a multiple of 16, so we need not clamp segend            \
-+     * to opr_sz_n when we advance it at the end of the loop.             \
-+     */                                                                   \
-     intptr_t segend = MIN(16 / sizeof(TYPED), opr_sz_n);                  \
-     intptr_t index = simd_data(desc);                                     \
-     TYPED *d = vd, *a = va;                                               \
-@@ -708,7 +715,7 @@ void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
-                     n[i * 4 + 2] * m2 +                                   \
-                     n[i * 4 + 3] * m3);                                   \
-         } while (++i < segend);                                           \
--        segend = i + 4;                                                   \
-+        segend = i + (16 / sizeof(TYPED));                                \
-     } while (i < opr_sz_n);                                               \
-     clear_tail(d, opr_sz, simd_maxsz(desc));                              \
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 15dba5f653..7a3bc7bea6 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -494,7 +494,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
+ static RISCVException read_vxsat(CPURISCVState *env, int csrno,
+                                  target_ulong *val)
+ {
+-    *val = env->vxsat;
++    *val = env->vxsat & BIT(0);
+     return RISCV_EXCP_NONE;
  }
+ 
+@@ -504,7 +504,7 @@ static RISCVException write_vxsat(CPURISCVState *env, int csrno,
+ #if !defined(CONFIG_USER_ONLY)
+     env->mstatus |= MSTATUS_VS;
+ #endif
+-    env->vxsat = val;
++    env->vxsat = val & BIT(0);
+     return RISCV_EXCP_NONE;
+ }
+ 
 -- 
 2.39.5
 
