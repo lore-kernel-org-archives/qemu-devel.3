@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6480CD5E365
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 818AED5E364
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9iUl-0004Bd-Om; Sat, 09 Nov 2024 05:15:07 -0500
+	id 1t9iXk-0000Vb-IH; Sat, 09 Nov 2024 05:18:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iUW-0003q1-9j; Sat, 09 Nov 2024 05:14:52 -0500
+ id 1t9iVg-0005K2-7K; Sat, 09 Nov 2024 05:16:04 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iUU-0007WF-NS; Sat, 09 Nov 2024 05:14:52 -0500
+ id 1t9iVe-0007vK-GC; Sat, 09 Nov 2024 05:16:03 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 38AFAA13E6;
- Sat,  9 Nov 2024 13:13:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 43232A13F8;
+ Sat,  9 Nov 2024 13:13:50 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D8D10167ED2;
- Sat,  9 Nov 2024 13:14:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E33C8167EE4;
+ Sat,  9 Nov 2024 13:14:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 02/49] target/arm: Correct ID_AA64ISAR1_EL1 value for
- neoverse-v1
-Date: Sat,  9 Nov 2024 13:13:53 +0300
-Message-Id: <20241109101443.312701-2-mjt@tls.msk.ru>
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 20/49] tests/qemu-iotests/211.out: Update to expect
+ MapEntry 'compressed' field
+Date: Sat,  9 Nov 2024 13:14:11 +0300
+Message-Id: <20241109101443.312701-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
@@ -64,35 +62,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-The Neoverse-V1 TRM is a bit confused about the layout of the
-ID_AA64ISAR1_EL1 register, and so its table 3-6 has the wrong value
-for this ID register.  Trust instead section 3.2.74's list of which
-fields are set.
+In commit 52b10c9c0c68e90f in 2023 the QAPI MapEntry struct was
+updated to add a 'compressed' field. That commit updated a number
+of iotest expected-output files, but missed 211, which is vdi
+specific. The result is that
+ ./check -vdi
+and more specifically
+ ./check -vdi 211
+fails because the expected and actual output don't match.
 
-This means that we stop incorrectly reporting FEAT_XS as present, and
-now report the presence of FEAT_BF16.
+Update the reference output.
 
 Cc: qemu-stable@nongnu.org
-Reported-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Fixes: 52b10c9c0c68e90f ("qemu-img: map: report compressed data blocks")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240917161337.3012188-1-peter.maydell@linaro.org
-(cherry picked from commit 8676007eff04bb4e454bcdf92fab3f855bcc59b3)
+Message-ID: <20241008164708.2966400-4-peter.maydell@linaro.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit d60bd080e783107cb876a6f16561fe03f9dcbca7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index fcda99e158..dfc0ebb796 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -678,7 +678,7 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
-     cpu->isar.id_aa64dfr0  = 0x000001f210305519ull;
-     cpu->isar.id_aa64dfr1 = 0x00000000;
-     cpu->isar.id_aa64isar0 = 0x1011111110212120ull; /* with FEAT_RNG */
--    cpu->isar.id_aa64isar1 = 0x0111000001211032ull;
-+    cpu->isar.id_aa64isar1 = 0x0011100001211032ull;
-     cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x0220011102101011ull;
+diff --git a/tests/qemu-iotests/211.out b/tests/qemu-iotests/211.out
+index f02c75409c..ff9f9a6913 100644
+--- a/tests/qemu-iotests/211.out
++++ b/tests/qemu-iotests/211.out
+@@ -17,7 +17,7 @@ file format: IMGFMT
+ virtual size: 128 MiB (134217728 bytes)
+ cluster_size: 1048576
+ 
+-[{"data": false, "depth": 0, "length": 134217728, "present": true, "start": 0, "zero": true}]
++[{"compressed": false, "data": false, "depth": 0, "length": 134217728, "present": true, "start": 0, "zero": true}]
+ === Successful image creation (explicit defaults) ===
+ 
+ {"execute": "blockdev-create", "arguments": {"job-id": "job0", "options": {"driver": "file", "filename": "TEST_DIR/PID-t.vdi", "size": 0}}}
+@@ -35,7 +35,7 @@ file format: IMGFMT
+ virtual size: 64 MiB (67108864 bytes)
+ cluster_size: 1048576
+ 
+-[{"data": false, "depth": 0, "length": 67108864, "present": true, "start": 0, "zero": true}]
++[{"compressed": false, "data": false, "depth": 0, "length": 67108864, "present": true, "start": 0, "zero": true}]
+ === Successful image creation (with non-default options) ===
+ 
+ {"execute": "blockdev-create", "arguments": {"job-id": "job0", "options": {"driver": "file", "filename": "TEST_DIR/PID-t.vdi", "size": 0}}}
+@@ -53,7 +53,7 @@ file format: IMGFMT
+ virtual size: 32 MiB (33554432 bytes)
+ cluster_size: 1048576
+ 
+-[{"data": true, "depth": 0, "length": 3072, "offset": 1024, "present": true, "start": 0, "zero": false}, {"data": true, "depth": 0, "length": 33551360, "offset": 4096, "present": true, "start": 3072, "zero": true}]
++[{"compressed": false, "data": true, "depth": 0, "length": 3072, "offset": 1024, "present": true, "start": 0, "zero": false}, {"compressed": false, "data": true, "depth": 0, "length": 33551360, "offset": 4096, "present": true, "start": 3072, "zero": true}]
+ === Invalid BlockdevRef ===
+ 
+ {"execute": "blockdev-create", "arguments": {"job-id": "job0", "options": {"driver": "vdi", "file": "this doesn't exist", "size": 33554432}}}
 -- 
 2.39.5
 
