@@ -4,79 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88D1CD64075
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1208D64075
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9exa-0006jU-Cg; Sat, 09 Nov 2024 01:28:38 -0500
+	id 1t9f1w-0007Yj-KU; Sat, 09 Nov 2024 01:33:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t9exY-0006jM-Em
- for qemu-devel@nongnu.org; Sat, 09 Nov 2024 01:28:36 -0500
-Received: from mail-ej1-f52.google.com ([209.85.218.52])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1t9exW-0000uM-MW
- for qemu-devel@nongnu.org; Sat, 09 Nov 2024 01:28:36 -0500
-Received: by mail-ej1-f52.google.com with SMTP id
- a640c23a62f3a-a9acafdb745so577022266b.0
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 22:28:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731133713; x=1731738513;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dNJVGivY9x2lfWzH3SyeTmuDvzlThAkBFU1sZtixOO0=;
- b=hxu5BG96PlXZVxWvGz2FvQYQgT6VcLQmdlggvd1DosmnK6Vk3dwjy2Y/t9pmajh9Da
- cPVhicyu12uxkjVObTm6n6Q74w2iLJJ4FWGZcfTdS78VWkBqOk0tG27PeQwgSTcRc7bF
- EnrsZihazhswm98GTQQ9dirc6Er6j9b6uknUW7fZOQrYM5yp352cCGUZeH7aqiMar5nv
- JdaG8OV+DJVc+Zw2hvgsiyuIyDss/1Fh3yyhb/ce61pwuG8AyNHpOY5Ccb/qlZrybV3O
- D61K0T9NseJqGDUp2GsyaT75ozKUCM8M8HhBLjx/x1AUQ96t/AdYcg5ToUkzVz/FfTnz
- v2SQ==
-X-Gm-Message-State: AOJu0Yyqr4x4OmCYDR3Sw7967XaWVBxovSXU7HLZ/FgJS93WNXiqbZod
- RMgHJC3jvWEwzFNCEtpB2w0CL1d0uEwn1KY8BJMEpd72YANp+fFy
-X-Google-Smtp-Source: AGHT+IEXPsP9CoMFa89mHLDjCHOdfjCyiUp6wyrPn1p/n+U5kkK9z9pYi0Eb3KM4Dr6nz3QLxzMJgQ==
-X-Received: by 2002:a17:907:3e88:b0:a9a:662f:ff4a with SMTP id
- a640c23a62f3a-a9eec5823a8mr587122166b.0.1731133712484; 
- Fri, 08 Nov 2024 22:28:32 -0800 (PST)
-Received: from tpx1 (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0e2f063sm320647166b.203.2024.11.08.22.28.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Nov 2024 22:28:32 -0800 (PST)
-Date: Sat, 9 Nov 2024 07:28:29 +0100
-From: Thomas Huth <huth@tuxfamily.org>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>, Stefano
- Stabellini <sstabellini@kernel.org>, Richard Henderson
- <richard.henderson@linaro.org>, xen-devel@lists.xenproject.org, Paolo
- Bonzini <pbonzini@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Bastian Koppelmann
- <kbastian@mail.uni-paderborn.de>, Anthony PERARD <anthony@xenproject.org>,
- Eduardo Habkost <eduardo@habkost.net>, Jia Liu <proljc@gmail.com>, Stafford
- Horne <shorne@gmail.com>, Paul Durrant <paul@xen.org>, Mark Cave-Ayland
- <mark.cave-ayland@ilande.co.uk>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH 3/5] hw/m68k: Mark devices as big-endian
-Message-ID: <20241109072829.205680ca@tpx1>
-In-Reply-To: <20241106184612.71897-4-philmd@linaro.org>
-References: <20241106184612.71897-1-philmd@linaro.org>
- <20241106184612.71897-4-philmd@linaro.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1t9f1v-0007Yb-QP
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 01:33:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1t9f1u-0001U0-GJ
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 01:33:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731133986;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=A4VNHmUiIa21a929R2Y1nHP51u+LIhF20n26bB3YK0w=;
+ b=NUWSuPXXokBGG0vqSwcNFn0ke+LrGt55InsoIoB4sjWVkfJMRgKSQdRnh8R4wArW7vlErF
+ cSZw9xXV9S5EtPNQaaWjuhm3Q8TRkAouNS1+PxpuEbQIEVMKf6k0bXuUaKhXE17WnBoMwq
+ qX3jowAVRb9cN1tLoLrxxAaASeccXrs=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-HRzcUnunMX63lQk5fZDv-g-1; Sat,
+ 09 Nov 2024 01:33:04 -0500
+X-MC-Unique: HRzcUnunMX63lQk5fZDv-g-1
+X-Mimecast-MFC-AGG-ID: HRzcUnunMX63lQk5fZDv-g
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E81841955EE9
+ for <qemu-devel@nongnu.org>; Sat,  9 Nov 2024 06:33:02 +0000 (UTC)
+Received: from server.redhat.com (unknown [10.72.112.21])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7A13A195E480; Sat,  9 Nov 2024 06:32:59 +0000 (UTC)
+From: Cindy Lu <lulu@redhat.com>
+To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH v4 3/4] virtio_net: Add second acceptable configuration for
+ MAC setup
+Date: Sat,  9 Nov 2024 14:31:25 +0800
+Message-ID: <20241109063241.1039433-4-lulu@redhat.com>
+In-Reply-To: <20241109063241.1039433-1-lulu@redhat.com>
+References: <20241109063241.1039433-1-lulu@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=209.85.218.52; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f52.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,22 +82,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Wed,  6 Nov 2024 18:46:10 +0000
-schrieb Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>:
+For VDPA devices, Allow configurations where the hardware MAC address
+is non-zero while the MAC address in the QEMU command line is zero.
 
-> These devices are only used by the M68K target, which is only
-> built as big-endian. Therefore the DEVICE_NATIVE_ENDIAN
-> definition expand to DEVICE_BIG_ENDIAN (besides, the
-> DEVICE_LITTLE_ENDIAN case isn't tested). Simplify directly
-> using DEVICE_BIG_ENDIAN.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  hw/m68k/mcf5206.c  | 2 +-
->  hw/m68k/mcf5208.c  | 6 +++---
->  hw/m68k/mcf_intc.c | 2 +-
->  hw/m68k/next-kbd.c | 2 +-
->  4 files changed, 6 insertions(+), 6 deletions(-)
+Signed-off-by: Cindy Lu <lulu@redhat.com>
+---
+ hw/net/virtio-net.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 01cac20d92..f74aa4f8db 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3612,6 +3612,20 @@ static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n,
+         if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr)) == 0)) {
+             return true;
+         }
++        /*
++         * 2.The hardware MAC address is NOT 0,
++         *  and the MAC address in the QEMU command line is 0.
++         *  In this situation, Here we use the hardware MAC address overwrite
++         *  the QEMU command line address(is 0) in VirtIONet->mac[0].
++         *  in the follwoing process, QEMU will use this mac in VirtIONet and
++         *  finish the bring up
++         */
++        if (memcmp(cmdline_mac, &zero, sizeof(MACAddr)) == 0) {
++            /* overwrite the mac address with hardware address*/
++            memcpy(&n->mac[0], &hwcfg.mac, sizeof(n->mac));
++            memcpy(&n->nic_conf.macaddr, &hwcfg.mac, sizeof(n->mac));
++            return true;
++        }
+     }
+ 
+     error_setg(errp,
+-- 
+2.45.0
+
 
