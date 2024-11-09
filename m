@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADF42D5E362
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:24:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81942D5E364
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9icC-00071g-Qd; Sat, 09 Nov 2024 05:22:48 -0500
+	id 1t9id6-0001Gx-3q; Sat, 09 Nov 2024 05:23:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iXR-0007nF-Fk; Sat, 09 Nov 2024 05:17:55 -0500
+ id 1t9iYJ-00028u-7q; Sat, 09 Nov 2024 05:18:47 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iXP-00089O-QO; Sat, 09 Nov 2024 05:17:53 -0500
+ id 1t9iYH-0008Dc-Hj; Sat, 09 Nov 2024 05:18:47 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3088AA1408;
+ by isrv.corpit.ru (Postfix) with ESMTP id B06A6A1411;
  Sat,  9 Nov 2024 13:13:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CFD86167EF3;
- Sat,  9 Nov 2024 13:14:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5CA5F167EFC;
+ Sat,  9 Nov 2024 13:14:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 35/49] target/riscv/csr.c: Fix an access to VXSAT
-Date: Sat,  9 Nov 2024 13:14:26 +0300
-Message-Id: <20241109101443.312701-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 44/49] target/ppc: Set ctx->opcode for decode_insn32()
+Date: Sat,  9 Nov 2024 13:14:35 +0300
+Message-Id: <20241109101443.312701-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,48 +62,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-The register VXSAT should be RW only to the first bit.
-The remaining bits should be 0.
+divdu (without a dot) sometimes updates cr0, even though it shouldn't.
+The reason is that gen_op_arith_divd() checks Rc(ctx->opcode), which is
+not initialized. This field is initialized only for instructions that
+go through decode_legacy(), and not decodetree.
 
-The RISC-V Instruction Set Manual Volume I: Unprivileged Architecture
+There already was a similar issue fixed in commit 86e6202a57b1
+("target/ppc: Make divw[u] handler method decodetree compatible.").
 
-The vxsat CSR has a single read-write least-significant bit (vxsat[0])
-that indicates if a fixed-point instruction has had to saturate an output
-value to fit into a destination format. Bits vxsat[XLEN-1:1]
-should be written as zeros.
+It's not immediately clear what else may access the uninitialized
+ctx->opcode, so instead of playing whack-a-mole and changing the check
+to compute_rc0, simply initialize ctx->opcode.
 
-Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241002084436.89347-1-evgenii.prokopiev@syntacore.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 5a60026cad4e9dba929cab4f63229e4b9110cf0a)
+Cc: qemu-stable@nongnu.org
+Fixes: 99082815f17f ("target/ppc: Add infrastructure for prefixed insns")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+(cherry picked from commit c9b8a13a8841e0e23901e57e24ea98eeef16cf91)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index c50a33397c..3d9ea0c316 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -704,7 +704,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
- static RISCVException read_vxsat(CPURISCVState *env, int csrno,
-                                  target_ulong *val)
- {
--    *val = env->vxsat;
-+    *val = env->vxsat & BIT(0);
-     return RISCV_EXCP_NONE;
- }
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 329da4d518..e99d89ed4a 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -7266,8 +7266,6 @@ static bool decode_legacy(PowerPCCPU *cpu, DisasContext *ctx, uint32_t insn)
+     opc_handler_t **table, *handler;
+     uint32_t inval;
  
-@@ -714,7 +714,7 @@ static RISCVException write_vxsat(CPURISCVState *env, int csrno,
- #if !defined(CONFIG_USER_ONLY)
-     env->mstatus |= MSTATUS_VS;
- #endif
--    env->vxsat = val;
-+    env->vxsat = val & BIT(0);
-     return RISCV_EXCP_NONE;
- }
+-    ctx->opcode = insn;
+-
+     LOG_DISAS("translate opcode %08x (%02x %02x %02x %02x) (%s)\n",
+               insn, opc1(insn), opc2(insn), opc3(insn), opc4(insn),
+               ctx->le_mode ? "little" : "big");
+@@ -7398,6 +7396,7 @@ static void ppc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+     ctx->base.pc_next = pc += 4;
  
+     if (!is_prefix_insn(ctx, insn)) {
++        ctx->opcode = insn;
+         ok = (decode_insn32(ctx, insn) ||
+               decode_legacy(cpu, ctx, insn));
+     } else if ((pc & 63) == 0) {
 -- 
 2.39.5
 
