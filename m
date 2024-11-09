@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F65AD5E366
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7525D5E366
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:22:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kPf-0006Tp-Dx; Sat, 09 Nov 2024 07:17:59 -0500
+	id 1t9kOr-0005GZ-Mp; Sat, 09 Nov 2024 07:17:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kOD-0004lA-AY; Sat, 09 Nov 2024 07:16:31 -0500
+ id 1t9kO1-0004ZT-50; Sat, 09 Nov 2024 07:16:17 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kOB-0005AJ-KQ; Sat, 09 Nov 2024 07:16:29 -0500
+ id 1t9kNz-00059f-Ck; Sat, 09 Nov 2024 07:16:16 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AF4A1A163A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 84DF0A1637;
  Sat,  9 Nov 2024 15:08:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 761EA167FC1;
+ by tsrv.corpit.ru (Postfix) with SMTP id 4A4E8167FBE;
  Sat,  9 Nov 2024 15:09:02 +0300 (MSK)
-Received: (nullmailer pid 3296179 invoked by uid 1000);
+Received: (nullmailer pid 3296169 invoked by uid 1000);
  Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 17/58] gitlab: make check-[dco|patch] a little more
- verbose
-Date: Sat,  9 Nov 2024 15:08:18 +0300
-Message-Id: <20241109120901.3295995-17-mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 14/58] linux-user/ppc: Fix sigmask endianness issue in
+ sigreturn
+Date: Sat,  9 Nov 2024 15:08:15 +0300
+Message-Id: <20241109120901.3295995-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
@@ -65,55 +65,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-When git fails the rather terse backtrace only indicates it failed
-without some useful context. Add some to make the log a little more
-useful.
+do_setcontext() copies the target sigmask without endianness handling
+and then uses target_to_host_sigset_internal(), which expects a
+byte-swapped one. Use target_to_host_sigset() instead.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241023113406.1284676-11-alex.bennee@linaro.org>
-(cherry picked from commit 97f116f9c6fd127b6ed2953993fa9fb05e82f450)
+Fixes: bcd4933a23f1 ("linux-user: ppc signal handling")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241017125811.447961-2-iii@linux.ibm.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 8704132805cf7a3259d1c5a073b3c2b92afa2616)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/check-dco.py b/.gitlab-ci.d/check-dco.py
-index 632c8bcce8..d221b16bd5 100755
---- a/.gitlab-ci.d/check-dco.py
-+++ b/.gitlab-ci.d/check-dco.py
-@@ -19,10 +19,9 @@
- reponame = os.path.basename(cwd)
- repourl = "https://gitlab.com/%s/%s.git" % (namespace, reponame)
+diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
+index a1d8c0bccc..24e5a02a78 100644
+--- a/linux-user/ppc/signal.c
++++ b/linux-user/ppc/signal.c
+@@ -628,7 +628,7 @@ static int do_setcontext(struct target_ucontext *ucp, CPUPPCState *env, int sig)
+     if (!lock_user_struct(VERIFY_READ, mcp, mcp_addr, 1))
+         return 1;
  
-+print(f"adding upstream git repo @ {repourl}")
- subprocess.check_call(["git", "remote", "add", "check-dco", repourl])
--subprocess.check_call(["git", "fetch", "check-dco", "master"],
--                      stdout=subprocess.DEVNULL,
--                      stderr=subprocess.DEVNULL)
-+subprocess.check_call(["git", "fetch", "check-dco", "master"])
+-    target_to_host_sigset_internal(&blocked, &set);
++    target_to_host_sigset(&blocked, &set);
+     set_sigmask(&blocked);
+     restore_user_regs(env, mcp, sig);
  
- ancestor = subprocess.check_output(["git", "merge-base",
-                                     "check-dco/master", "HEAD"],
-diff --git a/.gitlab-ci.d/check-patch.py b/.gitlab-ci.d/check-patch.py
-index 39e2b403c9..68c549a146 100755
---- a/.gitlab-ci.d/check-patch.py
-+++ b/.gitlab-ci.d/check-patch.py
-@@ -19,13 +19,12 @@
- reponame = os.path.basename(cwd)
- repourl = "https://gitlab.com/%s/%s.git" % (namespace, reponame)
- 
-+print(f"adding upstream git repo @ {repourl}")
- # GitLab CI environment does not give us any direct info about the
- # base for the user's branch. We thus need to figure out a common
- # ancestor between the user's branch and current git master.
- subprocess.check_call(["git", "remote", "add", "check-patch", repourl])
--subprocess.check_call(["git", "fetch", "check-patch", "master"],
--                      stdout=subprocess.DEVNULL,
--                      stderr=subprocess.DEVNULL)
-+subprocess.check_call(["git", "fetch", "check-patch", "master"])
- 
- ancestor = subprocess.check_output(["git", "merge-base",
-                                     "check-patch/master", "HEAD"],
 -- 
 2.39.5
 
