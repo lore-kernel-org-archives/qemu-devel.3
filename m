@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E154DD5E368
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2455CD5E36C
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:29:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kNx-0004Ss-P7; Sat, 09 Nov 2024 07:16:15 -0500
+	id 1t9kLF-0004o2-3I; Sat, 09 Nov 2024 07:13:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kNU-0003uy-Uq; Sat, 09 Nov 2024 07:15:46 -0500
+ id 1t9kLB-0004RF-LG; Sat, 09 Nov 2024 07:13:21 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kNT-00054w-Bo; Sat, 09 Nov 2024 07:15:44 -0500
+ id 1t9kL9-0004dz-CO; Sat, 09 Nov 2024 07:13:21 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3A4F5A1633;
- Sat,  9 Nov 2024 15:08:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 81A70A1615;
+ Sat,  9 Nov 2024 15:07:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id F3C64167FBA;
- Sat,  9 Nov 2024 15:09:01 +0300 (MSK)
-Received: (nullmailer pid 3296157 invoked by uid 1000);
- Sat, 09 Nov 2024 12:09:01 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 49476167FA3;
+ Sat,  9 Nov 2024 15:08:04 +0300 (MSK)
+Received: (nullmailer pid 3295391 invoked by uid 1000);
+ Sat, 09 Nov 2024 12:08:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 10/58] tcg: Reset data_gen_ptr correctly
-Date: Sat,  9 Nov 2024 15:08:11 +0300
-Message-Id: <20241109120901.3295995-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.4 45/57] target/riscv/kvm: set 'aia_mode' to default in
+ error path
+Date: Sat,  9 Nov 2024 15:07:47 +0300
+Message-Id: <20241109120801.3295120-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
-References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
+References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -63,40 +62,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-This pointer needs to be reset after overflow just like
-code_buf and code_ptr.
+When failing to set the selected AIA mode, 'aia_mode' is left untouched.
+This means that 'aia_mode' will not reflect the actual AIA mode,
+retrieved in 'default_aia_mode',
 
-Cc: qemu-stable@nongnu.org
-Fixes: 57a269469db ("tcg: Infrastructure for managing constant pools")
+This is benign for now, but it will impact QMP query commands that will
+expose the 'aia_mode' value, retrieving the wrong value.
+
+Set 'aia_mode' to 'default_aia_mode' if we fail to change the AIA mode
+in KVM.
+
+While we're at it, rework the log/warning messages to be a bit less
+verbose. Instead of:
+
+KVM AIA: default mode is emul
+qemu-system-riscv64: warning: KVM AIA: failed to set KVM AIA mode
+
+We can use a single warning message:
+
+qemu-system-riscv64: warning: KVM AIA: failed to set KVM AIA mode 'auto', using default host mode 'emul'
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit a7cfd751fb269de4a93bf1658cb13911c7ac77cc)
+Message-ID: <20241028182037.290171-2-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit d201a127e164b1683df5e7c93c6d42a74122db99)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 34e3056380..b1b8b8bba3 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1399,7 +1399,6 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
-         goto retry;
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 94b0e393bf..06a8b7a9e2 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1582,18 +1582,26 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+         error_report("KVM AIA: failed to get current KVM AIA mode");
+         exit(1);
      }
-     qatomic_set(&s->code_gen_ptr, next);
--    s->data_gen_ptr = NULL;
-     return tb;
- }
+-    qemu_log("KVM AIA: default mode is %s\n",
+-             kvm_aia_mode_str(default_aia_mode));
  
-@@ -6172,6 +6171,7 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
-      */
-     s->code_buf = tcg_splitwx_to_rw(tb->tc.ptr);
-     s->code_ptr = s->code_buf;
-+    s->data_gen_ptr = NULL;
+-    if (default_aia_mode != aia_mode) {
++    if (default_aia_mode == aia_mode) {
++        qemu_log("KVM AIA: using default host mode '%s'\n",
++                  kvm_aia_mode_str(default_aia_mode));
++    } else {
+         ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+                                 KVM_DEV_RISCV_AIA_CONFIG_MODE,
+                                 &aia_mode, true, NULL);
+-        if (ret < 0)
+-            warn_report("KVM AIA: failed to set KVM AIA mode");
+-        else
+-            qemu_log("KVM AIA: set current mode to %s\n",
++        if (ret < 0) {
++            warn_report("KVM AIA: failed to set KVM AIA mode '%s', using "
++                        "default host mode '%s'",
++                        kvm_aia_mode_str(aia_mode),
++                        kvm_aia_mode_str(default_aia_mode));
++
++            /* failed to change AIA mode, use default */
++            aia_mode = default_aia_mode;
++        } else {
++            qemu_log("KVM AIA: setting current mode to %s\n",
+                      kvm_aia_mode_str(aia_mode));
++        }
+     }
  
- #ifdef TCG_TARGET_NEED_LDST_LABELS
-     QSIMPLEQ_INIT(&s->ldst_labels);
+     ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
 -- 
 2.39.5
 
