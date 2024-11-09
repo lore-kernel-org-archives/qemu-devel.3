@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F067FD5E122
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 07:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ED09D5E122
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 07:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9ftP-00015E-NH; Sat, 09 Nov 2024 02:28:23 -0500
+	id 1t9fuG-0001d7-0y; Sat, 09 Nov 2024 02:29:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t9ftO-000156-Ev
- for qemu-devel@nongnu.org; Sat, 09 Nov 2024 02:28:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t9fuC-0001bN-P8
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 02:29:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t9ftM-0007ER-AD
- for qemu-devel@nongnu.org; Sat, 09 Nov 2024 02:28:22 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t9fuA-0007Fc-EP
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 02:29:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731137298;
+ s=mimecast20190719; t=1731137349;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Xd/EFWUGg62cxyMDL1xlvoRYOARUMtczQ81QYyIT3lw=;
- b=MxqnER5saCxn4JOZ/AmQWzo+bQNnS0SaDRhaOdBg02+1cpzG1ozE8OnhLQD3jYB3/R93MR
- LqPm6hzoAYhj/qzhE/ZEIZCjhx15N0psTkyLSAUjgvW0I1G8UBiDp982pZmvHM/jmgTEz3
- 7axOvKeQrSoc/DH/dX+Hd/OZROgvGiQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gpmrXaXTLuZZL1EBC6G6jPtYp8SsDQmfbl98DNmGUUw=;
+ b=Hmc4mY70yL1Fs5sPa0zqfCGpBs3JO3ZBJnyGusdBnHu0BxesEyzA53WyjGb+517Iq0C+0q
+ rbDie95waso4v+HZ4ymKELSazvMWFr43d+EIGEJW90b+c5ePf3aG2u9LTYmeIAc5qwvkgA
+ fUxPDSNOESO90TECXTmtWzJRQbWlnjc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462-ocu2R1scN1-iAXJ4HFk1lQ-1; Sat, 09 Nov 2024 02:28:14 -0500
-X-MC-Unique: ocu2R1scN1-iAXJ4HFk1lQ-1
-X-Mimecast-MFC-AGG-ID: ocu2R1scN1-iAXJ4HFk1lQ
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d4cf04bcfso1459011f8f.2
- for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 23:28:14 -0800 (PST)
+ us-mta-443-UZ7EcdwZOX-M-82GGftgjQ-1; Sat, 09 Nov 2024 02:29:07 -0500
+X-MC-Unique: UZ7EcdwZOX-M-82GGftgjQ-1
+X-Mimecast-MFC-AGG-ID: UZ7EcdwZOX-M-82GGftgjQ
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4316ac69e6dso20819715e9.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Nov 2024 23:29:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731137293; x=1731742093;
+ d=1e100.net; s=20230601; t=1731137346; x=1731742146;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Xd/EFWUGg62cxyMDL1xlvoRYOARUMtczQ81QYyIT3lw=;
- b=OtlvN4Td45j9tVBpRfkMRAjtLLJwexfv4IkqoV9OrZzAxUrzBR/ULiGB8doeWS61XI
- 317ImbeJ1znbFeeCqIKeVqOkMOyit+T4gmbrId8/k3ohgUSbyxX/qzGs/gR94OHEQY3r
- GDnMDOLQCVVlJltPrTfHQ85AUQ970M9h1VAghpC7LIULVLAQADrgwGc52C1HPR3S3Wyl
- YUyFvJoeLVqUVuH7yQVfQLxZi3KpQQtgoShz5r5YnwHIjJlDqkd5i+JuVcH/gboDfvlk
- L45eiMzRmlpTxhfiYRNagZx02/6/rE8QjBx78MwAyYbANNqHaKYK4hAEH+ujNh9hfTNb
- buow==
+ bh=gpmrXaXTLuZZL1EBC6G6jPtYp8SsDQmfbl98DNmGUUw=;
+ b=Z2ZRKDDtOZwVlhZ5JlqyA/Wpc55KJzBPal5bEpEG37JX7ZNBOP+ZS0lguqNlOEUFJ1
+ Vb6VuMHLKwe5MUOowzRMqGVAVM3KV5SQpgAwzR3hel8Vr2luiOiUNe9OO7q8raKKIDSk
+ z5SrHCJcEmhGwIJmhsdozZ/BTjMUmogNQt8xzrQXy7eJAJeub68C5CwPN32/pAW3xviV
+ G1LJezWhaKjKgjhtW9Ue1OL1U5zaKgBFl3MXu+lp1ubffdnnZtdc6KcCiptVoLeM3KvR
+ W34Z/OjaMlFL0T3suL2+POKhHDD9sExJrWUFoAmLSZ18in66ivN3Lgw1gG/A9BQvztXa
+ ueAQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWeANSggr8yL3gGP6naMwFpqYoXculMDe0AZVXZgCXmv5i+xwvjUwG9kDJh370Fy5usQKMsLvqp9I4A@nongnu.org
-X-Gm-Message-State: AOJu0Yxy522gK2HcKmvr1tcaBXygQTlwTpQOmwh1vVU07UgyntKf7PAE
- ZQG22+vGepZidcOmVmGcC0Yenjv/ihXtfoW3OyzoBJAfgY7NgbFkUBsrkVGgpn2d1KjexiRyBZu
- aWhidTT4INBFwwJkATnTvu6709pCikXBOulGlxTjHh7jCvfMJeB7P
-X-Received: by 2002:a05:6000:4812:b0:37d:509e:8742 with SMTP id
- ffacd0b85a97d-381f1862d72mr4461421f8f.1.1731137293123; 
- Fri, 08 Nov 2024 23:28:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHxTb1pqvPgnqqi4FCN9uheHuqZLBMrsQ8wB24Nl79XTLOKmqWz97jyeJDUiXhTa4js6IOuJg==
-X-Received: by 2002:a05:6000:4812:b0:37d:509e:8742 with SMTP id
- ffacd0b85a97d-381f1862d72mr4461409f8f.1.1731137292742; 
- Fri, 08 Nov 2024 23:28:12 -0800 (PST)
+ AJvYcCVV53Y/c5zyjo63AaQKsY5Ny6nH8MDFVXO4v1/a7SSBCcYvcTfvHXpz9WxrQPX4rI2Ywb2j3GuMDKhw@nongnu.org
+X-Gm-Message-State: AOJu0YzbwDxYp8ekinPLBCUT8gG/nzp0yymNww4XAy7t1pQSpOYnk9gN
+ bEsfdFaQiMdwvoMHrSpgyTcGnp4DveDfpqh9NM/5C3BaLRDHVWm/OOIz4eqKh19ksba9FBktCdm
+ 2yOEIQJ/yOGvt6Cup3vHUuej6BoN2OIWk04CanY9VIqi02tfuTkOHnwQxsspq
+X-Received: by 2002:a05:6000:2588:b0:37d:492c:4f54 with SMTP id
+ ffacd0b85a97d-381f186705cmr4888909f8f.3.1731137345905; 
+ Fri, 08 Nov 2024 23:29:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEwQUCMxzWdV/Eeb6PIt4YsJXh8b6ZdJ5L49pvAQCzWY4K9Dlcb0pppldFHPUA35cerHiMVlg==
+X-Received: by 2002:a05:6000:2588:b0:37d:492c:4f54 with SMTP id
+ ffacd0b85a97d-381f186705cmr4888890f8f.3.1731137345530; 
+ Fri, 08 Nov 2024 23:29:05 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
  ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa5b5e3dsm130776315e9.9.2024.11.08.23.28.10
+ ffacd0b85a97d-381ed987d95sm7069049f8f.44.2024.11.08.23.29.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Nov 2024 23:28:11 -0800 (PST)
-Message-ID: <e85748fd-6555-4aac-b633-502636b03512@redhat.com>
-Date: Sat, 9 Nov 2024 08:28:10 +0100
+ Fri, 08 Nov 2024 23:29:04 -0800 (PST)
+Message-ID: <9c81064e-e5ca-4fc6-84e5-91d12c246ee9@redhat.com>
+Date: Sat, 9 Nov 2024 08:29:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/igd: add pci id for Coffee Lake
+Subject: Re: [PATCH] hw/igd: fix calculation of graphics stolen memory
 To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>,
  Alex Williamson <alex.williamson@redhat.com>
-References: <20241108124829.92893-2-corvin.koehne@gmail.com>
+References: <20241108124904.93201-1-corvin.koehne@gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -123,17 +123,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241108124829.92893-2-corvin.koehne@gmail.com>
+In-Reply-To: <20241108124904.93201-1-corvin.koehne@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -151,18 +151,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/8/24 13:48, Corvin Köhne wrote:
+On 11/8/24 13:49, Corvin Köhne wrote:
 > From: Corvin Köhne <c.koehne@beckhoff.com>
 > 
-> I've tested and verified that Coffee Lake devices are working properly.
+> When copying the calculation of the stolen memory size for Intels integrated
+> graphics device of gen 9 and later from the Linux kernel [1], we missed
+> subtracting 0xf0 from the graphics mode select value for values above 0xf0.
+> This leads to QEMU reporting a very large size of the graphics stolen memory
+> area. That's just a waste of memory. Additionally the guest firmware might be
+> unable to allocate such a large buffer.
 > 
+> [1] https://github.com/torvalds/linux/blob/7c626ce4bae1ac14f60076d00eafe71af30450ba/arch/x86/kernel/early-quirks.c#L455-L460
+> 
+> Fixes: 8719224166832ff8230d7dd8599f42bd60e2eb96
 > Signed-off-by: Corvin Köhne <c.koehne@beckhoff.com>
 
+I changed the subject to "vfio/igd: ...."
 
 Applied to vfio-next.
 
 Thanks,
 
 C.
+
 
 
