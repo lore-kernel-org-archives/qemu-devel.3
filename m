@@ -4,40 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85802D5E362
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:27:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CBBED5E364
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9iaF-0004KC-0l; Sat, 09 Nov 2024 05:20:49 -0500
+	id 1t9idK-0002X8-BT; Sat, 09 Nov 2024 05:23:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iW2-00060K-Jq; Sat, 09 Nov 2024 05:16:33 -0500
+ id 1t9iYk-0002ft-Gn; Sat, 09 Nov 2024 05:19:15 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iW0-0007vZ-Og; Sat, 09 Nov 2024 05:16:26 -0500
+ id 1t9iYi-0008Eu-Eh; Sat, 09 Nov 2024 05:19:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5321AA13F9;
- Sat,  9 Nov 2024 13:13:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E388CA1415;
+ Sat,  9 Nov 2024 13:13:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EC4C1167EE5;
- Sat,  9 Nov 2024 13:14:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8BF18167F00;
+ Sat,  9 Nov 2024 13:14:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 21/49] raw-format: Fix error message for invalid
- offset/size
-Date: Sat,  9 Nov 2024 13:14:12 +0300
-Message-Id: <20241109101443.312701-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Waldemar Kozaczuk <jwkozaczuk@gmail.com>, Keith Busch <kbusch@kernel.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 48/49] hw/nvme: fix handling of over-committed queues
+Date: Sat,  9 Nov 2024 13:14:39 +0300
+Message-Id: <20241109101443.312701-48-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,43 +60,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-s->offset and s->size are only set at the end of the function and still
-contain the old values when formatting the error message. Print the
-parameters with the new values that we actually checked instead.
+If a host chooses to use the SQHD "hint" in the CQE to know if there is
+room in the submission queue for additional commands, it may result in a
+situation where there are not enough internal resources (struct
+NvmeRequest) available to process the command. For a lack of a better
+term, the host may "over-commit" the device (i.e., it may have more
+inflight commands than the queue size).
 
-Fixes: 500e2434207d ('raw-format: Split raw_read_options()')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20240829185527.47152-1-kwolf@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 04bbc3ee52b32ac465547bb40c1f090a1b8f315a)
+For example, assume a queue with N entries. The host submits N commands
+and all are picked up for processing, advancing the head and emptying
+the queue. Regardless of which of these N commands complete first, the
+SQHD field of that CQE will indicate to the host that the queue is
+empty, which allows the host to issue N commands again. However, if the
+device has not posted CQEs for all the previous commands yet, the device
+will have less than N resources available to process the commands, so
+queue processing is suspended.
+
+And here lies an 11 year latent bug. In the absense of any additional
+tail updates on the submission queue, we never schedule the processing
+bottom-half again unless we observe a head update on an associated full
+completion queue. This has been sufficient to handle N-to-1 SQ/CQ setups
+(in the absense of over-commit of course). Incidentially, that "kick all
+associated SQs" mechanism can now be killed since we now just schedule
+queue processing when we return a processing resource to a non-empty
+submission queue, which happens to cover both edge cases. However, we
+must retain kicking the CQ if it was previously full.
+
+So, apparently, no previous driver tested with hw/nvme has ever used
+SQHD (e.g., neither the Linux NVMe driver or SPDK uses it). But then OSv
+shows up with the driver that actually does. I salute you.
+
+Fixes: f3c507adcd7b ("NVMe: Initial commit for new storage interface")
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2388
+Reported-by: Waldemar Kozaczuk <jwkozaczuk@gmail.com>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 9529aa6bb4d18763f5b4704cb4198bd25cbbee31)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/raw-format.c b/block/raw-format.c
-index 1111dffd54..8195ed87cc 100644
---- a/block/raw-format.c
-+++ b/block/raw-format.c
-@@ -111,7 +111,7 @@ raw_apply_options(BlockDriverState *bs, BDRVRawState *s, uint64_t offset,
-     if (offset > real_size) {
-         error_setg(errp, "Offset (%" PRIu64 ") cannot be greater than "
-                    "size of the containing file (%" PRId64 ")",
--                   s->offset, real_size);
-+                   offset, real_size);
-         return -EINVAL;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index ca54c250b2..359313dbcb 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -1516,9 +1516,16 @@ static void nvme_post_cqes(void *opaque)
+             stl_le_p(&n->bar.csts, NVME_CSTS_FAILED);
+             break;
+         }
++
+         QTAILQ_REMOVE(&cq->req_list, req, entry);
++
+         nvme_inc_cq_tail(cq);
+         nvme_sg_unmap(&req->sg);
++
++        if (QTAILQ_EMPTY(&sq->req_list) && !nvme_sq_empty(sq)) {
++            qemu_bh_schedule(sq->bh);
++        }
++
+         QTAILQ_INSERT_TAIL(&sq->req_list, req, entry);
      }
+     if (cq->tail != cq->head) {
+@@ -7575,7 +7582,6 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
+         /* Completion queue doorbell write */
  
-@@ -119,7 +119,7 @@ raw_apply_options(BlockDriverState *bs, BDRVRawState *s, uint64_t offset,
-         error_setg(errp, "The sum of offset (%" PRIu64 ") and size "
-                    "(%" PRIu64 ") has to be smaller or equal to the "
-                    " actual size of the containing file (%" PRId64 ")",
--                   s->offset, s->size, real_size);
-+                   offset, size, real_size);
-         return -EINVAL;
-     }
+         uint16_t new_head = val & 0xffff;
+-        int start_sqs;
+         NvmeCQueue *cq;
  
+         qid = (addr - (0x1000 + (1 << 2))) >> 3;
+@@ -7626,18 +7632,15 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
+ 
+         trace_pci_nvme_mmio_doorbell_cq(cq->cqid, new_head);
+ 
+-        start_sqs = nvme_cq_full(cq) ? 1 : 0;
++        /* scheduled deferred cqe posting if queue was previously full */
++        if (nvme_cq_full(cq)) {
++            qemu_bh_schedule(cq->bh);
++        }
++
+         cq->head = new_head;
+         if (!qid && n->dbbuf_enabled) {
+             stl_le_pci_dma(pci, cq->db_addr, cq->head, MEMTXATTRS_UNSPECIFIED);
+         }
+-        if (start_sqs) {
+-            NvmeSQueue *sq;
+-            QTAILQ_FOREACH(sq, &cq->sq_list, entry) {
+-                qemu_bh_schedule(sq->bh);
+-            }
+-            qemu_bh_schedule(cq->bh);
+-        }
+ 
+         if (cq->tail == cq->head) {
+             if (cq->irq_enabled) {
 -- 
 2.39.5
 
