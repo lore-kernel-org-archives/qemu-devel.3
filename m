@@ -4,41 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 340EBD5E365
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 339E3D5E364
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:23:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9iZn-0003sM-GB; Sat, 09 Nov 2024 05:20:19 -0500
+	id 1t9iXf-0008FN-0o; Sat, 09 Nov 2024 05:18:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iWU-0006Kd-N7; Sat, 09 Nov 2024 05:16:56 -0500
+ id 1t9iVc-00051v-VC; Sat, 09 Nov 2024 05:16:01 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iWT-00080q-1Q; Sat, 09 Nov 2024 05:16:54 -0500
+ id 1t9iVa-0007uh-Ve; Sat, 09 Nov 2024 05:16:00 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A803AA13FF;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2A098A13F6;
  Sat,  9 Nov 2024 13:13:50 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4AD82167EEA;
- Sat,  9 Nov 2024 13:14:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BFE74167EE2;
+ Sat,  9 Nov 2024 13:14:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 26/49] linux-user/ppc: Fix sigmask endianness issue in
- sigreturn
-Date: Sat,  9 Nov 2024 13:14:17 +0300
-Message-Id: <20241109101443.312701-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Tom Dohrmann <erbse.13@gmx.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 18/49] accel/kvm: check for KVM_CAP_READONLY_MEM on VM
+Date: Sat,  9 Nov 2024 13:14:09 +0300
+Message-Id: <20241109101443.312701-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,34 +59,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Tom Dohrmann <erbse.13@gmx.de>
 
-do_setcontext() copies the target sigmask without endianness handling
-and then uses target_to_host_sigset_internal(), which expects a
-byte-swapped one. Use target_to_host_sigset() instead.
+KVM_CAP_READONLY_MEM used to be a global capability, but with the
+introduction of AMD SEV-SNP confidential VMs, this extension is not
+always available on all VM types [1,2].
 
-Fixes: bcd4933a23f1 ("linux-user: ppc signal handling")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241017125811.447961-2-iii@linux.ibm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 8704132805cf7a3259d1c5a073b3c2b92afa2616)
+Query the extension on the VM level instead of on the KVM level.
+
+[1] https://patchwork.kernel.org/project/kvm/patch/20240809190319.1710470-2-seanjc@google.com/
+[2] https://patchwork.kernel.org/project/kvm/patch/20240902144219.3716974-1-erbse.13@gmx.de/
+
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Tom Dohrmann <erbse.13@gmx.de>
+Link: https://lore.kernel.org/r/20240903062953.3926498-1-erbse.13@gmx.de
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 64e0e63ea16aa0122dc0c41a0679da0ae4616208)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
-index 7e7302823b..6203a8d8d6 100644
---- a/linux-user/ppc/signal.c
-+++ b/linux-user/ppc/signal.c
-@@ -627,7 +627,7 @@ static int do_setcontext(struct target_ucontext *ucp, CPUPPCState *env, int sig)
-     if (!lock_user_struct(VERIFY_READ, mcp, mcp_addr, 1))
-         return 1;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 6a9d10b1af..a103ae2ae8 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2589,7 +2589,7 @@ static int kvm_init(MachineState *ms)
+     }
  
--    target_to_host_sigset_internal(&blocked, &set);
-+    target_to_host_sigset(&blocked, &set);
-     set_sigmask(&blocked);
-     restore_user_regs(env, mcp, sig);
+     kvm_readonly_mem_allowed =
+-        (kvm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
++        (kvm_vm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
  
+     kvm_resamplefds_allowed =
+         (kvm_check_extension(s, KVM_CAP_IRQFD_RESAMPLE) > 0);
 -- 
 2.39.5
 
