@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C525D5E368
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:34:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4626CD5E369
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:34:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kUF-0006Ie-Ok; Sat, 09 Nov 2024 07:22:43 -0500
+	id 1t9kQd-00013f-A5; Sat, 09 Nov 2024 07:18:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kSr-0004Qm-Ra; Sat, 09 Nov 2024 07:21:19 -0500
+ id 1t9kPY-0006TB-3u; Sat, 09 Nov 2024 07:17:55 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kSq-0005sa-1x; Sat, 09 Nov 2024 07:21:17 -0500
+ id 1t9kPU-0005GS-Ay; Sat, 09 Nov 2024 07:17:51 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 81193A1664;
- Sat,  9 Nov 2024 15:08:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8036CA1647;
+ Sat,  9 Nov 2024 15:08:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4AEC1167FEA;
- Sat,  9 Nov 2024 15:09:05 +0300 (MSK)
-Received: (nullmailer pid 3296308 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 46E3A167FCD;
+ Sat,  9 Nov 2024 15:09:03 +0300 (MSK)
+Received: (nullmailer pid 3296216 invoked by uid 1000);
  Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 58/58] Revert "hw/audio/hda: fix memory leak on audio
- setup"
-Date: Sat,  9 Nov 2024 15:08:59 +0300
-Message-Id: <20241109120901.3295995-58-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 29/58] target/riscv/csr.c: Fix an access to VXSAT
+Date: Sat,  9 Nov 2024 15:08:30 +0300
+Message-Id: <20241109120901.3295995-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
@@ -61,78 +62,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 6d03242a7e47815ed56687ecd13f683d8da3f2fe.
+From: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
 
-Let's revert this one for now.  It is a revert of a commit picked
-to 9.1.x from master 6d6e23361fc732e4fe36a8bc5873b85f264ed53a,
-restoring the status quo with audio for now.
+The register VXSAT should be RW only to the first bit.
+The remaining bits should be 0.
 
-See https://gitlab.com/qemu-project/qemu/-/issues/2639 for details.
+The RISC-V Instruction Set Manual Volume I: Unprivileged Architecture
 
+The vxsat CSR has a single read-write least-significant bit (vxsat[0])
+that indicates if a fixed-point instruction has had to saturate an output
+value to fit into a destination format. Bits vxsat[XLEN-1:1]
+should be written as zeros.
+
+Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241002084436.89347-1-evgenii.prokopiev@syntacore.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 5a60026cad4e9dba929cab4f63229e4b9110cf0a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
-index 4373565371..ee3d0a7dec 100644
---- a/hw/audio/hda-codec.c
-+++ b/hw/audio/hda-codec.c
-@@ -472,24 +472,6 @@ static void hda_audio_set_amp(HDAAudioStream *st)
-     }
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index ea3560342c..c88ee1265e 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -734,7 +734,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
+ static RISCVException read_vxsat(CPURISCVState *env, int csrno,
+                                  target_ulong *val)
+ {
+-    *val = env->vxsat;
++    *val = env->vxsat & BIT(0);
+     return RISCV_EXCP_NONE;
  }
  
--static void hda_close_stream(HDAAudioState *a, HDAAudioStream *st)
--{
--    if (st->node == NULL) {
--        return;
--    }
--    if (a->use_timer) {
--        timer_free(st->buft);
--        st->buft = NULL;
--    }
--    if (st->output) {
--        AUD_close_out(&a->card, st->voice.out);
--        st->voice.out = NULL;
--    } else {
--        AUD_close_in(&a->card, st->voice.in);
--        st->voice.in = NULL;
--    }
--}
--
- static void hda_audio_setup(HDAAudioStream *st)
- {
-     bool use_timer = st->state->use_timer;
-@@ -502,7 +484,6 @@ static void hda_audio_setup(HDAAudioStream *st)
-     trace_hda_audio_format(st->node->name, st->as.nchannels,
-                            fmt2name[st->as.fmt], st->as.freq);
- 
--    hda_close_stream(st->state, st);
-     if (st->output) {
-         if (use_timer) {
-             cb = hda_audio_output_cb;
-@@ -760,11 +741,23 @@ static void hda_audio_init(HDACodecDevice *hda,
- static void hda_audio_exit(HDACodecDevice *hda)
- {
-     HDAAudioState *a = HDA_AUDIO(hda);
-+    HDAAudioStream *st;
-     int i;
- 
-     dprint(a, 1, "%s\n", __func__);
-     for (i = 0; i < ARRAY_SIZE(a->st); i++) {
--        hda_close_stream(a, a->st + i);
-+        st = a->st + i;
-+        if (st->node == NULL) {
-+            continue;
-+        }
-+        if (a->use_timer) {
-+            timer_free(st->buft);
-+        }
-+        if (st->output) {
-+            AUD_close_out(&a->card, st->voice.out);
-+        } else {
-+            AUD_close_in(&a->card, st->voice.in);
-+        }
-     }
-     AUD_remove_card(&a->card);
+@@ -744,7 +744,7 @@ static RISCVException write_vxsat(CPURISCVState *env, int csrno,
+ #if !defined(CONFIG_USER_ONLY)
+     env->mstatus |= MSTATUS_VS;
+ #endif
+-    env->vxsat = val;
++    env->vxsat = val & BIT(0);
+     return RISCV_EXCP_NONE;
  }
+ 
 -- 
 2.39.5
 
