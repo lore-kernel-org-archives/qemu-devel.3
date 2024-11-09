@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B597AD5E122
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F842D5E122
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9fAA-000676-N4; Sat, 09 Nov 2024 01:41:39 -0500
+	id 1t9f8N-0003Co-PE; Sat, 09 Nov 2024 01:39:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f8r-00046W-4H; Sat, 09 Nov 2024 01:40:17 -0500
+ id 1t9f8C-00035K-6h; Sat, 09 Nov 2024 01:39:40 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f8o-0002U1-VH; Sat, 09 Nov 2024 01:40:16 -0500
+ id 1t9f87-000208-1P; Sat, 09 Nov 2024 01:39:33 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 88DC1A12F8;
- Sat,  9 Nov 2024 09:38:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C94B2A12EE;
+ Sat,  9 Nov 2024 09:38:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E661C167DDC;
+ by tsrv.corpit.ru (Postfix) with SMTP id 3F71B167DD2;
  Sat,  9 Nov 2024 09:39:04 +0300 (MSK)
-Received: (nullmailer pid 3272543 invoked by uid 1000);
+Received: (nullmailer pid 3272512 invoked by uid 1000);
  Sat, 09 Nov 2024 06:39:03 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexander Graf <graf@amazon.com>,
- Eduard Vlad <evlad@amazon.de>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 17/33] target/i386: Walk NPT in guest real mode
-Date: Sat,  9 Nov 2024 09:38:43 +0300
-Message-Id: <20241109063903.3272404-17-mjt@tls.msk.ru>
+Subject: [Stable-7.2.15 07/33] linux-user: Fix parse_elf_properties GNU0_MAGIC
+ check
+Date: Sat,  9 Nov 2024 09:38:33 +0300
+Message-Id: <20241109063903.3272404-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 References: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,102 +64,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Graf <graf@amazon.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-When translating virtual to physical address with a guest CPU that
-supports nested paging (NPT), we need to perform every page table walk
-access indirectly through the NPT, which we correctly do.
+Comparing a string of 4 bytes only works in little-endian.
 
-However, we treat real mode (no page table walk) special: In that case,
-we currently just skip any walks and translate VA -> PA. With NPT
-enabled, we also need to then perform NPT walk to do GVA -> GPA -> HPA
-which we fail to do so far.
+Adjust bulk bswap to only apply to the note payload.
+Perform swapping of the note header manually; the magic
+is defined so that it does not need a runtime swap.
 
-The net result of that is that TCG VMs with NPT enabled that execute
-real mode code (like SeaBIOS) end up with GPA==HPA mappings which means
-the guest accesses host code and data. This typically shows as failure
-to boot guests.
-
-This patch changes the page walk logic for NPT enabled guests so that we
-always perform a GVA -> GPA translation and then skip any logic that
-requires an actual PTE.
-
-That way, all remaining logic to walk the NPT stays and we successfully
-walk the NPT in real mode.
-
-Cc: qemu-stable@nongnu.org
-Fixes: fe441054bb3f0 ("target-i386: Add NPT support")
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Reported-by: Eduard Vlad <evlad@amazon.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240921085712.28902-1-graf@amazon.com>
+Fixes: 83f990eb5adb ("linux-user/elfload: Parse NT_GNU_PROPERTY_TYPE_0 notes")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2596
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit b56617bbcb473c25815d1bf475e326f84563b1de)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit 2884596f5f385b5712c356310dd4125a089888a8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index eb78fcba11..a52a5b417e 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -147,6 +147,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-     uint32_t pkr;
-     int page_size;
-     int error_code;
-+    int prot;
- 
-  restart_all:
-     rsvd_mask = ~MAKE_64BIT_MASK(0, env_archcpu(env)->phys_bits);
-@@ -295,7 +296,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         /* combine pde and pte nx, user and rw protections */
-         ptep &= pte ^ PG_NX_MASK;
-         page_size = 4096;
--    } else {
-+    } else if (pg_mode) {
-         /*
-          * Page table level 2
-          */
-@@ -340,6 +341,15 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         ptep &= pte | PG_NX_MASK;
-         page_size = 4096;
-         rsvd_mask = 0;
-+    } else {
-+        /*
-+         * No paging (real mode), let's tentatively resolve the address as 1:1
-+         * here, but conditionally still perform an NPT walk on it later.
-+         */
-+        page_size = 0x40000000;
-+        paddr = in->addr;
-+        prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-+        goto stage2;
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 87895847ec..97528a13ed 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -2899,11 +2899,11 @@ static bool parse_elf_properties(int image_fd,
      }
- 
- do_check_protect:
-@@ -355,7 +365,7 @@ do_check_protect_pse36:
-         goto do_fault_protect;
-     }
- 
--    int prot = 0;
-+    prot = 0;
-     if (!is_mmu_index_smap(in->mmu_idx) || !(ptep & PG_USER_MASK)) {
-         prot |= PAGE_READ;
-         if ((ptep & PG_RW_MASK) || !(is_user || (pg_mode & PG_MODE_WP))) {
-@@ -417,6 +427,7 @@ do_check_protect_pse36:
- 
-     /* merge offset within page */
-     paddr = (pte & PG_ADDRESS_MASK & ~(page_size - 1)) | (addr & (page_size - 1));
-+ stage2:
  
      /*
-      * Note that NPT is walked (for both paging structures and final guest
-@@ -558,7 +569,7 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
-             addr = (uint32_t)addr;
-         }
+-     * The contents of a valid PT_GNU_PROPERTY is a sequence
+-     * of uint32_t -- swap them all now.
++     * The contents of a valid PT_GNU_PROPERTY is a sequence of uint32_t.
++     * Swap most of them now, beyond the header and namesz.
+      */
+ #ifdef BSWAP_NEEDED
+-    for (int i = 0; i < n / 4; i++) {
++    for (int i = 4; i < n / 4; i++) {
+         bswap32s(note.data + i);
+     }
+ #endif
+@@ -2913,15 +2913,15 @@ static bool parse_elf_properties(int image_fd,
+      * immediately follows nhdr and is thus at the 4th word.  Further, all
+      * of the inputs to the kernel's round_up are multiples of 4.
+      */
+-    if (note.nhdr.n_type != NT_GNU_PROPERTY_TYPE_0 ||
+-        note.nhdr.n_namesz != NOTE_NAME_SZ ||
++    if (tswap32(note.nhdr.n_type) != NT_GNU_PROPERTY_TYPE_0 ||
++        tswap32(note.nhdr.n_namesz) != NOTE_NAME_SZ ||
+         note.data[3] != GNU0_MAGIC) {
+         error_setg(errp, "Invalid note in PT_GNU_PROPERTY");
+         return false;
+     }
+     off = sizeof(note.nhdr) + NOTE_NAME_SZ;
  
--        if (likely(env->cr[0] & CR0_PG_MASK)) {
-+        if (likely(env->cr[0] & CR0_PG_MASK || use_stage2)) {
-             in.cr3 = env->cr[3];
-             in.mmu_idx = mmu_idx;
-             in.ptw_idx = use_stage2 ? MMU_NESTED_IDX : MMU_PHYS_IDX;
+-    datasz = note.nhdr.n_descsz + off;
++    datasz = tswap32(note.nhdr.n_descsz) + off;
+     if (datasz > n) {
+         error_setg(errp, "Invalid note size in PT_GNU_PROPERTY");
+         return false;
 -- 
 2.39.5
 
