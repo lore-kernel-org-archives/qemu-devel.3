@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03281D5E368
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31561D5E369
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:37:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kN3-00030D-74; Sat, 09 Nov 2024 07:15:17 -0500
+	id 1t9kIA-0003IK-VW; Sat, 09 Nov 2024 07:10:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kMq-0002Pp-QQ; Sat, 09 Nov 2024 07:15:05 -0500
+ id 1t9kHg-000223-8x; Sat, 09 Nov 2024 07:09:44 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kMo-0004mN-RN; Sat, 09 Nov 2024 07:15:04 -0500
+ id 1t9kHe-0003yA-Du; Sat, 09 Nov 2024 07:09:44 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D5B93A162C;
- Sat,  9 Nov 2024 15:08:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D5A85A15FC;
+ Sat,  9 Nov 2024 15:07:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 9D5A7167FB4;
- Sat,  9 Nov 2024 15:09:01 +0300 (MSK)
-Received: (nullmailer pid 3296138 invoked by uid 1000);
- Sat, 09 Nov 2024 12:09:01 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 91AC3167F8A;
+ Sat,  9 Nov 2024 15:08:02 +0300 (MSK)
+Received: (nullmailer pid 3295312 invoked by uid 1000);
+ Sat, 09 Nov 2024 12:08:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Tom Dohrmann <erbse.13@gmx.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 04/58] accel/kvm: check for KVM_CAP_READONLY_MEM on VM
-Date: Sat,  9 Nov 2024 15:08:05 +0300
-Message-Id: <20241109120901.3295995-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.4 20/57] ui/dbus: fix filtering all update messages
+Date: Sat,  9 Nov 2024 15:07:22 +0300
+Message-Id: <20241109120801.3295120-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
-References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
+References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,38 +63,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tom Dohrmann <erbse.13@gmx.de>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-KVM_CAP_READONLY_MEM used to be a global capability, but with the
-introduction of AMD SEV-SNP confidential VMs, this extension is not
-always available on all VM types [1,2].
+Filtering pending messages when a new scanout is given shouldn't discard
+pending cursor changes, for example.
 
-Query the extension on the VM level instead of on the KVM level.
+Since filtering happens in a different thread, use atomic set/get.
 
-[1] https://patchwork.kernel.org/project/kvm/patch/20240809190319.1710470-2-seanjc@google.com/
-[2] https://patchwork.kernel.org/project/kvm/patch/20240902144219.3716974-1-erbse.13@gmx.de/
+Fixes: fa88b85dea ("ui/dbus: filter out pending messages when scanout")
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Tom Dohrmann <erbse.13@gmx.de>
-Link: https://lore.kernel.org/r/20240903062953.3926498-1-erbse.13@gmx.de
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 64e0e63ea16aa0122dc0c41a0679da0ae4616208)
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-ID: <20241008125028.1177932-6-marcandre.lureau@redhat.com>
+(cherry picked from commit cf59889781297a5618f1735a5f31402caa806b42)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 4db866f0ca..8c5e71f20c 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2660,7 +2660,7 @@ static int kvm_init(MachineState *ms)
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index 83140f602d..b4b7e2666b 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -26,6 +26,7 @@
+ #include "qapi/error.h"
+ #include "sysemu/sysemu.h"
+ #include "dbus.h"
++#include "glib.h"
+ #ifdef G_OS_UNIX
+ #include <gio/gunixfdlist.h>
+ #endif
+@@ -85,7 +86,7 @@ struct _DBusDisplayListener {
+ #endif
+ 
+     guint dbus_filter;
+-    guint32 out_serial_to_discard;
++    guint32 display_serial_to_discard;
+ };
+ 
+ G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
+@@ -93,10 +94,12 @@ G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
+ static void dbus_gfx_update(DisplayChangeListener *dcl,
+                             int x, int y, int w, int h);
+ 
+-static void ddl_discard_pending_messages(DBusDisplayListener *ddl)
++static void ddl_discard_display_messages(DBusDisplayListener *ddl)
+ {
+-    ddl->out_serial_to_discard = g_dbus_connection_get_last_serial(
++    guint32 serial = g_dbus_connection_get_last_serial(
+         g_dbus_proxy_get_connection(G_DBUS_PROXY(ddl->proxy)));
++
++    g_atomic_int_set(&ddl->display_serial_to_discard, serial);
+ }
+ 
+ #ifdef CONFIG_OPENGL
+@@ -285,7 +288,7 @@ static void dbus_scanout_dmabuf(DisplayChangeListener *dcl,
+         return;
      }
  
-     kvm_readonly_mem_allowed =
--        (kvm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
-+        (kvm_vm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
+-    ddl_discard_pending_messages(ddl);
++    ddl_discard_display_messages(ddl);
  
-     kvm_resamplefds_allowed =
-         (kvm_check_extension(s, KVM_CAP_IRQFD_RESAMPLE) > 0);
+     /* FIXME: add missing x/y/w/h support */
+     qemu_dbus_display1_listener_call_scanout_dmabuf(
+@@ -334,7 +337,7 @@ static bool dbus_scanout_map(DBusDisplayListener *ddl)
+         return false;
+     }
+ 
+-    ddl_discard_pending_messages(ddl);
++    ddl_discard_display_messages(ddl);
+ 
+     if (!qemu_dbus_display1_listener_win32_map_call_scanout_map_sync(
+             ddl->map_proxy,
+@@ -397,7 +400,7 @@ dbus_scanout_share_d3d_texture(
+         return false;
+     }
+ 
+-    ddl_discard_pending_messages(ddl);
++    ddl_discard_display_messages(ddl);
+ 
+     qemu_dbus_display1_listener_win32_d3d11_call_scanout_texture2d(
+         ddl->d3d11_proxy,
+@@ -654,7 +657,7 @@ static void ddl_scanout(DBusDisplayListener *ddl)
+         surface_stride(ddl->ds) * surface_height(ddl->ds), TRUE,
+         (GDestroyNotify)pixman_image_unref, pixman_image_ref(ddl->ds->image));
+ 
+-    ddl_discard_pending_messages(ddl);
++    ddl_discard_display_messages(ddl);
+ 
+     qemu_dbus_display1_listener_call_scanout(
+         ddl->proxy, surface_width(ddl->ds), surface_height(ddl->ds),
+@@ -987,17 +990,35 @@ dbus_filter(GDBusConnection *connection,
+             gpointer         user_data)
+ {
+     DBusDisplayListener *ddl = DBUS_DISPLAY_LISTENER(user_data);
+-    guint32 serial;
++    guint32 serial, discard_serial;
+ 
+     if (incoming) {
+         return message;
+     }
+ 
+     serial = g_dbus_message_get_serial(message);
+-    if (serial <= ddl->out_serial_to_discard) {
+-        trace_dbus_filter(serial, ddl->out_serial_to_discard);
+-        g_object_unref(message);
+-        return NULL;
++
++    discard_serial = g_atomic_int_get(&ddl->display_serial_to_discard);
++    if (serial <= discard_serial) {
++        const char *member = g_dbus_message_get_member(message);
++        static const char *const display_messages[] = {
++            "Scanout",
++            "Update",
++#ifdef CONFIG_GBM
++            "ScanoutDMABUF",
++            "UpdateDMABUF",
++#endif
++            "ScanoutMap",
++            "UpdateMap",
++            "Disable",
++            NULL,
++        };
++
++        if (g_strv_contains(display_messages, member)) {
++            trace_dbus_filter(serial, discard_serial);
++            g_object_unref(message);
++            return NULL;
++        }
+     }
+ 
+     return message;
 -- 
 2.39.5
 
