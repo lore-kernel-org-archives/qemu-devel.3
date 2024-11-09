@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA2DD5E36C
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F24D8D5E369
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:29:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kTz-0005tO-2e; Sat, 09 Nov 2024 07:22:27 -0500
+	id 1t9kQb-0000iz-TM; Sat, 09 Nov 2024 07:18:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kRd-0002eU-I9; Sat, 09 Nov 2024 07:20:02 -0500
+ id 1t9kPR-0006Po-Lk; Sat, 09 Nov 2024 07:17:50 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kRb-0005YP-Q0; Sat, 09 Nov 2024 07:20:01 -0500
+ id 1t9kPQ-0005GD-4N; Sat, 09 Nov 2024 07:17:45 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A96E4A1659;
- Sat,  9 Nov 2024 15:08:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 713DAA1646;
+ Sat,  9 Nov 2024 15:08:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6EC7C167FDF;
- Sat,  9 Nov 2024 15:09:04 +0300 (MSK)
-Received: (nullmailer pid 3296273 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 39136167FCC;
+ Sat,  9 Nov 2024 15:09:03 +0300 (MSK)
+Received: (nullmailer pid 3296213 invoked by uid 1000);
  Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 47/58] tests/tcg: Replace -mpower8-vector with
- -mcpu=power8
-Date: Sat,  9 Nov 2024 15:08:48 +0300
-Message-Id: <20241109120901.3295995-47-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 28/58] stubs: avoid duplicate symbols in libqemuutil.a
+Date: Sat,  9 Nov 2024 15:08:29 +0300
+Message-Id: <20241109120901.3295995-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
@@ -65,64 +63,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-[1] deprecated -mpower8-vector, resulting in:
+qapi_event_send_device_deleted is always included (together with the
+rest of QAPI) in libqemuutil.a if either system-mode emulation or tools
+are being built, and in that case the stub causes a duplicate symbol
+to appear in libqemuutil.a.
 
-    powerpc64-linux-gnu-gcc: warning: switch '-mpower8-vector' is no longer supported
-    qemu/tests/tcg/ppc64/vsx_f2i_nan.c:4:15: error: expected ';' before 'float'
-        4 | typedef vector float vsx_float32_vec_t;
-          |               ^~~~~~
-
-Use -mcpu=power8 instead. In order to properly verify that this works,
-one needs a big-endian (the minimum supported CPU for 64-bit
-little-endian is power8 anyway) GCC configured with --enable-checking
-(see GCC commit e154242724b0 ("[RS6000] Don't pass -many to the
-assembler").
-
-[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=109987
+Add the symbol only if events are not being requested.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit ddf4dd46e5c31bd223f2e867f2cae43bfd41dfb9)
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 388b849fb6c33882b481123568995a749a54f648)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/ppc64/Makefile.target b/tests/tcg/ppc64/Makefile.target
-index 509a20be2b..102a2cefef 100644
---- a/tests/tcg/ppc64/Makefile.target
-+++ b/tests/tcg/ppc64/Makefile.target
-@@ -6,7 +6,7 @@ VPATH += $(SRC_PATH)/tests/tcg/ppc64
- 
- config-cc.mak: Makefile
- 	$(quiet-@)( \
--	    $(call cc-option,-mpower8-vector,   CROSS_CC_HAS_POWER8_VECTOR); \
-+	    $(call cc-option,-mcpu=power8,      CROSS_CC_HAS_CPU_POWER8); \
- 	    $(call cc-option,-mpower10,         CROSS_CC_HAS_POWER10)) 3> config-cc.mak
- 
- -include config-cc.mak
-@@ -23,15 +23,15 @@ run-threadcount: threadcount
- run-plugin-threadcount-with-%:
- 	$(call skip-test, $<, "BROKEN (flaky with clang) ")
- 
--ifneq ($(CROSS_CC_HAS_POWER8_VECTOR),)
-+ifneq ($(CROSS_CC_HAS_CPU_POWER8),)
- PPC64_TESTS=bcdsub non_signalling_xscv
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 772a3e817d..e91614a874 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -55,7 +55,12 @@ endif
+ if have_user
+   # Symbols that are used by hw/core.
+   stub_ss.add(files('cpu-synchronize-state.c'))
+-  stub_ss.add(files('qdev.c'))
++
++  # Stubs for QAPI events.  Those can always be included in the build, but
++  # they are not built at all for --disable-system --disable-tools builds.
++  if not (have_system or have_tools)
++    stub_ss.add(files('qdev.c'))
++  endif
  endif
--$(PPC64_TESTS): CFLAGS += -mpower8-vector
-+$(PPC64_TESTS): CFLAGS += -mcpu=power8
  
--ifneq ($(CROSS_CC_HAS_POWER8_VECTOR),)
-+ifneq ($(CROSS_CC_HAS_CPU_POWER8),)
- PPC64_TESTS += vsx_f2i_nan
- endif
--vsx_f2i_nan: CFLAGS += -mpower8-vector -I$(SRC_PATH)/include
-+vsx_f2i_nan: CFLAGS += -mcpu=power8 -I$(SRC_PATH)/include
- 
- PPC64_TESTS += mtfsf
- PPC64_TESTS += mffsce
+ if have_system
 -- 
 2.39.5
 
