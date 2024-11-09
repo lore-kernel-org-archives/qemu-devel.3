@@ -4,52 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E44D5E369
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F23ADD5E36C
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kKW-0001MR-8q; Sat, 09 Nov 2024 07:12:40 -0500
+	id 1t9kdT-0001vb-L5; Sat, 09 Nov 2024 07:32:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kKH-0008Di-RE; Sat, 09 Nov 2024 07:12:26 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kKF-0004Zt-VN; Sat, 09 Nov 2024 07:12:25 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C2F35A160A;
- Sat,  9 Nov 2024 15:07:08 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8A282167F98;
- Sat,  9 Nov 2024 15:08:03 +0300 (MSK)
-Received: (nullmailer pid 3295357 invoked by uid 1000);
- Sat, 09 Nov 2024 12:08:01 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t9kdL-0001rR-0z
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 07:32:08 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t9kdJ-0007AW-F4
+ for qemu-devel@nongnu.org; Sat, 09 Nov 2024 07:32:06 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-20c803787abso25838265ad.0
+ for <qemu-devel@nongnu.org>; Sat, 09 Nov 2024 04:32:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731155523; x=1731760323; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=I22Vm01k91Exl/3tx9OtOL6Tgt75qZKLVbyFVyDph9Y=;
+ b=Ua0ZuS08dmzkHBiwr3b/i2nwMiJDZuJYOwfhiWecaGDGWCkeEoJ/MccXKzU3XAtLAq
+ WeR1cIkJt8xGGD/o91cMQOiiio11DZzcfcbH+mKiHxq05AKygBwEWHxwJ0UEUGIqTfi5
+ uzYygZ6YFhWGLqbXSU/yZkx4XfCKwRiaNIN5cPEhoRAB0HCivdjy7s40m4Q+H6OstGl5
+ E1UO+bYUsP2o+4OCC4NMnSCr9h/C2N7q9YAkbGRAZJuz55Q/V/lXlPJMW+APgodQsDEa
+ sSGhc1+ZljPAAtA0BzKE2fZN9anvNEedmYHs+qHLqneEyxqOlnEE9MRA9vX9LC/WtQBQ
+ RR+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731155523; x=1731760323;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=I22Vm01k91Exl/3tx9OtOL6Tgt75qZKLVbyFVyDph9Y=;
+ b=TxGrPhiYhTP48s4hRCQhuDlSEsAavCGW+1q0q4bwHl9W31VXpYuaTWKZHqXptBNJf/
+ tJcTYP8jbrDnTH9S3LAnjxON6mjAWdzGMHy8LmIJg+vvTzx9kf4rlWqpw81zt+ykPMy1
+ Pg7wG+G+6qfQFEiupDsAtciziWM+lrDxxSM6MJ2YoWqVpIz4vNxnHd0a+NM49pMHH9ZU
+ cC0dot5YPoZihw4jQr5pfj02sY2yGfT53+oRri9CmYOl92XFyx2efz+Kdw6RZYDVFvhT
+ DSNCrnjvA4Oyz/fKKic+IAQXd5NlH1Ma/splr6paRz8yAUTATntnzuabxpO/cJth3H4v
+ u8mQ==
+X-Gm-Message-State: AOJu0Yw647lO93avMGhfqrNr4y751++0JI3oWJOJCEwP2zGVLJUTlrEi
+ DXwsC6yPfCzlSpSqTIBnDZruLvEGHTIhFHV+Ba7sJWcnLCxXtAbrbvJl8g==
+X-Google-Smtp-Source: AGHT+IGcd///f1aSWcqZh++Jq3x7EmhiC9o/yN+GDGmtmJE2Th7pnFRJSqeSgKsKFnSG0cP+AM/dBA==
+X-Received: by 2002:a17:903:32c4:b0:20c:c9ac:bd0d with SMTP id
+ d9443c01a7336-2118377eb96mr94083505ad.19.1731155523538; 
+ Sat, 09 Nov 2024 04:32:03 -0800 (PST)
+Received: from localhost.localdomain ([103.103.35.149])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21177e6a429sm45257045ad.238.2024.11.09.04.32.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 09 Nov 2024 04:32:03 -0800 (PST)
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 34/57] gitlab: make check-[dco|patch] a little more
- verbose
-Date: Sat,  9 Nov 2024 15:07:36 +0300
-Message-Id: <20241109120801.3295120-34-mjt@tls.msk.ru>
+Cc: graf@amazon.com,
+	pbonzini@redhat.com
+Subject: [PATCH] device/virtio-nsm: Support string data for extendPCR
+Date: Sat,  9 Nov 2024 18:32:08 +0600
+Message-Id: <20241109123208.24281-1-dorjoychy111@gmail.com>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
-References: <qemu-stable-9.0.4-20241109150303@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,55 +91,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+NSM device in AWS Nitro Enclaves supports extending with both
+bytestring and string data.
 
-When git fails the rather terse backtrace only indicates it failed
-without some useful context. Add some to make the log a little more
-useful.
+Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+---
+ hw/virtio/virtio-nsm.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241023113406.1284676-11-alex.bennee@linaro.org>
-(cherry picked from commit 97f116f9c6fd127b6ed2953993fa9fb05e82f450)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/.gitlab-ci.d/check-dco.py b/.gitlab-ci.d/check-dco.py
-index 632c8bcce8..d221b16bd5 100755
---- a/.gitlab-ci.d/check-dco.py
-+++ b/.gitlab-ci.d/check-dco.py
-@@ -19,10 +19,9 @@
- reponame = os.path.basename(cwd)
- repourl = "https://gitlab.com/%s/%s.git" % (namespace, reponame)
+diff --git a/hw/virtio/virtio-nsm.c b/hw/virtio/virtio-nsm.c
+index a3db8eef3e..6830fcfe17 100644
+--- a/hw/virtio/virtio-nsm.c
++++ b/hw/virtio/virtio-nsm.c
+@@ -444,7 +444,7 @@ static bool handle_describe_pcr(VirtIONSM *vnsm, struct iovec *request,
+  *       key = String("index"),
+  *       value = Uint8(pcr),
+  *       key = String("data"),
+- *       value = Byte_String(data),
++ *       value = Byte_String(data) || String(data),
+  *     }
+  *   }
+  * }
+@@ -504,14 +504,21 @@ static enum NSMResponseTypes get_nsm_extend_pcr_req(uint8_t *req, size_t len,
  
-+print(f"adding upstream git repo @ {repourl}")
- subprocess.check_call(["git", "remote", "add", "check-dco", repourl])
--subprocess.check_call(["git", "fetch", "check-dco", "master"],
--                      stdout=subprocess.DEVNULL,
--                      stderr=subprocess.DEVNULL)
-+subprocess.check_call(["git", "fetch", "check-dco", "master"])
- 
- ancestor = subprocess.check_output(["git", "merge-base",
-                                     "check-dco/master", "HEAD"],
-diff --git a/.gitlab-ci.d/check-patch.py b/.gitlab-ci.d/check-patch.py
-index 39e2b403c9..68c549a146 100755
---- a/.gitlab-ci.d/check-patch.py
-+++ b/.gitlab-ci.d/check-patch.py
-@@ -19,13 +19,12 @@
- reponame = os.path.basename(cwd)
- repourl = "https://gitlab.com/%s/%s.git" % (namespace, reponame)
- 
-+print(f"adding upstream git repo @ {repourl}")
- # GitLab CI environment does not give us any direct info about the
- # base for the user's branch. We thus need to figure out a common
- # ancestor between the user's branch and current git master.
- subprocess.check_call(["git", "remote", "add", "check-patch", repourl])
--subprocess.check_call(["git", "fetch", "check-patch", "master"],
--                      stdout=subprocess.DEVNULL,
--                      stderr=subprocess.DEVNULL)
-+subprocess.check_call(["git", "fetch", "check-patch", "master"])
- 
- ancestor = subprocess.check_output(["git", "merge-base",
-                                     "check-patch/master", "HEAD"],
+         if (cbor_string_length(pair[i].key) == 4 &&
+             memcmp(str, "data", 4) == 0) {
+-            if (!cbor_isa_bytestring(pair[i].value)) {
++            if (cbor_isa_bytestring(pair[i].value)) {
++                str = cbor_bytestring_handle(pair[i].value);
++                if (!str) {
++                    goto cleanup;
++                }
++                nsm_req->data_len = cbor_bytestring_length(pair[i].value);
++            } else if (cbor_isa_string(pair[i].value)) {
++                str = cbor_string_handle(pair[i].value);
++                if (!str) {
++                    goto cleanup;
++                }
++                nsm_req->data_len = cbor_string_length(pair[i].value);
++            } else {
+                 goto cleanup;
+             }
+-            str = cbor_bytestring_handle(pair[i].value);
+-            if (!str) {
+-                goto cleanup;
+-            }
+-            nsm_req->data_len = cbor_bytestring_length(pair[i].value);
+             /*
+              * nsm_req->data_len will be smaller than NSM_REQUEST_MAX_SIZE as
+              * we already check for the max request size before processing
 -- 
 2.39.5
 
