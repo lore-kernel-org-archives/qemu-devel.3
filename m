@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F842D5E122
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26510D5E122
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:43:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9f8N-0003Co-PE; Sat, 09 Nov 2024 01:39:47 -0500
+	id 1t9f8U-0003Su-Tb; Sat, 09 Nov 2024 01:39:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f8C-00035K-6h; Sat, 09 Nov 2024 01:39:40 -0500
+ id 1t9f8C-00035N-LA; Sat, 09 Nov 2024 01:39:40 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f87-000208-1P; Sat, 09 Nov 2024 01:39:33 -0500
+ id 1t9f89-00020j-Hq; Sat, 09 Nov 2024 01:39:35 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C94B2A12EE;
+ by isrv.corpit.ru (Postfix) with ESMTP id E586DA12EF;
  Sat,  9 Nov 2024 09:38:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 3F71B167DD2;
+ by tsrv.corpit.ru (Postfix) with SMTP id 4DAF9167DD3;
  Sat,  9 Nov 2024 09:39:04 +0300 (MSK)
-Received: (nullmailer pid 3272512 invoked by uid 1000);
+Received: (nullmailer pid 3272515 invoked by uid 1000);
  Sat, 09 Nov 2024 06:39:03 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 07/33] linux-user: Fix parse_elf_properties GNU0_MAGIC
- check
-Date: Sat,  9 Nov 2024 09:38:33 +0300
-Message-Id: <20241109063903.3272404-7-mjt@tls.msk.ru>
+Subject: [Stable-7.2.15 08/33] scsi: fetch unit attention when creating the
+ request
+Date: Sat,  9 Nov 2024 09:38:34 +0300
+Message-Id: <20241109063903.3272404-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 References: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,60 +63,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Comparing a string of 4 bytes only works in little-endian.
+Commit 1880ad4f4e ("virtio-scsi: Batched prepare for cmd reqs") split
+calls to scsi_req_new() and scsi_req_enqueue() in the virtio-scsi device.
+No ill effects were observed until commit 8cc5583abe ("virtio-scsi: Send
+"REPORTED LUNS CHANGED" sense data upon disk hotplug events") added a
+unit attention that was easy to trigger with device hotplug and
+hot-unplug.
 
-Adjust bulk bswap to only apply to the note payload.
-Perform swapping of the note header manually; the magic
-is defined so that it does not need a runtime swap.
+Because the two calls were separated, all requests in the batch were
+prepared calling scsi_req_new() to report a sense.  The first one
+submitted would report the right sense and reset it to NO_SENSE, while
+the others reported CHECK_CONDITION with no sense data.  This caused
+SCSI errors in Linux.
 
-Fixes: 83f990eb5adb ("linux-user/elfload: Parse NT_GNU_PROPERTY_TYPE_0 notes")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2596
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 2884596f5f385b5712c356310dd4125a089888a8)
+To solve this issue, let's fetch the unit attention as early as possible
+when we prepare the request, so that only the first request in the batch
+will use the unit attention SCSIReqOps and the others will not report
+CHECK CONDITION.
+
+Fixes: 1880ad4f4e ("virtio-scsi: Batched prepare for cmd reqs")
+Fixes: 8cc5583abe ("virtio-scsi: Send "REPORTED LUNS CHANGED" sense data upon disk hotplug events")
+Reported-by: Thomas Huth <thuth@redhat.com>
+Buglink: https://bugzilla.redhat.com/show_bug.cgi?id=2176702
+Co-developed-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-ID: <20230712134352.118655-2-sgarzare@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 9472083e642bfb9bc836b38662baddd9bc964ebc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 87895847ec..97528a13ed 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -2899,11 +2899,11 @@ static bool parse_elf_properties(int image_fd,
-     }
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index e5c9f7a53d..e76bfbd47b 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -413,19 +413,35 @@ static const struct SCSIReqOps reqops_invalid_opcode = {
  
-     /*
--     * The contents of a valid PT_GNU_PROPERTY is a sequence
--     * of uint32_t -- swap them all now.
-+     * The contents of a valid PT_GNU_PROPERTY is a sequence of uint32_t.
-+     * Swap most of them now, beyond the header and namesz.
-      */
- #ifdef BSWAP_NEEDED
--    for (int i = 0; i < n / 4; i++) {
-+    for (int i = 4; i < n / 4; i++) {
-         bswap32s(note.data + i);
-     }
- #endif
-@@ -2913,15 +2913,15 @@ static bool parse_elf_properties(int image_fd,
-      * immediately follows nhdr and is thus at the 4th word.  Further, all
-      * of the inputs to the kernel's round_up are multiples of 4.
-      */
--    if (note.nhdr.n_type != NT_GNU_PROPERTY_TYPE_0 ||
--        note.nhdr.n_namesz != NOTE_NAME_SZ ||
-+    if (tswap32(note.nhdr.n_type) != NT_GNU_PROPERTY_TYPE_0 ||
-+        tswap32(note.nhdr.n_namesz) != NOTE_NAME_SZ ||
-         note.data[3] != GNU0_MAGIC) {
-         error_setg(errp, "Invalid note in PT_GNU_PROPERTY");
-         return false;
-     }
-     off = sizeof(note.nhdr) + NOTE_NAME_SZ;
+ /* SCSIReqOps implementation for unit attention conditions.  */
  
--    datasz = note.nhdr.n_descsz + off;
-+    datasz = tswap32(note.nhdr.n_descsz) + off;
-     if (datasz > n) {
-         error_setg(errp, "Invalid note size in PT_GNU_PROPERTY");
-         return false;
+-static int32_t scsi_unit_attention(SCSIRequest *req, uint8_t *buf)
++static void scsi_fetch_unit_attention_sense(SCSIRequest *req)
+ {
++    SCSISense *ua = NULL;
++
+     if (req->dev->unit_attention.key == UNIT_ATTENTION) {
+-        scsi_req_build_sense(req, req->dev->unit_attention);
++        ua = &req->dev->unit_attention;
+     } else if (req->bus->unit_attention.key == UNIT_ATTENTION) {
+-        scsi_req_build_sense(req, req->bus->unit_attention);
++        ua = &req->bus->unit_attention;
+     }
++
++    /*
++     * Fetch the unit attention sense immediately so that another
++     * scsi_req_new does not use reqops_unit_attention.
++     */
++    if (ua) {
++        scsi_req_build_sense(req, *ua);
++        *ua = SENSE_CODE(NO_SENSE);
++    }
++}
++
++static int32_t scsi_unit_attention(SCSIRequest *req, uint8_t *buf)
++{
+     scsi_req_complete(req, CHECK_CONDITION);
+     return 0;
+ }
+ 
+ static const struct SCSIReqOps reqops_unit_attention = {
+     .size         = sizeof(SCSIRequest),
++    .init_req     = scsi_fetch_unit_attention_sense,
+     .send_command = scsi_unit_attention
+ };
+ 
+@@ -699,6 +715,11 @@ SCSIRequest *scsi_req_alloc(const SCSIReqOps *reqops, SCSIDevice *d,
+     object_ref(OBJECT(d));
+     object_ref(OBJECT(qbus->parent));
+     notifier_list_init(&req->cancel_notifiers);
++
++    if (reqops->init_req) {
++        reqops->init_req(req);
++    }
++
+     trace_scsi_req_alloc(req->dev->id, req->lun, req->tag);
+     return req;
+ }
+@@ -798,6 +819,15 @@ uint8_t *scsi_req_get_buf(SCSIRequest *req)
+ static void scsi_clear_unit_attention(SCSIRequest *req)
+ {
+     SCSISense *ua;
++
++    /*
++     * scsi_fetch_unit_attention_sense() already cleaned the unit attention
++     * in this case.
++     */
++    if (req->ops == &reqops_unit_attention) {
++        return;
++    }
++
+     if (req->dev->unit_attention.key != UNIT_ATTENTION &&
+         req->bus->unit_attention.key != UNIT_ATTENTION) {
+         return;
+diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
+index 6ea4b64fe7..60bc32da32 100644
+--- a/include/hw/scsi/scsi.h
++++ b/include/hw/scsi/scsi.h
+@@ -108,6 +108,7 @@ int cdrom_read_toc_raw(int nb_sectors, uint8_t *buf, int msf, int session_num);
+ /* scsi-bus.c */
+ struct SCSIReqOps {
+     size_t size;
++    void (*init_req)(SCSIRequest *req);
+     void (*free_req)(SCSIRequest *req);
+     int32_t (*send_command)(SCSIRequest *req, uint8_t *buf);
+     void (*read_data)(SCSIRequest *req);
 -- 
 2.39.5
 
