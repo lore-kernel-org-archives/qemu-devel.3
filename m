@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F24D8D5E369
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:29:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E154DD5E368
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 12:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9kQb-0000iz-TM; Sat, 09 Nov 2024 07:18:58 -0500
+	id 1t9kNx-0004Ss-P7; Sat, 09 Nov 2024 07:16:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kPR-0006Po-Lk; Sat, 09 Nov 2024 07:17:50 -0500
+ id 1t9kNU-0003uy-Uq; Sat, 09 Nov 2024 07:15:46 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9kPQ-0005GD-4N; Sat, 09 Nov 2024 07:17:45 -0500
+ id 1t9kNT-00054w-Bo; Sat, 09 Nov 2024 07:15:44 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 713DAA1646;
- Sat,  9 Nov 2024 15:08:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3A4F5A1633;
+ Sat,  9 Nov 2024 15:08:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 39136167FCC;
- Sat,  9 Nov 2024 15:09:03 +0300 (MSK)
-Received: (nullmailer pid 3296213 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id F3C64167FBA;
+ Sat,  9 Nov 2024 15:09:01 +0300 (MSK)
+Received: (nullmailer pid 3296157 invoked by uid 1000);
  Sat, 09 Nov 2024 12:09:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 28/58] stubs: avoid duplicate symbols in libqemuutil.a
-Date: Sat,  9 Nov 2024 15:08:29 +0300
-Message-Id: <20241109120901.3295995-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 10/58] tcg: Reset data_gen_ptr correctly
+Date: Sat,  9 Nov 2024 15:08:11 +0300
+Message-Id: <20241109120901.3295995-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241109150812@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,40 +63,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-qapi_event_send_device_deleted is always included (together with the
-rest of QAPI) in libqemuutil.a if either system-mode emulation or tools
-are being built, and in that case the stub causes a duplicate symbol
-to appear in libqemuutil.a.
-
-Add the symbol only if events are not being requested.
+This pointer needs to be reset after overflow just like
+code_buf and code_ptr.
 
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 388b849fb6c33882b481123568995a749a54f648)
+Fixes: 57a269469db ("tcg: Infrastructure for managing constant pools")
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit a7cfd751fb269de4a93bf1658cb13911c7ac77cc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 772a3e817d..e91614a874 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -55,7 +55,12 @@ endif
- if have_user
-   # Symbols that are used by hw/core.
-   stub_ss.add(files('cpu-synchronize-state.c'))
--  stub_ss.add(files('qdev.c'))
-+
-+  # Stubs for QAPI events.  Those can always be included in the build, but
-+  # they are not built at all for --disable-system --disable-tools builds.
-+  if not (have_system or have_tools)
-+    stub_ss.add(files('qdev.c'))
-+  endif
- endif
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 34e3056380..b1b8b8bba3 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -1399,7 +1399,6 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
+         goto retry;
+     }
+     qatomic_set(&s->code_gen_ptr, next);
+-    s->data_gen_ptr = NULL;
+     return tb;
+ }
  
- if have_system
+@@ -6172,6 +6171,7 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
+      */
+     s->code_buf = tcg_splitwx_to_rw(tb->tc.ptr);
+     s->code_ptr = s->code_buf;
++    s->data_gen_ptr = NULL;
+ 
+ #ifdef TCG_TARGET_NEED_LDST_LABELS
+     QSIMPLEQ_INIT(&s->ldst_labels);
 -- 
 2.39.5
 
