@@ -4,43 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C541DD5C0FC
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:43:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 303C8D5E123
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 06:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9fAl-0006am-RM; Sat, 09 Nov 2024 01:42:22 -0500
+	id 1t9f8Q-0003Jm-3K; Sat, 09 Nov 2024 01:39:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f9E-0004Vt-Jt; Sat, 09 Nov 2024 01:40:40 -0500
+ id 1t9f85-00031H-Pl; Sat, 09 Nov 2024 01:39:31 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9f9C-0002VD-JA; Sat, 09 Nov 2024 01:40:40 -0500
+ id 1t9f7z-0001yF-ST; Sat, 09 Nov 2024 01:39:28 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A638EA12FB;
- Sat,  9 Nov 2024 09:38:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AD29CA12EC;
+ Sat,  9 Nov 2024 09:38:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 1C5F5167DDE;
- Sat,  9 Nov 2024 09:39:05 +0300 (MSK)
-Received: (nullmailer pid 3272550 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 24B65167DD0;
+ Sat,  9 Nov 2024 09:39:04 +0300 (MSK)
+Received: (nullmailer pid 3272506 invoked by uid 1000);
  Sat, 09 Nov 2024 06:39:03 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 19/33] gitlab: make check-[dco|patch] a little more
- verbose
-Date: Sat,  9 Nov 2024 09:38:45 +0300
-Message-Id: <20241109063903.3272404-19-mjt@tls.msk.ru>
+Subject: [Stable-7.2.15 05/33] tracetool: avoid invalid escape in Python string
+Date: Sat,  9 Nov 2024 09:38:31 +0300
+Message-Id: <20241109063903.3272404-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 References: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,56 +61,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-When git fails the rather terse backtrace only indicates it failed
-without some useful context. Add some to make the log a little more
-useful.
+This is an error in Python 3.12; fix it by using a raw string literal.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241023113406.1284676-11-alex.bennee@linaro.org>
-(cherry picked from commit 97f116f9c6fd127b6ed2953993fa9fb05e82f450)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit e6d8e5e6e366ab4c9ed7d8ed1572f98c6ad6a38e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fix for stable-7.2)
 
-diff --git a/.gitlab-ci.d/check-dco.py b/.gitlab-ci.d/check-dco.py
-index b929571eed..8780d73e31 100755
---- a/.gitlab-ci.d/check-dco.py
-+++ b/.gitlab-ci.d/check-dco.py
-@@ -19,10 +19,9 @@
- reponame = os.path.basename(cwd)
- repourl = "https://gitlab.com/%s/%s.git" % (namespace, reponame)
+diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
+index cd46e7597c..e31aaedcbb 100644
+--- a/scripts/tracetool/__init__.py
++++ b/scripts/tracetool/__init__.py
+@@ -223,12 +223,12 @@ class Event(object):
  
-+print(f"adding upstream git repo @ {repourl}")
- subprocess.check_call(["git", "remote", "add", "check-dco", repourl])
--subprocess.check_call(["git", "fetch", "check-dco", "stable-7.2"],
--                      stdout=subprocess.DEVNULL,
--                      stderr=subprocess.DEVNULL)
-+subprocess.check_call(["git", "fetch", "check-dco", "stable-7.2"])
+     """
  
- ancestor = subprocess.check_output(["git", "merge-base",
-                                     "check-dco/stable-7.2", "HEAD"],
-diff --git a/.gitlab-ci.d/check-patch.py b/.gitlab-ci.d/check-patch.py
-index 39e2b403c9..68c549a146 100755
---- a/.gitlab-ci.d/check-patch.py
-+++ b/.gitlab-ci.d/check-patch.py
-@@ -19,13 +19,12 @@
- reponame = os.path.basename(cwd)
- repourl = "https://gitlab.com/%s/%s.git" % (namespace, reponame)
+-    _CRE = re.compile("((?P<props>[\w\s]+)\s+)?"
+-                      "(?P<name>\w+)"
+-                      "\((?P<args>[^)]*)\)"
+-                      "\s*"
+-                      "(?:(?:(?P<fmt_trans>\".+),)?\s*(?P<fmt>\".+))?"
+-                      "\s*")
++    _CRE = re.compile(r"((?P<props>[\w\s]+)\s+)?"
++                      r"(?P<name>\w+)"
++                      r"\((?P<args>[^)]*)\)"
++                      r"\s*"
++                      r"(?:(?:(?P<fmt_trans>\".+),)?\s*(?P<fmt>\".+))?"
++                      r"\s*")
  
-+print(f"adding upstream git repo @ {repourl}")
- # GitLab CI environment does not give us any direct info about the
- # base for the user's branch. We thus need to figure out a common
- # ancestor between the user's branch and current git master.
- subprocess.check_call(["git", "remote", "add", "check-patch", repourl])
--subprocess.check_call(["git", "fetch", "check-patch", "master"],
--                      stdout=subprocess.DEVNULL,
--                      stderr=subprocess.DEVNULL)
-+subprocess.check_call(["git", "fetch", "check-patch", "master"])
+     _VALID_PROPS = set(["disable", "vcpu"])
  
- ancestor = subprocess.check_output(["git", "merge-base",
-                                     "check-patch/master", "HEAD"],
+@@ -339,7 +339,7 @@ def __repr__(self):
+                                           fmt)
+     # Star matching on PRI is dangerous as one might have multiple
+     # arguments with that format, hence the non-greedy version of it.
+-    _FMT = re.compile("(%[\d\.]*\w+|%.*?PRI\S+)")
++    _FMT = re.compile(r"(%[\d\.]*\w+|%.*?PRI\S+)")
+ 
+     def formats(self):
+         """List conversion specifiers in the argument print format string."""
+diff --git a/scripts/tracetool/format/log_stap.py b/scripts/tracetool/format/log_stap.py
+index 0b6549d534..b49afababd 100644
+--- a/scripts/tracetool/format/log_stap.py
++++ b/scripts/tracetool/format/log_stap.py
+@@ -83,7 +83,7 @@ def c_fmt_to_stap(fmt):
+     # and "%ll" is not valid at all. Similarly the size_t
+     # based "%z" size qualifier is not valid. We just
+     # strip all size qualifiers for sanity.
+-    fmt = re.sub("%(\d*)(l+|z)(x|u|d)", "%\\1\\3", "".join(bits))
++    fmt = re.sub(r"%(\d*)(l+|z)(x|u|d)", r"%\1\3", "".join(bits))
+     return fmt
+ 
+ def generate(events, backend, group):
 -- 
 2.39.5
 
