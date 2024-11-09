@@ -4,33 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 387C4D5E364
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3F01D5E362
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9idg-0003a7-0O; Sat, 09 Nov 2024 05:24:20 -0500
+	id 1t9icE-0007KC-Th; Sat, 09 Nov 2024 05:22:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iYN-00029v-OV; Sat, 09 Nov 2024 05:18:53 -0500
+ id 1t9iXM-0007gf-B2; Sat, 09 Nov 2024 05:17:49 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iYM-0008Ej-0d; Sat, 09 Nov 2024 05:18:51 -0500
+ id 1t9iXK-000896-0p; Sat, 09 Nov 2024 05:17:48 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D6634A1414;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2693AA1407;
  Sat,  9 Nov 2024 13:13:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 84C32167EFF;
- Sat,  9 Nov 2024 13:14:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C6717167EF2;
+ Sat,  9 Nov 2024 13:14:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 47/49] migration: Ensure vmstate_save() sets errp
-Date: Sat,  9 Nov 2024 13:14:38 +0300
-Message-Id: <20241109101443.312701-47-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ido Plat <ido.plat1@ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 34/49] target/arm: Fix arithmetic underflow in SETM
+ instruction
+Date: Sat,  9 Nov 2024 13:14:25 +0300
+Message-Id: <20241109101443.312701-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
@@ -59,82 +61,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Ido Plat <ido.plat1@ibm.com>
 
-migration/savevm.c contains some calls to vmstate_save() that are
-followed by migrate_set_error() if the integer return value indicates an
-error.  migrate_set_error() requires that the `Error *` object passed to
-it is set.  Therefore, vmstate_save() is assumed to always set *errp on
-error.
+Pass the stage size to step function callback, otherwise do_setm
+would hang when size is larger then page size because stage size
+would underflow.  This fix changes do_setm to be more inline with
+do_setp.
 
-Right now, that assumption is not met: vmstate_save_state_v() (called
-internally by vmstate_save()) will not set *errp if
-vmstate_subsection_save() or vmsd->post_save() fail.  Fix that by adding
-an *errp parameter to vmstate_subsection_save(), and by generating a
-generic error in case post_save() fails (as is already done for
-pre_save()).
-
-Without this patch, qemu will crash after vmstate_subsection_save() or
-post_save() have failed inside of a vmstate_save() call (unless
-migrate_set_error() then happen to discard the new error because
-s->error is already set).  This happens e.g. when receiving the state
-from a virtio-fs back-end (virtiofsd) fails.
-
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Link: https://lore.kernel.org/r/20241015170437.310358-1-hreitz@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit 37dfcba1a04989830c706f9cbc00450e5d3a7447)
+Cc: qemu-stable@nongnu.org
+Fixes: 0e92818887dee ("target/arm: Implement the SET* instructions")
+Signed-off-by: Ido Plat <ido.plat1@ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241025024909.799989-1-ido.plat1@ibm.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit bab209af35037b33f7eb1b8a3737085935bec3a3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index b7723a4187..bd08e390c5 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -22,7 +22,8 @@
- #include "trace.h"
- 
- static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
--                                   void *opaque, JSONWriter *vmdesc);
-+                                   void *opaque, JSONWriter *vmdesc,
-+                                   Error **errp);
- static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
-                                    void *opaque);
- 
-@@ -440,12 +441,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-         json_writer_end_array(vmdesc);
-     }
- 
--    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc);
-+    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
- 
-     if (vmsd->post_save) {
-         int ps_ret = vmsd->post_save(opaque);
--        if (!ret) {
-+        if (!ret && ps_ret) {
-             ret = ps_ret;
-+            error_setg(errp, "post-save failed: %s", vmsd->name);
-         }
-     }
-     return ret;
-@@ -515,7 +517,8 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
- }
- 
- static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
--                                   void *opaque, JSONWriter *vmdesc)
-+                                   void *opaque, JSONWriter *vmdesc,
-+                                   Error **errp)
- {
-     const VMStateDescription **sub = vmsd->subsections;
-     bool vmdesc_has_subsections = false;
-@@ -543,7 +546,7 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
-             qemu_put_byte(f, len);
-             qemu_put_buffer(f, (uint8_t *)vmsdsub->name, len);
-             qemu_put_be32(f, vmsdsub->version_id);
--            ret = vmstate_save_state(f, vmsdsub, opaque, vmdesc);
-+            ret = vmstate_save_state_with_err(f, vmsdsub, opaque, vmdesc, errp);
-             if (ret) {
-                 return ret;
-             }
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 8ad84623d3..8335505a06 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -1330,7 +1330,7 @@ static void do_setm(CPUARMState *env, uint32_t syndrome, uint32_t mtedesc,
+     /* Do the actual memset: we leave the last partial page to SETE */
+     stagesetsize = setsize & TARGET_PAGE_MASK;
+     while (stagesetsize > 0) {
+-        step = stepfn(env, toaddr, setsize, data, memidx, &mtedesc, ra);
++        step = stepfn(env, toaddr, stagesetsize, data, memidx, &mtedesc, ra);
+         toaddr += step;
+         setsize -= step;
+         stagesetsize -= step;
 -- 
 2.39.5
 
