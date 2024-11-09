@@ -4,38 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4793D5E364
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65397D5E362
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Nov 2024 10:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t9iWq-00073y-8j; Sat, 09 Nov 2024 05:17:16 -0500
+	id 1t9iYd-0002FM-W6; Sat, 09 Nov 2024 05:19:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iV4-0004Zq-Fb; Sat, 09 Nov 2024 05:15:28 -0500
+ id 1t9iW6-00060h-SD; Sat, 09 Nov 2024 05:16:34 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t9iV2-0007Yj-R2; Sat, 09 Nov 2024 05:15:26 -0500
+ id 1t9iW5-0007yu-AP; Sat, 09 Nov 2024 05:16:30 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9F3F1A13EF;
- Sat,  9 Nov 2024 13:13:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 88111A13FD;
+ Sat,  9 Nov 2024 13:13:50 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4B746167EDB;
- Sat,  9 Nov 2024 13:14:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 358B6167EE8;
+ Sat,  9 Nov 2024 13:14:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 11/49] tcg/ppc: Use TCG_REG_TMP2 for scratch
- tcg_out_qemu_st
-Date: Sat,  9 Nov 2024 13:14:02 +0300
-Message-Id: <20241109101443.312701-11-mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 24/49] target/i386: Use probe_access_full_mmu in
+ ptw_translate
+Date: Sat,  9 Nov 2024 13:14:15 +0300
+Message-Id: <20241109101443.312701-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241109131339@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,33 +65,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-In the fallback when STDBRX is not available, avoid clobbering
-TCG_REG_TMP1, which might be h.base, which is still in use.
-Use TCG_REG_TMP2 instead.
+The probe_access_full_mmu function was designed for this purpose,
+and does not report the memory operation event to plugins.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 01a112e2e9 ("tcg/ppc: Reorg tcg_out_tlb_read")
+Fixes: 6d03226b422 ("plugins: force slow path when plugins instrument memory ops")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-By: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 4cabcb89b101942346aebff081aa1453e958fe7f)
+Message-ID: <20241013184733.1423747-3-richard.henderson@linaro.org>
+(cherry picked from commit 115ade42d50144c15b74368d32dc734ea277d853)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-index 54816967bc..192bb2120f 100644
---- a/tcg/ppc/tcg-target.c.inc
-+++ b/tcg/ppc/tcg-target.c.inc
-@@ -2556,9 +2556,9 @@ static void tcg_out_qemu_st(TCGContext *s, TCGReg datalo, TCGReg datahi,
-         uint32_t insn = qemu_stx_opc[opc & (MO_BSWAP | MO_SIZE)];
-         if (!have_isa_2_06 && insn == STDBRX) {
-             tcg_out32(s, STWBRX | SAB(datalo, h.base, h.index));
--            tcg_out32(s, ADDI | TAI(TCG_REG_TMP1, h.index, 4));
-+            tcg_out32(s, ADDI | TAI(TCG_REG_TMP2, h.index, 4));
-             tcg_out_shri64(s, TCG_REG_R0, datalo, 32);
--            tcg_out32(s, STWBRX | SAB(TCG_REG_R0, h.base, TCG_REG_TMP1));
-+            tcg_out32(s, STWBRX | SAB(TCG_REG_R0, h.base, TCG_REG_TMP2));
-         } else {
-             tcg_out32(s, insn | SAB(datalo, h.base, h.index));
-         }
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 319b23762c..31c5032ace 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -61,12 +61,11 @@ typedef struct PTETranslate {
+ 
+ static bool ptw_translate(PTETranslate *inout, hwaddr addr, uint64_t ra)
+ {
+-    CPUTLBEntryFull *full;
+     int flags;
+ 
+     inout->gaddr = addr;
+-    flags = probe_access_full(inout->env, addr, 0, MMU_DATA_STORE,
+-                              inout->ptw_idx, true, &inout->haddr, &full, ra);
++    flags = probe_access_full_mmu(inout->env, addr, 0, MMU_DATA_STORE,
++                                  inout->ptw_idx, &inout->haddr, NULL);
+ 
+     if (unlikely(flags & TLB_INVALID_MASK)) {
+         TranslateFault *err = inout->err;
+@@ -439,9 +438,8 @@ do_check_protect_pse36:
+         CPUTLBEntryFull *full;
+         int flags, nested_page_size;
+ 
+-        flags = probe_access_full(env, paddr, 0, access_type,
+-                                  MMU_NESTED_IDX, true,
+-                                  &pte_trans.haddr, &full, 0);
++        flags = probe_access_full_mmu(env, paddr, 0, access_type,
++                                      MMU_NESTED_IDX, &pte_trans.haddr, &full);
+         if (unlikely(flags & TLB_INVALID_MASK)) {
+             *err = (TranslateFault){
+                 .error_code = env->error_code,
 -- 
 2.39.5
 
