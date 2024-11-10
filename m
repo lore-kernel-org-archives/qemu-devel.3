@@ -4,79 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE158D12D59
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Nov 2024 22:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F67D12D5A
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Nov 2024 22:46:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAGHR-0003ZG-EB; Sun, 10 Nov 2024 17:19:37 -0500
+	id 1tAGg5-00017v-JN; Sun, 10 Nov 2024 17:45:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tAGHM-0003Yn-83
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 17:19:32 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tAGg3-000178-JT
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 17:45:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tAGHK-0008KD-Iv
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 17:19:32 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1731277155; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=TGxhiiCIkm4Jcqhb0giZbFaXkSonn1NL0agxWcVIh1GEMeUM7ZFrOrnVRT0aid+5a/uZI1DpMWzFZmCRTWVqTYOJbmdhZm4Unby+ONnVlyRYv1BtXi3yn4/BdJo3Y3MugHmahPee91AIO6m4ic1MyL/y/WhomzpID1+ykIXERIg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1731277155;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=YX8Cx3IAbZCZCZ5QLBTfQHwoqaPoB7M3PM5VoA7yqzk=; 
- b=H6SFmNtVOCIOYpKGAIomxsKc+HGiTy7KI9yW7ltUBL3iRVnpU7CU7PcSLVNRWklu3S9zJxydk3iqhS6KfHwbDU7K1J3pHmhzKg65YiIENQKlEtq6tLqeXaO9yzCZ/cfTZp3YtoTzZWYtTrVfrmvrx1LJHNja5K2zptimT+Qy8qY=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1731277155; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=YX8Cx3IAbZCZCZ5QLBTfQHwoqaPoB7M3PM5VoA7yqzk=;
- b=Ws41nWqqGtXscdLwWMRlTdMCG654hirslMtCz15q/yOscQua6rj7XVnqklIgjuiD
- 7iLfXBI5DIgFt8H5ZZYtP6G5flc81QvwYAvoaZdIsmwmWR2ZkWs//AVSkQwmyAuYVi3
- Itk3/tFt9vfqjcgyxsrkFC6ZPTFjTzHJg4X5e5ug=
-Received: by mx.zohomail.com with SMTPS id 1731277153390643.3435933019216;
- Sun, 10 Nov 2024 14:19:13 -0800 (PST)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v4 1/5] ui/sdl2: Restore original context after new context
- creation
-Date: Mon, 11 Nov 2024 01:18:33 +0300
-Message-ID: <20241110221838.2241356-2-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241110221838.2241356-1-dmitry.osipenko@collabora.com>
-References: <20241110221838.2241356-1-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tAGg0-0002bQ-2s
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 17:45:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731278696;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xIjvb1evZiGJoTh1zaLzDup+TXMcL/omBN1Rd5jN08E=;
+ b=Nzr1Aw3aK4zZT7klWD+/sFrednu8kwoxhr9Ww4nzyYsnB4J3wkG6uwWzrcCwCVO734nSLC
+ bY+RrAr5RfpbR/hTV/7xiQEggIfdyZEJb11rDij4di3GJ4vEOVUEYlysk7qWPpU35re/MJ
+ xjpzcR689CtRSxHl1CnVbpU20E1JAdU=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-581-wucWo9M4NFW3VbkIMp1z8g-1; Sun, 10 Nov 2024 17:44:55 -0500
+X-MC-Unique: wucWo9M4NFW3VbkIMp1z8g-1
+X-Mimecast-MFC-AGG-ID: wucWo9M4NFW3VbkIMp1z8g
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a99f43c4c7bso265573266b.0
+ for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 14:44:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731278694; x=1731883494;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xIjvb1evZiGJoTh1zaLzDup+TXMcL/omBN1Rd5jN08E=;
+ b=RB4kwAw5G+xHRjz6+Tzt0hpWiz6Ab5GvW0brWRg6pEJqRcKC5ZU9gTowRKnR1Inetx
+ n5QD3uvTpM5ekh62ObBYzwg3+6ZzHuaiaGv9i6L3Q64eb3qfMVDzype+yXoQoYEgEfxb
+ oiEg+h+sCN2UiXg2UPbXByf+/GyJVeUzREbw+hOJXdbOaVgqDJY40RanY0MTJE7dkSi5
+ 9347RO7XuJ7sbPQy3gCNha5KAlnMvpMDZ3fpSHWSPSQFWE0Bv/ElaKwqYvlaq3iM1RZ2
+ w2YenaMN3CLjb2O+N4fKkIC0bmtdObofDLe9eDkEbBFIcfXO2Es6b9wAEoOxypDWdnxM
+ HNwA==
+X-Gm-Message-State: AOJu0YxUtIIbjhEY7p47igsx6kOd74hKUdeLPGE1fO3rzo1gkJ/BEvXl
+ TcWHo7IEyMk2YA0+6D+Wc1pwyPK+qvcHd6UeDP6oSFwDQngUwIIjFF3TYoOW0AbBYU8coN+SkXb
+ U6dbMbHzM9MRvKn6YQQzU8h0z4j0FD/PFyyEUttEUAYgJmKvLmupc
+X-Received: by 2002:a17:907:97d4:b0:a99:fd32:11dc with SMTP id
+ a640c23a62f3a-a9eeff0de9dmr1049030666b.24.1731278694065; 
+ Sun, 10 Nov 2024 14:44:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH2DhxUUJnfOo/zgfK7eTpIEaMADDho+FsMOmDO2c6R9qB6MrOGZmsWHBNYAciDzyaFVw36ew==
+X-Received: by 2002:a17:907:97d4:b0:a99:fd32:11dc with SMTP id
+ a640c23a62f3a-a9eeff0de9dmr1049029266b.24.1731278693692; 
+ Sun, 10 Nov 2024 14:44:53 -0800 (PST)
+Received: from redhat.com ([2a02:14f:175:c88a:62ba:ea40:f034:5ee6])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9ee0deebabsm516710466b.153.2024.11.10.14.44.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 10 Nov 2024 14:44:52 -0800 (PST)
+Date: Sun, 10 Nov 2024 17:44:48 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: slp@redhat.com
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH] hw/i386/elfboot: allocate "header" in heap
+Message-ID: <20241110174359-mutt-send-email-mst@kernel.org>
+References: <20241108230314.1980-1-slp@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241108230314.1980-1-slp@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.118,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.743,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,35 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SDL API changes GL context to a newly created GL context, which differs
-from other GL providers that don't switch context. Change SDL backend to
-restore the original GL context. This allows Qemu's virtio-gpu to support
-new virglrenderer async-fencing feature for Virgl contexts, otherwise
-virglrenderer's vrend creates a fence-sync context on the Qemu's
-main-loop thread that erroneously stays in-use by the main-loop after
-creation, not allowing vrend's fence-sync thread switch to this new
-context that belongs to it.
+On Sat, Nov 09, 2024 at 12:03:14AM +0100, slp@redhat.com wrote:
+> From: Sergio Lopez <slp@redhat.com>
+> 
+> In x86_load_linux(), we were using a stack-allocated array as data for
+> fw_cfg_add_bytes(). Since the latter just takes a reference to the
+> pointer instead of copying the data, it can happen that the contents
+> have been overridden by the time the guest attempts to access them.
+> 
+> Instead of using the stack-allocated array, allocate some memory from
+> the heap, copy the contents of the array, and use it for fw_cfg.
+> 
+> Signed-off-by: Sergio Lopez <slp@redhat.com>
 
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
----
- ui/sdl2-gl.c | 3 +++
- 1 file changed, 3 insertions(+)
+Wow. How did this ever work?
 
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index e01d9ab0c7bf..b1fe96d6af22 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -168,6 +168,9 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
-                             SDL_GL_CONTEXT_PROFILE_ES);
-         ctx = SDL_GL_CreateContext(scon->real_window);
-     }
-+
-+    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
-+
-     return (QEMUGLContext)ctx;
- }
- 
--- 
-2.47.0
+
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+
+Paolo, you queueing this?
+
+> ---
+>  hw/i386/x86-common.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index bc360a9ea4..d51ebad4d6 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -697,9 +697,12 @@ void x86_load_linux(X86MachineState *x86ms,
+>                  strlen(kernel_cmdline) + 1);
+>              fw_cfg_add_string(fw_cfg, FW_CFG_CMDLINE_DATA, kernel_cmdline);
+>  
+> +            setup = g_malloc(sizeof(header));
+> +            memcpy(setup, header, sizeof(header));
+> +
+>              fw_cfg_add_i32(fw_cfg, FW_CFG_SETUP_SIZE, sizeof(header));
+>              fw_cfg_add_bytes(fw_cfg, FW_CFG_SETUP_DATA,
+> -                             header, sizeof(header));
+> +                             setup, sizeof(header));
+>  
+>              /* load initrd */
+>              if (initrd_filename) {
+> -- 
+> 2.45.2
 
 
