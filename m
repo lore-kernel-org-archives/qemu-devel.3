@@ -4,76 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2183BD5E38D
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Nov 2024 14:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313A7D5E38D
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Nov 2024 14:04:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tA8Tl-0001H0-Mq; Sun, 10 Nov 2024 08:59:49 -0500
+	id 1tA8Xg-0002h5-R9; Sun, 10 Nov 2024 09:03:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tA8Tj-0001FT-Vu
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 08:59:48 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tA8Xf-0002gZ-Cz
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 09:03:51 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tA8Ti-0000qW-5p
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 08:59:47 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43163667f0eso31341275e9.0
- for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 05:59:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tA8Xd-0001Fm-TQ
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 09:03:51 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-20caccadbeeso39846215ad.2
+ for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 06:03:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731247184; x=1731851984; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1731247428; x=1731852228; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SBGdfqtnrHgLYzhkKDBqT3rjfZkSqsl63eHNj3sgu28=;
- b=bv0jkI0xYR1mX6YccGndeUCrNyF2Ip+DzI6IZbMIlyVqthJgAr+vl96fc+gAx0bFQM
- jLVnYjdWc4ZN65vxFs+STueW05MgBWmdFrTuo5JLi4J48Ss9lDNXemhs8UKZQDmUftLm
- fi3SqBp4jBHpmpR5Trg5MZ95vX4yFZySYaFMD3OGipxYXodoz+aBrFrcDwyxQ3F2OWQf
- QB4uMXWQOolhCwEnn8E75/YH3ftu6epp2upEoHOwzrFjfLR0nT++CdfIeianTa5gIZ4d
- 4heCOk9UEWiRCQdNLWUdemJ02qsUk1AMlrsOD26uRgICfcQ4WdbQpF7xxGsbxVFO/arF
- eydA==
+ bh=7t8XK0j/sjGRGokMZU8V5Gp0m13efuWjV/DsVFeZVmQ=;
+ b=TEy7S6OTscW3v2fQ0bA12BMOn7y7Vt+QKppF2jv8djrs0Y3FoyTy/GsLPOdVondCsd
+ hw7rmBLg4NJ5NCQAr7Owru247RLuNh9GQ9dZMWyHTYJXwJrwFrn8WOz+uimnQGeuHzEo
+ VOroAcCPp1SttADlwf6glupH2iDoe3dpUlhc+nD347710aj1qtw8PPZe26D2RO5Z+HRw
+ NEZ0BR+QnATBmcOGBpyIefvv5nqF1Y3diQqsXGTJVuXOJTMvuxmdBktemhnxGTk6k1/a
+ 6QMBWkooC6b4Gmznf/+wM9hEzUq4MdCHQayva8L7a+/rtpjCtAvp7/djZHro1ywxD0IS
+ voCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731247184; x=1731851984;
+ d=1e100.net; s=20230601; t=1731247428; x=1731852228;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SBGdfqtnrHgLYzhkKDBqT3rjfZkSqsl63eHNj3sgu28=;
- b=aAtxQlVN1eG+yCGj7G/mcqJWLArLE6jzeWbHOuL9qQGikGCgbL1rhdSahtni3cALQx
- 1Ir5MFiRuemi5W0p1Y1HN4xPuVK4kYGTYJCtA3AEgDIFd6suNsv0zHlDevodZxoxLmBv
- LLwLPdgshi5tkxRiCM6zazqnxfF2pRfrS0ikXKOsmNH3Q0CrRkhRKB8ZH4nXECXR/eI6
- BVNUqHO5wcl9JxrH/gKVKOGIg9vTu1rvHbdf+dwBLu5/amFxjDEgsbMXR826hBYhbTti
- Hw8W9emKMsAlGTiXtVcCvDupbQ7V0i5G8mXTCXb02thgCO3SAE3RmYNsIS3W7fe8Eyjq
- E6zg==
+ bh=7t8XK0j/sjGRGokMZU8V5Gp0m13efuWjV/DsVFeZVmQ=;
+ b=d0mM3DKBoOTp+YF1ac55LnmmRUmTZVakqlNc4AkF1hp6RyRif6/KhCvky8WanA513N
+ cimuv+jKMvzMo7JvviGEh5uDHG9BpSi8TN0+J27qMKejcXuJEcJhs4jgV1cav9EEum1u
+ rzYyAvK/sXYtCmwItIwP5MMDk90I4DuMgqt3wGaWi1EAsodPaF1SkZpEGUCXiVzlvPoU
+ Lzz7tz5oYUk760UyBIVvezpVjQAYRgj6tCl5j2xuoH42sMxiRdhERcEHtJ77wIfa9K2Y
+ /uRi8nX+6m8GR5inFPTA8bDqe7ms93GPXsL7yIqSONxIRGKi903W6Stp6bPXcjmadcU/
+ hxxA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV1HtS00dv95FFclZlS0lZGB0MMwuxo6uFSkrdQGslQjnfmOVaVJnP2JWh00oxCWpn2IR9m7G9vxd7H@nongnu.org
-X-Gm-Message-State: AOJu0Yw8vjigb2IXMkjI1Y5qM9HbbQ3UvC1AdPzQV3HnMq2LK4pthQKB
- Bba6FSRGbaKtOBfoVcOfUiHjPFVBkuD58p0hqjq91v8cKz+mYVL6OALPmQSQEpY=
-X-Google-Smtp-Source: AGHT+IEWTmVMbxzBnQnsPT1q2+ZcNupA05Gq5meX0dzmzj/Y+LrFKTJnOjIYcPGQ/2mk3JtUFLVMCg==
-X-Received: by 2002:a05:600c:4508:b0:431:50cb:2398 with SMTP id
- 5b1f17b1804b1-432b74fecacmr75924135e9.2.1731247184488; 
- Sun, 10 Nov 2024 05:59:44 -0800 (PST)
-Received: from [192.168.69.126] (cnf78-h01-176-184-27-70.dsl.sta.abo.bbox.fr.
- [176.184.27.70]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed9f8dfbsm10591953f8f.73.2024.11.10.05.59.43
+ AJvYcCUTfIDO6wmoQIF/S1p6z1L6ftYfJMm0PSuRKVvgQ/A02SwfMelQRlSePQ80FeTc0DOnZvHUC6HpCsoj@nongnu.org
+X-Gm-Message-State: AOJu0Yz1+MvGt3JCNxbC1MVLCMHKvI04Zt4+dNeQSBs83qNwfOiD1bYN
+ brFDJIM2yUk2eC4XS/fBuQoI/nexKXZYCtPzHNs1qI+uYxyBOpT/5BDVYV1aCW8=
+X-Google-Smtp-Source: AGHT+IGUrrce6zXrxEKQB4uK+oZyuNFFV3aq8ZMfLLsotNTatrflyx43dRq5VKRvjAhEBAxKH5TL6w==
+X-Received: by 2002:a17:902:cec7:b0:20b:b7b2:b6c5 with SMTP id
+ d9443c01a7336-211835cd1a9mr119107755ad.54.1731247428436; 
+ Sun, 10 Nov 2024 06:03:48 -0800 (PST)
+Received: from [192.168.68.110] ([189.79.22.174])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7f41f5e1576sm6763474a12.40.2024.11.10.06.03.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 10 Nov 2024 05:59:43 -0800 (PST)
-Message-ID: <aa360d5f-b4f2-4a61-a5b8-decc87a97a7b@linaro.org>
-Date: Sun, 10 Nov 2024 14:59:42 +0100
+ Sun, 10 Nov 2024 06:03:48 -0800 (PST)
+Message-ID: <8c38c37f-2c86-498c-96fb-1999f546a497@ventanamicro.com>
+Date: Sun, 10 Nov 2024 11:03:43 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: CC rust/ patches to qemu-rust list
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20241109-update-maintainers-file-rust-v1-1-f4daba6f782f@linaro.org>
+Subject: Re: [CAUTION - External Sender] Re: [PATCH] target/riscv: Add
+ Tenstorrent Ascalon CPU
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anton Blanchard <antonb@tenstorrent.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20241108230709.1466634-1-antonb@tenstorrent.com>
+ <4e7a4a10-bea3-4f43-b091-6a30c400b8bd@linaro.org>
+ <CAN7m+mCqXz1YaBZpA-TFWz_TX0HiRorzXbaadn+L3fnigWBR1g@mail.gmail.com>
+ <1dc240cd-c35e-46da-959d-cf93783ee87e@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241109-update-maintainers-file-rust-v1-1-f4daba6f782f@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <1dc240cd-c35e-46da-959d-cf93783ee87e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,61 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/11/24 19:29, Manos Pitsidianakis wrote:
-> As of CAFEAcA-ZQuyGTtG-vhRTEwpz0L4cpimNxkKix45Yw6gVHXozRQ@mail.gmail.com
-
-"As of [*] ..." but I'm not sure about the usefulness of "like
-qemu-block, qemu-arm, qemu-ppc etc but", maybe scratch it?
 
 
-> we have a new topical mailing list like qemu-block, qemu-arm, qemu-ppc
-> etc but for Rust related patches. Add a new MAINTAINERS entry to touch
-> all files under rust/ subdirectory and additionally add it to previous
-> rust related entries.
+On 11/10/24 10:54 AM, Philippe Mathieu-Daudé wrote:
+> On 9/11/24 22:46, Anton Blanchard wrote:
+>> Hi Philippe,
+>>
+>> On Sun, Nov 10, 2024 at 5:21 AM Philippe Mathieu-Daudé
+>> <philmd@linaro.org> wrote:
+>>> Generally speaking (I'm not objecting to this patch as is), for
+>>> DEFINE_VENDOR_CPU() it would be nice to have reference to some
+>>> documentation -- at least to review whether the cpu features
+>>> announced make sense or not --.
+>>>
+>>> For this particular IP I'm not finding anything on the company
+>>> website...:
+>>> https://docs.tenstorrent.com/search.html?q=Ascalon
+>>
+>> This has some more details, including a 1 page PDF. Should I add the URL to
+>> the commit message?
+>>
+>> https://tenstorrent.com/ip/tt-ascalon
 > 
-> See also:
-> https://lore.kernel.org/qemu-devel/CAFEAcA-ZQuyGTtG-vhRTEwpz0L4cpimNxkKix45Yw6gVHXozRQ@mail.gmail.com/
+> This seems a sales presentation, not very useful technically, so better
+> no IMHO.
 
-[*] 
-https://lore.kernel.org/qemu-devel/CAFEAcA-ZQuyGTtG-vhRTEwpz0L4cpimNxkKix45Yw6gVHXozRQ@mail.gmail.com/
 
-> 
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->   MAINTAINERS | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 095420f8b0..373176e445 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3338,6 +3338,10 @@ F: rust/qemu-api
->   F: rust/qemu-api-macros
->   F: rust/rustfmt.toml
->   
-> +Rust-related patches CC here
-> +L: qemu-rust@nongnu.org
-> +F: rust/
-> +
->   SLIRP
->   M: Samuel Thibault <samuel.thibault@ens-lyon.org>
->   S: Maintained
-> @@ -4241,6 +4245,7 @@ F: docs/devel/docs.rst
->   
->   Rust build system integration
->   M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> +L: qemu-rust@nongnu.org
->   S: Maintained
->   F: scripts/rust/
->   F: rust/.gitignore
-> 
-> ---
-> base-commit: 134b443512825bed401b6e141447b8cdc22d2efe
-> change-id: 20241109-update-maintainers-file-rust-5cbd97b7b11a
-> 
-> --
-> γαῖα πυρί μιχθήτω
-> 
-> 
+The link has a 'Download One-Pager' button where you can download a PDF.
 
+The PDF is a bit more technical and it mentions that the CPU is RVA23 compliant,
+which give us an idea of the extensions that the CPU provides. I think this is
+enough.
+
+Alistair, what do you think?
+
+
+Daniel
 
