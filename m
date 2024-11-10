@@ -4,92 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313A7D5E38D
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Nov 2024 14:04:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1655FD6409B
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Nov 2024 14:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tA8Xg-0002h5-R9; Sun, 10 Nov 2024 09:03:52 -0500
+	id 1tA8eZ-00044h-74; Sun, 10 Nov 2024 09:10:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tA8Xf-0002gZ-Cz
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 09:03:51 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tA8Xd-0001Fm-TQ
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 09:03:51 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-20caccadbeeso39846215ad.2
- for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 06:03:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1731247428; x=1731852228; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7t8XK0j/sjGRGokMZU8V5Gp0m13efuWjV/DsVFeZVmQ=;
- b=TEy7S6OTscW3v2fQ0bA12BMOn7y7Vt+QKppF2jv8djrs0Y3FoyTy/GsLPOdVondCsd
- hw7rmBLg4NJ5NCQAr7Owru247RLuNh9GQ9dZMWyHTYJXwJrwFrn8WOz+uimnQGeuHzEo
- VOroAcCPp1SttADlwf6glupH2iDoe3dpUlhc+nD347710aj1qtw8PPZe26D2RO5Z+HRw
- NEZ0BR+QnATBmcOGBpyIefvv5nqF1Y3diQqsXGTJVuXOJTMvuxmdBktemhnxGTk6k1/a
- 6QMBWkooC6b4Gmznf/+wM9hEzUq4MdCHQayva8L7a+/rtpjCtAvp7/djZHro1ywxD0IS
- voCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731247428; x=1731852228;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7t8XK0j/sjGRGokMZU8V5Gp0m13efuWjV/DsVFeZVmQ=;
- b=d0mM3DKBoOTp+YF1ac55LnmmRUmTZVakqlNc4AkF1hp6RyRif6/KhCvky8WanA513N
- cimuv+jKMvzMo7JvviGEh5uDHG9BpSi8TN0+J27qMKejcXuJEcJhs4jgV1cav9EEum1u
- rzYyAvK/sXYtCmwItIwP5MMDk90I4DuMgqt3wGaWi1EAsodPaF1SkZpEGUCXiVzlvPoU
- Lzz7tz5oYUk760UyBIVvezpVjQAYRgj6tCl5j2xuoH42sMxiRdhERcEHtJ77wIfa9K2Y
- /uRi8nX+6m8GR5inFPTA8bDqe7ms93GPXsL7yIqSONxIRGKi903W6Stp6bPXcjmadcU/
- hxxA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUTfIDO6wmoQIF/S1p6z1L6ftYfJMm0PSuRKVvgQ/A02SwfMelQRlSePQ80FeTc0DOnZvHUC6HpCsoj@nongnu.org
-X-Gm-Message-State: AOJu0Yz1+MvGt3JCNxbC1MVLCMHKvI04Zt4+dNeQSBs83qNwfOiD1bYN
- brFDJIM2yUk2eC4XS/fBuQoI/nexKXZYCtPzHNs1qI+uYxyBOpT/5BDVYV1aCW8=
-X-Google-Smtp-Source: AGHT+IGUrrce6zXrxEKQB4uK+oZyuNFFV3aq8ZMfLLsotNTatrflyx43dRq5VKRvjAhEBAxKH5TL6w==
-X-Received: by 2002:a17:902:cec7:b0:20b:b7b2:b6c5 with SMTP id
- d9443c01a7336-211835cd1a9mr119107755ad.54.1731247428436; 
- Sun, 10 Nov 2024 06:03:48 -0800 (PST)
-Received: from [192.168.68.110] ([189.79.22.174])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7f41f5e1576sm6763474a12.40.2024.11.10.06.03.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 10 Nov 2024 06:03:48 -0800 (PST)
-Message-ID: <8c38c37f-2c86-498c-96fb-1999f546a497@ventanamicro.com>
-Date: Sun, 10 Nov 2024 11:03:43 -0300
+ (Exim 4.90_1) (envelope-from <j.neuschaefer@gmx.net>)
+ id 1tA8eW-00044W-VS
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 09:10:57 -0500
+Received: from mout.gmx.net ([212.227.17.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <j.neuschaefer@gmx.net>)
+ id 1tA8eV-0002Hy-BA
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 09:10:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
+ s=s31663417; t=1731247851; x=1731852651; i=j.neuschaefer@gmx.net;
+ bh=3HZ8tIoD2v6/CwNMCE0bOIZhoFfD4wTlSJqw6RyLhh4=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+ MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:
+ cc:content-transfer-encoding:content-type:date:from:message-id:
+ mime-version:reply-to:subject:to;
+ b=oMTq2KacR0T+r68fXo1aVovihfWtRsQBDHzJJJ6GIaR+qB7ToqUuGTuw/elMyNdI
+ EFVQnbU26YwX6xKON6/IiZlp+72C27XsTbyEpPLx0qMFRKq63u8hp32oizipkfluI
+ lRzcEEeez51nYZoqZMa8ia6J1EzPuJcWdEc47LN6MdkXLILWFzNKnm94AEo95wavK
+ GZYKTXTlSA9Z+mzc+kmYM+GjMbkNQRSE5+pT35dmtQUtilLb0y6Ct6QecVYEnV1Yx
+ YofHEGeSLiUzRPm7oqtm37hS7wz03AqPvTvV2PuMbDEDLbvbKqFJVVHx76q5LKzEt
+ PVlpd0vibfXsA/diGQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from probook ([89.1.58.244]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MVvPJ-1tKLMs3iBZ-00Tniy; Sun, 10
+ Nov 2024 15:10:51 +0100
+Date: Sun, 10 Nov 2024 15:10:49 +0100
+From: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ All patches CC here <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] linux-user/strace: show TID instead of PID
+Message-ID: <ZzC-6Yg6XwUoWHbS@probook>
+References: <20241024-strace-v1-1-56c4161431cd@gmx.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [CAUTION - External Sender] Re: [PATCH] target/riscv: Add
- Tenstorrent Ascalon CPU
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Blanchard <antonb@tenstorrent.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20241108230709.1466634-1-antonb@tenstorrent.com>
- <4e7a4a10-bea3-4f43-b091-6a30c400b8bd@linaro.org>
- <CAN7m+mCqXz1YaBZpA-TFWz_TX0HiRorzXbaadn+L3fnigWBR1g@mail.gmail.com>
- <1dc240cd-c35e-46da-959d-cf93783ee87e@linaro.org>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <1dc240cd-c35e-46da-959d-cf93783ee87e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20241024-strace-v1-1-56c4161431cd@gmx.net>
+X-Provags-ID: V03:K1:FUI2R5OzNdhz41n+v9oqWKfEpmmaml9B6dSun40kMzfDXRoq/kR
+ 45fOmQ46aubkNY+TjsSM6q673snfqESgpEQLHq7rjQvmfuF5UoP4hA/3bisdob/DVsBcVaD
+ ZV19od7bCyGFpk2X0bVCQoGc/z+DnEbCIYGhj9dQSfL+7gXylkPpXgHjidVVBQraqqonZEw
+ SkmRBl4LIAHXhPbaCA0Hg==
+UI-OutboundReport: notjunk:1;M01:P0:aw0YIyBvumA=;NqyYpooOg4iJpMOjIe2dNFC0Rrn
+ sdLLimJCKLPBdITVwPBAtxTHtuOgLH2jBf8lcqMs3ILEFIQnqkId24lKeO9g148pw5ZYI9raR
+ GwAI68CM797TAScjGK1Rto7FL+h9loK37nx+CvoIkE9OYs/+CggX/fSOtC+FQNRm5EW7eGvYT
+ SKmnwqEQp7/mPhW6A8hnDXas1ta3Z297BWHYsPgFPAHbWxKJwVgEPE3nHp1ueJak5nfey9zls
+ CHLltKHG1jNDxNEIp5qCbiaieTmjnLdV53+MtaDTUDmxZ/rbibJnyGUsP9uSC4vqsbhEX55jX
+ 33us9On9S3R/q+IAznGIBc0qXbE4qlC+DTivl3XTrN2uF+y4o7Z5jxJnXekCKG1vDAX6xKXUK
+ 5tQluu5RVYKKnHzd2FLYy3yNoMGh308NRjX4Es/rokTUDwtUrFo6B/JRZ2LAsAviwuJt8H7o8
+ GZXwjgr2H6JvEdYR768muqZanu+3ItrvL/Q6BOAuK+g3Oe0SAk8IRpUp+m05n70mwvuhtrn2f
+ ssRg0ppK7etOoiURmUjP+/G5ZBfGlkuCIj3w+FCkaUwOxsY4Bzcx0hA2VvYONwi/qj5bWnN1D
+ bPpnp9u7jIQ3cUoOQ84qO4UQ9Op1ARGrrpWuef+2ui3Mh3SFdicwr0qwOmt896BReq20fNhXi
+ M//K18IFIfdzpejy+nvbifRoEzGATOdT1VvyYIxuUCcAjFvwcqxoD2EpAlqCd4VnLa8LrcJLV
+ p80FqDaJjqMGs2i9NV1FhejEXvqU1lGps7xw/wRKIggPqvd7WyXifFY7IVwOzSN7P3F4QGUKv
+ 4qnTsxlaQetWgcA9kHq2ukrSAliOMCUctay7nQedFRLUJsnxVOWHii5ABpVAdnezCA0ta3sCV
+ IqwNZASByQvNADariLbRolK+xydcYH7yxbt6y4hoZL5Q/yhJ5CNqGQfitam6Ww6Muy9QYuRUP
+ Y8oWKQ==
+Received-SPF: pass client-ip=212.227.17.21; envelope-from=j.neuschaefer@gmx.net;
+ helo=mout.gmx.net
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,40 +94,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Oct 24, 2024 at 01:47:31AM +0200, J. Neusch=C3=A4fer wrote:
+> This aligns with strace, and is very useful when tracing multi-threaded
+> programs. The result is the same in single-threaded programs.
+>
+> gettid() requires the _GNU_SOURCE feature test macro, so it might be
+> unavailable in rare cases. I don't expect it to be a problem though,
+> because it's implemented by both glibc and musl.
+>
+> Signed-off-by: J. Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> ---
 
+Ping!  Any opinions on this patch?
 
-On 11/10/24 10:54 AM, Philippe Mathieu-Daudé wrote:
-> On 9/11/24 22:46, Anton Blanchard wrote:
->> Hi Philippe,
->>
->> On Sun, Nov 10, 2024 at 5:21 AM Philippe Mathieu-Daudé
->> <philmd@linaro.org> wrote:
->>> Generally speaking (I'm not objecting to this patch as is), for
->>> DEFINE_VENDOR_CPU() it would be nice to have reference to some
->>> documentation -- at least to review whether the cpu features
->>> announced make sense or not --.
->>>
->>> For this particular IP I'm not finding anything on the company
->>> website...:
->>> https://docs.tenstorrent.com/search.html?q=Ascalon
->>
->> This has some more details, including a 1 page PDF. Should I add the URL to
->> the commit message?
->>
->> https://tenstorrent.com/ip/tt-ascalon
-> 
-> This seems a sales presentation, not very useful technically, so better
-> no IMHO.
+Best regards,
+J. Neusch=C3=A4fer
 
-
-The link has a 'Download One-Pager' button where you can download a PDF.
-
-The PDF is a bit more technical and it mentions that the CPU is RVA23 compliant,
-which give us an idea of the extensions that the CPU provides. I think this is
-enough.
-
-Alistair, what do you think?
-
-
-Daniel
+>  linux-user/strace.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/linux-user/strace.c b/linux-user/strace.c
+> index c3eb3a2706a93fdcaf693b3413b13921a3c97e8e..93e8c73de8a4a307e6e0df55=
+55bee4c769e41e64 100644
+> --- a/linux-user/strace.c
+> +++ b/linux-user/strace.c
+> @@ -4337,7 +4337,7 @@ print_syscall(CPUArchState *cpu_env, int num,
+>      if (!f) {
+>          return;
+>      }
+> -    fprintf(f, "%d ", getpid());
+> +    fprintf(f, "%d ", gettid());
+>
+>      for (i =3D 0; i < nsyscalls; i++) {
+>          if (scnames[i].nr =3D=3D num) {
+>
+> ---
+> base-commit: 6f625ce2f21d6a1243065d236298277c56f972d5
+> change-id: 20241024-strace-a52bd8e3d305
+>
+> Best regards,
+> --
+> J. Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+>
+>
 
