@@ -4,95 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D111DD5E39B
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Nov 2024 07:06:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B8BDD5E39B
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Nov 2024 07:09:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tA21a-00055h-0f; Sun, 10 Nov 2024 02:06:18 -0500
+	id 1tA23u-00064D-UB; Sun, 10 Nov 2024 02:08:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tA21K-0004z3-KJ
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 02:06:04 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tA23p-00063D-2R
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 02:08:37 -0500
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tA21E-0005Qv-CK
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 02:06:02 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-720cb6ac25aso3215432b3a.3
- for <qemu-devel@nongnu.org>; Sat, 09 Nov 2024 23:05:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tA23g-0005sQ-NH
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 02:08:32 -0500
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-84fd01c9defso1448669241.0
+ for <qemu-devel@nongnu.org>; Sat, 09 Nov 2024 23:08:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1731222354; x=1731827154;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1731222507; x=1731827307;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=i+lbT9vbfmPSqA2GL3p3QlIpVFNuXYrQRrJm/GthEXo=;
- b=q9bXiAGhRtJ+2kP9h5782Jv839EOU3CdssFCYxJWTWgMOvMnzJ04s8DulCPWpy2WCe
- mB42oq4rZWbruK3ZW54oKl3Y4eb2olJWMXrENdcWBuO3O/ts2GtdYaeaiAdxPQ0cGWRc
- 6HIB/9IYVT5nWvYlllC+pjBlmFa70JR/jJiZiN5tmVO0rcxwObhN1RwKvMx+Gwecm2pJ
- gay8yBj8Y/bqOBcI3DTsS6+LWqXghFUX0wbxJeiKxu/CA3jwRlRolpqA9ZzsZA1NMOhX
- lrc85n2jGYx//mcJUZPO0aRcD0Gq2EG5z7Kzs51cKtjdGIcjUYsCZRwaaLnTot29uJaO
- IThA==
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nYGULGlBeYzM47BQXKvLIkfDz+kE3q2q+ggr4QlGcEg=;
+ b=1nivpqGa+WF60Qi472no6nCvXWlxl8U82IzT/Ki2icT2Cqy1DR1OwtE/lHkM871k0S
+ +a3NpGGw9p5iOnRG7F6FLXJyz8jChGnoJ3zoBa9BMA/bARAVrVsCCfNtrKszeiopZtwE
+ +5H6G2vQpIEcljFKNHVvuFI3CaU5oE1NrG7jj/WquPffAJNunzlgPBaKKcq0wwDqHfvc
+ NaKdtAN60pjEaWv8y/Zt/rka6IbhIUX75b+UPC6CZHusYaHsTmwOQSSlVEKXE95nV/Yi
+ 86K1CLrKJU6M58sXLnHidu7LY38yVhq4aywB+nFhQOoCH927F1wHXQQzgY8eOY/r0W6U
+ Vrrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731222354; x=1731827154;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=i+lbT9vbfmPSqA2GL3p3QlIpVFNuXYrQRrJm/GthEXo=;
- b=kfElmZCQ96XB9bXK6Or2TfYJlDLoyQ33axPywbHJR/wpcJV3bSWy2kPxfwnEd9qK1S
- nyfQBLpsJv6im8ENE6rRNUVLmhiZ1Gqdhn84k+ghcoaMkJitL4+QMati1iKuryvA7vXX
- KcOJqrt0KcbhTBhANw8K7nJwrXf9jLbYogUTxPpct/kcnaxVdfZYJPZhzwP5oRSjfWZH
- f/UwiFM3fWZgTZij/ctYLX6rTheQZaw5sdCOiW749N8cHxU/qWMWNi+s1RNhzrBDawml
- 4ElA+KIwbLVJWG6QxqNH/0vSUvhoToPm2RBRVKECxSGV7yT1+cus5SUQUDITrFimurf9
- U22Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1c3oinwmEYyCMhX/8HwAlUJ6500A2YkgxLDPcef8q1docHINddRMOkCWgsXfXvAiumIp45gF4Mtuy@nongnu.org
-X-Gm-Message-State: AOJu0YwIr8LiHuoFG0gxWDBi9ffI/L4fy+oe3icLAwxxywR/x9ZRZEDJ
- OLsr1o3nVdHoSjMxlDa+/CT0rppM8OPbOILZAov/aJcPKxUvzrD0Xkgsulosk1I=
-X-Google-Smtp-Source: AGHT+IHLo5f51OngiBbdvAAikuiTEZdpVlTYa+5rdfi/+VLVz9TgQDWaD8VF5jZ5F0MShkxUxMNm0A==
-X-Received: by 2002:a05:6a00:a95:b0:71e:b4ee:960d with SMTP id
- d2e1a72fcca58-72413290c8dmr14223970b3a.10.1731222354383; 
- Sat, 09 Nov 2024 23:05:54 -0800 (PST)
-Received: from [157.82.207.107] ([157.82.207.107])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72407a50512sm6649581b3a.173.2024.11.09.23.05.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Nov 2024 23:05:53 -0800 (PST)
-Message-ID: <66e86c17-9829-446c-b1a8-48be543c9ca5@daynix.com>
-Date: Sun, 10 Nov 2024 16:05:47 +0900
+ d=1e100.net; s=20230601; t=1731222507; x=1731827307;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nYGULGlBeYzM47BQXKvLIkfDz+kE3q2q+ggr4QlGcEg=;
+ b=HRqyEhFaqDAYIIUQlG82CZ9jl+V9YigagBZ2TR6A49nQAlgnE4a3A9oGTXIXTyjX+T
+ fnzipYdhAI7LBEjjWQqHCLXoqgkYnAt0WMk8uEUHYPipV709TKxv94WYiffG8r71UsOI
+ f+FK65gzp9uSEx8qFZVH03HSAxWW9G4daFN1mw5ILVqagm7RZhr9LKtzId9OyI+pvd7r
+ WINmwsxXNqC5xAIPzXGAqXCGyeDVVnJMf5SRMgv64ZcHmczem4lO/PTnHl6rr9m6VxBX
+ jP9/dYGKL7r1Ftx9hEZW7d9My3ds4w+v1BzQFXpZNlowCqTiqJFxDLN7FmIEKtCIuLB5
+ j85g==
+X-Gm-Message-State: AOJu0YyWNS5bVQA/JiOt2+7YgyYZiU8m9ZnoBFLpHafQDUOpszGuqClH
+ q1odMyj1E3zYFukvJEvQEmN08uD61kSn9W+B/OJHzWO+v8xnqHRs8/v9gXsoJ2JzFLJwKfJEDj9
+ MX/fDzgE9gHYx3GkgTHwxhMYr9UQCfvCxLbku
+X-Google-Smtp-Source: AGHT+IHMTM3YXPdo94G+TA0WUq6CB7W4y9EZDywjJVy8k2cxIl3axDxoaTDwd+6Y+N4ZpxYWRYm+NtflA5TFKGctLyc=
+X-Received: by 2002:a05:6102:26c9:b0:4a3:ef1e:8530 with SMTP id
+ ada2fe7eead31-4aae1384ademr7956099137.10.1731222506924; Sat, 09 Nov 2024
+ 23:08:26 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 10/15] hw/vmapple/aes: Introduce aes engine
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
- rad@semihalf.com, quic_llindhol@quicinc.com, stefanha@redhat.com,
- mst@redhat.com, slp@redhat.com, richard.henderson@linaro.org,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, gaosong@loongson.cn,
- jiaxun.yang@flygoat.com, chenhuacai@kernel.org, kwolf@redhat.com,
- hreitz@redhat.com, philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, qemu-riscv@nongnu.org,
- Alexander Graf <graf@amazon.com>
 References: <20241108144709.95498-1-phil@philjordan.eu>
- <20241108144709.95498-11-phil@philjordan.eu>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241108144709.95498-11-phil@philjordan.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::429;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+ <20241108144709.95498-2-phil@philjordan.eu>
+ <9c2e0b96-2125-4041-9f66-116d54accb04@daynix.com>
+In-Reply-To: <9c2e0b96-2125-4041-9f66-116d54accb04@daynix.com>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+Date: Sun, 10 Nov 2024 08:08:16 +0100
+Message-ID: <CAAibmn3NbtOEwWLQFOo_UmAGTehOj+dDP04A=-JGMZVK9AYMDw@mail.gmail.com>
+Subject: Re: [PATCH v8 01/15] ui & main loop: Redesign of system-specific main
+ thread event handling
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org, 
+ pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com, 
+ stefanha@redhat.com, mst@redhat.com, slp@redhat.com, 
+ richard.henderson@linaro.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com, 
+ gaosong@loongson.cn, jiaxun.yang@flygoat.com, chenhuacai@kernel.org, 
+ kwolf@redhat.com, hreitz@redhat.com, philmd@linaro.org, shorne@gmail.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com, 
+ qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000008d88f2062689a6c5"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::935;
+ envelope-from=phil@philjordan.eu; helo=mail-ua1-x935.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,762 +99,752 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/11/08 23:47, Phil Dennis-Jordan wrote:
-> From: Alexander Graf <graf@amazon.com>
-> 
-> VMApple contains an "aes" engine device that it uses to encrypt and
-> decrypt its nvram. It has trivial hard coded keys it uses for that
-> purpose.
-> 
-> Add device emulation for this device model.
-> 
-> Signed-off-by: Alexander Graf <graf@amazon.com>
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> ---
-> 
-> v3:
-> 
->   * Rebased on latest upstream and fixed minor breakages.
->   * Replaced legacy device reset method with Resettable method
-> 
-> v4:
-> 
->   * Improved logging of unimplemented functions and guest errors.
->   * Better adherence to naming and coding conventions.
->   * Cleaner error handling and recovery, including using g_autoptr
-> 
-> v5:
-> 
->   * More logging improvements
->   * Use xxx64_overflow() functions for hexdump buffer size calculations.
-> 
-> v7:
-> 
->   * Coding style tweaks.
-> 
-> v8:
-> 
->   * Further improved logging of guest errors.
-> 
->   hw/vmapple/Kconfig           |   2 +
->   hw/vmapple/aes.c             | 579 +++++++++++++++++++++++++++++++++++
->   hw/vmapple/meson.build       |   1 +
->   hw/vmapple/trace-events      |  14 +
->   include/hw/vmapple/vmapple.h |  17 +
->   include/qemu/cutils.h        |  15 +
->   util/hexdump.c               |  18 ++
->   7 files changed, 646 insertions(+)
->   create mode 100644 hw/vmapple/aes.c
->   create mode 100644 include/hw/vmapple/vmapple.h
-> 
-> diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
-> index 8b137891791..a73504d5999 100644
-> --- a/hw/vmapple/Kconfig
-> +++ b/hw/vmapple/Kconfig
-> @@ -1 +1,3 @@
-> +config VMAPPLE_AES
-> +    bool
->   
-> diff --git a/hw/vmapple/aes.c b/hw/vmapple/aes.c
-> new file mode 100644
-> index 00000000000..43b80bd1561
-> --- /dev/null
-> +++ b/hw/vmapple/aes.c
-> @@ -0,0 +1,579 @@
-> +/*
-> + * QEMU Apple AES device emulation
-> + *
-> + * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "trace.h"
-> +#include "crypto/hash.h"
-> +#include "crypto/aes.h"
-> +#include "crypto/cipher.h"
-> +#include "hw/irq.h"
-> +#include "hw/sysbus.h"
-> +#include "hw/vmapple/vmapple.h"
-> +#include "migration/vmstate.h"
-> +#include "qemu/cutils.h"
-> +#include "qemu/log.h"
-> +#include "qemu/module.h"
-> +#include "sysemu/dma.h"
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(AESState, APPLE_AES)
-> +
-> +#define MAX_FIFO_SIZE     9
-> +
-> +#define CMD_KEY           0x1
-> +#define CMD_KEY_CONTEXT_SHIFT    27
-> +#define CMD_KEY_CONTEXT_MASK     (0x1 << CMD_KEY_CONTEXT_SHIFT)
-> +#define CMD_KEY_SELECT_MAX_IDX   0x7
-> +#define CMD_KEY_SELECT_SHIFT     24
-> +#define CMD_KEY_SELECT_MASK      (CMD_KEY_SELECT_MAX_IDX << CMD_KEY_SELECT_SHIFT)
-> +#define CMD_KEY_KEY_LEN_NUM      4u
-> +#define CMD_KEY_KEY_LEN_SHIFT    22
-> +#define CMD_KEY_KEY_LEN_MASK     ((CMD_KEY_KEY_LEN_NUM - 1u) << CMD_KEY_KEY_LEN_SHIFT)
-> +#define CMD_KEY_ENCRYPT_SHIFT    20
-> +#define CMD_KEY_ENCRYPT_MASK     (0x1 << CMD_KEY_ENCRYPT_SHIFT)
-> +#define CMD_KEY_BLOCK_MODE_SHIFT 16
-> +#define CMD_KEY_BLOCK_MODE_MASK  (0x3 << CMD_KEY_BLOCK_MODE_SHIFT)
-> +#define CMD_IV            0x2
-> +#define CMD_IV_CONTEXT_SHIFT     26
-> +#define CMD_IV_CONTEXT_MASK      (0x3 << CMD_KEY_CONTEXT_SHIFT)
-> +#define CMD_DSB           0x3
-> +#define CMD_SKG           0x4
-> +#define CMD_DATA          0x5
-> +#define CMD_DATA_KEY_CTX_SHIFT   27
-> +#define CMD_DATA_KEY_CTX_MASK    (0x1 << CMD_DATA_KEY_CTX_SHIFT)
-> +#define CMD_DATA_IV_CTX_SHIFT    25
-> +#define CMD_DATA_IV_CTX_MASK     (0x3 << CMD_DATA_IV_CTX_SHIFT)
-> +#define CMD_DATA_LEN_MASK        0xffffff
-> +#define CMD_STORE_IV      0x6
-> +#define CMD_STORE_IV_ADDR_MASK   0xffffff
-> +#define CMD_WRITE_REG     0x7
-> +#define CMD_FLAG          0x8
-> +#define CMD_FLAG_STOP_MASK       BIT(26)
-> +#define CMD_FLAG_RAISE_IRQ_MASK  BIT(27)
-> +#define CMD_FLAG_INFO_MASK       0xff
-> +#define CMD_MAX           0x10
-> +
-> +#define CMD_SHIFT         28
-> +
-> +#define REG_STATUS            0xc
-> +#define REG_STATUS_DMA_READ_RUNNING     BIT(0)
-> +#define REG_STATUS_DMA_READ_PENDING     BIT(1)
-> +#define REG_STATUS_DMA_WRITE_RUNNING    BIT(2)
-> +#define REG_STATUS_DMA_WRITE_PENDING    BIT(3)
-> +#define REG_STATUS_BUSY                 BIT(4)
-> +#define REG_STATUS_EXECUTING            BIT(5)
-> +#define REG_STATUS_READY                BIT(6)
-> +#define REG_STATUS_TEXT_DPA_SEEDED      BIT(7)
-> +#define REG_STATUS_UNWRAP_DPA_SEEDED    BIT(8)
-> +
-> +#define REG_IRQ_STATUS        0x18
-> +#define REG_IRQ_STATUS_INVALID_CMD      BIT(2)
-> +#define REG_IRQ_STATUS_FLAG             BIT(5)
-> +#define REG_IRQ_ENABLE        0x1c
-> +#define REG_WATERMARK         0x20
-> +#define REG_Q_STATUS          0x24
-> +#define REG_FLAG_INFO         0x30
-> +#define REG_FIFO              0x200
-> +
-> +static const uint32_t key_lens[CMD_KEY_KEY_LEN_NUM] = {
-> +    [0] = 16,
-> +    [1] = 24,
-> +    [2] = 32,
-> +    [3] = 64,
-> +};
-> +
-> +typedef struct Key {
-> +    uint32_t key_len;
-> +    uint8_t key[32];
-> +} Key;
-> +
-> +typedef struct IV {
-> +    uint32_t iv[4];
-> +} IV;
-> +
-> +static Key builtin_keys[CMD_KEY_SELECT_MAX_IDX + 1] = {
-> +    [1] = {
-> +        .key_len = 32,
-> +        .key = { 0x1 },
-> +    },
-> +    [2] = {
-> +        .key_len = 32,
-> +        .key = { 0x2 },
-> +    },
-> +    [3] = {
-> +        .key_len = 32,
-> +        .key = { 0x3 },
-> +    }
-> +};
-> +
-> +struct AESState {
-> +    SysBusDevice parent_obj;
-> +
-> +    qemu_irq irq;
-> +    MemoryRegion iomem1;
-> +    MemoryRegion iomem2;
-> +    AddressSpace *as;
-> +
-> +    uint32_t status;
-> +    uint32_t q_status;
-> +    uint32_t irq_status;
-> +    uint32_t irq_enable;
-> +    uint32_t watermark;
-> +    uint32_t flag_info;
-> +    uint32_t fifo[MAX_FIFO_SIZE];
-> +    uint32_t fifo_idx;
-> +    Key key[2];
-> +    IV iv[4];
-> +    bool is_encrypt;
-> +    QCryptoCipherMode block_mode;
-> +};
-> +
-> +static void aes_update_irq(AESState *s)
-> +{
-> +    qemu_set_irq(s->irq, !!(s->irq_status & s->irq_enable));
-> +}
-> +
-> +static uint64_t aes1_read(void *opaque, hwaddr offset, unsigned size)
-> +{
-> +    AESState *s = opaque;
-> +    uint64_t res = 0;
-> +
-> +    switch (offset) {
-> +    case REG_STATUS:
-> +        res = s->status;
-> +        break;
-> +    case REG_IRQ_STATUS:
-> +        res = s->irq_status;
-> +        break;
-> +    case REG_IRQ_ENABLE:
-> +        res = s->irq_enable;
-> +        break;
-> +    case REG_WATERMARK:
-> +        res = s->watermark;
-> +        break;
-> +    case REG_Q_STATUS:
-> +        res = s->q_status;
-> +        break;
-> +    case REG_FLAG_INFO:
-> +        res = s->flag_info;
-> +        break;
-> +
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "%s: Unknown AES MMIO offset %" PRIx64 "\n",
-> +                      __func__, offset);
-> +        break;
-> +    }
-> +
-> +    trace_aes_read(offset, res);
-> +
-> +    return res;
-> +}
-> +
-> +static void fifo_append(AESState *s, uint64_t val)
-> +{
-> +    if (s->fifo_idx == MAX_FIFO_SIZE) {
-> +        /* Exceeded the FIFO. Bail out */
-> +        return;
-> +    }
-> +
-> +    s->fifo[s->fifo_idx++] = val;
-> +}
-> +
-> +static bool has_payload(AESState *s, uint32_t elems)
-> +{
-> +    return s->fifo_idx >= (elems + 1);
+--0000000000008d88f2062689a6c5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Extra parentheses.
+On Sun 10. Nov 2024 at 08:01, Akihiko Odaki <akihiko.odaki@daynix.com>
+wrote:
 
-> +}
-> +
-> +static bool cmd_key(AESState *s)
-> +{
-> +    uint32_t cmd = s->fifo[0];
-> +    uint32_t key_select = (cmd & CMD_KEY_SELECT_MASK) >> CMD_KEY_SELECT_SHIFT;
-> +    uint32_t ctxt = (cmd & CMD_KEY_CONTEXT_MASK) >> CMD_KEY_CONTEXT_SHIFT;
-> +    uint32_t key_len;
-> +
-> +    switch ((cmd & CMD_KEY_BLOCK_MODE_MASK) >> CMD_KEY_BLOCK_MODE_SHIFT) {
-> +    case 0:
-> +        s->block_mode = QCRYPTO_CIPHER_MODE_ECB;
-> +        break;
-> +    case 1:
-> +        s->block_mode = QCRYPTO_CIPHER_MODE_CBC;
-> +        break;
-> +    default:
-> +        return false;
-> +    }
-> +
-> +    s->is_encrypt = cmd & CMD_KEY_ENCRYPT_MASK;
-> +    key_len = key_lens[(cmd & CMD_KEY_KEY_LEN_MASK) >> CMD_KEY_KEY_LEN_SHIFT];
-> +
-> +    if (key_select) {
-> +        trace_aes_cmd_key_select_builtin(ctxt, key_select,
-> +                                         s->is_encrypt ? "en" : "de",
-> +                                         QCryptoCipherMode_str(s->block_mode));
-> +        s->key[ctxt] = builtin_keys[key_select];
-> +    } else {
-> +        trace_aes_cmd_key_select_new(ctxt, key_len,
-> +                                     s->is_encrypt ? "en" : "de",
-> +                                     QCryptoCipherMode_str(s->block_mode));
-> +        if (key_len > sizeof(s->key[ctxt].key)) {
-> +            return false;
-> +        }
-> +        if (!has_payload(s, key_len / sizeof(uint32_t))) {
-> +            /* wait for payload */
-> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: No payload\n", __func__);
-> +            return false;
-> +        }
-> +        memcpy(&s->key[ctxt].key, &s->fifo[1], key_len);
-> +        s->key[ctxt].key_len = key_len;
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +static bool cmd_iv(AESState *s)
-> +{
-> +    uint32_t cmd = s->fifo[0];
-> +    uint32_t ctxt = (cmd & CMD_IV_CONTEXT_MASK) >> CMD_IV_CONTEXT_SHIFT;
-> +
-> +    if (!has_payload(s, 4)) {
-> +        /* wait for payload */
-> +        return false;
-> +    }
-> +    memcpy(&s->iv[ctxt].iv, &s->fifo[1], sizeof(s->iv[ctxt].iv));
-> +    trace_aes_cmd_iv(ctxt, s->fifo[1], s->fifo[2], s->fifo[3], s->fifo[4]);
-> +
-> +    return true;
-> +}
-> +
-> +static void dump_data(const char *desc, const void *p, size_t len)
-> +{
-> +    static const size_t MAX_LEN = 0x1000;
-> +    char hex[MAX_LEN * 2 + 1] = "";
-> +
-> +    if (len > MAX_LEN) {
-> +        return;
-> +    }
-> +
-> +    qemu_hexdump_to_buffer(hex, sizeof(hex), p, len);
-> +    trace_aes_dump_data(desc, hex);
-> +}
-> +
-> +static bool cmd_data(AESState *s)
-> +{
-> +    uint32_t cmd = s->fifo[0];
-> +    uint32_t ctxt_iv = 0;
-> +    uint32_t ctxt_key = (cmd & CMD_DATA_KEY_CTX_MASK) >> CMD_DATA_KEY_CTX_SHIFT;
-> +    uint32_t len = cmd & CMD_DATA_LEN_MASK;
-> +    uint64_t src_addr = s->fifo[2];
-> +    uint64_t dst_addr = s->fifo[3];
-> +    QCryptoCipherAlgo alg;
-> +    g_autoptr(QCryptoCipher) cipher = NULL;
-> +    g_autoptr(GByteArray) src = NULL;
-> +    g_autoptr(GByteArray) dst = NULL;
-> +    MemTxResult r;
-> +
-> +    src_addr |= ((uint64_t)s->fifo[1] << 16) & 0xffff00000000ULL;
-> +    dst_addr |= ((uint64_t)s->fifo[1] << 32) & 0xffff00000000ULL;
-> +
-> +    trace_aes_cmd_data(ctxt_key, ctxt_iv, src_addr, dst_addr, len);
-> +
-> +    if (!has_payload(s, 3)) {
-> +        /* wait for payload */
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: No payload\n", __func__);
-> +        return false;
-> +    }
-> +
-> +    if (ctxt_key >= ARRAY_SIZE(s->key) ||
-> +        ctxt_iv >= ARRAY_SIZE(s->iv)) {
-> +        /* Invalid input */
+> On 2024/11/08 23:46, Phil Dennis-Jordan wrote:
+> > macOS's Cocoa event handling must be done on the initial (main) thread
+> > of the process. Furthermore, if library or application code uses
+> > libdispatch, the main dispatch queue must be handling events on the mai=
+n
+> > thread as well.
+> >
+> > So far, this has affected Qemu in both the Cocoa and SDL UIs, although
+> > in different ways: the Cocoa UI replaces the default qemu_main function
+> > with one that spins Qemu's internal main event loop off onto a
+> > background thread. SDL (which uses Cocoa internally) on the other hand
+> > uses a polling approach within Qemu's main event loop. Events are
+> > polled during the SDL UI's dpy_refresh callback, which happens to run
+> > on the main thread by default.
+>
+> GTK should also do the same as SDL and requires treatment; I forgot to
+> note that in previous reviews.
 
-This comment is no longer necessary; the log below tells the same.
 
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid key or iv\n", __func__);
-> +        return false;
-> +    }
-> +
-> +    src = g_byte_array_sized_new(len);
-> +    g_byte_array_set_size(src, len);
-> +    dst = g_byte_array_sized_new(len);
-> +    g_byte_array_set_size(dst, len);
-> +
-> +    r = dma_memory_read(s->as, src_addr, src->data, len, MEMTXATTRS_UNSPECIFIED);
-> +    if (r != MEMTX_OK) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: DMA read of %"PRIu32" bytes "
-> +                      "from 0x%"PRIx64" failed. (r=%d)\n",
-> +                      __func__, len, src_addr, r);
-> +        return false;
-> +    }
-> +
-> +    dump_data("cmd_data(): src_data=", src->data, len);
-> +
-> +    switch (s->key[ctxt_key].key_len) {
-> +    case 128 / 8:
-> +        alg = QCRYPTO_CIPHER_ALGO_AES_128;
-> +        break;
-> +    case 192 / 8:
-> +        alg = QCRYPTO_CIPHER_ALGO_AES_192;
-> +        break;
-> +    case 256 / 8:
-> +        alg = QCRYPTO_CIPHER_ALGO_AES_256;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid key length\n", __func__);
-> +        return false;
-> +    }
-> +    cipher = qcrypto_cipher_new(alg, s->block_mode,
-> +                                s->key[ctxt_key].key,
-> +                                s->key[ctxt_key].key_len, NULL);
-> +    if (!cipher) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Failed to create cipher object\n",
-> +                      __func__);
-> +        return false;
-> +    }
-> +    if (s->block_mode != QCRYPTO_CIPHER_MODE_ECB) {
-> +        if (qcrypto_cipher_setiv(cipher, (void *)s->iv[ctxt_iv].iv,
-> +                                 sizeof(s->iv[ctxt_iv].iv), NULL) != 0) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Failed to set IV\n", __func__);
-> +            return false;
-> +        }
-> +    }
-> +    if (s->is_encrypt) {
-> +        if (qcrypto_cipher_encrypt(cipher, src->data, dst->data, len, NULL) != 0) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Encryption failed\n", __func__);
-> +            return false;
-> +        }
-> +    } else {
-> +        if (qcrypto_cipher_decrypt(cipher, src->data, dst->data, len, NULL) != 0) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Decryption failed\n", __func__);
-> +            return false;
-> +        }
-> +    }
-> +
-> +    dump_data("cmd_data(): dst_data=", dst->data, len);
-> +    r = dma_memory_write(s->as, dst_addr, dst->data, len, MEMTXATTRS_UNSPECIFIED);
-> +    if (r != MEMTX_OK) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: DMA write of %"PRIu32" bytes "
-> +                      "to 0x%"PRIx64" failed. (r=%d)\n",
-> +                      __func__, len, src_addr, r);
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +static bool cmd_store_iv(AESState *s)
-> +{
-> +    uint32_t cmd = s->fifo[0];
-> +    uint32_t ctxt = (cmd & CMD_IV_CONTEXT_MASK) >> CMD_IV_CONTEXT_SHIFT;
-> +    uint64_t addr = s->fifo[1];
-> +
-> +    if (!has_payload(s, 1)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: No payload\n", __func__);
-> +        return false;
-> +    }
-> +
-> +    if (ctxt >= ARRAY_SIZE(s->iv)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: Invalid context. ctxt = %u, allowed: 0..%zu\n",
-> +                      __func__, ctxt, ARRAY_SIZE(s->iv) - 1);
-> +        return false;
-> +    }
-> +
-> +    addr |= ((uint64_t)cmd << 32) & 0xff00000000ULL;
-> +    cpu_physical_memory_write(addr, &s->iv[ctxt].iv, sizeof(s->iv[ctxt].iv));
-> +
-> +    trace_aes_cmd_store_iv(ctxt, addr, s->iv[ctxt].iv[0], s->iv[ctxt].iv[1],
-> +                           s->iv[ctxt].iv[2], s->iv[ctxt].iv[3]);
-> +
-> +    return true;
-> +}
-> +
-> +static bool cmd_flag(AESState *s)
-> +{
-> +    uint32_t cmd = s->fifo[0];
-> +    uint32_t raise_irq = cmd & CMD_FLAG_RAISE_IRQ_MASK;
-> +
-> +    /* We always process data when it's coming in, so fire an IRQ immediately */
-> +    if (raise_irq) {
-> +        s->irq_status |= REG_IRQ_STATUS_FLAG;
-> +    }
-> +
-> +    s->flag_info = cmd & CMD_FLAG_INFO_MASK;
-> +
-> +    trace_aes_cmd_flag(!!raise_irq, s->flag_info);
-> +
-> +    return true;
-> +}
-> +
-> +static void fifo_process(AESState *s)
-> +{
-> +    uint32_t cmd = s->fifo[0] >> CMD_SHIFT;
-> +    bool success = false;
-> +
-> +    if (!s->fifo_idx) {
-> +        return;
-> +    }
-> +
-> +    switch (cmd) {
-> +    case CMD_KEY:
-> +        success = cmd_key(s);
-> +        break;
-> +    case CMD_IV:
-> +        success = cmd_iv(s);
-> +        break;
-> +    case CMD_DATA:
-> +        success = cmd_data(s);
-> +        break;
-> +    case CMD_STORE_IV:
-> +        success = cmd_store_iv(s);
-> +        break;
-> +    case CMD_FLAG:
-> +        success = cmd_flag(s);
-> +        break;
-> +    default:
-> +        s->irq_status |= REG_IRQ_STATUS_INVALID_CMD;
-> +        break;
-> +    }
-> +
-> +    if (success) {
-> +        s->fifo_idx = 0;
-> +    }
-> +
-> +    trace_aes_fifo_process(cmd, success ? 1 : 0);
+Although it=E2=80=98s possible to build Qemu with GTK support enabled on ma=
+cOS,
+that UI doesn=E2=80=99t actually work on macOS at all, and apparently hasn=
+=E2=80=99t been
+supported since 2018, see:
+https://stackoverflow.com/a/51474795
 
-Why not just pass success as is?
+I don=E2=80=99t think there=E2=80=99s any point making adjustments to the G=
+TK code by
+guessing what might be needed if someone did fix that to work with macOS at
+some point.
 
-> +}
-> +
-> +static void aes1_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-> +{
-> +    AESState *s = opaque;
-> +
-> +    trace_aes_write(offset, val);
-> +
-> +    switch (offset) {
-> +    case REG_IRQ_STATUS:
-> +        s->irq_status &= ~val;
-> +        break;
-> +    case REG_IRQ_ENABLE:
-> +        s->irq_enable = val;
-> +        break;
-> +    case REG_FIFO:
-> +        fifo_append(s, val);
-> +        fifo_process(s);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s: Unknown AES MMIO offset %"PRIx64", data %"PRIx64"\n",
-> +                      __func__, offset, val);
-> +        return;
-> +    }
-> +
-> +    aes_update_irq(s);
-> +}
-> +
-> +static const MemoryRegionOps aes1_ops = {
-> +    .read = aes1_read,
-> +    .write = aes1_write,
-> +    .endianness = DEVICE_NATIVE_ENDIAN,
-> +    .valid = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 8,
-> +    },
-> +    .impl = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 4,
-> +    },
-> +};
-> +
-> +static uint64_t aes2_read(void *opaque, hwaddr offset, unsigned size)
-> +{
-> +    uint64_t res = 0;
-> +
-> +    switch (offset) {
-> +    case 0:
-> +        res = 0;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s: Unknown AES MMIO 2 offset %"PRIx64"\n",
-> +                      __func__, offset);
-> +        break;
-> +    }
-> +
-> +    trace_aes_2_read(offset, res);
-> +
-> +    return res;
-> +}
-> +
-> +static void aes2_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-> +{
-> +    trace_aes_2_write(offset, val);
-> +
-> +    switch (offset) {
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s: Unknown AES MMIO 2 offset %"PRIx64", data %"PRIx64"\n",
-> +                      __func__, offset, val);
-> +        return;
-> +    }
-> +}
-> +
-> +static const MemoryRegionOps aes2_ops = {
-> +    .read = aes2_read,
-> +    .write = aes2_write,
-> +    .endianness = DEVICE_NATIVE_ENDIAN,
-> +    .valid = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 8,
-> +    },
-> +    .impl = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 4,
-> +    },
-> +};
-> +
-> +static void aes_reset(Object *obj, ResetType type)
-> +{
-> +    AESState *s = APPLE_AES(obj);
-> +
-> +    s->status = 0x3f80;
-> +    s->q_status = 2;
-> +    s->irq_status = 0;
-> +    s->irq_enable = 0;
-> +    s->watermark = 0;
-> +}
-> +
-> +static void aes_init(Object *obj)
-> +{
-> +    AESState *s = APPLE_AES(obj);
-> +
-> +    memory_region_init_io(&s->iomem1, obj, &aes1_ops, s, TYPE_APPLE_AES, 0x4000);
-> +    memory_region_init_io(&s->iomem2, obj, &aes2_ops, s, TYPE_APPLE_AES, 0x4000);
-> +    sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->iomem1);
-> +    sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->iomem2);
-> +    sysbus_init_irq(SYS_BUS_DEVICE(s), &s->irq);
-> +    s->as = &address_space_memory;
-> +}
-> +
-> +static void aes_class_init(ObjectClass *klass, void *data)
-> +{
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
-> +
-> +    rc->phases.hold = aes_reset;
-> +}
-> +
-> +static const TypeInfo aes_info = {
-> +    .name          = TYPE_APPLE_AES,
-> +    .parent        = TYPE_SYS_BUS_DEVICE,
-> +    .instance_size = sizeof(AESState),
-> +    .class_init    = aes_class_init,
-> +    .instance_init = aes_init,
-> +};
-> +
-> +static void aes_register_types(void)
-> +{
-> +    type_register_static(&aes_info);
-> +}
-> +
-> +type_init(aes_register_types)
-> diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
-> index e69de29bb2d..bcd4dcb28d2 100644
-> --- a/hw/vmapple/meson.build
-> +++ b/hw/vmapple/meson.build
-> @@ -0,0 +1 @@
-> +system_ss.add(when: 'CONFIG_VMAPPLE_AES',  if_true: files('aes.c'))
-> diff --git a/hw/vmapple/trace-events b/hw/vmapple/trace-events
-> index 9ccc5790487..fbbef40eac0 100644
-> --- a/hw/vmapple/trace-events
-> +++ b/hw/vmapple/trace-events
-> @@ -1,2 +1,16 @@
->   # See docs/devel/tracing.rst for syntax documentation.
->   
-> +# aes.c
-> +aes_read(uint64_t offset, uint64_t res) "offset=0x%"PRIx64" res=0x%"PRIx64
-> +aes_cmd_key_select_builtin(uint32_t ctx, uint32_t key_id, const char *direction, const char *cipher) "[%d] Selecting builtin key %d to %scrypt with %s"
-> +aes_cmd_key_select_new(uint32_t ctx, uint32_t key_len, const char *direction, const char *cipher) "[%d] Selecting new key size=%d to %scrypt with %s"
-> +aes_cmd_iv(uint32_t ctx, uint32_t iv0, uint32_t iv1, uint32_t iv2, uint32_t iv3) "[%d] 0x%08x 0x%08x 0x%08x 0x%08x"
-> +aes_cmd_data(uint32_t key, uint32_t iv, uint64_t src, uint64_t dst, uint32_t len) "[key=%d iv=%d] src=0x%"PRIx64" dst=0x%"PRIx64" len=0x%x"
-> +aes_cmd_store_iv(uint32_t ctx, uint64_t addr, uint32_t iv0, uint32_t iv1, uint32_t iv2, uint32_t iv3) "[%d] addr=0x%"PRIx64"x -> 0x%08x 0x%08x 0x%08x 0x%08x"
-> +aes_cmd_flag(uint32_t raise, uint32_t flag_info) "raise=%d flag_info=0x%x"
-> +aes_fifo_process(uint32_t cmd, uint32_t success) "cmd=%d success=%d"
-> +aes_write(uint64_t offset, uint64_t val) "offset=0x%"PRIx64" val=0x%"PRIx64
-> +aes_2_read(uint64_t offset, uint64_t res) "offset=0x%"PRIx64" res=0x%"PRIx64
-> +aes_2_write(uint64_t offset, uint64_t val) "offset=0x%"PRIx64" val=0x%"PRIx64
-> +aes_dump_data(const char *desc, const char *hex) "%s%s"
-> +
-> diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
-> new file mode 100644
-> index 00000000000..6762b6c869f
-> --- /dev/null
-> +++ b/include/hw/vmapple/vmapple.h
-> @@ -0,0 +1,17 @@
-> +/*
-> + * Devices specific to the VMApple machine type
-> + *
-> + * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_VMAPPLE_VMAPPLE_H
-> +#define HW_VMAPPLE_VMAPPLE_H
-> +
-> +#define TYPE_APPLE_AES "apple-aes"
-> +
-> +#endif /* HW_VMAPPLE_VMAPPLE_H */
-> diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
-> index 34a9b9b2204..36c68ce86c5 100644
-> --- a/include/qemu/cutils.h
-> +++ b/include/qemu/cutils.h
-> @@ -302,4 +302,19 @@ GString *qemu_hexdump_line(GString *str, const void *buf, size_t len,
->   void qemu_hexdump(FILE *fp, const char *prefix,
->                     const void *bufptr, size_t size);
->   
-> +/**
-> + * qemu_hexdump_to_buffer:
-> + * @buffer: output string buffer
-> + * @buffer_size: amount of available space in buffer. Must be at least
-> + *               data_size*2+1.
-> + * @data: input bytes
-> + * @data_size: number of bytes in data
-> + *
-> + * Converts the @data_size bytes in @data into hex digit pairs, writing them to
-> + * @buffer. Finally, a nul terminating character is written; @buffer therefore
-> + * needs space for (data_size*2+1) chars.
-> + */
-> +void qemu_hexdump_to_buffer(char *restrict buffer, size_t buffer_size,
-> +                            const uint8_t *restrict data, size_t data_size);
-> +
->   #endif
-> diff --git a/util/hexdump.c b/util/hexdump.c
-> index ae0d4992dcf..f29ffceb746 100644
-> --- a/util/hexdump.c
-> +++ b/util/hexdump.c
-> @@ -15,6 +15,7 @@
->   
->   #include "qemu/osdep.h"
->   #include "qemu/cutils.h"
-> +#include "qemu/host-utils.h"
->   
->   static inline char hexdump_nibble(unsigned x)
->   {
-> @@ -97,3 +98,20 @@ void qemu_hexdump(FILE *fp, const char *prefix,
->       }
->   
->   }
-> +
-> +void qemu_hexdump_to_buffer(char *restrict buffer, size_t buffer_size,
-> +                            const uint8_t *restrict data, size_t data_size)
-> +{
-> +    size_t i;
-> +    uint64_t required_buffer_size;
-> +    bool overflow = umul64_overflow(data_size, 2, &required_buffer_size);
-> +    overflow |= uadd64_overflow(required_buffer_size, 1, &required_buffer_size);
-> +    assert(!overflow && buffer_size >= required_buffer_size);
-> +
-> +    for (i = 0; i < data_size; i++) {
-> +        uint8_t val = data[i];
-> +        *(buffer++) = hexdump_nibble(val >> 4);
-> +        *(buffer++) = hexdump_nibble(val & 0xf);
-> +    }
-> +    *buffer = '\0';
-> +}
+>
 
+> > As UIs are mutually exclusive, this works OK as long as nothing else
+> > needs platform-native event handling. In the next patch, a new device i=
+s
+> > introduced based on the ParavirtualizedGraphics.framework in macOS.
+> > This uses libdispatch internally, and only works when events are being
+> > handled on the main runloop. With the current system, it works when
+> > using either the Cocoa or the SDL UI. However, it does not when running
+> > headless. Moreover, any attempt to install a similar scheme to the
+> > Cocoa UI's main thread replacement fails when combined with the SDL
+> > UI.
+> >
+> > This change tidies up main thread management to be more flexible.
+> >
+> >   * The qemu_main global function pointer is a custom function for the
+> >     main thread, and it may now be NULL. When it is, the main thread
+> >     runs the main Qemu loop. This represents the traditional setup.
+> >   * When non-null, spawning the main Qemu event loop on a separate
+> >     thread is now done centrally rather than inside the Cocoa UI code.
+> >   * For most platforms, qemu_main is indeed NULL by default, but on
+> >     Darwin, it defaults to a function that runs the CFRunLoop.
+> >   * The Cocoa UI sets qemu_main to a function which runs the
+> >     NSApplication event handling runloop, as is usual for a Cocoa app.
+> >   * The SDL UI overrides the qemu_main function to NULL, thus
+> >     specifying that Qemu's main loop must run on the main
+> >     thread.
+> >   * For other UIs, or in the absence of UIs, the platform's default
+> >     behaviour is followed.
+> >
+> > This means that on macOS, the platform's runloop events are always
+> > handled, regardless of chosen UI. The new PV graphics device will
+> > thus work in all configurations. There is no functional change on other
+> > operating systems.
+> >
+> > Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> > Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > ---
+> >
+> > v5:
+> >
+> >   * Simplified the way of setting/clearing the main loop by going back
+> >     to setting qemu_main directly, but narrowing the scope of what it
+> >     needs to do, and it can now be NULL.
+> >
+> > v6:
+> >
+> >   * Folded function qemu_run_default_main_on_new_thread's code into
+> >     main()
+> >   * Removed whitespace changes left over on lines near code removed
+> >     between v4 and v5
+> >
+> >   include/qemu-main.h     |  3 +--
+> >   include/qemu/typedefs.h |  1 +
+> >   system/main.c           | 50 ++++++++++++++++++++++++++++++++++----
+> >   ui/cocoa.m              | 54 ++++++++++------------------------------=
+-
+> >   ui/sdl2.c               |  4 +++
+> >   5 files changed, 64 insertions(+), 48 deletions(-)
+> >
+> > diff --git a/include/qemu-main.h b/include/qemu-main.h
+> > index 940960a7dbc..4bd0d667edc 100644
+> > --- a/include/qemu-main.h
+> > +++ b/include/qemu-main.h
+> > @@ -5,7 +5,6 @@
+> >   #ifndef QEMU_MAIN_H
+> >   #define QEMU_MAIN_H
+> >
+> > -int qemu_default_main(void);
+> > -extern int (*qemu_main)(void);
+> > +extern qemu_main_fn qemu_main;
+> >
+> >   #endif /* QEMU_MAIN_H */
+> > diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+> > index 3d84efcac47..b02cfe1f328 100644
+> > --- a/include/qemu/typedefs.h
+> > +++ b/include/qemu/typedefs.h
+> > @@ -131,5 +131,6 @@ typedef struct IRQState *qemu_irq;
+> >    * Function types
+> >    */
+> >   typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
+> > +typedef int (*qemu_main_fn)(void);
+> >
+> >   #endif /* QEMU_TYPEDEFS_H */
+> > diff --git a/system/main.c b/system/main.c
+> > index 9b91d21ea8c..d9397a6d5d0 100644
+> > --- a/system/main.c
+> > +++ b/system/main.c
+> > @@ -24,13 +24,14 @@
+> >
+> >   #include "qemu/osdep.h"
+> >   #include "qemu-main.h"
+> > +#include "qemu/main-loop.h"
+> >   #include "sysemu/sysemu.h"
+> >
+> > -#ifdef CONFIG_SDL
+> > -#include <SDL.h>
+> > +#ifdef CONFIG_DARWIN
+> > +#include <CoreFoundation/CoreFoundation.h>
+> >   #endif
+> >
+> > -int qemu_default_main(void)
+> > +static int qemu_default_main(void)
+> >   {
+> >       int status;
+> >
+> > @@ -40,10 +41,49 @@ int qemu_default_main(void)
+> >       return status;
+> >   }
+> >
+> > -int (*qemu_main)(void) =3D qemu_default_main;
+> > +/*
+> > + * Various macOS system libraries, including the Cocoa UI and anything
+> using
+> > + * libdispatch, such as ParavirtualizedGraphics.framework, requires
+> that the
+> > + * main runloop, on the main (initial) thread be running or at least
+> regularly
+> > + * polled for events. A special mode is therefore supported, where the
+> QEMU
+> > + * main loop runs on a separate thread and the main thread handles the
+> > + * CF/Cocoa runloop.
+> > + */
+> > +
+> > +static void *call_qemu_default_main(void *opaque)
+> > +{
+> > +    int status;
+> > +
+> > +    bql_lock();
+> > +    status =3D qemu_default_main();
+> > +    bql_unlock();
+> > +
+> > +    exit(status);
+> > +}
+> > +
+> > +#ifdef CONFIG_DARWIN
+> > +static int os_darwin_cfrunloop_main(void)
+> > +{
+> > +    CFRunLoopRun();
+> > +    abort();
+> > +}
+> > +
+> > +qemu_main_fn qemu_main =3D os_darwin_cfrunloop_main;
+> > +#else
+> > +qemu_main_fn qemu_main;
+> > +#endif
+> >
+> >   int main(int argc, char **argv)
+> >   {
+> > +    QemuThread main_loop_thread;
+> > +
+> >       qemu_init(argc, argv);
+> > -    return qemu_main();
+> > +    if (qemu_main) {
+> > +        qemu_thread_create(&main_loop_thread, "qemu_main",
+> > +                           call_qemu_default_main, NULL,
+> QEMU_THREAD_DETACHED);
+> > +        bql_unlock();
+> > +        return qemu_main();
+> > +    } else {
+> > +        qemu_default_main();
+> > +    }
+> >   }
+> > diff --git a/ui/cocoa.m b/ui/cocoa.m
+> > index 4c2dd335323..30b8920d929 100644
+> > --- a/ui/cocoa.m
+> > +++ b/ui/cocoa.m
+> > @@ -73,6 +73,8 @@
+> >       int height;
+> >   } QEMUScreen;
+> >
+> > +@class QemuCocoaPasteboardTypeOwner;
+> > +
+> >   static void cocoa_update(DisplayChangeListener *dcl,
+> >                            int x, int y, int w, int h);
+> >
+> > @@ -107,6 +109,7 @@ static void cocoa_switch(DisplayChangeListener *dcl=
+,
+> >   static NSInteger cbchangecount =3D -1;
+> >   static QemuClipboardInfo *cbinfo;
+> >   static QemuEvent cbevent;
+> > +static QemuCocoaPasteboardTypeOwner *cbowner;
+> >
+> >   // Utility functions to run specified code block with the BQL held
+> >   typedef void (^CodeBlock)(void);
+> > @@ -1321,8 +1324,10 @@ - (void) dealloc
+> >   {
+> >       COCOA_DEBUG("QemuCocoaAppController: dealloc\n");
+> >
+> > -    if (cocoaView)
+> > -        [cocoaView release];
+> > +    [cocoaView release];
+> > +    [cbowner release];
+> > +    cbowner =3D nil;
+> > +
+> >       [super dealloc];
+> >   }
+> >
+> > @@ -1938,8 +1943,6 @@ - (void)pasteboard:(NSPasteboard *)sender
+> provideDataForType:(NSPasteboardType)t
+> >
+> >   @end
+> >
+> > -static QemuCocoaPasteboardTypeOwner *cbowner;
+> > -
+> >   static void cocoa_clipboard_notify(Notifier *notifier, void *data);
+> >   static void cocoa_clipboard_request(QemuClipboardInfo *info,
+> >                                       QemuClipboardType type);
+> > @@ -2002,43 +2005,8 @@ static void
+> cocoa_clipboard_request(QemuClipboardInfo *info,
+> >       }
+> >   }
+> >
+> > -/*
+> > - * The startup process for the OSX/Cocoa UI is complicated, because
+> > - * OSX insists that the UI runs on the initial main thread, and so we
+> > - * need to start a second thread which runs the qemu_default_main():
+> > - * in main():
+> > - *  in cocoa_display_init():
+> > - *   assign cocoa_main to qemu_main
+> > - *   create application, menus, etc
+> > - *  in cocoa_main():
+> > - *   create qemu-main thread
+> > - *   enter OSX run loop
+> > - */
+> > -
+> > -static void *call_qemu_main(void *opaque)
+> > -{
+> > -    int status;
+> > -
+> > -    COCOA_DEBUG("Second thread: calling qemu_default_main()\n");
+> > -    bql_lock();
+> > -    status =3D qemu_default_main();
+> > -    bql_unlock();
+> > -    COCOA_DEBUG("Second thread: qemu_default_main() returned,
+> exiting\n");
+> > -    [cbowner release];
+> > -    exit(status);
+> > -}
+> > -
+> >   static int cocoa_main(void)
+> >   {
+> > -    QemuThread thread;
+> > -
+> > -    COCOA_DEBUG("Entered %s()\n", __func__);
+> > -
+> > -    bql_unlock();
+> > -    qemu_thread_create(&thread, "qemu_main", call_qemu_main,
+> > -                       NULL, QEMU_THREAD_DETACHED);
+> > -
+> > -    // Start the main event loop
+> >       COCOA_DEBUG("Main thread: entering OSX run loop\n");
+> >       [NSApp run];
+> >       COCOA_DEBUG("Main thread: left OSX run loop, which should never
+> happen\n");
+> > @@ -2120,8 +2088,6 @@ static void cocoa_display_init(DisplayState *ds,
+> DisplayOptions *opts)
+> >
+> >       COCOA_DEBUG("qemu_cocoa: cocoa_display_init\n");
+> >
+> > -    qemu_main =3D cocoa_main;
+> > -
+> >       // Pull this console process up to being a fully-fledged graphica=
+l
+> >       // app with a menubar and Dock icon
+> >       ProcessSerialNumber psn =3D { 0, kCurrentProcess };
+> > @@ -2185,6 +2151,12 @@ static void cocoa_display_init(DisplayState *ds,
+> DisplayOptions *opts)
+> >       qemu_clipboard_peer_register(&cbpeer);
+> >
+> >       [pool release];
+> > +
+> > +    /*
+> > +     * The Cocoa UI will run the NSApplication runloop on the main
+> thread
+> > +     * rather than the default Core Foundation one.
+> > +     */
+> > +    qemu_main =3D cocoa_main;
+> >   }
+> >
+> >   static QemuDisplay qemu_display_cocoa =3D {
+> > diff --git a/ui/sdl2.c b/ui/sdl2.c
+> > index bd4f5a9da14..44ab2762262 100644
+> > --- a/ui/sdl2.c
+> > +++ b/ui/sdl2.c
+> > @@ -34,6 +34,7 @@
+> >   #include "sysemu/sysemu.h"
+> >   #include "ui/win32-kbd-hook.h"
+> >   #include "qemu/log.h"
+> > +#include "qemu-main.h"
+> >
+> >   static int sdl2_num_outputs;
+> >   static struct sdl2_console *sdl2_console;
+> > @@ -965,6 +966,9 @@ static void sdl2_display_init(DisplayState *ds,
+> DisplayOptions *o)
+> >       }
+> >
+> >       atexit(sdl_cleanup);
+> > +
+> > +    /* SDL's event polling (in dpy_refresh) must happen on the main
+> thread. */
+> > +    qemu_main =3D NULL;
+> >   }
+> >
+> >   static QemuDisplay qemu_display_sdl2 =3D {
+>
+>
+
+--0000000000008d88f2062689a6c5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div><br></div><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Sun 10. Nov 2024 at 08:01, Akihiko Odaki &lt;<a href=3D"=
+mailto:akihiko.odaki@daynix.com">akihiko.odaki@daynix.com</a>&gt; wrote:<br=
+></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
+border-left-width:1px;border-left-style:solid;padding-left:1ex;border-left-=
+color:rgb(204,204,204)">On 2024/11/08 23:46, Phil Dennis-Jordan wrote:<br>
+&gt; macOS&#39;s Cocoa event handling must be done on the initial (main) th=
+read<br>
+&gt; of the process. Furthermore, if library or application code uses<br>
+&gt; libdispatch, the main dispatch queue must be handling events on the ma=
+in<br>
+&gt; thread as well.<br>
+&gt; <br>
+&gt; So far, this has affected Qemu in both the Cocoa and SDL UIs, although=
+<br>
+&gt; in different ways: the Cocoa UI replaces the default qemu_main functio=
+n<br>
+&gt; with one that spins Qemu&#39;s internal main event loop off onto a<br>
+&gt; background thread. SDL (which uses Cocoa internally) on the other hand=
+<br>
+&gt; uses a polling approach within Qemu&#39;s main event loop. Events are<=
+br>
+&gt; polled during the SDL UI&#39;s dpy_refresh callback, which happens to =
+run<br>
+&gt; on the main thread by default.<br>
+<br>
+GTK should also do the same as SDL and requires treatment; I forgot to <br>
+note that in previous reviews.</blockquote><div dir=3D"auto"><br></div><div=
+ dir=3D"auto">Although it=E2=80=98s possible to build Qemu with GTK support=
+ enabled on macOS, that UI doesn=E2=80=99t actually work on macOS at all, a=
+nd apparently hasn=E2=80=99t been supported since 2018, see:</div><div dir=
+=3D"auto"><div><a href=3D"https://stackoverflow.com/a/51474795">https://sta=
+ckoverflow.com/a/51474795</a></div><br></div><div dir=3D"auto">I don=E2=80=
+=99t think there=E2=80=99s any point making adjustments to the GTK code by =
+guessing what might be needed if someone did fix that to work with macOS at=
+ some point.</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
+ 0px 0.8ex;border-left-width:1px;border-left-style:solid;padding-left:1ex;b=
+order-left-color:rgb(204,204,204)" dir=3D"auto"></blockquote><div dir=3D"au=
+to"><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left-width:1px;border-left-style:solid;padding-left:1ex;borde=
+r-left-color:rgb(204,204,204)" dir=3D"auto"><br>
+&gt; As UIs are mutually exclusive, this works OK as long as nothing else<b=
+r>
+&gt; needs platform-native event handling. In the next patch, a new device =
+is<br>
+&gt; introduced based on the ParavirtualizedGraphics.framework in macOS.<br=
+>
+&gt; This uses libdispatch internally, and only works when events are being=
+<br>
+&gt; handled on the main runloop. With the current system, it works when<br=
+>
+&gt; using either the Cocoa or the SDL UI. However, it does not when runnin=
+g<br>
+&gt; headless. Moreover, any attempt to install a similar scheme to the<br>
+&gt; Cocoa UI&#39;s main thread replacement fails when combined with the SD=
+L<br>
+&gt; UI.<br>
+&gt; <br>
+&gt; This change tidies up main thread management to be more flexible.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0* The qemu_main global function pointer is a custom functi=
+on for the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0main thread, and it may now be NULL. When it is, th=
+e main thread<br>
+&gt;=C2=A0 =C2=A0 =C2=A0runs the main Qemu loop. This represents the tradit=
+ional setup.<br>
+&gt;=C2=A0 =C2=A0* When non-null, spawning the main Qemu event loop on a se=
+parate<br>
+&gt;=C2=A0 =C2=A0 =C2=A0thread is now done centrally rather than inside the=
+ Cocoa UI code.<br>
+&gt;=C2=A0 =C2=A0* For most platforms, qemu_main is indeed NULL by default,=
+ but on<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Darwin, it defaults to a function that runs the CFR=
+unLoop.<br>
+&gt;=C2=A0 =C2=A0* The Cocoa UI sets qemu_main to a function which runs the=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0NSApplication event handling runloop, as is usual f=
+or a Cocoa app.<br>
+&gt;=C2=A0 =C2=A0* The SDL UI overrides the qemu_main function to NULL, thu=
+s<br>
+&gt;=C2=A0 =C2=A0 =C2=A0specifying that Qemu&#39;s main loop must run on th=
+e main<br>
+&gt;=C2=A0 =C2=A0 =C2=A0thread.<br>
+&gt;=C2=A0 =C2=A0* For other UIs, or in the absence of UIs, the platform&#3=
+9;s default<br>
+&gt;=C2=A0 =C2=A0 =C2=A0behaviour is followed.<br>
+&gt; <br>
+&gt; This means that on macOS, the platform&#39;s runloop events are always=
+<br>
+&gt; handled, regardless of chosen UI. The new PV graphics device will<br>
+&gt; thus work in all configurations. There is no functional change on othe=
+r<br>
+&gt; operating systems.<br>
+&gt; <br>
+&gt; Signed-off-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjorda=
+n.eu" target=3D"_blank">phil@philjordan.eu</a>&gt;<br>
+&gt; Reviewed-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.=
+com" target=3D"_blank">akihiko.odaki@daynix.com</a>&gt;<br>
+&gt; ---<br>
+&gt; <br>
+&gt; v5:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0* Simplified the way of setting/clearing the main loop by =
+going back<br>
+&gt;=C2=A0 =C2=A0 =C2=A0to setting qemu_main directly, but narrowing the sc=
+ope of what it<br>
+&gt;=C2=A0 =C2=A0 =C2=A0needs to do, and it can now be NULL.<br>
+&gt; <br>
+&gt; v6:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0* Folded function qemu_run_default_main_on_new_thread&#39;=
+s code into<br>
+&gt;=C2=A0 =C2=A0 =C2=A0main()<br>
+&gt;=C2=A0 =C2=A0* Removed whitespace changes left over on lines near code =
+removed<br>
+&gt;=C2=A0 =C2=A0 =C2=A0between v4 and v5<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0include/qemu-main.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 3 +--<br>
+&gt;=C2=A0 =C2=A0include/qemu/typedefs.h |=C2=A0 1 +<br>
+&gt;=C2=A0 =C2=A0system/main.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 50=
+ ++++++++++++++++++++++++++++++++++----<br>
+&gt;=C2=A0 =C2=A0ui/cocoa.m=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ | 54 ++++++++++-------------------------------<br>
+&gt;=C2=A0 =C2=A0ui/sdl2.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0|=C2=A0 4 +++<br>
+&gt;=C2=A0 =C2=A05 files changed, 64 insertions(+), 48 deletions(-)<br>
+&gt; <br>
+&gt; diff --git a/include/qemu-main.h b/include/qemu-main.h<br>
+&gt; index 940960a7dbc..4bd0d667edc 100644<br>
+&gt; --- a/include/qemu-main.h<br>
+&gt; +++ b/include/qemu-main.h<br>
+&gt; @@ -5,7 +5,6 @@<br>
+&gt;=C2=A0 =C2=A0#ifndef QEMU_MAIN_H<br>
+&gt;=C2=A0 =C2=A0#define QEMU_MAIN_H<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -int qemu_default_main(void);<br>
+&gt; -extern int (*qemu_main)(void);<br>
+&gt; +extern qemu_main_fn qemu_main;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0#endif /* QEMU_MAIN_H */<br>
+&gt; diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h<br>
+&gt; index 3d84efcac47..b02cfe1f328 100644<br>
+&gt; --- a/include/qemu/typedefs.h<br>
+&gt; +++ b/include/qemu/typedefs.h<br>
+&gt; @@ -131,5 +131,6 @@ typedef struct IRQState *qemu_irq;<br>
+&gt;=C2=A0 =C2=A0 * Function types<br>
+&gt;=C2=A0 =C2=A0 */<br>
+&gt;=C2=A0 =C2=A0typedef void (*qemu_irq_handler)(void *opaque, int n, int =
+level);<br>
+&gt; +typedef int (*qemu_main_fn)(void);<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0#endif /* QEMU_TYPEDEFS_H */<br>
+&gt; diff --git a/system/main.c b/system/main.c<br>
+&gt; index 9b91d21ea8c..d9397a6d5d0 100644<br>
+&gt; --- a/system/main.c<br>
+&gt; +++ b/system/main.c<br>
+&gt; @@ -24,13 +24,14 @@<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0#include &quot;qemu/osdep.h&quot;<br>
+&gt;=C2=A0 =C2=A0#include &quot;qemu-main.h&quot;<br>
+&gt; +#include &quot;qemu/main-loop.h&quot;<br>
+&gt;=C2=A0 =C2=A0#include &quot;sysemu/sysemu.h&quot;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -#ifdef CONFIG_SDL<br>
+&gt; -#include &lt;SDL.h&gt;<br>
+&gt; +#ifdef CONFIG_DARWIN<br>
+&gt; +#include &lt;CoreFoundation/CoreFoundation.h&gt;<br>
+&gt;=C2=A0 =C2=A0#endif<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -int qemu_default_main(void)<br>
+&gt; +static int qemu_default_main(void)<br>
+&gt;=C2=A0 =C2=A0{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int status;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; @@ -40,10 +41,49 @@ int qemu_default_main(void)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0return status;<br>
+&gt;=C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -int (*qemu_main)(void) =3D qemu_default_main;<br>
+&gt; +/*<br>
+&gt; + * Various macOS system libraries, including the Cocoa UI and anythin=
+g using<br>
+&gt; + * libdispatch, such as ParavirtualizedGraphics.framework, requires t=
+hat the<br>
+&gt; + * main runloop, on the main (initial) thread be running or at least =
+regularly<br>
+&gt; + * polled for events. A special mode is therefore supported, where th=
+e QEMU<br>
+&gt; + * main loop runs on a separate thread and the main thread handles th=
+e<br>
+&gt; + * CF/Cocoa runloop.<br>
+&gt; + */<br>
+&gt; +<br>
+&gt; +static void *call_qemu_default_main(void *opaque)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 int status;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 bql_lock();<br>
+&gt; +=C2=A0 =C2=A0 status =3D qemu_default_main();<br>
+&gt; +=C2=A0 =C2=A0 bql_unlock();<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 exit(status);<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +#ifdef CONFIG_DARWIN<br>
+&gt; +static int os_darwin_cfrunloop_main(void)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 CFRunLoopRun();<br>
+&gt; +=C2=A0 =C2=A0 abort();<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +qemu_main_fn qemu_main =3D os_darwin_cfrunloop_main;<br>
+&gt; +#else<br>
+&gt; +qemu_main_fn qemu_main;<br>
+&gt; +#endif<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0int main(int argc, char **argv)<br>
+&gt;=C2=A0 =C2=A0{<br>
+&gt; +=C2=A0 =C2=A0 QemuThread main_loop_thread;<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_init(argc, argv);<br>
+&gt; -=C2=A0 =C2=A0 return qemu_main();<br>
+&gt; +=C2=A0 =C2=A0 if (qemu_main) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_thread_create(&amp;main_loop_thread,=
+ &quot;qemu_main&quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0call_qemu_default_main, NULL, QEMU_THREAD_DETAC=
+HED);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 bql_unlock();<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return qemu_main();<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_default_main();<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0}<br>
+&gt; diff --git a/ui/cocoa.m b/ui/cocoa.m<br>
+&gt; index 4c2dd335323..30b8920d929 100644<br>
+&gt; --- a/ui/cocoa.m<br>
+&gt; +++ b/ui/cocoa.m<br>
+&gt; @@ -73,6 +73,8 @@<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int height;<br>
+&gt;=C2=A0 =C2=A0} QEMUScreen;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; +@class QemuCocoaPasteboardTypeOwner;<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0static void cocoa_update(DisplayChangeListener *dcl,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 int x, int y, int w, int h);<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; @@ -107,6 +109,7 @@ static void cocoa_switch(DisplayChangeListener *dc=
+l,<br>
+&gt;=C2=A0 =C2=A0static NSInteger cbchangecount =3D -1;<br>
+&gt;=C2=A0 =C2=A0static QemuClipboardInfo *cbinfo;<br>
+&gt;=C2=A0 =C2=A0static QemuEvent cbevent;<br>
+&gt; +static QemuCocoaPasteboardTypeOwner *cbowner;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0// Utility functions to run specified code block with the =
+BQL held<br>
+&gt;=C2=A0 =C2=A0typedef void (^CodeBlock)(void);<br>
+&gt; @@ -1321,8 +1324,10 @@ - (void) dealloc<br>
+&gt;=C2=A0 =C2=A0{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0COCOA_DEBUG(&quot;QemuCocoaAppController: de=
+alloc\n&quot;);<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -=C2=A0 =C2=A0 if (cocoaView)<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 [cocoaView release];<br>
+&gt; +=C2=A0 =C2=A0 [cocoaView release];<br>
+&gt; +=C2=A0 =C2=A0 [cbowner release];<br>
+&gt; +=C2=A0 =C2=A0 cbowner =3D nil;<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0[super dealloc];<br>
+&gt;=C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; @@ -1938,8 +1943,6 @@ - (void)pasteboard:(NSPasteboard *)sender provid=
+eDataForType:(NSPasteboardType)t<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0@end<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -static QemuCocoaPasteboardTypeOwner *cbowner;<br>
+&gt; -<br>
+&gt;=C2=A0 =C2=A0static void cocoa_clipboard_notify(Notifier *notifier, voi=
+d *data);<br>
+&gt;=C2=A0 =C2=A0static void cocoa_clipboard_request(QemuClipboardInfo *inf=
+o,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0QemuCl=
+ipboardType type);<br>
+&gt; @@ -2002,43 +2005,8 @@ static void cocoa_clipboard_request(QemuClipboa=
+rdInfo *info,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -/*<br>
+&gt; - * The startup process for the OSX/Cocoa UI is complicated, because<b=
+r>
+&gt; - * OSX insists that the UI runs on the initial main thread, and so we=
+<br>
+&gt; - * need to start a second thread which runs the qemu_default_main():<=
+br>
+&gt; - * in main():<br>
+&gt; - *=C2=A0 in cocoa_display_init():<br>
+&gt; - *=C2=A0 =C2=A0assign cocoa_main to qemu_main<br>
+&gt; - *=C2=A0 =C2=A0create application, menus, etc<br>
+&gt; - *=C2=A0 in cocoa_main():<br>
+&gt; - *=C2=A0 =C2=A0create qemu-main thread<br>
+&gt; - *=C2=A0 =C2=A0enter OSX run loop<br>
+&gt; - */<br>
+&gt; -<br>
+&gt; -static void *call_qemu_main(void *opaque)<br>
+&gt; -{<br>
+&gt; -=C2=A0 =C2=A0 int status;<br>
+&gt; -<br>
+&gt; -=C2=A0 =C2=A0 COCOA_DEBUG(&quot;Second thread: calling qemu_default_m=
+ain()\n&quot;);<br>
+&gt; -=C2=A0 =C2=A0 bql_lock();<br>
+&gt; -=C2=A0 =C2=A0 status =3D qemu_default_main();<br>
+&gt; -=C2=A0 =C2=A0 bql_unlock();<br>
+&gt; -=C2=A0 =C2=A0 COCOA_DEBUG(&quot;Second thread: qemu_default_main() re=
+turned, exiting\n&quot;);<br>
+&gt; -=C2=A0 =C2=A0 [cbowner release];<br>
+&gt; -=C2=A0 =C2=A0 exit(status);<br>
+&gt; -}<br>
+&gt; -<br>
+&gt;=C2=A0 =C2=A0static int cocoa_main(void)<br>
+&gt;=C2=A0 =C2=A0{<br>
+&gt; -=C2=A0 =C2=A0 QemuThread thread;<br>
+&gt; -<br>
+&gt; -=C2=A0 =C2=A0 COCOA_DEBUG(&quot;Entered %s()\n&quot;, __func__);<br>
+&gt; -<br>
+&gt; -=C2=A0 =C2=A0 bql_unlock();<br>
+&gt; -=C2=A0 =C2=A0 qemu_thread_create(&amp;thread, &quot;qemu_main&quot;, =
+call_qemu_main,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0NULL, QEMU_THREAD_DETACHED);<br>
+&gt; -<br>
+&gt; -=C2=A0 =C2=A0 // Start the main event loop<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0COCOA_DEBUG(&quot;Main thread: entering OSX =
+run loop\n&quot;);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0[NSApp run];<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0COCOA_DEBUG(&quot;Main thread: left OSX run =
+loop, which should never happen\n&quot;);<br>
+&gt; @@ -2120,8 +2088,6 @@ static void cocoa_display_init(DisplayState *ds,=
+ DisplayOptions *opts)<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0COCOA_DEBUG(&quot;qemu_cocoa: cocoa_display_=
+init\n&quot;);<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -=C2=A0 =C2=A0 qemu_main =3D cocoa_main;<br>
+&gt; -<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0// Pull this console process up to being a f=
+ully-fledged graphical<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0// app with a menubar and Dock icon<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ProcessSerialNumber psn =3D { 0, kCurrentPro=
+cess };<br>
+&gt; @@ -2185,6 +2151,12 @@ static void cocoa_display_init(DisplayState *ds=
+, DisplayOptions *opts)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_clipboard_peer_register(&amp;cbpeer);<b=
+r>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0[pool release];<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* The Cocoa UI will run the NSApplication runloop=
+ on the main thread<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* rather than the default Core Foundation one.<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 qemu_main =3D cocoa_main;<br>
+&gt;=C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0static QemuDisplay qemu_display_cocoa =3D {<br>
+&gt; diff --git a/ui/sdl2.c b/ui/sdl2.c<br>
+&gt; index bd4f5a9da14..44ab2762262 100644<br>
+&gt; --- a/ui/sdl2.c<br>
+&gt; +++ b/ui/sdl2.c<br>
+&gt; @@ -34,6 +34,7 @@<br>
+&gt;=C2=A0 =C2=A0#include &quot;sysemu/sysemu.h&quot;<br>
+&gt;=C2=A0 =C2=A0#include &quot;ui/win32-kbd-hook.h&quot;<br>
+&gt;=C2=A0 =C2=A0#include &quot;qemu/log.h&quot;<br>
+&gt; +#include &quot;qemu-main.h&quot;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0static int sdl2_num_outputs;<br>
+&gt;=C2=A0 =C2=A0static struct sdl2_console *sdl2_console;<br>
+&gt; @@ -965,6 +966,9 @@ static void sdl2_display_init(DisplayState *ds, Di=
+splayOptions *o)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0atexit(sdl_cleanup);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /* SDL&#39;s event polling (in dpy_refresh) must happen=
+ on the main thread. */<br>
+&gt; +=C2=A0 =C2=A0 qemu_main =3D NULL;<br>
+&gt;=C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0static QemuDisplay qemu_display_sdl2 =3D {<br>
+<br>
+</blockquote></div></div>
+
+--0000000000008d88f2062689a6c5--
 
