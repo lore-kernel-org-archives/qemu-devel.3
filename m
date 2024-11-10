@@ -4,76 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF080D12D42
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Nov 2024 15:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D187AD12D42
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Nov 2024 15:16:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tA9bY-0006hr-1g; Sun, 10 Nov 2024 10:11:56 -0500
+	id 1tA9f2-0007cr-BG; Sun, 10 Nov 2024 10:15:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tA9bW-0006hf-GH
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 10:11:54 -0500
-Received: from mgamail.intel.com ([192.198.163.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tA9bT-0001qc-KC
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 10:11:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1731251511; x=1762787511;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=USl1nY3YjGmLI1eF88k5ItXmHiKnBx4f1MQDRmVEU6Y=;
- b=ds31CxIrabR6A9TmJd0NeCwDTJYvUVybWLD61rJVTa034bxr/zsxeyQw
- nthWEjUGx0pcEwEA2BPLKPdYdl1weGSpxg+tVDSOuLIpCZYU3TuHyL3OU
- OVnJ83ct/eff+5IUhrjZbMUIWM07f7pzDlNz1pTAbHdxiRUogdo4e7e5t
- AfMCalWAshRBTmVVNnGNPty9PnWnfQPmV2I+GtH9pYTM1DVQ4bPKXSDUe
- C2T3Ppn2KDzv3cf1O7n0xNIKQtM8XtJg1yoABrN7ZQRsaDrsCxCXj7Us6
- 0WYwZxA1ZdyuGVOGSnfNb6ltv3aYSgUA1TdTANveIu0wj2UPUJCvJZTWG A==;
-X-CSE-ConnectionGUID: C1hQVoClSCWqAPF8vswojQ==
-X-CSE-MsgGUID: +s3pvs5kR0e4NHFRwQknXQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11252"; a="42455146"
-X-IronPort-AV: E=Sophos;i="6.12,143,1728975600"; d="scan'208";a="42455146"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Nov 2024 07:11:47 -0800
-X-CSE-ConnectionGUID: Zq6s1SMsTH2DN0QsWMsSMA==
-X-CSE-MsgGUID: N/+1CAqGQFG9Nk32wDYC0Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,143,1728975600"; d="scan'208";a="86820275"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa009.fm.intel.com with ESMTP; 10 Nov 2024 07:11:43 -0800
-Date: Sun, 10 Nov 2024 23:29:41 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
- likexu@tencent.com, like.xu.linux@gmail.com,
- zhenyuw@linux.intel.com, groug@kaod.org, lyan@digitalocean.com,
- khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
- den@virtuozzo.com, joe.jin@oracle.com, davydov-max@yandex-team.ru
-Subject: Re: [PATCH 3/7] target/i386/kvm: init PMU information only once
-Message-ID: <ZzDRZcy7EdK40PO1@intel.com>
-References: <20241104094119.4131-1-dongli.zhang@oracle.com>
- <20241104094119.4131-4-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
+ id 1tA9es-0007bF-8c
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 10:15:29 -0500
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
+ id 1tA9eo-0002L5-SA
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 10:15:22 -0500
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-7eae96e6624so2512754a12.2
+ for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 07:15:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1731251717; x=1731856517;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bRIElRIkbSkGcDEyJKLsexpTiPct+QzbWRnM08FSXYA=;
+ b=Gqn9qmiOdrBf5KMxmEb4PZRgLuL0umL9pPgFRvxTklYu3GNeBAlETxvh0a1YAjGH2/
+ Ic2dwb7rzn5piHO1O6Leg6AmUhKCOysECxxFF+FkmFByfahiJjq+D5wt0Kj2RCxoPEBz
+ sftDvEm28e2Jv7Bt9iG0GJL8u1j3QjEb4Rso0SK50aPOg7HDp14W1v8+GpiCLYYvNtrv
+ 70AHzDDCHCAbXocJRNmsm8vJXsNOt1gTGzTeQT/2hDQ5z97JAVGyAcxsZXoR0HCW3LSy
+ 3fGm3DyuQN1C5INxds8lwoEGopgfD+SbD9IzrbHaLBl9xDt8OnYFb8k7m6cEpacCVcSx
+ ZP6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731251717; x=1731856517;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bRIElRIkbSkGcDEyJKLsexpTiPct+QzbWRnM08FSXYA=;
+ b=Slrrf/kQinZ1f8bmE3rWMn/JC2f4tHzwpj66uGbG7yz5LKLn8EnogmM7YwBLgs782L
+ PyPEWDabTPCyoQ2oqqaJRSQl3E7iVe2YZQWwbmIaGea6a+rw1BIK+8v5TEng3Us2L+8s
+ f+PAEgAvLoO2qtK1xd6dRqhfTGhwP0gYQni0U0iQNiYe03lbFNlHZYI06faLJh2LTU9h
+ cB6JF8QPbMcg2ZqzHA1jhGHiBtgNt0LndelqAbVZr4U7GvvVZlX8ZzLNTG6mc8HKGicg
+ 9Oa0PbqCsRWEeywth2/Q5V2ilG+tSTU7Nca06SYUKBvYN1YnCKt5nq/HEPPJh+wTkIvi
+ xraw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVe2AsMba3O02lYHA8XxKpmmWJ1DZMfPwigAcubavCEDe5yj6tvWy1meTuhpFsKJSBoTPHBinGiVecD@nongnu.org
+X-Gm-Message-State: AOJu0Yw/DhcQHGm7DPLEZcNry07+Drw+z2CkxnlsTfUqtL+V0x8aObHX
+ KiGdG+8g/SK0RK91LD5S6AKQ7SSRzZKN6swCouAimwg+tZI1a9e2Iw3RW0a9fqiOXJPVlSKinDY
+ sggjm6tKSpH+rxxuB5TqXuOJLodX2MRi1UTOP
+X-Google-Smtp-Source: AGHT+IF3qax97AtN+5hD3VD8U+YOt+0KuBpiEI+KIHijgfNTxxY+rlEHjGQSBxSBpu+29rjjRwu4yHikM6Z5uJdD3t0=
+X-Received: by 2002:a17:90b:4f43:b0:2e2:e82d:48cf with SMTP id
+ 98e67ed59e1d1-2e9b1724271mr14520256a91.16.1731251716985; Sun, 10 Nov 2024
+ 07:15:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241104094119.4131-4-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.118,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241108144709.95498-1-phil@philjordan.eu>
+ <20241108144709.95498-2-phil@philjordan.eu>
+ <9c2e0b96-2125-4041-9f66-116d54accb04@daynix.com>
+ <CAAibmn3NbtOEwWLQFOo_UmAGTehOj+dDP04A=-JGMZVK9AYMDw@mail.gmail.com>
+ <07ec41b8-922c-4c6a-b550-63fc4481d019@daynix.com>
+In-Reply-To: <07ec41b8-922c-4c6a-b550-63fc4481d019@daynix.com>
+From: Phil Dennis-Jordan <lists@philjordan.eu>
+Date: Sun, 10 Nov 2024 16:15:06 +0100
+Message-ID: <CAGCz3vt=jCBU8UpXhcLEXC20mJZ=4Mx0hL4ixzhSPAKF3rV64w@mail.gmail.com>
+Subject: Re: [PATCH v8 01/15] ui & main loop: Redesign of system-specific main
+ thread event handling
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
+ agraf@csgraf.de, 
+ peter.maydell@linaro.org, pbonzini@redhat.com, rad@semihalf.com, 
+ quic_llindhol@quicinc.com, stefanha@redhat.com, mst@redhat.com, 
+ slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net, 
+ marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com, 
+ chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com, philmd@linaro.org, 
+ shorne@gmail.com, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, 
+ berrange@redhat.com, qemu-arm@nongnu.org, qemu-block@nongnu.org, 
+ qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=lists@philjordan.eu; helo=mail-pg1-x52f.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,38 +107,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Dongli,
+On Sun, 10 Nov 2024 at 08:10, Akihiko Odaki <akihiko.odaki@daynix.com> wrot=
+e:
+>
+> On 2024/11/10 16:08, Phil Dennis-Jordan wrote:
+> >
+> >
+> > On Sun 10. Nov 2024 at 08:01, Akihiko Odaki <akihiko.odaki@daynix.com
+> > <mailto:akihiko.odaki@daynix.com>> wrote:
+> >
+> >     On 2024/11/08 23:46, Phil Dennis-Jordan wrote:
+> >      > macOS's Cocoa event handling must be done on the initial (main)
+> >     thread
+> >      > of the process. Furthermore, if library or application code uses
+> >      > libdispatch, the main dispatch queue must be handling events on
+> >     the main
+> >      > thread as well.
+> >      >
+> >      > So far, this has affected Qemu in both the Cocoa and SDL UIs,
+> >     although
+> >      > in different ways: the Cocoa UI replaces the default qemu_main
+> >     function
+> >      > with one that spins Qemu's internal main event loop off onto a
+> >      > background thread. SDL (which uses Cocoa internally) on the othe=
+r
+> >     hand
+> >      > uses a polling approach within Qemu's main event loop. Events ar=
+e
+> >      > polled during the SDL UI's dpy_refresh callback, which happens t=
+o run
+> >      > on the main thread by default.
+> >
+> >     GTK should also do the same as SDL and requires treatment; I forgot=
+ to
+> >     note that in previous reviews.
+> >
+> >
+> > Although it=E2=80=98s possible to build Qemu with GTK support enabled o=
+n macOS,
+> > that UI doesn=E2=80=99t actually work on macOS at all, and apparently h=
+asn=E2=80=99t
+> > been supported since 2018, see:
+> > https://stackoverflow.com/a/51474795 <https://stackoverflow.com/a/51474=
+795>
+> >
+> > I don=E2=80=99t think there=E2=80=99s any point making adjustments to t=
+he GTK code by
+> > guessing what might be needed if someone did fix that to work with macO=
+S
+> > at some point.
+>
+> But there is a GitLab issue saying it "sometimes" crashes, implying it
+> works otherwise:
+> https://gitlab.com/qemu-project/qemu/-/issues/2539
 
->  int kvm_arch_init_vcpu(CPUState *cs)
->  {
->      struct {
-> @@ -2237,6 +2247,13 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
->      cpuid_data.cpuid.nent = cpuid_i;
->  
-> +    /*
-> +     * Initialize PMU information only once for the first vCPU.
-> +     */
-> +    if (cs == first_cpu) {
-> +        kvm_init_pmu_info(env);
-> +    }
-> +
-
-Thank you for the optimization. However, I think it¡¯s not necessary
-because:
-
-* This is not a hot path and not a performance bottleneck.
-* Many CPUID leaves are consistent across CPUs, and 0xA is just one of them.
-* And encoding them all in kvm_x86_build_cpuid() is a common pattern.
-  Separating out 0xa disrupts code readability and fragments the CPUID encoding.
-
-Therefore, code maintainability and correctness might be more important here,
-than performance concern.
-
->      if (((env->cpuid_version >> 8)&0xF) >= 6
->          && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
->             (CPUID_MCE | CPUID_MCA)) {
-> -- 
-> 2.39.3
-> 
+I spent some time trying to get the GTK GUI working locally on macOS
+with no success (with or without the pvg/vmapple patch set) until I
+found various info online suggesting it was broken. But I guess I can
+add a qemu_main =3D NULL; line to gtk_display_init(). This will retain
+the existing behaviour both on other platforms (where qemu_main is
+NULL anyway) and if anyone does manage to use it on macOS.
 
