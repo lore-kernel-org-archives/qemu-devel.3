@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A99D2E9DF
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 12:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A56EAD2E9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 12:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAT4Z-0006Sq-DQ; Mon, 11 Nov 2024 06:59:11 -0500
+	id 1tAT8E-0007UV-GI; Mon, 11 Nov 2024 07:02:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAT4W-0006RG-Kr
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 06:59:08 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAT88-0007Tp-DG
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 07:02:53 -0500
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAT4U-0006RE-Kt
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 06:59:08 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4316e9f4a40so37845565e9.2
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 03:59:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAT84-0006pN-54
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 07:02:50 -0500
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2feeb1e8edfso54509311fa.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 04:02:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731326345; x=1731931145; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731326565; x=1731931365; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kn9Rue13f/u+Er6gLvrFcstgO2g6Uo1SDafHxtBdCH4=;
- b=nTOVhpQOkObRC/7ySUMynkj5MonKnRB4uHglPGFVhQNXbcZAWFSeBaiQhJrKbdLxJk
- TE15nj1fP9bbvBTDBL/JSgkP1fjTn3WWDptEpGKV1bF0YlGzCfeAI9YMNolFP14J3JDQ
- fTx+c8ljLXWasEz6Pnuzvyp44XQ3QUUkLazRnkfA+9kpRTsqJegSYhi492xphWmxpbUD
- pyN5DRwxzg+PVKLg+5RdVi/dUr7mA9Ku/mhMr5MuWOT37ntp2RM2kmwhdXkPWhtbEucR
- YFn+HEDgum9dcZiTSTbpqt+/NGTj4hLBa822r9qzP3CBALXJ4D3PED1bBSJbHSb7Ltlr
- /9bw==
+ bh=dnMmNO50aDzoHtK5dRqtoMLJToObkbj4apMesAz6wjQ=;
+ b=a/T8Mb/kHJSa1n9r8ko00cR7FTxEMODHLJr+1O9Jm4Wt/mgmIMRtTZ8wzUzXoxsDJt
+ S/GLyi+WDQstIh0MObMCby4ki1tgprb9EhnDR9saxD8rcQHF7gMqgDLfhdSjgTLbF5Ur
+ Lal2pahE0m7bavj0OUqK9jS4Io8sT0ASkvnqjhA/KvxVhipnRnzLGsRbv2jf+jAoJEir
+ ZvtCTqfXDFHNycAM4K06U67PR4bRC5FT0wYpNfR7JisQjE8BiZ1iw4otbBODxxEv1zDQ
+ 6lZpOm0JKx7wlFrAHkilUwdRGtUVWPI4KlSIqEXrDj3BZ/ICEurXluCeHJlqKtISufPP
+ J93Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731326345; x=1731931145;
+ d=1e100.net; s=20230601; t=1731326565; x=1731931365;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kn9Rue13f/u+Er6gLvrFcstgO2g6Uo1SDafHxtBdCH4=;
- b=Z9Z1zE6e3F6a+KnWK0SaHHcarbXkXLm5/19ZjcQm6pZ0E92+U+XQeSZ6JQgJq//9lt
- AlzyFKJ8AVLlhAJp1sjf1afoyV2Elis5BXnz/YaeUKGGyCvbmEavlLuG9Hoqo+pCgsgo
- 5+yviwaFu7MDYFzveSKi7jhr2Cy8TntGJqNkjdW1VU+hBKH4Xv6ngxkHh6ZKVLyQlBIN
- dTeVAQMAQwRAWXeF9vnONdIvs/l0WFIxOsCRFCcuqhZIhL0ha6/uQA9A2SJPv5U+u17n
- aewrP6+ASnx6n6V9neyK+bfOriagc1RmpHteBI0kAlzbhBEglPi7F6QRqWtZlNqK6rko
- DFsA==
+ bh=dnMmNO50aDzoHtK5dRqtoMLJToObkbj4apMesAz6wjQ=;
+ b=R2KHxLZp+qLzHKewgA9OSbGZkDUmaQykiY/1MtLaILOTBJt4dQFIk0n9m96H3U07wf
+ y7JsYLqPff/OXbuZ/tfs1m+8JHOGyUFGwtDdUAchG8DCz7nIIH4LRF+eeKayfalLYeO4
+ qAoux8wKZJ7CTuC4YUnLsYNElGjbfbNjFnmGGjDgYSfK2euQBM7fepapLXUzbqOCjFPK
+ GkWgal0bNoQLvfUeZwDtotRvWaHUrNLr/HREWjvPSb20NLIOooov08B2PsKkzeOp06Iw
+ oPMR+muN0wT3mwjJGt+1hbry0d6mbnSIaDou9KEhNsIYSFhRTaAYX3E3y1zbZyvzDdQT
+ 50zQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWYsM2Web3d356VpeI9Mxu+5oKtPg8bDWjs+sIkwJda+Op32PKzNOgNyx3QbLx73Fs/DMspTYAZe3AP@nongnu.org
-X-Gm-Message-State: AOJu0YzZovLQdZHJuXgoVmgbbqcshARSMSAs0Z9KW8gShcqJrw0aB8V/
- DYYiGpNJCrdVIe2sK41uW3992gfN5jpnq6Iq8k+VvQvYrzaq8aqCtAMf7k300Hg=
-X-Google-Smtp-Source: AGHT+IGiyKI9odHvnuIvTVaCgITyF+kYU1jUhXfbpDHg3NKh5o5gYxBU4mkKs/dsprJdqN1BYMJkCw==
-X-Received: by 2002:a5d:47a4:0:b0:37d:3f5c:5a83 with SMTP id
- ffacd0b85a97d-381f186cb79mr9979467f8f.19.1731326344961; 
- Mon, 11 Nov 2024 03:59:04 -0800 (PST)
+ AJvYcCW1am/siLOAz9DviUSPhV6F/JuQd3v9rMfqUcx0tNp1y+TklzJWNUnZNzQJZvceyYAP5eBexFUX7mh/@nongnu.org
+X-Gm-Message-State: AOJu0YztGcO7R0IwCkAe67Hx7M12oneYl7xnL+bFGCDfLe3OpIkSTbC6
+ wjD7pw0llOSQBdDNYjX0WoxzuYcSDTPKErk3qC/o57BPv/Du6fbtBdu0DTiIi5c=
+X-Google-Smtp-Source: AGHT+IHLqk7NhJ4oqj0tnQqOBFfsgxzF2E+aiMN9ZtvK5H0HZTKHhKo/0ZhEn9aRsu3dWp2gIjlUNQ==
+X-Received: by 2002:a2e:bc1a:0:b0:2fa:d4ef:f234 with SMTP id
+ 38308e7fff4ca-2ff2016361fmr59045781fa.1.1731326565447; 
+ Mon, 11 Nov 2024 04:02:45 -0800 (PST)
 Received: from [192.168.69.126] (cnf78-h01-176-184-27-70.dsl.sta.abo.bbox.fr.
  [176.184.27.70]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed970e18sm12628331f8f.10.2024.11.11.03.59.03
+ 5b1f17b1804b1-432b054aed6sm170869455e9.15.2024.11.11.04.02.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Nov 2024 03:59:04 -0800 (PST)
-Message-ID: <07782067-bd0a-44da-ab89-f3bbe443e349@linaro.org>
-Date: Mon, 11 Nov 2024 12:59:01 +0100
+ Mon, 11 Nov 2024 04:02:44 -0800 (PST)
+Message-ID: <0efff9f3-6053-4e2d-80b5-27b4c86da813@linaro.org>
+Date: Mon, 11 Nov 2024 13:02:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/17] hw/microblaze: Support various endianness for
- s3adsp1800 machines
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+Subject: Re: [RFC PATCH v3 04/17] hw/net/xilinx_ethlite: Simplify by having
+ configurable endianness
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
  Anton Johansson <anjo@rev.ng>
-Cc: Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: Jason Wang <jasowang@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair@alistair23.me>
 References: <20241108154317.12129-1-philmd@linaro.org>
- <20241108154317.12129-16-philmd@linaro.org>
- <cf73685f-df95-4165-a642-ddbbb5efb64e@redhat.com>
+ <20241108154317.12129-5-philmd@linaro.org>
+ <71a10d65-dd73-4f39-93ee-2c36928f8f4f@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <cf73685f-df95-4165-a642-ddbbb5efb64e@redhat.com>
+In-Reply-To: <71a10d65-dd73-4f39-93ee-2c36928f8f4f@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,62 +105,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/11/24 07:56, Thomas Huth wrote:
-> On 08/11/2024 16.43, Philippe Mathieu-Daudé wrote:
->> Introduce an abstract machine parent class which defines
->> the 'little_endian' property. Duplicate the current machine,
->> which endian is tied to the binary endianness, to one big
->> endian and a little endian machine; updating the machine
->> description. Keep the current default machine for each binary.
+On 8/11/24 16:05, Paolo Bonzini wrote:
+> On 11/8/24 16:43, Philippe Mathieu-Daudé wrote:
+>> The Xilinx 'ethlite' device was added in commit b43848a100
+>> ("xilinx: Add ethlite emulation"), being only built back
+>> then for a big-endian MicroBlaze target (see commit 72b675caac
+>> "microblaze: Hook into the build-system").
 >>
->> 'petalogix-s3adsp1800' machine is aliased as:
->> - 'petalogix-s3adsp1800-be' on big-endian binary,
->> - 'petalogix-s3adsp1800-le' on little-endian one.
+>> I/O endianness access was then clarified in commit d48751ed4f
+>> ("xilinx-ethlite: Simplify byteswapping to/from brams"). Here
+>> the 'fix' was to use tswap32(). Since the machine was built as
+>> big-endian target, tswap32() use means the fix was for a little
+>> endian host. While the datasheet (reference added in file header)
+>> is not precise about it, we interpret such change as the device
+>> expects accesses in big-endian order.
 >>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Instead of having a double swapping, one in the core memory layer
+>> due to DEVICE_NATIVE_ENDIAN and a second one with the tswap calls,
+>> allow the machine code to select the proper endianness desired,
+>> removing the need of tswap().
+>>
+>> Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair of
+>> DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
+>> Add the "little-endian" property to select the device endianness,
+>> defaulting to little endian.
+>> Set the proper endianness on the single machine using the device.
+>>
 >> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> ---
->>   hw/microblaze/petalogix_s3adsp1800_mmu.c | 62 +++++++++++++++++++-----
->>   1 file changed, 51 insertions(+), 11 deletions(-)
-> ...
->>   static const TypeInfo petalogix_s3adsp1800_machine_types[] = {
->>       {
->>           .name           = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
->>           .parent         = TYPE_MACHINE,
->> -        .class_init     = petalogix_s3adsp1800_machine_class_init,
->> +        .abstract       = true,
->> +        .class_size     = sizeof(PetalogixS3adsp1800MachineClass),
->> +    },
->> +    {
->> +        .name           = MACHINE_TYPE_NAME("petalogix-s3adsp1800-be"),
->> +        .parent         = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
->> +        .class_init     = petalogix_s3adsp1800_machine_class_init_be,
->> +    },
->> +    {
->> +        .name           = MACHINE_TYPE_NAME("petalogix-s3adsp1800-le"),
->> +        .parent         = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
->> +        .class_init     = petalogix_s3adsp1800_machine_class_init_le,
->>       },
->>   };
+>> RFC until I digest Paolo's review from v1:
+>> https://lore.kernel.org/qemu-devel/34f6fe2f-06e0-4e2a-a361-2d662f6814b5@redhat.com/
 > 
-> Do we really want additional machine types for this? Can't we simply let 
-> the user set the machine property instead? (otherwise, all tests that 
-> run for each machine types (see qtest_cb_for_every_machine) will now be 
-> executed three times instead of only once). IMHO it should be sufficient 
-> to have a machine property for this and add proper documentation for the 
-> machine.
-
-Machine property was my first approach but then I figured when merging
-the 2 binaries in one, it is confusing for the CLI users.
-
-Having 3 more tests until we unify the endianness binary doesn't seem
-a high price to pay to me. Besides, not we are not exercising the same
-code path. We need to prove the tests are really duplicated so we can
-merge the binaries. If you really insist I can modify qtests to skip
-these machines meanwhile.
-
+> tl;dr: this works but would break migration compatibility with the 
+> previous version.  If you want to keep that, you need to add
 > 
->   Thomas
+>> -            r = tswap32(s->regs[addr]);
+>> +            r = s->regs[addr];
 > 
+> if (s->little_endian_model)
+>      r = cpu_to_le32(r);
+> else
+>      r = cpu_to_be32(r);
+> 
+> 
+>> @@ -161,23 +165,26 @@ eth_write(void *opaque, hwaddr addr,
+>>               break;
+>>           default:
+> 
+> if (s->little_endian_model)
+>      r = le32_to_cpu(r);
+> else
+>      r = be32_to_cpu(r);
+> 
+>> -            s->regs[addr] = tswap32(value);
+>> +            s->regs[addr] = value;
+>>               break;
+> 
+> These pairs ensure that RAM goes through an even number of swaps.  I 
+> don't think they are needed but you decide.
 
+Indeed; I didn't realize it was RAM.
+
+> However, I am wondering if the double MemoryRegionOps are needed *at 
+> all*.  Since petalogix is arguably a little-endian only machine, can you 
+> just use DEVICE_LITTLE_ENDIAN?
+
+1/ This petalogix machine is actually built in the big-endian binary
+2/ As Edgar mentioned elsewhere, Petalogic IP can be synthetized as
+    big-endian
+3/ This machine is used to prove we can remove the TARGET_BIG_ENDIAN
+    definition and unify big/little endian binaries in our build system.
 
