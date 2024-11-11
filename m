@@ -4,125 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F08ED2E9D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 10:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 273C9D2E9D6
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 10:43:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tARny-0006lG-Ei; Mon, 11 Nov 2024 05:37:59 -0500
+	id 1tARsY-0007oc-1k; Mon, 11 Nov 2024 05:42:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tARnq-0006kw-R1
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 05:37:51 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tARsK-0007o4-2n
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 05:42:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tARno-0006ra-9M
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 05:37:49 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tARsH-0007ND-RA
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 05:42:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731321463;
+ s=mimecast20190719; t=1731321743;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=StgbyrGnLx9oiuhXzO0YBAyvHcpMZsHwzc1Bvdy2iLA=;
- b=CqnkrziBl2eYsqVR0xz6wxDDpGJ14MyVzMoIk7qmsgVYdbIIaY6AcMaE+w8auAlSwZPClL
- e7BR+UA6PVMDTfREErZ/yGQur2gRZHgVmcV5xh6crtfh6LyYiTMvThULd+n+WGX7B8Oxlt
- 3y9SuNMql8JC8jMFSahUsQKnO0Lq86g=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=X4MnMtg5ej/tnhJaAYYAcviY9tyhNClA3VwOJEaiMrw=;
+ b=MKFJIN8ESzw8KbGHDzZvcH3QdjkezOD6CvXAaS693tJUkzH9RiYBr3UfrCxtyfS3lsuoEK
+ 7CTM3xgCaHKOi5gM35SzryJ09FN8jlZSCeyLhPhR0UGR52sPh2oGi64z3WQr8mHiuIqFP2
+ poid96tPxCfHHDneoN2Ah3MjOuesHUg=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-383-zuaJuxmtO-2mQbpvQK-TPg-1; Mon, 11 Nov 2024 05:37:40 -0500
-X-MC-Unique: zuaJuxmtO-2mQbpvQK-TPg-1
-X-Mimecast-MFC-AGG-ID: zuaJuxmtO-2mQbpvQK-TPg
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a9adb271de7so378495666b.0
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 02:37:40 -0800 (PST)
+ us-mta-327-hJnIOjEuN2aKqrfkC-g3_Q-1; Mon, 11 Nov 2024 05:42:17 -0500
+X-MC-Unique: hJnIOjEuN2aKqrfkC-g3_Q-1
+X-Mimecast-MFC-AGG-ID: hJnIOjEuN2aKqrfkC-g3_Q
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-539e7dc83ecso2656725e87.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 02:42:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731321459; x=1731926259;
- h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=StgbyrGnLx9oiuhXzO0YBAyvHcpMZsHwzc1Bvdy2iLA=;
- b=o01Rc2+Zf2DnSaY3CeaCNKME6fUfDkONLTbE9fcLAlLFj1ZXW2EV7sPP5QJhkxOL3Q
- spPHAx4vK9We1mhcwus8UTDjL36JcLCmW+QyuLoj9Avt2rQF7C9aKWjggPIv21MsghXe
- jUW5XwvhUyPWhiLjK7+WPBjyk1zoVTCC77sOrWFPAVwpuweQHsp8gyTh8EC1Hfwcm9LK
- IEcqUY0drTXXAg8HCyz3hip/0xybW22Ba3k4Bhc2ByR+8Tsul7Pzx4X3NPsNijK/Q6lm
- kbr46od+kl4M8sbWCyYqgT1pCp7igi80vBNSinVcc3eBNGSVvEIVryw7gVtP5HAB2koy
- Abiw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWJ0IWdpIzWXOD0w8OtAv4rgZqlClscH/jMkjc0+uxGXQHzyENC50GZQgfMYd6NKSLfTJnVkPMIpPD/@nongnu.org
-X-Gm-Message-State: AOJu0YzQWhkOeQg9D8UDTtErCxhA5+BBQ+SnIqxlgUgmfF5IHIsByVnU
- sSreGTZFC8bQ1Oh4EMjX94Yy/cmuliJrWmx2wTPOJoMUKtAmxYgK+eLMAFZFbtRqXaKvORkNsBD
- C1obfw0omOCLPKBZIRSrVoX9VKy312WaHAo0bh40ERlVLteff2lWr
-X-Received: by 2002:a17:907:3d90:b0:a86:8e3d:86e2 with SMTP id
- a640c23a62f3a-a9eefebd4b5mr1231223266b.11.1731321459495; 
- Mon, 11 Nov 2024 02:37:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEfVbzAbIKoJLIZUXL1Ws2Y8GAoaUG44M69KPA/WzySn8a79G4ymOb3AV4DATBS75EYgTspZw==
-X-Received: by 2002:a17:907:3d90:b0:a86:8e3d:86e2 with SMTP id
- a640c23a62f3a-a9eefebd4b5mr1231221366b.11.1731321459097; 
- Mon, 11 Nov 2024 02:37:39 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
+ d=1e100.net; s=20230601; t=1731321735; x=1731926535;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=X4MnMtg5ej/tnhJaAYYAcviY9tyhNClA3VwOJEaiMrw=;
+ b=CObjKrUQcm6Ntk2mGgslCdp2SiYIWG81UuKZOGKcm0rcdBN8/blehXaXegSrsrzTMg
+ v6r4XT65H2+p9Fgkwq7qvWBuOuqmlDk3hPTCZcWJ/DYwiR9KwX8wLkVJ7EWmmbmwaEoj
+ LhJkarF+//uNsznF6arBcAa0tox2EWDPTB2s4E+D2GZititxtzH2MQOiG7qa3815VXw4
+ JuKVja7R6haizJpXVryQ4qYJzPq2ZkFy+7KW+nB51Ejwk8tExyBy4W5iRoLPjdG48nUX
+ yX5vO4pHTQ4wFRJFYT069alc05pxN3sq/ic+mD8CSQify3XSYwO3l3g/kqu6hk6reHfV
+ sNFw==
+X-Gm-Message-State: AOJu0YxyqTGUVbz+x504lAuUha33+7jCn9fRGVHEPiKTOZdMd+RFCJ6p
+ 3qSkNigZdVEBsdm4T2FVYQVHeaE3aMPrdKc5lHDLyTSYpvq8duX0yGqLN9hqUn7CZWYtxUlVCxv
+ Mi35Gd8NICrJE3MEJOjX3vCjzO+zkO6OZw1+cSvgJx1ao0Zk9Mi7E
+X-Received: by 2002:a05:6512:3da9:b0:539:ffb5:8d2c with SMTP id
+ 2adb3069b0e04-53d862cb450mr4273758e87.30.1731321735287; 
+ Mon, 11 Nov 2024 02:42:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHq+4btrjb6NeWH6s9QdUAEK6Yo3smtpWCRhcqoZ4GxKpwAnoIKf3VY8uuz0fVVmU433xnqwg==
+X-Received: by 2002:a05:6512:3da9:b0:539:ffb5:8d2c with SMTP id
+ 2adb3069b0e04-53d862cb450mr4273747e87.30.1731321734838; 
+ Mon, 11 Nov 2024 02:42:14 -0800 (PST)
+Received: from ?IPV6:2003:cb:c730:4300:18eb:6c63:a196:d3a2?
+ (p200300cbc730430018eb6c63a196d3a2.dip0.t-ipconnect.de.
+ [2003:cb:c730:4300:18eb:6c63:a196:d3a2])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0a4ab5esm579737966b.54.2024.11.11.02.37.38
+ 5b1f17b1804b1-432b054aed6sm168821855e9.15.2024.11.11.02.42.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Nov 2024 02:37:38 -0800 (PST)
-Message-ID: <f2405acc-693f-415f-9f36-cd56bc472c75@redhat.com>
-Date: Mon, 11 Nov 2024 11:37:36 +0100
+ Mon, 11 Nov 2024 02:42:14 -0800 (PST)
+Message-ID: <43700d36-b9f8-42da-ba72-b0ec6580032d@redhat.com>
+Date: Mon, 11 Nov 2024 11:42:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: test harness hang running functional test
-To: Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>
-References: <CAFEAcA-4cf+yub8bsgtsdFOJD_9HziY3tekCN5s=+JcWEpw3Nw@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v1 2/2] migration: Do not perform RAMBlock dirty sync
+ during the first iteration
+To: Yong Huang <yong.huang@smartx.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Wei Wang <wei.w.wang@intel.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+References: <cover.1731128180.git.yong.huang@smartx.com>
+ <c25abae360ac204321acc5010a745a8e594f24bd.1731128180.git.yong.huang@smartx.com>
+ <b2e42ed6-d514-46c9-993c-e7ae6384592f@redhat.com>
+ <CAK9dgmak97Uv_RO+WFEb+KLkiuZ5+ibO3bigm3379L4aD55TvA@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-Cc: John Snow <jsnow@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA-4cf+yub8bsgtsdFOJD_9HziY3tekCN5s=+JcWEpw3Nw@mail.gmail.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CAK9dgmak97Uv_RO+WFEb+KLkiuZ5+ibO3bigm3379L4aD55TvA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -147,40 +156,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/11/2024 17.09, Peter Maydell wrote:
-> I was trying to track down why one of the functional tests was
-> hanging, so I tried running it directly:
+On 11.11.24 11:08, Yong Huang wrote:
 > 
-> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1
-> QEMU_TEST_QEMU_BINARY=build/clang/qemu-system-loongarch64
-> PYTHONPATH=./build/clang/pyvenv:./python time
-> ./build/clang/pyvenv/bin/python3
-> ./tests/functional/test_loongarch64_virt.py
 > 
-> (This is with a QEMU built with the undefined-behaviour
-> sanitizer.)
+> On Mon, Nov 11, 2024 at 5:27 PM David Hildenbrand <david@redhat.com 
+> <mailto:david@redhat.com>> wrote:
 > 
-> Mostly this seems to succeed, but this time it's hung. Looking
-> at the process tree:
+>     On 09.11.24 05:59, Hyman Huang wrote:
+>      > The first iteration's RAMBlock dirty sync can be omitted because QEMU
+>      > always initializes the RAMBlock's bmap to all 1s by default.
+>      >
+>      > Signed-off-by: Hyman Huang <yong.huang@smartx.com
+>     <mailto:yong.huang@smartx.com>>
+>      > ---
+>      >   migration/cpu-throttle.c |  2 +-
+>      >   migration/ram.c          | 11 ++++++++---
+>      >   2 files changed, 9 insertions(+), 4 deletions(-)
+>      >
+>      > diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
+>      > index 5179019e33..674dc2004e 100644
+>      > --- a/migration/cpu-throttle.c
+>      > +++ b/migration/cpu-throttle.c
+>      > @@ -141,7 +141,7 @@ void cpu_throttle_dirty_sync_timer_tick(void
+>     *opaque)
+>      >        * effect on guest performance, therefore omit it to avoid
+>      >        * paying extra for the sync penalty.
+>      >        */
+>      > -    if (sync_cnt <= 1) {
+>      > +    if (!sync_cnt) {
+>      >           goto end;
+>      >       }
+>      >
+>      > diff --git a/migration/ram.c b/migration/ram.c
+>      > index 05ff9eb328..571dba10b7 100644
+>      > --- a/migration/ram.c
+>      > +++ b/migration/ram.c
+>      > @@ -2718,7 +2718,7 @@ static void ram_list_init_bitmaps(void)
+>      >   {
+>      >       MigrationState *ms = migrate_get_current();
+>      >       RAMBlock *block;
+>      > -    unsigned long pages;
+>      > +    unsigned long pages, clear_bmap_pages;
+>      >       uint8_t shift;
+>      >
+>      >       /* Skip setting bitmap if there is no RAM */
+>      > @@ -2736,6 +2736,7 @@ static void ram_list_init_bitmaps(void)
+>      >
+>      >           RAMBLOCK_FOREACH_NOT_IGNORED(block) {
+>      >               pages = block->max_length >> TARGET_PAGE_BITS;
+>      > +            clear_bmap_pages = clear_bmap_size(pages, shift);
+>      >               /*
+>      >                * The initial dirty bitmap for migration must be
+>     set with all
+>      >                * ones to make sure we'll migrate every guest RAM
+>     page to
+>      > @@ -2751,7 +2752,12 @@ static void ram_list_init_bitmaps(void)
+>      >                   block->file_bmap = bitmap_new(pages);
+>      >               }
+>      >               block->clear_bmap_shift = shift;
+>      > -            block->clear_bmap =
+>     bitmap_new(clear_bmap_size(pages, shift));
+>      > +            block->clear_bmap = bitmap_new(clear_bmap_pages);
+>      > +            /*
+>      > +             * Set clear_bmap to 1 unconditionally, as we always
+>     set bmap
+>      > +             * to all 1s by default.
+>      > +             */
+>      > +            bitmap_set(block->clear_bmap, 0, clear_bmap_pages);
+>      >           }
+>      >       }
+>      >   }
+>      > @@ -2783,7 +2789,6 @@ static bool ram_init_bitmaps(RAMState *rs,
+>     Error **errp)
+>      >               if (!ret) {
+>      >                   goto out_unlock;
+>      >               }
+>      > -            migration_bitmap_sync_precopy(false);
+>      >           }
+>      >       }
+>      >   out_unlock:
 > 
-> petmay01 3616444  0.0  0.0   4768  1124 pts/2    S+   15:53   0:00
->   \_ time ./build/clang/pyvenv/bin/python3
-> ./tests/functional/test_loongarch64_virt.py
-> petmay01 3616445 99.8  0.0  38480 23620 pts/2    R+   15:53  13:20
->       \_ ./build/clang/pyvenv/bin/python3
-> ./tests/functional/test_loongarch64_virt.py
-> petmay01 3616448  0.0  0.0      0     0 pts/2    Z+   15:53   0:00
->           \_ [qemu-system-loo] <defunct>
 > 
-> The QEMU process itself has exited, but the test harness has
-> not yet noticed or reaped the zombie process. Instead it's sitting
-> there eating CPU. Presumably this is a bug in the test harness?
+>     For virtio-mem, we rely on the migration_bitmap_clear_discarded_pages()
+>     call to clear all bits that correspond to unplugged memory ranges. 
+> 
+> 
+>     If we ommit the sync, we can likely have bits of unplugged ranges still
+>     set to "1", meaning we would try migrate them later, although we
+>     shouldn't?
+> 
+> 
+> 
+> IIUC, migration_bitmap_clear_discarded_pagesis still called at the end of
+> ram_init_bitmaps no matter if we omit the first sync.
+ > > PRECOPY_NOTIFY_SETUPnotification is sent out at the end of
+> ram_save_setup(ram_list_init_bitmaps),when 
+> virtio_balloon_free_page_start() is
+> called,migration_bitmap_clear_discarded_pages() has already completed 
+> and the
+> bmap has been correctly cleared.
+> 
+> ram_save_setup
+>     -> ram_list_init_bitmaps
+>         -> migration_bitmap_clear_discarded_pages
+>      -> return precopy_notify(PRECOPY_NOTIFY_SETUP, errp);
+> 
+> You can double check it.
 
-Sounds like either a bug in the test harness or in the "python/qemu" module 
-... I'll try to look at it, but maybe not in the next two weeks (I'm 
-currently quite busy with other stuff), so if someone else wants to have a 
-look already, that would be great!
+That's not my concern, let me clarify :)
 
-  Thomas
+
+Assume in KVM the bitmap is all 1s ("everything dirty").
+
+In current code, we will sync the bitmap once (IIRC, clearing any dirty 
+bits from KVM).
+
+Then we call migration_bitmap_clear_discarded_pages() to clear all 
+"discarded" pages that we shouldn't touch.
+
+When we do the next bitmap sync, we will not get a "1" for discarded 
+ranges, and we will never try migrating discarded ranges.
+
+
+With your patch, we're omitting the first sync. Could we possibly get 
+discarded ranges reported from KVM as dirty during the "now first" sync 
+*after* the migration_bitmap_clear_discarded_pages() call, and try 
+migrating discarded ranges?
+
+I did not dive deep into the code, maybe 
+migration_bitmap_clear_discarded_pages() ends up clearing the bits in 
+KVM, but I recall that there was something special about the first 
+bitmap sync.
+
+-- 
+Cheers,
+
+David / dhildenb
 
 
