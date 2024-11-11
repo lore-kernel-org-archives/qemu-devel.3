@@ -4,80 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F67D12D5A
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Nov 2024 22:46:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34ED7D12D5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 01:25:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAGg5-00017v-JN; Sun, 10 Nov 2024 17:45:05 -0500
+	id 1tAJAW-0003yB-BC; Sun, 10 Nov 2024 20:24:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tAGg3-000178-JT
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 17:45:03 -0500
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tAJAV-0003y3-54
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 20:24:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tAGg0-0002bQ-2s
- for qemu-devel@nongnu.org; Sun, 10 Nov 2024 17:45:03 -0500
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tAJAS-0008GH-CL
+ for qemu-devel@nongnu.org; Sun, 10 Nov 2024 20:24:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731278696;
+ s=mimecast20190719; t=1731288272;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xIjvb1evZiGJoTh1zaLzDup+TXMcL/omBN1Rd5jN08E=;
- b=Nzr1Aw3aK4zZT7klWD+/sFrednu8kwoxhr9Ww4nzyYsnB4J3wkG6uwWzrcCwCVO734nSLC
- bY+RrAr5RfpbR/hTV/7xiQEggIfdyZEJb11rDij4di3GJ4vEOVUEYlysk7qWPpU35re/MJ
- xjpzcR689CtRSxHl1CnVbpU20E1JAdU=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=oZkj/hk2X9Ew5NcTU48B3xPtx4DtGzFjnve/+ekXsFs=;
+ b=Sbp+DcjwKLQB9O4FuYBRDfpKlwr53AKPVjusYbEXC6hTTV58XH4Yjf8zWRyy672ARC1feB
+ fSaJ7E2TMn83dQmmOLCX295oRD/GvJ82sMp71l4DrhF5qAqWUFBZpuSOcL3S1UcMZE1ggF
+ 3QikbpPqKtNzERizEsumMa+WriXs8Cw=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-581-wucWo9M4NFW3VbkIMp1z8g-1; Sun, 10 Nov 2024 17:44:55 -0500
-X-MC-Unique: wucWo9M4NFW3VbkIMp1z8g-1
-X-Mimecast-MFC-AGG-ID: wucWo9M4NFW3VbkIMp1z8g
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a99f43c4c7bso265573266b.0
- for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 14:44:55 -0800 (PST)
+ us-mta-461-w_-oiJe7M8uqIEXIa4bcQA-1; Sun, 10 Nov 2024 20:24:30 -0500
+X-MC-Unique: w_-oiJe7M8uqIEXIa4bcQA-1
+X-Mimecast-MFC-AGG-ID: w_-oiJe7M8uqIEXIa4bcQA
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-7ed98536f95so2639905a12.1
+ for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 17:24:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731278694; x=1731883494;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xIjvb1evZiGJoTh1zaLzDup+TXMcL/omBN1Rd5jN08E=;
- b=RB4kwAw5G+xHRjz6+Tzt0hpWiz6Ab5GvW0brWRg6pEJqRcKC5ZU9gTowRKnR1Inetx
- n5QD3uvTpM5ekh62ObBYzwg3+6ZzHuaiaGv9i6L3Q64eb3qfMVDzype+yXoQoYEgEfxb
- oiEg+h+sCN2UiXg2UPbXByf+/GyJVeUzREbw+hOJXdbOaVgqDJY40RanY0MTJE7dkSi5
- 9347RO7XuJ7sbPQy3gCNha5KAlnMvpMDZ3fpSHWSPSQFWE0Bv/ElaKwqYvlaq3iM1RZ2
- w2YenaMN3CLjb2O+N4fKkIC0bmtdObofDLe9eDkEbBFIcfXO2Es6b9wAEoOxypDWdnxM
- HNwA==
-X-Gm-Message-State: AOJu0YxUtIIbjhEY7p47igsx6kOd74hKUdeLPGE1fO3rzo1gkJ/BEvXl
- TcWHo7IEyMk2YA0+6D+Wc1pwyPK+qvcHd6UeDP6oSFwDQngUwIIjFF3TYoOW0AbBYU8coN+SkXb
- U6dbMbHzM9MRvKn6YQQzU8h0z4j0FD/PFyyEUttEUAYgJmKvLmupc
-X-Received: by 2002:a17:907:97d4:b0:a99:fd32:11dc with SMTP id
- a640c23a62f3a-a9eeff0de9dmr1049030666b.24.1731278694065; 
- Sun, 10 Nov 2024 14:44:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH2DhxUUJnfOo/zgfK7eTpIEaMADDho+FsMOmDO2c6R9qB6MrOGZmsWHBNYAciDzyaFVw36ew==
-X-Received: by 2002:a17:907:97d4:b0:a99:fd32:11dc with SMTP id
- a640c23a62f3a-a9eeff0de9dmr1049029266b.24.1731278693692; 
- Sun, 10 Nov 2024 14:44:53 -0800 (PST)
-Received: from redhat.com ([2a02:14f:175:c88a:62ba:ea40:f034:5ee6])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0deebabsm516710466b.153.2024.11.10.14.44.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 10 Nov 2024 14:44:52 -0800 (PST)
-Date: Sun, 10 Nov 2024 17:44:48 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: slp@redhat.com
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH] hw/i386/elfboot: allocate "header" in heap
-Message-ID: <20241110174359-mutt-send-email-mst@kernel.org>
-References: <20241108230314.1980-1-slp@redhat.com>
+ d=1e100.net; s=20230601; t=1731288269; x=1731893069;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oZkj/hk2X9Ew5NcTU48B3xPtx4DtGzFjnve/+ekXsFs=;
+ b=XhTM+qnyzDCN6BroHOx+TJ0eTmm2e1taxX28X7Hg3tWeDMTVM24TRf5FI6wfZIANJ+
+ i9bqSEWwGexmOdSY2YYqYpoSHgBqJkPIfSTyUv98bkYxJNZSUnNSDYyfv3Pt17ejMtat
+ lnbXOUyAVRm1EyEtD5hVLQ86EOuld2tTfOIIFYbS9mzOfwKmItqLts6hZNcyXzpwtIlq
+ 9lOmaz/7Ha16EHSg+uok12Oo34FniYhZoziefuq7b0o0vNRoKPShLC1o4VLW4eZwi4U8
+ J0SLI7LgXNfn3JymkQOFKFA6YUmqk99Bdb2HryAeNi9XiaIwoo9dcmoP1VO3sKG+McsN
+ daAg==
+X-Gm-Message-State: AOJu0YyT0oj8nuZNZOg/hkpC7reEhheWYq6Q8t1MayP9xIMRy40sWvze
+ lN4bD2Sg2yl1RuZXqqnJ98YKdb6cEB6OAhw6opAWk1mCd61CYz435Rfh2fX5vsnUsIBqsfReEGo
+ LdelYZzw7ad8OGdCAMk6n/akB8tHhyWrN73RvX68SZv0HA/IsMOvgw9Q0+izMXYmU2pQ7MzT00x
+ WuKXx5Lu8StB1B9sY0EHcvKrz/FDs=
+X-Received: by 2002:a17:90b:1805:b0:2e9:3056:71dd with SMTP id
+ 98e67ed59e1d1-2e9b0a31d44mr15855094a91.7.1731288269549; 
+ Sun, 10 Nov 2024 17:24:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG6NG73fO1MpzTSbLtMEdPTQ7p0QmT//LLjREVjoUjdgnMVhF5G5ObIPR5NmUlU5UdHcoNE6Qd4P5H+mS2Yonc=
+X-Received: by 2002:a17:90b:1805:b0:2e9:3056:71dd with SMTP id
+ 98e67ed59e1d1-2e9b0a31d44mr15855056a91.7.1731288268979; Sun, 10 Nov 2024
+ 17:24:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241108230314.1980-1-slp@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+References: <20240930092631.2997543-1-zhenzhong.duan@intel.com>
+ <20240930092631.2997543-15-zhenzhong.duan@intel.com>
+ <CACGkMEsq+VrxjGMf_ma=6xumwWgb2109XB4+86zH0ZXrce5Kdg@mail.gmail.com>
+ <SJ0PR11MB6744B13E0A9C352E4E6EF74D925D2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+In-Reply-To: <SJ0PR11MB6744B13E0A9C352E4E6EF74D925D2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 11 Nov 2024 09:24:17 +0800
+Message-ID: <CACGkMEvxK_+foQ1WV6ykJyRxzAPZc80wBfw0c-j-D56jsrTvXA@mail.gmail.com>
+Subject: Re: [PATCH v4 14/17] intel_iommu: Set default aw_bits to 48 in
+ scalable modern mode
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, 
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, 
+ "peterx@redhat.com" <peterx@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>, 
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, 
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>, "Tian,
+ Kevin" <kevin.tian@intel.com>, 
+ "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -102,49 +116,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Nov 09, 2024 at 12:03:14AM +0100, slp@redhat.com wrote:
-> From: Sergio Lopez <slp@redhat.com>
-> 
-> In x86_load_linux(), we were using a stack-allocated array as data for
-> fw_cfg_add_bytes(). Since the latter just takes a reference to the
-> pointer instead of copying the data, it can happen that the contents
-> have been overridden by the time the guest attempts to access them.
-> 
-> Instead of using the stack-allocated array, allocate some memory from
-> the heap, copy the contents of the array, and use it for fw_cfg.
-> 
-> Signed-off-by: Sergio Lopez <slp@redhat.com>
+On Fri, Nov 8, 2024 at 1:30=E2=80=AFPM Duan, Zhenzhong <zhenzhong.duan@inte=
+l.com> wrote:
+>
+>
+>
+> >-----Original Message-----
+> >From: Jason Wang <jasowang@redhat.com>
+> >Sent: Friday, November 8, 2024 12:42 PM
+> >Subject: Re: [PATCH v4 14/17] intel_iommu: Set default aw_bits to 48 in =
+scalable
+> >modern mode
+> >
+> >On Mon, Sep 30, 2024 at 5:30=E2=80=AFPM Zhenzhong Duan <zhenzhong.duan@i=
+ntel.com>
+> >wrote:
+> >>
+> >> According to VTD spec, stage-1 page table could support 4-level and
+> >> 5-level paging.
+> >>
+> >> However, 5-level paging translation emulation is unsupported yet.
+> >> That means the only supported value for aw_bits is 48.
+> >>
+> >> So default aw_bits to 48 in scalable modern mode. In other cases,
+> >> it is still default to 39 for backward compatibility.
+> >>
+> >> Add a check to ensure user specified value is 48 in modern mode
+> >> for now.
+> >>
+> >> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> >> Reviewed-by: Cl=C3=A9ment Mathieu--Drif<clement.mathieu--drif@eviden.c=
+om>
+> >> ---
+> >>  include/hw/i386/intel_iommu.h |  2 +-
+> >>  hw/i386/intel_iommu.c         | 10 +++++++++-
+> >>  2 files changed, 10 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iom=
+mu.h
+> >> index b843d069cc..48134bda11 100644
+> >> --- a/include/hw/i386/intel_iommu.h
+> >> +++ b/include/hw/i386/intel_iommu.h
+> >> @@ -45,7 +45,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(IntelIOMMUState,
+> >INTEL_IOMMU_DEVICE)
+> >>  #define DMAR_REG_SIZE               0x230
+> >>  #define VTD_HOST_AW_39BIT           39
+> >>  #define VTD_HOST_AW_48BIT           48
+> >> -#define VTD_HOST_ADDRESS_WIDTH      VTD_HOST_AW_39BIT
+> >> +#define VTD_HOST_AW_AUTO            0xff
+> >>  #define VTD_HAW_MASK(aw)            ((1ULL << (aw)) - 1)
+> >>
+> >>  #define DMAR_REPORT_F_INTR          (1)
+> >> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> >> index 91d7b1abfa..068a08f522 100644
+> >> --- a/hw/i386/intel_iommu.c
+> >> +++ b/hw/i386/intel_iommu.c
+> >> @@ -3776,7 +3776,7 @@ static Property vtd_properties[] =3D {
+> >>                              ON_OFF_AUTO_AUTO),
+> >>      DEFINE_PROP_BOOL("x-buggy-eim", IntelIOMMUState, buggy_eim, false=
+),
+> >>      DEFINE_PROP_UINT8("aw-bits", IntelIOMMUState, aw_bits,
+> >> -                      VTD_HOST_ADDRESS_WIDTH),
+> >> +                      VTD_HOST_AW_AUTO),
+> >>      DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode,
+> >FALSE),
+> >>      DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mod=
+e,
+> >FALSE),
+> >>      DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control,
+> >false),
+> >> @@ -4683,6 +4683,14 @@ static bool vtd_decide_config(IntelIOMMUState *=
+s,
+> >Error **errp)
+> >>          }
+> >>      }
+> >>
+> >> +    if (s->aw_bits =3D=3D VTD_HOST_AW_AUTO) {
+> >> +        if (s->scalable_modern) {
+> >> +            s->aw_bits =3D VTD_HOST_AW_48BIT;
+> >> +        } else {
+> >> +            s->aw_bits =3D VTD_HOST_AW_39BIT;
+> >> +        }
+> >
+> >I don't see how we maintain migration compatibility here.
+>
+> Imagine this cmdline: "-device intel-iommu,x-scalable-mode=3Don" which hi=
+nts
+> scalable legacy mode(a.k.a, stage-2 page table mode),
+>
+> without this patch, initial s->aw_bits value is VTD_HOST_ADDRESS_WIDTH(39=
+).
+>
+> after this patch, initial s->aw_bit value is VTD_HOST_AW_AUTO(0xff),
+> vtd_decide_config() is called by vtd_realize() to set s->aw_bit to VTD_HO=
+ST_AW_39BIT(39).
+>
+> So as long as the QEMU cmdline is same, s->aw_bit is same with or without=
+ this patch.
 
-Wow. How did this ever work?
+Ok, I guess the point is that the scalabe-modern mode is introduced in
+this series so we won't bother.
 
+But I see this:
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
++    if (s->scalable_modern && s->aw_bits !=3D VTD_HOST_AW_48BIT) {
 
-Paolo, you queueing this?
+In previous patches. So I wonder instead of mandating management to
+set AUTO which seems like a burden. How about just increase the
+default AW to 48bit and do the compatibility work here?
 
-> ---
->  hw/i386/x86-common.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index bc360a9ea4..d51ebad4d6 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -697,9 +697,12 @@ void x86_load_linux(X86MachineState *x86ms,
->                  strlen(kernel_cmdline) + 1);
->              fw_cfg_add_string(fw_cfg, FW_CFG_CMDLINE_DATA, kernel_cmdline);
->  
-> +            setup = g_malloc(sizeof(header));
-> +            memcpy(setup, header, sizeof(header));
-> +
->              fw_cfg_add_i32(fw_cfg, FW_CFG_SETUP_SIZE, sizeof(header));
->              fw_cfg_add_bytes(fw_cfg, FW_CFG_SETUP_DATA,
-> -                             header, sizeof(header));
-> +                             setup, sizeof(header));
->  
->              /* load initrd */
->              if (initrd_filename) {
-> -- 
-> 2.45.2
+Thanks
+
+>
+> Thanks
+> Zhenzhong
 
 
