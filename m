@@ -4,89 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DDCCD2E9C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 15:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC81E6781E
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 15:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAWK4-0007Dz-SL; Mon, 11 Nov 2024 10:27:25 -0500
+	id 1tAWlz-000455-QH; Mon, 11 Nov 2024 10:56:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAWK2-0007Dj-SZ
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 10:27:23 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAWK0-0006O5-HE
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 10:27:22 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-7ea8c4ce232so4079473a12.0
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 07:27:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731338838; x=1731943638; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=peXt1wGsaoIow0BySWPCWxrjpU+ntCIsjWNnSs480IM=;
- b=BZU+1MKGq4cIOszf39mRt6wzSt3AXgeQWGV6GDwAjKo4XLFRDJT3P57E6fnS0o+7YL
- sXSpyWRgna6Pd3Jp339wgO2x9Afn2xJxfVA1mXNZpiFRGSUr05ES14VOwxUs/aYWoT54
- cWyBp7gYkUCF73MTxgCdMyjq3GTgAXSFd8bHOjG/eLmpqohicNSKqIhcdeFca8/XVQTa
- BwjI8JYaD9kjV+AbqwArM2xRvV4CXdOox5SrQP7wzUh6wunuu+L6lK+zJkSwP50TbwdI
- R5VDFs74Z+8MCiVry/75KpnlkF5Clr2FeNJPhzU40d4pzzku52nREz3YmVyF/pKbTPIc
- anxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731338838; x=1731943638;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=peXt1wGsaoIow0BySWPCWxrjpU+ntCIsjWNnSs480IM=;
- b=gSOt2Mhgq+V26shtYn1d7Rz3ch/R6q1EbBQdgCBAqV7HFBa9P3WtBVCQXrZaY8D2N8
- KkdVHc6cQqGgiJz75LUG+YTofTyxiUf45gqd/yImXHSDMs5W1O6rScczMhqWG2YwhBCy
- bD1tqQeZLwG2Lsyopuw06t7nhak6zkz3U40Op98J6SsE52xuAED6qsXA1NtVdWjDePNf
- 70K0bsit0sqkkIePX9dyqoGoswNITG9dF7bqR5Dyq/6X+EVS/74K9G7kNStA3r6/GxLf
- xXcc7Sbv8ikNGl7Xe8RndJYHaZ1LZ99lY2S6OclOwt3ayW/4lRIUliwFSncaQUgfa2IC
- W5ZA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVLQcXOJcFbW1Pw3nKFAZnvJxzEz4p1Yws+ZTaNdOy2B8q5S51K5ptmWU5Ez1Yt7DkFtpjhieYGucW6@nongnu.org
-X-Gm-Message-State: AOJu0YxF7nnB8tiexdV1XghcBBGAUHsWwelrQ+C17CEhcZnGiU16fnk0
- k6aJxO3OwcVZq+jOskUk8geloNQ16M8r2psj/GBTNe0EZq5D0Vix1VULijfobWU=
-X-Google-Smtp-Source: AGHT+IHO2cCFrCDXc4Bw9OuMInatsFlh/vOwhuvD69EMSOxWSCLmlTU+6BRFjceg7GdA1V4Dvnaqrw==
-X-Received: by 2002:a17:90b:2dcc:b0:2e2:e6bf:cd64 with SMTP id
- 98e67ed59e1d1-2e9b16e66fcmr16226354a91.5.1731338838498; 
- Mon, 11 Nov 2024 07:27:18 -0800 (PST)
-Received: from [192.168.52.227] (wsip-24-120-228-34.lv.lv.cox.net.
- [24.120.228.34]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e9a5fd17d8sm8764854a91.41.2024.11.11.07.27.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Nov 2024 07:27:17 -0800 (PST)
-Message-ID: <e67eeffa-ce03-46cc-a413-cd6803d54632@linaro.org>
-Date: Mon, 11 Nov 2024 07:27:15 -0800
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tAWlv-00044b-BX
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 10:56:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tAWlt-0000ln-RF
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 10:56:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731340568;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oR2NEtZr5EmBntWh/rf+1SdXvwyPhmQQ/U96CK3tiTo=;
+ b=Qvex4vopMK83biMhABiMgOi4whsEmJNR04DTNXv+RCpUHvk7YLd+L/XLTF4A0Ji2Z1ViRx
+ 6plXcBmMI85lE47BCPwcXLZn/0YzD3dqXsyT35WkGdJIxuGCMruShUJCtU4S0Ly7uY2+JS
+ y3GXjcgfqTw70ZpIo+QO20xvgPU2g3U=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-9QyJjl8AMpegmNtERwtJJA-1; Mon,
+ 11 Nov 2024 10:56:03 -0500
+X-MC-Unique: 9QyJjl8AMpegmNtERwtJJA-1
+X-Mimecast-MFC-AGG-ID: 9QyJjl8AMpegmNtERwtJJA
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F0701954128
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 15:56:02 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.238])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 54F01195E480; Mon, 11 Nov 2024 15:55:59 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 1/8] qom: refactor checking abstract property when creating
+ instances
+Date: Mon, 11 Nov 2024 15:55:48 +0000
+Message-ID: <20241111155555.90091-2-berrange@redhat.com>
+In-Reply-To: <20241111155555.90091-1-berrange@redhat.com>
+References: <20241111155555.90091-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] target/riscv: Add new CSR fields for S{sn,mn,m}pm
- extensions as part of Zjpm v1.0
-To: baturo.alexey@gmail.com
-Cc: zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com,
- liwei1518@gmail.com, alistair23@gmail.com, frank.chang@sifive.com,
- palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-References: <20241108060116.37397-1-baturo.alexey@gmail.com>
- <20241108060116.37397-3-baturo.alexey@gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241108060116.37397-3-baturo.alexey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,46 +88,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/7/24 22:01, baturo.alexey@gmail.com wrote:
-> @@ -2424,6 +2433,12 @@ static RISCVException write_senvcfg(CPURISCVState *env, int csrno,
->                                       target_ulong val)
->   {
->       uint64_t mask = SENVCFG_FIOM | SENVCFG_CBIE | SENVCFG_CBCFE | SENVCFG_CBZE;
-> +    /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-> +    if (env_archcpu(env)->cfg.ext_ssnpm &&
-> +        riscv_cpu_mxl(env) == MXL_RV64 &&
-> +        (get_field(val, SENVCFG_PMM) != PMM_FIELD_RESERVED)) {
-> +        mask |= SENVCFG_PMM;
-> +    }
->       RISCVException ret;
->   
->       ret = smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+Push an Error object into object_initialize_with_type, so that
+reporting of attempts to create an abstract type is handled at
+the lowest level.
 
-Do not insert statements into the declarations at the start of the block.
-Drop the unnecessary () around != (multiple instances).
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ qom/object.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-> @@ -3525,6 +3546,15 @@ static RISCVException read_hstatus(CPURISCVState *env, int csrno,
->   static RISCVException write_hstatus(CPURISCVState *env, int csrno,
->                                       target_ulong val)
->   {
-> +    uint64_t mask = (target_ulong)-1;
-> +    /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-> +    if (env_archcpu(env)->cfg.ext_ssnpm &&
-> +        (riscv_cpu_mxl(env) == MXL_RV64) &&
-> +        (get_field(val, HSTATUS_HUPMM) == PMM_FIELD_RESERVED)) {
-> +        mask &= ~HSTATUS_HUPMM;
-> +    }
+diff --git a/qom/object.c b/qom/object.c
+index 9edc06d391..dc125e55bc 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -559,14 +559,20 @@ static void object_class_property_init_all(Object *obj)
+     }
+ }
+ 
+-static void object_initialize_with_type(Object *obj, size_t size, TypeImpl *type)
++static bool object_initialize_with_type(Object *obj, size_t size,
++                                        TypeImpl *type, Error **errp)
+ {
+     type_initialize(type);
+ 
+     g_assert(type->instance_size >= sizeof(Object));
+-    g_assert(type->abstract == false);
+     g_assert(size >= type->instance_size);
+ 
++    if (type->abstract) {
++        error_setg(errp, "Abstract type '%s' cannot be instantiated",
++                   type->name);
++        return false;
++    }
++
+     memset(obj, 0, type->instance_size);
+     obj->class = type->class;
+     object_ref(obj);
+@@ -575,13 +581,15 @@ static void object_initialize_with_type(Object *obj, size_t size, TypeImpl *type
+                                             NULL, object_property_free);
+     object_init_with_type(obj, type);
+     object_post_init_with_type(obj, type);
++
++    return true;
+ }
+ 
+ void object_initialize(void *data, size_t size, const char *typename)
+ {
+     TypeImpl *type = type_get_or_load_by_name(typename, &error_fatal);
+ 
+-    object_initialize_with_type(data, size, type);
++    object_initialize_with_type(data, size, type, &error_abort);
+ }
+ 
+ bool object_initialize_child_with_props(Object *parentobj,
+@@ -753,7 +761,7 @@ typedef union {
+ } qemu_max_align_t;
+ #endif
+ 
+-static Object *object_new_with_type(Type type)
++static Object *object_new_with_type(Type type, Error **errp)
+ {
+     Object *obj;
+     size_t size, align;
+@@ -777,7 +785,10 @@ static Object *object_new_with_type(Type type)
+         obj_free = qemu_vfree;
+     }
+ 
+-    object_initialize_with_type(obj, size, type);
++    if (!object_initialize_with_type(obj, size, type, errp)) {
++        g_free(obj);
++        return NULL;
++    }
+     obj->free = obj_free;
+ 
+     return obj;
+@@ -785,14 +796,14 @@ static Object *object_new_with_type(Type type)
+ 
+ Object *object_new_with_class(ObjectClass *klass)
+ {
+-    return object_new_with_type(klass->type);
++    return object_new_with_type(klass->type, &error_abort);
+ }
+ 
+ Object *object_new(const char *typename)
+ {
+     TypeImpl *ti = type_get_or_load_by_name(typename, &error_fatal);
+ 
+-    return object_new_with_type(ti);
++    return object_new_with_type(ti, &error_abort);
+ }
+ 
+ 
+@@ -829,11 +840,10 @@ Object *object_new_with_propv(const char *typename,
+         return NULL;
+     }
+ 
+-    if (object_class_is_abstract(klass)) {
+-        error_setg(errp, "object type '%s' is abstract", typename);
++    obj = object_new_with_type(klass->type, errp);
++    if (!obj) {
+         return NULL;
+     }
+-    obj = object_new_with_type(klass->type);
+ 
+     if (!object_set_propv(obj, errp, vargs)) {
+         goto error;
+-- 
+2.46.0
 
-Surely you'd not install HUPMM if ext_ssnpm is false?
-Is this missing other extension checks?
-
-
-> +    env->hstatus = (env->hstatus & ~mask) | (val & mask);
-> +
->       env->hstatus = val;
-
-Failure to remove previous assignment.
-
-
-r~
 
