@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 823ADD2E9C0
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 08:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFA4DD2E9C2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 08:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAPwM-0004s3-SW; Mon, 11 Nov 2024 03:38:30 -0500
+	id 1tAPwv-0004xc-Fk; Mon, 11 Nov 2024 03:39:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tAPwG-0004rS-U2
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 03:38:24 -0500
+ id 1tAPwY-0004uj-Ts
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 03:38:42 -0500
 Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tAPwF-0003UG-2l
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 03:38:24 -0500
+ id 1tAPwX-0003UY-9i
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 03:38:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1731314303; x=1762850303;
+ t=1731314321; x=1762850321;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=/8IG36P/t4d/6IkZ8Hw35fvK05oUnjKxvWgx+3gFyGc=;
- b=aKZ4KpJMs/S1CdRj3T3fjunaC2MPIYz3JJADEO2Nje2NnywVsGsRtpU4
- eHoxlmn+STIStpUYHWwB2be7WUzqFzy/+nr4Is6AHlxCovbNMWa06ei6q
- //ZkpoFD+IFa06qTcQFvBBKJQOKDlLJ8AiQL7YubdjbuIWol+wbkykzbB
- jjYnpBCkJ0708ibPMxv2sLnEZAXYy6ISwhJgB8SSPDvR8AZ4NKNmwwgUh
- ubmlCFVYHP6YaEJPKa1Y6eCGRO4WbRtZGGd3RNl9Eshj74KbQZmy7Y1Pk
- k1Pip7AE2mEVRwC+yvJf4cBJhe/Kybp/vjlxPrkn9cNW3M+uEHsLePoPk g==;
-X-CSE-ConnectionGUID: j/jIS4fxR+qB3Lj9RMNL9w==
-X-CSE-MsgGUID: Vb7rd7TkTfa5qzIfwT4ZGQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11252"; a="31334367"
-X-IronPort-AV: E=Sophos;i="6.12,144,1728975600"; d="scan'208";a="31334367"
+ bh=RbiGaYj5YCAoPO0UeCvl+7AhZLlMKJrF1a/kTbZur5M=;
+ b=Z0ZVvyHFvG4V6icDRRYznaKS/VWU1da5MWoH5K58YSOB/hYI5+Vj4Gyd
+ B2ZvvYM21YzWOXCRMh2Ka0LFK75O5yaTpklV+XOZPtJL9r4EaVlNrDjJr
+ 4EMAuREzz3QF4qAsEXWRawrTWAQbmlfzVPI4sXxGEdMQ9OR8DD3hP7W6A
+ hP4Df2/asdtNupgT+BJJWjOwy/1vSR0CWiaJY+f20uAORSAFc1rnV5SY1
+ pny3mA1KGOOReoxGWbbNduoycWl/tj6qu3IrfCSIFx7yP6M6NgFzFfvxj
+ EwE18CuUxU80DgoheDfjVbD1dikRxXlfyHg9NLzMl7t7+zcqk/3pcASQJ A==;
+X-CSE-ConnectionGUID: aQ1QBgiPSxqfDeuvD2gguw==
+X-CSE-MsgGUID: 5EH4Q/IpSR+WgmUjH6gZnw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11252"; a="31334432"
+X-IronPort-AV: E=Sophos;i="6.12,144,1728975600"; d="scan'208";a="31334432"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Nov 2024 00:38:21 -0800
-X-CSE-ConnectionGUID: cb1dW8/vQLu3X2ZBxz0U0w==
-X-CSE-MsgGUID: f5EYL62lSKu3Z3relCHjSA==
+ 11 Nov 2024 00:38:40 -0800
+X-CSE-ConnectionGUID: BgAOVj8mSd+gzI59FmQcOQ==
+X-CSE-MsgGUID: bUmxvMMBQBmmhCUvAsj/BA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,144,1728975600"; d="scan'208";a="87608265"
+X-IronPort-AV: E=Sophos;i="6.12,144,1728975600"; d="scan'208";a="87608306"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Nov 2024 00:38:18 -0800
+ 11 Nov 2024 00:38:37 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -57,15 +57,14 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v5 04/20] intel_iommu: Flush stage-2 cache in PASID-selective
- PASID-based iotlb invalidation
-Date: Mon, 11 Nov 2024 16:34:41 +0800
-Message-Id: <20241111083457.2090664-5-zhenzhong.duan@intel.com>
+Subject: [PATCH v5 08/20] intel_iommu: Check stage-1 translation result with
+ interrupt range
+Date: Mon, 11 Nov 2024 16:34:45 +0800
+Message-Id: <20241111083457.2090664-9-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241111083457.2090664-1-zhenzhong.duan@intel.com>
 References: <20241111083457.2090664-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.14;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -92,165 +91,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Per VT-d spec 4.1, 6.5.2.4, "Table 21. PASID-based-IOTLB Invalidation",
-PADID-selective PASID-based iotlb invalidation will flush stage-2 iotlb
-entries with matching domain id and pasid.
+Per VT-d spec 4.1 section 3.15, "Untranslated requests and translation
+requests that result in an address in the interrupt range will be
+blocked with condition code LGN.4 or SGN.8."
 
-With scalable modern mode introduced, guest could send PASID-selective
-PASID-based iotlb invalidation to flush either stage-1 or stage-2 entries.
+This applies to both stage-1 and stage-2 IOMMU page table, move the
+check from vtd_iova_to_slpte() to vtd_do_iommu_translate() so stage-1
+page table could also be checked.
 
-By this chance, remove old IOTLB related definitions which were unused.
+By this chance, update the comment with correct section number.
 
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
 ---
- hw/i386/intel_iommu_internal.h | 14 ++++--
- hw/i386/intel_iommu.c          | 85 +++++++++++++++++++++++++++++++++-
- 2 files changed, 93 insertions(+), 6 deletions(-)
+ hw/i386/intel_iommu.c | 48 ++++++++++++++++++++++---------------------
+ 1 file changed, 25 insertions(+), 23 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index a987023692..48019e2005 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -404,11 +404,6 @@ typedef union VTDInvDesc VTDInvDesc;
- #define VTD_INV_DESC_IOTLB_AM(val)      ((val) & 0x3fULL)
- #define VTD_INV_DESC_IOTLB_RSVD_LO      0xffffffff0000f100ULL
- #define VTD_INV_DESC_IOTLB_RSVD_HI      0xf80ULL
--#define VTD_INV_DESC_IOTLB_PASID_PASID  (2ULL << 4)
--#define VTD_INV_DESC_IOTLB_PASID_PAGE   (3ULL << 4)
--#define VTD_INV_DESC_IOTLB_PASID(val)   (((val) >> 32) & VTD_PASID_ID_MASK)
--#define VTD_INV_DESC_IOTLB_PASID_RSVD_LO      0xfff00000000001c0ULL
--#define VTD_INV_DESC_IOTLB_PASID_RSVD_HI      0xf80ULL
- 
- /* Mask for Device IOTLB Invalidate Descriptor */
- #define VTD_INV_DESC_DEVICE_IOTLB_ADDR(val) ((val) & 0xfffffffffffff000ULL)
-@@ -443,6 +438,15 @@ typedef union VTDInvDesc VTDInvDesc;
-         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM | VTD_SL_TM)) : \
-         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM))
- 
-+/* Masks for PIOTLB Invalidate Descriptor */
-+#define VTD_INV_DESC_PIOTLB_G             (3ULL << 4)
-+#define VTD_INV_DESC_PIOTLB_ALL_IN_PASID  (2ULL << 4)
-+#define VTD_INV_DESC_PIOTLB_PSI_IN_PASID  (3ULL << 4)
-+#define VTD_INV_DESC_PIOTLB_DID(val)      (((val) >> 16) & VTD_DOMAIN_ID_MASK)
-+#define VTD_INV_DESC_PIOTLB_PASID(val)    (((val) >> 32) & 0xfffffULL)
-+#define VTD_INV_DESC_PIOTLB_RSVD_VAL0     0xfff000000000f1c0ULL
-+#define VTD_INV_DESC_PIOTLB_RSVD_VAL1     0xf80ULL
-+
- /* Information about page-selective IOTLB invalidate */
- struct VTDIOTLBPageInvInfo {
-     uint16_t domain_id;
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 1d13916a98..1b07146e23 100644
+index 4cc4d668fc..e651401db1 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -2692,6 +2692,83 @@ static bool vtd_process_iotlb_desc(IntelIOMMUState *s, VTDInvDesc *inv_desc)
-     return true;
+@@ -1138,7 +1138,6 @@ static int vtd_iova_to_slpte(IntelIOMMUState *s, VTDContextEntry *ce,
+     uint32_t offset;
+     uint64_t slpte;
+     uint64_t access_right_check;
+-    uint64_t xlat, size;
+ 
+     if (!vtd_iova_sl_range_check(s, iova, ce, aw_bits, pasid)) {
+         error_report_once("%s: detected IOVA overflow (iova=0x%" PRIx64 ","
+@@ -1191,28 +1190,7 @@ static int vtd_iova_to_slpte(IntelIOMMUState *s, VTDContextEntry *ce,
+         level--;
+     }
+ 
+-    xlat = vtd_get_pte_addr(*slptep, aw_bits);
+-    size = ~vtd_pt_level_page_mask(level) + 1;
+-
+-    /*
+-     * From VT-d spec 3.14: Untranslated requests and translation
+-     * requests that result in an address in the interrupt range will be
+-     * blocked with condition code LGN.4 or SGN.8.
+-     */
+-    if ((xlat > VTD_INTERRUPT_ADDR_LAST ||
+-         xlat + size - 1 < VTD_INTERRUPT_ADDR_FIRST)) {
+-        return 0;
+-    } else {
+-        error_report_once("%s: xlat address is in interrupt range "
+-                          "(iova=0x%" PRIx64 ", level=0x%" PRIx32 ", "
+-                          "slpte=0x%" PRIx64 ", write=%d, "
+-                          "xlat=0x%" PRIx64 ", size=0x%" PRIx64 ", "
+-                          "pasid=0x%" PRIx32 ")",
+-                          __func__, iova, level, slpte, is_write,
+-                          xlat, size, pasid);
+-        return s->scalable_mode ? -VTD_FR_SM_INTERRUPT_ADDR :
+-                                  -VTD_FR_INTERRUPT_ADDR;
+-    }
++    return 0;
  }
  
-+static gboolean vtd_hash_remove_by_pasid(gpointer key, gpointer value,
-+                                         gpointer user_data)
-+{
-+    VTDIOTLBEntry *entry = (VTDIOTLBEntry *)value;
-+    VTDIOTLBPageInvInfo *info = (VTDIOTLBPageInvInfo *)user_data;
-+
-+    return ((entry->domain_id == info->domain_id) &&
-+            (entry->pasid == info->pasid));
-+}
-+
-+static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
-+                                        uint16_t domain_id, uint32_t pasid)
-+{
-+    VTDIOTLBPageInvInfo info;
-+    VTDAddressSpace *vtd_as;
-+    VTDContextEntry ce;
-+
-+    info.domain_id = domain_id;
-+    info.pasid = pasid;
-+
-+    vtd_iommu_lock(s);
-+    g_hash_table_foreach_remove(s->iotlb, vtd_hash_remove_by_pasid,
-+                                &info);
-+    vtd_iommu_unlock(s);
-+
-+    QLIST_FOREACH(vtd_as, &s->vtd_as_with_notifiers, next) {
-+        if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
-+                                      vtd_as->devfn, &ce) &&
-+            domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
-+            uint32_t rid2pasid = VTD_CE_GET_RID2PASID(&ce);
-+
-+            if ((vtd_as->pasid != PCI_NO_PASID || pasid != rid2pasid) &&
-+                vtd_as->pasid != pasid) {
-+                continue;
-+            }
-+
-+            if (!s->scalable_modern) {
-+                vtd_address_space_sync(vtd_as);
-+            }
-+        }
-+    }
-+}
-+
-+static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
-+                                    VTDInvDesc *inv_desc)
-+{
-+    uint16_t domain_id;
-+    uint32_t pasid;
-+    uint64_t mask[4] = {VTD_INV_DESC_PIOTLB_RSVD_VAL0,
-+                        VTD_INV_DESC_PIOTLB_RSVD_VAL1,
-+                        VTD_INV_DESC_ALL_ONE, VTD_INV_DESC_ALL_ONE};
-+
-+    if (!vtd_inv_desc_reserved_check(s, inv_desc, mask, true,
-+                                     __func__, "piotlb inv")) {
-+        return false;
-+    }
-+
-+    domain_id = VTD_INV_DESC_PIOTLB_DID(inv_desc->val[0]);
-+    pasid = VTD_INV_DESC_PIOTLB_PASID(inv_desc->val[0]);
-+    switch (inv_desc->val[0] & VTD_INV_DESC_PIOTLB_G) {
-+    case VTD_INV_DESC_PIOTLB_ALL_IN_PASID:
-+        vtd_piotlb_pasid_invalidate(s, domain_id, pasid);
-+        break;
-+
-+    case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
-+        break;
-+
-+    default:
-+        error_report_once("%s: invalid piotlb inv desc: hi=0x%"PRIx64
-+                          ", lo=0x%"PRIx64" (type mismatch: 0x%llx)",
-+                          __func__, inv_desc->val[1], inv_desc->val[0],
-+                          inv_desc->val[0] & VTD_INV_DESC_IOTLB_G);
-+        return false;
-+    }
-+    return true;
-+}
-+
- static bool vtd_process_inv_iec_desc(IntelIOMMUState *s,
-                                      VTDInvDesc *inv_desc)
- {
-@@ -2810,6 +2887,13 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
-         }
-         break;
+ typedef int (*vtd_page_walk_hook)(const IOMMUTLBEvent *event, void *private);
+@@ -2064,6 +2042,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+     uint8_t access_flags;
+     bool rid2pasid = (pasid == PCI_NO_PASID) && s->root_scalable;
+     VTDIOTLBEntry *iotlb_entry;
++    uint64_t xlat, size;
  
-+    case VTD_INV_DESC_PIOTLB:
-+        trace_vtd_inv_desc("p-iotlb", inv_desc.val[1], inv_desc.val[0]);
-+        if (!vtd_process_piotlb_desc(s, &inv_desc)) {
-+            return false;
-+        }
-+        break;
+     /*
+      * We have standalone memory region for interrupt addresses, we
+@@ -2173,6 +2152,29 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+         ret_fr = vtd_iova_to_slpte(s, &ce, addr, is_write, &pte, &level,
+                                    &reads, &writes, s->aw_bits, pasid);
+     }
++    if (!ret_fr) {
++        xlat = vtd_get_pte_addr(pte, s->aw_bits);
++        size = ~vtd_pt_level_page_mask(level) + 1;
 +
-     case VTD_INV_DESC_WAIT:
-         trace_vtd_inv_desc("wait", inv_desc.hi, inv_desc.lo);
-         if (!vtd_process_wait_desc(s, &inv_desc)) {
-@@ -2837,7 +2921,6 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
-      * iommu driver) work, just return true is enough so far.
-      */
-     case VTD_INV_DESC_PC:
--    case VTD_INV_DESC_PIOTLB:
-         if (s->scalable_mode) {
-             break;
-         }
++        /*
++         * Per VT-d spec 4.1 section 3.15: Untranslated requests and translation
++         * requests that result in an address in the interrupt range will be
++         * blocked with condition code LGN.4 or SGN.8.
++         */
++        if ((xlat <= VTD_INTERRUPT_ADDR_LAST &&
++             xlat + size - 1 >= VTD_INTERRUPT_ADDR_FIRST)) {
++            error_report_once("%s: xlat address is in interrupt range "
++                              "(iova=0x%" PRIx64 ", level=0x%" PRIx32 ", "
++                              "pte=0x%" PRIx64 ", write=%d, "
++                              "xlat=0x%" PRIx64 ", size=0x%" PRIx64 ", "
++                              "pasid=0x%" PRIx32 ")",
++                              __func__, addr, level, pte, is_write,
++                              xlat, size, pasid);
++            ret_fr = s->scalable_mode ? -VTD_FR_SM_INTERRUPT_ADDR :
++                                        -VTD_FR_INTERRUPT_ADDR;
++        }
++    }
++
+     if (ret_fr) {
+         vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
+                          addr, is_write, pasid != PCI_NO_PASID, pasid);
 -- 
 2.34.1
 
