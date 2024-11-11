@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE52DD3ABF4
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 21:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8C48D3ABF7
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 21:39:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAc65-0000zW-Vu; Mon, 11 Nov 2024 16:37:22 -0500
+	id 1tAc7u-0001aw-Ng; Mon, 11 Nov 2024 16:39:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tAc64-0000zD-59
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 16:37:20 -0500
+ id 1tAc7t-0001an-Ub
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 16:39:14 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tAc62-0001Vj-DZ
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 16:37:19 -0500
+ id 1tAc7r-0001Z6-1c
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 16:39:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=YxOh92KehrULBwI0SBU7ou4NqUkR9jYnGitC9fcQhjU=; b=iHA+l9UwoeIgecd5lwmOt8vnY0
- 75TiLZCkefSLQm78GS50ArTUei0ouSsB/IO+mBUs2rZdAWn3UivqRu/pjgFt2fTHQ3aoULRCtGRHX
- DNBmJFVXi4qGX+Em3rVQWRdiqeSNiJZm2zaomecICgjq+IU+mXTkDh+nj1WwZhJgOc+3MgSaR+4fr
- 2tKrl0ZMEW1GMFG1WTwmouMd/B8CljrNOUyDru5sRNcTvosTslT0u8jmOY2ncxrACvJ+R/2gEyoQm
- FxLXOPH7IJzj5/fAPPn1Gz77bRfiKgjjEdyfFUHJSTL7HUz1/0GdrS7VLvqIpd9E0+0sJ21/t+xQ/
- V3W7ncsCqlQv5QVcmrm9voeIXoCD6r/Kv8kpSLAU5tdgf/jMFqNJSUHDbZn7gblF/zGVFICl3WN5e
- O9JP31yXPT3vLKMrw0CF2gQSywiBfck+2ZhuJuOBrk5WERRRy3ME0Vx/HBOkBhDETh7EwcGiSB1MK
- stSi0MeQaKRonNhq12yHYmMCXNizDphtkgsFQcM049/sHscSrL9ue70H+uLhd1r6ov5WclbAxs4jt
- ADIlgsYzLnu2nxUnwbMSKgte9XdKLZ/m1GlvocfOMQGLjGvv1bM/OeUGsTCuucpAbYDnlHPchh2XX
- Pyg0RTqaPyXiaLd9AeqWTHcQYIrete8P28PZfOU1Y=;
+ bh=nbS4APPjs5e5+KnZj0rvpuUlPqnZko65/Bz3p6wp9gs=; b=uIT96FEC/NOaS7FvEW+ipr/Dsr
+ hQ3KwdORO1SoYPtY9/sOWMGsYXSFyATSCOjNtp7J9LFt06LL3c6uRhIWrXK6iID6AynhNuxomYDS3
+ qOH3R5rZeq4iXBhB2cxE03N7U/1F/tzJIjlHY4Ok6ORB9n9RyqOxN4BaEwRueM/FNAaMPdg36ZXI9
+ 90imRiR/3yED8G7eF8SKMEaXnpTF3OhOVmwVdUREAHVXAaHAuFvItToS35nFbg9HT/Ng08psupt/F
+ 6kn1OpAAZqjo0PaPz0ICZoyJr9b+zN4eG/Nmn6OSnOAYQ2nOv0q8f6RSuBflJSs3zF3n9GKCwDZfz
+ 8UKKXK7iTBzaNFGqxzIMu2gAj/yxPH3J1G8BH7TYuNDG3taunvXYzI2//JN3iqGWYWGVFclVlzsHN
+ ie0oofLP9vVgl0y6psfkfXWyWWU1/gjiTAsIXMOrDiGJ0meqZpWf11M9R/y2QwphK3MroPd3ag7sz
+ meSQErIiFBYxNgXr11X8S7wmw1fkYueApvzmBfzWe2aaCRzFMnD7KuMf1ZDIt3bDmhBsbnFsByfDf
+ QWtLMKPG9CMmmbmHydlrWl9Hsjg7aia1KFvxCvMVa6CTPA1IJuVUJ79GyJ+ZbBTwn7x9NjJrpYsJd
+ OnjS/aFeAHfWCLWoE8aMlNPcWQkaFBhj2N2pZ26vc=;
 Received: from [2a00:23c4:8bb8:f600:4d41:7cfb:3f13:ce94]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tAc5a-0004wN-9n; Mon, 11 Nov 2024 21:36:54 +0000
-Message-ID: <eacde215-1a30-47b8-ba03-aba863f5adcb@ilande.co.uk>
-Date: Mon, 11 Nov 2024 21:37:10 +0000
+ id 1tAc7P-0004xG-Ez; Mon, 11 Nov 2024 21:38:47 +0000
+Message-ID: <0f353eef-d3fe-4b7d-84c6-ae75c3a16183@ilande.co.uk>
+Date: Mon, 11 Nov 2024 21:39:03 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Thomas Huth <huth@tuxfamily.org>
 Cc: qemu-devel@nongnu.org
 References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-32-mark.cave-ayland@ilande.co.uk>
- <20241109092411.5ced24d0@tpx1>
+ <20241023085852.1061031-34-mark.cave-ayland@ilande.co.uk>
+ <20241109092506.049f327f@tpx1>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,13 +74,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20241109092411.5ced24d0@tpx1>
+In-Reply-To: <20241109092506.049f327f@tpx1>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:4d41:7cfb:3f13:ce94
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 31/36] next-cube: add rtc-cmd-reset named gpio to reset
- the rtc state machine
+Subject: Re: [PATCH 33/36] next-cube: move next_rtc_cmd_is_write() and
+ next_rtc_data_in_irq() functions
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -106,55 +106,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/11/2024 08:24, Thomas Huth wrote:
+On 09/11/2024 08:25, Thomas Huth wrote:
 
-> Am Wed, 23 Oct 2024 09:58:47 +0100
+> Am Wed, 23 Oct 2024 09:58:49 +0100
 > schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 > 
->> This allows us to decouple the next-pc and next-rtc devices from each
->> other in next_scr2_rtc_update().
+>> Move these functions in next-cube.c so that they are with the rest of the
+>> next-rtc functions.
 >>
 >> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 >> ---
->>   hw/m68k/next-cube.c | 23 +++++++++++++++++++----
->>   1 file changed, 19 insertions(+), 4 deletions(-)
->>
->> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
->> index bd24359913..16b16e9956 100644
->> --- a/hw/m68k/next-cube.c
->> +++ b/hw/m68k/next-cube.c
->> @@ -108,6 +108,7 @@ struct NeXTPC {
->>       NeXTRTC rtc;
->>       qemu_irq rtc_power_irq;
->>       qemu_irq rtc_data_irq;
->> +    qemu_irq rtc_cmd_reset_irq;
->>   };
->>   
->>   typedef struct next_dma {
->> @@ -264,7 +265,6 @@ static void next_rtc_data_in_irq(void *opaque, int n, int level)
->>   static void next_scr2_rtc_update(NeXTPC *s)
->>   {
->>       uint8_t old_scr2, scr2_2;
->> -    NeXTRTC *rtc = &s->rtc;
->>   
->>       old_scr2 = extract32(s->old_scr2, 8, 8);
->>       scr2_2 = extract32(s->scr2, 8, 8);
->> @@ -282,9 +282,7 @@ static void next_scr2_rtc_update(NeXTPC *s)
->>           }
->>       } else {
->>           /* else end or abort */
->> -        rtc->phase = 0;
->> -        rtc->command = 0;
->> -        rtc->value = 0;
->> +        qemu_irq_raise(s->rtc_cmd_reset_irq);
->>       }
->>   }
+>>   hw/m68k/next-cube.c | 172 ++++++++++++++++++++++----------------------
+>>   1 file changed, 86 insertions(+), 86 deletions(-)
 > 
-> Don't we also need a spot where the gpio gets lowered again?
+> Alternatively, move the rtc code to a separate file?
 
-It's not strictly necessary in this particular case because the IRQ handler 
-implements the reset directly when the gpio is raised, as opposed to it being a 
-stateful signal like the others.
+I believe I've already responded to this in a reply to one of your earlier comments :)
 
 
 ATB,
