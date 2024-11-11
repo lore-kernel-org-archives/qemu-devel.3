@@ -4,149 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97965D3ABF1
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 19:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CA41D3ABF7
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 21:31:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAZd4-0002R3-4L; Mon, 11 Nov 2024 13:59:14 -0500
+	id 1tAbzO-0007tf-0u; Mon, 11 Nov 2024 16:30:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Stewart.Hildebrand@amd.com>)
- id 1tAZd1-0002Ql-6M
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 13:59:12 -0500
-Received: from mail-sn1nam02on2045.outbound.protection.outlook.com
- ([40.107.96.45] helo=NAM02-SN1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tAbzM-0007tW-LX
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 16:30:24 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Stewart.Hildebrand@amd.com>)
- id 1tAZcz-0003oA-EF
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 13:59:10 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kD6vH3hJ4dMyf9Go6dJqRWxocqxdXIO/VBE8QaMk4O6JTV+HCzITsUaWY5bNHFsnKxnpsfenx+ArdAK5JSAoriJXJd4fZ9pfJnEMABxTgC8PQVTxqT4/yR7N0QNKROlyY+K5+1PnI89+8gAMMWMOVaspqdg4yJjtP///TKYp3mNCFiyJZuuUkDT7UxjJ/droql6Exd5w34iAFBd+KfLhADda1lmMU3wqKmcSfYQfE6JUe8t+fdWzPg1RdrUbGPdDrUgSV8QhQB8yoHzM5uXMlTDgRtj6tSgJMt5tgPi6rOq8yV6H9HVmMK9fRrN9SV1sMOeazKxIoAz8ggslyKRXpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=40CTrPbLByU5cW5JIeCveCntVxwqRoVn2WY30irMCLM=;
- b=A0smZ5UISnrzJ7Rtw8mjKeelU/FaQxnNjY/Zs9Wi7MyP/dGq1YcwOM1BWjyzEI6wBMA630P9yuY8B8nCI/P8ccAMkXU4HatHm6U6IB8+jVslEMui/3qfc4pJCVbA6IKXcVw3G081GPDY0LwZtJrel99exMfYhZyUnrRnz3Qw1bGnnB9bYIHkFqWpjJfGw+67gLNMQQVEePJZ1oqh8VxpvKBULWss4O73eyNsW5Y7HR/DceKNUT/a3r5VWcQW3gRDc5hJxJZrP/cCHRpj/twV6l0VJpm5VchwV0A8CRy1f6n8OjCAP7sq+AnZNObvmhrOwJr8yw/JTjIZ0ch3pJ5Z5g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=40CTrPbLByU5cW5JIeCveCntVxwqRoVn2WY30irMCLM=;
- b=nGgrVxEzLzQkIrsw4go8/1dA0nD8G6ULJEm1eWc8YaI5Ra3AU0+2uq6OmjJuaWIZh8oZEJ3ojaiHHkdNzhDrUapYGl2MuPqKHXbfFP1c9DNxQrc3ke40IBskLIpEOJSJqSWUTiXC08X2TCGE2eOWsQk1bNFlztP4aK4uuIt5OYM=
-Received: from PH7PR03CA0026.namprd03.prod.outlook.com (2603:10b6:510:339::11)
- by MW4PR12MB7016.namprd12.prod.outlook.com (2603:10b6:303:218::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.28; Mon, 11 Nov
- 2024 18:54:00 +0000
-Received: from SA2PEPF000015C8.namprd03.prod.outlook.com
- (2603:10b6:510:339:cafe::80) by PH7PR03CA0026.outlook.office365.com
- (2603:10b6:510:339::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.29 via Frontend
- Transport; Mon, 11 Nov 2024 18:54:00 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- SA2PEPF000015C8.mail.protection.outlook.com (10.167.241.198) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8158.14 via Frontend Transport; Mon, 11 Nov 2024 18:54:00 +0000
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 11 Nov
- 2024 12:53:59 -0600
-Received: from [172.30.86.253] (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
- Transport; Mon, 11 Nov 2024 12:53:58 -0600
-Message-ID: <567f142a-55d2-4d4a-999d-d8b63e4882e3@amd.com>
-Date: Mon, 11 Nov 2024 13:53:53 -0500
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tAbzI-00012u-IL
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 16:30:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=ntvK64JGABWZBzPpef3DCvHRD9R+NEFfYKfM5llVyNk=; b=rRrptUcQbzvU9uCGtVSZW986ah
+ F8rGMnl6vu5LCk2tOj/vG7XI2xnr5WfvuUFXTDQh1uvzytqDukb3znGSHBHmY5pAEQycCB0Gsb4Td
+ pHxDkGK8tApuk8sAm9b2cs+fxIQrm3VYwr7+4MJiT0xkoqXJdL/4o84HaFfsVC00v4gvbXO5Np6Sq
+ 6Y49BiWMbjOIi9BhSdpybi4C4ojg91YOu5AQ7C/ge0/DxnOuiYmg3BPYQKdD9AXJVFTDXAK5b9agU
+ qpEx6gW0klw/TVDlk8nxurIPl/N8udeNczYKntt/pE2f8RiRXmsPyuoImm5DDOkHYrk8ELQHJKsW0
+ g8kINLxrg/1zvG/uvLqHV9Qmc4tLieH036BcHyGVDHKLg3exC4fETySjxYjedqNUJLHZT/rH2mWY+
+ 0jgwPP7dIV+s7Tk0lFfQ138THKLNeQHWASJn+h9eJ2wV5PIT5yaFmmJ2o1N8SzZ/dsHcfVf/V4V0p
+ uSimrAnq6NkKuMUJCsTHhrBvz9Mnih7U8yTlEmKM9OyAuM4Bh7jpAzwMYtW6W/0kwJc6zW4Q12QzO
+ KaAZ7vFAtMeZVTGacDFM7AyJ7xVK+3+zpBxM5ex2mDeAVa/h8ClLjr2PIHPnuAWCWzTnTkESxSCtA
+ /dEjq37f2stUoCsm3fKtr7LP7cRqrjz/ov0+Y3jZ8=;
+Received: from [2a00:23c4:8bb8:f600:4d41:7cfb:3f13:ce94]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tAbyn-0004tq-4v; Mon, 11 Nov 2024 21:29:53 +0000
+Message-ID: <d24f1068-b75a-4184-a26f-0bc4a4631048@ilande.co.uk>
+Date: Mon, 11 Nov 2024 21:30:05 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [QEMU PATCH v10] xen/passthrough: use gsi to map pirq when dom0
- is PVH
-To: Jiqian Chen <Jiqian.Chen@amd.com>, Stefano Stabellini
- <sstabellini@kernel.org>, Anthony PERARD <anthony@xenproject.org>, "Paul
- Durrant" <paul@xen.org>, "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
-CC: <qemu-devel@nongnu.org>, <xen-devel@lists.xenproject.org>, Huang Rui
- <ray.huang@amd.com>
-References: <20241106061418.3655304-1-Jiqian.Chen@amd.com>
+To: Thomas Huth <huth@tuxfamily.org>
+Cc: qemu-devel@nongnu.org
+References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
+ <20241023085852.1061031-28-mark.cave-ayland@ilande.co.uk>
+ <20241109091426.0f636645@tpx1>
 Content-Language: en-US
-From: Stewart Hildebrand <stewart.hildebrand@amd.com>
-In-Reply-To: <20241106061418.3655304-1-Jiqian.Chen@amd.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20241109091426.0f636645@tpx1>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: None (SATLEXMB04.amd.com: stewart.hildebrand@amd.com does not
- designate permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF000015C8:EE_|MW4PR12MB7016:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0f6e1520-2835-4b68-965f-08dd02823454
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?S0VickcyNlk1ZWNWVi9kL3hpVzRlUFFYOU9aOG9SQW5wUmswd3IvZEphQTVC?=
- =?utf-8?B?QXFvcGRvczJrcHVNbndEMS9vd3dZTGpHVzZzSU8yY1dyQVJmWk9mSjZwbnl5?=
- =?utf-8?B?RVpkRkcxZ2o5YTJQb2JMYUloTURrdVd5MG84WUlZYjRTeWoyanV6R2M3QUZ1?=
- =?utf-8?B?cmUxQ0RBSStVaytmcTNkVjBqNGtSRTdVV0M4eWRJVW82NmQxL1UwZFN1M1hn?=
- =?utf-8?B?Rk9FZDdobXIxbWpNMXBnRDVoMFNiSDR2MmVNOVEwMDVGTUlnRmRyNldzY1VY?=
- =?utf-8?B?OHlBRkFwZE9PMXllK3JlWFh3U2VVN0dmYjdmSDBPQW5XdmplaHhuQmpOaSs2?=
- =?utf-8?B?cUFpSHpOQWdrZ1VLalppR1JDU0dDeHdQeWE1MmE1TWRRamREZkY2T0JPZTUr?=
- =?utf-8?B?Z1gwV1V1emZZTGQ5TVhWOHBMZWRyaFAxbDJzNVBZQkpuT3dndDBwTWdhVzF3?=
- =?utf-8?B?OE9JaGxCcFVwQUNzaXZtcVlRak9aRm5TQXhjdFBhSU1wa2dDRzE0Y3BMNEF1?=
- =?utf-8?B?Q21STXlHcklaeWpzMWVoZlNEWEVSZkNJakVJR3N4Q3JaUUhmeE9JTkRiN213?=
- =?utf-8?B?bEpDNTRMOW1WZys5ZE91dGJVR0dFeC93anZjQzl6R1I2aVEyUlc4MFZoSElm?=
- =?utf-8?B?dVM2c0FEY0g0TlJsSTFoU0FLcGNQTHNNaWZmZk15ckVGVDNtTHowVmxXT3U1?=
- =?utf-8?B?OUVPNXIxc2d3VERPYVhQcDFhUi9qMEk0a2Z5S3NCM2hZd3VHdTBXZnI2UzdP?=
- =?utf-8?B?Y3hQOFgxT2V6V211RzZpaktlRGZFNlRjdmJNQ1hyRGZYUkF4RmFsSlpYTEoy?=
- =?utf-8?B?NFEzQnFUUFdlczFKeGRHeTVhSHg3MjkrbU9UaDF1eW82c05CUVl4WVN3RHM3?=
- =?utf-8?B?NTJ1TCsyQ2dQSTArSTk1bFRuUGZXMlE2cXB0MStRc1pWMDJPTmpFR09NWGlV?=
- =?utf-8?B?V1RBdnlQSFdjNzYzdDNRZzFoRlVqVERHOVhGczVDVmxOSkI3UjRGbHJYQmp2?=
- =?utf-8?B?NEVXOHNCZEI1VXRyam81S1ZKZGE2S0p0QWZ4NzRKS1VaVHp3eXJnYW5hQURQ?=
- =?utf-8?B?cnExOThjbEJiL3A3WjNoQnp4c1FIUG5sOWtpWDBKbkxqcFdscjQ2bUJ0UG1v?=
- =?utf-8?B?T0g0R3R4bFJIM05CRzRuQVM3dTJYTWw3ZWNTMEhWV1RrZTlHQVdPUkxjYVpL?=
- =?utf-8?B?QWdVeXZIcFppMTBPZlhOQlZOM3F3N1hWelFpd3dQNGtRQWpXa1BpYm1qd2tk?=
- =?utf-8?B?cTZCak94dXJITnIvRVpxVWNndmtMRjdsWVNzK2hRWmlMdWFUOVpCeDdUOHJh?=
- =?utf-8?B?VDRteTZuUkF0N2hGejNHUTZyKzJIYVBrb0QrZ09TcEpBL21IQWlWeFNlM1B6?=
- =?utf-8?B?OUhUUXlzN3BXbFgvTlJiVGxnVEtXRThZYThGS3dlVG0xSUJ6d2RkaU1rNU5Z?=
- =?utf-8?B?dEtkbjE4bFVrOExxVDRPMkxzaElKNTMrRzhPNlpMVFpMN2p0UG56d2dpWUh5?=
- =?utf-8?B?by9uUzJHanI0djFDZEx3OUdlakN5VXZ2d25wUnpMMTNCNzk2NVFlODFKWitM?=
- =?utf-8?B?VEF0VUVZbFhRclhPaFUrQUlYcXVWNnA3cURpb1R1VkRxOWNqaHp1ZzZPbFRo?=
- =?utf-8?B?bDNWcEUvd2pheVFjRGpNVy8vNUR2YWRjaDAvSFZObTRxcjFhSkY5N01uZkRw?=
- =?utf-8?B?SExOVitBdENRelZubWNuak9jOEtaU3prdDlYb2t0V1pPc2Yyb3FFOGNZOW1j?=
- =?utf-8?B?V3BsS1VDUG1NZzg4eGlmZ3gwYWo3UVNob2dxcmkwY3NWT1B1V0Yxb0kyVU9S?=
- =?utf-8?B?dkhQSitiRjBIOENtMmFPbGJyQ25seS9tbGZJQlUxZnkyOW8vYVdaczBVNjk3?=
- =?utf-8?B?eDFCYWhGMjM4UlhzR1MyZmt0bG9MVThEQ1IvWStzbHRKZUE9PQ==?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2024 18:54:00.2502 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0f6e1520-2835-4b68-965f-08dd02823454
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF000015C8.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7016
-Received-SPF: permerror client-ip=40.107.96.45;
- envelope-from=Stewart.Hildebrand@amd.com;
- helo=NAM02-SN1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:4d41:7cfb:3f13:ce94
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 27/36] next-cube: QOMify NeXTRTC
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.671,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,19 +105,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/24 01:14, Jiqian Chen wrote:
-> In PVH dom0, when passthrough a device to domU, QEMU code
-> xen_pt_realize->xc_physdev_map_pirq wants to use gsi, but in current codes
-> the gsi number is got from file /sys/bus/pci/devices/<sbdf>/irq, that is
-> wrong, because irq is not equal with gsi, they are in different spaces, so
-> pirq mapping fails.
-> 
-> To solve above problem, use new interface of Xen, xc_pcidev_get_gsi to get
-> gsi and use xc_physdev_map_pirq_gsi to map pirq when dom0 is PVH.
-> 
-> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
-> Signed-off-by: Huang Rui <ray.huang@amd.com>
-> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+On 09/11/2024 08:14, Thomas Huth wrote:
 
-Reviewed-by: Stewart Hildebrand <stewart.hildebrand@amd.com>
+> Am Wed, 23 Oct 2024 09:58:43 +0100
+> schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
+> 
+>> This is to allow the RTC functionality to be maintained within its own separate
+>> device.
+>>
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> ---
+>>   hw/m68k/next-cube.c | 66 ++++++++++++++++++++++++++++++++-------------
+>>   1 file changed, 48 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+>> index e4d0083eb0..6b574d39cf 100644
+>> --- a/hw/m68k/next-cube.c
+>> +++ b/hw/m68k/next-cube.c
+>> @@ -42,7 +42,13 @@
+>>   #define RAM_SIZE    0x4000000
+>>   #define ROM_FILE    "Rev_2.5_v66.bin"
+>>   
+>> -typedef struct NeXTRTC {
+>> +
+>> +#define TYPE_NEXT_RTC "next-rtc"
+>> +OBJECT_DECLARE_SIMPLE_TYPE(NeXTRTC, NEXT_RTC)
+>> +
+>> +struct NeXTRTC {
+>> +    SysBusDevice parent_obj;
+>> +
+>>       int8_t phase;
+>>       uint8_t ram[32];
+>>       uint8_t command;
+>> @@ -50,7 +56,7 @@ typedef struct NeXTRTC {
+>>       uint8_t status;
+>>       uint8_t control;
+>>       uint8_t retval;
+>> -} NeXTRTC;
+>> +};
+>>   
+>>   #define TYPE_NEXT_SCSI "next-scsi"
+>>   OBJECT_DECLARE_SIMPLE_TYPE(NeXTSCSI, NEXT_SCSI)
+>> @@ -1012,6 +1018,37 @@ static const MemoryRegionOps next_dummy_en_ops = {
+>>       .endianness = DEVICE_BIG_ENDIAN,
+>>   };
+>>   
+>> +static const VMStateDescription next_rtc_vmstate = {
+>> +    .name = "next-rtc",
+>> +    .version_id = 3,
+>> +    .minimum_version_id = 3,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_INT8(phase, NeXTRTC),
+>> +        VMSTATE_UINT8_ARRAY(ram, NeXTRTC, 32),
+>> +        VMSTATE_UINT8(command, NeXTRTC),
+>> +        VMSTATE_UINT8(value, NeXTRTC),
+>> +        VMSTATE_UINT8(status, NeXTRTC),
+>> +        VMSTATE_UINT8(control, NeXTRTC),
+>> +        VMSTATE_UINT8(retval, NeXTRTC),
+>> +        VMSTATE_END_OF_LIST()
+>> +    },
+>> +};
+>> +
+>> +static void next_rtc_class_init(ObjectClass *klass, void *data)
+>> +{
+>> +    DeviceClass *dc = DEVICE_CLASS(klass);
+>> +
+>> +    dc->desc = "NeXT RTC";
+>> +    dc->vmsd = &next_rtc_vmstate;
+>> +}
+>> +
+>> +static const TypeInfo next_rtc_info = {
+>> +    .name = TYPE_NEXT_RTC,
+>> +    .parent = TYPE_SYS_BUS_DEVICE,
+>> +    .instance_size = sizeof(NeXTRTC),
+>> +    .class_init = next_rtc_class_init,
+>> +};
+>> +
+>>   static void next_pc_rtc_data_in_irq(void *opaque, int n, int level)
+>>   {
+>>       NeXTPC *s = NEXT_PC(opaque);
+>> @@ -1078,6 +1115,12 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+>>       }
+>>       sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(dev, NEXT_SCC_I));
+>>       sysbus_connect_irq(sbd, 1, qdev_get_gpio_in(dev, NEXT_SCC_DMA_I));
+>> +
+>> +    /* RTC */
+>> +    d = DEVICE(object_resolve_path_component(OBJECT(dev), "rtc"));
+>> +    if (!sysbus_realize(SYS_BUS_DEVICE(d), errp)) {
+>> +        return;
+>> +    }
+>>   }
+>>   
+>>   static void next_pc_init(Object *obj)
+>> @@ -1111,6 +1154,8 @@ static void next_pc_init(Object *obj)
+>>                             "next.timer", 4);
+>>       sysbus_init_mmio(sbd, &s->timer_mem);
+>>   
+>> +    object_initialize_child(obj, "rtc", &s->rtc, TYPE_NEXT_RTC);
+>> +
+>>       s->rtc_power_irq = qdev_get_gpio_in(DEVICE(obj), NEXT_PWR_I);
+>>       qdev_init_gpio_in_named(DEVICE(obj), next_pc_rtc_data_in_irq,
+>>                               "pc-rtc-data-in", 1);
+>> @@ -1129,22 +1174,6 @@ static Property next_pc_properties[] = {
+>>       DEFINE_PROP_END_OF_LIST(),
+>>   };
+>>   
+>> -static const VMStateDescription next_rtc_vmstate = {
+>> -    .name = "next-rtc",
+>> -    .version_id = 2,
+>> -    .minimum_version_id = 2,
+>> -    .fields = (const VMStateField[]) {
+>> -        VMSTATE_INT8(phase, NeXTRTC),
+>> -        VMSTATE_UINT8_ARRAY(ram, NeXTRTC, 32),
+>> -        VMSTATE_UINT8(command, NeXTRTC),
+>> -        VMSTATE_UINT8(value, NeXTRTC),
+>> -        VMSTATE_UINT8(status, NeXTRTC),
+>> -        VMSTATE_UINT8(control, NeXTRTC),
+>> -        VMSTATE_UINT8(retval, NeXTRTC),
+>> -        VMSTATE_END_OF_LIST()
+>> -    },
+>> -};
+>> -
+>>   static const VMStateDescription next_pc_vmstate = {
+>>       .name = "next-pc",
+>>       .version_id = 3,
+>> @@ -1297,6 +1326,7 @@ static void next_register_type(void)
+>>       type_register_static(&next_typeinfo);
+>>       type_register_static(&next_pc_info);
+>>       type_register_static(&next_scsi_info);
+>> +    type_register_static(&next_rtc_info);
+>>   }
+>>   
+>>   type_init(next_register_type)
+> 
+> Shouldn't the next_rtc_vmstate get removed from next_pc_vmstate now?
+
+Indeed, yes it should. I'll fix that up for v2.
+
+> Also, should we finally move the RTC code to a separate file?
+
+I was thinking about whether it was worth splitting up next-cube.c whilst writing 
+this series, but I didn't come up with a solution I was completely happy with. It is 
+certainly something to reconsider in future though.
+
+
+ATB,
+
+Mark.
+
 
