@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A06E2D2E9DD
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 11:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7367ED2E9DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 11:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tASti-0003fm-CJ; Mon, 11 Nov 2024 06:47:58 -0500
+	id 1tASvY-0004La-Ms; Mon, 11 Nov 2024 06:49:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tAStf-0003fD-Tg
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 06:47:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tASte-0005S7-1P
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 06:47:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731325672;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kjoCHtfDtLkhSHAu4AL0luQA8p5g3727P5DR6sg//CY=;
- b=aKaI1s0AJUAyKmpLRnx1IWWCpKEValb88jwf5vG7uAA5Y0J5O71et3lvgGRL7M8tLV435v
- 8ovTLQu6b78uEa8KdWkoD2zwFBMle4MpTdPhvbq7Y69PS66PtAOrdkVW8iqddnkLCSu8gp
- aeP3mtjNn4rB/ah/WC1cWgh5PE2aqMc=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-510-DmfTcvKxOum6411LIIPveQ-1; Mon, 11 Nov 2024 06:47:49 -0500
-X-MC-Unique: DmfTcvKxOum6411LIIPveQ-1
-X-Mimecast-MFC-AGG-ID: DmfTcvKxOum6411LIIPveQ
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-539e13b8143so4671098e87.0
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 03:47:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tASvV-0004LH-3C
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 06:49:50 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tASvT-0005Vd-I0
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 06:49:48 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5cecbddb574so5831988a12.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 03:49:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731325785; x=1731930585; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wtrUghqgj9LubW5fUfLvSSEMoQ+p30u1dZnBSejMoxA=;
+ b=FICQuqXZ23a03mIE7sSOHFFBDAZG9A8EAuPW0ZhlUKnPWPzaBRx/UUxa+i20xvAP4w
+ HnUqcEOYu7clY2qFFoMfQD4hsDvJRyX2wH2ncQ5oKmoOoOO+Qa1GXKhM0D2gCv06XuTL
+ togvnXeX/+5B5u2no9qgz+qhNYKC4gGafcpXDnLb0fjRHMtalzSYr1B2mxKNvm2BVd2H
+ bKjHibcTFZ+iYh1Da+gKJuVbMOS9+7bT4f6xumcfCPNXpeXCPMkcBXuYHnSzYZPC4SmT
+ p8Md0qrn5IOoNfxCDO4SNq9arIXo8+DX/3xR+6UDiJn6QGcKQOfueejWNpKeLTIcizvS
+ k1iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731325668; x=1731930468;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kjoCHtfDtLkhSHAu4AL0luQA8p5g3727P5DR6sg//CY=;
- b=rbya8MS0EzIfKOjoY1QF9IjHzFzGFVUEOupBHGCYIMS1jlwcq+R/+rsL5az7Wst4bG
- drQuUbcEL19VDCAgVDKahIDmGQ1FZIjuwYJ7Z7CrsIfhBCDdMTYsQ9XOrNFpLvLCgIA/
- ga8ZDYzQKDv3ZmT6C4acM2dX+4MeJypVXro+6x7sOP2OQ5ni0H6rned7EyHdeHNXt46X
- 8DALxYk+64Hyzr8abD7A0/fw0gdC8IUZvrbwqtZyOPyqe6ke19lRQY65/VUwI/XH4lic
- qSEBz7Urx/WOlv91RlbMDc9ZP/Ri5is8nazIqRuS83LeuXUpRQDliknmd0vWvZGwFbnx
- FEDg==
+ d=1e100.net; s=20230601; t=1731325785; x=1731930585;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wtrUghqgj9LubW5fUfLvSSEMoQ+p30u1dZnBSejMoxA=;
+ b=NnmfLvUmvFFYpo9KV31rNcXh/GdnMJE553JkS1zQq2cCv9lLdkv+0LICbdrCA9jjMb
+ vpR+5nWGt+NBQS6SDnq+ZJnC75y7j4gB+2SqR3pXcPeTewykNyt8UnzykZ4AxZG1Vwlc
+ /n9xF4jnpjKjoRnrJzVth4mqzLuf5nZOUHVwTlzt5snjkv81t/IpQ2ELVbxyFryoU4kK
+ bDDVr8XeI3T6CKjuICWV16U5gEnYBopsMmskXaQyMo43luk3Q0uICrrGa7LUAZMpCQ7f
+ a0pG8JP/zRkFDOl+Q0ZTIpfdvm8EmZ0Y0sc0MYhXvv/BQMCzI4KHjlguspCByr3UuzIy
+ +ZFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZFssYSxHK83kFIOjAuWseN298BM/hlnKBv7nZhApEOjZ20AvO/9s57W/ZrllTWg9Gss1ubhhVdhts@nongnu.org
-X-Gm-Message-State: AOJu0Yx7yRMRreRIPfyA+tWFAJ0gqygbbtucimEZe9XGpqbjyabPcrae
- ENox9KOIKYjqgOwxe/zc9C+pEB0H77xnj+9m3z9aIT0q/Y/WHzcoKMvkDUSjNmVQYxdfImB3m96
- 9LCOOJxWbcPMfUhE57uzm9nPYy4vkHwnutx0hLYqzS35AJVzRlChCafXWwC/3nTcKHtERZ8qG8T
- RSl+8atl4L+kr3cnk1iy98vtgyKXM=
-X-Received: by 2002:a05:6512:3d1d:b0:539:fc45:a292 with SMTP id
- 2adb3069b0e04-53d8626c94amr5166064e87.43.1731325668191; 
- Mon, 11 Nov 2024 03:47:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG6/q2rCE/R+yV4AS6HmPPFpN7C2xnZ28ohCQKM6PSMAg+jqKNSyHuL0+t8pmJI/9PPd21dKffX02Hi91ULU80=
-X-Received: by 2002:a05:6512:3d1d:b0:539:fc45:a292 with SMTP id
- 2adb3069b0e04-53d8626c94amr5166053e87.43.1731325667830; Mon, 11 Nov 2024
- 03:47:47 -0800 (PST)
+ AJvYcCV7PHVhJfk/L7q+3VLfUeH5SbV1h4BhGlq2++ylb/HxA5P70OTvzUN1K3u5ADVP9VLh4+jsf6/L6SIr@nongnu.org
+X-Gm-Message-State: AOJu0Yw18ThkQ4eiW19Cy8vQsJtuajLG+rJyNv5Jpeg+Fx/8xVVctseR
+ MI9m+ebzkmW/ZoDBVk98qoh2W2jv0RoeDk2yetr1bhmXIGUi2B0/o46VjxeTgCU=
+X-Google-Smtp-Source: AGHT+IErvGiaM+F1ZqfJ8b7DaVn1X3B4KF5CjhfOP6i6aRJoMG2vjnaj7WNVWbeNV1vTsfzNixZ/RA==
+X-Received: by 2002:a17:907:3fa2:b0:a9a:7f91:8c76 with SMTP id
+ a640c23a62f3a-a9eefcec58dmr1273728566b.0.1731325785407; 
+ Mon, 11 Nov 2024 03:49:45 -0800 (PST)
+Received: from [192.168.69.126] (cnf78-h01-176-184-27-70.dsl.sta.abo.bbox.fr.
+ [176.184.27.70]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9ee0a450besm580762266b.43.2024.11.11.03.49.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Nov 2024 03:49:44 -0800 (PST)
+Message-ID: <1af1f5db-ee5c-4f51-be40-2e9a2bc756be@linaro.org>
+Date: Mon, 11 Nov 2024 12:49:42 +0100
 MIME-Version: 1.0
-References: <20241111090534.66439-2-frolov@swemel.ru>
-In-Reply-To: <20241111090534.66439-2-frolov@swemel.ru>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 11 Nov 2024 17:17:31 +0530
-Message-ID: <CAE8KmOw75c9Vja5dnGy50b2Dqp9wgfMfxRWjHDdqEUkLBUcP+A@mail.gmail.com>
-Subject: Re: [PATCH] tests/qtest: fix heap-use-after-free
-To: Dmitry Frolov <frolov@swemel.ru>
-Cc: farosas@suse.de, lvivier@redhat.com, sdl.qemu@linuxtesting.org, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/i386/elfboot: allocate "header" in heap
+To: slp@redhat.com, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20241108230314.1980-1-slp@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241108230314.1980-1-slp@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.118,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,42 +98,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Nov 2024 at 14:37, Dmitry Frolov <frolov@swemel.ru> wrote:
-> "int main(int argc, char **argv, char** envp)" is non-standart
-> Microsoft`s extention of the C language and it`s not portable.
-> In my particular case (Debian 13, clang-16) this raises wild-pointer
-> dereference with ASAN message "heap-use-after-free".
-...
->          qos_printf("ENVIRONMENT VARIABLES: {\n");
-> -        for (char **env = envp; *env != 0; env++) {
-> +        for (char **env = environ; *env != 0; env++) {
->              qos_printf("\t%s\n", *env);
->          }
+On 8/11/24 23:03, slp@redhat.com wrote:
+> From: Sergio Lopez <slp@redhat.com>
+> 
+> In x86_load_linux(), we were using a stack-allocated array as data for
+> fw_cfg_add_bytes(). Since the latter just takes a reference to the
+> pointer instead of copying the data, it can happen that the contents
+> have been overridden by the time the guest attempts to access them.
+> 
+> Instead of using the stack-allocated array, allocate some memory from
+> the heap, copy the contents of the array, and use it for fw_cfg.
+> 
+> Signed-off-by: Sergio Lopez <slp@redhat.com>
+> ---
+>   hw/i386/x86-common.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index bc360a9ea4..d51ebad4d6 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -697,9 +697,12 @@ void x86_load_linux(X86MachineState *x86ms,
+>                   strlen(kernel_cmdline) + 1);
+>               fw_cfg_add_string(fw_cfg, FW_CFG_CMDLINE_DATA, kernel_cmdline);
+>   
+> +            setup = g_malloc(sizeof(header));
+> +            memcpy(setup, header, sizeof(header));
+> +
+>               fw_cfg_add_i32(fw_cfg, FW_CFG_SETUP_SIZE, sizeof(header));
+>               fw_cfg_add_bytes(fw_cfg, FW_CFG_SETUP_DATA,
+> -                             header, sizeof(header));
+> +                             setup, sizeof(header));
 
-* For heap-use-after-free, there needs to be a free(*env) call
-somewhere. In the 'tests/qtest/qos-test.c' file, I couldn't see
-environment variables being free'd anywhere. Above loop is only
-printing them. Following small test.c did not reproduce the
-'heap-use-after-free' error.
-===
-#include <stdio.h>
-int
-main(int argc, char *argv[], char **envp)
-{
-    int n = 0;
-    for (char **p = envp; *p != 0; p++) {
-        printf("environ[%d]: %s\n", n++, *p);
-    }
-    return 0;
-}
-$ cc -xc -o test test.c -lasan
-===
+Preferably using g_memdup2(header, sizeof(header)),
 
-* While the patch is okay, it is not clear why it fixes the
-wild-pointer dereference and "heap-use-after-free" errors.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Thank you.
----
-  - Prasad
+>   
+>               /* load initrd */
+>               if (initrd_filename) {
 
 
