@@ -4,63 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 631E3D3ABD2
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 17:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF2D7D3ABD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 17:44:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAY56-0003ik-Ew; Mon, 11 Nov 2024 12:20:04 -0500
+	id 1tAYRZ-0006nb-Ul; Mon, 11 Nov 2024 12:43:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khoroshilov@ispras.ru>)
- id 1tAY54-0003i6-UJ
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 12:20:02 -0500
-Received: from mail.ispras.ru ([83.149.199.84])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khoroshilov@ispras.ru>)
- id 1tAY52-00017q-39
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 12:20:02 -0500
-Received: from [10.49.130.42] (unknown [185.79.103.100])
- by mail.ispras.ru (Postfix) with ESMTPSA id A4BD2413BDE7;
- Mon, 11 Nov 2024 17:19:53 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru A4BD2413BDE7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
- s=default; t=1731345594;
- bh=cvvpk98777ix2cDmEPLsJwsUTRmLqkM7uILYOwfbfRs=;
- h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
- b=FPVomFxuChV6U6fGZx9Y0qJeaKvggwNnfvJI3WCFQsnc/ParQBc/t99pgpSRMlYfm
- v5sfR1yK9vG7j3kBgZpuYBpYwq+RP1jZ6+CgRACGx4wKSnf02esA9SaBQxhqDo3vAu
- pfPa+s0/ay8HtX26Trm9KVf1p+shw7AQWGdfViiw=
-Subject: Re: [sdl-qemu] [PATCH] tests/qtest: fix heap-use-after-free
-To: =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0KTRgNC+0LvQvtCy?= <frolov@swemel.ru>,
- Prasad Pandit <ppandit@redhat.com>
-Cc: lvivier@redhat.com, farosas@suse.de, sdl.qemu@linuxtesting.org,
- qemu-devel@nongnu.org
-References: <20241111090534.66439-2-frolov@swemel.ru>
- <CAE8KmOw75c9Vja5dnGy50b2Dqp9wgfMfxRWjHDdqEUkLBUcP+A@mail.gmail.com>
- <60535722-1a11-42f9-a678-d103e227942f@swemel.ru>
- <CAE8KmOyvCJoOHAw7+Y=2-pDD3co5kcwshJCjGfdsmEpsQLRgow@mail.gmail.com>
- <23ef463e-744d-472c-bd25-30f68a97a8cf@swemel.ru>
-From: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Message-ID: <f8673240-2bae-d759-9d1a-de3a320b3c14@ispras.ru>
-Date: Mon, 11 Nov 2024 20:19:51 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tAYRW-0006mt-78
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 12:43:14 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tAYRS-0003DF-4b
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 12:43:13 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-20cf3e36a76so48879135ad.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 09:43:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1731346979; x=1731951779; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YMPIY50XhnFA62zxJqZgs8OUE0v6135TnZmIse/sfdI=;
+ b=Eo/xzDfQlIPj/Rfl4i8ixWWllOj4CcaP2Qgzr6pHLvYm0eqOVUPBrOf9iDD+eo/Kvq
+ 261fxxjoHhAdbRCFDISz4LLUqZjIzzaaHTX7PH8Um31ktDkTOpha9yPlaT7LiRypeABU
+ zuhgXmRgdiYtz3SZ0dCCcbljf87i5oJD+xfRkbFtxacg3oFg9PS1Xur21us78llzpSOR
+ XtZYC9Ia02mczpOp9HxQRllAIb7/qQDmpOqBK9xgjaFPr6PCArXOInW0OTwlnXxDDm6y
+ mNmnGLnhRsnTtSeCiLieAHYeZ3OvkJRDXwfrVXJiqJJmbgFmuzOAmAbuhj7H1AX0HOSV
+ KBhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731346979; x=1731951779;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YMPIY50XhnFA62zxJqZgs8OUE0v6135TnZmIse/sfdI=;
+ b=GFxYXzQ50A5BNaNw5MjsGfVbEa3XvraYdYpBgC5ohKgA+gWA20Wl0csQPMYDmLvdGe
+ AyT3m2jreDc1Tc81CP294dxRbMU4OHncZXchhvU/1cmSi07Pral1dOmRrYUROdbX5oc6
+ Mw38hfWNd2lfC7HI6NBfdlRO9vfe4csAwEGbCj+26mUQRG6IyLFwlIIzxUKN78mUO3P0
+ 20F+nIYzVZKYG+eDXb922ubEpvOnbm1yHGMBbftupnwNIzz9GXhwppCTKcMLa6PwUXBH
+ 635JaCqoq7otWJEVvLTGx6tlMeiVIMTp6esSdkOP/ZjS/zw6csdWtCpb/JiZ3CFSm8Cr
+ ciiA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWdpZHLgago82OdSWvPKPBGHIeHQSVQMtenwQs7WDKqQ3u2u3uf43sEDAGx2c6rCeAT38FQWU0CFa0e@nongnu.org
+X-Gm-Message-State: AOJu0YzZdu0x8lgo96a9iafoJlsS2u+u3WPVcJYhbjVeJJOkXkSrz5OM
+ c7xNQObRrOBA537pqM5COpfQkiG9udjdzgJvPGzm6DBnnlh33n8G/AE++PtbeUM=
+X-Google-Smtp-Source: AGHT+IHXFugUuXXpRWyM9oM4lzbFfp3w+vlviWW+vh4U46R+nVUZUc+0eWYiphrGiibJkqcJuJwESg==
+X-Received: by 2002:a17:902:ea12:b0:20b:8ef3:67a with SMTP id
+ d9443c01a7336-211834f39acmr210100645ad.7.1731346979340; 
+ Mon, 11 Nov 2024 09:42:59 -0800 (PST)
+Received: from [192.168.68.110] ([189.79.22.174])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21177e68960sm78780525ad.220.2024.11.11.09.42.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Nov 2024 09:42:58 -0800 (PST)
+Message-ID: <364835b0-40a3-43be-a2c0-a60c27ac14cd@ventanamicro.com>
+Date: Mon, 11 Nov 2024 14:42:45 -0300
 MIME-Version: 1.0
-In-Reply-To: <23ef463e-744d-472c-bd25-30f68a97a8cf@swemel.ru>
-Content-Type: multipart/alternative;
- boundary="------------5D41C97EADCAC79B5849950F"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/5] target/riscv: Support senvcfg[UKTE] bit when
+ svukte extension is enabled
+To: "Fea.Wang" <fea.wang@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Frank Chang <frank.chang@sifive.com>, Jim Shu <jim.shu@sifive.com>
+References: <20241108085239.2927152-1-fea.wang@sifive.com>
+ <20241108085239.2927152-3-fea.wang@sifive.com>
 Content-Language: en-US
-Received-SPF: pass client-ip=83.149.199.84; envelope-from=khoroshilov@ispras.ru;
- helo=mail.ispras.ru
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- NICE_REPLY_A=-1.909, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20241108085239.2927152-3-fea.wang@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,313 +103,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------5D41C97EADCAC79B5849950F
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-On 11.11.2024 16:35, Дмитрий Фролов wrote:
->
->
-> On 11.11.2024 15:51, Prasad Pandit wrote:
->> On Mon, 11 Nov 2024 at 17:41, Дмитрий Фролов <frolov@swemel.ru> wrote:
->>> Above loop dereferences the pointer env, which is pointing to
->>> the memory area, which is not allowed to read.
->> * Not allowed to read environment variables? Is it because
->> Debian/clang does not support the '**envp' parameter? Is '**envp' set
->> to NULL on Debian? If '**envp' is not supported, then the compiler
->> should throw an error at build time, no?
-> Not allowed to read the exact memory area, because it is marked as freed.
-As far as I understand, heap-use-after-free means a situation when code
-allocates memory then frees it and then access it.
-Here the code just accesses invalid memory because of nonstandard main()
-call convention.
-
-If it is correct, the patch title could be "tests/qtest: make access to
-environment variables portable"
-
---
-Alexey
-
->>> I am pointing on 2 facts:
->>> 1. "env" is Microsoft`s extension, not a standard
->>> 2. There is exact example, where standards violation raises
->>> undefined behavior: debian13/clang16
->>>
->> * If this is about Debian not supporting '**envp' parameter, then
->> it'll help if the commit message says "...Debian does not support this
->> non-standard extension and crashes QEMU". 
-> Since this is UB, it does not matter, if a crash happens or not.
-> ASAN just helps to highlight the hidden problem.
->  
->> The asan error makes it
->> sound like the patch fixes the use-after-free issue. 
-> I didn`t want to confuse anybody, but this is exactly,
-> what is actually happening (see log below).
->
->> What happens if
->> the -lasan is not used? Does it still crash QEMUt?
->>
->> Thank you.
->> ---
->>   - Prasad
->>
-> When saintizers are disabled, qos-test passes successfully.
-> qos-test fails when qemu is built with enabled sanitizers
-> (--enable-asan --enable-ubsan)
->
-> ==879133==ERROR: AddressSanitizer: heap-use-after-free on address
-> 0x514000000040 at pc 0x55eae79b407c bp 0x7ffd028715d0 sp 0x7ffd028715c8
-> READ of size 8 at 0x514000000040 thread T0
->     #0 0x55eae79b407b in main
-> /home/df/projects/upstream/qemu/build/../tests/qtest/qos-test.c:339:33
->     #1 0x7f9011760c89  (/lib/x86_64-linux-gnu/libc.so.6+0x27c89)
-> (BuildId: 61cf5c68463ab7677fa14f071a036eda24d0cc38)
->     #2 0x7f9011760d44 in __libc_start_main
-> (/lib/x86_64-linux-gnu/libc.so.6+0x27d44) (BuildId:
-> 61cf5c68463ab7677fa14f071a036eda24d0cc38)
->     #3 0x55eae77a5c60 in _start
-> (/home/df/projects/upstream/qemu/build/tests/qtest/qos-test+0x209c60)
-> (BuildId: 2c9032193c32f574ceec39c89e10b1693e20d69e)
->
-> 0x514000000040 is located 0 bytes inside of 416-byte region
-> [0x514000000040,0x5140000001e0)
-> freed by thread T0 here:
->     #0 0x55eae7840ce9 in __interceptor_realloc
-> (/home/df/projects/upstream/qemu/build/tests/qtest/qos-test+0x2a4ce9)
-> (BuildId: 2c9032193c32f574ceec39c89e10b1693e20d69e)
->     #1 0x7f901177b596  (/lib/x86_64-linux-gnu/libc.so.6+0x42596)
-> (BuildId: 61cf5c68463ab7677fa14f071a036eda24d0cc38)
->
-> previously allocated by thread T0 here:
->     #0 0x55eae7840ce9 in __interceptor_realloc
-> (/home/df/projects/upstream/qemu/build/tests/qtest/qos-test+0x2a4ce9)
-> (BuildId: 2c9032193c32f574ceec39c89e10b1693e20d69e)
->     #1 0x7f901177b596  (/lib/x86_64-linux-gnu/libc.so.6+0x42596)
-> (BuildId: 61cf5c68463ab7677fa14f071a036eda24d0cc38)
->
-> SUMMARY: AddressSanitizer: heap-use-after-free
-> /home/df/projects/upstream/qemu/build/../tests/qtest/qos-test.c:339:33
-> in main
-> Shadow bytes around the buggy address:
->   0x513ffffffd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->   0x513ffffffe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->   0x513ffffffe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->   0x513fffffff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->   0x513fffffff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-> =>0x514000000000: fa fa fa fa fa fa fa fa[fd]fd fd fd fd fd fd fd
->   0x514000000080: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
->   0x514000000100: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
->   0x514000000180: fd fd fd fd fd fd fd fd fd fd fd fd fa fa fa fa
->   0x514000000200: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
->   0x514000000280: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-> Shadow byte legend (one shadow byte represents 8 application bytes):
->   Addressable:           00
->   Partially addressable: 01 02 03 04 05 06 07
->   Heap left redzone:       fa
->   Freed heap region:       fd
->   Stack left redzone:      f1
->   Stack mid redzone:       f2
->   Stack right redzone:     f3
->   Stack after return:      f5
->   Stack use after scope:   f8
->   Global redzone:          f9
->   Global init order:       f6
->   Poisoned by user:        f7
->   Container overflow:      fc
->   Array cookie:            ac
->   Intra object redzone:    bb
->   ASan internal:           fe
->   Left alloca redzone:     ca
->   Right alloca redzone:    cb
-> ==879133==ABORTING
-> Aborted
->
->
-> With best regards,
-> Dmitry.
->
-> _______________________________________________
-> sdl.qemu mailing list
-> sdl.qemu@linuxtesting.org
-> http://linuxtesting.org/cgi-bin/mailman/listinfo/sdl.qemu
 
 
---------------5D41C97EADCAC79B5849950F
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
+On 11/8/24 5:52 AM, Fea.Wang wrote:
+> Svukte extension add UKTE bit, bit[8] in senvcfg CSR. The bit will be
+> supported when the svukte extension is enabled.
+> 
+> When senvcfg[UKTE] bit is set, the memory access from U-mode should do
+> the svukte check only except HLV/HLVX/HSV H-mode instructions which
+> depend on hstatus[HUKTE].
+> 
+> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+> Reviewed-by: Jim Shu <jim.shu@sifive.com>
+> ---
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <div class="moz-cite-prefix">On 11.11.2024 16:35, Дмитрий Фролов
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:23ef463e-744d-472c-bd25-30f68a97a8cf@swemel.ru">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <br>
-      <br>
-      <div class="moz-cite-prefix">On 11.11.2024 15:51, Prasad Pandit
-        wrote:<br>
-      </div>
-      <blockquote type="cite"
-cite="mid:CAE8KmOyvCJoOHAw7+Y=2-pDD3co5kcwshJCjGfdsmEpsQLRgow@mail.gmail.com">
-        <pre class="moz-quote-pre" wrap="">On Mon, 11 Nov 2024 at 17:41, Дмитрий Фролов <a class="moz-txt-link-rfc2396E" href="mailto:frolov@swemel.ru" moz-do-not-send="true">&lt;frolov@swemel.ru&gt;</a> wrote:
-</pre>
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">Above loop dereferences the pointer env, which is pointing to
-the memory area, which is not allowed to read.
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">* Not allowed to read environment variables? Is it because
-Debian/clang does not support the '**envp' parameter? Is '**envp' set
-to NULL on Debian? If '**envp' is not supported, then the compiler
-should throw an error at build time, no?
-</pre>
-      </blockquote>
-      <span style="white-space: pre-wrap">Not allowed to read the exact memory area, because it is marked as freed.</span></blockquote>
-    As far as I understand, heap-use-after-free means a situation when
-    code allocates memory then frees it and then access it.<br>
-    Here the code just accesses invalid memory because of nonstandard
-    main() call convention.<br>
-    <br>
-    If it is correct, the patch title could be "tests/qtest: make access
-    to environment variables portable"<br>
-    <br>
-    --<br>
-    Alexey<br>
-    <br>
-    <blockquote type="cite"
-      cite="mid:23ef463e-744d-472c-bd25-30f68a97a8cf@swemel.ru"><span style="white-space: pre-wrap">
-</span><span style="white-space: pre-wrap">
-</span>
-      <blockquote type="cite"
-cite="mid:CAE8KmOyvCJoOHAw7+Y=2-pDD3co5kcwshJCjGfdsmEpsQLRgow@mail.gmail.com">
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">I am pointing on 2 facts:
-1. "env" is Microsoft`s extension, not a standard
-2. There is exact example, where standards violation raises
-undefined behavior: debian13/clang16
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">* If this is about Debian not supporting '**envp' parameter, then
-it'll help if the commit message says "...Debian does not support this
-non-standard extension and crashes QEMU". </pre>
-      </blockquote>
-      Since this is UB, it does not matter, if a crash happens or not. <br>
-      ASAN just helps to highlight the hidden problem.<br>
-       <br>
-      <blockquote type="cite"
-cite="mid:CAE8KmOyvCJoOHAw7+Y=2-pDD3co5kcwshJCjGfdsmEpsQLRgow@mail.gmail.com">
-        <pre class="moz-quote-pre" wrap="">The asan error makes it
-sound like the patch fixes the use-after-free issue. </pre>
-      </blockquote>
-      I didn`t want to confuse anybody, but this is exactly,<br>
-      what is actually happening (see log below).<br>
-      <br>
-      <blockquote type="cite"
-cite="mid:CAE8KmOyvCJoOHAw7+Y=2-pDD3co5kcwshJCjGfdsmEpsQLRgow@mail.gmail.com">
-        <pre class="moz-quote-pre" wrap="">What happens if
-the -lasan is not used? Does it still crash QEMUt?
-
-Thank you.
----
-  - Prasad
-
-</pre>
-      </blockquote>
-      When saintizers are disabled, qos-test passes successfully. <br>
-      qos-test fails when qemu is built with enabled sanitizers<br>
-      (--enable-asan --enable-ubsan)<br>
-      <br>
-      ==879133==ERROR: AddressSanitizer: heap-use-after-free on address
-      0x514000000040 at pc 0x55eae79b407c bp 0x7ffd028715d0 sp
-      0x7ffd028715c8<br>
-      READ of size 8 at 0x514000000040 thread T0<br>
-          #0 0x55eae79b407b in main
-      /home/df/projects/upstream/qemu/build/../tests/qtest/qos-test.c:339:33<br>
-          #1 0x7f9011760c89  (/lib/x86_64-linux-gnu/libc.so.6+0x27c89)
-      (BuildId: 61cf5c68463ab7677fa14f071a036eda24d0cc38)<br>
-          #2 0x7f9011760d44 in __libc_start_main
-      (/lib/x86_64-linux-gnu/libc.so.6+0x27d44) (BuildId:
-      61cf5c68463ab7677fa14f071a036eda24d0cc38)<br>
-          #3 0x55eae77a5c60 in _start
-      (/home/df/projects/upstream/qemu/build/tests/qtest/qos-test+0x209c60)
-      (BuildId: 2c9032193c32f574ceec39c89e10b1693e20d69e)<br>
-      <br>
-      0x514000000040 is located 0 bytes inside of 416-byte region
-      [0x514000000040,0x5140000001e0)<br>
-      freed by thread T0 here:<br>
-          #0 0x55eae7840ce9 in __interceptor_realloc
-      (/home/df/projects/upstream/qemu/build/tests/qtest/qos-test+0x2a4ce9)
-      (BuildId: 2c9032193c32f574ceec39c89e10b1693e20d69e)<br>
-          #1 0x7f901177b596  (/lib/x86_64-linux-gnu/libc.so.6+0x42596)
-      (BuildId: 61cf5c68463ab7677fa14f071a036eda24d0cc38)<br>
-      <br>
-      previously allocated by thread T0 here:<br>
-          #0 0x55eae7840ce9 in __interceptor_realloc
-      (/home/df/projects/upstream/qemu/build/tests/qtest/qos-test+0x2a4ce9)
-      (BuildId: 2c9032193c32f574ceec39c89e10b1693e20d69e)<br>
-          #1 0x7f901177b596  (/lib/x86_64-linux-gnu/libc.so.6+0x42596)
-      (BuildId: 61cf5c68463ab7677fa14f071a036eda24d0cc38)<br>
-      <br>
-      SUMMARY: AddressSanitizer: heap-use-after-free
-      /home/df/projects/upstream/qemu/build/../tests/qtest/qos-test.c:339:33
-      in main<br>
-      Shadow bytes around the buggy address:<br>
-        0x513ffffffd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00<br>
-        0x513ffffffe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00<br>
-        0x513ffffffe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00<br>
-        0x513fffffff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00<br>
-        0x513fffffff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00<br>
-      =&gt;0x514000000000: fa fa fa fa fa fa fa fa[fd]fd fd fd fd fd fd
-      fd<br>
-        0x514000000080: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd<br>
-        0x514000000100: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd<br>
-        0x514000000180: fd fd fd fd fd fd fd fd fd fd fd fd fa fa fa fa<br>
-        0x514000000200: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00<br>
-        0x514000000280: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00<br>
-      Shadow byte legend (one shadow byte represents 8 application
-      bytes):<br>
-        Addressable:           00<br>
-        Partially addressable: 01 02 03 04 05 06 07 <br>
-        Heap left redzone:       fa<br>
-        Freed heap region:       fd<br>
-        Stack left redzone:      f1<br>
-        Stack mid redzone:       f2<br>
-        Stack right redzone:     f3<br>
-        Stack after return:      f5<br>
-        Stack use after scope:   f8<br>
-        Global redzone:          f9<br>
-        Global init order:       f6<br>
-        Poisoned by user:        f7<br>
-        Container overflow:      fc<br>
-        Array cookie:            ac<br>
-        Intra object redzone:    bb<br>
-        ASan internal:           fe<br>
-        Left alloca redzone:     ca<br>
-        Right alloca redzone:    cb<br>
-      ==879133==ABORTING<br>
-      Aborted<br>
-      <br>
-      <br>
-      With best regards, <br>
-      Dmitry.<br>
-      <br>
-      <fieldset class="mimeAttachmentHeader"></fieldset>
-      <pre class="moz-quote-pre" wrap="">_______________________________________________
-sdl.qemu mailing list
-<a class="moz-txt-link-abbreviated" href="mailto:sdl.qemu@linuxtesting.org">sdl.qemu@linuxtesting.org</a>
-<a class="moz-txt-link-freetext" href="http://linuxtesting.org/cgi-bin/mailman/listinfo/sdl.qemu">http://linuxtesting.org/cgi-bin/mailman/listinfo/sdl.qemu</a>
-</pre>
-    </blockquote>
-    <br>
-  </body>
-</html>
-
---------------5D41C97EADCAC79B5849950F--
+>   target/riscv/cpu_bits.h | 1 +
+>   target/riscv/csr.c      | 4 ++++
+>   2 files changed, 5 insertions(+)
+> 
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index 385a2c67c2..4b9f899217 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -785,6 +785,7 @@ typedef enum RISCVException {
+>   #define SENVCFG_CBIE                       MENVCFG_CBIE
+>   #define SENVCFG_CBCFE                      MENVCFG_CBCFE
+>   #define SENVCFG_CBZE                       MENVCFG_CBZE
+> +#define SENVCFG_UKTE                       BIT(8)
+>   
+>   #define HENVCFG_FIOM                       MENVCFG_FIOM
+>   #define HENVCFG_LPE                        MENVCFG_LPE
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 9846770820..1936a6f32a 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -2453,6 +2453,10 @@ static RISCVException write_senvcfg(CPURISCVState *env, int csrno,
+>           mask |= SENVCFG_SSE;
+>       }
+>   
+> +    if (env_archcpu(env)->cfg.ext_svukte) {
+> +        mask |= SENVCFG_UKTE;
+> +    }
+> +
+>       env->senvcfg = (env->senvcfg & ~mask) | (val & mask);
+>       return RISCV_EXCP_NONE;
+>   }
 
