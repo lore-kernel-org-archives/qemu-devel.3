@@ -4,91 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00483D2E9FF
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 14:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F6AD2E9FF
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 14:32:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAVQK-0005hV-4o; Mon, 11 Nov 2024 09:29:48 -0500
+	id 1tAVSs-0006aM-9Q; Mon, 11 Nov 2024 09:32:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tAVQE-0005hC-Qv
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:29:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tAVQC-0008CP-Ie
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:29:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731335378;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pjRAGOxPKBLWWtMTL71YPmNIL38UX8S0tDkwH3bqdKI=;
- b=VCbfJdxQDa+Z/7fg3Sk0a5dg/83Gb8NWDsbduRab7pKbRi1MDfTAm/20/885qooEoSSPCH
- K3VrT8F5Hqfwx8iyjXfeDe60tGOS2M+a4b2yqSS7EyNruYWfqbVBEtM14berUWk7xMAYR1
- l7uSb6XJFCGtf/khNvOXsjDS4PWkcMg=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-138-qAk2hGD9OWOnj-H9L20ntQ-1; Mon,
- 11 Nov 2024 09:29:32 -0500
-X-MC-Unique: qAk2hGD9OWOnj-H9L20ntQ-1
-X-Mimecast-MFC-AGG-ID: qAk2hGD9OWOnj-H9L20ntQ
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tAVSo-0006Zr-A5
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:32:22 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tAVSm-0008Sp-5l
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:32:22 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA9FA1955DC3; Mon, 11 Nov 2024 14:29:28 +0000 (UTC)
-Received: from localhost (unknown [10.22.80.107])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76976300019E; Mon, 11 Nov 2024 14:29:26 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: eric.auger@redhat.com, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- kvmarm@lists.linux.dev, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
- armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: Re: [RFC 18/21] arm/cpu: Introduce a customizable kvm host cpu model
-In-Reply-To: <63c232c2-a325-48d6-8ed4-753a7c6e3b4e@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20241025101959.601048-1-eric.auger@redhat.com>
- <20241025101959.601048-19-eric.auger@redhat.com>
- <ZxuX4i9NjVRizB72@redhat.com>
- <cb6c8f62-c5dc-416d-865f-fbdf96164dac@redhat.com>
- <Zxub7ol4p8P_sWF8@redhat.com>
- <CAFEAcA_wQu17y0PyQwxw0wuf2H5y2VE5aX16nLP2-u7QUP2ggA@mail.gmail.com>
- <Zx-9WxXkmkMuGIlQ@redhat.com>
- <CAFEAcA9w0mb5bcU8p+fScQony-=oqLmNurGWpnL_sBneQCzxUg@mail.gmail.com>
- <Zx_EGxj2aqc_2-kY@redhat.com>
- <63c232c2-a325-48d6-8ed4-753a7c6e3b4e@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Mon, 11 Nov 2024 15:29:23 +0100
-Message-ID: <87ikstn8sc.fsf@redhat.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 53BC71F38E;
+ Mon, 11 Nov 2024 14:32:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1731335538; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fBpUsXKLSFaf/MAjCG2HZTZWktQ580QBpJ6d9j7qWpk=;
+ b=IjTdKllglo6cCfVRda+pFFgA8bQ3QinuCVSDypkOOYmb8m3XEGCQ758cbZgA4e8v+0pLSR
+ KKBH9cYikySEmzKeuQB61sKiv+gLBVOOcJ2TlBLDvhc/OYLqJnxe5JxADg2ZjlKY5xAb1Z
+ kKq1mI9dGrpX86LY6BBpGOm5C35TDB0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1731335538;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fBpUsXKLSFaf/MAjCG2HZTZWktQ580QBpJ6d9j7qWpk=;
+ b=s7XWSl9lNmLXFeW+g9I1bq0FSCx2wpFHombdszpDEITSgoGCbF9HGWz6SuzsSLpp4JBxD3
+ KsUDGOilAG8kV3Bw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=IjTdKllg;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=s7XWSl9l
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1731335538; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fBpUsXKLSFaf/MAjCG2HZTZWktQ580QBpJ6d9j7qWpk=;
+ b=IjTdKllglo6cCfVRda+pFFgA8bQ3QinuCVSDypkOOYmb8m3XEGCQ758cbZgA4e8v+0pLSR
+ KKBH9cYikySEmzKeuQB61sKiv+gLBVOOcJ2TlBLDvhc/OYLqJnxe5JxADg2ZjlKY5xAb1Z
+ kKq1mI9dGrpX86LY6BBpGOm5C35TDB0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1731335538;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fBpUsXKLSFaf/MAjCG2HZTZWktQ580QBpJ6d9j7qWpk=;
+ b=s7XWSl9lNmLXFeW+g9I1bq0FSCx2wpFHombdszpDEITSgoGCbF9HGWz6SuzsSLpp4JBxD3
+ KsUDGOilAG8kV3Bw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D030A13301;
+ Mon, 11 Nov 2024 14:32:17 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 56RuJXEVMmfpaAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 11 Nov 2024 14:32:17 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Laurent
+ Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Gerd
+ Hoffmann <kraxel@redhat.com>
+Subject: Re: [RFC PATCH 4/5] qtest/xhci: Add controller and device setup and
+ ring tests
+In-Reply-To: <20241108154229.263097-5-npiggin@gmail.com>
+References: <20241108154229.263097-1-npiggin@gmail.com>
+ <20241108154229.263097-5-npiggin@gmail.com>
+Date: Mon, 11 Nov 2024 11:32:15 -0300
+Message-ID: <87msi5j0y8.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 53BC71F38E
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; FREEMAIL_CC(0.00)[gmail.com,redhat.com];
+ FREEMAIL_TO(0.00)[gmail.com,nongnu.org];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MID_RHS_MATCH_FROM(0.00)[]; TAGGED_RCPT(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[8];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TO_DN_SOME(0.00)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,112 +129,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 04 2024, Eric Auger <eric.auger@redhat.com> wrote:
+Nicholas Piggin <npiggin@gmail.com> writes:
 
-> Hi Daniel,
+> Add tests which init the host controller registers to the point
+> where command and event rings, irqs are operational. Enumerate
+> ports and set up an attached device context that enables device
+> transfer ring to be set up and tested.
 >
-> On 10/28/24 18:04, Daniel P. Berrang=C3=A9 wrote:
->> On Mon, Oct 28, 2024 at 04:48:18PM +0000, Peter Maydell wrote:
->>> On Mon, 28 Oct 2024 at 16:35, Daniel P. Berrang=C3=A9 <berrange@redhat.=
-com> wrote:
->>>> On Mon, Oct 28, 2024 at 04:16:31PM +0000, Peter Maydell wrote:
->>>>> On Fri, 25 Oct 2024 at 14:24, Daniel P. Berrang=C3=A9 <berrange@redha=
-t.com> wrote:
->>>>>> On Fri, Oct 25, 2024 at 03:18:25PM +0200, Eric Auger wrote:
->>>>>>> On 10/25/24 15:06, Daniel P. Berrang=C3=A9 wrote:
->>>>>>>> Also, is this naming convention really the same one that users
->>>>>>>> will see when they look at /proc/cpuinfo to view features ? It
->>>>>>> No it is not. I do agree that the custom cpu model is very low leve=
-l. It
->>>>>>> is very well suited to test all series turning ID regs as writable =
-but
->>>>>>> this would require an extra layer that adapts /proc/cpuinfo feature
->>>>>>> level to this regid/field abstraction.
->>>>>>>
->>>>>>> In /cpu/proc you will see somethink like:
->>>>>>>  Features    : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics f=
-php
->>>>>>> asimdhp cpuid asimdrdm lrcpc dcpop asimddp
->>>>>> Right, IMHO, this is the terminology that QEMU must use in user
->>>>>> facing APIs.
->>>>> /proc/cpuinfo's naming is rather weird for historical
->>>>> reasons (for instance there is only one FEAT_FP16 feature
->>>>> but cpuinfo lists "fphp" and "asimdhp" separately).
->>>> There's plenty of wierd history in x86 too. In this
->>>> case I might suggest just picking one of the two
->>>> common names, and ignoring the other.
->>>>
->>>> If we really wanted to, we could alias the 2nd name
->>>> to the first, but its likely not worth the bother.
->>> Or we could use the standard set of architectural
->>> feature names, and not have the problem at all, and not
->>> have to document what we mean by our nonstandard names.
->>> (cpuinfo names do actually mostly line up with the
->>> standard names, just not 100%. Similarly gcc/clang command
->>> line options are mostly the architectural feature name.)
->> Ah, right, yes. Sorry I mis-understood you originally to be suggesting
->> the same low level names as this patch.
-> If my understanding is correct, Peter suggested to rely on the
-> terminology used in
+> This test does a bunch of things at once and is yet well
+> librified, but it allows testing basic mechanisms and gives a
+> starting point for further work.
+
+Please give it a pass through checkpatch when you get the chance.
+
 >
-> https://developer.arm.com/documentation/109697/2024_09
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>  tests/qtest/usb-hcd-xhci-test.h | 232 +++++++++++++++
+>  tests/qtest/usb-hcd-xhci-test.c | 506 +++++++++++++++++++++++++++++++-
+>  2 files changed, 732 insertions(+), 6 deletions(-)
+>  create mode 100644 tests/qtest/usb-hcd-xhci-test.h
 >
-> the doc pointed to by Oliver.
->
-> So I think the next step is to understand how those "high level" features=
- do map onto low level ID register field values. I think a high level featu=
-re can map onto separate fields in separate ID regs. This may not be the mo=
-st common case though.=20
 
-I went through all the FEAT_xxx features defined so far and tried to
-categorize them (probably with some errors here and there, but the
-general trend should be correct.)
+<snip>
 
-There's 335 features defined at the moment.
+> +static void pci_xhci_stress_rings(void)
+> +{
+> +    XHCIQState *s;
+> +    uint32_t value;
+> +    uint64_t input_context;
+> +    XHCIEvRingSeg ev_seg;
+> +    XHCITRB trb;
+> +    uint32_t hcsparams1;
+> +    uint32_t slotid;
+> +    void *mem;
+> +    int i;
+> +
+> +    mem = g_malloc(0x1000);
 
-Of these, the majority (295 by my count) map to one or more values in
-one or more id registers. These are what I'd consider the "easy" ones
-(added complexity if we deal with serveral values, but in general, it is
-clear how to handle them, and most of them actually map to a single
-value.) Of course, dependencies may be on top of that.
+This is leaking.
 
-Then, we have some features (~25 or so) that are actually defined by
-dependencies (i.e. FEAT_FOO and FEAT_BAR mean that we have FEAT_BAZ,
-sometimes with an architecture extension dependency thrown in as well.)
-These features are not really relevant when we compare two cpus since
-they do not map to registers directly, but they are relevant if we allow
-them to be specified (and use them as a kind of shorthand.) IOW, we'd
-need to think about how we'd handle them for comparisons and baselining.
-
-Next, let's talk about architecture extensions. All features have a
-level where they have been introduced as optional, some have an upper
-limit (e.g. FEAT_AA32EL1 is not allowed from v9.0 onwards), and quite a
-number of them (~65 or so) become mandatory with a certain architecture
-extension. Sometimes, FEAT_FOO + arch ext also implies FEAT_BAR. If we
-introduce Armvx.y named models, we'd need to enforce that some features
-are (not) set for a certain model. Complex, but not a showstopper. (We'd
-also need to deal with that if we worked on the register level.)
-
-We also have some registers like MIDR/REVIDR that do not correlate with
-any FEAT_xxx, but that we still need to handle; I would suggest to deal
-with them via separate cpu properties (e.g. specify a list of possible
-MIDR/REVIDR pairs.) I hope that there are not too many of them, although
-we do have some impdef registers.
-
-That leaves some headscratchers (at least for me.) E.g. FEAT_UINJ, which
-is optional from v9.5, and mandatory from v9.6, but where I'm unsure how
-we'd discover it, especially as we do not have a way to discover the
-architecture extensions. Maybe this will work for named actual cpus
-only? I'm also not sure if I understand FEAT_CHK, which is listed as
-optional from v8.0 and mandatory from v9.4, but every aarch64 cpu is
-supposed to be compliant, because CHKFEAT might be a NOP (and this is
-only supposed to check for FEAT_GCS? Yes, I'm confused.)
-
-So tl;dr, we cover a lot of the ID register space via FEAT_xxx (with
-varying complexity), but we already know about some exceptions. For some
-FEAT_xxx, I'm not sure if we want to handle them at all.
-
-(I also seem to remember that there some things like perf counters that
-don't map to any on/off features, but no idea about the details here.)
-
+> +    memset(mem, 0, 0x1000);
+> +
+> +    s = xhci_boot("-M q35 "
+> +            "-device nec-usb-xhci,id=xhci,bus=pcie.0,addr=1d.0 "
+> +            "-device usb-storage,bus=xhci.0,drive=drive0 "
+> +            "-drive id=drive0,if=none,file=null-co://,"
+> +                "file.read-zeroes=on,format=raw "
+> +            );
+> +//            "-d trace:*xhci*,trace:*usb*,trace:*msi*");
+> +
+> +    hcsparams1 = xhci_cap_readl(s, 0x4); /* HCSPARAMS1 */
+> +    s->maxports = (hcsparams1 >> 24) & 0xff;
+> +    s->maxintrs = (hcsparams1 >> 8) & 0x3ff;
+> +    s->maxslots = hcsparams1 & 0xff;
+> +
+> +    s->dboff = xhci_cap_readl(s, 0x14); /* DBOFF */
+> +    s->rtoff = xhci_cap_readl(s, 0x18); /* RTOFF */
+> +
+> +    s->dc_base_array = xhci_guest_zalloc(s, 0x800);
+> +    s->command_ring = xhci_guest_zalloc(s, 0x1000);
+> +    s->event_ring = xhci_guest_zalloc(s, 0x1000);
+> +    s->event_ring_seg = xhci_guest_zalloc(s, 0x100);
+> +
+> +    /* Arbitrary small sizes so we can make them wrap */
+> +    s->cr_trb_entries = 0x20;
+> +    s->cr_trb_c = 1;
+> +    s->er_trb_entries = 0x10;
+> +    s->er_trb_c = 1;
+> +
+> +    ev_seg.addr_low = cpu_to_le32(s->event_ring & 0xffffffff);
+> +    ev_seg.addr_high = cpu_to_le32(s->event_ring >> 32);
+> +    ev_seg.size = cpu_to_le32(0x10);
+> +    ev_seg.rsvd = 0;
+> +    qtest_memwrite(s->parent->qts, s->event_ring_seg, &ev_seg, sizeof(ev_seg));
+> +
+> +    xhci_op_writel(s, 0x0, USBCMD_HCRST); /* USBCMD */
+> +    do {
+> +        value = xhci_op_readl(s, 0x4); /* USBSTS */
+> +    } while (value & (1 << 11)); /* CNR */
+> +
+> +    xhci_op_writel(s, 0x38, s->maxslots); /* CONFIG */
+> +
+> +    /* DCBAAP */
+> +    xhci_op_writel(s, 0x30, s->dc_base_array & 0xffffffff);
+> +    xhci_op_writel(s, 0x34, s->dc_base_array >> 32);
+> +
+> +    /* CRCR */
+> +    xhci_op_writel(s, 0x18, (s->command_ring & 0xffffffff) | s->cr_trb_c);
+> +    xhci_op_writel(s, 0x1c, s->command_ring >> 32);
+> +
+> +    xhci_rt_writel(s, 0x28, 1); /* ERSTSZ */
+> +
+> +    /* ERSTBA */
+> +    xhci_rt_writel(s, 0x30, s->event_ring_seg & 0xffffffff);
+> +    xhci_rt_writel(s, 0x34, s->event_ring_seg >> 32);
+> +
+> +    /* ERDP */
+> +    xhci_rt_writel(s, 0x38, s->event_ring & 0xffffffff);
+> +    xhci_rt_writel(s, 0x3c, s->event_ring >> 32);
+> +
+> +    qpci_msix_enable(s->dev);
+> +    xhci_op_writel(s, 0x0, USBCMD_RS | USBCMD_INTE); /* RUN + INTE */
+> +
+> +    /* Enable interrupts on ER IMAN */
+> +    xhci_rt_writel(s, 0x20, IMAN_IE);
+> +
+> +    assert(!qpci_msix_pending(s->dev, 0));
+> +
+> +    /* Wrap the command and event rings with no-ops a few times */
+> +    for (i = 0; i < 100; i++) {
+> +        /* Issue a command ring no-op */
+> +        memset(&trb, 0, sizeof(trb));
+> +        trb.control |= CR_NOOP << TRB_TYPE_SHIFT;
+> +        trb.control |= TRB_TR_IOC;
+> +        submit_cr_trb(s, &trb);
+> +        wait_event_trb(s, &trb);
+> +    }
+> +
+> +    /* Query ports */
+> +    for (i = 0; i < s->maxports; i++) {
+> +        value = xhci_port_readl(s, i, 0); /* PORTSC */
+> +
+> +        /* Only first port should be attached and enabled */
+> +        if (i == 0) {
+> +            g_assert(value & PORTSC_CCS);
+> +            g_assert(value & PORTSC_PED);
+> +	    /* Port Speed must be identified */
+> +	    g_assert(((value >> PORTSC_SPEED_SHIFT) & PORTSC_SPEED_MASK) != 0);
+> +        } else {
+> +            g_assert(!(value & PORTSC_CCS));
+> +            g_assert(!(value & PORTSC_PED));
+> +            g_assert(((value >> PORTSC_PLS_SHIFT) & PORTSC_PLS_MASK) == 5);
+> +        }
+> +    }
+> +
+> +    /* Issue a command ring enable slot */
+> +    memset(&trb, 0, sizeof(trb));
+> +    trb.control |= CR_ENABLE_SLOT << TRB_TYPE_SHIFT;
+> +    trb.control |= TRB_TR_IOC;
+> +    submit_cr_trb(s, &trb);
+> +    wait_event_trb(s, &trb);
+> +    slotid = (trb.control >> TRB_CR_SLOTID_SHIFT) & 0xff;
+> +
+> +    s->slots[slotid].transfer_ring = xhci_guest_zalloc(s, 0x1000);
+> +    s->slots[slotid].tr_trb_entries = 0x10;
+> +    s->slots[slotid].tr_trb_c = 1;
+> +
+> +    /* 32-byte input context size, should check HCCPARAMS1 for 64-byte size */
+> +    input_context = xhci_guest_zalloc(s, 0x420);
+> +
+> +    /* Set input control context */
+> +    ((uint32_t *)mem)[1] = cpu_to_le32(0x3); /* Add device contexts 0 and 1 */
+> +    ((uint32_t *)mem)[8] = cpu_to_le32(1 << 27); /* 1 context entry */
+> +    ((uint32_t *)mem)[9] = cpu_to_le32(1 << 16); /* 1 port number */
+> +
+> +    /* Set endpoint 0 context */
+> +    ((uint32_t *)mem)[16] = 0;
+> +    ((uint32_t *)mem)[17] = cpu_to_le32((ET_CONTROL << EP_TYPE_SHIFT) |
+> +                                        (0x200 << 16)); /* max packet sz XXX? */
+> +    ((uint32_t *)mem)[18] = cpu_to_le32((s->slots[slotid].transfer_ring & 0xffffffff) | 1); /* DCS=1 */
+> +    ((uint32_t *)mem)[19] = cpu_to_le32(s->slots[slotid].transfer_ring >> 32);
+> +    ((uint32_t *)mem)[20] = cpu_to_le32(0x200); /* Average TRB length */
+> +    qtest_memwrite(s->parent->qts, input_context, mem, 0x420);
+> +
+> +    s->slots[slotid].device_context = xhci_guest_zalloc(s, 0x400);
+> +
+> +    ((uint64_t *)mem)[0] = cpu_to_le64(s->slots[slotid].device_context);
+> +    qtest_memwrite(s->parent->qts, s->dc_base_array + 8*slotid, mem, 8);
+> +
+> +    /* Issue a command ring address device */
+> +    memset(&trb, 0, sizeof(trb));
+> +    trb.parameter = input_context;
+> +    trb.control |= CR_ADDRESS_DEVICE << TRB_TYPE_SHIFT;
+> +    trb.control |= slotid << TRB_CR_SLOTID_SHIFT;
+> +    submit_cr_trb(s, &trb);
+> +    wait_event_trb(s, &trb);
+> +
+> +    /* XXX: Check EP state is running? */
+> +
+> +    /* Shut it down */
+> +    qpci_msix_disable(s->dev);
+> +
+> +    guest_free(&s->parent->alloc, s->slots[slotid].device_context);
+> +    guest_free(&s->parent->alloc, s->slots[slotid].transfer_ring);
+> +    guest_free(&s->parent->alloc, input_context);
+> +    guest_free(&s->parent->alloc, s->event_ring);
+> +    guest_free(&s->parent->alloc, s->event_ring_seg);
+> +    guest_free(&s->parent->alloc, s->command_ring);
+> +    guest_free(&s->parent->alloc, s->dc_base_array);
+> +
+> +    xhci_shutdown(s);
+> +}
+> +
+> +/* tests */
+>  int main(int argc, char **argv)
+>  {
+>      int ret;
+> +    const char *arch;
+>  
+>      g_test_init(&argc, &argv, NULL);
+>  
+> +    /* Check architecture */
+> +    arch = qtest_get_arch();
+> +    if (strcmp(arch, "i386") && strcmp(arch, "x86_64")) {
+> +        g_test_message("Skipping test for non-x86");
+> +        return 0;
+> +    }
+> +
+> +    if (!qtest_has_device("nec-usb-xhci")) {
+> +        return 0;
+> +    }
+> +
+>      qtest_add_func("/xhci/pci/hotplug", test_xhci_hotplug);
+>      if (qtest_has_device("usb-uas")) {
+>          qtest_add_func("/xhci/pci/hotplug/usb-uas", test_usb_uas_hotplug);
+> @@ -56,11 +549,12 @@ int main(int argc, char **argv)
+>      if (qtest_has_device("usb-ccid")) {
+>          qtest_add_func("/xhci/pci/hotplug/usb-ccid", test_usb_ccid_hotplug);
+>      }
+> +    if (qtest_has_device("usb-storage")) {
+> +        qtest_add_func("/xhci/pci/xhci-stress-rings", pci_xhci_stress_rings);
+> +    }
+>  
+> -    qtest_start("-device nec-usb-xhci,id=xhci"
+> -                " -drive id=drive0,if=none,file=null-co://,"
+> -                "file.read-zeroes=on,format=raw");
+>      ret = g_test_run();
+> +
+>      qtest_end();
+>  
+>      return ret;
 
