@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEFFFD3ABFD
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 22:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144C9D3ABCF
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 23:01:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAd9j-000661-6c; Mon, 11 Nov 2024 17:45:11 -0500
+	id 1tAdP0-0000uM-QV; Mon, 11 Nov 2024 18:01:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAd9f-00063z-KB
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 17:45:07 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tAdOp-0000tL-KE
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 18:00:48 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAd9d-0008Rl-0w
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 17:45:06 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43161e7bb25so40604595e9.2
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 14:45:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tAdOn-0001ir-Hx
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 18:00:47 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-37d4821e6b4so3538711f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 15:00:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731365100; x=1731969900; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731366043; x=1731970843; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3Av27Bjt8cybhsQ4Vyiv9pdkNpya1Ty2tMw+JzIarjo=;
- b=gUZrE9VoAQBKWv1BVBya8gg5yKfG8L/Y89E1TFqfGacaieOoAaHEm0tiv7LBpcifyn
- uWj/ujweAbd7e/tKokgE4Po7ajMW/wOFLig2h2n6R9OSJRETih0wOl4fxEOHeEr2fg9j
- MnCCCs2f1Z1n0uNvYMNr08b2diFQ6kr6i5g24tFvhUeQ4WY1C5b2nQoJH5+Ii1+4L1+z
- DPh4aDWsvp0iE885Hl6AxgvxhoIj4PKnJaZdVUAfjy7l/DOd0xaJSr87z301DvnOJ7S1
- RQXeE/ncv68ZV92nf7fanEy/LDgNMRrXi2Cnm2si38nOnzyw3FNKOVhccHnt/ZqTZH72
- lMIw==
+ bh=UxzzjInQDdcHJ2SqBgIRmm2wxmj26K0aTYuxqLWAoGk=;
+ b=VvR6Q/PbWb6xMt0sc+RqgLQ7zVnUkDyDq3iP4c64M+ULmeBMJ9PnC920rKc9v3ciAD
+ cF0z2LFJTEDMvp7z6T2n76MrQNpkkHy4ywMAeUpnPqkcY1GwgilJgUoJQyEuY8EBmAoR
+ 0yJP4R3pvyXMJAEpClSp6E6726zQLghiEi6QBuriQ/63uXxBpqC6czicDc8n5kNcl+dT
+ +x4q7gsDa6TOUCsCcK2owcdRke4ex1qeaduC1CJqcYeyEVhM28lImwHf2pG6doLbbv20
+ 1BpM8oz1vHRNS5NQg6/95YGYKVDkntCJ1mKAhVjKxyw6n9b4ZpzTHTvCbcUSmAnmgcl3
+ J/jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731365100; x=1731969900;
+ d=1e100.net; s=20230601; t=1731366043; x=1731970843;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3Av27Bjt8cybhsQ4Vyiv9pdkNpya1Ty2tMw+JzIarjo=;
- b=ftFV3YwKCowtWo//rVkajTf0tX94HqlIhFVmtupLzbgio6YCvV9fseZ+QhD63bPgcJ
- wy6RtyrkP9aRLl2jt3EvbY7KH4lkv73JZoSBMW6IpcemhjNo9oar+BTYOpPeA/pNz+8R
- 4MRWfWIyT3MZJz0f1UVE+iHqOR/MfMH9ZIaSd/biS5z8/esueMf79jMw8leZdT9CeHlX
- K4nS0swdDfX8OOK16bXG/Sa4Bik1O+u9ScF8+0hErx+QZ0s81UwCeKjBy61l6ejmoy1+
- LsaD0x1Ql/9zcnH500aAmCNPOx+T4fE1+QMsmX/WjnqhCpXcqFbfUc7zY2RzVo7sYMDE
- T+mA==
-X-Gm-Message-State: AOJu0YyoNxkLMJU9yiztBSMhM46OdygadUyNa8D/23C+ffPuym5/hzAm
- IhWtEMqbBzYziMz+eytb4SDQAtmfcarJzpNtD5Dbm3x0l+cxQ8MOyEQsymLBAT5pJuO3wBBcxxV
- u
-X-Google-Smtp-Source: AGHT+IGeGZugQaBArXVCl9MMnaTVGCjiANOqdxOhD23KuUAQMwJffltYx5q5WkOVu2sBzgRUtX3zlQ==
-X-Received: by 2002:a05:6000:1547:b0:374:c8e5:d568 with SMTP id
- ffacd0b85a97d-382081245e6mr190223f8f.29.1731365100587; 
- Mon, 11 Nov 2024 14:45:00 -0800 (PST)
-Received: from localhost.localdomain
- (vau06-h02-176-184-43-163.dsl.sta.abo.bbox.fr. [176.184.43.163])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa5b5e56sm231254545e9.2.2024.11.11.14.44.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 Nov 2024 14:45:00 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=UxzzjInQDdcHJ2SqBgIRmm2wxmj26K0aTYuxqLWAoGk=;
+ b=l1rVHIDO20Dr6S5kHpm/7/+o6QP9uAJYxBoPPDpnKEfpUcwRaKJqgMerZdtOFvQx87
+ 1lfvlpnfyD9oQ6zM16PZJn/WgiYRvWEmmpSgAi2dUk/q6p0GNxFJDJupc3456DHmJHJf
+ qSLfrSFMV2Zh9vtCYy1qgi619osGwn/EwWJuX22IxOencrbYKlPmWifKYbSepP34hXwi
+ vfwRoLouikqE3fhy1ItJfzjYXdhf86MZJqjoC9NRmxtlKE4uSAepvHLaUnwUhCgz3SP+
+ U/zNOTlK5w2B+vlWJBu7vc2ttorHYNlqjQv8YPTx2MN+04RTEXrbSsrEOixmuXJeoPy3
+ vjYw==
+X-Gm-Message-State: AOJu0YzDZXlG186hI/4/Ye2IElvW7sPz8Q+GJLDZBCgYCy9yo3+EDJVz
+ tq8gCegO6NQD6aev8eqnfK+iR83iVyYztLiH6iOKg1PFwdZZrLUKlL4G2ONqdw0=
+X-Google-Smtp-Source: AGHT+IHp5h+WRGtjWuYcc/d+nXS89FS9FmDlB+rCFEzK+g7TwDy596Ml/CeEfDpXFQElINm6TA28/A==
+X-Received: by 2002:a5d:64e3:0:b0:37d:4ebe:163e with SMTP id
+ ffacd0b85a97d-381f188c956mr11150775f8f.53.1731366043104; 
+ Mon, 11 Nov 2024 15:00:43 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432aa709ec7sm230433125e9.35.2024.11.11.15.00.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 Nov 2024 15:00:42 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DFB745FA3C;
+ Mon, 11 Nov 2024 23:00:40 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Aleksandar Rikalo <arikalo@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
-Subject: [PATCH 1/2] target/mips: Introduce decode tree bindings for nanoMIPS
- ISA
-Date: Mon, 11 Nov 2024 23:44:51 +0100
-Message-ID: <20241111224452.61276-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241111224452.61276-1-philmd@linaro.org>
-References: <20241111224452.61276-1-philmd@linaro.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH v2 1/2] hw/display: factor out the scanout blob to fb
+ conversion
+Date: Mon, 11 Nov 2024 23:00:39 +0000
+Message-Id: <20241111230040.68470-2-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241111230040.68470-1-alex.bennee@linaro.org>
+References: <20241111230040.68470-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,125 +99,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <f4bug@amsat.org>
+There are two identical sequences of a code doing the same thing that
+raise warnings with Coverity. Before fixing those issues lets factor
+out the common code into a helper function we can share.
 
-Introduce the nanoMIPS decodetree configs for the 16-bit
-and 32-bit instructions.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/tcg/translate.h              |  2 ++
- target/mips/tcg/nanomips16.decode        |  8 ++++++++
- target/mips/tcg/nanomips32.decode        |  8 ++++++++
- target/mips/tcg/nanomips_translate.c     | 14 ++++++++++++++
- target/mips/tcg/nanomips_translate.c.inc |  7 +++++++
- target/mips/tcg/meson.build              |  3 +++
- 6 files changed, 42 insertions(+)
- create mode 100644 target/mips/tcg/nanomips16.decode
- create mode 100644 target/mips/tcg/nanomips32.decode
- create mode 100644 target/mips/tcg/nanomips_translate.c
+v2
+  - fix compile of virtio-gpu-virgl
+  - tweak comment for blob_size
+---
+ include/hw/virtio/virtio-gpu.h | 15 +++++++++
+ hw/display/virtio-gpu-virgl.c  | 22 +------------
+ hw/display/virtio-gpu.c        | 60 +++++++++++++++++++++-------------
+ 3 files changed, 53 insertions(+), 44 deletions(-)
 
-diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-index a65ab4a747..f93bceb82a 100644
---- a/target/mips/tcg/translate.h
-+++ b/target/mips/tcg/translate.h
-@@ -222,6 +222,8 @@ bool decode_ase_mxu(DisasContext *ctx, uint32_t insn);
- bool decode_64bit_enabled(DisasContext *ctx);
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 553799b8cc..924eb8737e 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -333,6 +333,21 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+                                    struct virtio_gpu_scanout *s,
+                                    uint32_t resource_id);
  
- /* decodetree generated */
-+bool decode_isa_nanomips16(DisasContext *ctx, uint16_t insn);
-+bool decode_isa_nanomips32(DisasContext *ctx, uint32_t insn);
- bool decode_isa_rel6(DisasContext *ctx, uint32_t insn);
- bool decode_ase_msa(DisasContext *ctx, uint32_t insn);
- bool decode_ext_txx9(DisasContext *ctx, uint32_t insn);
-diff --git a/target/mips/tcg/nanomips16.decode b/target/mips/tcg/nanomips16.decode
-new file mode 100644
-index 0000000000..81fdc68e98
---- /dev/null
-+++ b/target/mips/tcg/nanomips16.decode
-@@ -0,0 +1,8 @@
-+# nanoMIPS32 16-bit instruction set extensions
-+#
-+# Copyright (C) 2021  Philippe Mathieu-Daudé
-+#
-+# SPDX-License-Identifier: LGPL-2.1-or-later
-+#
-+# Reference: nanoMIPS32 Instruction Set Technical Reference Manual
-+#            (Document Number: MD01247)
-diff --git a/target/mips/tcg/nanomips32.decode b/target/mips/tcg/nanomips32.decode
-new file mode 100644
-index 0000000000..9cecf1e13d
---- /dev/null
-+++ b/target/mips/tcg/nanomips32.decode
-@@ -0,0 +1,8 @@
-+# nanoMIPS32 32-bit instruction set extensions
-+#
-+# Copyright (C) 2021  Philippe Mathieu-Daudé
-+#
-+# SPDX-License-Identifier: LGPL-2.1-or-later
-+#
-+# Reference: nanoMIPS32 Instruction Set Technical Reference Manual
-+#            (Document Number: MD01247)
-diff --git a/target/mips/tcg/nanomips_translate.c b/target/mips/tcg/nanomips_translate.c
-new file mode 100644
-index 0000000000..c148c13ed9
---- /dev/null
-+++ b/target/mips/tcg/nanomips_translate.c
-@@ -0,0 +1,14 @@
-+/*
-+ * MIPS emulation for QEMU - nanoMIPS translation routines
++/**
++ * virtio_gpu_scanout_blob_to_fb() - fill out fb based on scanout data
++ * fb: the frame-buffer descriptor to fill out
++ * ss: the scanout blob data
++ * blob_size: size of scanout blob data
 + *
-+ * Copyright (c) 2021 Philippe Mathieu-Daudé <f4bug@amsat.org>
++ * This will check we have enough space for the frame taking into
++ * account that stride for all but the last line.
 + *
-+ * SPDX-License-Identifier: LGPL-2.1-or-later
++ * Returns true on success, otherwise logs guest error and returns false
 + */
++bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
++                                   struct virtio_gpu_set_scanout_blob *ss,
++                                   uint64_t blob_size);
 +
-+#include "qemu/osdep.h"
-+#include "translate.h"
-+
-+/* Include the auto-generated decoders.  */
-+#include "decode-nanomips16.c.inc"
-+#include "decode-nanomips32.c.inc"
-diff --git a/target/mips/tcg/nanomips_translate.c.inc b/target/mips/tcg/nanomips_translate.c.inc
-index 1e274143bb..e401b92bfd 100644
---- a/target/mips/tcg/nanomips_translate.c.inc
-+++ b/target/mips/tcg/nanomips_translate.c.inc
-@@ -4482,6 +4482,13 @@ static int decode_isa_nanomips(CPUMIPSState *env, DisasContext *ctx)
-         return 2;
+ /* virtio-gpu-udmabuf.c */
+ bool virtio_gpu_have_udmabuf(void);
+ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res);
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index eedae7357f..145a0b3879 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -805,7 +805,6 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
+     struct virtio_gpu_framebuffer fb = { 0 };
+     struct virtio_gpu_virgl_resource *res;
+     struct virtio_gpu_set_scanout_blob ss;
+-    uint64_t fbend;
+ 
+     VIRTIO_GPU_FILL_CMD(ss);
+     virtio_gpu_scanout_blob_bswap(&ss);
+@@ -852,26 +851,7 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
+         return;
      }
  
-+    if (decode_isa_nanomips16(ctx, ctx->opcode)) {
-+        return 2;
-+    }
-+    if (decode_isa_nanomips32(ctx, ctx->opcode)) {
-+        return 4;
+-    fb.format = virtio_gpu_get_pixman_format(ss.format);
+-    if (!fb.format) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: pixel format not supported %d\n",
+-                      __func__, ss.format);
+-        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+-        return;
+-    }
+-
+-    fb.bytes_pp = DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb.format), 8);
+-    fb.width = ss.width;
+-    fb.height = ss.height;
+-    fb.stride = ss.strides[0];
+-    fb.offset = ss.offsets[0] + ss.r.x * fb.bytes_pp + ss.r.y * fb.stride;
+-
+-    fbend = fb.offset;
+-    fbend += fb.stride * (ss.r.height - 1);
+-    fbend += fb.bytes_pp * ss.r.width;
+-    if (fbend > res->base.blob_size) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: fb end out of range\n",
+-                      __func__);
++    if (!virtio_gpu_scanout_blob_to_fb(&fb, &ss, res->base.blob_size)) {
+         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+         return;
+     }
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index c0570ef856..e7ca8fd1cf 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -721,13 +721,48 @@ static void virtio_gpu_set_scanout(VirtIOGPU *g,
+                               &fb, res, &ss.r, &cmd->error);
+ }
+ 
++bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
++                                   struct virtio_gpu_set_scanout_blob *ss,
++                                   uint64_t blob_size)
++{
++    uint64_t fbend;
++
++    fb->format = virtio_gpu_get_pixman_format(ss->format);
++    if (!fb->format) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: host couldn't handle guest format %d\n",
++                      __func__, ss->format);
++        return false;
 +    }
 +
-     op = extract32(ctx->opcode, 10, 6);
-     switch (op) {
-     case NM_P16_MV:
-diff --git a/target/mips/tcg/meson.build b/target/mips/tcg/meson.build
-index 7b18e6c4c8..c05f3c0649 100644
---- a/target/mips/tcg/meson.build
-+++ b/target/mips/tcg/meson.build
-@@ -1,5 +1,7 @@
- gen = [
-   decodetree.process('rel6.decode', extra_args: ['--decode=decode_isa_rel6']),
-+  decodetree.process('nanomips16.decode', extra_args: ['--decode=decode_isa_nanomips16', '--insnwidth=16']),
-+  decodetree.process('nanomips32.decode', extra_args: ['--decode=decode_isa_nanomips32']),
-   decodetree.process('msa.decode', extra_args: '--decode=decode_ase_msa'),
-   decodetree.process('tx79.decode', extra_args: '--static-decode=decode_tx79'),
-   decodetree.process('vr54xx.decode', extra_args: '--decode=decode_ext_vr54xx'),
-@@ -18,6 +20,7 @@ mips_ss.add(files(
-   'lmmi_helper.c',
-   'msa_helper.c',
-   'msa_translate.c',
-+  'nanomips_translate.c',
-   'op_helper.c',
-   'rel6_translate.c',
-   'translate.c',
++    fb->bytes_pp = DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb->format), 8);
++    fb->width = ss->width;
++    fb->height = ss->height;
++    fb->stride = ss->strides[0];
++    fb->offset = ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * fb->stride;
++
++    fbend = fb->offset;
++    fbend += fb->stride * (ss->r.height - 1);
++    fbend += fb->bytes_pp * ss->r.width;
++
++    if (fbend > blob_size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: fb end out of range\n",
++                      __func__);
++        return false;
++    }
++
++    return true;
++}
++
++
++
+ static void virtio_gpu_set_scanout_blob(VirtIOGPU *g,
+                                         struct virtio_gpu_ctrl_command *cmd)
+ {
+     struct virtio_gpu_simple_resource *res;
+     struct virtio_gpu_framebuffer fb = { 0 };
+     struct virtio_gpu_set_scanout_blob ss;
+-    uint64_t fbend;
+ 
+     VIRTIO_GPU_FILL_CMD(ss);
+     virtio_gpu_scanout_blob_bswap(&ss);
+@@ -753,28 +788,7 @@ static void virtio_gpu_set_scanout_blob(VirtIOGPU *g,
+         return;
+     }
+ 
+-    fb.format = virtio_gpu_get_pixman_format(ss.format);
+-    if (!fb.format) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: host couldn't handle guest format %d\n",
+-                      __func__, ss.format);
+-        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+-        return;
+-    }
+-
+-    fb.bytes_pp = DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb.format), 8);
+-    fb.width = ss.width;
+-    fb.height = ss.height;
+-    fb.stride = ss.strides[0];
+-    fb.offset = ss.offsets[0] + ss.r.x * fb.bytes_pp + ss.r.y * fb.stride;
+-
+-    fbend = fb.offset;
+-    fbend += fb.stride * (ss.r.height - 1);
+-    fbend += fb.bytes_pp * ss.r.width;
+-    if (fbend > res->blob_size) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: fb end out of range\n",
+-                      __func__);
++    if (!virtio_gpu_scanout_blob_to_fb(&fb, &ss, res->blob_size)) {
+         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+         return;
+     }
 -- 
-2.45.2
+2.39.5
 
 
