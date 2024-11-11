@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE98FD2E9F0
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 14:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00483D2E9FF
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 14:30:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAVAU-0003YS-4N; Mon, 11 Nov 2024 09:13:26 -0500
+	id 1tAVQK-0005hV-4o; Mon, 11 Nov 2024 09:29:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
- id 1tAVAM-0003XQ-Og
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:13:21 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
- id 1tAVAI-0006az-HN
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:13:18 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2e30db524c2so3627237a91.1
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 06:13:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1731334392; x=1731939192;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=PABMslX+KLHqaOC/KHgbO/71apQglvqkKGKbkO0zsxQ=;
- b=roeoE4lJl8ut1zNl9RgliJNNdwPuETmzFwNk38eeDh++JI6YlVE+JWNaqFI1/1yp50
- b5TDGYH2IY9a8VuCvh9XN4d9F245dH5iY4alM5+FPrjy2i5m+LARbcuS8SkDfErGKfkp
- gHCiaYKkzHUnFJrW7sIY1bahgG1ytMSm+kzVL0tKxAQbwtvlhtQW+wqKzpJc+GMSSQyJ
- PZF0VlmKvubG9pSRMxKlgY5k0YyRXbZV2QHyJS4n2DGwcTG899F+VqE72dyWvpn+KOWL
- tPc+YIcbnblsRmyIbprDgYqHy0Vu4V5dzniYGXn5rNPyWyPe10rdv/iWy60RtruzA+xL
- 6drA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731334392; x=1731939192;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PABMslX+KLHqaOC/KHgbO/71apQglvqkKGKbkO0zsxQ=;
- b=l2GQ54TZY8a1Xl4VAzdr9UAZqt5SAZGfW/u82ygqXMPoRwoiUwHFOj1epihJVpELib
- kZdFdbdAOJ//m3PPnlsuR/WjNaoIpGtta/A4hMLDnMK4FYBkgb2eZvwT76PDuWfKDEGd
- /v8Rt417yshyWsvys9YBbh3APGTyTTAbhBvMRTlGYFUwSfMpf+bujSWumEJ80/QIeGhH
- hQiTX4tS8Kn0XzC4fuFMcWaPgFucIeHc2ioeISNRvqQrghlMA1lDEz4B6gRso4SNh5XT
- YZ3OfXIa31zdFeVwACt2jbqktqFNGD1RFK/NneJu5ZqtUDJ1e7fIP4LPekP08tMxFZj+
- mxFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAwPDbdMgrt142iumvjZdiqHSbzXWZxhj14QmY73HG6sc+2hUjrh15iIYMWFCZb7e5eUh9dp6mT6cS@nongnu.org
-X-Gm-Message-State: AOJu0Yzu6syTyMJElbxEI9z92T63RKTui8N8lKIe9K1ynHpEbJVfTbY+
- sO1mMgZDEA2TkpvfcrexiHvwHR0wAAMsyn5+DSsVqhoF/FNDeNJ/K9z1cVxC2E9xzMUfTwkNlBu
- LkL8Nlf0N/9XoMIldvD+5wPaO8Q56x9Qu3Zbw
-X-Google-Smtp-Source: AGHT+IGUWIgHKElXCnJ+tP9p4nEgREZ6J338sCefMauPHUnBLHfU3OabHb38VNTHLyZ08/dr+ZDd/CM/AKa1tFE3M40=
-X-Received: by 2002:a17:90a:d604:b0:2e2:e530:508d with SMTP id
- 98e67ed59e1d1-2e9b1728859mr17588783a91.19.1731334392291; Mon, 11 Nov 2024
- 06:13:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tAVQE-0005hC-Qv
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:29:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tAVQC-0008CP-Ie
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:29:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731335378;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pjRAGOxPKBLWWtMTL71YPmNIL38UX8S0tDkwH3bqdKI=;
+ b=VCbfJdxQDa+Z/7fg3Sk0a5dg/83Gb8NWDsbduRab7pKbRi1MDfTAm/20/885qooEoSSPCH
+ K3VrT8F5Hqfwx8iyjXfeDe60tGOS2M+a4b2yqSS7EyNruYWfqbVBEtM14berUWk7xMAYR1
+ l7uSb6XJFCGtf/khNvOXsjDS4PWkcMg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-138-qAk2hGD9OWOnj-H9L20ntQ-1; Mon,
+ 11 Nov 2024 09:29:32 -0500
+X-MC-Unique: qAk2hGD9OWOnj-H9L20ntQ-1
+X-Mimecast-MFC-AGG-ID: qAk2hGD9OWOnj-H9L20ntQ
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA9FA1955DC3; Mon, 11 Nov 2024 14:29:28 +0000 (UTC)
+Received: from localhost (unknown [10.22.80.107])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 76976300019E; Mon, 11 Nov 2024 14:29:26 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: eric.auger@redhat.com, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
+ armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: Re: [RFC 18/21] arm/cpu: Introduce a customizable kvm host cpu model
+In-Reply-To: <63c232c2-a325-48d6-8ed4-753a7c6e3b4e@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20241025101959.601048-1-eric.auger@redhat.com>
+ <20241025101959.601048-19-eric.auger@redhat.com>
+ <ZxuX4i9NjVRizB72@redhat.com>
+ <cb6c8f62-c5dc-416d-865f-fbdf96164dac@redhat.com>
+ <Zxub7ol4p8P_sWF8@redhat.com>
+ <CAFEAcA_wQu17y0PyQwxw0wuf2H5y2VE5aX16nLP2-u7QUP2ggA@mail.gmail.com>
+ <Zx-9WxXkmkMuGIlQ@redhat.com>
+ <CAFEAcA9w0mb5bcU8p+fScQony-=oqLmNurGWpnL_sBneQCzxUg@mail.gmail.com>
+ <Zx_EGxj2aqc_2-kY@redhat.com>
+ <63c232c2-a325-48d6-8ed4-753a7c6e3b4e@redhat.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Mon, 11 Nov 2024 15:29:23 +0100
+Message-ID: <87ikstn8sc.fsf@redhat.com>
 MIME-Version: 1.0
-References: <20241110215519.49150-1-phil@philjordan.eu>
- <20241110215519.49150-2-phil@philjordan.eu>
- <e9077b66-33f0-42a0-9ef2-a6f2b5569997@daynix.com>
-In-Reply-To: <e9077b66-33f0-42a0-9ef2-a6f2b5569997@daynix.com>
-From: Phil Dennis-Jordan <lists@philjordan.eu>
-Date: Mon, 11 Nov 2024 15:13:01 +0100
-Message-ID: <CAGCz3vuG367ZEfKQK3HcQ6ir92LHRXa-JTEn2nozCPsiLr8_GQ@mail.gmail.com>
-Subject: Re: [PATCH v9 01/16] ui & main loop: Redesign of system-specific main
- thread event handling
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
- agraf@csgraf.de, 
- peter.maydell@linaro.org, pbonzini@redhat.com, rad@semihalf.com, 
- quic_llindhol@quicinc.com, stefanha@redhat.com, mst@redhat.com, 
- slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net, 
- marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com, 
- chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com, philmd@linaro.org, 
- shorne@gmail.com, palmer@dabbelt.com, alistair.francis@wdc.com, 
- bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, 
- berrange@redhat.com, qemu-arm@nongnu.org, qemu-block@nongnu.org, 
- qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::1036;
- envelope-from=lists@philjordan.eu; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,348 +104,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Nov 2024 at 05:45, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->
-> On 2024/11/11 6:55, Phil Dennis-Jordan wrote:
-> > macOS's Cocoa event handling must be done on the initial (main) thread
-> > of the process. Furthermore, if library or application code uses
-> > libdispatch, the main dispatch queue must be handling events on the main
-> > thread as well.
-> >
-> > So far, this has affected Qemu in both the Cocoa and SDL UIs, although
-> > in different ways: the Cocoa UI replaces the default qemu_main function
-> > with one that spins Qemu's internal main event loop off onto a
-> > background thread. SDL (which uses Cocoa internally) on the other hand
-> > uses a polling approach within Qemu's main event loop. Events are
-> > polled during the SDL UI's dpy_refresh callback, which happens to run
-> > on the main thread by default.
-> >
-> > As UIs are mutually exclusive, this works OK as long as nothing else
-> > needs platform-native event handling. In the next patch, a new device is
-> > introduced based on the ParavirtualizedGraphics.framework in macOS.
-> > This uses libdispatch internally, and only works when events are being
-> > handled on the main runloop. With the current system, it works when
-> > using either the Cocoa or the SDL UI. However, it does not when running
-> > headless. Moreover, any attempt to install a similar scheme to the
-> > Cocoa UI's main thread replacement fails when combined with the SDL
-> > UI.
-> >
-> > This change tidies up main thread management to be more flexible.
-> >
-> >   * The qemu_main global function pointer is a custom function for the
-> >     main thread, and it may now be NULL. When it is, the main thread
-> >     runs the main Qemu loop. This represents the traditional setup.
-> >   * When non-null, spawning the main Qemu event loop on a separate
-> >     thread is now done centrally rather than inside the Cocoa UI code.
-> >   * For most platforms, qemu_main is indeed NULL by default, but on
-> >     Darwin, it defaults to a function that runs the CFRunLoop.
-> >   * The Cocoa UI sets qemu_main to a function which runs the
-> >     NSApplication event handling runloop, as is usual for a Cocoa app.
-> >   * The SDL UI overrides the qemu_main function to NULL, thus
-> >     specifying that Qemu's main loop must run on the main
-> >     thread.
-> >   * The GTK UI also overrides the qemu_main function to NULL.
-> >   * For other UIs, or in the absence of UIs, the platform's default
-> >     behaviour is followed.
-> >
-> > This means that on macOS, the platform's runloop events are always
-> > handled, regardless of chosen UI. The new PV graphics device will
-> > thus work in all configurations. There is no functional change on other
-> > operating systems.
-> >
-> > Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> > Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> > ---
-> > v5:
-> >
-> >   * Simplified the way of setting/clearing the main loop by going back
-> >     to setting qemu_main directly, but narrowing the scope of what it
-> >     needs to do, and it can now be NULL.
-> >
-> > v6:
-> >
-> >   * Folded function qemu_run_default_main_on_new_thread's code into
-> >     main()
-> >   * Removed whitespace changes left over on lines near code removed
-> >     between v4 and v5
-> >
-> > v9:
-> >
-> >   * Set qemu_main to NULL for GTK UI as well.
-> >
-> >   include/qemu-main.h     |  3 +--
-> >   include/qemu/typedefs.h |  1 +
-> >   system/main.c           | 50 ++++++++++++++++++++++++++++++++++----
-> >   ui/cocoa.m              | 54 ++++++++++-------------------------------
-> >   ui/gtk.c                |  3 +++
-> >   ui/sdl2.c               |  4 +++
-> >   6 files changed, 67 insertions(+), 48 deletions(-)
-> >
-> > diff --git a/include/qemu-main.h b/include/qemu-main.h
-> > index 940960a7dbc..4bd0d667edc 100644
-> > --- a/include/qemu-main.h
-> > +++ b/include/qemu-main.h
-> > @@ -5,7 +5,6 @@
-> >   #ifndef QEMU_MAIN_H
-> >   #define QEMU_MAIN_H
-> >
-> > -int qemu_default_main(void);
-> > -extern int (*qemu_main)(void);
-> > +extern qemu_main_fn qemu_main;
-> >
-> >   #endif /* QEMU_MAIN_H */
-> > diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-> > index 3d84efcac47..b02cfe1f328 100644
-> > --- a/include/qemu/typedefs.h
-> > +++ b/include/qemu/typedefs.h
-> > @@ -131,5 +131,6 @@ typedef struct IRQState *qemu_irq;
-> >    * Function types
-> >    */
-> >   typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
-> > +typedef int (*qemu_main_fn)(void);
-> >
-> >   #endif /* QEMU_TYPEDEFS_H */
-> > diff --git a/system/main.c b/system/main.c
-> > index 9b91d21ea8c..d9397a6d5d0 100644
-> > --- a/system/main.c
-> > +++ b/system/main.c
-> > @@ -24,13 +24,14 @@
-> >
-> >   #include "qemu/osdep.h"
-> >   #include "qemu-main.h"
-> > +#include "qemu/main-loop.h"
-> >   #include "sysemu/sysemu.h"
-> >
-> > -#ifdef CONFIG_SDL
-> > -#include <SDL.h>
-> > +#ifdef CONFIG_DARWIN
-> > +#include <CoreFoundation/CoreFoundation.h>
-> >   #endif
-> >
-> > -int qemu_default_main(void)
-> > +static int qemu_default_main(void)
-> >   {
-> >       int status;
-> >
-> > @@ -40,10 +41,49 @@ int qemu_default_main(void)
-> >       return status;
-> >   }
-> >
-> > -int (*qemu_main)(void) = qemu_default_main;
-> > +/*
-> > + * Various macOS system libraries, including the Cocoa UI and anything using
-> > + * libdispatch, such as ParavirtualizedGraphics.framework, requires that the
-> > + * main runloop, on the main (initial) thread be running or at least regularly
-> > + * polled for events. A special mode is therefore supported, where the QEMU
-> > + * main loop runs on a separate thread and the main thread handles the
-> > + * CF/Cocoa runloop.
-> > + */
-> > +
-> > +static void *call_qemu_default_main(void *opaque)
-> > +{
-> > +    int status;
-> > +
-> > +    bql_lock();
-> > +    status = qemu_default_main();
-> > +    bql_unlock();
-> > +
-> > +    exit(status);
-> > +}
-> > +
-> > +#ifdef CONFIG_DARWIN
-> > +static int os_darwin_cfrunloop_main(void)
-> > +{
-> > +    CFRunLoopRun();
-> > +    abort();
-> > +}
-> > +
-> > +qemu_main_fn qemu_main = os_darwin_cfrunloop_main;
-> > +#else
-> > +qemu_main_fn qemu_main;
-> > +#endif
-> >
-> >   int main(int argc, char **argv)
-> >   {
-> > +    QemuThread main_loop_thread;
-> > +
-> >       qemu_init(argc, argv);
-> > -    return qemu_main();
-> > +    if (qemu_main) {
-> > +        qemu_thread_create(&main_loop_thread, "qemu_main",
-> > +                           call_qemu_default_main, NULL, QEMU_THREAD_DETACHED);
-> > +        bql_unlock();
-> > +        return qemu_main();
-> > +    } else {
-> > +        qemu_default_main();
-> > +    }
-> >   }
-> > diff --git a/ui/cocoa.m b/ui/cocoa.m
-> > index 4c2dd335323..30b8920d929 100644
-> > --- a/ui/cocoa.m
-> > +++ b/ui/cocoa.m
-> > @@ -73,6 +73,8 @@
-> >       int height;
-> >   } QEMUScreen;
-> >
-> > +@class QemuCocoaPasteboardTypeOwner;
-> > +
-> >   static void cocoa_update(DisplayChangeListener *dcl,
-> >                            int x, int y, int w, int h);
-> >
-> > @@ -107,6 +109,7 @@ static void cocoa_switch(DisplayChangeListener *dcl,
-> >   static NSInteger cbchangecount = -1;
-> >   static QemuClipboardInfo *cbinfo;
-> >   static QemuEvent cbevent;
-> > +static QemuCocoaPasteboardTypeOwner *cbowner;
-> >
-> >   // Utility functions to run specified code block with the BQL held
-> >   typedef void (^CodeBlock)(void);
-> > @@ -1321,8 +1324,10 @@ - (void) dealloc
-> >   {
-> >       COCOA_DEBUG("QemuCocoaAppController: dealloc\n");
-> >
-> > -    if (cocoaView)
-> > -        [cocoaView release];
-> > +    [cocoaView release];
-> > +    [cbowner release];
-> > +    cbowner = nil;
-> > +
-> >       [super dealloc];
-> >   }
-> >
-> > @@ -1938,8 +1943,6 @@ - (void)pasteboard:(NSPasteboard *)sender provideDataForType:(NSPasteboardType)t
-> >
-> >   @end
-> >
-> > -static QemuCocoaPasteboardTypeOwner *cbowner;
-> > -
-> >   static void cocoa_clipboard_notify(Notifier *notifier, void *data);
-> >   static void cocoa_clipboard_request(QemuClipboardInfo *info,
-> >                                       QemuClipboardType type);
-> > @@ -2002,43 +2005,8 @@ static void cocoa_clipboard_request(QemuClipboardInfo *info,
-> >       }
-> >   }
-> >
-> > -/*
-> > - * The startup process for the OSX/Cocoa UI is complicated, because
-> > - * OSX insists that the UI runs on the initial main thread, and so we
-> > - * need to start a second thread which runs the qemu_default_main():
-> > - * in main():
-> > - *  in cocoa_display_init():
-> > - *   assign cocoa_main to qemu_main
-> > - *   create application, menus, etc
-> > - *  in cocoa_main():
-> > - *   create qemu-main thread
-> > - *   enter OSX run loop
-> > - */
-> > -
-> > -static void *call_qemu_main(void *opaque)
-> > -{
-> > -    int status;
-> > -
-> > -    COCOA_DEBUG("Second thread: calling qemu_default_main()\n");
-> > -    bql_lock();
-> > -    status = qemu_default_main();
-> > -    bql_unlock();
-> > -    COCOA_DEBUG("Second thread: qemu_default_main() returned, exiting\n");
-> > -    [cbowner release];
-> > -    exit(status);
-> > -}
-> > -
-> >   static int cocoa_main(void)
-> >   {
-> > -    QemuThread thread;
-> > -
-> > -    COCOA_DEBUG("Entered %s()\n", __func__);
-> > -
-> > -    bql_unlock();
-> > -    qemu_thread_create(&thread, "qemu_main", call_qemu_main,
-> > -                       NULL, QEMU_THREAD_DETACHED);
-> > -
-> > -    // Start the main event loop
-> >       COCOA_DEBUG("Main thread: entering OSX run loop\n");
-> >       [NSApp run];
-> >       COCOA_DEBUG("Main thread: left OSX run loop, which should never happen\n");
-> > @@ -2120,8 +2088,6 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
-> >
-> >       COCOA_DEBUG("qemu_cocoa: cocoa_display_init\n");
-> >
-> > -    qemu_main = cocoa_main;
-> > -
-> >       // Pull this console process up to being a fully-fledged graphical
-> >       // app with a menubar and Dock icon
-> >       ProcessSerialNumber psn = { 0, kCurrentProcess };
-> > @@ -2185,6 +2151,12 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
-> >       qemu_clipboard_peer_register(&cbpeer);
-> >
-> >       [pool release];
-> > +
-> > +    /*
-> > +     * The Cocoa UI will run the NSApplication runloop on the main thread
-> > +     * rather than the default Core Foundation one.
-> > +     */
-> > +    qemu_main = cocoa_main;
-> >   }
-> >
-> >   static QemuDisplay qemu_display_cocoa = {
-> > diff --git a/ui/gtk.c b/ui/gtk.c
-> > index bf9d3dd679a..1694146ae37 100644
-> > --- a/ui/gtk.c
-> > +++ b/ui/gtk.c
-> > @@ -38,6 +38,7 @@
-> >   #include "qemu/cutils.h"
-> >   #include "qemu/error-report.h"
-> >   #include "qemu/main-loop.h"
-> > +#include "qemu-main.h"
-> >
-> >   #include "ui/console.h"
-> >   #include "ui/gtk.h"
-> > @@ -2485,6 +2486,8 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
-> >   #ifdef CONFIG_GTK_CLIPBOARD
-> >       gd_clipboard_init(s);
-> >   #endif /* CONFIG_GTK_CLIPBOARD */
-> > +
-> > +    qemu_main = NULL;
->
-> Add a comment that corresponds to one in: ui/sdl2.c
+On Mon, Nov 04 2024, Eric Auger <eric.auger@redhat.com> wrote:
 
-I've now got this:
-
-    /*
-     * GTK+ calls must happen on the main thread at least on some platforms,
-     * and on macOS the main runloop is polled via GTK+'s event handling.
-     * Don't allow Qemu's event loop to be moved off the main thread.
-     */
-
-It's carefully worded to only say things I know to be true - it seems
-like the GTK+ UI integration doesn't actually consistently follow the
-rule, which is why that UI currently doesn't work properly on macOS.
-
-> >   }
-> >
-> >   static void early_gtk_display_init(DisplayOptions *opts)
-> > diff --git a/ui/sdl2.c b/ui/sdl2.c
-> > index bd4f5a9da14..44ab2762262 100644
-> > --- a/ui/sdl2.c
-> > +++ b/ui/sdl2.c
-> > @@ -34,6 +34,7 @@
-> >   #include "sysemu/sysemu.h"
-> >   #include "ui/win32-kbd-hook.h"
-> >   #include "qemu/log.h"
-> > +#include "qemu-main.h"
-> >
-> >   static int sdl2_num_outputs;
-> >   static struct sdl2_console *sdl2_console;
-> > @@ -965,6 +966,9 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-> >       }
-> >
-> >       atexit(sdl_cleanup);
-> > +
-> > +    /* SDL's event polling (in dpy_refresh) must happen on the main thread. */
-> > +    qemu_main = NULL;
-> >   }
-> >
-> >   static QemuDisplay qemu_display_sdl2 = {
+> Hi Daniel,
 >
+> On 10/28/24 18:04, Daniel P. Berrang=C3=A9 wrote:
+>> On Mon, Oct 28, 2024 at 04:48:18PM +0000, Peter Maydell wrote:
+>>> On Mon, 28 Oct 2024 at 16:35, Daniel P. Berrang=C3=A9 <berrange@redhat.=
+com> wrote:
+>>>> On Mon, Oct 28, 2024 at 04:16:31PM +0000, Peter Maydell wrote:
+>>>>> On Fri, 25 Oct 2024 at 14:24, Daniel P. Berrang=C3=A9 <berrange@redha=
+t.com> wrote:
+>>>>>> On Fri, Oct 25, 2024 at 03:18:25PM +0200, Eric Auger wrote:
+>>>>>>> On 10/25/24 15:06, Daniel P. Berrang=C3=A9 wrote:
+>>>>>>>> Also, is this naming convention really the same one that users
+>>>>>>>> will see when they look at /proc/cpuinfo to view features ? It
+>>>>>>> No it is not. I do agree that the custom cpu model is very low leve=
+l. It
+>>>>>>> is very well suited to test all series turning ID regs as writable =
+but
+>>>>>>> this would require an extra layer that adapts /proc/cpuinfo feature
+>>>>>>> level to this regid/field abstraction.
+>>>>>>>
+>>>>>>> In /cpu/proc you will see somethink like:
+>>>>>>>  Features    : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics f=
+php
+>>>>>>> asimdhp cpuid asimdrdm lrcpc dcpop asimddp
+>>>>>> Right, IMHO, this is the terminology that QEMU must use in user
+>>>>>> facing APIs.
+>>>>> /proc/cpuinfo's naming is rather weird for historical
+>>>>> reasons (for instance there is only one FEAT_FP16 feature
+>>>>> but cpuinfo lists "fphp" and "asimdhp" separately).
+>>>> There's plenty of wierd history in x86 too. In this
+>>>> case I might suggest just picking one of the two
+>>>> common names, and ignoring the other.
+>>>>
+>>>> If we really wanted to, we could alias the 2nd name
+>>>> to the first, but its likely not worth the bother.
+>>> Or we could use the standard set of architectural
+>>> feature names, and not have the problem at all, and not
+>>> have to document what we mean by our nonstandard names.
+>>> (cpuinfo names do actually mostly line up with the
+>>> standard names, just not 100%. Similarly gcc/clang command
+>>> line options are mostly the architectural feature name.)
+>> Ah, right, yes. Sorry I mis-understood you originally to be suggesting
+>> the same low level names as this patch.
+> If my understanding is correct, Peter suggested to rely on the
+> terminology used in
 >
+> https://developer.arm.com/documentation/109697/2024_09
+>
+> the doc pointed to by Oliver.
+>
+> So I think the next step is to understand how those "high level" features=
+ do map onto low level ID register field values. I think a high level featu=
+re can map onto separate fields in separate ID regs. This may not be the mo=
+st common case though.=20
+
+I went through all the FEAT_xxx features defined so far and tried to
+categorize them (probably with some errors here and there, but the
+general trend should be correct.)
+
+There's 335 features defined at the moment.
+
+Of these, the majority (295 by my count) map to one or more values in
+one or more id registers. These are what I'd consider the "easy" ones
+(added complexity if we deal with serveral values, but in general, it is
+clear how to handle them, and most of them actually map to a single
+value.) Of course, dependencies may be on top of that.
+
+Then, we have some features (~25 or so) that are actually defined by
+dependencies (i.e. FEAT_FOO and FEAT_BAR mean that we have FEAT_BAZ,
+sometimes with an architecture extension dependency thrown in as well.)
+These features are not really relevant when we compare two cpus since
+they do not map to registers directly, but they are relevant if we allow
+them to be specified (and use them as a kind of shorthand.) IOW, we'd
+need to think about how we'd handle them for comparisons and baselining.
+
+Next, let's talk about architecture extensions. All features have a
+level where they have been introduced as optional, some have an upper
+limit (e.g. FEAT_AA32EL1 is not allowed from v9.0 onwards), and quite a
+number of them (~65 or so) become mandatory with a certain architecture
+extension. Sometimes, FEAT_FOO + arch ext also implies FEAT_BAR. If we
+introduce Armvx.y named models, we'd need to enforce that some features
+are (not) set for a certain model. Complex, but not a showstopper. (We'd
+also need to deal with that if we worked on the register level.)
+
+We also have some registers like MIDR/REVIDR that do not correlate with
+any FEAT_xxx, but that we still need to handle; I would suggest to deal
+with them via separate cpu properties (e.g. specify a list of possible
+MIDR/REVIDR pairs.) I hope that there are not too many of them, although
+we do have some impdef registers.
+
+That leaves some headscratchers (at least for me.) E.g. FEAT_UINJ, which
+is optional from v9.5, and mandatory from v9.6, but where I'm unsure how
+we'd discover it, especially as we do not have a way to discover the
+architecture extensions. Maybe this will work for named actual cpus
+only? I'm also not sure if I understand FEAT_CHK, which is listed as
+optional from v8.0 and mandatory from v9.4, but every aarch64 cpu is
+supposed to be compliant, because CHKFEAT might be a NOP (and this is
+only supposed to check for FEAT_GCS? Yes, I'm confused.)
+
+So tl;dr, we cover a lot of the ID register space via FEAT_xxx (with
+varying complexity), but we already know about some exceptions. For some
+FEAT_xxx, I'm not sure if we want to handle them at all.
+
+(I also seem to remember that there some things like perf counters that
+don't map to any on/off features, but no idea about the details here.)
+
 
