@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B8FDD2E9C6
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 15:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA56D12D51
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 15:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAVuc-00085J-P7; Mon, 11 Nov 2024 10:01:07 -0500
+	id 1tAVwa-0001Fe-9U; Mon, 11 Nov 2024 10:03:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tAVuT-00082D-D7
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 10:00:59 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tAVwR-0001FE-SL
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 10:03:00 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tAVuP-0003Uq-FS
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 10:00:56 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-37d495d217bso4287406f8f.0
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 07:00:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tAVwO-0003h1-NA
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 10:02:58 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2e2a97c2681so3531868a91.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 07:02:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731337251; x=1731942051; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qh9LWpTD8TcJDgDm8ylFnfDTQORAFdZ7MbLa7KMdD0Y=;
- b=jVOTcJT/j10/juo1NOUjG2eTIlPdOc+0SyBtrp+FQzMXoYOWhHpx5KIGqDpuxBoFaR
- jUzv5qODOoQGKV9ToG1SIfM8tk7sRDl56dPBU81urwZI/KwgsUADKaa6S/FwNvBXEQy4
- wAownCp+xToGsV46O6Sj3c6SNXxICktbllagV22x7BS+hrO3mWm/a0UygAXH9UTEOomy
- BVdUaw9oSnbSmC5JASdSSyOxNA4pxuh17n4Rf8dZqhqZXzPEmPzkpzCTUhmeuR++9eXs
- d48ELTvbsvIV37sJSqUnWY6Xmc8DUJ/igT7Qd7Nbis+0IwiRJzhKRQs1/R1Z/gbMGxe6
- OZQw==
+ d=linaro.org; s=google; t=1731337373; x=1731942173; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+P9B1oP2qTAbEFkhTjBOlVF3AGZoSMi6eDAXd3DeeBw=;
+ b=H9Yd4Pmm+vYuI7nN5zJ+Sqvqe5kkYn/p3/sPtu6YezZjN9vkqEIcAXgp1csLDtJuT6
+ S60Js9WRJyXwnhbjA42m7D3xmpcv3+TfvPTFRG/Bn98aZS4/jUTR+6gXszOAsg0BgHZ7
+ /zPA+Zn2g/uzoji63bS6uqZBgU4hNIcrWspmOTGBH8LhBz8xKs0FZvXMLb4VqrZd9Yt4
+ xdYQYDJz3kk+WbAeBiSU85RuDCp9WLNM6CPS0nSryOaDOZXgkW5iO/OzeaKx66PYBcRl
+ nkd4JliD3CYoJNZtnn8Kqf8wA6K21N4/TiGQj9AoUjFNBtZwonIkyJbLYtdh3tF0cYkS
+ E7kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731337251; x=1731942051;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=qh9LWpTD8TcJDgDm8ylFnfDTQORAFdZ7MbLa7KMdD0Y=;
- b=uDPg199ob4CVmobO4t1Nj7hwsgubr5w8zGP1IFdxeAWU2nlgd0ZypnfoepxgX3nvo4
- BTHaUG/KTBkIPEv469S5OIysOsJTUcqzC2bf3gvWXLZ3uGUj5opxFR3qlwI3MwtJoX5W
- 6Uf6ShLDjFNQR7jSTQryNKAlDc33Wmj25zO0n3uowQggaxx51GCbtz1C3Z1GNIzscIES
- d5IAanr+7FZiqzshg7LFQIvlt5h17gOL3dvZ4Gu3HUoonfGBahvA6PMD4/aMeD8Yzb0T
- VxmVrg2O6UVNALsZfASoHxsflAMfxT40c8cOCEE35955qYI43KGh06lPxmaRNPHvgmiO
- 4U4g==
-X-Gm-Message-State: AOJu0YzgwDoYr0TLzqNj9lUD5CzNX22BdzyOBfphyfUwHRKq/1MBdUXX
- 2D3OnQPDvnB8H5shA7ougV2T5o+6vs0Qx8ZsJg12FOhf3pvwfbqHOZ7+3L0EweM=
-X-Google-Smtp-Source: AGHT+IGIzBA/8OBgSxw1jyKAtUaXL2rT11BnRGzL1rJSyypLsueI5oJCob9ZTRH0axDWMQXBqZQusw==
-X-Received: by 2002:a05:6000:2587:b0:37d:39d8:b54b with SMTP id
- ffacd0b85a97d-381f188af64mr13755964f8f.58.1731337249743; 
- Mon, 11 Nov 2024 07:00:49 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed970f85sm13372418f8f.6.2024.11.11.07.00.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Nov 2024 07:00:49 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 945545F885;
- Mon, 11 Nov 2024 15:00:45 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
-Subject: Re: [PATCH for-9.2] accel/tcg: Fix user-only probe_access_internal
- plugin check
-In-Reply-To: <20241111145002.144995-1-richard.henderson@linaro.org> (Richard
- Henderson's message of "Mon, 11 Nov 2024 06:50:02 -0800")
-References: <20241111145002.144995-1-richard.henderson@linaro.org>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Mon, 11 Nov 2024 15:00:45 +0000
-Message-ID: <87ed3hq0gy.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1731337373; x=1731942173;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+P9B1oP2qTAbEFkhTjBOlVF3AGZoSMi6eDAXd3DeeBw=;
+ b=UuyKfaKh0wLSGJ6AFpWey84N8SGLwoof6KnLb5E3ooiBiO9q+5BuvSHa5tdz+WoSLp
+ JpMKehm3jhr5zpOMltsIBLc9T3edOnnXo0gAHVKD6W0prU9KVLIhSNnmyAgB50VNxeYo
+ Kbsp5xZU+UBewbgW+/xwQda5Xhg7LaVGFHKHMXqtE3ClKTgXeNu9zOjT+Jw/xSSGu7fU
+ e12LF21FZuFBMF0kaa6wsrD88xrisEkKPJUBhvZwGdfEgqt6hHP6pIBhmt/aK2Ogjzw3
+ WvPYLzLNO9iusKxjDooWHkzgf1PzdhVHmEE9w8PQNgcdygLnCwjEf8ibFpbfii7V6m3C
+ 07hA==
+X-Gm-Message-State: AOJu0YwcYEG5tVNAd912GEMwTpGzJvtc1LPqRmf9l6PXX/2yUZK62J1m
+ 2Y7pLlTTsQPLJ6BZhivqCinBfd89rAvKpIjK/hXRupQvEsohenyuldK0jLI9QKuFjshPeoSBqWt
+ F
+X-Google-Smtp-Source: AGHT+IHZUPDRmGpqyySQNfxQn1D7ckYCHq5eYRzi7HFQlGOBGmvdfGR1AnXDZZIE1WBaZ5ENaT6vAQ==
+X-Received: by 2002:a17:90b:3ecb:b0:2e0:7b2b:f6a with SMTP id
+ 98e67ed59e1d1-2e9b16aa954mr18484248a91.17.1731337373273; 
+ Mon, 11 Nov 2024 07:02:53 -0800 (PST)
+Received: from [192.168.52.227] (wsip-24-120-228-34.lv.lv.cox.net.
+ [24.120.228.34]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e9a5fee67fsm8590448a91.49.2024.11.11.07.02.52
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Nov 2024 07:02:52 -0800 (PST)
+Message-ID: <8b333c03-2794-40d8-a698-b983c5466d1e@linaro.org>
+Date: Mon, 11 Nov 2024 07:02:51 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user/strace: show TID instead of PID
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+References: <20241024-strace-v1-1-56c4161431cd@gmx.net>
+ <10610014-c6d6-4d39-9df1-f66a0900c754@linaro.org>
+Content-Language: en-US
+In-Reply-To: <10610014-c6d6-4d39-9df1-f66a0900c754@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,38 +97,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+On 11/11/24 06:59, Richard Henderson wrote:
+> On 10/23/24 16:47, J. Neuschäfer wrote:
+>> This aligns with strace, and is very useful when tracing multi-threaded
+>> programs. The result is the same in single-threaded programs.
+> 
+> See also "-D log.%d -d tid -strace" which will split the output into per-tid files.
+> 
+>>
+>> gettid() requires the _GNU_SOURCE feature test macro, so it might be
+>> unavailable in rare cases. I don't expect it to be a problem though,
+>> because it's implemented by both glibc and musl.
+>>
+>> Signed-off-by: J. Neuschäfer <j.neuschaefer@gmx.net>
+>> ---
+>>   linux-user/strace.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/linux-user/strace.c b/linux-user/strace.c
+>> index c3eb3a2706a93fdcaf693b3413b13921a3c97e8e..93e8c73de8a4a307e6e0df5555bee4c769e41e64 
+>> 100644
+>> --- a/linux-user/strace.c
+>> +++ b/linux-user/strace.c
+>> @@ -4337,7 +4337,7 @@ print_syscall(CPUArchState *cpu_env, int num,
+>>       if (!f) {
+>>           return;
+>>       }
+>> -    fprintf(f, "%d ", getpid());
+>> +    fprintf(f, "%d ", gettid());
+> 
+> Probably better as qemu_get_thread_id(), but otherwise
 
-> The acc_flag check for write should have been against PAGE_WRITE_ORG,
-> not PAGE_WRITE.  But it is better to combine two acc_flag checks
-> to a single check against access_type.  This matches the system code
-> in cputlb.c.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2647
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  accel/tcg/user-exec.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-> index aa8af52cc3..06016eb030 100644
-> --- a/accel/tcg/user-exec.c
-> +++ b/accel/tcg/user-exec.c
-> @@ -800,7 +800,7 @@ static int probe_access_internal(CPUArchState *env, v=
-addr addr,
->      if (guest_addr_valid_untagged(addr)) {
->          int page_flags =3D page_get_flags(addr);
->          if (page_flags & acc_flag) {
-> -            if ((acc_flag =3D=3D PAGE_READ || acc_flag =3D=3D PAGE_WRITE)
-> +            if (access_type !=3D MMU_INST_FETCH
->                  && cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
->                  return TLB_MMIO;
->              }
+Or, without the syscall,
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+   get_task_state(env_cpu(env))->ts_tid
 
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
