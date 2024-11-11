@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19A7D3ABFA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7929D3ABCF
 	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 22:30:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAcun-0001Ge-SI; Mon, 11 Nov 2024 17:29:45 -0500
+	id 1tAcut-0001HR-Ot; Mon, 11 Nov 2024 17:29:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAcum-0001GU-B3
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 17:29:44 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAcur-0001H4-SD
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 17:29:49 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAcuk-0006i3-Sg
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 17:29:44 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-37d3ecad390so3483647f8f.1
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 14:29:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAcuq-0006jl-9s
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 17:29:49 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4315e62afe0so47689285e9.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 14:29:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731364180; x=1731968980; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+DQF4+IgvYfgWsDX+XzRu7OiFqnoAvW8JYRiJKK9t94=;
- b=BLNszsplYeKuCfS/tVnROaiRRLv1g5PqJgIRpDzowYLr2DTyBF+2c9fngRUAdViNqm
- 4KNaIcIMo2cUyvEsZAXPtmc1CtQjUBg7hBqBImr0NUI4WwdrHnYI2AOuL5mwI/05Gzar
- lMb1x63iJ67pypmWy5ib89Z8SSUV//8sI46zWrrO0rSIwcf3appEZ0uM8jBdgX5z2dZj
- FPXq6F02oclP1Qomq1Ei1XoasUNnLiQ2AnYARK+a1wMS1Kqo3MbSQUJD7a7bpD+qxiCf
- vRNoJY9ZIbi/RSnhL3DnielB2vmWshiRK/Kw4cOIjbbP5ZTpzonJlNWBcxtB6Lk7wx2n
- hZNw==
+ d=linaro.org; s=google; t=1731364186; x=1731968986; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TDoaWsz0HSbM34lZB8eXf+Hk5GveTxSlbFqqIAwSB2Q=;
+ b=gMap+KCJ0A5ADbdXO0oa+vaOFg9V2dOd5VPj/IMg3vSU6TsEaUr7YrTb/Y91QLGcOX
+ aGyICdGL0nzdSZXIAXVD5UAD85q4AR8518f543Hw4Ggtg9LYYPH8UjVvX1qJw9kd0Ai6
+ K1BNth9YiFQxCrpnb5wUZnYSWjc8HI91NEgJAijTdhRr+Wl5NvikTrckBqsWc45aYqjY
+ iOY6q30nco+0h4ZqW/GUHzrlTbdYwlORfBeuU5zuWcdUqqYZ/ObQAsTHuUjrM+5w7vD6
+ mf9UjT/23NDs5eptuF6EyG7w0i9s/1SyfIT8ERZM2EBoeLBm2A8C1+L8iTAg38+m6H49
+ 4duw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731364180; x=1731968980;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+DQF4+IgvYfgWsDX+XzRu7OiFqnoAvW8JYRiJKK9t94=;
- b=qrTncn6c16WMeTzbGJUWTai0rOygcgHAAF0eYvkrzk55STQCKRWbzaiwuBcVbopRIA
- P4WVf3ckaKjLVsDrH0AM65iV5bE0nOVOxjil7pL3t0vCSMe7DQojLLxtfKDYZGZahS+v
- Ozvazha/AfJtOCd43Ra/UxMM8SVrA1+n3x9FXPB+RJu4Vmw223BOBPpyFK2+VKcv7cg5
- bussA11/MST3sL0IcpiUrR+JcTlkJ7U4AQq5bNsyrEc0Ne8ZnN840ExUyW9KqYu+46vh
- 4fMg+rpZ4YUNLcyTgaFIo7uF97zFNdfXPgpUkBwyiS4MMvKo7apDPzyvNsX7z+fT95TW
- Skiw==
-X-Gm-Message-State: AOJu0Yx7aUBjBkw3ODBfpu1MalrYzKOgkZ7p+s2DDlrIa2ediPSoPngS
- Y3FU6379CyFQU6gVRy3GDh83EEhGNcaV9GDuhU9SN4dCNpr8vkpnTuTYS9Ad5lxudKLb9IgyAUG
- C
-X-Google-Smtp-Source: AGHT+IG0+HteHe6oNY01bC02QK/jonYUz1x3HJKsQ+oSn6XgQ61LPVUjSUTOSnr71JU7nul3CJ34wA==
-X-Received: by 2002:a5d:47a8:0:b0:37c:bafd:5624 with SMTP id
- ffacd0b85a97d-381f0f85819mr12514850f8f.25.1731364180295; 
- Mon, 11 Nov 2024 14:29:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731364186; x=1731968986;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TDoaWsz0HSbM34lZB8eXf+Hk5GveTxSlbFqqIAwSB2Q=;
+ b=nA8xzViIGh3s1IqwwWNLiRziLXIsgtRDNaVCicw8Gdkuv/lYe06oA3257orODJSJ89
+ OweDsi2q7G0wo5ravdevu88qIf/ycVr0NF3FPD300+BmvR9+tuqnHSaqH196SYCOlvqQ
+ bK44woIfl4Zw/LdaoQv2XvQIOfLRs1fiY7HsksLzoY7Bfn9UgxLpa32RdsIQK/Sbx7Gn
+ hdghtgYYyL+USa3cSlIfvNYnnVQkjaZCMKAa9zjYoHqM/rzHBtEELyDXgzq8JHqWwbXl
+ FKybt3GAj2ssjaMh3oHYr2KvQB7pPAeC12mAa9BqGEkFw/JFqvKiq7E7AVYp/qqBDfxk
+ IXiw==
+X-Gm-Message-State: AOJu0YzhlBRkhA+SV8lmu83S22mxwDyC3MtIRbH9EidiTZbgjmVXIjlW
+ DQgkkJaSTlsEf7RBWF0sGgRvfAMEln2myIJFAMa1uYGZmH8x3X7bhp7y5DmN2BFv3OSNr88ZNuz
+ N
+X-Google-Smtp-Source: AGHT+IGNWZKoEH5oOIR5a+4FlZebhVDK+28uM7H0C2/eWFJjtnMLm9vbEhcELQzP2f5RLtcrEjIHqw==
+X-Received: by 2002:a05:600c:5124:b0:431:46fe:4cad with SMTP id
+ 5b1f17b1804b1-432b7501d4emr128829905e9.9.1731364186548; 
+ Mon, 11 Nov 2024 14:29:46 -0800 (PST)
 Received: from localhost.localdomain
  (vau06-h02-176-184-43-163.dsl.sta.abo.bbox.fr. [176.184.43.163])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432b053051fsm187695435e9.6.2024.11.11.14.29.38
+ 5b1f17b1804b1-432b053069fsm192795565e9.4.2024.11.11.14.29.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 Nov 2024 14:29:39 -0800 (PST)
+ Mon, 11 Nov 2024 14:29:46 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Pavel Dovgalyuk <pavel.dovgalyuk@ispras.ru>
@@ -64,15 +65,17 @@ Cc: Aleksandar Rikalo <arikalo@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 0/3] target/mips: Convert Octeon LX instructions to decodetree
-Date: Mon, 11 Nov 2024 23:29:33 +0100
-Message-ID: <20241111222936.59869-1-philmd@linaro.org>
+Subject: [PATCH 1/3] target/mips: Extract gen_base_index_addr() helper
+Date: Mon, 11 Nov 2024 23:29:34 +0100
+Message-ID: <20241111222936.59869-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241111222936.59869-1-philmd@linaro.org>
+References: <20241111222936.59869-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,23 +98,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Factor out gen_base_index_addr() which is used twice
+but we'll use it more.
 
-Few old patches lingering on an old branch I'm trying to rebase...
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/mips/tcg/translate.h |  1 +
+ target/mips/tcg/translate.c | 27 +++++++++++++--------------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
 
-Extract gen_lx() and call it via decodetree. Trivial IMHO.
-
-Philippe Mathieu-Daudé (3):
-  target/mips: Extract gen_base_index_addr() helper
-  target/mips: Extract generic gen_lx() helper
-  target/mips: Convert Octeon LX instructions to decodetree
-
- target/mips/tcg/translate.h        |  2 +
- target/mips/tcg/octeon.decode      |  8 +++
- target/mips/tcg/octeon_translate.c | 12 +++++
- target/mips/tcg/translate.c        | 78 +++++++++++-------------------
- 4 files changed, 51 insertions(+), 49 deletions(-)
-
+diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
+index 1bf153d183..ed69ba15e5 100644
+--- a/target/mips/tcg/translate.h
++++ b/target/mips/tcg/translate.h
+@@ -153,6 +153,7 @@ void check_cp1_registers(DisasContext *ctx, int regs);
+ void check_cop1x(DisasContext *ctx);
+ 
+ void gen_base_offset_addr(DisasContext *ctx, TCGv addr, int base, int offset);
++void gen_base_index_addr(DisasContext *ctx, TCGv addr, int base, int index);
+ void gen_move_low32(TCGv ret, TCGv_i64 arg);
+ void gen_move_high32(TCGv ret, TCGv_i64 arg);
+ void gen_load_gpr(TCGv t, int reg);
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index de7045874d..7152f5418e 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -1956,6 +1956,17 @@ void gen_base_offset_addr(DisasContext *ctx, TCGv addr, int base, int offset)
+     }
+ }
+ 
++void gen_base_index_addr(DisasContext *ctx, TCGv addr, int base, int index)
++{
++    if (base == 0) {
++        gen_load_gpr(addr, index);
++    } else if (index == 0) {
++        gen_load_gpr(addr, base);
++    } else {
++        gen_op_addr_add(ctx, addr, cpu_gpr[base], cpu_gpr[index]);
++    }
++}
++
+ static target_ulong pc_relative_pc(DisasContext *ctx)
+ {
+     target_ulong pc = ctx->base.pc_next;
+@@ -10545,13 +10556,7 @@ static void gen_flt3_ldst(DisasContext *ctx, uint32_t opc,
+ {
+     TCGv t0 = tcg_temp_new();
+ 
+-    if (base == 0) {
+-        gen_load_gpr(t0, index);
+-    } else if (index == 0) {
+-        gen_load_gpr(t0, base);
+-    } else {
+-        gen_op_addr_add(ctx, t0, cpu_gpr[base], cpu_gpr[index]);
+-    }
++    gen_base_index_addr(ctx, t0, base, index);
+     /*
+      * Don't do NOP if destination is zero: we must perform the actual
+      * memory access.
+@@ -11333,13 +11338,7 @@ static void gen_mips_lx(DisasContext *ctx, uint32_t opc,
+     }
+     t0 = tcg_temp_new();
+ 
+-    if (base == 0) {
+-        gen_load_gpr(t0, offset);
+-    } else if (offset == 0) {
+-        gen_load_gpr(t0, base);
+-    } else {
+-        gen_op_addr_add(ctx, t0, cpu_gpr[base], cpu_gpr[offset]);
+-    }
++    gen_base_index_addr(ctx, t0, base, offset);
+ 
+     switch (opc) {
+     case OPC_LBUX:
 -- 
 2.45.2
 
