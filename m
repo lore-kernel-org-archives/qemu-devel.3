@@ -4,95 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5361AD12D72
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 05:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B9F5D12D73
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 05:26:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAMgl-00061K-TS; Mon, 11 Nov 2024 00:10:11 -0500
+	id 1tAMvu-0001c6-BB; Mon, 11 Nov 2024 00:25:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tAMgj-00060W-5m
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 00:10:09 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1tAMvr-0001bj-Sk
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 00:25:47 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tAMgf-00081j-O8
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 00:10:08 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2e9b4a4182dso1728292a91.0
- for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 21:10:04 -0800 (PST)
+ id 1tAMvp-0001BF-S8
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 00:25:47 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-71e8235f0b6so3422513b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 21:25:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1731301803; x=1731906603;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1731302744; x=1731907544;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=34m+p+g+g1ZksKJT1TgMID5xJ0qQ52/0886R0zeE3Yw=;
- b=CybUmxQsq42sr5jCf03Sz69TcQuyGlOY9qZSCqxg9pUQDB2bx5722W9TvAzvpCeh9F
- MKwPNqqGODJGDMzAX1zPIrmeyaC9/qQ3C/ct0TlEtf/xvcbuV0g74Jkz1zNKaGeXQ/C4
- sghMovFV625LV+F4IyYCvbyCgt5Ig1fDbvcv9XRVRdgNq56Z1mE7zfLF7Ury1w3eZJRi
- 7W1vJQQZeazwWMcA+ljh1hNJ5AZ3JLdRmwtb+MshAUwMuMiWUXTaWRcRqMgXRIK70Tqn
- IIpathvDzRtMQkeLusJWDyoMKe+9bXlTtt1TXn9/catn5r0KayiW7pIndGtAypexz9br
- +2rg==
+ bh=JQYjJd5gL9uXMjBsqxuTk8zxVaVAcJ1ldHebPG2etTs=;
+ b=SxFOfogK/4+zY6OBu8haaTO959hFaIEJ/D+j1fQEaPwzkCPc8NKGxVQGAxu3DcOWnZ
+ tXKFltGn6MMtrOjlaLSndCIPgSbJNUExhN3vmBN0drP448YLyqnUDLLzx0rcShJD858O
+ qb+oWhYoNG+GVsCUDY0ACJZZGycyBVcWpR2oT9NIkfNypkDZzzd1JEDFumbfzAw/FKnG
+ xi/X4vN0SVYxagaOGoQGQPvq4Qadkc6cGKHk16PSjK6TFyQ58aNLdnQoHGyfnupQw+qF
+ PhwE4GS2LCmT7GuxyjuRLJh29xVxnZ59OGp313W64999UbUaaaPJn7QpCYptYcele5Yv
+ 9RpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731301803; x=1731906603;
+ d=1e100.net; s=20230601; t=1731302744; x=1731907544;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=34m+p+g+g1ZksKJT1TgMID5xJ0qQ52/0886R0zeE3Yw=;
- b=wff07Md4m4ymz5q+JPppUv6/IIGHo8s4MgWaWbZYTC1CcKHVRU2drwGTV476lOK+ju
- iEGj16h3Z7D9voQcAB9XuNWOk45iak+u47s69JyqZP3blXLoVLta4Q2vp1DvJkfJcjo8
- ZU4+Ndndk2FsDjD9GuKgVbWLkn5RRNlF2lZWsrvROwjeoHQm4Ab92SkmUCpEgFFFV7Lg
- i5Jub5kiv7+TQlbTkcXfSFxmgaQUe0hBQLGCbj/SeddmuCd3yqUfhcbuHFFEpHOf+0Ty
- sdAgv5Gob4r1epCQsjonOi9rONsG4qWG6XlQ9KB8glewGe2cpG+Bki1k6SkJIQrx8AER
- BDEg==
+ bh=JQYjJd5gL9uXMjBsqxuTk8zxVaVAcJ1ldHebPG2etTs=;
+ b=Wl4mbAKPorQdiwmt6nD9oqe61tUPT/vKd4eg8ZTWMXaK4Mz/YZCDlkWKfzDh648/ev
+ TXifH1HYJ4dK0PtvI8vU6Hm1Q3OCQ9548RApWol1ijt6oKLPQUI2xTg5XbbtkXtOcGQf
+ jJMXBXrP5rXXNSwEU1bcNdIhlEU4ods5pG2ZIUk229HjilQb6PuDmzg/Y1i0vOyh5dQW
+ oAtzcTMdZqGFuzoarIAlolMxKouPu6EjwbE0DtFXLGAyxO0L2eL0OuSxTxoQ3RZiZmzx
+ n9BbCvs7K2mk5DgmaUimEECBLG04dlipw6B+++rnOXXgH9jO5EUXhWQNBfJbJzk5uDZC
+ X1jQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWmsgowbhIcFY3tii+3dYJiKz0KKEyz9sR3+4EtqEUV390/zoC2aj0BOLqqUVOpBmQjJ5AT7slDd5bj@nongnu.org
-X-Gm-Message-State: AOJu0Yw5LEb5renA0BHfprl4A6ANp6RmyiTPWtZRUJ9aeRpVDc14FoCH
- kvaV4uOhPay18WKs3wH26QUP3FBrgUAbMQ2G5P6fDGLiXI+y2MoKRVC6rJ91/bs=
-X-Google-Smtp-Source: AGHT+IGb8/SI4YNitz1bCYMeUFvL9X8OE5f5neq4Tw8O1MYPP+tQg0Z1fVQuVO+1IA0M+IkoWJ2clA==
-X-Received: by 2002:a17:90b:1b01:b0:2e3:109:5147 with SMTP id
- 98e67ed59e1d1-2e9b0b3bef0mr16184634a91.17.1731301802888; 
- Sun, 10 Nov 2024 21:10:02 -0800 (PST)
+ AJvYcCXIo8EN49bS40DL4iYY2d/odnAi/bJjpQ+ck8cP4EZeviS2Ni0ixlYslIjjh4g8mIW62Qr5COBlvQ4a@nongnu.org
+X-Gm-Message-State: AOJu0YxKls+VNbCH1Vxlx9eJkPE/OL/cA6aDKJbOKXQguTB0WltUuJUL
+ 8RmItDMtssnGkTavggvPAk9sCt8O2W0JNRkm32hf1vKO4omjxSAiV8KtKFpKZZk=
+X-Google-Smtp-Source: AGHT+IGmX5sh61h8hWbVwWLZ5poDORNEGVAyNGdS0sdJ6gJaAWAkAj/pXnaJecJlkjp/TcufARkO2A==
+X-Received: by 2002:aa7:88c4:0:b0:71e:594:f1ef with SMTP id
+ d2e1a72fcca58-724133600ddmr13904479b3a.16.1731302744218; 
+ Sun, 10 Nov 2024 21:25:44 -0800 (PST)
 Received: from [157.82.207.107] ([157.82.207.107])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e9b46bfae2sm5480120a91.19.2024.11.10.21.09.56
+ d2e1a72fcca58-724078cd28asm8145655b3a.85.2024.11.10.21.25.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 10 Nov 2024 21:10:02 -0800 (PST)
-Message-ID: <9865a415-3d7a-4dd3-9140-8c417c5d3ee8@daynix.com>
-Date: Mon, 11 Nov 2024 14:09:55 +0900
+ Sun, 10 Nov 2024 21:25:43 -0800 (PST)
+Message-ID: <91c98764-c9ab-4299-8bbb-2d1a60e4d73c@daynix.com>
+Date: Mon, 11 Nov 2024 14:25:38 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 16/16] hw/vmapple/virtio-blk: Replace variant types
- with property on base
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
- rad@semihalf.com, quic_llindhol@quicinc.com, stefanha@redhat.com,
- mst@redhat.com, slp@redhat.com, richard.henderson@linaro.org,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, gaosong@loongson.cn,
- jiaxun.yang@flygoat.com, chenhuacai@kernel.org, kwolf@redhat.com,
- hreitz@redhat.com, philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, qemu-riscv@nongnu.org
-References: <20241110215519.49150-1-phil@philjordan.eu>
- <20241110215519.49150-17-phil@philjordan.eu>
+Subject: Re: [PATCH v3 6/6] virtio-gpu: Support DRM native context
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
+ <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20241024233355.136867-1-dmitry.osipenko@collabora.com>
+ <20241024233355.136867-7-dmitry.osipenko@collabora.com>
+ <87sescin4u.fsf@draig.linaro.org>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241110215519.49150-17-phil@philjordan.eu>
+In-Reply-To: <87sescin4u.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,238 +115,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/11/11 6:55, Phil Dennis-Jordan wrote:
-> This reduces the type hierarchy of the vmapple-virtio-blk-pci-base
-> type and vmapple-virtio-root/vmapple-virtio-aux leaf types with a single
-> vmapple-virtio-blk-pci type which exposes a 'variant' enum property
-> which can be set to 'aux' or 'root'.
+On 2024/10/31 19:26, Alex Bennée wrote:
+> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 > 
-> This change removes a bunch of device type boilerplate at the cost of
-> defining a new qapi enum and qdev property type.
+>> Add support for DRM native contexts to VirtIO-GPU. DRM context is enabled
+>> using a new virtio-gpu-gl device option "drm=on".
 > 
-> Documentation for the vmapple machine type is also updated.
+> I feel like using "drm" is confusing in this context because drm exists
+> for the host and guest. What about "native-context" or even
+> "context=[opengl|vulkan|wayland|native]"?
 
-Please merge this change into "[PATCH v9 13/16] hw/vmapple/virtio-blk: 
-Add support for apple virtio-blk".
+The terminology in the specification is "capset". Multiple capabilities 
+can be enabled at a time (e.g., DRM and VENUS) and we don't have a means 
+to express that with one property.
+
+The best option I came up with is to strip the VIRTIO_GPU_ prefix from 
+definitions in the specification. i.e.,:
+
+VIRTIO_GPU_CAPSET_VIRGL -> capset-virgl
+VIRTIO_GPU_CAPSET_VIRGL2 -> capset-virgl2
+VIRTIO_GPU_CAPSET_GFXSTREAM -> capset-gfxstream
+VIRTIO_GPU_CAPSET_GFXSTREAM_VULKAN -> capset-gfxstream-vulkan
+VIRTIO_GPU_CAPSET_VENUS -> capset-venus
+VIRTIO_GPU_CAPSET_CROSS_DOMAIN -> capset-cross-domain
+VIRTIO_GPU_CAPSET_DRM -> capset-drm
 
 > 
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> ---
->   docs/system/arm/vmapple.rst         |  4 +--
->   hw/core/qdev-properties-system.c    |  8 +++++
->   hw/vmapple/virtio-blk.c             | 50 +++++++----------------------
->   include/hw/qdev-properties-system.h |  6 ++++
->   include/hw/vmapple/vmapple.h        |  4 +--
->   qapi/virtio.json                    | 14 ++++++++
->   6 files changed, 43 insertions(+), 43 deletions(-)
+> The GPU command line is already getting complex so now might be the time
+> to rationalise it.
 > 
-> diff --git a/docs/system/arm/vmapple.rst b/docs/system/arm/vmapple.rst
-> index 67942474b93..efe39b68dc4 100644
-> --- a/docs/system/arm/vmapple.rst
-> +++ b/docs/system/arm/vmapple.rst
-> @@ -56,8 +56,8 @@ to get better interactive access into the target system:
->          -drive file="$DISK",if=pflash,format=raw \
->          -drive file="$AUX",if=none,id=aux,format=raw \
->          -drive file="$DISK",if=none,id=root,format=raw \
-> -       -device vmapple-virtio-aux,drive=aux \
-> -       -device vmapple-virtio-root,drive=root \
-> +       -device vmapple-virtio-blk-pci,variant=aux,drive=aux \
-> +       -device vmapple-virtio-blk-pci,variant=root,drive=root \
->          -netdev user,id=net0,ipv6=off,hostfwd=tcp::2222-:22,hostfwd=tcp::5901-:5900 \
->          -device virtio-net-pci,netdev=net0
->   
-> diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-> index 35deef05f32..8bf8a3442d6 100644
-> --- a/hw/core/qdev-properties-system.c
-> +++ b/hw/core/qdev-properties-system.c
-> @@ -1239,3 +1239,11 @@ const PropertyInfo qdev_prop_iothread_vq_mapping_list = {
->       .set = set_iothread_vq_mapping_list,
->       .release = release_iothread_vq_mapping_list,
->   };
-> +
-> +const PropertyInfo qdev_prop_vmapple_virtio_blk_variant = {
-> +    .name  = "VMAppleVirtioBlkVariant",
-> +    .enum_table  = &VMAppleVirtioBlkVariant_lookup,
-> +    .get   = qdev_propinfo_get_enum,
-> +    .set   = qdev_propinfo_set_enum,
-> +    .set_default_value = qdev_propinfo_set_default_value_enum,
-> +};
-> diff --git a/hw/vmapple/virtio-blk.c b/hw/vmapple/virtio-blk.c
-> index 40b33bbdac5..f883e65a5de 100644
-> --- a/hw/vmapple/virtio-blk.c
-> +++ b/hw/vmapple/virtio-blk.c
-> @@ -24,6 +24,7 @@
->   #include "qemu/module.h"
->   #include "qapi/error.h"
->   
-> +#define TYPE_VMAPPLE_VIRTIO_BLK  "vmapple-virtio-blk"
->   OBJECT_DECLARE_TYPE(VMAppleVirtIOBlk, VMAppleVirtIOBlkClass, VMAPPLE_VIRTIO_BLK)
->   
->   typedef struct VMAppleVirtIOBlkClass {
-> @@ -41,14 +42,10 @@ typedef struct VMAppleVirtIOBlk {
->   /*
->    * vmapple-virtio-blk-pci: This extends VirtioPCIProxy.
->    */
-> -#define TYPE_VMAPPLE_VIRTIO_BLK_PCI "vmapple-virtio-blk-pci-base"
->   OBJECT_DECLARE_SIMPLE_TYPE(VMAppleVirtIOBlkPCI, VMAPPLE_VIRTIO_BLK_PCI)
->   
->   #define VIRTIO_BLK_T_APPLE_BARRIER     0x10000
->   
-> -#define VIRTIO_APPLE_TYPE_ROOT 1
-> -#define VIRTIO_APPLE_TYPE_AUX  2
-> -
->   static bool vmapple_virtio_blk_handle_unknown_request(VirtIOBlockReq *req,
->                                                         MultiReqBuffer *mrb,
->                                                         uint32_t type)
-> @@ -109,7 +106,7 @@ static const TypeInfo vmapple_virtio_blk_info = {
->   struct VMAppleVirtIOBlkPCI {
->       VirtIOPCIProxy parent_obj;
->       VMAppleVirtIOBlk vdev;
-> -    uint32_t apple_type;
-> +    VMAppleVirtioBlkVariant variant;
->   };
->   
->   
-> @@ -119,6 +116,8 @@ static Property vmapple_virtio_blk_pci_properties[] = {
->                       VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT, true),
->       DEFINE_PROP_UINT32("vectors", VirtIOPCIProxy, nvectors,
->                          DEV_NVECTORS_UNSPECIFIED),
-> +    DEFINE_PROP_VMAPPLE_VIRTIO_BLK_VARIANT("variant", VMAppleVirtIOBlkPCI, variant,
-> +                                           VM_APPLE_VIRTIO_BLK_VARIANT_UNSPECIFIED),
->       DEFINE_PROP_END_OF_LIST(),
->   };
->   
-> @@ -128,6 +127,12 @@ static void vmapple_virtio_blk_pci_realize(VirtIOPCIProxy *vpci_dev, Error **err
->       DeviceState *vdev = DEVICE(&dev->vdev);
->       VirtIOBlkConf *conf = &dev->vdev.parent_obj.conf;
->   
-> +    if (dev->variant == VM_APPLE_VIRTIO_BLK_VARIANT_UNSPECIFIED) {
-> +        error_setg(errp, "Device " TYPE_VMAPPLE_VIRTIO_BLK_PCI ": must specify "
-> +                   "a variant, 'aux' or 'root'");
-> +        return;
-> +    }
-> +
->       if (conf->num_queues == VIRTIO_BLK_AUTO_NUM_QUEUES) {
->           conf->num_queues = virtio_pci_optimal_num_queues(0);
->       }
-> @@ -143,7 +148,7 @@ static void vmapple_virtio_blk_pci_realize(VirtIOPCIProxy *vpci_dev, Error **err
->        */
->       virtio_add_feature(&dev->vdev.parent_obj.host_features, VIRTIO_BLK_F_ZONED);
->       /* Propagate the apple type down to the virtio-blk device */
-> -    dev->vdev.apple_type = dev->apple_type;
-> +    dev->vdev.apple_type = dev->variant;
->       /* and spawn the virtio-blk device */
->       qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
->   
-> @@ -181,47 +186,16 @@ static void vmapple_virtio_blk_pci_instance_init(Object *obj)
->   }
->   
->   static const VirtioPCIDeviceTypeInfo vmapple_virtio_blk_pci_info = {
-> -    .base_name     = TYPE_VMAPPLE_VIRTIO_BLK_PCI,
-> -    .generic_name  = "vmapple-virtio-blk-pci",
-> +    .generic_name  = TYPE_VMAPPLE_VIRTIO_BLK_PCI,
->       .instance_size = sizeof(VMAppleVirtIOBlkPCI),
->       .instance_init = vmapple_virtio_blk_pci_instance_init,
->       .class_init    = vmapple_virtio_blk_pci_class_init,
->   };
->   
-> -static void vmapple_virtio_root_instance_init(Object *obj)
-> -{
-> -    VMAppleVirtIOBlkPCI *dev = VMAPPLE_VIRTIO_BLK_PCI(obj);
-> -
-> -    dev->apple_type = VIRTIO_APPLE_TYPE_ROOT;
-> -}
-> -
-> -static const TypeInfo vmapple_virtio_root_info = {
-> -    .name          = TYPE_VMAPPLE_VIRTIO_ROOT,
-> -    .parent        = "vmapple-virtio-blk-pci",
-> -    .instance_size = sizeof(VMAppleVirtIOBlkPCI),
-> -    .instance_init = vmapple_virtio_root_instance_init,
-> -};
-> -
-> -static void vmapple_virtio_aux_instance_init(Object *obj)
-> -{
-> -    VMAppleVirtIOBlkPCI *dev = VMAPPLE_VIRTIO_BLK_PCI(obj);
-> -
-> -    dev->apple_type = VIRTIO_APPLE_TYPE_AUX;
-> -}
-> -
-> -static const TypeInfo vmapple_virtio_aux_info = {
-> -    .name          = TYPE_VMAPPLE_VIRTIO_AUX,
-> -    .parent        = "vmapple-virtio-blk-pci",
-> -    .instance_size = sizeof(VMAppleVirtIOBlkPCI),
-> -    .instance_init = vmapple_virtio_aux_instance_init,
-> -};
-> -
->   static void vmapple_virtio_blk_register_types(void)
->   {
->       type_register_static(&vmapple_virtio_blk_info);
->       virtio_pci_types_register(&vmapple_virtio_blk_pci_info);
-> -    type_register_static(&vmapple_virtio_root_info);
-> -    type_register_static(&vmapple_virtio_aux_info);
->   }
->   
->   type_init(vmapple_virtio_blk_register_types)
-> diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
-> index cdcc63056e5..6e428f3fcad 100644
-> --- a/include/hw/qdev-properties-system.h
-> +++ b/include/hw/qdev-properties-system.h
-> @@ -27,6 +27,8 @@ extern const PropertyInfo qdev_prop_pcie_link_speed;
->   extern const PropertyInfo qdev_prop_pcie_link_width;
->   extern const PropertyInfo qdev_prop_cpus390entitlement;
->   extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
-> +extern const PropertyInfo qdev_prop_vmapple_virtio_blk_variant;
-> +
-
-Here is an extra line.
-
->   
->   #define DEFINE_PROP_PCI_DEVFN(_n, _s, _f, _d)                   \
->       DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_pci_devfn, int32_t)
-> @@ -94,4 +96,8 @@ extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
->       DEFINE_PROP(_name, _state, _field, qdev_prop_iothread_vq_mapping_list, \
->                   IOThreadVirtQueueMappingList *)
->   
-> +#define DEFINE_PROP_VMAPPLE_VIRTIO_BLK_VARIANT(_n, _s, _f, _d) \
-> +    DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_vmapple_virtio_blk_variant, \
-> +                       VMAppleVirtioBlkVariant)
-> +
->   #endif
-> diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
-> index b20956e1286..9c1ad1bd8c3 100644
-> --- a/include/hw/vmapple/vmapple.h
-> +++ b/include/hw/vmapple/vmapple.h
-> @@ -18,8 +18,6 @@
->   
->   #define TYPE_VMAPPLE_CFG "vmapple-cfg"
->   
-> -#define TYPE_VMAPPLE_VIRTIO_BLK  "vmapple-virtio-blk"
-> -#define TYPE_VMAPPLE_VIRTIO_ROOT "vmapple-virtio-root"
-> -#define TYPE_VMAPPLE_VIRTIO_AUX  "vmapple-virtio-aux"
-> +#define TYPE_VMAPPLE_VIRTIO_BLK_PCI "vmapple-virtio-blk-pci"
->   
->   #endif /* HW_VMAPPLE_VMAPPLE_H */
-> diff --git a/qapi/virtio.json b/qapi/virtio.json
-> index 2529c2d8b20..d351d2166ef 100644
-> --- a/qapi/virtio.json
-> +++ b/qapi/virtio.json
-> @@ -992,3 +992,17 @@
->   ##
->   { 'enum': 'GranuleMode',
->     'data': [ '4k', '8k', '16k', '64k', 'host' ] }
-> +
-> +##
-> +# @VMAppleVirtioBlkVariant:
-> +#
-> +# @unspecified: The default, not a valid setting.
-> +#
-> +# @root: Block device holding the root volume
-> +#
-> +# @aux: Block device holding auxiliary data required for boot
-> +#
-> +# Since: 9.2
-> +##
-> +{ 'enum': 'VMAppleVirtioBlkVariant',
-> +  'data': [ 'unspecified', 'root', 'aux' ] }
+> As an aside can mesa build the intel drivers on non-x86 systems as now I
+> could potentially pass my native intel context to my emulated aarch64
+> guests?
+> 
+>>
+>> Unlike Virgl and Venus contexts that operate on application API level,
+>> DRM native contexts work on a kernel UAPI level. This lower level results
+>> in a lightweight context implementations that yield better performance.
+>>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>> ---
+>>   docs/system/devices/virtio-gpu.rst | 11 +++++++++++
+>>   hw/display/virtio-gpu-gl.c         |  2 ++
+>>   hw/display/virtio-gpu-virgl.c      | 22 ++++++++++++++++++++++
+>>   hw/display/virtio-gpu.c            | 15 +++++++++++++++
+>>   include/hw/virtio/virtio-gpu.h     |  3 +++
+>>   5 files changed, 53 insertions(+)
+>>
+>> diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
+>> index b7eb0fc0e727..49a75138f7ef 100644
+>> --- a/docs/system/devices/virtio-gpu.rst
+>> +++ b/docs/system/devices/virtio-gpu.rst
+>> @@ -82,6 +82,17 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
+>>   
+>>   .. _venus: https://gitlab.freedesktop.org/virgl/venus-protocol/
+>>   
+>> +DRM native context is supported since release of `virglrenderer`_ v1.0.0
+>> +using `drm`_ protocol. ``DRM`` virtio-gpu capability set ("capset") requires
+>> +host blob support (``hostmem`` and ``blob`` fields) and should be enabled
+>> +using ``drm`` field. The ``hostmem`` field specifies the size of virtio-gpu
+>> +host memory window. This is typically between 256M and 8G.
+>> +
+>> +.. parsed-literal::
+>> +    -device virtio-gpu-gl,hostmem=8G,blob=on,drm=on
+>> +
+>> +.. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
+>> +
+>>   virtio-gpu rutabaga
+>>   -------------------
+>>   
+>> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+>> index 53d938f23f20..bd0c0692a5c4 100644
+>> --- a/hw/display/virtio-gpu-gl.c
+>> +++ b/hw/display/virtio-gpu-gl.c
+>> @@ -159,6 +159,8 @@ static Property virtio_gpu_gl_properties[] = {
+>>                       VIRTIO_GPU_FLAG_STATS_ENABLED, false),
+>>       DEFINE_PROP_BIT("venus", VirtIOGPU, parent_obj.conf.flags,
+>>                       VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
+>> +    DEFINE_PROP_BIT("drm", VirtIOGPU, parent_obj.conf.flags,
+>> +                    VIRTIO_GPU_FLAG_DRM_ENABLED, false),
+>>       DEFINE_PROP_END_OF_LIST(),
+>>   };
+>>   
+>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+>> index 37b40e258398..89ca1878fb7c 100644
+>> --- a/hw/display/virtio-gpu-virgl.c
+>> +++ b/hw/display/virtio-gpu-virgl.c
+>> @@ -1232,6 +1232,19 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>>       if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
+>>           flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
+>>       }
+>> +    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
+>> +        flags |= VIRGL_RENDERER_DRM;
+>> +
+>> +        if (!gl->context_fence_enabled) {
+>> +            /*
+>> +             * Virglrenderer skips enabling DRM context support without
+>> +             * enabled async-fence feature. VirtIO-GPU will initialize
+>> +             * successfully, but DRM context won't be available in guest.
+>> +             */
+>> +            error_report("DRM native context requires EGL display");
+>> +            return -EINVAL;
+>> +        }
+>> +    }
+>>   #endif
+>>   
+>>       ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
+>> @@ -1294,5 +1307,14 @@ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
+>>           }
+>>       }
+>>   
+>> +    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
+>> +        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_DRM,
+>> +                                   &capset_max_ver,
+>> +                                   &capset_max_size);
+>> +        if (capset_max_size) {
+>> +            virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_DRM);
+>> +        }
+>> +    }
+>> +
+>>       return capset_ids;
+>>   }
+>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+>> index c0570ef8565a..c1acafe6246b 100644
+>> --- a/hw/display/virtio-gpu.c
+>> +++ b/hw/display/virtio-gpu.c
+>> @@ -1492,6 +1492,21 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+>>   #endif
+>>       }
+>>   
+>> +    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
+>> +#ifdef VIRGL_VERSION_MAJOR
+>> +    #if VIRGL_VERSION_MAJOR >= 1
+>> +        if (!virtio_gpu_blob_enabled(g->parent_obj.conf) ||
+>> +            !virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
+>> +            error_setg(errp, "drm requires enabled blob and hostmem options");
+>> +            return;
+>> +        }
+>> +    #else
+>> +        error_setg(errp, "old virglrenderer, drm unsupported");
+>> +        return;
+>> +    #endif
+>> +#endif
+>> +    }
+>> +
+>>       if (!virtio_gpu_base_device_realize(qdev,
+>>                                           virtio_gpu_handle_ctrl_cb,
+>>                                           virtio_gpu_handle_cursor_cb,
+>> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+>> index 99cc6286f473..f1799fcb6eee 100644
+>> --- a/include/hw/virtio/virtio-gpu.h
+>> +++ b/include/hw/virtio/virtio-gpu.h
+>> @@ -98,6 +98,7 @@ enum virtio_gpu_base_conf_flags {
+>>       VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED,
+>>       VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,
+>>       VIRTIO_GPU_FLAG_VENUS_ENABLED,
+>> +    VIRTIO_GPU_FLAG_DRM_ENABLED,
+>>   };
+>>   
+>>   #define virtio_gpu_virgl_enabled(_cfg) \
+>> @@ -118,6 +119,8 @@ enum virtio_gpu_base_conf_flags {
+>>       (_cfg.hostmem > 0)
+>>   #define virtio_gpu_venus_enabled(_cfg) \
+>>       (_cfg.flags & (1 << VIRTIO_GPU_FLAG_VENUS_ENABLED))
+>> +#define virtio_gpu_drm_enabled(_cfg) \
+>> +    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_DRM_ENABLED))
+>>   
+>>   struct virtio_gpu_base_conf {
+>>       uint32_t max_outputs;
+> 
 
 
