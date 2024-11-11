@@ -4,66 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F193D2E9E4
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 12:42:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36C2DD2E9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 12:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tATjj-000268-Lv; Mon, 11 Nov 2024 07:41:43 -0500
+	id 1tATtn-0004ds-NT; Mon, 11 Nov 2024 07:52:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tATjJ-0001u7-4a; Mon, 11 Nov 2024 07:41:18 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tATtj-0004dd-Ac
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 07:52:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tATjH-0003Zq-08; Mon, 11 Nov 2024 07:41:16 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 013F34E6001;
- Mon, 11 Nov 2024 13:41:07 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Y4HK22FdUUOH; Mon, 11 Nov 2024 13:41:04 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A24E54E6000; Mon, 11 Nov 2024 13:41:04 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9F222746F60;
- Mon, 11 Nov 2024 13:41:04 +0100 (CET)
-Date: Mon, 11 Nov 2024 13:41:04 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Phil Dennis-Jordan <phil@philjordan.eu>
-cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org, 
- agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com, 
- rad@semihalf.com, quic_llindhol@quicinc.com, stefanha@redhat.com, 
- mst@redhat.com, slp@redhat.com, richard.henderson@linaro.org, 
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, gaosong@loongson.cn, 
- jiaxun.yang@flygoat.com, chenhuacai@kernel.org, kwolf@redhat.com, 
- hreitz@redhat.com, philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, qemu-arm@nongnu.org, 
- qemu-block@nongnu.org, qemu-riscv@nongnu.org
-Subject: Re: [PATCH v8 01/15] ui & main loop: Redesign of system-specific
- main thread event handling
-In-Reply-To: <CAAibmn2+pT_kpcdHd26KsFggRNRR3yPep11fToOK=GZ9AEDHpw@mail.gmail.com>
-Message-ID: <e08017b1-5b38-f482-5534-cea4dcc0f000@eik.bme.hu>
-References: <20241108144709.95498-1-phil@philjordan.eu>
- <20241108144709.95498-2-phil@philjordan.eu>
- <9c2e0b96-2125-4041-9f66-116d54accb04@daynix.com>
- <CAAibmn3NbtOEwWLQFOo_UmAGTehOj+dDP04A=-JGMZVK9AYMDw@mail.gmail.com>
- <ZzHJgAbBJZYrSt84@redhat.com>
- <CAAibmn2+pT_kpcdHd26KsFggRNRR3yPep11fToOK=GZ9AEDHpw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tATth-0004ge-FV
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 07:52:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731329519;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=x7kdfKYghpMxpcAfUWIgBcc9NkXNJ5wGHoe5byYILq8=;
+ b=GSAdPN979Cdz0/oYojgjm/xRDyIzgxZh9gIowNOao2Z1idD+Ay0XT+oG6EgpeJWQCvw9Qd
+ dzwrTFmFXHPBQ+2jVClI4rbqc0fkDm6mm4tk+vLw49PX5ZrAoeICFVHvuqZ8mDjJYWBNuU
+ vUmAIsBI6AvP9OBP2OIELnF6h8mmywY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-657-aL8fVU_GMWeQ0kXaXj_IMw-1; Mon, 11 Nov 2024 07:51:56 -0500
+X-MC-Unique: aL8fVU_GMWeQ0kXaXj_IMw-1
+X-Mimecast-MFC-AGG-ID: aL8fVU_GMWeQ0kXaXj_IMw
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43159603c92so31842905e9.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 04:51:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731329515; x=1731934315;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=x7kdfKYghpMxpcAfUWIgBcc9NkXNJ5wGHoe5byYILq8=;
+ b=S7EdSBmY3SyldLHshCvZWoKzfGWd9ygUFBcAtkejVp7La+L4pLGocf9hetI3Iq27Ch
+ sJGcy4PpF6u5cxsi0bomksKcl46QLsceB3yrbxBOkugZxvpceBHffDkxi84coQ/ZP2ZF
+ UC2lRoaqCs9MwGPAKmhjeqdOr0i9dN8zi240kHq8qlISi3ImLqSEP0te6UW/z+ul9sdx
+ UaNAJ/8TPIc1pmM02BLGxhHlkbRNZyCRlYuhOQW7eUjJ3DEJl4UgW/W2fLM2NTzZKp3P
+ CwLyJFjIvARth4f3RQ3QnKbnngUI5USPvBY30dZra6AqxfqgJFHKsnD2vp8G9REEg8jE
+ vk0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVohSztWVIUgC6yd+NB8GvnI9GXoTGUDtOPREmpYS7v2ALNwHsPZINX1SRrHTupDtsVhe9l3AZIM8r0@nongnu.org
+X-Gm-Message-State: AOJu0Yz5rovIyuqHxXoSze2uItC9nTpC3TugEIq5rlCziQYGV2pFcFgY
+ BOdW6z0I8pkUPGbmfm2UNzQjbcRnAApDwgODuvaTV2omZ4wceKa3zVvnHRJnVUXcyzxHUA3YVMa
+ VhO1C2YEdGoiSo/hGJX8EKSTZwMhuu8XdaSd1MrjzseA+13lxRhDcDzzLxOKPiUqALeAZ6Rdtd5
+ 6Lt7A55fRvp9CdyNEAc8G03U5kLTA=
+X-Received: by 2002:a05:600c:1d0e:b0:42d:a024:d6bb with SMTP id
+ 5b1f17b1804b1-432b7517ac2mr96382945e9.20.1731329515490; 
+ Mon, 11 Nov 2024 04:51:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IED4O6fI8z7ZRHxPdAY2JtgF7U6teQ5XA7GE8YsrL8K95/hXBjDNSFps6SQamDJFOQmYejPcrTWf744DwXtHWc=
+X-Received: by 2002:a05:600c:1d0e:b0:42d:a024:d6bb with SMTP id
+ 5b1f17b1804b1-432b7517ac2mr96382555e9.20.1731329514600; Mon, 11 Nov 2024
+ 04:51:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="3866299591-1363951794-1731328864=:607"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241111090534.66439-2-frolov@swemel.ru>
+ <CAE8KmOw75c9Vja5dnGy50b2Dqp9wgfMfxRWjHDdqEUkLBUcP+A@mail.gmail.com>
+ <60535722-1a11-42f9-a678-d103e227942f@swemel.ru>
+In-Reply-To: <60535722-1a11-42f9-a678-d103e227942f@swemel.ru>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Mon, 11 Nov 2024 18:21:38 +0530
+Message-ID: <CAE8KmOyvCJoOHAw7+Y=2-pDD3co5kcwshJCjGfdsmEpsQLRgow@mail.gmail.com>
+Subject: Re: [PATCH] tests/qtest: fix heap-use-after-free
+To: =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0KTRgNC+0LvQvtCy?= <frolov@swemel.ru>
+Cc: farosas@suse.de, lvivier@redhat.com, sdl.qemu@linuxtesting.org, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.671,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,80 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, 11 Nov 2024 at 17:41, =D0=94=D0=BC=D0=B8=D1=82=D1=80=D0=B8=D0=B9 =
+=D0=A4=D1=80=D0=BE=D0=BB=D0=BE=D0=B2 <frolov@swemel.ru> wrote:
+> Above loop dereferences the pointer env, which is pointing to
+> the memory area, which is not allowed to read.
 
---3866299591-1363951794-1731328864=:607
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+* Not allowed to read environment variables? Is it because
+Debian/clang does not support the '**envp' parameter? Is '**envp' set
+to NULL on Debian? If '**envp' is not supported, then the compiler
+should throw an error at build time, no?
 
-On Mon, 11 Nov 2024, Phil Dennis-Jordan wrote:
-> On Mon, 11 Nov 2024 at 10:08, Daniel P. Berrangé <berrange@redhat.com>
-> wrote:
+> I am pointing on 2 facts:
+> 1. "env" is Microsoft`s extension, not a standard
+> 2. There is exact example, where standards violation raises
+> undefined behavior: debian13/clang16
 >
->> On Sun, Nov 10, 2024 at 08:08:16AM +0100, Phil Dennis-Jordan wrote:
->>> On Sun 10. Nov 2024 at 08:01, Akihiko Odaki <akihiko.odaki@daynix.com>
->>> wrote:
->>>
->>>> On 2024/11/08 23:46, Phil Dennis-Jordan wrote:
->>>>> macOS's Cocoa event handling must be done on the initial (main)
->> thread
->>>>> of the process. Furthermore, if library or application code uses
->>>>> libdispatch, the main dispatch queue must be handling events on the
->> main
->>>>> thread as well.
->>>>>
->>>>> So far, this has affected Qemu in both the Cocoa and SDL UIs,
->> although
->>>>> in different ways: the Cocoa UI replaces the default qemu_main
->> function
->>>>> with one that spins Qemu's internal main event loop off onto a
->>>>> background thread. SDL (which uses Cocoa internally) on the other
->> hand
->>>>> uses a polling approach within Qemu's main event loop. Events are
->>>>> polled during the SDL UI's dpy_refresh callback, which happens to run
->>>>> on the main thread by default.
->>>>
->>>> GTK should also do the same as SDL and requires treatment; I forgot to
->>>> note that in previous reviews.
->>>
->>>
->>> Although it‘s possible to build Qemu with GTK support enabled on macOS,
->>> that UI doesn’t actually work on macOS at all, and apparently hasn’t been
->>> supported since 2018, see:
->>> https://stackoverflow.com/a/51474795
->>>
->>> I don’t think there’s any point making adjustments to the GTK code by
->>> guessing what might be needed if someone did fix that to work with macOS
->> at
->>> some point.
->>
->> If we don't support GTK on macOS, then we should update meson.build
->> to actively prevent users enabling GTK on macOS builds, rather than
->> letting them suffer random runtime crashes.
->>
->>
-> Agreed - I'm now more confused than ever though because
-> https://gitlab.com/qemu-project/qemu/-/issues/2539 sort of implies that
-> Philippe has previously been using it successfully. Or perhaps this was
-> created in response to https://gitlab.com/qemu-project/qemu/-/issues/2515 ?
-> But it seems like even the SDL implementation isn't perfect:
-> https://gitlab.com/qemu-project/qemu/-/issues/2537
->
-> Basically, it seems like Qemu's UI threading on macOS is currently a bit of
-> a mess, except in the Cocoa UI.
 
-Maybe it worked with older MacOS X releases but broke around the same time 
-when commit 5588840ff77800 was needed to fix the cocoa UI? Maybe gtk needs 
-a similar fix or whatever cocoa was changed to use since somewhere in gtk 
-or QEMU?
+* If this is about Debian not supporting '**envp' parameter, then
+it'll help if the commit message says "...Debian does not support this
+non-standard extension and crashes QEMU". The asan error makes it
+sound like the patch fixes the use-after-free issue. What happens if
+the -lasan is not used? Does it still crash QEMUt?
 
-Also I find it strange to require UI backends to NULL init a global. If 
-the cocoa UI is the only one that needs it could that also set it instead 
-of doing it in /system? That would also confine macOS specific code to 
-cocoa.m and the other UIs would not need any change that way.
+Thank you.
+---
+  - Prasad
 
-Regards,
-BALATON Zoltan
---3866299591-1363951794-1731328864=:607--
 
