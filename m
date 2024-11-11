@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E6DD3ABCE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ECEED3ABD1
 	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 17:04:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAXpP-0005uG-VS; Mon, 11 Nov 2024 12:03:52 -0500
+	id 1tAXpG-0005st-3v; Mon, 11 Nov 2024 12:03:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAXpK-0005tP-90
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 12:03:46 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAXpE-0005sM-El
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 12:03:40 -0500
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAXpI-0007hY-MG
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 12:03:46 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4314b316495so38710755e9.2
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 09:03:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAXpC-0007g0-Vw
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 12:03:40 -0500
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-539f76a6f0dso5310871e87.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 09:03:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731344623; x=1731949423; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4PxJcypGLJUZeCvO6UFQ988vSD/DmSC0a3FHBYB21+M=;
- b=sM1URRbRB/Y1aL5DoNXuey9khq+if4TKZFpkaGh2StF7JL4u1FcQFxTQaJ5HPDNovg
- +GJNxbmu6cKTGsntGhq3DFVoJcnqNh6BbOnYaE1nxeBm1oxo1C8V5of0oxL38QxC1tRZ
- LcfCG6i2yPm6AtDHfZsNCJTQ8fgR8ZZyPtT+3aUPczLVz5CoFA8lTFQ8if/uPiuqpm5h
- k+jkPs+iqhWG/yixioJiTzjuYoi4LmdjKgOr6W0EkzAr/q3m+vp5XKfizJSkwdJZgW6r
- GRZBBhZySx/BtGoXDLbI9+geSPyL9GG7kCA2k5PcPBYTpyZfcljn1SwL7P57G0z0fuXx
- fjaA==
+ d=linaro.org; s=google; t=1731344617; x=1731949417; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tneVgwOxeXMOJV2em6Sql32Iu0L2oPoZoYGFpR4RHFQ=;
+ b=zl9Py3+M+FoFA4dSZJJjN7RhxvZV7yJY2AHdCsYbP7SBxkDPeGWkAdwjoVIn4M+Ub7
+ gLLVQzdBF71VJ97Js1/HrV+u/5RXLDbqeWAfSVk6eYLPjMdCsNaRQTts57DKognqitSt
+ l8O0R2Hm9rU1NMDPzJuKmBLkaxEiKEQ/OuFALvGIFJiE7wli3+8IE3P8dL4o57TdB5AM
+ PSTeSKd7IXNX9+v306Z/J6P3mmj9jCJohQe5DzUXqgOKFbAvFW8W2tPSOMVsyh9Lnu8K
+ l7CqnZHt37ET2clBVC3W+bP8VWGuWhJa//ZsfZ0ZKE4A6CpvyGmlOFLcWINJ/nZ0OePw
+ cl7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731344623; x=1731949423;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4PxJcypGLJUZeCvO6UFQ988vSD/DmSC0a3FHBYB21+M=;
- b=CzrcbzkK1VPn1A5qB03SnQB/MooRoC+4F/oZ60FABhy5JmybiQwKODfg+W9qDArk07
- Hs7dKv2lySaxAMdh3TMPAvv0AooGF23eziYXdJ8E1BFRxRC/986e6sMSu0QQVYZ/SokL
- RZ3ePF2OV1UDm+9QJM0QcyhkaDKeUCRYzgFM4aW16iK9MOhI9xFs2/x0tT3G+HAFPkRT
- ovSAbfIbYd94G5inwQTYGmx/MHqMFniPivh3/jQIBJMx+RTnRWIoX/n4tUP5DrLh8DYl
- NF8YREJlRHiiI0GgisEwcWS8z1TJULlZxtUh0xJ7KNY27eXehGRwCrfA9y+XJuMeP0aH
- CBiw==
+ d=1e100.net; s=20230601; t=1731344617; x=1731949417;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tneVgwOxeXMOJV2em6Sql32Iu0L2oPoZoYGFpR4RHFQ=;
+ b=jXpaJsfJH3rZZgq4ONaSUdK3NnjMNQrbalNHk1JjeS1GugyKKKYjVE5mDUTLFE6doG
+ TBn3InhRGIlXlgn/V5eKNrVB7ck0M7tZPomN+3TZ8lWn5eopfdEa8/6bEppw+VuCMDe5
+ mC/cQVpqTy/qjW1vNs6eB4fbbvJWz4dFIlQTutARxho+HEMKd1s0sUJs3oW1/2H9CdUP
+ rVRcipD/VrWwBEGv6aspKxWawjRqWb9Ddsprm/d9p+nbCE56uvfWVHUHr2JRRTNyaMKa
+ QlNtBOnoiTdIJl+tnxGbtc4phQNqMYeHG0NibqAUg4nD3vquDx8fjK0JRfjki+/5+U0N
+ +G7g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXfanUVLnFJojMAsXbXDsICHZjQSyFLBnNxmsk5zrEdC/zOFS5ozbEkAzTAna39rz8dYLUgaZgauY7@nongnu.org
-X-Gm-Message-State: AOJu0YzQYwa0zJrBm9sq1UXO0+duKcYMccAWUwdU57Xs/WA80Yi+h3vu
- FJDJ+5xdxGYFmXqZf+bYLCeeHSUX/wLyttuhuO1Fq0hBASuKLOnY8mBBK68Tqwc=
-X-Google-Smtp-Source: AGHT+IGn0PeJpySm3IEU6/Rh1tulbfSGe2cd/VPOmBaQaP764kqOH+NinLos924OyY9Ym/VWDjatmA==
-X-Received: by 2002:a05:600c:4590:b0:430:57f2:bae5 with SMTP id
- 5b1f17b1804b1-432b751cc3emr105100205e9.27.1731344623042; 
- Mon, 11 Nov 2024 09:03:43 -0800 (PST)
+ AJvYcCUEJVteEIRhjTyKdgSVZUNT7kReXX/Xs9MKbGJADGvR+LIQkOuIt9aa7OwM29B2BwDA4uU4Wnq8mLgM@nongnu.org
+X-Gm-Message-State: AOJu0YyelEbopg9kmJwQE8+DaDrx9HH7UzT/O/auy8yWKdsZWLV+ocVc
+ 8bLYA+e4xlJJY+o22QPHZkQQcuRBvs+0/gHlQ2zhvygdhmfvX+encN+OMy5q0WA=
+X-Google-Smtp-Source: AGHT+IGfLnFqlqbWTJxLgMF3x0EK3XTwiNWJ1yjCQJ9EP9/TnuJadWqAN4VdgZOy3pi8+h1M1C/1qA==
+X-Received: by 2002:a05:6512:2256:b0:536:568f:c5ed with SMTP id
+ 2adb3069b0e04-53d8627ced8mr6197116e87.1.1731344616446; 
+ Mon, 11 Nov 2024 09:03:36 -0800 (PST)
 Received: from localhost.localdomain
  (vau06-h02-176-184-43-163.dsl.sta.abo.bbox.fr. [176.184.43.163])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432b05c18e0sm184802655e9.28.2024.11.11.09.03.40
+ 5b1f17b1804b1-432b05e5871sm182492055e9.37.2024.11.11.09.03.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 Nov 2024 09:03:41 -0800 (PST)
+ Mon, 11 Nov 2024 09:03:35 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Fabiano Rosas <farosas@suse.de>,
 	qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/2] block: Improve blk_get_attached_dev_id() docstring
-Date: Mon, 11 Nov 2024 18:03:32 +0100
-Message-ID: <20241111170333.43833-2-philmd@linaro.org>
+Subject: [PATCH v2 0/2] block: Fix leak in send_qmp_error_event
+Date: Mon, 11 Nov 2024 18:03:31 +0100
+Message-ID: <20241111170333.43833-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241111170333.43833-1-philmd@linaro.org>
-References: <20241111170333.43833-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,69 +95,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose the method docstring in the header, and mention
-returned value must be free'd by caller.
+Respin of Fabiano patch using g_autofree,
+and clarifying method docstrings.
 
-Reported-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
+Fabiano Rosas (1):
+  block: Fix leak in send_qmp_error_event
+
+Philippe Mathieu-Daudé (1):
+  block: Improve blk_get_attached_dev_id() docstring
+
  include/sysemu/block-backend-io.h |  7 +++++++
- block/block-backend.c             | 12 ++++++++----
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ block/block-backend.c             | 16 ++++++++++------
+ 2 files changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/include/sysemu/block-backend-io.h b/include/sysemu/block-backend-io.h
-index d174275a5c..ba8dfcc7d0 100644
---- a/include/sysemu/block-backend-io.h
-+++ b/include/sysemu/block-backend-io.h
-@@ -32,6 +32,13 @@ void blk_set_allow_aio_context_change(BlockBackend *blk, bool allow);
- void blk_set_disable_request_queuing(BlockBackend *blk, bool disable);
- bool blk_iostatus_is_enabled(const BlockBackend *blk);
- 
-+/*
-+ * Return the qdev ID, or if no ID is assigned the QOM path,
-+ * of the block device attached to the BlockBackend.
-+ *
-+ * The caller is responsible for releasing the value returned
-+ * with g_free() after use.
-+ */
- char *blk_get_attached_dev_id(BlockBackend *blk);
- 
- BlockAIOCB *blk_aio_pwrite_zeroes(BlockBackend *blk, int64_t offset,
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 85bcdedcef..7b329ff194 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -1019,6 +1019,10 @@ DeviceState *blk_get_attached_dev(BlockBackend *blk)
-     return blk->dev;
- }
- 
-+/*
-+ * The caller is responsible for releasing the value returned
-+ * with g_free() after use.
-+ */
- static char *blk_get_attached_dev_id_or_path(BlockBackend *blk, bool want_id)
- {
-     DeviceState *dev = blk->dev;
-@@ -1033,15 +1037,15 @@ static char *blk_get_attached_dev_id_or_path(BlockBackend *blk, bool want_id)
-     return object_get_canonical_path(OBJECT(dev)) ?: g_strdup("");
- }
- 
--/*
-- * Return the qdev ID, or if no ID is assigned the QOM path, of the block
-- * device attached to the BlockBackend.
-- */
- char *blk_get_attached_dev_id(BlockBackend *blk)
- {
-     return blk_get_attached_dev_id_or_path(blk, true);
- }
- 
-+/*
-+ * The caller is responsible for releasing the value returned
-+ * with g_free() after use.
-+ */
- static char *blk_get_attached_dev_path(BlockBackend *blk)
- {
-     return blk_get_attached_dev_id_or_path(blk, false);
 -- 
 2.45.2
 
