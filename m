@@ -4,78 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A886D2E9F0
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 14:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AFADD12D49
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 14:52:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAVk2-0002Cq-JF; Mon, 11 Nov 2024 09:50:10 -0500
+	id 1tAVmC-00030G-Oh; Mon, 11 Nov 2024 09:52:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAVk0-0002Bu-II
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:50:08 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tAVmA-0002yO-I8; Mon, 11 Nov 2024 09:52:22 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAVjy-0001wr-GF
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:50:08 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-20cb7139d9dso42173345ad.1
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 06:50:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731336604; x=1731941404; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=2M/3qA8mMKz7DvBymSN5QuTvN/Xyu5smd+SKwoEDOq0=;
- b=OouI765aM7lkx+/k56qqY7OLSHXtyl2wSePhdbc8iarcrbL4RmihUCybYuqUWiqc7x
- XXm73OxnCuL0ZEgdcrMh+qZROS5o9PNYeMOJE2AO6NH7Gc9F+429p1CsLaQnAl4HnggT
- PDdaAEFJRHxbLgMB7EOYpmMHwDYynMDxngYEwY9Ejf5jUzG0ZKjYZLxgItnoijAhB06C
- IRmdgqb4KCRHSrGo35fY/6QIvDv29/CMxdr2MjEXHe829gmAIHDmb9N4ED4sKMnbNUh1
- Ib2cS/cKg8mcCzKvG+PFBarlHb4LVQl0o6swRJNEDf+I87gadaobjfX5drkQEeV8qzE4
- TIwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731336604; x=1731941404;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2M/3qA8mMKz7DvBymSN5QuTvN/Xyu5smd+SKwoEDOq0=;
- b=X5XQoAnbyyrsBF9KkydIjvwrZ1eI8TiQei4yyUTPBSmoN4PmX60NYvNtdE5gQhI/VW
- lSZP7o89no3RBvj7h7Ndk/VXhBFuFvFV/DwAyRTe9R76osEEAX5VxxC8YtSgWXlWNsDc
- zYPBbtF24zegVJVd4GMZOevj0o3N+q8WyvNxl4dLHEjf3IqZAlLu+Vc3FR3iX+h/6mv7
- z8oBVR9TkXLa1JEp+8Oc/bbByCmZzS2Z4jdnWA4hn96DEVOiA6f63sB1GcqGpGAwL16N
- OllETxqQVpPDi/H/ny7tLfSexK8G+A/voGwdgfO47v+g2VlM3dTwK5FzX5NwJdW+rCDU
- ZgxA==
-X-Gm-Message-State: AOJu0Yx8nIJRvbhIntCuv/L49JZLT1/bnYjBKA/ID3/Otzl73WMESElg
- GpVNtUaIh23JPFkhuiXaAWCKOS/zTRyXsSqeGy7+ZjKwfJ3S8rVZcP2ekoGehcOkjoBMWQtkj08
- K
-X-Google-Smtp-Source: AGHT+IEVvIf2X0eekEoWokJQUG03DUGUs5QXh6JoFPk6M7rHtK9dfRhcgX3T7NpQL9DDOaOGJqEp6w==
-X-Received: by 2002:a17:902:ea12:b0:20c:ccb7:df84 with SMTP id
- d9443c01a7336-21183e0dd1cmr183698405ad.42.1731336604557; 
- Mon, 11 Nov 2024 06:50:04 -0800 (PST)
-Received: from stoup.. (wsip-24-120-228-34.lv.lv.cox.net. [24.120.228.34])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21177e68cb0sm76213705ad.224.2024.11.11.06.50.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Nov 2024 06:50:04 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tAVm8-0002AS-Lf; Mon, 11 Nov 2024 09:52:22 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 9DD991F38E;
+ Mon, 11 Nov 2024 14:52:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1731336738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=wPf3EusIvQUP5CbuI5hx2eO4SVkYd5Ku04n6CjnmX4Y=;
+ b=IoQiQDHS6A5rLAxA26fU/LAh+f9LHemlsRLF8bnorlSWTLWojkOu4d0f61Wp6Bq7RDBRch
+ 7ELUmHKTVHwdUmQVWIFBPAIPImX+A9xkBtj28i+693aMWfuxif1HxirK7tcOIo9DzHmI75
+ mRkR7u2z/YRDuhHpiZXY6o9+euFPAX8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1731336738;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=wPf3EusIvQUP5CbuI5hx2eO4SVkYd5Ku04n6CjnmX4Y=;
+ b=0AnMPpbx1PbGP4Xvn/ffH0if/fMz3rBJaf4hdZX2+cDIQe5F0AoGAoZBSFxhVnhrLJD/L1
+ SQRA87weQR50giBQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=IoQiQDHS;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=0AnMPpbx
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1731336738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=wPf3EusIvQUP5CbuI5hx2eO4SVkYd5Ku04n6CjnmX4Y=;
+ b=IoQiQDHS6A5rLAxA26fU/LAh+f9LHemlsRLF8bnorlSWTLWojkOu4d0f61Wp6Bq7RDBRch
+ 7ELUmHKTVHwdUmQVWIFBPAIPImX+A9xkBtj28i+693aMWfuxif1HxirK7tcOIo9DzHmI75
+ mRkR7u2z/YRDuhHpiZXY6o9+euFPAX8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1731336738;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=wPf3EusIvQUP5CbuI5hx2eO4SVkYd5Ku04n6CjnmX4Y=;
+ b=0AnMPpbx1PbGP4Xvn/ffH0if/fMz3rBJaf4hdZX2+cDIQe5F0AoGAoZBSFxhVnhrLJD/L1
+ SQRA87weQR50giBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2D88313301;
+ Mon, 11 Nov 2024 14:52:16 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id lym5OCAaMmeSbwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 11 Nov 2024 14:52:16 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-Subject: [PATCH for-9.2] accel/tcg: Fix user-only probe_access_internal plugin
- check
-Date: Mon, 11 Nov 2024 06:50:02 -0800
-Message-ID: <20241111145002.144995-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH] block: Fix leak in send_qmp_error_event
+Date: Mon, 11 Nov 2024 11:52:14 -0300
+Message-Id: <20241111145214.8261-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Rspamd-Queue-Id: 9DD991F38E
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,31 +117,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The acc_flag check for write should have been against PAGE_WRITE_ORG,
-not PAGE_WRITE.  But it is better to combine two acc_flag checks
-to a single check against access_type.  This matches the system code
-in cputlb.c.
+ASAN detected a leak when running the ahci-test
+/ahci/io/dma/lba28/retry:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2647
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Direct leak of 35 byte(s) in 1 object(s) allocated from:
+    #0 in malloc
+    #1 in __vasprintf_internal
+    #2 in vasprintf
+    #3 in g_vasprintf
+    #4 in g_strdup_vprintf
+    #5 in g_strdup_printf
+    #6 in object_get_canonical_path ../qom/object.c:2096:19
+    #7 in blk_get_attached_dev_id_or_path ../block/block-backend.c:1033:12
+    #8 in blk_get_attached_dev_path ../block/block-backend.c:1047:12
+    #9 in send_qmp_error_event ../block/block-backend.c:2140:36
+    #10 in blk_error_action ../block/block-backend.c:2172:9
+    #11 in ide_handle_rw_error ../hw/ide/core.c:875:5
+    #12 in ide_dma_cb ../hw/ide/core.c:894:13
+    #13 in dma_complete ../system/dma-helpers.c:107:9
+    #14 in dma_blk_cb ../system/dma-helpers.c:129:9
+    #15 in blk_aio_complete ../block/block-backend.c:1552:9
+    #16 in blk_aio_write_entry ../block/block-backend.c:1619:5
+    #17 in coroutine_trampoline ../util/coroutine-ucontext.c:175:9
+
+Plug the leak by freeing the device path string.
+
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- accel/tcg/user-exec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/block-backend.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index aa8af52cc3..06016eb030 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -800,7 +800,7 @@ static int probe_access_internal(CPUArchState *env, vaddr addr,
-     if (guest_addr_valid_untagged(addr)) {
-         int page_flags = page_get_flags(addr);
-         if (page_flags & acc_flag) {
--            if ((acc_flag == PAGE_READ || acc_flag == PAGE_WRITE)
-+            if (access_type != MMU_INST_FETCH
-                 && cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
-                 return TLB_MMIO;
-             }
+diff --git a/block/block-backend.c b/block/block-backend.c
+index 85bcdedcef..a3b7f00188 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -2134,13 +2134,14 @@ static void send_qmp_error_event(BlockBackend *blk,
+ {
+     IoOperationType optype;
+     BlockDriverState *bs = blk_bs(blk);
++    char *path = blk_get_attached_dev_path(blk);
+ 
+     optype = is_read ? IO_OPERATION_TYPE_READ : IO_OPERATION_TYPE_WRITE;
+-    qapi_event_send_block_io_error(blk_name(blk),
+-                                   blk_get_attached_dev_path(blk),
++    qapi_event_send_block_io_error(blk_name(blk), path,
+                                    bs ? bdrv_get_node_name(bs) : NULL, optype,
+                                    action, blk_iostatus_is_enabled(blk),
+                                    error == ENOSPC, strerror(error));
++    g_free(path);
+ }
+ 
+ /* This is done by device models because, while the block layer knows
 -- 
-2.43.0
+2.35.3
 
 
