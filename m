@@ -4,89 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D8EDD2E9E4
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 12:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F193D2E9E4
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 12:42:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tATjG-0001se-BE; Mon, 11 Nov 2024 07:41:14 -0500
+	id 1tATjj-000268-Lv; Mon, 11 Nov 2024 07:41:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1tATjD-0001qR-Sv
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 07:41:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tATjJ-0001u7-4a; Mon, 11 Nov 2024 07:41:18 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1tATjB-0003Zy-Ie
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 07:41:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731328868;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9fcrL7ci12chRT2aI21y5McyDVwIVK0MMWGrFO2NEZ4=;
- b=I57MWiJtMg+8we8T6Grn5uEbSVr9hTHVDPpuzh08U5uRM79Dhug7SzB/Eu9LUj7oNfn7/e
- YZ/rWQMVILXnXiY1lExhHHCJQGCOEHkRHUO4eJdCh/oTEBAc97sYEk8giT53RB00UA/p72
- PIZedPeRcplREohqhuG8oaQog17Ptjw=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-88-HnBZjuZcPwOmFZi8LARrUw-1; Mon, 11 Nov 2024 07:41:07 -0500
-X-MC-Unique: HnBZjuZcPwOmFZi8LARrUw-1
-X-Mimecast-MFC-AGG-ID: HnBZjuZcPwOmFZi8LARrUw
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6d354ec5288so64986666d6.2
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 04:41:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731328865; x=1731933665;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9fcrL7ci12chRT2aI21y5McyDVwIVK0MMWGrFO2NEZ4=;
- b=qZXZjNzN3uOgTDLAAaJy0XSoYSeom0UikuG7QgCShPBu25L2EThUosidu8k2R+vVlS
- Yg1lPAxysBhcOtQ7XvqsgL0TyTfUAQ2r+ohxUU/nd7WZs9Ac7kej0DDq/uiX+zYMSKbH
- ehnaLx81LxwTWF81fVfFcMnKcCGphwNWDpecGC6VXkzyJ371UoGKcvmaghjgGezv7V6J
- fWko+jf98ulpUQRqLfGK5ILPqt0LdYKcx+hvAMRCFtPmN96k6ciubMHyx1jL7h62AuZ0
- MEB/FbD2rRR2gHnJgePB5SZelse0pmOUvY1ZTNMQAfLngQyztC24md1wQRFTP4nXYLrT
- Qijw==
-X-Gm-Message-State: AOJu0YwQF/AWA7qoSludOFBWdMBwcf9hmfM78EV/49BFAaQgs+RcwMKC
- dy4jbUDLCK2ErZgOFdnG7BDOxZ5IwU8up2X8CrKFn0/BpXOtiTt6YXnrwM3J47UgOOY2Or5U9j8
- EF334sZ7hu2yL0RBFyVjE0dDp0BEfGqX9Hzg19PgmHEHcbDosPU8zraZiI5MHMJe9/gK9MvVhJw
- aXFuBeWKL1XaAj2xd3nR0Lfjip1GoO/8YlEA==
-X-Received: by 2002:a05:6214:43c1:b0:6cd:4972:59b1 with SMTP id
- 6a1803df08f44-6d39e18643cmr227124956d6.27.1731328865240; 
- Mon, 11 Nov 2024 04:41:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGXjmvAd1NlzqzyKni8Ye3lOEGheeWheXpa48Oq2HauqkQpIW+kWerXnYDrAhrkmJqf33wbBA==
-X-Received: by 2002:a05:6214:43c1:b0:6cd:4972:59b1 with SMTP id
- 6a1803df08f44-6d39e18643cmr227124656d6.27.1731328864905; 
- Mon, 11 Nov 2024 04:41:04 -0800 (PST)
-Received: from rh (p200300f6af368f00f7bae606b15f3bdb.dip0.t-ipconnect.de.
- [2003:f6:af36:8f00:f7ba:e606:b15f:3bdb])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d396208436sm58870806d6.56.2024.11.11.04.41.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Nov 2024 04:41:04 -0800 (PST)
-Date: Mon, 11 Nov 2024 13:40:59 +0100 (CET)
-From: Sebastian Ott <sebott@redhat.com>
-To: qemu-devel@nongnu.org
-cc: Alex Williamson <alex.williamson@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] pci: ensure valid link status bits for downstream
- ports
-In-Reply-To: <20241111123756.18393-1-sebott@redhat.com>
-Message-ID: <0a0049d2-7c72-5e5b-c35f-d777418f3eaa@redhat.com>
-References: <20241111123756.18393-1-sebott@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tATjH-0003Zq-08; Mon, 11 Nov 2024 07:41:16 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 013F34E6001;
+ Mon, 11 Nov 2024 13:41:07 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id Y4HK22FdUUOH; Mon, 11 Nov 2024 13:41:04 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id A24E54E6000; Mon, 11 Nov 2024 13:41:04 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9F222746F60;
+ Mon, 11 Nov 2024 13:41:04 +0100 (CET)
+Date: Mon, 11 Nov 2024 13:41:04 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Phil Dennis-Jordan <phil@philjordan.eu>
+cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org, 
+ agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com, 
+ rad@semihalf.com, quic_llindhol@quicinc.com, stefanha@redhat.com, 
+ mst@redhat.com, slp@redhat.com, richard.henderson@linaro.org, 
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, gaosong@loongson.cn, 
+ jiaxun.yang@flygoat.com, chenhuacai@kernel.org, kwolf@redhat.com, 
+ hreitz@redhat.com, philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, qemu-arm@nongnu.org, 
+ qemu-block@nongnu.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v8 01/15] ui & main loop: Redesign of system-specific
+ main thread event handling
+In-Reply-To: <CAAibmn2+pT_kpcdHd26KsFggRNRR3yPep11fToOK=GZ9AEDHpw@mail.gmail.com>
+Message-ID: <e08017b1-5b38-f482-5534-cea4dcc0f000@eik.bme.hu>
+References: <20241108144709.95498-1-phil@philjordan.eu>
+ <20241108144709.95498-2-phil@philjordan.eu>
+ <9c2e0b96-2125-4041-9f66-116d54accb04@daynix.com>
+ <CAAibmn3NbtOEwWLQFOo_UmAGTehOj+dDP04A=-JGMZVK9AYMDw@mail.gmail.com>
+ <ZzHJgAbBJZYrSt84@redhat.com>
+ <CAAibmn2+pT_kpcdHd26KsFggRNRR3yPep11fToOK=GZ9AEDHpw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed; boundary="3866299591-1363951794-1731328864=:607"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,26 +79,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Nov 2024, Sebastian Ott wrote:
-> PCI hotplug for downstream endpoints on arm fails because Linux'
-> PCIe hotplug driver doesn't like the QEMU provided LNKSTA:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-1363951794-1731328864=:607
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Mon, 11 Nov 2024, Phil Dennis-Jordan wrote:
+> On Mon, 11 Nov 2024 at 10:08, Daniel P. Berrangé <berrange@redhat.com>
+> wrote:
 >
->  pcieport 0000:08:01.0: pciehp: Slot(2): Card present
->  pcieport 0000:08:01.0: pciehp: Slot(2): Link Up
->  pcieport 0000:08:01.0: pciehp: Slot(2): Cannot train link: status 0x2000
+>> On Sun, Nov 10, 2024 at 08:08:16AM +0100, Phil Dennis-Jordan wrote:
+>>> On Sun 10. Nov 2024 at 08:01, Akihiko Odaki <akihiko.odaki@daynix.com>
+>>> wrote:
+>>>
+>>>> On 2024/11/08 23:46, Phil Dennis-Jordan wrote:
+>>>>> macOS's Cocoa event handling must be done on the initial (main)
+>> thread
+>>>>> of the process. Furthermore, if library or application code uses
+>>>>> libdispatch, the main dispatch queue must be handling events on the
+>> main
+>>>>> thread as well.
+>>>>>
+>>>>> So far, this has affected Qemu in both the Cocoa and SDL UIs,
+>> although
+>>>>> in different ways: the Cocoa UI replaces the default qemu_main
+>> function
+>>>>> with one that spins Qemu's internal main event loop off onto a
+>>>>> background thread. SDL (which uses Cocoa internally) on the other
+>> hand
+>>>>> uses a polling approach within Qemu's main event loop. Events are
+>>>>> polled during the SDL UI's dpy_refresh callback, which happens to run
+>>>>> on the main thread by default.
+>>>>
+>>>> GTK should also do the same as SDL and requires treatment; I forgot to
+>>>> note that in previous reviews.
+>>>
+>>>
+>>> Although it‘s possible to build Qemu with GTK support enabled on macOS,
+>>> that UI doesn’t actually work on macOS at all, and apparently hasn’t been
+>>> supported since 2018, see:
+>>> https://stackoverflow.com/a/51474795
+>>>
+>>> I don’t think there’s any point making adjustments to the GTK code by
+>>> guessing what might be needed if someone did fix that to work with macOS
+>> at
+>>> some point.
+>>
+>> If we don't support GTK on macOS, then we should update meson.build
+>> to actively prevent users enabling GTK on macOS builds, rather than
+>> letting them suffer random runtime crashes.
+>>
+>>
+> Agreed - I'm now more confused than ever though because
+> https://gitlab.com/qemu-project/qemu/-/issues/2539 sort of implies that
+> Philippe has previously been using it successfully. Or perhaps this was
+> created in response to https://gitlab.com/qemu-project/qemu/-/issues/2515 ?
+> But it seems like even the SDL implementation isn't perfect:
+> https://gitlab.com/qemu-project/qemu/-/issues/2537
 >
-> There's 2 cases where LNKSTA isn't setup properly:
-> * the downstream device has no express capability
+> Basically, it seems like Qemu's UI threading on macOS is currently a bit of
+> a mess, except in the Cocoa UI.
 
-I stumbled over this while debugging - is a pci device attached
-to a pcie downstream even a valid usecase?
+Maybe it worked with older MacOS X releases but broke around the same time 
+when commit 5588840ff77800 was needed to fix the cocoa UI? Maybe gtk needs 
+a similar fix or whatever cocoa was changed to use since somewhere in gtk 
+or QEMU?
 
-> * max link width of the bridge is 0
+Also I find it strange to require UI backends to NULL init a global. If 
+the cocoa UI is the only one that needs it could that also set it instead 
+of doing it in /system? That would also confine macOS specific code to 
+cocoa.m and the other UIs would not need any change that way.
 
-MLW for the downstream is initialized with defaults but gets overwritten
-later because speed and width properties are 0. Dunno if that's the issue
-we should address?
-
-Sebastian
-
+Regards,
+BALATON Zoltan
+--3866299591-1363951794-1731328864=:607--
 
