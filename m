@@ -4,89 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC2DD3ABEA
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 18:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97965D3ABF1
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 19:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAZEn-0006hl-5m; Mon, 11 Nov 2024 13:34:09 -0500
+	id 1tAZd4-0002R3-4L; Mon, 11 Nov 2024 13:59:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tAZEk-0006WI-W9
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 13:34:07 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tAZEd-00081Z-W8
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 13:34:01 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-71e61b47c6cso4396648b3a.2
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 10:33:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1731350038; x=1731954838; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ps+aUhNHNtcwV3mHatejeZgAw1aj439mI5fZQMw/vq4=;
- b=M6Zv0vAlWh+kMS2dF71N9XMutPXrJv475GbWiDcg94L3mafYuM37QINeKGBBn5Fzsr
- lzl5p+WtrpUIKVVDFGSpzm5TPG1JWncyNe2zXq6cvtDCc9DUwCAjo2tw4sTNkgTToM7T
- NKYXtZ/1wS5TTtGoEUBXh6Ce9CijEXKYUQ3PxnWTTCXYY/IobCrbKQDWlVHRiCDPVe71
- hlaOAksLbjN2o39fQ75cui4y1tlmhLZeXO/V41YjIrWhw9iLyJCWFqJBoF++albNpOfX
- OewoAXWZ6fPkvE5emGtpba+jVjIBGqKH7ULGMFcWD6ra8NcKruTwCWHSaSnK1GgMQEBD
- BgTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731350038; x=1731954838;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ps+aUhNHNtcwV3mHatejeZgAw1aj439mI5fZQMw/vq4=;
- b=Vg7VW5YXzBreC//ImQcIl1eqbnwLRW+6zUAn67IQ3MYHn7xz8GrQTm07/9jXkr5g96
- k1Fo4Rr4KM6oZurKEMEb+z2u3HshkL9YkSOiBtmU/33xrOEjDM4ueV25a0DdZYt9Clvc
- TW4gFtEcfB1NEoF4TucoTltD51EAPppKUw47YdoIeAtPJsgm3dOlzlFuf9F+Du5xowSU
- SmlyN3LPkQGNUm3c3mrpJ8dSWypD5jgsthFMgjXCwrLqmQ4utBJllKj5U21YMACNyFvt
- rVg8wzYSrrWj3svT6YsBE55ZJ3VuWbRwWRgQdLBfLxPyzdI0UFaACQyMXDw3KIVlc8cq
- bTxw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXqGdipgOkwBs6MYkmNfHiX3JkJxaPQKlE78AN2sLQg2KyRyeuDEg99Cwmqqd3NtUnBj7gz68ajsAa+@nongnu.org
-X-Gm-Message-State: AOJu0YxZ1woarmIzV3bcxMSUzmJEVfPRHVoSmBZzoXbTfqKRx8NOaCqF
- khL3faeUa91lL8fS/C2yNSrmopHIRo7XjXoo5LOHFNFXZEYRIiGPk1blntdzsRQ=
-X-Google-Smtp-Source: AGHT+IESv4nR+U9fWiaYiZ6Tv83b2RhRO0wRJGYkeqvfxb5X10sqreKedvDRddqtNe+Wro3apX0i/A==
-X-Received: by 2002:a05:6a00:80c:b0:71e:68ae:aaed with SMTP id
- d2e1a72fcca58-7241325f63fmr17337342b3a.1.1731350038594; 
- Mon, 11 Nov 2024 10:33:58 -0800 (PST)
-Received: from [192.168.68.110] ([189.79.22.174])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724079aa862sm9420218b3a.115.2024.11.11.10.33.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Nov 2024 10:33:58 -0800 (PST)
-Message-ID: <39b5cf42-4b35-4c69-825c-e813c55577f3@ventanamicro.com>
-Date: Mon, 11 Nov 2024 15:33:54 -0300
+ (Exim 4.90_1) (envelope-from <Stewart.Hildebrand@amd.com>)
+ id 1tAZd1-0002Ql-6M
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 13:59:12 -0500
+Received: from mail-sn1nam02on2045.outbound.protection.outlook.com
+ ([40.107.96.45] helo=NAM02-SN1-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Stewart.Hildebrand@amd.com>)
+ id 1tAZcz-0003oA-EF
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 13:59:10 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kD6vH3hJ4dMyf9Go6dJqRWxocqxdXIO/VBE8QaMk4O6JTV+HCzITsUaWY5bNHFsnKxnpsfenx+ArdAK5JSAoriJXJd4fZ9pfJnEMABxTgC8PQVTxqT4/yR7N0QNKROlyY+K5+1PnI89+8gAMMWMOVaspqdg4yJjtP///TKYp3mNCFiyJZuuUkDT7UxjJ/droql6Exd5w34iAFBd+KfLhADda1lmMU3wqKmcSfYQfE6JUe8t+fdWzPg1RdrUbGPdDrUgSV8QhQB8yoHzM5uXMlTDgRtj6tSgJMt5tgPi6rOq8yV6H9HVmMK9fRrN9SV1sMOeazKxIoAz8ggslyKRXpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=40CTrPbLByU5cW5JIeCveCntVxwqRoVn2WY30irMCLM=;
+ b=A0smZ5UISnrzJ7Rtw8mjKeelU/FaQxnNjY/Zs9Wi7MyP/dGq1YcwOM1BWjyzEI6wBMA630P9yuY8B8nCI/P8ccAMkXU4HatHm6U6IB8+jVslEMui/3qfc4pJCVbA6IKXcVw3G081GPDY0LwZtJrel99exMfYhZyUnrRnz3Qw1bGnnB9bYIHkFqWpjJfGw+67gLNMQQVEePJZ1oqh8VxpvKBULWss4O73eyNsW5Y7HR/DceKNUT/a3r5VWcQW3gRDc5hJxJZrP/cCHRpj/twV6l0VJpm5VchwV0A8CRy1f6n8OjCAP7sq+AnZNObvmhrOwJr8yw/JTjIZ0ch3pJ5Z5g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=40CTrPbLByU5cW5JIeCveCntVxwqRoVn2WY30irMCLM=;
+ b=nGgrVxEzLzQkIrsw4go8/1dA0nD8G6ULJEm1eWc8YaI5Ra3AU0+2uq6OmjJuaWIZh8oZEJ3ojaiHHkdNzhDrUapYGl2MuPqKHXbfFP1c9DNxQrc3ke40IBskLIpEOJSJqSWUTiXC08X2TCGE2eOWsQk1bNFlztP4aK4uuIt5OYM=
+Received: from PH7PR03CA0026.namprd03.prod.outlook.com (2603:10b6:510:339::11)
+ by MW4PR12MB7016.namprd12.prod.outlook.com (2603:10b6:303:218::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.28; Mon, 11 Nov
+ 2024 18:54:00 +0000
+Received: from SA2PEPF000015C8.namprd03.prod.outlook.com
+ (2603:10b6:510:339:cafe::80) by PH7PR03CA0026.outlook.office365.com
+ (2603:10b6:510:339::11) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.29 via Frontend
+ Transport; Mon, 11 Nov 2024 18:54:00 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ SA2PEPF000015C8.mail.protection.outlook.com (10.167.241.198) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8158.14 via Frontend Transport; Mon, 11 Nov 2024 18:54:00 +0000
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 11 Nov
+ 2024 12:53:59 -0600
+Received: from [172.30.86.253] (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
+ Transport; Mon, 11 Nov 2024 12:53:58 -0600
+Message-ID: <567f142a-55d2-4d4a-999d-d8b63e4882e3@amd.com>
+Date: Mon, 11 Nov 2024 13:53:53 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] target/riscv: Expose svukte ISA extension
-To: "Fea.Wang" <fea.wang@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Frank Chang <frank.chang@sifive.com>, Jim Shu <jim.shu@sifive.com>
-References: <20241108085239.2927152-1-fea.wang@sifive.com>
- <20241108085239.2927152-6-fea.wang@sifive.com>
+Subject: Re: [QEMU PATCH v10] xen/passthrough: use gsi to map pirq when dom0
+ is PVH
+To: Jiqian Chen <Jiqian.Chen@amd.com>, Stefano Stabellini
+ <sstabellini@kernel.org>, Anthony PERARD <anthony@xenproject.org>, "Paul
+ Durrant" <paul@xen.org>, "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
+CC: <qemu-devel@nongnu.org>, <xen-devel@lists.xenproject.org>, Huang Rui
+ <ray.huang@amd.com>
+References: <20241106061418.3655304-1-Jiqian.Chen@amd.com>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20241108085239.2927152-6-fea.wang@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Stewart Hildebrand <stewart.hildebrand@amd.com>
+In-Reply-To: <20241106061418.3655304-1-Jiqian.Chen@amd.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: None (SATLEXMB04.amd.com: stewart.hildebrand@amd.com does not
+ designate permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF000015C8:EE_|MW4PR12MB7016:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0f6e1520-2835-4b68-965f-08dd02823454
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|376014|82310400026|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?S0VickcyNlk1ZWNWVi9kL3hpVzRlUFFYOU9aOG9SQW5wUmswd3IvZEphQTVC?=
+ =?utf-8?B?QXFvcGRvczJrcHVNbndEMS9vd3dZTGpHVzZzSU8yY1dyQVJmWk9mSjZwbnl5?=
+ =?utf-8?B?RVpkRkcxZ2o5YTJQb2JMYUloTURrdVd5MG84WUlZYjRTeWoyanV6R2M3QUZ1?=
+ =?utf-8?B?cmUxQ0RBSStVaytmcTNkVjBqNGtSRTdVV0M4eWRJVW82NmQxL1UwZFN1M1hn?=
+ =?utf-8?B?Rk9FZDdobXIxbWpNMXBnRDVoMFNiSDR2MmVNOVEwMDVGTUlnRmRyNldzY1VY?=
+ =?utf-8?B?OHlBRkFwZE9PMXllK3JlWFh3U2VVN0dmYjdmSDBPQW5XdmplaHhuQmpOaSs2?=
+ =?utf-8?B?cUFpSHpOQWdrZ1VLalppR1JDU0dDeHdQeWE1MmE1TWRRamREZkY2T0JPZTUr?=
+ =?utf-8?B?Z1gwV1V1emZZTGQ5TVhWOHBMZWRyaFAxbDJzNVBZQkpuT3dndDBwTWdhVzF3?=
+ =?utf-8?B?OE9JaGxCcFVwQUNzaXZtcVlRak9aRm5TQXhjdFBhSU1wa2dDRzE0Y3BMNEF1?=
+ =?utf-8?B?Q21STXlHcklaeWpzMWVoZlNEWEVSZkNJakVJR3N4Q3JaUUhmeE9JTkRiN213?=
+ =?utf-8?B?bEpDNTRMOW1WZys5ZE91dGJVR0dFeC93anZjQzl6R1I2aVEyUlc4MFZoSElm?=
+ =?utf-8?B?dVM2c0FEY0g0TlJsSTFoU0FLcGNQTHNNaWZmZk15ckVGVDNtTHowVmxXT3U1?=
+ =?utf-8?B?OUVPNXIxc2d3VERPYVhQcDFhUi9qMEk0a2Z5S3NCM2hZd3VHdTBXZnI2UzdP?=
+ =?utf-8?B?Y3hQOFgxT2V6V211RzZpaktlRGZFNlRjdmJNQ1hyRGZYUkF4RmFsSlpYTEoy?=
+ =?utf-8?B?NFEzQnFUUFdlczFKeGRHeTVhSHg3MjkrbU9UaDF1eW82c05CUVl4WVN3RHM3?=
+ =?utf-8?B?NTJ1TCsyQ2dQSTArSTk1bFRuUGZXMlE2cXB0MStRc1pWMDJPTmpFR09NWGlV?=
+ =?utf-8?B?V1RBdnlQSFdjNzYzdDNRZzFoRlVqVERHOVhGczVDVmxOSkI3UjRGbHJYQmp2?=
+ =?utf-8?B?NEVXOHNCZEI1VXRyam81S1ZKZGE2S0p0QWZ4NzRKS1VaVHp3eXJnYW5hQURQ?=
+ =?utf-8?B?cnExOThjbEJiL3A3WjNoQnp4c1FIUG5sOWtpWDBKbkxqcFdscjQ2bUJ0UG1v?=
+ =?utf-8?B?T0g0R3R4bFJIM05CRzRuQVM3dTJYTWw3ZWNTMEhWV1RrZTlHQVdPUkxjYVpL?=
+ =?utf-8?B?QWdVeXZIcFppMTBPZlhOQlZOM3F3N1hWelFpd3dQNGtRQWpXa1BpYm1qd2tk?=
+ =?utf-8?B?cTZCak94dXJITnIvRVpxVWNndmtMRjdsWVNzK2hRWmlMdWFUOVpCeDdUOHJh?=
+ =?utf-8?B?VDRteTZuUkF0N2hGejNHUTZyKzJIYVBrb0QrZ09TcEpBL21IQWlWeFNlM1B6?=
+ =?utf-8?B?OUhUUXlzN3BXbFgvTlJiVGxnVEtXRThZYThGS3dlVG0xSUJ6d2RkaU1rNU5Z?=
+ =?utf-8?B?dEtkbjE4bFVrOExxVDRPMkxzaElKNTMrRzhPNlpMVFpMN2p0UG56d2dpWUh5?=
+ =?utf-8?B?by9uUzJHanI0djFDZEx3OUdlakN5VXZ2d25wUnpMMTNCNzk2NVFlODFKWitM?=
+ =?utf-8?B?VEF0VUVZbFhRclhPaFUrQUlYcXVWNnA3cURpb1R1VkRxOWNqaHp1ZzZPbFRo?=
+ =?utf-8?B?bDNWcEUvd2pheVFjRGpNVy8vNUR2YWRjaDAvSFZObTRxcjFhSkY5N01uZkRw?=
+ =?utf-8?B?SExOVitBdENRelZubWNuak9jOEtaU3prdDlYb2t0V1pPc2Yyb3FFOGNZOW1j?=
+ =?utf-8?B?V3BsS1VDUG1NZzg4eGlmZ3gwYWo3UVNob2dxcmkwY3NWT1B1V0Yxb0kyVU9S?=
+ =?utf-8?B?dkhQSitiRjBIOENtMmFPbGJyQ25seS9tbGZJQlUxZnkyOW8vYVdaczBVNjk3?=
+ =?utf-8?B?eDFCYWhGMjM4UlhzR1MyZmt0bG9MVThEQ1IvWStzbHRKZUE9PQ==?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2024 18:54:00.2502 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0f6e1520-2835-4b68-965f-08dd02823454
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF000015C8.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7016
+Received-SPF: permerror client-ip=40.107.96.45;
+ envelope-from=Stewart.Hildebrand@amd.com;
+ helo=NAM02-SN1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.671,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,53 +162,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/8/24 5:52 AM, Fea.Wang wrote:
-> Add "svukte" in the ISA string when svukte extension is enabled.
+On 11/6/24 01:14, Jiqian Chen wrote:
+> In PVH dom0, when passthrough a device to domU, QEMU code
+> xen_pt_realize->xc_physdev_map_pirq wants to use gsi, but in current codes
+> the gsi number is got from file /sys/bus/pci/devices/<sbdf>/irq, that is
+> wrong, because irq is not equal with gsi, they are in different spaces, so
+> pirq mapping fails.
 > 
-> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Jim Shu <jim.shu@sifive.com>
-> ---
->   target/riscv/cpu.c | 2 ++
->   1 file changed, 2 insertions(+)
+> To solve above problem, use new interface of Xen, xc_pcidev_get_gsi to get
+> gsi and use xc_physdev_map_pirq_gsi to map pirq when dom0 is PVH.
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index f219f0c3b5..69187c9aa1 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -200,6 +200,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->       ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
->       ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
->       ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
-> +    ISA_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svukte),
+> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+> Signed-off-by: Huang Rui <ray.huang@amd.com>
+> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
 
-We need to stick with the riscv,isa order, i.e. svukte must go before
-svvptc:
-
-
->       ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
->       ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
-> +    ISA_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svukte),
->       ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
-
-
-
-Thanks,
-
-Daniel
-
-
->       ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
->       ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
->       ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
-> @@ -1595,6 +1596,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
->   
->   /* These are experimental so mark with 'x-' */
->   const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
-> +    MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
->       DEFINE_PROP_END_OF_LIST(),
->   };
->   
+Reviewed-by: Stewart Hildebrand <stewart.hildebrand@amd.com>
 
