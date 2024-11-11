@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F697D12D7A
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 06:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E2D6D12D78
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 06:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAO6s-0006nu-V1; Mon, 11 Nov 2024 01:41:14 -0500
+	id 1tAO6n-0006mK-81; Mon, 11 Nov 2024 01:41:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tAO6k-0006mH-Vy
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 01:41:07 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1tAO6d-0006kb-OI
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 01:41:01 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tAO6i-0000fv-Dh
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 01:41:05 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2e2ed2230d8so3336434a91.0
- for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 22:41:04 -0800 (PST)
+ id 1tAO6c-0000fS-13
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 01:40:59 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-720c286bcd6so3489868b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 22:40:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1731307263; x=1731912063;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1731307256; x=1731912056;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=UntqNh0SSDcPg0A4KG+9ffl5JXbQpD+82Atqct3kXec=;
- b=aPAZHvzpBHf6Xn7AEx/wA3owP/SCzGNSN9Ac/IfK8lM9fQ9GowXRvTc8ZxlFiYCQLB
- v3HBTBT9l0W+MJ27/SBVs68buQsJVkebmuFmqUeHzf6AZcSjXdIusdXTXdONUI4lq6sc
- uF7KUmM6fR3+TL13dopHt4E7lciqLJ1qf7+v9xKZOcvCjUlNcIKgRJXnwhNc7iPqrjqV
- +gTAmXNYJnM6vxtHDH2mMaVtdgGxNiFxUsjOnAB9FuK7BhbrsQ669XejqeSbASTjUC0X
- lv3q2AEIkD/SGgJ6ZV0+xwK6SRmekROBuCwbLm2wuUhBFTp4+3aeaEEPzxK+P9dGVidJ
- +dwg==
+ :reply-to; bh=NDL1NP5K5bOcbgjLwqMXNqM37U/dezgHiGmS6DKu8Qk=;
+ b=ycDPGvrq4KnaKIoePLh9Kj3w/H3f5HXl7HZU2nyg6/6gCFeacEzCfe910t/wDW0i7D
+ rQoUskQj1PCfScskgqVVXqMkpEapl0UbvgAfC/ZmaLcyg1slZmsBfpovfkhbH7SynDPB
+ 7y+7u2cErpLvmNBieRgpvksXXqgwgBrAJiV+T4yrHHGd6Ft5ZamNvJOf6TJV39Dyv5S/
+ 8qbRx+l6gBsFrxckJOPYOZb/uQS4fwLVjiBbYQR08rMxzSaMvTVTd/pFN4KtcPMJU+xN
+ EIvEXxBX7WCm2vg04/54Yvf7J/Sooa/GhsYCcB/KhpQ9V6QNLhk/IFcfdReDbkPEc10/
+ ZEfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731307263; x=1731912063;
+ d=1e100.net; s=20230601; t=1731307256; x=1731912056;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UntqNh0SSDcPg0A4KG+9ffl5JXbQpD+82Atqct3kXec=;
- b=DqGVYzgSoWyS1oBctoJh4PnqPnVutIHiqW7mX6ows7Y2QJG+0WWYTYU23kKTOVvIlk
- CMdbjqLEYnc1qqyvq7yhQGsxRXApAIYKw0Hai4OVmbORIhSnopv/j3jNWBAMGX2JNE8O
- JijbkmQUBhqaehBBd3U6+b0++hNCC5bk+xSmezkwh4pCUDF3rz1KfXtVgH0OdfVJ2iU+
- Vha70Rnn7bpc8PpAh8fQOmVueTbnY0CNOEj3AMpCpa7y4bKWmfVBgYm89qSShMyBoRRK
- oJmaTg9Qv8+UHsYuFpqEQqRA15xTNjnRSDlrom4+Ly4s+gyKt+1RiIBe5vqzK7pu0GMp
- c4hw==
-X-Gm-Message-State: AOJu0Yxuj+RSNcyToy2Um51hLhh5lOB7Z9cYDCp5dUJDN8i+hItQmEPR
- ddEDfJacpSt2sHiGYOHX0L2w721HYCNBoWfN1FqAdnPaivROmG8ena527Badijw=
-X-Google-Smtp-Source: AGHT+IEbUGTu2wZSnZqwvRKYgEq17cts1XTgibILmFWBQif5pVnKSDDx43A32MDjDu1eDosWCCaXHg==
-X-Received: by 2002:a17:90b:2749:b0:2e2:d7db:41fa with SMTP id
- 98e67ed59e1d1-2e9b1781541mr16638061a91.33.1731307263025; 
- Sun, 10 Nov 2024 22:41:03 -0800 (PST)
+ bh=NDL1NP5K5bOcbgjLwqMXNqM37U/dezgHiGmS6DKu8Qk=;
+ b=Wz88dEFhPzcP6n2zd+sE/en+x2pNFOk+3zKWZFEf7bv8/Em/r72tLstiVN+R5lgy/L
+ VZjYLtEo1lA59CvsuRKl5U5BlwzkEAg6qbm69TuOCcfSkBlw8SAGIhEtHHwXzi4QrDCq
+ jVe8XrmoT67XJKmPuqp0smKMJj1d5nofskHcjjVg9zeQzfft0CpIpda4wtxhRE/mQQSE
+ 11ySyhj+R9evRB/BNDV0coItVYv9Lf+LYys6H6mCABZH84M/Io6tgO6vdSpI8pJ0q6oz
+ hxR+VR+Uzoj5cygBzswh+vvBcXk3cR4nWVzWQ6maRJ4nHYi6QUD/A0oyYXVa66PvBQTG
+ iXhA==
+X-Gm-Message-State: AOJu0YwlRV63p7XGfMIW4yu8QXJDPQ3v6IkX5UZvzVjp6bACLE7g9Uwg
+ lpaRcDPTctk6pu3uwwWIwKkqKO9tJZ+94G+yZyJvr9gQaZEcteZrzJ3G+1FHzw1OkjHikjSs702
+ T478=
+X-Google-Smtp-Source: AGHT+IEeJypxeoDWAw0eQrX+DZKq6GfD9f0nw7qWXwk9EnPz1rcpjHJJOPOt3SYzlJbuU9V83FKPYQ==
+X-Received: by 2002:a05:6a21:398:b0:1dc:e:e996 with SMTP id
+ adf61e73a8af0-1dc22b63711mr15829369637.33.1731307256423; 
+ Sun, 10 Nov 2024 22:40:56 -0800 (PST)
 Received: from localhost ([157.82.207.107])
  by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2e9a5f5e5bcsm7870354a91.15.2024.11.10.22.41.01
+ 41be03b00d2f7-7f41f65ba85sm6592719a12.73.2024.11.10.22.40.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 10 Nov 2024 22:41:02 -0800 (PST)
+ Sun, 10 Nov 2024 22:40:56 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Mon, 11 Nov 2024 15:40:23 +0900
-Subject: [PATCH v2 6/6] virtio-net: Copy received header to buffer
+Date: Mon, 11 Nov 2024 15:40:21 +0900
+Subject: [PATCH v2 4/6] virtio-net: Fix hash reporting when the queue changes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241111-queue-v2-6-2f7883a1004f@daynix.com>
+Message-Id: <20241111-queue-v2-4-2f7883a1004f@daynix.com>
 References: <20241111-queue-v2-0-2f7883a1004f@daynix.com>
 In-Reply-To: <20241111-queue-v2-0-2f7883a1004f@daynix.com>
 To: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
 Cc: qemu-devel@nongnu.org, devel@daynix.com, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,164 +95,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-receive_header() used to cast the const qualifier of the pointer to the
-received packet away to modify the header. Avoid this by copying the
-received header to buffer.
+virtio_net_process_rss() fills the values used for hash reporting, but
+the values used to be thrown away with a recursive function call if
+the queue changes after RSS. Avoid the function call to keep the values.
 
+Fixes: a4c960eedcd2 ("virtio-net: Do not write hashes to peer buffer")
+Buglink: https://issues.redhat.com/browse/RHEL-59572
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/net/virtio-net.c | 85 +++++++++++++++++++++++++++++------------------------
- 1 file changed, 46 insertions(+), 39 deletions(-)
+ hw/net/virtio-net.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index e75a8bb1f27a..10fc43064e13 100644
+index abbb22e40f9f..ea5faaf16422 100644
 --- a/hw/net/virtio-net.c
 +++ b/hw/net/virtio-net.c
-@@ -1690,41 +1690,44 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
-  * cache.
-  */
- static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
--                                        uint8_t *buf, size_t size)
-+                                        size_t *hdr_len, const uint8_t *buf,
-+                                        size_t buf_size, size_t *buf_offset)
- {
-     size_t csum_size = ETH_HLEN + sizeof(struct ip_header) +
-                        sizeof(struct udp_header);
- 
-+    buf += *buf_offset;
-+    buf_size -= *buf_offset;
-+
-     if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
--        (size >= csum_size && size < 1500) && /* normal sized MTU */
-+        (buf_size >= csum_size && buf_size < 1500) && /* normal sized MTU */
-         (buf[12] == 0x08 && buf[13] == 0x00) && /* ethertype == IPv4 */
-         (buf[23] == 17) && /* ip.protocol == UDP */
-         (buf[34] == 0 && buf[35] == 67)) { /* udp.srcport == bootps */
--        net_checksum_calculate(buf, size, CSUM_UDP);
-+        memcpy((uint8_t *)hdr + *hdr_len, buf, csum_size);
-+        net_checksum_calculate((uint8_t *)hdr + *hdr_len, csum_size, CSUM_UDP);
-         hdr->flags &= ~VIRTIO_NET_HDR_F_NEEDS_CSUM;
-+        *hdr_len += csum_size;
-+        *buf_offset += csum_size;
-     }
+@@ -1893,10 +1893,10 @@ static int virtio_net_process_rss(NetClientState *nc, const uint8_t *buf,
  }
  
--static void receive_header(VirtIONet *n, const struct iovec *iov, int iov_cnt,
--                           const void *buf, size_t size)
-+static size_t receive_header(VirtIONet *n, struct virtio_net_hdr *hdr,
-+                             const void *buf, size_t buf_size,
-+                             size_t *buf_offset)
- {
--    if (n->has_vnet_hdr) {
--        /* FIXME this cast is evil */
--        void *wbuf = (void *)buf;
--        work_around_broken_dhclient(wbuf, wbuf + n->host_hdr_len,
--                                    size - n->host_hdr_len);
-+    size_t hdr_len = n->guest_hdr_len;
- 
--        if (n->needs_vnet_hdr_swap) {
--            virtio_net_hdr_swap(VIRTIO_DEVICE(n), wbuf);
--        }
--        iov_from_buf(iov, iov_cnt, 0, buf, sizeof(struct virtio_net_hdr));
--    } else {
--        struct virtio_net_hdr hdr = {
--            .flags = 0,
--            .gso_type = VIRTIO_NET_HDR_GSO_NONE
--        };
--        iov_from_buf(iov, iov_cnt, 0, &hdr, sizeof hdr);
-+    memcpy(hdr, buf, sizeof(struct virtio_net_hdr));
-+
-+    *buf_offset = n->host_hdr_len;
-+    work_around_broken_dhclient(hdr, &hdr_len, buf, buf_size, buf_offset);
-+
-+    if (n->needs_vnet_hdr_swap) {
-+        virtio_net_hdr_swap(VIRTIO_DEVICE(n), hdr);
-     }
-+
-+    return hdr_len;
- }
- 
- static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
-@@ -1892,6 +1895,13 @@ static int virtio_net_process_rss(NetClientState *nc, const uint8_t *buf,
-     return (index == new_index) ? -1 : new_index;
- }
- 
-+typedef struct Header {
-+    struct virtio_net_hdr_v1_hash virtio_net;
-+    struct eth_header eth;
-+    struct ip_header ip;
-+    struct udp_header udp;
-+} Header;
-+
  static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
-                                       size_t size)
+-                                      size_t size, bool no_rss)
++                                      size_t size)
  {
-@@ -1901,15 +1911,15 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+     VirtIONet *n = qemu_get_nic_opaque(nc);
+-    VirtIONetQueue *q = virtio_net_get_subqueue(nc);
++    VirtIONetQueue *q;
+     VirtIODevice *vdev = VIRTIO_DEVICE(n);
      VirtQueueElement *elems[VIRTQUEUE_MAX_SIZE];
      size_t lens[VIRTQUEUE_MAX_SIZE];
-     struct iovec mhdr_sg[VIRTQUEUE_MAX_SIZE];
--    struct virtio_net_hdr_v1_hash extra_hdr;
-+    Header hdr;
-     unsigned mhdr_cnt = 0;
+@@ -1906,12 +1906,10 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
      size_t offset, i, guest_offset, j;
      ssize_t err;
  
--    memset(&extra_hdr, 0, sizeof(extra_hdr));
-+    memset(&hdr.virtio_net, 0, sizeof(hdr.virtio_net));
- 
-     if (n->rss_data.enabled && n->rss_data.enabled_software_rss) {
--        int index = virtio_net_process_rss(nc, buf, size, &extra_hdr);
-+        int index = virtio_net_process_rss(nc, buf, size, &hdr.virtio_net);
+-    if (!no_rss && n->rss_data.enabled && n->rss_data.enabled_software_rss) {
++    if (n->rss_data.enabled && n->rss_data.enabled_software_rss) {
+         int index = virtio_net_process_rss(nc, buf, size, &extra_hdr);
          if (index >= 0) {
-             nc = qemu_get_subqueue(n->nic, index % n->curr_queue_pairs);
+-            NetClientState *nc2 =
+-                qemu_get_subqueue(n->nic, index % n->curr_queue_pairs);
+-            return virtio_net_receive_rcu(nc2, buf, size, true);
++            nc = qemu_get_subqueue(n->nic, index % n->curr_queue_pairs);
          }
-@@ -1974,21 +1984,18 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
-             if (n->mergeable_rx_bufs) {
-                 mhdr_cnt = iov_copy(mhdr_sg, ARRAY_SIZE(mhdr_sg),
-                                     sg, elem->in_num,
--                                    offsetof(typeof(extra_hdr), hdr.num_buffers),
--                                    sizeof(extra_hdr.hdr.num_buffers));
-+                                    offsetof(typeof(hdr),
-+                                             virtio_net.hdr.num_buffers),
-+                                    sizeof(hdr.virtio_net.hdr.num_buffers));
-             }
+     }
  
--            receive_header(n, sg, elem->in_num, buf, size);
--            if (n->rss_data.populate_hash) {
--                offset = offsetof(typeof(extra_hdr), hash_value);
--                iov_from_buf(sg, elem->in_num, offset,
--                             (char *)&extra_hdr + offset,
--                             sizeof(extra_hdr.hash_value) +
--                             sizeof(extra_hdr.hash_report));
--            }
--            offset = n->host_hdr_len;
--            total += n->guest_hdr_len;
--            guest_offset = n->guest_hdr_len;
-+            guest_offset = n->has_vnet_hdr ?
-+                           receive_header(n, (struct virtio_net_hdr *)&hdr,
-+                                          buf, size, &offset) :
-+                           n->guest_hdr_len;
+@@ -1919,6 +1917,8 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+         return -1;
+     }
+ 
++    q = virtio_net_get_subqueue(nc);
 +
-+            iov_from_buf(sg, elem->in_num, 0, &hdr, guest_offset);
-+            total += guest_offset;
-         } else {
-             guest_offset = 0;
-         }
-@@ -2014,11 +2021,11 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
-     }
+     /* hdr_len refers to the header we supply to the guest */
+     if (!virtio_net_has_buffers(q, size + n->guest_hdr_len - n->host_hdr_len)) {
+         return 0;
+@@ -2044,7 +2044,7 @@ static ssize_t virtio_net_do_receive(NetClientState *nc, const uint8_t *buf,
+ {
+     RCU_READ_LOCK_GUARD();
  
-     if (mhdr_cnt) {
--        virtio_stw_p(vdev, &extra_hdr.hdr.num_buffers, i);
-+        virtio_stw_p(vdev, &hdr.virtio_net.hdr.num_buffers, i);
-         iov_from_buf(mhdr_sg, mhdr_cnt,
-                      0,
--                     &extra_hdr.hdr.num_buffers,
--                     sizeof extra_hdr.hdr.num_buffers);
-+                     &hdr.virtio_net.hdr.num_buffers,
-+                     sizeof hdr.virtio_net.hdr.num_buffers);
-     }
+-    return virtio_net_receive_rcu(nc, buf, size, false);
++    return virtio_net_receive_rcu(nc, buf, size);
+ }
  
-     for (j = 0; j < i; j++) {
+ static void virtio_net_rsc_extract_unit4(VirtioNetRscChain *chain,
 
 -- 
 2.47.0
