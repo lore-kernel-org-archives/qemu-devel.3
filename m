@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 273C9D2E9D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 10:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8820ED2E9D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 10:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tARsY-0007oc-1k; Mon, 11 Nov 2024 05:42:43 -0500
+	id 1tARzM-0000Tl-Ce; Mon, 11 Nov 2024 05:49:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tARsK-0007o4-2n
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 05:42:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tARzK-0000TI-P9
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 05:49:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tARsH-0007ND-RA
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 05:42:27 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tARzH-0007rz-Bu
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 05:49:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731321743;
+ s=mimecast20190719; t=1731322177;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=X4MnMtg5ej/tnhJaAYYAcviY9tyhNClA3VwOJEaiMrw=;
- b=MKFJIN8ESzw8KbGHDzZvcH3QdjkezOD6CvXAaS693tJUkzH9RiYBr3UfrCxtyfS3lsuoEK
- 7CTM3xgCaHKOi5gM35SzryJ09FN8jlZSCeyLhPhR0UGR52sPh2oGi64z3WQr8mHiuIqFP2
- poid96tPxCfHHDneoN2Ah3MjOuesHUg=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qqBWWa0TGqWAIwUik/jS7GaENETpjUX+Kzlz31zDDDY=;
+ b=WCKccCJ0fuUyF65GGWJCWekhiJdmLU6hqdXwx9uqzzEiZl82a2BSNNbmDUOUzdK8HKGtRG
+ k6VLOlOWXBZFiW9qxLXmLn3MbcqXfGmjmH3Jznr3SoxbkiP+Ob8CGyNW7+TVs3yfvRQNFs
+ 4iqgzhy4fp8YxZXVFHmO6FnCCb5iHwY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-hJnIOjEuN2aKqrfkC-g3_Q-1; Mon, 11 Nov 2024 05:42:17 -0500
-X-MC-Unique: hJnIOjEuN2aKqrfkC-g3_Q-1
-X-Mimecast-MFC-AGG-ID: hJnIOjEuN2aKqrfkC-g3_Q
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-539e7dc83ecso2656725e87.2
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 02:42:16 -0800 (PST)
+ us-mta-74-DwpCHRMpML6SQmkHqRInTA-1; Mon, 11 Nov 2024 05:49:29 -0500
+X-MC-Unique: DwpCHRMpML6SQmkHqRInTA-1
+X-Mimecast-MFC-AGG-ID: DwpCHRMpML6SQmkHqRInTA
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4315b7b0c16so34025785e9.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 02:49:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731321735; x=1731926535;
+ d=1e100.net; s=20230601; t=1731322168; x=1731926968;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=X4MnMtg5ej/tnhJaAYYAcviY9tyhNClA3VwOJEaiMrw=;
- b=CObjKrUQcm6Ntk2mGgslCdp2SiYIWG81UuKZOGKcm0rcdBN8/blehXaXegSrsrzTMg
- v6r4XT65H2+p9Fgkwq7qvWBuOuqmlDk3hPTCZcWJ/DYwiR9KwX8wLkVJ7EWmmbmwaEoj
- LhJkarF+//uNsznF6arBcAa0tox2EWDPTB2s4E+D2GZititxtzH2MQOiG7qa3815VXw4
- JuKVja7R6haizJpXVryQ4qYJzPq2ZkFy+7KW+nB51Ejwk8tExyBy4W5iRoLPjdG48nUX
- yX5vO4pHTQ4wFRJFYT069alc05pxN3sq/ic+mD8CSQify3XSYwO3l3g/kqu6hk6reHfV
- sNFw==
-X-Gm-Message-State: AOJu0YxyqTGUVbz+x504lAuUha33+7jCn9fRGVHEPiKTOZdMd+RFCJ6p
- 3qSkNigZdVEBsdm4T2FVYQVHeaE3aMPrdKc5lHDLyTSYpvq8duX0yGqLN9hqUn7CZWYtxUlVCxv
- Mi35Gd8NICrJE3MEJOjX3vCjzO+zkO6OZw1+cSvgJx1ao0Zk9Mi7E
-X-Received: by 2002:a05:6512:3da9:b0:539:ffb5:8d2c with SMTP id
- 2adb3069b0e04-53d862cb450mr4273758e87.30.1731321735287; 
- Mon, 11 Nov 2024 02:42:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHq+4btrjb6NeWH6s9QdUAEK6Yo3smtpWCRhcqoZ4GxKpwAnoIKf3VY8uuz0fVVmU433xnqwg==
-X-Received: by 2002:a05:6512:3da9:b0:539:ffb5:8d2c with SMTP id
- 2adb3069b0e04-53d862cb450mr4273747e87.30.1731321734838; 
- Mon, 11 Nov 2024 02:42:14 -0800 (PST)
+ bh=qqBWWa0TGqWAIwUik/jS7GaENETpjUX+Kzlz31zDDDY=;
+ b=psfoBnRZ4Jz1+paEB2sWsCHNmr7vxAWLpsqHK26bB+C9oWfYtr9g5Ws6FuuyeEenbN
+ MW/WkeI+f7lzAAoHOid0YEbSnpYVkpmtzW6dnj25YBJiQgJcl1rtEs5VwfTWOTLf9WzA
+ uUrQNiYqnhPqzLjCbfhO6dzXXy83x3FuOOyBg+IN56k/jnhkf+eBJ11dxiUcYjUCjZz+
+ jZc/SahVyaJt+PJs5CXr9boQqPSlpH/NB0QBWE4EXZubRX+gDaG4jjEu3i7ThUlwxPnI
+ LDW6j0uKCSZ79nSxOYzjyEe1vZPd0c49bCJBQhuOYI/Wvtfssgy4/V7VN/1Bo9z7BVYn
+ XmCg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX7TBKSDZXWt0zqXs1qSlcFg0dJbGMSzqObaSIFxFby+SIYadhWTQ1bUVKX5Q2fPbDV4OjzqbEHxlgZ@nongnu.org
+X-Gm-Message-State: AOJu0YyPtkTZ0PsDdQjTY32I/jrLEtL9W9rpRAsNnNU3KddrNYWEuR4U
+ yVGK2y+vAIiwX2oVuItwegzXcZqtrif9wmrIZxr9FM2/mIGHACMzOE63ldRdpIJqK0PenCYsa7e
+ xkWPZ9J0TxkGpQtNSNNyERAWZcxePNPMmW6iKWJwQ7AHeaMdDNf5Q
+X-Received: by 2002:a05:600c:138a:b0:431:59ab:15cf with SMTP id
+ 5b1f17b1804b1-432b75061c3mr105666485e9.19.1731322168568; 
+ Mon, 11 Nov 2024 02:49:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGXkI5pPr+weqMNwwB5rwH24e+oVn0SHNeUsw/LLxWlGI3WqyCacnmj9Ex66UfSimAoDmlRmQ==
+X-Received: by 2002:a05:600c:138a:b0:431:59ab:15cf with SMTP id
+ 5b1f17b1804b1-432b75061c3mr105666215e9.19.1731322168165; 
+ Mon, 11 Nov 2024 02:49:28 -0800 (PST)
 Received: from ?IPV6:2003:cb:c730:4300:18eb:6c63:a196:d3a2?
  (p200300cbc730430018eb6c63a196d3a2.dip0.t-ipconnect.de.
  [2003:cb:c730:4300:18eb:6c63:a196:d3a2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432b054aed6sm168821855e9.15.2024.11.11.02.42.13
+ 5b1f17b1804b1-432aa73a2d8sm203014405e9.41.2024.11.11.02.49.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Nov 2024 02:42:14 -0800 (PST)
-Message-ID: <43700d36-b9f8-42da-ba72-b0ec6580032d@redhat.com>
-Date: Mon, 11 Nov 2024 11:42:13 +0100
+ Mon, 11 Nov 2024 02:49:27 -0800 (PST)
+Message-ID: <5f8db586-cdda-4d00-be02-f9880a20e1a3@redhat.com>
+Date: Mon, 11 Nov 2024 11:49:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] migration: Do not perform RAMBlock dirty sync
- during the first iteration
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Wei Wang <wei.w.wang@intel.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-References: <cover.1731128180.git.yong.huang@smartx.com>
- <c25abae360ac204321acc5010a745a8e594f24bd.1731128180.git.yong.huang@smartx.com>
- <b2e42ed6-d514-46c9-993c-e7ae6384592f@redhat.com>
- <CAK9dgmak97Uv_RO+WFEb+KLkiuZ5+ibO3bigm3379L4aD55TvA@mail.gmail.com>
+Subject: Re: [PATCH v1 0/4] Initialize nr_cores and nr_threads early and
+ related clearup
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>, Brian Cain <bcain@quicinc.com>,
+ Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org
+References: <20241108070609.3653085-1-xiaoyao.li@intel.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -128,17 +135,17 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <CAK9dgmak97Uv_RO+WFEb+KLkiuZ5+ibO3bigm3379L4aD55TvA@mail.gmail.com>
+In-Reply-To: <20241108070609.3653085-1-xiaoyao.li@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.118,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.118,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.743,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -156,137 +163,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.11.24 11:08, Yong Huang wrote:
+On 08.11.24 08:06, Xiaoyao Li wrote:
+> This series is extracted from TDX QEMU v6[1] series per Paolo's request.
 > 
-> 
-> On Mon, Nov 11, 2024 at 5:27 PM David Hildenbrand <david@redhat.com 
-> <mailto:david@redhat.com>> wrote:
-> 
->     On 09.11.24 05:59, Hyman Huang wrote:
->      > The first iteration's RAMBlock dirty sync can be omitted because QEMU
->      > always initializes the RAMBlock's bmap to all 1s by default.
->      >
->      > Signed-off-by: Hyman Huang <yong.huang@smartx.com
->     <mailto:yong.huang@smartx.com>>
->      > ---
->      >   migration/cpu-throttle.c |  2 +-
->      >   migration/ram.c          | 11 ++++++++---
->      >   2 files changed, 9 insertions(+), 4 deletions(-)
->      >
->      > diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
->      > index 5179019e33..674dc2004e 100644
->      > --- a/migration/cpu-throttle.c
->      > +++ b/migration/cpu-throttle.c
->      > @@ -141,7 +141,7 @@ void cpu_throttle_dirty_sync_timer_tick(void
->     *opaque)
->      >        * effect on guest performance, therefore omit it to avoid
->      >        * paying extra for the sync penalty.
->      >        */
->      > -    if (sync_cnt <= 1) {
->      > +    if (!sync_cnt) {
->      >           goto end;
->      >       }
->      >
->      > diff --git a/migration/ram.c b/migration/ram.c
->      > index 05ff9eb328..571dba10b7 100644
->      > --- a/migration/ram.c
->      > +++ b/migration/ram.c
->      > @@ -2718,7 +2718,7 @@ static void ram_list_init_bitmaps(void)
->      >   {
->      >       MigrationState *ms = migrate_get_current();
->      >       RAMBlock *block;
->      > -    unsigned long pages;
->      > +    unsigned long pages, clear_bmap_pages;
->      >       uint8_t shift;
->      >
->      >       /* Skip setting bitmap if there is no RAM */
->      > @@ -2736,6 +2736,7 @@ static void ram_list_init_bitmaps(void)
->      >
->      >           RAMBLOCK_FOREACH_NOT_IGNORED(block) {
->      >               pages = block->max_length >> TARGET_PAGE_BITS;
->      > +            clear_bmap_pages = clear_bmap_size(pages, shift);
->      >               /*
->      >                * The initial dirty bitmap for migration must be
->     set with all
->      >                * ones to make sure we'll migrate every guest RAM
->     page to
->      > @@ -2751,7 +2752,12 @@ static void ram_list_init_bitmaps(void)
->      >                   block->file_bmap = bitmap_new(pages);
->      >               }
->      >               block->clear_bmap_shift = shift;
->      > -            block->clear_bmap =
->     bitmap_new(clear_bmap_size(pages, shift));
->      > +            block->clear_bmap = bitmap_new(clear_bmap_pages);
->      > +            /*
->      > +             * Set clear_bmap to 1 unconditionally, as we always
->     set bmap
->      > +             * to all 1s by default.
->      > +             */
->      > +            bitmap_set(block->clear_bmap, 0, clear_bmap_pages);
->      >           }
->      >       }
->      >   }
->      > @@ -2783,7 +2789,6 @@ static bool ram_init_bitmaps(RAMState *rs,
->     Error **errp)
->      >               if (!ret) {
->      >                   goto out_unlock;
->      >               }
->      > -            migration_bitmap_sync_precopy(false);
->      >           }
->      >       }
->      >   out_unlock:
-> 
-> 
->     For virtio-mem, we rely on the migration_bitmap_clear_discarded_pages()
->     call to clear all bits that correspond to unplugged memory ranges. 
-> 
-> 
->     If we ommit the sync, we can likely have bits of unplugged ranges still
->     set to "1", meaning we would try migrate them later, although we
->     shouldn't?
-> 
-> 
-> 
-> IIUC, migration_bitmap_clear_discarded_pagesis still called at the end of
-> ram_init_bitmaps no matter if we omit the first sync.
- > > PRECOPY_NOTIFY_SETUPnotification is sent out at the end of
-> ram_save_setup(ram_list_init_bitmaps),when 
-> virtio_balloon_free_page_start() is
-> called,migration_bitmap_clear_discarded_pages() has already completed 
-> and the
-> bmap has been correctly cleared.
-> 
-> ram_save_setup
->     -> ram_list_init_bitmaps
->         -> migration_bitmap_clear_discarded_pages
->      -> return precopy_notify(PRECOPY_NOTIFY_SETUP, errp);
-> 
-> You can double check it.
+> It is originally motivated by x86 TDX to track CPUID_HT in env->features[]
+> which requires nr_cores and nr_cores being initialized earlier than in
 
-That's not my concern, let me clarify :)
+"and nr_threads"
 
+> qemu_init_vcpu().
+> 
+> Initialize of nr_cores and nr_threads earlier in x86's cpu_realizefn()
+> can make it work for x86 but it's duplicated with the initialization in
+> qemu_init_vcpu() which are used by all the ARCHes. Since initialize them
+> earlier also work for other ARCHes, introduce qemu_init_early_vcpu() to
+> hold the initialization of nr_cores and nr_threads and call it at the
+> beginning in realizefn() for each ARCH.
+> 
+> Note, I only tested it for x86 ARCH. Please help test on other ARCHes.
 
-Assume in KVM the bitmap is all 1s ("everything dirty").
+[...]
 
-In current code, we will sync the bitmap once (IIRC, clearing any dirty 
-bits from KVM).
+>   accel/tcg/user-exec-stub.c |  4 +++
+>   hw/core/cpu-common.c       |  2 +-
+>   include/hw/core/cpu.h      |  8 +++++
+>   system/cpus.c              |  6 +++-
+>   target/alpha/cpu.c         |  2 ++
+>   target/arm/cpu.c           |  2 ++
+>   target/avr/cpu.c           |  2 ++
+>   target/hexagon/cpu.c       |  2 ++
+>   target/hppa/cpu.c          |  2 ++
+>   target/i386/cpu.c          | 61 +++++++++++++++++++-------------------
+>   target/loongarch/cpu.c     |  2 ++
+>   target/m68k/cpu.c          |  2 ++
+>   target/microblaze/cpu.c    |  2 ++
+>   target/mips/cpu.c          |  2 ++
+>   target/openrisc/cpu.c      |  2 ++
+>   target/ppc/cpu_init.c      |  2 ++
+>   target/riscv/cpu.c         |  2 ++
+>   target/rx/cpu.c            |  2 ++
+>   target/s390x/cpu.c         |  2 ++
+>   target/sh4/cpu.c           |  2 ++
+>   target/sparc/cpu.c         |  2 ++
+>   target/tricore/cpu.c       |  2 ++
+>   target/xtensa/cpu.c        |  2 ++
+>   23 files changed, 85 insertions(+), 32 deletions(-)
 
-Then we call migration_bitmap_clear_discarded_pages() to clear all 
-"discarded" pages that we shouldn't touch.
+Hm. It looks like this belongs into the parent realize function. But the 
+"bad thing" is that we call the parent realize function after we try 
+realizing the derived CPU.
 
-When we do the next bitmap sync, we will not get a "1" for discarded 
-ranges, and we will never try migrating discarded ranges.
-
-
-With your patch, we're omitting the first sync. Could we possibly get 
-discarded ranges reported from KVM as dirty during the "now first" sync 
-*after* the migration_bitmap_clear_discarded_pages() call, and try 
-migrating discarded ranges?
-
-I did not dive deep into the code, maybe 
-migration_bitmap_clear_discarded_pages() ends up clearing the bits in 
-KVM, but I recall that there was something special about the first 
-bitmap sync.
+Could it go into cpu_common_initfn()?
 
 -- 
 Cheers,
