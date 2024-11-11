@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3490D12D7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 07:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0AFFD12D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 07:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAPHi-0007FF-Ln; Mon, 11 Nov 2024 02:56:30 -0500
+	id 1tAPJh-00081U-3R; Mon, 11 Nov 2024 02:58:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tAPHg-0007Ej-VY
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 02:56:29 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tAPJ3-0007yw-OP
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 02:57:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tAPHf-0007sN-F5
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 02:56:28 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tAPIz-0007vL-PC
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 02:57:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731311786;
+ s=mimecast20190719; t=1731311868;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ow3FUGyStw/kKVci2B4aoXvUXvaaEUJf+4x32Fp7ekk=;
- b=ZOWwYCzPB3MQlJRYfehMMhXtgeliD0yQvTqpMvBzyV+Wdtku5DzgQheN/q46xHymxFh6GL
- JT6Rc7az3y1l52vURpaAlxMfw/vdijXXWMbiEQTHnvPVBebe6KEmpN/su2cd0cIU0GzLzT
- r4Ob6UbwmSwk2yvi+aNcGGLHmgLNleI=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HQmcALrQ1guwEpfmgJ/YyXq7vCO6yNEolihfrvAqnFo=;
+ b=NSxgPxK4fAAuDl/Aflr8O5p/JNXrx5i873cHFEwZmy1aRF9Cy5JdGnY/TpjI5y2gWn/BFI
+ MJ9MZD33JGdtv4Ldbjx3ZInQl9gqEpDYGrrvoNZH/c2IB8D84EMoOc1Fxu+vKchCqiSB8d
+ ol6BywRMs7Ag8CjM6dl41vLoBPFbvO8=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-XBR5zA3SOAWC3sdKvIDZbA-1; Mon, 11 Nov 2024 02:56:25 -0500
-X-MC-Unique: XBR5zA3SOAWC3sdKvIDZbA-1
-X-Mimecast-MFC-AGG-ID: XBR5zA3SOAWC3sdKvIDZbA
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5c95b050667so4959994a12.2
- for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 23:56:25 -0800 (PST)
+ us-mta-179-dBz2GK_0M3CxLFSnNmYEEQ-1; Mon, 11 Nov 2024 02:57:47 -0500
+X-MC-Unique: dBz2GK_0M3CxLFSnNmYEEQ-1
+X-Mimecast-MFC-AGG-ID: dBz2GK_0M3CxLFSnNmYEEQ
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5cbadbef8edso3660677a12.3
+ for <qemu-devel@nongnu.org>; Sun, 10 Nov 2024 23:57:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731311784; x=1731916584;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ow3FUGyStw/kKVci2B4aoXvUXvaaEUJf+4x32Fp7ekk=;
- b=RzUd9njrdbVbFHlmHBunSN9hoPWRnY6kuvI54XBcBOsw2PPwUWjZx9+kDdNxtVoeuH
- WLteSstRMhR5oe2CjOslgtJaBI0NzSbyKU6Sc36cIE0GmYxRcGh24TS94yF0aOV6Bwlb
- LvNcR/s69RKQV1ZffPFT/lTZzvggojGxfyqwX6J4z5oW2EXDvl98XGPkfQTTGzWuXiW3
- S0kWVb+eyPvwMD29PVqTiQs4NdxOwkW44j6uVZmdhulRhA/gaJo486shxiPdygVHATje
- joSbsOIk1CpJuA8XnRzx4WbD2Q6NLPjs3TSOqQCVPN1BTFHMr3Q89hc9cjxhvYxc3hu0
- 1tfw==
+ d=1e100.net; s=20230601; t=1731311866; x=1731916666;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HQmcALrQ1guwEpfmgJ/YyXq7vCO6yNEolihfrvAqnFo=;
+ b=Lehapeo5kxlrJFrrJGAAIjCuzJ+FxoTrTnSB4ZI1U3gVcsveq5tp+rUGqpPP5wytw0
+ T0ZOvyn9G4PR7gvvtLCa65n6J2aBEkhJJUw9li4y7AvugZhUabBMxo9BWMir/ktrm7sM
+ ZJyStB5ajxs+v19wkpTZNTF7IT0ZTzvu8hEesDMOeStnPfQacguBiNxwSGsYcBKJBjIx
+ 3IbUG9MtaCxybR6mMhVTSQDEVRGwG62u7I9EW0d0oR/SPMNuLVBtUduCWcCJCxItpuU4
+ +ao/Ug/iHsu9t1GrWNwbFS8571Zu9MBilakV/LOgrXfZCkElN3Jn4aP15kyK0zk/W/7g
+ nVrw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0s9kd6XQX1jcgkryWZOkDdX3vrdEyEUlmNYqnmrqgnP2Dbjil8QTUAndLwKG5RkoAV5G7zju0sCfd@nongnu.org
-X-Gm-Message-State: AOJu0YzvTdUpYn1jn7qe18I6K3fU+ZJ3kjIeUboEOg0khqQMcWZ4Rmok
- 7Hoc6RiD8zkoypHrEBFIi+JajxVGzhDuU/9ZlGrAFcqv+8VZl8m0+jPXJWp2io1pA8eX/3SwJ51
- 4AgP5hLe+GRYfLglh5dUTEjZOnni6UHRH5VOxqleL29D63uJUii9N
-X-Received: by 2002:a17:906:c112:b0:a99:6036:90a with SMTP id
- a640c23a62f3a-a9eeff0d262mr1143453666b.14.1731311784109; 
- Sun, 10 Nov 2024 23:56:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEmzpTGr0OUmwAYmxmiWfIlbp1BWoFXsrqA+ZHOaCSDX7rM7YQBRREWBwqE35Qv+ISOieg6Yw==
-X-Received: by 2002:a17:906:c112:b0:a99:6036:90a with SMTP id
- a640c23a62f3a-a9eeff0d262mr1143451566b.14.1731311783733; 
- Sun, 10 Nov 2024 23:56:23 -0800 (PST)
+ AJvYcCXR4zNk4baivvdjy3vzur1aAeD6e9Gm197LekLN7VRCr6ThWuc5UCNqWN30iqPwMPMvrtWqlt296kYo@nongnu.org
+X-Gm-Message-State: AOJu0YxGzG8WTMib5/FdJC4GXZfJxWg906ubXfkBlHeufFlnfANcC7XK
+ 7sk+pw08RqnhNF5C0nHXMceyL7VV9Iuh8eZe/daauS0/HtL/KixJksp309mqr+n1SPPMWCAXPM8
+ sjRvb0P7wjwgFDIcvukIpDg9vlUP9sATtLOKnhVqz+bYWpsyU4c3t
+X-Received: by 2002:a05:6402:234f:b0:5ce:c9d3:9fd7 with SMTP id
+ 4fb4d7f45d1cf-5cf0a31b925mr9575084a12.9.1731311865885; 
+ Sun, 10 Nov 2024 23:57:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEONrId/L+aw9mBOh5XBU+D85MPQX2IaJB2ww1D4KEeAACWT5cq2KODm8I69Cw+l4rxHFKP+Q==
+X-Received: by 2002:a05:6402:234f:b0:5ce:c9d3:9fd7 with SMTP id
+ 4fb4d7f45d1cf-5cf0a31b925mr9575073a12.9.1731311865493; 
+ Sun, 10 Nov 2024 23:57:45 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0a17684sm565487266b.34.2024.11.10.23.56.22
+ 4fb4d7f45d1cf-5cf03c7c41esm4652090a12.72.2024.11.10.23.57.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 10 Nov 2024 23:56:23 -0800 (PST)
-Message-ID: <cf73685f-df95-4165-a642-ddbbb5efb64e@redhat.com>
-Date: Mon, 11 Nov 2024 08:56:21 +0100
+ Sun, 10 Nov 2024 23:57:45 -0800 (PST)
+Message-ID: <52d92762-3e14-45f3-aca0-cf47c25a0116@redhat.com>
+Date: Mon, 11 Nov 2024 08:57:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/17] hw/microblaze: Support various endianness for
- s3adsp1800 machines
+Subject: Re: [PATCH v3 17/17] tests/functional: Add microblaze
+ cross-endianness tests
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
 Cc: Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -82,9 +82,9 @@ Cc: Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-ppc@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair@alistair23.me>
 References: <20241108154317.12129-1-philmd@linaro.org>
- <20241108154317.12129-16-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ <20241108154317.12129-18-philmd@linaro.org>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -127,7 +127,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241108154317.12129-16-philmd@linaro.org>
+In-Reply-To: <20241108154317.12129-18-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -139,7 +139,7 @@ X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.118,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.743,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,48 +156,83 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/11/2024 16.43, Philippe Mathieu-Daudé wrote:
-> Introduce an abstract machine parent class which defines
-> the 'little_endian' property. Duplicate the current machine,
-> which endian is tied to the binary endianness, to one big
-> endian and a little endian machine; updating the machine
-> description. Keep the current default machine for each binary.
+> Copy/paste the current tests, but call the opposite endianness
+> machines, testing:
+> - petalogix-s3adsp1800-le machine (little-endian CPU) on the
+>    qemu-system-microblaze binary (big-endian)
+> - petalogix-s3adsp1800-be machine (big-endian CPU) on the
+>    qemu-system-microblazeel binary (little-endian).
 > 
-> 'petalogix-s3adsp1800' machine is aliased as:
-> - 'petalogix-s3adsp1800-be' on big-endian binary,
-> - 'petalogix-s3adsp1800-le' on little-endian one.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   hw/microblaze/petalogix_s3adsp1800_mmu.c | 62 +++++++++++++++++++-----
->   1 file changed, 51 insertions(+), 11 deletions(-)
-...
->   static const TypeInfo petalogix_s3adsp1800_machine_types[] = {
->       {
->           .name           = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
->           .parent         = TYPE_MACHINE,
-> -        .class_init     = petalogix_s3adsp1800_machine_class_init,
-> +        .abstract       = true,
-> +        .class_size     = sizeof(PetalogixS3adsp1800MachineClass),
-> +    },
-> +    {
-> +        .name           = MACHINE_TYPE_NAME("petalogix-s3adsp1800-be"),
-> +        .parent         = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
-> +        .class_init     = petalogix_s3adsp1800_machine_class_init_be,
-> +    },
-> +    {
-> +        .name           = MACHINE_TYPE_NAME("petalogix-s3adsp1800-le"),
-> +        .parent         = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
-> +        .class_init     = petalogix_s3adsp1800_machine_class_init_le,
->       },
->   };
+>   .../functional/test_microblaze_s3adsp1800.py  | 21 +++++++++++++++++++
+>   .../test_microblazeel_s3adsp1800.py           | 19 +++++++++++++++++
+>   2 files changed, 40 insertions(+)
+> 
+> diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/test_microblaze_s3adsp1800.py
+> index 2b2f782270..7f5e8b6024 100755
+> --- a/tests/functional/test_microblaze_s3adsp1800.py
+> +++ b/tests/functional/test_microblaze_s3adsp1800.py
+> @@ -36,5 +36,26 @@ def test_microblaze_s3adsp1800_be(self):
+>           # message, that's why we don't test for a later string here. This
+>           # needs some investigation by a microblaze wizard one day...
 >   
+> +    ASSET_IMAGE_LE = Asset(
+> +        ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
+> +        'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
+> +
+> +    def test_microblaze_s3adsp1800_le(self):
+> +        self.require_netdev('user')
+> +        self.set_machine('petalogix-s3adsp1800-le')
+> +        file_path = self.ASSET_IMAGE_LE.fetch()
+> +        archive_extract(file_path, self.workdir)
+> +        self.vm.set_console()
+> +        self.vm.add_args('-kernel', self.workdir + '/day13/xmaton.bin')
+> +        self.vm.add_args('-nic', 'user,tftp=' + self.workdir + '/day13/')
+> +        self.vm.launch()
+> +        wait_for_console_pattern(self, 'QEMU Advent Calendar 2023')
+> +        time.sleep(0.1)
+> +        exec_command(self, 'root')
+> +        time.sleep(0.1)
+> +        exec_command_and_wait_for_pattern(self,
+> +                'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
+> +                '821cd3cab8efd16ad6ee5acc3642a8ea')
+> +
+>   if __name__ == '__main__':
+>       QemuSystemTest.main()
+> diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
+> index 1aee5149fb..60543009ba 100755
+> --- a/tests/functional/test_microblazeel_s3adsp1800.py
+> +++ b/tests/functional/test_microblazeel_s3adsp1800.py
+> @@ -38,5 +38,24 @@ def test_microblazeel_s3adsp1800_le(self):
+>                   'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
+>                   '821cd3cab8efd16ad6ee5acc3642a8ea')
+>   
+> +    ASSET_IMAGE_BE = Asset(
+> +        ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/'
+> +         'day17.tar.xz'),
+> +        '3ba7439dfbea7af4876662c97f8e1f0cdad9231fc166e4861d17042489270057')
+> +
+> +    def test_microblazeel_s3adsp1800_be(self):
+> +        self.set_machine('petalogix-s3adsp1800-be')
+> +        file_path = self.ASSET_IMAGE_BE.fetch()
+> +        archive_extract(file_path, self.workdir)
+> +        self.vm.set_console()
+> +        self.vm.add_args('-kernel', self.workdir + '/day17/ballerina.bin')
+> +        self.vm.launch()
+> +        wait_for_console_pattern(self, 'This architecture does not have '
+> +                                       'kernel memory protection')
+> +        # Note:
+> +        # The kernel sometimes gets stuck after the "This architecture ..."
+> +        # message, that's why we don't test for a later string here. This
+> +        # needs some investigation by a microblaze wizard one day...
+> +
+>   if __name__ == '__main__':
+>       QemuSystemTest.main()
 
-Do we really want additional machine types for this? Can't we simply let the 
-user set the machine property instead? (otherwise, all tests that run for 
-each machine types (see qtest_cb_for_every_machine) will now be executed 
-three times instead of only once). IMHO it should be sufficient to have a 
-machine property for this and add proper documentation for the machine.
+Duplicating code is ugly. I think I'd rather prefer to merge the two files 
+into one and then add that test to both targets in meson.build.
 
   Thomas
 
