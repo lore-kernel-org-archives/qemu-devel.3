@@ -4,104 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3F0FD2E9DC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 11:29:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A035CD2E9DC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 11:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tASaa-0008WJ-6X; Mon, 11 Nov 2024 06:28:12 -0500
+	id 1tASeM-0000wc-Tv; Mon, 11 Nov 2024 06:32:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tASaX-0008W2-Lo
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 06:28:09 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tASaV-0003Yl-O3
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 06:28:09 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5cec93719ccso5994516a12.2
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 03:28:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731324485; x=1731929285; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=q2NB6/0VsmMMh+6mc17Mu+mQRNIWduqptGhk1VGyML0=;
- b=r/QdLARThFlzkpyzw7TSty71qtjtVmEgxYg/YKuVNW3AG5NPi31cRpWgLG9MtMbopL
- uUVIciTrj/rxOI/CbucrSU+qAz6fiUUGc7emUaQI1U0EMxPYUbGIQPEgHnaM501UFh0j
- 0NaHYV+HzS2oofrbSzgjC26Z1oNMsgethzOjlqK3y8nJ+9Rhj43YZWbOCNqBuejGyl6z
- Kq1PdEzAk4pUxWoUd1qTFSU7RaHA9tboaMdyCNs6VsIQEjrObr4iWvlH44YMJWIa0/3s
- VQIysCjB4tf9H6HOi186nm2x1IYKKHc5pDf10g36TI2zFK+e5d+f/4yj5jlxn+FZ77NP
- c8mA==
+ (Exim 4.90_1) (envelope-from <slopezpa@redhat.com>)
+ id 1tASeL-0000wQ-Hz
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 06:32:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <slopezpa@redhat.com>)
+ id 1tASeI-0003v8-Rc
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 06:32:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731324721;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=77u+Ybamg3SnlOdGxfWreE39YrZ5znNWUcRYMfeQaGQ=;
+ b=CHAR1d7JmFMVtC1RvrghrzrZxgFuuPi6d44zMxm7TMss9pb5ktfGSR9thheHn8DskzBp7K
+ Zm7CIhZHw/o0cYbx3SL5LPcSXRrTMbxfIyHXNJjfb8lx7/cW9SzeyEeJoRUKhl7JHt/qID
+ ZUMqVWga3pl4KPJ/8qTNyGHrXV5kOWE=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-203-tm6PUGOQMEW61GF6DQTtkg-1; Mon, 11 Nov 2024 06:30:49 -0500
+X-MC-Unique: tm6PUGOQMEW61GF6DQTtkg-1
+X-Mimecast-MFC-AGG-ID: tm6PUGOQMEW61GF6DQTtkg
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-2e2fc2b1ce1so4469181a91.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 03:30:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731324485; x=1731929285;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q2NB6/0VsmMMh+6mc17Mu+mQRNIWduqptGhk1VGyML0=;
- b=IKQmAXDURkCFVoso28OqM4Rxh9NpJeKnlCVoyi3ZhH93wmIjhFJARc8/9rxQZUvZQA
- WYm9ffELeXVFfyvkphPsBEO0vIZghsO47wq8ILc/GmqN8RAqv/I7G7rnPcPWjor4NgWp
- Q15Wk+Bwohi/gxXMb7G8TZGrZNSvM9CSCJM0gUH05dgbUaQhRaPXyQWnavFNuizU6gLP
- SRCkxKqIMvO+xKSAakh4HrgzgHNXfKfxAo83Tq2kX/QL/JQSlN8Dgl9X2bWgmfAW9Psk
- Jm1C3GzVZgIUIvN786ZSBZFWHWqGTZw4OO2Ghw/mBnLf9KwNGcyk6oI83/HeKKC8kaKv
- zolQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/bLaD9b7/yTRv3OI7ugNdZ5Iulgu8oYszlVE6IeMC71tXEae51TEUKhoJxtjYnqU69SWMJhl4xCnZ@nongnu.org
-X-Gm-Message-State: AOJu0YyRK4xJs/smT03Ds5aC1X9pkkA58GNNqogEXLvTKkKIWdxj3sFq
- FtSP0V6u9f5drUdgO1mw2T5I71lJ5oGtmXR0wcu05j4Ax/zjf/rsuhWzk2c1noc=
-X-Google-Smtp-Source: AGHT+IH8geHOPXutfANDTLKpowiwHm+FMjuvp+wufyQVPacZtIJtTbYZhdUhSCuP25WjouAXPyEmxQ==
-X-Received: by 2002:aa7:c444:0:b0:5c9:76ca:705b with SMTP id
- 4fb4d7f45d1cf-5cf0a478e7dmr8859563a12.34.1731324485274; 
- Mon, 11 Nov 2024 03:28:05 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cf03b7f680sm4816053a12.35.2024.11.11.03.28.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Nov 2024 03:28:04 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 800695FA09;
- Mon, 11 Nov 2024 11:28:03 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- cw@f00f.org,
- dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Elena Ufimtseva <elena.ufimtseva@oracle.com>, Auger
- Eric <eric.auger@redhat.com>, felipe@nutanix.com, iggy@theiggy.com, Warner
- Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe
- <jgg@nvidia.com>, jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
- Joao Martins <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, Max Chou <max.chou@sifive.com>, Mark
- Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
- mimu@linux.vnet.ibm.com, Paul Walmsley <paul.walmsley@sifive.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, QEMU Developers
- <qemu-devel@nongnu.org>, Richard Henderson <richard.henderson@linaro.org>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>, Bernhard
- Beschow <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas
- Huth <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: KVM/QEMU community call 12/11/2024 agenda items
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Mon, 11 Nov 2024 11:28:03 +0000
-Message-ID: <87y11qovr0.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1731324649; x=1731929449;
+ h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=77u+Ybamg3SnlOdGxfWreE39YrZ5znNWUcRYMfeQaGQ=;
+ b=u1cIUlp0XrYItb4QL2Ti/nNU83rzfuCz2qmPTYPy2WE+MrRz2HrjwFBdRHO3BCiDUZ
+ oiKbw10wcdSYdZQmOXmhwVHjAHHVtTtnwb9QUdlQL2bJS/uMiOBGb9W/9el0/4meBSnz
+ nTwiiQgFohbZhsnhYwsjELtcizvpXWNM0q70GuFn18/spCUtlrk/9ygnZXBPqeZ6SFsy
+ j9Frn5EiSfCTAtJqv3PHlrWv7Wadxyp+gImSx5+gziHwuI733SSzFqpgmjGOHolVoE2H
+ Q+yq8Ly3EVDZfJEsPMDBHgWVZbUZ3L0mUfezTIr0o2+Jmxl6P/OEOMKsEB5NCY4nz707
+ kNBQ==
+X-Gm-Message-State: AOJu0YywbmjHPLHy4WnmatTrUzKgHBY6SmDo8RtSGAbpJCAx3WntuJMY
+ LswfyAxmmkUR4sTgWU8PhQr20HkQfUXlc87OLajNtw+6h0YLc/x1IlTi9hl7MeE9zTj+NkJASuD
+ 61HXCr2LgyLlnoTEp4sa+TDgyCuGxheyc2Ztr7otjXZ1b1KQspXzyeUdBMtoJc5AIUOS89D5Gzn
+ G0DWvPN0hDfCqjMhJfQLXbVPobRQQ=
+X-Received: by 2002:a17:90b:4b91:b0:2e1:d5c9:1bc4 with SMTP id
+ 98e67ed59e1d1-2e9b165595cmr16936839a91.7.1731324648742; 
+ Mon, 11 Nov 2024 03:30:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGp1O3lcWasaSxqsXXJ2kJpW+jUn2xIDr+NNQgALpXc6Z+Q10vpHCVURpGHCiq0ZV5YkYlqt6Vrbr1BkrAdENY=
+X-Received: by 2002:a17:90b:4b91:b0:2e1:d5c9:1bc4 with SMTP id
+ 98e67ed59e1d1-2e9b165595cmr16936815a91.7.1731324648467; Mon, 11 Nov 2024
+ 03:30:48 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 11 Nov 2024 06:30:47 -0500
+From: Sergio Lopez Pascual <slp@redhat.com>
+In-Reply-To: <20241110174359-mutt-send-email-mst@kernel.org>
+References: <20241108230314.1980-1-slp@redhat.com>
+ <20241110174359-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Date: Mon, 11 Nov 2024 06:30:47 -0500
+Message-ID: <CAAiTLFWnWpWByKMF3Y4uFkch0raw9+3w8nnnm8Ez1gPr-M+0Eg@mail.gmail.com>
+Subject: Re: [PATCH] hw/i386/elfboot: allocate "header" in heap
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=slopezpa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.118,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,23 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-Hi,
+> On Sat, Nov 09, 2024 at 12:03:14AM +0100, slp@redhat.com wrote:
+>> From: Sergio Lopez <slp@redhat.com>
+>>
+>> In x86_load_linux(), we were using a stack-allocated array as data for
+>> fw_cfg_add_bytes(). Since the latter just takes a reference to the
+>> pointer instead of copying the data, it can happen that the contents
+>> have been overridden by the time the guest attempts to access them.
+>>
+>> Instead of using the stack-allocated array, allocate some memory from
+>> the heap, copy the contents of the array, and use it for fw_cfg.
+>>
+>> Signed-off-by: Sergio Lopez <slp@redhat.com>
+>
+> Wow. How did this ever work?
+>
 
-The KVM/QEMU community call is at:
+I guess, for quite a while, we were just lucky that memory region wasn't
+touched by the time the FW in the guest uses it (possibly helped by the
+fact this happens very early in the VM lifetime). In recent
+versions/builds this is no longer the case.
 
-https://meet.jit.si/kvmcallmeeting
-@
-12/11/2024 14:00 UTC
+Sergio.
 
-So far I have the following agenda items:
-
-  - Rust next steps and merging strategy (Paolo/Manos)
-  - Rust as a device API (Mark)
-
-Anything else?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
