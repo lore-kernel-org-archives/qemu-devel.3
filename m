@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B10E5D2E9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 12:17:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103F4D2E9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 12:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tATM1-0004gn-Pr; Mon, 11 Nov 2024 07:17:13 -0500
+	id 1tATS5-0005r9-2B; Mon, 11 Nov 2024 07:23:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tATLv-0004fk-Tv
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 07:17:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tATS1-0005qi-KT
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 07:23:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tATLs-0000ib-Kq
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 07:17:07 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tATS0-0001P0-7U
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 07:23:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731327422;
+ s=mimecast20190719; t=1731327803;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sTPGj85ERuOhRVMM4nEbKrBXRoZ3ZQoR0mJY3L1kuxU=;
- b=cb5fGzjrfMhDHh3yRcDcZe+87r/JkLhTTFBhEBxkcCb1UVy+wSA5DL1pjhEFqKiICcB7k+
- Y0f4iCJl+UJDZDOAN2f5TV557Zp5MG2cH1vm3+fkU/rQD4y1f6P6cy+8r2m+m5HDh8nXF6
- /qW4+A7vuuixjG0ZtiTMmjE9C4sxLUM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aGkQRw705gA6xn048nQcioQvcOTtVEzH9VPvSoZbs0A=;
+ b=Sdhz55zow53qK9dqbp3lIVOIFi+ySO5vJt7iv0DbJze+pPE0PyqrVy//a9VVYd6e63fFWY
+ 7d2fPImOgbm+nsDowdIau8w20in9sZVmP21MWI6L1YZP+RnWA3AmCI3l/Pq2/qnacbQ8bZ
+ nEHLS1uufwWQFI9F79GUp/RKW13YmMw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-345-UwsgDRU5O7Gds5OvtTLPbQ-1; Mon, 11 Nov 2024 07:17:00 -0500
-X-MC-Unique: UwsgDRU5O7Gds5OvtTLPbQ-1
-X-Mimecast-MFC-AGG-ID: UwsgDRU5O7Gds5OvtTLPbQ
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43151e4ef43so31420205e9.3
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 04:17:00 -0800 (PST)
+ us-mta-336-1GL_PSaRMO-p51F5fa_nLw-1; Mon, 11 Nov 2024 07:23:22 -0500
+X-MC-Unique: 1GL_PSaRMO-p51F5fa_nLw-1
+X-Mimecast-MFC-AGG-ID: 1GL_PSaRMO-p51F5fa_nLw
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4315dd8fe7fso41535285e9.3
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 04:23:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731327419; x=1731932219;
+ d=1e100.net; s=20230601; t=1731327801; x=1731932601;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sTPGj85ERuOhRVMM4nEbKrBXRoZ3ZQoR0mJY3L1kuxU=;
- b=nY4eAcM0WgcPr6CP8D4TfTkFsCxJrtmHyLWOFpBNAv6xTHN5tAdKShk+dq/8JuBDBB
- XP1qwEGEsuRnaijeZglidCoQiiMgSWVe3kggw/Rbl6GwPa9stqUBVwUseobkS7pwb9c5
- /+hag4oCx7YCfl0YOwDy5B9M5dvzwfjSaKiAxpDZI16h95GEsZGgLCIkA0+Ngz1but/c
- JV1IBy5cF4fNAKjM7mJcmCE9uD1T1S0WwTu3u7qM5lGW0MH6ECfK1z3zYp9kfSXrw1Dw
- ft8eE5IAOyZ+GgP0bCIcmnp/52rTzM/cLO4bcYGeRMgBf3y9TPczAI+iy2UiKEoQbPC/
- wmiw==
+ bh=aGkQRw705gA6xn048nQcioQvcOTtVEzH9VPvSoZbs0A=;
+ b=vPPYv4NxLez0pB9u2b0BPmk0sDoD621D9ejCn7H74IAlO1KET5r9MoSEn8DCWAIT2u
+ Z6jQseUiWtPV2jC7tbRMdadyMdNQTeJC85Qy3GcjymUWev94BEvgrpGliMeRlgVfTwKW
+ jaGmsBRC69tjnIHevvF1o4NCAh5Smf6MZJZ4vgvYEcJzwuKyARh+oxcEPtHoBBwwbqAN
+ +jT3wJDlpRE0koG1+7wMuVTqk7jO4tV2fPnFlqqXwGAkp6o0GLeXESR5wvliwJsm4/eg
+ tSA1IDzHq2kZsk1REuDq9q6JPuHwPIBTZAkDGr8Fmlp51bzHDR/BfeN3Co2oW2iNplRO
+ 0fjg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXR95Wc1GJSof1WfCdWfUJsQ3eZwz78McHc4gr1WGvzd6AB1J3nCexmDK8i0rjj05BnzSiz6j3mmJaT@nongnu.org
-X-Gm-Message-State: AOJu0YzS2Jke0Zxz7uNr9wYZ+87TShH3/VKfI7+F7RXXag2f3lE6G5iQ
- lsfvMHxyVhg3YyoXgAwlkks3sYCx70rDmZNg6l3pyWqlt1aFZLgKVotex9PqI83AOhBduFjZ0Hj
- VL62rvhuoRCT0NGyjUbj53wkqef5m2Wj2kwFTfWqfSaWIs4fS1lwA
-X-Received: by 2002:a05:600c:a04:b0:431:40ca:ce5d with SMTP id
- 5b1f17b1804b1-432b75172d6mr96647855e9.23.1731327419591; 
- Mon, 11 Nov 2024 04:16:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGsmJORp9TNShbt2E6oK/OOKBWT6Y2eiAgs9MVlOlA4BjlkhEdL8gn+SYAlhGU8486zAE2dsA==
-X-Received: by 2002:a05:600c:a04:b0:431:40ca:ce5d with SMTP id
- 5b1f17b1804b1-432b75172d6mr96647635e9.23.1731327419222; 
- Mon, 11 Nov 2024 04:16:59 -0800 (PST)
+ AJvYcCW5UeU7AzRX6Kr1mAmbZ9mC2uQsnzejbQGJeV81hASyV12ai8zsWD60/zP0ycNGTG14rXSfJqzb6GCm@nongnu.org
+X-Gm-Message-State: AOJu0YxvhkE59uMg1+Yq5bzZjt+L6VK7D8IkIY0FUXYXbFJT9BXzGFrR
+ n6+MGt445LuccmoU6AhZE7uHy0o37kGZkPhfuux3n49AkIBbbkN2e43NpMtFL/FcQXfNmgDrtXw
+ FZqNN658l730fEYgLmPXpHLzgNGJq+woeYCfDOWQqSmWtKws2W7cE
+X-Received: by 2002:a05:600c:1d20:b0:430:57e8:3c7e with SMTP id
+ 5b1f17b1804b1-432b751ee6bmr121684125e9.28.1731327800847; 
+ Mon, 11 Nov 2024 04:23:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGlxYOAAOmjNPnn3L28z2gg6Dyfrtgzjy3YlcueUyBLA0JNl7Wk8lJn7kisf0n1PD2UNLzljw==
+X-Received: by 2002:a05:600c:1d20:b0:430:57e8:3c7e with SMTP id
+ 5b1f17b1804b1-432b751ee6bmr121683965e9.28.1731327800484; 
+ Mon, 11 Nov 2024 04:23:20 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-55.web.vodafone.de. [109.42.51.55])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432b05302e1sm172155045e9.9.2024.11.11.04.16.57
+ ffacd0b85a97d-381ed970e23sm12704155f8f.18.2024.11.11.04.23.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Nov 2024 04:16:58 -0800 (PST)
-Message-ID: <f05d2890-a6fd-4529-bb4b-6cd4d72db178@redhat.com>
-Date: Mon, 11 Nov 2024 13:16:55 +0100
+ Mon, 11 Nov 2024 04:23:20 -0800 (PST)
+Message-ID: <551160c5-8d68-467c-85b1-8f18cf4f3d8c@redhat.com>
+Date: Mon, 11 Nov 2024 13:23:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/17] hw/microblaze: Support various endianness for
- s3adsp1800 machines
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
-Cc: Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>
-References: <20241108154317.12129-1-philmd@linaro.org>
- <20241108154317.12129-16-philmd@linaro.org>
- <cf73685f-df95-4165-a642-ddbbb5efb64e@redhat.com>
- <07782067-bd0a-44da-ab89-f3bbe443e349@linaro.org>
+Subject: Re: [PATCH v5 00/19] s390x: Add Full Boot Order Support
 From: Thomas Huth <thuth@redhat.com>
+To: Jared Rossi <jrossi@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com, Sebastian Mitterle <smitterl@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20241020012953.1380075-1-jrossi@linux.ibm.com>
+ <7800f880-d362-40b6-aaef-2085dcb78ad0@redhat.com>
+ <c5bff27a-0aae-4356-9403-89d126426610@linux.ibm.com>
+ <6d6466b5-1d6c-49b3-abb0-f268aa617c6a@redhat.com>
+ <af01b629-7df1-4f55-9b18-3f3bc1d393c9@linux.ibm.com>
+ <592e9413-f2cf-4e84-b594-4017ca8d60e1@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -129,19 +125,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <07782067-bd0a-44da-ab89-f3bbe443e349@linaro.org>
+In-Reply-To: <592e9413-f2cf-4e84-b594-4017ca8d60e1@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.118,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.743,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,63 +153,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/11/2024 12.59, Philippe Mathieu-Daudé wrote:
-> On 11/11/24 07:56, Thomas Huth wrote:
->> On 08/11/2024 16.43, Philippe Mathieu-Daudé wrote:
->>> Introduce an abstract machine parent class which defines
->>> the 'little_endian' property. Duplicate the current machine,
->>> which endian is tied to the binary endianness, to one big
->>> endian and a little endian machine; updating the machine
->>> description. Keep the current default machine for each binary.
->>>
->>> 'petalogix-s3adsp1800' machine is aliased as:
->>> - 'petalogix-s3adsp1800-be' on big-endian binary,
->>> - 'petalogix-s3adsp1800-le' on little-endian one.
->>>
->>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   hw/microblaze/petalogix_s3adsp1800_mmu.c | 62 +++++++++++++++++++-----
->>>   1 file changed, 51 insertions(+), 11 deletions(-)
->> ...
->>>   static const TypeInfo petalogix_s3adsp1800_machine_types[] = {
->>>       {
->>>           .name           = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
->>>           .parent         = TYPE_MACHINE,
->>> -        .class_init     = petalogix_s3adsp1800_machine_class_init,
->>> +        .abstract       = true,
->>> +        .class_size     = sizeof(PetalogixS3adsp1800MachineClass),
->>> +    },
->>> +    {
->>> +        .name           = MACHINE_TYPE_NAME("petalogix-s3adsp1800-be"),
->>> +        .parent         = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
->>> +        .class_init     = petalogix_s3adsp1800_machine_class_init_be,
->>> +    },
->>> +    {
->>> +        .name           = MACHINE_TYPE_NAME("petalogix-s3adsp1800-le"),
->>> +        .parent         = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
->>> +        .class_init     = petalogix_s3adsp1800_machine_class_init_le,
->>>       },
->>>   };
->>
->> Do we really want additional machine types for this? Can't we simply let 
->> the user set the machine property instead? (otherwise, all tests that run 
->> for each machine types (see qtest_cb_for_every_machine) will now be 
->> executed three times instead of only once). IMHO it should be sufficient 
->> to have a machine property for this and add proper documentation for the 
->> machine.
+On 08/11/2024 15.37, Thomas Huth wrote:
+...
+> And in case you're interested (it's maybe not so important since it's rather 
+> unlikely that the users will do this), there is another issue when trying to 
+> boot from multiple network devices where the first one has a DHCP server but 
+> no bootfile:
 > 
-> Machine property was my first approach but then I figured when merging
-> the 2 binaries in one, it is confusing for the CLI users.
+> qemu-system-s390x -nographic -accel kvm -m 2G -netdev user,id=n1 \
+>   -device virtio-net-ccw,netdev=n1,bootindex=1 \
+>   -netdev user,id=n2,tftp=/boot,bootfile=vmlinuz \
+>   -device virtio-net-ccw,netdev=n2,bootindex=2 -d guest_errors
 > 
-> Having 3 more tests until we unify the endianness binary doesn't seem
-> a high price to pay to me. Besides, not we are not exercising the same
-> code path. We need to prove the tests are really duplicated so we can
-> merge the binaries. If you really insist I can modify qtests to skip
-> these machines meanwhile.
+> The firmware seems to panic while trying to request DHCP information from 
+> the second boot device.
 
-Ok, I don't insist, if unify the two endianness binaries into one in the 
-end, that's a much bigger win, I think, so let's keep this patch as it is.
+I had a look at this problem now, and the solution is as simple as this:
+
+diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
+--- a/pc-bios/s390-ccw/virtio-net.c
++++ b/pc-bios/s390-ccw/virtio-net.c
+@@ -51,6 +51,8 @@ int virtio_net_init(void *mac_addr)
+      void *buf;
+      int i;
+
++    rx_last_idx = 0;
++
+      vdev->guest_features[0] = VIRTIO_NET_F_MAC_BIT;
+      virtio_setup_ccw(vdev);
+
+Otherwise the rx_last_idx does not get reset to 0 when starting the 2nd 
+network boot, so the code tries to access some ring data that contains 
+garbage later. I'll send it as a proper patch...
 
   Thomas
 
