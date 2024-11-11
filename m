@@ -4,103 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AFADD12D49
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 14:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3ECCD12D49
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 14:53:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAVmC-00030G-Oh; Mon, 11 Nov 2024 09:52:24 -0500
+	id 1tAVnJ-0003lR-UP; Mon, 11 Nov 2024 09:53:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tAVmA-0002yO-I8; Mon, 11 Nov 2024 09:52:22 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tAVnH-0003kt-P5
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:53:31 -0500
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tAVm8-0002AS-Lf; Mon, 11 Nov 2024 09:52:22 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 9DD991F38E;
- Mon, 11 Nov 2024 14:52:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1731336738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=wPf3EusIvQUP5CbuI5hx2eO4SVkYd5Ku04n6CjnmX4Y=;
- b=IoQiQDHS6A5rLAxA26fU/LAh+f9LHemlsRLF8bnorlSWTLWojkOu4d0f61Wp6Bq7RDBRch
- 7ELUmHKTVHwdUmQVWIFBPAIPImX+A9xkBtj28i+693aMWfuxif1HxirK7tcOIo9DzHmI75
- mRkR7u2z/YRDuhHpiZXY6o9+euFPAX8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1731336738;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=wPf3EusIvQUP5CbuI5hx2eO4SVkYd5Ku04n6CjnmX4Y=;
- b=0AnMPpbx1PbGP4Xvn/ffH0if/fMz3rBJaf4hdZX2+cDIQe5F0AoGAoZBSFxhVnhrLJD/L1
- SQRA87weQR50giBQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=IoQiQDHS;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=0AnMPpbx
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1731336738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=wPf3EusIvQUP5CbuI5hx2eO4SVkYd5Ku04n6CjnmX4Y=;
- b=IoQiQDHS6A5rLAxA26fU/LAh+f9LHemlsRLF8bnorlSWTLWojkOu4d0f61Wp6Bq7RDBRch
- 7ELUmHKTVHwdUmQVWIFBPAIPImX+A9xkBtj28i+693aMWfuxif1HxirK7tcOIo9DzHmI75
- mRkR7u2z/YRDuhHpiZXY6o9+euFPAX8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1731336738;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=wPf3EusIvQUP5CbuI5hx2eO4SVkYd5Ku04n6CjnmX4Y=;
- b=0AnMPpbx1PbGP4Xvn/ffH0if/fMz3rBJaf4hdZX2+cDIQe5F0AoGAoZBSFxhVnhrLJD/L1
- SQRA87weQR50giBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2D88313301;
- Mon, 11 Nov 2024 14:52:16 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id lym5OCAaMmeSbwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 11 Nov 2024 14:52:16 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH] block: Fix leak in send_qmp_error_event
-Date: Mon, 11 Nov 2024 11:52:14 -0300
-Message-Id: <20241111145214.8261-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tAVnG-0002Ea-3d
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 09:53:31 -0500
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-7ea7e2ff5ceso3176634a12.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 06:53:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731336808; x=1731941608; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wkjkek4yunltea4BRJOejUUhd7EmZvVp7H9de6ECF8w=;
+ b=nSYn5ZFP1LV3BWJ8NBUtXbKSQxIYXBLd4wNTXl6ACyt+BNX2cFn7v/CBQGJK2HIXkb
+ K5a6OWXmHZYiThToa3KIfHQnq5Q0J3YR/63JxjUyq4jSdzJJY3JPWx/l9AJRi0sf22Z5
+ VtSEupBduz9iHI/ucX2/KWWZl7hCDeQNgXDiu/pe3Lg+qvmM7gwbyG+BJutPFARslxn+
+ NxHgS1I4JZGcw0CzUQaAjx3yi3AQBzfyncJIqBBGvSis05cqWz3PdFupEdHYy5qcFBTf
+ 7LZJFwTs1h75sfFTiP8v10kviwfnOMUgbAeJnLLlCdVI4aKOTaZu0+RWvJW+CHLwcDBf
+ L4Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731336808; x=1731941608;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wkjkek4yunltea4BRJOejUUhd7EmZvVp7H9de6ECF8w=;
+ b=qn+oTTXXVvm3O4sMbPo9lpJxpYPUJbQZkLfBAGbfWQ9uN19PoX3dBoMnJP4vLznrVc
+ bDj7XgfbyUl00z1iYJ5lzj8QLBF4nn69TPsfKaUJrkBd2pmI9kAndqOsDM66XjqB4dWM
+ h99r9m69DkwjnIcpXUhcXLPuiWHfCraHHJeMUuv1fuR1IcyIu1WGS0sE7i8AyYhifUBl
+ h/mHBG0RyLRTDuLnJaxQsr5gUM32ZTjnYcY7ya/fJoCrXdJNXfr8OTRxTR02BfppgTKb
+ zcZpmYUO8AcBcWn2EzshGZVDA1Y7KufK6wdcHZm213xS7TuPeQrUL2PD2feiPPKbVAt1
+ jztg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWaf6PPvUDFv18aCqYI9v5nJ0k1f8MNBrUyL+KNx37HQMCfNk9L3eyHAyLswdSRXHq0sDVUJwjatrAo@nongnu.org
+X-Gm-Message-State: AOJu0YxEyxCsu+8vz1Za6IdbtaACgDrchrFqrF2jAAt755BN9p73wTIR
+ MSzb+TzblnVRDxkUyp0ZfX7u3Qc4gtOOT7+yfSOlGjsjNpTbXh7sJhayqNZgRRqGb63PH+ERCK3
+ y
+X-Google-Smtp-Source: AGHT+IF6ZjTT2d+mQm7v0Qn1rSRsrLTCiDJNY38G75Vxos2vlvhrKSyhyuMPuMmQJUh3Ir9H1rCjSQ==
+X-Received: by 2002:a17:90b:1a85:b0:2e9:449e:d57f with SMTP id
+ 98e67ed59e1d1-2e9b1749291mr17571713a91.34.1731336808623; 
+ Mon, 11 Nov 2024 06:53:28 -0800 (PST)
+Received: from [192.168.52.227] (wsip-24-120-228-34.lv.lv.cox.net.
+ [24.120.228.34]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e9b2b4cd58sm6598906a91.20.2024.11.11.06.53.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Nov 2024 06:53:27 -0800 (PST)
+Message-ID: <141f99ec-37f3-40a3-910d-f8194b552c54@linaro.org>
+Date: Mon, 11 Nov 2024 06:53:24 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 9DD991F38E
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] linux-user: Tolerate CONFIG_LSM_MMAP_MIN_ADDR
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+References: <20241023002558.34589-1-iii@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241023002558.34589-1-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,58 +98,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ASAN detected a leak when running the ahci-test
-/ahci/io/dma/lba28/retry:
+On 10/22/24 17:24, Ilya Leoshkevich wrote:
+> Running qemu-i386 on a system running with SELinux in enforcing mode
+> (more precisely: s390x trixie container on Fedora 40) fails with:
+> 
+>      qemu-i386: tests/tcg/i386-linux-user/sigreturn-sigmask: Unable to find a guest_base to satisfy all guest address mapping requirements
+>        00000000-ffffffff
+> 
+> The reason is that main() determines mmap_min_addr from
+> /proc/sys/vm/mmap_min_addr, but SELinux additionally defines
+> CONFIG_LSM_MMAP_MIN_ADDR, which is normally larger: 32K or 64K, but,
+> in general, can be anything. There is no portable way to query its
+> value: /boot/config, /proc/config and /proc/config.gz are distro- and
+> environment-specific.
+> 
+> Once the identity map fails, the magnitude of guest_base does not
+> matter, so fix by starting the search from 1M or 1G.
+> 
+> Closes: https://gitlab.com/qemu-project/qemu/-/issues/2598
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+> v1: https://lore.kernel.org/qemu-devel/20241021121820.483535-1-iii@linux.ibm.com/
+> v1 -> v2: Start looking for a suitable hole from a higher address,
+>            instead of falling back to probing (Richard).
+> 
+>   linux-user/elfload.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+> index 6cef8db3b53..d6ad77d27dc 100644
+> --- a/linux-user/elfload.c
+> +++ b/linux-user/elfload.c
+> @@ -2898,7 +2898,7 @@ static uintptr_t pgb_try_itree(const PGBAddrs *ga, uintptr_t base,
+>   static uintptr_t pgb_find_itree(const PGBAddrs *ga, IntervalTreeRoot *root,
+>                                   uintptr_t align, uintptr_t brk)
+>   {
+> -    uintptr_t last = mmap_min_addr;
+> +    uintptr_t last = sizeof(uintptr_t) == 4 ? MiB : GiB;
+>       uintptr_t base, skip;
+>   
+>       while (true) {
 
-Direct leak of 35 byte(s) in 1 object(s) allocated from:
-    #0 in malloc
-    #1 in __vasprintf_internal
-    #2 in vasprintf
-    #3 in g_vasprintf
-    #4 in g_strdup_vprintf
-    #5 in g_strdup_printf
-    #6 in object_get_canonical_path ../qom/object.c:2096:19
-    #7 in blk_get_attached_dev_id_or_path ../block/block-backend.c:1033:12
-    #8 in blk_get_attached_dev_path ../block/block-backend.c:1047:12
-    #9 in send_qmp_error_event ../block/block-backend.c:2140:36
-    #10 in blk_error_action ../block/block-backend.c:2172:9
-    #11 in ide_handle_rw_error ../hw/ide/core.c:875:5
-    #12 in ide_dma_cb ../hw/ide/core.c:894:13
-    #13 in dma_complete ../system/dma-helpers.c:107:9
-    #14 in dma_blk_cb ../system/dma-helpers.c:129:9
-    #15 in blk_aio_complete ../block/block-backend.c:1552:9
-    #16 in blk_aio_write_entry ../block/block-backend.c:1619:5
-    #17 in coroutine_trampoline ../util/coroutine-ucontext.c:175:9
+Queued, thanks.
 
-Plug the leak by freeing the device path string.
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- block/block-backend.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 85bcdedcef..a3b7f00188 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -2134,13 +2134,14 @@ static void send_qmp_error_event(BlockBackend *blk,
- {
-     IoOperationType optype;
-     BlockDriverState *bs = blk_bs(blk);
-+    char *path = blk_get_attached_dev_path(blk);
- 
-     optype = is_read ? IO_OPERATION_TYPE_READ : IO_OPERATION_TYPE_WRITE;
--    qapi_event_send_block_io_error(blk_name(blk),
--                                   blk_get_attached_dev_path(blk),
-+    qapi_event_send_block_io_error(blk_name(blk), path,
-                                    bs ? bdrv_get_node_name(bs) : NULL, optype,
-                                    action, blk_iostatus_is_enabled(blk),
-                                    error == ENOSPC, strerror(error));
-+    g_free(path);
- }
- 
- /* This is done by device models because, while the block layer knows
--- 
-2.35.3
-
+r~
 
