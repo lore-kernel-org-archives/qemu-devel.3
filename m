@@ -4,78 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C3AD3ABD0
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 17:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 706CED3ABCE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 17:12:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAXpW-0005vu-8e; Mon, 11 Nov 2024 12:03:58 -0500
+	id 1tAXwE-0008TP-6k; Mon, 11 Nov 2024 12:10:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAXpP-0005ut-Pv
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 12:03:51 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tAXw1-0008Rr-Tf; Mon, 11 Nov 2024 12:10:44 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAXpO-0007hy-8P
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 12:03:51 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4316cce103dso59938345e9.3
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 09:03:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731344629; x=1731949429; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aswoOKXvIzBRThw5Im2BrT+a+DMSnACXRZbpsdUuO5Y=;
- b=Cg4eMBivePnketDBT9lL/asao4W7n6JHmVun+i26PH/N85TD4ac7EsVRfQSTHpyNNV
- y/BWlQM1gjzrHJKeko6sjlcfibJxotZ9aMbAIW2thnjV3yhHu+zTifYQkCU7o591cGOT
- RZ+WG1cBoA19Y/dq+dFTPrXBInpUBQJi9OUrvPfjxOsaSYO5XLJEEsxLVabpCM9uE9+N
- Gzif1bclBsBWvAZZLZxFOn+tN0TKfwrTyG9DUdRwre1SI30ttGuucqUX3ZdcAVAXClvL
- 6QM4OEoH1nV5tyhJlDqGiRgKtEeAH94zb7tr+JSNnxh0agL8K8UAGkD26SY7Hh4xismx
- eoIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731344629; x=1731949429;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aswoOKXvIzBRThw5Im2BrT+a+DMSnACXRZbpsdUuO5Y=;
- b=JMYU83cNW3ukD+rmAgSnYWmLEBTO0C9gNkek8leQiZWau8PGdQ3ASb4Mll+XIeEPyI
- xgPltT9RNATjP05mAVmZY2+X5urhSrTwi6mx+U8r7NIUdC3FUfNv5KN2DcnIGkElLKoO
- 1K3GdgHFY9aJnRIKkBgGrxmA9OWH7sS+hmC/TljWXMmHoVSn/oCE0jauTF0fsverUsvc
- Gr7KosAJ/9oZFlC/yUeqy5frMWYghvI+kchSHa82RY1sLFyDutfnVvNsTnGWfyvehAAc
- dyW5ZCOMvQbCe28deXarl7boMWsn0ebrWM93SOuz+oIArk8WI2CPIBvNREv+wuBolzDU
- q5VQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUCD0b7wrnUEv3QMGLd6/w5OABwGtkDnIxp5orv3e3dMrhTKPobLBk9CtrwRNbwlj39Hch1HqUBGab4@nongnu.org
-X-Gm-Message-State: AOJu0YziVGma0YHv+Wjo3WZIQEyeGvoEYPPsmhlXghhnPA8tE+IYsBqG
- 2mqDZr95ms3wzzwwIFSDn+WaalzFBgbFCvXsAt6rvkQm0Gu14149Adi5nfyYMvE=
-X-Google-Smtp-Source: AGHT+IFyB1rBJo9m1u2KgkUHXHd8dtIfcGq35meJPcGKk1gaswaJ/5OlR7o4b8T8XeMOdCICssJ5Vw==
-X-Received: by 2002:a05:600c:524b:b0:42b:ac3d:3abc with SMTP id
- 5b1f17b1804b1-432b7518c59mr141503645e9.24.1731344628453; 
- Mon, 11 Nov 2024 09:03:48 -0800 (PST)
-Received: from localhost.localdomain
- (vau06-h02-176-184-43-163.dsl.sta.abo.bbox.fr. [176.184.43.163])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381eda04049sm13204861f8f.93.2024.11.11.09.03.47
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 Nov 2024 09:03:47 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Fabiano Rosas <farosas@suse.de>,
-	qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/2] block: Fix leak in send_qmp_error_event
-Date: Mon, 11 Nov 2024 18:03:33 +0100
-Message-ID: <20241111170333.43833-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241111170333.43833-1-philmd@linaro.org>
-References: <20241111170333.43833-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tAXvz-0000MY-UY; Mon, 11 Nov 2024 12:10:41 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A974921976;
+ Mon, 11 Nov 2024 17:10:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1731345036; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3pDUfFL8mYFjpIM4v3KKicXnR6YXVFFWUcmcM3lLLwI=;
+ b=THEiaujLyzW59U+mkAoRY+LgrJEcWeUV7g4ktRhDL9H4Xtw6glHLiN0pSCJL6XZf5hZwX6
+ neClQFiMLmvhIY1XpcEdWrnLdAUmeNWC4ogeOgHvG10EGMnss+Oxl9g3Wv/lAIDC8W3CjU
+ t70xnqFAo+d67HAX0cX+bOvJ3qdQeFA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1731345036;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3pDUfFL8mYFjpIM4v3KKicXnR6YXVFFWUcmcM3lLLwI=;
+ b=/xOgztKSLVHU/gao8HBGAjteozYTa5uP85nHjUFaSe/XP4eNF+LVCaf/u5RFHuA8aGwEHQ
+ ZGVEsCta1pn0fWBg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=19LzsK5I;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=JFCwTFPR
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1731345034; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3pDUfFL8mYFjpIM4v3KKicXnR6YXVFFWUcmcM3lLLwI=;
+ b=19LzsK5It6x2/rTdtM3krTy/eJHfodPJIzqSSvtG/wLAdJlnXGzfEiIx3WKVGgEX67xNIP
+ G0UW/tayAoAgCGzQnb38nOcDlfwGcE2t/EVBdyjQxgEpX6rtTY5y7Bh7wW+W5XPE4u7Fcj
+ D19+BGx2XZjH+oucDviT8qKeCjFJ/2A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1731345034;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3pDUfFL8mYFjpIM4v3KKicXnR6YXVFFWUcmcM3lLLwI=;
+ b=JFCwTFPReB+BnN0KtARf4qKSgoGSUbbxpLYnZ63PpMx05+sa1eb/IgZ/dflr3J8LuSwWhX
+ utm8zzVgriMcclCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2E605137FB;
+ Mon, 11 Nov 2024 17:10:33 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id VgXDOIk6MmdpGgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 11 Nov 2024 17:10:33 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
+ <hreitz@redhat.com>
+Subject: Re: [PATCH] block: Fix leak in send_qmp_error_event
+In-Reply-To: <aeef7f22-1102-4d03-a473-564d65e29892@linaro.org>
+References: <20241111145214.8261-1-farosas@suse.de>
+ <aeef7f22-1102-4d03-a473-564d65e29892@linaro.org>
+Date: Mon, 11 Nov 2024 14:10:31 -0300
+Message-ID: <87jzd9itmg.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: A974921976
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,60 +132,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-ASAN detected a leak when running the ahci-test
-/ahci/io/dma/lba28/retry:
+> On 11/11/24 14:52, Fabiano Rosas wrote:
+>> ASAN detected a leak when running the ahci-test
+>> /ahci/io/dma/lba28/retry:
+>>=20
+>> Direct leak of 35 byte(s) in 1 object(s) allocated from:
+>>      #0 in malloc
+>>      #1 in __vasprintf_internal
+>>      #2 in vasprintf
+>>      #3 in g_vasprintf
+>>      #4 in g_strdup_vprintf
+>>      #5 in g_strdup_printf
+>>      #6 in object_get_canonical_path ../qom/object.c:2096:19
+>>      #7 in blk_get_attached_dev_id_or_path ../block/block-backend.c:1033=
+:12
+>>      #8 in blk_get_attached_dev_path ../block/block-backend.c:1047:12
+>>      #9 in send_qmp_error_event ../block/block-backend.c:2140:36
+>>      #10 in blk_error_action ../block/block-backend.c:2172:9
+>>      #11 in ide_handle_rw_error ../hw/ide/core.c:875:5
+>>      #12 in ide_dma_cb ../hw/ide/core.c:894:13
+>>      #13 in dma_complete ../system/dma-helpers.c:107:9
+>>      #14 in dma_blk_cb ../system/dma-helpers.c:129:9
+>>      #15 in blk_aio_complete ../block/block-backend.c:1552:9
+>>      #16 in blk_aio_write_entry ../block/block-backend.c:1619:5
+>>      #17 in coroutine_trampoline ../util/coroutine-ucontext.c:175:9
+>>=20
+>> Plug the leak by freeing the device path string.
+>>=20
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>   block/block-backend.c | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/block/block-backend.c b/block/block-backend.c
+>> index 85bcdedcef..a3b7f00188 100644
+>> --- a/block/block-backend.c
+>> +++ b/block/block-backend.c
+>> @@ -2134,13 +2134,14 @@ static void send_qmp_error_event(BlockBackend *b=
+lk,
+>>   {
+>>       IoOperationType optype;
+>>       BlockDriverState *bs =3D blk_bs(blk);
+>> +    char *path =3D blk_get_attached_dev_path(blk);
+>
+> Preferably using g_autofree,
 
-Direct leak of 35 byte(s) in 1 object(s) allocated from:
-    #0 in malloc
-    #1 in __vasprintf_internal
-    #2 in vasprintf
-    #3 in g_vasprintf
-    #4 in g_strdup_vprintf
-    #5 in g_strdup_printf
-    #6 in object_get_canonical_path ../qom/object.c:2096:19
-    #7 in blk_get_attached_dev_id_or_path ../block/block-backend.c:1033:12
-    #8 in blk_get_attached_dev_path ../block/block-backend.c:1047:12
-    #9 in send_qmp_error_event ../block/block-backend.c:2140:36
-    #10 in blk_error_action ../block/block-backend.c:2172:9
-    #11 in ide_handle_rw_error ../hw/ide/core.c:875:5
-    #12 in ide_dma_cb ../hw/ide/core.c:894:13
-    #13 in dma_complete ../system/dma-helpers.c:107:9
-    #14 in dma_blk_cb ../system/dma-helpers.c:129:9
-    #15 in blk_aio_complete ../block/block-backend.c:1552:9
-    #16 in blk_aio_write_entry ../block/block-backend.c:1619:5
-    #17 in coroutine_trampoline ../util/coroutine-ucontext.c:175:9
-
-Plug the leak by freeing the device path string.
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241111145214.8261-1-farosas@suse.de>
-[PMD: Use g_autofree]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- block/block-backend.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 7b329ff194..6128012953 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -2138,10 +2138,10 @@ static void send_qmp_error_event(BlockBackend *blk,
- {
-     IoOperationType optype;
-     BlockDriverState *bs = blk_bs(blk);
-+    g_autofree char *path = blk_get_attached_dev_path(blk);
- 
-     optype = is_read ? IO_OPERATION_TYPE_READ : IO_OPERATION_TYPE_WRITE;
--    qapi_event_send_block_io_error(blk_name(blk),
--                                   blk_get_attached_dev_path(blk),
-+    qapi_event_send_block_io_error(blk_name(blk), path,
-                                    bs ? bdrv_get_node_name(bs) : NULL, optype,
-                                    action, blk_iostatus_is_enabled(blk),
-                                    error == ENOSPC, strerror(error));
--- 
-2.45.2
+Of course, I'll repost. Thanks!
 
 
