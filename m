@@ -4,81 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33250D3ABCF
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Nov 2024 23:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16DEFD41D41
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 01:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAdP3-0000uj-Qg; Mon, 11 Nov 2024 18:01:01 -0500
+	id 1tAffk-0001N3-Jc; Mon, 11 Nov 2024 20:26:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tAdOp-0000tJ-8L
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 18:00:48 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tAdOn-0001iw-Hc
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 18:00:47 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43155abaf0bso44316705e9.0
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 15:00:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731366044; x=1731970844; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=2jf5eXU7OOog4JuRVBDPTFD6Bzvpvpk+NdEpqLWLXPQ=;
- b=IoE37ueuKqoPRlj3EYv5uN/MghZc6R+FKcmQc1RUcCDr9ZmcOBngUtLhdeD1NSx6xH
- UCK02Mr8aMtNExAUxyTtRrglxU1EsgJaZB1FMHoVpfLATreY0SI224SOmbR4l9w7DFKM
- 86gFCK3yjGvnxaVvgaS9sR0ZRBqqvaAQX2uwN6hIoIoNTYnpK04EXEUPmhn2Sp58WmpE
- N15v7idB3Q7tOSIwgw6m9MLpxtaCJjvPF9lcJBzShCtwL11WO3WEHvbinpyu04g9s3wr
- QT4AvZrUpN9k88QNGtLRVCC7lOWsgP5W66oiUotY7P09MDTQgQrc1NmuHA3puKsDtnZh
- eS5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731366044; x=1731970844;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2jf5eXU7OOog4JuRVBDPTFD6Bzvpvpk+NdEpqLWLXPQ=;
- b=WH8WliFA6+dbwfKwwkyLC9mXt7ASpozEHsm2KyOI+wFpG4v7XxpRe0HQtS8ptcRWPN
- pkl/wTVqz4mH7rzvY53VYN3fEyKngGqlQjT3QZAqfd+7TRoMDHyzyv1h76C1k8WgdTFI
- Gq9xqAEhs/fM61dDJ9shSTsFGefX7EQUzNgHyXc5PPRFU8A5+jVDeCfJDxOy7011zYit
- Sq8FgxG77bmokJXWbGxU0ssJU04Pmo7dPgxPRHBEJXakiYVb0bI+3gF48guZAXQrrfk4
- x//X/W/+EzfBnFtGVI9L4sUO105uobudcPjwyn/nCViyT8V3e5R2wkA5EblDIRbwlZUr
- hlkA==
-X-Gm-Message-State: AOJu0YwLrg2OtTrhSW5AUa8hbxtlE9dBHxyLtfiM8TjBqQj7/H97ZHep
- i1+I2ENOpwMDcf4ixq2ZjZp/idryka5ZVUn7PSslZcq6KudwEaj8S+S26AF1QXk=
-X-Google-Smtp-Source: AGHT+IEq9GXXvNz3qT3s9LLbsuPrJX2omf/Ud09M8MWKy6b+lP70CDjxIxfV7fItTfySXEjr7D+qow==
-X-Received: by 2002:a05:600c:3584:b0:432:7c08:d121 with SMTP id
- 5b1f17b1804b1-432b750331emr127277875e9.12.1731366043862; 
- Mon, 11 Nov 2024 15:00:43 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa5b5fb1sm234004665e9.8.2024.11.11.15.00.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Nov 2024 15:00:41 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C7B8F5FA35;
- Mon, 11 Nov 2024 23:00:40 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <r@drigo.nl>) id 1tAffj-0001Mu-ID
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 20:26:23 -0500
+Received: from smtp-bc08.mail.infomaniak.ch ([45.157.188.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <r@drigo.nl>) id 1tAffh-0007T1-MG
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 20:26:23 -0500
+Received: from smtp-3-0000.mail.infomaniak.ch (smtp-3-0000.mail.infomaniak.ch
+ [10.4.36.107])
+ by smtp-3-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4XnTJq5XbxzdgZ;
+ Tue, 12 Nov 2024 02:26:19 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=drigo.nl;
+ s=20241108; t=1731374779;
+ bh=vxk8AH3+BziTGfdR2L2xcNSCPa/LHx//KA7VWVgbqnk=;
+ h=From:To:Cc:Subject:Date:From;
+ b=ixz6rZRo+N91Y2F5ki6XUG0PSD0aGqEAeU5SwZVxL5CP4LbdWES7uc5SX4kAb12tj
+ pSY7XcKNfiyLvhxiBb1++dm9KtXq6QZDTJ+tXKHzuenOl6qepx7Z7IYhYPrjRe27un
+ ZnAnTcvNzR11tdP07sbW6wM74NsvcdZKEHI2F1y++sLX09hMWOh74Hrs4fhnzVuild
+ msQx5he+cDDcxCOaerTejUyYKNOTERDShkyQlsSn/R7Wk4JpNbDwlzk0lScccXBZ6o
+ Hddp9Rm8L7tabQ0wspj/eL/qjL70n8PIV1aO19ANvxtwjGf14J80x9KKyFxCibGNNz
+ Vp/tuwClrUeCg==
+Received: from unknown by smtp-3-0000.mail.infomaniak.ch (Postfix) with ESMTPA
+ id 4XnTJq0qKszlJ2; Tue, 12 Nov 2024 02:26:19 +0100 (CET)
+From: Rodrigo Dias Correa <r@drigo.nl>
 To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 0/2] virtio-gpu: coverity fixes
-Date: Mon, 11 Nov 2024 23:00:38 +0000
-Message-Id: <20241111230040.68470-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+Cc: jiri@resnulli.us,
+	jasowang@redhat.com
+Subject: [PATCH] hw/net/rocker/rocker_of_dpa.c: Remove superfluous error check
+Date: Tue, 12 Nov 2024 02:26:12 +0100
+Message-Id: <20241112012612.317020-1-r@drigo.nl>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Infomaniak-Routing: alpha
+Received-SPF: pass client-ip=45.157.188.8; envelope-from=r@drigo.nl;
+ helo=smtp-bc08.mail.infomaniak.ch
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.671,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,22 +70,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2,
+of_dpa_cmd_add_acl_ip() is called from a single place, and despite the
+fact that it always returns ROCKER_OK, its return value is still checked
+by the caller.
+Change of_dpa_cmd_add_acl_ip() to return void and remove the superfluous
+check from of_dpa_cmd_add_acl().
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2471
 
-Fixes after Dimitry's review.
+Signed-off-by: Rodrigo Dias Correa <r@drigo.nl>
+---
+ hw/net/rocker/rocker_of_dpa.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-Alex.
-
-Alex Bennée (2):
-  hw/display: factor out the scanout blob to fb conversion
-  hw/display: check frame buffer can hold blob
-
- include/hw/virtio/virtio-gpu.h | 15 +++++++++
- hw/display/virtio-gpu-virgl.c  | 22 +------------
- hw/display/virtio-gpu.c        | 59 +++++++++++++++++++++-------------
- 3 files changed, 52 insertions(+), 44 deletions(-)
-
+diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+index 5e16056be6..6d29130ec2 100644
+--- a/hw/net/rocker/rocker_of_dpa.c
++++ b/hw/net/rocker/rocker_of_dpa.c
+@@ -1635,7 +1635,7 @@ static int of_dpa_cmd_add_multicast_routing(OfDpaFlow *flow,
+     return ROCKER_OK;
+ }
+ 
+-static int of_dpa_cmd_add_acl_ip(OfDpaFlowKey *key, OfDpaFlowKey *mask,
++static void of_dpa_cmd_add_acl_ip(OfDpaFlowKey *key, OfDpaFlowKey *mask,
+                                  RockerTlv **flow_tlvs)
+ {
+     key->width = FLOW_KEY_WIDTH(ip.tos);
+@@ -1669,8 +1669,6 @@ static int of_dpa_cmd_add_acl_ip(OfDpaFlowKey *key, OfDpaFlowKey *mask,
+         mask->ip.tos |=
+             rocker_tlv_get_u8(flow_tlvs[ROCKER_TLV_OF_DPA_IP_ECN_MASK]) << 6;
+     }
+-
+-    return ROCKER_OK;
+ }
+ 
+ static int of_dpa_cmd_add_acl(OfDpaFlow *flow, RockerTlv **flow_tlvs)
+@@ -1689,7 +1687,6 @@ static int of_dpa_cmd_add_acl(OfDpaFlow *flow, RockerTlv **flow_tlvs)
+         ACL_MODE_ANY_VLAN,
+         ACL_MODE_ANY_TENANT,
+     } mode = ACL_MODE_UNKNOWN;
+-    int err = ROCKER_OK;
+ 
+     if (!flow_tlvs[ROCKER_TLV_OF_DPA_IN_PPORT] ||
+         !flow_tlvs[ROCKER_TLV_OF_DPA_ETHERTYPE]) {
+@@ -1776,14 +1773,10 @@ static int of_dpa_cmd_add_acl(OfDpaFlow *flow, RockerTlv **flow_tlvs)
+     switch (ntohs(key->eth.type)) {
+     case 0x0800:
+     case 0x86dd:
+-        err = of_dpa_cmd_add_acl_ip(key, mask, flow_tlvs);
++        of_dpa_cmd_add_acl_ip(key, mask, flow_tlvs);
+         break;
+     }
+ 
+-    if (err) {
+-        return err;
+-    }
+-
+     if (flow_tlvs[ROCKER_TLV_OF_DPA_GROUP_ID]) {
+         action->write.group_id =
+             rocker_tlv_get_le32(flow_tlvs[ROCKER_TLV_OF_DPA_GROUP_ID]);
 -- 
-2.39.5
+2.34.1
 
 
