@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A6ED597A3
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 20:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8AAD597A3
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 20:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAxek-0001KP-Jx; Tue, 12 Nov 2024 15:38:34 -0500
+	id 1tAxec-0001IV-J7; Tue, 12 Nov 2024 15:38:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAxeV-0001HN-9C
+ id 1tAxeY-0001Hc-CG
  for qemu-devel@nongnu.org; Tue, 12 Nov 2024 15:38:23 -0500
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAxeK-0008T0-5L
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 15:38:10 -0500
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-7f450f7f11dso2111039a12.2
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 12:38:05 -0800 (PST)
+ id 1tAxeK-0008Sw-8w
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 15:38:21 -0500
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-7ee7e87f6e4so4532978a12.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 12:38:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731443884; x=1732048684; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731443883; x=1732048683; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=83DOC5EhuvVszgMTN5y3DcTwu/SHcyPUnQNhN45Z82Q=;
- b=E25HWWBJ19L+TGiF3FS14SyQ8PKWmI621OIVxI2RahoTaw8cdN60OtHf/Kg8eBl+AG
- p+aBqEOIwMxmGgTDyOw3zfKNQSrZfxxmySD6dI2oDA3YVb8+NGrFdptAC2+YPKs0CUfF
- BPryxGzeGAfGWpLWZhj30WH5hzPBs7xhKbPB1QjPYJoXumVWxfuqVIvC8dbHRfRbAJJI
- KwgMBlNZmfZMKIarifamThW+LLdnwByzDEhSwKBPhKZ8FClmbJeBHintXp3MJ9Duaeaz
- ruZHn6QxTM+UYCVs7C7NqDIjrNbaRyKDyloeQTtjWZOyQGSCtS7Isx7F8xKCq69QIRLV
- TZMw==
+ :reply-to; bh=i9Tx+e50KlhsYgpRqVjdsO/z4tv3m55Kc+AlE2OCoQs=;
+ b=s9KSLqLjSdP9FhTEzjVTREwqrBkjqLZW512iM3/GRgSdLm/FbX8jXzJEUGyUi0v91t
+ KmHWIEmDqbYllapFCKgB/Fp8ckWa3bNpVAHGrT5RI+ZNm+3Uf5c/6f5/CSl2sMsK6jkl
+ ER1KnCnvfAU6q2I7a8bTM3PLymZVRjLIdmmLXgVKgj0wykW1kxDGNMDGePtInQCLG6KW
+ kLEVjUUy+LPcRfa46DWdcEpO0TL3jrr/PTH9VPNfRuS7AafnN57eu5p8DVjGRAiDuQxf
+ MfOlU2wDHEh6Dr13a1sMRgV1Y546Vm8coD1fS/w319mmOSAoCbrrqB40BJNiKes/wFQR
+ zMkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731443884; x=1732048684;
+ d=1e100.net; s=20230601; t=1731443883; x=1732048683;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=83DOC5EhuvVszgMTN5y3DcTwu/SHcyPUnQNhN45Z82Q=;
- b=xCGvS9gEtGwJBovSUxjMOVJ5zJbCGNz2tR0sgOWobQpWSpq7WLtn9rFvw8TMThIQed
- 8epOw8Tg/skkn+WPriTUOKsSPTu/pEINsCHsvTUUIPXAsDvH/XqIIUpyEk6yFsfvtK6Q
- 1NoKJYMvcTqa3hxqKMnXTsts3Vdw8ppsP79lVk+3FtmZ1aLcP3OuVKRhQ5d7mEt+60Ji
- mJWSpCLMc/cVPQlU2j7XQ/U35KoBkp6JDoz6tqBjCFW9dN2Y7vuz3zreBtBl5XCO3hVQ
- 00BSiuXpfS5iUAR7cwZ4LejxjWOGtqJKeh7kF5cJVkCNKon+LYecWZrcgNsmPhGytYYJ
- vgJA==
-X-Gm-Message-State: AOJu0YyFAqxxD6kNfmCQR5vwsJ+kddSwHPpqeTFZkqu9UjtSvZOqiT/W
- gpOswgP+8/k7GFIWcK0lRPxMAvIbC+Flqrb/C2mChgCVbDuCgMG+brLa1AgSNTsadtGd3pittj2
- v
-X-Google-Smtp-Source: AGHT+IF1Rh/aeP1HttI7mUohCu3+WfDPCKReXgPUVahQpVgS22r+LUJ0yFTSZgLsBx/k2fPB7n5UXg==
-X-Received: by 2002:a17:90b:1d89:b0:2e2:c15f:1ffe with SMTP id
- 98e67ed59e1d1-2e9b14ce798mr23715683a91.0.1731443884472; 
- Tue, 12 Nov 2024 12:38:04 -0800 (PST)
+ bh=i9Tx+e50KlhsYgpRqVjdsO/z4tv3m55Kc+AlE2OCoQs=;
+ b=nWyIluYh+jUqw04fV8LmaODWKMxeShepSI7vD3shoRqz1bH8OxQBN+aFGttSYbTn6e
+ lMqdE7cnV5fdJijIau4sjCNdETq+1W0y7soPt5azqKoaVFviWRir4T0tQbPvpc/9B1Ak
+ X2GlUEJtXD49IZxdaQrynqlNdseJavpDQlflRtbQDe6+hd0UMn6K33lXM0O8OiO6zoU5
+ HRrcIP+LX7e8XVWFz51FYATA1Pp8meOa47c433N/PZzGO7JcUuBJM7SIk4hu9hd10A0D
+ 2QppoXLLroWMlgCv0+Hn9iWuwkintmzD2Tkcy3xXU6s9GVZTBuEEu/4MxCuQ3VUfWdxz
+ gYbg==
+X-Gm-Message-State: AOJu0YyoLq3HuMAmxh5cdT3t4ZzsSi8J5mSIVqAclt804Hj3rzs8zU1C
+ 6YTRG7jFm7ZtMMXnHXcr7Pzo9gXX//PJgPJYssO3yqsBZYHPw4gkgPFlwYbkCkrwId/0LGVFTg/
+ V
+X-Google-Smtp-Source: AGHT+IEWesqoAAo3sX2bA7Clerqd327iPQ5JhX8BTOxXQjcvZ3repDP9WJYn/VfAYNn8JGXilqpsdg==
+X-Received: by 2002:a17:90b:3847:b0:2e2:e159:8f7b with SMTP id
+ 98e67ed59e1d1-2e9b16e6415mr21149876a91.3.1731443883349; 
+ Tue, 12 Nov 2024 12:38:03 -0800 (PST)
 Received: from stoup.. (wsip-24-120-228-34.lv.lv.cox.net. [24.120.228.34])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e9f3894192sm9860a91.21.2024.11.12.12.38.03
+ 98e67ed59e1d1-2e9f3894192sm9860a91.21.2024.11.12.12.38.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 12:38:04 -0800 (PST)
+ Tue, 12 Nov 2024 12:38:02 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 3/6] linux-user/aarch64: Reduce vdso alignment to 4k
-Date: Tue, 12 Nov 2024 12:37:54 -0800
-Message-ID: <20241112203757.804320-4-richard.henderson@linaro.org>
+Subject: [PATCH 2/6] linux-user: Drop image_info.alignment
+Date: Tue, 12 Nov 2024 12:37:53 -0800
+Message-ID: <20241112203757.804320-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241112203757.804320-1-richard.henderson@linaro.org>
 References: <20241112203757.804320-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,51 +93,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This field is write-only.  Use only the function-local
+variable within load_elf_image.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/aarch64/Makefile.vdso |   5 +++--
- linux-user/aarch64/vdso-be.so    | Bin 3224 -> 3224 bytes
- linux-user/aarch64/vdso-le.so    | Bin 3224 -> 3224 bytes
- 3 files changed, 3 insertions(+), 2 deletions(-)
+ linux-user/qemu.h    | 1 -
+ linux-user/elfload.c | 7 +++----
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/linux-user/aarch64/Makefile.vdso b/linux-user/aarch64/Makefile.vdso
-index 599958116b..c33a679c0f 100644
---- a/linux-user/aarch64/Makefile.vdso
-+++ b/linux-user/aarch64/Makefile.vdso
-@@ -5,8 +5,9 @@ VPATH += $(SUBDIR)
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 895bdd722a..67bc81b149 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -44,7 +44,6 @@ struct image_info {
+         abi_ulong       file_string;
+         uint32_t        elf_flags;
+         int             personality;
+-        abi_ulong       alignment;
+         bool            exec_stack;
  
- all: $(SUBDIR)/vdso-be.so $(SUBDIR)/vdso-le.so
+         /* Generic semihosting knows about these pointers. */
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 90e79a01b4..ef9cffbe4a 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -3220,7 +3220,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+      * amount of memory to handle that.  Locate the interpreter, if any.
+      */
+     loaddr = -1, hiaddr = 0;
+-    info->alignment = 0;
++    align = 0;
+     info->exec_stack = EXSTACK_DEFAULT;
+     for (i = 0; i < ehdr->e_phnum; ++i) {
+         struct elf_phdr *eppnt = phdr + i;
+@@ -3234,7 +3234,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+                 hiaddr = a;
+             }
+             ++info->nsegs;
+-            info->alignment |= eppnt->p_align;
++            align |= eppnt->p_align;
+         } else if (eppnt->p_type == PT_INTERP && pinterp_name) {
+             g_autofree char *interp_name = NULL;
  
--LDFLAGS = -nostdlib -shared -Wl,-h,linux-vdso.so.1 -Wl,--build-id=sha1 \
--	  -Wl,--hash-style=both -Wl,-T,$(SUBDIR)/vdso.ld
-+LDFLAGS = -nostdlib -shared -Wl,-h,linux-vdso.so.1 \
-+	  -Wl,--build-id=sha1 -Wl,--hash-style=both \
-+	  -Wl,-z,max-page-size=4096 -Wl,-T,$(SUBDIR)/vdso.ld
+@@ -3264,8 +3264,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
  
- $(SUBDIR)/vdso-be.so: vdso.S vdso.ld
- 	$(CC) -o $@ $(LDFLAGS) -mbig-endian $<
-diff --git a/linux-user/aarch64/vdso-be.so b/linux-user/aarch64/vdso-be.so
-index 808206ade824b09d786f6cc34f7cddf80b63130e..d43c3b19cdf6588757f2039f2308a8bce21aed9c 100755
-GIT binary patch
-delta 50
-zcmV-20L}lH8JHQ6tpWfLk+0bl<zcO@sx8Bk2RT5)R`<=5QB@Vnvz!6X1qOFSFiLP%
-IvvCI}1uUl&oB#j-
-
-delta 50
-zcmV-20L}lH8JHQ6tpWi6k+0blA5kqX4aFpe)BQ2Nwg4c8+P|Ifvz!6X1qO9#Ib$<7
-IvvCI}1^-?Xy#N3J
-
-diff --git a/linux-user/aarch64/vdso-le.so b/linux-user/aarch64/vdso-le.so
-index 941aaf29931193300de1f62097867c282a7e0c74..aaedc9d85e568d5dadc9c394e9c4459f1f0c8c88 100755
-GIT binary patch
-delta 49
-zcmV-10M7rI8JHQ6sR9rHk*nPlH6|OK!ah4~>4vUoZ1rE*XtsXbvz!6Y1qE4ha#lpM
-HaR(;_22&J+
-
-delta 49
-zcmV-10M7rI8JHQ6sR952k*nPl^~i=KtbcHFtl42<9TUsw2PpfHvz!6Y1qD@cX=ik^
-HaR(;_8o3m&
-
+     load_addr = loaddr;
+ 
+-    align = pow2ceil(info->alignment);
+-    info->alignment = align;
++    align = pow2ceil(align);
+ 
+     if (pinterp_name != NULL) {
+         if (ehdr->e_type == ET_EXEC) {
 -- 
 2.43.0
 
