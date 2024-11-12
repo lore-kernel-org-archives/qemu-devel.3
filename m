@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 401D3D597A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 21:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEDC6D597A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 21:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAyQ6-0004DL-FA; Tue, 12 Nov 2024 16:27:30 -0500
+	id 1tAyPQ-0003iE-U2; Tue, 12 Nov 2024 16:26:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tAyQ5-0004CZ-3J
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:27:29 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1tAyPJ-0003hI-GH
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:26:43 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tAyQ3-0004Wf-GZ
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:27:28 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-431481433bdso54274935e9.3
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 13:27:27 -0800 (PST)
+ id 1tAyPH-0004TK-To
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:26:41 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-37d447de11dso4573506f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 13:26:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731446846; x=1732051646; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mKGjSOcBFbGhHb2RTO6KhC/b1YcJbWL5HXNJSJMoTN0=;
- b=sRR45Z3+nraMbkcsCEsWzuDqkOmrKTTm1MKFTAWW6r33ZfQs1chQxTK9cNw5ZJasiW
- TZ5E6M90LXZlS6AQYWXjIOwkyZoFptnu1BtFtN3e6nryu65jT4mRHLaHXAdkp0Wf424t
- rZNUNgEM47uStxIMxJVkppfgSr8NuWWj4n/FgRVHPXoklot5866Nzc6Q5rB76Me1bb+T
- +tRboUBnjs78pM3eefAJm3kVhb+woUTmF6fEjL1k7pgn5Y4LV3kuRzxZtBNnsvo7v5Sl
- +Fa0c9xADP05Yt1bsvd+tW4fHqaqydcpT3TKKo+p3FGg8NJ/gkNcxUU3WZinWImsNLC3
- JbnA==
+ d=linaro.org; s=google; t=1731446798; x=1732051598; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R6PRNouRIX8nn07oym8VUYNLwY1A8W1UJP1nr46hRjQ=;
+ b=i+zc2c+P05S/FY69IxARJAXm+NaZ39ML0zi0+RIwyTHnezTyOAa5r3biliSYnmSMZV
+ Ih0io6DF84wm+A+99+egp2D9hGdYPiDOIEK8t8JBC0sEnr0CW/sNBbgGn4gq3zOKqwIq
+ fAQVyVTEWCWSktn7psBwed1XWXBX17SJ/LuKmC2nt34Qg8sQPpfB4m7bb4KKr2HVnA1A
+ 6GL6w66IMkuJQx5NTA0MXtrL4k+8+bO9up29FMh52xooUdLI9psnHxSBE5SbVnSnRELq
+ n5Wjr1UKBpPOSlyNRPs8DGhDTn1tgRw6CeTRuHaLMy7GvJe5B2IEbBn2Se7o4ynXEvCa
+ v1Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731446846; x=1732051646;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mKGjSOcBFbGhHb2RTO6KhC/b1YcJbWL5HXNJSJMoTN0=;
- b=HsNSvlq2muQwarmxZhZSkpCIhNWKxYkVqqWXFElDnzuNvLLiVlVrQW9oLd6CWLbD3i
- LNVNP0d6pffxJAO4NP7H9JdhtasVRCPyaEda3eAUXLRvZ63uuRZf6ib/pMlXgGorR0QP
- ZqeWFkxJtmEQQeECJmAAoabAoOvzlIq3sPlBjxUqbkC5+adlZUpp1/OMIonyfhyCdiI9
- dhcbPqPosrY+Qwt5ms7v62pQ4clJBRXZrtu38iVFBAU5FQMSz9pyR6kLgwwieO1tJiZt
- gNMcypBuTV7CZdaJKCE3HugkIsF8EkbZCA5dTaqVV+ibilci8LxtI6SNLfQ9K5fxK0IT
- 1CYg==
-X-Gm-Message-State: AOJu0YwNl1VNajPr7Ujkn3H97z4aCVTB+xCyXS1CRUG9/AyAj+H69Kv8
- CQ578O1gVe92K5kIJvjZNxB5WE/HLC8bSKEemPV5qKCkQ3t+eG6As+MjewFfJDs=
-X-Google-Smtp-Source: AGHT+IHPem24eBjM25szq1cFjKyK1WoMX7w6Cu/w/oL00W/uzjKRmo4F/b6ShFeQ4mrz1whIAW+eHQ==
-X-Received: by 2002:a05:600c:3488:b0:431:588a:44a2 with SMTP id
- 5b1f17b1804b1-432d4ab0f0dmr5638465e9.12.1731446846086; 
- Tue, 12 Nov 2024 13:27:26 -0800 (PST)
-Received: from [10.134.195.192] ([193.32.126.214])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432d54e0e40sm93035e9.5.2024.11.12.13.27.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Nov 2024 13:27:25 -0800 (PST)
-Message-ID: <694ebcfa-7e5e-47c8-a3d5-9da2ca3f734e@linaro.org>
-Date: Tue, 12 Nov 2024 13:27:22 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] plugins: generate list of symbols automatically
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
- Cleber Rosa <crosa@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- John Snow <jsnow@redhat.com>
-References: <20241106170923.2976750-1-pierrick.bouvier@linaro.org>
- <877c98upm0.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1731446798; x=1732051598;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=R6PRNouRIX8nn07oym8VUYNLwY1A8W1UJP1nr46hRjQ=;
+ b=ATsrYYTtYyns+No61zXq+QznNL/1f3wvVKMkGtguYVF2fXvabfY6pAuJ4AAzZ+rvN3
+ GLjZLa/epQYAdpqxQeeCnsIKAWXXJHq4op6dTnkGaXDd+dy9FqqoEbv9RpSRCwynhEnj
+ r8fbCsTEvTPaR564shCMfeMCFHufU8c5Hz0TjPdL5lEbcdmbrxD2bix0MxXVDuwzPb25
+ bh2N0P6Y40BGySyerWCYx8RJUku8qMuccC5EA6WwpNrjeYjS+2IdOgMtJLV4vM/v1u0U
+ PNgfVoexhY/ZbwjyYfPrAyBAjJC7cXsgIw8hdKNcRaIlalrhmDaEeFDQIegXxPmPmjpj
+ jIuQ==
+X-Gm-Message-State: AOJu0YwHeUqUbp4tp4zsioMzi0pmsNi0JR1/op/EZldVFtZkKvekHWc6
+ J5LZyFolSs0zjAGk7m1U1wku+ljAhoawgFXQtDKMPI1mij2crMEKJmFjBWCHLpva5i82SGH5qdw
+ p83zw8g==
+X-Google-Smtp-Source: AGHT+IGz5K5BN/oQ6EgL7be61r6JWiGEb6+cc/PIGiL2DbkzP9Lyt9t2aO8qdm/R2t17owW8cm8Sgg==
+X-Received: by 2002:a05:6000:1566:b0:37d:5173:7a54 with SMTP id
+ ffacd0b85a97d-3820df8cc0dmr431056f8f.52.1731446798393; 
+ Tue, 12 Nov 2024 13:26:38 -0800 (PST)
+Received: from linaro.. ([193.32.126.214]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381ed9ec202sm16613515f8f.83.2024.11.12.13.26.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Nov 2024 13:26:38 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <877c98upm0.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32e.google.com
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH v4 3/3] plugins: eradicate qemu-plugins.symbols static file
+Date: Tue, 12 Nov 2024 13:26:22 -0800
+Message-Id: <20241112212622.3590693-4-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241112212622.3590693-1-pierrick.bouvier@linaro.org>
+References: <20241112212622.3590693-1-pierrick.bouvier@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,30 +97,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTEvMTIvMjQgMTM6MDgsIEFsZXggQmVubsOpZSB3cm90ZToNCj4gUGllcnJpY2sgQm91
-dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPiB3cml0ZXM6DQo+IA0KPj4gTm93
-IHRoYXQgbWVzb24gYnVpbGQgZm9yIHBsdWdpbnMgd2FzIG1lcmdlZCwgd2UgY2FuIGNsZWFu
-dXAgYW5vdGhlciBwYXJ0IHdpdGgNCj4+IHRoZSBzeW1ib2xzIGZpbGUuDQo+PiBJdCBoYXMg
-dG8gYmUga2VwdCBpbiBzeW5jIGJldHdlZW4gdGhlIGhlYWRlciAocWVtdS1wbHVnaW4uaCkg
-YW5kIHRoZSBzeW1ib2xzDQo+PiBmaWxlLiBUaGlzIGhhcyBwcm92ZWQgdG8gYmUgZXJyb3Ig
-cHJvbmUgYW5kIHRlZGlvdXMuDQo+Pg0KPj4gV2Ugc29sdmUgdGhpcyBieSBnZW5lcmF0aW5n
-IHRoaXMgbGlzdCBmcm9tIGhlYWRlciBkaXJlY3RseSB1c2luZyBhIHB5dGhvbg0KPj4gc2Ny
-aXB0LiBEZXBlbmRlbmNpZXMgYXJlIHRyaWdnZXJlZCBjb3JyZWN0bHksIGFuZCB0aGUgZmls
-ZSBpcyByZWdlbmVyYXRlZCBpZiB0aGUNCj4+IGhlYWRlciBpcyBtb2RpZmllZCwgYXMgZXhw
-ZWN0ZWQuDQo+Pg0KPj4gUGllcnJpY2sgQm91dmllciAoMyk6DQo+PiAgICBwbHVnaW5zOiBh
-ZGQgbWlzc2luZyBleHBvcnQgZm9yIHFlbXVfcGx1Z2luX251bV92Y3B1cw0KPj4gICAgcGx1
-Z2luczogZGV0ZWN0IHFlbXUgcGx1Z2luIEFQSSBzeW1ib2xzIGZyb20gaGVhZGVyDQo+PiAg
-ICBwbHVnaW5zOiBlcmFkaWNhdGUgcWVtdS1wbHVnaW5zLnN5bWJvbHMgc3RhdGljIGZpbGUN
-Cj4+DQo+PiAgIE1BSU5UQUlORVJTICAgICAgICAgICAgICAgICAgICB8ICAxICsNCj4+ICAg
-aW5jbHVkZS9xZW11L3FlbXUtcGx1Z2luLmggICAgIHwgIDEgKw0KPj4gICBwbHVnaW5zL21l
-c29uLmJ1aWxkICAgICAgICAgICAgfCAxMiArKysrKy0tDQo+IA0KPiB0aGlzIGZhaWxlZCB0
-byBhcHBseSBjbGVhbmx5Lg0KDQpTb3JyeSBhYm91dCB0aGF0LiBUaGUgY29tbWl0IGlzIGNv
-cnJlY3QgYnV0IHRoZSBwYXRjaCBjb250ZXh0IGlzIA0KaW5jb3JyZWN0LiBGaXhlZCBpbiB2
-NC4NCg0KPiANCj4+ICAgcGx1Z2lucy9xZW11LXBsdWdpbnMuc3ltYm9scyAgIHwgNTkgLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPj4gICBzY3JpcHRzL3FlbXUtcGx1
-Z2luLXN5bWJvbHMucHkgfCA0NSArKysrKysrKysrKysrKysrKysrKysrKysrKw0KPj4gICA1
-IGZpbGVzIGNoYW5nZWQsIDU2IGluc2VydGlvbnMoKyksIDYyIGRlbGV0aW9ucygtKQ0KPj4g
-ICBkZWxldGUgbW9kZSAxMDA2NDQgcGx1Z2lucy9xZW11LXBsdWdpbnMuc3ltYm9scw0KPj4g
-ICBjcmVhdGUgbW9kZSAxMDA3NTUgc2NyaXB0cy9xZW11LXBsdWdpbi1zeW1ib2xzLnB5DQo+
-IA0KDQo=
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ plugins/qemu-plugins.symbols | 59 ------------------------------------
+ 1 file changed, 59 deletions(-)
+ delete mode 100644 plugins/qemu-plugins.symbols
+
+diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+deleted file mode 100644
+index 032661f9ea7..00000000000
+--- a/plugins/qemu-plugins.symbols
++++ /dev/null
+@@ -1,59 +0,0 @@
+-{
+-  qemu_plugin_bool_parse;
+-  qemu_plugin_end_code;
+-  qemu_plugin_entry_code;
+-  qemu_plugin_get_hwaddr;
+-  qemu_plugin_get_registers;
+-  qemu_plugin_hwaddr_device_name;
+-  qemu_plugin_hwaddr_is_io;
+-  qemu_plugin_hwaddr_phys_addr;
+-  qemu_plugin_insn_data;
+-  qemu_plugin_insn_disas;
+-  qemu_plugin_insn_haddr;
+-  qemu_plugin_insn_size;
+-  qemu_plugin_insn_symbol;
+-  qemu_plugin_insn_vaddr;
+-  qemu_plugin_mem_get_value;
+-  qemu_plugin_mem_is_big_endian;
+-  qemu_plugin_mem_is_sign_extended;
+-  qemu_plugin_mem_is_store;
+-  qemu_plugin_mem_size_shift;
+-  qemu_plugin_num_vcpus;
+-  qemu_plugin_outs;
+-  qemu_plugin_path_to_binary;
+-  qemu_plugin_read_memory_vaddr;
+-  qemu_plugin_read_register;
+-  qemu_plugin_register_atexit_cb;
+-  qemu_plugin_register_flush_cb;
+-  qemu_plugin_register_vcpu_exit_cb;
+-  qemu_plugin_register_vcpu_idle_cb;
+-  qemu_plugin_register_vcpu_init_cb;
+-  qemu_plugin_register_vcpu_insn_exec_cb;
+-  qemu_plugin_register_vcpu_insn_exec_cond_cb;
+-  qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu;
+-  qemu_plugin_register_vcpu_mem_cb;
+-  qemu_plugin_register_vcpu_mem_inline_per_vcpu;
+-  qemu_plugin_register_vcpu_resume_cb;
+-  qemu_plugin_register_vcpu_syscall_cb;
+-  qemu_plugin_register_vcpu_syscall_ret_cb;
+-  qemu_plugin_register_vcpu_tb_exec_cb;
+-  qemu_plugin_register_vcpu_tb_exec_cond_cb;
+-  qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu;
+-  qemu_plugin_register_vcpu_tb_trans_cb;
+-  qemu_plugin_request_time_control;
+-  qemu_plugin_reset;
+-  qemu_plugin_scoreboard_free;
+-  qemu_plugin_scoreboard_find;
+-  qemu_plugin_scoreboard_new;
+-  qemu_plugin_start_code;
+-  qemu_plugin_tb_get_insn;
+-  qemu_plugin_tb_n_insns;
+-  qemu_plugin_tb_vaddr;
+-  qemu_plugin_u64_add;
+-  qemu_plugin_u64_get;
+-  qemu_plugin_u64_set;
+-  qemu_plugin_u64_sum;
+-  qemu_plugin_uninstall;
+-  qemu_plugin_update_ns;
+-  qemu_plugin_vcpu_for_each;
+-};
+-- 
+2.39.5
+
 
