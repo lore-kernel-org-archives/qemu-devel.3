@@ -4,74 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D0ED42BAF
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 040C8D42BAF
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAuKf-0006eC-5l; Tue, 12 Nov 2024 12:05:37 -0500
+	id 1tAuOO-0007Q7-AV; Tue, 12 Nov 2024 12:09:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tAuIY-0003Uf-Bb
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tAuIT-0001Z0-MS
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731430997;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bYyCoABKXGGuyG9l7Gg9PZzugs/3n6FEjn8i2DmnPFg=;
- b=XnbCbt+sSO/YBVDXrTcJc04B+GmHzoXW4Xhph8ENXlc3DLRlMSD2hdDIqDrvqfMGOsP9oT
- jKjN4re5glf984JIIpr+awgs8gQC362djxhyUG8N66iO4yadZUEoFYhxfio3TBWnXJGcvp
- XuQvKROHH7vi+5vyho7ZvhSEUICveOc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-179-aG95qGV0OFGAi8OA_6BTXQ-1; Tue,
- 12 Nov 2024 12:03:10 -0500
-X-MC-Unique: aG95qGV0OFGAi8OA_6BTXQ-1
-X-Mimecast-MFC-AGG-ID: aG95qGV0OFGAi8OA_6BTXQ
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00CB2195609E; Tue, 12 Nov 2024 17:03:09 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5CBC61956086; Tue, 12 Nov 2024 17:03:06 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: salil.mehta@huawei.com, mst@redhat.com, imammedo@redhat.com,
- jonathan.cameron@huawei.com, linuxarm@huawei.com, anisinha@redhat.com,
- karl.heubaum@oracle.com, miguel.luis@oracle.com, gustavo.romero@linaro.org
-Subject: [PATCH 1/7 for-9.2] qtest: allow ACPI DSDT Table changes
-Date: Tue, 12 Nov 2024 18:02:52 +0100
-Message-ID: <20241112170258.2996640-2-imammedo@redhat.com>
-In-Reply-To: <20241112170258.2996640-1-imammedo@redhat.com>
-References: <20241112170258.2996640-1-imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAuOG-0007DF-FE
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:09:21 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAuOE-0002I8-1e
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:09:20 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-aa1f1f2d508so14356066b.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 09:09:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731431350; x=1732036150; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DXASbETSb82QL2+dQcsQo12SIa2OEz+NYoPmnWeJwtA=;
+ b=fH/6aTKMvxWMJh7O0olNz9b4jKG+49XDXJ0pIkJh23f9a+acFrvi4otxOD6nfq/zM0
+ 1QBtNJmfZOituLsVYTw3gGORy4mIJRlhYYZt0p7JBfS8JaBHTomrUj0qOC2/8jOBFNHJ
+ 4DKEgXJaPydQGdN7E38M6wo1buFN3u8e5pMYvyONvnKePocBgKvxWyLir567F0XNMQDY
+ ILh+juBxlwb2490DTzNAI5xpyU9bcfegBxiHWoWdGOnkRIPlKS5o+xGdDGZ+51g+zkfo
+ bpQLqUQfpiOAQ8mDzITj5HOz7vxgB+vf0VZWhZucF95ktJ8r342s/mqm96G/ysh0iIvA
+ khmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731431350; x=1732036150;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DXASbETSb82QL2+dQcsQo12SIa2OEz+NYoPmnWeJwtA=;
+ b=lp3YMFULuKLnnNicdEng4BW1zERamUWHQJPEFpttdSavunuB1nwjDqb2fG+SxaIN7q
+ R5qyeu9XIetLiBTDlZhbzovJ9Dx7RgweAGogr0qOGK0g+FCF9Urowqmi3J+Rd+Nqq+8G
+ szNZ3c8VqW3qH0FbOms5kkMhi6XM87dKpSW4Xcphmq0esv4Oga09mLxQKWGvHo9h6KJP
+ mUCQ9YOzrZx1bJrx4i0+gPY1MhfjNBqLjN7H4FHlWhxqaKmwbFZIm/tox4LrSLPc2mah
+ bBjDKDcvIA3QHzHkxiHbM3I/rmMgQyWJKKa7F9UC8vO+YILzLmqdPqH3lIShtfj4yZXG
+ ZdpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXrakdrplM0w0ySnVHpZwDDZOh7ht/fKoTokS/yX5qR6YSrCEbRWpV9GDRfDz9sdxm+p8tWFqFp7Ofd@nongnu.org
+X-Gm-Message-State: AOJu0YwQUHK7LW6XY0E7kct2sERRmkjpZz0/LRyKL7bIRp2Crz5iG9Ly
+ WZS7GwwjyKDRRuWFfocV1CcreruBGmfob33AkRgcjr2l4p6lQVL4QFaPfNCSnAM=
+X-Google-Smtp-Source: AGHT+IGqmpJQSvxaMMj41OZzFx9Bfw3xyy8QBi5MK8GJ9CsUg7PAkEy6Tle+C+6nJ52VW7XIpfAvKQ==
+X-Received: by 2002:a17:907:2d11:b0:a9a:161:8da4 with SMTP id
+ a640c23a62f3a-a9ef004b241mr1770655566b.55.1731431349700; 
+ Tue, 12 Nov 2024 09:09:09 -0800 (PST)
+Received: from [192.168.69.126] (cnf78-h01-176-184-27-250.dsl.sta.abo.bbox.fr.
+ [176.184.27.250]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9ee0abe369sm736216366b.83.2024.11.12.09.09.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Nov 2024 09:09:09 -0800 (PST)
+Message-ID: <ac2bd629-4d3c-4f8f-9315-a16161b4b2c2@linaro.org>
+Date: Tue, 12 Nov 2024 18:09:07 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] target/mips: Convert nanoMIPS LSA opcode to decodetree
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Aleksandar Rikalo <arikalo@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <f4bug@amsat.org>
+References: <20241111224452.61276-1-philmd@linaro.org>
+ <20241111224452.61276-3-philmd@linaro.org>
+ <a014d0a3-6692-41b1-84e0-6da07ed1e58b@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <a014d0a3-6692-41b1-84e0-6da07ed1e58b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.671,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,65 +100,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Salil Mehta <salil.mehta@huawei.com>
+On 12/11/24 14:30, Richard Henderson wrote:
+> On 11/11/24 14:44, Philippe Mathieu-Daudé wrote:
+>> From: Philippe Mathieu-Daudé <f4bug@amsat.org>
+>>
+>> Simply call the generic gen_lsa() helper, taking care
+>> to substract 1 to the shift field.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/mips/tcg/nanomips32.decode        |  8 ++++++++
+>>   target/mips/tcg/nanomips_translate.c     | 12 ++++++++++++
+>>   target/mips/tcg/nanomips_translate.c.inc |  9 ---------
+>>   3 files changed, 20 insertions(+), 9 deletions(-)
 
-list changed files in tests/qtest/bios-tables-test-allowed-diff.h
 
-Message-ID: <20241106100047.18901c9d@imammedo.users.ipa.redhat.com>
-Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
----
- tests/qtest/bios-tables-test-allowed-diff.h | 41 +++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+>> diff --git a/target/mips/tcg/nanomips_translate.c 
+>> b/target/mips/tcg/nanomips_translate.c
+>> index c148c13ed9..9a6db4a828 100644
+>> --- a/target/mips/tcg/nanomips_translate.c
+>> +++ b/target/mips/tcg/nanomips_translate.c
+>> @@ -9,6 +9,18 @@
+>>   #include "qemu/osdep.h"
+>>   #include "translate.h"
+>> +static inline int minus_1(DisasContext *ctx, int x)
+>> +{
+>> +    return x - 1;
+>> +}
+>> +
+>>   /* Include the auto-generated decoders.  */
+>>   #include "decode-nanomips16.c.inc"
+>>   #include "decode-nanomips32.c.inc"
+>> +
+>> +static bool trans_LSA(DisasContext *ctx, arg_r *a)
+>> +{
+>> +    gen_lsa(ctx, a->rd, a->rt, a->rs, a->sa);
+> 
+> I think decoding shift-amount - 1 is misleading.
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..512d40665d 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,42 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/x86/pc/DSDT",
-+"tests/data/acpi/x86/pc/DSDT.acpierst",
-+"tests/data/acpi/x86/pc/DSDT.acpihmat",
-+"tests/data/acpi/x86/pc/DSDT.bridge",
-+"tests/data/acpi/x86/pc/DSDT.cphp",
-+"tests/data/acpi/x86/pc/DSDT.dimmpxm",
-+"tests/data/acpi/x86/pc/DSDT.hpbridge",
-+"tests/data/acpi/x86/pc/DSDT.hpbrroot",
-+"tests/data/acpi/x86/pc/DSDT.ipmikcs",
-+"tests/data/acpi/x86/pc/DSDT.memhp",
-+"tests/data/acpi/x86/pc/DSDT.nohpet",
-+"tests/data/acpi/x86/pc/DSDT.numamem",
-+"tests/data/acpi/x86/pc/DSDT.roothp",
-+"tests/data/acpi/x86/q35/DSDT",
-+"tests/data/acpi/x86/q35/DSDT.acpierst",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
-+"tests/data/acpi/x86/q35/DSDT.applesmc",
-+"tests/data/acpi/x86/q35/DSDT.bridge",
-+"tests/data/acpi/x86/q35/DSDT.core-count",
-+"tests/data/acpi/x86/q35/DSDT.core-count2",
-+"tests/data/acpi/x86/q35/DSDT.cphp",
-+"tests/data/acpi/x86/q35/DSDT.cxl",
-+"tests/data/acpi/x86/q35/DSDT.dimmpxm",
-+"tests/data/acpi/x86/q35/DSDT.ipmibt",
-+"tests/data/acpi/x86/q35/DSDT.ipmismbus",
-+"tests/data/acpi/x86/q35/DSDT.ivrs",
-+"tests/data/acpi/x86/q35/DSDT.memhp",
-+"tests/data/acpi/x86/q35/DSDT.mmio64",
-+"tests/data/acpi/x86/q35/DSDT.multi-bridge",
-+"tests/data/acpi/x86/q35/DSDT.noacpihp",
-+"tests/data/acpi/x86/q35/DSDT.nohpet",
-+"tests/data/acpi/x86/q35/DSDT.numamem",
-+"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
-+"tests/data/acpi/x86/q35/DSDT.thread-count",
-+"tests/data/acpi/x86/q35/DSDT.thread-count2",
-+"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
-+"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
-+"tests/data/acpi/x86/q35/DSDT.type4-count",
-+"tests/data/acpi/x86/q35/DSDT.viot",
-+"tests/data/acpi/x86/q35/DSDT.xapic",
--- 
-2.43.0
+Yeah I thought the same while rebasing ...
+
+> Surely it would be better for other callers to pass extract(...) + 1?
+
+... but was too lazy to do the changes :p
+
+> 
+> 
+> r~
+> 
 
 
