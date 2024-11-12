@@ -4,75 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC01D42BB3
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:06:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F70D42BB3
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAuKe-0006ZS-RW; Tue, 12 Nov 2024 12:05:36 -0500
+	id 1tAuIf-0003cw-9g; Tue, 12 Nov 2024 12:03:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tAuIe-0003aJ-42
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tAuIa-0001aj-PH
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731431007;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U+AxEZy2EKAfJ4HugDLM4SSnrhVh/F2CqwmRwaOYjnc=;
- b=YJr89xa2eqjy4LIjRgVYFrPxyBIMIE/1t9ZNplMYSfOXRBAaOBjjkFFWRh7ozgbq1hXoGB
- pExrtKpMULEMsrQeJv4DVc0VNIw8tXkIV8ggM55huxBC9qDRW0p8vUuLGIKaGvvbePm30u
- qtcM935BDi6PN09GFKDk9Dd8FpvR9bs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-0RIq40jjMTSaMjpRU07xUA-1; Tue,
- 12 Nov 2024 12:03:24 -0500
-X-MC-Unique: 0RIq40jjMTSaMjpRU07xUA-1
-X-Mimecast-MFC-AGG-ID: 0RIq40jjMTSaMjpRU07xUA
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F1F21955BFC; Tue, 12 Nov 2024 17:03:22 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 24CDA1956086; Tue, 12 Nov 2024 17:03:18 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1tAuHd-0003Js-1v; Tue, 12 Nov 2024 12:02:32 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1tAuHZ-0001Ta-4w; Tue, 12 Nov 2024 12:02:28 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2110a622d76so52164825ad.3; 
+ Tue, 12 Nov 2024 09:02:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731430942; x=1732035742; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PSGVGD/CY09xJGCeeutTvTvahP2uY1wNiseufhmpqRw=;
+ b=LQ7e/+aargvOBk3TIyGRp0qvo58wQ5pauuy51jcP1OeCsoc/hpx7tLYxR9Ygy8Rac8
+ 1w4pMW8vp7W2q4CPtcHOR+VeLG0h69asHDuHhu4ceqBJIJFMZCFNjc2WqPpY87ucDZDd
+ 9BgO+DQUm6QsZrSNPzfBiq1KorY5NxgGyqgaFAJi1NeaQ2MNXvbvjYhQGar1ii9nu4ay
+ Cm6a8pUWQo32iegm3WZxn5GVS4DrsoP4oKMtXGUDVkG8/XzDc3USpGrqgdqU6wQu/tf8
+ pa0T3HLz+Q4lO4WcPf1Jp1ov6izqrqP/Tel+WhLx6zbK0jLjKTC6vMHdLPhoIiFHYAYu
+ oPMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731430942; x=1732035742;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PSGVGD/CY09xJGCeeutTvTvahP2uY1wNiseufhmpqRw=;
+ b=Nkd6EcjJDVW8FJmqWkCsKyBXDsCxUJYCZjnDFVmOG6Zp4xxLsdO05Bi5QsZ/SXJLdr
+ Sza56zJ30aCpffvxfTEBfabV+NVGr2qym6J3WaQZBrcb8n/+E5gbFB1KA7EipWffZ33h
+ xNTtAp3nZmncWHUp+HY6IbqHMXtbIyqKZwY7d8GdrgZM5SxIQg7Wr8uZNL6Ur8I2uGxp
+ kYaqVZwkiX9VIobYTY/GzRQ021RkTgvrXvx84M1rW0UTj4nJ+CNTeegDwfH4nPeyQLtU
+ gNxATXFlQ1EMizci7ZH9fkvTK2wJ0kLuykA0Wcrs3FyPARXeq4FvRQ9wRrlXHsMB7u10
+ Jn2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUChqsrflQkrBtwN84O4oDG3oitBIVy5pwobfuAI6B7fiu+L9zNo2pgpK8VARwEgBk49v9CVYJsyQ==@nongnu.org
+X-Gm-Message-State: AOJu0YwfcVC67KX8d6pdbIYcQOz3Ywf9YOb3yd4Cw2t0dOSQo+lQDXrs
+ c50lYEOpnFZG3DDKfFa2xliYHjev5/I2OQ+6q6O/KuBZj6tqvFWix1GP6w==
+X-Google-Smtp-Source: AGHT+IGHwfvJd/Bpm30CdGaaH6ZtrIEiMh3MYDskpC0ny0yq3cb03TdzgRFvBArXQfBS9dKjXvNEXA==
+X-Received: by 2002:a17:902:e84e:b0:20c:7661:dce8 with SMTP id
+ d9443c01a7336-21183d668d4mr238795415ad.36.1731430942122; 
+ Tue, 12 Nov 2024 09:02:22 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21177dc82e8sm96514785ad.49.2024.11.12.09.02.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Nov 2024 09:02:21 -0800 (PST)
+From: Guenter Roeck <linux@roeck-us.net>
 To: qemu-devel@nongnu.org
-Cc: salil.mehta@huawei.com, mst@redhat.com, imammedo@redhat.com,
- jonathan.cameron@huawei.com, linuxarm@huawei.com, anisinha@redhat.com,
- karl.heubaum@oracle.com, miguel.luis@oracle.com, gustavo.romero@linaro.org
-Subject: [RFC 5/7] DO NOT MERGE: acpi: cpuhp: add option to AML genrator to
- opt-in to always present vCPUs
-Date: Tue, 12 Nov 2024 18:02:56 +0100
-Message-ID: <20241112170258.2996640-6-imammedo@redhat.com>
-In-Reply-To: <20241112170258.2996640-1-imammedo@redhat.com>
-References: <20241112170258.2996640-1-imammedo@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, BALATON Zoltan <balaton@eik.bme.hu>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org, Guenter Roeck <linux@roeck-us.net>
+Subject: [RESEND PATCH 04/10] usb/uhci: enlarge uhci memory space
+Date: Tue, 12 Nov 2024 09:01:46 -0800
+Message-ID: <20241112170152.217664-5-linux@roeck-us.net>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241112170152.217664-1-linux@roeck-us.net>
+References: <20241112170152.217664-1-linux@roeck-us.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=groeck7@gmail.com; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,65 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Looking at [1] what 'present' bit would do, it's no necessary as it's
-statically defined for VM instance. So instead of introducing new ABI
-in cpuhp flags register, add CPUHotplugFeatures::always_present_cpus
-config option, that when set change _STA default return value to always
-present but not enabled. And the interpose 'enabled' check on top of it,
-which would set 'enabled' bit in return value if vCPU is enabled.
+hcd-uhci-sysbus will require more memory than hcd-uhci-pci
+since registers for some hardware (specifically Aspeed) don't
+map 1:1.
 
-Platforms that need the feature can opt in by setting
- CPUHotplugFeatures::always_present_cpus = true
-for other plaforms _STA will revert to the behavior before [1]
-
-1)
- bf1ecc8dad606 (w/acpi: Update ACPI `_STA` method with QOM vCPU ACPI Hotplug states)
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 ---
- include/hw/acpi/cpu.h | 1 +
- hw/acpi/cpu.c         | 9 +++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+Changes since RFC:
+- Rebased to v9.1.0-1673-g134b443512
 
-diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
-index 32654dc274..e9e9c28359 100644
---- a/include/hw/acpi/cpu.h
-+++ b/include/hw/acpi/cpu.h
-@@ -56,6 +56,7 @@ typedef struct CPUHotplugFeatures {
-     bool acpi_1_compatible;
-     bool has_legacy_cphp;
-     bool fw_unplugs_cpu;
-+    bool always_present_cpus;
-     const char *smi_path;
- } CPUHotplugFeatures;
+ hw/usb/hcd-uhci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index 68b72f8d3b..d2993a98b8 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -1212,7 +1212,7 @@ void usb_uhci_init(UHCIState *s, DeviceState *dev, Error **errp)
+     QTAILQ_INIT(&s->queues);
  
-diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-index 5cb60ca8bc..67513450f9 100644
---- a/hw/acpi/cpu.c
-+++ b/hw/acpi/cpu.c
-@@ -452,15 +452,20 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
+     memory_region_init_io(&s->mem, OBJECT(s), &uhci_ioport_ops, s,
+-                          "uhci", 0x20);
++                          "uhci", 0x100);
+ }
  
-         method = aml_method(CPU_STS_METHOD, 1, AML_SERIALIZED);
-         {
-+            /*
-+             * For always present CPUs set all bits except of 'enabled'
-+             * ACPI 1.0b: chapter '6.3.5 _STA'
-+             */
-+            uint8_t default_sta = opts.always_present_cpus ? 0xd : 0;
-             Aml *idx = aml_arg(0);
--            Aml *sta = aml_local(0);
-+            Aml *sta = aml_local(default_sta);
- 
-             aml_append(method, aml_acquire(ctrl_lock, 0xFFFF));
-             aml_append(method, aml_store(idx, cpu_selector));
-             aml_append(method, aml_store(zero, sta));
-             ifctx = aml_if(aml_equal(is_enabled, one));
-             {
--                aml_append(ifctx, aml_store(aml_int(0xF), sta));
-+                aml_append(ifctx, aml_or(aml_int(0xF), sta, sta));
-             }
-             aml_append(method, ifctx);
-             aml_append(method, aml_release(ctrl_lock));
+ void usb_uhci_exit(UHCIState *s)
 -- 
-2.43.0
+2.45.2
 
 
