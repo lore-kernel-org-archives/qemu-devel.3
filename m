@@ -4,42 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA72D41D44
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 02:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8D0D41D45
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 02:18:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAgTl-0007Cj-Io; Mon, 11 Nov 2024 21:18:05 -0500
+	id 1tAgTl-0007Ci-I4; Mon, 11 Nov 2024 21:18:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tAgTe-0007BN-91
+ id 1tAgTd-0007BI-Vt
  for qemu-devel@nongnu.org; Mon, 11 Nov 2024 21:17:59 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tAgTb-00046X-A4
- for qemu-devel@nongnu.org; Mon, 11 Nov 2024 21:17:58 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tAgTa-00045o-MH
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 21:17:57 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxGeDPujJnOLg7AA--.51977S3;
- Tue, 12 Nov 2024 10:17:51 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxC+LDujJnHbg7AA--.52216S3;
+ Tue, 12 Nov 2024 10:17:39 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCx98DCujJniixSAA--.12416S7;
- Tue, 12 Nov 2024 10:17:50 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMCx98DCujJniixSAA--.12416S2;
+ Tue, 12 Nov 2024 10:17:39 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Subject: [PATCH v4 5/6] hw/loongarch/virt: Update the ACPI table for hotplug
- cpu
-Date: Tue, 12 Nov 2024 10:17:37 +0800
-Message-Id: <20241112021738.1952851-6-maobibo@loongson.cn>
+Subject: [PATCH v4 0/6] hw/loongarch/virt: Add cpu hotplug support
+Date: Tue, 12 Nov 2024 10:17:32 +0800
+Message-Id: <20241112021738.1952851-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20241112021738.1952851-1-maobibo@loongson.cn>
-References: <20241112021738.1952851-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCx98DCujJniixSAA--.12416S7
+X-CM-TRANSID: qMiowMCx98DCujJniixSAA--.12416S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,150 +64,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On LoongArch virt machine, ACPI GED hardware is used for CPU hotplug
-handler, here CPU hotplug support feature is added based on GED handler,
-also CPU scan and reject method is added about CPU device in DSDT table.
+LoongArch cpu hotplug is based on ACPI GED device, there is a little
+change about ipi and extioi device, the value of num-cpu property is
+maximum cpu number rather than present cpu number.
 
-Co-developed-by: Xianglai Li <lixianglai@loongson.cn>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+It can be verified with qemu command:
+  qemu-system-loongarch64 -smp 2,maxcpus=16,sockets=4,cores=4,threads=1
+and vcpu can be added or remove with hmp command:
+  device_add la464-loongarch-cpu,socket-id=0,core-id=2,thread-id=0,id=cpu-2
+  device_del cpu-2
+
 ---
- hw/loongarch/Kconfig        |  1 +
- hw/loongarch/acpi-build.c   | 35 +++++++++++++++++++++++++++++++++--
- hw/loongarch/virt.c         | 10 ++++++++++
- include/hw/loongarch/virt.h |  1 +
- 4 files changed, 45 insertions(+), 2 deletions(-)
+v3 ... v4:
+  1. For cold-plug CPUs, move socket-id/core-id/thread-id property
+     setting from preplug function to CPU object creating loop, since
+     there is topo information calculation already in CPU object creating
+     loop.
+  2. Init interrupt pin of CPU object in cpu plug interface for both
+     cold-plug CPUs and hot-plug CPUs.
+  3. Apply the patch based on latest qemu version.
 
-diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
-index fe1c6feac1..bb2838b7b5 100644
---- a/hw/loongarch/Kconfig
-+++ b/hw/loongarch/Kconfig
-@@ -17,6 +17,7 @@ config LOONGARCH_VIRT
-     select LOONGARCH_EXTIOI
-     select LS7A_RTC
-     select SMBIOS
-+    select ACPI_CPU_HOTPLUG
-     select ACPI_PCI
-     select ACPI_HW_REDUCED
-     select FW_CFG_DMA
-diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-index 50709bda0f..c220edec68 100644
---- a/hw/loongarch/acpi-build.c
-+++ b/hw/loongarch/acpi-build.c
-@@ -47,6 +47,22 @@
- #define ACPI_BUILD_DPRINTF(fmt, ...)
- #endif
- 
-+static void virt_madt_cpu_entry(int uid,
-+                                const CPUArchIdList *apic_ids,
-+                                GArray *entry, bool force_enabled)
-+{
-+    uint32_t flags, apic_id = apic_ids->cpus[uid].arch_id;
-+
-+    flags = apic_ids->cpus[uid].cpu || force_enabled ? 1 /* Enabled */ : 0;
-+
-+    /* Rev 1.0b, Table 5-13 Processor Local APIC Structure */
-+    build_append_int_noprefix(entry, 0, 1);       /* Type */
-+    build_append_int_noprefix(entry, 8, 1);       /* Length */
-+    build_append_int_noprefix(entry, uid, 1);     /* ACPI Processor ID */
-+    build_append_int_noprefix(entry, apic_id, 1); /* APIC ID */
-+    build_append_int_noprefix(entry, flags, 4); /* Flags */
-+}
-+
- /* build FADT */
- static void init_common_fadt_data(AcpiFadtData *data)
- {
-@@ -123,15 +139,17 @@ build_madt(GArray *table_data, BIOSLinker *linker,
-     build_append_int_noprefix(table_data, 1 /* PCAT_COMPAT */, 4); /* Flags */
- 
-     for (i = 0; i < arch_ids->len; i++) {
-+        uint32_t flags;
-+
-         /* Processor Core Interrupt Controller Structure */
-         arch_id = arch_ids->cpus[i].arch_id;
--
-+        flags   = arch_ids->cpus[i].cpu ? 1 : 0;
-         build_append_int_noprefix(table_data, 17, 1);    /* Type */
-         build_append_int_noprefix(table_data, 15, 1);    /* Length */
-         build_append_int_noprefix(table_data, 1, 1);     /* Version */
-         build_append_int_noprefix(table_data, i, 4);     /* ACPI Processor ID */
-         build_append_int_noprefix(table_data, arch_id, 4); /* Core ID */
--        build_append_int_noprefix(table_data, 1, 4);     /* Flags */
-+        build_append_int_noprefix(table_data, flags, 4); /* Flags */
-     }
- 
-     /* Extend I/O Interrupt Controller Structure */
-@@ -334,6 +352,7 @@ build_la_ged_aml(Aml *dsdt, MachineState *machine)
- {
-     uint32_t event;
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(machine);
-+    CPUHotplugFeatures opts;
- 
-     build_ged_aml(dsdt, "\\_SB."GED_DEVICE,
-                   HOTPLUG_HANDLER(lvms->acpi_ged),
-@@ -346,6 +365,18 @@ build_la_ged_aml(Aml *dsdt, MachineState *machine)
-                                  AML_SYSTEM_MEMORY,
-                                  VIRT_GED_MEM_ADDR);
-     }
-+
-+    if (event & ACPI_GED_CPU_HOTPLUG_EVT) {
-+        opts.acpi_1_compatible = false;
-+        opts.has_legacy_cphp = false;
-+        opts.fw_unplugs_cpu = false;
-+        opts.smi_path = NULL;
-+
-+        build_cpus_aml(dsdt, machine, opts, virt_madt_cpu_entry,
-+                       VIRT_GED_CPUHP_ADDR, "\\_SB",
-+                       AML_GED_EVT_CPU_SCAN_METHOD, AML_SYSTEM_MEMORY);
-+    }
-+
-     acpi_dsdt_add_power_button(dsdt);
- }
- 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 0e0c6c202b..b49b15c0f6 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -666,11 +666,17 @@ static DeviceState *create_acpi_ged(DeviceState *pch_pic,
- {
-     DeviceState *dev;
-     MachineState *ms = MACHINE(lvms);
-+    MachineClass *mc = MACHINE_GET_CLASS(lvms);
-     uint32_t event = ACPI_GED_PWR_DOWN_EVT;
- 
-     if (ms->ram_slots) {
-         event |= ACPI_GED_MEM_HOTPLUG_EVT;
-     }
-+
-+    if (mc->has_hotpluggable_cpus) {
-+        event |= ACPI_GED_CPU_HOTPLUG_EVT;
-+    }
-+
-     dev = qdev_new(TYPE_ACPI_GED);
-     qdev_prop_set_uint32(dev, "ged-event", event);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-@@ -682,6 +688,10 @@ static DeviceState *create_acpi_ged(DeviceState *pch_pic,
-     /* ged regs used for reset and power down */
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 2, VIRT_GED_REG_ADDR);
- 
-+    if (mc->has_hotpluggable_cpus) {
-+        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 3, VIRT_GED_CPUHP_ADDR);
-+    }
-+
-     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
-                        qdev_get_gpio_in(pch_pic, VIRT_SCI_IRQ - VIRT_GSI_BASE));
-     return dev;
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 260e6bd7cf..79a85723c9 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -30,6 +30,7 @@
- #define VIRT_GED_EVT_ADDR       0x100e0000
- #define VIRT_GED_MEM_ADDR       (VIRT_GED_EVT_ADDR + ACPI_GED_EVT_SEL_LEN)
- #define VIRT_GED_REG_ADDR       (VIRT_GED_MEM_ADDR + MEMORY_HOTPLUG_IO_LEN)
-+#define VIRT_GED_CPUHP_ADDR     (VIRT_GED_REG_ADDR + ACPI_GED_REG_COUNT)
- 
- #define COMMAND_LINE_SIZE       512
- 
+v2 ... v3:
+  1. Use qdev_realize_and_unref() with qdev_realize() and object_unref().
+  2. Set vcpus_count with 1 since vcpu object is created for every thread.
+  3. Remove property hw-id, use internal variable hw_id to differentiate
+     cold-plug cpus and hot-plug cpus.
+  4. Add generic function virt_init_cpu_irq() to init interrupt pin
+     of CPU object, used by both cold-plug and hot-plug CPUs
+
+v1 ... v2:
+  1. Add new property hw-id, property hw-id is set for cold-added CPUs,
+     and property socket-id/core-id/thread-id is set for hot-added CPUs.
+     The two properties can be generated from each other.
+  2. Use general hotplug api such as hotplug_handler_pre_plug etc
+  3. Reorganize the patch order, split the patch set into 4 small
+     patches.
+---
+Bibo Mao (6):
+  hw/loongarch/virt: Add CPU topology support
+  hw/loongarch/virt: Implement cpu plug interface
+  hw/loongarch/virt: Add generic function to init interrupt pin of CPU
+  hw/loongarch/virt: Init interrupt pin of CPU during plug interface
+  hw/loongarch/virt: Update the ACPI table for hotplug cpu
+  hw/loongarch/virt: Enable cpu hotplug feature on virt machine
+
+ docs/system/loongarch/virt.rst |  31 +++
+ hw/loongarch/Kconfig           |   1 +
+ hw/loongarch/acpi-build.c      |  35 ++-
+ hw/loongarch/virt.c            | 374 ++++++++++++++++++++++++++++-----
+ include/hw/loongarch/virt.h    |   3 +
+ target/loongarch/cpu.c         |  25 +++
+ target/loongarch/cpu.h         |  17 ++
+ 7 files changed, 428 insertions(+), 58 deletions(-)
+
+
+base-commit: 134b443512825bed401b6e141447b8cdc22d2efe
 -- 
 2.39.3
 
