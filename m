@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F25E7D597A4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 20:39:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0B0DD597A4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 20:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAxee-0001Io-2d; Tue, 12 Nov 2024 15:38:30 -0500
+	id 1tAxec-0001If-Oq; Tue, 12 Nov 2024 15:38:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAxeV-0001HM-8j
+ id 1tAxeY-0001Hb-9y
  for qemu-devel@nongnu.org; Tue, 12 Nov 2024 15:38:23 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAxeK-0008Sn-6d
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 15:38:12 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-7f43259d220so3259951a12.3
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 12:38:02 -0800 (PST)
+ id 1tAxeQ-0008TL-9k
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 15:38:21 -0500
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-7f3e30a43f1so4177870a12.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 12:38:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731443881; x=1732048681; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=szuHMevCrKC+EdwnnmTePxCBnHN0QrWML9ZRboDaHSc=;
- b=U0eLAzAB+SmHkAw/MsrXahxRoH4xFcxctLqK4jOi8k9sZWNqEj8/EPBLAvfhOImyg0
- iTASiJxWpyMsktAtblj87398URBdmSuRY+2Lbdz0A2cnmTBLkwLJv2et/6ZU/WoVfrRZ
- kPiHA1QOISrPcsIN5+a8CmQYYoPNaRW/woD7wJi38k/N2x/khjRr/Ih46+wPlTuDJCUc
- n7tRG26nYYfNO8npo5YgZAHXz7fG2zszPH+rLG6BwgFQRobu1mL9mPuVbI+ay4WFxOuE
- RepKAdI61YTpQ43fsB0nwqyERUJBeY0rq9qynM4rjVe4AbimLrm3MQ2dZUgCP05F7XTz
- 5nVg==
+ d=linaro.org; s=google; t=1731443889; x=1732048689; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Ytqfxtz/gze+FwFK7EX85c9S/fEjNCvGmfsL22P/YbA=;
+ b=e8zmBcewnXKz2nTlDlJw5ToNxpIMby2rf31oxgdIQptD2p1s15/JjmgPK5C9H1tIth
+ Wkvhnq/OJLbsMCHpoqZiWIOr/Aw0QGvLntnTJKtqJ99cBGU1hpKZuuxGiC7Ile0GOmbb
+ SFJDiZVtOxuu1neiMaQQO5GBRlSeeQO/Fi3wlhiD9cv7lPQ5E4B+pxgtGp/ov5fr9Oyr
+ QU51VmMvj1dqXJkfvG6RzcH421VIWQNT8FVbqzUees/atVE1iGcjQhcj6hWF2DDlxQY5
+ jXhq0lSdtdecj7tPsz8HWGIYOp/+HYhvrKKHLGkjDuZw1wREMuC6dT55ksAH3d4IftVJ
+ Blrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731443881; x=1732048681;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=szuHMevCrKC+EdwnnmTePxCBnHN0QrWML9ZRboDaHSc=;
- b=Nrjyic5kipwzGv8dQXf6YoEYSVjyB8T0QODOxyVulTaks5bQaZcHjzl5GH4vF9TLV5
- 2wBT8PgphhHBD3atMeFv4a9NlDVD91KpdEpX4UYQOmoNLD5NECCnrgPPIb8pyJGT6beN
- FSjDgpRETUL0KcCku5+3a6RKxHmeE9ijARVbzaOCjHEGbRRJprVpSC3NmaSo/+w8W5Ss
- SBNT6v22DNBtl+4/PTgbYGFVclnJ5aSXI5M+G/tUIuqVcAuZ/sa2oyNRuorlVV0EKxkX
- Xo2luBj889rSvXUoTjD7xflgN07c6gZLMsUQWdaLTQIGz6xCYpLa/mU9kFJSfLBV0GH1
- ZVJw==
-X-Gm-Message-State: AOJu0YzDqqle0/+hoFqqBsri06iiPaRGPpDVkhASw8IULiILA7dIskT4
- TD3F22WXJ01ASMjG3kV4yGFCG3C5tklJiz2dx/3tVbAbvA1PwI/kWyqmykE3qJZa8VfhLjP9Doa
- 6
-X-Google-Smtp-Source: AGHT+IHJMPfPsIFIc8c6dKAefZea2i0RCOpSsOe8kl9VuU0QARM+pjdyylKWv8W3blUhknIjPdBftg==
-X-Received: by 2002:a17:90b:33c8:b0:2e2:bfb0:c06 with SMTP id
- 98e67ed59e1d1-2e9b17058camr23137447a91.12.1731443881252; 
- Tue, 12 Nov 2024 12:38:01 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731443889; x=1732048689;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ytqfxtz/gze+FwFK7EX85c9S/fEjNCvGmfsL22P/YbA=;
+ b=M5vzL94cqPQM4wpvAR5pAG4GunQAIYN23uM5k0J/8mklaQyVbwf8wtdOpNvZvgXh6Z
+ 3F9DWveUN2Rf9ISxqf1OxgJfcGkg34JbyWLfJRqJ5L0re7rKd3ziDBkWKQkMgguz8pEe
+ oAUBc60CkKBMI5+jj13VEHFyMl7no1pBSj55e+VMWK+MzDv+cJn4YRhvn6Y+T4b9VCHa
+ AeOs30bTsMdVIa8t+No5G9RrX9nUwJsUc25Yqxi0qUalegAOKyfiSX9H0ThMWuYH3pdq
+ K06RqSEe//206oDg6CKkMHjPHH/ElRubfJEqwsvh9B1RFJumMqKi2kVsr5zB9nXCnvKC
+ cvnQ==
+X-Gm-Message-State: AOJu0YyEpgen5DctNxoIMrBfGAK3Au3sIpkpLIAOt/TMQxLTtbtBNY/E
+ 4cfm++sJ49Zh5YDVbwx9Il2Sy+WoBHEXp56uU40cLcM7UAxmnRW5CivJBupKiZtQHB1GlonfFOz
+ m
+X-Google-Smtp-Source: AGHT+IHyd0s5OgtOnlH14ilGdOWMRh+3wrunmqSCHRD7Jy7gOgyIyJbFnSO8Es1iZerCbagdiXWZJQ==
+X-Received: by 2002:a17:90b:3b47:b0:2c8:647:1600 with SMTP id
+ 98e67ed59e1d1-2e9b16fc9d0mr23850605a91.9.1731443888602; 
+ Tue, 12 Nov 2024 12:38:08 -0800 (PST)
 Received: from stoup.. (wsip-24-120-228-34.lv.lv.cox.net. [24.120.228.34])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e9f3894192sm9860a91.21.2024.11.12.12.38.00
+ 98e67ed59e1d1-2e9f3894192sm9860a91.21.2024.11.12.12.38.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 12:38:00 -0800 (PST)
+ Tue, 12 Nov 2024 12:38:08 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 0/6] linux-user: Fix elf load and vdso alignment
-Date: Tue, 12 Nov 2024 12:37:51 -0800
-Message-ID: <20241112203757.804320-1-richard.henderson@linaro.org>
+Subject: [PATCH 6/6] linux-user/ppc: Reduce vdso alignment to 4k
+Date: Tue, 12 Nov 2024 12:37:57 -0800
+Message-ID: <20241112203757.804320-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241112203757.804320-1-richard.henderson@linaro.org>
+References: <20241112203757.804320-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,36 +93,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GDB picked up that we weren't properly honoring alignment.
-After fixing that, reduce vdso alignment to minimum page size.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/ppc/Makefile.vdso |   6 ++++--
+ linux-user/ppc/vdso-32.so    | Bin 3020 -> 3020 bytes
+ linux-user/ppc/vdso-64.so    | Bin 3896 -> 3896 bytes
+ linux-user/ppc/vdso-64le.so  | Bin 3896 -> 3896 bytes
+ 4 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/linux-user/ppc/Makefile.vdso b/linux-user/ppc/Makefile.vdso
+index 3ca3c6b83e..e2b8facbb5 100644
+--- a/linux-user/ppc/Makefile.vdso
++++ b/linux-user/ppc/Makefile.vdso
+@@ -6,9 +6,11 @@ VPATH += $(SUBDIR)
+ all: $(SUBDIR)/vdso-32.so $(SUBDIR)/vdso-64.so $(SUBDIR)/vdso-64le.so
+ 
+ LDFLAGS32 = -nostdlib -shared -Wl,-T,$(SUBDIR)/vdso-32.ld \
+-            -Wl,-h,linux-vdso32.so.1 -Wl,--hash-style=both -Wl,--build-id=sha1
++            -Wl,-h,linux-vdso32.so.1 -Wl,--hash-style=both \
++	    -Wl,--build-id=sha1 -Wl,-z,max-page-size=4096
+ LDFLAGS64 = -nostdlib -shared -Wl,-T,$(SUBDIR)/vdso-64.ld \
+-            -Wl,-h,linux-vdso64.so.1 -Wl,--hash-style=both -Wl,--build-id=sha1
++            -Wl,-h,linux-vdso64.so.1 -Wl,--hash-style=both \
++	    -Wl,--build-id=sha1 -Wl,-z,max-page-size=4096
+ 
+ $(SUBDIR)/vdso-32.so: vdso.S vdso-32.ld vdso-asmoffset.h
+ 	$(CC) -o $@ $(LDFLAGS32) -m32 $<
+diff --git a/linux-user/ppc/vdso-32.so b/linux-user/ppc/vdso-32.so
+index b19baafb0d38e15b4a24def5c44a6d684714be45..0dc55e0dddff618b954dbb939335e99956daf64a 100755
+GIT binary patch
+delta 42
+zcmV+_0M-A@7t9xsCINtvCrSbU5Rr3n6lq1YQP%3b&XBjV4sl%JXqmbIL$UbO3Tx34
+A(f|Me
 
-r~
+delta 42
+xcmX>jenxzP8Y9C*buT6$SzIX6c=(tjbAN``v6&a|RP{JtzgDQRW#f-4TmVmR5>WsE
 
+diff --git a/linux-user/ppc/vdso-64.so b/linux-user/ppc/vdso-64.so
+index 913c831b3819fc09912b9b31f7fbe9ee311ae12f..ac1ab2582e4675979ffca3ce90dce17df579ab2a 100755
+GIT binary patch
+delta 38
+wcmV+>0NMYz9=INmtpWfLk*~QFqejR%tq=sGFts+qF9Cf{%e>^#vwQ)(4KYR#WB>pF
 
-Richard Henderson (6):
-  linux-user: Honor elf alignment when placing images
-  linux-user: Drop image_info.alignment
-  linux-user/aarch64: Reduce vdso alignment to 4k
-  linux-user/arm: Reduce vdso alignment to 4k
-  linux-user/loongarch64: Reduce vdso alignment to 4k
-  linux-user/ppc: Reduce vdso alignment to 4k
+delta 38
+wcmV+>0NMYz9=INmtpWi6k*~QF<@TF=qRS8+wHM`Qf0n_&>m=ZivwQ)(4PLhrs{jB1
 
- linux-user/qemu.h                    |   1 -
- linux-user/elfload.c                 |  38 ++++++++++++++++++++-------
- linux-user/aarch64/Makefile.vdso     |   5 ++--
- linux-user/aarch64/vdso-be.so        | Bin 3224 -> 3224 bytes
- linux-user/aarch64/vdso-le.so        | Bin 3224 -> 3224 bytes
- linux-user/arm/Makefile.vdso         |   2 +-
- linux-user/arm/vdso-be.so            | Bin 2648 -> 2648 bytes
- linux-user/arm/vdso-le.so            | Bin 2648 -> 2648 bytes
- linux-user/loongarch64/Makefile.vdso |   3 ++-
- linux-user/loongarch64/vdso.so       | Bin 3560 -> 3560 bytes
- linux-user/ppc/Makefile.vdso         |   6 +++--
- linux-user/ppc/vdso-32.so            | Bin 3020 -> 3020 bytes
- linux-user/ppc/vdso-64.so            | Bin 3896 -> 3896 bytes
- linux-user/ppc/vdso-64le.so          | Bin 3896 -> 3896 bytes
- 14 files changed, 39 insertions(+), 16 deletions(-)
+diff --git a/linux-user/ppc/vdso-64le.so b/linux-user/ppc/vdso-64le.so
+index 258a03b807c4eca23547d978c16d1ad5ebd08bc5..424abb4290b7d3100e9dede2f3059483608ba703 100755
+GIT binary patch
+delta 38
+wcmV+>0NMYz9=INmsR9rHk*mEFj|Vri9^_Z(nV0Nw;)4VN>*aZovwQ)(4Mvj@kpKVy
+
+delta 38
+wcmV+>0NMYz9=INmsR952k*mEF`$9%&`;)~jB!C2C?=itIoQ(CfvwQ)(4MbHDMgRZ+
 
 -- 
 2.43.0
