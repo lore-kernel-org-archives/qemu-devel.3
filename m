@@ -4,68 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 974A2D41D4E
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 03:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF20D41D52
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 05:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAhje-0002w5-E1; Mon, 11 Nov 2024 22:38:34 -0500
+	id 1tAjSA-0004ib-R9; Tue, 12 Nov 2024 00:28:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tAhjb-0002uj-Lm; Mon, 11 Nov 2024 22:38:31 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1tAhjZ-0002gY-F0; Mon, 11 Nov 2024 22:38:31 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxUa+tzTJnqL07AA--.52621S3;
- Tue, 12 Nov 2024 11:38:21 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMAx7uCqzTJnsz1SAA--.56511S3;
- Tue, 12 Nov 2024 11:38:21 +0800 (CST)
-Subject: Re: [PATCH 3/3] hw/intc/loongarch_extioi: Use set_bit32() and
- clear_bit32() for s->isr
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20241108135514.4006953-1-peter.maydell@linaro.org>
- <20241108135514.4006953-4-peter.maydell@linaro.org>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <7ae0d2a1-6b62-1913-75e7-a1316f3cd91a@loongson.cn>
-Date: Tue, 12 Nov 2024 11:37:51 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tAjS7-0004i7-La
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 00:28:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tAjS6-0004If-63
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 00:28:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731389310;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0cpccIjpFxDWECk21DgBAahSfJS1J1ZhQXmJR4Ugfnc=;
+ b=FPk+OClop3xTrKjDQJbzjxJ8kAMiIe7slYYrNGSo+746Nk+6A5/6f++DB8DEsup+uDOnMs
+ A1QnuPM3sfKDxRhyopGD4WEmG3bJrdNaDWm4JfmES4QkKEXxiCF34YXXfdfqeWNKb9jBi3
+ HyATlsqyCGFXnNQzSwKV9bRLxmtFx1E=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-663-S4Vl7E29OJq6MG5wNd6snQ-1; Tue, 12 Nov 2024 00:28:28 -0500
+X-MC-Unique: S4Vl7E29OJq6MG5wNd6snQ-1
+X-Mimecast-MFC-AGG-ID: S4Vl7E29OJq6MG5wNd6snQ
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d5ca192b8so3000346f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 21:28:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731389307; x=1731994107;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0cpccIjpFxDWECk21DgBAahSfJS1J1ZhQXmJR4Ugfnc=;
+ b=lh5N/rJJxj4yBjHigLBXSYsnoZH61/lKfoVcShLfz4XLfD2LYpUevxB2hLQo6bkEDx
+ wKf6WPgVmlr6djOvWy4v3DpB2dFlPeo8wAbDXX9t3p6g8JIxTj64UcXsEqTzhNOMzzq9
+ bo4VUi56q07XgWEbT74d+k3mR4CnXR7zPDgTjAjG1WG2cs3RcAsissPL4W3Oj2n26Vgh
+ FI7UGg8QWsVnVXU+YE10Dk8TXnWlHcZlVWB0afS+WDF9iqoCRpDDFQG5Ud2r1nigIGHz
+ z7dJV/SYeDDR6IW5goH9Ws2iLk0qobnZDMrZfLt+ENi0dHmE+LCGxojul26rVXXMpN1p
+ t1JQ==
+X-Gm-Message-State: AOJu0Yxf8Er1Q2KMncBGFnO6CjzH51AWnMJoXWub5qssMFhc/33ARYQJ
+ wjPKD6c9hutzAAGrhXGukKjeRsCcOJpxJgJnLHjgUKo2Mu5O0cwOOGMulDZqOv1NNNwLhRq7oMd
+ 6lzcGfx7tB7QMglepPfo+wjN6Ke74xmWno4KxJDnXRJseGkx92PsQkIw0nwob87Jb7oLWma2XfX
+ thk4K4aRo/WyDqPXSkTD3UyzGZFAw=
+X-Received: by 2002:a05:6000:20ca:b0:381:f587:40c4 with SMTP id
+ ffacd0b85a97d-381f5874181mr8425816f8f.21.1731389307452; 
+ Mon, 11 Nov 2024 21:28:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGvduCeEM6H3Xv8sqcar/W9cpltePWSjgdoTMg2x0SQriWnFg2LX7BpMb1u6AdN7euOGvwBxByYolIx6neSc24=
+X-Received: by 2002:a05:6000:20ca:b0:381:f587:40c4 with SMTP id
+ ffacd0b85a97d-381f5874181mr8425810f8f.21.1731389307098; Mon, 11 Nov 2024
+ 21:28:27 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20241108135514.4006953-4-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAx7uCqzTJnsz1SAA--.56511S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWF4xAw4xKw43ZF13CFy5WrX_yoW5Zr13pF
- y5Cr1Ykr4xX34UJ3yvg3yY9ryUWFnYva4YyF42vry0gFy3GFyFgFykKryUXF4UC34kXay2
- 9FW5Xw4qvFWYyagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70Pf
- DUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.909,
+References: <20241108180139.117112-1-pbonzini@redhat.com>
+ <20241108180139.117112-6-pbonzini@redhat.com>
+ <SY0P300MB1026324D1571BBD2E001536695592@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+In-Reply-To: <SY0P300MB1026324D1571BBD2E001536695592@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 12 Nov 2024 06:28:14 +0100
+Message-ID: <CABgObfZUURf_QpdtqzmGF567Uk8obxdQ1P_WeVN1Ag=uG+J46A@mail.gmail.com>
+Subject: Re: [RFC PATCH 05/11] rust: cargo: store desired warning levels in
+ workspace Cargo.toml
+To: Junjie Mao <junjie.mao@hotmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+ Emmanouil Pitsidianakis <manos.pitsidianakis@linaro.org>, "Wolf,
+ Kevin" <kwolf@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, qemu-rust@nondevel.org
+Content-Type: multipart/alternative; boundary="0000000000009e35230626b07c3a"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.671,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,80 +102,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--0000000000009e35230626b07c3a
+Content-Type: text/plain; charset="UTF-8"
 
+Il mar 12 nov 2024, 04:17 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
 
-On 2024/11/8 下午9:55, Peter Maydell wrote:
-> In extioi_setirq() we try to operate on a bit array stored as an
-> array of uint32_t using the set_bit() and clear_bit() functions
-> by casting the pointer to 'unsigned long *'.
-> This has two problems:
->   * the alignment of 'uint32_t' is less than that of 'unsigned long'
->     so we pass an insufficiently aligned pointer, which is
->     undefined behaviour
->   * on big-endian hosts the 64-bit 'unsigned long' will have
->     its two halves the wrong way around, and we will produce
->     incorrect results
-> 
-> The undefined behaviour is shown by the clang undefined-behaviour
-> sanitizer when running the loongarch64-virt functional test:
-> 
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/include/qemu/bitops.h:41:5: runtime error: store to misaligned address 0x555559745d9c for type 'unsigned long', which requires 8 byte alignment
-> 0x555559745d9c: note: pointer points here
->    ff ff ff ff 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
->                ^
->      #0 0x555556fb81c4 in set_bit /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/include/qemu/bitops.h:41:9
->      #1 0x555556fb81c4 in extioi_setirq /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../hw/intc/loongarch_extioi.c:65:9
->      #2 0x555556fb6e90 in pch_pic_irq_handler /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../hw/intc/loongarch_pch_pic.c:75:5
->      #3 0x555556710265 in serial_ioport_write /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../hw/char/serial.c
-> 
-> Fix these problems by using set_bit32() and clear_bit32(),
-> which work with bit arrays stored as an array of uint32_t.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: cbff2db1e92f8759 ("hw/intc: Add LoongArch extioi interrupt controller(EIOINTC)")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/intc/loongarch_extioi.c | 11 +++--------
->   1 file changed, 3 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
-> index 02dc4e6db3b..97d1af5ccc2 100644
-> --- a/hw/intc/loongarch_extioi.c
-> +++ b/hw/intc/loongarch_extioi.c
-> @@ -57,14 +57,9 @@ static void extioi_setirq(void *opaque, int irq, int level)
->       LoongArchExtIOI *s = LOONGARCH_EXTIOI(opaque);
->       trace_loongarch_extioi_setirq(irq, level);
->       if (level) {
-> -        /*
-> -         * s->isr should be used in vmstate structure,
-> -         * but it not support 'unsigned long',
-> -         * so we have to switch it.
-> -         */
-> -        set_bit(irq, (unsigned long *)s->isr);
-> +        set_bit32(irq, s->isr);
->       } else {
-> -        clear_bit(irq, (unsigned long *)s->isr);
-> +        clear_bit32(irq, s->isr);
->       }
->       extioi_update_irq(s, irq, level);
->   }
-> @@ -154,7 +149,7 @@ static inline void extioi_update_sw_coremap(LoongArchExtIOI *s, int irq,
->               continue;
->           }
->   
-> -        if (notify && test_bit(irq + i, (unsigned long *)s->isr)) {
-> +        if (notify && test_bit32(irq + i, s->isr)) {
->               /*
->                * lower irq at old cpu and raise irq at new cpu
->                */
-> 
-Hi Peter,
+> Making a universal unexpected_cfgs apply to the whole workspace may lead
+> to a lengthy cfg list when more devices in Rust are added. As cargo does
+> not allow overriding workspace-defined lints once inherited, I think it
+> better to keep unexpected_cfgs crate-specific.
+>
 
-Thanks for finding and fixing this issue, it looks good to me.
+Is it possible? I thought you cannot override at a finer granularity once
+you have a "workspace = true" line.
 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Based on the experience with C we shouldn't have many cfgs, but if it's
+possible I would definitely make unexpected_cfgs specific to qemu-api.
 
-Regards
-Bibo Mao
+Paolo
+
+> --
+> Best Regards
+> Junjie Mao
+>
+>
+
+--0000000000009e35230626b07c3a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il mar 12 nov 2024, 04:17 Junjie Mao &lt;<a href=3D"ma=
+ilto:junjie.mao@hotmail.com">junjie.mao@hotmail.com</a>&gt; ha scritto:<br>=
+</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex">Making a universal =
+unexpected_cfgs apply to the whole workspace may lead<br>
+to a lengthy cfg list when more devices in Rust are added. As cargo does<br=
+>
+not allow overriding workspace-defined lints once inherited, I think it<br>
+better to keep unexpected_cfgs crate-specific.<br></blockquote></div></div>=
+<div dir=3D"auto"><br></div><div dir=3D"auto">Is it possible? I thought you=
+ cannot override at a finer granularity once you have a &quot;workspace =3D=
+ true&quot; line.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Based =
+on the experience with C we shouldn&#39;t have many cfgs, but if it&#39;s p=
+ossible I would definitely make unexpected_cfgs specific to qemu-api.</div>=
+<div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto">=
+<div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margi=
+n:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex=
+">
+--<br>
+Best Regards<br>
+Junjie Mao<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000009e35230626b07c3a--
 
 
