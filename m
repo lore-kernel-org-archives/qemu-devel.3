@@ -4,92 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05217D42BB3
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:08:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88231D42BB3
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:08:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAuJ4-0003xH-F9; Tue, 12 Nov 2024 12:03:59 -0500
+	id 1tAuKi-0006vU-LA; Tue, 12 Nov 2024 12:05:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1tAuHg-0003KG-Bw; Tue, 12 Nov 2024 12:02:42 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1tAuHd-0001US-M9; Tue, 12 Nov 2024 12:02:32 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-20c714cd9c8so60650155ad.0; 
- Tue, 12 Nov 2024 09:02:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731430947; x=1732035747; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f2Mkn+a1ArVn/Zal2kb6KrZbuO2GIdq8fyFe0czvqzo=;
- b=WU3WdzgNhGSWWXCch3/FuiVzW9fhdFj/2PjKid8RISZA4LW351s2SYNtpjHs2IU4/W
- 5VkuKTtdZsqA49sCHKKUKo54RhNgdkicWuWZ3VmIXHFWAOFHKDUEn7tnDUiag/0Kqobg
- Xw9Ofsr/swrdrcZEb1EEnmbwBEi7g8KMxbr+e1LXcZlaSLXMdJKkSgCve+rgbQ2UoYbS
- QK60DD1IQEwzIplAHrccFbuKWZc2VepHwgvkuPkCFModYn4iyNCvedVVlsMozWkCcaOA
- HS9rhsXfZxyCE3YGhd57RqIbhqKBp9Tfh0OXLgq2uLrXOihtNEgKZs36DGVnkoWFnWLD
- ENKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731430947; x=1732035747;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=f2Mkn+a1ArVn/Zal2kb6KrZbuO2GIdq8fyFe0czvqzo=;
- b=sDmuFgwdgSBuJW28hGdWJHVvxnYwoH1vblZC2pQWO/EienZivF3Ly+D4ronxLBdmda
- 3P0Cp67JiTqFQ4wtpTzyq2Qlx8/odJReXKFu4dsoRXrJimHIeSBLz/rrUdtOq6ZIHKc1
- WNiwfI7E+j6NOACMSGDlh2Z7710EpYF0XzLHjSF2aWDe7tV6HGg1pcMICKvArQM34kGs
- PnzDWvmENCzaP1zZY1GefVto6upPzFUJAKgHHApZ/inzA6KcwIJN5Dt3K+JUfHnt3eJs
- fyZpaDG1+LDdCbKk/wqh4ZbuqMYtw41SVLcCVP+LErv+NAu5pYXNo9PrN9Cu1XLzXzsz
- t42A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUrgld+a5l89MJhjbAexMZRfNnXYNlGT4sJaI399A1ys904Q4FfZdPtqsKewXP0SwvwmUqwufpfGA==@nongnu.org
-X-Gm-Message-State: AOJu0YwYvdDg7ragLXYiw0fy/K9xPjfhUGaAAmsiOyLG9DqNJv8FpbO9
- /o3jLyfulqE443nFaC5JTYDVIlezIzYcDxoZIBK21HgpHSg4bP0E9T0s/w==
-X-Google-Smtp-Source: AGHT+IGlKEhf4/Kyg/O/oLUCFB9s113ug/DPAof1vGrRM4XQhrw4+EmsENyiwRp+ds3QNu/yPW/RHg==
-X-Received: by 2002:a17:902:c405:b0:20c:7ae1:92cb with SMTP id
- d9443c01a7336-21183d2ebddmr227088045ad.15.1731430947371; 
- Tue, 12 Nov 2024 09:02:27 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21177e42782sm95357005ad.157.2024.11.12.09.02.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 09:02:26 -0800 (PST)
-From: Guenter Roeck <linux@roeck-us.net>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tAuIa-0003Vc-6Y
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tAuIW-0001ZP-Re
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731431003;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=j5hW+ko2CvgJ136Iuxuu+60x4pzVtirtMo/NDTCH6Ko=;
+ b=NGXlCIHOYw4RZRXOkJcxPWW6/71sGk9OeDCOFv06jqmo/8goUiIdufSbhUWYPpgCOKCYyL
+ rrDXh2ICfTcw6BuNTCsrk5L+S5NB3hi46OW4KH3v5att6l2vV3qkBdU5D9KihJacNXunGW
+ ogSviZ1wdAfUUJWNyZnpebo5f+jyv1s=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-TX2hogeKP4ShvciahbDvyQ-1; Tue,
+ 12 Nov 2024 12:03:13 -0500
+X-MC-Unique: TX2hogeKP4ShvciahbDvyQ-1
+X-Mimecast-MFC-AGG-ID: TX2hogeKP4ShvciahbDvyQ
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4238119560B0; Tue, 12 Nov 2024 17:03:12 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 924001956086; Tue, 12 Nov 2024 17:03:09 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, BALATON Zoltan <balaton@eik.bme.hu>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, Guenter Roeck <linux@roeck-us.net>
-Subject: [RESEND PATCH 07/10] aspeed: Add uhci support for ast2600
-Date: Tue, 12 Nov 2024 09:01:49 -0800
-Message-ID: <20241112170152.217664-8-linux@roeck-us.net>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241112170152.217664-1-linux@roeck-us.net>
-References: <20241112170152.217664-1-linux@roeck-us.net>
+Cc: salil.mehta@huawei.com, mst@redhat.com, imammedo@redhat.com,
+ jonathan.cameron@huawei.com, linuxarm@huawei.com, anisinha@redhat.com,
+ karl.heubaum@oracle.com, miguel.luis@oracle.com, gustavo.romero@linaro.org
+Subject: [PATCH 2/7 for-9.2] Revert "hw/acpi: Update ACPI `_STA` method with
+ QOM vCPU ACPI Hotplug states"
+Date: Tue, 12 Nov 2024 18:02:53 +0100
+Message-ID: <20241112170258.2996640-3-imammedo@redhat.com>
+In-Reply-To: <20241112170258.2996640-1-imammedo@redhat.com>
+References: <20241112170258.2996640-1-imammedo@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=groeck7@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,114 +88,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add UHCI support for the ast2600 SoC. With this patch, UHCI support
-is successfully enabled on the rainier-bmc and ast2600-evb machines.
+This reverts commit bf1ecc8dad6061914730a2a2d57af6b37c3a4f8d
+which broke cpu hotplug in x86 after migration to older QEMU
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: bf1ecc8dad606 (w/acpi: Update ACPI `_STA` method with QOM vCPU ACPI Hotplug states)
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 ---
-Changes since RFC:
-- Rebased to v9.1.0-1673-g134b443512
-- Use EHCI companion mode
+ include/hw/core/cpu.h |  1 -
+ hw/acpi/cpu.c         | 38 ++++----------------------------------
+ 2 files changed, 4 insertions(+), 35 deletions(-)
 
- hw/arm/aspeed_ast2600.c     | 20 ++++++++++++++++++++
- include/hw/arm/aspeed_soc.h |  3 +++
- 2 files changed, 23 insertions(+)
-
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index be3eb70cdd..0592bfb2bf 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -33,6 +33,7 @@ static const hwaddr aspeed_soc_ast2600_memmap[] = {
-     [ASPEED_DEV_SPI2]      = 0x1E631000,
-     [ASPEED_DEV_EHCI1]     = 0x1E6A1000,
-     [ASPEED_DEV_EHCI2]     = 0x1E6A3000,
-+    [ASPEED_DEV_UHCI]      = 0x1E6B0000,
-     [ASPEED_DEV_MII1]      = 0x1E650000,
-     [ASPEED_DEV_MII2]      = 0x1E650008,
-     [ASPEED_DEV_MII3]      = 0x1E650010,
-@@ -110,6 +111,7 @@ static const int aspeed_soc_ast2600_irqmap[] = {
-     [ASPEED_DEV_SDHCI]     = 43,
-     [ASPEED_DEV_EHCI1]     = 5,
-     [ASPEED_DEV_EHCI2]     = 9,
-+    [ASPEED_DEV_UHCI]      = 10,
-     [ASPEED_DEV_EMMC]      = 15,
-     [ASPEED_DEV_GPIO]      = 40,
-     [ASPEED_DEV_GPIO_1_8V] = 11,
-@@ -206,6 +208,8 @@ static void aspeed_soc_ast2600_init(Object *obj)
-                                 TYPE_PLATFORM_EHCI);
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index db8a6fbc6e..e7de77dc6d 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -159,7 +159,6 @@ struct CPUClass {
+     void (*query_cpu_fast)(CPUState *cpu, CpuInfoFast *value);
+     int64_t (*get_arch_id)(CPUState *cpu);
+     bool (*cpu_persistent_status)(CPUState *cpu);
+-    bool (*cpu_enabled_status)(CPUState *cpu);
+     void (*set_pc)(CPUState *cpu, vaddr value);
+     vaddr (*get_pc)(CPUState *cpu);
+     int (*gdb_read_register)(CPUState *cpu, GByteArray *buf, int reg);
+diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
+index 23443f09a5..9b03b4292e 100644
+--- a/hw/acpi/cpu.c
++++ b/hw/acpi/cpu.c
+@@ -50,18 +50,6 @@ void acpi_cpu_ospm_status(CPUHotplugState *cpu_st, ACPIOSTInfoList ***list)
      }
+ }
  
-+    object_initialize_child(obj, "uhci", &s->uhci, TYPE_ASPEED_UHCI);
-+
-     snprintf(typename, sizeof(typename), "aspeed.sdmc-%s", socname);
-     object_initialize_child(obj, "sdmc", &s->sdmc, typename);
-     object_property_add_alias(obj, "ram-size", OBJECT(&s->sdmc),
-@@ -294,6 +298,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-     qemu_irq irq;
-     g_autofree char *sram_name = NULL;
-+    g_autofree char *usb_bus = g_strdup_printf("usb-bus.%u", sc->ehcis_num - 1);
+-static bool check_cpu_enabled_status(DeviceState *dev)
+-{
+-    CPUClass *k = dev ? CPU_GET_CLASS(dev) : NULL;
+-    CPUState *cpu = CPU(dev);
+-
+-    if (cpu && (!k->cpu_enabled_status || k->cpu_enabled_status(cpu))) {
+-        return true;
+-    }
+-
+-    return false;
+-}
+-
+ static uint64_t cpu_hotplug_rd(void *opaque, hwaddr addr, unsigned size)
+ {
+     uint64_t val = 0;
+@@ -75,11 +63,10 @@ static uint64_t cpu_hotplug_rd(void *opaque, hwaddr addr, unsigned size)
+     cdev = &cpu_st->devs[cpu_st->selector];
+     switch (addr) {
+     case ACPI_CPU_FLAGS_OFFSET_RW: /* pack and return is_* fields */
+-        val |= check_cpu_enabled_status(DEVICE(cdev->cpu)) ? 1 : 0;
++        val |= cdev->cpu ? 1 : 0;
+         val |= cdev->is_inserting ? 2 : 0;
+         val |= cdev->is_removing  ? 4 : 0;
+         val |= cdev->fw_remove  ? 16 : 0;
+-        val |= cdev->cpu ? 32 : 0;
+         trace_cpuhp_acpi_read_flags(cpu_st->selector, val);
+         break;
+     case ACPI_CPU_CMD_DATA_OFFSET_RW:
+@@ -362,7 +349,6 @@ const VMStateDescription vmstate_cpu_hotplug = {
+ #define CPU_REMOVE_EVENT  "CRMV"
+ #define CPU_EJECT_EVENT   "CEJ0"
+ #define CPU_FW_EJECT_EVENT "CEJF"
+-#define CPU_PRESENT       "CPRS"
  
-     /* Default boot region (SPI memory or ROMs) */
-     memory_region_init(&s->spi_boot_container, OBJECT(s),
-@@ -472,6 +477,10 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
+                     build_madt_cpu_fn build_madt_cpu, hwaddr base_addr,
+@@ -423,9 +409,7 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
+         aml_append(field, aml_named_field(CPU_EJECT_EVENT, 1));
+         /* tell firmware to do device eject, write only */
+         aml_append(field, aml_named_field(CPU_FW_EJECT_EVENT, 1));
+-        /* 1 if present, read only */
+-        aml_append(field, aml_named_field(CPU_PRESENT, 1));
+-        aml_append(field, aml_reserved_field(2));
++        aml_append(field, aml_reserved_field(3));
+         aml_append(field, aml_named_field(CPU_COMMAND, 8));
+         aml_append(cpu_ctrl_dev, field);
  
-     /* EHCI */
-     for (i = 0; i < sc->ehcis_num; i++) {
-+        if (i == sc->ehcis_num - 1) {
-+            object_property_set_bool(OBJECT(&s->ehci[i]), "companion-enable",
-+                                     true, &error_fatal);
-+        }
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->ehci[i]), errp)) {
-             return;
-         }
-@@ -481,6 +490,17 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-                            aspeed_soc_get_irq(s, ASPEED_DEV_EHCI1 + i));
-     }
+@@ -455,7 +439,6 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
+         Aml *ctrl_lock = aml_name("%s.%s", cphp_res_path, CPU_LOCK);
+         Aml *cpu_selector = aml_name("%s.%s", cphp_res_path, CPU_SELECTOR);
+         Aml *is_enabled = aml_name("%s.%s", cphp_res_path, CPU_ENABLED);
+-        Aml *is_present = aml_name("%s.%s", cphp_res_path, CPU_PRESENT);
+         Aml *cpu_cmd = aml_name("%s.%s", cphp_res_path, CPU_COMMAND);
+         Aml *cpu_data = aml_name("%s.%s", cphp_res_path, CPU_DATA);
+         Aml *ins_evt = aml_name("%s.%s", cphp_res_path, CPU_INSERT_EVENT);
+@@ -484,26 +467,13 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
+         {
+             Aml *idx = aml_arg(0);
+             Aml *sta = aml_local(0);
+-            Aml *ifctx2;
+-            Aml *else_ctx;
  
-+    /* UHCI */
-+    object_property_set_str(OBJECT(&s->uhci), "masterbus", usb_bus,
-+                            &error_fatal);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->uhci), errp)) {
-+        return;
-+    }
-+    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->uhci), 0,
-+                    sc->memmap[ASPEED_DEV_UHCI]);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->uhci), 0,
-+                       aspeed_soc_get_irq(s, ASPEED_DEV_UHCI));
-+
-     /* SDMC - SDRAM Memory Controller */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
-         return;
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 689f52dae8..e579911ced 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -34,6 +34,7 @@
- #include "hw/gpio/aspeed_gpio.h"
- #include "hw/sd/aspeed_sdhci.h"
- #include "hw/usb/hcd-ehci.h"
-+#include "hw/usb/hcd-uhci-sysbus.h"
- #include "qom/object.h"
- #include "hw/misc/aspeed_lpc.h"
- #include "hw/misc/unimp.h"
-@@ -72,6 +73,7 @@ struct AspeedSoCState {
-     AspeedSMCState fmc;
-     AspeedSMCState spi[ASPEED_SPIS_NUM];
-     EHCISysBusState ehci[ASPEED_EHCIS_NUM];
-+    ASPEEDUHCIState uhci;
-     AspeedSBCState sbc;
-     AspeedSLIState sli;
-     AspeedSLIState sliio;
-@@ -193,6 +195,7 @@ enum {
-     ASPEED_DEV_SPI2,
-     ASPEED_DEV_EHCI1,
-     ASPEED_DEV_EHCI2,
-+    ASPEED_DEV_UHCI,
-     ASPEED_DEV_VIC,
-     ASPEED_DEV_INTC,
-     ASPEED_DEV_SDMC,
+             aml_append(method, aml_acquire(ctrl_lock, 0xFFFF));
+             aml_append(method, aml_store(idx, cpu_selector));
+             aml_append(method, aml_store(zero, sta));
+-            ifctx = aml_if(aml_equal(is_present, one));
++            ifctx = aml_if(aml_equal(is_enabled, one));
+             {
+-                ifctx2 = aml_if(aml_equal(is_enabled, one));
+-                {
+-                    /* cpu is present and enabled */
+-                    aml_append(ifctx2, aml_store(aml_int(0xF), sta));
+-                }
+-                aml_append(ifctx, ifctx2);
+-                else_ctx = aml_else();
+-                {
+-                    /* cpu is present but disabled */
+-                    aml_append(else_ctx, aml_store(aml_int(0xD), sta));
+-                }
+-                aml_append(ifctx, else_ctx);
++                aml_append(ifctx, aml_store(aml_int(0xF), sta));
+             }
+             aml_append(method, ifctx);
+             aml_append(method, aml_release(ctrl_lock));
 -- 
-2.45.2
+2.43.0
 
 
