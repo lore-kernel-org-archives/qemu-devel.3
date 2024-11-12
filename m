@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71280D597A4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 21:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D17D597A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 21:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAy81-0000u1-MS; Tue, 12 Nov 2024 16:08:49 -0500
+	id 1tAyHS-00028R-MS; Tue, 12 Nov 2024 16:18:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tAy7x-0000tY-Dc
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:08:45 -0500
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ id 1tAyHQ-000282-Ay
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:18:32 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tAy7v-0002oM-UH
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:08:45 -0500
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-539d9fffea1so6163981e87.2
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 13:08:42 -0800 (PST)
+ id 1tAyHN-0003lo-DO
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:18:31 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-37d5689eea8so3628529f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 13:18:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731445721; x=1732050521; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731446307; x=1732051107; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KmdEFgq45obI7C56tRv6Ix6570wzi8bDm2li0JdWk1g=;
- b=XAFg2ukg2yO/A5pfw/Pwq+IpQtDvAdh6i/Ge1EeCh+Pw0RJx+jgbJCsRdf52Fj39LT
- NzAmthdYgQQYMRvWBaOAMu8gGvVwvCgNmUs5cl2/gvWBvWrFRVzUiY+uFKHxQszbCBpE
- vnG55ECkTDgkqLI/02Ach3+IEZjq9XWRnnq+zOYGpYWaWJWPJ+TLndjn53gNEeooKFpn
- 8NtzFAfvalgKwVtdDnibtE8dSgA4kIWZDGAb4lwd7GX8d21C7GWw47IBv3y3s6DTReN7
- yNllPI2bcVu1UCKfxGfUSai+TOiS4/O6gSVsXGGlyHck1riCjiCbKfMrXjDLoqwSIHoR
- 7ylA==
+ bh=oBEDXQIHr58JSmTF4s/1h1xSHIZph2x02RwZ4yllt1c=;
+ b=fBZ9IbCsGsusv2Y8dH42TknFAUNEi0phQ1D9wVCrQteHPrWGHkT0XFGwklLUq1nxMD
+ MNGqsJJOkaDkkVm+8FK7xKazEavcmneWN8xpxwaDKI8U5aR6dhusy/QuV4p7bqrAF3id
+ c87465UUD4kzqHyiV0vucVKYnhsJQNLEW0X91kLFvjopmgAhUAE2DuR/GMtBAUJ30yZs
+ nONc8q0H7golstiruby6yglECYoJM9A7NrjYgXkpwHXBoFZ/NKiJF8xH/14jQ7rL6gFw
+ /jtoTLHooSmlrCyYozwtdc6LfpzppwVXGwao86LCm7tUc03FS+oxPJAlslDPHVlLEmKk
+ 5qYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731445721; x=1732050521;
+ d=1e100.net; s=20230601; t=1731446307; x=1732051107;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KmdEFgq45obI7C56tRv6Ix6570wzi8bDm2li0JdWk1g=;
- b=wWSCWRi/VaSXUVHXm3ya022XO9IZ5jtS3K1I3NbB5gE5HqdJR+nXWMh12aiNgTxYyo
- 6QMY6V+WiNr8Jxgh/mfYY9Zv5gA4FNsk5FD7WoShv3kSu2PMNyNACtyc+2nt4EfalVBk
- wwP73EimEgvACL/EpOL4pgzMOVHmNJoVyabWDMxvHHKcLlsxeFV/agtYAey5iuae52w9
- IbxE3xF+GtE9FTxm9N+cQBcwSXRZBf8Q0n+sjFTwI94hEDdy317vq2kQUQL+PEgDq6K0
- 3TZBeg1znoHQEFCdoK3UAol7NB0ZGhfak533N2cl0l1ok5wqju2ffOw9vi5sPp6tVuOQ
- QwVQ==
-X-Gm-Message-State: AOJu0YwqAo5/rHAERAbpD2XgRD5jw3xWtf8V7eebiNpb2jSjqdK2tlZx
- sM42BysMxbbcfWzL+f8dGUkd0pxyufkCGJCkWhZLSHaqeoFlZ435wN+mCJAiaOg=
-X-Google-Smtp-Source: AGHT+IHwXPU+OvJ7K6tH4OQnaXMusEVgTrsO34ZcPGeX4OiEY+tJUkLA9PGvxdRqd3cPJvUNJvSfRQ==
-X-Received: by 2002:a05:6512:3403:b0:53b:2114:92a7 with SMTP id
- 2adb3069b0e04-53d862f359cmr9372372e87.52.1731445721055; 
- Tue, 12 Nov 2024 13:08:41 -0800 (PST)
+ bh=oBEDXQIHr58JSmTF4s/1h1xSHIZph2x02RwZ4yllt1c=;
+ b=qzRiOTyT25hiHEnqTR56S1XYQv+Icp3y/64anlWUshFfCWvRPNnwF+3JwekZveS/YW
+ DaKkMIu1+dd8hLce5auLOdVF+AO19KgF5khQiCp3SjrlUWSYdUhU/xypCvsROw+4SIJW
+ wxoaObBtFLHMrAo4QsRGG39DkS/ducgJMe5LcKlFX+S6yq8cwiXVaJc6N7Uk36MRiPzx
+ GXIlS1PWegfDC9xhZie5HBj4Fp5OWB7qjLfWvF9SF0tEmWorOlCHCpVKpHXs5SKF52sw
+ ARV5kBVqvRZCoggZ4Cg3mt6D+KnjXS5t9ZsiXk7syF0PYesmXQXBZDISGwVvENBaSfvP
+ fxRQ==
+X-Gm-Message-State: AOJu0Yzd2ke0Qvz5xfMvCcUKDEAkclTsJiLBKXNfX6rGJXJFRTFqZOq1
+ nGxnTVYl+yHctYhqOlkiChFTz6uJVAuonDnv/0Exn5upJD32VJrSOO64K42t+RM=
+X-Google-Smtp-Source: AGHT+IGS+vqVnjnTvQP4zWKmXz+RdV0gjGgqHHIOdLm2klPfJaS9oEPQhhvWECnIfraHAW7+tQw98A==
+X-Received: by 2002:a5d:5e0a:0:b0:382:ce0:a7c8 with SMTP id
+ ffacd0b85a97d-3820ce0a843mr1190024f8f.42.1731446307259; 
+ Tue, 12 Nov 2024 13:18:27 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0dc50ddsm781442166b.103.2024.11.12.13.08.40
+ ffacd0b85a97d-381ed970f85sm16674171f8f.6.2024.11.12.13.18.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 13:08:40 -0800 (PST)
+ Tue, 12 Nov 2024 13:18:26 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 930115F7CB;
- Tue, 12 Nov 2024 21:08:39 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id CCFC25F7CB;
+ Tue, 12 Nov 2024 21:18:25 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Alexandre Iooss <erdnaxe@crans.org>,  Cleber
- Rosa <crosa@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  John
- Snow <jsnow@redhat.com>
-Subject: Re: [PATCH v3 0/3] plugins: generate list of symbols automatically
-In-Reply-To: <20241106170923.2976750-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Wed, 6 Nov 2024 09:09:20 -0800")
-References: <20241106170923.2976750-1-pierrick.bouvier@linaro.org>
+To: Aleksandar Rakic <rakicaleksandar1999@gmail.com>
+Cc: qemu-devel@nongnu.org,  djordje.todorovic@htecgroup.com,  cfu@mips.com,
+ arikalo@gmail.com,  philmd@linaro.org,  Aleksandar Rakic
+ <aleksandar.rakic@htecgroup.com>,  Faraz Shahbazker
+ <fshahbazker@wavecomp.com>
+Subject: Re: [PATCH] GTM19-448: Fix script to work without realpath
+In-Reply-To: <20241112183849.2577570-1-aleksandar.rakic@htecgroup.com>
+ (Aleksandar Rakic's message of "Tue, 12 Nov 2024 19:38:49 +0100")
+References: <20241112183849.2577570-1-aleksandar.rakic@htecgroup.com>
 User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Tue, 12 Nov 2024 21:08:39 +0000
-Message-ID: <877c98upm0.fsf@draig.linaro.org>
+Date: Tue, 12 Nov 2024 21:18:25 +0000
+Message-ID: <87zfm4tala.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,36 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Aleksandar Rakic <rakicaleksandar1999@gmail.com> writes:
 
-> Now that meson build for plugins was merged, we can cleanup another part =
-with
-> the symbols file.
-> It has to be kept in sync between the header (qemu-plugin.h) and the symb=
-ols
-> file. This has proved to be error prone and tedious.
->
-> We solve this by generating this list from header directly using a python
-> script. Dependencies are triggered correctly, and the file is regenerated=
- if the
-> header is modified, as expected.
->
-> Pierrick Bouvier (3):
->   plugins: add missing export for qemu_plugin_num_vcpus
->   plugins: detect qemu plugin API symbols from header
->   plugins: eradicate qemu-plugins.symbols static file
->
->  MAINTAINERS                    |  1 +
->  include/qemu/qemu-plugin.h     |  1 +
->  plugins/meson.build            | 12 +++++--
+> The archive-source.sh script depends on realpath command, which was
+> introduced in coreutils-8.15. CentOS-6 build systems use coreutils-4.7,
+> which does not have realpath, so fix the script to use 'readlink -e' to
+> perform the same action.
 
-this failed to apply cleanly.=20
+Isn't CentOS-6 outside of our supported build platform range? We aim for
+latest stable release + 5 years. CentOS got to 8 before being replaced
+with CentOS Stream.
 
->  plugins/qemu-plugins.symbols   | 59 ----------------------------------
->  scripts/qemu-plugin-symbols.py | 45 ++++++++++++++++++++++++++
->  5 files changed, 56 insertions(+), 62 deletions(-)
->  delete mode 100644 plugins/qemu-plugins.symbols
->  create mode 100755 scripts/qemu-plugin-symbols.py
+>
+> Cherry-picked 5d1d5766f0219ce2bec4e41c2467317df920ec0a
+> and 8003ab4032772a0e5b46e5983fe06268d3469289
+> from https://github.com/MIPS/gnutools-qemu
+>
+> An instance of a pipeline of QEMU CI jobs run with input
+> variable QEMU_CI=3D1 for this patch is available here:
+> https://gitlab.com/rakicaleksandar1999/qemu/-/pipelines/1538854588
+> and for the master branch is available here:
+> https://gitlab.com/rakicaleksandar1999/qemu/-/pipelines/1533465414
+>
+> Signed-off-by: Faraz Shahbazker <fshahbazker@wavecomp.com>
+> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+> Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+> ---
+>  scripts/archive-source.sh | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
+> index 30677c3ec9..bfaa0c1483 100755
+> --- a/scripts/archive-source.sh
+> +++ b/scripts/archive-source.sh
+> @@ -18,7 +18,13 @@ if test $# -lt 1; then
+>      error "Usage: $0 <output tarball>"
+>  fi
+>=20=20
+> -tar_file=3D$(realpath "$1")
+> +which realpath
+> +if [ $? -eq 0 ]; then
+> +    tar_file=3D$(realpath -s "$1")
+> +else
+> +    d=3D$(dirname "$1")
+> +    tar_file=3D$(readlink -e "$d")"/"$(basename "$1")
+> +fi
+>  sub_tdir=3D$(mktemp -d "${tar_file%.tar}.sub.XXXXXXXX")
+>  sub_file=3D"${sub_tdir}/submodule.tar"
 
 --=20
 Alex Benn=C3=A9e
