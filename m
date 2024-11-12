@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8AAD597A3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE1E7D597A4
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 20:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAxec-0001IV-J7; Tue, 12 Nov 2024 15:38:26 -0500
+	id 1tAxea-0001IS-E9; Tue, 12 Nov 2024 15:38:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAxeY-0001Hc-CG
+ id 1tAxeV-0001HO-8l
  for qemu-devel@nongnu.org; Tue, 12 Nov 2024 15:38:23 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAxeK-0008Sw-8w
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 15:38:21 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-7ee7e87f6e4so4532978a12.2
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 12:38:04 -0800 (PST)
+ id 1tAxeK-0008T5-8j
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 15:38:13 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2e9b4a4182dso36950a91.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 12:38:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731443883; x=1732048683; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731443886; x=1732048686; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=i9Tx+e50KlhsYgpRqVjdsO/z4tv3m55Kc+AlE2OCoQs=;
- b=s9KSLqLjSdP9FhTEzjVTREwqrBkjqLZW512iM3/GRgSdLm/FbX8jXzJEUGyUi0v91t
- KmHWIEmDqbYllapFCKgB/Fp8ckWa3bNpVAHGrT5RI+ZNm+3Uf5c/6f5/CSl2sMsK6jkl
- ER1KnCnvfAU6q2I7a8bTM3PLymZVRjLIdmmLXgVKgj0wykW1kxDGNMDGePtInQCLG6KW
- kLEVjUUy+LPcRfa46DWdcEpO0TL3jrr/PTH9VPNfRuS7AafnN57eu5p8DVjGRAiDuQxf
- MfOlU2wDHEh6Dr13a1sMRgV1Y546Vm8coD1fS/w319mmOSAoCbrrqB40BJNiKes/wFQR
- zMkQ==
+ :reply-to; bh=yaKvdcW0NY8dMapEj6tw4tU32C5h1WMT1O6sfRI1f24=;
+ b=uABqF/gm1d3oKtz0sIjbvRTww04he3eYgTivUPEI/LBwY2XR7xw6TCM7Q1PldqWilO
+ 47giKxw9I5dfPQS1zj+4PHWBLlS/+snzMgVqRq94M4pNc61C606WyKFh2VBcv3K6kzh/
+ 6IxO0TSl0uc1HLHFsewtfxjs7bBaf1GQCuELVlh3wHdkm/wV8qojYW+n0GBup1c4w6YB
+ J3IjPDWPLZ2OVnnnzAj4ax0I+G4hdRwacuYaTZrtUXzfi6tZIKNU9WACZt7p6i4vClB7
+ Hn3XFL3+SRy2cvfKBGnQiodjQoywIU/X2uFseSydYMHWSnnPVePPebOifQ3YyXMERglv
+ M4sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731443883; x=1732048683;
+ d=1e100.net; s=20230601; t=1731443886; x=1732048686;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i9Tx+e50KlhsYgpRqVjdsO/z4tv3m55Kc+AlE2OCoQs=;
- b=nWyIluYh+jUqw04fV8LmaODWKMxeShepSI7vD3shoRqz1bH8OxQBN+aFGttSYbTn6e
- lMqdE7cnV5fdJijIau4sjCNdETq+1W0y7soPt5azqKoaVFviWRir4T0tQbPvpc/9B1Ak
- X2GlUEJtXD49IZxdaQrynqlNdseJavpDQlflRtbQDe6+hd0UMn6K33lXM0O8OiO6zoU5
- HRrcIP+LX7e8XVWFz51FYATA1Pp8meOa47c433N/PZzGO7JcUuBJM7SIk4hu9hd10A0D
- 2QppoXLLroWMlgCv0+Hn9iWuwkintmzD2Tkcy3xXU6s9GVZTBuEEu/4MxCuQ3VUfWdxz
- gYbg==
-X-Gm-Message-State: AOJu0YyoLq3HuMAmxh5cdT3t4ZzsSi8J5mSIVqAclt804Hj3rzs8zU1C
- 6YTRG7jFm7ZtMMXnHXcr7Pzo9gXX//PJgPJYssO3yqsBZYHPw4gkgPFlwYbkCkrwId/0LGVFTg/
- V
-X-Google-Smtp-Source: AGHT+IEWesqoAAo3sX2bA7Clerqd327iPQ5JhX8BTOxXQjcvZ3repDP9WJYn/VfAYNn8JGXilqpsdg==
-X-Received: by 2002:a17:90b:3847:b0:2e2:e159:8f7b with SMTP id
- 98e67ed59e1d1-2e9b16e6415mr21149876a91.3.1731443883349; 
- Tue, 12 Nov 2024 12:38:03 -0800 (PST)
+ bh=yaKvdcW0NY8dMapEj6tw4tU32C5h1WMT1O6sfRI1f24=;
+ b=jDMU9gYNWKfGMi7HFTfVvnmj8r7Pz/WNC8Iulm3VmEcW6kaXgK4hjpgdqwUrSpzY3T
+ hxvPyu7mdeLybU8OWV3lYkgDBWOcUG9gJlhXDtAaDnaic27P4VkRrSRbjwhidZn817Ww
+ D6IvX80JBDzpR9ToyA20wCPMKpyBRm7jXfADLVP8J/eFyihhHSWhdymFbAkudOA2teK2
+ 2bU/wDkkO2KsDP3wnYE/gtMiXN/2dTlMYraZ3g9n0jOoS8EvjBudLzmDDgupdqNJP5vx
+ KGbT9cpjWq3u41nZ2LSoWNXLjQ9fij2O9DTxOSflBZexjwG0dpYlm8zhuIAjMMUtNa9Z
+ Z8Fw==
+X-Gm-Message-State: AOJu0YzEWA1y5hU3BsZqdDPzShmvVeehFH5fVpEjpgkcBweYgnoRAbVg
+ TqUnR9aqHcmhT+rli3uQWQME0ReOb3rxZ0+zsYMQybO13X8+bYNV5LCo9TsOALDqn8GifPLc/bX
+ x
+X-Google-Smtp-Source: AGHT+IFVR7FvqKM0XxZbKEtilnOCzvswuLVBNF7Rdy32QhHvuyYpGS1hT7j1xFjdeP1CLd0ZO29gsg==
+X-Received: by 2002:a17:90a:e7c5:b0:2d8:9fbe:6727 with SMTP id
+ 98e67ed59e1d1-2e9b1ec1443mr27786808a91.4.1731443885653; 
+ Tue, 12 Nov 2024 12:38:05 -0800 (PST)
 Received: from stoup.. (wsip-24-120-228-34.lv.lv.cox.net. [24.120.228.34])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e9f3894192sm9860a91.21.2024.11.12.12.38.02
+ 98e67ed59e1d1-2e9f3894192sm9860a91.21.2024.11.12.12.38.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 12:38:02 -0800 (PST)
+ Tue, 12 Nov 2024 12:38:05 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 2/6] linux-user: Drop image_info.alignment
-Date: Tue, 12 Nov 2024 12:37:53 -0800
-Message-ID: <20241112203757.804320-3-richard.henderson@linaro.org>
+Subject: [PATCH 4/6] linux-user/arm: Reduce vdso alignment to 4k
+Date: Tue, 12 Nov 2024 12:37:55 -0800
+Message-ID: <20241112203757.804320-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241112203757.804320-1-richard.henderson@linaro.org>
 References: <20241112203757.804320-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,59 +93,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This field is write-only.  Use only the function-local
-variable within load_elf_image.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/qemu.h    | 1 -
- linux-user/elfload.c | 7 +++----
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ linux-user/arm/Makefile.vdso |   2 +-
+ linux-user/arm/vdso-be.so    | Bin 2648 -> 2648 bytes
+ linux-user/arm/vdso-le.so    | Bin 2648 -> 2648 bytes
+ 3 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 895bdd722a..67bc81b149 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -44,7 +44,6 @@ struct image_info {
-         abi_ulong       file_string;
-         uint32_t        elf_flags;
-         int             personality;
--        abi_ulong       alignment;
-         bool            exec_stack;
+diff --git a/linux-user/arm/Makefile.vdso b/linux-user/arm/Makefile.vdso
+index 2d098a5748..8a24b0e534 100644
+--- a/linux-user/arm/Makefile.vdso
++++ b/linux-user/arm/Makefile.vdso
+@@ -6,7 +6,7 @@ VPATH += $(SUBDIR)
+ all: $(SUBDIR)/vdso-be.so $(SUBDIR)/vdso-le.so
  
-         /* Generic semihosting knows about these pointers. */
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 90e79a01b4..ef9cffbe4a 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -3220,7 +3220,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-      * amount of memory to handle that.  Locate the interpreter, if any.
-      */
-     loaddr = -1, hiaddr = 0;
--    info->alignment = 0;
-+    align = 0;
-     info->exec_stack = EXSTACK_DEFAULT;
-     for (i = 0; i < ehdr->e_phnum; ++i) {
-         struct elf_phdr *eppnt = phdr + i;
-@@ -3234,7 +3234,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-                 hiaddr = a;
-             }
-             ++info->nsegs;
--            info->alignment |= eppnt->p_align;
-+            align |= eppnt->p_align;
-         } else if (eppnt->p_type == PT_INTERP && pinterp_name) {
-             g_autofree char *interp_name = NULL;
+ # Adding -use-blx disables unneeded interworking without actually using blx.
+-LDFLAGS = -nostdlib -shared -Wl,-use-blx \
++LDFLAGS = -nostdlib -shared -Wl,-use-blx -Wl,-z,max-page-size=4096 \
+ 	  -Wl,-h,linux-vdso.so.1 -Wl,--build-id=sha1 \
+ 	  -Wl,--hash-style=both -Wl,-T,$(SUBDIR)/vdso.ld
  
-@@ -3264,8 +3264,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
- 
-     load_addr = loaddr;
- 
--    align = pow2ceil(info->alignment);
--    info->alignment = align;
-+    align = pow2ceil(align);
- 
-     if (pinterp_name != NULL) {
-         if (ehdr->e_type == ET_EXEC) {
+diff --git a/linux-user/arm/vdso-be.so b/linux-user/arm/vdso-be.so
+index 69cafbb956e283e2975bac59a10491c0cbafca57..bed02804a4bd367eb9fd8ca54d0c980103c02245 100755
+GIT binary patch
+delta 49
+zcmV-10M7r|6xbAyaRLAkk#lhrGQ`BrU>NUTo0WUr&~YvSTwestvG{WZ25D?qS41(h
+HaR%oD3DgvN
+
+delta 49
+zcmV-10M7r|6xbAyaRLDVk#lhrweyTc_Z*p@&&2@VLR1?$m|vtIvG{WZ23l}Oc}8xt
+HaR%oD4;B=<
+
+diff --git a/linux-user/arm/vdso-le.so b/linux-user/arm/vdso-le.so
+index ad05a1251875ac0c76685e1f9190a7307a8444d1..38d3d51047372391b3125c3f9f6ea5401f04bba1 100755
+GIT binary patch
+delta 49
+zcmV-10M7r|6xbAyaRLwkk#lhr8{q*880U1i=t7z4dQ|b*DDU}VvG{WZ25CxDZDwh+
+HaR%oD5d#(3
+
+delta 49
+zcmV-10M7r|6xbAyaRLAVk#lhrkUMV7Jk`NO!6O#urC$6IB@6+uvG{WZ26R_8MpaO=
+HaR%oD?$r}}
+
 -- 
 2.43.0
 
