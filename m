@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BBFAD42BB4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD64D42BAF
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:05:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAuJT-0004NJ-SE; Tue, 12 Nov 2024 12:04:26 -0500
+	id 1tAuKa-00068f-9Q; Tue, 12 Nov 2024 12:05:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1tAuHk-0003L6-J8; Tue, 12 Nov 2024 12:02:48 -0500
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1tAuHj-0003L3-9P; Tue, 12 Nov 2024 12:02:48 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1tAuHj-0001Vf-4Q; Tue, 12 Nov 2024 12:02:36 -0500
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7ae3d7222d4so4275040a12.3; 
- Tue, 12 Nov 2024 09:02:34 -0800 (PST)
+ id 1tAuHh-0001VI-9P; Tue, 12 Nov 2024 12:02:35 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-71e49ad46b1so5135967b3a.1; 
+ Tue, 12 Nov 2024 09:02:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731430952; x=1732035752; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731430951; x=1732035751; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fcTg55TVLZf6OfSuBaidjAn4zuepTjhmMHoIrKI/Xb4=;
- b=Fb4xriYcGpyCCSmMags/421Dozpn2UaIw2I8jNA80R2zIzPZKQ+CZo2rrBrcHbfx8L
- RnCVHmwytguLQPEPvV3PXIcFA87+0qyaa5z7sgwkGZ9XbZ+eKk3VpbCyP2hKp7jvPNgb
- OOiHFt5u1PgdykNneAwdQhosjREleGexg+Tdcr+ySCsLsfEOBlDg+AXsdAX2Hxg5HhC6
- JRbhjGSSVviowakAp5p3P+EQCgvJH3p3BKy+0rcduiVwlZGf2fgMKyNRzdpdN9PiJJlF
- D5FPELENmuIXUOvbuczOeNGzKkveqs+R/NGJgM4S/hfyJhdyYfxL496PnzZOzfx50AuL
- Skpg==
+ bh=Ov5WN5Qnk9W75jTisVRah+9h5c0nBp5r2UmUapO7Zv8=;
+ b=H0J7wflgmGPTqTF1/Pk/N1kauHtvd53UW3zPNI8XR3ADZ8hrzAekF2YMcmJWrLsBbQ
+ 2BRa6Clj88RGZF0Y5Pl3ZGgYcOoXs8baS4M3r91dN3r/Gz9ecNAIsx5M+ALMEMmqu1JL
+ lehEZyOhoLFxugaQln988KXIRkzh3vcyr29VJ7YI91I5osssUSy3sbjFticlyyn99TVk
+ X98KsSR/OJlaYzIWVToZUPYvCYQo7BZQ1RR+D+aEJNg8psPcgxO/bqb/ANMjvmJDEvOP
+ 6ZaD8S/YTnCcgeuPAz1k0pMArmDIoJFBZkk/lYctQL7vfuzzTxe9PSQrHwzOxQZPqVo1
+ hDYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731430952; x=1732035752;
+ d=1e100.net; s=20230601; t=1731430951; x=1732035751;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fcTg55TVLZf6OfSuBaidjAn4zuepTjhmMHoIrKI/Xb4=;
- b=MVX8Iav1VdWS0DmvB2tWwFd7Cu2BkGEvNcsSd+xSlGtnGwQbDjGeBytH9WU72EMqz9
- ri34nCq2QVDlkPTLzKi4Nr+y2u0FxB/EJT1uJeEPFAvJ0tNnpDXeIYf1IZRD0ERgEB/G
- w3ys7/3Gm8X612BIHpoerDBFbQcnjGwI1+S9SclyY4+cys0V4t3Yh4R+80iZFtaOxbz/
- es6xsbYR+fAQYJ7nsfRvpiC04Q2Utl6Ipww64sVDOW20OCBFyD6rlfiXcb65jHDSO1Ho
- H5fn8tEPEzcx1PYXReQaXbAW4iNDeFTj0MQwHWLRSImmN8qns8Mj+gKq86pQIwVJpLRV
- 0zBg==
+ bh=Ov5WN5Qnk9W75jTisVRah+9h5c0nBp5r2UmUapO7Zv8=;
+ b=f5g8Do2AzladUbNXX1wvfpADuX0VywQyYkB15HnLd9x+ODnhIhU3r91fRt7tihknmy
+ T6DtlLHtIu3zOCBQZXqUfY/3E8XBP+bVZ7WR9PbBfB4CmsL1/IHDudSavpnAMtlbDc1z
+ cLimCNHPXG2imNZr3/03KqN76ALUcOLt39qpEjXHJFeynj3KK+n1CfN6OIcuG3tpIGqv
+ vWsQNRV6EmkGupQkUEw9cMEzjtfMw+suf64CyWJTxSj8FXmJK/iMBWPvjHQeZnFSjh77
+ sAZ/loRV/hNDb2p/wmVdSj7AxvCHALuV+m5DuErtENGy2kqIEzgvwsdg+Ez4gU+Zcr1P
+ D1og==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCLfr0yMt0NbG8oZ8qmTLFiXSWzd2Xyzbt/bqdcdqS6vIQGpUEsyVj6Tz+GrRttMTItqQcNWC3Hg==@nongnu.org
-X-Gm-Message-State: AOJu0YyVQMiYHtYFnQ1Nnbao7S1Zj38eJ92trMUpdbAZXK31t6ZnPyr6
- 7ej/bWpnegY7FsRHOBKFPyDTX1MG1eg/pEu+ToyHK4+VRXQAcyOVvXgHuw==
-X-Google-Smtp-Source: AGHT+IEo0iBRS8PRdHLawG2F8k7ytxnHA6MKmimMdTNLSR/HGwzY1IKpyhxTro1TN3tvLPQvi0i04w==
-X-Received: by 2002:a17:90b:4c4c:b0:2e2:cf6d:33fd with SMTP id
- 98e67ed59e1d1-2e9b174821bmr22673530a91.31.1731430952418; 
- Tue, 12 Nov 2024 09:02:32 -0800 (PST)
+ AJvYcCXXLM534099l0vsXSWsH+JSMeSMtZyUoPRul115Dwy5CPc06AIV1yLEpXYQqJoy5oh9U8YIcz+Zug==@nongnu.org
+X-Gm-Message-State: AOJu0YwIcSXQslRKk3WbJhYBJn9drmS3n3GpXRSR0S6KY71qjaTfWSIk
+ /EP9WXRhN/OyVN1eOZH0+Vk2WD7byEUDYjP7aRL6O3TWp3ueuvCVdyY1ew==
+X-Google-Smtp-Source: AGHT+IGT5dex+/usLt9UzLvDzIuVJ+WfZBt0gQ5v5XEPjEPtQVv0gvFK16zXPtr18glUWBPrDU4Hhg==
+X-Received: by 2002:a05:6a00:3998:b0:71e:b1dc:f229 with SMTP id
+ d2e1a72fcca58-7241334b18emr23415568b3a.19.1731430950791; 
+ Tue, 12 Nov 2024 09:02:30 -0800 (PST)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e9a5f8f4e2sm12046793a91.26.2024.11.12.09.02.31
+ d2e1a72fcca58-72407860a2bsm11821663b3a.21.2024.11.12.09.02.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 09:02:31 -0800 (PST)
+ Tue, 12 Nov 2024 09:02:30 -0800 (PST)
 From: Guenter Roeck <linux@roeck-us.net>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
@@ -72,16 +72,16 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  qemu-arm@nongnu.org, Guenter Roeck <linux@roeck-us.net>
-Subject: [RESEND PATCH 10/10] usb-hub: Fix handling port power control messages
-Date: Tue, 12 Nov 2024 09:01:52 -0800
-Message-ID: <20241112170152.217664-11-linux@roeck-us.net>
+Subject: [RESEND PATCH 09/10] usb-hub: Add support for v2.0 hubs
+Date: Tue, 12 Nov 2024 09:01:51 -0800
+Message-ID: <20241112170152.217664-10-linux@roeck-us.net>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241112170152.217664-1-linux@roeck-us.net>
 References: <20241112170152.217664-1-linux@roeck-us.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=groeck7@gmail.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -105,30 +105,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ClearPortFeature control message fails for PORT_POWER because there
-is no break; at the end of the case statement, causing it to fall through
-to the failure handler. Add the missing break; to solve the problem.
+When adding a high speed USB device to the USB hub supported by qemu,
+it is added in full speed mode. Here is an example for a storage device.
+
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=platform-uhci/2p, 12M
+    |__ Port 002: Dev 002, If 0, Class=Hub, Driver=hub/8p, 12M
+        |__ Port 001: Dev 003, If 0, Class=Human Interface Device, Driver=usbhid, 12M
+        |__ Port 002: Dev 004, If 0, Class=Human Interface Device, Driver=usbhid, 12M
+        |__ Port 003: Dev 005, If 0, Class=Mass Storage, Driver=usb-storage, 12M
+
+This also triggers messages such as
+
+usb 1-2.3: new full-speed USB device number 5 using platform-uhci
+usb 1-2.3: not running at top speed; connect to a high speed hub
+
+when such devices are instantiated in the host (example from Linux).
+
+Add basic support for USB v2.0 hubs to solve the problem. The usb_version
+device parameter configures the USB version; version 1 is default for
+compatibility reasons. Example:
+
+-device usb-hub,bus=usb-bus.1,port=1,usb_version=2
+
+This command line parameter can be used to attach devices to the hub in
+high speed mode, as seen in the following example.
+
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=ehci-platform/6p, 480M
+    |__ Port 001: Dev 002, If 0, Class=Hub, Driver=hub/8p, 480M
+        |__ Port 002: Dev 004, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+
+and
+
+usb 2-1.2: new high-speed USB device number 4 using ehci-platform
+usb 2-1.2: New USB device found, idVendor=46f4, idProduct=0001, bcdDevice= 0.00
+
+To distinguish v1 from v2 instantiated hubs, the device version is set to
+2.01 (from 1.01) if the hub ist instantiated as USB v2 hub. The product
+name is set to "QEMU USB v2.0 Hub".
 
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 ---
-Change from RFC:
-    New patch
+Changes since RFC:
+- New patch
 
- hw/usb/dev-hub.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/usb/dev-hub.c | 84 +++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 76 insertions(+), 8 deletions(-)
 
 diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
-index 4da91d151c..2872c6712a 100644
+index 06e9537d03..4da91d151c 100644
 --- a/hw/usb/dev-hub.c
 +++ b/hw/usb/dev-hub.c
-@@ -532,6 +532,7 @@ static void usb_hub_handle_control(USBDevice *dev, USBPacket *p,
-                     usb_hub_port_clear(port, PORT_STAT_SUSPEND);
-                     port->wPortChange = 0;
-                 }
-+                break;
-             default:
-                 goto fail;
-             }
+@@ -46,6 +46,7 @@ struct USBHubState {
+     USBDevice dev;
+     USBEndpoint *intr;
+     uint32_t num_ports;
++    uint32_t usb_version;
+     bool port_power;
+     QEMUTimer *port_timer;
+     USBHubPort ports[MAX_PORTS];
+@@ -100,12 +101,14 @@ OBJECT_DECLARE_SIMPLE_TYPE(USBHubState, USB_HUB)
+ enum {
+     STR_MANUFACTURER = 1,
+     STR_PRODUCT,
++    STR_PRODUCT_V2,
+     STR_SERIALNUMBER,
+ };
+ 
+ static const USBDescStrings desc_strings = {
+     [STR_MANUFACTURER] = "QEMU",
+     [STR_PRODUCT]      = "QEMU USB Hub",
++    [STR_PRODUCT_V2]   = "QEMU USB v2.0 Hub",
+     [STR_SERIALNUMBER] = "314159",
+ };
+ 
+@@ -123,6 +126,20 @@ static const USBDescIface desc_iface_hub = {
+     }
+ };
+ 
++static const USBDescIface desc_iface_hub_v2 = {
++    .bInterfaceNumber              = 0,
++    .bNumEndpoints                 = 1,
++    .bInterfaceClass               = USB_CLASS_HUB,
++    .eps = (USBDescEndpoint[]) {
++        {
++            .bEndpointAddress      = USB_DIR_IN | 0x01,
++            .bmAttributes          = USB_ENDPOINT_XFER_INT,
++            .wMaxPacketSize        = 512,
++            .bInterval             = 10,
++        },
++    }
++};
++
+ static const USBDescDevice desc_device_hub = {
+     .bcdUSB                        = 0x0110,
+     .bDeviceClass                  = USB_CLASS_HUB,
+@@ -140,6 +157,23 @@ static const USBDescDevice desc_device_hub = {
+     },
+ };
+ 
++static const USBDescDevice desc_device_hub_v2 = {
++    .bcdUSB                        = 0x0200,
++    .bDeviceClass                  = USB_CLASS_HUB,
++    .bMaxPacketSize0               = 64,
++    .bNumConfigurations            = 1,
++    .confs = (USBDescConfig[]) {
++        {
++            .bNumInterfaces        = 1,
++            .bConfigurationValue   = 1,
++            .bmAttributes          = USB_CFG_ATT_ONE | USB_CFG_ATT_SELFPOWER |
++                                     USB_CFG_ATT_WAKEUP,
++            .nif = 1,
++            .ifs = &desc_iface_hub_v2,
++        },
++    },
++};
++
+ static const USBDesc desc_hub = {
+     .id = {
+         .idVendor          = 0x0409,
+@@ -153,6 +187,20 @@ static const USBDesc desc_hub = {
+     .str  = desc_strings,
+ };
+ 
++static const USBDesc desc_hub_v2 = {
++    .id = {
++        .idVendor          = 0x0409,
++        .idProduct         = 0x55aa,
++        .bcdDevice         = 0x0201,
++        .iManufacturer     = STR_MANUFACTURER,
++        .iProduct          = STR_PRODUCT_V2,
++        .iSerialNumber     = STR_SERIALNUMBER,
++    },
++    .full = &desc_device_hub,
++    .high = &desc_device_hub_v2,
++    .str  = desc_strings,
++};
++
+ static const uint8_t qemu_hub_hub_descriptor[] =
+ {
+         0x00,                   /*  u8  bLength; patched in later */
+@@ -195,15 +243,20 @@ static bool usb_hub_port_clear(USBHubPort *port, uint16_t status)
+     return usb_hub_port_change(port, status);
+ }
+ 
+-static bool usb_hub_port_update(USBHubPort *port)
++static bool usb_hub_port_update(USBHubState *s, USBHubPort *port)
+ {
+     bool notify = false;
+ 
+     if (port->port.dev && port->port.dev->attached) {
+         notify = usb_hub_port_set(port, PORT_STAT_CONNECTION);
+-        if (port->port.dev->speed == USB_SPEED_LOW) {
++        if (s->usb_version == 2 && port->port.dev->speed == USB_SPEED_HIGH) {
++            usb_hub_port_clear(port, PORT_STAT_LOW_SPEED);
++            usb_hub_port_set(port, PORT_STAT_HIGH_SPEED);
++        } else if (port->port.dev->speed == USB_SPEED_LOW) {
++            usb_hub_port_clear(port, PORT_STAT_HIGH_SPEED);
+             usb_hub_port_set(port, PORT_STAT_LOW_SPEED);
+         } else {
++            usb_hub_port_clear(port, PORT_STAT_HIGH_SPEED);
+             usb_hub_port_clear(port, PORT_STAT_LOW_SPEED);
+         }
+     }
+@@ -217,7 +270,7 @@ static void usb_hub_port_update_timer(void *opaque)
+     int i;
+ 
+     for (i = 0; i < s->num_ports; i++) {
+-        notify |= usb_hub_port_update(&s->ports[i]);
++        notify |= usb_hub_port_update(s, &s->ports[i]);
+     }
+     if (notify) {
+         usb_wakeup(s->intr, 0);
+@@ -230,7 +283,7 @@ static void usb_hub_attach(USBPort *port1)
+     USBHubPort *port = &s->ports[port1->index];
+ 
+     trace_usb_hub_attach(s->dev.addr, port1->index + 1);
+-    usb_hub_port_update(port);
++    usb_hub_port_update(s, port);
+     usb_wakeup(s->intr, 0);
+ }
+ 
+@@ -318,7 +371,7 @@ static void usb_hub_handle_reset(USBDevice *dev)
+         port->wPortStatus = 0;
+         port->wPortChange = 0;
+         usb_hub_port_set(port, PORT_STAT_POWER);
+-        usb_hub_port_update(port);
++        usb_hub_port_update(s, port);
+     }
+ }
+ 
+@@ -593,6 +646,19 @@ static void usb_hub_realize(USBDevice *dev, Error **errp)
+     USBHubPort *port;
+     int i;
+ 
++    switch (s->usb_version) {
++    case 1:
++        dev->usb_desc = &desc_hub;
++        break;
++    case 2:
++        dev->usb_desc = &desc_hub_v2;
++        break;
++    default:
++        error_setg(errp, "Unsupported usb version %d for usb hub",
++                   s->usb_version);
++        return;
++    }
++
+     if (s->num_ports < 1 || s->num_ports > MAX_PORTS) {
+         error_setg(errp, "num_ports (%d) out of range (1..%d)",
+                    s->num_ports, MAX_PORTS);
+@@ -613,7 +679,8 @@ static void usb_hub_realize(USBDevice *dev, Error **errp)
+         port = &s->ports[i];
+         usb_register_port(usb_bus_from_device(dev),
+                           &port->port, s, i, &usb_hub_port_ops,
+-                          USB_SPEED_MASK_LOW | USB_SPEED_MASK_FULL);
++                          USB_SPEED_MASK_LOW | USB_SPEED_MASK_FULL |
++                          ((s->usb_version == 2) ? USB_SPEED_MASK_HIGH : 0));
+         usb_port_location(&port->port, dev->port, i+1);
+     }
+     usb_hub_handle_reset(dev);
+@@ -650,7 +717,7 @@ static const VMStateDescription vmstate_usb_hub_port_timer = {
+ 
+ static const VMStateDescription vmstate_usb_hub = {
+     .name = "usb-hub",
+-    .version_id = 1,
++    .version_id = 2,
+     .minimum_version_id = 1,
+     .fields = (const VMStateField[]) {
+         VMSTATE_USB_DEVICE(dev, USBHubState),
+@@ -667,6 +734,7 @@ static const VMStateDescription vmstate_usb_hub = {
+ static Property usb_hub_properties[] = {
+     DEFINE_PROP_UINT32("ports", USBHubState, num_ports, 8),
+     DEFINE_PROP_BOOL("port-power", USBHubState, port_power, false),
++    DEFINE_PROP_UINT32("usb_version", USBHubState, usb_version, 1),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+@@ -677,12 +745,12 @@ static void usb_hub_class_initfn(ObjectClass *klass, void *data)
+ 
+     uc->realize        = usb_hub_realize;
+     uc->product_desc   = "QEMU USB Hub";
+-    uc->usb_desc       = &desc_hub;
+     uc->find_device    = usb_hub_find_device;
+     uc->handle_reset   = usb_hub_handle_reset;
+     uc->handle_control = usb_hub_handle_control;
+     uc->handle_data    = usb_hub_handle_data;
+     uc->unrealize      = usb_hub_unrealize;
++    uc->handle_attach  = usb_desc_attach;
+     set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+     dc->fw_name = "hub";
+     dc->vmsd = &vmstate_usb_hub;
 -- 
 2.45.2
 
