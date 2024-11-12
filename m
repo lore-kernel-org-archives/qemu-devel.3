@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A58D597AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 22:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9558D597B3
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 22:24:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAzHL-000629-No; Tue, 12 Nov 2024 17:22:31 -0500
+	id 1tAzJB-0006nP-Tp; Tue, 12 Nov 2024 17:24:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tAzHJ-00061a-Ee
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 17:22:29 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tAzJ9-0006mS-9a
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 17:24:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tAzHH-0001De-Kh
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 17:22:29 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tAzJ7-0001LG-RK
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 17:24:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731450145;
+ s=mimecast20190719; t=1731450261;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3o0DKyNkxN5HS2qO4ZFqK7rqbTR2jz7047eqx7d5yDk=;
- b=IxEhyUPrVs2+mGux1hFAqONAJXf9DfsnjaKCCDXVh4VeF/+zfRTSjJmiciM4UU2yPywmIF
- cyNINQDu/1G7/ASQI84SL4iIBCK52BNT3zg4rh0Ky1+DaitWmI3jvi9oTfW8s3KzVex93h
- NCJXzvVWhsP+pqK/au8ZKGjXKjcKNg0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fCIOP1bkYsLx4G3BTsPbOttcnEMUAhgczcADWOOaNmU=;
+ b=P6163E0IdqTNCmRvtLy64543Gt6w/TwOXYFhy/4way0vkpyp7TTpogfYv4+AP6K0lU/jRF
+ B4t+EdZAqcPuiSPPkbQAYCoxoBsvq/6YLtcj/otKSIRtGRDHpBDxhNVV5Wlu1kHT97mQSY
+ EXnq91JiHW/OY8O1H9NTz6A8Lnf7j9I=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-349-J80XiG0IOWqmvqXC6LpfCw-1; Tue, 12 Nov 2024 17:22:24 -0500
-X-MC-Unique: J80XiG0IOWqmvqXC6LpfCw-1
-X-Mimecast-MFC-AGG-ID: J80XiG0IOWqmvqXC6LpfCw
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43163a40ee0so46320775e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 14:22:24 -0800 (PST)
+ us-mta-447-y-IiB0HrOMWp2SREjtig0A-1; Tue, 12 Nov 2024 17:24:19 -0500
+X-MC-Unique: y-IiB0HrOMWp2SREjtig0A-1
+X-Mimecast-MFC-AGG-ID: y-IiB0HrOMWp2SREjtig0A
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43154a0886bso43870815e9.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 14:24:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731450143; x=1732054943;
+ d=1e100.net; s=20230601; t=1731450258; x=1732055058;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=3o0DKyNkxN5HS2qO4ZFqK7rqbTR2jz7047eqx7d5yDk=;
- b=XB/PLRV6tllx+3t6k7YjaugAYPm6D4jKvvVaZtvN9iF7OFYS3AWUoEUEB5u6FVlJdR
- VjoQtOm5K+3fi1zxCh47iWjuYwotVJ2MSHeCV60GoGpMOB+bmeM5RwGAN4YNqafEMIYn
- wYZJ4FhxUZfiqwBHW0JleCpUM0NJHJX5uGXXI8ErRVuWKcW8udiw8M3noOlEyX9R1kDe
- QQav5iZHc21nGy8O0rpP8g9hVMbsfvwRrEqOwfRPr82PLvaGSc6Kr7Gi7K8B47ng6tB0
- ZeRPXfU24HhoklpT/OZpAuhKBi3PzFsz8tuU3CX1DikbecSIgNc6xNtOsXcVrXzATJ2y
- aYaA==
+ bh=fCIOP1bkYsLx4G3BTsPbOttcnEMUAhgczcADWOOaNmU=;
+ b=tZcAa1uaSbF8cRorLUicWw94VfaU+MPdI9eqCurB8K6e+uZ9iWSQA2VJAfG2N6DviL
+ e4HjcPgo4LRJuIP+bnc/DGTi1vyHOQPaiZXY4O6IBxDrD+LvPrlqkv5EomB9//Mg22v1
+ nH4FQ6p4xHzoGfgW9/fFqK3Kog1fruXoEjjXdBhw03rkUVynr+StUqJbEPxieD2n7l4t
+ SNf6q2jyamkYRIBpHDtH0PGeJdii+OLfZe7+jkLqv8J/jWX7z03HihOtD59agzhM1Sh/
+ +qEiyWTLIMy7yHJ/ey/tcxHO7RZm8dMuSvZJxffvN5vUh44x3vZeczIqfFNabPcCqsL9
+ od6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXysKDAHoOjC0ItNFC1lnfO4kIyGTR3WaMBlqL3L3TkG0PDu68TFdxTf4rFXKSfWfcxTeMeM0Eoiv3S@nongnu.org
-X-Gm-Message-State: AOJu0Yw9FICmHFtx3oCyIiAKNJSYYZyVFEld2dX0vHgeMRZF8I0IZ5dK
- H6kaVAQxljqk4DSSK72cPWaatjE7QU0ptGCyaSDMF4xRdTDRFENFI5jxKVFE7NVJQCh+o0KWvr4
- +7LJk50AtT+p0uBrby2zVmQAFegeym4bcqg0aI9eYyorYF7euMRjq
-X-Received: by 2002:a05:600c:4f09:b0:42e:93af:61c5 with SMTP id
- 5b1f17b1804b1-432b7501fdemr163843275e9.14.1731450143075; 
- Tue, 12 Nov 2024 14:22:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE7vJgFJ6cnT2cMByJDAJyPfZoHyd8+ZgKel+fJKu7cHyD+JghCm0HBpC3v2yBE83mGk0ivvA==
-X-Received: by 2002:a05:600c:4f09:b0:42e:93af:61c5 with SMTP id
- 5b1f17b1804b1-432b7501fdemr163843015e9.14.1731450142643; 
- Tue, 12 Nov 2024 14:22:22 -0800 (PST)
+ AJvYcCXTyoxKROstucHftvuh/bSfWr+Ig//zYkyPzOMXzKuimqMW1INmYLcdR7Ti0RElb8QnBdQNQhxgOEsI@nongnu.org
+X-Gm-Message-State: AOJu0YwGqABzVJAeNZbd2gdeGA03abIwziY2FhTnEU7O+qOdrpcDHSgS
+ i6w5RN4NxH3RfiUSrCNZM7O/Wc87AQQoGrViVWu84kb50Rh1AHpVDON3xQl84wM/z8JMWIodiP/
+ FT5SimGqGydm/OtUm+eb+myOyiEhTMQB4wd3PAxLKBKS+U3BYjYtC
+X-Received: by 2002:a05:600c:a04:b0:428:1b0d:8657 with SMTP id
+ 5b1f17b1804b1-432b7517a5cmr155280655e9.22.1731450258485; 
+ Tue, 12 Nov 2024 14:24:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEW+/fTCwuLY3emJFf9LkjxjmK0ue2mqKaL5MpaEGKJoYVSxqo586sIsglbq7vQKAolutjEEQ==
+X-Received: by 2002:a05:600c:a04:b0:428:1b0d:8657 with SMTP id
+ 5b1f17b1804b1-432b7517a5cmr155280405e9.22.1731450258100; 
+ Tue, 12 Nov 2024 14:24:18 -0800 (PST)
 Received: from ?IPV6:2003:cb:c739:8e00:7a46:1b8c:8b13:d3d?
  (p200300cbc7398e007a461b8c8b130d3d.dip0.t-ipconnect.de.
  [2003:cb:c739:8e00:7a46:1b8c:8b13:d3d])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432d54e2cbesm1321355e9.4.2024.11.12.14.22.20
+ 5b1f17b1804b1-432d48c731dsm4281965e9.2.2024.11.12.14.24.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Nov 2024 14:22:22 -0800 (PST)
-Message-ID: <e5d6bae8-a3bd-4225-b38f-65de6b1a2b54@redhat.com>
-Date: Tue, 12 Nov 2024 23:22:20 +0100
+ Tue, 12 Nov 2024 14:24:16 -0800 (PST)
+Message-ID: <093dd833-d03a-4149-8928-0f31e84a3e03@redhat.com>
+Date: Tue, 12 Nov 2024 23:24:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] accel/kvm: Report the loss of a large memory page
+Subject: Re: [PATCH v2 6/7] hostmem: Handle remapping of RAM
 To: William Roche <william.roche@oracle.com>, kvm@vger.kernel.org,
  qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
@@ -82,9 +82,9 @@ Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
  wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
 References: <e2ac7ad0-aa26-4af2-8bb3-825cba4ffca0@redhat.com>
  <20241107102126.2183152-1-william.roche@oracle.com>
- <20241107102126.2183152-4-william.roche@oracle.com>
- <f5b43126-acbd-4e3f-8ec4-3a5c20957445@redhat.com>
- <08e03987-3c9a-49b2-adf5-fd40e7ede0c0@oracle.com>
+ <20241107102126.2183152-7-william.roche@oracle.com>
+ <3ed8c7c2-8059-4d51-a536-422c394f34e5@redhat.com>
+ <b6bdff02-4ebe-466f-93af-dda572505995@oracle.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -132,7 +132,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <08e03987-3c9a-49b2-adf5-fd40e7ede0c0@oracle.com>
+In-Reply-To: <b6bdff02-4ebe-466f-93af-dda572505995@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -144,7 +144,7 @@ X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.671,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,72 +161,71 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12.11.24 19:17, William Roche wrote:
-> On 11/12/24 12:13, David Hildenbrand wrote:
+> On 11/12/24 14:45, David Hildenbrand wrote:
 >> On 07.11.24 11:21, “William Roche wrote:
->>> From: William Roche <william.roche@oracle.com>
+>>> From: David Hildenbrand <david@redhat.com>
 >>>
->>> When an entire large page is impacted by an error (hugetlbfs case),
->>> report better the size and location of this large memory hole, so
->>> give a warning message when this page is first hit:
->>> Memory error: Loosing a large page (size: X) at QEMU addr Y and GUEST
->>> addr Z
+>>> Let's register a RAM block notifier and react on remap notifications.
+>>> Simply re-apply the settings. Warn only when something goes wrong.
 >>>
+>>> Note: qemu_ram_remap() will not remap when RAM_PREALLOC is set. Could be
+>>> that hostmem is still missing to update that flag ...
+>>>
+>>> Signed-off-by: David Hildenbrand <david@redhat.com>
+>>> Signed-off-by: William Roche <william.roche@oracle.com>
+>>> ---
+>>>    backends/hostmem.c       | 29 +++++++++++++++++++++++++++++
+>>>    include/sysemu/hostmem.h |  1 +
+>>>    2 files changed, 30 insertions(+)
+>>>
+>>> diff --git a/backends/hostmem.c b/backends/hostmem.c
+>>> index bf85d716e5..fbd8708664 100644
+>>> --- a/backends/hostmem.c
+>>> +++ b/backends/hostmem.c
+>>> @@ -361,11 +361,32 @@ static void
+>>> host_memory_backend_set_prealloc_threads(Object *obj, Visitor *v,
+>>>        backend->prealloc_threads = value;
+>>>    }
+>>> +static void host_memory_backend_ram_remapped(RAMBlockNotifier *n,
+>>> void *host,
+>>> +                                             size_t offset, size_t size)
+>>> +{
+>>> +    HostMemoryBackend *backend = container_of(n, HostMemoryBackend,
+>>> +                                              ram_notifier);
+>>> +    Error *err = NULL;
+>>> +
+>>> +    if (!host_memory_backend_mr_inited(backend) ||
+>>> +        memory_region_get_ram_ptr(&backend->mr) != host) {
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    host_memory_backend_apply_settings(backend, host + offset, size,
+>>> &err);
+>>> +    if (err) {
+>>> +        warn_report_err(err);
 >>
->> Hm, I wonder if we really want to special-case hugetlb here.
+>> I wonder if we want to fail hard instead, or have a way to tell the
+>> notifier that something wen wrong.
 >>
->> Why not make the warning independent of the underlying page size?
 > 
-> We already have a warning provided by Qemu (in kvm_arch_on_sigbus_vcpu()):
-> 
-> Guest MCE Memory Error at QEMU addr Y and GUEST addr Z of type
-> BUS_MCEERR_AR/_AO injected
-> 
-> The one I suggest is an additional message provided before the above
-> message.
-> 
-> Here is an example:
-> qemu-system-x86_64: warning: Memory error: Loosing a large page (size:
-> 2097152) at QEMU addr 0x7fdd7d400000 and GUEST addr 0x11600000
-> qemu-system-x86_64: warning: Guest MCE Memory Error at QEMU addr
-> 0x7fdd7d400000 and GUEST addr 0x11600000 of type BUS_MCEERR_AO injected
+> It depends on what the caller would do with this information. Is there a
+> way to workaround the problem ? (I don't think so)
+
+Primarily only preallocation will fail, and that ...
+
+> Can the VM continue to run without doing anything about it ? (Maybe?)
 > 
 
-Hm, I think we should definitely be including the size in the existing 
-one. That code was written without huge pages in mind.
+... will make crash the QEMU at some point later (SIGBUS), which is very 
+bad.
 
-We should similarly warn in the arm implementation (where I don't see a 
-similar message yet).
-
+> Currently all numa notifiers don't return errors.
 > 
-> According to me, this large page case additional message will help to
-> better understand the probable sudden proliferation of memory errors
-> that can be reported by Qemu on the impacted range.
-> Not only will the machine administrator identify better that a single
-> memory error had this large impact, it can also help us to better
-> measure the impact of fixing the large page memory error support in the
-> field (in the future).
+> This function is only called from ram_block_notify_remap() in
+> qemu_ram_remap(), I would vote for a "fail hard" in case where the
+> settings are mandatory to continue.
 
-What about extending the existing one to something like
-
-warning: Guest MCE Memory Error at QEMU addr $ADDR and GUEST $PADDR of 
-type BUS_MCEERR_AO and size $SIZE (large page) injected
-
-
-With the "large page" hint you can highlight that this is special.
-
-
-On a related note ...I think we have a problem. Assume we got a SIGBUS 
-on a huge page (e.g., somewhere in a 1 GiB page).
-
-We will call kvm_mce_inject(cpu, paddr, code) / 
-acpi_ghes_record_errors(ACPI_HEST_SRC_ID_SEA, paddr)
-
-But where is the size information? :// Won't the VM simply assume that 
-there was a MCE on a single 4k page starting at paddr?
-
-I'm not sure if we can inject ranges, or if we would have to issue one 
-MCE per page ... hm, what's your take on this?
-
+"fail hard" is likely the best approach for now.
 
 -- 
 Cheers,
