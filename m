@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61723D42B85
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 14:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DCF8D42B85
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 14:37:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tArui-0006vj-R3; Tue, 12 Nov 2024 09:30:44 -0500
+	id 1tAs0N-0000RT-RZ; Tue, 12 Nov 2024 09:36:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAruU-0006v1-98
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 09:30:28 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1tAs0I-0000MI-GK
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 09:36:26 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAruS-0007xo-IU
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 09:30:26 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-71ec997ad06so4726351b3a.3
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 06:30:23 -0800 (PST)
+ id 1tAs0H-0000Ea-2x
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 09:36:26 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-71e8235f0b6so4790835b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 06:36:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731421823; x=1732026623; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731422183; x=1732026983; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Vx9B7RO1IxMf0XzV5ktQ6S43si2ptBtKLIWDhdK9nIQ=;
- b=RyD4Vd9AH2AY6k0kPRHV7+L/FLi4kEcTcMM/mTwljs01Hby6nuGuXCpCnV+E4z8cMv
- RlDv4ChL8jEm9wwM7QwlmdmZFm2b8FZlmbUjuSN2N55guI2cuMnFXsTIpBXDERHRyp6b
- kS8CO62ZNJz20vrqV1si5ipsmJ7S2u/1LWiGEZnUbZawkOTlpkin6gQHTqw143BErm8X
- BvC4hZ60mKDdPIhFDTeiXBsVUifR9X0JXtl9vRQg+oe9RAYjFLJID0a7kaRE5Q8SFWXA
- f+gdebs/wEnAUQyuHWi9YLZ9RoENo0agm9slrLBPlmYJkUoZDC2O15kFeU+pKNCrfvdz
- Kltg==
+ bh=x886+rp6KvccbKprmkYzQc4c4qH5gn/nioBAMMQaMTs=;
+ b=wzWhvMn1LLAq1OREGdZ9EQdfBp4QoNp7MQJKUkmpZKx4kBNBIDY7tWqWRHWVDD+BNS
+ J3Ov6sdMbDmBjoAWzJV/7NtQjJKMW+qVZKAE3ib5qp8jvmOMZFN2YtaEv6ie1td6BvzJ
+ bZhS+KovG0GCorjJYxDKky1Kx+yIduemlH/SOJ3WDQ9HkBmY9itdIusqJ81AHv+o9yza
+ sVEsflj3hJoUAEMPbkRAQRMqAcNwilu4BxclwlE1fN6edTFlIzYeC+ROoa/vmsRXuyqU
+ GXUcv3xoQHEi1itcACaWEJ5PBNSaT52NTRky09XVabiwBBf5/dhofTc5Rfk16uOPZlgm
+ V/hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731421823; x=1732026623;
+ d=1e100.net; s=20230601; t=1731422183; x=1732026983;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Vx9B7RO1IxMf0XzV5ktQ6S43si2ptBtKLIWDhdK9nIQ=;
- b=rRATCmQY3+d+qW7Tdshpz5MBS62I91xdapc6vZj8E1TwwiyGjMtiJy2UwHzOxjxDjD
- GpZX/qNIU4yKy8WbRiCClCn3ex1PFqqy4LKfwruwN+TLJLjhqLrrMNN+hGp1rJV9Pdmz
- h35tLT32jSfslOBZck3TGVI6IrnZ53jz6WE8tHS7986yS63Gl0vPfbyiOozdeFJ6p2/E
- irfFL03Ax+JCgsV37/CdsZio53w+d/MtkvrLZ9CLu0nORkXKD1xvq5jUCEqNX6x0X9Pb
- CVA+4u8OCAJ7N6Q31Y8kjAU8rbxlqeVG4UmUnWf4VjKntQPr2ocjwpNUy9MRso5bwJ1i
- YalA==
+ bh=x886+rp6KvccbKprmkYzQc4c4qH5gn/nioBAMMQaMTs=;
+ b=oWWYnKUJiSlwlB1SBhPYPaBCqkA+bRxtjZmfd82OVe4uE8oBmHyLGOz+GxBAK6yq71
+ /XatCt3Qk39ZGTNK/o+TH1xJKlzcw68rV9EqfVczPrdyV0xgfZYK5GtyXYR+J0RYC6gI
+ kBaes/G6NM3aHBn35fj9rR4zFOB3SjZTtVc7+zUqbZsSrJpr4AAyozDjfQXeU3a67z6c
+ HdH3TR9HakLMlM39MG6Zkg/K1Lo5diNTCOavzIQMVbDV/XYODtGIFT+pw76ZnlEMr4Uy
+ Ox7fg08PnJELHivwQVvPYNkQ9a6WD/LseE7trTWLGOPol2GZzrL/1/hpsxmWZULd6gzJ
+ BdmQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSTZS3dr8eNx+z6jRui+X13Yqepj+lS5/s02yScGkB/VDyEG/v0l8F2AZCpRL7kczmLvGiwMNoSRdV@nongnu.org
-X-Gm-Message-State: AOJu0YwsO/AgutadQpkHhCJ6KfVo2/nSD2Fdy1drHnNbf6eMqu4aI3VB
- hSVN7jD0zPKyAHdC+2N4jf/FoZqbvcmgNCjOWTN2NPDsjAQY/K/IJXzmuLDJ3e3j6/b4EvudoIe
- C
-X-Google-Smtp-Source: AGHT+IELnYQ3PzheDXDUAMhDFY2aLnGoLk6XmTvGt454t/S7nN3RrOSz2Gayu0Nw+sJ9/zBOcFrUSw==
-X-Received: by 2002:a05:6a00:3a2a:b0:71e:4ee1:6d78 with SMTP id
- d2e1a72fcca58-7244a4fde5fmr3784025b3a.1.1731421822726; 
- Tue, 12 Nov 2024 06:30:22 -0800 (PST)
+ AJvYcCXs8GZP8x8g7WpOUfMRVJ1Mjg3x7sFIGJyE/MnOhvTy6zI74kXTYpglVkjiwrRdx44HDYGYmBrUfY5Q@nongnu.org
+X-Gm-Message-State: AOJu0YwqRPs+oZYtugT4YA42qGHxUUHnMj470n8foRDB/U/Uqrs9h4Q8
+ ZqqF7K2ktD3c6J/ZNKQNThT76f4AEdPhiieZxZ0MpfENsy9UVYS4EUNKuNYoKjM=
+X-Google-Smtp-Source: AGHT+IH04zWtSZ+PJfc08phtlGQ6bN0Vzm7tyhRrf9a/bAxR+2erf8qiilFH/spbc5wPgJ0el0H/EQ==
+X-Received: by 2002:a05:6a20:3d87:b0:1db:9367:d018 with SMTP id
+ adf61e73a8af0-1dc229d6d4dmr24781109637.20.1731422183610; 
+ Tue, 12 Nov 2024 06:36:23 -0800 (PST)
 Received: from [192.168.52.227] (wsip-24-120-228-34.lv.lv.cox.net.
  [24.120.228.34]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72407860a4dsm11511043b3a.29.2024.11.12.06.30.21
+ d2e1a72fcca58-7240799babesm11109821b3a.111.2024.11.12.06.36.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Nov 2024 06:30:22 -0800 (PST)
-Message-ID: <a014d0a3-6692-41b1-84e0-6da07ed1e58b@linaro.org>
-Date: Tue, 12 Nov 2024 06:30:19 -0800
+ Tue, 12 Nov 2024 06:36:23 -0800 (PST)
+Message-ID: <09a587f5-4727-4d2e-9e80-ef158d86318a@linaro.org>
+Date: Tue, 12 Nov 2024 06:36:20 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/mips: Convert nanoMIPS LSA opcode to decodetree
+Subject: Re: [PATCH 0/3] target/mips: Convert Octeon LX instructions to
+ decodetree
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
+ qemu-devel@nongnu.org, Pavel Dovgalyuk <pavel.dovgalyuk@ispras.ru>
 Cc: Aleksandar Rikalo <arikalo@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <f4bug@amsat.org>
-References: <20241111224452.61276-1-philmd@linaro.org>
- <20241111224452.61276-3-philmd@linaro.org>
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20241111222936.59869-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241111224452.61276-3-philmd@linaro.org>
+In-Reply-To: <20241111222936.59869-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,61 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/11/24 14:44, Philippe Mathieu-Daudé wrote:
-> From: Philippe Mathieu-Daudé <f4bug@amsat.org>
+On 11/11/24 14:29, Philippe Mathieu-Daudé wrote:
+> Hi,
 > 
-> Simply call the generic gen_lsa() helper, taking care
-> to substract 1 to the shift field.
+> Few old patches lingering on an old branch I'm trying to rebase...
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/tcg/nanomips32.decode        |  8 ++++++++
->   target/mips/tcg/nanomips_translate.c     | 12 ++++++++++++
->   target/mips/tcg/nanomips_translate.c.inc |  9 ---------
->   3 files changed, 20 insertions(+), 9 deletions(-)
+> Extract gen_lx() and call it via decodetree. Trivial IMHO.
 > 
-> diff --git a/target/mips/tcg/nanomips32.decode b/target/mips/tcg/nanomips32.decode
-> index 9cecf1e13d..11bf5cd6c4 100644
-> --- a/target/mips/tcg/nanomips32.decode
-> +++ b/target/mips/tcg/nanomips32.decode
-> @@ -6,3 +6,11 @@
->   #
->   # Reference: nanoMIPS32 Instruction Set Technical Reference Manual
->   #            (Document Number: MD01247)
-> +
-> +&r                  rs rt rd sa
-> +
-> +%lsa_u2             9:2  !function=minus_1
-> +
-> +@lsa                ...... rt:5 rs:5 rd:5 .. --- ... ...    &r sa=%lsa_u2
-> +
-> +LSA                 001000 ..... ..... ..... .. ... 001 111 @lsa
-> diff --git a/target/mips/tcg/nanomips_translate.c b/target/mips/tcg/nanomips_translate.c
-> index c148c13ed9..9a6db4a828 100644
-> --- a/target/mips/tcg/nanomips_translate.c
-> +++ b/target/mips/tcg/nanomips_translate.c
-> @@ -9,6 +9,18 @@
->   #include "qemu/osdep.h"
->   #include "translate.h"
->   
-> +static inline int minus_1(DisasContext *ctx, int x)
-> +{
-> +    return x - 1;
-> +}
-> +
->   /* Include the auto-generated decoders.  */
->   #include "decode-nanomips16.c.inc"
->   #include "decode-nanomips32.c.inc"
-> +
-> +static bool trans_LSA(DisasContext *ctx, arg_r *a)
-> +{
-> +    gen_lsa(ctx, a->rd, a->rt, a->rs, a->sa);
+> Philippe Mathieu-Daudé (3):
+>    target/mips: Extract gen_base_index_addr() helper
+>    target/mips: Extract generic gen_lx() helper
+>    target/mips: Convert Octeon LX instructions to decodetree
+> 
+>   target/mips/tcg/translate.h        |  2 +
+>   target/mips/tcg/octeon.decode      |  8 +++
+>   target/mips/tcg/octeon_translate.c | 12 +++++
+>   target/mips/tcg/translate.c        | 78 +++++++++++-------------------
+>   4 files changed, 51 insertions(+), 49 deletions(-)
+> 
 
-I think decoding shift-amount - 1 is misleading.
-Surely it would be better for other callers to pass extract(...) + 1?
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
 
