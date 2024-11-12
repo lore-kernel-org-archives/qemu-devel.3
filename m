@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02CD4D41D61
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 07:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8AFBD41D5F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 07:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAl41-000828-TR; Tue, 12 Nov 2024 02:11:49 -0500
+	id 1tAl6S-0001bo-ND; Tue, 12 Nov 2024 02:14:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tAl3y-00081h-7s
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 02:11:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tAl6P-0001aT-GY
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 02:14:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tAl3w-0006gr-8l
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 02:11:46 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tAl6N-00072Q-DX
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 02:14:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731395502;
+ s=mimecast20190719; t=1731395653;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=m11e0o3+CrruBeCDBMWoKtjF5L1A9qeK2nO915NyIeg=;
- b=HktyYLH4W3HOpURf5PCedprnL3kHOVU+CXyh5KdsDSpqT1KmML1dxSyexNmDwYgosdN9CK
- 2G5dxr/pIqE6l4wOUw64mgnxAJqitq0R6eRs9+KVZ3JiqPl93oghHI5JsTpbSmlcNqoT7G
- GTXGHcZh61NzrTXk5Gmy8Yt2VpXYchE=
+ bh=zb8U/+doWBa05XRot33wTgCEXY9Yz0wFm0qnpMOM0Es=;
+ b=E1Bg1aJCGOEgEkpJtGM542nzCSwoPGOFWbrEp2dFoOP70TCL85RPcDwFV151i+uUmDllcF
+ sTHPs6mpBwVTJccbNxDMRGwafvQAhF17ZaQwWEd1/HtqY3/qrOXlx3DWaDqFEZVFZJQaja
+ acOLsuSjWE8VLeyAEZz5AxMQAI0f3xc=
 Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
  [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-aXKWVY3AOjiyMr6xeFhdqw-1; Tue, 12 Nov 2024 02:11:40 -0500
-X-MC-Unique: aXKWVY3AOjiyMr6xeFhdqw-1
-X-Mimecast-MFC-AGG-ID: aXKWVY3AOjiyMr6xeFhdqw
+ us-mta-600-oHR7oVANNVKbvg-OwlT15w-1; Tue, 12 Nov 2024 02:14:11 -0500
+X-MC-Unique: oHR7oVANNVKbvg-OwlT15w-1
+X-Mimecast-MFC-AGG-ID: oHR7oVANNVKbvg-OwlT15w
 Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a9a2a81ab82so419478366b.1
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 23:11:40 -0800 (PST)
+ a640c23a62f3a-a9a273e4251so474592666b.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 23:14:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731395499; x=1732000299;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m11e0o3+CrruBeCDBMWoKtjF5L1A9qeK2nO915NyIeg=;
- b=FPXH1E/vJeFLmYQ7WGpYVPSycUGpoDi7mFyJQMVoZaiqD5xlQPAVC410bklGfeoy5X
- tv1ysFb5pFyH2NmZmBKHEthKOJFWJyGTKZ79lG+hRS3vj2ghG2ZeiXGclj/6KgGKpxnG
- o3crNDVI6msSCqM5lLWgoUdQQ/1saz+VbQv5blAXaXr2NtmFOyFHbS/8f76vcOoOH1Sa
- HGDLoJrw+B0SHwK6AZUd/4tpK+BFYaocGaKFx8xIMMkLPoTY5IgxYWUnSWp+IVv11AGt
- 8S0GBLVemHlDM0AtuIAsw8ws/wGS1lKlBmscO2FY35kfC3BMyucUPczt1spiDLqCBnac
- /hfQ==
+ d=1e100.net; s=20230601; t=1731395650; x=1732000450;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zb8U/+doWBa05XRot33wTgCEXY9Yz0wFm0qnpMOM0Es=;
+ b=CZ8DZ3beu4HnojxTx9nYgtVuIBM1nW85HEXC8MQQkcQx0dlKh38xiS1sprG10fIe5r
+ zScpkRavuB5sPH2E1QAsBHmcsJ1pjORe22/8g7HNSCuLet7Hcf2qB8jihgNW/1L38+5G
+ 7OPZWn2qqGwfytVAbd71SI4m+TdYWTvYx3CvlhhXxzAx7WFZ+3UNgK9CAKGrw0hJnrb8
+ NEllEAHM79VgrAAdlRXsbGpT4GBf2ktI4agIZJ3K6NYoyX1oedVFP1UxsJggQ9I1etGU
+ zLuc5crHfF4aOWHyx52qjMfx40TzbVfPnTMdWF/h8i91lG+hQVUvHtuFZltXbaemRqT1
+ PEyA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXuqcomVPiTAjYHFBq4oKEDGSxk9sPFf89UYe2mjzieg9dKGjUeCYsPOOkYgQ2KRHGxysxq9rx83FCP@nongnu.org
-X-Gm-Message-State: AOJu0YyafJIMdBmqaVT4O5kWpNmgc8eXBnde5cTOHyHZliuY8dzjCN0p
- UqofaRAgM7PMa9OP3ndseVwnLCzbY7xk+SSCq0HueIx5wgNYyUfwL4Fz1+k8qfC7yOkQqarq0P9
- J5LPw0j2oFvijV4zOSuYbrkkOOqvr6S43f+Ze4k/KaLC1WfONHwH1
-X-Received: by 2002:a17:907:844:b0:a9a:a96a:e280 with SMTP id
- a640c23a62f3a-a9eeff0ea22mr1542077766b.20.1731395499418; 
- Mon, 11 Nov 2024 23:11:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IECka63tjlvg2c43+o9GVyAfsTh5IO1G7+8ueQVzeqVlAdyhwZXLyMEPrxxj5cIB3CUHxfBPQ==
-X-Received: by 2002:a17:907:844:b0:a9a:a96a:e280 with SMTP id
- a640c23a62f3a-a9eeff0ea22mr1542074466b.20.1731395499018; 
- Mon, 11 Nov 2024 23:11:39 -0800 (PST)
+ AJvYcCXbhSVuD8tiOxUwAeVXYIx8CIGUAYFpiX0Ai2u1/pMmVIHCxxrOvEPHddV1rdmLYC9KPexyloxiD0mx@nongnu.org
+X-Gm-Message-State: AOJu0YzhicvylVBMt7A3r/yMR7qHCxd3Cy96sM4ouDNuTX6LMpFpTNvI
+ bu9Z3Z4KqU+Oc8PzMSKP8fgVOqZHZNnhdT4lh/RT5tKTTnEOGskmIiuNiFWMUSmSYq0hDifJYts
+ 6+Tg5+8bJDuhZbaafS80Y7yewPz+mZuwGjPE7bK1q8j/3ZggeuRPI
+X-Received: by 2002:a17:906:4a18:b0:aa1:e60e:6fe7 with SMTP id
+ a640c23a62f3a-aa1e60e774cmr27883966b.11.1731395650167; 
+ Mon, 11 Nov 2024 23:14:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF6whAhtT4wDL7jro/qdjzRJB1NqHf6T4RAD1u7nvoTObU/F/prx9JSii2SYEz1nhizodrBuw==
+X-Received: by 2002:a17:906:4a18:b0:aa1:e60e:6fe7 with SMTP id
+ a640c23a62f3a-aa1e60e774cmr27881566b.11.1731395649793; 
+ Mon, 11 Nov 2024 23:14:09 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-50-175.web.vodafone.de.
  [109.42.50.175]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9ee0dc56fcsm690734366b.125.2024.11.11.23.11.37
+ a640c23a62f3a-a9ee0a184f8sm675454766b.15.2024.11.11.23.14.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Nov 2024 23:11:38 -0800 (PST)
-Message-ID: <3bea84f6-098f-4956-a40d-651b567212c2@redhat.com>
-Date: Tue, 12 Nov 2024 08:11:36 +0100
+ Mon, 11 Nov 2024 23:14:09 -0800 (PST)
+Message-ID: <f97df212-9094-4ea4-ab9a-3ca3f88a0c81@redhat.com>
+Date: Tue, 12 Nov 2024 08:14:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] tests/functional: Introduce _console_read()
+Subject: Re: [PATCH v1 4/4] tests/functional: Remove sleep workarounds from
+ Aspeed tests
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -80,9 +81,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20241112062806.838717-1-clg@redhat.com>
- <20241112062806.838717-2-clg@redhat.com>
-Content-Language: en-US
+ <20241112062806.838717-5-clg@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -125,19 +126,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241112062806.838717-2-clg@redhat.com>
+In-Reply-To: <20241112062806.838717-5-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.671,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,70 +155,48 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/11/2024 07.28, Cédric Le Goater wrote:
-> Interaction with the console has been a problem in our avocado
-> tests. In some cases, the expected string does not match in the
-> output, causing the test to fail with a timeout. These were worked
-> around by sleeping before reading the console and even with SSH
-> connections in some places.
-> 
-> To fix, process the console output char by char and not with
-> readline. This routine was largely inspired by console_wait() in
-> tests/vm/basevm.py.
+> These were introduced in the avocado tests to workaround read issues
+> when interacting with console. They are no longer necessary.
 > 
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   tests/functional/qemu_test/cmd.py | 17 ++++++++++++++++-
->   1 file changed, 16 insertions(+), 1 deletion(-)
+>   tests/functional/test_arm_aspeed.py | 7 ++-----
+>   1 file changed, 2 insertions(+), 5 deletions(-)
 > 
-> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-> index cbabb1ceed3c..bb39857e6cae 100644
-> --- a/tests/functional/qemu_test/cmd.py
-> +++ b/tests/functional/qemu_test/cmd.py
-> @@ -12,6 +12,7 @@
->   # later.  See the COPYING file in the top-level directory.
+> diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
+> index bdd5771a794e..07a8905e2365 100755
+> --- a/tests/functional/test_arm_aspeed.py
+> +++ b/tests/functional/test_arm_aspeed.py
+> @@ -136,10 +136,8 @@ def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'
+>           self.wait_for_console_pattern('lease of 10.0.2.15')
+>           # the line before login:
+>           self.wait_for_console_pattern(pattern)
+
+Could we please wait for the "login:" string now instead, to make sure that 
+there is no race between detecting the previous line and the real login prompt?
+
+> -        time.sleep(0.1)
+> -        exec_command(self, 'root')
+> -        time.sleep(0.1)
+> -        exec_command(self, "passw0rd")
+> +        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+> +        exec_command_and_wait_for_pattern(self, 'passw0rd', '#')
 >   
->   import logging
-> +import re
->   import os
->   import os.path
->   import subprocess
-> @@ -78,6 +79,20 @@ def run_cmd(args):
->   def is_readable_executable_file(path):
->       return os.path.isfile(path) and os.access(path, os.R_OK | os.X_OK)
->   
-> +def _console_read(vm, expect, expectalt = None):
-> +    output = ""
-> +    while True:
-> +        data = vm.console_socket.recv(1)
-> +        if not data:
-> +            break
-> +        output += data.decode("latin1")
-> +        if expect in output:
-> +            break
-> +        if "\r" in output or "\n" in output:
-> +            lines = re.split("[\r\n]", output)
-> +            output = lines.pop()
-> +    return output
-> +
+>       def do_test_arm_aspeed_buildroot_poweroff(self):
+>           exec_command_and_wait_for_pattern(self, 'poweroff',
+> @@ -210,7 +208,6 @@ def test_arm_ast2600_evb_buildroot(self):
+>                'echo slave-24c02 0x1064 > /sys/bus/i2c/devices/i2c-3/new_device',
+>                'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64');
+>           exec_command(self, 'i2cset -y 3 0x42 0x64 0x00 0xaa i');
 
-The idea looks promising, but I just realized that this is breaking the 
-console.log:
-
-$ cat 
-tests/functional/arm/test_arm_aspeed.AST2x00Machine.test_arm_ast2500_evb_buildroot/console.log 
-  | wc -l
-12
-
-Without your patch, the log is way more verbose:
-
-$ cat 
-tests/functional/arm/test_arm_aspeed.AST2x00Machine.test_arm_ast2500_evb_buildroot/console.log 
-  | wc -l
-232
-
-Could you please have another look?
+Could please you change the above line to wait for the shell prompt pattern now?
 
   Thanks,
    Thomas
+
+> -        time.sleep(0.1)
+>           exec_command_and_wait_for_pattern(self,
+>                'hexdump /sys/bus/i2c/devices/3-1064/slave-eeprom',
+>                '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff');
 
 
