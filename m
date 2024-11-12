@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D74DD41D5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 06:29:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87FF0D41D5E
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 06:30:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAkOE-0005ua-33; Tue, 12 Nov 2024 01:28:38 -0500
+	id 1tAkON-0005yU-4R; Tue, 12 Nov 2024 01:28:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tAkOC-0005uB-Gm
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 01:28:36 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tAkOK-0005xA-5I
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 01:28:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tAkOB-0001z6-26
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 01:28:36 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tAkOI-00020t-S2
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 01:28:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731392910;
+ s=mimecast20190719; t=1731392922;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=BVyWWWlQjWdpHcql9rJH4/8KJiLR4q7DTqGtZA1YIr8=;
- b=FwOJl1uvxA7eM2tMGZF5D9K3KbHRd8OSbqujxW2hLgsWgJSOW0B9aF1tu01qh7HebID7vx
- Ik+QdsrZBddriSWSZqUO2upDGtjDSu3UOKaumJ6UNXA0QZJ7CWHsM7/+O5QsOUvwSlfhOo
- 0zvZmEhb2sGflRXRL+q1WUyke8WO/iw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MQxDgg+pj2eNUN1t9f4UF8jIfFSJe4LA4s8kBjckYoc=;
+ b=fK0CabmW2jPidWsvsC0dL8GxYv66Nu9mySCwpcQ4XMb++gH1dnzaOcVvY7Eq9qxinawD+F
+ x1KOuOSBjA/hsZ0N2awcREDaHiWOJaqWEbsJmQNWdp1IMV+j9+CTTAxvk5ObEGPFn8FCQ4
+ f/OZ6Py0hKbjZ9FsrCPXCgAeBXgeXQA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-492-NMNUoCtjMZmBTYt2JRnkNw-1; Tue,
- 12 Nov 2024 01:28:26 -0500
-X-MC-Unique: NMNUoCtjMZmBTYt2JRnkNw-1
-X-Mimecast-MFC-AGG-ID: NMNUoCtjMZmBTYt2JRnkNw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-bTS4PZpyNxu5pJ28mSXaxg-1; Tue,
+ 12 Nov 2024 01:28:37 -0500
+X-MC-Unique: bTS4PZpyNxu5pJ28mSXaxg-1
+X-Mimecast-MFC-AGG-ID: bTS4PZpyNxu5pJ28mSXaxg
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A57C1956088; Tue, 12 Nov 2024 06:28:19 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7410F19541A1; Tue, 12 Nov 2024 06:28:35 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.193.48])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A5CF019560A3; Tue, 12 Nov 2024 06:28:08 +0000 (UTC)
+ id 028A519560A3; Tue, 12 Nov 2024 06:28:31 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
@@ -54,9 +55,12 @@ Cc: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Joel Stanley <joel@jms.id.au>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v1 0/4] tests/functional: Finish conversion of Aspeed tests
-Date: Tue, 12 Nov 2024 07:28:02 +0100
-Message-ID: <20241112062806.838717-1-clg@redhat.com>
+Subject: [PATCH v1 4/4] tests/functional: Remove sleep workarounds from Aspeed
+ tests
+Date: Tue, 12 Nov 2024 07:28:06 +0100
+Message-ID: <20241112062806.838717-5-clg@redhat.com>
+In-Reply-To: <20241112062806.838717-1-clg@redhat.com>
+References: <20241112062806.838717-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,7 +74,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,36 +90,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+These were introduced in the avocado tests to workaround read issues
+when interacting with console. They are no longer necessary.
 
-The first patch is a proposal to fix a long-standing issue when
-capturing the console output. In some cases, the expected string does
-not match in the output, causing the test to fail with a timeout. The
-change introduces a _console_read() routine that processes the console
-output character by character as a possible fix.
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ tests/functional/test_arm_aspeed.py | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-Last patches complete the conversion of the Aspeed tests and remove
-the console workarounds.
-
-Thanks,
-
-C.
-
-Cédric Le Goater (4):
-  tests/functional: Introduce _console_read()
-  tests/functional: Convert Aspeed aarch64 SDK tests
-  tests/functional: Convert Aspeed arm SDK tests
-  tests/functional: Remove sleep workarounds from Aspeed tests
-
- tests/avocado/machine_aspeed.py         | 202 ------------------------
- tests/functional/meson.build            |   2 +
- tests/functional/qemu_test/cmd.py       |  17 +-
- tests/functional/test_aarch64_aspeed.py |  97 ++++++++++++
- tests/functional/test_arm_aspeed.py     |  74 ++++++++-
- 5 files changed, 184 insertions(+), 208 deletions(-)
- delete mode 100644 tests/avocado/machine_aspeed.py
- create mode 100644 tests/functional/test_aarch64_aspeed.py
-
+diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
+index bdd5771a794e..07a8905e2365 100755
+--- a/tests/functional/test_arm_aspeed.py
++++ b/tests/functional/test_arm_aspeed.py
+@@ -136,10 +136,8 @@ def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'
+         self.wait_for_console_pattern('lease of 10.0.2.15')
+         # the line before login:
+         self.wait_for_console_pattern(pattern)
+-        time.sleep(0.1)
+-        exec_command(self, 'root')
+-        time.sleep(0.1)
+-        exec_command(self, "passw0rd")
++        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
++        exec_command_and_wait_for_pattern(self, 'passw0rd', '#')
+ 
+     def do_test_arm_aspeed_buildroot_poweroff(self):
+         exec_command_and_wait_for_pattern(self, 'poweroff',
+@@ -210,7 +208,6 @@ def test_arm_ast2600_evb_buildroot(self):
+              'echo slave-24c02 0x1064 > /sys/bus/i2c/devices/i2c-3/new_device',
+              'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64');
+         exec_command(self, 'i2cset -y 3 0x42 0x64 0x00 0xaa i');
+-        time.sleep(0.1)
+         exec_command_and_wait_for_pattern(self,
+              'hexdump /sys/bus/i2c/devices/3-1064/slave-eeprom',
+              '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff');
 -- 
 2.47.0
 
