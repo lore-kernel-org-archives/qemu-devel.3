@@ -4,122 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65656D41D44
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 03:12:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A503D41D4E
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 03:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAhJT-0007uW-AE; Mon, 11 Nov 2024 22:11:31 -0500
+	id 1tAhPb-0000Nc-CV; Mon, 11 Nov 2024 22:17:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1tAhJQ-0007ti-Ky; Mon, 11 Nov 2024 22:11:28 -0500
-Received: from mail-sy4aus01olkn20809.outbound.protection.outlook.com
- ([2a01:111:f403:2819::809]
- helo=AUS01-SY4-obe.outbound.protection.outlook.com)
+ id 1tAhPZ-0000NN-Gn
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 22:17:49 -0500
+Received: from mail-me3aus01olkn2082e.outbound.protection.outlook.com
+ ([2a01:111:f403:2818::82e]
+ helo=AUS01-ME3-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1tAhJP-0000O6-1m; Mon, 11 Nov 2024 22:11:28 -0500
+ id 1tAhPY-0000uT-25
+ for qemu-devel@nongnu.org; Mon, 11 Nov 2024 22:17:49 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EQmWheEB+kvbm129/Afaj/T/oinZZom+Q2cwaGRJlI8SksI+nrqQVxtp/FV0WN/fXN/33CKyP4dfdr/WUliAfgs3ZpvLTeL97t51qFsKTDgRU0gCIV3a0Q7ByGbJsNQ8QqxoWE1s2TGHu0NCRyVy4ui9BpntiT0RQF6mp9fooo4ReXzdA2+fl3+P1gJbXZQamMb9DoGgdOZy4Jkx+3BMMukeixV/tgVjHoBl+jqnEygb+UDtf3S44z4mXGRXybi/0C8wq1ExGB2djY9qtB27xDyfeTNAW3hz71nKgU4GBoKoLk5mn2QSV7i6vObLJAZyYOW4GQkujoeMzGjo2ClinQ==
+ b=G0MuanHSaMlWRZqFdvz+0lvoo1Nx5Cf2ouJgkFviUoqRHRE7N5jvy4rwyq23UgI3x0685Rb0t6Xf2fp46hWLYU2gtB/uP4lBWz9HSlModfIOzl7cXnhF7sQa/bC6KczlENO3xtROqF210wHDxtnm99nF8oIuwkMXbYLq+dSsLaUfeUGdwR9Nct2g72awJnwIIwVBqNwEB1RcWeuHfWOi5rIc9il5skwozfa33M6n+Q1NjtGEYVuLYOecHBkTfrm17ONABKyboDCorfwRc7OAtzJi2xR4TCURwzW+hS30LfzX4o21qAlDkyJ6Q0uj1c0v/kTahGuz4hl9burdak7o1Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gGBiBGgvM+gG5441ZynYlMxM/NVm8FCYKY6zv4QMaow=;
- b=XJKfYZEnZFNrloPCgz5p6olBFte4P0vjuwF4ZkJMXRIYGJzDSvgLPCu4tziZs7rQ1iRZgy/Dvw4zaLKKeL410VhygeVhb6UumFvsdojxVfXm01/hJzsDSKysmUvCvu1Iy/kjEEn/E6ML5J3cnouiSKK22Q9qu0a66ajqsDV1r1Z5ymMUcgG22GQ9D6VkUiFM+9tfyTQ3hL56/IB4hYpy/omx+pe8wm7424N10GmmEpsB9GF8DylOqGabhcgcnZr2HXZHUef0VrnWS1yHHcdKWratQXAAja83iw5to9F/2MqE9cfNYuLdY3e2gq4ecs3cPoRoXVNqKyBPL6UDKeSKyA==
+ bh=X37vuWtEyRB+uPVyCwubvPrkicySYkXy9O4BH6mzZCI=;
+ b=vqUrNEdPejCYT1dOsWM/9YlGRLT2pdvLLdD2lHL6AHgQB+UBDx/vCri9ESx/sGNOSp2oUEaY4V2GuS6wAGYiIcjFQZ7bybN1dpsMFsIhsa4WRCaZ8Hyu9F/iosXzzOp/m6r3U4qhSaA9AAyWHLSXoA1ORyQmD4Xl0+jpQ32H++hAicQNfznf0s+5zp4VAg3TluvTpFukerW8yHnvfNLv524GB+Wu1FSY+KJ9Kn1FCvEd/iosFdaiQV6xtsLWA4MI1nAmgLMEoqpTjrTzHsApVFCBVFniAye9SnYeWaF7egrFfGEX5IjjiBfXQJWyxRR5BLcmzgSULMNPr8OMkDdygg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gGBiBGgvM+gG5441ZynYlMxM/NVm8FCYKY6zv4QMaow=;
- b=Ge9ihtVqdT5E7v2vXFFbGOQBokR9jRNdrltE4kv9V4C0TDuEFWknux+KUcN9x5UBcEjqHYBTtvQKbQkz7aAA77PO1V/G+wIhYlR6hJCqgN4YCUPNrxDeCV5UPtzHnonifm4391+aNpKMVCPLG0o+e0CVgiqTnlDp4Y3vReimNAbX/Tpv++hyinYcFNv3rhcNK72ZviCvca3Wl/HYu87WT32dlwTYdfl6XyICSvgcQkQL8ukn0M57SuKm2O7XKdBU8l15Y1pFsohO/2MuaLb4eBB89U57Q+5U6b7Mo4dwNNs+0RqzoMql81knzbPF0R17tDT/qQw5V6SgX/W4j3/sNw==
+ bh=X37vuWtEyRB+uPVyCwubvPrkicySYkXy9O4BH6mzZCI=;
+ b=tZOWr8i6R45qBBzAv9ye3lqlq2gx7DDF9Y9+mcW6pdhz9+hI0B0ZMvGx+drkw7y0ihptjsqB/tqhcPhk5hEpPeBlXDy9DRwbhnZ+yEWfe9SKdMv+HqI1fZvYN6ELswkWTp4AZLPU4fOcZ12Q9LjF5g3crsdZUS22hNAx7mCTjKKJjXoNzJ6CLDPI097WzMQ5PYmLjhJ4HPS3qllOhwiogfT6U2kzexc3Ep3HHCeU0WAEBaTcpbPZE1+yx9YbzzgJ/Aq0NTVu07PUc2uftk2p4uwhUuQBDu+nLbEJC7rEUVtsCxENxZRZmBGC7iuDVew1y9BoHDSMnsVmNmCtIVsb3Q==
 Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
- by SY8P300MB0757.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:293::19) with
+ by SY2PPF59C41B37B.AUSP300.PROD.OUTLOOK.COM (2603:10c6:18::39c) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.28; Tue, 12 Nov
- 2024 03:11:18 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.29; Tue, 12 Nov
+ 2024 03:17:41 +0000
 Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
  ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
  ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8137.027; Tue, 12 Nov 2024
- 03:11:18 +0000
+ 03:17:41 +0000
 References: <20241108180139.117112-1-pbonzini@redhat.com>
- <20241108180139.117112-3-pbonzini@redhat.com>
+ <20241108180139.117112-6-pbonzini@redhat.com>
 User-agent: mu4e 1.6.10; emacs 27.1
 From: Junjie Mao <junjie.mao@hotmail.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, kwolf@redhat.com,
- zhao1.liu@intel.com, qemu-rust@nongnu.org
-Subject: Re: [RFC PATCH 02/11] rust: build: move rustc_args.py invocation to
- individual crates
-Date: Tue, 12 Nov 2024 11:02:22 +0800
-In-reply-to: <20241108180139.117112-3-pbonzini@redhat.com>
-Message-ID: <SY0P300MB102652560AD744516054AE1495592@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+ zhao1.liu@intel.com, qemu-rust@nondevel.org
+Subject: Re: [RFC PATCH 05/11] rust: cargo: store desired warning levels in
+ workspace Cargo.toml
+Date: Tue, 12 Nov 2024 11:12:28 +0800
+In-reply-to: <20241108180139.117112-6-pbonzini@redhat.com>
+Message-ID: <SY0P300MB1026324D1571BBD2E001536695592@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
 Content-Type: text/plain
-X-ClientProxiedBy: KU1PR03CA0011.apcprd03.prod.outlook.com
- (2603:1096:802:18::23) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-ClientProxiedBy: TY2PR0101CA0025.apcprd01.prod.exchangelabs.com
+ (2603:1096:404:8000::11) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
  (2603:10c6:10:282::22)
-X-Microsoft-Original-Message-ID: <87ed3hi1tg.fsf@hotmail.com>
+X-Microsoft-Original-Message-ID: <87a5e5i1iu.fsf@hotmail.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY8P300MB0757:EE_
-X-MS-Office365-Filtering-Correlation-Id: 50593883-7917-482e-9578-08dd02c7ac9b
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY2PPF59C41B37B:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8bae69f1-0c38-41af-8be1-08dd02c89145
 X-Microsoft-Antispam: BCL:0;
- ARA:14566002|5072599009|8060799006|461199028|7092599003|19110799003|15080799006|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?NgyrijU71T0G3l0m6jCpNYENQPgFReCu2r5FiRzWCjNt0LXy8/QOZ6Hn+XCg?=
- =?us-ascii?Q?B+aBVayXXp+PZhYdUi+ILefNIg7D4B/g1Od4r46ybM3vOAqtyDJ33j2Et/lX?=
- =?us-ascii?Q?iZC/flXr8ipRPBx0CShdp0MNXi61cem9CZERY46kUt0BVEr+MmPVg/WTi6yW?=
- =?us-ascii?Q?VRQSJm1gJ/SEeKkWTGRAvXe2g9FxQAKjq5ynFebkrbsGNKtzrLYNfo37tpZw?=
- =?us-ascii?Q?xQxE/cBRKS4bB2IeedoBBSJmimlH+prCg9WapDu15RjWp8Rp3SDXMuNuSMN9?=
- =?us-ascii?Q?o7mbwZ8XGwXmzBioOIhEBsZZucmfMY0hrurKv9RnbIKpebFjNOL5tQPnU7Jv?=
- =?us-ascii?Q?DbcWWMtjlYTZoIvSomu9kRFsDLUoK2iBe1KbqkBRgNu+TkaMSUlUdZNDQd9m?=
- =?us-ascii?Q?VZ/xkUhcijJpouMZKQfQ2hcwpw8cs40t88G9DcuFYQiraXzVmi8P8IgcqEFi?=
- =?us-ascii?Q?+efI/St2WgxL3Z4/oDGZg0Y8/4gR8dUMR4ePk61IVMLuxk3CnyS2rwRjRPhs?=
- =?us-ascii?Q?IcOTg2DocSLrzZOdWt7Q6aVU4Pbvf9O0vLPtOLyyRzcJIBIn+wi9rI9CkFK1?=
- =?us-ascii?Q?eP6Jw3k42Im08QBDHXNEFx0UBHi6REIM/iD6Is9YuBq7XMyFGpRnpRpmotsA?=
- =?us-ascii?Q?mkTaxUelgJOQk7qW0IHq70NcVJUiUyFZy6gjmd0taP5cM33WC0q+Rwg+a4Od?=
- =?us-ascii?Q?IDVwOJyjHcM4yOj964UqKauDcZfC3SHDJOrZY2NJlJoUtlD9u8+Jn5OWAAy5?=
- =?us-ascii?Q?igKfuhevLHNKZ2rdCBEeDVWVrqLzyxhHWOWOQhG7YrXwMTNjv3wJ+mdUEFKR?=
- =?us-ascii?Q?+7HPWSb/cJfJv4EHvWcGXIKyJ4APjse56E2prabMdq3YJmO/vrDz16xyktdc?=
- =?us-ascii?Q?8mBjYpfENzdiOmADjvfvEJGPMcudU5cBySQqDf72mOAmvnXOjik6/opwVxR2?=
- =?us-ascii?Q?PwBoNe0D3QVUW6ho+RcSDL8Thti2Yucwnovklf64TLZpHn+YW8vtkitMaBCT?=
- =?us-ascii?Q?3yPnTHh6jci3CGq3Cosy5l5/JO+r1u/PrNCLQduSe/s5E/Y=3D?=
+ ARA:14566002|461199028|19110799003|5072599009|15080799006|7092599003|8060799006|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?KO0kapAp9MKfAnyBPAPvZ0zXYI023hkXPsQXbhW/g3dqcll40y9FDXVOj4a2?=
+ =?us-ascii?Q?Ui1C56WwHSWcutKjVYmco8j7v+WwMZAsf9GYIjJ2LiL4LuhOMphFyjxsERZu?=
+ =?us-ascii?Q?Xv3XmYRXgxm0JcHCRsS0EfrQhYDoG8ezHyh/fACc3WuJZala5BvMouo3eIJD?=
+ =?us-ascii?Q?Nozj0eaVGuRUM/5zCdQD8D4JlvVaxrRkwQROyeOOnRPPEZ0Q/cGgnDDH36IM?=
+ =?us-ascii?Q?ZpqCGlJ1dO0WO2KD2zrstL1OCza6f7U/xoTP80xJ/2lYZ/EUQFMRHXN3kprr?=
+ =?us-ascii?Q?7n9NMC5V4v10hKcthPe/qGuR+dMsYuj/TBgk78NcjmhbQ4auOITLwk6A57P6?=
+ =?us-ascii?Q?NDu6gXPly59LwQ2Rfkci5Z7qeqEY+3AC6s6DWoejob0OZh2BAMXeyQWvys2h?=
+ =?us-ascii?Q?UwTWaTXsFkZ+Lftd7uiVq2OvmckZbKhTZLcFotaKyuNofrlaZDfKb/EDkdJe?=
+ =?us-ascii?Q?AayVz+UJkA5hAfrt1HGR0Q9KKy3gnrY3ILdO8p0y1TbOvkMwnrHkGv1GOzsN?=
+ =?us-ascii?Q?uIKCP5heMJGmwPo7x1e08v15gf7FT8S0UU3Hz0TSxyuO/jkYTChvOV6uZlSg?=
+ =?us-ascii?Q?wGcwLk7opECO0INrEQNCCBT1Fe5p++DV4JD731uPxZLpejNLc5tp94k7lfOd?=
+ =?us-ascii?Q?NQSI2gHx8nteq0ZovqmNf4nd6mrwErMCM9XAMiPYahQRx5mp20iqrEqmAyR+?=
+ =?us-ascii?Q?fX6xvVb9Rb3Xpxs9il5BzMOXLwMt6doA7558dWB0iIzuamuSmohI9FTJoQz6?=
+ =?us-ascii?Q?bXB2Kux/5Vc8s2H6TrxP5JpadwAXsqp0affEaAMBDxQ30FD1g6t+WQ9gKuIz?=
+ =?us-ascii?Q?x2JI3Dze3L8Mcgtydj/uxuG6PhF9jvAEnYww47PEhud7a4hOVPuI+3yGFG3s?=
+ =?us-ascii?Q?4nsBkHqg7UiLxNvIwE+rNKUvs9EKgh04zDhbQqmsnXKMACCnUKtxVd5vwyWJ?=
+ =?us-ascii?Q?5z8Mzm3yfNkBDODWA7jCdONo+GbjXJOKZ+jqgT21FAm1feN4bjMvgz3s8VqP?=
+ =?us-ascii?Q?xxRl+xhmIZQjkrE4CtVzxRila4JggEWDsc6BZo65nGytetw=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ITCaEQH935qlRvvT/aEBqKZRYqHZq1rhlKF4NW14XRJF4TJbQdQD0fhUEM7o?=
- =?us-ascii?Q?8lZMrkdJmNaHzSj1YPlZsQvxxc9IG2v4XUlA5pEl8PQ5cYH21QKz4mE+SoF9?=
- =?us-ascii?Q?3XFjJjWYDFMsMkmz3RT2AEJVf6rPCwZZDPF94YWBZ/9z6A+FOLXSSK7TDu2K?=
- =?us-ascii?Q?Lwqmjvaig7L49+dqnkqQ108YUflsbt/xNdeoapDOqJWQhnq89HyZBXq68uhi?=
- =?us-ascii?Q?ER0L8xV/DFAQezNL53lN9gHILaJJYg/Ktb/Pr3mVVC+/jDlBApl9ADguWdMi?=
- =?us-ascii?Q?7urkmzi3HNcBu+PB7fDYkXtRF4NkJQ2+G+KMZqSunY4tYUUYrdvWqnVO3kJx?=
- =?us-ascii?Q?uPdUOE3NjM+LaGNMjhk+3hcO5kCjXZ4TBudOnPLqzOvt+1Y9FaZo13FLy3w+?=
- =?us-ascii?Q?KlqaM35aUdXYMIzoPJCH0BBT5fV83MM8auhxfmCU0ne6pg4p6QD4n4nNEMxB?=
- =?us-ascii?Q?tBX1RfzAjLowDQaplQTIQ+/j8EP+UGAk/CGYSAd/rQYDKstk9BbwFlSx/ukg?=
- =?us-ascii?Q?xk8wdXM5eRGSFfpKybMceSFYTFz/an9re7lYUxL1VPSZ87MtFY47aPKDg989?=
- =?us-ascii?Q?Hyr1T/tvqE/6xmzEwkBUIfmoNstJE3E3tFSX6gEOb+VMdPD0tbuFBFlJntbk?=
- =?us-ascii?Q?LbS87wtbm9Ede1yK3SOlOxBWEJ48qzzfVrxaLvFxqr6pK46ep7+e64SoTI3B?=
- =?us-ascii?Q?Nq9Mi9M1NfuiwqB0HXvb3bd2p6BsegGNFf836EdhYwp804PfT42xYolWo7pN?=
- =?us-ascii?Q?TaAB4z+8P0k4gF4dppjNG1nwAUTcNaIkeRbIG+oTzcFkHnFtQ7Sp40+hYt7D?=
- =?us-ascii?Q?kvdw9V81ozrf+oNzpWeR2g4VOQD7TZB+untg8P4oKLj/X8ODhu6XkfB7MMwb?=
- =?us-ascii?Q?3E1yWoQdqteD7xdS6SwGnhl2+hk7/6BQQ3T04CfwL84vHz4ZZqUKICImk2Sm?=
- =?us-ascii?Q?jK/8LvmTxvfiEt3y2/cIO3V2ybZIcdOIro+uI+7daR/zmpnQBuiGEXkRQUqP?=
- =?us-ascii?Q?jNMxhR+8csFk6C+lZD0lVicstZToA1865QCehIPfalA5zfbyyxmqTCdN8fuv?=
- =?us-ascii?Q?c92ORuiFaCdIfF2Wtuj/vGcgs3OdYzrGRzA2L/Oxldkn/4tFMs+1h4v+A/wa?=
- =?us-ascii?Q?pnnekYadQ4/UEFwQe8J8xtwqEVMinichAU7EyyUwra79GZEgnNgOoM0jdCDj?=
- =?us-ascii?Q?TTbte7G8l6UzQMcNkkWhnLt9ZILX27wEFVHI4IeR63/Xin29DXmmszOvWaU?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?4xA3I51ScKI1d2/B82UhKyeR+MSufXJFTc1NmJEpH3IONcdmH55Gyqf+C/ZZ?=
+ =?us-ascii?Q?au/JttDtAc+SsSOC4xAE1Bs6SWWW+Z4brXmfJqV8179O65haIS53SotxrSOa?=
+ =?us-ascii?Q?8mJmQWfAhepJbxuQvtD2UZdfwkzx3L1jbd5d9GCS4P79P922wW3/l3w3I8Qh?=
+ =?us-ascii?Q?niMs5lL6U00dNHwntJHkyHTs3hy4kvrbE0F8wsACbJFXmQdnqUaGYdqIcqjb?=
+ =?us-ascii?Q?cMO9M1hCGyge4XKJCpPiilcoaAyNfQZ3/4E95FtEuop9eMI+NUH9wGGxOe+y?=
+ =?us-ascii?Q?Ph8T+e7NkJbQ1oQXcGpxggxEfkAhtUz0wFn2ezpY6wZ4xFL6WjiWaKW1oM8A?=
+ =?us-ascii?Q?C7q96hgo+z+RQLQAW45SQn6UCS6MkVHDOWHgy3mrLm9PY3yhp2Lp2IqeXiei?=
+ =?us-ascii?Q?wHrXHL5httUNDtyfE5W9h14hn4rLtTQR9j2Ly3fa7fnik7RhOvz05C3HZ6vF?=
+ =?us-ascii?Q?ZdtCqVGet5dXnJXq6jsYLZTYDzgHijok74UMqN8Z9pQBLZ4o6PeVm3Wx12Tx?=
+ =?us-ascii?Q?9tYoSnN8PWXSWjLDDqZSKLPNwxhV1A3wJObDZnKdgo1eMGZtOTnONuAHHzDG?=
+ =?us-ascii?Q?nMP6B5SvzFuWIQDR26xNsuEJeXWHp+RuA5YjQeZEs2gOEReTJDc41LGJNRP9?=
+ =?us-ascii?Q?Z6mRfuUE8UydQ6asQBfQMe0eFLu8BoFNvghzXmMowa5/c/aqTjgx6nejls1h?=
+ =?us-ascii?Q?zB2C+2KSURIcNaWLvxjzPEGEP9K4Ak6J6zG34BmOOFQahqZxrbEwtVFR/+3h?=
+ =?us-ascii?Q?fFG4FxhEkWdJLQH5kOYagHWYLK94aA8e4W7NyfLjfE9OE3g4dTQPGdnt6cTK?=
+ =?us-ascii?Q?VzJN284k6NG5/+aYWkXy/WjGDNDlCy8Q/OzmIdtTw/l159hU1BeTqrrqn1P0?=
+ =?us-ascii?Q?GF42ahhtbobk42JiVpwcLCmEtkpFp6C6CK7eaZwvG6PmUlzDThK7UOsW9oU8?=
+ =?us-ascii?Q?9YndzrQKUwlymJ4VhBGjA3Jke+deEX0LQpUSVl0Ko1JY3mk50fO+StUCyK64?=
+ =?us-ascii?Q?E2mFCCdcJbee1LSXbENVPTD1Q96Z6yubMlmtOUokMv4fhWA4w5tc7xQfw5GB?=
+ =?us-ascii?Q?6F01M6t6+D2EJMeCdFDPStN5BFq3eCQl2gpsjYZDBmNB9HEltCPyTkNpyytS?=
+ =?us-ascii?Q?lagh9XO4JJexrWM3anWGr0veYdyOU4Og5g/cZ9ZE18LeixiFm6GXZp5KosZx?=
+ =?us-ascii?Q?A8TS4mM14msdoU2GNIu4aEDq4HDc56VsBBxAy11TIqkDj0w8Qn5dkI948cQ?=
  =?us-ascii?Q?=3D?=
 X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 50593883-7917-482e-9578-08dd02c7ac9b
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8bae69f1-0c38-41af-8be1-08dd02c89145
 X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 03:11:17.7492 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 03:17:41.3209 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0757
-Received-SPF: pass client-ip=2a01:111:f403:2819::809;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY2PPF59C41B37B
+Received-SPF: pass client-ip=2a01:111:f403:2818::82e;
  envelope-from=junjie.mao@hotmail.com;
- helo=AUS01-SY4-obe.outbound.protection.outlook.com
+ helo=AUS01-ME3-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -144,26 +146,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> Only qemu-api needs access to the symbols in config-host.h.
+> An extra benefit of workspaces is that they allow to place lint level
+> settings in a single Cargo.toml; the settings are then inherited by
+> packages in the workspace.
+>
+> Correspondingly, teach rustc_build_args.py to get the unexpected_cfgs
+> configuration from the workspace Cargo.toml.
+>
+> Note that it is still possible to allow or deny warnings per crate or
+> module, via the #![] attribute syntax.  The rust/qemu-api/src/bindings.rs
+> file is an example.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  meson.build                     |  8 +++++---
+>  rust/Cargo.toml                 |  8 ++++++++
+>  rust/hw/char/pl011/Cargo.toml   |  3 +++
+>  rust/qemu-api-macros/Cargo.toml |  3 +++
+>  rust/qemu-api/Cargo.toml        |  5 ++---
+>  rust/qemu-api/meson.build       |  2 +-
+>  scripts/rust/rustc_args.py      | 31 +++++++++++++++++++++++++++----
+>  7 files changed, 49 insertions(+), 11 deletions(-)
+>
+[snip]
+> diff --git a/rust/Cargo.toml b/rust/Cargo.toml
+> index 0c94d5037da..0230b92a9fa 100644
+> --- a/rust/Cargo.toml
+> +++ b/rust/Cargo.toml
+> @@ -5,3 +5,11 @@ members = [
+>      "qemu-api",
+>      "hw/char/pl011",
+>  ]
+> +
+> +[workspace.lints.rust]
+> +unexpected_cfgs = { level = "warn", check-cfg = [
+> +    'cfg(MESON)', 'cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)',
+> +    'cfg(has_offset_of)'] }
+> +
 
-This may no longer be the case when more complex, build-time
-configurable devices are added in the future.
-
-Moving rustc_args.py calls to each crate is still helpful because of the
-changes in patches 3-6 in this series. So I think every crate under
-rust/ needs a run_command(rustc_args, ...) for crate-specific arguments.
+Making a universal unexpected_cfgs apply to the whole workspace may lead
+to a lengthy cfg list when more devices in Rust are added. As cargo does
+not allow overriding workspace-defined lints once inherited, I think it
+better to keep unexpected_cfgs crate-specific.
 
 --
 Best Regards
 Junjie Mao
-
-> Remove
-> the temptation to use them by limiting the --cfg arguments to the
-> qemu-api crate.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  meson.build               | 54 +++++++++++++++++----------------------
->  rust/qemu-api/meson.build |  4 +++
->  2 files changed, 28 insertions(+), 30 deletions(-)
 
