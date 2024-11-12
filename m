@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E8EAD42BAF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 329B3D42BB3
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:04:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAuIc-0003UN-AU; Tue, 12 Nov 2024 12:03:31 -0500
+	id 1tAuJC-00045i-4i; Tue, 12 Nov 2024 12:04:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1tAuHW-0003Bo-8h; Tue, 12 Nov 2024 12:02:22 -0500
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1tAuHh-0003Kg-8r; Tue, 12 Nov 2024 12:02:48 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1tAuHU-0001SK-IR; Tue, 12 Nov 2024 12:02:21 -0500
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-7ed9c16f687so4038401a12.0; 
- Tue, 12 Nov 2024 09:02:19 -0800 (PST)
+ id 1tAuHf-0001Us-Ov; Tue, 12 Nov 2024 12:02:33 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-211a4682fcaso15906785ad.2; 
+ Tue, 12 Nov 2024 09:02:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731430938; x=1732035738; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731430949; x=1732035749; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XnAhVVFjjEa9AE7qgj063mddus/nht38lXKcvLgTu8c=;
- b=k9R8IPfLQdy5F0tA2ZuMTVRUuW7P0+ouZ/RqL/JyDXzhF3w1gfvD7C+7dTCbEaG0mu
- GDBfbNPpPD3gQYQiWiPdeND1oLE6/MDV/k7YV1sDNyBJBIkwnokfGf04R1JEUUXjOopM
- iBBnoA0F9cjoZ4b8asKMAwMjyEMhuluZN/RIM/pPcTOIgxvmCpbcemGROyS+8IEPNCEc
- rRAl91MR9ANwvv6Xg8FFy2fkslYyUj76Ntyd08cDPSu3DkBNjao2cQILaNlb140pgeh1
- HMXL3tibq1XLyZyaqpgfv5w38HJkQl2i7wLi23MaoWuylXTbJt8CLUftzJX0BF7SSJ8y
- OaWw==
+ bh=46KVdS+/Hw1rTusRxdJmkbj33EFntnxAICo5vL0yryE=;
+ b=SKamliY2Z/SHtUcHtJ54vNfIxmzTdVAC/4nOhO7g1q1PxJgHyrTNw4OhZyFmHBRF7D
+ QzESEDIYgQrgw1Zku/kMIAGnYzLlxSkJGLw2w4Eb4oawoEdQ9mbeucw7QOx4wgYhSDhg
+ bwLIJkxECsmfsh8RcHbdi9IyuIWEHJzNfZTz2rQIWfXSlwmt3vFPeNfTW7g5OkbGFMw0
+ Y4Vb/UAeeZDXrjc/e1nQkRFlNzaBwWaKFr5fbqqBRPe8u0zND1g4hphM9RHmGF03jTrB
+ e9kul5tdGIlQZQLVCKY+64QDepRXvFf3inolzWS7p+GprK0PA5cR0FyOisL4QjxUfpC8
+ qz1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731430938; x=1732035738;
+ d=1e100.net; s=20230601; t=1731430949; x=1732035749;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XnAhVVFjjEa9AE7qgj063mddus/nht38lXKcvLgTu8c=;
- b=RkKX6+3RoIfId0leg+DNFHb6NrE5gIYtCcedwJmRo2Ye9Je+37vUCYF5fZKtE0uEBc
- mDk+rNRv11WPkrFvB9Z5o2vhVEQnKVbC6Tv7H3KDrjeyijC4BtG+NzgDkl4hFmOzm6u0
- 0wbY31mVwOi9barRMhjG4+yEEmAf3lQdtEO19gVa3l+e7FvwQlLusxBPE0jH3QIxUuoB
- fuHP/BgseBkUCUExnDaV8ESggf4HvDXJPLputCX64sXYN3v6tP3lnnK32IYX4PjARFoT
- cIf8mVf6BTXESJqqrId8jlcYesgEbrsAytepw9uEhAtCLSsyO8D+fEaXQYZ549EKwKFj
- /HiA==
+ bh=46KVdS+/Hw1rTusRxdJmkbj33EFntnxAICo5vL0yryE=;
+ b=CKxUtmNWjQfnKGCIInTfJQ3sfClzK7skTsxVoGrjPZ1CfQ5gDumuBvRnXRMotGzBsr
+ Rca6EUZRtR3C5DUjYVG0FQay1eNqJpR/ZcB3pJgI9uge3nhmDz2gIqsEhHFWq+0hkA+P
+ Aznz6/NNfybI17lcw8rHg3dAUPZQLM/H4/Iszef0dpIL1SLmFan/8JcaORhxpr8DhG2R
+ mr9dyRc7h76vcbLtX6+1acNAu9ZnNhG618qzCTzIBZrtJRTOxRX4nOexg9csfhQLEtXh
+ SV3FI5R432RI2aLJlJD91N1M3/sgMKpwX6eXxThVy6wtRSH0VxwU9rnOAQyZsGZtO6/R
+ jC2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWF/4Hnkt7L9Y41PeSHs6yRIbsA0AvZhcFNHoovPHe4DS4WDfBAsWmESDREFvzX5fvXaGd1ff8ZsA==@nongnu.org
-X-Gm-Message-State: AOJu0Yw1n5SiM9uYMbOcUVBYq1Bt3Y0whFejxpyTcVeqHTqpe1F4SAbg
- D3UJkstWJGptxWHQJAnslJF/MnTMSXkSAcRZ8YxZN/R1AkHiMpvhBULBWQ==
-X-Google-Smtp-Source: AGHT+IGgYYQI8KlJMqEzFAH3CsDlipTWZfKiEE/YZFOQ3zPM1bxzLqZ6//cIjp1USr7onKoSw1108w==
-X-Received: by 2002:a17:90b:3a90:b0:2e2:cd80:4d44 with SMTP id
- 98e67ed59e1d1-2e9b172b03amr22530782a91.28.1731430938259; 
- Tue, 12 Nov 2024 09:02:18 -0800 (PST)
+ AJvYcCXcC7KjkIBH0pEznK5B6myajmicIK9NKd8HwGhmp5PLprYK/Hw9nqsDCEfQGZNpHiv0j1JK6OkD5g==@nongnu.org
+X-Gm-Message-State: AOJu0Yy/E1f/R2j7MCLvNzWl0UabQCN5iAA+dLF9Ho+W2VAgI2ILMtne
+ 18dh/mV863a30ux+NL5FySFQ3PZjqKQumxYhqtUpjRXmn1NAPxr51iRmVA==
+X-Google-Smtp-Source: AGHT+IE9eoYQ2NAHlYG9Cnav4fTYVd5p31IH4zKONO59XzhMVlljLu6kBC95Eb4P1aK/0Q2cUPr4rQ==
+X-Received: by 2002:a17:903:11c9:b0:20c:cccd:17a3 with SMTP id
+ d9443c01a7336-2118359c11amr235120975ad.46.1731430948985; 
+ Tue, 12 Nov 2024 09:02:28 -0800 (PST)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e9a5f5e57fsm10814294a91.14.2024.11.12.09.02.17
+ d9443c01a7336-21177cfb0ecsm95635775ad.0.2024.11.12.09.02.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 09:02:17 -0800 (PST)
+ Tue, 12 Nov 2024 09:02:28 -0800 (PST)
 From: Guenter Roeck <linux@roeck-us.net>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
@@ -73,17 +73,17 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  qemu-arm@nongnu.org, Guenter Roeck <linux@roeck-us.net>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [RESEND PATCH 02/10] usb/uhci: Introduce and use register defines
-Date: Tue, 12 Nov 2024 09:01:44 -0800
-Message-ID: <20241112170152.217664-3-linux@roeck-us.net>
+Subject: [RESEND PATCH 08/10] aspeed: Add uhci support for ast2400 and ast2500
+Date: Tue, 12 Nov 2024 09:01:50 -0800
+Message-ID: <20241112170152.217664-9-linux@roeck-us.net>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241112170152.217664-1-linux@roeck-us.net>
 References: <20241112170152.217664-1-linux@roeck-us.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=groeck7@gmail.com; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=groeck7@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -107,10 +107,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce defines for UHCI registers to simplify adding register access
-in subsequent patches of the series.
+Add UHCI support for ast2400 and ast2500 SoCs. With this patch,
+the UHCI port is successfully enabled on the ast2500-evb machine.
 
-No functional change.
+Note that the EHCI controller on AST2400 and AST2500 does not support
+companion mode, so the UHCI controller is instantiated as stand-alone
+device and creates an additional USB bus.
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
@@ -118,126 +120,64 @@ Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Changes since RFC:
 - Rebased to v9.1.0-1673-g134b443512
 - Added Reviewed-by: tag
+- Added explanation for not using EHCI companion mode
 
- hw/usb/hcd-uhci.c          | 32 ++++++++++++++++----------------
- include/hw/usb/uhci-regs.h | 11 +++++++++++
- 2 files changed, 27 insertions(+), 16 deletions(-)
+ hw/arm/aspeed_ast2400.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
-index 50d488d6fb..bdab9ac37e 100644
---- a/hw/usb/hcd-uhci.c
-+++ b/hw/usb/hcd-uhci.c
-@@ -389,7 +389,7 @@ static void uhci_port_write(void *opaque, hwaddr addr,
-     trace_usb_uhci_mmio_writew(addr, val);
+diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
+index ecc81ecc79..8a5d21459d 100644
+--- a/hw/arm/aspeed_ast2400.c
++++ b/hw/arm/aspeed_ast2400.c
+@@ -31,6 +31,7 @@ static const hwaddr aspeed_soc_ast2400_memmap[] = {
+     [ASPEED_DEV_FMC]    = 0x1E620000,
+     [ASPEED_DEV_SPI1]   = 0x1E630000,
+     [ASPEED_DEV_EHCI1]  = 0x1E6A1000,
++    [ASPEED_DEV_UHCI]   = 0x1E6B0000,
+     [ASPEED_DEV_VIC]    = 0x1E6C0000,
+     [ASPEED_DEV_SDMC]   = 0x1E6E0000,
+     [ASPEED_DEV_SCU]    = 0x1E6E2000,
+@@ -68,6 +69,7 @@ static const hwaddr aspeed_soc_ast2500_memmap[] = {
+     [ASPEED_DEV_SPI2]   = 0x1E631000,
+     [ASPEED_DEV_EHCI1]  = 0x1E6A1000,
+     [ASPEED_DEV_EHCI2]  = 0x1E6A3000,
++    [ASPEED_DEV_UHCI]   = 0x1E6B0000,
+     [ASPEED_DEV_VIC]    = 0x1E6C0000,
+     [ASPEED_DEV_SDMC]   = 0x1E6E0000,
+     [ASPEED_DEV_SCU]    = 0x1E6E2000,
+@@ -107,6 +109,7 @@ static const int aspeed_soc_ast2400_irqmap[] = {
+     [ASPEED_DEV_FMC]    = 19,
+     [ASPEED_DEV_EHCI1]  = 5,
+     [ASPEED_DEV_EHCI2]  = 13,
++    [ASPEED_DEV_UHCI]   = 14,
+     [ASPEED_DEV_SDMC]   = 0,
+     [ASPEED_DEV_SCU]    = 21,
+     [ASPEED_DEV_ADC]    = 31,
+@@ -199,6 +202,8 @@ static void aspeed_ast2400_soc_init(Object *obj)
+                                 TYPE_PLATFORM_EHCI);
+     }
  
-     switch (addr) {
--    case 0x00:
-+    case UHCI_USBCMD:
-         if ((val & UHCI_CMD_RS) && !(s->cmd & UHCI_CMD_RS)) {
-             /* start frame processing */
-             trace_usb_uhci_schedule_start();
-@@ -424,7 +424,7 @@ static void uhci_port_write(void *opaque, hwaddr addr,
-             }
-         }
-         break;
--    case 0x02:
-+    case UHCI_USBSTS:
-         s->status &= ~val;
-         /*
-          * XXX: the chip spec is not coherent, so we add a hidden
-@@ -435,27 +435,27 @@ static void uhci_port_write(void *opaque, hwaddr addr,
-         }
-         uhci_update_irq(s);
-         break;
--    case 0x04:
-+    case UHCI_USBINTR:
-         s->intr = val;
-         uhci_update_irq(s);
-         break;
--    case 0x06:
-+    case UHCI_USBFRNUM:
-         if (s->status & UHCI_STS_HCHALTED) {
-             s->frnum = val & 0x7ff;
-         }
-         break;
--    case 0x08:
-+    case UHCI_USBFLBASEADD:
-         s->fl_base_addr &= 0xffff0000;
-         s->fl_base_addr |= val & ~0xfff;
-         break;
--    case 0x0a:
-+    case UHCI_USBFLBASEADD + 2:
-         s->fl_base_addr &= 0x0000ffff;
-         s->fl_base_addr |= (val << 16);
-         break;
--    case 0x0c:
-+    case UHCI_USBSOF:
-         s->sof_timing = val & 0xff;
-         break;
--    case 0x10 ... 0x1f:
-+    case UHCI_USBPORTSC1 ... UHCI_USBPORTSC4:
-         {
-             UHCIPort *port;
-             USBDevice *dev;
-@@ -493,28 +493,28 @@ static uint64_t uhci_port_read(void *opaque, hwaddr addr, unsigned size)
-     uint32_t val;
- 
-     switch (addr) {
--    case 0x00:
-+    case UHCI_USBCMD:
-         val = s->cmd;
-         break;
--    case 0x02:
-+    case UHCI_USBSTS:
-         val = s->status;
-         break;
--    case 0x04:
-+    case UHCI_USBINTR:
-         val = s->intr;
-         break;
--    case 0x06:
-+    case UHCI_USBFRNUM:
-         val = s->frnum;
-         break;
--    case 0x08:
-+    case UHCI_USBFLBASEADD:
-         val = s->fl_base_addr & 0xffff;
-         break;
--    case 0x0a:
-+    case UHCI_USBFLBASEADD + 2:
-         val = (s->fl_base_addr >> 16) & 0xffff;
-         break;
--    case 0x0c:
-+    case UHCI_USBSOF:
-         val = s->sof_timing;
-         break;
--    case 0x10 ... 0x1f:
-+    case UHCI_USBPORTSC1 ... UHCI_USBPORTSC4:
-         {
-             UHCIPort *port;
-             int n;
-diff --git a/include/hw/usb/uhci-regs.h b/include/hw/usb/uhci-regs.h
-index fd45d29db0..5b81714e5c 100644
---- a/include/hw/usb/uhci-regs.h
-+++ b/include/hw/usb/uhci-regs.h
-@@ -1,6 +1,17 @@
- #ifndef HW_USB_UHCI_REGS_H
- #define HW_USB_UHCI_REGS_H
- 
-+#define UHCI_USBCMD       0
-+#define UHCI_USBSTS       2
-+#define UHCI_USBINTR      4
-+#define UHCI_USBFRNUM     6
-+#define UHCI_USBFLBASEADD 8
-+#define UHCI_USBSOF       0x0c
-+#define UHCI_USBPORTSC1   0x10
-+#define UHCI_USBPORTSC2   0x12
-+#define UHCI_USBPORTSC3   0x14
-+#define UHCI_USBPORTSC4   0x16
++    object_initialize_child(obj, "uhci", &s->uhci, TYPE_ASPEED_UHCI);
 +
- #define UHCI_CMD_FGR      (1 << 4)
- #define UHCI_CMD_EGSM     (1 << 3)
- #define UHCI_CMD_GRESET   (1 << 2)
+     snprintf(typename, sizeof(typename), "aspeed.sdmc-%s", socname);
+     object_initialize_child(obj, "sdmc", &s->sdmc, typename);
+     object_property_add_alias(obj, "ram-size", OBJECT(&s->sdmc),
+@@ -393,6 +398,15 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
+                            aspeed_soc_get_irq(s, ASPEED_DEV_EHCI1 + i));
+     }
+ 
++    /* UHCI */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->uhci), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->uhci), 0,
++                    sc->memmap[ASPEED_DEV_UHCI]);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->uhci), 0,
++                       aspeed_soc_get_irq(s, ASPEED_DEV_UHCI));
++
+     /* SDMC - SDRAM Memory Controller */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
+         return;
 -- 
 2.45.2
 
