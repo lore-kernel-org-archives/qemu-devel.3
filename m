@@ -4,202 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3619AD42BBF
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 18:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86AD7D42BBF
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 18:24:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAvSn-0000b7-OF; Tue, 12 Nov 2024 13:18:06 -0500
+	id 1tAvYP-0001Ea-K7; Tue, 12 Nov 2024 13:23:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
- id 1tAvSk-0000KM-K9; Tue, 12 Nov 2024 13:18:02 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tAvYM-0001D3-It
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 13:23:51 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
- id 1tAvSi-0002fL-L6; Tue, 12 Nov 2024 13:18:02 -0500
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACHtb03031404;
- Tue, 12 Nov 2024 18:17:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tAvYI-0003IP-J2
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 13:23:48 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACIAPV4028085;
+ Tue, 12 Nov 2024 18:23:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=/GC+G0+AJCdndcb/p+ne3kLzvTUxU7Udt5ovKx5QwDA=; b=
- kBdd0RCZafVJmvyndscJugBFuX2l/ob4MVWVKfI/fWvFYRZXgYcB/Gd4RR81oFol
- DkZwjtHDvx4AKPClBoEA9rVFtUkepxR0F4GSYBa7pGqzxHiyU9vOisDyEG/iKDVs
- MTFQXKU3rUaaMXW4UqNDIdBd2vbeRMYNoGPNEremTdHh8UbvOtAi/iZHp20UZAIA
- wcxpml5HoyP96enEyb4OmQ1DGojQg1U+E48mpnj1B/gDoMZl4/DR+mHvLC1KszdJ
- Nu+jontClC+0KVmiGhcoHC8CxI/tcfY78M8vlIj+Fr1/NyZq4jCiCRSlOKLDra8H
- 1q6iqpQlflrCkL7hCJcxLw==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42t0nwn3d2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 Nov 2024 18:17:51 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4ACHLDm2036004; Tue, 12 Nov 2024 18:17:51 GMT
-Received: from nam04-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam04lp2048.outbound.protection.outlook.com [104.47.74.48])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 42sx688yhf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 Nov 2024 18:17:50 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IuEOR0qaDnvLgmddf9NzDDqv+V2gt4FoHAqiD+5mrL2PD32fu7RUJfrRrxKdZTMR9x1CKPE56C/S7BxNl7pneng1U7uOxdubqBts6h6ILFdYJ3PP9Q2qfopPRzLeSBU7U/SzZ20mOmH8zEChPjCti5AvLLF4/p+HsAwBQDAGxoneslztZYi/S6w5R1XKqqSnf9zyclIFI/yfmcPKlsUCYTEPbbcNe9WE9WQxke9waHbnoYq6E9JZdVxcGiI4l/KBxaR+dxe//V9WQWHNJfNCbEAs/cEaXEEHcfzyuxfZWQRxeYA81zoPWi9Zphbb69MzC1//26JYZkcfZXpqbfQFiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/GC+G0+AJCdndcb/p+ne3kLzvTUxU7Udt5ovKx5QwDA=;
- b=YAvs7kXhwDkpxAyTh8Bp+UydcshmvUYrHXYKj4Lzl4WcvX860o5vTBMYAlMbNT3uUVxujSfHbaYG1p35A6m6XNwfjLuac4sC6A5gHOHNwF8iXyPfIcfLPs8DhqtH/HjfWgO+XAIsBgCdBP8fTxiQSXwX6Euwch7H1QdUlcVNoYLoPSa8HQ9+KfxqGeO0I5MihuvbKFxpoV4q3SIUfgAb7GMzV/12PfKY1dZOpfFoP5thVf8M6t0uVpE21czInP6Zak2C/jZih6Y9ayVfelcehIIq8zNX5oipnfzJHiS9996tJZ0H+fgWl2J6rtHX+EYPBDQ4EEriL/9IchrYuUxp0A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/GC+G0+AJCdndcb/p+ne3kLzvTUxU7Udt5ovKx5QwDA=;
- b=pAZdgfMuOzu0nnjOrMSXqusBTMYsCp+VApD52K3yMh9aKwuHvDEFutOfvuMnXoie/zS4XV+F0UgcVUa58T7D3Ab+nO6El7OnFeUQI0iV8udQGkGiSDICfNJb5FnwYMjF5pa2uZrMTnk73kot8dNCCg4dD8EpIdYA2co6ES2J4JM=
-Received: from IA0PR10MB7349.namprd10.prod.outlook.com (2603:10b6:208:40d::10)
- by DM4PR10MB6157.namprd10.prod.outlook.com (2603:10b6:8:b6::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.28; Tue, 12 Nov
- 2024 18:17:48 +0000
-Received: from IA0PR10MB7349.namprd10.prod.outlook.com
- ([fe80::8940:532:a642:b608]) by IA0PR10MB7349.namprd10.prod.outlook.com
- ([fe80::8940:532:a642:b608%5]) with mapi id 15.20.8137.027; Tue, 12 Nov 2024
- 18:17:47 +0000
-Message-ID: <b6bdff02-4ebe-466f-93af-dda572505995@oracle.com>
-Date: Tue, 12 Nov 2024 19:17:44 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] hostmem: Handle remapping of RAM
-To: David Hildenbrand <david@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
- philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
- imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
-References: <e2ac7ad0-aa26-4af2-8bb3-825cba4ffca0@redhat.com>
- <20241107102126.2183152-1-william.roche@oracle.com>
- <20241107102126.2183152-7-william.roche@oracle.com>
- <3ed8c7c2-8059-4d51-a536-422c394f34e5@redhat.com>
-Content-Language: en-US, fr
-From: William Roche <william.roche@oracle.com>
-In-Reply-To: <3ed8c7c2-8059-4d51-a536-422c394f34e5@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO2P265CA0125.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:9f::17) To IA0PR10MB7349.namprd10.prod.outlook.com
- (2603:10b6:208:40d::10)
+ :message-id:mime-version:references:subject:to; s=pp1; bh=E+UyhZ
+ 63WJDcVRCiEeSdFE7Ystc+gJHlypql91UTYLk=; b=ge4ibZc1DzClIkzZDDlm+J
+ Ff6UMjzmAbHUZZmPnAjBC9CcvZFVzmMrmh6aTFl21VLdAWUPCUGjWanj24f3HFby
+ HUlBpT+0J28C6J+UDRiAlGnPghIAqc1yEe8CrndI25WQYFDQlQv0aPzUngf0I7hN
+ LzALZl3XlDVpGsssIUrvSJxZmKqBygECtF4iumqR7ivldZYyrU6eB42AUE0Okix8
+ tk9c3l+y1AY8FrJK3vePhglpE6xqPVcQqpusFC7u3+Yu5usH/HSkY/KeDlBNJegN
+ +/PLoqvSlU7+iIlcU9tiJCORFYVeL5ZCFg8GmVa1qvfJ2GEBX+bLMNjI6bQKv/dw
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42vc2901r3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Nov 2024 18:23:41 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACHZ20Y029698;
+ Tue, 12 Nov 2024 18:23:40 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42tkjkuu4b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Nov 2024 18:23:40 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4ACINcqB54460766
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 Nov 2024 18:23:38 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 33C122004D;
+ Tue, 12 Nov 2024 18:23:38 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3D6FF20043;
+ Tue, 12 Nov 2024 18:23:37 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 12 Nov 2024 18:23:37 +0000 (GMT)
+Message-ID: <c741c9d92729ef51334fd50bd014796f983789e9.camel@linux.ibm.com>
+Subject: Ping: [PATCH v2] tests/tcg: Stop using exit() in the gdbstub testcases
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, Gustavo
+ Romero <gustavo.romero@linaro.org>, Richard Henderson
+ <richard.henderson@linaro.org>
+Date: Tue, 12 Nov 2024 19:23:36 +0100
+In-Reply-To: <20241022113939.19989-1-iii@linux.ibm.com>
+References: <20241022113939.19989-1-iii@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: m70zxgPTbmBH5xty9zM1icb-tWA-aeIq
+X-Proofpoint-ORIG-GUID: m70zxgPTbmBH5xty9zM1icb-tWA-aeIq
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA0PR10MB7349:EE_|DM4PR10MB6157:EE_
-X-MS-Office365-Filtering-Correlation-Id: 72539d7e-1f3a-4f40-499c-08dd03464fb3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?V1RpcnVKUWpjUHJVWXJYM2NhMmw4YnIveG5aZENUZ3BjaWY2VGR4SXhFaTBJ?=
- =?utf-8?B?bUZ3OG5wSjNmejlpOUlML2I4Ky9MRDd2My96ZGRoRGJWYTBWOG9BaDI3aTZ0?=
- =?utf-8?B?dmRHZHpXUng0SUhLeE5jQkVJMjRrNEhqUmw2NE9Ga3hib0dVUWc0bmc4bWF5?=
- =?utf-8?B?RU96SGhvNGtzRk82OHcrT0VwN3JxZmlCT1J3cXdrSTdBdlc2L1FVVEh5YkJW?=
- =?utf-8?B?Qk9yWTJZMExzSHFzWUh5UmpPbTFXV3VGa21VUEpRNXgyTGhOODlEUUNUNEJW?=
- =?utf-8?B?aU5OcTdMMUs0UFdOVEszc0VUdzJ2bXZhNHpIYWhnVG81SGMyL1hDbktiYXFS?=
- =?utf-8?B?eFpQWE1KS2dCVHNNdlJUVWhvMWM0UVpTWTJERHE0RXBLZXN4UndlRkdqMFI3?=
- =?utf-8?B?NWs0aE5UcGlmOUxQOEYySjk2VUVtcGxqNTllL1pMaGpPWGFCYVFVTXZCVDdX?=
- =?utf-8?B?WGxpZEc4SStXM1p0bTRCQU1XSmpLZnhIc2hiSVMvbElmbEVJMlV5aXVEQmVU?=
- =?utf-8?B?YVlNNVFTQ0tEUUVuL3Z5TjdsYkQzRzlSc1E0NVdzSEYweHhVYjdQSnFMR1Fm?=
- =?utf-8?B?eXNiM3gxek1vbkEzVGwzanZNdzYxWW0xOUR5VkJBMW5JUnhETU9KMklBOHhl?=
- =?utf-8?B?MnlwVTUwZUt1K3U1eFM0T0ZxOUVjVDlLcnE4OTV5elRKVzRQbjVEeTU4bjZM?=
- =?utf-8?B?WkJyQ1gvWFloc0lhSTQ0dFVZQlRwMXNXOWRyZmtqWWFFZTVtc2p5YjlnWTAv?=
- =?utf-8?B?Lyt0SktnVW5tWmNGeHBXT0hRNEp0ZEFqUzE2T3d0WGdnSlNPT1p5eFVCblVw?=
- =?utf-8?B?MHRScmkwRHZIajFRdjdCWUh1RmdDQnR2bGRiUUFJVkx4d1F6VmZuS0txTDFa?=
- =?utf-8?B?SlI3UmVscm44bnR2YXVnWDVhaGx5WVlkSjh4cURlUU91NDJleVFFUzdsUnlD?=
- =?utf-8?B?NjRoSlRDN1BxUm95YXBXdUljQ0k2VFJHOFpHNDdFNHlDdWcvSG02d05zZnYr?=
- =?utf-8?B?MVJDTHYrbDdZWndNYTUzcU03cU00RlNNWFpJalNxK3plWmlkc0wzSFRvaTVZ?=
- =?utf-8?B?T0l1ZFlGdkRqU3RmNklYeURFMmwxdXFIL0RMak5EZzNVNU9EMlM4VVIwRmtJ?=
- =?utf-8?B?WUhVUHJBNWhRdEFxZFE5YkpVYW5EUGo3UUFvU1pGd1c3bTRIYVo0VlVRc1Jx?=
- =?utf-8?B?SHhJbFB5YjJmeUZzR0lISWVYNDNwN1E3NHhDRmxJK2trcE5WOFU5VlJCbFpq?=
- =?utf-8?B?QnZRdjVWMERORTJnZXgyL1R4MUlDODdmVUE5dnpnSy9kbE94akdxMC9wNm9U?=
- =?utf-8?B?Wkx3SnY4WUhxYnRhU2JIRldNN2QwMWdaWmlTS0lhUERCZHFpTHpqMlN4QTRp?=
- =?utf-8?B?eGJvS0RkNEd1dGhPY29JZDRBak5rTzFRcnFmdmFvM1hPTWw5UDJBRHlDcFh1?=
- =?utf-8?B?RytUOENhcXNyWkJYOTdOV0VYZnN4SnF2TlFvQU9jd0c1VzRxdkJWV0tyKzlx?=
- =?utf-8?B?dlA1M21nZU1HTXhhVHN3ZlVDdno0cDBwUkI2N205dEFJZ3RVVDQrZ2QxUHR1?=
- =?utf-8?B?Z0ZnU3VDMHlMS2VrVlphZVE2Q2orVTBlWEViV2JBcTZpemdnUlZ0OU04U0Iw?=
- =?utf-8?B?dmcrUnVHUFdGMVNhaDhib1NtRVVDQ1VlSlhsN3FQalEwNjhnWkVqSlMwNURu?=
- =?utf-8?B?ek5nSkJwcUJkZkZQSnpFN0RjRXQ5TWhXbWd4MnRzT3BXcGRZNXIrMlNmLzZH?=
- =?utf-8?Q?bFUzuBPUQyUhtyEee6iZwxI3PtU/Ecjc05c5Aya?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR10MB7349.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cmZXcEJJOTg1TjNTeDg5SVhwUzZ6UVVrdkRrazhxbXpXSEZsemcvSXhJYnBV?=
- =?utf-8?B?MkJKSjNMSm9SUTNXbFdLT3JjaFk3aHE5dTc3WEp1T3hVM1BBVW1xWVpua0dW?=
- =?utf-8?B?aWY0YVBnbHhMc1o0Z2NHN0w3Z1IxWWJDSm1ueFMvWGEvbUQ5M1VRY3dnNmRr?=
- =?utf-8?B?RCtQRGdlcUtUK3RzbHlNaGRXQS9WR3RWblFzUVhMVm1hdmN1QXl5aXdTMW84?=
- =?utf-8?B?TGdhdzcyMWpVZzBtcTVzNlVzejZCUWFDWEt2TUp2K3ViOXFXeXlsYkx1cjlC?=
- =?utf-8?B?a3Z5Z0Joc2poMTRDL1ZGWHZaL0hIdzBkekNRMnhIaEcxK201U3h6d2hObEow?=
- =?utf-8?B?Wlg5bTB2R0JaRU03cVNVWXVwTUxjOXFlL2NmL284MjgwK1NsY1dvaUR1L3Nr?=
- =?utf-8?B?bmV2cmUrTE9aUzB3M05CM1hjVTQ2eTVybUlZY2Z3akJMdnR4VXNJcVpKS3Jy?=
- =?utf-8?B?b2JPT3RWb1hrZ0N6bGpZck1UTGlwTnhQYTRpQ0Q3bEFTdkhrMkc3aWFKcGg0?=
- =?utf-8?B?SGZwYjUwL29UR0VaV2d1bmQwcWtpbG1rZ09IaFRIbEFOTDkxWXNYUlNZQjdH?=
- =?utf-8?B?YkRGN0xSNFJNQnFacjZITFVLOGRQWGl6YUZ4OFJLLzhwcW5POTZRcXkvb3o3?=
- =?utf-8?B?WDc3STdOZGFYVGU0SHhoWnB6TWpBc3NSM3ZJMmJhMjFUcmlyVGl4eGpUNkZF?=
- =?utf-8?B?L3JqNUk0TWNFVHMrQnQ5ZDdBOGd3ZmRVQ0hYY3BLbE96MEJTVUliY3RnQWVN?=
- =?utf-8?B?RTVZRlBmdXN5eXVHT3JGWEhJa1I1Tm05TXd4N2YxVjVKRmhMcXIxTXNnUDM2?=
- =?utf-8?B?Tkxmck14U2lGQlpIUTU0R2NSMWJkZDN1V0EzbU5xNGtkQmhlYVpyaVltc1Fh?=
- =?utf-8?B?MSs0cnRvdFFKYlJTc29GcG5JV2QzcmZyUEtzelZyM0ZML2lNZ2oxYXRZZ0E2?=
- =?utf-8?B?eXgzanNHbkZuNzBta0FZNlhIVGM1ckFsS3FUWisxaGF2Nmhha2F4cE83ZE9X?=
- =?utf-8?B?MG1XQU5xaWE4aFFKUE81WkpjOUluMDc4aFdBVytlV0hLN08xeTM4bitMSmNU?=
- =?utf-8?B?aENReDF4ODJnUHNXSXNzTThhN2x3ZWZjSWx0c3VtcWt4S04xQ0NTRi9zbWFN?=
- =?utf-8?B?cGFVd1hHSXdjU3JTR0J3bnpPTU0rVVVIVmtCN0pPMXBYcHFjWmhoUWRINk9z?=
- =?utf-8?B?dHpJbmpzQTNyTVNmZHhmWlczRGZnRHJZRm1ZdjNrc2pXOVVyZ3RLaGxmYVg2?=
- =?utf-8?B?TFJGTGpxTW1sV3c0Nm1WaktxeW4xSVNjbTVEWkZxb0pZTHJVZ2tDR2dUd3pp?=
- =?utf-8?B?Tjc2dk5WbXNQd1FlT21OWGM4SThQUG9oTk1RRzdxSWtlem84bnFQRVdhaS9p?=
- =?utf-8?B?QXhoOGhlcWgycDFYdWFWL2t4K2haSnhjS3VyazhjUG5QeS8xWU5BcitWejNE?=
- =?utf-8?B?OG9rMDduWGdudWJKV0d3WU4wVW5qTGtXU2VqYml1dnN2SzRoZ2hVbUg1a2RZ?=
- =?utf-8?B?a0RrS2NhVXljQytIUFB6NTJZOTRWQnZTMzEzUGcxRlNRVElMVGtDc3VBTjVN?=
- =?utf-8?B?dzBoYzhJV2l4MStsSWtBa2R5ZHk3aWJmV2d0Y0JaRFcyVmVFTG5hS1pmU01v?=
- =?utf-8?B?U2dVdVMyeHF1U3BjendqWHR5ay9FWEdCUHlMYkpZTTdhVktyWUR3dlNyQVdZ?=
- =?utf-8?B?L2JDSUlzNzhKZ2JvSXd6Q1c5MUw5SHVKMGl2NXBReklCLzQ3d0xCa1R4L3R3?=
- =?utf-8?B?N3dmY3dmOWIrdFJWa1A0MHU0b01ZTzNkeU5oTUFGRVdlc1F2V1dCQTZJYXpu?=
- =?utf-8?B?a0RCSnJNczVIVWlsSWYramtuZWRXN3JpQ3dMQnVNNldLQnFPMzBEL0tpN3pY?=
- =?utf-8?B?dnBFaXVRSnZGcmN4ZXVWWkEvTUM5L2hnNjNwdFlJcU10V1NDcEpXL2Nqd0ZH?=
- =?utf-8?B?U0JmNjdCem9zYWMvRU9wQzVzVlFXNWROek5YZzRPbEJyRERnV3IzRUI4RHNk?=
- =?utf-8?B?cW0vUVZrZGlJcEhQUlV2VTVlYVJZaXhpdk5iZ1JFTTA4cXdDRmhsUHg2d2Z0?=
- =?utf-8?B?dW55MVRzZFJKQVMrS2w3WmsyZnRRM2ZOUmhQd3J0TkVnclhZKzBXeEFYMER0?=
- =?utf-8?B?SlFuWnZpSzhWOW1TS2NTa25JcGwwRXdESGdkYmhRQXJmbUlrMHBTaVNUS1pw?=
- =?utf-8?B?Y2c9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: GttqPVPj8marUKC1sZ3Q59/TIXlFg63zZVts2TFsMo3gA572O/DOvGPHkLrZNmOJjbiadnvG19iV9VoqxLV8pSeuimOcVqcx2jAWZSsHUqnmsJ6Y4YDIXOtObOyWXgJKBliXsaS35imzhzmGJPfQrI/6IXshN4YLgFaQozKAU7GHye1kqj0u1LT13mULd7anZArxB83mFoO25Vm3q3cznOj0uPbzf1zlM7xJx1Lu1bNk7tE4BJkZ4TFkwVgQWPMeNBi+cXZxduR2QzYmuAVQwrWF7bIjcQMyg6cEhGcixQiZ8mnuFaGlRbf8ACoGH3dFOIElXfEj64AwX25V6VRHhmV1liw8kHQt8D26wALu8wXNXoN6zslvFtSnA4M67B4K3+mm38xmX4JlSamorsxiKiLL7pBqYUgTM6UWcvKxShls3SW1tC0JyJv3F+t2igSvMl9owPL4092UbdfTMa3/PXyLk72w9KMTlo1bRSQNlL6AuD39NBrunTNVx0fOAynaXu9vI/SByOcsW7HaTj6OLLK0wWTq9sponpno4dlXXB+UTK2lIPK31FJ0Xkk6X/QpYKZ2bY8NejuOnKYdLpxyDgGKL56r8b+BAHWqy4PRK3w=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 72539d7e-1f3a-4f40-499c-08dd03464fb3
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR10MB7349.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 18:17:47.8304 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: utbqAoRxvwpaL0ilypcRqHihtjGu1Db2mtL8WmdJiPf9oWBd5dIT0VPNuPleK/Ct7GSPKa9Rv+c50AYUGiunpP09DAJaM1jc1O6QBLrCGio=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR10MB6157
 X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-11-12_08,2024-11-12_02,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- malwarescore=0 mlxscore=0
- bulkscore=0 suspectscore=0 phishscore=0 mlxlogscore=999 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2409260000
- definitions=main-2411120146
-X-Proofpoint-GUID: eFBxJ8TOluqZvxFEsa1aOVoDHX01D0D4
-X-Proofpoint-ORIG-GUID: eFBxJ8TOluqZvxFEsa1aOVoDHX01D0D4
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=william.roche@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxscore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 clxscore=1015
+ phishscore=0 bulkscore=0 malwarescore=0 spamscore=0 mlxlogscore=999
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411120145
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -217,62 +111,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/24 14:45, David Hildenbrand wrote:
-> On 07.11.24 11:21, “William Roche wrote:
->> From: David Hildenbrand <david@redhat.com>
->>
->> Let's register a RAM block notifier and react on remap notifications.
->> Simply re-apply the settings. Warn only when something goes wrong.
->>
->> Note: qemu_ram_remap() will not remap when RAM_PREALLOC is set. Could be
->> that hostmem is still missing to update that flag ...
->>
->> Signed-off-by: David Hildenbrand <david@redhat.com>
->> Signed-off-by: William Roche <william.roche@oracle.com>
->> ---
->>   backends/hostmem.c       | 29 +++++++++++++++++++++++++++++
->>   include/sysemu/hostmem.h |  1 +
->>   2 files changed, 30 insertions(+)
->>
->> diff --git a/backends/hostmem.c b/backends/hostmem.c
->> index bf85d716e5..fbd8708664 100644
->> --- a/backends/hostmem.c
->> +++ b/backends/hostmem.c
->> @@ -361,11 +361,32 @@ static void 
->> host_memory_backend_set_prealloc_threads(Object *obj, Visitor *v,
->>       backend->prealloc_threads = value;
->>   }
->> +static void host_memory_backend_ram_remapped(RAMBlockNotifier *n, 
->> void *host,
->> +                                             size_t offset, size_t size)
->> +{
->> +    HostMemoryBackend *backend = container_of(n, HostMemoryBackend,
->> +                                              ram_notifier);
->> +    Error *err = NULL;
->> +
->> +    if (!host_memory_backend_mr_inited(backend) ||
->> +        memory_region_get_ram_ptr(&backend->mr) != host) {
->> +        return;
->> +    }
->> +
->> +    host_memory_backend_apply_settings(backend, host + offset, size, 
->> &err);
->> +    if (err) {
->> +        warn_report_err(err);
-> 
-> I wonder if we want to fail hard instead, or have a way to tell the 
-> notifier that something wen wrong.
-> 
+On Tue, 2024-10-22 at 13:37 +0200, Ilya Leoshkevich wrote:
+> GDB 15 does not like exit() anymore:
+>=20
+> =C2=A0=C2=A0=C2=A0 (gdb) python exit(0)
+> =C2=A0=C2=A0=C2=A0 Python Exception <class 'SystemExit'>: 0
+> =C2=A0=C2=A0=C2=A0 Error occurred in Python: 0
+>=20
+> Use the GDB's own exit command, like it's already done in a couple
+> places, everywhere. This is the same fix as commit 93a3048dcf45
+> ("tests: Gently exit from GDB when tests complete"), but applied to
+> more places.
+>=20
+> Acked-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+> v1:
+> https://lore.kernel.org/qemu-devel/20241021150153.487057-1-iii@linux.ibm.=
+com/
+> v1 -> v2: Mention 93a3048dcf45 (Peter, Gustavo, Philippe).
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Collect A-b and R-=
+b.
+>=20
+> =C2=A0tests/guest-debug/test_gdbstub.py=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 14 ++++++=
+++++---
+> -
+> =C2=A0tests/tcg/multiarch/gdbstub/interrupt.py=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ++--
+> =C2=A0tests/tcg/multiarch/gdbstub/prot-none.py=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ++--
+> =C2=A0tests/tcg/multiarch/gdbstub/test-proc-mappings.py |=C2=A0 4 ++--
+> =C2=A04 files changed, 16 insertions(+), 10 deletions(-)
 
-It depends on what the caller would do with this information. Is there a 
-way to workaround the problem ? (I don't think so)
-Can the VM continue to run without doing anything about it ? (Maybe?)
+Hello,
 
-Currently all numa notifiers don't return errors.
+I would like to ping this fix, and also the s390x FMA NaN fix
+series [1].
 
-This function is only called from ram_block_notify_remap() in 
-qemu_ram_remap(), I would vote for a "fail hard" in case where the 
-settings are mandatory to continue.
+Best regards,
+Ilya
 
-HTH.
+[1]
+https://lore.kernel.org/qemu-devel/20241023000147.34035-1-iii@linux.ibm.com/
 
