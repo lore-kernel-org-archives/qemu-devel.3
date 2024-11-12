@@ -4,89 +4,204 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87288D42BBA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F324AD42BBE
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 18:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAvMI-0004zV-FF; Tue, 12 Nov 2024 13:11:23 -0500
+	id 1tAvSt-0001IG-Ia; Tue, 12 Nov 2024 13:18:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAvM9-0004xu-O2
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 13:11:14 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tAvM7-0001t7-KW
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 13:11:12 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-431688d5127so47752925e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 10:11:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
+ id 1tAvSh-0008Or-A6; Tue, 12 Nov 2024 13:17:59 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
+ id 1tAvSf-0002en-L3; Tue, 12 Nov 2024 13:17:59 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACHtdSW032325;
+ Tue, 12 Nov 2024 18:17:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=+L1aHS3/hMxwtV4OC5DzImukzCHpfAAsPb5ao2k+ZzE=; b=
+ TujV+pKddknbtLsOqKZBwkBRUB9oacEX/NsmX3OvR251jepPPdwIlKKkCWYUAnpI
+ PGcRNex/UEBjA3MeT822ThEMsPxqxaxd9Tl+3AGa472Hti6dja14zGbsWzJ7V0NY
+ Yc2U028ObFyujzWCvuSXKmB94cdzqV4muvlBkdtkPZKqPo3aDH0f+JgdqH402jx2
+ qXe5FUgzq2ztSUe2kNx/aUDhjZHwelE2we1hal6CjLNxapicH3caF21LeWD+J3wv
+ RsM87qxUdZ3b169cjUnDujwLpGK/tVfU9SQ6GeuJJx4yeedhBdv9dsRHrt9OSw+l
+ ZasK+8hwAG49xYrojxqhkQ==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42t0k5d12j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 Nov 2024 18:17:48 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 4ACHLCPJ008079; Tue, 12 Nov 2024 18:17:47 GMT
+Received: from nam04-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam04lp2040.outbound.protection.outlook.com [104.47.74.40])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 42sx68gp9c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 Nov 2024 18:17:47 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=urAk0/3S78SL++cTYAP9Ca/nbP6/J5IsfYNd53Xj/gR+cCh82I+UfcT4gwotugHmesvmzU+j8F/MMYoSTuGZr4e99xVPrkUZNAviGoDsLc7pUTBRtGe9zXj2lDntUvLLreZ8Refe0zg1E0uDBKSTOyVIgpECroHW4T8CcW1DI7YNYx0VF1cItKw0lvh1VVik61u0fAyR+YroXn6F1gli/Dpv/ZH612vU93MkjtDjrPPspyteCRTp6X/FdDpFdloaodT6iObLM06zv33gHNL8wS9CNKmbgOjdFA4XZ84LnMOAEkPq+CWBrTZk23ykMB3Ofr5gGZCn59X/auflpAMjfQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+L1aHS3/hMxwtV4OC5DzImukzCHpfAAsPb5ao2k+ZzE=;
+ b=Xu9kKIlozUzdYXv9DVM2HL2HRXqt2WcvxRfPRJWu5e/5dVfK5OhVd8wAywP6wntEF/f64oJaenZc3+o0jXLg1nqBxqWKh44rbic4zZ5wbjKt2If0ETJbaDYer34m7AAQTxYMF6azOVGbqaQxLiR3fTzd43t+Q186MJYdbhVvM2tZzBaYcz3wIdkcLi8CIwQ6xyLOmFibwPZyV0M1lZT/4kxAiuj2ulvoP8SfNaaZjLq4pzR3HipvehUyzV8LWVRfStWyo5buWc+9/JG2IseZFgn7gDvrar/jIQQH7oTjiWhRl0Bi1sfKlKrVe5Qfv3JdfGJEHt2zu6UKNiUS0Xb3IQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731435068; x=1732039868; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oH/SQSX4OUP5TxQrfvghzIartXS3npm2RFGdjSdA9Ng=;
- b=BsBqowxgsurXN+MW6A3LRV+KZr5BOOdjPGZucOjzunOoUzzFfggFvN7yKNzSwsnej2
- jxdN/eIYLa3CgaDZHa/TMjgpN1bFfsxI933n5lCbRGMEHivZWxxjsLnEsxS31Lcq+pLb
- 7mBbZPbm8QijRukU32EyHrwrMX3Kfv95I8JJpSqir2Qt0n58AXnlq5M96SPEPfkUO2gu
- TnIib27NBNKlzng0Kzb42CkNtlIdVDJrQc+526oo7eVa9/0wi18uNB9TYT5BS5pSYQYH
- fGJ1oyY1FPhzZv7QDEwkIerWu31gpIITRYW1SLFKq7PVMJvyISezcsGBVYk3NKq/FFib
- TepA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731435068; x=1732039868;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oH/SQSX4OUP5TxQrfvghzIartXS3npm2RFGdjSdA9Ng=;
- b=HeakYu8Ii0R75PDPv7vFcDPyb3AIRzzxqcUdSRw/kCaU6xlq0V8w9g9QL8t07oooca
- RIUHq2f1PIDBz5gLE2wZ819K7TL2tVDWP9UbNfaYjzusReDkixNmbmHJ6UafCLJKJ05i
- DboUnOlqIMBfjDk6vdk9Ie13Y6JUGIPI7tpUka5+dwrGvui0N5um8n70eZ0zmHwesAsm
- 7x5BHPw2JcupCgwSOUgGFpVTxLGDJ3rSvLHhmv1rnL+mFqa/dia8Kz0LFZdl4Cc7zyPU
- /o3WvkCKaLERvMlIRNO4waMg4WdwQK5iLwrtqQ2+P6w2vAy5AWB54ZBOiDnHIHfcXdgw
- hTRQ==
-X-Gm-Message-State: AOJu0YzC6ANSVdkehh2UqUUtO8w6coOWZjGn9/D0FzjiMdqlbFoG0ZPO
- 61FLALHSEmVoqJ8bmodXM7ke1UHRvBVmz9JM8CBi8S1GGkfXDGfSNQ9eFY9/cYt64jAg8bRnYtf
- h
-X-Google-Smtp-Source: AGHT+IF2xSYolMBrVK6spGZeNQNxHkxgEzy+QkyG2R1yz5ZQTHw2BiN0KyGisHgaggMhDQscr4gvLA==
-X-Received: by 2002:a05:600c:510a:b0:42f:7c9e:1f96 with SMTP id
- 5b1f17b1804b1-432b74fdee3mr147919705e9.1.1731435068020; 
- Tue, 12 Nov 2024 10:11:08 -0800 (PST)
-Received: from localhost.localdomain
- (cnf78-h01-176-184-27-250.dsl.sta.abo.bbox.fr. [176.184.27.250])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed97e46bsm15765702f8f.30.2024.11.12.10.11.06
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 12 Nov 2024 10:11:07 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Anton Johansson <anjo@rev.ng>,
- Jason Wang <jasowang@redhat.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 03/20] hw/net/xilinx_ethlite: Remove unuseful debug logs
-Date: Tue, 12 Nov 2024 19:10:27 +0100
-Message-ID: <20241112181044.92193-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241112181044.92193-1-philmd@linaro.org>
-References: <20241112181044.92193-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+L1aHS3/hMxwtV4OC5DzImukzCHpfAAsPb5ao2k+ZzE=;
+ b=dHyFPVOYSTVzOorfguDKathQDDiBeYIRMtU6hhsYWQ+9JXIZjK3b8L0FBiZflfgCoFVA1rW++ABmPqlKcC47QnRibKRGDNvDRUhJHhSOZVArJ30gh/S3rssXGbHNWo8nqUrDPECUtOQez3Np3WovlYW+JxR9Pg+f/dyKxJAD5Lo=
+Received: from IA0PR10MB7349.namprd10.prod.outlook.com (2603:10b6:208:40d::10)
+ by DM4PR10MB6157.namprd10.prod.outlook.com (2603:10b6:8:b6::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.28; Tue, 12 Nov
+ 2024 18:17:38 +0000
+Received: from IA0PR10MB7349.namprd10.prod.outlook.com
+ ([fe80::8940:532:a642:b608]) by IA0PR10MB7349.namprd10.prod.outlook.com
+ ([fe80::8940:532:a642:b608%5]) with mapi id 15.20.8137.027; Tue, 12 Nov 2024
+ 18:17:38 +0000
+Message-ID: <08e03987-3c9a-49b2-adf5-fd40e7ede0c0@oracle.com>
+Date: Tue, 12 Nov 2024 19:17:36 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/7] accel/kvm: Report the loss of a large memory page
+To: David Hildenbrand <david@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
+ imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
+References: <e2ac7ad0-aa26-4af2-8bb3-825cba4ffca0@redhat.com>
+ <20241107102126.2183152-1-william.roche@oracle.com>
+ <20241107102126.2183152-4-william.roche@oracle.com>
+ <f5b43126-acbd-4e3f-8ec4-3a5c20957445@redhat.com>
+Content-Language: en-US
+From: William Roche <william.roche@oracle.com>
+In-Reply-To: <f5b43126-acbd-4e3f-8ec4-3a5c20957445@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ClientProxiedBy: LO2P265CA0123.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:9f::15) To IA0PR10MB7349.namprd10.prod.outlook.com
+ (2603:10b6:208:40d::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA0PR10MB7349:EE_|DM4PR10MB6157:EE_
+X-MS-Office365-Filtering-Correlation-Id: d4117506-587c-4918-6ff5-08dd03464a01
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?QVB4cWlhWjJJMlp1R1VkWkNSUFFDN3hKWm5aY3JjSytvZERhK0M5eGNnZENi?=
+ =?utf-8?B?cFlNY0Z2bUR0bkV6VUNxMFpSQnJzNDlEZ3ZMczdDMVpxUEpNSnd3YkxkS3BR?=
+ =?utf-8?B?WnVkVTJRQkNMVENQMkJXelF4eEQ2azVpM2RDcE9vVlk1ajQxUVNCOXpKOFRO?=
+ =?utf-8?B?K0ViMUFtWS81emNZc3RsUnM1RVRsT2x1SnRvYVZKNjJDTmlyM2xURzdncjNN?=
+ =?utf-8?B?WVRCTEVrL29FTkNhdHNVc0dLQlFKUytZVGNHMDI4N0ppNDlkNE54Z2o4NTBv?=
+ =?utf-8?B?eC9QTDUxZ1h4T0VHOTJJZ1lnR0dLd2pKZUFFTjZsWEc2TmduM2lqbHZmdEFI?=
+ =?utf-8?B?MEpTOTlNTWhvWXJ5dmhhdExUMXBmWlJ5UXJLTE9kRjEvV1dNeTZJSExlbHV4?=
+ =?utf-8?B?Z1I4VDUvRzc3R05LdzNhS2pYNTAxMUF3RFptV2VndTBwUk1BRUs2UktjUUJn?=
+ =?utf-8?B?bGFaRjdrSlFsdS9UbDVEcUhTZHlIbUtXWHRsTzBTVEw5VFJLMXR5dkFVTEZR?=
+ =?utf-8?B?Rmh4czY4MHhpbjFiQ0Z1MHRhTVdxZWNucm1sRjdQZFpIWGRUNGcreWU3akEy?=
+ =?utf-8?B?RVlQK1duaTEzZW9LK2dTWG16dU9aNzFqYmUzc3NVVGNJTGVnTGVWelU4OWt1?=
+ =?utf-8?B?Y24yTjVxWENPTkZFWk1lOWFaVFgydVlkemFBK2ZmYWgrYjZvYTg1T0tvRlBT?=
+ =?utf-8?B?R3JyQS9tVkNWemRTZGRycEdhR0c1RzFLVWJnOGZxT21NbEduMXJWOTNKcStL?=
+ =?utf-8?B?S0ZsbEluemZnckY2RkZhWVNjd21nVEZ6d1RZUEFmMC80RXZqaU5oYzVqd1hK?=
+ =?utf-8?B?NFZubUYxWHN5WEh5OGRMWnZQTjRMM2pnc0JjRGNSazgraFJnbHhCTGs2dytB?=
+ =?utf-8?B?NDQ3K05xNWRhOTZHK1RkQU1mUGYwdlVNdjNYZFV6QlAzS0Q4NWZwaGFqTXMz?=
+ =?utf-8?B?dVVOZ2FzOW8zdUdNLy9FUXdlRW54MGtJcnk4U3VqVk1ld1d4UHIxRDU3emtX?=
+ =?utf-8?B?SFRWTHBmSjlINTh0S3JJT0xmNFZCOVU2NjFhd2p2eU1BbnhXVTB5emJ5VzdE?=
+ =?utf-8?B?bjJRNUFELytzbnNINW5uaUMxOS9aOXlVazBUSGpTNVhXUGI0blFGZ2ZETkVz?=
+ =?utf-8?B?WlArdW9OdDhTT0ZNN3dTNEMvcTBxMmdYdU13eW5wK0JlOXVjczBzY1FXS2N6?=
+ =?utf-8?B?d29sWXBqRk1qamo1T3hMRDlNRFdNRmNJVm1mM2dKNWRVcHY4SjlMd2xMUElG?=
+ =?utf-8?B?TEx2MDQzVThCMlJvWnNURHEzNU5Xb0srVUZIcDFRemZIUlI3NUk4TXU1ODJH?=
+ =?utf-8?B?T2FZZk9Ock5rQk9EQ2dYVngzeWtaVkJCRnJHNmRmemtLekZoWVFJU0c4MnJa?=
+ =?utf-8?B?eVV4Y3U3ZFVGVUJBUW9FeUZWdUlYbFdYYWkySHpIamxhaUsrMW1VaGE5TDJL?=
+ =?utf-8?B?VjcwV1RYYUxGeVJ1ankrRnU3OElBVXlQNCtodjJLSUVreG1IbXVzSDhManJj?=
+ =?utf-8?B?SVFUeWwrQkZocGpGdjljeUNDUnFBcyttSXkrQi80RXJBRGNvUC9jNERpaURq?=
+ =?utf-8?B?aW4xSVp5V3pMbDBua29FMkJOck8xZlJLd2JsdE84dkNLK0lORVdUYjk0K1Zr?=
+ =?utf-8?B?UmcxUHRlUnBiT040dDFFSGpiNXg3WnBkQmx0RUlTUEtxRHp5OGJKSXJZYWR1?=
+ =?utf-8?B?N0FqTWlLZHNxMWcrTExtcmUxb1lIUThuaEljS3ZYRWNCVkQ1a2szSmdYbGI0?=
+ =?utf-8?Q?hsnMePgaqa0xfAgIhnQIG1U0rsMR/FJy5xWX/lF?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA0PR10MB7349.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RksyeHVoeGF3eFd3dmEyY1E4RktyOFlGZ0dMTkEreFFFbFUxNjJjQ1pmbWha?=
+ =?utf-8?B?cHI3TE11OXNWWWlPRExYUGNiZ245dDIwR0h4clREaGFBejlnQzRnY0dEb1Jy?=
+ =?utf-8?B?dUdsSnJyMkU2WE1Qc3VmUUh1N2VNUXZCb0dkanh2VXlITTNNL0tvZGFxRHBz?=
+ =?utf-8?B?NmtCam4wZkwraWtmNFcxTWFxQTF6azhCNDhSSGVVNUNBNXY1VDVBMmM3NnNN?=
+ =?utf-8?B?L0poSWd0bk5WekZEVE1UcUhFS3AwRGFTWmxsbzY0SWlkcmpmQlJNNzdMU1Fu?=
+ =?utf-8?B?c1lFbGVIK0xJRjRQa2xrRk5UWXFENnRNRVkvY1BXVndKanhodXJzVUNBdFZQ?=
+ =?utf-8?B?dHZQQko4NUFVRkNSeXJXUkJPRGZCT0ZDWm4ydElkRUFXbVhLVUZscENyMStN?=
+ =?utf-8?B?WVNpOGkwT3NuZmxqWnNSUWtQMFFwZW96Wmd2Y29VSUpNRlRDdUdUZi9qclVL?=
+ =?utf-8?B?MmNJTE94N0wxV3ZsS0NDNWkrNGxBUGg4ekh1NVVjeTErTHBlSkJYY01JOTkz?=
+ =?utf-8?B?d1lLWjB4NjhyREExRGg2SjhHWW5meEJKcjVreXhjWkR2Q0F4UGRydy9IOXRP?=
+ =?utf-8?B?YzdUTWhNU1hUL1hFdGNXbDB6MXJTL2VSQXVUaFExV21nNVhhUkRPcFlJNlZm?=
+ =?utf-8?B?QmxEWjFXVVFsbDJDdmszdWMwN0dKUE5abFgxS1dVS1kyKzNKU1FySFVkQXZq?=
+ =?utf-8?B?cU1KMTZXcFMvT0lMRW5FeTJkb1ZLUllMRVlUT0NhSUdtU2ltS3dYbEFNZkg5?=
+ =?utf-8?B?UzVpQmYyck1zem5iRklObXJZbndWc0t3UEp6b1laWWdGWEd3Ymp5VWhYZ25s?=
+ =?utf-8?B?SndRYUdNTWgyZ2VxTGNnNFZZRWl2SzJVUGp4eWlXQnhNeW56MWY1SFVJQmdZ?=
+ =?utf-8?B?ZlZrVExiMkRRODRnQ0F5UFFZcis5amI4cm1RUU1NcExENVQ4c1pQcVhzRm1z?=
+ =?utf-8?B?WE5tVGJsdWhGUnNNeXI3K1VQSTltSUFDUnhiMUgwRmExWWk4ZGR6c0VlYmwy?=
+ =?utf-8?B?aVk2QkFTWEdpK0d5V1ZxM2p6NVJQcjlMYlFWSVFGQ0dkZVFBSHB0WnFJcU5J?=
+ =?utf-8?B?N1B6Y21QMjJMRlN1NC9QenhWaDB2RzU3bEZycEh3QWVKaTVLa1pUNFQ4NTVG?=
+ =?utf-8?B?Z1VLeUVuUUdqejY5bFZ1WUJxbjNLTms0Yy8vclNLQ1VjaFN2bjd6M0JUMXBv?=
+ =?utf-8?B?cXRoblVlT3orS2lVVEpSTGRtdFc4QmNMSEdlVjIreWhHRitraExmdEhYRWdy?=
+ =?utf-8?B?ZUtCOTlBV1ZCcXBBcy9XZ2lVWXpMKzRVMTQ1QXJ2QytrN01QazY1dlBBMysx?=
+ =?utf-8?B?N2RFT3NBTDRKMnlZK0gvT2tEQm51MEdIVjl2V1NCZU1sdjBwbDZrZjJESnhL?=
+ =?utf-8?B?aWM5MGFITWpBVW1kUDNUU0JjREh2Mml2djZKYzVZbXdxeHRBVDZ4d2xMR0Jv?=
+ =?utf-8?B?UXlRM2JvdVhPVjE3My9uQUVGZXdYeEd3dEFQMTdUUHJNUERDNEFURDNqZWpG?=
+ =?utf-8?B?WmZnTkpPcEFleGd2Rzd3blhYVnA4aTFPYUNJaUFXckNBRUJHcW1RdUFvZEh6?=
+ =?utf-8?B?dHFXa3lWVjlOY1FLSVpnNW9YWi9vYXVKMmo2ZnQ3SnpPemlRdlRNTWxkOFpr?=
+ =?utf-8?B?ZFgyQStFS2dKYmI5K21rM3lzUXpBSStiMkVSY25rd3pmMHlWTytFeXR6ckZx?=
+ =?utf-8?B?U0VuMHZSYXNnd1lBVDdZZDlySEJ2bGFxT1I5NXRUTC9VZ0tQTysvUmpWVm9o?=
+ =?utf-8?B?bUdwK0k5bXNHaktrNDRQY1F3Lzg5SVo1R0wzUlBnVGd5ZE9UNHk3am1WMHBm?=
+ =?utf-8?B?TlZOeGY2bFMwY1E5SW01YTlaWjBDTThNN0pSQmVFc3ZUWG5CVE1Ga2cxUkNm?=
+ =?utf-8?B?OEJxMHlVMjhPa0RpbU5KRWpVK3hYcE56cTB1aXoxbnMwWHd1QTdHNkJZdlZn?=
+ =?utf-8?B?YTdoSmZSVVZtbzVGQ0EzWmQzTW9Sbzhxd2pyc0xGdGU0eXNjNEh0eFNZemNo?=
+ =?utf-8?B?WGxmNDJWTFdGdUR4aXpjUTEzM2wvSHFKVUZ0Y0QwUWZrUHFTWVc3aXpyd3Nw?=
+ =?utf-8?B?WlVQTFhrYVZZbWVUb3ZvNndVdjZ3MFJ4VU9OQmlFRHhuMmw3d0hVdDZOVUxT?=
+ =?utf-8?B?NklGVks5RnIybnpNYU5OenQzKzF4RGtZL1YxdHNxazRmMll1MHArOXcvYW15?=
+ =?utf-8?B?K2c9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: vR6Y1n5mVlZbOCpBDqlXwlPsyo73i26yL1lKw0KGeye1cuRJi2Hw0dbcdz+YRrAJCkyeOQY/1Et2a2+0B+cnCuACvmcErdz/dqv/LmaTM2JkxcgHglyaLpTypMDlV7fBQGUb99MgIawREByEIQZCski2pwlC6kYLVHYYLlAmqNfJxtFZJNWCVvlxHlMQJ0X8iFKPLVbi8zn3p+vhcPJVeH6vOD+dqDSDQPiRYGm8i910njRg++LTvqKW74bbIvxEbdVJJx2ZqncHifoTdghMsc7qqZxwHTnP/rtgc2rewpuXNn/s4t56ZiXK+OrCOYOOqwMNIiVTnWlU3w6raAt2SJaaDEHUHYEgGsEmgvvKcU9lfmSF0+Uk+Sne0z4TKkJb3THexAhV3cERJJzZbH7EPjTZ0+cHyUlihVKMf2B9sYAZJHox4ctQqzmOTlegBK4/QGfcyM78iAwdz4M+UecrfWx/bYgvMt55mWnhzsrIEqgUfRnNOl6kmZkTyBab8zl5MDISTBZJDrVHwv7x+jpB5O5xhE55baVPpt7OxmH3VqazWgCPxeTEjDpLnwUAZP8MCWliVAu9jylNZ+/xVwNkK/aSMJ9OkQkS5YfriTgfPdg=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d4117506-587c-4918-6ff5-08dd03464a01
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR10MB7349.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 18:17:38.2061 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 62PqvZS2XvSo8v5D5RNNJ0VuKbsdFIygeIJW/TS7bcvV8U/T1fUBAaw4xfu8NgrNQi3yPF00oQt+WZoS8CXPYNuvrGmXp1IFghV+voFTGOs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR10MB6157
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-11-12_08,2024-11-12_02,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=964
+ spamscore=0
+ phishscore=0 bulkscore=0 malwarescore=0 suspectscore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2409260000 definitions=main-2411120146
+X-Proofpoint-ORIG-GUID: xnEqBUztNS0QL1CSYut1jAkvC1K5NfVN
+X-Proofpoint-GUID: xnEqBUztNS0QL1CSYut1jAkvC1K5NfVN
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=william.roche@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,63 +217,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/net/xilinx_ethlite.c | 8 --------
- 1 file changed, 8 deletions(-)
+On 11/12/24 12:13, David Hildenbrand wrote:
+> On 07.11.24 11:21, “William Roche wrote:
+>> From: William Roche <william.roche@oracle.com>
+>>
+>> When an entire large page is impacted by an error (hugetlbfs case),
+>> report better the size and location of this large memory hole, so
+>> give a warning message when this page is first hit:
+>> Memory error: Loosing a large page (size: X) at QEMU addr Y and GUEST 
+>> addr Z
+>>
+> 
+> Hm, I wonder if we really want to special-case hugetlb here.
+> 
+> Why not make the warning independent of the underlying page size?
 
-diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-index bb330a233f..2b52597f03 100644
---- a/hw/net/xilinx_ethlite.c
-+++ b/hw/net/xilinx_ethlite.c
-@@ -32,7 +32,6 @@
- #include "net/net.h"
- #include "trace.h"
- 
--#define D(x)
- #define R_TX_BUF0     0
- #define R_TX_LEN0     (0x07f4 / 4)
- #define R_TX_GIE0     (0x07f8 / 4)
-@@ -100,7 +99,6 @@ eth_read(void *opaque, hwaddr addr, unsigned int size)
-         case R_RX_CTRL1:
-         case R_RX_CTRL0:
-             r = s->regs[addr];
--            D(qemu_log("%s " HWADDR_FMT_plx "=%x\n", __func__, addr * 4, r));
-             break;
- 
-         default:
-@@ -126,13 +124,10 @@ eth_write(void *opaque, hwaddr addr,
-             if (addr == R_TX_CTRL1)
-                 base = 0x800 / 4;
- 
--            D(qemu_log("%s addr=" HWADDR_FMT_plx " val=%x\n",
--                       __func__, addr * 4, value));
-             if ((value & (CTRL_P | CTRL_S)) == CTRL_S) {
-                 qemu_send_packet(qemu_get_queue(s->nic),
-                                  (void *) &s->regs[base],
-                                  s->regs[base + R_TX_LEN0]);
--                D(qemu_log("eth_tx %d\n", s->regs[base + R_TX_LEN0]));
-                 if (s->regs[base + R_TX_CTRL0] & CTRL_I)
-                     eth_pulse_irq(s);
-             } else if ((value & (CTRL_P | CTRL_S)) == (CTRL_P | CTRL_S)) {
-@@ -156,8 +151,6 @@ eth_write(void *opaque, hwaddr addr,
-         case R_TX_LEN0:
-         case R_TX_LEN1:
-         case R_TX_GIE0:
--            D(qemu_log("%s addr=" HWADDR_FMT_plx " val=%x\n",
--                       __func__, addr * 4, value));
-             s->regs[addr] = value;
-             break;
- 
-@@ -203,7 +196,6 @@ static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
-         return -1;
-     }
- 
--    D(qemu_log("%s %zd rxbase=%x\n", __func__, size, rxbase));
-     if (size > (R_MAX - R_RX_BUF0 - rxbase) * 4) {
-         trace_ethlite_pkt_size_too_big(size);
-         return -1;
--- 
-2.45.2
+We already have a warning provided by Qemu (in kvm_arch_on_sigbus_vcpu()):
 
+Guest MCE Memory Error at QEMU addr Y and GUEST addr Z of type 
+BUS_MCEERR_AR/_AO injected
+
+The one I suggest is an additional message provided before the above 
+message.
+
+Here is an example:
+qemu-system-x86_64: warning: Memory error: Loosing a large page (size: 
+2097152) at QEMU addr 0x7fdd7d400000 and GUEST addr 0x11600000
+qemu-system-x86_64: warning: Guest MCE Memory Error at QEMU addr 
+0x7fdd7d400000 and GUEST addr 0x11600000 of type BUS_MCEERR_AO injected
+
+
+According to me, this large page case additional message will help to 
+better understand the probable sudden proliferation of memory errors 
+that can be reported by Qemu on the impacted range.
+Not only will the machine administrator identify better that a single 
+memory error had this large impact, it can also help us to better 
+measure the impact of fixing the large page memory error support in the 
+field (in the future).
+
+These are some reasons why I do think this large page specific message 
+can be useful.
 
