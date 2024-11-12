@@ -4,74 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605EDD42BB3
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF1FED42BAF
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:07:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAuKx-0007Ol-Tt; Tue, 12 Nov 2024 12:05:56 -0500
+	id 1tAuJ5-00041H-LX; Tue, 12 Nov 2024 12:04:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tAuIf-0003gO-VX
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tAuIb-0001aw-Nl
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731431008;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Q7Sw80feYdIpNPWhJFT98AEQYKPUwDpvCYX/S1i4AcA=;
- b=fMfFsvQNhoOiCe44d9E/+wG8LMQxLS98XvH+NM0vs+4umb6bN7xFNSxzvstchRGEDKUU9x
- Oj/0lViDcOMj9Q8EVQi8LiWnIlL3ozc9s0l4T5XUiwras4TLgo2TVpd3otgS15kUFxdmJM
- Pn169YMzOOGqUJmbJkNNRY9jDpdJFLg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-b8dcXkPSP8eR-BgMdi7veQ-1; Tue,
- 12 Nov 2024 12:03:21 -0500
-X-MC-Unique: b8dcXkPSP8eR-BgMdi7veQ-1
-X-Mimecast-MFC-AGG-ID: b8dcXkPSP8eR-BgMdi7veQ
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9863119560B2; Tue, 12 Nov 2024 17:03:18 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B5F03195607C; Tue, 12 Nov 2024 17:03:15 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1tAuHf-0003K5-Mg; Tue, 12 Nov 2024 12:02:42 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1tAuHX-0001Sx-0h; Tue, 12 Nov 2024 12:02:30 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-720aa3dbda5so4270652b3a.1; 
+ Tue, 12 Nov 2024 09:02:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731430940; x=1732035740; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B+TH8uDCTgTLX/QaHsjWAcbNQxza0LHPrr0Ee+Jl498=;
+ b=EAVWhsOG7oilFbWMX8CPS3Thy4brQBvgogEo/d3OjsUzOfpgD8j+3SKx85ZM4Gm5SD
+ k1r6yNf87rjdhgGK/Io5rhwseJXM2DnMWxu6erYvczIeWgHKxxUqwWZO8KW/YdciCLnM
+ pqFhbI4DICUxUMhamEXU/hOKt8k6wV3pF/KjILHZBbpxhcATAav+dhFeXO5Xri6IQU/P
+ c4BX/P/Q8nmMlZKkTbQg3HStwWmWLT24gFc89FTlfcROTnKvHAedgoT6JyFLolRAl1zf
+ CI3oj159sooFcH+3GdJlVo10+24PUjR4Iow6enQC4zI6EGYUuB4nmgu/IUcsFrq9xaqp
+ E0lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731430940; x=1732035740;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=B+TH8uDCTgTLX/QaHsjWAcbNQxza0LHPrr0Ee+Jl498=;
+ b=F7yZX0mb9R1hChLoFlxGZQMBPBwwjBRhjQAiNgZkHqe2CgYghWL1On91gDCM94mnbv
+ vUHi5RE2cZHm2QIxou23DDadheKj3NdP0BC5MK1zeX72nnv09jraW3kVJ7t7cD7YrY1A
+ UR2HlluFZvMfeC6snJ5qAtVyV0zjA5pC9B6lmQcGeb3vAfh3djhc/Rb0RsI2/n70QHgx
+ 4YY7HU2sdPB/8W9IY0LR8KVrP7LPXXcAY8g5X/uqxVX6DjTMYLstdBuB/Pv9xWusM70Q
+ GjUOCSEOBBp2JNHk2te8yDAetACoZaun5EhqmG4ZXJ09vVDXe8sK/4GL76qnH3/cyHBI
+ 5Q7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV9+4qSErBaQXsnhN2x+IKa/HAm94K8VzhVsSTZhRnNrEcTjn9ekG2Ygk1ghZFjXSiGScU2uJ9E/g==@nongnu.org
+X-Gm-Message-State: AOJu0YxdtNnRzJE69RfpJfb+c2UuAK66I+k6XBsTJUEc/yu7Ui6w2rz2
+ qMSLA0wQ0L+ncVyt/bbdAeggGrTe8JoOkbn5L9whzDYYce4Y2K7uzOap+g==
+X-Google-Smtp-Source: AGHT+IGJsRIMqyf6i+sfqLkgALEXy+5Q7l7OCpu6HBTmuFX/WDxKckfyvE4Ni7ZgUNpAthLIVlek5w==
+X-Received: by 2002:a05:6a21:3941:b0:1da:2e7c:e510 with SMTP id
+ adf61e73a8af0-1dc5f8cedf3mr4486944637.1.1731430940261; 
+ Tue, 12 Nov 2024 09:02:20 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7240785ffe3sm11478801b3a.2.2024.11.12.09.02.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Nov 2024 09:02:19 -0800 (PST)
+From: Guenter Roeck <linux@roeck-us.net>
 To: qemu-devel@nongnu.org
-Cc: salil.mehta@huawei.com, mst@redhat.com, imammedo@redhat.com,
- jonathan.cameron@huawei.com, linuxarm@huawei.com, anisinha@redhat.com,
- karl.heubaum@oracle.com, miguel.luis@oracle.com, gustavo.romero@linaro.org
-Subject: [PATCH 4/7 for-9.2] tests/acpi: update expected blobs
-Date: Tue, 12 Nov 2024 18:02:55 +0100
-Message-ID: <20241112170258.2996640-5-imammedo@redhat.com>
-In-Reply-To: <20241112170258.2996640-1-imammedo@redhat.com>
-References: <20241112170258.2996640-1-imammedo@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, BALATON Zoltan <balaton@eik.bme.hu>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org, Guenter Roeck <linux@roeck-us.net>
+Subject: [RESEND PATCH 03/10] usb/uhci: Move PCI-related code into a separate
+ file
+Date: Tue, 12 Nov 2024 09:01:45 -0800
+Message-ID: <20241112170152.217664-4-linux@roeck-us.net>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241112170152.217664-1-linux@roeck-us.net>
+References: <20241112170152.217664-1-linux@roeck-us.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,627 +106,935 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expected AML return to the state before
-  bf1ecc8dad606 (w/acpi: Update ACPI `_STA` method with QOM vCPU ACPI Hotplug states)
-droping not needed CPRS and _STA logic that broke cpu hotplug
+Some machines (like Aspeed ARM) only have a sysbus UHCI controller.
+The current UHCI implementation only supports PCI based UHCI controllers.
+Move the UHCI-PCI device code into a separate file so that it is possible
+to create a sysbus UHCI device without PCI dependency.
 
-	@@ -2887,7 +2887,6 @@ DefinitionBlock ("", "DSDT", 1, "BOCHS ", "BXPC    ", 0x00000001)
-			 CRMV,   1,
-			 CEJ0,   1,
-			 CEJF,   1,
-	-                CPRS,   1,
-			 Offset (0x05),
-			 CCMD,   8
-		     }
-	@@ -2922,16 +2921,9 @@ DefinitionBlock ("", "DSDT", 1, "BOCHS ", "BXPC    ", 0x00000001)
-			 Acquire (\_SB.PCI0.PRES.CPLK, 0xFFFF)
-			 \_SB.PCI0.PRES.CSEL = Arg0
-			 Local0 = Zero
-	-                If ((\_SB.PCI0.PRES.CPRS == One))
-	+                If ((\_SB.PCI0.PRES.CPEN == One))
-			 {
-	-                    If ((\_SB.PCI0.PRES.CPEN == One))
-	-                    {
-	-                        Local0 = 0x0F
-	-                    }
-	-                    Else
-	-                    {
-	-                        Local0 = 0x0D
-	-                    }
-	+                    Local0 = 0x0F
-			 }
-
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h   |  41 ------------------
- tests/data/acpi/x86/pc/DSDT                   | Bin 8560 -> 8526 bytes
- tests/data/acpi/x86/pc/DSDT.acpierst          | Bin 8471 -> 8437 bytes
- tests/data/acpi/x86/pc/DSDT.acpihmat          | Bin 9885 -> 9851 bytes
- tests/data/acpi/x86/pc/DSDT.bridge            | Bin 15431 -> 15397 bytes
- tests/data/acpi/x86/pc/DSDT.cphp              | Bin 9024 -> 8990 bytes
- tests/data/acpi/x86/pc/DSDT.dimmpxm           | Bin 10214 -> 10180 bytes
- tests/data/acpi/x86/pc/DSDT.hpbridge          | Bin 8511 -> 8477 bytes
- tests/data/acpi/x86/pc/DSDT.hpbrroot          | Bin 5067 -> 5033 bytes
- tests/data/acpi/x86/pc/DSDT.ipmikcs           | Bin 8632 -> 8598 bytes
- tests/data/acpi/x86/pc/DSDT.memhp             | Bin 9919 -> 9885 bytes
- tests/data/acpi/x86/pc/DSDT.nohpet            | Bin 8418 -> 8384 bytes
- tests/data/acpi/x86/pc/DSDT.numamem           | Bin 8566 -> 8532 bytes
- tests/data/acpi/x86/pc/DSDT.roothp            | Bin 12353 -> 12319 bytes
- tests/data/acpi/x86/q35/DSDT                  | Bin 8389 -> 8355 bytes
- tests/data/acpi/x86/q35/DSDT.acpierst         | Bin 8406 -> 8372 bytes
- tests/data/acpi/x86/q35/DSDT.acpihmat         | Bin 9714 -> 9680 bytes
- .../acpi/x86/q35/DSDT.acpihmat-noinitiator    | Bin 8668 -> 8634 bytes
- tests/data/acpi/x86/q35/DSDT.applesmc         | Bin 8435 -> 8401 bytes
- tests/data/acpi/x86/q35/DSDT.bridge           | Bin 12002 -> 11968 bytes
- tests/data/acpi/x86/q35/DSDT.core-count       | Bin 12947 -> 12913 bytes
- tests/data/acpi/x86/q35/DSDT.core-count2      | Bin 33804 -> 33770 bytes
- tests/data/acpi/x86/q35/DSDT.cphp             | Bin 8853 -> 8819 bytes
- tests/data/acpi/x86/q35/DSDT.cxl              | Bin 13180 -> 13146 bytes
- tests/data/acpi/x86/q35/DSDT.dimmpxm          | Bin 10043 -> 10009 bytes
- tests/data/acpi/x86/q35/DSDT.ipmibt           | Bin 8464 -> 8430 bytes
- tests/data/acpi/x86/q35/DSDT.ipmismbus        | Bin 8477 -> 8443 bytes
- tests/data/acpi/x86/q35/DSDT.ivrs             | Bin 8406 -> 8372 bytes
- tests/data/acpi/x86/q35/DSDT.memhp            | Bin 9748 -> 9714 bytes
- tests/data/acpi/x86/q35/DSDT.mmio64           | Bin 9519 -> 9485 bytes
- tests/data/acpi/x86/q35/DSDT.multi-bridge     | Bin 13242 -> 13208 bytes
- tests/data/acpi/x86/q35/DSDT.noacpihp         | Bin 8269 -> 8235 bytes
- tests/data/acpi/x86/q35/DSDT.nohpet           | Bin 8247 -> 8213 bytes
- tests/data/acpi/x86/q35/DSDT.numamem          | Bin 8395 -> 8361 bytes
- tests/data/acpi/x86/q35/DSDT.pvpanic-isa      | Bin 8490 -> 8456 bytes
- tests/data/acpi/x86/q35/DSDT.thread-count     | Bin 12947 -> 12913 bytes
- tests/data/acpi/x86/q35/DSDT.thread-count2    | Bin 33804 -> 33770 bytes
- tests/data/acpi/x86/q35/DSDT.tis.tpm12        | Bin 8995 -> 8961 bytes
- tests/data/acpi/x86/q35/DSDT.tis.tpm2         | Bin 9021 -> 8987 bytes
- tests/data/acpi/x86/q35/DSDT.type4-count      | Bin 18623 -> 18589 bytes
- tests/data/acpi/x86/q35/DSDT.viot             | Bin 14646 -> 14612 bytes
- tests/data/acpi/x86/q35/DSDT.xapic            | Bin 35752 -> 35718 bytes
- 42 files changed, 41 deletions(-)
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 512d40665d..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,42 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/x86/pc/DSDT",
--"tests/data/acpi/x86/pc/DSDT.acpierst",
--"tests/data/acpi/x86/pc/DSDT.acpihmat",
--"tests/data/acpi/x86/pc/DSDT.bridge",
--"tests/data/acpi/x86/pc/DSDT.cphp",
--"tests/data/acpi/x86/pc/DSDT.dimmpxm",
--"tests/data/acpi/x86/pc/DSDT.hpbridge",
--"tests/data/acpi/x86/pc/DSDT.hpbrroot",
--"tests/data/acpi/x86/pc/DSDT.ipmikcs",
--"tests/data/acpi/x86/pc/DSDT.memhp",
--"tests/data/acpi/x86/pc/DSDT.nohpet",
--"tests/data/acpi/x86/pc/DSDT.numamem",
--"tests/data/acpi/x86/pc/DSDT.roothp",
--"tests/data/acpi/x86/q35/DSDT",
--"tests/data/acpi/x86/q35/DSDT.acpierst",
--"tests/data/acpi/x86/q35/DSDT.acpihmat",
--"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
--"tests/data/acpi/x86/q35/DSDT.applesmc",
--"tests/data/acpi/x86/q35/DSDT.bridge",
--"tests/data/acpi/x86/q35/DSDT.core-count",
--"tests/data/acpi/x86/q35/DSDT.core-count2",
--"tests/data/acpi/x86/q35/DSDT.cphp",
--"tests/data/acpi/x86/q35/DSDT.cxl",
--"tests/data/acpi/x86/q35/DSDT.dimmpxm",
--"tests/data/acpi/x86/q35/DSDT.ipmibt",
--"tests/data/acpi/x86/q35/DSDT.ipmismbus",
--"tests/data/acpi/x86/q35/DSDT.ivrs",
--"tests/data/acpi/x86/q35/DSDT.memhp",
--"tests/data/acpi/x86/q35/DSDT.mmio64",
--"tests/data/acpi/x86/q35/DSDT.multi-bridge",
--"tests/data/acpi/x86/q35/DSDT.noacpihp",
--"tests/data/acpi/x86/q35/DSDT.nohpet",
--"tests/data/acpi/x86/q35/DSDT.numamem",
--"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
--"tests/data/acpi/x86/q35/DSDT.thread-count",
--"tests/data/acpi/x86/q35/DSDT.thread-count2",
--"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
--"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
--"tests/data/acpi/x86/q35/DSDT.type4-count",
--"tests/data/acpi/x86/q35/DSDT.viot",
--"tests/data/acpi/x86/q35/DSDT.xapic",
-diff --git a/tests/data/acpi/x86/pc/DSDT b/tests/data/acpi/x86/pc/DSDT
-index f68a32e6068788c3fdfaff139206b725ba2bf1d1..8b8235fe79e2fa08a6f840c8479edb75f5a047b9 100644
-GIT binary patch
-delta 76
-zcmez1bk2#(CD<jzPmzIvF>@o=P99EwyZB(I_~<5&$!B=t7&Rtq^C~bgFi#HR)nM{9
-go?OFg#^%B1930{}*^W<-i6LR~e_rX$3VZ>=07R=4p8x;=
-
-delta 125
-zcmX@-^udYCCD<jTK#_rgao0w!ojjb5j`6`x@zG7blh5$PG3rj%=2c*K4hRZnWMG=?
-z%d5fUWjeW>*Nn-PWAb`lQ#13)G5RbZ4FS%c1_42?!C<8eq%ehD{TK_l_!Abg7I5)y
-J{>vLE3;@@vBVGUi
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.acpierst b/tests/data/acpi/x86/pc/DSDT.acpierst
-index 0fd79699ebbfb650a5bbe49faecbebf2fc13a86c..06829b9c6c6d726d955dc7c99bc9f42448e22aeb 100644
-GIT binary patch
-delta 76
-zcmV-S0JHy>LiIrkL{mgm^&kKM0kW|QxeN(UK3`KpUt5AmlgtcW0VtCz4Ilyl1Cvq>
-iC<0A0lY9*}21o`&Q&d5dJ`OGd0AQ2<4I8r{4)+pssulqN
-
-delta 125
-zcmezBINgcMCD<iIT#<o+k!d5>P99E2$M|5U_~<6z$!B=t7<DIW^D3}A2LuH(GB8c{
-z<<(&FGM!w`YsTctF?l_&shRoY7=0Fyh5%<zgMc8{V6f5!QkcT7evAcN{0R$L3%GbU
-J|K<H51OP~<BESFu
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.acpihmat b/tests/data/acpi/x86/pc/DSDT.acpihmat
-index a4dd09e5ef71a47c31be0d9a57e93767f5d15b3c..2fe355ebdbb858fa9247d09112e21712e3eddc45 100644
-GIT binary patch
-delta 73
-zcmV-P0Ji^~P5Vp=L{mgmdnNz?0Vc5uxeN(TL|;=vUt5AmlgtcW0VtCz4Ilyl1Cvq>
-fC<075lY9+90!RjvzYR5$3l18Skq{NLKn`6P2n`eu
-
-delta 108
-zcmezEGuM~PCD<iot{MXaWBEp|ojjZl?(xA+@zG7blh5$PG3rj%=2c*K4hRZnWMG=?
-z%d5fUX+61|*OAGUWAZLuQ!(?&G5RbZ4FS%c1_42?!C<A6-|<SbEo3d=;!T)*kzaJP
-I9AB&i0HJIifdBvi
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.bridge b/tests/data/acpi/x86/pc/DSDT.bridge
-index 7ef58152d281c1e2c8da5b15bd30f23e61439d69..4d4067c182a6625db1e877408eb7436113884b50 100644
-GIT binary patch
-delta 76
-zcmX?Jv9yBACD<iI)rNtAv3w)fP99EwyZB(I_~<5&$!B=t7&Rtq^C~bgFi#HR)nM{9
-go?OFg#^%B1930{}*^W<-i6LR~e_rX$3ViB%082#_s{jB1
-
-delta 125
-zcmZ2lalC@dCD<jz-G+gI@x(^1ojjb5j`6`x@zG7blh5$PG3rj%=2c*K4hRZnWMG=?
-z%d5fUWjeW>*Nn-PWAb`lQ#13)G5RbZ4FS%c1_42?!C<8eq%ehD{TK_l_!Abg7I5)y
-J{>!VO2LR(fBWeHu
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.cphp b/tests/data/acpi/x86/pc/DSDT.cphp
-index 1079ff81c1ab05f0d5991835b3a0b014687924f4..045a52e75b7fcd4e5f840a758c548231498b96e4 100644
-GIT binary patch
-delta 69
-zcmV-L0J{IcMxI6rL{mgm9wPt%0nM=rxeN(UTVGQ`Ut5AmlgtcW0VtCz4Ilyl1Cvq>
-bC<0ATlY9+w0!Rjv@C`MSJPsPOTn^+E!a5Wv
-
-delta 108
-zcmbQ|cEF9xCD<jzL79PpQEnsGP99FjxcFeF_~<6z$!B=t7<DIW^D3}A2LuH(GB8c{
-z<<(&F3YuKbTg2qbG5IyGshIiX7=0Fyh5%<zgMc8{V6f83@_f>43t0=ecoQZs5D?w$
-I&v#w~08Tv}v;Y7A
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.dimmpxm b/tests/data/acpi/x86/pc/DSDT.dimmpxm
-index 34fe3fcad9dc245eb173ca5a9655d17f15bd42ef..205219b99d903555125c4b07fc047c42993eb338 100644
-GIT binary patch
-delta 96
-zcmaFnf5e~5CD<k8h&lrU<IIg*XL&e10^)<6;-i~9CO_bbW7L>z&#S=1z&tsPSA)sT
-zb@Bw>NG1=q$**}$rKBdu=(B*-1~_{f1O&MTI|sP>F&1#~Crp+X5Z#=^S0xDmhw>Y!
-
-delta 103
-zcmX@&|IDAuCD<k8nK}al<L!-HXL&fig5ran;-i~<CqLkcW7M5&&#S=h91s-D$iOr?
-zkynGs*?n?1ZzPi|$K+?crefxkWAs@-8Uma>4FZB(gTYECOYupwE@Um>;@xb*H$f5r
-Dad91&
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.hpbridge b/tests/data/acpi/x86/pc/DSDT.hpbridge
-index 33c7529f5c8a6ec651f979b3cebadb18774a781f..8fa8b519ec65bd5099c45f4e1c85b11b47a23845 100644
-GIT binary patch
-delta 76
-zcmdn*G}npCCD<iIR*`{$aqdR0ojjcWcJaYZ@zG5llh5$PF=|ZK=2c)~V4fVrtHI=J
-gJh_I~jLn11IXJ{|vK^lu6GOt}|Gd(h75L<Z0Vh}#4*&oF
-
-delta 125
-zcmbR1wBL!#CD<jzUXg);@!dwQojjb5j`6`x@zG7blh5$PG3rj%=2c*K4hRZnWMG=?
-z%d5fUWjeW>*Nn-PWAb`lQ#13)G5RbZ4FS%c1_42?!C<8eq%ehD{TK_l_!Abg7I5)y
-J{>!T%3;?JoBF+E+
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.hpbrroot b/tests/data/acpi/x86/pc/DSDT.hpbrroot
-index 2661170c833e23ae1985d31512a81a29afc858bd..01719462a72fd6d40ce433dac601e4b94eae574c 100644
-GIT binary patch
-delta 98
-zcmX@DzEYjbCD<ior7!~nWA8?;9Bxj3yZB(I_~<5&$@ScEj2e^gaVsz}Fi&RX(O~j5
-zo~+Mf#^%B1930{}`6G{>3`4>KsmU?=EFdib&YlJVL9W5h0j_?G1zh}_FY)|j0{}jp
-B8;bw{
-
-delta 131
-zcmZ3fep;Q&CD<k8v@in$<GqbsIozC%j`6`x@zG7blk2(T7<DJ#<5pmI4hRZnWMG=a
-zqrv25I$4XyjLnt9IXJ{|@_8OTONN96=96ReSwPwXoIMQ!f?R{a8Wu=l3cLC-7I5(=
-PEMzU<;@!M~=O-HgoMa_l
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.ipmikcs b/tests/data/acpi/x86/pc/DSDT.ipmikcs
-index 688faf83cbd7395e1112ba04303d66e11934bf8d..0ca664688b16baa3a06b8440181de4f17511c6b0 100644
-GIT binary patch
-delta 76
-zcmV-S0JHzNLzY7dL{mgmmLUKD0p+m@xeN(UK3`KpUt5AmlgtcW0VtCz4Ilyl1Cvq>
-iC<0A0lY9*}21o`&Q&d5dJ`OGd0AQ2<4I8r{4ww^F-xWOo
-
-delta 125
-zcmbQ{yu+ExCD<iohav+5quEBTojjb5j`6`x@zG7blh5$PG3rj%=2c*K4hRZnWMG=?
-z%d5fUWjeW>*Nn-PWAb`lQ#13)G5RbZ4FS%c1_42?!C<8eq%ehD{TK_l_!Abg7I5)y
-J{>wX47yyb?BK!aV
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.memhp b/tests/data/acpi/x86/pc/DSDT.memhp
-index 6ede4361f4b7bf18c496d7ca117310675126bbbf..03ff464ba4e72082fce0921815cfc09ca20b561a 100644
-GIT binary patch
-delta 76
-zcmV-S0JHzUO`S~&L{mgmohASP0b8*OxeN(KKVMTqUt5AmlgtcW0VtCz4Ilyl1Cvq>
-iC;~$?lY9*}21o`&Q&d5dJ`OGd0AQ2<4I8r{4xbo4h!ooZ
-
-delta 125
-zcmbR1yWf|~CD<iozZwGr<J^s0J9#+W9pi(Y;-i~<C!gVoW7M6j&8xuf91s-D$iOt&
-zmsf+y!EACluNjjo$K>_Are@}oWAs@-8Uma>4FZB(gTYD{NMQ=Q`Y{%8@h2=~E#Tta
-J{Firu1OUv#BbopJ
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.nohpet b/tests/data/acpi/x86/pc/DSDT.nohpet
-index 9d6040733f57f243056ee8f7601af84dd3cf2fa2..b081030f0ed171e52b13e28cfdc8770a04c2806e 100644
-GIT binary patch
-delta 76
-zcmV-S0JHz%LBK%@L{mgmz#sqs0W+}*D+~!wK3`KpUt5AmlRgYy0VtE53?Kpk1CzuI
-iC<0A0lkN;Q21o`&Q&d5dunjH(0AQ1G4I8tP4Nwz7&=p4j
-
-delta 125
-zcmX@$_{fpVCD<k8kpcq)W6MS^Z5~cX$M|5U_~<6z$#y((jJlKO@+h!72LuH(GB8cv
-z&!fTQWjgsKj~SCI$7DrbQ#13)G5RbZ4FS%c1_42?!C<8eq%ehD{TK_l_!Abg7I5)y
-J&gTsj1^~BOB9;IE
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.numamem b/tests/data/acpi/x86/pc/DSDT.numamem
-index aa9986f74bbd9f20ea9c886901a34122700f33b2..2c98cafbff5db04410b35a1151eaf18723a4dad7 100644
-GIT binary patch
-delta 76
-zcmez7bj69wCD<h-M3I4kQFtTQP99EI`}km|_~<5&$!B=t7&Rtq^C~bgFi#HR)nIZq
-gnOwtb#^%B1930{}*^W<-i6LR~e_rX$3VdP005SR$PXGV_
-
-delta 125
-zcmccO^v#LOCD<jTOp$?sF?1u>P99Eo$M|5U_~<6z$!B=t7<DIW^D3}A2LuH(GB8c{
-z<<($vFq>S?YsTctF?l_&shRoY7=0Fyh5%<zgMc8{V6f5!QkcT7evAcN{0R$L3%GbU
-J|K$xA1^~2IBMtxn
-
-diff --git a/tests/data/acpi/x86/pc/DSDT.roothp b/tests/data/acpi/x86/pc/DSDT.roothp
-index 86c2ae11dc601008cd4dbbbd34d4e5adcb9236cd..da018dca9e3102e811107994248719ab5278c505 100644
-GIT binary patch
-delta 76
-zcmX?@Fh7CICD<iI-hhFD@#{veojjcWcJaYZ@zG5llh5$PF=|ZK=2c)~V4fVrtHI=J
-gJh_I~jLn11IXJ{|vK^lu6GOt}|Gd(h75EgD08^tB$p8QV
-
-delta 125
-zcmbQAa4><(CD<jz(SU)0(QPBwP99E2$M|5U_~<6z$!B=t7<DIW^D3}A2LuH(GB8c{
-z<<(&FGM!w`YsTctF?l_&shRoY7=0Fyh5%<zgMc8{V6f5!QkcT7evAcN{0R$L3%GbU
-J|K(Lu0sw`~B8UJ0
-
-diff --git a/tests/data/acpi/x86/q35/DSDT b/tests/data/acpi/x86/q35/DSDT
-index b0bbff7686c9a56129bfa3408e62f142cc482713..fb89ae0ac6d4346e33156e9e4d3718698a0a1a8e 100644
-GIT binary patch
-delta 76
-zcmX@=xY&`)CD<iou>u1FqxnWIc1ccuyZB(I_~<5&$x@PWj2e?GB^8($m?tlg)L`;8
-go_tEujLn11IXJ{|a*vcA6GOseUn%L$c~aqQ02K=qHUIzs
-
-delta 108
-zcmZ4Nc+`>0CD<k8r~(56W5-4=c1cc0$M|5U_~<6z$x@PWjJlI6B^B761A>AX8JH%|
-zmegSKGM#)>(u~QKWAa}~Q!(?&G5RbZ4FS%c1_42?!C<A64W*>n7P1y_@g_{(C?mQ#
-IQOb!80A}|c$^ZZW
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.acpierst b/tests/data/acpi/x86/q35/DSDT.acpierst
-index f91cbe55fcfeea319babf7c9a0c6a6ccdc3320d1..46fd25400b7c00ee9149ddb64cb5d5bd73f6a82b 100644
-GIT binary patch
-delta 76
-zcmccSxW$pnCD<ioivj}!<MoYP?2?@RcJaYZ@zG5llcgl%7&RtWN-8ihFi&0}slnuH
-gJo%KQ8Jh>2b8v{`<Q^$KCWeH`zEaYg^Q1D^07_OB8UO$Q
-
-delta 108
-zcmdnuc+HW^CD<k8ngRm@qsB%qc1cc0$M|5U_~<6z$x@PWjJlI6B^B761A>AX8JH%|
-zmegSKGM#)>(u~QKWAa}~Q!(?&G5RbZ4FS%c1_42?!C<A64W*>n7P1y_@g_{(C?mQ#
-IQ7V`X09c|Ot^fc4
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.acpihmat b/tests/data/acpi/x86/q35/DSDT.acpihmat
-index 0949fb9d67c70dc882e50501ece421114ad8080b..61c5bd52a42242e85090934e8e45bf01642609d6 100644
-GIT binary patch
-delta 96
-zcmez5eZiZ{CD<k8f+_<8<Cl$G?2?>*F7d%m@zG5llcgl%7&RtWN-8ihFi&0}slnu9
-zIr)^NBa;W)WL_y#DXGaZ`Ya%|0nVNV0YR?8&H=7|j0If$36mXVL^t<IrEmiPOXnKE
-
-delta 122
-zcmccM{mGllCD<k8lPUuPqw7X4c1cbL_xNC^_~<6z$x@PWjJlI6B^B761A>AX8JH%|
-zmegSKw4Qua(vj1Z!#Oy_kuzF(vZ9Re<ZdYmNrr?4=96ReSwPwYoIMQ!f?R{a8YkOG
-WNwY0vE#Tr!m@F?Nx;aNGg&P1RK_K`5
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator b/tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator
-index 0fa4daa35cf95f93ba8c15f478460fe4e14e6d9e..3aaa2bbdf54a0d0cade14421e84c6ec5a42f96fa 100644
-GIT binary patch
-delta 76
-zcmV-S0JHzxL%Kr>L{mgmx*-4n0ll#b2N?-QP+wC*Ut5AmlNuRb0VtDs86W}x1CyW`
-iC;~)9lgb%c21o`&Q&d5duNp1_0AQ1F8XL2b8cPRMBNdqd
-
-delta 125
-zcmdnxe8-u~CD<k8jv@mC<Nu9Z?2?=wLGi&(@zG7blcgl%7<DICN-D5B2LuH(GB8b^
-zEvdoe=sx+VWF(U-$7BU5Q#13)G5RbZ4FS%c1_42?!C<8eq%ehD{TK_l_!Abg7I5)y
-J&Xe+C2LRVvBHRD~
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.applesmc b/tests/data/acpi/x86/q35/DSDT.applesmc
-index a5d032b7d96113c9393036b2ba831adb6d584142..944209adeaa5bbb722431161c404cb51b8209993 100644
-GIT binary patch
-delta 76
-zcmezDc+ru|CD<k8q5=a0qxwcJc1ccuyZB(I_~<5&$x@PWj2e?GB^8($m?tlg)L`;8
-go_tEujLn11IXJ{|a*vcA6GOseUn%L$c~Y%x062vd-T(jq
-
-delta 108
-zcmccU_}P)mCD<k8vjPJHW5q@;c1cc0$M|5U_~<6z$x@PWjJlI6B^B761A>AX8JH%|
-zmegSKGM#)>(u~QKWAa}~Q!(?&G5RbZ4FS%c1_42?!C<A64W*>n7P1y_@g_{(C?mQ#
-IQL2Cq0GY8KasU7T
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.bridge b/tests/data/acpi/x86/q35/DSDT.bridge
-index 3464f552974672bde25eb15f1c93c309c57ef5cb..d9938dba8fa5d405f7696c0dbdc24f3ae42ec934 100644
-GIT binary patch
-delta 76
-zcmaD9dmxs}CD<k8fF1(_WAH{Uc1ccuyZB(I_~<5&$x@PWj2e?GB^8($m?tlg)L`;8
-go_tEujLn11IXJ{|a*vcA6GOseUn%L$c~T`J07!fl8UO$Q
-
-delta 108
-zcmX>Q`zV&nCD<k8ksbpB<C2YB?2??0j`6`x@zG7blcgl%7<DICN-D5B2LuH(GB8b^
-zEvdoeWjgt&q#2Vd$K=0~refxkWAs@-8Uma>4FZB(gTYEC8%jyDEo3d=;!T*mQATug
-IqEx&H0I`T3t^fc4
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.core-count b/tests/data/acpi/x86/q35/DSDT.core-count
-index 08f5d5f54bcb61235b98fc85bb814046dd038c13..a24b04cbdbf09383b933a42a2a15182545543a87 100644
-GIT binary patch
-delta 71
-zcmV-N0J#5?W$|PRL{mgmaWVh^0k5$N2N?>DTLE8FLSI{gNRt~GUI8eRdKn-B00Wbu
-d87KmZP_xS!vjPH029tmsHIvL78nf&irxpI;78U>i
-
-delta 110
-zcmeyEGC7sYCD<iovJnFV<HwC$?2=slv5fJ-PVv!AzLTXT;}~@(S4k?cI|l>>Gcqtu
-zo+GKj)E>0?nB-<ACRdKh)iS1H=96ReSwK1hoIMQ!f?R{aYA3Ikk!D-STENAdFxfy}
-Kbn|_gNumG_&>%qo
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.core-count2 b/tests/data/acpi/x86/q35/DSDT.core-count2
-index d29a7108f82110ce9f9b4e006501215d41c5420a..3a0cb8c581c8cc630a2ec21712b7f8b75fcad1c8 100644
-GIT binary patch
-delta 100
-zcmeC_V0zWg#N`s~67s5<fq{{6BNw|QS6eY#e6Uk|bd$$qX~{T7jmcG#3QP>llNU;A
-zFg0gvJ}nu~!{os>Sx3!ON@{Y9J_|^3fU~DTK#*&&bAYQKV*wX`!sJ8^(ames;$s1w
-CTO4Nq
-
-delta 126
-zcmaFW&eYSv#N`s~62jBMz`*FVk&9iDtD}@HKG-Qfy2*F4v}7Ek?&K;-1$O6vpkPJ@
-zrpa?8HJBQ*HXoCW=izkaa1IV}<cwCH?5H6;d6k-kBtyai^T{##EFk>>&YlJVL9W4I
-aos*;0q}dj-7I5(<Ot#k$-Q2Af9}57JAR_hv
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.cphp b/tests/data/acpi/x86/q35/DSDT.cphp
-index 7fd59bf6702c04a622f05ae356a2ea37312ab403..20955d0aa30120553da35d5a6640055d26255cf9 100644
-GIT binary patch
-delta 73
-zcmV-P0Ji^?Me{@oL{mgmb0Po$0h_T32N?-ZTVGQ`Ut5AmlNuRb0VtDs86W}x1CyW`
-fC<0ATlgb%#0!RjvJ{mQXiW(Y|5FHh>zZ%vD0Bsc$
-
-delta 108
-zcmezDGS!vKCD<iosuBYO<C~3K?2??0aq+=U@zG7blcgl%7<DICN-D5B2LuH(GB8b^
-zEvdoe6*T#%WD%1q$7D+>Q!(?&G5RbZ4FS%c1_42?!C<A6bETx&7P1y_@g__TkP+QH
-ISLzx&0Ea9dh5!Hn
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.cxl b/tests/data/acpi/x86/q35/DSDT.cxl
-index 613a40b957dab99fd97b465bd89f6afac3a5b047..3c34d4dcab16783abe65f6fa5e64eb69d40795fb 100644
-GIT binary patch
-delta 76
-zcmey9b}Nm`CD<h-%9w$HF?%ByyCkQ-U3{=pd~}n?WGTrwMvcjpk_t==%##;LYB2d4
-gPd+7S#^%B1930{}xkpNmi6LRKuaxxWJSjd&07#7#wg3PC
-
-delta 108
-zcmcbW_9u<YCD<jT#+ZSDanD9Bc1cc0$M|5U_~<6z$x@PWjJlI6B^B761A>AX8JH%|
-zmegSKGM#)>(u~QKWAa}~Q!(?&G5RbZ4FS%c1_42?!C<A64W*>n7P1y_@g_{(C?mQ#
-IQR=4z0JAtBNdN!<
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.dimmpxm b/tests/data/acpi/x86/q35/DSDT.dimmpxm
-index 1db0bf454a203006f866e6752d06422ae675cbd3..228374b55bd544116e359f659e546fc66cf8a895 100644
-GIT binary patch
-delta 91
-zcmdn(H`9;HCD<iIQk{W;F>NE4v?QlTKzy)Md~}n?WIf3^Mvck6k_t==%#*iBYB0IE
-tPQE7@$>hN{*;2|>QfhLHJ_|@~fU~DTK#*&&bAYQKV*wZc<|R_oc>rS!7_9&R
-
-delta 132
-zcmbQ~x7&})CD<jzTAhJ`am7Y1X-Q76p!i^?_~<6z$$FA;jJlJ1B^B761A>AX8JH%o
-zm(*Z#cAtDxGLp@e!#Oy_aq>bbJxhj!1?H1u^jSdq0-QY!0)kwF!8#U5VG6tYF&1#~
-QCoE(w;NsofBsHA}0HD?-HUIzs
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.ipmibt b/tests/data/acpi/x86/q35/DSDT.ipmibt
-index 25f43ae8efb55364a739e6b5e3cb4e71e61862b0..45f911ada5645f158f3d6c0c430ec1d52cadc5d8 100644
-GIT binary patch
-delta 76
-zcmbQ>^v;pXCD<k8odN>`WA;Wac1ccuyZB(I_~<5&$x@PWj2e?GB^8($m?tlg)L`;8
-go_tEujLn11IXJ{|a*vcA6GOseUn%L$c~Xnm06Z5J7XSbN
-
-delta 108
-zcmaFoIKhd_CD<iIK#_rgarZ_pc1cc0$M|5U_~<6z$x@PWjJlI6B^B761A>AX8JH%|
-zmegSKGM#)>(u~QKWAa}~Q!(?&G5RbZ4FS%c1_42?!C<A64W*>n7P1y_@g_{(C?mQ#
-IQL2{>06xVXs{jB1
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.ipmismbus b/tests/data/acpi/x86/q35/DSDT.ipmismbus
-index 32bcd25bda9e9d2775790385f8da6a11e9d5cb46..e5d6811bee1233d74236453c49060390d74d4416 100644
-GIT binary patch
-delta 76
-zcmV-S0JHy{Li<4qL{mgm`yc=S0o<_)2N?-ZK3`KpUt5AmlNuRb0VtDs86W}x1CyW`
-iC<0A0lgb%321o`&Q&d5dj2bQi0AQ0%8XL228m|Uoloh-H
-
-delta 108
-zcmezEIM<2GCD<iIR*`{$QD-9;yCkQhV|=hvd~}oVWGTrwM%~Gkk_zn30YSlx3`~<}
-zOKLEAnNB_`X~yKrG5N2gshIiX7=0Fyh5%<zgMc8{V6f83hEmdO3t0=ecoQaXlo8#W
-IC^d@>02)FaPyhe`
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.ivrs b/tests/data/acpi/x86/q35/DSDT.ivrs
-index f91cbe55fcfeea319babf7c9a0c6a6ccdc3320d1..46fd25400b7c00ee9149ddb64cb5d5bd73f6a82b 100644
-GIT binary patch
-delta 76
-zcmccSxW$pnCD<ioivj}!<MoYP?2?@RcJaYZ@zG5llcgl%7&RtWN-8ihFi&0}slnuH
-gJo%KQ8Jh>2b8v{`<Q^$KCWeH`zEaYg^Q1D^07_OB8UO$Q
-
-delta 108
-zcmdnuc+HW^CD<k8ngRm@qsB%qc1cc0$M|5U_~<6z$x@PWjJlI6B^B761A>AX8JH%|
-zmegSKGM#)>(u~QKWAa}~Q!(?&G5RbZ4FS%c1_42?!C<A64W*>n7P1y_@g_{(C?mQ#
-IQ7V`X09c|Ot^fc4
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.memhp b/tests/data/acpi/x86/q35/DSDT.memhp
-index be90eb71d8dda8fe54c79ffffe103986ee06ae3a..5ce081187a578ba7145a9ba20d30be36c13b7663 100644
-GIT binary patch
-delta 76
-zcmbQ@^U0gbCD<k8lPUuPqvl2~c1ccG`}km|_~<5&$x@PWj2e?GB^8($m?tlg)L?Qp
-gnS4spjLn11IXJ{|a*vcA6GOseUn%L$c~Z-`0W+Tz@c;k-
-
-delta 108
-zcmez5J;jI1CD<iIM2&%gF>50iyCkQ(V|=hvd~}oVWGTrwM%~Gkk_zn30YSlx3`~<}
-zOKLDVm`y$^X~yKrG5N2gshIiX7=0Fyh5%<zgMc8{V6f83hEmdO3t0=ecoQaXlo8#W
-IC^eBA05Cxvg#Z8m
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.mmio64 b/tests/data/acpi/x86/q35/DSDT.mmio64
-index 01f276a6aff38a1d4f58640a9e6d120fc9a04b61..bdf36c4d575bfc4eb2eac3f00c9b7b4270f88677 100644
-GIT binary patch
-delta 76
-zcmZ4Q)$7IO66_MftIEK@_;Mo`yCkQpeSEM}d~}n?WGTrwMvcjpk_t==%##;LYA`vQ
-gOg<%P#^%B1930{}xkpNmi6LRKuaxxWJgI|R01#LdnE(I)
-
-delta 108
-zcmeD6TJOc>66_M9ugbu{sJ)SkU6Rw?F+SKSKDx<wvXo>TqweHNNd<Q2fS_PT2Byig
-zB{i5F%qAa|G-Gn*nEY4LRLp#Gj6MrULx8iVK|qjeFj(niLn&#tg{%c!ya|&x%7|`G
-Ilv=|D00OujEdT%j
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.multi-bridge b/tests/data/acpi/x86/q35/DSDT.multi-bridge
-index 1bd2ee8d2ebd3c9e0ed89a86478691f2e06f2590..1db43a69e4c2affd8bd678bbef4d3c228380288e 100644
-GIT binary patch
-delta 76
-zcmdm$J|msWCD<iohA{&Jqt8Yzc1ccuyZB(I_~<5&$x@PWj2e?GB^8($m?tlg)L`;8
-go_tEujLn11IXJ{|a*vcA6GOseUn%L$c~U--04u2!kpKVy
-
-delta 108
-zcmbP{zAK%}CD<iomoWna<J^s0?2??0j`6`x@zG7blcgl%7<DICN-D5B2LuH(GB8b^
-zEvdoeWjgt&q#2Vd$K=0~refxkWAs@-8Uma>4FZB(gTYEC8%jyDEo3d=;!T*mQATug
-IqLjHL0EhJ+B>(^b
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.noacpihp b/tests/data/acpi/x86/q35/DSDT.noacpihp
-index 45cc2bcffa42d73db110afd5075556dcfe5d9936..8bc16887e1c963c61aaecf71712a09c0554f6d67 100644
-GIT binary patch
-delta 75
-zcmX@>u-bvkCD<iITY-Ur@zh4HUE-YncJaYZ@zG5llh2CBF=|ZKkx*b_V4fT-p~2*9
-fJh@iFjLn11IXJ{|vc04p6GOrzN$Jgsk~-`FEX)(a
-
-delta 125
-zcmZ4OaMpp#CD<jzSAl_nQF<fSE^$sr$M|5U_~<6z$!Epm7<DJ>NGPy72LuH(GB8c{
-zlh9!DGM!u@VaDXjF?oZ8shRoY7=0Fyh5%<zgMc8{V6f5!QkcT7evAcN{0R$L3%GbU
-J|C7*V2LN@gB6R=&
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.nohpet b/tests/data/acpi/x86/q35/DSDT.nohpet
-index f110504b9c813aa07802fc17d2869596a2eeca6f..c13e45e3612646cc2e30f00b3b7e53335da816ea 100644
-GIT binary patch
-delta 76
-zcmdn)Fx7#}CD<iIRDpqkkzpfOr39zHU3{=pd~}n?<Q|DQMvcj@B@~z#m?sNKYB2d4
-gPqvXXWAk8h4i0gg{7+Jki6LR~eo5)g4<y6c00jRO-2eap
-
-delta 125
-zcmbR0u-$>nCD<jzT!DdsF>oVSr39y=V|=hvd~}oV<Q|DQM%~G;B^2151A>AX8JH&X
-zN@_59nNBvBG-Gn*n4B+ZYGyt;MxO<wA;8(wARx#!7_4-G6sEANA7cR*f5Jl60xsUo
-IdnF^-07yk4(f|Me
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.numamem b/tests/data/acpi/x86/q35/DSDT.numamem
-index 6090958f39875f5806e72e23f32cb4b3ae840627..ba6669437e65952f24516ded954b33fe54bdedfb 100644
-GIT binary patch
-delta 76
-zcmX@@xYCi!CD<ior2+#3<HL<y?2??W_VK|^@zG5llcgl%7&RtWN-8ihFi&0}slnuI
-gGWnFG8Jh>2b8v{`<Q^$KCWeH`zEaYg^Q2<g06<z4<^TWy
-
-delta 108
-zcmZ4Kc-oQ6CD<k8v;qSIqw+>Bc1ccm$M|5U_~<6z$x@PWjJlI6B^B761A>AX8JH%|
-zmegQ!Fq?c-(u~QKWAa}~Q!(?&G5RbZ4FS%c1_42?!C<A64W*>n7P1y_@g_{(C?mQ#
-IQObi207+UMdH?_b
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.pvpanic-isa b/tests/data/acpi/x86/q35/DSDT.pvpanic-isa
-index 7a8e568315a43f1fa98068d8e78995c98064fb91..6ad42873e91c80cef5a42224cb4d31936dad59b4 100644
-GIT binary patch
-delta 76
-zcmZ4G)ZxVC66_Mfp~%3%_;Mo`yCkQ-U3{=pd~}n?WGTrwMvcjpk_t==%##;LYB2d4
-gPd+7S#^%B1930{}xkpNmi6LRKuaxxWJgGfw010Fie*gdg
-
-delta 108
-zcmeBhTIIy$66_M9rO3d*Xtj}xU6Rw$F+SKSKDx<wvXo>TqweHNNd<Q2fS_PT2Byig
-zB{i75OeY_eG-Gn*nEY4LRLp#Gj6MrULx8iVK|qjeFj(niLn&#tg{%c!ya|&x%7|`G
-Ilv>UP0Qtck6951J
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.thread-count b/tests/data/acpi/x86/q35/DSDT.thread-count
-index 08f5d5f54bcb61235b98fc85bb814046dd038c13..a24b04cbdbf09383b933a42a2a15182545543a87 100644
-GIT binary patch
-delta 71
-zcmV-N0J#5?W$|PRL{mgmaWVh^0k5$N2N?>DTLE8FLSI{gNRt~GUI8eRdKn-B00Wbu
-d87KmZP_xS!vjPH029tmsHIvL78nf&irxpI;78U>i
-
-delta 110
-zcmeyEGC7sYCD<iovJnFV<HwC$?2=slv5fJ-PVv!AzLTXT;}~@(S4k?cI|l>>Gcqtu
-zo+GKj)E>0?nB-<ACRdKh)iS1H=96ReSwK1hoIMQ!f?R{aYA3Ikk!D-STENAdFxfy}
-Kbn|_gNumG_&>%qo
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.thread-count2 b/tests/data/acpi/x86/q35/DSDT.thread-count2
-index d29a7108f82110ce9f9b4e006501215d41c5420a..3a0cb8c581c8cc630a2ec21712b7f8b75fcad1c8 100644
-GIT binary patch
-delta 100
-zcmeC_V0zWg#N`s~67s5<fq{{6BNw|QS6eY#e6Uk|bd$$qX~{T7jmcG#3QP>llNU;A
-zFg0gvJ}nu~!{os>Sx3!ON@{Y9J_|^3fU~DTK#*&&bAYQKV*wX`!sJ8^(ames;$s1w
-CTO4Nq
-
-delta 126
-zcmaFW&eYSv#N`s~62jBMz`*FVk&9iDtD}@HKG-Qfy2*F4v}7Ek?&K;-1$O6vpkPJ@
-zrpa?8HJBQ*HXoCW=izkaa1IV}<cwCH?5H6;d6k-kBtyai^T{##EFk>>&YlJVL9W4I
-aos*;0q}dj-7I5(<Ot#k$-Q2Af9}57JAR_hv
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.tis.tpm12 b/tests/data/acpi/x86/q35/DSDT.tis.tpm12
-index 29a416f0508655d2bfde01fff4d25ad7f89581d9..e381ce4cbf2b11f56a2d0537db4d21acc97450c9 100644
-GIT binary patch
-delta 76
-zcmZ4N*67CN66_MfsLa5?n7)yVU6Rw^E<V^PKDx<cvXo>TqsHV)Nd+bb=E(~rHJE&j
-gC!dluWAk8h4i0gg+#{vO#E>xAS4w(wp43(j0Oqn2?EnA(
-
-delta 108
-zcmZp4TkOW=66_M9tjxf`xML$1yCkQhV|=hvd~}oVWGTrwM%~Gkk_zn30YSlx3`~<}
-zOKLEAnNB_`X~yKrG5N2gshIiX7=0Fyh5%<zgMc8{V6f83hEmdO3t0=ecoQaXlo8#W
-ID7AnC03(eZfdBvi
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.tis.tpm2 b/tests/data/acpi/x86/q35/DSDT.tis.tpm2
-index 59288f02c43cf2efc1555599131fde05dbbaa1cd..a09253042ce4a715922027245de8a2ab7449c5b7 100644
-GIT binary patch
-delta 76
-zcmdn%HrtKMCD<iITA6`?QE?*|yCkQ-U3{=pd~}n?WGTrwMvcjpk_t==%##;LYB2d4
-gPd+7S#^%B1930{}xkpNmi6LRKuaxxWJgM^>0PFk|4*&oF
-
-delta 108
-zcmbR3w%3izCD<jzR+)i;v1lU~yCkQhV|=hvd~}oVWGTrwM%~Gkk_zn30YSlx3`~<}
-zOKLEAnNB_`X~yKrG5N2gshIiX7=0Fyh5%<zgMc8{V6f83hEmdO3t0=ecoQaXlo8#W
-ID7A|N04diUqW}N^
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.type4-count b/tests/data/acpi/x86/q35/DSDT.type4-count
-index eaca76e8e61eb62f75dbdf093e803eea34330deb..edc23198cdb47a981bcbc82bc8e392b815abb554 100644
-GIT binary patch
-delta 106
-zcmdl#k#X)sMlP3Nmyo$03=E97H*&E{a&_)wiVt>*k8bjqEG-$ws4=-pQh|wqdGbO@
-z4W_oun@>xgW@Yzaa}Ex1<ec27AU;V+Ookz0fz;#}eHM_u0B28wfFRdk=Kxnf#sV(>
-J&CCjWGytMf9?Ad!
-
-delta 135
-zcmbO`k#YY-MlP3NmyrD)3=E928@bpexw;Q9#RogZM>qLSmX?fT)SX-<sle_W5ERVF
-zz%+S|qy|&-*3HKxPqVVQaySQvI8IW~vt&qEU_LoUp9Q2Zz}eFvAjmZstYd)`rm(9Y
-UV*wX`!a~*pF5b-#<@aa+0B74LfB*mh
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.viot b/tests/data/acpi/x86/q35/DSDT.viot
-index de0942a13dc65b75e78e66ee8df904b31bf6079a..4c93dfd5c4b362714d3f9aa606a838d4625b3369 100644
-GIT binary patch
-delta 76
-zcmdm1G^L2kCD<iI#FBx5k#i##yCkQ-U3{=pd~}n?WGTrwMvcjpk_t==%##;LYB2d4
-gPd+7S#^%B1930{}xkpNmi6LRKuaxxWJgF0M0RLeWUjP6A
-
-delta 108
-zcmbPIw5^ECCD<jz%#wkDF=`_hyCkQhV|=hvd~}oVWGTrwM%~Gkk_zn30YSlx3`~<}
-zOKLEAnNB_`X~yKrG5N2gshIiX7=0Fyh5%<zgMc8{V6f83hEmdO3t0=ecoQaXlo8#W
-ID79G*07YCK^8f$<
-
-diff --git a/tests/data/acpi/x86/q35/DSDT.xapic b/tests/data/acpi/x86/q35/DSDT.xapic
-index 9059812b5892ba7ac5c9bd312fd9f45a4f59f105..d4acd851c62c956436a436f9fa6d08fc5f370fa7 100644
-GIT binary patch
-delta 107
-zcmZ26ovCd)6PHV{OGsNc0|VpRja=-KTupD;;)9*yqnkV?OH0NvYD}(@RA6FYp1e>}
-zgQ@@F=F^g=dD%VKoP$FgIVU%2h)=fC5R+j@SRgeyMxO<wF~Hf=ARx#!*g3$}kFkJ@
-Ke>1bj(qsVVzaPi|
-
-delta 135
-zcmZph&a`4W6PHV{OUR0D1_nm`ja=-KTrKa};)9*yqnmsuOH0Nv>Q1hbRA6@w2nuFo
-zV46HfQiG}I@#bTar+L|2Ih=z-94Be$Su!LnFrOTw&jQjH;OuD-5ab#R*0DeeQ`psy
-Tv4D#|VIgY)7w_hW>PwRWojNEz
-
+Changes since RFC:
+- Rebased to v9.1.0-1673-g134b443512
+- Fixed bug in interrupt initialization
+
+ hw/isa/Kconfig                |   4 +-
+ hw/isa/vt82c686.c             |   4 +-
+ hw/usb/Kconfig                |   6 +-
+ hw/usb/hcd-uhci-pci.c         | 255 ++++++++++++++++++++++++++++++++++
+ hw/usb/hcd-uhci-pci.h         |  63 +++++++++
+ hw/usb/hcd-uhci.c             | 221 +++++------------------------
+ hw/usb/hcd-uhci.h             |  30 ++--
+ hw/usb/meson.build            |   1 +
+ hw/usb/vt82c686-uhci-pci.c    |  18 +--
+ include/hw/southbridge/piix.h |   4 +-
+ 10 files changed, 386 insertions(+), 220 deletions(-)
+ create mode 100644 hw/usb/hcd-uhci-pci.c
+ create mode 100644 hw/usb/hcd-uhci-pci.h
+
+diff --git a/hw/isa/Kconfig b/hw/isa/Kconfig
+index 73c6470805..b0e536fad9 100644
+--- a/hw/isa/Kconfig
++++ b/hw/isa/Kconfig
+@@ -47,7 +47,7 @@ config PIIX
+     select IDE_PIIX
+     select ISA_BUS
+     select MC146818RTC
+-    select USB_UHCI
++    select USB_UHCI_PCI
+ 
+ config VT82C686
+     bool
+@@ -55,7 +55,7 @@ config VT82C686
+     select ISA_SUPERIO
+     select ACPI
+     select ACPI_SMBUS
+-    select USB_UHCI
++    select USB_UHCI_PCI
+     select APM
+     select I8254
+     select I8257
+diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
+index 6f44b381a5..a47cbd6191 100644
+--- a/hw/isa/vt82c686.c
++++ b/hw/isa/vt82c686.c
+@@ -26,7 +26,7 @@
+ #include "hw/intc/i8259.h"
+ #include "hw/irq.h"
+ #include "hw/dma/i8257.h"
+-#include "hw/usb/hcd-uhci.h"
++#include "hw/usb/hcd-uhci-pci.h"
+ #include "hw/timer/i8254.h"
+ #include "hw/rtc/mc146818rtc.h"
+ #include "migration/vmstate.h"
+@@ -600,7 +600,7 @@ struct ViaISAState {
+     ViaSuperIOState via_sio;
+     MC146818RtcState rtc;
+     PCIIDEState ide;
+-    UHCIState uhci[2];
++    UHCIPCIState uhci[2];
+     ViaPMState pm;
+     ViaAC97State ac97;
+     PCIDevice mc97;
+diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
+index 5fbecd2f43..bab4d2d67d 100644
+--- a/hw/usb/Kconfig
++++ b/hw/usb/Kconfig
+@@ -2,10 +2,14 @@ config USB
+     bool
+ 
+ config USB_UHCI
++    bool
++    select USB
++
++config USB_UHCI_PCI
+     bool
+     default y if PCI_DEVICES
+     depends on PCI
+-    select USB
++    select USB_UHCI
+ 
+ config USB_OHCI
+     bool
+diff --git a/hw/usb/hcd-uhci-pci.c b/hw/usb/hcd-uhci-pci.c
+new file mode 100644
+index 0000000000..ed9b5f6121
+--- /dev/null
++++ b/hw/usb/hcd-uhci-pci.c
+@@ -0,0 +1,255 @@
++/*
++ * USB UHCI controller emulation
++ * PCI code
++ *
++ * Copyright (c) 2005 Fabrice Bellard
++ *
++ * Copyright (c) 2008 Max Krasnyansky
++ *     Magor rewrite of the UHCI data structures parser and frame processor
++ *     Support for fully async operation and multiple outstanding transactions
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ */
++
++#include "qemu/osdep.h"
++#include "hw/irq.h"
++#include "hw/usb.h"
++#include "migration/vmstate.h"
++#include "hw/pci/pci.h"
++#include "hw/qdev-properties.h"
++#include "qapi/error.h"
++#include "qemu/main-loop.h"
++#include "qemu/module.h"
++#include "qom/object.h"
++#include "hcd-uhci-pci.h"
++
++struct UHCIPCIDeviceClass {
++    PCIDeviceClass parent_class;
++    UHCIPCIInfo info;
++};
++
++static const VMStateDescription vmstate_uhci = {
++    .name = "pci_uhci",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_PCI_DEVICE(dev, UHCIPCIState),
++        VMSTATE_STRUCT(state, UHCIPCIState, 1, vmstate_uhci_state, UHCIState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void uhci_pci_reset(UHCIState *uhci)
++{
++    UHCIPCIState *pstate = container_of(uhci, UHCIPCIState, state);
++    PCIDevice *d = &pstate->dev;
++
++    d->config[0x6a] = 0x01; /* usb clock */
++    d->config[0x6b] = 0x00;
++
++    uhci_state_reset(uhci);
++}
++
++void usb_uhci_common_realize_pci(PCIDevice *dev, Error **errp)
++{
++    Error *err = NULL;
++    UHCIPCIDeviceClass *u = UHCI_PCI_GET_CLASS(dev);
++    UHCIPCIState *uhci = UHCI_PCI(dev);
++    UHCIState *s = &uhci->state;
++    uint8_t *pci_conf = dev->config;
++
++    pci_conf[PCI_CLASS_PROG] = 0x00;
++    /* TODO: reset value should be 0. */
++    pci_conf[USB_SBRN] = USB_RELEASE_1; /* release number */
++    pci_config_set_interrupt_pin(pci_conf, u->info.irq_pin + 1);
++
++    s->irq = pci_allocate_irq(dev);
++    s->masterbus = uhci->masterbus;
++    s->firstport = uhci->firstport;
++    s->maxframes = uhci->maxframes;
++    s->frame_bandwidth = uhci->frame_bandwidth;
++    s->as = pci_get_address_space(dev);
++    s->uhci_reset = uhci_pci_reset;
++
++    usb_uhci_init(s, DEVICE(dev), &err);
++
++    /*
++     * Use region 4 for consistency with real hardware.  BSD guests seem
++     * to rely on this.
++     */
++    pci_register_bar(dev, 4, PCI_BASE_ADDRESS_SPACE_IO, &s->mem);
++}
++
++static void uhci_pci_reset_pci(DeviceState *dev)
++{
++    PCIDevice *d = PCI_DEVICE(dev);
++    UHCIPCIState *uhci = UHCI_PCI(d);
++
++    uhci_pci_reset(&uhci->state);
++}
++
++static void usb_uhci_pci_exit(PCIDevice *dev)
++{
++    UHCIPCIState *uhci = UHCI_PCI(dev);
++    UHCIState *s = &uhci->state;
++
++    usb_uhci_exit(s);
++
++    qemu_free_irq(s->irq);
++}
++
++static Property uhci_properties_companion[] = {
++    DEFINE_PROP_STRING("masterbus", UHCIPCIState, masterbus),
++    DEFINE_PROP_UINT32("firstport", UHCIPCIState, firstport, 0),
++    DEFINE_PROP_UINT32("bandwidth", UHCIPCIState, frame_bandwidth, 1280),
++    DEFINE_PROP_UINT32("maxframes", UHCIPCIState, maxframes, 128),
++    DEFINE_PROP_END_OF_LIST(),
++};
++static Property uhci_properties_standalone[] = {
++    DEFINE_PROP_UINT32("bandwidth", UHCIPCIState, frame_bandwidth, 1280),
++    DEFINE_PROP_UINT32("maxframes", UHCIPCIState, maxframes, 128),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void uhci_pci_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
++
++    k->class_id  = PCI_CLASS_SERIAL_USB;
++    dc->vmsd = &vmstate_uhci;
++    device_class_set_legacy_reset(dc, uhci_pci_reset_pci);
++    set_bit(DEVICE_CATEGORY_USB, dc->categories);
++}
++
++static const TypeInfo uhci_pci_type_info = {
++    .name = TYPE_UHCI_PCI,
++    .parent = TYPE_PCI_DEVICE,
++    .instance_size = sizeof(UHCIPCIState),
++    .class_size    = sizeof(UHCIPCIDeviceClass),
++    .class_init    = uhci_pci_class_init,
++    .interfaces = (InterfaceInfo[]) {
++        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
++        { },
++    },
++};
++
++void uhci_pci_data_class_init(ObjectClass *klass, void *data)
++{
++    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    UHCIPCIDeviceClass *u = UHCI_PCI_CLASS(klass);
++    UHCIPCIInfo *info = data;
++
++    k->realize = info->realize ? info->realize : usb_uhci_common_realize_pci;
++    k->exit = info->unplug ? usb_uhci_pci_exit : NULL;
++    k->vendor_id = info->vendor_id;
++    k->device_id = info->device_id;
++    k->revision  = info->revision;
++    if (!info->unplug) {
++        /* uhci controllers in companion setups can't be hotplugged */
++        dc->hotpluggable = false;
++        device_class_set_props(dc, uhci_properties_companion);
++    } else {
++        device_class_set_props(dc, uhci_properties_standalone);
++    }
++    if (info->notuser) {
++        dc->user_creatable = false;
++    }
++    u->info = *info;
++}
++
++static UHCIPCIInfo uhci_pci_info[] = {
++    {
++        .name      = TYPE_PIIX3_USB_UHCI,
++        .vendor_id = PCI_VENDOR_ID_INTEL,
++        .device_id = PCI_DEVICE_ID_INTEL_82371SB_2,
++        .revision  = 0x01,
++        .irq_pin   = 3,
++        .unplug    = true,
++    },{
++        .name      = TYPE_PIIX4_USB_UHCI,
++        .vendor_id = PCI_VENDOR_ID_INTEL,
++        .device_id = PCI_DEVICE_ID_INTEL_82371AB_2,
++        .revision  = 0x01,
++        .irq_pin   = 3,
++        .unplug    = true,
++    },{
++        .name      = TYPE_ICH9_USB_UHCI(1), /* 00:1d.0 */
++        .vendor_id = PCI_VENDOR_ID_INTEL,
++        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI1,
++        .revision  = 0x03,
++        .irq_pin   = 0,
++        .unplug    = false,
++    },{
++        .name      = TYPE_ICH9_USB_UHCI(2), /* 00:1d.1 */
++        .vendor_id = PCI_VENDOR_ID_INTEL,
++        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI2,
++        .revision  = 0x03,
++        .irq_pin   = 1,
++        .unplug    = false,
++    },{
++        .name      = TYPE_ICH9_USB_UHCI(3), /* 00:1d.2 */
++        .vendor_id = PCI_VENDOR_ID_INTEL,
++        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI3,
++        .revision  = 0x03,
++        .irq_pin   = 2,
++        .unplug    = false,
++    },{
++        .name      = TYPE_ICH9_USB_UHCI(4), /* 00:1a.0 */
++        .vendor_id = PCI_VENDOR_ID_INTEL,
++        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI4,
++        .revision  = 0x03,
++        .irq_pin   = 0,
++        .unplug    = false,
++    },{
++        .name      = TYPE_ICH9_USB_UHCI(5), /* 00:1a.1 */
++        .vendor_id = PCI_VENDOR_ID_INTEL,
++        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI5,
++        .revision  = 0x03,
++        .irq_pin   = 1,
++        .unplug    = false,
++    },{
++        .name      = TYPE_ICH9_USB_UHCI(6), /* 00:1a.2 */
++        .vendor_id = PCI_VENDOR_ID_INTEL,
++        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI6,
++        .revision  = 0x03,
++        .irq_pin   = 2,
++        .unplug    = false,
++    }
++};
++
++static void uhci_pci_register_types(void)
++{
++    TypeInfo type_info = {
++        .parent        = TYPE_UHCI_PCI,
++        .class_init    = uhci_pci_data_class_init,
++    };
++    int i;
++
++    type_register_static(&uhci_pci_type_info);
++
++    for (i = 0; i < ARRAY_SIZE(uhci_pci_info); i++) {
++        type_info.name = uhci_pci_info[i].name;
++        type_info.class_data = uhci_pci_info + i;
++        type_register(&type_info);
++    }
++}
++
++type_init(uhci_pci_register_types)
+diff --git a/hw/usb/hcd-uhci-pci.h b/hw/usb/hcd-uhci-pci.h
+new file mode 100644
+index 0000000000..25d3e0eb97
+--- /dev/null
++++ b/hw/usb/hcd-uhci-pci.h
+@@ -0,0 +1,63 @@
++/*
++ * USB UHCI controller emulation
++ *
++ * Copyright (c) 2005 Fabrice Bellard
++ *
++ * Copyright (c) 2008 Max Krasnyansky
++ *     Magor rewrite of the UHCI data structures parser and frame processor
++ *     Support for fully async operation and multiple outstanding transactions
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ */
++#ifndef HW_USB_HCD_UHCI_PCI_H
++#define HW_USB_HCD_UHCI_PCI_H
++
++#include "hcd-uhci.h"
++
++#define TYPE_UHCI_PCI "pci-uhci"
++
++struct UHCIPCIState {
++    PCIDevice dev;
++    UHCIState state;
++
++    /* Properties */
++    char *masterbus;
++    uint32_t firstport;
++    uint32_t frame_bandwidth;
++    uint32_t maxframes;
++    uint32_t num_ports;
++};
++
++OBJECT_DECLARE_TYPE(UHCIPCIState, UHCIPCIDeviceClass, UHCI_PCI)
++
++typedef struct UHCIPCIInfo {
++    const char *name;
++    uint16_t   vendor_id;
++    uint16_t   device_id;
++    uint8_t    revision;
++    uint8_t    irq_pin;
++    void       (*realize)(PCIDevice *dev, Error **errp);
++    bool       unplug;
++    bool       notuser; /* disallow user_creatable */
++} UHCIPCIInfo;
++
++void usb_uhci_common_realize_pci(PCIDevice *dev, Error **errp);
++void uhci_pci_data_class_init(ObjectClass *klass, void *data);
++
++#endif /* HW_USB_HCD_UHCI_PCI_H */
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index bdab9ac37e..68b72f8d3b 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -30,7 +30,6 @@
+ #include "hw/usb.h"
+ #include "hw/usb/uhci-regs.h"
+ #include "migration/vmstate.h"
+-#include "hw/pci/pci.h"
+ #include "hw/irq.h"
+ #include "hw/qdev-properties.h"
+ #include "qapi/error.h"
+@@ -62,11 +61,6 @@ enum {
+ 
+ typedef struct UHCIAsync UHCIAsync;
+ 
+-struct UHCIPCIDeviceClass {
+-    PCIDeviceClass parent_class;
+-    UHCIInfo       info;
+-};
+-
+ /*
+  * Pending async transaction.
+  * 'packet' must be the first field because completion
+@@ -302,20 +296,13 @@ static void uhci_update_irq(UHCIState *s)
+     qemu_set_irq(s->irq, level);
+ }
+ 
+-static void uhci_reset(DeviceState *dev)
++void uhci_state_reset(UHCIState *s)
+ {
+-    PCIDevice *d = PCI_DEVICE(dev);
+-    UHCIState *s = UHCI(d);
+-    uint8_t *pci_conf;
+     int i;
+     UHCIPort *port;
+ 
+     trace_usb_uhci_reset();
+ 
+-    pci_conf = s->dev.config;
+-
+-    pci_conf[0x6a] = 0x01; /* usb clock */
+-    pci_conf[0x6b] = 0x00;
+     s->cmd = 0;
+     s->status = UHCI_STS_HCHALTED;
+     s->status2 = 0;
+@@ -336,6 +323,11 @@ static void uhci_reset(DeviceState *dev)
+     uhci_update_irq(s);
+ }
+ 
++static void uhci_reset(UHCIState *s)
++{
++        s->uhci_reset(s);
++}
++
+ static const VMStateDescription vmstate_uhci_port = {
+     .name = "uhci port",
+     .version_id = 1,
+@@ -357,13 +349,12 @@ static int uhci_post_load(void *opaque, int version_id)
+     return 0;
+ }
+ 
+-static const VMStateDescription vmstate_uhci = {
++const VMStateDescription vmstate_uhci_state = {
+     .name = "uhci",
+-    .version_id = 3,
++    .version_id = 4,
+     .minimum_version_id = 1,
+     .post_load = uhci_post_load,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_PCI_DEVICE(dev, UHCIState),
+         VMSTATE_UINT8_EQUAL(num_ports_vmstate, UHCIState, NULL),
+         VMSTATE_STRUCT_ARRAY(ports, UHCIState, UHCI_PORTS, 1,
+                              vmstate_uhci_port, UHCIPort),
+@@ -409,11 +400,11 @@ static void uhci_port_write(void *opaque, hwaddr addr,
+                 port = &s->ports[i];
+                 usb_device_reset(port->port.dev);
+             }
+-            uhci_reset(DEVICE(s));
++            uhci_reset(s);
+             return;
+         }
+         if (val & UHCI_CMD_HCRESET) {
+-            uhci_reset(DEVICE(s));
++            uhci_reset(s);
+             return;
+         }
+         s->cmd = val;
+@@ -628,9 +619,21 @@ static USBDevice *uhci_find_device(UHCIState *s, uint8_t addr)
+     return NULL;
+ }
+ 
++static void uhci_dma_read(UHCIState *s, dma_addr_t addr, void *buf,
++                          dma_addr_t len)
++{
++        dma_memory_read(s->as, addr, buf, len, MEMTXATTRS_UNSPECIFIED);
++}
++
++static void uhci_dma_write(UHCIState *s, dma_addr_t addr, void *buf,
++                           dma_addr_t len)
++{
++        dma_memory_write(s->as, addr, buf, len, MEMTXATTRS_UNSPECIFIED);
++}
++
+ static void uhci_read_td(UHCIState *s, UHCI_TD *td, uint32_t link)
+ {
+-    pci_dma_read(&s->dev, link & ~0xf, td, sizeof(*td));
++    uhci_dma_read(s, link & ~0xf, td, sizeof(*td));
+     le32_to_cpus(&td->link);
+     le32_to_cpus(&td->ctrl);
+     le32_to_cpus(&td->token);
+@@ -712,7 +715,7 @@ static int uhci_complete_td(UHCIState *s, UHCI_TD *td, UHCIAsync *async,
+     }
+ 
+     if (pid == USB_TOKEN_IN) {
+-        pci_dma_write(&s->dev, td->buffer, async->buf, len);
++        uhci_dma_write(s, td->buffer, async->buf, len);
+         if ((td->ctrl & TD_CTRL_SPD) && len < max_len) {
+             *int_mask |= 0x02;
+             /* short packet: do not update QH */
+@@ -848,7 +851,7 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
+     switch (pid) {
+     case USB_TOKEN_OUT:
+     case USB_TOKEN_SETUP:
+-        pci_dma_read(&s->dev, td->buffer, async->buf, max_len);
++        uhci_dma_read(s, td->buffer, async->buf, max_len);
+         usb_handle_packet(q->ep->dev, &async->packet);
+         if (async->packet.status == USB_RET_SUCCESS) {
+             async->packet.actual_length = max_len;
+@@ -976,7 +979,7 @@ static void uhci_process_frame(UHCIState *s)
+ 
+     frame_addr = s->fl_base_addr + ((s->frnum & 0x3ff) << 2);
+ 
+-    pci_dma_read(&s->dev, frame_addr, &link, 4);
++    uhci_dma_read(s, frame_addr, &link, 4);
+     le32_to_cpus(&link);
+ 
+     int_mask = 0;
+@@ -1016,7 +1019,7 @@ static void uhci_process_frame(UHCIState *s)
+                 }
+             }
+ 
+-            pci_dma_read(&s->dev, link & ~0xf, &qh, sizeof(qh));
++            uhci_dma_read(s, link & ~0xf, &qh, sizeof(qh));
+             le32_to_cpus(&qh.link);
+             le32_to_cpus(&qh.el_link);
+ 
+@@ -1041,7 +1044,7 @@ static void uhci_process_frame(UHCIState *s)
+         if (old_td_ctrl != td.ctrl) {
+             /* update the status bits of the TD */
+             val = cpu_to_le32(td.ctrl);
+-            pci_dma_write(&s->dev, (link & ~0xf) + 4, &val, sizeof(val));
++            uhci_dma_write(s, (link & ~0xf) + 4, &val, sizeof(val));
+         }
+ 
+         switch (ret) {
+@@ -1069,7 +1072,7 @@ static void uhci_process_frame(UHCIState *s)
+                 /* update QH element link */
+                 qh.el_link = link;
+                 val = cpu_to_le32(qh.el_link);
+-                pci_dma_write(&s->dev, (curr_qh & ~0xf) + 4, &val, sizeof(val));
++                uhci_dma_write(s, (curr_qh & ~0xf) + 4, &val, sizeof(val));
+ 
+                 if (!depth_first(link)) {
+                     /* done with this QH */
+@@ -1178,20 +1181,11 @@ static USBPortOps uhci_port_ops = {
+ static USBBusOps uhci_bus_ops = {
+ };
+ 
+-void usb_uhci_common_realize(PCIDevice *dev, Error **errp)
++void usb_uhci_init(UHCIState *s, DeviceState *dev, Error **errp)
+ {
+     Error *err = NULL;
+-    UHCIPCIDeviceClass *u = UHCI_GET_CLASS(dev);
+-    UHCIState *s = UHCI(dev);
+-    uint8_t *pci_conf = s->dev.config;
+     int i;
+ 
+-    pci_conf[PCI_CLASS_PROG] = 0x00;
+-    /* TODO: reset value should be 0. */
+-    pci_conf[USB_SBRN] = USB_RELEASE_1; /* release number */
+-    pci_config_set_interrupt_pin(pci_conf, u->info.irq_pin + 1);
+-    s->irq = pci_allocate_irq(dev);
+-
+     if (s->masterbus) {
+         USBPort *ports[UHCI_PORTS];
+         for (i = 0; i < UHCI_PORTS; i++) {
+@@ -1212,25 +1206,17 @@ void usb_uhci_common_realize(PCIDevice *dev, Error **errp)
+                               USB_SPEED_MASK_LOW | USB_SPEED_MASK_FULL);
+         }
+     }
+-    s->bh = qemu_bh_new_guarded(uhci_bh, s, &DEVICE(dev)->mem_reentrancy_guard);
++    s->bh = qemu_bh_new_guarded(uhci_bh, s, &dev->mem_reentrancy_guard);
+     s->frame_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, uhci_frame_timer, s);
+     s->num_ports_vmstate = UHCI_PORTS;
+     QTAILQ_INIT(&s->queues);
+ 
+-    memory_region_init_io(&s->io_bar, OBJECT(s), &uhci_ioport_ops, s,
++    memory_region_init_io(&s->mem, OBJECT(s), &uhci_ioport_ops, s,
+                           "uhci", 0x20);
+-
+-    /*
+-     * Use region 4 for consistency with real hardware.  BSD guests seem
+-     * to rely on this.
+-     */
+-    pci_register_bar(&s->dev, 4, PCI_BASE_ADDRESS_SPACE_IO, &s->io_bar);
+ }
+ 
+-static void usb_uhci_exit(PCIDevice *dev)
++void usb_uhci_exit(UHCIState *s)
+ {
+-    UHCIState *s = UHCI(dev);
+-
+     trace_usb_uhci_exit();
+ 
+     if (s->frame_timer) {
+@@ -1248,144 +1234,3 @@ static void usb_uhci_exit(PCIDevice *dev)
+         usb_bus_release(&s->bus);
+     }
+ }
+-
+-static Property uhci_properties_companion[] = {
+-    DEFINE_PROP_STRING("masterbus", UHCIState, masterbus),
+-    DEFINE_PROP_UINT32("firstport", UHCIState, firstport, 0),
+-    DEFINE_PROP_UINT32("bandwidth", UHCIState, frame_bandwidth, 1280),
+-    DEFINE_PROP_UINT32("maxframes", UHCIState, maxframes, 128),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-static Property uhci_properties_standalone[] = {
+-    DEFINE_PROP_UINT32("bandwidth", UHCIState, frame_bandwidth, 1280),
+-    DEFINE_PROP_UINT32("maxframes", UHCIState, maxframes, 128),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+-static void uhci_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+-
+-    k->class_id  = PCI_CLASS_SERIAL_USB;
+-    dc->vmsd = &vmstate_uhci;
+-    device_class_set_legacy_reset(dc, uhci_reset);
+-    set_bit(DEVICE_CATEGORY_USB, dc->categories);
+-}
+-
+-static const TypeInfo uhci_pci_type_info = {
+-    .name = TYPE_UHCI,
+-    .parent = TYPE_PCI_DEVICE,
+-    .instance_size = sizeof(UHCIState),
+-    .class_size    = sizeof(UHCIPCIDeviceClass),
+-    .abstract = true,
+-    .class_init = uhci_class_init,
+-    .interfaces = (InterfaceInfo[]) {
+-        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+-        { },
+-    },
+-};
+-
+-void uhci_data_class_init(ObjectClass *klass, void *data)
+-{
+-    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-    UHCIPCIDeviceClass *u = UHCI_CLASS(klass);
+-    UHCIInfo *info = data;
+-
+-    k->realize = info->realize ? info->realize : usb_uhci_common_realize;
+-    k->exit = info->unplug ? usb_uhci_exit : NULL;
+-    k->vendor_id = info->vendor_id;
+-    k->device_id = info->device_id;
+-    k->revision  = info->revision;
+-    if (!info->unplug) {
+-        /* uhci controllers in companion setups can't be hotplugged */
+-        dc->hotpluggable = false;
+-        device_class_set_props(dc, uhci_properties_companion);
+-    } else {
+-        device_class_set_props(dc, uhci_properties_standalone);
+-    }
+-    if (info->notuser) {
+-        dc->user_creatable = false;
+-    }
+-    u->info = *info;
+-}
+-
+-static UHCIInfo uhci_info[] = {
+-    {
+-        .name      = TYPE_PIIX3_USB_UHCI,
+-        .vendor_id = PCI_VENDOR_ID_INTEL,
+-        .device_id = PCI_DEVICE_ID_INTEL_82371SB_2,
+-        .revision  = 0x01,
+-        .irq_pin   = 3,
+-        .unplug    = true,
+-    },{
+-        .name      = TYPE_PIIX4_USB_UHCI,
+-        .vendor_id = PCI_VENDOR_ID_INTEL,
+-        .device_id = PCI_DEVICE_ID_INTEL_82371AB_2,
+-        .revision  = 0x01,
+-        .irq_pin   = 3,
+-        .unplug    = true,
+-    },{
+-        .name      = TYPE_ICH9_USB_UHCI(1), /* 00:1d.0 */
+-        .vendor_id = PCI_VENDOR_ID_INTEL,
+-        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI1,
+-        .revision  = 0x03,
+-        .irq_pin   = 0,
+-        .unplug    = false,
+-    },{
+-        .name      = TYPE_ICH9_USB_UHCI(2), /* 00:1d.1 */
+-        .vendor_id = PCI_VENDOR_ID_INTEL,
+-        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI2,
+-        .revision  = 0x03,
+-        .irq_pin   = 1,
+-        .unplug    = false,
+-    },{
+-        .name      = TYPE_ICH9_USB_UHCI(3), /* 00:1d.2 */
+-        .vendor_id = PCI_VENDOR_ID_INTEL,
+-        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI3,
+-        .revision  = 0x03,
+-        .irq_pin   = 2,
+-        .unplug    = false,
+-    },{
+-        .name      = TYPE_ICH9_USB_UHCI(4), /* 00:1a.0 */
+-        .vendor_id = PCI_VENDOR_ID_INTEL,
+-        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI4,
+-        .revision  = 0x03,
+-        .irq_pin   = 0,
+-        .unplug    = false,
+-    },{
+-        .name      = TYPE_ICH9_USB_UHCI(5), /* 00:1a.1 */
+-        .vendor_id = PCI_VENDOR_ID_INTEL,
+-        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI5,
+-        .revision  = 0x03,
+-        .irq_pin   = 1,
+-        .unplug    = false,
+-    },{
+-        .name      = TYPE_ICH9_USB_UHCI(6), /* 00:1a.2 */
+-        .vendor_id = PCI_VENDOR_ID_INTEL,
+-        .device_id = PCI_DEVICE_ID_INTEL_82801I_UHCI6,
+-        .revision  = 0x03,
+-        .irq_pin   = 2,
+-        .unplug    = false,
+-    }
+-};
+-
+-static void uhci_register_types(void)
+-{
+-    TypeInfo uhci_type_info = {
+-        .parent        = TYPE_UHCI,
+-        .class_init    = uhci_data_class_init,
+-    };
+-    int i;
+-
+-    type_register_static(&uhci_pci_type_info);
+-
+-    for (i = 0; i < ARRAY_SIZE(uhci_info); i++) {
+-        uhci_type_info.name = uhci_info[i].name;
+-        uhci_type_info.class_data = uhci_info + i;
+-        type_register(&uhci_type_info);
+-    }
+-}
+-
+-type_init(uhci_register_types)
+diff --git a/hw/usb/hcd-uhci.h b/hw/usb/hcd-uhci.h
+index 6d26b94e92..1ffa93f703 100644
+--- a/hw/usb/hcd-uhci.h
++++ b/hw/usb/hcd-uhci.h
+@@ -32,6 +32,7 @@
+ #include "qemu/timer.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/usb.h"
++#include "hw/sysbus.h"
+ 
+ typedef struct UHCIQueue UHCIQueue;
+ 
+@@ -42,9 +43,12 @@ typedef struct UHCIPort {
+     uint16_t ctrl;
+ } UHCIPort;
+ 
+-typedef struct UHCIState {
+-    PCIDevice dev;
+-    MemoryRegion io_bar;
++typedef struct UHCIState UHCIState;
++
++struct UHCIState {
++    MemoryRegion mem;
++    AddressSpace *as;
++    void (*uhci_reset)(UHCIState *);
+     USBBus bus; /* Note unused when we're a companion controller */
+     uint16_t cmd; /* cmd register */
+     uint16_t status;
+@@ -72,24 +76,18 @@ typedef struct UHCIState {
+     char *masterbus;
+     uint32_t firstport;
+     uint32_t maxframes;
+-} UHCIState;
++};
+ 
+-#define TYPE_UHCI "pci-uhci-usb"
+-OBJECT_DECLARE_TYPE(UHCIState, UHCIPCIDeviceClass, UHCI)
++#define TYPE_UHCI "uhci-usb"
++OBJECT_DECLARE_TYPE(UHCIState, UHCIDeviceClass, UHCI)
+ 
+-typedef struct UHCIInfo {
+-    const char *name;
+-    uint16_t   vendor_id;
+-    uint16_t   device_id;
+-    uint8_t    revision;
+-    uint8_t    irq_pin;
+-    void       (*realize)(PCIDevice *dev, Error **errp);
+-    bool       unplug;
+-    bool       notuser; /* disallow user_creatable */
+-} UHCIInfo;
++extern const VMStateDescription vmstate_uhci_state;
+ 
+ void uhci_data_class_init(ObjectClass *klass, void *data);
+ void usb_uhci_common_realize(PCIDevice *dev, Error **errp);
++void usb_uhci_init(UHCIState *s, DeviceState *dev, Error **errp);
++void uhci_state_reset(UHCIState *s);
++void usb_uhci_exit(UHCIState *s);
+ 
+ #define TYPE_PIIX3_USB_UHCI "piix3-usb-uhci"
+ #define TYPE_PIIX4_USB_UHCI "piix4-usb-uhci"
+diff --git a/hw/usb/meson.build b/hw/usb/meson.build
+index 1b4d1507e4..dc36e2d490 100644
+--- a/hw/usb/meson.build
++++ b/hw/usb/meson.build
+@@ -13,6 +13,7 @@ system_ss.add(when: 'CONFIG_USB', if_true: files(
+ 
+ # usb host adapters
+ system_ss.add(when: 'CONFIG_USB_UHCI', if_true: files('hcd-uhci.c'))
++system_ss.add(when: 'CONFIG_USB_UHCI_PCI', if_true: files('hcd-uhci-pci.c'))
+ system_ss.add(when: 'CONFIG_USB_OHCI', if_true: files('hcd-ohci.c'))
+ system_ss.add(when: 'CONFIG_USB_OHCI_PCI', if_true: files('hcd-ohci-pci.c'))
+ system_ss.add(when: 'CONFIG_USB_OHCI_SYSBUS', if_true: files('hcd-ohci-sysbus.c'))
+diff --git a/hw/usb/vt82c686-uhci-pci.c b/hw/usb/vt82c686-uhci-pci.c
+index 6162806172..fe757c59dd 100644
+--- a/hw/usb/vt82c686-uhci-pci.c
++++ b/hw/usb/vt82c686-uhci-pci.c
+@@ -1,17 +1,17 @@
+ #include "qemu/osdep.h"
+ #include "hw/irq.h"
+ #include "hw/isa/vt82c686.h"
+-#include "hcd-uhci.h"
++#include "hcd-uhci-pci.h"
+ 
+ static void uhci_isa_set_irq(void *opaque, int irq_num, int level)
+ {
+-    UHCIState *s = opaque;
++    UHCIPCIState *s = opaque;
+     via_isa_set_irq(&s->dev, 0, level);
+ }
+ 
+ static void usb_uhci_vt82c686b_realize(PCIDevice *dev, Error **errp)
+ {
+-    UHCIState *s = UHCI(dev);
++    UHCIPCIState *s = UHCI_PCI(dev);
+     uint8_t *pci_conf = s->dev.config;
+ 
+     /* USB misc control 1/2 */
+@@ -21,12 +21,12 @@ static void usb_uhci_vt82c686b_realize(PCIDevice *dev, Error **errp)
+     /* USB legacy support  */
+     pci_set_long(pci_conf + 0xc0, 0x00002000);
+ 
+-    usb_uhci_common_realize(dev, errp);
+-    object_unref(s->irq);
+-    s->irq = qemu_allocate_irq(uhci_isa_set_irq, s, 0);
++    usb_uhci_common_realize_pci(dev, errp);
++    object_unref(s->state.irq);
++    s->state.irq = qemu_allocate_irq(uhci_isa_set_irq, s, 0);
+ }
+ 
+-static UHCIInfo uhci_info[] = {
++static UHCIPCIInfo uhci_info[] = {
+     {
+         .name      = TYPE_VT82C686B_USB_UHCI,
+         .vendor_id = PCI_VENDOR_ID_VIA,
+@@ -41,9 +41,9 @@ static UHCIInfo uhci_info[] = {
+ };
+ 
+ static const TypeInfo vt82c686b_usb_uhci_type_info = {
+-    .parent         = TYPE_UHCI,
++    .parent         = TYPE_UHCI_PCI,
+     .name           = TYPE_VT82C686B_USB_UHCI,
+-    .class_init     = uhci_data_class_init,
++    .class_init     = uhci_pci_data_class_init,
+     .class_data     = uhci_info,
+ };
+ 
+diff --git a/include/hw/southbridge/piix.h b/include/hw/southbridge/piix.h
+index 86709ba2e4..ceb05548fe 100644
+--- a/include/hw/southbridge/piix.h
++++ b/include/hw/southbridge/piix.h
+@@ -16,7 +16,7 @@
+ #include "hw/acpi/piix4.h"
+ #include "hw/ide/pci.h"
+ #include "hw/rtc/mc146818rtc.h"
+-#include "hw/usb/hcd-uhci.h"
++#include "hw/usb/hcd-uhci-pci.h"
+ 
+ /* PIRQRC[A:D]: PIRQx Route Control Registers */
+ #define PIIX_PIRQCA 0x60
+@@ -57,7 +57,7 @@ struct PIIXState {
+ 
+     MC146818RtcState rtc;
+     PCIIDEState ide;
+-    UHCIState uhci;
++    UHCIPCIState uhci;
+     PIIX4PMState pm;
+ 
+     uint32_t smb_io_base;
 -- 
-2.43.0
+2.45.2
 
 
