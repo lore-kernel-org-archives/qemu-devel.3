@@ -4,71 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF97D42B86
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 14:14:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA0DD42B88
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 14:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tArdO-0003PK-75; Tue, 12 Nov 2024 09:12:46 -0500
+	id 1tArss-0005fr-UD; Tue, 12 Nov 2024 09:28:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tArdI-0003OE-Be
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 09:12:41 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1tArsp-0005fa-U7
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 09:28:43 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tArdG-0005dV-T3
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 09:12:40 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-7240fa50694so4281338b3a.1
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 06:12:37 -0800 (PST)
+ id 1tArsm-0007bU-Ew
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 09:28:42 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20ce65c8e13so63031205ad.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 06:28:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731420756; x=1732025556; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=JM+EJG8uPTvGoZU+1TdInhch32L1euUCIAwGo1PQ03s=;
- b=hlxBDVAUMATdgV29hKbC8bP63uChJpfylgxLcZeZR1pdU6/hxiP37TAmgaSCU4lLlI
- LqJGWBt4KUishV9xfJnkZm2ncpYVhfqCCuJ4xdZ6gM1ZfhEa6MJagkaKR8U15I3G2ifT
- Ct+EfakZJOUVcJzuhCRctWcyGTfQhDVV2PM5pEV9nSTLK5IXvKqpA7Au0MkbkxznUwLs
- Dx6SgxfXxWO5qoYcHvON0Dh6vw45rVEKTCA7yk6qr3YZXnxQmWIRT+/y3A4EZNLo4BMv
- QAOUamuqf33m32XAg/asnHImpUOL5BVjR0OzDYYqbskwsPriPKPvcYwTySqJZZKysjrK
- RS3w==
+ d=linaro.org; s=google; t=1731421718; x=1732026518; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=yQcDI8fUgXMRlsPAUnoF2lGP3I11kFSL55yqcOC+SCI=;
+ b=xxcZ8KJX3Kh34PjAY1gjUR1vVCWold7EUacWRvF4TqihYxftEGz5bS0J7l2kIGyU22
+ 6foKPgNruI8Y7LOyl8Dy49KywDeHGYclMJFbvZ0bioITUk0cKtURIbHWLKAzeYtXpVZS
+ iGJ8XRMMCu+SKCeq3GSAu2pyOigYjgChKSiTnzQQ9sqTfie8M6nh34ejvV6Jxjf39qoG
+ Yq2k9MfPDiRfW5O2+tPURhoRoACqKGDiwGGpi+QIlDJtiZZte+bMGK60xe7fUTjo5eXN
+ NC+CPEIJ7NdfuBYWD3uNAWOkmxC2SXcLzHteN/WJcMXEi8aWmBzK+af6JwSwzu9cX+/E
+ M5iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731420756; x=1732025556;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JM+EJG8uPTvGoZU+1TdInhch32L1euUCIAwGo1PQ03s=;
- b=ejnBFEXC0QV3PqvgWHwp+yfbUGS6NL27Z02StdrOJSZ0NuQOJdU48Ukrf0YYp6H/IO
- eRWBZgzbFW6UQY/NQlfkHUGpSB8y0S6RBAmnBNRK1h7hGOl4kh5FlaMD/XuDn5uYCCXf
- O6kL/8UmJXHLQMOzVg8x+MxemZOAHPeVSjiPLRC7cth+r9rHVa7t17rPnp4qsEZ8k4Ln
- G8hl+IOwdvRu6mj8QvYjxU/OcJBIaWQnAnKSoIg2WAlkd5rr1Y948W2PQQJois3lIZMn
- 1WWriZarWodTYpUS5XAW8s6h9IhWH2UVvDYRCuaTOZUB119aHjgDxVZW/ApGAjmvjQoS
- 21qA==
-X-Gm-Message-State: AOJu0YyYbwf35qT0Z861YrtHgbpx35dAJeCGJ41OcpzWKslmvCxuuIpR
- ZIRDFj3/swl9SZFR/8QkDrtKRyEcPkDRwRr2MnP0rWYkOS81BAs2dITnQT0QHsIwdOm871MG63C
- S
-X-Google-Smtp-Source: AGHT+IE5r3Sy2M4aTX4WFuIVEi/mlOCEgbi6QUGsOrdeC7Ix+KJvU+7zC9YUtfMyOQSfkpl3Sx+Qxw==
-X-Received: by 2002:a05:6a20:9f03:b0:1db:dafa:e9da with SMTP id
- adf61e73a8af0-1dc22a2670amr22189262637.27.1731420755869; 
- Tue, 12 Nov 2024 06:12:35 -0800 (PST)
-Received: from stoup.. (wsip-24-120-228-34.lv.lv.cox.net. [24.120.228.34])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724549a899csm335330b3a.115.2024.11.12.06.12.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 06:12:35 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH for-9.2] target/arm: Drop user-only special case in sve_stN_r
-Date: Tue, 12 Nov 2024 06:12:32 -0800
-Message-ID: <20241112141232.321354-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1731421718; x=1732026518;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yQcDI8fUgXMRlsPAUnoF2lGP3I11kFSL55yqcOC+SCI=;
+ b=cWqEzlEiMz0eYmgR4p4eJsAH4Lzws0Vkp8Jjuci6ADPEnrPfH8oLsRg/2ZL7WENNn+
+ PJctBASdnLXLDAWQ7s+4SXy5c4xgtO0qwGo61KdKdMYzpVIV2q7QFyJYV6VqPiwjA+NR
+ HX6lPnx+H3XxcYMYtIdfhgFzTeXiuBOFk8/BiWpn4pT0zK0un9yledTAuo5kT8L7DH0h
+ vI6ewUN5SR9Mef+qxY5Xpq2ZrVi3S5aZTkdRdsnBpMo6xoYKNe220OfTvSAziMNFPCzd
+ AEfORFRwMrWUL6RrCEHs7tuMA/HZ4FsHgMIkoxWkrxnQ121pFdaHObSassUDurQFNEvr
+ eNsg==
+X-Gm-Message-State: AOJu0YyI0Ddv/USsYB+vsuQSw0VwdCaMF0S8AZ6r7kHjyB42bIclrnAN
+ +kEtaAuUkwMowWBmA/VJG3OkCVqEcmy2fFNi240Xq3xhJJ58DnaiZ22NYO3Rh06uabw13kyfE1/
+ P
+X-Google-Smtp-Source: AGHT+IH9aUqGgXW1VNXnUZ1zjXaVZaW1OXk54Rz9q5VfqRJVwH0zlIYTzRW6vZzMDrra0KxqKZUWAA==
+X-Received: by 2002:a17:903:2287:b0:20c:c631:d81f with SMTP id
+ d9443c01a7336-21183524f65mr230736215ad.21.1731421718598; 
+ Tue, 12 Nov 2024 06:28:38 -0800 (PST)
+Received: from [192.168.52.227] (wsip-24-120-228-34.lv.lv.cox.net.
+ [24.120.228.34]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21177e5a040sm92127795ad.209.2024.11.12.06.28.37
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Nov 2024 06:28:38 -0800 (PST)
+Message-ID: <9132ecd1-a128-4ec8-86f1-b00b7f2b7338@linaro.org>
+Date: Tue, 12 Nov 2024 06:28:35 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] target/mips: Introduce decode tree bindings for
+ nanoMIPS ISA
+To: qemu-devel@nongnu.org
+References: <20241111224452.61276-1-philmd@linaro.org>
+ <20241111224452.61276-2-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241111224452.61276-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,37 +98,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This path is reachable with plugins enabled, and provoked
-with run-plugin-catch-syscalls-with-libinline.so.
+On 11/11/24 14:44, Philippe Mathieu-Daudé wrote:
+> From: Philippe Mathieu-Daudé<f4bug@amsat.org>
+> 
+> Introduce the nanoMIPS decodetree configs for the 16-bit
+> and 32-bit instructions.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<f4bug@amsat.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   target/mips/tcg/translate.h              |  2 ++
+>   target/mips/tcg/nanomips16.decode        |  8 ++++++++
+>   target/mips/tcg/nanomips32.decode        |  8 ++++++++
+>   target/mips/tcg/nanomips_translate.c     | 14 ++++++++++++++
+>   target/mips/tcg/nanomips_translate.c.inc |  7 +++++++
+>   target/mips/tcg/meson.build              |  3 +++
+>   6 files changed, 42 insertions(+)
+>   create mode 100644 target/mips/tcg/nanomips16.decode
+>   create mode 100644 target/mips/tcg/nanomips32.decode
+>   create mode 100644 target/mips/tcg/nanomips_translate.c
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/sve_helper.c | 4 ----
- 1 file changed, 4 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index f1ee0e060f..904296705c 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -6317,9 +6317,6 @@ void sve_stN_r(CPUARMState *env, uint64_t *vg, target_ulong addr,
- 
-     flags = info.page[0].flags | info.page[1].flags;
-     if (unlikely(flags != 0)) {
--#ifdef CONFIG_USER_ONLY
--        g_assert_not_reached();
--#else
-         /*
-          * At least one page includes MMIO.
-          * Any bus operation can fail with cpu_transaction_failed,
-@@ -6350,7 +6347,6 @@ void sve_stN_r(CPUARMState *env, uint64_t *vg, target_ulong addr,
-             } while (reg_off & 63);
-         } while (reg_off <= reg_last);
-         return;
--#endif
-     }
- 
-     mem_off = info.mem_off_first[0];
--- 
-2.43.0
-
+r~
 
