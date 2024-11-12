@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F4FD42B84
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 14:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20733D42B84
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 14:00:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tArQo-0006Ux-BN; Tue, 12 Nov 2024 08:59:46 -0500
+	id 1tArQn-0006SM-1U; Tue, 12 Nov 2024 08:59:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tArQm-0006SK-TG
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 08:59:44 -0500
-Received: from mail-io1-xd2b.google.com ([2607:f8b0:4864:20::d2b])
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tArQl-0006NF-89
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 08:59:43 -0500
+Received: from mail-io1-xd2a.google.com ([2607:f8b0:4864:20::d2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tArQl-00042K-8x
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 08:59:44 -0500
-Received: by mail-io1-xd2b.google.com with SMTP id
- ca18e2360f4ac-83ab21c26f1so219907939f.2
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 05:59:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tArQj-000426-OO
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 08:59:42 -0500
+Received: by mail-io1-xd2a.google.com with SMTP id
+ ca18e2360f4ac-83abf71f244so201798839f.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 05:59:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1731419975; x=1732024775; darn=nongnu.org;
+ d=chromium.org; s=google; t=1731419977; x=1732024777; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wQ0or+92eQIwyIqeAnu22dTpZHJuaX9S3qy+ardMUUs=;
- b=ey2yb/y+GRnp6ZtgU9cPNe1H/xQESU6jXqUc4spVvCpttY5+ums82TXJiZhqip3Ffu
- xiOsTjXV71wTsTh0Nt1eqYa/F/IZuoRskkRCl5m8mkvue88XAcjNmEb8s4hh+oVbddZe
- KwGKGkqja/l++V8y9KNgfE0Zz508tBBywJTg0=
+ bh=meZSkW/KpZC3yrnqAzdQzJHpxuq2GB8ec6FamATdohQ=;
+ b=SfMTuCFEKhGPwStkjR7MEeMtddQ5mA6Z4th8lpPLMDcK8yjaCtnBUEBR23y5refJ93
+ oksA7DhecmKsNOO9/QeUklUIARFVpZ1KUhKqBJM9BDcTPu0qp/QffmPX8L7LfpSyDQNf
+ Z/3aMFNU0ssj8P/qyN36xdnFZv1fVl84eHzM0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731419975; x=1732024775;
+ d=1e100.net; s=20230601; t=1731419977; x=1732024777;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wQ0or+92eQIwyIqeAnu22dTpZHJuaX9S3qy+ardMUUs=;
- b=wAx3sFDvVbyZdn2MLd1RqplufaByh+luJbYTG9Tz4A13a/x2SlViDziraCkxSggTYC
- OjCNTvW9MXyWig/i60pOx6/RwfqDoQtuGv/pgLiqgN7sCMQr3nlFgfiORubylsgyAqUs
- nEM8jGrgYVNSIHfzO/bSnpCxSHNhJRC+pkuqFmbujnNxd0DsC+S1ONrbJbAKr0wDIULS
- iXGKxjweSP/gKEJcIzHDpxEUA+72R6tFWrgkOl0o8JvpVAh6SvFIq/UJYu9ysz8NI5ma
- 5U4aP+4UKh0ehKUhQzulAMFxtq5+sAC8UDp4yX4WT2qagHpqSTARqc0nEXsnt6aSVUFz
- Vuhw==
+ bh=meZSkW/KpZC3yrnqAzdQzJHpxuq2GB8ec6FamATdohQ=;
+ b=DiG7nuo4iF3/Zv7J/VrxNpYwBmsQRCWGC/LyL546I962xBlFWkVcREcnlkZdaGhsuA
+ yi7x7N4KPYJu7i+nafxLXXceWVfUMSmFGthU+6o4LSpRsrAUhhAxKSzfvpE54SgzW89L
+ LXjqvcvASXJFTJUdz6Djq7OJUPIKqEvrxK9TMS1Tv9+M8+nLYQnheN7CttimjQcxlqqE
+ shKiB9Jmcjo839IEtQuoFY9uNwUApTTdVVmUuglSA9d7AUydJgE28n4pA0ysY+BSL809
+ 2k678+1DwBOUVZdYDuzRBM3LH+I4UZ4G986dCvadnzuRXSXffGqNfLjMkBCsfLBaVXa4
+ uskQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMlICEcoLVg0leBw1bRHo3ojyCVIsEZE2Ak2LGOrmsrX1r8TzbvQ60IkJztXKqk5Wio9Wfs5Cq9QV0@nongnu.org
-X-Gm-Message-State: AOJu0YysNT/8EZ+qlZLqZAfv2B8/6+XALdJI5zM2pWpIoNbwbiMWUHC+
- ioEigUQp1NrCDeY2Euj82zo81Z3J8tcQZDHDjqAKLQh1fQ9jyEmfPdQ95JARoQ==
-X-Google-Smtp-Source: AGHT+IFRbhsH3AjC0WgNlkAxNkftaUSmp70QM44N6E+zcwo2sbWOYoqBNr0YBpkJee5o8ETWAtybWQ==
-X-Received: by 2002:a05:6602:3c5:b0:83b:2da6:239a with SMTP id
- ca18e2360f4ac-83e432ae355mr281331239f.15.1731419974877; 
- Tue, 12 Nov 2024 05:59:34 -0800 (PST)
+ AJvYcCXxI8hJhBj08ezLiLjVlVn74M6UnDIvpEms8Y9mbruaTTQdG5AlShs0OSwycse3IkXL0g7r9xCExRnl@nongnu.org
+X-Gm-Message-State: AOJu0YyXCoE3o/s4FC8LCYaKDuiTsdH2FPUAK6R0Ab52K0WPUY9k+e8/
+ PU5F1mfXKlhWm+PN6INgYy/Sc8w1QDy13r8QYUb6a5S2UvGJRgJTtUlaIzAAJw==
+X-Google-Smtp-Source: AGHT+IGGnulNLd2O+ik74tJVc8S+m3d8DlVrueGb4U5VbLkVCda7IZb8VLCIneqkZOwTyIGB0IAFtw==
+X-Received: by 2002:a05:6602:29c7:b0:803:5e55:ecb2 with SMTP id
+ ca18e2360f4ac-83e03068fe6mr2057497739f.0.1731419977025; 
+ Tue, 12 Nov 2024 05:59:37 -0800 (PST)
 Received: from chromium.org (c-107-2-138-191.hsd1.co.comcast.net.
  [107.2.138.191]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-83e132c01besm189203039f.30.2024.11.12.05.59.32
+ ca18e2360f4ac-83e132c01besm189203039f.30.2024.11.12.05.59.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 05:59:33 -0800 (PST)
+ Tue, 12 Nov 2024 05:59:35 -0800 (PST)
 From: Simon Glass <sjg@chromium.org>
 To: U-Boot Mailing List <u-boot@lists.denx.de>
 Cc: Bin Meng <bmeng.cn@gmail.com>, Simon Glass <sjg@chromium.org>,
  Tom Rini <trini@konsulko.com>, qemu-devel@nongnu.org
-Subject: [PATCH 03/18] RFC: x86: qemu: Switch to bochs display
-Date: Tue, 12 Nov 2024 06:58:56 -0700
-Message-Id: <20241112135911.630586-4-sjg@chromium.org>
+Subject: [PATCH 04/18] x86: qemu: Enable dhrystone
+Date: Tue, 12 Nov 2024 06:58:57 -0700
+Message-Id: <20241112135911.630586-5-sjg@chromium.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241112135911.630586-1-sjg@chromium.org>
 References: <20241112135911.630586-1-sjg@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2b;
- envelope-from=sjg@chromium.org; helo=mail-io1-xd2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2a;
+ envelope-from=sjg@chromium.org; helo=mail-io1-xd2a.google.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -91,55 +91,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The vesa display is widely used on hardware, but it is a bit of a pain
-with QEMU. It requires executing option ROMs, which either doesn't work
-with kvm, or is difficult to do in a kvm/QEMU-friendly way.
-
-THe bochs display is probably better anyway, so switch to that. It works
-fine with kvm as it doesn't need an option ROM.
-
-Unfortunately this causes the Ubuntu 22.04 installer to stop booting,
-which needs further investigation
+Provide the 'dhry' command, which helps to check that kvm is being used
+properly with QEMU.
 
 Signed-off-by: Simon Glass <sjg@chromium.org>
-Fixes: https://source.denx.de/u-boot/custodians/u-boot-dm/-/issues/31
 ---
 
- configs/qemu-x86_64_defconfig | 5 ++---
- configs/qemu-x86_defconfig    | 5 ++---
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ configs/qemu-x86_64_defconfig | 1 +
+ configs/qemu-x86_defconfig    | 1 +
+ 2 files changed, 2 insertions(+)
 
 diff --git a/configs/qemu-x86_64_defconfig b/configs/qemu-x86_64_defconfig
-index 218c3535d15..1670c122002 100644
+index 1670c122002..151c5f3e0e7 100644
 --- a/configs/qemu-x86_64_defconfig
 +++ b/configs/qemu-x86_64_defconfig
-@@ -81,9 +81,8 @@ CONFIG_SYS_NS16550_PORT_MAPPED=y
- CONFIG_SPI=y
- CONFIG_USB_KEYBOARD=y
- CONFIG_CONSOLE_TRUETYPE=y
--CONFIG_FRAMEBUFFER_SET_VESA_MODE=y
--CONFIG_FRAMEBUFFER_VESA_MODE_USER=y
--CONFIG_FRAMEBUFFER_VESA_MODE=0x144
-+CONFIG_VIDEO_BOCHS=y
-+# CONFIG_VIDEO_VESA is not set
- CONFIG_CONSOLE_SCROLL_LINES=5
+@@ -87,4 +87,5 @@ CONFIG_CONSOLE_SCROLL_LINES=5
  CONFIG_SPL_VIDEO=y
  # CONFIG_SPL_USE_TINY_PRINTF is not set
+ CONFIG_GENERATE_ACPI_TABLE=y
++CONFIG_CMD_DHRYSTONE=y
+ # CONFIG_GZIP is not set
 diff --git a/configs/qemu-x86_defconfig b/configs/qemu-x86_defconfig
-index 947d15cd727..40c2f1cd362 100644
+index 40c2f1cd362..5c5cacd734c 100644
 --- a/configs/qemu-x86_defconfig
 +++ b/configs/qemu-x86_defconfig
-@@ -58,9 +58,8 @@ CONFIG_SYS_NS16550_PORT_MAPPED=y
- CONFIG_SPI=y
- CONFIG_USB_KEYBOARD=y
- CONFIG_CONSOLE_TRUETYPE=y
--CONFIG_FRAMEBUFFER_SET_VESA_MODE=y
--CONFIG_FRAMEBUFFER_VESA_MODE_USER=y
--CONFIG_FRAMEBUFFER_VESA_MODE=0x144
-+CONFIG_VIDEO_BOCHS=y
-+# CONFIG_VIDEO_VESA is not set
+@@ -62,4 +62,5 @@ CONFIG_VIDEO_BOCHS=y
+ # CONFIG_VIDEO_VESA is not set
  CONFIG_CONSOLE_SCROLL_LINES=5
  CONFIG_GENERATE_ACPI_TABLE=y
++CONFIG_CMD_DHRYSTONE=y
  # CONFIG_GZIP is not set
 -- 
 2.34.1
