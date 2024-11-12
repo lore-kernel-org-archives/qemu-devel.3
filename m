@@ -4,143 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107C7D597B4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 23:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5B77D597B7
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 23:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAzrj-0004Mm-Vd; Tue, 12 Nov 2024 18:00:07 -0500
+	id 1tB0Xr-0003B7-JQ; Tue, 12 Nov 2024 18:43:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tAzrh-0004MV-SR; Tue, 12 Nov 2024 18:00:06 -0500
-Received: from mail-co1nam11on2061d.outbound.protection.outlook.com
- ([2a01:111:f403:2416::61d]
- helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tB0Xp-0003Aj-RJ
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 18:43:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tAzrf-0004zQ-NK; Tue, 12 Nov 2024 18:00:05 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DHBv4F8P5hlcLfR/Vi7IsnpCWgQ8GLq6Y3KKTQJClFk2UmNCIm/hdV5xyGHZ6XweK4i8JaCcMQWd5hQptEQJTQUP/wvJmKbLxwFme1/FU0B3DnF1S39SRJpRgJaBXRYrArOt6avqIzbuXCvsdAl/zM5lnWuq1JhjIiVpM7hPYSrMB7HuK56mjev4YU9hEbiTRJ37ens7waWwP0tytt3s4RnWGHyJ0PHbXEA2ca56AQN1PYkYiH2Pp4j4eBi05ZTh8/Bu+9PXaj/gNmuop2N3otdE0M+7459pHFrRtX7109yV2aLB+bZ7oouGQDihO3GgCjkbP8JMb+QUxl5c3fwDsg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RF0cHfv2VK7u7WPzBNwCludU8QPbwEbXS09y9fISMTU=;
- b=MisfKtl/p3KyLqJMuJiw8m5Zou9xTkrFQpBk3iIobCL6AXZ7jbyV79GdSxO6WlyGcHTbRq4oaCWoyM3cqOPRDvLblTX4qPGVYeM780azUlbGCrcat5cGK8vHjJfZtJ5OvR4J1Z99dZ/HHIyQHGZkLvnUUTLZsIzh3Py99zUb6u2PqPkd1hbXLr3XWnFzBADO+oSomvzvDvCLVbhT3BaJEIO4JrN47n0Da60PTdX/5HxcEmK+oyf93cBysB3TdqXVH3fUWCBmEtelqH0JOHVH77vDmM92+/1YUvOwYytUlgI5S0ht8xllsBqCXlZXU92LzCUtaQbG26H32yD9YtcbaQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RF0cHfv2VK7u7WPzBNwCludU8QPbwEbXS09y9fISMTU=;
- b=dCEGn4+GjwYPosCcJ9K9eZazc9TAP5bZCZuN56oFneNiie5QzhXkc4kzP94wi8dgTQpVFO7kNlzduMzNUoA/vWpr84ii+mAnscveb2oD8eoU1BDv9eeuXHkQ1gAjxtC0k/tkZ2KA0/MNfkfdgMlxkz4nVKW7cAjp9fIBfaA1nxgm7fDl0ITvKRQPWsR+z1tM+TtLDy6HCDg+iOgiUqSqiEGY0JItpJKDBm/boIlnZAmD0pHyRrlXvOGW6MFqWeYbuOtE/QTbns3+Jv+nA+5rDHwN7kcNnedIZ7R0qfqHk0jlO2lRGoeIks0JvXjikHzniSYAgSBtjEJo105mk5pOQA==
-Received: from BYAPR11CA0053.namprd11.prod.outlook.com (2603:10b6:a03:80::30)
- by CY8PR12MB8314.namprd12.prod.outlook.com (2603:10b6:930:7b::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.29; Tue, 12 Nov
- 2024 22:59:56 +0000
-Received: from CO1PEPF000044F4.namprd05.prod.outlook.com
- (2603:10b6:a03:80:cafe::39) by BYAPR11CA0053.outlook.office365.com
- (2603:10b6:a03:80::30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.28 via Frontend
- Transport; Tue, 12 Nov 2024 22:59:55 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CO1PEPF000044F4.mail.protection.outlook.com (10.167.241.74) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8158.14 via Frontend Transport; Tue, 12 Nov 2024 22:59:54 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 12 Nov
- 2024 14:59:35 -0800
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 12 Nov
- 2024 14:59:35 -0800
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Tue, 12 Nov 2024 14:59:34 -0800
-Date: Tue, 12 Nov 2024 14:59:32 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <nathanc@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
- <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Message-ID: <ZzPd1F/UA2MKMbwl@Asurada-Nvidia>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tB0Xn-000108-Ri
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 18:43:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731455013;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i12siLNMw6OymdRUM8a3B/eVgL/7e/MH0JZhzjD0Veg=;
+ b=PMmqkrlx9yk5V++JUZjKT08TYRza3/Y+IlfZnVZlaYmuN/Gdxywlvj27r2tOldx1SNa7Xz
+ IxN8FgYmCBeYIyJfUHm9RGOoh3cQ8hFLknv3HTgcIwojdHkyUl1k0eFeCxZBK0w+A34Cq2
+ LKukrfMegAlIdaeNZ7XsRWfZmpU9P8g=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-690-dX64NDnSPwe6_dVITcf4Fw-1; Tue, 12 Nov 2024 18:43:29 -0500
+X-MC-Unique: dX64NDnSPwe6_dVITcf4Fw-1
+X-Mimecast-MFC-AGG-ID: dX64NDnSPwe6_dVITcf4Fw
+Received: by mail-io1-f70.google.com with SMTP id
+ ca18e2360f4ac-83aa8c7edb7so50769439f.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 15:43:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731455009; x=1732059809;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=i12siLNMw6OymdRUM8a3B/eVgL/7e/MH0JZhzjD0Veg=;
+ b=uBHAmqf13Wjx5EZvebDZCVIFMWragAZxlfnMYggeYH2HOGAZdgna5cnHK1zuD+TSB1
+ S1fAOMwwzi8JieBVmv0KIPk5tm17oSQ62B9ECAn2L+479iWaN8OWCK4Bnesk/H1oTV5t
+ dWAoPNs0FM6oujUgotpInPdOJ5jFCib0jxB3Wqj0Oy6uvqWQ/LtMqpitmDJyFsGJo0Ag
+ QUyWr5ZBw7pXxQGaVFhIQ/J5KW78zV2377GitNd6aMTIyAzODrn/1AYBmMc24mGevaCT
+ tmqaoE7iLgJn2hjMHnFwq2EZKMmeDPCIsXm55sLgyB/mWT0aCLBL+zHIbOXjVLUHOMWg
+ KV6w==
+X-Gm-Message-State: AOJu0YyVz3Zzo+X3hLqZ5yx++ybr6huvD0Z9alveVORmvevpcS1g2uA7
+ 8OIBzgHgK5cfWS6YMnUt1WOC+At0Mzmsf2e64wdNj6KLfMBqnVKS+bcDvM7LELZD5T2fj+2dwbm
+ QfEMKJ97SYj4SjU2KzNKhejWTfOLLs+Pn0wWbfr9YVCg8yaRmOkiR1fqp+C5p
+X-Received: by 2002:a05:6602:29c7:b0:83a:addb:7196 with SMTP id
+ ca18e2360f4ac-83e03290109mr570324439f.1.1731455008771; 
+ Tue, 12 Nov 2024 15:43:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHFKxmegMhj8ugB6CShW7DLdidA/n6evAUaBBDBHO6CoR7lQ/N0fHeraIZVHIkygE0CM5VZEA==
+X-Received: by 2002:a05:6602:29c7:b0:83a:addb:7196 with SMTP id
+ ca18e2360f4ac-83e03290109mr570323639f.1.1731455008334; 
+ Tue, 12 Nov 2024 15:43:28 -0800 (PST)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ ca18e2360f4ac-83e135583d2sm229422039f.46.2024.11.12.15.43.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Nov 2024 15:43:27 -0800 (PST)
+Date: Tue, 12 Nov 2024 16:43:26 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Juan Pablo Ruiz <jpruiz84@gmail.com>
+Cc: qemu-devel@nongnu.org, Juan Pablo Ruiz <juanpablo.ruiz@unikie.com>,
+ Auger Eric <eric.auger@redhat.com>, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
+ <clg@redhat.com>
+Subject: Re: [PATCH 1/1] vfio/platform: Add mmio-base property to define
+ start address for MMIO mapping
+Message-ID: <20241112164326.562406a9.alex.williamson@redhat.com>
+In-Reply-To: <20241112220212.2237-1-juanpablo.ruiz@unikie.com>
+References: <20241112220212.2237-1-juanpablo.ruiz@unikie.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000044F4:EE_|CY8PR12MB8314:EE_
-X-MS-Office365-Filtering-Correlation-Id: f3b05c77-bb19-4fcf-86f9-08dd036db923
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|36860700013|82310400026|1800799024|7416014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?5rJWHo86e3Sd3O2HJ7YoZUc8Ku0W4saCqjnqRwjoLdHraZ1H6yREEr6gFTyD?=
- =?us-ascii?Q?saF8ahRCV14rVzJPf/w+obAroXAR6VwGCMl8eE9AERGxwy2aoLgUBIw80l4k?=
- =?us-ascii?Q?uVwhUIeBJR6jG7Z9hGt8PmNkFoBKNwCj3ZLp4pVxwD/I4oEosWUwuiAxe6Af?=
- =?us-ascii?Q?fzaB24dOLwhRxBqAKqmvjCHuICavBN97+L1bKbfmj20NG3NZGktG1dN0tq4A?=
- =?us-ascii?Q?55KF5xJBJ3ilhfrGFBcZs2fECDIaACP4hVtu2CzeTKtOm1D7+uZJWapgepdU?=
- =?us-ascii?Q?NKmfLz1qeCJP6nrq2Wcd1p2WYKiaO8f+sdFWIRHzu0bhGD6q96Z96aFCzyIK?=
- =?us-ascii?Q?xGfJ4otp5r+cbMiJCTmEaaOAwkG9/fhsFRry61eB25xmv69rb0smqsCzpAXg?=
- =?us-ascii?Q?G/U/IV8jnf0ZYn48Dp183EBv5d3fZdU2IBHC7SdoRhr/X8blX6fVmJnQlN4f?=
- =?us-ascii?Q?ygc8XHhMqjqZ5L2uaNcPg3tgexo0S2Zn/4dnO4CHEcfC45xVPKiZ2XJoDRIq?=
- =?us-ascii?Q?Lk3H8MbzRrlQamfMop6S3URm+hFAazRI228vTcNBbrb5sKDTIxW7bdLPwTg5?=
- =?us-ascii?Q?cpUQ3CBXqVx0NRrw/gmkH9quob5ShpzjyHznr0J0717YHhGpghdmGDv4i5lJ?=
- =?us-ascii?Q?DQmU/SHTO95OpuX8AxHKRpSZKDfN9fwlKp28KM/h9Y29bbULGtHwF1shQwa+?=
- =?us-ascii?Q?Ly13kych4JPp34XRcH1ZN/tQlZJKTv5I6QiVC49T7OyXOTl+dP4Ldqtyze9R?=
- =?us-ascii?Q?UVcJ6wZNNuNzv56D3zuuIcrsOqvIp4ks4zewLAbXfVsUMD6n9XL1h0/67TgU?=
- =?us-ascii?Q?e4Y00pVavldUhNEeIoYAC7Zknyj3XNETJhsdJ42PvaGW1ndOGJE8R1biYpiB?=
- =?us-ascii?Q?LyQvlfQBek2hVDCUk60v78qnnvtAcrTgUFyBy02YVnBdCXct9kDjyPUQ94gq?=
- =?us-ascii?Q?Oe0PGhylMM/ljOpCm5/08olTm4XeBUndtOpGcEfa+viqWwPH/pfIMxgk4ggT?=
- =?us-ascii?Q?DlcRs8wJzUSI68AcL9caQFwncaPMCAVKCKWfxE2x50KR0RgZAzHpJ5MCZF2F?=
- =?us-ascii?Q?NKRJFNVmvislx/ihHGTFVE+bK4urNYZT9V9pAQzSlLQRx0Mc1QE9114Ht5zh?=
- =?us-ascii?Q?+ujTrTRzlc0z5OLGVBU1v3Eu7/yiCTTa0x6s85M6dc6qbipVddB9dKvvR02B?=
- =?us-ascii?Q?cID9AISLnPqBaweYJPMA1ZPz6rXBrzmi2dNCUYnY2Zg1MbGCPMIAWyr2U1ZG?=
- =?us-ascii?Q?p7lmVg6bhUFFjX9asgZwrp6KzMjOgndhGpyTofeQIgP+wptHWaZ1FF4O1vHC?=
- =?us-ascii?Q?RyOnFLxCPilhi4oH19QuS8y16rQmsupCbbjye/KWNwne2hk7JQo5oGdJdZE0?=
- =?us-ascii?Q?FJrCC9BvYsCZ3j1vpUrqizNjSTqe08SWHZd+rE+/6WRgZD86gA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(36860700013)(82310400026)(1800799024)(7416014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 22:59:54.7347 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f3b05c77-bb19-4fcf-86f9-08dd036db923
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044F4.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8314
-Received-SPF: softfail client-ip=2a01:111:f403:2416::61d;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,65 +106,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 08, 2024 at 12:52:37PM +0000, Shameer Kolothum wrote:
-> Few ToDos to note,
-> 1. At present default-bus-bypass-iommu=on should be set when
->    arm-smmuv3-nested dev is specified. Otherwise you may get an IORT
->    related boot error.  Requires fixing.
-> 2. Hot adding a device is not working at the moment. Looks like pcihp irq issue.
->    Could be a bug in IORT id mappings.
+On Tue, 12 Nov 2024 22:02:12 +0000
+Juan Pablo Ruiz <jpruiz84@gmail.com> wrote:
 
-Do we have enough bus number space for each pbx bus in IORT?
+> Some platform devices have large MMIO regions (e.g., GPU reserved memory). For
+> certain devices, it's preferable to have a 1:1 address translation in the VM to
+> avoid modifying driver source code.
 
-The bus range is defined by min_/max_bus in hort_host_bridges(),
-where the pci_bus_range() function call might not leave enough
-space in the range for hotplugs IIRC.
+Why do we need 1:1 mappings?  Shouldn't the device tree describe where
+the device lives in the VM address space and the driver should adapt
+rather than use hard coded addresses?
 
-> ./qemu-system-aarch64 -machine virt,gic-version=3,default-bus-bypass-iommu=on \
-> -enable-kvm -cpu host -m 4G -smp cpus=8,maxcpus=8 \
-> -object iommufd,id=iommufd0 \
-> -bios QEMU_EFI.fd \
-> -kernel Image \
-> -device virtio-blk-device,drive=fs \
-> -drive if=none,file=rootfs.qcow2,id=fs \
-> -device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
-> -device pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1 \
-> -device arm-smmuv3-nested,id=smmuv1,pci-bus=pcie.1 \
-> -device vfio-pci,host=0000:7d:02.1,bus=pcie.port1,iommufd=iommufd0 \
-> -device pxb-pcie,id=pcie.2,bus_nr=16,bus=pcie.0 \
-> -device pcie-root-port,id=pcie.port2,bus=pcie.2,chassis=2 \
-> -device arm-smmuv3-nested,id=smmuv2,pci-bus=pcie.2 \
-> -device vfio-pci,host=0000:75:00.1,bus=pcie.port2,iommufd=iommufd0 \
-> -append "rdinit=init console=ttyAMA0 root=/dev/vda2 rw earlycon=pl011,0x9000000" \
-> -device virtio-9p-pci,fsdev=p9fs2,mount_tag=p9,bus=pcie.0 \
-> -fsdev local,id=p9fs2,path=p9root,security_model=mapped \
-> -net none \
-> -nographic
-..
-> With a pci topology like below,
-> [root@localhost ~]# lspci -tv
-> -+-[0000:00]-+-00.0  Red Hat, Inc. QEMU PCIe Host bridge
->  |           +-01.0  Red Hat, Inc. QEMU PCIe Expander bridge
->  |           +-02.0  Red Hat, Inc. QEMU PCIe Expander bridge
->  |           \-03.0  Virtio: Virtio filesystem
->  +-[0000:08]---00.0-[09]----00.0  Huawei Technologies Co., Ltd. HNS Network Controller (Virtual Function)
->  \-[0000:10]---00.0-[11]----00.0  Huawei Technologies Co., Ltd. HiSilicon ZIP Engine(Virtual Function)
-> [root@localhost ~]#
+How does a user know which devices need fixed base addresses and what
+those addresses should be?
+
+> This patch:
+
+... should be split into at least 3 patches.
+
 > 
-> And if you want to add another HNS VF, it should be added to the same SMMUv3
-> as of the first HNS dev,
+> 1. Increases the VFIO platform bus size from 32MB to 130GB.
+
+That's a very strange and specific size.
+
+> 2. Changes the mmio_size property from 32 to 64 bits.
+> 3. Adds an mmio-base property to define the starting MMIO address for mapping
+>    the VFIO device.
 > 
-> -device pcie-root-port,id=pcie.port3,bus=pcie.1,chassis=3 \
-> -device vfio-pci,host=0000:7d:02.2,bus=pcie.port3,iommufd=iommufd0 \
-..
-> At present Qemu is not doing any extra validation other than the above
-> failure to make sure the user configuration is correct or not. The
-> assumption is libvirt will take care of this.
+> Signed-off-by: Juan Pablo Ruiz juanpablo.ruiz@unikie.com
+> ---
+>  hw/arm/virt.c                   |  6 +++---
+>  hw/core/platform-bus.c          | 28 ++++++++++++++++++++++++++--
+>  hw/vfio/platform.c              |  1 +
+>  include/hw/platform-bus.h       |  2 +-
+>  include/hw/vfio/vfio-platform.h |  1 +
+>  5 files changed, 32 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 1a381e9a2b..9fc8f4425a 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -183,13 +183,13 @@ static const MemMapEntry base_memmap[] = {
+>      [VIRT_SECURE_GPIO] =        { 0x090b0000, 0x00001000 },
+>      [VIRT_MMIO] =               { 0x0a000000, 0x00000200 },
+>      /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */
+> -    [VIRT_PLATFORM_BUS] =       { 0x0c000000, 0x02000000 },
+> +    [VIRT_PLATFORM_BUS] =       { 0x60000000, 0x1FC0000000 },          // 130048MB
+>      [VIRT_SECURE_MEM] =         { 0x0e000000, 0x01000000 },
+>      [VIRT_PCIE_MMIO] =          { 0x10000000, 0x2eff0000 },
+>      [VIRT_PCIE_PIO] =           { 0x3eff0000, 0x00010000 },
+>      [VIRT_PCIE_ECAM] =          { 0x3f000000, 0x01000000 },
+>      /* Actual RAM size depends on initial RAM and device memory settings */
+> -    [VIRT_MEM] =                { GiB, LEGACY_RAMLIMIT_BYTES },
+> +    [VIRT_MEM] =                { 0x2000000000, LEGACY_RAMLIMIT_BYTES },
+>  };
+>  
+>  /*
+> @@ -1625,7 +1625,7 @@ static void create_platform_bus(VirtMachineState *vms)
+>      dev = qdev_new(TYPE_PLATFORM_BUS_DEVICE);
+>      dev->id = g_strdup(TYPE_PLATFORM_BUS_DEVICE);
+>      qdev_prop_set_uint32(dev, "num_irqs", PLATFORM_BUS_NUM_IRQS);
+> -    qdev_prop_set_uint32(dev, "mmio_size", vms->memmap[VIRT_PLATFORM_BUS].size);
+> +    qdev_prop_set_uint64(dev, "mmio_size", vms->memmap[VIRT_PLATFORM_BUS].size);
+>      sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>      vms->platform_bus_dev = dev;
+>  
+> diff --git a/hw/core/platform-bus.c b/hw/core/platform-bus.c
+> index dc58bf505a..f545fab6e5 100644
+> --- a/hw/core/platform-bus.c
+> +++ b/hw/core/platform-bus.c
+> @@ -22,6 +22,7 @@
+>  #include "qemu/osdep.h"
+>  #include "hw/platform-bus.h"
+>  #include "hw/qdev-properties.h"
+> +#include "hw/vfio/vfio-platform.h"
+>  #include "qapi/error.h"
+>  #include "qemu/error-report.h"
+>  #include "qemu/module.h"
+> @@ -130,11 +131,29 @@ static void platform_bus_map_mmio(PlatformBusDevice *pbus, SysBusDevice *sbdev,
+>                                    int n)
+>  {
+>      MemoryRegion *sbdev_mr = sysbus_mmio_get_region(sbdev, n);
+> +    VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(sbdev);
 
-Nathan from NVIDIA side is working on the libvirt. And he already
-did some prototype coding in libvirt that could generate required
-PCI topology. I think he can take this patches for a combined test.
+How do you know it's a vfio-platform device?  This completely breaks
+device abstraction.  Thanks,
 
-Thanks
-Nicolin
+Alex
+
+>      uint64_t size = memory_region_size(sbdev_mr);
+>      uint64_t alignment = (1ULL << (63 - clz64(size + size - 1)));
+>      uint64_t off;
+> +    uint64_t mmio_base_off;
+>      bool found_region = false;
+>  
+> +    if (vdev->mmio_base) {
+> +        if(vdev->mmio_base < pbus->mmio.addr || 
+> +           vdev->mmio_base >= pbus->mmio.addr + pbus->mmio_size){
+> +            error_report("Platform Bus: MMIO base 0x%"PRIx64
+> +                " outside platform bus region [0x%"PRIx64",0x%"PRIx64"]",
+> +                vdev->mmio_base,
+> +                pbus->mmio.addr,
+> +                pbus->mmio.addr + pbus->mmio_size);
+> +            exit(1);
+> +        }
+> +        
+> +        mmio_base_off = vdev->mmio_base - pbus->mmio.addr;
+> +    } else {
+> +        mmio_base_off = 0;
+> +    }
+> +    
+>      if (memory_region_is_mapped(sbdev_mr)) {
+>          /* Region is already mapped, nothing to do */
+>          return;
+> @@ -144,7 +163,7 @@ static void platform_bus_map_mmio(PlatformBusDevice *pbus, SysBusDevice *sbdev,
+>       * Look for empty space in the MMIO space that is naturally aligned with
+>       * the target device's memory region
+>       */
+> -    for (off = 0; off < pbus->mmio_size; off += alignment) {
+> +    for (off = mmio_base_off; off < pbus->mmio_size; off += alignment) {
+>          MemoryRegion *mr = memory_region_find(&pbus->mmio, off, size).mr;
+>          if (!mr) {
+>              found_region = true;
+> @@ -154,6 +173,11 @@ static void platform_bus_map_mmio(PlatformBusDevice *pbus, SysBusDevice *sbdev,
+>          }
+>      }
+>  
+> +    if (vdev->mmio_base && vdev->mmio_base != off + pbus->mmio.addr) {
+> +        warn_report("Platform Bus: Not able to map in mmio base: 0x%"PRIx64, 
+> +            vdev->mmio_base);
+> +    }
+> +
+>      if (!found_region) {
+>          error_report("Platform Bus: Can not fit MMIO region of size %"PRIx64,
+>                       size);
+> @@ -206,7 +230,7 @@ static void platform_bus_realize(DeviceState *dev, Error **errp)
+>  
+>  static Property platform_bus_properties[] = {
+>      DEFINE_PROP_UINT32("num_irqs", PlatformBusDevice, num_irqs, 0),
+> -    DEFINE_PROP_UINT32("mmio_size", PlatformBusDevice, mmio_size, 0),
+> +    DEFINE_PROP_UINT64("mmio_size", PlatformBusDevice, mmio_size, 0),
+>      DEFINE_PROP_END_OF_LIST()
+>  };
+>  
+> diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+> index a85c199c76..cfac564093 100644
+> --- a/hw/vfio/platform.c
+> +++ b/hw/vfio/platform.c
+> @@ -640,6 +640,7 @@ static Property vfio_platform_dev_properties[] = {
+>      DEFINE_PROP_LINK("iommufd", VFIOPlatformDevice, vbasedev.iommufd,
+>                       TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
+>  #endif
+> +    DEFINE_PROP_UINT64("mmio-base", VFIOPlatformDevice, mmio_base, 0),
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+>  
+> diff --git a/include/hw/platform-bus.h b/include/hw/platform-bus.h
+> index 44f30c5353..4e9913a5d7 100644
+> --- a/include/hw/platform-bus.h
+> +++ b/include/hw/platform-bus.h
+> @@ -34,7 +34,7 @@ struct PlatformBusDevice {
+>      SysBusDevice parent_obj;
+>  
+>      /*< public >*/
+> -    uint32_t mmio_size;
+> +    uint64_t mmio_size;
+>      MemoryRegion mmio;
+>  
+>      uint32_t num_irqs;
+> diff --git a/include/hw/vfio/vfio-platform.h b/include/hw/vfio/vfio-platform.h
+> index c414c3dffc..90575b5852 100644
+> --- a/include/hw/vfio/vfio-platform.h
+> +++ b/include/hw/vfio/vfio-platform.h
+> @@ -59,6 +59,7 @@ struct VFIOPlatformDevice {
+>      uint32_t mmap_timeout; /* delay to re-enable mmaps after interrupt */
+>      QEMUTimer *mmap_timer; /* allows fast-path resume after IRQ hit */
+>      QemuMutex intp_mutex; /* protect the intp_list IRQ state */
+> +    uint64_t mmio_base; /* base address to start looking for mmio */
+>      bool irqfd_allowed; /* debug option to force irqfd on/off */
+>  };
+>  typedef struct VFIOPlatformDevice VFIOPlatformDevice;
+
 
