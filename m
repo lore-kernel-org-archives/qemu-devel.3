@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0376AD42BAA
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 16:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85C9AD42BB0
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 16:57:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAtrP-0007ew-61; Tue, 12 Nov 2024 11:35:23 -0500
+	id 1tAuC9-0003AB-8h; Tue, 12 Nov 2024 11:56:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tAtrM-0007ec-2Z
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 11:35:21 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1tAuC4-000372-3d; Tue, 12 Nov 2024 11:56:44 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tAtrJ-0006qJ-2I
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 11:35:19 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5cef772621eso7307943a12.3
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 08:35:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1tAuC2-0000ge-Gs; Tue, 12 Nov 2024 11:56:43 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-723db2798caso5980957b3a.0; 
+ Tue, 12 Nov 2024 08:56:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731429315; x=1732034115; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1731430600; x=1732035400; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mtv2v/FtQ0MJwY0Dq9yPPHWOTXHYS50EWcbqwJJAa8o=;
- b=RinffX8R9dVO1quz0sHo1hqGrywsPZIPdivAdW/HDBCj8QDGlxXhAp+ApZ2MzKqwAk
- AmAmAROvl+xPi5sbuibJ/3Cgcv1on12RHGT27nycuBE+rzNOpyngPqtL88fHrLIuKV5X
- RpW4PWRJDSuDVkIMtSANoo0sGWXr7gaoI2dhBaMsyNL1wiw23CvrIq0PbMSO4DeXhHWa
- Gbmkbpw1OmGgU3HTo7VLfQEt4pdeTCOFmVkpCSDNdoPN9+l22sy2BHZv12aI5Hrr9znn
- genTe0zc6nheSSkpAn0XcoEnVbBUurLgXfOZX9oF1ViGGBD5aNkktlSinoN5Xbje1vMy
- ZCbQ==
+ bh=46KVdS+/Hw1rTusRxdJmkbj33EFntnxAICo5vL0yryE=;
+ b=lUzmV3tWhfBuXFKD8E1AInd98yQZnrGxKCvV7H27MDlSfxprNd1yJ9el41hJqgfhlW
+ gGQ6fsy7VdabSLZWMsOBjv7TKRJBZ67FzHhvyUPFzQdKkj0an13kDaRu19ND1o8dMZff
+ jm1Ace3iZ1VVEjVtQ7cgo75tZgcADD7CRI6HThD6vPoVDMa3GQQIxqkFod3QDfZ6SEuW
+ 5bYQYxGmITWgfnw59MilRW8n1RmS3vJ8TmmAWXeDZjZ0chDQve/RHg/Xltbb7sleeluv
+ kaE03rpHfQURAnmNSorJ22KBKOPBB0GTWqAhk2PBhSGA+iMd6pXDU7ZSLtzZ3C76KOp8
+ T0rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731429315; x=1732034115;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1731430600; x=1732035400;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mtv2v/FtQ0MJwY0Dq9yPPHWOTXHYS50EWcbqwJJAa8o=;
- b=Nc/4O6LAJ192vh/0U0eCqH0q8IaiaYHW60KAyPZoQ357hbIBFQrYbhU5aR50a+TLoB
- pBkuCXNkd4L+WVNMUNVO6a1smUgdDqhYoUFntRNs1KjIUndfoPv9NdLTsIc9Jkv6xuiM
- 2p3/rcFtKbpHRF9Yvi254XVx0qfB0C70krpE8RVDsxemBuPlewQa8K9veENMfR/pyAdw
- HzYVnBISM34+kosK+KYh2ZxK5ibMt3VpwF+U4DDY+UFjCXwrisbMLPE0+tkpLqSmRFkS
- 6hN8GQuSVILGvDpnoW5lbaWrUKu4CME3bbJI7Io/rp+Rr0imGJ/UwwDayLYnq6Y5oNYy
- 3gkw==
+ bh=46KVdS+/Hw1rTusRxdJmkbj33EFntnxAICo5vL0yryE=;
+ b=MqNsLxUPQDvzYThEeSrjrUl9y0RWTruNXC2kIIzuF/zc7HUVZWqhaETSg5uDNBWtKR
+ KwoSbcspDyi1MILdDqtWNrLom/Wfu4patBcgk/tNjXoLhOlhyscDUyZbI6tZZgq5ltTL
+ ZT9ZCOAAFMzVdJsLgk5uhsJek3iEPWyxsxqh740FyjRGbYRJA+U5E9rxX1SQB9B3AHlE
+ Wn7v+3wNFZsjx3a8jaGdbCoxpXsgvIzDkYHHY73/BkZa2IkcMdaDc+zE/+4I9PzYiv+z
+ o0OFW6qxSURXiQOecfE2F81cM0WOR15VtUKFJVmSa7uXIu6mKzTanUMDVBsKCGiUDbhk
+ Z9dQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURlKCPwxVoKOc+teUEu0ycj6nl+lY3DwkyyZDXZclZfBMBljT5yJOYk6dn8ATFENercnJifg7Lgd8E@nongnu.org
-X-Gm-Message-State: AOJu0YwX8RtaRVgHMw+ToJG84dRPRukcLKeG2aetx5uAazgjY0+fOdCH
- +uDk8nH/IMNvDOBQ0q4VCRseKBISAwNna9P19GVgonY2rHkbErQJEnihcnsl+ac=
-X-Google-Smtp-Source: AGHT+IFW8v5HccavQj4jnFrf2XdDvfleEtnikWRGSvLyumIZ897lRap0dC8tqM71XOUzHsOvfVbcnw==
-X-Received: by 2002:a05:6402:d05:b0:5cb:b65d:2b6 with SMTP id
- 4fb4d7f45d1cf-5cf0a45e6abmr12643733a12.32.1731429314659; 
- Tue, 12 Nov 2024 08:35:14 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cf03b7eb16sm6174746a12.28.2024.11.12.08.35.13
+ AJvYcCUcrtlGRJa9f/3h0PYG1d8Qj9qqD7SxbHnMRIBExkFF85up1Qxt/tiap54HC2B1XsoXeSLX+f/0pQ==@nongnu.org
+X-Gm-Message-State: AOJu0YwaGBFy0kvGxmWzG628zqdkchA9FY07rhCDU6LWjYyw77P9ngW/
+ OSCumQmCU+SMjLbbRNSszbiGLjxWgJSOIfBM2+KIATospyNU+MJqbMIgZg==
+X-Google-Smtp-Source: AGHT+IHZJP0zR7RLPTaXh+SIHLjflp8ROaco6QV6KqtdTXb17C1NkFLZIsIPXdzJYaPQFtb6zbMoAw==
+X-Received: by 2002:a05:6a21:99a5:b0:1db:a33e:2c6 with SMTP id
+ adf61e73a8af0-1dc5f90a50fmr4599060637.18.1731430600288; 
+ Tue, 12 Nov 2024 08:56:40 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7240785f8c6sm11396917b3a.35.2024.11.12.08.56.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 08:35:14 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2709C5F7CB;
- Tue, 12 Nov 2024 16:35:12 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Patrick Leis <venture@google.com>,  laurent@vivier.eu,
- peter.maydell@linaro.org,  qemu-devel@nongnu.org,  Peter Foley
- <pefoley@google.com>
-Subject: Re: [PATCH] linux-user: Add missing mmap include
-In-Reply-To: <dab7363f-48b5-4f15-893d-1621ec9481eb@linaro.org> (Richard
- Henderson's message of "Tue, 12 Nov 2024 07:50:53 -0800")
-References: <20241028181821.1440988-1-venture@google.com>
- <dab7363f-48b5-4f15-893d-1621ec9481eb@linaro.org>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Tue, 12 Nov 2024 16:35:12 +0000
-Message-ID: <875xoswgu7.fsf@draig.linaro.org>
+ Tue, 12 Nov 2024 08:56:39 -0800 (PST)
+From: Guenter Roeck <linux@roeck-us.net>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, BALATON Zoltan <balaton@eik.bme.hu>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org, Guenter Roeck <linux@roeck-us.net>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 08/10] aspeed: Add uhci support for ast2400 and ast2500
+Date: Tue, 12 Nov 2024 08:56:17 -0800
+Message-ID: <20241112165618.217454-9-linux@roeck-us.net>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241112165618.217454-1-linux@roeck-us.net>
+References: <20241112165618.217454-1-linux@roeck-us.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,44 +107,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+Add UHCI support for ast2400 and ast2500 SoCs. With this patch,
+the UHCI port is successfully enabled on the ast2500-evb machine.
 
-> On 10/28/24 11:18, Patrick Leis wrote:
->> From: Peter Foley <pefoley@google.com>
->> error: use of undeclared identifier 'MAP_FIXED_NOREPLACE'
->> Signed-off-by: Patrick Leis <venture@google.com>
->> Signed-off-by: Peter Foley <pefoley@google.com>
->> ---
->>   linux-user/user-mmap.h | 2 ++
->>   1 file changed, 2 insertions(+)
->> diff --git a/linux-user/user-mmap.h b/linux-user/user-mmap.h
->> index b94bcdcf83..de769f9253 100644
->> --- a/linux-user/user-mmap.h
->> +++ b/linux-user/user-mmap.h
->> @@ -18,6 +18,8 @@
->>   #ifndef LINUX_USER_USER_MMAP_H
->>   #define LINUX_USER_USER_MMAP_H
->>   +#include "linux/mman.h"
->> +
->>   /*
->>    * Guest parameters for the ADDR_COMPAT_LAYOUT personality
->>    * (at present this is the only layout supported by QEMU).
->
-> In what context does this appear?
-> Both glibc and musl define this in <sys/mmap.h>.
+Note that the EHCI controller on AST2400 and AST2500 does not support
+companion mode, so the UHCI controller is instantiated as stand-alone
+device and creates an additional USB bus.
 
-I'm going to take a wild guess it's bionic:
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+---
+Changes since RFC:
+- Rebased to v9.1.0-1673-g134b443512
+- Added Reviewed-by: tag
+- Added explanation for not using EHCI companion mode
 
-=F0=9F=95=9916:33:53 alex@draig:bionic.git  on =EE=82=A0 main=20
-=E2=9E=9C  git grep MAP_FIXED_NOREPLACE
-libc/kernel/uapi/asm-generic/mman-common.h:#define MAP_FIXED_NOREPLACE 0x10=
-0000
+ hw/arm/aspeed_ast2400.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
->
->
-> r~
+diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
+index ecc81ecc79..8a5d21459d 100644
+--- a/hw/arm/aspeed_ast2400.c
++++ b/hw/arm/aspeed_ast2400.c
+@@ -31,6 +31,7 @@ static const hwaddr aspeed_soc_ast2400_memmap[] = {
+     [ASPEED_DEV_FMC]    = 0x1E620000,
+     [ASPEED_DEV_SPI1]   = 0x1E630000,
+     [ASPEED_DEV_EHCI1]  = 0x1E6A1000,
++    [ASPEED_DEV_UHCI]   = 0x1E6B0000,
+     [ASPEED_DEV_VIC]    = 0x1E6C0000,
+     [ASPEED_DEV_SDMC]   = 0x1E6E0000,
+     [ASPEED_DEV_SCU]    = 0x1E6E2000,
+@@ -68,6 +69,7 @@ static const hwaddr aspeed_soc_ast2500_memmap[] = {
+     [ASPEED_DEV_SPI2]   = 0x1E631000,
+     [ASPEED_DEV_EHCI1]  = 0x1E6A1000,
+     [ASPEED_DEV_EHCI2]  = 0x1E6A3000,
++    [ASPEED_DEV_UHCI]   = 0x1E6B0000,
+     [ASPEED_DEV_VIC]    = 0x1E6C0000,
+     [ASPEED_DEV_SDMC]   = 0x1E6E0000,
+     [ASPEED_DEV_SCU]    = 0x1E6E2000,
+@@ -107,6 +109,7 @@ static const int aspeed_soc_ast2400_irqmap[] = {
+     [ASPEED_DEV_FMC]    = 19,
+     [ASPEED_DEV_EHCI1]  = 5,
+     [ASPEED_DEV_EHCI2]  = 13,
++    [ASPEED_DEV_UHCI]   = 14,
+     [ASPEED_DEV_SDMC]   = 0,
+     [ASPEED_DEV_SCU]    = 21,
+     [ASPEED_DEV_ADC]    = 31,
+@@ -199,6 +202,8 @@ static void aspeed_ast2400_soc_init(Object *obj)
+                                 TYPE_PLATFORM_EHCI);
+     }
+ 
++    object_initialize_child(obj, "uhci", &s->uhci, TYPE_ASPEED_UHCI);
++
+     snprintf(typename, sizeof(typename), "aspeed.sdmc-%s", socname);
+     object_initialize_child(obj, "sdmc", &s->sdmc, typename);
+     object_property_add_alias(obj, "ram-size", OBJECT(&s->sdmc),
+@@ -393,6 +398,15 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
+                            aspeed_soc_get_irq(s, ASPEED_DEV_EHCI1 + i));
+     }
+ 
++    /* UHCI */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->uhci), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->uhci), 0,
++                    sc->memmap[ASPEED_DEV_UHCI]);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->uhci), 0,
++                       aspeed_soc_get_irq(s, ASPEED_DEV_UHCI));
++
+     /* SDMC - SDRAM Memory Controller */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
+         return;
+-- 
+2.45.2
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
