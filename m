@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21116D42BAF
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D0ED42BAF
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 17:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAuKm-00077H-Hb; Tue, 12 Nov 2024 12:05:47 -0500
+	id 1tAuKf-0006eC-5l; Tue, 12 Nov 2024 12:05:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tAuIf-0003fF-I4
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:33 -0500
+ id 1tAuIY-0003Uf-Bb
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tAuId-0001b7-Tl
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:33 -0500
+ id 1tAuIT-0001Z0-MS
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 12:03:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731431010;
+ s=mimecast20190719; t=1731430997;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=azsMbEJLVwLj/lJ3E4CiHbyMN/j2xaFaI4UK3gAhKqY=;
- b=L1eR3sRDAuStsiLKmzCol6ZQV0i+mOruLEmIl1CmErdmQLbMf1i13cV3tgkh8WD+eRxkZd
- sega0hAQawDP5eky/op/6fTXnMoS1cTHx1L4aQJtfWuJlvoR9rnscRjL9lI843BlgvXMvQ
- kAMvURptT5xWJlOgY+efVlY+QmW0paM=
+ bh=bYyCoABKXGGuyG9l7Gg9PZzugs/3n6FEjn8i2DmnPFg=;
+ b=XnbCbt+sSO/YBVDXrTcJc04B+GmHzoXW4Xhph8ENXlc3DLRlMSD2hdDIqDrvqfMGOsP9oT
+ jKjN4re5glf984JIIpr+awgs8gQC362djxhyUG8N66iO4yadZUEoFYhxfio3TBWnXJGcvp
+ XuQvKROHH7vi+5vyho7ZvhSEUICveOc=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-185-QsGwEaroPOqit7oNn92OJw-1; Tue,
- 12 Nov 2024 12:03:26 -0500
-X-MC-Unique: QsGwEaroPOqit7oNn92OJw-1
-X-Mimecast-MFC-AGG-ID: QsGwEaroPOqit7oNn92OJw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-179-aG95qGV0OFGAi8OA_6BTXQ-1; Tue,
+ 12 Nov 2024 12:03:10 -0500
+X-MC-Unique: aG95qGV0OFGAi8OA_6BTXQ-1
+X-Mimecast-MFC-AGG-ID: aG95qGV0OFGAi8OA_6BTXQ
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 551BB1956096; Tue, 12 Nov 2024 17:03:25 +0000 (UTC)
+ id 00CB2195609E; Tue, 12 Nov 2024 17:03:09 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B040F1956086; Tue, 12 Nov 2024 17:03:22 +0000 (UTC)
+ id 5CBC61956086; Tue, 12 Nov 2024 17:03:06 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: salil.mehta@huawei.com, mst@redhat.com, imammedo@redhat.com,
  jonathan.cameron@huawei.com, linuxarm@huawei.com, anisinha@redhat.com,
  karl.heubaum@oracle.com, miguel.luis@oracle.com, gustavo.romero@linaro.org
-Subject: [RFC 6/7] DO NOT MERGE: acpi: cpuhp: use 'realized' status of vCPU to
- check if CPU is enabled
-Date: Tue, 12 Nov 2024 18:02:57 +0100
-Message-ID: <20241112170258.2996640-7-imammedo@redhat.com>
+Subject: [PATCH 1/7 for-9.2] qtest: allow ACPI DSDT Table changes
+Date: Tue, 12 Nov 2024 18:02:52 +0100
+Message-ID: <20241112170258.2996640-2-imammedo@redhat.com>
 In-Reply-To: <20241112170258.2996640-1-imammedo@redhat.com>
 References: <20241112170258.2996640-1-imammedo@redhat.com>
 MIME-Version: 1.0
@@ -88,36 +87,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-it still correct for x86 and other users, and can serve us as simpler to
- [1] cpu_enabled_status() callback that does the same in a roundabout way.
+From: Salil Mehta <salil.mehta@huawei.com>
 
-It's still an RFC, and probably there we should add another property
-'enabled' instead of abusing 'realized' and/or handle enabled state
-using hotplug handlers chain. i.e. in plug handler store enabled state
-AcpiCpuStatus and clear it in unplug handler instead of asking cpu from
-MMIO handler directly.
+list changed files in tests/qtest/bios-tables-test-allowed-diff.h
 
-1) bf1ecc8dad606 (w/acpi: Update ACPI `_STA` method with QOM vCPU ACPI Hotplug states)
+Message-ID: <20241106100047.18901c9d@imammedo.users.ipa.redhat.com>
+Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/acpi/cpu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 41 +++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-index 67513450f9..992ae5d233 100644
---- a/hw/acpi/cpu.c
-+++ b/hw/acpi/cpu.c
-@@ -63,7 +63,9 @@ static uint64_t cpu_hotplug_rd(void *opaque, hwaddr addr, unsigned size)
-     cdev = &cpu_st->devs[cpu_st->selector];
-     switch (addr) {
-     case ACPI_CPU_FLAGS_OFFSET_RW: /* pack and return is_* fields */
--        val |= cdev->cpu ? 1 : 0;
-+        val |= cdev->cpu ? object_property_get_bool(OBJECT(cdev->cpu),
-+                                                    "realized", NULL)
-+                           : 0;
-         val |= cdev->is_inserting ? 2 : 0;
-         val |= cdev->is_removing  ? 4 : 0;
-         val |= cdev->fw_remove  ? 16 : 0;
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..512d40665d 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,42 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/x86/pc/DSDT",
++"tests/data/acpi/x86/pc/DSDT.acpierst",
++"tests/data/acpi/x86/pc/DSDT.acpihmat",
++"tests/data/acpi/x86/pc/DSDT.bridge",
++"tests/data/acpi/x86/pc/DSDT.cphp",
++"tests/data/acpi/x86/pc/DSDT.dimmpxm",
++"tests/data/acpi/x86/pc/DSDT.hpbridge",
++"tests/data/acpi/x86/pc/DSDT.hpbrroot",
++"tests/data/acpi/x86/pc/DSDT.ipmikcs",
++"tests/data/acpi/x86/pc/DSDT.memhp",
++"tests/data/acpi/x86/pc/DSDT.nohpet",
++"tests/data/acpi/x86/pc/DSDT.numamem",
++"tests/data/acpi/x86/pc/DSDT.roothp",
++"tests/data/acpi/x86/q35/DSDT",
++"tests/data/acpi/x86/q35/DSDT.acpierst",
++"tests/data/acpi/x86/q35/DSDT.acpihmat",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
++"tests/data/acpi/x86/q35/DSDT.applesmc",
++"tests/data/acpi/x86/q35/DSDT.bridge",
++"tests/data/acpi/x86/q35/DSDT.core-count",
++"tests/data/acpi/x86/q35/DSDT.core-count2",
++"tests/data/acpi/x86/q35/DSDT.cphp",
++"tests/data/acpi/x86/q35/DSDT.cxl",
++"tests/data/acpi/x86/q35/DSDT.dimmpxm",
++"tests/data/acpi/x86/q35/DSDT.ipmibt",
++"tests/data/acpi/x86/q35/DSDT.ipmismbus",
++"tests/data/acpi/x86/q35/DSDT.ivrs",
++"tests/data/acpi/x86/q35/DSDT.memhp",
++"tests/data/acpi/x86/q35/DSDT.mmio64",
++"tests/data/acpi/x86/q35/DSDT.multi-bridge",
++"tests/data/acpi/x86/q35/DSDT.noacpihp",
++"tests/data/acpi/x86/q35/DSDT.nohpet",
++"tests/data/acpi/x86/q35/DSDT.numamem",
++"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
++"tests/data/acpi/x86/q35/DSDT.thread-count",
++"tests/data/acpi/x86/q35/DSDT.thread-count2",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
++"tests/data/acpi/x86/q35/DSDT.type4-count",
++"tests/data/acpi/x86/q35/DSDT.viot",
++"tests/data/acpi/x86/q35/DSDT.xapic",
 -- 
 2.43.0
 
