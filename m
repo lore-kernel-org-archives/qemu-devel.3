@@ -4,136 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAC27D42B81
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 13:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B44D42B82
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 13:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tArDG-0000Yy-2v; Tue, 12 Nov 2024 08:45:46 -0500
+	id 1tArDf-0000c9-SN; Tue, 12 Nov 2024 08:46:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tArDE-0000Yi-8i
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 08:45:44 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tArDV-0000bE-Hl
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 08:46:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tArDC-0002aj-N4
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 08:45:44 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tArDT-0002cW-1g
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 08:46:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731419140;
+ s=mimecast20190719; t=1731419158;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=J9Bndr5Df3jqzYskYNRItnd7EoDK8tnuhJfM4ecycrQ=;
- b=UfY29IXKuvcjzQvdlwnP9AhxMca5NNfblbG0NMjBIAfq1bezsCp8hp86wjob5FQBEa+R1l
- cRAyhDE/odro1NKGLepsGsv69byZxmk8YkIsijYXpWoz9L4rtJeVE8g+fWXsmhDydSlFWf
- Xbhmcx/rPodnP8v/7+jWVMLFeyr8lBw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6mtJ1GNESwSYjCUk7/pfoTAkCNIunNZRJDvMPqmOLp0=;
+ b=IQ0gYMDRGP+l1Zu0rSNtR5ngF2iCmUukMIQmWS+DKTMb4egDkEujptWHsLRESG0dopfgog
+ jxBW43Fgv/N299wdm3SnlFwgu/02H//n/j7I6rxmFO+/7JzeM4kMigREUR16T4htPW0+zI
+ u5fxRCbD5Tah2rqSINx+Le5mU4jM330=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-295-bES6uV93Pe2snFc0xmh6Iw-1; Tue, 12 Nov 2024 08:45:38 -0500
-X-MC-Unique: bES6uV93Pe2snFc0xmh6Iw-1
-X-Mimecast-MFC-AGG-ID: bES6uV93Pe2snFc0xmh6Iw
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4316ac69e6dso44331675e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 05:45:37 -0800 (PST)
+ us-mta-279-OhyQUa_KM9yTyppHbqhTkQ-1; Tue, 12 Nov 2024 08:45:54 -0500
+X-MC-Unique: OhyQUa_KM9yTyppHbqhTkQ-1
+X-Mimecast-MFC-AGG-ID: OhyQUa_KM9yTyppHbqhTkQ
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7b14fc05206so692429285a.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 05:45:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731419137; x=1732023937;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=J9Bndr5Df3jqzYskYNRItnd7EoDK8tnuhJfM4ecycrQ=;
- b=NvCbni/wM3Jbil5bguiOKBzenTgqhAj01K7F3A92ZtSFEyq8fbdfvxJ1ZECf+JTSkC
- R7MYxGAlEJEe3b4IY2FY7aMqADW+g+rs6tUBeTkx4cwFAZUx0N74zD1jjbRFxXkFbEX+
- sks6/dA3cYFDdP2tVxJS8aZ5kJ9j0t+eqsmgAZ1UYnxEZTtwX7vbsj11BSgM6tVfhTIL
- Oln/TGrGyVcvMvVZ55DKCuE3+kaibvcByZME/ad6/1EojGtOYZolo6CoFaO9xaI5XNWK
- rZR0LdW9+1pJO4GAYjV2s2iNkIUIDKIrohyI/JyJZaYiDAQi0qlKNfmL+yDmrj9Izgvs
- kfqA==
+ d=1e100.net; s=20230601; t=1731419154; x=1732023954;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6mtJ1GNESwSYjCUk7/pfoTAkCNIunNZRJDvMPqmOLp0=;
+ b=NXfOg5ikydyEDnUHV65rxEVt60LLc94sJcKqOKsQXH+D2M0H5MnxW/5nxRY2rUiCUS
+ 5CL2jFtPzJ3okOZx2HjYEfMve3LgmPckfNSDiqlHkDDwwwQBXRdWfL8I8Ol4a57lC5TV
+ uQg6wk7tb8vAxqc/bu38ZW4yzbnwy6lLjFq4I0SgkfvBrUR9swpfKtdPyo86LDdObAAm
+ O+DhbPGEdULfHNMTrZKk4NkqNFxw5uu8l6in98bY+gyHnRW+aCiOPIEQlSo2wGiLXUzo
+ hv4j2tGPs9YetLR6sNWmnQsK/ZgNp4di7DdW6rxRjsIhzrdp8cbRP/7wQqOnsU0U+LNy
+ BOrw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5XqusW7F/KTgiYfmdErmiYRIJEjpbv/rTuvDhaKs4bJPJqBN8wuy87eDImoL0LrPRZB2AUnRQZzCy@nongnu.org
-X-Gm-Message-State: AOJu0Yy8P3B9OGneAocXsnS7lLzBxOqRhpVAF40YwKGtpVuxAeJGVreX
- ZE5xhJ9CLAt6LIRiPa6SNdcvZtTGL2cYWj3lMlxH0h8GUIUm9LrgKmuhxLhrHyUG7te+ZS6DY6A
- 1GXX+HTQtuSJGhlFspE6Od08pJuZuIQJxxjOm1WvL96g4I8MOc18z
-X-Received: by 2002:a05:600c:5123:b0:42c:af06:703 with SMTP id
- 5b1f17b1804b1-432b7519975mr141734385e9.31.1731419136920; 
- Tue, 12 Nov 2024 05:45:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHKtHTUdwaahmxefoRrCalG+fsvGQ5BbTumGMQ2bWfyN1v7nxhcYdPOOHa5thRIaDRqAoZHEg==
-X-Received: by 2002:a05:600c:5123:b0:42c:af06:703 with SMTP id
- 5b1f17b1804b1-432b7519975mr141734085e9.31.1731419136516; 
- Tue, 12 Nov 2024 05:45:36 -0800 (PST)
-Received: from ?IPV6:2003:cb:c739:8e00:7a46:1b8c:8b13:d3d?
- (p200300cbc7398e007a461b8c8b130d3d.dip0.t-ipconnect.de.
- [2003:cb:c739:8e00:7a46:1b8c:8b13:d3d])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432aa6b2a3bsm245800095e9.11.2024.11.12.05.45.34
+ AJvYcCVbhqSNbp+IbC2ybuM8mLGTGiWknF4Z2okkD3Wi3vGU2UPIqtKWWBCu6WJh7AcVuWDvT95jNKVG1IFr@nongnu.org
+X-Gm-Message-State: AOJu0YwehVw8Xcwq0FvSWYQYeaQsBLek9UBoy2gRmoqiO7hUZpoAvBXB
+ vfUdSk8FGzBbU7DZUgok4VtlyUFN6A3bdJrWfvnqjedv2/DWliuLVsej9qB+uLfA4DFulHuNaBr
+ yThoGF/8Pky01kjMP6yu0ETPDmcCaChptMhyGak/fqdahJSTP7RKv
+X-Received: by 2002:a05:620a:4041:b0:7b1:49cf:6460 with SMTP id
+ af79cd13be357-7b331f2ed00mr2234623485a.59.1731419154419; 
+ Tue, 12 Nov 2024 05:45:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFIPJdtHXXG9h6Nd7bffuYvhtIyrZrRl7hgi7adZd35oBkKVQI6NQngOCZCf225pUYh6OzdAw==
+X-Received: by 2002:a05:620a:4041:b0:7b1:49cf:6460 with SMTP id
+ af79cd13be357-7b331f2ed00mr2234618785a.59.1731419153889; 
+ Tue, 12 Nov 2024 05:45:53 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-49-115.web.vodafone.de.
+ [109.42.49.115]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b32ac2da65sm593243685a.13.2024.11.12.05.45.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Nov 2024 05:45:35 -0800 (PST)
-Message-ID: <3ed8c7c2-8059-4d51-a536-422c394f34e5@redhat.com>
-Date: Tue, 12 Nov 2024 14:45:34 +0100
+ Tue, 12 Nov 2024 05:45:53 -0800 (PST)
+Message-ID: <519d031b-ed11-4fed-b25b-e73dc28a9e9b@redhat.com>
+Date: Tue, 12 Nov 2024 14:45:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] hostmem: Handle remapping of RAM
-To: =?UTF-8?Q?=E2=80=9CWilliam_Roche?= <william.roche@oracle.com>,
- kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
- philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
- imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
-References: <e2ac7ad0-aa26-4af2-8bb3-825cba4ffca0@redhat.com>
- <20241107102126.2183152-1-william.roche@oracle.com>
- <20241107102126.2183152-7-william.roche@oracle.com>
-From: David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH v2 1/4] tests/functional: Introduce _console_read()
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20241112130246.970281-1-clg@redhat.com>
+ <20241112130246.970281-2-clg@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20241107102126.2183152-7-william.roche@oracle.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20241112130246.970281-2-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -158,52 +153,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07.11.24 11:21, “William Roche wrote:
-> From: David Hildenbrand <david@redhat.com>
+On 12/11/2024 14.02, Cédric Le Goater wrote:
+> Interaction with the console has been a problem in our avocado
+> tests. In some cases, the expected string does not match in the
+> output, causing the test to fail with a timeout. These were worked
+> around by sleeping before reading the console and even with SSH
+> connections in some places.
 > 
-> Let's register a RAM block notifier and react on remap notifications.
-> Simply re-apply the settings. Warn only when something goes wrong.
+> To fix, process the console output char by char and not with
+> readline. This routine was largely inspired by console_wait() in
+> tests/vm/basevm.py.
 > 
-> Note: qemu_ram_remap() will not remap when RAM_PREALLOC is set. Could be
-> that hostmem is still missing to update that flag ...
-> 
-> Signed-off-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: William Roche <william.roche@oracle.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   backends/hostmem.c       | 29 +++++++++++++++++++++++++++++
->   include/sysemu/hostmem.h |  1 +
->   2 files changed, 30 insertions(+)
+>   tests/functional/qemu_test/cmd.py | 22 ++++++++++++++++++++--
+>   1 file changed, 20 insertions(+), 2 deletions(-)
 > 
-> diff --git a/backends/hostmem.c b/backends/hostmem.c
-> index bf85d716e5..fbd8708664 100644
-> --- a/backends/hostmem.c
-> +++ b/backends/hostmem.c
-> @@ -361,11 +361,32 @@ static void host_memory_backend_set_prealloc_threads(Object *obj, Visitor *v,
->       backend->prealloc_threads = value;
->   }
+> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+> index cbabb1ceed3c..5bca29d1d721 100644
+> --- a/tests/functional/qemu_test/cmd.py
+> +++ b/tests/functional/qemu_test/cmd.py
+> @@ -12,6 +12,7 @@
+>   # later.  See the COPYING file in the top-level directory.
 >   
-> +static void host_memory_backend_ram_remapped(RAMBlockNotifier *n, void *host,
-> +                                             size_t offset, size_t size)
-> +{
-> +    HostMemoryBackend *backend = container_of(n, HostMemoryBackend,
-> +                                              ram_notifier);
-> +    Error *err = NULL;
+>   import logging
+> +import re
+>   import os
+>   import os.path
+>   import subprocess
+> @@ -78,6 +79,23 @@ def run_cmd(args):
+>   def is_readable_executable_file(path):
+>       return os.path.isfile(path) and os.access(path, os.R_OK | os.X_OK)
+>   
+> +def _console_read(vm, expect):
+> +    console_logger = logging.getLogger('console')
+> +    output = ""
+> +    while True:
+> +        data = vm.console_socket.recv(1)
+> +        if not data:
+> +            break
+> +        output += data.decode("latin1")
+> +        if expect in output:
+> +            break
+> +        if "\r" in output or "\n" in output:
+> +            lines = re.split("[\r\n]", output)
+> +            if lines[0]:
+> +                console_logger.debug(lines[0])
+> +            output = lines.pop()
+> +    return output
 > +
-> +    if (!host_memory_backend_mr_inited(backend) ||
-> +        memory_region_get_ram_ptr(&backend->mr) != host) {
-> +        return;
-> +    }
-> +
-> +    host_memory_backend_apply_settings(backend, host + offset, size, &err);
-> +    if (err) {
-> +        warn_report_err(err);
+>   def _console_interaction(test, success_message, failure_message,
+>                            send_string, keep_sending=False, vm=None):
+>       assert not keep_sending or send_string
+> @@ -98,12 +116,12 @@ def _console_interaction(test, success_message, failure_message,
+>               continue
+>   
+>           try:
+> -            msg = console.readline().decode().strip()
+> +            msg = _console_read(vm, success_message)
+>           except UnicodeDecodeError:
+>               msg = None
+>           if not msg:
+>               continue
+> -        console_logger.debug(msg)
+> +        console_logger.debug('found "%s"', msg)
 
-I wonder if we want to fail hard instead, or have a way to tell the 
-notifier that something wen wrong.
+Sorry for being picky (yay, bike shed painting!), but it's a little bit hard 
+to distinguish these "found" markers in the console.log from the lines that 
+just contain the normal output.
 
--- 
-Cheers,
+Maybe we could use some funky unicode character instead? For example:
 
-David / dhildenb
+         console_logger.debug('🔎 %s', msg)
+
+or:
+
+         console_logger.debug('✅ %s', msg)
+
+?
+
+Or maybe just indent the normal lines, i.e. in the _console_read() function
+you could do this instead:
+
+        console_logger.debug('      %s', lines[0])
+
+so that the "found" string is more visually separated?
+
+Or maybe even combine the two approaches?
+
+  Thanks,
+   Thomas
 
 
