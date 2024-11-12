@@ -4,84 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 184D7D42BB0
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 16:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2298ED42BB3
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 16:59:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAuC5-000386-Uh; Tue, 12 Nov 2024 11:56:46 -0500
+	id 1tAuEk-0001Hh-2W; Tue, 12 Nov 2024 11:59:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1tAuC1-00036Y-5W; Tue, 12 Nov 2024 11:56:41 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tAuEi-0001Fi-QB; Tue, 12 Nov 2024 11:59:28 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1tAuBz-0000gC-Gx; Tue, 12 Nov 2024 11:56:40 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-20c767a9c50so58172835ad.1; 
- Tue, 12 Nov 2024 08:56:38 -0800 (PST)
+ id 1tAuEh-0000xv-71; Tue, 12 Nov 2024 11:59:28 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-720d01caa66so5640635b3a.2; 
+ Tue, 12 Nov 2024 08:59:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731430597; x=1732035397; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wNLY6CBv3Vt54fe6xY1jCdrgvJkH83csJwvWMNPC39s=;
- b=OJtVbGBTYMQNf3UpBAdVGmQaSTZ4WEqk+Xdl94lPfTiY62bKX3X4N+VPehspJUMyQ+
- 50Wx+vBBqreIsp1T3OrojXvHF9RBPt6yxA3TIDl2fw3upeRHsBgtFCXg2ZXahhfOXA20
- J+9DB3GGYpVDVD8YNmxXsgDob/TflDW3o7lE2+5XbdvSiJKjDQZAmucRKIHlyZFcCkaT
- kfdrJYsD7v4Nckj/FmcusJKF+hh8I4L0+AbPkqxqlyitIWN6Qk/g9RsXi7m2IyNTUiak
- Do5BPB5Wf0bnp9hRIUmmdimsMPPh3Hs9pcMnaJZmHrQvTKTS7ifFxp1JBjAgkk8Vqy2j
- OpxQ==
+ d=gmail.com; s=20230601; t=1731430765; x=1732035565; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=NOpclEzqac2nJTuz/sojOl17P4j7bNUwoWt1GENLg1o=;
+ b=UkTvlVOSOVN9pjv/VVLpeakefveHVOBPYl6wWQaeMvej1fCCwIWMKXB0qq4hRLhLqT
+ Ifrf4S4FBc8GBvbHVteMv6EiCK12fiiOW6Pq1NplJsrSmaMyasCg8V3TSBvgJpz0WrZy
+ 2c3Mr4oDtS8ZAYP+pyge77bCfiRunb2TcZiOEgVH9pRMJLfSLf2I2OqpxRMoJb8dxfNA
+ b+KJ6MpDPTXEWnKiT3bd3U+rb5LSiIeLkT1YsdrvpComWdVzGD6GBxPQRxtTBsNN4Gb7
+ labAmummAUodGxieibYzNnR7Wcypp4Xi/ZI8FkYVNvXfyXSAXyGNsdwUCi9HFQywMP9J
+ GRdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731430597; x=1732035397;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wNLY6CBv3Vt54fe6xY1jCdrgvJkH83csJwvWMNPC39s=;
- b=DtlVEt1YraHtxQ85WlkJlDcmBL4kCVdjnh3ItiH0T5Y3RRXBBWoJ6SMPO13ahA1ZYq
- gBXO3on23sMpCDDKpQn6CwJOMYpXIKOem26HQ9a+9Ltl/X3Sf28bZycJwVuTrN1KofUO
- 3t0QwRpgCNMF5BRVNaVUkXPBckOPaMdqJs1zoWJS2GrQdJ70FMUJIYMXe7rnkmXJjqe0
- rZWwkk++gT+wMmCiYQkHGqM8meRlHIK1O+dcb0dFdlXaIO0MIF+MEaJ8y4127uv1q7Qs
- dkzh/7xtsdNbMZkGMDTNILbKiRYMZrfYxgqstOguaSI4yas2zoCP2Ma9EEMM/5royxxR
- 7OXA==
+ d=1e100.net; s=20230601; t=1731430765; x=1732035565;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NOpclEzqac2nJTuz/sojOl17P4j7bNUwoWt1GENLg1o=;
+ b=tQck0U/td5CuW6koQjTVUylpoT9YiyhsPTL2LZORCePOC00e7yCunDDCTJQ08wEb0u
+ nFM3e3RScKtWkjio9KLkvORhF5Il/E7WTlI3RdD1VyW/twQNkC6mkTJu4FGYYLKIZflk
+ SSBoBhl3ifk++Wx3QFGpjxLsKfFiNa26rILF6ETlwqA5VnvZ+JttZHA4zKBVj8xe20Gl
+ yKSI8xMBhWD3aDRewmd7wbNUmIXIOOi/aBwyHebyV+aHFXUbTNkqAibyoCj0cut+h9vL
+ 6je8lDLas4wS1NqQhrm1eDCgcD7ueBkBD9yTKEvG5rurqK67pNOnKo6mRExOTgkWL1iJ
+ TudA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV2hyxV1vIX7EGPHX2sd3yaEBZvK79qNCTQBFtiwV9bvo9UYznlXXP5EU94sIzqd/V6woWupXWNyQ==@nongnu.org
-X-Gm-Message-State: AOJu0YwifC9lNMcjZuqNfd/nw3S0VD0GETi/ycqryEBTrCbA0+wuJ7gF
- HiVwAkUhRBoZC3BOaaajR2gYVBBnH2METbG14RZ+5kpS2LB7IzkRHZSTjQ==
-X-Google-Smtp-Source: AGHT+IET4GzugYtgqSoHb+g1BDTSzd67kTBEo8XJZAzcgUS1nwn4dGg+SbdB111q+qdtEOJWDhNDJw==
-X-Received: by 2002:a17:902:e843:b0:20c:ca83:31c7 with SMTP id
- d9443c01a7336-21183d7cc28mr231783165ad.54.1731430596869; 
- Tue, 12 Nov 2024 08:56:36 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ AJvYcCVDidSNvtNsTdlukWwrsAz7KDwJAhODskHIGzXvkOkZfI2eAuL5o20MHze/pFtjrBZZsNs0CAJebw==@nongnu.org
+X-Gm-Message-State: AOJu0YxJ+IjbX+3AhYPEYXCfQC9S+uGADWGz11NR0EdIr4oA7r1Tk17S
+ woGU2Y8xXKuajgTm4d5kVZm+ECuUqyXOUaroM4YgKPdYFRHmFNHOdbytbw==
+X-Google-Smtp-Source: AGHT+IF8+gNuTQUECmG7FbNkvUt1jZyRCHL02D260iCGWGryeTmlrPVbPEVmXmnCq7g8QOSdBVNsfw==
+X-Received: by 2002:a05:6a00:2e1e:b0:71e:52ec:638d with SMTP id
+ d2e1a72fcca58-724132a0020mr22597185b3a.10.1731430764932; 
+ Tue, 12 Nov 2024 08:59:24 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
+ ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21177e59dfesm95980155ad.181.2024.11.12.08.56.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 08:56:35 -0800 (PST)
-From: Guenter Roeck <linux@roeck-us.net>
+ d2e1a72fcca58-72407a2367dsm11468240b3a.169.2024.11.12.08.59.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Nov 2024 08:59:24 -0800 (PST)
+Message-ID: <f89a684f-8639-4990-9bd1-3e1cff5bf29e@roeck-us.net>
+Date: Tue, 12 Nov 2024 08:59:22 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/8] usb/uhci: Add UHCI sysbus support, and enable for
+ AST machines
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, BALATON Zoltan <balaton@eik.bme.hu>,
- "Michael S . Tsirkin" <mst@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ BALATON Zoltan <balaton@eik.bme.hu>, "Michael S . Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 06/10] usb/uhci: Add aspeed specific read and write functions
-Date: Tue, 12 Nov 2024 08:56:15 -0800
-Message-ID: <20241112165618.217454-7-linux@roeck-us.net>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241112165618.217454-1-linux@roeck-us.net>
+ qemu-arm@nongnu.org
 References: <20241112165618.217454-1-linux@roeck-us.net>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=groeck7@gmail.com; helo=mail-pl1-x62a.google.com
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <20241112165618.217454-1-linux@roeck-us.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -105,189 +152,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Aspeed uses non-standard UHCI register addresses. On top of that,
-registers are 32 bit wide instead of 16 bit.
+Oops, sorry, the subject should have started with "[PATCH 00/10]"
 
-Map Aspeed UHCI addresses to standard UHCI addresses and where needed
-combine/split 32 bit accesses to solve the problem.
+Why do I always see that one second after sending :-(
 
-In addition to that, Aspeed SoCs starting with AST2600 support and use EHCI
-companion mode on the second EHCI interface. Support this by moving the
-property initialization to the Aspeed class initialization code. Since the
-USB ports are part of the SoC and always present, set user_creatable to
-false for the Aspeed UHCI controller.
+Guenter
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
----
-Changes since RFC:
-- Rebased to v9.1.0-1673-g134b443512
-- Added support for EHCI companion mode
-
- hw/usb/hcd-uhci-sysbus.c | 104 ++++++++++++++++++++++++++++++++++++++-
- hw/usb/hcd-uhci-sysbus.h |  11 +++++
- 2 files changed, 114 insertions(+), 1 deletion(-)
-
-diff --git a/hw/usb/hcd-uhci-sysbus.c b/hw/usb/hcd-uhci-sysbus.c
-index 3a6c56c3df..628b6601a1 100644
---- a/hw/usb/hcd-uhci-sysbus.c
-+++ b/hw/usb/hcd-uhci-sysbus.c
-@@ -20,7 +20,9 @@
- 
- #include "qemu/osdep.h"
- #include "hw/irq.h"
-+#include "hw/usb/uhci-regs.h"
- #include "qapi/error.h"
-+#include "qemu/log.h"
- #include "qemu/module.h"
- #include "qemu/timer.h"
- #include "hw/usb.h"
-@@ -84,10 +86,104 @@ static void uhci_sysbus_class_init(ObjectClass *klass, void *data)
-     dc->realize = uhci_sysbus_realize;
-     set_bit(DEVICE_CATEGORY_USB, dc->categories);
-     dc->desc = "UHCI USB Controller";
--    device_class_set_props(dc, uhci_sysbus_properties);
-     device_class_set_legacy_reset(dc, uhci_sysbus_reset_sysbus);
- }
- 
-+static hwaddr aspeed_uhci_chip_to_uhci(hwaddr addr)
-+{
-+    switch (addr) {
-+    case 0x00:
-+        return UHCI_USBCMD;
-+    case 0x04:
-+        return UHCI_USBSTS;
-+    case 0x08:
-+        return UHCI_USBINTR;
-+    case 0x0c:
-+        return UHCI_USBFLBASEADD;
-+    case 0x80:
-+        return UHCI_USBFRNUM;
-+    case 0x84:
-+        return UHCI_USBSOF;
-+    case 0x88:
-+        return UHCI_USBPORTSC1;
-+    case 0x8c:
-+        return UHCI_USBPORTSC2;
-+    case 0x90:
-+        return UHCI_USBPORTSC3;
-+    case 0x94:
-+        return UHCI_USBPORTSC4;
-+    default:        /* unimplemented */
-+        qemu_log_mask(LOG_UNIMP, "Unimplemented Aspeed UHCI register 0x%lx\n",
-+                      addr);
-+        return 0x20;
-+    }
-+}
-+
-+/*
-+ * Aspeed UHCI registers are 32 bit wide.
-+ * Convert to 16 bit to access standard UHCI code.
-+ */
-+static uint64_t aspeed_uhci_port_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    UHCIState *uhci = opaque;
-+    MemoryRegion *mr = &uhci->mem;
-+    hwaddr uaddr = aspeed_uhci_chip_to_uhci(addr);
-+
-+    if (uaddr == UHCI_USBFLBASEADD) {
-+        return mr->ops->read(opaque, uaddr, 2) |
-+               mr->ops->read(opaque, uaddr + 2, 2) << 16;
-+    }
-+    return mr->ops->read(opaque, uaddr, 2);
-+}
-+
-+static void aspeed_uhci_port_write(void *opaque, hwaddr addr, uint64_t val,
-+                                   unsigned size)
-+{
-+    UHCIState *uhci = opaque;
-+    MemoryRegion *mr = &uhci->mem;
-+    hwaddr uaddr = aspeed_uhci_chip_to_uhci(addr);
-+
-+    if (uaddr == UHCI_USBFLBASEADD) {
-+        mr->ops->write(opaque, uaddr, val & 0xffff, 2);
-+        mr->ops->write(opaque, uaddr + 2, val >> 16, 2);
-+    } else {
-+        mr->ops->write(opaque, uaddr, val, 2);
-+    }
-+}
-+
-+static const MemoryRegionOps aspeed_uhci_mmio_ops = {
-+    .read = aspeed_uhci_port_read,
-+    .write = aspeed_uhci_port_write,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
-+
-+static void uhci_sysbus_aspeed_realize(DeviceState *dev, Error **errp)
-+{
-+    UHCISysBusState *s = SYSBUS_UHCI(dev);
-+    ASPEEDUHCIState *f = ASPEED_UHCI(dev);
-+    UHCIState *uhci = &s->uhci;
-+
-+    uhci_sysbus_realize(dev, errp);
-+
-+    memory_region_init_io(&f->mem_aspeed, OBJECT(f), &aspeed_uhci_mmio_ops,
-+                          uhci, "aspeed", 0x100);
-+    memory_region_add_subregion(&uhci->mem, 0, &f->mem_aspeed);
-+}
-+
-+static void uhci_sysbus_aspeed_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = uhci_sysbus_aspeed_realize;
-+    set_bit(DEVICE_CATEGORY_USB, dc->categories);
-+    dc->desc = "ASPEED UHCI USB Controller";
-+    device_class_set_legacy_reset(dc, uhci_sysbus_reset_sysbus);
-+    device_class_set_props(dc, uhci_sysbus_properties);
-+    dc->user_creatable = false;
-+}
-+
- static const TypeInfo uhci_sysbus_types[] = {
-     {
-         .name          = TYPE_SYSBUS_UHCI,
-@@ -95,6 +191,12 @@ static const TypeInfo uhci_sysbus_types[] = {
-         .instance_size = sizeof(UHCISysBusState),
-         .class_init    = uhci_sysbus_class_init,
-     },
-+    {
-+        .name          = TYPE_ASPEED_UHCI,
-+        .parent        = TYPE_SYSBUS_UHCI,
-+        .instance_size = sizeof(ASPEEDUHCIState),
-+        .class_init    = uhci_sysbus_aspeed_class_init,
-+    },
- };
- 
- DEFINE_TYPES(uhci_sysbus_types);
-diff --git a/hw/usb/hcd-uhci-sysbus.h b/hw/usb/hcd-uhci-sysbus.h
-index c491b9fc92..75c4716c40 100644
---- a/hw/usb/hcd-uhci-sysbus.h
-+++ b/hw/usb/hcd-uhci-sysbus.h
-@@ -4,6 +4,7 @@
- #include "hcd-uhci.h"
- 
- #define TYPE_SYSBUS_UHCI "sysbus-uhci"
-+#define TYPE_ASPEED_UHCI "aspeed-uhci"
- 
- OBJECT_DECLARE_SIMPLE_TYPE(UHCISysBusState, SYSBUS_UHCI)
- 
-@@ -20,4 +21,14 @@ struct UHCISysBusState {
-     uint32_t num_ports;
- };
- 
-+OBJECT_DECLARE_SIMPLE_TYPE(ASPEEDUHCIState, ASPEED_UHCI)
-+
-+struct ASPEEDUHCIState {
-+    /*< private >*/
-+    UHCISysBusState parent_obj;
-+    /*< public >*/
-+
-+    MemoryRegion mem_aspeed;
-+};
-+
- #endif /* HW_USB_HCD_UHCI_SYSBUS_H */
--- 
-2.45.2
+On 11/12/24 08:56, Guenter Roeck wrote:
+> Some machines (like Aspeed ARM) only support a sysbus UHCI controller.
+> The current UHCI implementation in qemu only supports PCI based UHCI
+> controllers.
+> 
+> This patch series separates basic and PCI functionality from the hcd-uhci
+> implementation and then adds uhci-sysbus support. This is then used
+> to implement and enable sysbus based UHCI support for Aspeed machines.
+> 
+> The series is submitted as RFC since I am quite sure that I didn't get
+> everything right. All code surrounding VMStates deserves special scrutiny,
+> as well as the changes outside hw/usb/ and hw/arm/.
+> 
+> A side effect of this patch series is that Aspeed AST2400/2500 machines
+> will now instantiate UHCI, even if the machine does not actually support
+> it (it also always instantiates both EHCI ports, so that is not really
+> different). This means that the default USB bus is now the UHCI bus,
+> not the second EHCI bus. The bus number must therefore now be specified
+> explicitly when attaching a device unless attaching it to the UHCI port
+> is ok. I don't know if it is possible to avoid that and to ensure that
+> the default USB port is still the second EHCI port.
+> 
+> The code was tested on x86 machines to ensure that the existing UHCI
+> implementation still works. It was also tested on various Aspeed machines
+> with enabled UHCI ports (ast2500-evb, ast2600-evb, and rainier-bmc).
+> 
+> Changes since RFC:
+> - Rebased to v9.1.0-1673-g134b443512
+> - Added Reviewed-by: tags
+> - Fixed bug in interrupt initialization of vt82c686-uhci-pci.c
+>    which if instantiated caused a machine crash
+> - Instantiate UHCI controllers as companion devices on AST2600 machines
+> 
+> ----------------------------------------------------------------
+> Guenter Roeck (10):
+>        usb/uhci: checkpatch cleanup
+>        usb/uhci: Introduce and use register defines
+>        usb/uhci: Move PCI-related code into a separate file
+>        usb/uhci: enlarge uhci memory space
+>        usb/uhci: Add support for usb-uhci-sysbus
+>        usb/uhci: Add aspeed specific read and write functions
+>        aspeed: Add uhci support for ast2600
+>        aspeed: Add uhci support for ast2400 and ast2500
+>        usb-hub: Add support for v2.0 hubs
+>        usb-hub: Fix handling port power control messages
+> 
+>   hw/arm/Kconfig                |   1 +
+>   hw/arm/aspeed_ast2400.c       |  14 ++
+>   hw/arm/aspeed_ast2600.c       |  20 +++
+>   hw/isa/Kconfig                |   4 +-
+>   hw/isa/vt82c686.c             |   4 +-
+>   hw/usb/Kconfig                |  10 +-
+>   hw/usb/dev-hub.c              |  85 ++++++++++-
+>   hw/usb/hcd-uhci-pci.c         | 255 ++++++++++++++++++++++++++++++++
+>   hw/usb/hcd-uhci-pci.h         |  63 ++++++++
+>   hw/usb/hcd-uhci-sysbus.c      | 202 +++++++++++++++++++++++++
+>   hw/usb/hcd-uhci-sysbus.h      |  34 +++++
+>   hw/usb/hcd-uhci.c             | 337 +++++++++++++-----------------------------
+>   hw/usb/hcd-uhci.h             |  30 ++--
+>   hw/usb/meson.build            |   2 +
+>   hw/usb/vt82c686-uhci-pci.c    |  18 +--
+>   include/hw/arm/aspeed_soc.h   |   3 +
+>   include/hw/southbridge/piix.h |   4 +-
+>   include/hw/usb/uhci-regs.h    |  11 ++
+>   18 files changed, 822 insertions(+), 275 deletions(-)
+>   create mode 100644 hw/usb/hcd-uhci-pci.c
+>   create mode 100644 hw/usb/hcd-uhci-pci.h
+>   create mode 100644 hw/usb/hcd-uhci-sysbus.c
+>   create mode 100644 hw/usb/hcd-uhci-sysbus.h
 
 
