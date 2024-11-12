@@ -4,83 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53064D42BA2
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 15:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49231D42BA2
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 15:58:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAtAX-0001Ag-EQ; Tue, 12 Nov 2024 10:51:05 -0500
+	id 1tAtHD-0002Ji-8D; Tue, 12 Nov 2024 10:57:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAtAS-0001AP-24
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 10:51:00 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tAtAQ-0000u9-Dt
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 10:50:59 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-20cbcd71012so68125415ad.3
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 07:50:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731426656; x=1732031456; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aUiu92Y0oL0J0dGkA+Ji9vGJiOqJYWXz+jG6orxRY9Y=;
- b=uxmiMr88crPQBrne+m0lv9PqYPKK5ufLagAgGQS3KOmAsNs9Nfldwl6FPKo2H9gQr2
- UlE4Oza5dO7UnSE8tOmnjsju9CeEc8HO6+coAa15jLYtpJULk59PIST4DryUMftr38yx
- y+rO39x8XCpYZvEjzeBai1lOYmnuUIIroCSXg7h2WOVgV3iVTcCnPgsIqjboTaF469kT
- Sp2z9m1p99qgZnZUZ1crif8+fv3lxNuT9Sr5yQeBrKnxyZpSHt7KcCGGDr1rGH8LpFQV
- boR8YGilTLP+M8sNlG+4zu41xmVq7TL9pcN/OXA9KO7QQh9g0r1OtivQ9QUIImYRAPJO
- /9DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731426656; x=1732031456;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aUiu92Y0oL0J0dGkA+Ji9vGJiOqJYWXz+jG6orxRY9Y=;
- b=mAisNsiK408jeyJW6YyyDMcckUyTU4j48E7pkdV65Am9try/OifgV+BA8XrjNe9KCZ
- Ht//imi+b43JnbyF7jFhD3RZAZVC+bZgZu7+83DrROeur5sDTJAqDjONxHOqiu87iUmv
- eZYprMVAWvjA6TxL9tBUb+8i/SW1iBBdEvGzF46KY5lwcW9j0Mt7jITR3s7ovAde55Ia
- hQ8CWtPowGEEDKfODofKln+sSYfrv0e/mgo2K2392O8Z93d20tgit/BJo1Sr59gsV7sV
- GYNc9qmmYs6n1PMUy1nYUHNj+jYgrGZpVogXPQgklOTJgjPqMROyeEp3DlGpYFRzW+L0
- 1rog==
-X-Gm-Message-State: AOJu0Yx7Fl/5gHY3oC3/btXq9rpeIoLoX4+RE/8gqcDUKmmDU8ASY6x/
- RQlpihSUtzgsHsRTroMe+JuXYbWceSi/6o823zFuV6J91mLQb/pY1wX5VjYuuWA=
-X-Google-Smtp-Source: AGHT+IGm+TqOXGdwIOwOLzbjlttvbHulz0H91iUbKVMczWIhwKwERRfrwLN33U4K7RQmM8f3UXgw2Q==
-X-Received: by 2002:a17:902:ea10:b0:210:fce4:11db with SMTP id
- d9443c01a7336-21183517ca8mr247122595ad.22.1731426656688; 
- Tue, 12 Nov 2024 07:50:56 -0800 (PST)
-Received: from [192.168.52.227] (wsip-24-120-228-34.lv.lv.cox.net.
- [24.120.228.34]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21177dc970asm95092085ad.52.2024.11.12.07.50.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Nov 2024 07:50:56 -0800 (PST)
-Message-ID: <dab7363f-48b5-4f15-893d-1621ec9481eb@linaro.org>
-Date: Tue, 12 Nov 2024 07:50:53 -0800
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1tAtHB-0002JA-Lx; Tue, 12 Nov 2024 10:57:57 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1tAtHA-0001dK-AG; Tue, 12 Nov 2024 10:57:57 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACFe660002953;
+ Tue, 12 Nov 2024 15:57:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=Zci5rDJBRKARTQEQF9eumh0BpTNmQxQjFXmRBDPwl
+ Nw=; b=tZ/pcv9TFo3RQ2p/yo4UJGazffZttB/3V7FAxCrlgrXhmKzU3ypr6cJom
+ UUg3lVYjFgj1SdIp9WMUmEtqvK2JiBfDi2CPfobIReN4d4C74PF3NOVVxr/aCfdQ
+ ltcZRRl3MNb9Qq6Kjc1oek4Hd6ufMz1m5YPFhpNgrzjT+qqdUkVI5IubaENUO4A9
+ pWAV/WilVzRlGWaFT848DgZrlPl+TueyQ0f4AFyNW8Q8mLR//t3zBCGyz8WmehWb
+ fVEygaRaKv1PdmBmd+w4QIT/T2pLFye24hkULFEIPSFve/oH0okLVkEJTs2DMqGZ
+ Noxzcud4FeQEXFXSd8I5OV68uRX9A==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42v9uy82fh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Nov 2024 15:57:50 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4ACFvn3s011393;
+ Tue, 12 Nov 2024 15:57:49 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42v9uy82fd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Nov 2024 15:57:49 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACFFrOl010514;
+ Tue, 12 Nov 2024 15:57:48 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42tj2s4jpv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Nov 2024 15:57:48 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4ACFvj9v20906470
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 Nov 2024 15:57:45 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1C6742004B;
+ Tue, 12 Nov 2024 15:57:45 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DF8E620040;
+ Tue, 12 Nov 2024 15:57:42 +0000 (GMT)
+Received: from gfwr515.rchland.ibm.com (unknown [9.10.239.103])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 12 Nov 2024 15:57:42 +0000 (GMT)
+From: Chalapathi V <chalapathi.v@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ clg@kaod.org, calebs@linux.ibm.com, chalapathi.v@ibm.com,
+ chalapathi.v@linux.ibm.com, saif.abrar@linux.ibm.com,
+ dantan@linux.vnet.ibm.com, milesg@linux.ibm.com, philmd@linaro.org,
+ alistair@alistair23.me
+Subject: [PATCH v4 0/2] hw/ssi/pnv_spi: Remove PnvXferBuffer and fix CID
+ 1558827
+Date: Tue, 12 Nov 2024 09:57:37 -0600
+Message-Id: <20241112155739.4447-1-chalapathi.v@linux.ibm.com>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Add missing mmap include
-To: Patrick Leis <venture@google.com>, laurent@vivier.eu,
- peter.maydell@linaro.org
-Cc: qemu-devel@nongnu.org, Peter Foley <pefoley@google.com>
-References: <20241028181821.1440988-1-venture@google.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241028181821.1440988-1-venture@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: v8m9RlRoqGAHIWsqlCQFfVz9yAkVb_hA
+X-Proofpoint-GUID: 6kRMBZWBRkcZ-T9y_fv0H9vcLBd_VqVd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 mlxscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ mlxlogscore=618 bulkscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411120125
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=chalapathi.v@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,34 +115,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/28/24 11:18, Patrick Leis wrote:
-> From: Peter Foley <pefoley@google.com>
-> 
-> error: use of undeclared identifier 'MAP_FIXED_NOREPLACE'
-> 
-> Signed-off-by: Patrick Leis <venture@google.com>
-> Signed-off-by: Peter Foley <pefoley@google.com>
-> ---
->   linux-user/user-mmap.h | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/linux-user/user-mmap.h b/linux-user/user-mmap.h
-> index b94bcdcf83..de769f9253 100644
-> --- a/linux-user/user-mmap.h
-> +++ b/linux-user/user-mmap.h
-> @@ -18,6 +18,8 @@
->   #ifndef LINUX_USER_USER_MMAP_H
->   #define LINUX_USER_USER_MMAP_H
->   
-> +#include "linux/mman.h"
-> +
->   /*
->    * Guest parameters for the ADDR_COMPAT_LAYOUT personality
->    * (at present this is the only layout supported by QEMU).
+Hello,
 
-In what context does this appear?
-Both glibc and musl define this in <sys/mmap.h>.
+Thank You for reviewing patch v3, patch v4 addresses Nick's comments to
+use fifo8_num_used() and open-code next_sequencer_fsm().
 
+Updates in V4:
+1. Use of PnvXferBuffer results in a additonal process overhead due to
+frequent dynamic allocations and hence use an existing Fifo8 buffer.
+2. Use a local variable seq_index and use it with in while loop instead
+of repeatedly calling get_seq_index() and make sure s->seq_op doesn't
+overrun when seq_index is incremented.
 
-r~
+Tested:
+passed make check and make check-avocado
+
+Chalapathi V (2):
+  hw/ssi/pnv_spi: Replace PnvXferBuffer with Fifo8 structure
+  hw/ssi/pnv_spi: Coverity CID 1558827: Use local var seq_index instead
+    of get_seq_index().
+
+ include/hw/ssi/pnv_spi.h |   3 +
+ hw/ssi/pnv_spi.c         | 320 +++++++++++++++------------------------
+ 2 files changed, 124 insertions(+), 199 deletions(-)
+
+-- 
+2.39.5
+
 
