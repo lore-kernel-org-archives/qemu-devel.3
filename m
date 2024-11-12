@@ -4,77 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16E3BD32D9E
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 12:17:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E2CBD32D9E
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 12:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tApp7-0002Ij-Tn; Tue, 12 Nov 2024 07:16:45 -0500
+	id 1tApuc-00043O-9V; Tue, 12 Nov 2024 07:22:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=039b511fc=graf@amazon.de>)
- id 1tApp6-0002IT-VS; Tue, 12 Nov 2024 07:16:44 -0500
-Received: from smtp-fw-33001.amazon.com ([207.171.190.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=039b511fc=graf@amazon.de>)
- id 1tApp5-0005YJ-2b; Tue, 12 Nov 2024 07:16:44 -0500
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tApua-00042r-KK
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 07:22:24 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tApuY-0006Ez-Qs
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 07:22:24 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2114214c63eso46763235ad.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 04:22:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1731413803; x=1762949803;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=U1/dGXiMiP/pElwvUsTa743OTolAWFM5iek0GDTM5tQ=;
- b=MinLogXgUhfFMWwcZZc4VG1pvXzrOlbl9NiE6n+8DOyMt8Tx+oQjQWYN
- VxKfo+Z0AehchS8NbGi/hPQ6yFajKWH4XdI/aFwAhl+t1LYuCfEf6fKZM
- iSOmveYviWNeJqhUhTpgCcwSUkb6U0oNLluovn50g0H8W2RYk+VjZKrv9 k=;
-X-IronPort-AV: E=Sophos;i="6.12,147,1728950400"; d="scan'208";a="384524240"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
- by smtp-border-fw-33001.sea14.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2024 12:16:41 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [10.0.38.20:20255]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.13.54:2525]
- with esmtp (Farcaster)
- id c2fa75b4-958c-463d-85c0-d01f6ad21f5c; Tue, 12 Nov 2024 12:16:41 +0000 (UTC)
-X-Farcaster-Flow-ID: c2fa75b4-958c-463d-85c0-d01f6ad21f5c
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Tue, 12 Nov 2024 12:16:40 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34; Tue, 12 Nov 2024
- 12:16:38 +0000
-Message-ID: <d9c983ca-bc47-4e80-960e-5e40c43df48d@amazon.com>
-Date: Tue, 12 Nov 2024 13:16:36 +0100
+ d=ventanamicro.com; s=google; t=1731414141; x=1732018941; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=D/V8rNH4tZioBj/O2Q8p06sEusMtwex3ahoBPbQ6oEU=;
+ b=VlqOmvqqPIIJ79yFFETqpV2+WiLSHn/ro3ppN0nVUUZMJVvZ7IWsABOjtEFIVZ7Pi7
+ mwW3yWZl9EBFNjrJs7zkZIPkPh6vMdW6x50bwqi4HTzp2AU1Bl3jUeJJ3Lu/KaMpUNp2
+ XfSsKY+GTZs6IlenHY069661RmYEJdnmrZgVO56AP+Ey/UOYGSeIiSQgzp3NxvzVz3oY
+ Xrg7ABjvuHmqCNU6adCAufDbozYY8LFpw2FT3TYSqdnAQjGG7hcjBgZJgB2vLYVPpWLu
+ Gl02yUEm+nrAId+JXzGd+ZauZ/HCDI/O6b9EH+CKhnUTWK0p28vZ/jkWg/eHp5UDvxEq
+ /Pow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731414141; x=1732018941;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=D/V8rNH4tZioBj/O2Q8p06sEusMtwex3ahoBPbQ6oEU=;
+ b=nI8xSYU6GFluC46Y0jrme1/w4QcrzoD6weLh+6O3qkLWep5MT15Gg6w6oc/UHy/TZf
+ cEV/KHe/W19fLR6nbByeyc3uRgCDgrh9u3eUIZ3OEnNaHWK5rKkroYX7hp18jW8kqCt3
+ qcok7VjLzer1PwMV/+rLoUyFsMqlQyIadX5gczSseFbkApBInqgMNGEW4IHnjYcmuOV1
+ EP7AYT1Q/ukmVbPXnfC7Na/6+7f9s5zZLfX88J8c9dXn0U0ZA1LksCQ4Sc/0ahli3Tz0
+ Zrx97eTL6g05+FhdWpWvegMKv0hZZZXOk9WAqNPsmdPjnHFYF3OT3kAU9RpDaWKKm/cb
+ XlMg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWce922xGk+LjbVKaS82DCMC8XiwBJxQL/iq3vubDIDQOCFEWlQm2z8gcIjMJJzX9ch//R51pejYWy1@nongnu.org
+X-Gm-Message-State: AOJu0Yw9ZQRgKoxO878xOVSNzxGVLq+6Ha/XENie+FGCpZu1l9T+W0TC
+ aUCD8D14aCxEJsYUjZpN5YDCms1lXGUX3jtrrIn9+x/M4K2q5E/o0Ghu+/pxE+o=
+X-Google-Smtp-Source: AGHT+IH6rdVnPgOOP1UZNNykw9FTk+VGbv+N8xRy6jCwrNigzQnyo8iV/bVhgKZvjshRqOrgFcyWpA==
+X-Received: by 2002:a17:903:2308:b0:20c:d18c:1704 with SMTP id
+ d9443c01a7336-21183528de2mr218823345ad.23.1731414141216; 
+ Tue, 12 Nov 2024 04:22:21 -0800 (PST)
+Received: from [192.168.68.110] ([187.101.65.72])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21177e58331sm92514665ad.183.2024.11.12.04.22.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Nov 2024 04:22:20 -0800 (PST)
+Message-ID: <00b4369c-f461-4be3-baa2-c908b37f8296@ventanamicro.com>
+Date: Tue, 12 Nov 2024 09:22:17 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Stable-7.2.15 17/33] target/i386: Walk NPT in guest real mode
-To: Michael Tokarev <mjt@tls.msk.ru>, <qemu-devel@nongnu.org>
-CC: <qemu-stable@nongnu.org>, Eduard Vlad <evlad@amazon.de>, Richard Henderson
- <richard.henderson@linaro.org>
-References: <qemu-stable-7.2.15-20241109093832@cover.tls.msk.ru>
- <20241109063903.3272404-17-mjt@tls.msk.ru>
+Subject: Re: [PATCH 1/1] hw/riscv/riscv-iommu.c: Correct the validness check
+ of iova
+To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20241108095753.12166-1-jason.chien@sifive.com>
 Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <20241109063903.3272404-17-mjt@tls.msk.ru>
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D041UWB004.ant.amazon.com (10.13.139.143) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=207.171.190.10;
- envelope-from=prvs=039b511fc=graf@amazon.de; helo=smtp-fw-33001.amazon.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20241108095753.12166-1-jason.chien@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,82 +101,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGV5IE1pY2hhZWwsCgpEb2VzIHRoaXMgcXVldWUgYWxzbyBpbmNsdWRlIHRoZSBmaXggZm9yIHRo
-ZSBmaXggKCJ0YXJnZXQvaTM4NjogRml4IApsZWdhY3kgcGFnZSB0YWJsZSB3YWxrIik/CgpodHRw
-czovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzIwMjQxMTA2MTU0MzI5LjY3MjE4LTEtZ3Jh
-ZkBhbWF6b24uY29tLwoKCkFsZXgKCk9uIDA5LjExLjI0IDA3OjM4LCBNaWNoYWVsIFRva2FyZXYg
-d3JvdGU6Cj4gRnJvbTogQWxleGFuZGVyIEdyYWYgPGdyYWZAYW1hem9uLmNvbT4KPgo+IFdoZW4g
-dHJhbnNsYXRpbmcgdmlydHVhbCB0byBwaHlzaWNhbCBhZGRyZXNzIHdpdGggYSBndWVzdCBDUFUg
-dGhhdAo+IHN1cHBvcnRzIG5lc3RlZCBwYWdpbmcgKE5QVCksIHdlIG5lZWQgdG8gcGVyZm9ybSBl
-dmVyeSBwYWdlIHRhYmxlIHdhbGsKPiBhY2Nlc3MgaW5kaXJlY3RseSB0aHJvdWdoIHRoZSBOUFQs
-IHdoaWNoIHdlIGNvcnJlY3RseSBkby4KPgo+IEhvd2V2ZXIsIHdlIHRyZWF0IHJlYWwgbW9kZSAo
-bm8gcGFnZSB0YWJsZSB3YWxrKSBzcGVjaWFsOiBJbiB0aGF0IGNhc2UsCj4gd2UgY3VycmVudGx5
-IGp1c3Qgc2tpcCBhbnkgd2Fsa3MgYW5kIHRyYW5zbGF0ZSBWQSAtPiBQQS4gV2l0aCBOUFQKPiBl
-bmFibGVkLCB3ZSBhbHNvIG5lZWQgdG8gdGhlbiBwZXJmb3JtIE5QVCB3YWxrIHRvIGRvIEdWQSAt
-PiBHUEEgLT4gSFBBCj4gd2hpY2ggd2UgZmFpbCB0byBkbyBzbyBmYXIuCj4KPiBUaGUgbmV0IHJl
-c3VsdCBvZiB0aGF0IGlzIHRoYXQgVENHIFZNcyB3aXRoIE5QVCBlbmFibGVkIHRoYXQgZXhlY3V0
-ZQo+IHJlYWwgbW9kZSBjb2RlIChsaWtlIFNlYUJJT1MpIGVuZCB1cCB3aXRoIEdQQT09SFBBIG1h
-cHBpbmdzIHdoaWNoIG1lYW5zCj4gdGhlIGd1ZXN0IGFjY2Vzc2VzIGhvc3QgY29kZSBhbmQgZGF0
-YS4gVGhpcyB0eXBpY2FsbHkgc2hvd3MgYXMgZmFpbHVyZQo+IHRvIGJvb3QgZ3Vlc3RzLgo+Cj4g
-VGhpcyBwYXRjaCBjaGFuZ2VzIHRoZSBwYWdlIHdhbGsgbG9naWMgZm9yIE5QVCBlbmFibGVkIGd1
-ZXN0cyBzbyB0aGF0IHdlCj4gYWx3YXlzIHBlcmZvcm0gYSBHVkEgLT4gR1BBIHRyYW5zbGF0aW9u
-IGFuZCB0aGVuIHNraXAgYW55IGxvZ2ljIHRoYXQKPiByZXF1aXJlcyBhbiBhY3R1YWwgUFRFLgo+
-Cj4gVGhhdCB3YXksIGFsbCByZW1haW5pbmcgbG9naWMgdG8gd2FsayB0aGUgTlBUIHN0YXlzIGFu
-ZCB3ZSBzdWNjZXNzZnVsbHkKPiB3YWxrIHRoZSBOUFQgaW4gcmVhbCBtb2RlLgo+Cj4gQ2M6IHFl
-bXUtc3RhYmxlQG5vbmdudS5vcmcKPiBGaXhlczogZmU0NDEwNTRiYjNmMCAoInRhcmdldC1pMzg2
-OiBBZGQgTlBUIHN1cHBvcnQiKQo+IFNpZ25lZC1vZmYtYnk6IEFsZXhhbmRlciBHcmFmIDxncmFm
-QGFtYXpvbi5jb20+Cj4gUmVwb3J0ZWQtYnk6IEVkdWFyZCBWbGFkIDxldmxhZEBhbWF6b24uZGU+
-Cj4gUmV2aWV3ZWQtYnk6IFJpY2hhcmQgSGVuZGVyc29uIDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5h
-cm8ub3JnPgo+IE1lc3NhZ2UtSUQ6IDwyMDI0MDkyMTA4NTcxMi4yODkwMi0xLWdyYWZAYW1hem9u
-LmNvbT4KPiBTaWduZWQtb2ZmLWJ5OiBSaWNoYXJkIEhlbmRlcnNvbiA8cmljaGFyZC5oZW5kZXJz
-b25AbGluYXJvLm9yZz4KPiAoY2hlcnJ5IHBpY2tlZCBmcm9tIGNvbW1pdCBiNTY2MTdiYmNiNDcz
-YzI1ODE1ZDFiZjQ3NWUzMjZmODQ1NjNiMWRlKQo+IFNpZ25lZC1vZmYtYnk6IE1pY2hhZWwgVG9r
-YXJldiA8bWp0QHRscy5tc2sucnU+Cj4KPiBkaWZmIC0tZ2l0IGEvdGFyZ2V0L2kzODYvdGNnL3N5
-c2VtdS9leGNwX2hlbHBlci5jIGIvdGFyZ2V0L2kzODYvdGNnL3N5c2VtdS9leGNwX2hlbHBlci5j
-Cj4gaW5kZXggZWI3OGZjYmExMS4uYTUyYTViNDE3ZSAxMDA2NDQKPiAtLS0gYS90YXJnZXQvaTM4
-Ni90Y2cvc3lzZW11L2V4Y3BfaGVscGVyLmMKPiArKysgYi90YXJnZXQvaTM4Ni90Y2cvc3lzZW11
-L2V4Y3BfaGVscGVyLmMKPiBAQCAtMTQ3LDYgKzE0Nyw3IEBAIHN0YXRpYyBib29sIG1tdV90cmFu
-c2xhdGUoQ1BVWDg2U3RhdGUgKmVudiwgY29uc3QgVHJhbnNsYXRlUGFyYW1zICppbiwKPiAgICAg
-ICB1aW50MzJfdCBwa3I7Cj4gICAgICAgaW50IHBhZ2Vfc2l6ZTsKPiAgICAgICBpbnQgZXJyb3Jf
-Y29kZTsKPiArICAgIGludCBwcm90Owo+Cj4gICAgcmVzdGFydF9hbGw6Cj4gICAgICAgcnN2ZF9t
-YXNrID0gfk1BS0VfNjRCSVRfTUFTSygwLCBlbnZfYXJjaGNwdShlbnYpLT5waHlzX2JpdHMpOwo+
-IEBAIC0yOTUsNyArMjk2LDcgQEAgc3RhdGljIGJvb2wgbW11X3RyYW5zbGF0ZShDUFVYODZTdGF0
-ZSAqZW52LCBjb25zdCBUcmFuc2xhdGVQYXJhbXMgKmluLAo+ICAgICAgICAgICAvKiBjb21iaW5l
-IHBkZSBhbmQgcHRlIG54LCB1c2VyIGFuZCBydyBwcm90ZWN0aW9ucyAqLwo+ICAgICAgICAgICBw
-dGVwICY9IHB0ZSBeIFBHX05YX01BU0s7Cj4gICAgICAgICAgIHBhZ2Vfc2l6ZSA9IDQwOTY7Cj4g
-LSAgICB9IGVsc2Ugewo+ICsgICAgfSBlbHNlIGlmIChwZ19tb2RlKSB7Cj4gICAgICAgICAgIC8q
-Cj4gICAgICAgICAgICAqIFBhZ2UgdGFibGUgbGV2ZWwgMgo+ICAgICAgICAgICAgKi8KPiBAQCAt
-MzQwLDYgKzM0MSwxNSBAQCBzdGF0aWMgYm9vbCBtbXVfdHJhbnNsYXRlKENQVVg4NlN0YXRlICpl
-bnYsIGNvbnN0IFRyYW5zbGF0ZVBhcmFtcyAqaW4sCj4gICAgICAgICAgIHB0ZXAgJj0gcHRlIHwg
-UEdfTlhfTUFTSzsKPiAgICAgICAgICAgcGFnZV9zaXplID0gNDA5NjsKPiAgICAgICAgICAgcnN2
-ZF9tYXNrID0gMDsKPiArICAgIH0gZWxzZSB7Cj4gKyAgICAgICAgLyoKPiArICAgICAgICAgKiBO
-byBwYWdpbmcgKHJlYWwgbW9kZSksIGxldCdzIHRlbnRhdGl2ZWx5IHJlc29sdmUgdGhlIGFkZHJl
-c3MgYXMgMToxCj4gKyAgICAgICAgICogaGVyZSwgYnV0IGNvbmRpdGlvbmFsbHkgc3RpbGwgcGVy
-Zm9ybSBhbiBOUFQgd2FsayBvbiBpdCBsYXRlci4KPiArICAgICAgICAgKi8KPiArICAgICAgICBw
-YWdlX3NpemUgPSAweDQwMDAwMDAwOwo+ICsgICAgICAgIHBhZGRyID0gaW4tPmFkZHI7Cj4gKyAg
-ICAgICAgcHJvdCA9IFBBR0VfUkVBRCB8IFBBR0VfV1JJVEUgfCBQQUdFX0VYRUM7Cj4gKyAgICAg
-ICAgZ290byBzdGFnZTI7Cj4gICAgICAgfQo+Cj4gICBkb19jaGVja19wcm90ZWN0Ogo+IEBAIC0z
-NTUsNyArMzY1LDcgQEAgZG9fY2hlY2tfcHJvdGVjdF9wc2UzNjoKPiAgICAgICAgICAgZ290byBk
-b19mYXVsdF9wcm90ZWN0Owo+ICAgICAgIH0KPgo+IC0gICAgaW50IHByb3QgPSAwOwo+ICsgICAg
-cHJvdCA9IDA7Cj4gICAgICAgaWYgKCFpc19tbXVfaW5kZXhfc21hcChpbi0+bW11X2lkeCkgfHwg
-IShwdGVwICYgUEdfVVNFUl9NQVNLKSkgewo+ICAgICAgICAgICBwcm90IHw9IFBBR0VfUkVBRDsK
-PiAgICAgICAgICAgaWYgKChwdGVwICYgUEdfUldfTUFTSykgfHwgIShpc191c2VyIHx8IChwZ19t
-b2RlICYgUEdfTU9ERV9XUCkpKSB7Cj4gQEAgLTQxNyw2ICs0MjcsNyBAQCBkb19jaGVja19wcm90
-ZWN0X3BzZTM2Ogo+Cj4gICAgICAgLyogbWVyZ2Ugb2Zmc2V0IHdpdGhpbiBwYWdlICovCj4gICAg
-ICAgcGFkZHIgPSAocHRlICYgUEdfQUREUkVTU19NQVNLICYgfihwYWdlX3NpemUgLSAxKSkgfCAo
-YWRkciAmIChwYWdlX3NpemUgLSAxKSk7Cj4gKyBzdGFnZTI6Cj4KPiAgICAgICAvKgo+ICAgICAg
-ICAqIE5vdGUgdGhhdCBOUFQgaXMgd2Fsa2VkIChmb3IgYm90aCBwYWdpbmcgc3RydWN0dXJlcyBh
-bmQgZmluYWwgZ3Vlc3QKPiBAQCAtNTU4LDcgKzU2OSw3IEBAIHN0YXRpYyBib29sIGdldF9waHlz
-aWNhbF9hZGRyZXNzKENQVVg4NlN0YXRlICplbnYsIHZhZGRyIGFkZHIsCj4gICAgICAgICAgICAg
-ICBhZGRyID0gKHVpbnQzMl90KWFkZHI7Cj4gICAgICAgICAgIH0KPgo+IC0gICAgICAgIGlmIChs
-aWtlbHkoZW52LT5jclswXSAmIENSMF9QR19NQVNLKSkgewo+ICsgICAgICAgIGlmIChsaWtlbHko
-ZW52LT5jclswXSAmIENSMF9QR19NQVNLIHx8IHVzZV9zdGFnZTIpKSB7Cj4gICAgICAgICAgICAg
-ICBpbi5jcjMgPSBlbnYtPmNyWzNdOwo+ICAgICAgICAgICAgICAgaW4ubW11X2lkeCA9IG1tdV9p
-ZHg7Cj4gICAgICAgICAgICAgICBpbi5wdHdfaWR4ID0gdXNlX3N0YWdlMiA/IE1NVV9ORVNURURf
-SURYIDogTU1VX1BIWVNfSURYOwo+IC0tCj4gMi4zOS41Cj4KCgoKQW1hem9uIFdlYiBTZXJ2aWNl
-cyBEZXZlbG9wbWVudCBDZW50ZXIgR2VybWFueSBHbWJICktyYXVzZW5zdHIuIDM4CjEwMTE3IEJl
-cmxpbgpHZXNjaGFlZnRzZnVlaHJ1bmc6IENocmlzdGlhbiBTY2hsYWVnZXIsIEpvbmF0aGFuIFdl
-aXNzCkVpbmdldHJhZ2VuIGFtIEFtdHNnZXJpY2h0IENoYXJsb3R0ZW5idXJnIHVudGVyIEhSQiAy
-NTc3NjQgQgpTaXR6OiBCZXJsaW4KVXN0LUlEOiBERSAzNjUgNTM4IDU5Nwo=
+
+
+On 11/8/24 6:57 AM, Jason Chien wrote:
+>  From RISCV IOMMU spec section 2.1.3:
+> When SXL is 1, the following rules apply:
+> - If the first-stage is not Bare, then a page fault corresponding to the
+> riginal access type occurs if the IOVA has bits beyond bit 31 set to 1.
+
+s/riginal/original
+
+> - If the second-stage is not Bare, then a guest page fault corresponding
+> o the original access type occurs if the incoming GPA has bits beyond bit
+> 33 set to 1.
+> 
+>  From RISCV IOMMU spec section 2.3 step 17:
+> Use the process specified in Section "Two-Stage Address Translation" of
+> the RISC-V Privileged specification to determine the GPA accessed by the
+> transaction.
+> 
+>  From RISCV IOMMU spec section 2.3 step 19:
+> Use the second-stage address translation process specified in Section
+> "Two-Stage Address Translation" of the RISC-V Privileged specification
+> to translate the GPA A to determine the SPA accessed by the transaction.
+> 
+> This commit adds the iova check with the following rules:
+> - For Sv32, Sv32x4, Sv39x4, Sv48x4 and Sv57x4, the iova must be zero
+> extended.
+> - For Sv39, Sv48 and Sv57, the iova must be signed extended with most
+> significant bit.
+> 
+> Signed-off-by: Jason Chien <jason.chien@sifive.com>
+> ---
+
+LGTM
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   hw/riscv/riscv-iommu.c | 23 ++++++++++++++++++++---
+>   1 file changed, 20 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index bbc95425b3..ff9deefe37 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -392,9 +392,26 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>   
+>           /* Address range check before first level lookup */
+>           if (!sc[pass].step) {
+> -            const uint64_t va_mask = (1ULL << (va_skip + va_bits)) - 1;
+> -            if ((addr & va_mask) != addr) {
+> -                return RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED;
+> +            const uint64_t va_len = va_skip + va_bits;
+> +            const uint64_t va_mask = (1ULL << va_len) - 1;
+> +
+> +            if (pass == S_STAGE && va_len > 32) {
+> +                target_ulong mask, masked_msbs;
+> +
+> +                mask = (1L << (TARGET_LONG_BITS - (va_len - 1))) - 1;
+> +                masked_msbs = (addr >> (va_len - 1)) & mask;
+> +
+> +                if (masked_msbs != 0 && masked_msbs != mask) {
+> +                    return (iotlb->perm & IOMMU_WO) ?
+> +                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S :
+> +                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S;
+> +                }
+> +            } else {
+> +                if ((addr & va_mask) != addr) {
+> +                    return (iotlb->perm & IOMMU_WO) ?
+> +                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
+> +                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS;
+> +                }
+>               }
+>           }
+>   
 
 
