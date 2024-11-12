@@ -4,106 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D93CED42B97
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 15:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFADDD42B9B
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 15:23:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAsXw-00011u-LG; Tue, 12 Nov 2024 10:11:12 -0500
+	id 1tAsjX-0003l2-Ct; Tue, 12 Nov 2024 10:23:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=0wfx=SH=kaod.org=clg@ozlabs.org>)
- id 1tAsXu-00011c-V1; Tue, 12 Nov 2024 10:11:11 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tAsjR-0003kN-Q5; Tue, 12 Nov 2024 10:23:07 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=0wfx=SH=kaod.org=clg@ozlabs.org>)
- id 1tAsXr-0004Av-Pu; Tue, 12 Nov 2024 10:11:10 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XnqcG2xf2z4x8T;
- Wed, 13 Nov 2024 02:10:54 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Xnqc62RMRz4wZx;
- Wed, 13 Nov 2024 02:10:46 +1100 (AEDT)
-Message-ID: <59bd8d1e-c56a-4e77-a2a8-0f7050249423@kaod.org>
-Date: Tue, 12 Nov 2024 16:10:44 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 3/8] usb/uhci: Move PCI-related code into a separate
- file
-To: Guenter Roeck <linux@roeck-us.net>, Thomas Huth <thuth@redhat.com>,
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tAsjP-0005ly-SN; Tue, 12 Nov 2024 10:23:05 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id B320E5C2803;
+ Tue, 12 Nov 2024 15:22:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAC6C4CECD;
+ Tue, 12 Nov 2024 15:22:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1731424979;
+ bh=ygmiDec5oZDSySVozuUuRvuYRB9Cjy50S5yr7boJjtg=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=EDkeT8Ykv6F+Cv5+aRlUN6E5pI0wm6BtmuxfT5EtZvxeIyXsEZ1XuXN83ALX+JO2Q
+ 7WvfpoJES3dV30Uveev/lUWY4TILE4YzHsQx6UjLNbs3qNrTFKyyJhuQVvqt79F2Hh
+ X6kInZryDZWaBqztAq9xgwoTxR135P8sny5eLX3tG+L8p03EM5nEeGwcU4+ZAsztWh
+ WNhiwxzE7XAO0fjDgsGZRw/S6wJAMPYZmcE/5TcrL7BXKaQU++uR5hthjm/WVaTsjr
+ O3SyVgFhW6y25E6R0SrSGQsOeVfWGjRNXt6/+tEpM583VXUyCtUVxt57J6GoiopJWN
+ sEPdQtrTEuJgw==
+Date: Tue, 12 Nov 2024 16:22:54 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
+ <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Philippe
+ =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
+ <zhao1.liu@intel.com>, linux-kernel@vger.kernel.org, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-Cc: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- BALATON Zoltan <balaton@eik.bme.hu>, "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
-References: <20240906122542.3808997-1-linux@roeck-us.net>
- <20240906122542.3808997-4-linux@roeck-us.net>
- <2a318a7f-dd37-4fce-9106-7a85236c9408@redhat.com>
- <ee184371-68f0-4982-8f94-2170332fbc8a@roeck-us.net>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <ee184371-68f0-4982-8f94-2170332fbc8a@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=0wfx=SH=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [PATCH RFC 4/5] acpi/generic_event_device: add logic to detect
+ if HEST addr is available
+Message-ID: <20241112162254.65cc3efc@foz.lan>
+In-Reply-To: <20241112155557.728e9d68@foz.lan>
+References: <cover.1727782588.git.mchehab+huawei@kernel.org>
+ <176693e011a411db92be9e912bfc4a9da0e664b7.1727782588.git.mchehab+huawei@kernel.org>
+ <20241003162728.1de6fc62@imammedo.users.ipa.redhat.com>
+ <20241112155557.728e9d68@foz.lan>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,71 +81,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/24 15:50, Guenter Roeck wrote:
-> Hi Thomas,
-> 
-> On 11/11/24 22:32, Thomas Huth wrote:
->> On 06/09/2024 14.25, Guenter Roeck wrote:
->>> Some machines (like Aspeed ARM) only have a sysbus UHCI controller.
->>> The current UHCI implementation only supports PCI based UHCI controllers.
->>> Move the UHCI-PCI device code into a separate file so that it is possible
->>> to create a sysbus UHCI device without PCI dependency.
->>
->>   Hi Guenter,
->>
->> I think there's a bug in here ...
->>
->>> diff --git a/hw/usb/vt82c686-uhci-pci.c b/hw/usb/vt82c686-uhci-pci.c
->>> index 6162806172..7fdb4697f9 100644
->>> --- a/hw/usb/vt82c686-uhci-pci.c
->>> +++ b/hw/usb/vt82c686-uhci-pci.c
->>> @@ -1,17 +1,17 @@
->>>   #include "qemu/osdep.h"
->>>   #include "hw/irq.h"
->>>   #include "hw/isa/vt82c686.h"
->>> -#include "hcd-uhci.h"
->>> +#include "hcd-uhci-pci.h"
->>>   static void uhci_isa_set_irq(void *opaque, int irq_num, int level)
->>>   {
->>> -    UHCIState *s = opaque;
->>> +    UHCIPCIState *s = opaque;
->>
->> You use UHCIPCIState as parameter for the irq-related functions...
->>
->>>       via_isa_set_irq(&s->dev, 0, level);
->>>   }
->>>   static void usb_uhci_vt82c686b_realize(PCIDevice *dev, Error **errp)
->>>   {
->>> -    UHCIState *s = UHCI(dev);
->>> +    UHCIPCIState *s = UHCI_PCI(dev);
->>>       uint8_t *pci_conf = s->dev.config;
->>>       /* USB misc control 1/2 */
->>> @@ -21,12 +21,12 @@ static void usb_uhci_vt82c686b_realize(PCIDevice *dev, Error **errp)
->>>       /* USB legacy support  */
->>>       pci_set_long(pci_conf + 0xc0, 0x00002000);
->>> -    usb_uhci_common_realize(dev, errp);
->>> -    object_unref(s->irq);
->>> -    s->irq = qemu_allocate_irq(uhci_isa_set_irq, s, 0);
->>> +    usb_uhci_common_realize_pci(dev, errp);
->>> +    object_unref(s->state.irq);
->>> +    s->state.irq = qemu_allocate_irq(uhci_isa_set_irq, &s->state, 0);
->>
->> ... but you set it up with UHCIInfo as parameter here. I think this line should rather be:
->>
->>      s->state.irq = qemu_allocate_irq(uhci_isa_set_irq, s, 0);
->>
->> Shouldn't it?
->>
-> 
-> Yes, you are correct. Thanks for reporting it. Turns out I had fixed that in the
-> meantime, but did not remember to send another version. Is there any interest,
-> and should I resend ?
+Em Tue, 12 Nov 2024 15:55:57 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
 
-Please do. I was planning on merging the obvious ones in QEMU 10.0
-and spend more time reviewing the others.
+> Em Thu, 3 Oct 2024 16:27:28 +0200
+> Igor Mammedov <imammedo@redhat.com> escreveu:
+> 
+> > > +++ b/hw/acpi/ghes.c
+> > > @@ -513,7 +513,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+> > >      }
+> > >      ags = &acpi_ged_state->ghes_state;
+> > >  
+> > > -    if (!ags->hest_addr_le) {
+> > > +    if (!ags->hest_lookup) {
+> > >          get_ghes_offsets(le64_to_cpu(ags->hw_error_le),
+> > >                           &cper_addr, &read_ack_register_addr);    
+> > 
+> > just fencing off lookup is not enough,
+> > to be compatible with qemu-9.1 (virt-9.1) we also should not publish hest_addr fwcfg.  
+> 
+> I tried this:
+> 
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index 201e72516608..6bb962d3c449 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -402,8 +402,10 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+>      fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
+>          NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
+>  
+> -    fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
+> -        NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
+> +    if (ags->hest_lookup) {
+> +        fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
+> +            NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
+> +    }
+>  
+>      ags->present = true;
+>  }
+> 
+> But with such change, boot fails:
+> 
+> EFI stub: Booting Linux Kernel...
+> UpdateRegionMappingRecursive(0): DF100000 - E1B90000 set 400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(1): DF100000 - E1B90000 set 400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(2): C0000000 - 100000000 set 6000000000070C clr 0
+> UpdateRegionMappingRecursive(2): DF100000 - E1B90000 set 400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(3): DF000000 - DF200000 set 6000000000070C clr 0
+> UpdateRegionMappingRecursive(3): DF100000 - DF200000 set 400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(3): E1A00000 - E1C00000 set 6000000000070C clr 0
+> UpdateRegionMappingRecursive(3): E1A00000 - E1B90000 set 400 clr FF9F000000000B3F
+> EFI stub: Generating empty DTB
+> EFI stub: Exiting boot services...
+> UpdateRegionMappingRecursive(0): 139AC1000 - 139CD0000 set 400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(1): 139AC1000 - 139CD0000 set 400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(2): 139AC1000 - 139CD0000 set 400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(3): 139A00000 - 139C00000 set 6000000000070C clr 0
+> UpdateRegionMappingRecursive(3): 139AC1000 - 139C00000 set 400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(3): 139C00000 - 139CD0000 set 400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(0): 139AC1000 - 139AD0000 set 60000000000400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(1): 139AC1000 - 139AD0000 set 60000000000400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(2): 139AC1000 - 139AD0000 set 60000000000400 clr FF9F000000000B3F
+> UpdateRegionMappingRecursive(3): 139AC1000 - 139AD0000 set 60000000000400 clr FF9F000000000B3F
+> SetUefiImageMemoryAttributes - 0x000000013FE60000 - 0x0000000000040000 (0x0000000000000008)
+> UpdateRegionMappingRecursive(0): 13FE60000 - 13FEA0000 set 70C clr 0
+> UpdateRegionMappingRecursive(1): 13FE60000 - 13FEA0000 set 70C clr 0
+> UpdateRegionMappingRecursive(2): 13FE60000 - 13FEA0000 set 70C clr 0
+> UpdateRegionMappingRecursive(3): 13FE60000 - 13FEA0000 set 70C clr 0
+> SetUefiImageMemoryAttributes - 0x000000013CAF0000 - 0x0000000000040000 (0x0000000000000008)
+> UpdateRegionMappingRecursive(0): 13CAF0000 - 13CB30000 set 70C clr 0
+> UpdateRegionMappingRecursive(1): 13CAF0000 - 13CB30000 set 70C clr 0
+> UpdateRegionMappingRecursive(2): 13CAF0000 - 13CB30000 set 70C clr 0
+> UpdateRegionMappingRecursive(3): 13CAF0000 - 13CB30000 set 70C clr 0
+> SetUefiImageMemoryAttributes - 0x000000013CAA0000 - 0x0000000000040000 (0x0000000000000008)
+> UpdateRegionMappingRecursive(0): 13CAA0000 - 13CAE0000 set 70C clr 0
+> UpdateRegionMappingRecursive(1): 13CAA0000 - 13CAE0000 set 70C clr 0
+> UpdateRegionMappingRecursive(2): 13CAA0000 - 13CAE0000 set 70C clr 0
+> UpdateRegionMappingRecursive(3): 13CAA0000 - 13CAE0000 set 70C clr 0
+> SetUefiImageMemoryAttributes - 0x000000013CA50000 - 0x0000000000040000 (0x0000000000000008)
+> UpdateRegionMappingRecursive(0): 13CA50000 - 13CA90000 set 70C clr 0
+> UpdateRegionMappingRecursive(1): 13CA50000 - 13CA90000 set 70C clr 0
+> UpdateRegionMappingRecursive(2): 13CA50000 - 13CA90000 set 70C clr 0
+> UpdateRegionMappingRecursive(3): 13CA50000 - 13CA90000 set 70C clr 0
+> SetUefiImageMemoryAttributes - 0x000000013C960000 - 0x0000000000040000 (0x0000000000000008)
+> UpdateRegionMappingRecursive(0): 13C960000 - 13C9A0000 set 70C clr 0
+> UpdateRegionMappingRecursive(1): 13C960000 - 13C9A0000 set 70C clr 0
+> UpdateRegionMappingRecursive(2): 13C960000 - 13C9A0000 set 70C clr 0
+> UpdateRegionMappingRecursive(3): 13C960000 - 13C9A0000 set 70C clr 0
+> SetUefiImageMemoryAttributes - 0x000000013FE20000 - 0x0000000000030000 (0x0000000000000008)
+> UpdateRegionMappingRecursive(0): 13FE20000 - 13FE50000 set 70C clr 0
+> UpdateRegionMappingRecursive(1): 13FE20000 - 13FE50000 set 70C clr 0
+> UpdateRegionMappingRecursive(2): 13FE20000 - 13FE50000 set 70C clr 0
+> UpdateRegionMappingRecursive(3): 13FE20000 - 13FE50000 set 70C clr 0
+> SetUefiImageMemoryAttributes - 0x000000013C7B0000 - 0x0000000000030000 (0x0000000000000008)
+> UpdateRegionMappingRecursive(0): 13C7B0000 - 13C7E0000 set 70C clr 0
+> UpdateRegionMappingRecursive(1): 13C7B0000 - 13C7E0000 set 70C clr 0
+> UpdateRegionMappingRecursive(2): 13C7B0000 - 13C7E0000 set 70C clr 0
+> UpdateRegionMappingRecursive(3): 13C7B0000 - 13C7E0000 set 70C clr 0
+> SetUefiImageMemoryAttributes - 0x000000013C770000 - 0x0000000000030000 (0x0000000000000008)
+> UpdateRegionMappingRecursive(0): 13C770000 - 13C7A0000 set 70C clr 0
+> UpdateRegionMappingRecursive(1): 13C770000 - 13C7A0000 set 70C clr 0
+> UpdateRegionMappingRecursive(2): 13C770000 - 13C7A0000 set 70C clr 0
+> UpdateRegionMappingRecursive(3): 13C770000 - 13C7A0000 set 70C clr 0
+> 
+> At this point, nothing else appears, and bios doesn't boot OSPM. 
+> 
+> (I'm using an arm64 BIOS with debug enabled)
+> 
+> Thanks,
+> Mauro
+
+Got it. In order to be able to remove a call to 
+fw_cfg_add_file_callback(), no calls to bios_linker_loader_write_pointer()
+can happen.
+
+That basically explains why we can't do:
+
+	if (!ags->hest_lookup) {
+	     fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
+        	 NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
+	}
+
+We need the BIOS file callback to solve all the pointers that
+were created between HEST table and the hardware error table.
+
+This hunk worked:
+
+
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index 201e72516608..245efde75a8f 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -385,10 +385,12 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+      * tell firmware to write into GPA the address of HEST via fw_cfg,
+      * once initialized.
+      */
+-    bios_linker_loader_write_pointer(linker,
+-                                     ACPI_HEST_ADDR_FW_CFG_FILE, 0,
+-                                     sizeof(uint64_t),
+-                                     ACPI_BUILD_TABLE_FILE, hest_offset);
++    if (ags->hest_lookup) {
++        bios_linker_loader_write_pointer(linker,
++                                         ACPI_HEST_ADDR_FW_CFG_FILE, 0,
++                                         sizeof(uint64_t),
++                                         ACPI_BUILD_TABLE_FILE, hest_offset);
++    }
+ }
+ 
+ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+@@ -402,8 +404,10 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+     fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
+         NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
+ 
+-    fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
+-        NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
++    if (ags->hest_lookup) {
++        fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
++            NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
++    }
+ 
+     ags->present = true;
+ }
 
 Thanks,
-
-C.
-
+Mauro
 
