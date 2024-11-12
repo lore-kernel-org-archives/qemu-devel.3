@@ -4,172 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1581BD42BAB
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 16:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DAA0D42BAA
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 16:32:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAtlL-00039Z-T7; Tue, 12 Nov 2024 11:29:07 -0500
+	id 1tAtn7-0004Ye-0P; Tue, 12 Nov 2024 11:30:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1tAtlJ-00038p-P6
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 11:29:05 -0500
-Received: from mail-dm6nam11on2041.outbound.protection.outlook.com
- ([40.107.223.41] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tAtn4-0004V7-HY
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 11:30:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1tAtlG-0005c3-8W
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 11:29:05 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oEpba5DWHJdbV3vFkb87PBVDkM8xED8AWuWyyYZXWMNmYCKkj3DVGJugKMX4RcSLLbR7HyZm7Q019/kufb64guLez0Xc9+jeuloAvMOcVceGBUgDEypzg9Dp8MM0SbnP8W3ArNZOnAhOTZhLR9WN67uKFg1elzsxTINPlV8V+SIgI6wQIIFMQHLErpOb8k/a8ZZlxjoam2UAHrE1xiXHDc0sm7W+4SALELjh6wGC2gopuSwLkBYtfTxSjrrYJGkmgIRptK4qw37J9qXLCESQkL+5p8LRCHlzWLtcNZm5qghXhjJlFXD2MKeAVa6S8fWEeYVeYRRl6lfV39Hor/31xg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ycr+2cYAwCIKToCiUnwg6cEAHHJ9NRFyA3HizlIVPA4=;
- b=G8Qs7wIblMubgEvqHIY0nvPrJ69oqH4QHa/t1ThkFAqNRHuxspBAlWrkk/0ecEYwxzf1N6nTwdbyLMWqJ/o/NKgV3quZz0gnfZcMf6vCodMWhNwCO1w25p5RinaDg4FtBuTM35YgTi6rIT3ck4TDEuwIsNXpTyYYv/FZpCZVxVczSdaugNnJf50KvvoRFSbq6r08QBpeNBgT+CjJnXELCuw1Kw6hcvxsD6itAUNLrxucIq/H1np5hFUR4zyYO71LY44X/dJHVcCFldxbE+xKLSGQXgVMtuNgf3xi4HBIKspv1dqebwOcF5k57mzjwDMXl25isfS8bcInI9mPvylecQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ycr+2cYAwCIKToCiUnwg6cEAHHJ9NRFyA3HizlIVPA4=;
- b=gXYV+U56miXf0WxmZ/RT+iynBfkmyi6CJQD4FcjjFws+X8WwDZxK0djB4UqcG3IxlkOywOT+D0sMjwZG2rGBk15QcHhMDh6l7gFnP2Dgb35TQ/l/6yiVZqf8nqU/j2TKWCoO3Lozu6Njfjdaf1IDsbU3Vgp8FdOBltRZ12KXZis=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
- by CY5PR12MB6406.namprd12.prod.outlook.com (2603:10b6:930:3d::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.28; Tue, 12 Nov
- 2024 16:23:55 +0000
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::b0ef:2936:fec1:3a87]) by MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::b0ef:2936:fec1:3a87%5]) with mapi id 15.20.8137.022; Tue, 12 Nov 2024
- 16:23:55 +0000
-Message-ID: <7f7bf82f-c550-48c8-af38-e0992829f57d@amd.com>
-Date: Tue, 12 Nov 2024 10:23:50 -0600
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 7/7] target/i386: Add EPYC-Genoa model to support Zen 4
- processor series
-To: Maksim Davydov <davydov-max@yandex-team.ru>
-Cc: weijiang.yang@intel.com, philmd@linaro.org, dwmw@amazon.co.uk,
- paul@xen.org, joao.m.martins@oracle.com, qemu-devel@nongnu.org,
- mtosatti@redhat.com, kvm@vger.kernel.org, mst@redhat.com,
- marcel.apfelbaum@gmail.com, yang.zhong@intel.com, jing2.liu@intel.com,
- vkuznets@redhat.com, michael.roth@amd.com, wei.huang2@amd.com,
- berrange@redhat.com, bdas@redhat.com, pbonzini@redhat.com,
- richard.henderson@linaro.org
-References: <20230504205313.225073-1-babu.moger@amd.com>
- <20230504205313.225073-8-babu.moger@amd.com>
- <e8e0bc10-07ea-4678-a319-fc8d6938d9bd@yandex-team.ru>
- <4b38c071-ecb0-112b-f4c4-d1d68e5db63d@amd.com>
- <24462567-e486-4b7f-b869-a1fab48d739c@yandex-team.ru>
-Content-Language: en-US
-From: "Moger, Babu" <babu.moger@amd.com>
-In-Reply-To: <24462567-e486-4b7f-b869-a1fab48d739c@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SA1P222CA0145.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:806:3c2::29) To MW3PR12MB4553.namprd12.prod.outlook.com
- (2603:10b6:303:2c::19)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tAtn2-00061f-Eb
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 11:30:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731429050;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LYLr+rh5hOZBfdtfKnkZ93awofZ11kfZdonr2arSeaw=;
+ b=gklgdPev3wy3ZgFZDwj96El02QVENoZa9DB+/atQju4Ww0BU0cbTYlANauefuC3pHrfxxo
+ 0J8mQHURDSC0COWtY8ZWdrv8FdkDC9fo/Bn9vOLePnbEZKl0jD2Lr4dNd1QceInOpy0RGO
+ Ol382rEjIt/raVPVbZzdpj09Yjkb7iw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-332-qD_3M_D0MZ-H7d9sdBjsew-1; Tue,
+ 12 Nov 2024 11:30:45 -0500
+X-MC-Unique: qD_3M_D0MZ-H7d9sdBjsew-1
+X-Mimecast-MFC-AGG-ID: qD_3M_D0MZ-H7d9sdBjsew
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5DB4A1956095; Tue, 12 Nov 2024 16:30:37 +0000 (UTC)
+Received: from localhost (unknown [10.39.194.144])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E75C31956089; Tue, 12 Nov 2024 16:30:34 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: eric.auger@redhat.com, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
+ armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: Re: [RFC 18/21] arm/cpu: Introduce a customizable kvm host cpu model
+In-Reply-To: <87ikstn8sc.fsf@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20241025101959.601048-1-eric.auger@redhat.com>
+ <20241025101959.601048-19-eric.auger@redhat.com>
+ <ZxuX4i9NjVRizB72@redhat.com>
+ <cb6c8f62-c5dc-416d-865f-fbdf96164dac@redhat.com>
+ <Zxub7ol4p8P_sWF8@redhat.com>
+ <CAFEAcA_wQu17y0PyQwxw0wuf2H5y2VE5aX16nLP2-u7QUP2ggA@mail.gmail.com>
+ <Zx-9WxXkmkMuGIlQ@redhat.com>
+ <CAFEAcA9w0mb5bcU8p+fScQony-=oqLmNurGWpnL_sBneQCzxUg@mail.gmail.com>
+ <Zx_EGxj2aqc_2-kY@redhat.com>
+ <63c232c2-a325-48d6-8ed4-753a7c6e3b4e@redhat.com>
+ <87ikstn8sc.fsf@redhat.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Tue, 12 Nov 2024 17:30:32 +0100
+Message-ID: <87frnwmn2v.fsf@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|CY5PR12MB6406:EE_
-X-MS-Office365-Filtering-Correlation-Id: 52dbbfb1-92ae-41c5-2123-08dd033666af
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WnYxWU1rK2YvblFTalBMZmJPcytrUTZYbXdYdUcrZnprUUhiajUwS0lVY05j?=
- =?utf-8?B?cGg3TlFENjQwajdnOG5ndmtGRXNmS3Rwd1U3TU8weTVlVy9WYTQ4K2tSY1J2?=
- =?utf-8?B?NUtWVldhT2ROd0pTcm54OVBpekFhUVBYVzJXb1M1cFRwZG91bTV0TXRRTkpC?=
- =?utf-8?B?enVCRUh4NXFBSVNsS1ppUDlvd0lpaUFtOCtIcXdTWXZSTUtqMUNuMFlUeVVv?=
- =?utf-8?B?S1hvdXBJYmtlalJLeDY5cVZKdk5IMlRGKzBqOS9HZEx6WStIUDBINGFiT3Fk?=
- =?utf-8?B?NmZPZmluVGlwUTAzcUVCTTdjQTMwNlRzM1A0ZmJRQXh5dUcvOU4yZHFWOWV6?=
- =?utf-8?B?a2d0SDB2ZmZtSEhhNnNEQW5lLytpTjdudEhORXo1WVVSRXpWRFlIOTBpUS8y?=
- =?utf-8?B?ckM5RHB6T2JEZVhJTnpmTVdpUUxRYURWSlB2cTdsTG9leG12eGxHenFmNlBI?=
- =?utf-8?B?TlNDUTk2QkdlTjYvM3c5ZzBHZDlHYXYrZkxyakpRUjA3K1krcEJ2SHN6ZUoz?=
- =?utf-8?B?cXJhbkVBem9uNzlBMmNmOWw2UFI0TUhHcXMxOE5hamk5eGRHWFY3akFLWjh2?=
- =?utf-8?B?RURrdzh0emNqRU45VUR3TnkrU1ZuOFNWaFdFeFZQRmRObmduRmdtUEpENEZu?=
- =?utf-8?B?dlpPUTVPcEFnRUVnTHBjUVZvQUhDOE1qOHBNcUkyN1BXdjU3WTltcFRzVVFG?=
- =?utf-8?B?TzNQTXNLVkRkbU9qZEhOVitaaUdhbVZQRzVTZCtzUlo2NFFlN01jSmd3TDNP?=
- =?utf-8?B?VE92QjBUTmV2UEhFR3B5K254eVgwNFh2OVhDOXFLREVwUnE0a2hLekJUWCtQ?=
- =?utf-8?B?cUpDem54dXhWN0FwRW9mcFJGL0RBMkFORnpPaFJSWkxRTFRNMkZkRlZYbkRH?=
- =?utf-8?B?aExHSXFTdU5MejdlbmlrRzNhN2dQMTRsR3JCOXpjbFRHdUltd2ZQV21qTWE5?=
- =?utf-8?B?bHUxdFlna01hVnlRUDg5RHExOVJ0ZUFWVDlIV053eUlCYmFtVzZMQ2pBYXdn?=
- =?utf-8?B?WlU0UWIvRGZqei9WUCtQVGpmUVpBLzNmRm9WcFZoTkppR1J5M1hjVVNOdFZ5?=
- =?utf-8?B?UW9aRHc1c1hqY0pXa1RYY0g5Rk1lYzBpc3E4Z1hxdWVTWGViem5nL3ByZFVZ?=
- =?utf-8?B?aUdLUndObmpueGt6L2M5TCtDMCt5T0NRQ29TVVE4YWpabllYTjQzWGVqWHdG?=
- =?utf-8?B?eUJjVXF5ZlY3b3pKVmIyellJZ1RUeGg1d0ZidUx2U0RzRCtxN1VhQ2drSWlp?=
- =?utf-8?B?V1U4WUdhbkZueHd1OGlESWtna2ltTWhWWlFaNEdwalRjODY2S3piL0E0Zmdp?=
- =?utf-8?B?N0J3RnlsWXZ4TkF0MDVYdHVBUnFFOGdNZlJFNGo0eU5pZ2p0ZmxVVndSQmZk?=
- =?utf-8?B?R2RKWXg3cHpDOUd1V0d5RlFhenJ4cURmZnJEVFh6TkZRSDZWWFpsYUVHT3lT?=
- =?utf-8?B?a0JkSWRsVHM0YWVkVk81UXpEWXowZnZ4dTc1Y2VQcTFyczhSKzdIK0VjdkJ4?=
- =?utf-8?B?THNkM0hLSkxpd0UyTmx1dEJNQ1IyMTVvYnZROFNaaTJ6YVZ2ZnVSTk92Y1g1?=
- =?utf-8?B?Z1Y3Myt6OGJTRTVFNCtXL1ZzbXdDNkgvWGRQbnBTQmlPeXpaWjV2UlRSaVVr?=
- =?utf-8?B?Ykc0ZHVFWFFNZ2l0cUx6b0MvRnNTVUtYSm44WG80L1lQYjMreHFQQlZPQUUr?=
- =?utf-8?B?ekVDWk5lTHNnVlJHS3oxTjRsR0xvMlljWmJSWEJaRWo3dElBdWJnRVp4N2hw?=
- =?utf-8?Q?89IXPli3+IcjguFuCWivT/IucoGaRhseBRmY/rN?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW3PR12MB4553.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(366016)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?c0dFb1R2TkJjaGFKZGYrOXNpRzZvU1dQU0RhVXdPbHFXc04reDhSRzdFcGox?=
- =?utf-8?B?L1NWNGFEWmwvTFZkWUk4QUFBVW15bmJjZ2YzUHE0UmJDV3MyMWh5d3YvaVVt?=
- =?utf-8?B?Ni8vV1Y1bEdzV01rYmNuRVlGaHNoemttTDF2bzNxYVFzaVlFWGlGMVRFRXJw?=
- =?utf-8?B?VDBtZlJ4NHpGeGxORUZRMXlnZ0xxSDIxcnFHbHI4MXN2bjZnVW9qRVFSc1pG?=
- =?utf-8?B?WnRkR0ZpeDc2RCtwd0YvQlAxSk5hMFpOdVF6YWVTZnYzakN0MWRoWjZYTWJy?=
- =?utf-8?B?emkxL3ovdXNMamYxMmhrdUJRalBJK24yTnYzdmIrZVRXdlU3TVNYQkdkbUQy?=
- =?utf-8?B?UEkxMHd0Q0M3RU5ERklzUkd3OFVVVklxRXgzNmNtSFhaREdmNkRPTFNlODFB?=
- =?utf-8?B?VUV1U0hZSW9rNDJQeDFDbnFSSkFJZkJaQ1YySmhndEgwamFrYlYvRHNVbitj?=
- =?utf-8?B?aGo3cUVRM2tpa3FsaHhrbWUyM2ZBZnJBNTlsVk5ZYVE3WUNYYkhiRXRBc2g1?=
- =?utf-8?B?YmQzUm9CNktGRitGajY4Z3l6ZnhNMXZPMWdscVFPemgwKzZxN2JySWhjOUlN?=
- =?utf-8?B?SnJnT1ZkN0NFamtkYWRVUzJCdnJrQytPa3pFY0o2KzR5dGtmWUZnbmhqM0Zi?=
- =?utf-8?B?ckxOd0Nuby9jV0gwVDhyMHN3cSt6c1QrM29Pb2VRVlJuQW5KVFozb0dxakxa?=
- =?utf-8?B?UHBXQlN5WDBjWXNBeStHQUlSWlJKWTlPN3M1YVBwSXlwL09nTlB6Vkw1ck9Z?=
- =?utf-8?B?SzZlT2hWRzJEQi9CVi9DYnBSWnhqMyswWVpkY2ovWnhJbEFRODhmMWNnS2tI?=
- =?utf-8?B?cUpReEN4Qy9VZjZHWEpya0tOSGl3bGZkMFl3bnhBT3RRaXRYaklIanFXMmJ5?=
- =?utf-8?B?SkpkY0kyc0VDeVJrbW9ON3REeGMva2JqSU04Zk5SVTJLK0ZEOE1HUUxWNThY?=
- =?utf-8?B?amovUEJnbGtPemhQUHdrRHRXMFI1UUYzWmYxdHNIREx1T0JSOFo3YVZodG5z?=
- =?utf-8?B?ZTVrRWM1QjlMN0F1a0RQdlZNc2UrSjk2UlliYnEzN2libitKdkF5ajhPUCt4?=
- =?utf-8?B?QlozZ1JzSXN2T2lwOEszWnZFNWk2M1oydC9qbDRrbG9wb3hKQzFmYlc3dVl1?=
- =?utf-8?B?OXA4YU9PVnpxMGxMeDF2MmNRc0JFZjlzQ090VXBBbGlIZ1h5Y2l1UGdFYUcy?=
- =?utf-8?B?MnVOcHZPeGpwcjhwNFpla3hZRzljSXhiajFPR2Jub3pwcytFOVJDMzcrOTZX?=
- =?utf-8?B?UDdVaGhXSGZ5bWZUOGJQRi8zYS91a2hIQmZJbTY3bTFoQWEydjl3TGdyT1J3?=
- =?utf-8?B?MU04a0I3eUpyY1RlbjZXZExMQlpGV1ZWK2RVbWg5R3VTc2hRN1JJbXpFYVNM?=
- =?utf-8?B?Ukg0dStISDlFREdZbEdBVHljaEJka2hwQjJnemJLTFJZMU5IWVcxQUxlRDZ3?=
- =?utf-8?B?Njdud1VaM05jTXA2RFBrR2RRNEtMQTc0MU5sempOcU5FcXFYRmJvWitqSy9P?=
- =?utf-8?B?V21hSnYwNG04b01UOUFoUDR0QVdVb0Vnalh2ODdiRy9lc1Q5UENSTS9oOGhQ?=
- =?utf-8?B?UW5KOVYyaEFNZ0xSRG9rdjYvd1Z1Y0tRenlzTmNkLzlKNHFibEFxQ2pLVXo2?=
- =?utf-8?B?Sk96dG9SdFR4SzZPNlQ3OUROcytVemIyemdZaTRjUEFKSWtybFExS3dZUG96?=
- =?utf-8?B?aTlHQXo0UVF6dHFGZklVNlFTZUV6RDVzNnNEcEtjVkZvMExkTUdyakRiU0JR?=
- =?utf-8?B?ZGNlaUMxWkZiZHVaUWs5QU9nanhnRlZrTXVCWGlvSEtFUjRqM3VINjY2d3Q4?=
- =?utf-8?B?ZGF4VmhkZjV4SXFxdzBBQ3o3MnBGNUdUTXMrTjN0MVE2MnFwbUlhOVgvNGQw?=
- =?utf-8?B?UGFDN2Z0Vk8vTk9OQTk0NHhqWDZ5U1lwb1JCdU5GSW50RVVlOTMrNHpaRTM1?=
- =?utf-8?B?QWZSV2U3WG1uaUZVNTJDbWl2WW5jdTRMRkIwQkdRL0pTSk9pU0ZKU2E4WUdn?=
- =?utf-8?B?WGdEdnNkdktDaXVNWjIrUS80endNMGt4WktXRGhHMzFXOHNhRFdrMDB6NEgx?=
- =?utf-8?B?SldwdzEwckNxRkJuaGxKcDZGT0dhSGl6MU5oTG9ac1h2SHVEVUVKRUF5TkRZ?=
- =?utf-8?Q?vF8o=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 52dbbfb1-92ae-41c5-2123-08dd033666af
-X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 16:23:54.7375 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KdDEt3YOhZEEg6B5wN/u6btuVZA7ZNYtLY0JbnvQGwgWWzdn2KKsGx+Pf3Tdtwry
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6406
-Received-SPF: permerror client-ip=40.107.223.41;
- envelope-from=Babu.Moger@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.671,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,322 +102,215 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: babu.moger@amd.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Maksim,
+On Mon, Nov 11 2024, Cornelia Huck <cohuck@redhat.com> wrote:
 
-On 11/12/24 04:09, Maksim Davydov wrote:
-> 
-> 
-> On 11/8/24 23:56, Moger, Babu wrote:
->> Hi Maxim,
+> On Mon, Nov 04 2024, Eric Auger <eric.auger@redhat.com> wrote:
+>
+>> Hi Daniel,
 >>
->> Thanks for looking into this. I will fix the bits I mentioned below in
->> upcoming Genoa/Turin model update.
+>> On 10/28/24 18:04, Daniel P. Berrang=C3=A9 wrote:
+>>> On Mon, Oct 28, 2024 at 04:48:18PM +0000, Peter Maydell wrote:
+>>>> On Mon, 28 Oct 2024 at 16:35, Daniel P. Berrang=C3=A9 <berrange@redhat=
+.com> wrote:
+>>>>> On Mon, Oct 28, 2024 at 04:16:31PM +0000, Peter Maydell wrote:
+>>>>>> On Fri, 25 Oct 2024 at 14:24, Daniel P. Berrang=C3=A9 <berrange@redh=
+at.com> wrote:
+>>>>>>> On Fri, Oct 25, 2024 at 03:18:25PM +0200, Eric Auger wrote:
+>>>>>>>> On 10/25/24 15:06, Daniel P. Berrang=C3=A9 wrote:
+>>>>>>>>> Also, is this naming convention really the same one that users
+>>>>>>>>> will see when they look at /proc/cpuinfo to view features ? It
+>>>>>>>> No it is not. I do agree that the custom cpu model is very low lev=
+el. It
+>>>>>>>> is very well suited to test all series turning ID regs as writable=
+ but
+>>>>>>>> this would require an extra layer that adapts /proc/cpuinfo feature
+>>>>>>>> level to this regid/field abstraction.
+>>>>>>>>
+>>>>>>>> In /cpu/proc you will see somethink like:
+>>>>>>>>  Features    : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics =
+fphp
+>>>>>>>> asimdhp cpuid asimdrdm lrcpc dcpop asimddp
+>>>>>>> Right, IMHO, this is the terminology that QEMU must use in user
+>>>>>>> facing APIs.
+>>>>>> /proc/cpuinfo's naming is rather weird for historical
+>>>>>> reasons (for instance there is only one FEAT_FP16 feature
+>>>>>> but cpuinfo lists "fphp" and "asimdhp" separately).
+>>>>> There's plenty of wierd history in x86 too. In this
+>>>>> case I might suggest just picking one of the two
+>>>>> common names, and ignoring the other.
+>>>>>
+>>>>> If we really wanted to, we could alias the 2nd name
+>>>>> to the first, but its likely not worth the bother.
+>>>> Or we could use the standard set of architectural
+>>>> feature names, and not have the problem at all, and not
+>>>> have to document what we mean by our nonstandard names.
+>>>> (cpuinfo names do actually mostly line up with the
+>>>> standard names, just not 100%. Similarly gcc/clang command
+>>>> line options are mostly the architectural feature name.)
+>>> Ah, right, yes. Sorry I mis-understood you originally to be suggesting
+>>> the same low level names as this patch.
+>> If my understanding is correct, Peter suggested to rely on the
+>> terminology used in
 >>
->> I have few comments below.
+>> https://developer.arm.com/documentation/109697/2024_09
 >>
->> On 11/8/2024 12:15 PM, Maksim Davydov wrote:
->>> Hi!
->>> I compared EPYC-Genoa CPU model with CPUID output from real EPYC Genoa
->>> host. I found some mismatches that confused me. Could you help me to
->>> understand them?
->>>
->>> On 5/4/23 23:53, Babu Moger wrote:
->>>> Adds the support for AMD EPYC Genoa generation processors. The model
->>>> display for the new processor will be EPYC-Genoa.
->>>>
->>>> Adds the following new feature bits on top of the feature bits from
->>>> the previous generation EPYC models.
->>>>
->>>> avx512f         : AVX-512 Foundation instruction
->>>> avx512dq        : AVX-512 Doubleword & Quadword Instruction
->>>> avx512ifma      : AVX-512 Integer Fused Multiply Add instruction
->>>> avx512cd        : AVX-512 Conflict Detection instruction
->>>> avx512bw        : AVX-512 Byte and Word Instructions
->>>> avx512vl        : AVX-512 Vector Length Extension Instructions
->>>> avx512vbmi      : AVX-512 Vector Byte Manipulation Instruction
->>>> avx512_vbmi2    : AVX-512 Additional Vector Byte Manipulation Instruction
->>>> gfni            : AVX-512 Galois Field New Instructions
->>>> avx512_vnni     : AVX-512 Vector Neural Network Instructions
->>>> avx512_bitalg   : AVX-512 Bit Algorithms, add bit algorithms Instructions
->>>> avx512_vpopcntdq: AVX-512 AVX-512 Vector Population Count Doubleword and
->>>>                    Quadword Instructions
->>>> avx512_bf16    : AVX-512 BFLOAT16 instructions
->>>> la57            : 57-bit virtual address support (5-level Page Tables)
->>>> vnmi            : Virtual NMI (VNMI) allows the hypervisor to inject
->>>> the NMI
->>>>                    into the guest without using Event Injection mechanism
->>>>                    meaning not required to track the guest NMI and
->>>> intercepting
->>>>                    the IRET.
->>>> auto-ibrs       : The AMD Zen4 core supports a new feature called
->>>> Automatic IBRS.
->>>>                    It is a "set-and-forget" feature that means that,
->>>> unlike e.g.,
->>>>                    s/w-toggled SPEC_CTRL.IBRS, h/w manages its IBRS
->>>> mitigation
->>>>                    resources automatically across CPL transitions.
->>>>
->>>> Signed-off-by: Babu Moger <babu.moger@amd.com>
->>>> ---
->>>>   target/i386/cpu.c | 122 ++++++++++++++++++++++++++++++++++++++++++++++
->>>>   1 file changed, 122 insertions(+)
->>>>
->>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->>>> index d50ace84bf..71fe1e02ee 100644
->>>> --- a/target/i386/cpu.c
->>>> +++ b/target/i386/cpu.c
->>>> @@ -1973,6 +1973,56 @@ static const CPUCaches epyc_milan_v2_cache_info
->>>> = {
->>>>       },
->>>>   };
->>>> +static const CPUCaches epyc_genoa_cache_info = {
->>>> +    .l1d_cache = &(CPUCacheInfo) {
->>>> +        .type = DATA_CACHE,
->>>> +        .level = 1,
->>>> +        .size = 32 * KiB,
->>>> +        .line_size = 64,
->>>> +        .associativity = 8,
->>>> +        .partitions = 1,
->>>> +        .sets = 64,
->>>> +        .lines_per_tag = 1,
->>>> +        .self_init = 1,
->>>> +        .no_invd_sharing = true,
->>>> +    },
->>>> +    .l1i_cache = &(CPUCacheInfo) {
->>>> +        .type = INSTRUCTION_CACHE,
->>>> +        .level = 1,
->>>> +        .size = 32 * KiB,
->>>> +        .line_size = 64,
->>>> +        .associativity = 8,
->>>> +        .partitions = 1,
->>>> +        .sets = 64,
->>>> +        .lines_per_tag = 1,
->>>> +        .self_init = 1,
->>>> +        .no_invd_sharing = true,
->>>> +    },
->>>> +    .l2_cache = &(CPUCacheInfo) {
->>>> +        .type = UNIFIED_CACHE,
->>>> +        .level = 2,
->>>> +        .size = 1 * MiB,
->>>> +        .line_size = 64,
->>>> +        .associativity = 8,
->>>> +        .partitions = 1,
->>>> +        .sets = 2048,
->>>> +        .lines_per_tag = 1,
->>>
->>> 1. Why L2 cache is not shown as inclusive and self-initializing?
->>>
->>> PPR for AMD Family 19h Model 11 says for L2 (0x8000001d):
->>> * cache inclusive. Read-only. Reset: Fixed,1.
->>> * cache is self-initializing. Read-only. Reset: Fixed,1.
+>> the doc pointed to by Oliver.
 >>
->> Yes. That is correct. This needs to be fixed. I Will fix it.
->>>
->>>> +    },
->>>> +    .l3_cache = &(CPUCacheInfo) {
->>>> +        .type = UNIFIED_CACHE,
->>>> +        .level = 3,
->>>> +        .size = 32 * MiB,
->>>> +        .line_size = 64,
->>>> +        .associativity = 16,
->>>> +        .partitions = 1,
->>>> +        .sets = 32768,
->>>> +        .lines_per_tag = 1,
->>>> +        .self_init = true,
->>>> +        .inclusive = true,
->>>> +        .complex_indexing = false,
->>>
->>> 2. Why L3 cache is shown as inclusive? Why is it not shown in L3 that
->>> the WBINVD/INVD instruction is not guaranteed to invalidate all lower
->>> level caches (0 bit)?
->>>
->>> PPR for AMD Family 19h Model 11 says for L2 (0x8000001d):
->>> * cache inclusive. Read-only. Reset: Fixed,0.
->>> * Write-Back Invalidate/Invalidate. Read-only. Reset: Fixed,1.
->>>
->>
->> Yes. Both of this needs to be fixed. I Will fix it.
->>
->>>
->>>
->>> 3. Why the default stub is used for TLB, but not real values as for
->>> other caches?
->>
->> Can you please eloberate on this?
->>
-> 
-> For L1i, L1d, L2 and L3 cache we provide the correct information about
-> characteristics. In contrast, for L1i TLB, L1d TLB, L2i TLB and L2d TLB
-> (0x80000005 and 0x80000006) we use the same value for all CPU models.
-> Sometimes it seems strange. For instance, the current default value in
-> QEMU for L2 TLB associativity for 4 KB pages is 4. But 4 is a reserved
-> value for Genoa (as PPR for Family 19h Model 11h says)
+>> So I think the next step is to understand how those "high level" feature=
+s do map onto low level ID register field values. I think a high level feat=
+ure can map onto separate fields in separate ID regs. This may not be the m=
+ost common case though.=20
+>
+> I went through all the FEAT_xxx features defined so far and tried to
+> categorize them (probably with some errors here and there, but the
+> general trend should be correct.)
+>
+> There's 335 features defined at the moment.
+>
+> Of these, the majority (295 by my count) map to one or more values in
+> one or more id registers. These are what I'd consider the "easy" ones
+> (added complexity if we deal with serveral values, but in general, it is
+> clear how to handle them, and most of them actually map to a single
+> value.) Of course, dependencies may be on top of that.
+>
+> Then, we have some features (~25 or so) that are actually defined by
+> dependencies (i.e. FEAT_FOO and FEAT_BAR mean that we have FEAT_BAZ,
+> sometimes with an architecture extension dependency thrown in as well.)
+> These features are not really relevant when we compare two cpus since
+> they do not map to registers directly, but they are relevant if we allow
+> them to be specified (and use them as a kind of shorthand.) IOW, we'd
+> need to think about how we'd handle them for comparisons and baselining.
+>
+> Next, let's talk about architecture extensions. All features have a
+> level where they have been introduced as optional, some have an upper
+> limit (e.g. FEAT_AA32EL1 is not allowed from v9.0 onwards), and quite a
+> number of them (~65 or so) become mandatory with a certain architecture
+> extension. Sometimes, FEAT_FOO + arch ext also implies FEAT_BAR. If we
+> introduce Armvx.y named models, we'd need to enforce that some features
+> are (not) set for a certain model. Complex, but not a showstopper. (We'd
+> also need to deal with that if we worked on the register level.)
+>
+> We also have some registers like MIDR/REVIDR that do not correlate with
+> any FEAT_xxx, but that we still need to handle; I would suggest to deal
+> with them via separate cpu properties (e.g. specify a list of possible
+> MIDR/REVIDR pairs.) I hope that there are not too many of them, although
+> we do have some impdef registers.
+>
+> That leaves some headscratchers (at least for me.) E.g. FEAT_UINJ, which
+> is optional from v9.5, and mandatory from v9.6, but where I'm unsure how
+> we'd discover it, especially as we do not have a way to discover the
+> architecture extensions. Maybe this will work for named actual cpus
+> only? I'm also not sure if I understand FEAT_CHK, which is listed as
+> optional from v8.0 and mandatory from v9.4, but every aarch64 cpu is
+> supposed to be compliant, because CHKFEAT might be a NOP (and this is
+> only supposed to check for FEAT_GCS? Yes, I'm confused.)
+>
+> So tl;dr, we cover a lot of the ID register space via FEAT_xxx (with
+> varying complexity), but we already know about some exceptions. For some
+> FEAT_xxx, I'm not sure if we want to handle them at all.
+>
+> (I also seem to remember that there some things like perf counters that
+> don't map to any on/off features, but no idea about the details here.)
 
-Yes. I see that. We may need to address this sometime in the future.
+Following up on this, some ideas/questions on how a command line could
+look like and behave.
 
-> 
->>>
->>>> +    },
->>>> +};
->>>> +
->>>>   /* The following VMX features are not supported by KVM and are left
->>>> out in the
->>>>    * CPU definitions:
->>>>    *
->>>> @@ -4472,6 +4522,78 @@ static const X86CPUDefinition
->>>> builtin_x86_defs[] = {
->>>>               { /* end of list */ }
->>>>           }
->>>>       },
->>>> +    {
->>>> +        .name = "EPYC-Genoa",
->>>> +        .level = 0xd,
->>>> +        .vendor = CPUID_VENDOR_AMD,
->>>> +        .family = 25,
->>>> +        .model = 17,
->>>> +        .stepping = 0,
->>>> +        .features[FEAT_1_EDX] =
->>>> +            CPUID_SSE2 | CPUID_SSE | CPUID_FXSR | CPUID_MMX |
->>>> CPUID_CLFLUSH |
->>>> +            CPUID_PSE36 | CPUID_PAT | CPUID_CMOV | CPUID_MCA |
->>>> CPUID_PGE |
->>>> +            CPUID_MTRR | CPUID_SEP | CPUID_APIC | CPUID_CX8 |
->>>> CPUID_MCE |
->>>> +            CPUID_PAE | CPUID_MSR | CPUID_TSC | CPUID_PSE | CPUID_DE |
->>>> +            CPUID_VME | CPUID_FP87,
->>>> +        .features[FEAT_1_ECX] =
->>>> +            CPUID_EXT_RDRAND | CPUID_EXT_F16C | CPUID_EXT_AVX |
->>>> +            CPUID_EXT_XSAVE | CPUID_EXT_AES |  CPUID_EXT_POPCNT |
->>>> +            CPUID_EXT_MOVBE | CPUID_EXT_SSE42 | CPUID_EXT_SSE41 |
->>>> +            CPUID_EXT_PCID | CPUID_EXT_CX16 | CPUID_EXT_FMA |
->>>> +            CPUID_EXT_SSSE3 | CPUID_EXT_MONITOR | CPUID_EXT_PCLMULQDQ |
->>>> +            CPUID_EXT_SSE3,
->>>> +        .features[FEAT_8000_0001_EDX] =
->>>> +            CPUID_EXT2_LM | CPUID_EXT2_RDTSCP | CPUID_EXT2_PDPE1GB |
->>>> +            CPUID_EXT2_FFXSR | CPUID_EXT2_MMXEXT | CPUID_EXT2_NX |
->>>> +            CPUID_EXT2_SYSCALL,
->>>> +        .features[FEAT_8000_0001_ECX] =
->>>> +            CPUID_EXT3_OSVW | CPUID_EXT3_3DNOWPREFETCH |
->>>> +            CPUID_EXT3_MISALIGNSSE | CPUID_EXT3_SSE4A | CPUID_EXT3_ABM |
->>>> +            CPUID_EXT3_CR8LEG | CPUID_EXT3_SVM | CPUID_EXT3_LAHF_LM |
->>>> +            CPUID_EXT3_TOPOEXT | CPUID_EXT3_PERFCORE,
->>>> +        .features[FEAT_8000_0008_EBX] =
->>>> +            CPUID_8000_0008_EBX_CLZERO |
->>>> CPUID_8000_0008_EBX_XSAVEERPTR |
->>>> +            CPUID_8000_0008_EBX_WBNOINVD | CPUID_8000_0008_EBX_IBPB |
->>>> +            CPUID_8000_0008_EBX_IBRS | CPUID_8000_0008_EBX_STIBP |
->>>> +            CPUID_8000_0008_EBX_STIBP_ALWAYS_ON |
->>>> +            CPUID_8000_0008_EBX_AMD_SSBD | CPUID_8000_0008_EBX_AMD_PSFD,
->>>
->>> 4. Why 0x80000008_EBX features related to speculation vulnerabilities
->>> (BTC_NO, IBPB_RET, IbrsPreferred, INT_WBINVD) are not set?
->>
->> KVM does not expose these bits to the guests yet.
->>
->> I normally check using the ioctl KVM_GET_SUPPORTED_CPUID.
->>
-> 
-> I'm not sure, but at least the first two of these features seem to be
-> helpful to choose the appropriate mitigation. Do you think that we should
-> add them to KVM?
+Let's say we introduce Armv80, Armv81, ... models for the architecture
+extensions and optionally named models for individual cpus we care about
+(e.g. My85BasedCpu which would be Armv85 + some stuff on top). The
+Armv<xy> models would come with all mandatory features turned on and
+would allow all optional features to be set or unset, with
+(accelerator-specific) verification on top.
 
-Yes. Sure.
+Let's assume that we have
 
-> 
->>
->>>
->>>> +        .features[FEAT_8000_0021_EAX] =
->>>> +            CPUID_8000_0021_EAX_No_NESTED_DATA_BP |
->>>> +            CPUID_8000_0021_EAX_LFENCE_ALWAYS_SERIALIZING |
->>>> +            CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE |
->>>> +            CPUID_8000_0021_EAX_AUTO_IBRS,
->>>
->>> 5. Why some 0x80000021_EAX features are not set?
->>> (FsGsKernelGsBaseNonSerializing, FSRC and FSRS)
->>
->> KVM does not expose FSRC and FSRS bits to the guests yet.
-> 
-> But KVM exposes the same features (0x7 ecx=1, bits 10 and 11) for Intel
-> CPU models. Do we have to add these bits for AMD to KVM?
+-cpu Armv80,FEAT_AdvSIMD=3Don,FEAT_FP=3Don
 
-Yes. Sure.
-> 
->>
->> The KVM reports the bit FsGsKernelGsBaseNonSerializing. I will check if
->> we can add this bit to the Genoa and Turin.
+Since the two features provide each other, I'd assume
 
-Will add this in my qemu series.
+-cpu Armv80,FEAT_AdvSIMD=3Don
 
->>
->>>
->>>> +        .features[FEAT_7_0_EBX] =
->>>> +            CPUID_7_0_EBX_FSGSBASE | CPUID_7_0_EBX_BMI1 |
->>>> CPUID_7_0_EBX_AVX2 |
->>>> +            CPUID_7_0_EBX_SMEP | CPUID_7_0_EBX_BMI2 |
->>>> CPUID_7_0_EBX_ERMS |
->>>> +            CPUID_7_0_EBX_INVPCID | CPUID_7_0_EBX_AVX512F |
->>>> +            CPUID_7_0_EBX_AVX512DQ | CPUID_7_0_EBX_RDSEED |
->>>> CPUID_7_0_EBX_ADX |
->>>> +            CPUID_7_0_EBX_SMAP | CPUID_7_0_EBX_AVX512IFMA |
->>>> +            CPUID_7_0_EBX_CLFLUSHOPT | CPUID_7_0_EBX_CLWB |
->>>> +            CPUID_7_0_EBX_AVX512CD | CPUID_7_0_EBX_SHA_NI |
->>>> +            CPUID_7_0_EBX_AVX512BW | CPUID_7_0_EBX_AVX512VL,
->>>> +        .features[FEAT_7_0_ECX] =
->>>> +            CPUID_7_0_ECX_AVX512_VBMI | CPUID_7_0_ECX_UMIP |
->>>> CPUID_7_0_ECX_PKU |
->>>> +            CPUID_7_0_ECX_AVX512_VBMI2 | CPUID_7_0_ECX_GFNI |
->>>> +            CPUID_7_0_ECX_VAES | CPUID_7_0_ECX_VPCLMULQDQ |
->>>> +            CPUID_7_0_ECX_AVX512VNNI | CPUID_7_0_ECX_AVX512BITALG |
->>>> +            CPUID_7_0_ECX_AVX512_VPOPCNTDQ | CPUID_7_0_ECX_LA57 |
->>>> +            CPUID_7_0_ECX_RDPID,
->>>> +        .features[FEAT_7_0_EDX] =
->>>> +            CPUID_7_0_EDX_FSRM,
->>>
->>> 6. Why L1D_FLUSH is not set? Because only vulnerable MMIO stale data
->>> processors have to use it, am I right?
->>
->> KVM does not expose L1D_FLUSH to the guests. Not sure why. Need to
->> investigate.
->>
-> 
-> It seems that KVM has exposed L1D_FLUSH since da3db168fb67
+or
 
-Sure. Will update my patch series.
+-cpu Armv80,FEAT_FP=3Don
 
-> 
->>
->>>
->>>> +        .features[FEAT_7_1_EAX] =
->>>> +            CPUID_7_1_EAX_AVX512_BF16,
->>>> +        .features[FEAT_XSAVE] =
->>>> +            CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XSAVEC |
->>>> +            CPUID_XSAVE_XGETBV1 | CPUID_XSAVE_XSAVES,
->>>> +        .features[FEAT_6_EAX] =
->>>> +            CPUID_6_EAX_ARAT,
->>>> +        .features[FEAT_SVM] =
->>>> +            CPUID_SVM_NPT | CPUID_SVM_NRIPSAVE | CPUID_SVM_VNMI |
->>>> +            CPUID_SVM_SVME_ADDR_CHK,
->>>> +        .xlevel = 0x80000022,
->>>> +        .model_id = "AMD EPYC-Genoa Processor",
->>>> +        .cache_info = &epyc_genoa_cache_info,
->>>> +    },
->>>>   };
->>>>   /*
->>>
->>
-> 
-> So, If you don't mind, I will send a patch to KVM within a few hours. I
-> will add bits for FSRC, FSRS and some bits from 0x80000008_EBX
-> 
+to be equivalent, and
 
-FSRC and FSRS are not used anywhere in the kernel. It is mostly FYI kind
-of information. It does not hurt to add.  Please go ahead.
+-cpu Armv80,FEAT_AdvSIMD=3Don,FEAT_FP=3Doff
 
--- 
-Thanks
-Babu Moger
+to generate an error. Question: at which level? s390x does dependency
+validation in QEMU, we could do it as well, but I think we have way more
+dependencies on Arm.
+
+Also, let's take FEAT_BTI, which is optional for 8.4 and mandatory from
+8.5 onwards. I'd expect
+
+-cpu Armv84,FEAT_BTI=3Don   <-- ok
+-cpu Armv84  same as -cpu Armv84,FEAT_BTI=3Doff
+-cpu Armv85 same as -cpu Arm84,FEAT_BTI=3Don
+-cpu Armv85,FEAT_BTI=3Doff  <-- Error!
+
+When doing baselining while looking at id registers, we'd get
+
+ID_AA64PFR1_EL1.BT =3D=3D 1 -> must use Armv84 or later
+ID_AA64PFR1_EL1.BT =3D=3D 0 -> must use Armv84 or earlier
+
+(unfortunately, some other features are more complex...)
+
+Would
+
+-cpu Armv84,<all 8.5 mandatory bits>
+
+generate the same cpu as
+
+-cpu Armv85
+
+(and therefore, the two be migratable between each other?)
+
+If we create named cpu models for individual cpus, e.g.
+
+-cpu My85BasedCpu
+
+as equivalent to
+
+-cpu Armv85,FEAT_FOO=3Don,FEAT_BAR=3Don
+
+Should we allow
+
+-cpu My85BasedCpu,FEAT_BAR=3Doff
+
+or would the command line need to be
+
+-cpu Armv85,FEAT_FOO=3Don
+
+(e.g. to deal with not all id regs being writable?)
+
+Regardless of what we end up doing for features and cpu models, we'll
+need to be able to specify registers that do not correlate to any
+features; especially for things like MIDR/REVIDR, where we'll want to
+provide a list of possible target values as pairs;
+
+-cpu Armv85,midr_revidr=3D(<value>,<value>)
+
+is ugly, and figuring the actual values is not user friendly at all, I
+fear :(
+
+And now, at the end of this long email, the most important questions:
+What colour should the features have?
+
+Matching the architecture: FEAT_AdvSIMD, FEAT_FP, FEAT_BTI
+
+Dropping "FEAT_": AdvSIMD, FP, BTI
+
+Less shouty: feat_advsimd, feat_fp, feat_bti
+
+Less shouty and shorter: advsimd, fp, bti  -- in this case we'd need to
+be careful because we already have sve/sme props, and I'm not sure if we
+could do some sugaring without conflicts.
+
+Thoughts?
+
 
