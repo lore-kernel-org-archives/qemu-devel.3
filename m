@@ -4,79 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D68D32D96
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 11:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D49D32D9C
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 11:54:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tApFH-0001mG-Ct; Tue, 12 Nov 2024 06:39:43 -0500
+	id 1tApSO-0005Tg-Gd; Tue, 12 Nov 2024 06:53:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1tApFF-0001ln-Bi
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 06:39:41 -0500
-Received: from nyc.source.kernel.org ([147.75.193.91])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tApSM-0005TY-8U
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 06:53:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1tApFD-0000kN-HR
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 06:39:41 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 163C9A4196D;
- Tue, 12 Nov 2024 11:37:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6627CC4CECD;
- Tue, 12 Nov 2024 11:39:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1731411575;
- bh=LG7RZyrQQCMMftiyBGThQS+gGDQCRxNRxi5jzF0rtMU=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=vknOjlpo6yb1Vp6IvyGWB9fU+5x7MozaZPEx5An53FahQpTAnNO5K4ounXAy8oTiB
- TMyhmIa3vhWYr8Y70CpG7AqAsJ6Muua1r2mtSVbGPeuPR0Yb5JXd60v2VL3pSHRStQ
- uWb9VIFmeHvu95V7xCVSAH9p70B6Adjzvh7A37xU=
-Date: Tue, 12 Nov 2024 12:39:32 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
-Cc: Sudeep Holla <sudeep.holla@arm.com>,
- Cristian Marussi <cristian.marussi@arm.com>,
- Tzung-Bi Shih <tzungbi@kernel.org>,
- Brian Norris <briannorris@chromium.org>,
- Julius Werner <jwerner@chromium.org>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>,
- Conor Dooley <conor.dooley@microchip.com>,
- Daire McNamara <daire.mcnamara@microchip.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Gabriel Somlo <somlo@cmu.edu>, "Michael S. Tsirkin" <mst@redhat.com>,
- Florian Fainelli <florian.fainelli@broadcom.com>,
- Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
- Dinh Nguyen <dinguyen@kernel.org>, Michal Simek <michal.simek@amd.com>,
- Stefan Wahren <wahrenst@gmx.net>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
- Ronak Jain <ronak.jain@amd.com>,
- Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
- Praveen Teja Kundanala <praveen.teja.kundanala@amd.com>,
- arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev,
- imx@lists.linux.dev, linux-riscv@lists.infradead.org,
- linux-mediatek@lists.infradead.org, qemu-devel@nongnu.org,
- linux-rpi-kernel@lists.infradead.org
-Subject: Re: [PATCH] firmware: Switch back to struct platform_driver::remove()
-Message-ID: <2024111223-gizzard-scabby-eb98@gregkh>
-References: <36974feb6035201d53384557259ec72fe311053b.1731397962.git.u.kleine-koenig@baylibre.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tApSK-0002DP-My
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 06:53:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731412390;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jH7VR/ZL+/BrSMhgn2dLYEoyqhJ1fXW3y7DynU3Iq8A=;
+ b=cdCbaIuhet+cckvqLXApsGC8Me8bJi78JiFU/6vmrnmfgv7QwrM6dSd49znBWYWgo3dFbE
+ fXjeXAeIhnkhEw7QiYkMiB048rE/F43AK8rLacgvLzbjUYOlAuIXuHgCSEuvtohO7DFHVM
+ gmyEyXPdDLWbJtwqAFRGvY1wyOJIc+A=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-xL8S0qoGMc2jOn9TSIyDUQ-1; Tue,
+ 12 Nov 2024 06:53:08 -0500
+X-MC-Unique: xL8S0qoGMc2jOn9TSIyDUQ-1
+X-Mimecast-MFC-AGG-ID: xL8S0qoGMc2jOn9TSIyDUQ
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A02C7195608C; Tue, 12 Nov 2024 11:53:06 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.110])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3C1FA1956086; Tue, 12 Nov 2024 11:53:04 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] docs/devel/testing/functional: Clarify that we have to use
+ the build folder
+Date: Tue, 12 Nov 2024 12:53:02 +0100
+Message-ID: <20241112115302.470527-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <36974feb6035201d53384557259ec72fe311053b.1731397962.git.u.kleine-koenig@baylibre.com>
-Received-SPF: pass client-ip=147.75.193.91;
- envelope-from=gregkh@linuxfoundation.org; helo=nyc.source.kernel.org
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,30 +80,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 12, 2024 at 09:35:20AM +0100, Uwe Kleine-König wrote:
-> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
-> return void") .remove() is (again) the right callback to implement for
-> platform drivers.
-> 
-> Convert all platform drivers below drivers/firmware to use .remove(),
-> with the eventual goal to drop struct platform_driver::remove_new(). As
-> .remove() and .remove_new() have the same prototypes, conversion is done
-> by just changing the structure member name in the driver initializer.
-> 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-> ---
-> Hello,
-> 
-> I did a single patch for all of drivers/firmware. While I usually prefer
-> to do one logical change per patch, this seems to be overengineering
-> here as the individual changes are really trivial and shouldn't be much
-> in the way for stable backports.
-> 
-> There is no dedicated maintainer for drivers/firmware, maybe Sudeep as
-> biggest committer there can take it? Or would it be sensible to split
-> this patch?
+Make it clear that the commands have to be run from the folder with the
+build, and use the python3 from our pyvenv to make sure that the
+pycotap module is available.
 
-I'll just take it now, thanks!
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ docs/devel/testing/functional.rst | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-greg k-h
+diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+index bf6f1bb81e..7f55177a9e 100644
+--- a/docs/devel/testing/functional.rst
++++ b/docs/devel/testing/functional.rst
+@@ -59,11 +59,12 @@ To run a single test file without the meson test runner, you can also
+ execute the file directly by specifying two environment variables first,
+ the PYTHONPATH that has to include the python folder and the tests/functional
+ folder of the source tree, and QEMU_TEST_QEMU_BINARY that has to point
+-to the QEMU binary that should be used for the test, for example::
++to the QEMU binary that should be used for the test. The current working
++directory should be your build folder. For example::
+ 
+   $ export PYTHONPATH=../python:../tests/functional
+   $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
+-  $ python3 ../tests/functional/test_file.py
++  $ pyvenv/bin/python3 ../tests/functional/test_file.py
+ 
+ Overview
+ --------
+-- 
+2.47.0
+
 
