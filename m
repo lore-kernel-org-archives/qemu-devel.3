@@ -4,89 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7DF6D41D52
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 05:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C32D41D55
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 05:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAjXK-0006ae-9F; Tue, 12 Nov 2024 00:33:58 -0500
+	id 1tAjqA-0000av-Vv; Tue, 12 Nov 2024 00:53:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tAjXI-0006a9-8O
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 00:33:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1tAjq8-0000aR-P7; Tue, 12 Nov 2024 00:53:24 -0500
+Received: from mail-me3aus01olkn20804.outbound.protection.outlook.com
+ ([2a01:111:f403:2818::804]
+ helo=AUS01-ME3-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tAjXE-0004uW-NO
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 00:33:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731389631;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WgqsNTKXJIZt3fOpNqm3ty/N8ioHOygc1iZkJ4vZr7s=;
- b=FzeJY4L/Je9g5WzH0FphSp+UCrvUBcHrUDQpHyCW8ZWjhyudHWA4W7zuwTDbSXzBsYjDoP
- +0M9MFDUV5eYJ9pcKKbLg3ciCMDU5AhKbIZ6dN/z9sTCVPCtC75fi8WGzV29vRlda5FMYb
- Ed9YKw/lJGw3Bdm9gJm+8YjMk0OVvoQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-401-KTpVbReZPem5lgca6oJHKw-1; Tue, 12 Nov 2024 00:33:47 -0500
-X-MC-Unique: KTpVbReZPem5lgca6oJHKw-1
-X-Mimecast-MFC-AGG-ID: KTpVbReZPem5lgca6oJHKw
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-431673032e6so35597235e9.0
- for <qemu-devel@nongnu.org>; Mon, 11 Nov 2024 21:33:47 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731389626; x=1731994426;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WgqsNTKXJIZt3fOpNqm3ty/N8ioHOygc1iZkJ4vZr7s=;
- b=vEiSvC2XlkwaQ0d1iyaPvu38X0yESNKGO0Aa0sG8ok69+VEHYZmHVulmjaJOpFU+dL
- xAraGeDOgdWcTM6x5CJHuUOE6tJu7F61qUAzl8KQzgU1VlPkJOyx25XtlWsl4hOCImdB
- iWo2O2SRXcBAGttb8pxXrh6T3afOYnRIx6mL52t4hNThh5G1W5MklpLTxfvD7wd0FXWx
- B0QfR0ozrLpvC75vElgulQZP87WPmnMvStwxYg9LYvs8qirPxI5E5tQgkHg9tpc/iR+2
- 9zReBQmTj9JBqwHmrg1+c7FWR+cMuYfMh5ihlqg4qiRGJatd+GP2NaVSXeRr4U7BIfaY
- tTvA==
-X-Gm-Message-State: AOJu0YyI+2+tdJSXI7rCa2S9dM5AfREDoIxdjFRD+jcRbqYUP52m4fbw
- h0ngJPz0syZDaYUMx+BV3cVACbDtQeqwi4g2rAj8Wamah8y6SiuAVs7kkmCk/bd0oHg+F6LDd1C
- xGL9Ze4prQwJnEYMJWZ1Lu9cOI54ssHaJCbsDLeuvYcgvogAfPos+NzbsfOOyORVZum71K9ncum
- 9gC4J4wb7SYsmE4eYlLUgtGiiJVs8=
-X-Received: by 2002:a05:6000:715:b0:37d:41cd:ba4e with SMTP id
- ffacd0b85a97d-3820834994fmr796599f8f.48.1731389625974; 
- Mon, 11 Nov 2024 21:33:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH/0cP1KYl577FQHnREGuttHELb98AvDg/nqtvCaMLHHSjfBbdIm1Dk0ugiwu+BYCrxkISk8f3P3obf2KojyD4=
-X-Received: by 2002:a05:6000:715:b0:37d:41cd:ba4e with SMTP id
- ffacd0b85a97d-3820834994fmr796583f8f.48.1731389625575; Mon, 11 Nov 2024
- 21:33:45 -0800 (PST)
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1tAjq7-0006m3-5g; Tue, 12 Nov 2024 00:53:24 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Qzvej4zAsVq7605krPUzgJq8ARFjcrI7FjyPNyk6NkGWwwaXOgDyqRo+lt3yge7M1/HQebJ3c3YPuV/nYTkdz8xiuPr6RlETlmB+t3JWYAyrV5HJwbGrMsIXc7FUXUmFp1C9U9fSVyeBaDU9EAv/4UFGDjh0ZgWVJdclpEAR9gK1Y2/g3zekH050AmeOyEgcI7lgurQnirw137UWJZ4cVF657L1jPZG8wc2Isohte+JQBx4rky1D2w2UdhQ+thbK++DbdGnLy2Zm+1yG1ieAz0WwRFHEyqB74zY1srKIGvcl3f3Mum88xo0ytHZ9UuzId/vW8QEbsci04qy/IiAZTQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TVzPCJgY/aI2wdVA/ID+X+j94mdD0YA8euGG+sKKwak=;
+ b=HFG4XI/ZALE/H29IdL+UpbLiwsXgszpeo2jlgb7LJOx9BBJrLnxmumCXckOikH7gee/HrmQpoV0S43GAKAvHRXw+rjSbcr91kv1dwtJ6K807j8pn9SCEeoE5LDcSmfBOV4HXh3JAMkBPI7zqWTZySNwDPkn9YXv0vhW3IRwOK5vi6C6OIDtgfNFP4K91ihh8a1jBqv1fCtn5cKZTbv7hVU7/haFl/CdPOWicMTSw7XVhOvfTUGJGYgE6fjkqxYTldig3GR4D+lLEJBf3Iz3jT3Q0mIzH21z2UTeoouAW90zxnhN9oa1dVJ2XfXZUyfENIyA4nF26AHgqz6PTDU7E2Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TVzPCJgY/aI2wdVA/ID+X+j94mdD0YA8euGG+sKKwak=;
+ b=koXoaOJF741vuSxTFh/dl6iB0k+RJjJiZj5cAznfbs0jNE3+IriWeMO9Xtp6n7+OOEthtscQMQ/07qkSRFo5KwnzqKipIAaK6XWNOsZKaAzkpsmMO+6y2TVsmMlYbuFEECST93TktDCJpdEEVJOY+gqE4clZspZ+THYdshS5Lh5D1LHfDmCe/3Q1wdMctWIl/MH8OYmWemKpL9/NM3KBrvY2mkIijAJauOEyhdHvmoh5X4hL+NkOxPbFxIW0xKJQui6VhakVodtTA+jz5lBw0mHHcQblc4yx+PDSd+0SmdgE9+g2QT1OjDtPLJV8K82J+b5ZuQlb0wRyWp6mw2WVdg==
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
+ by SY0P300MB0369.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27d::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.29; Tue, 12 Nov
+ 2024 05:53:16 +0000
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8137.027; Tue, 12 Nov 2024
+ 05:53:16 +0000
 References: <20241108180139.117112-1-pbonzini@redhat.com>
- <20241108180139.117112-2-pbonzini@redhat.com>
- <SY0P300MB102699E99096F482F06296EF95592@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-In-Reply-To: <SY0P300MB102699E99096F482F06296EF95592@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 12 Nov 2024 06:33:33 +0100
-Message-ID: <CABgObfb9ujpoRrNUUqyiAefSfTOWSV-SGmo2YrSoMdfxBeAD9A@mail.gmail.com>
-Subject: Re: [RFC PATCH 01/11] rust: qemu_api: do not disable lints outside
- bindgen-generated code
-To: Junjie Mao <junjie.mao@hotmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, 
- Emmanouil Pitsidianakis <manos.pitsidianakis@linaro.org>, "Wolf,
- Kevin" <kwolf@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, qemu-rust@nondevel.org
-Content-Type: multipart/alternative; boundary="00000000000099cc010626b08f24"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+ <20241108180139.117112-6-pbonzini@redhat.com>
+ <SY0P300MB1026324D1571BBD2E001536695592@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+ <CABgObfZUURf_QpdtqzmGF567Uk8obxdQ1P_WeVN1Ag=uG+J46A@mail.gmail.com>
+User-agent: mu4e 1.6.10; emacs 27.1
+From: Junjie Mao <junjie.mao@hotmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Emmanouil Pitsidianakis
+ <manos.pitsidianakis@linaro.org>, "Wolf, Kevin" <kwolf@redhat.com>, Zhao
+ Liu <zhao1.liu@intel.com>, qemu-rust@nongnu.org
+Subject: Re: [RFC PATCH 05/11] rust: cargo: store desired warning levels in
+ workspace Cargo.toml
+Date: Tue, 12 Nov 2024 13:40:40 +0800
+In-reply-to: <CABgObfZUURf_QpdtqzmGF567Uk8obxdQ1P_WeVN1Ag=uG+J46A@mail.gmail.com>
+Message-ID: <SY0P300MB10268C2412B6F11B1876B1A495592@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+Content-Type: text/plain
+X-ClientProxiedBy: SG2PR01CA0175.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:28::31) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:282::22)
+X-Microsoft-Original-Message-ID: <875xothubk.fsf@hotmail.com>
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY0P300MB0369:EE_
+X-MS-Office365-Filtering-Correlation-Id: 23c2876a-2fdd-472b-0487-08dd02de4d2a
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|5072599009|8060799006|461199028|19110799003|15080799006|7092599003|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?taQla5LYX9ChPltFpCQCbqP3Q1CBS7YBRf8yLXDkNjPYrA4eS0mZ0nUK1A7m?=
+ =?us-ascii?Q?RIVFr7spXGc83UosX4SjX1LTKfiXNcAgksmxjfaTzebXBReHRwtnbZXFcV54?=
+ =?us-ascii?Q?RCjhU/iaIpZrJiK26ZYNW6Ij/vFh/HAeAQ2RKGzTUKuIYFMYxZVEsMUnf4Jc?=
+ =?us-ascii?Q?KuszZc5cDQmaviXOligwWLiIesk2Im8PiNkqRE3MCxlSyZhMhc5b5YO4dGEJ?=
+ =?us-ascii?Q?XsWyKI2e1hhC6znbI3iE+fuPS0LidxOLq2iMPrf4hg7Xj4PAq5cTcpAV5Jww?=
+ =?us-ascii?Q?BUOD5eUjBl6JHR7j+9a7nCdeLo4mULJMfFm2yR3ZNOx6XVT44DubIsF8Oiky?=
+ =?us-ascii?Q?DlZxe0XzUmlW4qElM5PEP9XcQj7UdDRWX+7OeO5Bf7351N72T+2JME2uHa7Y?=
+ =?us-ascii?Q?b/ydHBRr1KE9EjUfymjuNU+SROAzicP8Qq8255SYdUtu5iYcjssWhh0ChXm4?=
+ =?us-ascii?Q?3BsrGih3NvTded9hzRkfFHRZEyrkue6ipqiPERqC94/4ia35ehkUuGR56Ir7?=
+ =?us-ascii?Q?OY3tUmH+BuFe+0gkU8dtnxBCIMlXxeAxk5y9BPJ/aQPIN39GNmdJXdnLA7WZ?=
+ =?us-ascii?Q?QiMNvGeOSIEwhqQ++8UILx9qzMDcLQNZft+fk75DmkEo5eoyjkyq0Lh8mcex?=
+ =?us-ascii?Q?6seaWB5F+outqoVo9xcaNMFBA60mbAOKP/+Kg4yZu+cvx1WdQWZ7dtRGBLck?=
+ =?us-ascii?Q?vHMYmED5j9Vstu7CzaZdTV1Pud+KDXumK/GOn04XhTUwezeLLtI7ImEg84Z2?=
+ =?us-ascii?Q?xvNfuHv+V4fXzvAZ4/xntCRJNyIHoOqVL4MR37FyH2st5NxmlwX6AqRNbKdW?=
+ =?us-ascii?Q?JJEukhaRkxBamCwZ+1gZKp6yedzSoEx8Mq+/KRqEEx4TdmJtqGRq2lVLqu1L?=
+ =?us-ascii?Q?qgUsk/6QDi7xODFIsZxrIOWtUYx+JsXLM6U/NcxVzsit2kLlPl3rKYDFUnjQ?=
+ =?us-ascii?Q?XzKs0cyqPT+s/rdhryy91ca06mBB/io3gciKCf8noiwv2hEx/uxF6HiydHjz?=
+ =?us-ascii?Q?AOajhy1e0m68Do4gQPOioSXTzpgS0ujeyD2BDq30mJxCVOU=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?cybcyeX9SXGqaH6OIveM3NJhJBbxTf7NgAyU7q9NKDj11PjVbe1UUDJmhT14?=
+ =?us-ascii?Q?O2ab4xca0xC9XWpThAyFyMVb7tpab60k0+PJQayCuLfXPMeS8+fTz3WcaMLI?=
+ =?us-ascii?Q?k+xemuxG4tfys/qhlbjpbJV7xgWG/ltqLaEdpN7IxTzZ84GhQBIKYjXLY4mY?=
+ =?us-ascii?Q?WJTo6+zxaZp03Vk9kHd/S+UB50+WggCUJqxCUs/xcsi4bca5Gj8rDSIVrhZ+?=
+ =?us-ascii?Q?gMiieZS9XxCuIyBKmmfG66FOvNenn8KfjKf45v2YAmBOUAilOo9M+AQh+Foj?=
+ =?us-ascii?Q?njZdjUV9IH00wIPYbUoBRjxsEfEE2cecPBY4W0vP3tQNrtIOu0CTYq6/S1lj?=
+ =?us-ascii?Q?HcXV8uBlih2Rbe+Fy1W405UBS33kumi3iQLZfeKgdNcspKkz2LWmuMKA5Y63?=
+ =?us-ascii?Q?S7rQetQqdeK2v/Dzlq+nhELbmGY+JTk6XOCR6MTmWdYPnSeCyJ2ErSh3SvLh?=
+ =?us-ascii?Q?i0InBLCatyb+cZMp31ZP6Ir3fdk7JUAEiNrvJlBSI/RRwiWIAnOc2jo4QPC9?=
+ =?us-ascii?Q?8g+RgMAsRwYFU6q8yTC66TrA1OT4Jn0Q5zxNON+7GHNnpW2NGVXaHc4BlgJn?=
+ =?us-ascii?Q?Ofpgk49UD9Zr2SIT1D0i6bvBkYjqQtCfvJyS/CM/k+wpTbfidYHGxhWinIkF?=
+ =?us-ascii?Q?b/TYpF66S4vI3Z8i+xpdyH+bRQ9f7uuGRgUbZdmwav6vt29UpjreCGjvHV9p?=
+ =?us-ascii?Q?rp7WxEec19eSg6cpOSUrbX2Bas2V9iBalBeQNJY1iAMKbnxplWckfZMQsjnN?=
+ =?us-ascii?Q?koxM6oqmWjh9qJyTffneMG8R4D0NA5iMYPshw2wxjzfdnwEDH44HMLI6ypis?=
+ =?us-ascii?Q?aZ1GTmaTj7oMM4kVmB9zZNFDLcSTV+VbIGa4Nvd60+/s8wg+KZo3PzxSLPKZ?=
+ =?us-ascii?Q?TyiMW1dNBWXsV3UbGfIvVYt2cyTVmtAgbscqthHSTia5U4tFiaKuRSd9YEly?=
+ =?us-ascii?Q?6+BltLv0bMojcCFP4tQHIAJ9AMc8aNvAfY9ZEdBs1Vasm6AL+AlGodwVWazU?=
+ =?us-ascii?Q?TTW73XE5VA8gFApHtKevmDJBZJR5zNf/euIAieAWDFQBWq407f3wYVnS05vZ?=
+ =?us-ascii?Q?HyfiaB3b+wq2krlVx/tgQXYijfwBaLuD2dcIfxNZCJhmWZ68RcrEtLAmaL6e?=
+ =?us-ascii?Q?QP7N0ZKDq3GCGdOnDdKtsiUjOjN9PGtAk8DEtgOfBgLd5nZS0+VX8io0RoM2?=
+ =?us-ascii?Q?yiCAUgsJw89QAHrTaOAJCQ13szsJvdJUH6Xpsh7B40nIWa4MW3zxlCoXPwQ?=
+ =?us-ascii?Q?=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 23c2876a-2fdd-472b-0487-08dd02de4d2a
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 05:53:15.9368 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY0P300MB0369
+Received-SPF: pass client-ip=2a01:111:f403:2818::804;
+ envelope-from=junjie.mao@hotmail.com;
+ helo=AUS01-ME3-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.671,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,326 +144,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000099cc010626b08f24
-Content-Type: text/plain; charset="UTF-8"
 
-Il mar 12 nov 2024, 03:47 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> I agree that storing generated stuff in the source directory should not
-> be encouraged.
+> Il mar 12 nov 2024, 04:17 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
 >
-> Just want to mention that such changes can lead to trouble to
-> rust-analyzer. Today there are two ways to inform rust-analyzer of the
-> project structure:
+>  Making a universal unexpected_cfgs apply to the whole workspace may lead
+>  to a lengthy cfg list when more devices in Rust are added. As cargo does
+>  not allow overriding workspace-defined lints once inherited, I think it
+>  better to keep unexpected_cfgs crate-specific.
 >
->   1. Use rust/Cargo.toml. In this case we'll hit an issue in
->   rust-analyzer [1] that prevents it from including sources outside the
->   crate directory. Thus, definitions in the bindgen-generated code
->   cannot be found.
->
->   2. Use the meson-generated rust-project.json. Due to the use of
->   structured_sources(), that json file refers to the copied sources of
->   qemu-api in the build directory. Rust-analyzer can find every symbol
->   in the qemu-api crate but will jump to those copied files, making it a
->   bit more annoying when developing the crate.
->
+> Is it possible? I thought you cannot override at a finer granularity once you have a "workspace = true" line.
 
-Would it help to move the bindgen-generated code to a completely separate
-crate (e.g. qemu-api-sys), and avoid structured_sources for qemu-api? It
-might even help build times.
+No, such overriding is not supported by cargo today. I'm thinking about
+removing the workspace.lints.rust section, but ...
 
-Paolo
+>
+> Based on the experience with C we shouldn't have many cfgs, but if it's possible I would definitely make unexpected_cfgs specific to qemu-api.
 
-We can perhaps leave it as a separate topic for another series.
->
-> [1] https://github.com/rust-lang/rust-analyzer/issues/17040
->
-> --
-> Best Regards
-> Junjie Mao
->
-> > +    let path = env::var("MESON_BUILD_ROOT")
-> > +        .unwrap_or_else(|_| format!("{}/src",
-> env!("CARGO_MANIFEST_DIR")));
-> > +
-> > +    let file = format!("{}/bindings.rs.inc", path);
-> > +    if !Path::new(&file).exists() {
-> > +        panic!(concat!(
-> > +            "No generated C bindings found! If you want to run `cargo`,
-> start a subshell\n",
-> > +            "with `meson devenv`, or point MESON_BUILD_ROOT to the top
-> of the build tree."
-> > +        ));
-> >      }
-> >
-> > +    println!("cargo:rustc-env=BINDINGS_RS_INC={}", file);
-> > +
-> >      // Check for available rustc features
-> >      if rustc::is_min_version("1.77.0").unwrap_or(false) {
-> >          println!("cargo:rustc-cfg=has_offset_of");
-> > diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-> > index 6f637af7b1b..e3870e901e3 100644
-> > --- a/rust/qemu-api/meson.build
-> > +++ b/rust/qemu-api/meson.build
-> > @@ -9,6 +9,7 @@ _qemu_api_rs = static_library(
-> >    structured_sources(
-> >      [
-> >        'src/lib.rs',
-> > +      'src/bindings.rs',
-> >        'src/c_str.rs',
-> >        'src/definitions.rs',
-> >        'src/device_class.rs',
-> > diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/
-> bindings.rs
-> > new file mode 100644
-> > index 00000000000..1dac310594d
-> > --- /dev/null
-> > +++ b/rust/qemu-api/src/bindings.rs
-> > @@ -0,0 +1,29 @@
-> > +// SPDX-License-Identifier: GPL-2.0-or-later
-> > +#![allow(
-> > +    dead_code,
-> > +    improper_ctypes_definitions,
-> > +    improper_ctypes,
-> > +    non_camel_case_types,
-> > +    non_snake_case,
-> > +    non_upper_case_globals,
-> > +    unsafe_op_in_unsafe_fn,
-> > +    clippy::missing_const_for_fn,
-> > +    clippy::too_many_arguments,
-> > +    clippy::approx_constant,
-> > +    clippy::use_self,
-> > +    clippy::useless_transmute,
-> > +    clippy::missing_safety_doc
-> > +)]
-> > +
-> > +#[cfg(MESON)]
-> > +include!("bindings.rs.inc");
-> > +
-> > +#[cfg(not(MESON))]
-> > +include!(env!("BINDINGS_RS_INC"));
-> > +
-> > +unsafe impl Send for Property {}
-> > +unsafe impl Sync for Property {}
-> > +unsafe impl Sync for TypeInfo {}
-> > +unsafe impl Sync for VMStateDescription {}
-> > +unsafe impl Sync for VMStateField {}
-> > +unsafe impl Sync for VMStateInfo {}
-> > diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-> > index aa8d16ec94b..440aff3817d 100644
-> > --- a/rust/qemu-api/src/lib.rs
-> > +++ b/rust/qemu-api/src/lib.rs
-> > @@ -4,31 +4,9 @@
-> >
-> >  #![cfg_attr(not(MESON), doc = include_str!("../README.md"))]
-> >
-> > -#[allow(
-> > -    dead_code,
-> > -    improper_ctypes_definitions,
-> > -    improper_ctypes,
-> > -    non_camel_case_types,
-> > -    non_snake_case,
-> > -    non_upper_case_globals,
-> > -    unsafe_op_in_unsafe_fn,
-> > -    clippy::missing_const_for_fn,
-> > -    clippy::too_many_arguments,
-> > -    clippy::approx_constant,
-> > -    clippy::use_self,
-> > -    clippy::useless_transmute,
-> > -    clippy::missing_safety_doc,
-> > -)]
-> >  #[rustfmt::skip]
-> >  pub mod bindings;
-> >
-> > -unsafe impl Send for bindings::Property {}
-> > -unsafe impl Sync for bindings::Property {}
-> > -unsafe impl Sync for bindings::TypeInfo {}
-> > -unsafe impl Sync for bindings::VMStateDescription {}
-> > -unsafe impl Sync for bindings::VMStateField {}
-> > -unsafe impl Sync for bindings::VMStateInfo {}
-> > -
-> >  pub mod c_str;
-> >  pub mod definitions;
-> >  pub mod device_class;
->
->
+... a quick grep finds 33 different CONFIG_* being used in C under
+hw/. In that case one universal list of expected cfgs does not look like
+a problem. Thanks for pointing this out.
 
---00000000000099cc010626b08f24
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--
+Best Regards
+Junjie Mao
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il mar 12 nov 2024, 03:47 Junjie Mao &lt;<a href=3D"ma=
-ilto:junjie.mao@hotmail.com">junjie.mao@hotmail.com</a>&gt; ha scritto:<br>=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">I agree that storin=
-g generated stuff in the source directory should not<br>
-be encouraged.<br>
-<br>
-Just want to mention that such changes can lead to trouble to<br>
-rust-analyzer. Today there are two ways to inform rust-analyzer of the<br>
-project structure:<br>
-<br>
-=C2=A0 1. Use rust/Cargo.toml. In this case we&#39;ll hit an issue in<br>
-=C2=A0 rust-analyzer [1] that prevents it from including sources outside th=
-e<br>
-=C2=A0 crate directory. Thus, definitions in the bindgen-generated code<br>
-=C2=A0 cannot be found.<br>
-<br>
-=C2=A0 2. Use the meson-generated rust-project.json. Due to the use of<br>
-=C2=A0 structured_sources(), that json file refers to the copied sources of=
-<br>
-=C2=A0 qemu-api in the build directory. Rust-analyzer can find every symbol=
-<br>
-=C2=A0 in the qemu-api crate but will jump to those copied files, making it=
- a<br>
-=C2=A0 bit more annoying when developing the crate.<br></blockquote></div><=
-/div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quot=
-e"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex"></blockquote></div></d=
-iv><div dir=3D"auto">Would it help to move the bindgen-generated code to a =
-completely separate crate (e.g. qemu-api-sys), and avoid structured_sources=
- for qemu-api? It might even help build times.</div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"a=
-uto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"=
-margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
-t:1ex">
-We can perhaps leave it as a separate topic for another series.<br>
-<br>
-[1] <a href=3D"https://github.com/rust-lang/rust-analyzer/issues/17040" rel=
-=3D"noreferrer noreferrer" target=3D"_blank">https://github.com/rust-lang/r=
-ust-analyzer/issues/17040</a><br>
-<br>
---<br>
-Best Regards<br>
-Junjie Mao<br>
-<br>
-&gt; +=C2=A0 =C2=A0 let path =3D env::var(&quot;MESON_BUILD_ROOT&quot;)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 .unwrap_or_else(|_| format!(&quot;{}/src&=
-quot;, env!(&quot;CARGO_MANIFEST_DIR&quot;)));<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 let file =3D format!(&quot;{}/bindings.rs.inc&quot;, pa=
-th);<br>
-&gt; +=C2=A0 =C2=A0 if !Path::new(&amp;file).exists() {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 panic!(concat!(<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;No generated C bindin=
-gs found! If you want to run `cargo`, start a subshell\n&quot;,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;with `meson devenv`, =
-or point MESON_BUILD_ROOT to the top of the build tree.&quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ));<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;<br>
-&gt; +=C2=A0 =C2=A0 println!(&quot;cargo:rustc-env=3DBINDINGS_RS_INC=3D{}&q=
-uot;, file);<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 // Check for available rustc features<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if rustc::is_min_version(&quot;1.77.0&quot;).unwra=
-p_or(false) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 println!(&quot;cargo:rustc-cfg=3Dhas=
-_offset_of&quot;);<br>
-&gt; diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build<br>
-&gt; index 6f637af7b1b..e3870e901e3 100644<br>
-&gt; --- a/rust/qemu-api/meson.build<br>
-&gt; +++ b/rust/qemu-api/meson.build<br>
-&gt; @@ -9,6 +9,7 @@ _qemu_api_rs =3D static_library(<br>
-&gt;=C2=A0 =C2=A0 structured_sources(<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 [<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;src/<a href=3D"http://lib.rs" rel=3D"n=
-oreferrer noreferrer" target=3D"_blank">lib.rs</a>&#39;,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 &#39;src/<a href=3D"http://bindings.rs" rel=3D"n=
-oreferrer noreferrer" target=3D"_blank">bindings.rs</a>&#39;,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;src/<a href=3D"http://c_str.rs" rel=3D=
-"noreferrer noreferrer" target=3D"_blank">c_str.rs</a>&#39;,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;src/<a href=3D"http://definitions.rs" =
-rel=3D"noreferrer noreferrer" target=3D"_blank">definitions.rs</a>&#39;,<br=
 >
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;src/<a href=3D"http://device_class.rs"=
- rel=3D"noreferrer noreferrer" target=3D"_blank">device_class.rs</a>&#39;,<=
-br>
-&gt; diff --git a/rust/qemu-api/src/<a href=3D"http://bindings.rs" rel=3D"n=
-oreferrer noreferrer" target=3D"_blank">bindings.rs</a> b/rust/qemu-api/src=
-/<a href=3D"http://bindings.rs" rel=3D"noreferrer noreferrer" target=3D"_bl=
-ank">bindings.rs</a><br>
-&gt; new file mode 100644<br>
-&gt; index 00000000000..1dac310594d<br>
-&gt; --- /dev/null<br>
-&gt; +++ b/rust/qemu-api/src/<a href=3D"http://bindings.rs" rel=3D"noreferr=
-er noreferrer" target=3D"_blank">bindings.rs</a><br>
-&gt; @@ -0,0 +1,29 @@<br>
-&gt; +// SPDX-License-Identifier: GPL-2.0-or-later<br>
-&gt; +#![allow(<br>
-&gt; +=C2=A0 =C2=A0 dead_code,<br>
-&gt; +=C2=A0 =C2=A0 improper_ctypes_definitions,<br>
-&gt; +=C2=A0 =C2=A0 improper_ctypes,<br>
-&gt; +=C2=A0 =C2=A0 non_camel_case_types,<br>
-&gt; +=C2=A0 =C2=A0 non_snake_case,<br>
-&gt; +=C2=A0 =C2=A0 non_upper_case_globals,<br>
-&gt; +=C2=A0 =C2=A0 unsafe_op_in_unsafe_fn,<br>
-&gt; +=C2=A0 =C2=A0 clippy::missing_const_for_fn,<br>
-&gt; +=C2=A0 =C2=A0 clippy::too_many_arguments,<br>
-&gt; +=C2=A0 =C2=A0 clippy::approx_constant,<br>
-&gt; +=C2=A0 =C2=A0 clippy::use_self,<br>
-&gt; +=C2=A0 =C2=A0 clippy::useless_transmute,<br>
-&gt; +=C2=A0 =C2=A0 clippy::missing_safety_doc<br>
-&gt; +)]<br>
-&gt; +<br>
-&gt; +#[cfg(MESON)]<br>
-&gt; +include!(&quot;bindings.rs.inc&quot;);<br>
-&gt; +<br>
-&gt; +#[cfg(not(MESON))]<br>
-&gt; +include!(env!(&quot;BINDINGS_RS_INC&quot;));<br>
-&gt; +<br>
-&gt; +unsafe impl Send for Property {}<br>
-&gt; +unsafe impl Sync for Property {}<br>
-&gt; +unsafe impl Sync for TypeInfo {}<br>
-&gt; +unsafe impl Sync for VMStateDescription {}<br>
-&gt; +unsafe impl Sync for VMStateField {}<br>
-&gt; +unsafe impl Sync for VMStateInfo {}<br>
-&gt; diff --git a/rust/qemu-api/src/<a href=3D"http://lib.rs" rel=3D"norefe=
-rrer noreferrer" target=3D"_blank">lib.rs</a> b/rust/qemu-api/src/<a href=
-=3D"http://lib.rs" rel=3D"noreferrer noreferrer" target=3D"_blank">lib.rs</=
-a><br>
-&gt; index aa8d16ec94b..440aff3817d 100644<br>
-&gt; --- a/rust/qemu-api/src/<a href=3D"http://lib.rs" rel=3D"noreferrer no=
-referrer" target=3D"_blank">lib.rs</a><br>
-&gt; +++ b/rust/qemu-api/src/<a href=3D"http://lib.rs" rel=3D"noreferrer no=
-referrer" target=3D"_blank">lib.rs</a><br>
-&gt; @@ -4,31 +4,9 @@<br>
-&gt;<br>
-&gt;=C2=A0 #![cfg_attr(not(MESON), doc =3D include_str!(&quot;../README.md&=
-quot;))]<br>
-&gt;<br>
-&gt; -#[allow(<br>
-&gt; -=C2=A0 =C2=A0 dead_code,<br>
-&gt; -=C2=A0 =C2=A0 improper_ctypes_definitions,<br>
-&gt; -=C2=A0 =C2=A0 improper_ctypes,<br>
-&gt; -=C2=A0 =C2=A0 non_camel_case_types,<br>
-&gt; -=C2=A0 =C2=A0 non_snake_case,<br>
-&gt; -=C2=A0 =C2=A0 non_upper_case_globals,<br>
-&gt; -=C2=A0 =C2=A0 unsafe_op_in_unsafe_fn,<br>
-&gt; -=C2=A0 =C2=A0 clippy::missing_const_for_fn,<br>
-&gt; -=C2=A0 =C2=A0 clippy::too_many_arguments,<br>
-&gt; -=C2=A0 =C2=A0 clippy::approx_constant,<br>
-&gt; -=C2=A0 =C2=A0 clippy::use_self,<br>
-&gt; -=C2=A0 =C2=A0 clippy::useless_transmute,<br>
-&gt; -=C2=A0 =C2=A0 clippy::missing_safety_doc,<br>
-&gt; -)]<br>
-&gt;=C2=A0 #[rustfmt::skip]<br>
-&gt;=C2=A0 pub mod bindings;<br>
-&gt;<br>
-&gt; -unsafe impl Send for bindings::Property {}<br>
-&gt; -unsafe impl Sync for bindings::Property {}<br>
-&gt; -unsafe impl Sync for bindings::TypeInfo {}<br>
-&gt; -unsafe impl Sync for bindings::VMStateDescription {}<br>
-&gt; -unsafe impl Sync for bindings::VMStateField {}<br>
-&gt; -unsafe impl Sync for bindings::VMStateInfo {}<br>
-&gt; -<br>
-&gt;=C2=A0 pub mod c_str;<br>
-&gt;=C2=A0 pub mod definitions;<br>
-&gt;=C2=A0 pub mod device_class;<br>
-<br>
-</blockquote></div></div></div>
-
---00000000000099cc010626b08f24--
-
+> Paolo
+>
 
