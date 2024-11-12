@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3379D597A4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 21:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71280D597A4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 21:09:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAy1s-00083U-1a; Tue, 12 Nov 2024 16:02:28 -0500
+	id 1tAy81-0000u1-MS; Tue, 12 Nov 2024 16:08:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tAy1q-00083H-8S
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:02:26 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1tAy7x-0000tY-Dc
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:08:45 -0500
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tAy1n-00027I-Gq
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:02:25 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4315abed18aso52652055e9.2
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 13:02:22 -0800 (PST)
+ id 1tAy7v-0002oM-UH
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 16:08:45 -0500
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-539d9fffea1so6163981e87.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 13:08:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731445341; x=1732050141; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731445721; x=1732050521; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6mAypGFTgU/oYJ9UIgnt91i56ebpSdUHwzcep5maFo0=;
- b=gY+2NDfL3P2VwCqGt/IqxGj8tQdYeagg0o1pUkhrDujbli5stAjDpC+AiJc5xmY4AD
- Pnk57RXOuyF2KxzI0ByYQuRX7vky4TmwuXOeSnJxDrUdG4QwpqPdd5FXPVZXEazLQuUH
- 37HNtS6Sp61OQL96ejJB0uRDSMTQgxspV65siRm0C/5XyfbLn4/ksShHILceLOJr37lb
- DILHCScT2/tFTR120V3tgteIXSLXTtxmfBPbBQjpT1f6RuPxnSbKtWI+vVAcXpd4lkQU
- vQsv26pH6YdSw8oUxkBAMa2PKrbHkGwlQo9vFlcdPUtKWpbwdzeaGXNfXfkBqbxJPhIM
- 7mgQ==
+ bh=KmdEFgq45obI7C56tRv6Ix6570wzi8bDm2li0JdWk1g=;
+ b=XAFg2ukg2yO/A5pfw/Pwq+IpQtDvAdh6i/Ge1EeCh+Pw0RJx+jgbJCsRdf52Fj39LT
+ NzAmthdYgQQYMRvWBaOAMu8gGvVwvCgNmUs5cl2/gvWBvWrFRVzUiY+uFKHxQszbCBpE
+ vnG55ECkTDgkqLI/02Ach3+IEZjq9XWRnnq+zOYGpYWaWJWPJ+TLndjn53gNEeooKFpn
+ 8NtzFAfvalgKwVtdDnibtE8dSgA4kIWZDGAb4lwd7GX8d21C7GWw47IBv3y3s6DTReN7
+ yNllPI2bcVu1UCKfxGfUSai+TOiS4/O6gSVsXGGlyHck1riCjiCbKfMrXjDLoqwSIHoR
+ 7ylA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731445341; x=1732050141;
+ d=1e100.net; s=20230601; t=1731445721; x=1732050521;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6mAypGFTgU/oYJ9UIgnt91i56ebpSdUHwzcep5maFo0=;
- b=PmJtI7y6qtut+NM3+0xbe5+2hfcLwiKSlfQp8SmzKxL4AFsFvstaj7UQB+TE+DENMu
- Pg3zfjWJOD2B6DJlr8U3pD/QdGZdUOuH7pWKrByVecF7k0WNhb85LZbjOf0gw4+S7K3Z
- cwxSWxy9/evTn7zMq6gM3MxmlVoOqgpzUcaf7/rIxkJUOfsz2hQDmoIwsxvQ6pEAYwoL
- L4wXsWhHnn6kl/Iv2TseaD+rx0KiYogyo4yXBS4iJMCYWke3Rra7VEyrB+fAnfC3OBMS
- t87GCfuNZ/5ebVNg4j8Mu0ATEkxEy8Seow5b7zsU+0HEYHmMcqaYrS2jrdMvnQJp75T2
- kWgw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXupMpAkPnKDdKfJIwj4i2j2cBWtHE51nDIfOcaGaWAuCGhKjf0SfRg03UuMApmWJ0OH1clvsD8ztEI@nongnu.org
-X-Gm-Message-State: AOJu0YybVzFoKGTFFq0iV/yk7zWzTjJ1u0DTbQRu8HIKUoVmFFQq//eT
- irsngQVm0YmwTQ6oP9RtDm5TUDBGElkPPbMVC+hAEbnjurOT669JfKUcQlCFMrE=
-X-Google-Smtp-Source: AGHT+IH7cjbjXpWngtj9/HjPqnXEFolC8o9oRwcHXEp9qNwcE8F9SSx/PgjLMEM+nu5ZgxehvQLZZQ==
-X-Received: by 2002:a05:600c:4508:b0:431:50cb:2398 with SMTP id
- 5b1f17b1804b1-432b74fecacmr149877385e9.2.1731445341500; 
- Tue, 12 Nov 2024 13:02:21 -0800 (PST)
+ bh=KmdEFgq45obI7C56tRv6Ix6570wzi8bDm2li0JdWk1g=;
+ b=wWSCWRi/VaSXUVHXm3ya022XO9IZ5jtS3K1I3NbB5gE5HqdJR+nXWMh12aiNgTxYyo
+ 6QMY6V+WiNr8Jxgh/mfYY9Zv5gA4FNsk5FD7WoShv3kSu2PMNyNACtyc+2nt4EfalVBk
+ wwP73EimEgvACL/EpOL4pgzMOVHmNJoVyabWDMxvHHKcLlsxeFV/agtYAey5iuae52w9
+ IbxE3xF+GtE9FTxm9N+cQBcwSXRZBf8Q0n+sjFTwI94hEDdy317vq2kQUQL+PEgDq6K0
+ 3TZBeg1znoHQEFCdoK3UAol7NB0ZGhfak533N2cl0l1ok5wqju2ffOw9vi5sPp6tVuOQ
+ QwVQ==
+X-Gm-Message-State: AOJu0YwqAo5/rHAERAbpD2XgRD5jw3xWtf8V7eebiNpb2jSjqdK2tlZx
+ sM42BysMxbbcfWzL+f8dGUkd0pxyufkCGJCkWhZLSHaqeoFlZ435wN+mCJAiaOg=
+X-Google-Smtp-Source: AGHT+IHwXPU+OvJ7K6tH4OQnaXMusEVgTrsO34ZcPGeX4OiEY+tJUkLA9PGvxdRqd3cPJvUNJvSfRQ==
+X-Received: by 2002:a05:6512:3403:b0:53b:2114:92a7 with SMTP id
+ 2adb3069b0e04-53d862f359cmr9372372e87.52.1731445721055; 
+ Tue, 12 Nov 2024 13:08:41 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381eda04ceasm16064719f8f.102.2024.11.12.13.02.20
+ a640c23a62f3a-a9ee0dc50ddsm781442166b.103.2024.11.12.13.08.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Nov 2024 13:02:20 -0800 (PST)
+ Tue, 12 Nov 2024 13:08:40 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 350F25F7CB;
- Tue, 12 Nov 2024 21:02:20 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 930115F7CB;
+ Tue, 12 Nov 2024 21:08:39 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Peter Maydell
- <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,  Gustavo Romero
- <gustavo.romero@linaro.org>
-Subject: Re: [PATCH v2] tests/tcg: Stop using exit() in the gdbstub testcases
-In-Reply-To: <20241022113939.19989-1-iii@linux.ibm.com> (Ilya Leoshkevich's
- message of "Tue, 22 Oct 2024 13:37:11 +0200")
-References: <20241022113939.19989-1-iii@linux.ibm.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Alexandre Iooss <erdnaxe@crans.org>,  Cleber
+ Rosa <crosa@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  John
+ Snow <jsnow@redhat.com>
+Subject: Re: [PATCH v3 0/3] plugins: generate list of symbols automatically
+In-Reply-To: <20241106170923.2976750-1-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Wed, 6 Nov 2024 09:09:20 -0800")
+References: <20241106170923.2976750-1-pierrick.bouvier@linaro.org>
 User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Tue, 12 Nov 2024 21:02:20 +0000
-Message-ID: <87cyj0upwj.fsf@draig.linaro.org>
+Date: Tue, 12 Nov 2024 21:08:39 +0000
+Message-ID: <877c98upm0.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,20 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ilya Leoshkevich <iii@linux.ibm.com> writes:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> GDB 15 does not like exit() anymore:
+> Now that meson build for plugins was merged, we can cleanup another part =
+with
+> the symbols file.
+> It has to be kept in sync between the header (qemu-plugin.h) and the symb=
+ols
+> file. This has proved to be error prone and tedious.
 >
->     (gdb) python exit(0)
->     Python Exception <class 'SystemExit'>: 0
->     Error occurred in Python: 0
+> We solve this by generating this list from header directly using a python
+> script. Dependencies are triggered correctly, and the file is regenerated=
+ if the
+> header is modified, as expected.
 >
-> Use the GDB's own exit command, like it's already done in a couple
-> places, everywhere. This is the same fix as commit 93a3048dcf45
-> ("tests: Gently exit from GDB when tests complete"), but applied to
-> more places.
+> Pierrick Bouvier (3):
+>   plugins: add missing export for qemu_plugin_num_vcpus
+>   plugins: detect qemu plugin API symbols from header
+>   plugins: eradicate qemu-plugins.symbols static file
+>
+>  MAINTAINERS                    |  1 +
+>  include/qemu/qemu-plugin.h     |  1 +
+>  plugins/meson.build            | 12 +++++--
 
-Queued to maintainer/for-9.2, thanks.
+this failed to apply cleanly.=20
+
+>  plugins/qemu-plugins.symbols   | 59 ----------------------------------
+>  scripts/qemu-plugin-symbols.py | 45 ++++++++++++++++++++++++++
+>  5 files changed, 56 insertions(+), 62 deletions(-)
+>  delete mode 100644 plugins/qemu-plugins.symbols
+>  create mode 100755 scripts/qemu-plugin-symbols.py
 
 --=20
 Alex Benn=C3=A9e
