@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C7AED41D66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 08:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0235D41D66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 08:02:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAlqE-0001Qp-F1; Tue, 12 Nov 2024 03:01:38 -0500
+	id 1tAlqt-0001Y7-A4; Tue, 12 Nov 2024 03:02:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tAlqB-0001QI-2T
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 03:01:35 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tAlqn-0001W8-Kv
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 03:02:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tAlq8-0006tD-3m
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 03:01:33 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tAlql-0006uy-8c
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 03:02:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731398491;
+ s=mimecast20190719; t=1731398530;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=me7m3Ff2If6PHFRvOPduTppYCU+VNRwj/tjOWdLC4rg=;
- b=AMpm8fi/9pq+Vb1X7hdRNBhpaK2bsz4wb8U9KCfuTb9WgJBk8MkIBe6d8gS5qQDdy6+Mho
- mwmWg5FRDS49Zqx+c3GJYGAEyAHynonkCTvgUiFw8joDgovbjKGKcQ2bFvrMpLYrTTPouR
- HHTjM3wTNDFStiDZqaAGw1wPAGnxK7U=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xn1Qjs/PYtU/aSg+0PL60+R7uDxL90Q0YwjYY3lU/hI=;
+ b=OklZpiywnqNnQXzcfzgBJx7yDoeGKk7CfApPOLi+FzdvuqrhEpV0ZRbAbA6xWSP2BCLuah
+ EQ+4xBTIJNOscaSU7AHHQTz1quLdtRHwTXEkmqJq1Hcqtx/mZdicvve/hgp3okT2az4N5M
+ MsL5q3MKgLBiuwBxwz+tThGbU0T6Kxg=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-Bl2JaAjWPACEDaH6usgtNw-1; Tue, 12 Nov 2024 03:01:28 -0500
-X-MC-Unique: Bl2JaAjWPACEDaH6usgtNw-1
-X-Mimecast-MFC-AGG-ID: Bl2JaAjWPACEDaH6usgtNw
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7b14cb9f6f5so728378785a.0
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 00:01:28 -0800 (PST)
+ us-mta-226-_dkti1fvMGyXX5yQh9OV6Q-1; Tue, 12 Nov 2024 03:02:08 -0500
+X-MC-Unique: _dkti1fvMGyXX5yQh9OV6Q-1
+X-Mimecast-MFC-AGG-ID: _dkti1fvMGyXX5yQh9OV6Q
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3e7a207b659so2097195b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 00:02:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731398487; x=1732003287;
+ d=1e100.net; s=20230601; t=1731398527; x=1732003327;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=me7m3Ff2If6PHFRvOPduTppYCU+VNRwj/tjOWdLC4rg=;
- b=Cc+dTGq9YWAu53yRoKlXkegiQ0g1hWK470ifsvBh5ItkaSHzD0SFKN4tyjUvMXb+0s
- i98Isr67we91scP9AVKCih9V9SEVEXahknV8N91Rv/i8Rn1D2TqReZkYjga/YwOdME+r
- qPbj7gqDmw8gRokE1hSBiTWcf60T1Yl9fDK6GUPzK8pagxNoREzjdfa+5MWDIsVnFJhV
- PHYkL8Qe/SgcBQGokRT2gKLqAwl6HVOBuYm9lWKQ/wLE5kxzEZM/fKbOSrm9Qae7zjSP
- 3PotUfUqnW9AjC8swFGvvScNSIwLXRGxLaV4+SA2HdTvKasbeshtS+VVpG70eo6YQ4cz
- Zecw==
+ bh=xn1Qjs/PYtU/aSg+0PL60+R7uDxL90Q0YwjYY3lU/hI=;
+ b=HSy32LQ/K/wMASkNKBHWPMrD7VTizbzAmHpcCMKsRKwvI5US2tvtNpBfptGV3qjqWD
+ 4GQ+lowQNP6AmAdEllZ+fiiJiJ9LusBkSn1QPorHW6TgSDIRWd5YYIKVb7oOWyvPozqR
+ KQzXHiIhsCxYc+nuhSfRaAL3kAEB5H1Y1mPsbZlGJ8kT9wJ6emp2hFwFNCGmlpzTWSmB
+ 9qCigHubI4ZwRVdszWuTaX8uyklnoVmZOvcwCx/ge08K6w5yNxCxDDgLiAInS8PhTJ6y
+ Mh6uNQJw+ChDO3ti7TAoA7Vf93/71Nzayfx9Hrfg/vYp7129++CnazYz5nZz8pYQdMy1
+ Ykdg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwnXDh2wkdRoRx6/ikXAe3gDJ4hMqZ/GFsrfaCo+8Oc9cUdDXW4CBG8TIGNoXvHptcedjUF1GxzSe0@nongnu.org
-X-Gm-Message-State: AOJu0YxWXUPmORoCzrbjt48Eoc6BafdlM4VT2YAZ2Wlcbh7AwndKtc4k
- V9HbDCjUF6vj5GxHMDMGm4LKchJIojp38ZlJa+YtQUKJ9okGOrYBG6rNP2nycGdIzpNCantOE3s
- N79xfqbTx+z3MdMkzuaH9x/7BWKMztJ4Emt0QR0KSF8J7l05hAJnT
-X-Received: by 2002:a05:620a:17ac:b0:7ac:e879:1a20 with SMTP id
- af79cd13be357-7b331e88c15mr2436770285a.1.1731398487662; 
- Tue, 12 Nov 2024 00:01:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEzy9r8zc+UdSKz2fSnuavROmhmSnXBGiJ0EioGs5bbu+Ifdyo8sgv+uHiIMsO099lG26QXHA==
-X-Received: by 2002:a05:620a:17ac:b0:7ac:e879:1a20 with SMTP id
- af79cd13be357-7b331e88c15mr2436767085a.1.1731398487307; 
- Tue, 12 Nov 2024 00:01:27 -0800 (PST)
+ AJvYcCXaeyzHSyimzzvyVMVIOb3cfM6xLU1vUCJQeDDkLSO1N4/tXHmXyn1TVwApn/frz1fyZEZTUoiWV84U@nongnu.org
+X-Gm-Message-State: AOJu0YxBOTGUi3gPU2c+SqhigPsduEjoTe/5JB1bui23j/7l20j8ol8T
+ bsiaJ9qycK2KHHcUsQxzovBJz41RYtLtwFvHIuOGyCkPd4Z4+Jpjt6qu1QtLSSdLJq7088UOGnP
+ N9gAsxkQV/XfayZq7jk8J3O9m4by/fXUfznNY2euPEGT5lcYQtsmY
+X-Received: by 2002:a05:6808:2212:b0:3e0:c13:9837 with SMTP id
+ 5614622812f47-3e7aae09629mr1637711b6e.37.1731398525920; 
+ Tue, 12 Nov 2024 00:02:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHQxzgLm08f2bsqrhiyyzO/E966SyqZaw9HwRRzMFqXLgdp7l/bUPurb0LjcaihZAcSgtnESQ==
+X-Received: by 2002:a05:6808:2212:b0:3e0:c13:9837 with SMTP id
+ 5614622812f47-3e7aae09629mr1637687b6e.37.1731398525537; 
+ Tue, 12 Nov 2024 00:02:05 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b32acf47a6sm568556285a.120.2024.11.12.00.01.25
+ 6a1803df08f44-6d396630f80sm68758176d6.103.2024.11.12.00.02.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Nov 2024 00:01:26 -0800 (PST)
-Message-ID: <a84a1d5e-bc7b-46c8-9ab0-5e2470a3811b@redhat.com>
-Date: Tue, 12 Nov 2024 09:01:24 +0100
+ Tue, 12 Nov 2024 00:02:05 -0800 (PST)
+Message-ID: <75861f28-5215-4435-a474-be8545640357@redhat.com>
+Date: Tue, 12 Nov 2024 09:02:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] tests/functional: Introduce _console_read()
+Subject: Re: [PATCH v1 2/4] tests/functional: Convert Aspeed aarch64 SDK tests
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -80,8 +80,8 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20241112062806.838717-1-clg@redhat.com>
- <20241112062806.838717-2-clg@redhat.com>
- <3bea84f6-098f-4956-a40d-651b567212c2@redhat.com>
+ <20241112062806.838717-3-clg@redhat.com>
+ <e556df7b-86c6-487d-b64a-03d0e698f973@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,7 +127,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <3bea84f6-098f-4956-a40d-651b567212c2@redhat.com>
+In-Reply-To: <e556df7b-86c6-487d-b64a-03d0e698f973@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -155,73 +155,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/24 08:11, Thomas Huth wrote:
+On 11/12/24 07:53, Thomas Huth wrote:
 > On 12/11/2024 07.28, Cédric Le Goater wrote:
->> Interaction with the console has been a problem in our avocado
->> tests. In some cases, the expected string does not match in the
->> output, causing the test to fail with a timeout. These were worked
->> around by sleeping before reading the console and even with SSH
->> connections in some places.
->>
->> To fix, process the console output char by char and not with
->> readline. This routine was largely inspired by console_wait() in
->> tests/vm/basevm.py.
+>> Drop the SSH connection which was introduced in the avocado tests to
+>> workaround read issues when interacting with console.
 >>
 >> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 >> ---
->>   tests/functional/qemu_test/cmd.py | 17 ++++++++++++++++-
->>   1 file changed, 16 insertions(+), 1 deletion(-)
+>>   tests/avocado/machine_aspeed.py         | 78 --------------------
+>>   tests/functional/meson.build            |  2 +
+>>   tests/functional/test_aarch64_aspeed.py | 97 +++++++++++++++++++++++++
+>>   3 files changed, 99 insertions(+), 78 deletions(-)
+>>   create mode 100644 tests/functional/test_aarch64_aspeed.py
 >>
->> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
->> index cbabb1ceed3c..bb39857e6cae 100644
->> --- a/tests/functional/qemu_test/cmd.py
->> +++ b/tests/functional/qemu_test/cmd.py
->> @@ -12,6 +12,7 @@
->>   # later.  See the COPYING file in the top-level directory.
->>   import logging
->> +import re
->>   import os
->>   import os.path
->>   import subprocess
->> @@ -78,6 +79,20 @@ def run_cmd(args):
->>   def is_readable_executable_file(path):
->>       return os.path.isfile(path) and os.access(path, os.R_OK | os.X_OK)
->> +def _console_read(vm, expect, expectalt = None):
->> +    output = ""
->> +    while True:
->> +        data = vm.console_socket.recv(1)
->> +        if not data:
->> +            break
->> +        output += data.decode("latin1")
->> +        if expect in output:
->> +            break
->> +        if "\r" in output or "\n" in output:
->> +            lines = re.split("[\r\n]", output)
->> +            output = lines.pop()
->> +    return output
+>> diff --git a/tests/avocado/machine_aspeed.py b/tests/avocado/machine_aspeed.py
+>> index 241ef180affc..2240c82abff9 100644
+>> --- a/tests/avocado/machine_aspeed.py
+>> +++ b/tests/avocado/machine_aspeed.py
+>> @@ -59,17 +59,6 @@ def do_test_arm_aspeed_sdk_start(self, image):
+>>               self, 'boot', '## Loading kernel from FIT Image')
+>>           self.wait_for_console_pattern('Starting kernel ...')
+>> -    def do_test_aarch64_aspeed_sdk_start(self, image):
+>> -        self.vm.set_console()
+>> -        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
+>> -                         '-net', 'nic', '-net', 'user,hostfwd=:127.0.0.1:0-:22')
+>> -
+>> -        self.vm.launch()
+>> -
+>> -        self.wait_for_console_pattern('U-Boot 2023.10')
+>> -        self.wait_for_console_pattern('## Loading kernel from FIT Image')
+>> -        self.wait_for_console_pattern('Starting kernel ...')
+>> -
+>>       @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+>>       def test_arm_ast2500_evb_sdk(self):
+>>           """
+>> @@ -133,70 +122,3 @@ def test_arm_ast2600_evb_sdk(self):
+>>           year = time.strftime("%Y")
+>>           self.ssh_command_output_contains('/sbin/hwclock -f /dev/rtc1', year);
+>> -    def test_aarch64_ast2700_evb_sdk_v09_02(self):
+>> -        """
+>> -        :avocado: tags=arch:aarch64
+>> -        :avocado: tags=machine:ast2700-evb
+>> -        """
+>> -
+>> -        image_url = ('https://github.com/AspeedTech-BMC/openbmc/releases/'
+>> -                     'download/v09.02/ast2700-default-obmc.tar.gz')
+>> -        image_hash = 'ac969c2602f4e6bdb69562ff466b89ae3fe1d86e1f6797bb7969d787f82116a7'
+>> -        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+>> -                                      algorithm='sha256')
+>> -        archive.extract(image_path, self.workdir)
+>> -
+>> -        num_cpu = 4
+>> -        image_dir = self.workdir + '/ast2700-default/'
+>> -        uboot_size = os.path.getsize(image_dir + 'u-boot-nodtb.bin')
+>> -        uboot_dtb_load_addr = hex(0x400000000 + uboot_size)
+>> -
+>> -        load_images_list = [
+>> -            {
+>> -                'addr': '0x400000000',
+>> -                'file': image_dir + 'u-boot-nodtb.bin'
+>> -            },
+>> -            {
+>> -                'addr': str(uboot_dtb_load_addr),
+>> -                'file': image_dir + 'u-boot.dtb'
+>> -            },
+>> -            {
+>> -                'addr': '0x430000000',
+>> -                'file': image_dir + 'bl31.bin'
+>> -            },
+>> -            {
+>> -                'addr': '0x430080000',
+>> -                'file': image_dir + 'optee/tee-raw.bin'
+>> -            }
+>> -        ]
+>> -
+>> -        for load_image in load_images_list:
+>> -            addr = load_image['addr']
+>> -            file = load_image['file']
+>> -            self.vm.add_args('-device',
+>> -                             f'loader,force-raw=on,addr={addr},file={file}')
+>> -
+>> -        for i in range(num_cpu):
+>> -            self.vm.add_args('-device',
+>> -                             f'loader,addr=0x430000000,cpu-num={i}')
+>> -
+>> -        self.vm.add_args('-smp', str(num_cpu))
+>> -        self.vm.add_args('-device',
+>> -                         'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
+>> -        self.do_test_aarch64_aspeed_sdk_start(image_dir + 'image-bmc')
+>> -        self.wait_for_console_pattern('nodistro.0 ast2700-default ttyS12')
+>> -
+>> -        self.ssh_connect('root', '0penBmc', False)
+>> -        self.ssh_command('dmesg -c > /dev/null')
+>> -
+>> -        self.ssh_command_output_contains(
+>> -            'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device '
+>> -            '&& dmesg -c',
+>> -            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d');
+>> -
+>> -        self.ssh_command_output_contains(
+>> -            'cat /sys/class/hwmon/hwmon20/temp1_input', '0')
+>> -        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
+>> -                    property='temperature', value=18000)
+>> -        self.ssh_command_output_contains(
+>> -            'cat /sys/class/hwmon/hwmon20/temp1_input', '18000')
+>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+>> index 758145d1e5fa..c035eba4f9b8 100644
+>> --- a/tests/functional/meson.build
+>> +++ b/tests/functional/meson.build
+>> @@ -11,6 +11,7 @@ endif
+>>   # Timeouts for individual tests that can be slow e.g. with debugging enabled
+>>   test_timeouts = {
+>> +  'aarch64_aspeed' : 600,
+>>     'aarch64_raspi4' : 480,
+>>     'aarch64_sbsaref_alpine' : 720,
+>>     'aarch64_sbsaref_freebsd' : 720,
+>> @@ -47,6 +48,7 @@ tests_generic_bsduser = [
+>>   ]
+>>   tests_aarch64_system_thorough = [
+>> +  'aarch64_aspeed',
+>>     'aarch64_raspi3',
+>>     'aarch64_raspi4',
+>>     'aarch64_sbsaref',
+>> diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
+>> new file mode 100644
+>> index 000000000000..c61e34242d5a
+>> --- /dev/null
+>> +++ b/tests/functional/test_aarch64_aspeed.py
+>> @@ -0,0 +1,97 @@
+>> +#!/usr/bin/env python3
+>> +#
+>> +# Functional test that boots the ASPEED SoCs with firmware
+>> +#
+>> +# Copyright (C) 2022 ASPEED Technology Inc
+>> +#
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
 >> +
+>> +import sys
+>> +import os
+>> +
+>> +from qemu_test import QemuSystemTest, Asset
+>> +from qemu_test import wait_for_console_pattern
+>> +from qemu_test import exec_command_and_wait_for_pattern
+>> +from qemu_test.utils import archive_extract
+>> +
+>> +class AST2x00MachineSDK(QemuSystemTest):
+>> +
+>> +    def do_test_aarch64_aspeed_sdk_start(self, image):
+>> +        self.vm.set_console()
+>> +        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
+>> +                         '-net', 'nic', '-snapshot')
 > 
-> The idea looks promising, but I just realized that this is breaking the console.log:
-> 
-> $ cat tests/functional/arm/test_arm_aspeed.AST2x00Machine.test_arm_ast2500_evb_buildroot/console.log  | wc -l
-> 12
-> 
-> Without your patch, the log is way more verbose:
-> 
-> $ cat tests/functional/arm/test_arm_aspeed.AST2x00Machine.test_arm_ast2500_evb_buildroot/console.log  | wc -l
-> 232
-> 
-> Could you please have another look?
+> Running QEMU with just "-net nic" but no other "-net" option normally produces a warning à la "warning: hub 0 is not connected to host network" ... it's likely hidden in a log file here, so it does not really matter, but in case you respin the series anyway, you could maybe also try without the "-net nic" here.
 
-sure. I can add a log.debug.
+
+I will add a user netdev.
+
+
+
+
+> Anyway,
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
 
 
 Thanks,
 
 C.
-
-
-
-> 
 
 
