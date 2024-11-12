@@ -4,79 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C8BD32D9F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 12:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90CE4D32D9A
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 12:53:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAq7I-0007XE-3x; Tue, 12 Nov 2024 07:35:32 -0500
+	id 1tAqO5-0002L3-FB; Tue, 12 Nov 2024 07:52:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=039b511fc=graf@amazon.de>)
- id 1tAq7G-0007Wg-O9
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 07:35:30 -0500
-Received: from smtp-fw-6002.amazon.com ([52.95.49.90])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=039b511fc=graf@amazon.de>)
- id 1tAq7A-00081s-Nd
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 07:35:28 -0500
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tAqO3-0002Kf-Ee
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 07:52:51 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tAqO0-0001QA-Lb
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 07:52:51 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-20ca1b6a80aso60311865ad.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 04:52:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1731414925; x=1762950925;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to;
- bh=mM+p/y2dqoBvIWUAj4Wzbp6fJJIVJrXBYHz9z3USUow=;
- b=n3rnJG+Ftt+u9o8coXCIVdXHWNVhGEkSNyyxX8q+L8drWtK4DOjifKX7
- wol7FC3tuXEc81S6KLRZ+Facis+azAfSp9tpUYp6XsnbfmXOqy+f/ifN7
- Q9p7Kz+2nMYw+OSWaxXLIi5yPju5O7nSMl6Mhujgk4bB5exKC0FqasDI2 s=;
-X-IronPort-AV: E=Sophos;i="6.12,148,1728950400"; 
- d="scan'208,217";a="448078605"
-Received: from iad6-co-svc-p1-lb1-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.124.125.6])
- by smtp-border-fw-6002.iad6.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2024 12:35:18 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [10.0.38.20:56549]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.22.163:2525]
- with esmtp (Farcaster)
- id 047c1ff2-05db-47a9-904a-41274633d34e; Tue, 12 Nov 2024 12:35:17 +0000 (UTC)
-X-Farcaster-Flow-ID: 047c1ff2-05db-47a9-904a-41274633d34e
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Tue, 12 Nov 2024 12:35:17 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34; Tue, 12 Nov 2024
- 12:35:16 +0000
-Content-Type: multipart/alternative;
- boundary="------------nSwa3U5k04AZH169j5nCi5Zh"
-Message-ID: <2970cc68-a34c-4751-b4a3-d7fac416d7d3@amazon.com>
-Date: Tue, 12 Nov 2024 13:35:14 +0100
+ d=ventanamicro.com; s=google; t=1731415966; x=1732020766; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7MptEZjcrsnaEHxB1AuaEJOiLzKYeAZFOPQUUaBDxNM=;
+ b=N4t5CZNhd82qr80aK4KahtS06vxG7z7Te7HqjQRBiSnD95iLyFC/ZxM5Ej9c6Ohaxq
+ jMq6Q47V1kQaduvxgoCzR64zBr68vyXdZ9nvxEh5NGUOJJdNFripHPcWGA1YlG+7FYmW
+ y6G/FcTk0W1oGXFvCML75gxpuMo5rLEK/TJZXAFxgpa13aAZv98pigCLXFEfm3E1xicH
+ 2aGLhUM7FjqDAoHnE4A4Oxr0zBhvrgu7Vxyc5uwz6W9UVNS5B+VrXQslD92+itm27Zbm
+ qXv4MnOz33UBT+27KHYrLMTfdQJrJRYSDwB6rLudlVDyJfKJVgMrNr8NO9smUht/K03m
+ C7nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731415966; x=1732020766;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7MptEZjcrsnaEHxB1AuaEJOiLzKYeAZFOPQUUaBDxNM=;
+ b=LIO/yGMEtZqPVzgGECFhfVKKZfiOOSOEngoEjAssrvIa0WJZybslX2bqQoxh5ZxbxB
+ wKDxy1DJss/c0jXZ/91CAQrwEGKgqCkT964qmpZoYdb/kdaXZkgTSdbfkwDLXjyP9++o
+ /zGXWGR/SogJN3g1oiwO85GI4rEmCY0ieX71SmzNgXsXKxCt0vjyvY2f6RNguc/OWo1P
+ +ZN1D+KTASy3Ev3tX/AJgAAcy8Fvie6Bt9oqm5m9dptm9kZp34b/46EWKpUmFR9GKJ8w
+ ZIDn/7kaIq48H2/dCYtbgb8O8XgDEFIRe08IVtkMGdjOjv5mOIBdM0sBudU7Co8H7ZUG
+ OMww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhuAfy0qvzmmj+sOrUcEZTQNuEzLOrEANOiJfi5iOktOJmTzua0GPVGyxsduKbceNj3puBKp87eL+m@nongnu.org
+X-Gm-Message-State: AOJu0YwuT4wLuuOXpm+Ei85GozTBAa8tly5LpH0bpLMbnWzjl9AsXzNM
+ LT/h/0o5FrVa89IpqdXAETzpqv/Kzr6qNW1lHhnJqhZZHbBJw1DeFZxsIsM6eKQ=
+X-Google-Smtp-Source: AGHT+IHu3m9oXggas9+wwdfNZSMwKcKIkLkSUZII90siDNVmGJneHWKTySTqij0B4POevZNmpJluCA==
+X-Received: by 2002:a17:902:cec1:b0:20c:8763:b3f7 with SMTP id
+ d9443c01a7336-21183ca7259mr235748305ad.17.1731415966502; 
+ Tue, 12 Nov 2024 04:52:46 -0800 (PST)
+Received: from [192.168.68.110] ([187.101.65.72])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21177e85419sm92129215ad.273.2024.11.12.04.52.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Nov 2024 04:52:46 -0800 (PST)
+Message-ID: <980f6830-8fa1-41d2-997f-ed16fdfb7557@ventanamicro.com>
+Date: Tue, 12 Nov 2024 09:52:41 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] device/virtio-nsm: Support string data for extendPCR
-To: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-CC: <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20241109123208.24281-1-dorjoychy111@gmail.com>
- <44fbe3d8-509c-47ad-b764-5c8016980bfe@amazon.com>
- <CAFfO_h5LHsgng5itQTEO30SUT_jn02Pdi-0uYvyZCgRPJfcueA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] target/riscv: Check memory access to meet svukte
+ rule
+To: "Fea.Wang" <fea.wang@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Frank Chang <frank.chang@sifive.com>, Jim Shu <jim.shu@sifive.com>
+References: <20241112091423.2529583-1-fea.wang@sifive.com>
+ <20241112091423.2529583-5-fea.wang@sifive.com>
 Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <CAFfO_h5LHsgng5itQTEO30SUT_jn02Pdi-0uYvyZCgRPJfcueA@mail.gmail.com>
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D046UWA002.ant.amazon.com (10.13.139.39) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Received-SPF: pass client-ip=52.95.49.90;
- envelope-from=prvs=039b511fc=graf@amazon.de; helo=smtp-fw-6002.amazon.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20241112091423.2529583-5-fea.wang@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,69 +103,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---------------nSwa3U5k04AZH169j5nCi5Zh
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Transfer-Encoding: base64
 
-SGV5IERvcmpveSwKCk9uIDEyLjExLjI0IDEzOjMyLCBEb3Jqb3kgQ2hvd2RodXJ5IHdyb3RlOgoK
-PiBIZXkgQWxleCwKPgo+Cj4gT24gVHVlLCBOb3YgMTIsIDIwMjQsIDY6MTQgUE0gQWxleGFuZGVy
-IEdyYWYgPGdyYWZAYW1hem9uLmNvbT4gd3JvdGU6Cj4KPiAgICAgSGV5IERvcmpveSwKPgo+ICAg
-ICBUaGFua3MgYSBsb3QgZm9yIHRoZSBwYXRjaCEgV291bGQgeW91IG1pbmQgdG8gc2VuZCB0byB0
-aGUgTUwgc28gaXQKPiAgICAgY2FuCj4gICAgIGdvIHRocm91Z2ggdGhlIG5vcm1hbCByZXZpZXcg
-KyBhcHBseSBjeWNsZT8gOikKPgo+ICAgICBTYW1lIGNvbW1lbnQgZm9yIHRoZSBvdGhlciBwYXRj
-aGVzLgo+Cj4KPgo+IEkgZG9uJ3QgdW5kZXJzdGFuZC4gSSBzZW50IHRoZW0gdG8gdGhlIG1haWxp
-bmcgbGlzdCB0b28sIG5vPyBJIHNlZSB0aGUgCj4gY2MncyBvbiB0aGUgcGF0Y2hlcy4KCgpZb3Ug
-ZGlkIGluZGVlZCAtIEknbSBqdXN0IGJsaW5kIDopLiBMZXQgbWUgaGF2ZSBhbm90aGVyIGxvb2sg
-YXQgdGhlIAphY3R1YWwgY29udGVudHMgb2YgdGhlIHBhdGNoZXMhCgoKQWxleAoKCgpBbWF6b24g
-V2ViIFNlcnZpY2VzIERldmVsb3BtZW50IENlbnRlciBHZXJtYW55IEdtYkgKS3JhdXNlbnN0ci4g
-MzgKMTAxMTcgQmVybGluCkdlc2NoYWVmdHNmdWVocnVuZzogQ2hyaXN0aWFuIFNjaGxhZWdlciwg
-Sm9uYXRoYW4gV2Vpc3MKRWluZ2V0cmFnZW4gYW0gQW10c2dlcmljaHQgQ2hhcmxvdHRlbmJ1cmcg
-dW50ZXIgSFJCIDI1Nzc2NCBCClNpdHo6IEJlcmxpbgpVc3QtSUQ6IERFIDM2NSA1MzggNTk3Cg==
 
---------------nSwa3U5k04AZH169j5nCi5Zh
-MIME-Version: 1.0
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+On 11/12/24 6:14 AM, Fea.Wang wrote:
+> Follow the Svukte spec, do the memory access address checking
+> 
+> 1. Include instruction fetches or explicit memory accesses
+> 2. System run in effective privilege U or VU
+> 3. Check senvcfg[UKTE] being set, or hstatus[HUKTE] being set if
+> instruction is HLV, HLVX, HSV and execute from U mode to VU mode
+> 4. Depend on Sv39 and check virtual addresses bit[SXLEN-1]
+> 5. Raises a page-fault exception corresponding to the original access
+> type.
+> 
+> Ref: https://github.com/riscv/riscv-isa-manual/pull/1564/files
+> 
+> Signed-off-by: Frank Chang <frank.chang@sifive.com>
+> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Jim Shu <jim.shu@sifive.com>
 
-PCFET0NUWVBFIGh0bWw+CjxodG1sPgogIDxoZWFkPgogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29u
-dGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPgogIDwvaGVhZD4K
-ICA8Ym9keT4KICAgIDxwPkhleSBEb3Jqb3ksPGJyPgogICAgICA8YnI+CiAgICA8L3A+CiAgICA8
-ZGl2IGNsYXNzPSJtb3otY2l0ZS1wcmVmaXgiPk9uIDEyLjExLjI0IDEzOjMyLCBEb3Jqb3kgQ2hv
-d2RodXJ5CiAgICAgIHdyb3RlOjwvZGl2PgogICAgPGJyPgogICAgPGJsb2NrcXVvdGUgdHlwZT0i
-Y2l0ZSIKY2l0ZT0ibWlkOkNBRmZPX2g1TEhzZ25nNWl0UVRFTzMwU1VUX2puMDJQZGktMHVZdnla
-Q2dSUEpmY3VlQUBtYWlsLmdtYWlsLmNvbSI+CiAgICAgIDxkaXY+CiAgICAgICAgPGRpdiBkaXI9
-ImF1dG8iPgogICAgICAgICAgPGRpdj5IZXkgQWxleCwKICAgICAgICAgICAgPGRpdiBkaXI9ImF1
-dG8iPjxicj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxicj4KICAgICAgICAgICAg
-PGRpdiBjbGFzcz0iZ21haWxfcXVvdGUiPgogICAgICAgICAgICAgIDxkaXYgZGlyPSJsdHIiIGNs
-YXNzPSJnbWFpbF9hdHRyIj5PbiBUdWUsIE5vdiAxMiwgMjAyNCwKICAgICAgICAgICAgICAgIDY6
-MTQgUE0gQWxleGFuZGVyIEdyYWYgJmx0OzxhCiAgICAgICAgICAgICAgICAgIGhyZWY9Im1haWx0
-bzpncmFmQGFtYXpvbi5jb20iIG1vei1kby1ub3Qtc2VuZD0idHJ1ZSIKICAgICAgICAgICAgICAg
-ICAgY2xhc3M9Im1vei10eHQtbGluay1mcmVldGV4dCI+Z3JhZkBhbWF6b24uY29tPC9hPiZndDsK
-ICAgICAgICAgICAgICAgIHdyb3RlOjxicj4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAg
-ICAgICA8YmxvY2txdW90ZSBjbGFzcz0iZ21haWxfcXVvdGUiCnN0eWxlPSJtYXJnaW46MCAwIDAg
-LjhleDtib3JkZXItbGVmdDoxcHggI2NjYyBzb2xpZDtwYWRkaW5nLWxlZnQ6MWV4Ij4KICAgICAg
-ICAgICAgICAgIEhleSBEb3Jqb3ksPGJyPgogICAgICAgICAgICAgICAgPGJyPgogICAgICAgICAg
-ICAgICAgVGhhbmtzIGEgbG90IGZvciB0aGUgcGF0Y2ghIFdvdWxkIHlvdSBtaW5kIHRvIHNlbmQg
-dG8KICAgICAgICAgICAgICAgIHRoZSBNTCBzbyBpdCBjYW4gPGJyPgogICAgICAgICAgICAgICAg
-Z28gdGhyb3VnaCB0aGUgbm9ybWFsIHJldmlldyArIGFwcGx5IGN5Y2xlPyA6KTxicj4KICAgICAg
-ICAgICAgICAgIDxicj4KICAgICAgICAgICAgICAgIFNhbWUgY29tbWVudCBmb3IgdGhlIG90aGVy
-IHBhdGNoZXMuPGJyPgogICAgICAgICAgICAgIDwvYmxvY2txdW90ZT4KICAgICAgICAgICAgPC9k
-aXY+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxkaXYgZGlyPSJhdXRvIj48YnI+CiAgICAg
-ICAgICA8L2Rpdj4KICAgICAgICAgIDxkaXYgZGlyPSJhdXRvIj48YnI+CiAgICAgICAgICA8L2Rp
-dj4KICAgICAgICAgIDxkaXYgZGlyPSJhdXRvIj5JIGRvbid0IHVuZGVyc3RhbmQuIEkgc2VudCB0
-aGVtIHRvIHRoZSBtYWlsaW5nCiAgICAgICAgICAgIGxpc3QgdG9vLCBubz8gSSBzZWUgdGhlIGNj
-J3Mgb24gdGhlIHBhdGNoZXMuPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICAgIDwvZGl2PgogICAg
-PC9ibG9ja3F1b3RlPgogICAgPHA+PGJyPgogICAgPC9wPgogICAgPHA+WW91IGRpZCBpbmRlZWQg
-LSBJJ20ganVzdCBibGluZCA6KS4gTGV0IG1lIGhhdmUgYW5vdGhlciBsb29rIGF0CiAgICAgIHRo
-ZSBhY3R1YWwgY29udGVudHMgb2YgdGhlIHBhdGNoZXMhPGJyPgogICAgICA8YnI+CiAgICAgIDxi
-cj4KICAgICAgQWxleDxicj4KICAgICAgPGJyPgogICAgPC9wPgogIDxicj48YnI+PGJyPkFtYXpv
-biBXZWIgU2VydmljZXMgRGV2ZWxvcG1lbnQgQ2VudGVyIEdlcm1hbnkgR21iSDxicj4NCktyYXVz
-ZW5zdHIuIDM4PGJyPg0KMTAxMTcgQmVybGluPGJyPg0KR2VzY2hhZWZ0c2Z1ZWhydW5nOiBDaHJp
-c3RpYW4gU2NobGFlZ2VyLCBKb25hdGhhbiBXZWlzczxicj4NCkVpbmdldHJhZ2VuIGFtIEFtdHNn
-ZXJpY2h0IENoYXJsb3R0ZW5idXJnIHVudGVyIEhSQiAyNTc3NjQgQjxicj4NClNpdHo6IEJlcmxp
-bjxicj4NClVzdC1JRDogREUgMzY1IDUzOCA1OTc8L2JvZHk+CjwvaHRtbD4K
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
---------------nSwa3U5k04AZH169j5nCi5Zh--
+> ---
+>   target/riscv/cpu_helper.c | 61 +++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 61 insertions(+)
+> 
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 0a3ead69ea..5b29344c4f 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -857,6 +857,61 @@ static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
+>       return TRANSLATE_SUCCESS;
+>   }
+>   
+> +/* Returns 'true' if a svukte address check is needed */
+> +static bool do_svukte_check(CPURISCVState *env, bool first_stage,
+> +                             int mode, bool virt)
+> +{
+> +    bool ukte;
+> +
+> +    /* Svukte extension depends on Sv39. */
+> +    if (!(env_archcpu(env)->cfg.ext_svukte ||
+> +        !first_stage ||
+> +        VM_1_10_SV39 != get_field(env->satp, SATP64_MODE))) {
+> +        return false;
+> +    }
+> +
+> +    /*
+> +     * Check hstatus.HUKTE if the effective mode is switched to VU-mode by
+> +     * executing HLV/HLVX/HSV in U-mode.
+> +     * For other cases, check senvcfg.UKTE.
+> +     */
+> +    if (env->priv == PRV_U && !env->virt_enabled && virt) {
+> +        ukte = !!(env->hstatus & HSTATUS_HUKTE);
+> +    } else {
+> +        ukte = !!(env->senvcfg & SENVCFG_UKTE);
+> +    }
+> +
+> +    if (!ukte) {
+> +        return false;
+> +    }
+> +
+> +    /*
+> +     * Svukte extension is qualified only in U or VU-mode.
+> +     *
+> +     * Effective mode can be switched to U or VU-mode by:
+> +     *   - M-mode + mstatus.MPRV=1 + mstatus.MPP=U-mode.
+> +     *   - Execute HLV/HLVX/HSV from HS-mode + hstatus.SPVP=0.
+> +     *   - U-mode.
+> +     *   - VU-mode.
+> +     *   - Execute HLV/HLVX/HSV from U-mode + hstatus.HU=1.
+> +     */
+> +    if (mode != PRV_U) {
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +static bool check_svukte_addr(CPURISCVState *env, vaddr addr)
+> +{
+> +    uint32_t sxl = riscv_cpu_sxl(env);
+> +    sxl = (sxl == 0) ? MXL_RV32 : sxl;
+> +    uint32_t sxlen = 32 * sxl;
+> +    uint64_t high_bit = addr & (1UL << (sxlen - 1));
+> +
+> +    return !high_bit;
+> +}
+> +
+>   /*
+>    * get_physical_address - get the physical address for this virtual address
+>    *
+> @@ -894,6 +949,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+>       MemTxResult res;
+>       MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+>       int mode = mmuidx_priv(mmu_idx);
+> +    bool virt = mmuidx_2stage(mmu_idx);
+>       bool use_background = false;
+>       hwaddr ppn;
+>       int napot_bits = 0;
+> @@ -901,6 +957,11 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+>       bool is_sstack_idx = ((mmu_idx & MMU_IDX_SS_WRITE) == MMU_IDX_SS_WRITE);
+>       bool sstack_page = false;
+>   
+> +    if (do_svukte_check(env, first_stage, mode, virt) &&
+> +        !check_svukte_addr(env, addr)) {
+> +        return TRANSLATE_FAIL;
+> +    }
+> +
+>       /*
+>        * Check if we should use the background registers for the two
+>        * stage translation. We don't need to check if we actually need
 
 
