@@ -4,62 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA54DD32D84
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 10:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E350D32D8B
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 10:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAnvj-0004a0-LX; Tue, 12 Nov 2024 05:15:27 -0500
+	id 1tAnxn-0000hm-3q; Tue, 12 Nov 2024 05:17:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tAnvf-0004Ww-W8; Tue, 12 Nov 2024 05:15:24 -0500
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tAnvd-0008PO-6j; Tue, 12 Nov 2024 05:15:23 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 83D3FA41872;
- Tue, 12 Nov 2024 10:13:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1CE0C4CEE1;
- Tue, 12 Nov 2024 10:15:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1731406510;
- bh=/J8Ik2gV7ARAny61vMhfWIVszDkkmW/W+wjqFlb9x4g=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=c5WhjVKbp89mZGQ8ENJ+ekeuQgF+pzk2iBX7qQCTkMiowXlV6nALu8ICEfF9PHvf2
- fFh8Yg772DnxhhYOZNJ4p/WXTQThcwnuDrGHgjU4OVcX1ON7ThKpvfC6TCQw0T/PK9
- KDRAO8fqM3MhyvGTRmeBSsn9aeSAzWdXGSacwUZspI2tPFj2zWWHv9bnKsVZwfizKz
- LtRajCjRYFel0UfrPyQ5WYUcpw94FrdMAhznq7r8euLwzjtjJDXasLdNF+dRzFb2vo
- 0E/kM1whKn8iJn6BvvYKbXor+eBtW8QDAae1BGyb+M23esUPz7oFwtEwRh0wv1WPkq
- mHPgacVrEMj1w==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab+huawei@kernel.org>)
- id 1tAnvP-00000000Jcn-0H5k; Tue, 12 Nov 2024 11:15:07 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v3 04/15] acpi/ghes: better handle source_id and notification
-Date: Tue, 12 Nov 2024 11:14:48 +0100
-Message-ID: <c3e608a16a795b2d2be476eddc3707febcdb1ca3.1731406254.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <cover.1731406254.git.mchehab+huawei@kernel.org>
-References: <cover.1731406254.git.mchehab+huawei@kernel.org>
+ (Exim 4.90_1) (envelope-from <francescolavra.fl@gmail.com>)
+ id 1tAnxl-0000TD-4h
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 05:17:33 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <francescolavra.fl@gmail.com>)
+ id 1tAnxi-0000Ar-JN
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 05:17:32 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5cf04f75e1aso6626770a12.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 02:17:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731406649; x=1732011449; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=3LE/uQCFRzD9AYK90x3fGGWlE6ZUcSfNuzikrT/rsEM=;
+ b=fr22+IxmrxoOaqIyDdcRT8TvORKO8BPdM7FoM0Dl9Jz90nVaEoIOxpKdhmgoQnwipo
+ mIJCGvyLUeFI8dqryXomVv45AZp2sX/8xEGnx1G1iz9NcvzHb5wyNfMt/2Sb7NywRr2B
+ 84GpNFmuTN8q7ZtbjU0NRTJUxim+bcaeAaLa5EZmIe3GEsrEuHGjxlT48cjT/jx8rmtY
+ nahaP3D7tWDsp7a9UWP2bF85a5nR+iekLnUiKsdXWcbIrO3IjUZYCu0s6SJJwRvAE2T4
+ H2Xak5bpRGu3LppYDNBseSZK3d3YuvQFlhh7pxkgZCDCW5IEuc/v7D6EoAxy43CGyqWn
+ jmOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731406649; x=1732011449;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3LE/uQCFRzD9AYK90x3fGGWlE6ZUcSfNuzikrT/rsEM=;
+ b=XozywvfLvGwLqdDCWHlXQYH8+GfKrpNeQJrhNyC1pyXubnR99DANR2mTAS/ujLlvZZ
+ XJA5GRgUZuw1oZ9/xcmkfTH0IMt2keGDZPW2iGRZGixGPibCzCGiVex8i/xZvJK6rnvS
+ aI9leFXbZ4V4v6fmDANRdoowvmYMBdy+bKuiIDEgcF83aHizW6bxVkn5H9bgm1NjQdjy
+ iphIE1nyDICn+LtxOH9euUJ3Zoxm4nbptYIOFUYMMJwk3BDGwpT6Edd3kH6MkxUMDnTG
+ TEaZ8oOdozEsbEDZE6P0iPpokIVJ+zhDHGLHPjWiHolcPCRP2seY7zerI4S0u4RUDufz
+ MMSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUk9QCGrtrld+57jQ8kv08A/hRgBiLMK17pTf8ScNa2rM7fZkRCWSu5rX2qqUXcZplIG2VYcKKBHy8D@nongnu.org
+X-Gm-Message-State: AOJu0YyydXLk1ff16xBN8NFqGXodL4X84o9emf5XcF+Gbjpd4JpnO1Zg
+ 5NMbz63O0gBHHuEWR1vcErJjpH82t9D3VwYwRwpC8EMimQpZ+iX0
+X-Google-Smtp-Source: AGHT+IEb5ELpA9GlL2palg2Q4wuZ8cY7EssS8HMyUxKWbS47/oLRn+cYjuGANhR2YPA5JkbkzzkiPg==
+X-Received: by 2002:a05:6402:2067:b0:5cd:5499:8dbb with SMTP id
+ 4fb4d7f45d1cf-5cf0a32388cmr9660204a12.20.1731406648264; 
+ Tue, 12 Nov 2024 02:17:28 -0800 (PST)
+Received: from ?IPv6:2001:b07:5d29:f42d:fb75:3035:4c0:20e9?
+ ([2001:b07:5d29:f42d:fb75:3035:4c0:20e9])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5cf03b5d76esm5735357a12.9.2024.11.12.02.17.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Nov 2024 02:17:27 -0800 (PST)
+Message-ID: <17f00e24648b3f4f2ad5b941d848ca1d1fc075ae.camel@gmail.com>
+Subject: Re: [PATCH v6 60/60] docs: Add TDX documentation
+From: Francesco Lavra <francescolavra.fl@gmail.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Riku Voipio <riku.voipio@iki.fi>, Richard Henderson
+ <richard.henderson@linaro.org>, Zhao Liu <zhao1.liu@intel.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Cc: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Yanan
+ Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>, "Daniel
+ P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>,  rick.p.edgecombe@intel.com, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Date: Tue, 12 Nov 2024 11:17:25 +0100
+In-Reply-To: <20241105062408.3533704-61-xiaoyao.li@intel.com>
+References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+ <20241105062408.3533704-61-xiaoyao.li@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=francescolavra.fl@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,92 +107,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GHES has two fields that are stored on HEST error source
-blocks associated with notifications:
+On Tue, 2024-11-05 at 01:24 -0500, Xiaoyao Li wrote:
 
-- notification type, which is a number defined at the ACPI spec
-  containing several arch-specific synchronous and assynchronous
-  types;
-- source id, which is a HW/FW defined number, used to distinguish
-  between different implemented sources.
+> diff --git a/docs/system/confidential-guest-support.rst
+> b/docs/system/confidential-guest-support.rst
+> index 0c490dbda2b7..66129fbab64c 100644
+> --- a/docs/system/confidential-guest-support.rst
+> +++ b/docs/system/confidential-guest-support.rst
+> @@ -38,6 +38,7 @@ Supported mechanisms
+> =C2=A0Currently supported confidential guest mechanisms are:
+> =C2=A0
+> =C2=A0* AMD Secure Encrypted Virtualization (SEV) (see :doc:`i386/amd-
+> memory-encryption`)
+> +* Intel Trust Domain Extension (TDX) (see :doc:`i386/tdx`)
+> =C2=A0* POWER Protected Execution Facility (PEF) (see :ref:`power-papr-
+> protected-execution-facility-pef`)
+> =C2=A0* s390x Protected Virtualization (PV) (see :doc:`s390x/protvirt`)
+> =C2=A0
+> diff --git a/docs/system/i386/tdx.rst b/docs/system/i386/tdx.rst
+> new file mode 100644
+> index 000000000000..60106b29bf72
+> --- /dev/null
+> +++ b/docs/system/i386/tdx.rst
+> @@ -0,0 +1,155 @@
+> +Intel Trusted Domain eXtension (TDX)
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +
+> +Intel Trusted Domain eXtensions (TDX) refers to an Intel technology
+> that extends
+> +Virtual Machine Extensions (VMX) and Multi-Key Total Memory
+> Encryption (MKTME)
+> +with a new kind of virtual machine guest called a Trust Domain (TD).
+> A TD runs
+> +in a CPU mode that is designed to protect the confidentiality of its
+> memory
+> +contents and its CPU state from any other software, including the
+> hosting
+> +Virtual Machine Monitor (VMM), unless explicitly shared by the TD
+> itself.
+> +
+> +Prerequisites
+> +-------------
+> +
+> +To run TD, the physical machine needs to have TDX module loaded and
+> initialized
+> +while KVM hypervisor has TDX support and has TDX enabled. If those
+> requirements
+> +are met, the ``KVM_CAP_VM_TYPES`` will report the support of
+> ``KVM_X86_TDX_VM``.
+> +
+> +Trust Domain Virtual Firmware (TDVF)
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +Trust Domain Virtual Firmware (TDVF) is required to provide TD
+> services to boot
+> +TD Guest OS. TDVF needs to be copied to guest private memory and
+> measured before
+> +the TD boots.
+> +
+> +KVM vcpu ioctl ``KVM_TDX_INIT_MEM_REGION`` can be used to populates
 
-There could be several sources with the same notification type,
-which is dependent of the way each architecture maps notifications.
+s/populates/populate
 
-Right now, build_ghes_v2() hardcodes a 1:1 mapping between such
-fields. Move it to two independent parameters, allowing the
-caller function to fill both.
+> the TDVF
+> +content into its private memory.
+> +
+> +Since TDX doesn't support readonly memslot, TDVF cannot be mapped as
+> pflash
+> +device and it actually works as RAM. "-bios" option is chosen to
+> load TDVF.
+> +
+> +OVMF is the opensource firmware that implements the TDVF support.
+> Thus the
+> +command line to specify and load TDVF is ``-bios OVMF.fd``
+> +
+> +Feature Configuration
+> +---------------------
+> +
+> +Unlike non-TDX VM, the CPU features (enumerated by CPU or MSR) of a
+> TD is not
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+s/is/are
 
----
+> +under full control of VMM. VMM can only configure part of features
+> of a TD on
+> +``KVM_TDX_INIT_VM`` command of VM scope ``MEMORY_ENCRYPT_OP`` ioctl.
+> +
+> +The configurable features have three types:
+> +
+> +- Attributes:
+> +=C2=A0 - PKS (bit 30) controls whether Supervisor Protection Keys is
+> exposed to TD,
+> +=C2=A0 which determines related CPUID bit and CR4 bit;
+> +=C2=A0 - PERFMON (bit 63) controls whether PMU is exposed to TD.
+> +
+> +- XSAVE related features (XFAM):
+> +=C2=A0 XFAM is a 64b mask, which has the same format as XCR0 or IA32_XSS
+> MSR. It
+> +=C2=A0 determines the set of extended features available for use by the
+> guest TD.
+> +
+> +- CPUID features:
+> +=C2=A0 Only some bits of some CPUID leaves are directly configurable by
+> VMM.
+> +
+> +What features can be configured is reported via TDX capabilities.
+> +
+> +TDX capabilities
+> +~~~~~~~~~~~~~~~~
+> +
+> +The VM scope ``MEMORY_ENCRYPT_OP`` ioctl provides command
+> ``KVM_TDX_CAPABILITIES``
+> +to get the TDX capabilities from KVM. It returns a data structure of
+> +``struct kvm_tdx_capabilities``, which tells the supported
+> configuration of
+> +attributes, XFAM and CPUIDs.
+> +
+> +TD attributes
+> +~~~~~~~~~~~~~
+> +
+> +QEMU supports configuring raw 64-bit TD attributes directly via
+> "attributes"
+> +property of "tdx-guest" object. Note, it's users' responsibility to
+> provide a
+> +valid value because some bits may not supported by current QEMU or
+> KVM yet.
+> +
+> +QEMU also supports the configuration of individual attribute bits
+> that are
+> +supported by it, via propertyies of "tdx-guest" object.
 
-Chenges from v10:
+s/propertyies/properties
 
-- Some changes got moved to the previous patch.
+> +E.g., "sept-ve-disable" (bit 63).
+> +
+> +MSR based features
+> +~~~~~~~~~~~~~~~~
+> +
+> +Current KVM doesn't support MSR based feature (e.g.,
+> MSR_IA32_ARCH_CAPABILITIES)
+> +configuration for TDX, and it's a future work to enable it in QEMU
+> when KVM adds
+> +support of it.
+> +
+> +Feature check
+> +~~~~~~~~~~~~~
+> +
+> +QEMU checks if the final (CPU) features, determined by given cpu
+> model and
+> +explicit feature adjustment of "+featureA/-featureB", can be
+> supported or not.
+> +It can produce feature not supported warnning like
+> +
+> +=C2=A0 "warning: host doesn't support requested feature:
+> CPUID.07H:EBX.intel-pt [bit 25]"
+> +
+> +It will also procude warning like
 
-Changes from v8:
-- Non-rename/cleanup changes merged altogether;
-- source ID is now more generic, defined per guest target.
-  That should make easier to add support for 86.
+s/procude/produce
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- hw/acpi/ghes.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+> +
+> +=C2=A0 "warning: TDX forcibly sets the feature:
+> CPUID.80000007H:EDX.invtsc [bit 8]"
+> +
+> +if the fixed-1 feature is requested to be disabled explicitly. This
+> is newly
+> +added to QEMU for TDX because TDX has fixed-1 features that are
+> enfored enabled
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 4a6c45bcb4be..29cd7e4d8171 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -284,9 +284,13 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
- }
- 
- /* Build Generic Hardware Error Source version 2 (GHESv2) */
--static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-+static void build_ghes_v2(GArray *table_data,
-+                          BIOSLinker *linker,
-+                          enum AcpiGhesNotifyType notify,
-+                          uint16_t source_id)
- {
-     uint64_t address_offset;
-+
-     /*
-      * Type:
-      * Generic Hardware Error Source version 2(GHESv2 - Type 10)
-@@ -316,18 +320,8 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-         address_offset + GAS_ADDR_OFFSET, sizeof(uint64_t),
-         ACPI_GHES_ERRORS_FW_CFG_FILE, source_id * sizeof(uint64_t));
- 
--    switch (source_id) {
--    case ACPI_HEST_SRC_ID_SEA:
--        /*
--         * Notification Structure
--         * Now only enable ARMv8 SEA notification type
--         */
--        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
--        break;
--    default:
--        error_report("Not support this error source");
--        abort();
--    }
-+    /* Notification Structure */
-+    build_ghes_hw_error_notification(table_data, notify);
- 
-     /* Error Status Block Length */
-     build_append_int_noprefix(table_data, ACPI_GHES_MAX_RAW_DATA_LENGTH, 4);
-@@ -369,7 +363,8 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
- 
-     /* Error Source Count */
-     build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
--    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
-+    build_ghes_v2(table_data, linker,
-+                  ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
- 
-     acpi_table_end(linker, &table);
- }
--- 
-2.47.0
+s/enfored/enforced
+
+> +by TDX module and VMM cannot disable them.
+> +
+> +Launching a TD (TDX VM)
+> +-----------------------
+> +
+> +To launch a TDX guest, below are new added and required:
+
+This sentence is missing a subject (such as "command line options").
+
+> +
+> +.. parsed-literal::
+> +
+> +=C2=A0=C2=A0=C2=A0 |qemu_system_x86| \\
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -object tdx-guest,id=3Dtdx0 \=
+\
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -machine ...,kernel-irqchip=
+=3Dsplit,confidential-guest-
+> support=3Dtdx0 \\
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -bios OVMF.fd \\
+> +
+> +restrictions
+> +------------
+> +
+> + - kernel-irqchip must be split;
+> +
+> + - No readonly support for private memory;
+> +
+> + - No SMM support: SMM support requires manipulating the guset
+
+s/guset/guest
+
+> register states
+> +=C2=A0=C2=A0 which is not allowed;
+> +
+> +Debugging
+> +---------
+> +
+> +Bit 0 of TD attributes, is DEBUG bit, which decides if the TD runs
+> in off-TD
+> +debug mode. When in off-TD debug mode, TD's VCPU state and private
+> memory are
+> +accessible via given SEAMCALLs. This requires KVM to expose APIs to
+> invoke those
+> +SEAMCALLs and resonponding QEMU change.
+
+s/resonponding/corresponding
 
 
