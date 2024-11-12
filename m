@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89564D32D9A
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 12:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C8BD32D9F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Nov 2024 12:35:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tAq4Z-0006TP-3i; Tue, 12 Nov 2024 07:32:43 -0500
+	id 1tAq7I-0007XE-3x; Tue, 12 Nov 2024 07:35:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1tAq4X-0006T8-3X
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 07:32:41 -0500
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1tAq4V-0007ew-IF
- for qemu-devel@nongnu.org; Tue, 12 Nov 2024 07:32:40 -0500
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-718186b5c4eso2602230a34.2
- for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 04:32:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <prvs=039b511fc=graf@amazon.de>)
+ id 1tAq7G-0007Wg-O9
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 07:35:30 -0500
+Received: from smtp-fw-6002.amazon.com ([52.95.49.90])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=039b511fc=graf@amazon.de>)
+ id 1tAq7A-00081s-Nd
+ for qemu-devel@nongnu.org; Tue, 12 Nov 2024 07:35:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731414756; x=1732019556; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LHlWNfRdHCp3hgJ3wrSXRZI3nFdQIqvtC6PokKgfh58=;
- b=GB31gKiVbtLKE6c2p1FE5aj1/CEmKTStX/OzTKE+lGdPCAMKMs2vbfjYJUAQOZA2Am
- 2GAM0NQN5JdJcx1u4i0shXC8Gqk3JkRi4JgskOE2jDpxQUzzzWNyD+m0VckOdZUJAl53
- go3DelKxf0hkZtLM9SzQ7IZtEPxAyU9wtaFOgv9BBQ/QLLudd41gKDwVulmW0VQFMZWs
- 9zFd/Ft2ad4kBK1JeS4L2hUZmdVK3wLgOyDk7HzQbSJcrdl90AvnzBXYOQ9qVYuEjI5j
- VwYgs5OqFMVhqVUpmVeCEIPNCI3xq2pGquh4K+GgJYe5fL/5Jn6UykesrI3XDpsLeleY
- arbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731414756; x=1732019556;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LHlWNfRdHCp3hgJ3wrSXRZI3nFdQIqvtC6PokKgfh58=;
- b=NzgSulj43G8W46RidLukmHJB3GRA0UJxjT3nAGOL5Ndqvp7728zdmB3KZ+rppEjr5T
- gfLyQDxcyLniVcIC+FUILquiZtxrj+YxaTLu/X+oZFCnBZwIQyLWIVh2vsuNieQpq5sK
- 8iEu8mFnZL1raitO8UxxhLKq82wsA6qB7AEJgjMDXCz2gX/gBr5G8P8o2MIV8k/0yaOa
- YaPn0mdI0eHZGcKfm4Ndvmu71nrty2rnenKQyLfL9lg+Xhd5ccMlYEBd2fC3xISmORxt
- lE2e1FNFxkzYS+RZroLbFx58jacAk12LjL24WYq+vpASToYYTlCwlfDiPEGWg8ljoYJJ
- UhSw==
-X-Gm-Message-State: AOJu0YygT82Q0lK1RGnxaGks0M0jKmYsWWDiog1irAlX6Yd7ckNlDnL9
- OMUgtj9HTP58rbWCZuPhLxpbTN0VMhhCSXTEII1MqkxKvD1rSeqDypsCSPbEgo6togqHZtg7ON4
- caGwAStRz1KHlZZYZ1hq18clVR5s=
-X-Google-Smtp-Source: AGHT+IHAmqiKbSa2jgyPQveqAka+9jJzmi2EwT9o+WvTtust0YCT5YGlCRPbJlp+6by5OOvdfcIj7axjDo2afvDgcl0=
-X-Received: by 2002:a05:6359:2185:b0:1c3:15c3:739 with SMTP id
- e5c5f4694b2df-1c641ec4474mr620061055d.11.1731414756094; Tue, 12 Nov 2024
- 04:32:36 -0800 (PST)
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1731414925; x=1762950925;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to;
+ bh=mM+p/y2dqoBvIWUAj4Wzbp6fJJIVJrXBYHz9z3USUow=;
+ b=n3rnJG+Ftt+u9o8coXCIVdXHWNVhGEkSNyyxX8q+L8drWtK4DOjifKX7
+ wol7FC3tuXEc81S6KLRZ+Facis+azAfSp9tpUYp6XsnbfmXOqy+f/ifN7
+ Q9p7Kz+2nMYw+OSWaxXLIi5yPju5O7nSMl6Mhujgk4bB5exKC0FqasDI2 s=;
+X-IronPort-AV: E=Sophos;i="6.12,148,1728950400"; 
+ d="scan'208,217";a="448078605"
+Received: from iad6-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.124.125.6])
+ by smtp-border-fw-6002.iad6.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2024 12:35:18 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [10.0.38.20:56549]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.22.163:2525]
+ with esmtp (Farcaster)
+ id 047c1ff2-05db-47a9-904a-41274633d34e; Tue, 12 Nov 2024 12:35:17 +0000 (UTC)
+X-Farcaster-Flow-ID: 047c1ff2-05db-47a9-904a-41274633d34e
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
+ Tue, 12 Nov 2024 12:35:17 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34; Tue, 12 Nov 2024
+ 12:35:16 +0000
+Content-Type: multipart/alternative;
+ boundary="------------nSwa3U5k04AZH169j5nCi5Zh"
+Message-ID: <2970cc68-a34c-4751-b4a3-d7fac416d7d3@amazon.com>
+Date: Tue, 12 Nov 2024 13:35:14 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] device/virtio-nsm: Support string data for extendPCR
+To: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+CC: <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20241109123208.24281-1-dorjoychy111@gmail.com>
  <44fbe3d8-509c-47ad-b764-5c8016980bfe@amazon.com>
-In-Reply-To: <44fbe3d8-509c-47ad-b764-5c8016980bfe@amazon.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Tue, 12 Nov 2024 18:32:22 +0600
-Message-ID: <CAFfO_h5LHsgng5itQTEO30SUT_jn02Pdi-0uYvyZCgRPJfcueA@mail.gmail.com>
-Subject: Re: [PATCH] device/virtio-nsm: Support string data for extendPCR
-To: Alexander Graf <graf@amazon.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000007efbb10626b6691a"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=dorjoychy111@gmail.com; helo=mail-ot1-x32c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <CAFfO_h5LHsgng5itQTEO30SUT_jn02Pdi-0uYvyZCgRPJfcueA@mail.gmail.com>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <CAFfO_h5LHsgng5itQTEO30SUT_jn02Pdi-0uYvyZCgRPJfcueA@mail.gmail.com>
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D046UWA002.ant.amazon.com (10.13.139.39) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Received-SPF: pass client-ip=52.95.49.90;
+ envelope-from=prvs=039b511fc=graf@amazon.de; helo=smtp-fw-6002.amazon.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,51 +92,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007efbb10626b6691a
-Content-Type: text/plain; charset="UTF-8"
+--------------nSwa3U5k04AZH169j5nCi5Zh
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Transfer-Encoding: base64
 
-Hey Alex,
+SGV5IERvcmpveSwKCk9uIDEyLjExLjI0IDEzOjMyLCBEb3Jqb3kgQ2hvd2RodXJ5IHdyb3RlOgoK
+PiBIZXkgQWxleCwKPgo+Cj4gT24gVHVlLCBOb3YgMTIsIDIwMjQsIDY6MTQgUE0gQWxleGFuZGVy
+IEdyYWYgPGdyYWZAYW1hem9uLmNvbT4gd3JvdGU6Cj4KPiAgICAgSGV5IERvcmpveSwKPgo+ICAg
+ICBUaGFua3MgYSBsb3QgZm9yIHRoZSBwYXRjaCEgV291bGQgeW91IG1pbmQgdG8gc2VuZCB0byB0
+aGUgTUwgc28gaXQKPiAgICAgY2FuCj4gICAgIGdvIHRocm91Z2ggdGhlIG5vcm1hbCByZXZpZXcg
+KyBhcHBseSBjeWNsZT8gOikKPgo+ICAgICBTYW1lIGNvbW1lbnQgZm9yIHRoZSBvdGhlciBwYXRj
+aGVzLgo+Cj4KPgo+IEkgZG9uJ3QgdW5kZXJzdGFuZC4gSSBzZW50IHRoZW0gdG8gdGhlIG1haWxp
+bmcgbGlzdCB0b28sIG5vPyBJIHNlZSB0aGUgCj4gY2MncyBvbiB0aGUgcGF0Y2hlcy4KCgpZb3Ug
+ZGlkIGluZGVlZCAtIEknbSBqdXN0IGJsaW5kIDopLiBMZXQgbWUgaGF2ZSBhbm90aGVyIGxvb2sg
+YXQgdGhlIAphY3R1YWwgY29udGVudHMgb2YgdGhlIHBhdGNoZXMhCgoKQWxleAoKCgpBbWF6b24g
+V2ViIFNlcnZpY2VzIERldmVsb3BtZW50IENlbnRlciBHZXJtYW55IEdtYkgKS3JhdXNlbnN0ci4g
+MzgKMTAxMTcgQmVybGluCkdlc2NoYWVmdHNmdWVocnVuZzogQ2hyaXN0aWFuIFNjaGxhZWdlciwg
+Sm9uYXRoYW4gV2Vpc3MKRWluZ2V0cmFnZW4gYW0gQW10c2dlcmljaHQgQ2hhcmxvdHRlbmJ1cmcg
+dW50ZXIgSFJCIDI1Nzc2NCBCClNpdHo6IEJlcmxpbgpVc3QtSUQ6IERFIDM2NSA1MzggNTk3Cg==
 
+--------------nSwa3U5k04AZH169j5nCi5Zh
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-On Tue, Nov 12, 2024, 6:14 PM Alexander Graf <graf@amazon.com> wrote:
+PCFET0NUWVBFIGh0bWw+CjxodG1sPgogIDxoZWFkPgogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29u
+dGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPgogIDwvaGVhZD4K
+ICA8Ym9keT4KICAgIDxwPkhleSBEb3Jqb3ksPGJyPgogICAgICA8YnI+CiAgICA8L3A+CiAgICA8
+ZGl2IGNsYXNzPSJtb3otY2l0ZS1wcmVmaXgiPk9uIDEyLjExLjI0IDEzOjMyLCBEb3Jqb3kgQ2hv
+d2RodXJ5CiAgICAgIHdyb3RlOjwvZGl2PgogICAgPGJyPgogICAgPGJsb2NrcXVvdGUgdHlwZT0i
+Y2l0ZSIKY2l0ZT0ibWlkOkNBRmZPX2g1TEhzZ25nNWl0UVRFTzMwU1VUX2puMDJQZGktMHVZdnla
+Q2dSUEpmY3VlQUBtYWlsLmdtYWlsLmNvbSI+CiAgICAgIDxkaXY+CiAgICAgICAgPGRpdiBkaXI9
+ImF1dG8iPgogICAgICAgICAgPGRpdj5IZXkgQWxleCwKICAgICAgICAgICAgPGRpdiBkaXI9ImF1
+dG8iPjxicj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxicj4KICAgICAgICAgICAg
+PGRpdiBjbGFzcz0iZ21haWxfcXVvdGUiPgogICAgICAgICAgICAgIDxkaXYgZGlyPSJsdHIiIGNs
+YXNzPSJnbWFpbF9hdHRyIj5PbiBUdWUsIE5vdiAxMiwgMjAyNCwKICAgICAgICAgICAgICAgIDY6
+MTQgUE0gQWxleGFuZGVyIEdyYWYgJmx0OzxhCiAgICAgICAgICAgICAgICAgIGhyZWY9Im1haWx0
+bzpncmFmQGFtYXpvbi5jb20iIG1vei1kby1ub3Qtc2VuZD0idHJ1ZSIKICAgICAgICAgICAgICAg
+ICAgY2xhc3M9Im1vei10eHQtbGluay1mcmVldGV4dCI+Z3JhZkBhbWF6b24uY29tPC9hPiZndDsK
+ICAgICAgICAgICAgICAgIHdyb3RlOjxicj4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAg
+ICAgICA8YmxvY2txdW90ZSBjbGFzcz0iZ21haWxfcXVvdGUiCnN0eWxlPSJtYXJnaW46MCAwIDAg
+LjhleDtib3JkZXItbGVmdDoxcHggI2NjYyBzb2xpZDtwYWRkaW5nLWxlZnQ6MWV4Ij4KICAgICAg
+ICAgICAgICAgIEhleSBEb3Jqb3ksPGJyPgogICAgICAgICAgICAgICAgPGJyPgogICAgICAgICAg
+ICAgICAgVGhhbmtzIGEgbG90IGZvciB0aGUgcGF0Y2ghIFdvdWxkIHlvdSBtaW5kIHRvIHNlbmQg
+dG8KICAgICAgICAgICAgICAgIHRoZSBNTCBzbyBpdCBjYW4gPGJyPgogICAgICAgICAgICAgICAg
+Z28gdGhyb3VnaCB0aGUgbm9ybWFsIHJldmlldyArIGFwcGx5IGN5Y2xlPyA6KTxicj4KICAgICAg
+ICAgICAgICAgIDxicj4KICAgICAgICAgICAgICAgIFNhbWUgY29tbWVudCBmb3IgdGhlIG90aGVy
+IHBhdGNoZXMuPGJyPgogICAgICAgICAgICAgIDwvYmxvY2txdW90ZT4KICAgICAgICAgICAgPC9k
+aXY+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxkaXYgZGlyPSJhdXRvIj48YnI+CiAgICAg
+ICAgICA8L2Rpdj4KICAgICAgICAgIDxkaXYgZGlyPSJhdXRvIj48YnI+CiAgICAgICAgICA8L2Rp
+dj4KICAgICAgICAgIDxkaXYgZGlyPSJhdXRvIj5JIGRvbid0IHVuZGVyc3RhbmQuIEkgc2VudCB0
+aGVtIHRvIHRoZSBtYWlsaW5nCiAgICAgICAgICAgIGxpc3QgdG9vLCBubz8gSSBzZWUgdGhlIGNj
+J3Mgb24gdGhlIHBhdGNoZXMuPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICAgIDwvZGl2PgogICAg
+PC9ibG9ja3F1b3RlPgogICAgPHA+PGJyPgogICAgPC9wPgogICAgPHA+WW91IGRpZCBpbmRlZWQg
+LSBJJ20ganVzdCBibGluZCA6KS4gTGV0IG1lIGhhdmUgYW5vdGhlciBsb29rIGF0CiAgICAgIHRo
+ZSBhY3R1YWwgY29udGVudHMgb2YgdGhlIHBhdGNoZXMhPGJyPgogICAgICA8YnI+CiAgICAgIDxi
+cj4KICAgICAgQWxleDxicj4KICAgICAgPGJyPgogICAgPC9wPgogIDxicj48YnI+PGJyPkFtYXpv
+biBXZWIgU2VydmljZXMgRGV2ZWxvcG1lbnQgQ2VudGVyIEdlcm1hbnkgR21iSDxicj4NCktyYXVz
+ZW5zdHIuIDM4PGJyPg0KMTAxMTcgQmVybGluPGJyPg0KR2VzY2hhZWZ0c2Z1ZWhydW5nOiBDaHJp
+c3RpYW4gU2NobGFlZ2VyLCBKb25hdGhhbiBXZWlzczxicj4NCkVpbmdldHJhZ2VuIGFtIEFtdHNn
+ZXJpY2h0IENoYXJsb3R0ZW5idXJnIHVudGVyIEhSQiAyNTc3NjQgQjxicj4NClNpdHo6IEJlcmxp
+bjxicj4NClVzdC1JRDogREUgMzY1IDUzOCA1OTc8L2JvZHk+CjwvaHRtbD4K
 
-> Hey Dorjoy,
->
-> Thanks a lot for the patch! Would you mind to send to the ML so it can
-> go through the normal review + apply cycle? :)
->
-> Same comment for the other patches.
->
+--------------nSwa3U5k04AZH169j5nCi5Zh--
 
-
-I don't understand. I sent them to the mailing list too, no? I see the cc's
-on the patches.
-
-Regards,
-Dorjoy
-
->
-
---0000000000007efbb10626b6691a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div>Hey Alex,<div dir=3D"auto"><br></div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Nov 12, 2024=
-, 6:14 PM Alexander Graf &lt;<a href=3D"mailto:graf@amazon.com">graf@amazon=
-.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
-gin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Hey Dorjoy,<br>
-<br>
-Thanks a lot for the patch! Would you mind to send to the ML so it can <br>
-go through the normal review + apply cycle? :)<br>
-<br>
-Same comment for the other patches.<br></blockquote></div></div><div dir=3D=
-"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">I don&#39;t =
-understand. I sent them to the mailing list too, no? I see the cc&#39;s on =
-the patches.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Regards,</d=
-iv><div dir=3D"auto">Dorjoy</div><div dir=3D"auto"><div class=3D"gmail_quot=
-e"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left=
-:1px #ccc solid;padding-left:1ex"></blockquote></div></div></div>
-
---0000000000007efbb10626b6691a--
 
