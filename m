@@ -4,72 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A4FFD637A6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 18:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C9FD637A4
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 18:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBIGr-0002xv-Qq; Wed, 13 Nov 2024 13:39:17 -0500
+	id 1tBIHM-0003RF-OC; Wed, 13 Nov 2024 13:39:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <randrianasulu@gmail.com>)
- id 1tBIGp-0002rO-3l
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:39:15 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <randrianasulu@gmail.com>)
- id 1tBIGn-0004AI-C0
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:39:14 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-21116b187c4so58690885ad.3
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 10:39:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731523151; x=1732127951; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=P0AqjmHnxjCtqHcQptKVy39KhylOCq1OHt0nxEWEUM8=;
- b=EALTc2M4op4rClAUEAOO4f1SBSf4i2y7M95VHt2lJ+O7jLDc3TbTCxvVyTId/RWC7O
- C/nB+vPlOFspy3eP582nkIWvOyL1oPbcEFxSMBkMWpiSe2DSFZTPSKu/AcGAz5kTZyjb
- ualvLtwWorOd2xVzw1O2JdoTDc1li8MgqkAyeed9OLh4jJ2mm73dbyXm6EfcCD8OZx9T
- mFHeLiVJ75l9bfDYVmPGmCTJytTuYwZHLUaqhhpfkT9TxVvG8QshRXY5wYmpp7mzMz/s
- m8JGyj9ERoxDIvEejyfxkSpWho0aVEpxLIExb48vfursrPVIAXvaPKxWEZ/CK9b6f+pK
- zzAw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBIHF-0003Py-Vf
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:39:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBIHE-0004C0-Ka
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:39:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731523179;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9NGGxQ16BK45p9VSBjrrYc8rcurik7f9vC7s3z+C5ZM=;
+ b=MLyQZjpHC650//Rx/kPEd0/5aqiimJR8NZrctz4L0VJkZcJmV9uwpRyXgC/kkrD6T2RvUu
+ pxT4ZzosTHNfN3Ly6yN9IDwnvitcQgb1SoXTd6QpL300QC0GNtx0aHrabQzH6MNHzqtvC6
+ E3coEy7QL8Cmed7tMNFxh/hy6eaeMqk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-137-EZU_e7IDNdKEttx9jq20ag-1; Wed, 13 Nov 2024 13:39:38 -0500
+X-MC-Unique: EZU_e7IDNdKEttx9jq20ag-1
+X-Mimecast-MFC-AGG-ID: EZU_e7IDNdKEttx9jq20ag
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4316e2dde9eso66366265e9.2
+ for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 10:39:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731523151; x=1732127951;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P0AqjmHnxjCtqHcQptKVy39KhylOCq1OHt0nxEWEUM8=;
- b=I0popfA6rWtd19UNJRZ14ksff+xutJfk9cT0VMfhetKIzl+Cd0gd+LmM6gU4ldxt7l
- 7a4rHPK0gmDfU0kuXmp3nJauMACv68RdI7ZBMqsEYZyCBOkl2xz+3wpZzwvVccczaKDd
- YWyNINmgQ/dbimUtIZD21D5UTg+vQpIkGC6ZEizZ35WM8asQCs2RihePyeRzi5oA625C
- B6+oQ4jrtNmjaGvCvBJC7QrdFiMY4tJnZn3uS5IIkxZrMCLYs3gN84I8iV1xCyo9sBrr
- gAg2vx2vSdm0ocHA9PQLHCPn3LfGZUnRDLGolvSfy3wbtHtCBcjuyJJJXYWj5omkvSyr
- YYFg==
-X-Gm-Message-State: AOJu0YzsHmmpwD4GIiCJp/VJxr0PEX3X3E1GtAAet3ZSP9U/n5LSxGjJ
- JjFkGe8Pzc+UzogmDaaXuRIjWFdjstW0RYAN5M0QG382LhnVGMZrfhIqObhX9DjmwzMVCbKIv7K
- G76KGSwMiO5D2hwXfRE2ssmdfDzM/6750zaw=
-X-Google-Smtp-Source: AGHT+IGTe69xN5jAeDYiwtAo7HEs3cvOWH3BfQKKE4xX/WWjFQog0HGujCZ2izuiRsQH5AKv2Ihdot8gXUYy/Ao+7I4=
-X-Received: by 2002:a17:902:ea09:b0:20b:7388:f74 with SMTP id
- d9443c01a7336-21183d10a61mr295426085ad.12.1731523151272; Wed, 13 Nov 2024
- 10:39:11 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731523177; x=1732127977;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9NGGxQ16BK45p9VSBjrrYc8rcurik7f9vC7s3z+C5ZM=;
+ b=JMw3VDkYa2cS12rHr1ycUOcewrUvzy5sSbtvlHbvbQHsi6j76Tp3Pp4HrnvXBjWR2B
+ zXUDmZXR+oKBiaMsY69e6GNQ5j51Nqsyy4iewucH+Hd2HrwPo4aXwgUfe9XTp2HQXeZo
+ rM9VFHjV1HELgyQc1ZNSFpp8WGfR9TV5McNxQ8k6uLDtJq5gnZyQv0LnEenPuiM834ik
+ VZA8DiFNzG0s2PebzSdUsa72xEa/YV+WU3oUj1DJs9xKTTuLsZomd+mEP/YoU49jnBMt
+ SrxkFBAMTW0WfF4uwWKZSLdzy6rQogog0Ft27AFz3CfcNzQEGqOkGdjkifYdqWclUsxQ
+ ocQQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyAoXU64svLCs1K83ODlde7Vu90dawR1U9q9XVuxd5TkkhNgj6tuib4JpNx5sNfWHviPiEUx129Yjg@nongnu.org
+X-Gm-Message-State: AOJu0YyfB48+RJNC4MaMz5EMlgkubcxGjsGoMLDecWWi/Ea6QM+EJioK
+ 7WRZoxfUNrppmw/Jvi7x1MHyWOq+mmB/Bg+MlNhZOeMYyzLdcIfjyuNTxZ1bg3WFnQmsHZ0vuRT
+ H/dFN/9HELXNhALKk3VIpqFVz4FAvxU3E2CAuZ25j68cyDKhcJunN0/EizBgbjCFkRkIBKKRiM7
+ s+JPd7Zf3SLzfYGYteIBt8pZt7a4g=
+X-Received: by 2002:a05:600c:34c8:b0:431:604d:b22 with SMTP id
+ 5b1f17b1804b1-432b750acc4mr241633765e9.16.1731523177448; 
+ Wed, 13 Nov 2024 10:39:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHQkTjNqFFxBwbztI3KElEWR8DIfZgx/lOwPE5mFGWXrnd/2X+JY85/TL2D9FlEeRFluu1DheNxmNl2Ho6uwNY=
+X-Received: by 2002:a05:600c:34c8:b0:431:604d:b22 with SMTP id
+ 5b1f17b1804b1-432b750acc4mr241633555e9.16.1731523177089; Wed, 13 Nov 2024
+ 10:39:37 -0800 (PST)
 MIME-Version: 1.0
-References: <CA+rFky6jM9gKvgvy5BTR9CLOOAv+KycZORiu=3udwrFCZAE=6g@mail.gmail.com>
-In-Reply-To: <CA+rFky6jM9gKvgvy5BTR9CLOOAv+KycZORiu=3udwrFCZAE=6g@mail.gmail.com>
-From: Andrew Randrianasulu <randrianasulu@gmail.com>
-Date: Wed, 13 Nov 2024 21:47:47 +0300
-Message-ID: <CA+rFky6iNKWpjrn1kXoJTooF7ZFKVhz0cqu+34EWwjfM8XcF0Q@mail.gmail.com>
-Subject: Re: qemu-systems-sparc can't do 1152x900 ?
-To: QEMU <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="0000000000005a23320626cfa679"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=randrianasulu@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241113144923.41225-1-phil@philjordan.eu>
+ <b772f6e7-e506-4f87-98d1-5cbe59402b2b@redhat.com>
+ <ed2246ca-3ede-918c-d18d-f47cf8758d8c@amd.com>
+In-Reply-To: <ed2246ca-3ede-918c-d18d-f47cf8758d8c@amd.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 13 Nov 2024 19:39:25 +0100
+Message-ID: <CABgObfYhQDmjh4MJOaqeAv0=cFUR=iaoLeSoGYh9iMnjDKM2aA@mail.gmail.com>
+Subject: Re: [PATCH] i386/kvm: Fix kvm_enable_x2apic link error in non-KVM
+ builds
+To: "Shukla, Santosh" <santosh.shukla@amd.com>
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, mtosatti@redhat.com, suravee.suthikulpanit@amd.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.738,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,105 +104,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005a23320626cfa679
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Wed, Nov 13, 2024 at 7:25=E2=80=AFPM Shukla, Santosh <santosh.shukla@amd=
+.com> wrote:
+> Same proposed at https://lore.kernel.org/qemu-devel/cebca38a-5896-e2a5-8a=
+68-5edad5dc9d8c@amd.com/
+> and I think Phil confirmed that it works.
 
-On Wed, Nov 13, 2024 at 9:20=E2=80=AFPM Andrew Randrianasulu <
-randrianasulu@gmail.com> wrote:
+Thanks Santosh, can you post it with commit message and everything?
 
-> Was trying to figure out if my glitches at [1] due to wrong resolution
-> tried to start
-> qemu like this:
->
-> qemu-system-sparc -g 1152x900
-> qemu-system-sparc: Unsupported resolution: 1152 x 900
->
-> ow?
->
-> in source
->
-> hw/sparc/sun4m.c (git commit f0cfd067867668870931c9411d96cd518564b7a8)
->
->            if (!(graphic_width =3D=3D 1024 && graphic_height =3D=3D 768) =
-&&
->                 !(graphic_width =3D=3D 1152 && graphic_height =3D=3D 900)=
-) {
->                 error_report("Unsupported resolution: %d x %d",
-> graphic_width,
->                              graphic_height);
->                 exit(1);
->             }
->
-> may be && should be || ?
->
+Paolo
 
-ah, was looking at wrong part of code ...
-
-still, according to this
-
- https://docs.oracle.com/cd/E19620-01/805-4441/6j4761v2i/index.html
-"S24 Frame Buffer Screen Resolutions
-The S24 frame buffer in the SPARCstation(TM) 5 supports three different
-screen resolutions. You may select a screen resolution other than the
-default value. This is performed at the ok prompt."
-
-there should be 1152x900
-
-I thought I misremember  what was TCX, but
-
-https://docs.oracle.com/cd/E19620-01/805-4441/6j4761v2h/index.html
-
-tcx is the UNIX device name for the S24 Frame Buffer.
-
-
-
-> [1] - https://gitlab.com/qemu-project/qemu/-/issues/2674
->
-
---0000000000005a23320626cfa679
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 13, 2024 at 9:20=E2=80=AF=
-PM Andrew Randrianasulu &lt;<a href=3D"mailto:randrianasulu@gmail.com">rand=
-rianasulu@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex"><div dir=3D"ltr"><div>Was trying to figure out if my gli=
-tches at [1] due to wrong resolution tried to start</div><div>qemu like thi=
-s:</div><div><br></div><div>qemu-system-sparc -g 1152x900<br>qemu-system-sp=
-arc: Unsupported resolution: 1152 x 900</div><div><br></div><div>ow?</div><=
-div><br></div><div>in source</div><div><br></div><div>hw/sparc/sun4m.c (git=
- commit f0cfd067867668870931c9411d96cd518564b7a8)<br></div><div><br></div><=
-div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 if (!(graphic_width =3D=3D 102=
-4 &amp;&amp; graphic_height =3D=3D 768) &amp;&amp;<br>=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !(graphic_width =3D=3D 1152 &amp;&amp; g=
-raphic_height =3D=3D 900)) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 error_report(&quot;Unsupported resolution: %d x %d&quot;, gra=
-phic_width,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0graphic_height);<br>=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 exit(1);<br>=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 }</div><div><br></div><div>may be &amp;&amp; shoul=
-d be || ?</div></div></blockquote><div><br></div><div>ah, was looking at wr=
-ong part of code ...</div><div><br></div><div>still, according to this</div=
-><div><br></div><div>=C2=A0<a href=3D"https://docs.oracle.com/cd/E19620-01/=
-805-4441/6j4761v2i/index.html">https://docs.oracle.com/cd/E19620-01/805-444=
-1/6j4761v2i/index.html</a></div><div>&quot;S24 Frame Buffer Screen Resoluti=
-ons<br>The S24 frame buffer in the SPARCstation(TM) 5 supports three differ=
-ent screen resolutions. You may select a screen resolution other than the d=
-efault value. This is performed at the ok prompt.&quot;</div><div><br></div=
-><div>there should be 1152x900</div><div><br></div><div>I thought I misreme=
-mber=C2=A0 what was TCX, but<br></div><div><br></div><div><a href=3D"https:=
-//docs.oracle.com/cd/E19620-01/805-4441/6j4761v2h/index.html">https://docs.=
-oracle.com/cd/E19620-01/805-4441/6j4761v2h/index.html</a></div><div><br></d=
-iv><div>tcx is the UNIX device name for the S24 Frame Buffer.</div><div><br=
-></div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><di=
-v dir=3D"ltr"><div><br></div><div>[1] - <a href=3D"https://gitlab.com/qemu-=
-project/qemu/-/issues/2674" target=3D"_blank">https://gitlab.com/qemu-proje=
-ct/qemu/-/issues/2674</a></div></div>
-</blockquote></div></div>
-
---0000000000005a23320626cfa679--
 
