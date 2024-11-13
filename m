@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 435ABD637B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 20:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0294D637AE
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 20:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBKAc-00063K-4U; Wed, 13 Nov 2024 15:40:58 -0500
+	id 1tBKBp-0006fW-Ec; Wed, 13 Nov 2024 15:42:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBKAa-00063B-VM
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 15:40:56 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBKBn-0006fN-TR
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 15:42:11 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBKAY-0000fQ-R1
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 15:40:56 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4319399a411so69562135e9.2
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 12:40:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBKBm-0000pJ-1W
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 15:42:11 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-37d6ff1cbe1so5509568f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 12:42:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731530453; x=1732135253; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731530528; x=1732135328; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XBrny7brqYPGuwyBoIrvOJjrseneM5YdI96AGvGG1x8=;
- b=u/3RR6N5ICFsF4UhSlTxy+ZvFX86YMcju7tW2NUksz7yotDAWDbMDwPFi7N7UKZxdy
- OG80pld/bKgHrT2Prq/XVRDOASmvJT1oVVHrJzuo2wSpzvzzR3tSsSMe9IWxd0/JUJp2
- JuwA4lNG3Ymug/MQ3IpPDOAE4GwfzTbOW4nQvRoy5YKRhFT19E5L4wVG3e4YAh6iBava
- C2G4R75xm+qDeLMUu4vGtdHXwbhCTMnHUU6vcwpH3Ek8256oAZgEbs5B1EPPrCMU/rfV
- 7Q1LEdPDkh6m4NFj1MZgJg1dqqiL+d0Q1rACnBfiEeSgpSvffIzQPbO34K/EKHdamOVu
- 1h2A==
+ bh=BhZHDOu5aT/J2vqBBrwJp4n3UPW80fjr4yyi6rpTMlQ=;
+ b=CUhp+BFrkCIVms2jN6fVFHQXLo8qIbSdJTv7qNelJaxHlX9Z2OP5rRqIH89QicEsNw
+ rTKwDC6mLDDXtHe9JRDfPTmYs46ynb63zXzuiOE8BswcFql31jUu26FkF1Q6WLlKPAGJ
+ sYzTbioQuZBUMsGJEt4pa9b0Q/XPWOsY9I13w7mOkcMFQpxZMtIYpuobiWc9v2fPDiqn
+ o89iNEqo3tZEBiaBvLQFXy7WI50hrtyk1u/d1wVjQA7MF5T5Y6V82g6yaAnnPrgRmb6z
+ uQZy1/VDaddKbE0WoNTe+itPFN8KPSGwbi2nzBmb7pKJ4wK+6aDRzHU/mgkL/Wawjpxj
+ ukng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731530453; x=1732135253;
+ d=1e100.net; s=20230601; t=1731530528; x=1732135328;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XBrny7brqYPGuwyBoIrvOJjrseneM5YdI96AGvGG1x8=;
- b=Vb6fRsTMaNPq5xs7GZ++DyZ9o47euqq+m1ldPkvYnp2Ib3uuln5LrW74GdUtvzcUSA
- ypRRQAi+lSvDgocVR+voOtaF5hIEuSk03UHD026jKXN08f0sehs4mGR8SYl83Z3gs9CY
- GEPT/f8mW8Ogk5L+guR/rgWlMPtyFVxb/+CB8supTdeFeEbrY2fTLSQu8IEZ9aSSGy4N
- PTNPhMzw26wRjidYG6UYejAl4MAy/Dg2sfNpbEycoglyzd8M31BsCflDnmTxrBGoK8uf
- lsEt5aDv6qehC7TyOotdKWKAMDt0Cyc8QQOalSoXMhN2lDobXmCjStbWLcThxgC1ZwNo
- XBnw==
+ bh=BhZHDOu5aT/J2vqBBrwJp4n3UPW80fjr4yyi6rpTMlQ=;
+ b=qPQY0Pu4XxPLdMmLRjnEcbyA6gsxjF+5GG5c9BknLAo3OQMKlKrauPZaKVt6B0xxry
+ buxez5tOfAGUScNd2uOWTo2+limeeB0nGp1c6MFSLaj5ToYkGR2HxdWwGwVl1/grYMN4
+ jncu54ikETMxbak+T/OwGks1snAQViph+4l6AASpqe8hsz4kiatSnq7T/1AdGF9OfCjy
+ O3bOTXg/zFLyUt5ApLqcY8Wt1haSw66+CcXMbvlAIObQ4u0XZ0qZXEA1ZXdD5c5tZnEQ
+ 7VTows9bTM9WaSnK1juKlGDKpDe0O9vtmGSTWI9bh5evQfMpL4Fe9rmnHP0+y+xmfdjC
+ 6DHg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJcVOKjQocrocWo91h9c+AiNWRttRdTwd8dtnlw7BKoxVpN5MTpVOCciPi/rWuS+QFxKVYN4FVDjCZ@nongnu.org
-X-Gm-Message-State: AOJu0YxPdsUHqcH9Mc2qcs+kjG8lbk1PcvTs/VGJQw8C/KgCmspZIXUu
- 1S94JS00LmQW+nx4eOgxCeajNXt0ra1lWZGGE89ImsRsuItVokZIjHVamWdiLv8=
-X-Google-Smtp-Source: AGHT+IGYe2xFCx8zVi5SHj61aJLM8xRhGXMj2quJjrEDhQEl9QXsizo9hX7MjxbnFlTV4NBUtbrKwA==
-X-Received: by 2002:a05:600c:5493:b0:42e:75a6:bb60 with SMTP id
- 5b1f17b1804b1-432b7508b8amr198199865e9.19.1731530452672; 
- Wed, 13 Nov 2024 12:40:52 -0800 (PST)
+ AJvYcCXA+fOjYFsjfaDUl35JDV3GHBY7M6w895UBfQIjNDsIyXM7VMbfWFLU6N9JP2O0Qiu1EkWiv6URNlh+@nongnu.org
+X-Gm-Message-State: AOJu0YxvbHM0VLJzrqauKUSmhlUbAMHZ1fSbiHrdBtNAYqzQbyareNQL
+ Bx6f4knIx8yvjUX8sCruQuTEJsR/6ZGb/C5I0tp6Xmqj7GV5XGXwf+u1Ixp3py4=
+X-Google-Smtp-Source: AGHT+IGx6S/F5axeaAzKdwxFHI/BbhKJ2tHZAD7NNMpC4rP9Wzpe475mYQ66iLNqg+XGtA8MPKl3sA==
+X-Received: by 2002:a05:6000:178a:b0:37d:4e59:549a with SMTP id
+ ffacd0b85a97d-3820df71b96mr4180794f8f.16.1731530528483; 
+ Wed, 13 Nov 2024 12:42:08 -0800 (PST)
 Received: from [192.168.69.126] ([176.187.209.238])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed9ea7c3sm19722192f8f.80.2024.11.13.12.40.51
+ ffacd0b85a97d-381ed9f8984sm19616231f8f.71.2024.11.13.12.42.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Nov 2024 12:40:52 -0800 (PST)
-Message-ID: <f7ff08a4-30f8-47f6-a3e8-a1cb4e996ee7@linaro.org>
-Date: Wed, 13 Nov 2024 21:40:50 +0100
+ Wed, 13 Nov 2024 12:42:07 -0800 (PST)
+Message-ID: <0f3124e8-1bb3-4359-be80-8fdd34f898ea@linaro.org>
+Date: Wed, 13 Nov 2024 21:42:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 2/2] migration: fix-possible-int-overflow
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas
- <farosas@suse.de>, Dmitry Frolov <frolov@swemel.ru>
-References: <20241113201631.2920541-1-peterx@redhat.com>
- <20241113201631.2920541-3-peterx@redhat.com>
+Subject: Re: [PATCH] fuzz: disable tcg for OSS-Fuzz builds
+To: Alexander Bulekov <alxndr@bu.edu>
+Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Bandan Das <bsd@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>,
+ Qiuhao Li <Qiuhao.Li@outlook.com>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+References: <20241113163800.355547-1-alxndr@bu.edu>
+ <0d1f8f1d-2894-4753-aeef-1a229a71a334@linaro.org>
+ <glpwzquiqa6vaesu5dg7zc2futxypcycoel7uawlwg6l537oz7@4uzab3435nyf>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241113201631.2920541-3-peterx@redhat.com>
+In-Reply-To: <glpwzquiqa6vaesu5dg7zc2futxypcycoel7uawlwg6l537oz7@4uzab3435nyf>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,42 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On 13/11/24 20:16, Peter Xu wrote:
-> From: Dmitry Frolov <frolov@swemel.ru>
+On 13/11/24 20:02, Alexander Bulekov wrote:
+> On 241113 2040, Philippe Mathieu-Daud?? wrote:
+>> On 13/11/24 16:37, Alexander Bulekov wrote:
+>>> OSS-Fuzz builds have been failing due to some strange issues that seem
+>>> to be related to color codes from libffi:
+>>> https://oss-fuzz-build-logs.storage.googleapis.com/log-8d5435ee-1677-40af-9656-b4162fa881e1.txt
+>>>
+>>> Disable tcg to disable libffi.
+>>>
+>>> Signed-off-by: Alexander Bulekov <alxndr@bu.edu>
+>>> ---
+>>>    scripts/oss-fuzz/build.sh | 4 ++--
+>>>    1 file changed, 2 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/scripts/oss-fuzz/build.sh b/scripts/oss-fuzz/build.sh
+>>> index 7398298173..095f7a90e3 100755
+>>> --- a/scripts/oss-fuzz/build.sh
+>>> +++ b/scripts/oss-fuzz/build.sh
+>>> @@ -65,7 +65,7 @@ mkdir -p "$DEST_DIR/lib/"  # Copy the shared libraries here
+>>>    # Build once to get the list of dynamic lib paths, and copy them over
+>>>    ../configure --disable-werror --cc="$CC" --cxx="$CXX" --enable-fuzzing \
+>>>        --prefix="/opt/qemu-oss-fuzz" \
+>>> -    --extra-cflags="$EXTRA_CFLAGS" --target-list="i386-softmmu"
+>>> +    --extra-cflags="$EXTRA_CFLAGS" --target-list="i386-softmmu" --disable-tcg
+>>
+>> IIUC we are using the QTest 'software [un]accelerator' to fuzz via I/O,
+>> right?
+>> Then maybe we can disable all accelerators to speed up build. But please
+>> mention it in the commit description.
+>>
 > 
-> stat64_add() takes uint64_t as 2nd argument, but both
-> "p->next_packet_size" and "p->packet_len" are uint32_t.
-> Thus, theyr sum may overflow uint32_t.
-> 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
-> Link: https://lore.kernel.org/r/20241113140509.325732-2-frolov@swemel.ru
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   migration/multifd.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 4374e14a96..498e71fd10 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -623,7 +623,7 @@ static void *multifd_send_thread(void *opaque)
->               }
->   
->               stat64_add(&mig_stats.multifd_bytes,
-> -                       p->next_packet_size + p->packet_len);
-> +                       (uint64_t)p->next_packet_size + p->packet_len);
+> That would be nice, but needs some changes to meson.build, which doesn't
+> treat qtest as a real accelerator and will complain if building w/o tcg
+> and kvm:
+> error('No accelerator available for target @0@'.format(target))
 
-I am not familiar with this area, but quickly looking I can't
-find a code path accepting 4GiB payload, so IMHO this hypothetical
-case is not unreachable. My 2 cents (I'm not objecting on this
-"silence this warning" patch).
-
->   
->               p->next_packet_size = 0;
->               multifd_set_payload_type(p->data, MULTIFD_PAYLOAD_NONE);
-
+We need to start with the binary using '-accel qtest', not "pick any
+available accelerator randomly".
 
