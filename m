@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18591D637AF
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 19:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1882D637AC
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 19:48:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBJKR-0006Mu-0Z; Wed, 13 Nov 2024 14:47:03 -0500
+	id 1tBJKc-0006W6-Hg; Wed, 13 Nov 2024 14:47:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKO-0006M5-Cn
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:00 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKa-0006Vd-Iu
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:12 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKM-00039y-PN
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:00 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKY-0003B9-L1
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:12 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 70B0921111;
- Wed, 13 Nov 2024 19:46:56 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6BBCB21109;
+ Wed, 13 Nov 2024 19:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1731527216; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1731527229; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RgzxzJW2k0ItqUufPNFe8H+no2797FJ0300sgh6S9Tg=;
- b=sSESzutUrzgYb3APdfSUIDe5tkQH3ohAGLGP7rcGFM1SCDGauaunzylIMghwRBJM/ZR1U3
- 02M/qHiNQFVMYG0oO18o6mifwKLyepxg9IChj+N5qijghm/czKnFHyJP8vypqrOOYBf1+B
- R/FmGsi3u+OylnvZBtcQZ52kUshFSic=
+ bh=/6KiiPqfScx0wNZ9C8CRBzOrbDspXRpFvRZvJsyXx1M=;
+ b=zYiIImn6B5MtW/laLD0fnqMBAeFo6zZ8SPwZYP7Qo9SV0nJHDrk9ShoXxX9pkfW7DjDxNh
+ u7rpwuAHffuaYLqYzgYAPCXJEH0Zvi66xInUvxvYkcPeNRK34hedAdpIpG2Cbrr6WlWC+t
+ Mtn3cW3RTH7g4bHL9mUlKHfV1nHzrNc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1731527216;
+ s=susede2_ed25519; t=1731527229;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RgzxzJW2k0ItqUufPNFe8H+no2797FJ0300sgh6S9Tg=;
- b=Y2npxEfie8/LQYwVZgyvCvmhCbgzCDa6FluWNA9YUmlLPDM/wGOXX45orZiGev0s3rcONl
- RH3HGgk/i3wWgSBw==
+ bh=/6KiiPqfScx0wNZ9C8CRBzOrbDspXRpFvRZvJsyXx1M=;
+ b=Cl8JZmi2EwPKNzAPtpvgt4q9kWj3bUK36JcjR2NdfvZBMiIan6N8GBzQBbr8NA9BTxRLDS
+ HhYDKXO7L7UzVBBw==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=sSESzutU;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Y2npxEfi
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zYiIImn6;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Cl8JZmi2
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1731527216; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1731527229; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RgzxzJW2k0ItqUufPNFe8H+no2797FJ0300sgh6S9Tg=;
- b=sSESzutUrzgYb3APdfSUIDe5tkQH3ohAGLGP7rcGFM1SCDGauaunzylIMghwRBJM/ZR1U3
- 02M/qHiNQFVMYG0oO18o6mifwKLyepxg9IChj+N5qijghm/czKnFHyJP8vypqrOOYBf1+B
- R/FmGsi3u+OylnvZBtcQZ52kUshFSic=
+ bh=/6KiiPqfScx0wNZ9C8CRBzOrbDspXRpFvRZvJsyXx1M=;
+ b=zYiIImn6B5MtW/laLD0fnqMBAeFo6zZ8SPwZYP7Qo9SV0nJHDrk9ShoXxX9pkfW7DjDxNh
+ u7rpwuAHffuaYLqYzgYAPCXJEH0Zvi66xInUvxvYkcPeNRK34hedAdpIpG2Cbrr6WlWC+t
+ Mtn3cW3RTH7g4bHL9mUlKHfV1nHzrNc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1731527216;
+ s=susede2_ed25519; t=1731527229;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RgzxzJW2k0ItqUufPNFe8H+no2797FJ0300sgh6S9Tg=;
- b=Y2npxEfie8/LQYwVZgyvCvmhCbgzCDa6FluWNA9YUmlLPDM/wGOXX45orZiGev0s3rcONl
- RH3HGgk/i3wWgSBw==
+ bh=/6KiiPqfScx0wNZ9C8CRBzOrbDspXRpFvRZvJsyXx1M=;
+ b=Cl8JZmi2EwPKNzAPtpvgt4q9kWj3bUK36JcjR2NdfvZBMiIan6N8GBzQBbr8NA9BTxRLDS
+ HhYDKXO7L7UzVBBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 51F5613301;
- Wed, 13 Nov 2024 19:46:54 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 514D313301;
+ Wed, 13 Nov 2024 19:47:07 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id OLxGBi4CNWfLcQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 13 Nov 2024 19:46:54 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SM4LBjsCNWfLcQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 13 Nov 2024 19:47:07 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 09/22] tests/qtest/migration: Move kvm_dirty_ring_supported
- to utils
-Date: Wed, 13 Nov 2024 16:46:17 -0300
-Message-Id: <20241113194630.3385-10-farosas@suse.de>
+Subject: [PATCH v2 14/22] tests/qtest/migration: Split postcopy tests
+Date: Wed, 13 Nov 2024 16:46:22 -0300
+Message-Id: <20241113194630.3385-15-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20241113194630.3385-1-farosas@suse.de>
 References: <20241113194630.3385-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 70B0921111
+X-Rspamd-Queue-Id: 6BBCB21109
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
@@ -106,18 +105,19 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
  R_RATELIMIT(0.00)[to_ip_from(RL6tyf6sue6knz55rs3us8rsc3)];
  ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:email, suse.de:dkim, suse.de:mid]
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,120 +134,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move kvm_dirty_ring_supported() to migration-util.c. Similarly to
-ufd_version_check(), this function is used during test definition so
-put it in the utils file.
+Split the next group of tests from migration-test.c, the postcopy
+tests. This is another well-defined group of tests and postcopy is a
+unique enough feature that it deserves it's own file.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration-test.c           | 29 --------------------------
- tests/qtest/migration/migration-util.c | 29 ++++++++++++++++++++++++++
- tests/qtest/migration/migration-util.h |  1 +
- 3 files changed, 30 insertions(+), 29 deletions(-)
+ tests/qtest/meson.build                |   1 +
+ tests/qtest/migration-test.c           |  78 +-----------------
+ tests/qtest/migration/postcopy-tests.c | 106 +++++++++++++++++++++++++
+ tests/qtest/migration/test-framework.h |   1 +
+ 4 files changed, 109 insertions(+), 77 deletions(-)
+ create mode 100644 tests/qtest/migration/postcopy-tests.c
 
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 5e77eb09f2..23b600e6ec 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -336,6 +336,7 @@ migration_files = [files(
+   'migration/migration-qmp.c',
+   'migration/migration-util.c',
+   'migration/compression-tests.c',
++  'migration/postcopy-tests.c',
+ )]
+ 
+ migration_tls_files = []
 diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 40e11e2af0..01ef0014bd 100644
+index 4a468079e8..d1d67fc42f 100644
 --- a/tests/qtest/migration-test.c
 +++ b/tests/qtest/migration-test.c
-@@ -32,12 +32,6 @@
- # endif /* CONFIG_TASN1 */
- #endif /* CONFIG_GNUTLS */
+@@ -43,65 +43,6 @@
  
--/* For dirty ring test; so far only x86_64 is supported */
--#if defined(__linux__) && defined(HOST_X86_64)
--#include "linux/kvm.h"
--#include <sys/ioctl.h>
--#endif
--
- unsigned start_address;
- unsigned end_address;
- static bool uffd_feature_thread_id;
-@@ -3430,29 +3424,6 @@ static void test_dirty_limit(void)
-     migrate_end(from, to, true);
- }
+ static char *tmpfs;
  
--static bool kvm_dirty_ring_supported(void)
+-static void test_postcopy(void)
 -{
--#if defined(__linux__) && defined(HOST_X86_64)
--    int ret, kvm_fd = open("/dev/kvm", O_RDONLY);
+-    MigrateCommon args = { };
 -
--    if (kvm_fd < 0) {
--        return false;
--    }
--
--    ret = ioctl(kvm_fd, KVM_CHECK_EXTENSION, KVM_CAP_DIRTY_LOG_RING);
--    close(kvm_fd);
--
--    /* We test with 4096 slots */
--    if (ret < 4096) {
--        return false;
--    }
--
--    return true;
--#else
--    return false;
--#endif
+-    test_postcopy_common(&args);
 -}
 -
- int main(int argc, char **argv)
+-static void test_postcopy_suspend(void)
+-{
+-    MigrateCommon args = {
+-        .start.suspend_me = true,
+-    };
+-
+-    test_postcopy_common(&args);
+-}
+-
+-static void test_postcopy_preempt(void)
+-{
+-    MigrateCommon args = {
+-        .postcopy_preempt = true,
+-    };
+-
+-    test_postcopy_common(&args);
+-}
+-
+-static void test_postcopy_recovery(void)
+-{
+-    MigrateCommon args = { };
+-
+-    test_postcopy_recovery_common(&args);
+-}
+-
+-static void test_postcopy_recovery_fail_handshake(void)
+-{
+-    MigrateCommon args = {
+-        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_RECOVERY,
+-    };
+-
+-    test_postcopy_recovery_common(&args);
+-}
+-
+-static void test_postcopy_recovery_fail_reconnect(void)
+-{
+-    MigrateCommon args = {
+-        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_CHANNEL_ESTABLISH,
+-    };
+-
+-    test_postcopy_recovery_common(&args);
+-}
+-
+-static void test_postcopy_preempt_recovery(void)
+-{
+-    MigrateCommon args = {
+-        .postcopy_preempt = true,
+-    };
+-
+-    test_postcopy_recovery_common(&args);
+-}
+-
+ static void test_baddest(void)
  {
-     bool has_kvm, has_tcg;
-diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
-index 2ff8870fd5..525bf1eed4 100644
---- a/tests/qtest/migration/migration-util.c
-+++ b/tests/qtest/migration/migration-util.c
-@@ -28,6 +28,12 @@
- #include "qemu/userfaultfd.h"
- #endif
+     MigrateStart args = {
+@@ -1553,6 +1494,7 @@ int main(int argc, char **argv)
  
-+/* For dirty ring test; so far only x86_64 is supported */
-+#if defined(__linux__) && defined(HOST_X86_64)
-+#include "linux/kvm.h"
-+#include <sys/ioctl.h>
-+#endif
-+
+     migration_test_add_tls(env);
+     migration_test_add_compression(env);
++    migration_test_add_postcopy(env);
  
- static char *SocketAddress_to_str(SocketAddress *addr)
- {
-@@ -331,3 +337,26 @@ bool ufd_version_check(bool *uffd_feature_thread_id)
-     return false;
- }
- #endif
+     migration_test_add("/migration/bad_dest", test_baddest);
+ #ifndef _WIN32
+@@ -1566,24 +1508,6 @@ int main(int argc, char **argv)
+                            test_precopy_unix_suspend_notlive);
+     }
+ 
+-    if (env->has_uffd) {
+-        migration_test_add("/migration/postcopy/plain", test_postcopy);
+-        migration_test_add("/migration/postcopy/recovery/plain",
+-                           test_postcopy_recovery);
+-        migration_test_add("/migration/postcopy/preempt/plain",
+-                           test_postcopy_preempt);
+-        migration_test_add("/migration/postcopy/preempt/recovery/plain",
+-                           test_postcopy_preempt_recovery);
+-        migration_test_add("/migration/postcopy/recovery/double-failures/handshake",
+-                           test_postcopy_recovery_fail_handshake);
+-        migration_test_add("/migration/postcopy/recovery/double-failures/reconnect",
+-                           test_postcopy_recovery_fail_reconnect);
+-        if (env->is_x86) {
+-            migration_test_add("/migration/postcopy/suspend",
+-                               test_postcopy_suspend);
+-        }
+-    }
+-
+     migration_test_add("/migration/precopy/unix/plain",
+                        test_precopy_unix_plain);
+     migration_test_add("/migration/precopy/file",
+diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
+new file mode 100644
+index 0000000000..9e2032bbf3
+--- /dev/null
++++ b/tests/qtest/migration/postcopy-tests.c
+@@ -0,0 +1,106 @@
++/*
++ * QTest testcases for postcopy migration
++ *
++ * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
++ *   based on the vhost-user-test.c that is:
++ *      Copyright (c) 2014 Virtual Open Systems Sarl.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ */
 +
-+bool kvm_dirty_ring_supported(void)
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "migration/test-framework.h"
++#include "migration/migration-util.h"
++#include "qapi/qmp/qlist.h"
++#include "qemu/module.h"
++#include "qemu/option.h"
++#include "qemu/range.h"
++#include "qemu/sockets.h"
++
++static void test_postcopy(void)
 +{
-+#if defined(__linux__) && defined(HOST_X86_64)
-+    int ret, kvm_fd = open("/dev/kvm", O_RDONLY);
++    MigrateCommon args = { };
 +
-+    if (kvm_fd < 0) {
-+        return false;
-+    }
-+
-+    ret = ioctl(kvm_fd, KVM_CHECK_EXTENSION, KVM_CAP_DIRTY_LOG_RING);
-+    close(kvm_fd);
-+
-+    /* We test with 4096 slots */
-+    if (ret < 4096) {
-+        return false;
-+    }
-+
-+    return true;
-+#else
-+    return false;
-+#endif
++    test_postcopy_common(&args);
 +}
-diff --git a/tests/qtest/migration/migration-util.h b/tests/qtest/migration/migration-util.h
-index e6bfd25244..9127702e70 100644
---- a/tests/qtest/migration/migration-util.h
-+++ b/tests/qtest/migration/migration-util.h
-@@ -52,6 +52,7 @@ static inline bool probe_o_direct_support(const char *tmpfs)
++
++static void test_postcopy_suspend(void)
++{
++    MigrateCommon args = {
++        .start.suspend_me = true,
++    };
++
++    test_postcopy_common(&args);
++}
++
++static void test_postcopy_preempt(void)
++{
++    MigrateCommon args = {
++        .postcopy_preempt = true,
++    };
++
++    test_postcopy_common(&args);
++}
++
++static void test_postcopy_recovery(void)
++{
++    MigrateCommon args = { };
++
++    test_postcopy_recovery_common(&args);
++}
++
++static void test_postcopy_recovery_fail_handshake(void)
++{
++    MigrateCommon args = {
++        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_RECOVERY,
++    };
++
++    test_postcopy_recovery_common(&args);
++}
++
++static void test_postcopy_recovery_fail_reconnect(void)
++{
++    MigrateCommon args = {
++        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_CHANNEL_ESTABLISH,
++    };
++
++    test_postcopy_recovery_common(&args);
++}
++
++static void test_postcopy_preempt_recovery(void)
++{
++    MigrateCommon args = {
++        .postcopy_preempt = true,
++    };
++
++    test_postcopy_recovery_common(&args);
++}
++
++void migration_test_add_postcopy(MigrationTestEnv *env)
++{
++    if (env->has_uffd) {
++        migration_test_add("/migration/postcopy/plain", test_postcopy);
++        migration_test_add("/migration/postcopy/recovery/plain",
++                           test_postcopy_recovery);
++        migration_test_add("/migration/postcopy/preempt/plain",
++                           test_postcopy_preempt);
++        migration_test_add("/migration/postcopy/preempt/recovery/plain",
++                           test_postcopy_preempt_recovery);
++
++        migration_test_add(
++            "/migration/postcopy/recovery/double-failures/handshake",
++            test_postcopy_recovery_fail_handshake);
++
++        migration_test_add(
++            "/migration/postcopy/recovery/double-failures/reconnect",
++            test_postcopy_recovery_fail_reconnect);
++
++        if (env->is_x86) {
++            migration_test_add("/migration/postcopy/suspend",
++                               test_postcopy_suspend);
++        }
++    }
++}
+diff --git a/tests/qtest/migration/test-framework.h b/tests/qtest/migration/test-framework.h
+index 0f16f37426..d5197e8da1 100644
+--- a/tests/qtest/migration/test-framework.h
++++ b/tests/qtest/migration/test-framework.h
+@@ -219,5 +219,6 @@ void migration_test_add_tls(MigrationTestEnv *env);
+ static inline void migration_test_add_tls(MigrationTestEnv *env) {};
  #endif
+ void migration_test_add_compression(MigrationTestEnv *env);
++void migration_test_add_postcopy(MigrationTestEnv *env);
  
- bool ufd_version_check(bool *uffd_feature_thread_id);
-+bool kvm_dirty_ring_supported(void);
- void migration_test_add(const char *path, void (*fn)(void));
- char *migrate_get_connect_uri(QTestState *who);
- void migrate_set_ports(QTestState *to, QList *channel_list);
+ #endif /* TEST_FRAMEWORK_H */
 -- 
 2.35.3
 
