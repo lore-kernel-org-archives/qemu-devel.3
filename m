@@ -4,116 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26629D462DA
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 16:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 673F1D462DA
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 16:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBGNq-0004Qd-43; Wed, 13 Nov 2024 11:38:22 -0500
+	id 1tBGYA-0008Jn-Jg; Wed, 13 Nov 2024 11:49:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1tBGNo-0004QR-VE
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:38:20 -0500
-Received: from esa12.hc2706-39.iphmx.com ([216.71.137.82])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tBGY8-0008HV-Vl
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:49:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1tBGNn-0007ON-3v
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:38:20 -0500
-X-CSE-ConnectionGUID: 1T+LWpgWSiCzOmbu+UTNRQ==
-X-CSE-MsgGUID: U79gf5QITse2W0AUS0M3/g==
-X-IronPort-RemoteIP: 209.85.222.200
-X-IronPort-MID: 2524138
-X-IronPort-Reputation: None
-X-IronPort-Listener: OutgoingMail
-X-IronPort-SenderGroup: RELAY_GSUITE
-X-IronPort-MailFlowPolicy: $RELAYED
-IronPort-Data: A9a23:V1Xi4q8goSb3ljEqHPuUDrUDyX+TJUtcMsCJ2f8bNWPcYEJGY0x3z
- mVMWzuOP/7YazakKtkgbtiy8k9U6pHSzNYyHgFt+ygxFiIbosf7XuiUfxz6V8+wwmwvb67FA
- +E2MISowBUcFyeEzvuVGuG86yQ6jOfQG+eU5NfsYkhZXRVjRDoqlSVtkus4hp8AqdWiCkaGt
- MiaT/f3YTdJ4BYqdDtOg06/gEk35qir4WpD5gZWic1j5zcyqVFEVPrzGonsdxMUcqEMdsamS
- uDKyq2O/2+x138FFtO/n7/nRVYBS7jUMBLmoiI+t3+K20UqSoQai87XBdJFAatlo2zhc+NZk
- b2hgaeNpTIBZcUgrgi8vy5wSEmSNYUekFPOzOPWXca7liUqeFO1qxli4d1f0ST1NY+bDEkXn
- cH0JgzhYTjau6GS/6q0ddJtrdYEKcP2f74jnEtZmGSx4fYOGfgvQo3P7N5cmS4z34VAR66GI
- cUebjVrYVLLZBgn1lU/Uspv2rf1wCOlKXsC8Ar9SakfugA/yCR41KjrPMD9cMHMSMlI9qqdj
- jibpTigWUFy2Nq39GXU/Xzxv87zhi6hZ9o7KYbg06UtjwjGroAUIFhMPbehmtGgh0ujHt5SN
- UEQ0iwpq6c06QqsVNaVYvGjiHuNvxpZQtkJVuNgsFnLxa3T7AKUQGMDS1atdeAbiSP/fhRyv
- nfhoj8jLWcHXGG9IZ5FyoqpkA==
-IronPort-HdrOrdr: A9a23:t79uyapJj6SHYQNIbFTDP0kaV5rueYIsimQD101hICG9vPbo8P
- xG+85rqCMc7Qx6ZJhOo6H4BEDtewK4yXcX2/hqAV7BZnifhILAFugLhvqB/9SJIVycygc379
- YHT0ERMqyVMXFKyezX2k2XKeoB/fWw2JyUpI7lvgtQZDAvRKd68Q9jBwqXVmFwThJXHIc0Gf
- OnivavZADORZ3UVKmG77U+PtQr3+e7764OqCRpZyIa1A==
-X-Talos-CUID: =?us-ascii?q?9a23=3ALyadw2hiV0xyGVUPw9Jy4ESoAzJuK0Ge6EjILHC?=
- =?us-ascii?q?DCE17b7ifVBytxIVeqp87?=
-X-Talos-MUID: 9a23:ij6pmwXG6Pr4NMfq/AKz1T5saf5J37+jUn9VuKg94+zfciMlbg==
-Received: from mail-qk1-f200.google.com ([209.85.222.200])
- by ob1.hc2706-39.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 13 Nov 2024 11:38:12 -0500
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7b155e23851so953182185a.2
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 08:38:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bu.edu; s=s1gsbu; t=1731515891; x=1732120691; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gyV4NoyEKu85Hk8fMFhdhW263pOKxShPE3rnVYLIG28=;
- b=TAC4UIQ4xeiuD7YWbBq4I8LGsq+jFABgXKmWB/1Jqb6R3VtmB+QWLcxeI01SRRArwN
- YFo4kTeB/g8IHtvR2z9SR1m/h3D6OE3GpCQzTlrNyk/VdNPV61LUqF2M0UvpTJM+sKUu
- nfVbC6vSWrpPpFfTJ7bgDHX5LVkjvQih7+QCS8W41eytLOKyMlrpfrxCHwE0HbKOjsO8
- CzP31sAtytDQH+lJjeb7mNFS87CdzgwZ77DYp+CnfNkl5k1VEAgsk6cMSA+p9Ev19L4k
- TFeiGk6jtVqHUwFdBVMxtndta+U8gg+E0dsYK68Mvd2vkqbTuIpoKk5PygEkKalx0BXs
- 3olQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tBGY7-0000aw-F6
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:49:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731516537;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Q5lxgJju3VDJD2N/GXeMJZtK5/RQQ64Bmm3cQ/TKIEo=;
+ b=f/jtP7BwhsnIVu4rVrSadLIPKCAHZT1mZ27d1FeEdNXoKMLHBHPgapyXIjQmIR4v2AbGM2
+ +SNf14DPaDb7j6CIojTRsLjclsxYe+x2mGHy5J0bEz7KXvyUVvPsiONJqtgPHFcX31zNf8
+ LzrD7BhnFQcie0wGWF/O5q0mV85mPAo=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-475-lazXbQoIOFiQiUbgCZERJg-1; Wed, 13 Nov 2024 11:48:56 -0500
+X-MC-Unique: lazXbQoIOFiQiUbgCZERJg-1
+X-Mimecast-MFC-AGG-ID: lazXbQoIOFiQiUbgCZERJg
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6d35062e1fcso110467286d6.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 08:48:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731515891; x=1732120691;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1731516536; x=1732121336;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gyV4NoyEKu85Hk8fMFhdhW263pOKxShPE3rnVYLIG28=;
- b=mK3cSdEVKxr1ClT75Y2XYT6FOKy99Jnc+Mffl7PNJP6oiAjFLaDa4DlULWdDL/TCML
- 3zSnK65OGRFS6eH32/JLcJQ/Ib4nGfs+SW/ekOmnu9VQvcexHSWQUMvM0+WinkuhMwa3
- qExNNTB9Go5X1vvFRqMXoWXOTK3LsQuO9d2PbBOcj4W7OcB54ryQoQASGm5QXkkUzftf
- +SUWFO/GbwooX0PK7Fa9f4lNZDkbIekzzi3yN/kMz6k6Vrf7c8ZVdFEwcxiTmBNjjM5C
- kyVycgipPZMLz5UYnAKm0ziZpvSOiHkSIo+3MWrn3ewvVVd38XeCqGFvah98qhJY2hx9
- QEuQ==
+ bh=Q5lxgJju3VDJD2N/GXeMJZtK5/RQQ64Bmm3cQ/TKIEo=;
+ b=TxG3FvxyEVHy4YXQ1Rs9MhL2ix6SRMIKFr/fSCH4Z0cMzGsKSAvBKprZ52Lx9fI8ev
+ UK9h6u2lO4CFUJ+qSIIT+dXFTvBa/rYjFzM/ulXGxYWs0uSXzhAlbYqbTjUJXfJ16O0N
+ e5K10eU+jUoOl4nX1QXQjOeyHW00ruea19wvZzk4xiRBWJkD1S+fUxmfrRy4hhzeXx66
+ 9N05AzlsGIMdvqHkteGQjnPFr2y4DLJJ5opyQwN25Lmw1my6rHOmRXPX7tK4h+1CZw6v
+ Sa+TwfySEQS6Pf/1+auLFmx6igf9gOeGFkPXuSeboT8VLMjP5SXnqcTyGSQLnju9N86f
+ cRyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVfFm5AbfebvvQAizM9IaB2lJ1pQ+wsw3KklisqtbZ19RnMsCk3mXZo7vJ4KU7CDlHoB7apzdVYak+s@nongnu.org
-X-Gm-Message-State: AOJu0Yx40iocWmD206sVDf2SoTgX/rD9qyD8shIguJGtr44DMpx/q0dK
- ZmK3cwJhLSWxU2EdStF6H98oZTsxkCRybJXanEkqhxOLwa8YpRVJeE3IXfI8dhi6jRDR4tNB/r4
- n/fhP/8KNNXLwhCJmIXjsBVeC32sCt1hW3nRQyEZhz8SKsE9le6AZ/Zz5hBs8tE5SmQ==
-X-Received: by 2002:a05:620a:17a3:b0:7af:cb6b:b4fb with SMTP id
- af79cd13be357-7b3529e6975mr400152585a.52.1731515890043; 
- Wed, 13 Nov 2024 08:38:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHO4bQtIOpPi8duQ7X+9xrLqJ4601VhmFaU5RuNAtoD8cdUIeNa2sbIfnw2xwNPinRKFPoHeA==
-X-Received: by 2002:a05:620a:17a3:b0:7af:cb6b:b4fb with SMTP id
- af79cd13be357-7b3529e6975mr400138185a.52.1731515888255; 
- Wed, 13 Nov 2024 08:38:08 -0800 (PST)
-Received: from bos-mail01.vrmnet (pool-173-48-150-109.bstnma.fios.verizon.net.
- [173.48.150.109]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b32ac4ff94sm708967885a.41.2024.11.13.08.38.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Nov 2024 08:38:07 -0800 (PST)
-From: Alexander Bulekov <alxndr@bu.edu>
-To: 
-Cc: Alexander Bulekov <alxndr@bu.edu>, Paolo Bonzini <pbonzini@redhat.com>,
- Bandan Das <bsd@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>,
- Qiuhao Li <Qiuhao.Li@outlook.com>,
- qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH] fuzz: disable tcg for OSS-Fuzz builds
-Date: Wed, 13 Nov 2024 11:37:56 -0500
-Message-ID: <20241113163800.355547-1-alxndr@bu.edu>
-X-Mailer: git-send-email 2.45.2
+ AJvYcCUdOnCRmOjiJRk/MekW6QnDvsG3TDYw6Roh+OyUkRwRnE2zTUH/W3lm1bND6KxF9PYzw9SfOG+t8zu1@nongnu.org
+X-Gm-Message-State: AOJu0YzMINur8T2uCU8pS/WmiYk4cCkgYq6g2DNIBKB+s8McUPAy6ApI
+ Ycd1jsiuYWnEAotVY5TFlRCxX1NIiVIutdGHsQl52MWB52lvf9SsMGFalxSEjiVQYU9EjnvlzQ1
+ Pb9QG+6fS5MbrPseT4QHiabtXctqXM7yTVMLfv/zeFx2MvnY8bvDw
+X-Received: by 2002:a05:6214:3987:b0:6ce:34d5:8882 with SMTP id
+ 6a1803df08f44-6d39e19e2a1mr284192036d6.39.1731516535722; 
+ Wed, 13 Nov 2024 08:48:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFjEnEsAPyBHLpbwzxknztfmiiU2Cgdkdnx7qjiRQQ561YfYORBB2F5b6kpXWAAeQPVOkB9Eg==
+X-Received: by 2002:a05:6214:3987:b0:6ce:34d5:8882 with SMTP id
+ 6a1803df08f44-6d39e19e2a1mr284191736d6.39.1731516535422; 
+ Wed, 13 Nov 2024 08:48:55 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d3961df2c5sm86079806d6.4.2024.11.13.08.48.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 13 Nov 2024 08:48:54 -0800 (PST)
+Message-ID: <f739eaee-4890-45ab-9f8c-f406bdb085cc@redhat.com>
+Date: Wed, 13 Nov 2024 17:48:45 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CES-GSUITE_AUTH: bf3aNvsZpxl8
-Received-SPF: pass client-ip=216.71.137.82; envelope-from=alxndr@bu.edu;
- helo=esa12.hc2706-39.iphmx.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.054,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/5] hw/arm/virt: Add an SMMU_IO_LEN macro
+Content-Language: en-US
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, linuxarm@huawei.com, wangzhou1@hisilicon.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <20241108125242.60136-2-shameerali.kolothum.thodi@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20241108125242.60136-2-shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.738,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,43 +110,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OSS-Fuzz builds have been failing due to some strange issues that seem
-to be related to color codes from libffi:
-https://oss-fuzz-build-logs.storage.googleapis.com/log-8d5435ee-1677-40af-9656-b4162fa881e1.txt
+Hi,
 
-Disable tcg to disable libffi.
+On 11/8/24 13:52, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+>
+> A following patch will add a new MMIO region for nested SMMU instances.
+Nit: Add a new ... is generally preferred I think
+>
+> This macro will be repeatedly used to set offsets and MMIO sizes in both
+> virt and virt-acpi-build.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-Signed-off-by: Alexander Bulekov <alxndr@bu.edu>
----
- scripts/oss-fuzz/build.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/scripts/oss-fuzz/build.sh b/scripts/oss-fuzz/build.sh
-index 7398298173..095f7a90e3 100755
---- a/scripts/oss-fuzz/build.sh
-+++ b/scripts/oss-fuzz/build.sh
-@@ -65,7 +65,7 @@ mkdir -p "$DEST_DIR/lib/"  # Copy the shared libraries here
- # Build once to get the list of dynamic lib paths, and copy them over
- ../configure --disable-werror --cc="$CC" --cxx="$CXX" --enable-fuzzing \
-     --prefix="/opt/qemu-oss-fuzz" \
--    --extra-cflags="$EXTRA_CFLAGS" --target-list="i386-softmmu"
-+    --extra-cflags="$EXTRA_CFLAGS" --target-list="i386-softmmu" --disable-tcg
- 
- if ! make "-j$(nproc)" qemu-fuzz-i386; then
-     fatal "Build failed. Please specify a compiler with fuzzing support"\
-@@ -83,7 +83,7 @@ if [ "$GITLAB_CI" != "true" ]; then
-     ../configure --disable-werror --cc="$CC" --cxx="$CXX" --enable-fuzzing \
-         --prefix="/opt/qemu-oss-fuzz" \
-         --extra-cflags="$EXTRA_CFLAGS" --extra-ldflags="-Wl,-rpath,\$ORIGIN/lib" \
--        --target-list="i386-softmmu"
-+        --target-list="i386-softmmu" --disable-tcg
-     make "-j$(nproc)" qemu-fuzz-i386 V=1
- fi
- 
--- 
-2.45.2
+Eric
+> ---
+>  hw/arm/virt.c         | 2 +-
+>  include/hw/arm/virt.h | 3 +++
+>  2 files changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 719e83e6a1..780bcff77c 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -174,7 +174,7 @@ static const MemMapEntry base_memmap[] = {
+>      [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
+>      [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
+>      [VIRT_UART1] =              { 0x09040000, 0x00001000 },
+> -    [VIRT_SMMU] =               { 0x09050000, 0x00020000 },
+> +    [VIRT_SMMU] =               { 0x09050000, SMMU_IO_LEN },
+>      [VIRT_PCDIMM_ACPI] =        { 0x09070000, MEMORY_HOTPLUG_IO_LEN },
+>      [VIRT_ACPI_GED] =           { 0x09080000, ACPI_GED_EVT_SEL_LEN },
+>      [VIRT_NVDIMM_ACPI] =        { 0x09090000, NVDIMM_ACPI_IO_LEN},
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index ab961bb6a9..46f48fe561 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -47,6 +47,9 @@
+>  /* See Linux kernel arch/arm64/include/asm/pvclock-abi.h */
+>  #define PVTIME_SIZE_PER_CPU 64
+>  
+> +/* MMIO region size for SMMUv3 */
+> +#define SMMU_IO_LEN 0x20000
+> +
+>  enum {
+>      VIRT_FLASH,
+>      VIRT_MEM,
 
 
