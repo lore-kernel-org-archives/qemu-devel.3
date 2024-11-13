@@ -4,110 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C604D637B0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4878AD637AF
 	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 19:51:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBJKy-0007JA-B3; Wed, 13 Nov 2024 14:47:36 -0500
+	id 1tBJKp-0006ke-FI; Wed, 13 Nov 2024 14:47:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKv-0007BD-UX
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:33 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKo-0006j9-2j
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:26 -0500
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKt-0003Dk-7K
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:33 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKl-0003Cq-SX
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:25 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 039691F445;
- Wed, 13 Nov 2024 19:47:30 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 9CD361F44E;
+ Wed, 13 Nov 2024 19:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1731527250; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1731527242; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s8nchv0elteCWELOVSzsHAlRAaW9X+CzeIPjxDSMz9c=;
- b=yZU3lmE/nScSBuFC4ZuDVI9zSRS7UgqmH4qFWD/ikbX+a6uIJyoy23wnTnf1ku6+FUNEB9
- frKNBt6S3f0xzHvMiK3LB3fDJCUrz2NI1AJlyxV8Xqhiu0nmhSEEZeyawVa1yueluZgsZ2
- wn3PLdHEeYffZHBmHyf/MP64+nDZYQA=
+ bh=iOid0kfN7iDAuZ1MWoYtJ5bJDZg039RZU6H8lADuay8=;
+ b=XoR93qQxEAEi9zHJ/uQ985Exs6C56bDf3ybpcuZg611XCge+RRCWzuk3ovEKi8/d1yxJaV
+ NM6oidqHsiBHNZX8+xGnrs3g1kfNstImL19SjhL4NS6fyUum09BX6+y3F68Od8qfcVf/1h
+ ZOHq6PZKBzL6lMRDuAkEATdaFkTlIcg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1731527250;
+ s=susede2_ed25519; t=1731527242;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s8nchv0elteCWELOVSzsHAlRAaW9X+CzeIPjxDSMz9c=;
- b=BzDrz5a/zhFwFveM10aHAGqC3Uc1Mj1jRbN6ra4y7HipOBKaQt0uIV0gcZ6HjzsR0w+IxC
- s2JVCaqH98vsTRDg==
+ bh=iOid0kfN7iDAuZ1MWoYtJ5bJDZg039RZU6H8lADuay8=;
+ b=IPNNOSURtbgHn09s4x8zrRCHCd+Lr2cCj2vYdX89h3JQexas6lLaKTeQPhug1PwgMoB4Ui
+ rLFI4hr0RabRS1Aw==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="yZU3lmE/";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="BzDrz5a/"
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XoR93qQx;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=IPNNOSUR
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1731527250; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1731527242; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s8nchv0elteCWELOVSzsHAlRAaW9X+CzeIPjxDSMz9c=;
- b=yZU3lmE/nScSBuFC4ZuDVI9zSRS7UgqmH4qFWD/ikbX+a6uIJyoy23wnTnf1ku6+FUNEB9
- frKNBt6S3f0xzHvMiK3LB3fDJCUrz2NI1AJlyxV8Xqhiu0nmhSEEZeyawVa1yueluZgsZ2
- wn3PLdHEeYffZHBmHyf/MP64+nDZYQA=
+ bh=iOid0kfN7iDAuZ1MWoYtJ5bJDZg039RZU6H8lADuay8=;
+ b=XoR93qQxEAEi9zHJ/uQ985Exs6C56bDf3ybpcuZg611XCge+RRCWzuk3ovEKi8/d1yxJaV
+ NM6oidqHsiBHNZX8+xGnrs3g1kfNstImL19SjhL4NS6fyUum09BX6+y3F68Od8qfcVf/1h
+ ZOHq6PZKBzL6lMRDuAkEATdaFkTlIcg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1731527250;
+ s=susede2_ed25519; t=1731527242;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s8nchv0elteCWELOVSzsHAlRAaW9X+CzeIPjxDSMz9c=;
- b=BzDrz5a/zhFwFveM10aHAGqC3Uc1Mj1jRbN6ra4y7HipOBKaQt0uIV0gcZ6HjzsR0w+IxC
- s2JVCaqH98vsTRDg==
+ bh=iOid0kfN7iDAuZ1MWoYtJ5bJDZg039RZU6H8lADuay8=;
+ b=IPNNOSURtbgHn09s4x8zrRCHCd+Lr2cCj2vYdX89h3JQexas6lLaKTeQPhug1PwgMoB4Ui
+ rLFI4hr0RabRS1Aw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 58D8513301;
- Wed, 13 Nov 2024 19:47:28 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 77C7613301;
+ Wed, 13 Nov 2024 19:47:20 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id kCuwB1ACNWfLcQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 13 Nov 2024 19:47:28 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id eHQ8DkgCNWfLcQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 13 Nov 2024 19:47:20 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 22/22] docs: Add migration tests documentation
-Date: Wed, 13 Nov 2024 16:46:30 -0300
-Message-Id: <20241113194630.3385-23-farosas@suse.de>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2 19/22] tests/qtest/migration: Add migration-test-smoke
+Date: Wed, 13 Nov 2024 16:46:27 -0300
+Message-Id: <20241113194630.3385-20-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20241113194630.3385-1-farosas@suse.de>
 References: <20241113194630.3385-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 039691F445
+X-Rspamd-Queue-Id: 9CD361F44E
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
- FUZZY_BLOCKED(0.00)[rspamd.com];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_SOME(0.00)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- ARC_NA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[7]; RCVD_VIA_SMTP_AUTH(0.00)[];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FROM_EQ_ENVFROM(0.00)[];
  R_RATELIMIT(0.00)[to_ip_from(RL6tyf6sue6knz55rs3us8rsc3)];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCPT_COUNT_FIVE(0.00)[5];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
  DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
  imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
@@ -136,331 +134,332 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add documentation about how to write, run and debug migration tests.
+Add a new migration test to be ran as smoke test for each QEMU
+target. This test will run only when the QEMU binary being used has no
+KVM support, i.e. smoke tests run only on TCG.
+
+Also modify the existing migration-test to run only when KVM is
+present, i.e. the full set of tests will only run on a KVM host. To
+still enable the full set to be ran anywhere for debug, ignore the
+accel restriction when -m thorough is used.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- docs/devel/testing/index.rst     |   1 +
- docs/devel/testing/main.rst      |  12 ++
- docs/devel/testing/migration.rst | 261 +++++++++++++++++++++++++++++++
- docs/devel/testing/qtest.rst     |   1 +
- 4 files changed, 275 insertions(+)
- create mode 100644 docs/devel/testing/migration.rst
+ tests/qtest/meson.build                   |  7 +++-
+ tests/qtest/migration-test-smoke.c        | 39 +++++++++++++++++++++++
+ tests/qtest/migration-test.c              | 12 +++++++
+ tests/qtest/migration/compression-tests.c |  8 ++++-
+ tests/qtest/migration/cpr-tests.c         |  8 ++++-
+ tests/qtest/migration/file-tests.c        |  8 ++++-
+ tests/qtest/migration/misc-tests.c        |  8 ++++-
+ tests/qtest/migration/postcopy-tests.c    |  7 ++++
+ tests/qtest/migration/precopy-tests.c     |  8 ++++-
+ tests/qtest/migration/test-framework.h    |  8 +++++
+ tests/qtest/migration/tls-tests.c         |  7 +++-
+ 11 files changed, 113 insertions(+), 7 deletions(-)
+ create mode 100644 tests/qtest/migration-test-smoke.c
 
-diff --git a/docs/devel/testing/index.rst b/docs/devel/testing/index.rst
-index 1171f7db8f..32948a9889 100644
---- a/docs/devel/testing/index.rst
-+++ b/docs/devel/testing/index.rst
-@@ -9,6 +9,7 @@ testing infrastructure.
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 2b12a4d263..811117d264 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -5,6 +5,7 @@ slow_qtests = {
+   'cdrom-test' : 610,
+   'device-introspect-test' : 720,
+   'ide-test' : 120,
++  'migration-test-smoke' : 480,
+   'migration-test' : 480,
+   'npcm7xx_pwm-test': 300,
+   'npcm7xx_watchdog_timer-test': 120,
+@@ -111,6 +112,7 @@ qtests_i386 = \
+    'device-plug-test',
+    'drive_del-test',
+    'cpu-plug-test',
++   'migration-test-smoke',
+    'migration-test',
+   ]
  
-    main
-    qtest
-+   migration
-    functional
-    avocado
-    acpi-bits
-diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-index 91f4dc61fb..2dde6b6518 100644
---- a/docs/devel/testing/main.rst
-+++ b/docs/devel/testing/main.rst
-@@ -96,6 +96,18 @@ QTest cases can be executed with
+@@ -185,7 +187,7 @@ qtests_ppc64 = \
+   (slirp.found() ? ['pxe-test'] : []) +              \
+   (config_all_devices.has_key('CONFIG_USB_UHCI') ? ['usb-hcd-uhci-test'] : []) +             \
+   (config_all_devices.has_key('CONFIG_USB_XHCI_NEC') ? ['usb-hcd-xhci-test'] : []) +         \
+-  qtests_pci + ['migration-test', 'cpu-plug-test', 'drive_del-test']
++  qtests_pci + ['migration-test-smoke', 'migration-test', 'cpu-plug-test', 'drive_del-test']
  
-    make check-qtest
+ qtests_sh4 = (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : [])
+ qtests_sh4eb = (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : [])
+@@ -257,6 +259,7 @@ qtests_aarch64 = \
+   ['arm-cpu-features',
+    'numa-test',
+    'boot-serial-test',
++   'migration-test-smoke',
+    'migration-test']
  
-+Migration
-+~~~~~~~~~
-+
-+Migration tests are part of QTest, but are run independently.  Refer
-+to :doc:`migration` for more details.
-+
-+Migration test cases can be executed with
-+
-+.. code::
-+
-+   make check-qtest-migration
-+
- Writing portable test cases
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~
- Both unit tests and qtests can run on POSIX hosts as well as Windows hosts.
-diff --git a/docs/devel/testing/migration.rst b/docs/devel/testing/migration.rst
+ qtests_s390x = \
+@@ -266,6 +269,7 @@ qtests_s390x = \
+    'device-plug-test',
+    'virtio-ccw-test',
+    'cpu-plug-test',
++   'migration-test-smoke',
+    'migration-test']
+ 
+ qtests_riscv32 = \
+@@ -359,6 +363,7 @@ qtests = {
+   'dbus-vmstate-test': files('migration/migration-qmp.c', 'migration/migration-util.c') + dbus_vmstate1,
+   'erst-test': files('erst-test.c'),
+   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
++  'migration-test-smoke': migration_files + migration_tls_files,
+   'migration-test': migration_files + migration_tls_files,
+   'pxe-test': files('boot-sector.c'),
+   'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c'),
+diff --git a/tests/qtest/migration-test-smoke.c b/tests/qtest/migration-test-smoke.c
 new file mode 100644
-index 0000000000..aa6fd65af4
+index 0000000000..ff2d72881f
 --- /dev/null
-+++ b/docs/devel/testing/migration.rst
-@@ -0,0 +1,261 @@
-+.. _migration:
-+
-+Migration tests
-+===============
-+
-+Migration tests are part of QTest, but have some particularities of
-+their own, such as:
-+
-+- Extended test time due to the need to exercise the iterative phase
-+  of migration;
-+- Extra requirements on the QEMU binary being used due to
-+  :ref:`cross-version migration <cross-version-tests>`;
-+- The use of a custom binary for the guest code to test memory
-+  integrity (see :ref:`guest-code`).
-+
-+Invocation
-+----------
-+
-+Migration tests can be ran with:
-+
-+.. code::
-+
-+   make check-qtest
-+   make check-qtest-migration
-+
-+or directly:
-+
-+.. code::
-+
-+   # all tests
-+   QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test -m thorough
-+
-+   # single test
-+   QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test -m thorough -p /x86_64/migration/bad_dest
-+
-+   # all tests under /multifd (note no trailing slash)
-+   QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test -m thorough -r /x86_64/migration/multifd
-+
-+for cross-version tests (see :ref:`cross-version-tests`):
-+
-+.. code::
-+
-+   # old QEMU -> new QEMU
-+   QTEST_QEMU_BINARY=./qemu-system-x86_64 QTEST_QEMU_BINARY_SRC=./old/qemu-system-x86_64 -m thorough ./tests/qtest/migration-test
-+   QTEST_QEMU_BINARY_DST=./qemu-system-x86_64 QTEST_QEMU_BINARY=./old/qemu-system-x86_64 -m thorough ./tests/qtest/migration-test
-+
-+   # new QEMU -> old QEMU (backwards migration)
-+   QTEST_QEMU_BINARY_SRC=./qemu-system-x86_64 QTEST_QEMU_BINARY=./old/qemu-system-x86_64 -m thorough ./tests/qtest/migration-test
-+   QTEST_QEMU_BINARY=./qemu-system-x86_64 QTEST_QEMU_BINARY_DST=./old/qemu-system-x86_64 -m thorough ./tests/qtest/migration-test
-+
-+   # both _SRC and _DST variants are supported for convenience
-+
-+.. _cross-version-tests:
-+
-+Cross-version tests
-+~~~~~~~~~~~~~~~~~~~
-+
-+To detect compatibility issues between different QEMU versions, all
-+migration tests can be executed with two different QEMU versions. The
-+common machine type between the two versions is used.
-+
-+To setup cross-version tests, a previous build of QEMU must be kept,
-+e.g.:
-+
-+.. code::
-+
-+   # build current code
-+   mkdir build
-+   cd build
-+   ../configure; make
-+
-+   # build previous version
-+   cd ../
-+   mkdir build-9.1
-+   git checkout v9.1.0
-+   cd build
-+   ../configure; make
-+
-+To avoid issues with newly added features and new tests, it is highly
-+recommended to run the tests from the source directory of *older*
-+version being tested.
-+
-+.. code::
-+
-+   ./build/qemu-system-x86_64 --version
-+   QEMU emulator version 9.1.50
-+
-+   ./build-9.1/qemu-system-x86_64 --version
-+   QEMU emulator version 9.1.0
-+
-+   cd build-9.1
-+   QTEST_QEMU_BINARY=./qemu-system-x86_64 QTEST_QEMU_BINARY_DST=../build/qemu-system-x86_64 ./tests/qtest/migration-test -m thorough
-+
-+
-+How to write migration tests
-+----------------------------
-+
-+Add a test function (prefixed with ``test_``) that gets registered
-+with QTest using the ``migration_test_add*()`` helpers.
-+
-+.. code::
-+
-+  migration_test_add("/migration/multifd/tcp/plain/cancel", test_multifd_tcp_cancel);
-+
-+There is no formal grammar for the definition of the test paths, but
-+an informal rule is followed for consistency. Usually:
-+
-+``/migration/<multifd|precopy|postcopy>/<url type>/<test-specific>/``
-+
-+Bear in mind that the path string affects test execution order and
-+filtering when using the ``-r`` flag.
-+
-+For simpler tests, the test function can setup the test arguments in
-+the ``MigrateCommon`` structure and call into a common test
-+routine. Currently there are two common test routines:
-+
-+ - test_precopy_common - for generic precopy migration
-+ - test_file_common - for migration using the file: URL
-+
-+The general structure of a test routine is:
-+
-+- call ``migrate_start()`` to initialize the two QEMU
-+  instances. Usually named "from", for the source machine and "to" for
-+  the destination machine;
-+
-+- define the migration duration, (roughly speaking either quick or
-+  slow) by altering the convergence parameters with
-+  ``migrate_ensure[_non]_converge()``;
-+
-+- wait for the machines to be in the desired state with the ``wait_for_*``
-+  helpers;
-+
-+- migrate with ``migrate_qmp()/migrate_incoming_qmp()/migrate_qmp_fail()``;
-+
-+- check that guest memory was not corrupted and clean up the QEMU
-+  instances with ``migrate_end()``.
-+
-+If using the common test routines, the ``.start_hook`` and
-+``.end_hook`` callbacks can be used to perform test-specific tasks.
-+
-+.. _guest-code:
-+
-+About guest code
-+----------------
-+
-+The tests all use a custom, architecture-specific binary as the guest
-+code. This code, known as a-b-kernel or a-b-bootblock, constantly
-+iterates over the guest memory, writing a number to the start of each
-+guest page, incrementing it as it loops around (i.e. a generation
-+count). This allows the tests to catch memory corruption errors that
-+occur during migration as every page's first byte must have the same
-+value, except at the point where the transition happens.
-+
-+Whenever guest memory is migrated incorrectly, the test will output
-+the address and amount of pages that present a value inconsistent with
-+the generation count, e.g.:
-+
-+.. code::
-+
-+  Memory content inconsistency at d53000 first_byte = 27 last_byte = 26 current = 27 hit_edge = 1
-+  Memory content inconsistency at d54000 first_byte = 27 last_byte = 26 current = 27 hit_edge = 1
-+  Memory content inconsistency at d55000 first_byte = 27 last_byte = 26 current = 27 hit_edge = 1
-+  and in another 4929 pages
-+
-+In the scenario above,
-+
-+``first_byte`` shows that the current generation number is 27, therefore
-+all pages should have 27 as their first byte. Since ``hit_edge=1``, that
-+means the transition point was found, i.e. the guest was stopped for
-+migration while not all pages had yet been updated to the new
-+generation count. So 26 is also a valid byte to find in some pages.
-+
-+The inconsistency here is that ``last_byte``, i.e. the previous
-+generation count is smaller than the ``current`` byte, which should not
-+be possible. This would indicate a memory layout such as:
-+
-+.. code::
-+
-+  0xb00000 | 27 00 00 ...
-+  ...
-+  0xc00000 | 27 00 00 ...
-+  ...
-+  0xd00000 | 27 00 00 ...
-+  0x?????? | 26 00 00 ... <-- pages around this addr weren't migrated correctly
-+  ...
-+  0xd53000 | 27 00 00 ...
-+  0xd54000 | 27 00 00 ...
-+  0xd55000 | 27 00 00 ...
-+  ...
-+
-+The a-b code is located at ``tests/qtest/migration/<arch>``.
-+
-+Troubleshooting
-+---------------
-+
-+Migration tests usually run as part of make check, which is most
-+likely to not have been using the verbose flag, so the first thing to
-+check is the test log from meson (``meson-logs/testlog.txt``).
-+
-+There, look for the last "Running" entry, which will be the current
-+test. Notice whether the failing program is one of the QEMU instances
-+or the migration-test-* themselves.
-+
-+E.g.:
-+
-+.. code::
-+
-+  # Running /s390x/migration/precopy/unix/plain
-+  # Using machine type: s390-ccw-virtio-9.2
-+  # starting QEMU: exec ./qemu-system-s390x -qtest ...
-+  # starting QEMU: exec ./qemu-system-s390x -qtest ...
-+  ----------------------------------- stderr -----------------------------------
-+  migration-test: ../tests/qtest/migration-test.c:1712: test_precopy_common: Assertion `0' failed.
-+
-+  (test program exited with status code -6)
-+
-+.. code::
-+
-+  # Running /x86_64/migration/bad_dest
-+  # Using machine type: pc-q35-9.2
-+  # starting QEMU: exec ./qemu-system-x86_64 -qtest ...
-+  # starting QEMU: exec ./qemu-system-x86_64 -qtest ...
-+  ----------------------------------- stderr -----------------------------------
-+  Broken pipe
-+  ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from signal 6 (Aborted) (core dumped)
-+
-+  (test program exited with status code -6)
-+
-+The above is usually not enough to determine what happened, so
-+re-running the test directly is helpful:
-+
-+.. code::
-+
-+   QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test -m thorough -p /x86_64/migration/bad_dest
-+
-+There are also the QTEST_LOG and QTEST_TRACE variables for increased
-+logging and tracing.
-+
-+The QTEST_QEMU_BINARY environment variable can be abused to hook GDB
-+or valgrind into the invocation:
-+
-+.. code::
-+
-+   QTEST_QEMU_BINARY='gdb -q --ex "set pagination off" --ex "set print thread-events off" \
-+   --ex "handle SIGUSR1 noprint" --ex "break <breakpoint>" --ex "run" --ex "quit \$_exitcode" \
-+   --args ./qemu-system-x86_64' ./tests/qtest/migration-test -m thorough -p /x86_64/migration/multifd/file/mapped-ram/fdset/dio
-+
-+.. code::
-+
-+   QTEST_QEMU_BINARY='valgrind -q --leak-check=full --show-leak-kinds=definite,indirect \
-+   ./qemu-system-x86_64' ./tests/qtest/migration-test -m thorough -r /x86_64/migration
-+
-+Whenever a test fails, it will leave behind a temporary
-+directory. This is useful for file migrations to inspect the generated
-+migration file:
-+
-+.. code::
-+
-+   $ file /tmp/migration-test-X496U2/migfile
-+   /tmp/migration-test-X496U2/migfile: QEMU suspend to disk image
-+   $ hexdump -C /tmp/migration-test-X496U2/migfile | less
-diff --git a/docs/devel/testing/qtest.rst b/docs/devel/testing/qtest.rst
-index c5b8546b3e..4665c160b6 100644
---- a/docs/devel/testing/qtest.rst
-+++ b/docs/devel/testing/qtest.rst
-@@ -5,6 +5,7 @@ QTest Device Emulation Testing Framework
- .. toctree::
++++ b/tests/qtest/migration-test-smoke.c
+@@ -0,0 +1,39 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "migration/test-framework.h"
++#include "qemu/module.h"
++
++int main(int argc, char **argv)
++{
++    MigrationTestEnv *env;
++    int ret;
++
++    g_test_init(&argc, &argv, NULL);
++    env = migration_get_env();
++    module_call_init(MODULE_INIT_QOM);
++
++    if (env->has_kvm) {
++        g_test_message(
++            "Smoke tests already run as part of the full suite on KVM hosts");
++        goto out;
++    }
++
++    migration_test_add_tls_smoke(env);
++    migration_test_add_compression_smoke(env);
++    migration_test_add_postcopy_smoke(env);
++    migration_test_add_file_smoke(env);
++    migration_test_add_precopy_smoke(env);
++    migration_test_add_cpr_smoke(env);
++    migration_test_add_misc_smoke(env);
++
++out:
++    ret = g_test_run();
++
++    g_assert_cmpint(ret, ==, 0);
++
++    ret = migration_env_clean(env);
++
++    return ret;
++}
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 4c8ea397ec..73cb0bdfe6 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -26,6 +26,17 @@ int main(int argc, char **argv)
+     env = migration_get_env();
+     module_call_init(MODULE_INIT_QOM);
  
-    qgraph
-+   migration
++    /*
++     * Restrict the full set of tests to KVM hosts only. For tests
++     * that run in all platforms, see migration-test-smoke.c. Ignore
++     * the restriction if -m thorough was passed in the command line.
++     */
++    if (!g_test_thorough() && !env->has_kvm) {
++        g_test_message("Full test suite only runs on KVM hosts "
++                       "(override with -m thorough)");
++        goto out;
++    }
++
+     migration_test_add_tls(env);
+     migration_test_add_compression(env);
+     migration_test_add_postcopy(env);
+@@ -34,6 +45,7 @@ int main(int argc, char **argv)
+     migration_test_add_cpr(env);
+     migration_test_add_misc(env);
  
- QTest is a device emulation testing framework.  It can be very useful to test
- device models; it could also control certain aspects of QEMU (such as virtual
++out:
+     ret = g_test_run();
+ 
+     g_assert_cmpint(ret, ==, 0);
+diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
+index 1b4c59338c..b48dc87239 100644
+--- a/tests/qtest/migration/compression-tests.c
++++ b/tests/qtest/migration/compression-tests.c
+@@ -205,9 +205,15 @@ static void test_multifd_tcp_zlib(void)
+     test_precopy_common(&args);
+ }
+ 
+-void migration_test_add_compression(MigrationTestEnv *env)
++void migration_test_add_compression_smoke(MigrationTestEnv *env)
+ {
+     tmpfs = env->tmpfs;
++    /* TODO: add smoke tests */
++}
++
++void migration_test_add_compression(MigrationTestEnv *env)
++{
++    migration_test_add_compression_smoke(env);
+ 
+ #ifdef CONFIG_ZSTD
+     migration_test_add("/migration/multifd/tcp/plain/zstd",
+diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+index 92bd42e61a..4fe6eefe86 100644
+--- a/tests/qtest/migration/cpr-tests.c
++++ b/tests/qtest/migration/cpr-tests.c
+@@ -44,9 +44,15 @@ static void test_mode_reboot(void)
+     test_file_common(&args, true);
+ }
+ 
+-void migration_test_add_cpr(MigrationTestEnv *env)
++void migration_test_add_cpr_smoke(MigrationTestEnv *env)
+ {
+     tmpfs = env->tmpfs;
++    /* TODO: add smoke tests */
++}
++
++void migration_test_add_cpr(MigrationTestEnv *env)
++{
++    migration_test_add_cpr_smoke(env);
+ 
+     /*
+      * Our CI system has problems with shared memory.
+diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
+index 90b0386f58..10a5cb648d 100644
+--- a/tests/qtest/migration/file-tests.c
++++ b/tests/qtest/migration/file-tests.c
+@@ -294,9 +294,15 @@ static void test_multifd_file_mapped_ram_fdset_dio(void)
+ }
+ #endif /* !_WIN32 */
+ 
+-void migration_test_add_file(MigrationTestEnv *env)
++void migration_test_add_file_smoke(MigrationTestEnv *env)
+ {
+     tmpfs = env->tmpfs;
++    /* TODO: add smoke tests */
++}
++
++void migration_test_add_file(MigrationTestEnv *env)
++{
++    migration_test_add_file_smoke(env);
+ 
+     migration_test_add("/migration/precopy/file",
+                        test_precopy_file);
+diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+index 6f2bc5cca1..480fbda1c9 100644
+--- a/tests/qtest/migration/misc-tests.c
++++ b/tests/qtest/migration/misc-tests.c
+@@ -250,9 +250,15 @@ static void test_validate_uri_channels_none_set(void)
+     do_test_validate_uri_channel(&args);
+ }
+ 
+-void migration_test_add_misc(MigrationTestEnv *env)
++void migration_test_add_misc_smoke(MigrationTestEnv *env)
+ {
+     tmpfs = env->tmpfs;
++    /* TODO: add smoke tests */
++}
++
++void migration_test_add_misc(MigrationTestEnv *env)
++{
++    migration_test_add_misc_smoke(env);
+ 
+     migration_test_add("/migration/bad_dest", test_baddest);
+ #ifndef _WIN32
+diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
+index 9e2032bbf3..90d2d0820c 100644
+--- a/tests/qtest/migration/postcopy-tests.c
++++ b/tests/qtest/migration/postcopy-tests.c
+@@ -79,8 +79,15 @@ static void test_postcopy_preempt_recovery(void)
+     test_postcopy_recovery_common(&args);
+ }
+ 
++void migration_test_add_postcopy_smoke(MigrationTestEnv *env)
++{
++    /* TODO: add smoke tests */
++}
++
+ void migration_test_add_postcopy(MigrationTestEnv *env)
+ {
++    migration_test_add_postcopy_smoke(env);
++
+     if (env->has_uffd) {
+         migration_test_add("/migration/postcopy/plain", test_postcopy);
+         migration_test_add("/migration/postcopy/recovery/plain",
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index c7c802f812..393c7e226a 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -946,9 +946,15 @@ static void test_dirty_limit(void)
+     migrate_end(from, to, true);
+ }
+ 
+-void migration_test_add_precopy(MigrationTestEnv *env)
++void migration_test_add_precopy_smoke(MigrationTestEnv *env)
+ {
+     tmpfs = env->tmpfs;
++    /* TODO: add smoke tests */
++}
++
++void migration_test_add_precopy(MigrationTestEnv *env)
++{
++    migration_test_add_precopy_smoke(env);
+ 
+     if (env->is_x86) {
+         migration_test_add("/migration/precopy/unix/suspend/live",
+diff --git a/tests/qtest/migration/test-framework.h b/tests/qtest/migration/test-framework.h
+index 207a11edb9..10cc4e524c 100644
+--- a/tests/qtest/migration/test-framework.h
++++ b/tests/qtest/migration/test-framework.h
+@@ -215,14 +215,22 @@ QTestMigrationState *get_src(void);
+ 
+ #ifdef CONFIG_GNUTLS
+ void migration_test_add_tls(MigrationTestEnv *env);
++void migration_test_add_tls_smoke(MigrationTestEnv *env);
+ #else
+ static inline void migration_test_add_tls(MigrationTestEnv *env) {};
++static inline void migration_test_add_tls_smoke(MigrationTestEnv *env) {}
+ #endif
+ void migration_test_add_compression(MigrationTestEnv *env);
++void migration_test_add_compression_smoke(MigrationTestEnv *env);
+ void migration_test_add_postcopy(MigrationTestEnv *env);
++void migration_test_add_postcopy_smoke(MigrationTestEnv *env);
+ void migration_test_add_file(MigrationTestEnv *env);
++void migration_test_add_file_smoke(MigrationTestEnv *env);
+ void migration_test_add_precopy(MigrationTestEnv *env);
++void migration_test_add_precopy_smoke(MigrationTestEnv *env);
+ void migration_test_add_cpr(MigrationTestEnv *env);
++void migration_test_add_cpr_smoke(MigrationTestEnv *env);
+ void migration_test_add_misc(MigrationTestEnv *env);
++void migration_test_add_misc_smoke(MigrationTestEnv *env);
+ 
+ #endif /* TEST_FRAMEWORK_H */
+diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+index 7609183474..264b54f352 100644
+--- a/tests/qtest/migration/tls-tests.c
++++ b/tests/qtest/migration/tls-tests.c
+@@ -722,10 +722,15 @@ static void test_multifd_tcp_tls_x509_reject_anon_client(void)
+ }
+ #endif /* CONFIG_TASN1 */
+ 
+-void migration_test_add_tls(MigrationTestEnv *env)
++void migration_test_add_tls_smoke(MigrationTestEnv *env)
+ {
+     tmpfs = env->tmpfs;
++    /* TODO: add smoke tests */
++}
+ 
++void migration_test_add_tls(MigrationTestEnv *env)
++{
++    migration_test_add_tls_smoke(env);
+     migration_test_add("/migration/precopy/unix/tls/psk",
+                        test_precopy_unix_tls_psk);
+ 
 -- 
 2.35.3
 
