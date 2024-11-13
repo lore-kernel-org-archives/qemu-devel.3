@@ -4,111 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B20AD637AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 19:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CEECD637AF
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 19:50:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBJKt-0006xw-5W; Wed, 13 Nov 2024 14:47:31 -0500
+	id 1tBJKq-0006o8-QO; Wed, 13 Nov 2024 14:47:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKq-0006o1-BT
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:28 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKi-0006c3-8p
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:23 -0500
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKo-0003DA-IU
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:28 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKg-0003CH-Io
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:20 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 434A121109;
- Wed, 13 Nov 2024 19:47:25 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 4B93521111;
+ Wed, 13 Nov 2024 19:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1731527245; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1731527237; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r9wkFLa7eKx1hbkd0zud/vM2BmY/sqc9Oj0oHoBtLTw=;
- b=sLCcXdou6vsvsbi2fPrnFThxTTBBrUSRjDtxJ5d3loNpN/2lwR++lOrUx+oc0/irX7tiIT
- qJMWIg//yLaP2o81/fkdaCvpfVb4oKtFX1oWDSNs0xgVJbGBjk5bgeqlGpayCdz5uanMsN
- 5OVugPckR8BG2d1MOLZ9pF2xPFn2Cg4=
+ bh=ZT4TkMQ7Re9KRLueiPXFJT/PoUvSdR56WtHKMnA5xKA=;
+ b=uSfu5JoWc4UUn/qe1izEoSNbU7NiOqf8IJZ+LCsQ3NPYqIkj4IbyLCGy7NkgorNaf/Jk8x
+ MKWTFZmGhMz0c4PnMuzW1dsmukyhzZdn7V3IZbjSNJxU1rAstAG00NyIqXHtRWrlJbC5mj
+ YJvVgXpiXm5hqVoHwEwlikU2s8BpiBs=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1731527245;
+ s=susede2_ed25519; t=1731527237;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r9wkFLa7eKx1hbkd0zud/vM2BmY/sqc9Oj0oHoBtLTw=;
- b=lO3EzSd1VU7x61kRPNev8Zf12eRLZYNVdQP7ejFivgAGGNT7arxQgptDSA10vqzuHakD9H
- iv0yeImB8uZFKAAQ==
+ bh=ZT4TkMQ7Re9KRLueiPXFJT/PoUvSdR56WtHKMnA5xKA=;
+ b=zLhKZo4NFnDhAvG1OxsAphRkKjWgg4tX+vrloqUKqhme81SR0A18SQpHn3UT72oh1QTqXv
+ 5oYfii4t7Oa1/FBg==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=sLCcXdou;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=lO3EzSd1
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1731527245; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1731527237; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r9wkFLa7eKx1hbkd0zud/vM2BmY/sqc9Oj0oHoBtLTw=;
- b=sLCcXdou6vsvsbi2fPrnFThxTTBBrUSRjDtxJ5d3loNpN/2lwR++lOrUx+oc0/irX7tiIT
- qJMWIg//yLaP2o81/fkdaCvpfVb4oKtFX1oWDSNs0xgVJbGBjk5bgeqlGpayCdz5uanMsN
- 5OVugPckR8BG2d1MOLZ9pF2xPFn2Cg4=
+ bh=ZT4TkMQ7Re9KRLueiPXFJT/PoUvSdR56WtHKMnA5xKA=;
+ b=uSfu5JoWc4UUn/qe1izEoSNbU7NiOqf8IJZ+LCsQ3NPYqIkj4IbyLCGy7NkgorNaf/Jk8x
+ MKWTFZmGhMz0c4PnMuzW1dsmukyhzZdn7V3IZbjSNJxU1rAstAG00NyIqXHtRWrlJbC5mj
+ YJvVgXpiXm5hqVoHwEwlikU2s8BpiBs=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1731527245;
+ s=susede2_ed25519; t=1731527237;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r9wkFLa7eKx1hbkd0zud/vM2BmY/sqc9Oj0oHoBtLTw=;
- b=lO3EzSd1VU7x61kRPNev8Zf12eRLZYNVdQP7ejFivgAGGNT7arxQgptDSA10vqzuHakD9H
- iv0yeImB8uZFKAAQ==
+ bh=ZT4TkMQ7Re9KRLueiPXFJT/PoUvSdR56WtHKMnA5xKA=;
+ b=zLhKZo4NFnDhAvG1OxsAphRkKjWgg4tX+vrloqUKqhme81SR0A18SQpHn3UT72oh1QTqXv
+ 5oYfii4t7Oa1/FBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2745F13301;
- Wed, 13 Nov 2024 19:47:22 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2FF8C13301;
+ Wed, 13 Nov 2024 19:47:14 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id kBtjN0oCNWfLcQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 13 Nov 2024 19:47:22 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id WD6tOUICNWfLcQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 13 Nov 2024 19:47:14 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 20/22] tests/qtest/migration: Pick smoke tests
-Date: Wed, 13 Nov 2024 16:46:28 -0300
-Message-Id: <20241113194630.3385-21-farosas@suse.de>
+Subject: [PATCH v2 17/22] tests/qtest/migration: Split CPR tests
+Date: Wed, 13 Nov 2024 16:46:25 -0300
+Message-Id: <20241113194630.3385-18-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20241113194630.3385-1-farosas@suse.de>
 References: <20241113194630.3385-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 434A121109
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_SEVEN(0.00)[7];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCPT_COUNT_SEVEN(0.00)[7]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- R_RATELIMIT(0.00)[to_ip_from(RL6tyf6sue6knz55rs3us8rsc3)];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
+ RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -134,194 +122,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Choose a few tests per group and move them from the full set to the
-smoke set.
+Move the mode/reboot test into a separate file to hold all the CPR
+tests. Currently there's just one test, but we're adding more CPR
+modes and the feature is different enough from live migration that
+it's worth it to have a separate file for it.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration/compression-tests.c |  7 +++----
- tests/qtest/migration/cpr-tests.c         |  3 ++-
- tests/qtest/migration/misc-tests.c        | 11 +++++------
- tests/qtest/migration/postcopy-tests.c    | 15 ++++++++-------
- tests/qtest/migration/precopy-tests.c     | 19 +++++++++----------
- tests/qtest/migration/tls-tests.c         |  7 ++++---
- 6 files changed, 31 insertions(+), 31 deletions(-)
+ tests/qtest/meson.build                |  1 +
+ tests/qtest/migration-test.c           | 34 +--------------
+ tests/qtest/migration/cpr-tests.c      | 58 ++++++++++++++++++++++++++
+ tests/qtest/migration/test-framework.h |  1 +
+ 4 files changed, 61 insertions(+), 33 deletions(-)
+ create mode 100644 tests/qtest/migration/cpr-tests.c
 
-diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
-index b48dc87239..353b7ccbdd 100644
---- a/tests/qtest/migration/compression-tests.c
-+++ b/tests/qtest/migration/compression-tests.c
-@@ -208,7 +208,9 @@ static void test_multifd_tcp_zlib(void)
- void migration_test_add_compression_smoke(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
--    /* TODO: add smoke tests */
-+
-+    migration_test_add("/migration/multifd/tcp/plain/zlib",
-+                       test_multifd_tcp_zlib);
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index c1dcc67363..05d0e33d78 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -336,6 +336,7 @@ migration_files = [files(
+   'migration/migration-qmp.c',
+   'migration/migration-util.c',
+   'migration/compression-tests.c',
++  'migration/cpr-tests.c',
+   'migration/file-tests.c',
+   'migration/precopy-tests.c',
+   'migration/postcopy-tests.c',
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index fa2fd0c672..93f156f7af 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -145,31 +145,6 @@ static void test_ignore_shared(void)
  }
+ #endif
  
- void migration_test_add_compression(MigrationTestEnv *env)
-@@ -239,7 +241,4 @@ void migration_test_add_compression(MigrationTestEnv *env)
-         migration_test_add("/migration/precopy/unix/xbzrle",
-                            test_precopy_unix_xbzrle);
-     }
+-static void *test_mode_reboot_start(QTestState *from, QTestState *to)
+-{
+-    migrate_set_parameter_str(from, "mode", "cpr-reboot");
+-    migrate_set_parameter_str(to, "mode", "cpr-reboot");
 -
--    migration_test_add("/migration/multifd/tcp/plain/zlib",
--                       test_multifd_tcp_zlib);
- }
-diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-index 4fe6eefe86..c5cad2a20c 100644
---- a/tests/qtest/migration/cpr-tests.c
-+++ b/tests/qtest/migration/cpr-tests.c
-@@ -47,7 +47,8 @@ static void test_mode_reboot(void)
- void migration_test_add_cpr_smoke(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
--    /* TODO: add smoke tests */
-+
-+    /* none for now */
- }
- 
- void migration_test_add_cpr(MigrationTestEnv *env)
-diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
-index 480fbda1c9..ee737c3942 100644
---- a/tests/qtest/migration/misc-tests.c
-+++ b/tests/qtest/migration/misc-tests.c
-@@ -253,12 +253,6 @@ static void test_validate_uri_channels_none_set(void)
- void migration_test_add_misc_smoke(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
--    /* TODO: add smoke tests */
+-    migrate_set_capability(from, "x-ignore-shared", true);
+-    migrate_set_capability(to, "x-ignore-shared", true);
+-
+-    return NULL;
 -}
 -
--void migration_test_add_misc(MigrationTestEnv *env)
+-static void test_mode_reboot(void)
 -{
--    migration_test_add_misc_smoke(env);
+-    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
+-                                           FILE_TEST_FILENAME);
+-    MigrateCommon args = {
+-        .start.use_shmem = true,
+-        .connect_uri = uri,
+-        .listen_uri = "defer",
+-        .start_hook = test_mode_reboot_start
+-    };
+-
+-    test_file_common(&args, true);
+-}
+-
+ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+ {
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+@@ -308,20 +283,13 @@ int main(int argc, char **argv)
+     migration_test_add_postcopy(env);
+     migration_test_add_file(env);
+     migration_test_add_precopy(env);
++    migration_test_add_cpr(env);
  
      migration_test_add("/migration/bad_dest", test_baddest);
  #ifndef _WIN32
-@@ -279,3 +273,8 @@ void migration_test_add_misc(MigrationTestEnv *env)
-     migration_test_add("/migration/validate_uri/channels/none_set",
-                        test_validate_uri_channels_none_set);
- }
-+
-+void migration_test_add_misc(MigrationTestEnv *env)
-+{
-+    migration_test_add_misc_smoke(env);
-+}
-diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
-index 90d2d0820c..36ef05caa0 100644
---- a/tests/qtest/migration/postcopy-tests.c
-+++ b/tests/qtest/migration/postcopy-tests.c
-@@ -81,19 +81,20 @@ static void test_postcopy_preempt_recovery(void)
+     migration_test_add("/migration/analyze-script", test_analyze_script);
+ #endif
  
- void migration_test_add_postcopy_smoke(MigrationTestEnv *env)
- {
--    /* TODO: add smoke tests */
--}
+-    /*
+-     * Our CI system has problems with shared memory.
+-     * Don't run this test until we find a workaround.
+-     */
+-    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
+-        migration_test_add("/migration/mode/reboot", test_mode_reboot);
+-    }
 -
--void migration_test_add_postcopy(MigrationTestEnv *env)
--{
--    migration_test_add_postcopy_smoke(env);
--
-     if (env->has_uffd) {
-         migration_test_add("/migration/postcopy/plain", test_postcopy);
-         migration_test_add("/migration/postcopy/recovery/plain",
-                            test_postcopy_recovery);
-         migration_test_add("/migration/postcopy/preempt/plain",
-                            test_postcopy_preempt);
+     /* migration_test_add("/migration/ignore_shared", test_ignore_shared); */
+ 
+     migration_test_add("/migration/validate_uuid", test_validate_uuid);
+diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+new file mode 100644
+index 0000000000..92bd42e61a
+--- /dev/null
++++ b/tests/qtest/migration/cpr-tests.c
+@@ -0,0 +1,58 @@
++/*
++ * QTest testcases for CPR
++ *
++ * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
++ *   based on the vhost-user-test.c that is:
++ *      Copyright (c) 2014 Virtual Open Systems Sarl.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "migration/migration-qmp.h"
++#include "migration/migration-util.h"
++#include "migration/test-framework.h"
++
++
++static char *tmpfs;
++
++static void *test_mode_reboot_start(QTestState *from, QTestState *to)
++{
++    migrate_set_parameter_str(from, "mode", "cpr-reboot");
++    migrate_set_parameter_str(to, "mode", "cpr-reboot");
++
++    migrate_set_capability(from, "x-ignore-shared", true);
++    migrate_set_capability(to, "x-ignore-shared", true);
++
++    return NULL;
++}
++
++static void test_mode_reboot(void)
++{
++    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
++                                           FILE_TEST_FILENAME);
++    MigrateCommon args = {
++        .start.use_shmem = true,
++        .connect_uri = uri,
++        .listen_uri = "defer",
++        .start_hook = test_mode_reboot_start
++    };
++
++    test_file_common(&args, true);
++}
++
++void migration_test_add_cpr(MigrationTestEnv *env)
++{
++    tmpfs = env->tmpfs;
++
++    /*
++     * Our CI system has problems with shared memory.
++     * Don't run this test until we find a workaround.
++     */
++    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
++        migration_test_add("/migration/mode/reboot", test_mode_reboot);
 +    }
 +}
-+
-+void migration_test_add_postcopy(MigrationTestEnv *env)
-+{
-+    migration_test_add_postcopy_smoke(env);
-+
-+    if (env->has_uffd) {
-         migration_test_add("/migration/postcopy/preempt/recovery/plain",
-                            test_postcopy_preempt_recovery);
+diff --git a/tests/qtest/migration/test-framework.h b/tests/qtest/migration/test-framework.h
+index 4571326028..c1747a4e16 100644
+--- a/tests/qtest/migration/test-framework.h
++++ b/tests/qtest/migration/test-framework.h
+@@ -222,5 +222,6 @@ void migration_test_add_compression(MigrationTestEnv *env);
+ void migration_test_add_postcopy(MigrationTestEnv *env);
+ void migration_test_add_file(MigrationTestEnv *env);
+ void migration_test_add_precopy(MigrationTestEnv *env);
++void migration_test_add_cpr(MigrationTestEnv *env);
  
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index 393c7e226a..4a5e7f41a9 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -949,12 +949,6 @@ static void test_dirty_limit(void)
- void migration_test_add_precopy_smoke(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
--    /* TODO: add smoke tests */
--}
--
--void migration_test_add_precopy(MigrationTestEnv *env)
--{
--    migration_test_add_precopy_smoke(env);
- 
-     if (env->is_x86) {
-         migration_test_add("/migration/precopy/unix/suspend/live",
-@@ -967,6 +961,15 @@ void migration_test_add_precopy(MigrationTestEnv *env)
-                        test_precopy_unix_plain);
- 
-     migration_test_add("/migration/precopy/tcp/plain", test_precopy_tcp_plain);
-+    migration_test_add("/migration/multifd/tcp/uri/plain/none",
-+                       test_multifd_tcp_uri_none);
-+    migration_test_add("/migration/multifd/tcp/plain/cancel",
-+                       test_multifd_tcp_cancel);
-+}
-+
-+void migration_test_add_precopy(MigrationTestEnv *env)
-+{
-+    migration_test_add_precopy_smoke(env);
- 
-     migration_test_add("/migration/precopy/tcp/plain/switchover-ack",
-                        test_precopy_tcp_switchover_ack);
-@@ -990,16 +993,12 @@ void migration_test_add_precopy(MigrationTestEnv *env)
-                                test_dirty_limit);
-         }
-     }
--    migration_test_add("/migration/multifd/tcp/uri/plain/none",
--                       test_multifd_tcp_uri_none);
-     migration_test_add("/migration/multifd/tcp/channels/plain/none",
-                        test_multifd_tcp_channels_none);
-     migration_test_add("/migration/multifd/tcp/plain/zero-page/legacy",
-                        test_multifd_tcp_zero_page_legacy);
-     migration_test_add("/migration/multifd/tcp/plain/zero-page/none",
-                        test_multifd_tcp_no_zero_page);
--    migration_test_add("/migration/multifd/tcp/plain/cancel",
--                       test_multifd_tcp_cancel);
-     if (g_str_equal(env->arch, "x86_64")
-         && env->has_kvm && env->has_dirty_ring) {
- 
-diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-index 264b54f352..37b5b64692 100644
---- a/tests/qtest/migration/tls-tests.c
-+++ b/tests/qtest/migration/tls-tests.c
-@@ -725,12 +725,15 @@ static void test_multifd_tcp_tls_x509_reject_anon_client(void)
- void migration_test_add_tls_smoke(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
--    /* TODO: add smoke tests */
-+
-+    migration_test_add("/migration/precopy/tcp/tls/psk/match",
-+                       test_precopy_tcp_tls_psk_match);
- }
- 
- void migration_test_add_tls(MigrationTestEnv *env)
- {
-     migration_test_add_tls_smoke(env);
-+
-     migration_test_add("/migration/precopy/unix/tls/psk",
-                        test_precopy_unix_tls_psk);
- 
-@@ -756,8 +759,6 @@ void migration_test_add_tls(MigrationTestEnv *env)
-                        test_precopy_unix_tls_x509_override_host);
- #endif /* CONFIG_TASN1 */
- 
--    migration_test_add("/migration/precopy/tcp/tls/psk/match",
--                       test_precopy_tcp_tls_psk_match);
-     migration_test_add("/migration/precopy/tcp/tls/psk/mismatch",
-                        test_precopy_tcp_tls_psk_mismatch);
- #ifdef CONFIG_TASN1
+ #endif /* TEST_FRAMEWORK_H */
 -- 
 2.35.3
 
