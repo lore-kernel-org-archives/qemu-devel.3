@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 583ECD637A3
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 17:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D47B7D637A4
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 17:59:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBHMY-0001X3-HX; Wed, 13 Nov 2024 12:41:06 -0500
+	id 1tBHdz-0004Pn-Bp; Wed, 13 Nov 2024 12:59:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tBHMW-0001Wv-Rj
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 12:41:04 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tBHdw-0004PW-9T
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 12:59:04 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tBHMT-0006Id-GM
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 12:41:04 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tBHdu-0008Jz-CY
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 12:59:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731519658;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1731520739;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aKX37nO7zxuZ02FuqT2yXAqt1Lod8HPUpFv3d9aKTDU=;
- b=e4W6CUubCWoeiAH01F7QV5FqiSqOiln16O+ewKB1ZkeEJOaAn1cpfqJsxXOeJydMZhUlZh
- r7/b7azWb8v4+yzkTmpFTvgiGID2FLo3MjACxrC4QM1MBi6dsmljtWMihWVTy3XieCD7EW
- JlByN+XFpiHaSHrNTXxckcpaqhQ3oUo=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OVrqIYGS7NdD6eeIG6USycWyaacM+KCIZBbybQp0F2Q=;
+ b=iPZkZ6IvU9I0bfpIuv3c+wdEA017+VjDjFxmkn35z/Pgyz4RKdz87G6XcS8VKvXkqN5MQy
+ lP2kej37fQ8K3qhhGUANiF0fSFswI8Kve9Txumshbp7QgRHIeEUpZ+cPrewQueeQ3PP+zy
+ N7pAGn9kaFk1pb9jbJOrdsFWxAlvo2Q=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-108-n6-UKNUROrO1oqSICdDMRA-1; Wed, 13 Nov 2024 12:40:57 -0500
-X-MC-Unique: n6-UKNUROrO1oqSICdDMRA-1
-X-Mimecast-MFC-AGG-ID: n6-UKNUROrO1oqSICdDMRA
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7b2f2db16cfso965070385a.3
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 09:40:57 -0800 (PST)
+ us-mta-594-p5vh_b2fPDeYmrBdOv_gPw-1; Wed, 13 Nov 2024 12:58:58 -0500
+X-MC-Unique: p5vh_b2fPDeYmrBdOv_gPw-1
+X-Mimecast-MFC-AGG-ID: p5vh_b2fPDeYmrBdOv_gPw
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2fb50351d18so43999331fa.3
+ for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 09:58:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731519654; x=1732124454;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aKX37nO7zxuZ02FuqT2yXAqt1Lod8HPUpFv3d9aKTDU=;
- b=dMJN2R6ECrPerJ8audenubZJ82rypmEMPfQA54QOfv091JPabfNtjMUB8KMuzhPN6U
- BglUOO0YhNMo7ooWU/NkrxuXZOMYfUI7340V8QCyfmW8ldtweTOHR/jRsl+x2CWLCCAq
- 6Sw7QLASRRY+4sLpIQGEA8bEHq2jQGhfcbVF72EVJyjdoQ6el4aLLIL0uE2A3T6pVprw
- mzLUMnhvJLDQQu0vmsy4UpIdCL8DGQh4rVsNIAMrApMnKD468xK2Y/976yWH13rx9Fwr
- Z/sMXn6YoxQ/eSyc55YVBeYzhmlXj5uObsZX8PglVjFZ4RfmR5rIg6aMya1rp9g2Eab4
- QYyw==
+ d=1e100.net; s=20230601; t=1731520736; x=1732125536;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OVrqIYGS7NdD6eeIG6USycWyaacM+KCIZBbybQp0F2Q=;
+ b=FhQnfnFJO4To7D+5N6HPd2sDdx6PSzTt2UpIHGfa9Xf58TOW4Sns5jbfy1ypQQ0EDQ
+ 68SqAzmLERk79QyGIMfDZ8pRu+5i7sHfq3JQosjxxfuWONuZnH9ereO872mZqIu1exgr
+ pvZzT99cqjqBgc1cQ1JSF6Xn8IUevxieDnPvVt9rht2BkOWuFZnVmAMSKQThpn6+BgU1
+ qVgFsZH4qllE3YxQbMs9LZg8HdJCHXN2ogmgb86XBcI4toPg12aIVREWtEXRNANRDis6
+ eawDu704E/BCZsgD7nK/77TRYiEtFyAMtE5kHRxHhxsOimXyQ/OD9GIg/KqXGrVvS0OK
+ Qo1g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBF8OzG7ADmVsqR2pKvasMOZr+JFxpOcrbLGAgKXwsTd5W6fAgAw4zbkSfscbv+Z9CCCHM0eH6nc7C@nongnu.org
-X-Gm-Message-State: AOJu0YyrYDBaEtSpYfxcyi8MSBO0EkNSjolzOna7UNXjGiiIhBAc0gLo
- 1a3GY61WuWMTdImWiowOvthYlHZxbCMV6sZKdnP1iVIGtZ/ISYyyTI6mHUOzFz2N7wqDnnjeC0s
- e8fOhEgCuxk1cgOJEL95LAhIoZCGQcIhUASdOXFJwu9IwVsvANvbh
-X-Received: by 2002:a05:620a:19a3:b0:7b1:4276:ea4e with SMTP id
- af79cd13be357-7b3528a9cddmr500344985a.13.1731519654105; 
- Wed, 13 Nov 2024 09:40:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHArF7jNWGkwtOLIN7o8nO5LAttS8Zlu7NuihxJbFlAL4YTlAns9KDnYVJmUxTA7MfqUDR64g==
-X-Received: by 2002:a05:620a:19a3:b0:7b1:4276:ea4e with SMTP id
- af79cd13be357-7b3528a9cddmr500340385a.13.1731519653672; 
- Wed, 13 Nov 2024 09:40:53 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b32ac57015sm713613185a.50.2024.11.13.09.40.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Nov 2024 09:40:52 -0800 (PST)
-Date: Wed, 13 Nov 2024 12:40:50 -0500
-From: Peter Xu <peterx@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Yong Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Wei Wang <wei.w.wang@intel.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v1 2/2] migration: Do not perform RAMBlock dirty sync
- during the first iteration
-Message-ID: <ZzTkopUrLGL5iqSv@x1n>
-References: <cover.1731128180.git.yong.huang@smartx.com>
- <c25abae360ac204321acc5010a745a8e594f24bd.1731128180.git.yong.huang@smartx.com>
- <b2e42ed6-d514-46c9-993c-e7ae6384592f@redhat.com>
- <CAK9dgmak97Uv_RO+WFEb+KLkiuZ5+ibO3bigm3379L4aD55TvA@mail.gmail.com>
- <43700d36-b9f8-42da-ba72-b0ec6580032d@redhat.com>
- <CAK9dgmY8BAy4JAj5y-fY_YOpM6b3=86cmckPJZFuk9k=X1TYfQ@mail.gmail.com>
- <3049bc19-2556-4fbf-9d34-578db523b63b@redhat.com>
+ AJvYcCU/pfeh5GdVlD9AFm7lL7aJQRCt5s5F+q23l8vVwYCfVWxZP/WzYSXfQcVpgBpwlIC5X6NtGHNqShyh@nongnu.org
+X-Gm-Message-State: AOJu0Yz1t3DSCQr5wOuqdtItLfgp1FVRxyK0r2qv6YSvEbX7qfLcMKaV
+ QRwWcwRPEsYolm3JI2HT1uEZvDH/dlp60QbYW3fIXlO/7nTCuIXeOYbEu4WgFeovCaRSt0eP0G/
+ Z4ApCdPviPtgVeOX98Yy3uL2OAdEWQ6vpgZU0puS6alxy//QEtbGz
+X-Received: by 2002:a05:6512:12d1:b0:53d:a422:e826 with SMTP id
+ 2adb3069b0e04-53da422e940mr657667e87.2.1731520736430; 
+ Wed, 13 Nov 2024 09:58:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGsJIOUsnujXr9fAZRgYAqJsGUo0cw7OFvash6t18RIum34A81RVHhDsDT80Y8QH7XSBG/mHw==
+X-Received: by 2002:a05:6512:12d1:b0:53d:a422:e826 with SMTP id
+ 2adb3069b0e04-53da422e940mr657643e87.2.1731520736010; 
+ Wed, 13 Nov 2024 09:58:56 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432d4788c2asm26150885e9.0.2024.11.13.09.58.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 13 Nov 2024 09:58:54 -0800 (PST)
+Message-ID: <a1edc7ec-6450-4409-b8b2-b4026baee242@redhat.com>
+Date: Wed, 13 Nov 2024 18:58:52 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3049bc19-2556-4fbf-9d34-578db523b63b@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 3/5] hw/arm/smmuv3: Associate a pci bus with a SMMUv3
+ Nested device
+Content-Language: en-US
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, linuxarm@huawei.com, wangzhou1@hisilicon.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <20241108125242.60136-4-shameerali.kolothum.thodi@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20241108125242.60136-4-shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -109,255 +111,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 12, 2024 at 11:08:44AM +0100, David Hildenbrand wrote:
-> On 11.11.24 12:37, Yong Huang wrote:
-> > 
-> > 
-> > On Mon, Nov 11, 2024 at 6:42 PM David Hildenbrand <david@redhat.com
-> > <mailto:david@redhat.com>> wrote:
-> > 
-> >     On 11.11.24 11:08, Yong Huang wrote:
-> >      >
-> >      >
-> >      > On Mon, Nov 11, 2024 at 5:27 PM David Hildenbrand
-> >     <david@redhat.com <mailto:david@redhat.com>
-> >      > <mailto:david@redhat.com <mailto:david@redhat.com>>> wrote:
-> >      >
-> >      >     On 09.11.24 05:59, Hyman Huang wrote:
-> >      >      > The first iteration's RAMBlock dirty sync can be omitted
-> >     because QEMU
-> >      >      > always initializes the RAMBlock's bmap to all 1s by default.
-> >      >      >
-> >      >      > Signed-off-by: Hyman Huang <yong.huang@smartx.com
-> >     <mailto:yong.huang@smartx.com>
-> >      >     <mailto:yong.huang@smartx.com <mailto:yong.huang@smartx.com>>>
-> >      >      > ---
-> >      >      >   migration/cpu-throttle.c |  2 +-
-> >      >      >   migration/ram.c          | 11 ++++++++---
-> >      >      >   2 files changed, 9 insertions(+), 4 deletions(-)
-> >      >      >
-> >      >      > diff --git a/migration/cpu-throttle.c b/migration/cpu-
-> >     throttle.c
-> >      >      > index 5179019e33..674dc2004e 100644
-> >      >      > --- a/migration/cpu-throttle.c
-> >      >      > +++ b/migration/cpu-throttle.c
-> >      >      > @@ -141,7 +141,7 @@ void
-> >     cpu_throttle_dirty_sync_timer_tick(void
-> >      >     *opaque)
-> >      >      >        * effect on guest performance, therefore omit it to
-> >     avoid
-> >      >      >        * paying extra for the sync penalty.
-> >      >      >        */
-> >      >      > -    if (sync_cnt <= 1) {
-> >      >      > +    if (!sync_cnt) {
-> >      >      >           goto end;
-> >      >      >       }
-> >      >      >
-> >      >      > diff --git a/migration/ram.c b/migration/ram.c
-> >      >      > index 05ff9eb328..571dba10b7 100644
-> >      >      > --- a/migration/ram.c
-> >      >      > +++ b/migration/ram.c
-> >      >      > @@ -2718,7 +2718,7 @@ static void ram_list_init_bitmaps(void)
-> >      >      >   {
-> >      >      >       MigrationState *ms = migrate_get_current();
-> >      >      >       RAMBlock *block;
-> >      >      > -    unsigned long pages;
-> >      >      > +    unsigned long pages, clear_bmap_pages;
-> >      >      >       uint8_t shift;
-> >      >      >
-> >      >      >       /* Skip setting bitmap if there is no RAM */
-> >      >      > @@ -2736,6 +2736,7 @@ static void ram_list_init_bitmaps(void)
-> >      >      >
-> >      >      >           RAMBLOCK_FOREACH_NOT_IGNORED(block) {
-> >      >      >               pages = block->max_length >> TARGET_PAGE_BITS;
-> >      >      > +            clear_bmap_pages = clear_bmap_size(pages, shift);
-> >      >      >               /*
-> >      >      >                * The initial dirty bitmap for migration
-> >     must be
-> >      >     set with all
-> >      >      >                * ones to make sure we'll migrate every
-> >     guest RAM
-> >      >     page to
-> >      >      > @@ -2751,7 +2752,12 @@ static void ram_list_init_bitmaps(void)
-> >      >      >                   block->file_bmap = bitmap_new(pages);
-> >      >      >               }
-> >      >      >               block->clear_bmap_shift = shift;
-> >      >      > -            block->clear_bmap =
-> >      >     bitmap_new(clear_bmap_size(pages, shift));
-> >      >      > +            block->clear_bmap = bitmap_new(clear_bmap_pages);
-> >      >      > +            /*
-> >      >      > +             * Set clear_bmap to 1 unconditionally, as we
-> >     always
-> >      >     set bmap
-> >      >      > +             * to all 1s by default.
-> >      >      > +             */
-> >      >      > +            bitmap_set(block->clear_bmap, 0,
-> >     clear_bmap_pages);
-> >      >      >           }
-> >      >      >       }
-> >      >      >   }
-> >      >      > @@ -2783,7 +2789,6 @@ static bool
-> >     ram_init_bitmaps(RAMState *rs,
-> >      >     Error **errp)
-> >      >      >               if (!ret) {
-> >      >      >                   goto out_unlock;
-> >      >      >               }
-> >      >      > -            migration_bitmap_sync_precopy(false);
-> >      >      >           }
-> >      >      >       }
-> >      >      >   out_unlock:
-> >      >
-> >      >
-> >      >     For virtio-mem, we rely on the
-> >     migration_bitmap_clear_discarded_pages()
-> >      >     call to clear all bits that correspond to unplugged memory
-> >     ranges.
-> >      >
-> >      >
-> >      >     If we ommit the sync, we can likely have bits of unplugged
-> >     ranges still
-> >      >     set to "1", meaning we would try migrate them later, although we
-> >      >     shouldn't?
-> >      >
-> >      >
-> >      >
-> >      > IIUC, migration_bitmap_clear_discarded_pagesis still called at
-> >     the end of
-> >      > ram_init_bitmaps no matter if we omit the first sync.
-> >       > > PRECOPY_NOTIFY_SETUPnotification is sent out at the end of
-> >      > ram_save_setup(ram_list_init_bitmaps),when
-> >      > virtio_balloon_free_page_start() is
-> >      > called,migration_bitmap_clear_discarded_pages() has already
-> >     completed
-> >      > and the
-> >      > bmap has been correctly cleared.
-> >      >
-> >      > ram_save_setup
-> >      >     -> ram_list_init_bitmaps
-> >      >         -> migration_bitmap_clear_discarded_pages
-> >      >      -> return precopy_notify(PRECOPY_NOTIFY_SETUP, errp);
-> >      >
-> >      > You can double check it.
-> > 
-> >     That's not my concern, let me clarify :)
-> > 
-> > 
-> >     Assume in KVM the bitmap is all 1s ("everything dirty").
-> > 
-> >     In current code, we will sync the bitmap once (IIRC, clearing any dirty
-> >     bits from KVM).
-> > 
-> > 
-> > For the old logic, write-protect and clear dirty bits are all done in
-> > the KVM_GET_DIRTY_LOG API, while with
-> > KVM_CAP_MANUAL_DIRTY_LOG_PROTECT2 feature enabled, clearing
-> > dirty bits are postponed in the KVM_CLEAR_DIRTY_LOG API, which
-> > is called right before page sending in the migration thread in QEMU.
-> > 
-> > 
-> >     Then we call migration_bitmap_clear_discarded_pages() to clear all
-> >     "discarded" pages that we shouldn't touch.
-> > 
-> >     When we do the next bitmap sync, we will not get a "1" for discarded
-> >     ranges, and we will never try migrating discarded ranges.
-> > 
-> > 
-> >     With your patch, we're omitting the first sync. Could we possibly get
-> >     discarded ranges reported from KVM as dirty during the "now first" sync
-> >     *after* the migration_bitmap_clear_discarded_pages() call, and try
-> >     migrating discarded ranges?
-> > 
-> >     I did not dive deep into the code, maybe
-> >     migration_bitmap_clear_discarded_pages() ends up clearing the bits in
-> > 
-> > 
-> > Yes, the migration_bitmap_clear_discarded_pages clear the bits in
-> > KVM in:
-> > ramblock_dirty_bitmap_clear_discarded_pages
-> >      -> dirty_bitmap_clear_section
-> >          -> migration_clear_memory_region_dirty_bitmap_range
-> >              -> migration_clear_memory_region_dirty_bitmap
-> >                  -> memory_region_clear_dirty_bitmap
-> >                      -> KVM_CLEAR_DIRTY_LOG ioctl
-> > 
-> 
-> I just tried, and your patch breaks virtio-mem migration as I suspected.
-> 
-> sudo build/qemu-system-x86_64 \
->     --enable-kvm \
->     -m 16G,maxmem=24G \
->     -object memory-backend-ram,id=mem1,size=16G \
->     -machine q35,memory-backend=mem1 \
->     -cpu max \
->     -smp 16 \
->     -nographic \
->     -nodefaults \
->     -net nic -net user \
->     -chardev stdio,nosignal,id=serial \
->     -hda Fedora-Server-KVM-40-1.14.x86_64.qcow2 \
->     -cdrom /home/dhildenb/git/cloud-init/cloud-init.iso \
->     -device isa-serial,chardev=serial \
->     -chardev socket,id=monitor,path=/var/tmp/mon_src,server,nowait \
->     -mon chardev=monitor,mode=readline \
->     -device pcie-root-port,id=root,slot=0 \
->     -object memory-backend-file,share=on,mem-path=/dev/shm/vm,id=mem2,size=8G \
->     -device virtio-mem-pci,id=vmem0,memdev=mem2,requested-size=16M,bus=root,dynamic-memslots=on,prealloc=on \
-> 
-> 
-> Once the VM booted up, as expected we're consuming 16M
-> 
-> 
-> $ stat /dev/shm/vm
->  Datei: /dev/shm/vm
->  Größe: 8589934592      Blöcke: 32768      EA Block: 4096   reguläre Datei
-> Gerät: 0/25     Inode: 2087        Verknüpfungen: 1
-> tmpfs                   tmpfs             16G   16M   16G   1% /dev/shm
-> 
-> 
-> Let's start a migration:
-> 
-> $ echo "migrate exec:cat>state" | sudo nc -U /var/tmp/mon_src
-> 
-> 
-> ... and we end up reading discarded memory:
-> 
-> $ LANG=C df -ahT  | grep /dev/shm
-> tmpfs                   tmpfs             16G  8.0G  7.6G  52% /dev/shm
-> 
-> 
-> 
-> Running with TCG only also doesn't work. So somewhere, we have a bitmap filled with
-> all 1s that is not cleared if we drop the first sync.
+Hi Shameer,
 
-Hmm, I'm not yet sure why this happened, but indeed this reminds me that at
-least vhost can have similar issue: when vhost devices are used, it has its
-own bitmap so there it can keep having 1s in the unplugged regions when
-reported the 1st time.
+On 11/8/24 13:52, Shameer Kolothum wrote:
+> Subsequent patches will add IORT modifications to get this working.
+add a proper commit msg once non RFC ;-)
+>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>  hw/arm/smmuv3.c         | 27 +++++++++++++++++++++++++++
+>  include/hw/arm/smmuv3.h |  2 ++
+>  2 files changed, 29 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 0033eb8125..9b0a776769 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -24,6 +24,7 @@
+>  #include "hw/qdev-properties.h"
+>  #include "hw/qdev-core.h"
+>  #include "hw/pci/pci.h"
+> +#include "hw/pci/pci_bridge.h"
+>  #include "cpu.h"
+>  #include "trace.h"
+>  #include "qemu/log.h"
+> @@ -2201,12 +2202,32 @@ static void smmu_realize(DeviceState *d, Error **errp)
+>      smmu_init_irq(s, dev);
+>  }
+>  
+> +static int smmuv3_nested_pci_host_bridge(Object *obj, void *opaque)
+> +{
+> +    DeviceState *d = opaque;
+> +    SMMUv3NestedState *s_nested = ARM_SMMUV3_NESTED(d);
+> +
+> +    if (object_dynamic_cast(obj, TYPE_PCI_HOST_BRIDGE)) {
+> +        PCIBus *bus = PCI_HOST_BRIDGE(obj)->bus;
+> +        if (s_nested->pci_bus && !strcmp(bus->qbus.name, s_nested->pci_bus)) {
+> +            object_property_set_link(OBJECT(d), "primary-bus", OBJECT(bus),
+> +                                     &error_abort);
+> +        }
+> +    }
+> +    return 0;
+> +}
+> +
+>  static void smmu_nested_realize(DeviceState *d, Error **errp)
+>  {
+>      SMMUv3NestedState *s_nested = ARM_SMMUV3_NESTED(d);
+>      SMMUv3NestedClass *c = ARM_SMMUV3_NESTED_GET_CLASS(s_nested);
+> +    SysBusDevice *dev = SYS_BUS_DEVICE(d);
+>      Error *local_err = NULL;
+>  
+> +    object_child_foreach_recursive(object_get_root(),
+> +                                   smmuv3_nested_pci_host_bridge, d);
+Using a different opaque struct pointer you may properly use the errp
+and nicely fail if the bus is not found (avoid using error_abort).
+> +    object_property_set_bool(OBJECT(dev), "nested", true, &error_abort);
+why do you need that nested property as the SMMU is already type'd
+differently.
+> +
+>      c->parent_realize(d, &local_err);
+>      if (local_err) {
+>          error_propagate(errp, local_err);
+> @@ -2293,6 +2314,11 @@ static Property smmuv3_properties[] = {
+>      DEFINE_PROP_END_OF_LIST()
+>  };
+>  
+> +static Property smmuv3_nested_properties[] = {
+> +    DEFINE_PROP_STRING("pci-bus", SMMUv3NestedState, pci_bus),
+nit: maybe we can use the "bus" name instead of pci-bus
+> +    DEFINE_PROP_END_OF_LIST()
+> +};
+> +
+>  static void smmuv3_instance_init(Object *obj)
+>  {
+>      /* Nothing much to do here as of now */
+> @@ -2320,6 +2346,7 @@ static void smmuv3_nested_class_init(ObjectClass *klass, void *data)
+>      dc->vmsd = &vmstate_smmuv3;
+>      device_class_set_parent_realize(dc, smmu_nested_realize,
+>                                      &c->parent_realize);
+> +    device_class_set_props(dc, smmuv3_nested_properties);
+>      dc->user_creatable = true;
+>      dc->hotpluggable = false;
+>  }
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index 87e628be7a..96513fce56 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -89,6 +89,8 @@ OBJECT_DECLARE_TYPE(SMMUv3NestedState, SMMUv3NestedClass, ARM_SMMUV3_NESTED)
+>  
+>  struct SMMUv3NestedState {
+>      SMMUv3State smmuv3_state;
+> +
+> +    char *pci_bus;
+>  };
+>  
+>  struct SMMUv3NestedClass {
+Thanks
 
-Is virtio-mem plug/unplug allowed during migration?  I'm wondering whether
-below could happen while migration in progress:
-
-  migration starts..
-  bitmap init, disgard all unplugged mem in dirty bmap
-  plug mem region X, dirty some pages
-  unplug mem region X
-  dirty sync, reports mem region X dirty (even though unplugged..)
-  ...
-
-So if unplugged mem should never be touched by qemu, then not sure whether
-above can trigger this case too.
-
-With/without above, I wonder if migration_bitmap_clear_discarded_pages()
-shouldn't rely on the initial sync of dirty bitmap, instead it could be
-done after each global sync: either another log_global_after_sync() hook,
-or just move it over in migration_bitmap_sync().
-
-Thanks,
-
--- 
-Peter Xu
+Eric
 
 
