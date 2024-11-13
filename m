@@ -4,141 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BDC7D462DE
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 16:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26629D462DA
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 16:38:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBGMQ-0003UD-T5; Wed, 13 Nov 2024 11:36:54 -0500
+	id 1tBGNq-0004Qd-43; Wed, 13 Nov 2024 11:38:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBGMO-0003TE-QH
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:36:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1tBGNo-0004QR-VE
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:38:20 -0500
+Received: from esa12.hc2706-39.iphmx.com ([216.71.137.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBGML-0007Cd-OC
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:36:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731515807;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZoB7bHEPr2ZQyJwgbQsINSE79T6gtdN6t7gS/CsnTtc=;
- b=gc5n6qSaAXiVBIy9OyPL4y4B8qSrgmEgFj0msK3AQUnJTiLfMv9t89mWmp/7cp8oH9IBDN
- 7edBXi3ZdeZQiFVZWtBWkXQZmWUIY3duYx5fV0MrL/B/J8mMJxPEtOGt6G/+f6L0wOJTvn
- rfTXpYgD/EX7IVRxXRGkxxX2YWxU578=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-501-A1UFbdemO7m_ioFXPw9CPQ-1; Wed, 13 Nov 2024 11:36:46 -0500
-X-MC-Unique: A1UFbdemO7m_ioFXPw9CPQ-1
-X-Mimecast-MFC-AGG-ID: A1UFbdemO7m_ioFXPw9CPQ
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37d45de8bbfso5566161f8f.3
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 08:36:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1tBGNn-0007ON-3v
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:38:20 -0500
+X-CSE-ConnectionGUID: 1T+LWpgWSiCzOmbu+UTNRQ==
+X-CSE-MsgGUID: U79gf5QITse2W0AUS0M3/g==
+X-IronPort-RemoteIP: 209.85.222.200
+X-IronPort-MID: 2524138
+X-IronPort-Reputation: None
+X-IronPort-Listener: OutgoingMail
+X-IronPort-SenderGroup: RELAY_GSUITE
+X-IronPort-MailFlowPolicy: $RELAYED
+IronPort-Data: A9a23:V1Xi4q8goSb3ljEqHPuUDrUDyX+TJUtcMsCJ2f8bNWPcYEJGY0x3z
+ mVMWzuOP/7YazakKtkgbtiy8k9U6pHSzNYyHgFt+ygxFiIbosf7XuiUfxz6V8+wwmwvb67FA
+ +E2MISowBUcFyeEzvuVGuG86yQ6jOfQG+eU5NfsYkhZXRVjRDoqlSVtkus4hp8AqdWiCkaGt
+ MiaT/f3YTdJ4BYqdDtOg06/gEk35qir4WpD5gZWic1j5zcyqVFEVPrzGonsdxMUcqEMdsamS
+ uDKyq2O/2+x138FFtO/n7/nRVYBS7jUMBLmoiI+t3+K20UqSoQai87XBdJFAatlo2zhc+NZk
+ b2hgaeNpTIBZcUgrgi8vy5wSEmSNYUekFPOzOPWXca7liUqeFO1qxli4d1f0ST1NY+bDEkXn
+ cH0JgzhYTjau6GS/6q0ddJtrdYEKcP2f74jnEtZmGSx4fYOGfgvQo3P7N5cmS4z34VAR66GI
+ cUebjVrYVLLZBgn1lU/Uspv2rf1wCOlKXsC8Ar9SakfugA/yCR41KjrPMD9cMHMSMlI9qqdj
+ jibpTigWUFy2Nq39GXU/Xzxv87zhi6hZ9o7KYbg06UtjwjGroAUIFhMPbehmtGgh0ujHt5SN
+ UEQ0iwpq6c06QqsVNaVYvGjiHuNvxpZQtkJVuNgsFnLxa3T7AKUQGMDS1atdeAbiSP/fhRyv
+ nfhoj8jLWcHXGG9IZ5FyoqpkA==
+IronPort-HdrOrdr: A9a23:t79uyapJj6SHYQNIbFTDP0kaV5rueYIsimQD101hICG9vPbo8P
+ xG+85rqCMc7Qx6ZJhOo6H4BEDtewK4yXcX2/hqAV7BZnifhILAFugLhvqB/9SJIVycygc379
+ YHT0ERMqyVMXFKyezX2k2XKeoB/fWw2JyUpI7lvgtQZDAvRKd68Q9jBwqXVmFwThJXHIc0Gf
+ OnivavZADORZ3UVKmG77U+PtQr3+e7764OqCRpZyIa1A==
+X-Talos-CUID: =?us-ascii?q?9a23=3ALyadw2hiV0xyGVUPw9Jy4ESoAzJuK0Ge6EjILHC?=
+ =?us-ascii?q?DCE17b7ifVBytxIVeqp87?=
+X-Talos-MUID: 9a23:ij6pmwXG6Pr4NMfq/AKz1T5saf5J37+jUn9VuKg94+zfciMlbg==
+Received: from mail-qk1-f200.google.com ([209.85.222.200])
+ by ob1.hc2706-39.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 13 Nov 2024 11:38:12 -0500
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7b155e23851so953182185a.2
+ for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 08:38:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bu.edu; s=s1gsbu; t=1731515891; x=1732120691; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gyV4NoyEKu85Hk8fMFhdhW263pOKxShPE3rnVYLIG28=;
+ b=TAC4UIQ4xeiuD7YWbBq4I8LGsq+jFABgXKmWB/1Jqb6R3VtmB+QWLcxeI01SRRArwN
+ YFo4kTeB/g8IHtvR2z9SR1m/h3D6OE3GpCQzTlrNyk/VdNPV61LUqF2M0UvpTJM+sKUu
+ nfVbC6vSWrpPpFfTJ7bgDHX5LVkjvQih7+QCS8W41eytLOKyMlrpfrxCHwE0HbKOjsO8
+ CzP31sAtytDQH+lJjeb7mNFS87CdzgwZ77DYp+CnfNkl5k1VEAgsk6cMSA+p9Ev19L4k
+ TFeiGk6jtVqHUwFdBVMxtndta+U8gg+E0dsYK68Mvd2vkqbTuIpoKk5PygEkKalx0BXs
+ 3olQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731515805; x=1732120605;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1731515891; x=1732120691;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ZoB7bHEPr2ZQyJwgbQsINSE79T6gtdN6t7gS/CsnTtc=;
- b=kKC6YkSV1zwfm9jJ4LScC2jyEVnLU7dXA3TSB8CrP2WgTHMgjSKSo8FafHDebfbrUs
- ILtjxdF68n7YkOPDAAUP5xVyrfKJ5z2WVnt4oRet3JRZehNiX+B6S02JVbfBloQEOchM
- 9TvRcdVJOBBHEZ+OleFhNimfSwZTTrI3kCKIuEg/dSxeNPrfMngmjGENG+bhb03Gv/9g
- DsZiZsbOYlr6upIJRLk3i7b/YSoiWcjxGAIdAUak39Pl+JLx5gjVl/97JFXusLwq8VME
- tT4PjkgjZ7VL3k1Q+gx+tniB0Hd5ET6coJ6DDFE90RIkEU3rn+yI0mcY1m2ZnnHFCpQu
- AyKw==
+ bh=gyV4NoyEKu85Hk8fMFhdhW263pOKxShPE3rnVYLIG28=;
+ b=mK3cSdEVKxr1ClT75Y2XYT6FOKy99Jnc+Mffl7PNJP6oiAjFLaDa4DlULWdDL/TCML
+ 3zSnK65OGRFS6eH32/JLcJQ/Ib4nGfs+SW/ekOmnu9VQvcexHSWQUMvM0+WinkuhMwa3
+ qExNNTB9Go5X1vvFRqMXoWXOTK3LsQuO9d2PbBOcj4W7OcB54ryQoQASGm5QXkkUzftf
+ +SUWFO/GbwooX0PK7Fa9f4lNZDkbIekzzi3yN/kMz6k6Vrf7c8ZVdFEwcxiTmBNjjM5C
+ kyVycgipPZMLz5UYnAKm0ziZpvSOiHkSIo+3MWrn3ewvVVd38XeCqGFvah98qhJY2hx9
+ QEuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVmiWVvG3Yl9LyfsZK9UvWWkoaj2JIGRG4er3StY3hTLKWFQ7v0f9rzrVz+4rvFQhHjbo2Lbn0cR4A0@nongnu.org
-X-Gm-Message-State: AOJu0YxlMgnHSPj3zzbofTU+W4yPhS6p3V0h5vfo1JyOAMjI7oAspr8F
- nSAegoHvted5OuxmSNxL2+WqPbRKaxyRsoOas/gFBnxKk9i8pdZQihueSfH+Ah5nkRTV0hJ9pve
- /faRH4bZ6LcxCR+5V8dEQ12K7G9m2zHA0R3KYsEMZI2efVJDGf636
-X-Received: by 2002:a05:6000:1865:b0:37d:7e71:67a0 with SMTP id
- ffacd0b85a97d-381f1866b1amr24546594f8f.9.1731515804873; 
- Wed, 13 Nov 2024 08:36:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEPTSqbPPPLI53qChEyqKm6CWjyixEnke43e3OFPiEn+3ZuoB4mTH3x4CUkG/153Un2x6Ou7Q==
-X-Received: by 2002:a05:6000:1865:b0:37d:7e71:67a0 with SMTP id
- ffacd0b85a97d-381f1866b1amr24546545f8f.9.1731515804409; 
- Wed, 13 Nov 2024 08:36:44 -0800 (PST)
-Received: from [192.168.10.47] ([151.49.84.243])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-381ed97d658sm18710851f8f.39.2024.11.13.08.36.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Nov 2024 08:36:43 -0800 (PST)
-Message-ID: <c0983059-ab11-4bc5-ab60-c5b23d1c290e@redhat.com>
-Date: Wed, 13 Nov 2024 17:36:41 +0100
+ AJvYcCVfFm5AbfebvvQAizM9IaB2lJ1pQ+wsw3KklisqtbZ19RnMsCk3mXZo7vJ4KU7CDlHoB7apzdVYak+s@nongnu.org
+X-Gm-Message-State: AOJu0Yx40iocWmD206sVDf2SoTgX/rD9qyD8shIguJGtr44DMpx/q0dK
+ ZmK3cwJhLSWxU2EdStF6H98oZTsxkCRybJXanEkqhxOLwa8YpRVJeE3IXfI8dhi6jRDR4tNB/r4
+ n/fhP/8KNNXLwhCJmIXjsBVeC32sCt1hW3nRQyEZhz8SKsE9le6AZ/Zz5hBs8tE5SmQ==
+X-Received: by 2002:a05:620a:17a3:b0:7af:cb6b:b4fb with SMTP id
+ af79cd13be357-7b3529e6975mr400152585a.52.1731515890043; 
+ Wed, 13 Nov 2024 08:38:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHO4bQtIOpPi8duQ7X+9xrLqJ4601VhmFaU5RuNAtoD8cdUIeNa2sbIfnw2xwNPinRKFPoHeA==
+X-Received: by 2002:a05:620a:17a3:b0:7af:cb6b:b4fb with SMTP id
+ af79cd13be357-7b3529e6975mr400138185a.52.1731515888255; 
+ Wed, 13 Nov 2024 08:38:08 -0800 (PST)
+Received: from bos-mail01.vrmnet (pool-173-48-150-109.bstnma.fios.verizon.net.
+ [173.48.150.109]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b32ac4ff94sm708967885a.41.2024.11.13.08.38.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Nov 2024 08:38:07 -0800 (PST)
+From: Alexander Bulekov <alxndr@bu.edu>
+To: 
+Cc: Alexander Bulekov <alxndr@bu.edu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Bandan Das <bsd@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>,
+ Qiuhao Li <Qiuhao.Li@outlook.com>,
+ qemu-devel@nongnu.org (open list:All patches CC here)
+Subject: [PATCH] fuzz: disable tcg for OSS-Fuzz builds
+Date: Wed, 13 Nov 2024 11:37:56 -0500
+Message-ID: <20241113163800.355547-1-alxndr@bu.edu>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 01/15] ui & main loop: Redesign of system-specific
- main thread event handling
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, peter.maydell@linaro.org, rad@semihalf.com,
- quic_llindhol@quicinc.com, stefanha@redhat.com, mst@redhat.com,
- slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com,
- chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com,
- philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, akihiko.odaki@daynix.com,
- qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
- balaton@eik.bme.hu
-References: <20241113142343.40832-1-phil@philjordan.eu>
- <20241113142343.40832-2-phil@philjordan.eu>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20241113142343.40832-2-phil@philjordan.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.738,
+Content-Transfer-Encoding: 8bit
+X-CES-GSUITE_AUTH: bf3aNvsZpxl8
+Received-SPF: pass client-ip=216.71.137.82; envelope-from=alxndr@bu.edu;
+ helo=esa12.hc2706-39.iphmx.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.054,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,68 +129,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/13/24 15:23, Phil Dennis-Jordan wrote:
-> macOS's Cocoa event handling must be done on the initial (main) thread
-> of the process. Furthermore, if library or application code uses
-> libdispatch, the main dispatch queue must be handling events on the main
-> thread as well.
-> 
-> So far, this has affected Qemu in both the Cocoa and SDL UIs, although
-> in different ways: the Cocoa UI replaces the default qemu_main function
-> with one that spins Qemu's internal main event loop off onto a
-> background thread. SDL (which uses Cocoa internally) on the other hand
-> uses a polling approach within Qemu's main event loop. Events are
-> polled during the SDL UI's dpy_refresh callback, which happens to run
-> on the main thread by default.
-> 
-> As UIs are mutually exclusive, this works OK as long as nothing else
-> needs platform-native event handling. In the next patch, a new device is
-> introduced based on the ParavirtualizedGraphics.framework in macOS.
-> This uses libdispatch internally, and only works when events are being
-> handled on the main runloop. With the current system, it works when
-> using either the Cocoa or the SDL UI. However, it does not when running
-> headless. Moreover, any attempt to install a similar scheme to the
-> Cocoa UI's main thread replacement fails when combined with the SDL
-> UI.
-> 
-> This change tidies up main thread management to be more flexible.
-> 
->   * The qemu_main global function pointer is a custom function for the
->     main thread, and it may now be NULL. When it is, the main thread
->     runs the main Qemu loop. This represents the traditional setup.
->   * When non-null, spawning the main Qemu event loop on a separate
->     thread is now done centrally rather than inside the Cocoa UI code.
->   * For most platforms, qemu_main is indeed NULL by default, but on
->     Darwin, it defaults to a function that runs the CFRunLoop.
->   * The Cocoa UI sets qemu_main to a function which runs the
->     NSApplication event handling runloop, as is usual for a Cocoa app.
->   * The SDL UI overrides the qemu_main function to NULL, thus
->     specifying that Qemu's main loop must run on the main
->     thread.
->   * The GTK UI also overrides the qemu_main function to NULL.
->   * For other UIs, or in the absence of UIs, the platform's default
->     behaviour is followed.
-> 
-> This means that on macOS, the platform's runloop events are always
-> handled, regardless of chosen UI. The new PV graphics device will
-> thus work in all configurations. There is no functional change on other
-> operating systems.
-> 
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+OSS-Fuzz builds have been failing due to some strange issues that seem
+to be related to color codes from libffi:
+https://oss-fuzz-build-logs.storage.googleapis.com/log-8d5435ee-1677-40af-9656-b4162fa881e1.txt
 
-I checked what GTK+ does and, either way, you have to create another 
-thread: timers are handled with a CFRunLoopTimer, but file descriptors 
-are polled in a separate thread and sent to the main thread with a 
-single CFRunLoopSource.  It's a bit nicer that the main thread is in 
-charge, but it's more complex and probably slower too.
+Disable tcg to disable libffi.
 
-As long as it's clear that any handlers that go through the CFRunLoop 
-run outside the BQL, as is already the case for the Cocoa UI, I see no 
-problem with this approach.
+Signed-off-by: Alexander Bulekov <alxndr@bu.edu>
+---
+ scripts/oss-fuzz/build.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Acked-by: Paolo Bonzini <pbonzini@redhat.com>
-
-Paolo
+diff --git a/scripts/oss-fuzz/build.sh b/scripts/oss-fuzz/build.sh
+index 7398298173..095f7a90e3 100755
+--- a/scripts/oss-fuzz/build.sh
++++ b/scripts/oss-fuzz/build.sh
+@@ -65,7 +65,7 @@ mkdir -p "$DEST_DIR/lib/"  # Copy the shared libraries here
+ # Build once to get the list of dynamic lib paths, and copy them over
+ ../configure --disable-werror --cc="$CC" --cxx="$CXX" --enable-fuzzing \
+     --prefix="/opt/qemu-oss-fuzz" \
+-    --extra-cflags="$EXTRA_CFLAGS" --target-list="i386-softmmu"
++    --extra-cflags="$EXTRA_CFLAGS" --target-list="i386-softmmu" --disable-tcg
+ 
+ if ! make "-j$(nproc)" qemu-fuzz-i386; then
+     fatal "Build failed. Please specify a compiler with fuzzing support"\
+@@ -83,7 +83,7 @@ if [ "$GITLAB_CI" != "true" ]; then
+     ../configure --disable-werror --cc="$CC" --cxx="$CXX" --enable-fuzzing \
+         --prefix="/opt/qemu-oss-fuzz" \
+         --extra-cflags="$EXTRA_CFLAGS" --extra-ldflags="-Wl,-rpath,\$ORIGIN/lib" \
+-        --target-list="i386-softmmu"
++        --target-list="i386-softmmu" --disable-tcg
+     make "-j$(nproc)" qemu-fuzz-i386 V=1
+ fi
+ 
+-- 
+2.45.2
 
 
