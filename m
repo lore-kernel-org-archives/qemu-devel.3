@@ -4,85 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A0FD41C39
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 11:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAC5ED41C06
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 12:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBBw6-0001xA-I0; Wed, 13 Nov 2024 06:53:26 -0500
+	id 1tBC5V-00042G-56; Wed, 13 Nov 2024 07:03:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBBw4-0001w7-B4
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 06:53:24 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBBw1-0005Uz-7W
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 06:53:24 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-37d70df0b1aso4334597f8f.3
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 03:53:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731498799; x=1732103599; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Fw65cSVokJkxQ6NeO0sN4D2qESC5ip96VYkQcwL4Yzk=;
- b=AE293SbVq4Wnx/Dr3qRuvE/NloXy1hJncyCvoGjtuLJQXbo8dCnguCMgyddct6phTb
- Lj788R+OQWY35FvNUpRm7xoa908CZBKKC8KlfHxSwqQg+ZFhNMh+25U9W72r1uS2ce6Z
- 32UWhv+L3d/eD/5++NpVDdszyelsDoz9rsnoD53HN6L2wosLTY88t5FgPgEuTVn+9oKh
- 9EQcyfl3KsbgKriGnH+FaCkWoWAkieNgsjJ+bu1SgSYLsPgDPMASU9MbksNRCCVZxXF+
- c/CUH5MSukL+9XKTaUJXkOp5f650zjiFr9Htv39Zld3yhwEN8TOMqBKGxEgGZ2JSE22F
- a8KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731498799; x=1732103599;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Fw65cSVokJkxQ6NeO0sN4D2qESC5ip96VYkQcwL4Yzk=;
- b=S1knfkgI2qr5QIH0IeoX/T0/849ZOotXeIJC2ELHkiBtV5oUynMowuFYt4WnqFJW0k
- j+/mXRUtPEcn/cbZs9DdJdsj9BG0epfigbHSS5MKGiJpmwDu9Is9ZnMhpZoZjB0r7b9x
- eWW8Nyb64ndFXsHaB7sA/usVjbIwnOYS0bvXDBvSUBUv5AGYCVpsPtxrS2pl+p1IeqrG
- Fnw+tD4XV0wfCsklIqKk50dUQPLXLKr4G9KUd/cCgUx1Zp9dSNpgJKJxTrDM8sELxCgz
- Vpv6wj9fzCmzWat1zAe5FPCTYeTeEyvXmiOr0TsAFZOUjQQX3+HAh9y5sQ5H6xYFORzA
- QXbA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8+gqksgnTw6IguPsKzJOYjqSEyfYZuai7FkaBnCmO8y8dtK+vovBIgLXC6O6Vcx51Ve7pB+rNm2zP@nongnu.org
-X-Gm-Message-State: AOJu0Yx2S6Wd9RUkIxMkxLwLLkXt+/a2AZaYxXFfMHGsyu4r3fQrQJ9k
- DeJiPfRMiR1F6Rn35tYQ/TJRY/D1PluJRGgEXckApb/gLytlNRMQIwxtfHvUifw=
-X-Google-Smtp-Source: AGHT+IE0lb8016QmAn8t7n3tChYQBAYjN10KNqibyQmCJAj9L7wK/3AfTld39EfGeFffIlKUlY8gFw==
-X-Received: by 2002:a5d:5983:0:b0:381:bdeb:1799 with SMTP id
- ffacd0b85a97d-381f186cd09mr17979149f8f.16.1731498799413; 
- Wed, 13 Nov 2024 03:53:19 -0800 (PST)
-Received: from [192.168.69.174] (cnf78-h01-176-184-27-250.dsl.sta.abo.bbox.fr.
- [176.184.27.250]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed97e46bsm17910989f8f.30.2024.11.13.03.53.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Nov 2024 03:53:18 -0800 (PST)
-Message-ID: <6d223fe9-9dc7-49fb-a5b7-8835ff2b52c8@linaro.org>
-Date: Wed, 13 Nov 2024 12:53:17 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tBC5S-00041U-V4; Wed, 13 Nov 2024 07:03:07 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tBC5Q-00072M-Qz; Wed, 13 Nov 2024 07:03:06 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 71F96A2CFC;
+ Wed, 13 Nov 2024 15:02:53 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D666516C0F2;
+ Wed, 13 Nov 2024 15:02:59 +0300 (MSK)
+Message-ID: <0371e3cc-1ed5-4685-835a-5378dd4dfbb7@tls.msk.ru>
+Date: Wed, 13 Nov 2024 15:02:59 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/s390x: Restrict "loadparm" property to devices that
- can be used for booting
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Jared Rossi <jrossi@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20241113114741.681096-1-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241113114741.681096-1-thuth@redhat.com>
+Subject: Re: [PATCH ssh] ssh: Do not switch session to non-blocking mode
+To: "Richard W.M. Jones" <rjones@redhat.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
+ jjelen@redhat.com, mpitt@redhat.com
+References: <20241113115000.2494785-1-rjones@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20241113115000.2494785-1-rjones@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,25 +104,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/11/24 11:47, Thomas Huth wrote:
-> Commit bb185de423 ("s390x: Add individual loadparm assignment to
-> CCW device") added a "loadparm" property to all CCW devices. This
-> was a little bit unfortunate, since this property is only useful
-> for devices that can be used for booting, but certainly it is not
-> useful for devices like virtio-gpu or virtio-tablet.
+Heh. I was creating a qemu bug report on gitlab when this email arrived :)
+
+13.11.2024 14:49, Richard W.M. Jones wrote:
+> From: Jakub Jelen <jjelen@redhat.com>
 > 
-> Thus let's restrict the property to CCW devices that we can boot from
-> (i.e. virtio-block, virtio-net and vfio-ccw devices).
+> The libssh does not handle non-blocking mode in SFTP correctly. The
+> driver code already changes the mode to blocking for the SFTP
+> initialization, but for some reason changes to non-blocking mode.
+
+"changes to non-blocking mode LATER", I guess, - or else it's a bit
+difficult to read.  But this works too.
+
+> This used to work accidentally until libssh in 0.11 branch merged
+> the patch to avoid infinite looping in case of network errors:
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> https://gitlab.com/libssh/libssh-mirror/-/merge_requests/498
+> 
+> Since then, the ssh driver in qemu fails to read files over SFTP
+> as the first SFTP messages exchanged after switching the session
+> to non-blocking mode return SSH_AGAIN, but that message is lost
+> int the SFTP internals and interpretted as SSH_ERROR, which is
+> returned to the caller:
+> 
+> https://gitlab.com/libssh/libssh-mirror/-/issues/280
+> 
+> This is indeed an issue in libssh that we should address in the
+> long term, but it will require more work on the internals. For
+> now, the SFTP is not supported in non-blocking mode.
+
+The comment at init where the code sets socket to blocking mode, says:
+
+     /*
+      * Make sure we are in blocking mode during the connection and
+      * authentication phases.
+      */
+     ssh_set_blocking(s->session, 1);
+
+
+There are a few other places where the code expect "some" blocking
+mode, changes it to blocking, and restores the mode later, - eg,
+see ssh_grow_file().  It looks all this has to be fixed too.
+
+I wonder if qemu ssh driver needs to mess with blocking mode of this
+socket in the first place, ever.  Is there a way qemu can get non-blocking
+socket in this context?  I can only think of fd=NNN, but is it
+possible for this socket to be non-blocking?
+
+> Fixes: https://gitlab.com/libssh/libssh-mirror/-/issues/280
+> Signed-off-by: Jakub Jelen <jjelen@redhat.com>
+> Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
 > ---
->   hw/s390x/ccw-device.h     | 5 +++++
->   hw/s390x/ccw-device.c     | 4 +---
->   hw/s390x/virtio-ccw-blk.c | 1 +
->   hw/s390x/virtio-ccw-net.c | 1 +
->   hw/vfio/ccw.c             | 1 +
->   5 files changed, 9 insertions(+), 3 deletions(-)
+>   block/ssh.c | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/block/ssh.c b/block/ssh.c
+> index 9f8140bcb6..e1529cfda9 100644
+> --- a/block/ssh.c
+> +++ b/block/ssh.c
+> @@ -866,8 +866,6 @@ static int ssh_open(BlockDriverState *bs, QDict *options, int bdrv_flags,
+>           goto err;
+>       }
+>   
+> -    /* Go non-blocking. */
+> -    ssh_set_blocking(s->session, 0);
+>   
+>       if (s->attrs->type == SSH_FILEXFER_TYPE_REGULAR) {
+>           bs->supported_truncate_flags = BDRV_REQ_ZERO_WRITE;
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Please remove the empty line too.
 
+/mjt
 
