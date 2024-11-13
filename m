@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA932D41C33
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 10:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B589D41C33
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 11:06:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBB0S-0008SN-6h; Wed, 13 Nov 2024 05:53:52 -0500
+	id 1tBBBm-0003Px-1v; Wed, 13 Nov 2024 06:05:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
- id 1tBB0Q-0008S9-1B
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 05:53:50 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
+ id 1tBBBe-0003Op-0X
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 06:05:26 -0500
+Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
- id 1tBB0M-0005NJ-Sk
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 05:53:49 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-20c805a0753so66710655ad.0
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 02:53:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
+ id 1tBBBb-0007Jg-Rp
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 06:05:25 -0500
+Received: by mail-qk1-x735.google.com with SMTP id
+ af79cd13be357-7b14077ec5aso61333285a.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 03:05:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1731495224; x=1732100024;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MCB4/v+ZR3IzPPUe21BgGMYxckELoFhBvMVPThwfaWA=;
- b=KCKip1rZIdBQcQrYRjJQyv1l3+mQ/mUrvsQ3JBcAFX9JKt3jsjMkl+1xJ3CDq8iOa3
- Z/8ShsgJv7mmRxTXKTqhi4x0TNCXUNic92FWx52j1aq0YCmu5iVKwRxFXbXEj8Ki+tuW
- MGAvt1QdZBSCEVAzXfv1acBZicL24Pf6PYJgUVZJWt6uKz5PpuWtoYYefiqYiCpeKypH
- L3VCvuYR5bSHcqtKJE1seInkHKa8/1WjEtjHQPY5OlArc6eUCdMXUrf4Cn+FSzw8vAvR
- sKm0lB+NP+ljbjYxxaYbFZcyaZ0M7yer3cjWl5/8tKTcPVuZK03U/zXqeHFPda1RGVCX
- x2TQ==
+ d=tenstorrent.com; s=google; t=1731495922; x=1732100722; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=79Qimx1nMyYtTHxLhbx1rj+j53V50WkAMuTu2tDwobI=;
+ b=PNJTA7zd0SX2ekw22HRlURZjDOAF7FOricC0j8AmIFcueXt4hTULDUhXMfpDEQzy+y
+ WWW7Lx+mm8fXwD6fByXQM4ejJ4HO4xeimWHee2Rt1Ogj69ND0LOH6DrwLjC+vlH5RDAt
+ T+9Khaxng14VpxEA7lALqTyTOVbZUWz27dgAttjYBK0xK2VtFKnR/aQ+3xOg9K+BKpjA
+ LeHflUQU/dkDykVMuvggRGuXY2pNe8MV9P0B83YEoShryDeioxpc/IsSgLQlo1rlNXkP
+ MWBEu5VF+4D7hnzd57Q93vrT5VXoAp4eYfr6sm7wNFQKwUmGLWkl07CQ/Wr051SpU5AF
+ hXUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731495224; x=1732100024;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1731495922; x=1732100722;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MCB4/v+ZR3IzPPUe21BgGMYxckELoFhBvMVPThwfaWA=;
- b=uCEhVTuglx9J2o6Cc7zgk1a1BlbH3c4sv0m7NRlJwplGeOXsGQX1bK4quRbnoTp/Pg
- wTibBvOx/QC+ToTrTFhGB/YHWlNIaarCJRX6/qL618RBEQTfOeRm3h+ZywLo+/Gu99sC
- VAcTLoAO7PBmF2Fd10MFPC0tudrxIbTX0781SSIZJM/O1f6cswweM9h25WgA4axaD1YV
- b1DMu7n+t7/taYs70JG0LE7hlqPYZjV0D9nTLzERwANfyifSLf+QsFlL0UH9tWe3Gmob
- 4brwodR5tBwE/3rEeksdXleO7PSMdKjqhkPQkSGUiP7Wj4LEnlacuHL99thcolUSABbk
- B7Gg==
+ bh=79Qimx1nMyYtTHxLhbx1rj+j53V50WkAMuTu2tDwobI=;
+ b=w4OOPFsUB1ZIu9pWZz/2/Gi8lcGQips1G7BkF6D5N8Ih27Y7tmzDsiEppdoBPp32Et
+ Af4Qdr8FAa/0C6reOV0c8L560Gjv30ULaLOJSi5qBs0XyeKm4EKC1tEG9ljxPyMynL3f
+ /5PJaHC0myFYYBLRnYuWE4DOJwQ7e1qf6oDsH2OktfhtEK3G6ECjYHQGJOfkx8wfm7Kh
+ 1BwMqR+wiJi5NvcXNax0Mc5aLEPCdo9pYq3Dhxmb4Pna5S1bB3onE5SUxVQqRTfs0FvO
+ T5Qu2WRmAS7XsfgeEmhVQkFsMib/k1eF7LWohd+SQIQa1bz+jy+srz3+D7DpaQmz/kDD
+ FzDg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNQMCYSZbjXIqzd6+FutXXW4quQqoRjnp5Jdp7mHR3gTJUVhpdjFzcobIKnQvpZQlIe+LYM354PkZD@nongnu.org
-X-Gm-Message-State: AOJu0Yx34uXRyPExcxtkFVRSKcMCwsQmsX+Z40lrxuk6LNNbJPZUQc+n
- EVna8zEMX9tDlk7SJa+vEjeMmhxXqR3xDI1AJfZCId+k5l7Lk4AZBo3uyCwHKBfqkl83szO8Fpk
- VLsB0jRp6mSdfUEB4c4GJjUbCzb/D8oNpb2Tv3N48Gr5Iq87vRA==
-X-Google-Smtp-Source: AGHT+IG2IDrD0mjjtkTJKKoKtOBd8EMxqoG4EOTvBPDr38CWdAM3zKvbFvJ3lPFyNbWIEO5jrZIglhE8xe5hfaMYv0E=
-X-Received: by 2002:a17:90b:2ecb:b0:2e5:5ab5:ba52 with SMTP id
- 98e67ed59e1d1-2e9b173f1ddmr26342213a91.20.1731495223586; Wed, 13 Nov 2024
- 02:53:43 -0800 (PST)
+ AJvYcCWip70uvusvpIQxtekaiXer52PTaAOEeru1jgCQ5fJv3Clu+OcoXkeiVgRa3EkMOcXRFIgRRsdEMsP3@nongnu.org
+X-Gm-Message-State: AOJu0YyzC3w0eBOafLmCM9yXKlOsSQ5E1FozHIxnIMrcJKRd0bmjQTJH
+ FxSsaFfyl9EXPdkwyUjLFUecJ7VyK9fdjvB9J/069C1s8FNrA2tdABR1OGY/9sA=
+X-Google-Smtp-Source: AGHT+IF5oet/iFgY9FitxVVtn61AMIFSnuCJ6qiqA7rYdjtWGmAMy9dFn1/PTIjm78xb1VPpZ4nBKQ==
+X-Received: by 2002:a05:620a:2687:b0:7b1:21c4:ecf8 with SMTP id
+ af79cd13be357-7b33192f706mr3105331985a.28.1731495922192; 
+ Wed, 13 Nov 2024 03:05:22 -0800 (PST)
+Received: from ausc-rvsw-c-01-anton.tail89d63.ts.net ([38.104.49.66])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b32ac549ffsm676904285a.45.2024.11.13.03.05.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Nov 2024 03:05:21 -0800 (PST)
+From: Anton Blanchard <antonb@tenstorrent.com>
+To: qemu-riscv@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Anton Blanchard <antonb@tenstorrent.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v2] target/riscv: Add Tenstorrent Ascalon CPU
+Date: Wed, 13 Nov 2024 22:04:59 +1100
+Message-Id: <20241113110459.1607299-1-antonb@tenstorrent.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <cover.1730754238.git.mst@redhat.com>
- <b12cb3819baf6d9ee8140d4dd6d36fa829e2c6d9.1730754238.git.mst@redhat.com>
- <CAGCz3vsrwGQ9v_ZFtteU9jeHpw7z5YATLDLbuKS=dpAzs3C_HA@mail.gmail.com>
- <cebca38a-5896-e2a5-8a68-5edad5dc9d8c@amd.com>
-In-Reply-To: <cebca38a-5896-e2a5-8a68-5edad5dc9d8c@amd.com>
-From: Phil Dennis-Jordan <lists@philjordan.eu>
-Date: Wed, 13 Nov 2024 11:53:32 +0100
-Message-ID: <CAGCz3vvyc261YtS5ynhyW49ZccyNd9L2vOALJBAEVOhz1f4MgQ@mail.gmail.com>
-Subject: Re: [PULL 32/65] amd_iommu: Check APIC ID > 255 for XTSup
-To: "Shukla, Santosh" <santosh.shukla@amd.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>, 
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, sairaj.arunkodilkar@amd.com
-Content-Type: multipart/alternative; boundary="000000000000bb94db0626c925bb"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::62a;
- envelope-from=lists@philjordan.eu; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
+ envelope-from=antonb@tenstorrent.com; helo=mail-qk1-x735.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,276 +98,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000bb94db0626c925bb
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Add a CPU entry for the Tenstorrent Ascalon CPU, a series of 2 wide to
+8 wide RV64 cores. More details can be found at
+https://tenstorrent.com/ip/tt-ascalon
 
-Hi Santosh,
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+---
+ target/riscv/cpu-qom.h |  1 +
+ target/riscv/cpu.c     | 67 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+)
 
-On Mon, 11 Nov 2024 at 06:39, Shukla, Santosh <santosh.shukla@amd.com>
-wrote:
->
-> Hi Phil,
->
-> On 11/10/2024 4:36 PM, Phil Dennis-Jordan wrote:
-> > Hi,
-> >
-> > This commit seems to be causing link errors, likely on all platforms
-> > where KVM is not available, but at minimum that's what I'm seeing when
-> > trying to build the staging branch on macOS.
-> >
-> > ld: Undefined symbols:
-> >   _kvm_enable_x2apic, referenced from:
-> >       _amdvi_sysbus_realize in hw_i386_amd_iommu.c.o
-> > clang: error: linker command failed with exit code 1 (use -v to see
-invocation)
-> >
-> >
->
-> Hmm,.
->
-> Thank you for reporting.
->
-> > On Mon, 4 Nov 2024 at 22:10, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >>
-> >> From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-> >>
-> >> The XTSup mode enables x2APIC support for AMD IOMMU, which is needed
-> >> to support vcpu w/ APIC ID > 255.
-> >>
-> >> Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> >> Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-> >> Signed-off-by: Santosh Shukla <santosh.shukla@amd.com>
-> >> Message-Id: <20240927172913.121477-6-santosh.shukla@amd.com>
-> >> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> >> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> >> ---
-> >>  hw/i386/amd_iommu.c | 11 +++++++++++
-> >>  1 file changed, 11 insertions(+)
-> >>
-> >> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> >> index 38297376e7..13af7211e1 100644
-> >> --- a/hw/i386/amd_iommu.c
-> >> +++ b/hw/i386/amd_iommu.c
-> >> @@ -32,6 +32,7 @@
-> >>  #include "trace.h"
-> >>  #include "hw/i386/apic-msidef.h"
-> >>  #include "hw/qdev-properties.h"
-> >> +#include "kvm/kvm_i386.h"
-> >>
-> >>  /* used AMD-Vi MMIO registers */
-> >>  const char *amdvi_mmio_low[] =3D {
-> >> @@ -1651,6 +1652,16 @@ static void amdvi_sysbus_realize(DeviceState
-*dev, Error **errp)
-> >>      memory_region_add_subregion_overlap(&s->mr_sys,
-AMDVI_INT_ADDR_FIRST,
-> >>                                          &s->mr_ir, 1);
-> >>
-> >> +    /* AMD IOMMU with x2APIC mode requires xtsup=3Don */
-> >> +    if (x86ms->apic_id_limit > 255 && !s->xtsup) {
-> >> +        error_report("AMD IOMMU with x2APIC confguration requires
-xtsup=3Don");
-> >> +        exit(EXIT_FAILURE);
-> >> +    }
-> >> +    if (s->xtsup && kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-> >> +        error_report("AMD IOMMU xtsup=3Don requires support on the KV=
-M
-side");
-> >> +        exit(EXIT_FAILURE);
-> >> +    }
-> >
-> > I suspect this last if() { =E2=80=A6 } block should be wrapped in an #i=
-fdef
-> > CONFIG_KVM block? I don't know anything about this code though, so if
-> > this whole code path is generally a KVM-only feature, perhaps the KVM
-> > check should be implemented at the build system dependency level?
-> >
->
-> Could you please try below in your target system w/ clang and confirm
-back?
->
-> -----
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index 13af7211e1..7081d448e4 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -1657,9 +1657,12 @@ static void amdvi_sysbus_realize(DeviceState *dev,
-Error **errp)
->          error_report("AMD IOMMU with x2APIC confguration requires
-xtsup=3Don");
->          exit(EXIT_FAILURE);
->      }
-> -    if (s->xtsup && kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-> -        error_report("AMD IOMMU xtsup=3Don requires support on the KVM
-side");
-> -        exit(EXIT_FAILURE);
-> +
-> +    if (s->xtsup) {
-> +           if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-> +               error_report("AMD IOMMU xtsup=3Don requires support on th=
-e
-KVM side");
-> +               exit(EXIT_FAILURE);
-> +           }
->      }
+diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+index 62115375cd..6547642287 100644
+--- a/target/riscv/cpu-qom.h
++++ b/target/riscv/cpu-qom.h
+@@ -49,6 +49,7 @@
+ #define TYPE_RISCV_CPU_SIFIVE_U54       RISCV_CPU_TYPE_NAME("sifive-u54")
+ #define TYPE_RISCV_CPU_THEAD_C906       RISCV_CPU_TYPE_NAME("thead-c906")
+ #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
++#define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
+ #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
+ 
+ OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index f219f0c3b5..8447ad0dfb 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -579,6 +579,72 @@ static void rv64_veyron_v1_cpu_init(Object *obj)
+ #endif
+ }
+ 
++/* Tenstorrent Ascalon */
++static void rv64_tt_ascalon_cpu_init(Object *obj)
++{
++    CPURISCVState *env = &RISCV_CPU(obj)->env;
++    RISCVCPU *cpu = RISCV_CPU(obj);
++
++    riscv_cpu_set_misa_ext(env, RVG | RVC | RVS | RVU | RVH | RVV);
++    env->priv_ver = PRIV_VERSION_1_13_0;
++
++    /* Enable ISA extensions */
++    cpu->cfg.mmu = true;
++    cpu->cfg.vlenb = 256 >> 3;
++    cpu->cfg.elen = 64;
++    cpu->env.vext_ver = VEXT_VERSION_1_00_0;
++    cpu->cfg.rvv_ma_all_1s = true;
++    cpu->cfg.rvv_ta_all_1s = true;
++    cpu->cfg.misa_w = true;
++    cpu->cfg.pmp = true;
++    cpu->cfg.cbom_blocksize = 64;
++    cpu->cfg.cbop_blocksize = 64;
++    cpu->cfg.cboz_blocksize = 64;
++    cpu->cfg.ext_zic64b = true;
++    cpu->cfg.ext_zicbom = true;
++    cpu->cfg.ext_zicbop = true;
++    cpu->cfg.ext_zicboz = true;
++    cpu->cfg.ext_zicntr = true;
++    cpu->cfg.ext_zicond = true;
++    cpu->cfg.ext_zicsr = true;
++    cpu->cfg.ext_zifencei = true;
++    cpu->cfg.ext_zihintntl = true;
++    cpu->cfg.ext_zihintpause = true;
++    cpu->cfg.ext_zihpm = true;
++    cpu->cfg.ext_zimop = true;
++    cpu->cfg.ext_zawrs = true;
++    cpu->cfg.ext_zfa = true;
++    cpu->cfg.ext_zfbfmin = true;
++    cpu->cfg.ext_zfh = true;
++    cpu->cfg.ext_zfhmin = true;
++    cpu->cfg.ext_zcb = true;
++    cpu->cfg.ext_zcmop = true;
++    cpu->cfg.ext_zba = true;
++    cpu->cfg.ext_zbb = true;
++    cpu->cfg.ext_zbs = true;
++    cpu->cfg.ext_zkt = true;
++    cpu->cfg.ext_zvbb = true;
++    cpu->cfg.ext_zvbc = true;
++    cpu->cfg.ext_zvfbfmin = true;
++    cpu->cfg.ext_zvfbfwma = true;
++    cpu->cfg.ext_zvfh = true;
++    cpu->cfg.ext_zvfhmin = true;
++    cpu->cfg.ext_zvkng = true;
++    cpu->cfg.ext_smaia = true;
++    cpu->cfg.ext_smstateen = true;
++    cpu->cfg.ext_ssaia = true;
++    cpu->cfg.ext_sscofpmf = true;
++    cpu->cfg.ext_sstc = true;
++    cpu->cfg.ext_svade = true;
++    cpu->cfg.ext_svinval = true;
++    cpu->cfg.ext_svnapot = true;
++    cpu->cfg.ext_svpbmt = true;
++
++#ifndef CONFIG_USER_ONLY
++    set_satp_mode_max_supported(cpu, VM_1_10_SV57);
++#endif
++}
++
+ #ifdef CONFIG_TCG
+ static void rv128_base_cpu_init(Object *obj)
+ {
+@@ -2982,6 +3048,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_U54, MXL_RV64,  rv64_sifive_u_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SHAKTI_C,   MXL_RV64,  rv64_sifive_u_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_THEAD_C906, MXL_RV64,  rv64_thead_c906_cpu_init),
++    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_TT_ASCALON, MXL_RV64,  rv64_tt_ascalon_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_v1_cpu_init),
+ #ifdef CONFIG_TCG
+     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128, rv128_base_cpu_init),
+-- 
+2.34.1
 
-Hmm, that does indeed appear to work, but it relies entirely on the call
-site being optimised away by virtue of kvm_irqchip_is_split() being
-#defined as 0 and triggering the short-circuit of the && operator at
-compile time.
-This seems rather fragile.
-
-
-If kvm_enable_x2apic() needs to be used in code that's built on non-KVM
-systems, you should really provide a version of it that returns an
-appropriate value on such systems.
-
-kvm_enable_x2apic() is declared in target/i386/kvm/kvm_i386.h
-
-So, that's not a "public" cross-subsystem header in "include/=E2=80=A6", bu=
-t it's
-included from a file in hw/=E2=80=A6 - this already seems sub-optimal in it=
-self.
-
-Be that as it may, target/i386/kvm/kvm_i386.h already starts off with a
-bunch of conditional declarations in #ifdef CONFIG_KVM =E2=80=A6 #else =E2=
-=80=A6 #endif:
-
-https://gitlab.com/qemu-project/qemu/-/blob/master/target/i386/kvm/kvm_i386=
-.h#L27
-
-Perhaps you could move the declaration inside the #ifdef CONFIG_KVM and
-provide a
-#define kvm_enable_x2apic() 0
-for the #else case?
-
-
-It looks like there are other callers of kvm_enable_x2apic() in the Intel
-IOMMU and some common x86 code. They seem to rely on the same short-circuit
-optimisation. If the code around those sites is correct *even when not
-using KVM*, then I think the #define kvm_enable_x2apic() 0 approach would
-be best.
-
-
-I don't know the correct answer here though, and I can't gauge if the
-calling code is correct. I'm no expert on IOMMUs nor on KVM, all I know is
-this commit broke the build for me. :-)
-
->
->      pci_setup_iommu(bus, &amdvi_iommu_ops, s);
-> -----
->
-> Thank you!
-> Santosh
->
-
---000000000000bb94db0626c925bb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Santosh,<br><br>On Mon, 11 Nov 2024 at 06:39, Shukla, S=
-antosh &lt;<a href=3D"mailto:santosh.shukla@amd.com">santosh.shukla@amd.com=
-</a>&gt; wrote:<br>&gt;<br>&gt; Hi Phil,<br>&gt;<br>&gt; On 11/10/2024 4:36=
- PM, Phil Dennis-Jordan wrote:<br>&gt; &gt; Hi,<br>&gt; &gt;<br>&gt; &gt; T=
-his commit seems to be causing link errors, likely on all platforms<br>&gt;=
- &gt; where KVM is not available, but at minimum that&#39;s what I&#39;m se=
-eing when<br>&gt; &gt; trying to build the staging branch on macOS.<br>&gt;=
- &gt;<br>&gt; &gt; ld: Undefined symbols:<br>&gt; &gt; =C2=A0 _kvm_enable_x=
-2apic, referenced from:<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 _amdvi_sysbus_rea=
-lize in hw_i386_amd_iommu.c.o<br>&gt; &gt; clang: error: linker command fai=
-led with exit code 1 (use -v to see invocation)<br>&gt; &gt;<br>&gt; &gt;<b=
-r>&gt;<br>&gt; Hmm,.<br>&gt;<br>&gt; Thank you for reporting.<br>&gt;<br>&g=
-t; &gt; On Mon, 4 Nov 2024 at 22:10, Michael S. Tsirkin &lt;<a href=3D"mail=
-to:mst@redhat.com">mst@redhat.com</a>&gt; wrote:<br>&gt; &gt;&gt;<br>&gt; &=
-gt;&gt; From: Suravee Suthikulpanit &lt;<a href=3D"mailto:suravee.suthikulp=
-anit@amd.com">suravee.suthikulpanit@amd.com</a>&gt;<br>&gt; &gt;&gt;<br>&gt=
-; &gt;&gt; The XTSup mode enables x2APIC support for AMD IOMMU, which is ne=
-eded<br>&gt; &gt;&gt; to support vcpu w/ APIC ID &gt; 255.<br>&gt; &gt;&gt;=
-<br>&gt; &gt;&gt; Reviewed-by: Alejandro Jimenez &lt;<a href=3D"mailto:alej=
-andro.j.jimenez@oracle.com">alejandro.j.jimenez@oracle.com</a>&gt;<br>&gt; =
-&gt;&gt; Signed-off-by: Suravee Suthikulpanit &lt;<a href=3D"mailto:suravee=
-.suthikulpanit@amd.com">suravee.suthikulpanit@amd.com</a>&gt;<br>&gt; &gt;&=
-gt; Signed-off-by: Santosh Shukla &lt;<a href=3D"mailto:santosh.shukla@amd.=
-com">santosh.shukla@amd.com</a>&gt;<br>&gt; &gt;&gt; Message-Id: &lt;<a hre=
-f=3D"mailto:20240927172913.121477-6-santosh.shukla@amd.com">20240927172913.=
-121477-6-santosh.shukla@amd.com</a>&gt;<br>&gt; &gt;&gt; Reviewed-by: Micha=
-el S. Tsirkin &lt;<a href=3D"mailto:mst@redhat.com">mst@redhat.com</a>&gt;<=
-br>&gt; &gt;&gt; Signed-off-by: Michael S. Tsirkin &lt;<a href=3D"mailto:ms=
-t@redhat.com">mst@redhat.com</a>&gt;<br>&gt; &gt;&gt; ---<br>&gt; &gt;&gt; =
-=C2=A0hw/i386/amd_iommu.c | 11 +++++++++++<br>&gt; &gt;&gt; =C2=A01 file ch=
-anged, 11 insertions(+)<br>&gt; &gt;&gt;<br>&gt; &gt;&gt; diff --git a/hw/i=
-386/amd_iommu.c b/hw/i386/amd_iommu.c<br>&gt; &gt;&gt; index 38297376e7..13=
-af7211e1 100644<br>&gt; &gt;&gt; --- a/hw/i386/amd_iommu.c<br>&gt; &gt;&gt;=
- +++ b/hw/i386/amd_iommu.c<br>&gt; &gt;&gt; @@ -32,6 +32,7 @@<br>&gt; &gt;&=
-gt; =C2=A0#include &quot;trace.h&quot;<br>&gt; &gt;&gt; =C2=A0#include &quo=
-t;hw/i386/apic-msidef.h&quot;<br>&gt; &gt;&gt; =C2=A0#include &quot;hw/qdev=
--properties.h&quot;<br>&gt; &gt;&gt; +#include &quot;kvm/kvm_i386.h&quot;<b=
-r>&gt; &gt;&gt;<br>&gt; &gt;&gt; =C2=A0/* used AMD-Vi MMIO registers */<br>=
-&gt; &gt;&gt; =C2=A0const char *amdvi_mmio_low[] =3D {<br>&gt; &gt;&gt; @@ =
--1651,6 +1652,16 @@ static void amdvi_sysbus_realize(DeviceState *dev, Erro=
-r **errp)<br>&gt; &gt;&gt; =C2=A0 =C2=A0 =C2=A0memory_region_add_subregion_=
-overlap(&amp;s-&gt;mr_sys, AMDVI_INT_ADDR_FIRST,<br>&gt; &gt;&gt; =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;s-&g=
-t;mr_ir, 1);<br>&gt; &gt;&gt;<br>&gt; &gt;&gt; + =C2=A0 =C2=A0/* AMD IOMMU =
-with x2APIC mode requires xtsup=3Don */<br>&gt; &gt;&gt; + =C2=A0 =C2=A0if =
-(x86ms-&gt;apic_id_limit &gt; 255 &amp;&amp; !s-&gt;xtsup) {<br>&gt; &gt;&g=
-t; + =C2=A0 =C2=A0 =C2=A0 =C2=A0error_report(&quot;AMD IOMMU with x2APIC co=
-nfguration requires xtsup=3Don&quot;);<br>&gt; &gt;&gt; + =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0exit(EXIT_FAILURE);<br>&gt; &gt;&gt; + =C2=A0 =C2=A0}<br>&gt; &gt=
-;&gt; + =C2=A0 =C2=A0if (s-&gt;xtsup &amp;&amp; kvm_irqchip_is_split() &amp=
-;&amp; !kvm_enable_x2apic()) {<br>&gt; &gt;&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0error_report(&quot;AMD IOMMU xtsup=3Don requires support on the KVM side=
-&quot;);<br>&gt; &gt;&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0exit(EXIT_FAILURE);<=
-br>&gt; &gt;&gt; + =C2=A0 =C2=A0}<br>&gt; &gt;<br>&gt; &gt; I suspect this =
-last if() { =E2=80=A6 } block should be wrapped in an #ifdef<br>&gt; &gt; C=
-ONFIG_KVM block? I don&#39;t know anything about this code though, so if<br=
->&gt; &gt; this whole code path is generally a KVM-only feature, perhaps th=
-e KVM<br>&gt; &gt; check should be implemented at the build system dependen=
-cy level?<br>&gt; &gt;<br>&gt;<br>&gt; Could you please try below in your t=
-arget system w/ clang and confirm back?<br>&gt;<br>&gt; -----<br>&gt; diff =
---git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c<br>&gt; index 13af7211e1.=
-.7081d448e4 100644<br>&gt; --- a/hw/i386/amd_iommu.c<br>&gt; +++ b/hw/i386/=
-amd_iommu.c<br>&gt; @@ -1657,9 +1657,12 @@ static void amdvi_sysbus_realize=
-(DeviceState *dev, Error **errp)<br>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-error_report(&quot;AMD IOMMU with x2APIC confguration requires xtsup=3Don&q=
-uot;);<br>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0exit(EXIT_FAILURE);<br>&gt=
-; =C2=A0 =C2=A0 =C2=A0}<br>&gt; - =C2=A0 =C2=A0if (s-&gt;xtsup &amp;&amp; k=
-vm_irqchip_is_split() &amp;&amp; !kvm_enable_x2apic()) {<br>&gt; - =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0error_report(&quot;AMD IOMMU xtsup=3Don requires suppor=
-t on the KVM side&quot;);<br>&gt; - =C2=A0 =C2=A0 =C2=A0 =C2=A0exit(EXIT_FA=
-ILURE);<br>&gt; +<br>&gt; + =C2=A0 =C2=A0if (s-&gt;xtsup) {<br>&gt; + =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (kvm_irqchip_is_split() &amp;&amp; !kvm_=
-enable_x2apic()) {<br>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 error_report(&quot;AMD IOMMU xtsup=3Don requires support on the KVM sid=
-e&quot;);<br>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 exit(E=
-XIT_FAILURE);<br>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>&gt; =C2=A0=
- =C2=A0 =C2=A0}<br><br>Hmm, that does indeed appear to work, but it relies =
-entirely on the call site being optimised away by virtue of kvm_irqchip_is_=
-split() being #defined as 0 and triggering the short-circuit of the &amp;&a=
-mp; operator at compile time.<br>This seems rather fragile.<br><br><br>If k=
-vm_enable_x2apic() needs to be used in code that&#39;s built on non-KVM sys=
-tems, you should really provide a version of it that returns an appropriate=
- value on such systems.<br><br>kvm_enable_x2apic() is declared in target/i3=
-86/kvm/kvm_i386.h<br><br>So, that&#39;s not a &quot;public&quot; cross-subs=
-ystem header in &quot;include/=E2=80=A6&quot;, but it&#39;s included from a=
- file in hw/=E2=80=A6 - this already seems sub-optimal in itself.<br><br>Be=
- that as it may, target/i386/kvm/kvm_i386.h already starts off with a bunch=
- of conditional declarations in #ifdef CONFIG_KVM =E2=80=A6 #else =E2=80=A6=
- #endif:<br><br><a href=3D"https://gitlab.com/qemu-project/qemu/-/blob/mast=
-er/target/i386/kvm/kvm_i386.h#L27">https://gitlab.com/qemu-project/qemu/-/b=
-lob/master/target/i386/kvm/kvm_i386.h#L27</a><br><br>Perhaps you could move=
- the declaration inside the #ifdef CONFIG_KVM and provide a<br>#define kvm_=
-enable_x2apic() 0<br>for the #else case?<br><br><br>It looks like there are=
- other callers of kvm_enable_x2apic() in the Intel IOMMU and some common x8=
-6 code. They seem to rely on the same short-circuit optimisation. If the co=
-de around those sites is correct <b>even when not using KVM</b>, then I thi=
-nk the #define kvm_enable_x2apic() 0 approach would be best.<br>=C2=A0<br><=
-br>I don&#39;t know the correct answer here though, and I can&#39;t gauge i=
-f the calling code is correct. I&#39;m no expert on IOMMUs nor on KVM, all =
-I know is this commit broke the build for me. :-)<br><br>&gt;<br>&gt; =C2=
-=A0 =C2=A0 =C2=A0pci_setup_iommu(bus, &amp;amdvi_iommu_ops, s);<br>&gt; ---=
---<br>&gt;<br>&gt; Thank you!<br>&gt; Santosh<br>&gt;</div>
-
---000000000000bb94db0626c925bb--
 
