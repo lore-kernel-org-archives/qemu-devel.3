@@ -4,63 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4602D41C0A
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 06:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C5D8D41C0C
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 07:00:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tB7KN-0005qV-Jj; Wed, 13 Nov 2024 01:58:11 -0500
+	id 1tB7Ms-0006xU-43; Wed, 13 Nov 2024 02:00:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tB7KH-0005pr-Hl; Wed, 13 Nov 2024 01:58:05 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tB7KF-0003ex-Qs; Wed, 13 Nov 2024 01:58:05 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id CE3F45C55D8;
- Wed, 13 Nov 2024 06:57:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52827C4CED2;
- Wed, 13 Nov 2024 06:57:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1731481081;
- bh=iL8xR6/fZyknPIirBu4QmU0cQpDTBqHhpvaeoBMFPfM=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=CIFEoDX/sMGcGk+EAxEN9ElyA7m5RMLS4h1tFblCR7xKd2EutpmZoN387f+Kc1/WC
- Bf6weZD6MWlVAvsICyHXLrH288PV65jn4Z8ta5OKoSztK/xad1+nvmt59MS8HELzF/
- DIVZQW9v9P1iMKQHTmORWi/iAyrYEkuQhGdOd2j41gheMZMsZRomrXofVT9aqclkuB
- k+OUc2PDclOfQSsizEGmwsQZD44DYRg8nI59sAHnnuYFdjIjIDZOIZ6MoFSEZFULD1
- TwZet7nltCCtWdtF7qIao+rd2YtvNcL5JVY0TD09H54lAKNRgwm0Ba/Nlts02ip5rB
- 6j8qIKDhCdObQ==
-Date: Wed, 13 Nov 2024 07:57:56 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, Peter Maydell <peter.maydell@linaro.org>, Shannon
- Zhao <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao
- Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH RFC 0/5] Change ghes driver to use HEST-based offsets
-Message-ID: <20241113075756.370c5056@foz.lan>
-In-Reply-To: <20241113075418.5fa1ac61@foz.lan>
-References: <cover.1727782588.git.mchehab+huawei@kernel.org>
- <20241002154534.3c58db06@imammedo.users.ipa.redhat.com>
- <20241113075418.5fa1ac61@foz.lan>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tB7Mq-0006xC-EG
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 02:00:44 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tB7Mo-00047G-MN
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 02:00:44 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4314fa33a35so53403185e9.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Nov 2024 23:00:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731481239; x=1732086039; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=H7M6hFUlSuJTvE1z5BEpJmH3T3tcrOuzz7A2rSeEHKE=;
+ b=FGR1WzInYosbOo9Q6RliLY9HR0Gb9U9uKVPrp0V3Rccmay6piO9qPUd6jwFXUOBERv
+ PSYA0VWzf2uCRU3dAa3ItBiMn1wcgJD5U8oa5EOHwCHSrjm8N+D8uO9FXqNhtTgNFsOk
+ kRvdbZs7Gy5GJI/KKH8xoN/7sdKKvzdQpaXceltFXcoqrAfRTvdwlnfUyORqkneu9hf1
+ mr6v/pw9EO2gAj4Y46WXwUTYH8lTZJmN58Z1GGWCnbS1mjrFFBwW6xKtqC3+7gQvf/xu
+ WLmDhzmItW6F4AoODVbGq5fQfZ/+A7JMF8SFM0ep0HYf1v86EM3au/jM8ZPFpKg7jC+3
+ C0ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731481239; x=1732086039;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=H7M6hFUlSuJTvE1z5BEpJmH3T3tcrOuzz7A2rSeEHKE=;
+ b=rWGLTzWPmUsxAn91Fwz0Cfb7JEdCL0EnEN0pUwxpbYRVDo1o+wnXPsDeF8X1VQu9EB
+ pniuQMALMmcsZsO6ut1fO3hK8GAkuCWGc5GUUJUwyh0Dqfwqjv+g+YXI9uwT5byX7tfC
+ cbZkY3gmaKBciizPwN6hmDU8zsxOxoDSegr8erGsrv+O030GfXsdyfjdw9pGmCb8/K6+
+ EoLFuLSNRzUzB+OsjJe6f890gh6HVJ6Egom5TS+GJzAmSBEtqbGyDcgmjm2oZ4eivu9T
+ hjx2DHbOcov2rqx/3aL9/0FJkk/kf7NhincBjecoJRwqOU/zGGSjk2Ujpv2BEhm2xyb1
+ dwAg==
+X-Gm-Message-State: AOJu0YwU5rzDDvZhPEnbEKnibJc10bI0oVzba+XGKQtAOnp6lQxbG4TJ
+ VIWLpJPIrZZrhtqxpHySDr4Hc+Z+x3/nTxxiZohKeMcnMY486wHUUWg3jvFu
+X-Google-Smtp-Source: AGHT+IGtQfsNfsPGo2wDYzxUdQDcINhmp5b8M+Oxfb9ZDoYRV+EsDdjIVBJoacrscRYU5/VKh6G0mA==
+X-Received: by 2002:a05:6000:178d:b0:37c:d23a:1e4 with SMTP id
+ ffacd0b85a97d-38208124802mr3567605f8f.30.1731481239029; 
+ Tue, 12 Nov 2024 23:00:39 -0800 (PST)
+Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
+ [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-381fbf416c6sm9099754f8f.54.2024.11.12.23.00.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Nov 2024 23:00:37 -0800 (PST)
+Date: Wed, 13 Nov 2024 07:00:35 +0000
+From: Stafford Horne <shorne@gmail.com>
+To: Joel Holdsworth <jholdsworth@nvidia.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] hw/openrisc: Fixed undercounting of TTCR in continuous
+ mode
+Message-ID: <ZzROk0C5GOJZCqpA@antec>
+References: <20240607222933.45791-1-jholdsworth@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240607222933.45791-1-jholdsworth@nvidia.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=shorne@gmail.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,76 +91,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Wed, 13 Nov 2024 07:54:18 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
+On Fri, Jun 07, 2024 at 03:29:33PM -0700, Joel Holdsworth via wrote:
+> In the existing design, TTCR is prone to undercounting when running in
+> continuous mode. This manifests as a timer interrupt appearing to
+> trigger a few cycles prior to the deadline set in SPR_TTMR_TP.
+> 
+> When the timer triggers, the virtual time delta in nanoseconds between
+> the time when the timer was set, and when it triggers is calculated.
+> This nanoseconds value is then divided by TIMER_PERIOD (50) to compute
+> an increment of cycles to apply to TTCR.
+> 
+> However, this calculation rounds down the number of cycles causing the
+> undercounting.
+> 
+> A simplistic solution would be to instead round up the number of cycles,
+> however this will result in the accumulation of timing error over time.
+> 
+> This patch corrects the issue by calculating the time delta in
+> nanoseconds between when the timer was last reset and the timer event.
+> This approach allows the TTCR value to be rounded up, but without
+> accumulating error over time.
+> 
+> Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
+> ---
+>  hw/openrisc/cputimer.c | 22 +++++++++++++---------
+>  1 file changed, 13 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/openrisc/cputimer.c b/hw/openrisc/cputimer.c
+> index 835986c4db..ddc129aa48 100644
+> --- a/hw/openrisc/cputimer.c
+> +++ b/hw/openrisc/cputimer.c
+> @@ -29,7 +29,8 @@
+>  /* Tick Timer global state to allow all cores to be in sync */
+>  typedef struct OR1KTimerState {
+>      uint32_t ttcr;
+> -    uint64_t last_clk;
+> +    uint32_t ttcr_offset;
+> +    uint64_t clk_offset;
+>  } OR1KTimerState;
+>  
+>  static OR1KTimerState *or1k_timer;
+> @@ -37,6 +38,8 @@ static OR1KTimerState *or1k_timer;
+>  void cpu_openrisc_count_set(OpenRISCCPU *cpu, uint32_t val)
+>  {
+>      or1k_timer->ttcr = val;
+> +    or1k_timer->ttcr_offset = val;
+> +    or1k_timer->clk_offset = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+>  }
+>  
+>  uint32_t cpu_openrisc_count_get(OpenRISCCPU *cpu)
+> @@ -53,9 +56,8 @@ void cpu_openrisc_count_update(OpenRISCCPU *cpu)
+>          return;
+>      }
+>      now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+> -    or1k_timer->ttcr += (uint32_t)((now - or1k_timer->last_clk)
+> -                                    / TIMER_PERIOD);
+> -    or1k_timer->last_clk = now;
+> +    or1k_timer->ttcr = (now - or1k_timer->clk_offset + TIMER_PERIOD - 1) / TIMER_PERIOD +
+> +        or1k_timer->ttcr_offset;
+>  }
+>  
+>  /* Update the next timeout time as difference between ttmr and ttcr */
+> @@ -69,7 +71,7 @@ void cpu_openrisc_timer_update(OpenRISCCPU *cpu)
+>      }
+>  
+>      cpu_openrisc_count_update(cpu);
+> -    now = or1k_timer->last_clk;
+> +    now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+>  
+>      if ((cpu->env.ttmr & TTMR_TP) <= (or1k_timer->ttcr & TTMR_TP)) {
+>          wait = TTMR_TP - (or1k_timer->ttcr & TTMR_TP) + 1;
+> @@ -110,7 +112,8 @@ static void openrisc_timer_cb(void *opaque)
+>      case TIMER_NONE:
+>          break;
+>      case TIMER_INTR:
+> -        or1k_timer->ttcr = 0;
+> +        /* Zero the count by applying a negative offset to the counter */
+> +        or1k_timer->ttcr_offset += UINT32_MAX - (cpu->env.ttmr & TTMR_TP);
 
-> Em Wed, 2 Oct 2024 15:45:34 +0200
-> Igor Mammedov <imammedo@redhat.com> escreveu:
-> 
-> > On Tue,  1 Oct 2024 13:42:45 +0200
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >   
-> > > This RFC series was part of the previous PR to add generic error injection
-> > > support on GHES.
-> > > 
-> > > It contains only the changes of the math used to calculate offsets at
-> > > HEST table and hardware_error firmware file.
-> > > 
-> > > The first patch adds a new firmware file to store HEST address.
-> > > The second patch makes use of it.
-> > > The remaining ones add migration support.
-> > > 
-> > > PS.: I'm sending this as a RFC as using the proceudure defined at the
-> > > pseudo-migration of:
-> > > 
-> > > 	https://www.linux-kvm.org/page/Migration
-> > > 
-> > > Didn't work. I tried to use two different QEMU versions to check a
-> > > real life case and also to use just one QEMU and trying to load a
-> > > virt-9.1 state on a virt-9.2 machine. 
-> > > 
-> > > For instance, trying to restore a virt-9.1 state on virt-9.2 gave me
-> > > this error:
-> > > 
-> > > 	(qemu) qemu: Machine type received is 'virt-9.1' and local is 'virt-9.2'
-> > > 	qemu: load of migration failed: Invalid argument    
-> > 
-> > that's expected (idea is to keep machine type (virt-X) ABI stable so
-> > it would work the same way on old and new QEMU)
-> > migration is meant to move VM of the same machine type to a new/another QEMU instance.  
-> 
-> I found a couple of issues and, after the fixes, it can successfully
-> migrate both virt-9.1 and virt-9.2 machines. 
-> 
-> > 
-> > i.e try migrate 
-> > 
-> > qemu-9.1 -M virt-9.1  => qemu-9.2 -M virt-9.1
-> > and vice-versa
-> > migration should succeed and memory error injection should still work
-> > the old way in both instances (I don't recall anymore how to simulate SEA,
-> > perhaps original author left a description how to do that somewhere on mail-list).  
-> 
-> Those work as well, but I had to pass -cpu cortex-a57 to both 9.1
-> and 9.2, as using -cpu max caused qemu to refuse loading the guest.
-> 
-> I tested with both:
-> 
-> 	qemu-9.1 -M virt-9.1 -cpu cortex-a57 => qemu-9.2 -M virt-9.1 -cpu cortex-a57
-> 	qemu-9.2 -M virt-9.1 -cpu cortex-a57 => qemu-9.1 -M virt-9.1 -cpu cortex-a57
+Hi Joel,
 
-Forgot to mention, but I modified qemu-9.1 to use GPIO instead of SEA, as
-it is a lot easier to do the tests using the error injection logic.
-Also, I don't know how to test SEA errors.
+I am trying to get this merged as I am finally getting some time for this again
+after a long project at work.
 
-> I'll address your other comments to the series and post a new version
-> today.
-> 
-> Thanks,
-> Mauro
+Why here do you do += UINT32_MAX - (cpu->env.ttmr & TTMR_TP)?
+Is there an edge case I am not thinking of that is making you use UINT32_MAX?
 
+Wouldn't this be the same as
+    r1k_timer->ttcr_offset -= 1 - (cpu->env.ttmr & TTMR_TP);
 
-
-Thanks,
-Mauro
+-Stafford
 
