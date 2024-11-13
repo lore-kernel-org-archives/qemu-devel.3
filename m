@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3060D462BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 15:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6E2D462BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 15:13:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBF2X-0000Vr-Fw; Wed, 13 Nov 2024 10:12:17 -0500
+	id 1tBF2K-0000RX-LR; Wed, 13 Nov 2024 10:12:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1tBF2V-0000V7-Jl; Wed, 13 Nov 2024 10:12:15 -0500
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ id 1tBF2I-0000RF-8J; Wed, 13 Nov 2024 10:12:02 -0500
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1tBF2T-0005zh-SM; Wed, 13 Nov 2024 10:12:15 -0500
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2fb5740a03bso10272161fa.1; 
- Wed, 13 Nov 2024 07:12:13 -0800 (PST)
+ id 1tBF2F-0005z3-9I; Wed, 13 Nov 2024 10:12:01 -0500
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-53d8c08cfc4so4433130e87.3; 
+ Wed, 13 Nov 2024 07:11:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731510731; x=1732115531; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731510717; x=1732115517; darn=nongnu.org;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=3V9nTvgPknEsBDvRmTKghId2TbPVGNXOIqrZi85K+1U=;
- b=Jp4gzq6E8O2ImDSUX3NADGtsL8dzfelARp4Q0EsCFGrU7ePK/sSMcUwJ6UFY0WbOIe
- qFIAXtjnFU5C4TBua5j6+sfHAktSFgbdJlYKrL1fiv1/jSwSAfzcqYz+hPO5v5578n9z
- /QZFv6kju05TWs+GpmeSpDxCFqf29Pgg8+bgmHRzljm/wWXCyvxpx2XQIvtM4djcHPEM
- We5NVJgmxVEq0V5F8nQv9GGZblyn0Epgi+a/asvJYMh/mjNmeJ6Zo5Vt1v4ly7V3J72Q
- m92U1EtfkuHmyYKmjGYJ631Q1Gxi7Ek4QnVFiuCBYoOyOfyMXl009qWCziJx1Cp4Pu+M
- r2Jw==
+ bh=kJdRgxForAU7cG0AaP0orkOalMLhmklSvV/NZ7qeIwI=;
+ b=Hokyv0VgfE4qdSN0NJ/RT8Q4sRnMcDX9/3CjBlCpgIrDTXGMUuy383drlhxF9p7PkZ
+ N5kkpD5f+F7JVRF0s/iMGo8ZN/Ga9Am94Wbo7RW06pIDMdtqboR17wfIG9o3Py2KkEPa
+ Z45cfYM33v34k5pBthVAflTifOmMfOWVgH0+gcBcLT1Zl/Y+gsduPRcIt9zvMHjscynU
+ uFhZkKSHxvWGPDvgTK/j4JgtJU4L5z3GjNM86ai+37r7s5iiG0LERl5mV8BkdNd7IWaG
+ y7s2KneE+tTYyRqI3wf3CxNYghv3Ciq4z0ylVOGCVdtLuFLEWmUQRK0ZdTlFLBsaXuIk
+ S58Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731510731; x=1732115531;
+ d=1e100.net; s=20230601; t=1731510717; x=1732115517;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3V9nTvgPknEsBDvRmTKghId2TbPVGNXOIqrZi85K+1U=;
- b=Lp87Rg0Z59X0XkzIz8JFnKRgYWWYwL8BZ/md1x5YziTty1J96eK4UXLjgsGO4EqbNW
- L+8Ga8nqFlVymQnMEV1OkOLoICsrsxySG37wx+z/PymhchF6uLeHKFrsbmmGA8cCpbM3
- p1FCwOQ+tK5FLIs7xnMEp9LqH/WEDxxSAlYDSim+PPbuVuPtJ44c2+Jj0EfKlIAUfdg2
- 9eeZdgULDwlkg6d3/PVppoFjrd3exwNYmDtGed53eAlUYYmr6gwhsB/zk7WcJxo/7mwl
- eJbajWqSQqcxJ2ttc6IcHfOHA/Apg8YLkeV2YQEdQadIezvih0OFUrhMZDHvS6zXDEOr
- x9uA==
+ bh=kJdRgxForAU7cG0AaP0orkOalMLhmklSvV/NZ7qeIwI=;
+ b=O8BiexMw2G5JS5TBWOAr/s+iU2gIhj4OKSAhhR9kULY4SvYvBXm+B3hnM1aCD9SZf7
+ DNsS4A2rnLyG/NjtiMU1lH45diQ5ediJ0ZeibiAw3BBA/qHkMp2aONGgqX6m9nT3NvRu
+ YbdZd73B1NXFHU7hdCMxo0tz0sWKyvYn/n8mZP9L6MHuI9thqKAX95f09PHFTj2q+qgi
+ k9ktyJJKRYdnFFN5ZQO3Q/iO8ob+etaf/TWSXvFk4XJNRFJCjeUfgiYjURvgWIlTAqTs
+ uothZrHpThLaI9Uvd1NqCz0KKbBQJQCkv2BEU3xTRHTkYjP/FRBbOITzXLct5XI8kFVr
+ 6bnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXAtNjRK2zPTjO9VBDm2290/qb6nRjAEk2/OOHqm/LOcUiRDRSXfLAytRaZUsn57E9jhuYuKbq1ng==@nongnu.org
-X-Gm-Message-State: AOJu0YyfxExchKqZAnXeglBXTehK4eP3YLvgzhNk48vl+pb4Kk67/dCK
- +PLgZpkwoLYFltuif3e56omQTbUXzFD0CYe6NMqtDLKFGXrtE4xr
-X-Google-Smtp-Source: AGHT+IG69UyeQhiwKREJbKK2jRw7HAMQOavmaa6B1BMGo4BEIMgXVM03V33iAxH2JjlyPWJ0Sh1Eqw==
-X-Received: by 2002:a05:651c:12c3:b0:2f7:4f84:50a2 with SMTP id
- 38308e7fff4ca-2ff426fbbeamr44336841fa.31.1731510731309; 
- Wed, 13 Nov 2024 07:12:11 -0800 (PST)
+ AJvYcCVyUJX0d1NN85Cm0F17OUIVr9ftBn/NAfecU6gmavdP5aJGmOJ2cXvKfd7VhgoOgyME+5HYF56/KQ==@nongnu.org
+X-Gm-Message-State: AOJu0YwhqJWtdBXWXkK+bolYQfkh6y3rsOFbDfBI9XFKlUVfEjh97HzT
+ ntGgXhv7d8c0CJbOxQNqZ/2HDFxzLGQIbqpjo469M7gAQSHXf7iL
+X-Google-Smtp-Source: AGHT+IETjslZNW22Njt4tnW1R491TAMdfDhZ2ixjD6edhAZUCT1IT5iHtfZh7xye+e+DGfRcLbQQIw==
+X-Received: by 2002:a05:6512:3d8f:b0:539:dca9:19cc with SMTP id
+ 2adb3069b0e04-53d862cd106mr10230219e87.4.1731510716453; 
+ Wed, 13 Nov 2024 07:11:56 -0800 (PST)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2ff178fa226sm23839981fa.46.2024.11.13.07.12.10
+ 2adb3069b0e04-53d826a725esm2234226e87.156.2024.11.13.07.11.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Nov 2024 07:12:10 -0800 (PST)
-Date: Wed, 13 Nov 2024 16:12:09 +0100
+ Wed, 13 Nov 2024 07:11:55 -0800 (PST)
+Date: Wed, 13 Nov 2024 16:11:55 +0100
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
@@ -70,18 +70,18 @@ Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair@alistair23.me>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Gustavo Romero <gustavo.romero@linaro.org>
-Subject: Re: [PATCH 04/20] hw/net/xilinx_ethlite: Update QOM style
-Message-ID: <ZzTByV5P4oDBAZVO@zapote>
+Subject: Re: [PATCH 03/20] hw/net/xilinx_ethlite: Remove unuseful debug logs
+Message-ID: <ZzTButbXqWgqgZ8q@zapote>
 References: <20241112181044.92193-1-philmd@linaro.org>
- <20241112181044.92193-5-philmd@linaro.org>
+ <20241112181044.92193-4-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241112181044.92193-5-philmd@linaro.org>
+In-Reply-To: <20241112181044.92193-4-philmd@linaro.org>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x22d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,148 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 12, 2024 at 07:10:28PM +0100, Philippe Mathieu-Daudé wrote:
-> Use XlnxXpsEthLite typedef, OBJECT_DECLARE_SIMPLE_TYPE macro;
-> convert type_init() to DEFINE_TYPES().
-> 
+On Tue, Nov 12, 2024 at 07:10:27PM +0100, Philippe Mathieu-Daudé wrote:
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
 
 > ---
->  hw/net/xilinx_ethlite.c | 48 +++++++++++++++++++----------------------
->  1 file changed, 22 insertions(+), 26 deletions(-)
+>  hw/net/xilinx_ethlite.c | 8 --------
+>  1 file changed, 8 deletions(-)
 > 
 > diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-> index 2b52597f03..0f59811c78 100644
+> index bb330a233f..2b52597f03 100644
 > --- a/hw/net/xilinx_ethlite.c
 > +++ b/hw/net/xilinx_ethlite.c
-> @@ -53,10 +53,9 @@
->  #define CTRL_S     0x1
+> @@ -32,7 +32,6 @@
+>  #include "net/net.h"
+>  #include "trace.h"
 >  
->  #define TYPE_XILINX_ETHLITE "xlnx.xps-ethernetlite"
-> -DECLARE_INSTANCE_CHECKER(struct xlx_ethlite, XILINX_ETHLITE,
-> -                         TYPE_XILINX_ETHLITE)
-> +OBJECT_DECLARE_SIMPLE_TYPE(XlnxXpsEthLite, XILINX_ETHLITE)
+> -#define D(x)
+>  #define R_TX_BUF0     0
+>  #define R_TX_LEN0     (0x07f4 / 4)
+>  #define R_TX_GIE0     (0x07f8 / 4)
+> @@ -100,7 +99,6 @@ eth_read(void *opaque, hwaddr addr, unsigned int size)
+>          case R_RX_CTRL1:
+>          case R_RX_CTRL0:
+>              r = s->regs[addr];
+> -            D(qemu_log("%s " HWADDR_FMT_plx "=%x\n", __func__, addr * 4, r));
+>              break;
 >  
-> -struct xlx_ethlite
-> +struct XlnxXpsEthLite
->  {
->      SysBusDevice parent_obj;
+>          default:
+> @@ -126,13 +124,10 @@ eth_write(void *opaque, hwaddr addr,
+>              if (addr == R_TX_CTRL1)
+>                  base = 0x800 / 4;
 >  
-> @@ -73,7 +72,7 @@ struct xlx_ethlite
->      uint32_t regs[R_MAX];
->  };
+> -            D(qemu_log("%s addr=" HWADDR_FMT_plx " val=%x\n",
+> -                       __func__, addr * 4, value));
+>              if ((value & (CTRL_P | CTRL_S)) == CTRL_S) {
+>                  qemu_send_packet(qemu_get_queue(s->nic),
+>                                   (void *) &s->regs[base],
+>                                   s->regs[base + R_TX_LEN0]);
+> -                D(qemu_log("eth_tx %d\n", s->regs[base + R_TX_LEN0]));
+>                  if (s->regs[base + R_TX_CTRL0] & CTRL_I)
+>                      eth_pulse_irq(s);
+>              } else if ((value & (CTRL_P | CTRL_S)) == (CTRL_P | CTRL_S)) {
+> @@ -156,8 +151,6 @@ eth_write(void *opaque, hwaddr addr,
+>          case R_TX_LEN0:
+>          case R_TX_LEN1:
+>          case R_TX_GIE0:
+> -            D(qemu_log("%s addr=" HWADDR_FMT_plx " val=%x\n",
+> -                       __func__, addr * 4, value));
+>              s->regs[addr] = value;
+>              break;
 >  
-> -static inline void eth_pulse_irq(struct xlx_ethlite *s)
-> +static inline void eth_pulse_irq(XlnxXpsEthLite *s)
->  {
->      /* Only the first gie reg is active.  */
->      if (s->regs[R_TX_GIE0] & GIE_GIE) {
-> @@ -84,7 +83,7 @@ static inline void eth_pulse_irq(struct xlx_ethlite *s)
->  static uint64_t
->  eth_read(void *opaque, hwaddr addr, unsigned int size)
->  {
-> -    struct xlx_ethlite *s = opaque;
-> +    XlnxXpsEthLite *s = opaque;
->      uint32_t r = 0;
+> @@ -203,7 +196,6 @@ static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
+>          return -1;
+>      }
 >  
->      addr >>= 2;
-> @@ -112,7 +111,7 @@ static void
->  eth_write(void *opaque, hwaddr addr,
->            uint64_t val64, unsigned int size)
->  {
-> -    struct xlx_ethlite *s = opaque;
-> +    XlnxXpsEthLite *s = opaque;
->      unsigned int base = 0;
->      uint32_t value = val64;
->  
-> @@ -176,7 +175,7 @@ static const MemoryRegionOps eth_ops = {
->  
->  static bool eth_can_rx(NetClientState *nc)
->  {
-> -    struct xlx_ethlite *s = qemu_get_nic_opaque(nc);
-> +    XlnxXpsEthLite *s = qemu_get_nic_opaque(nc);
->      unsigned int rxbase = s->rxbuf * (0x800 / 4);
->  
->      return !(s->regs[rxbase + R_RX_CTRL0] & CTRL_S);
-> @@ -184,7 +183,7 @@ static bool eth_can_rx(NetClientState *nc)
->  
->  static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
->  {
-> -    struct xlx_ethlite *s = qemu_get_nic_opaque(nc);
-> +    XlnxXpsEthLite *s = qemu_get_nic_opaque(nc);
->      unsigned int rxbase = s->rxbuf * (0x800 / 4);
->  
->      /* DA filter.  */
-> @@ -214,7 +213,7 @@ static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
->  
->  static void xilinx_ethlite_reset(DeviceState *dev)
->  {
-> -    struct xlx_ethlite *s = XILINX_ETHLITE(dev);
-> +    XlnxXpsEthLite *s = XILINX_ETHLITE(dev);
->  
->      s->rxbuf = 0;
->  }
-> @@ -228,7 +227,7 @@ static NetClientInfo net_xilinx_ethlite_info = {
->  
->  static void xilinx_ethlite_realize(DeviceState *dev, Error **errp)
->  {
-> -    struct xlx_ethlite *s = XILINX_ETHLITE(dev);
-> +    XlnxXpsEthLite *s = XILINX_ETHLITE(dev);
->  
->      qemu_macaddr_default_if_unset(&s->conf.macaddr);
->      s->nic = qemu_new_nic(&net_xilinx_ethlite_info, &s->conf,
-> @@ -239,7 +238,7 @@ static void xilinx_ethlite_realize(DeviceState *dev, Error **errp)
->  
->  static void xilinx_ethlite_init(Object *obj)
->  {
-> -    struct xlx_ethlite *s = XILINX_ETHLITE(obj);
-> +    XlnxXpsEthLite *s = XILINX_ETHLITE(obj);
->  
->      sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
->  
-> @@ -249,9 +248,9 @@ static void xilinx_ethlite_init(Object *obj)
->  }
->  
->  static Property xilinx_ethlite_properties[] = {
-> -    DEFINE_PROP_UINT32("tx-ping-pong", struct xlx_ethlite, c_tx_pingpong, 1),
-> -    DEFINE_PROP_UINT32("rx-ping-pong", struct xlx_ethlite, c_rx_pingpong, 1),
-> -    DEFINE_NIC_PROPERTIES(struct xlx_ethlite, conf),
-> +    DEFINE_PROP_UINT32("tx-ping-pong", XlnxXpsEthLite, c_tx_pingpong, 1),
-> +    DEFINE_PROP_UINT32("rx-ping-pong", XlnxXpsEthLite, c_rx_pingpong, 1),
-> +    DEFINE_NIC_PROPERTIES(XlnxXpsEthLite, conf),
->      DEFINE_PROP_END_OF_LIST(),
->  };
->  
-> @@ -264,17 +263,14 @@ static void xilinx_ethlite_class_init(ObjectClass *klass, void *data)
->      device_class_set_props(dc, xilinx_ethlite_properties);
->  }
->  
-> -static const TypeInfo xilinx_ethlite_info = {
-> -    .name          = TYPE_XILINX_ETHLITE,
-> -    .parent        = TYPE_SYS_BUS_DEVICE,
-> -    .instance_size = sizeof(struct xlx_ethlite),
-> -    .instance_init = xilinx_ethlite_init,
-> -    .class_init    = xilinx_ethlite_class_init,
-> +static const TypeInfo xilinx_ethlite_types[] = {
-> +    {
-> +        .name          = TYPE_XILINX_ETHLITE,
-> +        .parent        = TYPE_SYS_BUS_DEVICE,
-> +        .instance_size = sizeof(XlnxXpsEthLite),
-> +        .instance_init = xilinx_ethlite_init,
-> +        .class_init    = xilinx_ethlite_class_init,
-> +    },
->  };
->  
-> -static void xilinx_ethlite_register_types(void)
-> -{
-> -    type_register_static(&xilinx_ethlite_info);
-> -}
-> -
-> -type_init(xilinx_ethlite_register_types)
-> +DEFINE_TYPES(xilinx_ethlite_types)
+> -    D(qemu_log("%s %zd rxbase=%x\n", __func__, size, rxbase));
+>      if (size > (R_MAX - R_RX_BUF0 - rxbase) * 4) {
+>          trace_ethlite_pkt_size_too_big(size);
+>          return -1;
 > -- 
 > 2.45.2
 > 
