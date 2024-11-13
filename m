@@ -4,61 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD94D637A6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 18:17:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED32ED637A4
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 18:21:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBHv6-0003bu-1Y; Wed, 13 Nov 2024 13:16:48 -0500
+	id 1tBHzR-0004u8-LL; Wed, 13 Nov 2024 13:21:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tBHv4-0003ba-Om; Wed, 13 Nov 2024 13:16:46 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBHzQ-0004tz-EX
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:21:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tBHv2-0001nU-1j; Wed, 13 Nov 2024 13:16:46 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A08DD4E6063;
- Wed, 13 Nov 2024 19:16:37 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 2cmPJ4WTMIHC; Wed, 13 Nov 2024 19:16:33 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id DF42E4E600E; Wed, 13 Nov 2024 19:16:33 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DC2EB746F60;
- Wed, 13 Nov 2024 19:16:33 +0100 (CET)
-Date: Wed, 13 Nov 2024 19:16:33 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Phil Dennis-Jordan <phil@philjordan.eu>
-cc: qemu-devel@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org, 
- pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com, 
- stefanha@redhat.com, mst@redhat.com, slp@redhat.com, 
- richard.henderson@linaro.org, eduardo@habkost.net, 
- marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com, 
- chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com, 
- philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com, 
- akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org, 
- qemu-riscv@nongnu.org
-Subject: Re: [PATCH v10 01/15] ui & main loop: Redesign of system-specific
- main thread event handling
-In-Reply-To: <20241113142343.40832-2-phil@philjordan.eu>
-Message-ID: <9dd5c736-e1b8-a025-745a-52e9aacb4b9b@eik.bme.hu>
-References: <20241113142343.40832-1-phil@philjordan.eu>
- <20241113142343.40832-2-phil@philjordan.eu>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBHzO-0002Py-Fw
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:21:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731522073;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=B163VpaRJXxp3b2iqYNrwHU/NDgSITNT/KiNnMB0IkU=;
+ b=LsPDXANoDp57/h0+djePtmo1fJy0hMYacowUdmE4iwsX+ph1iqkwfHsjwG9uo10wg3z5Pt
+ aNMIpGV0CqQ05F5ufFg+YVKDPvITYT6N9GFGsn4Fwo5CLofVido5Ol8sQKJ1NtD0rspocY
+ Gfh033rDx9RK7fwPkBd9rfHuk+i1dsA=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-345-sy1bvkv7PH2e9Yr3Eh1NSQ-1; Wed, 13 Nov 2024 13:21:10 -0500
+X-MC-Unique: sy1bvkv7PH2e9Yr3Eh1NSQ-1
+X-Mimecast-MFC-AGG-ID: sy1bvkv7PH2e9Yr3Eh1NSQ
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-53da4315990so260428e87.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 10:21:09 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731522068; x=1732126868;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B163VpaRJXxp3b2iqYNrwHU/NDgSITNT/KiNnMB0IkU=;
+ b=Ll9rF0680Zn71/RaU+Rt4he+XK9bTCSyC7T3UZg9FYXMLLMzuzVnoSEGeZFSOH47jJ
+ ofWmrGxtvgG0GT1A1Gs7BFCw2n2oXdHxT5KUqDleLt/MdESnrgle+ksb497OtDZmZEL2
+ 8IFfAJGMsdefo8kwew4Ft5IBwxV5gjbc2P9squcJ0xwY21Zs4wC1VdXAJLnmqQPg0RDr
+ nmNreo9AhJDY6Ly8Is6/81Ie0o9UjpJh8FcJ4vl8ZMrudu85M5pnRlI1GmOAYYgPRo67
+ cgVDYLk7Z/4Jeseil8C+Cyfij0QNNqjUJHkfBsrpMj330dCE5OmMDNbQM2fM2Nctg9+O
+ vo6g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXJqRivnDLs1ClMK1IkjaVKzKCwo83t+VRQFI4wrkYS/Tvt8ufV0PpnRT9VesfiAixQ9EDlDobW2NyA@nongnu.org
+X-Gm-Message-State: AOJu0YyIZnvqPjf6seMZS+TLQgby2HYxqy7WSBwDoz7dXReXszCiil9V
+ /vky6u/6K4J8nEp31AxCblvItoXqVP3iThTVxDjYURVcaOO+Ox3YEMq8n2RT3Z8SiYgHatt+pQw
+ 31tcVUYc5TV1g7nmBBpfWBxt7B+Zf27SRWpz1S+FhDh8WtvmoMVyG
+X-Received: by 2002:a05:6512:3a88:b0:536:a6c6:33f with SMTP id
+ 2adb3069b0e04-53d862bb481mr10575544e87.13.1731522068306; 
+ Wed, 13 Nov 2024 10:21:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGU6RcZJh/stvdvJj7BnrRRLy7n9hpCucCMPjhpTqNOETEY4/ZTyAjheZR6bbneoxly6hcFwA==
+X-Received: by 2002:a05:6512:3a88:b0:536:a6c6:33f with SMTP id
+ 2adb3069b0e04-53d862bb481mr10575516e87.13.1731522067790; 
+ Wed, 13 Nov 2024 10:21:07 -0800 (PST)
+Received: from [192.168.10.47] ([151.49.84.243])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-432d54f75f9sm32575485e9.17.2024.11.13.10.21.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 13 Nov 2024 10:21:07 -0800 (PST)
+Message-ID: <5a3d70f5-e135-4450-aed4-eac03abc58c0@redhat.com>
+Date: Wed, 13 Nov 2024 19:21:06 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 19/20] hw/net/xilinx_ethlite: Map the RAM buffer as RAM
+ memory region
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Anton Johansson <anjo@rev.ng>,
+ Jason Wang <jasowang@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+References: <20241112181044.92193-1-philmd@linaro.org>
+ <20241112181044.92193-20-philmd@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20241112181044.92193-20-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.738,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -76,385 +151,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 13 Nov 2024, Phil Dennis-Jordan wrote:
-> macOS's Cocoa event handling must be done on the initial (main) thread
-> of the process. Furthermore, if library or application code uses
-> libdispatch, the main dispatch queue must be handling events on the main
-> thread as well.
->
-> So far, this has affected Qemu in both the Cocoa and SDL UIs, although
-> in different ways: the Cocoa UI replaces the default qemu_main function
-> with one that spins Qemu's internal main event loop off onto a
-> background thread. SDL (which uses Cocoa internally) on the other hand
-> uses a polling approach within Qemu's main event loop. Events are
-> polled during the SDL UI's dpy_refresh callback, which happens to run
-> on the main thread by default.
->
-> As UIs are mutually exclusive, this works OK as long as nothing else
-> needs platform-native event handling. In the next patch, a new device is
-> introduced based on the ParavirtualizedGraphics.framework in macOS.
-> This uses libdispatch internally, and only works when events are being
-> handled on the main runloop. With the current system, it works when
-> using either the Cocoa or the SDL UI. However, it does not when running
-> headless. Moreover, any attempt to install a similar scheme to the
-> Cocoa UI's main thread replacement fails when combined with the SDL
-> UI.
->
-> This change tidies up main thread management to be more flexible.
->
-> * The qemu_main global function pointer is a custom function for the
->   main thread, and it may now be NULL. When it is, the main thread
->   runs the main Qemu loop. This represents the traditional setup.
-> * When non-null, spawning the main Qemu event loop on a separate
->   thread is now done centrally rather than inside the Cocoa UI code.
-> * For most platforms, qemu_main is indeed NULL by default, but on
->   Darwin, it defaults to a function that runs the CFRunLoop.
-> * The Cocoa UI sets qemu_main to a function which runs the
->   NSApplication event handling runloop, as is usual for a Cocoa app.
-> * The SDL UI overrides the qemu_main function to NULL, thus
->   specifying that Qemu's main loop must run on the main
->   thread.
-> * The GTK UI also overrides the qemu_main function to NULL.
-> * For other UIs, or in the absence of UIs, the platform's default
->   behaviour is followed.
->
-> This means that on macOS, the platform's runloop events are always
-> handled, regardless of chosen UI. The new PV graphics device will
-> thus work in all configurations. There is no functional change on other
-> operating systems.
->
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+On 11/12/24 19:10, Philippe Mathieu-Daudé wrote:
+> Rather than using I/O registers for RAM buffer, having to
+> swap endianness back and forth (because the core memory layer
+> automatically swaps endiannes for us), declare the buffers
+> as RAM regions. Remove the now unused s->regs[] array.
+> 
+> The memory flat view becomes:
+> 
+>    FlatView #0
+>     Root memory region: system
+>      0000000081000000-00000000810007f3 (prio 0, ram): ethlite.tx[0]buf
+>      00000000810007f4-00000000810007ff (prio 0, i/o): ethlite.tx[0]io
+>      0000000081000800-0000000081000ff3 (prio 0, ram): ethlite.tx[1]buf
+>      0000000081000ff4-0000000081000fff (prio 0, i/o): ethlite.tx[1]io
+>      0000000081001000-00000000810017f3 (prio 0, ram): ethlite.rx[0]buf
+>      00000000810017fc-00000000810017ff (prio 0, i/o): ethlite.rx[0]io
+>      0000000081001800-0000000081001ff3 (prio 0, ram): ethlite.rx[1]buf
+>      0000000081001ffc-0000000081001fff (prio 0, i/o): ethlite.rx[1]io
+
+The receive buffers should end at 7fb and ffb; no need to repost of course.
+
+Paolo
+
+> 
+> Mention the device datasheet in the file header.
+> 
+> Reported-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->
-> v5:
->
-> * Simplified the way of setting/clearing the main loop by going back
->   to setting qemu_main directly, but narrowing the scope of what it
->   needs to do, and it can now be NULL.
->
-> v6:
->
-> * Folded function qemu_run_default_main_on_new_thread's code into
->   main()
-> * Removed whitespace changes left over on lines near code removed
->   between v4 and v5
->
-> v9:
->
-> * Set qemu_main to NULL for GTK UI as well.
->
-> v10:
->
-> * Added comments clarifying the functionality and purpose of qemu_main.
->
-> include/qemu-main.h     | 21 ++++++++++++++--
-> include/qemu/typedefs.h |  1 +
-> system/main.c           | 50 ++++++++++++++++++++++++++++++++++----
-> ui/cocoa.m              | 54 ++++++++++-------------------------------
-> ui/gtk.c                |  8 ++++++
-> ui/sdl2.c               |  4 +++
-> 6 files changed, 90 insertions(+), 48 deletions(-)
->
-> diff --git a/include/qemu-main.h b/include/qemu-main.h
-> index 940960a7dbc..fc70681c8b5 100644
-> --- a/include/qemu-main.h
-> +++ b/include/qemu-main.h
-> @@ -5,7 +5,24 @@
-> #ifndef QEMU_MAIN_H
-> #define QEMU_MAIN_H
->
-> -int qemu_default_main(void);
-> -extern int (*qemu_main)(void);
-> +/*
-> + * The function to run on the main (initial) thread of the process.
-> + * NULL means QEMU's main event loop.
-> + * When non-NULL, QEMU's main event loop will run on a purposely created
-> + * thread, after which the provided function pointer will be invoked on
-> + * the initial thread.
-> + * This is useful on platforms which treat the main thread as special
-> + * (macOS/Darwin) and/or require all UI API calls to occur from a
-> + * specific thread.
-> + * Implementing this via a global function pointer variable is a bit
-> + * ugly, but it's probably worth investigating the existing UI thread rule
-> + * violations in the SDL (e.g. #2537) and GTK+ back-ends. Fixing those
-> + * issues might precipitate requirements similar but not identical to those
-> + * of the Cocoa UI; hopefully we'll see some kind of pattern emerge, which
-> + * can then be used as a basis for an overhaul. (In fact, it may turn
-> + * out to be simplest to split the UI/native platform event thread from the
-> + * QEMU main event loop on all platforms, with any UI or even none at all.)
-> + */
-> +extern qemu_main_fn qemu_main;
-
-qemu_main_fn is defined in typdefefs.h but not included here. Also coding 
-style says typedefs should be CamelCase but maybe it's just not worth to 
-define a type for this and you can just leave the existing line here only 
-removing the qemu_default_main declaration and adding the comment.
-
-> #endif /* QEMU_MAIN_H */
-> diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-> index 3d84efcac47..b02cfe1f328 100644
-> --- a/include/qemu/typedefs.h
-> +++ b/include/qemu/typedefs.h
-> @@ -131,5 +131,6 @@ typedef struct IRQState *qemu_irq;
->  * Function types
->  */
-> typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
-> +typedef int (*qemu_main_fn)(void);
-
-Then drop this change...
-
-> #endif /* QEMU_TYPEDEFS_H */
-> diff --git a/system/main.c b/system/main.c
-> index 9b91d21ea8c..d9397a6d5d0 100644
-> --- a/system/main.c
-> +++ b/system/main.c
-> @@ -24,13 +24,14 @@
->
-> #include "qemu/osdep.h"
-> #include "qemu-main.h"
-> +#include "qemu/main-loop.h"
-> #include "sysemu/sysemu.h"
->
-> -#ifdef CONFIG_SDL
-> -#include <SDL.h>
-> +#ifdef CONFIG_DARWIN
-> +#include <CoreFoundation/CoreFoundation.h>
-> #endif
->
-> -int qemu_default_main(void)
-> +static int qemu_default_main(void)
-> {
->     int status;
->
-> @@ -40,10 +41,49 @@ int qemu_default_main(void)
->     return status;
-> }
->
-> -int (*qemu_main)(void) = qemu_default_main;
-
-...and leave this line here without init to define the global variable and 
-only put assigning the init value in the #ifdef if you don't want to 
-repeat the function pointer definition twice (but that wouldn't be a 
-problem either in my opinion to do it in the #ifdef this way).
-
-> +/*
-> + * Various macOS system libraries, including the Cocoa UI and anything using
-> + * libdispatch, such as ParavirtualizedGraphics.framework, requires that the
-> + * main runloop, on the main (initial) thread be running or at least regularly
-> + * polled for events. A special mode is therefore supported, where the QEMU
-> + * main loop runs on a separate thread and the main thread handles the
-> + * CF/Cocoa runloop.
-> + */
-> +
-> +static void *call_qemu_default_main(void *opaque)
-> +{
-> +    int status;
-> +
-> +    bql_lock();
-> +    status = qemu_default_main();
-> +    bql_unlock();
-> +
-> +    exit(status);
-> +}
-> +
-> +#ifdef CONFIG_DARWIN
-> +static int os_darwin_cfrunloop_main(void)
-> +{
-> +    CFRunLoopRun();
-> +    abort();
-
-Is it better to use g_assert_not_reached() here?
-
-> +}
-> +
-> +qemu_main_fn qemu_main = os_darwin_cfrunloop_main;
-> +#else
-> +qemu_main_fn qemu_main;
-> +#endif
->
-> int main(int argc, char **argv)
-> {
-> +    QemuThread main_loop_thread;
-> +
->     qemu_init(argc, argv);
-> -    return qemu_main();
-> +    if (qemu_main) {
-> +        qemu_thread_create(&main_loop_thread, "qemu_main",
-> +                           call_qemu_default_main, NULL, QEMU_THREAD_DETACHED);
-> +        bql_unlock();
-> +        return qemu_main();
-> +    } else {
-> +        qemu_default_main();
-
-I think you need 'return qemu_default_main()' here but I'm a bit confused 
-by all this wrapping of qemu_default_main in call_qemu_default_main. I see 
-that may be needed because qemu_thread_create takes a different function 
-but now that qemu_default main is static and not replaced externally could 
-that be changed to the right type and avoid this confusion and simplify 
-this a bit?
-
-Regards,
-BALATON Zoltan
-
-> +    }
-> }
-> diff --git a/ui/cocoa.m b/ui/cocoa.m
-> index 4c2dd335323..30b8920d929 100644
-> --- a/ui/cocoa.m
-> +++ b/ui/cocoa.m
-> @@ -73,6 +73,8 @@
->     int height;
-> } QEMUScreen;
->
-> +@class QemuCocoaPasteboardTypeOwner;
-> +
-> static void cocoa_update(DisplayChangeListener *dcl,
->                          int x, int y, int w, int h);
->
-> @@ -107,6 +109,7 @@ static void cocoa_switch(DisplayChangeListener *dcl,
-> static NSInteger cbchangecount = -1;
-> static QemuClipboardInfo *cbinfo;
-> static QemuEvent cbevent;
-> +static QemuCocoaPasteboardTypeOwner *cbowner;
->
-> // Utility functions to run specified code block with the BQL held
-> typedef void (^CodeBlock)(void);
-> @@ -1321,8 +1324,10 @@ - (void) dealloc
-> {
->     COCOA_DEBUG("QemuCocoaAppController: dealloc\n");
->
-> -    if (cocoaView)
-> -        [cocoaView release];
-> +    [cocoaView release];
-> +    [cbowner release];
-> +    cbowner = nil;
-> +
->     [super dealloc];
-> }
->
-> @@ -1938,8 +1943,6 @@ - (void)pasteboard:(NSPasteboard *)sender provideDataForType:(NSPasteboardType)t
->
-> @end
->
-> -static QemuCocoaPasteboardTypeOwner *cbowner;
+>   hw/net/xilinx_ethlite.c | 79 +++++++++++------------------------------
+>   1 file changed, 20 insertions(+), 59 deletions(-)
+> 
+> diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
+> index f681b91769..da453465ca 100644
+> --- a/hw/net/xilinx_ethlite.c
+> +++ b/hw/net/xilinx_ethlite.c
+> @@ -2,6 +2,10 @@
+>    * QEMU model of the Xilinx Ethernet Lite MAC.
+>    *
+>    * Copyright (c) 2009 Edgar E. Iglesias.
+> + * Copyright (c) 2024 Linaro, Ltd
+> + *
+> + * DS580: https://docs.amd.com/v/u/en-US/xps_ethernetlite
+> + * LogiCORE IP XPS Ethernet Lite Media Access Controller
+>    *
+>    * Permission is hereby granted, free of charge, to any person obtaining a copy
+>    * of this software and associated documentation files (the "Software"), to deal
+> @@ -27,7 +31,6 @@
+>   #include "qemu/bitops.h"
+>   #include "qom/object.h"
+>   #include "qapi/error.h"
+> -#include "exec/tswap.h"
+>   #include "hw/sysbus.h"
+>   #include "hw/irq.h"
+>   #include "hw/qdev-properties.h"
+> @@ -46,7 +49,6 @@
+>   #define A_RX_BASE0    0x17fc
+>   #define R_RX_BUF1     (0x1800 / 4)
+>   #define A_RX_BASE1    0x1ffc
+> -#define R_MAX         (0x2000 / 4)
+>   
+>   #define RX_BUFSZ_MAX  0x07e0
+>   
+> @@ -72,6 +74,8 @@ typedef struct XlnxXpsEthLitePort
+>   {
+>       MemoryRegion txio;
+>       MemoryRegion rxio;
+> +    MemoryRegion txbuf;
+> +    MemoryRegion rxbuf;
+>   
+>       struct {
+>           uint32_t tx_len;
+> @@ -100,7 +104,6 @@ struct XlnxXpsEthLite
+>   
+>       UnimplementedDeviceState mdio;
+>       XlnxXpsEthLitePort port[2];
+> -    uint32_t regs[R_MAX];
+>   };
+>   
+>   static inline void eth_pulse_irq(XlnxXpsEthLite *s)
+> @@ -118,16 +121,12 @@ static unsigned addr_to_port_index(hwaddr addr)
+>   
+>   static void *txbuf_ptr(XlnxXpsEthLite *s, unsigned port_index)
+>   {
+> -    unsigned int rxbase = port_index * (0x800 / 4);
 > -
-> static void cocoa_clipboard_notify(Notifier *notifier, void *data);
-> static void cocoa_clipboard_request(QemuClipboardInfo *info,
->                                     QemuClipboardType type);
-> @@ -2002,43 +2005,8 @@ static void cocoa_clipboard_request(QemuClipboardInfo *info,
->     }
-> }
->
-> -/*
-> - * The startup process for the OSX/Cocoa UI is complicated, because
-> - * OSX insists that the UI runs on the initial main thread, and so we
-> - * need to start a second thread which runs the qemu_default_main():
-> - * in main():
-> - *  in cocoa_display_init():
-> - *   assign cocoa_main to qemu_main
-> - *   create application, menus, etc
-> - *  in cocoa_main():
-> - *   create qemu-main thread
-> - *   enter OSX run loop
-> - */
+> -    return &s->regs[rxbase + R_TX_BUF0];
+> +    return memory_region_get_ram_ptr(&s->port[port_index].txbuf);
+>   }
+>   
+>   static void *rxbuf_ptr(XlnxXpsEthLite *s, unsigned port_index)
+>   {
+> -    unsigned int rxbase = port_index * (0x800 / 4);
 > -
-> -static void *call_qemu_main(void *opaque)
+> -    return &s->regs[rxbase + R_RX_BUF0];
+> +    return memory_region_get_ram_ptr(&s->port[port_index].rxbuf);
+>   }
+>   
+>   static uint64_t port_tx_read(void *opaque, hwaddr addr, unsigned int size)
+> @@ -252,53 +251,6 @@ static const MemoryRegionOps eth_portrx_ops = {
+>           },
+>   };
+>   
+> -static uint64_t
+> -eth_read(void *opaque, hwaddr addr, unsigned int size)
 > -{
-> -    int status;
+> -    XlnxXpsEthLite *s = opaque;
+> -    uint32_t r = 0;
 > -
-> -    COCOA_DEBUG("Second thread: calling qemu_default_main()\n");
-> -    bql_lock();
-> -    status = qemu_default_main();
-> -    bql_unlock();
-> -    COCOA_DEBUG("Second thread: qemu_default_main() returned, exiting\n");
-> -    [cbowner release];
-> -    exit(status);
+> -    addr >>= 2;
+> -
+> -    switch (addr)
+> -    {
+> -        default:
+> -            r = tswap32(s->regs[addr]);
+> -            break;
+> -    }
+> -    return r;
 > -}
 > -
-> static int cocoa_main(void)
-> {
-> -    QemuThread thread;
+> -static void
+> -eth_write(void *opaque, hwaddr addr,
+> -          uint64_t val64, unsigned int size)
+> -{
+> -    XlnxXpsEthLite *s = opaque;
+> -    uint32_t value = val64;
 > -
-> -    COCOA_DEBUG("Entered %s()\n", __func__);
+> -    addr >>= 2;
+> -    switch (addr)
+> -    {
+> -        default:
+> -            s->regs[addr] = tswap32(value);
+> -            break;
+> -    }
+> -}
 > -
-> -    bql_unlock();
-> -    qemu_thread_create(&thread, "qemu_main", call_qemu_main,
-> -                       NULL, QEMU_THREAD_DETACHED);
+> -static const MemoryRegionOps eth_ops = {
+> -    .read = eth_read,
+> -    .write = eth_write,
+> -    .endianness = DEVICE_NATIVE_ENDIAN,
+> -    .impl = {
+> -        .min_access_size = 4,
+> -        .max_access_size = 4,
+> -    },
+> -    .valid = {
+> -        .min_access_size = 4,
+> -        .max_access_size = 4
+> -    }
+> -};
 > -
-> -    // Start the main event loop
->     COCOA_DEBUG("Main thread: entering OSX run loop\n");
->     [NSApp run];
->     COCOA_DEBUG("Main thread: left OSX run loop, which should never happen\n");
-> @@ -2120,8 +2088,6 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
->
->     COCOA_DEBUG("qemu_cocoa: cocoa_display_init\n");
->
-> -    qemu_main = cocoa_main;
-> -
->     // Pull this console process up to being a fully-fledged graphical
->     // app with a menubar and Dock icon
->     ProcessSerialNumber psn = { 0, kCurrentProcess };
-> @@ -2185,6 +2151,12 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
->     qemu_clipboard_peer_register(&cbpeer);
->
->     [pool release];
+>   static bool eth_can_rx(NetClientState *nc)
+>   {
+>       XlnxXpsEthLite *s = qemu_get_nic_opaque(nc);
+> @@ -354,6 +306,9 @@ static void xilinx_ethlite_realize(DeviceState *dev, Error **errp)
+>   {
+>       XlnxXpsEthLite *s = XILINX_ETHLITE(dev);
+>   
+> +    memory_region_init(&s->mmio, OBJECT(dev),
+> +                       "xlnx.xps-ethernetlite", 0x2000);
 > +
-> +    /*
-> +     * The Cocoa UI will run the NSApplication runloop on the main thread
-> +     * rather than the default Core Foundation one.
-> +     */
-> +    qemu_main = cocoa_main;
-> }
->
-> static QemuDisplay qemu_display_cocoa = {
-> diff --git a/ui/gtk.c b/ui/gtk.c
-> index bf9d3dd679a..fbf20161f36 100644
-> --- a/ui/gtk.c
-> +++ b/ui/gtk.c
-> @@ -38,6 +38,7 @@
-> #include "qemu/cutils.h"
-> #include "qemu/error-report.h"
-> #include "qemu/main-loop.h"
-> +#include "qemu-main.h"
->
-> #include "ui/console.h"
-> #include "ui/gtk.h"
-> @@ -2485,6 +2486,13 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
-> #ifdef CONFIG_GTK_CLIPBOARD
->     gd_clipboard_init(s);
-> #endif /* CONFIG_GTK_CLIPBOARD */
-> +
-> +    /*
-> +     * GTK+ calls must happen on the main thread at least on some platforms,
-> +     * and on macOS the main runloop is polled via GTK+'s event handling.
-> +     * Don't allow QEMU's event loop to be moved off the main thread.
-> +     */
-> +    qemu_main = NULL;
-> }
->
-> static void early_gtk_display_init(DisplayOptions *opts)
-> diff --git a/ui/sdl2.c b/ui/sdl2.c
-> index bd4f5a9da14..44ab2762262 100644
-> --- a/ui/sdl2.c
-> +++ b/ui/sdl2.c
-> @@ -34,6 +34,7 @@
-> #include "sysemu/sysemu.h"
-> #include "ui/win32-kbd-hook.h"
-> #include "qemu/log.h"
-> +#include "qemu-main.h"
->
-> static int sdl2_num_outputs;
-> static struct sdl2_console *sdl2_console;
-> @@ -965,6 +966,9 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
->     }
->
->     atexit(sdl_cleanup);
-> +
-> +    /* SDL's event polling (in dpy_refresh) must happen on the main thread. */
-> +    qemu_main = NULL;
-> }
->
-> static QemuDisplay qemu_display_sdl2 = {
->
+>       object_initialize_child(OBJECT(dev), "ethlite.mdio", &s->mdio,
+>                              TYPE_UNIMPLEMENTED_DEVICE);
+>       qdev_prop_set_string(DEVICE(&s->mdio), "name", "ethlite.mdio");
+> @@ -363,6 +318,10 @@ static void xilinx_ethlite_realize(DeviceState *dev, Error **errp)
+>                               sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->mdio), 0));
+>   
+>       for (unsigned i = 0; i < 2; i++) {
+> +        memory_region_init_ram(&s->port[i].txbuf, OBJECT(dev),
+> +                               i ? "ethlite.tx[1]buf" : "ethlite.tx[0]buf",
+> +                               0x07f4, &error_abort);
+> +        memory_region_add_subregion(&s->mmio, 0x0800 * i, &s->port[i].txbuf);
+>           memory_region_init_io(&s->port[i].txio, OBJECT(dev),
+>                                 &eth_porttx_ops, s,
+>                                 i ? "ethlite.tx[1]io" : "ethlite.tx[0]io",
+> @@ -370,6 +329,11 @@ static void xilinx_ethlite_realize(DeviceState *dev, Error **errp)
+>           memory_region_add_subregion(&s->mmio, i ? A_TX_BASE1 : A_TX_BASE0,
+>                                       &s->port[i].txio);
+>   
+> +        memory_region_init_ram(&s->port[i].rxbuf, OBJECT(dev),
+> +                               i ? "ethlite.rx[1]buf" : "ethlite.rx[0]buf",
+> +                               0x07f4, &error_abort);
+> +        memory_region_add_subregion(&s->mmio, 0x1000 + 0x0800 * i,
+> +                                    &s->port[i].rxbuf);
+>           memory_region_init_io(&s->port[i].rxio, OBJECT(dev),
+>                                 &eth_portrx_ops, s,
+>                                 i ? "ethlite.rx[1]io" : "ethlite.rx[0]io",
+> @@ -390,9 +354,6 @@ static void xilinx_ethlite_init(Object *obj)
+>       XlnxXpsEthLite *s = XILINX_ETHLITE(obj);
+>   
+>       sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
+> -
+> -    memory_region_init_io(&s->mmio, obj, &eth_ops, s,
+> -                          "xlnx.xps-ethernetlite", R_MAX * 4);
+>       sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+>   }
+>   
+
 
