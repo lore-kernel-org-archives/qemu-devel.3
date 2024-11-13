@@ -4,56 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A9FCD41C3E
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 12:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E1CD41C3E
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 13:01:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBCuK-0006BJ-9T; Wed, 13 Nov 2024 07:55:42 -0500
+	id 1tBCzD-0007Aa-20; Wed, 13 Nov 2024 08:00:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1tBCuG-0006BB-ED
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 07:55:36 -0500
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1tBCz1-000793-Bb
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 08:00:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1tBCuE-000645-IZ
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 07:55:36 -0500
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1tBCyz-0006mw-6Q
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 08:00:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731502532;
+ s=mimecast20190719; t=1731502828;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Ep8pWqFmpmfsKbUQSXa/buf9WcOM3yVH9VVC1Qi6QNM=;
- b=OoQQGeNyArJweorlgnd+DnLgF5/VwSUP3dF3G211fkecen+YyQOFX7kC9iQIAYc+A4lUc3
- Z9IoVoAPDTAzvNN42hRp/uasNkHmuvSn0+91S/Ew3+VXQOAh7gf+zvwBCpwCNMiZ+XoZsq
- Sanf0Nwyg2bMdbY4oMHSJkMf6Q1qzmo=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8Hb+hBMBJV+0BwXq9RpkhqYkD3AvBLNOOjmLahSWfvc=;
+ b=Pvho4+TPlMnCulegetP7sKz1yssqwKKGgp76SMvAZUI6YH4PP34i729S/tVJVQp+TKs1wF
+ UayJfwdJ8bkVPDSND5sIe/FYpnzUclGTiQdqQVFZ5Ou8ZIizZvSZlwZNxd7mV79kaLNNYD
+ tNdsMKG44mZwDQg6dnlLOWSsMZJPPos=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-82-6c5U0ccyN2a1_vTEquTzDw-1; Wed,
- 13 Nov 2024 07:55:31 -0500
-X-MC-Unique: 6c5U0ccyN2a1_vTEquTzDw-1
-X-Mimecast-MFC-AGG-ID: 6c5U0ccyN2a1_vTEquTzDw
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-LQKpUecrPEa2nqmt6KhHLQ-1; Wed,
+ 13 Nov 2024 08:00:25 -0500
+X-MC-Unique: LQKpUecrPEa2nqmt6KhHLQ-1
+X-Mimecast-MFC-AGG-ID: LQKpUecrPEa2nqmt6KhHLQ
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D5BE1954234; Wed, 13 Nov 2024 12:55:30 +0000 (UTC)
-Received: from cash.home.annexia.org (unknown [10.42.28.15])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8F86030000DF; Wed, 13 Nov 2024 12:55:28 +0000 (UTC)
+ id E62DF19560A3; Wed, 13 Nov 2024 13:00:23 +0000 (UTC)
+Received: from localhost (unknown [10.42.28.15])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7AAA919560A3; Wed, 13 Nov 2024 13:00:22 +0000 (UTC)
+Date: Wed, 13 Nov 2024 13:00:21 +0000
 From: "Richard W.M. Jones" <rjones@redhat.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
- jjelen@redhat.com, mpitt@redhat.com
-Subject: [PATCH ssh v2] ssh: Do not switch session to non-blocking mode
-Date: Wed, 13 Nov 2024 12:55:23 +0000
-Message-ID: <20241113125526.2495731-1-rjones@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
+ hreitz@redhat.com, jjelen@redhat.com, mpitt@redhat.com
+Subject: Re: [PATCH ssh] ssh: Do not switch session to non-blocking mode
+Message-ID: <20241113130021.GA20898@redhat.com>
+References: <20241113115000.2494785-1-rjones@redhat.com>
+ <0371e3cc-1ed5-4685-835a-5378dd4dfbb7@tls.msk.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0371e3cc-1ed5-4685-835a-5378dd4dfbb7@tls.msk.ru>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=rjones@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -79,50 +84,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jakub Jelen <jjelen@redhat.com>
+On Wed, Nov 13, 2024 at 03:02:59PM +0300, Michael Tokarev wrote:
+> Heh. I was creating a qemu bug report on gitlab when this email arrived :)
+> 
+> 13.11.2024 14:49, Richard W.M. Jones wrote:
+> >From: Jakub Jelen <jjelen@redhat.com>
+> >
+> >The libssh does not handle non-blocking mode in SFTP correctly. The
+> >driver code already changes the mode to blocking for the SFTP
+> >initialization, but for some reason changes to non-blocking mode.
+> 
+> "changes to non-blocking mode LATER", I guess, - or else it's a bit
+> difficult to read.  But this works too.
+> 
+> >This used to work accidentally until libssh in 0.11 branch merged
+> >the patch to avoid infinite looping in case of network errors:
+> >
+> >https://gitlab.com/libssh/libssh-mirror/-/merge_requests/498
+> >
+> >Since then, the ssh driver in qemu fails to read files over SFTP
+> >as the first SFTP messages exchanged after switching the session
+> >to non-blocking mode return SSH_AGAIN, but that message is lost
+> >int the SFTP internals and interpretted as SSH_ERROR, which is
+> >returned to the caller:
+> >
+> >https://gitlab.com/libssh/libssh-mirror/-/issues/280
+> >
+> >This is indeed an issue in libssh that we should address in the
+> >long term, but it will require more work on the internals. For
+> >now, the SFTP is not supported in non-blocking mode.
+> 
+> The comment at init where the code sets socket to blocking mode, says:
+> 
+>     /*
+>      * Make sure we are in blocking mode during the connection and
+>      * authentication phases.
+>      */
+>     ssh_set_blocking(s->session, 1);
+> 
+> 
+> There are a few other places where the code expect "some" blocking
+> mode, changes it to blocking, and restores the mode later, - eg,
+> see ssh_grow_file().  It looks all this has to be fixed too.
 
-The libssh does not handle non-blocking mode in SFTP correctly. The
-driver code already changes the mode to blocking for the SFTP
-initialization, but for some reason changes to non-blocking mode.
-This used to work accidentally until libssh in 0.11 branch merged
-the patch to avoid infinite looping in case of network errors:
+I'll just note that I'm only forwarding on the patch from Jakub.
+I didn't write it.
 
-https://gitlab.com/libssh/libssh-mirror/-/merge_requests/498
+I did lightly test it, and it seems to work.  However it seems also
+likely that it is causing qemu to block internally.  Probably not
+noticable for light use, but not something that we'd want for serious
+use.  However if libssh doesn't support non-blocking SFTP there's not
+much we can do about that in qemu.
 
-Since then, the ssh driver in qemu fails to read files over SFTP
-as the first SFTP messages exchanged after switching the session
-to non-blocking mode return SSH_AGAIN, but that message is lost
-int the SFTP internals and interpretted as SSH_ERROR, which is
-returned to the caller:
+I would recommend using nbdkit-ssh-plugin instead anyway as it is much
+more featureful and doesn't have this problem as we use real threads
+instead of coroutines.
 
-https://gitlab.com/libssh/libssh-mirror/-/issues/280
+> I wonder if qemu ssh driver needs to mess with blocking mode of this
+> socket in the first place, ever.  Is there a way qemu can get non-blocking
+> socket in this context?  I can only think of fd=NNN, but is it
+> possible for this socket to be non-blocking?
+> 
+> >Fixes: https://gitlab.com/libssh/libssh-mirror/-/issues/280
+> >Signed-off-by: Jakub Jelen <jjelen@redhat.com>
+> >Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
+> >---
+> >  block/ssh.c | 2 --
+> >  1 file changed, 2 deletions(-)
+> >
+> >diff --git a/block/ssh.c b/block/ssh.c
+> >index 9f8140bcb6..e1529cfda9 100644
+> >--- a/block/ssh.c
+> >+++ b/block/ssh.c
+> >@@ -866,8 +866,6 @@ static int ssh_open(BlockDriverState *bs, QDict *options, int bdrv_flags,
+> >          goto err;
+> >      }
+> >-    /* Go non-blocking. */
+> >-    ssh_set_blocking(s->session, 0);
+> >      if (s->attrs->type == SSH_FILEXFER_TYPE_REGULAR) {
+> >          bs->supported_truncate_flags = BDRV_REQ_ZERO_WRITE;
+> 
+> Please remove the empty line too.
 
-This is indeed an issue in libssh that we should address in the
-long term, but it will require more work on the internals. For
-now, the SFTP is not supported in non-blocking mode.
+I posted a v2 which removes the blank line but is otherwise the same.
 
-Fixes: https://gitlab.com/libssh/libssh-mirror/-/issues/280
-Signed-off-by: Jakub Jelen <jjelen@redhat.com>
-Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
----
- block/ssh.c | 3 ---
- 1 file changed, 3 deletions(-)
+Rich.
 
-diff --git a/block/ssh.c b/block/ssh.c
-index 9f8140bcb6..b9f33ec739 100644
---- a/block/ssh.c
-+++ b/block/ssh.c
-@@ -866,9 +866,6 @@ static int ssh_open(BlockDriverState *bs, QDict *options, int bdrv_flags,
-         goto err;
-     }
- 
--    /* Go non-blocking. */
--    ssh_set_blocking(s->session, 0);
--
-     if (s->attrs->type == SSH_FILEXFER_TYPE_REGULAR) {
-         bs->supported_truncate_flags = BDRV_REQ_ZERO_WRITE;
-     }
 -- 
-2.46.0
+Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
+Read my programming and virtualization blog: http://rwmj.wordpress.com
+Fedora Windows cross-compiler. Compile Windows programs, test, and
+build Windows installers. Over 100 libraries supported.
+http://fedoraproject.org/wiki/MinGW
 
 
