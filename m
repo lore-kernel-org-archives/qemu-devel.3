@@ -4,78 +4,211 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A107D41C18
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 08:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C229D41C17
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 08:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tB91g-0001pE-90; Wed, 13 Nov 2024 03:47:00 -0500
+	id 1tB93r-0002eb-KC; Wed, 13 Nov 2024 03:49:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jpruiz84@gmail.com>)
- id 1tB91e-0001oo-EY
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 03:46:58 -0500
-Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jpruiz84@gmail.com>)
- id 1tB91b-00078X-RQ
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 03:46:58 -0500
-Received: by mail-vk1-xa2e.google.com with SMTP id
- 71dfb90a1353d-50d3365c29cso420270e0c.0
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 00:46:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731487615; x=1732092415; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+IfjdgLpI8ScmfQxUlbtZcJaLTqvmUsnpEoMOVrYTc4=;
- b=hLUpN34itehNv2jg1YZszFsOJi2ol8JK4lScXQB055113v1PHpsb7ubGMm7UL7vwQg
- yyt2CeBp1NV3VM4Wzc4yPLgC94SAUBMz2ME5xbjBOube8b/7M3k34Zupv02QKKcPT0rK
- LzFpBq/5cXkodYdAyrRbCt+ZljwIM7ZHteEaCiPaZ9WYDDAhojtqtbMJwLct3CozT3Ar
- ibb/W068Hbziyi5p8/uD+rlZO846wsDHSBNOK/zDbfFHynm3dsM11mm32AikCWT0fwKc
- uyLdd2K1aaf5H8lgMQ211f38UzvcMbYsurae/tubrRQ0GsoUCMZ0+UH2heJIyr0o9chT
- qIGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731487615; x=1732092415;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+IfjdgLpI8ScmfQxUlbtZcJaLTqvmUsnpEoMOVrYTc4=;
- b=qNJfOZ8MXMHBZ784y8Tpx5FOt1D6JaW2J9JcL6N8QyqKg4oF63UjTetUPxUgD+CpPT
- zBd+l9WltNwMjSOj0Rzf5dZ/UdtJA9+PNhgOmrYDN+RSSWrlAgNT4JDdbLjMw6Mf7iUh
- Zcufx2B6sVQAB2kbM4OZ1E2vgJO46O8TqSfNsKSgZiwrs6FKKaFZcKj0OsuK3NQgzZPc
- Sy9+fPxOMvi4yCt6PkZNKGjaqQY2Jq8WlwPy8CSoXIM20NsNToADiC48fk9P7OjRBCCL
- +MPXGCt0WJ0qi19qOyPJwZx7zA1voIus3p42Wx08tQKDoHBCsZ30MO7qIB1xnLEVWzW2
- UulQ==
-X-Gm-Message-State: AOJu0Yx4osAj2lriHPFOZyFc4eUkRkfyqmrph03itICjRrxfPxoophZu
- gSwHE7KNT98JKBpcHA2e+hIOmirHql9hWIWm39dhJSBzpT6X7gN1Zx1/F5AcqIYRZzbbNB+tobN
- PE0wcfZdWduYO7Psl5rratjfC7IMVm3El
-X-Google-Smtp-Source: AGHT+IF/MBfXKEzGIcrN+CGSmLjtZtKMI1fgLgHV5j6Acym+0jrCajkDA3f+TlE8PiB289ZoGhgwNQAfrfYt/mENfDY=
-X-Received: by 2002:a05:6122:3c4f:b0:50d:4b8d:6750 with SMTP id
- 71dfb90a1353d-51402523fdcmr13345127e0c.1.1731487614507; Wed, 13 Nov 2024
- 00:46:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1tB93p-0002eM-9n
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 03:49:13 -0500
+Received: from mgamail.intel.com ([198.175.65.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1tB93m-0007Ko-Tu
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 03:49:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1731487751; x=1763023751;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=BpjAY9AzL5x5KZX2qxgLQ+3z8wVovt0Ej3VwkOeUc9Y=;
+ b=COpfYSCoxLhfLs0e6mfvYaEFC3tmveaXlnYqasaIFOYYYkSaFs0+CuDg
+ ZVkwWfhixmW/sdYCIw2Gg7Ld3uQYuKyxzDiwUYGf4AIT9gJQrXorRfUQa
+ sjYJE+qo0+tcU+9lUPQooI+FkXxGdyCdxL5zAm+z9eWT8MaiECjMwBq12
+ ghzadummHLhvM4H1sGUXrHmTAPABHNLG13Crp8lUZ1TywlhkxYqFqmr7U
+ 3cXkpGoKfIv/ZqZdHQ138jTh7heW+xFsuNt2LG2ts4f/hWlZZD7tCXvJC
+ L0bmpbVZqsqxNBHdfq4K0ESRJmUEstyntUDRPl6ZjIGn4jtj6SPAlGvM5 g==;
+X-CSE-ConnectionGUID: M9CstbDEQ5Spd+aakcbgVw==
+X-CSE-MsgGUID: CaDOvxqJT2+TaWPs7hcUAw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="48821730"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="48821730"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Nov 2024 00:49:07 -0800
+X-CSE-ConnectionGUID: hcbxJOQhToWkSiv3DUOkQw==
+X-CSE-MsgGUID: RFBQ5JbESFaXUPtBQcnKfQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,150,1728975600"; d="scan'208";a="87793715"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+ by orviesa009.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 13 Nov 2024 00:49:06 -0800
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Wed, 13 Nov 2024 00:49:05 -0800
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Wed, 13 Nov 2024 00:49:05 -0800
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (104.47.56.43) by
+ edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 13 Nov 2024 00:49:05 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gj+GATj1zb+YzZDZ9gspffNXiGqsBeliwj7i27Sf+DfmhCPg89f4gEwxXtWggOH/uvT6xWm952GpLf1L6bQ6ri0lA/lgfL+SQ+Pw3bcYX4K6mD8/K5wbcqvlAIpmZk/6eG+bMjjbSG+LeqPSprjcU/ZMLJG3vju0uJMkG2zmT5DXLg+MGS2RwhRj2BRlKpdbLcgIrgxl3PJ0a5kpF8uDReFjPaKwrakwwJHGn+/neNFBesDU3rZ/2/X90XX8zRXp7MENVfVlDXYvZq+1mDL6lMs3iIFUCMAhNPRrOHCWxrvczbgxN8xuzPUh5wrXJgKkINvGo8I/hpn97/WhQdUd3w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BpjAY9AzL5x5KZX2qxgLQ+3z8wVovt0Ej3VwkOeUc9Y=;
+ b=wlhqJMlW+MaO8j09+e2QwKDWXAM35tU9bY4dXjCYnl5FMVfNpfxie5/wo9WmYXhHONw9z4Wn7UATiHp/eBZ79Mubuq4ln3+cogjFuzVle2DKFkOzB9kTVrXiNdM62MrSpiZR8UncYl4YLl0a6D9Kx5NmURfT6DxyREZOthuVsUgwrbYstGDAkgsb4SV/pQG9FZFfwHMPAdPMfZ6dcZolhGn254xCTtRBVNa/L8y/lI5g2e6fkuqd8EEr0ZK+eeEGjIq+8JAPkSo34dMibaqeBDZs3Ah+p992ql4y+nhoOS/fXPl/dTqZLrG/z8rjoU7nN/9bV+nXCi8t2rUVZOZ20w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by CY8PR11MB7193.namprd11.prod.outlook.com (2603:10b6:930:91::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.28; Wed, 13 Nov
+ 2024 08:49:03 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%5]) with mapi id 15.20.8137.027; Wed, 13 Nov 2024
+ 08:49:02 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi
+ L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: RE: [PATCH v5 08/20] intel_iommu: Check stage-1 translation result
+ with interrupt range
+Thread-Topic: [PATCH v5 08/20] intel_iommu: Check stage-1 translation result
+ with interrupt range
+Thread-Index: AQHbNBUgojqICTTWREmOl85RD5a2urK0yfEAgAAdsfA=
+Date: Wed, 13 Nov 2024 08:49:02 +0000
+Message-ID: <SJ0PR11MB6744955D0692A4D225108831925A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20241111083457.2090664-1-zhenzhong.duan@intel.com>
+ <20241111083457.2090664-9-zhenzhong.duan@intel.com>
+ <04f7b400-b754-417b-8c17-7605d9676e76@eviden.com>
+In-Reply-To: <04f7b400-b754-417b-8c17-7605d9676e76@eviden.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|CY8PR11MB7193:EE_
+x-ms-office365-filtering-correlation-id: 8185b8e6-47cb-49a4-3663-08dd03c005e8
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|7416014|1800799024|366016|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?d2RjU0VSc3l1WmxUNVZDbFZkZ0xEN096eUplVGNyUVZsZS9Qb0NNT1BQcjVT?=
+ =?utf-8?B?K3IyWU5wR3o0T08xQ2RERWVLMDlxUVRkMnhFZGR5SjNDMFpOQy9YWU5zVFYr?=
+ =?utf-8?B?ekl3V0RiK1hDZUZHcUZvNEFxaXRFQ0RBQm4vZGhKL3UyMzRRQ3BRUTlJY1JZ?=
+ =?utf-8?B?MG5lQ1MrRXZ2OXk5TllGSSthNldlY0lyWTh4NzkvOTlCQldyM2xicyszYXdU?=
+ =?utf-8?B?cWhSODJTb1J4NGFJbkExdHR5RHlyODJiNk5MMDBIYXNtZ0IzUDVWWGxMTy9l?=
+ =?utf-8?B?aE9PMnlOVUp2NHRHRjNVU0ZzSEpzTHQzVWVFVURtaFJ1aUhxY3c4TTRmcmZs?=
+ =?utf-8?B?cGR6UmZNcSt2cXVld0V3YzZ5UEpGNVRTK3R6Q0daaytiYjUvdlN4ZFc5YjZZ?=
+ =?utf-8?B?R2c1clEvTERWZUVqRllyM09JaFU4REI0cGxvOW00TUs2Mm83Rnp3TnQ4cEx2?=
+ =?utf-8?B?QlI3c3dCOGYrMmtnajhrNTliV2dXTjA1YWFoWWVWbUJRRDJiZk5hWDd1T3VC?=
+ =?utf-8?B?UkZZTDRDK0p0djFsWXZ4M3dsSzZNVzR1M2hudVlQSFJac3NUeHhaalRIblZw?=
+ =?utf-8?B?SEo3RnRZMmtSOXpVK2hwelZIZ013NkF1QnFWclFOckVXblREN2lCSjRrWTlS?=
+ =?utf-8?B?bW5PZTdvYXBtdGZsUFB0TnVkajcyRHpheFFtMFI0TW0yQldBejJkbjBlSXdC?=
+ =?utf-8?B?RUw1ZG13SUJiZ1VxNXpoWXduc2tsRUkraWluWjFhTGM4ZFNkTml2eThQVkZH?=
+ =?utf-8?B?WWxBaTRLN252RTdSNWVYSjFod3dKeUM2emF1RlV6SWVsZ1kweFE1eTFSVzFY?=
+ =?utf-8?B?dU5jVm5ianRXVVlnS2dVZkQzMGJtdkkvdXhMS3FuTUUxRjhibWc1UkxzdjJL?=
+ =?utf-8?B?NnFXV204UjlwMGowTFBKc3drMXR5emZNN29hTFhZUTFYNmRmQjZyZjd6NWI0?=
+ =?utf-8?B?dzR4d3B3SEtNQmJxVXpldUpwaldoeXZHR2tadXVHZi9pYjBuc0xSZWZ6QWhN?=
+ =?utf-8?B?UWFVNkZIcks5ZVg0NE1pY3AvRTZ5a0xLa3hxd0pLVi9oTDNrSXJlaWMzM2FL?=
+ =?utf-8?B?bWdWT2g0cTgvQ1poWjVGT0FPT2dDZDNRVHc1ZU43b1hBUmpUR3VQRzg0MmUy?=
+ =?utf-8?B?VEI4ZkpiR0Z3TFZsR3IxL1BzZm54UFlFTEkxSytBZGdtK3FhMDA2cVdZc3N2?=
+ =?utf-8?B?WGVCZERXUUdZaXU1YzU4UU9Nc0c3bUhvNlQ1RmVKd1BLUG5zckRLOTZEVThi?=
+ =?utf-8?B?aTRUVTF4RytnMUdhcmFjRUV2TFFubXBuYkphTTAxWkZ5M3NGWWxXenc5SFJC?=
+ =?utf-8?B?ZmdnS0ZlNDRyalpKaXozQ3RvMHF3RU1TTlpFanNhd1BHYldLcVNXdm14UTdp?=
+ =?utf-8?B?aHJ4dFFjcVdkMlM5Q3RaeUhFKythYlNaUFBCdnFBV2syUVhPU2NzWGdYeHZZ?=
+ =?utf-8?B?SEMzejEwTWV0aWlFaSt6N0Q5N2hKZjFWMk9LT0dUWmVsZUJ0cXFFbVptd2F5?=
+ =?utf-8?B?ZlI0cWd4Mm9sRUFsK0RPdCtBd2d0VzI1L2NJT3oySGJaWVRJUVRwbGxHWm9p?=
+ =?utf-8?B?U0Nmd29qTkViYzZzVTA0UWdMYVcrWHFFSzM2NE5EeU91VUl1N2REYmFhR0pr?=
+ =?utf-8?B?WExOekdsSHZGUzVaRTBRdHdJZzJTUjNHamswTnlZNXpXUWFlV0JUb1VUTHhL?=
+ =?utf-8?B?blJxbEwzT2MrbVZkdVljNStWemYreGc2Tm0wUDZ2aVNpekRVSys0Z3BSOVZE?=
+ =?utf-8?B?RXEvcTlLTGFYL2F4Y1dkLzdKSFR3UU5SRXdHMWErN1VnU1VXS2dVMXRKQVpx?=
+ =?utf-8?Q?ZkovaNmYXfeJXGDm3juphyctaX2D3LMoaC3fs=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Szl2NThEUVRCL0V0WjZVamQvZFU4bGRnNU9wbFBBdktWMjNoMVJoNkhNZ05t?=
+ =?utf-8?B?Z1RPdGtRNWFYY2VlTHpTU0YzeXo3UDJyc1cxbGlWMjJlRHVkWXdGRmxsdkNz?=
+ =?utf-8?B?YU9WRnhGdy9FaTNWL2h6enQvdUlnUnRQVUI0QWo0a2dIb2Z3NzQ3ajM2TzFO?=
+ =?utf-8?B?aXRwZU5lZzNmV05FZmlSN29ETUd1VFhLVnUvQjBOZVk3UDVJd3VqRy83VFVZ?=
+ =?utf-8?B?SDUyd1U3WWR5SUczcHVnb05iN1ZqdTh2a3Y0enlxSGpaQ3BRanJHenp1VlZ3?=
+ =?utf-8?B?R3dEV25POFA0cndkQjFyUG4rZ3VqY2VkMElweExxT3VxRE4rc2R4Mm11UWw1?=
+ =?utf-8?B?cnVKZ2NFNWJZYjFDWjZjOTZlM2ZNVCtCRVE3ZUJRaW5mTnJFTGJhYXN4cS8y?=
+ =?utf-8?B?MEhGTUhyNiswTWdlc1dvQWt5dzFzY3paYktUaWdhRmJYT0FSdEtjYS9EUldW?=
+ =?utf-8?B?Yy9WSVRtVlQ1NVpxcFdxNi9OY3ZzZzhZUFpQcmI1ak95dHlJQ0dRWEVrdGZH?=
+ =?utf-8?B?QitJOGtVY0tEY1NqSWo2OVhJNUxKbkR2ZE03UUVFU3hrMHZrVGlEVGRENmlB?=
+ =?utf-8?B?Ym40WEZJODM1WG5IZ2pDOVFZOGxLZjc2RUxFRzdHSmcxU0FRQmtVSStlQnNP?=
+ =?utf-8?B?YjJjWmd3T3dCMDBVS2VOVWo2VXczRmpMckZoN2o2aERhMHpRcE5FUkh0STVY?=
+ =?utf-8?B?cmxCRzF5bGxic2dSV2VFN3BZTlBuajBySzRLYjBwcHhZQnYxQjhuelBCUHNw?=
+ =?utf-8?B?cmZNRWZoTjFOY3Y5bGpjNUtxa3RUMFE5VzZsT3BKcUVsYUZSd2tRNi9tTUU1?=
+ =?utf-8?B?NCtqVTdwQmFNRXVZM1RKcmNEWlF3K2QzZGhaVVgzMG9vcFhESlFBOEh1YXU3?=
+ =?utf-8?B?SEZ5R2Z6OHVIK3dHQVNwSkwwSk1vRWFLNVA4V3lENTU4dGN6dXlLelkxNkQ4?=
+ =?utf-8?B?Z1FWcFVCVnVoOHBKUGV2QWRSYjc2bnZnZ3NXL01pLzFhb1N3S1pZT0lsU0Qz?=
+ =?utf-8?B?eVVYelZIZUZoVmxqZkk4d3c0ZHpzZFBtR2hrUzUrdUFNRXhGbE9WbzN2VXlD?=
+ =?utf-8?B?NzdMdUROWHpod0orQmx6RzFMdlpybVB2QU1IVUxhMGZtYVp5d0l5VTY1dkF1?=
+ =?utf-8?B?MXdaa3VPTERTaW9VNmllalBFalp2bU1tU2doWEtkd3Q3UFhuVjFySTlPeGVZ?=
+ =?utf-8?B?WTBSOFo4ZDh2Y2p4V0tSUTdVNjVyQksyenFlOGg5UzdaaWl0S2YvcUhLdXFu?=
+ =?utf-8?B?bFpQcTl1V0FjUGFLTVlyaFBEYXZ3TzFpUkQyYkJTODBiaXdiVEFmd1FoVlRl?=
+ =?utf-8?B?U0s1RTByMy9YZURXWkFNRWIyNzN3UEg4c2ZnVXZ5S3hoVU1JUzVOU0dqbDFa?=
+ =?utf-8?B?UlRVdE54YTY2Mmtyc3ZhYi9DK0czd2lZUmlqVFBzYzhOL0xQdU1TZW4xZDA4?=
+ =?utf-8?B?UHJPR1ZFTG1QK1FYQktRbHp3RVhRbkFHVHhCb2RqVkNRUi8xeVdGTkgzcDlZ?=
+ =?utf-8?B?WUdUcXplVWVzMmFRMXRTQ3B2S0F2d21wcVJVNG9LOVJtWXNxMTlMWEFiNTA1?=
+ =?utf-8?B?WEoyMmFGMm5hZlVYbnZrQ0VQc1J0N2FEWU82Q3grOE93UUpvdGNGK0xjVThm?=
+ =?utf-8?B?ekNmVy9wTDd1ajdhb0MyT1UvTEcvOVNrQVNFWnhsSHM2WkRFb3BEc21aMmFK?=
+ =?utf-8?B?aEhYc0VpdTVhdGY4OVpQY21mRWVQUEVXdXhRbjlCd1Q0R1dZUWhQRmQ3cFRG?=
+ =?utf-8?B?UHJOQ01QUmYvUEdqMmRWejJVMEl5M2NuU0tqb2wzRkNPNGZuSlo3ZjlMWWxy?=
+ =?utf-8?B?NFdKejdVdUllcU9wRDBtZmN6SHNST2pBWjlkWmR2QWpZcFJhZ3F0eXUrM0FB?=
+ =?utf-8?B?L0c3ZlY3M1kyRTU4Nk9lZW9aUnk2R0FKQWFYai9TNXNrV2hzdUVOQ0JnR1JU?=
+ =?utf-8?B?cFBUZFRPRDM4T05qK2NVeVY5M1BqaFZna3BjL0QwUTAzeVdWRVVPYUtaSS9W?=
+ =?utf-8?B?NjFFWVJ3RE96SzJDeXVqT0sxWStEY0dtblFSQXgxWklhN0pSbmZUMU9rWUdu?=
+ =?utf-8?B?dHZ6UGFzOE4rbnpLK1BTQ3VERVpQNUJlT2RSRWhFOEhrSFdJYzlyaUZvaHho?=
+ =?utf-8?Q?N1EK0/d+yQRtV7jZA2texrfd1?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20241112220212.2237-1-juanpablo.ruiz@unikie.com>
- <20241112164326.562406a9.alex.williamson@redhat.com>
-In-Reply-To: <20241112164326.562406a9.alex.williamson@redhat.com>
-From: Juan Pablo Ruiz <jpruiz84@gmail.com>
-Date: Wed, 13 Nov 2024 10:46:42 +0200
-Message-ID: <CAAuDais8P9Hf9XSMhXp=aNctT+ix5mjkwNMfQ5Kcv4oMSJysbQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] vfio/platform: Add mmio-base property to define start
- address for MMIO mapping
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, Juan Pablo Ruiz <juanpablo.ruiz@unikie.com>, 
- Auger Eric <eric.auger@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Type: multipart/mixed; boundary="00000000000032b3b60626c76086"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
- envelope-from=jpruiz84@gmail.com; helo=mail-vk1-xa2e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8185b8e6-47cb-49a4-3663-08dd03c005e8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2024 08:49:02.3750 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: yuK+0uIeSg7QEm0rQqvl1lV8udTot01DQhzjZOjlU5P1obQknQjfGVpioNxXVfs8F3yMnLgbMievTRZ9v7+Ei5XyiAei4bUaZ2e5O22/G6o=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR11MB7193
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.10;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,510 +225,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000032b3b60626c76086
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Nov 13, 2024 at 1:43=E2=80=AFAM Alex Williamson
-<alex.williamson@redhat.com> wrote:
->
-> On Tue, 12 Nov 2024 22:02:12 +0000
-> Juan Pablo Ruiz <jpruiz84@gmail.com> wrote:
->
-> > Some platform devices have large MMIO regions (e.g., GPU reserved memor=
-y). For
-> > certain devices, it's preferable to have a 1:1 address translation in t=
-he VM to
-> > avoid modifying driver source code.
->
-> Why do we need 1:1 mappings?  Shouldn't the device tree describe where
-> the device lives in the VM address space and the driver should adapt
-> rather than use hard coded addresses?
->
-
-For certain devices, especially those with large MMIO regions like GPU rese=
-rved
-memory, it's important to have 1:1 address translations to avoid extensive
-modifications to the driver source code. In platforms like the NVIDIA Jetso=
-n,
-some drivers have not integrated the dma-ranges property from the device tr=
-ee
-to set DMA address translations. This means the drivers expect devices at f=
-ixed
-physical addresses. Using 1:1 mappings allows us to passthrough these devic=
-es
-without altering the drivers, facilitating scalability and ease of deployme=
-nt.
-
-
-> How does a user know which devices need fixed base addresses and what
-> those addresses should be?
->
-
-This is primarily only used to passthrough CMA regions that are required fo=
-r DMA
-opperatinos. For devices that do not require a specific address, users
-can omit the
-mmio-base parameter, and the platform bus will assign addresses automatical=
-ly.
-We can improve the documentation to help users determine when and how
-to specify `mmio-base`.
-
-> > This patch:
->
-> ... should be split into at least 3 patches.
->
-
-You're right; the patch should be split into separate commits for clarity:
-
-- Patch 1: Increase the platform bus size.
-- Patch 2: Change the `mmio_size` property from 32 to 64 bits.
-- Patch 3: Add the `mmio-base` property.
-
-> >
-> > 1. Increases the VFIO platform bus size from 32MB to 130GB.
->
-> That's a very strange and specific size.
-
-The bus size increase to 130GB (actually 127GB or 130048MB) aligns the
-platform bus's MMIO region with the VIRT_MEM region starting at
-`0x2000000000`. This alignment is necessary to accommodate devices
-with large MMIO requirements and to maintain a contiguous address space.
-
-
->
-> > 2. Changes the mmio_size property from 32 to 64 bits.
-> > 3. Adds an mmio-base property to define the starting MMIO address for m=
-apping
-> >    the VFIO device.
-> >
-> > Signed-off-by: Juan Pablo Ruiz juanpablo.ruiz@unikie.com
-> > ---
-> >  hw/arm/virt.c                   |  6 +++---
-> >  hw/core/platform-bus.c          | 28 ++++++++++++++++++++++++++--
-> >  hw/vfio/platform.c              |  1 +
-> >  include/hw/platform-bus.h       |  2 +-
-> >  include/hw/vfio/vfio-platform.h |  1 +
-> >  5 files changed, 32 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index 1a381e9a2b..9fc8f4425a 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -183,13 +183,13 @@ static const MemMapEntry base_memmap[] =3D {
-> >      [VIRT_SECURE_GPIO] =3D        { 0x090b0000, 0x00001000 },
-> >      [VIRT_MMIO] =3D               { 0x0a000000, 0x00000200 },
-> >      /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that=
- size */
-> > -    [VIRT_PLATFORM_BUS] =3D       { 0x0c000000, 0x02000000 },
-> > +    [VIRT_PLATFORM_BUS] =3D       { 0x60000000, 0x1FC0000000 },       =
-   // 130048MB
-> >      [VIRT_SECURE_MEM] =3D         { 0x0e000000, 0x01000000 },
-> >      [VIRT_PCIE_MMIO] =3D          { 0x10000000, 0x2eff0000 },
-> >      [VIRT_PCIE_PIO] =3D           { 0x3eff0000, 0x00010000 },
-> >      [VIRT_PCIE_ECAM] =3D          { 0x3f000000, 0x01000000 },
-> >      /* Actual RAM size depends on initial RAM and device memory settin=
-gs */
-> > -    [VIRT_MEM] =3D                { GiB, LEGACY_RAMLIMIT_BYTES },
-> > +    [VIRT_MEM] =3D                { 0x2000000000, LEGACY_RAMLIMIT_BYTE=
-S },
-> >  };
-> >
-> >  /*
-> > @@ -1625,7 +1625,7 @@ static void create_platform_bus(VirtMachineState =
-*vms)
-> >      dev =3D qdev_new(TYPE_PLATFORM_BUS_DEVICE);
-> >      dev->id =3D g_strdup(TYPE_PLATFORM_BUS_DEVICE);
-> >      qdev_prop_set_uint32(dev, "num_irqs", PLATFORM_BUS_NUM_IRQS);
-> > -    qdev_prop_set_uint32(dev, "mmio_size", vms->memmap[VIRT_PLATFORM_B=
-US].size);
-> > +    qdev_prop_set_uint64(dev, "mmio_size", vms->memmap[VIRT_PLATFORM_B=
-US].size);
-> >      sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> >      vms->platform_bus_dev =3D dev;
-> >
-> > diff --git a/hw/core/platform-bus.c b/hw/core/platform-bus.c
-> > index dc58bf505a..f545fab6e5 100644
-> > --- a/hw/core/platform-bus.c
-> > +++ b/hw/core/platform-bus.c
-> > @@ -22,6 +22,7 @@
-> >  #include "qemu/osdep.h"
-> >  #include "hw/platform-bus.h"
-> >  #include "hw/qdev-properties.h"
-> > +#include "hw/vfio/vfio-platform.h"
-> >  #include "qapi/error.h"
-> >  #include "qemu/error-report.h"
-> >  #include "qemu/module.h"
-> > @@ -130,11 +131,29 @@ static void platform_bus_map_mmio(PlatformBusDevi=
-ce *pbus, SysBusDevice *sbdev,
-> >                                    int n)
-> >  {
-> >      MemoryRegion *sbdev_mr =3D sysbus_mmio_get_region(sbdev, n);
-> > +    VFIOPlatformDevice *vdev =3D VFIO_PLATFORM_DEVICE(sbdev);
->
-> How do you know it's a vfio-platform device?  This completely breaks
-> device abstraction.  Thanks,
->
-> Alex
->
-> >      uint64_t size =3D memory_region_size(sbdev_mr);
-> >      uint64_t alignment =3D (1ULL << (63 - clz64(size + size - 1)));
-> >      uint64_t off;
-> > +    uint64_t mmio_base_off;
-> >      bool found_region =3D false;
-> >
-> > +    if (vdev->mmio_base) {
-> > +        if(vdev->mmio_base < pbus->mmio.addr ||
-> > +           vdev->mmio_base >=3D pbus->mmio.addr + pbus->mmio_size){
-> > +            error_report("Platform Bus: MMIO base 0x%"PRIx64
-> > +                " outside platform bus region [0x%"PRIx64",0x%"PRIx64"=
-]",
-> > +                vdev->mmio_base,
-> > +                pbus->mmio.addr,
-> > +                pbus->mmio.addr + pbus->mmio_size);
-> > +            exit(1);
-> > +        }
-> > +
-> > +        mmio_base_off =3D vdev->mmio_base - pbus->mmio.addr;
-> > +    } else {
-> > +        mmio_base_off =3D 0;
-> > +    }
-> > +
-> >      if (memory_region_is_mapped(sbdev_mr)) {
-> >          /* Region is already mapped, nothing to do */
-> >          return;
-> > @@ -144,7 +163,7 @@ static void platform_bus_map_mmio(PlatformBusDevice=
- *pbus, SysBusDevice *sbdev,
-> >       * Look for empty space in the MMIO space that is naturally aligne=
-d with
-> >       * the target device's memory region
-> >       */
-> > -    for (off =3D 0; off < pbus->mmio_size; off +=3D alignment) {
-> > +    for (off =3D mmio_base_off; off < pbus->mmio_size; off +=3D alignm=
-ent) {
-> >          MemoryRegion *mr =3D memory_region_find(&pbus->mmio, off, size=
-).mr;
-> >          if (!mr) {
-> >              found_region =3D true;
-> > @@ -154,6 +173,11 @@ static void platform_bus_map_mmio(PlatformBusDevic=
-e *pbus, SysBusDevice *sbdev,
-> >          }
-> >      }
-> >
-> > +    if (vdev->mmio_base && vdev->mmio_base !=3D off + pbus->mmio.addr)=
- {
-> > +        warn_report("Platform Bus: Not able to map in mmio base: 0x%"P=
-RIx64,
-> > +            vdev->mmio_base);
-> > +    }
-> > +
-> >      if (!found_region) {
-> >          error_report("Platform Bus: Can not fit MMIO region of size %"=
-PRIx64,
-> >                       size);
-> > @@ -206,7 +230,7 @@ static void platform_bus_realize(DeviceState *dev, =
-Error **errp)
-> >
-> >  static Property platform_bus_properties[] =3D {
-> >      DEFINE_PROP_UINT32("num_irqs", PlatformBusDevice, num_irqs, 0),
-> > -    DEFINE_PROP_UINT32("mmio_size", PlatformBusDevice, mmio_size, 0),
-> > +    DEFINE_PROP_UINT64("mmio_size", PlatformBusDevice, mmio_size, 0),
-> >      DEFINE_PROP_END_OF_LIST()
-> >  };
-> >
-> > diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-> > index a85c199c76..cfac564093 100644
-> > --- a/hw/vfio/platform.c
-> > +++ b/hw/vfio/platform.c
-> > @@ -640,6 +640,7 @@ static Property vfio_platform_dev_properties[] =3D =
-{
-> >      DEFINE_PROP_LINK("iommufd", VFIOPlatformDevice, vbasedev.iommufd,
-> >                       TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
-> >  #endif
-> > +    DEFINE_PROP_UINT64("mmio-base", VFIOPlatformDevice, mmio_base, 0),
-> >      DEFINE_PROP_END_OF_LIST(),
-> >  };
-> >
-> > diff --git a/include/hw/platform-bus.h b/include/hw/platform-bus.h
-> > index 44f30c5353..4e9913a5d7 100644
-> > --- a/include/hw/platform-bus.h
-> > +++ b/include/hw/platform-bus.h
-> > @@ -34,7 +34,7 @@ struct PlatformBusDevice {
-> >      SysBusDevice parent_obj;
-> >
-> >      /*< public >*/
-> > -    uint32_t mmio_size;
-> > +    uint64_t mmio_size;
-> >      MemoryRegion mmio;
-> >
-> >      uint32_t num_irqs;
-> > diff --git a/include/hw/vfio/vfio-platform.h b/include/hw/vfio/vfio-pla=
-tform.h
-> > index c414c3dffc..90575b5852 100644
-> > --- a/include/hw/vfio/vfio-platform.h
-> > +++ b/include/hw/vfio/vfio-platform.h
-> > @@ -59,6 +59,7 @@ struct VFIOPlatformDevice {
-> >      uint32_t mmap_timeout; /* delay to re-enable mmaps after interrupt=
- */
-> >      QEMUTimer *mmap_timer; /* allows fast-path resume after IRQ hit */
-> >      QemuMutex intp_mutex; /* protect the intp_list IRQ state */
-> > +    uint64_t mmio_base; /* base address to start looking for mmio */
-> >      bool irqfd_allowed; /* debug option to force irqfd on/off */
-> >  };
-> >  typedef struct VFIOPlatformDevice VFIOPlatformDevice;
->
-
-Juan Pablo Ruiz Rosero
-
-
-
-
-On Wed, Nov 13, 2024 at 1:43=E2=80=AFAM Alex Williamson
-<alex.williamson@redhat.com> wrote:
->
-> On Tue, 12 Nov 2024 22:02:12 +0000
-> Juan Pablo Ruiz <jpruiz84@gmail.com> wrote:
->
-> > Some platform devices have large MMIO regions (e.g., GPU reserved memor=
-y). For
-> > certain devices, it's preferable to have a 1:1 address translation in t=
-he VM to
-> > avoid modifying driver source code.
->
-> Why do we need 1:1 mappings?  Shouldn't the device tree describe where
-> the device lives in the VM address space and the driver should adapt
-> rather than use hard coded addresses?
->
-> How does a user know which devices need fixed base addresses and what
-> those addresses should be?
->
-> > This patch:
->
-> ... should be split into at least 3 patches.
->
-> >
-> > 1. Increases the VFIO platform bus size from 32MB to 130GB.
->
-> That's a very strange and specific size.
->
-> > 2. Changes the mmio_size property from 32 to 64 bits.
-> > 3. Adds an mmio-base property to define the starting MMIO address for m=
-apping
-> >    the VFIO device.
-> >
-> > Signed-off-by: Juan Pablo Ruiz juanpablo.ruiz@unikie.com
-> > ---
-> >  hw/arm/virt.c                   |  6 +++---
-> >  hw/core/platform-bus.c          | 28 ++++++++++++++++++++++++++--
-> >  hw/vfio/platform.c              |  1 +
-> >  include/hw/platform-bus.h       |  2 +-
-> >  include/hw/vfio/vfio-platform.h |  1 +
-> >  5 files changed, 32 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index 1a381e9a2b..9fc8f4425a 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -183,13 +183,13 @@ static const MemMapEntry base_memmap[] =3D {
-> >      [VIRT_SECURE_GPIO] =3D        { 0x090b0000, 0x00001000 },
-> >      [VIRT_MMIO] =3D               { 0x0a000000, 0x00000200 },
-> >      /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that=
- size */
-> > -    [VIRT_PLATFORM_BUS] =3D       { 0x0c000000, 0x02000000 },
-> > +    [VIRT_PLATFORM_BUS] =3D       { 0x60000000, 0x1FC0000000 },       =
-   // 130048MB
-> >      [VIRT_SECURE_MEM] =3D         { 0x0e000000, 0x01000000 },
-> >      [VIRT_PCIE_MMIO] =3D          { 0x10000000, 0x2eff0000 },
-> >      [VIRT_PCIE_PIO] =3D           { 0x3eff0000, 0x00010000 },
-> >      [VIRT_PCIE_ECAM] =3D          { 0x3f000000, 0x01000000 },
-> >      /* Actual RAM size depends on initial RAM and device memory settin=
-gs */
-> > -    [VIRT_MEM] =3D                { GiB, LEGACY_RAMLIMIT_BYTES },
-> > +    [VIRT_MEM] =3D                { 0x2000000000, LEGACY_RAMLIMIT_BYTE=
-S },
-> >  };
-> >
-> >  /*
-> > @@ -1625,7 +1625,7 @@ static void create_platform_bus(VirtMachineState =
-*vms)
-> >      dev =3D qdev_new(TYPE_PLATFORM_BUS_DEVICE);
-> >      dev->id =3D g_strdup(TYPE_PLATFORM_BUS_DEVICE);
-> >      qdev_prop_set_uint32(dev, "num_irqs", PLATFORM_BUS_NUM_IRQS);
-> > -    qdev_prop_set_uint32(dev, "mmio_size", vms->memmap[VIRT_PLATFORM_B=
-US].size);
-> > +    qdev_prop_set_uint64(dev, "mmio_size", vms->memmap[VIRT_PLATFORM_B=
-US].size);
-> >      sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> >      vms->platform_bus_dev =3D dev;
-> >
-> > diff --git a/hw/core/platform-bus.c b/hw/core/platform-bus.c
-> > index dc58bf505a..f545fab6e5 100644
-> > --- a/hw/core/platform-bus.c
-> > +++ b/hw/core/platform-bus.c
-> > @@ -22,6 +22,7 @@
-> >  #include "qemu/osdep.h"
-> >  #include "hw/platform-bus.h"
-> >  #include "hw/qdev-properties.h"
-> > +#include "hw/vfio/vfio-platform.h"
-> >  #include "qapi/error.h"
-> >  #include "qemu/error-report.h"
-> >  #include "qemu/module.h"
-> > @@ -130,11 +131,29 @@ static void platform_bus_map_mmio(PlatformBusDevi=
-ce *pbus, SysBusDevice *sbdev,
-> >                                    int n)
-> >  {
-> >      MemoryRegion *sbdev_mr =3D sysbus_mmio_get_region(sbdev, n);
-> > +    VFIOPlatformDevice *vdev =3D VFIO_PLATFORM_DEVICE(sbdev);
->
-> How do you know it's a vfio-platform device?  This completely breaks
-> device abstraction.  Thanks,
-
-Regarding your concern about breaking device abstraction by directly
-casting `sbdev`
-to `VFIOPlatformDevice`, I realize this is not ideal. I'll look into
-alternative approaches.
-
-Thanks for your comments
-
-Juan Pablo
->
-> Alex
->
-> >      uint64_t size =3D memory_region_size(sbdev_mr);
-> >      uint64_t alignment =3D (1ULL << (63 - clz64(size + size - 1)));
-> >      uint64_t off;
-> > +    uint64_t mmio_base_off;
-> >      bool found_region =3D false;
-> >
-> > +    if (vdev->mmio_base) {
-> > +        if(vdev->mmio_base < pbus->mmio.addr ||
-> > +           vdev->mmio_base >=3D pbus->mmio.addr + pbus->mmio_size){
-> > +            error_report("Platform Bus: MMIO base 0x%"PRIx64
-> > +                " outside platform bus region [0x%"PRIx64",0x%"PRIx64"=
-]",
-> > +                vdev->mmio_base,
-> > +                pbus->mmio.addr,
-> > +                pbus->mmio.addr + pbus->mmio_size);
-> > +            exit(1);
-> > +        }
-> > +
-> > +        mmio_base_off =3D vdev->mmio_base - pbus->mmio.addr;
-> > +    } else {
-> > +        mmio_base_off =3D 0;
-> > +    }
-> > +
-> >      if (memory_region_is_mapped(sbdev_mr)) {
-> >          /* Region is already mapped, nothing to do */
-> >          return;
-> > @@ -144,7 +163,7 @@ static void platform_bus_map_mmio(PlatformBusDevice=
- *pbus, SysBusDevice *sbdev,
-> >       * Look for empty space in the MMIO space that is naturally aligne=
-d with
-> >       * the target device's memory region
-> >       */
-> > -    for (off =3D 0; off < pbus->mmio_size; off +=3D alignment) {
-> > +    for (off =3D mmio_base_off; off < pbus->mmio_size; off +=3D alignm=
-ent) {
-> >          MemoryRegion *mr =3D memory_region_find(&pbus->mmio, off, size=
-).mr;
-> >          if (!mr) {
-> >              found_region =3D true;
-> > @@ -154,6 +173,11 @@ static void platform_bus_map_mmio(PlatformBusDevic=
-e *pbus, SysBusDevice *sbdev,
-> >          }
-> >      }
-> >
-> > +    if (vdev->mmio_base && vdev->mmio_base !=3D off + pbus->mmio.addr)=
- {
-> > +        warn_report("Platform Bus: Not able to map in mmio base: 0x%"P=
-RIx64,
-> > +            vdev->mmio_base);
-> > +    }
-> > +
-> >      if (!found_region) {
-> >          error_report("Platform Bus: Can not fit MMIO region of size %"=
-PRIx64,
-> >                       size);
-> > @@ -206,7 +230,7 @@ static void platform_bus_realize(DeviceState *dev, =
-Error **errp)
-> >
-> >  static Property platform_bus_properties[] =3D {
-> >      DEFINE_PROP_UINT32("num_irqs", PlatformBusDevice, num_irqs, 0),
-> > -    DEFINE_PROP_UINT32("mmio_size", PlatformBusDevice, mmio_size, 0),
-> > +    DEFINE_PROP_UINT64("mmio_size", PlatformBusDevice, mmio_size, 0),
-> >      DEFINE_PROP_END_OF_LIST()
-> >  };
-> >
-> > diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-> > index a85c199c76..cfac564093 100644
-> > --- a/hw/vfio/platform.c
-> > +++ b/hw/vfio/platform.c
-> > @@ -640,6 +640,7 @@ static Property vfio_platform_dev_properties[] =3D =
-{
-> >      DEFINE_PROP_LINK("iommufd", VFIOPlatformDevice, vbasedev.iommufd,
-> >                       TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
-> >  #endif
-> > +    DEFINE_PROP_UINT64("mmio-base", VFIOPlatformDevice, mmio_base, 0),
-> >      DEFINE_PROP_END_OF_LIST(),
-> >  };
-> >
-> > diff --git a/include/hw/platform-bus.h b/include/hw/platform-bus.h
-> > index 44f30c5353..4e9913a5d7 100644
-> > --- a/include/hw/platform-bus.h
-> > +++ b/include/hw/platform-bus.h
-> > @@ -34,7 +34,7 @@ struct PlatformBusDevice {
-> >      SysBusDevice parent_obj;
-> >
-> >      /*< public >*/
-> > -    uint32_t mmio_size;
-> > +    uint64_t mmio_size;
-> >      MemoryRegion mmio;
-> >
-> >      uint32_t num_irqs;
-> > diff --git a/include/hw/vfio/vfio-platform.h b/include/hw/vfio/vfio-pla=
-tform.h
-> > index c414c3dffc..90575b5852 100644
-> > --- a/include/hw/vfio/vfio-platform.h
-> > +++ b/include/hw/vfio/vfio-platform.h
-> > @@ -59,6 +59,7 @@ struct VFIOPlatformDevice {
-> >      uint32_t mmap_timeout; /* delay to re-enable mmaps after interrupt=
- */
-> >      QEMUTimer *mmap_timer; /* allows fast-path resume after IRQ hit */
-> >      QemuMutex intp_mutex; /* protect the intp_list IRQ state */
-> > +    uint64_t mmio_base; /* base address to start looking for mmio */
-> >      bool irqfd_allowed; /* debug option to force irqfd on/off */
-> >  };
-> >  typedef struct VFIOPlatformDevice VFIOPlatformDevice;
->
-
---00000000000032b3b60626c76086
-Content-Type: image/png; name="image.png"
-Content-Disposition: attachment; filename="image.png"
-Content-Transfer-Encoding: base64
-Content-ID: <f_m3fmdksw0>
-X-Attachment-Id: f_m3fmdksw0
-
-iVBORw0KGgoAAAANSUhEUgAAAJEAAAAVCAYAAABG+QztAAAElUlEQVR4nO2ZfUyUdQDHP3cHKHbc
-XYmSbxQwlTRfmFLHFHnJkDdrwzeKS5mIL/MVGucQsPKFAJVCEi1TS5mpc6iHgDpnJW/W8mVmZeWg
-bCJjbgFh4Bl3HXl5lOAOH8/W9vv8c7vn99nv+zy7757f73nOyWwBgUACTv/1CQj+/4gSCSTj8BK1
-139Gbkoa20rPc82owkc7neSc9cz1UyPr4VzG+i85sDWfnUcquXSljpuugxkT+iqvr1nJtOGPPVCu
-8KR5HTi2RG1fsW5qNNltOj6uKiGqby17l8SwaEot5jPFzPOW92CyWxxLCSOxYiL6DQcpDB+BsqGc
-zQtfIzbwLAXVBhJ9FD3LFZ40z4oDS2TmRtHbvHtexSuGjcwYrrQc8yNh81sUD01g3Tun0eUH09vu
-+WSo/FMoyU0ltJ/1IpQvkrp5BYbR6WRtOUN87gSc7c4VnjTPhgNL1Epl6ac095nMlEClrQruoYSN
-k1NyvJQLt4PRKq5xQBeA7vPn2FW9nzhP692k9TyZLwSxtnkepRWbCNG4ELws7Z4UeT8P+snb+fqn
-qxjpKJGduc7Ck+bZfgPHlaj9Fy7/2IJ8oDderp2Oy/vj7aXCXH2ZH26CVjOIGQW7+SIwkiVz8hh7
-LJmRLo2cStWx9tuxrDmdaSlQ97un36pPc+62Ez4jfenVk1w34UnyNLYhx5XI3MSvTWZkbmqUpu8p
-iAhh1ZVwdpRvxUOlRGZqorHJBBo5Mk0wmXvXcnZSBnGrx7Nv3PvEFzQStbOM5NH3WfBuVpOV/gkN
-mimsTxxz52LszVUKT5Knse2LHs0jvtlEe7vJ8tGOqRul16gV7LHsa7Txkfi7/MHgBcV8EOeJors5
-TXUULdax8RsPZhVuI96zi026HbnCk+45rkQyNY+rZZYbQxMtimdYeqKepX8NGClrbsEsV6NRd/7h
-FQyJnkf0wENsrxvFzIRJPNHdKmZupDz9ZeYUNhOUc5IPZw3m7kz25gpPmtcJx5VIMQTfoUpMhhpq
-W8HfzXrc1EBNbTOyIb4M6/xqx3SdoiUL+ahNy+RnL7JhTgaTy7MJVP27Sa1czJtJTM4VRqUf5WDS
-GPo8SK7wpHmdcOBy5sqEyBBU+yo5UdHCzIg7O33zjVOcOGti0OwIxt7d4Ru5vGU2ifudiD90mPd8
-jxATsAjdIn+q9sxg0N3i36amMJ6p+jM8lXQYwxsTUN9zt7I3V3jSPBsOLJEM95hUlucGk6NPIdwn
-m6i+Nexd/iZlLmEUJAVZ3zWYaa5YTezKKp5OOcmmSHfLY/pcdmyvRDt9AbP9R1K2YgQullW5/ugy
-oueXoFl4kJLsUNy7XO7szRWeNM+GYzfWvceTUWygT0o6eq0HOqMKL+10Co5nkmB962m6XsTiuFyu
-BmygYnUASuuF9H8pj93J5whbFUuaXzk5k9ow5O/iu9ZbkB/Bk/n/jHJ+PptLlXqGKezLtff8hHcf
-z4rDn84UA0LRF1ah72ZcPmAae342djHixsSsC/ye9fd3NfOPtzH/IeUK7+F4HYh/8QWSESUSSEaU
-SCAZUSKBZESJBJL5E6cqGgzxpNf4AAAAAElFTkSuQmCC
---00000000000032b3b60626c76086--
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IENMRU1FTlQgTUFUSElFVS0t
+RFJJRiA8Y2xlbWVudC5tYXRoaWV1LS1kcmlmQGV2aWRlbi5jb20+DQo+U2VudDogV2VkbmVzZGF5
+LCBOb3ZlbWJlciAxMywgMjAyNCAyOjU2IFBNDQo+U3ViamVjdDogUmU6IFtQQVRDSCB2NSAwOC8y
+MF0gaW50ZWxfaW9tbXU6IENoZWNrIHN0YWdlLTEgdHJhbnNsYXRpb24gcmVzdWx0IHdpdGgNCj5p
+bnRlcnJ1cHQgcmFuZ2UNCj4NCj4NCj5PbiAxMS8xMS8yMDI0IDA5OjM0LCBaaGVuemhvbmcgRHVh
+biB3cm90ZToNCj4+IENhdXRpb246IEV4dGVybmFsIGVtYWlsLiBEbyBub3Qgb3BlbiBhdHRhY2ht
+ZW50cyBvciBjbGljayBsaW5rcywgdW5sZXNzIHRoaXMNCj5lbWFpbCBjb21lcyBmcm9tIGEga25v
+d24gc2VuZGVyIGFuZCB5b3Uga25vdyB0aGUgY29udGVudCBpcyBzYWZlLg0KPj4NCj4+DQo+PiBQ
+ZXIgVlQtZCBzcGVjIDQuMSBzZWN0aW9uIDMuMTUsICJVbnRyYW5zbGF0ZWQgcmVxdWVzdHMgYW5k
+IHRyYW5zbGF0aW9uDQo+PiByZXF1ZXN0cyB0aGF0IHJlc3VsdCBpbiBhbiBhZGRyZXNzIGluIHRo
+ZSBpbnRlcnJ1cHQgcmFuZ2Ugd2lsbCBiZQ0KPj4gYmxvY2tlZCB3aXRoIGNvbmRpdGlvbiBjb2Rl
+IExHTi40IG9yIFNHTi44LiINCj4+DQo+PiBUaGlzIGFwcGxpZXMgdG8gYm90aCBzdGFnZS0xIGFu
+ZCBzdGFnZS0yIElPTU1VIHBhZ2UgdGFibGUsIG1vdmUgdGhlDQo+PiBjaGVjayBmcm9tIHZ0ZF9p
+b3ZhX3RvX3NscHRlKCkgdG8gdnRkX2RvX2lvbW11X3RyYW5zbGF0ZSgpIHNvIHN0YWdlLTENCj4+
+IHBhZ2UgdGFibGUgY291bGQgYWxzbyBiZSBjaGVja2VkLg0KPj4NCj4+IEJ5IHRoaXMgY2hhbmNl
+LCB1cGRhdGUgdGhlIGNvbW1lbnQgd2l0aCBjb3JyZWN0IHNlY3Rpb24gbnVtYmVyLg0KPj4NCj4+
+IFN1Z2dlc3RlZC1ieTogWWkgTGl1IDx5aS5sLmxpdUBpbnRlbC5jb20+DQo+PiBTaWduZWQtb2Zm
+LWJ5OiBaaGVuemhvbmcgRHVhbiA8emhlbnpob25nLmR1YW5AaW50ZWwuY29tPg0KPj4gLS0tDQo+
+PiAgIGh3L2kzODYvaW50ZWxfaW9tbXUuYyB8IDQ4ICsrKysrKysrKysrKysrKysrKysrKystLS0t
+LS0tLS0tLS0tLS0tLS0tLS0NCj4+ICAgMSBmaWxlIGNoYW5nZWQsIDI1IGluc2VydGlvbnMoKyks
+IDIzIGRlbGV0aW9ucygtKQ0KPj4NCj4+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11
+LmMgYi9ody9pMzg2L2ludGVsX2lvbW11LmMNCj4+IGluZGV4IDRjYzRkNjY4ZmMuLmU2NTE0MDFk
+YjEgMTAwNjQ0DQo+PiAtLS0gYS9ody9pMzg2L2ludGVsX2lvbW11LmMNCj4+ICsrKyBiL2h3L2kz
+ODYvaW50ZWxfaW9tbXUuYw0KPj4gQEAgLTExMzgsNyArMTEzOCw2IEBAIHN0YXRpYyBpbnQgdnRk
+X2lvdmFfdG9fc2xwdGUoSW50ZWxJT01NVVN0YXRlICpzLA0KPlZURENvbnRleHRFbnRyeSAqY2Us
+DQo+PiAgICAgICB1aW50MzJfdCBvZmZzZXQ7DQo+PiAgICAgICB1aW50NjRfdCBzbHB0ZTsNCj4+
+ICAgICAgIHVpbnQ2NF90IGFjY2Vzc19yaWdodF9jaGVjazsNCj4+IC0gICAgdWludDY0X3QgeGxh
+dCwgc2l6ZTsNCj4+DQo+PiAgICAgICBpZiAoIXZ0ZF9pb3ZhX3NsX3JhbmdlX2NoZWNrKHMsIGlv
+dmEsIGNlLCBhd19iaXRzLCBwYXNpZCkpIHsNCj4+ICAgICAgICAgICBlcnJvcl9yZXBvcnRfb25j
+ZSgiJXM6IGRldGVjdGVkIElPVkEgb3ZlcmZsb3cgKGlvdmE9MHglIiBQUkl4NjQgIiwiDQo+PiBA
+QCAtMTE5MSwyOCArMTE5MCw3IEBAIHN0YXRpYyBpbnQgdnRkX2lvdmFfdG9fc2xwdGUoSW50ZWxJ
+T01NVVN0YXRlICpzLA0KPlZURENvbnRleHRFbnRyeSAqY2UsDQo+PiAgICAgICAgICAgbGV2ZWwt
+LTsNCj4+ICAgICAgIH0NCj4+DQo+PiAtICAgIHhsYXQgPSB2dGRfZ2V0X3B0ZV9hZGRyKCpzbHB0
+ZXAsIGF3X2JpdHMpOw0KPj4gLSAgICBzaXplID0gfnZ0ZF9wdF9sZXZlbF9wYWdlX21hc2sobGV2
+ZWwpICsgMTsNCj4+IC0NCj4+IC0gICAgLyoNCj4+IC0gICAgICogRnJvbSBWVC1kIHNwZWMgMy4x
+NDogVW50cmFuc2xhdGVkIHJlcXVlc3RzIGFuZCB0cmFuc2xhdGlvbg0KPj4gLSAgICAgKiByZXF1
+ZXN0cyB0aGF0IHJlc3VsdCBpbiBhbiBhZGRyZXNzIGluIHRoZSBpbnRlcnJ1cHQgcmFuZ2Ugd2ls
+bCBiZQ0KPj4gLSAgICAgKiBibG9ja2VkIHdpdGggY29uZGl0aW9uIGNvZGUgTEdOLjQgb3IgU0dO
+LjguDQo+PiAtICAgICAqLw0KPj4gLSAgICBpZiAoKHhsYXQgPiBWVERfSU5URVJSVVBUX0FERFJf
+TEFTVCB8fA0KPj4gLSAgICAgICAgIHhsYXQgKyBzaXplIC0gMSA8IFZURF9JTlRFUlJVUFRfQURE
+Ul9GSVJTVCkpIHsNCj4+IC0gICAgICAgIHJldHVybiAwOw0KPj4gLSAgICB9IGVsc2Ugew0KPj4g
+LSAgICAgICAgZXJyb3JfcmVwb3J0X29uY2UoIiVzOiB4bGF0IGFkZHJlc3MgaXMgaW4gaW50ZXJy
+dXB0IHJhbmdlICINCj4+IC0gICAgICAgICAgICAgICAgICAgICAgICAgICIoaW92YT0weCUiIFBS
+SXg2NCAiLCBsZXZlbD0weCUiIFBSSXgzMiAiLCAiDQo+PiAtICAgICAgICAgICAgICAgICAgICAg
+ICAgICAic2xwdGU9MHglIiBQUkl4NjQgIiwgd3JpdGU9JWQsICINCj4+IC0gICAgICAgICAgICAg
+ICAgICAgICAgICAgICJ4bGF0PTB4JSIgUFJJeDY0ICIsIHNpemU9MHglIiBQUkl4NjQgIiwgIg0K
+Pj4gLSAgICAgICAgICAgICAgICAgICAgICAgICAgInBhc2lkPTB4JSIgUFJJeDMyICIpIiwNCj4+
+IC0gICAgICAgICAgICAgICAgICAgICAgICAgIF9fZnVuY19fLCBpb3ZhLCBsZXZlbCwgc2xwdGUs
+IGlzX3dyaXRlLA0KPj4gLSAgICAgICAgICAgICAgICAgICAgICAgICAgeGxhdCwgc2l6ZSwgcGFz
+aWQpOw0KPj4gLSAgICAgICAgcmV0dXJuIHMtPnNjYWxhYmxlX21vZGUgPyAtVlREX0ZSX1NNX0lO
+VEVSUlVQVF9BRERSIDoNCj4+IC0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLVZU
+RF9GUl9JTlRFUlJVUFRfQUREUjsNCj4+IC0gICAgfQ0KPj4gKyAgICByZXR1cm4gMDsNCj4+ICAg
+fQ0KPj4NCj4+ICAgdHlwZWRlZiBpbnQgKCp2dGRfcGFnZV93YWxrX2hvb2spKGNvbnN0IElPTU1V
+VExCRXZlbnQgKmV2ZW50LCB2b2lkDQo+KnByaXZhdGUpOw0KPj4gQEAgLTIwNjQsNiArMjA0Miw3
+IEBAIHN0YXRpYyBib29sDQo+dnRkX2RvX2lvbW11X3RyYW5zbGF0ZShWVERBZGRyZXNzU3BhY2Ug
+KnZ0ZF9hcywgUENJQnVzICpidXMsDQo+PiAgICAgICB1aW50OF90IGFjY2Vzc19mbGFnczsNCj4+
+ICAgICAgIGJvb2wgcmlkMnBhc2lkID0gKHBhc2lkID09IFBDSV9OT19QQVNJRCkgJiYgcy0+cm9v
+dF9zY2FsYWJsZTsNCj4+ICAgICAgIFZURElPVExCRW50cnkgKmlvdGxiX2VudHJ5Ow0KPj4gKyAg
+ICB1aW50NjRfdCB4bGF0LCBzaXplOw0KPj4NCj4+ICAgICAgIC8qDQo+PiAgICAgICAgKiBXZSBo
+YXZlIHN0YW5kYWxvbmUgbWVtb3J5IHJlZ2lvbiBmb3IgaW50ZXJydXB0IGFkZHJlc3Nlcywgd2UN
+Cj4+IEBAIC0yMTczLDYgKzIxNTIsMjkgQEAgc3RhdGljIGJvb2wNCj52dGRfZG9faW9tbXVfdHJh
+bnNsYXRlKFZUREFkZHJlc3NTcGFjZSAqdnRkX2FzLCBQQ0lCdXMgKmJ1cywNCj4+ICAgICAgICAg
+ICByZXRfZnIgPSB2dGRfaW92YV90b19zbHB0ZShzLCAmY2UsIGFkZHIsIGlzX3dyaXRlLCAmcHRl
+LCAmbGV2ZWwsDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJnJlYWRz
+LCAmd3JpdGVzLCBzLT5hd19iaXRzLCBwYXNpZCk7DQo+PiAgICAgICB9DQo+PiArICAgIGlmICgh
+cmV0X2ZyKSB7DQo+PiArICAgICAgICB4bGF0ID0gdnRkX2dldF9wdGVfYWRkcihwdGUsIHMtPmF3
+X2JpdHMpOw0KPj4gKyAgICAgICAgc2l6ZSA9IH52dGRfcHRfbGV2ZWxfcGFnZV9tYXNrKGxldmVs
+KSArIDE7DQo+PiArDQo+PiArICAgICAgICAvKg0KPj4gKyAgICAgICAgICogUGVyIFZULWQgc3Bl
+YyA0LjEgc2VjdGlvbiAzLjE1OiBVbnRyYW5zbGF0ZWQgcmVxdWVzdHMgYW5kIHRyYW5zbGF0aW9u
+DQo+PiArICAgICAgICAgKiByZXF1ZXN0cyB0aGF0IHJlc3VsdCBpbiBhbiBhZGRyZXNzIGluIHRo
+ZSBpbnRlcnJ1cHQgcmFuZ2Ugd2lsbCBiZQ0KPj4gKyAgICAgICAgICogYmxvY2tlZCB3aXRoIGNv
+bmRpdGlvbiBjb2RlIExHTi40IG9yIFNHTi44Lg0KPj4gKyAgICAgICAgICovDQo+PiArICAgICAg
+ICBpZiAoKHhsYXQgPD0gVlREX0lOVEVSUlVQVF9BRERSX0xBU1QgJiYNCj4+ICsgICAgICAgICAg
+ICAgeGxhdCArIHNpemUgLSAxID49IFZURF9JTlRFUlJVUFRfQUREUl9GSVJTVCkpIHsNCj4+ICsg
+ICAgICAgICAgICBlcnJvcl9yZXBvcnRfb25jZSgiJXM6IHhsYXQgYWRkcmVzcyBpcyBpbiBpbnRl
+cnJ1cHQgcmFuZ2UgIg0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICIoaW92YT0w
+eCUiIFBSSXg2NCAiLCBsZXZlbD0weCUiIFBSSXgzMiAiLCAiDQo+PiArICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgInB0ZT0weCUiIFBSSXg2NCAiLCB3cml0ZT0lZCwgIg0KPj4gKyAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICJ4bGF0PTB4JSIgUFJJeDY0ICIsIHNpemU9MHglIiBQ
+Ukl4NjQgIiwgIg0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJwYXNpZD0weCUi
+IFBSSXgzMiAiKSIsDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgX19mdW5jX18s
+IGFkZHIsIGxldmVsLCBwdGUsIGlzX3dyaXRlLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIHhsYXQsIHNpemUsIHBhc2lkKTsNCj4NCj5IaSBaaGVuemhvbmcsDQo+DQo+U2hvdWxk
+bid0IHdlIGFkZCB0aGUgcGd0dCB2YWx1ZSB0byB0aGlzIHRyYWNlIGFzIGl0IGNhbiBub3cgYmUg
+Z2VuZXJhdGVkDQo+YnkgYm90aCBGTCBhbmQgU0w/DQoNCkhpIENsZW1lbnQsDQoNCldlIGRvbid0
+IGFsd2F5cyBoYXZlIGEgcGd0dCB2YWx1ZSB0byBkdW1wLCBlLmcuLCB3aGVuIHZJT01NVSBpcyBp
+biBsZWdhY3kgbW9kZS4NCk1lYW53aGlsZSB3ZSBoYXZlIG90aGVyIHdheSB0byBnZXQgcGd0dCBp
+ZiB0aGVyZSBpcywgZS5nLiwgZnJvbSBxZW11IGNtZGxpbmUuDQpQZ3R0IGlzIGFsc28gdW5yZWxh
+dGVkIHRvIHRoZSBlcnJvciBpdHNlbGYsIHNvIEknZCBsaWtlIHRvIHNraXAgcGd0dCBkdW1wIHRv
+IGJlIGEgYml0IHNpbXBsZS4NCg0KVGhhbmtzDQpaaGVuemhvbmcNCg0K
 
