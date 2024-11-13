@@ -4,173 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF948D462D0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 16:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21668D462D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 16:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBG9U-00011F-HZ; Wed, 13 Nov 2024 11:23:32 -0500
+	id 1tBGGN-0002FZ-G2; Wed, 13 Nov 2024 11:30:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1tBG9S-000116-Mf
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:23:30 -0500
-Received: from mail-bn1nam02on20629.outbound.protection.outlook.com
- ([2a01:111:f403:2407::629]
- helo=NAM02-BN1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tBGGL-0002Eu-2L
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:30:37 -0500
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1tBG9P-0005xi-9A
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:23:30 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eBAbAYHB7B57bLhGJqWkmGSz3i7EVb5lMnX+zDTKaEO8zREa+Ftjg2NJtg7N4oCILs/KQRVx/hbP0wUkxNu/akmq3n1TKtsIN0u7MNrIpEfbySfWrsMZRXx8574MxjT5iScZqyYEvWtVBmWtgbiuoMxmiCHFNFY73mcXgvamYpUx9ZrQVy+YuBPGoa+eiRpiDJ00hj/CYEM0nGx3BO7kmdLRsM3wVZUabEIhqJcXRhnLybQ+CTKbl38sMmgI5YqfGpZBEECtQ1ZuiObmp5T1YdvqfDAqQ+r1Ir59A5x5jfISfNT++MyvKXdRD6Da092Wxpo/qB5quQSCyrEaB4Jn1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qb6Hz5QEhhvWRK0UAjgX+IXz2YXOxk84MHhfI+WQemo=;
- b=KDH1qJzfKo9dFNo8TvHFtYjkEctAE4e0C0r+DjCEe8Hv1CgwSj40eBzgYOwZZ5H8U6qNATBcIMheeQBulYuXYVjaVtFxdv4sk1cc1Co1qWhI7DhEp/f3cUPHBjhEP2jvhsWt9ZvwoQ1Sq9cBybzutc644QxeOXFIWX3IlRUU4yck57szJABWrsdqHiyMnlxwfBakGftmfClKVUmGrx9PO18GYi16/l3Js+6jYl6FCUUjmK/GTVR7jQw1/PDg9liAIVzas1L0Po2uC++2Ss7qptlFbWHs3UM5Qq9w0jmccYqlKCivnZxeAxB8KocJ65HrtcZFxiSwU0yIIv57BvI0iA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qb6Hz5QEhhvWRK0UAjgX+IXz2YXOxk84MHhfI+WQemo=;
- b=Q+VITzecZ29oZK2EZ/CMVjOeF23d0VpkXGEyDr+pq4ihwXt0tFBwda/1yUQP0oSO0baIsexSrYQP/Xnln9fiq7ZZMdzQAKht9eCx+qF9NcpuvA0KTcQKbJqfgnx5DD2kCXF9CqYcBY8k73lhax45qiDGDBL4wc2uP8WRdMc0iTE=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SA0PR12MB4557.namprd12.prod.outlook.com (2603:10b6:806:9d::10)
- by MW4PR12MB7261.namprd12.prod.outlook.com (2603:10b6:303:229::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.17; Wed, 13 Nov
- 2024 16:23:17 +0000
-Received: from SA0PR12MB4557.namprd12.prod.outlook.com
- ([fe80::d22d:666e:be69:117f]) by SA0PR12MB4557.namprd12.prod.outlook.com
- ([fe80::d22d:666e:be69:117f%6]) with mapi id 15.20.8137.022; Wed, 13 Nov 2024
- 16:23:17 +0000
-Message-ID: <2394ca75-409d-4ae5-b995-27f8b196a1fb@amd.com>
-Date: Wed, 13 Nov 2024 10:23:15 -0600
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 7/7] target/i386: Add EPYC-Genoa model to support Zen 4
- processor series
-To: Maksim Davydov <davydov-max@yandex-team.ru>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "Roth, Michael" <Michael.Roth@amd.com>
-Cc: weijiang.yang@intel.com, philmd@linaro.org, dwmw@amazon.co.uk,
- paul@xen.org, joao.m.martins@oracle.com, qemu-devel@nongnu.org,
- mtosatti@redhat.com, kvm@vger.kernel.org, mst@redhat.com,
- marcel.apfelbaum@gmail.com, yang.zhong@intel.com, jing2.liu@intel.com,
- vkuznets@redhat.com, michael.roth@amd.com, wei.huang2@amd.com,
- berrange@redhat.com, bdas@redhat.com, pbonzini@redhat.com,
- richard.henderson@linaro.org
-References: <20230504205313.225073-1-babu.moger@amd.com>
- <20230504205313.225073-8-babu.moger@amd.com>
- <e8e0bc10-07ea-4678-a319-fc8d6938d9bd@yandex-team.ru>
- <4b38c071-ecb0-112b-f4c4-d1d68e5db63d@amd.com>
- <24462567-e486-4b7f-b869-a1fab48d739c@yandex-team.ru>
-Content-Language: en-US
-From: "Moger, Babu" <babu.moger@amd.com>
-In-Reply-To: <24462567-e486-4b7f-b869-a1fab48d739c@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SN6PR2101CA0012.namprd21.prod.outlook.com
- (2603:10b6:805:106::22) To SA0PR12MB4557.namprd12.prod.outlook.com
- (2603:10b6:806:9d::10)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tBGGI-0006hp-RF
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:30:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1731515435; x=1763051435;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=r5qLpRURZWKqh+qzltYbHLtKz5Eb8VMEBe7FX268juo=;
+ b=OAB2rchlWe6ecjoBW056iBHneUhUZAjsQVBwSgja9gQsngkBaCvGKIrU
+ YU8znfalf5r89tgdjJHg6CmeXMp7C5rCsQYcJw8D+J5xNmELuwakLXkYX
+ xa5PryWHWskWiOvwfHf0bUZ4+KZxb+yJAlYUqLmeSTl+QNqPYdtn23Zyh
+ ugoUY3jRaVIFmv3AZC7369hRKyfq272FyDzXhT8mgtcBEG5cDbQMT1YCR
+ dK80wAehHbHRv607jZ3hc/1bZZdTi/F9RLRswI/tHZZWB3Rut3rWY/d45
+ eDP/wKiVxKRu2siKbhSo5RIxUs6y9rjDwx7U0S00KYy+0Atk/O5SjmHQ0 g==;
+X-CSE-ConnectionGUID: kPIKtTIVRz6VtuI/7J5yrQ==
+X-CSE-MsgGUID: P9hm+YWvR7itdq0CRDP+Ag==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="41977184"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="41977184"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Nov 2024 08:30:30 -0800
+X-CSE-ConnectionGUID: etMJktvSTm6SYva+9vNDyA==
+X-CSE-MsgGUID: V4tr+zkcQwWJ6CY3HotHQQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,151,1728975600"; d="scan'208";a="91961625"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 13 Nov 2024 08:30:25 -0800
+Date: Thu, 14 Nov 2024 00:48:24 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: dongli.zhang@oracle.com
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
+ likexu@tencent.com, like.xu.linux@gmail.com,
+ zhenyuw@linux.intel.com, groug@kaod.org, lyan@digitalocean.com,
+ khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, joe.jin@oracle.com, davydov-max@yandex-team.ru
+Subject: Re: [PATCH 3/7] target/i386/kvm: init PMU information only once
+Message-ID: <ZzTYWMM9bUAkn+c8@intel.com>
+References: <20241104094119.4131-1-dongli.zhang@oracle.com>
+ <20241104094119.4131-4-dongli.zhang@oracle.com>
+ <ZzDRZcy7EdK40PO1@intel.com>
+ <418a42f0-13d6-4f1e-8733-2d05ddd1959d@oracle.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA0PR12MB4557:EE_|MW4PR12MB7261:EE_
-X-MS-Office365-Filtering-Correlation-Id: 16ebc95d-9dd6-417b-4413-08dd03ff7b05
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?UisvVEhteUczQkd6YnJoZnZUa3Rjckl4KzB6MjQ1TVgyQXhxUXZjbmVrQ3hp?=
- =?utf-8?B?KzlsdUF1YjU1dUhOMXFxZVRHd3A5NFlZdC90Z0dmRy9sYzVUQmpRS3RlSGhF?=
- =?utf-8?B?SGN2NGFlNHRYMFRva3BKZHdwbFRWZWtqbGV5QXJkVGRxNGdudlFDWVVyb2hM?=
- =?utf-8?B?eUNJZXBTTXJxbWYrVWM2V2prSlhvQWwzd2J0VDlMNm9vSDFMS3gyUlY4STdE?=
- =?utf-8?B?M0JkeG5ZS3hnbzJHVkEzdXA0UHMwQ1ZWckpBczVpRm81QTFqYmFJNEROTzda?=
- =?utf-8?B?SEluOXRjb2R5aFl5ekdrRmZwaTQ2WGhrQUZmTytlTlVhbjBxVThnQWhncldi?=
- =?utf-8?B?bkJSa2pod3N6TXozbGY2KzMzdkRjaGdHOUc4dUY5R2ZpZGRkZW0yVVFrZG55?=
- =?utf-8?B?SUE4Zzg3aVhIYXZENkcyYXVvQXRkeitidXQ2WUNlcXNURnZiTVhRdXdUMGRS?=
- =?utf-8?B?K0pYVkVmMjdSZDg1bzd5U1BDZ0szdWpjZk4ybktxbTh1R3hPYllDcFYwN1VX?=
- =?utf-8?B?bS85RFR6S0Z5eWZwRUFKMmlYc2hOTHBqMGxTMHpOTkpKZjZPbUJ0QnFRTVY2?=
- =?utf-8?B?WnJJVFpmblNFRC9obCtjdDlVOWlSZmZkVnRuaWwrbHA4WXgxb0lSUUFSZDhY?=
- =?utf-8?B?dXlhNUhVdG51OCtxVi9BWVluUWNZcGJpMUVIV2NTR2F0OC8rVXJ1b3hxYkRw?=
- =?utf-8?B?TjRhNmJPem8zOUNOdE1QS1RsKytVMTJhaHJyZTBFUWl5cmJrb1UrOUZua2cr?=
- =?utf-8?B?QnlZN1RoazZJWTZSN3F5dk9mTEtMaDBYeTFhMDZPa1pJOXlDZmcxbDFJZko3?=
- =?utf-8?B?SDdWNCsrRFRyN3F3a2FwdHE1VHA1T2EreXNoTTFxNWlTUENNTElPRlMwYlZC?=
- =?utf-8?B?NG8rYUgvRHBOWlFFVUdMZFI3bEFIYkVLcXJES1FUYktyMFU2eml0UWlKaWhP?=
- =?utf-8?B?S2x1blFaT2lwbmRGOFdqOHpSSnl1aTFWSngrUkdyb1NJaUdFMGpBUnJUMGVy?=
- =?utf-8?B?S1RmdDRyS3lYdmI2WWRLZit1bmI4Wk1taDlIT25jY0hManlSSjk1RnFYQ1ZJ?=
- =?utf-8?B?RSthbjhLMGJacDlBM1pRRDFINXhaeitZUHp3MjhLUml4K1FwenFhQ3BVWXZR?=
- =?utf-8?B?TzBackpVdEIrVExWRWlYbm4va0dRcGl0ZVp5UGR1eUZObkNyS1JBQ01Nem5o?=
- =?utf-8?B?OVIrL2Z0SGkwTVBSTVB1Zk1BMDIwZGhZcjEzZy8yYVJBU1d0WklFZnBtOHFL?=
- =?utf-8?B?MzN6TkRjTGdWQm1mNUZrZks5dXhwWHV3MEJtZ1NxYWZRUlVlS2JtZEhiQ1Ix?=
- =?utf-8?B?T3FPVTFORlFGdFJ5eGJTTkFqa256V3FpRTQ1Z0llRHJTN0d6NERSZFYwZ2ps?=
- =?utf-8?B?Tlk4ZnBLSDlzWkdGR25UcG0wUGptSHJXenArcTRodXYyeWYwZDBvVjlyRzFS?=
- =?utf-8?B?aXZKRXNBZkkreHo5LytZUkRDbFh2NThhWCtZdTB2QUp2b0UvOHVzY3dVdWl2?=
- =?utf-8?B?WFhWU0w2UEhYcU15T3BoTnBic2lRamo2VWFQa3NtUU5uTmFyaW0zUkpsZlIx?=
- =?utf-8?B?TmhVdktXOFE2cUVpTmVjYXg5S0dZdjVPNW16M08zanNHeStueDR1K1BCNzR1?=
- =?utf-8?B?Wkt5a0xrakJOUGh5Q2x2b0U4VWU5SUZuZDJOK1Q1U1d4RDMxQlEvN0g0b09B?=
- =?utf-8?B?Z0h4K3RHRUpLK1l6UStGY3ZwTkRKV1pPZER0eUd3S1VjMzkxdC8zR0JJbkY5?=
- =?utf-8?Q?1PtmkeYlWX7pp2hkQONHSkqT/nW8Wt982jgyB+e?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA0PR12MB4557.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TnN1RVE0N1F1aVZxdXk0Y1hYSy96NTh2RTcvZk9XQ0FxU1JwazVPeFdIMTRs?=
- =?utf-8?B?eENMdDdRUkVES0poL25KamZjemhIb2Vkcyt3QVdWdHJsYUtXU1V4WHJFMCt4?=
- =?utf-8?B?TjJ0SzRXVGh3cjBIS0R6ek93Rnc2ay9MT1hTU05JNjc5QVVjb0VwcEhLdW5P?=
- =?utf-8?B?bVdjQU9hZVVWMURCc2VYaDd1WHFrY0VPK0Q2aWozT3ZiZzYzRGNTV3pEMFBk?=
- =?utf-8?B?Yjc3M0I3aTJsNUhBaHNHRDdVSjF4NnFlOWpya0RjYjRWV0pDVC9WbWtVakho?=
- =?utf-8?B?Q0c3WWhvUWQ1Y2VhZjRlOW1ONTJiUk85NUJSbmhWZ0VPcnhmZnJVRFlFZWVu?=
- =?utf-8?B?RStWcU1KUnExRmc1RThCQVJUd3Zrek9YRUR4MUM2UGFVWTF0cjVISnk5RXkv?=
- =?utf-8?B?SDZjY2VPeXdsZzhyQ0ttaGFYWGI0SHpYOHNOdW9KVVdtdjcrWmU4NWlPc29q?=
- =?utf-8?B?T1gwd2RiZk8wcGlab2crL3V4bXFxRlRDR0d6WFpLL0Q0aVpkUXBRNzdJcEZV?=
- =?utf-8?B?TVB0eEhKcFNBSmRUYXBtZ29rdGNNd3ZmQkxraVVUcjNnelBNRkkzZzJKM29P?=
- =?utf-8?B?SERyQTVrWnEweGhzUzFxMGV0U0gzTE92VHBoZmU0cDREN3Bray9GYzBWTU1v?=
- =?utf-8?B?a2Z4Nm9hZllFVm9Nd0plRkJQSGt5WlA3MGQzYTBoeU52VTBXTXFCYkZMbUFl?=
- =?utf-8?B?VUc2dE5uNTBWRE1DYy9tT3A0MFA2NUtQODlYekFnKzJxVE82QlpPRVIyR2gx?=
- =?utf-8?B?SGpMcHg3ZWQ1NDZUS3VFSHdkV29ZbkpuV1Q1N0gwbDNLZHg4RW9VbmRWMTQ2?=
- =?utf-8?B?bzJNTXdoMHZtbDR0YnZ0ZlV1Z0NSNGN2SU1UQ1BEdDJzQ0tIMWVTZ1Nsa3pB?=
- =?utf-8?B?aGEwQXFKSjRJMG84WW83QzVPTUpwaXZ0YjZNcE02OXpyRFNiK3haYVRmSDBL?=
- =?utf-8?B?NHJtTi9FT3JOc0FPbm9XblpVeDZENHhPNE13TmVpRnZNaklnL1ROZkFwRnE2?=
- =?utf-8?B?N0s2Z0NEWmxUb0MyS1MrWFo3allmRHFDZVlSZVlveTYrK3liZDNDcjJhUjVJ?=
- =?utf-8?B?NU0xbThnUUVnN0dka2YyNXIrZk9LcFA0VXAyYmk0Yzd1N1pPYlNTQTVic0RT?=
- =?utf-8?B?Yk1iemF2RVFjK1AwTldtckovbkhZQVRtK0ZsbldIaWZCaTRQdUllanRvTU83?=
- =?utf-8?B?TnUyYi9mWHNVZ2ZQQW1uRTdLSUJ4azNIdW5ySkpON2R4ZHV4RWNVRENOeWp3?=
- =?utf-8?B?Wjd1RmRoaXNvT0NRR3l2VFhwWUJtdnVlM0JPNXFzSGRSQzB0TGZveGR2eUgz?=
- =?utf-8?B?aHNncVZTOEM3ZFFoYlRuTTJwMkY3V2RPdmFCN3UxTll6REhyYXRmS215R1R1?=
- =?utf-8?B?UFh2cjJYYXU5MWphSjVReGdCV2RWQkc1dVhSYm1UZ0FzTmNhNGo5STQ3bUc4?=
- =?utf-8?B?aDhCZ0crZS90eG9JMWJVQjlhQ3pJdktNb1pXZHo4aFNVQzFrVGVWUkNUN09k?=
- =?utf-8?B?N2NHbXBITlVPdTlCVTRpV0ZxMGVHWDlsbEx4aFlwQXJPaUNFNVZ4cmowUHdQ?=
- =?utf-8?B?UU8vMWVqNEI0aXRDc3pCbm1BeFVkdU1sZHByZ2ZNVy9zV2dkYWxvVExSNmVQ?=
- =?utf-8?B?RUo5aktLV2VwNkllNWhiWUl4RUNwZTJXaWh1YXBGS3pvcHRZNm1qdnNLUW50?=
- =?utf-8?B?b0NqajgxejFEVmZMWm90K0d4YW5XdjdMNFY2eVRsa1RsK0N4ZkZXUC9oODZR?=
- =?utf-8?B?c0pGdjhjSmZpUy9ISWdob1hXV01zdVpWNEVPQ3p0MDArcmZtclRwb0J2QVZJ?=
- =?utf-8?B?SEdlOG82NUFJRW5obkVSNWtrTHE0QU9salNSUTh6bllPRWlWVm16aFY1am1S?=
- =?utf-8?B?MXQyUklSZFliSWsvWjlSTnhMc0tsbEVxUXJ4RU9DSjA3OGgzOUZVb3cwcDJB?=
- =?utf-8?B?dGFmWldpTTJkZjRCNlQ0YnlBMlJkaS93SzExV3hWS0U3NDhpUXRkSHZpT1Iy?=
- =?utf-8?B?RFo4WkxZY1lHT1lXRG04TlV1bHdzT2l1cmNhNGlQT1dGdkNBV2dVMnY3UDlU?=
- =?utf-8?B?R2pYUzI4RS9qWHVoOHV2ZkIyMkhxendVbTBNYnc0ZHZIR2lZWnVBZVd0V3B5?=
- =?utf-8?Q?rq/A=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 16ebc95d-9dd6-417b-4413-08dd03ff7b05
-X-MS-Exchange-CrossTenant-AuthSource: SA0PR12MB4557.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2024 16:23:17.5366 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iWkQV33fDMo7bq6M/OgbNpmxTuF9aaChESrgVSlfVYEsjQ62JJdLP8K0ux/EEc3P
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7261
-Received-SPF: permerror client-ip=2a01:111:f403:2407::629;
- envelope-from=Babu.Moger@amd.com;
- helo=NAM02-BN1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
+Content-Type: text/plain; charset=gb2312
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <418a42f0-13d6-4f1e-8733-2d05ddd1959d@oracle.com>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -183,313 +88,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: babu.moger@amd.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adding Paolo.
-
-On 11/12/24 04:09, Maksim Davydov wrote:
+On Tue, Nov 12, 2024 at 05:50:26PM -0800, dongli.zhang@oracle.com wrote:
+> Date: Tue, 12 Nov 2024 17:50:26 -0800
+> From: dongli.zhang@oracle.com
+> Subject: Re: [PATCH 3/7] target/i386/kvm: init PMU information only once
 > 
+> Hi Zhao,
 > 
-> On 11/8/24 23:56, Moger, Babu wrote:
->> Hi Maxim,
->>
->> Thanks for looking into this. I will fix the bits I mentioned below in
->> upcoming Genoa/Turin model update.
->>
->> I have few comments below.
->>
->> On 11/8/2024 12:15 PM, Maksim Davydov wrote:
->>> Hi!
->>> I compared EPYC-Genoa CPU model with CPUID output from real EPYC Genoa
->>> host. I found some mismatches that confused me. Could you help me to
->>> understand them?
->>>
->>> On 5/4/23 23:53, Babu Moger wrote:
->>>> Adds the support for AMD EPYC Genoa generation processors. The model
->>>> display for the new processor will be EPYC-Genoa.
->>>>
->>>> Adds the following new feature bits on top of the feature bits from
->>>> the previous generation EPYC models.
->>>>
->>>> avx512f         : AVX-512 Foundation instruction
->>>> avx512dq        : AVX-512 Doubleword & Quadword Instruction
->>>> avx512ifma      : AVX-512 Integer Fused Multiply Add instruction
->>>> avx512cd        : AVX-512 Conflict Detection instruction
->>>> avx512bw        : AVX-512 Byte and Word Instructions
->>>> avx512vl        : AVX-512 Vector Length Extension Instructions
->>>> avx512vbmi      : AVX-512 Vector Byte Manipulation Instruction
->>>> avx512_vbmi2    : AVX-512 Additional Vector Byte Manipulation Instruction
->>>> gfni            : AVX-512 Galois Field New Instructions
->>>> avx512_vnni     : AVX-512 Vector Neural Network Instructions
->>>> avx512_bitalg   : AVX-512 Bit Algorithms, add bit algorithms Instructions
->>>> avx512_vpopcntdq: AVX-512 AVX-512 Vector Population Count Doubleword and
->>>>                    Quadword Instructions
->>>> avx512_bf16    : AVX-512 BFLOAT16 instructions
->>>> la57            : 57-bit virtual address support (5-level Page Tables)
->>>> vnmi            : Virtual NMI (VNMI) allows the hypervisor to inject
->>>> the NMI
->>>>                    into the guest without using Event Injection mechanism
->>>>                    meaning not required to track the guest NMI and
->>>> intercepting
->>>>                    the IRET.
->>>> auto-ibrs       : The AMD Zen4 core supports a new feature called
->>>> Automatic IBRS.
->>>>                    It is a "set-and-forget" feature that means that,
->>>> unlike e.g.,
->>>>                    s/w-toggled SPEC_CTRL.IBRS, h/w manages its IBRS
->>>> mitigation
->>>>                    resources automatically across CPL transitions.
->>>>
->>>> Signed-off-by: Babu Moger <babu.moger@amd.com>
->>>> ---
->>>>   target/i386/cpu.c | 122 ++++++++++++++++++++++++++++++++++++++++++++++
->>>>   1 file changed, 122 insertions(+)
->>>>
->>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->>>> index d50ace84bf..71fe1e02ee 100644
->>>> --- a/target/i386/cpu.c
->>>> +++ b/target/i386/cpu.c
->>>> @@ -1973,6 +1973,56 @@ static const CPUCaches epyc_milan_v2_cache_info
->>>> = {
->>>>       },
->>>>   };
->>>> +static const CPUCaches epyc_genoa_cache_info = {
->>>> +    .l1d_cache = &(CPUCacheInfo) {
->>>> +        .type = DATA_CACHE,
->>>> +        .level = 1,
->>>> +        .size = 32 * KiB,
->>>> +        .line_size = 64,
->>>> +        .associativity = 8,
->>>> +        .partitions = 1,
->>>> +        .sets = 64,
->>>> +        .lines_per_tag = 1,
->>>> +        .self_init = 1,
->>>> +        .no_invd_sharing = true,
->>>> +    },
->>>> +    .l1i_cache = &(CPUCacheInfo) {
->>>> +        .type = INSTRUCTION_CACHE,
->>>> +        .level = 1,
->>>> +        .size = 32 * KiB,
->>>> +        .line_size = 64,
->>>> +        .associativity = 8,
->>>> +        .partitions = 1,
->>>> +        .sets = 64,
->>>> +        .lines_per_tag = 1,
->>>> +        .self_init = 1,
->>>> +        .no_invd_sharing = true,
->>>> +    },
->>>> +    .l2_cache = &(CPUCacheInfo) {
->>>> +        .type = UNIFIED_CACHE,
->>>> +        .level = 2,
->>>> +        .size = 1 * MiB,
->>>> +        .line_size = 64,
->>>> +        .associativity = 8,
->>>> +        .partitions = 1,
->>>> +        .sets = 2048,
->>>> +        .lines_per_tag = 1,
->>>
->>> 1. Why L2 cache is not shown as inclusive and self-initializing?
->>>
->>> PPR for AMD Family 19h Model 11 says for L2 (0x8000001d):
->>> * cache inclusive. Read-only. Reset: Fixed,1.
->>> * cache is self-initializing. Read-only. Reset: Fixed,1.
->>
->> Yes. That is correct. This needs to be fixed. I Will fix it.
->>>
->>>> +    },
->>>> +    .l3_cache = &(CPUCacheInfo) {
->>>> +        .type = UNIFIED_CACHE,
->>>> +        .level = 3,
->>>> +        .size = 32 * MiB,
->>>> +        .line_size = 64,
->>>> +        .associativity = 16,
->>>> +        .partitions = 1,
->>>> +        .sets = 32768,
->>>> +        .lines_per_tag = 1,
->>>> +        .self_init = true,
->>>> +        .inclusive = true,
->>>> +        .complex_indexing = false,
->>>
->>> 2. Why L3 cache is shown as inclusive? Why is it not shown in L3 that
->>> the WBINVD/INVD instruction is not guaranteed to invalidate all lower
->>> level caches (0 bit)?
->>>
->>> PPR for AMD Family 19h Model 11 says for L2 (0x8000001d):
->>> * cache inclusive. Read-only. Reset: Fixed,0.
->>> * Write-Back Invalidate/Invalidate. Read-only. Reset: Fixed,1.
->>>
->>
->> Yes. Both of this needs to be fixed. I Will fix it.
->>
->>>
->>>
->>> 3. Why the default stub is used for TLB, but not real values as for
->>> other caches?
->>
->> Can you please eloberate on this?
->>
+> On 11/10/24 7:29 AM, Zhao Liu wrote:
+> > Hi Dongli,
+> > 
+> >>  int kvm_arch_init_vcpu(CPUState *cs)
+> >>  {
+> >>      struct {
+> >> @@ -2237,6 +2247,13 @@ int kvm_arch_init_vcpu(CPUState *cs)
+> >>      cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
+> >>      cpuid_data.cpuid.nent = cpuid_i;
+> >>  
+> >> +    /*
+> >> +     * Initialize PMU information only once for the first vCPU.
+> >> +     */
+> >> +    if (cs == first_cpu) {
+> >> +        kvm_init_pmu_info(env);
+> >> +    }
+> >> +
+> > 
+> > Thank you for the optimization. However, I think it��s not necessary
+> > because:
+> > 
+> > * This is not a hot path and not a performance bottleneck.
+> > * Many CPUID leaves are consistent across CPUs, and 0xA is just one of them.
+> > * And encoding them all in kvm_x86_build_cpuid() is a common pattern.
+> >   Separating out 0xa disrupts code readability and fragments the CPUID encoding.
+> > 
+> > Therefore, code maintainability and correctness might be more important here,
+> > than performance concern.
 > 
-> For L1i, L1d, L2 and L3 cache we provide the correct information about
-> characteristics. In contrast, for L1i TLB, L1d TLB, L2i TLB and L2d TLB
-> (0x80000005 and 0x80000006) we use the same value for all CPU models.
-> Sometimes it seems strange. For instance, the current default value in
-> QEMU for L2 TLB associativity for 4 KB pages is 4. But 4 is a reserved
-> value for Genoa (as PPR for Family 19h Model 11h says)
+> I am going to remove this patch in v2.
 > 
->>>
->>>> +    },
->>>> +};
->>>> +
->>>>   /* The following VMX features are not supported by KVM and are left
->>>> out in the
->>>>    * CPU definitions:
->>>>    *
->>>> @@ -4472,6 +4522,78 @@ static const X86CPUDefinition
->>>> builtin_x86_defs[] = {
->>>>               { /* end of list */ }
->>>>           }
->>>>       },
->>>> +    {
->>>> +        .name = "EPYC-Genoa",
->>>> +        .level = 0xd,
->>>> +        .vendor = CPUID_VENDOR_AMD,
->>>> +        .family = 25,
->>>> +        .model = 17,
->>>> +        .stepping = 0,
->>>> +        .features[FEAT_1_EDX] =
->>>> +            CPUID_SSE2 | CPUID_SSE | CPUID_FXSR | CPUID_MMX |
->>>> CPUID_CLFLUSH |
->>>> +            CPUID_PSE36 | CPUID_PAT | CPUID_CMOV | CPUID_MCA |
->>>> CPUID_PGE |
->>>> +            CPUID_MTRR | CPUID_SEP | CPUID_APIC | CPUID_CX8 |
->>>> CPUID_MCE |
->>>> +            CPUID_PAE | CPUID_MSR | CPUID_TSC | CPUID_PSE | CPUID_DE |
->>>> +            CPUID_VME | CPUID_FP87,
->>>> +        .features[FEAT_1_ECX] =
->>>> +            CPUID_EXT_RDRAND | CPUID_EXT_F16C | CPUID_EXT_AVX |
->>>> +            CPUID_EXT_XSAVE | CPUID_EXT_AES |  CPUID_EXT_POPCNT |
->>>> +            CPUID_EXT_MOVBE | CPUID_EXT_SSE42 | CPUID_EXT_SSE41 |
->>>> +            CPUID_EXT_PCID | CPUID_EXT_CX16 | CPUID_EXT_FMA |
->>>> +            CPUID_EXT_SSSE3 | CPUID_EXT_MONITOR | CPUID_EXT_PCLMULQDQ |
->>>> +            CPUID_EXT_SSE3,
->>>> +        .features[FEAT_8000_0001_EDX] =
->>>> +            CPUID_EXT2_LM | CPUID_EXT2_RDTSCP | CPUID_EXT2_PDPE1GB |
->>>> +            CPUID_EXT2_FFXSR | CPUID_EXT2_MMXEXT | CPUID_EXT2_NX |
->>>> +            CPUID_EXT2_SYSCALL,
->>>> +        .features[FEAT_8000_0001_ECX] =
->>>> +            CPUID_EXT3_OSVW | CPUID_EXT3_3DNOWPREFETCH |
->>>> +            CPUID_EXT3_MISALIGNSSE | CPUID_EXT3_SSE4A | CPUID_EXT3_ABM |
->>>> +            CPUID_EXT3_CR8LEG | CPUID_EXT3_SVM | CPUID_EXT3_LAHF_LM |
->>>> +            CPUID_EXT3_TOPOEXT | CPUID_EXT3_PERFCORE,
->>>> +        .features[FEAT_8000_0008_EBX] =
->>>> +            CPUID_8000_0008_EBX_CLZERO |
->>>> CPUID_8000_0008_EBX_XSAVEERPTR |
->>>> +            CPUID_8000_0008_EBX_WBNOINVD | CPUID_8000_0008_EBX_IBPB |
->>>> +            CPUID_8000_0008_EBX_IBRS | CPUID_8000_0008_EBX_STIBP |
->>>> +            CPUID_8000_0008_EBX_STIBP_ALWAYS_ON |
->>>> +            CPUID_8000_0008_EBX_AMD_SSBD | CPUID_8000_0008_EBX_AMD_PSFD,
->>>
->>> 4. Why 0x80000008_EBX features related to speculation vulnerabilities
->>> (BTC_NO, IBPB_RET, IbrsPreferred, INT_WBINVD) are not set?
->>
->> KVM does not expose these bits to the guests yet.
->>
->> I normally check using the ioctl KVM_GET_SUPPORTED_CPUID.
->>
+> Just a reminder, we may have more code in this function by other patches,
+> including the initialization of both Intel and AMD PMU infortmation (PerfMonV2).
+
+Yes, I mean we can just remove "first_cpu" check and move this function
+into kvm_x86_build_cpuid() again. Your function wrapping is fine for me.
+
+> Dongli Zhang
 > 
-> I'm not sure, but at least the first two of these features seem to be
-> helpful to choose the appropriate mitigation. Do you think that we should
-> add them to KVM?
+> > 
+> >>      if (((env->cpuid_version >> 8)&0xF) >= 6
+> >>          && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
+> >>             (CPUID_MCE | CPUID_MCA)) {
+> >> -- 
+> >> 2.39.3
+> >>
 > 
->>
->>>
->>>> +        .features[FEAT_8000_0021_EAX] =
->>>> +            CPUID_8000_0021_EAX_No_NESTED_DATA_BP |
->>>> +            CPUID_8000_0021_EAX_LFENCE_ALWAYS_SERIALIZING |
->>>> +            CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE |
->>>> +            CPUID_8000_0021_EAX_AUTO_IBRS,
->>>
->>> 5. Why some 0x80000021_EAX features are not set?
->>> (FsGsKernelGsBaseNonSerializing, FSRC and FSRS)
->>
->> KVM does not expose FSRC and FSRS bits to the guests yet.
-> 
-> But KVM exposes the same features (0x7 ecx=1, bits 10 and 11) for Intel
-> CPU models. Do we have to add these bits for AMD to KVM?
-> 
->>
->> The KVM reports the bit FsGsKernelGsBaseNonSerializing. I will check if
->> we can add this bit to the Genoa and Turin.
->>
->>>
->>>> +        .features[FEAT_7_0_EBX] =
->>>> +            CPUID_7_0_EBX_FSGSBASE | CPUID_7_0_EBX_BMI1 |
->>>> CPUID_7_0_EBX_AVX2 |
->>>> +            CPUID_7_0_EBX_SMEP | CPUID_7_0_EBX_BMI2 |
->>>> CPUID_7_0_EBX_ERMS |
->>>> +            CPUID_7_0_EBX_INVPCID | CPUID_7_0_EBX_AVX512F |
->>>> +            CPUID_7_0_EBX_AVX512DQ | CPUID_7_0_EBX_RDSEED |
->>>> CPUID_7_0_EBX_ADX |
->>>> +            CPUID_7_0_EBX_SMAP | CPUID_7_0_EBX_AVX512IFMA |
->>>> +            CPUID_7_0_EBX_CLFLUSHOPT | CPUID_7_0_EBX_CLWB |
->>>> +            CPUID_7_0_EBX_AVX512CD | CPUID_7_0_EBX_SHA_NI |
->>>> +            CPUID_7_0_EBX_AVX512BW | CPUID_7_0_EBX_AVX512VL,
->>>> +        .features[FEAT_7_0_ECX] =
->>>> +            CPUID_7_0_ECX_AVX512_VBMI | CPUID_7_0_ECX_UMIP |
->>>> CPUID_7_0_ECX_PKU |
->>>> +            CPUID_7_0_ECX_AVX512_VBMI2 | CPUID_7_0_ECX_GFNI |
->>>> +            CPUID_7_0_ECX_VAES | CPUID_7_0_ECX_VPCLMULQDQ |
->>>> +            CPUID_7_0_ECX_AVX512VNNI | CPUID_7_0_ECX_AVX512BITALG |
->>>> +            CPUID_7_0_ECX_AVX512_VPOPCNTDQ | CPUID_7_0_ECX_LA57 |
->>>> +            CPUID_7_0_ECX_RDPID,
->>>> +        .features[FEAT_7_0_EDX] =
->>>> +            CPUID_7_0_EDX_FSRM,
->>>
->>> 6. Why L1D_FLUSH is not set? Because only vulnerable MMIO stale data
->>> processors have to use it, am I right?
->>
->> KVM does not expose L1D_FLUSH to the guests. Not sure why. Need to
->> investigate.
->>
-> 
-> It seems that KVM has exposed L1D_FLUSH since da3db168fb67
-
-Paolo,
-
-I see L1D_FLUSH feature bit is masked for SEV-SNP guest.
-
-https://lore.kernel.org/qemu-devel/20240704095806.1780273-17-pbonzini@redhat.com/
-
-Any reason for this?
-
-Genoa and Turin hardware supports L1D_FLUSH feature.
-
-I tested commenting the masking line and SEV-SNP guest boots fine.
-
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index a0d271f898..f5cc37bcc7 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -962,7 +962,7 @@ sev_snp_mask_cpuid_features(X86ConfidentialGuest *cg,
-uint32_t feature, uint32_t
-         if (index == 0 && reg == R_EDX) {
-             return value & ~(CPUID_7_0_EDX_SPEC_CTRL |
-                              CPUID_7_0_EDX_STIBP |
--                             CPUID_7_0_EDX_FLUSH_L1D |
-+                             //CPUID_7_0_EDX_FLUSH_L1D |
-                              CPUID_7_0_EDX_ARCH_CAPABILITIES |
-                              CPUID_7_0_EDX_CORE_CAPABILITY |
-                              CPUID_7_0_EDX_SPEC_CTRL_SSBD);
-
-
-
-If there are no objections, I can add this patch in the Turin series.
-
-Thanks
-
--- 
-Thanks
-Babu Moger
 
