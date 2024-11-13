@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1882D637AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 19:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A3FD637AF
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 19:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBJKc-0006W6-Hg; Wed, 13 Nov 2024 14:47:14 -0500
+	id 1tBJKa-0006Va-KH; Wed, 13 Nov 2024 14:47:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKa-0006Vd-Iu
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:12 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKY-0006Us-Ee
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:10 -0500
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKY-0003B9-L1
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:12 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tBJKW-0003At-4V
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 14:47:10 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 6BBCB21109;
- Wed, 13 Nov 2024 19:47:09 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E166A21133;
+ Wed, 13 Nov 2024 19:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1731527229; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1731527226; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/6KiiPqfScx0wNZ9C8CRBzOrbDspXRpFvRZvJsyXx1M=;
- b=zYiIImn6B5MtW/laLD0fnqMBAeFo6zZ8SPwZYP7Qo9SV0nJHDrk9ShoXxX9pkfW7DjDxNh
- u7rpwuAHffuaYLqYzgYAPCXJEH0Zvi66xInUvxvYkcPeNRK34hedAdpIpG2Cbrr6WlWC+t
- Mtn3cW3RTH7g4bHL9mUlKHfV1nHzrNc=
+ bh=oPBoz6R7wOiw8OhgWiMtTNLOYR7YTuhKyDIkBKp0JJU=;
+ b=Efe92Ey1ShIgTPbe692Tjzwt2iXsU2SEiuPew7qpOl1y5sq1CgTRb1+i6sbOiLqYBkCWKA
+ s/FxdbLKmByueZyGXMdLNu/oDLbQZktIHC24ykIhBKm09e3Orwo4/Ivj3ZnMSTuz8tzhn9
+ OYIjpnnXBdd8s42+ZrDt8bDj7lrSQ7c=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1731527229;
+ s=susede2_ed25519; t=1731527226;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/6KiiPqfScx0wNZ9C8CRBzOrbDspXRpFvRZvJsyXx1M=;
- b=Cl8JZmi2EwPKNzAPtpvgt4q9kWj3bUK36JcjR2NdfvZBMiIan6N8GBzQBbr8NA9BTxRLDS
- HhYDKXO7L7UzVBBw==
+ bh=oPBoz6R7wOiw8OhgWiMtTNLOYR7YTuhKyDIkBKp0JJU=;
+ b=up7UvPNajalyQ3iEXBC+3XR0UFCdID+v47z3BrlMHv+nywDL9+Oud8tx6LHLlosH46ZTuX
+ cXauZptBgMy5/tCQ==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zYiIImn6;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Cl8JZmi2
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Efe92Ey1;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=up7UvPNa
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1731527229; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1731527226; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/6KiiPqfScx0wNZ9C8CRBzOrbDspXRpFvRZvJsyXx1M=;
- b=zYiIImn6B5MtW/laLD0fnqMBAeFo6zZ8SPwZYP7Qo9SV0nJHDrk9ShoXxX9pkfW7DjDxNh
- u7rpwuAHffuaYLqYzgYAPCXJEH0Zvi66xInUvxvYkcPeNRK34hedAdpIpG2Cbrr6WlWC+t
- Mtn3cW3RTH7g4bHL9mUlKHfV1nHzrNc=
+ bh=oPBoz6R7wOiw8OhgWiMtTNLOYR7YTuhKyDIkBKp0JJU=;
+ b=Efe92Ey1ShIgTPbe692Tjzwt2iXsU2SEiuPew7qpOl1y5sq1CgTRb1+i6sbOiLqYBkCWKA
+ s/FxdbLKmByueZyGXMdLNu/oDLbQZktIHC24ykIhBKm09e3Orwo4/Ivj3ZnMSTuz8tzhn9
+ OYIjpnnXBdd8s42+ZrDt8bDj7lrSQ7c=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1731527229;
+ s=susede2_ed25519; t=1731527226;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/6KiiPqfScx0wNZ9C8CRBzOrbDspXRpFvRZvJsyXx1M=;
- b=Cl8JZmi2EwPKNzAPtpvgt4q9kWj3bUK36JcjR2NdfvZBMiIan6N8GBzQBbr8NA9BTxRLDS
- HhYDKXO7L7UzVBBw==
+ bh=oPBoz6R7wOiw8OhgWiMtTNLOYR7YTuhKyDIkBKp0JJU=;
+ b=up7UvPNajalyQ3iEXBC+3XR0UFCdID+v47z3BrlMHv+nywDL9+Oud8tx6LHLlosH46ZTuX
+ cXauZptBgMy5/tCQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 514D313301;
- Wed, 13 Nov 2024 19:47:07 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AEFBC13301;
+ Wed, 13 Nov 2024 19:47:04 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id SM4LBjsCNWfLcQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 13 Nov 2024 19:47:07 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id eCzuHDgCNWfLcQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 13 Nov 2024 19:47:04 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 14/22] tests/qtest/migration: Split postcopy tests
-Date: Wed, 13 Nov 2024 16:46:22 -0300
-Message-Id: <20241113194630.3385-15-farosas@suse.de>
+Subject: [PATCH v2 13/22] tests/qtest/migration: Split compression tests from
+ migration-test.c
+Date: Wed, 13 Nov 2024 16:46:21 -0300
+Message-Id: <20241113194630.3385-14-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20241113194630.3385-1-farosas@suse.de>
 References: <20241113194630.3385-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 6BBCB21109
+X-Rspamd-Queue-Id: E166A21133
+X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
@@ -105,10 +107,9 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
  R_RATELIMIT(0.00)[to_ip_from(RL6tyf6sue6knz55rs3us8rsc3)];
  ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo, suse.de:dkim, suse.de:mid, suse.de:email]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -134,142 +135,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split the next group of tests from migration-test.c, the postcopy
-tests. This is another well-defined group of tests and postcopy is a
-unique enough feature that it deserves it's own file.
+Continuing the split of groups of tests from migration-test.c, split
+the compression tests into their own file.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/meson.build                |   1 +
- tests/qtest/migration-test.c           |  78 +-----------------
- tests/qtest/migration/postcopy-tests.c | 106 +++++++++++++++++++++++++
- tests/qtest/migration/test-framework.h |   1 +
- 4 files changed, 109 insertions(+), 77 deletions(-)
- create mode 100644 tests/qtest/migration/postcopy-tests.c
+ tests/qtest/meson.build                   |   1 +
+ tests/qtest/migration-test.c              | 161 +--------------
+ tests/qtest/migration/compression-tests.c | 239 ++++++++++++++++++++++
+ tests/qtest/migration/test-framework.h    |   1 +
+ 4 files changed, 242 insertions(+), 160 deletions(-)
+ create mode 100644 tests/qtest/migration/compression-tests.c
 
 diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 5e77eb09f2..23b600e6ec 100644
+index 9ad9f0dc65..5e77eb09f2 100644
 --- a/tests/qtest/meson.build
 +++ b/tests/qtest/meson.build
-@@ -336,6 +336,7 @@ migration_files = [files(
+@@ -335,6 +335,7 @@ migration_files = [files(
+   'migration/test-framework.c',
    'migration/migration-qmp.c',
    'migration/migration-util.c',
-   'migration/compression-tests.c',
-+  'migration/postcopy-tests.c',
++  'migration/compression-tests.c',
  )]
  
  migration_tls_files = []
 diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 4a468079e8..d1d67fc42f 100644
+index 1cd14529a1..4a468079e8 100644
 --- a/tests/qtest/migration-test.c
 +++ b/tests/qtest/migration-test.c
-@@ -43,65 +43,6 @@
+@@ -274,36 +274,6 @@ static void test_ignore_shared(void)
+ }
+ #endif
  
- static char *tmpfs;
- 
--static void test_postcopy(void)
+-static void *
+-migrate_hook_start_xbzrle(QTestState *from,
+-                          QTestState *to)
 -{
--    MigrateCommon args = { };
+-    migrate_set_parameter_int(from, "xbzrle-cache-size", 33554432);
 -
--    test_postcopy_common(&args);
+-    migrate_set_capability(from, "xbzrle", true);
+-    migrate_set_capability(to, "xbzrle", true);
+-
+-    return NULL;
 -}
 -
--static void test_postcopy_suspend(void)
+-static void test_precopy_unix_xbzrle(void)
 -{
+-    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
 -    MigrateCommon args = {
--        .start.suspend_me = true,
+-        .connect_uri = uri,
+-        .listen_uri = uri,
+-        .start_hook = migrate_hook_start_xbzrle,
+-        .iterations = 2,
+-        /*
+-         * XBZRLE needs pages to be modified when doing the 2nd+ round
+-         * iteration to have real data pushed to the stream.
+-         */
+-        .live = true,
 -    };
 -
--    test_postcopy_common(&args);
+-    test_precopy_common(&args);
 -}
 -
--static void test_postcopy_preempt(void)
--{
--    MigrateCommon args = {
--        .postcopy_preempt = true,
--    };
--
--    test_postcopy_common(&args);
--}
--
--static void test_postcopy_recovery(void)
--{
--    MigrateCommon args = { };
--
--    test_postcopy_recovery_common(&args);
--}
--
--static void test_postcopy_recovery_fail_handshake(void)
--{
--    MigrateCommon args = {
--        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_RECOVERY,
--    };
--
--    test_postcopy_recovery_common(&args);
--}
--
--static void test_postcopy_recovery_fail_reconnect(void)
--{
--    MigrateCommon args = {
--        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_CHANNEL_ESTABLISH,
--    };
--
--    test_postcopy_recovery_common(&args);
--}
--
--static void test_postcopy_preempt_recovery(void)
--{
--    MigrateCommon args = {
--        .postcopy_preempt = true,
--    };
--
--    test_postcopy_recovery_common(&args);
--}
--
- static void test_baddest(void)
+ static void test_precopy_file(void)
  {
-     MigrateStart args = {
-@@ -1553,6 +1494,7 @@ int main(int argc, char **argv)
+     g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
+@@ -1011,61 +981,6 @@ test_migration_precopy_tcp_multifd_no_zero_page_start(QTestState *from,
+     return NULL;
+ }
+ 
+-static void *
+-migrate_hook_start_precopy_tcp_multifd_zlib(QTestState *from,
+-                                            QTestState *to)
+-{
+-    /*
+-     * Overloading this test to also check that set_parameter does not error.
+-     * This is also done in the tests for the other compression methods.
+-     */
+-    migrate_set_parameter_int(from, "multifd-zlib-level", 2);
+-    migrate_set_parameter_int(to, "multifd-zlib-level", 2);
+-
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "zlib");
+-}
+-
+-#ifdef CONFIG_ZSTD
+-static void *
+-migrate_hook_start_precopy_tcp_multifd_zstd(QTestState *from,
+-                                            QTestState *to)
+-{
+-    migrate_set_parameter_int(from, "multifd-zstd-level", 2);
+-    migrate_set_parameter_int(to, "multifd-zstd-level", 2);
+-
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "zstd");
+-}
+-#endif /* CONFIG_ZSTD */
+-
+-#ifdef CONFIG_QATZIP
+-static void *
+-migrate_hook_start_precopy_tcp_multifd_qatzip(QTestState *from,
+-                                              QTestState *to)
+-{
+-    migrate_set_parameter_int(from, "multifd-qatzip-level", 2);
+-    migrate_set_parameter_int(to, "multifd-qatzip-level", 2);
+-
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "qatzip");
+-}
+-#endif
+-
+-#ifdef CONFIG_QPL
+-static void *
+-migrate_hook_start_precopy_tcp_multifd_qpl(QTestState *from,
+-                                           QTestState *to)
+-{
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "qpl");
+-}
+-#endif /* CONFIG_QPL */
+-#ifdef CONFIG_UADK
+-static void *
+-migrate_hook_start_precopy_tcp_multifd_uadk(QTestState *from,
+-                                            QTestState *to)
+-{
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "uadk");
+-}
+-#endif /* CONFIG_UADK */
+-
+ static void test_multifd_tcp_uri_none(void)
+ {
+     MigrateCommon args = {
+@@ -1126,59 +1041,6 @@ static void test_multifd_tcp_channels_none(void)
+     test_precopy_common(&args);
+ }
+ 
+-static void test_multifd_tcp_zlib(void)
+-{
+-    MigrateCommon args = {
+-        .listen_uri = "defer",
+-        .start_hook = migrate_hook_start_precopy_tcp_multifd_zlib,
+-    };
+-    test_precopy_common(&args);
+-}
+-
+-#ifdef CONFIG_ZSTD
+-static void test_multifd_tcp_zstd(void)
+-{
+-    MigrateCommon args = {
+-        .listen_uri = "defer",
+-        .start_hook = migrate_hook_start_precopy_tcp_multifd_zstd,
+-    };
+-    test_precopy_common(&args);
+-}
+-#endif
+-
+-#ifdef CONFIG_QATZIP
+-static void test_multifd_tcp_qatzip(void)
+-{
+-    MigrateCommon args = {
+-        .listen_uri = "defer",
+-        .start_hook = migrate_hook_start_precopy_tcp_multifd_qatzip,
+-    };
+-    test_precopy_common(&args);
+-}
+-#endif
+-
+-#ifdef CONFIG_QPL
+-static void test_multifd_tcp_qpl(void)
+-{
+-    MigrateCommon args = {
+-        .listen_uri = "defer",
+-        .start_hook = migrate_hook_start_precopy_tcp_multifd_qpl,
+-    };
+-    test_precopy_common(&args);
+-}
+-#endif
+-
+-#ifdef CONFIG_UADK
+-static void test_multifd_tcp_uadk(void)
+-{
+-    MigrateCommon args = {
+-        .listen_uri = "defer",
+-        .start_hook = migrate_hook_start_precopy_tcp_multifd_uadk,
+-    };
+-    test_precopy_common(&args);
+-}
+-#endif
+-
+ /*
+  * This test does:
+  *  source               target
+@@ -1690,6 +1552,7 @@ int main(int argc, char **argv)
+     tmpfs = env->tmpfs;
  
      migration_test_add_tls(env);
-     migration_test_add_compression(env);
-+    migration_test_add_postcopy(env);
++    migration_test_add_compression(env);
  
      migration_test_add("/migration/bad_dest", test_baddest);
  #ifndef _WIN32
-@@ -1566,24 +1508,6 @@ int main(int argc, char **argv)
-                            test_precopy_unix_suspend_notlive);
-     }
+@@ -1723,10 +1586,6 @@ int main(int argc, char **argv)
  
--    if (env->has_uffd) {
--        migration_test_add("/migration/postcopy/plain", test_postcopy);
--        migration_test_add("/migration/postcopy/recovery/plain",
--                           test_postcopy_recovery);
--        migration_test_add("/migration/postcopy/preempt/plain",
--                           test_postcopy_preempt);
--        migration_test_add("/migration/postcopy/preempt/recovery/plain",
--                           test_postcopy_preempt_recovery);
--        migration_test_add("/migration/postcopy/recovery/double-failures/handshake",
--                           test_postcopy_recovery_fail_handshake);
--        migration_test_add("/migration/postcopy/recovery/double-failures/reconnect",
--                           test_postcopy_recovery_fail_reconnect);
--        if (env->is_x86) {
--            migration_test_add("/migration/postcopy/suspend",
--                               test_postcopy_suspend);
--        }
--    }
--
      migration_test_add("/migration/precopy/unix/plain",
                         test_precopy_unix_plain);
+-    if (g_test_slow()) {
+-        migration_test_add("/migration/precopy/unix/xbzrle",
+-                           test_precopy_unix_xbzrle);
+-    }
      migration_test_add("/migration/precopy/file",
-diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
+                        test_precopy_file);
+     migration_test_add("/migration/precopy/file/offset",
+@@ -1811,24 +1670,6 @@ int main(int argc, char **argv)
+                        test_multifd_tcp_no_zero_page);
+     migration_test_add("/migration/multifd/tcp/plain/cancel",
+                        test_multifd_tcp_cancel);
+-    migration_test_add("/migration/multifd/tcp/plain/zlib",
+-                       test_multifd_tcp_zlib);
+-#ifdef CONFIG_ZSTD
+-    migration_test_add("/migration/multifd/tcp/plain/zstd",
+-                       test_multifd_tcp_zstd);
+-#endif
+-#ifdef CONFIG_QATZIP
+-    migration_test_add("/migration/multifd/tcp/plain/qatzip",
+-                       test_multifd_tcp_qatzip);
+-#endif
+-#ifdef CONFIG_QPL
+-    migration_test_add("/migration/multifd/tcp/plain/qpl",
+-                       test_multifd_tcp_qpl);
+-#endif
+-#ifdef CONFIG_UADK
+-    migration_test_add("/migration/multifd/tcp/plain/uadk",
+-                       test_multifd_tcp_uadk);
+-#endif
+ 
+     if (g_str_equal(env->arch, "x86_64") &&
+         env->has_kvm && env->has_dirty_ring) {
+diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
 new file mode 100644
-index 0000000000..9e2032bbf3
+index 0000000000..1b4c59338c
 --- /dev/null
-+++ b/tests/qtest/migration/postcopy-tests.c
-@@ -0,0 +1,106 @@
++++ b/tests/qtest/migration/compression-tests.c
+@@ -0,0 +1,239 @@
 +/*
-+ * QTest testcases for postcopy migration
++ * QTest testcases for migration compression
 + *
 + * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
 + *   based on the vhost-user-test.c that is:
@@ -282,107 +386,240 @@ index 0000000000..9e2032bbf3
 +
 +#include "qemu/osdep.h"
 +#include "libqtest.h"
-+#include "migration/test-framework.h"
++#include "migration/migration-qmp.h"
 +#include "migration/migration-util.h"
-+#include "qapi/qmp/qlist.h"
++#include "migration/test-framework.h"
 +#include "qemu/module.h"
-+#include "qemu/option.h"
-+#include "qemu/range.h"
-+#include "qemu/sockets.h"
 +
-+static void test_postcopy(void)
++
++static char *tmpfs;
++
++#ifdef CONFIG_ZSTD
++static void *
++migrate_hook_start_precopy_tcp_multifd_zstd(QTestState *from,
++                                            QTestState *to)
 +{
-+    MigrateCommon args = { };
++    migrate_set_parameter_int(from, "multifd-zstd-level", 2);
++    migrate_set_parameter_int(to, "multifd-zstd-level", 2);
 +
-+    test_postcopy_common(&args);
++    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "zstd");
 +}
 +
-+static void test_postcopy_suspend(void)
++static void test_multifd_tcp_zstd(void)
 +{
 +    MigrateCommon args = {
-+        .start.suspend_me = true,
++        .listen_uri = "defer",
++        .start_hook = migrate_hook_start_precopy_tcp_multifd_zstd,
 +    };
++    test_precopy_common(&args);
++}
++#endif /* CONFIG_ZSTD */
 +
-+    test_postcopy_common(&args);
++#ifdef CONFIG_QATZIP
++static void *
++migrate_hook_start_precopy_tcp_multifd_qatzip(QTestState *from,
++                                              QTestState *to)
++{
++    migrate_set_parameter_int(from, "multifd-qatzip-level", 2);
++    migrate_set_parameter_int(to, "multifd-qatzip-level", 2);
++
++    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "qatzip");
 +}
 +
-+static void test_postcopy_preempt(void)
++static void test_multifd_tcp_qatzip(void)
 +{
 +    MigrateCommon args = {
-+        .postcopy_preempt = true,
++        .listen_uri = "defer",
++        .start_hook = migrate_hook_start_precopy_tcp_multifd_qatzip,
 +    };
-+
-+    test_postcopy_common(&args);
++    test_precopy_common(&args);
 +}
++#endif
 +
-+static void test_postcopy_recovery(void)
++#ifdef CONFIG_QPL
++static void *
++migrate_hook_start_precopy_tcp_multifd_qpl(QTestState *from,
++                                           QTestState *to)
 +{
-+    MigrateCommon args = { };
-+
-+    test_postcopy_recovery_common(&args);
++    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "qpl");
 +}
 +
-+static void test_postcopy_recovery_fail_handshake(void)
++static void test_multifd_tcp_qpl(void)
 +{
 +    MigrateCommon args = {
-+        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_RECOVERY,
++        .listen_uri = "defer",
++        .start_hook = migrate_hook_start_precopy_tcp_multifd_qpl,
 +    };
++    test_precopy_common(&args);
++}
++#endif /* CONFIG_QPL */
 +
-+    test_postcopy_recovery_common(&args);
++#ifdef CONFIG_UADK
++static void *
++migrate_hook_start_precopy_tcp_multifd_uadk(QTestState *from,
++                                            QTestState *to)
++{
++    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "uadk");
 +}
 +
-+static void test_postcopy_recovery_fail_reconnect(void)
++static void *
++migrate_hook_start_xbzrle(QTestState *from,
++                          QTestState *to)
++{
++    migrate_set_parameter_int(from, "xbzrle-cache-size", 33554432);
++
++    migrate_set_capability(from, "xbzrle", true);
++    migrate_set_capability(to, "xbzrle", true);
++
++    return NULL;
++}
++
++static void test_precopy_unix_xbzrle(void)
++{
++    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
++    MigrateCommon args = {
++        .connect_uri = uri,
++        .listen_uri = uri,
++        .start_hook = migrate_hook_start_xbzrle,
++        .iterations = 2,
++        /*
++         * XBZRLE needs pages to be modified when doing the 2nd+ round
++         * iteration to have real data pushed to the stream.
++         */
++        .live = true,
++    };
++
++    test_precopy_common(&args);
++}
++
++static void *
++migrate_hook_start_precopy_tcp_multifd_zlib(QTestState *from,
++                                            QTestState *to)
++{
++    /*
++     * Overloading this test to also check that set_parameter does not error.
++     * This is also done in the tests for the other compression methods.
++     */
++    migrate_set_parameter_int(from, "multifd-zlib-level", 2);
++    migrate_set_parameter_int(to, "multifd-zlib-level", 2);
++
++    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "zlib");
++}
++
++static void test_multifd_tcp_zlib(void)
 +{
 +    MigrateCommon args = {
-+        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_CHANNEL_ESTABLISH,
++        .listen_uri = "defer",
++        .start_hook = migrate_hook_start_precopy_tcp_multifd_zlib,
 +    };
-+
-+    test_postcopy_recovery_common(&args);
++    test_precopy_common(&args);
 +}
 +
-+static void test_postcopy_preempt_recovery(void)
++static void test_multifd_tcp_uadk(void)
 +{
 +    MigrateCommon args = {
-+        .postcopy_preempt = true,
++        .listen_uri = "defer",
++        .start_hook = migrate_hook_start_precopy_tcp_multifd_uadk,
 +    };
++    test_precopy_common(&args);
++}
++#endif /* CONFIG_UADK */
 +
-+    test_postcopy_recovery_common(&args);
++
++static void *
++migrate_hook_start_xbzrle(QTestState *from,
++                          QTestState *to)
++{
++    migrate_set_parameter_int(from, "xbzrle-cache-size", 33554432);
++
++    migrate_set_capability(from, "xbzrle", true);
++    migrate_set_capability(to, "xbzrle", true);
++
++    return NULL;
 +}
 +
-+void migration_test_add_postcopy(MigrationTestEnv *env)
++static void test_precopy_unix_xbzrle(void)
 +{
-+    if (env->has_uffd) {
-+        migration_test_add("/migration/postcopy/plain", test_postcopy);
-+        migration_test_add("/migration/postcopy/recovery/plain",
-+                           test_postcopy_recovery);
-+        migration_test_add("/migration/postcopy/preempt/plain",
-+                           test_postcopy_preempt);
-+        migration_test_add("/migration/postcopy/preempt/recovery/plain",
-+                           test_postcopy_preempt_recovery);
++    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
++    MigrateCommon args = {
++        .connect_uri = uri,
++        .listen_uri = uri,
++        .start_hook = migrate_hook_start_xbzrle,
++        .iterations = 2,
++        /*
++         * XBZRLE needs pages to be modified when doing the 2nd+ round
++         * iteration to have real data pushed to the stream.
++         */
++        .live = true,
++    };
 +
-+        migration_test_add(
-+            "/migration/postcopy/recovery/double-failures/handshake",
-+            test_postcopy_recovery_fail_handshake);
++    test_precopy_common(&args);
++}
 +
-+        migration_test_add(
-+            "/migration/postcopy/recovery/double-failures/reconnect",
-+            test_postcopy_recovery_fail_reconnect);
++static void *
++migrate_hook_start_precopy_tcp_multifd_zlib(QTestState *from,
++                                            QTestState *to)
++{
++    /*
++     * Overloading this test to also check that set_parameter does not error.
++     * This is also done in the tests for the other compression methods.
++     */
++    migrate_set_parameter_int(from, "multifd-zlib-level", 2);
++    migrate_set_parameter_int(to, "multifd-zlib-level", 2);
 +
-+        if (env->is_x86) {
-+            migration_test_add("/migration/postcopy/suspend",
-+                               test_postcopy_suspend);
-+        }
++    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "zlib");
++}
++
++static void test_multifd_tcp_zlib(void)
++{
++    MigrateCommon args = {
++        .listen_uri = "defer",
++        .start_hook = migrate_hook_start_precopy_tcp_multifd_zlib,
++    };
++    test_precopy_common(&args);
++}
++
++void migration_test_add_compression(MigrationTestEnv *env)
++{
++    tmpfs = env->tmpfs;
++
++#ifdef CONFIG_ZSTD
++    migration_test_add("/migration/multifd/tcp/plain/zstd",
++                       test_multifd_tcp_zstd);
++#endif
++
++#ifdef CONFIG_QATZIP
++    migration_test_add("/migration/multifd/tcp/plain/qatzip",
++                       test_multifd_tcp_qatzip);
++#endif
++
++#ifdef CONFIG_QPL
++    migration_test_add("/migration/multifd/tcp/plain/qpl",
++                       test_multifd_tcp_qpl);
++#endif
++
++#ifdef CONFIG_UADK
++    migration_test_add("/migration/multifd/tcp/plain/uadk",
++                       test_multifd_tcp_uadk);
++#endif
++
++    if (g_test_slow()) {
++        migration_test_add("/migration/precopy/unix/xbzrle",
++                           test_precopy_unix_xbzrle);
 +    }
++
++    migration_test_add("/migration/multifd/tcp/plain/zlib",
++                       test_multifd_tcp_zlib);
 +}
 diff --git a/tests/qtest/migration/test-framework.h b/tests/qtest/migration/test-framework.h
-index 0f16f37426..d5197e8da1 100644
+index c9008a3227..0f16f37426 100644
 --- a/tests/qtest/migration/test-framework.h
 +++ b/tests/qtest/migration/test-framework.h
-@@ -219,5 +219,6 @@ void migration_test_add_tls(MigrationTestEnv *env);
+@@ -218,5 +218,6 @@ void migration_test_add_tls(MigrationTestEnv *env);
+ #else
  static inline void migration_test_add_tls(MigrationTestEnv *env) {};
  #endif
- void migration_test_add_compression(MigrationTestEnv *env);
-+void migration_test_add_postcopy(MigrationTestEnv *env);
++void migration_test_add_compression(MigrationTestEnv *env);
  
  #endif /* TEST_FRAMEWORK_H */
 -- 
