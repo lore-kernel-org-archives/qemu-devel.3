@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61601D637A4
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 18:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC91D637A4
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 18:12:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBHle-0007mZ-FJ; Wed, 13 Nov 2024 13:07:02 -0500
+	id 1tBHpt-0000TQ-RT; Wed, 13 Nov 2024 13:11:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBHld-0007mM-8Y
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:07:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tBHps-0000Su-0x
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:11:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBHlb-0000kU-NJ
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:07:01 -0500
+ id 1tBHpq-00019j-HG
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:11:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731521218;
+ s=mimecast20190719; t=1731521480;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=zHGil4zFWVB1dC6k5RpDLCueLmdtUVVuQDry9KYFhb8=;
- b=TFV0PBGyAAncQvsy8s01BAvWKdJXN5pf2QGZi9uhPqkORNOxe/D7Aq63KxYZlWLrLzmxY3
- d6+nhBQYsU66fJ4BwvQLmKS1e7QlQpgcjPVtoA56vT5jTaeXdG0nB0ZnzXg4GoKezYz4ml
- ztCoV+EGshUtv6Zy+Nh693fX4KRTJJk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0YxfwgFTLzupDkk+ne1gwmOE+mfnRoLpiNTNWB7//10=;
+ b=Sw/FLJlXk1XMim1QDdC1j4Sy+V0sYA2qfqO4LWnVnonWLzWbe1lc0S6z7AC3OQ1HO8rbWy
+ au6zLYwyNNGMTnweZ+/MrYd5odXWAnSnD1cVY4p4kJ30G1vlI34k/djY1lBWOx7fzPVbJz
+ XNqHA8oHWjQzwykoTz6ZWHLqseXdswg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-Gxv6WzJ3OD2RulCf_10clQ-1; Wed, 13 Nov 2024 13:06:57 -0500
-X-MC-Unique: Gxv6WzJ3OD2RulCf_10clQ-1
-X-Mimecast-MFC-AGG-ID: Gxv6WzJ3OD2RulCf_10clQ
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43159c07193so66283295e9.0
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 10:06:56 -0800 (PST)
+ us-mta-421-kZEhjrhUPIuAJYg8rdko3A-1; Wed, 13 Nov 2024 13:11:19 -0500
+X-MC-Unique: kZEhjrhUPIuAJYg8rdko3A-1
+X-Mimecast-MFC-AGG-ID: kZEhjrhUPIuAJYg8rdko3A
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d432f9f5eso3751537f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 10:11:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731521216; x=1732126016;
+ d=1e100.net; s=20230601; t=1731521478; x=1732126278;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zHGil4zFWVB1dC6k5RpDLCueLmdtUVVuQDry9KYFhb8=;
- b=edZJKyAPB47/PbU3jZHAKjp0unejX6w4v8HHnReg4ZVz4lInULmQ1dpJoe/OPUk7S9
- y+hvtrIjtTC6xE5pHzPi+1E5QHImH/beL3UCqoLtIxH4ETmFKA+rLo+X9E1i0AjQRIkc
- x4bVamyXO8n4ukre2ATGEQK19019RTbMSCcz/CimpqHNPtrzDsjAwKou4uglrDKuGY3e
- oucQqZ8rMYHRNXScVZKAiqTkqyfIPtuUC/iVdGewZPA5AHB6Z5qHB1jEwkta1p/G2HmM
- uadxnKcGZ7/mWh06TLvyP6Kin2Lnl3/sr9XTCPAXxEOfEkJPrlK8c2cWFvWWbQkmZqoh
- w7mA==
+ bh=0YxfwgFTLzupDkk+ne1gwmOE+mfnRoLpiNTNWB7//10=;
+ b=Jh1RCwoMnTvXETB3yZTSbcworMjH0RSOqAfIe9Hs3AokKlbBORMoHvAFCNoRyTvi2L
+ bdVEi9AcfMKigHn9hO0AWQs+kSelyGCM+YZRP9ZzgbsxSrQZPDi7VESf6r7Hr+BUwWhk
+ MNWd4CZx2zEhJl3K2J9rMoZN8U92w8VSFyc8sxDlw9Df6Qz9Q1lMqmmQkNiCh13E8WaD
+ 2E1227xEfRfhDMUmdjc05s8Kl5B5IgB4ZezTTGrTA9osa+DmdjnLW8/1XO1AXBAGR9/A
+ qs1EGC6b0W//obrv2cFCM03gRZjmYnD3wLcvWTbrvlKGc2Aq8iAhFC9XSUKbnFgr8SoU
+ k0ew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWpdoeTXfN3mrolLFbVj0+VZ4WSRXq9AYjThG7N+0d2wt3CURBL4W0h4vqrzSD3mXjhMfjOJEcynM84@nongnu.org
-X-Gm-Message-State: AOJu0YzXiRRv8Z5SIdP6kOnK/tmme+jfsQsrwr4SStyxnUOIvMzU8Mh9
- 0M3lwhtKKh/KgMkcy2tx+I8yaR28VwOzCc5sYW4gcYnrnAUkTFHTAA/9zV0FwyKgWBpIgWTgQEO
- kyvkcK6ntpyocFFpJkYyCocBvCoSO2UJCk3926xxYGQrl7sWSGiZt
-X-Received: by 2002:a05:600c:1d20:b0:430:57e8:3c7e with SMTP id
- 5b1f17b1804b1-432b751ee6bmr205041185e9.28.1731521215883; 
- Wed, 13 Nov 2024 10:06:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGtF/Bm2sFvD8NMykTFnHKS/2fM8FKDNzbG9+c53bHdp6YlEv9GFdeiwAoFxnPEJlyF5VVV5w==
-X-Received: by 2002:a05:600c:1d20:b0:430:57e8:3c7e with SMTP id
- 5b1f17b1804b1-432b751ee6bmr205041015e9.28.1731521215539; 
- Wed, 13 Nov 2024 10:06:55 -0800 (PST)
+ AJvYcCVcqC/KjoEmVNWywWnx9wqiX4r/SLjHaKSS0COJM6ilqN0OU33Vy827JjhrZ2sDRWs9q/CxE8lLDbBo@nongnu.org
+X-Gm-Message-State: AOJu0Yz6AdlGcLpmhnQBeXPCKCEcGLE44/30Ym4HjMLFy+WT//xeDdqR
+ 2SX5OQu3rHQYphvHKoVs6iHtjJFKoh2bmesIF6OPEpzsSTvW1rFD76mIgeGfQp+N5fsYUzziBa/
+ ACOLTzxrbV1v8106PX2hkCc03TS7gqFhh5Sa+ho06e8rr8ywkHCV/
+X-Received: by 2002:a05:6000:470f:b0:382:6d2:2aa9 with SMTP id
+ ffacd0b85a97d-3820833ab47mr5676232f8f.37.1731521478003; 
+ Wed, 13 Nov 2024 10:11:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG/tazobe7GwAJVavzhuXfFhy7pRxGJgNBF0T2pVOsD0Pp4IqH4neTWDhou5gY9cocs+igfKw==
+X-Received: by 2002:a05:6000:470f:b0:382:6d2:2aa9 with SMTP id
+ ffacd0b85a97d-3820833ab47mr5676215f8f.37.1731521477623; 
+ Wed, 13 Nov 2024 10:11:17 -0800 (PST)
 Received: from [192.168.10.47] ([151.49.84.243])
  by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-432d5503c63sm31784555e9.26.2024.11.13.10.06.54
+ ffacd0b85a97d-381ed9ea587sm19302499f8f.78.2024.11.13.10.11.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Nov 2024 10:06:55 -0800 (PST)
-Message-ID: <02dcb7aa-f8d7-4044-93af-24b6d2e4c688@redhat.com>
-Date: Wed, 13 Nov 2024 19:06:54 +0100
+ Wed, 13 Nov 2024 10:11:17 -0800 (PST)
+Message-ID: <b772f6e7-e506-4f87-98d1-5cbe59402b2b@redhat.com>
+Date: Wed, 13 Nov 2024 19:11:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] i386/kvm: Fix kvm_enable_x2apic link error in non-KVM
@@ -119,14 +119,14 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
 In-Reply-To: <20241113144923.41225-1-phil@philjordan.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.738,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -153,71 +153,67 @@ On 11/13/24 15:49, Phil Dennis-Jordan wrote:
 > This fragile reliance recently broke down when commit b12cb38 added
 > a new call site which apparently failed to be optimised away when
 > building QEMU on macOS with clang, resulting in a link error.
-
-That's weird, can you check the preprocessor output?  The definition
-of kvm_irqchip_in_kernel() should be just "false" on macOS, in fact
-even the area you're changing should be simplified like
-
-diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-index 9de9c0d3038..7edb154a16e 100644
---- a/target/i386/kvm/kvm_i386.h
-+++ b/target/i386/kvm/kvm_i386.h
-@@ -13,8 +13,7 @@
-
-  #include "sysemu/kvm.h"
-
--#ifdef CONFIG_KVM
--
-+/* always false if !CONFIG_KVM */
-  #define kvm_pit_in_kernel() \
-      (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
-  #define kvm_pic_in_kernel()  \
-@@ -22,14 +21,6 @@
-  #define kvm_ioapic_in_kernel() \
-      (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
-
--#else
--
--#define kvm_pit_in_kernel()      0
--#define kvm_pic_in_kernel()      0
--#define kvm_ioapic_in_kernel()   0
--
--#endif  /* CONFIG_KVM */
--
-  bool kvm_has_smm(void);
-  bool kvm_enable_x2apic(void);
-
-Paolo
-
+> 
+> This change moves the function declaration into the existing
+> #if CONFIG_KVM
+> block in the same header file, while the corresponding
+> #else
+> block now #defines the symbol as 0, same as for various other
+> KVM-specific query functions.
 > 
 > Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> ---
->   target/i386/kvm/kvm_i386.h | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-> index 9de9c0d3038..7ce47388d90 100644
-> --- a/target/i386/kvm/kvm_i386.h
-> +++ b/target/i386/kvm/kvm_i386.h
-> @@ -21,17 +21,18 @@
->       (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
->   #define kvm_ioapic_in_kernel() \
->       (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
-> +bool kvm_enable_x2apic(void);
->   
->   #else
->   
->   #define kvm_pit_in_kernel()      0
->   #define kvm_pic_in_kernel()      0
->   #define kvm_ioapic_in_kernel()   0
-> +#define kvm_enable_x2apic()      0
->   
->   #endif  /* CONFIG_KVM */
->   
->   bool kvm_has_smm(void);
-> -bool kvm_enable_x2apic(void);
->   bool kvm_hv_vpindex_settable(void);
->   bool kvm_enable_hypercall(uint64_t enable_mask);
->   
+
+Nevermind, this actually rung a bell and seems to be the same as
+this commit from last year:
+
+commit c04cfb4596ad5032a9869a8f77fe9114ca8af9e0
+Author: Daniel Hoffman <dhoff749@gmail.com>
+Date:   Sun Nov 19 12:31:16 2023 -0800
+
+     hw/i386: fix short-circuit logic with non-optimizing builds
+     
+     `kvm_enabled()` is compiled down to `0` and short-circuit logic is
+     used to remove references to undefined symbols at the compile stage.
+     Some build configurations with some compilers don't attempt to
+     simplify this logic down in some cases (the pattern appears to be
+     that the literal false must be the first term) and this was causing
+     some builds to emit references to undefined symbols.
+     
+     An example of such a configuration is clang 16.0.6 with the following
+     configure: ./configure --enable-debug --without-default-features
+     --target-list=x86_64-softmmu --enable-tcg-interpreter
+     
+     Signed-off-by: Daniel Hoffman <dhoff749@gmail.com>
+     Message-Id: <20231119203116.3027230-1-dhoff749@gmail.com>
+     Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+     Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+
+So, this should work:
+
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 13af7211e11..af0f4da1f69 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1657,9 +1657,11 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+          error_report("AMD IOMMU with x2APIC confguration requires xtsup=on");
+          exit(EXIT_FAILURE);
+      }
+-    if (s->xtsup && kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
+-        error_report("AMD IOMMU xtsup=on requires support on the KVM side");
+-        exit(EXIT_FAILURE);
++    if (s->xtsup) {
++        if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
++            error_report("AMD IOMMU xtsup=on requires support on the KVM side");
++            exit(EXIT_FAILURE);
++        }
+      }
+  
+      pci_setup_iommu(bus, &amdvi_iommu_ops, s);
+
+
+It's admittedly a bit brittle, but it's already done in the neighboring
+hw/i386/intel_iommu.c so I guess it's okay.
+
+Paolo
 
 
