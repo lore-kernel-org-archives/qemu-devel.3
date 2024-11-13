@@ -4,77 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 810CBD637A4
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 18:15:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD94D637A6
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 18:17:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBHtW-0002yJ-3K; Wed, 13 Nov 2024 13:15:10 -0500
+	id 1tBHv6-0003bu-1Y; Wed, 13 Nov 2024 13:16:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tBHtT-0002wD-Rg
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:15:08 -0500
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tBHtR-0001dp-Ln
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 13:15:07 -0500
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-3e600ae1664so4372390b6e.2
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 10:15:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1731521704; x=1732126504;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=DT1smMNQMocKLEt0UKyZPUGMjTIP0ZGsEMAL493ZpQc=;
- b=dByoucMTSuvYY/5bEGoU1gZ7u4EGxXg1bY8670VlVNpeWK8rJmnt5cy5gClRV9wv9g
- sj+/sYJDzOG8NUmkiqkUEdxGoqN4mvnlQJSx0FS+N6wFHXd9UI3A8SAElr0SGcj+ZsLk
- 40NpjuFaOFHaHa5FNQm3Hjg2mUO+GSKnvaTgRBpY601XivUqmfsFx/O68zJkbzp8St6c
- Bx7Pfg9nea2eosE2ylmst0vM+LLXYxCUaHlwr7Md09cxV+e22NFAX0LrKsYI8hSDQHHm
- EXTHeJJ1ZJDZPi6VYgG8FM4kE+PzrvBSoBigI5/dc2OKFh1OeXS23RkPVzaZzb5WDLw6
- z9Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731521704; x=1732126504;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DT1smMNQMocKLEt0UKyZPUGMjTIP0ZGsEMAL493ZpQc=;
- b=KggxfiYAtihK2arM8cxm2wF45v5+re71Z4HIp67vRvwiHRDqhuF1GtnE1jqCU4mY55
- LkUXF9VXOha6Ha3Cmpg+tL+UHLRQ8FXZsR4yNOQyELKqutEyICiGwEx65jRbAu1l5gaz
- +vbA56ICR8OCk25PSLrfEEj5KbAvBdrrvp8uY6C4x/74TEwnB3CXcLTPWx5kAHU98TbZ
- DWrzpSVHA1n8bG9PTAaS1E/entfwxkstellC0J7vuRbqzjzzFdtC+cC23TXTIVeIw/LV
- KRYMblsytufM2v5XaxJ5mKJSpoG27nUnERsfmqOFHlJIbY2ydTC+YyiKK7KilbVrAhmr
- 7P1g==
-X-Gm-Message-State: AOJu0YzryQtvsbL/OITGxAP2bA4YrXrdcflmI6QamUhAVduAEbUnk5X4
- SaF/kjPYPV+nR3mgU+lEyL3uNOOKLqzco3jXB5lr00A2PdDnsXadpjxuVClSELxyR4VvLP6HNxq
- FukGU6zCEYUjf9GwFuJLbWsOUpB9XThN+tvxc
-X-Google-Smtp-Source: AGHT+IEQeblz3HKHXteiNYxv20mVOGIs8AEZv2MfYocTOAl2BTYUkJwtO2nCUCzgi3aUiwPWThhVaY8ZbCNDsSzkMaw=
-X-Received: by 2002:a05:6808:11c8:b0:3e5:f656:dd19 with SMTP id
- 5614622812f47-3e7946a670cmr18969229b6e.19.1731521702100; Wed, 13 Nov 2024
- 10:15:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tBHv4-0003ba-Om; Wed, 13 Nov 2024 13:16:46 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tBHv2-0001nU-1j; Wed, 13 Nov 2024 13:16:46 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A08DD4E6063;
+ Wed, 13 Nov 2024 19:16:37 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 2cmPJ4WTMIHC; Wed, 13 Nov 2024 19:16:33 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id DF42E4E600E; Wed, 13 Nov 2024 19:16:33 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DC2EB746F60;
+ Wed, 13 Nov 2024 19:16:33 +0100 (CET)
+Date: Wed, 13 Nov 2024 19:16:33 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Phil Dennis-Jordan <phil@philjordan.eu>
+cc: qemu-devel@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org, 
+ pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com, 
+ stefanha@redhat.com, mst@redhat.com, slp@redhat.com, 
+ richard.henderson@linaro.org, eduardo@habkost.net, 
+ marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com, 
+ chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com, 
+ philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com, 
+ akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org, 
+ qemu-riscv@nongnu.org
+Subject: Re: [PATCH v10 01/15] ui & main loop: Redesign of system-specific
+ main thread event handling
+In-Reply-To: <20241113142343.40832-2-phil@philjordan.eu>
+Message-ID: <9dd5c736-e1b8-a025-745a-52e9aacb4b9b@eik.bme.hu>
+References: <20241113142343.40832-1-phil@philjordan.eu>
+ <20241113142343.40832-2-phil@philjordan.eu>
 MIME-Version: 1.0
-References: <20241113144923.41225-1-phil@philjordan.eu>
- <02dcb7aa-f8d7-4044-93af-24b6d2e4c688@redhat.com>
-In-Reply-To: <02dcb7aa-f8d7-4044-93af-24b6d2e4c688@redhat.com>
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Wed, 13 Nov 2024 19:14:51 +0100
-Message-ID: <CAAibmn01cqyEhGNsg5XS8tFsX-iQ=ZLD_FHhiCt9HahEawT92w@mail.gmail.com>
-Subject: Re: [PATCH] i386/kvm: Fix kvm_enable_x2apic link error in non-KVM
- builds
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, mtosatti@redhat.com, 
- santosh.shukla@amd.com, suravee.suthikulpanit@amd.com
-Content-Type: multipart/alternative; boundary="000000000000f99dde0626cf4f36"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::231;
- envelope-from=phil@philjordan.eu; helo=mail-oi1-x231.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,215 +76,385 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f99dde0626cf4f36
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed 13. Nov 2024 at 19:06, Paolo Bonzini <pbonzini@redhat.com> wrote:
-
-> On 11/13/24 15:49, Phil Dennis-Jordan wrote:
-> > It appears that existing call sites for the kvm_enable_x2apic()
-> > function rely on the compiler eliding the calls during optimisation
-> > when building with KVM disabled, or on platforms other than Linux,
-> > where that function is declared but not defined.
-> >
-> > This fragile reliance recently broke down when commit b12cb38 added
-> > a new call site which apparently failed to be optimised away when
-> > building QEMU on macOS with clang, resulting in a link error.
+On Wed, 13 Nov 2024, Phil Dennis-Jordan wrote:
+> macOS's Cocoa event handling must be done on the initial (main) thread
+> of the process. Furthermore, if library or application code uses
+> libdispatch, the main dispatch queue must be handling events on the main
+> thread as well.
 >
-> That's weird, can you check the preprocessor output?  The definition
-> of kvm_irqchip_in_kernel() should be just "false" on macOS, in fact
-> even the area you're changing should be simplified like
+> So far, this has affected Qemu in both the Cocoa and SDL UIs, although
+> in different ways: the Cocoa UI replaces the default qemu_main function
+> with one that spins Qemu's internal main event loop off onto a
+> background thread. SDL (which uses Cocoa internally) on the other hand
+> uses a polling approach within Qemu's main event loop. Events are
+> polled during the SDL UI's dpy_refresh callback, which happens to run
+> on the main thread by default.
 >
-
-Yeah, to be honest this header file seems a bit of a mess. It=E2=80=99s bei=
-ng
-#included by a bunch of .c files in hw/ despite being located in target/
-not include/ which suggests to me that some of the declarations ought to be
-moved.
-
-As I=E2=80=99m not really familiar with any of the KVM code base I would no=
-t
-normally be attempting to clean this up but the staging & master branches
-currently don=E2=80=99t build on macOS, so I was aiming for the simplest fi=
-x
-possible for the immediate problem.
-
-(I will test your patch shortly however.)
-
-
-> diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-> index 9de9c0d3038..7edb154a16e 100644
-> --- a/target/i386/kvm/kvm_i386.h
-> +++ b/target/i386/kvm/kvm_i386.h
-> @@ -13,8 +13,7 @@
+> As UIs are mutually exclusive, this works OK as long as nothing else
+> needs platform-native event handling. In the next patch, a new device is
+> introduced based on the ParavirtualizedGraphics.framework in macOS.
+> This uses libdispatch internally, and only works when events are being
+> handled on the main runloop. With the current system, it works when
+> using either the Cocoa or the SDL UI. However, it does not when running
+> headless. Moreover, any attempt to install a similar scheme to the
+> Cocoa UI's main thread replacement fails when combined with the SDL
+> UI.
 >
->   #include "sysemu/kvm.h"
+> This change tidies up main thread management to be more flexible.
 >
-> -#ifdef CONFIG_KVM
+> * The qemu_main global function pointer is a custom function for the
+>   main thread, and it may now be NULL. When it is, the main thread
+>   runs the main Qemu loop. This represents the traditional setup.
+> * When non-null, spawning the main Qemu event loop on a separate
+>   thread is now done centrally rather than inside the Cocoa UI code.
+> * For most platforms, qemu_main is indeed NULL by default, but on
+>   Darwin, it defaults to a function that runs the CFRunLoop.
+> * The Cocoa UI sets qemu_main to a function which runs the
+>   NSApplication event handling runloop, as is usual for a Cocoa app.
+> * The SDL UI overrides the qemu_main function to NULL, thus
+>   specifying that Qemu's main loop must run on the main
+>   thread.
+> * The GTK UI also overrides the qemu_main function to NULL.
+> * For other UIs, or in the absence of UIs, the platform's default
+>   behaviour is followed.
+>
+> This means that on macOS, the platform's runloop events are always
+> handled, regardless of chosen UI. The new PV graphics device will
+> thus work in all configurations. There is no functional change on other
+> operating systems.
+>
+> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>
+> v5:
+>
+> * Simplified the way of setting/clearing the main loop by going back
+>   to setting qemu_main directly, but narrowing the scope of what it
+>   needs to do, and it can now be NULL.
+>
+> v6:
+>
+> * Folded function qemu_run_default_main_on_new_thread's code into
+>   main()
+> * Removed whitespace changes left over on lines near code removed
+>   between v4 and v5
+>
+> v9:
+>
+> * Set qemu_main to NULL for GTK UI as well.
+>
+> v10:
+>
+> * Added comments clarifying the functionality and purpose of qemu_main.
+>
+> include/qemu-main.h     | 21 ++++++++++++++--
+> include/qemu/typedefs.h |  1 +
+> system/main.c           | 50 ++++++++++++++++++++++++++++++++++----
+> ui/cocoa.m              | 54 ++++++++++-------------------------------
+> ui/gtk.c                |  8 ++++++
+> ui/sdl2.c               |  4 +++
+> 6 files changed, 90 insertions(+), 48 deletions(-)
+>
+> diff --git a/include/qemu-main.h b/include/qemu-main.h
+> index 940960a7dbc..fc70681c8b5 100644
+> --- a/include/qemu-main.h
+> +++ b/include/qemu-main.h
+> @@ -5,7 +5,24 @@
+> #ifndef QEMU_MAIN_H
+> #define QEMU_MAIN_H
+>
+> -int qemu_default_main(void);
+> -extern int (*qemu_main)(void);
+> +/*
+> + * The function to run on the main (initial) thread of the process.
+> + * NULL means QEMU's main event loop.
+> + * When non-NULL, QEMU's main event loop will run on a purposely created
+> + * thread, after which the provided function pointer will be invoked on
+> + * the initial thread.
+> + * This is useful on platforms which treat the main thread as special
+> + * (macOS/Darwin) and/or require all UI API calls to occur from a
+> + * specific thread.
+> + * Implementing this via a global function pointer variable is a bit
+> + * ugly, but it's probably worth investigating the existing UI thread rule
+> + * violations in the SDL (e.g. #2537) and GTK+ back-ends. Fixing those
+> + * issues might precipitate requirements similar but not identical to those
+> + * of the Cocoa UI; hopefully we'll see some kind of pattern emerge, which
+> + * can then be used as a basis for an overhaul. (In fact, it may turn
+> + * out to be simplest to split the UI/native platform event thread from the
+> + * QEMU main event loop on all platforms, with any UI or even none at all.)
+> + */
+> +extern qemu_main_fn qemu_main;
+
+qemu_main_fn is defined in typdefefs.h but not included here. Also coding 
+style says typedefs should be CamelCase but maybe it's just not worth to 
+define a type for this and you can just leave the existing line here only 
+removing the qemu_default_main declaration and adding the comment.
+
+> #endif /* QEMU_MAIN_H */
+> diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+> index 3d84efcac47..b02cfe1f328 100644
+> --- a/include/qemu/typedefs.h
+> +++ b/include/qemu/typedefs.h
+> @@ -131,5 +131,6 @@ typedef struct IRQState *qemu_irq;
+>  * Function types
+>  */
+> typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
+> +typedef int (*qemu_main_fn)(void);
+
+Then drop this change...
+
+> #endif /* QEMU_TYPEDEFS_H */
+> diff --git a/system/main.c b/system/main.c
+> index 9b91d21ea8c..d9397a6d5d0 100644
+> --- a/system/main.c
+> +++ b/system/main.c
+> @@ -24,13 +24,14 @@
+>
+> #include "qemu/osdep.h"
+> #include "qemu-main.h"
+> +#include "qemu/main-loop.h"
+> #include "sysemu/sysemu.h"
+>
+> -#ifdef CONFIG_SDL
+> -#include <SDL.h>
+> +#ifdef CONFIG_DARWIN
+> +#include <CoreFoundation/CoreFoundation.h>
+> #endif
+>
+> -int qemu_default_main(void)
+> +static int qemu_default_main(void)
+> {
+>     int status;
+>
+> @@ -40,10 +41,49 @@ int qemu_default_main(void)
+>     return status;
+> }
+>
+> -int (*qemu_main)(void) = qemu_default_main;
+
+...and leave this line here without init to define the global variable and 
+only put assigning the init value in the #ifdef if you don't want to 
+repeat the function pointer definition twice (but that wouldn't be a 
+problem either in my opinion to do it in the #ifdef this way).
+
+> +/*
+> + * Various macOS system libraries, including the Cocoa UI and anything using
+> + * libdispatch, such as ParavirtualizedGraphics.framework, requires that the
+> + * main runloop, on the main (initial) thread be running or at least regularly
+> + * polled for events. A special mode is therefore supported, where the QEMU
+> + * main loop runs on a separate thread and the main thread handles the
+> + * CF/Cocoa runloop.
+> + */
+> +
+> +static void *call_qemu_default_main(void *opaque)
+> +{
+> +    int status;
+> +
+> +    bql_lock();
+> +    status = qemu_default_main();
+> +    bql_unlock();
+> +
+> +    exit(status);
+> +}
+> +
+> +#ifdef CONFIG_DARWIN
+> +static int os_darwin_cfrunloop_main(void)
+> +{
+> +    CFRunLoopRun();
+> +    abort();
+
+Is it better to use g_assert_not_reached() here?
+
+> +}
+> +
+> +qemu_main_fn qemu_main = os_darwin_cfrunloop_main;
+> +#else
+> +qemu_main_fn qemu_main;
+> +#endif
+>
+> int main(int argc, char **argv)
+> {
+> +    QemuThread main_loop_thread;
+> +
+>     qemu_init(argc, argv);
+> -    return qemu_main();
+> +    if (qemu_main) {
+> +        qemu_thread_create(&main_loop_thread, "qemu_main",
+> +                           call_qemu_default_main, NULL, QEMU_THREAD_DETACHED);
+> +        bql_unlock();
+> +        return qemu_main();
+> +    } else {
+> +        qemu_default_main();
+
+I think you need 'return qemu_default_main()' here but I'm a bit confused 
+by all this wrapping of qemu_default_main in call_qemu_default_main. I see 
+that may be needed because qemu_thread_create takes a different function 
+but now that qemu_default main is static and not replaced externally could 
+that be changed to the right type and avoid this confusion and simplify 
+this a bit?
+
+Regards,
+BALATON Zoltan
+
+> +    }
+> }
+> diff --git a/ui/cocoa.m b/ui/cocoa.m
+> index 4c2dd335323..30b8920d929 100644
+> --- a/ui/cocoa.m
+> +++ b/ui/cocoa.m
+> @@ -73,6 +73,8 @@
+>     int height;
+> } QEMUScreen;
+>
+> +@class QemuCocoaPasteboardTypeOwner;
+> +
+> static void cocoa_update(DisplayChangeListener *dcl,
+>                          int x, int y, int w, int h);
+>
+> @@ -107,6 +109,7 @@ static void cocoa_switch(DisplayChangeListener *dcl,
+> static NSInteger cbchangecount = -1;
+> static QemuClipboardInfo *cbinfo;
+> static QemuEvent cbevent;
+> +static QemuCocoaPasteboardTypeOwner *cbowner;
+>
+> // Utility functions to run specified code block with the BQL held
+> typedef void (^CodeBlock)(void);
+> @@ -1321,8 +1324,10 @@ - (void) dealloc
+> {
+>     COCOA_DEBUG("QemuCocoaAppController: dealloc\n");
+>
+> -    if (cocoaView)
+> -        [cocoaView release];
+> +    [cocoaView release];
+> +    [cbowner release];
+> +    cbowner = nil;
+> +
+>     [super dealloc];
+> }
+>
+> @@ -1938,8 +1943,6 @@ - (void)pasteboard:(NSPasteboard *)sender provideDataForType:(NSPasteboardType)t
+>
+> @end
+>
+> -static QemuCocoaPasteboardTypeOwner *cbowner;
 > -
-> +/* always false if !CONFIG_KVM */
->   #define kvm_pit_in_kernel() \
->       (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
->   #define kvm_pic_in_kernel()  \
-> @@ -22,14 +21,6 @@
->   #define kvm_ioapic_in_kernel() \
->       (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
+> static void cocoa_clipboard_notify(Notifier *notifier, void *data);
+> static void cocoa_clipboard_request(QemuClipboardInfo *info,
+>                                     QemuClipboardType type);
+> @@ -2002,43 +2005,8 @@ static void cocoa_clipboard_request(QemuClipboardInfo *info,
+>     }
+> }
 >
-> -#else
+> -/*
+> - * The startup process for the OSX/Cocoa UI is complicated, because
+> - * OSX insists that the UI runs on the initial main thread, and so we
+> - * need to start a second thread which runs the qemu_default_main():
+> - * in main():
+> - *  in cocoa_display_init():
+> - *   assign cocoa_main to qemu_main
+> - *   create application, menus, etc
+> - *  in cocoa_main():
+> - *   create qemu-main thread
+> - *   enter OSX run loop
+> - */
 > -
-> -#define kvm_pit_in_kernel()      0
-> -#define kvm_pic_in_kernel()      0
-> -#define kvm_ioapic_in_kernel()   0
+> -static void *call_qemu_main(void *opaque)
+> -{
+> -    int status;
 > -
-> -#endif  /* CONFIG_KVM */
+> -    COCOA_DEBUG("Second thread: calling qemu_default_main()\n");
+> -    bql_lock();
+> -    status = qemu_default_main();
+> -    bql_unlock();
+> -    COCOA_DEBUG("Second thread: qemu_default_main() returned, exiting\n");
+> -    [cbowner release];
+> -    exit(status);
+> -}
 > -
->   bool kvm_has_smm(void);
->   bool kvm_enable_x2apic(void);
+> static int cocoa_main(void)
+> {
+> -    QemuThread thread;
+> -
+> -    COCOA_DEBUG("Entered %s()\n", __func__);
+> -
+> -    bql_unlock();
+> -    qemu_thread_create(&thread, "qemu_main", call_qemu_main,
+> -                       NULL, QEMU_THREAD_DETACHED);
+> -
+> -    // Start the main event loop
+>     COCOA_DEBUG("Main thread: entering OSX run loop\n");
+>     [NSApp run];
+>     COCOA_DEBUG("Main thread: left OSX run loop, which should never happen\n");
+> @@ -2120,8 +2088,6 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
 >
-> Paolo
+>     COCOA_DEBUG("qemu_cocoa: cocoa_display_init\n");
 >
-> >
-> > Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> > ---
-> >   target/i386/kvm/kvm_i386.h | 3 ++-
-> >   1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-> > index 9de9c0d3038..7ce47388d90 100644
-> > --- a/target/i386/kvm/kvm_i386.h
-> > +++ b/target/i386/kvm/kvm_i386.h
-> > @@ -21,17 +21,18 @@
-> >       (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
-> >   #define kvm_ioapic_in_kernel() \
-> >       (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
-> > +bool kvm_enable_x2apic(void);
-> >
-> >   #else
-> >
-> >   #define kvm_pit_in_kernel()      0
-> >   #define kvm_pic_in_kernel()      0
-> >   #define kvm_ioapic_in_kernel()   0
-> > +#define kvm_enable_x2apic()      0
-> >
-> >   #endif  /* CONFIG_KVM */
-> >
-> >   bool kvm_has_smm(void);
-> > -bool kvm_enable_x2apic(void);
-> >   bool kvm_hv_vpindex_settable(void);
-> >   bool kvm_enable_hypercall(uint64_t enable_mask);
-> >
+> -    qemu_main = cocoa_main;
+> -
+>     // Pull this console process up to being a fully-fledged graphical
+>     // app with a menubar and Dock icon
+>     ProcessSerialNumber psn = { 0, kCurrentProcess };
+> @@ -2185,6 +2151,12 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+>     qemu_clipboard_peer_register(&cbpeer);
 >
+>     [pool release];
+> +
+> +    /*
+> +     * The Cocoa UI will run the NSApplication runloop on the main thread
+> +     * rather than the default Core Foundation one.
+> +     */
+> +    qemu_main = cocoa_main;
+> }
 >
-
---000000000000f99dde0626cf4f36
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div><br></div><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Wed 13. Nov 2024 at 19:06, Paolo Bonzini &lt;<a href=3D"=
-mailto:pbonzini@redhat.com">pbonzini@redhat.com</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t-width:1px;border-left-style:solid;padding-left:1ex;border-left-color:rgb(=
-204,204,204)">On 11/13/24 15:49, Phil Dennis-Jordan wrote:<br>
-&gt; It appears that existing call sites for the kvm_enable_x2apic()<br>
-&gt; function rely on the compiler eliding the calls during optimisation<br=
+> static QemuDisplay qemu_display_cocoa = {
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index bf9d3dd679a..fbf20161f36 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -38,6 +38,7 @@
+> #include "qemu/cutils.h"
+> #include "qemu/error-report.h"
+> #include "qemu/main-loop.h"
+> +#include "qemu-main.h"
 >
-&gt; when building with KVM disabled, or on platforms other than Linux,<br>
-&gt; where that function is declared but not defined.<br>
-&gt; <br>
-&gt; This fragile reliance recently broke down when commit b12cb38 added<br=
+> #include "ui/console.h"
+> #include "ui/gtk.h"
+> @@ -2485,6 +2486,13 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+> #ifdef CONFIG_GTK_CLIPBOARD
+>     gd_clipboard_init(s);
+> #endif /* CONFIG_GTK_CLIPBOARD */
+> +
+> +    /*
+> +     * GTK+ calls must happen on the main thread at least on some platforms,
+> +     * and on macOS the main runloop is polled via GTK+'s event handling.
+> +     * Don't allow QEMU's event loop to be moved off the main thread.
+> +     */
+> +    qemu_main = NULL;
+> }
 >
-&gt; a new call site which apparently failed to be optimised away when<br>
-&gt; building QEMU on macOS with clang, resulting in a link error.<br>
-<br>
-That&#39;s weird, can you check the preprocessor output?=C2=A0 The definiti=
-on<br>
-of kvm_irqchip_in_kernel() should be just &quot;false&quot; on macOS, in fa=
-ct<br>
-even the area you&#39;re changing should be simplified like<br>
-</blockquote><div dir=3D"auto"><br></div><div dir=3D"auto">Yeah, to be hone=
-st this header file seems a bit of a mess. It=E2=80=99s being #included by =
-a bunch of .c files in hw/ despite being located in target/ not include/ wh=
-ich suggests to me that some of the declarations ought to be moved.</div><d=
-iv dir=3D"auto"><br></div><div dir=3D"auto">As I=E2=80=99m not really famil=
-iar with any of the KVM code base I would not normally be attempting to cle=
-an this up but the staging &amp; master branches currently don=E2=80=99t bu=
-ild on macOS, so I was aiming for the simplest fix possible for the immedia=
-te problem.</div><div dir=3D"auto"><br></div><div dir=3D"auto">(I will test=
- your patch shortly however.)</div><div dir=3D"auto"><br></div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1=
-px;border-left-style:solid;padding-left:1ex;border-left-color:rgb(204,204,2=
-04)"><br>
-diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h<br>
-index 9de9c0d3038..7edb154a16e 100644<br>
---- a/target/i386/kvm/kvm_i386.h<br>
-+++ b/target/i386/kvm/kvm_i386.h<br>
-@@ -13,8 +13,7 @@<br>
-<br>
-=C2=A0 #include &quot;sysemu/kvm.h&quot;<br>
-<br>
--#ifdef CONFIG_KVM<br>
--<br>
-+/* always false if !CONFIG_KVM */<br>
-=C2=A0 #define kvm_pit_in_kernel() \<br>
-=C2=A0 =C2=A0 =C2=A0 (kvm_irqchip_in_kernel() &amp;&amp; !kvm_irqchip_is_sp=
-lit())<br>
-=C2=A0 #define kvm_pic_in_kernel()=C2=A0 \<br>
-@@ -22,14 +21,6 @@<br>
-=C2=A0 #define kvm_ioapic_in_kernel() \<br>
-=C2=A0 =C2=A0 =C2=A0 (kvm_irqchip_in_kernel() &amp;&amp; !kvm_irqchip_is_sp=
-lit())<br>
-<br>
--#else<br>
--<br>
--#define kvm_pit_in_kernel()=C2=A0 =C2=A0 =C2=A0 0<br>
--#define kvm_pic_in_kernel()=C2=A0 =C2=A0 =C2=A0 0<br>
--#define kvm_ioapic_in_kernel()=C2=A0 =C2=A00<br>
--<br>
--#endif=C2=A0 /* CONFIG_KVM */<br>
--<br>
-=C2=A0 bool kvm_has_smm(void);<br>
-=C2=A0 bool kvm_enable_x2apic(void);<br>
-<br>
-Paolo<br>
-<br>
-&gt; <br>
-&gt; Signed-off-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjorda=
-n.eu" target=3D"_blank">phil@philjordan.eu</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0target/i386/kvm/kvm_i386.h | 3 ++-<br>
-&gt;=C2=A0 =C2=A01 file changed, 2 insertions(+), 1 deletion(-)<br>
-&gt; <br>
-&gt; diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h<b=
-r>
-&gt; index 9de9c0d3038..7ce47388d90 100644<br>
-&gt; --- a/target/i386/kvm/kvm_i386.h<br>
-&gt; +++ b/target/i386/kvm/kvm_i386.h<br>
-&gt; @@ -21,17 +21,18 @@<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0(kvm_irqchip_in_kernel() &amp;&amp; !kvm_irq=
-chip_is_split())<br>
-&gt;=C2=A0 =C2=A0#define kvm_ioapic_in_kernel() \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0(kvm_irqchip_in_kernel() &amp;&amp; !kvm_irq=
-chip_is_split())<br>
-&gt; +bool kvm_enable_x2apic(void);<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0#else<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0#define kvm_pit_in_kernel()=C2=A0 =C2=A0 =C2=A0 0<br>
-&gt;=C2=A0 =C2=A0#define kvm_pic_in_kernel()=C2=A0 =C2=A0 =C2=A0 0<br>
-&gt;=C2=A0 =C2=A0#define kvm_ioapic_in_kernel()=C2=A0 =C2=A00<br>
-&gt; +#define kvm_enable_x2apic()=C2=A0 =C2=A0 =C2=A0 0<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0#endif=C2=A0 /* CONFIG_KVM */<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0bool kvm_has_smm(void);<br>
-&gt; -bool kvm_enable_x2apic(void);<br>
-&gt;=C2=A0 =C2=A0bool kvm_hv_vpindex_settable(void);<br>
-&gt;=C2=A0 =C2=A0bool kvm_enable_hypercall(uint64_t enable_mask);<br>
-&gt;=C2=A0 =C2=A0<br>
-<br>
-</blockquote></div></div>
-
---000000000000f99dde0626cf4f36--
+> static void early_gtk_display_init(DisplayOptions *opts)
+> diff --git a/ui/sdl2.c b/ui/sdl2.c
+> index bd4f5a9da14..44ab2762262 100644
+> --- a/ui/sdl2.c
+> +++ b/ui/sdl2.c
+> @@ -34,6 +34,7 @@
+> #include "sysemu/sysemu.h"
+> #include "ui/win32-kbd-hook.h"
+> #include "qemu/log.h"
+> +#include "qemu-main.h"
+>
+> static int sdl2_num_outputs;
+> static struct sdl2_console *sdl2_console;
+> @@ -965,6 +966,9 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>     }
+>
+>     atexit(sdl_cleanup);
+> +
+> +    /* SDL's event polling (in dpy_refresh) must happen on the main thread. */
+> +    qemu_main = NULL;
+> }
+>
+> static QemuDisplay qemu_display_sdl2 = {
+>
 
