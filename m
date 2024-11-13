@@ -4,95 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53516D637BE
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 20:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 598F7D637BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 20:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBKJc-0000Kb-8z; Wed, 13 Nov 2024 15:50:17 -0500
+	id 1tBKNe-0001Lt-Ck; Wed, 13 Nov 2024 15:54:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1tBKJW-0000JC-Cp; Wed, 13 Nov 2024 15:50:10 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tBKNb-0001Lk-Vc
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 15:54:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1tBKJU-0001jZ-EY; Wed, 13 Nov 2024 15:50:10 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ADKA15x012159;
- Wed, 13 Nov 2024 20:50:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=KjCBsi
- cv5BEEKFRqAhqUaFXkyIyC4VyKlnmYhF++aBI=; b=YNgEZdkKEP6fhtYSvQx/PO
- 7QTwsXbrhwPxG6yL5d+0269GS92v2sYWF/6DNIlOWN6rfP6Ef3E187GJE5r4QTeH
- w4mmqsh76qkYv8LJ5FhBL2QPqJWD/kvbScRyUNeu/6U6ZhUfX1Qd8NJKsOE/GY/T
- 5aY+v9Hpp8yPr+opIkm358CMWuBHuo98/mavpxtN6YFxsN3b3HDNqRv/gsDX/nOJ
- wo7EkOBHz95CxNf5vSkNgUq04tgOd4QPnePZPkrlvnNvMxGOCQhcAz1+/++8A5GR
- T56CYD5ET8aWCaCxGd0kI5k9+3+y0YhDMzaBYZ8itFkE0UPo2LMZ85QBeyz7viqg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42w2wg041v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 13 Nov 2024 20:50:05 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4ADEOvJi010526;
- Wed, 13 Nov 2024 20:50:05 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42tj2s723a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 13 Nov 2024 20:50:05 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4ADKo4cI20185688
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 13 Nov 2024 20:50:04 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E5D8458060;
- Wed, 13 Nov 2024 20:50:03 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7D5EE5805A;
- Wed, 13 Nov 2024 20:50:03 +0000 (GMT)
-Received: from [9.61.167.191] (unknown [9.61.167.191])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 13 Nov 2024 20:50:03 +0000 (GMT)
-Message-ID: <d22ded0a-f9db-4971-812e-7588fc8374c5@linux.ibm.com>
-Date: Wed, 13 Nov 2024 15:50:02 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tBKNa-00020o-Hj
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 15:54:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731531261;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HsD2O8Yuv4PMO1WKqguMiS6ul2lMFcYGOZVeJRnXvTc=;
+ b=Y5B8sH+AibfchqAHsFHvOUXixTM8Z0wxlPkTK+1wpDYl7D2NgIVA8qYzyr1fNgAS0fHiNe
+ kYX3KMpv0tIYBpww8drOJ9jhjgkdOEzhJ2Hm+t0HT2wiHEOjRH4JaRpELtBlDp+qML5/Sw
+ 4JPOkO9z+3RI4xLthC+Uv/No0MnlBuw=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-167-zuMBpNdDPnqUp4C0HdnDvA-1; Wed, 13 Nov 2024 15:54:19 -0500
+X-MC-Unique: zuMBpNdDPnqUp4C0HdnDvA-1
+X-Mimecast-MFC-AGG-ID: zuMBpNdDPnqUp4C0HdnDvA
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7b14f5ca413so1057452585a.3
+ for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 12:54:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731531259; x=1732136059;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HsD2O8Yuv4PMO1WKqguMiS6ul2lMFcYGOZVeJRnXvTc=;
+ b=GegfqcsALGryOLjAWiiKBxnuwwViAnQmtbKEcLAxefCUMJT376Km9V4CetNIx0zOu4
+ 5fh0EyPFeKYBfwS4ACsc3kSdIDPZ9KdEkD9bfaju1NhHJh/Md4H1e334k485vusqt7ik
+ bm2/BWBVMpJOBtDR+Iq5ElOVKZcNmcEUaEPfn7zQ0dS7N751Ins2FqBl7+IDGPyVykco
+ K28xJheI2Zo1Cgk7ImRKYtPda3P++O9qjgeoDP+xsXYWwBFfEblkepTPpbGWJc/CfGmD
+ iYf+ZNlMm2ITjKw7jQgvizaCEvmOeveMiaYH10SpsgI8EHoM2bW0M75PPg3/TK7JEaZE
+ /5Rg==
+X-Gm-Message-State: AOJu0YwLZNd2c57psVIAuj8WZM563AZ0V7lvDFOzRa5s62WuZ5PQd0JW
+ XBo1Gdww4FDINE+ZfIZNdsGdch+74LsQ1KS6m+YMG8DndOn6iWwuJ89+fHRv1hva/nh5NEUViW7
+ uH1KpkOfe/Y3HsDyYuWrKBhYVEpD/henU0w3TuKR5ZHI1sRe3hVyS
+X-Received: by 2002:a05:620a:2688:b0:7b1:54e5:6183 with SMTP id
+ af79cd13be357-7b331f2e9dfmr3028023085a.53.1731531259195; 
+ Wed, 13 Nov 2024 12:54:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFYrWBWVRYX0f04He61S+HD1nPZaesPRLdW+kKuwxmLNR7PUjn1tELKTWcrJvNWz51plGti4w==
+X-Received: by 2002:a05:620a:2688:b0:7b1:54e5:6183 with SMTP id
+ af79cd13be357-7b331f2e9dfmr3028021385a.53.1731531258913; 
+ Wed, 13 Nov 2024 12:54:18 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b32ac44629sm731561985a.40.2024.11.13.12.54.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Nov 2024 12:54:18 -0800 (PST)
+Date: Wed, 13 Nov 2024 15:54:15 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V3 05/16] migration: SCM_RIGHTS for QEMUFile
+Message-ID: <ZzUR92pCcSn2U5Pj@x1n>
+References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
+ <1730468875-249970-6-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/s390x: Restrict "loadparm" property to devices that
- can be used for booting
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20241113114741.681096-1-thuth@redhat.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20241113114741.681096-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: JPrZ8GC8IBhwsSXcAeaADXaju50DPoig
-X-Proofpoint-ORIG-GUID: JPrZ8GC8IBhwsSXcAeaADXaju50DPoig
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 adultscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 mlxlogscore=999
- clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411130169
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1730468875-249970-6-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.738,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,108 +107,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Nov 01, 2024 at 06:47:44AM -0700, Steve Sistare wrote:
+> Define functions to put/get file descriptors to/from a QEMUFile, for qio
+> channels that support SCM_RIGHTS.  Maintain ordering such that
+>   put(A), put(fd), put(B)
+> followed by
+>   get(A), get(fd), get(B)
+> always succeeds.  Other get orderings may succeed but are not guaranteed.
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-On 11/13/24 6:47 AM, Thomas Huth wrote:
-> Commit bb185de423 ("s390x: Add individual loadparm assignment to
-> CCW device") added a "loadparm" property to all CCW devices. This
-> was a little bit unfortunate, since this property is only useful
-> for devices that can be used for booting, but certainly it is not
-> useful for devices like virtio-gpu or virtio-tablet.
->
-> Thus let's restrict the property to CCW devices that we can boot from
-> (i.e. virtio-block, virtio-net and vfio-ccw devices).
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   hw/s390x/ccw-device.h     | 5 +++++
->   hw/s390x/ccw-device.c     | 4 +---
->   hw/s390x/virtio-ccw-blk.c | 1 +
->   hw/s390x/virtio-ccw-net.c | 1 +
->   hw/vfio/ccw.c             | 1 +
->   5 files changed, 9 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/s390x/ccw-device.h b/hw/s390x/ccw-device.h
-> index 1e1737c0f3..4439feb140 100644
-> --- a/hw/s390x/ccw-device.h
-> +++ b/hw/s390x/ccw-device.h
-> @@ -51,4 +51,9 @@ static inline CcwDevice *to_ccw_dev_fast(DeviceState *d)
->   
->   OBJECT_DECLARE_TYPE(CcwDevice, CCWDeviceClass, CCW_DEVICE)
->   
-> +extern const PropertyInfo ccw_loadparm;
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+>  struct QEMUFile {
+>      QIOChannel *ioc;
+>      bool is_writable;
+> @@ -51,6 +56,9 @@ struct QEMUFile {
+>  
+>      int last_error;
+>      Error *last_error_obj;
 > +
-> +#define DEFINE_PROP_CCW_LOADPARM(_n, _s, _f) \
-> +    DEFINE_PROP(_n, _s, _f, ccw_loadparm, typeof(uint8_t[8]))
-> +
->   #endif
-> diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
-> index 230cc09e03..30f2fb486f 100644
-> --- a/hw/s390x/ccw-device.c
-> +++ b/hw/s390x/ccw-device.c
-> @@ -73,7 +73,7 @@ static void ccw_device_set_loadparm(Object *obj, Visitor *v,
->       s390_ipl_fmt_loadparm(dev->loadparm, val, errp);
->   }
->   
-> -static const PropertyInfo ccw_loadparm = {
-> +const PropertyInfo ccw_loadparm = {
->       .name  = "ccw_loadparm",
->       .description = "Up to 8 chars in set of [A-Za-z0-9. ] to pass"
->               " to the guest loader/kernel",
-> @@ -85,8 +85,6 @@ static Property ccw_device_properties[] = {
->       DEFINE_PROP_CSS_DEV_ID("devno", CcwDevice, devno),
->       DEFINE_PROP_CSS_DEV_ID_RO("dev_id", CcwDevice, dev_id),
->       DEFINE_PROP_CSS_DEV_ID_RO("subch_id", CcwDevice, subch_id),
-> -    DEFINE_PROP("loadparm", CcwDevice, loadparm, ccw_loadparm,
-> -            typeof(uint8_t[8])),
->       DEFINE_PROP_END_OF_LIST(),
->   };
->   
-> diff --git a/hw/s390x/virtio-ccw-blk.c b/hw/s390x/virtio-ccw-blk.c
-> index 8e0e58b77d..2364432c6e 100644
-> --- a/hw/s390x/virtio-ccw-blk.c
-> +++ b/hw/s390x/virtio-ccw-blk.c
-> @@ -48,6 +48,7 @@ static Property virtio_ccw_blk_properties[] = {
->                       VIRTIO_CCW_FLAG_USE_IOEVENTFD_BIT, true),
->       DEFINE_PROP_UINT32("max_revision", VirtioCcwDevice, max_rev,
->                          VIRTIO_CCW_MAX_REV),
-> +    DEFINE_PROP_CCW_LOADPARM("loadparm", CcwDevice, loadparm),
->       DEFINE_PROP_END_OF_LIST(),
->   };
->   
-> diff --git a/hw/s390x/virtio-ccw-net.c b/hw/s390x/virtio-ccw-net.c
-> index 484e617659..a4a3f65c7e 100644
-> --- a/hw/s390x/virtio-ccw-net.c
-> +++ b/hw/s390x/virtio-ccw-net.c
-> @@ -51,6 +51,7 @@ static Property virtio_ccw_net_properties[] = {
->                       VIRTIO_CCW_FLAG_USE_IOEVENTFD_BIT, true),
->       DEFINE_PROP_UINT32("max_revision", VirtioCcwDevice, max_rev,
->                          VIRTIO_CCW_MAX_REV),
-> +    DEFINE_PROP_CCW_LOADPARM("loadparm", CcwDevice, loadparm),
->       DEFINE_PROP_END_OF_LIST(),
->   };
->   
-> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index 24703c814a..c1cd7736cd 100644
-> --- a/hw/vfio/ccw.c
-> +++ b/hw/vfio/ccw.c
-> @@ -662,6 +662,7 @@ static Property vfio_ccw_properties[] = {
->       DEFINE_PROP_LINK("iommufd", VFIOCCWDevice, vdev.iommufd,
->                        TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
->   #endif
-> +    DEFINE_PROP_CCW_LOADPARM("loadparm", CcwDevice, loadparm),
->       DEFINE_PROP_END_OF_LIST(),
->   };
->   
+> +    bool fd_pass;
 
-Thomas,
+One nitpick: I'd rename this to allow_fd_pass, or any name clearly shows
+that it's a capability.
 
-Please disregard my previous response to this patch.
+> +    QTAILQ_HEAD(, FdEntry) fds;
+>  };
 
-While I do think per-device loadparm will need further revision, I 
-believe it
-will be in addition to these changes, not in place of them.
+-- 
+Peter Xu
 
-Thanks again for putting this together!
-
-Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
 
