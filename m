@@ -4,94 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9F9FD462D0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 16:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF948D462D0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 16:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBG2y-0007Rc-Do; Wed, 13 Nov 2024 11:16:48 -0500
+	id 1tBG9U-00011F-HZ; Wed, 13 Nov 2024 11:23:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1tBG2w-0007QH-QI
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:16:47 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1tBG2u-0005BO-HA
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:16:46 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-53da266cf37so4753e87.1
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 08:16:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1731514602; x=1732119402; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=LiSHDbLAv6mIXLorT18cINUKafJvqOrs9fp4p3I+ElY=;
- b=gUAa1EneOjWJuSmW5/r0xYkEQHVjjpbrm+cWPwEWhIQ/h4LHGC0V/cLocvb2REqywn
- r/JkZsfQ5EMtu1+HFiNtB1iNglecR2cHEpYCB8ES8UCRv4k/5DEgAEx5DcuY1PhJnlzj
- cneHyMkryOC4FYV47x6RYN7YT/hQfpbVH7H1Oiyd0o3TyIPO5DUZoNOlrXbPVKa6fXEj
- cnSWvhFM6McOPQmAqi/JtQJ+jMFcMdOP+qgzCJCFQJz82X8/r7fjgUbfGJNmtRyH24kQ
- OSuAPrNvlwfYopUlZ7UESeZKCqIuKTK+L4HRCMLTTOFXnBqIP2QD/vCX8JELZRYXGsf0
- dsbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731514602; x=1732119402;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LiSHDbLAv6mIXLorT18cINUKafJvqOrs9fp4p3I+ElY=;
- b=qQigs8Ow7uGNgHMIJ8XzFOSdxO5VTymsy6qvYnLSXqXIRWMvJILnVZsUlcxa+LEt7i
- NUP3MhB4/Ekzu25uMxgh9DjnZd4VOl4DF+HDnLD/GUaPTu/nDZDjqDM3zBpwFcTyypXX
- oR1cmfFa1IVtcIb0Ew+qRYjVt3HBhBcFyAFdOKWOmrNESR0SYsOzLkoFD9I83Q4DovK4
- 38OusnBsOHnGoYQAH0XE5dnlzYIaBZWxtSc2VuMjnVTb3JcrY4hgClGJkrgMAojQhqEC
- n/zALaRuflGszeGtltpXBIHWHUCNv55XOJEhN9fWcA45GcphNiNfjEX/4XHc+rE0E0vu
- mEjg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGak4xR5lOthEUdf+0Dl4/V9w8BevuoykqU9763RwelqMUcYRBFhU0jFMeXCuCPz7fzwjoW03+EV9f@nongnu.org
-X-Gm-Message-State: AOJu0YzLtAD7C0QPyrOVd4kqNSy2+XRU9ytOQKdxAsE7MKAB7es7PwUR
- Dj96PLuve8liaRs8HkVO6QV6luXBL+5nWoQ8gx5cEQeaE4PLFTJbHGHgN2QdDw==
-X-Gm-Gg: ASbGncuwA6LPlm8bbUNErcnntquLtSVHzVwhc7/iySM205lQpSiKOgIUz/6VUiST0li
- abIAUhxnCmdZR/ufk8ulDVLcRgC4VXFpBzIr8b/rXXG4RWQNg5u2AK9U/lUKVD2+p4zyqxIQU45
- 85YaiLKffh+y2xF88RWwEIp7Bq7ifPvXSHBvpl86Mgygo6c6/qxgdk+5yHspZYzbJFwOIJDNMLb
- NNXIloR0+mziBHY76JVHqL6Zt9rJTXlxSmulPfmlQgPulP8/L4d8mrJUOa3oZg3+9JpDvPWgRt1
- cLKBxVosIybm
-X-Google-Smtp-Source: AGHT+IEC3l7msHlGWD4j+YVAY1Ft2m20Cc39K5nYzCi7d+6hSBbvBph5YiM7FfXwnHA3qFwQWegHhg==
-X-Received: by 2002:ac2:42d1:0:b0:53b:4c7c:a792 with SMTP id
- 2adb3069b0e04-53da024641dmr101138e87.6.1731514601330; 
- Wed, 13 Nov 2024 08:16:41 -0800 (PST)
-Received: from google.com (158.100.79.34.bc.googleusercontent.com.
- [34.79.100.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed9978afsm18603259f8f.52.2024.11.13.08.16.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Nov 2024 08:16:40 -0800 (PST)
-Date: Wed, 13 Nov 2024 16:16:36 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com,
- peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, linuxarm@huawei.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org
-Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Message-ID: <ZzTQ5Dn8ckIJjxc-@google.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1tBG9S-000116-Mf
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:23:30 -0500
+Received: from mail-bn1nam02on20629.outbound.protection.outlook.com
+ ([2a01:111:f403:2407::629]
+ helo=NAM02-BN1-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1tBG9P-0005xi-9A
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 11:23:30 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=eBAbAYHB7B57bLhGJqWkmGSz3i7EVb5lMnX+zDTKaEO8zREa+Ftjg2NJtg7N4oCILs/KQRVx/hbP0wUkxNu/akmq3n1TKtsIN0u7MNrIpEfbySfWrsMZRXx8574MxjT5iScZqyYEvWtVBmWtgbiuoMxmiCHFNFY73mcXgvamYpUx9ZrQVy+YuBPGoa+eiRpiDJ00hj/CYEM0nGx3BO7kmdLRsM3wVZUabEIhqJcXRhnLybQ+CTKbl38sMmgI5YqfGpZBEECtQ1ZuiObmp5T1YdvqfDAqQ+r1Ir59A5x5jfISfNT++MyvKXdRD6Da092Wxpo/qB5quQSCyrEaB4Jn1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qb6Hz5QEhhvWRK0UAjgX+IXz2YXOxk84MHhfI+WQemo=;
+ b=KDH1qJzfKo9dFNo8TvHFtYjkEctAE4e0C0r+DjCEe8Hv1CgwSj40eBzgYOwZZ5H8U6qNATBcIMheeQBulYuXYVjaVtFxdv4sk1cc1Co1qWhI7DhEp/f3cUPHBjhEP2jvhsWt9ZvwoQ1Sq9cBybzutc644QxeOXFIWX3IlRUU4yck57szJABWrsdqHiyMnlxwfBakGftmfClKVUmGrx9PO18GYi16/l3Js+6jYl6FCUUjmK/GTVR7jQw1/PDg9liAIVzas1L0Po2uC++2Ss7qptlFbWHs3UM5Qq9w0jmccYqlKCivnZxeAxB8KocJ65HrtcZFxiSwU0yIIv57BvI0iA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qb6Hz5QEhhvWRK0UAjgX+IXz2YXOxk84MHhfI+WQemo=;
+ b=Q+VITzecZ29oZK2EZ/CMVjOeF23d0VpkXGEyDr+pq4ihwXt0tFBwda/1yUQP0oSO0baIsexSrYQP/Xnln9fiq7ZZMdzQAKht9eCx+qF9NcpuvA0KTcQKbJqfgnx5DD2kCXF9CqYcBY8k73lhax45qiDGDBL4wc2uP8WRdMc0iTE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SA0PR12MB4557.namprd12.prod.outlook.com (2603:10b6:806:9d::10)
+ by MW4PR12MB7261.namprd12.prod.outlook.com (2603:10b6:303:229::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.17; Wed, 13 Nov
+ 2024 16:23:17 +0000
+Received: from SA0PR12MB4557.namprd12.prod.outlook.com
+ ([fe80::d22d:666e:be69:117f]) by SA0PR12MB4557.namprd12.prod.outlook.com
+ ([fe80::d22d:666e:be69:117f%6]) with mapi id 15.20.8137.022; Wed, 13 Nov 2024
+ 16:23:17 +0000
+Message-ID: <2394ca75-409d-4ae5-b995-27f8b196a1fb@amd.com>
+Date: Wed, 13 Nov 2024 10:23:15 -0600
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 7/7] target/i386: Add EPYC-Genoa model to support Zen 4
+ processor series
+To: Maksim Davydov <davydov-max@yandex-team.ru>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "Roth, Michael" <Michael.Roth@amd.com>
+Cc: weijiang.yang@intel.com, philmd@linaro.org, dwmw@amazon.co.uk,
+ paul@xen.org, joao.m.martins@oracle.com, qemu-devel@nongnu.org,
+ mtosatti@redhat.com, kvm@vger.kernel.org, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, yang.zhong@intel.com, jing2.liu@intel.com,
+ vkuznets@redhat.com, michael.roth@amd.com, wei.huang2@amd.com,
+ berrange@redhat.com, bdas@redhat.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org
+References: <20230504205313.225073-1-babu.moger@amd.com>
+ <20230504205313.225073-8-babu.moger@amd.com>
+ <e8e0bc10-07ea-4678-a319-fc8d6938d9bd@yandex-team.ru>
+ <4b38c071-ecb0-112b-f4c4-d1d68e5db63d@amd.com>
+ <24462567-e486-4b7f-b869-a1fab48d739c@yandex-team.ru>
+Content-Language: en-US
+From: "Moger, Babu" <babu.moger@amd.com>
+In-Reply-To: <24462567-e486-4b7f-b869-a1fab48d739c@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=smostafa@google.com; helo=mail-lf1-x131.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-ClientProxiedBy: SN6PR2101CA0012.namprd21.prod.outlook.com
+ (2603:10b6:805:106::22) To SA0PR12MB4557.namprd12.prod.outlook.com
+ (2603:10b6:806:9d::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA0PR12MB4557:EE_|MW4PR12MB7261:EE_
+X-MS-Office365-Filtering-Correlation-Id: 16ebc95d-9dd6-417b-4413-08dd03ff7b05
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UisvVEhteUczQkd6YnJoZnZUa3Rjckl4KzB6MjQ1TVgyQXhxUXZjbmVrQ3hp?=
+ =?utf-8?B?KzlsdUF1YjU1dUhOMXFxZVRHd3A5NFlZdC90Z0dmRy9sYzVUQmpRS3RlSGhF?=
+ =?utf-8?B?SGN2NGFlNHRYMFRva3BKZHdwbFRWZWtqbGV5QXJkVGRxNGdudlFDWVVyb2hM?=
+ =?utf-8?B?eUNJZXBTTXJxbWYrVWM2V2prSlhvQWwzd2J0VDlMNm9vSDFMS3gyUlY4STdE?=
+ =?utf-8?B?M0JkeG5ZS3hnbzJHVkEzdXA0UHMwQ1ZWckpBczVpRm81QTFqYmFJNEROTzda?=
+ =?utf-8?B?SEluOXRjb2R5aFl5ekdrRmZwaTQ2WGhrQUZmTytlTlVhbjBxVThnQWhncldi?=
+ =?utf-8?B?bkJSa2pod3N6TXozbGY2KzMzdkRjaGdHOUc4dUY5R2ZpZGRkZW0yVVFrZG55?=
+ =?utf-8?B?SUE4Zzg3aVhIYXZENkcyYXVvQXRkeitidXQ2WUNlcXNURnZiTVhRdXdUMGRS?=
+ =?utf-8?B?K0pYVkVmMjdSZDg1bzd5U1BDZ0szdWpjZk4ybktxbTh1R3hPYllDcFYwN1VX?=
+ =?utf-8?B?bS85RFR6S0Z5eWZwRUFKMmlYc2hOTHBqMGxTMHpOTkpKZjZPbUJ0QnFRTVY2?=
+ =?utf-8?B?WnJJVFpmblNFRC9obCtjdDlVOWlSZmZkVnRuaWwrbHA4WXgxb0lSUUFSZDhY?=
+ =?utf-8?B?dXlhNUhVdG51OCtxVi9BWVluUWNZcGJpMUVIV2NTR2F0OC8rVXJ1b3hxYkRw?=
+ =?utf-8?B?TjRhNmJPem8zOUNOdE1QS1RsKytVMTJhaHJyZTBFUWl5cmJrb1UrOUZua2cr?=
+ =?utf-8?B?QnlZN1RoazZJWTZSN3F5dk9mTEtMaDBYeTFhMDZPa1pJOXlDZmcxbDFJZko3?=
+ =?utf-8?B?SDdWNCsrRFRyN3F3a2FwdHE1VHA1T2EreXNoTTFxNWlTUENNTElPRlMwYlZC?=
+ =?utf-8?B?NG8rYUgvRHBOWlFFVUdMZFI3bEFIYkVLcXJES1FUYktyMFU2eml0UWlKaWhP?=
+ =?utf-8?B?S2x1blFaT2lwbmRGOFdqOHpSSnl1aTFWSngrUkdyb1NJaUdFMGpBUnJUMGVy?=
+ =?utf-8?B?S1RmdDRyS3lYdmI2WWRLZit1bmI4Wk1taDlIT25jY0hManlSSjk1RnFYQ1ZJ?=
+ =?utf-8?B?RSthbjhLMGJacDlBM1pRRDFINXhaeitZUHp3MjhLUml4K1FwenFhQ3BVWXZR?=
+ =?utf-8?B?TzBackpVdEIrVExWRWlYbm4va0dRcGl0ZVp5UGR1eUZObkNyS1JBQ01Nem5o?=
+ =?utf-8?B?OVIrL2Z0SGkwTVBSTVB1Zk1BMDIwZGhZcjEzZy8yYVJBU1d0WklFZnBtOHFL?=
+ =?utf-8?B?MzN6TkRjTGdWQm1mNUZrZks5dXhwWHV3MEJtZ1NxYWZRUlVlS2JtZEhiQ1Ix?=
+ =?utf-8?B?T3FPVTFORlFGdFJ5eGJTTkFqa256V3FpRTQ1Z0llRHJTN0d6NERSZFYwZ2ps?=
+ =?utf-8?B?Tlk4ZnBLSDlzWkdGR25UcG0wUGptSHJXenArcTRodXYyeWYwZDBvVjlyRzFS?=
+ =?utf-8?B?aXZKRXNBZkkreHo5LytZUkRDbFh2NThhWCtZdTB2QUp2b0UvOHVzY3dVdWl2?=
+ =?utf-8?B?WFhWU0w2UEhYcU15T3BoTnBic2lRamo2VWFQa3NtUU5uTmFyaW0zUkpsZlIx?=
+ =?utf-8?B?TmhVdktXOFE2cUVpTmVjYXg5S0dZdjVPNW16M08zanNHeStueDR1K1BCNzR1?=
+ =?utf-8?B?Wkt5a0xrakJOUGh5Q2x2b0U4VWU5SUZuZDJOK1Q1U1d4RDMxQlEvN0g0b09B?=
+ =?utf-8?B?Z0h4K3RHRUpLK1l6UStGY3ZwTkRKV1pPZER0eUd3S1VjMzkxdC8zR0JJbkY5?=
+ =?utf-8?Q?1PtmkeYlWX7pp2hkQONHSkqT/nW8Wt982jgyB+e?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA0PR12MB4557.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TnN1RVE0N1F1aVZxdXk0Y1hYSy96NTh2RTcvZk9XQ0FxU1JwazVPeFdIMTRs?=
+ =?utf-8?B?eENMdDdRUkVES0poL25KamZjemhIb2Vkcyt3QVdWdHJsYUtXU1V4WHJFMCt4?=
+ =?utf-8?B?TjJ0SzRXVGh3cjBIS0R6ek93Rnc2ay9MT1hTU05JNjc5QVVjb0VwcEhLdW5P?=
+ =?utf-8?B?bVdjQU9hZVVWMURCc2VYaDd1WHFrY0VPK0Q2aWozT3ZiZzYzRGNTV3pEMFBk?=
+ =?utf-8?B?Yjc3M0I3aTJsNUhBaHNHRDdVSjF4NnFlOWpya0RjYjRWV0pDVC9WbWtVakho?=
+ =?utf-8?B?Q0c3WWhvUWQ1Y2VhZjRlOW1ONTJiUk85NUJSbmhWZ0VPcnhmZnJVRFlFZWVu?=
+ =?utf-8?B?RStWcU1KUnExRmc1RThCQVJUd3Zrek9YRUR4MUM2UGFVWTF0cjVISnk5RXkv?=
+ =?utf-8?B?SDZjY2VPeXdsZzhyQ0ttaGFYWGI0SHpYOHNOdW9KVVdtdjcrWmU4NWlPc29q?=
+ =?utf-8?B?T1gwd2RiZk8wcGlab2crL3V4bXFxRlRDR0d6WFpLL0Q0aVpkUXBRNzdJcEZV?=
+ =?utf-8?B?TVB0eEhKcFNBSmRUYXBtZ29rdGNNd3ZmQkxraVVUcjNnelBNRkkzZzJKM29P?=
+ =?utf-8?B?SERyQTVrWnEweGhzUzFxMGV0U0gzTE92VHBoZmU0cDREN3Bray9GYzBWTU1v?=
+ =?utf-8?B?a2Z4Nm9hZllFVm9Nd0plRkJQSGt5WlA3MGQzYTBoeU52VTBXTXFCYkZMbUFl?=
+ =?utf-8?B?VUc2dE5uNTBWRE1DYy9tT3A0MFA2NUtQODlYekFnKzJxVE82QlpPRVIyR2gx?=
+ =?utf-8?B?SGpMcHg3ZWQ1NDZUS3VFSHdkV29ZbkpuV1Q1N0gwbDNLZHg4RW9VbmRWMTQ2?=
+ =?utf-8?B?bzJNTXdoMHZtbDR0YnZ0ZlV1Z0NSNGN2SU1UQ1BEdDJzQ0tIMWVTZ1Nsa3pB?=
+ =?utf-8?B?aGEwQXFKSjRJMG84WW83QzVPTUpwaXZ0YjZNcE02OXpyRFNiK3haYVRmSDBL?=
+ =?utf-8?B?NHJtTi9FT3JOc0FPbm9XblpVeDZENHhPNE13TmVpRnZNaklnL1ROZkFwRnE2?=
+ =?utf-8?B?N0s2Z0NEWmxUb0MyS1MrWFo3allmRHFDZVlSZVlveTYrK3liZDNDcjJhUjVJ?=
+ =?utf-8?B?NU0xbThnUUVnN0dka2YyNXIrZk9LcFA0VXAyYmk0Yzd1N1pPYlNTQTVic0RT?=
+ =?utf-8?B?Yk1iemF2RVFjK1AwTldtckovbkhZQVRtK0ZsbldIaWZCaTRQdUllanRvTU83?=
+ =?utf-8?B?TnUyYi9mWHNVZ2ZQQW1uRTdLSUJ4azNIdW5ySkpON2R4ZHV4RWNVRENOeWp3?=
+ =?utf-8?B?Wjd1RmRoaXNvT0NRR3l2VFhwWUJtdnVlM0JPNXFzSGRSQzB0TGZveGR2eUgz?=
+ =?utf-8?B?aHNncVZTOEM3ZFFoYlRuTTJwMkY3V2RPdmFCN3UxTll6REhyYXRmS215R1R1?=
+ =?utf-8?B?UFh2cjJYYXU5MWphSjVReGdCV2RWQkc1dVhSYm1UZ0FzTmNhNGo5STQ3bUc4?=
+ =?utf-8?B?aDhCZ0crZS90eG9JMWJVQjlhQ3pJdktNb1pXZHo4aFNVQzFrVGVWUkNUN09k?=
+ =?utf-8?B?N2NHbXBITlVPdTlCVTRpV0ZxMGVHWDlsbEx4aFlwQXJPaUNFNVZ4cmowUHdQ?=
+ =?utf-8?B?UU8vMWVqNEI0aXRDc3pCbm1BeFVkdU1sZHByZ2ZNVy9zV2dkYWxvVExSNmVQ?=
+ =?utf-8?B?RUo5aktLV2VwNkllNWhiWUl4RUNwZTJXaWh1YXBGS3pvcHRZNm1qdnNLUW50?=
+ =?utf-8?B?b0NqajgxejFEVmZMWm90K0d4YW5XdjdMNFY2eVRsa1RsK0N4ZkZXUC9oODZR?=
+ =?utf-8?B?c0pGdjhjSmZpUy9ISWdob1hXV01zdVpWNEVPQ3p0MDArcmZtclRwb0J2QVZJ?=
+ =?utf-8?B?SEdlOG82NUFJRW5obkVSNWtrTHE0QU9salNSUTh6bllPRWlWVm16aFY1am1S?=
+ =?utf-8?B?MXQyUklSZFliSWsvWjlSTnhMc0tsbEVxUXJ4RU9DSjA3OGgzOUZVb3cwcDJB?=
+ =?utf-8?B?dGFmWldpTTJkZjRCNlQ0YnlBMlJkaS93SzExV3hWS0U3NDhpUXRkSHZpT1Iy?=
+ =?utf-8?B?RFo4WkxZY1lHT1lXRG04TlV1bHdzT2l1cmNhNGlQT1dGdkNBV2dVMnY3UDlU?=
+ =?utf-8?B?R2pYUzI4RS9qWHVoOHV2ZkIyMkhxendVbTBNYnc0ZHZIR2lZWnVBZVd0V3B5?=
+ =?utf-8?Q?rq/A=3D?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 16ebc95d-9dd6-417b-4413-08dd03ff7b05
+X-MS-Exchange-CrossTenant-AuthSource: SA0PR12MB4557.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2024 16:23:17.5366 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: iWkQV33fDMo7bq6M/OgbNpmxTuF9aaChESrgVSlfVYEsjQ62JJdLP8K0ux/EEc3P
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7261
+Received-SPF: permerror client-ip=2a01:111:f403:2407::629;
+ envelope-from=Babu.Moger@amd.com;
+ helo=NAM02-BN1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,167 +183,313 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: babu.moger@amd.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+Adding Paolo.
 
-On Fri, Nov 08, 2024 at 12:52:37PM +0000, Shameer Kolothum via wrote:
-> Hi,
+On 11/12/24 04:09, Maksim Davydov wrote:
 > 
-> This series adds initial support for a user-creatable "arm-smmuv3-nested"
-> device to Qemu. At present the Qemu ARM SMMUv3 emulation is per machine
-> and cannot support multiple SMMUv3s.
 > 
+> On 11/8/24 23:56, Moger, Babu wrote:
+>> Hi Maxim,
+>>
+>> Thanks for looking into this. I will fix the bits I mentioned below in
+>> upcoming Genoa/Turin model update.
+>>
+>> I have few comments below.
+>>
+>> On 11/8/2024 12:15 PM, Maksim Davydov wrote:
+>>> Hi!
+>>> I compared EPYC-Genoa CPU model with CPUID output from real EPYC Genoa
+>>> host. I found some mismatches that confused me. Could you help me to
+>>> understand them?
+>>>
+>>> On 5/4/23 23:53, Babu Moger wrote:
+>>>> Adds the support for AMD EPYC Genoa generation processors. The model
+>>>> display for the new processor will be EPYC-Genoa.
+>>>>
+>>>> Adds the following new feature bits on top of the feature bits from
+>>>> the previous generation EPYC models.
+>>>>
+>>>> avx512f         : AVX-512 Foundation instruction
+>>>> avx512dq        : AVX-512 Doubleword & Quadword Instruction
+>>>> avx512ifma      : AVX-512 Integer Fused Multiply Add instruction
+>>>> avx512cd        : AVX-512 Conflict Detection instruction
+>>>> avx512bw        : AVX-512 Byte and Word Instructions
+>>>> avx512vl        : AVX-512 Vector Length Extension Instructions
+>>>> avx512vbmi      : AVX-512 Vector Byte Manipulation Instruction
+>>>> avx512_vbmi2    : AVX-512 Additional Vector Byte Manipulation Instruction
+>>>> gfni            : AVX-512 Galois Field New Instructions
+>>>> avx512_vnni     : AVX-512 Vector Neural Network Instructions
+>>>> avx512_bitalg   : AVX-512 Bit Algorithms, add bit algorithms Instructions
+>>>> avx512_vpopcntdq: AVX-512 AVX-512 Vector Population Count Doubleword and
+>>>>                    Quadword Instructions
+>>>> avx512_bf16    : AVX-512 BFLOAT16 instructions
+>>>> la57            : 57-bit virtual address support (5-level Page Tables)
+>>>> vnmi            : Virtual NMI (VNMI) allows the hypervisor to inject
+>>>> the NMI
+>>>>                    into the guest without using Event Injection mechanism
+>>>>                    meaning not required to track the guest NMI and
+>>>> intercepting
+>>>>                    the IRET.
+>>>> auto-ibrs       : The AMD Zen4 core supports a new feature called
+>>>> Automatic IBRS.
+>>>>                    It is a "set-and-forget" feature that means that,
+>>>> unlike e.g.,
+>>>>                    s/w-toggled SPEC_CTRL.IBRS, h/w manages its IBRS
+>>>> mitigation
+>>>>                    resources automatically across CPL transitions.
+>>>>
+>>>> Signed-off-by: Babu Moger <babu.moger@amd.com>
+>>>> ---
+>>>>   target/i386/cpu.c | 122 ++++++++++++++++++++++++++++++++++++++++++++++
+>>>>   1 file changed, 122 insertions(+)
+>>>>
+>>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>>>> index d50ace84bf..71fe1e02ee 100644
+>>>> --- a/target/i386/cpu.c
+>>>> +++ b/target/i386/cpu.c
+>>>> @@ -1973,6 +1973,56 @@ static const CPUCaches epyc_milan_v2_cache_info
+>>>> = {
+>>>>       },
+>>>>   };
+>>>> +static const CPUCaches epyc_genoa_cache_info = {
+>>>> +    .l1d_cache = &(CPUCacheInfo) {
+>>>> +        .type = DATA_CACHE,
+>>>> +        .level = 1,
+>>>> +        .size = 32 * KiB,
+>>>> +        .line_size = 64,
+>>>> +        .associativity = 8,
+>>>> +        .partitions = 1,
+>>>> +        .sets = 64,
+>>>> +        .lines_per_tag = 1,
+>>>> +        .self_init = 1,
+>>>> +        .no_invd_sharing = true,
+>>>> +    },
+>>>> +    .l1i_cache = &(CPUCacheInfo) {
+>>>> +        .type = INSTRUCTION_CACHE,
+>>>> +        .level = 1,
+>>>> +        .size = 32 * KiB,
+>>>> +        .line_size = 64,
+>>>> +        .associativity = 8,
+>>>> +        .partitions = 1,
+>>>> +        .sets = 64,
+>>>> +        .lines_per_tag = 1,
+>>>> +        .self_init = 1,
+>>>> +        .no_invd_sharing = true,
+>>>> +    },
+>>>> +    .l2_cache = &(CPUCacheInfo) {
+>>>> +        .type = UNIFIED_CACHE,
+>>>> +        .level = 2,
+>>>> +        .size = 1 * MiB,
+>>>> +        .line_size = 64,
+>>>> +        .associativity = 8,
+>>>> +        .partitions = 1,
+>>>> +        .sets = 2048,
+>>>> +        .lines_per_tag = 1,
+>>>
+>>> 1. Why L2 cache is not shown as inclusive and self-initializing?
+>>>
+>>> PPR for AMD Family 19h Model 11 says for L2 (0x8000001d):
+>>> * cache inclusive. Read-only. Reset: Fixed,1.
+>>> * cache is self-initializing. Read-only. Reset: Fixed,1.
+>>
+>> Yes. That is correct. This needs to be fixed. I Will fix it.
+>>>
+>>>> +    },
+>>>> +    .l3_cache = &(CPUCacheInfo) {
+>>>> +        .type = UNIFIED_CACHE,
+>>>> +        .level = 3,
+>>>> +        .size = 32 * MiB,
+>>>> +        .line_size = 64,
+>>>> +        .associativity = 16,
+>>>> +        .partitions = 1,
+>>>> +        .sets = 32768,
+>>>> +        .lines_per_tag = 1,
+>>>> +        .self_init = true,
+>>>> +        .inclusive = true,
+>>>> +        .complex_indexing = false,
+>>>
+>>> 2. Why L3 cache is shown as inclusive? Why is it not shown in L3 that
+>>> the WBINVD/INVD instruction is not guaranteed to invalidate all lower
+>>> level caches (0 bit)?
+>>>
+>>> PPR for AMD Family 19h Model 11 says for L2 (0x8000001d):
+>>> * cache inclusive. Read-only. Reset: Fixed,0.
+>>> * Write-Back Invalidate/Invalidate. Read-only. Reset: Fixed,1.
+>>>
+>>
+>> Yes. Both of this needs to be fixed. I Will fix it.
+>>
+>>>
+>>>
+>>> 3. Why the default stub is used for TLB, but not real values as for
+>>> other caches?
+>>
+>> Can you please eloberate on this?
+>>
+> 
+> For L1i, L1d, L2 and L3 cache we provide the correct information about
+> characteristics. In contrast, for L1i TLB, L1d TLB, L2i TLB and L2d TLB
+> (0x80000005 and 0x80000006) we use the same value for all CPU models.
+> Sometimes it seems strange. For instance, the current default value in
+> QEMU for L2 TLB associativity for 4 KB pages is 4. But 4 is a reserved
+> value for Genoa (as PPR for Family 19h Model 11h says)
+> 
+>>>
+>>>> +    },
+>>>> +};
+>>>> +
+>>>>   /* The following VMX features are not supported by KVM and are left
+>>>> out in the
+>>>>    * CPU definitions:
+>>>>    *
+>>>> @@ -4472,6 +4522,78 @@ static const X86CPUDefinition
+>>>> builtin_x86_defs[] = {
+>>>>               { /* end of list */ }
+>>>>           }
+>>>>       },
+>>>> +    {
+>>>> +        .name = "EPYC-Genoa",
+>>>> +        .level = 0xd,
+>>>> +        .vendor = CPUID_VENDOR_AMD,
+>>>> +        .family = 25,
+>>>> +        .model = 17,
+>>>> +        .stepping = 0,
+>>>> +        .features[FEAT_1_EDX] =
+>>>> +            CPUID_SSE2 | CPUID_SSE | CPUID_FXSR | CPUID_MMX |
+>>>> CPUID_CLFLUSH |
+>>>> +            CPUID_PSE36 | CPUID_PAT | CPUID_CMOV | CPUID_MCA |
+>>>> CPUID_PGE |
+>>>> +            CPUID_MTRR | CPUID_SEP | CPUID_APIC | CPUID_CX8 |
+>>>> CPUID_MCE |
+>>>> +            CPUID_PAE | CPUID_MSR | CPUID_TSC | CPUID_PSE | CPUID_DE |
+>>>> +            CPUID_VME | CPUID_FP87,
+>>>> +        .features[FEAT_1_ECX] =
+>>>> +            CPUID_EXT_RDRAND | CPUID_EXT_F16C | CPUID_EXT_AVX |
+>>>> +            CPUID_EXT_XSAVE | CPUID_EXT_AES |  CPUID_EXT_POPCNT |
+>>>> +            CPUID_EXT_MOVBE | CPUID_EXT_SSE42 | CPUID_EXT_SSE41 |
+>>>> +            CPUID_EXT_PCID | CPUID_EXT_CX16 | CPUID_EXT_FMA |
+>>>> +            CPUID_EXT_SSSE3 | CPUID_EXT_MONITOR | CPUID_EXT_PCLMULQDQ |
+>>>> +            CPUID_EXT_SSE3,
+>>>> +        .features[FEAT_8000_0001_EDX] =
+>>>> +            CPUID_EXT2_LM | CPUID_EXT2_RDTSCP | CPUID_EXT2_PDPE1GB |
+>>>> +            CPUID_EXT2_FFXSR | CPUID_EXT2_MMXEXT | CPUID_EXT2_NX |
+>>>> +            CPUID_EXT2_SYSCALL,
+>>>> +        .features[FEAT_8000_0001_ECX] =
+>>>> +            CPUID_EXT3_OSVW | CPUID_EXT3_3DNOWPREFETCH |
+>>>> +            CPUID_EXT3_MISALIGNSSE | CPUID_EXT3_SSE4A | CPUID_EXT3_ABM |
+>>>> +            CPUID_EXT3_CR8LEG | CPUID_EXT3_SVM | CPUID_EXT3_LAHF_LM |
+>>>> +            CPUID_EXT3_TOPOEXT | CPUID_EXT3_PERFCORE,
+>>>> +        .features[FEAT_8000_0008_EBX] =
+>>>> +            CPUID_8000_0008_EBX_CLZERO |
+>>>> CPUID_8000_0008_EBX_XSAVEERPTR |
+>>>> +            CPUID_8000_0008_EBX_WBNOINVD | CPUID_8000_0008_EBX_IBPB |
+>>>> +            CPUID_8000_0008_EBX_IBRS | CPUID_8000_0008_EBX_STIBP |
+>>>> +            CPUID_8000_0008_EBX_STIBP_ALWAYS_ON |
+>>>> +            CPUID_8000_0008_EBX_AMD_SSBD | CPUID_8000_0008_EBX_AMD_PSFD,
+>>>
+>>> 4. Why 0x80000008_EBX features related to speculation vulnerabilities
+>>> (BTC_NO, IBPB_RET, IbrsPreferred, INT_WBINVD) are not set?
+>>
+>> KVM does not expose these bits to the guests yet.
+>>
+>> I normally check using the ioctl KVM_GET_SUPPORTED_CPUID.
+>>
+> 
+> I'm not sure, but at least the first two of these features seem to be
+> helpful to choose the appropriate mitigation. Do you think that we should
+> add them to KVM?
+> 
+>>
+>>>
+>>>> +        .features[FEAT_8000_0021_EAX] =
+>>>> +            CPUID_8000_0021_EAX_No_NESTED_DATA_BP |
+>>>> +            CPUID_8000_0021_EAX_LFENCE_ALWAYS_SERIALIZING |
+>>>> +            CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE |
+>>>> +            CPUID_8000_0021_EAX_AUTO_IBRS,
+>>>
+>>> 5. Why some 0x80000021_EAX features are not set?
+>>> (FsGsKernelGsBaseNonSerializing, FSRC and FSRS)
+>>
+>> KVM does not expose FSRC and FSRS bits to the guests yet.
+> 
+> But KVM exposes the same features (0x7 ecx=1, bits 10 and 11) for Intel
+> CPU models. Do we have to add these bits for AMD to KVM?
+> 
+>>
+>> The KVM reports the bit FsGsKernelGsBaseNonSerializing. I will check if
+>> we can add this bit to the Genoa and Turin.
+>>
+>>>
+>>>> +        .features[FEAT_7_0_EBX] =
+>>>> +            CPUID_7_0_EBX_FSGSBASE | CPUID_7_0_EBX_BMI1 |
+>>>> CPUID_7_0_EBX_AVX2 |
+>>>> +            CPUID_7_0_EBX_SMEP | CPUID_7_0_EBX_BMI2 |
+>>>> CPUID_7_0_EBX_ERMS |
+>>>> +            CPUID_7_0_EBX_INVPCID | CPUID_7_0_EBX_AVX512F |
+>>>> +            CPUID_7_0_EBX_AVX512DQ | CPUID_7_0_EBX_RDSEED |
+>>>> CPUID_7_0_EBX_ADX |
+>>>> +            CPUID_7_0_EBX_SMAP | CPUID_7_0_EBX_AVX512IFMA |
+>>>> +            CPUID_7_0_EBX_CLFLUSHOPT | CPUID_7_0_EBX_CLWB |
+>>>> +            CPUID_7_0_EBX_AVX512CD | CPUID_7_0_EBX_SHA_NI |
+>>>> +            CPUID_7_0_EBX_AVX512BW | CPUID_7_0_EBX_AVX512VL,
+>>>> +        .features[FEAT_7_0_ECX] =
+>>>> +            CPUID_7_0_ECX_AVX512_VBMI | CPUID_7_0_ECX_UMIP |
+>>>> CPUID_7_0_ECX_PKU |
+>>>> +            CPUID_7_0_ECX_AVX512_VBMI2 | CPUID_7_0_ECX_GFNI |
+>>>> +            CPUID_7_0_ECX_VAES | CPUID_7_0_ECX_VPCLMULQDQ |
+>>>> +            CPUID_7_0_ECX_AVX512VNNI | CPUID_7_0_ECX_AVX512BITALG |
+>>>> +            CPUID_7_0_ECX_AVX512_VPOPCNTDQ | CPUID_7_0_ECX_LA57 |
+>>>> +            CPUID_7_0_ECX_RDPID,
+>>>> +        .features[FEAT_7_0_EDX] =
+>>>> +            CPUID_7_0_EDX_FSRM,
+>>>
+>>> 6. Why L1D_FLUSH is not set? Because only vulnerable MMIO stale data
+>>> processors have to use it, am I right?
+>>
+>> KVM does not expose L1D_FLUSH to the guests. Not sure why. Need to
+>> investigate.
+>>
+> 
+> It seems that KVM has exposed L1D_FLUSH since da3db168fb67
 
-I had a quick look at the SMMUv3 files, as now SMMUv3 supports nested
-translation emulation, would it make sense to rename this? As AFAIU,
-this is about virt (stage-1) SMMUv3 that is emulated to a guest.
-Including vSMMU or virt would help distinguish the code, as now
-some new function as smmu_nested_realize() looks confusing.
+Paolo,
 
-Thanks,
-Mostafa
+I see L1D_FLUSH feature bit is masked for SEV-SNP guest.
 
-> In order to support vfio-pci dev assignment with vSMMUv3, the physical
-> SMMUv3 has to be configured in nested mode. Having a pluggable
-> "arm-smmuv3-nested" device enables us to have multiple vSMMUv3 for Guests
-> running on a host with multiple physical SMMUv3s. A few benefits of doing
-> this are,
-> 
-> 1. Avoid invalidation broadcast or lookup in case devices are behind
-> � �multiple phys SMMUv3s.
-> 2. Makes it easy to handle phys SMMUv3s that differ in features.
-> 3. Easy to handle future requirements such as vCMDQ support.
-> 
-> This is based on discussions/suggestions received for a previous RFC by
-> Nicolin here[0].
-> 
-> This series includes,
-> �-Adds support for "arm-smmuv3-nested" device. At present only virt is
-> � supported and is using _plug_cb() callback to hook the sysbus mem
-> � and irq (Not sure this has any negative repercussions). Patch #3.
-> �-Provides a way to associate a pci-bus(pxb-pcie) to the above device.
-> � Patch #3.
-> �-The last patch is adding RMR support for MSI doorbell handling. Patch #5.
-> � This may change in future[1].
-> 
-> This RFC is for initial discussion/test purposes only and includes patches
-> that are only relevant for adding the "arm-smmuv3-nested" support. For the
-> complete branch please find,
-> https://github.com/hisilicon/qemu/tree/private-smmuv3-nested-dev-rfc-v1
-> 
-> Few ToDos to note,
-> 1. At present default-bus-bypass-iommu=on should be set when
-> � �arm-smmuv3-nested dev is specified. Otherwise you may get an IORT
-> � �related boot error. �Requires fixing.
-> 2. Hot adding a device is not working at the moment. Looks like pcihp irq issue.
-> � �Could be a bug in IORT id mappings.
-> 3. The above branch doesn't support vSVA yet.
-> 
-> Hopefully this is helpful in taking the discussion forward. Please take a
-> look and let me know.
-> 
-> How to use it(Eg:):
-> 
-> On a HiSilicon platform that has multiple physical SMMUv3s, the ACC ZIP VF
-> devices and HNS VF devices are behind different SMMUv3s. So for a Guest,
-> specify two smmuv3-nested devices each behind a pxb-pcie as below,
-> 
-> ./qemu-system-aarch64 -machine virt,gic-version=3,default-bus-bypass-iommu=on \
-> -enable-kvm -cpu host -m 4G -smp cpus=8,maxcpus=8 \
-> -object iommufd,id=iommufd0 \
-> -bios QEMU_EFI.fd \
-> -kernel Image \
-> -device virtio-blk-device,drive=fs \
-> -drive if=none,file=rootfs.qcow2,id=fs \
-> -device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
-> -device pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1 \
-> -device arm-smmuv3-nested,id=smmuv1,pci-bus=pcie.1 \
-> -device vfio-pci,host=0000:7d:02.1,bus=pcie.port1,iommufd=iommufd0 \
-> -device pxb-pcie,id=pcie.2,bus_nr=16,bus=pcie.0 \
-> -device pcie-root-port,id=pcie.port2,bus=pcie.2,chassis=2 \
-> -device arm-smmuv3-nested,id=smmuv2,pci-bus=pcie.2 \
-> -device vfio-pci,host=0000:75:00.1,bus=pcie.port2,iommufd=iommufd0 \
-> -append "rdinit=init console=ttyAMA0 root=/dev/vda2 rw earlycon=pl011,0x9000000" \
-> -device virtio-9p-pci,fsdev=p9fs2,mount_tag=p9,bus=pcie.0 \
-> -fsdev local,id=p9fs2,path=p9root,security_model=mapped \
-> -net none \
-> -nographic
-> 
-> Guest will boot with two SMMuv3s,
-> [ � �1.608130] arm-smmu-v3 arm-smmu-v3.0.auto: option mask 0x0
-> [ � �1.609655] arm-smmu-v3 arm-smmu-v3.0.auto: ias 48-bit, oas 48-bit (features 0x00020b25)
-> [ � �1.612475] arm-smmu-v3 arm-smmu-v3.0.auto: allocated 65536 entries for cmdq
-> [ � �1.614444] arm-smmu-v3 arm-smmu-v3.0.auto: allocated 32768 entries for evtq
-> [ � �1.617451] arm-smmu-v3 arm-smmu-v3.1.auto: option mask 0x0
-> [ � �1.618842] arm-smmu-v3 arm-smmu-v3.1.auto: ias 48-bit, oas 48-bit (features 0x00020b25)
-> [ � �1.621366] arm-smmu-v3 arm-smmu-v3.1.auto: allocated 65536 entries for cmdq
-> [ � �1.623225] arm-smmu-v3 arm-smmu-v3.1.auto: allocated 32768 entries for evtq
-> 
-> With a pci topology like below,
-> [root@localhost ~]# lspci -tv
-> -+-[0000:00]-+-00.0 �Red Hat, Inc. QEMU PCIe Host bridge
-> �| � � � � � +-01.0 �Red Hat, Inc. QEMU PCIe Expander bridge
-> �| � � � � � +-02.0 �Red Hat, Inc. QEMU PCIe Expander bridge
-> �| � � � � � \-03.0 �Virtio: Virtio filesystem
-> �+-[0000:08]---00.0-[09]----00.0 �Huawei Technologies Co., Ltd. HNS Network Controller (Virtual Function)
-> �\-[0000:10]---00.0-[11]----00.0 �Huawei Technologies Co., Ltd. HiSilicon ZIP Engine(Virtual Function)
-> [root@localhost ~]#
-> 
-> And if you want to add another HNS VF, it should be added to the same SMMUv3
-> as of the first HNS dev,
-> 
-> -device pcie-root-port,id=pcie.port3,bus=pcie.1,chassis=3 \
-> -device vfio-pci,host=0000:7d:02.2,bus=pcie.port3,iommufd=iommufd0 \
-> 
-> [root@localhost ~]# lspci -tv
-> -+-[0000:00]-+-00.0 �Red Hat, Inc. QEMU PCIe Host bridge
-> �| � � � � � +-01.0 �Red Hat, Inc. QEMU PCIe Expander bridge
-> �| � � � � � +-02.0 �Red Hat, Inc. QEMU PCIe Expander bridge
-> �| � � � � � \-03.0 �Virtio: Virtio filesystem
-> �+-[0000:08]-+-00.0-[09]----00.0 �Huawei Technologies Co., Ltd. HNS Network Controller (Virtual Function)
-> �| � � � � � \-01.0-[0a]----00.0 �Huawei Technologies Co., Ltd. HNS Network Controller (Virtual Function)
-> �\-[0000:10]---00.0-[11]----00.0 �Huawei Technologies Co., Ltd. HiSilicon ZIP Engine(Virtual Function)
-> [root@localhost ~]#
-> 
-> Attempt to add the HNS VF to a different SMMUv3 will result in,
-> 
-> -device vfio-pci,host=0000:7d:02.2,bus=pcie.port3,iommufd=iommufd0: Unable to attach viommu
-> -device vfio-pci,host=0000:7d:02.2,bus=pcie.port3,iommufd=iommufd0: vfio 0000:7d:02.2:
-> � �Failed to set iommu_device: [iommufd=29] error attach 0000:7d:02.2 (38) to id=11: Invalid argument
-> 
-> At present Qemu is not doing any extra validation other than the above
-> failure to make sure the user configuration is correct or not. The
-> assumption is libvirt will take care of this.
-> 
-> Thanks,
-> Shameer
-> [0] https://lore.kernel.org/qemu-devel/cover.1719361174.git.nicolinc@nvidia.com/
-> [1] https://lore.kernel.org/linux-iommu/ZrVN05VylFq8lK4q@Asurada-Nvidia/
-> 
-> Eric Auger (1):
->   hw/arm/virt-acpi-build: Add IORT RMR regions to handle MSI nested
->     binding
-> 
-> Nicolin Chen (2):
->   hw/arm/virt: Add an SMMU_IO_LEN macro
->   hw/arm/virt-acpi-build: Build IORT with multiple SMMU nodes
-> 
-> Shameer Kolothum (2):
->   hw/arm/smmuv3: Add initial support for SMMUv3 Nested device
->   hw/arm/smmuv3: Associate a pci bus with a SMMUv3 Nested device
-> 
->  hw/arm/smmuv3.c          |  61 ++++++++++++++++++++++
->  hw/arm/virt-acpi-build.c | 109 ++++++++++++++++++++++++++++++++-------
->  hw/arm/virt.c            |  33 ++++++++++--
->  hw/core/sysbus-fdt.c     |   1 +
->  include/hw/arm/smmuv3.h  |  17 ++++++
->  include/hw/arm/virt.h    |  15 ++++++
->  6 files changed, 215 insertions(+), 21 deletions(-)
-> 
-> -- 
-> 2.34.1
-> 
-> 
+https://lore.kernel.org/qemu-devel/20240704095806.1780273-17-pbonzini@redhat.com/
+
+Any reason for this?
+
+Genoa and Turin hardware supports L1D_FLUSH feature.
+
+I tested commenting the masking line and SEV-SNP guest boots fine.
+
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index a0d271f898..f5cc37bcc7 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -962,7 +962,7 @@ sev_snp_mask_cpuid_features(X86ConfidentialGuest *cg,
+uint32_t feature, uint32_t
+         if (index == 0 && reg == R_EDX) {
+             return value & ~(CPUID_7_0_EDX_SPEC_CTRL |
+                              CPUID_7_0_EDX_STIBP |
+-                             CPUID_7_0_EDX_FLUSH_L1D |
++                             //CPUID_7_0_EDX_FLUSH_L1D |
+                              CPUID_7_0_EDX_ARCH_CAPABILITIES |
+                              CPUID_7_0_EDX_CORE_CAPABILITY |
+                              CPUID_7_0_EDX_SPEC_CTRL_SSBD);
+
+
+
+If there are no objections, I can add this patch in the Turin series.
+
+Thanks
+
+-- 
+Thanks
+Babu Moger
 
