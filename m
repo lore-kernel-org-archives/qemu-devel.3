@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5146D462BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 15:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B002ED462BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Nov 2024 15:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBFGc-0006Pc-Cr; Wed, 13 Nov 2024 10:26:50 -0500
+	id 1tBFHX-0007c8-FJ; Wed, 13 Nov 2024 10:27:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1tBFGb-0006P8-1I; Wed, 13 Nov 2024 10:26:49 -0500
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ id 1tBFHT-0007at-H5; Wed, 13 Nov 2024 10:27:43 -0500
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1tBFGZ-0007Xg-Lm; Wed, 13 Nov 2024 10:26:48 -0500
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-53d9ff92ee9so1199952e87.1; 
- Wed, 13 Nov 2024 07:26:46 -0800 (PST)
+ id 1tBFHR-0007dV-Tg; Wed, 13 Nov 2024 10:27:43 -0500
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-53da3545908so520222e87.1; 
+ Wed, 13 Nov 2024 07:27:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731511605; x=1732116405; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731511660; x=1732116460; darn=nongnu.org;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=7B7nnTBg+kU3c6AJkz3NJDJbDjfYpz06LC7stk3W3pk=;
- b=XJLE+dqaTCXbB5CCMTQLG4pg07Dzfd2+r3OO18L9OmBTTRpZa2dp9rmwXTwOGES8Ac
- 6Gs1yC/Up9kS1+JJ48m3zGX/5PUd7UofdYX3r3EvC7qsWAeYeeSGzF0cSsLUXrKG1WdA
- 42b/eakOZOM1X6vQ4NM4FF9gbYVT26VjHrv0rcx2GuZ07egf+U64ZPLQO/3MrmBY33Jm
- VE044Rw30Ouwd8Z4NYWZm4D/HtuJOSAhRR972pwfTG8LmPtzB6QCWk4IC3EEoSK2G17F
- B57wM9MVKFG8Pw4iVPiVl8BSc/HqF9SCVtH3AnRxB6/MbbVotL97szAeedDjkg40hzAw
- 6wFQ==
+ bh=c8AqL9LrCs4we89GKuuBV//k6qE6V7we9akKR2B4QXQ=;
+ b=VA0JjH7EDykFcg1aLuqhS5M3AZc4gNR/NAaVejMWmd2hOd7i4r/Aii2xSmo9DIvLpv
+ hdTB1q4C36v1u74y+3SYGeRThPQrh+r/LGiv3kyipeOVg9BEbqzAcvvHwp/KpOcB0HAU
+ GbaaFVoEphTzu9TTNssfIZtVz6UD0W73v+QTmTD9C0atAs4UqnpsgQVmFmImO093Ju9C
+ zbUuwPHvdK8qVykpd1WeaOjrspN1QbeB+Q/i8CyDnt5iX7zn812ZlaGvMfTnUItlzku4
+ uPtQyB4BaTSL5jhuhJtiiJj1wfpofN306FmgRHSu+o+eLMtlhi+SoqBIZH3lfetjvye7
+ SxYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731511605; x=1732116405;
+ d=1e100.net; s=20230601; t=1731511660; x=1732116460;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7B7nnTBg+kU3c6AJkz3NJDJbDjfYpz06LC7stk3W3pk=;
- b=BGoVXD17H/iGoLd5ue24jqCsXQY0ZIUgAsXJcj+EF+c44F4T1EyuZJwhcirCvIZukO
- UgnwaE67ed3nXOsyW5anlF0tvS9MVwoEYACj4HaCbhK8cOjcmSRM0Nm9CyaPHKkfEjxE
- HFkyYljxGKuoAX0HI2537rlq6utJk00AHwOZLq5K+4fBmepGF7MwbhpmHGjwLKlnLAOU
- L1lR9b+ITwGhaoVF1WRYQCebS8UbKwo0QPjnag6MPLJ2wh6SSD/JW7W0J6VIftDHeohD
- AD3HHH79JmAlgCdYQ0uvjqqbpjSn65tJAU+To97GlWphEWvtbODt0cR3VFL9qFuS9CT+
- jSYw==
+ bh=c8AqL9LrCs4we89GKuuBV//k6qE6V7we9akKR2B4QXQ=;
+ b=Xcmyc2QsFolzFLV8CgqJ2YrK9f9fepWPFrq9x1UoEeLT2oWJqdUWP00TOG26LuB6qE
+ v5iD7SN+JwZ54XdssGJ6l/LYzpCnWqvfJVF2aD8yfor/76aYxOnGFUauphKeIt8XISi3
+ XGWC8nzWReE7m/X0FRLrbCNh/J8VqANjpHuEqFyGs3YJdRHSEw0DVjNEkw0ZpIEKSlf/
+ Z44o5QjPiniTDUA6+P3G0zlOg7DTWjnFtOAvuncJ3ZiffT9vVgfT8/LFQ790xwffNcc6
+ q4baPD9jk4qyeRyOVzQ3j7vjqvVxdWFl+nQRgX96Yud9J1mUYkrzukOs9P5ZlnXCl1vk
+ lo+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXROr5FWviMbgiP4enbZ/1WjoAlEFXJ1ZLapguiWAfVFdQrY2f0Ifpl32fNQtLm+o5LlhqXEuynyA==@nongnu.org
-X-Gm-Message-State: AOJu0YwrZK9nL77WNpnWwxT5ogaE0T46YFn5xfrDHOLNlH8T5zbvS9sI
- CwAb7kc+Rm0C9NYui9LMfJh3O2osrWUWMzPfrI38jvHgL0awiSMR
-X-Google-Smtp-Source: AGHT+IGGQRAtU+qCtAe2uKx6woA8IvHilCMSiz/tQjhVubrTc3F/bUmvYXnf7FNdJQ4eUXeoEMiecQ==
-X-Received: by 2002:ac2:4c56:0:b0:53b:1f14:e11a with SMTP id
- 2adb3069b0e04-53d862c6c3amr9564654e87.15.1731511605178; 
- Wed, 13 Nov 2024 07:26:45 -0800 (PST)
+ AJvYcCUsNKQaqeKUoPr5KGMpqovysL66zA0K9kukrEJMcue22e5r+UHfLwNyK31kMz7biv9N7gs+ZuOTVA==@nongnu.org
+X-Gm-Message-State: AOJu0YzI1GJqaRgYlj7qpEni1Lmlm4/rD5IXa2Qm0Hq62mqCJSRFJk0/
+ C0TNY73xH1XJjSjy5C3hCtVMp4MBHZQtJ5l6bg8d3ze5AX98Xgg/
+X-Google-Smtp-Source: AGHT+IFW057e2VfgG8ARptoKHKp4S3q98RmkgNToMuFYWPAANAsVCjWzJCKO34KfUZfkeyunaiOQHQ==
+X-Received: by 2002:a05:6512:2256:b0:539:905c:15ab with SMTP id
+ 2adb3069b0e04-53d862e3e86mr10629139e87.32.1731511659622; 
+ Wed, 13 Nov 2024 07:27:39 -0800 (PST)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53da283bc7csm144610e87.233.2024.11.13.07.26.44
+ 2adb3069b0e04-53da077c4a6sm232553e87.140.2024.11.13.07.27.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Nov 2024 07:26:44 -0800 (PST)
-Date: Wed, 13 Nov 2024 16:26:43 +0100
+ Wed, 13 Nov 2024 07:27:38 -0800 (PST)
+Date: Wed, 13 Nov 2024 16:27:38 +0100
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
@@ -70,18 +70,19 @@ Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair@alistair23.me>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Gustavo Romero <gustavo.romero@linaro.org>
-Subject: Re: [PATCH 10/20] hw/net/xilinx_ethlite: Introduce rxbuf_ptr() helper
-Message-ID: <ZzTFM3cb0ovHpX4B@zapote>
+Subject: Re: [PATCH 11/20] hw/net/xilinx_ethlite: Access RX_CTRL register for
+ each port
+Message-ID: <ZzTFah0QJed6jvBd@zapote>
 References: <20241112181044.92193-1-philmd@linaro.org>
- <20241112181044.92193-11-philmd@linaro.org>
+ <20241112181044.92193-12-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241112181044.92193-11-philmd@linaro.org>
+In-Reply-To: <20241112181044.92193-12-philmd@linaro.org>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,46 +105,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 12, 2024 at 07:10:34PM +0100, Philippe Mathieu-Daudé wrote:
-> rxbuf_ptr() points to the beginning of a (RAM) RX buffer
-> within the device state.
+On Tue, Nov 12, 2024 at 07:10:35PM +0100, Philippe Mathieu-Daudé wrote:
+> Rather than accessing the registers within the mixed RAM/MMIO
+> region as indexed register, declare a per-port RX_CTRL. This
+> will help to map the RAM as RAM (keeping MMIO as MMIO) in few
+> commits.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Previous s->regs[R_RX_CTRL0] and s->regs[R_RX_CTRL1] are now
+> unused. Not a concern, this array will soon disappear.
+
 
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
 
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/net/xilinx_ethlite.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
+>  hw/net/xilinx_ethlite.c | 31 +++++++++++++++++++++----------
+>  1 file changed, 21 insertions(+), 10 deletions(-)
 > 
 > diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-> index d4882f43f7..fdbf25fd91 100644
+> index fdbf25fd91..605451a522 100644
 > --- a/hw/net/xilinx_ethlite.c
 > +++ b/hw/net/xilinx_ethlite.c
-> @@ -99,6 +99,13 @@ static void *txbuf_ptr(XlnxXpsEthLite *s, unsigned port_index)
->      return &s->regs[rxbase + R_TX_BUF0];
->  }
+> @@ -59,6 +59,13 @@
+>  #define CTRL_P     0x2
+>  #define CTRL_S     0x1
 >  
-> +static void *rxbuf_ptr(XlnxXpsEthLite *s, unsigned port_index)
+> +typedef struct XlnxXpsEthLitePort
 > +{
-> +    unsigned int rxbase = port_index * (0x800 / 4);
+> +    struct {
+> +        uint32_t rx_ctrl;
+> +    } reg;
+> +} XlnxXpsEthLitePort;
 > +
-> +    return &s->regs[rxbase + R_RX_BUF0];
-> +}
-> +
->  static uint64_t
+>  #define TYPE_XILINX_ETHLITE "xlnx.xps-ethernetlite"
+>  OBJECT_DECLARE_SIMPLE_TYPE(XlnxXpsEthLite, XILINX_ETHLITE)
+>  
+> @@ -76,6 +83,7 @@ struct XlnxXpsEthLite
+>      unsigned int port_index;
+>  
+>      UnimplementedDeviceState mdio;
+> +    XlnxXpsEthLitePort port[2];
+>      uint32_t regs[R_MAX];
+>  };
+>  
+> @@ -110,6 +118,7 @@ static uint64_t
 >  eth_read(void *opaque, hwaddr addr, unsigned int size)
 >  {
-> @@ -220,7 +227,7 @@ static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
->          trace_ethlite_pkt_size_too_big(size);
+>      XlnxXpsEthLite *s = opaque;
+> +    unsigned port_index = addr_to_port_index(addr);
+>      uint32_t r = 0;
+>  
+>      addr >>= 2;
+> @@ -121,11 +130,13 @@ eth_read(void *opaque, hwaddr addr, unsigned int size)
+>          case R_TX_LEN1:
+>          case R_TX_CTRL1:
+>          case R_TX_CTRL0:
+> -        case R_RX_CTRL1:
+> -        case R_RX_CTRL0:
+>              r = s->regs[addr];
+>              break;
+>  
+> +        case R_RX_CTRL1:
+> +        case R_RX_CTRL0:
+> +            r = s->port[port_index].reg.rx_ctrl;
+> +
+>          default:
+>              r = tswap32(s->regs[addr]);
+>              break;
+> @@ -173,7 +184,9 @@ eth_write(void *opaque, hwaddr addr,
+>              if (!(value & CTRL_S)) {
+>                  qemu_flush_queued_packets(qemu_get_queue(s->nic));
+>              }
+> -            /* fall through */
+> +            s->port[port_index].reg.rx_ctrl = value;
+> +            break;
+> +
+>          case R_TX_LEN0:
+>          case R_TX_LEN1:
+>          case R_TX_GIE0:
+> @@ -203,23 +216,21 @@ static const MemoryRegionOps eth_ops = {
+>  static bool eth_can_rx(NetClientState *nc)
+>  {
+>      XlnxXpsEthLite *s = qemu_get_nic_opaque(nc);
+> -    unsigned int rxbase = s->port_index * (0x800 / 4);
+>  
+> -    return !(s->regs[rxbase + R_RX_CTRL0] & CTRL_S);
+> +    return !(s->port[s->port_index].reg.rx_ctrl & CTRL_S);
+>  }
+>  
+>  static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
+>  {
+>      XlnxXpsEthLite *s = qemu_get_nic_opaque(nc);
+>      unsigned int port_index = s->port_index;
+> -    unsigned int rxbase = port_index * (0x800 / 4);
+>  
+>      /* DA filter.  */
+>      if (!(buf[0] & 0x80) && memcmp(&s->conf.macaddr.a[0], buf, 6))
+>          return size;
+>  
+> -    if (s->regs[rxbase + R_RX_CTRL0] & CTRL_S) {
+> -        trace_ethlite_pkt_lost(s->regs[R_RX_CTRL0]);
+> +    if (s->port[port_index].reg.rx_ctrl & CTRL_S) {
+> +        trace_ethlite_pkt_lost(s->port[port_index].reg.rx_ctrl);
 >          return -1;
 >      }
-> -    memcpy(&s->regs[rxbase + R_RX_BUF0], buf, size);
-> +    memcpy(rxbuf_ptr(s, port_index), buf, size);
 >  
->      s->regs[rxbase + R_RX_CTRL0] |= CTRL_S;
->      if (s->regs[R_RX_CTRL0] & CTRL_I) {
+> @@ -229,8 +240,8 @@ static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
+>      }
+>      memcpy(rxbuf_ptr(s, port_index), buf, size);
+>  
+> -    s->regs[rxbase + R_RX_CTRL0] |= CTRL_S;
+> -    if (s->regs[R_RX_CTRL0] & CTRL_I) {
+> +    s->port[port_index].reg.rx_ctrl |= CTRL_S;
+> +    if (s->port[port_index].reg.rx_ctrl & CTRL_I) {
+>          eth_pulse_irq(s);
+>      }
+>  
 > -- 
 > 2.45.2
 > 
