@@ -4,69 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5AFAD65C6C
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 11:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36DD5D65C74
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 11:14:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBXkC-0007Mz-KN; Thu, 14 Nov 2024 06:10:36 -0500
+	id 1tBXnL-0008JC-Qe; Thu, 14 Nov 2024 06:13:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tBXkA-0007M8-JC
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:10:34 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tBXnL-0008J1-5T
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:13:51 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tBXk8-0001tD-BR
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:10:34 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tBXnJ-0002Ae-IF
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:13:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731582629;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=KGwAQepdKT1uv2IiJcFoOnIjB/3YgWbiaRdBdojWPP4=;
- b=XJi2D9O70UZDHHDAX7RHP0skxXiUudvI8HyDjAQbyGb8BCEal1cDWN/KZjUeWwtemkKoin
- TmmYzMnD0lSRp0Wx0ZaTJ/FAsF5aScc6eAv6qeW1iHZthAoenLDmULUsi4/foHViItoIWf
- Tp0GkD7RHD9YRlGxLaqKtaWU5A+I/0c=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1731582828;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rd9TfXx4AVSdw8dcZSg0NDdVDwa30ZWHJYtmHZBD2DE=;
+ b=g4RTTo/hANEC+aI9CLj8at3g7MDvPwGpH/PHhvoqUtcBI95jzECWCvfamF+98Gv0ZnlFtF
+ dsNcvcFgsRPYf3NnhXOGJXMAST2ofQe6hWm5jSamwvwIde7KLgbdFwZBRQkLBzrA2CDXHi
+ 7PHOfud/fz7HmgQwDbH2cVdmZ7rU5zc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-J-cdOZMaNiq4S7zmDG32vw-1; Thu,
- 14 Nov 2024 06:10:26 -0500
-X-MC-Unique: J-cdOZMaNiq4S7zmDG32vw-1
-X-Mimecast-MFC-AGG-ID: J-cdOZMaNiq4S7zmDG32vw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-531-G-8sv0TGO82SnBMOPjcPNA-1; Thu,
+ 14 Nov 2024 06:13:47 -0500
+X-MC-Unique: G-8sv0TGO82SnBMOPjcPNA-1
+X-Mimecast-MFC-AGG-ID: G-8sv0TGO82SnBMOPjcPNA
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9C105195419D; Thu, 14 Nov 2024 11:10:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.209])
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5846D195604F; Thu, 14 Nov 2024 11:13:46 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.193.143])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE7111956054; Thu, 14 Nov 2024 11:10:16 +0000 (UTC)
-Date: Thu, 14 Nov 2024 11:10:11 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PULL 0/5] Firmware 20241114 patches
-Message-ID: <ZzXak8gl-IksvLkQ@redhat.com>
-References: <20241114110101.44322-1-kraxel@redhat.com>
+ id 1BDBB1956054; Thu, 14 Nov 2024 11:13:46 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id E74B018009A1; Thu, 14 Nov 2024 12:13:43 +0100 (CET)
+Date: Thu, 14 Nov 2024 12:13:43 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] edk2: update submodule to edk2-stable202408.01
+Message-ID: <m6k4oa4fnx3cm36iu3n2plewrftomdjts5ht4vmr6dlxdsm6zp@7sbnkmos7ezd>
+References: <20241111100701.2620020-1-kraxel@redhat.com>
+ <CAFEAcA83zip4PnAxjQp-Qiquwzqf=cVwRmxsKGeyAXvqwzg=qw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241114110101.44322-1-kraxel@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <CAFEAcA83zip4PnAxjQp-Qiquwzqf=cVwRmxsKGeyAXvqwzg=qw@mail.gmail.com>
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -88,41 +81,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 14, 2024 at 12:00:56PM +0100, Gerd Hoffmann wrote:
-> The following changes since commit f0a5a31c33a8109061c2493e475c8a2f4d022432:
+On Wed, Nov 13, 2024 at 03:57:58PM +0000, Peter Maydell wrote:
+> On Mon, 11 Nov 2024 at 10:07, Gerd Hoffmann <kraxel@redhat.com> wrote:
+> >
+> > Updates the subhook submodule to point to a edk2 mirror repo.
+> > Fixes recursive cloning of the edk2 submodule.
+> >
+> > Cc: Peter Maydell <peter.maydell@linaro.org>
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2660
+> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> > ---
+> >  roms/edk2 | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/roms/edk2 b/roms/edk2
+> > index b158dad150bf..4dfdca63a934 160000
+> > --- a/roms/edk2
+> > +++ b/roms/edk2
+> > @@ -1 +1 @@
+> > -Subproject commit b158dad150bf02879668f72ce306445250838201
+> > +Subproject commit 4dfdca63a93497203f197ec98ba20e2327e4afe4
+> > --
+> > 2.47.0
 > 
->   Update version for v9.2.0-rc0 release (2024-11-13 21:44:45 +0000)
-> 
-> are available in the Git repository at:
-> 
->   https://gitlab.com/kraxel/qemu.git tags/firmware-20241114-pull-request
-> 
-> for you to fetch changes up to 5916a3b20fdbfbfc2f987f1121e945100c8c3cd2:
-> 
->   x86/loader: add -shim option (2024-11-14 11:55:39 +0100)
-> 
-> ----------------------------------------------------------------
-> loader: fix efi binary loading via -kernel
-> loader: support secure boot verification with direct kernel boot
+> Shouldn't this also come with an update of the binaries?
+> I know that in this case there's not supposed to be any
+> change to the edk sources, but I kind of expected that the
+> process of "update the edk submodule" ought to be
+> standardised to the extent that it would produce new
+> binary blobs to match the submodule bump.
 
-Hard feature freeze was two days ago, so I would have thought
-the new secure boot feature should wait until 10.0 cycle ?
+That is an exception.  This adds only one commit, which changes the
+'subhook' submodule URL to point to a different location (a mirror repo
+in the tianocore project).  So it doesn't carry any actual code changes.
 
-Their commits say they depend on new OVMF features and we've
-not updated the OVMF binaries in this cycle, so do we even
-have the OVMF feature needed for this to work[1] ?
+But it is needed if you want do a local build (without already having a
+'subhook' submodule clone) because the old repo location is gone ...
 
-With regards,
-Daniel
-
-[1] admittedly not an issue for distros packaging ovmf separately
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+take care,
+  Gerd
 
 
