@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1400D68B3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3D5AD68B3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBd9x-000066-3p; Thu, 14 Nov 2024 11:57:33 -0500
+	id 1tBd9x-00009R-Vn; Thu, 14 Nov 2024 11:57:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tBd9e-0008Ou-Qp
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:57:15 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tBd9n-0008T3-TX
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:57:24 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tBd9c-0002a5-Kv
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:57:13 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tBd9m-0002c1-3W
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:57:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731603430;
+ s=mimecast20190719; t=1731603440;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZIMNnOydHnArrL0aAQPB6i8307JCVgtIWZgz17oGRBM=;
- b=W9v1PRomOstwlf2Bu/suaefRrKj3j2u1y6gEISqehXzvZ/z37qm92Mcm0q1CPAOnEnRX4d
- 9jT35yQYSZyx5MtCZ+gbEukRust9GTsj1JnQ94f1/2kD8EOFfRncQH9bt8K8C2E8vQ+yQS
- Xr34NAsB95voH5fcrJ8juPLclIpruFU=
+ bh=GLF0n6qglRIqtUkQqyx7RdSXVKBg4tQ932ju2zdvhJU=;
+ b=bR3qmOCYv5xGfYY027wZbRJCJbxaTU0Wum0zq1b6VLDh1D5IhH/rbeoJKb50APjnOgFfC9
+ U8KOeoSAHU1Wq3BZ7zoBimx1MTXzS/8TcCEOdBuJtmBX0MZVmCzOlsT3P5wGrCNvwllJEH
+ osycUlXDIH5Jq12i+Xp5y3mOzd0pXEE=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-252-QDYARnvIP_2w6O60FkON_w-1; Thu,
- 14 Nov 2024 11:57:08 -0500
-X-MC-Unique: QDYARnvIP_2w6O60FkON_w-1
-X-Mimecast-MFC-AGG-ID: QDYARnvIP_2w6O60FkON_w
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-TbRcXxjuM52LUMlLjUmddg-1; Thu,
+ 14 Nov 2024 11:57:18 -0500
+X-MC-Unique: TbRcXxjuM52LUMlLjUmddg-1
+X-Mimecast-MFC-AGG-ID: TbRcXxjuM52LUMlLjUmddg
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF4EC1955F42; Thu, 14 Nov 2024 16:57:07 +0000 (UTC)
+ id 2601A1956083; Thu, 14 Nov 2024 16:57:17 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.39.192.6])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EBF3C1955F43; Thu, 14 Nov 2024 16:57:05 +0000 (UTC)
+ id 866611955F21; Thu, 14 Nov 2024 16:57:15 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 2/8] parallels: fix possible int overflow
-Date: Thu, 14 Nov 2024 17:56:51 +0100
-Message-ID: <20241114165657.254256-3-kwolf@redhat.com>
+Subject: [PULL 7/8] qdev-monitor: avoid QemuOpts in QMP device_add
+Date: Thu, 14 Nov 2024 17:56:56 +0100
+Message-ID: <20241114165657.254256-8-kwolf@redhat.com>
 In-Reply-To: <20241114165657.254256-1-kwolf@redhat.com>
 References: <20241114165657.254256-1-kwolf@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
@@ -82,38 +83,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dmitry Frolov <frolov@swemel.ru>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-The sum "cluster_index + count" may overflow uint32_t.
+The QMP device_add monitor command converts the QDict arguments to
+QemuOpts and then back again to QDict. This process only supports scalar
+types. Device properties like virtio-blk-pci's iothread-vq-mapping (an
+array of objects) are silently dropped by qemu_opts_from_qdict() during
+the QemuOpts conversion even though QAPI is capable of validating them.
+As a result, hotplugging virtio-blk-pci devices with the
+iothread-vq-mapping property does not work as expected (the property is
+ignored).
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Get rid of the QemuOpts conversion in qmp_device_add() and call
+qdev_device_add_from_qdict() with from_json=true. Using the QMP
+command's QDict arguments directly allows non-scalar properties.
 
-Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
-Message-ID: <20241106080521.219255-2-frolov@swemel.ru>
+The HMP is also adjusted since qmp_device_add()'s now expects properly
+typed JSON arguments and cannot be used from HMP anymore. Move the code
+that was previously in qmp_device_add() (with QemuOpts conversion and
+from_json=false) into hmp_device_add() so that its behavior is
+unchanged.
+
+This patch changes the behavior of QMP device_add but not HMP
+device_add. QMP clients that sent incorrectly typed device_add QMP
+commands no longer work. This is a breaking change but clients should be
+using the correct types already. See the netdev_add QAPIfication in
+commit db2a380c8457 for similar reasoning and object-add in commit
+9151e59a8b6e. Unlike those commits, we continue to rely on 'gen': false
+for the time being.
+
+Markus helped me figure this out and even provided a draft patch. The
+code ended up very close to what he suggested.
+
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20240827192751.948633-2-stefanha@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/parallels.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ system/qdev-monitor.c | 42 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 28 insertions(+), 14 deletions(-)
 
-diff --git a/block/parallels.c b/block/parallels.c
-index 9205a0864f..071b6dcaf8 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -184,11 +184,11 @@ static int mark_used(BlockDriverState *bs, unsigned long *bitmap,
-     BDRVParallelsState *s = bs->opaque;
-     uint32_t cluster_index = host_cluster_index(s, off);
-     unsigned long next_used;
--    if (cluster_index + count > bitmap_size) {
-+    if ((uint64_t)cluster_index + count > bitmap_size) {
-         return -E2BIG;
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 4c09b38ffb..03ae610649 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -856,18 +856,9 @@ void hmp_info_qdm(Monitor *mon, const QDict *qdict)
+ 
+ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
+ {
+-    QemuOpts *opts;
+     DeviceState *dev;
+ 
+-    opts = qemu_opts_from_qdict(qemu_find_opts("device"), qdict, errp);
+-    if (!opts) {
+-        return;
+-    }
+-    if (!monitor_cur_is_qmp() && qdev_device_help(opts)) {
+-        qemu_opts_del(opts);
+-        return;
+-    }
+-    dev = qdev_device_add(opts, errp);
++    dev = qdev_device_add_from_qdict(qdict, true, errp);
+     if (!dev) {
+         /*
+          * Drain all pending RCU callbacks. This is done because
+@@ -879,9 +870,6 @@ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
+          * to the user
+          */
+         drain_call_rcu();
+-
+-        qemu_opts_del(opts);
+-        return;
      }
-     next_used = find_next_bit(bitmap, bitmap_size, cluster_index);
--    if (next_used < cluster_index + count) {
-+    if (next_used < (uint64_t)cluster_index + count) {
-         return -EBUSY;
-     }
-     bitmap_set(bitmap, cluster_index, count);
+     object_unref(OBJECT(dev));
+ }
+@@ -1018,8 +1006,34 @@ void qmp_device_sync_config(const char *id, Error **errp)
+ void hmp_device_add(Monitor *mon, const QDict *qdict)
+ {
+     Error *err = NULL;
++    QemuOpts *opts;
++    DeviceState *dev;
+ 
+-    qmp_device_add((QDict *)qdict, NULL, &err);
++    opts = qemu_opts_from_qdict(qemu_find_opts("device"), qdict, &err);
++    if (!opts) {
++        goto out;
++    }
++    if (qdev_device_help(opts)) {
++        qemu_opts_del(opts);
++        return;
++    }
++    dev = qdev_device_add(opts, &err);
++    if (!dev) {
++        /*
++         * Drain all pending RCU callbacks. This is done because
++         * some bus related operations can delay a device removal
++         * (in this case this can happen if device is added and then
++         * removed due to a configuration error)
++         * to a RCU callback, but user might expect that this interface
++         * will finish its job completely once qmp command returns result
++         * to the user
++         */
++        drain_call_rcu();
++
++        qemu_opts_del(opts);
++    }
++    object_unref(dev);
++out:
+     hmp_handle_error(mon, err);
+ }
+ 
 -- 
 2.47.0
 
