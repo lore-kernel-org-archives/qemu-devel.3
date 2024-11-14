@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85EF8D68B3C
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE1C6D68B3C
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:59:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBdBw-00048i-OL; Thu, 14 Nov 2024 11:59:36 -0500
+	id 1tBdC0-0004LS-DK; Thu, 14 Nov 2024 11:59:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <paskripkin@gmail.com>)
- id 1tBdBa-0003mY-Qw; Thu, 14 Nov 2024 11:59:16 -0500
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ id 1tBdBk-0003wD-61; Thu, 14 Nov 2024 11:59:24 -0500
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <paskripkin@gmail.com>)
- id 1tBdBZ-0002lP-9S; Thu, 14 Nov 2024 11:59:14 -0500
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-539e4b7409fso786482e87.0; 
- Thu, 14 Nov 2024 08:59:11 -0800 (PST)
+ id 1tBdBi-0002lz-3D; Thu, 14 Nov 2024 11:59:23 -0500
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2ff57619835so8773871fa.0; 
+ Thu, 14 Nov 2024 08:59:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731603550; x=1732208350; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
+ d=gmail.com; s=20230601; t=1731603560; x=1732208360; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
  bh=OjqNSEAeDqZHUwaEAq62cXj/YVXs2ncKcqAnAF2TK3M=;
- b=ApNjciHF1H96EaU0+SbiC8Pm7QennBIQbXUOTYWbJqrFkEbwEvvbxh6Nz21H5U+h7A
- VemdhCaNCbNHgLiyPQJ+kuow6KiKgRjUz6hrjUYwvUrmeOymUGUAfTokeeeJqFo+ygu9
- wFdE46qdQw1Xe6O6aiD+zr/SckrQaE8eIy+iNjnwbDidTskdQb9pI9Npdh0Ou0ACG+Xq
- JOoEjMw1d3UJFpaRj24YjlqCh9MzJa5yGHPkCAMzgLJmYOW4IdH2En2EVjW3TsIuMV9N
- Un3/S7QxePG/xyf0y0cFEGv1aOToVA3ur+EfIaUM2+4gCWWnyDAP71CyeMWmyPosLSMe
- FGUQ==
+ b=FogwjpGXgHsijVzcINWh/u44/FSuSL/GQtTo6x11UBWR5IFRQQ45dFbvaO1CsdyW9g
+ 0SYBCMMLzAc/6E4Mcbybohdk1VLXZVlljwr5QE+ftZILrOpu0ZvkGPJF+MtMShTHBsn7
+ AQrmLsrwaNlnqJHuepppz42kWaE9EZAN8gOgsmaQ/DC3C4Q5edNSShJjQRTMDvUxO7Ty
+ K14s7umi8s/iEew8QBbwS+FV6kqADC0zrcpSZRiTyJTsl9FiVTNT55fXJYYLjUaORKyU
+ qWJKpLZo/Di5JLNh78CwNRZ2vTv+JiXZlNf3U6l5Jeace8G0HxYhOooAyQl4fGXj0ssA
+ XucQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731603550; x=1732208350;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
+ d=1e100.net; s=20230601; t=1731603560; x=1732208360;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
  bh=OjqNSEAeDqZHUwaEAq62cXj/YVXs2ncKcqAnAF2TK3M=;
- b=iMTNjSoNTMS7GNMEJ4wml1BOhB4LY7SKE8NkUMm9cDaNXgkUhp5MibIpTgag8I3XPJ
- zyYRqHZKl69SYxWKRKYJp8vwFeIW3YQwo82V/5sx3Ak+ZSMJ7q1eS+27W1I1JdLBqwTo
- 8Ca7HOA+JslaPkaZy75Cy1ICq4WbqTqPxfS5IC9bVxFhXxfTwDxw/nibXajiqKgOyHkc
- 9CWxONQtL5bL+8osb8cx/K4qiKmw+1yjzxyjdUZO1wp6HcRx+pakQlBenfWOYqoi7oaO
- IVOiRiyocu+0KAzlcnPhL3tkLyXBE0+FUlaLrK3aYTqnY5YU8Dt0S8QJRib4jhX1FVu+
- UYoQ==
+ b=aPN18e1J+MfYaskdaqGlX8J4mLcOATMea6W6Sjn3RG3M6JZCx1cj00haqR0bt78MnT
+ dObNzPwQlRLGBWMpGo3rdFO79Q08JgfQxUrIyEOitTjcn33077WwNbmUpjp9+REeb5Um
+ bBY2pivpW8h5GcDXmjiFnLbufTdm5UsqO4FWvwSEBg5W/r7N1sTX85cqhbcm39YKwKey
+ wHZt/D03UzzmsSUfpuYIvA1W7WvWsKHpYjzBMXVg2R+MMh/bSJEn2Ixu74qyl2uMJBZX
+ Swg2znLwP+VNwjD8IoQnOpOPwKpIIeR4iy2UpbGgUQoQIOccvdKBftC3UCx7BDDjfRqR
+ Z7iA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWpyeaSG96u1ouilesuKcE9is16hxfIdF5XhuNJN4xKJV3o0JR0onA5LU+S6oTWC0vwwR2LuS04jKDN@nongnu.org
-X-Gm-Message-State: AOJu0YwzjOUZTXzUmQ0sCOk5l1PRHL3/F6e9t4g0Qv7j86yZN8cszm+4
- Bo5vJ6mENk8F/+rgRa2TnO6NK6v0p/7LqTdU87lFrlXm9ql0LAeG
-X-Google-Smtp-Source: AGHT+IG47TayMCK6l/AZ0pwBoivKfYWsYDhm11RjHii9fE03tvtnpnGzrOI4UUXXKJfIhjhOZXNbFg==
-X-Received: by 2002:a05:6512:3da4:b0:53d:a550:1efa with SMTP id
- 2adb3069b0e04-53da5501f63mr1123684e87.11.1731603549524; 
- Thu, 14 Nov 2024 08:59:09 -0800 (PST)
+ AJvYcCUM7N6faHzsMAzxfzLR/8JTHcqtNP/xchbJwgWrsmWObzK6EgogPNeCrMFmd2h+0/MqzVe0kr2JmqAE@nongnu.org
+X-Gm-Message-State: AOJu0Yy6RLI9akJerl6ZtvfqGPJQ9ecckw1ZD+ofnleVPYziIjJvh/48
+ teb46sZrBeUWBUIFbELTcEjEf2eFM76/X8B0YvHRJvWp+Ens+vP6/7MsXUrFWVk=
+X-Google-Smtp-Source: AGHT+IGbBww2HOvkzL6LnsRnAipNZgRdTPEgL7WhgLK/P4+GAeTiFL5cyXdSRkPoj8320rXyj44/2A==
+X-Received: by 2002:a2e:8a9b:0:b0:2f7:6277:f2be with SMTP id
+ 38308e7fff4ca-2ff56689160mr8584901fa.22.1731603559797; 
+ Thu, 14 Nov 2024 08:59:19 -0800 (PST)
 Received: from fedora.. ([2a00:1370:8180:90b:6639:2dc0:6fb5:8401])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53da64f2a33sm243453e87.16.2024.11.14.08.59.05
+ 38308e7fff4ca-2ff59859fbesm2429411fa.75.2024.11.14.08.59.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:59:07 -0800 (PST)
+ Thu, 14 Nov 2024 08:59:19 -0800 (PST)
 From: Pavel Skripkin <paskripkin@gmail.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
  Pavel Skripkin <paskripkin@gmail.com>
 Subject: [PATCH 1/2] arm/ptw: factor out wxn logic to separate functions
-Date: Thu, 14 Nov 2024 19:59:00 +0300
-Message-ID: <20241114165900.6399-1-paskripkin@gmail.com>
+Date: Thu, 14 Nov 2024 19:59:15 +0300
+Message-ID: <20241114165915.6569-1-paskripkin@gmail.com>
 X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20241114165900.6399-1-paskripkin@gmail.com>
+References: <20241114165900.6399-1-paskripkin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=paskripkin@gmail.com; helo=mail-lf1-x130.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=paskripkin@gmail.com; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
