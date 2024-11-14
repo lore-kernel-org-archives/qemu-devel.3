@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69503D6A224
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C732BD6A221
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBeIB-0008R6-Ff; Thu, 14 Nov 2024 13:10:07 -0500
+	id 1tBeJJ-0001Bs-6P; Thu, 14 Nov 2024 13:11:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBeI4-0008LD-Ih
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:10:01 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tBeJH-0001BX-4W
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:11:15 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBeI3-0003np-2A
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:10:00 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-21116b187c4so8192335ad.3
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:09:57 -0800 (PST)
+ id 1tBeJF-0004IC-N5
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:11:14 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-7ee4c57b037so738001a12.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:11:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731607797; x=1732212597; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731607872; x=1732212672; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wnErDPYJqPMf8yFGSPkiesdxoyLDeMnH4zvE60sXL/Y=;
- b=CNKIjB9ZnnH+kdgNBE9qxzl6R72nlxY73Ab1Vsc/2p3cwq2N8sE+XMJqGB4s1Z49Dz
- oxLXKl4o3dYkQSOqZHqkAe30brAzzxbq/yOK+OYWI/xsL0z9UGxwo00vn4bFBd3Rw4De
- jp0bvi038duiV3pkzDjA5OyN2p7pOwLhm1LxB6YvW+kdbA4C1Kt0rHOY0WnatdIEl781
- jr8L6NHxQ4b936/SuYwlkEGWFZIFzFSdT7F0eSXbzLeBvCW4HwYlhe7Q2rJ4BjZiQAYD
- Qtyl2q0/73+470//JxBWoonbgzfzyBURCDpfXWOnKKgYm8Dkkfhv3J1jUlkzzp++5rIZ
- jfUA==
+ bh=Ea/KZy4pMUypZfCAI/+M5qKcDT4H53YHmMVaAGp96JM=;
+ b=tW2CU1pW/pAXyrgPlmE8c5PcA0PteUlFOV7+I4NcLOdsK0NBi+jX+Uf9dqY2VKNbNp
+ bNbXUUFhxtstYAJ8bbbSnq+DSOq/9ekNDo2OtY1NiqcX/ntzm0uTGwv/6lqUj9z87GpE
+ t1XBLvdD0E/yDz9y5aiGgtfTM8aDH21lyoGR9+CreANED8jtm/VxYihRqmjLZDwAX50U
+ 39UJzHK98t+6MDK/btINmrFdBmyEL/J/g/Z++DneNUfvQM4lFkbz+VFg5+5W3otcK+Uj
+ uRXabKrZxFBVHdAhESDAEot8A4AVVf3QWVZtTn80ZcWmkzyCXeyV1N3KqVNow0SSnBx5
+ U7jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731607797; x=1732212597;
+ d=1e100.net; s=20230601; t=1731607872; x=1732212672;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wnErDPYJqPMf8yFGSPkiesdxoyLDeMnH4zvE60sXL/Y=;
- b=UnV5TY6ymWn32MrZtB06ZqNzmvKyF6BE3ZLzz+/0pwduzm6HPbx8klD/hPazyL4TOf
- RsdBRR+RL8AUKUh3SUKWnGT2EsUqD79O+hMyDqIRs+6jmyasv4uaXdUjSqE8DW59gtEj
- 1a1+dtgxlYRma9Hc0j/PERpQFD84D3NcmZYTbayA/q7LfMijyP/Cev414fg3z0c5EYcE
- HizwvdTodyOGEofYD0AogQfF3G8uiZO4EnktDPlpFKQ1/G4FJmPn8SJoCTS31dH4kLVx
- zPviZyMvgbj/gWrxynE5pQoCKP7lXUJk/qtFr16j2QJ7+1YbiHuejakviU1YhnlN3wPo
- HG3w==
+ bh=Ea/KZy4pMUypZfCAI/+M5qKcDT4H53YHmMVaAGp96JM=;
+ b=wpb/mKQ7bd0m+zsA1EOqak/fp9H4/LqhUeHlDGbgjgEaNVFgmtkcDnD/OiucH1/se7
+ 1erIRaN3X2SMOpuPA6rQ1L0xTMV04TZPwcIJDA+4RU8IoSctDaBXHVyDXTsF2qX7MHsI
+ on/maC7Q0Izg52bqZ743sJ2YiBEn5EvWaEJlYVP/NomyZ2ychDmRYNe+lkIn8wGW+f0v
+ YmzYKsiCe1y/SsM51UfaeBHYOaOgSWY4SB8clH/q57S2Vd+zAvHJTISCCn3EEoAwgpgs
+ KjvVqyjB1sJF/JQGAGHKMTXFqBgzmfLgFLJa455BfE4KwNh2CYjKvENb+8s/oYYwvrRi
+ snbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW18+J7JV/lFymcZLhW/bfLnbXQUZmTMb3d6/cqPZPpc1wcQmYwij8UN7jzZV5Acd/uI2C+TEbsBL5a@nongnu.org
-X-Gm-Message-State: AOJu0YxoJMi+FyySwSJkchPxx4NPCo9vvMYNWf59Q6dpnvdN45SjK+km
- ANsgPHuB5fZOQV7pjVwb/cx7zRtHLUJP7vtMFqp9fdXq+XTfCMtwv7HFZvCtBSv6E29ZxLrjNHh
- r9iBxjw==
-X-Google-Smtp-Source: AGHT+IEk55vse7JMMI61mHNvGVvubF6+q2oxP/c4T4/0bIhwsBkC1PYpIE3QQMU/2j0QxF+4sHhOPg==
-X-Received: by 2002:a17:903:1788:b0:211:6b25:d824 with SMTP id
- d9443c01a7336-211c50920aamr37116265ad.35.1731607796904; 
- Thu, 14 Nov 2024 10:09:56 -0800 (PST)
+ AJvYcCV2+XwYX4dT/LII+GV8yUTACILGfsz0hiEF+mNy+87YO8yCmlYnvPDRZ98CDVBKx2cqmreJ2YV7F1UV@nongnu.org
+X-Gm-Message-State: AOJu0YxUROFd9K+TVj1A0R9OOLiJneEJgS1AveAIJPgfGtDIN6zJp9/M
+ S/83Jl/fJzUq46isiCilI8mI8DoGQzOQO4Uo4vcyoffbvXZB6zZcmVMzIT1F4BwLJknG/3ZAS0j
+ jMAOVLQ==
+X-Google-Smtp-Source: AGHT+IHCnCv2GVUp8Qh0cxKZqm7Zui0QlYfBNFnEzIPgn/vG0Qz09Kh1pXOPfuB/Yn+SE6JF4VpG3Q==
+X-Received: by 2002:a05:6a21:6d92:b0:1db:e3c7:9975 with SMTP id
+ adf61e73a8af0-1dc833a9104mr4439026637.15.1731607872115; 
+ Thu, 14 Nov 2024 10:11:12 -0800 (PST)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7246a9a89c2sm1540149b3a.94.2024.11.14.10.09.56
+ 41be03b00d2f7-7f8b3976801sm1406287a12.56.2024.11.14.10.11.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 10:09:56 -0800 (PST)
-Message-ID: <0cd1e8cc-4c99-496f-9830-ac96e03f5241@linaro.org>
-Date: Thu, 14 Nov 2024 10:09:55 -0800
+ Thu, 14 Nov 2024 10:11:11 -0800 (PST)
+Message-ID: <c22708b5-994c-4b7a-9350-a7366d6a4312@linaro.org>
+Date: Thu, 14 Nov 2024 10:11:11 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 23/54] accel/tcg: Check original prot bits for read in
- atomic_mmu_lookup
+Subject: Re: [PATCH v2 24/54] accel/tcg: Preserve tlb flags in tlb_set_compare
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
- <20241114160131.48616-24-richard.henderson@linaro.org>
+ <20241114160131.48616-25-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241114160131.48616-24-richard.henderson@linaro.org>
+In-Reply-To: <20241114160131.48616-25-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,46 +98,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/14/24 08:00, Richard Henderson wrote:
-> In the mist before CPUTLBEntryFull existed, we had to be
-> clever to detect write-only pages.  Now we can directly
-> test the saved prot bits, which is clearer.
+On 11/14/24 08:01, Richard Henderson wrote:
+> Before, if !enable, we squashed the entire address comparator to -1.
+> This works because TLB_INVALID_MASK is set.  It seemed natural, because
+> the tlb is cleared with memset of 0xff.
+> 
+> With this patch, we retain all of the other TLB_* bits even when
+> the page is not enabled.  This works because TLB_INVALID_MASK is set.
+> This will be used in a subsequent patch; the addr_read comparator
+> contains the flags for pages that are executable but not readable.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/cputlb.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
+>   accel/tcg/cputlb.c | 16 +++++++---------
+>   1 file changed, 7 insertions(+), 9 deletions(-)
 > 
 > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index c975dd2322..ae3a99eb47 100644
+> index ae3a99eb47..585f4171cc 100644
 > --- a/accel/tcg/cputlb.c
 > +++ b/accel/tcg/cputlb.c
-> @@ -1854,14 +1854,13 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
->               flags &= ~TLB_INVALID_MASK;
->           }
+> @@ -1032,15 +1032,13 @@ static inline void tlb_set_compare(CPUTLBEntryFull *full, CPUTLBEntry *ent,
+>                                      vaddr address, int flags,
+>                                      MMUAccessType access_type, bool enable)
+>   {
+> -    if (enable) {
+> -        address |= flags & TLB_FLAGS_MASK;
+> -        flags &= TLB_SLOW_FLAGS_MASK;
+> -        if (flags) {
+> -            address |= TLB_FORCE_SLOW;
+> -        }
+> -    } else {
+> -        address = -1;
+> -        flags = 0;
+> +    if (!enable) {
+> +        address = TLB_INVALID_MASK;
+> +    }
+> +    address |= flags & TLB_FLAGS_MASK;
+> +    flags &= TLB_SLOW_FLAGS_MASK;
+> +    if (flags) {
+> +        address |= TLB_FORCE_SLOW;
 >       }
-> +    full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
->   
->       /*
->        * Let the guest notice RMW on a write-only page.
->        * We have just verified that the page is writable.
-> -     * Subpage lookups may have left TLB_INVALID_MASK set,
-> -     * but addr_read will only be -1 if PAGE_READ was unset.
->        */
-> -    if (unlikely(tlbe->addr_read == -1)) {
-> +    if (unlikely(!(full->prot & PAGE_READ))) {
->           tlb_fill_align(cpu, addr, MMU_DATA_LOAD, mmu_idx,
->                          0, size, false, retaddr);
->           /*
-> @@ -1899,7 +1898,6 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
->       }
->   
->       hostaddr = (void *)((uintptr_t)addr + tlbe->addend);
-> -    full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
->   
->       if (unlikely(flags & TLB_NOTDIRTY)) {
->           notdirty_write(cpu, addr, size, full, retaddr);
+>       ent->addr_idx[access_type] = address;
+>       full->slow_flags[access_type] = flags;
 
+Good that you extracted that from original patch, it's much more clear now.
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
