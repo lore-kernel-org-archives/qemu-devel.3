@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48CF2D637CF
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 01:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A39A6D637D6
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 01:15:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBOQU-0007Qy-0T; Wed, 13 Nov 2024 20:13:38 -0500
+	id 1tBOQf-0007VH-SE; Wed, 13 Nov 2024 20:13:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBOQS-0007Q6-IA
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 20:13:36 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBOQe-0007UL-OJ
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 20:13:48 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBOQP-0001t5-66
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 20:13:36 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-431695fa98bso873685e9.3
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 17:13:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBOQc-0001wn-Rs
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 20:13:48 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-431688d5127so1010245e9.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 17:13:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731546809; x=1732151609; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1EwqjnIRPctj4Nq1APqJi9S66/euonofsINQc3qIQuI=;
- b=CMYWPodBUiuAkKDJphMyENCBE+S04FzAN6K4E8EUifPUl5QAX6gTn1ZYU6Wmlw+G/X
- lTmQaoPCPWNiMNxrYiGUDw93rhLmazQaGUAQaF9DUURyghguM5IZ92FTXr5e0a4GpIoR
- PRaQdP4PJQItJc4wLYkj6lbsWsnKrFTI39AVduumu2WtXBzo32YiGGYsiTXCBk757lx6
- e7o1OS2uuobZ1vYiBUCEckl1yJcK/5Qydzqh39ZbuzfRkSwdk63YN816hv7o7GI4dnTd
- uIKtZEQ4LlfEdKDAMyx2dTSyg2jeecbxun2MJ6jPtVAOezh0rnCYKDM028A9gKdTsthO
- DWYw==
+ d=linaro.org; s=google; t=1731546824; x=1732151624; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=n4W2o+WVI2EW3XsW3lSsIks/9d2PO57Qya5v8Q7poU8=;
+ b=LitgoMJUmq+gqemI4ODNsD9dB2joc/86+4Bm4D55FpaYIq3e1DyF0VyRTlNoPlsy5I
+ qQ0v0P/SnY2dSch4f0h4YQfTZ7HVqsVyAoFY1PiUPiO5qrrF9CT0scM1L6TRsBCEgvaa
+ bSnKWelY7q7pO5Y3V10Nr/TJpT1DDAdlnFQCWKkwZUz0Ylz2LHUaA4jRfI02gq1juL1A
+ FKsb57f07L1k9Lc23Lk+5cwF9tgKFMZy3DBA2aZoL2p+0WW8GGQBFEw/rkRs8xOv/3n+
+ BG1pqZKtSQ285vHI2z+8Q1Ul7tPPCACfnz6RNuNlOgbGbbxgdIjBkBMmq+JqeOZM7r+2
+ /KkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731546809; x=1732151609;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1EwqjnIRPctj4Nq1APqJi9S66/euonofsINQc3qIQuI=;
- b=FW7dU331nGitXWYv2Fy6s3zou4jm8r/slKfPBNkqsSC7TV2HaLOL0HqCztNhCNW4Nf
- FVDLhQvGn6Or4g04nZa3yPBT8VNzc1gqyplgjCTJuJc7srq7/pRl5PU1h7iJtJ3wrkmH
- F8h+ja4Dw6rpdetPlCaqmCogLUo9WsXFoflSzvepxtFTw0eSriXZSm9BISRfaT8pZENP
- KTLBgmPjmbTSNs43Fzw/UhGQ2j4ZFLBaYZZWwEZKku1i82KfZH9m9uevQdu5k5rNKUPZ
- OINH3wvjrkXwYcEeFIi7C3234kNcPcVsLbP2fczIy2FGgNgA2YxxITmLqLU8LOFkx0jj
- Xzzw==
+ d=1e100.net; s=20230601; t=1731546824; x=1732151624;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=n4W2o+WVI2EW3XsW3lSsIks/9d2PO57Qya5v8Q7poU8=;
+ b=at0C7+Rro6qNY77ScRBF96m9aWKoWpsHqkubFR8cESEjMeG++gIOGbhza4e+dDKmX+
+ NoTy+evfvb+39zjT3foUQ+Jx3jE+tnTodktDvIBT1q3TBf2hI98rmEDprqfwM+8GxPIg
+ psW/deQ/cW8fdcqEIQdTWMkoSTivTqzSxiHqBnE2vk+0Wtj3Hl6hg3YVM8fdv2jfam0G
+ 55M1BvVxKxCnZOofcetX65RrXKL7BIac86AhrgJSwVLBGALYth9f7qNCWA8yGR4Ha7gC
+ 1tsj2STTI9apixjqB7eecn3kDaz6sgPu9Id+1nHBoI/DbkG9i9nmwvstu0zHqFn5FRwm
+ nVOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrFd1wOeB2PTazt6eBO0+G5Jg2e/Gg6JjOl4iYTSiGAAaT31JLMUZe4ZL9hI2qwCgCtaq2KJQK45dy@nongnu.org
-X-Gm-Message-State: AOJu0YxOy8PECPGwBuojNU5lioq9L6P4MGF0gVInvBWIViSIFu9860NH
- H0J8UTW5ewLGSHsx/8xfgqnlVgnQ4W27PwjIt6+yajmg1JqtOckJe6b4ST5PmV0=
-X-Google-Smtp-Source: AGHT+IGZ4mtQztDulS9O9dxe4sHklabKWPOdh+RwHBXIF1ImFkUSMTktTv3L7h4tm6Iw0lzhApxUAQ==
-X-Received: by 2002:a05:6000:70d:b0:37d:3e6d:3c2f with SMTP id
- ffacd0b85a97d-381f1883bc1mr18783646f8f.47.1731546809627; 
- Wed, 13 Nov 2024 17:13:29 -0800 (PST)
+ AJvYcCWLxUZADKrBTj9Zstxhx1tExxC5dhbQX2d0Kf7iKUBpU8Bmlt9ywa1/v898PjTAgEIgEre2h0J0Y/LL@nongnu.org
+X-Gm-Message-State: AOJu0YxxKrl92poAi1G5MWL6UuQxwNHqWUii0Y38oi6YPUhezYnxlQT5
+ asyitIEUDqizqopuIrdKwNREriTT4bGJ7dKORsrkPFHdtolQnpBUtfJ4vYVR6oI=
+X-Google-Smtp-Source: AGHT+IEicPSPnx9VguO/9hRNFn0r+OGPnyAza34mmQJUkip7pZQ0zwk7xapErhg7/qyCllNdtkSLxg==
+X-Received: by 2002:a05:600c:3582:b0:428:ec2a:8c94 with SMTP id
+ 5b1f17b1804b1-432b75035camr195067265e9.10.1731546824041; 
+ Wed, 13 Nov 2024 17:13:44 -0800 (PST)
 Received: from localhost.localdomain ([176.187.209.238])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381eda13780sm19409085f8f.109.2024.11.13.17.13.26
+ 5b1f17b1804b1-432dab721d7sm1548395e9.9.2024.11.13.17.13.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 13 Nov 2024 17:13:28 -0800 (PST)
+ Wed, 13 Nov 2024 17:13:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -69,15 +70,17 @@ Cc: qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 00/24] exec: Build up 'cputlb.h' and 'ram_addr.h' headers
-Date: Thu, 14 Nov 2024 02:12:45 +0100
-Message-ID: <20241114011310.3615-1-philmd@linaro.org>
+Subject: [PATCH 02/24] exec/cpu-defs: Remove unnecessary headers
+Date: Thu, 14 Nov 2024 02:12:47 +0100
+Message-ID: <20241114011310.3615-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241114011310.3615-1-philmd@linaro.org>
+References: <20241114011310.3615-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,157 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+"exec/cpu-defs.h" should be kept as minimal as possible;
+besides these includes don't seem necessay. Remove them.
 
-"exec/exec-all.h" and "exec/cpu-all.h" both contains a mess
-of unrelated APIs. More importantly, they contain target
-specific declarations, making any file including them to
-become target specific, thus not buildable in common meson
-sets.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/exec/cpu-defs.h | 8 --------
+ 1 file changed, 8 deletions(-)
 
-This series first extract the CPU TLB API scattered in various
-headers, then similarly strengthen the ram_addr_t API. Doing
-so we figured extracting "user/guest-host.h" was necessary.
-
-Before we have to include various missing headers to avoid
-compilation breakage when refactoring.
-
-The relevant part of the diff-stat is:
-
- include/exec/cpu-all.h        |  59 +-------------------
- include/exec/cpu-common.h     |  56 +------------------
- include/exec/cpu_ldst.h       |  73 +------------------------
- include/exec/exec-all.h       | 259 ------------------------------------------
- include/exec/ram_addr.h       | 56 ++-----------------
- include/sysemu/ram_addr.h     | 129 ++++++++++++++++++++++++++++++++++++++
- include/exec/cputlb.h         | 310 ++++++++++++++++++++++++++++++++++++++++++
- include/user/guest-host.h     |  87 +++++++++++++++++++++++++++++
-
-Hoping it makes sense!
-
-Please review,
-
-Phil.
-
-Philippe Mathieu-Daudé (24):
-  exec/cpu-all: Include missing 'exec/cpu-defs.h' header
-  exec/cpu-defs: Remove unnecessary headers
-  exec/translation-block: Include missing 'exec/vaddr.h' header
-  accel/tcg: Include missing 'exec/translation-block.h' header
-  target/i386/helper: Include missing 'exec/translation-block.h' header
-  target/rx/cpu: Include missing 'exec/translation-block.h' header
-  system/watchpoint: Include missing 'exec/cpu-all.h' header
-  linux-user/aarch64/mte: Include missing 'user/abitypes.h' header
-  target/arm/mte: Restrict 'exec/ram_addr.h' to system emulation
-  target/arm/cpu: Restrict cpu_untagged_addr() to user emulation
-  exec: Introduce 'user/guest-host.h' header
-  accel/tcg: Have tlb_vaddr_to_host() use vaddr type
-  exec: Declare tlb_reset_dirty*() in 'exec/cputlb.h'
-  exec: Declare tlb_init/destroy() in 'exec/cputlb.h'
-  exec: Declare tlb_set_page_full() in 'exec/cputlb.h'
-  exec: Declare tlb_set_page_with_attrs() in 'exec/cputlb.h'
-  exec: Declare tlb_set_page() in 'exec/cputlb.h'
-  exec: Declare tlb_flush*() in 'exec/cputlb.h'
-  exec: Declare tlb_hit*() in 'exec/cputlb.h'
-  exec: Declare tlb_vaddr_to_host() in 'exec/cputlb.h'
-  exec: Extract CPU physical memory API to 'sysemu/physmem-target.h'
-  exec/cpu-common: Move ram_addr_t related methods to 'exec/ram_addr.h'
-  exec/memory: Move qemu_map_ram_ptr() declaration to 'exec/ram_addr.h'
-  exec: Move 'ram_addr.h' header under sysemu/ namespace
-
- MAINTAINERS                                   |   3 +-
- include/exec/cpu-all.h                        |  59 +---
- include/exec/cpu-common.h                     |  56 +---
- include/exec/cpu-defs.h                       |   8 -
- include/exec/cpu_ldst.h                       |  73 +----
- include/exec/cputlb.h                         | 310 +++++++++++++++++-
- include/exec/exec-all.h                       | 259 ---------------
- include/exec/memory.h                         |   2 +-
- include/exec/translation-block.h              |   3 +-
- .../ram_addr.h => sysemu/physmem-target.h}    |  56 +---
- include/sysemu/ram_addr.h                     | 129 ++++++++
- include/user/guest-host.h                     |  87 +++++
- linux-user/aarch64/mte_user_helper.h          |   2 +
- target/arm/cpu.h                              |   5 +-
- accel/kvm/kvm-all.c                           |   3 +-
- accel/tcg/cpu-exec.c                          |   1 +
- accel/tcg/cputlb.c                            |  28 +-
- accel/tcg/tcg-accel-ops.c                     |   2 +
- accel/tcg/translate-all.c                     |   3 +-
- cpu-target.c                                  |   1 +
- hw/intc/armv7m_nvic.c                         |   2 +-
- hw/ppc/spapr.c                                |   3 +-
- hw/ppc/spapr_caps.c                           |   3 +-
- hw/ppc/spapr_nested.c                         |   1 +
- hw/ppc/spapr_pci.c                            |   3 +-
- hw/remote/memory.c                            |   3 +-
- hw/remote/proxy-memory-listener.c             |   3 +-
- hw/s390x/s390-stattrib-kvm.c                  |   3 +-
- hw/s390x/s390-stattrib.c                      |   3 +-
- hw/s390x/s390-virtio-ccw.c                    |   3 +-
- hw/sh4/sh7750.c                               |   1 +
- hw/vfio/common.c                              |   3 +-
- hw/vfio/container.c                           |   3 +-
- hw/vfio/iommufd.c                             |   3 +-
- hw/vfio/migration.c                           |   3 +-
- hw/vfio/spapr.c                               |   3 +-
- hw/virtio/virtio-mem.c                        |   3 +-
- migration/ram.c                               |   3 +-
- plugins/api.c                                 |   3 +-
- system/memory.c                               |   3 +-
- system/physmem.c                              |   4 +-
- system/watchpoint.c                           |   3 +-
- target/alpha/helper.c                         |   2 +-
- target/alpha/sys_helper.c                     |   2 +-
- target/arm/helper.c                           |   1 +
- target/arm/tcg/helper-a64.c                   |   1 +
- target/arm/tcg/mte_helper.c                   |   5 +-
- target/avr/helper.c                           |   2 +-
- target/hppa/mem_helper.c                      |   1 +
- target/i386/helper.c                          |   2 +
- target/i386/machine.c                         |   2 +-
- target/i386/tcg/fpu_helper.c                  |   2 +-
- target/i386/tcg/misc_helper.c                 |   2 +-
- target/i386/tcg/sysemu/excp_helper.c          |   2 +-
- target/i386/tcg/sysemu/misc_helper.c          |   2 +-
- target/i386/tcg/sysemu/svm_helper.c           |   2 +-
- target/loongarch/tcg/csr_helper.c             |   2 +-
- target/loongarch/tcg/tlb_helper.c             |   2 +-
- target/m68k/helper.c                          |   2 +-
- target/microblaze/helper.c                    |   2 +-
- target/microblaze/mmu.c                       |   2 +-
- target/mips/sysemu/cp0.c                      |   2 +-
- target/mips/tcg/sysemu/cp0_helper.c           |   2 +-
- target/mips/tcg/sysemu/tlb_helper.c           |   2 +-
- target/openrisc/mmu.c                         |   2 +-
- target/openrisc/sys_helper.c                  |   1 +
- target/ppc/helper_regs.c                      |   2 +-
- target/ppc/kvm.c                              |   3 +-
- target/ppc/mem_helper.c                       |   1 +
- target/ppc/misc_helper.c                      |   1 +
- target/ppc/mmu_helper.c                       |   1 +
- target/riscv/cpu_helper.c                     |   2 +-
- target/riscv/csr.c                            |   1 +
- target/riscv/op_helper.c                      |   1 +
- target/riscv/pmp.c                            |   2 +-
- target/rx/cpu.c                               |   3 +-
- target/s390x/gdbstub.c                        |   2 +-
- target/s390x/kvm/kvm.c                        |   3 +-
- target/s390x/sigp.c                           |   2 +-
- target/s390x/tcg/excp_helper.c                |   1 +
- target/s390x/tcg/mem_helper.c                 |   1 +
- target/s390x/tcg/misc_helper.c                |   1 +
- target/sh4/helper.c                           |   2 +-
- target/sparc/ldst_helper.c                    |   1 +
- target/sparc/mmu_helper.c                     |   2 +-
- target/tricore/helper.c                       |   2 +-
- target/xtensa/helper.c                        |   2 +-
- target/xtensa/mmu_helper.c                    |   1 +
- 88 files changed, 670 insertions(+), 566 deletions(-)
- rename include/{exec/ram_addr.h => sysemu/physmem-target.h} (88%)
- create mode 100644 include/sysemu/ram_addr.h
- create mode 100644 include/user/guest-host.h
-
+diff --git a/include/exec/cpu-defs.h b/include/exec/cpu-defs.h
+index 0dbef3010c..ae18398fa9 100644
+--- a/include/exec/cpu-defs.h
++++ b/include/exec/cpu-defs.h
+@@ -23,14 +23,6 @@
+ #error cpu.h included from common code
+ #endif
+ 
+-#include "qemu/host-utils.h"
+-#include "qemu/thread.h"
+-#ifndef CONFIG_USER_ONLY
+-#include "exec/hwaddr.h"
+-#endif
+-#include "exec/memattrs.h"
+-#include "hw/core/cpu.h"
+-
+ #include "cpu-param.h"
+ 
+ #ifndef TARGET_LONG_BITS
 -- 
 2.45.2
 
